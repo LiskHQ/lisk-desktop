@@ -42,6 +42,8 @@ import verifyMessageSuccess from '../../../assets/images/illustrations/verify-me
 import verifyMessageSuccessDark from '../../../assets/images/illustrations/verify-message-success-dark.svg';
 import registrationSuccess from '../../../assets/images/illustrations/registration-success.svg';
 import registrationSuccessDark from '../../../assets/images/illustrations/registration-success-dark.svg';
+import multisignaturePartialSuccess from '../../../assets/images/illustrations/multisignature-partial-success.svg';
+import multisignaturePartialSuccessDark from '../../../assets/images/illustrations/multisignature-partial-success-dark.svg';
 import registerMultisignatureSuccess from '../../../assets/images/illustrations/multisignature-success.svg';
 import registerMultisignatureSuccessDark from '../../../assets/images/illustrations/multisignature-success-dark.svg';
 import registerMultisignatureError from '../../../assets/images/illustrations/multisignature-error.svg';
@@ -95,6 +97,8 @@ export const illustrations = {
   reclaimBalanceIntro,
   transactionPending,
   transactionPendingDark,
+  multisignaturePartialSuccess,
+  multisignaturePartialSuccessDark,
 };
 
 const Illustration = ({ name, className, noTheme }) => {
