@@ -17,6 +17,7 @@ const AccountCard = ({
   onSaveNameAccounts,
   onSelectAccount,
   onInputBlur,
+  isLegacy = false,
   t,
 }) => (
   <div
@@ -74,12 +75,29 @@ const AccountCard = ({
               </>
             )}
         </header>
-        <div className={`${styles.accountBalance} row-balance`}>
-          <p>{t('Balance:')}</p>
-          <p>
-            <LiskAmount val={account.token?.balance} token={tokenMap.LSK.key} />
-          </p>
-        </div>
+        {!isLegacy ? (
+          <div className={`${styles.accountBalance} row-balance`}>
+            <p>{t('Balance:')}</p>
+            <p>
+              <LiskAmount val={account.token?.balance} token={tokenMap.LSK.key} />
+            </p>
+          </div>
+        ) : (
+          <>
+            <div className={`${styles.accountBalance} ${styles.legacyBalance} row-balance`}>
+              <p>{t('Old account:')}</p>
+              <p>
+                <LiskAmount val={account.legacy.balance} token={tokenMap.LSK.key} />
+              </p>
+            </div>
+            <div className={`${styles.accountBalance} ${styles.legacyBalance} row-balance`}>
+              <p>{t('New account:')}</p>
+              <p>
+                <LiskAmount val={account.token?.balance} token={tokenMap.LSK.key} />
+              </p>
+            </div>
+          </>
+        )}
       </div>
     </div>
   </div>

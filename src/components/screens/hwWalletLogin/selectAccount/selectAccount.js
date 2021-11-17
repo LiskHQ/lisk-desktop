@@ -4,6 +4,7 @@ import { toast } from 'react-toastify';
 import { getAccountsFromDevice } from '@utils/hwManager';
 import { tokenMap, routes } from '@constants';
 import { TertiaryButton } from '@toolbox/buttons';
+import TabsContainer from '@toolbox/tabsContainer/tabsContainer';
 import AccountCard from './accountCard';
 import LoadingIcon from '../loadingIcon';
 import styles from './selectAccount.css';
@@ -15,7 +16,6 @@ class SelectAccount extends React.Component {
     this.state = {
       accountOnEditMode: -1,
       hwAccounts: [],
-      showEmptyAccounts: false,
     };
 
     this.onEditAccount = this.onEditAccount.bind(this);
@@ -127,16 +127,24 @@ class SelectAccount extends React.Component {
 
   render() {
     const { t, device } = this.props;
-    const { accountOnEditMode, hwAccounts, showEmptyAccounts } = this.state;
+    const { accountOnEditMode, hwAccounts } = this.state;
 
-    const { nonEmptyAccounts, emptyAccounts } = hwAccounts.reduce((acc, account) => {
+    const {
+      nonEmptyAccounts,
+      emptyAccounts,
+      reclaimAccounts,
+    } = hwAccounts.reduce((acc, account) => {
+      if (account.legacy) {
+        acc.reclaimAccounts = [...acc.reclaimAccounts, account];
+        return acc;
+      }
       if (account.summary?.balance > 0) {
         acc.nonEmptyAccounts = [...acc.nonEmptyAccounts, account];
-      } else {
-        acc.emptyAccounts = [...acc.emptyAccounts, account];
+        return acc;
       }
+      acc.emptyAccounts = [...acc.emptyAccounts, account];
       return acc;
-    }, { nonEmptyAccounts: [], emptyAccounts: [] });
+    }, { nonEmptyAccounts: [], emptyAccounts: [], reclaimAccounts: [] });
 
     return (
       <div>
@@ -150,13 +158,15 @@ class SelectAccount extends React.Component {
             {t('Create an account')}
           </TertiaryButton>
         </p>
-
-        <div className={`${styles.deviceContainer} hw-container`}>
-          {
+        {
           hwAccounts.length
             ? (
-              <>
-                <div>
+              <TabsContainer name="main-tabs">
+                <div
+                  tabName={t('Active')}
+                  tabId="active"
+                  className={`${styles.deviceContainer} hw-container`}
+                >
                   {nonEmptyAccounts.map((hwAccount, index) => (
                     <AccountCard
                       key={index}
@@ -172,41 +182,49 @@ class SelectAccount extends React.Component {
                     />
                   ))}
                 </div>
-                <span className={`${styles.showEmptyAccountsToggleContainer} ${showEmptyAccounts ? styles.open : styles.closed}`}>
-                  {showEmptyAccounts && <div className={styles.stroke} />}
-                  <TertiaryButton
-                    className={`${styles.showEmptyAccountsToggle} show-empty-accounts`}
-                    onClick={() => {
-                      this.setState({
-                        ...this.state,
-                        showEmptyAccounts: !showEmptyAccounts,
-                      });
-                    }}
-                  >
-                    {t(showEmptyAccounts ? 'Hide empty accounts' : 'Show empty accounts')}
-                  </TertiaryButton>
-                </span>
-                <div>
-                  {showEmptyAccounts
-                    && emptyAccounts.map((hwAccount, index) => (
-                      <AccountCard
-                        key={index}
-                        account={hwAccount}
-                        accountOnEditMode={accountOnEditMode}
-                        index={index}
-                        onChangeAccountTitle={this.onChangeAccountTitle}
-                        onEditAccount={this.onEditAccount}
-                        onSaveNameAccounts={this.onSaveNameAccounts}
-                        onSelectAccount={this.onSelectAccount}
-                        t={t}
-                      />
-                    ))}
+                <div
+                  tabName={t('Empty')}
+                  tabId="empty"
+                  className={`${styles.deviceContainer} hw-container`}
+                >
+                  {emptyAccounts.map((hwAccount, index) => (
+                    <AccountCard
+                      key={index}
+                      account={hwAccount}
+                      accountOnEditMode={accountOnEditMode}
+                      index={index}
+                      onChangeAccountTitle={this.onChangeAccountTitle}
+                      onEditAccount={this.onEditAccount}
+                      onSaveNameAccounts={this.onSaveNameAccounts}
+                      onSelectAccount={this.onSelectAccount}
+                      t={t}
+                    />
+                  ))}
                 </div>
-              </>
+                <div
+                  tabName={t('Reclaim ({{numOfAccounts}})', { numOfAccounts: reclaimAccounts.length })}
+                  tabId="reclaim"
+                  className={`${styles.deviceContainer} hw-container`}
+                >
+                  {reclaimAccounts.map((hwAccount, index) => (
+                    <AccountCard
+                      key={index}
+                      account={hwAccount}
+                      accountOnEditMode={accountOnEditMode}
+                      index={index}
+                      onChangeAccountTitle={this.onChangeAccountTitle}
+                      onEditAccount={this.onEditAccount}
+                      onSaveNameAccounts={this.onSaveNameAccounts}
+                      onSelectAccount={this.onSelectAccount}
+                      isLegacy
+                      t={t}
+                    />
+                  ))}
+                </div>
+              </TabsContainer>
             )
             : <LoadingIcon />
         }
-        </div>
       </div>
     );
   }

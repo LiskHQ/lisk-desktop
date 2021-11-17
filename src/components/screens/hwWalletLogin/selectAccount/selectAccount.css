@@ -1,23 +1,10 @@
 @import './../../../../app/mixins.css';
 
 .deviceContainer {
-  width: calc(100% + 12px);
-  height: auto;
+  margin: 15px -6px 0 -6px;
   display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
+  flex-direction: row;
   flex-wrap: wrap;
-  margin: 42px -6px 0;
-  box-sizing: border-box;
-  padding: 0;
-
-  & > div {
-    width: 100%;
-    display: flex;
-    flex-direction: row;
-    flex-wrap: wrap;
-  }
 
   & .content {
     display: flex;
@@ -111,6 +98,10 @@
           color: var(--color-ink-blue);
         }
       }
+
+      & > .legacyBalance:last-child {
+        margin-top: 24px;
+      }
     }
   }
 }
@@ -139,39 +130,11 @@
 }
 
 .createAccountBtn {
-  padding: 5px;
-}
-
-.showEmptyAccountsToggleContainer {
-  width: calc(100% - 14px);
-  padding: 8px 0;
-  position: relative;
-
-  &.closed {
-    border: 1px solid var(--color-platinum);
-    border-radius: var(--border-radius-standard);
-  }
-
-  &.open {
-    & > .stroke {
-      background-color: var(--color-platinum);
-      height: 1px;
-      position: absolute;
-      left: 0;
-      right: 0;
-      top: 31px;
-    }
-  }
-}
-
-.showEmptyAccountsToggle {
-  background-color: var(--color-body-bg);
+  padding: 0 8px !important;
 }
 
 @media (--medium-viewport) {
-  .deviceContainer {
-    & > .account {
-      width: calc(50% - 12px);
-    }
+  .account {
+    width: calc(50% - 12px);
   }
 }
