@@ -2,6 +2,7 @@ import { toast } from 'react-toastify';
 import { actionTypes } from '@constants';
 import * as accountApi from '@api/account';
 import { extractKeyPair } from '@utils/account';
+import { defaultDerivationPath } from '@utils/explicitBipKeyDerivation';
 import {
   accountLoggedOut,
   accountDataUpdated,
@@ -174,6 +175,8 @@ describe('actions: account', () => {
               BTC: true,
             },
           },
+          enableCustomDerivationPath: true,
+          customDerivationPath: '1/2',
         },
       };
     });
@@ -217,8 +220,22 @@ describe('actions: account', () => {
 
     it('should call extractPublicKey with params', async () => {
       accountApi.getAccount.mockResolvedValue({ balance, address });
-      await login({ passphrase, isRecoveryPhraseMode: false, derivationPath: '1/2' })(dispatch, getState);
-      expect(extractKeyPair).toHaveBeenCalledWith(passphrase, false, '1/2');
+      await login({ passphrase })(dispatch, getState);
+      expect(extractKeyPair).toHaveBeenCalledWith({ passphrase, enableCustomDerivationPath: true, derivationPath: '1/2' });
+
+      const newGetState = () => ({
+        ...state,
+        settings: {
+          ...state.settings,
+          enableCustomDerivationPath: false,
+          customDerivationPath: undefined,
+        },
+      });
+
+      await login({ passphrase })(dispatch, newGetState);
+      expect(extractKeyPair).toHaveBeenLastCalledWith({
+        passphrase, enableCustomDerivationPath: false, derivationPath: defaultDerivationPath,
+      });
     });
 
     it.skip('should fire an error toast if getAccount fails ', async () => {

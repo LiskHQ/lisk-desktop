@@ -87,7 +87,7 @@
   display: flex;
   flex-direction: column;
   justify-content: center;
-  margin: 0 auto;
+  margin: 30px auto 0;
   max-width: 430px;
   width: 100%;
 
@@ -96,20 +96,34 @@
   }
 }
 
-.inputsHolder {
-  align-items: flex-start;
-  display: flex;
-  flex-direction: column;
-  margin: 30px auto 30px;
-  max-width: 665px;
-  width: 100%;
-  border: none;
-  text-align: left;
+.inputFields {
+  & > fieldset {
+    align-items: flex-start;
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    border: none;
+    text-align: left;
 
-  & > label {
-    margin-bottom: 7px;
-    color: var(--color-maastricht-blue);
+    & > label {
+      margin-bottom: 7px;
+      color: var(--color-maastricht-blue);
+    }
   }
+
+  & > * {
+    max-width: 665px;
+    margin: 30px auto 0px;
+  }
+
+  & > .discreetMode {
+    margin-top: 16px;
+  }
+}
+
+.derivationPathInput {
+  height: 40px !important;
+  margin-top: var(--vertical-padding-m);
 }
 
 .link {
@@ -125,8 +139,4 @@
   &:hover {
     text-decoration: underline;
   }
-}
-
-.discreetMode {
-  margin-top: 16px;
 }

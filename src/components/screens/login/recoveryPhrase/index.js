@@ -1,93 +1,33 @@
-import React, { useEffect, useState } from 'react';
-import CheckBox from '@toolbox/checkBox';
+import React from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import { settingsUpdated } from '@actions';
+import { selectSettings } from '@store/selectors';
 import { Input } from '@toolbox/inputs';
-import WarningMessage from '@shared/warningMessage';
-import FlashMessageHolder from '@toolbox/flashMessage/holder';
-import styles from './recoveryPhrase.css';
+import { defaultDerivationPath } from '@utils/explicitBipKeyDerivation';
+import styles from '../login.css';
 
-const addWarningMessage = (t) => {
-  FlashMessageHolder.addMessage(
-    (
-      <WarningMessage
-        title={t('WARNING: You are about to use the recovery phrase of your hardware wallet to access your Lisk account.')}
-      >
-        <>
-          <p>{t('Using your recovery phrase this way should be avoided, and if you don’t need to access your funds now, we recommend waiting for full support of hardware wallets in Lisk Desktop 2.2.0.')}</p>
-          <p>
-            <span>
-              {t('Lisk desktop does not store your recovery seed anywhere and is open-source. However, be aware that if your computer is compromised or running malware, entering your recovery phrase could lead to the loss of all crypto assets stored with your device, not only LSK tokens.')}
-            </span>
-            <span> </span>
-            <a
-              href="https://lisk.com/blog/development/hardware-wallet-user-guide"
-              target="_blank"
-              rel="noopener noreferrer"
-            >
-              { t('Read more') }
-            </a>
-          </p>
-        </>
-      </WarningMessage>
-    ),
-    'RecoveryPhraseWarning',
-  );
-};
+const RecoveryPhrase = ({ t }) => {
+  const { enableCustomDerivationPath, customDerivationPath } = useSelector(selectSettings);
+  const dispatch = useDispatch();
 
-const removeWarningMessage = () => {
-  FlashMessageHolder.deleteMessage('RecoveryPhraseWarning');
-};
+  const onPathInputChange = (e) => {
+    dispatch(settingsUpdated({ customDerivationPath: e.target.value }));
+  };
 
-const RecoveryPhrase = ({
-  t, derivationPath, setDerivationPath,
-  isRecoveryPhraseMode, setIsRecoveryPhrase,
-}) => {
-  const [showCustomDerivationPath, setShowCustomDerivationPath] = useState(false);
-
-  useEffect(() => {
-    if (isRecoveryPhraseMode) {
-      addWarningMessage(t);
-    } else {
-      removeWarningMessage();
-    }
-  }, [isRecoveryPhraseMode]);
-
-  useEffect(() => removeWarningMessage, []);
+  if (!enableCustomDerivationPath) {
+    return null;
+  }
 
   return (
-    <>
-      <div className={styles.checkboxWrapper}>
-        <CheckBox
-          name="recoveryMode"
-          className="recovery-phrase-check"
-          checked={isRecoveryPhraseMode}
-          onChange={() => {
-            setIsRecoveryPhrase(!isRecoveryPhraseMode);
-          }}
-        />
-        <span>{t('Enable recovery phrase mode (optional)')}</span>
-      </div>
-      {isRecoveryPhraseMode && (
-        <div className={styles.checkboxWrapper}>
-          <CheckBox
-            name="customDerivation"
-            className="custom-derivation-check"
-            checked={showCustomDerivationPath}
-            onChange={() => {
-              setShowCustomDerivationPath(!showCustomDerivationPath);
-            }}
-          />
-          <span>{t('Modify derivation path (optional)')}</span>
-        </div>
-      )}
-      {showCustomDerivationPath && (
-        <Input
-          className={styles.derivationPathInput}
-          size="l"
-          onChange={(e) => { setDerivationPath(e.target.value); }}
-          value={derivationPath}
-        />
-      )}
-    </>
+    <fieldset>
+      <label>{t('Custom derivation path')}</label>
+      <Input
+        className={`${styles.derivationPathInput} custom-derivation-path-input`}
+        size="l"
+        onChange={onPathInputChange}
+        value={customDerivationPath || defaultDerivationPath}
+      />
+    </fieldset>
   );
 };
 
