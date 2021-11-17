@@ -30,7 +30,7 @@ const defaultStore = {
     advancedMode: true,
     areTermsOfUseAccepted: true,
     token: {
-      active: 'LSK',
+      active: tokenMap.LSK.key,
       list: {
         [tokenMap.BTC.key]: false,
         [tokenMap.LSK.key]: true,
