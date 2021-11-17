@@ -97,7 +97,6 @@
 }
 
 .inputFields {
-
   & > fieldset {
     align-items: flex-start;
     display: flex;
@@ -105,7 +104,7 @@
     width: 100%;
     border: none;
     text-align: left;
-  
+
     & > label {
       margin-bottom: 7px;
       color: var(--color-maastricht-blue);
