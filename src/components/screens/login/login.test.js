@@ -1,8 +1,11 @@
 import React from 'react';
 import i18next from 'i18next';
 import { mount } from 'enzyme';
+import { useDispatch } from 'react-redux';
+import { mountWithRouterAndStore } from '@utils/testHelpers';
 import { routes } from '@constants';
-import FlashMessageHolder from '@toolbox/flashMessage/holder';
+import { defaultDerivationPath } from '@utils/explicitBipKeyDerivation';
+import { settingsUpdated } from '@actions';
 import Login from './login';
 import accounts from '../../../../test/constants/accounts';
 
@@ -123,37 +126,40 @@ describe('Login', () => {
       wrapper.update();
       wrapper.find('button.login-button').simulate('submit');
       expect(props.login).toHaveBeenCalledWith({
-        derivationPath: "m/44'/134'/0'",
-        enableCustomDerivationPath: false,
         passphrase: accounts.delegate.passphrase,
       });
     });
   });
 
   describe('Recovery phrase mode', () => {
-    it('Should show and hide warning', () => {
-      wrapper.find('.recovery-phrase-check input').simulate('change', { target: { checked: true } });
-      expect(FlashMessageHolder.addMessage).toHaveBeenCalled();
-
-      wrapper.find('.recovery-phrase-check input').simulate('change', { target: { checked: true } });
-      expect(FlashMessageHolder.deleteMessage).toHaveBeenCalled();
+    it('Should not display custom derivation path', () => {
+      wrapper = mountWithRouterAndStore(
+        Login, props, {}, {
+          settings: {
+            enableCustomDerivationPath: false,
+            customDerivationPath: defaultDerivationPath,
+          },
+        },
+      );
+      expect(wrapper.find('.custom-derivation-path-input').exists()).toBeFalsy();
     });
 
-    it('Should allow custom path and call login with', () => {
-      const derivationPath = "m/44'/134'/0'";
-      wrapper.find('.recovery-phrase-check input').simulate('change', { target: { checked: true } });
-      wrapper.find('.custom-derivation-check input').simulate('change', { target: { checked: true } });
-      const clipboardData = {
-        getData: () => accounts.delegate.passphrase,
-      };
-      wrapper.find('passphraseInput input').first().simulate('paste', { clipboardData });
+    it('Should display custom derivation path and dispatch settings updated action', () => {
+      const mockDispatch = jest.fn();
+      useDispatch.mockReturnValue(mockDispatch);
+      wrapper = mountWithRouterAndStore(
+        Login, props, {}, {
+          settings: {
+            enableCustomDerivationPath: true,
+            customDerivationPath: defaultDerivationPath,
+          },
+        },
+      );
+
+      expect(wrapper.find('.custom-derivation-path-input').at(1).props().value).toBe(defaultDerivationPath);
+      wrapper.find('.custom-derivation-path-input').at(1).simulate('change', { target: { value: "m/44'/134'/1'" } });
       wrapper.update();
-      wrapper.find('button.login-button').simulate('submit');
-      expect(props.login).toHaveBeenCalledWith({
-        derivationPath,
-        enableCustomDerivationPath: true,
-        passphrase: accounts.delegate.passphrase,
-      });
+      expect(mockDispatch).toHaveBeenCalledWith(settingsUpdated({ customDerivationPath: "m/44'/134'/1'" }));
     });
   });
 });

@@ -22,7 +22,7 @@ const RecoveryPhrase = ({ t }) => {
     <fieldset>
       <label>{t('Custom derivation path')}</label>
       <Input
-        className={styles.derivationPathInput}
+        className={`${styles.derivationPathInput} custom-derivation-path-input`}
         size="l"
         onChange={onPathInputChange}
         value={customDerivationPath || defaultDerivationPath}
