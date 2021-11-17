@@ -27,7 +27,6 @@ const Result = ({
           <span className={styles.title}>{t('Voting confirmation')}</span>
         </header>
         <TransactionResult
-          t={t}
           title={template.title}
           illustration="vote"
           status={status}

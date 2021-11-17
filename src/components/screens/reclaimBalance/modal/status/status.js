@@ -55,7 +55,6 @@ const Status = ({
   return (
     <div className={`${styles.wrapper} status-container`}>
       <TransactionResult
-        t={t}
         illustration="default"
         title={template.title}
         className={`${styles.content} ${status.code === 'error' && styles.error}`}

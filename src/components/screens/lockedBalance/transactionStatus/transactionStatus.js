@@ -17,7 +17,6 @@ const TransactionStatus = ({
   return (
     <div className={`${styles.wrapper} transaction-status`}>
       <TransactionResult
-        t={t}
         illustration="default"
         status={status}
         title={template.title}

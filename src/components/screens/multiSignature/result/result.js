@@ -33,7 +33,6 @@ const Result = ({
       </div>
       <ProgressBar current={4} />
       <TransactionResult
-        t={t}
         illustration="registerMultisignature"
         status={status}
         message={template}

@@ -33,7 +33,6 @@ const Status = ({
         title={template.title}
         message={template.message}
         className={styles.content}
-        t={t}
       />
     </div>
   );

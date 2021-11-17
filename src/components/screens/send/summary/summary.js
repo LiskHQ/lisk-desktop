@@ -8,7 +8,6 @@ import TransactionInfo from '@shared/transactionInfo';
 const Summary = ({
   resetTransactionResult,
   transactionCreated,
-  isInitialization,
   transactions,
   prevStep,
   nextStep,
@@ -42,7 +41,7 @@ const Summary = ({
     <TransactionSummary
       title={t('Transaction summary')}
       confirmButton={{
-        label: isInitialization ? t('Send') : t('Send {{amount}} {{token}}', { amount, token }),
+        label: t('Send {{amount}} {{token}}', { amount, token }),
         onClick: signTransaction,
       }}
       cancelButton={{
