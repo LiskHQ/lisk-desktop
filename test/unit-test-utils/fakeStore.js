@@ -1,6 +1,7 @@
 import configureStore from 'redux-mock-store';
 import accounts from '../constants/accounts';
 import delegates from '../constants/delegates';
+import { tokenMap } from '@constants';
 
 const forgers = Object.values(accounts).slice(0, 9).map((account, index) => ({
   username: `genesis_${index}`,
@@ -31,8 +32,8 @@ const defaultStore = {
     token: {
       active: 'LSK',
       list: {
-        BTC: false,
-        LSK: true,
+        [tokenMap.BTC.key]: false,
+        [tokenMap.LSK.key]: true,
       },
     },
   },
