@@ -17,7 +17,7 @@ const Tab = ({
   <div tabName={tabName} tabId={tabId} className={`${styles.deviceContainer} ${`tab-${tabId}`} hw-container`}>
     {accountsList.map((account, index) => (
       <AccountCard
-        key={index}
+        key={`hw-account-tabId-${index}`}
         account={account}
         index={index}
         accountOnEditMode={accountOnEditMode}
