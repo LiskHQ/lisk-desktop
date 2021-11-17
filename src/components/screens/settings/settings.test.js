@@ -13,7 +13,7 @@ describe('Setting', () => {
     discreetMode: false,
     token: {
       list: {
-        BTC: true,
+        BTC: false,
         LSK: true,
       },
       active: 'LSK',
@@ -101,16 +101,6 @@ describe('Setting', () => {
       wrapper.find('.autoLog input').at(0).simulate('change', { target: { name: 'autoLog' } });
 
       expect(props.timerReset).toBeCalled();
-    });
-
-    it('should enable and disable BTC token', () => {
-      localStorage.setItem('btc', true);
-      wrapper = mountWithRouter(Settings, {...props, account });
-      wrapper.find('.enableBTC input').at(0).simulate('change', { target: { name: 'BTC' } });
-      const expectedCallToSettingsUpdated = {
-        token: { list: { BTC: !settings.token.list.BTC } },
-      };
-      expect(props.settingsUpdated).toBeCalledWith(expectedCallToSettingsUpdated);
     });
   });
 });

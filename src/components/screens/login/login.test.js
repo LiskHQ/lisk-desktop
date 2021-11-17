@@ -37,7 +37,7 @@ describe('Login', () => {
       active: 'LSK',
       list: {
         LSK: true,
-        BTC: true,
+        BTC: false,
       },
     },
   };

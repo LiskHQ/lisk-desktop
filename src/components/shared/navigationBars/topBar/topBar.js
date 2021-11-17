@@ -11,7 +11,6 @@ import Network from './networkName';
 import NavigationButtons from './navigationButtons';
 import Search from './search';
 import Toggle from './toggle';
-import TokenSelector from './tokenSelector';
 import VoteQueueToggle from './voteQueueToggle';
 import SignOut from './signOut';
 
@@ -67,8 +66,6 @@ const TopBar = ({
         <Search t={t} history={history} disabled={disabled} />
       </div>
       <div className={styles.group}>
-        { !isUserLogout ? <TokenSelector token="LSK" history={history} t={t} disabled={disabled} /> : null }
-        { !isUserLogout && token.list.BTC ? <TokenSelector token="BTC" history={history} t={t} disabled={disabled} /> : null }
         <Toggle
           setting="darkMode"
           icons={['lightMode', 'darkMode']}
