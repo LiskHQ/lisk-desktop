@@ -88,25 +88,27 @@ const Login = ({
         >
           <RegisterTitle t={t} />
           <form onSubmit={onFormSubmit}>
-            {
-              settings.showNetwork ? (
-                <fieldset className={`${styles.inputsHolder}`}>
-                  <label>{t('Network')}</label>
-                  <NetworkSelector />
-                </fieldset>
-              ) : null
-            }
-            <fieldset className={`${styles.inputsHolder}`}>
-              <label className={styles.inputLabel}>{t('Passphrase')}</label>
-              <PassphraseInput
-                inputsLength={12}
-                maxInputsLength={24}
-                onFill={setPassphrase}
-                keyPress={handleKeyPress}
-              />
+            <div className={styles.inputFields}>
+              {
+                settings.showNetwork ? (
+                  <fieldset>
+                    <label>{t('Network')}</label>
+                    <NetworkSelector />
+                  </fieldset>
+                ) : null
+              }
+              <fieldset>
+                <label>{t('Passphrase')}</label>
+                <PassphraseInput
+                  inputsLength={12}
+                  maxInputsLength={24}
+                  onFill={setPassphrase}
+                  keyPress={handleKeyPress}
+                />
+              </fieldset>
+              <RecoveryPhrase t={t} />
               <DiscreetModeToggle className={styles.discreetMode} />
-            </fieldset>
-            <RecoveryPhrase t={t} />
+            </div>
             <div className={`${styles.buttonsHolder}`}>
               <PrimaryButton
                 className={`${styles.button} login-button`}
