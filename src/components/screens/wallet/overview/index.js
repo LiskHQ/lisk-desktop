@@ -68,7 +68,7 @@ const Overview = ({
         pomHeight: pomHeights[pomHeights.length - 1],
         readMore: () => {
           const url = 'https://lisk.com/blog/development/lisk-voting-process';
-          window.open(url, 'rel="noopener noreferrer');
+          window.open(url, 'rel="noopener noreferrer"');
         },
       });
     } else {
