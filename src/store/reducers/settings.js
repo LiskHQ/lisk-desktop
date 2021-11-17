@@ -1,4 +1,4 @@
-import { actionTypes, tokenKeys } from '@constants';
+import { actionTypes, tokenMap } from '@constants';
 import { deepMergeObj } from '@utils/helpers';
 
 export const channels = {
@@ -17,7 +17,7 @@ export const channels = {
  */
 const validateToken = state => (
   state.token && !state.token.list[state.token.active]
-    ? { ...state, token: { active: tokenKeys[0], list: state.token.list } }
+    ? { ...state, token: { active: tokenMap.LSK.key, list: state.token.list } }
     : state
 );
 
@@ -32,8 +32,11 @@ export const initialState = {
   areTermsOfUseAccepted: false,
   discreetMode: false,
   token: {
-    active: tokenKeys[0],
-    list: tokenKeys.reduce((acc, key) => { acc[key] = true; return acc; }, {}),
+    active: tokenMap.LSK.key,
+    list: {
+      [tokenMap.LSK.key]: true,
+      [tokenMap.BTC.key]: false,
+    },
   },
   sideBarExpanded: true,
   currency: 'USD',

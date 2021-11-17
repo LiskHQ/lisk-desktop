@@ -8,4 +8,4 @@ Feature: Wallet Votes
     Then I click on searchAccountRow
     Then I should be on Account page of billy_eilish
     Given I open votes tab
-    Then I should see 5 delegates in table
+    Then I should see 7 delegates in table

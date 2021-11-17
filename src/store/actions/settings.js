@@ -1,4 +1,4 @@
-import { actionTypes } from '@constants';
+import { actionTypes, tokenMap } from '@constants';
 import { getFromStorage } from '@utils/localJSONStorage';
 import { initialState } from '@store/reducers/settings';
 
@@ -10,7 +10,16 @@ export const settingsRetrieved = () => (dispatch) => {
   getFromStorage('settings', initialState, (data) => {
     dispatch({
       type: actionTypes.settingsRetrieved,
-      data,
+      data: {
+        ...data,
+        token: {
+          active: tokenMap.LSK.key,
+          list: {
+            [tokenMap.BTC.key]: false,
+            [tokenMap.LSK.key]: true,
+          },
+        },
+      },
     });
   });
 };
