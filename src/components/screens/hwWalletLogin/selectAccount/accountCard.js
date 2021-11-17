@@ -80,15 +80,15 @@ const AccountCard = ({
         {account.legacy ? (
           <>
             <div className={`${styles.accountBalance} ${styles.legacyBalance} row-balance`}>
-              <p>{t('Old account:')}</p>
+              <p>{t('Balance:')}</p>
               <p>
-                <LiskAmount val={account.legacy.balance} token={tokenMap.LSK.key} />
+                <LiskAmount val={account.summary?.balance} token={tokenMap.LSK.key} />
               </p>
             </div>
             <div className={`${styles.accountBalance} ${styles.legacyBalance} row-balance`}>
-              <p>{t('New account:')}</p>
+              <p>{t('Reclaimable balance:')}</p>
               <p>
-                <LiskAmount val={account.token?.balance} token={tokenMap.LSK.key} />
+                <LiskAmount val={account.legacy.balance} token={tokenMap.LSK.key} />
               </p>
             </div>
           </>
@@ -96,7 +96,7 @@ const AccountCard = ({
           <div className={`${styles.accountBalance} row-balance`}>
             <p>{t('Balance:')}</p>
             <p>
-              <LiskAmount val={account.token?.balance} token={tokenMap.LSK.key} />
+              <LiskAmount val={account.summary?.balance} token={tokenMap.LSK.key} />
             </p>
           </div>
         )}

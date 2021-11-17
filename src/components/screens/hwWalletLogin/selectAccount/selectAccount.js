@@ -216,7 +216,7 @@ class SelectAccount extends React.Component {
                   onInputBlur={this.onAccountCardBlur}
                 />
                 <Tab
-                  tabName={t('Reclaim ({{numOfAccounts}})', { numOfAccounts: reclaimAccounts.length })}
+                  tabName={t('Pending reclaim ({{numOfAccounts}})', { numOfAccounts: reclaimAccounts.length })}
                   tabId="reclaim"
                   accountsList={reclaimAccounts}
                   accountOnEditMode={accountOnEditMode}
