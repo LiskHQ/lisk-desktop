@@ -1,7 +1,6 @@
-import React from 'react';
-import { mount } from 'enzyme';
 import { toast } from 'react-toastify';
 import * as hwManager from '@utils/hwManager';
+import { mountWithRouter } from '../../../../utils/testHelpers';
 import SelectAccount from './selectAccount';
 
 jest.mock('@utils/hwManager');
@@ -12,28 +11,38 @@ describe('Select Account', () => {
 
   const mockValue = [
     {
-      name: 'Unnamed account',
       summary: {
         address: 'lsks6uckwnap7s72ov3edddwgxab5e89t6uy8gjt6',
-        balance: 100,
+        balance: 100000000,
       },
     },
     {
-      name: 'Unnamed account',
       summary: {
         address: 'lskehj8am9afxdz8arztqajy52acnoubkzvmo9cjy',
-        balance: 50,
+        balance: 500000000,
+      },
+      dpos: {
+        delegate: {
+          username: 'ABCD',
+        },
       },
     },
     {
-      name: 'Unnamed account',
       summary: {
         address: 'lskgonvfdxt3m6mm7jaeojrj5fnxx7vwmkxq72v79',
-        balance: 150,
+        balance: 200000000,
       },
     },
     {
-      name: 'Unnamed account',
+      summary: {
+        address: 'lsksckkjs2c8dnu7vhcku825cp62ed6eyxd8pbt6p',
+        balance: 0,
+      },
+    },
+    {
+      legacy: {
+        balance: 200000000,
+      },
       summary: {
         address: 'lsksckkjs2c8dnu7vhcku825cp62ed6eyxd8pbt6p',
         balance: 0,
@@ -88,21 +97,13 @@ describe('Select Account', () => {
     };
     jest.spyOn(toast, 'error');
 
-    wrapper = mount(<SelectAccount {...props} />);
+    wrapper = mountWithRouter(SelectAccount, props, { search: '?tab=active' });
   });
 
   it('Should render SelectAccount properly', async () => {
-    expect(wrapper).toContainMatchingElement('.create-account');
-    expect(wrapper).toContainMatchingElement('.hw-container');
-    expect(wrapper).toContainMatchingElement('.go-back');
-  });
-
-  it('Should call push function if do click in Go Back button', () => {
-    wrapper = mount(<SelectAccount {...props} />);
-    expect(props.goBack).not.toBeCalled();
-    wrapper.find('.go-back').at(0).simulate('click');
-    wrapper.update();
-    expect(props.goBack).toBeCalled();
+    const html = wrapper.html();
+    expect(html).toContain('create-account');
+    expect(html).toContain('hw-container');
   });
 
   it('Should change name "label" of one account', async () => {
@@ -122,19 +123,40 @@ describe('Select Account', () => {
   it('Should add another account to the list after do click on create account button', () => {
     wrapper.update();
     expect(wrapper).toContainMatchingElement('.create-account');
-    expect(wrapper).toContainMatchingElements(3, '.hw-account');
+    expect(wrapper).toContainMatchingElements(5, '.hw-account');
     wrapper.find('.create-account').at(0).simulate('click');
     wrapper.update();
-    expect(wrapper).toContainMatchingElements(4, '.hw-account');
+    expect(wrapper).toContainMatchingElements(5, '.hw-account');
   });
 
   it('Should NOT add another account to the list after do click on create account button', () => {
     expect(wrapper).toContainMatchingElement('.create-account');
     wrapper.find('.create-account').at(0).simulate('click');
-    expect(wrapper).toContainMatchingElements(4, '.hw-account');
+    expect(wrapper).toContainMatchingElements(5, '.hw-account');
     wrapper.find('.create-account').at(0).simulate('click');
     wrapper.update();
     expect(toast.error).toBeCalled();
+  });
+
+  it('Should display active accounts', () => {
+    wrapper.update();
+    wrapper.find('.tab-active').at(0).simulate('click');
+    wrapper.update();
+    expect(wrapper.find('.tab-active').at(0)).toContainMatchingElements(3, '.hw-account');
+  });
+
+  it('Should display empty accounts', () => {
+    wrapper.update();
+    wrapper.find('.tab-empty').at(0).simulate('click');
+    wrapper.update();
+    expect(wrapper.find('.tab-empty').at(0)).toContainMatchingElements(1, '.hw-account');
+  });
+
+  it('Should display reclaim accounts', () => {
+    wrapper.update();
+    wrapper.find('.tab-reclaim').at(0).simulate('click');
+    wrapper.update();
+    expect(wrapper.find('.tab-reclaim').at(0)).toContainMatchingElements(1, '.hw-account');
   });
 
   it('Should call login function after click on a select account button', () => {

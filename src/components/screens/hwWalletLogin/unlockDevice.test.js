@@ -15,7 +15,7 @@ describe('Unlock Device', () => {
       { deviceId: 2, openApp: true, model: 'Trezor' },
       { deviceId: 3, openApp: true, model: 'Ledger' },
     ],
-    t: v => v,
+    t: (v, i) => v.replace('{{deviceModel}}', i ? i.deviceModel : ''),
     nextStep: jest.fn(),
     prevStep: jest.fn(),
     goBack: jest.fn(),
@@ -28,13 +28,13 @@ describe('Unlock Device', () => {
   });
 
   it('Should render asking for opening app on Ledger', async () => {
-    expect(props.nextStep).not.toBeCalled();
-    // TODO refactor this as should be a better way to test it https://stackoverflow.com/a/43855794
-    jest.advanceTimersByTime(1000);
-    setImmediate(() => {
-      wrapper.find('button').simulate('click');
-      expect(props.goBack).toBeCalled();
-    });
+    const html = wrapper.html();
+    expect(html).toContain('Ledger connected! Open the Lisk app on the device');
+  });
+
+  it('Should call props.goback', async () => {
+    wrapper.find('button').simulate('click');
+    expect(props.goBack).toBeCalled();
   });
 
   it('Should call nextStep if openApp = true, or not Ledger', () => {

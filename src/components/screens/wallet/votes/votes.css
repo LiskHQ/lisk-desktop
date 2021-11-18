@@ -52,6 +52,8 @@
 }
 
 .row {
+  cursor: pointer;
+
   & .editVoteLink {
     padding: 5px 20px;
     opacity: 0;

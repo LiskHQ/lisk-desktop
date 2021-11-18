@@ -1,130 +1,140 @@
 @import './../../../../app/mixins.css';
 
 .deviceContainer {
-  width: calc(100% + 12px);
-  height: auto;
+  margin: 15px -6px 0 -6px;
   display: flex;
-  justify-content: center;
-  align-items: center;
+  flex-direction: row;
   flex-wrap: wrap;
-  margin: 42px -6px 0;
-  box-sizing: border-box;
-  padding: 0;
-
-  & > .account {
-    width: calc(33.3% - 12px);
-    height: 340px;
-    box-sizing: border-box;
-    border-radius: var(--border-radius-box);
-    border: 1px solid var(--color-platinum);
-    background: var(--color-white);
-    margin: 0 6px 12px;
-    padding: 0;
-    display: flex;
-    flex-direction: column;
-    justify-content: flex-start;
-    align-items: center;
-
-    &:hover {
-      & .editBtn {
-        display: flex;
-      }
-    }
-  }
-
-  & .header {
-    width: 100%;
-    height: 47px;
-    margin: 0;
-    padding: 0 20px;
-    box-sizing: border-box;
-    background-color: var(--color-white-smoke);
-    border-top-left-radius: var(--border-radius-box);
-    border-top-right-radius: var(--border-radius-box);
-    border-bottom: 1px solid var(--color-platinum);
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-
-    & .accountTitle {
-      @mixin contentNormal bold;
-
-      color: var(--color-maastricht-blue);
-    }
-
-    & .editBtn {
-      @mixin contentSmall bold;
-
-      width: 83px;
-      min-width: auto;
-      height: 32px;
-      color: var(--color-maastricht-blue) !important;
-      display: flex;
-      display: none;
-
-      & > img {
-        width: 14px;
-        height: 14px;
-        margin: 0 0 0 5px;
-        padding: 0;
-      }
-    }
-
-    & .saveBtn {
-      @mixin contentSmall bold;
-
-      width: 83px;
-      height: 32px;
-      margin-left: 20px;
-    }
-  }
 
   & .content {
+    display: flex;
     width: 100%;
     height: 100%;
     margin: 0;
-    padding: 20px;
+    padding: 20px 0px;
     box-sizing: border-box;
 
-    & .row {
-      width: 100%;
-      height: auto;
-      box-sizing: border-box;
-      display: flex;
-      flex-direction: column;
-      justify-content: center;
-      align-items: center;
-      margin: 20px 0;
-
-      & > p {
-        @mixin headingNormal bold;
-
-        color: var(--color-maastricht-blue);
-        margin: 0;
-        padding: 0;
-      }
-
-      & > span {
-        @mixin contentSmall;
-
-        color: var(--color-slate-gray);
-      }
+    & > div:nth-child(1) {
+      padding: 0 12px 0 20px;
     }
 
-    & > button {
+    & > div:nth-child(2) {
       width: 100%;
+      padding-right: 20px;
+      display: flex;
+      flex-direction: column;
+      align-items: start;
+      justify-content: space-between;
+
+      & > * > p {
+        margin: 0;
+      }
+
+      & > .header {
+        width: 100%;
+        margin-bottom: 20px;
+        display: flex;
+        flex-direction: column;
+        align-items: flex-start;
+
+        & > .editAccountTitle {
+          display: flex;
+          margin-top: 2px;
+
+          & > .saveBtn {
+            height: auto;
+            padding: 0;
+            width: 35px;
+            min-width: 35px;
+            margin-left: 10px;
+          }
+        }
+
+        & > .accountTitle {
+          @mixin contentLargest semi-bold;
+
+          color: var(--color-maastricht-blue);
+          width: 100%;
+          margin-bottom: 6px;
+          display: flex;
+          align-items: center;
+
+          & .editBtn {
+            margin: 0 0 0 10px;
+            height: 14px;
+            cursor: pointer;
+            display: none;
+          }
+
+          &:hover {
+            & .editBtn {
+              display: inline;
+            }
+          }
+        }
+
+        & > .accountAddress {
+          @mixin contentLarge;
+
+          color: var(--color-slate-gray);
+        }
+      }
+
+      & > .accountBalance {
+        display: flex;
+        flex-direction: column;
+        align-items: flex-start;
+
+        & > p:nth-child(1) {
+          @mixin contentLargest;
+
+          color: var(--color-maastricht-blue);
+          margin-bottom: 4px;
+        }
+
+        & > p:nth-child(2) {
+          @mixin contentLargest bold;
+
+          color: var(--color-ink-blue);
+        }
+      }
+
+      & > .legacyBalance:last-child {
+        margin-top: 24px;
+      }
+    }
+  }
+}
+
+.account {
+  width: calc(33.3% - 12px);
+  box-sizing: border-box;
+  border-radius: var(--border-radius-box);
+  border: 2px solid transparent;
+  background: var(--color-white);
+  margin: 0 6px 12px;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: center;
+  cursor: pointer;
+
+  &:hover {
+    border: 2px solid var(--color-ultramarine-blue);
+
+    & .editBtn {
+      display: flex;
     }
   }
 }
 
 .createAccountBtn {
-  padding: 5px;
+  padding: 0 8px !important;
 }
 
 @media (--medium-viewport) {
-  .deviceContainer {
-    & > .account {
-      width: calc(50% - 12px);
-    }
+  .account {
+    width: calc(50% - 12px);
   }
 }

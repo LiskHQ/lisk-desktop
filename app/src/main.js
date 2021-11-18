@@ -2,7 +2,10 @@ import { autoUpdater } from 'electron-updater';
 import electron from 'electron';
 import electronLocalshortcut from 'electron-localshortcut';
 import getPort from 'get-port';
-import installExtension, { REACT_DEVELOPER_TOOLS, REDUX_DEVTOOLS } from 'electron-devtools-installer';
+import installExtension, {
+  REACT_DEVELOPER_TOOLS,
+  REDUX_DEVTOOLS,
+} from 'electron-devtools-installer';
 import path from 'path';
 import win from './modules/win';
 import localeHandler from './modules/localeHandler';
@@ -17,8 +20,8 @@ i18nSetup();
 
 const defaultServerPort = 5659;
 let serverUrl;
-const startServer = () => getPort({ port: defaultServerPort })
-  .then((port) => {
+const startServer = () =>
+  getPort({ port: defaultServerPort }).then((port) => {
     serverUrl = server.init(port);
   });
 
@@ -37,7 +40,12 @@ let appIsReady = false;
 
 const createWindow = () => {
   win.create({
-    electron, path, electronLocalshortcut, storage, checkForUpdates, serverUrl,
+    electron,
+    path,
+    electronLocalshortcut,
+    storage,
+    checkForUpdates,
+    serverUrl,
   });
 
   if (process.env.DEBUG) {
@@ -47,6 +55,15 @@ const createWindow = () => {
       // eslint-disable-next-line no-console
       .catch((err) => console.info('An error occurred: ', err));
   }
+};
+
+const handleProtocol = () => {
+  // Protocol handler for MacOS
+  app.on('open-url', (event, url) => {
+    event.preventDefault();
+    win.browser?.show();
+    win.send({ event: 'openUrl', value: url });
+  });
 };
 
 app.on('ready', () => {
@@ -93,19 +110,18 @@ app.on('second-instance', (argv) => {
 });
 
 app.on('will-finish-launching', () => {
-  // Protocol handler for MacOS
-  app.on('open-url', (event, url) => {
-    event.preventDefault();
-    win.browser.show();
-    win.send({ event: 'openUrl', value: url });
-  });
+  handleProtocol();
 });
 
 ipcMain.on('set-locale', (event, locale) => {
   const langCode = locale.substr(0, 2);
   if (langCode) {
     localeHandler.update({
-      langCode, electron, storage, event, checkForUpdates,
+      langCode,
+      electron,
+      storage,
+      event,
+      checkForUpdates,
     });
   }
 });
@@ -120,8 +136,4 @@ ipcMain.on('storeConfig', (event, data) => {
 
 ipcMain.on('retrieveConfig', () => {
   readConfig();
-});
-
-ipcMain.on('updateQuitAndInstall', () => {
-  autoUpdater.quitAndInstall();
 });

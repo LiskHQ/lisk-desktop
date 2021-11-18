@@ -13,7 +13,7 @@ describe('withData', () => {
   });
 
   it('should render passed component with data', () => {
-    const data = [];
+    const data = {};
     const params = {};
     const apis = {
       dataKey: {
@@ -25,15 +25,14 @@ describe('withData', () => {
     const DummyComponentHOC = withData(apis)(DummyComponent);
     const wrapper = mount(<DummyComponentHOC />);
     expect(apis.dataKey.apiUtil).toHaveBeenCalledWith(expect.objectContaining({}), params);
-    // TODO figure out how to make the commented-out assertion work
-    expect(wrapper.find('DummyComponent')).toHaveProp(Object.keys(apis)[0]);
-    /*
-    expect(wrapper.find('DummyComponent')).toHaveProp(Object.keys(apis)[0], {
-      data,
-      isLoading: false,
-      error: '',
+    expect(wrapper.find('DummyComponent').props()).toMatchObject({
+      dataKey: {
+        data: {},
+        error: '',
+        isLoading: true,
+        urlSearchParams: {},
+      },
     });
-    */
   });
 
   it('should render passed component with error', () => {
@@ -47,15 +46,13 @@ describe('withData', () => {
     };
     const DummyComponentHOC = withData(apis)(DummyComponent);
     const wrapper = mount(<DummyComponentHOC />);
-    // TODO figure out how to make the commented-out assertion work
-    expect(wrapper.find('DummyComponent')).toHaveProp(Object.keys(apis)[0]);
-    /*
-    expect(wrapper.find('DummyComponent')).toHaveProp(Object.keys(apis)[0], {
-      data: [],
-      isLoading: false,
-      error,
+    expect(wrapper.find('DummyComponent').props()).toMatchObject({
+      dataKey: {
+        data: {},
+        error: '',
+        isLoading: true,
+      },
     });
-    */
   });
 
   it('should work with two or more apis', () => {
@@ -87,14 +84,12 @@ describe('withData', () => {
     };
     const DummyComponentHOC = withData(apis)(DummyComponent);
     const wrapper = mount(<DummyComponentHOC />);
-    // TODO figure out how to make the commented-out assertion work
-    expect(wrapper.find('DummyComponent')).toHaveProp(Object.keys(apis)[0]);
-    /*
-    expect(wrapper.find('DummyComponent')).toHaveProp(Object.keys(apis)[0], {
-      data,
-      isLoading: false,
-      error: '',
+    expect(wrapper.find('DummyComponent').props()).toMatchObject({
+      dataKey: {
+        data: {},
+        error: '',
+        isLoading: false,
+      },
     });
-    */
   });
 });
