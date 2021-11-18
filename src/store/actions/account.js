@@ -165,6 +165,26 @@ export const login = ({
   };
 
 /**
+ * Store second passphrase in the Redux store
+ *
+ * @param {string} passphrase - Valid Mnemonic passphrase
+ * @returns {object} Pure action object
+ */
+export const secondPassphraseStored = (passphrase) => ({
+  type: actionTypes.secondPassphraseStored,
+  data: passphrase,
+});
+
+/**
+ * Removes the second passphrase from the Redux store
+ *
+ * @returns {object} Pure action object
+ */
+export const secondPassphraseRemoved = () => ({
+  type: actionTypes.secondPassphraseRemoved,
+});
+
+/**
  * Submits unlock balance transactions
  *
  * @param {object} data

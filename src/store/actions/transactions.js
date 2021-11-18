@@ -134,7 +134,7 @@ export const transactionCreated = data => async (dispatch, getState) => {
  * @param {string} data.secondPass
  */
 /* istanbul ignore next */
-export const transactionDoubleSigned = data => async (dispatch, getState) => {
+export const transactionDoubleSigned = () => async (dispatch, getState) => {
   const {
     transactions, network, account, settings,
   } = getState();
@@ -142,7 +142,7 @@ export const transactionDoubleSigned = data => async (dispatch, getState) => {
   const activeAccount = selectActiveTokenAccount({ account, settings });
   const [signedTx, err] = signTransaction(
     transformTransaction(transactions.signedTransaction),
-    data.secondPass,
+    account.secondPassphrase,
     networkIdentifier,
     {
       data: activeAccount,
