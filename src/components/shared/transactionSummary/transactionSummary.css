@@ -11,6 +11,10 @@
     margin-bottom: 16px;
     display: flex;
     flex-flow: column nowrap !important;
+
+    &.reverse {
+      flex-flow: column-reverse nowrap !important;
+    }
   }
 }
 

@@ -74,15 +74,7 @@ const Footer = ({
   const [inputStatus, setInputStatus] = useState(hasSecondPass ? 'hidden' : 'notRequired');
 
   return (
-    <BoxFooter className={`${footerClassName} summary-footer`} direction="horizontal">
-      <Actions
-        cancelButton={cancelButton}
-        confirmButton={confirmButton}
-        hasSecondPass={hasSecondPass}
-        inputStatus={inputStatus}
-        isMultisignature={isMultisignature}
-        t={t}
-      />
+    <BoxFooter className={`${footerClassName} ${inputStatus === 'hidden' ? styles.reverse : ''} summary-footer`} direction="horizontal">
       {
           hasSecondPass ? (
             <SecondPassInput
@@ -93,6 +85,14 @@ const Footer = ({
             />
           ) : null
         }
+      <Actions
+        cancelButton={cancelButton}
+        confirmButton={confirmButton}
+        hasSecondPass={hasSecondPass}
+        inputStatus={inputStatus}
+        isMultisignature={isMultisignature}
+        t={t}
+      />
     </BoxFooter>
   );
 };
