@@ -2,7 +2,7 @@
 import { connect } from 'react-redux';
 import { withTranslation } from 'react-i18next';
 import { getActiveTokenAccount } from '@utils/account';
-import { tokensUnlocked } from '@actions';
+import { balanceUnlocked } from '@actions';
 import Summary from './summary';
 
 const mapStateToProps = state => ({
@@ -12,7 +12,7 @@ const mapStateToProps = state => ({
 });
 
 const mapDispatchToProps = {
-  tokensUnlocked,
+  balanceUnlocked,
 };
 
 export default connect(

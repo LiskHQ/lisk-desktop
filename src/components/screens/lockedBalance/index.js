@@ -13,8 +13,8 @@ const Modal = () => (
     >
       <Form />
       <Summary />
-      <TransactionStatus />
       <TransactionSignature />
+      <TransactionStatus />
     </MultiStep>
   </Dialog>
 );

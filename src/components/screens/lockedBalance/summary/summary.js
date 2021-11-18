@@ -5,13 +5,13 @@ import TransactionSummary from '@shared/transactionSummary';
 import { fromRawLsk } from '@utils/lsk';
 import { getUnlockableUnlockObjects } from '@utils/account';
 import TransactionInfo from '@shared/transactionInfo';
-import { balanceUnlocked } from '@actions/account';
 import styles from './summary.css';
 
 const moduleAssetId = MODULE_ASSETS_NAME_ID_MAP.unlockToken;
 
 const Summary = ({
   currentBlockHeight,
+  balanceUnlocked,
   rawTransaction,
   prevStep,
   nextStep,
