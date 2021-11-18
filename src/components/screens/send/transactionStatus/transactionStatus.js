@@ -1,9 +1,9 @@
 import React, { useEffect } from 'react';
 import { isEmpty } from '@utils/helpers';
 import { PrimaryButton } from '@toolbox/buttons';
-import TransactionResult, { getBroadcastStatus } from '@shared/transactionResult';
+import TransactionResult from '@shared/transactionResult';
+import { getTransactionStatus, txStatusTypes, statusMessages } from '@shared/transactionResult/statusConfig';
 import DialogLink from '@toolbox/dialog/link';
-import statusMessages from './statusMessages';
 import styles from './transactionStatus.css';
 
 const shouldShowBookmark = (bookmarks, account, rawTransaction, token) => {
@@ -15,10 +15,10 @@ const shouldShowBookmark = (bookmarks, account, rawTransaction, token) => {
 
 const getMessagesDetails = (transactions, status, t, isHardwareWalletError) => {
   const messages = statusMessages(t);
-  const code = isHardwareWalletError ? 'hw' : status.code;
+  const code = isHardwareWalletError ? txStatusTypes.hwRejected : status.code;
   const messageDetails = messages[code];
 
-  if (status.code === 'error'
+  if (status.code === txStatusTypes.broadcastError
       && transactions.txBroadcastError?.error?.message) {
     messageDetails.message = transactions.txBroadcastError.error.message;
   }
@@ -26,7 +26,6 @@ const getMessagesDetails = (transactions, status, t, isHardwareWalletError) => {
   return messageDetails;
 };
 
-// eslint-disable-next-line complexity
 const TransactionStatus = ({
   recipientAccount,
   transactions,
@@ -46,7 +45,7 @@ const TransactionStatus = ({
   }, []);
 
   const showBookmark = shouldShowBookmark(bookmarks, account, rawTransaction, token);
-  const status = getBroadcastStatus(transactions, false);
+  const status = getTransactionStatus(transactions);
   const template = getMessagesDetails(
     transactions, status, t,
     false,
@@ -55,7 +54,6 @@ const TransactionStatus = ({
   return (
     <div className={`${styles.wrapper} transaction-status`}>
       <TransactionResult
-        t={t}
         title={template.title}
         illustration="default"
         message={template.message}
