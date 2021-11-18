@@ -4,7 +4,7 @@ import { mountWithRouterAndStore } from '@utils/testHelpers';
 import Summary from './summary';
 import accounts from '../../../../../test/constants/accounts';
 
-describe('Delegate Registration Summary', () => {
+describe.skip('Delegate Registration Summary', () => {
   const props = {
     account: accounts.genesis,
     nickname: 'mydelegate',
