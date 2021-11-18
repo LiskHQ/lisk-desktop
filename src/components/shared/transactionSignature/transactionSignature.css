@@ -10,6 +10,7 @@
 
     & h5 {
       font-weight: var(--font-weight-bold);
+      color: var(--color-maastricht-blue);
     }
   }
 }

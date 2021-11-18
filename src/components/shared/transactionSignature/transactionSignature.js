@@ -5,11 +5,21 @@ import BoxContent from '@toolbox/box/content';
 import { isEmpty } from '@utils/helpers';
 import styles from './transactionSignature.css';
 
+const getDEviceType = (deviceModel = '') => {
+  if (/ledger/i.test(deviceModel)) {
+    return 'ledgerNano';
+  }
+  if (/trezor/i.test(deviceModel)) {
+    return 'trezor';
+  }
+  return '';
+};
+
 const TransactionSignature = ({
   t, transactions, account, actionFunction, multisigTransactionSigned,
   rawTransaction, nextStep, statusInfo, sender,
 }) => {
-  const deviceType = account.hwInfo?.deviceType;
+  const deviceType = getDEviceType(account.hwInfo?.deviceModel);
 
   useEffect(() => {
     /**
