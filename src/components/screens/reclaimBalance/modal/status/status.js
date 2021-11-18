@@ -47,10 +47,10 @@ const PendingAction = ({ template }) => (
 );
 
 const Status = ({
-  t, transactions, history, balance, isMigrated,
+  t, transactions, balance, isMigrated,
 }) => {
   const status = getTransactionStatus(transactions);
-  const template = statusMessages(t, history)[status.code];
+  const template = statusMessages(t)[status.code];
 
   return (
     <div className={`${styles.wrapper} status-container`}>

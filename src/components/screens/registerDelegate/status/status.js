@@ -40,7 +40,7 @@ const Status = ({
 
 const areEqual = (prev, next) => (
   !next.account.dpos.delegate
-  || prev.account.dpos.delegate?.username === next.account.dpos.delegate?.username
+  || prev.account.dpos.delegate.username === next.account.dpos.delegate.username
 );
 
 export default React.memo(Status, areEqual);

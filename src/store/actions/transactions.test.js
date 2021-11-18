@@ -250,9 +250,7 @@ describe('actions: transactions', () => {
 
     it('should create an action to store double signed tx', async () => {
       // Consume the utility
-      await transactionDoubleSigned({
-        secondPass: accounts.secondPass.secondPass,
-      })(dispatch, getStateWithTx);
+      await transactionDoubleSigned()(dispatch, getStateWithTx);
 
       // Prepare expectations
       const expectedAction = {
@@ -272,9 +270,7 @@ describe('actions: transactions', () => {
       // }, error]);
 
       // Consume the utility
-      await transactionDoubleSigned({
-        secondPass: accounts.secondPass.secondPass,
-      })(dispatch, getStateWithTx);
+      await transactionDoubleSigned()(dispatch, getStateWithTx);
 
       // Prepare expectations
       const expectedAction = {

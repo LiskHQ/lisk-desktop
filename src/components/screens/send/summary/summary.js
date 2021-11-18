@@ -1,6 +1,6 @@
 import React from 'react';
 import { MODULE_ASSETS_NAME_ID_MAP } from '@constants';
-import { toRawLsk, fromRawLsk } from '@utils/lsk';
+import { toRawLsk } from '@utils/lsk';
 import TransactionSummary from '@shared/transactionSummary';
 import TransactionInfo from '@shared/transactionInfo';
 
@@ -39,8 +39,7 @@ const Summary = ({
       data: fields.reference?.value ?? '',
     },
   };
-  const amount = transaction?.asset?.amount
-    ? fromRawLsk(transaction?.asset?.amount) : fields.amount.value;
+  const amount = fields.amount.value;
 
   return (
     <TransactionSummary
