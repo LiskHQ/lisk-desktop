@@ -6,9 +6,11 @@ import BoxFooter from '@toolbox/box/footer';
 import styles from './transactionSummary.css';
 
 const Actions = ({
+  isMultisignature,
   cancelButton,
   confirmButton,
   inputStatus,
+  t,
 }) => (
   <div className={styles.primaryActions}>
     {cancelButton && (
@@ -24,7 +26,7 @@ const Actions = ({
       disabled={confirmButton.disabled || inputStatus === 'visible'}
       onClick={confirmButton.onClick}
     >
-      {confirmButton.label}
+      {isMultisignature ? t('Sign') : confirmButton.label}
     </PrimaryButton>
   </div>
 );
@@ -64,8 +66,11 @@ const SecondPassInput = ({
 
 const Footer = ({
   confirmButton, cancelButton, footerClassName,
-  t, transactionDoubleSigned, hasSecondPass,
+  t, transactionDoubleSigned, account,
 }) => {
+  const isMultisignature = !!account.keys?.numberOfSignatures;
+  const hasSecondPass = account.keys.numberOfSignatures === 2
+    && account.keys.mandatoryKeys.length === 2 && account.keys.optionalKeys.length === 0;
   const [inputStatus, setInputStatus] = useState(hasSecondPass ? 'hidden' : 'notRequired');
 
   return (
@@ -75,6 +80,8 @@ const Footer = ({
         confirmButton={confirmButton}
         hasSecondPass={hasSecondPass}
         inputStatus={inputStatus}
+        isMultisignature={isMultisignature}
+        t={t}
       />
       {
           hasSecondPass ? (

@@ -19,9 +19,6 @@ const TransactionSummary = ({
     children: t('Transaction fees are required for every transaction to be accepted and forged by the {{network}} network. When the network is busy, transactions with a higher fee are confirmed sooner.', { network: tokenMap[token].label }),
   };
 
-  const hasSecondPass = account.keys.numberOfSignatures === 2
-    && account.keys.mandatoryKeys.length === 2 && account.keys.optionalKeys.length === 0;
-
   return (
     <Box width="medium" className={`${styles.wrapper} ${classNames} summary`}>
       {title && (
@@ -52,7 +49,7 @@ const TransactionSummary = ({
         confirmButton={confirmButton}
         cancelButton={cancelButton}
         footerClassName={footerClassName}
-        hasSecondPass={hasSecondPass}
+        account={account}
         transactionDoubleSigned={transactionDoubleSigned}
         t={t}
       />
