@@ -1,10 +1,10 @@
 import React from 'react';
-import TransactionResult, { getBroadcastStatus } from '@shared/transactionResult';
+import TransactionResult from '@shared/transactionResult';
+import { statusMessages, getTransactionStatus } from '@shared/transactionResult/statusConfig';
 import LiskAmount from '@shared/liskAmount';
 import { PrimaryButton } from '@toolbox/buttons';
 import { tokenMap } from '@constants';
 import Spinner from '@toolbox/spinner';
-import statusMessages from './statusMessages';
 import styles from './status.css';
 
 const SuccessAction = ({
@@ -49,7 +49,7 @@ const PendingAction = ({ template }) => (
 const Status = ({
   t, transactions, history, balance, isMigrated,
 }) => {
-  const status = getBroadcastStatus(transactions, false); // @todo handle HW errors by #3661
+  const status = getTransactionStatus(transactions);
   const template = statusMessages(t, history)[status.code];
 
   return (
