@@ -11,7 +11,6 @@ import {
   transactionCreated,
 } from './transactions';
 import { sampleTransaction } from '../../../test/constants/transactions';
-import accounts from '../../../test/constants/accounts';
 import { getState } from '../../../test/fixtures/transactions';
 
 jest.mock('@api/delegate');
