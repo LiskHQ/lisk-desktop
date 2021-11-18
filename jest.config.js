@@ -10,7 +10,6 @@ module.exports = {
   ],
   testPathIgnorePatterns: [
     '<rootDir>/test/integration/wallet.test.js',
-    'src/components/shared/errorBoundary/index.test.js',
     'src/components/login/*.test.js',
     'src/components/newsFeed/index.test.js', // This component doesn't meet the setted tresholds for mocha but in jest
     'src/components/screens/register/register.test.js',
