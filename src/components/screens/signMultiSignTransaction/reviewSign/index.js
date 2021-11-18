@@ -1,6 +1,6 @@
 import { compose } from 'redux';
 import { connect } from 'react-redux';
-import { useTranslation } from 'react-i18next';
+import { withTranslation } from 'react-i18next';
 import { multisigTransactionSigned } from '@actions';
 import { getAccount } from '@api/account';
 import withData from '@utils/withData';
@@ -38,5 +38,5 @@ export default compose(
   connect(mapStateToProps, dispatchToProps),
   withRouter,
   withData(apis),
-  useTranslation(),
+  withTranslation(),
 )(ReviewSign);
