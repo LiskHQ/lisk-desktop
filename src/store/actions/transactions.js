@@ -218,7 +218,9 @@ export const transactionBroadcasted = transaction =>
  * @param {object} data.rawTransaction Transaction config required by Lisk Element
  * @param {object} data.sender
  * @param {object} data.sender.data - Sender account info in Lisk API schema
+ * @todo account for privateKey and HW and increase test coverage once HW is implemented
  */
+/* istanbul ignore next */
 export const multisigTransactionSigned = ({
   rawTransaction, sender,
 }) => (dispatch, getState) => {
@@ -236,7 +238,7 @@ export const multisigTransactionSigned = ({
 
   const [tx, error] = signTransaction(
     rawTransaction,
-    activeAccount.passphrase, // @todo: account for privateKey and HW
+    activeAccount.passphrase,
     networkIdentifier,
     sender,
     isFullySigned,
