@@ -6,18 +6,36 @@ import { isEmpty } from '@utils/helpers';
 import styles from './transactionSignature.css';
 
 const TransactionSignature = ({
-  t, transactions, account, actionFunction,
-  rawTransaction, nextStep, statusInfo,
+  t, transactions, account, actionFunction, multisigTransactionSigned,
+  rawTransaction, nextStep, statusInfo, sender,
 }) => {
-  const deviceType = 'ledgerNano'; // @todo replace this by account.hwInfo.deviceType
+  const deviceType = account.hwInfo?.deviceType;
 
   useEffect(() => {
-    actionFunction(rawTransaction);
+    /**
+     * All multisignature transactions get signed using the a unique action
+     * Therefore there's no need to pass the action function, instead the
+     * sender account is required.
+     */
+    if (sender) {
+      multisigTransactionSigned({
+        rawTransaction, sender,
+      });
+    } else {
+      /**
+       * The action function must be wrapped in dispatch
+       * and passed via the tx summary screen.
+       * It's called in this step so we can display the
+       * HW pending screen. For ordinary login we don't display
+       * the illustration.
+       */
+      actionFunction(rawTransaction);
+    }
   }, []);
 
   useEffect(() => {
     if (!isEmpty(transactions.signedTransaction) || transactions.txSignatureError) {
-      nextStep({ rawTransaction, statusInfo });
+      nextStep({ rawTransaction, statusInfo, sender });
     }
   }, [transactions.signedTransaction, transactions.txSignatureError]);
 
