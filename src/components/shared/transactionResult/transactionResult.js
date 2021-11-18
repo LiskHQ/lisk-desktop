@@ -1,69 +1,37 @@
 /* eslint-disable complexity */
-import React, { useEffect } from 'react';
-import { getErrorReportMailto, isEmpty } from '@utils/helpers';
-import { TertiaryButton } from '@toolbox/buttons';
-import Illustration from '@toolbox/illustration';
-import illustrations from './illustrations';
-import styles from './transactionResult.css';
+import React, { useEffect, useState } from 'react';
+import Ordinary from './ordinary';
+import Multisignature from './multisignature';
 
-const errorTypes = ['SIGN_FAILED', 'BROADCAST_FAILED', 'error'];
+const TransactionResult = (props) => {
+  const [txType, setTxType] = useState('pending');
 
-const TransactionResult = ({
-  transactions, network,
-  title, message, t, status,
-  children, illustration, className,
-  resetTransactionResult, transactionBroadcasted,
-}) => {
   useEffect(() => {
-    if (!isEmpty(transactions.signedTransaction) && !transactions.txSignatureError) {
-      /**
-       * Broadcast the successfully signed tx
-       */
-      transactionBroadcasted(transactions.signedTransaction);
+    const isMultisig = !props.transactions.txSignatureError
+      && (
+        props.transactions.signedTransaction.signatures.length > 1
+        || props.account.summary.isMultisignature
+        || props.account.summary.publicKey !== props.transactions.signedTransaction.senderPublicKey.toString('hex')
+      );
+    if (isMultisig) {
+      setTxType('isMultisig');
+    } else {
+      setTxType('ordinary');
     }
-
-    return resetTransactionResult;
   }, []);
+  /**
+   * Broadcast the successfully signed tx by
+   * 1. Ordinary accounts
+   * 2. 2nd passphrase accounts
+   */
+  if (txType === 'ordinary') {
+    return (<Ordinary {...props} />);
+  }
 
-  return (
-    <div className={`${styles.wrapper} ${className}`}>
-      {
-        typeof illustration === 'string'
-          ? <Illustration name={illustrations[illustration][status.code]} />
-          : React.cloneElement(illustration)
-      }
-      <h1 className="result-box-header">{title}</h1>
-      <p className="transaction-status body-message">{message}</p>
-      {children}
-      {
-        errorTypes.includes(status.code)
-          ? (
-            <>
-              <p>{t('Does the problem still persist?')}</p>
-              <a
-                className="report-error-link"
-                href={getErrorReportMailto(
-                  {
-                    error: status.message,
-                    errorMessage: message,
-                    networkIdentifier: network.networkIdentifier,
-                    serviceUrl: network.serviceUrl,
-                    liskCoreVersion: network.networkVersion,
-                  },
-                )}
-                target="_top"
-                rel="noopener noreferrer"
-              >
-                <TertiaryButton>
-                  {t('Report the error via email')}
-                </TertiaryButton>
-              </a>
-            </>
-          )
-          : null
-      }
-    </div>
-  );
+  if (txType === 'isMultisig') {
+    return (<Multisignature {...props} />);
+  }
+  return <div />;
 };
 
 export default TransactionResult;

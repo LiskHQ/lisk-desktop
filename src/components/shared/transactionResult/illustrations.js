@@ -1,27 +1,30 @@
+import { txStatusTypes } from './statusConfig';
+
 export default {
   default: {
-    SIGNATURE_SUCCESS: 'transactionPending',
-    BROADCAST_SUCCESS: 'transactionSuccess',
-    BROADCAST_ERROR: 'transactionError',
-    SIGNATURE_ERROR: 'transactionError',
+    [txStatusTypes.signatureSuccess]: 'transactionPending',
+    [txStatusTypes.broadcastSuccess]: 'transactionSuccess',
+    [txStatusTypes.broadcastError]: 'transactionError',
+    [txStatusTypes.signatureError]: 'transactionError',
   },
   vote: {
-    SIGNATURE_SUCCESS: 'votingSuccess',
-    BROADCAST_SUCCESS: 'votingSuccess',
-    BROADCAST_ERROR: 'transactionError',
-    SIGNATURE_ERROR: 'transactionError',
+    [txStatusTypes.signatureSuccess]: 'votingSuccess',
+    [txStatusTypes.broadcastSuccess]: 'votingSuccess',
+    [txStatusTypes.broadcastError]: 'transactionError',
+    [txStatusTypes.signatureError]: 'transactionError',
   },
   registerMultisignature: {
-    SIGNATURE_SUCCESS: 'registerMultisignatureSuccess',
-    BROADCAST_SUCCESS: 'registerMultisignatureSuccess',
-    BROADCAST_ERROR: 'registerMultisignatureError',
-    SIGNATURE_ERROR: 'registerMultisignatureError',
+    [txStatusTypes.signatureSuccess]: 'registerMultisignatureSuccess',
+    [txStatusTypes.broadcastSuccess]: 'registerMultisignatureSuccess',
+    [txStatusTypes.broadcastError]: 'registerMultisignatureError',
+    [txStatusTypes.signatureError]: 'registerMultisignatureError',
   },
   signMultisignature: {
-    MUILTISIG_SIGNATURE_PARTIAL_SUCCESS: 'multisignaturePartialSuccess',
-    SIGNATURE_SUCCESS: 'registerMultisignatureSuccess',
-    SIGNATURE_ERROR: 'registerMultisignatureError',
-    BROADCAST_SUCCESS: 'transactionSuccess',
-    BROADCAST_ERROR: 'transactionError',
+    [txStatusTypes.multisigSignaturePartialSuccess]: 'multisignaturePartialSuccess',
+    [txStatusTypes.multisigSignatureSuccess]: 'multisignaturePartialSuccess',
+    [txStatusTypes.signatureSuccess]: 'registerMultisignatureSuccess',
+    [txStatusTypes.signatureError]: 'registerMultisignatureError',
+    [txStatusTypes.broadcastSuccess]: 'transactionSuccess',
+    [txStatusTypes.broadcastError]: 'transactionError',
   },
 };

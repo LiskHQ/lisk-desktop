@@ -55,7 +55,6 @@ export const statusMessages = t => ({
  */
 // eslint-disable-next-line max-statements
 export const getTransactionStatus = (transactions) => {
-  console.log('getTransactionStatus', transactions);
   if (transactions.txSignatureError) {
     return {
       code: txStatusTypes.signatureError,
