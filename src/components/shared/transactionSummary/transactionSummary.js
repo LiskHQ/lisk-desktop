@@ -11,7 +11,7 @@ import styles from './transactionSummary.css';
 
 const TransactionSummary = ({
   title, children, confirmButton, cancelButton,
-  account, t, fee, transactionDoubleSigned,
+  account, t, fee, secondPassphraseStored,
   classNames, token, footerClassName,
 }) => {
   const tooltip = {
@@ -50,7 +50,7 @@ const TransactionSummary = ({
         cancelButton={cancelButton}
         footerClassName={footerClassName}
         account={account}
-        transactionDoubleSigned={transactionDoubleSigned}
+        secondPassphraseStored={secondPassphraseStored}
         t={t}
       />
     </Box>

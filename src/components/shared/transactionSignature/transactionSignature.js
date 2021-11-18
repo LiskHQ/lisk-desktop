@@ -17,7 +17,7 @@ const getDEviceType = (deviceModel = '') => {
 
 const TransactionSignature = ({
   t, transactions, account, actionFunction, multisigTransactionSigned,
-  rawTransaction, nextStep, statusInfo, sender,
+  rawTransaction, nextStep, statusInfo, sender, transactionDoubleSigned,
 }) => {
   const deviceType = getDEviceType(account.hwInfo?.deviceModel);
 
@@ -44,8 +44,16 @@ const TransactionSignature = ({
   }, []);
 
   useEffect(() => {
-    if (!isEmpty(transactions.signedTransaction) || transactions.txSignatureError) {
-      nextStep({ rawTransaction, statusInfo, sender });
+    if (!isEmpty(transactions.signedTransaction)) {
+      const hasSecondPass = !!account.secondPassphrase;
+      const isDoubleSigned = !transactions.signedTransaction.signatures.some(
+        sig => sig.length === 0,
+      );
+      if (!transactions.txSignatureError && hasSecondPass && !isDoubleSigned) {
+        transactionDoubleSigned();
+      } else if (transactions.txSignatureError || !hasSecondPass || isDoubleSigned) {
+        nextStep({ rawTransaction, statusInfo, sender });
+      }
     }
   }, [transactions.signedTransaction, transactions.txSignatureError]);
 

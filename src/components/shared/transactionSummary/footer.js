@@ -32,13 +32,13 @@ const Actions = ({
 );
 
 const SecondPassInput = ({
-  t, transactionDoubleSigned, inputStatus, setInputStatus,
+  t, secondPassphraseStored, inputStatus, setInputStatus,
 }) => {
   const [secondPass, set2ndPass] = useState('');
 
   useEffect(() => {
     if (secondPass) {
-      transactionDoubleSigned({ secondPass });
+      secondPassphraseStored(secondPass);
       setInputStatus('valid');
     }
   }, [secondPass]);
@@ -66,7 +66,7 @@ const SecondPassInput = ({
 
 const Footer = ({
   confirmButton, cancelButton, footerClassName,
-  t, transactionDoubleSigned, account,
+  t, secondPassphraseStored, account,
 }) => {
   const isMultisignature = !!account.keys?.numberOfSignatures;
   const hasSecondPass = account.keys.numberOfSignatures === 2
@@ -87,7 +87,7 @@ const Footer = ({
           hasSecondPass ? (
             <SecondPassInput
               t={t}
-              transactionDoubleSigned={transactionDoubleSigned}
+              secondPassphraseStored={secondPassphraseStored}
               inputStatus={inputStatus}
               setInputStatus={setInputStatus}
             />

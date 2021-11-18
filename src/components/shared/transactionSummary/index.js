@@ -2,7 +2,7 @@
 import { connect } from 'react-redux';
 import { compose } from 'redux';
 import { withTranslation } from 'react-i18next';
-import { transactionDoubleSigned } from '@actions';
+import { secondPassphraseStored } from '@actions';
 import TransactionSummary from './transactionSummary';
 
 const mapStateToProps = state => ({
@@ -16,7 +16,7 @@ const mapStateToProps = state => ({
 });
 
 const mapDispatchToProps = {
-  transactionDoubleSigned,
+  secondPassphraseStored,
 };
 
 export default compose(
