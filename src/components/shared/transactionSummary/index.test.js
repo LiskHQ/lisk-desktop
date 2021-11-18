@@ -5,10 +5,6 @@ import TransactionSummary from './transactionSummary';
 
 describe('TransactionSummary', () => {
   let props;
-  const hwInfo = {
-    deviceModel: 'Trezor Model T',
-    deviceId: 'mock id',
-  };
 
   beforeEach(() => {
     props = {
