@@ -7,6 +7,7 @@ import { isEmpty } from '@utils/helpers';
 import { getTransactions, create, broadcast } from '@api/transaction';
 import { selectActiveTokenAccount, selectNetworkIdentifier } from '@store/selectors';
 import { signTransaction, transformTransaction } from '@utils/transaction';
+import { isTransactionFullySigned } from '@screens/signMultiSignTransaction/helpers';
 import { timerReset } from './account';
 import { loadingStarted, loadingFinished } from './loading';
 
@@ -208,3 +209,49 @@ export const transactionBroadcasted = transaction =>
       dispatch(timerReset());
     }
   };
+
+/**
+ * Signs a given multisignature transaction using passphrase
+ * and dispatches the relevant action.
+ *
+ * @param {object} data
+ * @param {object} data.rawTransaction Transaction config required by Lisk Element
+ * @param {object} data.sender
+ * @param {object} data.sender.data - Sender account info in Lisk API schema
+ */
+export const multisigTransactionSigned = ({
+  rawTransaction, sender,
+}) => (dispatch, getState) => {
+  const {
+    network, account,
+  } = getState();
+  const networkIdentifier = selectNetworkIdentifier({ network });
+  const activeAccount = {
+    ...account.info.LSK,
+    passphrase: account.passphrase,
+    hwInfo: account.hwInfo,
+  };
+  // @todo move isTransactionFullySigned to a generic location
+  const isFullySigned = isTransactionFullySigned(sender.data, rawTransaction);
+
+  const [tx, error] = signTransaction(
+    rawTransaction,
+    activeAccount.passphrase, // @todo: account for privateKey and HW
+    networkIdentifier,
+    sender,
+    isFullySigned,
+    network,
+  );
+
+  if (!error) {
+    dispatch({
+      type: actionTypes.transactionDoubleSigned,
+      data: tx,
+    });
+  } else {
+    dispatch({
+      type: actionTypes.transactionSignError,
+      data: error,
+    });
+  }
+};
