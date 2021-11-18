@@ -1,14 +1,12 @@
 import React from 'react';
 import { MODULE_ASSETS_NAME_ID_MAP } from '@constants';
 import { toRawLsk, fromRawLsk } from '@utils/lsk';
-import { isEmpty } from '@utils/helpers';
 import TransactionSummary from '@shared/transactionSummary';
 import TransactionInfo from '@shared/transactionInfo';
 
 const Summary = ({
   resetTransactionResult,
   transactionCreated,
-  transactions,
   prevStep,
   nextStep,
   account,
@@ -20,7 +18,7 @@ const Summary = ({
     nextStep({
       rawTransaction: {
         amount: `${toRawLsk(fields.amount.value)}`,
-        data: fields.reference ? fields.reference.value : '',
+        data: fields.reference?.value ?? '',
         recipientAddress: fields.recipient.address,
         fee: toRawLsk(parseFloat(fields.fee.value)),
       },
@@ -33,7 +31,14 @@ const Summary = ({
     prevStep({ fields });
   };
 
-  const transaction = transactions.signedTransaction;
+  const transaction = {
+    nonce: account.sequence.nonce,
+    fee: toRawLsk(parseFloat(fields.fee.value)),
+    asset: {
+      amount: toRawLsk(fields.amount.value),
+      data: fields.reference?.value ?? '',
+    },
+  };
   const amount = transaction?.asset?.amount
     ? fromRawLsk(transaction?.asset?.amount) : fields.amount.value;
 
@@ -54,11 +59,7 @@ const Summary = ({
         fields={fields}
         token={token}
         moduleAssetId={MODULE_ASSETS_NAME_ID_MAP.transfer}
-        transaction={
-          !isEmpty(transaction)
-            ? transaction
-            : { asset: { amount: toRawLsk(fields.amount.value) } }
-        }
+        transaction={transaction}
         account={account}
         isMultisignature={account.summary.isMultisignature}
       />
