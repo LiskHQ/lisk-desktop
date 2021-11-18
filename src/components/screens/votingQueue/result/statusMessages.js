@@ -1,4 +1,6 @@
+/* istanbul ignore file */
 import React from 'react';
+import { statusMessages, txStatusTypes } from '@shared/transactionResult/statusConfig';
 
 import LiskAmount from '@shared/liskAmount';
 import styles from './styles.css';
@@ -13,7 +15,7 @@ const LiskAmountFormatted = ({ val }) => (
 
 const getSuccessMessage = (t, locked, unlockable, selfUnvote = { confirmed: 0 }) => {
   if (!locked && unlockable) {
-    const regularUnlockable = unlockable - Number(selfUnvote.confirmed);
+    const regularUnlockable = unlockable - Number(selfUnvote.confirmed || 0);
     const selfUnvoteUnlockable = selfUnvote.confirmed;
 
     return (
@@ -58,24 +60,12 @@ const getSuccessMessage = (t, locked, unlockable, selfUnvote = { confirmed: 0 })
   return '';
 };
 
-/* istanbul ignore file */
-const statusMessages = (t, statusInfo) => ({
-  pending: {
-    title: t('Submitting your votes'),
-    message: t('Your votes are being submitted to the blockchain.'),
-  },
-  success: {
+const voteStatusMessages = (t, statusInfo) => ({
+  ...statusMessages(t),
+  [txStatusTypes.broadcastSuccess]: {
     title: t('Votes are submitted'),
     message: getSuccessMessage(t, statusInfo.locked, statusInfo.unlockable, statusInfo.selfUnvote),
   },
-  error: {
-    title: t('Vote submission failed'),
-    message: t('Oops, it looks like something went wrong. Please try again.'),
-  },
-  hw: {
-    title: t('Vote aborted on device'),
-    message: t('You have cancelled the vote on your hardware wallet.'),
-  },
 });
 
-export default statusMessages;
+export default voteStatusMessages;

@@ -4,7 +4,8 @@ import { routes } from '@constants';
 import Box from '@toolbox/box';
 import BoxFooter from '@toolbox/box/footer';
 import { PrimaryButton } from '@toolbox/buttons';
-import TransactionResult, { getBroadcastStatus } from '@shared/transactionResult';
+import TransactionResult from '@shared/transactionResult';
+import { getTransactionStatus } from '@shared/transactionResult/statusConfig';
 import ToggleIcon from '../toggleIcon';
 import statusMessages from './statusMessages';
 import styles from './styles.css';
@@ -16,7 +17,7 @@ const Result = ({
     history.push(routes.wallet.path);
   };
 
-  const status = getBroadcastStatus(transactions, false); // @todo handle HW errors by #3661
+  const status = getTransactionStatus(transactions);
   const template = statusMessages(t, statusInfo)[status.code];
 
   return (
