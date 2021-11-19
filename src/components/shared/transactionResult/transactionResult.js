@@ -1,6 +1,7 @@
 /* eslint-disable complexity */
 import React, { useEffect, useState } from 'react';
 import Regular from './regular';
+import { txStatusTypes } from './statusConfig';
 import Multisignature from './multisignature';
 
 const TransactionResult = (props) => {
@@ -8,6 +9,7 @@ const TransactionResult = (props) => {
 
   useEffect(() => {
     const isMultisig = !props.transactions.txSignatureError
+      && props.status.code !== txStatusTypes.broadcastSuccess
       && (
         props.transactions.signedTransaction.signatures.length > 1
         || props.account.summary.isMultisignature

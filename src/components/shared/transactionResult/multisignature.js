@@ -5,10 +5,11 @@ import {
 } from '@toolbox/buttons';
 import Illustration from '@toolbox/illustration';
 import { transactionToJSON, downloadJSON } from '@utils/transaction';
+import { routes } from '@constants';
 
 import copyToClipboard from 'copy-to-clipboard';
 import Icon from '@toolbox/icon';
-import illustrations from './illustrations';
+import getIllustration from './illustrations';
 import { txStatusTypes } from './statusConfig';
 import styles from './transactionResult.css';
 
@@ -47,8 +48,8 @@ const FullySignedActions = ({ t, onDownload, onSend }) => (
 );
 
 const Multisignature = ({
-  transactions, title, message, t, status, className,
-  resetTransactionResult, transactionBroadcasted,
+  transactions, title, message, t, status, className, history,
+  resetTransactionResult, transactionBroadcasted, account,
 }) => {
   const [copied, setCopied] = useState(false);
 
@@ -66,28 +67,47 @@ const Multisignature = ({
     transactionBroadcasted(transactions.signedTransaction);
   };
 
+  const goToWallet = () => {
+    history.push(routes.wallet.path);
+  };
+
   useEffect(() => resetTransactionResult, []);
 
   return (
     <div className={`${styles.wrapper} ${className}`}>
-      <Illustration name={illustrations.signMultisignature[status.code]} />
+      <Illustration name={getIllustration(status.code, 'signMultisignature', account.hwInfo)} />
       <h6 className="result-box-header">{title}</h6>
       <p className="transaction-status body-message">{message}</p>
 
       <div className={styles.primaryActions}>
-        <SecondaryButton
-          className={`${styles.copy} copy-button`}
-          onClick={onCopy}
-        >
-          <span className={styles.buttonContent}>
-            <Icon name={copied ? 'checkmark' : 'copy'} />
-            {t(copied ? 'Copied' : 'Copy')}
-          </span>
-        </SecondaryButton>
+        {
+          status.code === txStatusTypes.broadcastSuccess
+            ? (
+              <PrimaryButton
+                className={`${styles.backToWallet} back-to-wallet-button`}
+                onClick={goToWallet}
+              >
+                {t('Back to wallet')}
+              </PrimaryButton>
+            ) : (
+              <SecondaryButton
+                className={`${styles.copy} copy-button`}
+                onClick={onCopy}
+              >
+                <span className={styles.buttonContent}>
+                  <Icon name={copied ? 'checkmark' : 'copy'} />
+                  {t(copied ? 'Copied' : 'Copy')}
+                </span>
+              </SecondaryButton>
+            )
+        }
         {
           status.code === txStatusTypes.multisigSignatureSuccess
-            ? <FullySignedActions onDownload={onDownload} t={t} onSend={onSend} />
-            : <PartiallySignedActions onDownload={onDownload} t={t} />
+            ? <FullySignedActions onDownload={onDownload} t={t} onSend={onSend} /> : null
+        }
+        {
+          status.code === txStatusTypes.multisigSignaturePartialSuccess
+            ? <PartiallySignedActions onDownload={onDownload} t={t} /> : null
         }
       </div>
     </div>

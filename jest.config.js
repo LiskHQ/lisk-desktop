@@ -169,6 +169,8 @@ module.exports = {
     'src/components/shared/transactionSummary/transactionSummary.js',
     'src/components/shared/transactionSignature/transactionSignature.js',
     'src/components/shared/voteItem/index.js',
+    'src/components/shared/transactionResult/illustrations.js',
+    'src/components/shared/transactionResult/regular.js',
   ],
   coverageThreshold: {
     global: {
