@@ -3,18 +3,17 @@ import React, { useEffect } from 'react';
 import { getErrorReportMailto, isEmpty } from '@utils/helpers';
 import { TertiaryButton } from '@toolbox/buttons';
 import Illustration from '@toolbox/illustration';
-import illustrations from './illustrations';
+import getIllustration from './illustrations';
 import { txStatusTypes } from './statusConfig';
 import styles from './transactionResult.css';
 
 const errorTypes = [
   txStatusTypes.signatureError,
   txStatusTypes.broadcastError,
-  txStatusTypes.hwRejected,
 ];
 
 const Ordinary = ({
-  transactions, network,
+  transactions, network, account,
   title, message, t, status,
   children, illustration, className,
   resetTransactionResult, transactionBroadcasted,
@@ -32,7 +31,7 @@ const Ordinary = ({
     <div className={`${styles.wrapper} ${className}`}>
       {
         typeof illustration === 'string'
-          ? <Illustration name={illustrations[illustration][status.code]} />
+          ? <Illustration name={getIllustration(status.code, illustration, account.hwInfo)} />
           : React.cloneElement(illustration)
       }
       <h1 className="result-box-header">{title}</h1>

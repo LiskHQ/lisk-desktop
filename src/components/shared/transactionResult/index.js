@@ -8,7 +8,12 @@ import TransactionResult from './transactionResult';
 const mapStateToProps = state => ({
   activeToken: state.settings.token.active,
   transactions: state.transactions,
-  account: state.account.info[state.settings.token.active],
+  account: {
+    ...state.account.info[state.settings.token.active],
+    passphrase: state.account.passphrase,
+    hwInfo: state.account.hwInfo,
+  },
+  network: state.network.networks[state.settings.token.active],
 });
 
 const mapDispatchToProps = {
