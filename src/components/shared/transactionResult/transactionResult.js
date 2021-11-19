@@ -1,6 +1,6 @@
 /* eslint-disable complexity */
 import React, { useEffect, useState } from 'react';
-import Ordinary from './ordinary';
+import Regular from './regular';
 import Multisignature from './multisignature';
 
 const TransactionResult = (props) => {
@@ -16,16 +16,16 @@ const TransactionResult = (props) => {
     if (isMultisig) {
       setTxType('isMultisig');
     } else {
-      setTxType('ordinary');
+      setTxType('regular');
     }
   }, []);
   /**
    * Broadcast the successfully signed tx by
-   * 1. Ordinary accounts
+   * 1. Regular accounts
    * 2. 2nd passphrase accounts
    */
-  if (txType === 'ordinary') {
-    return (<Ordinary {...props} />);
+  if (txType === 'regular') {
+    return (<Regular {...props} />);
   }
 
   if (txType === 'isMultisig') {

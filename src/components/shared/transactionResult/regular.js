@@ -12,7 +12,7 @@ const errorTypes = [
   txStatusTypes.broadcastError,
 ];
 
-const Ordinary = ({
+const Regular = ({
   transactions, network, account,
   title, message, t, status,
   children, illustration, className,
@@ -68,4 +68,4 @@ const Ordinary = ({
   );
 };
 
-export default Ordinary;
+export default Regular;
