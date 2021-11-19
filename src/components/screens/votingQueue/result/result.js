@@ -1,8 +1,5 @@
 import React from 'react';
-
-import { routes } from '@constants';
 import Box from '@toolbox/box';
-import BoxFooter from '@toolbox/box/footer';
 import TransactionResult from '@shared/transactionResult';
 import { getTransactionStatus } from '@shared/transactionResult/statusConfig';
 import ToggleIcon from '../toggleIcon';
