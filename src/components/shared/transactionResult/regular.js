@@ -1,7 +1,8 @@
 /* eslint-disable complexity */
 import React, { useEffect } from 'react';
 import { getErrorReportMailto, isEmpty } from '@utils/helpers';
-import { TertiaryButton } from '@toolbox/buttons';
+import { TertiaryButton, PrimaryButton } from '@toolbox/buttons';
+import { routes } from '@constants';
 import Illustration from '@toolbox/illustration';
 import getIllustration from './illustrations';
 import { txStatusTypes } from './statusConfig';
@@ -12,9 +13,16 @@ const errorTypes = [
   txStatusTypes.broadcastError,
 ];
 
+const successTypes = [
+  txStatusTypes.multisigSignaturePartialSuccess,
+  txStatusTypes.multisigSignatureSuccess,
+  txStatusTypes.multisigBroadcastSuccess,
+  txStatusTypes.broadcastSuccess,
+];
+
 const Regular = ({
   transactions, network, account,
-  title, message, t, status,
+  title, message, t, status, history,
   children, illustration, className,
   resetTransactionResult, transactionBroadcasted,
 }) => {
@@ -27,6 +35,10 @@ const Regular = ({
     return resetTransactionResult;
   }, []);
 
+  const goToWallet = () => {
+    history.push(routes.wallet.path);
+  };
+
   return (
     <div className={`${styles.wrapper} ${className}`}>
       {
@@ -37,6 +49,17 @@ const Regular = ({
       <h1 className="result-box-header">{title}</h1>
       <p className="transaction-status body-message">{message}</p>
       {children}
+      {
+        successTypes.includes(status.code)
+          ? (
+            <PrimaryButton
+              className={`${styles.backToWallet} back-to-wallet-button`}
+              onClick={goToWallet}
+            >
+              {t('Back to wallet')}
+            </PrimaryButton>
+          ) : null
+      }
       {
         errorTypes.includes(status.code)
           ? (
