@@ -47,7 +47,7 @@ const getIllustration = (status, type, hwInfo) => {
   const name = illustrations[type][status];
   const deviceType = getDeviceType(hwInfo?.deviceModel);
 
-  return `${deviceType}${name}`;
+  return status === txStatusTypes.hwRejected ? `${deviceType}${name}` : name;
 };
 
 export default getIllustration;

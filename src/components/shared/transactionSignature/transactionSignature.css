@@ -1,5 +1,7 @@
 .wrapper {
   min-height: 400px;
+  flex: 1;
+  width: 100% !important;
 
   & .content {
     display: flex;
