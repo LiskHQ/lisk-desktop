@@ -5,7 +5,7 @@ import BoxContent from '@toolbox/box/content';
 import { isEmpty } from '@utils/helpers';
 import styles from './transactionSignature.css';
 
-const getDEviceType = (deviceModel = '') => {
+const getDeviceType = (deviceModel = '') => {
   if (/ledger/i.test(deviceModel)) {
     return 'ledgerNano';
   }
@@ -19,7 +19,7 @@ const TransactionSignature = ({
   t, transactions, account, actionFunction, multisigTransactionSigned,
   rawTransaction, nextStep, statusInfo, sender, transactionDoubleSigned,
 }) => {
-  const deviceType = getDEviceType(account.hwInfo?.deviceModel);
+  const deviceType = getDeviceType(account.hwInfo?.deviceModel);
 
   useEffect(() => {
     /**

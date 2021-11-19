@@ -1,6 +1,6 @@
 import { txStatusTypes } from './statusConfig';
 
-const getDEviceType = (deviceModel = '') => {
+const getDeviceType = (deviceModel = '') => {
   if (/ledger/i.test(deviceModel)) {
     return 'ledgerNano';
   }
@@ -45,7 +45,7 @@ const illustrations = {
 
 const getIllustration = (status, type, hwInfo) => {
   const name = illustrations[type][status];
-  const deviceType = getDEviceType(hwInfo?.deviceModel);
+  const deviceType = getDeviceType(hwInfo?.deviceModel);
 
   return `${deviceType}${name}`;
 };
