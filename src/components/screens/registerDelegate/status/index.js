@@ -6,7 +6,6 @@ import Status from './status';
 const mapStateToProps = state => ({
   account: getActiveTokenAccount(state),
   transactions: state.transactions,
-  network: state.network,
 });
 
 export default connect(
