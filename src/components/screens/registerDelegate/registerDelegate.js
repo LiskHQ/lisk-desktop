@@ -8,18 +8,18 @@ import Status from './status';
 import styles from './registerDelegate.css';
 
 const RegisterDelegate = ({
-  history,
+  history, t,
 }) => (
   <Dialog hasClose>
     <MultiStep
       className={styles.multiStep}
       prevPage={history.goBack}
-      backButtonLabel="Back"
+      backButtonLabel={t('Back')}
     >
-      <Form />
-      <Summary />
-      <TransactionSignature />
-      <Status />
+      <Form t={t} />
+      <Summary t={t} />
+      <TransactionSignature t={t} />
+      <Status t={t} />
     </MultiStep>
   </Dialog>
 );

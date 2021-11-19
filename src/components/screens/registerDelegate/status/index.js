@@ -1,6 +1,5 @@
 /* istanbul ignore file */
 import { connect } from 'react-redux';
-import { withTranslation } from 'react-i18next';
 import { getActiveTokenAccount } from '@utils/account';
 import Status from './status';
 
@@ -12,4 +11,4 @@ const mapStateToProps = state => ({
 
 export default connect(
   mapStateToProps,
-)(withTranslation()(Status));
+)(Status);
