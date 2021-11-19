@@ -1,17 +1,11 @@
-import React, {
-  // useEffect,
-  useMemo,
-} from 'react';
-// import { signTransaction } from '@utils/transaction';
+import React, { useMemo } from 'react';
 import { isEmpty } from '@utils/helpers';
 import BoxContent from '@toolbox/box/content';
 import Box from '@toolbox/box';
 import TransactionDetails from '@screens/transactionDetails/transactionDetails';
 
 import ProgressBar from '../progressBar';
-import {
-  showSignButton, isTransactionFullySigned,
-} from '../helpers';
+import { showSignButton, isTransactionFullySigned } from '../helpers';
 import { ActionBar, Feedback } from './footer';
 import styles from '../styles.css';
 

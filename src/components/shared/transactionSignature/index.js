@@ -7,7 +7,6 @@ import { withTranslation } from 'react-i18next';
 import TransactionSignature from './transactionSignature';
 
 const mapStateToProps = state => ({
-  activeToken: state.settings.token.active,
   transactions: state.transactions,
   account: state.account,
 });
