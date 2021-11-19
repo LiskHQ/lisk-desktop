@@ -106,6 +106,7 @@
 
   & .or {
     padding-top: var(--vertical-padding-l);
+    color: var(--color-blue-gray);
   }
 }
 
