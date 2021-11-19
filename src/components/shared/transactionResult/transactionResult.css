@@ -41,7 +41,7 @@
   }
 
   & > img {
-    width: 128px;
+    width: 210px;
     margin-top: var(--horizontal-padding-l);
   }
 }

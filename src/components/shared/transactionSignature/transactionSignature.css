@@ -12,5 +12,9 @@
       font-weight: var(--font-weight-bold);
       color: var(--color-maastricht-blue);
     }
+
+    & img {
+      width: 210px;
+    }
   }
 }
