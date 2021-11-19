@@ -2,7 +2,6 @@ import React from 'react';
 import { mount } from 'enzyme';
 import { MODULE_ASSETS_NAME_ID_MAP } from '@constants';
 import { removeSearchParamsFromUrl } from '@utils/searchParams';
-import { signTransaction } from '@utils/transaction';
 import Review from './reviewSign';
 import accounts from '../../../../../test/constants/accounts';
 
@@ -11,7 +10,6 @@ jest.mock('@utils/searchParams', () => ({
 }));
 
 jest.mock('@utils/transaction', () => ({
-  signTransaction: jest.fn().mockImplementation(() => [{}, undefined]),
   getTxAmount: () => '1000000000',
 }));
 
@@ -58,9 +56,10 @@ describe('Sign Multisignature Tx Review component', () => {
     const signatures = props.transaction.signatures;
     signatures[1] = accounts.genesis.summary.publicKey;
     wrapper.find('button.sign').simulate('click');
-    expect(props.nextStep).toHaveBeenCalled();
-    expect(signTransaction).toHaveBeenCalled();
-    expect(props.nextStep.mock.calls[0][0]).toHaveProperty('transaction');
+    expect(props.nextStep).toHaveBeenCalledWith(expect.objectContaining({
+      rawTransaction: expect.anything(),
+      sender: expect.anything(),
+    }));
   });
 
   it('Should call props.prevStep', () => {
