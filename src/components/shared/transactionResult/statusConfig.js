@@ -39,7 +39,7 @@ export const statusMessages = t => ({
   },
   [txStatusTypes.broadcastError]: {
     title: t('Transaction failed'),
-    message: t('An error occurred while sending your transaction to the blockchain. Please try again.'),
+    message: t('An error occurred while sending your transaction to the network. Please try again.'),
   },
   [txStatusTypes.hwRejected]: {
     title: t('Transaction aborted on device'),
