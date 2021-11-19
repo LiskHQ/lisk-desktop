@@ -51,9 +51,13 @@ const TransactionSignature = ({
       );
       if (!transactions.txSignatureError && hasSecondPass && !isDoubleSigned) {
         transactionDoubleSigned();
-      } else if (transactions.txSignatureError || !hasSecondPass || isDoubleSigned) {
+      } else if (!hasSecondPass || isDoubleSigned) {
         nextStep({ rawTransaction, statusInfo, sender });
       }
+    }
+
+    if (transactions.txSignatureError) {
+      nextStep({ rawTransaction, statusInfo, sender });
     }
   }, [transactions.signedTransaction, transactions.txSignatureError]);
 
