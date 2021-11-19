@@ -56,10 +56,15 @@ export const statusMessages = t => ({
 // eslint-disable-next-line max-statements
 export const getTransactionStatus = (transactions) => {
   if (transactions.txSignatureError) {
-    return {
-      code: txStatusTypes.signatureError,
-      message: transactionToJSON(transactions.txSignatureError),
-    };
+    return transactions.txSignatureError.message.indexOf('hwCommand') > -1
+      ? {
+        code: txStatusTypes.hwRejected,
+        message: transactions.txSignatureError.message,
+      }
+      : {
+        code: txStatusTypes.signatureError,
+        message: transactionToJSON(transactions.txSignatureError),
+      };
   }
   if (
     !isEmpty(transactions.signedTransaction)
