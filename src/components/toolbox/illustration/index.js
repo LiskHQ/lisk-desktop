@@ -49,6 +49,10 @@ import registerMultisignatureSuccessDark from '../../../assets/images/illustrati
 import registerMultisignatureError from '../../../assets/images/illustrations/multisignature-error.svg';
 import registerMultisignatureErrorDark from '../../../assets/images/illustrations/multisignature-error-dark.svg';
 import reclaimBalanceIntro from '../../../assets/images/illustrations/reclaim-balance-intro.svg';
+import trezorHwRejection from '../../../assets/images/illustrations/hw-rejection-trezor.svg';
+import trezorHwRejectionDark from '../../../assets/images/illustrations/hw-rejection-trezor-dark.svg';
+import ledgerNanoHwRejection from '../../../assets/images/illustrations/hw-rejection-ledger-nano.svg';
+import ledgerNanoHwRejectionDark from '../../../assets/images/illustrations/hw-rejection-ledger-nano-dark.svg';
 
 export const illustrations = {
   welcomeLiskDelegates,
@@ -99,6 +103,10 @@ export const illustrations = {
   transactionPendingDark,
   multisignaturePartialSuccess,
   multisignaturePartialSuccessDark,
+  trezorHwRejection,
+  trezorHwRejectionDark,
+  ledgerNanoHwRejection,
+  ledgerNanoHwRejectionDark,
 };
 
 const Illustration = ({ name, className, noTheme }) => {
