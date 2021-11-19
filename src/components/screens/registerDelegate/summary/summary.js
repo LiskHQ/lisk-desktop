@@ -40,7 +40,7 @@ const Summary = ({
       classNames={`${styles.box} ${styles.summaryContainer}`}
     >
       <TransactionInfo
-        nickname={rawTransaction.username}
+        username={rawTransaction.username}
         moduleAssetId={moduleAssetId}
         transaction={rawTransaction}
         account={account}

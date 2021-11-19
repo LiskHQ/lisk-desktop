@@ -72,7 +72,7 @@ describe.skip('SelectNameAndFee', () => {
     expect(wrapper).toContainMatchingElement('.confirm-btn');
   });
 
-  it('type a valid and unused nickname', async () => {
+  it('type a valid and unused username', async () => {
     expect(wrapper).toContainMatchingElement('.select-name-input');
     expect(wrapper.find('button.confirm-btn')).toBeDisabled();
     wrapper.find('input.select-name-input')
@@ -85,12 +85,12 @@ describe.skip('SelectNameAndFee', () => {
     wrapper.find('button.confirm-btn').simulate('click');
     await flushPromises();
     expect(props.nextStep).toBeCalledWith({
-      nickname: 'mydelegate',
+      username: 'mydelegate',
       transactionInfo: mockTransaction,
     });
   });
 
-  it('type an invalid nickname', () => {
+  it('type an invalid username', () => {
     expect(wrapper).toContainMatchingElement('.select-name-input');
     expect(wrapper.find('button.confirm-btn')).toBeDisabled();
     wrapper.find('input.select-name-input').simulate('change', { target: { value: 'mydelegate+' } });
@@ -108,7 +108,7 @@ describe.skip('SelectNameAndFee', () => {
     expect(wrapper.find('button.confirm-btn')).toBeDisabled();
   });
 
-  it('disabled confirm button if nickname is longer than 20 chars', async () => {
+  it('disabled confirm button if username is longer than 20 chars', async () => {
     expect(wrapper.find('button.confirm-btn')).toBeDisabled();
     wrapper.find('input.select-name-input').simulate('change', { target: { value: 'mydelegate' } });
     jest.advanceTimersByTime(1000);
