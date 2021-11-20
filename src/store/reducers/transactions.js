@@ -73,7 +73,7 @@ const transactions = (state = initialState, action) => { // eslint-disable-line 
         ...state,
         txSignatureError: {
           ...action.data,
-          message: 'The transaction failed',
+          message: action.data.message ?? 'The transaction failed',
           name: 'TransactionFailedError',
         },
       };

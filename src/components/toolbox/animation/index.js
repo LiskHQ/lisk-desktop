@@ -91,7 +91,6 @@ Animation.propTypes = {
   className: PropTypes.string,
   events: PropTypes.shape({
     complete: PropTypes.func,
-    loopComplete: PropTypes.func,
     enterFrame: PropTypes.func,
     segmentStart: PropTypes.func,
   }),

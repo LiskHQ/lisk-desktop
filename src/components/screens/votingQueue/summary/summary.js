@@ -1,7 +1,5 @@
-import React, { useEffect, useState } from 'react';
+import React from 'react';
 import { fromRawLsk } from '@utils/lsk';
-import Piwik from '@utils/piwik';
-import { isEmpty } from '@utils/helpers';
 import TransactionInfo from '@shared/transactionInfo';
 import { MODULE_ASSETS_NAME_ID_MAP } from '@constants';
 import TransactionSummary from '@shared/transactionSummary';
@@ -37,42 +35,24 @@ const getResultProps = ({ added, removed, edited }) => {
 
 const Summary = ({
   t, removed = {}, edited = {}, added = {}, selfUnvote = {},
-  fee, account, prevStep, nextStep, transactions, transactionDoubleSigned, ...props
+  fee, account, prevStep, nextStep, transactions,
+  normalizedVotes, votesSubmitted,
 }) => {
-  const [secondPass, setSecondPass] = useState('');
   const {
     locked, unlockable,
   } = getResultProps({ added, removed, edited });
 
-  useEffect(() => {
-    const { normalizedVotes, votesSubmitted } = props;
-
-    votesSubmitted({
-      fee: String(fee),
-      votes: normalizedVotes,
-    });
-  }, []);
-
-  useEffect(() => {
-    if (secondPass) {
-      transactionDoubleSigned({ secondPass });
-    }
-  }, [secondPass]);
-
   const onConfirm = () => {
-    if (!account.summary.isMultisignature || secondPass) {
-      Piwik.trackingEvent('Vote_SubmitTransaction', 'button', 'Next step');
-      if (!transactions.txSignatureError
-        && !isEmpty(transactions.signedTransaction)) {
-        nextStep({
-          locked, unlockable, error: false, selfUnvote,
-        });
-      } else if (transactions.txSignatureError) {
-        nextStep({
-          error: true,
-        });
-      }
-    }
+    nextStep({
+      rawTransaction: {
+        fee: String(fee),
+        votes: normalizedVotes,
+      },
+      actionFunction: votesSubmitted,
+      statusInfo: {
+        locked, unlockable, selfUnvote,
+      },
+    });
   };
 
   const onConfirmAction = {
@@ -86,17 +66,10 @@ const Summary = ({
 
   return (
     <TransactionSummary
-      t={t}
-      account={account}
       confirmButton={onConfirmAction}
       cancelButton={onCancelAction}
       classNames={styles.container}
       fee={!account.summary.isMultisignature && fromRawLsk(fee)}
-      createTransaction={(callback) => {
-        callback(transactions.signedTransaction);
-      }}
-      keys={account.keys}
-      setSecondPass={setSecondPass}
     >
       <ToggleIcon isNotHeader />
       <div className={styles.headerContainer}>

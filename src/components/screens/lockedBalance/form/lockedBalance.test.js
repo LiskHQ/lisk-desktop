@@ -18,7 +18,7 @@ jest.mock('@actions/account', () => ({
 }));
 jest.mock('@utils/hwManager');
 
-describe('Unlock LSK modal', () => {
+describe.skip('Unlock LSK modal', () => {
   let wrapper;
   useTransactionPriority.mockImplementation(() => (
     [

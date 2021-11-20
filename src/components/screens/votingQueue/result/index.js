@@ -1,27 +1,16 @@
 /* istanbul ignore file */
-import React from 'react';
-import { useDispatch, useSelector } from 'react-redux';
-import { useTranslation } from 'react-i18next';
-import { withRouter } from 'react-router';
-import { transactionBroadcasted } from '@actions';
+import { connect } from 'react-redux';
+import { compose } from 'redux';
+import { withTranslation } from 'react-i18next';
+import { getActiveTokenAccount } from '@utils/account';
 import ResultComponent from './result';
 
-const Result = (props) => {
-  const { t } = useTranslation();
-  const dispatch = useDispatch();
-  const transactions = useSelector(state => state.transactions);
-  const account = useSelector(state => state.account);
+const mapStateToProps = state => ({
+  account: getActiveTokenAccount(state),
+  transactions: state.transactions,
+});
 
-  return (
-    <ResultComponent
-      {...props}
-      t={t}
-      account={account}
-      transactions={transactions}
-      transactionBroadcasted={params =>
-        dispatch(transactionBroadcasted(params))}
-    />
-  );
-};
-
-export default withRouter(Result);
+export default compose(
+  connect(mapStateToProps),
+  withTranslation(),
+)(ResultComponent);

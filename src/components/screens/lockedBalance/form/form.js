@@ -1,14 +1,11 @@
-import React, { useEffect } from 'react';
-import { useDispatch } from 'react-redux';
+import React from 'react';
 import { withTranslation } from 'react-i18next';
 import { tokenMap } from '@constants';
-import { balanceUnlocked } from '@actions/account';
 import Box from '@toolbox/box';
 import BoxContent from '@toolbox/box/content';
 import BoxFooter from '@toolbox/box/footer';
 import BoxHeader from '@toolbox/box/header';
 import { PrimaryButton } from '@toolbox/buttons';
-import { isEmpty } from '@utils/helpers';
 import LiskAmount from '@shared/liskAmount';
 import styles from './lockedBalance.css';
 
@@ -30,37 +27,20 @@ const Form = ({
   children,
   nextStep,
   data,
-  signedTransaction,
-  txSignatureError,
 }) => {
   const {
     customFee,
     fee,
     unlockableBalance,
   } = data;
-  const dispatch = useDispatch();
 
-  // eslint-disable-next-line max-statements
-  const onClickUnlock = async () => {
-    const selectedFee = customFee ? customFee.value : fee.value;
-    dispatch(balanceUnlocked({ selectedFee }));
+  const onClick = async () => {
+    nextStep({
+      rawTransaction: {
+        selectedFee: customFee ? customFee.value : fee.value,
+      },
+    });
   };
-
-  useEffect(() => {
-    // success
-    if (!isEmpty(signedTransaction)) {
-      nextStep({
-        transactionInfo: signedTransaction, fee,
-      });
-    }
-  }, [signedTransaction]);
-
-  useEffect(() => {
-    // error
-    if (txSignatureError) {
-      nextStep({ fee });
-    }
-  }, [txSignatureError]);
 
   return (
     <Box className={styles.wrapper}>
@@ -74,7 +54,7 @@ const Form = ({
       <BoxFooter>
         <PrimaryButton
           className="unlock-btn"
-          onClick={onClickUnlock}
+          onClick={onClick}
           disabled={unlockableBalance === 0}
         >
           <ButtonTitle unlockableBalance={unlockableBalance} t={t} />

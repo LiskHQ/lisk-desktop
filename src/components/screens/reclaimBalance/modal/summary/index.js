@@ -9,15 +9,13 @@ import Summary from './summary';
 const mapStateToProps = state => ({
   account: state.account,
   network: state.network,
-  signedTransaction: state.transactions.signedTransaction,
-  txSignatureError: state.transactions.txSignatureError,
 });
 
-const mapDispatchToProps = {
+const dispatchToProps = {
   balanceReclaimed,
 };
 
 export default compose(
-  connect(mapStateToProps, mapDispatchToProps),
+  connect(mapStateToProps, dispatchToProps),
   withTranslation(),
 )(Summary);

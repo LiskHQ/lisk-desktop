@@ -2,9 +2,9 @@ import React, { useState } from 'react';
 import { downloadJSON, transactionToJSON } from '@utils/transaction';
 import copyToClipboard from 'copy-to-clipboard';
 import { PrimaryButton, SecondaryButton } from '@toolbox/buttons';
-import { TransactionResult, getBroadcastStatus } from '@shared/transactionResult';
+import TransactionResult from '@shared/transactionResult';
 import Icon from '@toolbox/icon';
-import statusMessages from './statusMessages';
+import { statusMessages, getTransactionStatus } from '@shared/transactionResult/statusConfig';
 import ProgressBar from '../progressBar';
 import styles from './styles.css';
 
@@ -23,7 +23,7 @@ const Result = ({
     setCopied(true);
   };
 
-  const status = getBroadcastStatus(transactions, false); // @todo handle HW errors by #3661
+  const status = getTransactionStatus(transactions);
   const template = statusMessages(t)[status.code];
 
   return (
@@ -33,7 +33,6 @@ const Result = ({
       </div>
       <ProgressBar current={4} />
       <TransactionResult
-        t={t}
         illustration="registerMultisignature"
         status={status}
         message={template}

@@ -2,16 +2,16 @@ import React from 'react';
 import AccountVisual from '@toolbox/accountVisual';
 import styles from './transactionInfo.css';
 
-const RegisterDelegate = ({ account, nickname, t }) => (
+const RegisterDelegate = ({ account, username, t }) => (
   <section>
-    <label className="nickname-label">{t('Your nickname')}</label>
+    <label className="username-label">{t('Your username')}</label>
     <div className={styles.userInformation}>
       <AccountVisual
         className={styles.accountVisual}
         address={account.summary?.address}
         size={25}
       />
-      <span className={`${styles.nickname} nickname`}>{nickname}</span>
+      <span className={`${styles.username} username`}>{username}</span>
       <span className={`${styles.address} address`}>{account.summary?.address}</span>
     </div>
   </section>

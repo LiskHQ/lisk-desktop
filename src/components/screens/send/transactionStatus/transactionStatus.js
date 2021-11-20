@@ -1,33 +1,24 @@
 import React, { useEffect } from 'react';
-import { getIndexOfBookmark } from '@utils/bookmarks';
 import { isEmpty } from '@utils/helpers';
-import { SecondaryButton, PrimaryButton } from '@toolbox/buttons';
-import { TransactionResult, getBroadcastStatus } from '@shared/transactionResult';
+import { PrimaryButton } from '@toolbox/buttons';
+import TransactionResult from '@shared/transactionResult';
+import { getTransactionStatus, txStatusTypes, statusMessages } from '@shared/transactionResult/statusConfig';
 import DialogLink from '@toolbox/dialog/link';
-import statusMessages from './statusMessages';
 import styles from './transactionStatus.css';
 
-const bookmarkInformation = (bookmarks, fields) => {
-  const isBookmarked = getIndexOfBookmark(
-    bookmarks,
-    { address: fields.recipient.address },
-  ) !== -1;
-
-  return {
-    isBookmarked,
-  };
+const shouldShowBookmark = (bookmarks, account, rawTransaction, token) => {
+  if (account.summary.address === rawTransaction.recipientAddress) {
+    return false;
+  }
+  return !bookmarks[token].find(bookmark => bookmark.address === rawTransaction.recipientAddress);
 };
-
-const getHwError = (isHardwareWalletConnected, fields) => (
-  isHardwareWalletConnected && fields.hwTransactionStatus === 'error'
-);
 
 const getMessagesDetails = (transactions, status, t, isHardwareWalletError) => {
   const messages = statusMessages(t);
-  const code = isHardwareWalletError ? 'hw' : status.code;
+  const code = isHardwareWalletError ? txStatusTypes.hwRejected : status.code;
   const messageDetails = messages[code];
 
-  if (status.code === 'error'
+  if (status.code === txStatusTypes.broadcastError
       && transactions.txBroadcastError?.error?.message) {
     messageDetails.message = transactions.txBroadcastError.error.message;
   }
@@ -35,86 +26,48 @@ const getMessagesDetails = (transactions, status, t, isHardwareWalletError) => {
   return messageDetails;
 };
 
-// eslint-disable-next-line complexity
 const TransactionStatus = ({
-  transactionBroadcasted,
-  resetTransactionResult,
   recipientAccount,
   transactions,
+  rawTransaction,
   bookmarks,
-  prevStep,
   account,
-  fields,
+  token,
   t,
 }) => {
-  const isHardwareWalletConnected = !!account.hwInfo?.deviceId;
-
-  const broadcast = () => {
-    if (!isEmpty(transactions.signedTransaction)) {
-      transactionBroadcasted(transactions.signedTransaction);
-    }
-  };
-
-  const onRetry = () => {
-    const { txBroadcastError } = transactions;
-
-    if (isHardwareWalletConnected) {
-      resetTransactionResult();
-      prevStep({ ...fields, hwTransactionStatus: false });
-    } else {
-      transactionBroadcasted(txBroadcastError.transaction);
-    }
-  };
-
   useEffect(() => {
-    recipientAccount.loadData({ address: fields.recipient.address });
-    broadcast();
-
-    return resetTransactionResult;
+    if (!isEmpty(transactions.signedTransaction) && !transactions.txSignatureError) {
+      /**
+       * Retrieve recipient info to use for bookmarking
+       */
+      recipientAccount.loadData({ address: rawTransaction.recipientAddress });
+    }
   }, []);
 
-  const { isBookmarked } = bookmarkInformation(bookmarks, fields);
-  const isHardwareWalletError = getHwError(isHardwareWalletConnected, fields);
-  const status = getBroadcastStatus(transactions, isHardwareWalletError);
+  const showBookmark = shouldShowBookmark(bookmarks, account, rawTransaction, token);
+  const status = getTransactionStatus(transactions);
   const template = getMessagesDetails(
     transactions, status, t,
-    isHardwareWalletError,
+    false,
   );
 
   return (
     <div className={`${styles.wrapper} transaction-status`}>
       <TransactionResult
-        t={t}
         title={template.title}
         illustration="default"
         message={template.message}
         status={status}
       >
         {
-          isHardwareWalletError
-            ? (
-              <SecondaryButton
-                className={`${styles.btn} retry`}
-                onClick={onRetry}
-              >
-                {t('Retry')}
-              </SecondaryButton>
-            )
-            : null
-        }
-        {
-          !isBookmarked && account.summary.address !== fields.recipient.address && (
+          showBookmark ? (
             <div className={`${styles.bookmarkBtn} bookmark-container`}>
               <DialogLink
                 component="addBookmark"
-                data={recipientAccount.data.delegate ? {
-                  formAddress: recipientAccount.data.address,
-                  label: recipientAccount.data.delegate.username,
-                  isDelegate: true,
-                } : {
-                  formAddress: fields.recipient.address,
-                  isDelegate: false,
-                  label: '',
+                data={{
+                  formAddress: rawTransaction.recipientAddress,
+                  label: recipientAccount.data.dpos?.delegate?.username ?? '',
+                  isDelegate: !!recipientAccount.data.dpos?.delegate,
                 }}
               >
                 <PrimaryButton className={`${styles.btn} bookmark-btn`}>
@@ -122,7 +75,7 @@ const TransactionStatus = ({
                 </PrimaryButton>
               </DialogLink>
             </div>
-          )
+          ) : null
         }
       </TransactionResult>
     </div>

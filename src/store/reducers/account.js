@@ -35,6 +35,16 @@ const account = (state = {}, action) => {
       return {
         loading: true,
       };
+    case actionTypes.secondPassphraseStored:
+      return {
+        ...state,
+        secondPassphrase: action.data,
+      };
+    case actionTypes.secondPassphraseRemoved:
+      return {
+        ...state,
+        secondPassphrase: null,
+      };
     default:
       return state;
   }

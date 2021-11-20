@@ -4,6 +4,7 @@ import { withRouter } from 'react-router-dom';
 import { routes } from '@constants';
 import { parseSearchParams } from '@utils/searchParams';
 import MultiStep from '@shared/multiStep';
+import TransactionSignature from '@shared/transactionSignature';
 import Dialog from '@toolbox/dialog/dialog';
 import Form from './form';
 import Summary from './summary';
@@ -26,6 +27,7 @@ const Send = ({ history }) => {
       >
         <Form initialValue={initialValue} />
         <Summary />
+        <TransactionSignature />
         <TransactionStatus history={history} />
       </MultiStep>
     </Dialog>
