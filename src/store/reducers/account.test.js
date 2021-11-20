@@ -76,6 +76,27 @@ describe('Reducer: account(state, action)', () => {
     expect(accountWithDelegateUpdated.delegate).toEqual(accounts.delegate_candidate);
   });
 
+  it('should store the second passphrase once called with secondPassphraseStored', () => {
+    const action = {
+      data: 'sample passphrase',
+      type: actionTypes.secondPassphraseStored,
+    };
+    const updatedState = account(state, action);
+    expect(updatedState.secondPassphrase).toEqual(action.data);
+  });
+
+  it('should remove the second passphrase once called with secondPassphraseRemoved', () => {
+    const action = {
+      type: actionTypes.secondPassphraseRemoved,
+    };
+    const oldState = {
+      ...state,
+      secondPassphrase: 'sample passphrase',
+    };
+    const updatedState = account(oldState, action);
+    expect(updatedState.secondPassphrase).toEqual(null);
+  });
+
   it('should return state if action.type is none of the above', () => {
     const action = {
       type: 'UNKNOWN',

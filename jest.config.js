@@ -6,6 +6,7 @@ module.exports = {
     '<rootDir>/app/src/**/*.test.js',
     '<rootDir>/src/**/*.test.js',
     '<rootDir>/test/integration/*.test.js',
+    '<rootDir>/libs/**/*.test.js',
   ],
   testPathIgnorePatterns: [
     '<rootDir>/test/integration/wallet.test.js',
@@ -161,6 +162,15 @@ module.exports = {
     'src/store/reducers/voting.js',
     'src/utils/voting.js',
     'src/utils/getNetwork.js',
+    'src/components/shared/transactionResult/statusConfig.js',
+    'src/components/shared/transactionResult/ordinary.js',
+    'src/components/shared/transactionResult/multisignature.js',
+    'src/components/shared/transactionResult/transactionResult.js',
+    'src/components/shared/transactionSummary/transactionSummary.js',
+    'src/components/shared/transactionSignature/transactionSignature.js',
+    'src/components/shared/voteItem/index.js',
+    'src/components/shared/transactionResult/illustrations.js',
+    'src/components/shared/transactionResult/regular.js',
   ],
   coverageThreshold: {
     global: {

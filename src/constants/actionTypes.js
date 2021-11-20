@@ -12,6 +12,8 @@ const actionTypes = {
   accountRemoved: 'ACCOUNT_REMOVED',
   accountsRetrieved: 'ACCOUNTS_RETRIEVED',
   accountUpdated: 'ACCOUNT_UPDATED',
+  secondPassphraseStored: 'SECOND_PASSPHRASE_STORED',
+  secondPassphraseRemoved: 'SECOND_PASSPHRASE_REMOVED',
   delegateRegisteredSuccess: 'DELEGATE_REGISTERED_SUCCESS',
   delegateRetrieved: 'DELEGATE_RETRIEVED',
   delegateRetrieving: 'DELEGATE_RETRIEVING',

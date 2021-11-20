@@ -1,14 +1,11 @@
 import React, { useMemo } from 'react';
-import { signTransaction } from '@utils/transaction';
 import { isEmpty } from '@utils/helpers';
 import BoxContent from '@toolbox/box/content';
 import Box from '@toolbox/box';
 import TransactionDetails from '@screens/transactionDetails/transactionDetails';
 
 import ProgressBar from '../progressBar';
-import {
-  showSignButton, isTransactionFullySigned,
-} from '../helpers';
+import { showSignButton, isTransactionFullySigned } from '../helpers';
 import { ActionBar, Feedback } from './footer';
 import styles from '../styles.css';
 
@@ -16,7 +13,6 @@ const ReviewSign = ({
   t,
   transaction,
   account,
-  networkIdentifier,
   nextStep,
   history,
   error,
@@ -36,24 +32,16 @@ const ReviewSign = ({
     return null;
   }, [senderAccount.data]);
 
-  const onSignClick = () => {
-    const [signedTx, err] = signTransaction(
-      transaction,
-      account.passphrase,
-      networkIdentifier,
-      senderAccount,
-      isFullySigned,
-    );
+  const onClick = () => {
     nextStep({
-      transaction: signedTx,
-      error: err,
-      senderAccount: senderAccount.data,
+      rawTransaction: transaction,
+      sender: senderAccount,
     });
   };
 
   const nextButton = {
     title: isFullySigned ? t('Continue') : t('Sign'),
-    onClick: onSignClick,
+    onClick,
   };
 
   const showFeedback = !isMember || isFullySigned;

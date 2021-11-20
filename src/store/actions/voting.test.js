@@ -15,6 +15,7 @@ import accounts from '../../../test/constants/accounts';
 
 jest.mock('@api/transaction', () => ({
   create: jest.fn(),
+  computeTransactionId: jest.fn(),
 }));
 
 jest.mock('@api/delegate', () => ({
@@ -26,7 +27,7 @@ jest.mock('@api/account', () => ({
 }));
 
 jest.mock('@utils/hwManager', () => ({
-  signVoteTransaction: jest.fn(),
+  signTransactionByHW: jest.fn(),
 }));
 
 describe('actions: voting', () => {
@@ -40,7 +41,7 @@ describe('actions: voting', () => {
       },
     },
     account: {
-      loginType: loginTypes.passphrase.code,
+      loginType: 0,
       info: {
         LSK: {
           summary: {
@@ -99,7 +100,27 @@ describe('actions: voting', () => {
 
       await votesSubmitted(data)(dispatch, getState);
       expect(transactionApi.create).toHaveBeenCalled();
-      expect(hwManager.signVoteTransaction).not.toHaveBeenCalled();
+      expect(hwManager.signTransactionByHW).not.toHaveBeenCalled();
+      expect(dispatch).toHaveBeenCalledTimes(3);
+      expect(dispatch).toHaveBeenCalledWith({
+        type: actionTypes.votesSubmitted,
+      });
+      expect(dispatch).toHaveBeenCalledWith({
+        type: actionTypes.transactionCreatedSuccess,
+        data: tx,
+      });
+    });
+
+    it('should call create transactions', async () => {
+      const tx = { data: sampleVotes[0] };
+      loginTypes.passphrase.code = 1;
+      const data = [{
+        address: 'dummy',
+        amount: 1e10,
+      }];
+
+      await votesSubmitted(data)(dispatch, getState);
+      expect(transactionApi.create).toHaveBeenCalled();
       expect(dispatch).toHaveBeenCalledTimes(3);
       expect(dispatch).toHaveBeenCalledWith({
         type: actionTypes.votesSubmitted,
@@ -124,32 +145,6 @@ describe('actions: voting', () => {
       expect(dispatch).toHaveBeenCalledWith({
         type: actionTypes.transactionSignError,
         data: error,
-      });
-    });
-
-    it('calls signVoteTransaction when loginType is not passphrase', async () => {
-      const tx = { data: sampleVotes[0] };
-      hwManager.signVoteTransaction.mockResolvedValue(tx);
-      const data = [{
-        address: 'dummy',
-        amount: 1e10,
-      }];
-
-      const _getState = () => {
-        const state = getState();
-        state.account.loginType = loginTypes.ledger.code;
-        return state;
-      };
-      await votesSubmitted(data)(dispatch, _getState);
-      expect(transactionApi.create).not.toHaveBeenCalled();
-      expect(hwManager.signVoteTransaction).toHaveBeenCalled();
-      expect(dispatch).toHaveBeenCalledTimes(3);
-      expect(dispatch).toHaveBeenCalledWith({
-        type: actionTypes.votesSubmitted,
-      });
-      expect(dispatch).toHaveBeenCalledWith({
-        type: actionTypes.transactionCreatedSuccess,
-        data: tx,
       });
     });
   });

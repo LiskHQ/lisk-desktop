@@ -9,7 +9,6 @@ describe('Delegate animation component', () => {
   const props = {
     className: 'test-className',
     status: 'pending',
-    onLoopComplete: jest.fn(),
   };
   let eventsMap;
   let wrapper;
@@ -58,8 +57,6 @@ describe('Delegate animation component', () => {
     eventsMap.complete();
     wrapper.update();
     expect(wrapper.find('Animation')).toHaveProp('name', animations.pending);
-    eventsMap.loopComplete();
-    expect(props.onLoopComplete).toBeCalled();
     wrapper.setProps({ status: 'success' });
     wrapper.unmount();
   });

@@ -1,7 +1,6 @@
 import { actionTypes, loginTypes } from '@constants';
-import * as transactionsApi from '@api/transaction';
-import * as transactionsModifyApi from '@utils/transaction';
 import * as hwManagerApi from '@utils/hwManager';
+import httpApi from '@utils/api/http';
 import {
   emptyTransactionsData,
   transactionsRetrieved,
@@ -12,14 +11,11 @@ import {
   transactionCreated,
 } from './transactions';
 import { sampleTransaction } from '../../../test/constants/transactions';
-import accounts from '../../../test/constants/accounts';
-import { getState, transformedAccountTransaction, newTransaction } from '../../../test/fixtures/transactions';
-import signedTransaction from '../../../test/fixtures/signedTx.json';
+import { getState } from '../../../test/fixtures/transactions';
 
-jest.mock('@api/transaction');
 jest.mock('@api/delegate');
-jest.mock('@utils/transaction');
 jest.mock('@utils/hwManager');
+jest.mock('@utils/api/http');
 
 describe('actions: transactions', () => {
   beforeEach(() => {
@@ -42,7 +38,7 @@ describe('actions: transactions', () => {
 
     it('should dispatch getTransactionsSuccess action if resolved', async () => {
       // Arrange
-      transactionsApi.getTransactions.mockResolvedValue({ data: [], meta: { total: 0 } });
+      httpApi.mockResolvedValue({ data: [], meta: { total: 0 } });
       const expectedAction = {
         count: 0,
         confirmed: [],
@@ -74,7 +70,7 @@ describe('actions: transactions', () => {
       const transactionData = {
         address: 'lsks6uckwnap7s72ov3edddwgxab5e89t6uy8gjt6',
       };
-      transactionsApi.getTransactions.mockResolvedValue({
+      httpApi.mockResolvedValue({
         data: transactionData,
         meta: { total: 0 },
       });
@@ -107,14 +103,13 @@ describe('actions: transactions', () => {
     it('should dispatch transactionsLoadFailed action if rejected', async () => {
       // Arrange
       const transactionError = new Error('Transaction retrieve error');
-      transactionsApi.getTransactions.mockRejectedValue(transactionError);
+      httpApi.mockRejectedValue(transactionError);
 
       // Act
       await transactionsRetrieved(data)(dispatch, getState);
 
       // Assert
-      expect(transactionsApi.getTransactions).rejects.toThrow('Transaction retrieve error');
-      expect(transactionsApi.getTransactions).rejects.toThrow(transactionError);
+      expect(httpApi).rejects.toThrow(transactionError);
       expect(dispatch).toHaveBeenCalledTimes(3);
       expect(dispatch).toHaveBeenNthCalledWith(1, {
         type: actionTypes.loadingStarted,
@@ -171,112 +166,90 @@ describe('actions: transactions', () => {
   });
 
   describe('transactionCreated', () => {
+    const state = getState();
+    const activeAccount = {
+      ...state.account.info.LSK,
+      hwInfo: {
+        deviceModel: 'Ledger Nano S',
+      },
+      passphrase: state.account.passphrase,
+    };
+    const getStateWithHW = () => ({
+      ...state,
+      account: {
+        info: {
+          LSK: activeAccount,
+        },
+        hwInfo: {
+          deviceModel: 'Ledger Nano S',
+        },
+        passphrase: state.account.passphrase,
+      },
+    });
+
     it('should dispatch transactionCreatedSuccess action if there are no errors', async () => {
       // Arrange
-      transactionsApi.create.mockResolvedValue({ tx: newTransaction });
-      const expectedAction = {
-        type: actionTypes.transactionCreatedSuccess,
-        data: { tx: newTransaction },
+      const data = {
+        amount: '21000000',
+        data: '',
+        recipientAddress: 'lsky3t7xfxbcjf5xmskrbhkmwzxpowex6eubghtws',
+        fee: 141000,
       };
 
       // Act
-      await transactionCreated(newTransaction)(dispatch, getState);
+      await transactionCreated(data)(dispatch, getState);
 
       // Assert
-      expect(transactionsApi.create).toHaveBeenCalled();
-      expect(dispatch).toHaveBeenCalledWith(expectedAction);
+      expect(hwManagerApi.signTransactionByHW).not.toHaveBeenCalled();
+      // Replace toMatchSnapshot with a definitive assertion.
+      expect(dispatch).toMatchSnapshot();
     });
 
-    it('should dispatch transactionSignError action if there are errors', async () => {
+    it('should dispatch transactionSignError action if there are errors during transaction creation', async () => {
       // Arrange
+      const data = {
+        amount: '21000000',
+        data: '',
+        recipientAddress: 'lsky3t7xfxbcjf5xmskrbhkmwzxpowex6eubghtws',
+        fee: 141000,
+      };
       const transactionError = new Error('Transaction create error');
       loginTypes.passphrase.code = 1;
-      hwManagerApi.signSendTransaction.mockRejectedValue(transactionError);
+      hwManagerApi.signTransactionByHW.mockRejectedValue(transactionError);
       const expectedAction = {
         type: actionTypes.transactionSignError,
         data: transactionError,
       };
+      const { network } = getStateWithHW();
 
       // Act
-      await transactionCreated(newTransaction)(dispatch, getState);
+      await transactionCreated(data)(dispatch, getStateWithHW);
 
       // Assert
-      expect(hwManagerApi.signSendTransaction).rejects.toThrow(transactionError);
-      expect(hwManagerApi.signSendTransaction).toHaveBeenCalled();
-      expect(dispatch).toHaveBeenCalledWith(expectedAction);
-    });
-
-    it('should dispatch transactionSignError action if there are no transaction signatures', async () => {
-      // Arrange
-      loginTypes.passphrase.code = 1;
-      const noSignatureTransaction = {
-        pending: [],
-        confirmed: [],
-        count: null,
-        filters: {},
-      };
-      hwManagerApi.signSendTransaction.mockResolvedValue({ tx: noSignatureTransaction });
-      const expectedAction = {
-        type: actionTypes.transactionSignError,
-        data: null,
-      };
-
-      // Act
-      await transactionCreated(newTransaction)(dispatch, getState);
-
-      // Assert
-      expect(hwManagerApi.signSendTransaction).toHaveBeenCalled();
+      expect(hwManagerApi.signTransactionByHW).toHaveBeenCalledWith(
+        activeAccount,
+        Buffer.from(network.networks.LSK.networkIdentifier, 'hex'),
+        expect.anything(),
+        expect.anything(),
+      );
       expect(dispatch).toHaveBeenCalledWith(expectedAction);
     });
   });
 
-  describe('transactionDoubleSigned', () => {
-    transactionsModifyApi.transformTransaction.mockReturnValue({
-      moduleAssetId: '2:0',
-      id: 'f8ddab3b1a23d7c19e17855fe82ca5c1fa701ba82b8896da2ba332fccc308e90',
-      fee: '207000',
-      nonce: '19',
-      signatures: [
-        {
-          type: 'Buffer',
-          data: [],
-        },
-        {
-          type: 'Buffer',
-          // eslint-disable-next-line max-len
-          data: [193, 83, 141, 74, 106, 154, 208, 111, 153, 199, 64, 82, 0, 126, 223, 90, 149, 53, 175, 19, 100, 107, 116, 125, 165, 184, 206, 190, 178, 229, 8, 139, 235, 29, 152, 57, 28, 30, 143, 193, 50, 230, 110, 138, 203, 191, 188, 13, 228, 65, 187, 225, 90, 45, 240, 40, 174, 37, 108, 32, 115, 186, 104, 8],
-        },
-      ],
-      sender: {
-        address: 'lskwunwxqmss9w3mtuvzgbsfy665cz4eo3rd2mxdp',
-        publicKey: '6b40b2c68d52b1532d0374a078974798cff0b59d0a409a8d574378fe2c69daef',
-      },
-      asset: {
-        amount: '12000000',
-        data: '',
-        recipient: { address: 'lskhqy429nwm2tew3j5j29ef6pguyynf6jxcmgrh2' },
-      },
-    });
+  describe.skip('transactionDoubleSigned', () => {
     const { network, account, settings } = getState();
     const getStateWithTx = () => ({
       network,
       account,
       settings,
       transactions: {
-        signedTransaction,
+        signedTransaction: sampleTransaction,
       },
     });
 
     it('should create an action to store double signed tx', async () => {
-      // Prepare the store
-      transactionsModifyApi.signTransaction.mockReturnValue([{
-        id: 'f8ddab3b1a23d7c19e17855fe82ca5c1fa701ba82b8896da2ba332fccc308e90',
-      }]);
-
       // Consume the utility
-      await transactionDoubleSigned({
-        secondPass: accounts.secondPass.secondPass,
-      })(dispatch, getStateWithTx);
+      await transactionDoubleSigned()(dispatch, getStateWithTx);
 
       // Prepare expectations
       const expectedAction = {
@@ -291,14 +264,12 @@ describe('actions: transactions', () => {
     it('should create an action to store signature error', async () => {
       // Prepare the store
       const error = { message: 'error signing tx' };
-      transactionsModifyApi.signTransaction.mockReturnValue([{
-        id: 'f8ddab3b1a23d7c19e17855fe82ca5c1fa701ba82b8896da2ba332fccc308e90',
-      }, error]);
+      // transactionsModifyApi.signTransaction.mockReturnValue([{
+      //   id: 'f8ddab3b1a23d7c19e17855fe82ca5c1fa701ba82b8896da2ba332fccc308e90',
+      // }, error]);
 
       // Consume the utility
-      await transactionDoubleSigned({
-        secondPass: accounts.secondPass.secondPass,
-      })(dispatch, getStateWithTx);
+      await transactionDoubleSigned()(dispatch, getStateWithTx);
 
       // Prepare expectations
       const expectedAction = {
@@ -314,10 +285,7 @@ describe('actions: transactions', () => {
   describe('transactionBroadcasted', () => {
     it('should dispatch broadcastedTransactionSuccess action if there are no errors', async () => {
       // Arrange
-      transactionsApi.broadcast.mockResolvedValue({ data: sampleTransaction });
-      transactionsModifyApi.transformTransaction.mockImplementation(
-        () => transformedAccountTransaction,
-      );
+      httpApi.mockResolvedValue({ data: sampleTransaction });
       jest
         .spyOn(global, 'Date')
         .mockImplementationOnce(() => new Date('2021-09-15T11:07:29.864Z'));
@@ -334,15 +302,14 @@ describe('actions: transactions', () => {
       await transactionBroadcasted(sampleTransaction)(dispatch, getState);
 
       // Assert
-      expect(transactionsApi.broadcast).toHaveBeenCalled();
       expect(dispatch).toHaveBeenCalledWith(expectedAction);
       expect(dispatch).toHaveBeenLastCalledWith(lastExpectedAction);
     });
 
-    it('should dispatch broadcastedTransactionError action if there\'s an error', async () => {
+    it('should dispatch broadcastedTransactionError action when broadcast has an error', async () => {
       // Arrange
       const transactionBroadcastError = new Error('Transaction broadcast error');
-      transactionsApi.broadcast.mockRejectedValue(transactionBroadcastError);
+      httpApi.mockRejectedValue(transactionBroadcastError);
       const expectedAction = {
         type: actionTypes.broadcastedTransactionError,
         data: {
@@ -355,26 +322,35 @@ describe('actions: transactions', () => {
       await transactionBroadcasted(sampleTransaction)(dispatch, getState);
 
       // Assert
-      expect(transactionsApi.broadcast).rejects.toThrow(transactionBroadcastError);
-      expect(transactionsApi.broadcast).toHaveBeenCalled();
+      expect(httpApi).toHaveBeenCalled();
       expect(dispatch).toHaveBeenCalledWith(expectedAction);
     });
 
     it('should dispatch pendingTransactionAdded action if transformedTransaction sender address is the same as LSK address', async () => {
-      // Arrange
-      transactionsApi.broadcast.mockResolvedValue({ data: sampleTransaction });
-      transactionsModifyApi.transformTransaction.mockReturnValue(transformedAccountTransaction);
-      const expectedAction = {
-        type: actionTypes.pendingTransactionAdded,
-        data: { ...transformedAccountTransaction, isPending: true },
+      const transformedAccountTransaction = {
+        ...sampleTransaction,
+        id: 'ad0e0acbe8a3ece3087c8362149ca39c470e565d268df32e57de5d3fe2e1ea5c',
       };
+      // Arrange
+      httpApi.mockResolvedValue({ data: sampleTransaction });
+      const expectedAction1 = {
+        type: actionTypes.broadcastedTransactionSuccess,
+        data: transformedAccountTransaction,
+      };
+      // const expectedAction2 = {
+      //   type: actionTypes.pendingTransactionAdded,
+      //   data: { ...transformedAccountTransaction, isPending: true },
+      // };
+      const expectedAction3 = { data: expect.anything(), type: actionTypes.timerReset };
 
       // Act
       await transactionBroadcasted(sampleTransaction)(dispatch, getState);
 
       // Assert
-      expect(transactionsModifyApi.transformTransaction).toHaveBeenCalled();
-      expect(dispatch).toHaveBeenCalledWith(expectedAction);
+      expect(httpApi).toHaveBeenCalled();
+      expect(dispatch).toHaveBeenNthCalledWith(1, expectedAction1);
+      // expect(dispatch).toHaveBeenNthCalledWith(2, expectedAction2);
+      expect(dispatch).toHaveBeenNthCalledWith(3, expectedAction3);
     });
   });
 });

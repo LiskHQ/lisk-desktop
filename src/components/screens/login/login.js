@@ -7,9 +7,9 @@ import { routes } from '@constants';
 import { parseSearchParams, stringifySearchParams } from '@utils/searchParams';
 import { getNetworksList } from '@utils/getNetwork';
 import Piwik from '@utils/piwik';
-import { defaultDerivationPath } from '@utils/explicitBipKeyDerivation';
 import { PrimaryButton } from '@toolbox/buttons';
 import PassphraseInput from '@toolbox/passphraseInput';
+import Icon from '@toolbox/icon/index';
 import DiscreetModeToggle from '@shared/discreetModeToggle';
 import NetworkSelector from './networkSelector';
 import RecoveryPhrase from './recoveryPhrase';
@@ -43,9 +43,9 @@ const redirectToReferrer = (history) => {
 const Login = ({
   t, settings, network, history, account, login,
 }) => {
-  const [isRecoveryPhraseMode, setIsRecoveryPhrase] = useState(false);
-  const [derivationPath, setDerivationPath] = useState(defaultDerivationPath);
   const [passphrase, setPass] = useState({ value: '', isValid: false });
+  const canHWSignIn = true;
+
   const setPassphrase = (value, error) => {
     setPass({
       value,
@@ -56,7 +56,7 @@ const Login = ({
   const onFormSubmit = (e) => {
     e.preventDefault();
     Piwik.trackingEvent('Login', 'button', 'Login submission');
-    login({ passphrase: passphrase.value, isRecoveryPhraseMode, derivationPath });
+    login({ passphrase: passphrase.value });
   };
 
   const handleKeyPress = (e) => {
@@ -88,31 +88,27 @@ const Login = ({
         >
           <RegisterTitle t={t} />
           <form onSubmit={onFormSubmit}>
-            {
-              settings.showNetwork ? (
-                <fieldset className={`${styles.inputsHolder}`}>
-                  <label>{t('Network')}</label>
-                  <NetworkSelector />
-                </fieldset>
-              ) : null
-            }
-            <fieldset className={`${styles.inputsHolder}`}>
-              <label className={styles.inputLabel}>{t('Passphrase')}</label>
-              <PassphraseInput
-                inputsLength={12}
-                maxInputsLength={24}
-                onFill={setPassphrase}
-                keyPress={handleKeyPress}
-              />
+            <div className={styles.inputFields}>
+              {
+                settings.showNetwork ? (
+                  <fieldset>
+                    <label>{t('Network')}</label>
+                    <NetworkSelector />
+                  </fieldset>
+                ) : null
+              }
+              <fieldset>
+                <label>{t('Passphrase')}</label>
+                <PassphraseInput
+                  inputsLength={12}
+                  maxInputsLength={24}
+                  onFill={setPassphrase}
+                  keyPress={handleKeyPress}
+                />
+              </fieldset>
+              <RecoveryPhrase t={t} />
               <DiscreetModeToggle className={styles.discreetMode} />
-              <RecoveryPhrase
-                t={t}
-                isRecoveryPhraseMode={isRecoveryPhraseMode}
-                setIsRecoveryPhrase={setIsRecoveryPhrase}
-                derivationPath={derivationPath}
-                setDerivationPath={setDerivationPath}
-              />
-            </fieldset>
+            </div>
             <div className={`${styles.buttonsHolder}`}>
               <PrimaryButton
                 className={`${styles.button} login-button`}
@@ -121,7 +117,7 @@ const Login = ({
               >
                 {t('Sign in')}
               </PrimaryButton>
-              {/* {
+              {
                 canHWSignIn
                   ? (
                     <Link
@@ -132,8 +128,7 @@ const Login = ({
                       {t('Sign in with a hardware wallet')}
                     </Link>
                   ) : null
-              } */}
-
+              }
             </div>
           </form>
         </div>

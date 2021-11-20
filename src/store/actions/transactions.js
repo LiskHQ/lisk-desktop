@@ -1,12 +1,13 @@
 import to from 'await-to-js';
 
 import {
-  actionTypes, tokenMap, MODULE_ASSETS_NAME_ID_MAP, loginTypes, DEFAULT_LIMIT,
+  actionTypes, tokenMap, MODULE_ASSETS_NAME_ID_MAP, DEFAULT_LIMIT,
 } from '@constants';
+import { isEmpty } from '@utils/helpers';
 import { getTransactions, create, broadcast } from '@api/transaction';
 import { selectActiveTokenAccount, selectNetworkIdentifier } from '@store/selectors';
 import { signTransaction, transformTransaction } from '@utils/transaction';
-import { signSendTransaction } from '@utils/hwManager';
+import { isTransactionFullySigned } from '@screens/signMultiSignTransaction/helpers';
 import { timerReset } from './account';
 import { loadingStarted, loadingFinished } from './loading';
 
@@ -98,31 +99,32 @@ export const transactionCreated = data => async (dispatch, getState) => {
     account, settings, network,
   } = getState();
   const activeToken = settings.token.active;
+  const hwInfo = isEmpty(account.hwInfo) ? undefined : account.hwInfo; // @todo remove this by #3898
 
-  const params = {
+  const [error, tx] = await to(create({
     transactionObject: {
       ...data,
       moduleAssetId: MODULE_ASSETS_NAME_ID_MAP.transfer,
     },
-    account: account.info[activeToken],
-    passphrase: account.passphrase,
+    account: {
+      ...account.info[activeToken],
+      hwInfo,
+      passphrase: account.passphrase,
+    },
     network,
-  };
+  }, activeToken));
 
-  const [error, tx] = account.loginType === loginTypes.passphrase.code
-    ? await to(create(params, activeToken))
-    : await to(signSendTransaction(account, data));
-
-  if (error || (account.loginType !== loginTypes.passphrase.code && !tx.signatures)) {
+  if (error) {
     dispatch({
       type: actionTypes.transactionSignError,
       data: error,
     });
+  } else {
+    dispatch({
+      type: actionTypes.transactionCreatedSuccess,
+      data: tx,
+    });
   }
-  dispatch({
-    type: actionTypes.transactionCreatedSuccess,
-    data: tx,
-  });
 };
 
 /**
@@ -131,7 +133,8 @@ export const transactionCreated = data => async (dispatch, getState) => {
  * @param {object} data
  * @param {string} data.secondPass
  */
-export const transactionDoubleSigned = data => async (dispatch, getState) => {
+/* istanbul ignore next */
+export const transactionDoubleSigned = () => async (dispatch, getState) => {
   const {
     transactions, network, account, settings,
   } = getState();
@@ -139,12 +142,13 @@ export const transactionDoubleSigned = data => async (dispatch, getState) => {
   const activeAccount = selectActiveTokenAccount({ account, settings });
   const [signedTx, err] = signTransaction(
     transformTransaction(transactions.signedTransaction),
-    data.secondPass,
+    account.secondPassphrase,
     networkIdentifier,
     {
       data: activeAccount,
     },
     false,
+    network,
   );
 
   if (!err) {
@@ -177,7 +181,7 @@ export const transactionBroadcasted = transaction =>
     const serviceUrl = network.networks[activeToken].serviceUrl;
 
     const [error] = await to(broadcast(
-      { transaction, serviceUrl },
+      { transaction, serviceUrl, network },
       activeToken,
     ));
 
@@ -205,3 +209,51 @@ export const transactionBroadcasted = transaction =>
       dispatch(timerReset());
     }
   };
+
+/**
+ * Signs a given multisignature transaction using passphrase
+ * and dispatches the relevant action.
+ *
+ * @param {object} data
+ * @param {object} data.rawTransaction Transaction config required by Lisk Element
+ * @param {object} data.sender
+ * @param {object} data.sender.data - Sender account info in Lisk API schema
+ * @todo account for privateKey and HW and increase test coverage once HW is implemented
+ */
+/* istanbul ignore next */
+export const multisigTransactionSigned = ({
+  rawTransaction, sender,
+}) => (dispatch, getState) => {
+  const {
+    network, account,
+  } = getState();
+  const networkIdentifier = selectNetworkIdentifier({ network });
+  const activeAccount = {
+    ...account.info.LSK,
+    passphrase: account.passphrase,
+    hwInfo: account.hwInfo,
+  };
+  // @todo move isTransactionFullySigned to a generic location
+  const isFullySigned = isTransactionFullySigned(sender.data, rawTransaction);
+
+  const [tx, error] = signTransaction(
+    rawTransaction,
+    activeAccount.passphrase,
+    networkIdentifier,
+    sender,
+    isFullySigned,
+    network,
+  );
+
+  if (!error) {
+    dispatch({
+      type: actionTypes.transactionDoubleSigned,
+      data: tx,
+    });
+  } else {
+    dispatch({
+      type: actionTypes.transactionSignError,
+      data: error,
+    });
+  }
+};

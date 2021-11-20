@@ -1,27 +1,11 @@
-import React from 'react';
 import { compose } from 'redux';
-import { useSelector } from 'react-redux';
-import { useTranslation } from 'react-i18next';
-import { getActiveTokenAccount } from '@utils/account';
+import { connect } from 'react-redux';
+import { withTranslation } from 'react-i18next';
+import { multisigTransactionSigned } from '@actions';
 import { getAccount } from '@api/account';
 import withData from '@utils/withData';
 import { withRouter } from 'react-router';
-import ReviewSignComp from './reviewSign';
-
-const ReviewSign = (props) => {
-  const { t } = useTranslation();
-  const networkIdentifier = useSelector(state => state.network.networks.LSK.networkIdentifier);
-  const account = useSelector(getActiveTokenAccount);
-
-  return (
-    <ReviewSignComp
-      t={t}
-      {...props}
-      networkIdentifier={networkIdentifier}
-      account={account}
-    />
-  );
-};
+import ReviewSign from './reviewSign';
 
 const apis = {
   senderAccount: {
@@ -36,7 +20,23 @@ const apis = {
   },
 };
 
+const mapStateToProps = state => ({
+  account: {
+    ...state.account.info.LSK,
+    passphrase: state.passphrase,
+    hwInfo: state.hwInfo,
+  },
+  network: state.network,
+  networkIdentifier: state.network.networks.LSK.networkIdentifier,
+});
+
+const dispatchToProps = {
+  multisigTransactionSigned,
+};
+
 export default compose(
+  connect(mapStateToProps, dispatchToProps),
   withRouter,
   withData(apis),
+  withTranslation(),
 )(ReviewSign);

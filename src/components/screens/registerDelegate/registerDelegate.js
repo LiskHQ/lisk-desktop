@@ -1,18 +1,14 @@
 import React from 'react';
 import MultiStep from '@shared/multiStep';
+import TransactionSignature from '@shared/transactionSignature';
 import Dialog from '@toolbox/dialog/dialog';
-import SelectNameAndFee from './selectNameAndFee/selectNameAndFee';
-import Summary from './summary/summary';
-import Status from './status/status';
+import Form from './form';
+import Summary from './summary';
+import Status from './status';
 import styles from './registerDelegate.css';
 
 const RegisterDelegate = ({
-  account,
-  transactions,
-  history,
-  network,
-  transactionBroadcasted,
-  t,
+  history, t,
 }) => (
   <Dialog hasClose>
     <MultiStep
@@ -20,21 +16,10 @@ const RegisterDelegate = ({
       prevPage={history.goBack}
       backButtonLabel={t('Back')}
     >
-      <SelectNameAndFee
-        t={t}
-        account={account}
-        network={network}
-      />
-      <Summary
-        t={t}
-        account={account}
-        network={network}
-      />
-      <Status
-        t={t}
-        transactionBroadcasted={transactionBroadcasted}
-        transactions={transactions}
-      />
+      <Form t={t} />
+      <Summary t={t} />
+      <TransactionSignature t={t} />
+      <Status t={t} />
     </MultiStep>
   </Dialog>
 );

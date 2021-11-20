@@ -1,25 +1,23 @@
 import React from 'react';
 import { mount } from 'enzyme';
 import accounts from '../../../../test/constants/accounts';
-import TransactionSummary from './index';
+import TransactionSummary from './transactionSummary';
 
 describe('TransactionSummary', () => {
   let props;
-  const hwInfo = {
-    deviceModel: 'Trezor Model T',
-    deviceId: 'mock id',
-  };
 
   beforeEach(() => {
     props = {
       title: 'mock title',
       account: accounts.genesis,
+      token: 'LSK',
       confirmButton: {
         label: 'Confirm',
         onClick: jest.fn(),
       },
       cancelButton: {
         label: 'Cancel',
+        onClick: jest.fn(),
       },
       t: key => key,
     };
@@ -30,52 +28,7 @@ describe('TransactionSummary', () => {
     expect(wrapper.find('h2').text()).toEqual(props.title);
   });
 
-  it('should render hw wallet confirmation if props.acount.hwInfo', () => {
-    const wrapper = mount(<TransactionSummary {...{
-      ...props,
-      account: { ...accounts.genesis, hwInfo },
-    }}
-    />);
-    expect(wrapper.find('h2')).toIncludeText('Confirm transaction on your');
-    expect(wrapper.find('.confirm-button')).toHaveLength(0);
-    expect(props.confirmButton.onClick).toHaveBeenCalled();
-  });
-
-  it('should not render hw wallet confirmation if props.acount.hwInfo and props.confirmButton.disabled', () => {
-    const wrapper = mount(<TransactionSummary {...{
-      ...props,
-      confirmButton: {
-        ...props.confirmButton,
-        disabled: true,
-      },
-      account: { ...accounts.genesis, hwInfo },
-    }}
-    />);
-    expect(wrapper.find('h2')).toIncludeText('Confirm transaction on your');
-    expect(wrapper.find('.confirm-button')).toHaveLength(0);
-    expect(props.confirmButton.onClick).not.toHaveBeenCalled();
-    wrapper.unmount();
-  });
-
-  it('should render copy/download buttons', () => {
-    const wrapper = mount(<TransactionSummary {... {
-      ...props,
-      account: {
-        ...props.account,
-        summary: {
-          ...props.account.summary,
-          isMultisignature: true,
-        },
-      },
-    }}
-    />);
-    expect(wrapper.find('.cancel-button').exists()).toBeTruthy();
-    expect(wrapper.find('.copy-button').exists()).toBeTruthy();
-    expect(wrapper.find('.download-button').exists()).toBeTruthy();
-    expect(wrapper.find('.confirm-button').exists()).toBeFalsy();
-  });
-
-  it('should call props.createTransaction', () => {
+  it('should call action functions of each button', () => {
     const createTransaction = jest.fn();
     const wrapper = mount(<TransactionSummary {... {
       ...props,
@@ -89,9 +42,9 @@ describe('TransactionSummary', () => {
       createTransaction,
     }}
     />);
-    wrapper.find('.copy-button').at(0).simulate('click');
-    expect(createTransaction).toHaveBeenCalledTimes(1);
-    wrapper.find('.download-button').at(0).simulate('click');
-    expect(createTransaction).toHaveBeenCalledTimes(2);
+    wrapper.find('.confirm-button').at(0).simulate('click');
+    expect(props.confirmButton.onClick).toHaveBeenCalled();
+    wrapper.find('.cancel-button').at(0).simulate('click');
+    expect(props.cancelButton.onClick).toHaveBeenCalled();
   });
 });

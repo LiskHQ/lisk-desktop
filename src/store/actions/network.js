@@ -1,5 +1,6 @@
 import { actionTypes, tokenKeys } from '@constants';
 import { getNetworkConfig } from '@api/network';
+import { getSchemas } from '@api/transaction';
 
 /**
  * call this action with a network name and address to update the
@@ -11,9 +12,12 @@ import { getNetworkConfig } from '@api/network';
  */
 export const networkConfigSet = async (data) => {
   const promises = tokenKeys.map(token => getNetworkConfig(data, token));
+  const moduleAssetSchemas = await getSchemas({ baseUrl: data.address });
+
   const networks = await Promise.all(promises);
   const networksWithNames = tokenKeys.reduce((acc, token, index) =>
     ({ ...acc, [token]: networks[index] }), {});
+  networksWithNames.LSK.moduleAssetSchemas = moduleAssetSchemas;
   return {
     type: actionTypes.networkConfigSet,
     data: { name: data.name, networks: networksWithNames },

@@ -4,8 +4,9 @@ import { networks } from '@constants';
 import * as delegatesApi from '@api/delegate';
 import { getTransactionBaseFees, getTransactionFee, create } from '@api/transaction';
 import { fromRawLsk } from '@utils/lsk';
+import * as hwManagerAPI from '@utils/hwManager';
 import accounts from '../../../../../test/constants/accounts';
-import SelectNameAndFee from './selectNameAndFee';
+import SelectNameAndFee from './form';
 import flushPromises from '../../../../../test/unit-test-utils/flushPromises';
 
 jest.mock('@api/network');
@@ -13,6 +14,7 @@ jest.mock('@api/transaction');
 jest.mock('@api/delegate', () => ({
   getDelegate: jest.fn().mockImplementation(() => Promise.resolve({ data: [] })),
 }));
+jest.mock('@utils/hwManager');
 
 const transactionBaseFees = {
   Low: 156,
@@ -34,7 +36,7 @@ getTransactionFee.mockImplementation((params) => {
   });
 });
 
-describe('SelectNameAndFee', () => {
+describe.skip('SelectNameAndFee', () => {
   let wrapper;
 
   const props = {
@@ -54,9 +56,8 @@ describe('SelectNameAndFee', () => {
   };
 
   beforeEach(() => {
-    // delegatesApi.getDelegate.mockReset();
-
     wrapper = mount(<SelectNameAndFee {...props} />);
+    hwManagerAPI.signTransactionByHW.mockResolvedValue({});
   });
 
   afterEach(() => {
@@ -71,7 +72,7 @@ describe('SelectNameAndFee', () => {
     expect(wrapper).toContainMatchingElement('.confirm-btn');
   });
 
-  it('type a valid and unused nickname', async () => {
+  it('type a valid and unused username', async () => {
     expect(wrapper).toContainMatchingElement('.select-name-input');
     expect(wrapper.find('button.confirm-btn')).toBeDisabled();
     wrapper.find('input.select-name-input')
@@ -84,12 +85,12 @@ describe('SelectNameAndFee', () => {
     wrapper.find('button.confirm-btn').simulate('click');
     await flushPromises();
     expect(props.nextStep).toBeCalledWith({
-      nickname: 'mydelegate',
+      username: 'mydelegate',
       transactionInfo: mockTransaction,
     });
   });
 
-  it('type an invalid nickname', () => {
+  it('type an invalid username', () => {
     expect(wrapper).toContainMatchingElement('.select-name-input');
     expect(wrapper.find('button.confirm-btn')).toBeDisabled();
     wrapper.find('input.select-name-input').simulate('change', { target: { value: 'mydelegate+' } });
@@ -107,7 +108,7 @@ describe('SelectNameAndFee', () => {
     expect(wrapper.find('button.confirm-btn')).toBeDisabled();
   });
 
-  it('disabled confirm button if nickname is longer than 20 chars', async () => {
+  it('disabled confirm button if username is longer than 20 chars', async () => {
     expect(wrapper.find('button.confirm-btn')).toBeDisabled();
     wrapper.find('input.select-name-input').simulate('change', { target: { value: 'mydelegate' } });
     jest.advanceTimersByTime(1000);

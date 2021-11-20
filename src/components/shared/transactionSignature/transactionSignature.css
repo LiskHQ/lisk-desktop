@@ -1,0 +1,22 @@
+.wrapper {
+  min-height: 400px;
+  flex: 1;
+  width: 100% !important;
+
+  & .content {
+    display: flex;
+    flex-flow: column nowrap;
+    justify-content: center;
+    align-items: center;
+    flex-grow: 1;
+
+    & h5 {
+      font-weight: var(--font-weight-bold);
+      color: var(--color-maastricht-blue);
+    }
+
+    & img {
+      width: 210px;
+    }
+  }
+}

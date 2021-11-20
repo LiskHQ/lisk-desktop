@@ -80,7 +80,7 @@ export class HwManager {
 
   /**
    * Remove a specific hwWallet from the manager
-   * @param {string} path - Path of hWWallet that shoud be removed
+   * @param {string} path - Path of hWWallet that should be removed
    */
   removeDevice(path) {
     const { sender } = this.pubSub;
@@ -119,7 +119,7 @@ export class HwManager {
   }
 
   /**
-   * Publish event throught sender with deviceList
+   * Publish event through sender with deviceList
    */
   async syncDevices() {
     const { sender } = this.pubSub;

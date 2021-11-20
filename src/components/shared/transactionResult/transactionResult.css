@@ -16,6 +16,12 @@
     color: var(--color-maastricht-blue);
   }
 
+  & > h6 {
+    font-weight: var(--font-weight-semi-bold);
+    margin: 20px 0 0;
+    color: var(--color-maastricht-blue);
+  }
+
   & a,
   & > p {
     @mixin contentLarge;
@@ -26,6 +32,7 @@
 
   & > p {
     color: var(--color-slate-gray);
+    max-width: 70%;
   }
 
   & .button {
@@ -34,7 +41,41 @@
   }
 
   & > img {
-    width: 128px;
+    width: 210px;
     margin-top: var(--horizontal-padding-l);
   }
+}
+
+.primaryActions {
+  width: 100%;
+  box-sizing: border-box;
+  display: flex;
+  flex-flow: row nowrap;
+  justify-content: center;
+  align-items: center;
+  margin-top: 20px;
+
+  & .copy,
+  & .download {
+    width: 160px;
+    flex-shrink: 0;
+    margin: 0 10px;
+
+    & img {
+      vertical-align: middle;
+      margin-right: 10px;
+    }
+
+    &.secondary {
+      & img {
+        filter: invert(45%) sepia(39%) saturate(7283%) hue-rotate(214deg) brightness(98%) contrast(95%);
+      }
+    }
+  }
+}
+
+.backToWallet {
+  margin-top: 30px;
+  margin-bottom: 30px;
+  width: 160px;
 }

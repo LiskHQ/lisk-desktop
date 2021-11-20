@@ -9,12 +9,13 @@ describe('Account Card', () => {
   beforeEach(() => {
     props = {
       account: {
-        address: '123456L',
-        balance: 100,
-        name: 'Lisk',
+        summary: {
+          address: 'lsk123',
+          balance: 100,
+          name: 'Lisk',
+        },
       },
-      accountOnEditMode: -1,
-      index: 0,
+      accountOnEditMode: '',
       t: v => v,
       onChangeAccountTitle: jest.fn(),
       onEditAccount: jest.fn(),
@@ -35,7 +36,7 @@ describe('Account Card', () => {
     expect(wrapper).not.toContainMatchingElement('.save-account');
     wrapper.find('.edit-account').at(0).simulate('click');
     expect(props.onEditAccount).toBeCalled();
-    wrapper.setProps({ accountOnEditMode: 0 });
+    wrapper.setProps({ accountOnEditMode: props.account.summary.address });
     wrapper.update();
     expect(wrapper).toContainMatchingElement('.save-account');
     wrapper.find('.account-name input').simulate('change', { target: { value: 'Lisk Account' } });

@@ -8,6 +8,7 @@ import Editor from './editor';
 
 const mapStateToProps = state => ({
   account: getActiveTokenAccount(state),
+  network: state.network,
   votes: state.voting,
   isVotingTxPending: containsTransactionType(
     state.transactions.pending,

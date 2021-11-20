@@ -44,7 +44,7 @@ class DelegateAnimation extends React.PureComponent {
   }
 
   render() {
-    const { className, onLoopComplete } = this.props;
+    const { className } = this.props;
     const { loop } = this.state;
     const animation = this.getAnimationName();
 
@@ -55,7 +55,6 @@ class DelegateAnimation extends React.PureComponent {
         name={animation}
         events={{
           complete: this.onComplete,
-          loopComplete: onLoopComplete,
         }}
       />
     );
@@ -65,7 +64,6 @@ class DelegateAnimation extends React.PureComponent {
 DelegateAnimation.propTypes = {
   className: PropTypes.string,
   status: PropTypes.oneOf(['success', 'pending', 'error']),
-  onLoopComplete: PropTypes.func.isRequired,
 };
 
 DelegateAnimation.defaultProps = {

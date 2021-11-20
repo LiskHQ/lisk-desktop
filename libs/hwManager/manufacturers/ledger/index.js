@@ -1,9 +1,6 @@
 /* istanbul ignore file */
-import { LedgerAccount, SupportedCoin, DposLedger } from 'dpos-ledger-api';
-import {
-  getBufferToHex,
-  getTransactionBytes,
-} from './utils';
+import { LedgerAccount, LiskLedger } from '@hirishh/lisk-ledger.js';
+
 import {
   ADD_DEVICE,
 } from '../../constants';
@@ -70,7 +67,6 @@ const listener = (transport, actions) => {
  */
 const getLedgerAccount = (index = 0) => {
   const ledgerAccount = new LedgerAccount();
-  ledgerAccount.coinIndex(SupportedCoin.LISK);
   ledgerAccount.account(index);
   return ledgerAccount;
 };
@@ -90,7 +86,7 @@ const checkIfInsideLiskApp = async ({
   let transport;
   try {
     transport = await transporter.open(device.path);
-    const liskLedger = new DposLedger(transport);
+    const liskLedger = new LiskLedger(transport);
     const ledgerAccount = getLedgerAccount();
     const account = await liskLedger.getPubKey(ledgerAccount.derivePath());
     device.openApp = !!account;
@@ -105,11 +101,11 @@ const getPublicKey = async (transporter, { device, data }) => {
   let transport = null;
   try {
     transport = await transporter.open(device.path);
-    const liskLedger = new DposLedger(transport);
+    const liskLedger = new LiskLedger(transport);
     const ledgerAccount = getLedgerAccount(data.index);
-    const { publicKey: res } = await liskLedger.getPubKey(ledgerAccount, data.showOnDevice);
+    const { publicKey } = await liskLedger.getPubKey(ledgerAccount, data.showOnDevice);
     transport.close();
-    return res;
+    return publicKey;
   } catch (error) {
     if (transport) transport.close();
     throw error;
@@ -120,42 +116,43 @@ const getAddress = async (transporter, { device, data }) => {
   let transport = null;
   try {
     transport = await transporter.open(device.path);
-    const liskLedger = new DposLedger(transport);
+    const liskLedger = new LiskLedger(transport);
     const ledgerAccount = getLedgerAccount(data.index);
-    const { publicKey: res } = await liskLedger.getPubKey(ledgerAccount, data.showOnDevice);
+    const { address } = await liskLedger.getPubKey(ledgerAccount, data.showOnDevice);
     transport.close();
-    return res;
+    return address;
   } catch (error) {
     if (transport) transport.close();
     throw error;
   }
 };
 
+// eslint-disable-next-line max-statements
 const signTransaction = async (transporter, { device, data }) => {
   let transport = null;
   try {
     transport = await transporter.open(device.path);
-    const liskLedger = new DposLedger(transport);
+    const liskLedger = new LiskLedger(transport);
     const ledgerAccount = getLedgerAccount(data.index);
-    const signature = await liskLedger.signTX(ledgerAccount, getTransactionBytes(data.tx), false);
+    const txToBeSigned = Buffer.concat([data.networkIdentifier, data.transactionBytes]);
+    const signature = await liskLedger.signTX(ledgerAccount, txToBeSigned);
     transport.close();
-    return getBufferToHex(signature);
+    return signature;
   } catch (error) {
     if (transport) transport.close();
     throw new Error(error);
   }
 };
 
-// eslint-disable-next-line max-statements
 const signMessage = async (transporter, { device, data }) => {
   let transport = null;
   try {
     transport = await transporter.open(device.path);
-    const liskLedger = new DposLedger(transport);
+    const liskLedger = new LiskLedger(transport);
     const ledgerAccount = getLedgerAccount(data.index);
     const signature = await liskLedger.signMSG(ledgerAccount, data.message);
     transport.close();
-    return getBufferToHex(signature.slice(0, 64));
+    return signature.slice(0, 64);
   } catch (error) {
     if (transport) transport.close();
     throw new Error(error);

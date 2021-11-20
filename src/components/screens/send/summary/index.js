@@ -4,9 +4,9 @@ import { withTranslation } from 'react-i18next';
 
 import { getActiveTokenAccount } from '@utils/account';
 import {
-  transactionCreated,
   resetTransactionResult,
   transactionDoubleSigned,
+  transactionCreated,
 } from '@actions';
 import Summary from './summary';
 
@@ -17,9 +17,9 @@ const mapStateToProps = state => ({
 });
 
 const mapDispatchToProps = {
-  transactionCreated,
   resetTransactionResult,
   transactionDoubleSigned,
+  transactionCreated,
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(withTranslation()(Summary));
