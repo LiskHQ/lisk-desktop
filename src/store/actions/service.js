@@ -1,6 +1,6 @@
 import i18next from 'i18next';
 import { toast } from 'react-toastify';
-import { actionTypes } from '@constants';
+import { actionTypes, tokenMap } from '@constants';
 import { getPrices } from '@api/market';
 
 const tickerReducer = (acc, key) => ({
@@ -13,8 +13,8 @@ const tickerReducer = (acc, key) => ({
 
 // eslint-disable-next-line import/prefer-default-export
 export const pricesRetrieved = () => (dispatch, getState) => {
-  const { settings: { token }, network } = getState();
-  const activeToken = token.active;
+  const { network } = getState();
+  const activeToken = tokenMap.LSK.key;
 
   return getPrices({ network })
     .then(({ data }) => {

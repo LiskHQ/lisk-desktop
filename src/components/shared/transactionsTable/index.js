@@ -45,6 +45,14 @@ const TransactionsTable = ({
   };
 
   /* istanbul ignore next */
+  const loadLastTransactions = () => {
+    if (document.querySelector(`.${styles.header}`).getBoundingClientRect().top - window.scrollY <= 50) {
+      document.querySelector('.transactions-box').scrollIntoView(true);
+    }
+    return transactions.loadData;
+  };
+
+  /* istanbul ignore next */
   const formatters = {
     height: value => `${t('Height')}: ${value}`,
     moduleAssetId: value => `${t('Type')}: ${getModuleAssetTitle()[value]}`,
@@ -54,23 +62,23 @@ const TransactionsTable = ({
 
   return (
     <Box main isLoading={transactions.isLoading} className="transactions-box">
-      <BoxHeader>
+      <BoxHeader className={styles.header}>
         <h1>{title}</h1>
+        {isLoadMoreEnabled && (
+          <LoadLatestButton
+            buttonClassName={`${styles.loadButton} load-latest`}
+            entity="transaction"
+            onClick={loadLastTransactions}
+          >
+            {t('New transactions')}
+          </LoadLatestButton>
+        )}
         <FilterDropdownButton
           fields={fields}
           filters={filters}
           applyFilters={applyFilters}
         />
       </BoxHeader>
-      {isLoadMoreEnabled
-        && (
-        <LoadLatestButton
-          entity="transaction"
-          onClick={transactions.loadData}
-        >
-          {t('New transactions')}
-        </LoadLatestButton>
-        )}
       <FilterBar {...{
         clearFilter, clearAllFilters, filters, formatters, t,
       }}
@@ -83,6 +91,7 @@ const TransactionsTable = ({
           loadData={handleLoadMore}
           additionalRowProps={{ t, currentBlockHeight }}
           header={header(changeSort, t)}
+          headerClassName={styles.tableHeader}
           currentSort={sort}
           canLoadMore={canLoadMore}
           error={transactions.error}

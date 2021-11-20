@@ -20,15 +20,6 @@ class Settings extends React.Component {
     this.setCurrency = this.setCurrency.bind(this);
     this.handleCheckboxChange = this.handleCheckboxChange.bind(this);
     this.toggleAutoLog = this.toggleAutoLog.bind(this);
-    this.handleTokenToggle = this.handleTokenToggle.bind(this);
-  }
-
-  handleTokenToggle({ target: { name } }) {
-    const { settings } = this.props;
-    const newSettings = {
-      token: { list: { [name]: !settings.token.list[name] } },
-    };
-    this.onUpdateSettings(newSettings);
   }
 
   toggleAutoLog({ target }) {
@@ -62,11 +53,9 @@ class Settings extends React.Component {
   render() {
     const {
       t, settings,
-      account,
     } = this.props;
     const { currencies } = this.state;
 
-    const isHardwareWalletAccount = account.hwInfo && !!account.hwInfo.deviceId;
     const activeCurrency = settings.currency || settingsConst.currencies[0];
 
     return (
@@ -146,36 +135,6 @@ class Settings extends React.Component {
                   <p>{t('Enable network switcher to connect to different networks or service nodes when signing in.')}</p>
                 </div>
               </label>
-              <label className={`${styles.fieldGroup} ${styles.checkboxField}`}>
-                <CheckBox
-                  name="enableCustomDerivationPath"
-                  className={`${styles.checkbox} enableCustomDerivationPath`}
-                  checked={settings.enableCustomDerivationPath}
-                  onChange={this.handleCheckboxChange}
-                />
-                <div>
-                  <span className={styles.labelName}>{t('Enable custom derivation path')}</span>
-                  <p>{t('Modify recovery phrase derivation path')}</p>
-                </div>
-              </label>
-              {
-                !isHardwareWalletAccount
-                  ? (
-                    <label className={`${styles.fieldGroup} ${styles.checkboxField} enableBTC`}>
-                      <CheckBox
-                        name="BTC"
-                        className={`${styles.checkbox}`}
-                        checked={!!(settings.token && settings.token.list.BTC)}
-                        onChange={this.handleTokenToggle}
-                      />
-                      <div>
-                        <span className={styles.labelName}>{t('Enable BTC')}</span>
-                        <p>{t('Enable Bitcoin wallet support.')}</p>
-                      </div>
-                    </label>
-                  )
-                  : null
-              }
             </section>
             <section>
               <h2>{t('Privacy')}</h2>

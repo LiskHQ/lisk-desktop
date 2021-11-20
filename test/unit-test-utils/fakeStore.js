@@ -1,4 +1,5 @@
 import configureStore from 'redux-mock-store';
+import { tokenMap } from '@constants';
 import accounts from '../constants/accounts';
 import delegates from '../constants/delegates';
 
@@ -29,10 +30,10 @@ const defaultStore = {
     advancedMode: true,
     areTermsOfUseAccepted: true,
     token: {
-      active: 'LSK',
+      active: tokenMap.LSK.key,
       list: {
-        BTC: true,
-        LSK: true,
+        [tokenMap.BTC.key]: false,
+        [tokenMap.LSK.key]: true,
       },
     },
   },

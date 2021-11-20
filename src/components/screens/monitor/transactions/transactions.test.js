@@ -1,6 +1,18 @@
-import { mountWithRouter } from '@utils/testHelpers';
-import TransactionsPure from './transactions';
+import { act } from 'react-dom/test-utils';
+import { useSelector } from 'react-redux';
+import { mountWithRouter, mountWithRouterAndStore } from '@utils/testHelpers';
 import transactions from '../../../../../test/constants/transactions';
+import defaultState from '../../../../../test/constants/defaultState';
+import TransactionsPure from './transactions';
+
+jest.mock('react-redux', () => ({
+  ...jest.requireActual('react-redux'),
+  useSelector: jest.fn(),
+}));
+
+afterEach(() => {
+  useSelector.mockClear();
+});
 
 describe('Transactions monitor page', () => {
   const props = {
@@ -45,6 +57,45 @@ describe('Transactions monitor page', () => {
     expect(props.transactions.loadData).toHaveBeenCalledWith(
       { offset: transactionsWithData.data.length, sort },
     );
+  });
+
+  it.skip('allows to load latest transactions', () => {
+    const newState = {
+      ...defaultState,
+      blocks: {
+        ...defaultState.blocks,
+        latestBlocks: [
+          { height: 123123124, numberOfTransactions: 2 },
+          { height: 123123126, numberOfTransactions: 5 },
+          { height: 123123127, numberOfTransactions: 6 },
+        ],
+      },
+    };
+    const wrapper = mountWithRouterAndStore(
+      TransactionsPure,
+      { ...props, transactions: transactionsWithData },
+      {},
+      defaultState,
+    );
+    wrapper.update();
+    // simulate new transactions
+    // mock selector used in transactions table
+    useSelector.mockImplementation(callback => callback(newState));
+    // store.dispatch({
+    //   type: actionTypes.newBlockCreated,
+    //   data: {
+    //     block: { height: 123123126, numberOfTransactions: 5 },
+    //   },
+    // });
+    // store.dispatch({
+    //   type: actionTypes.newBlockCreated,
+    //   data: {
+    //     block: { height: 123123127, numberOfTransactions: 6 },
+    //   },
+    // });
+    act(() => { wrapper.update(); });
+    wrapper.find('button.load-latest').simulate('click');
+    expect(props.transactions.loadData).toHaveBeenCalled();
   });
 
   it('shows error if API failed', () => {

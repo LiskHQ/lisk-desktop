@@ -33,6 +33,8 @@ import styles from './table.css';
  *    key: 'keyName',
  *  }
  * it helps you to define which function and ith what parameter to be called for sorting.
+ * @param {String} headerClassName
+ * You can pass a class for the table header
  * @param {Function} row
  * A component, preferably a pure component with update condition handled through
  * shouldComponentUpdate method or areEqual function. this will help keep the
@@ -66,6 +68,7 @@ const Table = ({
   data = [],
   loadData,
   header,
+  headerClassName,
   row,
   currentSort,
   loadingState,
@@ -82,6 +85,7 @@ const Table = ({
       <List
         data={data}
         header={header}
+        headerClassName={headerClassName}
         currentSort={currentSort}
         iterationKey={iterationKey}
         Row={Row}
