@@ -44,7 +44,7 @@
   "Amount range": "Amount range",
   "Amount to unlock": "Amount to unlock",
   "An error occurred while rendering this page": "An error occurred while rendering this page",
-  "An error occurred while sending your transaction to the blockchain. Please try again.": "An error occurred while sending your transaction to the blockchain. Please try again.",
+  "An error occurred while sending your transaction to the network. Please try again.": "An error occurred while sending your transaction to the network. Please try again.",
   "An error occurred while signing your transaction. Please try again.": "An error occurred while signing your transaction. Please try again.",
   "An error occurred.": "An error occurred.",
   "An initial one-time transfer fee will be deducted from the new account.": "An initial one-time transfer fee will be deducted from the new account.",
