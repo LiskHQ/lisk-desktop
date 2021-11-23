@@ -5,11 +5,9 @@ import DelegateAnimation from '../animations/delegateAnimation';
 import statusMessages from './statusMessages';
 import styles from './status.css';
 
-const Status = ({
-  transactions, account, t,
-}) => {
+const Status = ({ transactions, account, t }) => {
   const [animationStatus, setAnimationStatus] = useState('pending');
-  const status = getTransactionStatus(transactions);
+  const status = getTransactionStatus(account, transactions);
   const template = statusMessages(t)[status.code];
   const isConfirmed = !!account.dpos.delegate?.username;
 

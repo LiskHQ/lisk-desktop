@@ -4,11 +4,8 @@ import TransactionResult from '@shared/transactionResult';
 import { getTransactionStatus, statusMessages } from '@shared/transactionResult/statusConfig';
 import styles from './status.css';
 
-const TransactionStatus = ({
-  transactions,
-  t,
-}) => {
-  const status = getTransactionStatus(transactions);
+const TransactionStatus = ({ account, transactions, t }) => {
+  const status = getTransactionStatus(account, transactions);
   const template = statusMessages(t)[status.code];
 
   return (

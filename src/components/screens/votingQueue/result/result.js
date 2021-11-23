@@ -7,9 +7,9 @@ import statusMessages from './statusMessages';
 import styles from './styles.css';
 
 const Result = ({
-  t, transactions, statusInfo,
+  account, transactions, statusInfo, t,
 }) => {
-  const status = getTransactionStatus(transactions);
+  const status = getTransactionStatus(account, transactions);
   const template = statusMessages(t, statusInfo)[status.code];
 
   return (

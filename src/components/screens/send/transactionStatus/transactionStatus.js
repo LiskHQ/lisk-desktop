@@ -45,7 +45,7 @@ const TransactionStatus = ({
   }, []);
 
   const showBookmark = shouldShowBookmark(bookmarks, account, rawTransaction, token);
-  const status = getTransactionStatus(transactions);
+  const status = getTransactionStatus(account, transactions);
   const template = getMessagesDetails(
     transactions, status, t,
     false,
