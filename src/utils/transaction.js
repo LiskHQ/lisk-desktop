@@ -1,6 +1,6 @@
 /* eslint-disable max-lines */
 import { transactions } from '@liskhq/lisk-client';
-import { MODULE_ASSETS_NAME_ID_MAP } from '@constants';
+import { DEFAULT_NUMBER_OF_SIGNATURES, MODULE_ASSETS_NAME_ID_MAP } from '@constants';
 import {
   extractAddressFromPublicKey,
   getBase32AddressFromAddress,
@@ -444,6 +444,16 @@ const signTransaction = (
   return [signedTransaction, err];
 };
 
+const getNumberOfSignatures = (account, transaction) => {
+  if (transaction?.moduleAssetId === MODULE_ASSETS_NAME_ID_MAP.registerMultisignatureGroup) {
+    return transaction.asset.optionalKeys.length + transaction.asset.mandatoryKeys.length + 1;
+  }
+  if (account?.summary?.isMultisignature) {
+    return account.keys.numberOfSignatures;
+  }
+  return DEFAULT_NUMBER_OF_SIGNATURES;
+};
+
 export {
   getTxAmount,
   downloadJSON,
@@ -454,4 +464,5 @@ export {
   createTransactionObject,
   normalizeTransactionParams,
   signTransaction,
+  getNumberOfSignatures,
 };
