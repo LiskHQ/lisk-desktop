@@ -1,20 +1,19 @@
 .header {
   position: sticky;
   top: 0;
-  background-color: var(--color-mystic);
+  background-color: var(--color-body-bg);
 }
 
 .loadButton {
-  position: sticky;
+  position: absolute;
   top: 0;
   z-index: 4;
-  align-self: end;
 }
 
 .tableHeader {
   position: sticky;
   top: 70px;
-  background: white;
+  background: var(--color-white);
   z-index: 2;
   border-bottom: 2px solid var(--color-mystic);
 }
