@@ -18,8 +18,8 @@ export const statusMessages = t => ({
     message: t('You can download or copy the transaction and share it with other members.'),
   },
   [txStatusTypes.multisigSignatureSuccess]: {
-    title: t('Your signature was successful'),
-    message: t('You can download or copy the transaction and share it with other members. You can send the transaction too.'),
+    title: t('The transaction is now fully signed'),
+    message: t('Now you can send it to the blockchain. You may also copy or download it, if you wish to send the transaction using another device later.'),
   },
   [txStatusTypes.signatureSuccess]: {
     title: t('Submitting the transaction'),
