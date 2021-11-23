@@ -56,41 +56,46 @@ export const statusMessages = t => ({
  */
 // eslint-disable-next-line max-statements
 export const getTransactionStatus = (account, transactions) => {
+  // Signature errors
   if (transactions.txSignatureError) {
-    return transactions.txSignatureError.message.indexOf('hwCommand') > -1
-      ? {
+    if (transactions.txSignatureError.message.indexOf('hwCommand') > -1) {
+      return {
         code: txStatusTypes.hwRejected,
         message: transactions.txSignatureError.message,
-      }
-      : {
-        code: txStatusTypes.signatureError,
-        message: transactionToJSON(transactions.txSignatureError),
       };
+    }
+
+    return {
+      code: txStatusTypes.signatureError,
+      message: transactionToJSON(transactions.txSignatureError),
+    };
   }
-  const requiredSignatures = getNumberOfSignatures(account, transactions);
-  const nonEmptySignatures = transactions
-    .signedTransaction.signatures.filter(sig => sig.length > 0).length;
-  if (
-    !isEmpty(transactions.signedTransaction)
-    && nonEmptySignatures < requiredSignatures
-  ) {
-    return { code: txStatusTypes.multisigSignaturePartialSuccess };
-  }
-  if (
-    !isEmpty(transactions.signedTransaction)
-    && requiredSignatures > 1
-    && nonEmptySignatures === requiredSignatures
-  ) {
-    return { code: txStatusTypes.multisigSignatureSuccess };
-  }
+
+  // signature success
   if (!isEmpty(transactions.signedTransaction)) {
+    const requiredSignatures = getNumberOfSignatures(account, transactions);
+    const nonEmptySignatures = transactions
+      .signedTransaction.signatures.filter(sig => sig.length > 0).length;
+
+    if (nonEmptySignatures < requiredSignatures) {
+      return { code: txStatusTypes.multisigSignaturePartialSuccess };
+    }
+
+    if (requiredSignatures > 1 && nonEmptySignatures === requiredSignatures) {
+      return { code: txStatusTypes.multisigSignatureSuccess };
+    }
+
     return { code: txStatusTypes.signatureSuccess };
   }
+
+  // broadcast error
   if (transactions.txBroadcastError) {
     return {
       code: txStatusTypes.broadcastError,
       message: transactionToJSON(transactions.txBroadcastError),
     };
   }
+
+  // broadcast success
   return { code: txStatusTypes.broadcastSuccess };
 };
