@@ -1,15 +1,3 @@
-.header {
-  position: sticky;
-  top: 0;
-  background-color: var(--color-body-bg);
-}
-
-.loadButton {
-  position: absolute;
-  top: 0;
-  z-index: 4;
-}
-
 .tableHeader {
   position: sticky;
   top: 70px;
