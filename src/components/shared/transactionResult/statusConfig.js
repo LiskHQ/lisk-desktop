@@ -1,4 +1,4 @@
-import { transactionToJSON } from '@utils/transaction';
+import { transactionToJSON, getNumberOfSignatures } from '@utils/transaction';
 import { isEmpty } from '@utils/helpers';
 
 export const txStatusTypes = {
@@ -50,11 +50,12 @@ export const statusMessages = t => ({
 /**
  * Defines the status of the broadcasted tx.
  *
+ * @param {Object} account - active account info
  * @param {Object} transactions - Transactions status from the redux store
  * @returns {Object} The status code and message
  */
 // eslint-disable-next-line max-statements
-export const getTransactionStatus = (transactions) => {
+export const getTransactionStatus = (account, transactions) => {
   if (transactions.txSignatureError) {
     return transactions.txSignatureError.message.indexOf('hwCommand') > -1
       ? {
@@ -66,16 +67,19 @@ export const getTransactionStatus = (transactions) => {
         message: transactionToJSON(transactions.txSignatureError),
       };
   }
+  const requiredSignatures = getNumberOfSignatures(account, transactions);
+  const nonEmptySignatures = transactions
+    .signedTransaction.signatures.filter(sig => sig.length > 0).length;
   if (
     !isEmpty(transactions.signedTransaction)
-    && transactions.signedTransaction.signatures.some(sig => sig.length === 0)
+    && nonEmptySignatures < requiredSignatures
   ) {
     return { code: txStatusTypes.multisigSignaturePartialSuccess };
   }
   if (
     !isEmpty(transactions.signedTransaction)
-    && transactions.signedTransaction.signatures.length > 1
-    && !transactions.signedTransaction.signatures.some(sig => sig.length === 0)
+    && requiredSignatures > 1
+    && nonEmptySignatures === requiredSignatures
   ) {
     return { code: txStatusTypes.multisigSignatureSuccess };
   }
