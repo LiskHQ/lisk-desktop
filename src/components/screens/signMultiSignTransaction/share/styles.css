@@ -1,7 +1,6 @@
 @import '../styles.css';
 
 .content {
-  max-width: 450px;
   margin: 0 auto;
   padding-bottom: 0;
 }
