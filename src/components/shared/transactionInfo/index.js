@@ -1,7 +1,5 @@
 import React from 'react';
-import withData from '@utils/withData';
 import { withTranslation } from 'react-i18next';
-import { getAccounts } from '@api/account';
 import AccountVisual from '@toolbox/accountVisual';
 import LiskAmount from '@shared/liskAmount';
 import { tokenMap, MODULE_ASSETS_NAME_ID_MAP } from '@constants';
@@ -27,51 +25,28 @@ const CustomTransactionInfo = ({ moduleAssetId, ...restProps }) => {
   }
 };
 
-const MemberType = ({
-  t, keys, account,
-}) => {
-  const type = keys.mandatoryKeys.includes(account.summary.publicKey) ? t('Mandatory') : t('Optional');
-  return (
-    <p className={styles.memberTitle}>
-      {account.summary.username || account.summary.address}
-      <span>{`(${type})`}</span>
-    </p>
-  );
-};
-
-const Members = ({ accounts, keys, t }) => (
+const Members = ({ members, t }) => (
   <section>
     <label>{t('Members')}</label>
     <div className={styles.membersContainer}>
-      {accounts.data?.map((account, i) => (
+      {members.map((member, i) => (
         <div
           className={styles.memberInfo}
           key={i + 1}
         >
-          <AccountVisual address={account.summary.address} />
+          <AccountVisual address={member.address} />
           <div className={styles.memberDetails}>
-            <MemberType t={t} keys={keys} account={account} />
-            <p className={styles.memberKey}>{account.summary.publicKey}</p>
+            <p className={styles.memberTitle}>
+              {member.address}
+              <span>{`(${member.isMandatory ? t('Mandatory') : t('Optional')})`}</span>
+            </p>
+            <p className={styles.memberKey}>{member.publicKey}</p>
           </div>
         </div>
       ))}
     </div>
   </section>
 );
-
-const MembersWithData = withData({
-  accounts: {
-    apiUtil: (network, { token, ...params }) => getAccounts({ network, params }, token),
-    defaultData: [],
-    getApiParams: (state, props) => ({
-      token: state.settings.token.active,
-      publicKeyList: [...props.keys.mandatoryKeys, ...props.keys.optionalKeys],
-      network: state.network,
-    }),
-    autoload: true,
-    transformResponse: response => response.data,
-  },
-})(Members);
 
 const TransactionInfo = ({
   isMultisignature, t, transaction, date, account, ...restProps
@@ -116,7 +91,7 @@ const TransactionInfo = ({
             </label>
           </div>
         </section>
-        <MembersWithData t={t} keys={account.keys} />
+        <Members t={t} members={account.keys.members} />
       </>
     )}
   </>
