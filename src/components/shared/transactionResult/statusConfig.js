@@ -73,7 +73,11 @@ export const getTransactionStatus = (account, transactions) => {
 
   // signature success
   if (!isEmpty(transactions.signedTransaction)) {
-    const requiredSignatures = getNumberOfSignatures(account, transactions);
+    const transaction = {
+      ...transactions.signedTransaction.asset,
+      moduleAssetId: `${transactions.signedTransaction.moduleID}:${transactions.signedTransaction.assetID}`,
+    };
+    const requiredSignatures = getNumberOfSignatures(account, transaction);
     const nonEmptySignatures = transactions
       .signedTransaction.signatures.filter(sig => sig.length > 0).length;
 
