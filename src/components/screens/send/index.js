@@ -8,7 +8,7 @@ import TransactionSignature from '@shared/transactionSignature';
 import Dialog from '@toolbox/dialog/dialog';
 import Form from './form';
 import Summary from './summary';
-import TransactionStatus from './transactionStatus';
+import Status from './status';
 import styles from './send.css';
 
 const Send = ({ history }) => {
@@ -28,7 +28,7 @@ const Send = ({ history }) => {
         <Form initialValue={initialValue} />
         <Summary />
         <TransactionSignature />
-        <TransactionStatus history={history} />
+        <Status history={history} />
       </MultiStep>
     </Dialog>
   );
