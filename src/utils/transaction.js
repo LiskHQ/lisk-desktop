@@ -456,7 +456,7 @@ const signTransaction = (
  */
 const getNumberOfSignatures = (account, transaction) => {
   if (transaction?.moduleAssetId === MODULE_ASSETS_NAME_ID_MAP.registerMultisignatureGroup) {
-    return transaction.asset.optionalKeys.length + transaction.asset.mandatoryKeys.length + 1;
+    return transaction.optionalKeys.length + transaction.mandatoryKeys.length + 1;
   }
   if (account?.summary?.isMultisignature) {
     return account.keys.numberOfSignatures;
