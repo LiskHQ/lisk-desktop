@@ -5,12 +5,11 @@ import withFilters from '@utils/withFilters';
 import { getModuleAssetTitle } from '@utils/moduleAssets';
 import Box from '@toolbox/box';
 import BoxContent from '@toolbox/box/content';
-import BoxHeader from '@toolbox/box/header';
 import Table from '@toolbox/table';
 import { selectCurrentBlockHeight } from '@store/selectors';
+import StickyHeader from '@shared/stickyHeader';
 import FilterBar from '../filterBar';
 import FilterDropdownButton from '../filterDropdownButton';
-import LoadLatestButton from '../loadLatestButton';
 import styles from './transactionsTable.css';
 import TransactionRow from './transactionRow';
 import header from './tableHeader';
@@ -45,12 +44,7 @@ const TransactionsTable = ({
   };
 
   /* istanbul ignore next */
-  const loadLastTransactions = () => {
-    if (document.querySelector(`.${styles.header}`).getBoundingClientRect().top - window.scrollY <= 50) {
-      document.querySelector('.transactions-box').scrollIntoView(true);
-    }
-    return transactions.loadData;
-  };
+  const loadLastTransactions = () => { transactions.loadData(); };
 
   /* istanbul ignore next */
   const formatters = {
@@ -62,23 +56,19 @@ const TransactionsTable = ({
 
   return (
     <Box main isLoading={transactions.isLoading} className="transactions-box">
-      <BoxHeader className={styles.header}>
-        <h1>{title}</h1>
-        {isLoadMoreEnabled && (
-          <LoadLatestButton
-            buttonClassName={`${styles.loadButton} load-latest`}
-            entity="transaction"
-            onClick={loadLastTransactions}
-          >
-            {t('New transactions')}
-          </LoadLatestButton>
-        )}
-        <FilterDropdownButton
-          fields={fields}
-          filters={filters}
-          applyFilters={applyFilters}
-        />
-      </BoxHeader>
+      <StickyHeader
+        title={title}
+        button={isLoadMoreEnabled ? {
+          className: 'load-latest',
+          entity: 'transaction',
+          onClick: loadLastTransactions,
+          label: t('New transactions'),
+        } : undefined}
+        scrollToSelector=".transactions-box"
+        filters={
+          <FilterDropdownButton fields={fields} filters={filters} applyFilters={applyFilters} />
+        }
+      />
       <FilterBar {...{
         clearFilter, clearAllFilters, filters, formatters, t,
       }}
