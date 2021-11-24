@@ -1,11 +1,12 @@
 import { getTransactionFee } from '@api/transaction';
+import { getNumberOfSignatures } from '@utils/transaction';
 import {
   VOTE_AMOUNT_STEP,
   MIN_ACCOUNT_BALANCE,
   MODULE_ASSETS_NAME_ID_MAP,
 } from '@constants';
 import { toRawLsk } from '@utils/lsk';
-import { normalizeVotesForTx, getNumberOfSignatures } from '@shared/transactionPriority';
+import { normalizeVotesForTx } from '@shared/transactionPriority';
 
 /**
  * Calculates the maximum vote amount possible. It
@@ -49,7 +50,7 @@ const getMaxAmount = async (account, network, voting, address) => {
     network,
     transaction,
     selectedPriority: { title: 'Normal', value: 0, selectedIndex: 0 }, // Always set to LOW
-    numberOfSignatures: getNumberOfSignatures(account),
+    numberOfSignatures: getNumberOfSignatures(account, transaction),
   }, 'LSK');
 
   // If the "sum of vote amounts + fee + dust" exceeds balance

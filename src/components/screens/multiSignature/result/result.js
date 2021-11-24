@@ -4,10 +4,8 @@ import { statusMessages, getTransactionStatus } from '@shared/transactionResult/
 import ProgressBar from '../progressBar';
 import styles from './styles.css';
 
-const Result = ({
-  t, transactions,
-}) => {
-  const status = getTransactionStatus(transactions);
+const Result = ({ account, transactions, t }) => {
+  const status = getTransactionStatus(account, transactions);
   const template = statusMessages(t)[status.code];
 
   return (

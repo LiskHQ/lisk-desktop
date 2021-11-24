@@ -6,6 +6,11 @@ import Share from './share';
 
 const mapStateToProps = state => ({
   transactions: state.transactions,
+  account: {
+    ...state.account.info[state.settings.token.active],
+    hwInfo: state.account.hwInfo,
+    passphrase: state.account.passphrase,
+  },
 });
 
 export default compose(
