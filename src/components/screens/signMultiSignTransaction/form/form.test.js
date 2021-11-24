@@ -1,8 +1,8 @@
 import React from 'react';
 import { mount } from 'enzyme';
-import ImportData from './importData';
+import Form from './form';
 
-describe.skip('Multisignature ImportData component', () => {
+describe.skip('Multisignature Form component', () => {
   let wrapper;
   const props = {
     t: v => v,
@@ -10,7 +10,7 @@ describe.skip('Multisignature ImportData component', () => {
   };
 
   beforeEach(() => {
-    wrapper = mount(<ImportData {...props} />);
+    wrapper = mount(<Form {...props} />);
   });
 
   it('renders properly', () => {

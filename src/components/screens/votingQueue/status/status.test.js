@@ -1,5 +1,5 @@
 import { mountWithRouter } from '@utils/testHelpers';
-import Result from './result';
+import Result from './status';
 
 const props = {
   t: s => s,

@@ -13,7 +13,7 @@ import styles from './styles.css';
 
 const reader = new FileReader();
 
-const ImportData = ({ t, nextStep, network }) => {
+const Form = ({ t, nextStep, network }) => {
   const [transaction, setTransaction] = useState();
   const [error, setError] = useState();
 
@@ -113,4 +113,4 @@ const ImportData = ({ t, nextStep, network }) => {
   );
 };
 
-export default ImportData;
+export default Form;
