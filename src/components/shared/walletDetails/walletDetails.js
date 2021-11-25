@@ -60,7 +60,7 @@ const WalletDetails = ({
                     {token === tokenMap.LSK.key ? (
                       <LockedBalanceLink
                         style={styles.lockedBalance}
-                        icon="zodiacBlueLock"
+                        icon="lockedBalance"
                       />
                     ) : null}
                   </DiscreetMode>
