@@ -1,17 +1,13 @@
+/* istanbul ignore file */
 import { connect } from 'react-redux';
 import { compose } from 'redux';
 import { withTranslation } from 'react-i18next';
+import { getActiveTokenAccount } from '@utils/account';
 import Status from './status';
 
 const mapStateToProps = state => ({
-  isMigrated: state.account.info.LSK.summary.isMigrated,
+  account: getActiveTokenAccount(state),
   transactions: state.transactions,
-  network: state.network,
-  account: {
-    ...state.account.info[state.settings.token.active],
-    hwInfo: state.account.hwInfo,
-    passphrase: state.account.passphrase,
-  },
 });
 
 export default compose(

@@ -8,9 +8,9 @@ import { removeSearchParamsFromUrl } from '@utils/searchParams';
 import { processLaunchProtocol } from '@actions';
 import MultiStep from '@shared/multiStep';
 
-import Editor from './editor';
+import Form from './form';
 import Summary from './summary';
-import Result from './result';
+import Status from './status';
 import styles from './styles.css';
 
 const VotingQueue = ({ history }) => {
@@ -32,10 +32,10 @@ const VotingQueue = ({ history }) => {
       finalCallback={closeModal}
       className={styles.modal}
     >
-      <Editor />
+      <Form />
       <Summary />
       <TransactionSignature />
-      <Result />
+      <Status />
     </MultiStep>
   );
 };
