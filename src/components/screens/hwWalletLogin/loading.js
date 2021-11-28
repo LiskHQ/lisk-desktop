@@ -24,7 +24,7 @@ class Loading extends React.Component {
     return (
       <div>
         <h1>{t('Connect your Hardware Wallet')}</h1>
-        <p>{t('Lisk currently supports Ledger Nano S, Ledger Nano X, Trezor One and Trezor Model T wallets')}</p>
+        <p>{t('Lisk currently supports Ledger Nano S, Ledger Nano X wallets')}</p>
         <LoadingIcon />
         <p>{t('Looking for a device...')}</p>
         <Link to={routes.login.path}>
