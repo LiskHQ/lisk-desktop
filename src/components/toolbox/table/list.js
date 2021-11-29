@@ -13,12 +13,12 @@ const getUniqueKey = (data, index, key) => {
 };
 
 const List = ({
-  data, header, currentSort, iterationKey, Row, error, additionalRowProps,
+  data, header, headerClassName, currentSort, iterationKey, Row, error, additionalRowProps,
 }) => {
   if (data.length === 0 || error) return null;
   return (
     <>
-      <Header data={header} currentSort={currentSort} />
+      <Header data={header} currentSort={currentSort} headerClassName={headerClassName} />
       {data.map((item, index) => (
         <Row
           key={getUniqueKey(item, index, iterationKey)}

@@ -11,7 +11,6 @@ import {
   transactionCreated,
 } from './transactions';
 import { sampleTransaction } from '../../../test/constants/transactions';
-import accounts from '../../../test/constants/accounts';
 import { getState } from '../../../test/fixtures/transactions';
 
 jest.mock('@api/delegate');
@@ -250,9 +249,7 @@ describe('actions: transactions', () => {
 
     it('should create an action to store double signed tx', async () => {
       // Consume the utility
-      await transactionDoubleSigned({
-        secondPass: accounts.secondPass.secondPass,
-      })(dispatch, getStateWithTx);
+      await transactionDoubleSigned()(dispatch, getStateWithTx);
 
       // Prepare expectations
       const expectedAction = {
@@ -272,9 +269,7 @@ describe('actions: transactions', () => {
       // }, error]);
 
       // Consume the utility
-      await transactionDoubleSigned({
-        secondPass: accounts.secondPass.secondPass,
-      })(dispatch, getStateWithTx);
+      await transactionDoubleSigned()(dispatch, getStateWithTx);
 
       // Prepare expectations
       const expectedAction = {

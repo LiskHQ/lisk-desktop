@@ -1,6 +1,6 @@
 import React from 'react';
 import { mount } from 'enzyme';
-import AcountVisualWithAddress from '.';
+import AccountVisualWithAddress from '.';
 
 describe('AccountVisualWithAddress component', () => {
   const props = {
@@ -16,7 +16,7 @@ describe('AccountVisualWithAddress component', () => {
   };
 
   it('should show bookmarked name if address is bookmarked', () => {
-    const wrapper = mount(<AcountVisualWithAddress {...props} />);
+    const wrapper = mount(<AccountVisualWithAddress {...props} />);
     expect(wrapper.find('.addressValue').at(0)).toHaveText('BM');
   });
 });

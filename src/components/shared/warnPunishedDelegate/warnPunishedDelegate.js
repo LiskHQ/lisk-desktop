@@ -3,6 +3,7 @@ import { withTranslation } from 'react-i18next';
 import PropTypes from 'prop-types';
 import { routes } from '@constants';
 import { useTheme } from '@utils/theme';
+import { SecondaryButton } from '@toolbox/buttons';
 import FlashMessage from '@toolbox/flashMessage/flashMessage';
 import FlashMessageHolder from '@toolbox/flashMessage/holder';
 import Icon from '@toolbox/icon';
@@ -13,6 +14,7 @@ const WarnPunishedDelegate = ({
   isBanned,
   history,
   daysLeft,
+  readMore,
   punishmentStartDate,
   ...props
 }) => {
@@ -46,13 +48,13 @@ const WarnPunishedDelegate = ({
           <Icon name="warningYellow" />
           {`${message}`}
           <div className={styles.btnContainer}>
-            {/* TODO: re-enable button when readmore blog content becomes available.- #3907 */}
-            {/* <SecondaryButton
+            <SecondaryButton
               className={`${styles.button} ${theme === 'dark' ? theme : ''}`}
               size="s"
+              onClick={readMore}
             >
               {t('Read more')}
-            </SecondaryButton> */}
+            </SecondaryButton>
           </div>
         </div>
       </FlashMessage.Content>

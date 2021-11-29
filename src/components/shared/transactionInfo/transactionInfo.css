@@ -22,7 +22,7 @@
   align-items: center;
   box-sizing: border-box;
 
-  & .nickname {
+  & .username {
     @mixin contentLargest;
 
     color: var(--color-maastricht-blue);

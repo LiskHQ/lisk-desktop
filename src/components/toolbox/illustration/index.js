@@ -42,11 +42,17 @@ import verifyMessageSuccess from '../../../assets/images/illustrations/verify-me
 import verifyMessageSuccessDark from '../../../assets/images/illustrations/verify-message-success-dark.svg';
 import registrationSuccess from '../../../assets/images/illustrations/registration-success.svg';
 import registrationSuccessDark from '../../../assets/images/illustrations/registration-success-dark.svg';
+import multisignaturePartialSuccess from '../../../assets/images/illustrations/multisignature-partial-success.svg';
+import multisignaturePartialSuccessDark from '../../../assets/images/illustrations/multisignature-partial-success-dark.svg';
 import registerMultisignatureSuccess from '../../../assets/images/illustrations/multisignature-success.svg';
 import registerMultisignatureSuccessDark from '../../../assets/images/illustrations/multisignature-success-dark.svg';
 import registerMultisignatureError from '../../../assets/images/illustrations/multisignature-error.svg';
 import registerMultisignatureErrorDark from '../../../assets/images/illustrations/multisignature-error-dark.svg';
 import reclaimBalanceIntro from '../../../assets/images/illustrations/reclaim-balance-intro.svg';
+import trezorHwRejection from '../../../assets/images/illustrations/hw-rejection-trezor.svg';
+import trezorHwRejectionDark from '../../../assets/images/illustrations/hw-rejection-trezor-dark.svg';
+import ledgerNanoHwRejection from '../../../assets/images/illustrations/hw-rejection-ledger-nano.svg';
+import ledgerNanoHwRejectionDark from '../../../assets/images/illustrations/hw-rejection-ledger-nano-dark.svg';
 
 export const illustrations = {
   welcomeLiskDelegates,
@@ -95,6 +101,12 @@ export const illustrations = {
   reclaimBalanceIntro,
   transactionPending,
   transactionPendingDark,
+  multisignaturePartialSuccess,
+  multisignaturePartialSuccessDark,
+  trezorHwRejection,
+  trezorHwRejectionDark,
+  ledgerNanoHwRejection,
+  ledgerNanoHwRejectionDark,
 };
 
 const Illustration = ({ name, className, noTheme }) => {

@@ -5,7 +5,7 @@ const getModuleAssetSenderLabel = (t = str => str) => ({
   [MODULE_ASSETS_NAME_ID_MAP.reclaimLSK]: t('Sender'),
   [MODULE_ASSETS_NAME_ID_MAP.unlockToken]: t('Sender'),
   [MODULE_ASSETS_NAME_ID_MAP.voteDelegate]: t('Voter'),
-  [MODULE_ASSETS_NAME_ID_MAP.registerDelegate]: t('Account nickname'),
+  [MODULE_ASSETS_NAME_ID_MAP.registerDelegate]: t('Account username'),
   [MODULE_ASSETS_NAME_ID_MAP.registerMultisignatureGroup]: t('Registrant'),
   [MODULE_ASSETS_NAME_ID_MAP.reportDelegateMisbehavior]: t('Reporter'),
 });

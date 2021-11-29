@@ -23,7 +23,7 @@ describe('WalletDetails', () => {
         active: 'LSK',
         list: {
           LSK: true,
-          BTC: true,
+          BTC: false,
         },
       },
     },
@@ -36,6 +36,6 @@ describe('WalletDetails', () => {
 
   it('Should render properly', () => {
     expect(wrapper).toContainMatchingElement('.coin-container');
-    expect(wrapper).toContainMatchingElements(2, 'section.coin-row');
+    expect(wrapper).toContainMatchingElements(1, 'section.coin-row');
   });
 });

@@ -1,10 +1,10 @@
-import React, { useEffect } from 'react';
-import { TransactionResult, getBroadcastStatus } from '@shared/transactionResult';
+import React from 'react';
+import TransactionResult from '@shared/transactionResult';
+import { statusMessages, getTransactionStatus } from '@shared/transactionResult/statusConfig';
 import LiskAmount from '@shared/liskAmount';
 import { PrimaryButton } from '@toolbox/buttons';
 import { tokenMap } from '@constants';
 import Spinner from '@toolbox/spinner';
-import statusMessages from './statusMessages';
 import styles from './status.css';
 
 const SuccessAction = ({
@@ -39,12 +39,6 @@ const SuccessAction = ({
 const FailAction = ({ template }) => (
   <>
     <p className="transaction-status body-message">{template.message}</p>
-    <PrimaryButton
-      className={`${styles.btn} ${template.button.className}`}
-      onClick={template.button.onClick}
-    >
-      {template.button.title}
-    </PrimaryButton>
   </>
 );
 
@@ -52,33 +46,15 @@ const PendingAction = ({ template }) => (
   <p className="transaction-status body-message">{template.message}</p>
 );
 
-// eslint-disable-next-line max-statements
 const Status = ({
-  t, transactionBroadcasted, transactions,
-  transactionInfo, history,
-  balance, isMigrated,
+  t, transactions, balance, isMigrated,
 }) => {
-  const broadcastTransaction = () => {
-    if (transactionInfo) {
-      transactionBroadcasted(transactionInfo);
-    }
-  };
-
-  const onRetry = () => {
-    broadcastTransaction();
-  };
-
-  useEffect(() => {
-    if (transactionInfo) broadcastTransaction();
-  }, []);
-
-  const status = getBroadcastStatus(transactions, false); // @todo handle HW errors by #3661
-  const template = statusMessages(t, history, onRetry)[status.code];
+  const status = getTransactionStatus(transactions);
+  const template = statusMessages(t)[status.code];
 
   return (
     <div className={`${styles.wrapper} status-container`}>
       <TransactionResult
-        t={t}
         illustration="default"
         title={template.title}
         className={`${styles.content} ${status.code === 'error' && styles.error}`}

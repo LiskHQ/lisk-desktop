@@ -3,6 +3,7 @@ import React from 'react';
 import { withRouter } from 'react-router-dom';
 import MultiStep from '@shared/multiStep';
 import { removeSearchParamsFromUrl } from '@utils/searchParams';
+import TransactionSignature from '@shared/transactionSignature';
 import Dialog from '@toolbox/dialog/dialog';
 
 import ImportData from './importData';
@@ -22,6 +23,7 @@ const MultiSignature = ({ history }) => {
       >
         <ImportData />
         <ReviewSign />
+        <TransactionSignature />
         <Share history={history} />
       </MultiStep>
     </Dialog>

@@ -39,14 +39,14 @@ const Sort = ({
   return <span className={styles.titleWrapper}>{children}</span>;
 };
 
-const Header = ({ data, currentSort }) => {
+const Header = ({ data, currentSort, headerClassName }) => {
   /**
    * In case we define a config array for header
    */
   if (Array.isArray(data)) {
     const defaultSize = Math.floor(12 / data.length);
     return (
-      <header className={`${grid.row} ${styles.row} ${styles.header}`}>
+      <header className={`${grid.row} ${styles.row} ${styles.header} ${headerClassName || ''}`}>
         {
           data.map((item, index) => (
             <div

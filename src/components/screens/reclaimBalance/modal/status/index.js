@@ -1,6 +1,6 @@
 import { connect } from 'react-redux';
-import { withRouter } from 'react-router';
-import { transactionBroadcasted } from '@actions';
+import { compose } from 'redux';
+import { withTranslation } from 'react-i18next';
 import Status from './status';
 
 const mapStateToProps = state => ({
@@ -9,11 +9,7 @@ const mapStateToProps = state => ({
   network: state.network,
 });
 
-const mapDispatchToProps = {
-  transactionBroadcasted,
-};
-
-export default withRouter(connect(
-  mapStateToProps,
-  mapDispatchToProps,
-)(Status));
+export default compose(
+  connect(mapStateToProps),
+  withTranslation(),
+)(Status);

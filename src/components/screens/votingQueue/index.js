@@ -3,6 +3,7 @@ import React, { useEffect } from 'react';
 import { useDispatch } from 'react-redux';
 import { withRouter } from 'react-router-dom';
 
+import TransactionSignature from '@shared/transactionSignature';
 import { removeSearchParamsFromUrl } from '@utils/searchParams';
 import { processLaunchProtocol } from '@actions';
 import MultiStep from '@shared/multiStep';
@@ -33,6 +34,7 @@ const VotingQueue = ({ history }) => {
     >
       <Editor />
       <Summary />
+      <TransactionSignature />
       <Result />
     </MultiStep>
   );

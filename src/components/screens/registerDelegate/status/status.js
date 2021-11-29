@@ -1,69 +1,48 @@
-import React from 'react';
-import { TransactionResult } from '@shared/transactionResult';
-import { transactionToJSON } from '@utils/transaction';
+import React, { useState, useEffect } from 'react';
+import TransactionResult from '@shared/transactionResult';
+import { getTransactionStatus, txStatusTypes } from '@shared/transactionResult/statusConfig';
 import DelegateAnimation from '../animations/delegateAnimation';
 import statusMessages from './statusMessages';
 import styles from './status.css';
 
-class Status extends React.Component {
-  constructor() {
-    super();
+const Status = ({
+  transactions, account, t,
+}) => {
+  const [animationStatus, setAnimationStatus] = useState('pending');
+  const status = getTransactionStatus(transactions);
+  const template = statusMessages(t)[status.code];
+  const isConfirmed = !!account.dpos.delegate?.username;
 
-    this.state = {
-      status: 'pending',
-    };
+  useEffect(() => {
+    if (status.code === txStatusTypes.signatureError
+      || status.code === txStatusTypes.broadcastError) {
+      setAnimationStatus('error');
+    } else if (isConfirmed && animationStatus === 'pending') {
+      setAnimationStatus('success');
+    }
+  }, [transactions.txBroadcastError, transactions.signedTransaction]);
 
-    this.checkTransactionStatus = this.checkTransactionStatus.bind(this);
-  }
+  return (
+    <div className={`${styles.wrapper} status-container`}>
+      <TransactionResult
+        illustration={(
+          <DelegateAnimation
+            className={styles.animation}
+            status={animationStatus}
+          />
+        )}
+        status={status}
+        title={template.title}
+        message={template.message}
+        className={styles.content}
+      />
+    </div>
+  );
+};
 
-  componentDidMount() {
-    const { transactions } = this.props;
-    // istanbul ignore else
-    if (transactions.signedTransaction) this.broadcastTransaction();
-  }
+const areEqual = (prev, next) => (
+  !next.account.dpos.delegate
+  || prev.account.dpos.delegate.username === next.account.dpos.delegate.username
+);
 
-  broadcastTransaction() {
-    const { transactionBroadcasted, transactions } = this.props;
-    transactionBroadcasted(transactions.signedTransaction);
-  }
-
-  // TODO update test coverage in PR #2199
-  // istanbul ignore next
-  checkTransactionStatus() {
-    const { transactions, transactionInfo } = this.props;
-    const transaction = JSON.parse(transactionToJSON(transactionInfo));
-
-    const success = transactions.confirmed
-      .filter(tx => tx.id === transaction.id);
-
-    if (success.length) this.setState({ status: 'success' });
-    if (transactions.txBroadcastError) this.setState({ status: 'error' });
-  }
-
-  render() {
-    const { t } = this.props;
-    const { status } = this.state;
-    const template = statusMessages(t)[status];
-
-    return (
-      <div className={`${styles.wrapper} status-container`}>
-        <TransactionResult
-          illustration={(
-            <DelegateAnimation
-              className={styles.animation}
-              status={status}
-              onLoopComplete={this.checkTransactionStatus}
-            />
-          )}
-          status={{ code: status }}
-          title={template.title}
-          message={template.message}
-          className={styles.content}
-          t={t}
-        />
-      </div>
-    );
-  }
-}
-
-export default Status;
+export default React.memo(Status, areEqual);

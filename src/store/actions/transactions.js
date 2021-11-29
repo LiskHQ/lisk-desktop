@@ -7,6 +7,7 @@ import { isEmpty } from '@utils/helpers';
 import { getTransactions, create, broadcast } from '@api/transaction';
 import { selectActiveTokenAccount, selectNetworkIdentifier } from '@store/selectors';
 import { signTransaction, transformTransaction } from '@utils/transaction';
+import { isTransactionFullySigned } from '@screens/signMultiSignTransaction/helpers';
 import { timerReset } from './account';
 import { loadingStarted, loadingFinished } from './loading';
 
@@ -113,8 +114,6 @@ export const transactionCreated = data => async (dispatch, getState) => {
     network,
   }, activeToken));
 
-  console.log({ error, tx });
-
   if (error) {
     dispatch({
       type: actionTypes.transactionSignError,
@@ -135,7 +134,7 @@ export const transactionCreated = data => async (dispatch, getState) => {
  * @param {string} data.secondPass
  */
 /* istanbul ignore next */
-export const transactionDoubleSigned = data => async (dispatch, getState) => {
+export const transactionDoubleSigned = () => async (dispatch, getState) => {
   const {
     transactions, network, account, settings,
   } = getState();
@@ -143,7 +142,7 @@ export const transactionDoubleSigned = data => async (dispatch, getState) => {
   const activeAccount = selectActiveTokenAccount({ account, settings });
   const [signedTx, err] = signTransaction(
     transformTransaction(transactions.signedTransaction),
-    data.secondPass,
+    account.secondPassphrase,
     networkIdentifier,
     {
       data: activeAccount,
@@ -210,3 +209,51 @@ export const transactionBroadcasted = transaction =>
       dispatch(timerReset());
     }
   };
+
+/**
+ * Signs a given multisignature transaction using passphrase
+ * and dispatches the relevant action.
+ *
+ * @param {object} data
+ * @param {object} data.rawTransaction Transaction config required by Lisk Element
+ * @param {object} data.sender
+ * @param {object} data.sender.data - Sender account info in Lisk API schema
+ * @todo account for privateKey and HW and increase test coverage once HW is implemented
+ */
+/* istanbul ignore next */
+export const multisigTransactionSigned = ({
+  rawTransaction, sender,
+}) => (dispatch, getState) => {
+  const {
+    network, account,
+  } = getState();
+  const networkIdentifier = selectNetworkIdentifier({ network });
+  const activeAccount = {
+    ...account.info.LSK,
+    passphrase: account.passphrase,
+    hwInfo: account.hwInfo,
+  };
+  // @todo move isTransactionFullySigned to a generic location
+  const isFullySigned = isTransactionFullySigned(sender.data, rawTransaction);
+
+  const [tx, error] = signTransaction(
+    rawTransaction,
+    activeAccount.passphrase,
+    networkIdentifier,
+    sender,
+    isFullySigned,
+    network,
+  );
+
+  if (!error) {
+    dispatch({
+      type: actionTypes.transactionDoubleSigned,
+      data: tx,
+    });
+  } else {
+    dispatch({
+      type: actionTypes.transactionSignError,
+      data: error,
+    });
+  }
+};

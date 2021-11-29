@@ -1,14 +1,11 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import { tokenMap, MODULE_ASSETS_NAME_ID_MAP } from '@constants';
-import { isEmpty } from '@utils/helpers';
 import { useTransactionFeeCalculation, useTransactionPriority } from '@shared/transactionPriority';
 import TransactionSummary from '@shared/transactionSummary';
 import TransactionInfo from '@shared/transactionInfo';
 import styles from './summary.css';
 
 const Summary = ({
-  signedTransaction,
-  txSignatureError,
   balanceReclaimed,
   nextStep,
   account,
@@ -33,46 +30,29 @@ const Summary = ({
     },
   });
 
-  // eslint-disable-next-line max-statements
   const onSubmit = () => {
-    balanceReclaimed({ fee: minFee });
+    nextStep({
+      rawTransaction: {
+        fee: minFee,
+      },
+      actionFunction: balanceReclaimed,
+    });
   };
-
-  useEffect(() => {
-    // success
-    if (!isEmpty(signedTransaction)) {
-      nextStep({
-        transactionInfo: signedTransaction,
-        balance: account.info.LSK.legacy?.balance,
-      });
-    }
-  }, [signedTransaction]);
-
-  useEffect(() => {
-    // error
-    if (txSignatureError) {
-      nextStep({
-        transactionError: txSignatureError,
-        balance: account.info.LSK.legacy?.balance,
-      });
-    }
-  }, [txSignatureError]);
 
   return (
     <TransactionSummary
       title={t('Transaction summary')}
-      t={t}
-      account={account.info.LSK}
       confirmButton={{
         label: t('Continue'),
         onClick: onSubmit,
       }}
-      showCancelButton={false}
       fee={minFee.value}
-      token={tokenMap.LSK.key}
       classNames={styles.summaryContainer}
     >
-      <TransactionInfo account={account} moduleAssetId={MODULE_ASSETS_NAME_ID_MAP.reclaimLSK} />
+      <TransactionInfo
+        account={account}
+        moduleAssetId={MODULE_ASSETS_NAME_ID_MAP.reclaimLSK}
+      />
     </TransactionSummary>
   );
 };

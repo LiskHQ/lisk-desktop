@@ -172,7 +172,7 @@ describe('actions: account', () => {
           token: {
             list: {
               LSK: true,
-              BTC: true,
+              BTC: false,
             },
           },
           enableCustomDerivationPath: true,
@@ -211,7 +211,6 @@ describe('actions: account', () => {
           data: expect.objectContaining({
             info: {
               LSK: expect.objectContaining({ address, balance }),
-              BTC: expect.objectContaining({ address, balance }),
             },
           }),
         }),

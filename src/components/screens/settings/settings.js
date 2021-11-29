@@ -20,15 +20,6 @@ class Settings extends React.Component {
     this.setCurrency = this.setCurrency.bind(this);
     this.handleCheckboxChange = this.handleCheckboxChange.bind(this);
     this.toggleAutoLog = this.toggleAutoLog.bind(this);
-    this.handleTokenToggle = this.handleTokenToggle.bind(this);
-  }
-
-  handleTokenToggle({ target: { name } }) {
-    const { settings } = this.props;
-    const newSettings = {
-      token: { list: { [name]: !settings.token.list[name] } },
-    };
-    this.onUpdateSettings(newSettings);
   }
 
   toggleAutoLog({ target }) {
@@ -62,11 +53,9 @@ class Settings extends React.Component {
   render() {
     const {
       t, settings,
-      account,
     } = this.props;
     const { currencies } = this.state;
 
-    const isHardwareWalletAccount = account.hwInfo && !!account.hwInfo.deviceId;
     const activeCurrency = settings.currency || settingsConst.currencies[0];
 
     return (

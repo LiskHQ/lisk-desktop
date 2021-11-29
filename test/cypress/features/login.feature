@@ -8,7 +8,11 @@ Feature: Login
     Then I should be connected to mainnet
 
   Scenario: Log in to Testnet
+    Given Network switcher is disabled
     Given I am on Login page
+    And I click on settingsMenu
+    And I click on switchNetworksTrigger
+    And I click on closeDialog
     When I choose testnet
     When I enter the passphrase of testnet_guy
     When I login
