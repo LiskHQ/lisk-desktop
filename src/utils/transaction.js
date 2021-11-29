@@ -1,6 +1,6 @@
 /* eslint-disable max-lines */
 import { transactions } from '@liskhq/lisk-client';
-import { MODULE_ASSETS_NAME_ID_MAP } from '@constants';
+import { DEFAULT_NUMBER_OF_SIGNATURES, MODULE_ASSETS_NAME_ID_MAP } from '@constants';
 import {
   extractAddressFromPublicKey,
   getBase32AddressFromAddress,
@@ -444,6 +444,26 @@ const signTransaction = (
   return [signedTransaction, err];
 };
 
+/**
+ * Determines the number of signatures required for a transactions to be fully signed.
+ * Note that the account passed must tbe sender account info. So for all types of txs, you
+ * can get it from the Redux store. but for signing another account's tx, you should
+ * make an API call using transaction.senderPublicKey to get the account info.
+ *
+ * @param {object} account - Sender account info
+ * @param {object} transaction - Transaction object which should include the signatures property.
+ * @returns {number} the number of signatures required
+ */
+const getNumberOfSignatures = (account, transaction) => {
+  if (transaction?.moduleAssetId === MODULE_ASSETS_NAME_ID_MAP.registerMultisignatureGroup) {
+    return transaction.optionalKeys.length + transaction.mandatoryKeys.length + 1;
+  }
+  if (account?.summary?.isMultisignature) {
+    return account.keys.numberOfSignatures;
+  }
+  return DEFAULT_NUMBER_OF_SIGNATURES;
+};
+
 export {
   getTxAmount,
   downloadJSON,
@@ -454,4 +474,5 @@ export {
   createTransactionObject,
   normalizeTransactionParams,
   signTransaction,
+  getNumberOfSignatures,
 };

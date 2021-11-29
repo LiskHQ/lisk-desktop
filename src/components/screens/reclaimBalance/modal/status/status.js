@@ -47,9 +47,9 @@ const PendingAction = ({ template }) => (
 );
 
 const Status = ({
-  t, transactions, balance, isMigrated,
+  account, transactions, balance, isMigrated, t,
 }) => {
-  const status = getTransactionStatus(transactions);
+  const status = getTransactionStatus(account, transactions);
   const template = statusMessages(t)[status.code];
 
   return (

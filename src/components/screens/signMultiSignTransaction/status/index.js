@@ -1,12 +1,11 @@
 import { connect } from 'react-redux';
 import { compose } from 'redux';
 import { withTranslation } from 'react-i18next';
+import { withRouter } from 'react-router';
 import Status from './status';
 
 const mapStateToProps = state => ({
-  isMigrated: state.account.info.LSK.summary.isMigrated,
   transactions: state.transactions,
-  network: state.network,
   account: {
     ...state.account.info[state.settings.token.active],
     hwInfo: state.account.hwInfo,
@@ -16,5 +15,6 @@ const mapStateToProps = state => ({
 
 export default compose(
   connect(mapStateToProps),
+  withRouter,
   withTranslation(),
 )(Status);

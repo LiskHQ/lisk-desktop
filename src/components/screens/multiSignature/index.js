@@ -6,9 +6,9 @@ import MultiStep from '../../shared/multiStep';
 import { removeSearchParamsFromUrl } from '../../../utils/searchParams';
 import Dialog from '../../toolbox/dialog/dialog';
 
-import Editor from './editor';
+import Form from './form';
 import Summary from './summary';
-import Result from './result';
+import Status from './status';
 import styles from './styles.css';
 
 const MultiSignature = ({ history }) => {
@@ -23,9 +23,9 @@ const MultiSignature = ({ history }) => {
         finalCallback={closeModal}
         className={styles.modal}
       >
-        <Editor />
+        <Form />
         <Summary />
-        <Result />
+        <Status />
       </MultiStep>
     </Dialog>
 
