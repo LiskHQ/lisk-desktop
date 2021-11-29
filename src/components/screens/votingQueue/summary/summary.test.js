@@ -75,7 +75,7 @@ beforeEach(() => {
   props.nextStep.mockClear();
 });
 
-describe.skip('VotingQueue.Summary', () => {
+describe('VotingQueue.Summary', () => {
   it('renders properly', () => {
     const wrapper = mountWithRouter(Summary, props);
 

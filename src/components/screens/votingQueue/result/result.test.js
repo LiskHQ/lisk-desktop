@@ -12,7 +12,7 @@ beforeEach(() => {
   props.transactionBroadcasted.mockClear();
 });
 
-describe.skip('VotingQueue.Resuly', () => {
+describe('VotingQueue.Result', () => {
   it('renders properly', () => {
     const wrapper = mountWithRouter(Result, props);
 

@@ -31,12 +31,12 @@ describe('unlock transaction Status', () => {
     },
   };
 
-  it.skip('renders a pending state when the transactions not submitted yet. then submits it.', () => {
+  it('renders a pending state when the transactions not submitted yet. then submits it.', () => {
     const wrapper = shallow(<TransactionStatus {...propsWithSignedTx} />);
     expect(wrapper.find('PrimaryButton')).toExist();
   });
 
-  it.skip('renders properly Status component when transaction failed', () => {
+  it('renders properly Status component when transaction failed', () => {
     const wrapper = shallow(<TransactionStatus {...propsWithError} />);
     const html = wrapper.html();
     expect(html).toContain('failed');

@@ -4,7 +4,7 @@ import { mount } from 'enzyme';
 import Share from './share';
 import flushPromises from '../../../../../test/unit-test-utils/flushPromises';
 
-describe.skip('Sign Multisignature Tx Share component', () => {
+describe('Sign Multisignature Tx Share component', () => {
   const transaction = {
     moduleID: 2,
     assetID: 0,

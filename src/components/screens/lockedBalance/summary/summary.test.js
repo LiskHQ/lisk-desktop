@@ -2,7 +2,7 @@ import { mountWithRouterAndStore } from '@utils/testHelpers';
 import Summary from './index';
 import accounts from '../../../../../test/constants/accounts';
 
-describe.skip('Locked balance Summary', () => {
+describe('Locked balance Summary', () => {
   const props = {
     currentBlockHeight: 10000000,
     balanceUnlocked: jest.fn(),

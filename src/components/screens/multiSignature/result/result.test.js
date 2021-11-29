@@ -2,7 +2,7 @@ import React from 'react';
 import { mount } from 'enzyme';
 import Result from './result';
 
-describe.skip('Multisignature result component', () => {
+describe('Multisignature result component', () => {
   let wrapper;
 
   const props = {

@@ -1,7 +1,7 @@
 import { mountWithRouter } from '@utils/testHelpers';
 import TransactionStatus from './transactionStatus';
 
-describe.skip('TransactionStatus', () => {
+describe('TransactionStatus', () => {
   let wrapper;
 
   const props = {

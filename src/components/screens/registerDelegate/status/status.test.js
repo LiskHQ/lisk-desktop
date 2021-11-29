@@ -3,7 +3,7 @@ import { mount } from 'enzyme';
 import accounts from '../../../../../test/constants/accounts';
 import Status from './status';
 
-describe.skip('Delegate Registration Status', () => {
+describe('Delegate Registration Status', () => {
   let wrapper;
 
   const props = {

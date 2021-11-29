@@ -6,7 +6,7 @@ import Summary from './summary';
 import accounts from '../../../../../test/constants/accounts';
 import i18n from '../../../../i18n';
 
-describe.skip('Summary', () => {
+describe('Summary', () => {
   let wrapper;
   let props;
   const transaction = {

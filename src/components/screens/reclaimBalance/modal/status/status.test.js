@@ -2,7 +2,7 @@ import { mountWithRouterAndStore } from '@utils/testHelpers';
 import accounts from '../../../../../../test/constants/accounts';
 import Status from './status';
 
-describe.skip('Status', () => {
+describe('Status', () => {
   let wrapper;
 
   const state = {
