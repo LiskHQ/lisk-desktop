@@ -59,7 +59,7 @@ export const DelegateWeight = ({ value, activeTab }) => {
 export const DelegateDetails = ({
   t, watched = false, data, activeTab, removeFromWatchList, addToWatchList,
 }) => {
-  const showEyeIcon = activeTab === 'active' || activeTab === 'standby' || activeTab === 'watched';
+  const showEyeIcon = activeTab === 'active' || activeTab === 'standby' || activeTab === 'sanctioned' || activeTab === 'watched';
   return (
     <span className={getDelegateDetailsClass(activeTab)}>
       <div className={styles.delegateColumn}>
