@@ -60,7 +60,7 @@ const SelectNameAndFee = ({
 
   const getUsernameFromPrevState = () => {
     if (Object.entries(prevState).length) {
-      setState({ username: prevState.username });
+      setState({ username: prevState.rawTransaction.username });
     }
   };
 
