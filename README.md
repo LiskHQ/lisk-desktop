@@ -37,11 +37,6 @@ npm run dev
 
 Open http://localhost:8080
 
-For ease of development, you can set the following query string to see network options in login page:
-```
-http://localhost:8080/#/?showNetwork=true
-```
-
 If you are actively developing in a specific route, and want to be automatically signed in every time you reload the page, please add the following input pairs to your localStorage:
 
 _loginKey_: _a valid passphrase_
@@ -60,7 +55,7 @@ localStorage.setItem('hwWalletAutoLogin', true);
 You can use the same approach to define a desired network to which Lisk Desktop connects:
 
 ```
-localStorage.setItem('liskCoreUrl', 'http://localhost:4000') // desired node to log in into
+localStorage.setItem('liskServiceUrl', 'http://localhost:4000') // desired node to log in into
 ```
 
 ### Build
@@ -75,12 +70,12 @@ npm run build
 Under the hood, this script runs
 
 ```
-npm run build-prod
+npm run build:prod
 ```
 to build the React app under `src/` and
 
 ```
-npm run build-electron
+npm run build:electron
 ```
 to build the electron app under `app/` using webpack. You can run the above scripts individually if you're looking to see the changes solely on one of the two said applications.
 
@@ -97,7 +92,7 @@ npm run start
 To launch a version which supports hardware wallets, you can run
 
 ```
-npm run dev-hardware-wallet
+npm run dev:hw
 ```
 
 or to launch electron and receive live updates from already running `webpack-dev-server` on port `8080` and you can run
@@ -144,17 +139,20 @@ npm run test
 
 #### Run each time a file changes
 ```
-npm run test-live
+npm run test:live
 ```
 
 ### E2E tests
-In order to run e2e tests you need to install [lisk-core](https://github.com/LiskHQ/lisk)
+In order to run e2e tests you need to install [lisk-core](https://github.com/LiskHQ/lisk) as well as [lisk-service](https://github.com/LiskHQ/lisk-service).
 
-#### Setup core
+#### Setup Lisk Core
 
 Setup a lisk test node as described in Preparing Node headline under [the tests section of Lisk Framework README](https://github.com/LiskHQ/lisk-sdk/tree/development/framework).
 
-Run lisk test node with [pm2](http://pm2.keymetrics.io/)  on `localhost:4000`
+#### Setup Service
+
+Run Lisk Service against an already running local node as described in Preparing Node headline under [the installation section of Lisk Service README](https://github.com/liskhq/lisk-service#installation).
+
 
 #### Run
 
@@ -200,7 +198,6 @@ http://localhost:6006/
 ├── libs/                          # Modules which can be consumed individually in other projects.
 ├── node_modules/                  # 3rd-party libraries and utilities.
 ├── src/                           # Application source code.
-│   ├── actions/                   # Store actions reside here and are broken into script files dedicated to each system entity.
 │   ├── app/                       # The bootstrap React application
 │   ├── assets/                    # Static files (images, fonts, etc)
 │   ├── components/                # React presentational components are located here.
@@ -211,6 +208,7 @@ http://localhost:6006/
 │   ├── context/                   # React context configuration files
 │   ├── hooks/                     # React custom hooks
 │   ├── store/                     # Redux store resides here.
+│   │   ├── actions/               # Store actions reside here and are broken into script files dedicated to each system entity.
 │   │   ├── middlewares/           # All the Redux middlewares are places here and have their dedicated script files based on the system entities.
 │   │   ├── reducers/              # Redux reducers are located here. similar to actions and reducers, they are placed in script files named after the entity they represent.
 │   ├── utils/                     # Utility functions
