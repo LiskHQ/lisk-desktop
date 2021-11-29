@@ -7,6 +7,11 @@ import Settings from './settings';
 const mapStateToProps = state => ({
   settings: state.settings,
   transactions: state.transactions,
+  account: {
+    ...state.account.info[state.settings.token.active],
+    passphrase: state.account.passphrase,
+    hwInfo: state.account.hwInfo,
+  },
 });
 
 const mapDispatchToProps = {
