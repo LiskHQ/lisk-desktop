@@ -147,24 +147,6 @@ class Settings extends React.Component {
                   <p>{t('Modify recovery phrase derivation path')}</p>
                 </div>
               </label>
-              {
-                !isHardwareWalletAccount
-                  ? (
-                    <label className={`${styles.fieldGroup} ${styles.checkboxField} enableBTC`}>
-                      <CheckBox
-                        name="BTC"
-                        className={`${styles.checkbox}`}
-                        checked={!!(settings.token && settings.token.list.BTC)}
-                        onChange={this.handleTokenToggle}
-                      />
-                      <div>
-                        <span className={styles.labelName}>{t('Enable BTC')}</span>
-                        <p>{t('Enable Bitcoin wallet support.')}</p>
-                      </div>
-                    </label>
-                  )
-                  : null
-              }
             </section>
             <section>
               <h2>{t('Privacy')}</h2>
