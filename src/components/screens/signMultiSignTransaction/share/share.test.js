@@ -1,7 +1,7 @@
-import React from 'react';
 import { act } from 'react-dom/test-utils';
-import { mount } from 'enzyme';
+import { mountWithRouterAndStore } from '@utils/testHelpers';
 import Share from './share';
+import accounts from '../../../../../test/constants/accounts';
 import flushPromises from '../../../../../test/unit-test-utils/flushPromises';
 
 describe('Sign Multisignature Tx Share component', () => {
@@ -22,41 +22,35 @@ describe('Sign Multisignature Tx Share component', () => {
 
   const props = {
     t: (str, dict) => (dict ? str.replace('{{errorMessage}}', dict.errorMessage) : str),
-    history: jest.fn(),
-    networkIdentifier: '',
-    senderAccount: {
-      keys: {
-        numberOfSignatures: 2,
-        mandatoryKeys: ['2fe9a3f1a21b5530f27f87a414b549e79a940bf24fdf2b2f05e7f22aeeecc86a', '0fe9a3f1a21b5530f27f87a414b549e79a940bf24fdf2b2f05e7f22aeeecc86a'],
-        optionalKeys: [],
-      },
+    sender: { data: accounts.multiSig },
+    transactions: {
+      signedTransaction: transaction,
+      txSignatureError: null,
+      txBroadcastError: null,
     },
-    txBroadcastError: null,
-    transaction,
-    transactionBroadcasted: jest.fn(),
   };
 
   it('Should render properly on success', () => {
-    const wrapper = mount(
-      <Share
-        {...props}
-        transaction={transaction}
-      />,
+    const wrapper = mountWithRouterAndStore(
+      Share, props, {}, {
+        transactions: props.transactions,
+      },
     );
     const html = wrapper.html();
     expect(html).toContain('transaction-status');
-    expect(html).toContain('You have successfully signed the transaction');
+    expect(html).toContain('Your transaction has been submitted and will be confirmed in a few moments.');
     expect(html).toContain('Download');
     expect(html).toContain('Copy');
   });
 
   it('Should render properly on error', () => {
-    const wrapper = mount(
-      <Share
-        {...props}
-        txBroadcastError={{ error: { message: 'testerror' } }}
-        error="testerror"
-      />,
+    const wrapper = mountWithRouterAndStore(
+      Share, props, {}, {
+        transactions: {
+          ...props.transactions,
+          txSignatureError: { error: { message: 'testerror' } },
+        },
+      },
     );
     const html = wrapper.html();
     expect(html).toContain('transaction-status');
@@ -65,14 +59,13 @@ describe('Sign Multisignature Tx Share component', () => {
   });
 
   it('Should display an error message if broadcasting fails', async () => {
-    const wrapper = mount(
-      <Share
-        {...props}
-        transaction={{
-          ...props.transaction,
-          signatures: [props.transaction.signatures[0], props.transaction.signatures[0]],
-        }}
-      />,
+    const wrapper = mountWithRouterAndStore(
+      Share, props, {}, {
+        transactions: {
+          ...props.transactions,
+          txBroadcastError: { error: { message: 'Bad request.' } },
+        },
+      },
     );
     const sendButton = wrapper.find('.send-button button');
     expect(sendButton).not.toBeDisabled();

@@ -1,83 +1,72 @@
-import { mountWithRouter } from '@utils/testHelpers';
+import { mountWithRouterAndStore } from '@utils/testHelpers';
+import { tokenMap } from '@constants';
 import TransactionStatus from './transactionStatus';
+import accounts from '../../../../../test/constants/accounts';
+
+jest.mock('react-redux', () => ({
+  ...jest.requireActual('react-redux'),
+}));
 
 describe('TransactionStatus', () => {
   let wrapper;
 
   const props = {
-    t: v => v,
-    finalCallback: jest.fn(),
-    failedTransactions: undefined,
-    bookmarks: {
-      LSK: [],
-    },
-    account: {
-      summary: { address: 'lsks6uckwnap7s72ov3edddwgxab5e89t6uy8gjt6' },
-      hwInfo: { deviceId: 'MOCK' },
-    },
-    prevStep: jest.fn(),
-    fields: {
-      recipient: {
-        address: 'lskehj8am9afxdz8arztqajy52acnoubkzvmo9cjy',
-      },
-      amount: {
-        value: 1,
-      },
-      reference: {
-        value: 1,
-      },
-      isLoading: false,
-      isHardwareWalletConnected: false,
-    },
-    resetTransactionResult: jest.fn(),
-    transactionBroadcasted: jest.fn(),
+    account: accounts.genesis,
+    recipientAccount: { data: accounts.delegate },
     transactions: {
       signedTransaction: {},
       txSignatureError: null,
       txBroadcastError: null,
     },
-    recipientAccount: {
-      data: {},
-      loadData: jest.fn(),
+    rawTransaction: {},
+    bookmarks: {
+      LSK: [{ address: 'lsk1' }],
     },
+    token: tokenMap.LSK.key,
+    t: v => v,
   };
 
-  beforeEach(() => {
-    wrapper = mountWithRouter(TransactionStatus, props, {
-      pathname: 'wallet',
-      search: '?modal=send',
-    });
-  });
-
   it('should render properly transactionStatus', () => {
+    wrapper = mountWithRouterAndStore(
+      TransactionStatus, props, {}, {
+        transactions: props.transactions,
+      },
+    );
     expect(wrapper).toContainMatchingElement('.transaction-status');
   });
 
   it('should show add bookmark button', () => {
+    wrapper = mountWithRouterAndStore(
+      TransactionStatus, props, {}, {
+        transactions: props.transactions,
+      },
+    );
     expect(wrapper).toContainMatchingElement('.bookmark-container');
     expect(wrapper).toContainMatchingElement('.bookmark-btn');
-    expect(wrapper.find('.bookmark-btn').at(0).text()).toEqual('Add address to bookmarks');
+    expect(wrapper.find('.bookmark-btn').at(0)).toHaveText('Add address to bookmarks');
   });
 
   it('should not show add bookmark button', () => {
-    wrapper = mountWithRouter(TransactionStatus, {
-      ...props,
-      account: {
-        summary: {
-          address: props.fields.recipient.address,
+    wrapper = mountWithRouterAndStore(
+      TransactionStatus,
+      {
+        ...props,
+        recipientAccount: {
+          data: {
+            ...accounts.delegate,
+            summary: {
+              ...accounts.delegate.summary,
+              address: 'lsk1',
+            },
+          },
         },
-        hwInfo: { deviceId: 'MOCK' },
+        rawTransaction: { recipientAddress: 'lsk1' },
       },
-    });
-    expect(wrapper).not.toContainMatchingElement('.bookmark-container');
-    expect(wrapper).not.toContainMatchingElement('.bookmark-btn');
-
-    wrapper = mountWithRouter(TransactionStatus, {
-      ...props,
-      bookmarks: {
-        LSK: [{ address: props.fields.recipient.address }],
+      {},
+      {
+        transactions: props.transactions,
       },
-    });
+    );
     expect(wrapper).not.toContainMatchingElement('.bookmark-container');
     expect(wrapper).not.toContainMatchingElement('.bookmark-btn');
   });
@@ -85,26 +74,15 @@ describe('TransactionStatus', () => {
   it('should render error message in case of transaction failed', () => {
     const newProps = { ...props };
     newProps.transactions.txBroadcastError = { recipient: 'lskehj8am9afxdz8arztqajy52acnoubkzvmo9cjy', amount: 1, reference: 'test' };
-    wrapper = mountWithRouter(TransactionStatus, newProps);
+    wrapper = mountWithRouterAndStore(
+      TransactionStatus, newProps, {}, {
+        transactions: {
+          signedTransaction: { signatures: ['1'] },
+          txSignatureError: null,
+          txBroadcastError: newProps.transactions.txBroadcastError,
+        },
+      },
+    );
     expect(wrapper).toContainMatchingElement('.report-error-link');
-  });
-
-  it('should call onPrevStep function on hwWallet', () => {
-    const newProps = { ...props };
-    newProps.account.hwInfo.deviceId = 'mock';
-    newProps.fields.hwTransactionStatus = 'error';
-    newProps.failedTransactions = [{
-      error: { message: 'errorMessage' },
-      transaction: { recipient: 'lskehj8am9afxdz8arztqajy52acnoubkzvmo9cjy', amount: 1, reference: 'test' },
-    }];
-    wrapper = mountWithRouter(TransactionStatus, newProps);
-    expect(wrapper).toContainMatchingElement('.report-error-link');
-    wrapper.find('.retry').at(0).simulate('click');
-    expect(props.prevStep).toBeCalled();
-  });
-
-  it('should call resetTransactionResult on unmount', () => {
-    wrapper.unmount();
-    expect(props.resetTransactionResult).toHaveBeenCalled();
   });
 });

@@ -117,6 +117,10 @@ describe('Unlock LSK modal', () => {
     wrapper.find('.unlock-btn').at(0).simulate('click');
     act(() => { wrapper.update(); });
     await flushPromises();
-    expect(balanceUnlocked).toBeCalledWith({ selectedFee: '0.1' });
+    expect(props.nextStep).toBeCalledWith({
+      rawTransaction: {
+        selectedFee: '0.1',
+      },
+    });
   });
 });

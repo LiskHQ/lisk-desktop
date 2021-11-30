@@ -1,5 +1,4 @@
-import React from 'react';
-import { mount } from 'enzyme';
+import { mountWithRouterAndStore } from '@utils/testHelpers';
 import accounts from '../../../../../test/constants/accounts';
 import Status from './status';
 
@@ -7,16 +6,7 @@ describe('Delegate Registration Status', () => {
   let wrapper;
 
   const props = {
-    transactionInfo: {
-      id: 1,
-      account: accounts.genesis,
-      username: 'my_delegate_account',
-      passphrase: accounts.genesis.passphrase,
-      secondPassphrase: null,
-      recipientId: '123123L',
-      amount: 0,
-      timeOffset: 0,
-    },
+    account: accounts.genesis,
     transactions: {
       confirmed: [],
       txBroadcastError: null,
@@ -25,13 +15,12 @@ describe('Delegate Registration Status', () => {
     t: key => key,
   };
 
-  beforeEach(() => {
-    wrapper = mount(
-      <Status {...props} />,
-    );
-  });
-
   it('renders properly Status component', () => {
+    wrapper = mountWithRouterAndStore(
+      Status, props, {}, {
+        transactions: props.transactions,
+      },
+    );
     expect(wrapper).toContainMatchingElement('.status-container');
     expect(wrapper).toContainMatchingElement('.result-box-header');
     expect(wrapper).toContainMatchingElement('.body-message');
@@ -43,10 +32,20 @@ describe('Delegate Registration Status', () => {
       ...props,
       transactions: {
         txSignatureError: null,
-        signedTransaction: { id: 1 },
+        signedTransaction: {
+          id: 1,
+          signatures: ['1234'],
+        },
       },
     };
-    wrapper = mount(<Status {...newProps} />);
+    wrapper = mountWithRouterAndStore(
+      Status, newProps, {}, {
+        transactions: {
+          ...props.transactions,
+          signedTransaction: { signatures: ['1'] },
+        },
+      },
+    );
 
     expect(props.transactionBroadcasted).toBeCalled();
   });
