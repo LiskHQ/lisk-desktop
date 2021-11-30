@@ -135,6 +135,18 @@ class Settings extends React.Component {
                   <p>{t('Enable network switcher to connect to different networks or service nodes when signing in.')}</p>
                 </div>
               </label>
+              <label className={`${styles.fieldGroup} ${styles.checkboxField}`}>
+                <CheckBox
+                  name="enableCustomDerivationPath"
+                  className={`${styles.checkbox} enableCustomDerivationPath`}
+                  checked={settings.enableCustomDerivationPath}
+                  onChange={this.handleCheckboxChange}
+                />
+                <div>
+                  <span className={styles.labelName}>{t('Enable custom derivation path')}</span>
+                  <p>{t('Modify recovery phrase derivation path')}</p>
+                </div>
+              </label>
             </section>
             <section>
               <h2>{t('Privacy')}</h2>
