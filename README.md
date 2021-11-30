@@ -143,7 +143,7 @@ npm run test:live
 ```
 
 ### E2E tests
-In order to run e2e tests you need to install [lisk-core](https://github.com/LiskHQ/lisk) as well as [lisk-service](https://github.com/LiskHQ/lisk-service).
+In order to run e2e tests you need to install [lisk-core](https://github.com/LiskHQ/lisk-core) as well as [lisk-service](https://github.com/LiskHQ/lisk-service).
 
 #### Setup Lisk Core
 
