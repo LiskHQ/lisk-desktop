@@ -35,8 +35,7 @@ const Dropdown = ({
                 className: ` ${styles.option} ${active === key ? styles.active : ''} ${child.props.className || ''}`,
                 key,
                 onClick: (...rest) => {
-                  console.log();
-                  toggleDropdown();
+                  if (typeof toggleDropdown === 'function') toggleDropdown();
                   if (child.props.onClick) child.props.onClick(...rest);
                 },
               })
