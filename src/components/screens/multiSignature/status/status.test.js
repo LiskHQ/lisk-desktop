@@ -1,7 +1,7 @@
 import { mountWithRouterAndStore } from '@utils/testHelpers';
-import Result from './result';
+import Status from './status';
 
-describe('Multisignature result component', () => {
+describe('Multisignature status component', () => {
   let wrapper;
 
   const props = {
@@ -16,7 +16,7 @@ describe('Multisignature result component', () => {
 
   it('Should render properly on success', () => {
     wrapper = mountWithRouterAndStore(
-      Result,
+      Status,
       props,
       {},
       {
@@ -35,7 +35,7 @@ describe('Multisignature result component', () => {
 
   it('Should render properly on error', () => {
     wrapper = mountWithRouterAndStore(
-      Result,
+      Status,
       props,
       {},
       {
