@@ -13,7 +13,7 @@ import getIllustration from './illustrations';
 import { txStatusTypes } from './statusConfig';
 import styles from './transactionResult.css';
 
-const PartiallySignedActions = ({ onDownload, t }) => (
+export const PartiallySignedActions = ({ onDownload, t }) => (
   <PrimaryButton
     className={`${styles.download} download-button`}
     onClick={onDownload}
@@ -25,7 +25,7 @@ const PartiallySignedActions = ({ onDownload, t }) => (
   </PrimaryButton>
 );
 
-const FullySignedActions = ({ t, onDownload, onSend }) => (
+export const FullySignedActions = ({ t, onDownload, onSend }) => (
   <>
     <SecondaryButton
       className={`${styles.download} ${styles.secondary} download-button`}
