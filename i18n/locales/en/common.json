@@ -159,6 +159,7 @@
   "Either change the optional member to mandatory or reduce the number of signatures.": "Either change the optional member to mandatory or reduce the number of signatures.",
   "Empty": "Empty",
   "Empty/Not empty": "Empty/Not empty",
+  "Enable custom derivation path": "Enable custom derivation path",
   "Enable dark mode": "Enable dark mode",
   "Enable dark mode.": "Enable dark mode.",
   "Enable discreet mode": "Enable discreet mode",
