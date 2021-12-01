@@ -377,6 +377,29 @@ const downloadJSON = (data, name) => {
   anchor.setAttribute('download', `${name}.json`);
   anchor.click();
 };
+
+/**
+ * Removes the excess signatures from optional members
+ * to open up room for the mandatory ones
+ *
+ * @param {array} signatures - The transaction signatures array
+ * @param {number} mandatoryKeysNo - Number of mandatory keys
+ * @param {boolean} hasSenderSignature - Defines if the signatures list has
+ * an extra sender signature at the beginning.
+ * @returns {array} the trimmed array of signatures
+ */
+const removeExcessSignatures = (signatures, mandatoryKeysNo, hasSenderSignature) => {
+  const skip = hasSenderSignature ? 1 : 0;
+  const firstOptional = skip + mandatoryKeysNo;
+  const trimmedSignatures = signatures.map((item, index) => {
+    if (index === firstOptional) {
+      return Buffer.from('');
+    }
+    return item;
+  });
+  return trimmedSignatures;
+};
+
 /**
  * Signs a given multisignature tx with a given passphrase
  *
@@ -395,7 +418,7 @@ const signTransaction = (
   passphrase,
   networkIdentifier,
   senderAccount,
-  isFullySigned,
+  txStatus,
   network,
 ) => {
   let signedTransaction;
@@ -419,6 +442,13 @@ const signTransaction = (
     === MODULE_ASSETS_NAME_ID_MAP.registerMultisignatureGroup;
 
   try {
+    // remove excess optionals
+    if (txStatus === 'occupiedByOptionals') {
+      transactionObject.signatures = removeExcessSignatures(
+        transactionObject.signatures, keys.mandatoryKeys.length, includeSender,
+      );
+    }
+
     signedTransaction = transactions.signMultiSignatureTransaction(
       network.networks.LSK.moduleAssetSchemas[transaction.moduleAssetId],
       transactionObject,
@@ -429,8 +459,8 @@ const signTransaction = (
     );
 
     // remove unnecessary signatures
-    if (isFullySigned) {
-      const emptySignatureIndices = findNonEmptySignatureIndices(transaction.signatures);
+    if (txStatus === 'fullySigned' || txStatus === 'occupiedByOptionals') {
+      const emptySignatureIndices = findNonEmptySignatureIndices(signedTransaction.signatures);
       emptySignatureIndices.forEach(index => {
         signedTransaction.signatures[index] = Buffer.from('');
       });
