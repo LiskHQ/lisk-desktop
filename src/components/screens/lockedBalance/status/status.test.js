@@ -1,5 +1,5 @@
 import { mountWithRouterAndStore } from '@utils/testHelpers';
-import TransactionStatus from './transactionStatus';
+import Status from './status';
 import accounts from '../../../../../test/constants/accounts';
 import signedTX from '../../../../../test/fixtures/signedTx.json';
 
@@ -25,7 +25,7 @@ describe('unlock transaction Status', () => {
     };
 
     const wrapper = mountWithRouterAndStore(
-      TransactionStatus, propsWithSignedTx, {}, {
+      Status, propsWithSignedTx, {}, {
         transactions: propsWithSignedTx.transactions,
       },
     );
@@ -43,7 +43,7 @@ describe('unlock transaction Status', () => {
     };
 
     const wrapper = mountWithRouterAndStore(
-      TransactionStatus, propsWithError, {}, {
+      Status, propsWithError, {}, {
         transactions: propsWithError.transactions,
       },
     );
