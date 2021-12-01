@@ -391,7 +391,7 @@ const downloadJSON = (data, name) => {
  * an extra sender signature at the beginning.
  * @returns {array} the trimmed array of signatures
  */
-const removeExcessSignatures = (signatures, mandatoryKeysNo, hasSenderSignature) => {
+export const removeExcessSignatures = (signatures, mandatoryKeysNo, hasSenderSignature) => {
   const skip = hasSenderSignature ? 1 : 0;
   const firstOptional = skip + mandatoryKeysNo;
   let cleared = false;
