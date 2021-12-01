@@ -68,6 +68,7 @@ const props = {
   nextStep: jest.fn(),
   fee: 1000000000,
   transactions: { txSignatureError: null, signedTransaction: transaction },
+  normalizedVotes: { lsk123: {} },
 };
 
 beforeEach(() => {
@@ -118,11 +119,22 @@ describe('VotingQueue.Summary', () => {
     expect(wrapper).toContainMatchingElements(12, '.vote-item-address');
   });
 
-  it('calls props.votesSubmitted when confirm button is clicked', () => {
+  it('calls props.nextStep with properties when confirm button is clicked', () => {
     const wrapper = mountWithRouter(Summary, props);
     wrapper.find('button.confirm-button').simulate('click');
 
-    expect(props.votesSubmitted).toHaveBeenCalledTimes(1);
+    expect(props.nextStep).toHaveBeenCalledWith({
+      rawTransaction: {
+        fee: String(props.fee),
+        votes: props.normalizedVotes,
+      },
+      actionFunction: props.votesSubmitted,
+      statusInfo: {
+        locked: 0,
+        unlockable: 0,
+        selfUnvote: {},
+      },
+    });
   });
 
   it('calls props.nextStep when transaction is confirmed', () => {
@@ -135,19 +147,17 @@ describe('VotingQueue.Summary', () => {
 
     wrapper.find('button.confirm-button').simulate('click');
     expect(props.nextStep).toHaveBeenCalledTimes(1);
-    expect(props.nextStep).toHaveBeenCalledWith(expect.objectContaining(
-      { error: false, locked: 100, unlockable: 120 },
-    ));
-  });
-
-  it('calls props.nextStep when transaction create fail', () => {
-    const wrapper = mountWithRouter(Summary, {
-      ...props,
-      transactions: { signedTransaction: {}, txSignatureError: {} },
+    expect(props.nextStep).toHaveBeenCalledWith({
+      rawTransaction: {
+        fee: String(props.fee),
+        votes: props.normalizedVotes,
+      },
+      actionFunction: props.votesSubmitted,
+      statusInfo: {
+        locked: 100,
+        unlockable: 120,
+        selfUnvote: {},
+      },
     });
-
-    wrapper.find('button.confirm-button').simulate('click');
-    expect(props.nextStep).toHaveBeenCalledTimes(1);
-    expect(props.nextStep).toHaveBeenCalledWith(expect.objectContaining({ error: true }));
   });
 });

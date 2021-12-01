@@ -15,17 +15,6 @@ describe('Locked balance Summary', () => {
     t: key => key,
     account: accounts.genesis,
   };
-  const state = {
-    transactions: {
-      txSignatureError: null,
-      signedTransaction: { id: 1 },
-    },
-    account: { info: { LSK: accounts.genesis } },
-    blocks: {
-      latestBlocks: [{ height: 10000000 }],
-    },
-    network: { networks: { LSK: {} } },
-  };
 
   afterEach(() => {
     props.nextStep.mockRestore();
@@ -46,25 +35,13 @@ describe('Locked balance Summary', () => {
     expect(props.prevStep).toBeCalled();
   });
 
-  it('submit user data when click in confirm button', () => {
+  it('submit transaction and action function when click in confirm button', () => {
     const wrapper = mount(<Summary {...props} />);
     expect(props.nextStep).not.toBeCalled();
     wrapper.find('button.confirm-button').simulate('click');
-    expect(props.nextStep).toBeCalled();
-  });
-
-  it('submit user data when click in confirm button but fails', () => {
-    const error = { message: 'some error' };
-    const wrapper = mount(
-      <Summary
-        {...props}
-        transactions={{
-          txSignatureError: error,
-          signedTransaction: { id: 1 },
-        }}
-      />,
-    );
-    wrapper.find('button.confirm-button').simulate('click');
-    expect(props.nextStep).toBeCalledWith({ error });
+    expect(props.nextStep).toBeCalledWith({
+      actionFunction: props.balanceUnlocked,
+      rawTransaction: props.rawTransaction,
+    });
   });
 });
