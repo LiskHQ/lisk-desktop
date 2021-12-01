@@ -3,7 +3,7 @@ import Dialog from '@toolbox/dialog/dialog';
 import MultiStep from '@shared/multiStep';
 import TransactionSignature from '@shared/transactionSignature';
 import Form from './form';
-import TransactionStatus from './transactionStatus';
+import Status from './status';
 import Summary from './summary';
 
 const Modal = () => (
@@ -14,7 +14,7 @@ const Modal = () => (
       <Form />
       <Summary />
       <TransactionSignature />
-      <TransactionStatus />
+      <Status />
     </MultiStep>
   </Dialog>
 );

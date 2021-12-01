@@ -42,7 +42,7 @@ const Summary = ({
       title={t('Delegate registration summary')}
       confirmButton={onConfirmAction}
       cancelButton={onCancelAction}
-      fee={!account.summary.isMultisignature && toRawLsk(rawTransaction.fee.value)}
+      fee={!account.summary.isMultisignature && rawTransaction.fee.value}
       classNames={`${styles.box} ${styles.summaryContainer}`}
     >
       <TransactionInfo
