@@ -49,10 +49,6 @@ export default {
   },
   appUpdates: {},
   transactions: {
-    /* signedTransaction: {
-      senderPublicKey: 'abc1',
-      signatures: ['abc1'],
-    }, */
     signedTransaction: {},
     txSignatureError: null,
     txBroadcastError: null,

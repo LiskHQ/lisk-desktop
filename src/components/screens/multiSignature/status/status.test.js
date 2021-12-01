@@ -1,9 +1,10 @@
-import { mountWithRouterAndStore } from '@utils/testHelpers';
+import React from 'react';
+import { shallow } from 'enzyme';
+import TransactionResult from '@shared/transactionResult';
 import Status from './status';
+import accounts from '../../../../../test/constants/accounts';
 
 describe('Multisignature status component', () => {
-  let wrapper;
-
   const props = {
     t: v => v,
     transactions: {
@@ -14,40 +15,94 @@ describe('Multisignature status component', () => {
     },
   };
 
-  it('Should render properly on success', () => {
-    wrapper = mountWithRouterAndStore(
-      Status,
-      props,
-      {},
-      {
-        transactions: {
-          ...props.transactions,
-          confirmed: [{ id: 1 }],
-        },
+  const signedTransaction = {
+    id: '4:0',
+    senderPublicKey: accounts.genesis.summary.publicKey,
+    signatures: [accounts.genesis.summary.publicKey],
+    nonce: '19n',
+    fee: '207000n',
+  };
+
+  it('passes correct props to TransactionResult when signed transaction', () => {
+    const propsWithSignedTx = {
+      ...props,
+      transactions: {
+        txBroadcastError: null,
+        txSignatureError: null,
+        signedTransaction,
       },
-    );
-    const html = wrapper.html();
-    expect(html).toContain('transaction-status');
-    expect(html).toContain('Your transaction has been submitted and will be confirmed in a few moments.');
-    expect(html).toContain('Download');
-    expect(html).toContain('Copy');
+    };
+
+    const wrapper = shallow(<Status {...propsWithSignedTx} />);
+    expect(wrapper.find('.transaction-status')).toExist();
+    expect(wrapper.find(TransactionResult).props()).toEqual({
+      illustration: 'registerMultisignature',
+      status: { code: 'SIGNATURE_SUCCESS' },
+      title: 'Submitting the transaction',
+      message: 'Your transaction is being submitted to the blockchain.',
+      className: 'content',
+    });
   });
 
-  it('Should render properly on error', () => {
-    wrapper = mountWithRouterAndStore(
-      Status,
-      props,
-      {},
-      {
-        transactions: {
-          ...props.transactions,
-          txBroadcastError: { message: 'error:test' },
-        },
+  it('passes correct props to TransactionResult when transaction sign failed', () => {
+    const propsWithError = {
+      ...props,
+      transactions: {
+        txBroadcastError: null,
+        txSignatureError: { message: 'error:test' },
+        signedTransaction: { signatures: ['123'] },
       },
-    );
-    const html = wrapper.html();
-    expect(html).toContain('transaction-status');
-    expect(html).toContain('Oops, looks like something went wrong.');
-    expect(html).toContain('Report the error via email');
+    };
+
+    const wrapper = shallow(<Status {...propsWithError} />);
+    expect(wrapper.find('.transaction-status')).toExist();
+    expect(wrapper.find(TransactionResult).props()).toEqual({
+      illustration: 'registerMultisignature',
+      status: { code: 'SIGNATURE_ERROR', message: JSON.stringify({ message: 'error:test' }) },
+      title: 'Transaction failed',
+      message: 'An error occurred while signing your transaction. Please try again.',
+      className: 'content',
+    });
+  });
+
+  it('passes correct props to TransactionResult when transaction broadcast fails', () => {
+    const propsWithError = {
+      ...props,
+      transactions: {
+        txBroadcastError: { message: 'error:test' },
+        txSignatureError: null,
+        signedTransaction: { },
+      },
+    };
+
+    const wrapper = shallow(<Status {...propsWithError} />);
+    expect(wrapper.find('.transaction-status')).toExist();
+    expect(wrapper.find(TransactionResult).props()).toEqual({
+      illustration: 'registerMultisignature',
+      status: { code: 'BROADCAST_ERROR', message: JSON.stringify({ message: 'error:test' }) },
+      title: 'Transaction failed',
+      message: 'An error occurred while sending your transaction to the network. Please try again.',
+      className: 'content',
+    });
+  });
+
+  it('passes correct props to TransactionResult when transaction broadcast success', () => {
+    const propsSuccess = {
+      ...props,
+      transactions: {
+        txBroadcastError: null,
+        txSignatureError: null,
+        signedTransaction: { },
+      },
+    };
+
+    const wrapper = shallow(<Status {...propsSuccess} />);
+    expect(wrapper.find('.transaction-status')).toExist();
+    expect(wrapper.find(TransactionResult).props()).toMatchObject({
+      illustration: 'registerMultisignature',
+      status: { code: 'BROADCAST_SUCCESS' },
+      title: 'Transaction submitted',
+      className: 'content',
+    });
   });
 });
