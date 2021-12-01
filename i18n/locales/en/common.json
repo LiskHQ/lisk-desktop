@@ -605,6 +605,7 @@
   "Your multisignatures groups": "Your multisignatures groups",
   "Your session will be timed out in {{time}} if no network activity occurs.": "Your session will be timed out in {{time}} if no network activity occurs.",
   "Your signature was successful": "Your signature was successful",
+  "Your signature will replace one optional signature.": "Your signature will replace one optional signature.",
   "Your tokens and passphrase are safe.": "Your tokens and passphrase are safe.",
   "Your transaction has been submitted and will appear in sender account's wallet after confirmation.": "Your transaction has been submitted and will appear in sender account's wallet after confirmation.",
   "Your transaction has been submitted and will be confirmed in a few moments.": "Your transaction has been submitted and will be confirmed in a few moments.",
