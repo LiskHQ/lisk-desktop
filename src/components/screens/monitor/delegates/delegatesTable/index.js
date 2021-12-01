@@ -34,7 +34,7 @@ const TableWrapper = compose(
     data={delegates.data}
     error={delegates.error ? {
       ...delegates.error,
-      message: delegates.error?.message === 'Data not found' ? t('No {{activeTab}} delegates found.', { activeTab }) : undefined,
+      message: delegates.error.message === 'Data not found' ? t('No {{activeTab}} delegates found.', { activeTab }) : undefined,
     } : undefined}
     isLoading={delegates.isLoading}
     row={DelegateRow}
