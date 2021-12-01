@@ -3,7 +3,6 @@ import { tokenMap, networks } from '@constants';
 import { mountWithProps } from '@utils/testHelpers';
 import * as hwManagerAPI from '@utils/hwManager';
 import { create } from '@api/transaction';
-import { balanceUnlocked } from '@actions/account';
 import useTransactionPriority from '@shared/transactionPriority/useTransactionPriority';
 import useTransactionFeeCalculation from '@shared/transactionPriority/useTransactionFeeCalculation';
 import LockedBalance from './index';
