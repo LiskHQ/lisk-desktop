@@ -14,7 +14,7 @@ const Empty = ({
   return (
     <div className={`${styles.wrapper} ${className} empty-state`}>
       <Illustration name={data?.illustration ?? 'emptyWallet'} />
-      <h3>{data?.message ?? 'Nothing found.'}</h3>
+      <h3>{error?.message ?? 'Nothing found.'}</h3>
     </div>
   );
 };
