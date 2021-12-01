@@ -1,6 +1,10 @@
 /* eslint-disable max-lines */
 import { transactions } from '@liskhq/lisk-client';
-import { DEFAULT_NUMBER_OF_SIGNATURES, MODULE_ASSETS_NAME_ID_MAP } from '@constants';
+import {
+  DEFAULT_NUMBER_OF_SIGNATURES,
+  MODULE_ASSETS_NAME_ID_MAP,
+  signatureCollectionStatus,
+} from '@constants';
 import {
   extractAddressFromPublicKey,
   getBase32AddressFromAddress,
@@ -10,7 +14,6 @@ import {
 import { transformStringDateToUnixTimestamp } from '@utils/datetime';
 import { toRawLsk } from '@utils/lsk';
 import { splitModuleAndAssetIds, joinModuleAndAssetIds } from '@utils/moduleAssets';
-import { findNonEmptySignatureIndices } from '@screens/signMultiSignTransaction/helpers';
 
 const {
   transfer, voteDelegate, registerDelegate, unlockToken, reclaimLSK, registerMultisignatureGroup,
@@ -391,8 +394,10 @@ const downloadJSON = (data, name) => {
 const removeExcessSignatures = (signatures, mandatoryKeysNo, hasSenderSignature) => {
   const skip = hasSenderSignature ? 1 : 0;
   const firstOptional = skip + mandatoryKeysNo;
+  let cleared = false;
   const trimmedSignatures = signatures.map((item, index) => {
-    if (index === firstOptional) {
+    if (index >= firstOptional && item.length && !cleared) {
+      cleared = true;
       return Buffer.from('');
     }
     return item;
@@ -443,7 +448,7 @@ const signTransaction = (
 
   try {
     // remove excess optionals
-    if (txStatus === 'occupiedByOptionals') {
+    if (txStatus === signatureCollectionStatus.occupiedByOptionals) {
       transactionObject.signatures = removeExcessSignatures(
         transactionObject.signatures, keys.mandatoryKeys.length, includeSender,
       );

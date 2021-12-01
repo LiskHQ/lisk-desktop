@@ -1,4 +1,4 @@
-import { MODULE_ASSETS_NAME_ID_MAP } from '@constants';
+import { MODULE_ASSETS_NAME_ID_MAP, signatureCollectionStatus } from '@constants';
 import { joinModuleAndAssetIds } from '@utils/moduleAssets';
 import { getKeys } from '@utils/account';
 
@@ -39,20 +39,22 @@ export const getTransactionSignatureStatus = (senderAccount, transaction) => {
   });
 
   const alreadySigned = getNonEmptySignatures(transaction.signatures).length;
-  const mandatorySignatures = getNonEmptySignatures(
-    transaction.signatures.slice(0, keys.mandatoryKeys.length + 1),
+  const registrationExtra = isGroupRegistration ? 1 : 0;
+  const mandatorySigs = keys.mandatoryKeys.length + registrationExtra;
+  const nonEmptyMandatorySigs = getNonEmptySignatures(
+    transaction.signatures.slice(0, mandatorySigs),
   ).length;
 
   if (required > alreadySigned) {
-    return 'partiallySigned';
+    return signatureCollectionStatus.partiallySigned;
   }
-  if (required === alreadySigned && mandatorySignatures === keys.mandatoryKeys.length + 1) {
-    return 'fullySigned';
+  if (required === alreadySigned && nonEmptyMandatorySigs === mandatorySigs) {
+    return signatureCollectionStatus.fullySigned;
   }
-  if (required === alreadySigned && mandatorySignatures < keys.mandatoryKeys.length + 1) {
-    return 'occupiedByOptionals';
+  if (required === alreadySigned && nonEmptyMandatorySigs < mandatorySigs) {
+    return signatureCollectionStatus.occupiedByOptionals;
   }
-  return 'overSigned';
+  return signatureCollectionStatus.overSigned;
 };
 
 // eslint-disable-next-line max-statements
