@@ -19,6 +19,10 @@
 
   & > .footer {
     padding-top: 20px;
+
+    & + footer {
+      padding-top: 0;
+    }
   }
 
   & .feedback {

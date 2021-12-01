@@ -28,14 +28,17 @@ export const ActionBar = ({
 );
 
 export const Feedback = ({
-  t, isMember, isFullySigned,
+  t, isMember, signatureStatus,
 }) => {
   let feedback = 'Unknown error';
+  const statusMessages = {
+    fullySigned: t('Transaction is already fully signed.'),
+    occupiedByOptionals: t('Your signature will replace one optional signature.'),
+  };
   if (!isMember) {
     feedback = t('Only members of the group can sign the transaction.');
-  }
-  if (isFullySigned) {
-    feedback = t('Transaction is already fully signed.');
+  } else {
+    feedback = statusMessages[signatureStatus];
   }
 
   return (
