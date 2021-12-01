@@ -30,7 +30,7 @@ export const ActionBar = ({
 export const Feedback = ({
   t, isMember, signatureStatus,
 }) => {
-  let feedback = 'Unknown error';
+  let feedback;
   const statusMessages = {
     fullySigned: t('Transaction is already fully signed.'),
     occupiedByOptionals: t('Your signature will replace one optional signature.'),
@@ -46,7 +46,7 @@ export const Feedback = ({
       direction="horizontal"
       className={styles.footer}
     >
-      <div className={`${styles.feedback} feedback`}>
+      <div className={`${styles.feedback} ${signatureStatus === 'occupiedByOptionals' ? styles.warning : styles.error} feedback`}>
         <span>{feedback}</span>
       </div>
     </BoxFooter>
