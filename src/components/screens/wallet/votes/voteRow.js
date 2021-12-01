@@ -17,8 +17,8 @@ const VoteRow = ({
   const account = accounts[data.address];
   const truncatedAddress = truncateAddress(data.address);
   return (
-    <div className={`${grid.row} ${tableStyles.row} ${styles.row} vote-row`}>
-      <div className={`${grid['col-sm-11']}`} onClick={onClick}>
+    <div className={`${grid.row} ${tableStyles.row} ${styles.row}`}>
+      <div className={`${grid['col-sm-11']} vote-row`} onClick={onClick}>
         {/* Account visual */}
         <div className={grid['col-sm-6']}>
           <div className={`${styles.info}`}>
@@ -71,7 +71,7 @@ const VoteRow = ({
           : (
             <div className={grid['col-sm-1']}>
               <DialogLink
-                className={styles.editVoteLink}
+                className={`${styles.editVoteLink} edit-vote`}
                 component="editVote"
                 data={{ address: data.address }}
               >
