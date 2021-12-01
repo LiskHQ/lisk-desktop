@@ -13,6 +13,7 @@ describe('Multisignature status component', () => {
       txSignatureError: null,
       signedTransaction: { signatures: ['123', '987'] },
     },
+    account: accounts.genesis,
   };
 
   const signedTransaction = {
@@ -22,6 +23,37 @@ describe('Multisignature status component', () => {
     nonce: '19n',
     fee: '207000n',
   };
+
+  it('passes correct props to TransactionResult when partial signed transaction', () => {
+    const propsWithSignedTx = {
+      ...props,
+      account: accounts.multiSig,
+      transactions: {
+        txBroadcastError: null,
+        txSignatureError: null,
+        signedTransaction: {
+          ...signedTransaction,
+          senderPublicKey: accounts.multiSig.summary.publicKey,
+          signatures: [accounts.multiSig.summary.publicKey],
+          asset: {
+            optionalKeys: accounts.multiSig.keys.optionalKeys,
+            mandatoryKeys: accounts.multiSig.keys.mandatoryKeys,
+            numberOfSignatures: accounts.multiSig.keys.numberOfSignatures,
+          },
+        },
+      },
+    };
+
+    const wrapper = shallow(<Status {...propsWithSignedTx} />);
+    expect(wrapper.find('.transaction-status')).toExist();
+    expect(wrapper.find(TransactionResult).props()).toEqual({
+      illustration: 'registerMultisignature',
+      status: { code: 'MULTISIG_SIGNATURE_PARTIAL_SUCCESS' },
+      title: 'Your signature was successful',
+      message: 'You can download or copy the transaction and share it with other members.',
+      className: 'content',
+    });
+  });
 
   it('passes correct props to TransactionResult when signed transaction', () => {
     const propsWithSignedTx = {

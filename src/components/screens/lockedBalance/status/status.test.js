@@ -54,13 +54,32 @@ describe('unlock transaction Status', () => {
       },
     };
 
-    const wrapper = shallow(<Status {...propsWithError} />);
+    let wrapper = shallow(<Status {...propsWithError} />);
     expect(wrapper.find('.transaction-status')).toExist();
     expect(wrapper.find(TransactionResult).props()).toEqual({
       illustration: 'default',
       status: { code: 'SIGNATURE_ERROR', message: JSON.stringify({ message: 'error:test' }) },
       title: 'Transaction failed',
       message: 'An error occurred while signing your transaction. Please try again.',
+      className: 'content',
+    });
+
+    const propsWithHWError = {
+      ...props,
+      transactions: {
+        txBroadcastError: null,
+        txSignatureError: { message: 'hwCommand' },
+        signedTransaction: { signatures: ['123'] },
+      },
+    };
+
+    wrapper = shallow(<Status {...propsWithHWError} />);
+    expect(wrapper.find('.transaction-status')).toExist();
+    expect(wrapper.find(TransactionResult).props()).toEqual({
+      illustration: 'default',
+      status: { code: 'HW_REJECTED', message: 'hwCommand' },
+      title: 'Transaction aborted on device',
+      message: 'You have cancelled the transaction on your hardware wallet.',
       className: 'content',
     });
   });
