@@ -26,7 +26,7 @@ export const findNonEmptySignatureIndices = (signatures) => {
 };
 
 // eslint-disable-next-line max-statements
-export const isTransactionFullySigned = (senderAccount, transaction) => {
+export const getTransactionSignatureStatus = (senderAccount, transaction) => {
   const moduleAssetId = transaction.moduleAssetId || joinModuleAndAssetIds(transaction);
   const isGroupRegistration = moduleAssetId
     === MODULE_ASSETS_NAME_ID_MAP.registerMultisignatureGroup;
@@ -39,8 +39,20 @@ export const isTransactionFullySigned = (senderAccount, transaction) => {
   });
 
   const alreadySigned = getNonEmptySignatures(transaction.signatures).length;
+  const mandatorySignatures = getNonEmptySignatures(
+    transaction.signatures.slice(0, keys.mandatoryKeys.length + 1),
+  ).length;
 
-  return (required === alreadySigned);
+  if (required > alreadySigned) {
+    return 'partiallySigned';
+  }
+  if (required === alreadySigned && mandatorySignatures === keys.mandatoryKeys.length + 1) {
+    return 'fullySigned';
+  }
+  if (required === alreadySigned && mandatorySignatures < keys.mandatoryKeys.length + 1) {
+    return 'occupiedByOptionals';
+  }
+  return 'overSigned';
 };
 
 // eslint-disable-next-line max-statements
