@@ -5,12 +5,11 @@ import {
 } from '@toolbox/buttons';
 import Illustration from '@toolbox/illustration';
 import { transactionToJSON, downloadJSON } from '@utils/transaction';
-import { routes } from '@constants';
+import { routes, txStatusTypes } from '@constants';
 
 import copyToClipboard from 'copy-to-clipboard';
 import Icon from '@toolbox/icon';
 import getIllustration from './illustrations';
-import { txStatusTypes } from './statusConfig';
 import styles from './transactionResult.css';
 
 const PartiallySignedActions = ({ onDownload, t }) => (

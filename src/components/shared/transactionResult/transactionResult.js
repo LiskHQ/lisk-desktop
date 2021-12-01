@@ -1,7 +1,7 @@
 /* eslint-disable complexity */
 import React, { useEffect, useState } from 'react';
+import { txStatusTypes } from '@constants';
 import Regular from './regular';
-import { txStatusTypes } from './statusConfig';
 import Multisignature from './multisignature';
 
 const TransactionResult = (props) => {
