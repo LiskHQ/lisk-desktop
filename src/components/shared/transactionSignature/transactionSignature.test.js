@@ -9,7 +9,7 @@ describe('unlock transaction Status', () => {
     transactions: {
       txBroadcastError: null,
       txSignatureError: null,
-      signedTransaction: { signatures: ['123'] },
+      signedTransaction: { },
     },
     account: accounts.genesis,
     actionFunction: jest.fn(),
@@ -32,6 +32,57 @@ describe('unlock transaction Status', () => {
   it('should call actionFunction', () => {
     mount(<TransactionSignature {...props} sender={undefined} />);
     expect(props.actionFunction).toHaveBeenCalledWith({});
+  });
+
+  it('should call nextStep with props', () => {
+    const wrapper = mount(<TransactionSignature {...props} />);
+
+    wrapper.setProps({
+      transactions: {
+        ...props.transactions,
+        signedTransaction: { signatures: [accounts.genesis.summary.publicKey] },
+      },
+    });
+    wrapper.update();
+    expect(props.nextStep).toHaveBeenCalledWith({
+      rawTransaction: props.rawTransaction,
+      statusInfo: props.statusInfo,
+      sender: props.sender,
+    });
+
+    wrapper.setProps({
+      transactions: {
+        ...props.transactions,
+        txSignatureError: { },
+      },
+    });
+    wrapper.update();
+    expect(props.nextStep).toHaveBeenCalledWith({
+      rawTransaction: props.rawTransaction,
+      statusInfo: props.statusInfo,
+      sender: props.sender,
+    });
+  });
+
+  it('should call transactionDoubleSigned with props', () => {
+    const wrapper = mount(
+      <TransactionSignature
+        {...props}
+        account={{
+          ...props.account,
+          secondPassphrase: accounts.delegate.passphrase,
+        }}
+      />,
+    );
+
+    wrapper.setProps({
+      transactions: {
+        ...props.transactions,
+        signedTransaction: { signatures: [accounts.genesis.summary.publicKey, ''] },
+      },
+    });
+    wrapper.update();
+    expect(props.transactionDoubleSigned).toHaveBeenCalled();
   });
 
   it('should render empty div when is not hardware wallet', () => {
