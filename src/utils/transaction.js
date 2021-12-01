@@ -457,14 +457,6 @@ const signTransaction = (
       keys,
       includeSender,
     );
-
-    // remove unnecessary signatures
-    if (txStatus === 'fullySigned' || txStatus === 'occupiedByOptionals') {
-      const emptySignatureIndices = findNonEmptySignatureIndices(signedTransaction.signatures);
-      emptySignatureIndices.forEach(index => {
-        signedTransaction.signatures[index] = Buffer.from('');
-      });
-    }
   } catch (e) {
     // eslint-disable-next-line no-console
     console.error(e);
