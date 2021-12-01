@@ -1,5 +1,4 @@
-import React from 'react';
-import { mount } from 'enzyme';
+import { mountWithRouterAndStore } from '@utils/testHelpers';
 import Result from './result';
 
 describe('Multisignature result component', () => {
@@ -7,40 +6,44 @@ describe('Multisignature result component', () => {
 
   const props = {
     t: v => v,
-    transactionBroadcasted: jest.fn(),
     transactions: {
       confirmed: [],
       txBroadcastError: null,
       txSignatureError: null,
-      signedTransaction: {},
+      signedTransaction: { signatures: ['123', '987'] },
     },
   };
 
   it('Should render properly on success', () => {
-    wrapper = mount(
-      <Result
-        {...props}
-        transactionInfo={{ id: 1 }}
-        transactions={{
+    wrapper = mountWithRouterAndStore(
+      Result,
+      props,
+      {},
+      {
+        transactions: {
           ...props.transactions,
           confirmed: [{ id: 1 }],
-        }}
-      />,
+        },
+      },
     );
     const html = wrapper.html();
     expect(html).toContain('transaction-status');
-    expect(html).toContain('You have successfully signed the transaction');
+    expect(html).toContain('Your transaction has been submitted and will be confirmed in a few moments.');
     expect(html).toContain('Download');
     expect(html).toContain('Copy');
   });
 
   it('Should render properly on error', () => {
-    wrapper = mount(
-      <Result
-        {...props}
-        transactions={{ ...props.transactions, txBroadcastError: { message: 'error:test' } }}
-        error={{ message: 'error:test' }}
-      />,
+    wrapper = mountWithRouterAndStore(
+      Result,
+      props,
+      {},
+      {
+        transactions: {
+          ...props.transactions,
+          txBroadcastError: { message: 'error:test' },
+        },
+      },
     );
     const html = wrapper.html();
     expect(html).toContain('transaction-status');

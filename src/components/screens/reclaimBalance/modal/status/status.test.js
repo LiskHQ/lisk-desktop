@@ -39,7 +39,7 @@ describe('Status', () => {
     const newProps = { ...props, isMigrated: true };
     newProps.transactions.confirmed = [{ amount: 1 }];
     wrapper = mountWithRouterAndStore(Status, newProps, {}, state);
-    wrapper.find('.close-modal').at(0).simulate('click');
+    wrapper.find('.back-to-wallet-button').at(0).simulate('click');
     expect(props.history.push).toBeCalledWith('/wallet');
   });
 
@@ -48,6 +48,6 @@ describe('Status', () => {
     newProps.transactions.confirmed = [];
     newProps.transactions.txBroadcastError = { amount: 1 };
     wrapper = mountWithRouterAndStore(Status, newProps, {}, state);
-    expect(wrapper).toContainMatchingElement('.report-error-link');
+    expect(wrapper.html()).toContain('Transaction');
   });
 });

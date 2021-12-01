@@ -1,43 +1,52 @@
-import React from 'react';
-import { shallow } from 'enzyme';
+import { mountWithRouterAndStore } from '@utils/testHelpers';
 import TransactionStatus from './transactionStatus';
+import accounts from '../../../../../test/constants/accounts';
 import signedTX from '../../../../../test/fixtures/signedTx.json';
 
 describe('unlock transaction Status', () => {
   const props = {
     t: key => key,
-    transactionBroadcasted: jest.fn(),
+    account: accounts.genesis,
     transactions: {
       txBroadcastError: null,
       txSignatureError: null,
-      signedTransaction: {},
+      signedTransaction: { signatures: ['123'] },
     },
   };
 
-  const propsWithSignedTx = {
-    ...props,
-    transactions: {
-      txBroadcastError: null,
-      txSignatureError: null,
-      signedTransaction: signedTX,
-    },
-  };
-  const propsWithError = {
-    ...props,
-    transactions: {
-      txBroadcastError: { message: 'error:test' },
-      txSignatureError: null,
-      signedTransaction: {},
-    },
-  };
+  it('renders a pending state when the transactions not submitted yet.', () => {
+    const propsWithSignedTx = {
+      ...props,
+      transactions: {
+        txBroadcastError: null,
+        txSignatureError: null,
+        signedTransaction: signedTX,
+      },
+    };
 
-  it('renders a pending state when the transactions not submitted yet. then submits it.', () => {
-    const wrapper = shallow(<TransactionStatus {...propsWithSignedTx} />);
-    expect(wrapper.find('PrimaryButton')).toExist();
+    const wrapper = mountWithRouterAndStore(
+      TransactionStatus, propsWithSignedTx, {}, {
+        transactions: propsWithSignedTx.transactions,
+      },
+    );
+    expect(wrapper.find('.dialog-close-button')).toExist();
   });
 
   it('renders properly Status component when transaction failed', () => {
-    const wrapper = shallow(<TransactionStatus {...propsWithError} />);
+    const propsWithError = {
+      ...props,
+      transactions: {
+        txBroadcastError: { message: 'error:test' },
+        txSignatureError: null,
+        signedTransaction: { signatures: ['123'] },
+      },
+    };
+
+    const wrapper = mountWithRouterAndStore(
+      TransactionStatus, propsWithError, {}, {
+        transactions: propsWithError.transactions,
+      },
+    );
     const html = wrapper.html();
     expect(html).toContain('failed');
     expect(html).toContain('something went wrong');

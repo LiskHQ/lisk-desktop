@@ -83,6 +83,6 @@ describe('TransactionStatus', () => {
         },
       },
     );
-    expect(wrapper).toContainMatchingElement('.report-error-link');
+    expect(wrapper.html()).toContain('An error occurred while sending your transaction to the network. Please try again.');
   });
 });
