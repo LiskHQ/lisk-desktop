@@ -3,7 +3,10 @@ import styles from '../box/emptyState.css';
 import Illustration from '../illustration';
 
 const Error = ({ data, isLoading }) => {
-  if (isLoading || !data || data.message.indexOf('not found') > -1) return null;
+  const notFoundReg = /not\sfound/gi;
+  if (isLoading || !data || (typeof data === 'string' ? notFoundReg.test(data) : notFoundReg.test(data.message))) {
+    return null;
+  }
   return (
     <div className={`${styles.wrapper} error-state`}>
       <Illustration name="emptyWallet" />
