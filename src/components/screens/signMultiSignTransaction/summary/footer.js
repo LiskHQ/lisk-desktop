@@ -1,4 +1,5 @@
 import React from 'react';
+import { signatureCollectionStatus } from '@constants';
 import { useTheme } from '@utils/theme';
 import { removeSearchParamsFromUrl } from '@utils/searchParams';
 import { PrimaryButton, SecondaryButton } from '@toolbox/buttons';
@@ -46,7 +47,7 @@ export const Feedback = ({
       direction="horizontal"
       className={styles.footer}
     >
-      <div className={`${styles.feedback} ${signatureStatus === 'occupiedByOptionals' ? styles.warning : styles.error} feedback`}>
+      <div className={`${styles.feedback} ${signatureStatus === signatureCollectionStatus.occupiedByOptionals ? styles.warning : styles.error} feedback`}>
         <span>{feedback}</span>
       </div>
     </BoxFooter>

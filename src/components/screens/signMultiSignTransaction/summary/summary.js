@@ -1,5 +1,6 @@
 import React, { useMemo } from 'react';
 import { isEmpty } from '@utils/helpers';
+import { signatureCollectionStatus } from '@constants';
 import BoxContent from '@toolbox/box/content';
 import Box from '@toolbox/box';
 import TransactionDetails from '@screens/transactionDetails/transactionDetails';
@@ -40,11 +41,13 @@ const Summary = ({
   };
 
   const nextButton = {
-    title: signatureStatus === 'fullySigned' ? t('Continue') : t('Sign'),
+    title: signatureStatus === signatureCollectionStatus.fullySigned ? t('Continue') : t('Sign'),
     onClick,
   };
 
-  const showFeedback = !isMember || signatureStatus === 'fullySigned' || signatureStatus === 'occupiedByOptionals';
+  const showFeedback = !isMember
+    || signatureStatus === signatureCollectionStatus.fullySigned
+    || signatureStatus === signatureCollectionStatus.occupiedByOptionals;
 
   if (isEmpty(senderAccount.data)) {
     return <div />;
