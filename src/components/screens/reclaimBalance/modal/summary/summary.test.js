@@ -1,17 +1,15 @@
-import { mountWithRouterAndStore } from '@utils/testHelpers';
+import React from 'react';
+import { mount } from 'enzyme';
+import { act } from 'react-dom/test-utils';
 import {
   getTransactionBaseFees,
-  getTransactionFee,
-  create,
-  computeTransactionId,
 } from '@api/transaction';
 import { tokenMap } from '@constants';
 import useTransactionFeeCalculation from '@shared/transactionPriority/useTransactionFeeCalculation';
-import { fromRawLsk } from '@utils/lsk';
 import { truncateAddress } from '@utils/account';
 import * as hwManagerAPI from '@utils/hwManager';
 import accounts from '../../../../../../test/constants/accounts';
-import Summary from './index';
+import Summary from './summary';
 import flushPromises from '../../../../../../test/unit-test-utils/flushPromises';
 
 jest.mock('@shared/transactionPriority/useTransactionFeeCalculation');
@@ -23,29 +21,23 @@ const transactionBaseFees = {
   Medium: 100,
   High: 51,
 };
+
 const response = {
   amount: 13600000000,
   nonce: '123',
   id: 'tx-id',
 };
-const mockFeeFactor = 100;
-getTransactionBaseFees.mockResolvedValue(transactionBaseFees);
-getTransactionFee.mockImplementation((params) => {
-  const selectedTransactionPriority = params.selectedPriority.selectedIndex;
-  const fees = fromRawLsk(
-    Object.values(transactionBaseFees)[selectedTransactionPriority] * mockFeeFactor,
-  );
-  return ({
-    value: fees, feedback: '', error: false,
-  });
-});
 
+getTransactionBaseFees.mockResolvedValue(transactionBaseFees);
+hwManagerAPI.signTransactionByHW.mockResolvedValue(response);
 useTransactionFeeCalculation.mockImplementation(() => ({
   minFee: { value: 0.001 },
 }));
 
-describe.skip('Reclaim balance Summary', () => {
-  const state = {
+describe('Reclaim balance Summary', () => {
+  const props = {
+    nextStep: jest.fn(),
+    t: key => key,
     account: {
       passphrase: 'test',
       info: {
@@ -58,20 +50,12 @@ describe.skip('Reclaim balance Summary', () => {
         LSK: { networkIdentifier: 'sample_identifier' },
       },
     },
+    balanceReclaimed: jest.fn(),
   };
-
-  const props = {
-    nextStep: jest.fn(),
-    t: key => key,
-  };
-
-  beforeEach(() => {
-    hwManagerAPI.signTransactionByHW.mockResolvedValue(response);
-  });
 
   it('should render summary component', () => {
     // Arrange
-    const wrapper = mountWithRouterAndStore(Summary, props, {}, state);
+    const wrapper = mount(<Summary {...props} />);
 
     // Act
     const html = wrapper.html();
@@ -86,19 +70,17 @@ describe.skip('Reclaim balance Summary', () => {
 
   it('should navigate to next page when continue button is clicked', async () => {
     // Arrange
-    const wrapper = mountWithRouterAndStore(Summary, props, {}, state);
-    create.mockImplementation(() => Promise.resolve(response));
-    computeTransactionId.mockImplementation(() => response.id);
+    const wrapper = mount(<Summary {...props} />);
     wrapper.find('button.confirm-button').simulate('click');
 
     // Act
     await flushPromises();
+    act(() => { wrapper.update(); });
 
     // Assert
-    expect(create).toHaveBeenCalled();
     expect(props.nextStep).toBeCalledWith({
-      transactionInfo: response,
-      balance: accounts.non_migrated.legacy?.balance,
+      rawTransaction: { fee: { value: 0.001 } },
+      actionFunction: props.balanceReclaimed,
     });
   });
 });
