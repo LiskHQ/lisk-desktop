@@ -4,16 +4,17 @@ import { mountWithRouterAndStore } from '@utils/testHelpers';
 import Summary from './summary';
 import accounts from '../../../../../test/constants/accounts';
 
-describe.skip('Delegate Registration Summary', () => {
+describe('Delegate Registration Summary', () => {
   const props = {
+    delegateRegistered: jest.fn(),
+    rawTransaction: {
+      username: 'mydelegate',
+      fee: { value: 1900000000 },
+    },
     account: accounts.genesis,
-    username: 'mydelegate',
     prevStep: jest.fn(),
     nextStep: jest.fn(),
     t: key => key,
-    transactionInfo: {
-      fee: 1900000000,
-    },
   };
 
   afterEach(() => {
@@ -38,35 +39,13 @@ describe.skip('Delegate Registration Summary', () => {
 
   it('submit user data when click in confirm button', () => {
     const wrapper = mountWithRouterAndStore(
-      Summary,
-      props,
-      {},
-      {
-        transactions: {
-          txSignatureError: null,
-          signedTransaction: { id: 1 },
-        },
-      },
+      Summary, props, {}, {},
     );
     expect(props.nextStep).not.toBeCalled();
     wrapper.find('button.confirm-button').simulate('click');
-    expect(props.nextStep).toBeCalledWith({ transactionInfo: props.transactionInfo });
-  });
-
-  it('submit user data when click in confirm button but fails', () => {
-    const error = {};
-    const wrapper = mountWithRouterAndStore(
-      Summary,
-      props,
-      {},
-      {
-        transactions: {
-          txSignatureError: error,
-          signedTransaction: { id: 1 },
-        },
-      },
-    );
-    wrapper.find('button.confirm-button').simulate('click');
-    expect(props.nextStep).toBeCalledWith({ error });
+    expect(props.nextStep).toBeCalledWith({
+      actionFunction: props.delegateRegistered,
+      rawTransaction: props.rawTransaction,
+    });
   });
 });

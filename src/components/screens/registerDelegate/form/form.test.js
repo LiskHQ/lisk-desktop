@@ -36,7 +36,7 @@ getTransactionFee.mockImplementation((params) => {
   });
 });
 
-describe.skip('SelectNameAndFee', () => {
+describe('SelectNameAndFee', () => {
   let wrapper;
 
   const props = {
@@ -85,8 +85,14 @@ describe.skip('SelectNameAndFee', () => {
     wrapper.find('button.confirm-btn').simulate('click');
     await flushPromises();
     expect(props.nextStep).toBeCalledWith({
-      username: 'mydelegate',
-      transactionInfo: mockTransaction,
+      rawTransaction: {
+        fee: {
+          error: false,
+          feedback: '',
+          value: '0.000156',
+        },
+        username: 'mydelegate',
+      },
     });
   });
 

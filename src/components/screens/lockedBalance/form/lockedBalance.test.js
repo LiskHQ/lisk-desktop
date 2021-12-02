@@ -3,7 +3,6 @@ import { tokenMap, networks } from '@constants';
 import { mountWithProps } from '@utils/testHelpers';
 import * as hwManagerAPI from '@utils/hwManager';
 import { create } from '@api/transaction';
-import { balanceUnlocked } from '@actions/account';
 import useTransactionPriority from '@shared/transactionPriority/useTransactionPriority';
 import useTransactionFeeCalculation from '@shared/transactionPriority/useTransactionFeeCalculation';
 import LockedBalance from './index';
@@ -18,7 +17,7 @@ jest.mock('@actions/account', () => ({
 }));
 jest.mock('@utils/hwManager');
 
-describe.skip('Unlock LSK modal', () => {
+describe('Unlock LSK modal', () => {
   let wrapper;
   useTransactionPriority.mockImplementation(() => (
     [
@@ -117,6 +116,10 @@ describe.skip('Unlock LSK modal', () => {
     wrapper.find('.unlock-btn').at(0).simulate('click');
     act(() => { wrapper.update(); });
     await flushPromises();
-    expect(balanceUnlocked).toBeCalledWith({ selectedFee: '0.1' });
+    expect(props.nextStep).toBeCalledWith({
+      rawTransaction: {
+        selectedFee: '0.1',
+      },
+    });
   });
 });
