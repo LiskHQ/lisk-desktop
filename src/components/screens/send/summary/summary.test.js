@@ -1,29 +1,23 @@
 import React from 'react';
 import { mount } from 'enzyme';
 import { tokenMap } from '@constants';
+import { toRawLsk } from '@utils/lsk';
 import { formatAmountBasedOnLocale } from '@utils/formattedNumber';
 import Summary from './summary';
 import accounts from '../../../../../test/constants/accounts';
 import i18n from '../../../../i18n';
 
-describe.skip('Summary', () => {
+describe('Summary', () => {
   let wrapper;
   let props;
-  const transaction = {
-    asset: {
-      amount: 112300000,
-    },
-  };
 
   beforeEach(() => {
     props = {
-      t: i18n.t,
-      account: {
-        ...accounts.genesis,
-        hwInfo: {
-          deviceModel: 'Ledger Nano S',
-        },
-      },
+      transactionCreated: jest.fn(),
+      resetTransactionResult: jest.fn(),
+      prevStep: jest.fn(),
+      nextStep: jest.fn(),
+      account: accounts.genesis,
       fields: {
         recipient: {
           address: '1lskehj8am9afxdz8arztqajy52acnoubkzvmo9cjy',
@@ -40,23 +34,8 @@ describe.skip('Summary', () => {
         isLoading: false,
         isHardwareWalletConnected: false,
       },
-      prevState: {
-        fields: {},
-      },
-      prevStep: jest.fn(),
-      nextStep: jest.fn(),
-      transactionCreated: jest.fn(),
-      resetTransactionResult: jest.fn(),
-      isLoading: false,
-      isHardwareWalletConnected: false,
-      transactions: {
-        pending: [],
-        failed: '',
-        signedTransaction: transaction,
-        txSignatureError: null,
-        txBroadcastError: null,
-      },
       token: tokenMap.LSK.key,
+      t: i18n.t,
     };
     wrapper = mount(<Summary {...props} />);
   });
@@ -93,7 +72,7 @@ describe.skip('Summary', () => {
     expect(wrapper.find('.recipient-value')).toIncludeText(title);
   });
 
-  it('should show props.fields.fee.value and use it in transactionCreated if props.token is not LSK', () => {
+  it('should show props.fields.fee.value and call props.nextStep with properties if props.token is not LSK', () => {
     const txFee = 0.00012451;
     const formattedTxFee = formatAmountBasedOnLocale({ value: txFee });
     const newProps = { ...props };
@@ -116,21 +95,14 @@ describe.skip('Summary', () => {
     wrapper = mount(<Summary {...newProps} />);
     expect(wrapper.find('.fee-value')).toIncludeText(formattedTxFee);
     wrapper.find('.confirm-button').at(0).simulate('click');
-    expect(props.transactionCreated).toBeCalledWith(expect.objectContaining({
-      fee: 12451,
-    }));
-  });
-
-  it('should call transactionCreated as soon the component load if using HW', () => {
-    const newProps = { ...props };
-    newProps.account = {
-      ...props.account,
-      hwInfo: {
-        deviceId: '123123sdf',
+    expect(props.nextStep).toHaveBeenCalledWith({
+      rawTransaction: {
+        amount: `${toRawLsk(props.fields.amount.value)}`,
+        recipientAddress: props.fields.recipient.address,
+        data: '',
+        fee: 12451,
       },
-    };
-    wrapper = mount(<Summary {...newProps} />);
-    wrapper.update();
-    expect(props.transactionCreated).toBeCalled();
+      actionFunction: props.transactionCreated,
+    });
   });
 });
