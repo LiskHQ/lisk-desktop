@@ -1,4 +1,4 @@
-import { txStatusTypes } from './statusConfig';
+import { txStatusTypes } from '@constants';
 
 const getDeviceType = (deviceModel = '') => {
   if (/ledger/i.test(deviceModel)) {

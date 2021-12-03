@@ -1,11 +1,12 @@
 import React, { useMemo } from 'react';
 import { isEmpty } from '@utils/helpers';
+import { signatureCollectionStatus } from '@constants';
 import BoxContent from '@toolbox/box/content';
 import Box from '@toolbox/box';
 import TransactionDetails from '@screens/transactionDetails/transactionDetails';
 
 import ProgressBar from '../progressBar';
-import { showSignButton, isTransactionFullySigned } from '../helpers';
+import { showSignButton, getTransactionSignatureStatus } from '../helpers';
 import { ActionBar, Feedback } from './footer';
 import styles from '../styles.css';
 
@@ -25,9 +26,9 @@ const Summary = ({
     return null;
   }, [senderAccount.data]);
 
-  const isFullySigned = useMemo(() => {
+  const signatureStatus = useMemo(() => {
     if (senderAccount.data.keys) {
-      return isTransactionFullySigned(senderAccount.data, transaction);
+      return getTransactionSignatureStatus(senderAccount.data, transaction);
     }
     return null;
   }, [senderAccount.data]);
@@ -40,11 +41,13 @@ const Summary = ({
   };
 
   const nextButton = {
-    title: isFullySigned ? t('Continue') : t('Sign'),
+    title: signatureStatus === signatureCollectionStatus.fullySigned ? t('Continue') : t('Sign'),
     onClick,
   };
 
-  const showFeedback = !isMember || isFullySigned;
+  const showFeedback = !isMember
+    || signatureStatus === signatureCollectionStatus.fullySigned
+    || signatureStatus === signatureCollectionStatus.occupiedByOptionals;
 
   if (isEmpty(senderAccount.data)) {
     return <div />;
@@ -84,7 +87,7 @@ const Summary = ({
           <Feedback
             t={t}
             isMember={isMember}
-            isFullySigned={isFullySigned}
+            signatureStatus={signatureStatus}
           />
         ) : null
       }

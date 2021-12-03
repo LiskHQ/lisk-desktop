@@ -1,6 +1,10 @@
 /* eslint-disable max-lines */
 import { transactions } from '@liskhq/lisk-client';
-import { DEFAULT_NUMBER_OF_SIGNATURES, MODULE_ASSETS_NAME_ID_MAP } from '@constants';
+import {
+  DEFAULT_NUMBER_OF_SIGNATURES,
+  MODULE_ASSETS_NAME_ID_MAP,
+  signatureCollectionStatus,
+} from '@constants';
 import {
   extractAddressFromPublicKey,
   getBase32AddressFromAddress,
@@ -10,7 +14,6 @@ import {
 import { transformStringDateToUnixTimestamp } from '@utils/datetime';
 import { toRawLsk } from '@utils/lsk';
 import { splitModuleAndAssetIds, joinModuleAndAssetIds } from '@utils/moduleAssets';
-import { findNonEmptySignatureIndices } from '@screens/signMultiSignTransaction/helpers';
 
 const {
   transfer, voteDelegate, registerDelegate, unlockToken, reclaimLSK, registerMultisignatureGroup,
@@ -377,6 +380,31 @@ const downloadJSON = (data, name) => {
   anchor.setAttribute('download', `${name}.json`);
   anchor.click();
 };
+
+/**
+ * Removes the excess signatures from optional members
+ * to open up room for the mandatory ones
+ *
+ * @param {array} signatures - The transaction signatures array
+ * @param {number} mandatoryKeysNo - Number of mandatory keys
+ * @param {boolean} hasSenderSignature - Defines if the signatures list has
+ * an extra sender signature at the beginning.
+ * @returns {array} the trimmed array of signatures
+ */
+export const removeExcessSignatures = (signatures, mandatoryKeysNo, hasSenderSignature) => {
+  const skip = hasSenderSignature ? 1 : 0;
+  const firstOptional = skip + mandatoryKeysNo;
+  let cleared = false;
+  const trimmedSignatures = signatures.map((item, index) => {
+    if (index >= firstOptional && item.length && !cleared) {
+      cleared = true;
+      return Buffer.from('');
+    }
+    return item;
+  });
+  return trimmedSignatures;
+};
+
 /**
  * Signs a given multisignature tx with a given passphrase
  *
@@ -395,7 +423,7 @@ const signTransaction = (
   passphrase,
   networkIdentifier,
   senderAccount,
-  isFullySigned,
+  txStatus,
   network,
 ) => {
   let signedTransaction;
@@ -419,6 +447,13 @@ const signTransaction = (
     === MODULE_ASSETS_NAME_ID_MAP.registerMultisignatureGroup;
 
   try {
+    // remove excess optionals
+    if (txStatus === signatureCollectionStatus.occupiedByOptionals) {
+      transactionObject.signatures = removeExcessSignatures(
+        transactionObject.signatures, keys.mandatoryKeys.length, includeSender,
+      );
+    }
+
     signedTransaction = transactions.signMultiSignatureTransaction(
       network.networks.LSK.moduleAssetSchemas[transaction.moduleAssetId],
       transactionObject,
@@ -427,14 +462,6 @@ const signTransaction = (
       keys,
       includeSender,
     );
-
-    // remove unnecessary signatures
-    if (isFullySigned) {
-      const emptySignatureIndices = findNonEmptySignatureIndices(transaction.signatures);
-      emptySignatureIndices.forEach(index => {
-        signedTransaction.signatures[index] = Buffer.from('');
-      });
-    }
   } catch (e) {
     // eslint-disable-next-line no-console
     console.error(e);
