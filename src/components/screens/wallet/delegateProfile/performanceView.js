@@ -154,14 +154,16 @@ const PerformanceView = ({
             title={t('Last forged block')}
             icon="productivity"
           >
-            <NavLink
-              to={`${routes.block.path}?height=${data.lastForgedHeight}`}
-              className={styles.performanceValue}
-              id={data.lastForgedHeight}
-              exact
-            >
-              {data.lastForgedHeight || '-'}
-            </NavLink>
+            { data.lastForgedHeight ? (
+              <NavLink
+                to={`${routes.block.path}?height=${data.lastForgedHeight}`}
+                className={styles.performanceValue}
+                id={data.lastForgedHeight}
+                exact
+              >
+                {data.lastForgedHeight || '-'}
+              </NavLink>
+            ) : '-'}
           </Item>
           <Item
             title={t('Forged blocks')}
