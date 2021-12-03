@@ -1,8 +1,7 @@
 import React from 'react';
 import { mount } from 'enzyme';
-import { routes } from '@constants';
+import { routes, txStatusTypes } from '@constants';
 import Regular from './regular';
-import { txStatusTypes } from './statusConfig';
 import accounts from '../../../../test/constants/accounts';
 
 describe('TransactionResult Regular', () => {

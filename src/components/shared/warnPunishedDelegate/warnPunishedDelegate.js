@@ -63,7 +63,6 @@ const WarnPunishedDelegate = ({
 };
 
 WarnPunishedDelegate.propTypes = {
-  message: PropTypes.string.isRequired,
   readMore: PropTypes.func.isRequired,
 };
 
