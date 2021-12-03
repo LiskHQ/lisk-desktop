@@ -94,7 +94,7 @@ describe('BlockDetails page', () => {
       ...props,
       blockTransactions: {
         ...props.blockTransactions,
-        error: 'failed',
+        error: 'not found',
       },
     };
     wrapper = mountWithRouter(BlockDetails, newProps);
