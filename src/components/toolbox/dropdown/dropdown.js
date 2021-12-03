@@ -5,7 +5,7 @@ import styles from './dropdown.css';
 import Separator from './separator';
 
 const Dropdown = ({
-  showDropdown, className, showArrow, active, children, align, toggleDropdown,
+  showDropdown, className, showArrow, active, children, align,
 }) => {
   const isSelectionList = children && Array.isArray(children);
 
@@ -31,14 +31,7 @@ const Dropdown = ({
           isSelectionList ? flattenArray(children).map((child, key) => (
             child.type === Separator
               ? child
-              : React.cloneElement(child, {
-                className: ` ${styles.option} ${active === key ? styles.active : ''} ${child.props.className || ''}`,
-                key,
-                onClick: (...rest) => {
-                  if (typeof toggleDropdown === 'function') toggleDropdown();
-                  if (child.props.onClick) child.props.onClick(...rest);
-                },
-              })
+              : React.cloneElement(child, { className: ` ${styles.option} ${active === key ? styles.active : ''} ${child.props.className || ''}`, key })
           )) : children
         }
       </div>

@@ -45,7 +45,6 @@ class DropdownButton extends React.Component {
           <Dropdown
             showArrow={false}
             showDropdown={shownDropdown}
-            toggleDropdown={this.toggleDropdown}
             className={`${styles.dropdown} ${className}`}
             align={align}
           >
