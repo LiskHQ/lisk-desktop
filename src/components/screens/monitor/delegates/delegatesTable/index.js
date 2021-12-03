@@ -32,11 +32,9 @@ const TableWrapper = compose(
 }) => (
   <Table
     data={delegates.data}
-    error={delegates.error ? {
-      ...delegates.error,
-      message: delegates.error.message === 'Data not found' ? t('No {{activeTab}} delegates found.', { activeTab }) : undefined,
-    } : undefined}
+    error={delegates.error}
     isLoading={delegates.isLoading}
+    emptyState={{ message: t('No {{activeTab}} delegates found.', { activeTab }) }}
     row={DelegateRow}
     loadData={handleLoadMore}
     additionalRowProps={{
