@@ -221,7 +221,7 @@ export const transactionBroadcasted = transaction =>
  */
 export const multisigTransactionSigned = ({
   rawTransaction, sender,
-}) => (dispatch, getState) => {
+}) => async (dispatch, getState) => {
   const {
     network, account,
   } = getState();
@@ -234,9 +234,9 @@ export const multisigTransactionSigned = ({
   // @todo move isTransactionFullySigned to a generic location
   const txStatus = getTransactionSignatureStatus(sender.data, rawTransaction);
 
-  const [tx, error] = signTransaction(
+  const [tx, error] = await signTransaction(
     rawTransaction,
-    activeAccount.passphrase,
+    activeAccount,
     networkIdentifier,
     sender,
     txStatus,
