@@ -1,5 +1,7 @@
 /* eslint-disable max-lines */
-import { transactions } from '@liskhq/lisk-client';
+import { transactions, cryptography } from '@liskhq/lisk-client';
+import { to } from 'await-to-js';
+import { signTransactionByHW } from '@utils/hwManager';
 import {
   DEFAULT_NUMBER_OF_SIGNATURES,
   MODULE_ASSETS_NAME_ID_MAP,
@@ -13,6 +15,7 @@ import {
 } from '@utils/account';
 import { transformStringDateToUnixTimestamp } from '@utils/datetime';
 import { toRawLsk } from '@utils/lsk';
+import { isEmpty } from '@utils/helpers';
 import { splitModuleAndAssetIds, joinModuleAndAssetIds } from '@utils/moduleAssets';
 
 const {
@@ -403,6 +406,129 @@ export const removeExcessSignatures = (signatures, mandatoryKeysNo, hasSenderSig
     return item;
   });
   return trimmedSignatures;
+};
+
+/**
+ * Computes transaction id
+ * @param {object} transaction
+ * @returns {Promise} returns transaction id for a given transaction object
+ */
+export const computeTransactionId = ({ transaction, network }) => {
+  const moduleAssetId = joinModuleAndAssetIds({
+    moduleID: transaction.moduleID,
+    assetID: transaction.assetID,
+  });
+  const schema = network.networks.LSK.moduleAssetSchemas[moduleAssetId];
+  const transactionBytes = transactions.getBytes(schema, transaction);
+  const id = cryptography.hash(transactionBytes);
+
+  return id;
+};
+
+const signMultisigUsingPrivateKey = (
+  schema, transaction, networkIdentifier, keys, privateKey,
+  isMultiSignatureRegistration, publicKey, moduleAssetId, rawTransaction,
+) => {
+  /**
+   * Use Lisk Element to Sign with Private Key
+   */
+  let signedTransaction = transactions.signMultiSignatureTransactionWithPrivateKey(
+    schema,
+    transaction,
+    networkIdentifier,
+    Buffer.from(privateKey, 'hex'),
+    {
+      optionalKeys: keys.optionalKeys.map(convertStringToBinary),
+      mandatoryKeys: keys.mandatoryKeys.map(convertStringToBinary),
+    },
+    isMultiSignatureRegistration,
+  );
+
+  /**
+   * Define keys. Since we are creating the tx
+   * The keys only exist for MultisigReg
+   */
+  const transactionKeys = {
+    mandatoryKeys: rawTransaction.mandatoryKeys ?? [],
+    optionalKeys: rawTransaction.optionalKeys ?? [],
+  };
+
+  /**
+   * Check if the tx is multisigReg
+   */
+  const needsDoubleSign = [
+    ...transactionKeys.mandatoryKeys,
+    ...transactionKeys.optionalKeys,
+  ].includes(publicKey);
+
+  if (isMultiSignatureRegistration && needsDoubleSign) {
+    /**
+     * we have to transform, then flatten
+     * then create txObject, convert to Buffer
+     */
+    const transformedTransaction = transformTransaction(signedTransaction);
+    const flattenedTransaction = flattenTransaction(transformedTransaction);
+    const tx = createTransactionObject(flattenedTransaction, moduleAssetId);
+    const transactionKeysInBinary = {
+      mandatoryKeys: transactionKeys.mandatoryKeys.map(convertStringToBinary),
+      optionalKeys: transactionKeys.optionalKeys.map(convertStringToBinary),
+    };
+
+    /**
+     * Use Lisk Element to Sign with Private Key
+     */
+    signedTransaction = transactions.signMultiSignatureTransactionWithPrivateKey(
+      schema,
+      tx,
+      networkIdentifier,
+      Buffer.from(privateKey, 'hex'),
+      transactionKeysInBinary,
+      isMultiSignatureRegistration,
+    );
+  }
+
+  return signedTransaction;
+};
+
+const signUsingPrivateKey = (schema, transaction, networkIdentifier, privateKey) =>
+  transactions.signTransactionWithPrivateKey(
+    schema,
+    transaction,
+    networkIdentifier,
+    Buffer.from(privateKey, 'hex'),
+  );
+
+const signUsingHW = async (schema, transaction, account, networkIdentifier, network) => {
+  const signingBytes = transactions.getSigningBytes(schema, transaction);
+  const [error, signedTransaction] = await to(signTransactionByHW(
+    account,
+    networkIdentifier,
+    transaction,
+    signingBytes,
+  ));
+  if (error) {
+    throw error;
+  }
+  const id = computeTransactionId({ transaction: signedTransaction, network });
+  return { ...signedTransaction, id };
+};
+
+export const sign = async (
+  account, schema, transaction, network, networkIdentifier,
+  isMultisignature, isMultiSignatureRegistration, keys, publicKey,
+  moduleAssetId, rawTransaction, privateKey,
+) => {
+  if (!isEmpty(account.hwInfo)) {
+    const signedTx = await signUsingHW(schema, transaction, account, networkIdentifier, network);
+    return signedTx;
+  }
+  if (isMultisignature || isMultiSignatureRegistration) {
+    return signMultisigUsingPrivateKey(
+      schema, transaction, networkIdentifier, keys, privateKey,
+      isMultiSignatureRegistration, publicKey, moduleAssetId, rawTransaction,
+    );
+  }
+  return signUsingPrivateKey(schema, transaction, networkIdentifier, privateKey);
 };
 
 /**
