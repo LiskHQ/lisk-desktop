@@ -138,10 +138,13 @@ export const transactionDoubleSigned = () => async (dispatch, getState) => {
     transactions, network, account, settings,
   } = getState();
   const networkIdentifier = selectNetworkIdentifier({ network });
-  const activeAccount = selectActiveTokenAccount({ account, settings });
-  const [signedTx, err] = signMultisigTransaction(
+  const activeAccount = {
+    ...account.info[settings.token.active],
+    passphrase: account.secondPassphrase,
+  };
+  const [signedTx, err] = await signMultisigTransaction(
     transformTransaction(transactions.signedTransaction),
-    account.secondPassphrase,
+    activeAccount,
     networkIdentifier,
     {
       data: activeAccount,
