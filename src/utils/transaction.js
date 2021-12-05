@@ -544,57 +544,56 @@ export const sign = async (
  * @returns [Object, Object] - Signed transaction and err
  */
 // eslint-disable-next-line max-statements
-const signTransaction = (
+const signTransaction = async (
   transaction,
-  passphrase,
-  networkIdentifier,
+  account,
+  _,
   senderAccount,
   txStatus,
   network,
 ) => {
-  let signedTransaction;
-  let err;
-
+  /**
+   * Define keys.
+   * Since the sender is different, the keys are defined based on that
+   */
   const isGroupRegistration = transaction.moduleAssetId
     === MODULE_ASSETS_NAME_ID_MAP.registerMultisignatureGroup;
+  const schema = network.networks.LSK.moduleAssetSchemas[transaction.moduleAssetId];
+  const networkIdentifier = Buffer.from(network.networks.LSK.networkIdentifier, 'hex');
 
   const { mandatoryKeys, optionalKeys } = getKeys({
     senderAccount: senderAccount.data, transaction, isGroupRegistration,
   });
-
-  const flatTransaction = flattenTransaction(transaction);
-  const transactionObject = createTransactionObject(flatTransaction, transaction.moduleAssetId);
   const keys = {
     mandatoryKeys: mandatoryKeys.map(key => Buffer.from(key, 'hex')),
     optionalKeys: optionalKeys.map(key => Buffer.from(key, 'hex')),
   };
 
-  const includeSender = transaction.moduleAssetId
-    === MODULE_ASSETS_NAME_ID_MAP.registerMultisignatureGroup;
+  /**
+   * To do so, we have to  flatten, then create txObject
+   */
+  const flatTransaction = flattenTransaction(transaction);
+  const transactionObject = createTransactionObject(flatTransaction, transaction.moduleAssetId);
 
-  try {
-    // remove excess optionals
-    if (txStatus === signatureCollectionStatus.occupiedByOptionals) {
-      transactionObject.signatures = removeExcessSignatures(
-        transactionObject.signatures, keys.mandatoryKeys.length, includeSender,
-      );
-    }
-
-    signedTransaction = transactions.signMultiSignatureTransaction(
-      network.networks.LSK.moduleAssetSchemas[transaction.moduleAssetId],
-      transactionObject,
-      Buffer.from(networkIdentifier, 'hex'),
-      passphrase,
-      keys,
-      includeSender,
+  /**
+   * remove excess optional signatures
+   */
+  if (txStatus === signatureCollectionStatus.occupiedByOptionals) {
+    transactionObject.signatures = removeExcessSignatures(
+      transactionObject.signatures, keys.mandatoryKeys.length, isGroupRegistration,
     );
-  } catch (e) {
-    // eslint-disable-next-line no-console
-    console.error(e);
-    err = e;
   }
 
-  return [signedTransaction, err];
+  try {
+    const result = await sign(
+      account, schema, transactionObject, network, networkIdentifier,
+      !!senderAccount.data, isGroupRegistration, keys, account.summary.publicKey,
+      transaction.moduleAssetId, flatTransaction, account.summary.privateKey,
+    );
+    return [result];
+  } catch (e) {
+    return [null, e];
+  }
 };
 
 /**
