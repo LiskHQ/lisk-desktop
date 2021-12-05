@@ -544,7 +544,7 @@ export const sign = async (
  * @returns [Object, Object] - Signed transaction and err
  */
 // eslint-disable-next-line max-statements
-const signTransaction = async (
+const signMultisigTransaction = async (
   transaction,
   account,
   _,
@@ -625,6 +625,6 @@ export {
   containsTransactionType,
   createTransactionObject,
   normalizeTransactionParams,
-  signTransaction,
+  signMultisigTransaction,
   getNumberOfSignatures,
 };

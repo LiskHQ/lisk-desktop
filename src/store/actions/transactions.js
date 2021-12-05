@@ -6,7 +6,7 @@ import {
 import { isEmpty } from '@utils/helpers';
 import { getTransactions, create, broadcast } from '@api/transaction';
 import { selectActiveTokenAccount, selectNetworkIdentifier } from '@store/selectors';
-import { signTransaction, transformTransaction } from '@utils/transaction';
+import { signMultisigTransaction, transformTransaction } from '@utils/transaction';
 import { getTransactionSignatureStatus } from '@screens/signMultiSignTransaction/helpers';
 import { timerReset } from './account';
 import { loadingStarted, loadingFinished } from './loading';
@@ -139,7 +139,7 @@ export const transactionDoubleSigned = () => async (dispatch, getState) => {
   } = getState();
   const networkIdentifier = selectNetworkIdentifier({ network });
   const activeAccount = selectActiveTokenAccount({ account, settings });
-  const [signedTx, err] = signTransaction(
+  const [signedTx, err] = signMultisigTransaction(
     transformTransaction(transactions.signedTransaction),
     account.secondPassphrase,
     networkIdentifier,
@@ -234,7 +234,7 @@ export const multisigTransactionSigned = ({
   // @todo move isTransactionFullySigned to a generic location
   const txStatus = getTransactionSignatureStatus(sender.data, rawTransaction);
 
-  const [tx, error] = await signTransaction(
+  const [tx, error] = await signMultisigTransaction(
     rawTransaction,
     activeAccount,
     networkIdentifier,
