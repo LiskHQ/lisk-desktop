@@ -10,10 +10,10 @@ import LoadingIcon from '../loadingIcon';
 import styles from './selectAccount.css';
 
 const Tab = ({
-  tabName, tabId, accountsList,
+  name, id, accountsList,
   onSaveNameAccounts, onSelectAccount,
 }) => (
-  <div name={tabName} id={tabId} className={`${styles.deviceContainer} ${`tab-${tabId}`} hw-container`}>
+  <div name={name} id={id} className={`${styles.deviceContainer} ${`tab-${id}`} hw-container`}>
     {accountsList.map((data) => (
       <AccountCard
         key={`hw-account-tabId-${data.index}`}
@@ -170,22 +170,22 @@ class SelectAccount extends React.Component {
             ? (
               <TabsContainer name="main-tabs">
                 <Tab
-                  tabName={t('Active')}
-                  tabId="active"
+                  name={t('Active')}
+                  id="active"
                   accountsList={nonEmptyAccounts}
                   onSaveNameAccounts={this.onSaveNameAccounts}
                   onSelectAccount={this.onSelectAccount}
                 />
                 <Tab
-                  tabName={t('Empty')}
-                  tabId="empty"
+                  name={t('Empty')}
+                  id="empty"
                   accountsList={emptyAccounts}
                   onSaveNameAccounts={this.onSaveNameAccounts}
                   onSelectAccount={this.onSelectAccount}
                 />
                 <Tab
-                  tabName={t('Pending reclaim ({{numOfAccounts}})', { numOfAccounts: reclaimAccounts.length })}
-                  tabId="reclaim"
+                  name={t('Pending reclaim ({{numOfAccounts}})', { numOfAccounts: reclaimAccounts.length })}
+                  id="reclaim"
                   accountsList={reclaimAccounts}
                   onSaveNameAccounts={this.onSaveNameAccounts}
                   onSelectAccount={this.onSelectAccount}
