@@ -3,7 +3,7 @@ import { mount } from 'enzyme';
 import TransactionSignature from './transactionSignature';
 import accounts from '../../../../test/constants/accounts';
 
-describe('unlock transaction Status', () => {
+describe('TransactionSignature', () => {
   const props = {
     t: key => key,
     transactions: {
