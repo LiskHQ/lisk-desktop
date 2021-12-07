@@ -49,17 +49,15 @@ const Warning = ({ vote, ...props }) => {
 };
 
 export const DelegateProfileWarning = ({ daysLeft, punishmentStartDate, ...props }) => (
-  daysLeft >= 1 ? (
-    <WarnPunishedDelegate
-      daysLeft={daysLeft}
-      punishmentStartDate={punishmentStartDate}
-      {...props}
-    />
-  ) : null
+  <WarnPunishedDelegate
+    daysLeft={daysLeft}
+    punishmentStartDate={punishmentStartDate}
+    {...props}
+  />
 );
 
 export const EditVoteWarning = ({ daysLeft, ...props }) => (
-  daysLeft >= 1 ? (<VoteWarning {...props} daysLeft={daysLeft} />) : null
+  <VoteWarning {...props} daysLeft={daysLeft} />
 );
 
 const apis = {
