@@ -67,6 +67,8 @@ export const validateLSKPublicKey = (publicKey) => {
  * @param {string?} [data.funds] Maximum funds users are allowed to input
  * @param {Array?} [data.checklist] The list of errors to be tested. A choice of
  * ZERO, MAX_ACCURACY, FORMAT, VOTE_10X, INSUFFICIENT_FUNDS
+ * @param {Boolean} [data.selfVote] - If the delegate is voting for self or another delegate
+ * @param {string} [data.initialVote] The amount of the user's self votes
  * @returns {Object.<string, string|boolean>}
  * data - Object containing the message and if has an error
  *  data.message - Message of the error or empty string
@@ -78,6 +80,8 @@ export const validateAmountFormat = ({
   locale = i18n.language,
   funds,
   checklist = ['ZERO', 'MAX_ACCURACY', 'FORMAT'],
+  selfVote = false,
+  initialVote,
 }) => {
   const { format, maxFloating } = reg.amount[locale];
 
@@ -100,7 +104,7 @@ export const validateAmountFormat = ({
     },
     INSUFFICIENT_FUNDS: {
       message: i18n.t('Provided amount is higher than your current balance.'),
-      fn: () => funds < toRawLsk(numeral(value).value()),
+      fn: () => !selfVote && funds < toRawLsk(numeral(value).value()),
     },
     MIN_BALANCE: {
       message: i18n.t('Provided amount will result in a wallet with less than the minimum balance.'),
@@ -113,7 +117,16 @@ export const validateAmountFormat = ({
       message: i18n.t('The vote amount is too high. You should keep at least 0.05 LSK available in your account.'),
       fn: () => {
         const rawValue = toRawLsk(numeral(value).value());
-        return funds - rawValue < MIN_ACCOUNT_BALANCE;
+        return !selfVote && funds - rawValue < MIN_ACCOUNT_BALANCE;
+      },
+    },
+    SELF_VOTES_MAX: {
+      message: i18n.t('The vote amount exceeds both your current and locked balance with your self votes'),
+      fn: () => {
+        const rawValue = toRawLsk(numeral(value).value());
+        // Selected vote amount should be not be greater than the user's balance as well as
+        // the sum of the user's self locked votes and normal balance
+        return selfVote && rawValue > funds && rawValue > initialVote + funds;
       },
     },
   };

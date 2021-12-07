@@ -1,10 +1,11 @@
 import React, { useState } from 'react';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 
 import { tokenMap } from '@constants';
 import { voteEdited } from '@actions';
 import { fromRawLsk, toRawLsk } from '@utils/lsk';
 import { truncateAddress } from '@utils/account';
+import { selectLSKAddress } from '@store/selectors';
 import AccountVisual from '@toolbox/accountVisual';
 import Box from '@toolbox/box';
 import { SecondaryButton, TertiaryButton } from '@toolbox/buttons';
@@ -24,7 +25,8 @@ const VoteRow = ({
 }) => {
   const [state, setState] = useState(unconfirmed === '' ? ComponentState.editing : ComponentState.notEditing);
   const dispatch = useDispatch();
-  const [voteAmount, setVoteAmount] = useVoteAmountField(fromRawLsk(unconfirmed));
+  const host = useSelector(selectLSKAddress);
+  const [voteAmount, setVoteAmount] = useVoteAmountField(fromRawLsk(unconfirmed), address === host);
   const truncatedAddress = truncateAddress(address);
 
   const handleFormSubmission = (e) => {

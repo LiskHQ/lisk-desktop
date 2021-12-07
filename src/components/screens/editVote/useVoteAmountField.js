@@ -1,10 +1,10 @@
 import { useEffect, useState } from 'react';
+import { useSelector } from 'react-redux';
 import { useTranslation } from 'react-i18next';
 
 import { validateAmountFormat } from '@utils/validators';
-import { selectAccountBalance } from '@store/selectors';
+import { selectAccountBalance, selectLSKAddress } from '@store/selectors';
 import { tokenMap, regex } from '@constants';
-import { useSelector } from 'react-redux';
 
 let loaderTimeout = null;
 
@@ -12,15 +12,19 @@ let loaderTimeout = null;
  * Returns error and feedback of vote amount field.
  *
  * @param {String} value - The vote amount value in Beddows
- * @param {Number} balance - The account balance value in Beddows
+ * @param {String} balance - The account balance value in Beddows
+ * @param {Boolean} selfVote - If the delegate is voting for self or another delegate
+ * @param {String} unconfirmedVotes - The vote amount value in Beddows
  * @returns {Object} The boolean error flag and a human readable message.
  */
-const getAmountFeedbackAndError = (value, balance) => {
+const getAmountFeedbackAndError = (value, balance, selfVote, unconfirmedVotes) => {
   const { message: feedback } = validateAmountFormat({
     value,
     token: tokenMap.LSK.key,
-    funds: balance,
-    checklist: ['FORMAT', 'ZERO', 'VOTE_10X', 'INSUFFICIENT_FUNDS', 'VOTES_MAX'],
+    funds: parseInt(balance, 10),
+    checklist: ['FORMAT', 'ZERO', 'VOTE_10X', 'INSUFFICIENT_FUNDS', 'VOTES_MAX', 'SELF_VOTES_MAX'],
+    selfVote,
+    initialVote: unconfirmedVotes,
   });
 
   return { error: !!feedback, feedback };
@@ -31,12 +35,15 @@ const getAmountFeedbackAndError = (value, balance) => {
  * Also provides a setter function
  *
  * @param {String} initialValue - The initial vote amount value in Beddows
- * @param {Number} accountBalance - The account balance value in Beddows
+ * @param {Boolean} selfVote - If the delegate is voting for self or another delegate
  * @returns {[Boolean, Function]} The error flag, The setter function
  */
-const useVoteAmountField = (initialValue) => {
+const useVoteAmountField = (initialValue, selfVote) => {
   const { i18n } = useTranslation();
   const balance = useSelector(selectAccountBalance);
+  const host = useSelector(selectLSKAddress);
+  const existingVote = useSelector(state => state.voting[host]);
+  const previouslyConfirmedVotes = existingVote ? existingVote.confirmed : 0;
   const [amountField, setAmountField] = useState({
     value: initialValue,
     isLoading: false,
@@ -65,7 +72,7 @@ const useVoteAmountField = (initialValue) => {
       value,
       isLoading: true,
     });
-    const feedback = getAmountFeedbackAndError(value, balance);
+    const feedback = getAmountFeedbackAndError(value, balance, selfVote, previouslyConfirmedVotes);
     loaderTimeout = setTimeout(() => {
       setAmountField({
         isLoading: false,
