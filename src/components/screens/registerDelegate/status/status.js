@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import TransactionResult from '@shared/transactionResult';
-import { getTransactionStatus, txStatusTypes } from '@shared/transactionResult/statusConfig';
+import { txStatusTypes } from '@constants';
+import { getTransactionStatus } from '@shared/transactionResult/statusConfig';
 import DelegateAnimation from '../animations/delegateAnimation';
 import statusMessages from './statusMessages';
 import styles from './status.css';

@@ -1,9 +1,9 @@
 import React from 'react';
 import TransactionResult from '@shared/transactionResult';
-import { statusMessages, getTransactionStatus, txStatusTypes } from '@shared/transactionResult/statusConfig';
+import { statusMessages, getTransactionStatus } from '@shared/transactionResult/statusConfig';
 import LiskAmount from '@shared/liskAmount';
 import { PrimaryButton } from '@toolbox/buttons';
-import { tokenMap } from '@constants';
+import { tokenMap, txStatusTypes } from '@constants';
 import Spinner from '@toolbox/spinner';
 import styles from './status.css';
 

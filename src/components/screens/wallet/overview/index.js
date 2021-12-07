@@ -75,7 +75,7 @@ const Overview = ({
     if (!isWalletRoute && host && address && (isBanned || pomHeights?.length) && daysLeft >= 1) {
       addWarningMessage({
         isBanned,
-        pomHeight: pomHeights[pomHeights.length - 1],
+        pomHeight: pomHeights ? pomHeights[pomHeights.length - 1] : 0,
         readMore: () => {
           const url = 'https://lisk.com/blog/development/lisk-voting-process';
           window.open(url, 'rel="noopener noreferrer"');

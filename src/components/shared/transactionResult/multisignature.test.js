@@ -2,9 +2,8 @@ import React from 'react';
 import { mount } from 'enzyme';
 import copyToClipboard from 'copy-to-clipboard';
 import * as txUtils from '@utils/transaction';
-import { routes } from '@constants';
+import { routes, txStatusTypes } from '@constants';
 import Multisignature, { FullySignedActions, PartiallySignedActions } from './multisignature';
-import { txStatusTypes } from './statusConfig';
 import accounts from '../../../../test/constants/accounts';
 
 jest.mock('copy-to-clipboard');
