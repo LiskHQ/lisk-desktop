@@ -29,7 +29,7 @@ jest.mock('../delegate', () => ({
   getDelegates: jest.fn(),
 }));
 
-describe.skip('API: LSK Transactions', () => {
+describe('API: LSK Transactions', () => {
   const baseUrl = 'http://custom-basse-url.com/';
   const sampleId = 'sample_id';
 
@@ -250,9 +250,11 @@ describe.skip('API: LSK Transactions', () => {
         senderPublicKey: 'c094ebee7ec0c50ebee32918655e089f6e1a604b83bcaa760293c61e0f18ab6f',
         votes: [],
       };
+
       const result = await getTransactionFee({
         transaction: voteTxData,
         selectedPriority,
+        network,
       });
       expect(Number(result.value)).toBeGreaterThan(0);
     });
@@ -264,9 +266,11 @@ describe.skip('API: LSK Transactions', () => {
         senderPublicKey: 'c094ebee7ec0c50ebee32918655e089f6e1a604b83bcaa760293c61e0f18ab6f',
         username: 'some_username',
       };
+
       const result = await getTransactionFee({
         transaction: voteTxData,
         selectedPriority,
+        network,
       });
       expect(Number(result.value)).toBeGreaterThan(0);
     });
@@ -281,6 +285,7 @@ describe.skip('API: LSK Transactions', () => {
       const result = await getTransactionFee({
         transaction,
         selectedPriority,
+        network,
       });
 
       expect(Number(result.value)).toBeGreaterThan(0);
@@ -301,6 +306,7 @@ describe.skip('API: LSK Transactions', () => {
         transaction,
         selectedPriority,
         numberOfSignatures: 2,
+        network,
       });
 
       expect(Number(result.value)).toBeGreaterThan(0);
@@ -317,6 +323,7 @@ describe.skip('API: LSK Transactions', () => {
         transaction,
         selectedPriority,
         numberOfSignatures: 3,
+        network,
       });
 
       expect(Number(result.value)).toBeGreaterThan(0);
@@ -336,6 +343,7 @@ describe.skip('API: LSK Transactions', () => {
         transaction,
         selectedPriority,
         numberOfSignatures: 10,
+        network,
       });
 
       expect(Number(result.value)).toBeGreaterThan(0);
@@ -352,6 +360,7 @@ describe.skip('API: LSK Transactions', () => {
         transaction,
         selectedPriority,
         numberOfSignatures: 64,
+        network,
       });
 
       expect(Number(result.value)).toBeGreaterThan(0);
@@ -363,14 +372,15 @@ describe.skip('API: LSK Transactions', () => {
         nonce: '6',
         senderPublicKey: 'c094ebee7ec0c50ebee32918655e089f6e1a604b83bcaa760293c61e0f18ab6f',
         unlockObjects: [
-          { delegateAddress: accounts.genesis.summary.address, amount: '-10000000' },
-          { delegateAddress: accounts.delegate_candidate.summary.address, amount: '-340000000' },
+          { delegateAddress: accounts.genesis.summary.address, amount: '-10000000', unvoteHeight: 1500 },
+          { delegateAddress: accounts.delegate_candidate.summary.address, amount: '-340000000', unvoteHeight: 1500 },
         ],
       };
       const result = await getTransactionFee({
         transaction,
         selectedPriority,
         numberOfSignatures: 4,
+        network,
       });
 
       expect(Number(result.value)).toBeGreaterThan(0);

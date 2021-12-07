@@ -20,6 +20,8 @@ import EmptyState from './emptyState';
 import header from './tableHeader';
 import styles from './form.css';
 
+const VOTE_LIMIT = 10;
+
 /**
  * Determines the number of votes that have been
  * added, removed or edited.
@@ -53,9 +55,24 @@ const getVoteStats = (votes, account) =>
       added: {}, edited: {}, removed: {}, untouched: {}, selfUnvote: {},
     });
 
+const getRemainingAndResultingNumOfVotes = (votes, account) => {
+  const votesStats = getVoteStats(votes, account);
+  const resultingNumOfVotes = Object.keys(votesStats.added).length
+    + Object.keys(votesStats.edited).length
+    + Object.keys(votesStats.untouched).length
+    - Object.keys(votesStats.removed).length;
+  const remainingVotes = VOTE_LIMIT
+    - (Object.keys(votesStats.edited).length + Object.keys(votesStats.untouched).length);
+
+  return {
+    resultingNumOfVotes,
+    remainingVotes,
+  };
+};
+
 /**
  * Validates given votes against the following criteria:
- * - Number of votes must not exceed 10
+ * - Number of votes must not exceed VOTE_LIMIT
  * - Added vote amounts + fee must not exceed account balance
  * @param {Object} votes - Votes object from Redux store
  * @param {Number} balance - Account balance in Beddows
@@ -68,22 +85,20 @@ const validateVotes = (votes, balance, fee, account, t) => {
   const messages = [];
   const areVotesInValid = Object.values(votes).some(vote =>
     (vote.unconfirmed === '' || vote.unconfirmed === undefined));
-  const votesStats = getVoteStats(votes, account);
+  const { resultingNumOfVotes } = getRemainingAndResultingNumOfVotes(votes, account);
 
   if (areVotesInValid) {
     messages.push(t('Please enter vote amounts for the delegates you wish to vote for'));
   }
 
-  if (Object.keys(votesStats.added).length
-      + Object.keys(votesStats.edited).length
-      + Object.keys(votesStats.untouched).length
-      - Object.keys(votesStats.removed).length > 10) {
-    messages.push(t('You can\'t vote for more than 10 delegates.'));
+  if (resultingNumOfVotes > VOTE_LIMIT) {
+    messages.push(t(`These votes in addition to your current votes will add up to ${resultingNumOfVotes} , exceeding the account limit of ${VOTE_LIMIT}.`));
   }
 
   const addedVoteAmount = Object.values(votes)
     .filter(vote => vote.unconfirmed > vote.confirmed)
-    .reduce((sum, vote) => { sum += (vote.unconfirmed - vote.confirmed); return sum; }, 0);
+    .reduce((sum,
+      vote) => { sum += (vote.unconfirmed - vote.confirmed); return sum; }, 0);
 
   if ((addedVoteAmount + toRawLsk(fee)) > balance) {
     messages.push(t('You don\'t have enough LSK in your account.'));
@@ -134,6 +149,8 @@ const Editor = ({
   } = useMemo(() =>
     getVoteStats(votes, account),
   [votes, account]);
+  const { remainingVotes, resultingNumOfVotes } = getRemainingAndResultingNumOfVotes(votes, account);
+  console.log(remainingVotes, resulting);
 
   const feedback = validateVotes(votes, Number(account.token?.balance), fee.value, account, t);
 
@@ -156,6 +173,7 @@ const Editor = ({
           <header>
             {t('Voting queue')}
           </header>
+          <span>{`${remainingVotes}/${VOTE_LIMIT}`}</span>
           {!showEmptyState && (
             <VoteStats
               t={t}

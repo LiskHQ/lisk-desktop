@@ -1,8 +1,9 @@
 import React, { useEffect } from 'react';
 import { isEmpty } from '@utils/helpers';
+import { txStatusTypes } from '@constants';
 import { PrimaryButton } from '@toolbox/buttons';
 import TransactionResult from '@shared/transactionResult';
-import { getTransactionStatus, txStatusTypes, statusMessages } from '@shared/transactionResult/statusConfig';
+import { getTransactionStatus, statusMessages } from '@shared/transactionResult/statusConfig';
 import DialogLink from '@toolbox/dialog/link';
 import styles from './status.css';
 
@@ -67,7 +68,7 @@ const TransactionStatus = ({
                 data={{
                   formAddress: rawTransaction.recipientAddress,
                   label: recipientAccount.data.dpos?.delegate?.username ?? '',
-                  isDelegate: !!recipientAccount.data.dpos?.delegate,
+                  isDelegate: !!recipientAccount.data.summary?.isDelegate,
                 }}
               >
                 <PrimaryButton className={`${styles.btn} bookmark-btn`}>
