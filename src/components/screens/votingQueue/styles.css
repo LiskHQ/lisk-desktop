@@ -26,11 +26,19 @@
 .toggleIcon.notHeader {
   border-bottom: 1px solid var(--color-platinum);
   display: flex;
+  align-items: center;
   height: 50px;
+
+  & > header {
+    margin-left: 18px;
+    margin-top: 4px;
+  }
 }
 
 .statsContainer {
   display: flex;
+  padding: 20px 0;
+  border-left: 1px solid var(--color-platinum);
 
   & .voteStats {
     padding: 0 var(--horizontal-padding-m);
