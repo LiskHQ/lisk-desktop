@@ -92,7 +92,7 @@ const validateVotes = (votes, balance, fee, account, t) => {
   }
 
   if (resultingNumOfVotes > VOTE_LIMIT) {
-    messages.push(t(`These votes in addition to your current votes will add up to ${resultingNumOfVotes} , exceeding the account limit of ${VOTE_LIMIT}.`));
+    messages.push(t(`These votes in addition to your current votes will add up to ${resultingNumOfVotes}, exceeding the account limit of ${VOTE_LIMIT}.`));
   }
 
   const addedVoteAmount = Object.values(votes)
@@ -149,8 +149,10 @@ const Editor = ({
   } = useMemo(() =>
     getVoteStats(votes, account),
   [votes, account]);
-  const { remainingVotes, resultingNumOfVotes } = getRemainingAndResultingNumOfVotes(votes, account);
-  console.log(remainingVotes, resulting);
+  const {
+    remainingVotes, resultingNumOfVotes,
+  } = getRemainingAndResultingNumOfVotes(votes, account);
+  console.log(remainingVotes, resultingNumOfVotes);
 
   const feedback = validateVotes(votes, Number(account.token?.balance), fee.value, account, t);
 
@@ -168,19 +170,21 @@ const Editor = ({
   return (
     <section className={styles.wrapper}>
       <Box>
-        <ToggleIcon isNotHeader />
+        <ToggleIcon t={t} isNotHeader />
         <div className={styles.headerContainer}>
-          <header>
-            {t('Voting queue')}
-          </header>
-          <span>{`${remainingVotes}/${VOTE_LIMIT}`}</span>
           {!showEmptyState && (
-            <VoteStats
-              t={t}
-              added={Object.keys(added).length}
-              edited={Object.keys(edited).length}
-              removed={Object.keys(removed).length}
-            />
+            <>
+              <div className={styles.votesAvailableCounter}>
+                <span>{`${remainingVotes}/`}</span>
+                <span>{t('{{VOTE_LIMIT}} Votes available', { VOTE_LIMIT })}</span>
+              </div>
+              <VoteStats
+                t={t}
+                added={Object.keys(added).length}
+                edited={Object.keys(edited).length}
+                removed={Object.keys(removed).length}
+              />
+            </>
           )}
         </div>
         {showEmptyState
