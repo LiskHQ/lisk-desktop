@@ -54,7 +54,7 @@ const Overview = ({
 
   const isBanned = account?.dpos?.delegate?.isBanned;
   const pomHeights = account?.dpos?.delegate?.pomHeights;
-  const { end } = pomHeights && pomHeights[pomHeights.length - 1];
+  const { end } = pomHeights ? (pomHeights[pomHeights.length - 1]) : 0;
   // 6: blocks per minute, 60: minutes, 24: hours
   const numOfBlockPerDay = 24 * 60 * 6;
   const daysLeft = Math.ceil((end - currentHeight) / numOfBlockPerDay);
