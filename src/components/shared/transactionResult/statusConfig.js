@@ -1,16 +1,6 @@
 import { transactionToJSON, getNumberOfSignatures } from '@utils/transaction';
 import { isEmpty } from '@utils/helpers';
-
-export const txStatusTypes = {
-  multisigSignaturePartialSuccess: 'MULTISIG_SIGNATURE_PARTIAL_SUCCESS',
-  multisigSignatureSuccess: 'MULTISIG_SIGNATURE_SUCCESS',
-  signatureSuccess: 'SIGNATURE_SUCCESS',
-  multisigBroadcastSuccess: 'MULTISIG_BROADCAST_SUCCESS',
-  broadcastSuccess: 'BROADCAST_SUCCESS',
-  signatureError: 'SIGNATURE_ERROR',
-  broadcastError: 'BROADCAST_ERROR',
-  hwRejected: 'HW_REJECTED',
-};
+import { txStatusTypes } from '@constants';
 
 export const statusMessages = t => ({
   [txStatusTypes.multisigSignaturePartialSuccess]: {

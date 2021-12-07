@@ -7,7 +7,7 @@ import useTransactionFeeCalculation from '@shared/transactionPriority/useTransac
 import { fromRawLsk } from '@utils/lsk';
 import accounts from '../../../../../test/constants/accounts';
 
-import Form from './form';
+import Form, { validateState } from './form';
 
 jest.mock('@shared/transactionPriority/useTransactionFeeCalculation');
 jest.mock('@api/transaction');
@@ -96,5 +96,91 @@ describe('Multisignature editor component', () => {
     act(() => { wrapper.update(); });
     wrapper.find('.confirm-button').at(0).simulate('click');
     expect(props.nextStep).toHaveBeenCalledTimes(1);
+  });
+});
+
+describe('validateState', () => {
+  it('should return error if signature are less than mandatory members', () => {
+    const pbk = accounts.genesis.summary.publicKey;
+    const params = {
+      mandatoryKeys: [pbk, pbk, pbk],
+      optionalKeys: [],
+      requiredSignatures: 2,
+      t: str => str,
+    };
+    const error = 'Number of signatures must be equal to the number of members.';
+    expect(validateState(params).messages).toContain(error);
+  });
+
+  it('should return error if signatures are more than all members', () => {
+    const pbk = accounts.genesis.summary.publicKey;
+    const params = {
+      mandatoryKeys: [pbk, pbk, pbk],
+      optionalKeys: [],
+      requiredSignatures: 5,
+      t: str => str,
+    };
+    const error = 'Number of signatures must be equal to the number of members.';
+    expect(validateState(params).messages).toContain(error);
+  });
+
+  it('should return error if optional members are practically mandatory', () => {
+    const pbk = accounts.genesis.summary.publicKey;
+    const params = {
+      mandatoryKeys: [pbk, pbk, pbk],
+      optionalKeys: [pbk],
+      requiredSignatures: 4,
+      t: str => str,
+    };
+    const error = 'Either change the optional member to mandatory or define more optional members.';
+    expect(validateState(params).messages).toContain(error);
+  });
+
+  it('should return error if optional members never get to sign', () => {
+    const pbk = accounts.genesis.summary.publicKey;
+    const params = {
+      mandatoryKeys: [pbk, pbk, pbk],
+      optionalKeys: [pbk],
+      requiredSignatures: 3,
+      t: str => str,
+    };
+    const error = 'Either change the optional member to mandatory or define more optional members.';
+    expect(validateState(params).messages).toContain(error);
+  });
+
+  it('should return error if there are only optional members', () => {
+    const pbk = accounts.genesis.summary.publicKey;
+    const params = {
+      mandatoryKeys: [],
+      optionalKeys: [pbk, pbk, pbk],
+      requiredSignatures: 3,
+      t: str => str,
+    };
+    const error = 'All members can not be optional. Consider changing them to mandatory.';
+    expect(validateState(params).messages).toContain(error);
+  });
+
+  it('should return error if the number of signature is equal to optional and mandatory members', () => {
+    const pbk = accounts.genesis.summary.publicKey;
+    const params = {
+      mandatoryKeys: [pbk, pbk, pbk],
+      optionalKeys: [pbk, pbk, pbk],
+      requiredSignatures: 6,
+      t: str => str,
+    };
+    const error = 'Either change the optional member to mandatory or reduce the number of signatures.';
+    expect(validateState(params).messages).toContain(error);
+  });
+
+  it('should return error if there are more than 64 members', () => {
+    const pbk = accounts.genesis.summary.publicKey;
+    const params = {
+      mandatoryKeys: new Array(65).fill(pbk),
+      optionalKeys: [],
+      requiredSignatures: 65,
+      t: str => str,
+    };
+    const error = 'Maximum number of members is {{MAX_MULTI_SIG_MEMBERS}}.';
+    expect(validateState(params).messages).toContain(error);
   });
 });

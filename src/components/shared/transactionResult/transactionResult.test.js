@@ -1,9 +1,9 @@
 import React from 'react';
 import { mount } from 'enzyme';
+import { txStatusTypes } from '@constants';
 import TransactionResult from './transactionResult';
 import Regular from './regular';
 import Multisignature from './multisignature';
-import { txStatusTypes } from './statusConfig';
 import accounts from '../../../../test/constants/accounts';
 
 describe('TransactionResult', () => {

@@ -1,4 +1,4 @@
-import { MODULE_ASSETS_NAME_ID_MAP } from '@constants';
+import { MODULE_ASSETS_NAME_ID_MAP, signatureCollectionStatus } from '@constants';
 import { joinModuleAndAssetIds } from '@utils/moduleAssets';
 import { getKeys } from '@utils/account';
 
@@ -26,7 +26,7 @@ export const findNonEmptySignatureIndices = (signatures) => {
 };
 
 // eslint-disable-next-line max-statements
-export const isTransactionFullySigned = (senderAccount, transaction) => {
+export const getTransactionSignatureStatus = (senderAccount, transaction) => {
   const moduleAssetId = transaction.moduleAssetId || joinModuleAndAssetIds(transaction);
   const isGroupRegistration = moduleAssetId
     === MODULE_ASSETS_NAME_ID_MAP.registerMultisignatureGroup;
@@ -39,8 +39,22 @@ export const isTransactionFullySigned = (senderAccount, transaction) => {
   });
 
   const alreadySigned = getNonEmptySignatures(transaction.signatures).length;
+  const registrationExtra = isGroupRegistration ? 1 : 0;
+  const mandatorySigs = keys.mandatoryKeys.length + registrationExtra;
+  const nonEmptyMandatorySigs = getNonEmptySignatures(
+    transaction.signatures.slice(0, mandatorySigs),
+  ).length;
 
-  return (required === alreadySigned);
+  if (required > alreadySigned) {
+    return signatureCollectionStatus.partiallySigned;
+  }
+  if (required === alreadySigned && nonEmptyMandatorySigs === mandatorySigs) {
+    return signatureCollectionStatus.fullySigned;
+  }
+  if (required === alreadySigned && nonEmptyMandatorySigs < mandatorySigs) {
+    return signatureCollectionStatus.occupiedByOptionals;
+  }
+  return signatureCollectionStatus.overSigned;
 };
 
 // eslint-disable-next-line max-statements
