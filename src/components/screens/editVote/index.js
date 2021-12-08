@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { withRouter } from 'react-router-dom';
 import { withTranslation } from 'react-i18next';
-import { useDispatch, useSelector } from 'react-redux';
+import { useDispatch, useSelector, connect } from 'react-redux';
 import { compose } from 'redux';
 
 import { selectSearchParamValue, removeSearchParamsFromUrl } from '@utils/searchParams';
@@ -24,6 +24,10 @@ import useVoteAmountField from './useVoteAmountField';
 import getMaxAmount from './getMaxAmount';
 import styles from './editVote.css';
 
+const mapStateToProps = (state) => ({
+  currentHeight: state.blocks.latestBlocks.length ? state.blocks.latestBlocks[0].height : 0,
+});
+
 const getTitles = t => ({
   edit: {
     title: t('Edit vote'),
@@ -37,7 +41,7 @@ const getTitles = t => ({
 
 // eslint-disable-next-line max-statements
 const AddVote = ({
-  history, t,
+  history, t, currentHeight,
 }) => {
   const dispatch = useDispatch();
   const { account, network, voting } = useSelector(state => state);
@@ -75,6 +79,10 @@ const AddVote = ({
     removeSearchParamsFromUrl(history, ['modal']);
   };
 
+  // 6: blocks per minute, 60: minutes, 24: hours
+  const numOfBlockPerDay = 24 * 60 * 6;
+  const daysLeft = Math.ceil((parseInt(end, 10) - currentHeight) / numOfBlockPerDay);
+
   return (
     <Dialog hasClose className={styles.wrapper}>
       <Box>
@@ -98,7 +106,7 @@ const AddVote = ({
               />
             </div>
           </BoxInfoText>
-          {start !== undefined && (
+          {daysLeft >= 1 && start !== undefined && (
           <>
             <WarnPunishedDelegate pomHeight={{ start, end }} vote />
             <span className={styles.space} />
@@ -137,5 +145,6 @@ const AddVote = ({
 
 export default compose(
   withRouter,
+  connect(mapStateToProps),
   withTranslation(),
 )(AddVote);
