@@ -28,7 +28,6 @@ const VOTE_LIMIT = 10;
  * @param {Object} votes - votes object retrieved from the Redux store
  * @returns {Object} - stats object
  */
-// eslint-disable-next-line max-statements
 const getVoteStats = (votes, account) => {
   const votesStats = Object.keys(votes)
     // eslint-disable-next-line max-statements
