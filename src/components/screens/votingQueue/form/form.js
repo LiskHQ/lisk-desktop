@@ -13,7 +13,6 @@ import { PrimaryButton } from '@toolbox/buttons';
 
 import Table from '@toolbox/table';
 import ToggleIcon from '../toggleIcon';
-import VoteStats from '../voteStats';
 
 import VoteRow from './voteRow';
 import EmptyState from './emptyState';
@@ -29,10 +28,16 @@ const VOTE_LIMIT = 10;
  * @param {Object} votes - votes object retrieved from the Redux store
  * @returns {Object} - stats object
  */
+// eslint-disable-next-line max-statements
 const getVoteStats = (votes, account) => {
   const votesStats = Object.keys(votes)
+    // eslint-disable-next-line max-statements
     .reduce((stats, address) => {
       const { confirmed, unconfirmed, username } = votes[address];
+
+      if (confirmed === 0 && unconfirmed === 0) {
+        return stats;
+      }
 
       if (!confirmed && unconfirmed) {
         // new vote
@@ -55,17 +60,18 @@ const getVoteStats = (votes, account) => {
       added: {}, edited: {}, removed: {}, untouched: {}, selfUnvote: {},
     });
 
-  const resultingNumOfVotes = Object.keys(votesStats.added).length
-    + Object.keys(votesStats.edited).length
-    + Object.keys(votesStats.untouched).length
-    - Object.keys(votesStats.removed).length;
-  const remainingVotes = VOTE_LIMIT
-    - (Object.keys(votesStats.edited).length + Object.keys(votesStats.untouched).length);
+  const numOfAddededVotes = Object.keys(votesStats.added).length;
+  const numOfEditedVotes = Object.keys(votesStats.edited).length;
+  const numOfUntouchedVotes = Object.keys(votesStats.untouched).length;
+  const numOfRemovedVotes = Object.keys(votesStats.removed).length;
+
+  const resultingNumOfVotes = numOfAddededVotes + numOfEditedVotes + numOfUntouchedVotes;
+  const availableVotes = VOTE_LIMIT - (numOfEditedVotes + numOfUntouchedVotes + numOfRemovedVotes);
 
   return {
     ...votesStats,
     resultingNumOfVotes,
-    remainingVotes,
+    availableVotes,
   };
 };
 
@@ -144,7 +150,7 @@ const Editor = ({
   });
 
   const {
-    added, edited, removed, selfUnvote, remainingVotes, resultingNumOfVotes,
+    added, edited, removed, selfUnvote, availableVotes, resultingNumOfVotes,
   } = useMemo(() =>
     getVoteStats(votes, account),
   [votes, account]);
@@ -173,7 +179,7 @@ const Editor = ({
             <>
               <span className={styles.title}>{t('Voting queue')}</span>
               <div className={styles.votesAvailableCounter}>
-                <span>{`${remainingVotes}/`}</span>
+                <span>{`${availableVotes}/`}</span>
                 <span>{t('{{VOTE_LIMIT}} votes available for your account', { VOTE_LIMIT })}</span>
               </div>
             </>
