@@ -1,5 +1,22 @@
 @import '../../../../app/mixins.css';
 
+.container {
+  & .header {
+    padding: 0;
+    height: 50px;
+    justify-content: flex-start;
+
+    & .title {
+      margin-left: 12px;
+      color: var(--color-maastricht-blue);
+    }
+  }
+
+  & .footer {
+    margin-top: 48px;
+  }
+}
+
 .subHeadingBold {
   @mixin contentLarge semi-bold;
 

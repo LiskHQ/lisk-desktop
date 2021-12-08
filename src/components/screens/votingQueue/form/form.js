@@ -167,21 +167,14 @@ const Editor = ({
   return (
     <section className={styles.wrapper}>
       <Box>
-        <ToggleIcon title={t('Voting queue')} />
+        <ToggleIcon isNotHeader />
+        <span className={styles.title}>{t('Voting queue')}</span>
         <div className={styles.headerContainer}>
           {!showEmptyState && (
-            <>
-              <div className={styles.votesAvailableCounter}>
-                <span>{`${remainingVotes}/`}</span>
-                <span>{t('{{VOTE_LIMIT}} Votes available', { VOTE_LIMIT })}</span>
-              </div>
-              <VoteStats
-                t={t}
-                added={Object.keys(added).length}
-                edited={Object.keys(edited).length}
-                removed={Object.keys(removed).length}
-              />
-            </>
+            <div className={styles.votesAvailableCounter}>
+              <span>{`${remainingVotes}/`}</span>
+              <span>{t('{{VOTE_LIMIT}} Votes available', { VOTE_LIMIT })}</span>
+            </div>
           )}
         </div>
         {showEmptyState
