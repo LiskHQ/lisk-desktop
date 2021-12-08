@@ -79,11 +79,8 @@ const Summary = ({
       classNames={styles.container}
       fee={!account.summary.isMultisignature && fromRawLsk(fee)}
     >
-      <ToggleIcon isNotHeader />
+      <ToggleIcon title={t('Voting summary')} />
       <div className={styles.headerContainer}>
-        <header>
-          {t('Voting summary')}
-        </header>
         <VoteStats
           t={t}
           heading={t('Voting summary')}

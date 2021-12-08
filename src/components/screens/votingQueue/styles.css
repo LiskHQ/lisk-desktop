@@ -12,10 +12,11 @@
 
 .toggleIcon {
   @mixin headingNormal;
-  padding-left: 14px;
+
   box-sizing: border-box;
   padding: 0;
   height: 50px;
+  display: flex;
   justify-content: flex-start;
   align-items: center;
   border-bottom: 1px solid var(--color-platinum);
@@ -30,6 +31,7 @@
   }
 
   & img {
+    margin-left: 14px;
     width: 20px;
   }
 }

@@ -149,10 +149,7 @@ const Editor = ({
   } = useMemo(() =>
     getVoteStats(votes, account),
   [votes, account]);
-  const {
-    remainingVotes, resultingNumOfVotes,
-  } = getRemainingAndResultingNumOfVotes(votes, account);
-  console.log(remainingVotes, resultingNumOfVotes);
+  const { remainingVotes } = getRemainingAndResultingNumOfVotes(votes, account);
 
   const feedback = validateVotes(votes, Number(account.token?.balance), fee.value, account, t);
 
@@ -170,7 +167,7 @@ const Editor = ({
   return (
     <section className={styles.wrapper}>
       <Box>
-        <ToggleIcon t={t} isNotHeader />
+        <ToggleIcon title={t('Voting queue')} />
         <div className={styles.headerContainer}>
           {!showEmptyState && (
             <>

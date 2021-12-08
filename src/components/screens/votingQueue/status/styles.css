@@ -1,0 +1,7 @@
+@import '../../../../app/mixins.css';
+
+.subHeadingBold {
+  @mixin contentLarge semi-bold;
+
+  color: #4463a7;
+}
