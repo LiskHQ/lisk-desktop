@@ -6,17 +6,15 @@ import Icon from '@toolbox/icon';
 
 import styles from './styles.css';
 
-const ToggleIcon = ({ history, isNotHeader, t }) => {
+const ToggleIcon = ({ history, title }) => {
   const closeModal = () => {
     removeSearchParamsFromUrl(history, ['modal']);
   };
 
   return (
-    <span className={`${styles.toggleIcon} ${isNotHeader ? styles.notHeader : ''}`} onClick={closeModal}>
+    <span className={styles.toggleIcon} onClick={closeModal}>
       <Icon name="votingQueueActive" />
-      <header>
-        {t('Voting queue')}
-      </header>
+      <span className={styles.title}>{title}</span>
     </span>
   );
 };
