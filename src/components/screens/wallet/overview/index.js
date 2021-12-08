@@ -1,6 +1,6 @@
 /* eslint-disable max-statements */
 import React, { useEffect } from 'react';
-import { useSelector } from 'react-redux';
+import { useSelector, connect } from 'react-redux';
 import { compose } from 'redux';
 import { withTranslation } from 'react-i18next';
 import grid from 'flexboxgrid/dist/flexboxgrid.css';
@@ -14,6 +14,10 @@ import BalanceChart from './balanceChart';
 import AccountInfo from './accountInfo';
 import BalanceInfo from './balanceInfo';
 import styles from './overview.css';
+
+const mapStateToProps = (state) => ({
+  currentHeight: state.blocks.latestBlocks.length ? state.blocks.latestBlocks[0].height : 0,
+});
 
 const addWarningMessage = ({ isBanned, pomHeight, readMore }) => {
   FlashMessageHolder.addMessage(
@@ -39,6 +43,7 @@ const Overview = ({
   isWalletRoute,
   account,
   history,
+  currentHeight,
 }) => {
   const {
     address,
@@ -46,8 +51,13 @@ const Overview = ({
     balance = 0,
     isMultisignature,
   } = account?.summary ?? {};
+
   const isBanned = account?.dpos?.delegate?.isBanned;
   const pomHeights = account?.dpos?.delegate?.pomHeights;
+  const { end } = pomHeights ? (pomHeights[pomHeights.length - 1]) : 0;
+  // 6: blocks per minute, 60: minutes, 24: hours
+  const numOfBlockPerDay = 24 * 60 * 6;
+  const daysLeft = Math.ceil((end - currentHeight) / numOfBlockPerDay);
 
   const { confirmed } = useSelector(selectTransactions);
   const bookmark = useSelector((state) =>
@@ -62,7 +72,7 @@ const Overview = ({
   );
 
   const showWarning = () => {
-    if (!isWalletRoute && host && address && (isBanned || pomHeights?.length)) {
+    if (!isWalletRoute && host && address && (isBanned || pomHeights?.length) && daysLeft >= 1) {
       addWarningMessage({
         isBanned,
         pomHeight: pomHeights ? pomHeights[pomHeights.length - 1] : 0,
@@ -147,6 +157,7 @@ const Overview = ({
 
 export default compose(
   withRouter,
+  connect(mapStateToProps),
   withData({
     transactions: {
       apiUtil: (network, { token, ...params }) =>
