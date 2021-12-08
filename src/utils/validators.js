@@ -84,7 +84,6 @@ export const validateAmountFormat = ({
   initialVote,
 }) => {
   const { format, maxFloating } = reg.amount[locale];
-
   const errors = {
     ZERO: {
       message: i18n.t('Amount can\'t be zero.'),
@@ -117,15 +116,22 @@ export const validateAmountFormat = ({
       message: i18n.t('The vote amount is too high. You should keep at least 0.05 LSK available in your account.'),
       fn: () => {
         const rawValue = toRawLsk(numeral(value).value());
-        return !selfVote && funds - rawValue < MIN_ACCOUNT_BALANCE;
+        return !selfVote && funds - rawValue < MIN_ACCOUNT_BALANCE && funds - rawValue > 0;
       },
     },
     SELF_VOTES_MAX: {
-      message: i18n.t('The vote amount exceeds both your current and locked balance with your self votes'),
+      message: i18n.t('The vote amount is too high. You should keep at least 0.05 LSK available in your account.'),
       fn: () => {
         const rawValue = toRawLsk(numeral(value).value());
-        // Selected vote amount should be not be greater than the user's balance as well as
-        // the sum of the user's self locked votes and normal balance
+        return selfVote
+          && (initialVote + funds) - rawValue < MIN_ACCOUNT_BALANCE
+          && (initialVote + funds) - rawValue > 0;
+      },
+    },
+    LOCKED_BALANCE_MAX: {
+      message: i18n.t('The vote amount exceeds both your current and locked balance with your self votes.'),
+      fn: () => {
+        const rawValue = toRawLsk(numeral(value).value());
         return selfVote && rawValue > funds && rawValue > initialVote + funds;
       },
     },

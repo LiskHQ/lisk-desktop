@@ -22,7 +22,7 @@ const getAmountFeedbackAndError = (value, balance, selfVote, unconfirmedVotes) =
     value,
     token: tokenMap.LSK.key,
     funds: parseInt(balance, 10),
-    checklist: ['FORMAT', 'ZERO', 'VOTE_10X', 'INSUFFICIENT_FUNDS', 'VOTES_MAX', 'SELF_VOTES_MAX'],
+    checklist: ['FORMAT', 'ZERO', 'VOTE_10X', 'INSUFFICIENT_FUNDS', 'VOTES_MAX', 'SELF_VOTES_MAX', 'LOCKED_BALANCE_MAX'],
     selfVote,
     initialVote: unconfirmedVotes,
   });
