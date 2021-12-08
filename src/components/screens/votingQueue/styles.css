@@ -11,8 +11,19 @@
 }
 
 .toggleIcon {
+  @mixin headingNormal;
   padding-left: 14px;
   box-sizing: border-box;
+  padding: 0;
+  height: 50px;
+  justify-content: flex-start;
+  align-items: center;
+  border-bottom: 1px solid var(--color-platinum);
+
+  & .title {
+    margin-left: 12px;
+    color: var(--color-maastricht-blue);
+  }
 
   & :hover {
     cursor: pointer;
@@ -20,18 +31,6 @@
 
   & img {
     width: 20px;
-  }
-}
-
-.toggleIcon.notHeader {
-  border-bottom: 1px solid var(--color-platinum);
-  display: flex;
-  align-items: center;
-  height: 50px;
-
-  & > header {
-    margin-left: 18px;
-    margin-top: 4px;
   }
 }
 

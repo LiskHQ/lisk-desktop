@@ -8,11 +8,8 @@
     border-bottom: 1px solid var(--color-platinum);
   }
 
-  & header {
-    @mixin headingNormal;
-
-    font-size: var(--font-size-h5);
-    color: var(--color-maastricht-blue);
+  & .footer {
+    margin-top: 48px;
   }
 }
 
@@ -20,26 +17,22 @@
   display: flex;
   justify-content: space-between;
   border-bottom: 1px solid var(--color-platinum);
-}
 
-.contentHeader {
-  display: flex;
-}
-
-.votesAvailableCounter {
-  @mixin contentLargest;
-
-  line-height: 15px;
-  padding: 20px;
-
-  & > span {
-
-    &:nth-child(1) {
-      color: var(--color-maastricht-blue);
-    }
-
-    &:nth-child(2) {
-      color: var(--color-blue-gray);
+  & > .votesAvailableCounter {
+    @mixin contentLargest;
+  
+    line-height: 15px;
+    padding: 20px;
+  
+    & > span {
+  
+      &:nth-child(1) {
+        color: var(--color-maastricht-blue);
+      }
+  
+      &:nth-child(2) {
+        color: var(--color-blue-gray);
+      }
     }
   }
 }
