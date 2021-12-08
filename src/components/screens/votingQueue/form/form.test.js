@@ -99,7 +99,7 @@ describe('VotingQueue.Editor', () => {
 
   it('Shows an error if trying to vote for more than 10 delegates', () => {
     const wrapper = mountWithRouter(Form, { ...props, votes: elevenVotes });
-    expect(wrapper.find('.feedback').text()).toBe('You can\'t vote for more than 10 delegates.');
+    expect(wrapper.find('.feedback').text()).toBe('These votes in addition to your current votes will add up to 11, exceeding the account limit of 10.');
   });
 
   it('Shows an error if trying to vote more than your balance', async () => {
