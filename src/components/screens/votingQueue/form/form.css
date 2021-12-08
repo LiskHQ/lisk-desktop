@@ -16,7 +16,15 @@
 .headerContainer {
   display: flex;
   justify-content: space-between;
+  align-items: center;
   border-bottom: 1px solid var(--color-platinum);
+
+  & > .title {
+    @mixin headingNormal;
+  
+    color: var(--color-maastricht-blue);
+    padding: 20px 16px;
+  }
 
   & > .votesAvailableCounter {
     @mixin contentLargest;

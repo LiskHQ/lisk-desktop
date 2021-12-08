@@ -168,13 +168,15 @@ const Editor = ({
     <section className={styles.wrapper}>
       <Box>
         <ToggleIcon isNotHeader />
-        <span className={styles.title}>{t('Voting queue')}</span>
         <div className={styles.headerContainer}>
           {!showEmptyState && (
-            <div className={styles.votesAvailableCounter}>
-              <span>{`${remainingVotes}/`}</span>
-              <span>{t('{{VOTE_LIMIT}} Votes available', { VOTE_LIMIT })}</span>
-            </div>
+            <>
+              <span className={styles.title}>{t('Voting queue')}</span>
+              <div className={styles.votesAvailableCounter}>
+                <span>{`${remainingVotes}/`}</span>
+                <span>{t('{{VOTE_LIMIT}} votes available for your account', { VOTE_LIMIT })}</span>
+              </div>
+            </>
           )}
         </div>
         {showEmptyState
