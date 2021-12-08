@@ -21,23 +21,22 @@
 
   & > .title {
     @mixin headingNormal;
-  
+
     color: var(--color-maastricht-blue);
     padding: 20px 16px;
   }
 
   & > .votesAvailableCounter {
     @mixin contentLargest;
-  
+
     line-height: 15px;
     padding: 20px;
-  
+
     & > span {
-  
       &:nth-child(1) {
         color: var(--color-maastricht-blue);
       }
-  
+
       &:nth-child(2) {
         color: var(--color-blue-gray);
       }
