@@ -29,8 +29,8 @@ const VOTE_LIMIT = 10;
  * @param {Object} votes - votes object retrieved from the Redux store
  * @returns {Object} - stats object
  */
-const getVoteStats = (votes, account) =>
-  Object.keys(votes)
+const getVoteStats = (votes, account) => {
+  const votesStats = Object.keys(votes)
     .reduce((stats, address) => {
       const { confirmed, unconfirmed, username } = votes[address];
 
@@ -55,8 +55,6 @@ const getVoteStats = (votes, account) =>
       added: {}, edited: {}, removed: {}, untouched: {}, selfUnvote: {},
     });
 
-const getRemainingAndResultingNumOfVotes = (votes, account) => {
-  const votesStats = getVoteStats(votes, account);
   const resultingNumOfVotes = Object.keys(votesStats.added).length
     + Object.keys(votesStats.edited).length
     + Object.keys(votesStats.untouched).length
@@ -65,6 +63,7 @@ const getRemainingAndResultingNumOfVotes = (votes, account) => {
     - (Object.keys(votesStats.edited).length + Object.keys(votesStats.untouched).length);
 
   return {
+    ...votesStats,
     resultingNumOfVotes,
     remainingVotes,
   };
@@ -77,15 +76,15 @@ const getRemainingAndResultingNumOfVotes = (votes, account) => {
  * @param {Object} votes - Votes object from Redux store
  * @param {Number} balance - Account balance in Beddows
  * @param {Number} fee - Tx fee in Beddows
+ * @param {Number} resultingNumOfVotes - Number of used voted that will result after submitting tx
  * @param {Function} t - i18n translation function
  * @returns {Object} The feedback object including error status and messages
  */
 // eslint-disable-next-line max-statements
-const validateVotes = (votes, balance, fee, account, t) => {
+const validateVotes = (votes, balance, fee, resultingNumOfVotes, t) => {
   const messages = [];
   const areVotesInValid = Object.values(votes).some(vote =>
     (vote.unconfirmed === '' || vote.unconfirmed === undefined));
-  const { resultingNumOfVotes } = getRemainingAndResultingNumOfVotes(votes, account);
 
   if (areVotesInValid) {
     messages.push(t('Please enter vote amounts for the delegates you wish to vote for'));
@@ -145,13 +144,14 @@ const Editor = ({
   });
 
   const {
-    added, edited, removed, selfUnvote,
+    added, edited, removed, selfUnvote, remainingVotes, resultingNumOfVotes,
   } = useMemo(() =>
     getVoteStats(votes, account),
   [votes, account]);
-  const { remainingVotes } = getRemainingAndResultingNumOfVotes(votes, account);
 
-  const feedback = validateVotes(votes, Number(account.token?.balance), fee.value, account, t);
+  const feedback = validateVotes(
+    votes, Number(account.token?.balance), fee.value, resultingNumOfVotes, t,
+  );
 
   const isCTADisabled = feedback.error || Object.keys(changedVotes).length === 0;
 
