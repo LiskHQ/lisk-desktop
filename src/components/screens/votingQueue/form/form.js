@@ -179,7 +179,7 @@ const Editor = ({
             <>
               <span className={styles.title}>{t('Voting queue')}</span>
               <div className={styles.votesAvailableCounter}>
-                <span>{`${availableVotes}/`}</span>
+                <span className="available-votes-num">{`${availableVotes}/`}</span>
                 <span>{t('{{VOTE_LIMIT}} votes available for your account', { VOTE_LIMIT })}</span>
               </div>
             </>
