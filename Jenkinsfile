@@ -52,7 +52,8 @@ pipeline {
 		stage('test') {
 			steps {
 				parallel (
-					"cypress": {
+					// cypress
+					"end-to-end": {
 						nvm(getNodejsVersion()) {
 							ansiColor('xterm') {
 								wrap([$class: 'Xvfb']) {
@@ -61,7 +62,8 @@ pipeline {
 							}
 						}
 					},
-					"jest": {
+					// jest
+					"unit": {
 						nvm(getNodejsVersion()) {
 							ansiColor('xterm') {
 								sh 'ON_JENKINS=true npm run test'
