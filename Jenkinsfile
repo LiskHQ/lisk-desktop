@@ -22,19 +22,13 @@ pipeline {
 						}
 					},
 					"linux": {
-						withCredentials([string(credentialsId: 'github-lisk-token', variable: 'GH_TOKEN')]) {
-							nvm(getNodejsVersion()) {
-								sh '''
-								cp -R /home/lisk/fonts/basier-circle src/assets/fonts
-								cp -R /home/lisk/fonts/gilroy src/assets/fonts
-								npm run build
-								npm run install:electron:dependencies
-								npm run dist:linux
-								'''
-							}
+						nvm(getNodejsVersion()) {
+							sh '''
+							cp -R /home/lisk/fonts/basier-circle src/assets/fonts
+							cp -R /home/lisk/fonts/gilroy src/assets/fonts
+							npm run build
+							'''
 						}
-						archiveArtifacts allowEmptyArchive: true, artifacts: 'dist/lisk-linux-*'
-						archiveArtifacts allowEmptyArchive: true, artifacts: 'dist/latest-linux.yml'
 						stash includes: 'app/build/', name: 'build'
 					}
 				)
