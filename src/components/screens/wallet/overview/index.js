@@ -72,7 +72,8 @@ const Overview = ({
   );
 
   const showWarning = () => {
-    if (!isWalletRoute && host && address && (isBanned || pomHeights?.length) && daysLeft >= 1) {
+    if (!isWalletRoute && host && address && (isBanned || pomHeights?.length)
+      && (isBanned || daysLeft >= 1)) {
       addWarningMessage({
         isBanned,
         pomHeight: pomHeights ? pomHeights[pomHeights.length - 1] : 0,
