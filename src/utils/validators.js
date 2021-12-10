@@ -67,7 +67,6 @@ export const validateLSKPublicKey = (publicKey) => {
  * @param {string?} [data.funds] Maximum funds users are allowed to input
  * @param {Array?} [data.checklist] The list of errors to be tested. A choice of
  * ZERO, MAX_ACCURACY, FORMAT, VOTE_10X, INSUFFICIENT_FUNDS
- * @param {Boolean} [data.selfVote] - If the delegate is voting for self or another delegate
  * @param {string} [data.initialVote] The amount of the user's self votes
  * @returns {Object.<string, string|boolean>}
  * data - Object containing the message and if has an error
@@ -80,7 +79,6 @@ export const validateAmountFormat = ({
   locale = i18n.language,
   funds,
   checklist = ['ZERO', 'MAX_ACCURACY', 'FORMAT'],
-  selfVote = false,
   initialVote,
 }) => {
   const { format, maxFloating } = reg.amount[locale];
@@ -103,7 +101,7 @@ export const validateAmountFormat = ({
     },
     INSUFFICIENT_FUNDS: {
       message: i18n.t('Provided amount is higher than your current balance.'),
-      fn: () => !selfVote && funds < toRawLsk(numeral(value).value()),
+      fn: () => initialVote === 0 && funds < toRawLsk(numeral(value).value()),
     },
     MIN_BALANCE: {
       message: i18n.t('Provided amount will result in a wallet with less than the minimum balance.'),
@@ -116,23 +114,22 @@ export const validateAmountFormat = ({
       message: i18n.t('The vote amount is too high. You should keep at least 0.05 LSK available in your account.'),
       fn: () => {
         const rawValue = toRawLsk(numeral(value).value());
-        return !selfVote && funds - rawValue < MIN_ACCOUNT_BALANCE && funds - rawValue > 0;
+        return initialVote === 0 && funds - rawValue < MIN_ACCOUNT_BALANCE && funds - rawValue > 0;
       },
     },
-    SELF_VOTES_MAX: {
+    LOCKED_VOTES_MAX: {
       message: i18n.t('The vote amount is too high. You should keep at least 0.05 LSK available in your account.'),
       fn: () => {
         const rawValue = toRawLsk(numeral(value).value());
-        return selfVote
-          && (initialVote + funds) - rawValue < MIN_ACCOUNT_BALANCE
+        return (initialVote + funds) - rawValue < MIN_ACCOUNT_BALANCE
           && (initialVote + funds) - rawValue > 0;
       },
     },
     LOCKED_BALANCE_MAX: {
-      message: i18n.t('The vote amount exceeds both your current and locked balance with your self votes.'),
+      message: i18n.t('The vote amount exceeds both your current and locked balance with your votes for this delegate.'),
       fn: () => {
         const rawValue = toRawLsk(numeral(value).value());
-        return selfVote && rawValue > funds && rawValue > initialVote + funds;
+        return rawValue > funds && rawValue > initialVote + funds;
       },
     },
   };
