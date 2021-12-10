@@ -30,7 +30,6 @@
     box-shadow: var(--balance-shadow);
     border-radius: 6px;
     padding: var(--vertical-padding-l) var(--horizontal-padding-l);
-    width: 60%;
     position: relative;
     background-image: url('../../../../src/assets/images/waves_pattern.svg');
     background-color: var(--color-balance-bg);
