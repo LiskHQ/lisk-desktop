@@ -14,17 +14,16 @@ let loaderTimeout = null;
  *
  * @param {String} value - The vote amount value in Beddows
  * @param {String} balance - The account balance value in Beddows
- // * @param {Boolean} selfVote - If the delegate is voting for self or another delegate
- * @param {String} unconfirmedVotes - The vote amount value in Beddows
+ * @param {String} previouslyConfirmedVotes - The vote amount value in Beddows
  * @returns {Object} The boolean error flag and a human readable message.
  */
-const getAmountFeedbackAndError = (value, balance, unconfirmedVotes) => {
+const getAmountFeedbackAndError = (value, balance, previouslyConfirmedVotes) => {
   const { message: feedback } = validateAmountFormat({
     value,
     token: tokenMap.LSK.key,
     funds: parseInt(balance, 10),
     checklist: ['FORMAT', 'ZERO', 'VOTE_10X', 'INSUFFICIENT_FUNDS', 'VOTES_MAX', 'LOCKED_VOTES_MAX', 'LOCKED_BALANCE_MAX'],
-    initialVote: unconfirmedVotes,
+    initialVote: previouslyConfirmedVotes,
   });
 
   return { error: !!feedback, feedback };
