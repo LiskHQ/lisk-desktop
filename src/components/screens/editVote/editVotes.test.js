@@ -149,7 +149,7 @@ describe('EditVote', () => {
     amountField = wrapper.find('input[name="vote"]').at(0);
 
     expect(amountField.find('.error')).toHaveClassName('error');
-    expect(wrapper.find('.amount Feedback')).toHaveText('The vote amount exceeds both your current and locked balance with your self votes.');
+    expect(wrapper.find('.amount Feedback')).toHaveText('The vote amount exceeds both your current and locked balance with your votes for this delegate.');
   });
 
   it('should dispatch remove vote for host if called with address search param', () => {
