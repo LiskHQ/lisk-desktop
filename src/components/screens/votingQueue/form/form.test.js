@@ -64,7 +64,10 @@ describe('VotingQueue.Editor', () => {
 
   const elevenVotes = addresses.reduce((dict, item, index) => {
     if (index > 1) {
-      dict[item] = { confirmed: 1e10, unconfirmed: 1e10 * index };
+      dict[item] = {
+        confirmed: index > 9 ? 0 : 1e10,
+        unconfirmed: 1e10 * index,
+      };
     }
     return dict;
   }, {});
@@ -95,17 +98,20 @@ describe('VotingQueue.Editor', () => {
   it('Render only the changed votes', () => {
     const wrapper = mountWithRouter(Form, { ...props, votes: mixedVotes });
     expect(wrapper.find('VoteRow')).toHaveLength(1);
+    expect(wrapper.find('.available-votes-num').text()).toBe('8/');
   });
 
   it('Shows an error if trying to vote for more than 10 delegates', () => {
     const wrapper = mountWithRouter(Form, { ...props, votes: elevenVotes });
-    expect(wrapper.find('.feedback').text()).toBe('You can\'t vote for more than 10 delegates.');
+    expect(wrapper.find('.available-votes-num').text()).toBe('2/');
+    expect(wrapper.find('.feedback').text()).toBe('These votes in addition to your current votes will add up to 11, exceeding the account limit of 10.');
   });
 
   it('Shows an error if trying to vote more than your balance', async () => {
     const wrapper = mountWithRouter(Form, { ...props, votes: expensiveVotes });
     await flushPromises();
     act(() => { wrapper.update(); });
+    expect(wrapper.find('.available-votes-num').text()).toBe('10/');
     expect(wrapper.find('.feedback').text()).toBe('You don\'t have enough LSK in your account.');
   });
 
@@ -114,6 +120,7 @@ describe('VotingQueue.Editor', () => {
     const wrapper = mountWithRouter(Form, { ...props, votes: minimumBalanceVotes });
     await flushPromises();
     act(() => { wrapper.update(); });
+    expect(wrapper.find('.available-votes-num').text()).toBe('10/');
     expect(wrapper.find('.feedback').text()).toBe('The vote amounts are too high. You should keep 0.05 LSK available in your account.');
   });
 });
