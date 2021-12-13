@@ -63,13 +63,17 @@ const VoteRow = ({
         </div>
       </div>
       <span className={`${styles.oldAmountColumn} ${styles.centerContent}`}>
-        <LiskAmount val={confirmed} token={token} />
+        {confirmed ? (
+          <LiskAmount val={confirmed} token={token} />
+        ) : '-'}
       </span>
       {state === ComponentState.notEditing
         ? (
           <>
             <span className={`${styles.newAmountColumn} ${styles.centerContent}`}>
-              <LiskAmount val={unconfirmed} token={token} />
+              {unconfirmed ? (
+                <LiskAmount val={unconfirmed} token={token} />
+              ) : '-'}
             </span>
             <div className={`${styles.editIconsContainer} ${styles.centerContent}`}>
               <span onClick={changeToEditingMode}>

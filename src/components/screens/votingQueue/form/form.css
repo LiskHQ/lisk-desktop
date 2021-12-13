@@ -8,22 +8,40 @@
     border-bottom: 1px solid var(--color-platinum);
   }
 
-  & header {
-    @mixin headingNormal;
-
-    font-size: var(--font-size-h5);
-    color: var(--color-maastricht-blue);
+  & .footer {
+    margin-top: 48px;
   }
 }
 
 .headerContainer {
   display: flex;
   justify-content: space-between;
-  margin: 20px;
-}
+  align-items: center;
+  border-bottom: 1px solid var(--color-platinum);
 
-.contentHeader {
-  display: flex;
+  & > .title {
+    @mixin headingNormal;
+
+    color: var(--color-maastricht-blue);
+    padding: 20px 16px;
+  }
+
+  & > .votesAvailableCounter {
+    @mixin contentLargest;
+
+    line-height: 15px;
+    padding: 20px;
+
+    & > span {
+      &:nth-child(1) {
+        color: var(--color-maastricht-blue);
+      }
+
+      &:nth-child(2) {
+        color: var(--color-blue-gray);
+      }
+    }
+  }
 }
 
 .infoColumn {

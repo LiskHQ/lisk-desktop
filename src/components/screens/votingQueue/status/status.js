@@ -17,7 +17,6 @@ const Status = ({
       <Box className={styles.container}>
         <header className={styles.header}>
           <ToggleIcon />
-          <span className={styles.title}>{t('Voting confirmation')}</span>
         </header>
         <TransactionResult
           title={template.title}
