@@ -1,4 +1,7 @@
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
+const merge = require('webpack-merge');
+
+const baseConfig = require('./webpack.config');
 
 const config = {
   plugins: [
@@ -83,4 +86,5 @@ const config = {
   },
 };
 
-module.exports = config;
+module.exports = merge(baseConfig, config);
+// module.exports = config;
