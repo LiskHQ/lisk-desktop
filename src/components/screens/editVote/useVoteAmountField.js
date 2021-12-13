@@ -42,7 +42,12 @@ const useVoteAmountField = (initialValue) => {
   const host = useSelector(selectLSKAddress);
   const searchDetails = window.location.href.replace(/.*[?]/, '');
   const address = selectSearchParamValue(`?${searchDetails}`, 'address');
-  const existingVote = useSelector(state => state.voting[address || host]);
+  const voting = useSelector(state => state.voting);
+  const existingVote = voting[address || host];
+  const totalUnconfirmedVotes = Object.values(voting)
+    .filter(vote => vote.confirmed < vote.unconfirmed)
+    .map(vote => vote.unconfirmed - vote.confirmed)
+    .reduce((total, amount) => (total + amount), 0);
   const previouslyConfirmedVotes = existingVote ? existingVote.confirmed : 0;
   const [amountField, setAmountField] = useState({
     value: initialValue,
@@ -73,7 +78,7 @@ const useVoteAmountField = (initialValue) => {
       isLoading: true,
     });
     const feedback = getAmountFeedbackAndError(
-      value - fromRawLsk(previouslyConfirmedVotes),
+      value - fromRawLsk(previouslyConfirmedVotes - totalUnconfirmedVotes),
       balance,
     );
     loaderTimeout = setTimeout(() => {
