@@ -8,6 +8,7 @@ pipeline {
 				stage('linux, windows') {
 					agent { node { label 'lisk-desktop' } }
 					steps {
+					    cleanWs(patterns: [[pattern: 'dist/lisk-*-*', type: 'INCLUDE'], [pattern: 'dist/latest-*.yml', type: 'INCLUDE']])
 						nvm(getNodejsVersion()) {
 							sh '''
 							npm ci
@@ -32,6 +33,7 @@ pipeline {
 				stage('darwin') {
 					agent { node { label 'darwin' } }
 					steps {
+					    cleanWs(patterns: [[pattern: 'dist/lisk-mac-*-*', type: 'INCLUDE'], [pattern: 'dist/latest-mac-*.yml', type: 'INCLUDE']])
 						nvm(getNodejsVersion()) {
 							sh '''
 							npm ci
