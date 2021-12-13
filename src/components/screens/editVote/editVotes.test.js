@@ -108,8 +108,13 @@ describe('EditVote', () => {
   });
 
   it('should display error if called with amount that will cause insufficient balance after voting', () => {
+    const withUpdatedVotes = {
+      ...withVotes,
+      [genesis]: { confirmed: 0, unconfirmed: 0 },
+      [delegate]: { confirmed: 0, unconfirmed: 0 },
+    };
     const wrapper = mountWithRouterAndStore(
-      EditVote, propsWithoutSearch, {}, { ...state, voting: withVotes },
+      EditVote, propsWithoutSearch, {}, { ...state, voting: withUpdatedVotes },
     );
     let amountField = wrapper.find('input[name="vote"]').at(0);
     amountField.simulate('change', {
@@ -124,7 +129,27 @@ describe('EditVote', () => {
     amountField = wrapper.find('input[name="vote"]').at(0);
 
     expect(amountField.find('.error')).toHaveClassName('error');
-    expect(wrapper.find('.amount Feedback')).toHaveText('The vote amount is too high. You should keep at least 0.05 LSK available in your account.');
+    expect(wrapper.find('.amount Feedback')).toHaveText('Provided amount will result in a wallet with less than the minimum balance.');
+  });
+
+  it('should display error when voting for self if called with amount greater than balance and locked votes for delegate', () => {
+    const wrapper = mountWithRouterAndStore(
+      EditVote, propsWithoutSearch, {}, { ...state, voting: withVotes },
+    );
+    let amountField = wrapper.find('input[name="vote"]').at(0);
+    amountField.simulate('change', {
+      target: {
+        value: 210,
+        name: 'vote',
+      },
+    });
+    wrapper.update();
+    act(() => { jest.advanceTimersByTime(300); });
+    wrapper.update();
+    amountField = wrapper.find('input[name="vote"]').at(0);
+
+    expect(amountField.find('.error')).toHaveClassName('error');
+    expect(wrapper.find('.amount Feedback')).toHaveText('Provided amount is higher than your current balance.');
   });
 
   it('should dispatch remove vote for host if called with address search param', () => {

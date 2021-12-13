@@ -12,6 +12,7 @@ const Feedback = ({
     styles.feedback,
     styles[size],
     styles[status],
+    message.length ? styles.display : '',
     className,
     'feedback',
   ].filter(name => name).join(' ');
@@ -39,4 +40,8 @@ Feedback.defaultProps = {
   status: '',
 };
 
-export default Feedback;
+const areEqual = (prev, next) => (
+  prev.status === next.status && prev.message === next.message && prev.className === next.className
+);
+
+export default React.memo(Feedback, areEqual);

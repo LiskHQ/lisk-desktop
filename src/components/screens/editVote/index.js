@@ -116,7 +116,7 @@ const AddVote = ({
             <AmountField
               amount={voteAmount}
               onChange={setVoteAmount}
-              maxAmount={{ value: maxAmount || balance }}
+              maxAmount={{ value: maxAmount }}
               displayConverter
               label={t('Vote amount (LSK)')}
               placeholder={t('Insert vote amount')}
