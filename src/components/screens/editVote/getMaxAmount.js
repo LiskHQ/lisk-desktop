@@ -25,9 +25,10 @@ const getMaxAmount = async (account, network, voting, address) => {
     .filter(vote => vote.confirmed < vote.unconfirmed)
     .map(vote => vote.unconfirmed - vote.confirmed)
     .reduce((total, amount) => (total + amount), 0);
+  const currentVote = voting[address].confirmed;
 
   const maxVoteAmount = Math.floor(
-    (balance - totalUnconfirmedVotes - MIN_ACCOUNT_BALANCE) / 1e9,
+    (balance - totalUnconfirmedVotes + currentVote - MIN_ACCOUNT_BALANCE) / 1e9,
   ) * 1e9;
 
   const transaction = {
@@ -56,7 +57,7 @@ const getMaxAmount = async (account, network, voting, address) => {
   // If the "sum of vote amounts + fee + dust" exceeds balance
   // return 10 LSK less, since votes must be multiplications of 10 LSK.
   if ((maxVoteAmount + toRawLsk(maxAmountFee.value)) <= (
-    balance - totalUnconfirmedVotes - MIN_ACCOUNT_BALANCE)) {
+    balance - totalUnconfirmedVotes + currentVote - MIN_ACCOUNT_BALANCE)) {
     return maxVoteAmount;
   }
   return maxVoteAmount - VOTE_AMOUNT_STEP;
