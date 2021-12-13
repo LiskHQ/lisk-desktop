@@ -5,11 +5,7 @@
     padding: 0;
     height: 50px;
     justify-content: flex-start;
-
-    & .title {
-      margin-left: 12px;
-      color: var(--color-maastricht-blue);
-    }
+    border-bottom: 1px solid var(--color-platinum);
   }
 
   & .footer {

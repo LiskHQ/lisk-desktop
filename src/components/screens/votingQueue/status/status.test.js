@@ -35,6 +35,6 @@ describe('VotingQueue.Result', () => {
     });
     const element = wrapper.find('.transaction-status');
 
-    expect(element.text()).toBe('You have now locked0.000002 LSKfor voting and may unlock0.000003 LSKin {{unlockTime}} hours.');
+    expect(element.text()).toBe('You have now locked 0.000002 LSK for voting and may unlock 0.000003 LSK in {{unlockTime}} hours.');
   });
 });

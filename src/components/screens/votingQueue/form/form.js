@@ -13,12 +13,13 @@ import { PrimaryButton } from '@toolbox/buttons';
 
 import Table from '@toolbox/table';
 import ToggleIcon from '../toggleIcon';
-import VoteStats from '../voteStats';
 
 import VoteRow from './voteRow';
 import EmptyState from './emptyState';
 import header from './tableHeader';
 import styles from './form.css';
+
+const VOTE_LIMIT = 10;
 
 /**
  * Determines the number of votes that have been
@@ -27,10 +28,15 @@ import styles from './form.css';
  * @param {Object} votes - votes object retrieved from the Redux store
  * @returns {Object} - stats object
  */
-const getVoteStats = (votes, account) =>
-  Object.keys(votes)
+const getVoteStats = (votes, account) => {
+  const votesStats = Object.keys(votes)
+    // eslint-disable-next-line max-statements
     .reduce((stats, address) => {
       const { confirmed, unconfirmed, username } = votes[address];
+
+      if (confirmed === 0 && unconfirmed === 0) {
+        return stats;
+      }
 
       if (!confirmed && unconfirmed) {
         // new vote
@@ -53,37 +59,50 @@ const getVoteStats = (votes, account) =>
       added: {}, edited: {}, removed: {}, untouched: {}, selfUnvote: {},
     });
 
+  const numOfAddededVotes = Object.keys(votesStats.added).length;
+  const numOfEditedVotes = Object.keys(votesStats.edited).length;
+  const numOfUntouchedVotes = Object.keys(votesStats.untouched).length;
+  const numOfRemovedVotes = Object.keys(votesStats.removed).length;
+
+  const resultingNumOfVotes = numOfAddededVotes + numOfEditedVotes + numOfUntouchedVotes;
+  const availableVotes = VOTE_LIMIT - (numOfEditedVotes + numOfUntouchedVotes + numOfRemovedVotes);
+
+  return {
+    ...votesStats,
+    resultingNumOfVotes,
+    availableVotes,
+  };
+};
+
 /**
  * Validates given votes against the following criteria:
- * - Number of votes must not exceed 10
+ * - Number of votes must not exceed VOTE_LIMIT
  * - Added vote amounts + fee must not exceed account balance
  * @param {Object} votes - Votes object from Redux store
  * @param {Number} balance - Account balance in Beddows
  * @param {Number} fee - Tx fee in Beddows
+ * @param {Number} resultingNumOfVotes - Number of used voted that will result after submitting tx
  * @param {Function} t - i18n translation function
  * @returns {Object} The feedback object including error status and messages
  */
 // eslint-disable-next-line max-statements
-const validateVotes = (votes, balance, fee, account, t) => {
+const validateVotes = (votes, balance, fee, resultingNumOfVotes, t) => {
   const messages = [];
   const areVotesInValid = Object.values(votes).some(vote =>
     (vote.unconfirmed === '' || vote.unconfirmed === undefined));
-  const votesStats = getVoteStats(votes, account);
 
   if (areVotesInValid) {
     messages.push(t('Please enter vote amounts for the delegates you wish to vote for'));
   }
 
-  if (Object.keys(votesStats.added).length
-      + Object.keys(votesStats.edited).length
-      + Object.keys(votesStats.untouched).length
-      - Object.keys(votesStats.removed).length > 10) {
-    messages.push(t('You can\'t vote for more than 10 delegates.'));
+  if (resultingNumOfVotes > VOTE_LIMIT) {
+    messages.push(t(`These votes in addition to your current votes will add up to ${resultingNumOfVotes}, exceeding the account limit of ${VOTE_LIMIT}.`));
   }
 
   const addedVoteAmount = Object.values(votes)
     .filter(vote => vote.unconfirmed > vote.confirmed)
-    .reduce((sum, vote) => { sum += (vote.unconfirmed - vote.confirmed); return sum; }, 0);
+    .reduce((sum,
+      vote) => { sum += (vote.unconfirmed - vote.confirmed); return sum; }, 0);
 
   if ((addedVoteAmount + toRawLsk(fee)) > balance) {
     messages.push(t('You don\'t have enough LSK in your account.'));
@@ -130,12 +149,14 @@ const Editor = ({
   });
 
   const {
-    added, edited, removed, selfUnvote,
+    added, edited, removed, selfUnvote, availableVotes, resultingNumOfVotes,
   } = useMemo(() =>
     getVoteStats(votes, account),
   [votes, account]);
 
-  const feedback = validateVotes(votes, Number(account.token?.balance), fee.value, account, t);
+  const feedback = validateVotes(
+    votes, Number(account.token?.balance), fee.value, resultingNumOfVotes, t,
+  );
 
   const isCTADisabled = feedback.error || Object.keys(changedVotes).length === 0;
 
@@ -153,16 +174,14 @@ const Editor = ({
       <Box>
         <ToggleIcon isNotHeader />
         <div className={styles.headerContainer}>
-          <header>
-            {t('Voting queue')}
-          </header>
           {!showEmptyState && (
-            <VoteStats
-              t={t}
-              added={Object.keys(added).length}
-              edited={Object.keys(edited).length}
-              removed={Object.keys(removed).length}
-            />
+            <>
+              <span className={styles.title}>{t('Voting queue')}</span>
+              <div className={styles.votesAvailableCounter}>
+                <span className="available-votes-num">{`${availableVotes}/`}</span>
+                <span>{t('{{VOTE_LIMIT}} votes available for your account', { VOTE_LIMIT })}</span>
+              </div>
+            </>
           )}
         </div>
         {showEmptyState

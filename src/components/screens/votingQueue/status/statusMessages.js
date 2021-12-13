@@ -50,9 +50,13 @@ const getSuccessMessage = (t, locked, unlockable, selfUnvote = { confirmed: 0 })
     return (
       <>
         <span>{t('You have now locked')}</span>
+        {' '}
         <LiskAmountFormatted val={locked} />
+        {' '}
         <span>{t('for voting and may unlock')}</span>
+        {' '}
         <LiskAmountFormatted val={unlockable} />
+        {' '}
         <span>{t('in {{unlockTime}} hours.', { unlockTime })}</span>
       </>
     );

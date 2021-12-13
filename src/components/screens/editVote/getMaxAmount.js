@@ -25,7 +25,7 @@ const getMaxAmount = async (account, network, voting, address) => {
     .filter(vote => vote.confirmed < vote.unconfirmed)
     .map(vote => vote.unconfirmed - vote.confirmed)
     .reduce((total, amount) => (total + amount), 0);
-  const currentVote = voting[address].confirmed;
+  const currentVote = voting[address] ? voting[address].confirmed : 0;
 
   const maxVoteAmount = Math.floor(
     (balance - totalUnconfirmedVotes + currentVote - MIN_ACCOUNT_BALANCE) / 1e9,
