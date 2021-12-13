@@ -79,7 +79,6 @@ export const validateAmountFormat = ({
   locale = i18n.language,
   funds,
   checklist = ['ZERO', 'MAX_ACCURACY', 'FORMAT'],
-  initialVote,
 }) => {
   const { format, maxFloating } = reg.amount[locale];
   const errors = {
@@ -101,35 +100,13 @@ export const validateAmountFormat = ({
     },
     INSUFFICIENT_FUNDS: {
       message: i18n.t('Provided amount is higher than your current balance.'),
-      fn: () => initialVote === 0 && funds < toRawLsk(numeral(value).value()),
+      fn: () => funds < toRawLsk(numeral(value).value()),
     },
     MIN_BALANCE: {
       message: i18n.t('Provided amount will result in a wallet with less than the minimum balance.'),
       fn: () => {
         const rawValue = toRawLsk(numeral(value).value());
         return funds - rawValue < MIN_ACCOUNT_BALANCE;
-      },
-    },
-    VOTES_MAX: {
-      message: i18n.t('The vote amount is too high. You should keep at least 0.05 LSK available in your account.'),
-      fn: () => {
-        const rawValue = toRawLsk(numeral(value).value());
-        return initialVote === 0 && funds - rawValue < MIN_ACCOUNT_BALANCE && funds - rawValue > 0;
-      },
-    },
-    LOCKED_VOTES_MAX: {
-      message: i18n.t('The vote amount is too high. You should keep at least 0.05 LSK available in your account.'),
-      fn: () => {
-        const rawValue = toRawLsk(numeral(value).value());
-        return (initialVote + funds) - rawValue < MIN_ACCOUNT_BALANCE
-          && (initialVote + funds) - rawValue > 0;
-      },
-    },
-    LOCKED_BALANCE_MAX: {
-      message: i18n.t('The vote amount exceeds both your current and locked balance with your votes for this delegate.'),
-      fn: () => {
-        const rawValue = toRawLsk(numeral(value).value());
-        return rawValue > funds && rawValue > initialVote + funds;
       },
     },
   };

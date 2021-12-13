@@ -3,6 +3,7 @@ import { useSelector } from 'react-redux';
 import { useTranslation } from 'react-i18next';
 
 import { validateAmountFormat } from '@utils/validators';
+import { fromRawLsk } from '@utils/lsk';
 import { selectSearchParamValue } from '@utils/searchParams';
 import { selectAccountBalance, selectLSKAddress } from '@store/selectors';
 import { tokenMap, regex } from '@constants';
@@ -14,16 +15,14 @@ let loaderTimeout = null;
  *
  * @param {String} value - The vote amount value in Beddows
  * @param {String} balance - The account balance value in Beddows
- * @param {String} previouslyConfirmedVotes - The vote amount value in Beddows
  * @returns {Object} The boolean error flag and a human readable message.
  */
-const getAmountFeedbackAndError = (value, balance, previouslyConfirmedVotes) => {
+const getAmountFeedbackAndError = (value, balance) => {
   const { message: feedback } = validateAmountFormat({
     value,
     token: tokenMap.LSK.key,
     funds: parseInt(balance, 10),
-    checklist: ['FORMAT', 'ZERO', 'VOTE_10X', 'INSUFFICIENT_FUNDS', 'VOTES_MAX', 'LOCKED_VOTES_MAX', 'LOCKED_BALANCE_MAX'],
-    initialVote: previouslyConfirmedVotes,
+    checklist: ['FORMAT', 'ZERO', 'VOTE_10X', 'INSUFFICIENT_FUNDS', 'MIN_BALANCE'],
   });
 
   return { error: !!feedback, feedback };
@@ -73,7 +72,10 @@ const useVoteAmountField = (initialValue) => {
       value,
       isLoading: true,
     });
-    const feedback = getAmountFeedbackAndError(value, balance, previouslyConfirmedVotes);
+    const feedback = getAmountFeedbackAndError(
+      value - fromRawLsk(previouslyConfirmedVotes),
+      balance,
+    );
     loaderTimeout = setTimeout(() => {
       setAmountField({
         isLoading: false,
