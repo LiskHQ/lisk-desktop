@@ -24,8 +24,7 @@ const Overview = ({
   totalBlocks,
   // supply,
 }) => {
-  const theme = useTheme();
-  const colorPalette = getColorPalette(theme);
+  const colorPalette = getColorPalette(useTheme());
   const doughnutChartData = {
     labels: [t('Standby delegates'), t('Active delegates')],
     datasets: [

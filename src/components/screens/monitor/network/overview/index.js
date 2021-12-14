@@ -271,8 +271,7 @@ const Overview = ({
   const { networkVersion, height, basic } = networkStatus;
   const versionData = networkVersion ? createChartData(networkVersion, t) : null;
   const heightData = height ? createChartData(height, t) : null;
-  const theme = useTheme();
-  const colorPalette = getColorPalette(theme);
+  const colorPalette = getColorPalette(useTheme());
 
   return (
     <Box className={styles.wrapper}>

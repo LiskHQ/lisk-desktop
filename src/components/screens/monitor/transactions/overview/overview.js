@@ -133,8 +133,7 @@ const formatDistributionByValues = distributions =>
 
 const Overview = ({ t, txStats }) => {
   const [activeTab, setActiveTab] = useState('week');
-  const theme = useTheme();
-  const colorPalette = getColorPalette(theme);
+  const colorPalette = getColorPalette(useTheme());
   const distributionByType = formatDistributionByValues(txStats.data.distributionByType);
   const distributionByAmount = normalizeNumberRange(txStats.data.distributionByAmount);
   const { txCountList, txVolumeList, txDateList } = txStats.data.timeline.reduce((acc, item) => ({
