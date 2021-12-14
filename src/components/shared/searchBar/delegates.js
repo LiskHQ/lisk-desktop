@@ -1,6 +1,7 @@
 import React from 'react';
 import Highlighter from 'react-highlight-words';
 import AccountVisual from '@toolbox/accountVisual';
+import { truncateAddress } from '@utils/account';
 import styles from './accountsAndDeletegates.css';
 
 const Delegates = ({
@@ -32,7 +33,12 @@ const Delegates = ({
                 />
               </span>
             </div>
-            <span className={styles.accountSubtitle}>{delegate.summary.address}</span>
+            <span className={`${styles.accountSubtitle} hideOnLargeViewPort`}>
+              {truncateAddress(delegate.summary.address)}
+            </span>
+            <span className={`${styles.accountSubtitle} showOnLargeViewPort`}>
+              {delegate.summary.address}
+            </span>
           </div>
           <span className={styles.accountBalance}>
             <span className={styles.tag}>
