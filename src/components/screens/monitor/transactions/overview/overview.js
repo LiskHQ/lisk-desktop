@@ -4,10 +4,11 @@ import moment from 'moment';
 import { fromRawLsk } from '@utils/lsk';
 import { kFormatter } from '@utils/helpers';
 import {
-  colorPalette, colorPaletteDark, chartStyles, MODULE_ASSETS_NAME_ID_MAP,
+  chartStyles, MODULE_ASSETS_NAME_ID_MAP,
 } from '@constants';
 import { getModuleAssetTitle } from '@utils/moduleAssets';
 import { useTheme } from '@utils/theme';
+import { getColorPalette } from '@utils/chartOptions';
 import Box from '@toolbox/box';
 import BoxTabs from '@toolbox/tabs';
 import BoxHeader from '@toolbox/box/header';
@@ -133,6 +134,7 @@ const formatDistributionByValues = distributions =>
 const Overview = ({ t, txStats }) => {
   const [activeTab, setActiveTab] = useState('week');
   const theme = useTheme();
+  const colorPalette = getColorPalette(theme);
   const distributionByType = formatDistributionByValues(txStats.data.distributionByType);
   const distributionByAmount = normalizeNumberRange(txStats.data.distributionByAmount);
   const { txCountList, txVolumeList, txDateList } = txStats.data.timeline.reduce((acc, item) => ({
@@ -196,7 +198,7 @@ const Overview = ({ t, txStats }) => {
                 .map((label, i) => (
                   <GuideTooltipItem
                     key={`transaction-GuideTooltip${i}`}
-                    color={theme === 'light' ? colorPalette[i] : colorPaletteDark[i]}
+                    color={colorPalette[i]}
                     label={label
                       .replace('Register multisignature group', 'Register multisig.')}
                   />
@@ -216,7 +218,7 @@ const Overview = ({ t, txStats }) => {
             <GuideTooltip>
               {Object.keys(distributionByAmount)
                 .map((label, i) => (
-                  <GuideTooltipItem key={`distribution-GuideTooltip${i}`} color={theme === 'light' ? colorPalette[i] : colorPaletteDark[i]} label={label} />
+                  <GuideTooltipItem key={`distribution-GuideTooltip${i}`} color={colorPalette[i]} label={label} />
                 ))}
             </GuideTooltip>
           </div>
