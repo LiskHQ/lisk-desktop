@@ -11,27 +11,25 @@ pipeline {
 				}
 			}
 		}
+		stage('lint') {
+			steps {
+				ansiColor('xterm') {
+					nvm(getNodejsVersion()) {
+						sh 'npm run lint'
+					}
+				}
+			}
+		}
 		stage('build') {
 			steps {
-				parallel (
-					"lint": {
-						ansiColor('xterm') {
-							nvm(getNodejsVersion()) {
-								sh 'npm run lint'
-							}
-						}
-					},
-					"linux": {
-						nvm(getNodejsVersion()) {
-							sh '''
-							cp -R /home/lisk/fonts/basier-circle src/assets/fonts
-							cp -R /home/lisk/fonts/gilroy src/assets/fonts
-							npm run build
-							'''
-						}
-						stash includes: 'app/build/', name: 'build'
-					}
-				)
+				nvm(getNodejsVersion()) {
+					sh '''
+					cp -R /home/lisk/fonts/basier-circle src/assets/fonts
+					cp -R /home/lisk/fonts/gilroy src/assets/fonts
+					npm run build
+					'''
+				}
+				stash includes: 'app/build/', name: 'build'
 			}
 		}
 		stage('deploy') {
