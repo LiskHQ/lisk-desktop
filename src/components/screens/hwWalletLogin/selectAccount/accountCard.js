@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import { withTranslation } from 'react-i18next';
 import { tokenMap } from '@constants';
 import { truncateAddress } from '@utils/account';
@@ -11,27 +11,20 @@ import styles from './selectAccount.css';
 
 const AccountCard = ({
   account,
-  accountOnEditMode,
   index,
-  toggleEditAccount,
   onSaveNameAccounts,
   onSelectAccount,
   t,
 }) => {
   const [inputTitle, setInputTitle] = useState(account.name);
-
-  useEffect(() => {
-    if (!accountOnEditMode) {
-      setInputTitle(account.name);
-    }
-  }, [accountOnEditMode]);
+  const [accountOnEditMode, setAccountOnEditMode] = useState(false);
 
   return (
     <div
       id={account.summary?.address}
       className={`${styles.account} hw-account select-account`}
       onClick={() => onSelectAccount(account, index)}
-      onMouseLeave={() => toggleEditAccount()}
+      onMouseLeave={() => setAccountOnEditMode(false)}
     >
       <div className={styles.content}>
         <div>
@@ -42,7 +35,7 @@ const AccountCard = ({
         </div>
         <div>
           <header className={styles.header}>
-            { accountOnEditMode === account.summary?.address
+            { accountOnEditMode
               ? (
                 <div className={styles.editAccountTitle}>
                   <Input
@@ -59,6 +52,7 @@ const AccountCard = ({
                     onClick={e => {
                       e.stopPropagation();
                       onSaveNameAccounts(inputTitle, account.summary?.address);
+                      setAccountOnEditMode(false);
                     }}
                   >
                     {t('Save')}
@@ -73,7 +67,8 @@ const AccountCard = ({
                       className={`${styles.editBtn} edit-account`}
                       onClick={e => {
                         e.stopPropagation();
-                        toggleEditAccount(account.summary?.address);
+                        console.log('setAccountOnEditMode');
+                        setAccountOnEditMode(true);
                       }}
                       name="edit"
                     />

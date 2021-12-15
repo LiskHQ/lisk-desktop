@@ -10,8 +10,8 @@ import LoadingIcon from '../loadingIcon';
 import styles from './selectAccount.css';
 
 const Tab = ({
-  tabName, tabId, accountsList, accountOnEditMode,
-  onSaveNameAccounts, onSelectAccount, toggleEditAccount,
+  tabName, tabId, accountsList,
+  onSaveNameAccounts, onSelectAccount,
 }) => (
   <div tabName={tabName} tabId={tabId} className={`${styles.deviceContainer} ${`tab-${tabId}`} hw-container`}>
     {accountsList.map((account, index) => (
@@ -19,8 +19,6 @@ const Tab = ({
         key={`hw-account-tabId-${index}`}
         account={account}
         index={index}
-        accountOnEditMode={accountOnEditMode}
-        toggleEditAccount={toggleEditAccount}
         onSaveNameAccounts={onSaveNameAccounts}
         onSelectAccount={onSelectAccount}
       />
@@ -33,11 +31,9 @@ class SelectAccount extends React.Component {
     super(props);
 
     this.state = {
-      accountOnEditMode: '',
       hwAccounts: [],
     };
 
-    this.toggleEditAccount = this.toggleEditAccount.bind(this);
     this.onSaveNameAccounts = this.onSaveNameAccounts.bind(this);
     this.onAddNewAccount = this.onAddNewAccount.bind(this);
     this.onSelectAccount = this.onSelectAccount.bind(this);
@@ -84,14 +80,6 @@ class SelectAccount extends React.Component {
     }
   }
 
-  toggleEditAccount(address) {
-    if (this.state.accountOnEditMode) {
-      this.setState({ accountOnEditMode: '' });
-    } else {
-      this.setState({ accountOnEditMode: address });
-    }
-  }
-
   onSaveNameAccounts(name, address) {
     const newAccounts = this.state.hwAccounts.map((account) => {
       if (account.summary.address === address) {
@@ -107,7 +95,7 @@ class SelectAccount extends React.Component {
         [this.props.device.model]: accountNames,
       },
     });
-    this.setState({ accountOnEditMode: '', hwAccounts: newAccounts });
+    this.setState({ hwAccounts: newAccounts });
   }
 
   onAddNewAccount() {
@@ -148,7 +136,7 @@ class SelectAccount extends React.Component {
 
   render() {
     const { t, device } = this.props;
-    const { accountOnEditMode, hwAccounts } = this.state;
+    const { hwAccounts } = this.state;
 
     const {
       nonEmptyAccounts,
@@ -187,28 +175,22 @@ class SelectAccount extends React.Component {
                   tabName={t('Active')}
                   tabId="active"
                   accountsList={nonEmptyAccounts}
-                  accountOnEditMode={accountOnEditMode}
                   onSaveNameAccounts={this.onSaveNameAccounts}
                   onSelectAccount={this.onSelectAccount}
-                  toggleEditAccount={this.toggleEditAccount}
                 />
                 <Tab
                   tabName={t('Empty')}
                   tabId="empty"
                   accountsList={emptyAccounts}
-                  accountOnEditMode={accountOnEditMode}
                   onSaveNameAccounts={this.onSaveNameAccounts}
                   onSelectAccount={this.onSelectAccount}
-                  toggleEditAccount={this.toggleEditAccount}
                 />
                 <Tab
                   tabName={t('Pending reclaim ({{numOfAccounts}})', { numOfAccounts: reclaimAccounts.length })}
                   tabId="reclaim"
                   accountsList={reclaimAccounts}
-                  accountOnEditMode={accountOnEditMode}
                   onSaveNameAccounts={this.onSaveNameAccounts}
                   onSelectAccount={this.onSelectAccount}
-                  toggleEditAccount={this.toggleEditAccount}
                 />
               </TabsContainer>
             )
