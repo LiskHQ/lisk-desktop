@@ -11,8 +11,8 @@ import styles from './selectAccount.css';
 
 const Tab = ({
   tabName, tabId, accountsList,
-  accountOnEditMode, onChangeAccountTitle, onEditAccount,
-  onSaveNameAccounts, onSelectAccount, onInputBlur,
+  accountOnEditMode, onChangeAccountTitle,
+  onSaveNameAccounts, onSelectAccount, toggleEditAccount,
 }) => (
   <div tabName={tabName} tabId={tabId} className={`${styles.deviceContainer} ${`tab-${tabId}`} hw-container`}>
     {accountsList.map((account, index) => (
@@ -22,10 +22,9 @@ const Tab = ({
         index={index}
         accountOnEditMode={accountOnEditMode}
         onChangeAccountTitle={onChangeAccountTitle}
-        onEditAccount={onEditAccount}
+        toggleEditAccount={toggleEditAccount}
         onSaveNameAccounts={onSaveNameAccounts}
         onSelectAccount={onSelectAccount}
-        onInputBlur={onInputBlur}
       />
     ))}
   </div>
@@ -40,9 +39,8 @@ class SelectAccount extends React.Component {
       hwAccounts: [],
     };
 
-    this.onEditAccount = this.onEditAccount.bind(this);
     this.onChangeAccountTitle = this.onChangeAccountTitle.bind(this);
-    this.onAccountCardBlur = this.onAccountCardBlur.bind(this);
+    this.toggleEditAccount = this.toggleEditAccount.bind(this);
     this.onSaveNameAccounts = this.onSaveNameAccounts.bind(this);
     this.onAddNewAccount = this.onAddNewAccount.bind(this);
     this.onSelectAccount = this.onSelectAccount.bind(this);
@@ -89,9 +87,12 @@ class SelectAccount extends React.Component {
     }
   }
 
-  onEditAccount(address) {
-    this.onSaveNameAccounts();
-    this.setState({ accountOnEditMode: address });
+  toggleEditAccount(address) {
+    if (this.state.accountOnEditMode) {
+      this.setState({ accountOnEditMode: '' });
+    } else {
+      this.setState({ accountOnEditMode: address });
+    }
   }
 
   onChangeAccountTitle(value, address) {
@@ -102,10 +103,6 @@ class SelectAccount extends React.Component {
       return account;
     });
     this.setState({ hwAccounts: newAccounts });
-  }
-
-  onAccountCardBlur() {
-    this.setState({ accountOnEditMode: '' });
   }
 
   onSaveNameAccounts() {
@@ -199,10 +196,9 @@ class SelectAccount extends React.Component {
                   accountsList={nonEmptyAccounts}
                   accountOnEditMode={accountOnEditMode}
                   onChangeAccountTitle={this.onChangeAccountTitle}
-                  onEditAccount={this.onEditAccount}
                   onSaveNameAccounts={this.onSaveNameAccounts}
                   onSelectAccount={this.onSelectAccount}
-                  onInputBlur={this.onAccountCardBlur}
+                  toggleEditAccount={this.toggleEditAccount}
                 />
                 <Tab
                   tabName={t('Empty')}
@@ -210,10 +206,9 @@ class SelectAccount extends React.Component {
                   accountsList={emptyAccounts}
                   accountOnEditMode={accountOnEditMode}
                   onChangeAccountTitle={this.onChangeAccountTitle}
-                  onEditAccount={this.onEditAccount}
                   onSaveNameAccounts={this.onSaveNameAccounts}
                   onSelectAccount={this.onSelectAccount}
-                  onInputBlur={this.onAccountCardBlur}
+                  toggleEditAccount={this.toggleEditAccount}
                 />
                 <Tab
                   tabName={t('Pending reclaim ({{numOfAccounts}})', { numOfAccounts: reclaimAccounts.length })}
@@ -221,10 +216,9 @@ class SelectAccount extends React.Component {
                   accountsList={reclaimAccounts}
                   accountOnEditMode={accountOnEditMode}
                   onChangeAccountTitle={this.onChangeAccountTitle}
-                  onEditAccount={this.onEditAccount}
                   onSaveNameAccounts={this.onSaveNameAccounts}
                   onSelectAccount={this.onSelectAccount}
-                  onInputBlur={this.onAccountCardBlur}
+                  toggleEditAccount={this.toggleEditAccount}
                 />
               </TabsContainer>
             )

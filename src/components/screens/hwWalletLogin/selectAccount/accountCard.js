@@ -13,17 +13,17 @@ const AccountCard = ({
   account,
   accountOnEditMode,
   index,
+  toggleEditAccount,
   onChangeAccountTitle,
-  onEditAccount,
   onSaveNameAccounts,
   onSelectAccount,
-  onInputBlur,
   t,
 }) => (
   <div
     id={account.summary?.address}
     className={`${styles.account} hw-account select-account`}
     onClick={() => onSelectAccount(account, index)}
+    onMouseLeave={() => toggleEditAccount()}
   >
     <div className={styles.content}>
       <div>
@@ -44,7 +44,6 @@ const AccountCard = ({
                   onChange={
                     event => onChangeAccountTitle(event.target.value, account.summary?.address)
                   }
-                  onBlur={onInputBlur}
                   className="account-name"
                   placeholder={t('Account name')}
                   autoFocus
@@ -68,7 +67,7 @@ const AccountCard = ({
                     className={`${styles.editBtn} edit-account`}
                     onClick={e => {
                       e.stopPropagation();
-                      onEditAccount(account.summary?.address);
+                      toggleEditAccount(account.summary?.address);
                     }}
                     name="edit"
                   />
