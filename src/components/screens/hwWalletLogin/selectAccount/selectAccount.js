@@ -30,9 +30,7 @@ class SelectAccount extends React.Component {
   constructor(props) {
     super(props);
 
-    this.state = {
-      hwAccounts: [],
-    };
+    this.state = { hwAccounts: [] };
 
     this.onSaveNameAccounts = this.onSaveNameAccounts.bind(this);
     this.onAddNewAccount = this.onAddNewAccount.bind(this);

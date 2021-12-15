@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { withTranslation } from 'react-i18next';
 import { tokenMap } from '@constants';
 import { truncateAddress } from '@utils/account';
@@ -18,6 +18,12 @@ const AccountCard = ({
 }) => {
   const [inputTitle, setInputTitle] = useState(account.name);
   const [accountOnEditMode, setAccountOnEditMode] = useState(false);
+
+  useEffect(() => {
+    if (!accountOnEditMode) {
+      setInputTitle(account.name);
+    }
+  }, [accountOnEditMode]);
 
   return (
     <div
