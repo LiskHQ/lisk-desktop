@@ -73,7 +73,6 @@ const AccountCard = ({
                       className={`${styles.editBtn} edit-account`}
                       onClick={e => {
                         e.stopPropagation();
-                        console.log('setAccountOnEditMode');
                         setAccountOnEditMode(true);
                       }}
                       name="edit"
