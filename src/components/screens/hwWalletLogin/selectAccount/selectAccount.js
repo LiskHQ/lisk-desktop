@@ -10,8 +10,7 @@ import LoadingIcon from '../loadingIcon';
 import styles from './selectAccount.css';
 
 const Tab = ({
-  tabName, tabId, accountsList,
-  accountOnEditMode, onChangeAccountTitle,
+  tabName, tabId, accountsList, accountOnEditMode,
   onSaveNameAccounts, onSelectAccount, toggleEditAccount,
 }) => (
   <div tabName={tabName} tabId={tabId} className={`${styles.deviceContainer} ${`tab-${tabId}`} hw-container`}>
@@ -21,7 +20,6 @@ const Tab = ({
         account={account}
         index={index}
         accountOnEditMode={accountOnEditMode}
-        onChangeAccountTitle={onChangeAccountTitle}
         toggleEditAccount={toggleEditAccount}
         onSaveNameAccounts={onSaveNameAccounts}
         onSelectAccount={onSelectAccount}
@@ -39,7 +37,6 @@ class SelectAccount extends React.Component {
       hwAccounts: [],
     };
 
-    this.onChangeAccountTitle = this.onChangeAccountTitle.bind(this);
     this.toggleEditAccount = this.toggleEditAccount.bind(this);
     this.onSaveNameAccounts = this.onSaveNameAccounts.bind(this);
     this.onAddNewAccount = this.onAddNewAccount.bind(this);
@@ -95,18 +92,14 @@ class SelectAccount extends React.Component {
     }
   }
 
-  onChangeAccountTitle(value, address) {
+  onSaveNameAccounts(name, address) {
     const newAccounts = this.state.hwAccounts.map((account) => {
       if (account.summary.address === address) {
-        account.name = value;
+        account.name = name;
       }
       return account;
     });
-    this.setState({ hwAccounts: newAccounts });
-  }
-
-  onSaveNameAccounts() {
-    const accountNames = this.state.hwAccounts.map(account =>
+    const accountNames = newAccounts.map(account =>
       ({ address: account.summary.address, name: account.name }));
     this.props.settingsUpdated({
       hardwareAccounts: {
@@ -114,7 +107,7 @@ class SelectAccount extends React.Component {
         [this.props.device.model]: accountNames,
       },
     });
-    this.setState({ accountOnEditMode: '' });
+    this.setState({ accountOnEditMode: '', hwAccounts: newAccounts });
   }
 
   onAddNewAccount() {
@@ -195,7 +188,6 @@ class SelectAccount extends React.Component {
                   tabId="active"
                   accountsList={nonEmptyAccounts}
                   accountOnEditMode={accountOnEditMode}
-                  onChangeAccountTitle={this.onChangeAccountTitle}
                   onSaveNameAccounts={this.onSaveNameAccounts}
                   onSelectAccount={this.onSelectAccount}
                   toggleEditAccount={this.toggleEditAccount}
@@ -205,7 +197,6 @@ class SelectAccount extends React.Component {
                   tabId="empty"
                   accountsList={emptyAccounts}
                   accountOnEditMode={accountOnEditMode}
-                  onChangeAccountTitle={this.onChangeAccountTitle}
                   onSaveNameAccounts={this.onSaveNameAccounts}
                   onSelectAccount={this.onSelectAccount}
                   toggleEditAccount={this.toggleEditAccount}
@@ -215,7 +206,6 @@ class SelectAccount extends React.Component {
                   tabId="reclaim"
                   accountsList={reclaimAccounts}
                   accountOnEditMode={accountOnEditMode}
-                  onChangeAccountTitle={this.onChangeAccountTitle}
                   onSaveNameAccounts={this.onSaveNameAccounts}
                   onSelectAccount={this.onSelectAccount}
                   toggleEditAccount={this.toggleEditAccount}
