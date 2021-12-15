@@ -1,6 +1,7 @@
 // istanbul ignore file
 import React from 'react';
-import { colorPalette } from '@constants';
+import { useTheme } from '@utils/theme';
+import { getColorPalette } from '@utils/chartOptions';
 import Box from '@toolbox/box';
 import BoxHeader from '@toolbox/box/header';
 import BoxContent from '@toolbox/box/content';
@@ -41,7 +42,7 @@ const createChartData = (data, t) => {
   return list;
 };
 
-const VersionsDonutChart = ({ t, versionData }) => {
+const VersionsDonutChart = ({ t, versionData, colorPalette }) => {
   const chartProps = versionData ? {
     data: {
       labels: versionData.labels,
@@ -117,7 +118,7 @@ const VersionsDonutChart = ({ t, versionData }) => {
   );
 };
 
-const HeightsDonutChart = ({ t, heightData }) => {
+const HeightsDonutChart = ({ t, heightData, colorPalette }) => {
   const chartProps = heightData ? {
     data: {
       labels: heightData.labels,
@@ -193,7 +194,7 @@ const HeightsDonutChart = ({ t, heightData }) => {
   );
 };
 
-const ConnectivityDonutChart = ({ t, connectionData }) => {
+const ConnectivityDonutChart = ({ t, connectionData, colorPalette }) => {
   const chartProps = connectionData ? {
     data: {
       labels: [t('Connected'), t('Disconnected')],
@@ -270,6 +271,7 @@ const Overview = ({
   const { networkVersion, height, basic } = networkStatus;
   const versionData = networkVersion ? createChartData(networkVersion, t) : null;
   const heightData = height ? createChartData(height, t) : null;
+  const colorPalette = getColorPalette(useTheme());
 
   return (
     <Box className={styles.wrapper}>
@@ -284,9 +286,9 @@ const Overview = ({
         </div>
       </BoxHeader>
       <BoxContent className={styles.content}>
-        <VersionsDonutChart t={t} versionData={versionData} />
-        <HeightsDonutChart t={t} heightData={heightData} />
-        <ConnectivityDonutChart t={t} connectionData={basic} />
+        <VersionsDonutChart t={t} versionData={versionData} colorPalette={colorPalette} />
+        <HeightsDonutChart t={t} heightData={heightData} colorPalette={colorPalette} />
+        <ConnectivityDonutChart t={t} connectionData={basic} colorPalette={colorPalette} />
       </BoxContent>
     </Box>
   );
