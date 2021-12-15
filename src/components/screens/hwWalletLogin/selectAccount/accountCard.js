@@ -109,6 +109,6 @@ const AccountCard = ({
       </div>
     </div>
   );
-}
+};
 
 export default withTranslation()(AccountCard);
