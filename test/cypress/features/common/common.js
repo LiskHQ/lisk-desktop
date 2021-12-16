@@ -124,6 +124,9 @@ Then(/^The latest transaction is (.*?)$/, function (transactionType) {
     case 'delegate registration':
       cy.get(`${ss.transactionRow} ${ss.transactionAddress}`).eq(0).contains('Delegate registration');
       break;
+    case 'register delegate':
+      cy.get(`${ss.transactionRow} ${ss.transactionAddress}`).eq(0).contains('Register delegate');
+      break;
   }
 });
 
