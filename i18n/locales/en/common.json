@@ -554,6 +554,7 @@
   "Vote": "Vote",
   "Vote amount": "Vote amount",
   "Vote amount (LSK)": "Vote amount (LSK)",
+  "Vote amount can't be zero or negative.": "Vote amount can't be zero or negative.",
   "Vote for delegate": "Vote for delegate",
   "Voted delegates": "Voted delegates",
   "Voter": "Voter",
