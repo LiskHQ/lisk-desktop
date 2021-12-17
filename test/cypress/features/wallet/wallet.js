@@ -1,17 +1,13 @@
 /* eslint-disable */
-import { Given, When, Then } from 'cypress-cucumber-preprocessor/steps';
-import { ss, networks, accounts } from '../../../constants';
+import { Given, Then } from 'cypress-cucumber-preprocessor/steps';
+import { ss, accounts, urls } from '../../../constants';
 
-Then(/^I should see 30 transactions$/, function () {
-  cy.get(ss.transactionRow).should('have.length', 30);
+Given(/^I am on Wallet page of delegate$/, function () {
+  cy.visit(`${urls.account}?address=lskdxwf9kgmfghoeevqhrkcruy8j7xpkw57un9avq`);
 });
 
-Then(/^I click show more$/, function () {
-  cy.get(ss.showMoreButton).click();
-});
-
-Then(/^I should see more than 30 transactions$/, function () {
-  cy.get(ss.transactionRow).should('have.length.greaterThan', 30);
+Then(/^I should see more than ([^\s]+) transactions$/, function (trnxNumber) {
+  cy.get(ss.transactionRow).should('have.length.greaterThan', Number(trnxNumber));
 });
 
 Then(/^I should see incoming transaction in table$/, function () {
@@ -40,4 +36,8 @@ Then(/^I send LSK$/, function () {
 
 Then(/^I should see ([^s]+) in recipient$/, function (accountName) {
   cy.get(ss.recipientInput).should('have.value', accounts[accountName].summary.address);
+});
+
+Then(/^I should have (.+) in recipient field$/, function (walletAddress) {
+  cy.get(ss.recipientInput).should('have.value', walletAddress);
 });

@@ -1,25 +1,25 @@
 Feature: Search
 
   Scenario: Search for Transaction while signed out
-    Given Network is set to testnet
+    Given Network is set to devnet
     Given I am on login page
     When I click on searchIcon
-    And I search for transaction 21f537cddf1701a586788a266e1fa3664cd9441e922942c55eef2cf4d0b441c4
+    And I search for transaction a22d1d1959af42988746d350d4c21c3ffb81086e116de34d29148e6799bc2e8e
     Then I click on searchTransactionRow
-    Then I should be on Tx Details page of 21f537...441c4
+    Then I should be on Tx Details page of a22d1d...c2e8e
 
   Scenario: Search for Lisk ID
-    Given Network is set to testnet
-    Given I login as genesis on testnet
+    Given Network is set to devnet
+    Given I login as genesis on devnet
     Given I am on Dashboard page
     When I click on searchIcon
-    And I search for account lsks3nfpf5bt6xa5qo73ftgaersg89t8fx5ov9d9z
+    And I search for account lsk2df24om24b44hrw473ut66kv5yywk9yohwg4k7
     Then I click on searchAccountRow
-    Then I should be on Account page of gr33ndrag0n
+    Then I should be on Account page of irvowcxlclonwcfvcpwp
 
   Scenario: Search for non-existent account
-    Given Network is set to testnet
-    Given I login as genesis on testnet
+    Given Network is set to devnet
+    Given I login as genesis on devnet
     When I click on searchIcon
     And I search for delegate 43th3j4bt324
     And I wait 3 seconds

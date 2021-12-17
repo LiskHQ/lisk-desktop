@@ -16,6 +16,11 @@ Given(/^Network is set to testnet$/, function () {
     JSON.stringify({ ...settings, 'showNetwork': true, network: { name: 'testnet', address:'https://testnet-service.lisk.com' } }));
 });
 
+Given(/^Network is set to ([^\s]+)$/, function (network) {
+  window.localStorage.setItem('settings', 
+    JSON.stringify({ ...settings, 'showNetwork': true, network: { name: network, address:networks[network].serviceUrl } }));
+});
+
 Given(/^I login as ([^\s]+) on ([^\s]+)$/, function (account, network) {
   cy.visit(urls.login);
   cy.get(ss.networkDropdown).click();
@@ -141,6 +146,10 @@ Then(/^I should be on (.*?) page$/, function (pageName) {
   }
 });
 
+Then(/^I should see (\d+) transactions in table$/, function (number) {
+  cy.get(ss.transactionRow).should('have.length', number);
+});
+
 Then(/^I should see (.*?)$/, function (elementName) {
   cy.get(ss[elementName]).should('be.visible');
 });
@@ -214,3 +223,5 @@ And(/^I search for account (.*?)$/, function (string) {
 Then(/^I wait (.*?) seconds$/, function (seconds) {
   cy.wait(Number(seconds) * 1000);
 });
+
+

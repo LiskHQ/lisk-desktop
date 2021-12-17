@@ -26,7 +26,7 @@ const ss = {
   filterNotVoted: '.filter-not-voted',
   seeAllTxsBtn: '.view-all',
   txDetailsBackButton: '.transaction-details-back-button',
-  recipientInput: '.recipient input',
+  recipientInput: 'input.recipient.bookmark',
   recipientConfirmLabel: '.recipient-confirm',
   transferSendTab: '.send-tab',
   transferRequestTab: '.request-tab',
