@@ -15,12 +15,10 @@ describe('Account Card', () => {
           name: 'Lisk',
         },
       },
-      accountOnEditMode: '',
-      t: v => v,
-      onChangeAccountTitle: jest.fn(),
-      onEditAccount: jest.fn(),
+      index: 1,
       onSaveNameAccounts: jest.fn(),
       onSelectAccount: jest.fn(),
+      t: v => v,
     };
   });
 
@@ -29,26 +27,25 @@ describe('Account Card', () => {
     expect(wrapper).toContainMatchingElement('.hw-account');
   });
 
-  it('Should call onEditAccount function', () => {
+  it('Should call props.onSaveNameAccounts function', () => {
     wrapper = mount(<AccountCard {...props} />);
     wrapper.simulate('mouseover');
     expect(wrapper).toContainMatchingElement('.edit-account');
     expect(wrapper).not.toContainMatchingElement('.save-account');
+
     wrapper.find('.edit-account').at(0).simulate('click');
-    expect(props.onEditAccount).toBeCalled();
-    wrapper.setProps({ accountOnEditMode: props.account.summary.address });
-    wrapper.update();
+    expect(wrapper).not.toContainMatchingElement('.edit-account');
     expect(wrapper).toContainMatchingElement('.save-account');
+
     wrapper.find('.account-name input').simulate('change', { target: { value: 'Lisk Account' } });
-    expect(props.onChangeAccountTitle).toBeCalled();
     wrapper.find('.save-account').at(0).simulate('click');
-    expect(props.onSaveNameAccounts).toBeCalled();
+    expect(props.onSaveNameAccounts).toBeCalledWith('Lisk Account', props.account.summary.address);
   });
 
   it('Should call onSelectAccount function for login', () => {
     wrapper = mount(<AccountCard {...props} />);
     expect(wrapper).toContainMatchingElement('.select-account');
     wrapper.find('.select-account').at(0).simulate('click');
-    expect(props.onSelectAccount).toBeCalled();
+    expect(props.onSelectAccount).toBeCalledWith(props.account, props.index);
   });
 });
