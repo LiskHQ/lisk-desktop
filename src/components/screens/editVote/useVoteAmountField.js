@@ -13,16 +13,20 @@ let loaderTimeout = null;
 /**
  * Returns error and feedback of vote amount field.
  *
- * @param {String} value - The vote amount value in Beddows
+ * @param {String} value - The vote amount value difference in Beddows
  * @param {String} balance - The account balance value in Beddows
+ * @param {String} minValue - The minimum value checker in Beddows
+ * @param {String} inputValue - The input vote amount value in Beddows
  * @returns {Object} The boolean error flag and a human readable message.
  */
-const getAmountFeedbackAndError = (value, balance) => {
+const getAmountFeedbackAndError = (value, balance, minValue, inputValue) => {
   const { message: feedback } = validateAmountFormat({
     value,
     token: tokenMap.LSK.key,
     funds: parseInt(balance, 10),
-    checklist: ['FORMAT', 'ZERO', 'VOTE_10X', 'INSUFFICIENT_FUNDS', 'MIN_BALANCE'],
+    checklist: ['FORMAT', 'NEGATIVE_VOTE', 'ZERO', 'VOTE_10X', 'INSUFFICIENT_FUNDS', 'MIN_BALANCE'],
+    minValue,
+    inputValue,
   });
 
   return { error: !!feedback, feedback };
@@ -80,6 +84,8 @@ const useVoteAmountField = (initialValue) => {
     const feedback = getAmountFeedbackAndError(
       value - fromRawLsk(previouslyConfirmedVotes - totalUnconfirmedVotes),
       balance,
+      -1 * fromRawLsk(previouslyConfirmedVotes),
+      value,
     );
     loaderTimeout = setTimeout(() => {
       setAmountField({

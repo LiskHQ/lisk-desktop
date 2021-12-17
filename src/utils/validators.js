@@ -79,16 +79,25 @@ export const validateAmountFormat = ({
   locale = i18n.language,
   funds,
   checklist = ['ZERO', 'MAX_ACCURACY', 'FORMAT'],
+  minValue,
+  inputValue,
 }) => {
   const { format, maxFloating } = reg.amount[locale];
   const errors = {
+    NEGATIVE_VOTE: {
+      message: i18n.t('Vote amount can\'t be zero or negative.'),
+      fn: () =>
+        numeral(value).value() < minValue
+        || numeral(inputValue).value() < 0
+        || Object.is(numeral(inputValue).value(), -0),
+    },
     ZERO: {
       message: i18n.t('Amount can\'t be zero.'),
-      fn: () => numeral(value).value() === 0,
+      fn: () => numeral(Math.abs(value)).value() === 0,
     },
     FORMAT: {
       message: i18n.t('Provide a correct amount of {{token}}', { token }),
-      fn: () => format.test(value),
+      fn: () => format.test(Math.abs(value)),
     },
     MAX_ACCURACY: {
       message: i18n.t('Maximum floating point is 8.'),
