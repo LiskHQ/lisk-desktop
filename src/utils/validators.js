@@ -67,7 +67,8 @@ export const validateLSKPublicKey = (publicKey) => {
  * @param {string?} [data.funds] Maximum funds users are allowed to input
  * @param {Array?} [data.checklist] The list of errors to be tested. A choice of
  * ZERO, MAX_ACCURACY, FORMAT, VOTE_10X, INSUFFICIENT_FUNDS
- * @param {string} [data.initialVote] The amount of the user's previous votes
+ * @param {string} [data.minValue] The minimum value which is the previously confirmed votes
+ * @param {string} [data.inputValue] The user's input for votes
  * @returns {Object.<string, string|boolean>}
  * data - Object containing the message and if has an error
  *  data.message - Message of the error or empty string
@@ -97,7 +98,7 @@ export const validateAmountFormat = ({
     },
     FORMAT: {
       message: i18n.t('Provide a correct amount of {{token}}', { token }),
-      fn: () => format.test(Math.abs(value)),
+      fn: () => (typeof value === 'string' && value.slice(-1) === '.') || format.test(Math.abs(value)),
     },
     MAX_ACCURACY: {
       message: i18n.t('Maximum floating point is 8.'),

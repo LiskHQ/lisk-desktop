@@ -132,7 +132,7 @@ describe('EditVote', () => {
     expect(wrapper.find('.amount Feedback')).toHaveText('Provided amount will result in a wallet with less than the minimum balance.');
   });
 
-  it('should display error when voting for self if called with amount greater than balance and locked votes for delegate', () => {
+  it('should display error when voting if called with amount greater than balance and locked votes for delegate', () => {
     const wrapper = mountWithRouterAndStore(
       EditVote, propsWithoutSearch, {}, { ...state, voting: withVotes },
     );
@@ -150,6 +150,26 @@ describe('EditVote', () => {
 
     expect(amountField.find('.error')).toHaveClassName('error');
     expect(wrapper.find('.amount Feedback')).toHaveText('Provided amount is higher than your current balance.');
+  });
+
+  it('should display error when voting if called with amount that is zero or negative', () => {
+    const wrapper = mountWithRouterAndStore(
+      EditVote, propsWithoutSearch, {}, { ...state, voting: withVotes },
+    );
+    let amountField = wrapper.find('input[name="vote"]').at(0);
+    amountField.simulate('change', {
+      target: {
+        value: '-0',
+        name: 'vote',
+      },
+    });
+    wrapper.update();
+    act(() => { jest.advanceTimersByTime(300); });
+    wrapper.update();
+    amountField = wrapper.find('input[name="vote"]').at(0);
+
+    expect(amountField.find('.error')).toHaveClassName('error');
+    expect(wrapper.find('.amount Feedback')).toHaveText('Vote amount can\'t be zero or negative.');
   });
 
   it('should dispatch remove vote for host if called with address search param', () => {
