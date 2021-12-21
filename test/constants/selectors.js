@@ -234,6 +234,7 @@ const ss = {
   saveButton: '.save-button',
   feeValue: '.fee-value',
   nodeConnectionLoadingSpinner: '.node-connection-loading-spinner',
+  backToWalletButton: '.back-to-wallet-button',
 };
 
 export default ss;
