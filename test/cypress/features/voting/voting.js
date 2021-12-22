@@ -10,3 +10,4 @@ Then(/^I should see that (.*?) LSK are locked$/, function (amount) {
 Then(/^I should see unlocking balance (.*?)$/, function (amount) {
   cy.get(`${ss.unlockingBalance}`).eq(0).contains(amount);
 });
+

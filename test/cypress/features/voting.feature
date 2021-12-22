@@ -16,7 +16,18 @@ Feature: Vote delegate
      And I click on votingQueueToggle
      And I click on confirmBtn
      And I click on confirmButton
-    # And I click on closeDialog
+     And I click on backToWalletButton
+     Given I am on wallet page
+     Then The latest transaction is vote
+
+  Scenario: Up Vote for a delegate when there are locked lsk
+     And I click on openAddVoteDialog
+     And I clear input amountInput
+     And I fill 20 in amountInput field
+     And I click on confirmBtn
+     And I click on votingQueueToggle
+     And I click on confirmBtn
+     And I click on confirmButton
      And I click on backToWalletButton
      Given I am on wallet page
      Then The latest transaction is vote
@@ -26,28 +37,25 @@ Feature: Vote delegate
      And I clear input amountInput
      And I fill 20 in amountInput field
      And I click on confirmBtn
+     And I wait 5 seconds
      And I click on votingQueueToggle
      And I click on confirmBtn
      And I click on confirmButton
-   # And I click on closeDialog
      And I click on backToWalletButton
      Given I am on wallet page
      Then The latest transaction is vote
 
-   #Scenario: Downvote for a delegate
-   #  And I click on openAddVoteDialog
-   #  And I clear input amountInput
-   #  And I fill 20 in amountInput field
-   #  And I click on confirmBtn
-   #  And I click on votingQueueToggle
-   #  And I click on confirmBtn
-   #  And I click on confirmButton
-    ## And I click on closeDialog
-    # And I click on backToWalletButton
-    # Given I am on wallet page
-    # Then The latest transaction is vote
+  Scenario: Remove Vote for a delegate
+     When I click on openAddVoteDialog
+     And I click on removeVote
+     And I click on votingQueueToggle
+     And I click on confirmBtn
+     And I click on confirmButton
+     And I click on backToWalletButton
+     Given I am on wallet page
+     Then The latest transaction is vote
 
-   Scenario: Unlock balance
+   #Scenario: Unlock balance
      Given I am on wallet page
      Then I should see that 40 LSK are locked
      Then I click on openUnlockBalanceDialog
