@@ -20,6 +20,7 @@ class SearchBar extends React.Component {
 
     this.onChangeSearchTextValue = this.onChangeSearchTextValue.bind(this);
     this.onSelectAccount = this.onSelectedRow.bind(this, 'account');
+    this.onSelectDelegateAccount = this.onSelectedRow.bind(this, 'delegate-account');
     this.onSelectTransaction = this.onSelectedRow.bind(this, 'transactions');
     this.onSelectBlock = this.onSelectedRow.bind(this, 'block');
     this.onHandleKeyPress = this.onHandleKeyPress.bind(this);
@@ -52,6 +53,8 @@ class SearchBar extends React.Component {
   onSelectedRow(type, value) {
     if (type === 'transactions') {
       addSearchParamsToUrl(this.props.history, { modal: 'transactionDetails', transactionId: value });
+    } else if (type === 'delegate-account') {
+      this.props.history.push(`${routes.account.path}?${routes.account.searchParam}=${value}&tab=delegateProfile`);
     } else {
       this.props.history.push(`${routes[type].path}?${routes[type].searchParam}=${value}`);
     }
@@ -81,7 +84,7 @@ class SearchBar extends React.Component {
     const { rowItemIndex } = this.state;
 
     if (addresses.length) this.onSelectAccount(addresses[rowItemIndex].address);
-    if (delegates.length) this.onSelectAccount(delegates[rowItemIndex].summary?.address);
+    if (delegates.length) this.onSelectDelegateAccount(delegates[rowItemIndex].summary?.address);
     if (transactions.length) this.onSelectTransaction(transactions[rowItemIndex].id);
     if (blocks.length) this.onSelectTransaction(blocks[rowItemIndex].id);
   }
@@ -168,7 +171,7 @@ class SearchBar extends React.Component {
               <Delegates
                 searchTextValue={searchTextValue}
                 delegates={suggestions.data.delegates}
-                onSelectedRow={this.onSelectAccount}
+                onSelectedRow={this.onSelectDelegateAccount}
                 rowItemIndex={rowItemIndex}
                 updateRowItemIndex={this.updateRowItemIndex}
                 t={t}
