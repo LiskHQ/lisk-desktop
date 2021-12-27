@@ -102,7 +102,6 @@ export const DelegateDetails = ({
 export const RoundState = ({
   activeTab, state, isBanned, t, time,
 }) => {
-  // if (activeTab === 'active') console.log('lastBlock', lastBlock);
   if (state === undefined) {
     return (
       <span className={`${getRoundStateClass(activeTab)} ${styles.noEllipsis} ${styles.statusIconsContainer}`}>-</span>
