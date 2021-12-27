@@ -70,7 +70,9 @@ const Footer = ({
 }) => {
   const isMultisignature = !!account.keys?.numberOfSignatures;
   const hasSecondPass = account.keys?.numberOfSignatures === 2
-    && account.keys.mandatoryKeys.length === 2 && account.keys.optionalKeys.length === 0;
+    && account.keys.mandatoryKeys.length === 2
+    && account.keys.optionalKeys.length === 0
+    && account.hwInfo;
   const [inputStatus, setInputStatus] = useState(hasSecondPass ? 'hidden' : 'notRequired');
 
   return (
