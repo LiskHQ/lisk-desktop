@@ -26,11 +26,33 @@ const getAccountsFromDevice = async ({ device: { deviceId }, network }) => {
     const publicKey = await getPublicKey({ index, deviceId });
     // eslint-disable-next-line no-await-in-loop
     account = await getAccount({ network, params: { publicKey } }, 'LSK');
+    console.log(`#${index}`, publicKey, account.summary.address, account.summary.balance);
     if (index === 0 || accounts[index - 1].summary.balance) {
       accounts.push(account);
     }
   }
   return accounts;
+};
+
+/**
+ * Returns the index of the current signature in
+ * the array of signatures
+ *
+ * @param {string} publicKey - The hex representation of account publicKey
+ * @param {object} keys - The object containing sender account keys
+ * @param {object} transactionObject - the raw transaction object
+ * @returns {number} the index of the current signature amount the list
+ */
+const getSignatureIndex = (publicKey, keys, transactionObject) => {
+  const buf = JSON.stringify(Buffer.from(publicKey, 'hex'));
+  const list = [...keys.mandatoryKeys, ...keys.optionalKeys].map(item => JSON.stringify(item));
+  let index = list.indexOf(buf);
+
+  if (transactionObject.moduleID === 4 && transactionObject.assetID === 0) {
+    index++;
+  }
+
+  return index;
 };
 
 /**
@@ -42,8 +64,9 @@ const signTransactionByHW = async (
   networkIdentifier,
   transactionObject,
   transactionBytes,
+  keys,
 ) => {
-  const transaction = {
+  const data = {
     deviceId: account.hwInfo.deviceId,
     index: account.hwInfo.derivationIndex,
     networkIdentifier,
@@ -51,9 +74,10 @@ const signTransactionByHW = async (
   };
 
   try {
-    const signature = await signTransaction(transaction);
-    if (Array.isArray(transactionObject.signatures)) {
-      transactionObject.signatures.push(signature);
+    const signature = await signTransaction(data);
+    const myIndex = getSignatureIndex(account.summary.publicKey, keys, transactionObject);
+    if (Array.isArray(transactionObject.signatures) && transactionObject.signatures.length) {
+      transactionObject.signatures[myIndex] = signature;
     } else {
       Object.assign(transactionObject, { signatures: [signature] });
     }
