@@ -227,26 +227,26 @@ const flattenTransaction = ({ moduleAssetId, asset, ...rest }) => {
   };
 
   switch (moduleAssetId) {
-    case MODULE_ASSETS_NAME_ID_MAP.transfer: {
+    case transfer: {
       transaction.recipientAddress = asset.recipient.address;
       transaction.amount = asset.amount;
       transaction.data = asset.data;
       break;
     }
 
-    case MODULE_ASSETS_NAME_ID_MAP.voteDelegate:
+    case voteDelegate:
       transaction.votes = asset.votes;
       break;
 
-    case MODULE_ASSETS_NAME_ID_MAP.registerDelegate:
+    case registerDelegate:
       transaction.username = asset.username;
       break;
 
-    case MODULE_ASSETS_NAME_ID_MAP.unlockToken:
+    case unlockToken:
       transaction.unlockObjects = asset.unlockObjects;
       break;
 
-    case MODULE_ASSETS_NAME_ID_MAP.registerMultisignatureGroup: {
+    case registerMultisignatureGroup: {
       transaction.numberOfSignatures = asset.numberOfSignatures;
       transaction.mandatoryKeys = asset.mandatoryKeys;
       transaction.optionalKeys = asset.optionalKeys;
@@ -498,13 +498,14 @@ const signUsingPrivateKey = (schema, transaction, networkIdentifier, privateKey)
     Buffer.from(privateKey, 'hex'),
   );
 
-const signUsingHW = async (schema, transaction, account, networkIdentifier, network) => {
+const signUsingHW = async (schema, transaction, account, networkIdentifier, network, keys) => {
   const signingBytes = transactions.getSigningBytes(schema, transaction);
   const [error, signedTransaction] = await to(signTransactionByHW(
     account,
     networkIdentifier,
     transaction,
     signingBytes,
+    keys,
   ));
   if (error) {
     throw error;
@@ -519,7 +520,9 @@ export const sign = async (
   moduleAssetId, rawTransaction, privateKey,
 ) => {
   if (!isEmpty(account.hwInfo)) {
-    const signedTx = await signUsingHW(schema, transaction, account, networkIdentifier, network);
+    const signedTx = await signUsingHW(
+      schema, transaction, account, networkIdentifier, network, keys,
+    );
     return signedTx;
   }
   if (isMultisignature || isMultiSignatureRegistration) {
@@ -556,8 +559,7 @@ const signMultisigTransaction = async (
    * Define keys.
    * Since the sender is different, the keys are defined based on that
    */
-  const isGroupRegistration = transaction.moduleAssetId
-    === MODULE_ASSETS_NAME_ID_MAP.registerMultisignatureGroup;
+  const isGroupRegistration = transaction.moduleAssetId === registerMultisignatureGroup;
   const schema = network.networks.LSK.moduleAssetSchemas[transaction.moduleAssetId];
   const networkIdentifier = Buffer.from(network.networks.LSK.networkIdentifier, 'hex');
 
@@ -607,7 +609,7 @@ const signMultisigTransaction = async (
  * @returns {number} the number of signatures required
  */
 const getNumberOfSignatures = (account, transaction) => {
-  if (transaction?.moduleAssetId === MODULE_ASSETS_NAME_ID_MAP.registerMultisignatureGroup) {
+  if (transaction?.moduleAssetId === registerMultisignatureGroup) {
     return transaction.optionalKeys.length + transaction.mandatoryKeys.length + 1;
   }
   if (account?.summary?.isMultisignature) {
