@@ -5,7 +5,7 @@ import {
 } from '@constants';
 import { isEmpty } from '@utils/helpers';
 import { getTransactions, create, broadcast } from '@api/transaction';
-import { selectActiveTokenAccount, selectNetworkIdentifier } from '@store/selectors';
+import { selectNetworkIdentifier } from '@store/selectors';
 import { signMultisigTransaction, transformTransaction } from '@utils/transaction';
 import { getTransactionSignatureStatus } from '@screens/signMultiSignTransaction/helpers';
 import { timerReset } from './account';
