@@ -26,7 +26,6 @@ const getAccountsFromDevice = async ({ device: { deviceId }, network }) => {
     const publicKey = await getPublicKey({ index, deviceId });
     // eslint-disable-next-line no-await-in-loop
     account = await getAccount({ network, params: { publicKey } }, 'LSK');
-    console.log(`#${index}`, publicKey, account.summary.address, account.summary.balance);
     if (index === 0 || accounts[index - 1].summary.balance) {
       accounts.push(account);
     }
