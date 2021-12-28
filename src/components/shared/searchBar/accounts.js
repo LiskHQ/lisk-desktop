@@ -1,5 +1,6 @@
 import React from 'react';
 import AccountVisual from '@toolbox/accountVisual';
+import { truncateAddress } from '@utils/account';
 import styles from './accountsAndDeletegates.css';
 
 const Accounts = ({
@@ -33,7 +34,12 @@ const Accounts = ({
                           {account.dpos?.delegate.username}
                         </span>
                       </div>
-                      <span className={styles.accountSubtitle}>{account.summary?.address}</span>
+                      <span className={`${styles.accountSubtitle} hideOnLargeViewPort`}>
+                        {truncateAddress(account.summary?.address)}
+                      </span>
+                      <span className={`${styles.accountSubtitle} showOnLargeViewPort`}>
+                        {account.summary?.address}
+                      </span>
                     </>
                   )
                   : (

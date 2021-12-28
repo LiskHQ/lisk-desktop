@@ -18,7 +18,7 @@ getTransactionFee.mockResolvedValue({
   feedback: '',
 });
 
-describe.skip('RegisterDelegate', () => {
+describe('RegisterDelegate', () => {
   const props = {
     account: {
       info: {

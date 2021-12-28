@@ -67,6 +67,7 @@ export const validateLSKPublicKey = (publicKey) => {
  * @param {string?} [data.funds] Maximum funds users are allowed to input
  * @param {Array?} [data.checklist] The list of errors to be tested. A choice of
  * ZERO, MAX_ACCURACY, FORMAT, VOTE_10X, INSUFFICIENT_FUNDS
+ * @param {string} [data.initialVote] The amount of the user's previous votes
  * @returns {Object.<string, string|boolean>}
  * data - Object containing the message and if has an error
  *  data.message - Message of the error or empty string
@@ -80,7 +81,6 @@ export const validateAmountFormat = ({
   checklist = ['ZERO', 'MAX_ACCURACY', 'FORMAT'],
 }) => {
   const { format, maxFloating } = reg.amount[locale];
-
   const errors = {
     ZERO: {
       message: i18n.t('Amount can\'t be zero.'),
@@ -104,13 +104,6 @@ export const validateAmountFormat = ({
     },
     MIN_BALANCE: {
       message: i18n.t('Provided amount will result in a wallet with less than the minimum balance.'),
-      fn: () => {
-        const rawValue = toRawLsk(numeral(value).value());
-        return funds - rawValue < MIN_ACCOUNT_BALANCE;
-      },
-    },
-    VOTES_MAX: {
-      message: i18n.t('The vote amount is too high. You should keep at least 0.05 LSK available in your account.'),
       fn: () => {
         const rawValue = toRawLsk(numeral(value).value());
         return funds - rawValue < MIN_ACCOUNT_BALANCE;

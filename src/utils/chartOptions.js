@@ -204,3 +204,8 @@ export const doughnutChartOptions = (theme, options) =>
       },
     },
   }, baseOptions(theme), options);
+
+export const getColorPalette = (theme) => {
+  if (theme === 'dark') return colorPaletteDark;
+  return colorPalette;
+};

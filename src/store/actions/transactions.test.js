@@ -1,6 +1,7 @@
 import { actionTypes, loginTypes } from '@constants';
 import * as hwManagerApi from '@utils/hwManager';
 import httpApi from '@utils/api/http';
+import * as transactionUtils from '@utils/transaction';
 import {
   emptyTransactionsData,
   transactionsRetrieved,
@@ -12,6 +13,7 @@ import {
 } from './transactions';
 import { sampleTransaction } from '../../../test/constants/transactions';
 import { getState } from '../../../test/fixtures/transactions';
+import accounts from '../../../test/constants/accounts';
 
 jest.mock('@api/delegate');
 jest.mock('@utils/hwManager');
@@ -236,11 +238,18 @@ describe('actions: transactions', () => {
     });
   });
 
-  describe.skip('transactionDoubleSigned', () => {
+  describe('transactionDoubleSigned', () => {
     const { network, account, settings } = getState();
     const getStateWithTx = () => ({
       network,
-      account,
+      account: {
+        ...account,
+        secondPassphrase: accounts.genesis.passphrase,
+        info: {
+          ...account.info,
+          LSK: accounts.multiSig,
+        },
+      },
       settings,
       transactions: {
         signedTransaction: sampleTransaction,
@@ -254,7 +263,7 @@ describe('actions: transactions', () => {
       // Prepare expectations
       const expectedAction = {
         type: actionTypes.transactionDoubleSigned,
-        data: { id: 'f8ddab3b1a23d7c19e17855fe82ca5c1fa701ba82b8896da2ba332fccc308e90' },
+        data: expect.any(Object),
       };
 
       // Assert
@@ -264,9 +273,7 @@ describe('actions: transactions', () => {
     it('should create an action to store signature error', async () => {
       // Prepare the store
       const error = { message: 'error signing tx' };
-      // transactionsModifyApi.signTransaction.mockReturnValue([{
-      //   id: 'f8ddab3b1a23d7c19e17855fe82ca5c1fa701ba82b8896da2ba332fccc308e90',
-      // }, error]);
+      jest.spyOn(transactionUtils, 'signTransaction').mockImplementation(() => [{}, error]);
 
       // Consume the utility
       await transactionDoubleSigned()(dispatch, getStateWithTx);

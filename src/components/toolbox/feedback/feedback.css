@@ -24,7 +24,7 @@
   left: 0;
   z-index: 1;
 
-  &.error:not(:empty) {
+  &.error.display {
     background: var(--error-background-color);
     color: var(--color-strong-white);
     animation: fadeIn var(--animation-speed-fastest) forwards;

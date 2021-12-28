@@ -28,8 +28,7 @@ const WarnPunishedDelegate = ({
 
   const message = isBanned
     ? t(
-      'This delegate has been permanently banned from {{punishmentStartDate}}',
-      { punishmentStartDate },
+      'This delegate has been permanently banned',
     )
     : t(
       'Caution! This delegate was punished on {{punishmentStartDate}}. There is approximately {{daysLeft}} days remaining before the punishment ends.',
@@ -63,7 +62,6 @@ const WarnPunishedDelegate = ({
 };
 
 WarnPunishedDelegate.propTypes = {
-  message: PropTypes.string.isRequired,
   readMore: PropTypes.func.isRequired,
 };
 

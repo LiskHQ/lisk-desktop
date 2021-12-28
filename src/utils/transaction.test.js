@@ -7,6 +7,7 @@ import {
   containsTransactionType,
   createTransactionObject,
   transactionToJSON,
+  removeExcessSignatures,
 } from './transaction';
 import accounts from '../../test/constants/accounts';
 
@@ -319,6 +320,20 @@ describe('API: LSK Transactions', () => {
     it('should return the transaction as JSON', () => {
       const json = transactionToJSON(transaction);
       expect(json).toMatchSnapshot();
+    });
+  });
+
+  describe('removeExcessSignatures', () => {
+    it('should remove optional signature considering the sender signature', () => {
+      const nonEmpty = Buffer.from(accounts.genesis.summary.publicKey, 'hex');
+      const empty = Buffer.from('');
+      const mandatoryKeysNo = 2;
+      const hasSenderSignature = true;
+      const signatures = [nonEmpty, nonEmpty, empty, nonEmpty];
+      const expectSignatures = [nonEmpty, nonEmpty, empty, empty];
+      expect(
+        removeExcessSignatures(signatures, mandatoryKeysNo, hasSenderSignature),
+      ).toEqual(expectSignatures);
     });
   });
 });

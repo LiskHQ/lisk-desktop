@@ -2,10 +2,9 @@
 import React, { useEffect } from 'react';
 import { getErrorReportMailto, isEmpty } from '@utils/helpers';
 import { TertiaryButton, PrimaryButton } from '@toolbox/buttons';
-import { routes } from '@constants';
+import { routes, txStatusTypes } from '@constants';
 import Illustration from '@toolbox/illustration';
 import getIllustration from './illustrations';
-import { txStatusTypes } from './statusConfig';
 import styles from './transactionResult.css';
 
 const errorTypes = [

@@ -1,7 +1,7 @@
 import { useSelector } from 'react-redux';
 import { useEffect, useReducer } from 'react';
 import { getTransactionFee } from '@api/transaction';
-import { DEFAULT_NUMBER_OF_SIGNATURES } from '@constants';
+import { getNumberOfSignatures } from '@utils/transaction';
 import { actionTypes, reducer, getInitialState } from './reducer';
 
 /**
@@ -20,20 +20,6 @@ export const normalizeVotesForTx = votes =>
       delegateAddress,
       amount: (votes[delegateAddress].unconfirmed - votes[delegateAddress].confirmed).toString(),
     }));
-
-/**
- * Returns the number of signatures required to sign
- * a transaction. Returns 1 for ordinary accounts.
- *
- * @param {object} account - the active account info
- * @returns {number} Number of signatures
- */
-export const getNumberOfSignatures = (account) => {
-  if (account?.summary?.isMultisignature) {
-    return account.keys.numberOfSignatures;
-  }
-  return DEFAULT_NUMBER_OF_SIGNATURES;
-};
 
 /**
  * Custom hook to define tx fee
@@ -81,7 +67,7 @@ const useTransactionFeeCalculation = ({
       network,
       transaction,
       selectedPriority,
-      numberOfSignatures: getNumberOfSignatures(account),
+      numberOfSignatures: getNumberOfSignatures(account, transaction),
     });
   }, [
     transaction.amount,
