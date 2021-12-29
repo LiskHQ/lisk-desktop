@@ -550,7 +550,6 @@ export const sign = async (
 const signMultisigTransaction = async (
   transaction,
   account,
-  _,
   senderAccount,
   txStatus,
   network,
