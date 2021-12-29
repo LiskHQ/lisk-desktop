@@ -37,11 +37,11 @@ const Votes = ({
 
   // Fetch delegate profiles to define rank, productivity and delegate weight
   useEffect(() => {
-    if (isEmpty(accounts.data) && votes.data.length) {
-      const addressList = votes.data.map(vote => vote.address);
+    const addressList = Object.keys(hostVotes);
+    if (isEmpty(accounts.data) && addressList.length) {
       accounts.loadData({ addressList, isDelegate: true });
     }
-  }, [votes.data]);
+  }, [hostVotes]);
 
   const areLoading = accounts.isLoading || votes.isLoading;
   const filteredVotes = votes.data.filter((vote) => {
