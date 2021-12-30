@@ -18,9 +18,9 @@ const VoteRow = ({
   const truncatedAddress = truncateAddress(data.address);
   return (
     <div className={`${grid.row} ${tableStyles.row} ${styles.row}`}>
-      <div className={`${grid['col-sm-12']} vote-row`} onClick={onClick}>
+      <div className={`${grid['col-sm-12']} vote-row`}>
         {/* Account visual */}
-        <div className={grid['col-sm-5']}>
+        <div className={grid['col-sm-5']} onClick={onClick}>
           <div className={`${styles.info}`}>
             <AccountVisual
               className={`${styles.avatar}`}
@@ -35,12 +35,12 @@ const VoteRow = ({
         </div>
 
         {/* Delegate rank */}
-        <div className={`${grid['col-sm-2']} ${styles.flexLeftAlign}`}>
+        <div className={`${grid['col-sm-2']} ${styles.flexLeftAlign}`} onClick={onClick}>
           <span>{account?.dpos.delegate.rank}</span>
         </div>
 
         {/* Delegate weight */}
-        <div className={`${grid['col-sm-2']} ${styles.flexLeftAlign}`}>
+        <div className={`${grid['col-sm-2']} ${styles.flexLeftAlign}`} onClick={onClick}>
           <span>
             <LiskAmount
               val={account?.dpos.delegate.totalVotesReceived ?? 0}
@@ -51,7 +51,7 @@ const VoteRow = ({
 
         {/* Vote amount */}
         {account ? (
-          <div className={`${grid['col-sm-2']} ${styles.flexRightAlign}`}>
+          <div className={`${grid['col-sm-2']} ${styles.flexRightAlign}`} onClick={onClick}>
             <span className={styles.votes}>
               <LiskAmount
                 val={data.amount}

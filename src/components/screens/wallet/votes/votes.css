@@ -75,6 +75,7 @@
 
 .info {
   display: flex;
+  margin-left: -8px;
 
   & > .avatar {
     margin-right: 16px;
