@@ -27,7 +27,7 @@ const apis = {
 };
 
 const mapStateToProps = state => ({
-  hostVotes: state.voting,
+  sentVotes: state.voting,
   isDelegate: state.account?.info?.LSK?.summary.isDelegate,
 });
 
