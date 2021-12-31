@@ -3,11 +3,11 @@ import TransactionResult from '@shared/transactionResult';
 import { statusMessages, getTransactionStatus } from '@shared/transactionResult/statusConfig';
 import LiskAmount from '@shared/liskAmount';
 import { PrimaryButton } from '@toolbox/buttons';
-import { tokenMap } from '@constants';
+import { tokenMap, txStatusTypes } from '@constants';
 import Spinner from '@toolbox/spinner';
 import styles from './status.css';
 
-const SuccessAction = ({
+export const SuccessAction = ({
   template, isMigrated, balance, t,
 }) => (
   <>
@@ -36,20 +36,20 @@ const SuccessAction = ({
   </>
 );
 
-const FailAction = ({ template }) => (
+export const FailAction = ({ template }) => (
   <>
     <p className="transaction-status body-message">{template.message}</p>
   </>
 );
 
-const PendingAction = ({ template }) => (
+export const PendingAction = ({ template }) => (
   <p className="transaction-status body-message">{template.message}</p>
 );
 
 const Status = ({
-  t, transactions, balance, isMigrated,
+  account, transactions, balance, isMigrated, t,
 }) => {
-  const status = getTransactionStatus(transactions);
+  const status = getTransactionStatus(account, transactions);
   const template = statusMessages(t)[status.code];
 
   return (
@@ -62,7 +62,7 @@ const Status = ({
       >
         <>
           {
-            status.code === 'success' ? (
+            status.code === txStatusTypes.broadcastSuccess ? (
               <SuccessAction
                 template={template}
                 isMigrated={isMigrated}
@@ -72,12 +72,14 @@ const Status = ({
             ) : null
           }
           {
-            status.code === 'fail' ? (
+            (status.code === txStatusTypes.signatureError
+            || status.code === txStatusTypes.broadcastError
+            || status.code === txStatusTypes.hwRejected) ? (
               <FailAction template={template} />
-            ) : null
+              ) : null
           }
           {
-            status.code === 'pending' ? (
+            status.code === txStatusTypes.signatureSuccess ? (
               <PendingAction template={template} />
             ) : null
           }

@@ -96,7 +96,7 @@ describe('autoUpdater', () => {
     expect(params.autoUpdater.checkForUpdatesAndNotify).to.have.been.calledWithExactly();
   });
 
-  it.skip('should check for updates every 24 hours', () => {
+  it('should check for updates every 24 hours', () => {
     autoUpdater(params);
     expect(params.autoUpdater.checkForUpdatesAndNotify).to.have.callCount(1);
     clock.tick(24 * 60 * 60 * 1000);
@@ -167,14 +167,17 @@ describe('autoUpdater', () => {
     expect(params.win.send).to.have.been.calledWith({ event: 'downloadUpdateStart' });
   });
 
-  /* it('should not download the update if update is available and the "Later" button was pressed',
-    () => {
-    autoUpdater(params);
+  it('should send update:available event when update is available', () => {
+    const newPrams = { ...params, electron };
+    autoUpdater(newPrams);
     callbacks['update-available']({ version });
-    callbacks.dialog(1);
+    expect(params.win.send).to.have.been.calledWith({
+      event: 'update:available',
+      value: { releaseNotes: undefined, version },
+    });
 
     expect(params.autoUpdater.downloadUpdate).to.not.have.been.calledWith();
-  }); */
+  });
 
   it('should set the progress bar when being in download progress', () => {
     autoUpdater(params);

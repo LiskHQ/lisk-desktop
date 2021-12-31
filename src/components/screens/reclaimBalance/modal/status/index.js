@@ -7,6 +7,11 @@ const mapStateToProps = state => ({
   isMigrated: state.account.info.LSK.summary.isMigrated,
   transactions: state.transactions,
   network: state.network,
+  account: {
+    ...state.account.info[state.settings.token.active],
+    hwInfo: state.account.hwInfo,
+    passphrase: state.account.passphrase,
+  },
 });
 
 export default compose(

@@ -48,4 +48,9 @@ export default {
     forgingTimes: {},
   },
   appUpdates: {},
+  transactions: {
+    signedTransaction: {},
+    txSignatureError: null,
+    txBroadcastError: null,
+  },
 };

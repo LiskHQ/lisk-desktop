@@ -1,7 +1,7 @@
 // istanbul ignore file
 import React from 'react';
 import moment from 'moment';
-import { colorPalette, ROUND_LENGTH } from '@constants';
+import { ROUND_LENGTH } from '@constants';
 import { DoughnutChart } from '@toolbox/charts';
 import Box from '@toolbox/box';
 import BoxHeader from '@toolbox/box/header';
@@ -10,6 +10,7 @@ import BoxEmptyState from '@toolbox/box/emptyState';
 import GuideTooltip, { GuideTooltipItem } from '@toolbox/charts/guideTooltip';
 import Icon from '@toolbox/icon';
 import { useTheme } from '@utils/theme';
+import { getColorPalette } from '@utils/chartOptions';
 import NumericInfo from './numericInfo';
 import Forger from './forger';
 import styles from './overview.css';
@@ -39,6 +40,8 @@ const getPassedMinutes = (startTime) => {
 const ForgingDetails = ({
   t, forgers, forgedInRound, startTime,
 }) => {
+  const theme = useTheme();
+  const colorPalette = getColorPalette(theme);
   const delegatesForgedLabels = [
     t('Forging'),
     t('Awaiting slot'),
@@ -120,7 +123,7 @@ const ForgingDetails = ({
                 <Icon name="blocksForged" />
                 <main className={styles.main}>
                   <h6>{t('Blocks forged')}</h6>
-                  <ProgressBar forgedInRound={forgedInRound} theme={useTheme()} />
+                  <ProgressBar forgedInRound={forgedInRound} theme={theme} />
                   <p className={styles.blue}>
                     {`${forgedInRound} / `}
                     <span>{` ${ROUND_LENGTH}`}</span>

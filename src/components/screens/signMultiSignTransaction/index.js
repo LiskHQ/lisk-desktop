@@ -6,9 +6,9 @@ import { removeSearchParamsFromUrl } from '@utils/searchParams';
 import TransactionSignature from '@shared/transactionSignature';
 import Dialog from '@toolbox/dialog/dialog';
 
-import ImportData from './importData';
-import ReviewSign from './reviewSign';
-import Share from './share';
+import Form from './form';
+import Summary from './summary';
+import Status from './status';
 
 const MultiSignature = ({ history }) => {
   const closeModal = () => {
@@ -21,10 +21,10 @@ const MultiSignature = ({ history }) => {
         key="sign-multisignature-transaction"
         finalCallback={closeModal}
       >
-        <ImportData />
-        <ReviewSign />
+        <Form />
+        <Summary />
         <TransactionSignature />
-        <Share history={history} />
+        <Status history={history} />
       </MultiStep>
     </Dialog>
   );

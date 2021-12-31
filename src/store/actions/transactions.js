@@ -7,7 +7,7 @@ import { isEmpty } from '@utils/helpers';
 import { getTransactions, create, broadcast } from '@api/transaction';
 import { selectActiveTokenAccount, selectNetworkIdentifier } from '@store/selectors';
 import { signTransaction, transformTransaction } from '@utils/transaction';
-import { isTransactionFullySigned } from '@screens/signMultiSignTransaction/helpers';
+import { getTransactionSignatureStatus } from '@screens/signMultiSignTransaction/helpers';
 import { timerReset } from './account';
 import { loadingStarted, loadingFinished } from './loading';
 
@@ -234,14 +234,14 @@ export const multisigTransactionSigned = ({
     hwInfo: account.hwInfo,
   };
   // @todo move isTransactionFullySigned to a generic location
-  const isFullySigned = isTransactionFullySigned(sender.data, rawTransaction);
+  const txStatus = getTransactionSignatureStatus(sender.data, rawTransaction);
 
   const [tx, error] = signTransaction(
     rawTransaction,
     activeAccount.passphrase,
     networkIdentifier,
     sender,
-    isFullySigned,
+    txStatus,
     network,
   );
 
