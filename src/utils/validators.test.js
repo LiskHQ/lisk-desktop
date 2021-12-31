@@ -38,16 +38,15 @@ describe('Validate Amount Format', () => {
     FLOATING_POINT: i18n.t('Maximum floating point is 8.'),
   };
   it('Should return errors.ZERO if amount is zero', () => {
-    [0.0, '0,', '0,0'].forEach((value) => {
-      expect(validateAmountFormat({ value })).toEqual({
-        error: true,
-        message: errors.ZERO,
-      });
+    const zeroValue = 0.0;
+    expect(validateAmountFormat({ value: zeroValue })).toEqual({
+      error: true,
+      message: errors.ZERO,
     });
   });
 
   it('Should return errors.INVALID if format is invalid', () => {
-    ['0.1.2', '1..', '1a,1', '2.d2'].forEach((value) => {
+    ['0,', '0,0', '0.1.2', '1..', '1a,1', '2.d2'].forEach((value) => {
       expect(validateAmountFormat({ value })).toEqual({
         error: true,
         message: errors.INVALID,
