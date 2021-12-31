@@ -1,6 +1,5 @@
 #!/bin/zsh
 
-USER=eniola
 LISK_CORE_PATH="../../lisk-service/"
 NODE_VERSION="v12.22.7"
 
@@ -35,14 +34,3 @@ cd ../redis
 make up
 
 lisk-core start --network=devnet --api-ws --api-ws-host=0.0.0.0 --api-ws-port=8888 --enable-forger-plugin --port=5050
-
-
-
-
-
-
-
-
-
-
-
