@@ -17,7 +17,7 @@ const getMessages = t => ({
 });
 
 const Votes = ({
-  votes, accounts, address, t, history, hostVotes = {},
+  votes, accounts, address, t, history, sentVotes = {},
 }) => {
   const [filterValue, setFilterValue] = useState('');
   const messages = getMessages(t);
@@ -33,15 +33,15 @@ const Votes = ({
 
   useEffect(() => {
     votes.loadData({ address });
-  }, [address, hostVotes]);
+  }, [address, sentVotes]);
 
   // Fetch delegate profiles to define rank, productivity and delegate weight
   useEffect(() => {
-    if (isEmpty(accounts.data) && votes.data.length) {
-      const addressList = votes.data.map(vote => vote.address);
+    const addressList = Object.keys(sentVotes);
+    if (isEmpty(accounts.data) && addressList.length) {
       accounts.loadData({ addressList, isDelegate: true });
     }
-  }, [votes.data]);
+  }, [sentVotes]);
 
   const areLoading = accounts.isLoading || votes.isLoading;
   const filteredVotes = votes.data.filter((vote) => {
