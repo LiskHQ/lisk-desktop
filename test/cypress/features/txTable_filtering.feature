@@ -8,7 +8,7 @@ Feature: Transaction table filtering
   Scenario: Filter by 1 Amount, add second filter by 1 Amount
     When I fill 10 in amountToInputFilter field
     And I click on applyFilters
-    Then I should see 1 transactions in table
+    Then I should see 2 transactions in table
     When I click on filterTransactionsBtn
     And I fill 10 in amountFromInputFilter field
     And I clear input amountToInputFilter   
