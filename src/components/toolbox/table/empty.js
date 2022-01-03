@@ -6,7 +6,7 @@ import Illustration from '../illustration';
 const Empty = ({
   isListEmpty, isLoading, data, error, className,
 }) => {
-  if (isLoading || !isListEmpty || (error && error.message !== 'Not found.')) return null;
+  if (isLoading || !isListEmpty) return null;
   if (isReactComponent(data)) {
     const Element = data;
     return (<Element />);
@@ -14,7 +14,7 @@ const Empty = ({
   return (
     <div className={`${styles.wrapper} ${className} empty-state`}>
       <Illustration name={data?.illustration ?? 'emptyWallet'} />
-      <h3>{data?.message ?? 'Nothing found.'}</h3>
+      <h3>{data?.message || error?.message || 'Nothing found.'}</h3>
     </div>
   );
 };

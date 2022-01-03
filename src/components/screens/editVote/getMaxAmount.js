@@ -1,11 +1,12 @@
 import { getTransactionFee } from '@api/transaction';
+import { getNumberOfSignatures } from '@utils/transaction';
 import {
   VOTE_AMOUNT_STEP,
   MIN_ACCOUNT_BALANCE,
   MODULE_ASSETS_NAME_ID_MAP,
 } from '@constants';
 import { toRawLsk } from '@utils/lsk';
-import { normalizeVotesForTx, getNumberOfSignatures } from '@shared/transactionPriority';
+import { normalizeVotesForTx } from '@shared/transactionPriority';
 
 /**
  * Calculates the maximum vote amount possible. It
@@ -24,9 +25,10 @@ const getMaxAmount = async (account, network, voting, address) => {
     .filter(vote => vote.confirmed < vote.unconfirmed)
     .map(vote => vote.unconfirmed - vote.confirmed)
     .reduce((total, amount) => (total + amount), 0);
+  const currentVote = voting[address] ? voting[address].confirmed : 0;
 
   const maxVoteAmount = Math.floor(
-    (balance - totalUnconfirmedVotes - MIN_ACCOUNT_BALANCE) / 1e9,
+    (balance - totalUnconfirmedVotes + currentVote - MIN_ACCOUNT_BALANCE) / 1e9,
   ) * 1e9;
 
   const transaction = {
@@ -49,13 +51,13 @@ const getMaxAmount = async (account, network, voting, address) => {
     network,
     transaction,
     selectedPriority: { title: 'Normal', value: 0, selectedIndex: 0 }, // Always set to LOW
-    numberOfSignatures: getNumberOfSignatures(account),
+    numberOfSignatures: getNumberOfSignatures(account, transaction),
   }, 'LSK');
 
   // If the "sum of vote amounts + fee + dust" exceeds balance
   // return 10 LSK less, since votes must be multiplications of 10 LSK.
   if ((maxVoteAmount + toRawLsk(maxAmountFee.value)) <= (
-    balance - totalUnconfirmedVotes - MIN_ACCOUNT_BALANCE)) {
+    balance - totalUnconfirmedVotes + currentVote - MIN_ACCOUNT_BALANCE)) {
     return maxVoteAmount;
   }
   return maxVoteAmount - VOTE_AMOUNT_STEP;

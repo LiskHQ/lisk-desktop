@@ -47,6 +47,32 @@ describe('Votes Tab Component', () => {
     expect(wrapper).toContainMatchingElement('.loading');
   });
 
+  it('should call accounts.loadData with right arguments', () => {
+    const loadData = jest.fn();
+    wrapper = setup({
+      ...props,
+      votes: { ...props.votes, isLoading: true },
+      accounts: { data: [], loadData },
+      sentVotes: {
+        lskwhocotuu6bwnhwgjt859ugp467f8kuhdo5xfd6: [],
+        skaqeqqvkxzvt8g6kbukma8pu5cwpe6w2fjc5amc: [],
+      },
+    });
+    expect(loadData).toBeCalledWith({
+      addressList: ['lskwhocotuu6bwnhwgjt859ugp467f8kuhdo5xfd6', 'skaqeqqvkxzvt8g6kbukma8pu5cwpe6w2fjc5amc'],
+      isDelegate: true,
+    });
+  });
+  it('should not call accounts.loadData if accounts.data and no sentVotes is empty', () => {
+    const loadData = jest.fn();
+    wrapper = setup({
+      ...props,
+      votes: { ...props.votes, isLoading: true },
+      accounts: { data: [], loadData },
+    });
+    expect(loadData).not.toHaveBeenCalled();
+  });
+
   it('Should render votes', () => {
     const customProps = {
       ...props,
@@ -62,7 +88,7 @@ describe('Votes Tab Component', () => {
       votes,
     };
     wrapper = setup(customProps);
-    wrapper.find('.vote-row').at(0).simulate('click');
+    wrapper.find('.vote-row > div').at(0).first().simulate('click');
     jest.advanceTimersByTime(300);
     expect(props.history.push).toBeCalledWith(`${routes.account.path}?address=lsk0`);
   });

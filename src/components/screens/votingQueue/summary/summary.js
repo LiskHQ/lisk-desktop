@@ -35,7 +35,7 @@ const getResultProps = ({ added, removed, edited }) => {
 
 const Summary = ({
   t, removed = {}, edited = {}, added = {}, selfUnvote = {},
-  fee, account, prevStep, nextStep, transactions,
+  fee, account, prevStep, nextStep,
   normalizedVotes, votesSubmitted,
 }) => {
   const {
@@ -64,6 +64,14 @@ const Summary = ({
     onClick: prevStep,
   };
 
+  const transaction = {
+    nonce: account.sequence.nonce,
+    fee,
+    added,
+    edited,
+    removed,
+  };
+
   return (
     <TransactionSummary
       confirmButton={onConfirmAction}
@@ -90,7 +98,7 @@ const Summary = ({
         removed={removed}
         fee={fee}
         moduleAssetId={MODULE_ASSETS_NAME_ID_MAP.voteDelegate}
-        transaction={transactions.signedTransaction}
+        transaction={transaction}
         account={account}
         isMultisignature={account.summary.isMultisignature}
       />

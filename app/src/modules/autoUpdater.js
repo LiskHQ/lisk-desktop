@@ -18,6 +18,9 @@ export default ({ // eslint-disable-line max-statements
   autoUpdater.autoDownload = false;
 
   autoUpdater.checkForUpdatesAndNotify();
+  setInterval(() => {
+    autoUpdater.checkForUpdatesAndNotify();
+  }, 24 * 60 * 60 * 1000);
 
   autoUpdater.on('error', (error) => {
     // eslint-disable-next-line no-console

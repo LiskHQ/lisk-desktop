@@ -1,16 +1,6 @@
-import { transactionToJSON } from '@utils/transaction';
+import { transactionToJSON, getNumberOfSignatures } from '@utils/transaction';
 import { isEmpty } from '@utils/helpers';
-
-export const txStatusTypes = {
-  multisigSignaturePartialSuccess: 'MULTISIG_SIGNATURE_PARTIAL_SUCCESS',
-  multisigSignatureSuccess: 'MULTISIG_SIGNATURE_SUCCESS',
-  signatureSuccess: 'SIGNATURE_SUCCESS',
-  multisigBroadcastSuccess: 'MULTISIG_BROADCAST_SUCCESS',
-  broadcastSuccess: 'BROADCAST_SUCCESS',
-  signatureError: 'SIGNATURE_ERROR',
-  broadcastError: 'BROADCAST_ERROR',
-  hwRejected: 'HW_REJECTED',
-};
+import { txStatusTypes } from '@constants';
 
 export const statusMessages = t => ({
   [txStatusTypes.multisigSignaturePartialSuccess]: {
@@ -18,8 +8,8 @@ export const statusMessages = t => ({
     message: t('You can download or copy the transaction and share it with other members.'),
   },
   [txStatusTypes.multisigSignatureSuccess]: {
-    title: t('Your signature was successful'),
-    message: t('You can download or copy the transaction and share it with other members. You can send the transaction too.'),
+    title: t('The transaction is now fully signed'),
+    message: t('Now you can send it to the blockchain. You may also copy or download it, if you wish to send the transaction using another device later.'),
   },
   [txStatusTypes.signatureSuccess]: {
     title: t('Submitting the transaction'),
@@ -50,43 +40,56 @@ export const statusMessages = t => ({
 /**
  * Defines the status of the broadcasted tx.
  *
+ * @param {Object} account - active account info
  * @param {Object} transactions - Transactions status from the redux store
  * @returns {Object} The status code and message
  */
 // eslint-disable-next-line max-statements
-export const getTransactionStatus = (transactions) => {
+export const getTransactionStatus = (account, transactions) => {
+  // Signature errors
   if (transactions.txSignatureError) {
-    return transactions.txSignatureError.message.indexOf('hwCommand') > -1
-      ? {
+    if (transactions.txSignatureError.message.indexOf('hwCommand') > -1) {
+      return {
         code: txStatusTypes.hwRejected,
         message: transactions.txSignatureError.message,
-      }
-      : {
-        code: txStatusTypes.signatureError,
-        message: transactionToJSON(transactions.txSignatureError),
       };
+    }
+
+    return {
+      code: txStatusTypes.signatureError,
+      message: transactionToJSON(transactions.txSignatureError),
+    };
   }
-  if (
-    !isEmpty(transactions.signedTransaction)
-    && transactions.signedTransaction.signatures.some(sig => sig.length === 0)
-  ) {
-    return { code: txStatusTypes.multisigSignaturePartialSuccess };
-  }
-  if (
-    !isEmpty(transactions.signedTransaction)
-    && transactions.signedTransaction.signatures.length > 1
-    && !transactions.signedTransaction.signatures.some(sig => sig.length === 0)
-  ) {
-    return { code: txStatusTypes.multisigSignatureSuccess };
-  }
+
+  // signature success
   if (!isEmpty(transactions.signedTransaction)) {
+    const transaction = {
+      ...transactions.signedTransaction.asset,
+      moduleAssetId: `${transactions.signedTransaction.moduleID}:${transactions.signedTransaction.assetID}`,
+    };
+    const requiredSignatures = getNumberOfSignatures(account, transaction);
+    const nonEmptySignatures = transactions
+      .signedTransaction.signatures.filter(sig => sig.length > 0).length;
+
+    if (nonEmptySignatures < requiredSignatures) {
+      return { code: txStatusTypes.multisigSignaturePartialSuccess };
+    }
+
+    if (requiredSignatures > 1 && nonEmptySignatures === requiredSignatures) {
+      return { code: txStatusTypes.multisigSignatureSuccess };
+    }
+
     return { code: txStatusTypes.signatureSuccess };
   }
+
+  // broadcast error
   if (transactions.txBroadcastError) {
     return {
       code: txStatusTypes.broadcastError,
       message: transactionToJSON(transactions.txBroadcastError),
     };
   }
+
+  // broadcast success
   return { code: txStatusTypes.broadcastSuccess };
 };

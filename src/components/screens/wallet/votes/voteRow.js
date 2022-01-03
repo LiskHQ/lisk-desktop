@@ -17,59 +17,60 @@ const VoteRow = ({
   const account = accounts[data.address];
   const truncatedAddress = truncateAddress(data.address);
   return (
-    <div className={`${tableStyles.row} ${styles.row} vote-row`} onClick={onClick}>
-      {/* Account visual */}
-      <div className={grid['col-sm-5']}>
-        <div className={`${styles.info}`}>
-          <AccountVisual
-            className={`${styles.avatar}`}
-            address={truncatedAddress}
-            size={40}
-          />
-          <div className={styles.accountInfo}>
-            <span className={`${styles.username} vote-username`}>{data.username}</span>
-            <span className={`${styles.address} showOnLargeViewPort`}>{truncatedAddress}</span>
+    <div className={`${grid.row} ${tableStyles.row} ${styles.row}`}>
+      <div className={`${grid['col-sm-12']} vote-row`}>
+        {/* Account visual */}
+        <div className={grid['col-sm-5']} onClick={onClick}>
+          <div className={`${styles.info}`}>
+            <AccountVisual
+              className={`${styles.avatar}`}
+              address={truncatedAddress}
+              size={40}
+            />
+            <div className={styles.accountInfo}>
+              <span className={`${styles.username} vote-username`}>{data.username}</span>
+              <span className={`${styles.address} showOnLargeViewPort`}>{truncatedAddress}</span>
+            </div>
           </div>
         </div>
-      </div>
 
-      {/* Delegate rank */}
-      <div className={grid['col-sm-2']}>
-        <span>{account?.dpos.delegate.rank}</span>
-      </div>
+        {/* Delegate rank */}
+        <div className={`${grid['col-sm-2']} ${styles.flexLeftAlign}`} onClick={onClick}>
+          <span>{account?.dpos.delegate.rank}</span>
+        </div>
 
-      {/* Delegate weight */}
-      <div className={grid['col-sm-2']}>
-        <span>
-          <LiskAmount
-            val={account?.dpos.delegate.totalVotesReceived ?? 0}
-            token={tokenMap.LSK.key}
-          />
-        </span>
-      </div>
-
-      {/* Vote amount */}
-      {account ? (
-        <div className={`${grid['col-sm-2']} ${styles.flexRightAlign}`}>
-          <span className={styles.votes}>
+        {/* Delegate weight */}
+        <div className={`${grid['col-sm-2']} ${styles.flexLeftAlign}`} onClick={onClick}>
+          <span>
             <LiskAmount
-              val={data.amount}
+              val={account?.dpos.delegate.totalVotesReceived ?? 0}
               token={tokenMap.LSK.key}
-              showInt
-              className={styles.voteAmount}
             />
           </span>
         </div>
-      ) : null}
 
-      {/* Edit button */}
-      {
+        {/* Vote amount */}
+        {account ? (
+          <div className={`${grid['col-sm-2']} ${styles.flexRightAlign}`} onClick={onClick}>
+            <span className={styles.votes}>
+              <LiskAmount
+                val={data.amount}
+                token={tokenMap.LSK.key}
+                showInt
+                className={styles.voteAmount}
+              />
+            </span>
+          </div>
+        ) : null}
+
+        {/* Edit button */}
+        {
         data.pending
           ? <Spinner />
           : (
             <div className={grid['col-sm-1']}>
               <DialogLink
-                className={styles.editVoteLink}
+                className={`${styles.editVoteLink} edit-vote`}
                 component="editVote"
                 data={{ address: data.address }}
               >
@@ -78,6 +79,7 @@ const VoteRow = ({
             </div>
           )
       }
+      </div>
     </div>
   );
 };

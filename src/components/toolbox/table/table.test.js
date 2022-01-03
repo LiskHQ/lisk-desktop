@@ -31,22 +31,23 @@ describe('Table', () => {
       isLoading: false,
       row: () => <div />,
       header: [],
+      error: { message: 'Data not found' },
     };
     it('should render an empty template if data is empty with default template', () => {
       const wrapper = mount(<Table {...props} />);
       expect(wrapper.find('Empty')).toHaveLength(1);
     });
     it('should render an empty template if data is empty with custom config', () => {
-      props.emptyState = {
+      const emptyState = {
         message: 'custom_message',
         illustration: 'emptyBookmarksList',
       };
-      const wrapper = mount(<Table {...props} />);
+      const wrapper = mount(<Table {...props} emptyState={emptyState} />);
       expect(wrapper).toHaveText('custom_message');
     });
     it('should render an empty template if data is empty with custom template', () => {
-      props.emptyState = () => <div>custom_empty_template</div>;
-      const wrapper = mount(<Table {...props} />);
+      const emptyState = () => <div>custom_empty_template</div>;
+      const wrapper = mount(<Table {...props} emptyState={emptyState} />);
       expect(wrapper).toHaveText('custom_empty_template');
     });
   });

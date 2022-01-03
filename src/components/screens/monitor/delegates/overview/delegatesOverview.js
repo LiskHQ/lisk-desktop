@@ -1,7 +1,9 @@
 // istanbul ignore file
 import React from 'react';
 // import { fromRawLsk } from '@utils/lsk';
-import { colorPalette, ROUND_LENGTH } from '@constants';
+import { ROUND_LENGTH } from '@constants';
+import { useTheme } from '@utils/theme';
+import { getColorPalette } from '@utils/chartOptions';
 import Box from '@toolbox/box';
 import BoxHeader from '@toolbox/box/header';
 import BoxContent from '@toolbox/box/content';
@@ -22,6 +24,7 @@ const Overview = ({
   totalBlocks,
   // supply,
 }) => {
+  const colorPalette = getColorPalette(useTheme());
   const doughnutChartData = {
     labels: [t('Standby delegates'), t('Active delegates')],
     datasets: [

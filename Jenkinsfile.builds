@@ -1,0 +1,58 @@
+@Library('lisk-jenkins') _
+
+pipeline {
+	agent none
+	stages {
+		stage('package') {
+			parallel {
+				stage('linux, windows') {
+					agent { node { label 'lisk-desktop' } }
+					steps {
+					    cleanWs(patterns: [[pattern: 'dist/lisk-*-*', type: 'INCLUDE'], [pattern: 'dist/latest-*.yml', type: 'INCLUDE']])
+						nvm(getNodejsVersion()) {
+							sh '''
+							npm ci
+							cp -R /home/lisk/fonts/basier-circle src/assets/fonts
+							cp -R /home/lisk/fonts/gilroy src/assets/fonts
+							npm run build
+							npm run install:electron:dependencies
+							npm run dist:linux
+							'''
+							sh '''
+							export DEBUG=electron-builder
+							#npm run dist:win  # does not work
+							'''
+						}
+					}
+					post {
+						success {
+							archiveArtifacts artifacts: 'dist/lisk-*-*, dist/latest-*.yml'
+						}
+					}
+				}
+				stage('darwin') {
+					agent { node { label 'darwin' } }
+					steps {
+					    cleanWs(patterns: [[pattern: 'dist/lisk-mac-*-*', type: 'INCLUDE'], [pattern: 'dist/latest-mac-*.yml', type: 'INCLUDE']])
+						nvm(getNodejsVersion()) {
+							sh '''
+							npm ci
+							cp -R /Users/jenkins/fonts/basier-circle src/assets/fonts
+							cp -R /Users/jenkins/fonts/gilroy src/assets/fonts
+							npm run build
+							npm run install:electron:dependencies
+							npm run dist:mac -- --publish never
+							'''
+						}
+					}
+					post {
+						success {
+							archiveArtifacts artifacts: 'dist/lisk-mac-*, dist/latest-mac.yml'
+						}
+					}
+				}
+			}
+		}
+	}
+}
+// vim: filetype=groovy
