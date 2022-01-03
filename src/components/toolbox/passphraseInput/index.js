@@ -185,7 +185,7 @@ class passphraseInput extends React.Component {
           <div className={styles.footerContent}>
             <Feedback
               className={styles.errorMessage}
-              status={isFeedbackOnError ? 'error' : ''}
+              status={isFeedbackOnError ? 'error' : 'ok'}
               message={validationError}
             />
           </div>

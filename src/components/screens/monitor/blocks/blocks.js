@@ -2,10 +2,9 @@ import PropTypes from 'prop-types';
 import React from 'react';
 import withFilters from '@utils/withFilters';
 import Box from '@toolbox/box';
-import BoxHeader from '@toolbox/box/header';
 import BoxContent from '@toolbox/box/content';
 import FilterBar from '@shared/filterBar';
-import LoadLatestButton from '@shared/loadLatestButton';
+import StickyHeader from '@shared/stickyHeader';
 import Table from '@toolbox/table';
 import BlockFilterDropdown from './blockFilterDropdown';
 import styles from './blocks.css';
@@ -40,15 +39,7 @@ const Blocks = ({
   };
 
   /* istanbul ignore next */
-  const loadLastBlocks = () => {
-    // When the header is fixed at the top, the position is 50px
-    // Therefore the page should only scroll into the view if the header is not at the top
-    if (document.querySelector(`.${styles.header}`).getBoundingClientRect().top - window.scrollY <= 50) {
-      document.querySelector('.blocks-container')
-        .scrollIntoView(true);
-    }
-    return applyFilters(filters);
-  };
+  const loadLastBlocks = () => { applyFilters(filters); };
 
   const canLoadMore = blocks.meta && blocks.meta.total > blocks.data.length;
 
@@ -56,17 +47,18 @@ const Blocks = ({
     <div>
       <BlocksOverview t={t} />
       <Box isLoading={blocks.isLoading} className="blocks-container" width="full" main>
-        <BoxHeader className={styles.header}>
-          <h2 className="blocks-header-title">{t('All blocks')}</h2>
-          <LoadLatestButton
-            buttonClassName={styles.loadButton}
-            entity="block"
-            onClick={loadLastBlocks}
-          >
-            {t('New blocks')}
-          </LoadLatestButton>
-          <BlockFilterDropdown filters={filters} applyFilters={applyFilters} />
-        </BoxHeader>
+        <StickyHeader
+          title={t('All blocks')}
+          button={{
+            entity: 'block',
+            onClick: loadLastBlocks,
+            label: t('New blocks'),
+          }}
+          scrollToSelector=".blocks-container"
+          filters={
+            <BlockFilterDropdown filters={filters} applyFilters={applyFilters} />
+          }
+        />
         <FilterBar {...{
           clearFilter, clearAllFilters, filters, formatters, t,
         }}

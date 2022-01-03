@@ -12,6 +12,7 @@
   "supportFile": "./support/index.js",
   "videosFolder": "./videos",
   "trashAssetsBeforeRuns": true,
+  "videoCompression": false,
   "projectId": "528xi2",
   "ignoreTestFiles": "*.js",
   "modifyObstructiveCode": false

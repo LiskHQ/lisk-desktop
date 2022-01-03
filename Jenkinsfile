@@ -11,33 +11,25 @@ pipeline {
 				}
 			}
 		}
+		stage('lint') {
+			steps {
+				ansiColor('xterm') {
+					nvm(getNodejsVersion()) {
+						sh 'npm run lint'
+					}
+				}
+			}
+		}
 		stage('build') {
 			steps {
-				parallel (
-					"lint": {
-						ansiColor('xterm') {
-							nvm(getNodejsVersion()) {
-								sh 'npm run lint'
-							}
-						}
-					},
-					"linux": {
-						withCredentials([string(credentialsId: 'github-lisk-token', variable: 'GH_TOKEN')]) {
-							nvm(getNodejsVersion()) {
-								sh '''
-								cp -R /home/lisk/fonts/basier-circle src/assets/fonts
-								cp -R /home/lisk/fonts/gilroy src/assets/fonts
-								npm run build
-								npm run install:electron:dependencies
-								npm run dist:linux
-								'''
-							}
-						}
-						archiveArtifacts allowEmptyArchive: true, artifacts: 'dist/lisk-linux-*'
-						archiveArtifacts allowEmptyArchive: true, artifacts: 'dist/latest-linux.yml'
-						stash includes: 'app/build/', name: 'build'
-					}
-				)
+				nvm(getNodejsVersion()) {
+					sh '''
+					cp -R /home/lisk/fonts/basier-circle src/assets/fonts
+					cp -R /home/lisk/fonts/gilroy src/assets/fonts
+					npm run build
+					'''
+				}
+				stash includes: 'app/build/', name: 'build'
 			}
 		}
 		stage('deploy') {
@@ -58,7 +50,8 @@ pipeline {
 		stage('test') {
 			steps {
 				parallel (
-					"cypress": {
+					// cypress
+					"end-to-end": {
 						nvm(getNodejsVersion()) {
 							ansiColor('xterm') {
 								wrap([$class: 'Xvfb']) {
@@ -67,7 +60,8 @@ pipeline {
 							}
 						}
 					},
-					"jest": {
+					// jest
+					"unit": {
 						nvm(getNodejsVersion()) {
 							ansiColor('xterm') {
 								sh 'ON_JENKINS=true npm run test'

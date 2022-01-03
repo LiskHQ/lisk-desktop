@@ -59,7 +59,7 @@ export const DelegateWeight = ({ value, activeTab }) => {
 export const DelegateDetails = ({
   t, watched = false, data, activeTab, removeFromWatchList, addToWatchList,
 }) => {
-  const showEyeIcon = activeTab === 'active' || activeTab === 'standby' || activeTab === 'watched';
+  const showEyeIcon = activeTab === 'active' || activeTab === 'standby' || activeTab === 'sanctioned' || activeTab === 'watched';
   return (
     <span className={getDelegateDetailsClass(activeTab)}>
       <div className={styles.delegateColumn}>
@@ -139,11 +139,11 @@ export const RoundState = ({
   );
 };
 
-const getDelegateStatus = (key, voteWeight) => {
+const getDelegateStatus = (key, totalVotesReceived) => {
   if (key === 'banned' || key === 'punished' || key === 'active') {
     return [key, delegateStatus[key]];
   }
-  if (voteWeight < DEFAULT_STANDBY_THRESHOLD) {
+  if (totalVotesReceived < DEFAULT_STANDBY_THRESHOLD) {
     return ['ineligible', delegateStatus.ineligible];
   }
 
@@ -151,9 +151,9 @@ const getDelegateStatus = (key, voteWeight) => {
 };
 
 export const DelegateStatus = ({
-  activeTab, status, voteWeight, theme,
+  activeTab, status, totalVotesReceived, theme,
 }) => {
-  const [key, value] = getDelegateStatus(status, voteWeight);
+  const [key, value] = getDelegateStatus(status, totalVotesReceived);
 
   return (
     <span className={getStatusClass(activeTab)}>

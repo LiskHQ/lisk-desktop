@@ -67,6 +67,8 @@ export const validateLSKPublicKey = (publicKey) => {
  * @param {string?} [data.funds] Maximum funds users are allowed to input
  * @param {Array?} [data.checklist] The list of errors to be tested. A choice of
  * ZERO, MAX_ACCURACY, FORMAT, VOTE_10X, INSUFFICIENT_FUNDS
+ * @param {string} [data.minValue] The minimum value which is the previously confirmed votes
+ * @param {string} [data.inputValue] The user's input for votes
  * @returns {Object.<string, string|boolean>}
  * data - Object containing the message and if has an error
  *  data.message - Message of the error or empty string
@@ -78,17 +80,25 @@ export const validateAmountFormat = ({
   locale = i18n.language,
   funds,
   checklist = ['ZERO', 'MAX_ACCURACY', 'FORMAT'],
+  minValue,
+  inputValue,
 }) => {
   const { format, maxFloating } = reg.amount[locale];
-
   const errors = {
+    NEGATIVE_VOTE: {
+      message: i18n.t('Vote amount can\'t be zero or negative.'),
+      fn: () =>
+        numeral(value).value() < minValue
+        || numeral(inputValue).value() < 0
+        || Object.is(numeral(inputValue).value(), -0),
+    },
     ZERO: {
       message: i18n.t('Amount can\'t be zero.'),
-      fn: () => numeral(value).value() === 0,
+      fn: () => numeral(Math.abs(value)).value() === 0,
     },
     FORMAT: {
       message: i18n.t('Provide a correct amount of {{token}}', { token }),
-      fn: () => format.test(value),
+      fn: () => (typeof value === 'string' && value.slice(-1) === '.') || format.test(Math.abs(value)),
     },
     MAX_ACCURACY: {
       message: i18n.t('Maximum floating point is 8.'),
@@ -104,13 +114,6 @@ export const validateAmountFormat = ({
     },
     MIN_BALANCE: {
       message: i18n.t('Provided amount will result in a wallet with less than the minimum balance.'),
-      fn: () => {
-        const rawValue = toRawLsk(numeral(value).value());
-        return funds - rawValue < MIN_ACCOUNT_BALANCE;
-      },
-    },
-    VOTES_MAX: {
-      message: i18n.t('The vote amount is too high. You should keep at least 0.05 LSK available in your account.'),
       fn: () => {
         const rawValue = toRawLsk(numeral(value).value());
         return funds - rawValue < MIN_ACCOUNT_BALANCE;
