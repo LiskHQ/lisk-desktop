@@ -34,27 +34,6 @@ const getAccountsFromDevice = async ({ device: { deviceId }, network }) => {
 };
 
 /**
- * Returns the index of the current signature in
- * the array of signatures
- *
- * @param {string} publicKey - The hex representation of account publicKey
- * @param {object} keys - The object containing sender account keys
- * @param {object} transactionObject - the raw transaction object
- * @returns {number} the index of the current signature amount the list
- */
-const getSignatureIndex = (publicKey, keys, transactionObject) => {
-  const buf = JSON.stringify(Buffer.from(publicKey, 'hex'));
-  const list = [...keys.mandatoryKeys, ...keys.optionalKeys].map(item => JSON.stringify(item));
-  let index = list.indexOf(buf);
-
-  if (transactionObject.moduleID === 4 && transactionObject.assetID === 0) {
-    index++;
-  }
-
-  return index;
-};
-
-/**
  * signTransactionByHW - Function.
  * This function is used for sign a send hardware wallet transaction.
  */
@@ -74,11 +53,36 @@ const signTransactionByHW = async (
 
   try {
     const signature = await signTransaction(data);
-    const myIndex = getSignatureIndex(account.summary.publicKey, keys, transactionObject);
-    if (Array.isArray(transactionObject.signatures) && transactionObject.signatures.length) {
-      transactionObject.signatures[myIndex] = signature;
-    } else {
-      Object.assign(transactionObject, { signatures: [signature] });
+    const isMultiSignatureRegistration = transactionObject.moduleID === 4;
+    const signerPublicKey = Buffer.from(account.summary.publicKey, 'hex');
+
+    // The signature should included similar non hardware wallet logic
+    // The below logic is copied from Lisk SDK https://github.com/LiskHQ/lisk-sdk/blob/2593d1fe70154a9209b713994a252c494cad7123/elements/lisk-transactions/src/sign.ts#L228-L297
+    if (isMultiSignatureRegistration &&
+      Buffer.isBuffer(transactionObject.senderPublicKey) &&
+      signerPublicKey.equals(transactionObject.senderPublicKey)
+    ) {
+      transactionObject.signatures[0] = signature;
+    }
+
+    const { mandatoryKeys, optionalKeys } = transactionObject.asset;
+    const mandatoryKeyIndex = mandatoryKeys.findIndex(aPublicKey => aPublicKey.equals(signerPublicKey));
+    const optionalKeyIndex = optionalKeys.findIndex(aPublicKey => aPublicKey.equals(signerPublicKey));
+    if (mandatoryKeyIndex !== -1) {
+      const signatureOffset = isMultiSignatureRegistration ? 1 : 0;
+      transactionObject.signatures[mandatoryKeyIndex + signatureOffset] = signature;
+    }
+    if (optionalKeyIndex !== -1) {
+      const signatureOffset = isMultiSignatureRegistration ? 1 : 0;
+      transactionObject.signatures[mandatoryKeys.length + optionalKeyIndex + signatureOffset] = signature;
+    }
+
+    const numberOfSignatures = (isMultiSignatureRegistration ? 1 : 0) + mandatoryKeys.length + optionalKeys.length;
+    for (let i = 0; i < numberOfSignatures; i += 1) {
+      if (Array.isArray(transactionObject.signatures) &&
+        transactionObject.signatures[i] === undefined) {
+        transactionObject.signatures[i] = Buffer.alloc(0);
+      }
     }
 
     return transactionObject;
