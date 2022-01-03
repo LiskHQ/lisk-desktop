@@ -100,11 +100,15 @@ const Overview = ({
     }
   }, [address]);
 
+  useEffect(showWarning,
+    [isWalletRoute,
+      host,
+      address,
+      pomHeights,
+    ]);
+
   return (
     <section className={`${grid.row} ${styles.wrapper}`}>
-      {
-        showWarning()
-      }
       <div
         className={`${grid['col-xs-6']} ${grid['col-md-3']} ${grid['col-lg-3']}`}
       >
