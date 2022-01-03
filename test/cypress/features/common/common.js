@@ -121,7 +121,7 @@ Then(/^The latest transaction is (.*?)$/, function (transactionType) {
   }
   switch (transactionType.toLowerCase()) {
     case 'unlocking':
-      cy.get(`${ss.transactionRow} ${ss.transactionAddress}`).eq(0).contains('Unlock LSK');
+      cy.get(`${ss.transactionRow} ${ss.transactionAddress}`).eq(0).contains('Unlock');
       break;
     case 'voting':
       cy.get(`${ss.transactionRow} ${ss.transactionAddress}`).eq(0).contains('Delegate vote');

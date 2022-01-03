@@ -46,7 +46,7 @@ Feature: Vote delegate
       Given I am on wallet page
       Then I should see that 540 LSK are locked
       Then I click on openUnlockBalanceDialog
-      Then I should see unlocking balance 40
+      Then I should see unlocking balance 160
       Then I should see available balance 300
       And I click on unlockBtn
       And I click on confirmButton
