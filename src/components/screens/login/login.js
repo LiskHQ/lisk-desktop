@@ -56,7 +56,7 @@ const Login = ({
   const onFormSubmit = (e) => {
     e.preventDefault();
     Piwik.trackingEvent('Login', 'button', 'Login submission');
-    if (passphrase.value) {
+    if (passphrase.value && passphrase.isValid) {
       login({ passphrase: passphrase.value });
     }
   };
