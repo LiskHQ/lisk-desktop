@@ -8,7 +8,6 @@ import { defaultDerivationPath } from '@utils/explicitBipKeyDerivation';
 import { settingsUpdated } from '@actions';
 import Login from './login';
 import accounts from '../../../../test/constants/accounts';
-import login from '.';
 
 jest.mock('@toolbox/flashMessage/holder', () => ({
   addMessage: jest.fn(),
