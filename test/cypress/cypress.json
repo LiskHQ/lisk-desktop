@@ -4,7 +4,6 @@
   "viewportHeight": 1000,
   "video": true,
   "env": {
-    "serviceUrl": "http://localhost:9901"
   },
   "integrationFolder": "./features",
   "fixturesFolder": "./fixtures",
