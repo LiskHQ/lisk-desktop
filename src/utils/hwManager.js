@@ -1,5 +1,4 @@
 // eslint-disable-next-line import/no-unresolved
-// import Lisk from '@liskhq/lisk-client';
 import i18next from 'i18next';
 import { getAccount } from './api/account';
 import {
@@ -34,6 +33,54 @@ const getAccountsFromDevice = async ({ device: { deviceId }, network }) => {
 };
 
 /**
+ * updateTransactionSignatures - Function.
+ * This function updates transaction object to include the signatures at correct index.
+ * The below logic is copied from Lisk SDK https://github.com/LiskHQ/lisk-sdk/blob/2593d1fe70154a9209b713994a252c494cad7123/elements/lisk-transactions/src/sign.ts#L228-L297
+ */
+/* eslint-disable max-statements */
+const updateTransactionSignatures = (
+  account,
+  transactionObject,
+  signature,
+) => {
+  const isMultiSignatureRegistration = transactionObject.moduleID === 4;
+  const signerPublicKey = Buffer.from(account.summary.publicKey, 'hex');
+  if (isMultiSignatureRegistration
+    && Buffer.isBuffer(transactionObject.senderPublicKey)
+    && signerPublicKey.equals(transactionObject.senderPublicKey)
+  ) {
+    transactionObject.signatures[0] = signature;
+  }
+
+  const { mandatoryKeys, optionalKeys } = transactionObject.asset;
+  const mandatoryKeyIndex = mandatoryKeys.findIndex(
+    aPublicKey => aPublicKey.equals(signerPublicKey),
+  );
+  const optionalKeyIndex = optionalKeys.findIndex(
+    aPublicKey => aPublicKey.equals(signerPublicKey),
+  );
+  const signatureOffset = isMultiSignatureRegistration ? 1 : 0;
+  if (mandatoryKeyIndex !== -1) {
+    transactionObject.signatures[mandatoryKeyIndex + signatureOffset] = signature;
+  }
+  if (optionalKeyIndex !== -1) {
+    const index = mandatoryKeys.length + optionalKeyIndex + signatureOffset;
+    transactionObject.signatures[index] = signature;
+  }
+
+  const numberOfSignatures = signatureOffset + mandatoryKeys.length + optionalKeys.length;
+  for (let i = 0; i < numberOfSignatures; i += 1) {
+    if (Array.isArray(transactionObject.signatures)
+      && transactionObject.signatures[i] === undefined) {
+      transactionObject.signatures[i] = Buffer.alloc(0);
+    }
+  }
+
+  return transactionObject;
+};
+/* eslint-disable max-statements */
+
+/**
  * signTransactionByHW - Function.
  * This function is used for sign a send hardware wallet transaction.
  */
@@ -42,7 +89,6 @@ const signTransactionByHW = async (
   networkIdentifier,
   transactionObject,
   transactionBytes,
-  keys,
 ) => {
   const data = {
     deviceId: account.hwInfo.deviceId,
@@ -53,39 +99,7 @@ const signTransactionByHW = async (
 
   try {
     const signature = await signTransaction(data);
-    const isMultiSignatureRegistration = transactionObject.moduleID === 4;
-    const signerPublicKey = Buffer.from(account.summary.publicKey, 'hex');
-
-    // The signature should included similar non hardware wallet logic
-    // The below logic is copied from Lisk SDK https://github.com/LiskHQ/lisk-sdk/blob/2593d1fe70154a9209b713994a252c494cad7123/elements/lisk-transactions/src/sign.ts#L228-L297
-    if (isMultiSignatureRegistration &&
-      Buffer.isBuffer(transactionObject.senderPublicKey) &&
-      signerPublicKey.equals(transactionObject.senderPublicKey)
-    ) {
-      transactionObject.signatures[0] = signature;
-    }
-
-    const { mandatoryKeys, optionalKeys } = transactionObject.asset;
-    const mandatoryKeyIndex = mandatoryKeys.findIndex(aPublicKey => aPublicKey.equals(signerPublicKey));
-    const optionalKeyIndex = optionalKeys.findIndex(aPublicKey => aPublicKey.equals(signerPublicKey));
-    if (mandatoryKeyIndex !== -1) {
-      const signatureOffset = isMultiSignatureRegistration ? 1 : 0;
-      transactionObject.signatures[mandatoryKeyIndex + signatureOffset] = signature;
-    }
-    if (optionalKeyIndex !== -1) {
-      const signatureOffset = isMultiSignatureRegistration ? 1 : 0;
-      transactionObject.signatures[mandatoryKeys.length + optionalKeyIndex + signatureOffset] = signature;
-    }
-
-    const numberOfSignatures = (isMultiSignatureRegistration ? 1 : 0) + mandatoryKeys.length + optionalKeys.length;
-    for (let i = 0; i < numberOfSignatures; i += 1) {
-      if (Array.isArray(transactionObject.signatures) &&
-        transactionObject.signatures[i] === undefined) {
-        transactionObject.signatures[i] = Buffer.alloc(0);
-      }
-    }
-
-    return transactionObject;
+    return updateTransactionSignatures(account, transactionObject, signature);
   } catch (error) {
     throw new Error(error);
   }
