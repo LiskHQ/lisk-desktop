@@ -201,6 +201,10 @@ Then(/^I fill ([^s]+) in ([^s]+) field$/, function (value, field) {
   cy.get(ss[field]).type(value);
 });
 
+When(/^I paste ([\w]+) in ([\w]+) field$/, function (value, field) {
+  cy.get(ss[field]).clear().invoke('val', value.slice(0, value.length - 1)).type(value.slice(-1))
+});
+
 Then(/^I go to transfer confirmation$/, function () {
   cy.get(ss.nextTransferBtn).should('be.enabled');
   cy.get(ss.nextTransferBtn).click();
