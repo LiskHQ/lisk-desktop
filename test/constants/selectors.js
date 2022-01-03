@@ -229,6 +229,7 @@ const ss = {
   unlockBtn: '.unlock-btn',
   removeVote: '.remove-vote',
   unlockingBalance: '.unlocking-balance',
+  availableBalance: '.available-balance',
   addBookmarkIcon: '.add-bookmark-icon',
   inputLabel: '.input-label',
   saveButton: '.save-button',

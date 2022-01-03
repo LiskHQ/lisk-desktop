@@ -8,6 +8,9 @@ Then(/^I should see that (.*?) LSK are locked$/, function (amount) {
 });
 
 Then(/^I should see unlocking balance (.*?)$/, function (amount) {
-  cy.get(`${ss.unlockingBalance}`).eq(0).contains(amount);
+  cy.get(`${ss.unlockingBalance} > p:first-child`).eq(0).contains(amount);
+});
+Then(/^I should see available balance (.*?)$/, function (amount) {
+  cy.get(`${ss.availableBalance}`).eq(0).contains(amount);
 });
 
