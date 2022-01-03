@@ -8,6 +8,7 @@ import { defaultDerivationPath } from '@utils/explicitBipKeyDerivation';
 import { settingsUpdated } from '@actions';
 import Login from './login';
 import accounts from '../../../../test/constants/accounts';
+import login from '.';
 
 jest.mock('@toolbox/flashMessage/holder', () => ({
   addMessage: jest.fn(),
@@ -45,6 +46,8 @@ describe('Login', () => {
     },
   };
 
+  let props;
+
   const history = {
     location: {
       pathname: '',
@@ -58,24 +61,24 @@ describe('Login', () => {
     url: routes.login.path,
   };
 
-  const props = {
-    network,
-    match,
-    account,
-    history,
-    settings,
-    t: data => data,
-    login: jest.fn(),
-    onAccountUpdated: jest.fn(),
-    accountsRetrieved: jest.fn(),
-    settingsUpdated: jest.fn(),
-    liskAPIClient: jest.fn(),
-  };
-
   const { passphrase } = accounts.genesis;
 
   beforeEach(() => {
     jest.restoreAllMocks();
+    props = {
+      network,
+      match,
+      account,
+      history,
+      settings,
+      t: data => data,
+      login: jest.fn(),
+      onAccountUpdated: jest.fn(),
+      accountsRetrieved: jest.fn(),
+      settingsUpdated: jest.fn(),
+      liskAPIClient: jest.fn(),
+    };
+
     localStorage.getItem = jest.fn().mockReturnValue(JSON.stringify(undefined));
     wrapper = mount(<Login {...props} />);
   });
@@ -128,6 +131,16 @@ describe('Login', () => {
       expect(props.login).toHaveBeenCalledWith({
         passphrase: accounts.delegate.passphrase,
       });
+    });
+
+    it('should not login if passphrase is empty', () => {
+      const clipboardData = {
+        getData: () => '',
+      };
+      wrapper.find('passphraseInput input').first().simulate('paste', { clipboardData });
+      wrapper.update();
+      wrapper.find('button.login-button').simulate('submit');
+      expect(props.login).not.toHaveBeenCalled();
     });
   });
 
