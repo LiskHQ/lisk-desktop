@@ -33,4 +33,4 @@ make up
 cd ../redis
 make up
 
-lisk-core start --network=devnet --api-ws --api-ws-host=0.0.0.0 --api-ws-port=8888 --enable-forger-plugin --port=5050 --enable-http-api-plugin
+lisk-core start --network=devnet --api-ws --api-ws-host=0.0.0.0 --api-ws-port=8888 --enable-forger-plugin --port=5050
