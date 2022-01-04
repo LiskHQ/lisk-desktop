@@ -384,10 +384,10 @@ describe('actions: transactions', () => {
       sender: { data: accounts.multiSig },
     };
 
-    it('should create an action to store double signed tx', async () => {
+    it('should create an action to store double signed tx', () => {
       // Consume the utility
       jest.spyOn(transactionUtils, 'signTransaction').mockImplementation(() => [{ id: 1 }, undefined]);
-      await multisigTransactionSigned(params)(dispatch, getStateWithTx);
+      multisigTransactionSigned(params)(dispatch, getStateWithTx);
 
       // Prepare expectations
       const expectedAction = {
@@ -399,13 +399,13 @@ describe('actions: transactions', () => {
       expect(dispatch).toHaveBeenCalledWith(expectedAction);
     });
 
-    it('should create an action to store signature error', async () => {
+    it('should create an action to store signature error', () => {
       // Prepare the store
       const error = { message: 'error signing tx' };
       jest.spyOn(transactionUtils, 'signTransaction').mockImplementation(() => [undefined, error]);
 
       // Consume the utility
-      await multisigTransactionSigned(params)(dispatch, getStateWithTx);
+      multisigTransactionSigned(params)(dispatch, getStateWithTx);
 
       // Prepare expectations
       const expectedAction = {
