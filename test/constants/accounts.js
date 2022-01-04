@@ -83,7 +83,7 @@ const accounts = {
       address: 'lsks6wh4zqfd8wyka3rj243rshcdqyug9gyvehxwz',
     },
     token: {},
-    sequence: {},
+    sequence: { nonce: 1 },
     dpos: {
       delegate: {},
       sentVotes: [],

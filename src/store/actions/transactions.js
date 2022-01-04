@@ -133,7 +133,6 @@ export const transactionCreated = data => async (dispatch, getState) => {
  * @param {object} data
  * @param {string} data.secondPass
  */
-/* istanbul ignore next */
 export const transactionDoubleSigned = () => async (dispatch, getState) => {
   const {
     transactions, network, account, settings,
@@ -220,7 +219,6 @@ export const transactionBroadcasted = transaction =>
  * @param {object} data.sender.data - Sender account info in Lisk API schema
  * @todo account for privateKey and HW and increase test coverage once HW is implemented
  */
-/* istanbul ignore next */
 export const multisigTransactionSigned = ({
   rawTransaction, sender,
 }) => (dispatch, getState) => {

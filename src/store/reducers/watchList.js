@@ -11,7 +11,6 @@ const watchList = (state = [], action) => {
     case actionTypes.removedFromWatchList:
       return state.filter(address => address !== action.data.address);
 
-    /* istanbul ignore next  */
     default:
       return state;
   }
