@@ -1,5 +1,17 @@
 Feature: Send
 
+  Scenario: Error message is shown if transfer tx fails
+      Given I login as genesis on devnet
+      Given I mock api /transactions
+      Given I am on Wallet page
+      Then I click on sendLink
+      When I paste lsk29eqdkm88v4zc6tbjv8435td54u33m3a3kgjjk in recipientInput field
+      And I fill 4 in amountInput field
+      And I go to transfer confirmation
+      And I click on sendButton
+      Then submittedTransactionMessage should be visible
+      Then I see error message
+
    Scenario: Transfer tx + Header balance is affected
      Given I login as genesis on devnet
      Given I am on Wallet page
@@ -28,14 +40,4 @@ Feature: Send
     When I login
     Then Send form fields are prefilled
 
-  Scenario: Error message is shown if transfer tx fails
-    Given I login as genesis on devnet
-    Given I mock api /transactions
-    Given I am on Wallet page
-    Then I click on sendLink
-    When I paste lsk29eqdkm88v4zc6tbjv8435td54u33m3a3kgjjk in recipientInput field
-    And I fill 4 in amountInput field
-    And I go to transfer confirmation
-    And I click on sendButton
-    Then submittedTransactionMessage should be visible
-    Then I see error message
+  
