@@ -2,11 +2,18 @@ import { toast } from 'react-toastify';
 import { actionTypes } from '@constants';
 import * as accountApi from '@api/account';
 import { extractKeyPair } from '@utils/account';
+import { create } from '@api/transaction';
 import { defaultDerivationPath } from '@utils/explicitBipKeyDerivation';
 import {
   accountLoggedOut,
   accountDataUpdated,
   login,
+  secondPassphraseStored,
+  secondPassphraseRemoved,
+  balanceUnlocked,
+  delegateRegistered,
+  multisigGroupRegistered,
+  balanceReclaimed,
 } from './account';
 import accounts from '../../../test/constants/accounts';
 import * as networkActions from './network';
@@ -32,7 +39,9 @@ jest.mock('./network', () => ({
 }));
 jest.mock('@utils/account', () => ({
   extractKeyPair: jest.fn(),
+  getUnlockableUnlockObjects: () => [{}],
 }));
+jest.mock('@api/transaction');
 
 const network = {
   name: 'Mainnet',
@@ -61,6 +70,26 @@ describe('actions: account', () => {
       };
 
       expect(accountLoggedOut()).toEqual(expectedAction);
+    });
+  });
+
+  describe('secondPassphraseStored', () => {
+    it('should create an action to reset the account', () => {
+      const expectedAction = {
+        type: actionTypes.secondPassphraseStored,
+      };
+
+      expect(secondPassphraseStored()).toEqual(expectedAction);
+    });
+  });
+
+  describe('secondPassphraseRemoved', () => {
+    it('should create an action to reset the account', () => {
+      const expectedAction = {
+        type: actionTypes.secondPassphraseRemoved,
+      };
+
+      expect(secondPassphraseRemoved()).toEqual(expectedAction);
     });
   });
 
@@ -237,11 +266,248 @@ describe('actions: account', () => {
       });
     });
 
-    it.skip('should fire an error toast if getAccount fails ', async () => {
+    it('should call extractAddress with params when selected token is BTC', async () => {
+      const newGetState = () => ({
+        ...state,
+        settings: {
+          ...state.settings,
+          token: {
+            list: {
+              LSK: false,
+              BTC: true,
+            },
+          },
+        },
+      });
+
+      await login({ passphrase })(dispatch, newGetState);
+      expect(accountApi.extractAddress).toHaveBeenCalledWith(
+        accounts.genesis.passphrase,
+        state.network,
+      );
+    });
+
+    it('should fire an error toast if getAccount fails ', async () => {
       jest.spyOn(toast, 'error');
       accountApi.getAccount.mockRejectedValue({ message: 'custom error' });
       await login({ passphrase })(dispatch, getState);
       expect(toast.error).toHaveBeenCalledTimes(1);
+      expect(dispatch).toHaveBeenCalledWith({ type: actionTypes.accountLoggedOut });
+    });
+  });
+
+  describe('balanceUnlocked', () => {
+    const state = {
+      account: {
+        passphrase: accounts.genesis.passphrase,
+        info: {
+          LSK: accounts.genesis,
+        },
+      },
+      network: {},
+      blocks: {
+        latestBlocks: [{ height: 10 }],
+      },
+    };
+    const getState = () => state;
+    const params = { selectedFee: '0.1' };
+
+    it('should dispatch transactionCreatedSuccess', async () => {
+      const tx = { id: 1 };
+      create.mockImplementation(() =>
+        new Promise((resolve) => {
+          resolve(tx);
+        }));
+      await balanceUnlocked(params)(dispatch, getState);
+      expect(create).toHaveBeenCalledWith({
+        network: state.network,
+        account: state.account.info.LSK,
+        transactionObject: {
+          moduleAssetId: '5:2',
+          senderPublicKey: accounts.genesis.summary.publicKey,
+          nonce: accounts.genesis.sequence?.nonce,
+          fee: '10000000',
+          unlockObjects: [{}],
+        },
+      }, 'LSK');
+      expect(dispatch).toHaveBeenCalledWith({
+        type: actionTypes.transactionCreatedSuccess,
+        data: tx,
+      });
+    });
+
+    it('should dispatch transactionSignError', async () => {
+      const error = { message: 'TestError' };
+      create.mockImplementation(() =>
+        new Promise((_, reject) => {
+          reject(error);
+        }));
+      await balanceUnlocked(params)(dispatch, getState);
+      expect(dispatch).toHaveBeenCalledWith({
+        type: actionTypes.transactionSignError,
+        data: error,
+      });
+    });
+  });
+
+  describe('delegateRegistered', () => {
+    const state = {
+      account: {
+        passphrase: accounts.delegate_candidate.passphrase,
+        info: {
+          LSK: accounts.delegate_candidate,
+        },
+      },
+      network: {},
+    };
+    const getState = () => state;
+    const params = {
+      fee: { value: '0.1' },
+      username: 'new_delegate',
+    };
+
+    it('should dispatch transactionCreatedSuccess', async () => {
+      const tx = { id: 1 };
+      create.mockImplementation(() =>
+        new Promise((resolve) => {
+          resolve(tx);
+        }));
+      await delegateRegistered(params)(dispatch, getState);
+      expect(create).toHaveBeenCalledWith({
+        network: state.network,
+        account: state.account.info.LSK,
+        transactionObject: {
+          senderPublicKey: accounts.delegate_candidate.summary.publicKey,
+          nonce: accounts.delegate_candidate.sequence.nonce,
+          fee: 10000000,
+          username: params.username,
+          moduleAssetId: '5:0',
+        },
+      }, 'LSK');
+      expect(dispatch).toHaveBeenCalledWith({
+        type: actionTypes.transactionCreatedSuccess,
+        data: tx,
+      });
+    });
+
+    it('should dispatch transactionSignError', async () => {
+      const error = { message: 'TestError' };
+      create.mockImplementation(() =>
+        new Promise((_, reject) => {
+          reject(error);
+        }));
+      await delegateRegistered(params)(dispatch, getState);
+      expect(dispatch).toHaveBeenCalledWith({
+        type: actionTypes.transactionSignError,
+        data: error,
+      });
+    });
+  });
+
+  describe('multisigGroupRegistered', () => {
+    const state = {
+      account: {
+        passphrase: accounts.multiSig_candidate.passphrase,
+        info: {
+          LSK: accounts.multiSig_candidate,
+        },
+      },
+      network: {},
+    };
+    const getState = () => state;
+    const params = {
+      fee: '0.1',
+      mandatoryKeys: ['1'],
+      optionalKeys: ['2', '3'],
+      numberOfSignatures: 2,
+    };
+
+    it('should dispatch transactionCreatedSuccess', async () => {
+      const tx = { id: 1 };
+      create.mockImplementation(() =>
+        new Promise((resolve) => {
+          resolve(tx);
+        }));
+      await multisigGroupRegistered(params)(dispatch, getState);
+      expect(create).toHaveBeenCalledWith({
+        network: state.network,
+        account: state.account.info.LSK,
+        transactionObject: {
+          moduleAssetId: '4:0',
+          fee: 10000000,
+          mandatoryKeys: params.mandatoryKeys,
+          optionalKeys: params.optionalKeys,
+          numberOfSignatures: params.numberOfSignatures,
+          nonce: accounts.multiSig_candidate.sequence.nonce,
+          senderPublicKey: accounts.multiSig_candidate.summary.publicKey,
+        },
+      }, 'LSK');
+      expect(dispatch).toHaveBeenCalledWith({
+        type: actionTypes.transactionCreatedSuccess,
+        data: tx,
+      });
+    });
+
+    it('should dispatch transactionSignError', async () => {
+      const error = { message: 'TestError' };
+      create.mockImplementation(() =>
+        new Promise((_, reject) => {
+          reject(error);
+        }));
+      await multisigGroupRegistered(params)(dispatch, getState);
+      expect(dispatch).toHaveBeenCalledWith({
+        type: actionTypes.transactionSignError,
+        data: error,
+      });
+    });
+  });
+
+  describe('balanceReclaimed', () => {
+    const state = {
+      account: {
+        passphrase: accounts.non_migrated.passphrase,
+        info: {
+          LSK: accounts.non_migrated,
+        },
+      },
+      network: {},
+    };
+    const getState = () => state;
+
+    it('should dispatch transactionCreatedSuccess', async () => {
+      const tx = { id: 1 };
+      create.mockImplementation(() =>
+        new Promise((resolve) => {
+          resolve(tx);
+        }));
+      await balanceReclaimed({ fee: { value: '0,1' } })(dispatch, getState);
+      expect(create).toHaveBeenCalledWith({
+        network: state.network,
+        account: state.account.info.LSK,
+        transactionObject: {
+          moduleAssetId: '1000:0',
+          fee: 100000000,
+          amount: '13600000000',
+          keys: { numberOfSignatures: 0 },
+        },
+      }, 'LSK');
+      expect(dispatch).toHaveBeenCalledWith({
+        type: actionTypes.transactionCreatedSuccess,
+        data: tx,
+      });
+    });
+
+    it('should dispatch transactionSignError', async () => {
+      const error = { message: 'TestError' };
+      create.mockImplementation(() =>
+        new Promise((_, reject) => {
+          reject(error);
+        }));
+      await balanceReclaimed({ fee: { value: '0,1' } })(dispatch, getState);
+      expect(dispatch).toHaveBeenCalledWith({
+        type: actionTypes.transactionSignError,
+        data: error,
+      });
     });
   });
 });

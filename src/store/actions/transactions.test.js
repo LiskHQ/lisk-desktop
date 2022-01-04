@@ -10,6 +10,7 @@ import {
   transactionDoubleSigned,
   transactionBroadcasted,
   transactionCreated,
+  multisigTransactionSigned,
 } from './transactions';
 import { sampleTransaction } from '../../../test/constants/transactions';
 import { getState } from '../../../test/fixtures/transactions';
@@ -358,6 +359,62 @@ describe('actions: transactions', () => {
       expect(dispatch).toHaveBeenNthCalledWith(1, expectedAction1);
       // expect(dispatch).toHaveBeenNthCalledWith(2, expectedAction2);
       expect(dispatch).toHaveBeenNthCalledWith(3, expectedAction3);
+    });
+  });
+
+  describe('multisigTransactionSigned', () => {
+    const { network, account, settings } = getState();
+    const getStateWithTx = () => ({
+      network,
+      account: {
+        ...account,
+        secondPassphrase: accounts.multiSig.passphrase,
+        info: {
+          ...account.info,
+          LSK: accounts.multiSig,
+        },
+      },
+      settings,
+      transactions: {
+        signedTransaction: sampleTransaction,
+      },
+    });
+    const params = {
+      rawTransaction: { signatures: [] },
+      sender: { data: accounts.multiSig },
+    };
+
+    it('should create an action to store double signed tx', async () => {
+      // Consume the utility
+      jest.spyOn(transactionUtils, 'signTransaction').mockImplementation(() => [{ id: 1 }, undefined]);
+      await multisigTransactionSigned(params)(dispatch, getStateWithTx);
+
+      // Prepare expectations
+      const expectedAction = {
+        type: actionTypes.transactionDoubleSigned,
+        data: expect.any(Object),
+      };
+
+      // Assert
+      expect(dispatch).toHaveBeenCalledWith(expectedAction);
+    });
+
+    it('should create an action to store signature error', async () => {
+      // Prepare the store
+      const error = { message: 'error signing tx' };
+      jest.spyOn(transactionUtils, 'signTransaction').mockImplementation(() => [undefined, error]);
+
+      // Consume the utility
+      await multisigTransactionSigned(params)(dispatch, getStateWithTx);
+
+      // Prepare expectations
+      const expectedAction = {
+        type: actionTypes.transactionSignError,
+        data: error,
+      };
+
+      // Assert
+      expect(dispatch).toHaveBeenCalledWith(expectedAction);
     });
   });
 });
