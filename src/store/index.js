@@ -14,7 +14,6 @@ const store = createStore(App, composeEnhancers(applyMiddleware(...middleWares))
 store.dispatch({ type: actionTypes.storeCreated });
 
 // ignore this in coverage as it is hard to test and does not run in production
-/* istanbul ignore if */
 if (module.hot) {
   module.hot.accept('./reducers', () => {
     const nextReducer = combineReducers(require('./reducers'));
