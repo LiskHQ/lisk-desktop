@@ -1,3 +1,4 @@
+/* eslint-disable max-lines */
 import { toast } from 'react-toastify';
 import { actionTypes } from '@constants';
 import * as accountApi from '@api/account';
