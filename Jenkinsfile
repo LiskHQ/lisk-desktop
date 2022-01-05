@@ -7,6 +7,7 @@ pipeline {
 		timeout(time: 30, unit: 'MINUTES')
 	}
 	parameters {
+		string(name: 'CORE_VERSION', defaultValue: '3.0.2')
 		string(name: 'SERVICE_BRANCH_NAME', defaultValue: 'development')
 	}
 	stages {
@@ -68,12 +69,12 @@ pipeline {
 							ansiColor('xterm') {
 								wrap([$class: 'Xvfb']) {
 									sh '''
-									wget --no-verbose --continue https://downloads.lisk.com/lisk/testnet/3.0.2/lisk-core-v3.0.2-linux-x64.tar.gz.SHA256 https://downloads.lisk.com/lisk/testnet/3.0.2/lisk-core-v3.0.2-linux-x64.tar.gz
-									sha256sum -c lisk-core-v3.0.2-linux-x64.tar.gz.SHA256
-									tar xf lisk-core-v3.0.2-linux-x64.tar.gz
+									wget --no-verbose --continue https://downloads.lisk.com/lisk/testnet/$CORE_VERSION/lisk-core-v$CORE_VERSION-linux-x64.tar.gz.SHA256 https://downloads.lisk.com/lisk/testnet/$CORE_VERSION/lisk-core-v$CORE_VERSION-linux-x64.tar.gz
+									sha256sum -c lisk-core-v$CORE_VERSION-linux-x64.tar.gz.SHA256
+									rm -rf lisk-core/
+									tar xf lisk-core-v$CORE_VERSION-linux-x64.tar.gz
 									rm -rf ~/.lisk/
-									mkdir -p ~/.lisk/lisk-core/config/devnet/
-									cp -f test/dev_config_and_db/genesis_block.json ~/.lisk/lisk-core/config/devnet/
+									install -D test/dev_config_and_db/genesis_block.json ~/.lisk/lisk-core/config/devnet/genesis_block.json
 									./lisk-core/bin/lisk-core blockchain:import --force test/dev_config_and_db/tokens_unlocked_dev_blockchain.db.tar.gz
 									./lisk-core/bin/lisk-core forger-info:import --force test/dev_config_and_db/forger.db.tar.gz
 									nohup ./lisk-core/bin/lisk-core start --network=devnet --api-ws --api-ws-host=0.0.0.0 --api-ws-port=8080 --enable-forger-plugin >lisk-core.out 2>lisk-core.err &
@@ -82,9 +83,14 @@ pipeline {
 									curl --verbose http://127.0.0.1:8080/
 									cp -f lisk-service/docker/example.env lisk-service/.env
 									make -C lisk-service up
+
+									# workaround for https://github.com/LiskHQ/lisk-service/issues/916
+									# until https://github.com/LiskHQ/lisk-service/issues/920 is resolved
 									docker exec --user root lisk-service_core_1 mkdir -p /home/lisk/lisk-service/export/data/static
 									docker exec --user root lisk-service_core_1 mkdir -p /home/lisk/lisk-service/export/data/partials
 									docker exec --user root lisk-service_core_1 chown lisk:lisk -R /home/lisk/lisk-service/export/data
+
+									# wait for service to be up and running
 									set -e; while ! curl --silent --fail http://127.0.0.1:9901/api/v2/blocks >/dev/null; do echo waiting; sleep 10; done; set +e
 									curl --verbose http://127.0.0.1:9901/api/v2/blocks
 									set -e; while ! curl --silent --fail http://127.0.0.1:9901/api/v2/network/status >/dev/null; do echo waiting; sleep 10; done; set +e
