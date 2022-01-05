@@ -25,6 +25,7 @@ const TableWrapper = compose(
       }
       return 0;
     },
+    sanctionedStatus: (a, b, direction) => (((direction === 'asc' ? a.status > b.status : b.status > a.status) ? 1 : -1)),
   }),
 )(({
   delegates, handleLoadMore, t, activeTab, blocks,
