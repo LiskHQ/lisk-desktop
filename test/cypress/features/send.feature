@@ -24,7 +24,6 @@ Feature: Send
      Then submittedTransactionMessage should be visible
      And I click on closeDialog
      Then The latest transaction is transfer to lsk29e...kgjjk
-    #  Then I should not see pending transaction
      Then I wait 10 seconds
      Then The balance is subtracted
  

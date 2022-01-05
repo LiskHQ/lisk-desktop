@@ -50,6 +50,5 @@ Feature: Vote delegate
       Then I should see available balance 300
       And I click on unlockBtn
       And I click on confirmButton
-      # And I click on closeDialog
       And I click on backToWalletButton
       Then The latest transaction is unlocking
