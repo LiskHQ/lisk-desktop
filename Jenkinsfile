@@ -109,6 +109,9 @@ pipeline {
 				)
 			}
 			post {
+				failure {
+					archiveArtifacts artifacts: 'test/cypress/screenshots/', allowEmptyArchive: true
+				}
 				always {
 					sh '''
 					make -C lisk-service logs
