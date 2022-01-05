@@ -8,3 +8,9 @@
     top: calc(100% + 10px);
   }
 }
+
+@media (--small-viewport) {
+  .dropdown {
+    max-width: 670px;
+  }
+}
