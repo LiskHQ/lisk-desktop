@@ -69,6 +69,7 @@ pipeline {
 							ansiColor('xterm') {
 								wrap([$class: 'Xvfb']) {
 									sh '''
+									# lisk-core
 									wget --no-verbose --continue https://downloads.lisk.com/lisk/testnet/$CORE_VERSION/lisk-core-v$CORE_VERSION-linux-x64.tar.gz.SHA256 https://downloads.lisk.com/lisk/testnet/$CORE_VERSION/lisk-core-v$CORE_VERSION-linux-x64.tar.gz
 									sha256sum -c lisk-core-v$CORE_VERSION-linux-x64.tar.gz.SHA256
 									rm -rf lisk-core/
@@ -77,10 +78,14 @@ pipeline {
 									install -D test/dev_config_and_db/genesis_block.json ~/.lisk/lisk-core/config/devnet/genesis_block.json
 									./lisk-core/bin/lisk-core blockchain:import --force test/dev_config_and_db/tokens_unlocked_dev_blockchain.db.tar.gz
 									./lisk-core/bin/lisk-core forger-info:import --force test/dev_config_and_db/forger.db.tar.gz
-									nohup ./lisk-core/bin/lisk-core start --network=devnet --api-ws --api-ws-host=0.0.0.0 --api-ws-port=8080 --enable-forger-plugin >lisk-core.out 2>lisk-core.err &
+									nohup ./lisk-core/bin/lisk-core start --network=devnet --api-ws --api-ws-host=0.0.0.0 --api-ws-port=8080 --enable-forger-plugin --enable-http-api-plugin >lisk-core.out 2>lisk-core.err &
 									echo $! >lisk-core.pid
-									sleep 90  # TODO
-									curl --verbose http://127.0.0.1:8080/
+
+									# wait for core to be up and running
+									set -e; while ! curl --silent --fail http://127.0.0.1:4000/api/node/info >/dev/null; do echo waiting; sleep 10; done; set +e
+									curl --verbose http://127.0.0.1:4000/api/node/info
+
+									# lisk-service
 									cp -f lisk-service/docker/example.env lisk-service/.env
 									make -C lisk-service up
 
@@ -120,8 +125,11 @@ pipeline {
 				}
 				always {
 					sh '''
+					# lisk-service
 					make -C lisk-service logs
 					make -C lisk-service down
+
+					# lisk-core
 					kill $( cat lisk-core.pid ) || true
 					sleep 10
 					kill -9 $( cat lisk-core.pid ) || true
