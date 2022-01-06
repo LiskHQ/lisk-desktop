@@ -64,10 +64,11 @@ describe('hwManager util', () => {
         assetID: 0,
         nonce: '1',
         senderAddress: 'lskdxc4ta5j43jp9ro3f8zqbxta9fn6jwzjucw7yt',
+        signatures: [],
       };
 
       const keys = {
-        mandatoryKeys: [account.summary.publicKey],
+        mandatoryKeys: [Buffer.from(account.summary.publicKey, 'hex'), Buffer.from(accounts.genesis.summary.publicKey, 'hex')],
         optionalKeys: [],
       };
 
