@@ -108,8 +108,6 @@ const DelegatesMonitor = ({
     });
   }
 
-  console.log('>>>> ', sanctionedDelegates);
-
   return (
     <div>
       <DelegatesOverview

@@ -194,22 +194,24 @@ describe('Delegates monitor page', () => {
     expect(wrapper.find('a.delegate-row')).toHaveLength(blocks.forgers.length);
   });
 
-  it('properly sorts  delegates by their status', () => {
+  it('properly sorts delegates by their status', () => {
     initSanctionedProps();
     wrapper = setup(props);
     switchTab('sanctioned');
+
     const sortByBtn = wrapper.find('span.sort-by');
     const statuses = wrapper.find('a.delegate-row > span:first-child ~ span ~ span > span').map(ele => ele.text());
     statuses.forEach((status, index) => {
       expect(status).equal(index === 1 ? 'Punished' : 'Banned');
     });
 
-    sortByBtn.simulate('click');
+    sortByBtn.last().simulate('click');
 
     statuses.forEach((status, index) => {
       expect(status).equal(index === 2 ? 'Banned' : 'Punished');
     });
-    sortByBtn.simulate('click');
+
+    sortByBtn.last().simulate('click');
 
     statuses.forEach((status, index) => {
       expect(status).equal(index === 2 ? 'Punished' : 'Banned');
