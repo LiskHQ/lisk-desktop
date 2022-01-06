@@ -213,8 +213,8 @@ describe('Delegates monitor page', () => {
 
     sortByBtn.last().simulate('click');
 
-    // statuses.forEach((status, index) => {
-    //   expect(status).equal(index === 2 ? 'Punished' : 'Banned');
-    // });
+    statuses.forEach((status, index) => {
+      expect(status).equal(index === 2 ? 'Punished' : 'Banned');
+    });
   });
 });
