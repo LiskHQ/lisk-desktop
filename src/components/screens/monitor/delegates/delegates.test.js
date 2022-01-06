@@ -43,6 +43,59 @@ describe('Delegates monitor page', () => {
     });
   };
 
+  function initSanctionedProps() {
+    props.sanctionedDelegates = {
+      isLoading: false,
+      data: [
+        {
+          address: 'lsktaa9xuys6hztyaryvx6msu279mpkn9sz6w5or2',
+          consecutiveMissedBlocks: 220,
+          isBanned: true,
+          lastForgedHeight: 16695471,
+          producedBlocks: 1404,
+          rank: 1563,
+          registrationHeight: 16331164,
+          rewards: '140200000000',
+          status: 'banned',
+          totalVotesReceived: '2170000000000',
+          username: 'ziqi',
+          voteWeight: '0',
+        },
+        {
+          address: 'lsksaca4v9r3uotdzdhje3smwa49rvj2h2sn5yskt',
+          consecutiveMissedBlocks: 0,
+          isBanned: false,
+          lastForgedHeight: 16784595,
+          producedBlocks: 4929,
+          rank: 1503,
+          registrationHeight: 16270293,
+          rewards: '491800000000',
+          status: 'punished',
+          totalVotesReceived: '8771000000000',
+          username: 'liskjp',
+          voteWeight: '0',
+        },
+        {
+          address: 'lskr39gqjxhepd9o5txgmups9zjhjaadfjgm5dc87',
+          consecutiveMissedBlocks: 229,
+          isBanned: true,
+          lastForgedHeight: 16739690,
+          producedBlocks: 2014,
+          rank: 1436,
+          registrationHeight: 16270293,
+          rewards: '201125000000',
+          status: 'banned',
+          totalVotesReceived: '2356000000000',
+          username: 'acheng',
+          voteWeight: '0',
+        },
+      ],
+      loadData: jest.fn(),
+      clearData: jest.fn(),
+      urlSearchParams: {},
+    };
+  }
+
   const { blocks } = store.getState();
 
   beforeEach(() => {
@@ -139,5 +192,27 @@ describe('Delegates monitor page', () => {
   it('renders the forging status', () => {
     wrapper = setup(props);
     expect(wrapper.find('a.delegate-row')).toHaveLength(blocks.forgers.length);
+  });
+
+  it('properly sorts  delegates by their status', () => {
+    initSanctionedProps();
+    wrapper = setup(props);
+    switchTab('sanctioned');
+    const sortByBtn = wrapper.find('span.sort-by');
+    const statuses = wrapper.find('a.delegate-row > span:first-child ~ span ~ span > span').map(ele => ele.text());
+    statuses.forEach((status, index) => {
+      expect(status).equal(index === 1 ? 'Punished' : 'Banned');
+    });
+
+    sortByBtn.simulate('click');
+
+    statuses.forEach((status, index) => {
+      expect(status).equal(index === 2 ? 'Banned' : 'Punished');
+    });
+    sortByBtn.simulate('click');
+
+    statuses.forEach((status, index) => {
+      expect(status).equal(index === 2 ? 'Punished' : 'Banned');
+    });
   });
 });
