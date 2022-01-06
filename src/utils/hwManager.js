@@ -42,37 +42,38 @@ const updateTransactionSignatures = (
   account,
   transactionObject,
   signature,
+  keys,
 ) => {
   const isMultiSignatureRegistration = transactionObject.moduleID === 4;
   const signerPublicKey = Buffer.from(account.summary.publicKey, 'hex');
-  if (isMultiSignatureRegistration
-    && Buffer.isBuffer(transactionObject.senderPublicKey)
+  if (Buffer.isBuffer(transactionObject.senderPublicKey)
     && signerPublicKey.equals(transactionObject.senderPublicKey)
   ) {
     transactionObject.signatures[0] = signature;
   }
 
-  const { mandatoryKeys, optionalKeys } = transactionObject.asset;
-  const mandatoryKeyIndex = mandatoryKeys.findIndex(
-    aPublicKey => aPublicKey.equals(signerPublicKey),
-  );
-  const optionalKeyIndex = optionalKeys.findIndex(
-    aPublicKey => aPublicKey.equals(signerPublicKey),
-  );
-  const signatureOffset = isMultiSignatureRegistration ? 1 : 0;
-  if (mandatoryKeyIndex !== -1) {
-    transactionObject.signatures[mandatoryKeyIndex + signatureOffset] = signature;
-  }
-  if (optionalKeyIndex !== -1) {
-    const index = mandatoryKeys.length + optionalKeyIndex + signatureOffset;
-    transactionObject.signatures[index] = signature;
-  }
-
-  const numberOfSignatures = signatureOffset + mandatoryKeys.length + optionalKeys.length;
-  for (let i = 0; i < numberOfSignatures; i += 1) {
-    if (Array.isArray(transactionObject.signatures)
-      && transactionObject.signatures[i] === undefined) {
-      transactionObject.signatures[i] = Buffer.alloc(0);
+  const { mandatoryKeys, optionalKeys } = keys;
+  if (mandatoryKeys.length + optionalKeys.length > 0) {
+    const mandatoryKeyIndex = mandatoryKeys.findIndex(
+      aPublicKey => aPublicKey.equals(signerPublicKey),
+    );
+    const optionalKeyIndex = optionalKeys.findIndex(
+      aPublicKey => aPublicKey.equals(signerPublicKey),
+    );
+    const signatureOffset = isMultiSignatureRegistration ? 1 : 0;
+    if (mandatoryKeyIndex !== -1) {
+      transactionObject.signatures[mandatoryKeyIndex + signatureOffset] = signature;
+    }
+    if (optionalKeyIndex !== -1) {
+      const index = mandatoryKeys.length + optionalKeyIndex + signatureOffset;
+      transactionObject.signatures[index] = signature;
+    }
+    const numberOfSignatures = signatureOffset + mandatoryKeys.length + optionalKeys.length;
+    for (let i = 0; i < numberOfSignatures; i += 1) {
+      if (Array.isArray(transactionObject.signatures)
+        && transactionObject.signatures[i] === undefined) {
+        transactionObject.signatures[i] = Buffer.alloc(0);
+      }
     }
   }
 
@@ -89,6 +90,7 @@ const signTransactionByHW = async (
   networkIdentifier,
   transactionObject,
   transactionBytes,
+  keys,
 ) => {
   const data = {
     deviceId: account.hwInfo.deviceId,
@@ -99,7 +101,7 @@ const signTransactionByHW = async (
 
   try {
     const signature = await signTransaction(data);
-    return updateTransactionSignatures(account, transactionObject, signature);
+    return updateTransactionSignatures(account, transactionObject, signature, keys);
   } catch (error) {
     throw new Error(error);
   }
