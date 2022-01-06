@@ -25,8 +25,9 @@ cd ../lisk-core
 mkdir -p ~/.lisk/lisk-core/config/devnet/
 cp config/genesis_block.json ~/.lisk/lisk-core/config/devnet/
 
+# lisk-core blockchain:import snapshots/blockchain.db.tar.gz --force
 lisk-core blockchain:import snapshots/unlocked-tokens/blockchain.db.tar.gz --force
-lisk-core forger-info:import snapshots/forger.db.tar.gz --force
+lisk-core forger-info:import snapshots/unlocked-tokens/forger.db.tar.gz --force
 
 cd ../mariadb
 make up
