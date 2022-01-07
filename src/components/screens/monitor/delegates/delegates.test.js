@@ -211,7 +211,7 @@ describe('Delegates monitor page', () => {
       expect(status).equal(index === 2 ? 'Banned' : 'Punished');
     });
 
-    sortByBtn.last().simulate('click');
+    wrapper.find('span.sort-by').at(1).simulate('click');
 
     statuses.forEach((status, index) => {
       expect(status).equal(index === 2 ? 'Punished' : 'Banned');
