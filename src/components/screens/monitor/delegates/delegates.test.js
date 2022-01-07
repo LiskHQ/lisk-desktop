@@ -200,7 +200,7 @@ describe('Delegates monitor page', () => {
     switchTab('sanctioned');
 
     const sortByBtn = wrapper.find('span.sort-by');
-    const statuses = wrapper.find('a.delegate-row > span:first-child ~ span ~ span > span').map(ele => ele.text());git
+    const statuses = wrapper.find('a.delegate-row > span:first-child ~ span ~ span > span').map(ele => ele.text());
     statuses.forEach((status, index) => {
       expect(status).equal(index === 1 ? 'Punished' : 'Banned');
     });
