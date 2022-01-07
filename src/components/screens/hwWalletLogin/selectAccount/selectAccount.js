@@ -13,12 +13,12 @@ const Tab = ({
   tabName, tabId, accountsList,
   onSaveNameAccounts, onSelectAccount,
 }) => (
-  <div tabName={tabName} tabId={tabId} className={`${styles.deviceContainer} ${`tab-${tabId}`} hw-container`}>
-    {accountsList.map((account, index) => (
+  <div name={tabName} id={tabId} className={`${styles.deviceContainer} ${`tab-${tabId}`} hw-container`}>
+    {accountsList.map((data) => (
       <AccountCard
-        key={`hw-account-tabId-${index}`}
-        account={account}
-        index={index}
+        key={`hw-account-tabId-${data.index}`}
+        account={data.account}
+        index={data.index}
         onSaveNameAccounts={onSaveNameAccounts}
         onSelectAccount={onSelectAccount}
       />
@@ -140,16 +140,16 @@ class SelectAccount extends React.Component {
       nonEmptyAccounts,
       emptyAccounts,
       reclaimAccounts,
-    } = hwAccounts.reduce((acc, account) => {
+    } = hwAccounts.reduce((acc, account, index) => {
       if (account.legacy) {
-        acc.reclaimAccounts = [...acc.reclaimAccounts, account];
+        acc.reclaimAccounts = [...acc.reclaimAccounts, { index, account }];
         return acc;
       }
       if (account.summary?.balance > 0) {
-        acc.nonEmptyAccounts = [...acc.nonEmptyAccounts, account];
+        acc.nonEmptyAccounts = [...acc.nonEmptyAccounts, { index, account }];
         return acc;
       }
-      acc.emptyAccounts = [...acc.emptyAccounts, account];
+      acc.emptyAccounts = [...acc.emptyAccounts, { index, account }];
       return acc;
     }, { nonEmptyAccounts: [], emptyAccounts: [], reclaimAccounts: [] });
 
