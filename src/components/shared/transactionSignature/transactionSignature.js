@@ -3,17 +3,8 @@ import Box from '@toolbox/box';
 import Illustration from '@toolbox/illustration';
 import BoxContent from '@toolbox/box/content';
 import { isEmpty } from '@utils/helpers';
+import { getDeviceType } from '@utils/hwManager';
 import styles from './transactionSignature.css';
-
-const getDeviceType = (deviceModel = '') => {
-  if (/ledger/i.test(deviceModel)) {
-    return 'ledgerNano';
-  }
-  if (/trezor/i.test(deviceModel)) {
-    return 'trezor';
-  }
-  return '';
-};
 
 const TransactionSignature = ({
   t, transactions, account, actionFunction, multisigTransactionSigned,
