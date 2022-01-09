@@ -59,16 +59,31 @@
 .pendingWrapper {
   display: flex;
   flex-flow: column nowrap;
-  align-items: center;
+  justify-content: center !important;
+  align-items: center !important;
+  flex-grow: 1;
 
-  & > span {
-    display: block;
-    width: 100%;
-    text-align: left;
+  & h5 {
+    font-weight: var(--font-weight-bold);
+    color: var(--color-maastricht-blue);
   }
 
   & img {
-    margin-top: 50px;
-    margin-bottom: 40px;
+    width: 210px;
+  }
+}
+
+.statusWrapper {
+  flex-wrap: nowrap;
+  align-items: center !important;
+
+  & img {
+    width: 210px;
+  }
+
+  & h5 {
+    font-weight: var(--font-weight-bold);
+    color: var(--color-maastricht-blue);
+    margin-bottom: 0;
   }
 }

@@ -10,9 +10,9 @@ import BoxContent from '@toolbox/box/content';
 import BoxFooter from '@toolbox/box/footer';
 import BoxHeader from '@toolbox/box/header';
 import BoxInfoText from '@toolbox/box/infoText';
-import styles from './signMessage.css';
+import styles from '../signMessage.css';
 
-const SignMessageInput = ({ nextStep, t, history }) => {
+const Form = ({ nextStep, t, history }) => {
   const [message, setMessage] = useState('');
   useEffect(() => {
     const params = parseSearchParams(history.location.search);
@@ -61,4 +61,4 @@ const SignMessageInput = ({ nextStep, t, history }) => {
   );
 };
 
-export default SignMessageInput;
+export default Form;

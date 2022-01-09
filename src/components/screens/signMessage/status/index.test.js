@@ -3,8 +3,8 @@ import { mount } from 'enzyme';
 import { act } from 'react-dom/test-utils';
 import { loginTypes } from '@constants';
 import * as hwManager from '@utils/hwManager';
-import ConfirmMessage from './confirmMessage';
-import accounts from '../../../../test/constants/accounts';
+import ConfirmMessage from '.';
+import accounts from '../../../../../test/constants/accounts';
 
 jest.mock('@utils/hwManager');
 
@@ -15,7 +15,7 @@ const updateWrapperAsync = async wrapper => new Promise((resolve) => {
   });
 });
 
-describe('Confirm Message Component', () => {
+describe('Sign Message: Status', () => {
   const accountWithPassphrase = {
     ...accounts.genesis,
     loginType: loginTypes.passphrase.code,

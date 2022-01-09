@@ -1,19 +1,28 @@
 import React from 'react';
 
+import Box from '@toolbox/box';
+import BoxHeader from '@toolbox/box/header';
 import MultiStep from '@shared/multiStep';
 import Dialog from '@toolbox/dialog/dialog';
-import ConfirmMessage from './confirmMessage';
-import SignMessageInput from './signMessageInput';
+import Form from './form';
+import Status from './status';
+import MessageSignature from './messageSignature';
 import styles from './signMessage.css';
 
 const SignMessage = ({
   account, t, history,
 }) => (
   <Dialog hasClose className={styles.wrapper}>
-    <MultiStep>
-      <SignMessageInput t={t} history={history} />
-      <ConfirmMessage t={t} account={account} />
-    </MultiStep>
+    <Box>
+      <BoxHeader>
+        <h1>{t('Sign message')}</h1>
+      </BoxHeader>
+      <MultiStep>
+        <Form t={t} history={history} />
+        <MessageSignature t={t} account={account} />
+        <Status t={t} history={history} account={account} />
+      </MultiStep>
+    </Box>
   </Dialog>
 );
 
