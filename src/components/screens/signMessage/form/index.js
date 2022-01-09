@@ -8,7 +8,6 @@ import Box from '@toolbox/box';
 import Tooltip from '@toolbox/tooltip/tooltip';
 import BoxContent from '@toolbox/box/content';
 import BoxFooter from '@toolbox/box/footer';
-import BoxHeader from '@toolbox/box/header';
 import BoxInfoText from '@toolbox/box/infoText';
 import styles from '../signMessage.css';
 
@@ -32,9 +31,6 @@ const Form = ({ nextStep, t, history }) => {
 
   return (
     <Box>
-      <BoxHeader>
-        <h1>{t('Sign message')}</h1>
-      </BoxHeader>
       <BoxContent className={styles.noPadding}>
         <BoxInfoText>
           <span>{t('Sign a message to prove its integrity')}</span>
