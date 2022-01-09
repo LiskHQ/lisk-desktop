@@ -432,7 +432,7 @@ const signMultisigUsingPrivateKey = (
   /**
    * Use Lisk Element to Sign with Private Key
    */
-  let signedTransaction = transactions.signMultiSignatureTransactionWithPrivateKey(
+  const signedTransaction = transactions.signMultiSignatureTransactionWithPrivateKey(
     schema,
     transaction,
     networkIdentifier,
@@ -456,35 +456,21 @@ const signMultisigUsingPrivateKey = (
   /**
    * Check if the tx is multisigReg
    */
-  const needsDoubleSign = [
-    ...transactionKeys.mandatoryKeys,
-    ...transactionKeys.optionalKeys,
-  ].includes(publicKey);
+  const members = [
+    ...transactionKeys.mandatoryKeys.sort(),
+    ...transactionKeys.optionalKeys.sort(),
+  ];
+  const senderIndex = members.indexOf(publicKey);
+  const isSender = rawTransaction.senderPublicKey === publicKey;
+  console.log(isMultiSignatureRegistration, isSender, senderIndex);
 
-  if (isMultiSignatureRegistration && needsDoubleSign) {
-    /**
-     * we have to transform, then flatten
-     * then create txObject, convert to Buffer
-     */
-    const transformedTransaction = transformTransaction(signedTransaction);
-    const flattenedTransaction = flattenTransaction(transformedTransaction);
-    const tx = createTransactionObject(flattenedTransaction, moduleAssetId);
-    const transactionKeysInBinary = {
-      mandatoryKeys: transactionKeys.mandatoryKeys.map(convertStringToBinary),
-      optionalKeys: transactionKeys.optionalKeys.map(convertStringToBinary),
-    };
-
-    /**
-     * Use Lisk Element to Sign with Private Key
-     */
-    signedTransaction = transactions.signMultiSignatureTransactionWithPrivateKey(
-      schema,
-      tx,
-      networkIdentifier,
-      Buffer.from(privateKey, 'hex'),
-      transactionKeysInBinary,
-      isMultiSignatureRegistration,
-    );
+  if (isMultiSignatureRegistration && isSender && senderIndex > -1) {
+    const signatures = Array.from(Array(members.length + 1).keys()).map((index) => {
+      if (signedTransaction.signatures[index]) return signedTransaction.signatures[index];
+      if (index === senderIndex + 1) return signedTransaction.signatures[0];
+      return Buffer.from('');
+    });
+    signedTransaction.signatures = signatures;
   }
 
   return signedTransaction;
@@ -498,7 +484,11 @@ const signUsingPrivateKey = (schema, transaction, networkIdentifier, privateKey)
     Buffer.from(privateKey, 'hex'),
   );
 
-const signUsingHW = async (schema, transaction, account, networkIdentifier, network, keys) => {
+// eslint-disable-next-line max-statements
+const signUsingHW = async (
+  schema, transaction, account, networkIdentifier, network, keys, rawTransaction,
+  isMultiSignatureRegistration,
+) => {
   const signingBytes = transactions.getSigningBytes(schema, transaction);
   const [error, signedTransaction] = await to(signTransactionByHW(
     account,
@@ -510,6 +500,30 @@ const signUsingHW = async (schema, transaction, account, networkIdentifier, netw
   if (error) {
     throw error;
   }
+
+  const transactionKeys = {
+    mandatoryKeys: rawTransaction.mandatoryKeys ?? [],
+    optionalKeys: rawTransaction.optionalKeys ?? [],
+  };
+
+  const members = [
+    ...transactionKeys.mandatoryKeys.sort(),
+    ...transactionKeys.optionalKeys.sort(),
+  ];
+  const senderIndex = members.indexOf(account.summary.publicKey);
+  const isSender = rawTransaction.senderPublicKey === account.summary.publicKey;
+
+  console.log(isMultiSignatureRegistration, isSender, senderIndex);
+
+  if (isMultiSignatureRegistration && isSender && senderIndex > -1) {
+    const signatures = Array.from(Array(members.length + 1).keys()).map((index) => {
+      if (signedTransaction.signatures[index]) return signedTransaction.signatures[index];
+      if (index === senderIndex + 1) return signedTransaction.signatures[0];
+      return Buffer.from('');
+    });
+    signedTransaction.signatures = signatures;
+  }
+
   const id = computeTransactionId({ transaction: signedTransaction, network });
   return { ...signedTransaction, id };
 };
@@ -521,7 +535,8 @@ export const sign = async (
 ) => {
   if (!isEmpty(account.hwInfo)) {
     const signedTx = await signUsingHW(
-      schema, transaction, account, networkIdentifier, network, keys,
+      schema, transaction, account, networkIdentifier, network, keys, rawTransaction,
+      isMultiSignatureRegistration,
     );
     return signedTx;
   }
