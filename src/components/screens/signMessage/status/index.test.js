@@ -1,93 +1,57 @@
 import React from 'react';
 import { mount } from 'enzyme';
 import { act } from 'react-dom/test-utils';
-import { loginTypes } from '@constants';
-import * as hwManager from '@utils/hwManager';
-import ConfirmMessage from '.';
+import Status from '.';
 import accounts from '../../../../../test/constants/accounts';
 
-jest.mock('@utils/hwManager');
-
-const updateWrapperAsync = async wrapper => new Promise((resolve) => {
-  setImmediate(() => {
-    wrapper.update();
-    resolve();
-  });
-});
-
 describe('Sign Message: Status', () => {
-  const accountWithPassphrase = {
-    ...accounts.genesis,
-    loginType: loginTypes.passphrase.code,
-  };
-  const accountWithHW = {
-    ...accounts.genesis,
-    loginType: loginTypes.ledger,
-    hwInfo: {
-      deviceModel: 'Ledger Nano S',
-    },
+  const baseProps = {
+    account: accounts.genesis,
+    t: str => str,
+    prevStep: jest.fn(),
   };
 
-  describe('Using Passphrase', () => {
+  it('should render the signature', () => {
     const props = {
-      account: accountWithPassphrase,
-      message: 'Random message',
-      t: v => v,
+      ...baseProps,
+      error: null,
+      signature: 'sample signature',
     };
-
-    it('Should render correct result', () => {
-      const wrapper = mount(<ConfirmMessage {...props} />);
-      expect(wrapper).toContainExactlyOneMatchingElement('textarea');
-      expect(wrapper.find('textarea')).toIncludeText(props.message);
-    });
-
-    it('Should handle copying result', () => {
-      const wrapper = mount(<ConfirmMessage {...props} />);
-      expect(wrapper).toContainMatchingElements(2, 'button');
-      wrapper.find('button').at(1).simulate('click');
-      expect(wrapper.find('button').at(1)).toBeDisabled();
-      act(() => {
-        jest.advanceTimersByTime(3000);
-      });
-      wrapper.update();
-      expect(wrapper.find('button').at(1)).not.toBeDisabled();
-      wrapper.unmount();
-    });
+    const wrapper = mount(<Status {...props} />);
+    expect(wrapper.find('AutoResizeTextarea')).toExist();
   });
 
-  describe('Using hardware wallet', () => {
+  it('Should handle copying result', () => {
     const props = {
-      account: accountWithHW,
-      message: 'Random message',
-      t: (str, data) => {
-        if (!data) return str;
-        return str.replace('{{model}}', data.model);
-      },
+      ...baseProps,
+      error: null,
+      signature: 'sample signature',
     };
-
-    it('Should render pending confirmation message', () => {
-      const infoText = `Please confirm the message on your ${accountWithHW.hwInfo.deviceModel}`;
-      const wrapper = mount(<ConfirmMessage {...props} />);
-      expect(wrapper).toContainExactlyOneMatchingElement('ConfirmationPending');
-      expect(wrapper.find('span')).toIncludeText(infoText);
+    const wrapper = mount(<Status {...props} />);
+    expect(wrapper).toContainMatchingElements(2, 'button');
+    wrapper.find('button').at(1).simulate('click');
+    expect(wrapper.find('button').at(1)).toBeDisabled();
+    act(() => {
+      jest.advanceTimersByTime(3000);
     });
+    wrapper.update();
+    expect(wrapper.find('button').at(1)).not.toBeDisabled();
+    wrapper.unmount();
+  });
 
-    it('Should render error if aborted on device', async () => {
-      hwManager.signMessageByHW = jest.fn().mockImplementation(() => {
-        throw new Error('sample message');
-      });
-      const wrapper = mount(<ConfirmMessage {...props} />);
-      await updateWrapperAsync(wrapper);
-      expect(wrapper).toContainExactlyOneMatchingElement('Error');
-      hwManager.signMessageByHW.mockRestore();
-    });
-
-    it('Should render error if aborted on device', async () => {
-      hwManager.signMessageByHW = jest.fn().mockImplementation(() => new Promise(resolve => resolve({ data: 'signature' })));
-      const wrapper = mount(<ConfirmMessage {...props} />);
-      await updateWrapperAsync(wrapper);
-      expect(wrapper).toContainExactlyOneMatchingElement('Result');
-      hwManager.signMessageByHW.mockRestore();
-    });
+  it('Should show error message', () => {
+    const props = {
+      ...baseProps,
+      account: {
+        ...baseProps.account,
+        hwInfo: {
+          deviceModel: 'trezor',
+        },
+      },
+      error: 'some error',
+      signature: undefined,
+    };
+    const wrapper = mount(<Status {...props} />);
+    expect(wrapper.find('h5').text()).toMatch('Transaction aborted on device');
   });
 });
