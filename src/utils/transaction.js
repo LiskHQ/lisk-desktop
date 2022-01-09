@@ -427,7 +427,7 @@ export const computeTransactionId = ({ transaction, network }) => {
 
 const signMultisigUsingPrivateKey = (
   schema, transaction, networkIdentifier, keys, privateKey,
-  isMultiSignatureRegistration, publicKey, moduleAssetId, rawTransaction,
+  isMultiSignatureRegistration, publicKey, rawTransaction,
 ) => {
   /**
    * Use Lisk Element to Sign with Private Key
@@ -543,7 +543,7 @@ export const sign = async (
   if (isMultisignature || isMultiSignatureRegistration) {
     return signMultisigUsingPrivateKey(
       schema, transaction, networkIdentifier, keys, privateKey,
-      isMultiSignatureRegistration, publicKey, moduleAssetId, rawTransaction,
+      isMultiSignatureRegistration, publicKey, rawTransaction,
     );
   }
   return signUsingPrivateKey(schema, transaction, networkIdentifier, privateKey);

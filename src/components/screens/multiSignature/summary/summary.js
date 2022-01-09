@@ -1,7 +1,6 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import { MODULE_ASSETS_NAME_ID_MAP } from '@constants';
 import TransactionInfo from '@shared/transactionInfo';
-import { isEmpty } from '@utils/helpers';
 import Box from '@toolbox/box';
 import BoxContent from '@toolbox/box/content';
 import BoxFooter from '@toolbox/box/footer';

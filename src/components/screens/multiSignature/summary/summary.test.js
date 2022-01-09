@@ -1,10 +1,8 @@
 import React from 'react';
 import { mount } from 'enzyme';
-import { txStatusTypes } from '@constants';
 import * as hwManagerAPI from '@utils/hwManager';
 import Summary from './summary';
 import accounts from '../../../../../test/constants/accounts';
-import flushPromises from '../../../../../test/unit-test-utils/flushPromises';
 
 const mockTransaction = {
   fee: 0.02,
