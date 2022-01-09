@@ -32,6 +32,10 @@ const getAccountsFromDevice = async ({ device: { deviceId }, network }) => {
   return accounts;
 };
 
+const isKeyMatch = (aPublicKey, signerPublicKey) => (Buffer.isBuffer(aPublicKey)
+  ? aPublicKey.equals(signerPublicKey)
+  : Buffer.from(aPublicKey, 'hex').equals(signerPublicKey));
+
 /**
  * updateTransactionSignatures - Function.
  * This function updates transaction object to include the signatures at correct index.
@@ -55,10 +59,10 @@ const updateTransactionSignatures = (
   const { mandatoryKeys, optionalKeys } = keys;
   if (mandatoryKeys.length + optionalKeys.length > 0) {
     const mandatoryKeyIndex = mandatoryKeys.findIndex(
-      aPublicKey => aPublicKey.equals(signerPublicKey),
+      aPublicKey => isKeyMatch(aPublicKey, signerPublicKey),
     );
     const optionalKeyIndex = optionalKeys.findIndex(
-      aPublicKey => aPublicKey.equals(signerPublicKey),
+      aPublicKey => isKeyMatch(aPublicKey, signerPublicKey),
     );
     const signatureOffset = isMultiSignatureRegistration ? 1 : 0;
     if (mandatoryKeyIndex !== -1) {

@@ -462,7 +462,6 @@ const signMultisigUsingPrivateKey = (
   ];
   const senderIndex = members.indexOf(publicKey);
   const isSender = rawTransaction.senderPublicKey === publicKey;
-  console.log(isMultiSignatureRegistration, isSender, senderIndex);
 
   if (isMultiSignatureRegistration && isSender && senderIndex > -1) {
     const signatures = Array.from(Array(members.length + 1).keys()).map((index) => {
@@ -512,8 +511,6 @@ const signUsingHW = async (
   ];
   const senderIndex = members.indexOf(account.summary.publicKey);
   const isSender = rawTransaction.senderPublicKey === account.summary.publicKey;
-
-  console.log(isMultiSignatureRegistration, isSender, senderIndex);
 
   if (isMultiSignatureRegistration && isSender && senderIndex > -1) {
     const signatures = Array.from(Array(members.length + 1).keys()).map((index) => {
