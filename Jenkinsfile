@@ -24,7 +24,7 @@ pipeline {
 				ansiColor('xterm') {
 					nvm(getNodejsVersion()) {
 						sh '''
-						rm -rf lisk-service/  # TODO
+						rm -rf lisk-service/  # linting will fail otherwise
 						npm run lint
 						'''
 					}
