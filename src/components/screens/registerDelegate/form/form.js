@@ -96,7 +96,7 @@ const SelectNameAndFee = ({
   };
 
   const isUsernameFree = (username) => {
-    clearTimeout(timeout);
+    clearTimeout(timeout.current);
 
     timeout.current = setTimeout(() => {
       getDelegate({ network, params: { username } })
