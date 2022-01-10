@@ -1,6 +1,5 @@
 import grid from 'flexboxgrid/dist/flexboxgrid.css';
 import gridVisibility from 'flexboxgrid-helpers/dist/flexboxgrid-helpers.min.css';
-import styles from '../delegates.css';
 
 export default t => ([
   {
@@ -17,6 +16,6 @@ export default t => ([
   },
   {
     title: t('Votes'),
-    classList: `${grid['col-xs-5']} ${grid['col-lg-3']} ${styles.votesColumnTitle}`,
+    classList: `${grid['col-xs-5']} ${grid['col-lg-3']}`,
   },
 ]);
