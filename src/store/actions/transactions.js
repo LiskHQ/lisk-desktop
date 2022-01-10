@@ -2,11 +2,12 @@ import to from 'await-to-js';
 
 import {
   actionTypes, tokenMap, MODULE_ASSETS_NAME_ID_MAP, DEFAULT_LIMIT,
+  signatureCollectionStatus,
 } from '@constants';
 import { isEmpty } from '@utils/helpers';
 import { getTransactions, create, broadcast } from '@api/transaction';
-import { selectActiveTokenAccount, selectNetworkIdentifier } from '@store/selectors';
-import { signTransaction, transformTransaction } from '@utils/transaction';
+import { signMultisigTransaction, transformTransaction } from '@utils/transaction';
+import { extractKeyPair } from '@utils/account';
 import { getTransactionSignatureStatus } from '@screens/signMultiSignTransaction/helpers';
 import { timerReset } from './account';
 import { loadingStarted, loadingFinished } from './loading';
@@ -133,21 +134,30 @@ export const transactionCreated = data => async (dispatch, getState) => {
  * @param {object} data
  * @param {string} data.secondPass
  */
-/* istanbul ignore next */
 export const transactionDoubleSigned = () => async (dispatch, getState) => {
   const {
     transactions, network, account, settings,
   } = getState();
-  const networkIdentifier = selectNetworkIdentifier({ network });
-  const activeAccount = selectActiveTokenAccount({ account, settings });
-  const [signedTx, err] = signTransaction(
-    transformTransaction(transactions.signedTransaction),
-    account.secondPassphrase,
-    networkIdentifier,
+  const keyPair = extractKeyPair({
+    passphrase: account.secondPassphrase,
+    enableCustomDerivationPath: false,
+  });
+  const activeAccount = {
+    ...account.info[settings.token.active],
+    passphrase: account.secondPassphrase,
+    summary: {
+      ...account.info[settings.token.active].summary,
+      ...keyPair,
+    },
+  };
+  const transformedTx = transformTransaction(transactions.signedTransaction);
+  const [signedTx, err] = await signMultisigTransaction(
+    transformedTx,
+    activeAccount,
     {
       data: activeAccount,
     },
-    false,
+    signatureCollectionStatus.partiallySigned,
     network,
   );
 
@@ -220,14 +230,12 @@ export const transactionBroadcasted = transaction =>
  * @param {object} data.sender.data - Sender account info in Lisk API schema
  * @todo account for privateKey and HW and increase test coverage once HW is implemented
  */
-/* istanbul ignore next */
 export const multisigTransactionSigned = ({
   rawTransaction, sender,
-}) => (dispatch, getState) => {
+}) => async (dispatch, getState) => {
   const {
     network, account,
   } = getState();
-  const networkIdentifier = selectNetworkIdentifier({ network });
   const activeAccount = {
     ...account.info.LSK,
     passphrase: account.passphrase,
@@ -236,10 +244,9 @@ export const multisigTransactionSigned = ({
   // @todo move isTransactionFullySigned to a generic location
   const txStatus = getTransactionSignatureStatus(sender.data, rawTransaction);
 
-  const [tx, error] = signTransaction(
+  const [tx, error] = await signMultisigTransaction(
     rawTransaction,
-    activeAccount.passphrase,
-    networkIdentifier,
+    activeAccount,
     sender,
     txStatus,
     network,

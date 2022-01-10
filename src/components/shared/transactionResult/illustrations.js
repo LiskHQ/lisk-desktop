@@ -1,14 +1,5 @@
 import { txStatusTypes } from '@constants';
-
-const getDeviceType = (deviceModel = '') => {
-  if (/ledger/i.test(deviceModel)) {
-    return 'ledgerNano';
-  }
-  if (/trezor/i.test(deviceModel)) {
-    return 'trezor';
-  }
-  return '';
-};
+import { getDeviceType } from '@utils/hwManager';
 
 const illustrations = {
   default: {

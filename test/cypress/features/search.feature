@@ -23,6 +23,6 @@ Feature: Search
     Then I wait 2 seconds
     When I click on searchIcon
     And I search for delegate 43th3j4bt324
-    And I wait 3 seconds
+    And I wait 2 seconds
     Then I should see no results
 

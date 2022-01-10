@@ -153,7 +153,6 @@ const accountMiddleware = store => next => async (action) => {
         store.dispatch(accountDataUpdated('enabled'));
       }
       break;
-    /* istanbul ignore next */
     default: break;
   }
 };

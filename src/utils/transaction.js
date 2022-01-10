@@ -1,5 +1,7 @@
 /* eslint-disable max-lines */
-import { transactions } from '@liskhq/lisk-client';
+import { transactions, cryptography } from '@liskhq/lisk-client';
+import { to } from 'await-to-js';
+import { signTransactionByHW } from '@utils/hwManager';
 import {
   DEFAULT_NUMBER_OF_SIGNATURES,
   MODULE_ASSETS_NAME_ID_MAP,
@@ -13,6 +15,7 @@ import {
 } from '@utils/account';
 import { transformStringDateToUnixTimestamp } from '@utils/datetime';
 import { toRawLsk } from '@utils/lsk';
+import { isEmpty } from '@utils/helpers';
 import { splitModuleAndAssetIds, joinModuleAndAssetIds } from '@utils/moduleAssets';
 
 const {
@@ -224,26 +227,26 @@ const flattenTransaction = ({ moduleAssetId, asset, ...rest }) => {
   };
 
   switch (moduleAssetId) {
-    case MODULE_ASSETS_NAME_ID_MAP.transfer: {
+    case transfer: {
       transaction.recipientAddress = asset.recipient.address;
       transaction.amount = asset.amount;
       transaction.data = asset.data;
       break;
     }
 
-    case MODULE_ASSETS_NAME_ID_MAP.voteDelegate:
+    case voteDelegate:
       transaction.votes = asset.votes;
       break;
 
-    case MODULE_ASSETS_NAME_ID_MAP.registerDelegate:
+    case registerDelegate:
       transaction.username = asset.username;
       break;
 
-    case MODULE_ASSETS_NAME_ID_MAP.unlockToken:
+    case unlockToken:
       transaction.unlockObjects = asset.unlockObjects;
       break;
 
-    case MODULE_ASSETS_NAME_ID_MAP.registerMultisignatureGroup: {
+    case registerMultisignatureGroup: {
       transaction.numberOfSignatures = asset.numberOfSignatures;
       transaction.mandatoryKeys = asset.mandatoryKeys;
       transaction.optionalKeys = asset.optionalKeys;
@@ -406,6 +409,144 @@ export const removeExcessSignatures = (signatures, mandatoryKeysNo, hasSenderSig
 };
 
 /**
+ * Computes transaction id
+ * @param {object} transaction
+ * @returns {Promise} returns transaction id for a given transaction object
+ */
+export const computeTransactionId = ({ transaction, network }) => {
+  const moduleAssetId = joinModuleAndAssetIds({
+    moduleID: transaction.moduleID,
+    assetID: transaction.assetID,
+  });
+  const schema = network.networks.LSK.moduleAssetSchemas[moduleAssetId];
+  const transactionBytes = transactions.getBytes(schema, transaction);
+  const id = cryptography.hash(transactionBytes);
+
+  return id;
+};
+
+const signMultisigUsingPrivateKey = (
+  schema, transaction, networkIdentifier, keys, privateKey,
+  isMultiSignatureRegistration, publicKey, rawTransaction,
+) => {
+  /**
+   * Use Lisk Element to Sign with Private Key
+   */
+  const signedTransaction = transactions.signMultiSignatureTransactionWithPrivateKey(
+    schema,
+    transaction,
+    networkIdentifier,
+    Buffer.from(privateKey, 'hex'),
+    {
+      optionalKeys: keys.optionalKeys.map(convertStringToBinary),
+      mandatoryKeys: keys.mandatoryKeys.map(convertStringToBinary),
+    },
+    isMultiSignatureRegistration,
+  );
+
+  /**
+   * Define keys. Since we are creating the tx
+   * The keys only exist for MultisigReg
+   */
+  const transactionKeys = {
+    mandatoryKeys: rawTransaction.mandatoryKeys ?? [],
+    optionalKeys: rawTransaction.optionalKeys ?? [],
+  };
+
+  /**
+   * Check if the tx is multisigReg
+   */
+  const members = [
+    ...transactionKeys.mandatoryKeys.sort(),
+    ...transactionKeys.optionalKeys.sort(),
+  ];
+  const senderIndex = members.indexOf(publicKey);
+  const isSender = rawTransaction.senderPublicKey === publicKey;
+
+  if (isMultiSignatureRegistration && isSender && senderIndex > -1) {
+    const signatures = Array.from(Array(members.length + 1).keys()).map((index) => {
+      if (signedTransaction.signatures[index]) return signedTransaction.signatures[index];
+      if (index === senderIndex + 1) return signedTransaction.signatures[0];
+      return Buffer.from('');
+    });
+    signedTransaction.signatures = signatures;
+  }
+
+  return signedTransaction;
+};
+
+const signUsingPrivateKey = (schema, transaction, networkIdentifier, privateKey) =>
+  transactions.signTransactionWithPrivateKey(
+    schema,
+    transaction,
+    networkIdentifier,
+    Buffer.from(privateKey, 'hex'),
+  );
+
+// eslint-disable-next-line max-statements
+const signUsingHW = async (
+  schema, transaction, account, networkIdentifier, network, keys, rawTransaction,
+  isMultiSignatureRegistration,
+) => {
+  const signingBytes = transactions.getSigningBytes(schema, transaction);
+  const [error, signedTransaction] = await to(signTransactionByHW(
+    account,
+    networkIdentifier,
+    transaction,
+    signingBytes,
+    keys,
+  ));
+  if (error) {
+    throw error;
+  }
+
+  const transactionKeys = {
+    mandatoryKeys: rawTransaction.mandatoryKeys ?? [],
+    optionalKeys: rawTransaction.optionalKeys ?? [],
+  };
+
+  const members = [
+    ...transactionKeys.mandatoryKeys.sort(),
+    ...transactionKeys.optionalKeys.sort(),
+  ];
+  const senderIndex = members.indexOf(account.summary.publicKey);
+  const isSender = rawTransaction.senderPublicKey === account.summary.publicKey;
+
+  if (isMultiSignatureRegistration && isSender && senderIndex > -1) {
+    const signatures = Array.from(Array(members.length + 1).keys()).map((index) => {
+      if (signedTransaction.signatures[index]) return signedTransaction.signatures[index];
+      if (index === senderIndex + 1) return signedTransaction.signatures[0];
+      return Buffer.from('');
+    });
+    signedTransaction.signatures = signatures;
+  }
+
+  const id = computeTransactionId({ transaction: signedTransaction, network });
+  return { ...signedTransaction, id };
+};
+
+export const sign = async (
+  account, schema, transaction, network, networkIdentifier,
+  isMultisignature, isMultiSignatureRegistration, keys, publicKey,
+  moduleAssetId, rawTransaction, privateKey,
+) => {
+  if (!isEmpty(account.hwInfo)) {
+    const signedTx = await signUsingHW(
+      schema, transaction, account, networkIdentifier, network, keys, rawTransaction,
+      isMultiSignatureRegistration,
+    );
+    return signedTx;
+  }
+  if (isMultisignature || isMultiSignatureRegistration) {
+    return signMultisigUsingPrivateKey(
+      schema, transaction, networkIdentifier, keys, privateKey,
+      isMultiSignatureRegistration, publicKey, rawTransaction,
+    );
+  }
+  return signUsingPrivateKey(schema, transaction, networkIdentifier, privateKey);
+};
+
+/**
  * Signs a given multisignature tx with a given passphrase
  *
  * @param {Object} transaction - Transaction object to be signed
@@ -418,57 +559,54 @@ export const removeExcessSignatures = (signatures, mandatoryKeysNo, hasSenderSig
  * @returns [Object, Object] - Signed transaction and err
  */
 // eslint-disable-next-line max-statements
-const signTransaction = (
+const signMultisigTransaction = async (
   transaction,
-  passphrase,
-  networkIdentifier,
+  account,
   senderAccount,
   txStatus,
   network,
 ) => {
-  let signedTransaction;
-  let err;
-
-  const isGroupRegistration = transaction.moduleAssetId
-    === MODULE_ASSETS_NAME_ID_MAP.registerMultisignatureGroup;
+  /**
+   * Define keys.
+   * Since the sender is different, the keys are defined based on that
+   */
+  const isGroupRegistration = transaction.moduleAssetId === registerMultisignatureGroup;
+  const schema = network.networks.LSK.moduleAssetSchemas[transaction.moduleAssetId];
+  const networkIdentifier = Buffer.from(network.networks.LSK.networkIdentifier, 'hex');
 
   const { mandatoryKeys, optionalKeys } = getKeys({
     senderAccount: senderAccount.data, transaction, isGroupRegistration,
   });
-
-  const flatTransaction = flattenTransaction(transaction);
-  const transactionObject = createTransactionObject(flatTransaction, transaction.moduleAssetId);
   const keys = {
     mandatoryKeys: mandatoryKeys.map(key => Buffer.from(key, 'hex')),
     optionalKeys: optionalKeys.map(key => Buffer.from(key, 'hex')),
   };
 
-  const includeSender = transaction.moduleAssetId
-    === MODULE_ASSETS_NAME_ID_MAP.registerMultisignatureGroup;
+  /**
+   * To do so, we have to  flatten, then create txObject
+   */
+  const flatTransaction = flattenTransaction(transaction);
+  const transactionObject = createTransactionObject(flatTransaction, transaction.moduleAssetId);
 
-  try {
-    // remove excess optionals
-    if (txStatus === signatureCollectionStatus.occupiedByOptionals) {
-      transactionObject.signatures = removeExcessSignatures(
-        transactionObject.signatures, keys.mandatoryKeys.length, includeSender,
-      );
-    }
-
-    signedTransaction = transactions.signMultiSignatureTransaction(
-      network.networks.LSK.moduleAssetSchemas[transaction.moduleAssetId],
-      transactionObject,
-      Buffer.from(networkIdentifier, 'hex'),
-      passphrase,
-      keys,
-      includeSender,
+  /**
+   * remove excess optional signatures
+   */
+  if (txStatus === signatureCollectionStatus.occupiedByOptionals) {
+    transactionObject.signatures = removeExcessSignatures(
+      transactionObject.signatures, keys.mandatoryKeys.length, isGroupRegistration,
     );
-  } catch (e) {
-    // eslint-disable-next-line no-console
-    console.error(e);
-    err = e;
   }
 
-  return [signedTransaction, err];
+  try {
+    const result = await sign(
+      account, schema, transactionObject, network, networkIdentifier,
+      !!senderAccount.data, isGroupRegistration, keys, account.summary.publicKey,
+      transaction.moduleAssetId, flatTransaction, account.summary.privateKey,
+    );
+    return [result];
+  } catch (e) {
+    return [null, e];
+  }
 };
 
 /**
@@ -482,7 +620,7 @@ const signTransaction = (
  * @returns {number} the number of signatures required
  */
 const getNumberOfSignatures = (account, transaction) => {
-  if (transaction?.moduleAssetId === MODULE_ASSETS_NAME_ID_MAP.registerMultisignatureGroup) {
+  if (transaction?.moduleAssetId === registerMultisignatureGroup) {
     return transaction.optionalKeys.length + transaction.mandatoryKeys.length + 1;
   }
   if (account?.summary?.isMultisignature) {
@@ -500,6 +638,6 @@ export {
   containsTransactionType,
   createTransactionObject,
   normalizeTransactionParams,
-  signTransaction,
+  signMultisigTransaction,
   getNumberOfSignatures,
 };

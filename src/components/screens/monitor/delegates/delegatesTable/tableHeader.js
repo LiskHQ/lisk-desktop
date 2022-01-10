@@ -106,7 +106,7 @@ export default (activeTab, changeSort, t) => ([
     classList: getStatusClass(activeTab),
     sort: {
       fn: changeSort,
-      key: 'status',
+      key: activeTab === 'sanctioned' ? 'sanctionedStatus' : 'status',
     },
   },
 ]);

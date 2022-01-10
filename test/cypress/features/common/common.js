@@ -6,7 +6,6 @@ const txConfirmationTimeout = 15000;
 
 Given(/^Network switcher is (enabled|disabled)$/, function (status) {
   const showNetwork = status === 'enabled';
-  console.log('showNetwork', showNetwork);
   window.localStorage.setItem('settings', 
     JSON.stringify({ ...settings, 'showNetwork': showNetwork }));
 });

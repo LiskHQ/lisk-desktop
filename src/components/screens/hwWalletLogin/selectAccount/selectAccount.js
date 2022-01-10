@@ -10,15 +10,15 @@ import LoadingIcon from '../loadingIcon';
 import styles from './selectAccount.css';
 
 const Tab = ({
-  tabName, tabId, accountsList,
+  name, id, accountsList,
   onSaveNameAccounts, onSelectAccount,
 }) => (
-  <div tabName={tabName} tabId={tabId} className={`${styles.deviceContainer} ${`tab-${tabId}`} hw-container`}>
-    {accountsList.map((account, index) => (
+  <div name={name} id={id} className={`${styles.deviceContainer} ${`tab-${id}`} hw-container`}>
+    {accountsList.map((data) => (
       <AccountCard
-        key={`hw-account-tabId-${index}`}
-        account={account}
-        index={index}
+        key={`hw-account-tabId-${data.index}`}
+        account={data.account}
+        index={data.index}
         onSaveNameAccounts={onSaveNameAccounts}
         onSelectAccount={onSelectAccount}
       />
@@ -140,16 +140,16 @@ class SelectAccount extends React.Component {
       nonEmptyAccounts,
       emptyAccounts,
       reclaimAccounts,
-    } = hwAccounts.reduce((acc, account) => {
+    } = hwAccounts.reduce((acc, account, index) => {
       if (account.legacy) {
-        acc.reclaimAccounts = [...acc.reclaimAccounts, account];
+        acc.reclaimAccounts = [...acc.reclaimAccounts, { index, account }];
         return acc;
       }
       if (account.summary?.balance > 0) {
-        acc.nonEmptyAccounts = [...acc.nonEmptyAccounts, account];
+        acc.nonEmptyAccounts = [...acc.nonEmptyAccounts, { index, account }];
         return acc;
       }
-      acc.emptyAccounts = [...acc.emptyAccounts, account];
+      acc.emptyAccounts = [...acc.emptyAccounts, { index, account }];
       return acc;
     }, { nonEmptyAccounts: [], emptyAccounts: [], reclaimAccounts: [] });
 
@@ -170,22 +170,22 @@ class SelectAccount extends React.Component {
             ? (
               <TabsContainer name="main-tabs">
                 <Tab
-                  tabName={t('Active')}
-                  tabId="active"
+                  name={t('Active')}
+                  id="active"
                   accountsList={nonEmptyAccounts}
                   onSaveNameAccounts={this.onSaveNameAccounts}
                   onSelectAccount={this.onSelectAccount}
                 />
                 <Tab
-                  tabName={t('Empty')}
-                  tabId="empty"
+                  name={t('Empty')}
+                  id="empty"
                   accountsList={emptyAccounts}
                   onSaveNameAccounts={this.onSaveNameAccounts}
                   onSelectAccount={this.onSelectAccount}
                 />
                 <Tab
-                  tabName={t('Pending reclaim ({{numOfAccounts}})', { numOfAccounts: reclaimAccounts.length })}
-                  tabId="reclaim"
+                  name={t('Pending reclaim ({{numOfAccounts}})', { numOfAccounts: reclaimAccounts.length })}
+                  id="reclaim"
                   accountsList={reclaimAccounts}
                   onSaveNameAccounts={this.onSaveNameAccounts}
                   onSelectAccount={this.onSelectAccount}

@@ -31,7 +31,8 @@ const validators = [
     message: t => t('Either change the optional member to mandatory or define more optional members.'),
   },
   {
-    pattern: (mandatory, optional) => mandatory.length === 0 && optional.length > 0,
+    pattern: (mandatory, optional, signatures) =>
+      mandatory.length === 0 && optional.length === signatures,
     message: t => t('All members can not be optional. Consider changing them to mandatory.'),
   },
   {

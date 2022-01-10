@@ -43,11 +43,9 @@ describe('hwManager util', () => {
   describe('signTransactionByHW', () => {
     it('should return a transaction object with the proper signature', async () => {
       const account = {
-        info: {
-          LSK: {
-            address: 'lskbgyrx3v76jxowgkgthu9yaf3dr29wqxbtxz8yp',
-            publicKey: 'fd061b9146691f3c56504be051175d5b76d1b1d0179c5c4370e18534c5882122',
-          },
+        summary: {
+          address: 'lskbgyrx3v76jxowgkgthu9yaf3dr29wqxbtxz8yp',
+          publicKey: 'fd061b9146691f3c56504be051175d5b76d1b1d0179c5c4370e18534c5882122',
         },
         hwInfo: {
           deviceId: '060E803263E985C022CA2C9B',
@@ -66,6 +64,12 @@ describe('hwManager util', () => {
         assetID: 0,
         nonce: '1',
         senderAddress: 'lskdxc4ta5j43jp9ro3f8zqbxta9fn6jwzjucw7yt',
+        signatures: [],
+      };
+
+      const keys = {
+        mandatoryKeys: [Buffer.from(account.summary.publicKey, 'hex'), Buffer.from(accounts.genesis.summary.publicKey, 'hex')],
+        optionalKeys: [],
       };
 
       const networkIdentifier = Buffer.from('15f0dacc1060e91818224a94286b13aa04279c640bd5d6f193182031d133df7c', 'hex');
@@ -76,6 +80,7 @@ describe('hwManager util', () => {
         networkIdentifier,
         transactionObject,
         transactionBytes,
+        keys,
       );
 
       expect(signedTransaction.signatures[0]).toEqual(signature);

@@ -17,7 +17,7 @@ describe('Sign Message Component', () => {
   it('Should render properly', () => {
     const wrapper = shallow(<SignMessage {...props} />);
     expect(wrapper).toContainExactlyOneMatchingElement('MultiStep');
-    expect(wrapper).toContainExactlyOneMatchingElement('SignMessageInput');
-    expect(wrapper).toContainExactlyOneMatchingElement('ConfirmMessage');
+    expect(wrapper).toContainExactlyOneMatchingElement('Form');
+    expect(wrapper).toContainExactlyOneMatchingElement('BoxHeader');
   });
 });

@@ -1,6 +1,5 @@
 /* eslint-disable max-lines */
-import { transactions, cryptography } from '@liskhq/lisk-client';
-import { to } from 'await-to-js';
+import { transactions } from '@liskhq/lisk-client';
 
 import {
   tokenMap,
@@ -11,9 +10,8 @@ import {
   BASE_FEES,
 } from '@constants';
 import { joinModuleAndAssetIds } from '@utils/moduleAssets';
-import { signTransactionByHW } from '@utils/hwManager';
 import {
-  createTransactionObject, convertStringToBinary, transformTransaction, flattenTransaction,
+  createTransactionObject, sign,
 } from '@utils/transaction';
 import { validateAddress } from '../../validators';
 import http from '../http';
@@ -298,94 +296,6 @@ export const getTransactionFee = async ({
 };
 
 /**
- * Computes transaction id
- * @param {object} transaction
- * @returns {Promise} returns transaction id for a given transaction object
- */
-export const computeTransactionId = ({ transaction, network }) => {
-  const moduleAssetId = joinModuleAndAssetIds({
-    moduleID: transaction.moduleID,
-    assetID: transaction.assetID,
-  });
-  const schema = network.networks.LSK.moduleAssetSchemas[moduleAssetId];
-  const transactionBytes = transactions.getBytes(schema, transaction);
-  const id = cryptography.hash(transactionBytes);
-
-  return id;
-};
-
-const signMultisigUsingPrivateKey = (
-  schema, transaction, networkIdentifier, keys, privateKey,
-  isMultiSignatureRegistration, publicKey, moduleAssetId, rawTransaction,
-) => {
-  let signedTransaction = transactions.signMultiSignatureTransactionWithPrivateKey(
-    schema,
-    transaction,
-    networkIdentifier,
-    Buffer.from(privateKey, 'hex'),
-    {
-      optionalKeys: keys.optionalKeys.map(convertStringToBinary),
-      mandatoryKeys: keys.mandatoryKeys.map(convertStringToBinary),
-    },
-    isMultiSignatureRegistration,
-  );
-
-  const transactionKeys = {
-    mandatoryKeys: rawTransaction.mandatoryKeys ?? [],
-    optionalKeys: rawTransaction.optionalKeys ?? [],
-  };
-
-  const needsDoubleSign = [
-    ...transactionKeys.mandatoryKeys,
-    ...transactionKeys.optionalKeys,
-  ].includes(publicKey);
-
-  if (isMultiSignatureRegistration && needsDoubleSign) {
-    const transformedTransaction = transformTransaction(signedTransaction);
-    const flattenedTransaction = flattenTransaction(transformedTransaction);
-    const tx = createTransactionObject(flattenedTransaction, moduleAssetId);
-    const transactionKeysInBinary = {
-      mandatoryKeys: transactionKeys.mandatoryKeys.map(convertStringToBinary),
-      optionalKeys: transactionKeys.optionalKeys.map(convertStringToBinary),
-    };
-
-    signedTransaction = transactions.signMultiSignatureTransactionWithPrivateKey(
-      schema,
-      tx,
-      networkIdentifier,
-      Buffer.from(privateKey, 'hex'),
-      transactionKeysInBinary,
-      isMultiSignatureRegistration,
-    );
-  }
-
-  return signedTransaction;
-};
-
-const signUsingPrivateKey = (schema, transaction, networkIdentifier, privateKey) =>
-  transactions.signTransactionWithPrivateKey(
-    schema,
-    transaction,
-    networkIdentifier,
-    Buffer.from(privateKey, 'hex'),
-  );
-
-const signUsingHW = async (schema, transaction, account, networkIdentifier, network) => {
-  const signingBytes = transactions.getSigningBytes(schema, transaction);
-  const [error, signedTransaction] = await to(signTransactionByHW(
-    account,
-    networkIdentifier,
-    transaction,
-    signingBytes,
-  ));
-  if (error) {
-    throw error;
-  }
-  const id = computeTransactionId({ transaction: signedTransaction, network });
-  return { ...signedTransaction, id };
-};
-
-/**
  * creates a new transaction
  *
  * @param {Object} transaction The transaction information
@@ -420,17 +330,13 @@ export const create = async ({
   const isMultiSignatureRegistration = moduleAssetId
     === MODULE_ASSETS_NAME_ID_MAP.registerMultisignatureGroup;
 
-  if (isMultisignature || isMultiSignatureRegistration) {
-    return signMultisigUsingPrivateKey(
-      schema, transaction, networkIdentifier, keys, privateKey,
-      isMultiSignatureRegistration, publicKey, moduleAssetId, rawTransaction,
-    );
-  }
-  if (account.hwInfo) {
-    const signedTx = await signUsingHW(schema, transaction, account, networkIdentifier, network);
-    return signedTx;
-  }
-  return signUsingPrivateKey(schema, transaction, networkIdentifier, privateKey);
+  const result = await sign(
+    account, schema, transaction, network, networkIdentifier,
+    isMultisignature, isMultiSignatureRegistration, keys, publicKey,
+    moduleAssetId, rawTransaction, privateKey,
+  );
+
+  return result;
 };
 
 /**

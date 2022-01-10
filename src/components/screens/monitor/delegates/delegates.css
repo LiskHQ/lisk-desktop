@@ -85,9 +85,9 @@
 
   & .delegatesList {
     display: flex;
-    width: calc(100% - 20px);
     word-break: break-word;
     flex-wrap: wrap;
+    justify-content: flex-end;
 
     & span {
       display: inline;

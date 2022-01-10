@@ -3,7 +3,6 @@ import { mount } from 'enzyme';
 import * as hwManagerAPI from '@utils/hwManager';
 import Summary from './summary';
 import accounts from '../../../../../test/constants/accounts';
-import flushPromises from '../../../../../test/unit-test-utils/flushPromises';
 
 const mockTransaction = {
   fee: 0.02,
@@ -56,8 +55,20 @@ describe('Multisignature summary component', () => {
 
   it('Should call props.nextStep', async () => {
     wrapper.find('button.confirm').simulate('click');
-    await flushPromises();
-    expect(props.multisigGroupRegistered).toHaveBeenCalledWith(mockTransaction);
+    expect(props.nextStep).toHaveBeenCalledWith({
+      rawTransaction: {
+        fee: String(props.fee),
+        mandatoryKeys: props.mandatoryKeys,
+        optionalKeys: props.optionalKeys,
+        numberOfSignatures: props.numberOfSignatures,
+      },
+      actionFunction: props.multisigGroupRegistered,
+      statusInfo: {
+        mandatoryKeys: props.mandatoryKeys,
+        optionalKeys: props.optionalKeys,
+        numberOfSignatures: props.numberOfSignatures,
+      },
+    });
   });
 
   it('Should call props.prevStep', () => {
