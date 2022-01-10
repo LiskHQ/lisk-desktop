@@ -51,6 +51,22 @@ Then(/^I enter the passphrase of ([^\s]+)$/, function (accountName) {
   });
 });
 
+
+When(/^I enter the passphrase of ([^\s]+) on ([^\s]+)$/, function (accountName, network) {
+
+  cy.get(ss.networkDropdown).click();
+  cy.get(ss.networkOptions).eq(2).click();
+  cy.get(ss.addressInput).clear().type(networks[network].serviceUrl);
+  cy.get(ss.connectButton).click();
+
+  const passphrase = accounts[accountName]['passphrase'];
+  cy.get(ss.passphraseInput).first().click();
+  cy.get(ss.passphraseInput).each(($el, index) => {
+    const passphraseWordsArray = passphrase.split(' ');
+    cy.wrap($el).type(passphraseWordsArray[index]);
+  });
+});
+
 Given(/^I am on (.*?) page$/, function (page) {
   page = page.toLowerCase();
   cy.server();
