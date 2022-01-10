@@ -42,7 +42,6 @@ const AmountField = ({
   const resetInput = (e) => {
     e.preventDefault();
     setShowEntireBalanceWarning(false);
-    onChange({ value: '' }, maxAmount);
   };
 
   const handleAmountChange = ({ target }) => {
