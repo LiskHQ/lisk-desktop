@@ -1,6 +1,6 @@
 import React from 'react';
 import { mount } from 'enzyme';
-import SignMessageInput from './signMessageInput';
+import SignMessageInput from '.';
 
 describe('Sign Message Input Component', () => {
   const props = {

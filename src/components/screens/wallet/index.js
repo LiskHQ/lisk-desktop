@@ -59,24 +59,24 @@ const Wallet = ({ t, history }) => {
           confirmedLength={confirmed.length}
           activeToken={activeToken}
           discreetMode={discreetMode}
-          tabName={t('Transactions')}
-          tabId="Transactions"
+          name={t('Transactions')}
+          id="Transactions"
           address={address}
         />
         {activeToken !== 'BTC' ? (
           <VotesTab
             history={history}
             address={address}
-            tabName={t('Votes')}
-            tabId="votes"
+            name={t('Votes')}
+            id="votes"
           />
         ) : null}
         {isDelegate
           ? (
             <DelegateTab
               tabClassName="delegate-statistics"
-              tabName={t('Delegate profile')}
-              tabId="delegateProfile"
+              name={t('Delegate profile')}
+              id="delegateProfile"
               account={account.info[activeToken]}
             />
           )
@@ -85,8 +85,8 @@ const Wallet = ({ t, history }) => {
           ? (
             <MultiSignatureTab
               // tabClassName="delegate-statistics"
-              tabName={t('Multisignatures')}
-              tabId="multiSignatures"
+              name={t('Multisignatures')}
+              id="multiSignatures"
             />
           )
           : null} */}
