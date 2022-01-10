@@ -34,10 +34,11 @@ const EditMode = ({
   });
   const timeout = useRef();
 
-  const validate = (value) => {
+  const validate = (input) => {
     clearTimeout(timeout.current);
     // validate the URL with debouncer
     timeout.current = setTimeout(() => {
+      const value = input.charAt(input.length - 1) === '/' ? input.substring(0, input.length - 1) : input;
       const normalized = addHttp(value);
       setLoading(true);
       validateNode(normalized)
