@@ -1,4 +1,4 @@
-# Feature: Vote delegate
+Feature: Vote delegate
 
 #    Background:
 #       Given I login as genesis on devnet
