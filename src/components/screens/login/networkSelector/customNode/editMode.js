@@ -22,6 +22,16 @@ const validateNode = async (address) => {
   }
 };
 
+const removeTrailingSlash = (input) => {
+  const bypassStrings = ['http:/', 'http://', 'https:/', 'https://'];
+
+  if (input.charAt(input.length - 1) !== '/' || bypassStrings.includes(input)) {
+    return input;
+  }
+
+  return input.substring(0, input.length - 1);
+};
+
 const EditMode = ({
   t, setMode, dropdownRef,
   storedCustomNetwork, networkSelected, customNetworkStored,
@@ -38,7 +48,7 @@ const EditMode = ({
     clearTimeout(timeout.current);
     // validate the URL with debouncer
     timeout.current = setTimeout(() => {
-      const value = input.charAt(input.length - 1) === '/' ? input.substring(0, input.length - 1) : input;
+      const value = removeTrailingSlash(input);
       const normalized = addHttp(value);
       setLoading(true);
       validateNode(normalized)
