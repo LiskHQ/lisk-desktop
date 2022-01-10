@@ -12,6 +12,7 @@ const TransactionResult = (props) => {
       && props.status.code !== txStatusTypes.broadcastSuccess
       && (
         props.transactions.signedTransaction.signatures.length > 1
+        || props.status.code === txStatusTypes.multisigSignaturePartialSuccess
         || props.account.summary.isMultisignature
         || props.account.summary.publicKey !== props.transactions.signedTransaction.senderPublicKey.toString('hex')
       );

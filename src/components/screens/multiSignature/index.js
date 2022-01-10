@@ -2,9 +2,10 @@
 import React from 'react';
 import { withRouter } from 'react-router-dom';
 
-import MultiStep from '../../shared/multiStep';
-import { removeSearchParamsFromUrl } from '../../../utils/searchParams';
-import Dialog from '../../toolbox/dialog/dialog';
+import TransactionSignature from '@shared/transactionSignature';
+import MultiStep from '@shared/multiStep';
+import { removeSearchParamsFromUrl } from '@utils/searchParams';
+import Dialog from '@toolbox/dialog/dialog';
 
 import Form from './form';
 import Summary from './summary';
@@ -25,6 +26,7 @@ const MultiSignature = ({ history }) => {
       >
         <Form />
         <Summary />
+        <TransactionSignature />
         <Status />
       </MultiStep>
     </Dialog>

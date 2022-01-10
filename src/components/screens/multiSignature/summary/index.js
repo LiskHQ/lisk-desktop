@@ -9,8 +9,6 @@ import Summary from './summary';
 
 const mapStateToProps = state => ({
   account: getActiveTokenAccount(state),
-  signedTransaction: state.transactions.signedTransaction,
-  txSignatureError: state.transactions.txSignatureError,
 });
 
 const mapDispatchToProps = {

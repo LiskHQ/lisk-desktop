@@ -42,24 +42,24 @@ const Wallet = ({
           pending={[]}
           activeToken={activeToken}
           discreetMode={discreetMode}
-          tabName={t('Transactions')}
-          tabId="transactions"
+          name={t('Transactions')}
+          id="transactions"
           address={address}
         />
         {activeToken !== 'BTC' ? (
           <VotesTab
             history={history}
             address={address}
-            tabName={t('Voting')}
-            tabId="voting"
+            name={t('Voting')}
+            id="voting"
           />
         ) : null}
         {isDelegate
           ? (
             <DelegateTab
               tabClassName="delegate-statistics"
-              tabName={t('Delegate profile')}
-              tabId="delegateProfile"
+              name={t('Delegate profile')}
+              id="delegateProfile"
               account={account.data}
             />
           )
