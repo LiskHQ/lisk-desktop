@@ -10,6 +10,7 @@ import BoxFooter from '@toolbox/box/footer';
 import { Input } from '@toolbox/inputs';
 import { PrimaryButton } from '@toolbox/buttons';
 import Tooltip from '@toolbox/tooltip/tooltip';
+import { toRawLsk } from '@utils/lsk';
 import styles from './form.css';
 
 const token = tokenMap.LSK.key;
@@ -157,7 +158,10 @@ const SelectNameAndFee = ({
   }, [txSignatureError]);
 
   const isBtnDisabled = () => {
-    if (state.customFee && state.customFee.error) return true;
+    if (
+      (state.customFee && state.customFee.error)
+      || toRawLsk(fee.value) > account.token.balance
+    ) return true;
     return !!state.error || state.username.length === 0 || state.loading;
   };
 
