@@ -23,16 +23,13 @@ const validateNode = async (address) => {
 };
 
 /**
- * Removes the trailing slash
+ * Removes the trailing slash if string is not exactly equal to 'http:/','http://','https:/' or 'https://'
  *
  * @param {string} url - A URL that might end in a slash
  * @returns {string} A URL without a trailing slash
  */
 const removeTrailingSlash = (url) => {
-  const regexs = [/http:\/$/, /http:\/\/$/, /https:\/$/, /https:\/\/$/];
-  const bypass = regexs.some(regex => regex.test(url));
-
-  if (url.charAt(url.length - 1) !== '/' || bypass) {
+  if (url.charAt(url.length - 1) !== '/' || /http(s?):(\/){1,2}$/.test(url)) {
     return url;
   }
 
@@ -50,9 +47,11 @@ const EditMode = ({
     feedback: '',
   });
   const timeout = useRef();
+  const lastInput = useRef();
 
   const validate = (input) => {
     clearTimeout(timeout.current);
+    lastInput.current = input;
     // validate the URL with debouncer
     timeout.current = setTimeout(() => {
       const value = removeTrailingSlash(input);
@@ -60,20 +59,24 @@ const EditMode = ({
       setLoading(true);
       validateNode(normalized)
         .then(() => {
-          setAddress({
-            value,
-            error: 0,
-            feedback: '',
-          });
-          setLoading(false);
+          if (input === lastInput.current) {
+            setAddress({
+              value,
+              error: 0,
+              feedback: '',
+            });
+            setLoading(false);
+          }
         })
         .catch(() => {
-          setAddress({
-            value,
-            error: 1,
-            feedback: t('Unable to connect to Lisk Service, please check the address and try again'),
-          });
-          setLoading(false);
+          if (input === lastInput.current) {
+            setAddress({
+              value,
+              error: 1,
+              feedback: t('Unable to connect to Lisk Service, please check the address and try again'),
+            });
+            setLoading(false);
+          }
         });
     }, 500);
   };
