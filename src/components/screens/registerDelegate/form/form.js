@@ -1,6 +1,8 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { isEmpty } from '@utils/helpers';
-import { tokenMap, MODULE_ASSETS_NAME_ID_MAP, regex } from '@constants';
+import {
+  tokenMap, MODULE_ASSETS_NAME_ID_MAP, regex, MIN_ACCOUNT_BALANCE,
+} from '@constants';
 import { getDelegate } from '@api/delegate';
 import TransactionPriority, { useTransactionFeeCalculation, useTransactionPriority } from '@shared/transactionPriority';
 import Box from '@toolbox/box';
@@ -10,6 +12,7 @@ import BoxFooter from '@toolbox/box/footer';
 import { Input } from '@toolbox/inputs';
 import { PrimaryButton } from '@toolbox/buttons';
 import Tooltip from '@toolbox/tooltip/tooltip';
+import { toRawLsk, fromRawLsk } from '@utils/lsk';
 import styles from './form.css';
 
 const token = tokenMap.LSK.key;
@@ -74,12 +77,12 @@ const SelectNameAndFee = ({
   };
 
   const hasUserEnoughFunds = () => {
-    const hasFunds = account?.token?.balance >= fee.value;
+    const hasFunds = account?.token?.balance >= toRawLsk(fee.value);
 
     if (!hasFunds) {
       setState({
         inputDisabled: true,
-        error: t('Insufficient funds'),
+        error: t('The minimum required balance to register is {{minBalance}} LSK', { minBalance: fromRawLsk(toRawLsk(fee.value) + MIN_ACCOUNT_BALANCE) }),
       });
     }
   };
