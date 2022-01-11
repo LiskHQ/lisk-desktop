@@ -3,6 +3,7 @@ Feature: Send
   Scenario: Error message is shown if transfer tx fails
       Given I login as genesis on devnet
       Given I mock api /transactions
+      Given  I wait 2 seconds
       Given I am on Wallet page
       Then I click on sendLink
       When I paste lsk29eqdkm88v4zc6tbjv8435td54u33m3a3kgjjk in recipientInput field
