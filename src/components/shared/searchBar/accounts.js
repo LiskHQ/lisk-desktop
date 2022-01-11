@@ -20,10 +20,10 @@ const Accounts = ({
             key={index}
             data-index={index}
             className={`${styles.accountRow} ${rowItemIndex === index ? styles.active : ''} account-row`}
-            onClick={() => onSelectedRow(account.summary?.address)}
+            onClick={() => onSelectedRow(account?.summary?.address)}
             onMouseEnter={updateRowItemIndex}
           >
-            <AccountVisual address={account.summary?.address} />
+            <AccountVisual address={account?.summary?.address} />
             <div className={styles.accountInformation}>
               {
                 isDelegate

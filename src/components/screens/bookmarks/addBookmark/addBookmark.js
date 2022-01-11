@@ -105,7 +105,7 @@ const AddBookmark = ({
   }, []);
 
   useEffect(() => {
-    if (account.data.summary) {
+    if (account.data?.summary) {
       const username = account.data?.dpos?.delegate?.username ?? '';
       setFields(
         [{

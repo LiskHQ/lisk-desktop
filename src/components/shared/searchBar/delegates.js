@@ -18,10 +18,10 @@ const Delegates = ({
           key={index}
           data-index={index}
           className={`${styles.accountRow} ${rowItemIndex === index ? styles.active : ''} delegates-row`}
-          onClick={() => onSelectedRow(delegate.summary.address)}
+          onClick={() => onSelectedRow(delegate?.summary.address)}
           onMouseEnter={updateRowItemIndex}
         >
-          <AccountVisual address={delegate.summary.address} />
+          <AccountVisual address={delegate?.summary.address} />
           <div className={styles.accountInformation}>
             <div>
               <span className={`${styles.delegateName} delegate-name`}>
@@ -34,10 +34,10 @@ const Delegates = ({
               </span>
             </div>
             <span className={`${styles.accountSubtitle} hideOnLargeViewPort`}>
-              {truncateAddress(delegate.summary.address)}
+              {truncateAddress(delegate?.summary.address)}
             </span>
             <span className={`${styles.accountSubtitle} showOnLargeViewPort`}>
-              {delegate.summary.address}
+              {delegate?.summary.address}
             </span>
           </div>
           <span className={styles.accountBalance}>
