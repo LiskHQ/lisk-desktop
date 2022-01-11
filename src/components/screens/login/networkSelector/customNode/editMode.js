@@ -22,14 +22,21 @@ const validateNode = async (address) => {
   }
 };
 
-const removeTrailingSlash = (input) => {
-  const bypassStrings = ['http:/', 'http://', 'https:/', 'https://'];
+/**
+ * Removes the trailing slash
+ *
+ * @param {string} url - A URL that might end in a slash
+ * @returns {string} A URL without a trailing slash
+ */
+const removeTrailingSlash = (url) => {
+  const regexs = [/http:\/$/, /http:\/\/$/, /https:\/$/, /https:\/\/$/];
+  const bypass = regexs.some(regex => regex.test(url));
 
-  if (input.charAt(input.length - 1) !== '/' || bypassStrings.includes(input)) {
-    return input;
+  if (url.charAt(url.length - 1) !== '/' || bypass) {
+    return url;
   }
 
-  return input.substring(0, input.length - 1);
+  return url.substring(0, url.length - 1);
 };
 
 const EditMode = ({
