@@ -138,7 +138,6 @@ describe('SelectNameAndFee', () => {
       />,
     );
     await flushPromises();
-    wrapper.update();
     expect(wrapper.find('button.confirm-btn')).toBeDisabled();
     expect(wrapper.find('.feedback')).toHaveText('The minimum required balance to register is {{minBalance}} LSK');
   });
