@@ -75,12 +75,12 @@ const SelectNameAndFee = ({
   };
 
   const hasUserEnoughFunds = () => {
-    const hasFunds = account?.token?.balance >= fee.value;
+    const hasFunds = account?.token?.balance >= toRawLsk(fee.value);
 
     if (!hasFunds) {
       setState({
         inputDisabled: true,
-        error: t('Insufficient funds'),
+        error: t('The balance on your account is not sufficient to register.'),
       });
     }
   };
@@ -158,10 +158,7 @@ const SelectNameAndFee = ({
   }, [txSignatureError]);
 
   const isBtnDisabled = () => {
-    if (
-      (state.customFee && state.customFee.error)
-      || toRawLsk(fee.value) > account.token.balance
-    ) return true;
+    if (state.customFee && state.customFee.error) return true;
     return !!state.error || state.username.length === 0 || state.loading;
   };
 
