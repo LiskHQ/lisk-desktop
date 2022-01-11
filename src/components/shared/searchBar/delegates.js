@@ -29,7 +29,7 @@ const Delegates = ({
                   highlightClassName={styles.highlight}
                   searchWords={[searchTextValue]}
                   autoEscape
-                  textToHighlight={delegate.dpos.delegate.username}
+                  textToHighlight={delegate?.dpos?.delegate?.username}
                 />
               </span>
             </div>
@@ -42,7 +42,7 @@ const Delegates = ({
           </div>
           <span className={styles.accountBalance}>
             <span className={styles.tag}>
-              {t('Delegate #{{rank}}', { rank: delegate.dpos.delegate.rank })}
+              {t('Delegate #{{rank}}', { rank: delegate?.dpos?.delegate?.rank })}
             </span>
           </span>
         </div>

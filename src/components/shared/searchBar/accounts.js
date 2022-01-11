@@ -31,7 +31,7 @@ const Accounts = ({
                     <>
                       <div>
                         <span className={`${styles.accountTitle} account-title`}>
-                          {account.dpos?.delegate.username}
+                          {account?.dpos?.delegate?.username}
                         </span>
                       </div>
                       <span className={`${styles.accountSubtitle} hideOnLargeViewPort`}>

@@ -33,7 +33,7 @@ const VoteDelegate = ({
   const addedLength = Object.keys(added).length;
   const editedLength = Object.keys(edited).length;
   const removedLength = Object.keys(removed).length;
-  const sentVotes = account.dpos?.sentVotes?.length ?? 0;
+  const sentVotes = account?.dpos?.sentVotes?.length ?? 0;
 
   return (
     <>
