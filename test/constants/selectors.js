@@ -26,7 +26,7 @@ const ss = {
   filterNotVoted: '.filter-not-voted',
   seeAllTxsBtn: '.view-all',
   txDetailsBackButton: '.transaction-details-back-button',
-  recipientInput: '.recipient input',
+  recipientInput: 'input.recipient.bookmark',
   recipientConfirmLabel: '.recipient-confirm',
   transferSendTab: '.send-tab',
   transferRequestTab: '.request-tab',
@@ -229,11 +229,13 @@ const ss = {
   unlockBtn: '.unlock-btn',
   removeVote: '.remove-vote',
   unlockingBalance: '.unlocking-balance',
+  availableBalance: '.available-balance',
   addBookmarkIcon: '.add-bookmark-icon',
   inputLabel: '.input-label',
   saveButton: '.save-button',
   feeValue: '.fee-value',
   nodeConnectionLoadingSpinner: '.node-connection-loading-spinner',
+  backToWalletButton: '.back-to-wallet-button',
 };
 
 export default ss;

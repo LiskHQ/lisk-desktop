@@ -15,6 +15,11 @@ Given(/^Network is set to testnet$/, function () {
     JSON.stringify({ ...settings, 'showNetwork': true, network: { name: 'testnet', address:'https://testnet-service.lisk.com' } }));
 });
 
+Given(/^Network is set to ([^\s]+)$/, function (network) {
+  window.localStorage.setItem('settings', 
+    JSON.stringify({ ...settings, 'showNetwork': true, network: { name: network, address:networks[network].serviceUrl } }));
+});
+
 Given(/^I login as ([^\s]+) on ([^\s]+)$/, function (account, network) {
   cy.visit(urls.login);
   cy.get(ss.networkDropdown).click();
@@ -38,6 +43,22 @@ Given(/^I login$/, function () {
 });
 
 Then(/^I enter the passphrase of ([^\s]+)$/, function (accountName) {
+  const passphrase = accounts[accountName]['passphrase'];
+  cy.get(ss.passphraseInput).first().click();
+  cy.get(ss.passphraseInput).each(($el, index) => {
+    const passphraseWordsArray = passphrase.split(' ');
+    cy.wrap($el).type(passphraseWordsArray[index]);
+  });
+});
+
+
+When(/^I enter the passphrase of ([^\s]+) on ([^\s]+)$/, function (accountName, network) {
+
+  cy.get(ss.networkDropdown).click();
+  cy.get(ss.networkOptions).eq(2).click();
+  cy.get(ss.addressInput).clear().type(networks[network].serviceUrl);
+  cy.get(ss.connectButton).click();
+
   const passphrase = accounts[accountName]['passphrase'];
   cy.get(ss.passphraseInput).first().click();
   cy.get(ss.passphraseInput).each(($el, index) => {
@@ -115,13 +136,19 @@ Then(/^The latest transaction is (.*?)$/, function (transactionType) {
   }
   switch (transactionType.toLowerCase()) {
     case 'unlocking':
-      cy.get(`${ss.transactionRow} ${ss.transactionAddress}`).eq(0).contains('Unlock LSK');
+      cy.get(`${ss.transactionRow} ${ss.transactionAddress}`).eq(0).contains('Unlock');
       break;
     case 'voting':
       cy.get(`${ss.transactionRow} ${ss.transactionAddress}`).eq(0).contains('Delegate vote');
       break;
     case 'delegate registration':
       cy.get(`${ss.transactionRow} ${ss.transactionAddress}`).eq(0).contains('Delegate registration');
+      break;
+    case 'register delegate':
+      cy.get(`${ss.transactionRow} ${ss.transactionAddress}`).eq(0).contains('Register delegate');
+      break;
+    case 'vote':
+      cy.get(`${ss.transactionRow} ${ss.transactionAddress}`).eq(0).contains('Vote');
       break;
   }
 });
@@ -135,6 +162,10 @@ Then(/^I should be on (.*?) page$/, function (pageName) {
       cy.get(ss.accountName).should('be.visible');
       break;
   }
+});
+
+Then(/^I should see (\d+) transactions in table$/, function (number) {
+  cy.get(ss.transactionRow).should('have.length', number);
 });
 
 Then(/^I should see (.*?)$/, function (elementName) {
@@ -185,6 +216,10 @@ Then(/^I fill ([^s]+) in ([^s]+) field$/, function (value, field) {
   cy.get(ss[field]).type(value);
 });
 
+When(/^I paste ([\w]+) in ([\w]+) field$/, function (value, field) {
+  cy.get(ss[field]).clear().invoke('val', value.slice(0, value.length - 1)).type(value.slice(-1))
+});
+
 Then(/^I go to transfer confirmation$/, function () {
   cy.get(ss.nextTransferBtn).should('be.enabled');
   cy.get(ss.nextTransferBtn).click();
@@ -210,3 +245,5 @@ And(/^I search for account (.*?)$/, function (string) {
 Then(/^I wait (.*?) seconds$/, function (seconds) {
   cy.wait(Number(seconds) * 1000);
 });
+
+
