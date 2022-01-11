@@ -6,7 +6,7 @@ import styles from './accountsAndDeletegates.css';
 const Accounts = ({
   accounts, onSelectedRow, t, rowItemIndex, updateRowItemIndex,
 }) => {
-  const isDelegate = accounts.some(account => account.summary?.isDelegate);
+  const isDelegate = accounts.some(account => account?.summary?.isDelegate);
 
   return (
     <div className={`${styles.wrapper} accounts`}>
@@ -35,16 +35,16 @@ const Accounts = ({
                         </span>
                       </div>
                       <span className={`${styles.accountSubtitle} hideOnLargeViewPort`}>
-                        {truncateAddress(account.summary?.address)}
+                        {truncateAddress(account?.summary?.address)}
                       </span>
                       <span className={`${styles.accountSubtitle} showOnLargeViewPort`}>
-                        {account.summary?.address}
+                        {account?.summary?.address}
                       </span>
                     </>
                   )
                   : (
                     <span className={`${styles.accountTitle} account-title`}>
-                      {account.summary?.address}
+                      {account?.summary?.address}
                     </span>
                   )
               }
@@ -54,8 +54,8 @@ const Accounts = ({
                 ? (
                   <span className={`${styles.tag} tag`}>
                     {
-                      account.dpos
-                        ? t('Delegate #{{rank}}', { rank: account.dpos.delegate.rank })
+                      account?.dpos
+                        ? t('Delegate #{{rank}}', { rank: account?.dpos.delegate.rank })
                         : '-'
                     }
                   </span>
