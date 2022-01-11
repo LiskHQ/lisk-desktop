@@ -3,7 +3,7 @@ import { Given, Then } from 'cypress-cucumber-preprocessor/steps';
 import { ss, urls } from '../../../constants';
 import compareBalances from '../../utils/compareBalances';
 
-const transactionFee = 0.0026;
+const transactionFee = 0.00142;
 
 const errorMessage = 'Test error';
 
@@ -18,8 +18,13 @@ Then(/^Send form fields are prefilled$/, function () {
 });
 
 Then(/^I mock api \/transactions$/, function () {
-  cy.server({ status: 409 });
-  cy.route('POST', '/api/transactions', { message: errorMessage });
+  cy.intercept({
+    method: 'POST',
+    url: 'http://localhost:9901/api/v2/transactions',
+  }, {
+    statusCode: 409,
+    body: { message: errorMessage },
+  })
 });
 
 Then(/^I see error message$/, function () {
@@ -32,6 +37,6 @@ Given(/^I remember my balance$/, function () {
 
 Then(/^The balance is subtracted$/, function () {
   cy.get(ss.accountBalance).invoke('text').as('balanceAfter').then(function () {
-    compareBalances(this.balanceBefore, this.balanceAfter, 5 + transactionFee);
+    compareBalances(this.balanceBefore, this.balanceAfter, transactionFee);
   });
 });

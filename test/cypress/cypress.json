@@ -4,7 +4,6 @@
   "viewportHeight": 1000,
   "video": true,
   "env": {
-    "serviceUrl": "https://testnet-service.lisk.com"
   },
   "integrationFolder": "./features",
   "fixturesFolder": "./fixtures",

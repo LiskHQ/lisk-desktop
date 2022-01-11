@@ -2,17 +2,12 @@
 import { Given } from 'cypress-cucumber-preprocessor/steps';
 import { ss } from '../../../constants';
 
-When(/^I pick an avatar$/, function () {
-  cy.get(ss.chooseAvatar).first().click();
-  cy.get(ss.getPassphraseButton).click();
-});
 
 Given(/^I remember my passphrase$/, function () {
   this.passphrase = [];
   cy.get(ss.copyPassphrase).each(($el) => {
     this.passphrase = [...this.passphrase, $el[0].textContent];
   });
-  cy.get(ss.itsSafeBtn).click();
 });
 
 Given(/^I confirm my passphrase$/, function () {
@@ -24,9 +19,4 @@ Given(/^I confirm my passphrase$/, function () {
       });
     }
   });
-  cy.get(ss.passphraseConfirmButton).click();
-});
-
-Then(/^I see the success message$/, function () {
-  cy.get(ss.app).contains('Perfect! You\'re all set');
 });
