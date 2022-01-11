@@ -1,4 +1,5 @@
 const { resolve } = require('path');
+const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 
 module.exports = {
   webpackFinal: async (config) => {
@@ -14,7 +15,7 @@ module.exports = {
     config.resolve.alias['@fixtures'] = resolve(__dirname, '../test/constants');
     return config;
   },
-  stories: ['../src/components/**/*.stories.js'],
+  stories: ['../src/components/**/*.stories.@(js)'],
   addons: [
     '@storybook/addon-actions',
     '@storybook/addon-links'
@@ -22,4 +23,46 @@ module.exports = {
   core: {
     builder: 'webpack5',
   },
+  module: {
+    rules: [
+      {
+        test: /^((?!styles\.head).)*\.css$/,
+        use: [
+          MiniCssExtractPlugin.loader,
+          {
+            loader: 'css-loader',
+            options: {
+              sourceMap: true,
+              modules: {
+                mode: 'local',
+                localIdentName: '[name]__[local]___[hash:base64:5]',
+              },
+            },
+          },
+          {
+            loader: 'postcss-loader',
+            options: {
+              ident: 'postcss',
+              sourceMap: true,
+              sourceComments: true,
+              plugins: [
+                require('postcss-partial-import')({}),
+                require('postcss-mixins')({}),
+                require('postcss-nesting')({}),
+                require('postcss-preset-env')({
+                  stage: 0,
+                }),
+                require('postcss-functions')({
+                  functions: {
+                    rem: px => `${(px / 10)}rem`,
+                  },
+                }),
+                require('postcss-for')({}),
+              ],
+            },
+          },
+        ],
+      },
+    ],
+  }
 };
