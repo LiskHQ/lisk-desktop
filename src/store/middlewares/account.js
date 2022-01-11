@@ -69,15 +69,13 @@ const checkTransactionsAndUpdateAccount = async (store, action) => {
       network,
       params: { blockId: id },
     }, token.active);
-    console.log('>>>', account.summary);
     const blockContainsRelevantTransaction = txs.filter((transaction) => {
       if (!transaction) return false;
       return (
-        account.summary?.address === transaction.sender.address
-        || account.summary?.address === transaction.asset?.recipient?.address
+        account.summary?.address && (account.summary?.address === transaction.sender.address
+        || account.summary?.address === transaction.asset?.recipient?.address)
       );
     }).length > 0;
-    console.log('<<<', blockContainsRelevantTransaction);
     showNotificationsForIncomingTransactions(txs, account, token.active);
     const recentBtcTransaction = token.active === tokenMap.BTC.key
       && transactions.confirmed.filter(t => t.confirmations === 1).length > 0;
