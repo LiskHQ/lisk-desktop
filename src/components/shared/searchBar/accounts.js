@@ -4,7 +4,7 @@ import { truncateAddress } from '@utils/account';
 import styles from './accountsAndDeletegates.css';
 
 const Accounts = ({
-  accounts, onSelectedRow, t, rowItemIndex, updateRowItemIndex,
+  accounts = [], onSelectedRow, t, rowItemIndex, updateRowItemIndex,
 }) => {
   const isDelegate = accounts.some(account => account.summary?.isDelegate);
 

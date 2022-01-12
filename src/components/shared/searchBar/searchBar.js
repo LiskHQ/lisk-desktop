@@ -156,7 +156,7 @@ class SearchBar extends React.Component {
           suggestions.data.addresses.length
             ? (
               <Accounts
-                accounts={suggestions.data.addresses || []}
+                accounts={suggestions.data.addresses}
                 onSelectedRow={this.onSelectAccount}
                 rowItemIndex={rowItemIndex}
                 updateRowItemIndex={this.updateRowItemIndex}
