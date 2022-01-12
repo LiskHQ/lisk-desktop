@@ -1,4 +1,5 @@
 import React, { useEffect } from 'react';
+import { signatureCollectionStatus } from '@constants';
 import Box from '@toolbox/box';
 import Illustration from '@toolbox/illustration';
 import BoxContent from '@toolbox/box/content';
@@ -9,6 +10,7 @@ import styles from './transactionSignature.css';
 const TransactionSignature = ({
   t, transactions, account, actionFunction, multisigTransactionSigned,
   rawTransaction, nextStep, statusInfo, sender, transactionDoubleSigned,
+  signatureStatus, signatureSkipped,
 }) => {
   const deviceType = getDeviceType(account.hwInfo?.deviceModel);
 
@@ -19,9 +21,15 @@ const TransactionSignature = ({
      * sender account is required.
      */
     if (sender) {
-      multisigTransactionSigned({
-        rawTransaction, sender,
-      });
+      if (signatureStatus === signatureCollectionStatus.fullySigned
+        || signatureStatus === signatureCollectionStatus.overSigned) {
+        // Skip the current member as the all required signature are collected
+        signatureSkipped({ rawTransaction });
+      } else {
+        multisigTransactionSigned({
+          rawTransaction, sender,
+        });
+      }
     } else {
       /**
        * The action function must be wrapped in dispatch

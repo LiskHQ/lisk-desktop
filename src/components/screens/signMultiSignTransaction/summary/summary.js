@@ -37,6 +37,7 @@ const Summary = ({
     nextStep({
       rawTransaction: transaction,
       sender: senderAccount,
+      signatureStatus,
     });
   };
 
