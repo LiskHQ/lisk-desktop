@@ -5,7 +5,6 @@ import autoUpdater from './autoUpdater';
 
 describe('autoUpdater', () => {
   const version = '1.2.3';
-  const releaseNotes = 'this notes';
   const loadURL = spy();
   const show = spy();
   const close = spy();
