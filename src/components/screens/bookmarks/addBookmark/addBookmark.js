@@ -109,7 +109,7 @@ const AddBookmark = ({
       const username = account.data?.dpos?.delegate?.username ?? '';
       setFields(
         [{
-          value: account.data.summary.address,
+          value: account.data?.summary.address,
           feedback: '',
           readonly: true,
         },

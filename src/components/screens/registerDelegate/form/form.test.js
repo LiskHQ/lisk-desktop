@@ -126,4 +126,19 @@ describe('SelectNameAndFee', () => {
     jest.advanceTimersByTime(1000);
     expect(wrapper.find('button.confirm-btn')).toBeDisabled();
   });
+
+  it('disabled confirm button if balance is not enough to pay fee', async () => {
+    wrapper = mount(
+      <SelectNameAndFee
+        {...props}
+        account={{
+          ...props.account,
+          token: { balance: 1e2 },
+        }}
+      />,
+    );
+    await flushPromises();
+    expect(wrapper.find('button.confirm-btn')).toBeDisabled();
+    expect(wrapper.find('.feedback')).toHaveText('The minimum required balance to register is {{minBalance}} LSK');
+  });
 });
