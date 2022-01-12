@@ -81,10 +81,6 @@ export default ({ // eslint-disable-line max-statements
     win.send({ event: 'downloadUpdateCompleted' });
   });
 
-  autoUpdater.on('updateQuitAndInstall', () => {
-    autoUpdater.quitAndInstall();
-  });
-
   // export this to MenuItem click callback
   function checkForUpdates(menuItem) {
     autoUpdater.checkForUpdates();
