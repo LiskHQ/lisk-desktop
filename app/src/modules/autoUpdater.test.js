@@ -48,6 +48,7 @@ describe('autoUpdater', () => {
 
   beforeEach(() => {
     const quitAndInstall = spy();
+    callbacks = {};
     params = {
       autoUpdater: {
         checkForUpdates: spy(),
