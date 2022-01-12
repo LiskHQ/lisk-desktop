@@ -1,0 +1,19 @@
+{
+  "specName": "__all",
+  "title": "Unlock balance",
+  "suiteName": "Vote delegate",
+  "testName": "Vote delegate Unlock balance",
+  "testError": "Timed out retrying after 4050ms: `cy.click()` could not be issued because this element is currently animating:\n\n`<button type=\"button\" class=\"secondaryButton__button___p3kTe networkSelector__dropdownHandler___4K6V8 network size__button___Kl9XF size__l___d3JUQ\">...</button>`\n\nYou can fix this problem by:\n  - Passing `{force: true}` which disables all error checking\n  - Passing `{waitForAnimations: false}` which disables waiting on animations\n  - Passing `{animationDistanceThreshold: 20}` which decreases the sensitivity",
+  "testCommands": [
+    "xhr  GET http://localhost:8080/sockjs-node/info?t=1641912168229",
+    "step **I login as genesis on devnet**",
+    "visit /login",
+    "get .network",
+    "click ",
+    "request ",
+    "request ",
+    "request ",
+    "request ",
+    "xhr  GET http://localhost:8080/sockjs-node/info?t=1641912224376"
+  ]
+}

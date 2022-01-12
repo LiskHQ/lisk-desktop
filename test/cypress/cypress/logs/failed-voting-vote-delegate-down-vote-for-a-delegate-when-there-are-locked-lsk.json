@@ -1,0 +1,11 @@
+{
+  "specName": "voting.feature",
+  "title": "Down Vote for a delegate when there are locked lsk",
+  "suiteName": "Vote delegate",
+  "testName": "Vote delegate Down Vote for a delegate when there are locked lsk",
+  "testError": "Timed out after waiting `60000ms` for your remote page to load.\n\nYour page did not fire its `load` event within `60000ms`.\n\nYou can try increasing the `pageLoadTimeout` value in `cypress.json` to wait longer.\n\nBrowsers will not fire the `load` event until all stylesheets and scripts are done downloading.\n\nWhen this `load` event occurs, Cypress will continue running commands.",
+  "testCommands": [
+    "step **I login as genesis on devnet**",
+    "visit /login"
+  ]
+}

@@ -2,6 +2,7 @@ Feature: Transaction table filtering
 
   Background:
     Given I login as genesis on devnet
+    And I wait 5 seconds
     Given I am on Wallet page
     And I click on filterTransactionsBtn
 
