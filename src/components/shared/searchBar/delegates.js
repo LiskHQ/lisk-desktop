@@ -5,7 +5,7 @@ import { truncateAddress } from '@utils/account';
 import styles from './accountsAndDeletegates.css';
 
 const Delegates = ({
-  delegates = [], onSelectedRow, t, rowItemIndex, updateRowItemIndex, searchTextValue,
+  delegates, onSelectedRow, t, rowItemIndex, updateRowItemIndex, searchTextValue,
 }) => (
   <div className={`${styles.wrapper} delegates`}>
     <header className={`${styles.header} delegates-header`}>
