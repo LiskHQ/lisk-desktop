@@ -2,6 +2,7 @@ Feature: Wallet
 
   Background:
     Given I login as genesis on devnet
+    And I wait 2 seconds
     Given I am on wallet page
     
   Scenario: 30 tx are shown, clicking show more loads more transactions
