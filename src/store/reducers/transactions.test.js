@@ -169,6 +169,24 @@ describe('Reducer: transactions', () => {
     });
   });
 
+  describe('signatureSkipped', () => {
+    it('should store the signed transaction', () => {
+      const state = {
+        ...defaultState,
+        signedTransaction: null,
+      };
+      const action = {
+        type: actionTypes.signatureSkipped,
+        data: mockTransactions[0],
+      };
+      const changedState = transactions(state, action);
+      expect(changedState).toEqual({
+        ...defaultState,
+        signedTransaction: mockTransactions[0],
+      });
+    });
+  });
+
   describe('transactionSignError', () => {
     it('should store the signed creation/signature error', () => {
       const state = {
