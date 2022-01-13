@@ -71,7 +71,7 @@ const Summary = ({
             data: transaction,
             error,
           }}
-          containerStyle={styles.txDetails}
+          containerStyle={`${styles.txDetails} ${showFeedback && isMember ? styles.small : ''}`}
         />
       </BoxContent>
       {
