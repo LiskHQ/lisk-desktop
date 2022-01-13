@@ -65,6 +65,7 @@ const actionTypes = {
   transactionCreatedSuccess: 'TRANSACTION_CREATED_SUCCESS',
   transactionSignError: 'TRANSACTION_SIGN_ERROR',
   transactionDoubleSigned: 'TRANSACTION_DOUBLE_SIGNED',
+  signatureSkipped: 'SIGNATURE_SKIPPED',
   resetTransactionResult: 'RESET_TRANSACTION_RESULTS',
   broadcastedTransactionSuccess: 'BROADCAST_TRANSACTION_SUCCESS',
   broadcastedTransactionError: 'BROADCASTED_TRANSACTION_ERROR',
