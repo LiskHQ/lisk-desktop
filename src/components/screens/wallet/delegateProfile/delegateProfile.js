@@ -37,7 +37,7 @@ const DelegateProfile = ({
         />
         <PerformanceView
           t={t}
-          data={data.dpos?.delegate}
+          data={data.dpos.delegate}
         />
       </Box>
       <DelegateVotesView
