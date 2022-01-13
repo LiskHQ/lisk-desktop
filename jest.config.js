@@ -99,7 +99,6 @@ module.exports = {
     'src/components/toolbox/hardwareWalletIllustration/index.js',
     'src/components/toolbox/switcher/index.js',
     'src/components/toolbox/demo.js',
-    'src/components/toolbox/animation/demo.js',
     'src/components/toolbox/calendar/demo.js',
     'src/components/toolbox/hardwareWalletIllustration/demo.js',
     'src/components/toolbox/illustration/demo.js',
