@@ -29,7 +29,7 @@ const Delegates = ({
                   highlightClassName={styles.highlight}
                   searchWords={[searchTextValue]}
                   autoEscape
-                  textToHighlight={delegate.dpos?.delegate?.username}
+                  textToHighlight={delegate.dpos.delegate.username}
                 />
               </span>
             </div>
