@@ -52,7 +52,7 @@ export const voteEdited = data => async (dispatch, getState) => {
     const account = await getAccount({
       network, params: { address: vote.address },
     }, settings.token.active);
-    const username = account.dpos.delegate ? account.dpos.delegate.username : '';
+    const username = account.dpos?.delegate ? account.dpos.delegate.username : '';
 
     return { ...vote, username };
   }));
