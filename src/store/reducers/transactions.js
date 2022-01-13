@@ -60,6 +60,7 @@ const transactions = (state = initialState, action) => { // eslint-disable-line 
 
     // Stored the signed transaction to be used for broadcasting or downloading
     case actionTypes.transactionCreatedSuccess:
+    case actionTypes.signatureSkipped:
     case actionTypes.transactionDoubleSigned:
       return {
         ...state,

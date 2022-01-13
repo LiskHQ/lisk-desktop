@@ -52,4 +52,8 @@
 
 .txDetails {
   max-height: calc(100vh - 80px - 290px); /* stylelint-disable-line unit-whitelist */
+
+  &.small {
+    max-height: calc(100vh - 110px - 290px); /* stylelint-disable-line unit-whitelist */
+  }
 }

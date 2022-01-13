@@ -6,7 +6,12 @@ import {
 } from '@constants';
 import { isEmpty } from '@utils/helpers';
 import { getTransactions, create, broadcast } from '@api/transaction';
-import { signMultisigTransaction, transformTransaction } from '@utils/transaction';
+import {
+  signMultisigTransaction,
+  transformTransaction,
+  createTransactionObject,
+  flattenTransaction,
+} from '@utils/transaction';
 import { extractKeyPair } from '@utils/account';
 import { getTransactionSignatureStatus } from '@screens/signMultiSignTransaction/helpers';
 import { timerReset } from './account';
@@ -228,7 +233,6 @@ export const transactionBroadcasted = transaction =>
  * @param {object} data.rawTransaction Transaction config required by Lisk Element
  * @param {object} data.sender
  * @param {object} data.sender.data - Sender account info in Lisk API schema
- * @todo account for privateKey and HW and increase test coverage once HW is implemented
  */
 export const multisigTransactionSigned = ({
   rawTransaction, sender,
@@ -241,7 +245,6 @@ export const multisigTransactionSigned = ({
     passphrase: account.passphrase,
     hwInfo: account.hwInfo,
   };
-  // @todo move isTransactionFullySigned to a generic location
   const txStatus = getTransactionSignatureStatus(sender.data, rawTransaction);
 
   const [tx, error] = await signMultisigTransaction(
@@ -263,4 +266,22 @@ export const multisigTransactionSigned = ({
       data: error,
     });
   }
+};
+
+/**
+ * Used when a fully signed transaction is imported, this action
+ * skips the current user's signature and directly places the tx
+ * in the Redux store to be ready for broadcasting.
+ *
+ * @param {object} data
+ * @param {object} data.rawTransaction Transaction config required by Lisk Element
+ */
+export const signatureSkipped = ({ rawTransaction }) => {
+  const flatTx = flattenTransaction(rawTransaction);
+  const binaryTx = createTransactionObject(flatTx, rawTransaction.moduleAssetId);
+
+  return ({
+    type: actionTypes.signatureSkipped,
+    data: binaryTx,
+  });
 };

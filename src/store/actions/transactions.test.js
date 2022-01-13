@@ -11,6 +11,7 @@ import {
   transactionBroadcasted,
   transactionCreated,
   multisigTransactionSigned,
+  signatureSkipped,
 } from './transactions';
 import { sampleTransaction } from '../../../test/constants/transactions';
 import { getState } from '../../../test/fixtures/transactions';
@@ -407,6 +408,35 @@ describe('actions: transactions', () => {
 
       // Assert
       expect(dispatch).toHaveBeenCalledWith(expectedAction);
+    });
+  });
+
+  describe('signatureSkipped', () => {
+    const props = {
+      rawTransaction: {
+        id: '9dc584c07c9d7ed77d54b6f8f43b8341c50e108cbcf582ceb3513388fe4ba84c',
+        moduleAssetId: '2:0',
+        fee: '10000000',
+        nonce: 0,
+        sender: {
+          publicKey: '00f046aea2782180c51f7271249a0c107e6b6295c6b3c31e43c1a3ed644dcdeb',
+        },
+        asset: {
+          amount: '200',
+          recipient: { address: 'lskz5r2nbgwrzjctbcffyrn8k74jdxdmd9cj9ng45' },
+          data: 'test',
+        },
+        signatures: [
+          'af975f7670394a1fe7eee4785c2a65f4604b1e7ad2e4367308738c86ed4837ace17960b32d6d7ceca2d5c2ae7709465bb69581d4ef2713ccef1d4ed4618c0d0a',
+          'ae67d1418797e48afae2c8d3641bd0ee4807e307d22df71a84d50555438a03c3df1f9162b2d7e54836979e78925261944e2c5aadaf9f9534b5cb8956fa95f501',
+        ],
+      },
+    };
+
+    it('should return the tx ready to be broadcasted', () => {
+      expect(signatureSkipped(props)).toEqual(
+        expect.objectContaining({ type: actionTypes.signatureSkipped }),
+      );
     });
   });
 });
