@@ -2,7 +2,7 @@
 import { withRouter } from 'react-router';
 import { connect } from 'react-redux';
 import { compose } from 'redux';
-import { multisigTransactionSigned, transactionDoubleSigned } from '@actions';
+import { multisigTransactionSigned, transactionDoubleSigned, signatureSkipped } from '@actions';
 import { withTranslation } from 'react-i18next';
 import TransactionSignature from './transactionSignature';
 
@@ -14,6 +14,7 @@ const mapStateToProps = state => ({
 const dispatchToProps = {
   multisigTransactionSigned,
   transactionDoubleSigned,
+  signatureSkipped,
 };
 
 export default compose(
