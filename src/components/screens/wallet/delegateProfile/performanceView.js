@@ -163,7 +163,9 @@ const PerformanceView = ({
               >
                 {data.lastForgedHeight}
               </NavLink>
-            ) : '-'}
+            ) : (
+              <span className={styles.performanceValue}>-</span>
+            )}
           </Item>
           <Item
             title={t('Forged blocks')}
