@@ -6,6 +6,7 @@ import {
 import Illustration from '@toolbox/illustration';
 import { transactionToJSON, downloadJSON } from '@utils/transaction';
 import { routes, txStatusTypes } from '@constants';
+import { getErrorReportMailto } from '@utils/helpers';
 
 import copyToClipboard from 'copy-to-clipboard';
 import Icon from '@toolbox/icon';
@@ -46,9 +47,32 @@ export const FullySignedActions = ({ t, onDownload, onSend }) => (
   </>
 );
 
+const ErrorActions = ({
+  t, status, message, network,
+}) => (
+  <a
+    className="report-error-link"
+    href={getErrorReportMailto(
+      {
+        error: status.message,
+        errorMessage: message,
+        networkIdentifier: network.networkIdentifier,
+        serviceUrl: network.serviceUrl,
+        liskCoreVersion: network.networkVersion,
+      },
+    )}
+    target="_top"
+    rel="noopener noreferrer"
+  >
+    <SecondaryButton>
+      {t('Report the error via email')}
+    </SecondaryButton>
+  </a>
+);
+
 const Multisignature = ({
   transactions, title, message, t, status, className, history,
-  resetTransactionResult, transactionBroadcasted, account,
+  resetTransactionResult, transactionBroadcasted, account, network,
 }) => {
   const [copied, setCopied] = useState(false);
 
@@ -88,7 +112,23 @@ const Multisignature = ({
               >
                 {t('Back to wallet')}
               </PrimaryButton>
-            ) : (
+            ) : null
+        }
+        {
+          status.code === txStatusTypes.broadcastError
+            ? (
+              <ErrorActions
+                message={message}
+                network={network}
+                status={status}
+                t={t}
+              />
+            ) : null
+        }
+        {
+          (status.code !== txStatusTypes.broadcastSuccess
+            && status.code !== txStatusTypes.broadcastError)
+            ? (
               <SecondaryButton
                 className={`${styles.copy} copy-button`}
                 onClick={onCopy}
@@ -98,7 +138,7 @@ const Multisignature = ({
                   {t(copied ? 'Copied' : 'Copy')}
                 </span>
               </SecondaryButton>
-            )
+            ) : null
         }
         {
           status.code === txStatusTypes.multisigSignatureSuccess

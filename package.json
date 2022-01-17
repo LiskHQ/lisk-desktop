@@ -1,6 +1,6 @@
 {
   "name": "Lisk",
-  "version": "2.2.0-beta.1",
+  "version": "2.2.0-rc.0",
   "author": "Lisk Foundation <admin@lisk.com>, lightcurve GmbH <admin@lightcurve.io>",
   "license": "GPL-3.0",
   "productName": "Lisk",
@@ -201,7 +201,9 @@
     "css-loader": "5.2.4",
     "cypress": "8.7.0",
     "cypress-cucumber-preprocessor": "4.3.0",
+    "cypress-failed-log": "2.9.2",
     "cypress-pipe": "2.0.0",
+    "cypress-terminal-report": "3.4.1",
     "electron": "12.1.0",
     "electron-builder": "22.10.4",
     "electron-builder-notarize": "1.2.0",
