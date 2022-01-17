@@ -5,7 +5,6 @@ import autoUpdater from './autoUpdater';
 
 describe('autoUpdater', () => {
   const version = '1.2.3';
-  const releaseNotes = 'this notes';
   const loadURL = spy();
   const show = spy();
   const close = spy();
@@ -49,13 +48,7 @@ describe('autoUpdater', () => {
 
   beforeEach(() => {
     const quitAndInstall = spy();
-    callbacks = {
-      clickDialogButton: (buttonIndex) => {
-        if (buttonIndex === 0) {
-          quitAndInstall();
-        }
-      },
-    };
+    callbacks = {};
     params = {
       autoUpdater: {
         checkForUpdates: spy(),
@@ -136,22 +129,6 @@ describe('autoUpdater', () => {
     dialogSpy.resetHistory();
     callbacks['update-not-available']({ version });
     expect(dialogSpy).to.have.not.been.calledWith();
-  });
-
-  it('should install update once downloaded and "Restart now" button pressed', () => {
-    autoUpdater(params);
-    callbacks['update-downloaded']({ version });
-    callbacks.clickDialogButton(0);
-
-    expect(params.autoUpdater.quitAndInstall).to.have.been.calledWithExactly();
-  });
-
-  it('should not install update when "Later" was pressed', () => {
-    autoUpdater(params);
-    callbacks['update-downloaded']({ releaseNotes, version });
-    callbacks.clickDialogButton(1);
-
-    expect(params.autoUpdater.quitAndInstall).to.not.have.been.calledWith();
   });
 
   it('should Send information to renderer when update is available', () => {
