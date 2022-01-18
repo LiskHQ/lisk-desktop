@@ -3,6 +3,7 @@ import React from 'react';
 
 import WalletDetails from '@shared/walletDetails';
 import Onboarding from '@toolbox/onboarding/onboarding';
+import InfoBanner from '@toolbox/infoBanner/infoBanner';
 import NewsFeed from './newsFeed';
 import RecentTransactions from './recentTransactions';
 import styles from './dashboard.css';
@@ -36,6 +37,7 @@ const Dashboard = ({ account, t }) => {
           actionButtonLabel={t('Got it, thanks!')}
           name="dashboardOnboarding"
         />
+        <InfoBanner name="btcRemoval" infoMessage="BTC is not supported in this release 2.2.0" infoLabel="Update" infoLink="https://google.com" />
         <div className={`${styles.main}`}>
           <div className={styles.subContainer}>
             {
