@@ -37,7 +37,7 @@ const Dashboard = ({ account, t }) => {
           actionButtonLabel={t('Got it, thanks!')}
           name="dashboardOnboarding"
         />
-        <InfoBanner name="btcRemoval" infoMessage="BTC is not supported in this release 2.2.0" infoLabel="Update" infoLink="https://google.com" />
+        <InfoBanner name="btcRemoval" infoMessage="Please note: BTC is not supported in this release xx.xxx" infoLabel="Update" infoLink="https://lisk.com/blog/development/lisk-desktop-220-release" />
         <div className={`${styles.main}`}>
           <div className={styles.subContainer}>
             {
