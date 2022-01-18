@@ -1,6 +1,6 @@
 {
   "name": "Lisk",
-  "version": "2.2.0-beta.1",
+  "version": "2.2.0-rc.0",
   "author": "Lisk Foundation <admin@lisk.com>, lightcurve GmbH <admin@lightcurve.io>",
   "license": "GPL-3.0",
   "productName": "Lisk",
@@ -146,7 +146,7 @@
     "node-hid": "2.1.1",
     "numeral": "git+https://github.com/LiskHQ/Numeral-js.git",
     "path-browserify": "^1.0.1",
-    "postcss": "6.0.12",
+    "postcss": "8.2.13",
     "prop-types": "15.7.2",
     "qrcode.react": "1.0.1",
     "react": "16.14.0",
