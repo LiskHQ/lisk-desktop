@@ -25,3 +25,8 @@ cypress.log
 ## Commercial fonts
 src/assets/fonts/basier-circle/
 src/assets/fonts/gilroy/
+
+## Cypress
+test/cypress/cypress
+test/cypress/screenshots
+test/cypress/videos
