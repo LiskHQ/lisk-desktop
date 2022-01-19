@@ -27,7 +27,7 @@ const InfoBanner = ({
   return (
     <div className={`${styles.infoBanner} ${className}`}>
       <span
-        className={`closeOnboarding ${styles.closeBtn}`}
+        className={`closeBanner ${styles.closeBtn}`}
         onClick={handleClose}
       />
       <div className={styles.illustrations}>
@@ -45,7 +45,7 @@ const InfoBanner = ({
           <section className={`${className || ''} ${styles.active}`}>
             <h1 className={styles.infoMessage}>{infoMessage}</h1>
             <p
-              className={styles.infoLink}
+              className={`${styles.infoLink} link`}
               onClick={() => {
                 window.open(`${infoLink}`);
               }}
