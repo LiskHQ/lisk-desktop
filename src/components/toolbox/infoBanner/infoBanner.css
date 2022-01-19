@@ -70,7 +70,7 @@
 
   & .closeBtn {
     align-items: center;
-    border: 1px solid var(--color-slate-gray);
+    border: 1px solid #F7F9FB;
     border-radius: var(--border-radius-box);
     box-sizing: border-box;
     cursor: pointer;
