@@ -24,9 +24,9 @@ const getOnboardingSlides = (t) => [
     illustration: 'builtAroundCommunity',
   },
   {
-    title: t('Send LSK and BTC'),
+    title: t('Effortlessly send and receive tokens'),
     content: t(
-      'Personalize each transaction with a custom message. Look up its value in a fiat currency of your choice.',
+      'Personalize each transaction with a custom message.',
     ),
     illustration: 'sendLSKTokens',
   },
