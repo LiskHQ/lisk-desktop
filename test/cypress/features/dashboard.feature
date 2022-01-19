@@ -2,6 +2,7 @@ Feature: Dashboard
   Background:
     Given I have a bookmark saved
     Given I login as genesis on devnet
+    And I wait 5 seconds
     Given I am on wallet page
 
   Scenario: Open last transaction and open a bookmark item

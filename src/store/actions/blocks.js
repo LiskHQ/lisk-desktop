@@ -78,7 +78,7 @@ export const forgersRetrieved = () => async (dispatch, getState) => {
     forgers = data.map((forger, index) => {
       forger.rank = delegates.data.find(
         delegate => forger.address === delegate.summary.address,
-      ).dpos?.delegate?.rank;
+      )?.dpos?.delegate?.rank;
       indexBook[forger.address] = index;
       if (haveForgedInRound.indexOf(forger.username) > -1) {
         return { ...forger, state: 'forging' };
