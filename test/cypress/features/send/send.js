@@ -8,11 +8,11 @@ const transactionFee = 0.00142;
 const errorMessage = 'Test error';
 
 Then(/^I follow the launch protokol link$/, function () {
-  cy.visit(`${urls.send}&recipient=4995063339468361088L&amount=5&reference=test`);
+  cy.visit(`${urls.send}&recipient=lsk2h73o3bqa4v2u3ehn6c5e787ky38q8wte538mn&amount=5&reference=test`);
 });
 
 Then(/^Send form fields are prefilled$/, function () {
-  cy.get(ss.recipientInput).should('have.value', '4995063339468361088L');
+  cy.get(ss.recipientInput).should('have.value', 'lsk2h73o3bqa4v2u3ehn6c5e787ky38q8wte538mn');
   cy.get(ss.amountInput).should('have.value', '5');
   cy.get(ss.sendReferenceText).should('have.value', 'test');
 });
