@@ -80,7 +80,6 @@
       "target": {
         "target": "dmg",
         "arch": [
-          "darwin-arm64",
           "arm64",
           "x64"
         ]
