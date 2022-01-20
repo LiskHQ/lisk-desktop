@@ -281,6 +281,15 @@ const accounts = {
       address: '13537424230540679628L',
       balance: '12100000',
     },
+    dpos: {
+      delegate: {
+        username: '',
+        consecutiveMissedBlocks: 0,
+        lastForgedHeight: 0,
+        isBanned: false,
+        totalVotesReceived: '0',
+      },
+    },
   },
 };
 
