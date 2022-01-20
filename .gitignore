@@ -23,7 +23,7 @@ storybook-static
 cypress.log
 
 ## Commercial fonts
-src/assets/fonts/basier-circle/
+src/assets/fonts/basierCircle/
 src/assets/fonts/gilroy/
 
 ## Cypress
