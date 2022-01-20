@@ -10,6 +10,7 @@ Feature: Send
       And I fill 4 in amountInput field
       And I go to transfer confirmation
       And I click on sendButton
+      Given  I wait 5 seconds
       Then submittedTransactionMessage should be visible
       Then I see error message
 
