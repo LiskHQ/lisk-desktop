@@ -1,0 +1,187 @@
+@import '../../../app/mixins.css';
+
+.infoBanner {
+  background-color: #254898;
+  border-radius: var(--border-radius-standard);
+  box-sizing: border-box;
+  color: var(--color-white);
+  display: flex;
+  margin-top: 32px;
+  overflow: hidden;
+  position: relative;
+  height: 257px;
+  width: 100%;
+
+  & .illustrations {
+    bottom: 0;
+    height: calc(100% - 45px);
+    position: absolute;
+    right: 10%;
+    width: 50%;
+    z-index: 0;
+
+    & > img {
+      bottom: 0;
+      max-height: 100%;
+      max-width: 100%;
+      opacity: 0;
+      position: absolute;
+      right: 0;
+      transform: translateX(-100%);
+      transition:
+        transform var(--animation-speed-slow) linear,
+        opacity var(--animation-speed-fast) linear;
+      will-change: transform, opacity;
+
+      &.active {
+        opacity: 1;
+        transform: translateX(0);
+        transition:
+          transform var(--animation-speed-slow) cubic-bezier(0.17, 0.65, 0.33, 0.88),
+          opacity var(--animation-speed-standard) linear calc(var(--animation-delay-standard) * 1.5);
+      }
+
+      &.active ~ img {
+        transform: translateX(100%);
+        transition:
+          transform var(--animation-speed-standard) linear,
+          opacity var(--animation-speed-fast) linear;
+      }
+    }
+  }
+
+  & .label {
+    display: flex;
+
+    & > span {
+      background-color: #2bd67b;
+      border-radius: 4px;
+      padding: 5px 10px;
+      font-family: var(--heading-font);
+      font-size: var(--paragraph-font-size-l);
+      line-height: 18px;
+    }
+
+    & > .active {
+      background-color: var(--color-ultramarine-blue);
+      border-color: var(--color-ultramarine-blue);
+    }
+  }
+
+  & .closeBtn {
+    align-items: center;
+    border: 1px solid #f7f9fb;
+    border-radius: var(--border-radius-box);
+    box-sizing: border-box;
+    cursor: pointer;
+    display: flex;
+    flex-shrink: 0;
+    height: 32px;
+    justify-content: center;
+    margin-left: auto;
+    right: 30px;
+    position: absolute;
+    top: 30px;
+    width: 32px;
+    z-index: 10;
+
+    &::before,
+    &::after {
+      background-color: var(--color-strong-white);
+      content: '';
+      height: 11px;
+      position: absolute;
+      width: 1px;
+    }
+
+    &::before {
+      transform: rotate(45deg);
+    }
+
+    &::after {
+      transform: rotate(-45deg);
+    }
+  }
+
+  & .content {
+    box-sizing: border-box;
+    display: flex;
+    flex-direction: column;
+    flex-basis: 55%;
+    height: 100%;
+    padding: 40px 35px;
+    z-index: 1;
+  }
+
+  & .slides {
+    flex-grow: 1;
+    height: 100%;
+    position: relative;
+
+    & > section {
+      box-sizing: border-box;
+      display: flex;
+      height: 100%;
+      flex-direction: column;
+      left: 0;
+      opacity: 0;
+      position: absolute;
+      transform: translateX(-100%);
+      transition:
+        transform var(--animation-speed-slow) linear,
+        opacity var(--animation-speed-fast) linear;
+      top: 0;
+      will-change: transform, opacity;
+
+      &.active {
+        opacity: 1;
+        transform: translateX(0);
+        transition:
+          transform var(--animation-speed-slow) cubic-bezier(0.17, 0.65, 0.33, 0.88),
+          opacity var(--animation-speed-standard) linear calc(var(--animation-delay-standard) * 1.5);
+      }
+
+      &.active ~ section {
+        transform: translateX(100%);
+        transition:
+          transform var(--animation-speed-standard) linear,
+          opacity var(--animation-speed-fastest) linear;
+      }
+    }
+
+    & p {
+      @mixin contentLargest;
+
+      line-height: 25px;
+      margin: 0;
+      color: var(--color-strong-white);
+    }
+
+    & h1 {
+      @mixin headingNormalIntermediate;
+
+      margin: 30px 0;
+      color: var(--color-strong-white);
+    }
+  }
+}
+
+.infoMessage {
+  font-size: var(--font-size-h3);
+}
+
+.infoLink {
+  font-size: var(--paragraph-font-size-l);
+}
+
+@media (--medium-viewport) {
+  .infoBanner {
+    & .illustrations {
+      display: none;
+    }
+
+    & .content {
+      flex-basis: 100%;
+    }
+  }
+}

@@ -199,6 +199,7 @@ import reportDelegateMisbehavior from '../../../assets/images/icons/reportDelega
 import reportDelegateMisbehaviorDark from '../../../assets/images/icons/reportDelegateMisbehavior-dark.svg';
 import downloadUpdateFinish from '../../../assets/images/icons/download-update-finish.svg';
 import downloadUpdateProgress from '../../../assets/images/icons/download-update-progress.svg';
+import whiteLinkIcon from '../../../assets/images/icons/white-link-icon.svg';
 
 export const icons = {
   academy,
@@ -398,6 +399,7 @@ export const icons = {
   lockedBalanceDark,
   downloadUpdateProgress,
   downloadUpdateFinish,
+  whiteLinkIcon,
 };
 
 const Icon = ({ name, noTheme, ...props }) => {
