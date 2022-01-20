@@ -265,6 +265,23 @@ const accounts = {
       unlocking: [],
     },
   },
+  mainnet_guy: {
+    passphrase: 'pass umbrella hold deny stumble slab trade fall test noodle royal pluck',
+    summary: {
+      address: 'lskaror3zjhrg85edkfemyg7aoq4cq6jqycnxgkr9',
+      balance: '0',
+      isDelegate: false,
+      isMigrated: false,
+      isMultisignature: false,
+      legacyAddress: '13537424230540679628L',
+      publicKey: 'e3e86b862d74d55fe05eff9170932a7d3b103d31e5e63c2dc294db7bd0ac23a9',
+    },
+    token: { balance: '0' },
+    legacy: {
+      address: '13537424230540679628L',
+      balance: '12100000',
+    },
+  },
 };
 
 export default accounts;
