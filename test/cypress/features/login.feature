@@ -1,5 +1,6 @@
 Feature: Login
-
+  # @todo: would be re-insisted when #4089 has been resolved
+  #
   # Scenario: Log in to Mainnet (Network switcher is not enabled)
   #   Given Network switcher is disabled
   #   Given I am on Login page
