@@ -12,7 +12,7 @@ pipeline {
 						nvm(getNodejsVersion()) {
 							sh '''
 							npm ci
-							cp -R /home/lisk/fonts/basierCircle src/assets/fonts
+							cp -R /home/lisk/fonts/basier-circle src/assets/fonts/basierCircle
 							cp -R /home/lisk/fonts/gilroy src/assets/fonts
 							npm run build
 							npm run install:electron:dependencies
@@ -37,7 +37,7 @@ pipeline {
 						nvm(getNodejsVersion()) {
 							sh '''
 							npm ci
-							cp -R /Users/jenkins/fonts/basierCircle src/assets/fonts
+							cp -R /Users/jenkins/fonts/basier-circle src/assets/fonts/basierCircle
 							cp -R /Users/jenkins/fonts/gilroy src/assets/fonts
 							npm run build
 							npm run install:electron:dependencies
