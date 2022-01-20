@@ -76,7 +76,15 @@
       "hardenedRuntime": true,
       "gatekeeperAssess": false,
       "entitlements": "build/entitlements.plist",
-      "entitlementsInherit": "build/entitlements.plist"
+      "entitlementsInherit": "build/entitlements.plist",
+      "target": {
+        "target": "dmg",
+        "arch": [
+          "darwin-arm64",
+          "arm64",
+          "x64"
+        ]
+      }
     },
     "dmg": {
       "background": "./build/background@2x.png",
@@ -104,6 +112,7 @@
     "stepDefinitions": "features/"
   },
   "dependencies": {
+    "@electron/universal": "1.1.0",
     "@hirishh/lisk-ledger.js": "2.2.0",
     "@ledgerhq/hw-transport": "6.3.0",
     "@ledgerhq/hw-transport-node-hid": "6.6.0",
@@ -204,12 +213,12 @@
     "cypress-failed-log": "2.9.2",
     "cypress-pipe": "2.0.0",
     "cypress-terminal-report": "3.4.1",
-    "electron": "12.1.0",
-    "electron-builder": "22.10.4",
-    "electron-builder-notarize": "1.2.0",
+    "electron": "17.0.0-beta.5",
+    "electron-builder": "22.12.0",
+    "electron-builder-notarize": "1.4.0",
     "electron-devtools-installer": "3.2.0",
     "electron-ipc-mock": "0.0.3",
-    "electron-rebuild": "2.3.5",
+    "electron-rebuild": "3.2.7",
     "electron-updater": "4.3.8",
     "enzyme": "3.10.0",
     "eslint": "7.21.0",
