@@ -53,6 +53,7 @@ import trezorHwRejection from '../../../assets/images/illustrations/hw-rejection
 import trezorHwRejectionDark from '../../../assets/images/illustrations/hw-rejection-trezor-dark.svg';
 import ledgerNanoHwRejection from '../../../assets/images/illustrations/hw-rejection-ledger-nano.svg';
 import ledgerNanoHwRejectionDark from '../../../assets/images/illustrations/hw-rejection-ledger-nano-dark.svg';
+import illustrationBtcSupport from '../../../assets/images/illustrations/illustration-btc-support.svg';
 
 export const illustrations = {
   welcomeLiskDelegates,
@@ -107,6 +108,7 @@ export const illustrations = {
   trezorHwRejectionDark,
   ledgerNanoHwRejection,
   ledgerNanoHwRejectionDark,
+  illustrationBtcSupport,
 };
 
 const Illustration = ({ name, className, noTheme }) => {
