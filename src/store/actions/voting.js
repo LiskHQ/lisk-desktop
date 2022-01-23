@@ -123,6 +123,12 @@ export const votesRetrieved = () =>
         type: actionTypes.votesRetrieved,
         data: votes.data,
       });
-      return 0;
-    } catch (exp) { return 0; }
+    } catch (exp) {
+      dispatch({
+        type: actionTypes.votesRetrieved,
+        data: {
+          account: {},
+        },
+      });
+    }
   };
