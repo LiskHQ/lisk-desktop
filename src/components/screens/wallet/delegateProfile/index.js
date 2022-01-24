@@ -30,7 +30,6 @@ const apis = {
     apiUtil: (network, params) => getVoters({ network, params }),
     defaultData: defaultVoters,
     getApiParams: (_, ownProps) => ({ address: ownProps.account.summary.address }),
-    // TODO Improve the response transformation
     transformResponse: (response, oldData, urlSearchParams) => (
       urlSearchParams.offset
         ? {
