@@ -9,6 +9,7 @@ const InfoBanner = ({
   name,
   infoLabel,
   infoMessage,
+  infoDescription,
   infoLink,
   className,
   t,
@@ -30,13 +31,6 @@ const InfoBanner = ({
         className={`closeBanner ${styles.closeBtn}`}
         onClick={handleClose}
       />
-      <div className={styles.illustrations}>
-        <Illustration
-          className={`${styles.active}`}
-          name="illustrationBtcSupport"
-        />
-      </div>
-
       <div className={styles.content}>
         <div className={styles.label}>
           <span>{infoLabel}</span>
@@ -44,6 +38,7 @@ const InfoBanner = ({
         <div className={`${styles.slides} slides`}>
           <section className={`${className || ''} ${styles.active}`}>
             <h1 className={styles.infoMessage}>{infoMessage}</h1>
+            <p>{infoDescription}</p>
             <p
               className={`${styles.infoLink} link`}
               onClick={() => {
@@ -53,9 +48,14 @@ const InfoBanner = ({
               {t('Read more ')}
               <Icon name="whiteLinkIcon" />
             </p>
-
           </section>
         </div>
+      </div>
+      <div className={styles.illustrations}>
+        <Illustration
+          className={`${styles.active}`}
+          name="illustrationBtcSupport"
+        />
       </div>
     </div>
   );
