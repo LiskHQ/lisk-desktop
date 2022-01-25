@@ -1,11 +1,13 @@
 Feature: Login
-
-  Scenario: Log in to Mainnet (Network switcher is not enabled)
-    Given Network switcher is disabled
-    Given I am on Login page
-    When I enter the passphrase of genesis
-    When I login
-    Then I should be connected to mainnet
+  # @todo: would be re-insisted when #4089 has been resolved
+  #
+  # Scenario: Log in to Mainnet (Network switcher is not enabled)
+  #   Given Network switcher is disabled
+  #   Given I am on Login page
+  #   When I enter the passphrase of mainnet_guy
+  #   When I login
+  #   Then I should be connected to mainnet
+  #   Given  I wait 4 seconds
 
   Scenario: Log in to Testnet
     Given Network switcher is disabled

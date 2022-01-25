@@ -1,6 +1,6 @@
 {
   "name": "Lisk",
-  "version": "2.2.0-rc.0",
+  "version": "2.2.0-rc.1",
   "author": "Lisk Foundation <admin@lisk.com>, lightcurve GmbH <admin@lightcurve.io>",
   "license": "GPL-3.0",
   "productName": "Lisk",
@@ -115,7 +115,7 @@
     "@hirishh/lisk-ledger.js": "2.2.0",
     "@ledgerhq/hw-transport": "6.3.0",
     "@ledgerhq/hw-transport-node-hid": "6.6.0",
-    "@liskhq/lisk-client": "5.2.0",
+    "@liskhq/lisk-client": "5.2.1",
     "@testing-library/react-hooks": "5.1.2",
     "await-to-js": "2.1.1",
     "bignumber.js": "8.0.1",
