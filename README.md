@@ -8,6 +8,14 @@
 [![Dependencies Status](https://david-dm.org/liskHQ/lisk-desktop/status.svg)](https://david-dm.org/liskHQ/lisk-desktop)
 [![devDependencies Status](https://david-dm.org/liskHQ/lisk-desktop/dev-status.svg)](https://david-dm.org/liskHQ/lisk-desktop?type=dev)
 
+## Installation
+
+You can download the latest release from [Lisk.com](https://lisk.com/wallet). The link automatically detects your operating system and downloads the correct app. Currently we are supporting the following operating systems:
+
+- MacOS (individual builds for Apple Silicon and Intel chips)
+- Windows
+- Linux
+
 ## For Contributors
 Please see [CONTRIBUTING_GUIDE.md](/docs/CONTRIBUTING_GUIDE.md) for more information.
 
