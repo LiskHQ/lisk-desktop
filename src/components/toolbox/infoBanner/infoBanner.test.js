@@ -13,6 +13,7 @@ describe('InfoBanner component', () => {
     infoMessage: 'info banner message',
     infoLink: 'https://lisk.io',
     className: '',
+    show: true,
     t: v => v,
   };
 
