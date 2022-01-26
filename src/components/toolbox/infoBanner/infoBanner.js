@@ -26,7 +26,7 @@ const InfoBanner = ({
   };
 
   useEffect(() => {
-    if (show) {
+    if (show && !localStorage.getItem(name)) {
       setVisibility('visible');
     }
   }, [show]);
