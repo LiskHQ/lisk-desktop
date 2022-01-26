@@ -41,6 +41,7 @@ const getOnboardingSlides = (t) => [
 
 const Dashboard = ({ account, t }) => {
   const isLoggedIn = !!account?.summary?.address;
+  const OnboardingBannerName = 'dashboardOnboarding';
 
   return (
     <>
@@ -48,7 +49,7 @@ const Dashboard = ({ account, t }) => {
         <Onboarding
           slides={getOnboardingSlides(t)}
           actionButtonLabel={t('Got it, thanks!')}
-          name="dashboardOnboarding"
+          name={OnboardingBannerName}
         />
         <InfoBanner
           name="btcRemoval"
@@ -56,6 +57,7 @@ const Dashboard = ({ account, t }) => {
           infoDescription={t('If you are affected by this change, please click the link below to learn how to access your BTC using an alternative application.')}
           infoLabel="Update"
           infoLink="https://lisk.com/blog/development/lisk-desktop-220-release"
+          show={localStorage.getItem(OnboardingBannerName)}
         />
         <div className={`${styles.main}`}>
           <div className={styles.subContainer}>
