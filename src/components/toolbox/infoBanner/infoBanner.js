@@ -15,23 +15,21 @@ const InfoBanner = ({
   show,
   t,
 }) => {
-  const [visibility, setVisibility] = useState(
-    !localStorage.getItem(name) && show ? 'visible' : 'hidden',
-  );
+  const [visibility, setVisibility] = useState(!localStorage.getItem(name) && show);
   const isLoggedIn = useSelector(state => (state.account && state.account.passphrase));
 
   const handleClose = () => {
     localStorage.setItem(name, true);
-    setVisibility('hidden');
+    setVisibility(false);
   };
 
   useEffect(() => {
     if (show && !localStorage.getItem(name)) {
-      setVisibility('visible');
+      setVisibility(true);
     }
   }, [show]);
 
-  if (visibility === 'hidden' || !isLoggedIn) return null;
+  if (!visibility || !isLoggedIn) return null;
 
   return (
     <div className={`${styles.infoBanner} ${className}`}>
