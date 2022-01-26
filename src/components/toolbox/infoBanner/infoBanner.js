@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { withTranslation } from 'react-i18next';
 import { useSelector } from 'react-redux';
 import Icon from '@toolbox/icon';
@@ -12,10 +12,11 @@ const InfoBanner = ({
   infoDescription,
   infoLink,
   className,
+  show,
   t,
 }) => {
   const [visibility, setVisibility] = useState(
-    !localStorage.getItem(name) ? 'visible' : 'hidden',
+    !localStorage.getItem(name) && show ? 'visible' : 'hidden',
   );
   const isLoggedIn = useSelector(state => (state.account && state.account.passphrase));
 
@@ -24,7 +25,14 @@ const InfoBanner = ({
     setVisibility('hidden');
   };
 
+  useEffect(() => {
+    if (show) {
+      setVisibility('visible');
+    }
+  }, [show]);
+
   if (visibility === 'hidden' || !isLoggedIn) return null;
+
   return (
     <div className={`${styles.infoBanner} ${className}`}>
       <span
