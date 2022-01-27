@@ -33,10 +33,10 @@ class PaperWallet {
       lineHeightFactor: 1.57,
     };
 
-    this.doc.addFileToVFS('gilroy-bold.ttf', fonts.GilroyBold)
-      .addFont('gilroy-bold.ttf', 'gilroy', 'normal', 'bold');
+    this.doc.addFileToVFS('Gilroy-Bold.ttf', fonts.GilroyBold)
+      .addFont('Gilroy-Bold.ttf', 'gilroy', 'normal', 'bold');
     this.doc.addFileToVFS('gilroy-medium.ttf', fonts.GilroyMedium)
-      .addFont('gilroy-medium.ttf', 'gilroy', 'normal', 'normal');
+      .addFont('Gilroy-Medium.ttf', 'gilroy', 'normal', 'normal');
     this.doc.setTextColor('#303030').setFont('gilroy');
   }
 

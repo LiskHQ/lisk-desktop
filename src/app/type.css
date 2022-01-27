@@ -25,9 +25,9 @@ avaialble application-wide
 @font-face {
   font-family: 'gilroy';
   src:
-    url('../assets/fonts/gilroy/gilroy-bold.woff2') format('woff2'),
-    url('../assets/fonts/gilroy/gilroy-bold.woff') format('woff'),
-    url('../assets/fonts/gilroy/gilroy-bold.ttf')  format('truetype');
+    url('../assets/fonts/gilroy/Gilroy-Bold.woff2') format('woff2'),
+    url('../assets/fonts/gilroy/Gilroy-Bold.woff') format('woff'),
+    url('../assets/fonts/gilroy/Gilroy-Bold.ttf')  format('truetype');
   font-weight: bold;
   font-style: normal;
 }
@@ -35,16 +35,16 @@ avaialble application-wide
 @font-face {
   font-family: 'gilroy';
   src:
-    url('../assets/fonts/gilroy/gilroy-extra-bold.woff2') format('woff2'),
-    url('../assets/fonts/gilroy/gilroy-extra-bold.woff') format('woff'),
-    url('../assets/fonts/gilroy/gilroy-extra-bold.ttf')  format('truetype');
+    url('../assets/fonts/gilroy/Gilroy-Extra-Bold.woff2') format('woff2'),
+    url('../assets/fonts/gilroy/Gilroy-Extra-Bold.woff') format('woff'),
+    url('../assets/fonts/gilroy/Gilroy-Extra-Bold.ttf')  format('truetype');
   font-weight: bolder;
   font-style: normal;
 }
 
 @font-face {
   font-family: 'gilroy';
-  src: url('../assets/fonts/gilroy/gilroy-medium.otf');
+  src: url('../assets/fonts/gilroy/Gilroy-Medium.otf');
   font-weight: 400;
   font-style: normal;
 }
@@ -52,9 +52,9 @@ avaialble application-wide
 @font-face {
   font-family: 'basier-circle';
   src:
-    url('../assets/fonts/basier-circle/basiercircle-semibold.woff2') format('woff2'),
-    url('../assets/fonts/basier-circle/basiercircle-semibold.woff') format('woff'),
-    url('../assets/fonts/basier-circle/basiercircle-semibold.otf');
+    url('../assets/fonts/basierCircle/BasierCircle-SemiBold.woff2') format('woff2'),
+    url('../assets/fonts/basierCircle/BasierCircle-SemiBold.woff') format('woff'),
+    url('../assets/fonts/basierCircle/BasierCircle-SemiBold.otf');
   font-weight: 600;
   font-style: normal;
 }
@@ -62,9 +62,9 @@ avaialble application-wide
 @font-face {
   font-family: 'basier-circle';
   src:
-    url('../assets/fonts/basier-circle/basiercircle-medium.woff2') format('woff2'),
-    url('../assets/fonts/basier-circle/basiercircle-medium.woff') format('woff'),
-    url('../assets/fonts/basier-circle/basiercircle-medium.otf');
+    url('../assets/fonts/basierCircle/BasierCircle-Medium.woff2') format('woff2'),
+    url('../assets/fonts/basierCircle/BasierCircle-Medium.woff') format('woff'),
+    url('../assets/fonts/basierCircle/BasierCircle-Medium.otf');
   font-weight: 500;
   font-style: normal;
 }
@@ -72,9 +72,9 @@ avaialble application-wide
 @font-face {
   font-family: 'basier-circle';
   src:
-    url('../assets/fonts/basier-circle/basiercircle-regular.woff2') format('woff2'),
-    url('../assets/fonts/basier-circle/basiercircle-regular.woff') format('woff'),
-    url('../assets/fonts/basier-circle/basiercircle-regular.otf');
+    url('../assets/fonts/basierCircle/BasierCircle-Regular.woff2') format('woff2'),
+    url('../assets/fonts/basierCircle/BasierCircle-Regular.woff') format('woff'),
+    url('../assets/fonts/basierCircle/BasierCircle-Regular.otf');
   font-weight: 400;
   font-style: normal;
 }
