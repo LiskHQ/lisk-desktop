@@ -6,7 +6,7 @@ const reclaimBalanceMessages = t => ({
   ...statusMessages(t),
   [txStatusTypes.broadcastSuccess]: {
     title: t('Balance reclaimed successfully'),
-    message: t('Your legacy balance was deposited on your account.'),
+    message: t('Your legacy balance was deposited to your account.'),
   },
 });
 
