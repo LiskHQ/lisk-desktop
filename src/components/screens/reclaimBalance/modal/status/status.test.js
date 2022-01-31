@@ -2,7 +2,7 @@ import React from 'react';
 import { shallow } from 'enzyme';
 import TransactionResult from '@shared/transactionResult';
 import accounts from '../../../../../../test/constants/accounts';
-import Status, { SuccessAction, PendingAction, FailAction } from './status';
+import Status from './status';
 
 describe('Status', () => {
   const props = {
@@ -38,12 +38,11 @@ describe('Status', () => {
 
     const wrapper = shallow(<Status {...propsWithSignedTx} />);
     expect(wrapper.find('.status-container')).toExist();
-    expect(wrapper.find(PendingAction)).toExist();
     expect(wrapper.find(TransactionResult).props()).toMatchObject({
       illustration: 'default',
       status: { code: 'SIGNATURE_SUCCESS' },
       title: 'Submitting the transaction',
-      className: 'content false',
+      className: 'content',
     });
   });
 
@@ -59,12 +58,11 @@ describe('Status', () => {
 
     const wrapper = shallow(<Status {...propsWithError} />);
     expect(wrapper.find('.status-container')).toExist();
-    expect(wrapper.find(FailAction)).toExist();
     expect(wrapper.find(TransactionResult).props()).toMatchObject({
       illustration: 'default',
       status: { code: 'SIGNATURE_ERROR', message: JSON.stringify({ message: 'error:test' }) },
       title: 'Transaction failed',
-      className: 'content false',
+      className: 'content',
     });
   });
 
@@ -80,12 +78,11 @@ describe('Status', () => {
 
     const wrapper = shallow(<Status {...propsWithError} />);
     expect(wrapper.find('.status-container')).toExist();
-    expect(wrapper.find(FailAction)).toExist();
     expect(wrapper.find(TransactionResult).props()).toMatchObject({
       illustration: 'default',
       status: { code: 'BROADCAST_ERROR', message: JSON.stringify({ message: 'error:test' }) },
       title: 'Transaction failed',
-      className: 'content false',
+      className: 'content',
     });
   });
 
@@ -101,12 +98,11 @@ describe('Status', () => {
 
     const wrapper = shallow(<Status {...propsSuccess} />);
     expect(wrapper.find('.status-container')).toExist();
-    expect(wrapper.find(SuccessAction)).toExist();
     expect(wrapper.find(TransactionResult).props()).toMatchObject({
       illustration: 'default',
       status: { code: 'BROADCAST_SUCCESS' },
-      title: 'Transaction submitted',
-      className: 'content false',
+      title: 'Balance reclaimed successfully',
+      className: 'content',
     });
   });
 });
