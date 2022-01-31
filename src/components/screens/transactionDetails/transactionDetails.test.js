@@ -272,6 +272,7 @@ describe('Transaction Details Component', () => {
       }}
       />);
       expect(wrapper).toContainMatchingElement('NotFound');
+      expect(wrapper.find('.not-found-state h3').text()).toBe('The transaction was not found.');
     });
   });
 
