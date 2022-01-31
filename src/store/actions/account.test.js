@@ -48,7 +48,6 @@ const network = {
   name: 'Mainnet',
   networks: {
     LSK: {},
-    BTC: {},
   },
 };
 
@@ -108,17 +107,12 @@ describe('actions: account', () => {
               nethash:
                 '198f2b61a8eb95fbeed58b8216780b68f697f26b849acf00c8c93bb9b24f783d',
             },
-            BTC: {
-              serviceUrl: 'http://localhost:4000',
-              nethash:
-                '198f2b61a8eb95fbeed58b8216780b68f697f26b849acf00c8c93bb9b24f783d',
-            },
           },
         },
         settings: {
           token: {
             active: 'LSK',
-            list: { LSK: true, BTC: false },
+            list: { LSK: true },
           },
         },
         account: {
@@ -202,7 +196,6 @@ describe('actions: account', () => {
           token: {
             list: {
               LSK: true,
-              BTC: false,
             },
           },
           enableCustomDerivationPath: true,
@@ -265,27 +258,6 @@ describe('actions: account', () => {
       expect(extractKeyPair).toHaveBeenLastCalledWith({
         passphrase, enableCustomDerivationPath: false, derivationPath: defaultDerivationPath,
       });
-    });
-
-    it('should call extractAddress with params when selected token is BTC', async () => {
-      const newGetState = () => ({
-        ...state,
-        settings: {
-          ...state.settings,
-          token: {
-            list: {
-              LSK: false,
-              BTC: true,
-            },
-          },
-        },
-      });
-
-      await login({ passphrase })(dispatch, newGetState);
-      expect(accountApi.extractAddress).toHaveBeenCalledWith(
-        accounts.genesis.passphrase,
-        state.network,
-      );
     });
 
     it('should fire an error toast if getAccount fails ', async () => {
