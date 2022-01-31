@@ -71,7 +71,7 @@ const ErrorActions = ({
 );
 
 const Multisignature = ({
-  transactions, title, message, t, status, className, history,
+  transactions, title, message, t, status, className, history, noBackButton,
   resetTransactionResult, transactionBroadcasted, account, network,
 }) => {
   const [copied, setCopied] = useState(false);
@@ -104,7 +104,7 @@ const Multisignature = ({
 
       <div className={styles.primaryActions}>
         {
-          status.code === txStatusTypes.broadcastSuccess
+          status.code === txStatusTypes.broadcastSuccess && !noBackButton
             ? (
               <PrimaryButton
                 className={`${styles.backToWallet} back-to-wallet-button`}
