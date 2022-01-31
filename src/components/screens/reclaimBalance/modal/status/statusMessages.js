@@ -2,7 +2,7 @@
 import { statusMessages } from '@shared/transactionResult/statusConfig';
 import { txStatusTypes } from '@constants';
 
-const registerDelegatesMessages = t => ({
+const reclaimBalanceMessages = t => ({
   ...statusMessages(t),
   [txStatusTypes.broadcastSuccess]: {
     title: t('Balance reclaimed successfully'),
@@ -10,4 +10,4 @@ const registerDelegatesMessages = t => ({
   },
 });
 
-export default registerDelegatesMessages;
+export default reclaimBalanceMessages;
