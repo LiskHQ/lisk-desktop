@@ -605,7 +605,7 @@
   "Your Lisk ID is how you recognize and interact with your unique Lisk account, think of it as your email.": "Your Lisk ID is how you recognize and interact with your unique Lisk account, think of it as your email.",
   "Your account is not safe until you initialize it.": "Your account is not safe until you initialize it.",
   "Your account just received {{amount}} {{token}} {{message}}": "Your account just received {{amount}} {{token}} {{message}}",
-  "Your legacy balance was deposited on your account.": "Your legacy balance was deposited on your account.",
+  "Your legacy balance was deposited to your account.": "Your legacy balance was deposited to your account.",
   "Your multisignatures groups": "Your multisignatures groups",
   "Your session will be timed out in {{time}} if no network activity occurs.": "Your session will be timed out in {{time}} if no network activity occurs.",
   "Your signature was successful": "Your signature was successful",
