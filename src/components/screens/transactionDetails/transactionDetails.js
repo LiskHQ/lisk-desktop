@@ -3,7 +3,7 @@ import { isEmpty } from '@utils/helpers';
 import Box from '@toolbox/box';
 import BoxHeader from '@toolbox/box/header';
 import BoxContent from '@toolbox/box/content';
-import NotFound from '@shared/notFound';
+import NotFound from './notFound';
 
 import styles from './transactionDetails.css';
 import LayoutSchema from './layoutSchema';
@@ -23,7 +23,7 @@ const TransactionDetails = ({
   }
 
   if (error && isEmpty(data)) {
-    return <NotFound />;
+    return <NotFound t={t} />;
   }
 
   const Layout = LayoutSchema[schema ?? data.moduleAssetId] || LayoutSchema.default;
