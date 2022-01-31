@@ -20,7 +20,7 @@ const successTypes = [
 ];
 
 const Regular = ({
-  transactions, network, account,
+  transactions, network, account, noBackButton,
   title, message, t, status, history,
   children, illustration, className,
   resetTransactionResult, transactionBroadcasted,
@@ -49,7 +49,7 @@ const Regular = ({
       <p className="transaction-status body-message">{message}</p>
       {children}
       {
-        successTypes.includes(status.code)
+        successTypes.includes(status.code) && !noBackButton
           ? (
             <PrimaryButton
               className={`${styles.backToWallet} back-to-wallet-button`}
