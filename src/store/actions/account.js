@@ -81,7 +81,7 @@ export const accountDataUpdated = tokensTypes =>
 
     // Collect their addresses to send to the API
     const params = activeTokens.reduce((acc, token) => {
-      acc[token] = { address: account.info[token].summary.address };
+      acc[token] = { publicKey: account.info[token].summary.publicKey };
       return acc;
     }, {});
 

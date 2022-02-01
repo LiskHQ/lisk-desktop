@@ -54,7 +54,7 @@
     & .searchedValue {
       @mixin contentLarge normal;
 
-      color: #f7f9fb;
+      color: var(--color-ghost-white);
       padding-left: 10px;
       white-space: nowrap;
       text-overflow: ellipsis;
