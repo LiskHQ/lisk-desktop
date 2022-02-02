@@ -35,7 +35,19 @@ const useIpc = (history) => {
       };
 
       const version = '2.2.0';
-      const releaseNotes = '<h4>asfsabjhskdnsadksadnkasdnsajdsakjdaj</h4><p>injklmklmlk 2132143454354</p>';
+      const releaseNotes = `<h4>asfsabjhskdnsadksadnkasdnsajdsakjdaj</h4>
+      <p>injklmklmlk 2132143454354</p>
+      <ul>
+      <li>123213</li>
+      <li>dsfds3213</li>
+      <li>oiouytre 23
+      <p>injklmklmlk 2132143454354</p>
+      <p>rewr rewrew wrwec cdsfd ewref fdsfsd</p>
+      </li>
+      </ul>
+      <p>rewr rewrew wrwec cdsfd ewref fdsfsd rewr rewrew wrwec cdsfd ewref fdsfsd rewr rewrew wrwec cdsfd ewref fdsfsd rewr rewrew wrwec cdsfd ewref fdsfsd rewr rewrew wrwec cdsfd ewref fdsfsd rewr rewrew wrwec cdsfd ewref fdsfsd</p>
+      <p>rewr rewrew wrwec cdsfd ewref fdsfsd rewr rewrew wrwec cdsfd ewref fdsfsd rewr rewrew wrwec cdsfd ewref fdsfsd rewr rewrew wrwec cdsfd ewref fdsfsd rewr rewrew wrwec cdsfd ewref fdsfsd rewr rewrew wrwec cdsfd ewref fdsfsd</p>
+      `;
       const [releaseSummary] = releaseNotes.match(regex.releaseSummary)?.slice(1);
       dispatch(appUpdateAvailable({
         version, releaseNotes, remindMeLater, updateNow,
