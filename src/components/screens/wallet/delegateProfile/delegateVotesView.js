@@ -13,23 +13,25 @@ import styles from './delegateProfile.css';
 const DelegateVotesView = ({
   voters, t,
 }) => {
-  const [searchedAddress, setSearchedAddress] = useState('');
+  const [searchInput, setSearchInput] = useState('');
 
   const onInputChange = (e) => {
-    setSearchedAddress(e.target.value);
+    setSearchInput(e.target.value);
   };
 
   const handleLoadMore = () => {
     voters.loadData({ aggregate: true, offset: voters.meta.count + voters.meta.offset });
   };
 
-  const votersInfo = searchedAddress
-    ? voters.data.votes.filter(v => v.address === searchedAddress)
+  const votersInfo = searchInput
+    ? voters.data.votes.filter(
+      v => v.username?.includes(searchInput) || v.address?.includes(searchInput),
+    )
     : voters.data.votes;
   const canLoadMoreData = voters.meta
     && voters.meta.total > votersInfo.length
-    && !searchedAddress;
-  const emptyMessage = searchedAddress ? t('This account does not have any voter for the given address.') : t('This account does not have any voters.');
+    && !searchInput;
+  const emptyMessage = searchInput ? t('This account does not have any voter for the given address.') : t('This account does not have any voters.');
 
   return (
     <div className={`${grid.row} ${styles.votesWrapper}`}>
@@ -43,7 +45,7 @@ const DelegateVotesView = ({
             <span>
               <Input
                 onChange={onInputChange}
-                value={searchedAddress}
+                value={searchInput}
                 className="filter-by-address"
                 size="m"
                 placeholder={t('Filter by address...')}
