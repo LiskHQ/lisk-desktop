@@ -14,11 +14,13 @@ const useIpc = (history) => {
 
   const { ipc } = window;
 
-  if (!ipc) return;
+  //if (!ipc) return;
 
   useEffect(() => {
-    ipc.on('update:available', (action, { version, releaseNotes }) => {
-      const [releaseSummary] = releaseNotes.match(regex.releaseSummary).slice(1);
+    // ipc.on('update:available', (action, { version, releaseNotes }) => {
+      const version = '2.2.0';
+      const releaseNotes = '<h4>asfsabjhskdnsadksadnkasdnsajdsakjdaj</h4><p>injklmklmlk 2132143454354</p>';
+      const [releaseSummary] = releaseNotes.match(regex.releaseSummary)?.slice(1);
       dispatch(appUpdateAvailable({
         version, ipc, releaseNotes,
       }));
@@ -44,11 +46,11 @@ const useIpc = (history) => {
         />,
         'NewRelease',
       );
-    });
+    // });
 
-    ipc.on('update:downloading', (action, { label }) => {
-      toast.success(label);
-    });
+    //ipc.on('update:downloading', (action, { label }) => {
+      // toast.success(label);
+    // });
   }, []);
 };
 

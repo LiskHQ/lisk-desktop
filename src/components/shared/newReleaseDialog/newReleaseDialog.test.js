@@ -2,7 +2,7 @@ import React from 'react';
 import FlashMessageHolder from '@toolbox/flashMessage/holder';
 import { mountWithRouter } from '@utils/testHelpers';
 import { removeSearchParamsFromUrl } from '@utils/searchParams';
-import NewReleaseDialog from './newReleaseDialog';
+import NewReleaseDialog from './index';
 
 jest.mock('@toolbox/flashMessage/holder');
 jest.mock('@toolbox/dialog/holder');
