@@ -7,9 +7,10 @@ describe('Reducer: appUpdates(state, action)', () => {
     const action = {
       type: actionTypes.appUpdateAvailable,
       data: {
-        version: '2',
-        ipc: jest.fn(),
-        releaseNotes: jest.fn(),
+        version: '1.3.1',
+        releaseNotes: '<h4>dummy text</h4><h3>Fixed bugs</h3>',
+        remindMeLater: jest.fn(),
+        updateNow: jest.fn(),
       },
     };
     const changedAccount = appUpdates(state, action);
