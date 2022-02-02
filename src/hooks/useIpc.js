@@ -1,7 +1,5 @@
 import React, { useEffect } from 'react';
-import { toast } from 'react-toastify';
 import { useDispatch } from 'react-redux';
-
 import htmlStringToReact from '@utils/htmlStringToReact';
 import { regex } from '@constants';
 import { addSearchParamsToUrl, removeSearchParamsFromUrl } from '@utils/searchParams';
@@ -34,7 +32,7 @@ const useIpc = (history) => {
         }, 500);
       };
 
-      const [releaseSummary] = releaseNotes.match(regex.releaseSummary)?.slice(1);
+      const [releaseSummary] = releaseNotes.match(regex.releaseSummary).slice(1);
       dispatch(appUpdateAvailable({
         version, releaseNotes, remindMeLater, updateNow,
       }));

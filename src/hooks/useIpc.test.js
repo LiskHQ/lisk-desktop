@@ -1,4 +1,3 @@
-import { toast } from 'react-toastify';
 import { renderHook, act } from '@testing-library/react-hooks';
 import { mountWithRouter } from '@utils/testHelpers';
 import FlashMessageHolder from '../components/toolbox/flashMessage/holder';
