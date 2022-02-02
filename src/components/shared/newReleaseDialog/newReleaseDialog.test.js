@@ -1,7 +1,5 @@
 import React from 'react';
-import FlashMessageHolder from '@toolbox/flashMessage/holder';
-import { mountWithRouter } from '@utils/testHelpers';
-import { removeSearchParamsFromUrl } from '@utils/searchParams';
+import { mountWithRouterAndStore } from '@utils/testHelpers';
 import NewReleaseDialog from './index';
 
 jest.mock('@toolbox/flashMessage/holder');
@@ -11,28 +9,32 @@ jest.mock('@utils/searchParams', () => ({
 }));
 
 describe('New release dialog component', () => {
-  const props = {
-    t: v => v,
-    version: '1.20.1',
-    releaseNotes: <div><p>Dummy text</p></div>,
-    ipc: {
-      send: jest.fn(),
+  const remindMeLater = jest.fn();
+  const updateNow = jest.fn();
+  const props = { t: v => v };
+  const store = {
+    appUpdates: {
+      version: '1.20.1',
+      releaseNotes: '<div><p>Dummy text</p></div>',
+      remindMeLater,
+      updateNow,
     },
   };
 
-  let wrapper;
-
-  beforeEach(() => {
-    wrapper = mountWithRouter(NewReleaseDialog, props);
+  it('Should render all remindMeLater and updateNow', () => {
+    const wrapper = mountWithRouterAndStore(NewReleaseDialog, props, {}, store);
+    wrapper.find('button.release-dialog-remind-me-later').at(0).simulate('click');
+    expect(remindMeLater).toBeCalledTimes(1);
+    wrapper.find('button.release-dialog-update-now').at(0).simulate('click');
+    expect(updateNow).toBeCalledTimes(1);
   });
 
-  it('Should render with release notes and call FlashMessageHolder.deleteMessage on any option click', () => {
-    expect(wrapper).toContainReact(props.releaseNotes);
-    wrapper.find('button').first().simulate('click');
-    expect(FlashMessageHolder.deleteMessage).toBeCalledTimes(1);
-    wrapper.find('button').last().simulate('click');
-    expect(FlashMessageHolder.deleteMessage).toBeCalledTimes(2);
-    expect(props.ipc.send).toBeCalled();
-    expect(removeSearchParamsFromUrl).toBeCalledTimes(2);
+  it('Should display release notes', () => {
+    let wrapper = mountWithRouterAndStore(NewReleaseDialog, props, {}, store);
+    expect(wrapper.find('.release-notes').at(0)).toHaveText('Dummy text');
+
+    store.appUpdates.releaseNotes = <div><p>ReactDummy text</p></div>;
+    wrapper = mountWithRouterAndStore(NewReleaseDialog, props, {}, store);
+    expect(wrapper.find('.release-notes').at(0)).toHaveText('ReactDummy text');
   });
 });
