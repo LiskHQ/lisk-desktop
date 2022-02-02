@@ -10,6 +10,10 @@ describe('Votes Tab Component', () => {
       data: [],
       loadData: jest.fn(),
     },
+    emptyVotes: {
+      data: [],
+      loadData: jest.fn(),
+    },
     accounts: {
       data: {},
       loadData: jest.fn(),
@@ -51,15 +55,20 @@ describe('Votes Tab Component', () => {
     const loadData = jest.fn();
     wrapper = setup({
       ...props,
-      votes: { ...props.votes, isLoading: true },
+      votes: { ...votes, isLoading: true },
       accounts: { data: [], loadData },
-      sentVotes: {
-        lskwhocotuu6bwnhwgjt859ugp467f8kuhdo5xfd6: [],
-        skaqeqqvkxzvt8g6kbukma8pu5cwpe6w2fjc5amc: [],
-      },
     });
     expect(loadData).toBeCalledWith({
-      addressList: ['lskwhocotuu6bwnhwgjt859ugp467f8kuhdo5xfd6', 'skaqeqqvkxzvt8g6kbukma8pu5cwpe6w2fjc5amc'],
+      addressList: ['lsk0',
+        'lsk1',
+        'lsk2',
+        'lsk3',
+        'lsk4',
+        'lsk5',
+        'lsk6',
+        'lsk7',
+        'lsk8',
+        'lsk9'],
       isDelegate: true,
     });
   });
@@ -67,7 +76,7 @@ describe('Votes Tab Component', () => {
     const loadData = jest.fn();
     wrapper = setup({
       ...props,
-      votes: { ...props.votes, isLoading: true },
+      votes: { ...props.emptyVotes, isLoading: true },
       accounts: { data: [], loadData },
     });
     expect(loadData).not.toHaveBeenCalled();

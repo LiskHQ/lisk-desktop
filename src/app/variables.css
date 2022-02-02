@@ -179,6 +179,7 @@ or "warn/action" ineastd of "red/green"
   --color-tx-priority-btn-bg: var(--color-ink-blue);
   --color-tx-priority-btn-default: var(--color-maastricht-blue);
   --color-progress-bar: var(--color-ink-blue);
+  --color-ghost-white: #f7f9fb;
 
   /*************************
         Box
