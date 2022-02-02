@@ -12,27 +12,6 @@ const getErrorMessage = (error) => {
 export default ({ // eslint-disable-line max-statements
   autoUpdater, dialog, win, electron,
 }) => {
-  // TODO remove this mock
-  const versionMock = '2.5.0';
-  const releaseNotesMock = `<h4>asfsabjhskdnsadksadnkasdnsajdsakjdaj</h4>
-      <p>injklmklmlk 2132143454354</p>
-      <ul>
-      <li>123213</li>
-      <li>dsfds3213</li>
-      <li>oiouytre 23
-      <p>injklmklmlk 2132143454354</p>
-      <p>rewr rewrew wrwec cdsfd ewref fdsfsd</p>
-      </li>
-      </ul>
-      <p>rewr rewrew wrwec cdsfd ewref fdsfsd rewr rewrew wrwec cdsfd ewref fdsfsd rewr rewrew wrwec cdsfd ewref fdsfsd rewr rewrew wrwec cdsfd ewref fdsfsd rewr rewrew wrwec cdsfd ewref fdsfsd rewr rewrew wrwec cdsfd ewref fdsfsd</p>
-      <p>rewr rewrew wrwec cdsfd ewref fdsfsd rewr rewrew wrwec cdsfd ewref fdsfsd rewr rewrew wrwec cdsfd ewref fdsfsd rewr rewrew wrwec cdsfd ewref fdsfsd rewr rewrew wrwec cdsfd ewref fdsfsd rewr rewrew wrwec cdsfd ewref fdsfsd</p>
-      `;
-  win.send({
-    event: 'update:available',
-    value: { releaseNotes: releaseNotesMock, version: versionMock },
-  });
-  //
-
   const updater = {
     menuItem: { enabled: true },
   };
