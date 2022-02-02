@@ -21,15 +21,15 @@ const NewReleaseDialog = ({ t }) => {
           <p>{t('Would you like to download it now?')}</p>
         </Dialog.Description>
         <h3>{t('Release notes')}</h3>
-        <div className={styles.releaseNotes}>
-          {htmlStringToReact(releaseNotes)}
+        <div className={`${styles.releaseNotes} release-notes`}>
+          {typeof releaseNotes === 'string' ? htmlStringToReact(releaseNotes) : releaseNotes}
         </div>
       </div>
       <Dialog.Options align="center">
-        <SecondaryButton onClick={remindMeLater}>
+        <SecondaryButton className="release-dialog-remind-me-later" onClick={remindMeLater}>
           {t('Remind me later')}
         </SecondaryButton>
-        <PrimaryButton onClick={updateNow}>
+        <PrimaryButton className="release-dialog-update-now" onClick={updateNow}>
           {t('Install update')}
         </PrimaryButton>
       </Dialog.Options>
