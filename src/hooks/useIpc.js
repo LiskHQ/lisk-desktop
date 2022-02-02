@@ -14,10 +14,10 @@ const useIpc = (history) => {
 
   const { ipc } = window;
 
-  //if (!ipc) return;
+  if (!ipc) return;
 
   useEffect(() => {
-    // ipc.on('update:available', (action, { version, releaseNotes }) => {
+    ipc.on('update:available', (action, { version, releaseNotes }) => {
       const readMore = () => {
         addSearchParamsToUrl(history, { modal: 'newRelease' });
       };
@@ -34,20 +34,6 @@ const useIpc = (history) => {
         }, 500);
       };
 
-      const version = '2.2.0';
-      const releaseNotes = `<h4>asfsabjhskdnsadksadnkasdnsajdsakjdaj</h4>
-      <p>injklmklmlk 2132143454354</p>
-      <ul>
-      <li>123213</li>
-      <li>dsfds3213</li>
-      <li>oiouytre 23
-      <p>injklmklmlk 2132143454354</p>
-      <p>rewr rewrew wrwec cdsfd ewref fdsfsd</p>
-      </li>
-      </ul>
-      <p>rewr rewrew wrwec cdsfd ewref fdsfsd rewr rewrew wrwec cdsfd ewref fdsfsd rewr rewrew wrwec cdsfd ewref fdsfsd rewr rewrew wrwec cdsfd ewref fdsfsd rewr rewrew wrwec cdsfd ewref fdsfsd rewr rewrew wrwec cdsfd ewref fdsfsd</p>
-      <p>rewr rewrew wrwec cdsfd ewref fdsfsd rewr rewrew wrwec cdsfd ewref fdsfsd rewr rewrew wrwec cdsfd ewref fdsfsd rewr rewrew wrwec cdsfd ewref fdsfsd rewr rewrew wrwec cdsfd ewref fdsfsd rewr rewrew wrwec cdsfd ewref fdsfsd</p>
-      `;
       const [releaseSummary] = releaseNotes.match(regex.releaseSummary)?.slice(1);
       dispatch(appUpdateAvailable({
         version, releaseNotes, remindMeLater, updateNow,
@@ -63,7 +49,7 @@ const useIpc = (history) => {
         />,
         'NewRelease',
       );
-    // });
+    });
   }, []);
 };
 
