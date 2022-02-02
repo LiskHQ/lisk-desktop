@@ -2,18 +2,14 @@ import React from 'react';
 import { useSelector } from 'react-redux';
 import { withTranslation } from 'react-i18next';
 import Dialog from '@toolbox/dialog/dialog';
-import FlashMessageHolder from '@toolbox/flashMessage/holder';
 import { PrimaryButton, SecondaryButton } from '@toolbox/buttons';
 import styles from './newReleaseDialog.css';
 
 const NewReleaseDialog = ({ t }) => {
-  const { version, releaseNotes, ipc } = useSelector(state => state.appUpdates);
-  const handleClick = () => {
-    FlashMessageHolder.deleteMessage('NewRelease');
-    ipc.send('update:started');
-  };
+  const {
+    version, releaseNotes, remindMeLater, updateNow,
+  } = useSelector(state => state.appUpdates);
 
-  // return !!ipc && (
   return (
     <Dialog hasClose>
       <div className={styles.wrapper}>
@@ -29,10 +25,10 @@ const NewReleaseDialog = ({ t }) => {
         </div>
       </div>
       <Dialog.Options align="center">
-        <SecondaryButton onClick={() => FlashMessageHolder.deleteMessage('NewRelease')}>
+        <SecondaryButton onClick={remindMeLater}>
           {t('Remind me later')}
         </SecondaryButton>
-        <PrimaryButton onClick={handleClick}>
+        <PrimaryButton onClick={updateNow}>
           {t('Install update')}
         </PrimaryButton>
       </Dialog.Options>
