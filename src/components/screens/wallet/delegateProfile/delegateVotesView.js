@@ -25,7 +25,7 @@ const DelegateVotesView = ({
 
   const votersInfo = searchInput
     ? voters.data.votes.filter(
-      v => v.username.includes(searchInput) || v.address.includes(searchInput),
+      v => v.username?.includes(searchInput) || v.address?.includes(searchInput),
     )
     : voters.data.votes;
   const canLoadMoreData = voters.meta
