@@ -52,10 +52,6 @@ const useIpc = (history) => {
         'NewRelease',
       );
     // });
-
-    //ipc.on('update:downloading', (action, { label }) => {
-      // toast.success(label);
-    // });
   }, []);
 };
 

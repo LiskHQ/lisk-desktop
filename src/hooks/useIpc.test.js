@@ -37,15 +37,6 @@ describe('useIpc', () => {
     expect(result.current).toBe(undefined);
   });
 
-  it('Should fire success toaster when ipc receives update:downloading', () => {
-    renderHook(() => useIpc(mockHistory));
-    jest.spyOn(toast, 'success');
-    const expectedAction = { label: 'Download started!' };
-    callbacks['update:downloading']({}, expectedAction);
-
-    expect(toast.success).toBeCalledWith('Download started!');
-  });
-
   it('Should call FlashMessageHolder.addMessage when ipc receives update:available', () => {
     renderHook(() => useIpc(mockHistory));
 
