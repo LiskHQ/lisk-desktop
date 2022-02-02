@@ -1,6 +1,7 @@
 import React from 'react';
 import { useSelector } from 'react-redux';
 import { withTranslation } from 'react-i18next';
+import htmlStringToReact from '@utils/htmlStringToReact';
 import Dialog from '@toolbox/dialog/dialog';
 import { PrimaryButton, SecondaryButton } from '@toolbox/buttons';
 import styles from './newReleaseDialog.css';
@@ -21,7 +22,7 @@ const NewReleaseDialog = ({ t }) => {
         </Dialog.Description>
         <h3>{t('Release notes')}</h3>
         <div className={styles.releaseNotes}>
-          {releaseNotes}
+          {htmlStringToReact(releaseNotes)}
         </div>
       </div>
       <Dialog.Options align="center">
