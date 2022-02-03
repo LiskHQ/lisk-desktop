@@ -131,15 +131,10 @@ const Overview = ({
         <BalanceInfo
           t={t}
           activeToken={activeToken}
-          balance={balance}
           isDiscreetMode={discreetMode}
           isWalletRoute={isWalletRoute}
           account={account}
           address={address}
-          isBanned={isBanned}
-          pomStart={pomHeights?.length
-            ? { ...pomHeights[pomHeights.length - 1] }
-            : {}}
         />
       </div>
       <div
