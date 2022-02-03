@@ -13,7 +13,7 @@ import styles from './balanceInfo.css';
 
 // eslint-disable-next-line complexity
 const BalanceInfo = ({
-  t, activeToken, balance, isWalletRoute, address, username, isBanned, pomStart,
+  t, activeToken, balance, isWalletRoute, address, account, isBanned, pomStart,
 }) => (
   <Box className={`${styles.wrapper}`}>
     <BoxContent className={styles.content}>
@@ -29,15 +29,19 @@ const BalanceInfo = ({
             />
           </div>
           {
-            activeToken === tokenMap.LSK.key && isWalletRoute ? (
-              <LockedBalanceLink activeToken={activeToken} isWalletRoute={isWalletRoute} />
+            activeToken === tokenMap.LSK.key ? (
+              <LockedBalanceLink
+                activeToken={activeToken}
+                isWalletRoute={isWalletRoute}
+                account={account}
+              />
             ) : null
           }
         </DiscreetMode>
       </div>
       <ActionBar
         address={address}
-        username={username}
+        username={account?.dpos?.delegate?.username}
         isWalletRoute={isWalletRoute}
         activeToken={activeToken}
         isBanned={isBanned}
