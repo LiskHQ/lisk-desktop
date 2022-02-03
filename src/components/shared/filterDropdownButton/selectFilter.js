@@ -31,7 +31,7 @@ const SelectFilter = ({
         options={options}
         selected={filters[name]}
         onChange={onChange}
-        className={styles.input}
+        className={`${styles.input} transaction-options`}
         size="xs"
       />
     </div>

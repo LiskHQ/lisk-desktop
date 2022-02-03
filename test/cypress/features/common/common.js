@@ -80,6 +80,9 @@ Given(/^I am on (.*?) page$/, function (page) {
     case 'delegates':
       cy.visit(urls.delegates);
       break;
+    case 'transactions':
+      cy.visit(urls.transactions);
+      break;
     case 'wallet':
       cy.visit(urls.wallet);
       break;
