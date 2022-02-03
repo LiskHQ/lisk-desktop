@@ -12,14 +12,24 @@ import {
 import Icon from '@toolbox/icon';
 import styles from './balanceInfo.css';
 
-const Link = ({ sum, style, icon }) => (
-  <DialogLink
-    className={`${styles.lockedBalance} ${styles.pointer} ${style} open-unlock-balance-dialog`}
-    component="lockedBalance"
-  >
-    <Icon name={icon || 'lock'} />
-    {`${fromRawLsk(sum)} ${tokenMap.LSK.key}`}
-  </DialogLink>
+const Link = ({
+  sum, style, icon, isWalletRoute,
+}) => (
+  isWalletRoute ? (
+    <DialogLink
+      className={`${styles.lockedBalance} ${styles.pointer} ${style} open-unlock-balance-dialog`}
+      component="lockedBalance"
+    >
+      <Icon name={icon || 'lock'} />
+      {`${fromRawLsk(sum)} ${tokenMap.LSK.key}`}
+    </DialogLink>
+  )
+    : (
+      <div className={`${styles.lockedBalance} ${styles.pointer} ${style}`}>
+        <Icon name={icon || 'lock'} />
+        {`${fromRawLsk(sum)} ${tokenMap.LSK.key}`}
+      </div>
+    )
 );
 
 // eslint-disable-next-line max-statements
@@ -48,7 +58,12 @@ const LockedBalanceLink = ({
 
   if (lockedInUnvotes + lockedInVotes > 0) {
     return (
-      <Link sum={lockedInUnvotes + lockedInVotes} style={style} icon={icon} />
+      <Link
+        sum={lockedInUnvotes + lockedInVotes}
+        style={style}
+        icon={icon}
+        isWalletRoute={isWalletRoute}
+      />
     );
   }
   return null;
