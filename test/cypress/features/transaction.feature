@@ -49,3 +49,7 @@ Feature: Transactions
     Then I should see 1 transactions in table
     And I click on clearAllFiltersBtn
     Then I should see 20 transactions in table
+
+  Scenario: Navigate to the transaction details page if transaction is clicked
+    When I click on transactionRow
+    Then I should be on transaction details page  
