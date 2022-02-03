@@ -1,32 +1,22 @@
 @import '../../../app/mixins.css';
 
 .infoBanner {
-  background-color: #254898;
+  background-color: var(--color-strong-ink-blue);
   border-radius: var(--border-radius-standard);
-  box-sizing: border-box;
   color: var(--color-white);
   display: flex;
   margin-top: 32px;
   overflow: hidden;
   position: relative;
-  height: 257px;
-  width: 100%;
 
   & .illustrations {
-    bottom: 0;
-    height: calc(100% - 45px);
-    position: absolute;
-    right: 10%;
-    width: 50%;
-    z-index: 0;
+    min-height: 257px;
+    flex-basis: 33%;
 
     & > img {
       bottom: 0;
-      max-height: 100%;
-      max-width: 100%;
       opacity: 0;
       position: absolute;
-      right: 0;
       transform: translateX(-100%);
       transition:
         transform var(--animation-speed-slow) linear,
@@ -70,7 +60,7 @@
 
   & .closeBtn {
     align-items: center;
-    border: 1px solid #f7f9fb;
+    border: 1px solid var(--color-ghost-white);
     border-radius: var(--border-radius-box);
     box-sizing: border-box;
     cursor: pointer;
@@ -107,25 +97,23 @@
     box-sizing: border-box;
     display: flex;
     flex-direction: column;
-    flex-basis: 55%;
-    height: 100%;
-    padding: 40px 35px;
+    flex-basis: 67%;
+    padding: 30px 50px 30px 30px;
     z-index: 1;
   }
 
   & .slides {
-    flex-grow: 1;
     height: 100%;
     position: relative;
 
     & > section {
       box-sizing: border-box;
+      margin-bottom: 15px;
       display: flex;
       height: 100%;
       flex-direction: column;
       left: 0;
       opacity: 0;
-      position: absolute;
       transform: translateX(-100%);
       transition:
         transform var(--animation-speed-slow) linear,
@@ -155,12 +143,16 @@
       line-height: 25px;
       margin: 0;
       color: var(--color-strong-white);
+
+      &.infoLink {
+        margin-top: 16px;
+      }
     }
 
     & h1 {
       @mixin headingNormalIntermediate;
 
-      margin: 30px 0;
+      margin: 30px 0 10px 0;
       color: var(--color-strong-white);
     }
   }
@@ -172,6 +164,12 @@
 
 .infoLink {
   font-size: var(--paragraph-font-size-l);
+  display: flex;
+  align-items: inherit;
+
+  & > img {
+    margin-left: 8px;
+  }
 }
 
 @media (--medium-viewport) {

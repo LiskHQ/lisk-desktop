@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { withTranslation } from 'react-i18next';
 import { useSelector } from 'react-redux';
 import Icon from '@toolbox/icon';
@@ -9,34 +9,34 @@ const InfoBanner = ({
   name,
   infoLabel,
   infoMessage,
+  infoDescription,
   infoLink,
   className,
+  show,
   t,
 }) => {
-  const [visibility, setVisibility] = useState(
-    !localStorage.getItem(name) ? 'visible' : 'hidden',
-  );
+  const [visibility, setVisibility] = useState(!localStorage.getItem(name) && show);
   const isLoggedIn = useSelector(state => (state.account && state.account.passphrase));
 
   const handleClose = () => {
     localStorage.setItem(name, true);
-    setVisibility('hidden');
+    setVisibility(false);
   };
 
-  if (visibility === 'hidden' || !isLoggedIn) return null;
+  useEffect(() => {
+    if (show && !localStorage.getItem(name)) {
+      setVisibility(true);
+    }
+  }, [show]);
+
+  if (!visibility || !isLoggedIn) return null;
+
   return (
     <div className={`${styles.infoBanner} ${className}`}>
       <span
         className={`closeBanner ${styles.closeBtn}`}
         onClick={handleClose}
       />
-      <div className={styles.illustrations}>
-        <Illustration
-          className={`${styles.active}`}
-          name="illustrationBtcSupport"
-        />
-      </div>
-
       <div className={styles.content}>
         <div className={styles.label}>
           <span>{infoLabel}</span>
@@ -44,6 +44,7 @@ const InfoBanner = ({
         <div className={`${styles.slides} slides`}>
           <section className={`${className || ''} ${styles.active}`}>
             <h1 className={styles.infoMessage}>{infoMessage}</h1>
+            <p>{infoDescription}</p>
             <p
               className={`${styles.infoLink} link`}
               onClick={() => {
@@ -53,9 +54,14 @@ const InfoBanner = ({
               {t('Read more ')}
               <Icon name="whiteLinkIcon" />
             </p>
-
           </section>
         </div>
+      </div>
+      <div className={styles.illustrations}>
+        <Illustration
+          className={`${styles.active}`}
+          name="illustrationBtcSupport"
+        />
       </div>
     </div>
   );

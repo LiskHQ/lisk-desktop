@@ -183,3 +183,12 @@
       "amount amount";
   }
 }
+
+.emptyState {
+  padding-top: 100px;
+  padding-bottom: 100px;
+
+  & p {
+    max-width: 400px !important;
+  }
+}

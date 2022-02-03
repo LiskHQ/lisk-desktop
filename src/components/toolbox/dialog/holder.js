@@ -53,8 +53,7 @@ const DialogHolder = ({ history }) => {
 
   const onBackDropClick = (e) => {
     if (e.target === backdropRef.current) {
-      const { initialization = false } = parseSearchParams(history.location.search);
-      if (!initialization) {
+      if (modalName !== 'reclaimBalance') {
         removeSearchParamsFromUrl(history, ['modal'], true);
       }
     }
