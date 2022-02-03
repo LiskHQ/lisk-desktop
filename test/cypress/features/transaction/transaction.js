@@ -9,7 +9,7 @@ When(/^I select ([^\s]+) in ([^\s]+) field$/, function (value, field) {
 
 Then(/^I should be on transaction details page$/, function () {
   cy.location().should((location) => {
-    const hasAddress = /\?address=lskdxc4ta5j43jp9ro3f8zqbxta9fn6jwzjucw7yt/.test(location.href);
+    const hasAddress = /\?transactionId=a1c5521f466ae5476d3908cc8d562444d45adf4ac3af57e77f1f9359999ab9ca/.test(location.href);
     expect(hasAddress).true;
   });
 });
