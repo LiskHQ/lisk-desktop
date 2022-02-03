@@ -238,6 +238,9 @@ const ss = {
   backToWalletButton: '.back-to-wallet-button',
   accountsRow: '.accounts-row',
   showMoreAccountsBtn: '.accounts-box .load-more',
+  peerRow: '.peer-row',
+  showMorePeersBtn: '.peers-box .load-more',
+  sortByBtn: '.sort-by',
 };
 
 export default ss;
