@@ -204,6 +204,7 @@ const ss = {
   amountToInputFilter: '.amountToInput',
   senderAddressFilter: 'input[name="senderAddress"]',
   messageInputFilter: 'input.message',
+  transactionTypeFilter: '.transaction-options',
   heightFilter: '.height',
   moreLessSwitch: '.more-less-switch',
   applyFilters: '.saveButton',
