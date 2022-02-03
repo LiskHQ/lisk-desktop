@@ -22,13 +22,29 @@ const Link = ({ sum, style, icon }) => (
   </DialogLink>
 );
 
+// eslint-disable-next-line max-statements
 const LockedBalanceLink = ({
-  activeToken, isWalletRoute, style, icon,
+  activeToken, account, isWalletRoute, style, icon,
 }) => {
   const host = useSelector(state => getActiveTokenAccount(state));
-  const lockedInVotes = useSelector(state => calculateBalanceLockedInVotes(state.voting));
-  const lockedInUnvotes = activeToken === tokenMap.LSK.key && isWalletRoute && host
-    ? calculateBalanceLockedInUnvotes(host.dpos?.unlocking) : 0;
+  let lockedInVotes = 0;
+  let lockedInUnvotes = 0;
+
+  // Calculate locked-in votes for self or other delegates.
+  if (isWalletRoute && host) {
+    lockedInVotes = useSelector(state => calculateBalanceLockedInVotes(state.voting));
+  } else {
+    lockedInVotes = calculateBalanceLockedInUnvotes(account.dpos?.sentVotes);
+  }
+
+  // Calculate locked-in unvotes for self or other delegates.
+  if (activeToken === tokenMap.LSK.key) {
+    if (isWalletRoute && host) {
+      lockedInUnvotes = calculateBalanceLockedInUnvotes(host.dpos?.unlocking);
+    } else {
+      lockedInUnvotes = calculateBalanceLockedInUnvotes(account.dpos?.unlocking);
+    }
+  }
 
   if (lockedInUnvotes + lockedInVotes > 0) {
     return (
