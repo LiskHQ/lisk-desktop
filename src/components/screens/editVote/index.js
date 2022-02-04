@@ -121,7 +121,7 @@ const AddVote = ({
               label={t('Vote amount (LSK)')}
               placeholder={t('Insert vote amount')}
               useMaxLabel={t('Use maximum amount')}
-              useMaxWarning={t('You are about to vote almost your entire balance')}
+              useMaxWarning={t('Caution! You are about to send the majority of your balance')}
               name="vote"
             />
           </label>

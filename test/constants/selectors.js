@@ -236,6 +236,8 @@ const ss = {
   feeValue: '.fee-value',
   nodeConnectionLoadingSpinner: '.node-connection-loading-spinner',
   backToWalletButton: '.back-to-wallet-button',
+  accountsRow: '.accounts-row',
+  showMoreAccountsBtn: '.accounts-box .load-more',
 };
 
 export default ss;
