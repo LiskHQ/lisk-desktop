@@ -51,5 +51,11 @@ Feature: Transactions
     Then I should see 20 transactions in table
 
   Scenario: Navigate to the transaction details page if transaction is clicked
+    When I click on filterTransactionsBtn
+    Then I should see filterDropdown
+    When I fill lskdxc4ta5j43jp9ro3f8zqbxta9fn6jwzjucw7yt in senderAddressFilter field
+    And I click on applyFilters
+    And I wait 2 seconds
+    Then I should see 20 transactions in table
     When I click on transactionRow
-    Then I should be on transaction details page  
+    Then I should be on transaction details modal
