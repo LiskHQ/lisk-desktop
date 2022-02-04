@@ -53,9 +53,10 @@ Feature: Transactions
   Scenario: Navigate to the transaction details page if transaction is clicked
     When I click on filterTransactionsBtn
     Then I should see filterDropdown
-    When I fill lskdxc4ta5j43jp9ro3f8zqbxta9fn6jwzjucw7yt in senderAddressFilter field
+    When I fill 100 in amountFromInputFilter field
+    When I fill lsk37c5adc39ux7vdq8s7tpfduvzz9ec7zkj7n9xs in senderAddressFilter field
     And I click on applyFilters
     And I wait 2 seconds
-    Then I should see 20 transactions in table
+    Then I should see 1 transactions in table
     When I click on transactionRow
     Then I should be on transaction details modal
