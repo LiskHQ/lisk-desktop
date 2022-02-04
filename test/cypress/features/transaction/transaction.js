@@ -7,9 +7,9 @@ When(/^I select ([^\s]+) in ([^\s]+) field$/, function (value, field) {
   cy.get('.options').contains(value).click();
 });
 
-Then(/^I should be on transaction details page$/, function () {
+Then(/^I should be on transaction details modal$/, function () {
   cy.location().should((location) => {
-    const hasAddress = /\?transactionId=a1c5521f466ae5476d3908cc8d562444d45adf4ac3af57e77f1f9359999ab9ca/.test(location.href);
+    const hasAddress = /\?modal=transactionDetails&transactionId=a1c5521f466ae5476d3908cc8d562444d45adf4ac3af57e77f1f9359999ab9ca/.test(location.href);
     expect(hasAddress).true;
   });
 });
