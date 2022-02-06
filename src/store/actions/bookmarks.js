@@ -8,10 +8,6 @@ import { validateAddress } from '@utils/validators';
  */
 export const bookmarksRetrieved = () => (dispatch) => {
   getFromStorage('bookmarks', emptyBookmarks, (data) => {
-    // if legacy address, disable it
-    // @todo This is a quick fix and we have to fetch the
-    // legacy account and replace it with the new address
-    // after Lisk Service implements this feature.
     const bookmarks = {
       BTC: data.BTC,
       LSK: data.LSK.map(account => ({
