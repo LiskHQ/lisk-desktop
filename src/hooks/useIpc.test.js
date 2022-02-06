@@ -1,6 +1,7 @@
-import { toast } from 'react-toastify';
 import { renderHook, act } from '@testing-library/react-hooks';
 import { mountWithRouter } from '@utils/testHelpers';
+import { useDispatch } from 'react-redux';
+import { appUpdateAvailable } from '@actions';
 import FlashMessageHolder from '../components/toolbox/flashMessage/holder';
 import DialogHolder from '../components/toolbox/dialog/holder';
 import useIpc from './useIpc';
@@ -8,8 +9,11 @@ import useIpc from './useIpc';
 jest.mock('@store');
 
 const mockHistory = {
-  push: jest.fn(), pathname: '', location: { search: '' },
+  push: jest.fn(), location: { search: '', pathname: '' },
 };
+
+const mockDispatch = jest.fn();
+useDispatch.mockReturnValue(mockDispatch);
 
 describe('useIpc', () => {
   const callbacks = {};
@@ -17,9 +21,13 @@ describe('useIpc', () => {
     on: jest.fn((event, callback) => { callbacks[event] = callback; }),
     send: jest.fn(),
   };
+  const version = '1.20.1';
+  const releaseNotes = '<h4>dummy text</h4><h3>Fixed bugs</h3>';
 
   beforeEach(() => {
     ipc.send.mockClear();
+    mockHistory.push.mockClear();
+    mockDispatch.mockClear();
     window.ipc = ipc;
   });
 
@@ -37,41 +45,48 @@ describe('useIpc', () => {
     expect(result.current).toBe(undefined);
   });
 
-  it('Should fire success toaster when ipc receives update:downloading', () => {
+  it('Should call render FlashMessage correctly and dispatch appUpdateAvailable when ipc receives update:available', () => {
     renderHook(() => useIpc(mockHistory));
-    jest.spyOn(toast, 'success');
-    const expectedAction = { label: 'Download started!' };
-    callbacks['update:downloading']({}, expectedAction);
-
-    expect(toast.success).toBeCalledWith('Download started!');
-  });
-
-  it('Should call FlashMessageHolder.addMessage when ipc receives update:available', () => {
-    renderHook(() => useIpc(mockHistory));
-
+    const spy = jest.spyOn(FlashMessageHolder, 'addMessage');
     const wrapper = mountWithRouter(FlashMessageHolder);
     const dialogWrapper = mountWithRouter(DialogHolder);
-    const version = '1.20.1';
-    const releaseNotes = '<h4>dummy text</h4><h3>Fixed bugs</h3>';
+
     expect(wrapper).toBeEmptyRender();
     expect(dialogWrapper).toBeEmptyRender();
-
     expect(ipc.on).toHaveBeenCalled();
+
     callbacks['update:available']({}, { version, releaseNotes });
     wrapper.update();
-    expect(wrapper).toIncludeText('dummy text');
-    wrapper.find('button.read-more').simulate('click');
 
-    expect(mockHistory.push).toBeCalledTimes(1);
+    expect(spy).toHaveBeenCalledWith(expect.anything(), 'NewRelease');
+    expect(wrapper).toIncludeText(`Lisk ${version} is out. dummy text`);
+    expect(wrapper.find('.read-more').at(0)).toHaveText('Read more');
+    expect(wrapper.find('.update-now').at(0)).toHaveText('Update now');
+    expect(mockDispatch).toHaveBeenCalledWith(appUpdateAvailable({
+      releaseNotes,
+      version,
+      remindMeLater: expect.any(Function),
+      updateNow: expect.any(Function),
+    }));
   });
 
-  it('Should initiate the update process if clicked on updateNow', () => {
+  it('Should call to open modal when readMore is clicked', () => {
+    renderHook(() => useIpc(mockHistory));
+    const wrapper = mountWithRouter(FlashMessageHolder);
+
+    callbacks['update:available']({}, { version, releaseNotes });
+    wrapper.update();
+
+    wrapper.find('button.read-more').simulate('click');
+    expect(mockHistory.push).toBeCalledWith('?modal=newRelease');
+  });
+
+  it('Should call FlashMessageHolder.deleteMessage and send update:started through ipc on updateNow click', () => {
     renderHook(() => useIpc(mockHistory));
     const spy = jest.spyOn(FlashMessageHolder, 'deleteMessage');
     const wrapper = mountWithRouter(FlashMessageHolder);
     const dialogWrapper = mountWithRouter(DialogHolder);
-    const version = '1.20.1';
-    const releaseNotes = '<h4>dummy text</h4><h3>Fixed bugs</h3>';
+
     callbacks['update:available']({}, { version, releaseNotes });
     wrapper.update();
     wrapper.find('button.update-now').simulate('click');
@@ -80,5 +95,18 @@ describe('useIpc', () => {
 
     expect(ipc.send).toHaveBeenCalledWith('update:started');
     expect(spy).toHaveBeenCalledWith('NewRelease');
+  });
+
+  it('Should call FlashMessageHolder.deleteMessage and remove modal when remindMeLater is triggered', () => {
+    renderHook(() => useIpc(mockHistory));
+    const spy = jest.spyOn(FlashMessageHolder, 'deleteMessage');
+    const wrapper = mountWithRouter(FlashMessageHolder);
+
+    callbacks['update:available']({}, { version, releaseNotes });
+    wrapper.update();
+    mockDispatch.mock.calls[0][0].data.remindMeLater();
+
+    expect(spy).toHaveBeenCalledWith('NewRelease');
+    expect(mockHistory.push).toBeCalledWith('');
   });
 });

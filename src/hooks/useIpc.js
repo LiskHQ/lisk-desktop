@@ -1,10 +1,8 @@
 import React, { useEffect } from 'react';
-import { toast } from 'react-toastify';
 import { useDispatch } from 'react-redux';
-
 import htmlStringToReact from '@utils/htmlStringToReact';
 import { regex } from '@constants';
-import { addSearchParamsToUrl } from '@utils/searchParams';
+import { addSearchParamsToUrl, removeSearchParamsFromUrl } from '@utils/searchParams';
 import { appUpdateAvailable } from '@actions';
 import FlashMessageHolder from '@toolbox/flashMessage/holder';
 import NewReleaseMessage from '@shared/newReleaseMessage/newReleaseMessage';
@@ -18,13 +16,13 @@ const useIpc = (history) => {
 
   useEffect(() => {
     ipc.on('update:available', (action, { version, releaseNotes }) => {
-      const [releaseSummary] = releaseNotes.match(regex.releaseSummary).slice(1);
-      dispatch(appUpdateAvailable({
-        version, ipc, releaseNotes,
-      }));
-
       const readMore = () => {
         addSearchParamsToUrl(history, { modal: 'newRelease' });
+      };
+
+      const remindMeLater = () => {
+        FlashMessageHolder.deleteMessage('NewRelease');
+        removeSearchParamsFromUrl(history, ['modal']);
       };
 
       const updateNow = () => {
@@ -33,6 +31,11 @@ const useIpc = (history) => {
           FlashMessageHolder.deleteMessage('NewRelease');
         }, 500);
       };
+
+      const [releaseSummary] = releaseNotes.match(regex.releaseSummary).slice(1);
+      dispatch(appUpdateAvailable({
+        version, releaseNotes, remindMeLater, updateNow,
+      }));
 
       FlashMessageHolder.addMessage(
         <NewReleaseMessage
@@ -44,10 +47,6 @@ const useIpc = (history) => {
         />,
         'NewRelease',
       );
-    });
-
-    ipc.on('update:downloading', (action, { label }) => {
-      toast.success(label);
     });
   }, []);
 };

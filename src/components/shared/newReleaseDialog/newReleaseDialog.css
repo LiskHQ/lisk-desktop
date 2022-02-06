@@ -19,6 +19,7 @@
   color: var(--color-slate-gray);
   flex-shrink: 1;
   max-height: 475px;
+  overflow-y: auto;
   height: 40vh; /* stylelint-disable-line unit-whitelist */
   margin-bottom: var(--horizontal-padding-xl);
   padding-right: var(--horizontal-padding-xl);
