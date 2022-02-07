@@ -238,6 +238,15 @@ const ss = {
   backToWalletButton: '.back-to-wallet-button',
   accountsRow: '.accounts-row',
   showMoreAccountsBtn: '.accounts-box .load-more',
+  signMessageToggle: '.signMessage-toggle',
+  accountInfoMsign: '.account-info-msign',
+  msignPkInput: '.msign-pk-input',
+  addNewMembers: '.add-new-members',
+  mandatoryToggle: '.mandatory-toggle',
+  selectOptional: '.select-optional',
+  multisignatureEditorInput: '.multisignature-editor-input',
+  copyButton: '.copy-button',
+  downloadButton: '.download-button',
 };
 
 export default ss;

@@ -24,14 +24,15 @@ const MemberField = ({
     <div className={styles.memberFieldContainer}>
       <InputWithDropdown
         t={t}
-        className={styles.inputWithDropdown}
+        className={`${styles.inputWithDropdown} msign-pk-input`}
         value={publicKey}
         onChange={changeIdentifier}
         placeholder={t('Account public key')}
         ButtonComponent={SecondaryButton}
         buttonLabel={isMandatory ? t('Mandatory') : t('Optional')}
+        buttonClassname="mandatory-toggle"
       >
-        <span onClick={() => changeCategory(false)}>
+        <span className="select-optional" onClick={() => changeCategory(false)}>
           {t('Optional')}
         </span>
         <span onClick={() => changeCategory(true)}>
