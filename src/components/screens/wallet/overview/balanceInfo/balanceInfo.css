@@ -123,6 +123,16 @@
   }
 }
 
+.pointer {
+  cursor: pointer;
+}
+
+.lockedIcon {
+  display: flex;
+  align-self: center;
+  margin-left: 5px;
+}
+
 .disabled {
   cursor: not-allowed;
   opacity: 0.5;
