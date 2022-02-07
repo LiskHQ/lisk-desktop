@@ -172,6 +172,10 @@ Then(/^I should see (.*?)$/, function (elementName) {
   cy.get(ss[elementName]).should('be.visible');
 });
 
+Then(/^(.*?) should not exist$/, function (elementName) {
+  cy.get(ss[elementName]).should('not.exist');
+});
+
 Then(/^I should be on (.*?) page of (.*?)$/, function (pageName, identifier) {
   switch (pageName.toLowerCase()) {
     case 'account':
