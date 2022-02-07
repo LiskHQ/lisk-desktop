@@ -30,6 +30,7 @@ describe('TransactionResult Multisignature', () => {
     transactionBroadcasted: jest.fn(),
     resetTransactionResult: jest.fn(),
     account: accounts.multiSig,
+    secondPassphraseRemoved: jest.fn(),
   };
 
   it('should render properly', () => {
@@ -49,6 +50,21 @@ describe('TransactionResult Multisignature', () => {
       />,
     );
     wrapper.find('.back-to-wallet-button').at(0).simulate('click');
+    expect(props.history.push).toHaveBeenCalledWith(routes.wallet.path);
+  });
+
+  it('should navigate to wallet and clear stored second passphrase if it exists', () => {
+    const updatedProps = { ...props, account: { ...props.account, secondPassphrase: 'pen hawk chunk better gadget flat picture wait exclude zero hung broom' } };
+    const wrapper = mount(
+      <Multisignature
+        {...updatedProps}
+        status={{
+          code: txStatusTypes.broadcastSuccess,
+        }}
+      />,
+    );
+    wrapper.find('.back-to-wallet-button').at(0).simulate('click');
+    expect(props.secondPassphraseRemoved).toHaveBeenCalledTimes(1);
     expect(props.history.push).toHaveBeenCalledWith(routes.wallet.path);
   });
 
