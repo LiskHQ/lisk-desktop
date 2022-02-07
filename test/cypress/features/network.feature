@@ -16,7 +16,7 @@ Feature: Network
     Then I should have 40 peers rendered in table
     And peers should be sorted in descending order by height
 
-    Scenario: I should see peers sorted in ascending order by height
+  Scenario: I should see peers sorted in ascending order by height
     When I click on showMorePeersBtn
     And I wait 1 seconds
     And I sort by height
