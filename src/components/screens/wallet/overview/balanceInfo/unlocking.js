@@ -37,14 +37,12 @@ const LockedBalanceLink = ({
   let lockedInVotes = 0;
   let lockedInUnvotes = 0;
 
-  // Calculate locked-in votes for self or other delegates.
   if (isWalletRoute && host) {
     lockedInVotes = useSelector(state => calculateBalanceLockedInVotes(state.voting));
   } else {
     lockedInVotes = calculateBalanceLockedInUnvotes(account.dpos?.sentVotes);
   }
 
-  // Calculate locked-in unvotes for self or other delegates.
   if (activeToken === tokenMap.LSK.key) {
     if (isWalletRoute && host) {
       lockedInUnvotes = calculateBalanceLockedInUnvotes(host.dpos?.unlocking);

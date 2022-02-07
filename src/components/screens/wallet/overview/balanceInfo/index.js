@@ -41,7 +41,7 @@ const BalanceInfo = ({
       </div>
       <ActionBar
         address={address}
-        username={account?.dpos?.delegate?.username}
+        username={account.dpos?.delegate?.username}
         isWalletRoute={isWalletRoute}
         activeToken={activeToken}
         isBanned={isBanned}
