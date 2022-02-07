@@ -247,6 +247,8 @@ const ss = {
   multisignatureEditorInput: '.multisignature-editor-input',
   copyButton: '.copy-button',
   downloadButton: '.download-button',
+  signBtn: '.sign',
+  msignSendButton: '.send-button',
 };
 
 export default ss;
