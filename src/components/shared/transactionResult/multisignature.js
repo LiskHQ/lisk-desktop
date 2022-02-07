@@ -72,7 +72,7 @@ const ErrorActions = ({
 
 const Multisignature = ({
   transactions, title, message, t, status, className, history, noBackButton,
-  resetTransactionResult, transactionBroadcasted, account, network,
+  resetTransactionResult, transactionBroadcasted, account, network, secondPassphraseRemoved,
 }) => {
   const [copied, setCopied] = useState(false);
 
@@ -91,6 +91,9 @@ const Multisignature = ({
   };
 
   const goToWallet = () => {
+    if (account?.secondPassphrase) {
+      secondPassphraseRemoved();
+    }
     history.push(routes.wallet.path);
   };
 
