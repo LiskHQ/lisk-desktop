@@ -15,21 +15,18 @@ import styles from './balanceInfo.css';
 const Link = ({
   sum, style, icon, isWalletRoute,
 }) => (
-  isWalletRoute ? (
+  <div className={`${styles.lockedBalance} ${style}`}>
+    <Icon name={icon || 'lock'} />
+    {`${fromRawLsk(sum)} ${tokenMap.LSK.key}`}
+    {isWalletRoute && (
     <DialogLink
-      className={`${styles.lockedBalance} ${styles.pointer} ${style} open-unlock-balance-dialog`}
+      className={`${styles.pointer} ${styles.lockedIcon} open-unlock-balance-dialog`}
       component="lockedBalance"
     >
-      <Icon name={icon || 'lock'} />
-      {`${fromRawLsk(sum)} ${tokenMap.LSK.key}`}
+      <Icon name="arrowRightCircle" />
     </DialogLink>
-  )
-    : (
-      <div className={`${styles.lockedBalance} ${styles.pointer} ${style}`}>
-        <Icon name={icon || 'lock'} />
-        {`${fromRawLsk(sum)} ${tokenMap.LSK.key}`}
-      </div>
-    )
+    )}
+  </div>
 );
 
 // eslint-disable-next-line max-statements
