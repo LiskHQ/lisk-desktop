@@ -1,5 +1,5 @@
 import React from 'react';
-import { mount, unmount } from 'enzyme';
+import { mount } from 'enzyme';
 import { secondPassphraseRemoved } from '@actions';
 import TransactionSignature from './transactionSignature';
 import accounts from '../../../../test/constants/accounts';
