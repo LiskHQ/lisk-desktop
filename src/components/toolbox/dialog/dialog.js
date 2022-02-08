@@ -10,9 +10,7 @@ import styles from './dialog.css';
 const Dialog = ({
   children, hasClose, className, history,
 }) => {
-  const onCloseClick = () => {
-    removeSearchParamsFromUrl(history, ['modal'], true);
-  };
+  const onCloseClick = () => removeSearchParamsFromUrl(history, ['modal'], true);
 
   return (
     <div className={`${styles.wrapper} ${className}`}>
