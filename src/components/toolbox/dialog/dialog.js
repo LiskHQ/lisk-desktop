@@ -1,10 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { withRouter } from 'react-router';
-import { useSelector, useDispatch } from 'react-redux';
 import { removeSearchParamsFromUrl } from '@utils/searchParams';
-import { selectAccount } from '@store/selectors';
-import { secondPassphraseRemoved } from '@actions';
 import Title from './title';
 import Description from './description';
 import Options from './options';
@@ -13,12 +10,7 @@ import styles from './dialog.css';
 const Dialog = ({
   children, hasClose, className, history,
 }) => {
-  const account = useSelector(selectAccount);
-  const dispatch = useDispatch();
   const onCloseClick = () => {
-    if (account?.secondPassphrase) {
-      dispatch(secondPassphraseRemoved());
-    }
     removeSearchParamsFromUrl(history, ['modal'], true);
   };
 
