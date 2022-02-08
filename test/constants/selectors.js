@@ -238,7 +238,7 @@ const ss = {
   backToWalletButton: '.back-to-wallet-button',
   accountsRow: '.accounts-row',
   showMoreAccountsBtn: '.accounts-box .load-more',
-  signMessageToggle: '.signMessage-toggle',
+  signMultiSignTransactionToggle: '.signMultiSignTransaction-toggle',
   accountInfoMsign: '.account-info-msign',
   msignPkInput: '.msign-pk-input',
   addNewMembers: '.add-new-members',

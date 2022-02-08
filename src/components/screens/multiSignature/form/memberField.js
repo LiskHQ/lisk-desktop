@@ -30,7 +30,7 @@ const MemberField = ({
         placeholder={t('Account public key')}
         ButtonComponent={SecondaryButton}
         buttonLabel={isMandatory ? t('Mandatory') : t('Optional')}
-        buttonClassname="mandatory-toggle"
+        buttonClassName="mandatory-toggle"
       >
         <span className="select-optional" onClick={() => changeCategory(false)}>
           {t('Optional')}
