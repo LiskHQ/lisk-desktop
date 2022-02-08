@@ -15,7 +15,7 @@ import styles from './balanceInfo.css';
 const Link = ({
   sum, style, icon, isWalletRoute,
 }) => (
-  <div className={`${styles.lockedBalance} ${style}`}>
+  <div className={`${styles.lockedBalance} ${style} unlock-amount-value`}>
     <Icon name={icon || 'lock'} />
     {`${fromRawLsk(sum)} ${tokenMap.LSK.key}`}
     {isWalletRoute && (
