@@ -43,13 +43,11 @@ const LockedBalanceLink = ({
     lockedInVotes = calculateBalanceLockedInUnvotes(account.dpos?.sentVotes);
   }
 
-  if (activeToken === tokenMap.LSK.key) {
-    if (isWalletRoute && host) {
-      lockedInUnvotes = calculateBalanceLockedInUnvotes(host.dpos?.unlocking);
-    } else {
-      lockedInUnvotes = calculateBalanceLockedInUnvotes(account.dpos?.unlocking);
-    }
-  }
+  lockedInUnvotes = isWalletRoute && host
+    ? (calculateBalanceLockedInUnvotes(host.dpos?.unlocking))
+    : (
+      calculateBalanceLockedInUnvotes(account.dpos?.unlocking)
+    );
 
   if (lockedInUnvotes + lockedInVotes > 0) {
     return (
