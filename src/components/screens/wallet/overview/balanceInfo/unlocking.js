@@ -31,7 +31,7 @@ const Link = ({
 
 // eslint-disable-next-line max-statements
 const LockedBalanceLink = ({
-  activeToken, account, isWalletRoute, style, icon,
+  account, isWalletRoute, style, icon,
 }) => {
   const host = useSelector(state => getActiveTokenAccount(state));
   let lockedInVotes = 0;
