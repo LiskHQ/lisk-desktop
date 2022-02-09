@@ -42,7 +42,7 @@ const Success = ({
         onCopy={copy}
         text={signature}
       >
-        <PrimaryButton disabled={copied} className={styles.button}>
+        <PrimaryButton disabled={copied} className={`${styles.button} copy-to-clipboard`}>
           {copied ? t('Copied!') : t('Copy to clipboard')}
         </PrimaryButton>
       </CopyToClipboard>
