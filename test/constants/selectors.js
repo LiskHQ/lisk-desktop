@@ -241,6 +241,9 @@ const ss = {
   peerRow: '.peer-row',
   showMorePeersBtn: '.peers-box .load-more',
   sortByBtn: '.sort-by',
+  signMessageInput: '.sign-message-input',
+  copyToClipboardBtn: '.copy-to-clipboard',
+  signedResult: '.result',
 };
 
 export default ss;

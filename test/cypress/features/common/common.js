@@ -251,4 +251,9 @@ When(/^I sort by (\w+)$/, function (sortParam) {
   cy.get(`${ss.sortByBtn}.${sortParam}`).eq(0).click();
 });
 
+Given(/^I open (\w+) modal$/, function (modal) {
+  cy.visit(`${urls.dashboard}?modal=${modal}`);
+
+});
+
 
