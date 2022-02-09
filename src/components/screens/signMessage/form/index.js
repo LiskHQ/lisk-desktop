@@ -41,7 +41,7 @@ const Form = ({ nextStep, t, history }) => {
         <label className={styles.fieldGroup}>
           <span>{t('Message')}</span>
           <AutoResizeTextarea
-            className={styles.textarea}
+            className={`${styles.textarea} sign-message-input`}
             name="message"
             onChange={onChange}
             value={message}

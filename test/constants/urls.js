@@ -16,6 +16,7 @@ const urls = {
   delegatesVote: '/delegates/vote',
   signMessage: '/sign-message',
   login: '/login',
+  network: '/network',
 };
 
 export default urls;
