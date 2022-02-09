@@ -1,7 +1,12 @@
 import React from 'react';
 import { mount } from 'enzyme';
+import { secondPassphraseRemoved } from '@actions';
 import TransactionSignature from './transactionSignature';
 import accounts from '../../../../test/constants/accounts';
+
+jest.mock('@actions', () => ({
+  secondPassphraseRemoved: jest.fn(),
+}));
 
 describe('TransactionSignature', () => {
   const props = {
@@ -102,5 +107,20 @@ describe('TransactionSignature', () => {
     );
     expect(wrapper.find('.hwConfirmation')).toExist();
     expect(wrapper.find('h5')).toHaveText('Please confirm the transaction on your {{deviceModel}}');
+  });
+
+  it('should unmount and remove stored second passphrase if it exists', () => {
+    const wrapper = mount(
+      <TransactionSignature
+        {...props}
+        account={{
+          ...accounts.genesis,
+          secondPassphrase: 'pen hawk chunk better gadget flat picture wait exclude zero hung broom',
+        }}
+      />,
+    );
+    wrapper.unmount();
+    expect(secondPassphraseRemoved).toBeCalledTimes(1);
+    expect(wrapper).not.toExist();
   });
 });
