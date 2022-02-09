@@ -41,13 +41,13 @@ const BalanceInfo = ({
               />
             </div>
             {
-            activeToken === tokenMap.LSK.key ? (
+            activeToken === tokenMap.LSK.key && (
               <LockedBalanceLink
                 activeToken={activeToken}
                 isWalletRoute={isWalletRoute}
                 account={account}
               />
-            ) : null
+            )
           }
           </DiscreetMode>
         </div>
