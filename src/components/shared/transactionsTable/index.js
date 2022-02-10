@@ -1,5 +1,5 @@
 import { withTranslation } from 'react-i18next';
-import React from 'react';
+import React, { useState } from 'react';
 import { useSelector } from 'react-redux';
 import withFilters from '@utils/withFilters';
 import { getModuleAssetTitle } from '@utils/moduleAssets';
@@ -13,8 +13,6 @@ import FilterDropdownButton from '../filterDropdownButton';
 import styles from './transactionsTable.css';
 import TransactionRow from './transactionRow';
 import header from './tableHeader';
-
-const blackListTypes = ['4:0', '5:0', '5:1', '5:3'];
 
 const TransactionsTable = ({
   title,
@@ -31,6 +29,9 @@ const TransactionsTable = ({
   canLoadMore,
   emptyState,
 }) => {
+  const [innerFields, setInnerFields] = useState(fields);
+
+  const blackListTypes = ['4:0', '5:0', '5:1', '5:3'];
   const currentBlockHeight = useSelector(selectCurrentBlockHeight);
   const handleLoadMore = () => {
     // filter the blanks out
@@ -61,6 +62,20 @@ const TransactionsTable = ({
     return data;
   });
 
+  const removeField = (rawFields, transactionType) => rawFields.filter((field) => {
+    if ((field.name === 'amount' || field.name === 'recipientAddress')
+        && blackListTypes.some((type) => type === transactionType)
+    ) return false;
+
+    return true;
+  });
+
+  const dropdownApplyFilters = (tranxFilters) => {
+    const moduleAssetId = tranxFilters.moduleAssetId;
+    applyFilters(tranxFilters);
+    if (blackListTypes.some((type) => type === moduleAssetId)) setTimeout(() => changeSort('timestamp'), 100);
+  };
+
   return (
     <Box main isLoading={transactions.isLoading} className="transactions-box">
       <StickyHeader
@@ -72,13 +87,27 @@ const TransactionsTable = ({
           label: t('New transactions'),
         } : undefined}
         scrollToSelector=".transactions-box"
-        filters={
-          <FilterDropdownButton fields={fields} filters={filters} applyFilters={applyFilters} />
-        }
+        filters={(
+          <FilterDropdownButton
+            fields={innerFields}
+            filters={filters}
+            applyFilters={dropdownApplyFilters}
+            onTypeSelected={moduleAssetId => {
+              setInnerFields(moduleAssetId ? removeField(fields, moduleAssetId) : fields);
+            }}
+          />
+        )}
       />
-      <FilterBar {...{
-        clearFilter, clearAllFilters, filters, formatters, t,
-      }}
+      <FilterBar
+        {...{ filters, formatters, t }}
+        clearFilter={(filterKey) => {
+          setInnerFields(fields);
+          clearFilter(filterKey);
+        }}
+        clearAllFilters={() => {
+          setInnerFields(fields);
+          clearAllFilters();
+        }}
       />
       <BoxContent className={`${styles.content} transaction-results`}>
         <Table
