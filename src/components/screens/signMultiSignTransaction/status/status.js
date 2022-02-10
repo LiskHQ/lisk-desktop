@@ -8,7 +8,7 @@ import ProgressBar from '../progressBar';
 import styles from './styles.css';
 
 const Status = ({ sender, transactions, t }) => {
-  const status = getTransactionStatus(sender.data, transactions);
+  const status = getTransactionStatus(sender.data, transactions, sender.data?.summary.publicKey);
   const template = statusMessages(t)[status.code];
 
   return (

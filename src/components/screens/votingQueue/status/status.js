@@ -9,7 +9,7 @@ import styles from './styles.css';
 const Status = ({
   account, transactions, statusInfo, t,
 }) => {
-  const status = getTransactionStatus(account, transactions);
+  const status = getTransactionStatus(account, transactions, account.summary.isMultisignature);
   const template = statusMessages(t, statusInfo)[status.code];
 
   return (

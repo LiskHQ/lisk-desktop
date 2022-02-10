@@ -24,11 +24,14 @@ const TransactionSignature = ({
      * sender account is required.
      */
     if (sender) {
+      console.log('sender', !!sender);
       if (signatureStatus === signatureCollectionStatus.fullySigned
         || signatureStatus === signatureCollectionStatus.overSigned) {
         // Skip the current member as the all required signature are collected
+        console.log('skip signagture');
         signatureSkipped({ rawTransaction });
       } else {
+        console.log('multi signed');
         multisigTransactionSigned({
           rawTransaction, sender,
         });
@@ -57,9 +60,12 @@ const TransactionSignature = ({
       const isDoubleSigned = !transactions.signedTransaction.signatures.some(
         sig => sig.length === 0,
       );
+      console.log('proceed', transactions.signedTransaction);
       if (!transactions.txSignatureError && hasSecondPass && !isDoubleSigned) {
+        console.log('double signed');
         transactionDoubleSigned();
       } else if (!hasSecondPass || isDoubleSigned) {
+        console.log('Just proceed');
         nextStep({ rawTransaction, statusInfo, sender });
       }
     }

@@ -42,10 +42,11 @@ export const statusMessages = t => ({
  *
  * @param {Object} account - active account info
  * @param {Object} transactions - Transactions status from the redux store
+ * @param {boolean?} isMultisignature - Is the sender account multisig
  * @returns {Object} The status code and message
  */
 // eslint-disable-next-line max-statements
-export const getTransactionStatus = (account, transactions) => {
+export const getTransactionStatus = (account, transactions, isMultisignature) => {
   // Signature errors
   if (transactions.txSignatureError) {
     if (transactions.txSignatureError.message.indexOf('hwCommand') > -1) {
@@ -70,12 +71,13 @@ export const getTransactionStatus = (account, transactions) => {
     const requiredSignatures = getNumberOfSignatures(account, transaction);
     const nonEmptySignatures = transactions
       .signedTransaction.signatures.filter(sig => sig.length > 0).length;
-
+    console.log(transactions.signedTransaction.signatures);
+    console.log(requiredSignatures, nonEmptySignatures);
     if (nonEmptySignatures < requiredSignatures) {
       return { code: txStatusTypes.multisigSignaturePartialSuccess };
     }
 
-    if (requiredSignatures > 1 && nonEmptySignatures === requiredSignatures) {
+    if (isMultisignature && nonEmptySignatures === requiredSignatures) {
       return { code: txStatusTypes.multisigSignatureSuccess };
     }
 
