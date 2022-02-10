@@ -71,8 +71,6 @@ export const getTransactionStatus = (account, transactions, isMultisignature) =>
     const requiredSignatures = getNumberOfSignatures(account, transaction);
     const nonEmptySignatures = transactions
       .signedTransaction.signatures.filter(sig => sig.length > 0).length;
-    console.log(transactions.signedTransaction.signatures);
-    console.log(requiredSignatures, nonEmptySignatures);
     if (nonEmptySignatures < requiredSignatures) {
       return { code: txStatusTypes.multisigSignaturePartialSuccess };
     }
