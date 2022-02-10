@@ -14,6 +14,8 @@ import styles from './transactionsTable.css';
 import TransactionRow from './transactionRow';
 import header from './tableHeader';
 
+const blackListTypes = ['4:0', '5:0', '5:1', '5:3'];
+
 const TransactionsTable = ({
   title,
   transactions,
@@ -54,6 +56,11 @@ const TransactionsTable = ({
     recipientAddress: value => `${t('Recipient')}: ${value}`,
   };
 
+  const removeSortOnAmount = (headerData, dropdownFilters) => headerData.map(data => {
+    if (data?.sort?.key === 'amount' && blackListTypes.some((type) => type === dropdownFilters.moduleAssetId)) delete data.sort;
+    return data;
+  });
+
   return (
     <Box main isLoading={transactions.isLoading} className="transactions-box">
       <StickyHeader
@@ -80,7 +87,7 @@ const TransactionsTable = ({
           row={TransactionRow}
           loadData={handleLoadMore}
           additionalRowProps={{ t, currentBlockHeight }}
-          header={header(changeSort, t)}
+          header={removeSortOnAmount(header(changeSort, t), filters)}
           headerClassName={styles.tableHeader}
           currentSort={sort}
           canLoadMore={canLoadMore}
