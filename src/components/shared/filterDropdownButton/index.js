@@ -58,14 +58,15 @@ class FilterDropdownButton extends React.Component {
       };
     }, filters);
 
-    if (blackListTypes.some(blackListType => blackListType === fields.moduleAssetId?.value)
-        && this.props.onTypeSelected) {
+    this.setState({ filters, hasErrors });
+
+    if (!this.props.onTypeSelected) return;
+
+    if (blackListTypes.some(blackListType => blackListType === fields.moduleAssetId?.value)) {
       this.props.onTypeSelected(fields.moduleAssetId.value);
     } else {
       this.props.onTypeSelected(null);
     }
-
-    this.setState({ filters, hasErrors });
   }
 
   applyFilters(event) {
