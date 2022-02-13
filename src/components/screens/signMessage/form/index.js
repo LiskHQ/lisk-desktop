@@ -11,8 +11,14 @@ import BoxFooter from '@toolbox/box/footer';
 import BoxInfoText from '@toolbox/box/infoText';
 import styles from '../signMessage.css';
 
-const Form = ({ nextStep, t, history }) => {
-  const [message, setMessage] = useState('');
+const Form = ({
+  nextStep,
+  t,
+  history,
+  onNext,
+  prevState,
+}) => {
+  const [message, setMessage] = useState(prevState.message || '');
   useEffect(() => {
     const params = parseSearchParams(history.location.search);
     if (typeof params.message === 'string' && params.message.length) {
@@ -27,8 +33,8 @@ const Form = ({ nextStep, t, history }) => {
   const onClick = () => {
     Piwik.trackingEvent('SignMessageInput', 'button', 'Next step');
     nextStep({ message });
+    onNext?.();
   };
-
   return (
     <Box>
       <BoxContent className={styles.noPadding}>

@@ -12,6 +12,8 @@ const MessageSignature = ({
   message,
   account,
   t,
+  isNext,
+  prevStep,
 }) => {
   const [signature, setSignature] = useState();
   const [error, setError] = useState();
@@ -53,8 +55,10 @@ const MessageSignature = ({
           .then(setSignature)
           .catch(setError);
       }
+    } else if (isNext) {
+      nextStep({ signature, error, message });
     } else {
-      nextStep({ signature, error });
+      prevStep();
     }
   }, [signature, error]);
 
