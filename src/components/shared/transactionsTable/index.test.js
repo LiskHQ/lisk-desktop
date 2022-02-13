@@ -2,7 +2,6 @@ import { mountWithRouter } from '@utils/testHelpers';
 import { expect } from 'chai';
 import TransactionsTable from './index';
 import transactionsData from '../../../../test/fixtures/transactions_data';
-// import { mount } from 'enzyme';
 
 const mockLoadMore = jest.fn();
 const filters = {
