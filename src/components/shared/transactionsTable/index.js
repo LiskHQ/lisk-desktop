@@ -14,6 +14,7 @@ import styles from './transactionsTable.css';
 import TransactionRow from './transactionRow';
 import header from './tableHeader';
 
+const blackListTypes = ['4:0', '5:0', '5:1', '5:3'];
 const TransactionsTable = ({
   title,
   transactions,
@@ -31,7 +32,6 @@ const TransactionsTable = ({
 }) => {
   const [innerFields, setInnerFields] = useState(fields);
 
-  const blackListTypes = ['4:0', '5:0', '5:1', '5:3'];
   const currentBlockHeight = useSelector(selectCurrentBlockHeight);
   const handleLoadMore = () => {
     // filter the blanks out
