@@ -11,3 +11,7 @@ Then(/I should have the signed message in the clipboard/, function(){
     });
   });
 })
+
+Then(/(\w+) should have value of (\w+)/, function(field, value){
+  cy.get(ss[field]).should('have.value', value);
+})
