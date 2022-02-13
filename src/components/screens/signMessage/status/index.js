@@ -40,7 +40,7 @@ const Success = ({
           onPrev?.();
           prevStep();
         }}
-        className={styles.button}
+        className={`${styles.button} go-back`}
       >
         {t('Go back')}
       </SecondaryButton>
