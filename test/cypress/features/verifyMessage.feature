@@ -4,14 +4,7 @@ Feature: Verify Message
     Given I login as genesis on devnet
     And I wait 2 seconds
     And I open verifyMessage modal
-    When I paste "-----BEGIN LISK SIGNED MESSAGE-----\n
-    -----MESSAGE-----\n
-    Hello, this is a test\n
-    -----PUBLIC KEY-----\n
-    167221bdf0af9f83fd9f0cda0aff264a836f4b85a0cf7ee5f6bec6029bb6d517\n
-    -----SIGNATURE-----\n
-    d03a83796ab1b108b0eb2f900214da931e9589211bebe6648d3f4cbfd964d183053891eb13b77fd573dcb407f2a57becba1e131f3351736d4336c6ac26e95703\n
-    -----END LISK SIGNED MESSAGE-----" in verifyMessageInput field
+    When I paste "-----BEGIN LISK SIGNED MESSAGE-----\n-----MESSAGE-----\nHello, this is a test\n-----PUBLIC KEY-----\n167221bdf0af9f83fd9f0cda0aff264a836f4b85a0cf7ee5f6bec6029bb6d517\n-----SIGNATURE-----\nd03a83796ab1b108b0eb2f900214da931e9589211bebe6648d3f4cbfd964d183053891eb13b77fd573dcb407f2a57becba1e131f3351736d4336c6ac26e95703\n-----END LISK SIGNED MESSAGE-----" in verifyMessageInput field
     And I click on continueBtn
     And  I wait 2 seconds
     Then I see this title: The signature is correct
