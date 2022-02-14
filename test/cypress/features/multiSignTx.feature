@@ -55,15 +55,15 @@ Feature: Multisignature transaction
     Then The latest transaction is transfer to lsks6w...ehxwz
 
   Scenario: Register multisignature group (Mandatory, Optional, Optional, 2 signatures)
-    Given I login as genesis on devnet
+    Given I login as multiSig_candidate on devnet
     And I wait 1 seconds
     Given I am on wallet page
     When I click on accountInfoMsign
     When I clear input multisignatureEditorInput
     And I fill 2 in multisignatureEditorInput field
     When I click on addNewMembers
-    Then I enter the publicKey of genesis at input 1
-    Then I enter the publicKey of multiSig_candidate at input 2
+    Then I enter the publicKey of multiSig_candidate at input 1
+    Then I enter the publicKey of genesis at input 2
     Then I enter the publicKey of delegate at input 3
     Then I set 2 inputs as optional
     When I click on sendButton
@@ -73,25 +73,32 @@ Feature: Multisignature transaction
     Then I should see copyButton
 
   Scenario: Sign transaction (Mandatory, Optional, Optional, 2 signatures)
-      Given I login as multiSig_candidate on devnet
-      And I wait 1 seconds
-      When I click on signMultiSignTransactionToggle
-      Then I paste a transaction
-      When I click on confirmBtn
-      Then I confirm data of firstTxSecondSign
-      When I click on signBtn
-      Then msignSendButton should not exist
-      Then I should see downloadButton
-      Then I should see copyButton
+    Given I login as genesis on devnet
+    And I wait 1 seconds
+    When I click on signMultiSignTransactionToggle
+    Then I paste a transaction
+    When I click on confirmBtn
+    Then I confirm data of firstTxSecondSign
+    When I click on signBtn
+    Then msignSendButton should not exist
+    Then I should see downloadButton
+    Then I should see copyButton
 
   Scenario: Send transaction (Mandatory, Optional, Optional, 2 signatures)
-      Given I login as delegate on devnet
-      And I wait 1 seconds
-      When I click on signMultiSignTransactionToggle
-      Then I paste a transaction
-      When I click on confirmBtn
-      Then I confirm data of firstTxThirdSign
-      When I click on signBtn
-      Then I should see downloadButton
-      Then I should see copyButton
-      Then I should see msignSendButton
+    Given I login as delegate on devnet
+    And I wait 1 seconds
+    When I click on signMultiSignTransactionToggle
+    Then I paste a transaction
+    When I click on confirmBtn
+    Then I confirm data of firstTxThirdSign
+    When I click on signBtn
+    Then I should see downloadButton
+    Then I should see copyButton
+    Then I should see msignSendButton
+    And I click on msignSendButton
+    And I click on closeDialog
+    When I click on searchIcon
+    And I search for account lsks6wh4zqfd8wyka3rj243rshcdqyug9gyvehxwz
+    Then I click on searchAccountRow
+    And I wait 10 seconds
+    Then The latest transaction is Register multisig. group
