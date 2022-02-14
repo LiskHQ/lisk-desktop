@@ -25,6 +25,7 @@ describe('Sign Message: Status', () => {
       account: accountWithPassphrase,
       message: 'Random message',
       t: v => v,
+      isNext: true,
       nextStep: jest.fn(),
     };
 
@@ -40,6 +41,7 @@ describe('Sign Message: Status', () => {
       expect(props.nextStep).toHaveBeenCalledWith({
         error: undefined,
         signature: expect.any(String),
+        message: props.message,
       });
     });
   });

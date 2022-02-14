@@ -18,7 +18,7 @@ const Form = ({
   onNext,
   prevState,
 }) => {
-  const [message, setMessage] = useState(prevState.message || '');
+  const [message, setMessage] = useState(prevState?.message || '');
   useEffect(() => {
     const params = parseSearchParams(history.location.search);
     if (typeof params.message === 'string' && params.message.length) {
