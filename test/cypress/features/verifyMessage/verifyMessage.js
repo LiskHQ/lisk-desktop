@@ -2,6 +2,6 @@
 import { Then } from 'cypress-cucumber-preprocessor/steps';
 import ss from '../../../constants/selectors';
 
-Then(/^the modal should show the signature is (.*?)$/, function (message) {
-    cy.get(ss.verifyMessage).eq(0).should('contain', message);
-  });
+When(/^I paste (.+) in ([\w]+) field$/, function (value, field) {
+  cy.get(ss[field]).clear().invoke('val', value.slice(0, value.length - 1)).type(value.slice(-1))
+});
