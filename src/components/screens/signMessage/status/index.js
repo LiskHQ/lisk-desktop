@@ -24,7 +24,7 @@ const Error = ({ t, hwInfo }) => {
 };
 
 const Success = ({
-  t, signature, copied, copy, prevStep,
+  t, signature, copied, copy, prevStep, onPrev,
 }) => (
   <>
     <BoxContent className={styles.noPadding}>
@@ -35,7 +35,13 @@ const Success = ({
       />
     </BoxContent>
     <BoxFooter direction="horizontal">
-      <SecondaryButton onClick={prevStep} className={styles.button}>
+      <SecondaryButton
+        onClick={() => {
+          onPrev?.();
+          prevStep();
+        }}
+        className={`${styles.button} go-back`}
+      >
         {t('Go back')}
       </SecondaryButton>
       <CopyToClipboard
@@ -51,7 +57,7 @@ const Success = ({
 );
 
 const Status = ({
-  t, prevStep, signature, error, account,
+  t, prevStep, signature, error, account, onPrev,
 }) => {
   const [copied, setCopied] = useState(false);
   const ref = useRef();
@@ -75,6 +81,7 @@ const Status = ({
       copied={copied}
       copy={copy}
       prevStep={prevStep}
+      onPrev={onPrev}
     />
   );
 };
