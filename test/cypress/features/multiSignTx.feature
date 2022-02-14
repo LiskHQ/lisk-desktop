@@ -41,3 +41,18 @@ Feature: Multisignature transaction
       Then I should see downloadButton
       Then I should see copyButton
       Then I should see msignSendButton
+
+  Scenario: Register multisignature group (Mandatory, Mandatory)
+    Given I login as genesis on devnet
+    And I wait 1 seconds
+    Given I am on wallet page
+    When I click on accountInfoMsign
+    When I clear input multisignatureEditorInput
+    And I fill 2 in multisignatureEditorInput field
+    Then I enter the publicKey of genesis at input 1
+    Then I enter the publicKey of delegate at input 2
+    When I click on sendButton
+    When I click on confirmBtn
+    Then msignSendButton should not exist
+    Then I should see downloadButton
+    Then I should see copyButton
