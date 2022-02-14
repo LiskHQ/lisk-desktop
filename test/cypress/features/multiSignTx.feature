@@ -1,47 +1,5 @@
 Feature: Multisignature transaction
 
-  Scenario: Register multisignature group (Mandatory, Optional, Optional, 2 signatures)
-    Given I login as genesis on devnet
-    And I wait 1 seconds
-    Given I am on wallet page
-    When I click on accountInfoMsign
-    When I clear input multisignatureEditorInput
-    And I fill 2 in multisignatureEditorInput field
-    When I click on addNewMembers
-    Then I enter the publicKey of genesis at input 1
-    Then I enter the publicKey of multiSig_candidate at input 2
-    Then I enter the publicKey of delegate at input 3
-    Then I set 2 inputs as optional
-    When I click on sendButton
-    When I click on confirmBtn
-    Then msignSendButton should not exist
-    Then I should see downloadButton
-    Then I should see copyButton
-
-  Scenario: Sign transaction
-      Given I login as multiSig_candidate on devnet
-      And I wait 1 seconds
-      When I click on signMultiSignTransactionToggle
-      Then I paste a transaction
-      When I click on confirmBtn
-      Then I confirm data of firstTxSecondSign
-      When I click on signBtn
-      Then msignSendButton should not exist
-      Then I should see downloadButton
-      Then I should see copyButton
-
-  Scenario: Send transaction
-      Given I login as delegate on devnet
-      And I wait 1 seconds
-      When I click on signMultiSignTransactionToggle
-      Then I paste a transaction
-      When I click on confirmBtn
-      Then I confirm data of firstTxThirdSign
-      When I click on signBtn
-      Then I should see downloadButton
-      Then I should see copyButton
-      Then I should see msignSendButton
-
   Scenario: Register multisignature group (Mandatory, Mandatory)
     Given I login as genesis on devnet
     And I wait 1 seconds
@@ -68,7 +26,14 @@ Feature: Multisignature transaction
     Then I should see downloadButton
     Then I should see copyButton
     Then I should see msignSendButton
-  
+    And I click on msignSendButton
+    And I click on closeDialog
+    When I click on searchIcon
+    And I search for account lskdxc4ta5j43jp9ro3f8zqbxta9fn6jwzjucw7yt
+    Then I click on searchAccountRow
+    Then I should be on Account page of test_deligate
+    Then The latest transaction is Register multisig. group
+
   Scenario: Send transaction using second passphrase (Mandatory, Mandatory)
     Given I login as genesis on devnet
     And I wait 1 seconds
@@ -90,3 +55,45 @@ Feature: Multisignature transaction
     Then The latest transaction is transfer to lsks6w...ehxwz
     Then I wait 10 seconds
     Then The balance is subtracted
+
+  Scenario: Register multisignature group (Mandatory, Optional, Optional, 2 signatures)
+    Given I login as genesis on devnet
+    And I wait 1 seconds
+    Given I am on wallet page
+    When I click on accountInfoMsign
+    When I clear input multisignatureEditorInput
+    And I fill 2 in multisignatureEditorInput field
+    When I click on addNewMembers
+    Then I enter the publicKey of genesis at input 1
+    Then I enter the publicKey of multiSig_candidate at input 2
+    Then I enter the publicKey of delegate at input 3
+    Then I set 2 inputs as optional
+    When I click on sendButton
+    When I click on confirmBtn
+    Then msignSendButton should not exist
+    Then I should see downloadButton
+    Then I should see copyButton
+
+  Scenario: Sign transaction (Mandatory, Optional, Optional, 2 signatures)
+      Given I login as multiSig_candidate on devnet
+      And I wait 1 seconds
+      When I click on signMultiSignTransactionToggle
+      Then I paste a transaction
+      When I click on confirmBtn
+      Then I confirm data of firstTxSecondSign
+      When I click on signBtn
+      Then msignSendButton should not exist
+      Then I should see downloadButton
+      Then I should see copyButton
+
+  Scenario: Send transaction (Mandatory, Optional, Optional, 2 signatures)
+      Given I login as delegate on devnet
+      And I wait 1 seconds
+      When I click on signMultiSignTransactionToggle
+      Then I paste a transaction
+      When I click on confirmBtn
+      Then I confirm data of firstTxThirdSign
+      When I click on signBtn
+      Then I should see downloadButton
+      Then I should see copyButton
+      Then I should see msignSendButton
