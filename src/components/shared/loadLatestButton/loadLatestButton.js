@@ -39,7 +39,7 @@ const LoadLatestButton = ({
 
   return shouldShow[entity] && shouldShow[entity](updateHeight, latestBlocks)
     ? (
-      <PrimaryButton onClick={handleClick} className={`${styles.button} ${buttonClassName || ''}`}>
+      <PrimaryButton onClick={handleClick} className={`${styles.button} ${buttonClassName || ''} load-latest`}>
         <Icon name="refresh" className={styles.icon} />
         <span>{children}</span>
       </PrimaryButton>
