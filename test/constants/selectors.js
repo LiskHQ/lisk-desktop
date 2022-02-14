@@ -249,6 +249,7 @@ const ss = {
   signMessageInput: '.sign-message-input',
   copyToClipboardBtn: '.copy-to-clipboard',
   signedResult: '.result',
+  verifyMessage: '.verifyMessage',
 };
 
 export default ss;
