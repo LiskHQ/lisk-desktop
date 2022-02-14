@@ -56,3 +56,17 @@ Feature: Multisignature transaction
     Then msignSendButton should not exist
     Then I should see downloadButton
     Then I should see copyButton
+
+  Scenario: Sign transaction and send transaction (Mandatory, Mandatory)
+    Given I login as delegate on devnet
+    And I wait 1 seconds
+    When I click on signMultiSignTransactionToggle
+    Then I paste a transaction
+    When I click on confirmBtn
+    Then I confirm data of SecondTxSecondSign
+    When I click on signBtn
+    Then I should see downloadButton
+    Then I should see copyButton
+    Then I should see msignSendButton
+  
+  Scenario: Send transaction using second passphrase (Mandatory, Mandatory)
