@@ -47,6 +47,7 @@ const SecondPassInput = ({
     <div className={styles.secondaryActions}>
       <span className={styles.or}>or</span>
       <TertiaryButton
+        className="use-second-passphrase-btn"
         onClick={() => setInputStatus('visible')}
       >
         {t('Send using second passphrase right away')}

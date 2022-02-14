@@ -253,6 +253,7 @@ const ss = {
   txRequiredSignatures: '.tx-required-signatures',
   memberTitle: '.member-title',
   txRemainingMembers: '.tx-remaining-members',
+  useSecondPassphraseBtn: '.use-second-passphrase-btn',
 };
 
 export default ss;
