@@ -24,7 +24,7 @@ Feature: Multisignature transaction
       When I click on signMultiSignTransactionToggle
       Then I paste a transaction
       When I click on confirmBtn
-      Then I confirm data
+      Then I confirm data of firstTxSecondSign
       When I click on signBtn
       Then msignSendButton should not exist
       Then I should see downloadButton
@@ -32,10 +32,12 @@ Feature: Multisignature transaction
 
   Scenario: Send transaction
       Given I login as delegate on devnet
-      And I wait 5 seconds
+      And I wait 1 seconds
       When I click on signMultiSignTransactionToggle
-      Then I read a transaction from json
+      Then I paste a transaction
       When I click on confirmBtn
+      Then I confirm data of firstTxThirdSign
       When I click on signBtn
-      Then I should be able to copy and download transaction
-      When I click on sendButton
+      Then I should see downloadButton
+      Then I should see copyButton
+      Then I should see msignSendButton

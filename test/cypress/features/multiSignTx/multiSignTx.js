@@ -19,18 +19,51 @@ Then(/^I paste a transaction$/, function () {
   // cy.get(ss.txSignInput).invoke('val', tx).trigger('change');
 });
 
-Then(/^I confirm data$/, function () {
+Then(/^I confirm data of ([^\s]+)$/, function (signTx) {
+  let template = {};
+  switch (signTx) {
+    case 'firstTxSecondSign':
+      template.txSenderAddress = 'lskdxc4ta5j43jp9ro3f8zqbxta9fn6jwzjucw7yt';
+      template.txRequiredSignatures = '2';
+      template.memberTitle = {
+        0: 'lskehj...o9cjy(Optional)',
+        1: 'lsks6w...ehxwz(Optional)',
+        2: 'lskdxc...cw7yt(Mandatory)',
+        3: 'lskdxc...cw7yt(Mandatory)',
+        4: 'lskehj...o9cjy(Optional)',
+        5: 'lsks6w...ehxwz(Optional)',
+      };
+      template.txFee = '0.00415 LSK';
+      template.txRemainingMembers = ' 2/3';
+      break;
+    case 'firstTxThirdSign':
+      template.txSenderAddress = 'lskdxc4ta5j43jp9ro3f8zqbxta9fn6jwzjucw7yt';
+      template.txRequiredSignatures = '2';
+      template.memberTitle = {
+        0: 'lskehj...o9cjy(Optional)',
+        1: 'lsks6w...ehxwz(Optional)',
+        2: 'lskdxc...cw7yt(Mandatory)',
+        3: 'lskdxc...cw7yt(Mandatory)',
+        4: 'lsks6w...ehxwz(Optional)',
+        5: 'lskehj...o9cjy(Optional)',
+      };
+      template.txFee = '0.00415 LSK';
+      template.txRemainingMembers = ' 1/3';
+      break;
+    default:
+      break;
+  }
  cy.get(ss.txHeader).eq(0).should('have.text', 'Register multisignature group');
- cy.get(ss.txSenderAddress).eq(0).should('have.text', 'lskdxc4ta5j43jp9ro3f8zqbxta9fn6jwzjucw7yt');
- cy.get(ss.txRequiredSignatures).eq(0).should('have.text', '2');
- cy.get(ss.memberTitle).eq(0).should('have.text', 'lskehj...o9cjy(Optional)');
- cy.get(ss.memberTitle).eq(1).should('have.text', 'lsks6w...ehxwz(Optional)');
- cy.get(ss.memberTitle).eq(2).should('have.text', 'lskdxc...cw7yt(Mandatory)');
- cy.get(ss.txFee).eq(0).should('have.text', '0.00415 LSK');
- cy.get(ss.memberTitle).eq(3).should('have.text', 'lskdxc...cw7yt(Mandatory)');
- cy.get(ss.txRemainingMembers).eq(0).should('have.text', ' 2/3');
- cy.get(ss.memberTitle).eq(4).should('have.text', 'lskehj...o9cjy(Optional)');
- cy.get(ss.memberTitle).eq(5).should('have.text', 'lsks6w...ehxwz(Optional)');
+ cy.get(ss.txSenderAddress).eq(0).should('have.text', template.txSenderAddress);
+ cy.get(ss.txRequiredSignatures).eq(0).should('have.text', template.txRequiredSignatures);
+ cy.get(ss.memberTitle).eq(0).should('have.text', template.memberTitle['0']);
+ cy.get(ss.memberTitle).eq(1).should('have.text', template.memberTitle['1']);
+ cy.get(ss.memberTitle).eq(2).should('have.text', template.memberTitle['2']);
+ cy.get(ss.txFee).eq(0).should('have.text', template.txFee);
+ cy.get(ss.memberTitle).eq(3).should('have.text', template.memberTitle['3']);
+ cy.get(ss.txRemainingMembers).eq(0).should('have.text', template.txRemainingMembers);
+ cy.get(ss.memberTitle).eq(4).should('have.text', template.memberTitle['4']);
+ cy.get(ss.memberTitle).eq(5).should('have.text', template.memberTitle['5']);
 });
 
 Then(/^I read a transaction from json$/, function () {
