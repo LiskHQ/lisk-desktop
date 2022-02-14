@@ -74,7 +74,7 @@ const ss = {
   txAddedVotes: '.tx-added-votes .voter-address',
   txRemovedVotes: '.tx-removed-votes .voter-address',
   txAmount: '.tx-amount',
-  txFee: '.tx-fee span',
+  txFee: '.tx-fee',
   txConfirmations: '.tx-confirmation',
   txId: '.tx-id .copy-title',
   txReference: '.tx-reference',
@@ -249,6 +249,10 @@ const ss = {
   downloadButton: '.download-button',
   signBtn: '.sign',
   msignSendButton: '.send-button',
+  txSignInput: '.tx-sign-input',
+  txRequiredSignatures: '.tx-required-signatures',
+  memberTitle: '.member-title',
+  txRemainingMembers: '.tx-remaining-members',
 };
 
 export default ss;
