@@ -47,7 +47,6 @@ const MessageSignature = ({
   };
 
   useEffect(() => {
-    console.log(signature);
     if (!signature && !error) {
       if (account.loginType === loginTypes.passphrase.code) {
         setSignature(signUsingPrivateKey());
