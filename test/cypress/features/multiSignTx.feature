@@ -38,7 +38,6 @@ Feature: Multisignature transaction
     Given I login as genesis on devnet
     And I wait 1 seconds
     Given I am on wallet page
-    And I remember my balance
     Then I click on sendLink
     When I paste lsks6wh4zqfd8wyka3rj243rshcdqyug9gyvehxwz in recipientInput field
     And I fill 10 in amountInput field
@@ -52,9 +51,8 @@ Feature: Multisignature transaction
     And I click on msignSendButton
     Then submittedTransactionMessage should be visible
     And I click on closeDialog
+    Then I wait 3 seconds
     Then The latest transaction is transfer to lsks6w...ehxwz
-    Then I wait 10 seconds
-    Then The balance is subtracted
 
   Scenario: Register multisignature group (Mandatory, Optional, Optional, 2 signatures)
     Given I login as genesis on devnet
