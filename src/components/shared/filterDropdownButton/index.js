@@ -21,6 +21,8 @@ const filterComponents = {
   select: SelectFilter,
 };
 
+const blackListTypes = ['4:0', '5:0', '5:1', '5:3'];
+
 class FilterDropdownButton extends React.Component {
   constructor(props) {
     super(props);
@@ -57,6 +59,14 @@ class FilterDropdownButton extends React.Component {
     }, filters);
 
     this.setState({ filters, hasErrors });
+
+    if (!this.props.onTypeSelected) return;
+
+    if (blackListTypes.some(blackListType => blackListType === fields.moduleAssetId?.value)) {
+      this.props.onTypeSelected(fields.moduleAssetId.value);
+    } else {
+      this.props.onTypeSelected(null);
+    }
   }
 
   applyFilters(event) {
