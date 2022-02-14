@@ -249,7 +249,8 @@ const ss = {
   signMessageInput: '.sign-message-input',
   copyToClipboardBtn: '.copy-to-clipboard',
   signedResult: '.result',
-  verifyMessage: '.verifyMessage',
+  verifyMessageInput: '.verify-message-input',
+  continueBtn: '.continue',
 };
 
 export default ss;
