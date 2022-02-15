@@ -104,8 +104,8 @@ Given(/^I am on (.*?) page of (.*?)$/, function (page, identifier) {
   }
 });
 
-Given(/^I scroll to (.*?)$/, (position) => {
-  cy.get('.scrollContainer').scrollTo(position, { ensureScrollable: false });
+Given(/^I scroll from (.*?) to (.*?)$/, (elementName, position) => {
+  cy.get(ss[elementName]).scrollTo(position, { ensureScrollable: false });
 });
 
 Then(/^I should see pending transaction$/, function () {

@@ -40,8 +40,9 @@ Feature: Multisignature transaction
     Given I am on wallet page
     Then I click on sendLink
     When I paste lsks6wh4zqfd8wyka3rj243rshcdqyug9gyvehxwz in recipientInput field
-    And I fill 10 in amountInput field
+    And I fill 1 in amountInput field
     And I go to transfer confirmation
+    Given I scroll from summary to bottom
     When I click on useSecondPassphraseBtn
     Then I input second passphrase
     And I click on sendButton
