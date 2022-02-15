@@ -5,7 +5,7 @@ const nets = {
   mainnet: networks.mainnet,
   testnet: networks.testnet,
   devnet: {
-    serviceUrl: 'http://127.0.0.1:9901',
+    serviceUrl: Cypress.env('serviceUrl'),
   },
 };
 
