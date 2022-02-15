@@ -19,7 +19,7 @@ Feature: Multisignature transaction
     Given I login as delegate on devnet
     And I wait 1 seconds
     When I click on signMultiSignTransactionToggle
-    Then I paste a transaction
+    Then I paste transaction SecondTxSecondSign
     When I click on confirmBtn
     Then I confirm data of SecondTxSecondSign
     When I click on signBtn
@@ -76,7 +76,7 @@ Feature: Multisignature transaction
     Given I login as genesis on devnet
     And I wait 1 seconds
     When I click on signMultiSignTransactionToggle
-    Then I paste a transaction
+    Then I paste transaction firstTxSecondSign
     When I click on confirmBtn
     Then I confirm data of firstTxSecondSign
     When I click on signBtn
@@ -88,7 +88,7 @@ Feature: Multisignature transaction
     Given I login as delegate on devnet
     And I wait 1 seconds
     When I click on signMultiSignTransactionToggle
-    Then I paste a transaction
+    Then I paste transaction firstTxThirdSign
     When I click on confirmBtn
     Then I confirm data of firstTxThirdSign
     When I click on signBtn
