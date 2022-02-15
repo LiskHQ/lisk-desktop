@@ -16,3 +16,15 @@ Then(/^blocks should be sorted in (\w+) order by height$/, function (sortOrder) 
     prevHeight = height;
   })
 }); 
+
+Then(/^I should see latest blocks$/, function () {
+  let oldHeight, currentHeight
+  cy.get(`${ss.blockRow} > span:first-child`).first().then(($elem) => {
+    oldHeight = +$elem.text();
+  });
+  cy.wait(1000);
+  cy.get(`${ss.blockRow} > span:first-child`).first().then(($elem) => {
+    currentHeight = +$elem.text();
+  });
+  expect(oldHeight)['lt'](currentHeight)
+})
