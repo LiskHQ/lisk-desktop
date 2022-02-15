@@ -61,10 +61,6 @@ const Form = ({ t, nextStep, network }) => {
     reader.onload = ({ target }) => {
       validateAndSetTransaction(target.result);
     };
-    // const tx = '{"moduleID":4,"assetID":0,"senderPublicKey":"a04a60f5f3f9be3a15b121342ba81b7bd66d37e7f3e8cc4f7c03396bd9c1f103","nonce":"0n","fee":"414000n","signatures":["89c380e42226cbcdf8738390cdcd215521348e50f27e21767baa7f88d91d86fd87949d01b11f82afe865b025222f33d3c1c72a0b4f0122d9cc77513bbcc03b0d","89c380e42226cbcdf8738390cdcd215521348e50f27e21767baa7f88d91d86fd87949d01b11f82afe865b025222f33d3c1c72a0b4f0122d9cc77513bbcc03b0d","",""],"asset":{"numberOfSignatures":2,"mandatoryKeys":["a04a60f5f3f9be3a15b121342ba81b7bd66d37e7f3e8cc4f7c03396bd9c1f103"],"optionalKeys":["0fe9a3f1a21b5530f27f87a414b549e79a940bf24fdf2b2f05e7f22aeeecc86a","86499879448d1b0215d59cbf078836e3d7d9d2782d56a2274a568761bff36f19"]},"id":"9ae1254b9333e4a103dc2c49c596d7d55013d46e18043a95c1b9d1319d84c83c"}';
-    // const tx = '{"moduleID":4,"assetID":0,"senderPublicKey":"a04a60f5f3f9be3a15b121342ba81b7bd66d37e7f3e8cc4f7c03396bd9c1f103","nonce":"0n","fee":"414000n","signatures":["89c380e42226cbcdf8738390cdcd215521348e50f27e21767baa7f88d91d86fd87949d01b11f82afe865b025222f33d3c1c72a0b4f0122d9cc77513bbcc03b0d","89c380e42226cbcdf8738390cdcd215521348e50f27e21767baa7f88d91d86fd87949d01b11f82afe865b025222f33d3c1c72a0b4f0122d9cc77513bbcc03b0d","336541438f0f81019c05af132600defea2f235525022e24a1b4184e71674233f7df7463ed739a4624dcd351b1e344707ea2a3953c003b7ecb1e5a632b58cae00",""],"asset":{"numberOfSignatures":2,"mandatoryKeys":["a04a60f5f3f9be3a15b121342ba81b7bd66d37e7f3e8cc4f7c03396bd9c1f103"],"optionalKeys":["0fe9a3f1a21b5530f27f87a414b549e79a940bf24fdf2b2f05e7f22aeeecc86a","86499879448d1b0215d59cbf078836e3d7d9d2782d56a2274a568761bff36f19"]},"id":"f0ea4fb53ba647715fc5a11a36bbbe6edb8026e7b476b5b287e3a4452bef3289"}';
-    const tx = '{"moduleID":4,"assetID":0,"senderPublicKey":"0fe9a3f1a21b5530f27f87a414b549e79a940bf24fdf2b2f05e7f22aeeecc86a","nonce":"144n","fee":"315000n","signatures":["7638e53baaaae45034c6fbff6a85883fb937604c25bdfbdfaedd7b053063adbb48939556eb130e58982fd106cb60de56978c669b19840ddfb0eba1d9ee950201","7638e53baaaae45034c6fbff6a85883fb937604c25bdfbdfaedd7b053063adbb48939556eb130e58982fd106cb60de56978c669b19840ddfb0eba1d9ee950201",""],"asset":{"numberOfSignatures":2,"mandatoryKeys":["0fe9a3f1a21b5530f27f87a414b549e79a940bf24fdf2b2f05e7f22aeeecc86a","86499879448d1b0215d59cbf078836e3d7d9d2782d56a2274a568761bff36f19"],"optionalKeys":[]},"id":"41218da5ebf4f8151656a7dd4ca219329af9e50c40fe2193d86ea9668cbf7d4c"}';
-    validateAndSetTransaction(tx);
   }, []);
 
   return (
@@ -91,9 +87,10 @@ const Form = ({ t, nextStep, network }) => {
           <div className={`${styles.textAreaContainer} ${error && styles.error} ${transaction && styles.filled}`}>
             <textarea
               onPaste={onPaste}
+              onChange={onPaste}
               value={transaction ? JSON.stringify(transaction) : ''}
               readOnly
-              className={styles.txInput}
+              className={`${styles.txInput} tx-sign-input`}
             />
             <Feedback
               message={error}
