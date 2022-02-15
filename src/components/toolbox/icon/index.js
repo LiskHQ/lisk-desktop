@@ -11,6 +11,7 @@ import arrowLeftInactive from '../../../assets/images/icons/arrow-left-inactive.
 import arrowRightActive from '../../../assets/images/icons/arrow-right-active.svg';
 import arrowRightInactive from '../../../assets/images/icons/arrow-right-inactive.svg';
 import arrowRightWithStroke from '../../../assets/images/icons/arrow-right-with-stroke.svg';
+import arrowRightCircle from '../../../assets/images/icons/arrow-right-circle.svg';
 import arrowRightWithStrokeDark from '../../../assets/images/icons/arrow-right-with-stroke-dark.svg';
 import arrowUpCircle from '../../../assets/images/icons/click-to-update.svg';
 import balance from '../../../assets/images/icons/balance.svg';
@@ -212,6 +213,7 @@ export const icons = {
   arrowRightActive,
   arrowRightInactive,
   arrowUpCircle,
+  arrowRightCircle,
   balance,
   bookmarksIconEmptyState,
   btcIcon,
