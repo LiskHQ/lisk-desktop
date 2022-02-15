@@ -18,7 +18,7 @@ const TransactionRow = ({
   data, className, t, currentBlockHeight,
 }) => (
   <DialogLink
-    className={`${grid.row} ${className}`}
+    className={`${grid.row} ${className} transactions-row`}
     component="transactionDetails"
     data={{ transactionId: data.id, token: tokenMap.LSK.key }}
   >

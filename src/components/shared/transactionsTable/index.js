@@ -73,7 +73,7 @@ const TransactionsTable = ({
         clearFilter, clearAllFilters, filters, formatters, t,
       }}
       />
-      <BoxContent className={styles.content}>
+      <BoxContent className={`${styles.content} transaction-results`}>
         <Table
           data={transactions.data}
           isLoading={transactions.isLoading}

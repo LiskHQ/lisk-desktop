@@ -202,7 +202,11 @@ const ss = {
   dateToInputFilter: '.dateToInput',
   amountFromInputFilter: '.amountFromInput',
   amountToInputFilter: '.amountToInput',
+  senderAddressFilter: 'input[name="senderAddress"]',
   messageInputFilter: 'input.message',
+  transactionTypeFilter: '.transaction-options',
+  heightFilter: '.height',
+  moreLessSwitch: '.more-less-switch',
   applyFilters: '.saveButton',
   filterBar: '.filterBar',
   filter: '.filter',
@@ -254,6 +258,12 @@ const ss = {
   memberTitle: '.member-title',
   txRemainingMembers: '.tx-remaining-members',
   useSecondPassphraseBtn: '.use-second-passphrase-btn',
+  peerRow: '.peer-row',
+  showMorePeersBtn: '.peers-box .load-more',
+  sortByBtn: '.sort-by',
+  signMessageInput: '.sign-message-input',
+  copyToClipboardBtn: '.copy-to-clipboard',
+  signedResult: '.result',
 };
 
 export default ss;
