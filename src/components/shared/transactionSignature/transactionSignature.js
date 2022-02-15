@@ -1,5 +1,7 @@
 import React, { useEffect } from 'react';
+import { useDispatch } from 'react-redux';
 import { signatureCollectionStatus } from '@constants';
+import { secondPassphraseRemoved } from '@actions';
 import Box from '@toolbox/box';
 import Illustration from '@toolbox/illustration';
 import BoxContent from '@toolbox/box/content';
@@ -13,6 +15,7 @@ const TransactionSignature = ({
   signatureStatus, signatureSkipped,
 }) => {
   const deviceType = getDeviceType(account.hwInfo?.deviceModel);
+  const dispatch = useDispatch();
 
   useEffect(() => {
     /**
@@ -40,6 +43,12 @@ const TransactionSignature = ({
        */
       actionFunction(rawTransaction);
     }
+    return () => {
+      // Ensure second passphrase is removed to prevent automatically signing future transactions
+      if (account?.secondPassphrase) {
+        dispatch(secondPassphraseRemoved());
+      }
+    };
   }, []);
 
   useEffect(() => {

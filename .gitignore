@@ -8,7 +8,6 @@ app/report.html
 app/*.map
 app/build
 app/build-testnet
-app/package-lock.json
 *.sw[pon]
 app/app.js
 .vscode

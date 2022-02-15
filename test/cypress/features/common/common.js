@@ -250,4 +250,14 @@ Then(/^I wait (.*?) seconds$/, function (seconds) {
   cy.wait(Number(seconds) * 1000);
 });
 
+When(/^I sort by (\w+)$/, function (sortParam) {
+  cy.wait(100);
+  cy.get(`${ss.sortByBtn}.${sortParam}`).eq(0).click();
+});
+
+Given(/^I open (\w+) modal$/, function (modal) {
+  cy.visit(`${urls.dashboard}?modal=${modal}`);
+
+});
+
 

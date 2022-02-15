@@ -5,8 +5,6 @@
 [![License: GPL v3](https://img.shields.io/badge/License-GPL%20v3-blue.svg)](http://www.gnu.org/licenses/gpl-3.0)
 ![GitHub package.json version](https://img.shields.io/github/package-json/v/LiskHQ/lisk-desktop)
 [![DeepScan grade](https://deepscan.io/api/teams/6759/projects/8871/branches/113511/badge/grade.svg)](https://deepscan.io/dashboard#view=project&tid=6759&pid=8871&bid=113511)
-[![Dependencies Status](https://david-dm.org/liskHQ/lisk-desktop/status.svg)](https://david-dm.org/liskHQ/lisk-desktop)
-[![devDependencies Status](https://david-dm.org/liskHQ/lisk-desktop/dev-status.svg)](https://david-dm.org/liskHQ/lisk-desktop?type=dev)
 
 ## Installation
 
