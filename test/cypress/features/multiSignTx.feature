@@ -2,7 +2,7 @@ Feature: Multisignature transaction
 
   Scenario: Register multisignature group (Mandatory, Mandatory)
     Given I login as genesis on devnet
-    And I wait 1 seconds
+    And I wait 5 seconds
     Given I am on wallet page
     When I click on accountInfoMsign
     When I clear input multisignatureEditorInput
@@ -17,7 +17,7 @@ Feature: Multisignature transaction
 
   Scenario: Sign transaction and send transaction (Mandatory, Mandatory)
     Given I login as delegate on devnet
-    And I wait 1 seconds
+    And I wait 5 seconds
     When I click on signMultiSignTransactionToggle
     Then I paste transaction SecondTxSecondSign
     When I click on confirmBtn
@@ -27,16 +27,17 @@ Feature: Multisignature transaction
     Then I should see copyButton
     Then I should see msignSendButton
     And I click on msignSendButton
+    And I wait 5 seconds
     And I click on closeDialog
     When I click on searchIcon
     And I search for account lskdxc4ta5j43jp9ro3f8zqbxta9fn6jwzjucw7yt
     Then I click on searchAccountRow
     Then I should be on Account page of test_deligate
-    Then The latest transaction is Register multisig. group
+    Then The latest transaction is register multisignature group
 
   Scenario: Send transaction using second passphrase (Mandatory, Mandatory)
     Given I login as genesis on devnet
-    And I wait 1 seconds
+    And I wait 5 seconds
     Given I am on wallet page
     Then I click on sendLink
     When I paste lsks6wh4zqfd8wyka3rj243rshcdqyug9gyvehxwz in recipientInput field
@@ -57,7 +58,7 @@ Feature: Multisignature transaction
 
   Scenario: Register multisignature group (Mandatory, Optional, Optional, 2 signatures)
     Given I login as multiSig_candidate on devnet
-    And I wait 1 seconds
+    And I wait 5 seconds
     Given I am on wallet page
     When I click on accountInfoMsign
     When I clear input multisignatureEditorInput
@@ -75,7 +76,7 @@ Feature: Multisignature transaction
 
   Scenario: Sign transaction (Mandatory, Optional, Optional, 2 signatures)
     Given I login as genesis on devnet
-    And I wait 1 seconds
+    And I wait 5 seconds
     When I click on signMultiSignTransactionToggle
     Then I paste transaction firstTxSecondSign
     When I click on confirmBtn
@@ -87,7 +88,7 @@ Feature: Multisignature transaction
 
   Scenario: Send transaction (Mandatory, Optional, Optional, 2 signatures)
     Given I login as delegate on devnet
-    And I wait 1 seconds
+    And I wait 5 seconds
     When I click on signMultiSignTransactionToggle
     Then I paste transaction firstTxThirdSign
     When I click on confirmBtn
@@ -102,4 +103,4 @@ Feature: Multisignature transaction
     And I search for account lsks6wh4zqfd8wyka3rj243rshcdqyug9gyvehxwz
     Then I click on searchAccountRow
     And I wait 10 seconds
-    Then The latest transaction is Register multisig. group
+    Then The latest transaction is register multisignature group
