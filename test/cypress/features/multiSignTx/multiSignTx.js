@@ -34,12 +34,12 @@ Then(/^I confirm data of ([^\s]+)$/, function (tx) {
       template.txSenderAddress = 'lsks6wh4zqfd8wyka3rj243rshcdqyug9gyvehxwz';
       template.txRequiredSignatures = '2';
       template.memberTitle = [
-        'lskehj...o9cjy(Optional)',
-        'lsks6w...ehxwz(Mandatory)',
-        'lskdxc...cw7yt(Optional)',
         'lskdxc...cw7yt(Optional)',
         'lskehj...o9cjy(Optional)',
         'lsks6w...ehxwz(Mandatory)',
+        'lsks6w...ehxwz(Mandatory)',
+        'lskdxc...cw7yt(Optional)',
+        'lskehj...o9cjy(Optional)',
       ];
       template.txFee = '0.00414 LSK';
       template.txRemainingMembers = ' 2/3';
