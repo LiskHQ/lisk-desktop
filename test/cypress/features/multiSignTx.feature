@@ -19,9 +19,9 @@ Feature: Multisignature transaction
     Given I login as delegate on devnet
     And I wait 1 seconds
     When I click on signMultiSignTransactionToggle
-    Then I paste transaction SecondTxSecondSign
+    Then I paste transaction RegisterSecondPassphraseTx
     When I click on confirmBtn
-    Then I confirm data of SecondTxSecondSign
+    Then I confirm data of RegisterSecondPassphraseTx
     When I click on signBtn
     Then I should see downloadButton
     Then I should see copyButton
@@ -32,7 +32,7 @@ Feature: Multisignature transaction
     When I click on searchIcon
     And I search for account lskdxc4ta5j43jp9ro3f8zqbxta9fn6jwzjucw7yt
     Then I click on searchAccountRow
-    Then I should be on Account page of test_deligate
+    Then I should be on Account page of test_delegate
     Then The latest transaction is register multisignature group
 
   Scenario: Send transaction using second passphrase (Mandatory, Mandatory)
@@ -78,9 +78,9 @@ Feature: Multisignature transaction
     Given I login as genesis on devnet
     And I wait 1 seconds
     When I click on signMultiSignTransactionToggle
-    Then I paste transaction firstTxSecondSign
+    Then I paste transaction RegisterMultiSignGroupTx_second_sign
     When I click on confirmBtn
-    Then I confirm data of firstTxSecondSign
+    Then I confirm data of RegisterMultiSignGroupTx_second_sign
     When I click on signBtn
     Then msignSendButton should not exist
     Then I should see downloadButton
@@ -90,9 +90,9 @@ Feature: Multisignature transaction
     Given I login as delegate on devnet
     And I wait 1 seconds
     When I click on signMultiSignTransactionToggle
-    Then I paste transaction firstTxThirdSign
+    Then I paste transaction RegisterMultiSignGroupTx_third_sign
     When I click on confirmBtn
-    Then I confirm data of firstTxThirdSign
+    Then I confirm data of RegisterMultiSignGroupTx_third_sign
     When I click on signBtn
     Then I should see downloadButton
     Then I should see copyButton

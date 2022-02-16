@@ -8,7 +8,7 @@ Feature: Register delegate
         When I click on votesTab
         And I click on becomeDelegateLink
         Then I see this title: Register delegate
-        When I fill test_deligate in delegateNameInput field
+        When I fill test_delegate in delegateNameInput field
         Then I wait 1.2 seconds
         When I click on chooseDelegateName
         And I click on confirmButton
