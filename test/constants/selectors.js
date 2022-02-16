@@ -269,6 +269,13 @@ const ss = {
   transactionRowSender: '.transaction-row-sender',
   transactionRowRecipient: '.transaction-row-recipient',
   loadLatest: '.load-latest',
+  verifyMessageTextArea: '.verify-message-input',
+  continueBtn: '.continue',
+  inputsViewBtn: '.inputs-view-icon',
+  textAreaViewBtn: '.textarea-view-icon',
+  verifyMessageInput: '.message',
+  verifyPublicKeyInput: '.publicKey',
+  verifySignatureInput: '.signature',
 };
 
 export default ss;
