@@ -117,7 +117,7 @@ Feature: Multisignature transaction
     And I click on msignSendButton
     And I click on closeDialog
     Given I am on transactions page
-    And I wait 12 seconds
+    And I wait 9 seconds
     And I click on loadLatest
     And I wait 3 seconds
     Then The latest transaction in monitor is sent by lsks6w...ehxwz and recipient is Register multisignature group
