@@ -6,18 +6,10 @@ Feature: Verify Message
     And I open signMessage modal
     When I fill test_Message in signMessageInput field
     And I click on nextBtn
-    And I click on goBack
-    Then signMessageInput should have value of test_Message
-    When I click on nextBtn
     And I click on copyToClipboardBtn
-    Then I should have the signed message in the clipboard
     And I open verifyMessage modal
     And I click on textAreaViewBtn
-    Then I paste clipboardValue in verifyMessageTextArea field
-    Then I should have the clipboard value in the verify input textarea
-    And I click on continueBtn
-    And  I wait 2 seconds
-    Then I see this title: The signature is correct
+    Then I verify signed message in verifyMessageTextArea
 
   Scenario: Verify the integrity of a tampered message in textArea view
     Given I login as genesis on devnet

@@ -30,10 +30,13 @@ Then(/(\w+) should have value of (\w+)/, function(field, value){
   cy.get(ss[field]).should('have.value', value);
 })
 
-Then(/^I paste clipboardValue in ([\w]+) field$/, function (field) {
+Then(/^I verify signed message in (\w+)$/, function (field) {
   cy.window().then((win) => {
     win.navigator.clipboard.readText().then((clipboardValue) => {
-      cy.get(ss[field]).clear().invoke('val', clipboardValue.slice(0, clipboardValue.length - 1)).type(value.slice(-1))
+      cy.get(ss[field]).type(clipboardValue)
+      cy.get(ss.continueBtn).eq(0).click();
+      cy.get(ss.app).contains('The signature is correct');
     });
   });
+
 });
