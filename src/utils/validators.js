@@ -92,6 +92,10 @@ export const validateAmountFormat = ({
         || numeral(inputValue).value() < 0
         || Object.is(numeral(inputValue).value(), -0),
     },
+    NEGATIVE_AMOUNT: {
+      message: i18n.t('Amount can\'t be negative.'),
+      fn: () => numeral(value).value() < 0,
+    },
     ZERO: {
       message: i18n.t('Amount can\'t be zero.'),
       fn: () => numeral(Math.abs(value)).value() === 0,
