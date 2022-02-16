@@ -16,7 +16,7 @@ Feature: Verify Message
     And I wait 2 seconds
     And I open verifyMessage modal
     And I click on textAreaViewBtn
-    When I paste invalid_text in verifyMessageTextArea field
+    When I fill invalid_text in verifyMessageTextArea field
     And I click on continueBtn
     And I wait 2 seconds
     Then I see this title: The signature is incorrect
