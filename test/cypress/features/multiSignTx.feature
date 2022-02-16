@@ -32,7 +32,7 @@ Feature: Multisignature transaction
     When I click on searchIcon
     And I search for account lskdxc4ta5j43jp9ro3f8zqbxta9fn6jwzjucw7yt
     Then I click on searchAccountRow
-    Then I should be on Account page of test_delegate
+    Then I should be on Account page of test_deligate
     Then The latest transaction is register multisignature group
 
   Scenario: Send transaction using second passphrase (Mandatory, Mandatory)
