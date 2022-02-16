@@ -1,13 +1,24 @@
 Feature: Multisignature transaction
 
-  Scenario: Register multisignature group (Mandatory, Mandatory)
+  Scenario: Add funds to account2P
     Given I login as genesis on devnet
-    And I wait 1 seconds
+    Given  I wait 1 seconds
+    Given I am on Wallet page
+    Then I click on sendLink
+    When I paste lskwunwxqmss9w3mtuvzgbsfy665cz4eo3rd2mxdp in recipientInput field
+    And I fill 10 in amountInput field
+    And I go to transfer confirmation
+    And I click on sendButton
+    And I click on closeDialog
+
+  Scenario: Register multisignature group (Mandatory, Mandatory)
+    Given I login as account2P on devnet
+    And I wait 10 seconds
     Given I am on wallet page
     When I click on accountInfoMsign
     When I clear input multisignatureEditorInput
     And I fill 2 in multisignatureEditorInput field
-    Then I enter the publicKey of genesis at input 1
+    Then I enter the publicKey of account2P at input 1
     Then I enter the publicKey of delegate at input 2
     When I click on sendButton
     When I click on confirmBtn
@@ -30,13 +41,13 @@ Feature: Multisignature transaction
     And I wait 5 seconds
     And I click on closeDialog
     When I click on searchIcon
-    And I search for account lskdxc4ta5j43jp9ro3f8zqbxta9fn6jwzjucw7yt
+    And I search for account lskwunwxqmss9w3mtuvzgbsfy665cz4eo3rd2mxdp
     Then I click on searchAccountRow
-    Then I should be on Account page of test_deligate
+    Then I should be on Account page of lskwun...2mxdp
     Then The latest transaction is register multisignature group
 
   Scenario: Send transaction using second passphrase (Mandatory, Mandatory)
-    Given I login as genesis on devnet
+    Given I login as account2P on devnet
     And I wait 1 seconds
     Given I am on wallet page
     Then I click on sendLink
@@ -102,4 +113,5 @@ Feature: Multisignature transaction
     Given I am on transactions page
     And I wait 12 seconds
     And I click on loadLatest
+    And I wait 3 seconds
     Then The latest transaction in monitor is sent by lsks6w...ehxwz and recipient is Register multisignature group

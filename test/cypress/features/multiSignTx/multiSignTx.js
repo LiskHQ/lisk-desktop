@@ -51,15 +51,15 @@ Then(/^I confirm data of ([^\s]+)$/, function (tx) {
       template.txRemainingMembers = ' 1/3';
       break;
     case 'RegisterSecondPassphraseTx':
-      template.txSenderAddress = 'lskdxc4ta5j43jp9ro3f8zqbxta9fn6jwzjucw7yt';
+      template.txSenderAddress = 'lskwunwxqmss9w3mtuvzgbsfy665cz4eo3rd2mxdp';
       template.txRequiredSignatures = '2';
       template.memberTitle = [
-        'lskdxc...cw7yt(Mandatory)',
+        'lskwun...2mxdp(Mandatory)',
         'lskehj...o9cjy(Mandatory)',
-        'lskdxc...cw7yt(Mandatory)',
+        'lskwun...2mxdp(Mandatory)',
         'lskehj...o9cjy(Mandatory)',
       ];
-      template.txFee = '0.00315 LSK';
+      template.txFee = '0.00314 LSK';
       template.txRemainingMembers = ' 1/2';
       break;
     default:

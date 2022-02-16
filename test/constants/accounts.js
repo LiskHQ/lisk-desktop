@@ -225,6 +225,7 @@ const accounts = {
     dpos: { delegate: {} },
   },
   account2P: {
+    passphrase: 'steak avoid couple fog ability chalk jacket electric rifle fuel tuition van',
     summary: {
       address: 'lskwunwxqmss9w3mtuvzgbsfy665cz4eo3rd2mxdp',
       balance: '5834556000',
