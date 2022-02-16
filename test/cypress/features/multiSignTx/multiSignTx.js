@@ -82,3 +82,11 @@ Then(/^I input second passphrase$/, function () {
     cy.wrap($el, { log: false }).type(passphraseWordsArray[index], { log: false });
   });
 });
+
+Then(/^I should have the transaction ([^\s]+) in the clipboard$/, function (tx) {
+  cy.window().then((win) => {
+    win.navigator.clipboard.readText().then((text) => {
+      expect(text).to.eq(multiSignatureTxs[tx]);
+    });
+  });
+});

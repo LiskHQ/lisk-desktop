@@ -25,6 +25,8 @@ Feature: Multisignature transaction
     Then msignSendButton should not exist
     Then I should see downloadButton
     Then I should see copyButton
+    And I click on copyButton
+    Then I should have the transaction RegisterSecondPassphraseTx in the clipboard
 
   Scenario: Sign transaction and send transaction (Mandatory, Mandatory)
     Given I login as delegate on devnet
@@ -84,6 +86,8 @@ Feature: Multisignature transaction
     Then msignSendButton should not exist
     Then I should see downloadButton
     Then I should see copyButton
+    And I click on copyButton
+    Then I should have the transaction RegisterMultiSignGroupTx_second_sign in the clipboard
 
   Scenario: Sign transaction (Mandatory, Optional, Optional, 2 signatures)
     Given I login as genesis on devnet
@@ -96,6 +100,8 @@ Feature: Multisignature transaction
     Then msignSendButton should not exist
     Then I should see downloadButton
     Then I should see copyButton
+    And I click on copyButton
+    Then I should have the transaction RegisterMultiSignGroupTx_third_sign in the clipboard
 
   Scenario: Send transaction (Mandatory, Optional, Optional, 2 signatures)
     Given I login as delegate on devnet
