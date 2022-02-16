@@ -238,6 +238,30 @@ describe('Form', () => {
       expect(wrapper.find('button.btn-submit')).toBeDisabled();
     });
 
+    it('Should show error if amount is negative', () => {
+      const wrapper = mount(<Form {...props} />);
+      const evt = { target: { name: 'amount', value: '-1' } };
+      const amountField = wrapper.find('.fieldGroup').at(1);
+      amountField.find('input').simulate('change', evt);
+      act(() => { jest.advanceTimersByTime(300); });
+      wrapper.update();
+
+      expect(wrapper.find('.amount Feedback')).toHaveText('Amount can\'t be negative.');
+      expect(wrapper.find('button.btn-submit')).toBeDisabled();
+    });
+
+    it('Should allow to send 0 LSK amount', () => {
+      const wrapper = mount(<Form {...props} />);
+      const evt = { target: { name: 'amount', value: '0' } };
+      const amountField = wrapper.find('.fieldGroup').at(1);
+      amountField.find('input').simulate('change', evt);
+      act(() => { jest.advanceTimersByTime(300); });
+      wrapper.update();
+
+      expect(wrapper.find('.amount Feedback')).not.toHaveText(expect.any(String));
+      expect(wrapper.find('button.btn-submit')).not.toBeDisabled();
+    });
+
     it('Should be able to send entire balance', () => {
       const wrapper = mount(<Form {...props} />);
       const { address } = accounts.genesis.summary;
