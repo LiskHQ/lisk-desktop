@@ -168,7 +168,7 @@ export default class VerifyMessageInput extends React.Component {
             <Input
               key={name}
               name={name}
-              className={[name, styles[name]].filter(Boolean).join(' ')}
+              className={`${[name, styles[name]].filter(Boolean).join(' ')} verify-message-input ${name}`}
               placeholder={placeholder}
               label={label}
               value={inputs[name].value}
