@@ -21,10 +21,21 @@ Then(/^I should see latest blocks$/, function () {
   let oldHeight, currentHeight
   cy.get(`${ss.blockRow} > span:first-child`).first().then(($elem) => {
     oldHeight = +$elem.text();
+    // console.log({ oldHeight });
   });
   cy.wait(1000);
   cy.get(`${ss.blockRow} > span:first-child`).first().then(($elem) => {
     currentHeight = +$elem.text();
+    // console.log({ currentHeight });
   });
   expect(oldHeight)['lt'](currentHeight)
-})
+});
+
+Then(/^I should see the block details page$/, function (url) {
+  cy.location().should((location) => {
+    const hasId = /block\?id=408c63b500eac768140ef7a0dacd1638726c783c1cefa52a42189ef0fa46a1c1/.test(location.href);
+    expect(hasId).true;
+  })
+});
+
+Then(/^I should see (w+) in block (w+) section$/, function (detail, section) {});

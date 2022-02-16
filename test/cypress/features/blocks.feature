@@ -18,11 +18,11 @@ Feature: Blocks
 		And I wait 1 seconds
 		Then blocks should be sorted in ascending order by height
 
-	Scenario: Retrieves and prepends new blocks
-		And I wait 30 seconds
-		Then I should see showLatestBlocksBtn
-		When I click on showLatestBlocksBtn
-		Then I should see latest blocks
+	# Scenario: Retrieves and prepends new blocks
+	# 	And I wait 30 seconds
+	# 	Then I should see showLatestBlocksBtn
+	# 	When I click on showLatestBlocksBtn
+	# 	Then I should see latest blocks
 
 	Scenario: Filter blocks based on existing inputs
 		When I click on filterTransactionsBtn
@@ -43,3 +43,13 @@ Feature: Blocks
 		When I fill genesis_82 in generatedByFilter field
 		And I click on applyFilters
 		Then I should see 1 blocks in table
+
+	Scenario: Navigate to block details page and verify details
+		When I click on filterTransactionsBtn
+    Then I should see filterDropdown
+		When I fill 414 in heightFilter field
+		And I click on applyFilters
+		Then I should see 1 blocks in table
+		When I click on blockRow
+		And I wait 1 seconds
+		Then I should see the block details page

@@ -111,7 +111,7 @@ const Rows = ({ data, t, currentHeight }) => {
     <LabeledValue
       key={field}
       label={fields[field].label}
-      className={styles.dataRow}
+      className={`${styles.dataRow} block-${field}`}
     >
       {fields[field].value}
     </LabeledValue>
