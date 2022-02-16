@@ -99,8 +99,6 @@ Feature: Multisignature transaction
     Then I should see msignSendButton
     And I click on msignSendButton
     And I click on closeDialog
-    When I click on searchIcon
-    And I search for account lsks6wh4zqfd8wyka3rj243rshcdqyug9gyvehxwz
-    Then I click on searchAccountRow
+    Given I am on transactions page
     And I wait 10 seconds
-    Then The latest transaction is register multisignature group
+    Then The latest transaction in monitor is sent by lsks6w...ehxwz and recipient is Register multisignature group

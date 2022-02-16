@@ -265,6 +265,8 @@ const ss = {
   copyToClipboardBtn: '.copy-to-clipboard',
   signedResult: '.result',
   summary: '.summary',
+  transactionRowSender: '.transaction-row-sender',
+  transactionRowRecipient: '.transaction-row-recipient',
 };
 
 export default ss;

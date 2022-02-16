@@ -156,6 +156,12 @@ Then(/^The latest transaction is (.*?)$/, function (transactionType) {
   }
 });
 
+Then(/^The latest transaction in monitor is sent by (.*?) and recipient is (.*?)$/, function (sender, recipient) {
+  cy.wait(1000);
+  cy.get(`${ss.transactionRowSender}`).eq(0).contains(sender);
+  cy.get(`${ss.transactionRowRecipient}`).eq(0).contains(recipient);
+});
+
 Then(/^I should be on (.*?) page$/, function (pageName) {
   switch (pageName.toLowerCase()) {
     case 'tx details':

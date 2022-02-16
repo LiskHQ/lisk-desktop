@@ -22,7 +22,7 @@ const TransactionRow = ({
     component="transactionDetails"
     data={{ transactionId: data.id, token: tokenMap.LSK.key }}
   >
-    <span className={grid['col-xs-3']}>
+    <span className={`${grid['col-xs-3']} transaction-row-sender`}>
       <AccountVisualWithAddress
         address={data.sender.address}
         transactionSubject="sender"
@@ -30,7 +30,7 @@ const TransactionRow = ({
         showBookmarkedAddress
       />
     </span>
-    <span className={grid['col-xs-3']}>
+    <span className={`${grid['col-xs-3']} transaction-row-recipient`}>
       <AccountVisualWithAddress
         address={data.asset.recipient?.address}
         transactionSubject="recipient"
