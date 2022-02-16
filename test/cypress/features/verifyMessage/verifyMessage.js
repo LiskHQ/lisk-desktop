@@ -1,5 +1,5 @@
 /* eslint-disable */
-import { Then } from 'cypress-cucumber-preprocessor/steps';
+import { And, Then } from 'cypress-cucumber-preprocessor/steps';
 import ss from '../../../constants/selectors';
 
 When(/^I paste (.+) in ([\w]+) field$/, function (value, field) {
@@ -30,7 +30,7 @@ Then(/(\w+) should have value of (\w+)/, function(field, value){
   cy.get(ss[field]).should('have.value', value);
 })
 
-When(/^I paste clipboardValue in ([\w]+) field$/, function (field) {
+Then(/^I paste clipboardValue in ([\w]+) field$/, function (field) {
   const clipboardValue = window.navigator.clipboard.readText();
   cy.get(ss[field]).clear().invoke('val', clipboardValue.slice(0, clipboardValue.length - 1)).type(value.slice(-1))
 });
