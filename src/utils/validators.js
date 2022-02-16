@@ -110,7 +110,7 @@ export const validateAmountFormat = ({
       fn: () => {
         try {
           // converting LSK to Beddows will ensure the value is under beddows
-          transactions.convertLSKToBeddows(value);
+          transactions.convertLSKToBeddows(value.toString());
           return !isNumeric(value);
         } catch (error) {
           return true;
