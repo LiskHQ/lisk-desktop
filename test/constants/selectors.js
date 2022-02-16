@@ -267,6 +267,7 @@ const ss = {
   summary: '.summary',
   transactionRowSender: '.transaction-row-sender',
   transactionRowRecipient: '.transaction-row-recipient',
+  loadLatest: '.load-latest',
 };
 
 export default ss;
