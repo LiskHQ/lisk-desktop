@@ -4,3 +4,4 @@ Feature: delegate
         Given I am on delegates page
 
    Scenario: Delegates overview
+        Then totalBlocks count should have value greater than 4807
