@@ -31,6 +31,9 @@ Then(/(\w+) should have value of (\w+)/, function(field, value){
 })
 
 Then(/^I paste clipboardValue in ([\w]+) field$/, function (field) {
-  const clipboardValue = window.navigator.clipboard.readText();
-  cy.get(ss[field]).clear().invoke('val', clipboardValue.slice(0, clipboardValue.length - 1)).type(value.slice(-1))
+  cy.window().then((win) => {
+    win.navigator.clipboard.readText().then((clipboardValue) => {
+      cy.get(ss[field]).clear().invoke('val', clipboardValue.slice(0, clipboardValue.length - 1)).type(value.slice(-1))
+    });
+  });
 });
