@@ -8,20 +8,20 @@ When(/^I paste (.+) in ([\w]+) field$/, function (value, field) {
 
 Then(/I should have the signed message in the clipboard/, function(){
   cy.window().then((win) => {
-    const verifyInput = win.document.querySelector(ss.verifyMessageTextArea).innerHTML
+    const signedMessage = win.document.querySelector(ss.signedResult).innerHTML
 
     win.navigator.clipboard.readText().then((text) => {
-      expect(verifyInput).to.eq(text);
+      expect(text).to.eq(signedMessage);
     });
   });
 })
 
 Then(/I should have the clipboard value in the verify input textarea/, function(){
   cy.window().then((win) => {
-    const signedMessage = win.document.querySelector(ss.signedResult).innerHTML
+    const verifyInput = win.document.querySelector(ss.verifyMessageTextArea).innerHTML
 
     win.navigator.clipboard.readText().then((text) => {
-      expect(text).to.eq(signedMessage);
+      expect(verifyInput).to.eq(text);
     });
   });
 })
