@@ -1,19 +1,54 @@
 Feature: Verify Message
 
-  Scenario: Verify the integrity of a signed message
+  Scenario: Verify the integrity of a signed message in textarea
     Given I login as genesis on devnet
     And I wait 2 seconds
+    And I open signMessage modal
+    When I fill test_Message in signMessageInput field
+    And I click on nextBtn
+    And I click on goBack
+    Then signMessageInput should have value of test_Message
+    When I click on nextBtn
+    And I click on copyToClipboardBtn
+    Then I should have the signed message in the clipboard
     And I open verifyMessage modal
-    When I paste "-----BEGIN LISK SIGNED MESSAGE-----\n-----MESSAGE-----\nHello, this is a test\n-----PUBLIC KEY-----\n167221bdf0af9f83fd9f0cda0aff264a836f4b85a0cf7ee5f6bec6029bb6d517\n-----SIGNATURE-----\nd03a83796ab1b108b0eb2f900214da931e9589211bebe6648d3f4cbfd964d183053891eb13b77fd573dcb407f2a57becba1e131f3351736d4336c6ac26e95703\n-----END LISK SIGNED MESSAGE-----" in verifyMessageInput field
+    And I click on textAreaViewBtn
+    When I paste clipboardValue in verifyMessageTextArea field
+    Then I should have the clipboard value in the verify input textarea
     And I click on continueBtn
     And  I wait 2 seconds
     Then I see this title: The signature is correct
 
-  Scenario: Verify the integrity of a tampered message
+  Scenario: Verify the integrity of a tampered message in textArea view
     Given I login as genesis on devnet
     And I wait 2 seconds
     And I open verifyMessage modal
-    When I paste "-----BEGIN LISK SIGNED MESSAGE----- -----MESSAGE----- tampered test -----PUBLIC KEY----- fd061b9146691f3c56504be051175d5b76d1b1d0179c5c4370e18534c5882122 -----SIGNATURE----- 9510ec44703c2da70a2a54e1699c06eab2e4caff0b299ca96f69e5f79b8ee913bd5e37e1b20d104bd57c4b316200dfbd2df7716c4c4582d4c52db8aabcb87603 -----END LISK SIGNED MESSAGE-----" in verifyMessageInput field
+    And I click on textAreaViewBtn
+    When I paste invalid_text in verifyMessageTextArea field
+    And I click on continueBtn
+    And I wait 2 seconds
+    Then I see this title: The signature is incorrect
+
+  Scenario: Verify the integrity of a signed message in input fields view
+    Given I login as genesis on devnet
+    And I wait 2 seconds
+    And I open verifyMessage modal
+    And I click on inputsViewBtn
+    Then I fill test_message in verifyMessageInput
+    Then I fill 167221bdf0af9f83fd9f0cda0aff264a836f4b85a0cf7ee5f6bec6029bb6d517 in verifyPublicKeyInput
+    Then I fill 09392ac34e257b6cdb9bd4a73fc3901a073061c17b71ee4d4500fd600044eabd901b27584d59946f26a869a1e29ccdc87209272db545c02e43b4c083242ffc0d in verifySignatureInput
+    And I click on continueBtn
+    And I wait 2 seconds
+    Then I see this title: The signature is correct
+
+  Scenario: Verify the integrity of a tampered message in input fields view
+    Given I login as genesis on devnet
+    And I wait 2 seconds
+    And I open verifyMessage modal
+    And I click on inputsViewBtn
+    Then I fill tampered_message in verifyMessageInput
+    Then I fill 167221bdf0af9f83fd9f0cda0aff264a836f4b85a0cf7ee5f6bec6029bb6d517 in verifyPublicKeyInput
+    Then I fill 112233abcde in verifySignatureInput
     And I click on continueBtn
     And I wait 2 seconds
     Then I see this title: The signature is incorrect
