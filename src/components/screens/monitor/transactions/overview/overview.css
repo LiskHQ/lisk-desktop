@@ -44,6 +44,11 @@
   }
 }
 
+.guide {
+  position: absolute;
+  bottom: 5%;
+}
+
 .tabs:last-child {
   border-radius: 0 var(--border-radius-standard) 0 0;
 }

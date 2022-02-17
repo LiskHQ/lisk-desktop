@@ -99,18 +99,18 @@ const tabs = (t = str => str) => [
 
 const normalizeNumberRange = (distributions) => {
   const values = {
-    '0.001_0.01': '< 10',
-    '0.01_0.1': '< 10',
-    '0.1_1': '< 10',
-    '1_10': '< 10',
-    '10_100': '10 < 100',
-    '100_1000': '100 < 1K',
-    '1000_10000': '1K < 10K',
-    '10000_100000': '10K <',
-    '100000_1000000': '10K <',
-    '1000000_10000000': '10K <',
-    '10000000_100000000': '10K <',
-    '100000000_1000000000': '10K <',
+    '0.001_0.01': '0 - 10 LSK',
+    '0.01_0.1': '0 - 10 LSK',
+    '0.1_1': '0 - 10 LSK',
+    '1_10': '0 - 10 LSK',
+    '10_100': '10 - 100 LSK',
+    '100_1000': '100 - 1000 LSK',
+    '1000_10000': '1000K - 10,000 LSK',
+    '10000_100000': '10,000 - 100,000 LSK',
+    '100000_1000000': '100,000 - 1,000,000 LSK',
+    '1000000_10000000': '1,000,000 - 10,000,000 LSK',
+    '10000000_100000000': '10,000,000 - 100,000,000 LSK',
+    '100000000_1000000000': '100,000,000 - 1,000,000,000 LSK',
   };
   return Object.keys(distributions).reduce((acc, item) => {
     acc[values[item]] = (acc[values[item]] || 0) + distributions[item];
@@ -191,7 +191,7 @@ const Overview = ({ t, txStats }) => {
               options={{ legend: { display: false } }}
             />
           </div>
-          <div>
+          <div className={styles.guide}>
             <GuideTooltip>
               {listOfLabels
                 .map((label, i) => (
@@ -213,7 +213,7 @@ const Overview = ({ t, txStats }) => {
           <div className={`${styles.graph} hideOnLargeViewPort`}>
             <DoughnutChart data={amountChartData} options={{ legend: { display: false } }} />
           </div>
-          <div className="hideOnLargeViewPort">
+          <div className={`hideOnLargeViewPort ${styles.guide}`}>
             <GuideTooltip>
               {Object.keys(distributionByAmount)
                 .map((label, i) => (
