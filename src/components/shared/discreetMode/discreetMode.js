@@ -23,7 +23,9 @@ class DiscreetMode extends Component {
       }
       const { location: { search } } = this.props;
       if (selectSearchParamValue(search, 'modal') === 'transactionDetails') {
-        return addresses.includes(account.summary?.address);
+        return addresses.length
+          ? addresses.includes(account.summary?.address)
+          : this.handleBlurOnOtherWalletPage();
       }
     }
     return true;
