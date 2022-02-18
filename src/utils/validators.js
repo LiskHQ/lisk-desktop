@@ -9,7 +9,7 @@ import i18n from '../i18n';
 /**
  * Validates the given value to be numeric
  */
-export const isNumeric = (value) => /^([0-9]+\.?[0-9]*|\.[0-9]+)$/.test(value);
+export const isNumeric = (value) => /^(-?[0-9]+\.?[0-9]*|\.[0-9]+)$/.test(value);
 
 /**
  * Validates the given address with respect to the tokenType
