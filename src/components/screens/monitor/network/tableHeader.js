@@ -35,7 +35,7 @@ export default (changeSort, t) => ([
     classList: grid['col-xs-2'],
     sort: {
       fn: changeSort,
-      key: 'version',
+      key: 'networkVersion',
     },
   },
   {

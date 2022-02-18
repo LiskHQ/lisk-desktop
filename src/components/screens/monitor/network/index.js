@@ -35,7 +35,7 @@ import Overview from './overview';
  * -1 for a < b
  */
 export const sortByVersion = (a, b, direction = 'desc') => {
-  if (a.version === b.version) return 0;
+  if (a.networkVersion === b.networkVersion) return 0;
 
   const split = (version) => {
     const arr = version.split(/\.|-/);
@@ -48,8 +48,8 @@ export const sortByVersion = (a, b, direction = 'desc') => {
       },
     );
   };
-  const aParts = split(a.version);
-  const bParts = split(b.version);
+  const aParts = split(a.networkVersion || '');
+  const bParts = split(b.networkVersion || '');
 
   return aParts.reduce((acc, item, index) => {
     if (acc === 0 && item > bParts[index]) acc = 1;
@@ -125,6 +125,6 @@ export default compose(
       ),
     },
   }),
-  withLocalSort('peers', 'height:desc', { version: sortByVersion }),
+  withLocalSort('peers', 'height:desc', { networkVersion: sortByVersion }),
   withTranslation(),
 )(NetworkPure);
