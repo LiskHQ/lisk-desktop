@@ -3,3 +3,7 @@
   filter: blur(7px);
   user-select: none;
 }
+
+.preformat::after {
+  content: "\00a0 \00a0 ";
+}
