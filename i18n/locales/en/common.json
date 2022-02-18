@@ -39,6 +39,7 @@
   "All types": "All types",
   "All you need to do:": "All you need to do:",
   "Amount": "Amount",
+  "Amount can't be negative.": "Amount can't be negative.",
   "Amount can't be zero.": "Amount can't be zero.",
   "Amount of transaction": "Amount of transaction",
   "Amount per transaction (LSK)": "Amount per transaction (LSK)",
