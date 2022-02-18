@@ -41,7 +41,7 @@ const isKeyMatch = (aPublicKey, signerPublicKey) => (Buffer.isBuffer(aPublicKey)
  * This function updates transaction object to include the signatures at correct index.
  * The below logic is copied from Lisk SDK https://github.com/LiskHQ/lisk-sdk/blob/2593d1fe70154a9209b713994a252c494cad7123/elements/lisk-transactions/src/sign.ts#L228-L297
  */
-/* eslint-disable max-statements */
+/* eslint-disable max-statements, complexity */
 const updateTransactionSignatures = (
   account,
   transactionObject,
@@ -50,13 +50,16 @@ const updateTransactionSignatures = (
 ) => {
   const isMultiSignatureRegistration = transactionObject.moduleID === 4;
   const signerPublicKey = Buffer.from(account.summary.publicKey, 'hex');
-  if (Buffer.isBuffer(transactionObject.senderPublicKey)
-    && signerPublicKey.equals(transactionObject.senderPublicKey)
+  const isSender = Buffer.isBuffer(transactionObject.senderPublicKey)
+    && signerPublicKey.equals(transactionObject.senderPublicKey);
+  const { mandatoryKeys, optionalKeys } = keys;
+  if (
+    mandatoryKeys.length + optionalKeys.length === 0
+    || (isSender && isMultiSignatureRegistration)
   ) {
     transactionObject.signatures[0] = signature;
   }
 
-  const { mandatoryKeys, optionalKeys } = keys;
   if (mandatoryKeys.length + optionalKeys.length > 0) {
     const mandatoryKeyIndex = mandatoryKeys.findIndex(
       aPublicKey => isKeyMatch(aPublicKey, signerPublicKey),
