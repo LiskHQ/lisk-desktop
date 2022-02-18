@@ -21,3 +21,9 @@ Feature: Network
     And I wait 1 seconds
     And I sort by height
     Then peers should be sorted in ascending order by height
+ 
+  Scenario: I should see peers sorted in ascending order by networkVersion
+    When I click on showMorePeersBtn
+    And I wait 1 seconds
+    And I sort by networkVersion
+    Then peers should be sorted in ascending order by networkVersion
