@@ -31,7 +31,7 @@
   }
 
   & .box {
-    max-height: 370px;
+    height: 423px;
     overflow-y: scroll;
     margin-bottom: 0;
 
