@@ -207,13 +207,10 @@ const Overview = ({ t, txStats }) => {
         </div>
         <div className={`${styles.column} ${styles.pie}`}>
           <h2 className={styles.title}>{t('Amount per transaction (LSK)')}</h2>
-          <div className={`${styles.graph} showOnLargeViewPort`}>
-            <DoughnutChart data={amountChartData} options={{ legend: { display: true } }} />
-          </div>
-          <div className={`${styles.graph} hideOnLargeViewPort`}>
+          <div className={styles.graph}>
             <DoughnutChart data={amountChartData} options={{ legend: { display: false } }} />
           </div>
-          <div className={`hideOnLargeViewPort ${styles.guide}`}>
+          <div className={styles.guide}>
             <GuideTooltip>
               {Object.keys(distributionByAmount)
                 .map((label, i) => (
