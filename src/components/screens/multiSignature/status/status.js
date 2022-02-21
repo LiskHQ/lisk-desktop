@@ -5,7 +5,7 @@ import ProgressBar from '../progressBar';
 import styles from './styles.css';
 
 const Status = ({ account, transactions, t }) => {
-  const status = getTransactionStatus(account, transactions);
+  const status = getTransactionStatus(account, transactions, account.summary.isMultisignature);
   const template = statusMessages(t)[status.code];
 
   return (

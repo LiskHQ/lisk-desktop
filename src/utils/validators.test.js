@@ -1,5 +1,10 @@
 import { networks } from '@constants';
-import { validateAddress, validateLSKPublicKey, validateAmountFormat } from './validators';
+import {
+  validateAddress,
+  validateLSKPublicKey,
+  validateAmountFormat,
+  isNumeric,
+} from './validators';
 import accounts from '../../test/constants/accounts';
 import i18n from '../i18n';
 
@@ -37,6 +42,7 @@ describe('Validate Amount Format', () => {
     INVALID: i18n.t('Provide a correct amount of {{token}}', { token: 'LSK' }),
     FLOATING_POINT: i18n.t('Maximum floating point is 8.'),
   };
+
   it('Should return errors.ZERO if amount is zero', () => {
     const zeroValue = 0.0;
     expect(validateAmountFormat({ value: zeroValue })).toEqual({
@@ -62,9 +68,25 @@ describe('Validate Amount Format', () => {
   });
 
   it('Should return { error: false, message: "" } if valid amount is inputed', () => {
-    expect(validateAmountFormat({ value: '123.43213' })).toEqual({
-      error: false,
-      message: '',
+    ['123.43213', '0.00000001'].forEach((value) => {
+      expect(validateAmountFormat({ value })).toEqual({
+        error: false,
+        message: '',
+      });
     });
+  });
+});
+
+describe('isNumeric', () => {
+  it('should return false for invalid decimal numbers', () => {
+    expect(isNumeric('12..4')).toBe(false);
+  });
+
+  it('should return true for valid decimal numbers', () => {
+    expect(isNumeric('12.4')).toBe(true);
+  });
+
+  it('should return true for integers', () => {
+    expect(isNumeric('123456789')).toBe(true);
   });
 });

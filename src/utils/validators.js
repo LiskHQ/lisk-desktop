@@ -1,10 +1,15 @@
 import * as bitcoin from 'bitcoinjs-lib';
-import { cryptography } from '@liskhq/lisk-client';
+import { cryptography, transactions } from '@liskhq/lisk-client';
 import numeral from 'numeral';
 
 import { tokenMap, MIN_ACCOUNT_BALANCE, regex as reg } from '@constants';
 import { toRawLsk } from './lsk';
 import i18n from '../i18n';
+
+/**
+ * Validates the given value to be numeric
+ */
+export const isNumeric = (value) => /^(-?[0-9]+\.?[0-9]*|\.[0-9]+)$/.test(value);
 
 /**
  * Validates the given address with respect to the tokenType
@@ -83,7 +88,7 @@ export const validateAmountFormat = ({
   minValue,
   inputValue,
 }) => {
-  const { format, maxFloating } = reg.amount[locale];
+  const { maxFloating } = reg.amount[locale];
   const errors = {
     NEGATIVE_VOTE: {
       message: i18n.t('Vote amount can\'t be zero or negative.'),
@@ -92,13 +97,25 @@ export const validateAmountFormat = ({
         || numeral(inputValue).value() < 0
         || Object.is(numeral(inputValue).value(), -0),
     },
+    NEGATIVE_AMOUNT: {
+      message: i18n.t('Amount can\'t be negative.'),
+      fn: () => numeral(value).value() < 0,
+    },
     ZERO: {
       message: i18n.t('Amount can\'t be zero.'),
       fn: () => numeral(Math.abs(value)).value() === 0,
     },
     FORMAT: {
       message: i18n.t('Provide a correct amount of {{token}}', { token }),
-      fn: () => (typeof value === 'string' && value.slice(-1) === '.') || format.test(Math.abs(value)),
+      fn: () => {
+        try {
+          // converting LSK to Beddows will ensure the value is under beddows
+          transactions.convertLSKToBeddows(value.toString());
+          return !isNumeric(value);
+        } catch (error) {
+          return true;
+        }
+      },
     },
     MAX_ACCURACY: {
       message: i18n.t('Maximum floating point is 8.'),
