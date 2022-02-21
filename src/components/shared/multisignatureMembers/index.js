@@ -10,7 +10,7 @@ const Member = ({ member, i, t }) => (
     {i !== undefined && <p className={styles.memberInfoIndex}>{`${i + 1}.`}</p>}
     <AccountVisual address={member.address} />
     <div className={styles.memberDetails}>
-      <p className={`${styles.memberTitle} member-title`}>
+      <p className={styles.memberTitle}>
         {member.name || truncateAddress(member.address)}
         <span>{`(${member.mandatory ? t('Mandatory') : t('Optional')})`}</span>
       </p>
@@ -50,7 +50,7 @@ export const SignedAndRemainingMembers = ({
     <div>
       <p className={styles.label}>
         <span>{t('Remaining')}</span>
-        <span className="tx-remaining-members">{` ${needed}/${required}`}</span>
+        <span>{` ${needed}/${required}`}</span>
       </p>
       {remaining.map((member, i) =>
         <Member member={member} key={`registerMultiSignature-members-list-${i}-remaining`} t={t} />)}

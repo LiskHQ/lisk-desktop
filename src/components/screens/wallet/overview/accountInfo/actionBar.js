@@ -37,7 +37,7 @@ const MultiSignatureButton = ({
     component={component}
   >
     <Tooltip
-      className={`${styles.tooltipWrapper} ${styles.centerContent} ${isMultisignature ? styles.whiteBackground : ''} account-info-msign`}
+      className={`${styles.tooltipWrapper} ${styles.centerContent} ${isMultisignature ? styles.whiteBackground : ''}`}
       position="bottom"
       size="maxContent"
       content={(

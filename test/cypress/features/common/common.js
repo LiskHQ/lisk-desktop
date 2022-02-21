@@ -104,8 +104,8 @@ Given(/^I am on (.*?) page of (.*?)$/, function (page, identifier) {
   }
 });
 
-Given(/^I scroll from (.*?) to (.*?)$/, (elementName, position) => {
-  cy.get(ss[elementName]).scrollTo(position, { ensureScrollable: false });
+Given(/^I scroll to (.*?)$/, (position) => {
+  cy.get('.scrollContainer').scrollTo(position, { ensureScrollable: false });
 });
 
 Then(/^I should see pending transaction$/, function () {
@@ -147,19 +147,10 @@ Then(/^The latest transaction is (.*?)$/, function (transactionType) {
     case 'register delegate':
       cy.get(`${ss.transactionRow} ${ss.transactionAddress}`).eq(0).contains('Register delegate');
       break;
-    case 'register multisignature group':
-      cy.get(`${ss.transactionRow} ${ss.transactionAddress}`).eq(0).contains('Register multisig. group');
-      break;
     case 'vote':
       cy.get(`${ss.transactionRow} ${ss.transactionAddress}`).eq(0).contains('Vote');
       break;
   }
-});
-
-Then(/^The latest transaction in monitor is sent by (.*?) and recipient is (.*?)$/, function (sender, recipient) {
-  cy.wait(1000);
-  cy.get(`${ss.transactionRowSender}`).eq(0).contains(sender);
-  cy.get(`${ss.transactionRowRecipient}`).eq(0).contains(recipient);
 });
 
 Then(/^I should be on (.*?) page$/, function (pageName) {
@@ -179,10 +170,6 @@ Then(/^I should see (\d+) transactions in table$/, function (number) {
 
 Then(/^I should see (.*?)$/, function (elementName) {
   cy.get(ss[elementName]).should('be.visible');
-});
-
-Then(/^(.*?) should not exist$/, function (elementName) {
-  cy.get(ss[elementName]).should('not.exist');
 });
 
 Then(/^I should be on (.*?) page of (.*?)$/, function (pageName, identifier) {

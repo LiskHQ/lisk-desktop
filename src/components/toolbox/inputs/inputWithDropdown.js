@@ -6,7 +6,7 @@ import DropdownButton from '../dropdownButton';
 import styles from './input.css';
 
 const InputWithDropdown = ({
-  className, value, onChange, children, buttonLabel, buttonClassName, ButtonComponent, placeholder,
+  className, value, onChange, children, buttonLabel, ButtonComponent, placeholder,
 }) => (
   <div className={`${styles.inputWithDropdown} ${className} input-with-dropdown-container`}>
     <Input
@@ -18,7 +18,7 @@ const InputWithDropdown = ({
     />
     <DropdownButton
       className="input-with-dropdown-dropdown"
-      buttonClassName={`${styles.inputDropdownButton} ${buttonClassName}`}
+      buttonClassName={styles.inputDropdownButton}
       buttonLabel={buttonLabel}
       size="s"
       ButtonComponent={ButtonComponent}

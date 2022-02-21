@@ -240,7 +240,7 @@ export const RequiredSignatures = ({ t }) => {
 
   return (
     <ValueAndLabel className={styles.requiredSignatures} label={t('Required signatures')}>
-      <span className="tx-required-signatures">{requiredSignatures}</span>
+      <span>{requiredSignatures}</span>
     </ValueAndLabel>
   );
 };

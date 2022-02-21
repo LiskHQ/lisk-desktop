@@ -78,8 +78,8 @@ const accounts = {
   multiSig_candidate: {
     passphrase: 'approve tribe main deposit luxury obtain knock problem pulse claw social select',
     summary: {
-      publicKey: 'a04a60f5f3f9be3a15b121342ba81b7bd66d37e7f3e8cc4f7c03396bd9c1f103',
-      serverPublicKey: 'a04a60f5f3f9be3a15b121342ba81b7bd66d37e7f3e8cc4f7c03396bd9c1f103',
+      publicKey: '35c6b25520fc868b56c83fed6e1c89bb350fb7994a5da0bcea7a4f621f948c7f',
+      serverPublicKey: '35c6b25520fc868b56c83fed6e1c89bb350fb7994a5da0bcea7a4f621f948c7f',
       address: 'lsks6wh4zqfd8wyka3rj243rshcdqyug9gyvehxwz',
     },
     token: {},
@@ -92,8 +92,8 @@ const accounts = {
   multiSig: {
     passphrase: 'approve tribe main deposit luxury obtain knock problem pulse claw social select',
     summary: {
-      publicKey: 'a04a60f5f3f9be3a15b121342ba81b7bd66d37e7f3e8cc4f7c03396bd9c1f103',
-      serverPublicKey: 'a04a60f5f3f9be3a15b121342ba81b7bd66d37e7f3e8cc4f7c03396bd9c1f103',
+      publicKey: '35c6b25520fc868b56c83fed6e1c89bb350fb7994a5da0bcea7a4f621f948c7f',
+      serverPublicKey: '35c6b25520fc868b56c83fed6e1c89bb350fb7994a5da0bcea7a4f621f948c7f',
       address: 'lsks6wh4zqfd8wyka3rj243rshcdqyug9gyvehxwz',
       balance: '9897000000000000',
       isMigrated: true,
@@ -225,7 +225,6 @@ const accounts = {
     dpos: { delegate: {} },
   },
   account2P: {
-    passphrase: 'steak avoid couple fog ability chalk jacket electric rifle fuel tuition van',
     summary: {
       address: 'lskwunwxqmss9w3mtuvzgbsfy665cz4eo3rd2mxdp',
       balance: '5834556000',
