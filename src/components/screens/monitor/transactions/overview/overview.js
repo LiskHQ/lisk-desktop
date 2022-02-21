@@ -185,13 +185,7 @@ const Overview = ({ t, txStats }) => {
       <BoxContent className={styles.content}>
         <div className={`${styles.column} ${styles.pie}`}>
           <h2 className={styles.title}>{t('Transaction types')}</h2>
-          <div className={`${styles.graph}`}>
-            <DoughnutChart
-              data={distributionChartData}
-              options={{ legend: { display: false } }}
-            />
-          </div>
-          <div className={styles.guide}>
+          <div>
             <GuideTooltip>
               {listOfLabels
                 .map((label, i) => (
@@ -204,19 +198,25 @@ const Overview = ({ t, txStats }) => {
                 ))}
             </GuideTooltip>
           </div>
+          <div className={`${styles.graph}`}>
+            <DoughnutChart
+              data={distributionChartData}
+              options={{ legend: { display: false } }}
+            />
+          </div>
         </div>
         <div className={`${styles.column} ${styles.pie}`}>
           <h2 className={styles.title}>{t('Amount per transaction (LSK)')}</h2>
-          <div className={styles.graph}>
-            <DoughnutChart data={amountChartData} options={{ legend: { display: false } }} />
-          </div>
-          <div className={styles.guide}>
+          <div>
             <GuideTooltip>
               {Object.keys(distributionByAmount)
                 .map((label, i) => (
                   <GuideTooltipItem key={`distribution-GuideTooltip${i}`} color={colorPalette[i]} label={label} />
                 ))}
             </GuideTooltip>
+          </div>
+          <div className={styles.graph}>
+            <DoughnutChart data={amountChartData} options={{ legend: { display: false } }} />
           </div>
         </div>
         <div className={`${styles.column} ${styles.bar}`}>
