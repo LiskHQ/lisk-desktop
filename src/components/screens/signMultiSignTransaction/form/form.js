@@ -87,9 +87,10 @@ const Form = ({ t, nextStep, network }) => {
           <div className={`${styles.textAreaContainer} ${error && styles.error} ${transaction && styles.filled}`}>
             <textarea
               onPaste={onPaste}
+              onChange={onPaste}
               value={transaction ? JSON.stringify(transaction) : ''}
               readOnly
-              className={styles.txInput}
+              className={`${styles.txInput} tx-sign-input`}
             />
             <Feedback
               message={error}

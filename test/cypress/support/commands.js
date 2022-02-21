@@ -63,3 +63,19 @@ Cypress.Commands.add('autologin', (passphrase, network) => {
   localStorage.setItem('liskServiceUrl', network);
   localStorage.setItem('loginKey', passphrase);
 });
+
+Cypress.Commands.add('paste', { prevSubject: true }, (subject, { pastePayload, pasteType = 'text' }) => {
+  const data = pasteType === 'application/json' ? JSON.stringify(pastePayload) : pastePayload;
+  const clipboardData = new DataTransfer();
+  clipboardData.setData(pasteType, data);
+  const pasteEvent = new ClipboardEvent('paste', {
+    bubbles: true,
+    cancelable: true,
+    dataType: pasteType,
+    data,
+    clipboardData,
+  });
+  subject[0].dispatchEvent(pasteEvent);
+
+  return subject;
+});
