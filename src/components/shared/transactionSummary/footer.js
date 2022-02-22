@@ -24,7 +24,7 @@ const Actions = ({
     )}
     <PrimaryButton
       className="confirm-button"
-      disabled={confirmButton.disabled || inputStatus === 'visible'}
+      disabled={confirmButton.disabled || inputStatus === 'visible' || inputStatus === 'invalid'}
       onClick={confirmButton.onClick}
     >
       {isMultisignature ? t('Sign') : confirmButton.label}
@@ -41,6 +41,8 @@ const SecondPassInput = ({
     if (secondPass.error === 0) {
       secondPassphraseStored(secondPass);
       setInputStatus('valid');
+    } else if (secondPass.error > 0) {
+      setInputStatus('invalid');
     }
   }, [secondPass]);
 
