@@ -90,3 +90,7 @@ Then(/^I should have the transaction ([^\s]+) in the clipboard$/, function (tx) 
     });
   });
 });
+
+Then(/^([^\s]+) should have been downloaded correctly$/, function (tx) {
+  cy.readFile(`cypress/downloads/tx-${multiSignatureTxs[tx].id}.json`).should('eq', multiSignatureTxs[tx]);
+});
