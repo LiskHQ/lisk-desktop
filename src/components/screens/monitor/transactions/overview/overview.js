@@ -1,3 +1,4 @@
+/* eslint-disable max-lines */
 // istanbul ignore file
 import React, { useState } from 'react';
 import moment from 'moment';
@@ -185,38 +186,65 @@ const Overview = ({ t, txStats }) => {
       <BoxContent className={styles.content}>
         <div className={`${styles.column} ${styles.pie}`}>
           <h2 className={styles.title}>{t('Transaction types')}</h2>
-          <div>
-            <GuideTooltip>
-              {listOfLabels
-                .map((label, i) => (
-                  <GuideTooltipItem
-                    key={`transaction-GuideTooltip${i}`}
-                    color={colorPalette[i]}
-                    label={label
-                      .replace('Register multisignature group', 'Register multisig.')}
-                  />
-                ))}
-            </GuideTooltip>
-          </div>
-          <div className={`${styles.graph}`}>
-            <DoughnutChart
-              data={distributionChartData}
-              options={{ legend: { display: false } }}
-            />
+          <div className={styles.graph}>
+            <div>
+              <GuideTooltip>
+                {listOfLabels
+                  .map((label, i) => (
+                    <GuideTooltipItem
+                      key={`transaction-GuideTooltip${i}`}
+                      color={colorPalette[i]}
+                      label={label
+                        .replace('Register multisignature group', 'Register multisig.')}
+                    />
+                  ))}
+              </GuideTooltip>
+            </div>
+            <div>
+              <DoughnutChart
+                data={distributionChartData}
+                options={{
+                  legend: { display: false },
+                  layout: {
+                    padding: {
+                      left: 0,
+                      right: 0,
+                      bottom: 0,
+                      top: 0,
+                    },
+                  },
+                }}
+              />
+            </div>
           </div>
         </div>
         <div className={`${styles.column} ${styles.pie}`}>
           <h2 className={styles.title}>{t('Amount per transaction (LSK)')}</h2>
-          <div>
-            <GuideTooltip>
-              {Object.keys(distributionByAmount)
-                .map((label, i) => (
-                  <GuideTooltipItem key={`distribution-GuideTooltip${i}`} color={colorPalette[i]} label={label} />
-                ))}
-            </GuideTooltip>
-          </div>
           <div className={styles.graph}>
-            <DoughnutChart data={amountChartData} options={{ legend: { display: false } }} />
+            <div>
+              <GuideTooltip>
+                {Object.keys(distributionByAmount)
+                  .map((label, i) => (
+                    <GuideTooltipItem key={`distribution-GuideTooltip${i}`} color={colorPalette[i]} label={label} />
+                  ))}
+              </GuideTooltip>
+            </div>
+            <div>
+              <DoughnutChart
+                data={amountChartData}
+                options={{
+                  legend: { display: false },
+                  layout: {
+                    padding: {
+                      left: 0,
+                      right: 0,
+                      bottom: 0,
+                      top: 0,
+                    },
+                  },
+                }}
+              />
+            </div>
           </div>
         </div>
         <div className={`${styles.column} ${styles.bar}`}>
