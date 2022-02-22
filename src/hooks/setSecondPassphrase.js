@@ -17,6 +17,7 @@ const setSecondPassphrase = () => {
     const messages = [];
     if (error) {
       messages.push(messages);
+      return messages;
     }
 
     const secondPublicKey = account.keys.mandatoryKeys

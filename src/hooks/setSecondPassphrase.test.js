@@ -28,4 +28,14 @@ describe('setSecondPassphrase', () => {
     });
     expect(result.result.current[0].error).toBe(1);
   });
+
+  it('Should return second passphrase with an external error message, if provided', () => {
+    const result = renderHook(() => setSecondPassphrase());
+    const [state, setState] = result.result.current;
+    expect(state.error).toBe(-1);
+    act(() => {
+      setState('wrong_pass', 'The pass is invalid');
+    });
+    expect(result.result.current[0].error).toBe(1);
+  });
 });
