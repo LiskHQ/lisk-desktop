@@ -7,7 +7,6 @@ import { compose } from 'redux';
 import { selectSearchParamValue, removeSearchParamsFromUrl } from '@utils/searchParams';
 import { tokenMap } from '@constants';
 import { voteEdited } from '@actions';
-import { selectAccountBalance } from '@store/selectors';
 import { toRawLsk, fromRawLsk } from '@utils/lsk';
 import Dialog from '@toolbox/dialog/dialog';
 import Box from '@toolbox/box';
@@ -50,7 +49,6 @@ const AddVote = ({
   const start = selectSearchParamValue(history.location.search, 'start');
   const end = selectSearchParamValue(history.location.search, 'end');
   const existingVote = useSelector(state => state.voting[address || host]);
-  const balance = useSelector(selectAccountBalance);
   const [voteAmount, setVoteAmount] = useVoteAmountField(existingVote ? fromRawLsk(existingVote.unconfirmed) : '');
   const mode = existingVote ? 'edit' : 'add';
   const [maxAmount, setMaxAmount] = useState(0);
@@ -97,11 +95,11 @@ const AddVote = ({
             <p className={styles.balanceTitle}>{t('Available balance')}</p>
             <div className={styles.balanceDetails}>
               <span className={styles.lskValue}>
-                <LiskAmount val={balance} token={tokenMap.LSK.key} />
+                <LiskAmount val={maxAmount} token={tokenMap.LSK.key} />
               </span>
               <Converter
                 className={styles.fiatValue}
-                value={fromRawLsk(balance)}
+                value={fromRawLsk(maxAmount)}
                 error=""
               />
             </div>
@@ -119,6 +117,7 @@ const AddVote = ({
               maxAmount={{ value: maxAmount }}
               displayConverter
               label={t('Vote amount (LSK)')}
+              labelClassname={`${styles.fieldLabel}`}
               placeholder={t('Insert vote amount')}
               useMaxLabel={t('Use maximum amount')}
               useMaxWarning={t('Caution! You are about to send the majority of your balance')}

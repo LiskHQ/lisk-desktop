@@ -65,6 +65,7 @@
   "Balance reclaimed successfully": "Balance reclaimed successfully",
   "Balance to reclaim": "Balance to reclaim",
   "Balance:": "Balance:",
+  "Based on your available balance and rounded down to a multiple of 10 LSK, your total remaining balance is {{maxAmount}} LSK": "Based on your available balance and rounded down to a multiple of 10 LSK, your total remaining balance is {{maxAmount}} LSK",
   "Before you continue using Lisk, please read and accept the": "Before you continue using Lisk, please read and accept the",
   "Below are the details of your locked balances and the unlock waiting periods. From here you can submit an unlock transaction when waiting periods are over.": "Below are the details of your locked balances and the unlock waiting periods. From here you can submit an unlock transaction when waiting periods are over.",
   "Block": "Block",
