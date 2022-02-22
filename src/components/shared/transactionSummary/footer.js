@@ -2,6 +2,7 @@
 import React, { useEffect, useState } from 'react';
 import { PrimaryButton, SecondaryButton, TertiaryButton } from '@toolbox/buttons';
 import PassphraseInput from '@toolbox/passphraseInput';
+import useSecondPassphrase from '@src/hooks/setSecondPassphrase';
 import BoxFooter from '@toolbox/box/footer';
 import styles from './transactionSummary.css';
 
@@ -34,10 +35,10 @@ const Actions = ({
 const SecondPassInput = ({
   t, secondPassphraseStored, inputStatus, setInputStatus,
 }) => {
-  const [secondPass, set2ndPass] = useState('');
+  const [secondPass, set2ndPass] = useSecondPassphrase();
 
   useEffect(() => {
-    if (secondPass) {
+    if (secondPass.error === 0) {
       secondPassphraseStored(secondPass);
       setInputStatus('valid');
     }
