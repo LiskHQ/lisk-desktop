@@ -146,3 +146,7 @@
 .hide {
   visibility: hidden;
 }
+
+.tooltipContainer {
+  right: -27px !important;
+}
