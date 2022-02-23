@@ -7,7 +7,16 @@ const selectBTCAddress = state =>
   (state.account.info ? state.account.info.BTC.summary.address : undefined);
 const selectPublicKey = state => state.account.info[state.settings.token.active].publicKey;
 const selectTransactions = state => state.transactions;
-const selectActiveTokenAccount = state => state.account.info[state.settings.token.active];
+const selectActiveTokenAccount = (state) => {
+  if (!state.account.info) {
+    return {};
+  }
+  return {
+    ...state.account.info[state.settings.token.active],
+    passphrase: state.passphrase,
+    hwInfo: state.hwInfo,
+  };
+};
 const selectAccountBalance = state => (
   state.account.info ? state.account.info[state.settings.token.active].summary.balance : undefined);
 const selectBookmarks = state => state.bookmarks[state.settings.token.active];

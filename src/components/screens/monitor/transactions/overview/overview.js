@@ -1,3 +1,4 @@
+/* eslint-disable max-lines */
 // istanbul ignore file
 import React, { useState } from 'react';
 import moment from 'moment';
@@ -99,18 +100,18 @@ const tabs = (t = str => str) => [
 
 const normalizeNumberRange = (distributions) => {
   const values = {
-    '0.001_0.01': '< 10',
-    '0.01_0.1': '< 10',
-    '0.1_1': '< 10',
-    '1_10': '< 10',
-    '10_100': '10 < 100',
-    '100_1000': '100 < 1K',
-    '1000_10000': '1K < 10K',
-    '10000_100000': '10K <',
-    '100000_1000000': '10K <',
-    '1000000_10000000': '10K <',
-    '10000000_100000000': '10K <',
-    '100000000_1000000000': '10K <',
+    '0.001_0.01': '0 - 10 LSK',
+    '0.01_0.1': '0 - 10 LSK',
+    '0.1_1': '0 - 10 LSK',
+    '1_10': '0 - 10 LSK',
+    '10_100': '10 - 100 LSK',
+    '100_1000': '100 - 1000 LSK',
+    '1000_10000': '1000K - 10,000 LSK',
+    '10000_100000': '10,000 - 100,000 LSK',
+    '100000_1000000': '100,000 - 1,000,000 LSK',
+    '1000000_10000000': '1,000,000 - 10,000,000 LSK',
+    '10000000_100000000': '10,000,000 - 100,000,000 LSK',
+    '100000000_1000000000': '100,000,000 - 1,000,000,000 LSK',
   };
   return Object.keys(distributions).reduce((acc, item) => {
     acc[values[item]] = (acc[values[item]] || 0) + distributions[item];
@@ -185,41 +186,65 @@ const Overview = ({ t, txStats }) => {
       <BoxContent className={styles.content}>
         <div className={`${styles.column} ${styles.pie}`}>
           <h2 className={styles.title}>{t('Transaction types')}</h2>
-          <div className={`${styles.graph}`}>
-            <DoughnutChart
-              data={distributionChartData}
-              options={{ legend: { display: false } }}
-            />
-          </div>
-          <div>
-            <GuideTooltip>
-              {listOfLabels
-                .map((label, i) => (
-                  <GuideTooltipItem
-                    key={`transaction-GuideTooltip${i}`}
-                    color={colorPalette[i]}
-                    label={label
-                      .replace('Register multisignature group', 'Register multisig.')}
-                  />
-                ))}
-            </GuideTooltip>
+          <div className={styles.graph}>
+            <div>
+              <GuideTooltip>
+                {listOfLabels
+                  .map((label, i) => (
+                    <GuideTooltipItem
+                      key={`transaction-GuideTooltip${i}`}
+                      color={colorPalette[i]}
+                      label={label
+                        .replace('Register multisignature group', 'Register multisig.')}
+                    />
+                  ))}
+              </GuideTooltip>
+            </div>
+            <div>
+              <DoughnutChart
+                data={distributionChartData}
+                options={{
+                  legend: { display: false },
+                  layout: {
+                    padding: {
+                      left: 0,
+                      right: 0,
+                      bottom: 0,
+                      top: 0,
+                    },
+                  },
+                }}
+              />
+            </div>
           </div>
         </div>
         <div className={`${styles.column} ${styles.pie}`}>
           <h2 className={styles.title}>{t('Amount per transaction (LSK)')}</h2>
-          <div className={`${styles.graph} showOnLargeViewPort`}>
-            <DoughnutChart data={amountChartData} options={{ legend: { display: true } }} />
-          </div>
-          <div className={`${styles.graph} hideOnLargeViewPort`}>
-            <DoughnutChart data={amountChartData} options={{ legend: { display: false } }} />
-          </div>
-          <div className="hideOnLargeViewPort">
-            <GuideTooltip>
-              {Object.keys(distributionByAmount)
-                .map((label, i) => (
-                  <GuideTooltipItem key={`distribution-GuideTooltip${i}`} color={colorPalette[i]} label={label} />
-                ))}
-            </GuideTooltip>
+          <div className={styles.graph}>
+            <div>
+              <GuideTooltip>
+                {Object.keys(distributionByAmount)
+                  .map((label, i) => (
+                    <GuideTooltipItem key={`distribution-GuideTooltip${i}`} color={colorPalette[i]} label={label} />
+                  ))}
+              </GuideTooltip>
+            </div>
+            <div>
+              <DoughnutChart
+                data={amountChartData}
+                options={{
+                  legend: { display: false },
+                  layout: {
+                    padding: {
+                      left: 0,
+                      right: 0,
+                      bottom: 0,
+                      top: 0,
+                    },
+                  },
+                }}
+              />
+            </div>
           </div>
         </div>
         <div className={`${styles.column} ${styles.bar}`}>
