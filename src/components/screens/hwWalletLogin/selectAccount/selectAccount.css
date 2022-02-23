@@ -25,6 +25,7 @@
       flex-direction: column;
       align-items: start;
       justify-content: space-between;
+      position: relative;
 
       & > * > p {
         margin: 0;
@@ -99,8 +100,11 @@
         }
       }
 
-      & > .legacyBalance:last-child {
-        margin-top: 24px;
+      & > .legacyWarning {
+        width: 18px;
+        margin: 0;
+        position: absolute;
+        right: 22px;
       }
     }
   }

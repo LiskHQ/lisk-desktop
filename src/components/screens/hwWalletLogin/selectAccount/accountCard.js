@@ -68,7 +68,7 @@ const AccountCard = ({
               : (
                 <>
                   <p className={`${styles.accountTitle} account-name`}>
-                    {account.name === null ? t('Unnamed account') : account.name}
+                    {!account.name ? t('Unnamed account') : account.name}
                     <Icon
                       className={`${styles.editBtn} edit-account`}
                       onClick={e => {
@@ -82,29 +82,13 @@ const AccountCard = ({
                 </>
               )}
           </header>
-          {account.legacy ? (
-            <>
-              <div className={`${styles.accountBalance} ${styles.legacyBalance} row-balance`}>
-                <p>{t('Balance:')}</p>
-                <p>
-                  <LiskAmount val={account.summary?.balance} token={tokenMap.LSK.key} />
-                </p>
-              </div>
-              <div className={`${styles.accountBalance} ${styles.legacyBalance} row-balance`}>
-                <p>{t('Reclaimable balance:')}</p>
-                <p>
-                  <LiskAmount val={account.legacy.balance} token={tokenMap.LSK.key} />
-                </p>
-              </div>
-            </>
-          ) : (
-            <div className={`${styles.accountBalance} row-balance`}>
-              <p>{t('Balance:')}</p>
-              <p>
-                <LiskAmount val={account.summary?.balance} token={tokenMap.LSK.key} />
-              </p>
-            </div>
-          )}
+          <div className={`${styles.accountBalance} row-balance`}>
+            <p>{t('Balance:')}</p>
+            <p>
+              <LiskAmount val={account.summary?.balance} token={tokenMap.LSK.key} />
+            </p>
+          </div>
+          {account.legacy && <Icon name="warningIconBlue" className={styles.legacyWarning} />}
         </div>
       </div>
     </div>
