@@ -39,7 +39,7 @@ const SecondPassInput = ({
 
   useEffect(() => {
     if (secondPass.error === 0) {
-      secondPassphraseStored(secondPass);
+      secondPassphraseStored(secondPass.data);
       setInputStatus('valid');
     } else if (secondPass.error > 0) {
       setInputStatus('invalid');
