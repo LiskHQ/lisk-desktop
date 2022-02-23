@@ -240,6 +240,7 @@ export class BookmarksList extends React.Component {
                                     </TertiaryButton>
                                   ) : (
                                     <Tooltip
+                                      tooltipClassName={styles.tooltipContainer}
                                       position="bottom left"
                                       size="maxContent"
                                       indent
