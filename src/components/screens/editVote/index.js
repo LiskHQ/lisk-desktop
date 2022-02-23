@@ -92,7 +92,7 @@ const AddVote = ({
             <span>{titles.description}</span>
           </BoxInfoText>
           <BoxInfoText className={styles.accountInfo}>
-            <p className={styles.balanceTitle}>{t('Available balance')}</p>
+            <p className={styles.balanceTitle}>{t('Available balance for voting')}</p>
             <div className={styles.balanceDetails}>
               <span className={styles.lskValue}>
                 <LiskAmount val={maxAmount} token={tokenMap.LSK.key} />
