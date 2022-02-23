@@ -129,6 +129,10 @@ export const validateAmountFormat = ({
       message: i18n.t('Provided amount is higher than your current balance.'),
       fn: () => funds < toRawLsk(numeral(value).value()),
     },
+    INSUFFICIENT_VOTE_FUNDS: {
+      message: i18n.t('The provided amount is higher than available voting balance.'),
+      fn: () => funds < toRawLsk(numeral(value).value()),
+    },
     MIN_BALANCE: {
       message: i18n.t('Provided amount will result in a wallet with less than the minimum balance.'),
       fn: () => {

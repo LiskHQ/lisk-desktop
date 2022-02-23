@@ -6,6 +6,7 @@ import { fromRawLsk } from '@utils/lsk';
 import { Input } from '@toolbox/inputs';
 import { TertiaryButton } from '@toolbox/buttons';
 import Icon from '@toolbox/icon';
+import Tooltip from '@toolbox/tooltip/tooltip';
 import Converter from '../converter';
 import styles from './amountField.css';
 
@@ -23,11 +24,13 @@ const MaxAmountWarning = ({ resetInput, message }) => {
   );
 };
 
+// eslint-disable-next-line complexity
 const AmountField = ({
   amount, maxAmount, onChange, className,
-  label, useMaxLabel, placeholder, name,
+  label, labelClassname, useMaxLabel, placeholder, name,
   displayConverter, useMaxWarning,
 }) => {
+  const { t } = useTranslation();
   const [showEntireBalanceWarning, setShowEntireBalanceWarning] = useState(false);
   const setEntireBalance = (e) => {
     e.preventDefault();
@@ -57,8 +60,8 @@ const AmountField = ({
 
   return (
     <label className={`${styles.fieldGroup} ${amount.error ? styles.error : ''} ${className}`}>
-      <div className={`${styles.amountFieldHeader}`} onClick={ignoreClicks}>
-        { label && <span className={`${styles.fieldLabel}`}>{label}</span> }
+      <div className={labelClassname ? `${styles.customAmountFieldHeader} ${styles.amountFieldHeader}` : `${styles.amountFieldHeader}`} onClick={ignoreClicks}>
+        { label && <span className={labelClassname ? `${styles.customFieldLabel} ${styles.fieldLabel} label` : `${styles.fieldLabel}`}>{label}</span> }
         {
           useMaxLabel && (
             <TertiaryButton
@@ -67,6 +70,12 @@ const AmountField = ({
               size="xs"
             >
               {useMaxLabel}
+              <Tooltip
+                position="bottom"
+                tooltipClassName={`${styles.tooltipContainer}`}
+              >
+                <span>{t('Based on your available balance and rounded down to a multiple of 10 LSK, your total remaining balance is {{maxAmount}} LSK', { maxAmount: fromRawLsk(maxAmount.value) })}</span>
+              </Tooltip>
             </TertiaryButton>
           )
         }
