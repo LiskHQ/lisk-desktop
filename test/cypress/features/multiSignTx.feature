@@ -24,6 +24,8 @@ Feature: Multisignature transaction
     When I click on confirmBtn
     Then msignSendButton should not exist
     Then I should see downloadButton
+    And I click on downloadButton
+    Then RegisterSecondPassphraseTx should have been downloaded correctly
     Then I should see copyButton
     And I click on copyButton
     Then I should have the transaction RegisterSecondPassphraseTx in the clipboard
