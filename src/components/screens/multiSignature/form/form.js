@@ -67,6 +67,19 @@ const validators = [
       || optional.some(item => !regex.publicKey.test(item)),
     message: t => t('Please enter a valid public key for each member.'),
   },
+  {
+    pattern: (mandatory, optional) => {
+      const validationResult = mandatory.concat(optional).reduce((prev, { publicKey }) => {
+        if (prev.prevKey === publicKey && !prev.notValid) {
+          return { notValid: true, prevKey: publicKey };
+        }
+        return { notValid: prev.notValid, prevKey: publicKey };
+      }, { notValid: false, prevKey: '' });
+
+      return validationResult.notValid;
+    },
+    message: t => t('Duplicate public keys detected.'),
+  },
 ];
 
 export const validateState = ({
@@ -192,9 +205,9 @@ const Editor = ({
     }
   }, [requiredSignatures]);
 
-  const feedback = validateState({
+  const feedback = useMemo(() => validateState({
     mandatoryKeys, optionalKeys, requiredSignatures, t,
-  });
+  }), [mandatoryKeys, optionalKeys, requiredSignatures]);
 
   return (
     <section className={styles.wrapper}>
