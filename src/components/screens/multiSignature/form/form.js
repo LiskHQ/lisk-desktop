@@ -69,7 +69,7 @@ const validators = [
   },
   {
     pattern: (mandatory, optional) => {
-      const validationResult = mandatory.concat(optional).reduce((prev, { publicKey }) => {
+      const validationResult = mandatory.concat(optional).reduce((prev, publicKey) => {
         if (prev.prevKey === publicKey && !prev.notValid) {
           return { notValid: true, prevKey: publicKey };
         }

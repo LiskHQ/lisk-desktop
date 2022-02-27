@@ -183,4 +183,15 @@ describe('validateState', () => {
     const error = 'Maximum number of members is {{MAX_MULTI_SIG_MEMBERS}}.';
     expect(validateState(params).messages).toContain(error);
   });
+  it('should return error if there are duplicate public keys', () => {
+    const pbk = accounts.genesis.summary.publicKey;
+    const params = {
+      mandatoryKeys: new Array(2).fill(pbk),
+      optionalKeys: [],
+      requiredSignatures: 2,
+      t: str => str,
+    };
+    const error = 'Duplicate public keys detected.';
+    expect(validateState(params).messages).toContain(error);
+  });
 });
