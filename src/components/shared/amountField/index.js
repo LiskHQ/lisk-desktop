@@ -10,7 +10,7 @@ import Tooltip from '@toolbox/tooltip/tooltip';
 import Converter from '../converter';
 import styles from './amountField.css';
 
-const MaxAmountWarning = ({ resetInput, message, ignoreClicks }) => {
+export const MaxAmountWarning = ({ resetInput, message, ignoreClicks }) => {
   const { t } = useTranslation();
   return (
     <div className={`${styles.entireBalanceWarning} entire-balance-warning`} onClick={ignoreClicks}>
