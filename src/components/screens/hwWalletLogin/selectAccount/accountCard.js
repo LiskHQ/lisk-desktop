@@ -101,7 +101,9 @@ const AccountCard = ({
                 <p>{t('This account needs to be reclaimed')}</p>
                 <br />
                 <p>{t('Balance after reclaiming:')}</p>
-                <p><LiskAmount val={account.legacy.balance} token={tokenMap.LSK.key} /></p>
+                <p className={styles.reclaimBalance}>
+                  <LiskAmount val={account.legacy.balance} token={tokenMap.LSK.key} />
+                </p>
               </>
             </Tooltip>
           )}

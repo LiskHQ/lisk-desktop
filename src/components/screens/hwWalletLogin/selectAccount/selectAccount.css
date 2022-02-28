@@ -112,6 +112,10 @@
 
         & > .tooltip {
           width: 265px;
+
+          & > main > .reclaimBalance {
+            color: var(--color-ink-blue);
+          }
         }
       }
     }
@@ -160,7 +164,7 @@
   align-items: flex-start;
   display: flex;
   margin-top: 60px;
-  margin-bottom: 20px;
+  margin-bottom: 5px;
   color: var(--color-zodiac-blue);
 
   &.false {
