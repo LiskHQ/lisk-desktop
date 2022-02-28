@@ -69,14 +69,13 @@ const validators = [
   },
   {
     pattern: (mandatory, optional) => {
-      const validationResult = mandatory.concat(optional).reduce((prev, publicKey) => {
-        if (prev.prevKey === publicKey && !prev.notValid) {
-          return { notValid: true, prevKey: publicKey };
-        }
-        return { notValid: prev.notValid, prevKey: publicKey };
-      }, { notValid: false, prevKey: '' });
+      const allKeys = mandatory.concat(optional);
+      const keysMap = allKeys.reduce((result, key) => {
+        result[key] = true;
+        return result;
+      }, {});
 
-      return validationResult.notValid;
+      return Object.keys(keysMap).length !== allKeys.length;
     },
     message: t => t('Duplicate public keys detected.'),
   },
