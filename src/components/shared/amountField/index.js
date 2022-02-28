@@ -10,10 +10,10 @@ import Tooltip from '@toolbox/tooltip/tooltip';
 import Converter from '../converter';
 import styles from './amountField.css';
 
-const MaxAmountWarning = ({ resetInput, message }) => {
+export const MaxAmountWarning = ({ resetInput, message, ignoreClicks }) => {
   const { t } = useTranslation();
   return (
-    <div className={`${styles.entireBalanceWarning} entire-balance-warning`}>
+    <div className={`${styles.entireBalanceWarning} entire-balance-warning`} onClick={ignoreClicks}>
       <Icon name="warningYellow" />
       <span>{message || t('You are about to send your entire balance')}</span>
       <div
@@ -105,6 +105,7 @@ const AmountField = ({
         <MaxAmountWarning
           message={useMaxWarning}
           resetInput={resetInput}
+          ignoreClicks={ignoreClicks}
         />
       )}
     </label>
