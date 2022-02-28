@@ -148,14 +148,14 @@ class SelectAccount extends React.Component {
                   <span>{t('Hide empty accounts')}</span>
                 </label>
                 <div className={`${styles.deviceContainer} hw-container`}>
-                  {[hwAccounts].filter(account => {
+                  {hwAccounts.filter(account => {
                     if (hideEmptyAccounts) {
                       return account.summary?.balance > 0;
                     }
                     return true;
                   }).map((account, index) => (
                     <AccountCard
-                      key={`hw-account-tabId-${index}`}
+                      key={`hw-account-${index}`}
                       account={account}
                       index={index}
                       onSaveNameAccounts={this.onSaveNameAccounts}

@@ -117,6 +117,7 @@ describe('Select Account', () => {
     expect(wrapper).toContainMatchingElement('.save-account');
     wrapper.find('input.account-name').at(0).simulate('change', { target: { value: 'Lisk Account' } });
     wrapper.find('.save-account').at(0).simulate('click');
+    wrapper.update();
     expect(wrapper.find('.account-name').at(0).text()).toEqual('Lisk Account');
   });
 
@@ -126,37 +127,21 @@ describe('Select Account', () => {
     expect(wrapper).toContainMatchingElements(5, '.hw-account');
     wrapper.find('.create-account').at(0).simulate('click');
     wrapper.update();
-    expect(wrapper).toContainMatchingElements(5, '.hw-account');
+    expect(wrapper).toContainMatchingElements(6, '.hw-account');
   });
 
-  it('Should NOT add another account to the list after do click on create account button', () => {
+  it('Should disable create new account button', () => {
+    wrapper.update();
     expect(wrapper).toContainMatchingElement('.create-account');
-    wrapper.find('.create-account').at(0).simulate('click');
-    expect(wrapper).toContainMatchingElements(5, '.hw-account');
-    wrapper.find('.create-account').at(0).simulate('click');
-    wrapper.update();
-    expect(toast.error).toBeCalled();
+    expect(wrapper.find('.create-account').at(0)).toBeDisabled();
   });
 
-  it('Should display active accounts', () => {
+  it('Should hide empty balance accounts', () => {
     wrapper.update();
-    wrapper.find('.tab-active').at(0).simulate('click');
+    expect(wrapper.find('.hw-container').at(0)).toContainMatchingElements(5, '.hw-account');
+    wrapper.find('.hideEmptyAccounts').at(0).simulate('change', { target: { name: 'hideEmptyAccounts' } });
     wrapper.update();
-    expect(wrapper.find('.tab-active').at(0)).toContainMatchingElements(3, '.hw-account');
-  });
-
-  it('Should display empty accounts', () => {
-    wrapper.update();
-    wrapper.find('.tab-empty').at(0).simulate('click');
-    wrapper.update();
-    expect(wrapper.find('.tab-empty').at(0)).toContainMatchingElements(1, '.hw-account');
-  });
-
-  it('Should display reclaim accounts', () => {
-    wrapper.update();
-    wrapper.find('.tab-reclaim').at(0).simulate('click');
-    wrapper.update();
-    expect(wrapper.find('.tab-reclaim').at(0)).toContainMatchingElements(1, '.hw-account');
+    expect(wrapper.find('.hw-container').at(0)).toContainMatchingElements(3, '.hw-account');
   });
 
   it('Should call login function after click on a select account button', () => {
