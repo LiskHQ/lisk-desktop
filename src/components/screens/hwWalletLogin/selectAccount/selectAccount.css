@@ -105,6 +105,10 @@
         margin: 0;
         position: absolute;
         right: 22px;
+
+        & > img {
+          margin: 0;
+        }
       }
     }
   }

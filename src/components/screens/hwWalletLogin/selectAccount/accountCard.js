@@ -7,6 +7,7 @@ import AccountVisual from '@toolbox/accountVisual';
 import LiskAmount from '@shared/liskAmount';
 import { Input } from '@toolbox/inputs';
 import Icon from '@toolbox/icon';
+import Tooltip from '@toolbox/tooltip/tooltip';
 import styles from './selectAccount.css';
 
 const AccountCard = ({
@@ -88,7 +89,20 @@ const AccountCard = ({
               <LiskAmount val={account.summary?.balance} token={tokenMap.LSK.key} />
             </p>
           </div>
-          {account.legacy && <Icon name="warningIconBlue" className={styles.legacyWarning} />}
+          {account.legacy && (
+            <Tooltip
+              className={styles.legacyWarning}
+              position="bottom"
+              indent
+              content={<Icon name="warningIconBlue" />}
+            >
+              <>
+                <p>{t('This account needs to be reclaimed')}</p>
+                <p>{t('Balance after reclaiming:')}</p>
+                <p><LiskAmount val={account.legacy.balance} token={tokenMap.LSK.key} /></p>
+              </>
+            </Tooltip>
+          )}
         </div>
       </div>
     </div>
