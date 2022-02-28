@@ -109,6 +109,10 @@
         & > img {
           margin: 0;
         }
+
+        & > .tooltip {
+          width: 265px;
+        }
       }
     }
   }
@@ -139,6 +143,42 @@
 
 .createAccountBtn {
   padding: 0 8px !important;
+}
+
+.selectAccountWrapper {
+  display: flex;
+  flex-direction: column;
+
+  & > h1 {
+    margin: 0;
+  }
+}
+
+.hideAccountsCheckbox {
+  @mixin contentLargest;
+
+  align-items: flex-start;
+  display: flex;
+  margin-top: 60px;
+  margin-bottom: 20px;
+  color: var(--color-zodiac-blue);
+
+  &.false {
+    opacity: 0.4;
+  }
+
+  & > div:last-child {
+    flex-basis: calc(100% - 25px);
+    margin-left: auto;
+  }
+
+  & .checkbox {
+    margin-right: 10px;
+
+    & > span > img {
+        margin: 0;
+    }
+  }
 }
 
 @media (--medium-viewport) {

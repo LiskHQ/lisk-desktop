@@ -92,12 +92,14 @@ const AccountCard = ({
           {account.legacy && (
             <Tooltip
               className={styles.legacyWarning}
+              tooltipClassName={styles.tooltip}
+              size="m"
               position="bottom"
-              indent
               content={<Icon name="warningIconBlue" />}
             >
               <>
                 <p>{t('This account needs to be reclaimed')}</p>
+                <br />
                 <p>{t('Balance after reclaiming:')}</p>
                 <p><LiskAmount val={account.legacy.balance} token={tokenMap.LSK.key} /></p>
               </>

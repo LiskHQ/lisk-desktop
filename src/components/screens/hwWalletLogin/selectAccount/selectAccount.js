@@ -120,7 +120,7 @@ class SelectAccount extends React.Component {
     const { hwAccounts, hideEmptyAccounts } = this.state;
 
     return (
-      <div>
+      <div className={styles.selectAccountWrapper}>
         <h1>{t('Lisk accounts on {{WalletModel}}', { WalletModel: device.model })}</h1>
         <p>
           {t('Please select the account you’d like to sign in to or')}
@@ -136,9 +136,10 @@ class SelectAccount extends React.Component {
           hwAccounts.length
             ? (
               <>
-                <label className={`${styles.fieldGroup} ${styles.checkboxField}`}>
+                <label className={`${styles.hideAccountsCheckbox} ${styles[hideEmptyAccounts]}`}>
                   <CheckBox
                     name="hideEmptyAccouts"
+                    className={`${styles.checkbox} hideEmptyAccounts`}
                     checked={hideEmptyAccounts}
                     onChange={() => {
                       this.setState({ hideEmptyAccounts: !hideEmptyAccounts });
@@ -147,7 +148,42 @@ class SelectAccount extends React.Component {
                   <span>{t('Hide empty accounts')}</span>
                 </label>
                 <div className={`${styles.deviceContainer} hw-container`}>
-                  {hwAccounts.filter(account => {
+                  {[...hwAccounts, {
+                    summary: {
+                      address: 'lsk8dwx2xdagos9v7vq6h2qnv4jnbjc95hxs7nckc',
+                      legacyAddress: '15075513162459295358L',
+                      balance: '100000000',
+                      username: '',
+                      publicKey: '6e0291140a28148267e30ac69b5e6965680190dc7de13b0a859bda556c9f0f86',
+                      isMigrated: false,
+                      isDelegate: false,
+                      isMultisignature: false,
+                    },
+                    token: {
+                      balance: '100000000',
+                    },
+                    sequence: {
+                      nonce: '0',
+                    },
+                    keys: {
+                      numberOfSignatures: 0,
+                      mandatoryKeys: [],
+                      optionalKeys: [],
+                    },
+                    dpos: {
+                      delegate: {
+                        username: '',
+                        consecutiveMissedBlocks: 0,
+                        lastForgedHeight: 0,
+                        isBanned: false,
+                        totalVotesReceived: '0',
+                      },
+                    },
+                    legacy: {
+                      address: '15075513162459295358L',
+                      balance: '13600000000',
+                    },
+                  }].filter(account => {
                     if (hideEmptyAccounts) {
                       return account.summary?.balance > 0;
                     }
