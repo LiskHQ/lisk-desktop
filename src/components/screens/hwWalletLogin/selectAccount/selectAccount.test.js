@@ -127,7 +127,7 @@ describe('Select Account', () => {
     expect(wrapper).toContainMatchingElements(5, '.hw-account');
     wrapper.find('.create-account').at(0).simulate('click');
     wrapper.update();
-    expect(wrapper).toContainMatchingElements(6, '.hw-account');
+    expect(wrapper).toContainMatchingElements(5, '.hw-account');
   });
 
   it('Should disable create new account button', () => {
@@ -139,7 +139,7 @@ describe('Select Account', () => {
   it('Should hide empty balance accounts', () => {
     wrapper.update();
     expect(wrapper.find('.hw-container').at(0)).toContainMatchingElements(5, '.hw-account');
-    wrapper.find('.hideEmptyAccounts').at(0).simulate('change', { target: { name: 'hideEmptyAccounts' } });
+    wrapper.find('input[name="hideEmptyAccounts"]').at(0).simulate('change', { target: { name: 'hideEmptyAccounts' } });
     wrapper.update();
     expect(wrapper.find('.hw-container').at(0)).toContainMatchingElements(3, '.hw-account');
   });
