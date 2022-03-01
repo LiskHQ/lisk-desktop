@@ -139,7 +139,7 @@ class SelectAccount extends React.Component {
                 <label className={`${styles.hideAccountsCheckbox} ${styles[hideEmptyAccounts]}`}>
                   <CheckBox
                     name="hideEmptyAccounts"
-                    className="hideEmptyAccounts"
+                    className={`${styles.checkbox} hideEmptyAccounts`}
                     checked={hideEmptyAccounts}
                     onChange={() => {
                       this.setState({ hideEmptyAccounts: !hideEmptyAccounts });
