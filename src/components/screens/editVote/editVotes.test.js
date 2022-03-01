@@ -149,7 +149,7 @@ describe('EditVote', () => {
     amountField = wrapper.find('input[name="vote"]').at(0);
 
     expect(amountField.find('.error')).toHaveClassName('error');
-    expect(wrapper.find('.amount Feedback')).toHaveText('Provided amount is higher than your current balance.');
+    expect(wrapper.find('.amount Feedback')).toHaveText('The provided amount is higher than available voting balance.');
   });
 
   it('should display error when voting if called with amount that is zero or negative', () => {
