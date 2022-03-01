@@ -11,7 +11,7 @@ const NumericInfo = ({
     <Icon name={icon} />
     <main className={`${styles.main} ${icon || ''}`}>
       <h6>{title}</h6>
-      <p>{value}</p>
+      <p className={`timeValue-${icon}`}>{value}</p>
     </main>
   </section>
 );

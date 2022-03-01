@@ -248,6 +248,8 @@ const ss = {
   signMessageInput: '.sign-message-input',
   copyToClipboardBtn: '.copy-to-clipboard',
   signedResult: '.result',
+  timeValue: '.timeValue-clock',
+  blocksForged: '.blocksForged',
 };
 
 export default ss;
