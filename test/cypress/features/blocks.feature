@@ -53,3 +53,7 @@ Feature: Blocks
 		When I click on blockRow
 		And I wait 1 seconds
 		Then I should see the block details page
+    Then I should see 408c63b500eac768140ef7a0dacd1638726c783c1cefa52a42189ef0fa46a1c1 in blockIdDetails section
+    Then I should see 414 in blockHeightDetails section
+    Then I should see 20 Aug 2021 in blockDateDetails section
+    Then I should see genesis_99 in blockGeneratorDetails section
