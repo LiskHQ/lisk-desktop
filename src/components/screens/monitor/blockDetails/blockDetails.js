@@ -70,7 +70,7 @@ const getFields = (data, token, t, currentHeight) => ({
   },
   confirmations: {
     label: t('Confirmations'),
-    value: currentHeight ? currentHeight - data.height : '-',
+    value: currentHeight && data?.height ? currentHeight - data.height : '-',
   },
   version: {
     label: t('Version'),
