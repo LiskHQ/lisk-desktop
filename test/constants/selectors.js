@@ -250,6 +250,7 @@ const ss = {
   signedResult: '.result',
   timeValue: '.timeValue-clock',
   blocksForged: '.blocksForged',
+  forgerItem: '.forger-item',
 };
 
 export default ss;

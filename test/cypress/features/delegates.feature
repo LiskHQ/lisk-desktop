@@ -11,8 +11,11 @@ Feature: delegate
    Scenario: Should properly display forging details
         When I observe blocksForged
         And I observe timeValue-clock
-        And I wait 10 seconds
-        Then blocksForged should be incremented by at least 1
+        When I observe forger list
+        And I wait 10.5 seconds
         And time timeValue should be incremented by at least 10 seconds
+        Then blocksForged should be incremented by at least 1
+        And forger list should be updated accordinly
+        And forger list should have a maximum of 6 delegates
         
 

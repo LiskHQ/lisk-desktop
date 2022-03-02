@@ -9,8 +9,12 @@ Then(/(\w+) count should have value greater than (\d+)/, function(displayElement
 })
 
 When(/I observe (\w+)/, function(elementClass){
-    const className = ss[elementClass]
-    cy.get(className).invoke('text').as(elementClass)
+    if(elementClass === 'forger'){
+        cy.get(ss.forgerItem).as('forgerList')
+    } else {
+        const className = ss[elementClass]
+        cy.get(className).invoke('text').as(elementClass)
+    }
 })
 
 Then(/^(\w+) should be incremented by at least (\d+)$/, function(elementClass, incrementValue){
@@ -19,6 +23,16 @@ Then(/^(\w+) should be incremented by at least (\d+)$/, function(elementClass, i
         const value = +$ele.text()
         expect(value).gte(+this[elementClass] + +incrementValue);
     })
+})
+
+Then(/^forger list should be updated accordinly$/, function(){
+    const forgerList = this.forgerList;
+    const secondForger = forgerList.eq(1)
+
+    cy.get(ss.forgerItem).eq(0).then($ele => {
+        expect($ele.text() === secondForger.text());
+    })
+
 })
 
 Then(/^time (\w+) should be incremented by at least (\d+) seconds/, function(elementClass, incrementValue){
@@ -33,6 +47,10 @@ Then(/^time (\w+) should be incremented by at least (\d+) seconds/, function(ele
         const nowSeconds = parseTimeToSeconds($ele.text());
         expect(nowSeconds).gte(parseTimeToSeconds(this[elementClass]) + +incrementValue);
     })
+})
+
+Then(/^forger list should have a maximum of (\d+) delegates/, function(forgerCount){
+    cy.get(ss.forgerItem).should('have.length.at.most', forgerCount)
 })
 
 
