@@ -36,7 +36,7 @@ Then(/^I should see the block details page$/, function () {
   })
 });
 
-Then(/^I should see (\w+) in (block\w+) section$/, function (detail, section) {
+Then(/^I should see (\w.+) in (block\w+) section$/, function (detail, section) {
   if (section === 'blockIdDetails') {
     const truncateAddress = (address) => address.replace(/^(.{6})(.+)?(.{5})$/, '$1...$3');
     cy.get(ss[section]).should('contain', truncateAddress(detail));
@@ -44,3 +44,19 @@ Then(/^I should see (\w+) in (block\w+) section$/, function (detail, section) {
     cy.get(ss[section]).should('contain', detail);
   }
 });
+
+Then(/^I should be on transaction details modal on block details page$/, function () {
+  cy.location().should((location) => {
+    const hasAddress = /&modal=transactionDetails&transactionId=6dc372dfcbfd2b1782d4d1964a35908f71e3878c69b5bbe28e5c69973671c8ee/.test(location.href);
+    expect(hasAddress).true;
+  });
+});
+
+Then(/^I should see (\w.+) in (\w+) field$/, function (text, field) {
+  if (/id/i.test(field)) {
+    const truncateAddress = (address) => address.replace(/^(.{6})(.+)?(.{5})$/, '$1...$3');
+    cy.get(ss[field]).should('contain', truncateAddress(text))
+  } else {
+    cy.get(ss[field]).should('contain', text)
+  }
+})

@@ -44,7 +44,7 @@ Feature: Blocks
 		And I click on applyFilters
 		Then I should see 1 blocks in table
 
-	Scenario: Navigate to block details page and verify details
+	Scenario: Navigate to block details page and verify block details
 		When I click on filterTransactionsBtn
     Then I should see filterDropdown
 		When I fill 414 in heightFilter field
@@ -57,3 +57,22 @@ Feature: Blocks
     Then I should see 414 in blockHeightDetails section
     Then I should see 20 Aug 2021 in blockDateDetails section
     Then I should see genesis_99 in blockGeneratorDetails section
+
+  Scenario: Navigate to block details page and verify transaction details
+		When I click on filterTransactionsBtn
+    Then I should see filterDropdown
+		When I fill 414 in heightFilter field
+		And I click on applyFilters
+		Then I should see 1 blocks in table
+		When I click on blockRow
+		And I wait 1 seconds
+		Then I should see the block details page
+    Then I should see 1 transactions in table
+    When I click on transactionRow
+    Then I should be on transaction details modal on block details page
+    Then I should see lskdxc4ta5j43jp9ro3f8zqbxta9fn6jwzjucw7yt in txSenderAddress field
+    Then I should see lsk769d7rrnxtvme2egazc8uc8d77uzwnmgzqyp53 in txRecipientAddress field
+    Then I should see 20 LSK in txAmount field
+    Then I should see 6dc372dfcbfd2b1782d4d1964a35908f71e3878c69b5bbe28e5c69973671c8ee in txId field
+    Then I should see 20 Aug 2021, 11:53:16 AM in txDate field
+    Then I should see 408c63b500eac768140ef7a0dacd1638726c783c1cefa52a42189ef0fa46a1c1 in blockIdDetails field
