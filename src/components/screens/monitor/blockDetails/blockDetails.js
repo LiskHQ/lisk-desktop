@@ -45,7 +45,7 @@ const getFields = (data, token, t, currentHeight) => ({
     value: (
       <CopyToClipboard
         text={truncateAddress(data?.id)}
-        value={data.id}
+        value={data?.id}
         className="tx-id"
         containerProps={{
           size: 'xs',
@@ -57,7 +57,7 @@ const getFields = (data, token, t, currentHeight) => ({
   },
   height: {
     label: t('Height'),
-    value: <CopyToClipboard value={data.height} />,
+    value: <CopyToClipboard value={data?.height} />,
   },
   date: {
     label: t('Date'),
@@ -70,7 +70,7 @@ const getFields = (data, token, t, currentHeight) => ({
   },
   confirmations: {
     label: t('Confirmations'),
-    value: currentHeight && data ? currentHeight - data.height : '-',
+    value: data?.height ? currentHeight - data.height : '-',
   },
   version: {
     label: t('Version'),
