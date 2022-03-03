@@ -53,4 +53,14 @@ Then(/^forger list should have a maximum of (\d+) delegates/, function(forgerCou
     cy.get(ss.forgerItem).should('have.length.at.most', forgerCount)
 })
 
+Then(/^next forgers should match first members of the inside round list$/, function(){
+    cy.get(ss.delegateRow).each(($ele, index) => {
+        if(index > 6) return;
+        if(index === 0) return;
+
+        const delegateName = $ele.find('span:first-child > div > div:last-child > div:last-child > p:first-child').text()
+        cy.get(ss.forgerItem).eq(index - 1).contains(delegateName)
+    })
+})
+
 
