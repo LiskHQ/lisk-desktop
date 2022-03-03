@@ -18,11 +18,12 @@ Feature: Blocks
 		And I wait 1 seconds
 		Then blocks should be sorted in ascending order by height
 
-	# Scenario: Retrieves and prepends new blocks
-	# 	And I wait 30 seconds
-	# 	Then I should see showLatestBlocksBtn
-	# 	When I click on showLatestBlocksBtn
-	# 	Then I should see latest blocks
+	Scenario: Retrieves and prepends new blocks
+		And I wait 30 seconds
+		Then I should see showLatestBlocksBtn
+    Then I should see the most current block
+		When I click on showLatestBlocksBtn
+		Then I should see latest blocks
 
 	Scenario: Filter blocks based on existing inputs
 		When I click on filterTransactionsBtn

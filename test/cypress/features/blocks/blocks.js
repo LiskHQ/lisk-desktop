@@ -2,7 +2,10 @@
 import { Then } from 'cypress-cucumber-preprocessor/steps';
 import { ss } from '../../../constants';
 
+let oldHeight, currentHeight
+
 Then(/^I should see (\d+) blocks in table$/, function (number) {
+  cy.wait(500);
 	cy.get(ss.blockRow).should('have.length', number);
 });
 
@@ -15,18 +18,23 @@ Then(/^blocks should be sorted in (\w+) order by height$/, function (sortOrder) 
     expect(height)[sortOrder === 'descending' ? 'lt' : 'gt'](prevHeight);
     prevHeight = height;
   })
-}); 
+});
 
-Then(/^I should see latest blocks$/, function () {
-  let oldHeight, currentHeight
-  cy.get(`${ss.blockRow} > span:first-child`).first().then(($elem) => {
-    oldHeight = +$elem.text();
-  });
+// Due to the fact that the latest blocks might load immediately the associated button is clicked,
+// it's best to keep track of the most current block at the time then compare with the latest
+// blocks after the button has been clicked
+Then(/^I should see the most current block$/, function () {
+  cy.get(`${ss.blockRow} > span:first-child`).first().should('exist').invoke('text').then((spanHeight) => {
+    oldHeight = parseInt(spanHeight, 10)
+  })
+})
+
+Then(/^I should see latest blocks$/, function () {  
   cy.wait(1000);
-  cy.get(`${ss.blockRow} > span:first-child`).first().then(($elem) => {
-    currentHeight = +$elem.text();
-  });
-  expect(oldHeight)['lt'](currentHeight)
+  cy.get(`${ss.blockRow} > span:first-child`).first().invoke('text').then((spanHeight) => {
+    currentHeight = parseInt(spanHeight, 10)
+    expect(oldHeight)['lt'](currentHeight)
+  })
 });
 
 Then(/^I should see the block details page$/, function () {
