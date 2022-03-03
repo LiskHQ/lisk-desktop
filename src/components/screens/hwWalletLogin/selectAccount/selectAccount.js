@@ -1,7 +1,7 @@
 import { to } from 'await-to-js';
 import React from 'react';
 import { toast } from 'react-toastify';
-import { getAccountsFromDevice } from '@utils/hwManager';
+import { getAccountsFromDevice, getNewAccountByIndex } from '@utils/hwManager';
 import { tokenMap, routes } from '@constants';
 import { TertiaryButton } from '@toolbox/buttons';
 import CheckBox from '@toolbox/checkBox';
@@ -79,20 +79,16 @@ class SelectAccount extends React.Component {
     this.setState({ hwAccounts: newAccounts });
   }
 
-  onAddNewAccount() {
-    const { t } = this.props;
+  async onAddNewAccount() {
     const { hwAccounts } = this.state;
-    const lastAccount = hwAccounts[hwAccounts.length - 1];
-    if (lastAccount && lastAccount.shouldShow === false) {
-      hwAccounts[hwAccounts.length - 1] = {
-        ...lastAccount,
-        shouldShow: true,
-      };
-      this.setState({ hwAccounts });
-    } else {
-      const label = t('Please use the last not-initialized account before creating a new one!');
-      toast.error(label);
-    }
+    const newAccount = await getNewAccountByIndex({
+      device: this.props.device,
+      index: hwAccounts.length,
+    });
+
+    this.setState({
+      hwAccounts: [...hwAccounts, newAccount],
+    });
   }
 
   onSelectAccount(account, index) {
@@ -127,7 +123,7 @@ class SelectAccount extends React.Component {
           <TertiaryButton
             className={`${styles.createAccountBtn} create-account`}
             onClick={this.onAddNewAccount}
-            disabled={hwAccounts.some(account => account.summary?.balance === 0)}
+            disabled={hwAccounts.some(account => !account.token)}
           >
             {t('Create an account')}
           </TertiaryButton>
