@@ -64,10 +64,9 @@ Then(/^next forgers should match first members of the inside round list$/, funct
 
 Then(/^first delegate should be forging$/, function(){
     cy.get(ss.delegateRow).each((ele, index) => {
-        if(index === 0){
+        if(index === 0) {
             expect(ele.find('span:last-child > div > div > main > p').text()).contain('Forging')
         }
-        
     })
 })
 
@@ -82,10 +81,20 @@ Then(/^delegates should be sorted in (\w+) order by forgingTime$/, function (sor
     cy.get(`${ss.delegateRow}`).each((ele) => {
       const forgeTime = parseToSeconds(ele.find('span:first-child ~ span ~ span ~ span').text());
       
-      if(forgeTime){
+      if(forgeTime) {
         expect(forgeTime)[sortOrder === 'descending' ? 'lte' : 'gte'](prevForgeTime);
         prevForgeTime = forgeTime;
       }
+    })
+  }); 
+
+  Then(/^delegates should be sorted in (\w+) order by status$/, function (sortOrder) {
+    let prevStatus = sortOrder === 'descending' ? 'zzzzz' : '';
+  
+    cy.get(`${ss.delegateRow}`).each((ele) => {
+        const status = ele.find('span:first-child ~ span ~ span ~ span').text()
+        expect(sortOrder === 'descending' ? prevStatus >= status :prevStatus <= status ).eq(true)
+        prevStatus = status;
     })
   }); 
 
