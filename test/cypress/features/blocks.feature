@@ -9,6 +9,7 @@ Feature: Blocks
 	Scenario: Load all blocks and load more blocks
 		Then I should see 20 blocks in table
 		When I click on showMoreBlocksBtn
+    And I wait 1 seconds
 		Then I should see 40 blocks in table
 
 	Scenario: Sorting by height should work as expected
@@ -41,6 +42,7 @@ Feature: Blocks
 		Then I should see 20 blocks in table
 		When I click on filterTransactionsBtn
     Then I should see filterDropdown
+    When I fill 508 in heightFilter field
 		When I fill genesis_82 in generatedByFilter field
 		And I click on applyFilters
 		Then I should see 1 blocks in table
@@ -75,5 +77,4 @@ Feature: Blocks
     Then I should see lsk769d7rrnxtvme2egazc8uc8d77uzwnmgzqyp53 in txRecipientAddress field
     Then I should see 20 LSK in txAmount field
     Then I should see 6dc372dfcbfd2b1782d4d1964a35908f71e3878c69b5bbe28e5c69973671c8ee in txId field
-    Then I should see 20 Aug 2021, 11:53:16 AM in txDate field
     Then I should see 408c63b500eac768140ef7a0dacd1638726c783c1cefa52a42189ef0fa46a1c1 in blockIdDetails field

@@ -29,7 +29,7 @@ Then(/^I should see the most current block$/, function () {
   })
 })
 
-Then(/^I should see latest blocks$/, function () {  
+Then(/^I should see latest blocks$/, function () {
   cy.wait(1000);
   cy.get(`${ss.blockRow} > span:first-child`).first().invoke('text').then((spanHeight) => {
     currentHeight = parseInt(spanHeight, 10)
