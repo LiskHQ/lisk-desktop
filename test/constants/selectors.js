@@ -251,6 +251,9 @@ const ss = {
   timeValue: '.timeValue-clock',
   blocksForged: '.blocksForged',
   forgerItem: '.forger-item',
+  insideRoundBtn: '.delegates-table > ul > .tab:first-child',
+  watchedBtn: '.delegates-table > ul > .tab:last-child',
+  filterDelegateInput: '.filter-by-name',
 };
 
 export default ss;

@@ -164,8 +164,15 @@ Then(/^I should be on (.*?) page$/, function (pageName) {
   }
 });
 
-Then(/^I should see (\d+) transactions in table$/, function (number) {
-  cy.get(ss.transactionRow).should('have.length', number);
+Then(/^I should see (\d+) (\w+) in table$/, function (number, rowType) {
+  switch (rowType) {
+    case 'transactions':
+      cy.get(ss.transactionRow).should('have.length', number);
+      break;
+    case 'delegates':
+      cy.get(ss.delegateRow).should('have.length', number);
+      break;
+  }
 });
 
 Then(/^I should see (.*?)$/, function (elementName) {
