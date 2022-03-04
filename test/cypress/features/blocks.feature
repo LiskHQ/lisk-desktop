@@ -35,7 +35,7 @@ Feature: Blocks
 		Then I should see 20 blocks in table
 		When I click on filterTransactionsBtn
     Then I should see filterDropdown
-		When I fill 01.01.22 in dateFromInputFilter field
+		When I fill 04.01.22 in dateFromInputFilter field
 		When I fill 05.01.22 in dateToInputFilter field
 		And I click on applyFilters
 		Then I should see 20 blocks in table
