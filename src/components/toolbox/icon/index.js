@@ -96,6 +96,7 @@ import verifyWalletAddressActive from '../../../assets/images/icons/verify-icon-
 import walletIcon from '../../../assets/images/icons/wallet.svg';
 import walletIconActive from '../../../assets/images/icons/wallet-active.svg';
 import warningIcon from '../../../assets/images/icons/warning-icon.svg';
+import warningIconBlue from '../../../assets/images/icons/warning-icon-blue.svg';
 import warningRound from '../../../assets/images/icons/warning-round.svg';
 import warningFolder from '../../../assets/images/icons/warning-folder.svg';
 import qrCode from '../../../assets/images/icons/qr-code.svg';
@@ -293,6 +294,7 @@ export const icons = {
   walletIcon,
   walletIconActive,
   warningIcon,
+  warningIconBlue,
   warningRound,
   warningFolder,
   addedVotes,
