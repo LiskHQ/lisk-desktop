@@ -1,5 +1,5 @@
 Feature: delegate
-     Background:
+     Scenario: I should be on the delegates page
           Given Network is set to devnet
           And I am on delegates page
           And I wait 5 seconds
@@ -33,6 +33,9 @@ Feature: delegate
           Then delegate should be watched
      
      Scenario: Outside round delegates should function properly
+          Given Network is set to devnet
+          And I am on delegates page
+          And I wait 5 seconds
           When I click on outsideRoundBtn
           Then I should see 20 delegates in table
           When I click on showMoreDelegatesBtn
@@ -42,6 +45,22 @@ Feature: delegate
           Then delegates should be sorted in descending order by status
           Then delegates should be sorted in ascending order by status
           When I fill test_deleg in filterDelegateInput field
+          And I wait 2 seconds
+          Then filtered results should be displayed
+          When I watch a delegate
+          And I wait 0.5 seconds
+          Then delegate should be watched
+
+     Scenario: Sanctioned delegates should function properly
+          Given Network is set to testnet
+          And I am on delegates page
+          And I wait 5 seconds
+          When I click on sanctionedBtn
+          Then I should see 10 delegates in table
+          When I click on showMoreDelegatesBtn
+          And I wait 1 seconds
+          Then I should see 20 delegates in table
+          When I fill genesis in filterDelegateInput field
           And I wait 2 seconds
           Then filtered results should be displayed
           When I watch a delegate

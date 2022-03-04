@@ -119,3 +119,7 @@ Then(/^delegates should be sorted in (\w+) order by forgingTime$/, function (sor
       })
   }); 
 
+  Then(/^there should be more than (\d+) delegates in table$/, function (number) {
+        cy.get(ss.delegateRow).should('have.length.gte', number);
+  });
+
