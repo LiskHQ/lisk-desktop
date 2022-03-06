@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
 
 import { formatAmountBasedOnLocale } from '@utils/formattedNumber';
@@ -32,8 +32,11 @@ const AmountField = ({
 }) => {
   const { t } = useTranslation();
   const [showEntireBalanceWarning, setShowEntireBalanceWarning] = useState(false);
+  const [isMaximum, setIsMaximum] = useState(false);
+
   const setEntireBalance = (e) => {
     e.preventDefault();
+    setIsMaximum(true);
     const value = formatAmountBasedOnLocale({
       value: fromRawLsk(maxAmount.value),
       format: '0.[00000000]',
@@ -57,6 +60,16 @@ const AmountField = ({
   const ignoreClicks = (e) => {
     e.preventDefault();
   };
+
+  useEffect(() => {
+    if (isMaximum) {
+      const value = formatAmountBasedOnLocale({
+        value: fromRawLsk(maxAmount.value),
+        format: '0.[00000000]',
+      });
+      onChange({ value }, maxAmount);
+    }
+  }, [isMaximum, maxAmount.value]);
 
   return (
     <label className={`${styles.fieldGroup} ${amount.error ? styles.error : ''} ${className}`}>
