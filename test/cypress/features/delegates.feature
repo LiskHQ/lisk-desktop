@@ -51,6 +51,21 @@ Feature: delegate
           And I wait 0.5 seconds
           Then delegate should be watched
 
+     Scenario: watch list should function properly
+          When I clear input filterDelegateInput
+          And I click on insideRoundBtn
+          And I watch a delegate
+          And I click on watchedBtn
+          Then I should see 2 delegates in table
+          When I don't watch a delegate
+          Then I should see 1 delegates in table
+          When I fill test in filterDelegateInput field
+          And I wait 2 seconds
+          Then filtered results should be displayed
+          When I clear input filterDelegateInput
+          And I fill not_valid in filterDelegateInput field
+          Then I should see 0 delegates in table
+
      Scenario: Sanctioned delegates should function properly
           Given Network is set to testnet
           And I am on delegates page
@@ -66,3 +81,5 @@ Feature: delegate
           When I watch a delegate
           And I wait 0.5 seconds
           Then delegate should be watched
+
+

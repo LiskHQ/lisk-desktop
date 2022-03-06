@@ -109,6 +109,12 @@ Then(/^delegates should be sorted in (\w+) order by forgingTime$/, function (sor
         watchToggleBtn.trigger('click')
       })
   }); 
+  When(/^I don't watch a delegate$/, function () {
+    cy.get(`${ss.delegateRow}`).eq(0).then((ele) => {
+        const watchToggleBtn = ele.find('span:first-child > div:first-child > div:first-child > span:first-child');
+        watchToggleBtn.trigger('click')
+      })
+  }); 
   
   Then (/^delegate should be watched$/, function () {
     cy.get(`${ss.delegateRow}`).each((ele) => {
