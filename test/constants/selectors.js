@@ -254,6 +254,7 @@ const ss = {
   insideRoundBtn: '.delegates-table > ul > .tab:first-child',
   outsideRoundBtn: '.delegates-table > ul > .tab:nth-child(2)',
   sanctionedBtn: '.delegates-table > ul > .tab:nth-child(3)',
+  latestVotesBtn: '.delegates-table > ul > .tab:nth-child(4)',
   watchedBtn: '.delegates-table > ul > .tab:last-child',
   filterDelegateInput: '.filter-by-name',
   showMoreDelegatesBtn: '.delegate-box .load-more',

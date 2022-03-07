@@ -82,4 +82,14 @@ Feature: delegate
           And I wait 0.5 seconds
           Then delegate should be watched
 
+     Scenario: latest votes list should function properly
+          Given Network is set to devnet
+          And I am on delegates page
+          And I wait 5 seconds
+          When I click on latestVotesBtn
+          Then I should see 10 votes in table
+          When I click on showMoreDelegatesBtn
+          Then I should see 20 votes in table
+          When I click on voteRow
+          Then I should be on a vote transaction details modal
 

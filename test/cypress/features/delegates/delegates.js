@@ -11,7 +11,7 @@ Then(/(\w+) count should have value greater than (\d+)/, function(displayElement
 })
 
 When(/I observe (\w+)/, function(elementClass){
-    if(elementClass === 'forger'){
+    if(elementClass === 'forger') {
         cy.get(ss.forgerItem).as('forgerList')
     } else {
         const className = ss[elementClass]
@@ -126,6 +126,13 @@ Then(/^delegates should be sorted in (\w+) order by forgingTime$/, function (sor
   }); 
 
   Then(/^there should be more than (\d+) delegates in table$/, function (number) {
-        cy.get(ss.delegateRow).should('have.length.gte', number);
+    cy.get(ss.delegateRow).should('have.length.gte', number);
+  });
+
+  Then(/^I should be on a vote transaction details modal$/, function () {
+    cy.location().should((location) => {
+      const hasAddress = /\?modal=transactionDetails&transactionId=a1c5521f466ae5476d3908cc8d562444d45adf4ac3af57e77f1f9359999ab9ca&token=LSK/.test(location.href);
+      expect(hasAddress).true;
+    });
   });
 
