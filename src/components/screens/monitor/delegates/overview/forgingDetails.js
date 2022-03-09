@@ -126,8 +126,7 @@ const ForgingDetails = ({
                   <ProgressBar forgedInRound={forgedInRound} theme={theme} />
                   <p className={styles.blue}>
                     <span className="blocksForged">{`${forgedInRound} `}</span>
-                    /
-                    <span>{` ${ROUND_LENGTH}`}</span>
+                    <span>{`/ ${ROUND_LENGTH}`}</span>
                   </p>
                 </main>
               </section>

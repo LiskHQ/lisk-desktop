@@ -39,9 +39,9 @@ Then(/^next forger list should be updated accordingly$/, function () {
 Then(/^time (\w+) should be incremented by at least (\d+) seconds/, function (elementClass, incrementValue) {
   const className = ss[elementClass];
   const parseTimeToSeconds = (time) => {
-    const minuites = time.match(/^\d+(?=:)/g)?.[0] || 0;
+    const minutes = time.match(/^\d+(?=:)/g)?.[0] || 0;
     const seconds = time.match(/(?<=:)\d+$/g) || 0;
-    return 60 * +minuites + +seconds;
+    return 60 * +minutes + +seconds;
   };
 
   cy.get(className).then(ele => {
@@ -72,9 +72,9 @@ Then(/^first delegate should be forging$/, () => {
 Then(/^delegates should be sorted in (\w+) order by forgingTime$/, (sortOrder) => {
   let prevForgeTime = sortOrder === 'descending' ? Infinity : -Infinity;
   const parseToSeconds = (time) => {
-    const minuites = time.match(/\d+(?=m)/g)?.[0] || 0;
+    const minutes = time.match(/\d+(?=m)/g)?.[0] || 0;
     const seconds = time.match(/\d+(?=s)$/g)?.[0] || 0;
-    return 60 * +minuites + +seconds;
+    return 60 * +minutes + +seconds;
   };
 
   cy.get(`${ss.delegateRow}`).each((ele) => {
@@ -108,6 +108,7 @@ When(/^I watch a delegate$/, function () {
     watchToggleBtn.trigger('click');
   });
 });
+
 When(/^I don't watch a delegate$/, () => {
   cy.get(`${ss.delegateRow}`).eq(0).then((ele) => {
     const watchToggleBtn = ele.find('span:first-child > div:first-child > div:first-child > span:first-child');
