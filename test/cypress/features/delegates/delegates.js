@@ -1,5 +1,4 @@
 /* eslint-disable */
-import { Then, When } from 'cypress-cucumber-preprocessor/steps/index';
 import { ss } from '../../../constants';
 
 const getDelegateNameFromRow = (ele) => ele.find('span:first-child > div > div:last-child > div:last-child > p:first-child').text();
