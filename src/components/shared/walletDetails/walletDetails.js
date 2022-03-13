@@ -16,7 +16,7 @@ import LockedBalanceLink from '../../screens/wallet/overview/balanceInfo/unlocki
 import styles from './walletDetails.css';
 
 const WalletDetails = ({
-  t, account, settings, className,
+  t, account, settings, className, isWalletRoute,
 }) => {
   const dispatch = useDispatch();
   const tokens = Object.entries(account.info || {}).filter(
@@ -60,9 +60,10 @@ const WalletDetails = ({
                     {token === tokenMap.LSK.key ? (
                       <LockedBalanceLink
                         activeToken={token}
-                        isWalletRoute
+                        isWalletRoute={isWalletRoute}
                         style={styles.lockedBalance}
                         icon="lockedBalance"
+                        account={account.info.LSK}
                       />
                     ) : null}
                   </DiscreetMode>
