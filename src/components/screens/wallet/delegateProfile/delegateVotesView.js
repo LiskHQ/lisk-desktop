@@ -15,8 +15,8 @@ const DelegateVotesView = ({
 }) => {
   const [searchInput, setSearchInput] = useState('');
 
-  const onInputChange = (e) => {
-    setSearchInput(e.target.value);
+  const onInputChange = ({ target }) => {
+    setSearchInput(target.value);
   };
 
   const handleLoadMore = () => {
