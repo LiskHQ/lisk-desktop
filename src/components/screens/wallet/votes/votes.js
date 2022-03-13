@@ -46,7 +46,7 @@ const Votes = ({
   const areLoading = accounts.isLoading || votes.isLoading;
   const filteredVotes = votes.data.filter((vote) => {
     if (!vote.username) return false;
-    return vote.username.indexOf(filterValue) > -1;
+    return vote.username.indexOf(filterValue) > -1 || vote.address.indexOf(filtervalue) > -1;
   });
 
   return (
