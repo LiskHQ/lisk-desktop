@@ -95,7 +95,7 @@ export const search = ({ network, params, baseUrl }) => {
   }
   if (regex.blockHeight.test(params.query)) {
     return getBlock({
-      network, 
+      network,
       params: { height: params.query },
       baseUrl,
     }).then(res => ({ data: { blocks: res.data }, meta: res.meta }));
