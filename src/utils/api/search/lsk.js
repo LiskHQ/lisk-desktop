@@ -1,7 +1,6 @@
 import { regex, tokenMap } from '@constants';
 import { validateAddress } from '@utils/validators';
 import { getAccount } from '../account/lsk';
-import { getBlock } from '../block';
 import { getTransaction } from '../transaction/lsk';
 import { getDelegates } from '../delegate';
 import { getBlock } from '../block';
@@ -94,13 +93,12 @@ export const search = ({ network, params, baseUrl }) => {
   if (regex.transactionId.test(params.query)) {
     return getTransactionOrBlock({ network, params, baseUrl });
   }
-  /// test height-> getBlock
   if (regex.blockHeight.test(params.query)) {
     return getBlock({
-       network, 
-       params:{height:params.query},
-        baseUrl 
-      });
+      network, 
+      params: { height: params.query },
+      baseUrl,
+    }).then(res => ({ data: { blocks: res.data }, meta: res.meta }));
   }
   return getDelegates({
     network,
