@@ -17,6 +17,7 @@ const urls = {
   signMessage: '/sign-message',
   login: '/login',
   network: '/network',
+  blocks: '/blocks',
 };
 
 export default urls;

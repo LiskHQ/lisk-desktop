@@ -63,7 +63,7 @@ const Blocks = ({
           clearFilter, clearAllFilters, filters, formatters, t,
         }}
         />
-        <BoxContent className={styles.content}>
+        <BoxContent className={`${styles.content} block-results`}>
           <Table
             data={blocks.data}
             isLoading={blocks.isLoading}
