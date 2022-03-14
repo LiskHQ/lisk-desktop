@@ -39,7 +39,7 @@ const Generator = ({
   );
 };
 
-const getFields = (data, token, t, currentHeight) => ({
+const getFields = (data = {}, token, t, currentHeight) => ({
   id: {
     label: t('Block ID'),
     value: (
@@ -70,7 +70,7 @@ const getFields = (data, token, t, currentHeight) => ({
   },
   confirmations: {
     label: t('Confirmations'),
-    value: currentHeight ? currentHeight - data.height : '-',
+    value: data.height ? currentHeight - data.height : '-',
   },
   version: {
     label: t('Version'),
@@ -111,7 +111,7 @@ const Rows = ({ data, t, currentHeight }) => {
     <LabeledValue
       key={field}
       label={fields[field].label}
-      className={styles.dataRow}
+      className={`${styles.dataRow} block-${field}`}
     >
       {fields[field].value}
     </LabeledValue>
