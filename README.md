@@ -26,7 +26,7 @@ If you have licensed copies of `Basier Circle` and `Gilroy`, you can add them to
 
 ### Setup environment
 
-The development environment currently depends on [Node.js version 12 (lts/erbium)](https://nodejs.org/download/release/latest-v12.x/). The below instructions assume [nvm](https://github.com/nvm-sh/nvm) is being used to manage Node.js versions.
+The development environment currently depends on [Node.js version 16 (lts/gallium)](https://nodejs.org/download/release/latest-v16.x/). The below instructions assume [nvm](https://github.com/nvm-sh/nvm) is being used to manage Node.js versions.
 
 *Note*:
 For *Windows* users, make sure to set the correct [msvs_version](https://www.npmjs.com/package/node-gyp#on-windows) config for installing and packing the Lisk Desktop application.

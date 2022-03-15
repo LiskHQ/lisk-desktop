@@ -1,6 +1,6 @@
 // eslint-disable-next-line import/no-unresolved
 import i18next from 'i18next';
-import { getAccount } from './api/account';
+import { getAccounts } from './api/account';
 import {
   checkIfInsideLiskApp,
   getAddress,
@@ -12,24 +12,46 @@ import {
   validatePin,
   signMessage,
 } from '../../libs/hwManager/communication';
+import { extractAddressFromPublicKey } from './account';
+
+const getAccountBundle = async (deviceId, network, offset) => {
+  const publicKeyList = [];
+
+  for (let index = offset; index < offset + 10; index++) {
+    // eslint-disable-next-line no-await-in-loop
+    const publicKey = await getPublicKey({ index, deviceId });
+    publicKeyList.push(publicKey);
+  }
+  const accounts = await getAccounts({ network, params: { publicKeyList } }, 'LSK');
+  return accounts.data.filter(item => item.summary?.address);
+};
 
 /**
  * getAccountsFromDevice - Function.
  * This function is used for retrieve the accounts from an hw device, using public keys.
  */
 const getAccountsFromDevice = async ({ device: { deviceId }, network }) => {
-  const accounts = [];
-  let account = {};
-  for (let index = 0; index === accounts.length; index++) {
+  let accounts = [];
+
+  for (let index = 0; index <= accounts.length; index += 10) {
     // eslint-disable-next-line no-await-in-loop
-    const publicKey = await getPublicKey({ index, deviceId });
+    const result = await getAccountBundle(deviceId, network, index);
     // eslint-disable-next-line no-await-in-loop
-    account = await getAccount({ network, params: { publicKey } }, 'LSK');
-    if (index === 0 || accounts[index - 1].summary.balance) {
-      accounts.push(account);
-    }
+    accounts = [...accounts, ...result];
   }
   return accounts;
+};
+
+const getNewAccountByIndex = async ({ device: { deviceId }, index }) => {
+  const publicKey = await getPublicKey({ index, deviceId });
+
+  return {
+    summary: {
+      publicKey,
+      address: extractAddressFromPublicKey(publicKey),
+      balance: '0',
+    },
+  };
 };
 
 const isKeyMatch = (aPublicKey, signerPublicKey) => (Buffer.isBuffer(aPublicKey)
@@ -41,7 +63,7 @@ const isKeyMatch = (aPublicKey, signerPublicKey) => (Buffer.isBuffer(aPublicKey)
  * This function updates transaction object to include the signatures at correct index.
  * The below logic is copied from Lisk SDK https://github.com/LiskHQ/lisk-sdk/blob/2593d1fe70154a9209b713994a252c494cad7123/elements/lisk-transactions/src/sign.ts#L228-L297
  */
-/* eslint-disable max-statements */
+/* eslint-disable max-statements, complexity */
 const updateTransactionSignatures = (
   account,
   transactionObject,
@@ -50,13 +72,16 @@ const updateTransactionSignatures = (
 ) => {
   const isMultiSignatureRegistration = transactionObject.moduleID === 4;
   const signerPublicKey = Buffer.from(account.summary.publicKey, 'hex');
-  if (Buffer.isBuffer(transactionObject.senderPublicKey)
-    && signerPublicKey.equals(transactionObject.senderPublicKey)
+  const isSender = Buffer.isBuffer(transactionObject.senderPublicKey)
+    && signerPublicKey.equals(transactionObject.senderPublicKey);
+  const { mandatoryKeys, optionalKeys } = keys;
+  if (
+    mandatoryKeys.length + optionalKeys.length === 0
+    || (isSender && isMultiSignatureRegistration)
   ) {
     transactionObject.signatures[0] = signature;
   }
 
-  const { mandatoryKeys, optionalKeys } = keys;
   if (mandatoryKeys.length + optionalKeys.length > 0) {
     const mandatoryKeyIndex = mandatoryKeys.findIndex(
       aPublicKey => isKeyMatch(aPublicKey, signerPublicKey),
@@ -149,6 +174,7 @@ export const getDeviceType = (deviceModel = '') => {
 };
 
 export {
+  getNewAccountByIndex,
   checkIfInsideLiskApp,
   getAccountsFromDevice,
   getAddress,

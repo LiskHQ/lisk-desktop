@@ -16,6 +16,9 @@ export const chartStyles = {
   mystic: '#edf0f5',
   warningBorder: '#f7e36d',
   cobaltBlue: '#254798',
+  burntSienna: '#ec6868',
+  orange: '#ff7721',
+  rainbowEnd: '#35f2b6',
   transparent: 'rgba(0, 0, 0, 0)',
   contentFontFamily: '\'basier-circle\', sans-serif',
   fontSize: 13,
@@ -28,6 +31,9 @@ export const colorPalette = [
   chartStyles.linthPink,
   chartStyles.darkBlue,
   chartStyles.slateGray,
+  chartStyles.burntSienna,
+  chartStyles.orange,
+  chartStyles.rainbowEnd,
 ];
 
 export const colorPaletteDark = [
@@ -37,4 +43,7 @@ export const colorPaletteDark = [
   chartStyles.pasterPink,
   chartStyles.cobaltBlue,
   chartStyles.slateGray,
+  chartStyles.burntSienna,
+  chartStyles.orange,
+  chartStyles.rainbowEnd,
 ];

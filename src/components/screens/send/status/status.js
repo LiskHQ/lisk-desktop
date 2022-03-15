@@ -46,7 +46,7 @@ const TransactionStatus = ({
   }, []);
 
   const showBookmark = shouldShowBookmark(bookmarks, account, rawTransaction, token);
-  const status = getTransactionStatus(account, transactions);
+  const status = getTransactionStatus(account, transactions, account.summary.isMultisignature);
   const template = getMessagesDetails(
     transactions, status, t,
     false,

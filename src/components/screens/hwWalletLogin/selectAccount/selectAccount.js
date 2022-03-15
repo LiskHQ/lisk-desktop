@@ -1,36 +1,19 @@
 import { to } from 'await-to-js';
 import React from 'react';
 import { toast } from 'react-toastify';
-import { getAccountsFromDevice } from '@utils/hwManager';
+import { getAccountsFromDevice, getNewAccountByIndex } from '@utils/hwManager';
 import { tokenMap, routes } from '@constants';
 import { TertiaryButton } from '@toolbox/buttons';
-import TabsContainer from '@toolbox/tabsContainer/tabsContainer';
+import CheckBox from '@toolbox/checkBox';
 import AccountCard from './accountCard';
 import LoadingIcon from '../loadingIcon';
 import styles from './selectAccount.css';
-
-const Tab = ({
-  name, id, accountsList,
-  onSaveNameAccounts, onSelectAccount,
-}) => (
-  <div name={name} id={id} className={`${styles.deviceContainer} ${`tab-${id}`} hw-container`}>
-    {accountsList.map((data) => (
-      <AccountCard
-        key={`hw-account-tabId-${data.index}`}
-        account={data.account}
-        index={data.index}
-        onSaveNameAccounts={onSaveNameAccounts}
-        onSelectAccount={onSelectAccount}
-      />
-    ))}
-  </div>
-);
 
 class SelectAccount extends React.Component {
   constructor(props) {
     super(props);
 
-    this.state = { hwAccounts: [] };
+    this.state = { hwAccounts: [], hideEmptyAccounts: false };
 
     this.onSaveNameAccounts = this.onSaveNameAccounts.bind(this);
     this.onAddNewAccount = this.onAddNewAccount.bind(this);
@@ -96,20 +79,16 @@ class SelectAccount extends React.Component {
     this.setState({ hwAccounts: newAccounts });
   }
 
-  onAddNewAccount() {
-    const { t } = this.props;
+  async onAddNewAccount() {
     const { hwAccounts } = this.state;
-    const lastAccount = hwAccounts[hwAccounts.length - 1];
-    if (lastAccount && lastAccount.shouldShow === false) {
-      hwAccounts[hwAccounts.length - 1] = {
-        ...lastAccount,
-        shouldShow: true,
-      };
-      this.setState({ hwAccounts });
-    } else {
-      const label = t('Please use the last not-initialized account before creating a new one!');
-      toast.error(label);
-    }
+    const newAccount = await getNewAccountByIndex({
+      device: this.props.device,
+      index: hwAccounts.length,
+    });
+
+    this.setState({
+      hwAccounts: [...hwAccounts, newAccount],
+    });
   }
 
   onSelectAccount(account, index) {
@@ -134,33 +113,17 @@ class SelectAccount extends React.Component {
 
   render() {
     const { t, device } = this.props;
-    const { hwAccounts } = this.state;
-
-    const {
-      nonEmptyAccounts,
-      emptyAccounts,
-      reclaimAccounts,
-    } = hwAccounts.reduce((acc, account, index) => {
-      if (account.legacy) {
-        acc.reclaimAccounts = [...acc.reclaimAccounts, { index, account }];
-        return acc;
-      }
-      if (account.summary?.balance > 0) {
-        acc.nonEmptyAccounts = [...acc.nonEmptyAccounts, { index, account }];
-        return acc;
-      }
-      acc.emptyAccounts = [...acc.emptyAccounts, { index, account }];
-      return acc;
-    }, { nonEmptyAccounts: [], emptyAccounts: [], reclaimAccounts: [] });
+    const { hwAccounts, hideEmptyAccounts } = this.state;
 
     return (
-      <div>
+      <div className={styles.selectAccountWrapper}>
         <h1>{t('Lisk accounts on {{WalletModel}}', { WalletModel: device.model })}</h1>
         <p>
           {t('Please select the account you’d like to sign in to or')}
           <TertiaryButton
             className={`${styles.createAccountBtn} create-account`}
             onClick={this.onAddNewAccount}
+            disabled={hwAccounts.some(account => !account.token)}
           >
             {t('Create an account')}
           </TertiaryButton>
@@ -168,29 +131,35 @@ class SelectAccount extends React.Component {
         {
           hwAccounts.length
             ? (
-              <TabsContainer name="main-tabs">
-                <Tab
-                  name={t('Active')}
-                  id="active"
-                  accountsList={nonEmptyAccounts}
-                  onSaveNameAccounts={this.onSaveNameAccounts}
-                  onSelectAccount={this.onSelectAccount}
-                />
-                <Tab
-                  name={t('Empty')}
-                  id="empty"
-                  accountsList={emptyAccounts}
-                  onSaveNameAccounts={this.onSaveNameAccounts}
-                  onSelectAccount={this.onSelectAccount}
-                />
-                <Tab
-                  name={t('Pending reclaim ({{numOfAccounts}})', { numOfAccounts: reclaimAccounts.length })}
-                  id="reclaim"
-                  accountsList={reclaimAccounts}
-                  onSaveNameAccounts={this.onSaveNameAccounts}
-                  onSelectAccount={this.onSelectAccount}
-                />
-              </TabsContainer>
+              <>
+                <label className={`${styles.hideAccountsCheckbox} ${styles[hideEmptyAccounts]}`}>
+                  <CheckBox
+                    name="hideEmptyAccounts"
+                    className={`${styles.checkbox} hideEmptyAccounts`}
+                    checked={hideEmptyAccounts}
+                    onChange={() => {
+                      this.setState({ hideEmptyAccounts: !hideEmptyAccounts });
+                    }}
+                  />
+                  <span>{t('Hide empty accounts')}</span>
+                </label>
+                <div className={`${styles.deviceContainer} hw-container`}>
+                  {hwAccounts.filter(account => {
+                    if (hideEmptyAccounts) {
+                      return account.summary?.balance > 0;
+                    }
+                    return true;
+                  }).map((account, index) => (
+                    <AccountCard
+                      key={`hw-account-${index}`}
+                      account={account}
+                      index={index}
+                      onSaveNameAccounts={this.onSaveNameAccounts}
+                      onSelectAccount={this.onSelectAccount}
+                    />
+                  ))}
+                </div>
+              </>
             )
             : <LoadingIcon />
         }

@@ -11,6 +11,7 @@ import arrowLeftInactive from '../../../assets/images/icons/arrow-left-inactive.
 import arrowRightActive from '../../../assets/images/icons/arrow-right-active.svg';
 import arrowRightInactive from '../../../assets/images/icons/arrow-right-inactive.svg';
 import arrowRightWithStroke from '../../../assets/images/icons/arrow-right-with-stroke.svg';
+import arrowRightCircle from '../../../assets/images/icons/arrow-right-circle.svg';
 import arrowRightWithStrokeDark from '../../../assets/images/icons/arrow-right-with-stroke-dark.svg';
 import arrowUpCircle from '../../../assets/images/icons/click-to-update.svg';
 import balance from '../../../assets/images/icons/balance.svg';
@@ -95,6 +96,7 @@ import verifyWalletAddressActive from '../../../assets/images/icons/verify-icon-
 import walletIcon from '../../../assets/images/icons/wallet.svg';
 import walletIconActive from '../../../assets/images/icons/wallet-active.svg';
 import warningIcon from '../../../assets/images/icons/warning-icon.svg';
+import warningIconBlue from '../../../assets/images/icons/warning-icon-blue.svg';
 import warningRound from '../../../assets/images/icons/warning-round.svg';
 import warningFolder from '../../../assets/images/icons/warning-folder.svg';
 import qrCode from '../../../assets/images/icons/qr-code.svg';
@@ -212,6 +214,7 @@ export const icons = {
   arrowRightActive,
   arrowRightInactive,
   arrowUpCircle,
+  arrowRightCircle,
   balance,
   bookmarksIconEmptyState,
   btcIcon,
@@ -291,6 +294,7 @@ export const icons = {
   walletIcon,
   walletIconActive,
   warningIcon,
+  warningIconBlue,
   warningRound,
   warningFolder,
   addedVotes,

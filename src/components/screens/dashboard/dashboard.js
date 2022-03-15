@@ -61,7 +61,11 @@ const Dashboard = ({ account, t }) => {
         />
         <div className={`${styles.main}`}>
           <div className={styles.subContainer}>
-            {isLoggedIn ? <WalletDetails className={styles.marginFix} /> : null}
+            {
+              isLoggedIn
+                ? <WalletDetails className={styles.marginFix} isWalletRoute={false} />
+                : null
+            }
 
             <RecentTransactions
               className={styles.marginFix}

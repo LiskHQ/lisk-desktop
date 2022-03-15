@@ -2,6 +2,7 @@
 import React, { useEffect, useState } from 'react';
 import { PrimaryButton, SecondaryButton, TertiaryButton } from '@toolbox/buttons';
 import PassphraseInput from '@toolbox/passphraseInput';
+import useSecondPassphrase from '@src/hooks/setSecondPassphrase';
 import BoxFooter from '@toolbox/box/footer';
 import styles from './transactionSummary.css';
 
@@ -23,7 +24,7 @@ const Actions = ({
     )}
     <PrimaryButton
       className="confirm-button"
-      disabled={confirmButton.disabled || inputStatus === 'visible'}
+      disabled={confirmButton.disabled || inputStatus === 'visible' || inputStatus === 'invalid'}
       onClick={confirmButton.onClick}
     >
       {isMultisignature ? t('Sign') : confirmButton.label}
@@ -34,12 +35,14 @@ const Actions = ({
 const SecondPassInput = ({
   t, secondPassphraseStored, inputStatus, setInputStatus,
 }) => {
-  const [secondPass, set2ndPass] = useState('');
+  const [secondPass, set2ndPass] = useSecondPassphrase();
 
   useEffect(() => {
-    if (secondPass) {
-      secondPassphraseStored(secondPass);
+    if (secondPass.error === 0) {
+      secondPassphraseStored(secondPass.data);
       setInputStatus('valid');
+    } else if (secondPass.error > 0) {
+      setInputStatus('invalid');
     }
   }, [secondPass]);
 
@@ -47,6 +50,7 @@ const SecondPassInput = ({
     <div className={styles.secondaryActions}>
       <span className={styles.or}>or</span>
       <TertiaryButton
+        className="use-second-passphrase-btn"
         onClick={() => setInputStatus('visible')}
       >
         {t('Send using second passphrase right away')}

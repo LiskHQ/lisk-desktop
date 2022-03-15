@@ -60,14 +60,8 @@ describe('Request', () => {
     });
 
     it('Should show error feedback if ending in . or multiples .', () => {
-      const evt = { target: { name: 'amount', value: 1 } };
       const multipleDotsEvt = { target: { name: 'amount', value: '1.2.3' } };
-      const endingDotEvt = { target: { name: 'amount', value: '12.' } };
       const amountField = wrapper.find('.fieldGroup').at(0);
-      amountField.find('input').simulate('change', endingDotEvt);
-      wrapper.update();
-      expect(wrapper.find('.amount Feedback')).toHaveText('Provide a correct amount of LSK');
-      amountField.find('input').simulate('change', evt);
       wrapper.update();
       expect(wrapper.find('.amount Feedback')).toHaveText('');
       amountField.find('input').simulate('change', multipleDotsEvt);

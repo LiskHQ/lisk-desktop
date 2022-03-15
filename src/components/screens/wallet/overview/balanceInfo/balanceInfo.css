@@ -119,8 +119,19 @@
 
   & > img {
     width: 17px;
-    margin-right: 8px;
+    margin-right: 5px;
+    margin-left: 5px;
   }
+}
+
+.pointer {
+  cursor: pointer;
+}
+
+.lockedIcon {
+  display: flex;
+  align-self: center;
+  margin-left: 5px;
 }
 
 .disabled {

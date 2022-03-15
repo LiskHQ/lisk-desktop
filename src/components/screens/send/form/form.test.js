@@ -238,6 +238,30 @@ describe('Form', () => {
       expect(wrapper.find('button.btn-submit')).toBeDisabled();
     });
 
+    it('Should show error if amount is negative', () => {
+      const wrapper = mount(<Form {...props} />);
+      const evt = { target: { name: 'amount', value: '-1' } };
+      const amountField = wrapper.find('.fieldGroup').at(1);
+      amountField.find('input').simulate('change', evt);
+      act(() => { jest.advanceTimersByTime(300); });
+      wrapper.update();
+
+      expect(wrapper.find('.amount Feedback')).toHaveText('Amount can\'t be negative.');
+      expect(wrapper.find('button.btn-submit')).toBeDisabled();
+    });
+
+    it('Should allow to send 0 LSK amount', () => {
+      const wrapper = mount(<Form {...props} />);
+      const evt = { target: { name: 'amount', value: '0' } };
+      const amountField = wrapper.find('.fieldGroup').at(1);
+      amountField.find('input').simulate('change', evt);
+      act(() => { jest.advanceTimersByTime(300); });
+      wrapper.update();
+
+      expect(wrapper.find('.amount Feedback')).not.toHaveText(expect.any(String));
+      expect(wrapper.find('button.btn-submit')).not.toBeDisabled();
+    });
+
     it('Should be able to send entire balance', () => {
       const wrapper = mount(<Form {...props} />);
       const { address } = accounts.genesis.summary;
@@ -248,6 +272,22 @@ describe('Form', () => {
 
       expect(wrapper.find('.amount Feedback')).toHaveText('');
       expect(wrapper.find('button.btn-submit')).not.toBeDisabled();
+    });
+
+    it.skip('Should update amount field if maximum value changes', () => {
+      const wrapper = mount(<Form {...props} />);
+      const { address } = accounts.genesis.summary;
+      wrapper.find('input.recipient').simulate('change', { target: { name: 'recipient', value: address } });
+      wrapper.find('.use-entire-balance-button').at(1).simulate('click');
+      act(() => { jest.advanceTimersByTime(300); });
+      wrapper.update();
+      expect(wrapper.find('.amount input').instance().value).toEqual('2');
+      act(() => { jest.advanceTimersByTime(300); });
+      wrapper.update();
+      wrapper.find('textarea.message').simulate('change', { target: { name: 'reference', value: 'Testing maximum balance update' } });
+      act(() => { jest.advanceTimersByTime(300); });
+      wrapper.update();
+      expect(wrapper.find('.amount input').instance().value).toEqual('2');
     });
 
     it('Should display send entire balance warning', () => {
