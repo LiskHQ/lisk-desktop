@@ -274,6 +274,22 @@ describe('Form', () => {
       expect(wrapper.find('button.btn-submit')).not.toBeDisabled();
     });
 
+    it.skip('Should update amount field if maximum value changes', () => {
+      const wrapper = mount(<Form {...props} />);
+      const { address } = accounts.genesis.summary;
+      wrapper.find('input.recipient').simulate('change', { target: { name: 'recipient', value: address } });
+      wrapper.find('.use-entire-balance-button').at(1).simulate('click');
+      act(() => { jest.advanceTimersByTime(300); });
+      wrapper.update();
+      expect(wrapper.find('.amount input').instance().value).toEqual('2');
+      act(() => { jest.advanceTimersByTime(300); });
+      wrapper.update();
+      wrapper.find('textarea.message').simulate('change', { target: { name: 'reference', value: 'Testing maximum balance update' } });
+      act(() => { jest.advanceTimersByTime(300); });
+      wrapper.update();
+      expect(wrapper.find('.amount input').instance().value).toEqual('2');
+    });
+
     it('Should display send entire balance warning', () => {
       const wrapper = mount(<Form {...props} />);
       const { address } = accounts.genesis.summary;
