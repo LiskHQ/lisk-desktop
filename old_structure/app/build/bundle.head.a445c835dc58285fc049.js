@@ -1,0 +1,1 @@
+(self.webpackChunkLisk=self.webpackChunkLisk||[]).push([[974],{"./src/assets/css/styles.head.css":()=>{}},0,[["./src/assets/css/styles.head.css",666]]]);

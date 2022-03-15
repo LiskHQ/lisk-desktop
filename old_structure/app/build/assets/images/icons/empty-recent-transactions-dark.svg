@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="41px" height="41px" viewBox="0 0 41 41" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <!-- Generator: sketchtool 54.1 (76490) - https://sketchapp.com -->
+    <title>17BD5513-EE5E-4B52-94E5-F8712E39B1B1</title>
+    <desc>Created with sketchtool.</desc>
+    <defs>
+        <polygon id="path-1" points="0.0910199275 0.203368967 5.05505435 0.203368967 5.05505435 4.10580799 0.0910199275 4.10580799"></polygon>
+    </defs>
+    <g id="🏡--1.0-Dashboard" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="1.1.2-Dashboard---Empty" transform="translate(-219.000000, -486.000000)">
+            <g id="Group-2" transform="translate(24.000000, 416.000000)">
+                <g id="Recent-Transactions---Empty---3-Col">
+                    <g id="Group" transform="translate(196.000000, 70.000000)">
+                        <g id="Group-23">
+                            <g id="Group-22">
+                                <path d="M36.9415743,21.7097872 C36.9415743,31.6442553 28.8843098,39.6978723 18.9453424,39.6978723 C9.00552355,39.6978723 0.949110507,31.6442553 0.949110507,21.7097872 C0.949110507,11.7753191 9.00552355,3.72170213 18.9453424,3.72170213 C28.8843098,3.72170213 36.9415743,11.7753191 36.9415743,21.7097872" id="Fill-1" fill="#3B3B41"></path>
+                                <path d="M29.8901268,35.7464681 C26.8078804,38.2188085 22.8946196,39.6979574 18.6348188,39.6979574 C8.69585145,39.6979574 0.638586957,31.6443404 0.638586957,21.7098723 C0.638586957,11.7754043 8.69585145,3.72178723 18.6348188,3.72178723" id="Stroke-3" stroke="#4070F4" stroke-width="1.5"></path>
+                                <polygon id="Fill-5" fill="#4070F4" points="18.6349891 7.80561702 18.6349891 0.000510638298 22.5388841 3.9026383"></polygon>
+                                <path d="M32.3197373,28.5328511 L36.3700815,31.3243404" id="Stroke-7" stroke="#4070F4" stroke-width="1.5"></path>
+                                <path d="M32.3197373,14.2667234 L36.9899366,11.475234" id="Stroke-12" stroke="#4070F4" stroke-width="1.5"></path>
+                                <path d="M26.7021304,8.65123404 L29.4948841,3.98314894" id="Stroke-14" stroke="#4070F4" stroke-width="1.5"></path>
+                                <path d="M20.8068659,21.7097872 C20.8068659,22.7378723 19.9732971,23.5710638 18.9447464,23.5710638 C17.9170471,23.5710638 17.0834783,22.7378723 17.0834783,21.7097872 C17.0834783,20.6817021 17.9170471,19.8485106 18.9447464,19.8485106 C19.9732971,19.8485106 20.8068659,20.6817021 20.8068659,21.7097872" id="Fill-16" fill="#4070F4"></path>
+                                <path d="M19.3181069,21.6034043 L25.3983062,18.0944681" id="Stroke-18" stroke="#4070F4" stroke-width="1.5"></path>
+                                <path d="M18.6349891,21.7097872 L18.6349891,10.5446809" id="Stroke-20" stroke="#4070F4" stroke-width="1.5"></path>
+                            </g>
+                        </g>
+                        <g id="Group-11" transform="translate(34.057971, 18.935199)">
+                            <mask id="mask-2" fill="white">
+                                <use xlink:href="#path-1"></use>
+                            </mask>
+                            <g id="Clip-10"></g>
+                            <path d="M0.0910199275,2.15458848 L5.05582065,2.15458848" id="Stroke-9" stroke="#4070F4" stroke-width="1.5" mask="url(#mask-2)"></path>
+                        </g>
+                    </g>
+                </g>
+            </g>
+        </g>
+    </g>
+</svg>

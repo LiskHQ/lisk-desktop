@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="80px" height="80px" viewBox="0 0 80 80" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <!-- Generator: Sketch 50.2 (55047) - http://www.bohemiancoding.com/sketch -->
+    <title>icons/sidebar/settings</title>
+    <desc>Created with Sketch.</desc>
+    <defs>
+        <linearGradient x1="19.4762866%" y1="88.4126955%" x2="86.0468234%" y2="18.4958616%" id="linearGradient-1">
+            <stop stop-color="#004AFF" offset="0%"></stop>
+            <stop stop-color="#93F4FE" offset="100%"></stop>
+        </linearGradient>
+        <linearGradient x1="85.0239064%" y1="19.5701975%" x2="-22.7836953%" y2="123.900336%" id="linearGradient-2">
+            <stop stop-color="#FFFFFF" offset="0%"></stop>
+            <stop stop-color="#93F4FE" offset="100%"></stop>
+        </linearGradient>
+    </defs>
+    <g id="icons/sidebar/settings" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="Group" transform="translate(13.000000, 3.000000)">
+            <g id="settings-copy-2">
+                <polygon id="Polygon-2-Copy-3" fill="url(#linearGradient-1)" opacity="0.700000048" points="22.2507289 0 44.5014577 12.8571429 44.5014577 38.7475538 22.2507289 51.7808219 -2.35367281e-14 38.7475538 -2.35367281e-14 13.0332681"></polygon>
+                <path d="M22.2735201,37.4699633 C28.6579036,37.4699633 33.8334691,32.2261751 33.8334691,25.7576345 C33.8334691,19.289094 28.6579036,14.0453058 22.2735201,14.0453058 C15.8891366,14.0453058 10.7135711,19.289094 10.7135711,25.7576345 C10.7135711,32.2261751 15.8891366,37.4699633 22.2735201,37.4699633 Z" id="Oval-Copy-3" fill="url(#linearGradient-2)"></path>
+            </g>
+            <g id="settings-copy-3" transform="translate(31.232143, 45.068493)">
+                <polygon id="Polygon-2-Copy-3" fill="url(#linearGradient-1)" opacity="0.700000048" points="10.8839286 0 21.7678571 6.19047619 21.7678571 18.6562296 10.8839286 24.9315068 -1.24344979e-14 18.6562296 -1.24344979e-14 6.27527723"></polygon>
+                <path d="M10.8839286,17.5987107 C13.6890749,17.5987107 15.9630952,15.3006075 15.9630952,12.4657534 C15.9630952,9.63089939 13.6890749,7.33279613 10.8839286,7.33279613 C8.07878228,7.33279613 5.8047619,9.63089939 5.8047619,12.4657534 C5.8047619,15.3006075 8.07878228,17.5987107 10.8839286,17.5987107 Z" id="Oval-Copy-3" fill="url(#linearGradient-2)"></path>
+            </g>
+        </g>
+    </g>
+</svg>

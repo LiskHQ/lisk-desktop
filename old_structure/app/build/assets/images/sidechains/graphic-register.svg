@@ -1,0 +1,143 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="224" height="181" viewBox="0 0 224 181">
+  <defs>
+    <linearGradient id="graphic-register-b" x1="-52.506%" y1="-9.548%" y2="95.048%">
+      <stop offset="0%" stop-color="#00457D"/>
+      <stop offset="100%" stop-color="#001A56"/>
+    </linearGradient>
+    <linearGradient id="graphic-register-c" x1="0%" y1="100%" y2="0%">
+      <stop offset="0%" stop-color="#021755" stop-opacity="0"/>
+      <stop offset="100%" stop-color="#0097FF"/>
+    </linearGradient>
+    <polygon id="graphic-register-a" points="78.47 .532 156.677 45.597 156.665 71.034 78.458 116.099 .251 71.034 .263 45.597"/>
+    <linearGradient id="graphic-register-d" x1="0%" x2="50%" y1="31.053%" y2="50%">
+      <stop offset="0%" stop-color="#FFF"/>
+      <stop offset="100%" stop-color="#FFF" stop-opacity="0"/>
+    </linearGradient>
+    <linearGradient id="graphic-register-f" x1="100%" x2="-19.446%" y1="68.284%" y2="28.862%">
+      <stop offset="0%" stop-color="#021755" stop-opacity="0"/>
+      <stop offset="100%" stop-color="#0097FF"/>
+    </linearGradient>
+    <linearGradient id="graphic-register-g" x1="26.176%" x2="105.233%" y1="8.461%" y2="39.87%">
+      <stop offset="0%" stop-color="#FFF"/>
+      <stop offset="100%" stop-color="#FFF" stop-opacity="0"/>
+    </linearGradient>
+    <linearGradient id="graphic-register-i" x1="0%" x2="72.088%" y1="100%" y2="0%">
+      <stop offset="0%" stop-color="#021755" stop-opacity="0"/>
+      <stop offset="100%" stop-color="#0097FF"/>
+    </linearGradient>
+    <polygon id="graphic-register-h" points="78.207 0 156.413 45.065 156.413 70.843 78.207 115.908 0 69.77 0 45.065"/>
+    <linearGradient id="graphic-register-j" x1="91.939%" x2="8.517%" y1="24.123%" y2="52.09%">
+      <stop offset="0%" stop-color="#021755" stop-opacity="0"/>
+      <stop offset="100%" stop-color="#67C1FF"/>
+    </linearGradient>
+    <linearGradient id="graphic-register-l" x1="196.414%" x2="2.414%" y1="84.038%" y2="21.672%">
+      <stop offset="0%" stop-color="#021755" stop-opacity="0"/>
+      <stop offset="100%" stop-color="#0097FF"/>
+    </linearGradient>
+    <polygon id="graphic-register-k" points="78.207 91.203 78.207 115.908 0 69.77 0 45.065"/>
+    <linearGradient id="graphic-register-m" x1="167.504%" x2="0%" y1="90.604%" y2="32.848%">
+      <stop offset="0%" stop-color="#021755" stop-opacity="0"/>
+      <stop offset="100%" stop-color="#0097FF"/>
+    </linearGradient>
+    <linearGradient id="graphic-register-n" x1="-4.402%" y1="-4.443%" y2="95.048%">
+      <stop offset="0%" stop-color="#00457D"/>
+      <stop offset="100%" stop-color="#001A56"/>
+    </linearGradient>
+    <linearGradient id="graphic-register-p" x1="-11.816%" x2="134.274%" y1="36.069%" y2="36.069%">
+      <stop offset="0%" stop-color="#0462F5"/>
+      <stop offset="100%" stop-color="#00ECFF"/>
+    </linearGradient>
+    <polygon id="graphic-register-o" points="78.265 .434 156.472 45.499 156.472 71.813 78.265 116.878 .059 70.741 .059 45.499"/>
+    <linearGradient id="graphic-register-q" x1="79.333%" x2="0%" y1="29.754%" y2="29.754%">
+      <stop offset="0%" stop-color="#74F8F8" stop-opacity="0"/>
+      <stop offset="100%" stop-color="#74F8F8"/>
+    </linearGradient>
+    <linearGradient id="graphic-register-r" x1="82.396%" x2="15.958%" y1="53.18%" y2="6.779%">
+      <stop offset="0%" stop-color="#74F8F8" stop-opacity="0"/>
+      <stop offset="100%" stop-color="#74F8F8"/>
+    </linearGradient>
+    <linearGradient id="graphic-register-s" x1="154.433%" x2="39.768%" y1="36.999%" y2="89.321%">
+      <stop offset="0%" stop-color="#021755" stop-opacity="0"/>
+      <stop offset="100%" stop-color="#0097FF"/>
+    </linearGradient>
+    <linearGradient id="graphic-register-t" x1="135.284%" x2="0%" y1="70.448%" y2="32.848%">
+      <stop offset="0%" stop-color="#021755" stop-opacity="0"/>
+      <stop offset="100%" stop-color="#0097FF"/>
+    </linearGradient>
+    <linearGradient id="graphic-register-u" x1="26.917%" x2="86.959%" y1="14.279%" y2="71.231%">
+      <stop offset="0%" stop-color="#021755" stop-opacity="0"/>
+      <stop offset="100%" stop-color="#0097FF"/>
+    </linearGradient>
+    <linearGradient id="graphic-register-v" x1="73.818%" x2="73.818%" y1="32.637%" y2="72.191%">
+      <stop offset="0%" stop-color="#021755" stop-opacity="0"/>
+      <stop offset="100%" stop-color="#0097FF"/>
+    </linearGradient>
+    <linearGradient id="graphic-register-x" x1="50%" x2="78.931%" y1=".811%" y2="75.945%">
+      <stop offset="0%" stop-color="#08061E"/>
+      <stop offset="100%" stop-color="#001A55"/>
+    </linearGradient>
+    <linearGradient id="graphic-register-y" x1="65.935%" x2="7.1%" y1="82.749%" y2="45.965%">
+      <stop offset="0%" stop-color="#FFF"/>
+      <stop offset="100%" stop-color="#93F4FE"/>
+    </linearGradient>
+    <polygon id="graphic-register-w" points="9.943 .066 19.785 5.666 19.785 16.865 9.943 22.465 .101 16.865 .101 5.666"/>
+    <linearGradient id="graphic-register-A" x1="-52.506%" y1="-9.548%" y2="95.048%">
+      <stop offset="0%" stop-color="#00457D"/>
+      <stop offset="100%" stop-color="#001A56" stop-opacity=".08"/>
+    </linearGradient>
+    <linearGradient id="graphic-register-C" x1="57.703%" x2="0%" y1="50%" y2="78.368%">
+      <stop offset="0%" stop-color="#021755" stop-opacity="0"/>
+      <stop offset="40.262%" stop-color="#022264" stop-opacity=".088"/>
+      <stop offset="100%" stop-color="#0097FF"/>
+    </linearGradient>
+    <polygon id="graphic-register-B" points="10.005 22.386 10.005 11.266 19.761 5.666 19.761 16.851"/>
+    <polygon id="graphic-register-D" points="9.943 11.106 9.943 22.465 .101 16.865 .101 5.666"/>
+  </defs>
+  <g fill="none" fill-rule="evenodd">
+    <g transform="translate(0 64.889)">
+      <mask id="graphic-register-e" fill="#fff">
+        <use xlink:href="#graphic-register-a"/>
+      </mask>
+      <use fill="url(#graphic-register-b)" xlink:href="#graphic-register-a"/>
+      <use fill="url(#graphic-register-c)" xlink:href="#graphic-register-a"/>
+      <polygon fill="url(#graphic-register-d)" points=".263 135.088 .263 45.597 77.789 .532 77.789 90.547" mask="url(#graphic-register-e)" opacity=".631" style="mix-blend-mode:soft-light"/>
+      <polygon fill="url(#graphic-register-f)" points="78.458 116.055 78.458 90.906 156.483 45.597 156.483 71.16" mask="url(#graphic-register-e)"/>
+      <polygon fill="url(#graphic-register-g)" points="78.47 89.911 78.458 115.941 .251 70.876 .263 46.133" opacity=".701" style="mix-blend-mode:soft-light"/>
+    </g>
+    <g transform="translate(0 32.712)">
+      <use fill="url(#graphic-register-b)" xlink:href="#graphic-register-h"/>
+      <use fill="url(#graphic-register-i)" xlink:href="#graphic-register-h"/>
+      <g opacity=".379">
+        <use fill="url(#graphic-register-j)" xlink:href="#graphic-register-k"/>
+        <use fill="url(#graphic-register-l)" xlink:href="#graphic-register-k"/>
+      </g>
+      <polygon fill="url(#graphic-register-m)" fill-opacity=".52" points="78.189 115.887 78.189 91.169 156.22 45.155 156.22 70.728"/>
+    </g>
+    <use fill="url(#graphic-register-n)" xlink:href="#graphic-register-o"/>
+    <use fill="url(#graphic-register-p)" fill-opacity=".9" xlink:href="#graphic-register-o"/>
+    <polygon fill="url(#graphic-register-q)" points=".101 45.626 78.458 .369 230 88.557 230 206.555 .101 70.773" opacity=".39"/>
+    <polygon fill="url(#graphic-register-r)" points="156.444 45.58 230 88.02 230 182.458 78.458 92.636" opacity=".39"/>
+    <polygon fill="url(#graphic-register-s)" fill-opacity=".52" points="78.637 92.544 78.637 116.82 .076 70.743 .076 45.484"/>
+    <polygon fill="url(#graphic-register-t)" fill-opacity=".52" points="78.144 117.002 78.144 92.573 156.279 45.619 156.279 72.235"/>
+    <g transform="translate(99.416 70.251)">
+      <polygon fill="url(#graphic-register-u)" fill-opacity=".52" points="88.389 47.499 78.561 53.158 78.561 63.828 0 17.751 0 6.301 9.827 .439"/>
+      <polygon fill="url(#graphic-register-v)" fill-opacity=".2" points="88.389 47.499 78.561 53.158 78.561 63.828 0 17.751 0 6.301 9.827 .439"/>
+      <g transform="translate(78.458 47.192)">
+        <mask id="graphic-register-z" fill="#fff">
+          <use xlink:href="#graphic-register-w"/>
+        </mask>
+        <use fill="url(#graphic-register-x)" xlink:href="#graphic-register-w"/>
+        <use fill="url(#graphic-register-y)" xlink:href="#graphic-register-w"/>
+        <polygon fill="url(#graphic-register-d)" points=".101 16.786 .101 5.666 9.857 .066 9.857 11.251" mask="url(#graphic-register-z)" opacity=".631" style="mix-blend-mode:soft-light"/>
+        <g mask="url(#graphic-register-z)">
+          <use fill="url(#graphic-register-A)" fill-opacity=".15" xlink:href="#graphic-register-B"/>
+          <use fill="url(#graphic-register-C)" fill-opacity=".2" xlink:href="#graphic-register-B"/>
+        </g>
+        <g>
+          <use fill="url(#graphic-register-A)" fill-opacity=".15" xlink:href="#graphic-register-D"/>
+          <use fill="url(#graphic-register-C)" fill-opacity=".2" xlink:href="#graphic-register-D"/>
+        </g>
+      </g>
+    </g>
+  </g>
+</svg>

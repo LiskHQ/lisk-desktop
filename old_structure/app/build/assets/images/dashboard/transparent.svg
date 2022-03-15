@@ -1,0 +1,101 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="315px" height="250px" viewBox="0 0 315 250" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <!-- Generator: Sketch 51.1 (57501) - http://www.bohemiancoding.com/sketch -->
+    <title>transparent</title>
+    <desc>Created with Sketch.</desc>
+    <defs>
+        <rect id="path-1" x="0" y="0" width="315" height="250"></rect>
+        <linearGradient x1="-7.71824324%" y1="171.767876%" x2="139.03884%" y2="19.9420167%" id="linearGradient-3">
+            <stop stop-color="#243475" offset="0%"></stop>
+            <stop stop-color="#0097FF" offset="100%"></stop>
+        </linearGradient>
+        <polygon id="path-4" points="112.320814 0.383502272 224.641628 65.317945 224.641628 72.691152 112.320814 137.625595 9.35258655e-14 72.691152 0 65.317945"></polygon>
+        <polygon id="path-6" points="112.075314 -2.85365854 212.753138 58.7295251 112.075314 117 11.3974895 58.7295251"></polygon>
+        <filter x="-14.4%" y="-20.9%" width="128.8%" height="148.4%" filterUnits="objectBoundingBox" id="filter-7">
+            <feOffset dx="0" dy="4" in="SourceAlpha" result="shadowOffsetOuter1"></feOffset>
+            <feGaussianBlur stdDeviation="9" in="shadowOffsetOuter1" result="shadowBlurOuter1"></feGaussianBlur>
+            <feColorMatrix values="0 0 0 0 0.0235294118   0 0 0 0 0.184313725   0 0 0 0 0.450980392  0 0 0 0.5 0" type="matrix" in="shadowBlurOuter1"></feColorMatrix>
+        </filter>
+        <linearGradient x1="-60.9206081%" y1="-239.640231%" x2="56.8095439%" y2="123.93645%" id="linearGradient-8">
+            <stop stop-color="#08061E" stop-opacity="0.57" offset="0%"></stop>
+            <stop stop-color="#001A55" stop-opacity="0" offset="100%"></stop>
+        </linearGradient>
+        <polygon id="path-9" points="112.320814 131.151803 224.641628 65.5845057 224.641628 72.9533034 112.320814 137.848915 9.35258655e-14 72.9533034 0 65.5845057"></polygon>
+        <linearGradient x1="100%" y1="100%" x2="56.8106142%" y2="0%" id="linearGradient-11">
+            <stop stop-color="#004AFF" offset="0%"></stop>
+            <stop stop-color="#93F4FE" offset="100%"></stop>
+        </linearGradient>
+        <polygon id="path-12" points="112.219485 -27.383811 224.540299 37.5161271 224.540299 44.8854161 112.219485 109.785354 -0.101329495 44.8854161 -0.101329495 37.5161271"></polygon>
+        <linearGradient x1="85.4482583%" y1="118.293662%" x2="-25.4651845%" y2="-174.355136%" id="linearGradient-14">
+            <stop stop-color="#004AFF" offset="0%"></stop>
+            <stop stop-color="#93F4FE" stop-opacity="0" offset="100%"></stop>
+        </linearGradient>
+        <polygon id="path-15" points="112.017174 101.948873 224.135677 37.8966868 224.135677 45.2212628 112.017174 109.560952 -0.101329495 44.4490372 -0.101329495 37.8966868"></polygon>
+        <linearGradient x1="44.7708386%" y1="8.58927124%" x2="64.4924822%" y2="100%" id="linearGradient-17">
+            <stop stop-color="#008DF1" offset="0%"></stop>
+            <stop stop-color="#001A56" offset="100%"></stop>
+        </linearGradient>
+        <polygon id="path-18" points="112.795639 -56.2558445 225.085468 8.60390989 225.085468 15.9686361 112.795639 80.8283905 0.505810041 15.9686361 0.505810041 8.60390989"></polygon>
+        <linearGradient x1="152.363886%" y1="-219.073644%" x2="32.9552553%" y2="88.4981873%" id="linearGradient-20">
+            <stop stop-color="#008DF1" offset="0%"></stop>
+            <stop stop-color="#001A56" offset="100%"></stop>
+        </linearGradient>
+        <polygon id="path-21" points="112.795639 74.1246473 225.085468 8.49242885 225.085468 15.8685228 112.795639 80.8283905 0.505810041 15.8685228 0.505810041 8.49242885"></polygon>
+        <linearGradient x1="24.1086419%" y1="11.270635%" x2="96.3808407%" y2="127.388414%" id="linearGradient-23">
+            <stop stop-color="#008DF1" stop-opacity="0" offset="0%"></stop>
+            <stop stop-color="#001A56" offset="100%"></stop>
+        </linearGradient>
+        <polygon id="path-24" points="112.795639 -56.2558445 225.085468 8.60390989 225.085468 15.9686361 112.795639 80.8283905 0.505810041 15.9686361 0.505810041 8.60390989"></polygon>
+    </defs>
+    <g id="transparent" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="components/illustrations/transparent">
+            <mask id="mask-2" fill="white">
+                <use xlink:href="#path-1"></use>
+            </mask>
+            <g id="Mask" fill-rule="nonzero"></g>
+            <g mask="url(#mask-2)" id="Polygon-2">
+                <g transform="translate(43.000000, 82.000000)">
+                    <g>
+                        <g id="Group">
+                            <g id="Group-3">
+                                <g id="Group-2" transform="translate(0.949791, 0.073171)">
+                                    <mask id="mask-5" fill="white">
+                                        <use xlink:href="#path-4"></use>
+                                    </mask>
+                                    <use id="Mask" fill="url(#linearGradient-3)" xlink:href="#path-4"></use>
+                                    <g id="Polygon-2" opacity="0.938876488" mask="url(#mask-5)" fill="black" fill-opacity="1">
+                                        <use filter="url(#filter-7)" xlink:href="#path-6"></use>
+                                    </g>
+                                    <mask id="mask-10" fill="white">
+                                        <use xlink:href="#path-9"></use>
+                                    </mask>
+                                    <use id="Mask" fill="url(#linearGradient-8)" xlink:href="#path-9"></use>
+                                    <mask id="mask-13" fill="white">
+                                        <use xlink:href="#path-12"></use>
+                                    </mask>
+                                    <use id="Mask" fill="url(#linearGradient-11)" opacity="0.800000012" xlink:href="#path-12"></use>
+                                    <mask id="mask-16" fill="white">
+                                        <use xlink:href="#path-15"></use>
+                                    </mask>
+                                    <use id="Mask" fill-opacity="0.8" fill="url(#linearGradient-14)" opacity="0.5" xlink:href="#path-15"></use>
+                                    <mask id="mask-19" fill="white">
+                                        <use xlink:href="#path-18"></use>
+                                    </mask>
+                                    <use id="Mask" fill="url(#linearGradient-17)" opacity="0.5" xlink:href="#path-18"></use>
+                                    <mask id="mask-22" fill="white">
+                                        <use xlink:href="#path-21"></use>
+                                    </mask>
+                                    <use id="Mask" fill-opacity="0.8" fill="url(#linearGradient-20)" opacity="0.5" xlink:href="#path-21"></use>
+                                    <mask id="mask-25" fill="white">
+                                        <use xlink:href="#path-24"></use>
+                                    </mask>
+                                    <use id="Mask" fill="url(#linearGradient-23)" opacity="0.5" xlink:href="#path-24"></use>
+                                </g>
+                            </g>
+                        </g>
+                    </g>
+                </g>
+            </g>
+        </g>
+    </g>
+</svg>

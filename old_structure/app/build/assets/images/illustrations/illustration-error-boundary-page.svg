@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="480px" height="160px" viewBox="0 0 480 160" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <!-- Generator: sketchtool 53.2 (72643) - https://sketchapp.com -->
+    <title>390729FB-78B4-4408-9190-1F65B6CF1052</title>
+    <desc>Created with sketchtool.</desc>
+    <defs>
+        <polygon id="path-1" points="0 0.877192982 479.446456 0.877192982 479.446456 163.877193 0 163.877193"></polygon>
+    </defs>
+    <g id="lisk-desktop---Internal-Iterations" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="Error-404---Go-to-Dashboard-Copy-2" transform="translate(-443.000000, -208.000000)">
+            <g id="Group-3" transform="translate(422.000000, 203.000000)">
+                <g id="Group-14" transform="translate(21.000000, 0.000000)">
+                    <polygon id="Fill-1" fill="#DFE6F2" points="359.248056 158.584561 147.239074 158.584561 147.239074 149.138386 350.569881 149.138386 350.569881 27.8477193 359.248056 27.8477193"></polygon>
+                    <g id="Group-13" transform="translate(0.000000, 0.360982)">
+                        <mask id="mask-2" fill="white">
+                            <use xlink:href="#path-1"></use>
+                        </mask>
+                        <g id="Clip-3"></g>
+                        <polygon id="Stroke-2" stroke="#0C152E" mask="url(#mask-2)" points="131.371789 148.777123 350.570105 148.777123 350.570105 5.48112281 131.371789 5.48112281"></polygon>
+                        <polygon id="Stroke-4" stroke="#0C152E" mask="url(#mask-2)" points="131.371789 22.7263158 350.570105 22.7263158 350.570105 5.48112281 131.371789 5.48112281"></polygon>
+                        <path d="M341.667761,13.4957754 C341.667761,16.0568982 339.591691,18.1329684 337.030568,18.1329684 C334.469446,18.1329684 332.392814,16.0568982 332.392814,13.4957754 C332.392814,10.9346526 334.469446,8.85858246 337.030568,8.85858246 C339.591691,8.85858246 341.667761,10.9346526 341.667761,13.4957754 Z" id="Stroke-5" stroke="#0C152E" mask="url(#mask-2)"></path>
+                        <polygon id="Fill-6" fill="#4070F4" mask="url(#mask-2)" points="374.157474 147.508912 424.874667 147.508912 424.874667 136.201684 374.157474 136.201684"></polygon>
+                        <polygon id="Fill-7" fill="#4070F4" mask="url(#mask-2)" points="436.992 119.889544 460.565895 119.889544 460.565895 108.581754 436.992 108.581754"></polygon>
+                        <polygon id="Fill-8" fill="#4070F4" mask="url(#mask-2)" points="11.9427368 163.877193 27.3341754 163.877193 27.3341754 152.569965 11.9427368 152.569965"></polygon>
+                        <polygon id="Fill-9" fill="#4070F4" mask="url(#mask-2)" points="0 163.877193 5.71901754 163.877193 5.71901754 152.569965 0 152.569965"></polygon>
+                        <polygon id="Fill-10" fill="#4070F4" mask="url(#mask-2)" points="60.6759298 56.9247719 103.834947 56.9247719 103.834947 45.6169825 60.6759298 45.6169825"></polygon>
+                        <polygon id="Fill-11" fill="#4070F4" mask="url(#mask-2)" points="279.202863 109.92233 253.846512 84.5665404 279.202863 59.2107509 271.262933 51.2708211 245.907144 76.6266105 220.551354 51.2708211 212.611425 59.2107509 237.967214 84.5665404 212.611425 109.92233 220.551354 117.86226 245.907144 92.5064702 271.262933 117.86226"></polygon>
+                        <polygon id="Fill-12" fill="#4070F4" mask="url(#mask-2)" points="464.969544 119.889544 479.447018 119.889544 479.447018 108.581754 464.969544 108.581754"></polygon>
+                    </g>
+                </g>
+            </g>
+        </g>
+    </g>
+</svg>

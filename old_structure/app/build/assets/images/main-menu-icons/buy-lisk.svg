@@ -1,0 +1,16 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="80" height="60" viewBox="0 0 80 60">
+  <defs>
+    <linearGradient id="buy_export-a" x1="19.476%" x2="86.047%" y1="88.413%" y2="18.496%">
+      <stop offset="0%" stop-color="#004AFF"/>
+      <stop offset="100%" stop-color="#93F4FE"/>
+    </linearGradient>
+    <linearGradient id="buy_export-b" x1="157.456%" x2="0%" y1="26.775%" y2="78.719%">
+      <stop offset="0%" stop-color="#FFF" stop-opacity="0"/>
+      <stop offset="100%" stop-color="#82F0FC"/>
+    </linearGradient>
+  </defs>
+  <g fill="none" fill-rule="evenodd" transform="translate(8 7)">
+    <circle cx="42" cy="23" r="23" fill="url(#buy_export-a)" opacity=".8"/>
+    <circle cx="23" cy="23" r="23" fill="url(#buy_export-b)"/>
+  </g>
+</svg>

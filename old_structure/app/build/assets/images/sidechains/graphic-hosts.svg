@@ -1,0 +1,127 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="279" height="197" viewBox="0 0 279 197">
+  <defs>
+    <linearGradient id="graphic-hosts-a" x1="-4.402%" y1="-4.443%" y2="95.048%">
+      <stop offset="0%" stop-color="#00457D"/>
+      <stop offset="100%" stop-color="#001A56"/>
+    </linearGradient>
+    <linearGradient id="graphic-hosts-c" x1="-5.003%" x2="109.775%" y1="63.418%" y2="24.017%">
+      <stop offset="0%" stop-color="#0462F5"/>
+      <stop offset="100%" stop-color="#00ECFF"/>
+    </linearGradient>
+    <polygon id="graphic-hosts-b" points="78.029 0 156.057 45.186 156.057 135.557 78.029 180.743 0 135.557 0 45.186"/>
+    <linearGradient id="graphic-hosts-d" x1="89.177%" x2="-21.465%" y1="25.356%" y2="69.201%">
+      <stop offset="0%" stop-color="#74F8F8" stop-opacity="0"/>
+      <stop offset="100%" stop-color="#74F8F8"/>
+    </linearGradient>
+    <linearGradient id="graphic-hosts-e" x1="125.022%" x2="0%" y1="72.112%" y2="33.491%">
+      <stop offset="0%" stop-color="#74F8F8" stop-opacity="0"/>
+      <stop offset="100%" stop-color="#74F8F8"/>
+    </linearGradient>
+    <linearGradient id="graphic-hosts-f" x1="-15.485%" x2="290.573%" y1="255.558%" y2="-265.672%">
+      <stop offset="0%" stop-color="#243475"/>
+      <stop offset="100%" stop-color="#0097FF" stop-opacity=".87"/>
+    </linearGradient>
+    <linearGradient id="graphic-hosts-g" x1="-52.506%" y1="-9.548%" y2="95.048%">
+      <stop offset="0%" stop-color="#00457D"/>
+      <stop offset="100%" stop-color="#001A56"/>
+    </linearGradient>
+    <linearGradient id="graphic-hosts-i" x1="0%" y1="100%" y2="0%">
+      <stop offset="0%" stop-color="#021755" stop-opacity="0"/>
+      <stop offset="100%" stop-color="#0097FF"/>
+    </linearGradient>
+    <polygon id="graphic-hosts-h" points="27.49 .115 55.103 16.112 55.103 47.907 27.49 63.904 .175 47.907 .175 16.112"/>
+    <linearGradient id="graphic-hosts-j" x1="167.504%" x2="0%" y1="90.604%" y2="32.848%">
+      <stop offset="0%" stop-color="#021755" stop-opacity="0"/>
+      <stop offset="100%" stop-color="#0097FF"/>
+    </linearGradient>
+    <linearGradient id="graphic-hosts-k" x1="50%" x2="62.737%" y1="12.657%" y2="74.822%">
+      <stop offset="0%" stop-color="#FFF"/>
+      <stop offset="100%" stop-color="#FFF" stop-opacity="0"/>
+    </linearGradient>
+    <linearGradient id="graphic-hosts-l" x1="189.103%" x2="-63.783%" y1="240.611%" y2="-168.495%">
+      <stop offset="0%" stop-color="#243475"/>
+      <stop offset="100%" stop-color="#0097FF" stop-opacity=".87"/>
+    </linearGradient>
+    <linearGradient id="graphic-hosts-m" x1="65.935%" x2="7.1%" y1="82.749%" y2="45.965%">
+      <stop offset="0%" stop-color="#FFF"/>
+      <stop offset="100%" stop-color="#93F4FE"/>
+    </linearGradient>
+    <linearGradient id="graphic-hosts-n" x1="57.703%" x2="0%" y1="50%" y2="78.368%">
+      <stop offset="0%" stop-color="#021755" stop-opacity="0"/>
+      <stop offset="40.262%" stop-color="#022264" stop-opacity=".088"/>
+      <stop offset="100%" stop-color="#0097FF"/>
+    </linearGradient>
+    <linearGradient id="graphic-hosts-o" x1="86.823%" x2="0%" y1="100%" y2="0%">
+      <stop offset="0%" stop-color="#FFF"/>
+      <stop offset="100%" stop-color="#93F4FE"/>
+    </linearGradient>
+    <linearGradient id="graphic-hosts-p" x1="-7.718%" x2="139.039%" y1="171.768%" y2="19.942%">
+      <stop offset="0%" stop-color="#243475"/>
+      <stop offset="100%" stop-color="#0097FF"/>
+    </linearGradient>
+    <linearGradient id="graphic-hosts-q" x1="-60.921%" x2="56.81%" y1="-239.64%" y2="123.936%">
+      <stop offset="0%" stop-color="#08061E" stop-opacity=".57"/>
+      <stop offset="100%" stop-color="#001A55" stop-opacity="0"/>
+    </linearGradient>
+    <linearGradient id="graphic-hosts-r" x1="125.756%" x2="-64.687%" y1="50%" y2="208.058%">
+      <stop offset="0%" stop-color="#84A7CE"/>
+      <stop offset="100%" stop-color="#55CDFF"/>
+    </linearGradient>
+    <linearGradient id="graphic-hosts-s" x1="66.354%" x2="50%" y1="181.321%" y2="-30.134%">
+      <stop offset="0%" stop-color="#021755" stop-opacity="0"/>
+      <stop offset="100%" stop-color="#0097FF"/>
+    </linearGradient>
+    <linearGradient id="graphic-hosts-u" x1="50%" x2="50%" y1="10.962%" y2="61.384%">
+      <stop offset="0%" stop-color="#FFF"/>
+      <stop offset="100%" stop-color="#FFF" stop-opacity="0"/>
+    </linearGradient>
+    <polygon id="graphic-hosts-t" points="27.49 .115 55.103 16.112 55.103 47.907 27.49 63.904 .175 47.907 .175 16.112"/>
+    <linearGradient id="graphic-hosts-v" x1="100%" x2="26.806%" y1="61.982%" y2="31.991%">
+      <stop offset="0%" stop-color="#FFF" stop-opacity="0"/>
+      <stop offset="100%" stop-color="#82F0FC"/>
+    </linearGradient>
+    <linearGradient id="graphic-hosts-w" x1="141.417%" x2="50%" y1="0%" y2="97.848%">
+      <stop offset="0%" stop-color="#08061E" stop-opacity="0"/>
+      <stop offset="100%" stop-color="#001A55"/>
+    </linearGradient>
+    <linearGradient id="graphic-hosts-x" x1="160.417%" x2="31.006%" y1="255.236%" y2="-19.837%">
+      <stop offset="0%" stop-color="#243475"/>
+      <stop offset="100%" stop-color="#0097FF" stop-opacity=".87"/>
+    </linearGradient>
+  </defs>
+  <g fill="none" fill-rule="evenodd">
+    <g transform="translate(60.586 6.452)">
+      <use fill="url(#graphic-hosts-a)" xlink:href="#graphic-hosts-b"/>
+      <use fill="url(#graphic-hosts-c)" fill-opacity=".9" xlink:href="#graphic-hosts-b"/>
+      <polygon fill="url(#graphic-hosts-d)" fill-opacity=".8" points="78.029 92.954 78.029 180.743 0 135.557 0 45.186" opacity=".57"/>
+      <polygon fill="url(#graphic-hosts-e)" points="78.516 180.102 78.516 92.385 155.865 46.477 155.865 135.442" opacity=".39"/>
+    </g>
+    <polygon fill="url(#graphic-hosts-f)" points="58.441 143.623 60.881 145.088 60.881 148.407 100.8 124.659 100.8 121.23 97.905 119.831"/>
+    <g transform="translate(5.898 128.511)">
+      <use fill="url(#graphic-hosts-g)" xlink:href="#graphic-hosts-h"/>
+      <use fill="url(#graphic-hosts-i)" xlink:href="#graphic-hosts-h"/>
+      <polygon fill="url(#graphic-hosts-j)" fill-opacity=".52" points="27.49 63.904 27.49 31.91 55.103 16.112 55.103 47.907"/>
+      <polygon fill="url(#graphic-hosts-k)" points="27.49 31.926 .175 16.112 27.49 .115 55.109 16.112" opacity=".14"/>
+    </g>
+    <polygon fill="url(#graphic-hosts-l)" points="183.287 123.485 180.692 125.018 180.692 128.01 207.235 144.105 207.235 140.961 209.639 139.524"/>
+    <g transform="translate(206.958 122.059)">
+      <polygon fill="url(#graphic-hosts-m)" points="32.294 .135 64.733 18.82 64.732 55.959 32.294 74.644 .206 55.959 .206 18.82"/>
+      <polygon fill="url(#graphic-hosts-n)" fill-opacity=".2" points="32.294 74.644 32.294 37.273 64.732 18.82 64.732 55.959"/>
+      <polygon fill="url(#graphic-hosts-o)" points="32.295 37.273 .206 18.82 32.294 .135 64.733 18.82"/>
+    </g>
+    <g transform="translate(0 2.15)">
+      <polygon fill="url(#graphic-hosts-p)" fill-opacity=".7" points="24.821 .104 49.753 14.487 49.753 43.076 24.821 57.46 .158 43.076 .158 14.487"/>
+      <polygon fill="url(#graphic-hosts-q)" points="24.821 57.46 24.821 28.692 49.753 14.487 49.753 43.076"/>
+      <polygon fill="url(#graphic-hosts-k)" points=".158 43.076 .158 14.487 24.821 .104 24.821 28.692" opacity=".14"/>
+    </g>
+    <polygon fill="url(#graphic-hosts-r)" points="35.387 50.216 37.861 51.699 37.861 55.057 63.124 41.449 63.124 37.979 60.188 36.564" transform="matrix(-1 0 0 1 98.51 0)"/>
+    <g transform="translate(223.579)">
+      <use fill="url(#graphic-hosts-s)" xlink:href="#graphic-hosts-t"/>
+      <use fill="url(#graphic-hosts-s)" fill-opacity=".32" xlink:href="#graphic-hosts-t"/>
+      <use fill="url(#graphic-hosts-u)" style="mix-blend-mode:soft-light" xlink:href="#graphic-hosts-t"/>
+      <polygon fill="url(#graphic-hosts-v)" points="27.49 63.904 27.49 31.91 55.103 16.112 55.103 47.907" opacity=".25"/>
+      <polygon fill="url(#graphic-hosts-w)" points=".175 47.907 .175 16.112 27.49 31.91 27.49 63.705" opacity=".057"/>
+    </g>
+    <polygon fill="url(#graphic-hosts-x)" points="216.491 37.468 213.928 38.99 213.928 41.959 236.08 54.846 236.08 51.725 238.454 50.3" transform="matrix(-1 0 0 1 452.382 0)"/>
+  </g>
+</svg>

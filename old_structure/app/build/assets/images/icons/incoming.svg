@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="15px" height="12px" viewBox="0 0 15 12" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <!-- Generator: sketchtool 54.1 (76490) - https://sketchapp.com -->
+    <title>063ECDB0-4EEE-4E5D-94D3-6EAB1B4BD416</title>
+    <desc>Created with sketchtool.</desc>
+    <g id="💰-2.0-My-Wallet" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="2.1.1-Wallet" transform="translate(-44.000000, -592.000000)">
+            <g id="Group-10" transform="translate(24.000000, 479.000000)">
+                <g id="Transactions---12-Col">
+                    <g id="Items" transform="translate(19.000000, 62.000000)">
+                        <g id="arrow-down" transform="translate(8.500000, 56.200000) scale(-1, -1) rotate(90.000000) translate(-8.500000, -56.200000) translate(1.500000, 48.700000)">
+                            <rect id="Rectangle" fill-opacity="0" fill="#000000" x="0.2" y="0" width="13" height="15"></rect>
+                            <path d="M6.6,1 L6.6,13.5" id="Path" stroke="#2BD67B" stroke-linecap="round" stroke-linejoin="round"></path>
+                            <polyline id="Path" stroke="#2BD67B" stroke-linecap="round" stroke-linejoin="round" points="12.2 8.6 6.6 14.2 1 8.6"></polyline>
+                        </g>
+                    </g>
+                </g>
+            </g>
+        </g>
+    </g>
+</svg>
