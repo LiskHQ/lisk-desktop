@@ -52,6 +52,7 @@ const AmountField = ({
 
   const handleAmountChange = ({ target }) => {
     onChange(target, maxAmount);
+    setIsMaximum(false);
     if (showEntireBalanceWarning && target.value < maxAmount.value) {
       setShowEntireBalanceWarning(false);
     }
