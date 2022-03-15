@@ -4,28 +4,26 @@ node_modules
 npm-debug.log
 src/.nyc_output
 coverage
-app/report.html
-app/*.map
-app/build
-app/build-testnet
+old_structure/app/report.html
+old_structure/app/*.map
+old_structure/app/build
+old_structure/app/build-testnet
 *.sw[pon]
-app/app.js
+old_structure/app/app.js
 .vscode
 .idea
 blockchain_explorer.db.gz
 reports
-test/cypress/screenshots/
-test/cypress/videos/
 .history
 storybook-static
 .env
 cypress.log
 
 ## Commercial fonts
-src/assets/fonts/basierCircle/
-src/assets/fonts/gilroy/
+old_structure/src/assets/fonts/basierCircle/
+old_structure/src/assets/fonts/gilroy/
 
 ## Cypress
-test/cypress/cypress
-test/cypress/screenshots
-test/cypress/videos
+old_structure/test/cypress/cypress
+old_structure/test/cypress/screenshots
+old_structure/test/cypress/videos
