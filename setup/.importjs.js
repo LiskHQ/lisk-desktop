@@ -1,6 +1,6 @@
 module.exports = {
   emptyLineBetweenGroups: false,
     excludes: [
-      './app/build/**'
+      './old_structure/app/build/**'
   ]
 }
