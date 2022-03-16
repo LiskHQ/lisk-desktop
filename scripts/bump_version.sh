@@ -25,8 +25,8 @@ release=$1
 changes=$(git status --porcelain -uno)
 
 if [ -z "${changes}" ]; then
-  bump "package.json"
-  bump "app/package.json"
+  bump ".../package.json"
+  bump ".../old_structure/app/package.json"
 
   git commit -m "Bump Lisk to ${release}"
   git tag "v${release}"
