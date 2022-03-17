@@ -18,6 +18,11 @@
   }
 }
 
+.illustrationWrapper {
+  margin: 32px auto;
+  width: 180px;
+}
+
 .content {
   & section {
     width: 100%;

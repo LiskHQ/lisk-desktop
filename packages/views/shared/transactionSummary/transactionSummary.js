@@ -29,7 +29,14 @@ const TransactionSummary = ({
         </BoxHeader>
       )}
       <BoxContent className={`${styles.content} summary-content`}>
-        <HardwareWalletIllustration account={account} size="s" />
+        {account.loginType
+        ? (
+          <Illustration
+            name={account.loginType}
+            className={styles.illustrationWrapper}
+          />
+        )
+        : null}
         {children}
         {fee && (
           <section>
