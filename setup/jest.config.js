@@ -54,7 +54,7 @@ module.exports = {
     'src/constants/',
     'src/i18n-scanner.js',
     'src/main.js',
-    'src/tests.js',
+    'tests/tests.js',
     '/app/src/modules/autoUpdater.js',
     'src/store/index.js',
     'src/store/reducers/settings.js',
