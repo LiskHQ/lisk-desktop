@@ -8,27 +8,6 @@ const timestampConverters = {
   BTC: timestamp => timestamp,
 };
 
-export const Time = withTranslation()((props) => {
-  moment.locale(i18n.language);
-  // eslint-disable-next-line new-cap
-  const time = moment(timestampConverters.LSK(props.label));
-  return <span>{time.fromNow(true)}</span>;
-});
-
-export const DateFromTimestamp = withTranslation()((props) => {
-  moment.locale(i18n.language);
-  // eslint-disable-next-line new-cap
-  const day = moment(timestampConverters.LSK(props.time));
-  return (<span className="date">{day.format('ll')}</span>);
-});
-
-export const TimeFromTimestamp = withTranslation()((props) => {
-  moment.locale(i18n.language);
-  // eslint-disable-next-line new-cap
-  const day = moment(timestampConverters.LSK(props.time));
-  return (<span className="time">{day.format('LTS')}</span>);
-});
-
 export const DateTimeFromTimestamp = withTranslation()((props) => {
   moment.locale(i18n.language);
   const datetime = moment(timestampConverters[props.token || 'LSK'](props.time));

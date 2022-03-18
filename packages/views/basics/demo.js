@@ -2,10 +2,8 @@ import React from 'react';
 import AccountVisualDemo from './accountVisual/demo';
 import AutoSuggestDemo from './autoSuggest/demo';
 import CalendarDemo from './calendar/demo';
-import HardwareWalletIllustrationDemo from './hardwareWalletIllustration/demo';
 import IllustrationDemo from './illustration/demo';
 import OnboardingDemo from './onboarding/demo';
-import PageHeaderDemo from './pageHeader/demo';
 import PassphraseInputDemo from './passphraseInput/demo';
 import SpinnerDemo from './spinner/demo';
 import SwitcherDemo from './switcher/demo';
@@ -39,9 +37,7 @@ const ToolboxDemo = () => (
     <AutoSuggestDemo />
     <CalendarDemo />
     <IllustrationDemo />
-    <HardwareWalletIllustrationDemo />
     <OnboardingDemo />
-    <PageHeaderDemo />
     <PassphraseInputDemo />
     <SpinnerDemo />
     <SwitcherDemo />
