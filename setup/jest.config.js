@@ -79,7 +79,6 @@ module.exports = {
     'src/components/shared/navigationBars/topBar/navigationButtons.js',
     'src/components/shared/newReleaseDialog/index.js',
     'src/components/shared/transactionInfo/',
-    'src/components/toolbox/pageLayout/index.js',
     'src/components/shared/formattedNumber/stories.js',
     'src/components/shared/header/signInHeader/signInHeader.js',
     'src/components/shared/accountVisualWithAddress/index.js',
