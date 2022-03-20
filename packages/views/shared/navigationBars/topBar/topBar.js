@@ -10,8 +10,8 @@ import styles from './topBar.css';
 import Network from './networkName';
 import NavigationButtons from './navigationButtons';
 import Search from './search';
-import Toggle from './toggle';
-import VoteQueueToggle from './voteQueueToggle';
+import Toggle from '../../../../settings/setters/toggle';
+import VoteQueueToggle from '../../../../settings/setters/voteQueueToggle';
 import SignOut from './signOut';
 
 const TopBar = ({
