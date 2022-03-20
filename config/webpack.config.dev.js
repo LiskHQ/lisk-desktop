@@ -14,8 +14,8 @@ const config = {
     filename: 'bundle.[name].[contenthash].js',
   },
   devServer: {
-    contentBase: 'src',
-    inline: true,
+    // contentBase: 'src',
+    // inline: true,
     port: 8080,
     historyApiFallback: true,
     host: '0.0.0.0',
