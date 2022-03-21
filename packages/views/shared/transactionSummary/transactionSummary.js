@@ -3,7 +3,6 @@ import LiskAmount from '@shared/liskAmount';
 import Box from '@toolbox/box';
 import BoxHeader from '@toolbox/box/header';
 import BoxContent from '@toolbox/box/content';
-import HardwareWalletIllustration from '@toolbox/hardwareWalletIllustration';
 import Tooltip from '@toolbox/tooltip/tooltip';
 import { tokenMap } from '@constants';
 import Footer from './footer';

@@ -10,3 +10,10 @@ describe('components/toolbox/timestamp', () => {
     jest.resetAllMocks();
   });
 });
+
+describe('<DateTimeFromTimestamp label={1499983200} />', () => {
+  it('renders "5 months" if today is 2017-01-15', () => {
+    const wrapper = mount(<DateTimeFromTimestamp label={inputValue} />);
+    expect(wrapper).toHaveText('5 months');
+  });
+});
