@@ -5,14 +5,6 @@ export const Element = ({ children, type, ...rest }) => {
     return <div {...rest}>{children}</div>;
   }
   return null;
-  // try {
-  //   // eslint-disable-next-line import/no-unresolved
-  //   const { View } = require('react-native');
-  //   const Type = type || View;
-  //   return <Type {...rest}>{children}</Type>;
-  // } catch (e) {
-  //   return {};
-  // }
 };
 
 export const Button = ({
@@ -26,20 +18,4 @@ export const Button = ({
     );
   }
   return null;
-  // try {
-  //   // eslint-disable-next-line import/no-unresolved
-  //   const ReactButton = require('react-native').Button;
-  //   const Type = type || ReactButton;
-  //   return (
-  //     <Type
-  //       {...rest}
-  //       onPress={onClick}
-  //       title={typeof children === 'string' ? children : 'Button'}
-  //     >
-  //       {children}
-  //     </Type>
-  //   );
-  // } catch (e) {
-  //   return {};
-  // }
 };
