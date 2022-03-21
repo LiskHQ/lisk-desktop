@@ -5,7 +5,6 @@ export { txStatusTypes, signatureCollectionStatus } from './txStatus';
 export { DEFAULT_LIMIT } from './monitor';
 export { default as networks, networkKeys } from './networks';
 export { default as piwikOptions } from './piwik';
-export { default as quickTips } from './quickTips';
 export { default as settings } from './settings';
 export { tokenKeys, tokenMap } from './tokens';
 export * from './transactions';
