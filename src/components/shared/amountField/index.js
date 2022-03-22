@@ -36,6 +36,7 @@ const AmountField = ({
 
   const setEntireBalance = (e) => {
     e.preventDefault();
+    e.stopPropagation();
     setIsMaximum(true);
     const value = formatAmountBasedOnLocale({
       value: fromRawLsk(maxAmount.value),
@@ -63,17 +64,17 @@ const AmountField = ({
   };
 
   useEffect(() => {
-    if (isMaximum) {
+    if (isMaximum && maxAmount) {
       const value = formatAmountBasedOnLocale({
         value: fromRawLsk(maxAmount.value),
         format: '0.[00000000]',
       });
       onChange({ value }, maxAmount);
     }
-  }, [isMaximum, maxAmount.value]);
+  }, [isMaximum, maxAmount?.value]);
 
   return (
-    <label className={`${styles.fieldGroup} ${amount.error ? styles.error : ''} ${className}`}>
+    <span className={`${styles.fieldGroup} ${amount.error ? styles.error : ''} ${className}`}>
       <div className={labelClassname ? `${styles.customAmountFieldHeader} ${styles.amountFieldHeader}` : `${styles.amountFieldHeader}`} onClick={ignoreClicks}>
         { label && <span className={labelClassname ? `${styles.customFieldLabel} ${styles.fieldLabel} label` : `${styles.fieldLabel}`}>{label}</span> }
         {
@@ -122,7 +123,7 @@ const AmountField = ({
           ignoreClicks={ignoreClicks}
         />
       )}
-    </label>
+    </span>
   );
 };
 

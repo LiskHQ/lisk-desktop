@@ -110,7 +110,7 @@ const AddVote = ({
             <span className={styles.space} />
           </>
           )}
-          <label className={styles.fieldGroup}>
+          <div className={styles.fieldGroup}>
             <AmountField
               amount={voteAmount}
               onChange={setVoteAmount}
@@ -123,7 +123,7 @@ const AddVote = ({
               useMaxWarning={t('Caution! You are about to send the majority of your balance')}
               name="vote"
             />
-          </label>
+          </div>
         </BoxContent>
         <BoxFooter direction="horizontal">
           {
