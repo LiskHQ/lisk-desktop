@@ -50,6 +50,7 @@ const FormBase = ({
           placeHolder={t('Insert transaction amount')}
           useMaxLabel={t('Send maximum amount')}
           name="amount"
+          maxToolTipPosition="left"
         />
         { children }
       </BoxContent>

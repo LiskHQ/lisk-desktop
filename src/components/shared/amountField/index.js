@@ -28,7 +28,7 @@ export const MaxAmountWarning = ({ resetInput, message, ignoreClicks }) => {
 const AmountField = ({
   amount, maxAmount, onChange, className,
   label, labelClassname, useMaxLabel, placeholder, name,
-  displayConverter, useMaxWarning, maxToolTipPosition,
+  displayConverter, useMaxWarning, maxToolTipPosition, headerStyle,
 }) => {
   const { t } = useTranslation();
   const [showEntireBalanceWarning, setShowEntireBalanceWarning] = useState(false);
@@ -78,19 +78,21 @@ const AmountField = ({
         { label && <span className={labelClassname ? `${styles.customFieldLabel} ${styles.fieldLabel} label` : `${styles.fieldLabel}`}>{label}</span> }
         {
           useMaxLabel && (
-            <TertiaryButton
-              onClick={setEntireBalance}
-              className="use-entire-balance-button"
-              size="xs"
-            >
-              {useMaxLabel}
+            <div className={`${styles.maxToggleWrapper} ${headerStyle || ''}`}>
+              <TertiaryButton
+                onClick={setEntireBalance}
+                className="use-entire-balance-button"
+                size="xs"
+              >
+                {useMaxLabel}
+              </TertiaryButton>
               <Tooltip
                 position={maxToolTipPosition || 'bottom'}
                 tooltipClassName={`${styles.tooltipContainer}`}
               >
                 <span>{t('Based on your available balance and rounded down to a multiple of 10 LSK, your total remaining balance is {{maxAmount}} LSK', { maxAmount: fromRawLsk(maxAmount.value) })}</span>
               </Tooltip>
-            </TertiaryButton>
+            </div>
           )
         }
       </div>
