@@ -13,8 +13,9 @@
 
 const cucumber = require('cypress-cucumber-preprocessor').default;
 
-module.exports = (on) => {
+module.exports = (on, config) => {
   on('file:preprocessor', cucumber());
+  require('cypress-grep/src/plugin')(config);
 
   on('task', {
     failed: require('cypress-failed-log/src/failed')(),
