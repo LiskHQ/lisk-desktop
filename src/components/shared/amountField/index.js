@@ -28,7 +28,7 @@ export const MaxAmountWarning = ({ resetInput, message, ignoreClicks }) => {
 const AmountField = ({
   amount, maxAmount, onChange, className,
   label, labelClassname, useMaxLabel, placeholder, name,
-  displayConverter, useMaxWarning,
+  displayConverter, useMaxWarning, maxToolTipPosition,
 }) => {
   const { t } = useTranslation();
   const [showEntireBalanceWarning, setShowEntireBalanceWarning] = useState(false);
@@ -85,7 +85,7 @@ const AmountField = ({
             >
               {useMaxLabel}
               <Tooltip
-                position="bottom"
+                position={maxToolTipPosition || 'bottom'}
                 tooltipClassName={`${styles.tooltipContainer}`}
               >
                 <span>{t('Based on your available balance and rounded down to a multiple of 10 LSK, your total remaining balance is {{maxAmount}} LSK', { maxAmount: fromRawLsk(maxAmount.value) })}</span>
