@@ -1,12 +1,12 @@
 const { resolve } = require('path');
 
 module.exports = {
-  modulePaths: ['src/components'],
+  modulePaths: ['packages'],
   testMatch: [
-    '<rootDir>/app/src/**/*.test.js',
-    '<rootDir>/src/**/*.test.js',
-    '<rootDir>/test/integration/*.test.js',
-    '<rootDir>/libs/**/*.test.js',
+    '<rootDir>/packages/**/*.test.js',
+    '<rootDir>/scripts/**/*.test.js',
+    '<rootDir>/setup/**/*.test.js',
+    '<rootDir>/tests/**/*.test.js',
   ],
   testPathIgnorePatterns: [
     '<rootDir>/test/integration/wallet.test.js',
@@ -23,21 +23,28 @@ module.exports = {
   moduleDirectories: ['node_modules'],
   moduleNameMapper: {
     '^.+\\.css$': 'identity-obj-proxy',
-    '^@src(.*)$': resolve(__dirname, './src/$1'),
-    '^@utils(.*)$': resolve(__dirname, './src/utils/$1'),
-    '^@api(.*)$': resolve(__dirname, './src/utils/api/$1'),
-    '^@constants$': resolve(__dirname, './src/constants'),
-    '^@shared(.*)$': resolve(__dirname, './src/components/shared/$1'),
-    '^@screens(.*)$': resolve(__dirname, './src/components/screens/$1'),
-    '^@toolbox(.*)$': resolve(__dirname, './src/components/toolbox/$1'),
-    '^@actions(.*)$': resolve(__dirname, './src/store/actions/$1'),
-    '^@store(.*)$': resolve(__dirname, './src/store/$1'),
+    '^@scripts(.*)$': resolve(__dirname, './scripts/$1'),
+    '^@setup(.*)$': resolve(__dirname, './setup/$1'),
+    '^@tests(.*)$': resolve(__dirname, './tests/$1'),
+    '^@packages(.*)$': resolve(__dirname, './packages/$1'),
+    '^@block(.*)$': resolve(__dirname, './packages/block/$1'),
+    '^@bookmark(.*)$': resolve(__dirname, './packages/bookmark/$1'),
+    '^@common(.*)$': resolve(__dirname, './packages/common/$1'),
+    '^@dpos(.*)$': resolve(__dirname, './packages/dpos/$1'),
+    '^@hardwareWallet(.*)$': resolve(__dirname, './packages/hardwareWallet/$1'),
+    '^@network(.*)$': resolve(__dirname, './packages/network/$1'),
+    '^@settings(.*)$': resolve(__dirname, './packages/settings/$1'),
+    '^@token(.*)$': resolve(__dirname, './packages/token/$1'),
+    '^@transaction(.*)$': resolve(__dirname, './packages/transaction/$1'),
+    '^@updates(.*)$': resolve(__dirname, './packages/updates/$1'),
+    '^@views(.*)$': resolve(__dirname, './packages/views/$1'),
+    '^@wallet(.*)$': resolve(__dirname, './packages/wallet/$1'),
     '\\.(jpg|jpeg|png|gif|eot|otf|webp|svg|ttf|woff|woff2|mp4|webm|wav|mp3|m4a|aac|oga)$':
       '<rootDir>/__mocks__/fileMock.js',
   },
   collectCoverage: true,
   coverageDirectory: '<rootDir>/coverage/jest',
-  collectCoverageFrom: ['src/**/*.js', 'app/src/**/*.js'],
+  collectCoverageFrom: ['pacckages/**/*.js', 'setup/**/*.js'],
   coveragePathIgnorePatterns: [
     '/node_modules/',
     '.test.js',
@@ -163,23 +170,23 @@ module.exports = {
       lines: 90,
       statements: 90,
     },
-    'app/src/**/*.js': {
+    'scripts/app/src/**/*.js': {
       branches: 80,
       functions: 80,
       lines: 80,
       statements: 80,
     },
-    'src/**/*.js': {
+    'packages/**/*.js': {
       branches: 80,
       functions: 80,
       lines: 80,
       statements: 80,
     },
-    'src/store/**/*.js': {
+    'packages/**/store/**/*.js': {
       statements: 90,
     },
   },
-  setupFiles: ['<rootDir>/config/setupJest.js', 'jest-canvas-mock'],
+  setupFiles: ['<rootDir>/setup/config/setupJest.js', 'jest-canvas-mock'],
   transform: {
     '^.+\\.js$': 'babel-jest',
   },

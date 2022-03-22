@@ -7,7 +7,7 @@
   "description": "Lisk",
   "homepage": "https://github.com/LiskHQ/lisk-desktop",
   "bugs": "https://github.com/LiskHQ/lisk-desktop/issues",
-  "main": "main.js",
+  "main": "./scpripts/app/src/main.js",
   "repository": {
     "type": "git",
     "url": "https://github.com/LiskHQ/lisk-desktop"
@@ -29,7 +29,7 @@
     "dist:linux": "electron-builder --linux --x64 --publish onTag",
     "pack": "npm ci && npm run build && npm run clean:dist && npm run dist",
     "pack:win": "cmd /c npm ci && npm run install:electron:dependencies && npm run clean:build && npm run copy:files && npm run build:prod && npm run build:electron && npm run clean:dist && npm run dist:win",
-    "test": "jest --config ./jest.config.js",
+    "test": "jest --config ./setup/jest.config.js",
     "test:live": "npm test -- --watch",
     "cypress:open": "cypress open --project test/cypress",
     "cypress:run": "cypress run --project test/cypress",

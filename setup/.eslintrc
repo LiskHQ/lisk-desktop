@@ -28,16 +28,23 @@
     "import/resolver" : {
       "alias" : {
         "map" : [
-          ["@store", "./src/store"],
-          ["@utils", "./src/utils/"],
-          ["@api", "./src/utils/api/"],
-          ["@actions", "./src/store/actions"],
-          ["@constants", "./src/constants/"],
-          ["@shared", "./src/components/shared"],
-          ["@screens", "./src/components/screens/"],
-          ["@toolbox", "./src/components/toolbox/"],
-          ["@src", "./src"],
-          ["@fixtures", "./test/constants/"]
+          ["@fixtures", "../tests/fixtures/"],          
+          ["@scripts/*", "../scripts/"],
+          ["@setup/*", "../setup/"],
+          ["@tests/*", "../tests/"],
+          ["@packages/*", "../packages/"],
+          ["@block/*", "../packages/block/"],
+          ["@bookmark/*", "../packages/bookmark/"],
+          ["@common/*", "../packages/common/"],
+          ["@dpos/*", "../packages/dpos/"],
+          ["@hardwareWallet/*", "../packages/hardwareWallet/"],
+          ["@network/*", "../packages/network/"],
+          ["@settings/*", "../packages/settings/"],
+          ["@token/*", "../packages/token/"],
+          ["@transaction/*", "../packages/transaction/"],
+          ["@updates/*", "../packages/updates/"],
+          ["@views/*", "../packages/views/"],
+          ["@wallet/*", "../packages/wallet/"]
         ],
         "extensions": [".js"]
       }

@@ -2,16 +2,22 @@
   "compilerOptions": {
     "baseUrl": ".",
     "paths": {
-      "@utils/*": ["./src/utils/*"],
-      "@api/*": ["./src/utils/api/*"],
-      "@constants": ["./src/constants"],
-      "@shared/*": ["./src/components/shared/*"],
-      "@screens/*": ["./src/components/screens/*"],
-      "@toolbox/*": ["./src/components/toolbox/*"],
-      "@actions": ["./src/store/actions"],
-      "@store/*": ["./src/store/*"],
-      "@src/*": ["./src/*"],
-      "@fixtures/*": ["./test/constants/*"]
+      "@scripts/*": ["./scripts/*"],
+      "@setup/*": ["./setup/*"],
+      "@tests/*": ["./tests/*"],
+      "@packages/*": ["./packages/*"],
+      "@block/*": ["./packages/block/*"],
+      "@bookmark/*": ["./packages/bookmark/*"],
+      "@common/*": ["./packages/common/*"],
+      "@dpos/*": ["./packages/dpos/*"],
+      "@hardwareWallet/*": ["./packages/hardwareWallet/*"],
+      "@network/*": ["./packages/network/*"],
+      "@settings/*": ["./packages/settings/*"],
+      "@token/*": ["./packages/token/*"],
+      "@transaction/*": ["./packages/transaction/*"],
+      "@updates/*": ["./packages/updates/*"],
+      "@views/*": ["./packages/views/*"],
+      "@wallet/*": ["./packages/wallet/*"],
     }
   }
 }
