@@ -106,7 +106,7 @@ pipeline {
 
 								CYPRESS_baseUrl=https://jenkins.lisk.com/test/${JOB_NAME%/*}/$BRANCH_NAME/#/ \
 								CYPRESS_serviceUrl=http://127.0.0.1:9901 \
-								npm run cypress:run
+								npm run cypress:run:basic
 								'''
 							}
 						}
