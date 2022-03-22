@@ -21,6 +21,8 @@ const config = {
       '@updates(.*)$': resolve(__dirname, './packages/updates'),
       '@views(.*)$': resolve(__dirname, './packages/views'),
       '@wallet(.*)$': resolve(__dirname, './packages/wallet'),
+      '@shared': resolve(__dirname, './packages/views/shared'),
+      '@screens': resolve(__dirname, './packages/views/screens'),
     },
     fallback: {
       net: false,

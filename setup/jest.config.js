@@ -39,6 +39,8 @@ module.exports = {
     '^@updates(.*)$': resolve(__dirname, './packages/updates/$1'),
     '^@views(.*)$': resolve(__dirname, './packages/views/$1'),
     '^@wallet(.*)$': resolve(__dirname, './packages/wallet/$1'),
+    '^@screens(.*)$': resolve(__dirname, './packages/views/screens/$1'),
+    '^@shared(.*)$': resolve(__dirname, './packages/views/shared/$1'),
     '\\.(jpg|jpeg|png|gif|eot|otf|webp|svg|ttf|woff|woff2|mp4|webm|wav|mp3|m4a|aac|oga)$':
       '<rootDir>/__mocks__/fileMock.js',
   },

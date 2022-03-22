@@ -44,7 +44,9 @@
           ["@transaction/*", "../packages/transaction/"],
           ["@updates/*", "../packages/updates/"],
           ["@views/*", "../packages/views/"],
-          ["@wallet/*", "../packages/wallet/"]
+          ["@wallet/*", "../packages/wallet/"],
+          ["@screens/*", "../packages/views/screens"],
+          ["@shared/*", "../packages/views/shared"]
         ],
         "extensions": [".js"]
       }
