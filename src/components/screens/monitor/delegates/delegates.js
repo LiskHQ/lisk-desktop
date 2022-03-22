@@ -139,7 +139,7 @@ const DelegatesMonitor = ({
             />
           </span>
         </BoxHeader>
-        <BoxContent className={styles.content}>
+        <BoxContent className={`${styles.content} delegate-box`}>
           {
             activeTab === 'votes'
               ? <LatestVotes votes={votes} t={t} delegates={votedDelegates} />
