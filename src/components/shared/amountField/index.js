@@ -28,7 +28,7 @@ export const MaxAmountWarning = ({ resetInput, message, ignoreClicks }) => {
 const AmountField = ({
   amount, maxAmount, onChange, className,
   label, labelClassname, useMaxLabel, placeholder, name,
-  displayConverter, useMaxWarning, maxToolTipPosition, headerStyle,
+  displayConverter, useMaxWarning, maxToolTipPosition,
 }) => {
   const { t } = useTranslation();
   const [showEntireBalanceWarning, setShowEntireBalanceWarning] = useState(false);
@@ -78,7 +78,7 @@ const AmountField = ({
         { label && <span className={labelClassname ? `${styles.customFieldLabel} ${styles.fieldLabel} label` : `${styles.fieldLabel}`}>{label}</span> }
         {
           useMaxLabel && (
-            <div className={`${styles.maxToggleWrapper} ${headerStyle || ''}`}>
+            <div className={styles.maxToggleWrapper}>
               <TertiaryButton
                 onClick={setEntireBalance}
                 className="use-entire-balance-button"
