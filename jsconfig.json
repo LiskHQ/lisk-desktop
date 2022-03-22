@@ -17,7 +17,7 @@
       "@transaction/*": ["./packages/transaction/*"],
       "@updates/*": ["./packages/updates/*"],
       "@views/*": ["./packages/views/*"],
-      "@wallet/*": ["./packages/wallet/*"],
+      "@wallet/*": ["./packages/wallet/*"]
     }
   }
 }
