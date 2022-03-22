@@ -3,12 +3,12 @@ import ReactDOM from 'react-dom';
 import { HashRouter as Router } from 'react-router-dom';
 import { Provider } from 'react-redux';
 import { I18nextProvider } from 'react-i18next';
-import store from '@store';
-import externalLinks from '@utils/externalLinks';
-import updateApp from '@utils/updateApp';
-import ipcLocale from '@utils/ipcLocale';
+import store from '@common/store';
+import externalLinks from '@commoon/utilites/externalLinks';
+import updateApp from '@updater/utilities/updateApp';
+import ipcLocale from '@common/utilities/ipcLocale';
 import { cryptography } from '@liskhq/lisk-client';
-import i18n from './i18n';
+import i18n from '../i18n/i18n';
 import App from './app';
 
 // eslint-disable-next-line no-extend-native

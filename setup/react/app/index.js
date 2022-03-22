@@ -7,18 +7,18 @@ import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import { hot } from 'react-hot-loader/root';
 import './variables.css';
-import OfflineWrapper from '@shared/offlineWrapper';
-import CustomRoute from '@shared/customRoute';
-import NotFound from '@shared/notFound';
-import { routes } from '@constants';
-import NavigationBars from '@shared/navigationBars';
-import FlashMessageHolder from '@toolbox/flashMessage/holder';
-import DialogHolder from '@toolbox/dialog/holder';
-import { settingsRetrieved, bookmarksRetrieved, watchListRetrieved } from '@actions';
-import routesMap from '../routesMap';
-import ThemeContext from '../contexts/theme';
+import OfflineWrapper from '@views/basics/offlineWrapper';
+import CustomRoute from '@views/shared/customRoute';
+import NotFound from '@views/shared/notFound';
+import { routes } from '@views/screens/router/routes';
+import NavigationBars from '@views/shared/navigationBars';
+import FlashMessageHolder from '@views/basics/flashMessage/holder';
+import DialogHolder from '@views/basics/dialog/holder';
+import { settingsRetrieved, bookmarksRetrieved, watchListRetrieved } from '@common/store/actions';
+import routesMap from '@views/screens/router/routesMap';
+import ThemeContext from '@common/contexts/theme';
 import styles from './app.css';
-import useIpc from '../hooks/useIpc';
+import useIpc from '@updater/hooks/useIpc';
 
 // eslint-disable-next-line max-statements
 const App = ({ history }) => {
