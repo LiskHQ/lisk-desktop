@@ -17,8 +17,8 @@ import DialogHolder from '@views/basics/dialog/holder';
 import { settingsRetrieved, bookmarksRetrieved, watchListRetrieved } from '@common/store/actions';
 import routesMap from '@views/screens/router/routesMap';
 import ThemeContext from '@common/contexts/theme';
-import styles from './app.css';
 import useIpc from '@updater/hooks/useIpc';
+import styles from './app.css';
 
 // eslint-disable-next-line max-statements
 const App = ({ history }) => {
