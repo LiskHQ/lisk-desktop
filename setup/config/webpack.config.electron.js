@@ -5,10 +5,10 @@ const baseConfig = require('./webpack.config');
 const config = {
   mode: 'production',
   entry: {
-    main: `${resolve(__dirname, '../app/src')}/main.js`,
+    main: `${resolve(__dirname, '../../scripts/app/src')}/main.js`,
   },
   output: {
-    path: resolve(__dirname, '../app/build'),
+    path: resolve(__dirname, '../../scripts/app/build'),
     filename: '[name].js',
   },
   target: 'electron-main',

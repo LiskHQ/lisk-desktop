@@ -4,12 +4,12 @@ const { resolve } = require('path');
 const merge = require('webpack-merge');
 const baseConfig = require('./webpack.config');
 const reactConfig = require('./webpack.config.react');
-const version = require('../package.json').version;
+const version = require('../../package.json').version;
 
 const config = {
   mode: 'production',
   output: {
-    path: resolve(__dirname, '../app/build'),
+    path: resolve(__dirname, '../../scripts/app/build'),
     filename: 'bundle.[name].[contenthash].js',
   },
   optimization: {

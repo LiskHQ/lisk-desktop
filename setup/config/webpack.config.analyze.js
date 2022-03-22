@@ -6,7 +6,7 @@ const reactConfig = require('./webpack.config.react');
 
 const config = {
   output: {
-    path: resolve(__dirname, '../dist'),
+    path: resolve(__dirname, '../../dist'),
     filename: 'bundle.[name].js',
   },
   devtool: 'inline-source-map',

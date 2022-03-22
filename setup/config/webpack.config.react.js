@@ -7,8 +7,8 @@ const InlineChunkHtmlPlugin = require('inline-chunk-html-plugin');
 const fs = require('fs');
 const path = require('path');
 const reactToolboxVariables = require('./reactToolbox.config');
-const I18nScannerPlugin = require('../src/i18n-scanner');
-const bundleVersion = require('../package.json').version;
+const I18nScannerPlugin = require('../../scripts/i18n/i18n-scanner');
+const bundleVersion = require('../../package.json').version;
 const stylelintrc = require('../.stylelintrc.json');
 
 const getLocales = (url) => {
@@ -88,8 +88,8 @@ const postCssLoader = {
 const config = {
   mode: 'development',
   entry: {
-    app: `${resolve(__dirname, '../src')}/main.js`,
-    head: `${resolve(__dirname, '../src/assets/css')}/styles.head.css`,
+    app: `${resolve(__dirname, '../react')}/main.js`,
+    head: `${resolve(__dirname, '../react/assets/css')}/styles.head.css`,
   },
   devtool: 'source-map',
   devServer: {
@@ -116,7 +116,7 @@ const config = {
       chunkFilename: '[name].css',
     }),
     new HtmlWebpackPlugin({
-      template: './src/index.html',
+      template: '../react/index.html',
       VERSION: bundleVersion,
       inject: false,
       excludeChunks: ['head'],
@@ -132,8 +132,8 @@ const config = {
       outputFilePath: './i18n/locales/en/common.json',
       files: [
         './i18n/**/*.js',
-        './src/**/*.js',
-        './app/src/**/*.js',
+        './packages/**/*.js',
+        './scripts/app/src/**/*.js',
       ],
     }),
     new ContextReplacementPlugin(/moment[/\\]locale$/, new RegExp(langRegex)),

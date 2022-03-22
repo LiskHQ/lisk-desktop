@@ -5,12 +5,12 @@ const ESLintPlugin = require('eslint-webpack-plugin');
 
 const baseConfig = require('./webpack.config');
 const reactConfig = require('./webpack.config.react');
-const version = require('../package.json').version;
+const version = require('../../package.json').version;
 
 const config = {
   mode: 'development',
   output: {
-    path: resolve(__dirname, '../app', '../dist'),
+    path: resolve(__dirname, '../../scripts/app', '../../dist'),
     filename: 'bundle.[name].[contenthash].js',
   },
   devServer: {
