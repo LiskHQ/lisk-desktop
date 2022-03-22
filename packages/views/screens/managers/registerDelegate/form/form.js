@@ -3,7 +3,7 @@ import { isEmpty } from '@utils/helpers';
 import {
   tokenMap, MODULE_ASSETS_NAME_ID_MAP, regex, MIN_ACCOUNT_BALANCE,
 } from '@constants';
-import { getDelegate } from '@api/delegate';
+import { getDelegate } from '@common/utilities/api/delegate';
 import TransactionPriority, { useTransactionFeeCalculation, useTransactionPriority } from '@shared/transactionPriority';
 import Box from '@toolbox/box';
 import BoxHeader from '@toolbox/box/header';

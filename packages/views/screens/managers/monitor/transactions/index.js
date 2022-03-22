@@ -2,7 +2,7 @@
 import { compose } from 'redux';
 import { withTranslation } from 'react-i18next';
 import withData from '@utils/withData';
-import { getTransactions } from '@api/transaction';
+import { getTransactions } from '@common/utilities/api/transaction';
 import { normalizeTransactionParams } from '@utils/transaction';
 import { DEFAULT_LIMIT } from '@constants';
 import Transactions from './transactions';

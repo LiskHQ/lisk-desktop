@@ -17,7 +17,7 @@ import { sampleTransaction } from '../../../test/constants/transactions';
 import { getState } from '../../../test/fixtures/transactions';
 import accounts from '../../../test/constants/accounts';
 
-jest.mock('@api/delegate');
+jest.mock('@common/utilities/api/delegate');
 jest.mock('@utils/hwManager');
 jest.mock('@utils/api/http');
 

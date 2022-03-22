@@ -2,7 +2,7 @@ import { act } from 'react-dom/test-utils';
 import { tokenMap, networks } from '@constants';
 import { mountWithProps } from '@utils/testHelpers';
 import * as hwManagerAPI from '@utils/hwManager';
-import { create } from '@api/transaction';
+import { create } from '@common/utilities/api/transaction';
 import useTransactionPriority from '@shared/transactionPriority/useTransactionPriority';
 import useTransactionFeeCalculation from '@shared/transactionPriority/useTransactionFeeCalculation';
 import LockedBalance from './index';
@@ -11,7 +11,7 @@ import flushPromises from '../../../../../test/unit-test-utils/flushPromises';
 
 jest.mock('@shared/transactionPriority/useTransactionPriority');
 jest.mock('@shared/transactionPriority/useTransactionFeeCalculation');
-jest.mock('@api/transaction');
+jest.mock('@common/utilities/api/transaction');
 jest.mock('@actions/account', () => ({
   balanceUnlocked: jest.fn(),
 }));

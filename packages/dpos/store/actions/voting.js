@@ -2,9 +2,9 @@ import to from 'await-to-js';
 import {
   actionTypes, tokenMap, MODULE_ASSETS_NAME_ID_MAP,
 } from '@constants';
-import { create } from '@api/transaction';
-import { getAccount } from '@api/account';
-import { getVotes } from '@api/delegate';
+import { create } from '@common/utilities/api/transaction';
+import { getAccount } from '@common/utilities/api/account';
+import { getVotes } from '@common/utilities/api/delegate';
 import { isEmpty } from '@utils/helpers';
 import { timerReset } from './account';
 

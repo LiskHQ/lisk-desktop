@@ -3,7 +3,7 @@ import { mount } from 'enzyme';
 import { act } from 'react-dom/test-utils';
 import {
   getTransactionBaseFees,
-} from '@api/transaction';
+} from '@common/utilities/api/transaction';
 import { tokenMap } from '@constants';
 import useTransactionFeeCalculation from '@shared/transactionPriority/useTransactionFeeCalculation';
 import { truncateAddress } from '@utils/account';
@@ -13,7 +13,7 @@ import Summary from './summary';
 import flushPromises from '../../../../../../test/unit-test-utils/flushPromises';
 
 jest.mock('@shared/transactionPriority/useTransactionFeeCalculation');
-jest.mock('@api/transaction');
+jest.mock('@common/utilities/api/transaction');
 jest.mock('@utils/hwManager');
 
 const transactionBaseFees = {

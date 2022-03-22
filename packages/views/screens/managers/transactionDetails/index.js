@@ -3,7 +3,7 @@ import { compose } from 'redux';
 import { connect } from 'react-redux';
 import { withRouter } from 'react-router-dom';
 import { getActiveTokenAccount } from '@utils/account';
-import { getTransaction } from '@api/transaction';
+import { getTransaction } from '@common/utilities/api/transaction';
 import withData from '@utils/withData';
 import { parseSearchParams } from '@utils/searchParams';
 import { withTranslation } from 'react-i18next';

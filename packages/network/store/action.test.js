@@ -1,12 +1,12 @@
 import { actionTypes } from '@constants';
-import { getNetworkConfig } from '@api/network';
+import { getNetworkConfig } from '@common/utilities/api/network';
 import {
   networkSelected, networkConfigSet, networkStatusUpdated,
   customNetworkStored, customNetworkRemoved,
 } from './network';
 import { getState } from '../../../test/fixtures/transactions';
 
-jest.mock('@api/network', () => ({
+jest.mock('@common/utilities/api/network', () => ({
   getNetworkConfig:
     jest.fn(() =>
       Promise.resolve({

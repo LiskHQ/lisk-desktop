@@ -3,7 +3,7 @@ import { useTranslation } from 'react-i18next';
 import { useSelector } from 'react-redux';
 import { compose } from 'redux';
 import { withRouter } from 'react-router';
-import { getAccount } from '@api/account';
+import { getAccount } from '@common/utilities/api/account';
 import withData from '@utils/withData';
 import { selectSearchParamValue } from '@utils/searchParams';
 import { selectAccount } from '@store/selectors';

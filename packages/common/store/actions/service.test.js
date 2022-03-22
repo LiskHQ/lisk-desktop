@@ -1,5 +1,5 @@
 import { actionTypes } from '@constants';
-import * as marketApi from '@api/market';
+import * as marketApi from '@common/utilities/api/market';
 import { pricesRetrieved } from './service';
 import { initialState as settings } from '../reducers/settings';
 import prices from '../../../test/constants/prices';

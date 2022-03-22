@@ -11,7 +11,7 @@ import {
   emptyTransactionsData, transactionsRetrieved, votesRetrieved,
 } from '@actions';
 import analytics from '@utils/analytics';
-import { getTransactions } from '@api/transaction';
+import { getTransactions } from '@common/utilities/api/transaction';
 import i18n from '../../i18n';
 import history from '../../history';
 

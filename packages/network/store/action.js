@@ -1,6 +1,6 @@
 import { actionTypes, tokenKeys } from '@constants';
-import { getNetworkConfig } from '@api/network';
-import { getSchemas } from '@api/transaction';
+import { getNetworkConfig } from '@common/utilities/api/network';
+import { getSchemas } from '@common/utilities/api/transaction';
 
 /**
  * call this action with a network name and address to update the

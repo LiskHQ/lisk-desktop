@@ -1,6 +1,6 @@
 // istanbul ignore file
 import { withTranslation } from 'react-i18next';
-import { getTransactions } from '@api/transaction';
+import { getTransactions } from '@common/utilities/api/transaction';
 import withData from '@utils/withData';
 import RecentTransaction from './recentTransactions';
 

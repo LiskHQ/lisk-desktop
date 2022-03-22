@@ -3,7 +3,7 @@ import { withRouter } from 'react-router';
 import { connect } from 'react-redux';
 import { compose } from 'redux';
 import { withTranslation } from 'react-i18next';
-import { search } from '@api/search';
+import { search } from '@common/utilities/api/search';
 import withData from '@utils/withData';
 import SearchBar from './searchBar';
 

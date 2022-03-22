@@ -1,4 +1,4 @@
-import { getTransactionFee } from '@api/transaction';
+import { getTransactionFee } from '@common/utilities/api/transaction';
 import { getNumberOfSignatures } from '@utils/transaction';
 import {
   VOTE_AMOUNT_STEP,

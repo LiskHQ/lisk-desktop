@@ -1,6 +1,6 @@
 import { useSelector } from 'react-redux';
 import { useEffect, useReducer } from 'react';
-import { getTransactionFee } from '@api/transaction';
+import { getTransactionFee } from '@common/utilities/api/transaction';
 import { getNumberOfSignatures } from '@utils/transaction';
 import { actionTypes, reducer, getInitialState } from './reducer';
 

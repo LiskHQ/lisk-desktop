@@ -1,10 +1,10 @@
 import debounce from 'lodash.debounce';
 import { mountWithRouter } from '@utils/testHelpers';
-import { getTransactionBaseFees, getTransactionFee } from '@api/transaction';
+import { getTransactionBaseFees, getTransactionFee } from '@common/utilities/api/transaction';
 import RegisterDelegate from './registerDelegate';
 
 jest.mock('lodash.debounce');
-jest.mock('@api/transaction');
+jest.mock('@common/utilities/api/transaction');
 
 getTransactionBaseFees.mockResolvedValue({
   Low: 0,

@@ -2,7 +2,7 @@ import { act } from 'react-dom/test-utils';
 import { MIN_ACCOUNT_BALANCE } from '@constants';
 
 import { mountWithRouter } from '@utils/testHelpers';
-import { getTransactionBaseFees, getTransactionFee } from '@api/transaction';
+import { getTransactionBaseFees, getTransactionFee } from '@common/utilities/api/transaction';
 import useTransactionFeeCalculation from '@shared/transactionPriority/useTransactionFeeCalculation';
 import { fromRawLsk } from '@utils/lsk';
 import accounts from '../../../../../test/constants/accounts';
@@ -10,7 +10,7 @@ import flushPromises from '../../../../../test/unit-test-utils/flushPromises';
 import Form from './form';
 
 jest.mock('@shared/transactionPriority/useTransactionFeeCalculation');
-jest.mock('@api/transaction');
+jest.mock('@common/utilities/api/transaction');
 
 const transactionBaseFees = {
   Low: 156,

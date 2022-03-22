@@ -1,7 +1,7 @@
 /* istanbul ignore file */
 import { compose } from 'redux';
 import { withRouter } from 'react-router-dom';
-import { getDelegate } from '@api/delegate';
+import { getDelegate } from '@common/utilities/api/delegate';
 import withData from '@utils/withData';
 import { parseSearchParams } from '@utils/searchParams';
 import { withTranslation } from 'react-i18next';

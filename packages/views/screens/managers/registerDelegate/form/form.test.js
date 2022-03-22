@@ -1,17 +1,17 @@
 import React from 'react';
 import { mount } from 'enzyme';
 import { networks } from '@constants';
-import * as delegatesApi from '@api/delegate';
-import { getTransactionBaseFees, getTransactionFee, create } from '@api/transaction';
+import * as delegatesApi from '@common/utilities/api/delegate';
+import { getTransactionBaseFees, getTransactionFee, create } from '@common/utilities/api/transaction';
 import { fromRawLsk } from '@utils/lsk';
 import * as hwManagerAPI from '@utils/hwManager';
 import accounts from '../../../../../test/constants/accounts';
 import SelectNameAndFee from './form';
 import flushPromises from '../../../../../test/unit-test-utils/flushPromises';
 
-jest.mock('@api/network');
-jest.mock('@api/transaction');
-jest.mock('@api/delegate', () => ({
+jest.mock('@common/utilities/api/network');
+jest.mock('@common/utilities/api/transaction');
+jest.mock('@common/utilities/api/delegate', () => ({
   getDelegate: jest.fn().mockImplementation(() => Promise.resolve({ data: [] })),
 }));
 jest.mock('@utils/hwManager');

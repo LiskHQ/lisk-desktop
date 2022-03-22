@@ -4,7 +4,7 @@ import { compose } from 'redux';
 import { withRouter } from 'react-router';
 import { withTranslation } from 'react-i18next';
 import { bookmarkAdded, bookmarkUpdated, bookmarkRemoved } from '@actions';
-import { getAccount } from '@api/account';
+import { getAccount } from '@common/utilities/api/account';
 import withData from '@utils/withData';
 import { selectSearchParamValue } from '@utils/searchParams';
 import AddBookmark from './addBookmark';

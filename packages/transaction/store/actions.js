@@ -5,7 +5,7 @@ import {
   signatureCollectionStatus,
 } from '@constants';
 import { isEmpty } from '@utils/helpers';
-import { getTransactions, create, broadcast } from '@api/transaction';
+import { getTransactions, create, broadcast } from '@common/utilities/api/transaction';
 import {
   signMultisigTransaction,
   transformTransaction,
