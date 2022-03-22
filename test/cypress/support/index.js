@@ -18,5 +18,7 @@ import 'cypress-pipe';
 import './commands';
 
 import installLogsCollector from 'cypress-terminal-report/src/installLogsCollector';
+import registerCypressGrep from 'cypress-grep';
 
 installLogsCollector();
+registerCypressGrep();
