@@ -1,4 +1,9 @@
-import { getAccountsFromDevice, signMessageByHW, signTransactionByHW } from './hwManager';
+import {
+  getAccountsFromDevice,
+  signMessageByHW,
+  signTransactionByHW,
+  getNewAccountByIndex,
+} from './hwManager';
 import * as accountApi from './api/account';
 import accounts from '../../test/constants/accounts';
 import * as communication from '../../libs/hwManager/communication';
@@ -10,7 +15,7 @@ jest.mock('../../libs/hwManager/communication', () => ({
 }));
 
 jest.mock('./api/account', () => ({
-  getAccount: jest.fn(),
+  getAccounts: jest.fn(),
 }));
 
 describe('hwManager util', () => {
@@ -28,15 +33,32 @@ describe('hwManager util', () => {
     it('should resolve all non-empty and one empty account', async () => {
       communication.getPublicKey.mockResolvedValueOnce(accounts.genesis.summary.publicKey);
       communication.getPublicKey.mockResolvedValueOnce(accounts.empty_account.summary.publicKey);
-      accountApi.getAccount.mockResolvedValueOnce(accounts.genesis);
-      accountApi.getAccount.mockResolvedValueOnce(accounts.empty_account);
+      accountApi.getAccounts.mockResolvedValueOnce({ data: [accounts.genesis] });
 
       const device = { deviceId: '1234125125' };
       const network = { name: 'Testnet', networks: {} };
 
       const accountsOnDevice = await getAccountsFromDevice({ device, network });
 
-      expect(accountsOnDevice).toEqual([accounts.genesis, accounts.empty_account]);
+      expect(accountsOnDevice).toEqual([accounts.genesis]);
+    });
+  });
+
+  describe('getNewAccountByIndex', () => {
+    it('should resolve one empty account using a given index', async () => {
+      communication.getPublicKey.mockResolvedValueOnce(accounts.genesis.summary.publicKey);
+
+      const device = { deviceId: '1234125125' };
+
+      const accountsOnDevice = await getNewAccountByIndex({ device, index: 11 });
+
+      expect(accountsOnDevice).toEqual({
+        summary: {
+          publicKey: accounts.genesis.summary.publicKey,
+          address: accounts.genesis.summary.address,
+          balance: '0',
+        },
+      });
     });
   });
 
