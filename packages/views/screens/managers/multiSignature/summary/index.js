@@ -2,7 +2,7 @@
 import { compose } from 'redux';
 import { connect } from 'react-redux';
 import { withTranslation } from 'react-i18next';
-import { multisigGroupRegistered } from '@actions/account';
+import { multisigGroupRegistered } from '@common/store/actions/account';
 import { getActiveTokenAccount } from '../../../../utils/account';
 
 import Summary from './summary';

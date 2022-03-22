@@ -2,7 +2,7 @@
 import { connect } from 'react-redux';
 import { withTranslation } from 'react-i18next';
 import { getActiveTokenAccount } from '@utils/account';
-import { settingsUpdated, timerReset } from '@actions';
+import { settingsUpdated, timerReset } from '@common/store/actions';
 import Settings from './settings';
 
 const mapStateToProps = state => ({

@@ -4,7 +4,7 @@ import {
   olderBlocksRetrieved,
   forgersRetrieved,
   networkStatusUpdated,
-} from '@actions';
+} from '@common/store/actions';
 
 const oneMinute = 1000 * 60;
 

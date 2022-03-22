@@ -1,7 +1,7 @@
 import { renderHook, act } from '@testing-library/react-hooks';
 import { mountWithRouter } from '@utils/testHelpers';
 import { useDispatch } from 'react-redux';
-import { appUpdateAvailable } from '@actions';
+import { appUpdateAvailable } from '@common/store/actions';
 import FlashMessageHolder from '../components/toolbox/flashMessage/holder';
 import DialogHolder from '../components/toolbox/dialog/holder';
 import useIpc from './useIpc';

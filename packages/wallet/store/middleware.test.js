@@ -1,7 +1,7 @@
 import {
   accountDataUpdated, transactionsRetrieved, settingsUpdated,
   votesRetrieved, emptyTransactionsData, networkSelected, networkStatusUpdated,
-} from '@actions';
+} from '@common/store/actions';
 
 import {
   tokenMap, actionTypes, MODULE_ASSETS_NAME_ID_MAP, routes,
@@ -18,7 +18,7 @@ jest.mock('@common/utilities/api/transaction', () => ({
   emptyTransactionsData: jest.fn(),
 }));
 
-jest.mock('@actions', () => ({
+jest.mock('@common/store/actions', () => ({
   accountDataUpdated: jest.fn(),
   transactionsRetrieved: jest.fn(),
   settingsUpdated: jest.fn(),

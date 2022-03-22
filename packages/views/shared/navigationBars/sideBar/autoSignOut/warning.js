@@ -4,7 +4,7 @@ import Countdown from 'react-countdown';
 import { toast } from 'react-toastify';
 import { useDispatch } from 'react-redux';
 import { withTranslation } from 'react-i18next';
-import { timerReset } from '@actions';
+import { timerReset } from '@common/store/actions';
 import { account, timeOutWarningId } from '@constants';
 import styles from './autoSignOut.css';
 

@@ -2,7 +2,7 @@
 import { compose } from 'redux';
 import { connect } from 'react-redux';
 import { withTranslation } from 'react-i18next';
-import { settingsUpdated } from '@actions';
+import { settingsUpdated } from '@common/store/actions';
 import AnalyticsDialog from './analyticsDialog';
 
 const mapStateToProps = state => ({

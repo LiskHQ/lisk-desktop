@@ -1,7 +1,7 @@
 import { compose } from 'redux';
 import { connect } from 'react-redux';
 import { withTranslation } from 'react-i18next';
-import { multisigTransactionSigned } from '@actions';
+import { multisigTransactionSigned } from '@common/store/actions';
 import { getAccount } from '@common/utilities/api/account';
 import withData from '@utils/withData';
 import { withRouter } from 'react-router';

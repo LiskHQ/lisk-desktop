@@ -7,7 +7,7 @@ import {
   resetTransactionResult,
   transactionDoubleSigned,
   transactionCreated,
-} from '@actions';
+} from '@common/store/actions';
 import Summary from './summary';
 
 const mapStateToProps = state => ({

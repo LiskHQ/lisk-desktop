@@ -1,7 +1,7 @@
 import React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 
-import { settingsUpdated } from '@actions';
+import { settingsUpdated } from '@common/store/actions';
 import { routes, tokenMap } from '@constants';
 import Icon from '@toolbox/icon';
 import Tooltip from '@toolbox/tooltip/tooltip';

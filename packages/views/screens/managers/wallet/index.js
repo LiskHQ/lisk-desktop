@@ -6,7 +6,7 @@ import { compose } from 'redux';
 
 import { parseSearchParams, addSearchParamsToUrl } from '@utils/searchParams';
 import { withRouter } from 'react-router';
-import { transactionsRetrieved } from '@actions';
+import { transactionsRetrieved } from '@common/store/actions';
 import {
   selectAccount,
   selectActiveToken,

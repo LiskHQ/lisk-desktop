@@ -1,6 +1,6 @@
 import React from 'react';
 import { mount } from 'enzyme';
-import { timerReset } from '@actions';
+import { timerReset } from '@common/store/actions';
 import { account } from '@constants';
 import Warning from './warning';
 
@@ -8,7 +8,7 @@ jest.mock('react-toastify', () => ({
   toast: (component) => (component),
 }));
 
-jest.mock('@actions', () => ({
+jest.mock('@common/store/actions', () => ({
   timerReset: jest.fn(),
 }));
 

@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 import { compose } from 'redux';
 import { withRouter } from 'react-router';
 import { withTranslation } from 'react-i18next';
-import { bookmarkAdded, bookmarkUpdated, bookmarkRemoved } from '@actions';
+import { bookmarkAdded, bookmarkUpdated, bookmarkRemoved } from '@common/store/actions';
 import { getAccount } from '@common/utilities/api/account';
 import withData from '@utils/withData';
 import { selectSearchParamValue } from '@utils/searchParams';

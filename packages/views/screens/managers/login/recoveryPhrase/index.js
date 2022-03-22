@@ -1,6 +1,6 @@
 import React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { settingsUpdated } from '@actions';
+import { settingsUpdated } from '@common/store/actions';
 import { selectSettings } from '@store/selectors';
 import { Input } from '@toolbox/inputs';
 import { defaultDerivationPath } from '@utils/explicitBipKeyDerivation';

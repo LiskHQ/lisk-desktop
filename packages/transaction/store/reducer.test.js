@@ -1,4 +1,4 @@
-import { resetTransactionResult } from '@actions';
+import { resetTransactionResult } from '@common/store/actions';
 import { actionTypes } from '@constants';
 import transactions from './transactions';
 

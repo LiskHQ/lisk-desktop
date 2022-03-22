@@ -1,7 +1,7 @@
 /* istanbul ignore file */
 import { connect } from 'react-redux';
 import { getActiveTokenAccount } from '@utils/account';
-import { delegateRegistered } from '@actions';
+import { delegateRegistered } from '@common/store/actions';
 import Summary from './summary';
 
 const mapStateToProps = state => ({

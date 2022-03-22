@@ -1,7 +1,7 @@
 import React from 'react';
 import { useDispatch } from 'react-redux';
 import { Link } from 'react-router-dom';
-import { settingsUpdated } from '@actions';
+import { settingsUpdated } from '@common/store/actions';
 import { tokenMap, routes } from '@constants';
 import Box from '@toolbox/box';
 import BoxHeader from '@toolbox/box/header';

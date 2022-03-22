@@ -1,4 +1,4 @@
-import { votesRetrieved, votesReset } from '@actions';
+import { votesRetrieved, votesReset } from '@common/store/actions';
 import { actionTypes } from '@constants';
 
 const votingMiddleware = store => next => (action) => {

@@ -2,7 +2,7 @@
 import React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useTranslation } from 'react-i18next';
-import { votesSubmitted } from '@actions';
+import { votesSubmitted } from '@common/store/actions';
 import { getActiveTokenAccount } from '@utils/account';
 import SummaryComponent from './summary';
 

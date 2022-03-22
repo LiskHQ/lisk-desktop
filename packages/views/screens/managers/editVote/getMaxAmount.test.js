@@ -63,7 +63,7 @@ jest.mock('@common/utilities/api/transaction', () => ({
   getTransactionFee: jest.fn().mockImplementation(() => Promise.resolve({ value: '0.046' })),
 }));
 
-jest.mock('@actions/voting', () => ({
+jest.mock('@common/store/actions/voting', () => ({
   voteEdited: jest.fn(),
 }));
 

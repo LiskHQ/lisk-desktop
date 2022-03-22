@@ -1,7 +1,7 @@
 /* istanbul ignore file */
 import { connect } from 'react-redux';
 import { withTranslation } from 'react-i18next';
-import { settingsUpdated } from '@actions';
+import { settingsUpdated } from '@common/store/actions';
 import DiscreetModeToggle from './discreetModeToggle';
 
 const mapStateToProps = state => ({

@@ -1,4 +1,4 @@
-import { networkConfigSet } from '@actions';
+import { networkConfigSet } from '@common/store/actions';
 import { actionTypes } from '@constants';
 import { getAutoLogInData, shouldAutoLogIn } from '@utils/login';
 import middleware from './network';
@@ -8,7 +8,7 @@ jest.mock('@utils/login', () => ({
   shouldAutoLogIn: jest.fn(),
 }));
 
-jest.mock('@actions', () => ({
+jest.mock('@common/store/actions', () => ({
   login: jest.fn(),
   networkConfigSet: jest.fn(),
 }));

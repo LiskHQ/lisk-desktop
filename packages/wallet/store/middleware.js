@@ -9,7 +9,7 @@ import { getActiveTokenAccount } from '@utils/account';
 import {
   settingsUpdated, networkSelected, networkStatusUpdated, accountDataUpdated,
   emptyTransactionsData, transactionsRetrieved, votesRetrieved,
-} from '@actions';
+} from '@common/store/actions';
 import analytics from '@utils/analytics';
 import { getTransactions } from '@common/utilities/api/transaction';
 import i18n from '../../i18n';

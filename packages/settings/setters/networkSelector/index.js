@@ -1,7 +1,7 @@
 /* istanbul ignore file */
 import React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { networkSelected } from '@actions';
+import { networkSelected } from '@common/store/actions';
 import NetworkSelectorComp from './networkSelector';
 
 const NetworkSelector = (props) => {

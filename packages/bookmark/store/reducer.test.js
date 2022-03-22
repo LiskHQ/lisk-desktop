@@ -1,6 +1,6 @@
 import {
   bookmarkAdded, bookmarkUpdated, bookmarkRemoved,
-} from '@actions';
+} from '@common/store/actions';
 import { actionTypes } from '@constants';
 import bookmarks from './bookmarks';
 import accounts from '../../../test/constants/accounts';

@@ -1,10 +1,10 @@
-import { pricesRetrieved, emptyTransactionsData, settingsUpdated } from '@actions';
+import { pricesRetrieved, emptyTransactionsData, settingsUpdated } from '@common/store/actions';
 import { actionTypes } from '@constants';
 import settingsMiddleware from './settings';
 
-jest.mock('@actions/service');
-jest.mock('@actions/settings');
-jest.mock('@actions/transactions');
+jest.mock('@common/store/actions/service');
+jest.mock('@common/store/actions/settings');
+jest.mock('@common/store/actions/transactions');
 
 describe('Middleware: Settings', () => {
   const next = jest.fn();

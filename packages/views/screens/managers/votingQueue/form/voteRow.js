@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { useDispatch } from 'react-redux';
 
 import { tokenMap } from '@constants';
-import { voteEdited } from '@actions';
+import { voteEdited } from '@common/store/actions';
 import { fromRawLsk, toRawLsk } from '@utils/lsk';
 import { truncateAddress } from '@utils/account';
 import AccountVisual from '@toolbox/accountVisual';

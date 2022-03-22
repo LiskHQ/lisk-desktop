@@ -2,7 +2,7 @@
 import { connect } from 'react-redux';
 import { compose } from 'redux';
 import { withTranslation } from 'react-i18next';
-import { secondPassphraseStored } from '@actions';
+import { secondPassphraseStored } from '@common/store/actions';
 import TransactionSummary from './transactionSummary';
 
 const mapStateToProps = state => ({

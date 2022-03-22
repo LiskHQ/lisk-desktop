@@ -1,5 +1,5 @@
 import { act } from 'react-dom/test-utils';
-import * as votingActions from '@actions';
+import * as votingActions from '@common/store/actions';
 import { mountWithRouterAndStore } from '@utils/testHelpers';
 import EditVote from './index';
 
@@ -7,7 +7,7 @@ jest.mock('@common/utilities/api/transaction', () => ({
   getTransactionFee: jest.fn().mockImplementation(() => Promise.resolve({ value: '0.046' })),
 }));
 
-jest.mock('@actions/voting', () => ({
+jest.mock('@common/store/actions/voting', () => ({
   voteEdited: jest.fn(),
 }));
 

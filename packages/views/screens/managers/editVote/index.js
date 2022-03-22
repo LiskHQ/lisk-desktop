@@ -6,7 +6,7 @@ import { compose } from 'redux';
 
 import { selectSearchParamValue, removeSearchParamsFromUrl } from '@utils/searchParams';
 import { tokenMap } from '@constants';
-import { voteEdited } from '@actions';
+import { voteEdited } from '@common/store/actions';
 import { toRawLsk, fromRawLsk } from '@utils/lsk';
 import Dialog from '@toolbox/dialog/dialog';
 import Box from '@toolbox/box';

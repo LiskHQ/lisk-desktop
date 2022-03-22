@@ -4,7 +4,7 @@ import { routes } from '@constants';
 import Icon from '@toolbox/icon';
 import Tooltip from '@toolbox/tooltip/tooltip';
 import Piwik from '@utils/piwik';
-import { accountLoggedOut } from '@actions';
+import { accountLoggedOut } from '@common/store/actions';
 import styles from './topBar.css';
 
 const SignOut = ({ t, history }) => {

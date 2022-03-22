@@ -2,7 +2,7 @@
 import { connect } from 'react-redux';
 import { withTranslation } from 'react-i18next';
 import { getActiveTokenAccount } from '@utils/account';
-import { balanceUnlocked } from '@actions';
+import { balanceUnlocked } from '@common/store/actions';
 import Summary from './summary';
 
 const mapStateToProps = state => ({

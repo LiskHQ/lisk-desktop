@@ -5,7 +5,7 @@ import { useDispatch } from 'react-redux';
 import { mountWithRouterAndStore } from '@utils/testHelpers';
 import { routes } from '@constants';
 import { defaultDerivationPath } from '@utils/explicitBipKeyDerivation';
-import { settingsUpdated } from '@actions';
+import { settingsUpdated } from '@common/store/actions';
 import Login from './login';
 import accounts from '../../../../test/constants/accounts';
 

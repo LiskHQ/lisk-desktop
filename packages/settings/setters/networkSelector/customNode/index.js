@@ -4,7 +4,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { useTranslation } from 'react-i18next';
 import {
   networkSelected, customNetworkRemoved, customNetworkStored,
-} from '@actions';
+} from '@common/store/actions';
 import CustomNode from './customNode';
 
 const CustomNodeHOC = (props) => {

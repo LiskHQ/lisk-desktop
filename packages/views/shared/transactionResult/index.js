@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 import { compose } from 'redux';
 import { withRouter } from 'react-router';
 import { withTranslation } from 'react-i18next';
-import { transactionBroadcasted, resetTransactionResult } from '@actions';
+import { transactionBroadcasted, resetTransactionResult } from '@common/store/actions';
 import TransactionResult from './transactionResult';
 
 const mapStateToProps = state => ({

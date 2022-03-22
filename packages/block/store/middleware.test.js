@@ -1,11 +1,11 @@
-import { olderBlocksRetrieved } from '@actions';
+import { olderBlocksRetrieved } from '@common/store/actions';
 import { actionTypes } from '@constants';
 import { blockSubscribe, blockUnsubscribe } from '@common/utilities/api/block';
 import middleware from './block';
 
 jest.mock('@common/utilities/api/block');
 jest.mock('@common/utilities/api/delegate');
-jest.mock('@actions/blocks');
+jest.mock('@common/store/actions/blocks');
 
 describe('Block middleware', () => {
   it('Should subscribe to block/change when actionTypes.networkConfigSet', () => {

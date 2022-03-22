@@ -3,7 +3,7 @@ import { useSelector, useDispatch } from 'react-redux';
 import { withTranslation } from 'react-i18next';
 import { NavLink } from 'react-router-dom';
 import { routes, modals, account } from '@constants';
-import { accountLoggedOut } from '@actions';
+import { accountLoggedOut } from '@common/store/actions';
 import Icon from '@toolbox/icon';
 import DialogLink from '@toolbox/dialog/link';
 import styles from './sideBar.css';

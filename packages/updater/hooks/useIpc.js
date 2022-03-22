@@ -3,7 +3,7 @@ import { useDispatch } from 'react-redux';
 import htmlStringToReact from '@utils/htmlStringToReact';
 import { regex } from '@constants';
 import { addSearchParamsToUrl, removeSearchParamsFromUrl } from '@utils/searchParams';
-import { appUpdateAvailable } from '@actions';
+import { appUpdateAvailable } from '@common/store/actions';
 import FlashMessageHolder from '@toolbox/flashMessage/holder';
 import NewReleaseMessage from '@shared/newReleaseMessage/newReleaseMessage';
 
