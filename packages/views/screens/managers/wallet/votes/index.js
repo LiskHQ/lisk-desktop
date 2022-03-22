@@ -4,7 +4,7 @@ import { compose } from 'redux';
 import { withTranslation } from 'react-i18next';
 import { getVotes } from '@common/utilities/api/delegate';
 import { getAccounts } from '@common/utilities/api/account';
-import withData from '@utils/withData';
+import withData from '@common/utilities/withData';
 import Votes from './votes';
 
 const apis = {

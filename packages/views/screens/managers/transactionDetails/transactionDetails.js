@@ -1,5 +1,5 @@
 import React from 'react';
-import { isEmpty } from '@utils/helpers';
+import { isEmpty } from '@common/utilities/helpers';
 import Box from '@views/basics/box';
 import BoxHeader from '@views/basics/box/header';
 import BoxContent from '@views/basics/box/content';

@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { flattenArray } from '@utils/helpers';
+import { flattenArray } from '@common/utilities/helpers';
 import styles from './dropdown.css';
 import Separator from './separator';
 

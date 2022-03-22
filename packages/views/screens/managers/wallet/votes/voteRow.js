@@ -1,7 +1,7 @@
 import React from 'react';
 import grid from 'flexboxgrid/dist/flexboxgrid.css';
 import { tokenMap } from '@constants';
-import { truncateAddress } from '@utils/account';
+import { truncateAddress } from '@common/utilities/account';
 import AccountVisual from '@views/basics/accountVisual';
 import tableStyles from '@views/basics/table/table.css';
 import LiskAmount from '@shared/liskAmount';

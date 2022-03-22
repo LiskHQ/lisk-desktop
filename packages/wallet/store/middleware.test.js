@@ -7,7 +7,7 @@ import {
   tokenMap, actionTypes, MODULE_ASSETS_NAME_ID_MAP, routes,
 } from '@constants';
 import * as transactionApi from '@common/utilities/api/transaction';
-import { getAutoLogInData } from '@utils/login';
+import { getAutoLogInData } from '@common/utilities/login';
 import middleware from './account';
 import history from '../../history';
 
@@ -28,14 +28,14 @@ jest.mock('@common/store/actions', () => ({
   networkStatusUpdated: jest.fn(),
 }));
 
-jest.mock('@utils/login', () => ({
+jest.mock('@common/utilities/login', () => ({
   getAutoLogInData: jest.fn(),
   shouldAutoLogIn: jest.fn(),
 }));
 
 jest.mock('@common/utilities/api/transaction');
 
-jest.mock('@utils/lsk');
+jest.mock('@common/utilities/lsk');
 
 const liskAPIClientMock = 'DUMMY_LISK_API_CLIENT';
 const storeCreatedAction = {

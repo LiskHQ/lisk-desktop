@@ -11,7 +11,7 @@ import Feedback from '@views/basics/feedback/feedback';
 import LabeledValue from '@views/basics/labeledValue';
 import LiskAmount from '@shared/liskAmount';
 import TransactionsTable from '@shared/transactionsTable';
-import { truncateAddress } from '@utils/account';
+import { truncateAddress } from '@common/utilities/account';
 import AccountVisual from '@views/basics/accountVisual';
 import styles from './blockDetails.css';
 

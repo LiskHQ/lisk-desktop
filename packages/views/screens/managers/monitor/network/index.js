@@ -2,9 +2,9 @@ import React from 'react';
 import { compose } from 'redux';
 import { withTranslation } from 'react-i18next';
 
-import withLocalSort from '@utils/withLocalSort';
+import withLocalSort from '@common/utilities/withLocalSort';
 import { getNetworkStatistics, getPeers } from '@common/utilities/api/network';
-import withData from '@utils/withData';
+import withData from '@common/utilities/withData';
 import { tokenMap, DEFAULT_LIMIT } from '@constants';
 import Box from '@views/basics/box';
 import BoxHeader from '@views/basics/box/header';

@@ -1,9 +1,9 @@
 import React from 'react';
-import { mountWithRouter } from '@utils/testHelpers';
-import { removeSearchParamsFromUrl } from '@utils/searchParams';
+import { mountWithRouter } from '@common/utilities/testHelpers';
+import { removeSearchParamsFromUrl } from '@common/utilities/searchParams';
 import Dialog from './dialog';
 
-jest.mock('@utils/searchParams', () => ({
+jest.mock('@common/utilities/searchParams', () => ({
   removeSearchParamsFromUrl: jest.fn(),
 }));
 

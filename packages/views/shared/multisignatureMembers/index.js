@@ -1,7 +1,7 @@
 import React from 'react';
 
 import AccountVisual from '@views/basics/accountVisual';
-import { truncateAddress } from '@utils/account';
+import { truncateAddress } from '@common/utilities/account';
 
 import styles from './styles.css';
 

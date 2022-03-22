@@ -3,8 +3,8 @@ import React, { useContext, useMemo } from 'react';
 import { useSelector } from 'react-redux';
 
 import { selectCurrentBlockHeight } from '@store/selectors';
-import { getModuleAssetTitle, getModuleAssetSenderLabel } from '@utils/moduleAssets';
-import { getTxAmount } from '@utils/transaction';
+import { getModuleAssetTitle, getModuleAssetSenderLabel } from '@common/utilities/moduleAssets';
+import { getTxAmount } from '@common/utilities/transaction';
 import { tokenMap, MODULE_ASSETS_NAME_ID_MAP } from '@constants';
 import CopyToClipboard from '@views/basics/copyToClipboard';
 import TransactionTypeFigure from '@shared/transactionTypeFigure';
@@ -13,7 +13,7 @@ import DiscreetMode from '@shared/discreetMode';
 import LiskAmount from '@shared/liskAmount';
 import MultiSignatureMembers, { SignedAndRemainingMembers } from '@shared/multisignatureMembers';
 import Tooltip from '@views/basics/tooltip/tooltip';
-import { extractAddressFromPublicKey, truncateAddress, calculateRemainingAndSignedMembers } from '@utils/account';
+import { extractAddressFromPublicKey, truncateAddress, calculateRemainingAndSignedMembers } from '@common/utilities/account';
 
 import { Context } from '../transactionDetails';
 import AccountInfo from './accountInfo';

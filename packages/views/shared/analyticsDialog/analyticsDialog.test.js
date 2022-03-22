@@ -1,6 +1,6 @@
 import { toast } from 'react-toastify';
 import FlashMessageHolder from '@views/basics/flashMessage/holder';
-import { mountWithRouter } from '@utils/testHelpers';
+import { mountWithRouter } from '@common/utilities/testHelpers';
 import AnalyticsDialog from './analyticsDialog';
 
 jest.mock('@views/basics/flashMessage/holder');

@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useRef } from 'react';
-import { isEmpty } from '@utils/helpers';
+import { isEmpty } from '@common/utilities/helpers';
 import {
   tokenMap, MODULE_ASSETS_NAME_ID_MAP, regex, MIN_ACCOUNT_BALANCE,
 } from '@constants';
@@ -12,7 +12,7 @@ import BoxFooter from '@views/basics/box/footer';
 import { Input } from '@views/basics/inputs';
 import { PrimaryButton } from '@views/basics/buttons';
 import Tooltip from '@views/basics/tooltip/tooltip';
-import { toRawLsk, fromRawLsk } from '@utils/lsk';
+import { toRawLsk, fromRawLsk } from '@common/utilities/lsk';
 import styles from './form.css';
 
 const token = tokenMap.LSK.key;

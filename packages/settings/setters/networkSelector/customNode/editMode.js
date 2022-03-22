@@ -4,7 +4,7 @@ import { tokenMap, networkKeys } from '@constants';
 import { getNetworkConfig } from '@common/utilities/api/network';
 import { PrimaryButton } from '@views/basics/buttons';
 import { Input } from '@views/basics/inputs';
-import { addHttp } from '@utils/login';
+import { addHttp } from '@common/utilities/login';
 import styles from '../networkSelector.css';
 
 const validateNode = async (address) => {

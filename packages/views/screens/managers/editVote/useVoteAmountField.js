@@ -2,9 +2,9 @@ import { useEffect, useState } from 'react';
 import { useSelector } from 'react-redux';
 import { useTranslation } from 'react-i18next';
 
-import { validateAmountFormat } from '@utils/validators';
-import { fromRawLsk } from '@utils/lsk';
-import { selectSearchParamValue } from '@utils/searchParams';
+import { validateAmountFormat } from '@common/utilities/validators';
+import { fromRawLsk } from '@common/utilities/lsk';
+import { selectSearchParamValue } from '@common/utilities/searchParams';
 import { selectAccountBalance, selectLSKAddress } from '@store/selectors';
 import { tokenMap, regex } from '@constants';
 

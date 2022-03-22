@@ -1,6 +1,6 @@
 import { MODULE_ASSETS_NAME_ID_MAP, signatureCollectionStatus } from '@constants';
-import { joinModuleAndAssetIds } from '@utils/moduleAssets';
-import { getKeys } from '@utils/account';
+import { joinModuleAndAssetIds } from '@common/utilities/moduleAssets';
+import { getKeys } from '@common/utilities/account';
 
 const getNumbersOfSignaturesRequired = ({ keys, isGroupRegistration }) => {
   if (isGroupRegistration) {

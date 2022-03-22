@@ -1,5 +1,5 @@
 import { keyCodes } from '@constants';
-import { mountWithRouter } from '@utils/testHelpers';
+import { mountWithRouter } from '@common/utilities/testHelpers';
 import SearchBar from './searchBar';
 
 describe('SearchBar', () => {

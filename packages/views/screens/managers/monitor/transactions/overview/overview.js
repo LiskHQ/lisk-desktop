@@ -2,14 +2,14 @@
 // istanbul ignore file
 import React, { useState } from 'react';
 import moment from 'moment';
-import { fromRawLsk } from '@utils/lsk';
-import { kFormatter } from '@utils/helpers';
+import { fromRawLsk } from '@common/utilities/lsk';
+import { kFormatter } from '@common/utilities/helpers';
 import {
   chartStyles, MODULE_ASSETS_NAME_ID_MAP,
 } from '@constants';
-import { getModuleAssetTitle } from '@utils/moduleAssets';
-import { useTheme } from '@utils/theme';
-import { getColorPalette } from '@utils/chartOptions';
+import { getModuleAssetTitle } from '@common/utilities/moduleAssets';
+import { useTheme } from '@common/utilities/theme';
+import { getColorPalette } from '@common/utilities/chartOptions';
 import Box from '@views/basics/box';
 import BoxTabs from '@views/basics/tabs';
 import BoxHeader from '@views/basics/box/header';

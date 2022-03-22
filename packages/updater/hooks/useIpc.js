@@ -1,8 +1,8 @@
 import React, { useEffect } from 'react';
 import { useDispatch } from 'react-redux';
-import htmlStringToReact from '@utils/htmlStringToReact';
+import htmlStringToReact from '@common/utilities/htmlStringToReact';
 import { regex } from '@constants';
-import { addSearchParamsToUrl, removeSearchParamsFromUrl } from '@utils/searchParams';
+import { addSearchParamsToUrl, removeSearchParamsFromUrl } from '@common/utilities/searchParams';
 import { appUpdateAvailable } from '@common/store/actions';
 import FlashMessageHolder from '@views/basics/flashMessage/holder';
 import NewReleaseMessage from '@shared/newReleaseMessage/newReleaseMessage';

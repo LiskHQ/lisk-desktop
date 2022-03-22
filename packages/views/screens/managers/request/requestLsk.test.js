@@ -1,5 +1,5 @@
 import React from 'react';
-import { mountWithRouter } from '@utils/testHelpers';
+import { mountWithRouter } from '@common/utilities/testHelpers';
 import Request from './requestLsk';
 import accounts from '../../../../test/constants/accounts';
 

@@ -1,8 +1,8 @@
 import React from 'react';
 import { mount } from 'enzyme';
 import { tokenMap } from '@constants';
-import { toRawLsk } from '@utils/lsk';
-import { formatAmountBasedOnLocale } from '@utils/formattedNumber';
+import { toRawLsk } from '@common/utilities/lsk';
+import { formatAmountBasedOnLocale } from '@common/utilities/formattedNumber';
 import Summary from './summary';
 import accounts from '../../../../../test/constants/accounts';
 import i18n from '../../../../i18n';

@@ -1,6 +1,6 @@
 import React from 'react';
 import { toast } from 'react-toastify';
-import Piwik from '@utils/piwik';
+import Piwik from '@common/utilities/piwik';
 import { externalLinks, settings as settingsConst } from '@constants';
 import Box from '@views/basics/box';
 import BoxHeader from '@views/basics/box/header';

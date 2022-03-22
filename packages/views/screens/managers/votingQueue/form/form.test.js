@@ -1,10 +1,10 @@
 import { act } from 'react-dom/test-utils';
 import { MIN_ACCOUNT_BALANCE } from '@constants';
 
-import { mountWithRouter } from '@utils/testHelpers';
+import { mountWithRouter } from '@common/utilities/testHelpers';
 import { getTransactionBaseFees, getTransactionFee } from '@common/utilities/api/transaction';
 import useTransactionFeeCalculation from '@shared/transactionPriority/useTransactionFeeCalculation';
-import { fromRawLsk } from '@utils/lsk';
+import { fromRawLsk } from '@common/utilities/lsk';
 import accounts from '../../../../../test/constants/accounts';
 import flushPromises from '../../../../../test/unit-test-utils/flushPromises';
 import Form from './form';

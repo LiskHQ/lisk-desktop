@@ -1,7 +1,7 @@
 /* eslint-disable max-lines */
 import React from 'react';
 import PropTypes from 'prop-types';
-import { useTheme } from '@utils/theme';
+import { useTheme } from '@common/utilities/theme';
 import academy from '../../../assets/images/icons/academy.svg';
 import academyActive from '../../../assets/images/icons/academy-active.svg';
 import alertIcon from '../../../assets/images/icons/icon-alert.svg';

@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react';
-import { isEmpty } from '@utils/helpers';
+import { isEmpty } from '@common/utilities/helpers';
 import { txStatusTypes } from '@constants';
 import { PrimaryButton } from '@views/basics/buttons';
 import TransactionResult from '@shared/transactionResult';

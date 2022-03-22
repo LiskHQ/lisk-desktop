@@ -1,7 +1,7 @@
 import PropTypes from 'prop-types';
 import React from 'react';
 
-import { parseSearchParams } from '@utils/searchParams';
+import { parseSearchParams } from '@common/utilities/searchParams';
 import { Input } from '@views/basics/inputs';
 import { PrimaryButton } from '@views/basics/buttons';
 import Box from '@views/basics/box';

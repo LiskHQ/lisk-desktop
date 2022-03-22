@@ -7,8 +7,8 @@ import { connect } from 'react-redux';
 import { getDelegates } from '@common/utilities/api/delegate';
 import { getNetworkStatus } from '@common/utilities/api/network';
 import { getTransactions, getRegisteredDelegates } from '@common/utilities/api/transaction';
-import withData from '@utils/withData';
-import withFilters from '@utils/withFilters';
+import withData from '@common/utilities/withData';
+import withFilters from '@common/utilities/withFilters';
 import { MODULE_ASSETS_NAME_ID_MAP, tokenMap, DEFAULT_LIMIT } from '@constants';
 import Delegates from './delegates';
 

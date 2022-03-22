@@ -2,10 +2,10 @@
 import { compose } from 'redux';
 import { connect } from 'react-redux';
 import { withRouter } from 'react-router-dom';
-import { getActiveTokenAccount } from '@utils/account';
+import { getActiveTokenAccount } from '@common/utilities/account';
 import { getTransaction } from '@common/utilities/api/transaction';
-import withData from '@utils/withData';
-import { parseSearchParams } from '@utils/searchParams';
+import withData from '@common/utilities/withData';
+import { parseSearchParams } from '@common/utilities/searchParams';
 import { withTranslation } from 'react-i18next';
 import TransactionDetails from './transactionDetails';
 

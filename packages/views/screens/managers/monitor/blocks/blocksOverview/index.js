@@ -2,7 +2,7 @@
 import { compose } from 'redux';
 import { withRouter } from 'react-router-dom';
 import { getBlocks } from '@common/utilities/api/block';
-import withData from '@utils/withData';
+import withData from '@common/utilities/withData';
 import { DEFAULT_LIMIT } from '@constants';
 import BlocksOverview from './blocksOverview';
 

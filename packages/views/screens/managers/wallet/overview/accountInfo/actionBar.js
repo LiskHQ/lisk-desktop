@@ -1,8 +1,8 @@
 import React from 'react';
 import QRCode from 'qrcode.react';
 import { tokenMap } from '@constants';
-import { getAddress } from '@utils/hwManager';
-import { isEmpty } from '@utils/helpers';
+import { getAddress } from '@common/utilities/hwManager';
+import { isEmpty } from '@common/utilities/helpers';
 import Icon from '@views/basics/icon';
 import CopyToClipboard from '@views/basics/copyToClipboard';
 import Tooltip from '@views/basics/tooltip/tooltip';

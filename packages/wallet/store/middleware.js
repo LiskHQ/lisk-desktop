@@ -4,13 +4,13 @@ import {
   MODULE_ASSETS_NAME_ID_MAP, tokenMap, routes,
   timeOutId, timeOutWarningId,
 } from '@constants';
-import { fromRawLsk, delay } from '@utils/lsk';
-import { getActiveTokenAccount } from '@utils/account';
+import { fromRawLsk, delay } from '@common/utilities/lsk';
+import { getActiveTokenAccount } from '@common/utilities/account';
 import {
   settingsUpdated, networkSelected, networkStatusUpdated, accountDataUpdated,
   emptyTransactionsData, transactionsRetrieved, votesRetrieved,
 } from '@common/store/actions';
-import analytics from '@utils/analytics';
+import analytics from '@common/utilities/analytics';
 import { getTransactions } from '@common/utilities/api/transaction';
 import i18n from '../../i18n';
 import history from '../../history';

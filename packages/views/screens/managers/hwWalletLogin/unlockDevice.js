@@ -1,5 +1,5 @@
 import React, { useEffect, useRef } from 'react';
-import { checkIfInsideLiskApp } from '@utils/hwManager';
+import { checkIfInsideLiskApp } from '@common/utilities/hwManager';
 import { TertiaryButton } from '@views/basics/buttons';
 import Illustration from '@views/basics/illustration';
 import Spinner from '@views/basics/spinner';

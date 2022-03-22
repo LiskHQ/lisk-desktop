@@ -1,4 +1,4 @@
-import { getCustomDerivationKeyPair } from '@utils/explicitBipKeyDerivation';
+import { getCustomDerivationKeyPair } from '@common/utilities/explicitBipKeyDerivation';
 import accounts from '../../test/constants/accounts';
 import {
   extractPublicKey,
@@ -21,7 +21,7 @@ const {
   publicKey,
 } = accounts.genesis.summary;
 
-jest.mock('@utils/explicitBipKeyDerivation', () => ({
+jest.mock('@common/utilities/explicitBipKeyDerivation', () => ({
   getCustomDerivationKeyPair: jest.fn(),
 }));
 

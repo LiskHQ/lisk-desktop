@@ -1,7 +1,7 @@
 import React from 'react';
 import AccountVisual from '@views/basics/accountVisual';
 import LiskAmount from '@shared/liskAmount';
-import { toRawLsk } from '@utils/lsk';
+import { toRawLsk } from '@common/utilities/lsk';
 import styles from './transactionInfo.css';
 
 const Send = ({

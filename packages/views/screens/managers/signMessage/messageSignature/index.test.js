@@ -1,11 +1,11 @@
 import React from 'react';
 import { mount } from 'enzyme';
 import { loginTypes } from '@constants';
-import * as hwManager from '@utils/hwManager';
+import * as hwManager from '@common/utilities/hwManager';
 import MessageSignature from '.';
 import accounts from '../../../../../test/constants/accounts';
 
-jest.mock('@utils/hwManager');
+jest.mock('@common/utilities/hwManager');
 
 describe('Sign Message: Status', () => {
   const accountWithPassphrase = {

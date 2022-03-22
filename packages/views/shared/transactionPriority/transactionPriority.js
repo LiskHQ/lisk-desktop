@@ -3,8 +3,8 @@ import PropTypes from 'prop-types';
 import { tokenMap, MODULE_ASSETS_MAP } from '@constants';
 import {
   formatAmountBasedOnLocale,
-} from '@utils/formattedNumber';
-import { toRawLsk, fromRawLsk } from '@utils/lsk';
+} from '@common/utilities/formattedNumber';
+import { toRawLsk, fromRawLsk } from '@common/utilities/lsk';
 import Input from '@views/basics/inputs/input';
 import Icon from '@views/basics/icon';
 import Tooltip from '@views/basics/tooltip/tooltip';

@@ -1,8 +1,8 @@
 import React from 'react';
 import { mount } from 'enzyme';
 import { MODULE_ASSETS_NAME_ID_MAP } from '@constants';
-import { mountWithRouter } from '@utils/testHelpers';
-import { truncateAddress } from '@utils/account';
+import { mountWithRouter } from '@common/utilities/testHelpers';
+import { truncateAddress } from '@common/utilities/account';
 import TransactionDetails from './transactionDetails';
 import accounts from '../../../../test/constants/accounts';
 

@@ -2,8 +2,8 @@ import React from 'react';
 import { expect } from 'chai';
 import { mount } from 'enzyme';
 import sinon from 'sinon';
-import { generatePassphraseFromSeed } from '@utils/passphrase';
-import { extractAddressFromPassphrase } from '@utils/account';
+import { generatePassphraseFromSeed } from '@common/utilities/passphrase';
+import { extractAddressFromPassphrase } from '@common/utilities/account';
 import ChooseAvatar from './chooseAvatar';
 
 describe('Register Process - Choose Avatar', () => {

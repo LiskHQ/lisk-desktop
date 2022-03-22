@@ -1,7 +1,7 @@
 // istanbul ignore file
 import React from 'react';
-import { useTheme } from '@utils/theme';
-import { getColorPalette } from '@utils/chartOptions';
+import { useTheme } from '@common/utilities/theme';
+import { getColorPalette } from '@common/utilities/chartOptions';
 import Box from '@views/basics/box';
 import BoxHeader from '@views/basics/box/header';
 import BoxContent from '@views/basics/box/content';

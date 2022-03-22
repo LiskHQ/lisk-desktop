@@ -3,8 +3,8 @@ import { compose } from 'redux';
 import { withTranslation } from 'react-i18next';
 import { withRouter } from 'react-router-dom';
 import { getBlocks } from '@common/utilities/api/block';
-import withData from '@utils/withData';
-import { transformStringDateToUnixTimestamp } from '@utils/datetime';
+import withData from '@common/utilities/withData';
+import { transformStringDateToUnixTimestamp } from '@common/utilities/datetime';
 import { DEFAULT_LIMIT } from '@constants';
 import Blocks from './blocks';
 

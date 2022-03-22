@@ -1,6 +1,6 @@
 /* eslint-disable import/prefer-default-export */
 import { tokenMap, MIN_ACCOUNT_BALANCE } from '@constants';
-import { toRawLsk } from '@utils/lsk';
+import { toRawLsk } from '@common/utilities/lsk';
 
 const calculateAvailableBalance = (balance, token) => {
   if (token !== tokenMap.LSK.key) {

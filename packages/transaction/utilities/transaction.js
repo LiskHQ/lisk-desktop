@@ -1,7 +1,7 @@
 /* eslint-disable max-lines */
 import { transactions, cryptography } from '@liskhq/lisk-client';
 import { to } from 'await-to-js';
-import { signTransactionByHW } from '@utils/hwManager';
+import { signTransactionByHW } from '@common/utilities/hwManager';
 import {
   DEFAULT_NUMBER_OF_SIGNATURES,
   MODULE_ASSETS_NAME_ID_MAP,
@@ -12,11 +12,11 @@ import {
   getBase32AddressFromAddress,
   getAddressFromBase32Address,
   getKeys,
-} from '@utils/account';
-import { transformStringDateToUnixTimestamp } from '@utils/datetime';
-import { toRawLsk } from '@utils/lsk';
-import { isEmpty } from '@utils/helpers';
-import { splitModuleAndAssetIds, joinModuleAndAssetIds } from '@utils/moduleAssets';
+} from '@common/utilities/account';
+import { transformStringDateToUnixTimestamp } from '@common/utilities/datetime';
+import { toRawLsk } from '@common/utilities/lsk';
+import { isEmpty } from '@common/utilities/helpers';
+import { splitModuleAndAssetIds, joinModuleAndAssetIds } from '@common/utilities/moduleAssets';
 
 const {
   transfer, voteDelegate, registerDelegate, unlockToken, reclaimLSK, registerMultisignatureGroup,

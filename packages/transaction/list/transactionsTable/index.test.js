@@ -1,4 +1,4 @@
-import { mountWithRouter } from '@utils/testHelpers';
+import { mountWithRouter } from '@common/utilities/testHelpers';
 import { expect } from 'chai';
 import TransactionsTable from './index';
 import transactionsData from '../../../../test/fixtures/transactionsData';

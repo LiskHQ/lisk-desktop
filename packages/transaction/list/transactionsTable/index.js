@@ -1,8 +1,8 @@
 import { withTranslation } from 'react-i18next';
 import React, { useState } from 'react';
 import { useSelector } from 'react-redux';
-import withFilters from '@utils/withFilters';
-import { getModuleAssetTitle } from '@utils/moduleAssets';
+import withFilters from '@common/utilities/withFilters';
+import { getModuleAssetTitle } from '@common/utilities/moduleAssets';
 import Box from '@views/basics/box';
 import BoxContent from '@views/basics/box/content';
 import Table from '@views/basics/table';

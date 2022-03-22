@@ -2,8 +2,8 @@
 import { compose } from 'redux';
 import { withRouter } from 'react-router-dom';
 import { getDelegate } from '@common/utilities/api/delegate';
-import withData from '@utils/withData';
-import { parseSearchParams } from '@utils/searchParams';
+import withData from '@common/utilities/withData';
+import { parseSearchParams } from '@common/utilities/searchParams';
 import { withTranslation } from 'react-i18next';
 import DelegatePerformance from './delegatePerformance';
 

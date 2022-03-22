@@ -1,5 +1,5 @@
-import { mountWithRouter } from '@utils/testHelpers';
-import { truncateAddress } from '@utils/account';
+import { mountWithRouter } from '@common/utilities/testHelpers';
+import { truncateAddress } from '@common/utilities/account';
 import blocks from '../../../../../test/constants/blocks';
 import transactions from '../../../../../test/constants/transactions';
 import BlockDetails from './blockDetails';

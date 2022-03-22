@@ -5,7 +5,7 @@ import { Link } from 'react-router-dom';
 
 import { tokenMap, routes } from '@constants';
 import Tooltip from '@views/basics/tooltip/tooltip';
-import { truncateAddress } from '@utils/account';
+import { truncateAddress } from '@common/utilities/account';
 import { Input } from '@views/basics/inputs';
 import { PrimaryButton, TertiaryButton } from '@views/basics/buttons';
 import AccountVisual from '@views/basics/accountVisual';

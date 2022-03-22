@@ -4,7 +4,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { withTranslation } from 'react-i18next';
 import { compose } from 'redux';
 
-import { parseSearchParams, addSearchParamsToUrl } from '@utils/searchParams';
+import { parseSearchParams, addSearchParamsToUrl } from '@common/utilities/searchParams';
 import { withRouter } from 'react-router';
 import { transactionsRetrieved } from '@common/store/actions';
 import {

@@ -1,5 +1,5 @@
 import { actionTypes, ROUND_LENGTH } from '@constants';
-import { convertUnixSecondsToLiskEpochSeconds } from '@utils/datetime';
+import { convertUnixSecondsToLiskEpochSeconds } from '@common/utilities/datetime';
 import { getBlocks } from '@common/utilities/api/block';
 import { getForgers, getDelegates } from '@common/utilities/api/delegate';
 

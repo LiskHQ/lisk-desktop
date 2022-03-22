@@ -1,5 +1,5 @@
-import { transactionToJSON, getNumberOfSignatures } from '@utils/transaction';
-import { isEmpty } from '@utils/helpers';
+import { transactionToJSON, getNumberOfSignatures } from '@common/utilities/transaction';
+import { isEmpty } from '@common/utilities/helpers';
 import { txStatusTypes } from '@constants';
 
 export const statusMessages = t => ({

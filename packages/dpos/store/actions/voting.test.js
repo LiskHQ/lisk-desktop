@@ -2,7 +2,7 @@ import { actionTypes, networks, loginTypes } from '@constants';
 import * as transactionApi from '@common/utilities/api/transaction';
 import * as delegateApi from '@common/utilities/api/delegate';
 import * as accountApi from '@common/utilities/api/account';
-import * as hwManager from '@utils/hwManager';
+import * as hwManager from '@common/utilities/hwManager';
 import {
   voteEdited,
   votesCleared,
@@ -26,7 +26,7 @@ jest.mock('@common/utilities/api/account', () => ({
   getAccount: jest.fn(),
 }));
 
-jest.mock('@utils/hwManager', () => ({
+jest.mock('@common/utilities/hwManager', () => ({
   signTransactionByHW: jest.fn(),
 }));
 

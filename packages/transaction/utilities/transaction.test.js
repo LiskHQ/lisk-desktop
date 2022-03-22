@@ -1,6 +1,6 @@
 import { MODULE_ASSETS_NAME_ID_MAP } from '@constants';
-import { splitModuleAndAssetIds } from '@utils/moduleAssets';
-import { getAddressFromBase32Address } from '@utils/account';
+import { splitModuleAndAssetIds } from '@common/utilities/moduleAssets';
+import { getAddressFromBase32Address } from '@common/utilities/account';
 import {
   getTxAmount,
   transformTransaction,

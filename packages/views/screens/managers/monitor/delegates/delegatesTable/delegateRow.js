@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom';
 
 import { useDispatch } from 'react-redux';
 import { routes } from '@constants';
-import { useTheme } from '@utils/theme';
+import { useTheme } from '@common/utilities/theme';
 import { addedToWatchList, removedFromWatchList } from '@common/store/actions';
 import styles from '../delegates.css';
 import {

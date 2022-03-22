@@ -1,5 +1,5 @@
 import { tokenMap } from '@constants';
-import { mountWithRouter } from '@utils/testHelpers';
+import { mountWithRouter } from '@common/utilities/testHelpers';
 import BookmarkListModal from './modal';
 import bookmarks from '../../../../../test/constants/bookmarks';
 

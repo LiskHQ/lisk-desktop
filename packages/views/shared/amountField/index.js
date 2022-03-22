@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
 
-import { formatAmountBasedOnLocale } from '@utils/formattedNumber';
-import { fromRawLsk } from '@utils/lsk';
+import { formatAmountBasedOnLocale } from '@common/utilities/formattedNumber';
+import { fromRawLsk } from '@common/utilities/lsk';
 import { Input } from '@views/basics/inputs';
 import { TertiaryButton } from '@views/basics/buttons';
 import Icon from '@views/basics/icon';

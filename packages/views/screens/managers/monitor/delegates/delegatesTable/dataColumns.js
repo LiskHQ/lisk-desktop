@@ -1,8 +1,8 @@
 import React from 'react';
 
-import { formatAmountBasedOnLocale } from '@utils/formattedNumber';
-import { fromRawLsk } from '@utils/lsk';
-import { truncateAddress } from '@utils/account';
+import { formatAmountBasedOnLocale } from '@common/utilities/formattedNumber';
+import { fromRawLsk } from '@common/utilities/lsk';
+import { truncateAddress } from '@common/utilities/account';
 import Tooltip from '@views/basics/tooltip/tooltip';
 import Icon from '@views/basics/icon';
 import AccountVisual from '@views/basics/accountVisual';

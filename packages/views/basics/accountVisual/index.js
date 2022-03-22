@@ -1,9 +1,9 @@
 import BigNumber from 'bignumber.js';
 import React from 'react';
 import sha256 from 'js-sha256';
-import generateUniqueId from '@utils/generateUniqueId';
+import generateUniqueId from '@common/utilities/generateUniqueId';
 import { tokenMap } from '@constants';
-import { validateAddress } from '@utils/validators';
+import { validateAddress } from '@common/utilities/validators';
 import { Gradients, gradientSchemes } from './gradients';
 import styles from './accountVisual.css';
 

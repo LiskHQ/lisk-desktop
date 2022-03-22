@@ -3,7 +3,7 @@ import React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useTranslation } from 'react-i18next';
 import { votesSubmitted } from '@common/store/actions';
-import { getActiveTokenAccount } from '@utils/account';
+import { getActiveTokenAccount } from '@common/utilities/account';
 import SummaryComponent from './summary';
 
 const Summary = (props) => {

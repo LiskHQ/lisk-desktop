@@ -1,7 +1,7 @@
 import React, { useMemo } from 'react';
 import grid from 'flexboxgrid/dist/flexboxgrid.css';
 
-import { extractAddressFromPublicKey } from '@utils/account';
+import { extractAddressFromPublicKey } from '@common/utilities/account';
 import Box from '@views/basics/box';
 import BoxHeader from '@views/basics/box/header';
 import BoxContent from '@views/basics/box/content';

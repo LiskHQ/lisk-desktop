@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 import { withTranslation } from 'react-i18next';
 import { multisigTransactionSigned } from '@common/store/actions';
 import { getAccount } from '@common/utilities/api/account';
-import withData from '@utils/withData';
+import withData from '@common/utilities/withData';
 import { withRouter } from 'react-router';
 import Summary from './summary';
 

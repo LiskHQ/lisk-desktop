@@ -1,5 +1,5 @@
 import React from 'react';
-import Piwik from '@utils/piwik';
+import Piwik from '@common/utilities/piwik';
 import { routes } from '@constants';
 import { PrimaryButton } from '@views/basics/buttons';
 import Icon from '@views/basics/icon';

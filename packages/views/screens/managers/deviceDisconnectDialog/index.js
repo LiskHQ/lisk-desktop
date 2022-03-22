@@ -3,7 +3,7 @@ import grid from 'flexboxgrid/dist/flexboxgrid.css';
 import { withRouter } from 'react-router';
 import { withTranslation } from 'react-i18next';
 
-import { selectSearchParamValue } from '@utils/searchParams';
+import { selectSearchParamValue } from '@common/utilities/searchParams';
 import Dialog from '@views/basics/dialog/dialog';
 import { PrimaryButton } from '@views/basics/buttons';
 

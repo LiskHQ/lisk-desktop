@@ -3,7 +3,7 @@ import { passphrase as LiskPassphrase, cryptography } from '@liskhq/lisk-client'
 import {
   tokenMap, regex, balanceNeededForReclaim, balanceNeededForInitialization,
 } from '@constants';
-import { getCustomDerivationKeyPair } from '@utils/explicitBipKeyDerivation';
+import { getCustomDerivationKeyPair } from '@common/utilities/explicitBipKeyDerivation';
 
 /**
  * Extracts Lisk PrivateKey/PublicKey pair from a given valid Mnemonic passphrase

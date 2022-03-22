@@ -1,7 +1,7 @@
 // istanbul ignore file
 import { withTranslation } from 'react-i18next';
 import { getNews } from '@common/utilities/api/market';
-import withData from '@utils/withData';
+import withData from '@common/utilities/withData';
 import NewsFeed from './newsFeed';
 
 export default withData({

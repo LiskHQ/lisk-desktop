@@ -1,8 +1,8 @@
 import React from 'react';
 
 import { MODULE_ASSETS_NAME_ID_MAP } from '@constants';
-import { getModuleAssetTitle } from '@utils/moduleAssets';
-import { truncateAddress } from '@utils/account';
+import { getModuleAssetTitle } from '@common/utilities/moduleAssets';
+import { truncateAddress } from '@common/utilities/account';
 import styles from './transactionAddress.css';
 
 const Address = ({

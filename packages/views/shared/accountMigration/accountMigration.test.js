@@ -1,6 +1,6 @@
 import React from 'react';
 import { mount } from 'enzyme';
-import { truncateAddress } from '@utils/account';
+import { truncateAddress } from '@common/utilities/account';
 import AccountMigration from './index';
 import accounts from '../../../../test/constants/accounts';
 

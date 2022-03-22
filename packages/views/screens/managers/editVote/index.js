@@ -4,10 +4,10 @@ import { withTranslation } from 'react-i18next';
 import { useDispatch, useSelector, connect } from 'react-redux';
 import { compose } from 'redux';
 
-import { selectSearchParamValue, removeSearchParamsFromUrl } from '@utils/searchParams';
+import { selectSearchParamValue, removeSearchParamsFromUrl } from '@common/utilities/searchParams';
 import { tokenMap } from '@constants';
 import { voteEdited } from '@common/store/actions';
-import { toRawLsk, fromRawLsk } from '@utils/lsk';
+import { toRawLsk, fromRawLsk } from '@common/utilities/lsk';
 import Dialog from '@views/basics/dialog/dialog';
 import Box from '@views/basics/box';
 import BoxContent from '@views/basics/box/content';

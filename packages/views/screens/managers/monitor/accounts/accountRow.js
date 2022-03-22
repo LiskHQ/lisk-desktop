@@ -4,7 +4,7 @@ import { Link } from 'react-router-dom';
 import grid from 'flexboxgrid/dist/flexboxgrid.css';
 
 import { tokenMap, routes } from '@constants';
-// import { formatAmountBasedOnLocale } from '@utils/formattedNumber';
+// import { formatAmountBasedOnLocale } from '@common/utilities/formattedNumber';
 import LiskAmount from '@shared/liskAmount';
 import AccountVisualWithAddress from '@shared/accountVisualWithAddress';
 import styles from './accounts.css';

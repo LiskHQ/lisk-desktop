@@ -2,8 +2,8 @@
 import React from 'react';
 import { useSelector } from 'react-redux';
 import { Redirect, Route } from 'react-router-dom';
-import { getActiveTokenAccount } from '@utils/account';
-import Piwik from '@utils/piwik';
+import { getActiveTokenAccount } from '@common/utilities/account';
+import Piwik from '@common/utilities/piwik';
 import { routes } from '@constants';
 import Login from '@screens/login';
 import ErrorBoundary from '../errorBoundary';

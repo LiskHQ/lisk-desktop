@@ -1,11 +1,11 @@
 import { getTransactionFee } from '@common/utilities/api/transaction';
-import { getNumberOfSignatures } from '@utils/transaction';
+import { getNumberOfSignatures } from '@common/utilities/transaction';
 import {
   VOTE_AMOUNT_STEP,
   MIN_ACCOUNT_BALANCE,
   MODULE_ASSETS_NAME_ID_MAP,
 } from '@constants';
-import { toRawLsk } from '@utils/lsk';
+import { toRawLsk } from '@common/utilities/lsk';
 import { normalizeVotesForTx } from '@shared/transactionPriority';
 
 /**

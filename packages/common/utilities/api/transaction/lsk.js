@@ -9,10 +9,10 @@ import {
   MODULE_ASSETS_NAME_ID_MAP,
   BASE_FEES,
 } from '@constants';
-import { joinModuleAndAssetIds } from '@utils/moduleAssets';
+import { joinModuleAndAssetIds } from '@common/utilities/moduleAssets';
 import {
   createTransactionObject, sign,
-} from '@utils/transaction';
+} from '@common/utilities/transaction';
 import { validateAddress } from '../../validators';
 import http from '../http';
 import { getDelegates } from '../delegate';

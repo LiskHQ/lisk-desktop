@@ -1,9 +1,9 @@
 import React from 'react';
 import { mount } from 'enzyme';
-import { truncateAddress } from '@utils/account';
+import { truncateAddress } from '@common/utilities/account';
 import VoteItem from '.';
 
-jest.mock('@utils/account');
+jest.mock('@common/utilities/account');
 
 describe('VoteItem', () => {
   it('should render correctly', () => {

@@ -1,7 +1,7 @@
 import React from 'react';
 import grid from 'flexboxgrid/dist/flexboxgrid.css';
-import { generatePassphrase } from '@utils/passphrase';
-import { extractAddressFromPassphrase } from '@utils/account';
+import { generatePassphrase } from '@common/utilities/passphrase';
+import { extractAddressFromPassphrase } from '@common/utilities/account';
 import { routes } from '@constants';
 import MultiStepProgressBar from '@shared/multiStepProgressBar';
 import MultiStep from '@shared/registerMultiStep';

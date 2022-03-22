@@ -3,7 +3,7 @@ import { mount } from 'enzyme';
 import {
   calculateBalanceLockedInVotes,
   calculateUnlockableBalance,
-} from '@utils/account';
+} from '@common/utilities/account';
 import BalanceTable from './balanceTable';
 import accounts from '../../../../../test/constants/accounts';
 

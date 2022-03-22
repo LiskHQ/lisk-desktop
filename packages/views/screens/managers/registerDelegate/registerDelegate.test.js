@@ -1,5 +1,5 @@
 import debounce from 'lodash.debounce';
-import { mountWithRouter } from '@utils/testHelpers';
+import { mountWithRouter } from '@common/utilities/testHelpers';
 import { getTransactionBaseFees, getTransactionFee } from '@common/utilities/api/transaction';
 import RegisterDelegate from './registerDelegate';
 

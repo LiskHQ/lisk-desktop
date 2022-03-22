@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { Line, Bar, Doughnut } from 'react-chartjs-2';
-import { useTheme } from '@utils/theme';
+import { useTheme } from '@common/utilities/theme';
 import {
   lineChartData,
   barChartData,
@@ -9,7 +9,7 @@ import {
   lineChartOptions,
   barChartOptions,
   doughnutChartOptions,
-} from '@utils/chartOptions';
+} from '@common/utilities/chartOptions';
 
 const propTypes = {
   data: PropTypes.object.isRequired,

@@ -6,7 +6,7 @@ import {
   getChartDateFormat,
   graphOptions,
   getBalanceData,
-} from '@utils/balanceChart';
+} from '@common/utilities/balanceChart';
 import Box from '@views/basics/box';
 import BoxContent from '@views/basics/box/content';
 import BoxEmptyState from '@views/basics/box/emptyState';

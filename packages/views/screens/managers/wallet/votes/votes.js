@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import { routes } from '@constants';
-import { isEmpty } from '@utils/helpers';
+import { isEmpty } from '@common/utilities/helpers';
 import Box from '@views/basics/box';
 import BoxHeader from '@views/basics/box/header';
 import BoxContent from '@views/basics/box/content';

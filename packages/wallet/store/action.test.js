@@ -2,9 +2,9 @@
 import { toast } from 'react-toastify';
 import { actionTypes } from '@constants';
 import * as accountApi from '@common/utilities/api/account';
-import { extractKeyPair } from '@utils/account';
+import { extractKeyPair } from '@common/utilities/account';
 import { create } from '@common/utilities/api/transaction';
-import { defaultDerivationPath } from '@utils/explicitBipKeyDerivation';
+import { defaultDerivationPath } from '@common/utilities/explicitBipKeyDerivation';
 import {
   accountLoggedOut,
   accountDataUpdated,
@@ -38,7 +38,7 @@ jest.mock('./transactions', () => ({
 jest.mock('./network', () => ({
   networkStatusUpdated: jest.fn(),
 }));
-jest.mock('@utils/account', () => ({
+jest.mock('@common/utilities/account', () => ({
   extractKeyPair: jest.fn(),
   getUnlockableUnlockObjects: () => [{}],
 }));

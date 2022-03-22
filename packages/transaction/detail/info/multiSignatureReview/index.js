@@ -1,8 +1,8 @@
 import React from 'react';
 
 import { tokenMap } from '@constants';
-import { toRawLsk } from '@utils/lsk';
-import { truncateAddress } from '@utils/account';
+import { toRawLsk } from '@common/utilities/lsk';
+import { truncateAddress } from '@common/utilities/account';
 import LiskAmount from '../liskAmount';
 import AccountVisual from '../../toolbox/accountVisual';
 

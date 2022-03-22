@@ -1,9 +1,9 @@
 import React, { useRef } from 'react';
 
 import { networks, networkKeys } from '@constants';
-import { addHttp } from '@utils/login';
+import { addHttp } from '@common/utilities/login';
 import { SecondaryButton } from '@views/basics/buttons';
-import { getNetworksList } from '@utils/getNetwork';
+import { getNetworksList } from '@common/utilities/getNetwork';
 import DropdownButton from '@views/basics/dropdownButton';
 import CustomNode from './customNode';
 

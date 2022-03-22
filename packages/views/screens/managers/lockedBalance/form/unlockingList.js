@@ -1,7 +1,7 @@
 import React from 'react';
 import moment from 'moment';
 import { tokenMap } from '@constants';
-import { isBlockHeightReached } from '@utils/account';
+import { isBlockHeightReached } from '@common/utilities/account';
 import Icon from '@views/basics/icon';
 import LiskAmount from '@shared/liskAmount';
 

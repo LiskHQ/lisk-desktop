@@ -1,5 +1,5 @@
 import React from 'react';
-import { isReactComponent } from '@utils/helpers';
+import { isReactComponent } from '@common/utilities/helpers';
 import styles from '../box/emptyState.css';
 import Illustration from '../illustration';
 

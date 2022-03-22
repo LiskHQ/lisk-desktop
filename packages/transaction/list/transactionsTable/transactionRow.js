@@ -2,8 +2,8 @@ import React from 'react';
 import grid from 'flexboxgrid/dist/flexboxgrid.css';
 
 import { tokenMap } from '@constants';
-import { getModuleAssetTitle } from '@utils/moduleAssets';
-import { getTxAmount } from '@utils/transaction';
+import { getModuleAssetTitle } from '@common/utilities/moduleAssets';
+import { getTxAmount } from '@common/utilities/transaction';
 import { DateTimeFromTimestamp } from '@views/basics/timestamp';
 import Icon from '@views/basics/icon';
 import Tooltip from '@views/basics/tooltip/tooltip';

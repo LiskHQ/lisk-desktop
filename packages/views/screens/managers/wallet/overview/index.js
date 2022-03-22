@@ -4,7 +4,7 @@ import { useSelector, connect } from 'react-redux';
 import { compose } from 'redux';
 import { withTranslation } from 'react-i18next';
 import grid from 'flexboxgrid/dist/flexboxgrid.css';
-import withData from '@utils/withData';
+import withData from '@common/utilities/withData';
 import { getTransactions } from '@common/utilities/api/transaction';
 import { selectTransactions } from '@store/selectors';
 import FlashMessageHolder from '@views/basics/flashMessage/holder';

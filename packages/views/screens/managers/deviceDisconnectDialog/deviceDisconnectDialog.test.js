@@ -1,4 +1,4 @@
-import { mountWithRouter } from '@utils/testHelpers';
+import { mountWithRouter } from '@common/utilities/testHelpers';
 import { DeviceDisconnectDialog } from '.';
 
 describe('DeviceDisconnectModal', () => {

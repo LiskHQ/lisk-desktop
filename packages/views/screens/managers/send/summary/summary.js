@@ -1,6 +1,6 @@
 import React from 'react';
 import { MODULE_ASSETS_NAME_ID_MAP } from '@constants';
-import { toRawLsk } from '@utils/lsk';
+import { toRawLsk } from '@common/utilities/lsk';
 import TransactionSummary from '@shared/transactionSummary';
 import TransactionInfo from '@shared/transactionInfo';
 

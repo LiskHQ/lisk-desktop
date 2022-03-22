@@ -4,7 +4,7 @@ import Box from '@views/basics/box';
 import BoxHeader from '@views/basics/box/header';
 import BoxContent from '@views/basics/box/content';
 import NotFound from '@shared/notFound';
-import { isEmpty } from '@utils/helpers';
+import { isEmpty } from '@common/utilities/helpers';
 import delegatePerformanceDetails from './delegatePerformanceDetails';
 import styles from './styles.css';
 

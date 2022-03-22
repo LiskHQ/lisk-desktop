@@ -3,8 +3,8 @@ import { NavLink } from 'react-router-dom';
 import grid from 'flexboxgrid/dist/flexboxgrid.css';
 
 import { DEFAULT_STANDBY_THRESHOLD, routes } from '@constants';
-import { useTheme } from '@utils/theme';
-import { capitalize } from '@utils/helpers';
+import { useTheme } from '@common/utilities/theme';
+import { capitalize } from '@common/utilities/helpers';
 import Box from '@views/basics/box';
 import BoxHeader from '@views/basics/box/header';
 import BoxContent from '@views/basics/box/content';

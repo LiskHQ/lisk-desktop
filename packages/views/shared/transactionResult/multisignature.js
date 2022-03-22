@@ -4,9 +4,9 @@ import {
   SecondaryButton,
 } from '@views/basics/buttons';
 import Illustration from '@views/basics/illustration';
-import { transactionToJSON, downloadJSON } from '@utils/transaction';
+import { transactionToJSON, downloadJSON } from '@common/utilities/transaction';
 import { routes, txStatusTypes } from '@constants';
-import { getErrorReportMailto } from '@utils/helpers';
+import { getErrorReportMailto } from '@common/utilities/helpers';
 
 import copyToClipboard from 'copy-to-clipboard';
 import Icon from '@views/basics/icon';

@@ -1,5 +1,5 @@
 import { actionTypes, tokenMap } from '@constants';
-import { deepMergeObj } from '@utils/helpers';
+import { deepMergeObj } from '@common/utilities/helpers';
 
 export const channels = {
   academy: false,

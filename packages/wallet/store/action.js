@@ -7,14 +7,14 @@ import {
   actionTypes,
   tokenMap,
 } from '@constants';
-import { toRawLsk } from '@utils/lsk';
-import { isEmpty } from '@utils/helpers';
+import { toRawLsk } from '@common/utilities/lsk';
+import { isEmpty } from '@common/utilities/helpers';
 import { create } from '@common/utilities/api/transaction';
 import { selectCurrentBlockHeight } from '@store/selectors';
 import { getAccount, extractAddress as extractBitcoinAddress } from '@common/utilities/api/account';
-import { getConnectionErrorMessage } from '@utils/getNetwork';
-import { extractKeyPair, getUnlockableUnlockObjects } from '@utils/account';
-import { defaultDerivationPath } from '@utils/explicitBipKeyDerivation';
+import { getConnectionErrorMessage } from '@common/utilities/getNetwork';
+import { extractKeyPair, getUnlockableUnlockObjects } from '@common/utilities/account';
+import { defaultDerivationPath } from '@common/utilities/explicitBipKeyDerivation';
 import { networkStatusUpdated } from './network';
 
 /**

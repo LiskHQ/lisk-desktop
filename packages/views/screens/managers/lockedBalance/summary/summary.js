@@ -2,8 +2,8 @@ import React from 'react';
 
 import { MODULE_ASSETS_NAME_ID_MAP } from '@constants';
 import TransactionSummary from '@shared/transactionSummary';
-import { fromRawLsk } from '@utils/lsk';
-import { getUnlockableUnlockObjects } from '@utils/account';
+import { fromRawLsk } from '@common/utilities/lsk';
+import { getUnlockableUnlockObjects } from '@common/utilities/account';
 import TransactionInfo from '@shared/transactionInfo';
 import styles from './summary.css';
 

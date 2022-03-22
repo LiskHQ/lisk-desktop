@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { maxMessageLength, MODULE_ASSETS_NAME_ID_MAP } from '@constants';
-import { toRawLsk } from '@utils/lsk';
+import { toRawLsk } from '@common/utilities/lsk';
 import TransactionPriority, { useTransactionPriority, useTransactionFeeCalculation } from '@shared/transactionPriority';
 import { AutoResizeTextarea } from '@views/basics/inputs';
 import CircularProgress from '@views/basics/circularProgress/circularProgress';

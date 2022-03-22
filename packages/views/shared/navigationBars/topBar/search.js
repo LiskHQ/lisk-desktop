@@ -1,7 +1,7 @@
 import React from 'react';
 
 import { routes, regex } from '@constants';
-import { selectSearchParamValue } from '@utils/searchParams';
+import { selectSearchParamValue } from '@common/utilities/searchParams';
 import Icon from '@views/basics/icon';
 import DialogLink from '@views/basics/dialog/link';
 import AccountVisual from '@views/basics/accountVisual';

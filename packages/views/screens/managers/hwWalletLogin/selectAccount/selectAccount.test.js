@@ -1,9 +1,9 @@
 import { toast } from 'react-toastify';
-import * as hwManager from '@utils/hwManager';
+import * as hwManager from '@common/utilities/hwManager';
 import { mountWithRouter } from '../../../../utils/testHelpers';
 import SelectAccount from './selectAccount';
 
-jest.mock('@utils/hwManager');
+jest.mock('@common/utilities/hwManager');
 
 describe('Select Account', () => {
   let wrapper;

@@ -2,13 +2,13 @@ import React from 'react';
 import { useSelector } from 'react-redux';
 
 import { tokenMap } from '@constants';
-import { fromRawLsk } from '@utils/lsk';
+import { fromRawLsk } from '@common/utilities/lsk';
 import DialogLink from '@views/basics/dialog/link';
 import {
   calculateBalanceLockedInUnvotes,
   calculateBalanceLockedInVotes,
   getActiveTokenAccount,
-} from '@utils/account';
+} from '@common/utilities/account';
 import Icon from '@views/basics/icon';
 import styles from './balanceInfo.css';
 

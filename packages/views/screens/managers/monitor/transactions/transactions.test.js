@@ -1,6 +1,6 @@
 import { act } from 'react-dom/test-utils';
 import { useSelector } from 'react-redux';
-import { mountWithRouter, mountWithRouterAndStore } from '@utils/testHelpers';
+import { mountWithRouter, mountWithRouterAndStore } from '@common/utilities/testHelpers';
 import transactions from '../../../../../test/constants/transactions';
 import defaultState from '../../../../../test/constants/defaultState';
 import TransactionsPure from './transactions';

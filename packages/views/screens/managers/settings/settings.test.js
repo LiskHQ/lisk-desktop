@@ -2,7 +2,7 @@
 import React from 'react';
 import Settings from './settings';
 import accounts from '../../../../test/constants/accounts';
-import { mountWithRouter } from '@utils/testHelpers';
+import { mountWithRouter } from '@common/utilities/testHelpers';
 
 describe('Setting', () => {
   const settings = {

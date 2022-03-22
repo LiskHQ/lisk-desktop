@@ -1,7 +1,7 @@
 import React from 'react';
 import { CopyToClipboard as ReactCopyToClipboard } from 'react-copy-to-clipboard';
 import { withTranslation } from 'react-i18next';
-import Piwik from '@utils/piwik';
+import Piwik from '@common/utilities/piwik';
 import Icon from '../icon';
 import styles from './copyToClipboard.css';
 

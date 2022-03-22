@@ -2,7 +2,7 @@ import { act } from 'react-dom/test-utils';
 import React from 'react';
 import { mount } from 'enzyme';
 import { tokenMap } from '@constants';
-import { fromRawLsk } from '@utils/lsk';
+import { fromRawLsk } from '@common/utilities/lsk';
 import {
   getUnspentTransactionOutputs,
   getTransactionFeeFromUnspentOutputs,

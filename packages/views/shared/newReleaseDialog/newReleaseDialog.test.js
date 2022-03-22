@@ -1,10 +1,10 @@
 import React from 'react';
-import { mountWithRouterAndStore } from '@utils/testHelpers';
+import { mountWithRouterAndStore } from '@common/utilities/testHelpers';
 import NewReleaseDialog from './index';
 
 jest.mock('@views/basics/flashMessage/holder');
 jest.mock('@views/basics/dialog/holder');
-jest.mock('@utils/searchParams', () => ({
+jest.mock('@common/utilities/searchParams', () => ({
   removeSearchParamsFromUrl: jest.fn(),
 }));
 

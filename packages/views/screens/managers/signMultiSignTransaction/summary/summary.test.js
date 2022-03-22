@@ -1,15 +1,15 @@
 import React from 'react';
 import { mount } from 'enzyme';
 import { MODULE_ASSETS_NAME_ID_MAP } from '@constants';
-import { removeSearchParamsFromUrl } from '@utils/searchParams';
+import { removeSearchParamsFromUrl } from '@common/utilities/searchParams';
 import Summary from './summary';
 import accounts from '../../../../../test/constants/accounts';
 
-jest.mock('@utils/searchParams', () => ({
+jest.mock('@common/utilities/searchParams', () => ({
   removeSearchParamsFromUrl: jest.fn(),
 }));
 
-jest.mock('@utils/transaction', () => ({
+jest.mock('@common/utilities/transaction', () => ({
   getTxAmount: () => '1000000000',
 }));
 

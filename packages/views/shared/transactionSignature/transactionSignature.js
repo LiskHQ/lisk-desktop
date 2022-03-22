@@ -5,8 +5,8 @@ import { secondPassphraseRemoved } from '@common/store/actions';
 import Box from '@views/basics/box';
 import Illustration from '@views/basics/illustration';
 import BoxContent from '@views/basics/box/content';
-import { isEmpty } from '@utils/helpers';
-import { getDeviceType } from '@utils/hwManager';
+import { isEmpty } from '@common/utilities/helpers';
+import { getDeviceType } from '@common/utilities/hwManager';
 import styles from './transactionSignature.css';
 
 const TransactionSignature = ({

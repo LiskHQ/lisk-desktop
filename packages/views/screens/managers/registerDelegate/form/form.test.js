@@ -3,8 +3,8 @@ import { mount } from 'enzyme';
 import { networks } from '@constants';
 import * as delegatesApi from '@common/utilities/api/delegate';
 import { getTransactionBaseFees, getTransactionFee, create } from '@common/utilities/api/transaction';
-import { fromRawLsk } from '@utils/lsk';
-import * as hwManagerAPI from '@utils/hwManager';
+import { fromRawLsk } from '@common/utilities/lsk';
+import * as hwManagerAPI from '@common/utilities/hwManager';
 import accounts from '../../../../../test/constants/accounts';
 import SelectNameAndFee from './form';
 import flushPromises from '../../../../../test/unit-test-utils/flushPromises';
@@ -14,7 +14,7 @@ jest.mock('@common/utilities/api/transaction');
 jest.mock('@common/utilities/api/delegate', () => ({
   getDelegate: jest.fn().mockImplementation(() => Promise.resolve({ data: [] })),
 }));
-jest.mock('@utils/hwManager');
+jest.mock('@common/utilities/hwManager');
 
 const transactionBaseFees = {
   Low: 156,

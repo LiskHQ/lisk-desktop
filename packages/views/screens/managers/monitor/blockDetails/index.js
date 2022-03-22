@@ -5,8 +5,8 @@ import { withTranslation } from 'react-i18next';
 import { withRouter } from 'react-router-dom';
 import { getBlock } from '@common/utilities/api/block';
 import { getTransactions } from '@common/utilities/api/transaction';
-import withData from '@utils/withData';
-import { selectSearchParamValue } from '@utils/searchParams';
+import withData from '@common/utilities/withData';
+import { selectSearchParamValue } from '@common/utilities/searchParams';
 import { tokenMap } from '@constants';
 import BlockDetails from './blockDetails';
 

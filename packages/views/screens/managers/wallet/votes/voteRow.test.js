@@ -1,4 +1,4 @@
-import { mountWithRouter } from '@utils/testHelpers';
+import { mountWithRouter } from '@common/utilities/testHelpers';
 import Spinner from '@views/basics/spinner';
 import DialogLink from '@views/basics/dialog/link';
 import VoteRow from './voteRow';

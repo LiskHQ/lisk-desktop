@@ -5,7 +5,7 @@ import BoxContent from '@views/basics/box/content';
 import BoxFooter from '@views/basics/box/footer';
 import Illustration from '@views/basics/illustration';
 import { AutoResizeTextarea } from '@views/basics/inputs';
-import { getDeviceType } from '@utils/hwManager';
+import { getDeviceType } from '@common/utilities/hwManager';
 import { SecondaryButton, PrimaryButton } from '@views/basics/buttons';
 import styles from '../signMessage.css';
 

@@ -1,5 +1,5 @@
 import { actionTypes, tokenMap } from '@constants';
-import { getFromStorage } from '@utils/localJSONStorage';
+import { getFromStorage } from '@common/utilities/localJSONStorage';
 import { initialState } from '@store/reducers/settings';
 
 /**

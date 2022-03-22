@@ -1,6 +1,6 @@
 import React from 'react';
 import { withTranslation } from 'react-i18next';
-import { validateAddress, validateLSKPublicKey } from '@utils/validators';
+import { validateAddress, validateLSKPublicKey } from '@common/utilities/validators';
 import { tokenMap } from '@constants';
 import { Input } from '@views/basics/inputs';
 import styles from './filters.css';

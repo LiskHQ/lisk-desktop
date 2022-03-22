@@ -1,5 +1,5 @@
 import { txStatusTypes } from '@constants';
-import { getDeviceType } from '@utils/hwManager';
+import { getDeviceType } from '@common/utilities/hwManager';
 
 const illustrations = {
   default: {

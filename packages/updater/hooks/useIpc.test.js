@@ -1,5 +1,5 @@
 import { renderHook, act } from '@testing-library/react-hooks';
-import { mountWithRouter } from '@utils/testHelpers';
+import { mountWithRouter } from '@common/utilities/testHelpers';
 import { useDispatch } from 'react-redux';
 import { appUpdateAvailable } from '@common/store/actions';
 import FlashMessageHolder from '../components/toolbox/flashMessage/holder';

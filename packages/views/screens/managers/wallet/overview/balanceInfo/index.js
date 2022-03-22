@@ -1,7 +1,7 @@
 import React from 'react';
 import { withTranslation } from 'react-i18next';
 import { tokenMap } from '@constants';
-import { fromRawLsk } from '@utils/lsk';
+import { fromRawLsk } from '@common/utilities/lsk';
 import Box from '@views/basics/box';
 import BoxContent from '@views/basics/box/content';
 import LiskAmount from '@shared/liskAmount';

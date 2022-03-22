@@ -1,6 +1,6 @@
 import React, { useMemo, useState } from 'react';
 import { tokenMap, MODULE_ASSETS_NAME_ID_MAP, MIN_ACCOUNT_BALANCE } from '@constants';
-import { toRawLsk } from '@utils/lsk';
+import { toRawLsk } from '@common/utilities/lsk';
 import TransactionPriority, {
   useTransactionFeeCalculation,
   useTransactionPriority,

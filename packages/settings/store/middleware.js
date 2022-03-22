@@ -1,5 +1,5 @@
 import { actionTypes } from '@constants';
-import { setInStorage } from '@utils/localJSONStorage';
+import { setInStorage } from '@common/utilities/localJSONStorage';
 import { pricesRetrieved, emptyTransactionsData, settingsUpdated } from '@common/store/actions';
 
 const settings = store => next => (action) => {

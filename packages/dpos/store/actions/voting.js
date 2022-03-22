@@ -5,7 +5,7 @@ import {
 import { create } from '@common/utilities/api/transaction';
 import { getAccount } from '@common/utilities/api/account';
 import { getVotes } from '@common/utilities/api/delegate';
-import { isEmpty } from '@utils/helpers';
+import { isEmpty } from '@common/utilities/helpers';
 import { timerReset } from './account';
 
 export const votesReset = () => ({

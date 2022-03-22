@@ -7,7 +7,7 @@ import BoxFooter from '@views/basics/box/footer';
 import { PrimaryButton, TertiaryButton } from '@views/basics/buttons';
 import { Input } from '@views/basics/inputs';
 import { tokenMap, MODULE_ASSETS_NAME_ID_MAP, regex } from '@constants';
-import { extractAddressFromPublicKey } from '@utils/account';
+import { extractAddressFromPublicKey } from '@common/utilities/account';
 import ProgressBar from '../progressBar';
 import MemberField from './memberField';
 import Feedback from './feedback';

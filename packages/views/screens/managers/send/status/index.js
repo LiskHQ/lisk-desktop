@@ -3,8 +3,8 @@ import { connect } from 'react-redux';
 import { compose } from 'redux';
 import { withTranslation } from 'react-i18next';
 import { getAccount } from '@common/utilities/api/account';
-import { getActiveTokenAccount } from '@utils/account';
-import withData from '@utils/withData';
+import { getActiveTokenAccount } from '@common/utilities/account';
+import withData from '@common/utilities/withData';
 import Status from './status';
 
 const mapStateToProps = state => ({

@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import grid from 'flexboxgrid/dist/flexboxgrid.css';
-import { subscribeToDevicesList } from '@utils/hwManager';
+import { subscribeToDevicesList } from '@common/utilities/hwManager';
 import { routes } from '@constants';
 import MultiStep from '@shared/multiStep';
 import Loading from './loading';

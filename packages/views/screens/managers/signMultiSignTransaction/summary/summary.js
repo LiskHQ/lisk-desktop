@@ -1,5 +1,5 @@
 import React, { useMemo } from 'react';
-import { isEmpty } from '@utils/helpers';
+import { isEmpty } from '@common/utilities/helpers';
 import { signatureCollectionStatus } from '@constants';
 import BoxContent from '@views/basics/box/content';
 import Box from '@views/basics/box';

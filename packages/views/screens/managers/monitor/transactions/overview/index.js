@@ -2,7 +2,7 @@
 import { compose } from 'redux';
 import { withTranslation } from 'react-i18next';
 
-import withData from '@utils/withData';
+import withData from '@common/utilities/withData';
 import { getTransactionStats } from '@common/utilities/api/transaction';
 import Overview from './overview';
 

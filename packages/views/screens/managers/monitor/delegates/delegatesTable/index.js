@@ -1,6 +1,6 @@
 import React from 'react';
 import { compose } from 'redux';
-import withLocalSort from '@utils/withLocalSort';
+import withLocalSort from '@common/utilities/withLocalSort';
 import Table from '@views/basics/table';
 import { DEFAULT_STANDBY_THRESHOLD } from '@constants';
 import DelegateRow from './delegateRow';
