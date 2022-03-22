@@ -36,7 +36,6 @@ const AmountField = ({
 
   const setEntireBalance = (e) => {
     e.preventDefault();
-    e.stopPropagation();
     setIsMaximum(true);
     const value = formatAmountBasedOnLocale({
       value: fromRawLsk(maxAmount.value),
