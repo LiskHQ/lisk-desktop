@@ -7,7 +7,7 @@
   "description": "Lisk",
   "homepage": "https://github.com/LiskHQ/lisk-desktop",
   "bugs": "https://github.com/LiskHQ/lisk-desktop/issues",
-  "main": "./scpripts/app/src/main.js",
+  "main": "./scprits/app/src/main.js",
   "repository": {
     "type": "git",
     "url": "https://github.com/LiskHQ/lisk-desktop"
