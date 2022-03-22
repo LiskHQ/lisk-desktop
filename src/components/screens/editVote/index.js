@@ -120,8 +120,8 @@ const AddVote = ({
               labelClassname={`${styles.fieldLabel}`}
               placeholder={t('Insert vote amount')}
               useMaxLabel={t('Use maximum amount')}
-              maxToolTipPosition="top"
               useMaxWarning={t('Caution! You are about to send the majority of your balance')}
+              maxToolTipPosition="top"
               name="vote"
             />
           </div>
