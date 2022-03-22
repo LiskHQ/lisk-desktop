@@ -3,7 +3,7 @@ import React from 'react';
 
 import { routes } from '@constants';
 import MultiStep from '@shared/multiStep';
-import Dialog from '@toolbox/dialog/dialog';
+import Dialog from '@views/basics/dialog/dialog';
 import Result from './result';
 import VerifyMessageInput from './verifyMessageInput';
 import styles from './verifyMessage.css';

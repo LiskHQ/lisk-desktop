@@ -7,11 +7,11 @@ import {
   graphOptions,
   getBalanceData,
 } from '@utils/balanceChart';
-import Box from '@toolbox/box';
-import BoxContent from '@toolbox/box/content';
-import BoxEmptyState from '@toolbox/box/emptyState';
-import { LineChart } from '@toolbox/charts';
-import Icon from '@toolbox/icon';
+import Box from '@views/basics/box';
+import BoxContent from '@views/basics/box/content';
+import BoxEmptyState from '@views/basics/box/emptyState';
+import { LineChart } from '@views/basics/charts';
+import Icon from '@views/basics/icon';
 import i18n from '../../../../../i18n';
 import styles from './balanceChart.css';
 

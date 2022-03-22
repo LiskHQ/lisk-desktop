@@ -1,7 +1,7 @@
 /* istanbul ignore file */
 import React from 'react';
 import { toast } from 'react-toastify';
-import UpdateIndicator from '@toolbox/updateIndicator';
+import UpdateIndicator from '@views/basics/updateIndicator';
 
 export default {
   init: () => {

@@ -1,6 +1,6 @@
 import React from 'react';
-import boxStyles from '@toolbox/box/emptyState.css';
-import Illustration from '@toolbox/illustration';
+import boxStyles from '@views/basics/box/emptyState.css';
+import Illustration from '@views/basics/illustration';
 import styles from './transactionDetails.css';
 
 const NotFound = ({ t }) => (

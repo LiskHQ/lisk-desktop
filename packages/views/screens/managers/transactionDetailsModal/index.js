@@ -1,6 +1,6 @@
 import React from 'react';
 import grid from 'flexboxgrid/dist/flexboxgrid.css';
-import Dialog from '@toolbox/dialog/dialog';
+import Dialog from '@views/basics/dialog/dialog';
 import TransactionDetails from '../transactionDetails';
 import styles from './styles.css';
 

@@ -1,8 +1,8 @@
 import React from 'react';
 import { isEmpty } from '@utils/helpers';
-import Box from '@toolbox/box';
-import BoxHeader from '@toolbox/box/header';
-import BoxContent from '@toolbox/box/content';
+import Box from '@views/basics/box';
+import BoxHeader from '@views/basics/box/header';
+import BoxContent from '@views/basics/box/content';
 import NotFound from './notFound';
 
 import styles from './transactionDetails.css';

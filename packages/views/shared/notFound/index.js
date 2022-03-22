@@ -2,8 +2,8 @@ import { Link } from 'react-router-dom';
 import React from 'react';
 import { withTranslation } from 'react-i18next';
 import { routes } from '@constants';
-import { PrimaryButton } from '@toolbox/buttons';
-import Illustration from '@toolbox/illustration';
+import { PrimaryButton } from '@views/basics/buttons';
+import Illustration from '@views/basics/illustration';
 import styles from './notFound.css';
 
 const NotFound = ({ t }) => (

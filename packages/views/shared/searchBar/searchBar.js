@@ -2,7 +2,7 @@ import React from 'react';
 import { withRouter } from 'react-router-dom';
 import { routes, keyCodes } from '@constants';
 import { addSearchParamsToUrl } from '@utils/searchParams';
-import { Input } from '@toolbox/inputs';
+import { Input } from '@views/basics/inputs';
 import Accounts from './accounts';
 import Delegates from './delegates';
 import Transactions from './transactions';

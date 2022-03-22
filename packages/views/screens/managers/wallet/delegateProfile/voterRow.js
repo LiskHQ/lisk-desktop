@@ -1,7 +1,7 @@
 import React from 'react';
 
 import { Link } from 'react-router-dom';
-import AccountVisual from '@toolbox/accountVisual';
+import AccountVisual from '@views/basics/accountVisual';
 import { truncateAddress } from '@utils/account';
 import styles from './delegateProfile.css';
 

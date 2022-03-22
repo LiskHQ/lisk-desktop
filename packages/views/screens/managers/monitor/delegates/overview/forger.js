@@ -2,7 +2,7 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 
 import { routes } from '@constants';
-import AccountVisual from '@toolbox/accountVisual';
+import AccountVisual from '@views/basics/accountVisual';
 import styles from './overview.css';
 
 const Forger = ({ forger }) => (

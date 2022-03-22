@@ -5,13 +5,13 @@ import {
 } from '@constants';
 import { getDelegate } from '@common/utilities/api/delegate';
 import TransactionPriority, { useTransactionFeeCalculation, useTransactionPriority } from '@shared/transactionPriority';
-import Box from '@toolbox/box';
-import BoxHeader from '@toolbox/box/header';
-import BoxContent from '@toolbox/box/content';
-import BoxFooter from '@toolbox/box/footer';
-import { Input } from '@toolbox/inputs';
-import { PrimaryButton } from '@toolbox/buttons';
-import Tooltip from '@toolbox/tooltip/tooltip';
+import Box from '@views/basics/box';
+import BoxHeader from '@views/basics/box/header';
+import BoxContent from '@views/basics/box/content';
+import BoxFooter from '@views/basics/box/footer';
+import { Input } from '@views/basics/inputs';
+import { PrimaryButton } from '@views/basics/buttons';
+import Tooltip from '@views/basics/tooltip/tooltip';
 import { toRawLsk, fromRawLsk } from '@utils/lsk';
 import styles from './form.css';
 

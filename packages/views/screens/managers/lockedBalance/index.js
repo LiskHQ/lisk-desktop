@@ -1,5 +1,5 @@
 import React from 'react';
-import Dialog from '@toolbox/dialog/dialog';
+import Dialog from '@views/basics/dialog/dialog';
 import MultiStep from '@shared/multiStep';
 import TransactionSignature from '@shared/transactionSignature';
 import Form from './form';

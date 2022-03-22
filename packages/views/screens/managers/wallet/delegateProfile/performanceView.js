@@ -5,12 +5,12 @@ import grid from 'flexboxgrid/dist/flexboxgrid.css';
 import { DEFAULT_STANDBY_THRESHOLD, routes } from '@constants';
 import { useTheme } from '@utils/theme';
 import { capitalize } from '@utils/helpers';
-import Box from '@toolbox/box';
-import BoxHeader from '@toolbox/box/header';
-import BoxContent from '@toolbox/box/content';
+import Box from '@views/basics/box';
+import BoxHeader from '@views/basics/box/header';
+import BoxContent from '@views/basics/box/content';
 import LiskAmount from '@shared/liskAmount';
-import DialogLink from '@toolbox/dialog/link';
-import Icon from '@toolbox/icon';
+import DialogLink from '@views/basics/dialog/link';
+import Icon from '@views/basics/icon';
 import styles from './delegateProfile.css';
 
 export const getStatus = (data) => {

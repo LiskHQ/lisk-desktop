@@ -1,7 +1,7 @@
 import React from 'react';
 import { mount } from 'enzyme';
 import { tokenMap } from '@constants';
-import EmptyState from '@toolbox/box/emptyState';
+import EmptyState from '@views/basics/box/emptyState';
 import { BookmarksList } from './list';
 import bookmarks from '../../../../../test/constants/bookmarks';
 

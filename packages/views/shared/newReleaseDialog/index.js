@@ -2,8 +2,8 @@ import React from 'react';
 import { useSelector } from 'react-redux';
 import { withTranslation } from 'react-i18next';
 import htmlStringToReact from '@utils/htmlStringToReact';
-import Dialog from '@toolbox/dialog/dialog';
-import { PrimaryButton, SecondaryButton } from '@toolbox/buttons';
+import Dialog from '@views/basics/dialog/dialog';
+import { PrimaryButton, SecondaryButton } from '@views/basics/buttons';
 import styles from './newReleaseDialog.css';
 
 const NewReleaseDialog = ({ t }) => {

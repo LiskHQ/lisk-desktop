@@ -8,7 +8,7 @@ import { getAccount } from '@common/utilities/api/account';
 import { selectSearchParamValue } from '@utils/searchParams';
 import { isEmpty } from '@utils/helpers';
 import { selectActiveToken, selectSettings } from '@store/selectors';
-import TabsContainer from '@toolbox/tabsContainer/tabsContainer';
+import TabsContainer from '@views/basics/tabsContainer/tabsContainer';
 import Overview from './overview';
 import DelegateTab from './delegateProfile';
 import VotesTab from './votes';

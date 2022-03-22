@@ -3,8 +3,8 @@ import { cryptography } from '@liskhq/lisk-client'; // eslint-disable-line
 
 import { loginTypes } from '@constants';
 import { signMessageByHW, getDeviceType } from '@utils/hwManager';
-import Illustration from '@toolbox/illustration';
-import BoxContent from '@toolbox/box/content';
+import Illustration from '@views/basics/illustration';
+import BoxContent from '@views/basics/box/content';
 import styles from '../signMessage.css';
 
 const MessageSignature = ({

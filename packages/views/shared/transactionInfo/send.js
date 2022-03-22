@@ -1,5 +1,5 @@
 import React from 'react';
-import AccountVisual from '@toolbox/accountVisual';
+import AccountVisual from '@views/basics/accountVisual';
 import LiskAmount from '@shared/liskAmount';
 import { toRawLsk } from '@utils/lsk';
 import styles from './transactionInfo.css';

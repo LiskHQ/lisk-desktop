@@ -1,9 +1,9 @@
 import React from 'react';
 import grid from 'flexboxgrid/dist/flexboxgrid.css';
 import { tokenMap, regex } from '@constants';
-import DialogLink from '@toolbox/dialog/link';
-import AccountVisual from '@toolbox/accountVisual';
-import Icon from '@toolbox/icon';
+import DialogLink from '@views/basics/dialog/link';
+import AccountVisual from '@views/basics/accountVisual';
+import Icon from '@views/basics/icon';
 import TransactionAmount from '../../../shared/transactionAmount';
 import styles from './multiSignature.css';
 

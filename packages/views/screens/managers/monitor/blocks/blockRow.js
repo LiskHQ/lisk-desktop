@@ -2,7 +2,7 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import grid from 'flexboxgrid/dist/flexboxgrid.css';
 import { routes } from '@constants';
-import { DateTimeFromTimestamp } from '@toolbox/timestamp';
+import { DateTimeFromTimestamp } from '@views/basics/timestamp';
 import LiskAmount from '@shared/liskAmount';
 import styles from './blocks.css';
 

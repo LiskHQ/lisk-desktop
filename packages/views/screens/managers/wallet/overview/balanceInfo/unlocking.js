@@ -3,13 +3,13 @@ import { useSelector } from 'react-redux';
 
 import { tokenMap } from '@constants';
 import { fromRawLsk } from '@utils/lsk';
-import DialogLink from '@toolbox/dialog/link';
+import DialogLink from '@views/basics/dialog/link';
 import {
   calculateBalanceLockedInUnvotes,
   calculateBalanceLockedInVotes,
   getActiveTokenAccount,
 } from '@utils/account';
-import Icon from '@toolbox/icon';
+import Icon from '@views/basics/icon';
 import styles from './balanceInfo.css';
 
 const Link = ({

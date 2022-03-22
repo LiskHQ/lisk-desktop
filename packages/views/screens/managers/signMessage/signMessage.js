@@ -1,9 +1,9 @@
 import React, { useState } from 'react';
 
-import Box from '@toolbox/box';
-import BoxHeader from '@toolbox/box/header';
+import Box from '@views/basics/box';
+import BoxHeader from '@views/basics/box/header';
 import MultiStep from '@shared/multiStep';
-import Dialog from '@toolbox/dialog/dialog';
+import Dialog from '@views/basics/dialog/dialog';
 import Form from './form';
 import Status from './status';
 import MessageSignature from './messageSignature';

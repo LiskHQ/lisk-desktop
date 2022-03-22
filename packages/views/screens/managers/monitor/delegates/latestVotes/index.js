@@ -1,5 +1,5 @@
 import React from 'react';
-import Table from '@toolbox/table';
+import Table from '@views/basics/table';
 import VoteRow from './voteRow';
 import header from './tableHeader';
 

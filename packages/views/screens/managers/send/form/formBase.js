@@ -1,12 +1,12 @@
 import React from 'react';
 import Piwik from '@utils/piwik';
-import { PrimaryButton } from '@toolbox/buttons';
+import { PrimaryButton } from '@views/basics/buttons';
 import { tokenMap } from '@constants';
 import AmountField from '@shared/amountField';
-import Box from '@toolbox/box';
-import BoxContent from '@toolbox/box/content';
-import BoxFooter from '@toolbox/box/footer';
-import BoxHeader from '@toolbox/box/header';
+import Box from '@views/basics/box';
+import BoxContent from '@views/basics/box/content';
+import BoxFooter from '@views/basics/box/footer';
+import BoxHeader from '@views/basics/box/header';
 import BookmarkAutoSuggest from './bookmarkAutoSuggest';
 import styles from './form.css';
 

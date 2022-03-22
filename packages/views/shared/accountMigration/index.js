@@ -1,7 +1,7 @@
 import React from 'react';
 import { withTranslation } from 'react-i18next';
-import CopyToClipboard from '@toolbox/copyToClipboard';
-import Icon from '@toolbox/icon';
+import CopyToClipboard from '@views/basics/copyToClipboard';
+import Icon from '@views/basics/icon';
 import LiskAmount from '@shared/liskAmount';
 import AccountVisualWithAddress from '@shared/accountVisualWithAddress';
 import { tokenMap } from '@constants';

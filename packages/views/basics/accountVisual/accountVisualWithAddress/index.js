@@ -7,8 +7,8 @@ import PropTypes from 'prop-types';
 import { MODULE_ASSETS_NAME_ID_MAP, MODULE_ASSETS_MAP } from '@constants';
 import { truncateAddress } from '@utils/account';
 import { getModuleAssetTitle } from '@utils/moduleAssets';
-import Icon from '@toolbox/icon';
-import AccountVisual from '@toolbox/accountVisual';
+import Icon from '@views/basics/icon';
+import AccountVisual from '@views/basics/accountVisual';
 import styles from './accountVisualWithAddress.css';
 
 class AccountVisualWithAddress extends React.Component {

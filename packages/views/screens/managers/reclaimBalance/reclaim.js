@@ -1,9 +1,9 @@
 import React from 'react';
 import { withTranslation } from 'react-i18next';
 import { useSelector } from 'react-redux';
-import Tooltip from '@toolbox/tooltip/tooltip';
-import { PrimaryButton } from '@toolbox/buttons';
-import DialogLink from '@toolbox/dialog/link';
+import Tooltip from '@views/basics/tooltip/tooltip';
+import { PrimaryButton } from '@views/basics/buttons';
+import DialogLink from '@views/basics/dialog/link';
 import AccountMigration from '@shared/accountMigration';
 import { hasEnoughBalanceForReclaim } from '@utils/account';
 import { fromRawLsk } from '@utils/lsk';

@@ -1,9 +1,9 @@
 import { withTranslation } from 'react-i18next';
 import React from 'react';
 import moment from 'moment';
-import { PrimaryButton, SecondaryButton } from '@toolbox/buttons';
-import DropdownButton from '@toolbox/dropdownButton';
-import Icon from '@toolbox/icon';
+import { PrimaryButton, SecondaryButton } from '@views/basics/buttons';
+import DropdownButton from '@views/basics/dropdownButton';
+import Icon from '@views/basics/icon';
 import AmountFieldGroup from './amountFieldGroup';
 import DateFieldGroup from './dateFieldGroup';
 import IntegerFilter from './integerFilter';

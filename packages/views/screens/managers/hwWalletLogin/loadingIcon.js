@@ -1,5 +1,5 @@
 import React from 'react';
-import Icon from '@toolbox/icon';
+import Icon from '@views/basics/icon';
 import styles from './loadingIcon.css';
 
 const LoadingIcon = () => (

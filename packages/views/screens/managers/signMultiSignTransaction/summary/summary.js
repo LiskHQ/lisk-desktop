@@ -1,8 +1,8 @@
 import React, { useMemo } from 'react';
 import { isEmpty } from '@utils/helpers';
 import { signatureCollectionStatus } from '@constants';
-import BoxContent from '@toolbox/box/content';
-import Box from '@toolbox/box';
+import BoxContent from '@views/basics/box/content';
+import Box from '@views/basics/box';
 import TransactionDetails from '@screens/transactionDetails/transactionDetails';
 
 import ProgressBar from '../progressBar';

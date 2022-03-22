@@ -1,8 +1,8 @@
 import PropTypes from 'prop-types';
 import React from 'react';
 import { validateAddress } from '@utils/validators';
-import AccountVisual from '@toolbox/accountVisual';
-import AutoSuggest from '@toolbox/autoSuggest';
+import AccountVisual from '@views/basics/accountVisual';
+import AutoSuggest from '@views/basics/autoSuggest';
 import styles from './form.css';
 
 class BookmarkAutoSuggest extends React.Component {

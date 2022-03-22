@@ -1,11 +1,11 @@
 import React from 'react';
 import { withTranslation } from 'react-i18next';
 import { tokenMap } from '@constants';
-import Box from '@toolbox/box';
-import BoxContent from '@toolbox/box/content';
-import BoxFooter from '@toolbox/box/footer';
-import BoxHeader from '@toolbox/box/header';
-import { PrimaryButton } from '@toolbox/buttons';
+import Box from '@views/basics/box';
+import BoxContent from '@views/basics/box/content';
+import BoxFooter from '@views/basics/box/footer';
+import BoxHeader from '@views/basics/box/header';
+import { PrimaryButton } from '@views/basics/buttons';
 import LiskAmount from '@shared/liskAmount';
 import styles from './lockedBalance.css';
 

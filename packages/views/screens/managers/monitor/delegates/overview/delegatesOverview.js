@@ -4,12 +4,12 @@ import React from 'react';
 import { ROUND_LENGTH } from '@constants';
 import { useTheme } from '@utils/theme';
 import { getColorPalette } from '@utils/chartOptions';
-import Box from '@toolbox/box';
-import BoxHeader from '@toolbox/box/header';
-import BoxContent from '@toolbox/box/content';
-import BoxEmptyState from '@toolbox/box/emptyState';
-import { DoughnutChart, LineChart } from '@toolbox/charts';
-import GuideTooltip, { GuideTooltipItem } from '@toolbox/charts/guideTooltip';
+import Box from '@views/basics/box';
+import BoxHeader from '@views/basics/box/header';
+import BoxContent from '@views/basics/box/content';
+import BoxEmptyState from '@views/basics/box/emptyState';
+import { DoughnutChart, LineChart } from '@views/basics/charts';
+import GuideTooltip, { GuideTooltipItem } from '@views/basics/charts/guideTooltip';
 import NumericInfo from './numericInfo';
 import styles from './overview.css';
 

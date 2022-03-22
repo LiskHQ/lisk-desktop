@@ -1,7 +1,7 @@
 import React from 'react';
 import { withTranslation } from 'react-i18next';
-import Illustration from '@toolbox/illustration';
-import { PrimaryButton } from '@toolbox/buttons';
+import Illustration from '@views/basics/illustration';
+import { PrimaryButton } from '@views/basics/buttons';
 import styles from './index.css';
 
 const Introduction = ({ t, nextStep }) => (

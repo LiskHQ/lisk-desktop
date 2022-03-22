@@ -3,9 +3,9 @@ import { useTranslation } from 'react-i18next';
 import grid from 'flexboxgrid/dist/flexboxgrid.css';
 import gridVisibility from 'flexboxgrid-helpers/dist/flexboxgrid-helpers.min.css';
 
-import { DateTimeFromTimestamp } from '@toolbox/timestamp';
+import { DateTimeFromTimestamp } from '@views/basics/timestamp';
 import AccountVisualWithAddress from '@shared/accountVisualWithAddress';
-import DialogLink from '@toolbox/dialog/link';
+import DialogLink from '@views/basics/dialog/link';
 import VoteItem from '@shared/voteItem';
 import styles from '../delegates.css';
 

@@ -1,8 +1,8 @@
 import React, { useEffect, useRef } from 'react';
 import { checkIfInsideLiskApp } from '@utils/hwManager';
-import { TertiaryButton } from '@toolbox/buttons';
-import Illustration from '@toolbox/illustration';
-import Spinner from '@toolbox/spinner';
+import { TertiaryButton } from '@views/basics/buttons';
+import Illustration from '@views/basics/illustration';
+import Spinner from '@views/basics/spinner';
 import styles from './hwWalletLogin.css';
 
 const UnlockDevice = ({

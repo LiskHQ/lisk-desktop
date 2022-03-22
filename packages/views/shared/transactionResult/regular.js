@@ -1,9 +1,9 @@
 /* eslint-disable complexity */
 import React, { useEffect } from 'react';
 import { getErrorReportMailto, isEmpty } from '@utils/helpers';
-import { TertiaryButton, PrimaryButton } from '@toolbox/buttons';
+import { TertiaryButton, PrimaryButton } from '@views/basics/buttons';
 import { routes, txStatusTypes } from '@constants';
-import Illustration from '@toolbox/illustration';
+import Illustration from '@views/basics/illustration';
 import getIllustration from './illustrations';
 import styles from './transactionResult.css';
 

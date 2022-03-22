@@ -1,9 +1,9 @@
 import React from 'react';
 import { withTranslation } from 'react-i18next';
 import { useSelector } from 'react-redux';
-import { PrimaryButton, SecondaryButton, TertiaryButton } from '@toolbox/buttons';
-import DialogLink from '@toolbox/dialog/link';
-import Tooltip from '@toolbox/tooltip/tooltip';
+import { PrimaryButton, SecondaryButton, TertiaryButton } from '@views/basics/buttons';
+import DialogLink from '@views/basics/dialog/link';
+import Tooltip from '@views/basics/tooltip/tooltip';
 import SignInTooltipWrapper from '@shared/signInTooltipWrapper';
 import { selectAccountBalance, selectLSKAddress } from '@store/selectors';
 import EmptyBalanceTooltipWrapper from './emptyBalanceTooltipWrapper';

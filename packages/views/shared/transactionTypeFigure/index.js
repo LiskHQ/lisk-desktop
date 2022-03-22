@@ -1,8 +1,8 @@
 import React from 'react';
 import { MODULE_ASSETS_NAME_ID_MAP, MODULE_ASSETS_MAP, tokenMap } from '@constants';
 import { validateAddress } from '@utils/validators';
-import AccountVisual from '@toolbox/accountVisual';
-import Icon from '@toolbox/icon';
+import AccountVisual from '@views/basics/accountVisual';
+import Icon from '@views/basics/icon';
 import styles from './transactionTypeFigure.css';
 
 const TransactionTypeFigure = ({

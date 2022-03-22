@@ -2,12 +2,12 @@ import React, { useMemo } from 'react';
 import grid from 'flexboxgrid/dist/flexboxgrid.css';
 
 import { extractAddressFromPublicKey } from '@utils/account';
-import Box from '@toolbox/box';
-import BoxHeader from '@toolbox/box/header';
-import BoxContent from '@toolbox/box/content';
-import BoxInfoText from '@toolbox/box/infoText';
-import Dialog from '@toolbox/dialog/dialog';
-import Tooltip from '@toolbox/tooltip/tooltip';
+import Box from '@views/basics/box';
+import BoxHeader from '@views/basics/box/header';
+import BoxContent from '@views/basics/box/content';
+import BoxInfoText from '@views/basics/box/infoText';
+import Dialog from '@views/basics/dialog/dialog';
+import Tooltip from '@views/basics/tooltip/tooltip';
 import Members from '@shared/multisignatureMembers';
 
 import styles from './styles.css';

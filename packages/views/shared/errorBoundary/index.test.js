@@ -1,5 +1,5 @@
 import React from 'react';
-import { PrimaryButton, TertiaryButton } from '@toolbox/buttons';
+import { PrimaryButton, TertiaryButton } from '@views/basics/buttons';
 import { mountWithContext } from '../../../../test/unit-test-utils/mountHelpers';
 import ErrorBoundary from './index';
 

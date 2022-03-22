@@ -3,13 +3,13 @@ import grid from 'flexboxgrid/dist/flexboxgrid.css';
 import { useSelector } from 'react-redux';
 import { tokenMap } from '@constants';
 import { getTxAmount } from '@utils/transaction';
-import { DateTimeFromTimestamp } from '@toolbox/timestamp';
+import { DateTimeFromTimestamp } from '@views/basics/timestamp';
 import LiskAmount from '@shared/liskAmount';
 import TransactionTypeFigure from '@shared/transactionTypeFigure';
 import TransactionAddress from '@shared/transactionAddress';
 import TransactionAmount from '@shared/transactionAmount';
-import Spinner from '@toolbox/spinner';
-import DialogLink from '@toolbox/dialog/link';
+import Spinner from '@views/basics/spinner';
+import DialogLink from '@views/basics/dialog/link';
 import TransactionAsset from './txAsset';
 import styles from './transactions.css';
 

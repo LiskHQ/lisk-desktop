@@ -1,6 +1,6 @@
 import React from 'react';
 import Highlighter from 'react-highlight-words';
-import AccountVisual from '@toolbox/accountVisual';
+import AccountVisual from '@views/basics/accountVisual';
 import { truncateAddress } from '@utils/account';
 import styles from './accountsAndDeletegates.css';
 

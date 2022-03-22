@@ -2,11 +2,11 @@
 import React, { useState, useEffect } from 'react';
 import { transformTransaction, createTransactionObject, flattenTransaction } from '@utils/transaction';
 import { joinModuleAndAssetIds } from '@utils/moduleAssets';
-import Box from '@toolbox/box';
-import BoxContent from '@toolbox/box/content';
-import BoxFooter from '@toolbox/box/footer';
-import { PrimaryButton } from '@toolbox/buttons';
-import Feedback from '@toolbox/feedback/feedback';
+import Box from '@views/basics/box';
+import BoxContent from '@views/basics/box/content';
+import BoxFooter from '@views/basics/box/footer';
+import { PrimaryButton } from '@views/basics/buttons';
+import Feedback from '@views/basics/feedback/feedback';
 import { validateTransaction } from '@liskhq/lisk-transactions';
 import ProgressBar from '../progressBar';
 import styles from './styles.css';

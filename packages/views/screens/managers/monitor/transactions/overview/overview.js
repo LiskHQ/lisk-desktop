@@ -10,13 +10,13 @@ import {
 import { getModuleAssetTitle } from '@utils/moduleAssets';
 import { useTheme } from '@utils/theme';
 import { getColorPalette } from '@utils/chartOptions';
-import Box from '@toolbox/box';
-import BoxTabs from '@toolbox/tabs';
-import BoxHeader from '@toolbox/box/header';
-import BoxContent from '@toolbox/box/content';
-import { DoughnutChart, BarChart } from '@toolbox/charts';
-import Tooltip from '@toolbox/tooltip/tooltip';
-import GuideTooltip, { GuideTooltipItem } from '@toolbox/charts/guideTooltip';
+import Box from '@views/basics/box';
+import BoxTabs from '@views/basics/tabs';
+import BoxHeader from '@views/basics/box/header';
+import BoxContent from '@views/basics/box/content';
+import { DoughnutChart, BarChart } from '@views/basics/charts';
+import Tooltip from '@views/basics/tooltip/tooltip';
+import GuideTooltip, { GuideTooltipItem } from '@views/basics/charts/guideTooltip';
 import styles from './overview.css';
 
 const moduleAssetIds = Object.values(MODULE_ASSETS_NAME_ID_MAP);

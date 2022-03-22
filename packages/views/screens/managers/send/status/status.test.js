@@ -1,7 +1,7 @@
 import React from 'react';
 import { shallow } from 'enzyme';
 import TransactionResult from '@shared/transactionResult';
-import DialogLink from '@toolbox/dialog/link';
+import DialogLink from '@views/basics/dialog/link';
 import accounts from '../../../../../test/constants/accounts';
 import Status from './status';
 

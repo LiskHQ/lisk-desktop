@@ -1,9 +1,9 @@
 import QRCode from 'qrcode.react';
 import React from 'react';
 import renderPaperWallet from '@utils/paperWallet';
-import { SecondaryButton } from '@toolbox/buttons';
-import CopyToClipboard from '@toolbox/copyToClipboard';
-import Icon from '@toolbox/icon';
+import { SecondaryButton } from '@views/basics/buttons';
+import CopyToClipboard from '@views/basics/copyToClipboard';
+import Icon from '@views/basics/icon';
 import styles from './passphraseBackup.css';
 import PassphraseRenderer from '../passphraseRenderer';
 

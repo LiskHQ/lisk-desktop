@@ -2,8 +2,8 @@ import React from 'react';
 import { signatureCollectionStatus } from '@constants';
 import { useTheme } from '@utils/theme';
 import { removeSearchParamsFromUrl } from '@utils/searchParams';
-import { PrimaryButton, SecondaryButton } from '@toolbox/buttons';
-import BoxFooter from '@toolbox/box/footer';
+import { PrimaryButton, SecondaryButton } from '@views/basics/buttons';
+import BoxFooter from '@views/basics/box/footer';
 import styles from '../styles.css';
 
 export const ActionBar = ({

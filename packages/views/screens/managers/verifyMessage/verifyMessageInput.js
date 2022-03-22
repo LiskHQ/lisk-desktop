@@ -2,15 +2,15 @@ import PropTypes from 'prop-types';
 import React from 'react';
 
 import { parseSearchParams } from '@utils/searchParams';
-import { Input } from '@toolbox/inputs';
-import { PrimaryButton } from '@toolbox/buttons';
-import Box from '@toolbox/box';
-import BoxHeader from '@toolbox/box/header';
-import BoxContent from '@toolbox/box/content';
-import BoxFooter from '@toolbox/box/footer';
-import BoxInfoText from '@toolbox/box/infoText';
-import Icon from '@toolbox/icon';
-import Tooltip from '@toolbox/tooltip/tooltip';
+import { Input } from '@views/basics/inputs';
+import { PrimaryButton } from '@views/basics/buttons';
+import Box from '@views/basics/box';
+import BoxHeader from '@views/basics/box/header';
+import BoxContent from '@views/basics/box/content';
+import BoxFooter from '@views/basics/box/footer';
+import BoxInfoText from '@views/basics/box/infoText';
+import Icon from '@views/basics/icon';
+import Tooltip from '@views/basics/tooltip/tooltip';
 import { regex } from '@constants';
 import styles from './verifyMessage.css';
 

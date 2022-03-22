@@ -1,6 +1,6 @@
 import { mountWithRouter } from '@utils/testHelpers';
-import Spinner from '@toolbox/spinner';
-import DialogLink from '@toolbox/dialog/link';
+import Spinner from '@views/basics/spinner';
+import DialogLink from '@views/basics/dialog/link';
 import VoteRow from './voteRow';
 import accounts from '../../../../../test/constants/accounts';
 

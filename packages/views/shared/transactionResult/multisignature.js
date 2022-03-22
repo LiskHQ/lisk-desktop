@@ -2,14 +2,14 @@ import React, { useState, useEffect } from 'react';
 import {
   PrimaryButton,
   SecondaryButton,
-} from '@toolbox/buttons';
-import Illustration from '@toolbox/illustration';
+} from '@views/basics/buttons';
+import Illustration from '@views/basics/illustration';
 import { transactionToJSON, downloadJSON } from '@utils/transaction';
 import { routes, txStatusTypes } from '@constants';
 import { getErrorReportMailto } from '@utils/helpers';
 
 import copyToClipboard from 'copy-to-clipboard';
-import Icon from '@toolbox/icon';
+import Icon from '@views/basics/icon';
 import getIllustration from './illustrations';
 import styles from './transactionResult.css';
 

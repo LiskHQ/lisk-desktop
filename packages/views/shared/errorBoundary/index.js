@@ -1,8 +1,8 @@
 import React from 'react';
 import { withTranslation } from 'react-i18next';
 import Piwik from '@utils/piwik';
-import { PrimaryButton, TertiaryButton } from '@toolbox/buttons';
-import Illustration from '@toolbox/illustration';
+import { PrimaryButton, TertiaryButton } from '@views/basics/buttons';
+import Illustration from '@views/basics/illustration';
 import styles from './errorBoundary.css';
 
 /* eslint-disable class-methods-use-this, no-unused-vars */

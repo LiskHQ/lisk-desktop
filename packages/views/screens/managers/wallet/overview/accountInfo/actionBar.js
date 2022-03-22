@@ -3,10 +3,10 @@ import QRCode from 'qrcode.react';
 import { tokenMap } from '@constants';
 import { getAddress } from '@utils/hwManager';
 import { isEmpty } from '@utils/helpers';
-import Icon from '@toolbox/icon';
-import CopyToClipboard from '@toolbox/copyToClipboard';
-import Tooltip from '@toolbox/tooltip/tooltip';
-import DialogLink from '@toolbox/dialog/link';
+import Icon from '@views/basics/icon';
+import CopyToClipboard from '@views/basics/copyToClipboard';
+import Tooltip from '@views/basics/tooltip/tooltip';
+import DialogLink from '@views/basics/dialog/link';
 import styles from './accountInfo.css';
 
 const BookmarkIcon = ({ bookmark }) => (

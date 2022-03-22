@@ -1,7 +1,7 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { routes } from '@constants';
-import Tooltip from '@toolbox/tooltip/tooltip';
+import Tooltip from '@views/basics/tooltip/tooltip';
 import styles from './signInTooltipWrapper.css';
 
 const SignInTooltipWrapper = ({

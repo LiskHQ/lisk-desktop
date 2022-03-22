@@ -1,8 +1,8 @@
 import React from 'react';
 
 import { truncateAddress } from '@utils/account';
-import Tooltip from '@toolbox/tooltip/tooltip';
-import CopyToClipboard from '@toolbox/copyToClipboard';
+import Tooltip from '@views/basics/tooltip/tooltip';
+import CopyToClipboard from '@views/basics/copyToClipboard';
 import styles from './accountInfo.css';
 
 const Legacy = ({ legacyAddress }) => (

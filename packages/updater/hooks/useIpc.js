@@ -4,7 +4,7 @@ import htmlStringToReact from '@utils/htmlStringToReact';
 import { regex } from '@constants';
 import { addSearchParamsToUrl, removeSearchParamsFromUrl } from '@utils/searchParams';
 import { appUpdateAvailable } from '@common/store/actions';
-import FlashMessageHolder from '@toolbox/flashMessage/holder';
+import FlashMessageHolder from '@views/basics/flashMessage/holder';
 import NewReleaseMessage from '@shared/newReleaseMessage/newReleaseMessage';
 
 const useIpc = (history) => {

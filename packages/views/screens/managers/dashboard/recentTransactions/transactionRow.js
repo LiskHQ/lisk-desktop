@@ -4,7 +4,7 @@ import { useSelector } from 'react-redux';
 import TransactionTypeFigure from '@shared/transactionTypeFigure';
 import TransactionAddress from '@shared/transactionAddress';
 import TransactionAmount from '@shared/transactionAmount';
-import DialogLink from '@toolbox/dialog/link';
+import DialogLink from '@views/basics/dialog/link';
 import styles from './recentTransactions.css';
 
 // eslint-disable-next-line complexity

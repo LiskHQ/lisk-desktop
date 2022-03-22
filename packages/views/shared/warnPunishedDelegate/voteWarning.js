@@ -1,6 +1,6 @@
 import React from 'react';
 import { withTranslation } from 'react-i18next';
-import Icon from '@toolbox/icon';
+import Icon from '@views/basics/icon';
 import styles from './warnPunishedDelegate.css';
 
 const VoteWarning = ({ t, daysLeft }) => (

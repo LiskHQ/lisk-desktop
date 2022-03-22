@@ -1,10 +1,10 @@
 import { toast } from 'react-toastify';
-import FlashMessageHolder from '@toolbox/flashMessage/holder';
+import FlashMessageHolder from '@views/basics/flashMessage/holder';
 import { mountWithRouter } from '@utils/testHelpers';
 import AnalyticsDialog from './analyticsDialog';
 
-jest.mock('@toolbox/flashMessage/holder');
-jest.mock('@toolbox/dialog/holder');
+jest.mock('@views/basics/flashMessage/holder');
+jest.mock('@views/basics/dialog/holder');
 
 describe('Analytics dialog component', () => {
   const props = {

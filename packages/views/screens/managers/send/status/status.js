@@ -1,10 +1,10 @@
 import React, { useEffect } from 'react';
 import { isEmpty } from '@utils/helpers';
 import { txStatusTypes } from '@constants';
-import { PrimaryButton } from '@toolbox/buttons';
+import { PrimaryButton } from '@views/basics/buttons';
 import TransactionResult from '@shared/transactionResult';
 import { getTransactionStatus, statusMessages } from '@shared/transactionResult/statusConfig';
-import DialogLink from '@toolbox/dialog/link';
+import DialogLink from '@views/basics/dialog/link';
 import styles from './status.css';
 
 const shouldShowBookmark = (bookmarks, account, rawTransaction, token) => {

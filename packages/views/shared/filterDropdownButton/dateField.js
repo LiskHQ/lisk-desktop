@@ -1,10 +1,10 @@
 import React from 'react';
 import moment from 'moment';
 import { firstBlockTime } from '@constants';
-import { Input } from '@toolbox/inputs';
-import Calendar from '@toolbox/calendar/calendar';
-import Dropdown from '@toolbox/dropdown/dropdown';
-import OutsideClickHandler from '@toolbox/outsideClickHandler';
+import { Input } from '@views/basics/inputs';
+import Calendar from '@views/basics/calendar/calendar';
+import Dropdown from '@views/basics/dropdown/dropdown';
+import OutsideClickHandler from '@views/basics/outsideClickHandler';
 import i18n from '../../../i18n';
 import styles from './filters.css';
 

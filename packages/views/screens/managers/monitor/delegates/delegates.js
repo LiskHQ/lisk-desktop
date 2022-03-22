@@ -1,10 +1,10 @@
 import React, { useState, useEffect } from 'react';
 
-import { Input } from '@toolbox/inputs';
-import Box from '@toolbox/box';
-import BoxHeader from '@toolbox/box/header';
-import BoxContent from '@toolbox/box/content';
-import BoxTabs from '@toolbox/tabs';
+import { Input } from '@views/basics/inputs';
+import Box from '@views/basics/box';
+import BoxHeader from '@views/basics/box/header';
+import BoxContent from '@views/basics/box/content';
+import BoxTabs from '@views/basics/tabs';
 import { ROUND_LENGTH } from '@constants';
 import styles from './delegates.css';
 import DelegatesOverview from './overview/delegatesOverview';

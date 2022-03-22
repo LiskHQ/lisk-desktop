@@ -1,7 +1,7 @@
 import React from 'react';
 import grid from 'flexboxgrid/dist/flexboxgrid.css';
 import { Link } from 'react-router-dom';
-import AccountVisual from '@toolbox/accountVisual';
+import AccountVisual from '@views/basics/accountVisual';
 import LiskAmount from '@shared/liskAmount';
 import { tokenMap, routes, regex } from '@constants';
 import styles from './multiSignature.css';

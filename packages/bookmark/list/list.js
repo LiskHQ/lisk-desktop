@@ -4,15 +4,15 @@ import { withTranslation } from 'react-i18next';
 import { Link } from 'react-router-dom';
 
 import { tokenMap, routes } from '@constants';
-import Tooltip from '@toolbox/tooltip/tooltip';
+import Tooltip from '@views/basics/tooltip/tooltip';
 import { truncateAddress } from '@utils/account';
-import { Input } from '@toolbox/inputs';
-import { PrimaryButton, TertiaryButton } from '@toolbox/buttons';
-import AccountVisual from '@toolbox/accountVisual';
-import Box from '@toolbox/box';
-import BoxHeader from '@toolbox/box/header';
-import BoxContent from '@toolbox/box/content';
-import Icon from '@toolbox/icon';
+import { Input } from '@views/basics/inputs';
+import { PrimaryButton, TertiaryButton } from '@views/basics/buttons';
+import AccountVisual from '@views/basics/accountVisual';
+import Box from '@views/basics/box';
+import BoxHeader from '@views/basics/box/header';
+import BoxContent from '@views/basics/box/content';
+import Icon from '@views/basics/icon';
 import EmptyState from './emptyState';
 import styles from './list.css';
 

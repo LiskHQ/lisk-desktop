@@ -1,9 +1,9 @@
 import React, { useState } from 'react';
 import { useTheme } from '@utils/theme';
-import BoxFooter from '@toolbox/box/footer';
-import { PrimaryButton, SecondaryButton } from '@toolbox/buttons';
+import BoxFooter from '@views/basics/box/footer';
+import { PrimaryButton, SecondaryButton } from '@views/basics/buttons';
 import { routes } from '@constants';
-import Icon from '@toolbox/icon';
+import Icon from '@views/basics/icon';
 import styles from './styles.css';
 
 export const CopyFooter = ({

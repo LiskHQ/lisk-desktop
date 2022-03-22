@@ -6,13 +6,13 @@ import { selectCurrentBlockHeight } from '@store/selectors';
 import { getModuleAssetTitle, getModuleAssetSenderLabel } from '@utils/moduleAssets';
 import { getTxAmount } from '@utils/transaction';
 import { tokenMap, MODULE_ASSETS_NAME_ID_MAP } from '@constants';
-import CopyToClipboard from '@toolbox/copyToClipboard';
+import CopyToClipboard from '@views/basics/copyToClipboard';
 import TransactionTypeFigure from '@shared/transactionTypeFigure';
-import { DateTimeFromTimestamp } from '@toolbox/timestamp';
+import { DateTimeFromTimestamp } from '@views/basics/timestamp';
 import DiscreetMode from '@shared/discreetMode';
 import LiskAmount from '@shared/liskAmount';
 import MultiSignatureMembers, { SignedAndRemainingMembers } from '@shared/multisignatureMembers';
-import Tooltip from '@toolbox/tooltip/tooltip';
+import Tooltip from '@views/basics/tooltip/tooltip';
 import { extractAddressFromPublicKey, truncateAddress, calculateRemainingAndSignedMembers } from '@utils/account';
 
 import { Context } from '../transactionDetails';
