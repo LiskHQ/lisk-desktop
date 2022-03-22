@@ -35,7 +35,7 @@ class DiscreetMode extends Component {
     const discreetModeClass = this.shouldEnableDiscreetMode() ? styles.discreetMode : '';
     return (
       <div className={discreetModeClass}>
-        {discreetModeClass.length ? <span className={styles.preformat} /> : ''}
+        {!!discreetModeClass.length && <span className={styles.preformat} />}
         {this.props.children}
       </div>
     );
