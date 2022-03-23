@@ -107,7 +107,7 @@ const config = {
       VERSION: `"${bundleVersion}"`,
     }),
     new StyleLintPlugin({
-      context: `${resolve(__dirname, '../src')}`,
+      context: `${resolve(__dirname, '../..')}`,
       files: '**/*.css',
       config: stylelintrc,
     }),
@@ -116,7 +116,7 @@ const config = {
       chunkFilename: '[name].css',
     }),
     new HtmlWebpackPlugin({
-      template: '../react/index.html',
+      template: `${resolve(__dirname, '../react/index.html')}`,
       VERSION: bundleVersion,
       inject: false,
       excludeChunks: ['head'],
@@ -129,7 +129,7 @@ const config = {
     new InlineChunkHtmlPlugin(HtmlWebpackPlugin, [/runtime/]),
     new I18nScannerPlugin({
       translationFunctionNames: ['i18next.t', 'props.t', 'this.props.t', 't'],
-      outputFilePath: './i18n/locales/en/common.json',
+      outputFilePath: './setup/i18n/locales/en/common.json',
       files: [
         './i18n/**/*.js',
         './packages/**/*.js',

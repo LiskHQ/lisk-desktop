@@ -1,4 +1,5 @@
-import { actionTypes, tokenMap } from '@common/configuration';
+import { actionTypes } from '@common/configuration';
+import { tokenMap } from '@token/configuration';
 import settings from './settings';
 
 describe('Reducer: settings(state, action)', () => {

@@ -16,13 +16,13 @@
     "node": ">=v12.7.0"
   },
   "scripts": {
-    "dev": "cross-env DEBUG=true NACL_FAST=disable && webpack serve --config ./config/webpack.config.dev",
-    "dev:hw": "cross-env DEBUG=true webpack serve --config ./config/webpack.config.dev --https",
+    "dev": "cross-env DEBUG=true NACL_FAST=disable && webpack serve --config ./setup/config/webpack.config.dev",
+    "dev:hw": "cross-env DEBUG=true webpack serve --config ./setup/config/webpack.config.dev --https",
     "start": "cross-env DEBUG=true npm run rebuild && electron ./app/",
     "rebuild": "electron-rebuild -m app/node_modules/node-hid && electron-rebuild -m app/node_modules/usb",
     "build": "npm-run-all clean:build copy:files build:prod build:electron",
-    "build:prod": "webpack --config ./config/webpack.config.prod",
-    "build:electron": "webpack --config ./config/webpack.config.electron",
+    "build:prod": "webpack --config ./setup/config/webpack.config.prod",
+    "build:electron": "webpack --config ./setup/config/webpack.config.electron",
     "dist": "electron-builder --x64 --publish onTag",
     "dist:win": "electron-builder --win --ia32 --x64 --publish onTag",
     "dist:mac": "electron-builder --mac",
@@ -40,8 +40,8 @@
     "postinstall": "electron-builder install-app-deps",
     "install:storybook:dependencies": "cd ./storybook/; npm ci; cd ..",
     "install:electron:dependencies": "cd ./app && npm ci && cd ..",
-    "analyze:bundles": "webpack  --config ./config/webpack.config.analyze",
-    "copy:files": "cpx \"./src/{index.html,assets/**/*}\" ./app/build/",
+    "analyze:bundles": "webpack  --config ./setup/config/webpack.config.analyze",
+    "copy:files": "cpx \"./setup/react/{index.html,assets/**/*}\" ./app/build/",
     "clean:build": "rm -rf app/build",
     "clean:dist": "rm -rf dist"
   },

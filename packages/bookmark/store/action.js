@@ -1,4 +1,5 @@
-import { actionTypes, tokenMap } from '@common/configuration';
+import { actionTypes } from '@common/configuration';
+import { tokenMap } from '@token/configuration';
 import { getFromStorage } from '@common/utilities/localJSONStorage';
 import { emptyBookmarks } from '@common/utilities/bookmarks';
 import { validateAddress } from '@common/utilities/validators';
