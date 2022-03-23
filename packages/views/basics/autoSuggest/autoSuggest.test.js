@@ -1,6 +1,6 @@
 import React from 'react';
 import { mount } from 'enzyme';
-import { tokenMap, keyCodes } from '@constants';
+import { tokenMap, keyCodes } from '@common/configuration';
 import AccountVisual from '../accountVisual';
 import AutoSuggest from './index';
 

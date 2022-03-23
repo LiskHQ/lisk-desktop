@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { useDispatch } from 'react-redux';
 
-import { tokenMap } from '@constants';
+import { tokenMap } from '@common/configuration';
 import { voteEdited } from '@common/store/actions';
 import { fromRawLsk, toRawLsk } from '@common/utilities/lsk';
 import { truncateAddress } from '@common/utilities/account';

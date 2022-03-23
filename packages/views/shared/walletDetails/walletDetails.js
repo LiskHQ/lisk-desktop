@@ -2,7 +2,7 @@ import React from 'react';
 import { useDispatch } from 'react-redux';
 import { Link } from 'react-router-dom';
 import { settingsUpdated } from '@common/store/actions';
-import { tokenMap, routes } from '@constants';
+import { tokenMap, routes } from '@common/configuration';
 import Box from '@basics/box';
 import BoxHeader from '@basics/box/header';
 import BoxContent from '@basics/box/content';

@@ -1,4 +1,4 @@
-import { regex, tokenMap } from '@constants';
+import { regex, tokenMap } from '@common/configuration';
 import { validateAddress } from '@common/utilities/validators';
 import { getAccount } from '../account/lsk';
 import { getTransaction } from '../transaction/lsk';

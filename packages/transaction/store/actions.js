@@ -3,7 +3,7 @@ import to from 'await-to-js';
 import {
   actionTypes, tokenMap, MODULE_ASSETS_NAME_ID_MAP, DEFAULT_LIMIT,
   signatureCollectionStatus,
-} from '@constants';
+} from '@common/configuration';
 import { isEmpty } from '@common/utilities/helpers';
 import { getTransactions, create, broadcast } from '@common/utilities/api/transaction';
 import {

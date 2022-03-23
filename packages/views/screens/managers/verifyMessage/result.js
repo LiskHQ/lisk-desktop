@@ -5,7 +5,7 @@ import React from 'react';
 import { PrimaryButton } from '@basics/buttons';
 import BoxFooter from '@basics/box/footer';
 import Illustration from '@basics/illustration';
-import { routes } from '@constants';
+import { routes } from '@common/configuration';
 import styles from './verifyMessage.css';
 
 export default function Result({

@@ -1,5 +1,5 @@
 import grid from 'flexboxgrid/dist/flexboxgrid.css';
-import { tokenMap } from '@constants';
+import { tokenMap } from '@common/configuration';
 import styles from './transactions.css';
 
 export default (t, activeToken, changeSort) => {

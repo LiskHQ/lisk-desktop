@@ -6,7 +6,7 @@ import {
   DEFAULT_NUMBER_OF_SIGNATURES,
   MODULE_ASSETS_NAME_ID_MAP,
   signatureCollectionStatus,
-} from '@constants';
+} from '@common/configuration';
 import {
   extractAddressFromPublicKey,
   getBase32AddressFromAddress,

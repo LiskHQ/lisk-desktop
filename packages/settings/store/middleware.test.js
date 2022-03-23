@@ -1,5 +1,5 @@
 import { pricesRetrieved, emptyTransactionsData, settingsUpdated } from '@common/store/actions';
-import { actionTypes } from '@constants';
+import { actionTypes } from '@common/configuration';
 import settingsMiddleware from './settings';
 
 jest.mock('@common/store/actions/service');

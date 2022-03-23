@@ -4,7 +4,7 @@ import {
   VOTE_AMOUNT_STEP,
   MIN_ACCOUNT_BALANCE,
   MODULE_ASSETS_NAME_ID_MAP,
-} from '@constants';
+} from '@common/configuration';
 import { toRawLsk } from '@common/utilities/lsk';
 import { normalizeVotesForTx } from '@shared/transactionPriority';
 

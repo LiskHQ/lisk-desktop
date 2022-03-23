@@ -1,5 +1,5 @@
 import React from 'react';
-import { signatureCollectionStatus } from '@constants';
+import { signatureCollectionStatus } from '@common/configuration';
 import { useTheme } from '@common/utilities/theme';
 import { removeSearchParamsFromUrl } from '@common/utilities/searchParams';
 import { PrimaryButton, SecondaryButton } from '@basics/buttons';

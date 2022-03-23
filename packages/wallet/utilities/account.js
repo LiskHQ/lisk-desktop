@@ -2,7 +2,7 @@
 import { passphrase as LiskPassphrase, cryptography } from '@liskhq/lisk-client';
 import {
   tokenMap, regex, balanceNeededForReclaim, balanceNeededForInitialization,
-} from '@constants';
+} from '@common/configuration';
 import { getCustomDerivationKeyPair } from '@common/utilities/explicitBipKeyDerivation';
 
 /**

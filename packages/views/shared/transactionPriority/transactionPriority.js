@@ -1,6 +1,6 @@
 import React, { useState, useMemo } from 'react';
 import PropTypes from 'prop-types';
-import { tokenMap, MODULE_ASSETS_MAP } from '@constants';
+import { tokenMap, MODULE_ASSETS_MAP } from '@common/configuration';
 import {
   formatAmountBasedOnLocale,
 } from '@common/utilities/formattedNumber';

@@ -1,4 +1,4 @@
-import { actionTypes, account as accountConstants } from '@constants';
+import { actionTypes, account as accountConstants } from '@common/configuration';
 
 /**
  *

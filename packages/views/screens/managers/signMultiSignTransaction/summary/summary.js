@@ -1,6 +1,6 @@
 import React, { useMemo } from 'react';
 import { isEmpty } from '@common/utilities/helpers';
-import { signatureCollectionStatus } from '@constants';
+import { signatureCollectionStatus } from '@common/configuration';
 import BoxContent from '@basics/box/content';
 import Box from '@basics/box';
 import TransactionDetails from '@screens/transactionDetails/transactionDetails';

@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { maxMessageLength, MODULE_ASSETS_NAME_ID_MAP } from '@constants';
+import { maxMessageLength, MODULE_ASSETS_NAME_ID_MAP } from '@common/configuration';
 import { toRawLsk } from '@common/utilities/lsk';
 import TransactionPriority, { useTransactionPriority, useTransactionFeeCalculation } from '@shared/transactionPriority';
 import { AutoResizeTextarea } from '@basics/inputs';

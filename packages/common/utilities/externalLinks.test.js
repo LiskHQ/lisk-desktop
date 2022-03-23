@@ -1,4 +1,4 @@
-import { routes } from '@constants';
+import { routes } from '@common/configuration';
 import externalLinks from './externalLinks';
 import history from '../history';
 

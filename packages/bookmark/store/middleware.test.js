@@ -1,4 +1,4 @@
-import { actionTypes } from '@constants';
+import { actionTypes } from '@common/configuration';
 import * as localJSONStorage from '@common/utilities/localJSONStorage';
 import bookmarksMiddleware from './bookmarks';
 import accounts from '../../../test/constants/accounts';

@@ -1,4 +1,4 @@
-import { actionTypes } from '@constants';
+import { actionTypes } from '@common/configuration';
 import account from './account';
 import accounts from '../../../test/constants/accounts';
 

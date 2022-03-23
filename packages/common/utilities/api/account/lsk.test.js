@@ -1,4 +1,4 @@
-import { HTTP_CODES } from '@constants';
+import { HTTP_CODES } from '@common/configuration';
 import http from '../http';
 import ws from '../ws';
 import { getAccount, getAccounts } from './lsk';

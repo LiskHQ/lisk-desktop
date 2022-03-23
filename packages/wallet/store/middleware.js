@@ -3,7 +3,7 @@ import {
   networks, actionTypes, networkKeys,
   MODULE_ASSETS_NAME_ID_MAP, tokenMap, routes,
   timeOutId, timeOutWarningId,
-} from '@constants';
+} from '@common/configuration';
 import { fromRawLsk, delay } from '@common/utilities/lsk';
 import { getActiveTokenAccount } from '@common/utilities/account';
 import {

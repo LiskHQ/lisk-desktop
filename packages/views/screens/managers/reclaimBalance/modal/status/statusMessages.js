@@ -1,6 +1,6 @@
 /* istanbul ignore file */
 import { statusMessages } from '@shared/transactionResult/statusConfig';
-import { txStatusTypes } from '@constants';
+import { txStatusTypes } from '@common/configuration';
 
 const reclaimBalanceMessages = t => ({
   ...statusMessages(t),

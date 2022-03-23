@@ -1,6 +1,6 @@
 import React from 'react';
 import { withTranslation } from 'react-i18next';
-import { tokenMap } from '@constants';
+import { tokenMap } from '@common/configuration';
 import Icon from '@basics/icon';
 import LiskAmount from '@shared/liskAmount';
 import UnlockingList from './unlockingList';

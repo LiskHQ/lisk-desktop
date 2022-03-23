@@ -6,7 +6,7 @@ import {
   loginTypes,
   actionTypes,
   tokenMap,
-} from '@constants';
+} from '@common/configuration';
 import { toRawLsk } from '@common/utilities/lsk';
 import { isEmpty } from '@common/utilities/helpers';
 import { create } from '@common/utilities/api/transaction';

@@ -1,5 +1,5 @@
 import moment from 'moment';
-import { firstBlockTime } from '@constants';
+import { firstBlockTime } from '@common/configuration';
 
 /**
  * Returns unix timestamp from value

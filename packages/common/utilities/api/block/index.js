@@ -1,4 +1,4 @@
-import { tokenMap } from '@constants';
+import { tokenMap } from '@common/configuration';
 import { subscribe, unsubscribe } from '../ws';
 import http from '../http';
 import { validateAddress } from '../../validators';

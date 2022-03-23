@@ -5,7 +5,7 @@ import { withRouter } from 'react-router-dom';
 import { getBlocks } from '@common/utilities/api/block';
 import withData from '@common/utilities/withData';
 import { transformStringDateToUnixTimestamp } from '@common/utilities/datetime';
-import { DEFAULT_LIMIT } from '@constants';
+import { DEFAULT_LIMIT } from '@common/configuration';
 import Blocks from './blocks';
 
 const transformParams = params => Object.keys(params)

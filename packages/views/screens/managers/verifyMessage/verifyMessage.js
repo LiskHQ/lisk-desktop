@@ -1,7 +1,7 @@
 import PropTypes from 'prop-types';
 import React from 'react';
 
-import { routes } from '@constants';
+import { routes } from '@common/configuration';
 import MultiStep from '@shared/multiStep';
 import Dialog from '@basics/dialog/dialog';
 import Result from './result';

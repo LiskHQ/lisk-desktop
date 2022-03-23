@@ -1,4 +1,4 @@
-import { actionTypes } from '@constants';
+import { actionTypes } from '@common/configuration';
 
 const addNewTransactions = (array1, array2) => array1.filter(array1Value =>
   array2.filter(array2Value => array2Value.id === array1Value.id).length === 0);

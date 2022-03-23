@@ -1,5 +1,5 @@
 import React from 'react';
-import { maxMessageLength, regex } from '@constants';
+import { maxMessageLength, regex } from '@common/configuration';
 import { validateAmountFormat } from '@common/utilities/validators';
 import { sizeOfString } from '@common/utilities/helpers';
 import { Input, AutoResizeTextarea } from '@basics/inputs';

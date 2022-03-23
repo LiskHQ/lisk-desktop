@@ -1,4 +1,4 @@
-import { actionTypes, ROUND_LENGTH } from '@constants';
+import { actionTypes, ROUND_LENGTH } from '@common/configuration';
 
 const initialState = {
   latestBlocks: [],

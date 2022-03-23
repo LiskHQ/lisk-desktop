@@ -5,7 +5,7 @@ import { withTranslation } from 'react-i18next';
 import withLocalSort from '@common/utilities/withLocalSort';
 import { getNetworkStatistics, getPeers } from '@common/utilities/api/network';
 import withData from '@common/utilities/withData';
-import { tokenMap, DEFAULT_LIMIT } from '@constants';
+import { tokenMap, DEFAULT_LIMIT } from '@common/configuration';
 import Box from '@basics/box';
 import BoxHeader from '@basics/box/header';
 import BoxContent from '@basics/box/content';

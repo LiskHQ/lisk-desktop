@@ -1,6 +1,6 @@
 import React, { useEffect, useRef, useState } from 'react';
 
-import { tokenMap, networkKeys } from '@constants';
+import { tokenMap, networkKeys } from '@common/configuration';
 import { getNetworkConfig } from '@common/utilities/api/network';
 import { PrimaryButton } from '@basics/buttons';
 import { Input } from '@basics/inputs';

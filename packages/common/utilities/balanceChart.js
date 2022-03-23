@@ -1,5 +1,5 @@
 import moment from 'moment';
-import { chartStyles } from '@constants';
+import { chartStyles } from '@common/configuration';
 import { fromRawLsk } from './lsk';
 import { getUnixTimestampFromValue } from './datetime';
 import i18n from '../i18n';

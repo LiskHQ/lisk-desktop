@@ -1,5 +1,5 @@
 import { act } from 'react-dom/test-utils';
-import { tokenMap, networks } from '@constants';
+import { tokenMap, networks } from '@common/configuration';
 import { mountWithProps } from '@common/utilities/testHelpers';
 import * as hwManagerAPI from '@common/utilities/hwManager';
 import { create } from '@common/utilities/api/transaction';

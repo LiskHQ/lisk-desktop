@@ -1,4 +1,4 @@
-import { actionTypes, tokenKeys } from '@constants';
+import { actionTypes, tokenKeys } from '@common/configuration';
 import { getNetworkConfig } from '@common/utilities/api/network';
 import { getSchemas } from '@common/utilities/api/transaction';
 

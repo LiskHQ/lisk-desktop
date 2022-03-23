@@ -1,6 +1,6 @@
 import React from 'react';
 import { mount } from 'enzyme';
-import { txStatusTypes } from '@constants';
+import { txStatusTypes } from '@common/configuration';
 import TransactionResult from './transactionResult';
 import Regular from './regular';
 import Multisignature from './multisignature';

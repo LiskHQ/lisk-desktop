@@ -3,7 +3,7 @@ import {
   chartStyles,
   colorPalette,
   colorPaletteDark,
-} from '@constants';
+} from '@common/configuration';
 
 const merge = (...args) => lodashMerge({}, ...args);
 

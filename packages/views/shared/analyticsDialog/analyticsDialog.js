@@ -2,7 +2,7 @@ import React from 'react';
 import moment from 'moment';
 import { toast } from 'react-toastify';
 import PropTypes from 'prop-types';
-import { externalLinks } from '@constants';
+import { externalLinks } from '@common/configuration';
 import Dialog from '@basics/dialog/dialog';
 import FlashMessageHolder from '@basics/flashMessage/holder';
 import { PrimaryButton, SecondaryButton } from '@basics/buttons';

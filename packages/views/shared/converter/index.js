@@ -1,6 +1,6 @@
 /* istanbul ignore file */
 import { connect } from 'react-redux';
-import { settings, tokenMap } from '@constants';
+import { settings, tokenMap } from '@common/configuration';
 import Converter from './converter';
 
 const mapStateToProps = state => ({

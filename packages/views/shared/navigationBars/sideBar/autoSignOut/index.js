@@ -2,7 +2,7 @@ import React from 'react';
 import Countdown from 'react-countdown';
 import { toast } from 'react-toastify';
 import { withTranslation } from 'react-i18next';
-import { timeOutId } from '@constants';
+import { timeOutId } from '@common/configuration';
 import styles from './autoSignOut.css';
 
 const TimeOutToast = ({ t, completed }) => (

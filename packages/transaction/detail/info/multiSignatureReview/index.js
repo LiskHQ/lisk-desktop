@@ -1,6 +1,6 @@
 import React from 'react';
 
-import { tokenMap } from '@constants';
+import { tokenMap } from '@common/configuration';
 import { toRawLsk } from '@common/utilities/lsk';
 import { truncateAddress } from '@common/utilities/account';
 import LiskAmount from '../liskAmount';

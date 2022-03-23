@@ -1,4 +1,4 @@
-import { tokenMap } from '@constants';
+import { tokenMap } from '@common/configuration';
 
 export default {
   wallet: {

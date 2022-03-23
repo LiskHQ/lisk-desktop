@@ -5,7 +5,7 @@ import { useDispatch, useSelector, connect } from 'react-redux';
 import { compose } from 'redux';
 
 import { selectSearchParamValue, removeSearchParamsFromUrl } from '@common/utilities/searchParams';
-import { tokenMap } from '@constants';
+import { tokenMap } from '@common/configuration';
 import { voteEdited } from '@common/store/actions';
 import { toRawLsk, fromRawLsk } from '@common/utilities/lsk';
 import Dialog from '@basics/dialog/dialog';

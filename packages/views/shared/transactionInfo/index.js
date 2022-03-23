@@ -2,7 +2,7 @@ import React from 'react';
 import { withTranslation } from 'react-i18next';
 import AccountVisual from '@basics/accountVisual';
 import LiskAmount from '@shared/liskAmount';
-import { tokenMap, MODULE_ASSETS_NAME_ID_MAP } from '@constants';
+import { tokenMap, MODULE_ASSETS_NAME_ID_MAP } from '@common/configuration';
 import VoteDelegate from './voteDelegate';
 import Reclaim from './reclaim';
 import Send from './send';

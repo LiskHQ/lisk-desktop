@@ -1,4 +1,4 @@
-import { actionTypes } from '@constants';
+import { actionTypes } from '@common/configuration';
 import { addedToWatchList, removedFromWatchList, watchListRetrieved } from './watchList';
 
 describe('actions: watchList', () => {

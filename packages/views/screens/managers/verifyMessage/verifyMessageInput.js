@@ -11,7 +11,7 @@ import BoxFooter from '@basics/box/footer';
 import BoxInfoText from '@basics/box/infoText';
 import Icon from '@basics/icon';
 import Tooltip from '@basics/tooltip/tooltip';
-import { regex } from '@constants';
+import { regex } from '@common/configuration';
 import styles from './verifyMessage.css';
 
 export default class VerifyMessageInput extends React.Component {

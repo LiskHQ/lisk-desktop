@@ -1,7 +1,7 @@
 import React from 'react';
 import { withTranslation } from 'react-i18next';
 import { validateAddress, validateLSKPublicKey } from '@common/utilities/validators';
-import { tokenMap } from '@constants';
+import { tokenMap } from '@common/configuration';
 import { Input } from '@basics/inputs';
 import styles from './filters.css';
 

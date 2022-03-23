@@ -1,5 +1,5 @@
 import { expect } from 'chai';
-import { actionTypes } from '@constants';
+import { actionTypes } from '@common/configuration';
 import loading from './loading';
 
 describe('Reducer: loading(state, action)', () => {

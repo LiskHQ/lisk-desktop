@@ -8,7 +8,7 @@ import {
   MODULE_ASSETS_MAP,
   MODULE_ASSETS_NAME_ID_MAP,
   BASE_FEES,
-} from '@constants';
+} from '@common/configuration';
 import { joinModuleAndAssetIds } from '@common/utilities/moduleAssets';
 import {
   createTransactionObject, sign,

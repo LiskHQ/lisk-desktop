@@ -6,7 +6,7 @@ import { truncateAddress } from '@common/utilities/account';
 import Tooltip from '@basics/tooltip/tooltip';
 import Icon from '@basics/icon';
 import AccountVisual from '@basics/accountVisual';
-import { DEFAULT_STANDBY_THRESHOLD } from '@constants';
+import { DEFAULT_STANDBY_THRESHOLD } from '@common/configuration';
 import {
   getDelegateDetailsClass,
   getStatusClass,

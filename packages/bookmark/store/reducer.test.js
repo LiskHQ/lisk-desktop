@@ -1,7 +1,7 @@
 import {
   bookmarkAdded, bookmarkUpdated, bookmarkRemoved,
 } from '@common/store/actions';
-import { actionTypes } from '@constants';
+import { actionTypes } from '@common/configuration';
 import bookmarks from './bookmarks';
 import accounts from '../../../test/constants/accounts';
 

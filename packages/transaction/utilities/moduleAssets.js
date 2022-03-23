@@ -1,4 +1,4 @@
-import { MODULE_ASSETS_NAME_ID_MAP } from '@constants';
+import { MODULE_ASSETS_NAME_ID_MAP } from '@common/configuration';
 
 const getModuleAssetSenderLabel = (t = str => str) => ({
   [MODULE_ASSETS_NAME_ID_MAP.transfer]: t('Sender'),

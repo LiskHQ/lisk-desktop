@@ -2,7 +2,7 @@ import React from 'react';
 
 import { TertiaryButton } from '@basics/buttons';
 import Icon from '@basics/icon';
-import { networkKeys } from '@constants';
+import { networkKeys } from '@common/configuration';
 import styles from '../networkSelector.css';
 
 const ReadMode = ({

@@ -9,7 +9,7 @@ import Box from '@basics/box';
 import BoxHeader from '@basics/box/header';
 import BoxContent from '@basics/box/content';
 import Table from '@basics/table';
-import { DEFAULT_LIMIT } from '@constants';
+import { DEFAULT_LIMIT } from '@common/configuration';
 import styles from './accounts.css';
 import header from './tableHeader';
 import AccountRow from './accountRow';

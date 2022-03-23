@@ -1,4 +1,4 @@
-import { MODULE_ASSETS_NAME_ID_MAP } from '@constants';
+import { MODULE_ASSETS_NAME_ID_MAP } from '@common/configuration';
 import {
   getModuleAssetSenderLabel,
   getModuleAssetTitle,

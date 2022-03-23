@@ -1,4 +1,4 @@
-import { actionTypes, networks } from '@constants';
+import { actionTypes, networks } from '@common/configuration';
 import { getBlocks } from '@common/utilities/api/block';
 import { getForgers, getDelegates } from '@common/utilities/api/delegate';
 import blocks from '../../../test/constants/blocks';

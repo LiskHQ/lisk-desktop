@@ -1,6 +1,6 @@
 import React from 'react';
 
-import { MODULE_ASSETS_NAME_ID_MAP } from '@constants';
+import { MODULE_ASSETS_NAME_ID_MAP } from '@common/configuration';
 import TransactionSummary from '@shared/transactionSummary';
 import { fromRawLsk } from '@common/utilities/lsk';
 import { getUnlockableUnlockObjects } from '@common/utilities/account';

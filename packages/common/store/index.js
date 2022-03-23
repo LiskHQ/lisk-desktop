@@ -2,7 +2,7 @@ import {
   createStore, combineReducers, applyMiddleware, compose,
 } from 'redux';
 
-import { actionTypes } from '@constants';
+import { actionTypes } from '@common/configuration';
 import * as reducers from './reducers';
 import middleWares from './middlewares';
 

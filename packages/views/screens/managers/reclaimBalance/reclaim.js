@@ -7,7 +7,7 @@ import DialogLink from '@basics/dialog/link';
 import AccountMigration from '@shared/accountMigration';
 import { hasEnoughBalanceForReclaim } from '@common/utilities/account';
 import { fromRawLsk } from '@common/utilities/lsk';
-import { balanceNeededForReclaim } from '@constants';
+import { balanceNeededForReclaim } from '@common/configuration';
 import { selectActiveTokenAccount } from '@store/selectors';
 import styles from './index.css';
 

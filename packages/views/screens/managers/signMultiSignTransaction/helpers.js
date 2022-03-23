@@ -1,4 +1,4 @@
-import { MODULE_ASSETS_NAME_ID_MAP, signatureCollectionStatus } from '@constants';
+import { MODULE_ASSETS_NAME_ID_MAP, signatureCollectionStatus } from '@common/configuration';
 import { joinModuleAndAssetIds } from '@common/utilities/moduleAssets';
 import { getKeys } from '@common/utilities/account';
 

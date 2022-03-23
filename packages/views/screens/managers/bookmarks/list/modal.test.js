@@ -1,4 +1,4 @@
-import { tokenMap } from '@constants';
+import { tokenMap } from '@common/configuration';
 import { mountWithRouter } from '@common/utilities/testHelpers';
 import BookmarkListModal from './modal';
 import bookmarks from '../../../../../test/constants/bookmarks';

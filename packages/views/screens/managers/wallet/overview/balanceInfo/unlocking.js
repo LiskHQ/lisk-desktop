@@ -1,7 +1,7 @@
 import React from 'react';
 import { useSelector } from 'react-redux';
 
-import { tokenMap } from '@constants';
+import { tokenMap } from '@common/configuration';
 import { fromRawLsk } from '@common/utilities/lsk';
 import DialogLink from '@basics/dialog/link';
 import {

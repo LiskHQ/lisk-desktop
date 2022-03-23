@@ -5,7 +5,7 @@ import {
 } from '@basics/buttons';
 import Illustration from '@basics/illustration';
 import { transactionToJSON, downloadJSON } from '@common/utilities/transaction';
-import { routes, txStatusTypes } from '@constants';
+import { routes, txStatusTypes } from '@common/configuration';
 import { getErrorReportMailto } from '@common/utilities/helpers';
 
 import copyToClipboard from 'copy-to-clipboard';

@@ -1,6 +1,6 @@
 import React from 'react';
 import { mount } from 'enzyme';
-import { loginTypes } from '@constants';
+import { loginTypes } from '@common/configuration';
 import * as hwManager from '@common/utilities/hwManager';
 import MessageSignature from '.';
 import accounts from '../../../../../test/constants/accounts';

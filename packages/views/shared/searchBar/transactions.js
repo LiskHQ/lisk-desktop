@@ -1,5 +1,5 @@
 import React from 'react';
-import { MODULE_ASSETS_MAP } from '@constants';
+import { MODULE_ASSETS_MAP } from '@common/configuration';
 import Icon from '@basics/icon';
 import { truncateAddress } from '@common/utilities/account';
 import LiskAmount from '../liskAmount';

@@ -1,6 +1,6 @@
 /* eslint-disable max-lines */
 import { toast } from 'react-toastify';
-import { actionTypes } from '@constants';
+import { actionTypes } from '@common/configuration';
 import * as accountApi from '@common/utilities/api/account';
 import { extractKeyPair } from '@common/utilities/account';
 import { create } from '@common/utilities/api/transaction';

@@ -1,7 +1,7 @@
 // istanbul ignore file
 import React from 'react';
 import moment from 'moment';
-import { ROUND_LENGTH } from '@constants';
+import { ROUND_LENGTH } from '@common/configuration';
 import { DoughnutChart } from '@basics/charts';
 import Box from '@basics/box';
 import BoxHeader from '@basics/box/header';

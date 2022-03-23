@@ -1,6 +1,6 @@
 import { act } from 'react-dom/test-utils';
 import { mountWithRouterAndStore } from '@common/utilities/testHelpers';
-import { tokenMap } from '@constants';
+import { tokenMap } from '@common/configuration';
 import ActionBar from './actionBar';
 
 describe('Reclaim balance screen', () => {

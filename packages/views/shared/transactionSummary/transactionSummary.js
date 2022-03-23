@@ -4,7 +4,7 @@ import Box from '@basics/box';
 import BoxHeader from '@basics/box/header';
 import BoxContent from '@basics/box/content';
 import Tooltip from '@basics/tooltip/tooltip';
-import { tokenMap } from '@constants';
+import { tokenMap } from '@common/configuration';
 import Footer from './footer';
 import styles from './transactionSummary.css';
 

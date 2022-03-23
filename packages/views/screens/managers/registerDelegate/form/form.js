@@ -2,7 +2,7 @@ import React, { useState, useEffect, useRef } from 'react';
 import { isEmpty } from '@common/utilities/helpers';
 import {
   tokenMap, MODULE_ASSETS_NAME_ID_MAP, regex, MIN_ACCOUNT_BALANCE,
-} from '@constants';
+} from '@common/configuration';
 import { getDelegate } from '@common/utilities/api/delegate';
 import TransactionPriority, { useTransactionFeeCalculation, useTransactionPriority } from '@shared/transactionPriority';
 import Box from '@basics/box';

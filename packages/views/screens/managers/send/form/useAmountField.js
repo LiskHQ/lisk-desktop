@@ -2,7 +2,7 @@ import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import numeral from 'numeral';
 
-import { tokenMap, MIN_ACCOUNT_BALANCE, regex } from '@constants';
+import { tokenMap, MIN_ACCOUNT_BALANCE, regex } from '@common/configuration';
 import { toRawLsk } from '@common/utilities/lsk';
 import { validateAmountFormat } from '@common/utilities/validators';
 

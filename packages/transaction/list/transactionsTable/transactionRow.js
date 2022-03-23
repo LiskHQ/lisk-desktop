@@ -1,7 +1,7 @@
 import React from 'react';
 import grid from 'flexboxgrid/dist/flexboxgrid.css';
 
-import { tokenMap } from '@constants';
+import { tokenMap } from '@common/configuration';
 import { getModuleAssetTitle } from '@common/utilities/moduleAssets';
 import { getTxAmount } from '@common/utilities/transaction';
 import { DateTimeFromTimestamp } from '@basics/timestamp';

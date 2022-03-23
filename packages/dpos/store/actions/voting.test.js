@@ -1,4 +1,4 @@
-import { actionTypes, networks, loginTypes } from '@constants';
+import { actionTypes, networks, loginTypes } from '@common/configuration';
 import * as transactionApi from '@common/utilities/api/transaction';
 import * as delegateApi from '@common/utilities/api/delegate';
 import * as accountApi from '@common/utilities/api/account';

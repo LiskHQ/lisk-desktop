@@ -2,7 +2,7 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 
 import { truncateAddress } from '@common/utilities/account';
-import { routes, tokenMap } from '@constants';
+import { routes, tokenMap } from '@common/configuration';
 import LiskAmount from '../liskAmount';
 
 import styles from './styles.css';

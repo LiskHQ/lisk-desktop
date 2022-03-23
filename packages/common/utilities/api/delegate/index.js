@@ -1,4 +1,4 @@
-import { regex } from '@constants';
+import { regex } from '@common/configuration';
 import http from '../http';
 import ws, { subscribe, unsubscribe } from '../ws';
 import { extractAddressFromPublicKey } from '../../account';

@@ -1,6 +1,6 @@
 /* istanbul ignore file */
 import React from 'react';
-import { txStatusTypes } from '@constants';
+import { txStatusTypes } from '@common/configuration';
 import { statusMessages } from '@shared/transactionResult/statusConfig';
 import LiskAmount from '@shared/liskAmount';
 import styles from './styles.css';

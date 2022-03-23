@@ -6,7 +6,7 @@ import { validateAmountFormat } from '@common/utilities/validators';
 import { fromRawLsk } from '@common/utilities/lsk';
 import { selectSearchParamValue } from '@common/utilities/searchParams';
 import { selectAccountBalance, selectLSKAddress } from '@store/selectors';
-import { tokenMap, regex } from '@constants';
+import { tokenMap, regex } from '@common/configuration';
 
 let loaderTimeout = null;
 

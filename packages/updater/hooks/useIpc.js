@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react';
 import { useDispatch } from 'react-redux';
 import htmlStringToReact from '@common/utilities/htmlStringToReact';
-import { regex } from '@constants';
+import { regex } from '@common/configuration';
 import { addSearchParamsToUrl, removeSearchParamsFromUrl } from '@common/utilities/searchParams';
 import { appUpdateAvailable } from '@common/store/actions';
 import FlashMessageHolder from '@basics/flashMessage/holder';

@@ -1,5 +1,5 @@
 import { useSelector } from 'react-redux';
-import { routes } from '@constants';
+import { routes } from '@common/configuration';
 import { mountWithRouter } from '@common/utilities/testHelpers';
 import SideBar from './index';
 

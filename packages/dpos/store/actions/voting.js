@@ -1,7 +1,7 @@
 import to from 'await-to-js';
 import {
   actionTypes, tokenMap, MODULE_ASSETS_NAME_ID_MAP,
-} from '@constants';
+} from '@common/configuration';
 import { create } from '@common/utilities/api/transaction';
 import { getAccount } from '@common/utilities/api/account';
 import { getVotes } from '@common/utilities/api/delegate';

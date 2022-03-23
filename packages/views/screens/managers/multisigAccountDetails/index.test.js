@@ -1,4 +1,4 @@
-import { routes } from '@constants';
+import { routes } from '@common/configuration';
 import { mountWithRouterAndStore } from '../../../utils/testHelpers';
 import MultisigAccountDetails from './index';
 

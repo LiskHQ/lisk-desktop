@@ -1,6 +1,6 @@
 import { toast } from 'react-toastify';
 import { subscribeToDeviceConnected, subscribeToDeviceDisconnected } from '@common/utilities/hwManager';
-import { actionTypes } from '@constants';
+import { actionTypes } from '@common/configuration';
 import { addSearchParamsToUrl } from '@common/utilities/searchParams';
 import { accountLoggedOut, login } from '@common/store/actions';
 import {

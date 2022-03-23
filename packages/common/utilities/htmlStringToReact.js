@@ -1,5 +1,5 @@
 import React, { Fragment, createElement } from 'react';
-import { regex } from '@constants';
+import { regex } from '@common/configuration';
 
 const htmlStringToReact = (html = '') => {
   const trimmedHtml = html.trim();

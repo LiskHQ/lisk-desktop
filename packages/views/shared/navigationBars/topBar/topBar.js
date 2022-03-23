@@ -1,6 +1,6 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import { routes } from '@constants';
+import { routes } from '@common/configuration';
 import { isEmpty } from '@common/utilities/helpers';
 import Icon from '@basics/icon';
 import DialogLink from '@basics/dialog/link';

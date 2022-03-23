@@ -1,7 +1,7 @@
 import React, { useEffect, useRef, useState } from 'react';
 import PropTypes from 'prop-types';
 
-import { tokenMap } from '@constants';
+import { tokenMap } from '@common/configuration';
 import { validateAddress } from '@common/utilities/validators';
 import { getIndexOfBookmark } from '@common/utilities/bookmarks';
 import { parseSearchParams, removeSearchParamsFromUrl } from '@common/utilities/searchParams';

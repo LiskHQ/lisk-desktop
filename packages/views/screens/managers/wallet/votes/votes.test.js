@@ -1,5 +1,5 @@
 import { mountWithRouter } from '@common/utilities/testHelpers';
-import { routes } from '@constants';
+import { routes } from '@common/configuration';
 import accounts from '../../../../../test/constants/accounts';
 import Votes from './votes';
 

@@ -1,7 +1,7 @@
 import React from 'react';
 import { fromRawLsk } from '@common/utilities/lsk';
 import TransactionInfo from '@shared/transactionInfo';
-import { MODULE_ASSETS_NAME_ID_MAP } from '@constants';
+import { MODULE_ASSETS_NAME_ID_MAP } from '@common/configuration';
 import TransactionSummary from '@shared/transactionSummary';
 import ToggleIcon from '../toggleIcon';
 import VoteStats from '../voteStats';

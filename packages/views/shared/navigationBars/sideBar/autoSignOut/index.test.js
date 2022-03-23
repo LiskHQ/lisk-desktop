@@ -1,6 +1,6 @@
 import React from 'react';
 import { mount } from 'enzyme';
-import { account } from '@constants';
+import { account } from '@common/configuration';
 import AutoSignOut from './index';
 
 describe('AutoSignOut', () => {

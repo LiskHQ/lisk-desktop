@@ -1,6 +1,6 @@
 import React from 'react';
 import { mount } from 'enzyme';
-import { tokenMap } from '@constants';
+import { tokenMap } from '@common/configuration';
 import { toRawLsk } from '@common/utilities/lsk';
 import { formatAmountBasedOnLocale } from '@common/utilities/formattedNumber';
 import Summary from './summary';

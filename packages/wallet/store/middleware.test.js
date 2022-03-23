@@ -5,7 +5,7 @@ import {
 
 import {
   tokenMap, actionTypes, MODULE_ASSETS_NAME_ID_MAP, routes,
-} from '@constants';
+} from '@common/configuration';
 import * as transactionApi from '@common/utilities/api/transaction';
 import { getAutoLogInData } from '@common/utilities/login';
 import middleware from './account';

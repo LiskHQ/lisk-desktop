@@ -1,4 +1,4 @@
-import { HTTP_CODES, tokenMap, regex } from '@constants';
+import { HTTP_CODES, tokenMap, regex } from '@common/configuration';
 import http from '../http';
 import ws from '../ws';
 import { isEmpty } from '../../helpers';

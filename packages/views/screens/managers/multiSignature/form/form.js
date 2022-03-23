@@ -6,7 +6,7 @@ import BoxContent from '@basics/box/content';
 import BoxFooter from '@basics/box/footer';
 import { PrimaryButton, TertiaryButton } from '@basics/buttons';
 import { Input } from '@basics/inputs';
-import { tokenMap, MODULE_ASSETS_NAME_ID_MAP, regex } from '@constants';
+import { tokenMap, MODULE_ASSETS_NAME_ID_MAP, regex } from '@common/configuration';
 import { extractAddressFromPublicKey } from '@common/utilities/account';
 import ProgressBar from '../progressBar';
 import MemberField from './memberField';

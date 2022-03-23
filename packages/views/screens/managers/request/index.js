@@ -2,7 +2,7 @@ import React from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import { withTranslation } from 'react-i18next';
-import { tokenKeys } from '@constants';
+import { tokenKeys } from '@common/configuration';
 import RequestBtc from './requestBtc';
 import RequestLsk from './requestLsk';
 

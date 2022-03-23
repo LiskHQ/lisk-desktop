@@ -1,5 +1,5 @@
 /* eslint-disable max-lines */
-import { MODULE_ASSETS_NAME_ID_MAP } from '@constants';
+import { MODULE_ASSETS_NAME_ID_MAP } from '@common/configuration';
 import { getTxAmount } from '@common/utilities/transaction';
 import {
   getTransaction,

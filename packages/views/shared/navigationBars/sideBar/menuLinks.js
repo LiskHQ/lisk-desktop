@@ -1,4 +1,4 @@
-import { routes } from '@constants';
+import { routes } from '@common/configuration';
 
 const menuLinks = t => ([
   [

@@ -1,4 +1,4 @@
-import { regex } from '@constants';
+import { regex } from '@common/configuration';
 import { getAccount } from '../account/btc';
 import { getTransaction } from '../transaction/btc';
 

@@ -1,4 +1,4 @@
-import { txStatusTypes } from '@constants';
+import { txStatusTypes } from '@common/configuration';
 import { getDeviceType } from '@common/utilities/hwManager';
 
 const illustrations = {

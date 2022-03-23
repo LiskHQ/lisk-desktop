@@ -1,5 +1,5 @@
 import React from 'react';
-import { MODULE_ASSETS_NAME_ID_MAP } from '@constants';
+import { MODULE_ASSETS_NAME_ID_MAP } from '@common/configuration';
 import TransactionInfo from '@shared/transactionInfo';
 import Box from '@basics/box';
 import BoxContent from '@basics/box/content';

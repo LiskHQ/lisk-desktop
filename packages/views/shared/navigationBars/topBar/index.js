@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 import { withRouter } from 'react-router';
 import { withTranslation } from 'react-i18next';
 import { containsTransactionType } from '@common/utilities/transaction';
-import { MODULE_ASSETS_NAME_ID_MAP } from '@constants';
+import { MODULE_ASSETS_NAME_ID_MAP } from '@common/configuration';
 import { accountLoggedOut, timerReset } from '@common/store/actions';
 import TopBar from './topBar';
 

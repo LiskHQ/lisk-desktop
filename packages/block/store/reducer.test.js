@@ -1,4 +1,4 @@
-import { actionTypes } from '@constants';
+import { actionTypes } from '@common/configuration';
 import blocksReducer from './blocks';
 import accounts from '../../../test/constants/accounts';
 

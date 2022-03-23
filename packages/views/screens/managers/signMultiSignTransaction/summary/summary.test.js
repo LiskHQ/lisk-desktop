@@ -1,6 +1,6 @@
 import React from 'react';
 import { mount } from 'enzyme';
-import { MODULE_ASSETS_NAME_ID_MAP } from '@constants';
+import { MODULE_ASSETS_NAME_ID_MAP } from '@common/configuration';
 import { removeSearchParamsFromUrl } from '@common/utilities/searchParams';
 import Summary from './summary';
 import accounts from '../../../../../test/constants/accounts';

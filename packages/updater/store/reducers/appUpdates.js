@@ -1,4 +1,4 @@
-import { actionTypes } from '@constants';
+import { actionTypes } from '@common/configuration';
 
 const appUpdates = (state = {}, action) => {
   switch (action.type) {

@@ -9,7 +9,7 @@ const mockHistory = {
   push: jest.fn(),
 };
 
-jest.mock('@constants', () => ({
+jest.mock('@common/configuration', () => ({
   modals: {
     testDialog: {
       forbiddenTokens: [],
