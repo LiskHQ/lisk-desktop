@@ -8,7 +8,7 @@ import { parseSearchParams, stringifySearchParams } from '@screens/router/search
 import { getNetworksList } from '@network/utilities/getNetwork';
 import Piwik from '@common/utilities/piwik';
 import { PrimaryButton } from '@basics/buttons';
-import PassphraseInput from '@basics/passphraseInput';
+import PassphraseInput from '@shared/passphraseInput';
 import Icon from '@basics/icon/index';
 import DiscreetModeToggle from '@shared/discreetModeToggle';
 import NetworkSelector from '../../../../settings/setters/networkSelector';

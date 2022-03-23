@@ -6,7 +6,7 @@ import Dashboard from '@screens/dashboard';
 import DelegatesMonitor from '@screens/monitor/delegates';
 import DelegatesPerformanceModal from '@screens/wallet/delegatePerformanceModal';
 import HwWalletLogin from '@screens/hwWalletLogin';
-import Login from '@screens/login';
+import Login from '@screens/managers/login';
 import MonitorAccounts from '@screens/monitor/accounts';
 import MonitorNetwork from '@screens/monitor/network';
 import MonitorTransactions from '@screens/monitor/transactions';

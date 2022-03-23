@@ -7,7 +7,7 @@ import {
   getDeviceList,
   getPublicKey,
 } from '@libs/hwManager/communication';
-import history from '../../history';
+import history from '@common/utilities/history';
 
 async function autoLogInIfNecessary(store) {
   // not tested as it is just a development helper

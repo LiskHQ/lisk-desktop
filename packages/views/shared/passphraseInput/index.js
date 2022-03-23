@@ -2,9 +2,9 @@ import React from 'react';
 import { withTranslation } from 'react-i18next';
 import { keyCodes } from '@common/configuration';
 import { isValidPassphrase, getPassphraseValidationErrors } from '@common/utilities/passphrase';
-import Icon from '../icon';
-import Input from '../inputs/input';
-import Feedback from '../feedback/feedback';
+import Icon from '@basics/icon';
+import Input from '@basics/inputs/input';
+import Feedback from '@basics/feedback/feedback';
 import styles from './passphraseInput.css';
 
 class passphraseInput extends React.Component {

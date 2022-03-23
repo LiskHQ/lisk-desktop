@@ -5,7 +5,7 @@ import { getAccountsFromDevice, getNewAccountByIndex } from '@hardwareWallet/uti
 import routes from '@screens/router/routes';
 import { tokenMap } from '@token/configuration/tokens';
 import { TertiaryButton } from '@basics/buttons';
-import CheckBox from '@basics/checkBox';
+import CheckBox from '@basics/inputs/checkBox';
 import AccountCard from './accountCard';
 import LoadingIcon from '../loadingIcon';
 import styles from './selectAccount.css';

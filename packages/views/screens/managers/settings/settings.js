@@ -6,7 +6,7 @@ import settingsConst from '@settings/configuration/settings';
 import Box from '@basics/box';
 import BoxHeader from '@basics/box/header';
 import BoxContent from '@basics/box/content';
-import CheckBox from '@basics/checkBox';
+import CheckBox from '@basics/inputs/checkBox';
 import Select from '@basics/select';
 import Dialog from '@basics/dialog/dialog';
 import styles from './settings.css';
