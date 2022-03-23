@@ -1,6 +1,6 @@
 import React from 'react';
 
-import { MODULE_ASSETS_NAME_ID_MAP } from '@common/configuration';
+import { MODULE_ASSETS_NAME_ID_MAP } from '@transaction/configuration/moduleAssets';
 import { getModuleAssetTitle } from '@transaction/utilities/moduleAssets';
 import { truncateAddress } from '@common/utilities/account';
 import styles from './transactionAddress.css';

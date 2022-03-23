@@ -5,10 +5,12 @@ import {
   tokenMap,
   MIN_FEE_PER_BYTE,
   DEFAULT_NUMBER_OF_SIGNATURES,
-  MODULE_ASSETS_MAP,
-  MODULE_ASSETS_NAME_ID_MAP,
-  BASE_FEES,
 } from '@common/configuration';
+import {
+  MODULE_ASSETS_MAP,
+  BASE_FEES,
+  MODULE_ASSETS_NAME_ID_MAP,
+} from '@transaction/configuration/moduleAssets';
 import { joinModuleAndAssetIds } from '@transaction/utilities/moduleAssets';
 import {
   createTransactionObject, sign,

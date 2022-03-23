@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { withTranslation } from 'react-i18next';
-import { tokenMap } from '@common/configuration';
+import { tokenMap } from '@token/configuration';
 import { truncateAddress } from '@common/utilities/account';
 import { TertiaryButton } from '@basics/buttons';
 import AccountVisual from '@basics/accountVisual';

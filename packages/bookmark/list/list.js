@@ -3,7 +3,8 @@ import { connect } from 'react-redux';
 import { withTranslation } from 'react-i18next';
 import { Link } from 'react-router-dom';
 
-import { tokenMap, routes } from '@common/configuration';
+import routes from '@screens/router/routes';
+import { tokenMap } from '@token/configuration';
 import Tooltip from '@basics/tooltip/tooltip';
 import { truncateAddress } from '@common/utilities/account';
 import { Input } from '@basics/inputs';

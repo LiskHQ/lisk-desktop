@@ -6,7 +6,7 @@ import {
   getActiveTokenAccount,
   getUnlockableUnlockObjects,
 } from '@common/utilities/account';
-import { MODULE_ASSETS_NAME_ID_MAP } from '@common/configuration';
+import { MODULE_ASSETS_NAME_ID_MAP } from '@transaction/configuration/moduleAssets';
 import TransactionPriority, { useTransactionFeeCalculation } from '@shared/transactionPriority';
 import useTransactionPriority from '@shared/transactionPriority/useTransactionPriority';
 import { selectCurrentBlockHeight } from '@store/selectors';

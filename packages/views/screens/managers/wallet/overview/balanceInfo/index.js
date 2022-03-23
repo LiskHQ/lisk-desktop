@@ -1,6 +1,6 @@
 import React from 'react';
 import { withTranslation } from 'react-i18next';
-import { tokenMap } from '@common/configuration';
+import { tokenMap } from '@token/configuration';
 import { fromRawLsk } from '@token/utilities/lsk';
 import Box from '@basics/box';
 import BoxContent from '@basics/box/content';

@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useSelector } from 'react-redux';
 import { withTranslation } from 'react-i18next';
-import { tokenMap } from '@common/configuration';
+import { tokenMap } from '@token/configuration';
 import {
   getChartDateFormat,
   graphOptions,

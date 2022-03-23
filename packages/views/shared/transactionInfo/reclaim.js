@@ -1,7 +1,7 @@
 import React from 'react';
 import AccountMigration from '@shared/accountMigration';
 import LiskAmount from '@shared/liskAmount';
-import { tokenMap } from '@common/configuration';
+import { tokenMap } from '@token/configuration';
 
 const Reclaim = ({ account, t }) => (
   <>

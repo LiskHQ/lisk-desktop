@@ -1,6 +1,7 @@
 import React from 'react';
 import { mount } from 'enzyme';
-import { tokenMap, MODULE_ASSETS_NAME_ID_MAP } from '@common/configuration';
+import { tokenMap } from '@token/configuration';
+import { MODULE_ASSETS_NAME_ID_MAP } from '@transaction/configuration/moduleAssets';
 import TransactionPriority from '.';
 
 const baseFees = {

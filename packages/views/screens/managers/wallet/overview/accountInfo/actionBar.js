@@ -1,6 +1,6 @@
 import React from 'react';
 import QRCode from 'qrcode.react';
-import { tokenMap } from '@common/configuration';
+import { tokenMap } from '@token/configuration';
 import { getAddress } from '@common/utilities/hwManager';
 import { isEmpty } from '@common/utilities/helpers';
 import Icon from '@basics/icon';

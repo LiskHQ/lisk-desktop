@@ -1,6 +1,6 @@
 import PropTypes from 'prop-types';
 import React from 'react';
-import { MODULE_ASSETS_NAME_ID_MAP } from '@common/configuration';
+import { MODULE_ASSETS_NAME_ID_MAP } from '@transaction/configuration/moduleAssets';
 import LiskAmount from '@shared/liskAmount';
 import DiscreetMode from '../discreetMode';
 import styles from './transactionAmount.css';

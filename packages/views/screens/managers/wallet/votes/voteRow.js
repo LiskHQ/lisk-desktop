@@ -1,6 +1,6 @@
 import React from 'react';
 import grid from 'flexboxgrid/dist/flexboxgrid.css';
-import { tokenMap } from '@common/configuration';
+import { tokenMap } from '@token/configuration';
 import { truncateAddress } from '@common/utilities/account';
 import AccountVisual from '@basics/accountVisual';
 import tableStyles from '@basics/table/table.css';

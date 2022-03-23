@@ -1,7 +1,7 @@
 import to from 'await-to-js';
-import {
-  actionTypes, tokenMap, MODULE_ASSETS_NAME_ID_MAP,
-} from '@common/configuration';
+import { actionTypes } from '@common/configuration';
+import { tokenMap } from '@token/configuration';
+import { MODULE_ASSETS_NAME_ID_MAP } from '@transaction/configuration/moduleAssets';
 import { create } from '@transaction/api';
 import { getAccount } from '@wallet/api';
 import { getVotes } from '@dpos/delegate/api';

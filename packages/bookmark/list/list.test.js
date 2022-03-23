@@ -1,6 +1,6 @@
 import React from 'react';
 import { mount } from 'enzyme';
-import { tokenMap } from '@common/configuration';
+import { tokenMap } from '@token/configuration';
 import EmptyState from '@basics/box/emptyState';
 import { BookmarksList } from './list';
 import bookmarks from '../../../../../test/constants/bookmarks';

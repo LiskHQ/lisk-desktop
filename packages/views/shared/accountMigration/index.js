@@ -4,7 +4,7 @@ import CopyToClipboard from '@basics/copyToClipboard';
 import Icon from '@basics/icon';
 import LiskAmount from '@shared/liskAmount';
 import AccountVisualWithAddress from '@shared/accountVisualWithAddress';
-import { tokenMap } from '@common/configuration';
+import { tokenMap } from '@token/configuration';
 import styles from './index.css';
 
 const token = tokenMap.LSK.key;
