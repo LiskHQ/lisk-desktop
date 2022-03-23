@@ -28,7 +28,7 @@ export const MaxAmountWarning = ({ resetInput, message, ignoreClicks }) => {
 const AmountField = ({
   amount, maxAmount, onChange, className,
   label, labelClassname, useMaxLabel, placeholder, name,
-  displayConverter, useMaxWarning,
+  displayConverter, useMaxWarning, maxToolTipPosition,
 }) => {
   const { t } = useTranslation();
   const [showEntireBalanceWarning, setShowEntireBalanceWarning] = useState(false);
@@ -63,34 +63,36 @@ const AmountField = ({
   };
 
   useEffect(() => {
-    if (isMaximum) {
+    if (isMaximum && maxAmount) {
       const value = formatAmountBasedOnLocale({
         value: fromRawLsk(maxAmount.value),
         format: '0.[00000000]',
       });
       onChange({ value }, maxAmount);
     }
-  }, [isMaximum, maxAmount.value]);
+  }, [isMaximum, maxAmount?.value]);
 
   return (
-    <label className={`${styles.fieldGroup} ${amount.error ? styles.error : ''} ${className}`}>
+    <span className={`${styles.fieldGroup} ${amount.error ? styles.error : ''} ${className}`}>
       <div className={labelClassname ? `${styles.customAmountFieldHeader} ${styles.amountFieldHeader}` : `${styles.amountFieldHeader}`} onClick={ignoreClicks}>
         { label && <span className={labelClassname ? `${styles.customFieldLabel} ${styles.fieldLabel} label` : `${styles.fieldLabel}`}>{label}</span> }
         {
           useMaxLabel && (
-            <TertiaryButton
-              onClick={setEntireBalance}
-              className="use-entire-balance-button"
-              size="xs"
-            >
-              {useMaxLabel}
+            <div className={styles.maxToggleWrapper}>
+              <TertiaryButton
+                onClick={setEntireBalance}
+                className="use-entire-balance-button"
+                size="xs"
+              >
+                {useMaxLabel}
+              </TertiaryButton>
               <Tooltip
-                position="bottom"
+                position={maxToolTipPosition || 'bottom'}
                 tooltipClassName={`${styles.tooltipContainer}`}
               >
                 <span>{t('Based on your available balance and rounded down to a multiple of 10 LSK, your total remaining balance is {{maxAmount}} LSK', { maxAmount: fromRawLsk(maxAmount.value) })}</span>
               </Tooltip>
-            </TertiaryButton>
+            </div>
           )
         }
       </div>
@@ -122,7 +124,7 @@ const AmountField = ({
           ignoreClicks={ignoreClicks}
         />
       )}
-    </label>
+    </span>
   );
 };
 

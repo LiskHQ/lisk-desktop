@@ -4,6 +4,6 @@
   user-select: none;
 }
 
-.preformat::after {
-  content: "\00a0 \00a0 ";
+.preformat {
+  height: 1px;
 }
