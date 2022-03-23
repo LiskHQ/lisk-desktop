@@ -24,6 +24,7 @@ const config = {
       '@shared(.*)$': resolve(__dirname, './packages/views/shared'),
       '@basics(.*)$': resolve(__dirname, './packages/views/basics'),
       '@screens(.*)$': resolve(__dirname, './packages/views/screens'),
+      '@libs(.*)$': resolve(__dirname, './libs'),
     },
     fallback: {
       net: false,

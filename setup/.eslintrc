@@ -47,7 +47,8 @@
           ["@wallet/*", "../packages/wallet/"],
           ["@screens/*", "../packages/views/screens"],
           ["@basics/*", "../packages/views/basics"],
-          ["@shared/*", "../packages/views/shared"]
+          ["@shared/*", "../packages/views/shared"],
+          ["@libs/*", "../libs"]
         ],
         "extensions": [".js"]
       }

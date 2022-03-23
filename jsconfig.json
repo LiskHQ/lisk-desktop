@@ -20,7 +20,8 @@
       "@wallet/*": ["./packages/wallet/*"],
       "@shared/*": ["./packages/views/shared/*"],
       "@basics/*": ["./packages/views/basics/*"],
-      "@screens/*": ["./packages/views/screens/*"]
+      "@screens/*": ["./packages/views/screens/*"],
+      "@libs/*": ["./libs/*"]
     }
   }
 }
