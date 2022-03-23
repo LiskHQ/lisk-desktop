@@ -2,7 +2,8 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 
 import { truncateAddress } from '@common/utilities/account';
-import { routes, tokenMap } from '@common/configuration';
+import routes from '@screens/router/routes';
+import { tokenMap } from '@token/configuration';
 import LiskAmount from '@shared/liskAmount';
 
 import styles from './styles.css';

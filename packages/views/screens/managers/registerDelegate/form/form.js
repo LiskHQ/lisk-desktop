@@ -1,8 +1,9 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { isEmpty } from '@common/utilities/helpers';
-import {
-  tokenMap, MODULE_ASSETS_NAME_ID_MAP, regex, MIN_ACCOUNT_BALANCE,
-} from '@common/configuration';
+import { regex } from '@common/configuration';
+import { tokenMap } from '@token/configuration';
+import { MODULE_ASSETS_NAME_ID_MAP } from '@transaction/configuration/moduleAssets';
+import { MIN_ACCOUNT_BALANCE } from '@transaction/configuration/transactions';
 import { getDelegate } from '@dpos/delegate/api';
 import TransactionPriority, { useTransactionFeeCalculation, useTransactionPriority } from '@shared/transactionPriority';
 import Box from '@basics/box';

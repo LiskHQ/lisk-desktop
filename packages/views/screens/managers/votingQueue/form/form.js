@@ -1,5 +1,7 @@
 import React, { useMemo, useState } from 'react';
-import { tokenMap, MODULE_ASSETS_NAME_ID_MAP, MIN_ACCOUNT_BALANCE } from '@common/configuration';
+import { tokenMap } from '@token/configuration';
+import { MODULE_ASSETS_NAME_ID_MAP } from '@transaction/configuration/moduleAssets';
+import { MIN_ACCOUNT_BALANCE } from '@transaction/configuration/transactions';
 import { toRawLsk } from '@token/utilities/lsk';
 import TransactionPriority, {
   useTransactionFeeCalculation,

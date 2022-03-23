@@ -3,9 +3,10 @@ import {
   votesRetrieved, emptyTransactionsData, networkSelected, networkStatusUpdated,
 } from '@common/store/actions';
 
-import {
-  tokenMap, actionTypes, MODULE_ASSETS_NAME_ID_MAP, routes,
-} from '@common/configuration';
+import { actionTypes } from '@common/configuration';
+import { MODULE_ASSETS_NAME_ID_MAP } from '@transaction/configuration/moduleAssets';
+import routes from '@screens/router/routes';
+import { tokenMap } from '@token/configuration';
 import * as transactionApi from '@transaction/api';
 import { getAutoLogInData } from '@common/utilities/login';
 import middleware from './account';

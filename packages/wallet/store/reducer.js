@@ -1,4 +1,5 @@
-import { actionTypes, account as accountConstants } from '@common/configuration';
+import { actionTypes } from '@common/configuration';
+import accountConstants from '@wallet/configuration/account';
 
 /**
  *

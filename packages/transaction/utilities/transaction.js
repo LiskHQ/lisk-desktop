@@ -2,10 +2,8 @@
 import { transactions, cryptography } from '@liskhq/lisk-client';
 import { to } from 'await-to-js';
 import { signTransactionByHW } from '@common/utilities/hwManager';
-import {
-  DEFAULT_NUMBER_OF_SIGNATURES,
-  MODULE_ASSETS_NAME_ID_MAP,
-} from '@common/configuration';
+import { MODULE_ASSETS_NAME_ID_MAP } from '@transaction/configuration/moduleAssets';
+import { DEFAULT_NUMBER_OF_SIGNATURES } from '@transaction/configuration/transactions';
 import { signatureCollectionStatus } from '@transaction/configuration/txStatus';
 import {
   extractAddressFromPublicKey,

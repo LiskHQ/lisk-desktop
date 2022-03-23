@@ -2,7 +2,9 @@ import * as bitcoin from 'bitcoinjs-lib';
 import { cryptography, transactions } from '@liskhq/lisk-client';
 import numeral from 'numeral';
 
-import { tokenMap, MIN_ACCOUNT_BALANCE, regex as reg } from '@common/configuration';
+import { regex as reg } from '@common/configuration';
+import { tokenMap } from '@token/configuration';
+import { MIN_ACCOUNT_BALANCE } from '@transaction/configuration/transactions';
 import { toRawLsk } from '@token/utilities/lsk';
 import i18n from '@setup/i18n/i18n';
 

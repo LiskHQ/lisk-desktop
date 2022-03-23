@@ -4,7 +4,8 @@ import { useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
 
 import { selectAccount, selectCurrentBlockHeight } from '@store/selectors';
-import { routes, tokenMap } from '@common/configuration';
+import routes from '@screens/router/routes';
+import { tokenMap } from '@token/configuration';
 import { SecondaryButton } from '@basics/buttons';
 import Box from '@basics/box';
 import BoxHeader from '@basics/box/header';
