@@ -13,15 +13,12 @@
 
 const cucumber = require('cypress-cucumber-preprocessor').default;
 
-module.exports = (on, config) => {
+module.exports = (on) => {
   on('file:preprocessor', cucumber());
-  require('cypress-grep/src/plugin')(config);
 
   on('task', {
     failed: require('cypress-failed-log/src/failed')(),
   });
 
   require('cypress-terminal-report/src/installLogsPrinter')(on, { includeSuccessfulHookLogs: true });
-
-  return config;
 };
