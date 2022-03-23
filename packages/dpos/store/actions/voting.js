@@ -6,7 +6,7 @@ import { create } from '@common/utilities/api/transaction';
 import { getAccount } from '@common/utilities/api/account';
 import { getVotes } from '@common/utilities/api/delegate';
 import { isEmpty } from '@common/utilities/helpers';
-import { timerReset } from './account';
+import { timerReset } from '@wallet/store/action';
 
 export const votesReset = () => ({
   type: actionTypes.votesReset,
