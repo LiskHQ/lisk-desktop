@@ -1,4 +1,4 @@
-export * from '@account/store/action';
+export * from '@wallet/store/action';
 export * from '@blocks/store/action';
 export * from '@bookmarks/store/action';
 export * from '@network/store/action';

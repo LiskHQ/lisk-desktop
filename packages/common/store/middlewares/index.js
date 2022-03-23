@@ -1,7 +1,7 @@
 import thunk from 'redux-thunk';
 import spy from 'redux-monitor-spy';
 
-import account from '@account/store/middleware';
+import account from '@wallet/store/middleware';
 import block from '@block/store/middleware';
 import settings from '@settings/store/middleware';
 import bookmarks from '@bookmarks/store/middleware';
