@@ -3,7 +3,7 @@ import { useDispatch } from 'react-redux';
 
 import { tokenMap } from '@common/configuration';
 import { voteEdited } from '@common/store/actions';
-import { fromRawLsk, toRawLsk } from '@common/utilities/lsk';
+import { fromRawLsk, toRawLsk } from '@token/utilities/lsk';
 import { truncateAddress } from '@common/utilities/account';
 import AccountVisual from '@basics/accountVisual';
 import Box from '@basics/box';

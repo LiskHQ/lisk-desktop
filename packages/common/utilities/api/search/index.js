@@ -1,4 +1,4 @@
-import * as lsk from './lsk';
+import * as lsk from '@token/utilities/lsk';
 import * as btc from './btc';
 import functionMapper from '../functionMapper';
 

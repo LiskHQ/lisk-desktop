@@ -8,7 +8,7 @@ import {
   getRegisteredDelegates,
   getTransactionFee,
   getSchemas,
-} from './lsk';
+} from '@token/utilities/lsk';
 import http from '../http';
 import * as delegates from '../delegate';
 import accounts from '../../../../test/constants/accounts';

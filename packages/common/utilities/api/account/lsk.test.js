@@ -1,7 +1,7 @@
 import { HTTP_CODES } from '@common/configuration';
 import http from '../http';
 import ws from '../ws';
-import { getAccount, getAccounts } from './lsk';
+import { getAccount, getAccounts } from '@token/utilities/lsk';
 import accounts from '../../../../test/constants/accounts';
 
 jest.mock('../http', () => jest.fn().mockReturnValue([]));

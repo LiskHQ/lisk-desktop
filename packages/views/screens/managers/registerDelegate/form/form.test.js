@@ -3,7 +3,7 @@ import { mount } from 'enzyme';
 import { networks } from '@common/configuration';
 import * as delegatesApi from '@common/utilities/api/delegate';
 import { getTransactionBaseFees, getTransactionFee, create } from '@common/utilities/api/transaction';
-import { fromRawLsk } from '@common/utilities/lsk';
+import { fromRawLsk } from '@token/utilities/lsk';
 import * as hwManagerAPI from '@common/utilities/hwManager';
 import accounts from '../../../../../test/constants/accounts';
 import SelectNameAndFee from './form';

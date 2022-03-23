@@ -4,7 +4,7 @@ import {
   MODULE_ASSETS_NAME_ID_MAP, tokenMap, routes,
   timeOutId, timeOutWarningId,
 } from '@common/configuration';
-import { fromRawLsk, delay } from '@common/utilities/lsk';
+import { fromRawLsk, delay } from '@token/utilities/lsk';
 import { getActiveTokenAccount } from '@common/utilities/account';
 import {
   settingsUpdated, networkSelected, networkStatusUpdated, accountDataUpdated,

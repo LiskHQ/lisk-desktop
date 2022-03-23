@@ -3,7 +3,7 @@ import { useSelector } from 'react-redux';
 import { useTranslation } from 'react-i18next';
 
 import { validateAmountFormat } from '@common/utilities/validators';
-import { fromRawLsk } from '@common/utilities/lsk';
+import { fromRawLsk } from '@token/utilities/lsk';
 import { selectSearchParamValue } from '@common/utilities/searchParams';
 import { selectAccountBalance, selectLSKAddress } from '@store/selectors';
 import { tokenMap, regex } from '@common/configuration';

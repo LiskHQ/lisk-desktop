@@ -4,7 +4,7 @@ import { MIN_ACCOUNT_BALANCE } from '@common/configuration';
 import { mountWithRouter } from '@common/utilities/testHelpers';
 import { getTransactionBaseFees, getTransactionFee } from '@common/utilities/api/transaction';
 import useTransactionFeeCalculation from '@shared/transactionPriority/useTransactionFeeCalculation';
-import { fromRawLsk } from '@common/utilities/lsk';
+import { fromRawLsk } from '@token/utilities/lsk';
 import accounts from '../../../../../test/constants/accounts';
 import flushPromises from '../../../../../test/unit-test-utils/flushPromises';
 import Form from './form';

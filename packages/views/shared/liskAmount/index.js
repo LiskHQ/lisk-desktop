@@ -1,5 +1,5 @@
 import React from 'react';
-import { fromRawLsk } from '@common/utilities/lsk';
+import { fromRawLsk } from '@token/utilities/lsk';
 import FormattedNumber from '../formattedNumber';
 
 const trimReg = /([0-9,]+\.(([0]{0,2})[1-9]{1,2})?)|-?(0\.([0]+)?[1-9]{1,2})/g;

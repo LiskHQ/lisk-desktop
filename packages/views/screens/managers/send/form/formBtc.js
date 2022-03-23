@@ -1,6 +1,6 @@
 import React from 'react';
 import { MODULE_ASSETS_NAME_ID_MAP } from '@common/configuration';
-import { toRawLsk } from '@common/utilities/lsk';
+import { toRawLsk } from '@token/utilities/lsk';
 import TransactionPriority, { useTransactionPriority, useTransactionFeeCalculation } from '@shared/transactionPriority';
 import FormBase from './formBase';
 import useAmountField from './useAmountField';

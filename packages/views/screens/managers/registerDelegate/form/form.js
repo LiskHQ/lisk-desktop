@@ -12,7 +12,7 @@ import BoxFooter from '@basics/box/footer';
 import { Input } from '@basics/inputs';
 import { PrimaryButton } from '@basics/buttons';
 import Tooltip from '@basics/tooltip/tooltip';
-import { toRawLsk, fromRawLsk } from '@common/utilities/lsk';
+import { toRawLsk, fromRawLsk } from '@token/utilities/lsk';
 import styles from './form.css';
 
 const token = tokenMap.LSK.key;

@@ -4,7 +4,7 @@ import { mount } from 'enzyme';
 import { tokenMap } from '@common/configuration';
 import { getTransactionBaseFees, getTransactionFee } from '@common/utilities/api/transaction';
 import useTransactionFeeCalculation from '@shared/transactionPriority/useTransactionFeeCalculation';
-import { fromRawLsk } from '@common/utilities/lsk';
+import { fromRawLsk } from '@token/utilities/lsk';
 import Form from './form';
 import accounts from '../../../../../test/constants/accounts';
 import flushPromises from '../../../../../test/unit-test-utils/flushPromises';

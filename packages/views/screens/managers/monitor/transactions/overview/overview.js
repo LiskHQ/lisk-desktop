@@ -2,7 +2,7 @@
 // istanbul ignore file
 import React, { useState } from 'react';
 import moment from 'moment';
-import { fromRawLsk } from '@common/utilities/lsk';
+import { fromRawLsk } from '@token/utilities/lsk';
 import { kFormatter } from '@common/utilities/helpers';
 import {
   chartStyles, MODULE_ASSETS_NAME_ID_MAP,

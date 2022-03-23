@@ -16,7 +16,7 @@ import {
 import { validateAddress } from '../../validators';
 import http from '../http';
 import { getDelegates } from '../delegate';
-import { fromRawLsk } from '../../lsk';
+import { fromRawLsk } from '@token/utilities/lsk';
 
 const httpPrefix = '/api/v2';
 

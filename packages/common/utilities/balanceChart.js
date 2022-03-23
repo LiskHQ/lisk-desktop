@@ -1,6 +1,6 @@
 import moment from 'moment';
 import { chartStyles } from '@common/configuration';
-import { fromRawLsk } from './lsk';
+import { fromRawLsk } from '@token/utilities/lsk';
 import { getUnixTimestampFromValue } from './datetime';
 import i18n from '../i18n';
 

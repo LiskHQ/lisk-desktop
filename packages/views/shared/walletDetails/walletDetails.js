@@ -9,7 +9,7 @@ import BoxContent from '@basics/box/content';
 import BoxRow from '@basics/box/row';
 import Icon from '@basics/icon';
 import Converter from '@shared/converter';
-import { fromRawLsk } from '@common/utilities/lsk';
+import { fromRawLsk } from '@token/utilities/lsk';
 import LiskAmount from '../liskAmount';
 import DiscreetMode from '../discreetMode';
 import LockedBalanceLink from '../../screens/wallet/overview/balanceInfo/unlocking';

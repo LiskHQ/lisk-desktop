@@ -3,7 +3,7 @@ import { useTranslation } from 'react-i18next';
 import numeral from 'numeral';
 
 import { tokenMap, MIN_ACCOUNT_BALANCE, regex } from '@common/configuration';
-import { toRawLsk } from '@common/utilities/lsk';
+import { toRawLsk } from '@token/utilities/lsk';
 import { validateAmountFormat } from '@common/utilities/validators';
 
 let loaderTimeout = null;

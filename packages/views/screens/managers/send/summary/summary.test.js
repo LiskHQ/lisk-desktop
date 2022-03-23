@@ -1,7 +1,7 @@
 import React from 'react';
 import { mount } from 'enzyme';
 import { tokenMap } from '@common/configuration';
-import { toRawLsk } from '@common/utilities/lsk';
+import { toRawLsk } from '@token/utilities/lsk';
 import { formatAmountBasedOnLocale } from '@common/utilities/formattedNumber';
 import Summary from './summary';
 import accounts from '../../../../../test/constants/accounts';

@@ -14,7 +14,7 @@ import {
   getKeys,
 } from '@common/utilities/account';
 import { transformStringDateToUnixTimestamp } from '@common/utilities/datetime';
-import { toRawLsk } from '@common/utilities/lsk';
+import { toRawLsk } from '@token/utilities/lsk';
 import { isEmpty } from '@common/utilities/helpers';
 import { splitModuleAndAssetIds, joinModuleAndAssetIds } from '@common/utilities/moduleAssets';
 

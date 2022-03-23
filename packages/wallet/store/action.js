@@ -7,7 +7,7 @@ import {
   actionTypes,
   tokenMap,
 } from '@common/configuration';
-import { toRawLsk } from '@common/utilities/lsk';
+import { toRawLsk } from '@token/utilities/lsk';
 import { isEmpty } from '@common/utilities/helpers';
 import { create } from '@common/utilities/api/transaction';
 import { selectCurrentBlockHeight } from '@store/selectors';
