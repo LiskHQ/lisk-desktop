@@ -2,7 +2,7 @@ import React, { useContext, useEffect } from 'react';
 
 import VoteItem from '@shared/voteItem';
 import withData from '@common/utilities/withData';
-import { getDelegates } from '@common/utilities/api/delegate';
+import { getDelegates } from '@dpos/delegate/api';
 import { Context } from '../transactionDetails';
 import styles from './styles.css';
 

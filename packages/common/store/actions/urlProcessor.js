@@ -1,5 +1,5 @@
 import { parseSearchParams } from '@common/utilities/searchParams';
-import { getAccounts } from '@common/utilities/api/account';
+import { getAccounts } from '@wallet/api';
 import { tokenMap, regex } from '@common/configuration';
 import { validateAddress } from '@common/utilities/validators';
 import { voteEdited } from './voting';

@@ -3,8 +3,8 @@ import { compose } from 'redux';
 import { withTranslation } from 'react-i18next';
 
 import withData from '@common/utilities/withData';
-import { getAccounts } from '@common/utilities/api/account';
-import { getNetworkStatus } from '@common/utilities/api/network';
+import { getAccounts } from '@wallet/api';
+import { getNetworkStatus } from '@network/api';
 import Box from '@basics/box';
 import BoxHeader from '@basics/box/header';
 import BoxContent from '@basics/box/content';

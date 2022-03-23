@@ -6,14 +6,14 @@ import {
 import {
   tokenMap, actionTypes, MODULE_ASSETS_NAME_ID_MAP, routes,
 } from '@common/configuration';
-import * as transactionApi from '@common/utilities/api/transaction';
+import * as transactionApi from '@transaction/api';
 import { getAutoLogInData } from '@common/utilities/login';
 import middleware from './account';
 import history from '../../history';
 
 jest.mock('../../history');
 
-jest.mock('@common/utilities/api/transaction', () => ({
+jest.mock('@transaction/api', () => ({
   getTransactions: jest.fn(),
   emptyTransactionsData: jest.fn(),
 }));
@@ -33,7 +33,7 @@ jest.mock('@common/utilities/login', () => ({
   shouldAutoLogIn: jest.fn(),
 }));
 
-jest.mock('@common/utilities/api/transaction');
+jest.mock('@transaction/api');
 
 jest.mock('@common/utilities/lsk');
 

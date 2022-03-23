@@ -9,9 +9,9 @@ import {
 } from '@common/configuration';
 import { toRawLsk } from '@token/utilities/lsk';
 import { isEmpty } from '@common/utilities/helpers';
-import { create } from '@common/utilities/api/transaction';
+import { create } from '@transaction/api';
 import { selectCurrentBlockHeight } from '@store/selectors';
-import { getAccount, extractAddress as extractBitcoinAddress } from '@common/utilities/api/account';
+import { getAccount, extractAddress as extractBitcoinAddress } from '@wallet/api';
 import { getConnectionErrorMessage } from '@common/utilities/getNetwork';
 import { extractKeyPair, getUnlockableUnlockObjects } from '@common/utilities/account';
 import { defaultDerivationPath } from '@common/utilities/explicitBipKeyDerivation';

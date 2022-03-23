@@ -1,4 +1,4 @@
-import { blockSubscribe, blockUnsubscribe } from '@common/utilities/api/block';
+import { blockSubscribe, blockUnsubscribe } from '@block/api';
 import { tokenMap, actionTypes } from '@common/configuration';
 import {
   olderBlocksRetrieved,

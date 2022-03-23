@@ -3,7 +3,7 @@ import { compose } from 'redux';
 import { withRouter } from 'react-router-dom';
 import { connect } from 'react-redux';
 import moment from 'moment';
-import { getBlock } from '@common/utilities/api/block';
+import { getBlock } from '@block/api';
 import withData from '@common/utilities/withData';
 import { withTranslation } from 'react-i18next';
 import VoteWarning from './voteWarning';

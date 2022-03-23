@@ -1,15 +1,15 @@
 import { actionTypes, networks } from '@common/configuration';
-import { getBlocks } from '@common/utilities/api/block';
-import { getForgers, getDelegates } from '@common/utilities/api/delegate';
+import { getBlocks } from '@block/api';
+import { getForgers, getDelegates } from '@dpos/delegate/api';
 import blocks from '../../../test/constants/blocks';
 import forger from '../../../test/fixtures/forgers';
 import delegate from '../../../test/fixtures/delegates';
 import { olderBlocksRetrieved, forgersRetrieved } from './blocks';
 
-jest.mock('@common/utilities/api/block', () => ({
+jest.mock('@block/api', () => ({
   getBlocks: jest.fn(),
 }));
-jest.mock('@common/utilities/api/delegate', () => ({
+jest.mock('@dpos/delegate/api', () => ({
   getForgers: jest.fn(),
   getDelegates: jest.fn(),
 }));

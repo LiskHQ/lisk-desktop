@@ -4,9 +4,9 @@ import { withRouter } from 'react-router-dom';
 import { withTranslation } from 'react-i18next';
 import { connect } from 'react-redux';
 
-import { getDelegates } from '@common/utilities/api/delegate';
-import { getNetworkStatus } from '@common/utilities/api/network';
-import { getTransactions, getRegisteredDelegates } from '@common/utilities/api/transaction';
+import { getDelegates } from '@dpos/delegate/api';
+import { getNetworkStatus } from '@network/api';
+import { getTransactions, getRegisteredDelegates } from '@transaction/api';
 import withData from '@common/utilities/withData';
 import withFilters from '@common/utilities/withFilters';
 import { MODULE_ASSETS_NAME_ID_MAP, tokenMap, DEFAULT_LIMIT } from '@common/configuration';

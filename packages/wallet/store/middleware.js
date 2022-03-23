@@ -11,7 +11,7 @@ import {
   emptyTransactionsData, transactionsRetrieved, votesRetrieved,
 } from '@common/store/actions';
 import analytics from '@common/utilities/analytics';
-import { getTransactions } from '@common/utilities/api/transaction';
+import { getTransactions } from '@transaction/api';
 import i18n from '@setup/i18n/i18n';
 import history from '@common/utilities/history';
 

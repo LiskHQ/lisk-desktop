@@ -1,6 +1,6 @@
 // eslint-disable-next-line import/no-unresolved
 import i18next from 'i18next';
-import { getAccounts } from './api/account';
+import { getAccounts } from './@wallet/api';
 import {
   checkIfInsideLiskApp,
   getAddress,

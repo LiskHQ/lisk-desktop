@@ -14,7 +14,7 @@ const mockTransaction = {
   optionalKeys: [],
 };
 
-jest.mock('@common/utilities/api/transaction/lsk', () => ({
+jest.mock('@transaction/api/lsk', () => ({
   create: jest.fn(() => Promise.resolve(mockTransaction)),
   computeTransactionId: jest.fn(() => mockTransaction.id),
 }));

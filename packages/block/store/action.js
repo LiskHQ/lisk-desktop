@@ -1,7 +1,7 @@
 import { actionTypes, ROUND_LENGTH } from '@common/configuration';
 import { convertUnixSecondsToLiskEpochSeconds } from '@common/utilities/datetime';
-import { getBlocks } from '@common/utilities/api/block';
-import { getForgers, getDelegates } from '@common/utilities/api/delegate';
+import { getBlocks } from '@block/api';
+import { getForgers, getDelegates } from '@dpos/delegate/api';
 
 /**
  * Retrieves latest blocks from Lisk Service.

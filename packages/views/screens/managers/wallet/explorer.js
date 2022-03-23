@@ -4,7 +4,7 @@ import { compose } from 'redux';
 import { useSelector } from 'react-redux';
 import { withTranslation } from 'react-i18next';
 import withData from '@common/utilities/withData';
-import { getAccount } from '@common/utilities/api/account';
+import { getAccount } from '@wallet/api';
 import { selectSearchParamValue } from '@common/utilities/searchParams';
 import { isEmpty } from '@common/utilities/helpers';
 import { selectActiveToken, selectSettings } from '@store/selectors';
