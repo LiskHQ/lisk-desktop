@@ -1,8 +1,8 @@
 import moment from 'moment';
 import { chartStyles } from '@common/configuration';
 import { fromRawLsk } from '@token/utilities/lsk';
+import i18n from '@setup/i18n/i18n';
 import { getUnixTimestampFromValue } from './datetime';
-import i18n from '../i18n';
 
 const formats = {
   second: i18n.t('MMM DD YYYY hh:mm:ss'),

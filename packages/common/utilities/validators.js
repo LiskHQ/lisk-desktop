@@ -4,7 +4,7 @@ import numeral from 'numeral';
 
 import { tokenMap, MIN_ACCOUNT_BALANCE, regex as reg } from '@common/configuration';
 import { toRawLsk } from '@token/utilities/lsk';
-import i18n from '../i18n';
+import i18n from '@setup/i18n/i18n';
 
 /**
  * Validates the given value to be numeric

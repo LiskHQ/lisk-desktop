@@ -1,6 +1,6 @@
 import numeral from 'numeral';
 import 'numeral/locales';
-import i18n from '../i18n';
+import i18n from '@setup/i18n/i18n';
 
 export const formatAmountBasedOnLocale = ({
   value,
