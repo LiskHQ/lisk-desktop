@@ -1,4 +1,4 @@
-export { default as account } from '@wallet/store/reducer';
+export { default as wallet } from '@wallet/store/reducer';
 export { default as blocks } from '@blocks/store/reducer';
 export { default as bookmarks } from '@bookmarks/store/reducer';
 export { default as network } from '@network/store/reducer';

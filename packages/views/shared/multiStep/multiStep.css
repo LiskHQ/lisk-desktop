@@ -1,4 +1,4 @@
-@import '../../../app/variables';
+@import '../../../setup/react/app/variables';
 
 :root {
   --nav-line-height: 32px;

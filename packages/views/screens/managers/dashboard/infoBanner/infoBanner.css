@@ -1,4 +1,4 @@
-@import '../../../app/mixins.css';
+@import '../../../setup/react/app/mixins.css';
 
 .infoBanner {
   background-color: var(--color-strong-ink-blue);

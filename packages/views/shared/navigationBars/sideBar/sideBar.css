@@ -1,4 +1,4 @@
-@import '../../../../app/mixins.css';
+@import '../../../../setup/react/app/mixins.css';
 
 :root {
   --item-size: 50px;

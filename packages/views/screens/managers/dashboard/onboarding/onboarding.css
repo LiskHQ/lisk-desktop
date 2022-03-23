@@ -1,4 +1,4 @@
-@import '../../../app/mixins.css';
+@import '../../../setup/react/app/mixins.css';
 
 .onboarding {
   background-color: var(--color-onboarding-bg);
