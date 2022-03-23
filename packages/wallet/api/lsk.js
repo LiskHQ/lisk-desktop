@@ -1,6 +1,6 @@
 import { HTTP_CODES, tokenMap, regex } from '@common/configuration';
-import http from '../http';
-import ws from '../ws';
+import functionMapper from '@common/utilities/api/http';
+import ws from '@common/utilities/api/ws';
 import { isEmpty } from '../../helpers';
 import { extractAddressFromPublicKey, extractPublicKey } from '../../account';
 

@@ -3,7 +3,7 @@ import {
   getNetworkStatistics,
   getNetworkStatus,
 } from '@token/utilities/lsk';
-import http from '../http';
+import functionMapper from '@common/utilities/api/http';
 
 jest.mock('../http');
 

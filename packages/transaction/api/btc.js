@@ -6,7 +6,7 @@ import { tokenMap } from '@common/configuration';
 import { validateAddress } from '../../validators';
 import { getDerivedPathFromPassphrase } from '../account';
 import { fromRawLsk } from '@token/utilities/lsk';
-import http from '../http';
+import functionMapper from '@common/utilities/api/http';
 
 const httpPrefix = '';
 

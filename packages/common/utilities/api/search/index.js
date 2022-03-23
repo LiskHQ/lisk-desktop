@@ -1,6 +1,6 @@
 import * as lsk from '@token/utilities/lsk';
 import * as btc from './btc';
-import functionMapper from '../functionMapper';
+import functionMapper from '@common/utilities/api/functionMapper';
 
 const searchAPI = functionMapper(lsk, btc);
 

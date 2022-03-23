@@ -1,4 +1,4 @@
-import http from '../http';
+import functionMapper from '@common/utilities/api/http';
 
 const httpPrefix = '/api/v2';
 
