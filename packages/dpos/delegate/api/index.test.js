@@ -1,5 +1,5 @@
 import accounts from '../../../../test/constants/accounts';
-import functionMapper from '@common/utilities/api/http';
+import functionMapper from '@common/utilities/api/functionMapper';
 import ws, { subscribe, unsubscribe } from '@common/utilities/api/ws';
 
 import * as delegate from './index';

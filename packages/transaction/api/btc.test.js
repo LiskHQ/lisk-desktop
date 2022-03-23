@@ -3,7 +3,7 @@ import {
   getTransactions,
   calculateTransactionFee,
 } from './btc';
-import functionMapper from '@common/utilities/api/http';
+import functionMapper from '@common/utilities/api/functionMapper';
 
 jest.mock('../http', () => ({
   __esModule: true,

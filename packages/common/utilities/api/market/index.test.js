@@ -1,5 +1,5 @@
 import * as market from './index';
-import functionMapper from '@common/utilities/api/http';
+import functionMapper from '@common/utilities/api/functionMapper';
 
 jest.mock('../http');
 

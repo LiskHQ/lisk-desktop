@@ -1,7 +1,7 @@
 import bitcoin from 'bitcoinjs-lib';
 
 import { getAccount } from './btc';
-import functionMapper from '@common/utilities/api/http';
+import functionMapper from '@common/utilities/api/functionMapper';
 
 jest.mock('../http', () => ({
   __esModule: true,

@@ -1,5 +1,5 @@
 import { networks, networkKeys } from '@common/configuration';
-import functionMapper from '@common/utilities/api/http';
+import functionMapper from '@common/utilities/api/functionMapper';
 
 const httpPrefix = '/api/v2';
 

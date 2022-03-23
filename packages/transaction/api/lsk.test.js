@@ -9,7 +9,7 @@ import {
   getTransactionFee,
   getSchemas,
 } from '@token/utilities/lsk';
-import functionMapper from '@common/utilities/api/http';
+import functionMapper from '@common/utilities/api/functionMapper';
 import * as delegates from '../delegate';
 import accounts from '../../../../test/constants/accounts';
 import { getState } from '../../../../test/fixtures/transactions';
