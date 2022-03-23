@@ -4,7 +4,7 @@ import { act } from 'react-dom/test-utils';
 import {
   getTransactionBaseFees,
 } from '@transaction/api';
-import { tokenMap } from '@token/configuration';
+import { tokenMap } from '@token/configuration/tokens';
 import useTransactionFeeCalculation from '@shared/transactionPriority/useTransactionFeeCalculation';
 import { truncateAddress } from '@common/utilities/account';
 import * as hwManagerAPI from '@common/utilities/hwManager';

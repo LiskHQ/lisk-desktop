@@ -1,4 +1,4 @@
-import { tokenMap } from '@token/configuration';
+import { tokenMap } from '@token/configuration/tokens';
 import { subscribe, unsubscribe } from '@common/utilities/api/ws';
 import { validateAddress } from '../../validators';
 import { transformStringDateToUnixTimestamp } from '../../datetime';

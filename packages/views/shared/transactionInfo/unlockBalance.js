@@ -1,7 +1,7 @@
 import React from 'react';
 import AccountVisual from '@basics/accountVisual';
 import LiskAmount from '@shared/liskAmount';
-import { tokenMap } from '@token/configuration';
+import { tokenMap } from '@token/configuration/tokens';
 import styles from './transactionInfo.css';
 
 const UnlockBalance = ({ account, t, transaction = {} }) => (

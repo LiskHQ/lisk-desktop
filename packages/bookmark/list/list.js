@@ -4,7 +4,7 @@ import { withTranslation } from 'react-i18next';
 import { Link } from 'react-router-dom';
 
 import routes from '@screens/router/routes';
-import { tokenMap } from '@token/configuration';
+import { tokenMap } from '@token/configuration/tokens';
 import Tooltip from '@basics/tooltip/tooltip';
 import { truncateAddress } from '@common/utilities/account';
 import { Input } from '@basics/inputs';

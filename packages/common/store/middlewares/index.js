@@ -4,7 +4,7 @@ import spy from 'redux-monitor-spy';
 import account from '@wallet/store/middleware';
 import block from '@block/store/middleware';
 import settings from '@settings/store/middleware';
-import bookmarks from '@bookmarks/store/middleware';
+import bookmarks from '@bookmark/store/middleware';
 import network from '@network/store/middleware';
 import watchList from '@dpos/store/middlewares/watchList';
 import voting from '@dpos/store/middlewares/voting';

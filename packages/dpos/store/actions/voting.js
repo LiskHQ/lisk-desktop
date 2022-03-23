@@ -1,6 +1,6 @@
 import to from 'await-to-js';
 import { actionTypes } from '@common/configuration';
-import { tokenMap } from '@token/configuration';
+import { tokenMap } from '@token/configuration/tokens';
 import { MODULE_ASSETS_NAME_ID_MAP } from '@transaction/configuration/moduleAssets';
 import { create } from '@transaction/api';
 import { getAccount } from '@wallet/api';

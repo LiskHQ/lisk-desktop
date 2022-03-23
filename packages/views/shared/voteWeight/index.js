@@ -1,5 +1,5 @@
 import React from 'react';
-import { tokenMap } from '@token/configuration';
+import { tokenMap } from '@token/configuration/tokens';
 import LiskAmount from '@shared/liskAmount';
 /**
  * This component acts as an adapter for diversions in consecutive versions of API

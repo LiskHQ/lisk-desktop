@@ -1,5 +1,5 @@
 import { regex } from '@common/configuration';
-import { tokenMap } from '@token/configuration';
+import { tokenMap } from '@token/configuration/tokens';
 import { validateAddress } from '@common/utilities/validators';
 import { getAccount } from '../account/lsk';
 import { getTransaction } from '../transaction/lsk';

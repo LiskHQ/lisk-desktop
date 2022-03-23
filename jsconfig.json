@@ -15,7 +15,7 @@
       "@settings/*": ["./packages/settings/*"],
       "@token/*": ["./packages/token/*"],
       "@transaction/*": ["./packages/transaction/*"],
-      "@updates/*": ["./packages/updates/*"],
+      "@updater/*": ["./packages/updater/*"],
       "@views/*": ["./packages/views/*"],
       "@wallet/*": ["./packages/wallet/*"],
       "@shared/*": ["./packages/views/shared/*"],

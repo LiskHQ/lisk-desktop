@@ -1,20 +1,6 @@
 const webpack = require('webpack');
 const { resolve } = require('path');
 
-console.log('//////////////////////////////////////////////////////');
-console.log('//////////////////////////////////////////////////////');
-console.log('//////////////////////////////////////////////////////');
-console.log('//////////////////////////////////////////////////////');
-console.log('......................................................');
-console.log(resolve());
-console.log(resolve(__dirname, '../../packages/wallet'));
-console.log(resolve('./packages/wallet'));
-console.log('......................................................');
-console.log('//////////////////////////////////////////////////////');
-console.log('//////////////////////////////////////////////////////');
-console.log('//////////////////////////////////////////////////////');
-console.log('//////////////////////////////////////////////////////');
-
 const config = {
   mode: 'development',
   resolve: {
@@ -32,7 +18,7 @@ const config = {
       '@settings': resolve('./packages/settings'),
       '@token': resolve('./packages/token'),
       '@transaction': resolve('./packages/transaction'),
-      '@updates': resolve('./packages/updates'),
+      '@updater': resolve('./packages/updater'),
       '@views': resolve('./packages/views'),
       '@wallet': resolve('./packages/wallet'),
       '@shared': resolve('./packages/views/shared'),

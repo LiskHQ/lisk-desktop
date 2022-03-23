@@ -7,7 +7,7 @@ import { fromRawLsk } from '@token/utilities/lsk';
 import { selectSearchParamValue } from '@common/utilities/searchParams';
 import { selectAccountBalance, selectLSKAddress } from '@store/selectors';
 import { regex } from '@common/configuration';
-import { tokenMap } from '@token/configuration';
+import { tokenMap } from '@token/configuration/tokens';
 
 let loaderTimeout = null;
 

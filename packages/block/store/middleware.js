@@ -1,6 +1,6 @@
 import { blockSubscribe, blockUnsubscribe } from '@block/api';
 import { actionTypes } from '@common/configuration';
-import { tokenMap } from '@token/configuration';
+import { tokenMap } from '@token/configuration/tokens';
 import {
   olderBlocksRetrieved,
   forgersRetrieved,

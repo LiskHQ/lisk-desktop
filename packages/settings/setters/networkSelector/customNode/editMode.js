@@ -1,7 +1,7 @@
 import React, { useEffect, useRef, useState } from 'react';
 
 import { networkKeys } from '@network/configuration/networks';
-import { tokenMap } from '@token/configuration';
+import { tokenMap } from '@token/configuration/tokens';
 import { getNetworkConfig } from '@network/api';
 import { PrimaryButton } from '@basics/buttons';
 import { Input } from '@basics/inputs';

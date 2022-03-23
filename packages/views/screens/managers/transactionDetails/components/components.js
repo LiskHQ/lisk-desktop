@@ -5,7 +5,7 @@ import { useSelector } from 'react-redux';
 import { selectCurrentBlockHeight } from '@store/selectors';
 import { getModuleAssetTitle, getModuleAssetSenderLabel } from '@transaction/utilities/moduleAssets';
 import { getTxAmount } from '@common/utilities/transaction';
-import { tokenMap } from '@token/configuration';
+import { tokenMap } from '@token/configuration/tokens';
 import { MODULE_ASSETS_NAME_ID_MAP } from '@transaction/configuration/moduleAssets';
 import CopyToClipboard from '@basics/copyToClipboard';
 import TransactionTypeFigure from '@shared/transactionTypeFigure';

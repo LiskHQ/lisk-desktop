@@ -3,7 +3,7 @@ import { cryptography, transactions } from '@liskhq/lisk-client';
 import numeral from 'numeral';
 
 import { regex as reg } from '@common/configuration';
-import { tokenMap } from '@token/configuration';
+import { tokenMap } from '@token/configuration/tokens';
 import { MIN_ACCOUNT_BALANCE } from '@transaction/configuration/transactions';
 import { toRawLsk } from '@token/utilities/lsk';
 import i18n from '@setup/i18n/i18n';

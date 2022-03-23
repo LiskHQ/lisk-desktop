@@ -1,7 +1,7 @@
 import { actionTypes } from '@common/configuration';
-import { tokenMap } from '@token/configuration';
+import { tokenMap } from '@token/configuration/tokens';
 import { getFromStorage } from '@common/utilities/localJSONStorage';
-import { emptyBookmarks } from '@common/utilities/bookmarks';
+import { emptyBookmarks } from '@bookmark/utilities/bookmarks';
 import {
   bookmarksRetrieved,
   bookmarkAdded,

@@ -5,7 +5,7 @@ import AccountVisual from '@basics/accountVisual';
 import LiskAmount from '@shared/liskAmount';
 import { regex } from '@common/configuration';
 import routes from '@screens/router/routes';
-import { tokenMap } from '@token/configuration';
+import { tokenMap } from '@token/configuration/tokens';
 import styles from './multiSignature.css';
 
 const GroupRow = ({ data, className }) => {

@@ -1,5 +1,5 @@
 import { actionTypes } from '@common/configuration';
-import { tokenMap } from '@token/configuration';
+import { tokenMap } from '@token/configuration/tokens';
 import { deepMergeObj } from '@common/utilities/helpers';
 
 export const channels = {

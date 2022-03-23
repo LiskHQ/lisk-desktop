@@ -6,7 +6,7 @@ import withLocalSort from '@common/utilities/withLocalSort';
 import { getNetworkStatistics, getPeers } from '@network/api';
 import withData from '@common/utilities/withData';
 import { DEFAULT_LIMIT } from '@common/configuration';
-import { tokenMap } from '@token/configuration';
+import { tokenMap } from '@token/configuration/tokens';
 import Box from '@basics/box';
 import BoxHeader from '@basics/box/header';
 import BoxContent from '@basics/box/content';

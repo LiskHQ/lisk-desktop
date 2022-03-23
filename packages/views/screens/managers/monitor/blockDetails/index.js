@@ -7,7 +7,7 @@ import { getBlock } from '@block/api';
 import { getTransactions } from '@transaction/api';
 import withData from '@common/utilities/withData';
 import { selectSearchParamValue } from '@common/utilities/searchParams';
-import { tokenMap } from '@token/configuration';
+import { tokenMap } from '@token/configuration/tokens';
 import BlockDetails from './blockDetails';
 
 const mapStateToProps = (state, ownProps) => ({

@@ -1,5 +1,5 @@
 import configureStore from 'redux-mock-store';
-import { tokenMap } from '@token/configuration';
+import { tokenMap } from '@token/configuration/tokens';
 import accounts from '../constants/accounts';
 import delegates from '../constants/delegates';
 

@@ -11,7 +11,7 @@ import withData from '@common/utilities/withData';
 import withFilters from '@common/utilities/withFilters';
 import { DEFAULT_LIMIT } from '@common/configuration';
 import { MODULE_ASSETS_NAME_ID_MAP } from '@transaction/configuration/moduleAssets';
-import { tokenMap } from '@token/configuration';
+import { tokenMap } from '@token/configuration/tokens';
 import Delegates from './delegates';
 
 const defaultUrlSearchParams = { search: '' };

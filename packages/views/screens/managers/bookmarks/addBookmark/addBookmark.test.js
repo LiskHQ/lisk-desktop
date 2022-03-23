@@ -1,7 +1,7 @@
 import React from 'react';
 import { mount } from 'enzyme';
 import * as bitcoin from 'bitcoinjs-lib';
-import { tokenMap, tokenKeys } from '@token/configuration';
+import { tokenMap, tokenKeys } from '@token/configuration/tokens';
 import accounts from '../../../../../test/constants/accounts';
 import AddBookmark from './addBookmark';
 

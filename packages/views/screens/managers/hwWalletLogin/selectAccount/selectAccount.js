@@ -3,7 +3,7 @@ import React from 'react';
 import { toast } from 'react-toastify';
 import { getAccountsFromDevice, getNewAccountByIndex } from '@common/utilities/hwManager';
 import routes from '@screens/router/routes';
-import { tokenMap } from '@token/configuration';
+import { tokenMap } from '@token/configuration/tokens';
 import { TertiaryButton } from '@basics/buttons';
 import CheckBox from '@basics/checkBox';
 import AccountCard from './accountCard';

@@ -1,4 +1,4 @@
-import { tokenMap } from '@token/configuration';
+import { tokenMap } from '@token/configuration/tokens';
 
 export default {
   wallet: {

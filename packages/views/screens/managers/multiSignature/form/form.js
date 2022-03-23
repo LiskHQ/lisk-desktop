@@ -7,7 +7,7 @@ import BoxFooter from '@basics/box/footer';
 import { PrimaryButton, TertiaryButton } from '@basics/buttons';
 import { Input } from '@basics/inputs';
 import { regex } from '@common/configuration';
-import { tokenMap } from '@token/configuration';
+import { tokenMap } from '@token/configuration/tokens';
 import { MODULE_ASSETS_NAME_ID_MAP } from '@transaction/configuration/moduleAssets';
 import { extractAddressFromPublicKey } from '@common/utilities/account';
 import ProgressBar from '../progressBar';

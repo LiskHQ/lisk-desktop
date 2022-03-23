@@ -5,7 +5,7 @@ import {
   MIN_FEE_PER_BYTE,
   DEFAULT_NUMBER_OF_SIGNATURES,
 } from '@transaction/configuration/transactions';
-import { tokenMap } from '@token/configuration';
+import { tokenMap } from '@token/configuration/tokens';
 import {
   MODULE_ASSETS_MAP,
   BASE_FEES,
