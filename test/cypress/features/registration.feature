@@ -2,6 +2,7 @@ Feature: Registration
 
   Create a new account
 
+  @basic
   Scenario: Click through the registration process
     When I am on Register page
     And I click on chooseAvatar

@@ -1,13 +1,17 @@
 Feature: delegate
+
+  @basic
   Scenario: I should be on the delegates page
     Given Network is set to devnet
     And I am on delegates page
     And I wait 5 seconds
 
+  @basic
   Scenario: Should properly display delegates overview
     Then totalBlocks count should have value greater than 0
     And transactions count should have value greater than 0
 
+  @basic
   Scenario: Should properly display forging details
     When I observe blocksForged
     And I observe timeValue-clock
@@ -18,7 +22,8 @@ Feature: delegate
     And next forger list should be updated accordingly
     And next forger list should have a maximum of 6 delegates
     And next forgers should match first members of the inside round list
-    
+
+  @advanced
   Scenario: Inside round delegates should function properly
     When I click on insideRoundBtn
     Then I should see 103 delegates in table
@@ -31,7 +36,8 @@ Feature: delegate
     When I watch a delegate
     And I wait 0.5 seconds
     Then delegate should be watched
-  
+
+  @advanced
   Scenario: Outside round delegates should function properly
     Given Network is set to devnet
     And I am on delegates page
@@ -51,6 +57,7 @@ Feature: delegate
     And I wait 0.5 seconds
     Then delegate should be watched
 
+  @advanced
   Scenario: watch list should function properly
     When I clear input filterDelegateInput
     And I click on insideRoundBtn
@@ -66,6 +73,7 @@ Feature: delegate
     And I fill not_valid in filterDelegateInput field
     Then I should see 0 delegates in table
 
+  @advanced
   Scenario: Sanctioned delegates should function properly
     Given Network is set to testnet
     And I am on delegates page
@@ -82,6 +90,7 @@ Feature: delegate
     And I wait 0.5 seconds
     Then delegate should be watched
 
+  @advanced
   Scenario: latest votes list should function properly
     Given Network is set to devnet
     And I am on delegates page

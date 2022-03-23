@@ -9,6 +9,7 @@ Feature: Vote delegate
       Then I click on searchDelegatesRow
       Then I should be on Account page
 
+   @basic
    Scenario: Down Vote for a delegate when there are locked lsk
       And I click on openAddVoteDialog
       And I clear input amountInput
@@ -21,6 +22,7 @@ Feature: Vote delegate
       Given I am on wallet page
       Then The latest transaction is vote
 
+   @basic
    Scenario: Up Vote for a delegate when there are locked lsk
       And I click on openAddVoteDialog
       And I clear input amountInput
@@ -33,6 +35,7 @@ Feature: Vote delegate
       Given I am on wallet page
       Then The latest transaction is vote
 
+   @basic
    Scenario: Remove Vote for a delegate
       When I click on openAddVoteDialog
       And I click on removeVote
@@ -43,6 +46,7 @@ Feature: Vote delegate
       Given I am on wallet page
       Then The latest transaction is vote
 
+   @basic
    Scenario: Unlock balance
       Given I am on wallet page
       Then I should see that 540 LSK are locked

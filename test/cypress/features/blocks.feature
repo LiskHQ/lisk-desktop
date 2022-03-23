@@ -6,12 +6,14 @@ Feature: Blocks
     Given I am on blocks page
     And I wait 1 seconds
 
+  @basic
   Scenario: Load all blocks and load more blocks
     Then I should see 20 blocks in table
     When I click on showMoreBlocksBtn
     And I wait 1 seconds
     Then I should see 40 blocks in table
 
+  @basic
   Scenario: Sorting by height should work as expected
     When I click on showMoreBlocksBtn
     Then blocks should be sorted in descending order by height
@@ -19,6 +21,7 @@ Feature: Blocks
     And I wait 1 seconds
     Then blocks should be sorted in ascending order by height
 
+  @basic
   Scenario: Retrieves and prepends new blocks
     And I wait 30 seconds
     Then I should see showLatestBlocksBtn
@@ -27,6 +30,7 @@ Feature: Blocks
     And I wait 1 seconds
     Then I should see latest blocks
 
+  @basic
   Scenario: Filter blocks based on existing inputs
     When I click on filterTransactionsBtn
     Then I should see filterDropdown
@@ -48,6 +52,7 @@ Feature: Blocks
     And I click on applyFilters
     Then I should see 1 blocks in table
 
+  @advanced
   Scenario: Navigate to block details page and verify block details
     When I click on filterTransactionsBtn
     Then I should see filterDropdown
@@ -62,6 +67,7 @@ Feature: Blocks
     Then I should see 20 Aug 2021 in blockDateDetails section
     Then I should see genesis_99 in blockGeneratorDetails section
 
+  @advanced
   Scenario: Navigate to block details page and verify transaction details
     When I click on filterTransactionsBtn
     Then I should see filterDropdown

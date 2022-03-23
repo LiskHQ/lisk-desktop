@@ -1,5 +1,6 @@
 Feature: Wallet Votes
 
+  @basic
   Scenario: See all votes
     Given Network is set to devnet
     Given I am on login page
