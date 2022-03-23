@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom';
 
 import { truncateAddress } from '@common/utilities/account';
 import { routes, tokenMap } from '@common/configuration';
-import LiskAmount from '../liskAmount';
+import LiskAmount from '@shared/liskAmount';
 
 import styles from './styles.css';
 

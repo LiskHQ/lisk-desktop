@@ -10,7 +10,7 @@ import BoxRow from '@basics/box/row';
 import Icon from '@basics/icon';
 import Converter from '@shared/converter';
 import { fromRawLsk } from '@token/utilities/lsk';
-import LiskAmount from '../liskAmount';
+import LiskAmount from '@shared/liskAmount';
 import DiscreetMode from '../discreetMode';
 import LockedBalanceLink from '../../screens/wallet/overview/balanceInfo/unlocking';
 import styles from './walletDetails.css';

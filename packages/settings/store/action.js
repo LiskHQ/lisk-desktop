@@ -1,6 +1,6 @@
 import { actionTypes, tokenMap } from '@common/configuration';
 import { getFromStorage } from '@common/utilities/localJSONStorage';
-import { initialState } from '@store/reducers/settings';
+import { initialState } from './reducer';
 
 /**
  * An action to dispatch settingsRetrieved

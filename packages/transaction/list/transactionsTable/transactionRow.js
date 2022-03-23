@@ -8,7 +8,7 @@ import { DateTimeFromTimestamp } from '@basics/timestamp';
 import Icon from '@basics/icon';
 import Tooltip from '@basics/tooltip/tooltip';
 import DialogLink from '@basics/dialog/link';
-import LiskAmount from '../liskAmount';
+import LiskAmount from '@shared/liskAmount';
 import AccountVisualWithAddress from '../accountVisualWithAddress';
 import styles from './transactionsTable.css';
 

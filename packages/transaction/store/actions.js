@@ -14,8 +14,8 @@ import {
 } from '@common/utilities/transaction';
 import { extractKeyPair } from '@common/utilities/account';
 import { getTransactionSignatureStatus } from '@screens/signMultiSignTransaction/helpers';
-import { timerReset } from './account';
-import { loadingStarted, loadingFinished } from './loading';
+import { timerReset } from '@wallet/store/action';
+import { loadingStarted, loadingFinished } from '@common/store/actions/loading';
 
 /**
  * Action trigger when user logout from the application

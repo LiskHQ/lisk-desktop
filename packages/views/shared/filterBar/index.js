@@ -2,7 +2,7 @@ import React from 'react';
 import moment from 'moment';
 import { tokenMap } from '@common/configuration';
 import { SecondaryButton } from '@basics/buttons';
-import i18n from '../../../i18n';
+import i18n from '@setup/i18n/i18n';
 
 import styles from './filterBar.css';
 

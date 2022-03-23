@@ -4,7 +4,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { settingsUpdated } from '@common/store/actions';
 import Tooltip from '@basics/tooltip/tooltip';
 import Icon from '@basics/icon';
-import styles from './topBar.css';
+import styles from '@shared/navigationBars/topBar/topBar.css';
 
 /**
  * Toggles boolean values on store.settings

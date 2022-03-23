@@ -5,7 +5,7 @@ import { routes } from '@common/configuration';
 import Tooltip from '@basics/tooltip/tooltip';
 import DialogLink from '@basics/dialog/link';
 import Icon from '@basics/icon';
-import styles from './topBar.css';
+import styles from '@shared/navigationBars/topBar/topBar.css';
 
 const SignedInTip = ({ t }) => <p>{t('Voting queue')}</p>;
 

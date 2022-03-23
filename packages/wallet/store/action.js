@@ -15,7 +15,7 @@ import { getAccount, extractAddress as extractBitcoinAddress } from '@common/uti
 import { getConnectionErrorMessage } from '@common/utilities/getNetwork';
 import { extractKeyPair, getUnlockableUnlockObjects } from '@common/utilities/account';
 import { defaultDerivationPath } from '@common/utilities/explicitBipKeyDerivation';
-import { networkStatusUpdated } from './network';
+import { networkStatusUpdated } from '@network/store/action';
 
 /**
  * Trigger this action to log out of the account
