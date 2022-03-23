@@ -1,5 +1,5 @@
 import React from 'react';
-import { AutoResizeTextarea } from '@views/basics/inputs';
+import { AutoResizeTextarea } from '@basics/inputs';
 import RequestWrapper from './requestWrapper';
 import styles from './request.css';
 

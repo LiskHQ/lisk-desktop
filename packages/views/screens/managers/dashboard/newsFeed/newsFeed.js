@@ -1,11 +1,11 @@
 import React, { useEffect, useState } from 'react';
-import Box from '@views/basics/box';
-import BoxRow from '@views/basics/box/row';
-import BoxHeader from '@views/basics/box/header';
-import BoxContent from '@views/basics/box/content';
-import BoxTabs from '@views/basics/tabs';
-import BoxEmptyState from '@views/basics/box/emptyState';
-import Icon from '@views/basics/icon';
+import Box from '@basics/box';
+import BoxRow from '@basics/box/row';
+import BoxHeader from '@basics/box/header';
+import BoxContent from '@basics/box/content';
+import BoxTabs from '@basics/tabs';
+import BoxEmptyState from '@basics/box/emptyState';
+import Icon from '@basics/icon';
 import News from './news';
 import styles from './newsFeed.css';
 

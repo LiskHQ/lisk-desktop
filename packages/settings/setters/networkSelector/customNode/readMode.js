@@ -1,7 +1,7 @@
 import React from 'react';
 
-import { TertiaryButton } from '@views/basics/buttons';
-import Icon from '@views/basics/icon';
+import { TertiaryButton } from '@basics/buttons';
+import Icon from '@basics/icon';
 import { networkKeys } from '@constants';
 import styles from '../networkSelector.css';
 

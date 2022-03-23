@@ -3,9 +3,9 @@ import moment from 'moment';
 import { toast } from 'react-toastify';
 import PropTypes from 'prop-types';
 import { externalLinks } from '@constants';
-import Dialog from '@views/basics/dialog/dialog';
-import FlashMessageHolder from '@views/basics/flashMessage/holder';
-import { PrimaryButton, SecondaryButton } from '@views/basics/buttons';
+import Dialog from '@basics/dialog/dialog';
+import FlashMessageHolder from '@basics/flashMessage/holder';
+import { PrimaryButton, SecondaryButton } from '@basics/buttons';
 import styles from './analyticsDialog.css';
 
 class AnalyticsDialog extends React.Component {

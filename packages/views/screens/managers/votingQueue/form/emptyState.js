@@ -1,7 +1,7 @@
 import React from 'react';
 
-import EmptyBoxState from '@views/basics/box/emptyState';
-import Illustration from '@views/basics/illustration';
+import EmptyBoxState from '@basics/box/emptyState';
+import Illustration from '@basics/illustration';
 
 const EmptyState = ({ t }) => (
   <EmptyBoxState>

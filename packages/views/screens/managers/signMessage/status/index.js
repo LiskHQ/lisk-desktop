@@ -1,12 +1,12 @@
 import React, { useEffect, useRef, useState } from 'react';
 import CopyToClipboard from 'react-copy-to-clipboard';
 
-import BoxContent from '@views/basics/box/content';
-import BoxFooter from '@views/basics/box/footer';
-import Illustration from '@views/basics/illustration';
-import { AutoResizeTextarea } from '@views/basics/inputs';
+import BoxContent from '@basics/box/content';
+import BoxFooter from '@basics/box/footer';
+import Illustration from '@basics/illustration';
+import { AutoResizeTextarea } from '@basics/inputs';
 import { getDeviceType } from '@common/utilities/hwManager';
-import { SecondaryButton, PrimaryButton } from '@views/basics/buttons';
+import { SecondaryButton, PrimaryButton } from '@basics/buttons';
 import styles from '../signMessage.css';
 
 const Error = ({ t, hwInfo }) => {

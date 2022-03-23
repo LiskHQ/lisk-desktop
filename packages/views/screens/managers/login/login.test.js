@@ -9,7 +9,7 @@ import { settingsUpdated } from '@common/store/actions';
 import Login from './login';
 import accounts from '../../../../test/constants/accounts';
 
-jest.mock('@views/basics/flashMessage/holder', () => ({
+jest.mock('@basics/flashMessage/holder', () => ({
   addMessage: jest.fn(),
   deleteMessage: jest.fn(),
 }));

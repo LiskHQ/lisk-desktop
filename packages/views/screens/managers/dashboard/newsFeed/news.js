@@ -1,6 +1,6 @@
 import React from 'react';
 import moment from 'moment';
-import Icon from '@views/basics/icon';
+import Icon from '@basics/icon';
 import NewsParser from './newsParser';
 import styles from './news.css';
 

@@ -2,9 +2,9 @@ import React, { useRef } from 'react';
 
 import { networks, networkKeys } from '@constants';
 import { addHttp } from '@common/utilities/login';
-import { SecondaryButton } from '@views/basics/buttons';
+import { SecondaryButton } from '@basics/buttons';
 import { getNetworksList } from '@common/utilities/getNetwork';
-import DropdownButton from '@views/basics/dropdownButton';
+import DropdownButton from '@basics/dropdownButton';
 import CustomNode from './customNode';
 
 import styles from './networkSelector.css';

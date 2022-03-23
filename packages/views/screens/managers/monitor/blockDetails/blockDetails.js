@@ -2,17 +2,17 @@ import { Link } from 'react-router-dom';
 import React, { useEffect } from 'react';
 
 import { tokenMap, routes } from '@constants';
-import { DateTimeFromTimestamp } from '@views/basics/timestamp';
-import Box from '@views/basics/box';
-import BoxHeader from '@views/basics/box/header';
-import BoxContent from '@views/basics/box/content';
-import CopyToClipboard from '@views/basics/copyToClipboard';
-import Feedback from '@views/basics/feedback/feedback';
-import LabeledValue from '@views/basics/labeledValue';
+import { DateTimeFromTimestamp } from '@basics/timestamp';
+import Box from '@basics/box';
+import BoxHeader from '@basics/box/header';
+import BoxContent from '@basics/box/content';
+import CopyToClipboard from '@basics/copyToClipboard';
+import Feedback from '@basics/feedback/feedback';
+import LabeledValue from '@basics/labeledValue';
 import LiskAmount from '@shared/liskAmount';
 import TransactionsTable from '@shared/transactionsTable';
 import { truncateAddress } from '@common/utilities/account';
-import AccountVisual from '@views/basics/accountVisual';
+import AccountVisual from '@basics/accountVisual';
 import styles from './blockDetails.css';
 
 const Generator = ({

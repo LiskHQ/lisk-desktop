@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { routes } from '@constants';
-import Icon from '@views/basics/icon';
+import Icon from '@basics/icon';
 import styles from './navigationButtons.css';
 
 const NavigationButtons = ({ history }) => {

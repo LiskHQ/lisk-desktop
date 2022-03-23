@@ -1,10 +1,10 @@
 import React from 'react';
 import { MODULE_ASSETS_NAME_ID_MAP } from '@constants';
 import TransactionInfo from '@shared/transactionInfo';
-import Box from '@views/basics/box';
-import BoxContent from '@views/basics/box/content';
-import BoxFooter from '@views/basics/box/footer';
-import { PrimaryButton, SecondaryButton } from '@views/basics/buttons';
+import Box from '@basics/box';
+import BoxContent from '@basics/box/content';
+import BoxFooter from '@basics/box/footer';
+import { PrimaryButton, SecondaryButton } from '@basics/buttons';
 import ProgressBar from '../progressBar';
 import styles from './styles.css';
 

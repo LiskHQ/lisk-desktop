@@ -1,5 +1,5 @@
 import React from 'react';
-import Icon from '@views/basics/icon';
+import Icon from '@basics/icon';
 import styles from './overview.css';
 
 const NumericInfo = ({

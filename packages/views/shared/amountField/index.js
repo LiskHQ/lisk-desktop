@@ -3,10 +3,10 @@ import { useTranslation } from 'react-i18next';
 
 import { formatAmountBasedOnLocale } from '@common/utilities/formattedNumber';
 import { fromRawLsk } from '@common/utilities/lsk';
-import { Input } from '@views/basics/inputs';
-import { TertiaryButton } from '@views/basics/buttons';
-import Icon from '@views/basics/icon';
-import Tooltip from '@views/basics/tooltip/tooltip';
+import { Input } from '@basics/inputs';
+import { TertiaryButton } from '@basics/buttons';
+import Icon from '@basics/icon';
+import Tooltip from '@basics/tooltip/tooltip';
 import Converter from '../converter';
 import styles from './amountField.css';
 

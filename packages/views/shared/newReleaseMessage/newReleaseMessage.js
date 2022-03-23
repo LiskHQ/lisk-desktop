@@ -2,9 +2,9 @@ import React from 'react';
 import { withTranslation } from 'react-i18next';
 import PropTypes from 'prop-types';
 import { useTheme } from '@common/utilities/theme';
-import FlashMessage from '@views/basics/flashMessage/flashMessage';
-import { PrimaryButton, SecondaryButton } from '@views/basics/buttons';
-import Icon from '@views/basics/icon';
+import FlashMessage from '@basics/flashMessage/flashMessage';
+import { PrimaryButton, SecondaryButton } from '@basics/buttons';
+import Icon from '@basics/icon';
 import styles from './newReleaseMessage.css';
 
 const NewReleaseMessage = ({

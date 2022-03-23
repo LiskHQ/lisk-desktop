@@ -1,6 +1,6 @@
 import React from 'react';
 import moment from 'moment';
-import FlashMessageHolder from '@views/basics/flashMessage/holder';
+import FlashMessageHolder from '@basics/flashMessage/holder';
 import AnalyticsMessage from '@shared/analyticsMessage/analyticsMessage';
 
 export default {

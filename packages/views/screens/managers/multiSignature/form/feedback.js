@@ -1,5 +1,5 @@
 import React from 'react';
-import BoxFooter from '@views/basics/box/footer';
+import BoxFooter from '@basics/box/footer';
 
 import styles from './styles.css';
 

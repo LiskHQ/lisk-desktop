@@ -1,9 +1,9 @@
 // istanbul ignore file
 import React, { useEffect, useState } from 'react';
-import { PrimaryButton, SecondaryButton, TertiaryButton } from '@views/basics/buttons';
-import PassphraseInput from '@views/basics/passphraseInput';
+import { PrimaryButton, SecondaryButton, TertiaryButton } from '@basics/buttons';
+import PassphraseInput from '@basics/passphraseInput';
 import useSecondPassphrase from '@src/hooks/setSecondPassphrase';
-import BoxFooter from '@views/basics/box/footer';
+import BoxFooter from '@basics/box/footer';
 import styles from './transactionSummary.css';
 
 const Actions = ({

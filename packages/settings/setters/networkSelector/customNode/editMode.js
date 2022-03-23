@@ -2,8 +2,8 @@ import React, { useEffect, useRef, useState } from 'react';
 
 import { tokenMap, networkKeys } from '@constants';
 import { getNetworkConfig } from '@common/utilities/api/network';
-import { PrimaryButton } from '@views/basics/buttons';
-import { Input } from '@views/basics/inputs';
+import { PrimaryButton } from '@basics/buttons';
+import { Input } from '@basics/inputs';
 import { addHttp } from '@common/utilities/login';
 import styles from '../networkSelector.css';
 

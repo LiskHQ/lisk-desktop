@@ -2,12 +2,12 @@ import React from 'react';
 import grid from 'flexboxgrid/dist/flexboxgrid.css';
 import { tokenMap } from '@constants';
 import { truncateAddress } from '@common/utilities/account';
-import AccountVisual from '@views/basics/accountVisual';
-import tableStyles from '@views/basics/table/table.css';
+import AccountVisual from '@basics/accountVisual';
+import tableStyles from '@basics/table/table.css';
 import LiskAmount from '@shared/liskAmount';
-import DialogLink from '@views/basics/dialog/link';
-import Spinner from '@views/basics/spinner';
-import Icon from '@views/basics/icon';
+import DialogLink from '@basics/dialog/link';
+import Spinner from '@basics/spinner';
+import Icon from '@basics/icon';
 import styles from './votes.css';
 
 const VoteRow = ({

@@ -13,7 +13,7 @@ import {
   selectSettings,
   selectTransactions,
 } from '@store/selectors';
-import TabsContainer from '@views/basics/tabsContainer/tabsContainer';
+import TabsContainer from '@basics/tabsContainer/tabsContainer';
 import Overview from './overview';
 import DelegateTab from './delegateProfile';
 // import MultiSignatureTab from './multiSignature';

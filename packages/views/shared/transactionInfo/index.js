@@ -1,6 +1,6 @@
 import React from 'react';
 import { withTranslation } from 'react-i18next';
-import AccountVisual from '@views/basics/accountVisual';
+import AccountVisual from '@basics/accountVisual';
 import LiskAmount from '@shared/liskAmount';
 import { tokenMap, MODULE_ASSETS_NAME_ID_MAP } from '@constants';
 import VoteDelegate from './voteDelegate';

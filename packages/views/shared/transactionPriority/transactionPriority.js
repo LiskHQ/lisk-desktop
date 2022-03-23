@@ -5,10 +5,10 @@ import {
   formatAmountBasedOnLocale,
 } from '@common/utilities/formattedNumber';
 import { toRawLsk, fromRawLsk } from '@common/utilities/lsk';
-import Input from '@views/basics/inputs/input';
-import Icon from '@views/basics/icon';
-import Tooltip from '@views/basics/tooltip/tooltip';
-import Spinner from '@views/basics/spinner';
+import Input from '@basics/inputs/input';
+import Icon from '@basics/icon';
+import Tooltip from '@basics/tooltip/tooltip';
+import Spinner from '@basics/spinner';
 
 import styles from './transactionPriority.css';
 

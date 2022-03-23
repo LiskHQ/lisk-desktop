@@ -1,6 +1,6 @@
 import React from 'react';
 import { useTranslation } from 'react-i18next';
-import SteppedProgressBar from '@views/basics/steppedProgressBar/steppedProgressBar';
+import SteppedProgressBar from '@basics/steppedProgressBar/steppedProgressBar';
 import styles from './styles.css';
 
 const ProgressBar = ({ current }) => {

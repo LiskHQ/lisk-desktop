@@ -6,12 +6,12 @@ import TransactionPriority, {
   useTransactionPriority,
   normalizeVotesForTx,
 } from '@shared/transactionPriority';
-import Box from '@views/basics/box';
-import BoxContent from '@views/basics/box/content';
-import BoxFooter from '@views/basics/box/footer';
-import { PrimaryButton } from '@views/basics/buttons';
+import Box from '@basics/box';
+import BoxContent from '@basics/box/content';
+import BoxFooter from '@basics/box/footer';
+import { PrimaryButton } from '@basics/buttons';
 
-import Table from '@views/basics/table';
+import Table from '@basics/table';
 import ToggleIcon from '../toggleIcon';
 
 import VoteRow from './voteRow';

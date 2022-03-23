@@ -1,8 +1,8 @@
 import React from 'react';
-import Illustration from '@views/basics/illustration';
-import { PrimaryButton } from '@views/basics/buttons';
-import BoxEmptyState from '@views/basics/box/emptyState';
-import Icon from '@views/basics/icon';
+import Illustration from '@basics/illustration';
+import { PrimaryButton } from '@basics/buttons';
+import BoxEmptyState from '@basics/box/emptyState';
+import Icon from '@basics/icon';
 import styles from './list.css';
 
 const EmptyState = ({

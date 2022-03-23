@@ -1,7 +1,7 @@
 import React from 'react';
 import { withTranslation } from 'react-i18next';
-import Icon from '@views/basics/icon';
-import { PrimaryButton } from '@views/basics/buttons';
+import Icon from '@basics/icon';
+import { PrimaryButton } from '@basics/buttons';
 import styles from './updateIndicator.css';
 
 const UpdateIndicator = ({

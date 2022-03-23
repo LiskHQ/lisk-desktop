@@ -1,6 +1,6 @@
 import React from 'react';
 import grid from 'flexboxgrid/dist/flexboxgrid.css';
-import Dialog from '@views/basics/dialog/dialog';
+import Dialog from '@basics/dialog/dialog';
 import DelegatePerformance from '../delegatePerformance';
 import styles from './styles.css';
 

@@ -2,9 +2,9 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 
 import { routes } from '@constants';
-import Tooltip from '@views/basics/tooltip/tooltip';
-import DialogLink from '@views/basics/dialog/link';
-import Icon from '@views/basics/icon';
+import Tooltip from '@basics/tooltip/tooltip';
+import DialogLink from '@basics/dialog/link';
+import Icon from '@basics/icon';
 import styles from './topBar.css';
 
 const SignedInTip = ({ t }) => <p>{t('Voting queue')}</p>;

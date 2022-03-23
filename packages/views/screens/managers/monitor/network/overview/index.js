@@ -2,13 +2,13 @@
 import React from 'react';
 import { useTheme } from '@common/utilities/theme';
 import { getColorPalette } from '@common/utilities/chartOptions';
-import Box from '@views/basics/box';
-import BoxHeader from '@views/basics/box/header';
-import BoxContent from '@views/basics/box/content';
-import BoxEmptyState from '@views/basics/box/emptyState';
-import { DoughnutChart } from '@views/basics/charts';
-import Tooltip from '@views/basics/tooltip/tooltip';
-import GuideTooltip, { GuideTooltipItem } from '@views/basics/charts/guideTooltip';
+import Box from '@basics/box';
+import BoxHeader from '@basics/box/header';
+import BoxContent from '@basics/box/content';
+import BoxEmptyState from '@basics/box/emptyState';
+import { DoughnutChart } from '@basics/charts';
+import Tooltip from '@basics/tooltip/tooltip';
+import GuideTooltip, { GuideTooltipItem } from '@basics/charts/guideTooltip';
 import OthersTooltip from './othersTooltip';
 import styles from './overview.css';
 

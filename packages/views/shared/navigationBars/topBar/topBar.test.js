@@ -1,6 +1,6 @@
 import React from 'react';
 import { routes } from '@constants';
-import DialogHolder from '@views/basics/dialog/holder';
+import DialogHolder from '@basics/dialog/holder';
 import { mountWithRouter } from '@common/utilities/testHelpers';
 import TopBar from './topBar';
 import accounts from '../../../../../test/constants/accounts';

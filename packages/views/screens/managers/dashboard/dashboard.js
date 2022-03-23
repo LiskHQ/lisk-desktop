@@ -2,8 +2,8 @@
 import React from 'react';
 
 import WalletDetails from '@shared/walletDetails';
-import Onboarding from '@views/basics/onboarding/onboarding';
-import InfoBanner from '@views/basics/infoBanner/infoBanner';
+import Onboarding from '@basics/onboarding/onboarding';
+import InfoBanner from '@basics/infoBanner/infoBanner';
 import NewsFeed from './newsFeed';
 import RecentTransactions from './recentTransactions';
 import styles from './dashboard.css';

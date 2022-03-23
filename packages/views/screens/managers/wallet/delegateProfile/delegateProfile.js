@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react';
 import grid from 'flexboxgrid/dist/flexboxgrid.css';
 
-import Box from '@views/basics/box';
+import Box from '@basics/box';
 import styles from './delegateProfile.css';
 import DetailsView from './detailsView';
 import PerformanceView from './performanceView';

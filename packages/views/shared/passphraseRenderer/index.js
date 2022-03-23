@@ -2,7 +2,7 @@ import React from 'react';
 import fillWordsList from 'bitcore-mnemonic/lib/words/english';
 import grid from 'flexboxgrid/dist/flexboxgrid.css';
 import { withTranslation } from 'react-i18next';
-import { PrimaryButton, TertiaryButton } from '@views/basics/buttons';
+import { PrimaryButton, TertiaryButton } from '@basics/buttons';
 import styles from './passphraseRenderer.css';
 
 class PassphraseRenderer extends React.Component {

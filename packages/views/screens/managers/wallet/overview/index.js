@@ -7,7 +7,7 @@ import grid from 'flexboxgrid/dist/flexboxgrid.css';
 import withData from '@common/utilities/withData';
 import { getTransactions } from '@common/utilities/api/transaction';
 import { selectTransactions } from '@store/selectors';
-import FlashMessageHolder from '@views/basics/flashMessage/holder';
+import FlashMessageHolder from '@basics/flashMessage/holder';
 import WarnPunishedDelegate from '@shared/warnPunishedDelegate';
 import { withRouter } from 'react-router';
 import BalanceChart from './balanceChart';

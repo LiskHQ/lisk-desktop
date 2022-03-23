@@ -5,7 +5,7 @@ import { routes } from '@constants';
 import { parseSearchParams } from '@common/utilities/searchParams';
 import MultiStep from '@shared/multiStep';
 import TransactionSignature from '@shared/transactionSignature';
-import Dialog from '@views/basics/dialog/dialog';
+import Dialog from '@basics/dialog/dialog';
 import Form from './form';
 import Summary from './summary';
 import Status from './status';

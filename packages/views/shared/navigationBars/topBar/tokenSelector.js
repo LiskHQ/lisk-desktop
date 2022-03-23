@@ -3,8 +3,8 @@ import { useDispatch, useSelector } from 'react-redux';
 
 import { settingsUpdated } from '@common/store/actions';
 import { routes, tokenMap } from '@constants';
-import Icon from '@views/basics/icon';
-import Tooltip from '@views/basics/tooltip/tooltip';
+import Icon from '@basics/icon';
+import Tooltip from '@basics/tooltip/tooltip';
 import styles from './topBar.css';
 
 const TokenSelector = ({

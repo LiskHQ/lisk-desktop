@@ -1,7 +1,7 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { routes } from '@constants';
-import { TertiaryButton } from '@views/basics/buttons';
+import { TertiaryButton } from '@basics/buttons';
 import LoadingIcon from './loadingIcon';
 
 class Loading extends React.Component {

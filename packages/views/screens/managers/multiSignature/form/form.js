@@ -1,11 +1,11 @@
 import React, { useState, useEffect, useMemo } from 'react';
 
 import TransactionPriority, { useTransactionFeeCalculation, useTransactionPriority } from '@shared/transactionPriority';
-import Box from '@views/basics/box';
-import BoxContent from '@views/basics/box/content';
-import BoxFooter from '@views/basics/box/footer';
-import { PrimaryButton, TertiaryButton } from '@views/basics/buttons';
-import { Input } from '@views/basics/inputs';
+import Box from '@basics/box';
+import BoxContent from '@basics/box/content';
+import BoxFooter from '@basics/box/footer';
+import { PrimaryButton, TertiaryButton } from '@basics/buttons';
+import { Input } from '@basics/inputs';
 import { tokenMap, MODULE_ASSETS_NAME_ID_MAP, regex } from '@constants';
 import { extractAddressFromPublicKey } from '@common/utilities/account';
 import ProgressBar from '../progressBar';

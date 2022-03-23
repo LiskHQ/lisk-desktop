@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
 
-import { PrimaryButton } from '@views/basics/buttons';
-import Icon from '@views/basics/icon';
+import { PrimaryButton } from '@basics/buttons';
+import Icon from '@basics/icon';
 import styles from './loadLatestButton.css';
 
 const shouldShow = {

@@ -2,8 +2,8 @@ import { to } from 'await-to-js';
 import React from 'react';
 import { getPublicKey, validatePin } from '@common/utilities/hwManager';
 import { externalLinks } from '@constants';
-import { Input } from '@views/basics/inputs';
-import { PrimaryButton, TertiaryButton } from '@views/basics/buttons';
+import { Input } from '@basics/inputs';
+import { PrimaryButton, TertiaryButton } from '@basics/buttons';
 import styles from './requestPin.css';
 
 class RequestPin extends React.Component {

@@ -1,6 +1,6 @@
 import React from 'react';
 import { MODULE_ASSETS_MAP } from '@constants';
-import Icon from '@views/basics/icon';
+import Icon from '@basics/icon';
 import { truncateAddress } from '@common/utilities/account';
 import LiskAmount from '../liskAmount';
 import styles from './transactionsAndBlocks.css';

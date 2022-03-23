@@ -1,7 +1,7 @@
 /* eslint-disable max-lines */
 import React from 'react';
-import FlashMessage from '@views/basics/flashMessage/flashMessage';
-import Icon from '@views/basics/icon';
+import FlashMessage from '@basics/flashMessage/flashMessage';
+import Icon from '@basics/icon';
 import styles from './styles.css';
 
 const PhraseRevoveryWarningMessage = ({ title, children }) => (

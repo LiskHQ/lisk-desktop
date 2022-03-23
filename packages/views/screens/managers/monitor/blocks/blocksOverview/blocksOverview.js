@@ -1,12 +1,12 @@
 import React from 'react';
 import grid from 'flexboxgrid/dist/flexboxgrid.css';
 import { chartStyles } from '@constants';
-import Box from '@views/basics/box';
-import BoxHeader from '@views/basics/box/header';
-import BoxContent from '@views/basics/box/content';
-import BoxTabs from '@views/basics/tabs';
-import { DoughnutChart, BarChart } from '@views/basics/charts';
-import GuideTooltip, { GuideTooltipItem } from '@views/basics/charts/guideTooltip';
+import Box from '@basics/box';
+import BoxHeader from '@basics/box/header';
+import BoxContent from '@basics/box/content';
+import BoxTabs from '@basics/tabs';
+import { DoughnutChart, BarChart } from '@basics/charts';
+import GuideTooltip, { GuideTooltipItem } from '@basics/charts/guideTooltip';
 import styles from './blocksOverview.css';
 
 class BlocksOverview extends React.Component {

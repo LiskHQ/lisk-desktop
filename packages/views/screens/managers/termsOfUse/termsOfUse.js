@@ -1,8 +1,8 @@
 import React from 'react';
 import Piwik from '@common/utilities/piwik';
 import { routes } from '@constants';
-import { PrimaryButton } from '@views/basics/buttons';
-import Icon from '@views/basics/icon';
+import { PrimaryButton } from '@basics/buttons';
+import Icon from '@basics/icon';
 import styles from './termsOfUse.css';
 
 class TermsOfUse extends React.Component {

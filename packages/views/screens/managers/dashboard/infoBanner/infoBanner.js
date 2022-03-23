@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { withTranslation } from 'react-i18next';
 import { useSelector } from 'react-redux';
-import Icon from '@views/basics/icon';
+import Icon from '@basics/icon';
 import styles from './infoBanner.css';
 import Illustration from '../illustration';
 

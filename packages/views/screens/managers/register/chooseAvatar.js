@@ -3,8 +3,8 @@ import { withTranslation } from 'react-i18next';
 import { Link } from 'react-router-dom';
 import grid from 'flexboxgrid/dist/flexboxgrid.css';
 import { routes } from '@constants';
-import { PrimaryButton, TertiaryButton } from '@views/basics/buttons';
-import AccountVisual from '@views/basics/accountVisual';
+import { PrimaryButton, TertiaryButton } from '@basics/buttons';
+import AccountVisual from '@basics/accountVisual';
 import registerStyles from './register.css';
 import styles from './chooseAvatar.css';
 

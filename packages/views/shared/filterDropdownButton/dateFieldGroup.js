@@ -3,7 +3,7 @@ import React from 'react';
 import moment from 'moment';
 import { firstBlockTime } from '@constants';
 import { getDateTimestampFromFirstBlock, formatInputToDate } from '@common/utilities/datetime';
-import Feedback from '@views/basics/feedback/feedback';
+import Feedback from '@basics/feedback/feedback';
 import DateField from './dateField';
 import styles from './filters.css';
 

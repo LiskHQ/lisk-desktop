@@ -1,6 +1,6 @@
 import React from 'react';
-import Box from '@views/basics/box';
-import BoxContent from '@views/basics/box/content';
+import Box from '@basics/box';
+import BoxContent from '@basics/box/content';
 import TransactionResult from '@shared/transactionResult';
 import { statusMessages, getTransactionStatus } from '@shared/transactionResult/statusConfig';
 

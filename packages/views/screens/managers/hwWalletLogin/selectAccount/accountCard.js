@@ -2,12 +2,12 @@ import React, { useState, useEffect } from 'react';
 import { withTranslation } from 'react-i18next';
 import { tokenMap } from '@constants';
 import { truncateAddress } from '@common/utilities/account';
-import { TertiaryButton } from '@views/basics/buttons';
-import AccountVisual from '@views/basics/accountVisual';
+import { TertiaryButton } from '@basics/buttons';
+import AccountVisual from '@basics/accountVisual';
 import LiskAmount from '@shared/liskAmount';
-import { Input } from '@views/basics/inputs';
-import Icon from '@views/basics/icon';
-import Tooltip from '@views/basics/tooltip/tooltip';
+import { Input } from '@basics/inputs';
+import Icon from '@basics/icon';
+import Tooltip from '@basics/tooltip/tooltip';
 import styles from './selectAccount.css';
 
 const AccountCard = ({

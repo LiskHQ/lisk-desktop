@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import React from 'react';
 import { routes } from '@constants';
 import { validateAddress } from '@common/utilities/validators';
-import AccountVisual from '@views/basics/accountVisual';
+import AccountVisual from '@basics/accountVisual';
 
 import styles from './styles.css';
 

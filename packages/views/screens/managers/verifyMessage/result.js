@@ -2,9 +2,9 @@ import { cryptography } from '@liskhq/lisk-client';
 import PropTypes from 'prop-types';
 import React from 'react';
 
-import { PrimaryButton } from '@views/basics/buttons';
-import BoxFooter from '@views/basics/box/footer';
-import Illustration from '@views/basics/illustration';
+import { PrimaryButton } from '@basics/buttons';
+import BoxFooter from '@basics/box/footer';
+import Illustration from '@basics/illustration';
 import { routes } from '@constants';
 import styles from './verifyMessage.css';
 

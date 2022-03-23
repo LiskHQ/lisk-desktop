@@ -1,8 +1,8 @@
 import React from 'react';
 import grid from 'flexboxgrid/dist/flexboxgrid.css';
-import Box from '@views/basics/box';
-import BoxHeader from '@views/basics/box/header';
-import BoxContent from '@views/basics/box/content';
+import Box from '@basics/box';
+import BoxHeader from '@basics/box/header';
+import BoxContent from '@basics/box/content';
 import NotFound from '@shared/notFound';
 import { isEmpty } from '@common/utilities/helpers';
 import delegatePerformanceDetails from './delegatePerformanceDetails';

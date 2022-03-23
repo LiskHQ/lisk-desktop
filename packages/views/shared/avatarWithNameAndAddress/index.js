@@ -1,5 +1,5 @@
 import React from 'react';
-import AccountVisual from '@views/basics/accountVisual';
+import AccountVisual from '@basics/accountVisual';
 import styles from './avatarWithNameAndAddress.css';
 
 const AvatarWithNameAndAddress = ({ username, account: { address } }) => (

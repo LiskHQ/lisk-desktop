@@ -1,8 +1,8 @@
 import React from 'react';
 import QRCode from 'qrcode.react';
-import CopyToClipboard from '@views/basics/copyToClipboard';
-import { PrimaryButton } from '@views/basics/buttons';
-import Dialog from '@views/basics/dialog/dialog';
+import CopyToClipboard from '@basics/copyToClipboard';
+import { PrimaryButton } from '@basics/buttons';
+import Dialog from '@basics/dialog/dialog';
 import styles from './request.css';
 
 const RequestWrapper = ({

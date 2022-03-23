@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import CheckBox from '@views/basics/checkBox';
+import CheckBox from '@basics/checkBox';
 import styles from './discreetModeToggle.css';
 
 const DiscreetModeToggle = ({

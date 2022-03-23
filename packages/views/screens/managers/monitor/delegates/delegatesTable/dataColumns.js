@@ -3,9 +3,9 @@ import React from 'react';
 import { formatAmountBasedOnLocale } from '@common/utilities/formattedNumber';
 import { fromRawLsk } from '@common/utilities/lsk';
 import { truncateAddress } from '@common/utilities/account';
-import Tooltip from '@views/basics/tooltip/tooltip';
-import Icon from '@views/basics/icon';
-import AccountVisual from '@views/basics/accountVisual';
+import Tooltip from '@basics/tooltip/tooltip';
+import Icon from '@basics/icon';
+import AccountVisual from '@basics/accountVisual';
 import { DEFAULT_STANDBY_THRESHOLD } from '@constants';
 import {
   getDelegateDetailsClass,

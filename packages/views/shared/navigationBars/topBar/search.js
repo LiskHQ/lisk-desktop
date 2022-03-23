@@ -2,10 +2,10 @@ import React from 'react';
 
 import { routes, regex } from '@constants';
 import { selectSearchParamValue } from '@common/utilities/searchParams';
-import Icon from '@views/basics/icon';
-import DialogLink from '@views/basics/dialog/link';
-import AccountVisual from '@views/basics/accountVisual';
-import Tooltip from '@views/basics/tooltip/tooltip';
+import Icon from '@basics/icon';
+import DialogLink from '@basics/dialog/link';
+import AccountVisual from '@basics/accountVisual';
+import Tooltip from '@basics/tooltip/tooltip';
 import styles from './topBar.css';
 
 /**

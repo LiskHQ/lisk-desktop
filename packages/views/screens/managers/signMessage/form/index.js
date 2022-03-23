@@ -2,13 +2,13 @@ import React, { useEffect, useState } from 'react';
 
 import { parseSearchParams } from '@common/utilities/searchParams';
 import Piwik from '@common/utilities/piwik';
-import { AutoResizeTextarea } from '@views/basics/inputs';
-import { PrimaryButton } from '@views/basics/buttons';
-import Box from '@views/basics/box';
-import Tooltip from '@views/basics/tooltip/tooltip';
-import BoxContent from '@views/basics/box/content';
-import BoxFooter from '@views/basics/box/footer';
-import BoxInfoText from '@views/basics/box/infoText';
+import { AutoResizeTextarea } from '@basics/inputs';
+import { PrimaryButton } from '@basics/buttons';
+import Box from '@basics/box';
+import Tooltip from '@basics/tooltip/tooltip';
+import BoxContent from '@basics/box/content';
+import BoxFooter from '@basics/box/footer';
+import BoxInfoText from '@basics/box/infoText';
 import styles from '../signMessage.css';
 
 const Form = ({

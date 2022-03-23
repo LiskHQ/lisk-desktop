@@ -1,6 +1,6 @@
 import React from 'react';
-import AccountVisual from '@views/basics/accountVisual';
-import { Input } from '@views/basics/inputs';
+import AccountVisual from '@basics/accountVisual';
+import { Input } from '@basics/inputs';
 import styles from './addBookmark.css';
 
 const getFields = t => [{

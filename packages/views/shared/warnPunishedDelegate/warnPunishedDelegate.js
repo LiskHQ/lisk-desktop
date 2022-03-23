@@ -3,10 +3,10 @@ import { withTranslation } from 'react-i18next';
 import PropTypes from 'prop-types';
 import { routes } from '@constants';
 import { useTheme } from '@common/utilities/theme';
-import { SecondaryButton } from '@views/basics/buttons';
-import FlashMessage from '@views/basics/flashMessage/flashMessage';
-import FlashMessageHolder from '@views/basics/flashMessage/holder';
-import Icon from '@views/basics/icon';
+import { SecondaryButton } from '@basics/buttons';
+import FlashMessage from '@basics/flashMessage/flashMessage';
+import FlashMessageHolder from '@basics/flashMessage/holder';
+import Icon from '@basics/icon';
 import styles from './warnPunishedDelegate.css';
 
 const WarnPunishedDelegate = ({

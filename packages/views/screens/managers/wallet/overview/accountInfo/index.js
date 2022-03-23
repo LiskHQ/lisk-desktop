@@ -1,8 +1,8 @@
 import React, { useState } from 'react';
-import AccountVisual from '@views/basics/accountVisual';
-import Box from '@views/basics/box';
-import BoxContent from '@views/basics/box/content';
-import Icon from '@views/basics/icon';
+import AccountVisual from '@basics/accountVisual';
+import Box from '@basics/box';
+import BoxContent from '@basics/box/content';
+import Icon from '@basics/icon';
 import styles from './accountInfo.css';
 import Identity from './identity';
 import ActionBar from './actionBar';

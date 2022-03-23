@@ -1,8 +1,8 @@
 import React from 'react';
 import { useDispatch } from 'react-redux';
 import { routes } from '@constants';
-import Icon from '@views/basics/icon';
-import Tooltip from '@views/basics/tooltip/tooltip';
+import Icon from '@basics/icon';
+import Tooltip from '@basics/tooltip/tooltip';
 import Piwik from '@common/utilities/piwik';
 import { accountLoggedOut } from '@common/store/actions';
 import styles from './topBar.css';

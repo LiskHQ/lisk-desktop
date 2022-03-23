@@ -1,9 +1,9 @@
 import React from 'react';
 import LiskAmount from '@shared/liskAmount';
-import Box from '@views/basics/box';
-import BoxHeader from '@views/basics/box/header';
-import BoxContent from '@views/basics/box/content';
-import Tooltip from '@views/basics/tooltip/tooltip';
+import Box from '@basics/box';
+import BoxHeader from '@basics/box/header';
+import BoxContent from '@basics/box/content';
+import Tooltip from '@basics/tooltip/tooltip';
 import { tokenMap } from '@constants';
 import Footer from './footer';
 import styles from './transactionSummary.css';

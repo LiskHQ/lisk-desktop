@@ -2,7 +2,7 @@ import React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { settingsUpdated } from '@common/store/actions';
 import { selectSettings } from '@store/selectors';
-import { Input } from '@views/basics/inputs';
+import { Input } from '@basics/inputs';
 import { defaultDerivationPath } from '@common/utilities/explicitBipKeyDerivation';
 import styles from '../login.css';
 

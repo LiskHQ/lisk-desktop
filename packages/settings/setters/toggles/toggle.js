@@ -2,8 +2,8 @@ import React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 
 import { settingsUpdated } from '@common/store/actions';
-import Tooltip from '@views/basics/tooltip/tooltip';
-import Icon from '@views/basics/icon';
+import Tooltip from '@basics/tooltip/tooltip';
+import Icon from '@basics/icon';
 import styles from './topBar.css';
 
 /**
