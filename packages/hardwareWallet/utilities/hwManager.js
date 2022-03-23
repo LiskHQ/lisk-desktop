@@ -11,7 +11,7 @@ import {
   subscribeToDevicesList,
   validatePin,
   signMessage,
-} from '../../libs/hwManager/communication';
+} from '@libs/hwManager/communication';
 import { extractAddressFromPublicKey } from './account';
 
 const getAccountBundle = async (deviceId, network, offset) => {

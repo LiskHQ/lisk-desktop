@@ -6,9 +6,9 @@ import {
 } from './hwManager';
 import * as accountApi from './api/account';
 import accounts from '../../test/constants/accounts';
-import * as communication from '../../libs/hwManager/communication';
+import * as communication from '@libs/hwManager/communication';
 
-jest.mock('../../libs/hwManager/communication', () => ({
+jest.mock('@libs/hwManager/communication', () => ({
   getPublicKey: jest.fn(),
   signTransaction: jest.fn(),
   signMessage: jest.fn(),
