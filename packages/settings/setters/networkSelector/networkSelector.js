@@ -1,6 +1,7 @@
 import React, { useRef } from 'react';
 
-import networks, { networkKeys } from '@common/configuration';
+import networks from '@common/configuration';
+import { networkKeys } from '@network/configuration/networks';
 import { addHttp } from '@common/utilities/login';
 import { SecondaryButton } from '@basics/buttons';
 import { getNetworksList } from '@common/utilities/getNetwork';

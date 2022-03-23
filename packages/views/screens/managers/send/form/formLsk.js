@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { maxMessageLength } from '@common/configuration';
+import { maxMessageLength } from '@transaction/configuration/transactions';
 import { MODULE_ASSETS_NAME_ID_MAP } from '@transaction/configuration/moduleAssets';
 import { toRawLsk } from '@token/utilities/lsk';
 import TransactionPriority, { useTransactionPriority, useTransactionFeeCalculation } from '@shared/transactionPriority';

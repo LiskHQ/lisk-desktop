@@ -1,7 +1,7 @@
 import React from 'react';
 import { mount } from 'enzyme';
 import { timerReset } from '@common/store/actions';
-import { wallet as account } from '@wallet/configuration/account';
+import account from '@wallet/configuration/account';
 import Warning from './warning';
 
 jest.mock('react-toastify', () => ({

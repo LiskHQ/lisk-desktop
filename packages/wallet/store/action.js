@@ -2,11 +2,11 @@
 import { to } from 'await-to-js';
 import { toast } from 'react-toastify';
 import {
-  MODULE_ASSETS_NAME_ID_MAP,
   loginTypes,
   actionTypes,
-  tokenMap,
 } from '@common/configuration';
+import { tokenMap } from '@token/configuration';
+import { MODULE_ASSETS_NAME_ID_MAP } from '@transaction/configuration/moduleAssets';
 import { toRawLsk } from '@token/utilities/lsk';
 import { isEmpty } from '@common/utilities/helpers';
 import { create } from '@transaction/api';

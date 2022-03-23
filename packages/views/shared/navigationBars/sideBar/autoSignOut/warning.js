@@ -5,7 +5,8 @@ import { toast } from 'react-toastify';
 import { useDispatch } from 'react-redux';
 import { withTranslation } from 'react-i18next';
 import { timerReset } from '@common/store/actions';
-import { account, timeOutWarningId } from '@common/configuration';
+import { timeOutWarningId } from '@common/configuration';
+import account from '@wallet/configuration/account';
 import styles from './autoSignOut.css';
 
 const TimeOutToast = ({

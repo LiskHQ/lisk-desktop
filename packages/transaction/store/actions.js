@@ -1,8 +1,8 @@
 import to from 'await-to-js';
 
-import {
-  actionTypes, tokenMap, MODULE_ASSETS_NAME_ID_MAP, DEFAULT_LIMIT,
-} from '@common/configuration';
+import { actionTypes, DEFAULT_LIMIT } from '@common/configuration';
+import { tokenMap } from '@token/configuration';
+import { MODULE_ASSETS_NAME_ID_MAP } from '@transaction/configuration/moduleAssets';
 import { signatureCollectionStatus } from '@transaction/configuration/txStatus';
 import { isEmpty } from '@common/utilities/helpers';
 import { getTransactions, create, broadcast } from '@transaction/api';

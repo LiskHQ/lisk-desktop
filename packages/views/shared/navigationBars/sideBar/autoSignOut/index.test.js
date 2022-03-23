@@ -1,6 +1,6 @@
 import React from 'react';
 import { mount } from 'enzyme';
-import { wallet as account } from '@wallet/configuration/account';
+import account from '@wallet/configuration/account';
 import AutoSignOut from './index';
 
 describe('AutoSignOut', () => {

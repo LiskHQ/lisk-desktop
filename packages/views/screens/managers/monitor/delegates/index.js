@@ -9,7 +9,9 @@ import { getNetworkStatus } from '@network/api';
 import { getTransactions, getRegisteredDelegates } from '@transaction/api';
 import withData from '@common/utilities/withData';
 import withFilters from '@common/utilities/withFilters';
-import { MODULE_ASSETS_NAME_ID_MAP, tokenMap, DEFAULT_LIMIT } from '@common/configuration';
+import { DEFAULT_LIMIT } from '@common/configuration';
+import { MODULE_ASSETS_NAME_ID_MAP } from '@transaction/configuration/moduleAssets';
+import { tokenMap } from '@token/configuration';
 import Delegates from './delegates';
 
 const defaultUrlSearchParams = { search: '' };

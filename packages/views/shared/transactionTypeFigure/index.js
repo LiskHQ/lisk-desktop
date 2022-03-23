@@ -1,5 +1,6 @@
 import React from 'react';
-import { MODULE_ASSETS_NAME_ID_MAP, MODULE_ASSETS_MAP, tokenMap } from '@common/configuration';
+import { MODULE_ASSETS_NAME_ID_MAP, MODULE_ASSETS_MAP } from '@transaction/configuration/moduleAssets';
+import { tokenMap } from '@token/configuration';
 import { validateAddress } from '@common/utilities/validators';
 import AccountVisual from '@basics/accountVisual';
 import Icon from '@basics/icon';

@@ -1,4 +1,4 @@
-import { tokenKeys, tokenMap } from '@common/configuration';
+import { tokenKeys, tokenMap } from '@token/configuration';
 
 export const emptyBookmarks = tokenKeys.reduce((acc, token) => ({ ...acc, [token]: [] }), {});
 
