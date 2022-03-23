@@ -1,4 +1,6 @@
-import { HTTP_CODES, tokenMap, regex } from '@common/configuration';
+import { regex } from '@common/configuration';
+import { tokenMap } from '@token/configuration';
+import { HTTP_CODES } from '@wallet/configuration/httpCodes';
 import ws from '@common/utilities/api/ws';
 import { isEmpty } from '../../helpers';
 import { extractAddressFromPublicKey, extractPublicKey } from '../../account';

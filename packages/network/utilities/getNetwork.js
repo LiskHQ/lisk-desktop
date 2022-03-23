@@ -1,5 +1,5 @@
 import i18next from 'i18next';
-import { networks, networkKeys } from '@common/configuration';
+import networks, { networkKeys } from '@common/configuration';
 
 export const getNetworksList = () =>
   Object.values(networkKeys)

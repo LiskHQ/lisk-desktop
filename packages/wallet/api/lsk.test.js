@@ -1,4 +1,4 @@
-import { HTTP_CODES } from '@common/configuration';
+import { HTTP_CODES } from '@wallet/configuration/httpCodes';
 import ws from '@common/utilities/api/ws';
 import { getAccount, getAccounts } from './lsk';
 import accounts from '../../../../test/constants/accounts';

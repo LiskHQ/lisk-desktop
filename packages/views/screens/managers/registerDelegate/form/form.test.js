@@ -1,6 +1,6 @@
 import React from 'react';
 import { mount } from 'enzyme';
-import { networks } from '@common/configuration';
+import networks from '@network/configuration/networks';
 import * as delegatesApi from '@dpos/delegate/api';
 import { getTransactionBaseFees, getTransactionFee, create } from '@transaction/api';
 import { fromRawLsk } from '@token/utilities/lsk';

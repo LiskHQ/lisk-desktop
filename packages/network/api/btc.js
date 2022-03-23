@@ -1,5 +1,5 @@
 import * as bitcoin from 'bitcoinjs-lib';
-import { networkKeys } from '@common/configuration';
+import { networkKeys } from '@network/configuration/networks';
 
 /**
  * Defines the BTC testnet/mainnet network

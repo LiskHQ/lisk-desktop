@@ -1,4 +1,4 @@
-import { networks } from '@common/configuration';
+import networks from '@network/configuration/networks';
 import {
   validateAddress,
   validateLSKPublicKey,
