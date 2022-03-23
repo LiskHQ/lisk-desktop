@@ -6,7 +6,7 @@ import { getModuleAssetTitle } from '@transaction/utilities/moduleAssets';
 import Box from '@basics/box';
 import BoxContent from '@basics/box/content';
 import Table from '@basics/table';
-import { selectCurrentBlockHeight } from '@store/selectors';
+import { selectCurrentBlockHeight } from '@common/store/selectors';
 import StickyHeader from '@shared/stickyHeader';
 import FilterBar from '@shared/filterBar';
 import FilterDropdownButton from '@shared/filterDropdownButton';

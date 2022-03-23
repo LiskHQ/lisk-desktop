@@ -1,9 +1,9 @@
 import React from 'react';
 import { mount } from 'enzyme';
-import * as hwManager from '@common/utilities/hwManager';
+import * as hwManager from '@hardwareWallet/utilities/hwManager';
 import HwWalletLogin from './hwWalletLogin';
 
-jest.mock('@common/utilities/hwManager', () => ({
+jest.mock('@hardwareWallet/utilities/hwManager', () => ({
   subscribeToDevicesList: jest.fn().mockImplementation(fn => new Promise((resolve) => {
     fn([
       { deviceId: 1, openApp: false, manufacturer: 'Ledger' },

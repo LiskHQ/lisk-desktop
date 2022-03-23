@@ -4,7 +4,7 @@ import { useDispatch } from 'react-redux';
 import { withRouter } from 'react-router-dom';
 
 import TransactionSignature from '@shared/transactionSignature';
-import { removeSearchParamsFromUrl } from '@common/utilities/searchParams';
+import { removeSearchParamsFromUrl } from '@screens/router/searchParams';
 import { processLaunchProtocol } from '@common/store/actions';
 import MultiStep from '@shared/multiStep';
 

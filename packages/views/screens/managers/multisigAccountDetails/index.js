@@ -5,8 +5,8 @@ import { compose } from 'redux';
 import { withRouter } from 'react-router';
 import { getAccount } from '@wallet/api';
 import withData from '@common/utilities/withData';
-import { selectSearchParamValue } from '@common/utilities/searchParams';
-import { selectAccount } from '@store/selectors';
+import { selectSearchParamValue } from '@screens/router/searchParams';
+import { selectAccount } from '@common/store/selectors';
 import routes from '@screens/router/routes';
 import MultisigAccountDetailsComp from './multisigAccountDetails';
 

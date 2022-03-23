@@ -4,8 +4,8 @@ import { useTranslation } from 'react-i18next';
 
 import { validateAmountFormat } from '@common/utilities/validators';
 import { fromRawLsk } from '@token/utilities/lsk';
-import { selectSearchParamValue } from '@common/utilities/searchParams';
-import { selectAccountBalance, selectLSKAddress } from '@store/selectors';
+import { selectSearchParamValue } from '@screens/router/searchParams';
+import { selectAccountBalance, selectLSKAddress } from '@common/store/selectors';
 import { regex } from '@common/configuration';
 import { tokenMap } from '@token/configuration/tokens';
 

@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { cryptography } from '@liskhq/lisk-client'; // eslint-disable-line
 
 import { loginTypes } from '@common/configuration';
-import { signMessageByHW, getDeviceType } from '@common/utilities/hwManager';
+import { signMessageByHW, getDeviceType } from '@hardwareWallet/utilities/hwManager';
 import Illustration from '@basics/illustration';
 import BoxContent from '@basics/box/content';
 import styles from '../signMessage.css';

@@ -1,6 +1,6 @@
 import { regex } from '@common/configuration';
 import ws, { subscribe, unsubscribe } from '@common/utilities/api/ws';
-import { extractAddressFromPublicKey } from '../../account';
+import { extractAddressFromPublicKey } from '@wallet/utilities/account';
 
 const httpPrefix = '/api/v2';
 

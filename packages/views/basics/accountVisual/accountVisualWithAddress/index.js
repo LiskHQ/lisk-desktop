@@ -5,7 +5,7 @@ import { compose } from 'redux';
 import PropTypes from 'prop-types';
 
 import { MODULE_ASSETS_NAME_ID_MAP, MODULE_ASSETS_MAP } from '@transaction/configuration/moduleAssets';
-import { truncateAddress } from '@common/utilities/account';
+import { truncateAddress } from '@wallet/utilities/account';
 import { getModuleAssetTitle } from '@transaction/utilities/moduleAssets';
 import Icon from '@basics/icon';
 import AccountVisual from '@basics/accountVisual';

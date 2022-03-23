@@ -9,7 +9,7 @@ import { Input } from '@basics/inputs';
 import { regex } from '@common/configuration';
 import { tokenMap } from '@token/configuration/tokens';
 import { MODULE_ASSETS_NAME_ID_MAP } from '@transaction/configuration/moduleAssets';
-import { extractAddressFromPublicKey } from '@common/utilities/account';
+import { extractAddressFromPublicKey } from '@wallet/utilities/account';
 import ProgressBar from '../progressBar';
 import MemberField from './memberField';
 import Feedback from './feedback';

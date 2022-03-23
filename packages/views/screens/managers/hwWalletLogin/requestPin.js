@@ -1,6 +1,6 @@
 import { to } from 'await-to-js';
 import React from 'react';
-import { getPublicKey, validatePin } from '@common/utilities/hwManager';
+import { getPublicKey, validatePin } from '@hardwareWallet/utilities/hwManager';
 import { externalLinks } from '@common/configuration';
 import { Input } from '@basics/inputs';
 import { PrimaryButton, TertiaryButton } from '@basics/buttons';

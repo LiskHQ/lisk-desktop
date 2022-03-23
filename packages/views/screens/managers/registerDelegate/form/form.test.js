@@ -4,7 +4,7 @@ import networks from '@network/configuration/networks';
 import * as delegatesApi from '@dpos/delegate/api';
 import { getTransactionBaseFees, getTransactionFee, create } from '@transaction/api';
 import { fromRawLsk } from '@token/utilities/lsk';
-import * as hwManagerAPI from '@common/utilities/hwManager';
+import * as hwManagerAPI from '@hardwareWallet/utilities/hwManager';
 import accounts from '../../../../../test/constants/accounts';
 import SelectNameAndFee from './form';
 import flushPromises from '../../../../../test/unit-test-utils/flushPromises';
@@ -14,7 +14,7 @@ jest.mock('@transaction/api');
 jest.mock('@dpos/delegate/api', () => ({
   getDelegate: jest.fn().mockImplementation(() => Promise.resolve({ data: [] })),
 }));
-jest.mock('@common/utilities/hwManager');
+jest.mock('@hardwareWallet/utilities/hwManager');
 
 const transactionBaseFees = {
   Low: 156,

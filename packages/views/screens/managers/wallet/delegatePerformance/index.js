@@ -3,7 +3,7 @@ import { compose } from 'redux';
 import { withRouter } from 'react-router-dom';
 import { getDelegate } from '@dpos/delegate/api';
 import withData from '@common/utilities/withData';
-import { parseSearchParams } from '@common/utilities/searchParams';
+import { parseSearchParams } from '@screens/router/searchParams';
 import { withTranslation } from 'react-i18next';
 import DelegatePerformance from './delegatePerformance';
 

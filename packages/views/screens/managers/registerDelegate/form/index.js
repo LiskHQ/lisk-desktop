@@ -1,6 +1,6 @@
 /* istanbul ignore file */
 import { connect } from 'react-redux';
-import { getActiveTokenAccount } from '@common/utilities/account';
+import { getActiveTokenAccount } from '@wallet/utilities/account';
 import Form from './form';
 
 const mapStateToProps = state => ({

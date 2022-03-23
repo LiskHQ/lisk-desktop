@@ -14,9 +14,9 @@ import {
 import { joinModuleAndAssetIds } from '@transaction/utilities/moduleAssets';
 import {
   createTransactionObject, sign,
-} from '@common/utilities/transaction';
+} from '@transaction/utilities/transaction';
 import { fromRawLsk } from '@token/utilities/lsk';
-import { validateAddress } from '../../validators';
+import { validateAddress } from '@common/utilities/validators';
 import { getDelegates } from '../delegate';
 
 const httpPrefix = '/api/v2';

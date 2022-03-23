@@ -1,5 +1,5 @@
 import { txStatusTypes } from '@transaction/configuration/txStatus';
-import { getDeviceType } from '@common/utilities/hwManager';
+import { getDeviceType } from '@hardwareWallet/utilities/hwManager';
 
 const illustrations = {
   default: {

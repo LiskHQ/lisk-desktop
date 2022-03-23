@@ -2,7 +2,7 @@ import React from 'react';
 import { withTranslation } from 'react-i18next';
 import { useSelector } from 'react-redux';
 import { networkKeys } from '@network/configuration/networks';
-import { selectNetworkName } from '@store/selectors';
+import { selectNetworkName } from '@common/store/selectors';
 import Tooltip from '@basics/tooltip/tooltip';
 import styles from './balanceInfo.css';
 

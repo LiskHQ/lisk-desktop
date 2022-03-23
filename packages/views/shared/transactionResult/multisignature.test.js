@@ -1,7 +1,7 @@
 import React from 'react';
 import { mount } from 'enzyme';
 import copyToClipboard from 'copy-to-clipboard';
-import * as txUtils from '@common/utilities/transaction';
+import * as txUtils from '@transaction/utilities/transaction';
 import routes from '@screens/router/routes';
 import { txStatusTypes } from '@transaction/configuration/txStatus';
 import Multisignature, { FullySignedActions, PartiallySignedActions } from './multisignature';

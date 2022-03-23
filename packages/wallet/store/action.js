@@ -10,10 +10,10 @@ import { MODULE_ASSETS_NAME_ID_MAP } from '@transaction/configuration/moduleAsse
 import { toRawLsk } from '@token/utilities/lsk';
 import { isEmpty } from '@common/utilities/helpers';
 import { create } from '@transaction/api';
-import { selectCurrentBlockHeight } from '@store/selectors';
+import { selectCurrentBlockHeight } from '@common/store/selectors';
 import { getAccount, extractAddress as extractBitcoinAddress } from '@wallet/api';
-import { getConnectionErrorMessage } from '@common/utilities/getNetwork';
-import { extractKeyPair, getUnlockableUnlockObjects } from '@common/utilities/account';
+import { getConnectionErrorMessage } from '@network/utilities/getNetwork';
+import { extractKeyPair, getUnlockableUnlockObjects } from '@wallet/utilities/account';
 import { defaultDerivationPath } from '@common/utilities/explicitBipKeyDerivation';
 import { networkStatusUpdated } from '@network/store/action';
 

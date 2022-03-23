@@ -6,7 +6,7 @@ import { withRouter } from 'react-router';
 
 import routesMap from '@screens/router/routesMap';
 import { modals } from '@screens/router/routes';
-import { parseSearchParams, removeSearchParamsFromUrl } from '@common/utilities/searchParams';
+import { parseSearchParams, removeSearchParamsFromUrl } from '@screens/router/searchParams';
 import styles from './dialog.css';
 
 // eslint-disable-next-line max-statements

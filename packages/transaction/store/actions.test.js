@@ -1,7 +1,7 @@
 import { actionTypes, loginTypes } from '@common/configuration';
-import * as hwManagerApi from '@common/utilities/hwManager';
+import * as hwManagerApi from '@hardwareWallet/utilities/hwManager';
 import httpApi from '@common/utilities/api/http';
-import * as transactionUtils from '@common/utilities/transaction';
+import * as transactionUtils from '@transaction/utilities/transaction';
 import {
   emptyTransactionsData,
   transactionsRetrieved,
@@ -18,7 +18,7 @@ import { getState } from '../../../test/fixtures/transactions';
 import accounts from '../../../test/constants/accounts';
 
 jest.mock('@dpos/delegate/api');
-jest.mock('@common/utilities/hwManager');
+jest.mock('@hardwareWallet/utilities/hwManager');
 jest.mock('@common/utilities/api/http');
 
 describe('actions: transactions', () => {

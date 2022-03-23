@@ -12,7 +12,7 @@ import Feedback from '@basics/feedback/feedback';
 import LabeledValue from '@basics/labeledValue';
 import LiskAmount from '@shared/liskAmount';
 import TransactionsTable from '@shared/transactionsTable';
-import { truncateAddress } from '@common/utilities/account';
+import { truncateAddress } from '@wallet/utilities/account';
 import AccountVisual from '@basics/accountVisual';
 import styles from './blockDetails.css';
 

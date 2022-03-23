@@ -5,7 +5,7 @@ import { PrimaryButton, SecondaryButton, TertiaryButton } from '@basics/buttons'
 import DialogLink from '@basics/dialog/link';
 import Tooltip from '@basics/tooltip/tooltip';
 import SignInTooltipWrapper from '@shared/signInTooltipWrapper';
-import { selectAccountBalance, selectLSKAddress } from '@store/selectors';
+import { selectAccountBalance, selectLSKAddress } from '@common/store/selectors';
 import EmptyBalanceTooltipWrapper from './emptyBalanceTooltipWrapper';
 import styles from './balanceInfo.css';
 

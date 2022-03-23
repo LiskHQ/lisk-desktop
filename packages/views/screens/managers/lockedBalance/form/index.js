@@ -5,11 +5,11 @@ import {
   calculateUnlockableBalance,
   getActiveTokenAccount,
   getUnlockableUnlockObjects,
-} from '@common/utilities/account';
+} from '@wallet/utilities/account';
 import { MODULE_ASSETS_NAME_ID_MAP } from '@transaction/configuration/moduleAssets';
 import TransactionPriority, { useTransactionFeeCalculation } from '@shared/transactionPriority';
 import useTransactionPriority from '@shared/transactionPriority/useTransactionPriority';
-import { selectCurrentBlockHeight } from '@store/selectors';
+import { selectCurrentBlockHeight } from '@common/store/selectors';
 import Form from './form';
 import BalanceTable from './balanceTable';
 

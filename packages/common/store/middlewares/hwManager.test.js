@@ -1,16 +1,16 @@
 import { toast } from 'react-toastify';
 import { actionTypes } from '@common/configuration';
-import { subscribeToDeviceConnected, subscribeToDeviceDisconnected } from '@common/utilities/hwManager';
-import { addSearchParamsToUrl } from '@common/utilities/searchParams';
+import { subscribeToDeviceConnected, subscribeToDeviceDisconnected } from '@hardwareWallet/utilities/hwManager';
+import { addSearchParamsToUrl } from '@screens/router/searchParams';
 import hwManagerMiddleware from './hwManager';
 import accounts from '../../../test/constants/accounts';
 
-jest.mock('@common/utilities/hwManager', () => ({
+jest.mock('@hardwareWallet/utilities/hwManager', () => ({
   subscribeToDeviceConnected: jest.fn().mockImplementation((fn) => fn({ model: 'testHW' })),
   subscribeToDeviceDisconnected: jest.fn().mockImplementation((fn) => fn({ model: 'testHW' })),
 }));
 
-jest.mock('@common/utilities/searchParams', () => ({
+jest.mock('@screens/router/searchParams', () => ({
   addSearchParamsToUrl: jest.fn(),
 }));
 

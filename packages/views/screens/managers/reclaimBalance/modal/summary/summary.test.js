@@ -6,15 +6,15 @@ import {
 } from '@transaction/api';
 import { tokenMap } from '@token/configuration/tokens';
 import useTransactionFeeCalculation from '@shared/transactionPriority/useTransactionFeeCalculation';
-import { truncateAddress } from '@common/utilities/account';
-import * as hwManagerAPI from '@common/utilities/hwManager';
+import { truncateAddress } from '@wallet/utilities/account';
+import * as hwManagerAPI from '@hardwareWallet/utilities/hwManager';
 import accounts from '../../../../../../test/constants/accounts';
 import Summary from './summary';
 import flushPromises from '../../../../../../test/unit-test-utils/flushPromises';
 
 jest.mock('@shared/transactionPriority/useTransactionFeeCalculation');
 jest.mock('@transaction/api');
-jest.mock('@common/utilities/hwManager');
+jest.mock('@hardwareWallet/utilities/hwManager');
 
 const transactionBaseFees = {
   Low: 156,

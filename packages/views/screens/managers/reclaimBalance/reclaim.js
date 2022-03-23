@@ -5,10 +5,10 @@ import Tooltip from '@basics/tooltip/tooltip';
 import { PrimaryButton } from '@basics/buttons';
 import DialogLink from '@basics/dialog/link';
 import AccountMigration from '@shared/accountMigration';
-import { hasEnoughBalanceForReclaim } from '@common/utilities/account';
+import { hasEnoughBalanceForReclaim } from '@wallet/utilities/account';
 import { fromRawLsk } from '@token/utilities/lsk';
 import { balanceNeededForReclaim } from '@wallet/configuration/account';
-import { selectActiveTokenAccount } from '@store/selectors';
+import { selectActiveTokenAccount } from '@common/store/selectors';
 import styles from './index.css';
 
 const Reclaim = ({ t }) => {

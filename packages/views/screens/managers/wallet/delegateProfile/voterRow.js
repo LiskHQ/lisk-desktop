@@ -2,7 +2,7 @@ import React from 'react';
 
 import { Link } from 'react-router-dom';
 import AccountVisual from '@basics/accountVisual';
-import { truncateAddress } from '@common/utilities/account';
+import { truncateAddress } from '@wallet/utilities/account';
 import styles from './delegateProfile.css';
 
 const VoterRow = ({ data = {} }) => {

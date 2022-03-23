@@ -1,6 +1,6 @@
 import React from 'react';
 
-import { truncateAddress } from '@common/utilities/account';
+import { truncateAddress } from '@wallet/utilities/account';
 import Tooltip from '@basics/tooltip/tooltip';
 import CopyToClipboard from '@basics/copyToClipboard';
 import styles from './accountInfo.css';

@@ -131,7 +131,7 @@ module.exports = {
     'packages/common/utilities/balanceChart.js', // This should be unskipped in issue #1499
     'src/utils/loading.js',
     'packages/common/utilities/platform.js',
-    'packages/common/utilities/hwManager.js',
+    'packages/hardwareWallet/utilities/hwManager.js',
     'packages/common/utilities/api/ws.js',
     'src/utils/account.js',
     'packages/common/utilities/datetime.js',

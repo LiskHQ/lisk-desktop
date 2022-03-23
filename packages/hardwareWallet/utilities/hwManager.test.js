@@ -5,7 +5,7 @@ import {
   signTransactionByHW,
   getNewAccountByIndex,
 } from './hwManager';
-import * as accountApi from './@wallet/api';
+import * as accountApi from '@wallet/api';
 import accounts from '../../test/constants/accounts';
 
 jest.mock('@libs/hwManager/communication', () => ({
@@ -14,7 +14,7 @@ jest.mock('@libs/hwManager/communication', () => ({
   signMessage: jest.fn(),
 }));
 
-jest.mock('./@wallet/api', () => ({
+jest.mock('@wallet/api', () => ({
   getAccounts: jest.fn(),
 }));
 

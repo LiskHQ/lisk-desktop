@@ -2,7 +2,7 @@ import React from 'react';
 import { mount } from 'enzyme';
 import UnlockDevice from './unlockDevice';
 
-jest.mock('@common/utilities/hwManager', () => ({
+jest.mock('@hardwareWallet/utilities/hwManager', () => ({
   checkIfInsideLiskApp: jest.fn(() => Promise.resolve()),
 }));
 

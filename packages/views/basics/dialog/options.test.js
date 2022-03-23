@@ -1,10 +1,10 @@
 import React from 'react';
 import { mountWithRouter } from '@common/utilities/testHelpers';
-import { removeSearchParamsFromUrl } from '@common/utilities/searchParams';
+import { removeSearchParamsFromUrl } from '@screens/router/searchParams';
 import Options from './options';
 import { PrimaryButton } from '../buttons';
 
-jest.mock('@common/utilities/searchParams', () => ({
+jest.mock('@screens/router/searchParams', () => ({
   removeSearchParamsFromUrl: jest.fn(),
 }));
 

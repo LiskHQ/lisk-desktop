@@ -1,7 +1,7 @@
 import React from 'react';
 import { withRouter } from 'react-router';
 
-import { removeSearchParamsFromUrl } from '@common/utilities/searchParams';
+import { removeSearchParamsFromUrl } from '@screens/router/searchParams';
 import Icon from '@basics/icon';
 
 import styles from './styles.css';

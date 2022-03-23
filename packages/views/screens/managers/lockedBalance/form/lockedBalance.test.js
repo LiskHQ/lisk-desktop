@@ -2,7 +2,7 @@ import { act } from 'react-dom/test-utils';
 import networks from '@network/configuration/networks';
 import { tokenMap } from '@token/configuration/tokens';
 import { mountWithProps } from '@common/utilities/testHelpers';
-import * as hwManagerAPI from '@common/utilities/hwManager';
+import * as hwManagerAPI from '@hardwareWallet/utilities/hwManager';
 import { create } from '@transaction/api';
 import useTransactionPriority from '@shared/transactionPriority/useTransactionPriority';
 import useTransactionFeeCalculation from '@shared/transactionPriority/useTransactionFeeCalculation';
@@ -16,7 +16,7 @@ jest.mock('@transaction/api');
 jest.mock('@common/store/actions/account', () => ({
   balanceUnlocked: jest.fn(),
 }));
-jest.mock('@common/utilities/hwManager');
+jest.mock('@hardwareWallet/utilities/hwManager');
 
 describe('Unlock LSK modal', () => {
   let wrapper;

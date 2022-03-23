@@ -11,9 +11,9 @@ import {
   transformTransaction,
   createTransactionObject,
   flattenTransaction,
-} from '@common/utilities/transaction';
-import { extractKeyPair } from '@common/utilities/account';
-import { getTransactionSignatureStatus } from '@screens/signMultiSignTransaction/helpers';
+} from '@transaction/utilities/transaction';
+import { extractKeyPair } from '@wallet/utilities/account';
+import { getTransactionSignatureStatus } from '@screens/managers/signMultiSignTransaction/helpers';
 import { timerReset } from '@wallet/store/action';
 import { loadingStarted, loadingFinished } from '@common/store/actions/loading';
 

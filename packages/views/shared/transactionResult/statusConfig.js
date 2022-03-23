@@ -1,4 +1,4 @@
-import { transactionToJSON, getNumberOfSignatures } from '@common/utilities/transaction';
+import { transactionToJSON, getNumberOfSignatures } from '@transaction/utilities/transaction';
 import { isEmpty } from '@common/utilities/helpers';
 import { txStatusTypes } from '@transaction/configuration/txStatus';
 

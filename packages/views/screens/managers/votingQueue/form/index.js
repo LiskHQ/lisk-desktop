@@ -1,8 +1,8 @@
 /* istanbul ignore file */
 import { connect } from 'react-redux';
 import { withTranslation } from 'react-i18next';
-import { containsTransactionType } from '@common/utilities/transaction';
-import { getActiveTokenAccount } from '@common/utilities/account';
+import { containsTransactionType } from '@transaction/utilities/transaction';
+import { getActiveTokenAccount } from '@wallet/utilities/account';
 import { MODULE_ASSETS_NAME_ID_MAP } from '@transaction/configuration/moduleAssets';
 import Form from './form';
 

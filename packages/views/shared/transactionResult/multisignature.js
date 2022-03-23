@@ -4,7 +4,7 @@ import {
   SecondaryButton,
 } from '@basics/buttons';
 import Illustration from '@basics/illustration';
-import { transactionToJSON, downloadJSON } from '@common/utilities/transaction';
+import { transactionToJSON, downloadJSON } from '@transaction/utilities/transaction';
 import routes from '@screens/router/routes';
 import { txStatusTypes } from '@transaction/configuration/txStatus';
 import { getErrorReportMailto } from '@common/utilities/helpers';

@@ -2,7 +2,7 @@
 import React from 'react';
 import { withTranslation } from 'react-i18next';
 import { useDispatch, useSelector } from 'react-redux';
-import { selectActiveTokenAccount } from '@store/selectors';
+import { selectActiveTokenAccount } from '@common/store/selectors';
 import { transactionBroadcasted } from '@common/store/actions';
 import StatusComponent from './status';
 

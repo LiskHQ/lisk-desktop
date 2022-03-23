@@ -6,7 +6,7 @@ export * from '@settings/store/action';
 export * from '@transaction/store/action';
 export * from '@dpos/store/actions/voting';
 export * from '@dpos/store/actions/watchList';
-export * from '@updater/store/actons/appUpdates';
+export * from '@updater/store/actions/appUpdates';
 export * from './loading';
 export * from './service';
 export { default as processLaunchProtocol } from './urlProcessor';

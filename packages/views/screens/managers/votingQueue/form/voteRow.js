@@ -4,7 +4,7 @@ import { useDispatch } from 'react-redux';
 import { tokenMap } from '@token/configuration/tokens';
 import { voteEdited } from '@common/store/actions';
 import { fromRawLsk, toRawLsk } from '@token/utilities/lsk';
-import { truncateAddress } from '@common/utilities/account';
+import { truncateAddress } from '@wallet/utilities/account';
 import AccountVisual from '@basics/accountVisual';
 import Box from '@basics/box';
 import { SecondaryButton, TertiaryButton } from '@basics/buttons';

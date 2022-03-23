@@ -1,7 +1,7 @@
 import { tokenMap } from '@token/configuration/tokens';
 import { subscribe, unsubscribe } from '@common/utilities/api/ws';
-import { validateAddress } from '../../validators';
-import { transformStringDateToUnixTimestamp } from '../../datetime';
+import { validateAddress } from '@common/utilities/validators';
+import { transformStringDateToUnixTimestamp } from '@common/utilities/datetime';
 
 const httpPrefix = '/api/v2';
 

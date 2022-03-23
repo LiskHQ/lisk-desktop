@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { withRouter } from 'react-router';
-import { removeSearchParamsFromUrl } from '@common/utilities/searchParams';
+import { removeSearchParamsFromUrl } from '@screens/router/searchParams';
 import Title from './title';
 import Description from './description';
 import Options from './options';

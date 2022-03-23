@@ -4,7 +4,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { withTranslation } from 'react-i18next';
 import { compose } from 'redux';
 
-import { parseSearchParams, addSearchParamsToUrl } from '@common/utilities/searchParams';
+import { parseSearchParams, addSearchParamsToUrl } from '@screens/router/searchParams';
 import { withRouter } from 'react-router';
 import { transactionsRetrieved } from '@common/store/actions';
 import {
@@ -12,7 +12,7 @@ import {
   selectActiveToken,
   selectSettings,
   selectTransactions,
-} from '@store/selectors';
+} from '@common/store/selectors';
 import TabsContainer from '@basics/tabsContainer/tabsContainer';
 import Overview from './overview';
 import DelegateTab from './delegateProfile';

@@ -1,6 +1,6 @@
 /* eslint-disable complexity */
 import React, { useState, useEffect } from 'react';
-import { transformTransaction, createTransactionObject, flattenTransaction } from '@common/utilities/transaction';
+import { transformTransaction, createTransactionObject, flattenTransaction } from '@transaction/utilities/transaction';
 import { joinModuleAndAssetIds } from '@transaction/utilities/moduleAssets';
 import Box from '@basics/box';
 import BoxContent from '@basics/box/content';

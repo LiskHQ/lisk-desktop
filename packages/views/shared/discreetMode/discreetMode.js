@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import routes from '@screens/router/routes';
-import { selectSearchParamValue } from '@common/utilities/searchParams';
+import { selectSearchParamValue } from '@screens/router/searchParams';
 import styles from './discreetMode.css';
 
 class DiscreetMode extends Component {

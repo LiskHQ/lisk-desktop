@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { withTranslation } from 'react-i18next';
 import { tokenMap } from '@token/configuration/tokens';
-import { truncateAddress } from '@common/utilities/account';
+import { truncateAddress } from '@wallet/utilities/account';
 import { TertiaryButton } from '@basics/buttons';
 import AccountVisual from '@basics/accountVisual';
 import LiskAmount from '@shared/liskAmount';

@@ -1,6 +1,6 @@
 /* eslint-disable max-lines */
 import { MODULE_ASSETS_NAME_ID_MAP } from '@transaction/configuration/moduleAssets';
-import { getTxAmount } from '@common/utilities/transaction';
+import { getTxAmount } from '@transaction/utilities/transaction';
 import {
   getTransaction,
   getTransactions,

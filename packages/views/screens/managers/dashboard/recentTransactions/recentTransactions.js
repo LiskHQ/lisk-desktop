@@ -3,7 +3,7 @@ import { withTranslation } from 'react-i18next';
 import { useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
 
-import { selectAccount, selectCurrentBlockHeight } from '@store/selectors';
+import { selectAccount, selectCurrentBlockHeight } from '@common/store/selectors';
 import routes from '@screens/router/routes';
 import { tokenMap } from '@token/configuration/tokens';
 import { SecondaryButton } from '@basics/buttons';

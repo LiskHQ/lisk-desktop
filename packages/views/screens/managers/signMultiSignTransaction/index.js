@@ -2,7 +2,7 @@
 import React from 'react';
 import { withRouter } from 'react-router-dom';
 import MultiStep from '@shared/multiStep';
-import { removeSearchParamsFromUrl } from '@common/utilities/searchParams';
+import { removeSearchParamsFromUrl } from '@screens/router/searchParams';
 import TransactionSignature from '@shared/transactionSignature';
 import Dialog from '@basics/dialog/dialog';
 

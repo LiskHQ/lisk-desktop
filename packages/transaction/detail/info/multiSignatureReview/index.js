@@ -2,7 +2,7 @@ import React from 'react';
 
 import { tokenMap } from '@token/configuration/tokens';
 import { toRawLsk } from '@token/utilities/lsk';
-import { truncateAddress } from '@common/utilities/account';
+import { truncateAddress } from '@wallet/utilities/account';
 import LiskAmount from '@shared/liskAmount';
 import AccountVisual from '@basics/accountVisual';
 

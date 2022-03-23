@@ -6,7 +6,7 @@ import { withRouter } from 'react-router-dom';
 import { getBlock } from '@block/api';
 import { getTransactions } from '@transaction/api';
 import withData from '@common/utilities/withData';
-import { selectSearchParamValue } from '@common/utilities/searchParams';
+import { selectSearchParamValue } from '@screens/router/searchParams';
 import { tokenMap } from '@token/configuration/tokens';
 import BlockDetails from './blockDetails';
 
