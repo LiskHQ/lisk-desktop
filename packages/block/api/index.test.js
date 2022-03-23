@@ -1,6 +1,5 @@
 import * as block from './index';
 import { subscribe, unsubscribe } from '@common/utilities/api/ws';
-import functionMapper from '@common/utilities/api/functionMapper';
 
 jest.mock('../http');
 jest.mock('../ws');

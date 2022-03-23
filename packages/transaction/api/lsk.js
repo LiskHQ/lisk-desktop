@@ -14,7 +14,6 @@ import {
   createTransactionObject, sign,
 } from '@common/utilities/transaction';
 import { validateAddress } from '../../validators';
-import functionMapper from '@common/utilities/api/functionMapper';
 import { getDelegates } from '../delegate';
 import { fromRawLsk } from '@token/utilities/lsk';
 

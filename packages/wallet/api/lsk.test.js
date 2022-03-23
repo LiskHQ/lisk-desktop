@@ -1,5 +1,4 @@
 import { HTTP_CODES } from '@common/configuration';
-import functionMapper from '@common/utilities/api/functionMapper';
 import ws from '@common/utilities/api/ws';
 import { getAccount, getAccounts } from '@token/utilities/lsk';
 import accounts from '../../../../test/constants/accounts';

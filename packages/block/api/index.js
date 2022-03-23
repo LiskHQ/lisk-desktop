@@ -1,6 +1,5 @@
 import { tokenMap } from '@common/configuration';
 import { subscribe, unsubscribe } from '@common/utilities/api/ws';
-import functionMapper from '@common/utilities/api/functionMapper';
 import { validateAddress } from '../../validators';
 import { transformStringDateToUnixTimestamp } from '../../datetime';
 
