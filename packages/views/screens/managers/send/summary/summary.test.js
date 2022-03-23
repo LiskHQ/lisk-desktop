@@ -5,7 +5,7 @@ import { toRawLsk } from '@token/utilities/lsk';
 import { formatAmountBasedOnLocale } from '@common/utilities/formattedNumber';
 import Summary from './summary';
 import accounts from '../../../../../test/constants/accounts';
-import i18n from '../../../../i18n';
+import i18n from '../@setup/i18n/i18n';
 
 describe('Summary', () => {
   let wrapper;

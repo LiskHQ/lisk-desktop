@@ -1,6 +1,6 @@
 import React from 'react';
 
-import TransactionsTable from '@shared/transactionsTable';
+import TransactionsTable from '@transaction/list/transactionsTable';
 import Overview from './overview';
 
 const fields = t => [{

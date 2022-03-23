@@ -26,7 +26,6 @@ module.exports = {
     '^@scripts(.*)$': resolve(__dirname, '../scripts/$1'),
     '^@setup(.*)$': resolve(__dirname, '../setup/$1'),
     '^@tests(.*)$': resolve(__dirname, '../tests/$1'),
-    '^@packages(.*)$': resolve(__dirname, '../packages/$1'),
     '^@block(.*)$': resolve(__dirname, '../packages/block/$1'),
     '^@bookmark(.*)$': resolve(__dirname, '../packages/bookmark/$1'),
     '^@common(.*)$': resolve(__dirname, '../packages/common/$1'),

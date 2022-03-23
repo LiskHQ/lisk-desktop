@@ -2,7 +2,7 @@ import React from 'react';
 import numeral from 'numeral';
 import 'numeral/locales';
 import styles from './converter.css';
-import i18n from '../../../i18n';
+import i18n from '@setup/i18n/i18n';
 
 const Converter = ({
   currency,

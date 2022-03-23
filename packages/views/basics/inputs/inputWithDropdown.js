@@ -1,7 +1,7 @@
 import React from 'react';
 
 import Input from './input';
-import DropdownButton from '../dropdownButton';
+import DropdownButton from '../inputs/select/dropdownButton';
 
 import styles from './input.css';
 

@@ -1,5 +1,5 @@
 import React from 'react';
-import LoadLatestButton from '../loadLatestButton';
+import LoadLatestButton from './loadLatestButton';
 import styles from './stickyHeader.css';
 
 const StickyHeader = ({

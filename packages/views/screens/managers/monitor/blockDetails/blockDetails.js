@@ -11,7 +11,7 @@ import CopyToClipboard from '@basics/copyToClipboard';
 import Feedback from '@basics/feedback/feedback';
 import LabeledValue from '@basics/labeledValue';
 import LiskAmount from '@shared/liskAmount';
-import TransactionsTable from '@shared/transactionsTable';
+import TransactionsTable from '@transaction/list/transactionsTable';
 import { truncateAddress } from '@wallet/utilities/account';
 import AccountVisual from '@basics/accountVisual';
 import styles from './blockDetails.css';

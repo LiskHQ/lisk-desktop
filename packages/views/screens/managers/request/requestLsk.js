@@ -9,7 +9,7 @@ import Converter from '@shared/converter';
 import Icon from '@basics/icon';
 import RequestWrapper from './requestWrapper';
 import styles from './request.css';
-import i18n from '../../../i18n';
+import i18n from '@setup/i18n/i18n';
 
 class RequestLsk extends React.Component {
   constructor(props) {

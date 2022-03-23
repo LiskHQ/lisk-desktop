@@ -7,7 +7,7 @@ import Box from '@basics/box';
 import BoxContent from '@basics/box/content';
 import Table from '@basics/table';
 import { selectCurrentBlockHeight } from '@common/store/selectors';
-import StickyHeader from '@shared/stickyHeader';
+import StickyHeader from '@basics/table/stickyHeader';
 import FilterBar from '@shared/filterBar';
 import FilterDropdownButton from '@shared/filterDropdownButton';
 import styles from './transactionsTable.css';

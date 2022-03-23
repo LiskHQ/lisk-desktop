@@ -4,7 +4,7 @@ import withFilters from '@common/utilities/withFilters';
 import Box from '@basics/box';
 import BoxContent from '@basics/box/content';
 import FilterBar from '@shared/filterBar';
-import StickyHeader from '@shared/stickyHeader';
+import StickyHeader from '@basics/table/stickyHeader';
 import Table from '@basics/table';
 import BlockFilterDropdown from './blockFilterDropdown';
 import styles from './blocks.css';

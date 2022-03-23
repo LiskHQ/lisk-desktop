@@ -5,7 +5,7 @@ import { Input } from '@basics/inputs';
 import Calendar from '@basics/calendar/calendar';
 import Dropdown from '@basics/dropdown/dropdown';
 import OutsideClickHandler from '@basics/outsideClickHandler';
-import i18n from '../../../i18n';
+import i18n from '@setup/i18n/i18n';
 import styles from './filters.css';
 
 class DateField extends React.Component {
