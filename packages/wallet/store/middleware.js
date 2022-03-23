@@ -1,9 +1,11 @@
 import { toast } from 'react-toastify';
 import {
-  networks, actionTypes, networkKeys,
-  MODULE_ASSETS_NAME_ID_MAP, tokenMap, routes,
-  timeOutId, timeOutWarningId,
+  actionTypes, timeOutId, timeOutWarningId,
 } from '@common/configuration';
+import networks, { networkKeys } from '@network/configuration/networks';
+import routes from '@screens/router/routes';
+import { tokenMap } from '@token/configuration';
+import { MODULE_ASSETS_NAME_ID_MAP } from '@transaction/configuration/moduleAssets';
 import { fromRawLsk, delay } from '@token/utilities/lsk';
 import { getActiveTokenAccount } from '@common/utilities/account';
 import {

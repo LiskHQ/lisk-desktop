@@ -2,10 +2,10 @@
 import { transactions } from '@liskhq/lisk-client';
 
 import {
-  tokenMap,
   MIN_FEE_PER_BYTE,
   DEFAULT_NUMBER_OF_SIGNATURES,
-} from '@common/configuration';
+} from '@transaction/configuration/transactions';
+import { tokenMap } from '@token/configuration';
 import {
   MODULE_ASSETS_MAP,
   BASE_FEES,

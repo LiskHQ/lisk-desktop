@@ -1,4 +1,5 @@
-import { actionTypes, ROUND_LENGTH } from '@common/configuration';
+import { actionTypes } from '@common/configuration';
+import { ROUND_LENGTH } from '@dpos/configuration/delegates';
 import { convertUnixSecondsToLiskEpochSeconds } from '@common/utilities/datetime';
 import { getBlocks } from '@block/api';
 import { getForgers, getDelegates } from '@dpos/delegate/api';

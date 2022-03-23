@@ -1,8 +1,8 @@
 /* eslint-disable max-lines */
 import { passphrase as LiskPassphrase, cryptography } from '@liskhq/lisk-client';
-import {
-  tokenMap, regex, balanceNeededForReclaim, balanceNeededForInitialization,
-} from '@common/configuration';
+import { regex } from '@common/configuration';
+import { tokenMap } from '@token/configuration';
+import { balanceNeededForReclaim, balanceNeededForInitialization } from '@wallet/configuration/account';
 import { getCustomDerivationKeyPair } from '@common/utilities/explicitBipKeyDerivation';
 
 /**
