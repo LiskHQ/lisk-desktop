@@ -1,15 +1,15 @@
 import thunk from 'redux-thunk';
 import spy from 'redux-monitor-spy';
 
-import account from './account';
-import loading from './loadingBar';
+import account from '@account/store/middleware';
+import block from '@block/store/middleware';
+import settings from '@settings/store/middleware';
+import bookmarks from '@bookmarks/store/middleware';
+import network from '@network/store/middleware';
+import watchList from '@dpos/store/middlewares/watchList';
+import voting from '@dpos/store/middlewares/voting';
 import hwManager from './hwManager';
-import voting from './voting';
-import block from './block';
-import settings from './settings';
-import bookmarks from './bookmarks';
-import network from './network';
-import watchList from './watchList';
+import loading from './loadingBar';
 
 export default [
   spy,
