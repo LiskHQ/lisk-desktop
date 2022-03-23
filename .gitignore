@@ -20,8 +20,9 @@ storybook-static
 cypress.log
 
 ## Commercial fonts
-old_structure/src/assets/fonts/basierCircle/
-old_structure/src/assets/fonts/gilroy/
+setup/react/assets/fonts/basierCircle/
+setup/react/assets/fonts/basier-circle/
+setup/react/assets/fonts/gilroy/
 
 ## Cypress
 old_structure/test/cypress/cypress
