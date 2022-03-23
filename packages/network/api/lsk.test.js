@@ -2,7 +2,7 @@ import {
   getPeers,
   getNetworkStatistics,
   getNetworkStatus,
-} from '@token/utilities/lsk';
+} from './lsk';
 
 jest.mock('../http');
 

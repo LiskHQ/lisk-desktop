@@ -5,10 +5,9 @@ import {
   getTransaction,
   getTransactions,
   getTransactionStats,
-  getRegisteredDelegates,
-  getTransactionFee,
   getSchemas,
-} from '@token/utilities/lsk';
+} from './lsk';
+import { getTransactionFee, getRegisteredDelegates } from './lsk';
 import * as delegates from '../delegate';
 import accounts from '../../../../test/constants/accounts';
 import { getState } from '../../../../test/fixtures/transactions';
