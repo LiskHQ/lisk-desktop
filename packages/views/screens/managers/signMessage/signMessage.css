@@ -1,4 +1,4 @@
-@import '../../../setup/react/app/mixins.css';
+@import '../../../../../setup/react/app/mixins.css';
 
 :root {
   --horizontal-margin: calc(var(--side-bar-shrunk-size) * 2);

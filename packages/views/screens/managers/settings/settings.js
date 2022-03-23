@@ -7,7 +7,7 @@ import Box from '@basics/box';
 import BoxHeader from '@basics/box/header';
 import BoxContent from '@basics/box/content';
 import CheckBox from '@basics/inputs/checkBox';
-import Select from '@basics/select';
+import Select from '@basics/inputs/select';
 import Dialog from '@basics/dialog/dialog';
 import styles from './settings.css';
 

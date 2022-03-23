@@ -7,7 +7,7 @@ import routes from '@screens/router/routes';
 import { tokenMap } from '@token/configuration/tokens';
 // import { formatAmountBasedOnLocale } from '@common/utilities/formattedNumber';
 import LiskAmount from '@shared/liskAmount';
-import AccountVisualWithAddress from '@shared/accountVisualWithAddress';
+import AccountVisualWithAddress from '@basics/accountVisual/accountVisualWithAddress';
 import styles from './accounts.css';
 
 const getOwnerName = (account) => {

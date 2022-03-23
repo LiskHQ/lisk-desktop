@@ -4,7 +4,7 @@ import { firstBlockTime } from '@common/configuration';
 import { Input } from '@basics/inputs';
 import Calendar from '@basics/calendar/calendar';
 import Dropdown from '@basics/dropdown/dropdown';
-import OutsideClickHandler from '@basics/outsideClickHandler';
+import OutsideClickHandler from '@basics/inputs/select/outsideClickHandler';
 import i18n from '@setup/i18n/i18n';
 import styles from './filters.css';
 

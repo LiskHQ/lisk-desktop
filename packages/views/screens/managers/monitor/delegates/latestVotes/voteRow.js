@@ -4,7 +4,7 @@ import grid from 'flexboxgrid/dist/flexboxgrid.css';
 import gridVisibility from 'flexboxgrid-helpers/dist/flexboxgrid-helpers.min.css';
 
 import { DateTimeFromTimestamp } from '@basics/timestamp';
-import AccountVisualWithAddress from '@shared/accountVisualWithAddress';
+import AccountVisualWithAddress from '@basics/accountVisual/accountVisualWithAddress';
 import DialogLink from '@basics/dialog/link';
 import VoteItem from '@shared/voteItem';
 import styles from '../delegates.css';

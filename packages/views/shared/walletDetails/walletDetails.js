@@ -13,7 +13,7 @@ import Converter from '@shared/converter';
 import { fromRawLsk } from '@token/utilities/lsk';
 import LiskAmount from '@shared/liskAmount';
 import DiscreetMode from '../discreetMode';
-import LockedBalanceLink from '../../screens/wallet/overview/balanceInfo/unlocking';
+import LockedBalanceLink from '@screens/managers/wallet/overview/balanceInfo/unlocking';
 import styles from './walletDetails.css';
 
 const WalletDetails = ({

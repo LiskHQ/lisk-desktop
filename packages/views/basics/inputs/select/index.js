@@ -1,9 +1,9 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { Input } from '../inputs';
+import { Input } from '../../inputs';
 import Dropdown from '../../dropdown/dropdown';
 import styles from './select.css';
-import OutsideClickHandler from '../outsideClickHandler';
+import OutsideClickHandler from './outsideClickHandler';
 
 class Select extends React.Component {
   constructor(props) {
