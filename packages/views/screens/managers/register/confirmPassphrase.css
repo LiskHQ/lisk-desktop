@@ -1,4 +1,4 @@
-@import './../../../setup/react/app/mixins.css';
+@import '../../../../setup/react/app/mixins.css';
 
 :root {
   --word-choice-height: 36px;

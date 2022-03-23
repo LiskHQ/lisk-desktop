@@ -5,7 +5,7 @@ import { Provider } from 'react-redux';
 import { I18nextProvider } from 'react-i18next';
 import { cryptography } from '@liskhq/lisk-client';
 import store from '../../packages/common/store';
-import externalLinks from '../../packages/commoon/utilites/externalLinks';
+import externalLinks from '../../packages/common/utilities/externalLinks';
 import updateApp from '../../packages/updater/utilities/updateApp';
 import ipcLocale from '../../packages/common/utilities/ipcLocale';
 import i18n from '../i18n/i18n';

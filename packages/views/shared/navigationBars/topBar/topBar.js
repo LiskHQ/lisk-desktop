@@ -6,12 +6,12 @@ import Icon from '@basics/icon';
 import DialogLink from '@basics/dialog/link';
 import { PrimaryButton } from '@basics/buttons';
 import Tooltip from '@basics/tooltip/tooltip';
+import Toggle from '@settings/setters/toggle';
+import VoteQueueToggle from '@settings/setters/voteQueueToggle';
 import styles from './topBar.css';
 import Network from './networkName';
 import NavigationButtons from './navigationButtons';
 import Search from './search';
-import Toggle from '../../../../settings/setters/toggle';
-import VoteQueueToggle from '../../../../settings/setters/voteQueueToggle';
 import SignOut from './signOut';
 
 const TopBar = ({
