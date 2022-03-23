@@ -5,8 +5,8 @@ import { signTransactionByHW } from '@common/utilities/hwManager';
 import {
   DEFAULT_NUMBER_OF_SIGNATURES,
   MODULE_ASSETS_NAME_ID_MAP,
-  signatureCollectionStatus,
 } from '@common/configuration';
+import { signatureCollectionStatus } from '@transaction/configuration/txStatus';
 import {
   extractAddressFromPublicKey,
   getBase32AddressFromAddress,
@@ -16,7 +16,7 @@ import {
 import { transformStringDateToUnixTimestamp } from '@common/utilities/datetime';
 import { toRawLsk } from '@token/utilities/lsk';
 import { isEmpty } from '@common/utilities/helpers';
-import { splitModuleAndAssetIds, joinModuleAndAssetIds } from '@common/utilities/moduleAssets';
+import { splitModuleAndAssetIds, joinModuleAndAssetIds } from '@transaction/utilities/moduleAssets';
 
 const {
   transfer, voteDelegate, registerDelegate, unlockToken, reclaimLSK, registerMultisignatureGroup,

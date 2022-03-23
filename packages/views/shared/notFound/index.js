@@ -1,7 +1,7 @@
 import { Link } from 'react-router-dom';
 import React from 'react';
 import { withTranslation } from 'react-i18next';
-import { routes } from '@common/configuration';
+import routes from '@screens/router/routes';
 import { PrimaryButton } from '@basics/buttons';
 import Illustration from '@basics/illustration';
 import styles from './notFound.css';

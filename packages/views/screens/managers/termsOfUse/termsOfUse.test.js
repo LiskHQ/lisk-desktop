@@ -2,7 +2,7 @@ import React from 'react';
 import { expect } from 'chai';
 import { mount } from 'enzyme';
 import { spy } from 'sinon';
-import { routes } from '@common/configuration';
+import routes from '@screens/router/routes';
 import TermsOfUse from './termsOfUse';
 
 describe('TermsOfUse', () => {

@@ -6,7 +6,7 @@ import PropTypes from 'prop-types';
 
 import { MODULE_ASSETS_NAME_ID_MAP, MODULE_ASSETS_MAP } from '@common/configuration';
 import { truncateAddress } from '@common/utilities/account';
-import { getModuleAssetTitle } from '@common/utilities/moduleAssets';
+import { getModuleAssetTitle } from '@transaction/utilities/moduleAssets';
 import Icon from '@basics/icon';
 import AccountVisual from '@basics/accountVisual';
 import styles from './accountVisualWithAddress.css';

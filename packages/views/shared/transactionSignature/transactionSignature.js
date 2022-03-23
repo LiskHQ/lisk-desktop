@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react';
 import { useDispatch } from 'react-redux';
-import { signatureCollectionStatus } from '@common/configuration';
+import { signatureCollectionStatus } from '@transaction/configuration/txStatus';
 import { secondPassphraseRemoved } from '@common/store/actions';
 import Box from '@basics/box';
 import Illustration from '@basics/illustration';

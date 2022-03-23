@@ -1,7 +1,7 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 
-import { routes } from '@common/configuration';
+import routes from '@screens/router/routes';
 import AccountVisual from '@basics/accountVisual';
 import styles from './overview.css';
 

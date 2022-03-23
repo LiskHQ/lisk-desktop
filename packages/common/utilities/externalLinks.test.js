@@ -1,4 +1,4 @@
-import { routes } from '@common/configuration';
+import routes from '@screens/router/routes';
 import externalLinks from './externalLinks';
 import history from '../history';
 

@@ -9,7 +9,7 @@ import {
   MODULE_ASSETS_NAME_ID_MAP,
   BASE_FEES,
 } from '@common/configuration';
-import { joinModuleAndAssetIds } from '@common/utilities/moduleAssets';
+import { joinModuleAndAssetIds } from '@transaction/utilities/moduleAssets';
 import {
   createTransactionObject, sign,
 } from '@common/utilities/transaction';

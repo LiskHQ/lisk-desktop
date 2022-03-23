@@ -1,7 +1,7 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 
-import { routes } from '@common/configuration';
+import routes from '@screens/router/routes';
 import Tooltip from '@basics/tooltip/tooltip';
 import DialogLink from '@basics/dialog/link';
 import Icon from '@basics/icon';

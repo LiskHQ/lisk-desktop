@@ -7,7 +7,7 @@ import { getAccount } from '@wallet/api';
 import withData from '@common/utilities/withData';
 import { selectSearchParamValue } from '@common/utilities/searchParams';
 import { selectAccount } from '@store/selectors';
-import { routes } from '@common/configuration';
+import routes from '@screens/router/routes';
 import MultisigAccountDetailsComp from './multisigAccountDetails';
 
 const MultisigAccountDetails = ({ account, history }) => {

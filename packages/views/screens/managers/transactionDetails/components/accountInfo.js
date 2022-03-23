@@ -1,7 +1,7 @@
 import { Link } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import React from 'react';
-import { routes } from '@common/configuration';
+import routes from '@screens/router/routes';
 import { validateAddress } from '@common/utilities/validators';
 import AccountVisual from '@basics/accountVisual';
 

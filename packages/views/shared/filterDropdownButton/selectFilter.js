@@ -1,7 +1,7 @@
 import React from 'react';
 import { withTranslation } from 'react-i18next';
 import { MODULE_ASSETS_NAME_ID_MAP } from '@common/configuration';
-import { getModuleAssetTitle } from '@common/utilities/moduleAssets';
+import { getModuleAssetTitle } from '@transaction/utilities/moduleAssets';
 import Select from '@basics/select';
 import styles from './filters.css';
 

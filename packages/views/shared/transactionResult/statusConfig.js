@@ -1,6 +1,6 @@
 import { transactionToJSON, getNumberOfSignatures } from '@common/utilities/transaction';
 import { isEmpty } from '@common/utilities/helpers';
-import { txStatusTypes } from '@common/configuration';
+import { txStatusTypes } from '@transaction/configuration/txStatus';
 
 export const statusMessages = t => ({
   [txStatusTypes.multisigSignaturePartialSuccess]: {

@@ -1,7 +1,7 @@
 /* eslint-disable complexity */
 import React, { useState, useEffect } from 'react';
 import { transformTransaction, createTransactionObject, flattenTransaction } from '@common/utilities/transaction';
-import { joinModuleAndAssetIds } from '@common/utilities/moduleAssets';
+import { joinModuleAndAssetIds } from '@transaction/utilities/moduleAssets';
 import Box from '@basics/box';
 import BoxContent from '@basics/box/content';
 import BoxFooter from '@basics/box/footer';

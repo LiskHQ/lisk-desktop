@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
-import { routes } from '@common/configuration';
+import routes from '@screens/router/routes';
 import { isEmpty } from '@common/utilities/helpers';
 import Box from '@basics/box';
 import BoxHeader from '@basics/box/header';

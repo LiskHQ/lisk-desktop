@@ -7,7 +7,7 @@ import { kFormatter } from '@common/utilities/helpers';
 import {
   chartStyles, MODULE_ASSETS_NAME_ID_MAP,
 } from '@common/configuration';
-import { getModuleAssetTitle } from '@common/utilities/moduleAssets';
+import { getModuleAssetTitle } from '@transaction/utilities/moduleAssets';
 import { useTheme } from '@common/utilities/theme';
 import { getColorPalette } from '@common/utilities/chartOptions';
 import Box from '@basics/box';

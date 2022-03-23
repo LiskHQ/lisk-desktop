@@ -1,6 +1,6 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import { routes } from '@common/configuration';
+import routes from '@screens/router/routes';
 import Tooltip from '@basics/tooltip/tooltip';
 import styles from './signInTooltipWrapper.css';
 

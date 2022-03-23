@@ -1,6 +1,6 @@
 /* istanbul ignore file */
 import { statusMessages } from '@shared/transactionResult/statusConfig';
-import { txStatusTypes } from '@common/configuration';
+import { txStatusTypes } from '@transaction/configuration/txStatus';
 
 const registerDelegatesMessages = t => ({
   ...statusMessages(t),

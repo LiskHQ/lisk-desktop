@@ -1,7 +1,7 @@
 import React from 'react';
 import { withRouter } from 'react-router-dom';
 
-import { routes } from '@common/configuration';
+import routes from '@screens/router/routes';
 import { parseSearchParams } from '@common/utilities/searchParams';
 import MultiStep from '@shared/multiStep';
 import TransactionSignature from '@shared/transactionSignature';

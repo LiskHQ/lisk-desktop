@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react';
 import { isEmpty } from '@common/utilities/helpers';
-import { txStatusTypes } from '@common/configuration';
+import { txStatusTypes } from '@transaction/configuration/txStatus';
 import { PrimaryButton } from '@basics/buttons';
 import TransactionResult from '@shared/transactionResult';
 import { getTransactionStatus, statusMessages } from '@shared/transactionResult/statusConfig';

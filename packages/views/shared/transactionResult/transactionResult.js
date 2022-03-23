@@ -1,6 +1,6 @@
 /* eslint-disable complexity */
 import React, { useEffect, useState } from 'react';
-import { txStatusTypes } from '@common/configuration';
+import { txStatusTypes } from '@transaction/configuration/txStatus';
 import Regular from './regular';
 import Multisignature from './multisignature';
 

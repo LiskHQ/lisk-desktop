@@ -2,7 +2,7 @@ import { withTranslation } from 'react-i18next';
 import React, { useState } from 'react';
 import { useSelector } from 'react-redux';
 import withFilters from '@common/utilities/withFilters';
-import { getModuleAssetTitle } from '@common/utilities/moduleAssets';
+import { getModuleAssetTitle } from '@transaction/utilities/moduleAssets';
 import Box from '@basics/box';
 import BoxContent from '@basics/box/content';
 import Table from '@basics/table';

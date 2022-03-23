@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { routes } from '@common/configuration';
+import routes from '@screens/router/routes';
 import Icon from '@basics/icon';
 import styles from './navigationButtons.css';
 

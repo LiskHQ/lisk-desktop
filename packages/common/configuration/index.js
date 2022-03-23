@@ -1,7 +1,5 @@
 export { default as loginTypes } from './loginTypes';
 export { default as keyCodes } from './keyCodes';
-export * from './moduleAssets';
-export { txStatusTypes, signatureCollectionStatus } from './txStatus';
 export { DEFAULT_LIMIT } from './monitor';
 export { default as networks, networkKeys } from './networks';
 export { default as piwikOptions } from './piwik';

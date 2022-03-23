@@ -1,7 +1,7 @@
 import React from 'react';
 import { mount } from 'enzyme';
 import { accountLoggedOut } from '@common/store/actions';
-import { routes } from '@common/configuration';
+import routes from '@screens/router/routes';
 import SignOut from './signOut';
 
 jest.mock('@common/store/actions', () => ({
