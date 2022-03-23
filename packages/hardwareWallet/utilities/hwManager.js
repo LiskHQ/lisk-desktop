@@ -1,6 +1,5 @@
 // eslint-disable-next-line import/no-unresolved
 import i18next from 'i18next';
-import { getAccounts } from './@wallet/api';
 import {
   checkIfInsideLiskApp,
   getAddress,
@@ -13,6 +12,7 @@ import {
   signMessage,
 } from '@libs/hwManager/communication';
 import { extractAddressFromPublicKey } from '@wallet/utilities/account';
+import { getAccounts } from './@wallet/api';
 
 const getAccountBundle = async (deviceId, network, offset) => {
   const publicKeyList = [];

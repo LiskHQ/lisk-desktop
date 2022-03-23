@@ -1,5 +1,5 @@
-import accounts from '../../../../test/constants/accounts';
 import ws, { subscribe, unsubscribe } from '@common/utilities/api/ws';
+import accounts from '../../../../test/constants/accounts';
 
 import * as delegate from './index';
 

@@ -1,4 +1,5 @@
 import networks from '@network/configuration/networks';
+import i18n from '@setup/i18n/i18n';
 import {
   validateAddress,
   validateLSKPublicKey,
@@ -6,7 +7,6 @@ import {
   isNumeric,
 } from './validators';
 import accounts from '../../test/constants/accounts';
-import i18n from '@setup/i18n/i18n';
 
 describe('Validate Address', () => {
   it('Should return -1 if empty adress', () => {

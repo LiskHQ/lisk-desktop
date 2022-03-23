@@ -3,9 +3,9 @@ import * as bitcoin from 'bitcoinjs-lib';
 import { BigNumber } from 'bignumber.js';
 
 import { tokenMap } from '@token/configuration';
+import { fromRawLsk } from '@token/utilities/lsk';
 import { validateAddress } from '../../validators';
 import { getDerivedPathFromPassphrase } from '../account';
-import { fromRawLsk } from '@token/utilities/lsk';
 
 const httpPrefix = '';
 

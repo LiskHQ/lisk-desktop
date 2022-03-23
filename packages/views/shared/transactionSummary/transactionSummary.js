@@ -29,13 +29,13 @@ const TransactionSummary = ({
       )}
       <BoxContent className={`${styles.content} summary-content`}>
         {account.loginType
-        ? (
-          <Illustration
-            name={account.loginType}
-            className={styles.illustrationWrapper}
-          />
-        )
-        : null}
+          ? (
+            <Illustration
+              name={account.loginType}
+              className={styles.illustrationWrapper}
+            />
+          )
+          : null}
         {children}
         {fee && (
           <section>

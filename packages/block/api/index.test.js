@@ -1,5 +1,5 @@
-import * as block from './index';
 import { subscribe, unsubscribe } from '@common/utilities/api/ws';
+import * as block from './index';
 
 jest.mock('../http');
 jest.mock('../ws');
