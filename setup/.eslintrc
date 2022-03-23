@@ -46,6 +46,7 @@
           ["@views/*", "../packages/views/"],
           ["@wallet/*", "../packages/wallet/"],
           ["@screens/*", "../packages/views/screens"],
+          ["@basics/*", "../packages/views/basics"],
           ["@shared/*", "../packages/views/shared"]
         ],
         "extensions": [".js"]

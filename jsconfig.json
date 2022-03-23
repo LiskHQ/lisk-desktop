@@ -19,6 +19,7 @@
       "@views/*": ["./packages/views/*"],
       "@wallet/*": ["./packages/wallet/*"],
       "@shared/*": ["./packages/views/shared/*"],
+      "@basics/*": ["./packages/views/basics/*"],
       "@screens/*": ["./packages/views/screens/*"]
     }
   }
