@@ -1,30 +1,44 @@
 const webpack = require('webpack');
 const { resolve } = require('path');
 
+console.log('//////////////////////////////////////////////////////');
+console.log('//////////////////////////////////////////////////////');
+console.log('//////////////////////////////////////////////////////');
+console.log('//////////////////////////////////////////////////////');
+console.log('......................................................');
+console.log(resolve());
+console.log(resolve(__dirname, '../../packages/wallet'));
+console.log(resolve('./packages/wallet'));
+console.log('......................................................');
+console.log('//////////////////////////////////////////////////////');
+console.log('//////////////////////////////////////////////////////');
+console.log('//////////////////////////////////////////////////////');
+console.log('//////////////////////////////////////////////////////');
+
 const config = {
   mode: 'development',
   resolve: {
     alias: {
-      '@scripts(.*)$': resolve(__dirname, '../../scripts'),
-      '@setup(.*)$': resolve(__dirname, '../../setup'),
-      '@tests(.*)$': resolve(__dirname, '../../tests'),
-      '@packages(.*)$': resolve(__dirname, '../../packages'),
-      '@block(.*)$': resolve(__dirname, '../../packages/block'),
-      '@bookmark(.*)$': resolve(__dirname, '../../packages/bookmark'),
-      '@common(.*)$': resolve(__dirname, '../../packages/common'),
-      '@dpos(.*)$': resolve(__dirname, '../../packages/dpos'),
-      '@hardwareWallet(.*)$': resolve(__dirname, '../../packages/hardwareWallet'),
-      '@network(.*)$': resolve(__dirname, '../../packages/network'),
-      '@settings(.*)$': resolve(__dirname, '../../packages/settings'),
-      '@token(.*)$': resolve(__dirname, '../../packages/token'),
-      '@transaction(.*)$': resolve(__dirname, '../../packages/transaction'),
-      '@updates(.*)$': resolve(__dirname, '../../packages/updates'),
-      '@views(.*)$': resolve(__dirname, '../../packages/views'),
-      '@wallet(.*)$': resolve(__dirname, '../../packages/wallet'),
-      '@shared(.*)$': resolve(__dirname, '../../packages/views/shared'),
-      '@basics(.*)$': resolve(__dirname, '../../packages/views/basics'),
-      '@screens(.*)$': resolve(__dirname, '../../packages/views/screens'),
-      '@libs(.*)$': resolve(__dirname, '../../libs'),
+      '@scripts': resolve('./scripts'),
+      '@setup': resolve('./setup'),
+      '@tests': resolve('./tests'),
+      '@packages': resolve('./packages'),
+      '@block': resolve('./packages/block'),
+      '@bookmark': resolve('./packages/bookmark'),
+      '@common': resolve('./packages/common'),
+      '@dpos': resolve('./packages/dpos'),
+      '@hardwareWallet': resolve('./packages/hardwareWallet'),
+      '@network': resolve('./packages/network'),
+      '@settings': resolve('./packages/settings'),
+      '@token': resolve('./packages/token'),
+      '@transaction': resolve('./packages/transaction'),
+      '@updates': resolve('./packages/updates'),
+      '@views': resolve('./packages/views'),
+      '@wallet': resolve('./packages/wallet'),
+      '@shared': resolve('./packages/views/shared'),
+      '@basics': resolve('./packages/views/basics'),
+      '@screens': resolve('./packages/views/screens'),
+      '@libs': resolve('./libs'),
     },
     fallback: {
       net: false,
