@@ -5,6 +5,7 @@ Feature: Dashboard
     And I wait 5 seconds
     Given I am on wallet page
 
+  @advanced
   Scenario: Open last transaction and open a bookmark item
     Given I am on Dashboard page
     When I click on transactionRow

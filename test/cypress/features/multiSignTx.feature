@@ -1,5 +1,6 @@
 Feature: Multisignature transaction
 
+  @basic
   Scenario: Add funds to account2P
     Given I login as genesis on devnet
     Given  I wait 1 seconds
@@ -11,6 +12,7 @@ Feature: Multisignature transaction
     And I click on sendButton
     And I click on closeDialog
 
+  @basic
   Scenario: Register multisignature group (Mandatory, Mandatory)
     Given I login as account2P on devnet
     And I wait 10 seconds
@@ -30,6 +32,7 @@ Feature: Multisignature transaction
     And I click on copyButton
     Then I should have the transaction RegisterSecondPassphraseTx in the clipboard
 
+  @basic
   Scenario: Sign transaction and send transaction (Mandatory, Mandatory)
     Given I login as delegate on devnet
     And I wait 1 seconds
@@ -50,6 +53,7 @@ Feature: Multisignature transaction
     Then I should be on Account page of lskwun...2mxdp
     Then The latest transaction is register multisignature group
 
+  @basic
   Scenario: Send transaction using second passphrase (Mandatory, Mandatory)
     Given I login as account2P on devnet
     And I wait 1 seconds
@@ -71,6 +75,7 @@ Feature: Multisignature transaction
     Then I wait 5 seconds
     Then The latest transaction is transfer to lsks6w...ehxwz
 
+  @advanced
   Scenario: Register multisignature group (Mandatory, Optional, Optional, 2 signatures)
     Given I login as multiSig_candidate on devnet
     And I wait 1 seconds
@@ -91,6 +96,7 @@ Feature: Multisignature transaction
     And I click on copyButton
     Then I should have the transaction RegisterMultiSignGroupTx_second_sign in the clipboard
 
+  @advanced
   Scenario: Sign transaction (Mandatory, Optional, Optional, 2 signatures)
     Given I login as genesis on devnet
     And I wait 1 seconds
@@ -105,6 +111,7 @@ Feature: Multisignature transaction
     And I click on copyButton
     Then I should have the transaction RegisterMultiSignGroupTx_third_sign in the clipboard
 
+  @advanced
   Scenario: Send transaction (Mandatory, Optional, Optional, 2 signatures)
     Given I login as delegate on devnet
     And I wait 1 seconds
