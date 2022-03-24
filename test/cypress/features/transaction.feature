@@ -1,4 +1,4 @@
-Feature: Transactions 
+Feature: Transactions
 
   Background:
     Given Network is set to devnet
@@ -6,11 +6,13 @@ Feature: Transactions
     And I wait 2 seconds
     Given I am on Transactions page
 
+  @basic
   Scenario: Load Latest Transactions
     Then I should see 20 transactions in table
     When I click on showMoreButton
     Then I should see 40 transactions in table
 
+  @advanced
   Scenario: Filter by one amount then add second and third filters for another amount and sender respectively
     When I click on filterTransactionsBtn
     Then I should see filterDropdown
@@ -29,6 +31,7 @@ Feature: Transactions
     And I wait 2 seconds
     Then I should see 1 transactions in table
 
+  @advanced
   Scenario: Filter by transaction type
     When I click on filterTransactionsBtn
     Then I should see filterDropdown
@@ -38,6 +41,7 @@ Feature: Transactions
     And I wait 2 seconds
     Then I should see 20 transactions in table
 
+  @advanced
   Scenario: Filter by all filters combined, clear all filters
     When I click on filterTransactionsBtn
     Then I should see filterDropdown
@@ -50,6 +54,7 @@ Feature: Transactions
     And I click on clearAllFiltersBtn
     Then I should see 20 transactions in table
 
+  @basic
   Scenario: Navigate to the transaction details page if transaction is clicked
     When I click on filterTransactionsBtn
     Then I should see filterDropdown

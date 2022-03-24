@@ -1,5 +1,6 @@
 Feature: Send
 
+  @basic
   Scenario: Error message is shown if transfer tx fails
       Given I login as genesis on devnet
       Given I mock api /transactions
@@ -14,6 +15,7 @@ Feature: Send
       Then submittedTransactionMessage should be visible
       Then I see error message
 
+  @basic
    Scenario: Transfer tx + Header balance is affected
      Given I login as genesis on devnet
      Given  I wait 5 seconds
@@ -29,7 +31,8 @@ Feature: Send
      Then The latest transaction is transfer to lsk29e...kgjjk
      Then I wait 10 seconds
      Then The balance is subtracted
- 
+
+  @advanced
   Scenario: Launch protocol prefills fields  - from logged in state
     Given I am on Login page
     Given I login as genesis on devnet
@@ -37,10 +40,11 @@ Feature: Send
     When I follow the launch protokol link
     Then Send form fields are prefilled
 
+  @advanced
   Scenario: Launch protocol prefills fields  - from logged out state
     Given I follow the launch protokol link
     When I enter the passphrase of genesis on devnet
     When I login
     Then Send form fields are prefilled
 
-  
+
