@@ -2,7 +2,7 @@ import React from 'react';
 import { mount } from 'enzyme';
 import { act } from 'react-dom/test-utils';
 import Status from '.';
-import accounts from '../../../../../test/constants/accounts';
+import accounts from '../../../../../tests/constants/accounts';
 
 describe('Sign Message: Status', () => {
   const baseProps = {

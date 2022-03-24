@@ -6,7 +6,7 @@ import {
   getNewAccountByIndex,
 } from './hwManager';
 import * as accountApi from '@wallet/api';
-import accounts from '../../test/constants/accounts';
+import accounts from '../../tests/constants/accounts';
 
 jest.mock('@libs/hwManager/communication', () => ({
   getPublicKey: jest.fn(),

@@ -2,7 +2,7 @@ import { actionTypes } from '@common/configuration';
 import networks from '@network/configuration/networks';
 import { getBlocks } from '@block/api';
 import { getForgers, getDelegates } from '@dpos/delegate/api';
-import blocks from '../../../test/constants/blocks';
+import blocks from '../../../tests/constants/blocks';
 import forger from '../../../test/fixtures/forgers';
 import delegate from '../../../test/fixtures/delegates';
 import { olderBlocksRetrieved, forgersRetrieved } from './blocks';

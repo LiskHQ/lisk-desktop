@@ -7,7 +7,7 @@ import { create } from '@transaction/api';
 import useTransactionPriority from '@shared/transactionPriority/useTransactionPriority';
 import useTransactionFeeCalculation from '@shared/transactionPriority/useTransactionFeeCalculation';
 import LockedBalance from './index';
-import accounts from '../../../../../test/constants/accounts';
+import accounts from '../../../../../tests/constants/accounts';
 import flushPromises from '../../../../../test/unit-test-utils/flushPromises';
 
 jest.mock('@shared/transactionPriority/useTransactionPriority');

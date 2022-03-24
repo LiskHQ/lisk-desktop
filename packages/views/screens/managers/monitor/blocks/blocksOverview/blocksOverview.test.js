@@ -1,7 +1,7 @@
 import React from 'react';
 import { mount } from 'enzyme';
 import BlocksOverview from './blocksOverview';
-import blocks from '../../../../../../test/constants/blocks';
+import blocks from '../../../../../../tests/constants/blocks';
 
 describe('Blocks Overview', () => {
   const props = {

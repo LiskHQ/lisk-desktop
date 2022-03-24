@@ -11,8 +11,8 @@ import {
   votesConfirmed,
   votesRetrieved,
 } from './voting';
-import sampleVotes from '../../../test/constants/votes';
-import accounts from '../../../test/constants/accounts';
+import sampleVotes from '../../../tests/constants/votes';
+import accounts from '../../../tests/constants/accounts';
 
 jest.mock('@transaction/api', () => ({
   create: jest.fn(),

@@ -10,7 +10,7 @@ import {
   getTransactionBaseFees,
 } from '@transaction/api';
 import Form from './formBtc';
-import accounts from '../../../../../test/constants/accounts';
+import accounts from '../../../../../tests/constants/accounts';
 import flushPromises from '../../../../../test/unit-test-utils/flushPromises';
 
 jest.mock('@transaction/api');

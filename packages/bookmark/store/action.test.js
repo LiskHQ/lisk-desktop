@@ -8,7 +8,7 @@ import {
   bookmarkRemoved,
   bookmarkUpdated,
 } from './bookmarks';
-import accounts from '../../../test/constants/accounts';
+import accounts from '../../../tests/constants/accounts';
 
 jest.mock('@common/utilities/localJSONStorage', () => ({
   getFromStorage: jest.fn(),

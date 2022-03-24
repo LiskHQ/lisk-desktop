@@ -2,7 +2,7 @@ import { mountWithRouter } from '@common/utilities/testHelpers';
 import Spinner from '@basics/spinner';
 import DialogLink from '@basics/dialog/link';
 import VoteRow from './voteRow';
-import accounts from '../../../../../test/constants/accounts';
+import accounts from '../../../../../tests/constants/accounts';
 
 describe('VoteRow Component', () => {
   let wrapper;

@@ -10,7 +10,7 @@ import {
 } from './lsk';
 
 import * as delegates from '../delegate';
-import accounts from '../../../../test/constants/accounts';
+import accounts from '../../../../tests/constants/accounts';
 import { getState } from '../../../../test/fixtures/transactions';
 
 const {

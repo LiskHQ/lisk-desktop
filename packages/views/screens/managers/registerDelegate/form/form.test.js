@@ -5,7 +5,7 @@ import * as delegatesApi from '@dpos/delegate/api';
 import { getTransactionBaseFees, getTransactionFee, create } from '@transaction/api';
 import { fromRawLsk } from '@token/utilities/lsk';
 import * as hwManagerAPI from '@hardwareWallet/utilities/hwManager';
-import accounts from '../../../../../test/constants/accounts';
+import accounts from '../../../../../tests/constants/accounts';
 import SelectNameAndFee from './form';
 import flushPromises from '../../../../../test/unit-test-utils/flushPromises';
 

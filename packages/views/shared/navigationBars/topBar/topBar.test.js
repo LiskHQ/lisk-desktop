@@ -3,7 +3,7 @@ import routes from '@screens/router/routes';
 import DialogHolder from '@basics/dialog/holder';
 import { mountWithRouter } from '@common/utilities/testHelpers';
 import TopBar from './topBar';
-import accounts from '../../../../../test/constants/accounts';
+import accounts from '../../../../../tests/constants/accounts';
 
 const mockInputNode = {
   focus: jest.fn(),

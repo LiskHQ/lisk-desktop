@@ -5,7 +5,7 @@ import { mountWithRouter } from '@common/utilities/testHelpers';
 import { getTransactionBaseFees, getTransactionFee } from '@transaction/api';
 import useTransactionFeeCalculation from '@shared/transactionPriority/useTransactionFeeCalculation';
 import { fromRawLsk } from '@token/utilities/lsk';
-import accounts from '../../../../../test/constants/accounts';
+import accounts from '../../../../../tests/constants/accounts';
 import flushPromises from '../../../../../test/unit-test-utils/flushPromises';
 import Form from './form';
 

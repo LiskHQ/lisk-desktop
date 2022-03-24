@@ -3,6 +3,7 @@ import LiskAmount from '@shared/liskAmount';
 import Box from '@basics/box';
 import BoxHeader from '@basics/box/header';
 import BoxContent from '@basics/box/content';
+import Illustration from '@basics/illustration';
 import Tooltip from '@basics/tooltip/tooltip';
 import { tokenMap } from '@token/configuration/tokens';
 import Footer from './footer';

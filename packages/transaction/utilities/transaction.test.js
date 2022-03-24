@@ -9,7 +9,7 @@ import {
   transactionToJSON,
   removeExcessSignatures,
 } from './transaction';
-import accounts from '../../test/constants/accounts';
+import accounts from '../../tests/constants/accounts';
 
 const {
   transfer, voteDelegate, registerMultisignatureGroup, registerDelegate, reclaimLSK, unlockToken,

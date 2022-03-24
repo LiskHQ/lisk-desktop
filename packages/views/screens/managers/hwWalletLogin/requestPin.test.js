@@ -2,7 +2,7 @@ import React from 'react';
 import { mount } from 'enzyme';
 import * as hwManager from '@hardwareWallet/utilities/hwManager';
 import RequestPin from './requestPin';
-import accounts from '../../../../test/constants/accounts';
+import accounts from '../../../../tests/constants/accounts';
 
 jest.mock('@hardwareWallet/utilities/hwManager');
 

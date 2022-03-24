@@ -3,8 +3,8 @@ import { mount } from 'enzyme';
 import { Provider } from 'react-redux';
 import fakeStore from '../../../../../test/unit-test-utils/fakeStore';
 import Delegates from './delegates';
-import delegatesList from '../../../../../test/constants/delegates';
-import accounts from '../../../../../test/constants/accounts';
+import delegatesList from '../../../../../tests/constants/delegates';
+import accounts from '../../../../../tests/constants/accounts';
 
 const activeDelegates = delegatesList.map(item => ({ ...item, publicKey: item.account.publicKey }));
 activeDelegates.push({

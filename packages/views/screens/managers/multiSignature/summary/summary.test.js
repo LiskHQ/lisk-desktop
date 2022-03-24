@@ -2,7 +2,7 @@ import React from 'react';
 import { mount } from 'enzyme';
 import * as hwManagerAPI from '@hardwareWallet/utilities/hwManager';
 import Summary from './summary';
-import accounts from '../../../../../test/constants/accounts';
+import accounts from '../../../../../tests/constants/accounts';
 
 const mockTransaction = {
   fee: 0.02,

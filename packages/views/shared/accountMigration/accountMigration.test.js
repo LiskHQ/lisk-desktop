@@ -2,7 +2,7 @@ import React from 'react';
 import { mount } from 'enzyme';
 import { truncateAddress } from '@wallet/utilities/account';
 import AccountMigration from './index';
-import accounts from '../../../../test/constants/accounts';
+import accounts from '../../../../tests/constants/accounts';
 
 describe('AccountMigration component', () => {
   const props = {

@@ -15,7 +15,7 @@ import {
   delegateRegistered,
   multisigGroupRegistered,
   balanceReclaimed,
-} from './actions';
+} from './action';
 import accounts from '../../../tests/constants/accounts';
 import * as networkActions from './action';
 

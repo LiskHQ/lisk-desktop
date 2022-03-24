@@ -1,5 +1,5 @@
 import { mountWithRouter } from '@common/utilities/testHelpers';
-import accounts from '../../../../../test/constants/accounts';
+import accounts from '../../../../../tests/constants/accounts';
 import Summary from './summary';
 
 const added = {

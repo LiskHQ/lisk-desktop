@@ -3,7 +3,7 @@ import { useSelector } from 'react-redux';
 import { mount } from 'enzyme';
 import { MemoryRouter, Route } from 'react-router';
 import routes from '@screens/router/routes';
-import accounts from '../../../../test/constants/accounts';
+import accounts from '../../../../tests/constants/accounts';
 import ReclaimBalance from '../../screens/reclaimBalance';
 import CustomRoute from './index';
 

@@ -1,7 +1,7 @@
 // import React from 'react';
 // import { mount } from 'enzyme';
 // import Blocks from './blocks';
-// import blocks from '../../../../../test/constants/blocks';
+// import blocks from '../../../../../tests/constants/blocks';
 
 describe('dummy', () => {
   it('placeholder', () => {

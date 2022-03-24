@@ -1,6 +1,6 @@
 import React from 'react';
 import { shallow } from 'enzyme';
-import accounts from '../../../../../test/constants/accounts';
+import accounts from '../../../../../tests/constants/accounts';
 import Status from './status';
 
 describe('Delegate Registration Status', () => {
