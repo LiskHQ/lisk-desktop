@@ -7,7 +7,7 @@ import { fromRawLsk } from '@token/utilities/lsk';
 import * as hwManagerAPI from '@hardwareWallet/utilities/hwManager';
 import accounts from '../../../../../tests/constants/accounts';
 import SelectNameAndFee from './form';
-import flushPromises from '../../../../../test/unit-test-utils/flushPromises';
+import flushPromises from '../../../../../tests/unit-test-utils/flushPromises';
 
 jest.mock('@network/api');
 jest.mock('@transaction/api');

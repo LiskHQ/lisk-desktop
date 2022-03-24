@@ -1,7 +1,7 @@
 import React from 'react';
 import { mount } from 'enzyme';
 import * as reactRedux from 'react-redux';
-import accounts from '../../../../../tests/constants/accounts';
+import accounts from '../../../../../../tests/constants/accounts';
 import DelegateProfile from './delegateProfile';
 
 const { genesis, delegate } = accounts;

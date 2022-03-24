@@ -11,7 +11,7 @@ import {
 } from '@transaction/api';
 import Form from './formBtc';
 import accounts from '../../../../../tests/constants/accounts';
-import flushPromises from '../../../../../test/unit-test-utils/flushPromises';
+import flushPromises from '../../../../../tests/unit-test-utils/flushPromises';
 
 jest.mock('@transaction/api');
 

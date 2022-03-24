@@ -10,7 +10,7 @@ import { truncateAddress } from '@wallet/utilities/account';
 import * as hwManagerAPI from '@hardwareWallet/utilities/hwManager';
 import accounts from '../../../../../../tests/constants/accounts';
 import Summary from './summary';
-import flushPromises from '../../../../../../test/unit-test-utils/flushPromises';
+import flushPromises from '../../../../../../tests/unit-test-utils/flushPromises';
 
 jest.mock('@shared/transactionPriority/useTransactionFeeCalculation');
 jest.mock('@transaction/api');

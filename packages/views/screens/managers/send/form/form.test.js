@@ -7,7 +7,7 @@ import useTransactionFeeCalculation from '@shared/transactionPriority/useTransac
 import { fromRawLsk } from '@token/utilities/lsk';
 import Form from './form';
 import accounts from '../../../../../tests/constants/accounts';
-import flushPromises from '../../../../../test/unit-test-utils/flushPromises';
+import flushPromises from '../../../../../tests/unit-test-utils/flushPromises';
 
 jest.mock('@shared/transactionPriority/useTransactionFeeCalculation');
 jest.mock('@transaction/api');
