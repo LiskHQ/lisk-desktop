@@ -15,9 +15,9 @@ import {
   delegateRegistered,
   multisigGroupRegistered,
   balanceReclaimed,
-} from './account';
-import accounts from '../../../test/constants/accounts';
-import * as networkActions from './network';
+} from './actions';
+import accounts from '../../../tests/constants/accounts';
+import * as networkActions from './action';
 
 jest.mock('i18next', () => ({
   t: jest.fn((key) => key),

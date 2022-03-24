@@ -9,10 +9,10 @@ import routes from '@screens/router/routes';
 import { tokenMap } from '@token/configuration/tokens';
 import * as transactionApi from '@transaction/api';
 import { getAutoLogInData } from '@common/utilities/login';
-import middleware from './account';
-import history from '../../history';
+import history from '@common/utilities/history';
+import middleware from './middleware';
 
-jest.mock('../../history');
+jest.mock('@common/utilities/history');
 
 jest.mock('@transaction/api', () => ({
   getTransactions: jest.fn(),

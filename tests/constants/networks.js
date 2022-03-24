@@ -1,5 +1,5 @@
 /* global Cypress */
-import networks from '../../src/constants/networks';
+import networks from '@network/configuration/networks';
 
 const nets = {
   mainnet: networks.mainnet,

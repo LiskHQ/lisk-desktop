@@ -1,6 +1,6 @@
 @font-face {
   font-family: "icons";
-  src: url("../../../assets/fonts/iconfont/icons.woff?5f5e56aa80edb0d7be1a9633ca07fb10") format("woff"), url("../../../assets/fonts/iconfont/icons.ttf?5f5e56aa80edb0d7be1a9633ca07fb10") format("truetype");
+  src: url("../../../../setup/react/assets/fonts/iconfont/icons.woff?5f5e56aa80edb0d7be1a9633ca07fb10") format("woff"), url("../../../setup/react/assets/fonts/iconfont/icons.ttf?5f5e56aa80edb0d7be1a9633ca07fb10") format("truetype");
   font-weight: normal;
   font-style: normal;
 }
