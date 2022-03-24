@@ -54,7 +54,7 @@
     "glob-parent": "^5.1.2",
     "node-fetch": "^2.6.7",
     "braces": "^2.3.1",
-    "postcss": "8.4"
+    "postcss": "8.4.12"
   },
   "build": {
     "asar": true,
@@ -166,7 +166,7 @@
     "node-hid": "2.1.1",
     "numeral": "git+https://github.com/LiskHQ/Numeral-js.git",
     "path-browserify": "^1.0.1",
-    "postcss": "8.4",
+    "postcss": "8.4.12",
     "prop-types": "15.7.2",
     "qrcode.react": "1.0.1",
     "react": "16.14.0",
