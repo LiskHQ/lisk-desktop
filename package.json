@@ -248,7 +248,7 @@
     "i18next-scanner": "3.0.0",
     "identity-obj-proxy": "3.0.0",
     "inline-chunk-html-plugin": "1.1.1",
-    "jest": "27.0.0",
+    "jest": "26.6.3",
     "jest-canvas-mock": "2.0.0",
     "jest-date-mock": "1.0.7",
     "jest-enzyme": "7.1.1",
