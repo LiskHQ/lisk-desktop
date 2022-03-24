@@ -48,7 +48,6 @@
   },
   "resolutions": {
     "elliptic": "^6.5.4",
-    "bitcore-mnemonic": "^9.0.0",
     "validator": "^13.7.0",
     "lodash": "^4.17.21",
     "trim": "^0.0.3",
@@ -134,7 +133,7 @@
     "bip32": "1.0.4",
     "bitcoinjs-lib": "4.0.5",
     "bitcore-lib": "8.25.10",
-    "bitcore-mnemonic": "9.0.0",
+    "bitcore-mnemonic": "8.25.25",
     "blake2b": "2.1.4",
     "body-parser": "1.18.3",
     "browser-or-node": "1.1.0",
