@@ -4,12 +4,12 @@ node_modules
 npm-debug.log
 src/.nyc_output
 coverage
-old_structure/app/report.html
-old_structure/app/*.map
-old_structure/app/build
-old_structure/app/build-testnet
+app/report.html
+app/*.map
+app/build
+app/build-testnet
 *.sw[pon]
-old_structure/app/app.js
+app/app.js
 .vscode
 .idea
 blockchain_explorer.db.gz
@@ -25,6 +25,6 @@ setup/react/assets/fonts/basier-circle/
 setup/react/assets/fonts/gilroy/
 
 ## Cypress
-old_structure/test/cypress/cypress
-old_structure/test/cypress/screenshots
-old_structure/test/cypress/videos
+tests/cypress/cypress
+tests/cypress/screenshots
+tests/cypress/videos
