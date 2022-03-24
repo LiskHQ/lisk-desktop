@@ -47,10 +47,10 @@
     "preinstall": "npx npm-force-resolutions"
   },
   "resolutions": {
-    "elliptic": "^6.5.3",
+    "elliptic": "^6.5.4",
     "bitcore-mnemonic": "^9.0.0",
     "validator": "^13.7.0",
-    "lodash": "^4.17.20",
+    "lodash": "^4.17.21",
     "trim": "^0.0.3",
     "glob-parent": "^5.1.2",
     "node-fetch": "^2.6.7",
