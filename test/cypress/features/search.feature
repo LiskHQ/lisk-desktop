@@ -1,5 +1,6 @@
 Feature: Search
 
+  @basic
   Scenario: Search for Transaction while signed out
     Given Network is set to devnet
     Given I am on login page
@@ -8,6 +9,7 @@ Feature: Search
     Then I click on searchTransactionRow
     Then I should be on Tx Details page of 28fcc2...ecef0
 
+  @basic
   Scenario: Search for Lisk ID
     Given Network is set to devnet
     Given I login as genesis on devnet
@@ -17,6 +19,7 @@ Feature: Search
     Then I click on searchAccountRow
     Then I should be on Account page of irvowcxlclonwcfvcpwp
 
+  @basic
   Scenario: Search for non-existent account
     Given Network is set to devnet
     Given I login as genesis on devnet

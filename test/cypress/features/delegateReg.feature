@@ -3,6 +3,7 @@ Feature: Register delegate
         Given I login as genesis on devnet
         And I wait 5 seconds
 
+  @advanced
    Scenario: Register delegate + Header balance is affected
         Given I am on wallet page
         When I click on votesTab

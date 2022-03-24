@@ -1,5 +1,6 @@
 Feature: Login
 
+  @basic
   Scenario: Log in to Mainnet (Network switcher is not enabled)
     Given Network switcher is disabled
     Given I am on Login page
@@ -8,6 +9,7 @@ Feature: Login
     Then I should be connected to mainnet
     Given  I wait 4 seconds
 
+  @basic
   Scenario: Log in to Testnet
     Given Network switcher is disabled
     Given I am on Login page
@@ -19,6 +21,7 @@ Feature: Login
     When I login
     Then I should be connected to testnet
 
+  @basic
   Scenario: Log in on devnet
     Given I am on Login page
     When I choose devnet
