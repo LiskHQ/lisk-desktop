@@ -3,6 +3,7 @@ import { MODULE_ASSETS_NAME_ID_MAP } from '@transaction/configuration/moduleAsse
 import { getTxAmount } from '@transaction/utilities/transaction';
 import { getState } from '@fixtures/transactions';
 import * as delegates from '@dpos/utilities/api';
+import http from '@common/utilities/api/http';
 import accounts from '../../../../tests/constants/accounts';
 import {
   getTransaction,

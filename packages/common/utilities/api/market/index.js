@@ -1,3 +1,5 @@
+import http from '@common/utilities/api/http';
+
 const httpPrefix = '/api/v2';
 
 export const httpPaths = {

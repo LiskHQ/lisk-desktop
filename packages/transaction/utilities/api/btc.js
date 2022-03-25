@@ -6,6 +6,7 @@ import { tokenMap } from '@token/configuration/tokens';
 import { fromRawLsk } from '@token/utilities/lsk';
 import { validateAddress } from '@common/utilities/validators';
 import { getDerivedPathFromPassphrase } from '@wallet/utilities/api/btc';
+import http from '@common/utilities/api/http';
 
 const httpPrefix = '';
 

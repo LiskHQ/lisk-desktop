@@ -1,4 +1,5 @@
 import networks from '@common/configuration';
+import http from '@common/utilities/api/http';
 import { networkKeys } from '@network/configuration/networks';
 
 const httpPrefix = '/api/v2';

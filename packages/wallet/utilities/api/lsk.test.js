@@ -1,4 +1,5 @@
 import { HTTP_CODES } from '@wallet/configuration/httpCodes';
+import http from '@common/utilities/api/http';
 import ws from '@common/utilities/api/ws';
 import { getAccount, getAccounts } from './lsk';
 import accounts from '../../../../tests/constants/accounts';

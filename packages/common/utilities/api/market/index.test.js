@@ -1,3 +1,4 @@
+import http from '@common/utilities/api/http';
 import * as market from './index';
 
 jest.mock('../http');

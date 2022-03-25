@@ -1,5 +1,5 @@
 import { validateUrl, shouldAutoLogIn, addHttp } from './login';
-import accounts from '../.././tests/constants/accounts';
+import accounts from '../../../tests/constants/accounts';
 
 describe('Login', () => {
   describe('addHttp', () => {

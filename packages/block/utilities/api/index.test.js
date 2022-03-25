@@ -1,3 +1,4 @@
+import http from '@common/utilities/api/http';
 import { subscribe, unsubscribe } from '@common/utilities/api/ws';
 import * as block from './index';
 

@@ -1,4 +1,5 @@
 import { regex } from '@common/configuration';
+import http from '@common/utilities/api/http';
 import ws, { subscribe, unsubscribe } from '@common/utilities/api/ws';
 import { extractAddressFromPublicKey } from '@wallet/utilities/account';
 

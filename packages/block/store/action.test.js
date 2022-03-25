@@ -2,9 +2,9 @@ import { actionTypes } from '@common/configuration';
 import networks from '@network/configuration/networks';
 import { getBlocks } from '@block/utilities/api';
 import { getForgers, getDelegates } from '@dpos/utilities/api';
-import blocks from '../../../tests/constants/blocks';
 import forger from '@fixtures/forgers';
 import delegate from '@fixtures/delegates';
+import blocks from '../../../tests/constants/blocks';
 import { olderBlocksRetrieved, forgersRetrieved } from './action';
 
 jest.mock('@block/utilities/api', () => ({

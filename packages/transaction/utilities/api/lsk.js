@@ -17,6 +17,7 @@ import {
 } from '@transaction/utilities/transaction';
 import { fromRawLsk } from '@token/utilities/lsk';
 import { validateAddress } from '@common/utilities/validators';
+import http from '@common/utilities/api/http';
 import { getDelegates } from '@dpos/utilities/api';
 
 const httpPrefix = '/api/v2';
