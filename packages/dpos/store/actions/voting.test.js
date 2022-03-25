@@ -1,8 +1,8 @@
 import { actionTypes, loginTypes } from '@common/configuration';
 import networks from '@network/configuration/networks';
-import * as transactionApi from '@transaction/api';
+import * as transactionApi from '@transaction/utilities/api';
 import * as delegateApi from '@dpos/delegate/api';
-import * as accountApi from '@wallet/api';
+import * as accountApi from '@wallet/utilities/api';
 import * as hwManager from '@hardwareWallet/utilities/hwManager';
 import {
   voteEdited,
@@ -14,7 +14,7 @@ import {
 import sampleVotes from '../../../tests/constants/votes';
 import accounts from '../../../tests/constants/accounts';
 
-jest.mock('@transaction/api', () => ({
+jest.mock('@transaction/utilities/api', () => ({
   create: jest.fn(),
   computeTransactionId: jest.fn(),
 }));
@@ -23,7 +23,7 @@ jest.mock('@dpos/delegate/api', () => ({
   getVotes: jest.fn(),
 }));
 
-jest.mock('@wallet/api', () => ({
+jest.mock('@wallet/utilities/api', () => ({
   getAccount: jest.fn(),
 }));
 

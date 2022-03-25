@@ -1,7 +1,7 @@
 import { mountWithRouter } from '@common/utilities/testHelpers';
 import { truncateAddress } from '@wallet/utilities/account';
-import blocks from '../../../../../tests/constants/blocks';
-import transactions from '../../../../../tests/constants/transactions';
+import blocks from '../../../../../../tests/constants/blocks';
+import transactions from '../../../../../../tests/constants/transactions';
 import BlockDetails from './blockDetails';
 
 describe('BlockDetails page', () => {

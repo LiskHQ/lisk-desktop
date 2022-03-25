@@ -3,17 +3,17 @@ import { mount } from 'enzyme';
 import { act } from 'react-dom/test-utils';
 import {
   getTransactionBaseFees,
-} from '@transaction/api';
+} from '@transaction/utilities/api';
 import { tokenMap } from '@token/configuration/tokens';
 import useTransactionFeeCalculation from '@shared/transactionPriority/useTransactionFeeCalculation';
 import { truncateAddress } from '@wallet/utilities/account';
 import * as hwManagerAPI from '@hardwareWallet/utilities/hwManager';
-import accounts from '../../../../../../tests/constants/accounts';
+import accounts from '../../../../../../../tests/constants/accounts';
 import Summary from './summary';
-import flushPromises from '../../../../../../tests/unit-test-utils/flushPromises';
+import flushPromises from '../../../../../../../tests/unit-test-utils/flushPromises';
 
 jest.mock('@shared/transactionPriority/useTransactionFeeCalculation');
-jest.mock('@transaction/api');
+jest.mock('@transaction/utilities/api');
 jest.mock('@hardwareWallet/utilities/hwManager');
 
 const transactionBaseFees = {

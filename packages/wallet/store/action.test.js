@@ -1,9 +1,9 @@
 /* eslint-disable max-lines */
 import { toast } from 'react-toastify';
 import { actionTypes } from '@common/configuration';
-import * as accountApi from '@wallet/api';
+import * as accountApi from '@wallet/utilities/api';
 import { extractKeyPair } from '@wallet/utilities/account';
-import { create } from '@transaction/api';
+import { create } from '@transaction/utilities/api';
 import { defaultDerivationPath } from '@common/utilities/explicitBipKeyDerivation';
 import {
   accountLoggedOut,
@@ -28,7 +28,7 @@ jest.mock('react-toastify', () => ({
     error: jest.fn(),
   },
 }));
-jest.mock('@wallet/api', () => ({
+jest.mock('@wallet/utilities/api', () => ({
   getAccount: jest.fn(),
   extractAddress: jest.fn(),
 }));
@@ -42,7 +42,7 @@ jest.mock('@wallet/utilities/account', () => ({
   extractKeyPair: jest.fn(),
   getUnlockableUnlockObjects: () => [{}],
 }));
-jest.mock('@transaction/api');
+jest.mock('@transaction/utilities/api');
 
 const network = {
   name: 'Mainnet',

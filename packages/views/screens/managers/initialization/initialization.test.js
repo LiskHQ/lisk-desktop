@@ -1,9 +1,9 @@
-import { mountWithRouter } from '../../../utils/testHelpers';
-import Initialization from './index';
-import { addSearchParamsToUrl } from '../../../utils/searchParams';
+import { mountWithRouter } from '@common/utilities/testHelpers';
+import { addSearchParamsToUrl } from '@common/utilities/searchParams';
+import Initialization from './';
 import styles from './initialization.css';
 
-jest.mock('../../../utils/searchParams', () => ({
+jest.mock('@common/utilities/searchParams', () => ({
   addSearchParamsToUrl: jest.fn(),
 }));
 window.open = jest.fn();

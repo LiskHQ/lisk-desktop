@@ -2,7 +2,7 @@ import React from 'react';
 import { shallow } from 'enzyme';
 import TransactionResult from '@shared/transactionResult';
 import DialogLink from '@basics/dialog/link';
-import accounts from '../../../../../tests/constants/accounts';
+import accounts from '../../../../../../tests/constants/accounts';
 import Status from './status';
 
 describe('unlock transaction Status', () => {

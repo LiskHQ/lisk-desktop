@@ -6,7 +6,7 @@ import { connect } from 'react-redux';
 
 import { getDelegates } from '@dpos/delegate/api';
 import { getNetworkStatus } from '@network/api';
-import { getTransactions, getRegisteredDelegates } from '@transaction/api';
+import { getTransactions, getRegisteredDelegates } from '@transaction/utilities/api';
 import withData from '@common/utilities/withData';
 import withFilters from '@common/utilities/withFilters';
 import { DEFAULT_LIMIT } from '@common/configuration';

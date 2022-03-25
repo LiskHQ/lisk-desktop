@@ -2,7 +2,7 @@ import {
   bookmarkAdded, bookmarkUpdated, bookmarkRemoved,
 } from '@common/store/actions';
 import { actionTypes } from '@common/configuration';
-import bookmarks from './bookmarks';
+import bookmarks from './reducer';
 import accounts from '../../../tests/constants/accounts';
 
 // eslint-disable-next-line camelcase

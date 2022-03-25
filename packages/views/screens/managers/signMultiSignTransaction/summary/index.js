@@ -2,7 +2,7 @@ import { compose } from 'redux';
 import { connect } from 'react-redux';
 import { withTranslation } from 'react-i18next';
 import { multisigTransactionSigned } from '@common/store/actions';
-import { getAccount } from '@wallet/api';
+import { getAccount } from '@wallet/utilities/api';
 import withData from '@common/utilities/withData';
 import { withRouter } from 'react-router';
 import Summary from './summary';

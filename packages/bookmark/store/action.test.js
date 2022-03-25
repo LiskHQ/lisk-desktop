@@ -7,7 +7,7 @@ import {
   bookmarkAdded,
   bookmarkRemoved,
   bookmarkUpdated,
-} from './bookmarks';
+} from './action';
 import accounts from '../../../tests/constants/accounts';
 
 jest.mock('@common/utilities/localJSONStorage', () => ({

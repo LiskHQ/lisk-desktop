@@ -7,7 +7,7 @@ import withFilters from '@common/utilities/withFilters';
 import withData from '@common/utilities/withData';
 import { getDelegates } from '@dpos/delegate/api';
 import { normalizeTransactionParams } from '@transaction/utilities/transaction';
-import { getTransactions } from '@transaction/api';
+import { getTransactions } from '@transaction/utilities/api';
 import Box from '@basics/box';
 import BoxHeader from '@basics/box/header';
 import BoxContent from '@basics/box/content';

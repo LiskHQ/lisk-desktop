@@ -1,4 +1,4 @@
-import { getTransactionFee } from '@transaction/api';
+import { getTransactionFee } from '@transaction/utilities/api';
 import { getNumberOfSignatures } from '@transaction/utilities/transaction';
 import { MODULE_ASSETS_NAME_ID_MAP } from '@transaction/configuration/moduleAssets';
 import { MIN_ACCOUNT_BALANCE, VOTE_AMOUNT_STEP } from '@transaction/configuration/transactions';

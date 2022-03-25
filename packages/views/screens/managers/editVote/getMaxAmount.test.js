@@ -1,5 +1,5 @@
 import getMaxAmount from './getMaxAmount';
-import accounts from '../../../../tests/constants/accounts';
+import accounts from '../../../../../tests/constants/accounts';
 
 const account = {
   ...accounts.genesis,
@@ -59,7 +59,7 @@ const voting = {
   },
 };
 
-jest.mock('@transaction/api', () => ({
+jest.mock('@transaction/utilities/api', () => ({
   getTransactionFee: jest.fn().mockImplementation(() => Promise.resolve({ value: '0.046' })),
 }));
 

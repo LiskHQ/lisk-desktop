@@ -3,7 +3,7 @@ import * as votingActions from '@common/store/actions';
 import { mountWithRouterAndStore } from '@common/utilities/testHelpers';
 import EditVote from './index';
 
-jest.mock('@transaction/api', () => ({
+jest.mock('@transaction/utilities/api', () => ({
   getTransactionFee: jest.fn().mockImplementation(() => Promise.resolve({ value: '0.046' })),
 }));
 

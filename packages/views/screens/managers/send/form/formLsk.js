@@ -4,7 +4,7 @@ import { MODULE_ASSETS_NAME_ID_MAP } from '@transaction/configuration/moduleAsse
 import { toRawLsk } from '@token/utilities/lsk';
 import TransactionPriority, { useTransactionPriority, useTransactionFeeCalculation } from '@shared/transactionPriority';
 import { AutoResizeTextarea } from '@basics/inputs';
-import CircularProgress from '@basics/circularProgress/circularProgress';
+import CircularProgress from '@basics/progress/circularProgress/circularProgress';
 import Icon from '@basics/icon';
 import Tooltip from '@basics/tooltip/tooltip';
 import FormBase from './formBase';

@@ -1,6 +1,6 @@
 import { toast } from 'react-toastify';
 import * as hwManager from '@hardwareWallet/utilities/hwManager';
-import { mountWithRouter } from '../../../../utils/testHelpers';
+import { mountWithRouter } from '@common/utilities/testHelpers';
 import SelectAccount from './selectAccount';
 
 jest.mock('@hardwareWallet/utilities/hwManager');

@@ -2,7 +2,7 @@ import React from 'react';
 import { tokenMap } from '@token/configuration/tokens';
 import { mountWithRouter } from '@common/utilities/testHelpers';
 import Request from '.';
-import accounts from '../../../../tests/constants/accounts';
+import accounts from '../../../../../tests/constants/accounts';
 
 jest.mock('@shared/converter', () => (
   function ConverterMock() {

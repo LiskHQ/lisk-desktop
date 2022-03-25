@@ -2,8 +2,8 @@ import React, { useEffect, useRef, useState } from 'react';
 import L from 'leaflet';
 import styles from './network.css';
 import 'leaflet.markercluster/dist/leaflet.markercluster';
-import markerIcon from '../../../../assets/images/marker.svg';
-import mapboxWatermarkImage from '../../../../assets/images/mapbox.png';
+import markerIcon from '@setup/react/assets/images/assets/images/marker.svg';
+import mapboxWatermarkImage from '@setup/react/assets/images/assets/images/mapbox.png';
 
 const mapOptions = {
   minZoom: 2,

@@ -1,7 +1,7 @@
 import { tokenMap } from '@token/configuration/tokens';
 import { mountWithRouter } from '@common/utilities/testHelpers';
+import bookmarks from '../../../../../../tests/constants/bookmarks';
 import BookmarkListModal from './modal';
-import bookmarks from '../../../../../tests/constants/bookmarks';
 
 describe('BookmarkListModal', () => {
   let wrapper;

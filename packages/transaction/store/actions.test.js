@@ -14,7 +14,7 @@ import {
   signatureSkipped,
 } from './transactions';
 import { sampleTransaction } from '../../../tests/constants/transactions';
-import { getState } from '../../../test/fixtures/transactions';
+import { getState } from '../../../@fixtures/transactions';
 import accounts from '../../../tests/constants/accounts';
 
 jest.mock('@dpos/delegate/api');

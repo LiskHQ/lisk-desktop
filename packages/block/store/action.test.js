@@ -3,9 +3,9 @@ import networks from '@network/configuration/networks';
 import { getBlocks } from '@block/api';
 import { getForgers, getDelegates } from '@dpos/delegate/api';
 import blocks from '../../../tests/constants/blocks';
-import forger from '../../../test/fixtures/forgers';
-import delegate from '../../../test/fixtures/delegates';
-import { olderBlocksRetrieved, forgersRetrieved } from './blocks';
+import forger from '@fixtures/forgers';
+import delegate from '@fixtures/delegates';
+import { olderBlocksRetrieved, forgersRetrieved } from './action';
 
 jest.mock('@block/api', () => ({
   getBlocks: jest.fn(),

@@ -1,8 +1,8 @@
 import React from 'react';
 import { withTranslation } from 'react-i18next';
-import Icon from '../../toolbox/icon';
-import { PrimaryButton } from '../../toolbox/buttons';
-import DialogLink from '../../toolbox/dialog/link';
+import Icon from '@basics/icon';
+import { PrimaryButton } from '@basics/buttons';
+import DialogLink from '@basics/dialog/link';
 import styles from './initialization.css';
 
 const Initialization = ({ t }) => (

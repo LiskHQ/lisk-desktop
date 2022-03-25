@@ -3,7 +3,7 @@ import { compose } from 'redux';
 import { withTranslation } from 'react-i18next';
 
 import withData from '@common/utilities/withData';
-import { getAccounts } from '@wallet/api';
+import { getAccounts } from '@wallet/utilities/api';
 import { getNetworkStatus } from '@network/api';
 import Box from '@basics/box';
 import BoxHeader from '@basics/box/header';

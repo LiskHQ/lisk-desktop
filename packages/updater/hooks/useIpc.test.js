@@ -2,8 +2,8 @@ import { renderHook, act } from '@testing-library/react-hooks';
 import { mountWithRouter } from '@common/utilities/testHelpers';
 import { useDispatch } from 'react-redux';
 import { appUpdateAvailable } from '@common/store/actions';
-import FlashMessageHolder from '../components/toolbox/flashMessage/holder';
-import DialogHolder from '../components/toolbox/dialog/holder';
+import FlashMessageHolder from '@basics/flashMessage/holder';
+import DialogHolder from '@basics/dialog/holder';
 import useIpc from './useIpc';
 
 jest.mock('@store');

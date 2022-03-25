@@ -5,7 +5,7 @@ import { BigNumber } from 'bignumber.js';
 import { tokenMap } from '@token/configuration/tokens';
 import { fromRawLsk } from '@token/utilities/lsk';
 import { validateAddress } from '@common/utilities/validators';
-import { getDerivedPathFromPassphrase } from '@wallet/api/btc';
+import { getDerivedPathFromPassphrase } from '@wallet/utilities/api/btc';
 
 const httpPrefix = '';
 

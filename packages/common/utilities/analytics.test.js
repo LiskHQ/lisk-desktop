@@ -2,8 +2,8 @@ import React from 'react';
 import moment from 'moment';
 import { advanceBy, clear } from 'jest-date-mock';
 import { mount } from 'enzyme';
-import DialogHolder from '../components/toolbox/dialog/holder';
-import FlashMessageHolder from '../components/toolbox/flashMessage/holder';
+import DialogHolder from '@basics/dialog/holder';
+import FlashMessageHolder from '@basics/flashMessage/holder';
 import analyticsUtil from './analytics';
 
 describe.skip('Analytics Util', () => {

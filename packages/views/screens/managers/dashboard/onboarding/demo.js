@@ -1,5 +1,5 @@
 import React from 'react';
-import DemoRenderer from '../demoRenderer';
+import DemoRenderer from '@basics/demoRenderer';
 import Onboarding from './onboarding';
 
 /* eslint-disable-next-line no-console */

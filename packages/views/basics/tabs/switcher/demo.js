@@ -1,7 +1,7 @@
 import React from 'react';
 import { MemoryRouter } from 'react-router-dom';
 import Switcher from '.';
-import DemoRenderer from '../demoRenderer';
+import DemoRenderer from '@basics/demoRenderer';
 
 const SwitcherDemo = () => (
   <>

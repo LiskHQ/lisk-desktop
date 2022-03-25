@@ -1,8 +1,8 @@
 import { actionTypes } from '@common/configuration';
 import * as marketApi from '@common/utilities/api/market';
 import { pricesRetrieved } from './service';
-import { initialState as settings } from '../reducers/settings';
-import prices from '../../../tests/constants/prices';
+import { initialState as settings } from '@settings/store/reducer';
+import prices from '../../../../tests/constants/prices';
 
 describe('actions: service', () => {
   const getState = () => ({

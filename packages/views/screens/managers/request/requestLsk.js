@@ -4,7 +4,7 @@ import { maxMessageLength } from '@transaction/configuration/transactions';
 import { validateAmountFormat } from '@common/utilities/validators';
 import { sizeOfString } from '@common/utilities/helpers';
 import { Input, AutoResizeTextarea } from '@basics/inputs';
-import CircularProgress from '@basics/circularProgress/circularProgress';
+import CircularProgress from '@basics/progress/circularProgress/circularProgress';
 import Converter from '@shared/converter';
 import Icon from '@basics/icon';
 import RequestWrapper from './requestWrapper';

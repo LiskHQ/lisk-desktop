@@ -4,7 +4,7 @@ import {
   networkSelected, networkConfigSet, networkStatusUpdated,
   customNetworkStored, customNetworkRemoved,
 } from './network';
-import { getState } from '../../../test/fixtures/transactions';
+import { getState } from '../../../@fixtures/transactions';
 
 jest.mock('@network/api', () => ({
   getNetworkConfig:

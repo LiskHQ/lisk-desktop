@@ -8,12 +8,12 @@ import {
   getTransactionFeeFromUnspentOutputs,
   getTransactionFee,
   getTransactionBaseFees,
-} from '@transaction/api';
+} from '@transaction/utilities/api';
 import Form from './formBtc';
-import accounts from '../../../../../tests/constants/accounts';
-import flushPromises from '../../../../../tests/unit-test-utils/flushPromises';
+import accounts from '../../../../../../tests/constants/accounts';
+import flushPromises from '../../../../../../tests/unit-test-utils/flushPromises';
 
-jest.mock('@transaction/api');
+jest.mock('@transaction/utilities/api');
 
 const unspendTransactionOutputs = [{
   height: 1575216,

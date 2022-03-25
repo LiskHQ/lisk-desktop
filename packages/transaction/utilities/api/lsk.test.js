@@ -11,7 +11,7 @@ import {
 
 import * as delegates from '../delegate';
 import accounts from '../../../../tests/constants/accounts';
-import { getState } from '../../../../test/fixtures/transactions';
+import { getState } from '../../../../@fixtures/transactions';
 
 const {
   transfer, voteDelegate, registerDelegate, registerMultisignatureGroup, unlockToken, reclaimLSK,
