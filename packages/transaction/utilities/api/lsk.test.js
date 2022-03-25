@@ -1,6 +1,9 @@
 /* eslint-disable max-lines */
 import { MODULE_ASSETS_NAME_ID_MAP } from '@transaction/configuration/moduleAssets';
 import { getTxAmount } from '@transaction/utilities/transaction';
+import { getState } from '@fixtures/transactions';
+import * as delegates from '@dpos/utilities/api';
+import accounts from '../../../../tests/constants/accounts';
 import {
   getTransaction,
   getTransactions,
@@ -8,10 +11,6 @@ import {
   getSchemas,
   getTransactionFee, getRegisteredDelegates,
 } from './lsk';
-
-import * as delegates from '../delegate';
-import accounts from '../../../../tests/constants/accounts';
-import { getState } from '../../../../@fixtures/transactions';
 
 const {
   transfer, voteDelegate, registerDelegate, registerMultisignatureGroup, unlockToken, reclaimLSK,

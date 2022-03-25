@@ -1,6 +1,6 @@
 import { actionTypes } from '@common/configuration';
 import { tokenMap } from '@token/configuration/tokens';
-import settings from './settings';
+import settings from './reducer';
 
 describe('Reducer: settings(state, action)', () => {
   let initializeState;

@@ -1,10 +1,10 @@
 import { olderBlocksRetrieved } from '@common/store/actions';
 import { actionTypes } from '@common/configuration';
-import { blockSubscribe, blockUnsubscribe } from '@block/api';
+import { blockSubscribe, blockUnsubscribe } from '@block/utilities/api';
 import middleware from './middleware';
 
-jest.mock('@block/api');
-jest.mock('@dpos/delegate/api');
+jest.mock('@block/utilities/api');
+jest.mock('@dpos/utilities/api');
 jest.mock('@common/store/actions/blocks');
 
 describe('Block middleware', () => {

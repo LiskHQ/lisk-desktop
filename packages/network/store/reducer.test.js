@@ -1,5 +1,5 @@
 import { actionTypes } from '@common/configuration';
-import network from './network';
+import network from './reducer';
 
 describe('Reducer: network(state, action)', () => {
   it('should return state object with passed network setup if action is networkSet', () => {

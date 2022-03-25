@@ -3,7 +3,7 @@ import { isEmpty } from '@common/utilities/helpers';
 import { signatureCollectionStatus } from '@transaction/configuration/txStatus';
 import BoxContent from '@basics/box/content';
 import Box from '@basics/box';
-import TransactionDetails from '@screens/transactionDetails/transactionDetails';
+import TransactionDetails from '@screens/managers/transactionDetails/transactionDetails';
 
 import ProgressBar from '../progressBar';
 import { showSignButton, getTransactionSignatureStatus } from '../helpers';

@@ -8,7 +8,7 @@ const timestampConverters = {
   BTC: timestamp => timestamp,
 };
 
-export const DateTimeFromTimestamp = withTranslation()((props) => {
+const DateTimeFromTimestamp = withTranslation()((props) => {
   moment.locale(i18n.language);
   const datetime = moment(timestampConverters[props.token || 'LSK'](props.time));
   return (
@@ -30,3 +30,5 @@ export const DateTimeFromTimestamp = withTranslation()((props) => {
     </span>
   );
 });
+
+export default DateTimeFromTimestamp;

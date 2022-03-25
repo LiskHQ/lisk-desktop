@@ -2,9 +2,9 @@ import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import { useSelector } from 'react-redux';
 import { withTranslation } from 'react-i18next';
-import styles from './onboarding.css';
 import { PrimaryButton, SecondaryButton } from '@basics/buttons';
 import Illustration from '@basics/illustration';
+import styles from './onboarding.css';
 
 const Onboarding = ({
   onDiscard, name, finalCallback, slides, actionButtonLabel, className, t,

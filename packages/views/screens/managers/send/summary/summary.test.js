@@ -3,9 +3,9 @@ import { mount } from 'enzyme';
 import { tokenMap } from '@token/configuration/tokens';
 import { toRawLsk } from '@token/utilities/lsk';
 import { formatAmountBasedOnLocale } from '@common/utilities/formattedNumber';
-import Summary from './summary';
-import accounts from '../../../../../../tests/constants/accounts';
 import i18n from '@setup/i18n/i18n';
+import accounts from '../../../../../../tests/constants/accounts';
+import Summary from './summary';
 
 describe('Summary', () => {
   let wrapper;

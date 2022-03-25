@@ -1,11 +1,10 @@
 /* istanbul ignore file */
 import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
+import { withRouter } from 'react-router';
 import { withTranslation } from 'react-i18next';
 import { compose } from 'redux';
-
 import { parseSearchParams, addSearchParamsToUrl } from '@screens/router/searchParams';
-import { withRouter } from 'react-router';
 import { transactionsRetrieved } from '@common/store/actions';
 import {
   selectAccount,
@@ -13,7 +12,7 @@ import {
   selectSettings,
   selectTransactions,
 } from '@common/store/selectors';
-import TabsContainer from '@basics/tabsContainer/tabsContainer';
+import TabsContainer from '@basics/tabs/tabsContainer/tabsContainer';
 import Overview from './overview';
 import DelegateTab from './delegateProfile';
 // import MultiSignatureTab from './multiSignature';

@@ -5,7 +5,7 @@ import { useSelector } from 'react-redux';
 import { selectCurrentBlockHeight } from '@common/store/selectors';
 import withFilters from '@common/utilities/withFilters';
 import withData from '@common/utilities/withData';
-import { getDelegates } from '@dpos/delegate/api';
+import { getDelegates } from '@dpos/utilities/api';
 import { normalizeTransactionParams } from '@transaction/utilities/transaction';
 import { getTransactions } from '@transaction/utilities/api';
 import Box from '@basics/box';

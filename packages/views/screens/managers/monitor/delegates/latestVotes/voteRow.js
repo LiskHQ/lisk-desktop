@@ -6,7 +6,7 @@ import gridVisibility from 'flexboxgrid-helpers/dist/flexboxgrid-helpers.min.css
 import { DateTimeFromTimestamp } from '@basics/timestamp';
 import AccountVisualWithAddress from '@basics/accountVisual/accountVisualWithAddress';
 import DialogLink from '@basics/dialog/link';
-import VoteItem from '@shared/voteItem';
+import VoteItem from '@transaction/list/row/voteItem';
 import styles from '../delegates.css';
 
 const VotesItemsList = ({ votes = [], delegates }) => {

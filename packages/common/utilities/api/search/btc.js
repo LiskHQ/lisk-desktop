@@ -1,6 +1,6 @@
 import { regex } from '@common/configuration';
-import { getAccount } from '../account/btc';
 import { getTransaction } from '@transaction/utilities/api/btc';
+import { getAccount } from '@wallet/utilities/api/btc';
 
 /**
  * Defines the entity corresponding the given query

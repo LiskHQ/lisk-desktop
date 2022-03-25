@@ -2,7 +2,7 @@
 import { compose } from 'redux';
 import { connect } from 'react-redux';
 import { withTranslation } from 'react-i18next';
-import { balanceReclaimed } from '@common/store/actions/account';
+import { balanceReclaimed } from '@wallet/store/action';
 
 import Summary from './summary';
 

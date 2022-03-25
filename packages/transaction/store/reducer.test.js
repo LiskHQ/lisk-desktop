@@ -1,6 +1,6 @@
 import { resetTransactionResult } from '@common/store/actions';
 import { actionTypes } from '@common/configuration';
-import transactions from './transactions';
+import transactions from './reducer';
 
 describe('Reducer: transactions', () => {
   const defaultState = {

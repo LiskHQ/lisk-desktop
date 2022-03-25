@@ -1,7 +1,7 @@
 import React from 'react';
 import { mount } from 'enzyme';
 import networks from '@network/configuration/networks';
-import * as delegatesApi from '@dpos/delegate/api';
+import * as delegatesApi from '@dpos/utilities/api';
 import { getTransactionBaseFees, getTransactionFee, create } from '@transaction/utilities/api';
 import { fromRawLsk } from '@token/utilities/lsk';
 import * as hwManagerAPI from '@hardwareWallet/utilities/hwManager';
@@ -9,9 +9,9 @@ import accounts from '../../../../../../tests/constants/accounts';
 import SelectNameAndFee from './form';
 import flushPromises from '../../../../../../tests/unit-test-utils/flushPromises';
 
-jest.mock('@network/api');
+jest.mock('@network/utilities/api');
 jest.mock('@transaction/utilities/api');
-jest.mock('@dpos/delegate/api', () => ({
+jest.mock('@dpos/utilities/api', () => ({
   getDelegate: jest.fn().mockImplementation(() => Promise.resolve({ data: [] })),
 }));
 jest.mock('@hardwareWallet/utilities/hwManager');

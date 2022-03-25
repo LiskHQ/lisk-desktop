@@ -3,10 +3,8 @@ import AccountVisualDemo from './accountVisual/demo';
 import AutoSuggestDemo from './autoSuggest/demo';
 import CalendarDemo from './calendar/demo';
 import IllustrationDemo from './illustration/demo';
-import OnboardingDemo from './onboarding/demo';
-import PassphraseInputDemo from './passphraseInput/demo';
 import SpinnerDemo from './spinner/demo';
-import SwitcherDemo from './switcher/demo';
+import SwitcherDemo from './tabs/switcher/demo';
 import styles from './demo.css';
 
 const getName = child => child.type.name.replace('Demo', '');
@@ -37,8 +35,6 @@ const ToolboxDemo = () => (
     <AutoSuggestDemo />
     <CalendarDemo />
     <IllustrationDemo />
-    <OnboardingDemo />
-    <PassphraseInputDemo />
     <SpinnerDemo />
     <SwitcherDemo />
   </WithTableOfContents>

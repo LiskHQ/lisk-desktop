@@ -3,7 +3,7 @@ import { compose } from 'redux';
 import { withTranslation } from 'react-i18next';
 
 import withLocalSort from '@common/utilities/withLocalSort';
-import { getNetworkStatistics, getPeers } from '@network/api';
+import { getNetworkStatistics, getPeers } from '@network/utilities/api';
 import withData from '@common/utilities/withData';
 import { DEFAULT_LIMIT } from '@common/configuration';
 import { tokenMap } from '@token/configuration/tokens';

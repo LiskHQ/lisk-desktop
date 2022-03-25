@@ -1,5 +1,5 @@
 import React from 'react';
-import MultiSignatureReview from '@shared/multiSignatureReview';
+import MultiSignatureReview from '@transaction/detail/info/multiSignatureReview';
 
 const RegisterMultisignatureGroup = ({
   t, members, fee, numberOfSignatures,

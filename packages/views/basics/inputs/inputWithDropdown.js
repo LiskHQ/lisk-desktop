@@ -1,8 +1,6 @@
 import React from 'react';
-
 import Input from './input';
-import DropdownButton from '../inputs/select/dropdownButton';
-
+import DropdownButton from './select/dropdownButton';
 import styles from './input.css';
 
 const InputWithDropdown = ({
