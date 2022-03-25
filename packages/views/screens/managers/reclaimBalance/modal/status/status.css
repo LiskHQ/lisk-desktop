@@ -1,4 +1,4 @@
-@import '../../../../setup/react/app/mixins.css';
+@import '../../../../../../../setup/react/app/mixins.css';
 
 .wrapper {
   padding: var(--horizontal-padding-l);
@@ -54,7 +54,7 @@
       border-radius: 16px;
       border: 1px solid var(--color-jade-green);
       background: var(--color-jade-green);
-      background-image: url('../../../../../assets/images/icons/checkmark-white.svg');
+      background-image: url('../../../../../../../setup/react/assets/images/icons/checkmark-white.svg');
       background-repeat: no-repeat;
       background-position: center;
     }

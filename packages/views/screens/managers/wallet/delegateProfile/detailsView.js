@@ -6,7 +6,7 @@ import Box from '@basics/box';
 import BoxContent from '@basics/box/content';
 import BoxHeader from '@basics/box/header';
 import Icon from '@basics/icon';
-import { DateTimeFromTimestamp } from '@basics/timestamp';
+import DateTimeFromTimestamp from '@basics/timestamp';
 import LiskAmount from '@shared/liskAmount';
 import { getStatus } from './performanceView';
 import styles from './delegateProfile.css';

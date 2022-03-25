@@ -1,4 +1,4 @@
-@import '../../../setup/react/app/mixins.css';
+@import '../../../../../setup/react/app/mixins.css';
 
 :root {
   --horizontal-margin: calc(var(--side-bar-shrunk-size) * 2);
@@ -31,7 +31,7 @@
     border-radius: 6px;
     padding: var(--vertical-padding-l) var(--horizontal-padding-l);
     position: relative;
-    background-image: url('../../../../src/assets/images/waves_pattern.svg');
+    background-image: url('../../../../../setup/react/assets/images/waves_pattern.svg');
     background-color: var(--color-balance-bg);
 
     & .balanceTitle {

@@ -3,7 +3,7 @@ import React, { useEffect } from 'react';
 
 import routes from '@screens/router/routes';
 import { tokenMap } from '@token/configuration/tokens';
-import { DateTimeFromTimestamp } from '@basics/timestamp';
+import DateTimeFromTimestamp from '@basics/timestamp';
 import Box from '@basics/box';
 import BoxHeader from '@basics/box/header';
 import BoxContent from '@basics/box/content';

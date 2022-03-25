@@ -4,7 +4,7 @@ import grid from 'flexboxgrid/dist/flexboxgrid.css';
 import { tokenMap } from '@token/configuration/tokens';
 import { getModuleAssetTitle } from '@transaction/utilities/moduleAssets';
 import { getTxAmount } from '@transaction/utilities/transaction';
-import { DateTimeFromTimestamp } from '@basics/timestamp';
+import DateTimeFromTimestamp from '@basics/timestamp';
 import Icon from '@basics/icon';
 import Tooltip from '@basics/tooltip/tooltip';
 import DialogLink from '@basics/dialog/link';

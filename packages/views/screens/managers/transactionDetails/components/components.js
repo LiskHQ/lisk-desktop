@@ -9,7 +9,7 @@ import { tokenMap } from '@token/configuration/tokens';
 import { MODULE_ASSETS_NAME_ID_MAP } from '@transaction/configuration/moduleAssets';
 import CopyToClipboard from '@basics/copyToClipboard';
 import TransactionTypeFigure from '@shared/transactionTypeFigure';
-import { DateTimeFromTimestamp } from '@basics/timestamp';
+import DateTimeFromTimestamp from '@basics/timestamp';
 import DiscreetMode from '@shared/discreetMode';
 import LiskAmount from '@shared/liskAmount';
 import MultiSignatureMembers, { SignedAndRemainingMembers } from '@shared/multisignatureMembers';

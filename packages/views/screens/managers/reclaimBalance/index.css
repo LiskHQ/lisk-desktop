@@ -1,4 +1,4 @@
-@import '../../../setup/react/app/mixins.css';
+@import '../../../../../setup/react/app/mixins.css';
 
 .multiStep {
   height: 100%;
@@ -129,7 +129,7 @@
     &.step.check::before {
       border: 1px solid var(--color-jade-green);
       background: var(--color-jade-green);
-      background-image: url('../../../assets/images/icons/checkmark-white.svg');
+      background-image: url('../../../../../setup/react/assets/images/icons/checkmark-white.svg');
       background-repeat: no-repeat;
       background-position: center;
     }

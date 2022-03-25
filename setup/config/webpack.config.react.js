@@ -107,7 +107,7 @@ const config = {
       VERSION: `"${bundleVersion}"`,
     }),
     new StyleLintPlugin({
-      context: `${resolve(__dirname, '../..')}`,
+      context: `${resolve(__dirname, '../../packages')}`,
       files: '**/*.css',
       config: stylelintrc,
     }),
@@ -131,9 +131,9 @@ const config = {
       translationFunctionNames: ['i18next.t', 'props.t', 'this.props.t', 't'],
       outputFilePath: './setup/i18n/locales/en/common.json',
       files: [
-        './i18n/**/*.js',
+        './setup/i18n/**/*.js',
         './packages/**/*.js',
-        './scripts/app/src/**/*.js',
+        './app/src/**/*.js',
       ],
     }),
     new ContextReplacementPlugin(/moment[/\\]locale$/, new RegExp(langRegex)),

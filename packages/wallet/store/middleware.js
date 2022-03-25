@@ -1,8 +1,8 @@
 import { toast } from 'react-toastify';
-import networks, {
+import networks from '@network/configuration/networks';
+import {
   actionTypes, timeOutId, timeOutWarningId,
 } from '@common/configuration';
-
 import { networkKeys } from '@network/configuration/networks';
 import routes from '@screens/router/routes';
 import { tokenMap } from '@token/configuration/tokens';
@@ -14,9 +14,9 @@ import {
   emptyTransactionsData, transactionsRetrieved, votesRetrieved,
 } from '@common/store/actions';
 import analytics from '@common/utilities/analytics';
+import history from '@common/utilities/history';
 import { getTransactions } from '@transaction/utilities/api';
 import i18n from '@setup/i18n/i18n';
-import history from '@common/utilities/history';
 
 const getRecentTransactionOfType = (transactionsList, type) => (
   transactionsList.filter(transaction => (

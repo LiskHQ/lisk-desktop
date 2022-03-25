@@ -42,7 +42,7 @@ module.exports = {
     '^@basics(.*)$': resolve(__dirname, '../packages/views/basics/$1'),
     '^@libs(.*)$': resolve(__dirname, '../libs/$1'),
     '\\.(jpg|jpeg|png|gif|eot|otf|webp|svg|ttf|woff|woff2|mp4|webm|wav|mp3|m4a|aac|oga)$':
-      '<rootDir>/tests/__mocks__/fileMock.js',
+      '../tests/__mocks__/fileMock.js',
   },
   collectCoverage: true,
   coverageDirectory: '<rootDir>/coverage/jest',
