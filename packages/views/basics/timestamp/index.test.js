@@ -1,6 +1,6 @@
 import React from 'react';
 import { mount } from 'enzyme';
-import { DateTimeFromTimestamp } from '.';
+import DateTimeFromTimestamp from '.';
 
 describe('packages/views/basics/timestamp', () => {
   const inputValue = 1499983200;
