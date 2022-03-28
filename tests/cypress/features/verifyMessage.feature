@@ -1,5 +1,6 @@
 Feature: Verify Message
 
+  @basic
   Scenario: Verify the integrity of a signed message in textarea
     Given I login as genesis on devnet
     And I wait 2 seconds
@@ -11,6 +12,7 @@ Feature: Verify Message
     And I click on textAreaViewBtn
     Then I verify signed message in verifyMessageTextArea
 
+  @basic
   Scenario: Verify the integrity of a tampered message in textArea view
     Given I login as genesis on devnet
     And I wait 2 seconds
@@ -21,6 +23,7 @@ Feature: Verify Message
     And I wait 2 seconds
     Then I see this title: The signature is incorrect
 
+  @basic
   Scenario: Verify the integrity of a signed message in input fields view
     Given I login as genesis on devnet
     And I wait 2 seconds
@@ -33,6 +36,7 @@ Feature: Verify Message
     And I wait 2 seconds
     Then I see this title: The signature is correct
 
+  @basic
   Scenario: Verify the integrity of a tampered message in input fields view
     Given I login as genesis on devnet
     And I wait 2 seconds

@@ -1,5 +1,6 @@
 Feature: Sign Message
- 
+
+  @basic
   Scenario: I should get the lisk signed message
     Given I login as genesis on devnet
     And I wait 2 seconds
@@ -11,5 +12,5 @@ Feature: Sign Message
     When I click on nextBtn
     And I click on copyToClipboardBtn
     Then I should have the signed message in the clipboard
-    
+
 

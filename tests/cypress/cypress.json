@@ -4,6 +4,7 @@
   "viewportHeight": 1000,
   "video": true,
   "env": {
+    "TAGS": "@basic"
   },
   "integrationFolder": "./features",
   "fixturesFolder": "./fixtures",
