@@ -1,6 +1,6 @@
-import * as lsk from '@token/utilities/lsk';
-import functionMapper from '@common/utilities/api/functionMapper';
+import * as lsk from './lsk';
 import * as btc from './btc';
+import functionMapper from '@common/utilities/api/functionMapper';
 
 const accountAPI = functionMapper(lsk, btc);
 

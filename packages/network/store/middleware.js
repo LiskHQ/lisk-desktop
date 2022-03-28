@@ -1,5 +1,5 @@
 import { actionTypes } from '@common/configuration';
-import settings from '@settings/store/middleware';
+import settings from '@settings/configuration/settings';
 import { getAutoLogInData, shouldAutoLogIn } from '@common/utilities/login';
 import { networkConfigSet, login, settingsUpdated } from '@common/store/actions';
 
