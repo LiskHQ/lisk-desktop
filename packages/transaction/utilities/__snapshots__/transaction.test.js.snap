@@ -1,0 +1,470 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`API: LSK Transactions createTransactionObject creates a transaction object for delegate registration transaction 1`] = `
+Object {
+  "asset": Object {
+    "username": "username",
+  },
+  "assetID": 0,
+  "fee": 1000000n,
+  "moduleID": 5,
+  "nonce": 1n,
+  "senderPublicKey": Object {
+    "data": Array [],
+    "type": "Buffer",
+  },
+  "signatures": Array [],
+}
+`;
+
+exports[`API: LSK Transactions createTransactionObject creates a transaction object for reclaimLSK transaction 1`] = `
+Object {
+  "asset": Object {
+    "amount": 10000000n,
+  },
+  "assetID": 0,
+  "fee": 1000000n,
+  "moduleID": 1000,
+  "nonce": 1n,
+  "senderPublicKey": Object {
+    "data": Array [],
+    "type": "Buffer",
+  },
+  "signatures": Array [],
+}
+`;
+
+exports[`API: LSK Transactions createTransactionObject creates a transaction object for registerMultisignatureGroup transaction 1`] = `
+Object {
+  "asset": Object {
+    "mandatoryKeys": Array [
+      Object {
+        "data": Array [
+          15,
+          233,
+          163,
+          241,
+          162,
+          27,
+          85,
+          48,
+          242,
+          127,
+          135,
+          164,
+          20,
+          181,
+          73,
+          231,
+          154,
+          148,
+          11,
+          242,
+          79,
+          223,
+          43,
+          47,
+          5,
+          231,
+          242,
+          42,
+          238,
+          236,
+          200,
+          106,
+        ],
+        "type": "Buffer",
+      },
+      Object {
+        "data": Array [
+          134,
+          73,
+          152,
+          121,
+          68,
+          141,
+          27,
+          2,
+          21,
+          213,
+          156,
+          191,
+          7,
+          136,
+          54,
+          227,
+          215,
+          217,
+          210,
+          120,
+          45,
+          86,
+          162,
+          39,
+          74,
+          86,
+          135,
+          97,
+          191,
+          243,
+          111,
+          25,
+        ],
+        "type": "Buffer",
+      },
+    ],
+    "numberOfSignatures": 2,
+    "optionalKeys": Array [
+      Object {
+        "data": Array [
+          53,
+          198,
+          178,
+          85,
+          32,
+          252,
+          134,
+          139,
+          86,
+          200,
+          63,
+          237,
+          110,
+          28,
+          137,
+          187,
+          53,
+          15,
+          183,
+          153,
+          74,
+          93,
+          160,
+          188,
+          234,
+          122,
+          79,
+          98,
+          31,
+          148,
+          140,
+          127,
+        ],
+        "type": "Buffer",
+      },
+    ],
+  },
+  "assetID": 0,
+  "fee": 1000000n,
+  "moduleID": 4,
+  "nonce": 1n,
+  "senderPublicKey": Object {
+    "data": Array [],
+    "type": "Buffer",
+  },
+  "signatures": Array [],
+}
+`;
+
+exports[`API: LSK Transactions createTransactionObject creates a transaction object for transfer transaction 1`] = `
+Object {
+  "asset": Object {
+    "amount": 1n,
+    "data": "test",
+    "recipientAddress": Object {
+      "data": Array [],
+      "type": "Buffer",
+    },
+  },
+  "assetID": 0,
+  "fee": 1000000n,
+  "moduleID": 2,
+  "nonce": 1n,
+  "senderPublicKey": Object {
+    "data": Array [],
+    "type": "Buffer",
+  },
+  "signatures": Array [],
+}
+`;
+
+exports[`API: LSK Transactions createTransactionObject creates a transaction object for unlockToken transaction 1`] = `
+Object {
+  "asset": Object {
+    "unlockObjects": Array [
+      Object {
+        "amount": -1000n,
+        "delegateAddress": Object {
+          "data": Array [
+            208,
+            70,
+            153,
+            229,
+            124,
+            74,
+            56,
+            70,
+            201,
+            136,
+            243,
+            193,
+            83,
+            6,
+            121,
+            111,
+            142,
+            174,
+            92,
+            28,
+          ],
+          "type": "Buffer",
+        },
+        "unvoteHeight": undefined,
+      },
+      Object {
+        "amount": 1000n,
+        "delegateAddress": Object {
+          "data": Array [
+            183,
+            120,
+            252,
+            149,
+            185,
+            240,
+            116,
+            7,
+            230,
+            64,
+            157,
+            115,
+            200,
+            175,
+            25,
+            25,
+            217,
+            3,
+            80,
+            2,
+          ],
+          "type": "Buffer",
+        },
+        "unvoteHeight": undefined,
+      },
+    ],
+  },
+  "assetID": 2,
+  "fee": 1000000n,
+  "moduleID": 5,
+  "nonce": 1n,
+  "senderPublicKey": Object {
+    "data": Array [],
+    "type": "Buffer",
+  },
+  "signatures": Array [],
+}
+`;
+
+exports[`API: LSK Transactions createTransactionObject creates a transaction object for vote transaction 1`] = `
+Object {
+  "asset": Object {
+    "votes": Array [
+      Object {
+        "amount": 100n,
+        "delegateAddress": Object {
+          "data": Array [
+            208,
+            70,
+            153,
+            229,
+            124,
+            74,
+            56,
+            70,
+            201,
+            136,
+            243,
+            193,
+            83,
+            6,
+            121,
+            111,
+            142,
+            174,
+            92,
+            28,
+          ],
+          "type": "Buffer",
+        },
+      },
+      Object {
+        "amount": -100n,
+        "delegateAddress": Object {
+          "data": Array [
+            183,
+            120,
+            252,
+            149,
+            185,
+            240,
+            116,
+            7,
+            230,
+            64,
+            157,
+            115,
+            200,
+            175,
+            25,
+            25,
+            217,
+            3,
+            80,
+            2,
+          ],
+          "type": "Buffer",
+        },
+      },
+    ],
+  },
+  "assetID": 1,
+  "fee": 1000000n,
+  "moduleID": 5,
+  "nonce": 1n,
+  "senderPublicKey": Object {
+    "data": Array [],
+    "type": "Buffer",
+  },
+  "signatures": Array [],
+}
+`;
+
+exports[`API: LSK Transactions transactionToJSON should return the transaction as JSON 1`] = `"{\\"moduleID\\":2,\\"assetID\\":0,\\"senderPublicKey\\":\\"0fe9a3f1a21b5530f27f87a414b549e79a940bf24fdf2b2f05e7f22aeeecc86a\\",\\"nonce\\":\\"2n\\",\\"fee\\":\\"123123n\\",\\"signatures\\":[],\\"asset\\":{\\"recipientAddress\\":\\"b778fc95b9f07407e6409d73c8af1919d9035002\\",\\"amount\\":\\"10000n\\"}}"`;
+
+exports[`API: LSK Transactions transformTransaction should a register delegate transaction with type signature of lisk service 1`] = `
+Object {
+  "asset": Object {
+    "username": "super_delegate",
+  },
+  "fee": "0.1",
+  "id": "12",
+  "moduleAssetId": "5:0",
+  "nonce": "1",
+  "sender": Object {
+    "address": "lskdxc4ta5j43jp9ro3f8zqbxta9fn6jwzjucw7yt",
+    "publicKey": "0fe9a3f1a21b5530f27f87a414b549e79a940bf24fdf2b2f05e7f22aeeecc86a",
+  },
+  "signatures": undefined,
+}
+`;
+
+exports[`API: LSK Transactions transformTransaction should a transfer transaction with type signature of lisk service 1`] = `
+Object {
+  "asset": Object {
+    "amount": "100000000",
+    "data": "",
+    "recipient": Object {
+      "address": "lskdxc4ta5j43jp9ro3f8zqbxta9fn6jwzjucw7yt",
+    },
+  },
+  "fee": "0.1",
+  "id": "12",
+  "moduleAssetId": "2:0",
+  "nonce": "1",
+  "sender": Object {
+    "address": "lskdxc4ta5j43jp9ro3f8zqbxta9fn6jwzjucw7yt",
+    "publicKey": "0fe9a3f1a21b5530f27f87a414b549e79a940bf24fdf2b2f05e7f22aeeecc86a",
+  },
+  "signatures": undefined,
+}
+`;
+
+exports[`API: LSK Transactions transformTransaction should a vote delegate transaction with type signature of lisk service 1`] = `
+Object {
+  "asset": Object {
+    "votes": Array [
+      Object {
+        "amount": "100",
+        "delegateAddress": "lskvj27a26",
+      },
+    ],
+  },
+  "fee": "0.1",
+  "id": "12",
+  "moduleAssetId": "5:1",
+  "nonce": "1",
+  "sender": Object {
+    "address": "lskdxc4ta5j43jp9ro3f8zqbxta9fn6jwzjucw7yt",
+    "publicKey": "0fe9a3f1a21b5530f27f87a414b549e79a940bf24fdf2b2f05e7f22aeeecc86a",
+  },
+  "signatures": undefined,
+}
+`;
+
+exports[`API: LSK Transactions transformTransaction should transform a reclaimLSK transaction 1`] = `
+Object {
+  "asset": Object {
+    "amount": "100",
+  },
+  "fee": "0.1",
+  "id": "12",
+  "moduleAssetId": "1000:0",
+  "nonce": "1",
+  "sender": Object {
+    "address": "lskdxc4ta5j43jp9ro3f8zqbxta9fn6jwzjucw7yt",
+    "publicKey": "0fe9a3f1a21b5530f27f87a414b549e79a940bf24fdf2b2f05e7f22aeeecc86a",
+  },
+  "signatures": undefined,
+}
+`;
+
+exports[`API: LSK Transactions transformTransaction should transform a registerMultisignatureGroup transaction 1`] = `
+Object {
+  "asset": Object {
+    "mandatoryKeys": Array [
+      "0fe9a3f1a21b5530f27f87a414b549e79a940bf24fdf2b2f05e7f22aeeecc86a",
+      "86499879448d1b0215d59cbf078836e3d7d9d2782d56a2274a568761bff36f19",
+    ],
+    "numberOfSignatures": 2,
+    "optionalKeys": Array [
+      "35c6b25520fc868b56c83fed6e1c89bb350fb7994a5da0bcea7a4f621f948c7f",
+    ],
+  },
+  "fee": "1000000",
+  "id": "12",
+  "moduleAssetId": "4:0",
+  "nonce": "1",
+  "sender": Object {
+    "address": "lskdxc4ta5j43jp9ro3f8zqbxta9fn6jwzjucw7yt",
+    "publicKey": "0fe9a3f1a21b5530f27f87a414b549e79a940bf24fdf2b2f05e7f22aeeecc86a",
+  },
+  "signatures": undefined,
+}
+`;
+
+exports[`API: LSK Transactions transformTransaction should transform a unlockToken transaction 1`] = `
+Object {
+  "asset": Object {
+    "unlockObjects": Array [
+      Object {
+        "amount": "10000000",
+        "delegateAddress": "lskehj8am9afxdz8arztqajy52acnoubkzvmo9cjy",
+        "unvoteHeight": 1000000,
+      },
+      Object {
+        "amount": "-10000000",
+        "delegateAddress": "lskkx46qy3wkwtfbh4gzbq57tx6dzfexu5yufwh5b",
+        "unvoteHeight": 1000000,
+      },
+    ],
+  },
+  "fee": "0.1",
+  "id": "12",
+  "moduleAssetId": "5:2",
+  "nonce": "1",
+  "sender": Object {
+    "address": "lskdxc4ta5j43jp9ro3f8zqbxta9fn6jwzjucw7yt",
+    "publicKey": "0fe9a3f1a21b5530f27f87a414b549e79a940bf24fdf2b2f05e7f22aeeecc86a",
+  },
+  "signatures": undefined,
+}
+`;

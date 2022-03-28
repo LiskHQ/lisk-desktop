@@ -23,7 +23,7 @@ const config = {
   },
   plugins: [
     new ESLintPlugin({
-      context: '../../',
+      context: '../',
       files: '../../**/*.js',
     }),
     new webpack.IgnorePlugin({ resourceRegExp: /\.\/locale$/ }),

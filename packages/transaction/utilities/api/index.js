@@ -1,6 +1,6 @@
 import * as lsk from './lsk';
-import functionMapper from '@common/utilities/api/functionMapper';
 import * as btc from './btc';
+import functionMapper from '@common/utilities/api/functionMapper';
 
 const transactionAPI = functionMapper(lsk, btc);
 

@@ -5,6 +5,7 @@
       "@scripts/*": ["./scripts/*"],
       "@setup/*": ["./setup/*"],
       "@tests/*": ["./tests/*"],
+      "@fixtures/*": ["./tests/fixtures"],
       "@block/*": ["./packages/block/*"],
       "@bookmark/*": ["./packages/bookmark/*"],
       "@common/*": ["./packages/common/*"],

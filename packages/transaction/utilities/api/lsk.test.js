@@ -24,7 +24,7 @@ jest.mock('@common/utilities/api/http', () =>
 jest.mock('@common/utilities/api/ws', () =>
   jest.fn().mockImplementation(() => Promise.resolve({ data: [{ type: 0 }] })));
 
-jest.mock('../delegate', () => ({
+jest.mock('@dpos/utilities/api', () => ({
   getDelegates: jest.fn(),
 }));
 
