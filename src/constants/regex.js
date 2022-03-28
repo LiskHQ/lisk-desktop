@@ -6,7 +6,7 @@ export default {
   delegateName: /^[a-z0-9!@$&_.]{3,20}$/,
   transactionId: /^[0-9a-z]{64}/,
   blockId: /^[0-9a-z]{64}/,
-  blockHeight: /[0-9]+/,
+  blockHeight: /^[0-9]+$/,
   btcAddressTrunk: /^(.{10})(.+)?(.{10})$/,
   lskAddressTrunk: /^(.{6})(.+)?(.{5})$/,
   publicKeyTrunk: /^(.{6})(.+)?(.{5})$/,
