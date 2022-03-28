@@ -3,7 +3,7 @@ import { actionTypes } from '@common/configuration';
 import settingsMiddleware from './middleware';
 
 jest.mock('@common/store/actions/service');
-jest.mock('@common/store/actions/settings');
+jest.mock('@settings/store/middleware');
 jest.mock('@common/store/actions/transactions');
 
 describe('Middleware: Settings', () => {

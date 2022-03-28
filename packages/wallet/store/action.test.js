@@ -32,10 +32,10 @@ jest.mock('@wallet/utilities/api', () => ({
   getAccount: jest.fn(),
   extractAddress: jest.fn(),
 }));
-jest.mock('./transactions', () => ({
+jest.mock('@transaction/store/action', () => ({
   updateTransactions: jest.fn(),
 }));
-jest.mock('./network', () => ({
+jest.mock('@network/store/action', () => ({
   networkStatusUpdated: jest.fn(),
 }));
 jest.mock('@wallet/utilities/account', () => ({

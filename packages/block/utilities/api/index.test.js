@@ -2,8 +2,8 @@ import http from '@common/utilities/api/http';
 import { subscribe, unsubscribe } from '@common/utilities/api/ws';
 import * as block from './index';
 
-jest.mock('../http');
-jest.mock('../ws');
+jest.mock('@common/utilities/api/http');
+jest.mock('@common/utilities/api/ws');
 
 describe('Block api module', () => {
   describe('getBlock', () => {

@@ -17,7 +17,7 @@ jest.mock('@common/configuration', () => ({
   },
 }));
 
-jest.mock('@src/routesMap', () => {
+jest.mock('@screens/router/routesMap', () => {
   const component = () => <MockDialog.WrappedComponent hasClose history={mockHistory} />;
   return { testDialog: component };
 });

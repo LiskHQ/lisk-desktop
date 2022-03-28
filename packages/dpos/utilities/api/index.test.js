@@ -4,8 +4,8 @@ import accounts from '../../../../tests/constants/accounts';
 
 import * as delegate from './index';
 
-jest.mock('../http');
-jest.mock('../ws');
+jest.mock('@common/utilities/api/http');
+jest.mock('@common/utilities/api/ws');
 
 const setApiResponseData = (data, api) => {
   api.mockImplementation(() => Promise.resolve(data));

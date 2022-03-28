@@ -10,7 +10,7 @@ const version = require('../../package.json').version;
 const config = {
   mode: 'development',
   output: {
-    path: resolve(__dirname, '../../scripts/app', '../../dist'),
+    path: resolve(__dirname, '../../app', '../../dist'),
     filename: 'bundle.[name].[contenthash].js',
   },
   devServer: {
@@ -23,7 +23,7 @@ const config = {
   },
   plugins: [
     new ESLintPlugin({
-      context: '../',
+      context: '../../',
     }),
     new webpack.IgnorePlugin({ resourceRegExp: /\.\/locale$/ }),
     new webpack.DefinePlugin({

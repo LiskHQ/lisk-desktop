@@ -5,6 +5,7 @@ const config = {
   mode: 'development',
   resolve: {
     alias: {
+      '@fixtures': resolve('./tests/fixtures'),
       '@scripts': resolve('./scripts'),
       '@setup': resolve('./setup'),
       '@tests': resolve('./tests'),

@@ -2,7 +2,7 @@ import bitcoin from 'bitcoinjs-lib';
 import http from '@common/utilities/api/http';
 import { getAccount } from './btc';
 
-jest.mock('../http', () => ({
+jest.mock('@common/utilities/api/http', () => ({
   __esModule: true,
   default: jest.fn(),
 }));

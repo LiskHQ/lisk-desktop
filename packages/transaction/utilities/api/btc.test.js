@@ -5,7 +5,7 @@ import {
   calculateTransactionFee,
 } from './btc';
 
-jest.mock('../http', () => ({
+jest.mock('@common/utilities/api/http', () => ({
   __esModule: true,
   default: jest.fn(),
 }));

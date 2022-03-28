@@ -18,10 +18,10 @@ const {
 } = MODULE_ASSETS_NAME_ID_MAP;
 const { network } = getState();
 
-jest.mock('../http', () =>
+jest.mock('@common/utilities/api/http', () =>
   jest.fn().mockImplementation(() => Promise.resolve({ data: [{ type: 0 }] })));
 
-jest.mock('../ws', () =>
+jest.mock('@common/utilities/api/ws', () =>
   jest.fn().mockImplementation(() => Promise.resolve({ data: [{ type: 0 }] })));
 
 jest.mock('../delegate', () => ({

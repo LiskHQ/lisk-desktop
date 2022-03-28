@@ -5,7 +5,7 @@ import {
   getNetworkStatus,
 } from './lsk';
 
-jest.mock('../http');
+jest.mock('@common/utilities/api/http');
 
 const setApiResponseData = (data, api) => {
   api.mockImplementation(() => Promise.resolve(data));
