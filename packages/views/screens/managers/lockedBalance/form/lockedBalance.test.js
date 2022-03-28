@@ -13,7 +13,7 @@ import flushPromises from '../../../../../../tests/unit-test-utils/flushPromises
 jest.mock('@shared/transactionPriority/useTransactionPriority');
 jest.mock('@shared/transactionPriority/useTransactionFeeCalculation');
 jest.mock('@transaction/utilities/api');
-jest.mock('@common/store/actions/account', () => ({
+jest.mock('@wallet/store/action', () => ({
   balanceUnlocked: jest.fn(),
 }));
 jest.mock('@hardwareWallet/utilities/hwManager');

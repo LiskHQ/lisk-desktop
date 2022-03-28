@@ -3,7 +3,7 @@ import { useSelector } from 'react-redux';
 import setSecondPassphrase from './setSecondPassphrase';
 import accounts from '../../../../tests/constants/accounts';
 
-jest.mock('@store');
+jest.mock('@common/store');
 
 // const mockSelector = jest.fn();
 useSelector.mockReturnValue(accounts.secondPass);

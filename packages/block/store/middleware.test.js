@@ -5,7 +5,7 @@ import middleware from './middleware';
 
 jest.mock('@block/utilities/api');
 jest.mock('@dpos/utilities/api');
-jest.mock('@common/store/actions/blocks');
+jest.mock('@block/store/action');
 
 describe('Block middleware', () => {
   it('Should subscribe to block/change when actionTypes.networkConfigSet', () => {

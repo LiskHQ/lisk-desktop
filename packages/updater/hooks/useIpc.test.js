@@ -6,7 +6,7 @@ import FlashMessageHolder from '@basics/flashMessage/holder';
 import DialogHolder from '@basics/dialog/holder';
 import useIpc from './useIpc';
 
-jest.mock('@store');
+jest.mock('@common/store');
 
 const mockHistory = {
   push: jest.fn(), location: { search: '', pathname: '' },
