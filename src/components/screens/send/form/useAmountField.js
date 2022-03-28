@@ -30,7 +30,7 @@ const useAmountField = (initialValue, balance, token) => {
   const { t, i18n } = useTranslation();
 
   const getAmountFeedbackAndError = (value, maxAmount = balance) => {
-    const checklist = ['ZERO', 'MAX_ACCURACY', 'FORMAT', 'INSUFFICIENT_FUNDS', 'MIN_BALANCE'];
+    const checklist = ['NEGATIVE_AMOUNT', 'MAX_ACCURACY', 'INSUFFICIENT_FUNDS', 'MIN_BALANCE', 'FORMAT'];
     let { message: feedback } = validateAmountFormat({
       value,
       token,

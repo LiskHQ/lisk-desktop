@@ -6,6 +6,7 @@ Feature: Add bookmark
     Given I am on wallet page
     When I click on searchIcon
 
+  @basic
   Scenario: Add a delegate to bookmarks
     And I search for account lskervshto3so95nq6eduvrzyvyw3z6s6th52vxjx
     Then I click on searchAccountRow
@@ -16,6 +17,7 @@ Feature: Add bookmark
     When I click on bookmarkListToggle
     Then The bookmarkList should contain genesis_10
 
+  @basic
   Scenario: Add regular account to bookmarks
     And I search for account lskehmcfxh7vq6mpjgexe2c2ftq4gdeb5qfkoq8cm
     Then I click on searchAccountRow

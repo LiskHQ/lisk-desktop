@@ -24,7 +24,7 @@ const getAmountFeedbackAndError = (value, balance, minValue, inputValue) => {
     value,
     token: tokenMap.LSK.key,
     funds: parseInt(balance, 10),
-    checklist: ['FORMAT', 'NEGATIVE_VOTE', 'ZERO', 'VOTE_10X', 'INSUFFICIENT_FUNDS', 'MIN_BALANCE'],
+    checklist: ['NEGATIVE_VOTE', 'ZERO', 'VOTE_10X', 'INSUFFICIENT_VOTE_FUNDS', 'MIN_BALANCE', 'FORMAT'],
     minValue,
     inputValue,
   });

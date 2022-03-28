@@ -5,7 +5,7 @@ import statusMessages from './statusMessages';
 import styles from './status.css';
 
 const Status = ({ transactions, account, t }) => {
-  const status = getTransactionStatus(account, transactions);
+  const status = getTransactionStatus(account, transactions, account.summary.isMultisignature);
   const template = statusMessages(t)[status.code];
 
   return (
