@@ -1,5 +1,5 @@
 import React, { Fragment } from 'react';
-import { useTheme } from '@views/contexts/theme';
+import { useTheme } from '@views/utilities/theme';
 import styles from './styles.css';
 
 const Step = ({ children, current, active }) => (

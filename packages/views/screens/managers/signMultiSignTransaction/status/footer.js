@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { useTheme } from '@views/contexts/theme';
+import { useTheme } from '@views/utilities/theme';
 import BoxFooter from '@basics/box/footer';
 import { PrimaryButton, SecondaryButton } from '@basics/buttons';
 import routes from '@screens/router/routes';

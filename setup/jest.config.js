@@ -127,7 +127,7 @@ module.exports = {
     'src/utils/api/lsk/account.js',
     'src/utils/applyDeviceClass.js',
     'src/utils/ledger.js',
-    'packages/common/utilities/theme.js',
+    'packages/views/utilities/theme.js',
     'packages/common/utilities/balanceChart.js', // This should be unskipped in issue #1499
     'src/utils/loading.js',
     'packages/common/utilities/platform.js',
