@@ -1,8 +1,7 @@
 import { toast } from 'react-toastify';
 import networks, { networkKeys } from '@network/configuration/networks';
-import {
-  actionTypes, timeOutId, timeOutWarningId,
-} from '@common/configuration';
+import { actionTypes } from '@common/configuration';
+import { timeOutId, timeOutWarningId } from '@views/configuration';
 import routes from '@screens/router/routes';
 import { tokenMap } from '@token/configuration/tokens';
 import { MODULE_ASSETS_NAME_ID_MAP } from '@transaction/configuration/moduleAssets';
