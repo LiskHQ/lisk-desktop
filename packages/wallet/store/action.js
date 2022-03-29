@@ -2,7 +2,7 @@
 import { to } from 'await-to-js';
 import { toast } from 'react-toastify';
 import actionTypes from './actionTypes';
-import { loginTypes } from '@views/configuration';
+import loginTypes from '@wallet/configuration/loginTypes';
 import { tokenMap } from '@token/configuration/tokens';
 import { MODULE_ASSETS_NAME_ID_MAP } from '@transaction/configuration/moduleAssets';
 import { toRawLsk } from '@token/utilities/lsk';
