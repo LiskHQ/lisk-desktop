@@ -1,7 +1,7 @@
 import React from 'react';
 import { expect } from 'chai';
 import { mount } from 'enzyme';
-import ThemeContext from '@common/contexts/theme';
+import ThemeContext from '@views/contexts/theme';
 import Icon from './index';
 
 describe('Icon', () => {

@@ -4,7 +4,7 @@ import grid from 'flexboxgrid/dist/flexboxgrid.css';
 
 import { DEFAULT_STANDBY_THRESHOLD } from '@dpos/configuration/delegates';
 import routes from '@screens/router/routes';
-import { useTheme } from '@common/utilities/theme';
+import { useTheme } from '@views/contexts/theme';
 import { capitalize } from '@common/utilities/helpers';
 import Box from '@basics/box';
 import BoxHeader from '@basics/box/header';
