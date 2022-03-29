@@ -7,14 +7,14 @@ import {
 import { tokenMap } from '@token/configuration/tokens';
 import useTransactionFeeCalculation from '@shared/transactionPriority/useTransactionFeeCalculation';
 import { truncateAddress } from '@wallet/utilities/account';
-import * as hwManagerAPI from '@hardwareWallet/utilities/hwManager';
+import * as hwManagerAPI from '@wallet/utilities/hwManager';
 import accounts from '../../../../../../../tests/constants/accounts';
 import Summary from './summary';
 import flushPromises from '../../../../../../../tests/unit-test-utils/flushPromises';
 
 jest.mock('@shared/transactionPriority/useTransactionFeeCalculation');
 jest.mock('@transaction/utilities/api');
-jest.mock('@hardwareWallet/utilities/hwManager');
+jest.mock('@wallet/utilities/hwManager');
 
 const transactionBaseFees = {
   Low: 156,

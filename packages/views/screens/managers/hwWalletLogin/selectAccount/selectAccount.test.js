@@ -1,9 +1,9 @@
 import { toast } from 'react-toastify';
-import * as hwManager from '@hardwareWallet/utilities/hwManager';
+import * as hwManager from '@wallet/utilities/hwManager';
 import { mountWithRouter } from '@common/utilities/testHelpers';
 import SelectAccount from './selectAccount';
 
-jest.mock('@hardwareWallet/utilities/hwManager');
+jest.mock('@wallet/utilities/hwManager');
 
 describe('Select Account', () => {
   let wrapper;

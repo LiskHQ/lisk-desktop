@@ -1,7 +1,7 @@
 import React from 'react';
 import QRCode from 'qrcode.react';
 import { tokenMap } from '@token/configuration/tokens';
-import { getAddress } from '@hardwareWallet/utilities/hwManager';
+import { getAddress } from '@wallet/utilities/hwManager';
 import { isEmpty } from '@common/utilities/helpers';
 import Icon from '@basics/icon';
 import CopyToClipboard from '@basics/copyToClipboard';

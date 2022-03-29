@@ -1,7 +1,7 @@
 /* eslint-disable max-lines */
 import { transactions, cryptography } from '@liskhq/lisk-client';
 import { to } from 'await-to-js';
-import { signTransactionByHW } from '@hardwareWallet/utilities/hwManager';
+import { signTransactionByHW } from '@wallet/utilities/hwManager';
 import { MODULE_ASSETS_NAME_ID_MAP } from '@transaction/configuration/moduleAssets';
 import { DEFAULT_NUMBER_OF_SIGNATURES } from '@transaction/configuration/transactions';
 import { signatureCollectionStatus } from '@transaction/configuration/txStatus';

@@ -1,11 +1,11 @@
 import React from 'react';
 import { mount } from 'enzyme';
 import { loginTypes } from '@common/configuration';
-import * as hwManager from '@hardwareWallet/utilities/hwManager';
+import * as hwManager from '@wallet/utilities/hwManager';
 import MessageSignature from '.';
 import accounts from '../../../../../../tests/constants/accounts';
 
-jest.mock('@hardwareWallet/utilities/hwManager');
+jest.mock('@wallet/utilities/hwManager');
 
 describe('Sign Message: Status', () => {
   const accountWithPassphrase = {
