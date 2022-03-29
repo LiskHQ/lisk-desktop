@@ -6,7 +6,7 @@ import {
   validateAmountFormat,
   isNumeric,
 } from './validators';
-import accounts from '../../../tests/constants/accounts';
+import accounts from '@tests/constants/accounts';
 
 describe('Validate Address', () => {
   it('Should return -1 if empty adress', () => {

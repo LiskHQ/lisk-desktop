@@ -3,7 +3,7 @@ import { mount } from 'enzyme';
 import { loginTypes } from '@common/configuration';
 import * as hwManager from '@wallet/utilities/hwManager';
 import MessageSignature from '.';
-import accounts from '../../../../../../tests/constants/accounts';
+import accounts from '@tests/constants/accounts';
 
 jest.mock('@wallet/utilities/hwManager');
 

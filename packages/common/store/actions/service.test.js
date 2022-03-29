@@ -1,7 +1,7 @@
 import { actionTypes } from '@common/configuration';
 import * as marketApi from '@common/utilities/api/market';
 import { initialState as settings } from '@settings/store/reducer';
-import prices from '../../../../tests/constants/prices';
+import prices from '@tests/constants/prices';
 import { pricesRetrieved } from './service';
 
 describe('actions: service', () => {

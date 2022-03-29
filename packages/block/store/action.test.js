@@ -4,7 +4,7 @@ import { getBlocks } from '@block/utilities/api';
 import { getForgers, getDelegates } from '@dpos/utilities/api';
 import forger from '@fixtures/forgers';
 import delegate from '@fixtures/delegates';
-import blocks from '../../../tests/constants/blocks';
+import blocks from '@tests/constants/blocks';
 import { olderBlocksRetrieved, forgersRetrieved } from './action';
 
 jest.mock('@block/utilities/api', () => ({

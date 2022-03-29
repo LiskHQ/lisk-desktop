@@ -1,7 +1,7 @@
 import React from 'react';
 import { mount } from 'enzyme';
 import AccountVisual from './index';
-import accounts from '../../../../tests/constants/accounts';
+import accounts from '@tests/constants/accounts';
 
 describe.skip('AccountVisual', () => {
   it('should create account visual of an address', () => {

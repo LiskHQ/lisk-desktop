@@ -1,7 +1,7 @@
 import { MODULE_ASSETS_NAME_ID_MAP } from '@transaction/configuration/moduleAssets';
 import { splitModuleAndAssetIds } from '@transaction/utilities/moduleAssets';
 import { getAddressFromBase32Address } from '@wallet/utilities/account';
-import accounts from '../../../tests/constants/accounts';
+import accounts from '@tests/constants/accounts';
 import {
   getTxAmount,
   transformTransaction,

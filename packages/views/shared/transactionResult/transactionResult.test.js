@@ -4,7 +4,7 @@ import { txStatusTypes } from '@transaction/configuration/txStatus';
 import TransactionResult from './transactionResult';
 import Regular from './regular';
 import Multisignature from './multisignature';
-import accounts from '../../../../tests/constants/accounts';
+import accounts from '@tests/constants/accounts';
 
 describe('TransactionResult', () => {
   const props = {

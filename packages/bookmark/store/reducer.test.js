@@ -3,7 +3,7 @@ import {
 } from '@common/store/actions';
 import { actionTypes } from '@common/configuration';
 import bookmarks from './reducer';
-import accounts from '../../../tests/constants/accounts';
+import accounts from '@tests/constants/accounts';
 
 // eslint-disable-next-line camelcase
 const { genesis, delegate, empty_account } = accounts;

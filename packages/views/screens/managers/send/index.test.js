@@ -1,7 +1,7 @@
 import { getTransactionBaseFees, getTransactionFee } from '@transaction/utilities/api';
 import { mountWithRouter } from '@common/utilities/testHelpers';
 import Send from './index';
-import accounts from '../../../../../tests/constants/accounts';
+import accounts from '@tests/constants/accounts';
 
 jest.mock('@transaction/utilities/api');
 

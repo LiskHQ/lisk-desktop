@@ -1,7 +1,7 @@
 import React from 'react';
 import { spy, useFakeTimers } from 'sinon';
 import { expect } from 'chai';
-import { mountWithContext } from '../../../../tests/unit-test-utils/mountHelpers';
+import { mountWithContext } from '@tests/unit-test-utils/mountHelpers';
 import Header from '.';
 
 describe.skip('Signin Header', () => {

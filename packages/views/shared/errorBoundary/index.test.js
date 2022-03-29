@@ -1,6 +1,6 @@
 import React from 'react';
 import { PrimaryButton, TertiaryButton } from '@basics/buttons';
-import { mountWithContext } from '../../../../tests/unit-test-utils/mountHelpers';
+import { mountWithContext } from '@tests/unit-test-utils/mountHelpers';
 import ErrorBoundary from './index';
 
 describe('ErrorBoundary:', () => {

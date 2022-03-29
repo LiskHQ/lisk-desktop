@@ -3,7 +3,7 @@ import { actionTypes } from '@common/configuration';
 import { subscribeToDeviceConnected, subscribeToDeviceDisconnected } from '@wallet/utilities/hwManager';
 import { addSearchParamsToUrl } from '@screens/router/searchParams';
 import hwManagerMiddleware from './hwManager';
-import accounts from '../../../../tests/constants/accounts';
+import accounts from '@tests/constants/accounts';
 
 jest.mock('@wallet/utilities/hwManager', () => ({
   subscribeToDeviceConnected: jest.fn().mockImplementation((fn) => fn({ model: 'testHW' })),

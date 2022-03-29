@@ -14,8 +14,8 @@ import {
   multisigTransactionSigned,
   signatureSkipped,
 } from './action';
-import { sampleTransaction } from '../../../tests/constants/transactions';
-import accounts from '../../../tests/constants/accounts';
+import { sampleTransaction } from '@tests/constants/transactions';
+import accounts from '@tests/constants/accounts';
 
 jest.mock('@dpos/utilities/api');
 jest.mock('@transaction/utilities/hwManager');

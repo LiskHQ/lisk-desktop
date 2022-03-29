@@ -1,5 +1,5 @@
 import getMaxAmount from './getMaxAmount';
-import accounts from '../../../../../tests/constants/accounts';
+import accounts from '@tests/constants/accounts';
 
 const account = {
   ...accounts.genesis,

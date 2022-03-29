@@ -1,6 +1,6 @@
 import { tokenMap } from '@token/configuration/tokens';
 import { mountWithRouter } from '@common/utilities/testHelpers';
-import bookmarks from '../../../../../../tests/constants/bookmarks';
+import bookmarks from '@tests/constants/bookmarks';
 import BookmarkListModal from './modal';
 
 describe('BookmarkListModal', () => {

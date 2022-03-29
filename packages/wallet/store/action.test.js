@@ -16,7 +16,7 @@ import {
   multisigGroupRegistered,
   balanceReclaimed,
 } from './action';
-import accounts from '../../../tests/constants/accounts';
+import accounts from '@tests/constants/accounts';
 import * as networkActions from '@network/store/action';
 
 jest.mock('i18next', () => ({

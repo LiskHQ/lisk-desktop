@@ -1,7 +1,7 @@
 import { renderHook, act } from '@testing-library/react-hooks';
 import { useSelector } from 'react-redux';
 import setSecondPassphrase from './setSecondPassphrase';
-import accounts from '../../../../tests/constants/accounts';
+import accounts from '@tests/constants/accounts';
 
 jest.mock('@common/store');
 

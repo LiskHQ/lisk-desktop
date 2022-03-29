@@ -5,7 +5,7 @@ import {
   calculateUnlockableBalance,
 } from '@wallet/utilities/account';
 import BalanceTable from './balanceTable';
-import accounts from '../../../../../../tests/constants/accounts';
+import accounts from '@tests/constants/accounts';
 
 describe('unlock transaction Status', () => {
   let wrapper;
