@@ -9,7 +9,7 @@ import {
   lineChartOptions,
   barChartOptions,
   doughnutChartOptions,
-} from '@common/utilities/chartOptions';
+} from '@views/basics/charts/chartOptions';
 
 const propTypes = {
   data: PropTypes.object.isRequired,

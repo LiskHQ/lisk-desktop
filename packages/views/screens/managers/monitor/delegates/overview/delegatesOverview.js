@@ -3,7 +3,7 @@ import React from 'react';
 // import { fromRawLsk } from '@token/utilities/lsk';
 import { ROUND_LENGTH } from '@dpos/configuration/delegates';
 import { useTheme } from '@views/contexts/theme';
-import { getColorPalette } from '@common/utilities/chartOptions';
+import { getColorPalette } from '@views/basics/charts/chartOptions';
 import Box from '@basics/box';
 import BoxHeader from '@basics/box/header';
 import BoxContent from '@basics/box/content';
