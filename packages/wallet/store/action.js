@@ -1,10 +1,8 @@
 /* eslint-disable max-lines */
 import { to } from 'await-to-js';
 import { toast } from 'react-toastify';
-import {
-  loginTypes,
-  actionTypes,
-} from '@common/configuration';
+import { actionTypes } from '@common/configuration';
+import { loginTypes } from '@views/configuration';
 import { tokenMap } from '@token/configuration/tokens';
 import { MODULE_ASSETS_NAME_ID_MAP } from '@transaction/configuration/moduleAssets';
 import { toRawLsk } from '@token/utilities/lsk';

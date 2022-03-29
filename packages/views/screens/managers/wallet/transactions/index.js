@@ -13,7 +13,7 @@ import BoxHeader from '@basics/box/header';
 import BoxContent from '@basics/box/content';
 import Table from '@basics/table';
 import FilterBar from '@shared/filterBar';
-import { DEFAULT_LIMIT } from '@common/configuration';
+import { DEFAULT_LIMIT } from '@views/configuration';
 import styles from './transactions.css';
 import header from './tableHeader';
 import TransactionRow from './transactionRow';

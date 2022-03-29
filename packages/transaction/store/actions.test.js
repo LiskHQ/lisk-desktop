@@ -1,4 +1,5 @@
-import { actionTypes, loginTypes } from '@common/configuration';
+import { actionTypes } from '@common/configuration';
+import { loginTypes } from '@views/configuration';
 import * as hwManager from '@transaction/utilities/hwManager';
 import httpApi from '@common/utilities/api/http';
 import * as transactionUtils from '@transaction/utilities/transaction';

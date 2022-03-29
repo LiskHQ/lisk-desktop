@@ -1,4 +1,4 @@
-import { keyCodes } from '@common/configuration';
+import { keyCodes } from '@views/configuration';
 import { mountWithRouter } from '@common/utilities/testHelpers';
 import SearchBar from './searchBar';
 

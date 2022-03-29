@@ -1,6 +1,6 @@
 import PropTypes from 'prop-types';
 import React from 'react';
-import { keyCodes } from '@common/configuration';
+import { keyCodes } from '@views/configuration';
 import { Input } from '../inputs';
 import styles from './autoSuggest.css';
 

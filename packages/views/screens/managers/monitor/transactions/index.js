@@ -4,7 +4,7 @@ import { withTranslation } from 'react-i18next';
 import withData from '@common/utilities/withData';
 import { getTransactions } from '@transaction/utilities/api';
 import { normalizeTransactionParams } from '@transaction/utilities/transaction';
-import { DEFAULT_LIMIT } from '@common/configuration';
+import { DEFAULT_LIMIT } from '@views/configuration';
 import Transactions from './transactions';
 
 export default compose(
