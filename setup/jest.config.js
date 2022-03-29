@@ -31,7 +31,6 @@ module.exports = {
     '^@bookmark(.*)$': resolve(__dirname, '../packages/bookmark/$1'),
     '^@common(.*)$': resolve(__dirname, '../packages/common/$1'),
     '^@dpos(.*)$': resolve(__dirname, '../packages/dpos/$1'),
-    '^@hardwareWallet(.*)$': resolve(__dirname, '../packages/hardwareWallet/$1'),
     '^@network(.*)$': resolve(__dirname, '../packages/network/$1'),
     '^@settings(.*)$': resolve(__dirname, '../packages/settings/$1'),
     '^@token(.*)$': resolve(__dirname, '../packages/token/$1'),
@@ -131,7 +130,7 @@ module.exports = {
     'packages/common/utilities/balanceChart.js', // This should be unskipped in issue #1499
     'src/utils/loading.js',
     'packages/common/utilities/platform.js',
-    'packages/hardwareWallet/utilities/hwManager.js',
+    'packages/wallet/utilities/hwManager/index.js',
     'packages/common/utilities/api/ws.js',
     'src/utils/account.js',
     'packages/common/utilities/datetime.js',

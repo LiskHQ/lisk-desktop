@@ -36,7 +36,6 @@
           ["@bookmark", "./packages/bookmark/"],
           ["@common", "./packages/common/"],
           ["@dpos", "./packages/dpos/"],
-          ["@hardwareWallet", "./packages/hardwareWallet/"],
           ["@network", "./packages/network/"],
           ["@settings", "./packages/settings/"],
           ["@token", "./packages/token/"],

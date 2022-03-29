@@ -13,7 +13,6 @@ const config = {
       '@bookmark': resolve('./packages/bookmark'),
       '@common': resolve('./packages/common'),
       '@dpos': resolve('./packages/dpos'),
-      '@hardwareWallet': resolve('./packages/hardwareWallet'),
       '@network': resolve('./packages/network'),
       '@settings': resolve('./packages/settings'),
       '@token': resolve('./packages/token'),
