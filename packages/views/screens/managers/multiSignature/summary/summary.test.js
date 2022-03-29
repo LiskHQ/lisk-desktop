@@ -1,6 +1,6 @@
 import React from 'react';
 import { mount } from 'enzyme';
-import * as hwManagerAPI from '@wallet/utilities/hwManager';
+import * as hwManager from '@transaction/utilities/hwManager';
 import Summary from './summary';
 import accounts from '../../../../../../tests/constants/accounts';
 
@@ -18,7 +18,7 @@ jest.mock('@transaction/utilities/api/lsk', () => ({
   create: jest.fn(() => Promise.resolve(mockTransaction)),
   computeTransactionId: jest.fn(() => mockTransaction.id),
 }));
-jest.mock('@wallet/utilities/hwManager');
+jest.mock('@transaction/utilities/hwManager');
 
 describe('Multisignature summary component', () => {
   const members = [accounts.genesis, accounts.delegate].map(item => ({
@@ -50,7 +50,7 @@ describe('Multisignature summary component', () => {
 
   beforeEach(() => {
     wrapper = mount(<Summary {...props} />);
-    hwManagerAPI.signTransactionByHW.mockResolvedValue({});
+    hwManager.signTransactionByHW.mockResolvedValue({});
   });
 
   it('Should call props.nextStep', async () => {

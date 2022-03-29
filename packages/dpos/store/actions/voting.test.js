@@ -3,7 +3,7 @@ import networks from '@network/configuration/networks';
 import * as transactionApi from '@transaction/utilities/api';
 import * as delegateApi from '@dpos/utilities/api';
 import * as accountApi from '@wallet/utilities/api';
-import * as hwManager from '@wallet/utilities/hwManager';
+import * as hwManager from '@transaction/utilities/hwManager';
 import {
   voteEdited,
   votesCleared,
@@ -27,7 +27,7 @@ jest.mock('@wallet/utilities/api', () => ({
   getAccount: jest.fn(),
 }));
 
-jest.mock('@wallet/utilities/hwManager', () => ({
+jest.mock('@transaction/utilities/hwManager', () => ({
   signTransactionByHW: jest.fn(),
 }));
 

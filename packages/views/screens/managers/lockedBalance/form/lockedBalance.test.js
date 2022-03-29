@@ -2,7 +2,7 @@ import { act } from 'react-dom/test-utils';
 import networks from '@network/configuration/networks';
 import { tokenMap } from '@token/configuration/tokens';
 import { mountWithProps } from '@common/utilities/testHelpers';
-import * as hwManagerAPI from '@wallet/utilities/hwManager';
+import * as hwManager from '@transaction/utilities/hwManager';
 import { create } from '@transaction/utilities/api';
 import useTransactionPriority from '@shared/transactionPriority/useTransactionPriority';
 import useTransactionFeeCalculation from '@shared/transactionPriority/useTransactionFeeCalculation';
@@ -16,7 +16,7 @@ jest.mock('@transaction/utilities/api');
 jest.mock('@wallet/store/action', () => ({
   balanceUnlocked: jest.fn(),
 }));
-jest.mock('@wallet/utilities/hwManager');
+jest.mock('@transaction/utilities/hwManager');
 
 describe('Unlock LSK modal', () => {
   let wrapper;
@@ -97,7 +97,7 @@ describe('Unlock LSK modal', () => {
 
   beforeEach(() => {
     wrapper = mountWithProps(LockedBalance, props, store);
-    hwManagerAPI.signTransactionByHW.mockResolvedValue({});
+    hwManager.signTransactionByHW.mockResolvedValue({});
   });
 
   it('renders the LockedBalance component properly', () => {

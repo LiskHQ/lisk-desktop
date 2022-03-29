@@ -1,5 +1,5 @@
 import { actionTypes, loginTypes } from '@common/configuration';
-import * as hwManagerApi from '@wallet/utilities/hwManager';
+import * as hwManager from '@transaction/utilities/hwManager';
 import httpApi from '@common/utilities/api/http';
 import * as transactionUtils from '@transaction/utilities/transaction';
 import { getState } from '@fixtures/transactions';
@@ -18,7 +18,7 @@ import { sampleTransaction } from '../../../tests/constants/transactions';
 import accounts from '../../../tests/constants/accounts';
 
 jest.mock('@dpos/utilities/api');
-jest.mock('@wallet/utilities/hwManager');
+jest.mock('@transaction/utilities/hwManager');
 jest.mock('@common/utilities/api/http');
 
 describe('actions: transactions', () => {
@@ -204,7 +204,7 @@ describe('actions: transactions', () => {
       await transactionCreated(data)(dispatch, getState);
 
       // Assert
-      expect(hwManagerApi.signTransactionByHW).not.toHaveBeenCalled();
+      expect(hwManager.signTransactionByHW).not.toHaveBeenCalled();
       // Replace toMatchSnapshot with a definitive assertion.
       expect(dispatch).toMatchSnapshot();
     });
@@ -219,7 +219,7 @@ describe('actions: transactions', () => {
       };
       const transactionError = new Error('Transaction create error');
       loginTypes.passphrase.code = 1;
-      jest.spyOn(hwManagerApi, 'signTransactionByHW')
+      jest.spyOn(hwManager, 'signTransactionByHW')
         .mockRejectedValue(transactionError);
       const expectedAction = {
         type: actionTypes.transactionSignError,
