@@ -1,5 +1,5 @@
-import { actionTypes } from '@common/configuration';
 import { tokenKeys } from '@token/configuration/tokens';
+import actionTypes from '../actions/actionTypes';
 
 export const INITIAL_STATE = {
   priceTicker: tokenKeys.reduce((info, tokenKey) => ({

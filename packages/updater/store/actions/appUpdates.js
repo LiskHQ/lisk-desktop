@@ -1,4 +1,4 @@
-import { actionTypes } from '@common/configuration';
+import actionTypes from './actionTypes';
 
 // eslint-disable-next-line import/prefer-default-export
 export const appUpdateAvailable = data => ({

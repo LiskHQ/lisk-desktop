@@ -1,6 +1,6 @@
 import to from 'await-to-js';
 
-import { actionTypes } from '@common/configuration';
+import actionTypes from './actionTypes';
 import { DEFAULT_LIMIT } from '@views/configuration';
 import { tokenMap } from '@token/configuration/tokens';
 import { MODULE_ASSETS_NAME_ID_MAP } from '@transaction/configuration/moduleAssets';

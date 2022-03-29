@@ -1,6 +1,6 @@
 import { toast } from 'react-toastify';
 import networks, { networkKeys } from '@network/configuration/networks';
-import { actionTypes } from '@common/configuration';
+import actionTypes from './actionTypes';
 import { timeOutId, timeOutWarningId } from '@views/configuration';
 import routes from '@screens/router/routes';
 import { tokenMap } from '@token/configuration/tokens';

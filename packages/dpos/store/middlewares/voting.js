@@ -1,14 +1,14 @@
-import { actionTypes } from '@common/configuration';
+import { accountLoggedIn, accountLoggedOut, accountUpdated } from '@wallet/store/actionTypes';
 import { votesRetrieved, votesReset } from '../actions/voting';
 
 const votingMiddleware = store => next => (action) => {
   next(action);
   switch (action.type) {
-    case actionTypes.accountLoggedIn:
-    case actionTypes.accountUpdated:
+    case accountLoggedIn:
+    case accountUpdated:
       store.dispatch(votesRetrieved());
       break;
-    case actionTypes.accountLoggedOut:
+    case accountLoggedOut:
       store.dispatch(votesReset());
       break;
     default: break;

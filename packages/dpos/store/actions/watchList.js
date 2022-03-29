@@ -1,4 +1,4 @@
-import { actionTypes } from '@common/configuration';
+import actionTypes from './actionTypes';
 import { getFromStorage } from '@common/utilities/localJSONStorage';
 
 export const watchListRetrieved = () => (dispatch) => {

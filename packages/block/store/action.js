@@ -1,4 +1,4 @@
-import { actionTypes } from '@common/configuration';
+import actionTypes from './actionTypes';
 import { ROUND_LENGTH } from '@dpos/configuration/delegates';
 import { convertUnixSecondsToLiskEpochSeconds } from '@common/utilities/datetime';
 import { getBlocks } from '@block/utilities/api';

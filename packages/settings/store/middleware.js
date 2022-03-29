@@ -1,4 +1,4 @@
-import { actionTypes } from '@common/configuration';
+import actionTypes from './actionTypes';
 import { setInStorage } from '@common/utilities/localJSONStorage';
 import { pricesRetrieved, emptyTransactionsData, settingsUpdated } from '@common/store/actions';
 
