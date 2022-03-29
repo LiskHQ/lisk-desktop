@@ -10,7 +10,7 @@ import BoxEmptyState from '@basics/box/emptyState';
 import GuideTooltip, { GuideTooltipItem } from '@basics/charts/guideTooltip';
 import Icon from '@basics/icon';
 import { useTheme } from '@views/contexts/theme';
-import { getColorPalette } from '@common/utilities/chartOptions';
+import { getColorPalette } from '@views/basics/charts/chartOptions';
 import NumericInfo from './numericInfo';
 import Forger from './forger';
 import styles from './overview.css';
