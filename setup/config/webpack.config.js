@@ -19,6 +19,7 @@ const config = {
       '@transaction': resolve('./packages/transaction'),
       '@updater': resolve('./packages/updater'),
       '@wallet': resolve('./packages/wallet'),
+      '@views': resolve('./packages/views'),
       '@shared': resolve('./packages/views/shared'),
       '@basics': resolve('./packages/views/basics'),
       '@screens': resolve('./packages/views/screens'),
