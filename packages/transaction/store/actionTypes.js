@@ -16,6 +16,7 @@ const actionTypes = {
   broadcastedTransactionSuccess: 'BROADCAST_TRANSACTION_SUCCESS',
   broadcastedTransactionError: 'BROADCASTED_TRANSACTION_ERROR',
   updateTransactions: 'UPDATE_TRANSACTIONS',
+  signatureSkipped: 'SIGNATURE_SKIPPED',
 };
 
 export default actionTypes;
