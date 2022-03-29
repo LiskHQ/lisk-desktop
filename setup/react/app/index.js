@@ -18,7 +18,7 @@ import { bookmarksRetrieved } from '../../../packages/bookmark/store/action';
 import { watchListRetrieved } from '../../../packages/dpos/store/actions/watchList';
 import routesMap from '../../../packages/views/screens/router/routesMap';
 import routes from '../../../packages/views/screens/router/routes';
-import ThemeContext from '../../../packages/common/contexts/theme';
+import ThemeContext from '../../../packages/views/contexts/theme';
 import useIpc from '../../../packages/updater/hooks/useIpc';
 import styles from './app.css';
 

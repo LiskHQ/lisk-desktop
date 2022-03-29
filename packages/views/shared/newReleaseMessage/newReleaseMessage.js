@@ -1,7 +1,7 @@
 import React from 'react';
 import { withTranslation } from 'react-i18next';
 import PropTypes from 'prop-types';
-import { useTheme } from '@common/utilities/theme';
+import { useTheme } from '@views/contexts/theme';
 import FlashMessage from '@basics/flashMessage/flashMessage';
 import { PrimaryButton, SecondaryButton } from '@basics/buttons';
 import Icon from '@basics/icon';
