@@ -58,8 +58,8 @@ const blockMiddleware = store => (
     next(action);
     switch (action.type) {
       case actionTypes.networkConfigSet:
-        store.dispatch(olderBlocksRetrieved());
-        blockListener(store);
+        // store.dispatch(olderBlocksRetrieved());
+        // blockListener(store);
         break;
       case actionTypes.olderBlocksRetrieved:
         store.dispatch(forgersRetrieved());

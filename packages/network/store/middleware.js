@@ -13,7 +13,7 @@ const network = ({ dispatch, getState }) => next => async (action) => {
     case actionTypes.networkConfigSet: {
       const autoLoginData = getAutoLogInData();
       if (shouldAutoLogIn(autoLoginData)) {
-        dispatch(login({ passphrase: autoLoginData[settings.keys.loginKey] }));
+        // dispatch(login({ passphrase: autoLoginData[settings.keys.loginKey] }));
       }
       break;
     }
