@@ -1,5 +1,6 @@
 import { blockSubscribe, blockUnsubscribe } from '@block/utilities/api';
 import { tokenMap } from '@token/configuration/tokens';
+// eslint-disable-next-line no-unused-vars
 import {
   olderBlocksRetrieved,
   forgersRetrieved,
@@ -17,6 +18,7 @@ const generateOnReconnect = dispatch => () => {
   dispatch(networkStatusUpdated({ online: true }));
 };
 
+// eslint-disable-next-line no-unused-vars
 const blockListener = ({ getState, dispatch }) => {
   const state = getState();
   blockUnsubscribe();
