@@ -1,7 +1,7 @@
 import { blockSubscribe, blockUnsubscribe } from '@block/utilities/api';
 import { tokenMap } from '@token/configuration/tokens';
-// eslint-disable-next-line no-unused-vars
 import {
+// eslint-disable-next-line no-unused-vars
   olderBlocksRetrieved,
   forgersRetrieved,
   networkStatusUpdated,
