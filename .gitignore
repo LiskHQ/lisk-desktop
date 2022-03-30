@@ -24,6 +24,6 @@ setup/react/assets/fonts/basierCircle/
 setup/react/assets/fonts/gilroy/
 
 ## Cypress
-tests/cypress/cypress
-tests/cypress/screenshots
-tests/cypress/videos
+test/cypress/cypress
+test/cypress/screenshots
+test/cypress/videos
