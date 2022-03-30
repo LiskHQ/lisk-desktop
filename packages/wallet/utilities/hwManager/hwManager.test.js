@@ -5,7 +5,7 @@ import {
   getAccountsFromDevice,
   signMessageByHW,
   getNewAccountByIndex,
-} from './hwManager';
+} from './index';
 
 jest.mock('@libs/hwManager/communication', () => ({
   getPublicKey: jest.fn(),

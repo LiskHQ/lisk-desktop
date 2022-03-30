@@ -2,13 +2,15 @@ import * as communication from '@libs/hwManager/communication';
 import accounts from '@tests/constants/accounts';
 import {
   signTransactionByHW,
-} from './hwManager';
+} from './index';
 
 jest.mock('@libs/hwManager/communication', () => ({
   signTransaction: jest.fn(),
 }));
 
 describe('signTransactionByHW', () => {
+  // @todo fix the temp signature
+  const signature = '';
   it('should return a transaction object with the proper signature', async () => {
     const account = {
       summary: {

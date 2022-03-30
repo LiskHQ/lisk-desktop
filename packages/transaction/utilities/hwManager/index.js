@@ -1,3 +1,5 @@
+import { updateTransactionSignatures } from '@wallet/utilities/hwManager';
+import { signTransaction } from '@libs/hwManager/communication';
 /**
  * signTransactionByHW - Function.
  * This function is used for sign a send hardware wallet transaction.
@@ -24,6 +26,5 @@ const signTransactionByHW = async (
   }
 };
 
-export {
-  signTransactionByHW,
-};
+// eslint-disable-next-line import/prefer-default-export
+export { signTransactionByHW };
