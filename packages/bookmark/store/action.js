@@ -1,8 +1,8 @@
-import actionTypes from './actionTypes';
 import { tokenMap } from '@token/configuration/tokens';
 import { getFromStorage } from '@common/utilities/localJSONStorage';
 import { emptyBookmarks } from '@bookmark/utilities/bookmarks';
 import { validateAddress } from '@common/utilities/validators';
+import actionTypes from './actionTypes';
 
 /**
  * An action to dispatch settingsRetrieved

@@ -1,6 +1,6 @@
 import { actionTypes } from '@common/configuration';
-import account from './reducer';
 import accounts from '@tests/constants/accounts';
+import account from './reducer';
 
 describe('Reducer: account(state, action)', () => {
   let state;

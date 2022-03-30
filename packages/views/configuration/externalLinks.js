@@ -1,4 +1,4 @@
-import history from './history';
+import history from '@common/utilities/history';
 
 const sendRegex = /^\/(wallet|wallet\/send|main\/transactions\/send)$/;
 const sendRedirect = '/wallet?modal=send';

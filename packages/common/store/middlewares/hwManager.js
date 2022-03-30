@@ -1,6 +1,5 @@
 import { toast } from 'react-toastify';
 import { subscribeToDeviceConnected, subscribeToDeviceDisconnected } from '@wallet/utilities/hwManager';
-import actionTypes from '../actions/actionTypes';
 import { addSearchParamsToUrl } from '@screens/router/searchParams';
 import { accountLoggedOut, login } from '@common/store/actions';
 import {
@@ -8,6 +7,7 @@ import {
   getPublicKey,
 } from '@libs/hwManager/communication';
 import history from '@common/utilities/history';
+import actionTypes from '../actions/actionTypes';
 
 async function autoLogInIfNecessary(store) {
   // not tested as it is just a development helper

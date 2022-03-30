@@ -1,5 +1,5 @@
-import actionTypes from './actionTypes';
 import { setInStorage } from '@common/utilities/localJSONStorage';
+import actionTypes from './actionTypes';
 
 const bookmarks = store => next => (action) => {
   switch (action.type) {

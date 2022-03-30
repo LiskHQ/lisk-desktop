@@ -1,5 +1,5 @@
-import actionTypes from './actionTypes';
 import { getIndexOfBookmark, validateBookmarks, emptyBookmarks } from '@bookmark/utilities/bookmarks';
+import actionTypes from './actionTypes';
 
 const bookmarks = (state = emptyBookmarks, action) => {
   switch (action.type) {

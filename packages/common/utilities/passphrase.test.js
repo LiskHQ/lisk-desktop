@@ -1,6 +1,6 @@
 import { expect } from 'chai';
-import { generateSeed, generatePassphraseFromSeed, isValidPassphrase } from './passphrase';
 import accounts from '@tests/constants/accounts';
+import { generateSeed, generatePassphraseFromSeed, isValidPassphrase } from './passphrase';
 
 if (global._bitcore) delete global._bitcore;
 const mnemonic = require('bitcore-mnemonic');

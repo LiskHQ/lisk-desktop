@@ -6,8 +6,8 @@ import { mountWithRouterAndStore } from '@common/utilities/testHelpers';
 import routes from '@screens/router/routes';
 import { defaultDerivationPath } from '@common/utilities/explicitBipKeyDerivation';
 import { settingsUpdated } from '@common/store/actions';
-import Login from './login';
 import accounts from '@tests/constants/accounts';
+import Login from './login';
 
 jest.mock('@basics/flashMessage/holder', () => ({
   addMessage: jest.fn(),

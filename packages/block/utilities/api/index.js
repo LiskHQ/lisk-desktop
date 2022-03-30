@@ -2,7 +2,7 @@ import { tokenMap } from '@token/configuration/tokens';
 import http from '@common/utilities/api/http';
 import { subscribe, unsubscribe } from '@common/utilities/api/ws';
 import { validateAddress } from '@common/utilities/validators';
-import { transformStringDateToUnixTimestamp } from '@common/utilities/datetime';
+import { transformStringDateToUnixTimestamp } from '@views/configuration/dateTime';
 
 const httpPrefix = '/api/v2';
 

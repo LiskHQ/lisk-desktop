@@ -11,7 +11,7 @@ import {
   getAddressFromBase32Address,
   getKeys,
 } from '@wallet/utilities/account';
-import { transformStringDateToUnixTimestamp } from '@common/utilities/datetime';
+import { transformStringDateToUnixTimestamp } from '@views/configuration/dateTime';
 import { toRawLsk } from '@token/utilities/lsk';
 import { isEmpty } from '@common/utilities/helpers';
 import { splitModuleAndAssetIds, joinModuleAndAssetIds } from '@transaction/utilities/moduleAssets';

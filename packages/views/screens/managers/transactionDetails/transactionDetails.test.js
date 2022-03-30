@@ -3,8 +3,8 @@ import { mount } from 'enzyme';
 import { MODULE_ASSETS_NAME_ID_MAP } from '@transaction/configuration/moduleAssets';
 import { mountWithRouter } from '@common/utilities/testHelpers';
 import { truncateAddress } from '@wallet/utilities/account';
-import TransactionDetails from './transactionDetails';
 import accounts from '@tests/constants/accounts';
+import TransactionDetails from './transactionDetails';
 
 const transaction = {
   data: {

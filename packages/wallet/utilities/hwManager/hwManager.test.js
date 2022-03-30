@@ -1,11 +1,11 @@
 import * as communication from '@libs/hwManager/communication';
 import * as accountApi from '@wallet/utilities/api';
+import accounts from '@tests/constants/accounts';
 import {
   getAccountsFromDevice,
   signMessageByHW,
   getNewAccountByIndex,
 } from './hwManager';
-import accounts from '@tests/constants/accounts';
 
 jest.mock('@libs/hwManager/communication', () => ({
   getPublicKey: jest.fn(),

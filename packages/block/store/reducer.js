@@ -1,5 +1,5 @@
-import actionTypes from './actionTypes';
 import { ROUND_LENGTH } from '@dpos/configuration/delegates';
+import actionTypes from './actionTypes';
 
 const initialState = {
   latestBlocks: [],

@@ -1,8 +1,8 @@
 import React from 'react';
 import { mount } from 'enzyme';
 import { mountWithRouterAndStore } from '@common/utilities/testHelpers';
-import Summary from './summary';
 import accounts from '@tests/constants/accounts';
+import Summary from './summary';
 
 describe('Delegate Registration Summary', () => {
   const props = {

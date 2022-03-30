@@ -5,6 +5,8 @@ import * as transactionApi from '@transaction/utilities/api';
 import * as delegateApi from '@dpos/utilities/api';
 import * as accountApi from '@wallet/utilities/api';
 import * as hwManager from '@transaction/utilities/hwManager';
+import sampleVotes from '@tests/constants/votes';
+import accounts from '@tests/constants/accounts';
 import {
   voteEdited,
   votesCleared,
@@ -12,8 +14,6 @@ import {
   votesConfirmed,
   votesRetrieved,
 } from './voting';
-import sampleVotes from '@tests/constants/votes';
-import accounts from '@tests/constants/accounts';
 
 jest.mock('@transaction/utilities/api', () => ({
   create: jest.fn(),

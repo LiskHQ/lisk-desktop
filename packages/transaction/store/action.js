@@ -1,6 +1,5 @@
 import to from 'await-to-js';
 
-import actionTypes from './actionTypes';
 import { DEFAULT_LIMIT } from '@views/configuration';
 import { tokenMap } from '@token/configuration/tokens';
 import { MODULE_ASSETS_NAME_ID_MAP } from '@transaction/configuration/moduleAssets';
@@ -17,6 +16,7 @@ import { extractKeyPair } from '@wallet/utilities/account';
 import { getTransactionSignatureStatus } from '@screens/managers/signMultiSignTransaction/helpers';
 import { timerReset } from '@wallet/store/action';
 import { loadingStarted, loadingFinished } from '@common/store/actions/loading';
+import actionTypes from './actionTypes';
 
 /**
  * Action trigger when user logout from the application

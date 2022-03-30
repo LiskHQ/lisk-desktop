@@ -1,8 +1,8 @@
 import { HTTP_CODES } from '@wallet/configuration/httpCodes';
 import http from '@common/utilities/api/http';
 import ws from '@common/utilities/api/ws';
-import { getAccount, getAccounts } from './lsk';
 import accounts from '@tests/constants/accounts';
+import { getAccount, getAccounts } from './lsk';
 
 jest.mock('@common/utilities/api/http', () => jest.fn().mockReturnValue([]));
 jest.mock('@common/utilities/api/ws', () => jest.fn().mockReturnValue([]));

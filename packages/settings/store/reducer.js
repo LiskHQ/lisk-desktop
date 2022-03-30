@@ -1,6 +1,6 @@
-import actionTypes from './actionTypes';
 import { tokenMap } from '@token/configuration/tokens';
 import { deepMergeObj } from '@common/utilities/helpers';
+import actionTypes from './actionTypes';
 
 export const channels = {
   academy: false,

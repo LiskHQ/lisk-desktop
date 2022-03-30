@@ -1,6 +1,6 @@
+import functionMapper from '@common/utilities/api/functionMapper';
 import * as lsk from './lsk';
 import * as btc from './btc';
-import functionMapper from '@common/utilities/api/functionMapper';
 
 const networkAPI = functionMapper(lsk, btc);
 

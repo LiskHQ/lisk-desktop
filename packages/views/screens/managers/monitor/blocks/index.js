@@ -4,7 +4,7 @@ import { withTranslation } from 'react-i18next';
 import { withRouter } from 'react-router-dom';
 import { getBlocks } from '@block/utilities/api';
 import withData from '@common/utilities/withData';
-import { transformStringDateToUnixTimestamp } from '@common/utilities/datetime';
+import { transformStringDateToUnixTimestamp } from '@views/configuration/dateTime';
 import { DEFAULT_LIMIT } from '@views/configuration';
 import Blocks from './blocks';
 

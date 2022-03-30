@@ -2,8 +2,8 @@ import React from 'react';
 import { mount } from 'enzyme';
 import { MODULE_ASSETS_NAME_ID_MAP } from '@transaction/configuration/moduleAssets';
 import { removeSearchParamsFromUrl } from '@screens/router/searchParams';
-import Summary from './summary';
 import accounts from '@tests/constants/accounts';
+import Summary from './summary';
 
 jest.mock('@screens/router/searchParams', () => ({
   removeSearchParamsFromUrl: jest.fn(),

@@ -1,7 +1,7 @@
 import React from 'react';
 import { mount } from 'enzyme';
-import Table from './index';
 import accounts from '@tests/constants/accounts';
+import Table from './index';
 
 describe('Table', () => {
   describe('Loading', () => {

@@ -2,7 +2,7 @@ import { withTranslation } from 'react-i18next';
 import React from 'react';
 import moment from 'moment';
 import { firstBlockTime } from '@common/configuration';
-import { getDateTimestampFromFirstBlock, formatInputToDate } from '@common/utilities/datetime';
+import { getDateTimestampFromFirstBlock, formatInputToDate } from '@views/configuration/dateTime';
 import Feedback from '@basics/feedback/feedback';
 import DateField from './dateField';
 import styles from './filters.css';

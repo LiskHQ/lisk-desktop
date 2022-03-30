@@ -1,6 +1,6 @@
 import { actionTypes } from '@common/configuration';
-import blocksReducer from './reducer';
 import accounts from '@tests/constants/accounts';
+import blocksReducer from './reducer';
 
 describe('Reducer: blocks(state, action)', () => {
   const blocks = [{

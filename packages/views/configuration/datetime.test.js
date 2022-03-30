@@ -1,7 +1,7 @@
 import {
   getUnixTimestampFromValue,
   convertUnixSecondsToLiskEpochSeconds,
-} from './datetime';
+} from './dateTime';
 
 describe('Datetime', () => {
   describe('getUnixTimestampFromValue', () => {

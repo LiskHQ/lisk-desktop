@@ -1,6 +1,6 @@
 import { mountWithRouter } from '@common/utilities/testHelpers';
-import Multisignature from './multiSignature';
 import accounts from '@tests/constants/accounts';
+import Multisignature from './multiSignature';
 import { multisignGroups, transactionsData } from './mockData';
 
 describe('Multisignature wallet tab component', () => {

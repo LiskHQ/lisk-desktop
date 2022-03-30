@@ -1,7 +1,7 @@
 import React from 'react';
 import { mount } from 'enzyme';
-import { AccountsPure } from './index';
 import accounts from '@tests/constants/accounts';
+import { AccountsPure } from './index';
 
 const accountsApiResponse = Object.values(accounts);
 describe('Top Accounts Monitor Page', () => {

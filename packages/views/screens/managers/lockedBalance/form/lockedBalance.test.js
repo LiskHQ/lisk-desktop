@@ -6,9 +6,9 @@ import * as hwManager from '@transaction/utilities/hwManager';
 import { create } from '@transaction/utilities/api';
 import useTransactionPriority from '@shared/transactionPriority/useTransactionPriority';
 import useTransactionFeeCalculation from '@shared/transactionPriority/useTransactionFeeCalculation';
-import LockedBalance from './index';
 import accounts from '@tests/constants/accounts';
 import flushPromises from '@tests/unit-test-utils/flushPromises';
+import LockedBalance from './index';
 
 jest.mock('@shared/transactionPriority/useTransactionPriority');
 jest.mock('@shared/transactionPriority/useTransactionFeeCalculation');

@@ -1,8 +1,8 @@
 import React from 'react';
 import { mount } from 'enzyme';
 import * as hwManager from '@wallet/utilities/hwManager';
-import RequestPin from './requestPin';
 import accounts from '@tests/constants/accounts';
+import RequestPin from './requestPin';
 
 jest.mock('@wallet/utilities/hwManager');
 

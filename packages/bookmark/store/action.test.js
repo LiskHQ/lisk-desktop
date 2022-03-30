@@ -2,13 +2,13 @@ import { actionTypes } from '@common/configuration';
 import { tokenMap } from '@token/configuration/tokens';
 import { getFromStorage } from '@common/utilities/localJSONStorage';
 import { emptyBookmarks } from '@bookmark/utilities/bookmarks';
+import accounts from '@tests/constants/accounts';
 import {
   bookmarksRetrieved,
   bookmarkAdded,
   bookmarkRemoved,
   bookmarkUpdated,
 } from './action';
-import accounts from '@tests/constants/accounts';
 
 jest.mock('@common/utilities/localJSONStorage', () => ({
   getFromStorage: jest.fn(),

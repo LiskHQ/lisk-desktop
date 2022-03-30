@@ -2,9 +2,9 @@ import { mountWithRouterAndStore } from '@common/utilities/testHelpers';
 import { truncateAddress } from '@wallet/utilities/account';
 import { addSearchParamsToUrl } from '@screens/router/searchParams';
 import { tokenMap } from '@token/configuration/tokens';
+import accounts from '@tests/constants/accounts';
 import Reclaim from './reclaim';
 import styles from './index.css';
-import accounts from '@tests/constants/accounts';
 
 jest.mock('@screens/router/searchParams', () => ({
   addSearchParamsToUrl: jest.fn(),

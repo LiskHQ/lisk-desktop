@@ -1,7 +1,6 @@
 /* eslint-disable max-lines */
 import { to } from 'await-to-js';
 import { toast } from 'react-toastify';
-import actionTypes from './actionTypes';
 import loginTypes from '@wallet/configuration/loginTypes';
 import { tokenMap } from '@token/configuration/tokens';
 import { MODULE_ASSETS_NAME_ID_MAP } from '@transaction/configuration/moduleAssets';
@@ -14,6 +13,7 @@ import { getConnectionErrorMessage } from '@network/utilities/getNetwork';
 import { extractKeyPair, getUnlockableUnlockObjects } from '@wallet/utilities/account';
 import { defaultDerivationPath } from '@common/utilities/explicitBipKeyDerivation';
 import { networkStatusUpdated } from '@network/store/action';
+import actionTypes from './actionTypes';
 
 /**
  * Trigger this action to log out of the account

@@ -1,8 +1,8 @@
 import React from 'react';
 import { shallow } from 'enzyme';
 import TransactionResult from '@shared/transactionResult';
-import Status from './status';
 import accounts from '@tests/constants/accounts';
+import Status from './status';
 
 describe('Multisignature status component', () => {
   const props = {

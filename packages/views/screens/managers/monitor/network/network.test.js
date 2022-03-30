@@ -1,7 +1,7 @@
 import React from 'react';
 import { mount, shallow } from 'enzyme';
-import { NetworkPure } from './index';
 import peers from '@tests/constants/peers';
+import { NetworkPure } from './index';
 
 describe('Network Monitor Page', () => {
   const networkStatistics = {

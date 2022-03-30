@@ -3,11 +3,11 @@ import ReactDOM from 'react-dom';
 import { HashRouter as Router } from 'react-router-dom';
 import { Provider } from 'react-redux';
 import { I18nextProvider } from 'react-i18next';
+import externalLinks from '@views/configuration/externalLinks';
 import { cryptography } from '@liskhq/lisk-client';
-import store from '../../packages/common/store';
-import externalLinks from '../../packages/common/utilities/externalLinks';
-import updateApp from '../../packages/updater/utilities/updateApp';
-import ipcLocale from '../../packages/common/utilities/ipcLocale';
+import store from '@common/store';
+import updateApp from '@updater/utilities/updateApp';
+import ipcLocale from '@common/utilities/ipcLocale';
 import i18n from '../i18n/i18n';
 import App from './app';
 

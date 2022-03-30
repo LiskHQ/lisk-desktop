@@ -1,6 +1,6 @@
-import actionTypes from './actionTypes';
 import { tokenMap } from '@token/configuration/tokens';
 import { getFromStorage } from '@common/utilities/localJSONStorage';
+import actionTypes from './actionTypes';
 import { initialState } from './reducer';
 
 /**

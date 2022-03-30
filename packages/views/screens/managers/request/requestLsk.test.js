@@ -1,7 +1,7 @@
 import React from 'react';
 import { mountWithRouter } from '@common/utilities/testHelpers';
-import Request from './requestLsk';
 import accounts from '@tests/constants/accounts';
+import Request from './requestLsk';
 
 jest.mock('@shared/converter', () => (
   function ConverterMock() {

@@ -1,7 +1,7 @@
-import actionTypes from './actionTypes';
 import settings from '@settings/configuration/settings';
 import { getAutoLogInData, shouldAutoLogIn } from '@common/utilities/login';
 import { networkConfigSet, login, settingsUpdated } from '@common/store/actions';
+import actionTypes from './actionTypes';
 
 const network = ({ dispatch, getState }) => next => async (action) => {
   next(action);

@@ -1,8 +1,8 @@
 import React from 'react';
 import { mount } from 'enzyme';
 import { keyCodes } from '@views/configuration';
-import PassphraseInput from '.';
 import accounts from '@tests/constants/accounts';
+import PassphraseInput from '.';
 
 describe('passphraseInput', () => {
   let wrapper;
