@@ -13,6 +13,7 @@ const config = {
     token: 'token',
     sideBarExpanded: 'sideBarExpanded',
     currency: 'currency',
+    darkMode: 'darkMode',
   },
 
 };

@@ -6,9 +6,9 @@ import Icon from '@basics/icon';
 import DialogLink from '@basics/dialog/link';
 import { PrimaryButton } from '@basics/buttons';
 import Tooltip from '@basics/tooltip/tooltip';
-import Toggle from '@settings/setters/toggles/toggle';
 import VoteQueueToggle from '@settings/setters/toggles/voteQueueToggle';
 import DiscreateModeToggle from '@settings/setters/toggles/discreteModeToggle';
+import LightDarkToggle from '@settings/setters/toggles/lightDarkModeToggle';
 import SideBarToggle from '@settings/setters/toggles/sideBarToggle';
 import styles from './topBar.css';
 import Network from './networkName';
@@ -64,11 +64,7 @@ const TopBar = ({
         <Search t={t} history={history} disabled={disabled} />
       </div>
       <div className={styles.group}>
-        <Toggle
-          setting="darkMode"
-          icons={['lightMode', 'darkMode']}
-          tips={[t('Disable dark mode'), t('Enable dark mode')]}
-        />
+        <LightDarkToggle t={t} />
         { !isUserLogout && <DiscreateModeToggle  t={t}/> }
         <Network
           token={token.active}
