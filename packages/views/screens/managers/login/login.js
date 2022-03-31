@@ -11,7 +11,7 @@ import { PrimaryButton } from '@basics/buttons';
 import PassphraseInput from '@shared/passphraseInput';
 import Icon from '@basics/icon/index';
 import DiscreetModeToggle from '@shared/discreetModeToggle';
-import NetworkSelector from '../../../../settings/setters/networkSelector';
+import NetworkSelector from '@settings/setters/selectors/networkSelector';
 import RecoveryPhrase from './recoveryPhrase';
 import styles from './login.css';
 

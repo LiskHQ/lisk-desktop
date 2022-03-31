@@ -8,8 +8,8 @@ import BoxHeader from '@basics/box/header';
 import BoxContent from '@basics/box/content';
 import CheckBox from '@basics/inputs/checkBox';
 import Dialog from '@basics/dialog/dialog';
-import styles from './settings.css';
 import CurrencySelector from '@settings/setters/selectors/currencySelector';
+import styles from './settings.css';
 
 class Settings extends React.Component {
   constructor() {
@@ -52,12 +52,7 @@ class Settings extends React.Component {
   }
 
   render() {
-    const {
-      t, settings,
-    } = this.props;
-    const { currencies } = this.state;
-
-    const activeCurrency = settings.currency || settingsConst.currencies[0];
+    const { t, settings } = this.props;
 
     return (
       <Dialog hasClose className={styles.dialogWrapper}>
@@ -68,7 +63,9 @@ class Settings extends React.Component {
           <BoxContent className={styles.content}>
             <section>
               <h2>{t('Currency')}</h2>
-              <CurrencySelector t = {t} />
+              <div className={styles.fieldGroup}>
+                <CurrencySelector t = {t} />
+              </div>
             </section>
             <section>
               <h2>{t('Appearance')}</h2>

@@ -2,12 +2,12 @@ import React from 'react'
 import settingConstants from "@settings/configuration/settingConstants";
 import Toggle from "./toggle";
 
-function DiscreateModeToggle(){
+function DiscreateModeToggle({ t }){
     return ( 
         <Toggle
             setting={settingConstants.keys.discreetMode}
-            icons={['toggleSidebarActive', 'toggleSidebar']}
-            tips={[t('Collapse sidebar'), t('Expand sidebar')]}
+            icons={['discreetModeActive', 'discreetMode']}
+            tips={[t('Disable discreet mode'), t('Enable discreet mode')]}
         />
     )
 }

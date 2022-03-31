@@ -2,12 +2,12 @@ import React from 'react'
 import settingConstants from "@settings/configuration/settingConstants";
 import Toggle from "./toggle";
 
-function SideBarToggle(){
+function SideBarToggle({ t }){
     return ( 
         <Toggle
             setting={settingConstants.keys.sideBarExpanded}
-            icons={['discreetModeActive', 'discreetMode']}
-            tips={[t('Disable discreet mode'), t('Enable discreet mode')]}
+            icons={['toggleSidebarActive', 'toggleSidebar']}
+            tips={[t('Collapse sidebar'), t('Expand sidebar')]}
         />
     )
 }
