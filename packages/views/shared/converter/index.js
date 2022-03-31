@@ -1,6 +1,6 @@
 /* istanbul ignore file */
 import { connect } from 'react-redux';
-import settings from '@settings/configuration/settings';
+import config from '@settings/configuration/settingConstants';
 import { tokenMap } from '@token/configuration/tokens';
 import Converter from './converter';
 
@@ -10,8 +10,8 @@ const mapStateToProps = state => ({
   priceTicker: (state.service && state.service.priceTicker)
     ? state.service.priceTicker
     : {
-      LSK: settings.currencies.reduce((acc, key) => ({ ...acc, [key]: '0' })),
-      BTC: settings.currencies.reduce((acc, key) => ({ ...acc, [key]: '0' })),
+      LSK: config.currencies.reduce((acc, key) => ({ ...acc, [key]: '0' })),
+      BTC: config.currencies.reduce((acc, key) => ({ ...acc, [key]: '0' })),
     },
 });
 

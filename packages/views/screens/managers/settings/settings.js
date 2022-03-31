@@ -2,14 +2,14 @@ import React from 'react';
 import { toast } from 'react-toastify';
 import Piwik from '@common/utilities/piwik';
 import { externalLinks } from '@common/configuration';
-import settingsConst from '@settings/configuration/settings';
+import settingsConst from '@settings/configuration/settingConstants';
 import Box from '@basics/box';
 import BoxHeader from '@basics/box/header';
 import BoxContent from '@basics/box/content';
 import CheckBox from '@basics/inputs/checkBox';
-import Select from '@basics/inputs/select';
 import Dialog from '@basics/dialog/dialog';
 import styles from './settings.css';
+import CurrencySelector from '@settings/setters/selectors/currencySelector';
 
 class Settings extends React.Component {
   constructor() {
@@ -68,17 +68,7 @@ class Settings extends React.Component {
           <BoxContent className={styles.content}>
             <section>
               <h2>{t('Currency')}</h2>
-              <div className={styles.fieldGroup}>
-                <Select
-                  options={currencies.map(currency => ({
-                    label: currency, value: currency,
-                  }))}
-                  selected={activeCurrency}
-                  onChange={this.setCurrency}
-                  className="currency"
-                  placeholder="Currency"
-                />
-              </div>
+              <CurrencySelector t = {t} />
             </section>
             <section>
               <h2>{t('Appearance')}</h2>
