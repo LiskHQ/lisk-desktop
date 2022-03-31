@@ -6,7 +6,9 @@
 ![GitHub package.json version](https://img.shields.io/github/package-json/v/LiskHQ/lisk-desktop)
 [![DeepScan grade](https://deepscan.io/api/teams/6759/projects/8871/branches/113511/badge/grade.svg)](https://deepscan.io/dashboard#view=project&tid=6759&pid=8871&bid=113511)
 [![PRs Welcome](https://img.shields.io/badge/PRs-welcome-brightgreen.svg)](https://makeapullrequest.com)
-![Discord](https://img.shields.io/discord/405002561775599619/606112254789681163?style=flat-square)
+![Discord](https://img.shields.io/discord/405002561775599619)
+[![GitHub issues](https://img.shields.io/github/issues/LiskHQ/lisk-desktop)](https://github.com/LiskHQ/lisk-desktop/issues)
+![GitHub closed issues](https://img.shields.io/github/issues-closed/liskhq/lisk-desktop)
 
 ## Installation
 
