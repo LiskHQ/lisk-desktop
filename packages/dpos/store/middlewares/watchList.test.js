@@ -1,5 +1,5 @@
-import { actionTypes } from '@common/configuration';
 import { setInStorage } from '@common/utilities/localJSONStorage';
+import actionTypes from './actionTypes';
 import middleware from './watchList';
 
 jest.mock('@common/utilities/localJSONStorage', () => ({ setInStorage: jest.fn() }));
