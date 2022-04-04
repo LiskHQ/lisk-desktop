@@ -11,8 +11,6 @@ import DemoRenderer from '../demoRenderer';
  */
 /* istanbul ignore next */
 const AccountVisualDemo = () => {
-  const [accounts, setAccounts] = useState(loadMore([]))
-
   const loadMore = (acc) => {
     const offset = acc.length;
     const bytes = [];
@@ -31,6 +29,7 @@ const AccountVisualDemo = () => {
     return [...acc, ...generateAccounts].filter(onlyUnique);
   }
 
+  const [accounts, setAccounts] = useState(loadMore([]))
   const size = 88;
 
   return (
