@@ -1,7 +1,7 @@
 import BigNumber from 'bignumber.js';
 import React from 'react';
 import sha256 from 'js-sha256';
-import generateUniqueId from '@common/utilities/generateUniqueId';
+import generateUniqueId from '@views/utilities/generateUniqueId';
 import { tokenMap } from '@token/configuration/tokens';
 import { validateAddress } from '@common/utilities/validators';
 import { Gradients, gradientSchemes } from './gradients';

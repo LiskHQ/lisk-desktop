@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import Waypoint from 'react-waypoint';
 import { extractAddressFromPassphrase } from '@wallet/utilities/account';
 import { generatePassphraseFromSeed } from '@common/utilities/passphrase';
@@ -10,16 +10,10 @@ import DemoRenderer from '../demoRenderer';
  * since it's developed for demonstration purpose only
  */
 /* istanbul ignore next */
-class AccountVisualDemo extends React.Component {
-  constructor() {
-    super();
-    this.state = {
-      accounts: this.loadMore([]),
-    };
-  }
+const AccountVisualDemo = () => {
+  const [accounts, setAccounts] = useState(loadMore([]))
 
-  // eslint-disable-next-line class-methods-use-this
-  loadMore(acc) { // eslint-disable-line max-statements
+  const loadMore = (acc) => {
     const offset = acc.length;
     const bytes = [];
     for (let j = 1 + offset; j <= 152 + offset; j += 1) {
@@ -28,48 +22,44 @@ class AccountVisualDemo extends React.Component {
       bytes.push(byte);
     }
 
-    const accounts = bytes.map(seed => generatePassphraseFromSeed({ seed }))
+    const generateAccounts = bytes.map(seed => generatePassphraseFromSeed({ seed }))
       .map(extractAddressFromPassphrase);
 
     function onlyUnique(value, index, self) {
       return self.indexOf(value) === index;
     }
-    return [...acc, ...accounts].filter(onlyUnique);
+    return [...acc, ...generateAccounts].filter(onlyUnique);
   }
 
-  render() {
-    const size = 88;
+  const size = 88;
 
-    return (
-      <div>
-        <h2>AccountVisual</h2>
-        <div style={{ whiteSpace: 'no-break' }}>
-          {this.state.accounts.map(account => (
-            <DemoRenderer
-              key={account}
-              style={{
-                display: 'inline-block',
-                overflow: 'hidden',
-                wordBreak: 'break-all',
-                textAlign: 'center',
-                width: size * 2,
-                padding: 10,
-                fontSize: 14,
-              }}
-            >
-              <AccountVisual size={size} address={account} />
-            </DemoRenderer>
-          ))}
-        </div>
-        <Waypoint onEnter={() => {
-          this.setState({
-            accounts: this.loadMore(this.state.accounts),
-          });
-        }}
-        />
+  return (
+    <div>
+      <h2>AccountVisual</h2>
+      <div style={{ whiteSpace: 'no-break' }}>
+        {accounts.map(account => (
+          <DemoRenderer
+            key={account}
+            style={{
+              display: 'inline-block',
+              overflow: 'hidden',
+              wordBreak: 'break-all',
+              textAlign: 'center',
+              width: size * 2,
+              padding: 10,
+              fontSize: 14,
+            }}
+          >
+            <AccountVisual size={size} address={account} />
+          </DemoRenderer>
+        ))}
       </div>
-    );
-  }
+      <Waypoint onEnter={() => {
+        setAccounts(loadMore(accounts));
+      }}
+      />
+    </div>
+  );
 }
 
 export default AccountVisualDemo;

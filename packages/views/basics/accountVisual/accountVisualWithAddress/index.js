@@ -11,12 +11,10 @@ import Icon from '@basics/icon';
 import AccountVisual from '@basics/accountVisual';
 import styles from './accountVisualWithAddress.css';
 
-class AccountVisualWithAddress extends React.Component {
-  getTransformedAddress(address) {
-    const { bookmarks, showBookmarkedAddress } = this.props;
-
+const AccountVisualWithAddress = ({ bookmarks, showBookmarkedAddress, token, address, transactionSubject, moduleAssetId, size, truncate }) => {
+  const getTransformedAddress = (address) => {
     if (showBookmarkedAddress) {
-      const bookmarkedAddress = bookmarks[this.props.token.active].find(
+      const bookmarkedAddress = bookmarks[token.active].find(
         element => element.address === address,
       );
       if (bookmarkedAddress) return bookmarkedAddress.title;
@@ -25,39 +23,34 @@ class AccountVisualWithAddress extends React.Component {
     return address;
   }
 
-  render() {
-    const {
-      address, transactionSubject, moduleAssetId, size, truncate,
-    } = this.props;
-    const title = getModuleAssetTitle()[moduleAssetId];
-    const transformedAddress = this.getTransformedAddress(address);
-    const truncatedAddress = (truncate === 'small' || truncate === 'medium')
-      ? truncateAddress(transformedAddress, truncate)
-      : truncateAddress(transformedAddress);
+  const title = getModuleAssetTitle()[moduleAssetId];
+  const transformedAddress = getTransformedAddress(address);
+  const truncatedAddress = (truncate === 'small' || truncate === 'medium')
+    ? truncateAddress(transformedAddress, truncate)
+    : truncateAddress(transformedAddress);
 
-    return (
-      <div className={`${styles.address}`}>
-        {moduleAssetId !== MODULE_ASSETS_NAME_ID_MAP.transfer && transactionSubject === 'recipient' ? (
-          <>
-            <Icon
-              className={styles.txIcon}
-              name={MODULE_ASSETS_MAP[moduleAssetId]?.icon ?? 'txDefault'}
-            />
-            <span className={styles.addressValue}>
-              {title}
-            </span>
-          </>
-        ) : (
-          <>
-            <AccountVisual address={address} size={size} />
-            <span className={`${styles.addressValue}`}>
-              {truncate ? truncatedAddress : transformedAddress}
-            </span>
-          </>
-        )}
-      </div>
-    );
-  }
+  return (
+    <div className={`${styles.address}`}>
+      {moduleAssetId !== MODULE_ASSETS_NAME_ID_MAP.transfer && transactionSubject === 'recipient' ? (
+        <>
+          <Icon
+            className={styles.txIcon}
+            name={MODULE_ASSETS_MAP[moduleAssetId]?.icon ?? 'txDefault'}
+          />
+          <span className={styles.addressValue}>
+            {title}
+          </span>
+        </>
+      ) : (
+        <>
+          <AccountVisual address={address} size={size} />
+          <span className={`${styles.addressValue}`}>
+            {truncate ? truncatedAddress : transformedAddress}
+          </span>
+        </>
+      )}
+    </div>
+  );
 }
 
 AccountVisualWithAddress.propTypes = {
