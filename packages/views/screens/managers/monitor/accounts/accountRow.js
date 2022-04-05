@@ -5,7 +5,7 @@ import grid from 'flexboxgrid/dist/flexboxgrid.css';
 
 import routes from '@screens/router/routes';
 import { tokenMap } from '@token/configuration/tokens';
-// import { formatAmountBasedOnLocale } from '@common/utilities/formattedNumber';
+// import { formatAmountBasedOnLocale } from '@views/shared/formattedNumber';
 import LiskAmount from '@shared/liskAmount';
 import AccountVisualWithAddress from '@wallet/detail/info/accountVisual/accountVisualWithAddress';
 import styles from './accounts.css';
