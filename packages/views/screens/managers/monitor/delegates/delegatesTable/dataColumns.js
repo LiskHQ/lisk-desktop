@@ -1,6 +1,6 @@
 import React from 'react';
 
-import { formatAmountBasedOnLocale } from '@views/shared/formattedNumber';
+import { formatAmountBasedOnLocale } from '@common/utilities/formattedNumber';
 import { fromRawLsk } from '@token/utilities/lsk';
 import { truncateAddress } from '@wallet/utilities/account';
 import Tooltip from '@basics/tooltip/tooltip';
