@@ -39,7 +39,7 @@ const TopBar = ({
           history={history}
           account={account}
         />
-        <SideBarToggle t={t}/>
+        <SideBarToggle t={t} />
         <Tooltip
           className={styles.tooltipWrapper}
           size="maxContent"
@@ -65,7 +65,7 @@ const TopBar = ({
       </div>
       <div className={styles.group}>
         <LightDarkToggle t={t} />
-        { !isUserLogout && <DiscreateModeToggle  t={t}/> }
+        { !isUserLogout && <DiscreateModeToggle t={t} /> }
         <Network
           token={token.active}
           network={network}

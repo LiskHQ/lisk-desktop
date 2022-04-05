@@ -1,9 +1,6 @@
 import React from 'react';
 import { toast } from 'react-toastify';
-import { useDispatch, useSelector } from 'react-redux';
-import { settingsUpdated } from '@common/store/actions';
 import useSettings from '@settings/managers/useSettings';
-import settingConstants from '@settings/configuration/settingConstants';
 import Piwik from '@common/utilities/piwik';
 import CheckBox from '@basics/inputs/checkBox';
 import Tooltip from '@basics/tooltip/tooltip';
@@ -18,7 +15,7 @@ import styles from '@shared/navigationBars/topBar/topBar.css';
  * @param {boolean} isCheckbox show checkbox or tooltip
  */
 const Toggle = ({
-  setting, icons, tips, isCheckbox, t
+  setting, icons, tips, isCheckbox, t,
 }) => {
   const { toggleSetting, [setting]: value } = useSettings(setting);
 
@@ -26,7 +23,7 @@ const Toggle = ({
 
   const handleCheckboxChange = () => {
     Piwik.trackingEvent('Settings', 'button', 'Update settings');
-    toggleSetting(value['setting']);
+    toggleSetting(value.setting);
     toast(t('Settings saved!'));
   };
 
