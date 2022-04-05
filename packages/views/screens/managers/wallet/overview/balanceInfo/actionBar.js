@@ -4,7 +4,7 @@ import { useSelector } from 'react-redux';
 import { PrimaryButton, SecondaryButton, TertiaryButton } from '@basics/buttons';
 import DialogLink from '@basics/dialog/link';
 import Tooltip from '@basics/tooltip/tooltip';
-import SignInTooltipWrapper from '@wallet/manage/passphraseInput';
+import SignInTooltipWrapper from '@wallet/manage/signInTooltipWrapper';
 import { selectAccountBalance, selectLSKAddress } from '@common/store/selectors';
 import EmptyBalanceTooltipWrapper from './emptyBalanceTooltipWrapper';
 import styles from './balanceInfo.css';
