@@ -3,7 +3,7 @@ import { isEmpty } from '@common/utilities/helpers';
 import { txStatusTypes } from '@transaction/configuration/txStatus';
 import { PrimaryButton } from '@basics/buttons';
 import TransactionResult from '@transaction/detail/manager/transactionResult';
-import { getTransactionStatus, statusMessages } from '@transaction/detail/manager/transactionResult/statusConfig';
+import { getTransactionStatus, statusMessages } from '@transaction/detail/info/transactionResult/statusConfig';
 import DialogLink from '@basics/dialog/link';
 import styles from './status.css';
 

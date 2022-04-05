@@ -4,7 +4,7 @@ import { connect } from 'react-redux';
 import { compose } from 'redux';
 import { multisigTransactionSigned, transactionDoubleSigned, signatureSkipped } from '@common/store/actions';
 import { withTranslation } from 'react-i18next';
-import TransactionSignature from '../../info/transactionSignature';
+import TransactionSignature from '../../info/transactionSignature/transactionSignature';
 
 const mapStateToProps = state => ({
   transactions: state.transactions,
