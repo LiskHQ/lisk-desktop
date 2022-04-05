@@ -5,7 +5,7 @@ import { tokenMap } from '@token/configuration/tokens';
 import DialogLink from '@basics/dialog/link';
 import AccountVisual from '@basics/accountVisual';
 import Icon from '@basics/icon';
-import TransactionAmount from '@shared/transactionAmount';
+import TransactionAmount from '@transaction/detail/info/transactionAmount';
 import styles from './multiSignature.css';
 
 const ActionButton = ({ status, t }) => (

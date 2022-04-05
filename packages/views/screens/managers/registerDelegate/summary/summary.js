@@ -1,7 +1,7 @@
 import React from 'react';
 import { MODULE_ASSETS_NAME_ID_MAP } from '@transaction/configuration/moduleAssets';
-import TransactionSummary from '@shared/transactionSummary';
-import TransactionInfo from '@shared/transactionInfo';
+import TransactionSummary from '@transaction/detail/info/transactionSummary';
+import TransactionInfo from '@transaction/detail/info/transactionInfo';
 import { toRawLsk } from '@token/utilities/lsk';
 import styles from './summary.css';
 

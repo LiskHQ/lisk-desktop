@@ -4,7 +4,7 @@ import { compose } from 'redux';
 import { withRouter } from 'react-router';
 import { withTranslation } from 'react-i18next';
 import { transactionBroadcasted, resetTransactionResult } from '@common/store/actions';
-import TransactionResult from './transactionResult';
+import TransactionResult from '../../info/transactionResult/transactionResult';
 
 const mapStateToProps = state => ({
   activeToken: state.settings.token.active,

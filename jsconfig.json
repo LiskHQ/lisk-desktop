@@ -16,6 +16,7 @@
       "@transaction/*": ["./packages/transaction/*"],
       "@updater/*": ["./packages/updater/*"],
       "@wallet/*": ["./packages/wallet/*"],
+      "@legacy/*": ["./packages/legacy/*"],
       "@views/*": ["./packages/views/*"],
       "@shared/*": ["./packages/views/shared/*"],
       "@basics/*": ["./packages/views/basics/*"],

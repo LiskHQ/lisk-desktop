@@ -8,7 +8,7 @@ import withData from '@common/utilities/withData';
 import { getTransactions } from '@transaction/utilities/api';
 import { selectTransactions } from '@common/store/selectors';
 import FlashMessageHolder from '@basics/flashMessage/holder';
-import WarnPunishedDelegate from '@shared/warnPunishedDelegate';
+import WarnPunishedDelegate from '@dpos/detail/info/warnPunishedDelegate';
 import { withRouter } from 'react-router';
 import BalanceChart from './balanceChart';
 import AccountInfo from './accountInfo';

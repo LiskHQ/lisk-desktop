@@ -1,5 +1,5 @@
 import React from 'react';
-import AccountMigration from '@shared/accountMigration';
+import AccountMigration from '@legacy/detail/info/accountMigration';
 import LiskAmount from '@shared/liskAmount';
 import { tokenMap } from '@token/configuration/tokens';
 
