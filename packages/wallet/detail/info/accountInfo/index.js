@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import AccountVisual from '@basics/accountVisual';
+import AccountVisual from '@wallet/detail/info/accountVisual';
 import Box from '@basics/box';
 import BoxContent from '@basics/box/content';
 import Icon from '@basics/icon';

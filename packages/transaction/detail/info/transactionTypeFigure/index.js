@@ -2,7 +2,7 @@ import React from 'react';
 import { MODULE_ASSETS_NAME_ID_MAP, MODULE_ASSETS_MAP } from '@transaction/configuration/moduleAssets';
 import { tokenMap } from '@token/configuration/tokens';
 import { validateAddress } from '@common/utilities/validators';
-import AccountVisual from '@basics/accountVisual';
+import AccountVisual from '@wallet/detail/info/accountVisual';
 import Icon from '@basics/icon';
 import styles from './transactionTypeFigure.css';
 

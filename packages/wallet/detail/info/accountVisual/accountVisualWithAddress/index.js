@@ -8,7 +8,7 @@ import { MODULE_ASSETS_NAME_ID_MAP, MODULE_ASSETS_MAP } from '@transaction/confi
 import { truncateAddress } from '@wallet/utilities/account';
 import { getModuleAssetTitle } from '@transaction/utilities/moduleAssets';
 import Icon from '@basics/icon';
-import AccountVisual from '@basics/accountVisual';
+import AccountVisual from '@wallet/detail/info/accountVisual';
 import styles from './accountVisualWithAddress.css';
 
 const AccountVisualWithAddress = ({ bookmarks, showBookmarkedAddress, token, address, transactionSubject, moduleAssetId, size, truncate }) => {

@@ -4,7 +4,7 @@ import FlashMessage from '@basics/flashMessage/flashMessage';
 import Icon from '@basics/icon';
 import styles from './styles.css';
 
-const PhraseRevoveryWarningMessage = ({ title, children }) => (
+const PhraseRecoveryWarningMessage = ({ title, children }) => (
   <FlashMessage shouldShow hasCloseAction={false} className={styles.flashMessage}>
     <FlashMessage.Content>
       <div className={styles.warningContainer}>
@@ -20,4 +20,4 @@ const PhraseRevoveryWarningMessage = ({ title, children }) => (
   </FlashMessage>
 );
 
-export default PhraseRevoveryWarningMessage;
+export default PhraseRecoveryWarningMessage;
