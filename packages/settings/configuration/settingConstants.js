@@ -15,6 +15,5 @@ const config = {
     currency: 'currency',
     darkMode: 'darkMode',
   },
-
 };
 export default config;

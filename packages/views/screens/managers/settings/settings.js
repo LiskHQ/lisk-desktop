@@ -9,6 +9,7 @@ import BoxContent from '@basics/box/content';
 import CheckBox from '@basics/inputs/checkBox';
 import Dialog from '@basics/dialog/dialog';
 import CurrencySelector from '@settings/setters/selectors/currencySelector';
+import Toggle from '@settings/setters/toggles/toggle';
 import styles from './settings.css';
 
 class Settings extends React.Component {
@@ -70,12 +71,7 @@ class Settings extends React.Component {
             <section>
               <h2>{t('Appearance')}</h2>
               <label className={`${styles.fieldGroup} ${styles.checkboxField}`}>
-                <CheckBox
-                  name="darkMode"
-                  className={`${styles.checkbox} darkMode`}
-                  checked={settings.darkMode}
-                  onChange={this.handleCheckboxChange}
-                />
+                <Toggle t = {t} isCheckbox setting={'darkMode'} />
                 <div>
                   <span className={styles.labelName}>{t('Dark mode')}</span>
                   <p>{t('Enable dark mode.')}</p>
@@ -85,24 +81,14 @@ class Settings extends React.Component {
             <section>
               <h2>{t('Security')}</h2>
               <label className={`${styles.fieldGroup} ${styles.checkboxField}`}>
-                <CheckBox
-                  name="autoLog"
-                  className={`${styles.checkbox} autoLog`}
-                  checked={settings.autoLog}
-                  onChange={this.toggleAutoLog}
-                />
+              <Toggle t = {t} isCheckbox setting={'autoLog'} />
                 <div>
                   <span className={styles.labelName}>{t('Auto sign out')}</span>
                   <p>{t('Sign out automatically after 10 minutes.')}</p>
                 </div>
               </label>
               <label className={`${styles.fieldGroup} ${styles.checkboxField}`}>
-                <CheckBox
-                  name="discreetMode"
-                  className={`${styles.checkbox} discreetMode`}
-                  checked={settings.discreetMode}
-                  onChange={this.handleCheckboxChange}
-                />
+              <Toggle t = {t} isCheckbox setting={'discreetMode'} />
                 <div>
                   <span className={styles.labelName}>{t('Discreet mode')}</span>
                   <p>{t('Hide balance and transactions amounts.')}</p>
@@ -112,24 +98,14 @@ class Settings extends React.Component {
             <section>
               <h2>{t('Advanced')}</h2>
               <label className={`${styles.fieldGroup} ${styles.checkboxField}`}>
-                <CheckBox
-                  name="showNetwork"
-                  className={`${styles.checkbox} showNetwork`}
-                  checked={settings.showNetwork}
-                  onChange={this.handleCheckboxChange}
-                />
+                <Toggle t = {t} isCheckbox setting={'showNetwork'} />
                 <div>
                   <span className={styles.labelName}>{t('Network switcher')}</span>
                   <p>{t('Enable network switcher to connect to different networks or service nodes when signing in.')}</p>
                 </div>
               </label>
               <label className={`${styles.fieldGroup} ${styles.checkboxField}`}>
-                <CheckBox
-                  name="enableCustomDerivationPath"
-                  className={`${styles.checkbox} enableCustomDerivationPath`}
-                  checked={settings.enableCustomDerivationPath}
-                  onChange={this.handleCheckboxChange}
-                />
+              <Toggle t = {t} isCheckbox setting={'enableCustomDerivationPath'} />
                 <div>
                   <span className={styles.labelName}>{t('Enable custom derivation path')}</span>
                   <p>{t('Modify recovery phrase derivation path')}</p>
@@ -139,12 +115,7 @@ class Settings extends React.Component {
             <section>
               <h2>{t('Privacy')}</h2>
               <label className={`${styles.fieldGroup} ${styles.checkboxField}`}>
-                <CheckBox
-                  name="statistics"
-                  className={`${styles.checkbox} statistics`}
-                  checked={settings.statistics}
-                  onChange={this.handleCheckboxChange}
-                />
+                <Toggle t = {t} isCheckbox setting={'statistics'} />
                 <div>
                   <span className={styles.labelName}>
                     {t('Anonymous analytics collection')}
