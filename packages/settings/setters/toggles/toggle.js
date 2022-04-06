@@ -23,7 +23,7 @@ const Toggle = ({
 
   const handleCheckboxChange = () => {
     Piwik.trackingEvent('Settings', 'button', 'Update settings');
-    toggleSetting(value.setting);
+    toggleSetting(value?.setting);
     toast(t('Settings saved!'));
   };
 

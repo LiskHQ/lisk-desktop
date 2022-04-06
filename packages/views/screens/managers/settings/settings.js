@@ -68,7 +68,7 @@ class Settings extends React.Component {
             <section>
               <h2>{t('Appearance')}</h2>
               <label className={`${styles.fieldGroup} ${styles.checkboxField}`}>
-                <Toggle t={t} isCheckbox setting="darkMode" />
+                <Toggle t={t} isCheckbox setting={settingsConst.keys.darkMode} />
                 <div>
                   <span className={styles.labelName}>{t('Dark mode')}</span>
                   <p>{t('Enable dark mode.')}</p>
@@ -78,14 +78,14 @@ class Settings extends React.Component {
             <section>
               <h2>{t('Security')}</h2>
               <label className={`${styles.fieldGroup} ${styles.checkboxField}`}>
-                <Toggle t={t} isCheckbox setting="autoLog" />
+                <Toggle t={t} isCheckbox setting={settingsConst.keys.autoLog} />
                 <div>
                   <span className={styles.labelName}>{t('Auto sign out')}</span>
                   <p>{t('Sign out automatically after 10 minutes.')}</p>
                 </div>
               </label>
               <label className={`${styles.fieldGroup} ${styles.checkboxField}`}>
-                <Toggle t={t} isCheckbox setting="discreetMode" />
+                <Toggle t={t} isCheckbox setting={settingsConst.keys.discreetMode} />
                 <div>
                   <span className={styles.labelName}>{t('Discreet mode')}</span>
                   <p>{t('Hide balance and transactions amounts.')}</p>
@@ -95,7 +95,7 @@ class Settings extends React.Component {
             <section>
               <h2>{t('Advanced')}</h2>
               <label className={`${styles.fieldGroup} ${styles.checkboxField}`}>
-                <Toggle t={t} isCheckbox setting="showNetwork" />
+                <Toggle t={t} isCheckbox setting={settingsConst.keys.showNetwork} />
                 <div>
                   <span className={styles.labelName}>
                     {t('Network switcher')}
@@ -108,7 +108,7 @@ class Settings extends React.Component {
                 </div>
               </label>
               <label className={`${styles.fieldGroup} ${styles.checkboxField}`}>
-                <Toggle t={t} isCheckbox setting="enableCustomDerivationPath" />
+                <Toggle t={t} isCheckbox setting={settingsConst.keys.enableCustomDerivationPath} />
                 <div>
                   <span className={styles.labelName}>
                     {t('Enable custom derivation path')}
@@ -120,7 +120,7 @@ class Settings extends React.Component {
             <section>
               <h2>{t('Privacy')}</h2>
               <label className={`${styles.fieldGroup} ${styles.checkboxField}`}>
-                <Toggle t={t} isCheckbox setting="statistics" />
+                <Toggle t={t} isCheckbox setting={settingsConst.keys.statistics} />
                 <div>
                   <span className={styles.labelName}>
                     {t('Anonymous analytics collection')}
