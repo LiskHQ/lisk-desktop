@@ -5,19 +5,21 @@ import Dropdown from '../../dropdown/dropdown';
 import styles from './select.css';
 import OutsideClickHandler from './outsideClickHandler';
 
-const Select = ({ onChange, options, size, className, placeholder, selected }) => {
-  const [isOpen, setIsOpen] = useState(false)
+const Select = ({
+  onChange, options, size, className, placeholder, selected,
+}) => {
+  const [isOpen, setIsOpen] = useState(false);
 
   const toggleIsOpen = () => {
     setIsOpen(!isOpen);
-  }
+  };
 
   const setSelected = ({ target }) => {
     const value = target.getAttribute('value');
 
     onChange(value);
     setIsOpen(false);
-  }
+  };
 
   // eslint-disable-next-line eqeqeq
   const { value, label } = options.find(item => item.value == selected);
@@ -60,7 +62,7 @@ const Select = ({ onChange, options, size, className, placeholder, selected }) =
       </Dropdown>
     </OutsideClickHandler>
   );
-}
+};
 
 Select.propTypes = {
   options: PropTypes.arrayOf(PropTypes.shape({

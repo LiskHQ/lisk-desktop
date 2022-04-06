@@ -6,13 +6,13 @@ import styles from './discreetMode.css';
 
 const DiscreetMode = ({
   children, location, isDiscreetMode, shouldEvaluateForOtherAccounts,
-  addresses, account, token
+  addresses, account, token,
 }) => {
   const handleBlurOnOtherWalletPage = () => {
     const { search } = location;
     const address = selectSearchParamValue(search, routes.account.searchParam);
     return account.info && address === account.info[token].address;
-  }
+  };
 
   const shouldEnableDiscreetMode = () => {
     if (!isDiscreetMode) return false;
@@ -28,7 +28,7 @@ const DiscreetMode = ({
       }
     }
     return true;
-  }
+  };
 
   const discreetModeClass = shouldEnableDiscreetMode() ? styles.discreetMode : '';
   return (
@@ -37,7 +37,7 @@ const DiscreetMode = ({
       {children}
     </div>
   );
-}
+};
 
 DiscreetMode.defaultProps = {
   addresses: [],

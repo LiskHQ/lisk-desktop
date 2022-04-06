@@ -1,5 +1,5 @@
-import actionTypes from './actionTypes';
 import { getFromStorage } from '@common/utilities/localJSONStorage';
+import actionTypes from './actionTypes';
 import {
   settingsReset,
   settingsUpdated,

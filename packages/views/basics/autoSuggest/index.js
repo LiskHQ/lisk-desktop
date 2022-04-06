@@ -4,8 +4,8 @@ import { keyCodes } from '@views/configuration';
 import { Input } from '../inputs';
 import styles from './autoSuggest.css';
 
-const AutoSuggest = ({
-  items, selectedItem, matchProps, onSelectItem, onChange, 
+const AutoSuggest = ({ // eslint-disable-line max-statements
+  items, selectedItem, matchProps, onSelectItem, onChange,
   onChangeDelayed, placeholder, renderItem, renderIcon, className,
 }) => {
   const [dropdownIndex, setDropdownIndex] = useState(0);
@@ -15,13 +15,11 @@ const AutoSuggest = ({
   const listContainerRef = useRef(null);
 
   const getFilterList = () => {
-    if (selectedItem.value === "") return items;
+    if (selectedItem.value === '') return items;
 
     return items.filter((item) =>
       matchProps.find((prop) =>
-        item[prop].toLowerCase().includes(selectedItem.value.toLowerCase())
-      )
-    );
+        item[prop].toLowerCase().includes(selectedItem.value.toLowerCase())));
   };
 
   const resetListIndex = () => {
@@ -38,31 +36,30 @@ const AutoSuggest = ({
     const rowHeight = 44;
     const filteredItemsLength = getFilterList().length;
 
-    setDropdownIndex((dropdownIndex) => {
+    setDropdownIndex((dropdownIndexVal) => {
       // istanbul ignore else
-      if (action === "down" && dropdownIndex < filteredItemsLength - 1) {
-        if (dropdownIndex + 1 >= 4) {
+      if (action === 'down' && dropdownIndexVal < filteredItemsLength - 1) {
+        if (dropdownIndexVal + 1 >= 4) {
           // eslint-disable-next-line operator-assignment
           listContainerRef.current.scrollTop = listContainerRef.current.scrollTop + rowHeight;
         }
-        dropdownIndex += 1;
+        dropdownIndexVal += 1;
       }
 
       // istanbul ignore else
-      if (action === "up" && dropdownIndex > 0) {
-        listContainerRef.current.scrollTop =
-          listContainerRef.current.scrollTop > 0 &&
-          (dropdownIndex - 1) * rowHeight < listContainerRef.current.scrollTop
-            ? listContainerRef.current.scrollTop - rowHeight
-            : listContainerRef.current.scrollTop;
-        dropdownIndex -= 1;
+      if (action === 'up' && dropdownIndexVal > 0) {
+        listContainerRef.current.scrollTop = listContainerRef.current.scrollTop > 0
+          && (dropdownIndexVal - 1) * rowHeight < listContainerRef.current.scrollTop
+          ? listContainerRef.current.scrollTop - rowHeight
+          : listContainerRef.current.scrollTop;
+        dropdownIndexVal -= 1;
       }
-      return dropdownIndex;
+      return dropdownIndexVal;
     });
   };
 
-  const handleUpdateIndex = (dropdownIndex) => {
-    setDropdownIndex(dropdownIndex);
+  const handleUpdateIndex = (dropdownIndexVal) => {
+    setDropdownIndex(dropdownIndexVal);
   };
 
   const onKeyPressEnter = () => {
@@ -75,10 +72,10 @@ const AutoSuggest = ({
     if (getFilterList().length) {
       switch (e.keyCode) {
         case keyCodes.arrowDown:
-          onKeyPressDownOrUp("down");
+          onKeyPressDownOrUp('down');
           break;
         case keyCodes.arrowUp:
-          onKeyPressDownOrUp("up");
+          onKeyPressDownOrUp('up');
           break;
         case keyCodes.enter:
           onKeyPressEnter();
@@ -99,7 +96,7 @@ const AutoSuggest = ({
       onChangeDelayed();
     }, 300);
 
-    if (e?.target?.value === "") resetListIndex();
+    if (e?.target?.value === '') resetListIndex();
     onChange(e);
   };
 
@@ -115,10 +112,9 @@ const AutoSuggest = ({
     const bookmarksList = getFilterList();
 
     if (
-      (!items.length && selectedItem.error) ||
-      (!isFocused && selectedItem.error)
-    )
-      return true;
+      (!items.length && selectedItem.error)
+      || (!isFocused && selectedItem.error)
+    ) return true;
     if (items.length && !bookmarksList.length && selectedItem.error) {
       return true;
     }
@@ -131,7 +127,7 @@ const AutoSuggest = ({
         <Input
           autoComplete="off"
           className={`${styles.input} ${
-            isOnError() ? "error" : ""
+            isOnError() ? 'error' : ''
           } ${className} bookmark`}
           name={className}
           value={
@@ -142,7 +138,7 @@ const AutoSuggest = ({
           onChange={onChangeEv}
           feedback={selectedItem.feedback}
           isLoading={isLoading && selectedItem.value}
-          status={isOnError() ? "error" : "ok"}
+          status={isOnError() ? 'error' : 'ok'}
           icon={renderIcon(selectedItem)}
           onBlur={onBlur}
           onFocus={onFocus}
@@ -157,7 +153,7 @@ const AutoSuggest = ({
               onMouseEnter={() => handleUpdateIndex(index)}
               onClick={() => onItemSelect(item)}
               onKeyPress={onHandleKeyPress}
-              className={`${dropdownIndex === index ? styles.active : ""}`}
+              className={`${dropdownIndex === index ? styles.active : ''}`}
             >
               {renderItem(item)}
             </li>

@@ -2,8 +2,8 @@ import React, { useState } from 'react';
 import Waypoint from 'react-waypoint';
 import { extractAddressFromPassphrase } from '@wallet/utilities/account';
 import { generatePassphraseFromSeed } from '@views/utilities/passphrase';
+import DemoRenderer from '@basics/demoRenderer';
 import AccountVisual from '.';
-import DemoRenderer from '../demoRenderer';
 
 /**
  * Ignored the unit test coverage of this component
@@ -27,9 +27,9 @@ const AccountVisualDemo = () => {
       return self.indexOf(value) === index;
     }
     return [...acc, ...generateAccounts].filter(onlyUnique);
-  }
+  };
 
-  const [accounts, setAccounts] = useState(loadMore([]))
+  const [accounts, setAccounts] = useState(loadMore([]));
   const size = 88;
 
   return (
@@ -59,6 +59,6 @@ const AccountVisualDemo = () => {
       />
     </div>
   );
-}
+};
 
 export default AccountVisualDemo;

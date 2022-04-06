@@ -11,17 +11,20 @@ import Icon from '@basics/icon';
 import AccountVisual from '@wallet/detail/info/accountVisual';
 import styles from './accountVisualWithAddress.css';
 
-const AccountVisualWithAddress = ({ bookmarks, showBookmarkedAddress, token, address, transactionSubject, moduleAssetId, size, truncate }) => {
-  const getTransformedAddress = (address) => {
+const AccountVisualWithAddress = ({
+  bookmarks, showBookmarkedAddress, token, address,
+  transactionSubject, moduleAssetId, size, truncate,
+}) => {
+  const getTransformedAddress = (addressValue) => {
     if (showBookmarkedAddress) {
       const bookmarkedAddress = bookmarks[token.active].find(
-        element => element.address === address,
+        element => element.address === addressValue,
       );
       if (bookmarkedAddress) return bookmarkedAddress.title;
     }
 
-    return address;
-  }
+    return addressValue;
+  };
 
   const title = getModuleAssetTitle()[moduleAssetId];
   const transformedAddress = getTransformedAddress(address);
@@ -51,7 +54,7 @@ const AccountVisualWithAddress = ({ bookmarks, showBookmarkedAddress, token, add
       )}
     </div>
   );
-}
+};
 
 AccountVisualWithAddress.propTypes = {
   address: PropTypes.string.isRequired,

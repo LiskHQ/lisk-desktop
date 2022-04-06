@@ -4,13 +4,15 @@ import Content from './content';
 import Button from './button';
 import styles from './flashMessage.css';
 
-const FlashMessage = ({ onDismiss, className, shouldShow, children, hasCloseAction }) => {
+const FlashMessage = ({
+  onDismiss, className, shouldShow, children, hasCloseAction,
+}) => {
   const [dismissed, setDismissed] = useState(false);
 
   const dismiss = () => {
     setDismissed(true);
     if (typeof onDismiss === 'function') onDismiss();
-  }
+  };
 
   return shouldShow && !dismissed && (
     <div className={`${styles.wrapper} ${className}`}>
@@ -26,7 +28,7 @@ const FlashMessage = ({ onDismiss, className, shouldShow, children, hasCloseActi
       }
     </div>
   );
-}
+};
 
 FlashMessage.propTypes = {
   className: PropTypes.string,
