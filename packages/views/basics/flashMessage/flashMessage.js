@@ -1,45 +1,31 @@
-import React from 'react';
+import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import Content from './content';
 import Button from './button';
 import styles from './flashMessage.css';
 
-class FlashMessage extends React.Component {
-  constructor() {
-    super();
-    this.state = {
-      dismissed: false,
-    };
+const FlashMessage = ({ onDismiss, className, shouldShow, children, hasCloseAction }) => {
+  const [dismissed, setDismissed] = useState(false);
 
-    this.dismiss = this.dismiss.bind(this);
-  }
-
-  dismiss() {
-    const { onDismiss } = this.props;
-    this.setState({ dismissed: true });
+  const dismiss = () => {
+    setDismissed(true);
     if (typeof onDismiss === 'function') onDismiss();
   }
 
-  render() {
-    const {
-      className, shouldShow, children, hasCloseAction,
-    } = this.props;
-    const { dismissed } = this.state;
-    return shouldShow && !dismissed && (
-      <div className={`${styles.wrapper} ${className}`}>
-        {children}
-        {
-          hasCloseAction
-          && !(Array.isArray(children) && children.some(child => child.type === Button)) && (
-            <span
-              className={styles.closeBtn}
-              onClick={this.dismiss}
-            />
-          )
-        }
-      </div>
-    );
-  }
+  return shouldShow && !dismissed && (
+    <div className={`${styles.wrapper} ${className}`}>
+      {children}
+      {
+        hasCloseAction
+        && !(Array.isArray(children) && children.some(child => child.type === Button)) && (
+          <span
+            className={styles.closeBtn}
+            onClick={dismiss}
+          />
+        )
+      }
+    </div>
+  );
 }
 
 FlashMessage.propTypes = {

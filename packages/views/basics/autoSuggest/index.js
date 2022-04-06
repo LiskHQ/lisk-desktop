@@ -5,16 +5,8 @@ import { Input } from '../inputs';
 import styles from './autoSuggest.css';
 
 const AutoSuggest = ({
-  items,
-  selectedItem,
-  matchProps,
-  onSelectItem,
-  onChange,
-  onChangeDelayed,
-  placeholder,
-  renderItem,
-  renderIcon,
-  className,
+  items, selectedItem, matchProps, onSelectItem, onChange, 
+  onChangeDelayed, placeholder, renderItem, renderIcon, className,
 }) => {
   const [dropdownIndex, setDropdownIndex] = useState(0);
   const [isLoading, setIsLoading] = useState(false);

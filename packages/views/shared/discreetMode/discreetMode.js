@@ -1,45 +1,42 @@
-import React, { Component } from 'react';
+import React from 'react';
 import PropTypes from 'prop-types';
 import routes from '@screens/router/routes';
 import { selectSearchParamValue } from '@screens/router/searchParams';
 import styles from './discreetMode.css';
 
-class DiscreetMode extends Component {
-  handleBlurOnOtherWalletPage() {
-    const { account, location: { search }, token } = this.props;
+const DiscreetMode = ({
+  children, location, isDiscreetMode, shouldEvaluateForOtherAccounts,
+  addresses, account, token
+}) => {
+  const handleBlurOnOtherWalletPage = () => {
+    const { search } = location;
     const address = selectSearchParamValue(search, routes.account.searchParam);
     return account.info && address === account.info[token].address;
   }
 
-  shouldEnableDiscreetMode() {
-    const {
-      location, isDiscreetMode, shouldEvaluateForOtherAccounts,
-      addresses, account,
-    } = this.props;
+  const shouldEnableDiscreetMode = () => {
     if (!isDiscreetMode) return false;
     if (shouldEvaluateForOtherAccounts) {
       if (location.pathname.includes(routes.account.path)) {
-        return this.handleBlurOnOtherWalletPage();
+        return handleBlurOnOtherWalletPage();
       }
-      const { location: { search } } = this.props;
+      const { search } = location;
       if (selectSearchParamValue(search, 'modal') === 'transactionDetails') {
         return addresses.length
           ? addresses.includes(account.summary?.address)
-          : this.handleBlurOnOtherWalletPage();
+          : handleBlurOnOtherWalletPage();
       }
     }
     return true;
   }
 
-  render() {
-    const discreetModeClass = this.shouldEnableDiscreetMode() ? styles.discreetMode : '';
-    return (
-      <div className={discreetModeClass}>
-        {discreetModeClass.length ? <span className={styles.preformat} /> : ''}
-        {this.props.children}
-      </div>
-    );
-  }
+  const discreetModeClass = shouldEnableDiscreetMode() ? styles.discreetMode : '';
+  return (
+    <div className={discreetModeClass}>
+      {discreetModeClass.length ? <span className={styles.preformat} /> : ''}
+      {children}
+    </div>
+  );
 }
 
 DiscreetMode.defaultProps = {
