@@ -7,7 +7,7 @@ import DialogLink from '@basics/dialog/link';
 import { PrimaryButton } from '@basics/buttons';
 import Tooltip from '@basics/tooltip/tooltip';
 import VoteQueueToggle from '@settings/setters/toggles/voteQueueToggle';
-import DiscreateModeToggle from '@settings/setters/toggles/discreteModeToggle';
+import DiscreteModeToggle from '@settings/setters/toggles/discreteModeToggle';
 import LightDarkToggle from '@settings/setters/toggles/lightDarkModeToggle';
 import SideBarToggle from '@settings/setters/toggles/sideBarToggle';
 import styles from './topBar.css';
@@ -65,7 +65,7 @@ const TopBar = ({
       </div>
       <div className={styles.group}>
         <LightDarkToggle t={t} />
-        { !isUserLogout && <DiscreateModeToggle t={t} /> }
+        { !isUserLogout && <DiscreteModeToggle t={t} /> }
         <Network
           token={token.active}
           network={network}
