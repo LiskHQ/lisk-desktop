@@ -2,7 +2,7 @@ import React from 'react';
 import settingConstants from '@settings/configuration/settingConstants';
 import Toggle from './toggle';
 
-function DiscreateModeToggle({ t }) {
+function DiscreteModeToggle({ t }) {
   return (
     <Toggle
       setting={settingConstants.keys.discreetMode}
@@ -12,4 +12,4 @@ function DiscreateModeToggle({ t }) {
   );
 }
 
-export default DiscreateModeToggle;
+export default DiscreteModeToggle;
