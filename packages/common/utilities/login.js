@@ -1,5 +1,5 @@
 import i18next from 'i18next';
-import config from '@settings/configuration/settingConstants';
+import settingConstants from '@settings/configuration/settingConstants';
 
 // https://stackoverflow.com/questions/3809401/what-is-a-good-regular-expression-to-match-a-url
 const pattern = new RegExp(/[-a-zA-Z0-9@:%_+.~#?&/=]{2,256}\.[a-z]{2,4}\b(\/[-a-zA-Z0-9@:%_+.~#?&/=]*)?/gi);
@@ -41,9 +41,9 @@ export const validateUrl = (value) => {
 
 // Ignore coverage because this is only development feature
 export const getAutoLogInData = /* istanbul ignore next */ () => ({
-  [config.keys.loginKey]: localStorage.getItem(config.keys.loginKey),
+  [settingConstants.keys.loginKey]: localStorage.getItem(settingConstants.keys.loginKey),
 });
 
 // Ignore coverage because this is only development feature
 export const shouldAutoLogIn = /* istanbul ignore next */ autoLogin =>
-  !!autoLogin[config.keys.loginKey] && autoLogin[config.keys.loginKey] !== '';
+  !!autoLogin[settingConstants.keys.loginKey] && autoLogin[settingConstants.keys.loginKey] !== '';

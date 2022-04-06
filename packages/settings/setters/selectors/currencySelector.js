@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useMemo } from 'react';
 import { toast } from 'react-toastify';
 import Select from '@basics/inputs/select';
 import settingConstants from '@settings/configuration/settingConstants';
@@ -15,12 +15,14 @@ function CurrencySelector({ t }) {
     toast(t('Settings saved!'));
   };
 
+  const currencies = useMemo(() => settingConstants.currencies.map((currencyName) => ({
+    label: currencyName,
+    value: currencyName,
+  })), [settingConstants.currencies]);
+
   return (
     <Select
-      options={settingConstants.currencies.map((currencyName) => ({
-        label: currencyName,
-        value: currencyName,
-      }))}
+      options={currencies}
       selected={currency || settingConstants.currencies[0]}
       onChange={onChangeCurrency}
       className="currency"

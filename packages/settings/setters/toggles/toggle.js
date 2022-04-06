@@ -1,5 +1,6 @@
 import React from 'react';
 import { toast } from 'react-toastify';
+import { useTranslation } from 'react-i18next';
 import useSettings from '@settings/managers/useSettings';
 import Piwik from '@common/utilities/piwik';
 import CheckBox from '@basics/inputs/checkBox';
@@ -15,8 +16,9 @@ import styles from '@shared/navigationBars/topBar/topBar.css';
  * @param {boolean} isCheckbox show checkbox or tooltip
  */
 const Toggle = ({
-  setting, icons, tips, isCheckbox, t,
+  setting, icons, tips, isCheckbox = false,
 }) => {
+  const { t } = useTranslation();
   const { toggleSetting, [setting]: value } = useSettings(setting);
 
   const toggle = () => { toggleSetting(!value); };
