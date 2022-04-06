@@ -7,9 +7,10 @@ const settings = store => next => (action) => {
   const { token } = store.getState().settings;
   next(action);
   switch (action.type) {
+    case !action.data:
+      break;
     case actionTypes.networkConfigSet:
       // store.dispatch(pricesRetrieved());
-      if(!action.data) break;
       store.dispatch(settingsUpdated({
         network: {
           name: action.data.name,
