@@ -1,4 +1,4 @@
-import React, { useState, useRef } from 'react';
+import React, { useState, useRef, useMemo } from 'react';
 import PropTypes from 'prop-types';
 import { keyCodes } from '@views/configuration';
 import { Input } from '../inputs';
@@ -14,13 +14,15 @@ const AutoSuggest = ({ // eslint-disable-line max-statements
   let loaderTimeout = null;
   const listContainerRef = useRef(null);
 
-  const getFilterList = () => {
-    if (selectedItem.value === '') return items;
+  const filterList = useMemo(() => {
+    if (selectedItem.value === '') {
+      return items;
+    }
 
     return items.filter((item) =>
       matchProps.find((prop) =>
         item[prop].toLowerCase().includes(selectedItem.value.toLowerCase())));
-  };
+  });
 
   const resetListIndex = () => {
     setDropdownIndex(0);
@@ -34,7 +36,7 @@ const AutoSuggest = ({ // eslint-disable-line max-statements
 
   const onKeyPressDownOrUp = (action) => {
     const rowHeight = 44;
-    const filteredItemsLength = getFilterList().length;
+    const filteredItemsLength = filterList().length;
 
     setDropdownIndex((dropdownIndexVal) => {
       // istanbul ignore else
@@ -63,13 +65,13 @@ const AutoSuggest = ({ // eslint-disable-line max-statements
   };
 
   const onKeyPressEnter = () => {
-    const item = getFilterList()[dropdownIndex];
+    const item = FilterList()[dropdownIndex];
     onItemSelect(item);
   };
 
   const onHandleKeyPress = (e) => {
     // istanbul ignore else
-    if (getFilterList().length) {
+    if (filterList().length) {
       switch (e.keyCode) {
         case keyCodes.arrowDown:
           onKeyPressDownOrUp('down');
@@ -92,11 +94,15 @@ const AutoSuggest = ({ // eslint-disable-line max-statements
     setIsLoading(true);
     loaderTimeout = setTimeout(() => {
       // istanbul ignore else
-      if (getFilterList().length >= 0) setIsLoading(false);
+      if (filterList().length >= 0) {
+        setIsLoading(false);
+      }
       onChangeDelayed();
     }, 300);
 
-    if (e?.target?.value === '') resetListIndex();
+    if (e?.target?.value === '') {
+      resetListIndex();
+    }
     onChange(e);
   };
 
@@ -109,7 +115,7 @@ const AutoSuggest = ({ // eslint-disable-line max-statements
   };
 
   const isOnError = () => {
-    const bookmarksList = getFilterList();
+    const bookmarksList = filterList();
 
     if (
       (!items.length && selectedItem.error)
@@ -147,7 +153,7 @@ const AutoSuggest = ({ // eslint-disable-line max-statements
           className={`${styles.suggestionList} bookmark-list`}
           ref={listContainerRef}
         >
-          {getFilterList().map((item, index) => (
+          {filterList().map((item, index) => (
             <li
               key={index}
               onMouseEnter={() => handleUpdateIndex(index)}

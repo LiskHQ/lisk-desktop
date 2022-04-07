@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useMemo } from 'react';
 import PropTypes from 'prop-types';
 import routes from '@screens/router/routes';
 import { selectSearchParamValue } from '@screens/router/searchParams';
@@ -8,23 +8,23 @@ const DiscreetMode = ({
   children, location, isDiscreetMode, shouldEvaluateForOtherAccounts,
   addresses, account, token,
 }) => {
-  const handleBlurOnOtherWalletPage = () => {
-    const { search } = location;
+  const isBlurHandledOnOtherWalletPage = useMemo(() => {
+    const { search } = location || {};
     const address = selectSearchParamValue(search, routes.account.searchParam);
     return account.info && address === account.info[token].address;
-  };
+  });
 
   const shouldEnableDiscreetMode = () => {
     if (!isDiscreetMode) return false;
     if (shouldEvaluateForOtherAccounts) {
       if (location.pathname.includes(routes.account.path)) {
-        return handleBlurOnOtherWalletPage();
+        return isBlurHandledOnOtherWalletPage();
       }
-      const { search } = location;
+      const { search } = location || {};
       if (selectSearchParamValue(search, 'modal') === 'transactionDetails') {
         return addresses.length
           ? addresses.includes(account.summary?.address)
-          : handleBlurOnOtherWalletPage();
+          : isBlurHandledOnOtherWalletPage();
       }
     }
     return true;
