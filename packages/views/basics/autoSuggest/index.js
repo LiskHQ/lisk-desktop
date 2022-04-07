@@ -22,7 +22,7 @@ const AutoSuggest = ({ // eslint-disable-line max-statements
     return items.filter((item) =>
       matchProps.find((prop) =>
         item[prop].toLowerCase().includes(selectedItem.value.toLowerCase())));
-  });
+  }, [selectedItem, items]);
 
   const resetListIndex = () => {
     setDropdownIndex(0);
@@ -65,7 +65,7 @@ const AutoSuggest = ({ // eslint-disable-line max-statements
   };
 
   const onKeyPressEnter = () => {
-    const item = FilterList()[dropdownIndex];
+    const item = filterList()[dropdownIndex];
     onItemSelect(item);
   };
 

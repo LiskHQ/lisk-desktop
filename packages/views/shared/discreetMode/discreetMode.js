@@ -12,7 +12,7 @@ const DiscreetMode = ({
     const { search } = location || {};
     const address = selectSearchParamValue(search, routes.account.searchParam);
     return account.info && address === account.info[token].address;
-  });
+  }, [location, account.info]);
 
   const shouldEnableDiscreetMode = () => {
     if (!isDiscreetMode) return false;
