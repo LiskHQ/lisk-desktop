@@ -102,7 +102,6 @@ describe('Select Account', () => {
 
   it('Should render SelectAccount properly', async () => {
     const html = wrapper.html();
-    expect(html).toContain('create-account');
     expect(html).toContain('hw-container');
   });
 
@@ -119,21 +118,6 @@ describe('Select Account', () => {
     wrapper.find('.save-account').at(0).simulate('click');
     wrapper.update();
     expect(wrapper.find('.account-name').at(0).text()).toEqual('Lisk Account');
-  });
-
-  it('Should add another account to the list after do click on create account button', () => {
-    wrapper.update();
-    expect(wrapper).toContainMatchingElement('.create-account');
-    expect(wrapper).toContainMatchingElements(5, '.hw-account');
-    wrapper.find('.create-account').at(0).simulate('click');
-    wrapper.update();
-    expect(wrapper).toContainMatchingElements(5, '.hw-account');
-  });
-
-  it('Should disable create new account button', () => {
-    wrapper.update();
-    expect(wrapper).toContainMatchingElement('.create-account');
-    expect(wrapper.find('.create-account').at(0)).toBeDisabled();
   });
 
   it('Should hide empty balance accounts', () => {

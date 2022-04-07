@@ -1,9 +1,8 @@
 import { to } from 'await-to-js';
 import React from 'react';
 import { toast } from 'react-toastify';
-import { getAccountsFromDevice, getNewAccountByIndex } from '@utils/hwManager';
+import { getAccountsFromDevice } from '@utils/hwManager';
 import { tokenMap, routes } from '@constants';
-import { TertiaryButton } from '@toolbox/buttons';
 import CheckBox from '@toolbox/checkBox';
 import AccountCard from './accountCard';
 import LoadingIcon from '../loadingIcon';
@@ -13,10 +12,13 @@ class SelectAccount extends React.Component {
   constructor(props) {
     super(props);
 
-    this.state = { hwAccounts: [], hideEmptyAccounts: false };
+    this.state = {
+      hwAccounts: [],
+      hideEmptyAccounts: false,
+      accountsLoaded: false,
+    };
 
     this.onSaveNameAccounts = this.onSaveNameAccounts.bind(this);
-    this.onAddNewAccount = this.onAddNewAccount.bind(this);
     this.onSelectAccount = this.onSelectAccount.bind(this);
     this.getNameFromAccount = this.getNameFromAccount.bind(this);
   }
@@ -56,8 +58,11 @@ class SelectAccount extends React.Component {
       const hwAccounts = accounts.map((account) => ({
         ...account,
         name: this.getNameFromAccount(account.summary.address),
-      }));
-      this.setState({ hwAccounts });
+      })).reverse();
+      this.setState({
+        hwAccounts,
+        accountsLoaded: true,
+      });
     }
   }
 
@@ -77,18 +82,6 @@ class SelectAccount extends React.Component {
       },
     });
     this.setState({ hwAccounts: newAccounts });
-  }
-
-  async onAddNewAccount() {
-    const { hwAccounts } = this.state;
-    const newAccount = await getNewAccountByIndex({
-      device: this.props.device,
-      index: hwAccounts.length,
-    });
-
-    this.setState({
-      hwAccounts: [...hwAccounts, newAccount],
-    });
   }
 
   onSelectAccount(account, index) {
@@ -113,23 +106,20 @@ class SelectAccount extends React.Component {
 
   render() {
     const { t, device } = this.props;
-    const { hwAccounts, hideEmptyAccounts } = this.state;
+    const {
+      hwAccounts,
+      hideEmptyAccounts,
+      accountsLoaded,
+    } = this.state;
 
     return (
       <div className={styles.selectAccountWrapper}>
         <h1>{t('Lisk accounts on {{WalletModel}}', { WalletModel: device.model })}</h1>
         <p>
-          {t('Please select the account you’d like to sign in to or')}
-          <TertiaryButton
-            className={`${styles.createAccountBtn} create-account`}
-            onClick={this.onAddNewAccount}
-            disabled={hwAccounts.some(account => !account.token)}
-          >
-            {t('Create an account')}
-          </TertiaryButton>
+          {t('Please select an account, the first one in the list is new.')}
         </p>
         {
-          hwAccounts.length
+          accountsLoaded
             ? (
               <>
                 <label className={`${styles.hideAccountsCheckbox} ${styles[hideEmptyAccounts]}`}>
