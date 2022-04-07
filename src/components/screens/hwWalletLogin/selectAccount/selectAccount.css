@@ -176,6 +176,10 @@
     margin-left: auto;
   }
 
+  & > span {
+    color: var(--color-maastricht-blue);
+  }
+
   & .checkbox {
     margin-right: 10px;
 
