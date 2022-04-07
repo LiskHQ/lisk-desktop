@@ -18,7 +18,7 @@ function CurrencySelector({ t }) {
   const currencies = useMemo(() => settingConstants.currencies.map((currencyName) => ({
     label: currencyName,
     value: currencyName,
-  })), [settingConstants.currencies]);
+  })), []);
 
   return (
     <Select
