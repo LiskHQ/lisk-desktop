@@ -16,7 +16,7 @@ import styles from '@shared/navigationBars/topBar/topBar.css';
  * @param {boolean} isCheckbox show checkbox or tooltip
  */
 const Toggle = ({
-  setting, icons, tips, isCheckbox = false,
+  setting, icons, tips, isCheckbox,
 }) => {
   const { t } = useTranslation();
   const { toggleSetting, [setting]: value } = useSettings(setting);
@@ -53,5 +53,9 @@ const Toggle = ({
     </Tooltip>
   );
 };
+
+Toggle.defaultProps = {
+  isChecked: false
+}
 
 export default Toggle;
