@@ -11,11 +11,15 @@ export default {
     const { ipc } = window;
 
     if (ipc) {
-      ipc.on('openUrl', (action, url) => {
-        const [protocol, rest] = url.split(':/');
-        const [normalizedUrl, searchParams] = rest?.split('?') ?? [];
+      ipc.on('openUrl', (_, url) => {
+        const urlDetails = new window.URL(url);
+        const { protocol, href, search } = urlDetails || {};
 
-        if (protocol?.toLowerCase() === 'lisk' && normalizedUrl) {
+        // Due to some bug with URL().pathname displaying a blank string
+        // instead of the correct pathname, it was best to use href with a regex
+        const normalizedUrl = href.match(/\/\w+/)[0];
+        const searchParams = search.slice(1);
+        if (protocol?.slice(0, -1).toLowerCase() === 'lisk' && normalizedUrl) {
           let redirectUrl = normalizedUrl;
           if (normalizedUrl.match(sendRegex)) {
             redirectUrl = sendRedirect + (searchParams ? `&${searchParams}` : '');
