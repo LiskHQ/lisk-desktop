@@ -9,7 +9,7 @@ const DiscreetMode = ({
   addresses, account, token,
 }) => {
   const isBlurHandledOnOtherWalletPage = useMemo(() => {
-    const { search } = location || {};
+    const { search } = location;
     const address = selectSearchParamValue(search, routes.account.searchParam);
     return account.info && address === account.info[token].address;
   }, [location, account.info]);
@@ -18,13 +18,13 @@ const DiscreetMode = ({
     if (!isDiscreetMode) return false;
     if (shouldEvaluateForOtherAccounts) {
       if (location.pathname.includes(routes.account.path)) {
-        return isBlurHandledOnOtherWalletPage();
+        return isBlurHandledOnOtherWalletPage;
       }
-      const { search } = location || {};
+      const { search } = location;
       if (selectSearchParamValue(search, 'modal') === 'transactionDetails') {
         return addresses.length
           ? addresses.includes(account.summary?.address)
-          : isBlurHandledOnOtherWalletPage();
+          : isBlurHandledOnOtherWalletPage;
       }
     }
     return true;
