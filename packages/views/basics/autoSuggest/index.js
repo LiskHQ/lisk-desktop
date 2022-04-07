@@ -115,13 +115,11 @@ const AutoSuggest = ({ // eslint-disable-line max-statements
   };
 
   const isOnError = () => {
-    const bookmarksList = filterList;
-
     if (
       (!items.length && selectedItem.error)
       || (!isFocused && selectedItem.error)
     ) return true;
-    if (items.length && !bookmarksList.length && selectedItem.error) {
+    if (items.length && !filterList.length && selectedItem.error) {
       return true;
     }
     return false;
@@ -159,7 +157,7 @@ const AutoSuggest = ({ // eslint-disable-line max-statements
               onMouseEnter={() => handleUpdateIndex(index)}
               onClick={() => onItemSelect(item)}
               onKeyPress={onHandleKeyPress}
-              className={`${dropdownIndex === index ? styles.active : ''}`}
+              className={dropdownIndex === index && styles.active}
             >
               {renderItem(item)}
             </li>
