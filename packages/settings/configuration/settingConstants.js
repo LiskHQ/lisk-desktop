@@ -14,7 +14,7 @@ const config = {
     sideBarExpanded: 'sideBarExpanded',
     currency: 'currency',
     darkMode: 'darkMode',
-    enableCustomDerivationPath: 'enableCustomDerivationPath'
+    enableCustomDerivationPath: 'enableCustomDerivationPath',
   },
 };
 export default config;
