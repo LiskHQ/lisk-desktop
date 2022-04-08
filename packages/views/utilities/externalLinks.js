@@ -12,7 +12,7 @@ export default {
 
     if (ipc) {
       ipc.on('openUrl', (_, url) => {
-        const urlDetails = new window.URL(url);
+        const urlDetails = new URL(url);
         const { protocol, href, search } = urlDetails;
 
         // Due to some bug with URL().pathname displaying a blank string
