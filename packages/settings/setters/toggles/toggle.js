@@ -55,7 +55,7 @@ const Toggle = ({
 };
 
 Toggle.defaultProps = {
-  isChecked: false
-}
+  isChecked: false,
+};
 
 export default Toggle;
