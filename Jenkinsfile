@@ -35,8 +35,8 @@ pipeline {
 			steps {
 				nvm(getNodejsVersion()) {
 					sh '''
-					cp -R /home/lisk/fonts/basierCircle src/assets/fonts
-					cp -R /home/lisk/fonts/gilroy src/assets/fonts
+					cp -R /home/lisk/fonts/basierCircle setup/react/assets/fonts
+					cp -R /home/lisk/fonts/gilroy setup/react/assets/fonts
 					npm run build
 					'''
 				}
