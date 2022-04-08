@@ -56,7 +56,10 @@ const getAccountsFromDevice = async ({ device: { deviceId }, network }) => {
     accounts = [...accounts, ...result];
   }
 
-  const unusedAccount = await getNewAccountByIndex(deviceId, accounts.length);
+  const unusedAccount = await getNewAccountByIndex({
+    device: { deviceId },
+    index: accounts.length,
+  });
   accounts.push(unusedAccount);
 
   return accounts;
