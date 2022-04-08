@@ -8,9 +8,7 @@ import Illustration from '@basics/illustration';
 import routes from '@screens/router/routes';
 import styles from './verifyMessage.css';
 
-export default function Result({
-  inputs, history, t,
-}) {
+export default function Result({ inputs, history, t }) {
   let isCorrect = false;
   try {
     isCorrect = cryptography.verifyMessageWithPublicKey({
@@ -32,9 +30,15 @@ export default function Result({
         name={isCorrect ? 'verifyMessageSuccess' : 'verifyMessageError'}
         className={styles.illustration}
       />
-      <h1>{isCorrect ? t('The signature is correct') : t('The signature is incorrect')}</h1>
+      <h1>
+        {isCorrect
+          ? t('The signature is correct')
+          : t('The signature is incorrect')}
+      </h1>
       <BoxFooter direction="horizontal">
-        <PrimaryButton onClick={closeModal} className="go-back">{t('Back to wallet')}</PrimaryButton>
+        <PrimaryButton onClick={closeModal} className="go-back">
+          {t('Back to wallet')}
+        </PrimaryButton>
       </BoxFooter>
     </div>
   );
