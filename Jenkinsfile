@@ -25,6 +25,7 @@ pipeline {
 					nvm(getNodejsVersion()) {
 						sh '''
 						rm -rf lisk-service/  # linting will fail otherwise
+						rm -rf scripts/app/build/ # build assets persistanlty exists on jenkins
 						npm run lint
 						'''
 					}
