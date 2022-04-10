@@ -76,9 +76,9 @@ pipeline {
 								rm -rf lisk-core/
 								tar xf lisk-core-v$CORE_VERSION-linux-x64.tar.gz
 								rm -rf ~/.lisk/
-								install -D test/dev_config_and_db/genesis_block.json ~/.lisk/lisk-core/config/devnet/genesis_block.json
-								./lisk-core/bin/lisk-core blockchain:import --force test/dev_config_and_db/tokens_unlocked_dev_blockchain.db.tar.gz
-								./lisk-core/bin/lisk-core forger-info:import --force test/dev_config_and_db/forger.db.tar.gz
+								install -D tests/dev_config_and_db/genesis_block.json ~/.lisk/lisk-core/config/devnet/genesis_block.json
+								./lisk-core/bin/lisk-core blockchain:import --force tests/dev_config_and_db/tokens_unlocked_dev_blockchain.db.tar.gz
+								./lisk-core/bin/lisk-core forger-info:import --force tests/dev_config_and_db/forger.db.tar.gz
 								nohup ./lisk-core/bin/lisk-core start --network=devnet --api-ws --api-ws-host=0.0.0.0 --api-ws-port=8080 --enable-http-api-plugin >lisk-core.out 2>lisk-core.err &
 								echo $! >lisk-core.pid
 
