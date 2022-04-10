@@ -24,8 +24,7 @@ pipeline {
 				ansiColor('xterm') {
 					nvm(getNodejsVersion()) {
 						sh '''
-						rm -rf lisk-service/  # linting will fail otherwise
-						rm -rf scripts/app/build/ # build assets persistanlty exists on jenkins
+						rm -rf lisk-service/ scripts/app/build/ setup/react/app/build/ # linting will fail otherwise
 						npm run lint
 						'''
 					}
