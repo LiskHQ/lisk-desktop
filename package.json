@@ -33,7 +33,7 @@
     "test:live": "npm test -- --watch",
     "cypress:open": "cypress open --project test/cypress",
     "cypress:run": "cypress run --project test/cypress",
-    "lint": "eslint -c setup/.eslintrc .",
+    "lint": "eslint --ignore-path setup/.eslintignore -c setup/.eslintrc .",
     "lint:fix": "eslint -c setup/.eslintrc . --fix",
     "storybook": "start-storybook -p 6006",
     "percy": "build-storybook && percy-storybook --widths=769",
