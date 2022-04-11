@@ -5,7 +5,7 @@ module.exports = {
   modulePaths: ['packages'],
   testMatch: [
     '<rootDir>/packages/**/*.test.js',
-    '<rootDir>/scripts/app/src/**/*.test.js',
+    '<rootDir>/app/src/**/*.test.js',
     '<rootDir>/setup/**/*.test.js',
     '<rootDir>/tests/**/*.test.js',
   ],

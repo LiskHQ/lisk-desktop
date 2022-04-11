@@ -9,7 +9,7 @@ const config = {
     main: `${resolve(__dirname, '../../setup/react')}/main.js`,
   },
   output: {
-    path: resolve(__dirname, '../../setup/react/app/build'),
+    path: resolve(__dirname, '../../app/build'),
     filename: '[name].js',
   },
   target: 'electron-main',
