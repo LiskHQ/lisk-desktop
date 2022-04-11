@@ -6,7 +6,7 @@ describe('WalletDetails', () => {
   let wrapper;
 
   const props = {
-    account: {
+    wallet: {
       info: {
         LSK: {
           balance: '100',
