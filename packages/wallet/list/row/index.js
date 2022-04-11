@@ -8,7 +8,7 @@ import { tokenMap } from '@token/configuration/tokens';
 // import { formatAmountBasedOnLocale } from '@common/utilities/formattedNumber';
 import LiskAmount from '@shared/liskAmount';
 import AccountVisualWithAddress from '@basics/accountVisual/accountVisualWithAddress';
-import styles from './accounts.css';
+import styles from './wallet.css';
 
 const getOwnerName = (account) => {
   const delegateUsername = account.summary?.username ? account.summary?.username : '';
