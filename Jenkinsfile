@@ -121,7 +121,7 @@ pipeline {
 			}
 			post {
 				failure {
-					archiveArtifacts artifacts: 'test/cypress/screenshots/', allowEmptyArchive: true
+					archiveArtifacts artifacts: 'tests/cypress/screenshots/', allowEmptyArchive: true
 				}
 				always {
 					sh '''
