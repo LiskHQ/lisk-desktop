@@ -28,7 +28,7 @@ const apis = {
 
 const mapStateToProps = state => ({
   sentVotes: state.voting,
-  isDelegate: state.account?.info?.LSK?.summary.isDelegate,
+  isDelegate: state.wallet?.info?.LSK?.summary.isDelegate,
 });
 
 export default compose(

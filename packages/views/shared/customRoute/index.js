@@ -28,7 +28,7 @@ const CustomRoute = ({
   const account = useSelector(state => getActiveTokenAccount(state));
   const settings = useSelector(state => state.settings);
   const isAuthenticated = useSelector(state =>
-    (state.account.info && state.account.info[settings.token.active]));
+    (state.wallet.info && state.wallet.info[settings.token.active]));
   const isNetworkSet = useSelector(checkNetwork);
   const { search = '' } = history.location;
 

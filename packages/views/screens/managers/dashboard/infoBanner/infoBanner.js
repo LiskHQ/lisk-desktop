@@ -16,7 +16,7 @@ const InfoBanner = ({
   t,
 }) => {
   const [visibility, setVisibility] = useState(!localStorage.getItem(name) && show);
-  const isLoggedIn = useSelector(state => (state.account && state.account.passphrase));
+  const isLoggedIn = useSelector(state => (state.wallet && state.wallet.passphrase));
 
   const handleClose = () => {
     localStorage.setItem(name, true);

@@ -294,7 +294,7 @@ describe('actions: account', () => {
       await balanceUnlocked(params)(dispatch, getState);
       expect(create).toHaveBeenCalledWith({
         network: state.network,
-        account: state.account.info.LSK,
+        account: state.wallet.info.LSK,
         transactionObject: {
           moduleAssetId: '5:2',
           senderPublicKey: accounts.genesis.summary.publicKey,
@@ -348,7 +348,7 @@ describe('actions: account', () => {
       await delegateRegistered(params)(dispatch, getState);
       expect(create).toHaveBeenCalledWith({
         network: state.network,
-        account: state.account.info.LSK,
+        account: state.wallet.info.LSK,
         transactionObject: {
           senderPublicKey: accounts.delegate_candidate.summary.publicKey,
           nonce: accounts.delegate_candidate.sequence.nonce,
@@ -404,7 +404,7 @@ describe('actions: account', () => {
       await multisigGroupRegistered(params)(dispatch, getState);
       expect(create).toHaveBeenCalledWith({
         network: state.network,
-        account: state.account.info.LSK,
+        account: state.wallet.info.LSK,
         transactionObject: {
           moduleAssetId: '4:0',
           fee: 10000000,
@@ -456,7 +456,7 @@ describe('actions: account', () => {
       await balanceReclaimed({ fee: { value: '0,1' } })(dispatch, getState);
       expect(create).toHaveBeenCalledWith({
         network: state.network,
-        account: state.account.info.LSK,
+        account: state.wallet.info.LSK,
         transactionObject: {
           moduleAssetId: '1000:0',
           fee: 100000000,

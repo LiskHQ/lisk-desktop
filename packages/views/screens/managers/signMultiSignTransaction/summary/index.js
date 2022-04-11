@@ -22,7 +22,7 @@ const apis = {
 
 const mapStateToProps = state => ({
   account: {
-    ...state.account.info.LSK,
+    ...state.wallet.info.LSK,
     passphrase: state.passphrase,
     hwInfo: state.hwInfo,
   },

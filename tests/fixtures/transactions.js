@@ -1,5 +1,5 @@
 const getState = () => ({
-  account: {
+  wallet: {
     passphrase: 'test',
     info: {
       LSK: {

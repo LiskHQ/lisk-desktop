@@ -35,7 +35,7 @@ Request.defaultProps = {
 export default connect(
   state => ({
     token: state.settings.token.active,
-    account: state.account,
+    account: state.wallet,
   }),
   {},
 )(withTranslation()(Request));

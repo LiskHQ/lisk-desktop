@@ -41,7 +41,7 @@ export const pendingTransactionAdded = data => ({
  * for Dashboard and Wallet components
  *
  * @param {Object} params - Object with all params.
- * @param {String} params.address - address of the account to fetch the transactions for
+ * @param {String} params.address - address of the wallet to fetch the transactions for
  * @param {Number} params.limit - amount of transactions to fetch
  * @param {Number} params.offset - index of the first transaction
  * @param {Object} params.filters - object with filters for the filer dropdown
@@ -103,20 +103,21 @@ export const resetTransactionResult = () => ({
 // eslint-disable-next-line max-statements
 export const transactionCreated = data => async (dispatch, getState) => {
   const {
-    account, settings, network,
+    wallet, settings, network,
   } = getState();
+  console.log({ getState: getState() });
   const activeToken = settings.token.active;
-  const hwInfo = isEmpty(account.hwInfo) ? undefined : account.hwInfo; // @todo remove this by #3898
+  const hwInfo = isEmpty(wallet.hwInfo) ? undefined : wallet.hwInfo; // @todo remove this by #3898
 
   const [error, tx] = await to(create({
     transactionObject: {
       ...data,
       moduleAssetId: MODULE_ASSETS_NAME_ID_MAP.transfer,
     },
-    account: {
-      ...account.info[activeToken],
+    wallet: {
+      ...wallet.info[activeToken],
       hwInfo,
-      passphrase: account.passphrase,
+      passphrase: wallet.passphrase,
     },
     network,
   }, activeToken));
@@ -142,26 +143,26 @@ export const transactionCreated = data => async (dispatch, getState) => {
  */
 export const transactionDoubleSigned = () => async (dispatch, getState) => {
   const {
-    transactions, network, account, settings,
+    transactions, network, wallet, settings,
   } = getState();
   const keyPair = extractKeyPair({
-    passphrase: account.secondPassphrase,
+    passphrase: wallet.secondPassphrase,
     enableCustomDerivationPath: false,
   });
-  const activeAccount = {
-    ...account.info[settings.token.active],
-    passphrase: account.secondPassphrase,
+  const activeWallet = {
+    ...wallet.info[settings.token.active],
+    passphrase: wallet.secondPassphrase,
     summary: {
-      ...account.info[settings.token.active].summary,
+      ...wallet.info[settings.token.active].summary,
       ...keyPair,
     },
   };
   const transformedTx = transformTransaction(transactions.signedTransaction);
   const [signedTx, err] = await signMultisigTransaction(
     transformedTx,
-    activeAccount,
+    activeWallet,
     {
-      data: activeAccount,
+      data: activeWallet,
     },
     signatureCollectionStatus.partiallySigned,
     network,
@@ -192,7 +193,7 @@ export const transactionDoubleSigned = () => async (dispatch, getState) => {
 export const transactionBroadcasted = transaction =>
   // eslint-disable-next-line max-statements
   async (dispatch, getState) => {
-    const { network, settings, account } = getState();
+    const { network, settings, wallet } = getState();
     const activeToken = settings.token.active;
     const serviceUrl = network.networks[activeToken].serviceUrl;
 
@@ -217,7 +218,7 @@ export const transactionBroadcasted = transaction =>
 
       if (activeToken === tokenMap.LSK.key) {
         const transformedTransaction = transformTransaction(transaction);
-        if (transformedTransaction.sender.address === account.info.LSK.summary.address) {
+        if (transformedTransaction.sender.address === wallet.info.LSK.summary.address) {
           dispatch(pendingTransactionAdded({ ...transformedTransaction, isPending: true }));
         }
       }
@@ -239,18 +240,18 @@ export const multisigTransactionSigned = ({
   rawTransaction, sender,
 }) => async (dispatch, getState) => {
   const {
-    network, account,
+    network, wallet,
   } = getState();
-  const activeAccount = {
-    ...account.info.LSK,
-    passphrase: account.passphrase,
-    hwInfo: account.hwInfo,
+  const activeWallet = {
+    ...wallet.info.LSK,
+    passphrase: wallet.passphrase,
+    hwInfo: wallet.hwInfo,
   };
   const txStatus = getTransactionSignatureStatus(sender.data, rawTransaction);
 
   const [tx, error] = await signMultisigTransaction(
     rawTransaction,
-    activeAccount,
+    activeWallet,
     sender,
     txStatus,
     network,

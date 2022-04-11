@@ -483,12 +483,12 @@ const signUsingPrivateKey = (schema, transaction, networkIdentifier, privateKey)
 
 // eslint-disable-next-line max-statements
 const signUsingHW = async (
-  schema, transaction, account, networkIdentifier, network, keys, rawTransaction,
+  schema, transaction, wallet, networkIdentifier, network, keys, rawTransaction,
   isMultiSignatureRegistration,
 ) => {
   const signingBytes = transactions.getSigningBytes(schema, transaction);
   const [error, signedTransaction] = await to(signTransactionByHW(
-    account,
+    wallet,
     networkIdentifier,
     transaction,
     signingBytes,
@@ -507,8 +507,8 @@ const signUsingHW = async (
     ...transactionKeys.mandatoryKeys.sort(),
     ...transactionKeys.optionalKeys.sort(),
   ];
-  const senderIndex = members.indexOf(account.summary.publicKey);
-  const isSender = rawTransaction.senderPublicKey === account.summary.publicKey;
+  const senderIndex = members.indexOf(wallet.summary.publicKey);
+  const isSender = rawTransaction.senderPublicKey === wallet.summary.publicKey;
 
   if (isMultiSignatureRegistration && isSender && senderIndex > -1) {
     const signatures = Array.from(Array(members.length + 1).keys()).map((index) => {
@@ -524,13 +524,13 @@ const signUsingHW = async (
 };
 
 export const sign = async (
-  account, schema, transaction, network, networkIdentifier,
+  wallet, schema, transaction, network, networkIdentifier,
   isMultisignature, isMultiSignatureRegistration, keys, publicKey,
   moduleAssetId, rawTransaction, privateKey,
 ) => {
-  if (!isEmpty(account.hwInfo)) {
+  if (!isEmpty(wallet.hwInfo)) {
     const signedTx = await signUsingHW(
-      schema, transaction, account, networkIdentifier, network, keys, rawTransaction,
+      schema, transaction, wallet, networkIdentifier, network, keys, rawTransaction,
       isMultiSignatureRegistration,
     );
     return signedTx;

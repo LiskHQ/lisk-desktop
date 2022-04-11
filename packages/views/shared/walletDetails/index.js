@@ -4,7 +4,7 @@ import { withTranslation } from 'react-i18next';
 import WalletDetails from './walletDetails';
 
 const mapStateToProps = state => ({
-  account: state.account,
+  account: state.wallet,
   settings: state.settings,
 });
 

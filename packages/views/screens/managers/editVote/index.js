@@ -44,7 +44,7 @@ const AddVote = ({
 }) => {
   const dispatch = useDispatch();
   const { account, network, voting } = useSelector(state => state);
-  const host = useSelector(state => state.account.info.LSK.summary.address);
+  const host = useSelector(state => state.wallet.info.LSK.summary.address);
   const address = selectSearchParamValue(history.location.search, 'address');
   const start = selectSearchParamValue(history.location.search, 'start');
   const end = selectSearchParamValue(history.location.search, 'end');

@@ -74,13 +74,13 @@ describe('CustomRoute', () => {
   });
 
   it('should redirect to root path if user is not authenticated', () => {
-    mockAppState.account.info = {};
+    mockAppState.wallet.info = {};
     const wrapper = isAuth({ isPrivate: true });
     expect(wrapper.find(Public).exists()).toBe(true);
   });
 
   it('should redirect to reclaim path if user is not migrated', () => {
-    mockAppState.account.info.LSK = accounts.empty_account;
+    mockAppState.wallet.info.LSK = accounts.empty_account;
     const wrapper = isAuth({ isPrivate: true });
     expect(wrapper.find(ReclaimBalance).exists()).toBe(true);
   });

@@ -1,11 +1,12 @@
-import { actionTypes } from '@common/configuration';
-import { loginTypes } from '@views/configuration';
+import loginTypes from '@wallet/configuration/loginTypes';
 import * as hwManager from '@transaction/utilities/hwManager';
 import httpApi from '@common/utilities/api/http';
 import * as transactionUtils from '@transaction/utilities/transaction';
 import { getState } from '@fixtures/transactions';
 import { sampleTransaction } from '@tests/constants/transactions';
 import accounts from '@tests/constants/accounts';
+import commonActionTypes from '@common/store/actions/actionTypes'
+import actionTypes from './actionTypes';
 import {
   emptyTransactionsData,
   transactionsRetrieved,
@@ -57,7 +58,7 @@ describe('actions: transactions', () => {
 
       // Assert
       expect(dispatch).toHaveBeenNthCalledWith(1, {
-        type: actionTypes.loadingStarted,
+        type: commonActionTypes.loadingStarted,
         data: actionTypes.transactionsRetrieved,
       });
       expect(dispatch).toHaveBeenNthCalledWith(2, {
@@ -65,7 +66,7 @@ describe('actions: transactions', () => {
         data: expectedAction,
       });
       expect(dispatch).toHaveBeenNthCalledWith(3, {
-        type: actionTypes.loadingFinished,
+        type: commonActionTypes.loadingFinished,
         data: actionTypes.transactionsRetrieved,
       });
     });
@@ -92,7 +93,7 @@ describe('actions: transactions', () => {
 
       // Assert
       expect(dispatch).toHaveBeenNthCalledWith(1, {
-        type: actionTypes.loadingStarted,
+        type: commonActionTypes.loadingStarted,
         data: actionTypes.transactionsRetrieved,
       });
       expect(dispatch).toHaveBeenNthCalledWith(2, {
@@ -100,7 +101,7 @@ describe('actions: transactions', () => {
         data: expectedAction,
       });
       expect(dispatch).toHaveBeenNthCalledWith(3, {
-        type: actionTypes.loadingFinished,
+        type: commonActionTypes.loadingFinished,
         data: actionTypes.transactionsRetrieved,
       });
     });
@@ -117,7 +118,7 @@ describe('actions: transactions', () => {
       expect(httpApi).rejects.toThrow(transactionError);
       expect(dispatch).toHaveBeenCalledTimes(3);
       expect(dispatch).toHaveBeenNthCalledWith(1, {
-        type: actionTypes.loadingStarted,
+        type: commonActionTypes.loadingStarted,
         data: actionTypes.transactionsRetrieved,
       });
       expect(dispatch).toHaveBeenNthCalledWith(2, {
@@ -125,7 +126,7 @@ describe('actions: transactions', () => {
         data: { error: transactionError },
       });
       expect(dispatch).toHaveBeenNthCalledWith(3, {
-        type: actionTypes.loadingFinished,
+        type: commonActionTypes.loadingFinished,
         data: actionTypes.transactionsRetrieved,
       });
     });
@@ -172,23 +173,24 @@ describe('actions: transactions', () => {
 
   describe('transactionCreated', () => {
     const state = getState();
+    console.log({ state });
     const activeAccount = {
-      ...state.account.info.LSK,
+      ...state.wallet.info.LSK,
       hwInfo: {
         deviceModel: 'Ledger Nano S',
       },
-      passphrase: state.account.passphrase,
+      passphrase: state.wallet.passphrase,
     };
     const getStateWithHW = () => ({
       ...state,
-      account: {
+      wallet: {
         info: {
           LSK: activeAccount,
         },
         hwInfo: {
           deviceModel: 'Ledger Nano S',
         },
-        passphrase: state.account.passphrase,
+        passphrase: state.wallet.passphrase,
       },
     });
 
@@ -233,14 +235,15 @@ describe('actions: transactions', () => {
   });
 
   describe('transactionDoubleSigned', () => {
-    const { network, account, settings } = getState();
+    console.log({ getState: getState() });
+    const { network, wallet, settings } = getState();
     const getStateWithTx = () => ({
       network,
-      account: {
-        ...account,
+      wallet: {
+        ...wallet,
         secondPassphrase: accounts.genesis.passphrase,
         info: {
-          ...account.info,
+          ...wallet.info,
           LSK: accounts.multiSig,
         },
       },
@@ -357,14 +360,14 @@ describe('actions: transactions', () => {
   });
 
   describe('multisigTransactionSigned', () => {
-    const { network, account, settings } = getState();
+    const { network, wallet, settings } = getState();
     const getStateWithTx = () => ({
       network,
-      account: {
-        ...account,
+      wallet: {
+        ...wallet,
         secondPassphrase: accounts.multiSig.passphrase,
         info: {
-          ...account.info,
+          ...wallet.info,
           LSK: accounts.multiSig,
         },
       },

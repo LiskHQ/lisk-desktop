@@ -8,7 +8,7 @@ import TransactionSignature from './transactionSignature';
 
 const mapStateToProps = state => ({
   transactions: state.transactions,
-  account: state.account,
+  account: state.wallet,
 });
 
 const dispatchToProps = {

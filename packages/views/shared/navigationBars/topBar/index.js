@@ -8,7 +8,7 @@ import { accountLoggedOut, timerReset } from '@common/store/actions';
 import TopBar from './topBar';
 
 const mapStateToProps = state => ({
-  account: state.account,
+  account: state.wallet,
   network: state.network,
   token: state.settings.token,
   settings: state.settings,

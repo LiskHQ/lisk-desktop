@@ -9,7 +9,7 @@ const mapStateToProps = state => ({
   token: state.settings.token.active,
   transactions: state.transactions,
   account: {
-    ...state.account.info[state.settings.token.active],
+    ...state.wallet.info[state.settings.token.active],
     passphrase: state.passphrase,
     hwInfo: state.hwInfo,
   },

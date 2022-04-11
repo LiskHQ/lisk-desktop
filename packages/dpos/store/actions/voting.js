@@ -78,9 +78,9 @@ export const votesSubmitted = ({ fee, votes }) =>
     const state = getState();
     // @todo Fix this by #3898
     const activeAccount = {
-      ...state.account.info.LSK,
-      hwInfo: isEmpty(state.account.hwInfo) ? undefined : state.account.hwInfo,
-      passphrase: state.account.passphrase,
+      ...state.wallet.info.LSK,
+      hwInfo: isEmpty(state.wallet.hwInfo) ? undefined : state.wallet.hwInfo,
+      passphrase: state.wallet.passphrase,
     };
 
     const [error, tx] = await to(create({

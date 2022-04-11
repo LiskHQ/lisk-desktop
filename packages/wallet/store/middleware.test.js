@@ -339,7 +339,7 @@ describe('Account middleware', () => {
       store.getState = () => ({
         ...state,
         account: {
-          ...state.account,
+          ...state.wallet,
           info: {
             LSK: { summary: { address: '123456L' } },
             BTC: { summary: { address: '123456L' } },
