@@ -27,6 +27,7 @@ const getAccountBundle = async (deviceId, network, offset) => {
 };
 
 const getNewAccountByIndex = async ({ deviceId, index }) => {
+  console.log('getNewAccountByIndex', deviceId, index);
   const publicKey = await getPublicKey({ index, deviceId });
 
   return {
@@ -57,7 +58,7 @@ const getAccountsFromDevice = async ({ device: { deviceId }, network }) => {
   }
 
   const unusedAccount = await getNewAccountByIndex({
-    device: { deviceId },
+    deviceId,
     index: accounts.length,
   });
   accounts.push(unusedAccount);

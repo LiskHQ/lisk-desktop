@@ -63,9 +63,9 @@ describe('hwManager util', () => {
     it('should resolve one empty account using a given index', async () => {
       communication.getPublicKey.mockResolvedValueOnce(accounts.genesis.summary.publicKey);
 
-      const device = { deviceId: '1234125125' };
+      const deviceId = '1234125125';
 
-      const accountsOnDevice = await getNewAccountByIndex({ device, index: 11 });
+      const accountsOnDevice = await getNewAccountByIndex({ deviceId, index: 11 });
 
       expect(accountsOnDevice).toEqual({
         dpos: {},
