@@ -61,8 +61,8 @@ export default {
     exact: true,
     forbiddenTokens: [tokenMap.BTC.key],
   },
-  accounts: {
-    path: '/accounts',
+  wallets: {
+    path: '/wallets',
     isPrivate: false,
     forbiddenTokens: [tokenMap.BTC.key],
   },
