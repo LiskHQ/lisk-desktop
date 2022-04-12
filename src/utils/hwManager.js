@@ -27,7 +27,6 @@ const getAccountBundle = async (deviceId, network, offset) => {
 };
 
 const getNewAccountByIndex = async ({ deviceId, index }) => {
-  console.log('getNewAccountByIndex', deviceId, index);
   const publicKey = await getPublicKey({ index, deviceId });
 
   return {
