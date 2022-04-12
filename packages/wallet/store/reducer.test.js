@@ -1,5 +1,5 @@
-import actionTypes from './actionTypes';
 import accounts from '@tests/constants/accounts';
+import actionTypes from './actionTypes';
 import account from './reducer';
 
 describe('Reducer: account(state, action)', () => {

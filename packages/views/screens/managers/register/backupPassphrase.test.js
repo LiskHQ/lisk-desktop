@@ -3,7 +3,7 @@ import { expect } from 'chai';
 import { mount } from 'enzyme';
 import { spy } from 'sinon';
 import { extractAddressFromPassphrase } from '@wallet/utilities/account';
-import { generatePassphrase } from '@common/utilities/passphrase';
+import { generatePassphrase } from '@views/utilities/passphrase';
 import BackupPassphrase from './backupPassphrase';
 
 describe('Register Process - Backup Passphrase', () => {

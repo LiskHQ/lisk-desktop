@@ -1,5 +1,5 @@
-import actionTypes from './actionTypes';
 import { tokenMap } from '@token/configuration/tokens';
+import actionTypes from './actionTypes';
 import settings from './reducer';
 
 describe('Reducer: settings(state, action)', () => {

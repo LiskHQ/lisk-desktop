@@ -1,4 +1,3 @@
-import actionTypes from './actionTypes';
 import { loginTypes } from '@views/configuration';
 import networks from '@network/configuration/networks';
 import * as transactionApi from '@transaction/utilities/api';
@@ -7,6 +6,7 @@ import * as accountApi from '@wallet/utilities/api';
 import * as hwManager from '@transaction/utilities/hwManager';
 import sampleVotes from '@tests/constants/votes';
 import accounts from '@tests/constants/accounts';
+import actionTypes from './actionTypes';
 import {
   voteEdited,
   votesCleared,

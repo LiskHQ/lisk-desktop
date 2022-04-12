@@ -1,4 +1,4 @@
-import actionTypes from './actionTypes';
+import actionTypes from '../actions/actionTypes';
 import middleware from './voting';
 
 describe('voting middleware', () => {
