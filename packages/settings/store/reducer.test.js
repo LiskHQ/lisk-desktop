@@ -12,7 +12,6 @@ describe('Reducer: settings(state, action)', () => {
         active: tokenMap.LSK.key,
         list: {
           [tokenMap.LSK.key]: true,
-          [tokenMap.BTC.key]: false,
         },
       },
     };
