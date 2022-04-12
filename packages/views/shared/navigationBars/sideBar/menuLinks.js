@@ -38,7 +38,7 @@ const menuLinks = t => ([
       icon: 'accountsMonitor',
       id: 'accounts',
       label: t('Accounts'),
-      path: routes.accounts.path,
+      path: routes.wallets.path,
     },
     {
       icon: 'delegatesMonitor',
