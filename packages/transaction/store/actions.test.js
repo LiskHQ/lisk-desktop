@@ -1,4 +1,3 @@
-import { actionTypes } from '@common/configuration';
 import { loginTypes } from '@views/configuration';
 import * as hwManager from '@transaction/utilities/hwManager';
 import httpApi from '@common/utilities/api/http';
@@ -6,6 +5,7 @@ import * as transactionUtils from '@transaction/utilities/transaction';
 import { getState } from '@fixtures/transactions';
 import { sampleTransaction } from '@tests/constants/transactions';
 import accounts from '@tests/constants/accounts';
+import actionTypes from './actionTypes';
 import {
   emptyTransactionsData,
   transactionsRetrieved,

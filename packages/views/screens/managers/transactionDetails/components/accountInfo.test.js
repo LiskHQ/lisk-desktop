@@ -1,7 +1,7 @@
 import React from 'react';
 import { mount } from 'enzyme';
 import accounts from '@tests/constants/accounts';
-import AccountInfo from './accountInfo';
+import AccountInfo from '@wallet/detail/info/accountInfo';
 
 describe('TxDetail AccountInfo', () => {
   const props = {

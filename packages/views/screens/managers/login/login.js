@@ -8,9 +8,9 @@ import { parseSearchParams, stringifySearchParams } from '@screens/router/search
 import { getNetworksList } from '@network/utilities/getNetwork';
 import Piwik from '@common/utilities/piwik';
 import { PrimaryButton } from '@basics/buttons';
-import PassphraseInput from '@shared/passphraseInput';
+import PassphraseInput from '@wallet/manage/passphraseInput';
 import Icon from '@basics/icon/index';
-import DiscreetModeToggle from '@shared/discreetModeToggle';
+import DiscreetModeToggle from '@settings/setters/toggles/discreetModeToggle';
 import NetworkSelector from '../../../../settings/setters/networkSelector';
 import RecoveryPhrase from './recoveryPhrase';
 import styles from './login.css';

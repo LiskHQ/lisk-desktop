@@ -1,6 +1,6 @@
-import { actionTypes } from '@common/configuration';
 import { getNetworkConfig } from '@network/utilities/api';
 import { getState } from '@fixtures/transactions';
+import actionTypes from './actionTypes';
 import {
   networkSelected, networkConfigSet, networkStatusUpdated,
   customNetworkStored, customNetworkRemoved,

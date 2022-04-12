@@ -1,6 +1,6 @@
 import { olderBlocksRetrieved } from '@common/store/actions';
-import { actionTypes } from '@common/configuration';
 import { blockSubscribe, blockUnsubscribe } from '@block/utilities/api';
+import actionTypes from './actionTypes';
 import middleware from './middleware';
 
 jest.mock('@block/utilities/api');

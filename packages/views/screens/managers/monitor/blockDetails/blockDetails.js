@@ -13,7 +13,7 @@ import LabeledValue from '@basics/labeledValue';
 import LiskAmount from '@shared/liskAmount';
 import TransactionsTable from '@transaction/list/transactionsTable';
 import { truncateAddress } from '@wallet/utilities/account';
-import AccountVisual from '@basics/accountVisual';
+import AccountVisual from '@wallet/detail/info/accountVisual';
 import styles from './blockDetails.css';
 
 const Generator = ({

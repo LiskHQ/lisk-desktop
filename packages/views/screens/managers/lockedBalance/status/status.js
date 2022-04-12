@@ -1,7 +1,7 @@
 import React from 'react';
 import { PrimaryButton } from '@basics/buttons';
-import TransactionResult from '@shared/transactionResult';
-import { getTransactionStatus, statusMessages } from '@shared/transactionResult/statusConfig';
+import TransactionResult from '@transaction/detail/manager/transactionResult';
+import { getTransactionStatus, statusMessages } from '@transaction/detail/info/transactionResult/statusConfig';
 import styles from './status.css';
 
 const TransactionStatus = ({ account, transactions, t }) => {

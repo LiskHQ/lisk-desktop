@@ -5,7 +5,7 @@ import { fromRawLsk } from '@token/utilities/lsk';
 import { truncateAddress } from '@wallet/utilities/account';
 import Tooltip from '@basics/tooltip/tooltip';
 import Icon from '@basics/icon';
-import AccountVisual from '@basics/accountVisual';
+import AccountVisual from '@wallet/detail/info/accountVisual';
 import { DEFAULT_STANDBY_THRESHOLD } from '@dpos/configuration/delegates';
 import {
   getDelegateDetailsClass,

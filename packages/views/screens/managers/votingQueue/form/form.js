@@ -7,7 +7,7 @@ import TransactionPriority, {
   useTransactionFeeCalculation,
   useTransactionPriority,
   normalizeVotesForTx,
-} from '@shared/transactionPriority';
+} from '@transaction/manage/transactionPriority';
 import Box from '@basics/box';
 import BoxContent from '@basics/box/content';
 import BoxFooter from '@basics/box/footer';
