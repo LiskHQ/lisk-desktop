@@ -10,7 +10,7 @@
   },
   "dependencies": {
     "get-port": "5.1.1",
-    "node-abi": "2.26.0",
+    "node-abi": "^3.8.0",
     "node-hid": "2.1.1",
     "usb": "1.7.0"
   }
