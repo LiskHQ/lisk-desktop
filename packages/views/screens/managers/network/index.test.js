@@ -1,20 +1,66 @@
-import { sortByVersion } from './index';
+import React from 'react';
+import { mount, shallow } from 'enzyme';
+import peers from '@tests/constants/peers';
+import { NetworkPure } from './index';
 
-describe('sortByVersion', () => {
-  it('sorts versions based on major, minor and patch release values', () => {
-    [
-      ['1.0.0', '0.9.9'],
-      ['1.1.0', '1.0.2'],
-      ['1.1.2', '1.1.1'],
-      ['1.2.3', '1.2.3-rc.0'],
-      ['1.2.3', '1.2.3-beta.0'],
-      ['1.2.3-rc.0', '1.2.3-beta.0'],
-      ['1.2.3-beta.1', '1.2.3-beta.0'],
-      ['1.2.3-rc.1', '1.2.3-rc.0'],
-    ].map(versions =>
-      expect(sortByVersion(
-        { networkVersion: versions[0] },
-        { networkVersion: versions[1] },
-      )).toEqual(-1));
+describe('Network Monitor Page', () => {
+  const networkStatistics = {
+    isLoading: false,
+    data: {},
+    loadData: jest.fn(),
+    clearData: jest.fn(),
+    urlSearchParams: {},
+  };
+  const setup = properties => mount(<NetworkPure {...properties} />);
+  const emptyPeers = {
+    isLoading: false,
+    data: [],
+    loadData: jest.fn(),
+    clearData: jest.fn(),
+    urlSearchParams: {},
+  };
+  const fullPeers = {
+    isLoading: false,
+    data: peers,
+    meta: { total: peers.length },
+    loadData: jest.fn(),
+    clearData: jest.fn(),
+    urlSearchParams: {},
+  };
+  const t = key => key;
+
+  it('renders a page with header', () => {
+    const wrapper = setup({ t, peers: emptyPeers, networkStatistics });
+    expect(wrapper.find('.contentHeader')).toIncludeText('Connected peers');
+  });
+
+  it('renders the empty state if no peers passed', () => {
+    const wrapper = shallow(<NetworkPure {...{ t, peers: emptyPeers, networkStatistics }} />);
+    expect(wrapper.html().match(/empty-state/gm)).toHaveLength(4);
+  });
+
+  it('shows loading overlay while the API call is being processed', () => {
+    const wrapper = shallow(
+      <NetworkPure
+        t={t}
+        networkStatistics={networkStatistics}
+        peers={{
+          isLoading: true,
+          data: peers,
+          meta: {
+            total: peers.length * 2,
+          },
+          loadData: jest.fn(),
+          clearData: jest.fn(),
+          urlSearchParams: {},
+        }}
+      />,
+    );
+    expect(wrapper.html().match(/loadingOverlay/gm)).toHaveLength(1);
+  });
+
+  it('renders 20 peers', () => {
+    const wrapper = shallow(<NetworkPure {...{ t, peers: fullPeers, networkStatistics }} />);
+    expect(wrapper.html().match(/peer-row/gm)).toHaveLength(20);
   });
 });
