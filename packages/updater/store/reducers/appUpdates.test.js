@@ -1,4 +1,4 @@
-import { actionTypes } from '@common/configuration';
+import actionTypes from './actionTypes';
 import appUpdates from './appUpdates';
 
 describe('Reducer: appUpdates(state, action)', () => {

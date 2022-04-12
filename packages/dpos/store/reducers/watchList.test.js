@@ -1,4 +1,4 @@
-import { actionTypes } from '@common/configuration';
+import actionTypes from './actionTypes';
 import reducer from './watchList';
 
 describe('Reducer: watchList(state, action)', () => {

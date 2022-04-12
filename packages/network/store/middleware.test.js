@@ -1,5 +1,5 @@
 import { networkConfigSet } from '@common/store/actions';
-import { actionTypes } from '@common/configuration';
+import actionTypes from './actionTypes';
 import { getAutoLogInData, shouldAutoLogIn } from '@common/utilities/login';
 import middleware from './middleware';
 

@@ -1,5 +1,5 @@
 import { olderBlocksRetrieved } from '@common/store/actions';
-import { actionTypes } from '@common/configuration';
+import actionTypes from './actionTypes';
 import { blockSubscribe, blockUnsubscribe } from '@block/utilities/api';
 import middleware from './middleware';
 

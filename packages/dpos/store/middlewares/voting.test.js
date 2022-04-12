@@ -1,4 +1,4 @@
-import { actionTypes } from '@common/configuration';
+import actionTypes from './actionTypes';
 import middleware from './voting';
 
 describe('voting middleware', () => {

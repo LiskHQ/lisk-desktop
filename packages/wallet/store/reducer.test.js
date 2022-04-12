@@ -1,4 +1,4 @@
-import { actionTypes } from '@common/configuration';
+import actionTypes from './actionTypes';
 import accounts from '@tests/constants/accounts';
 import account from './reducer';
 

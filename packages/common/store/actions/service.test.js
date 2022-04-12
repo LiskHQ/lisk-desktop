@@ -1,4 +1,4 @@
-import { actionTypes } from '@common/configuration';
+import actionTypes from './actionTypes';
 import * as marketApi from '@common/utilities/api/market';
 import { initialState as settings } from '@settings/store/reducer';
 import prices from '@tests/constants/prices';

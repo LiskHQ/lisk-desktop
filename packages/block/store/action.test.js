@@ -1,4 +1,4 @@
-import { actionTypes } from '@common/configuration';
+import actionTypes from './actionTypes';
 import networks from '@network/configuration/networks';
 import { getBlocks } from '@block/utilities/api';
 import { getForgers, getDelegates } from '@dpos/utilities/api';

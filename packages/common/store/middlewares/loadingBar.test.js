@@ -1,6 +1,6 @@
 import { expect } from 'chai';
 import { spy } from 'sinon';
-import { actionTypes } from '@common/configuration';
+import actionTypes from './actionTypes';
 import middleware from './loadingBar';
 
 describe('LoadingBar middleware', () => {

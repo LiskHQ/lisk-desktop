@@ -3,7 +3,7 @@ import {
   votesRetrieved, emptyTransactionsData, networkSelected, networkStatusUpdated,
 } from '@common/store/actions';
 
-import { actionTypes } from '@common/configuration';
+import actionTypes from './actionTypes';
 import { MODULE_ASSETS_NAME_ID_MAP } from '@transaction/configuration/moduleAssets';
 import routes from '@screens/router/routes';
 import { tokenMap } from '@token/configuration/tokens';
