@@ -5,6 +5,7 @@ import Toggle from './toggle';
 
 function LightDarkToggle() {
   const { t } = useTranslation();
+
   return (
     <Toggle
       setting={settingConstants.keys.darkMode}

@@ -5,6 +5,7 @@ import Toggle from './toggle';
 
 function SideBarToggle() {
   const { t } = useTranslation();
+
   return (
     <Toggle
       setting={settingConstants.keys.sideBarExpanded}
