@@ -11,6 +11,7 @@ export default {
     const { ipc } = window;
 
     if (ipc) {
+      // eslint-disable-next-line max-statements
       ipc.on('openUrl', (_, url) => {
         const urlDetails = new URL(url);
         const { protocol, href, search } = urlDetails;
@@ -27,6 +28,7 @@ export default {
             redirectUrl = voteRedirect + (searchParams ? `&${searchParams}` : '');
           }
 
+          // @todo do we need to both push and replace?
           history.push(redirectUrl);
           history.replace(redirectUrl);
         }

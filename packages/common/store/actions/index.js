@@ -2,7 +2,7 @@ export * from '@wallet/store/action';
 export * from '@block/store/action';
 export * from '@bookmark/store/action';
 export * from '@network/store/action';
-export * from '@settings/store/action';
+export * from '@settings/store/actions';
 export * from '@transaction/store/action';
 export * from '@dpos/store/actions/voting';
 export * from '@dpos/store/actions/watchList';

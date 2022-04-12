@@ -24,7 +24,7 @@
 // -- This is will overwrite an existing command --
 // Cypress.Commands.overwrite("visit", (originalFn, url, options) => { ... })
 import networks from '../../../packages/network/configuration/networks';
-import settings from '../../../packages/settings/configuration/settings';
+import settingConstants from '../../../packages/settings/configuration/settingConstants';
 import { deepMergeObj } from '../../../packages/common/utilities/helpers';
 
 before(() => {
@@ -33,7 +33,7 @@ before(() => {
 });
 
 beforeEach(() => {
-  const settingsWithNetworkSelectorEnabled = { ...settings, showNetwork: true };
+  const settingsWithNetworkSelectorEnabled = { ...settingConstants, showNetwork: true };
   const btcSettings = deepMergeObj(
     settingsWithNetworkSelectorEnabled,
     { token: { list: { BTC: true } } },

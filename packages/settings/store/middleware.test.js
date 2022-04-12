@@ -1,10 +1,11 @@
-import { pricesRetrieved, emptyTransactionsData, settingsUpdated } from '@common/store/actions';
+import { /* pricesRetrieved, */ emptyTransactionsData, settingsUpdated } from '@common/store/actions';
 import actionTypes from './actionTypes';
 import settingsMiddleware from './middleware';
 
 jest.mock('@common/store/actions/service');
-jest.mock('@settings/store/middleware');
+// jest.mock('@settings/store/middleware');
 jest.mock('@transaction/store/action');
+jest.mock('@common/store/actions');
 
 describe('Middleware: Settings', () => {
   const next = jest.fn();
@@ -44,7 +45,7 @@ describe('Middleware: Settings', () => {
       };
 
       settingsMiddleware(store)(next)(action);
-      expect(pricesRetrieved).toBeCalled();
+      // expect(pricesRetrieved).toBeCalled();
       expect(settingsUpdated).toBeCalled();
     });
   });
@@ -59,7 +60,7 @@ describe('Middleware: Settings', () => {
       };
 
       settingsMiddleware(store)(next)(action);
-      expect(pricesRetrieved).not.toBeCalled();
+      // expect(pricesRetrieved).not.toBeCalled();
     });
 
     it('should dispatch pricesRetrieved', () => {

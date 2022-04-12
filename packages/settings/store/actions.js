@@ -16,7 +16,6 @@ export const settingsRetrieved = () => (dispatch) => {
         token: {
           active: tokenMap.LSK.key,
           list: {
-            [tokenMap.BTC.key]: false,
             [tokenMap.LSK.key]: true,
           },
         },

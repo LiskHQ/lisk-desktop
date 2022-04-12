@@ -1,14 +1,15 @@
 const { resolve } = require('path');
 const merge = require('webpack-merge');
 const baseConfig = require('./webpack.config');
+const reactConfig = require('./webpack.config.react');
 
 const config = {
   mode: 'production',
   entry: {
-    main: `${resolve(__dirname, '../../scripts/app/src')}/main.js`,
+    main: `${resolve(__dirname, '../../setup/react')}/main.js`,
   },
   output: {
-    path: resolve(__dirname, '../../scripts/app/build'),
+    path: resolve(__dirname, '../../app/build'),
     filename: '[name].js',
   },
   target: 'electron-main',
@@ -28,4 +29,4 @@ const config = {
   },
 };
 
-module.exports = merge(baseConfig, config);
+module.exports = merge(baseConfig, reactConfig, config);
