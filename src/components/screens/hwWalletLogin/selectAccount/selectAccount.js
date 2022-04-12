@@ -143,7 +143,7 @@ class SelectAccount extends React.Component {
                     <AccountCard
                       key={`hw-account-${index}`}
                       account={account}
-                      index={index}
+                      index={hwAccounts.length - index - 1}
                       onSaveNameAccounts={this.onSaveNameAccounts}
                       onSelectAccount={this.onSelectAccount}
                     />
