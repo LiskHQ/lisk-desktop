@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import grid from 'flexboxgrid/dist/flexboxgrid.css';
 import { generatePassphrase } from '@common/utilities/passphrase';
 import { extractAddressFromPassphrase } from '@wallet/utilities/account';
@@ -11,69 +11,51 @@ import ConfirmPassphrase from './confirmPassphrase';
 import AccountCreated from './accountCreated';
 import styles from './register.css';
 
-class Register extends React.Component {
-  constructor() {
-    super();
-    this.state = {
-      accounts: [],
-      selectedAccount: {},
-    };
+const Register = ({ account, token, history }) => {
+  const [accounts, setAccounts] = useState([]);
+  const [selectedAccount, setSelectedAccount] = useState({});
 
-    this.handleSelectAvatar = this.handleSelectAvatar.bind(this);
-  }
-
-  componentDidMount() {
+  useEffect(() => {
     const passphrases = [...Array(5)].map(generatePassphrase);
-    const accounts = passphrases.map(pass => ({
+    const acc = passphrases.map((pass) => ({
       address: extractAddressFromPassphrase(pass),
       passphrase: pass,
     }));
-    this.setState({
-      accounts,
-    });
-  }
+    setAccounts(acc);
+  }, []);
 
-  componentDidUpdate() {
-    const { account, token, history } = this.props;
+  useEffect(() => {
     if (account?.info?.[token.active].address) {
       history.push(routes.dashboard.path);
     }
-  }
+  }, [account, history, token]);
 
-  /* istanbul ignore next */
-  handleSelectAvatar(selectedAccount) {
-    this.setState({ selectedAccount });
-  }
+  const handleSelectAvatar = (userSelectedAccount) => {
+    setSelectedAccount(userSelectedAccount);
+  };
 
-  render() {
-    const { accounts, selectedAccount } = this.state;
-    return (
-      <>
-        <div className={`${grid.row} ${styles.register}`}>
-          <MultiStep
-            navStyles={{ multiStepWrapper: styles.wrapper }}
-            progressBar={MultiStepProgressBar}
-          >
-            <ChooseAvatar
-              accounts={accounts}
-              selected={selectedAccount}
-              handleSelectAvatar={this.handleSelectAvatar}
-            />
-            <BackupPassphrase
-              account={selectedAccount}
-            />
-            <ConfirmPassphrase
-              account={selectedAccount}
-              passphrase={selectedAccount.passphrase}
-            />
-            <AccountCreated
-              account={selectedAccount}
-            />
-          </MultiStep>
-        </div>
-      </>
-    );
-  }
-}
+  return (
+    <>
+      <div className={`${grid.row} ${styles.register}`}>
+        <MultiStep
+          navStyles={{ multiStepWrapper: styles.wrapper }}
+          progressBar={MultiStepProgressBar}
+        >
+          <ChooseAvatar
+            accounts={accounts}
+            selected={selectedAccount}
+            handleSelectAvatar={handleSelectAvatar}
+          />
+          <BackupPassphrase account={selectedAccount} />
+          <ConfirmPassphrase
+            account={selectedAccount}
+            passphrase={selectedAccount.passphrase}
+          />
+          <AccountCreated account={selectedAccount} />
+        </MultiStep>
+      </div>
+    </>
+  );
+};
 
 export default Register;
