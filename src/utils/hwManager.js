@@ -26,6 +26,22 @@ const getAccountBundle = async (deviceId, network, offset) => {
   return accounts.data.filter(item => item.summary?.address);
 };
 
+const getNewAccountByIndex = async ({ deviceId, index }) => {
+  const publicKey = await getPublicKey({ index, deviceId });
+
+  return {
+    summary: {
+      publicKey,
+      address: extractAddressFromPublicKey(publicKey),
+      balance: '0',
+    },
+    sequence: {
+      nonce: 0,
+    },
+    dpos: {},
+  };
+};
+
 /**
  * getAccountsFromDevice - Function.
  * This function is used for retrieve the accounts from an hw device, using public keys.
@@ -39,19 +55,14 @@ const getAccountsFromDevice = async ({ device: { deviceId }, network }) => {
     // eslint-disable-next-line no-await-in-loop
     accounts = [...accounts, ...result];
   }
+
+  const unusedAccount = await getNewAccountByIndex({
+    deviceId,
+    index: accounts.length,
+  });
+  accounts.push(unusedAccount);
+
   return accounts;
-};
-
-const getNewAccountByIndex = async ({ device: { deviceId }, index }) => {
-  const publicKey = await getPublicKey({ index, deviceId });
-
-  return {
-    summary: {
-      publicKey,
-      address: extractAddressFromPublicKey(publicKey),
-      balance: '0',
-    },
-  };
 };
 
 const isKeyMatch = (aPublicKey, signerPublicKey) => (Buffer.isBuffer(aPublicKey)

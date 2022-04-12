@@ -31,16 +31,31 @@ describe('hwManager util', () => {
 
   describe('getAccountsFromDevice', () => {
     it('should resolve all non-empty and one empty account', async () => {
-      communication.getPublicKey.mockResolvedValueOnce(accounts.genesis.summary.publicKey);
-      communication.getPublicKey.mockResolvedValueOnce(accounts.empty_account.summary.publicKey);
-      accountApi.getAccounts.mockResolvedValueOnce({ data: [accounts.genesis] });
+      const accountsList = Object.values(accounts);
+      accountsList.forEach((item) => {
+        communication.getPublicKey.mockResolvedValueOnce(item.summary.publicKey);
+      });
+      accountApi.getAccounts.mockResolvedValueOnce({ data: [accountsList[0]] });
 
       const device = { deviceId: '1234125125' };
       const network = { name: 'Testnet', networks: {} };
 
       const accountsOnDevice = await getAccountsFromDevice({ device, network });
 
-      expect(accountsOnDevice).toEqual([accounts.genesis]);
+      expect(accountsOnDevice).toEqual([
+        accountsList[0],
+        {
+          summary: {
+            publicKey: expect.stringMatching(/[0-9a-z]+/),
+            address: expect.stringMatching(/[0-9a-z]+/),
+            balance: '0',
+          },
+          sequence: {
+            nonce: 0,
+          },
+          dpos: {},
+        },
+      ]);
     });
   });
 
@@ -48,14 +63,18 @@ describe('hwManager util', () => {
     it('should resolve one empty account using a given index', async () => {
       communication.getPublicKey.mockResolvedValueOnce(accounts.genesis.summary.publicKey);
 
-      const device = { deviceId: '1234125125' };
+      const deviceId = '1234125125';
 
-      const accountsOnDevice = await getNewAccountByIndex({ device, index: 11 });
+      const accountsOnDevice = await getNewAccountByIndex({ deviceId, index: 11 });
 
       expect(accountsOnDevice).toEqual({
+        dpos: {},
+        sequence: {
+          nonce: 0,
+        },
         summary: {
-          publicKey: accounts.genesis.summary.publicKey,
-          address: accounts.genesis.summary.address,
+          publicKey: expect.stringMatching(/[0-9a-z]+/),
+          address: expect.stringMatching(/[0-9a-z]+/),
           balance: '0',
         },
       });
