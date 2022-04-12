@@ -5,14 +5,14 @@ import {
   getTransactionBaseFees,
 } from '@transaction/utilities/api';
 import { tokenMap } from '@token/configuration/tokens';
-import useTransactionFeeCalculation from '@shared/transactionPriority/useTransactionFeeCalculation';
+import useTransactionFeeCalculation from '@transaction/manage/transactionPriority/useTransactionFeeCalculation';
 import { truncateAddress } from '@wallet/utilities/account';
 import * as hwManager from '@transaction/utilities/hwManager';
 import accounts from '@tests/constants/accounts';
 import flushPromises from '@tests/unit-test-utils/flushPromises';
 import Summary from './summary';
 
-jest.mock('@shared/transactionPriority/useTransactionFeeCalculation');
+jest.mock('@transaction/manage/transactionPriority/useTransactionFeeCalculation');
 jest.mock('@transaction/utilities/api');
 jest.mock('@transaction/utilities/hwManager');
 

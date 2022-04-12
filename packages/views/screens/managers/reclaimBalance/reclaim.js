@@ -4,7 +4,7 @@ import { useSelector } from 'react-redux';
 import Tooltip from '@basics/tooltip/tooltip';
 import { PrimaryButton } from '@basics/buttons';
 import DialogLink from '@basics/dialog/link';
-import AccountMigration from '@shared/accountMigration';
+import AccountMigration from '@legacy/detail/info/accountMigration';
 import { hasEnoughBalanceForReclaim } from '@wallet/utilities/account';
 import { fromRawLsk } from '@token/utilities/lsk';
 import { balanceNeededForReclaim } from '@wallet/configuration/account';

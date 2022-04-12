@@ -1,5 +1,5 @@
 import React from 'react';
-import AccountVisualDemo from './accountVisual/demo';
+import AccountVisualDemo from '@wallet/detail/info/accountVisual/demo';
 import AutoSuggestDemo from './autoSuggest/demo';
 import CalendarDemo from './calendar/demo';
 import IllustrationDemo from './illustration/demo';

@@ -1,4 +1,4 @@
-import { actionTypes } from '@common/configuration';
+import actionTypes from './actionTypes';
 import network from './reducer';
 
 describe('Reducer: network(state, action)', () => {
