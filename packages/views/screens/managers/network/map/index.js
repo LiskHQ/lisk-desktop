@@ -3,7 +3,7 @@ import L from 'leaflet';
 import 'leaflet.markercluster/dist/leaflet.markercluster';
 import markerIcon from '@setup/react/assets/images/marker.svg';
 import mapboxWatermarkImage from '@setup/react/assets/images/mapbox.png';
-import styles from './network.css';
+import styles from './map.css';
 
 const mapOptions = {
   minZoom: 2,
