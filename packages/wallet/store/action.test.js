@@ -1,12 +1,12 @@
 /* eslint-disable max-lines */
 import { toast } from 'react-toastify';
-import { actionTypes } from '@common/configuration';
 import * as accountApi from '@wallet/utilities/api';
 import { extractKeyPair } from '@wallet/utilities/account';
 import { create } from '@transaction/utilities/api';
 import { defaultDerivationPath } from '@common/utilities/explicitBipKeyDerivation';
 import accounts from '@tests/constants/accounts';
 import * as networkActions from '@network/store/action';
+import actionTypes from './actionTypes';
 import {
   accountLoggedOut,
   accountDataUpdated,

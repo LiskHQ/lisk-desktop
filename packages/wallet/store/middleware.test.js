@@ -3,13 +3,17 @@ import {
   votesRetrieved, emptyTransactionsData, networkSelected, networkStatusUpdated,
 } from '@common/store/actions';
 
-import { actionTypes } from '@common/configuration';
+import commonActionTypes from '@common/store/actions/actionTypes';
+import blockActionTypes from '@block/store/actionTypes';
+import settingsActionTypes from '@settings/store/actionTypes';
+import transactionActionTypes from '@transaction/store/actionTypes';
 import { MODULE_ASSETS_NAME_ID_MAP } from '@transaction/configuration/moduleAssets';
 import routes from '@screens/router/routes';
 import { tokenMap } from '@token/configuration/tokens';
 import * as transactionApi from '@transaction/utilities/api';
 import { getAutoLogInData } from '@common/utilities/login';
 import history from '@common/utilities/history';
+import actionTypes from './actionTypes';
 import middleware from './middleware';
 
 jest.mock('@common/utilities/history');
@@ -40,7 +44,7 @@ jest.mock('@token/utilities/lsk');
 
 const liskAPIClientMock = 'DUMMY_LISK_API_CLIENT';
 const storeCreatedAction = {
-  type: actionTypes.storeCreated,
+  type: commonActionTypes.storeCreated,
 };
 
 const transactions = [
@@ -86,7 +90,7 @@ const block = {
 };
 
 const transactionsRetrievedAction = {
-  type: actionTypes.transactionsRetrieved,
+  type: transactionActionTypes.transactionsRetrieved,
   data: {
     confirmed: [{
       type: MODULE_ASSETS_NAME_ID_MAP.registerDelegate,
@@ -96,7 +100,7 @@ const transactionsRetrievedAction = {
 };
 
 const newBlockCreated = {
-  type: actionTypes.newBlockCreated,
+  type: blockActionTypes.newBlockCreated,
   data: { block },
 };
 
@@ -179,7 +183,7 @@ describe('Account middleware', () => {
     });
     it('should not pass the action to next middleware', () => {
       const actionNewBlockCreatedAction = {
-        type: actionTypes.newBlockCreated,
+        type: blockActionTypes.newBlockCreated,
         data: {
           block: {
             numberOfTransactions: 0,
@@ -195,7 +199,7 @@ describe('Account middleware', () => {
   describe('on settingsRetrieved', () => {
     it('should set the network from the settings', () => {
       const accountLoggedOutAction = {
-        type: actionTypes.settingsRetrieved,
+        type: settingsActionTypes.settingsRetrieved,
       };
       middleware(store)(next)(accountLoggedOutAction);
       expect(networkSelected).toHaveBeenCalledWith(settings.network);
@@ -204,7 +208,7 @@ describe('Account middleware', () => {
 
     it('should set the network from defaults if no value stored in the settings', () => {
       const accountLoggedOutAction = {
-        type: actionTypes.settingsRetrieved,
+        type: settingsActionTypes.settingsRetrieved,
       };
 
       const noNetworkState = {
@@ -347,7 +351,7 @@ describe('Account middleware', () => {
         },
       });
       const accountSettingsUpdatedAction = {
-        type: actionTypes.settingsUpdated,
+        type: settingsActionTypes.settingsUpdated,
         data: { token: 'LSK' },
       };
       middleware(store)(next)(accountSettingsUpdatedAction);
@@ -355,7 +359,7 @@ describe('Account middleware', () => {
     });
     it('Account Setting Update Unsucessfull', () => {
       const accountSettingsUpdatedAction = {
-        type: actionTypes.settingsUpdated,
+        type: settingsActionTypes.settingsUpdated,
         data: { token: '' },
       };
       middleware(store)(next)(accountSettingsUpdatedAction);
@@ -366,7 +370,7 @@ describe('Account middleware', () => {
   describe('on accountSettingsRetrieved', () => {
     it('Account Setting Retrieve Sucessfull', async () => {
       const accountSettingsRetrievedAction = {
-        type: actionTypes.settingsRetrieved,
+        type: settingsActionTypes.settingsRetrieved,
         data: { token: 'LSK' },
       };
       getAutoLogInData.mockImplementation(() => ({
@@ -391,7 +395,7 @@ describe('Account middleware', () => {
       });
 
       const accountSettingsRetrievedAction = {
-        type: actionTypes.settingsRetrieved,
+        type: settingsActionTypes.settingsRetrieved,
         data: { token: 'LSK' },
       };
       getAutoLogInData.mockImplementation(() => ({

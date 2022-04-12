@@ -1,6 +1,6 @@
 import React from 'react';
 import MultiStep from '@shared/multiStep';
-import TransactionSignature from '@shared/transactionSignature';
+import TransactionSignature from '@transaction/detail/manager/transactionSignature';
 import Dialog from '@basics/dialog/dialog';
 import Form from './form';
 import Summary from './summary';

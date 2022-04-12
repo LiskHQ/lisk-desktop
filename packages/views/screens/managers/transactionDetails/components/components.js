@@ -8,16 +8,16 @@ import { getTxAmount } from '@transaction/utilities/transaction';
 import { tokenMap } from '@token/configuration/tokens';
 import { MODULE_ASSETS_NAME_ID_MAP } from '@transaction/configuration/moduleAssets';
 import CopyToClipboard from '@basics/copyToClipboard';
-import TransactionTypeFigure from '@shared/transactionTypeFigure';
+import TransactionTypeFigure from '@transaction/detail/info/transactionTypeFigure';
 import DateTimeFromTimestamp from '@basics/timestamp';
 import DiscreetMode from '@shared/discreetMode';
 import LiskAmount from '@shared/liskAmount';
-import MultiSignatureMembers, { SignedAndRemainingMembers } from '@shared/multisignatureMembers';
+import MultiSignatureMembers, { SignedAndRemainingMembers } from '@wallet/detail/info/multisignatureMembers';
 import Tooltip from '@basics/tooltip/tooltip';
 import { extractAddressFromPublicKey, truncateAddress, calculateRemainingAndSignedMembers } from '@wallet/utilities/account';
+import AccountInfo from '@wallet/detail/info/accountInfo';
 
 import { Context } from '../transactionDetails';
-import AccountInfo from './accountInfo';
 import styles from './styles.css';
 
 const getDelegateName = (transaction, activeToken) => (

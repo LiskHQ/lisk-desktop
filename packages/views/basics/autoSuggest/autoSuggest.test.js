@@ -2,7 +2,7 @@ import React from 'react';
 import { mount } from 'enzyme';
 import { keyCodes } from '@views/configuration';
 import { tokenMap } from '@token/configuration/tokens';
-import AccountVisual from '../accountVisual';
+import AccountVisual from '@wallet/detail/info/accountVisual';
 import AutoSuggest from './index';
 
 describe('Recipient Input', () => {
@@ -67,7 +67,7 @@ describe('Recipient Input', () => {
     expect(props.onChangeDelayed).toBeCalled();
   });
 
-  it('render properly when bookmard is selected', () => {
+  it('render properly when bookmark is selected', () => {
     props.selectedItem.address = '12345L';
     props.selectedItem.title = 'John Cena';
     wrapper = mount(<AutoSuggest {...props} />);

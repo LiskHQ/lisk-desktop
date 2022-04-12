@@ -7,7 +7,7 @@ import routes from '@screens/router/routes';
 import { tokenMap } from '@token/configuration/tokens';
 // import { formatAmountBasedOnLocale } from '@common/utilities/formattedNumber';
 import LiskAmount from '@shared/liskAmount';
-import AccountVisualWithAddress from '@basics/accountVisual/accountVisualWithAddress';
+import AccountVisualWithAddress from '@wallet/detail/info/accountVisual/accountVisualWithAddress';
 import styles from './wallet.css';
 
 const getOwnerName = (account) => {
