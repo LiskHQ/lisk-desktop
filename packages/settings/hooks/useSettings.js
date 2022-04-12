@@ -1,4 +1,4 @@
-import { settingsUpdated } from '@settings/store/action';
+import { settingsUpdated } from '@settings/store/actions';
 import { useDispatch, useSelector } from 'react-redux';
 
 function useSettings(settingKey) {

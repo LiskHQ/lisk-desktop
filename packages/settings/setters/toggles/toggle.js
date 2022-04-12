@@ -1,7 +1,7 @@
 import React from 'react';
 import { toast } from 'react-toastify';
 import { useTranslation } from 'react-i18next';
-import useSettings from '@settings/managers/useSettings';
+import useSettings from '@settings/hooks/useSettings';
 import Piwik from '@common/utilities/piwik';
 import CheckBox from '@basics/inputs/checkBox';
 import Tooltip from '@basics/tooltip/tooltip';

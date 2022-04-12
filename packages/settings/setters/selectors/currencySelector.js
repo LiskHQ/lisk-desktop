@@ -2,7 +2,7 @@ import React, { useMemo } from 'react';
 import { toast } from 'react-toastify';
 import Select from '@basics/inputs/select';
 import settingConstants from '@settings/configuration/settingConstants';
-import useSettings from '@settings/managers/useSettings';
+import useSettings from '@settings/hooks/useSettings';
 import Piwik from '@common/utilities/piwik';
 
 function CurrencySelector({ t }) {
