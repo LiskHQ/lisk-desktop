@@ -1,11 +1,10 @@
 import React from 'react';
 import grid from 'flexboxgrid/dist/flexboxgrid.css';
-import styles from './network.css';
 import Flag from './flag';
 
 const PeerRow = ({ data, className }) => (
   <div className={`${grid.row} ${className} peer-row`}>
-    <span className={`${grid['col-xs-3']} ${styles.ip}`}>
+    <span className={grid['col-xs-3']}>
       {data.ip}
     </span>
     <span className={grid['col-xs-2']}>
