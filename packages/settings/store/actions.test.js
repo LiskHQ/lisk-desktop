@@ -4,7 +4,7 @@ import {
   settingsReset,
   settingsUpdated,
   settingsRetrieved,
-} from './action';
+} from './actions';
 
 describe('actions: setting', () => {
   const dispatch = jest.fn();
