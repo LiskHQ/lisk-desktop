@@ -10,7 +10,7 @@ import { DoughnutChart } from '@basics/charts';
 import Tooltip from '@basics/tooltip/tooltip';
 import GuideTooltip, { GuideTooltipItem } from '@basics/charts/guideTooltip';
 import OthersTooltip from './othersTooltip';
-import styles from './overview.css';
+import styles from './statistics.css';
 
 const createChartData = (data, t) => {
   const list = {
