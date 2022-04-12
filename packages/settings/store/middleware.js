@@ -9,6 +9,8 @@ const settings = store => next => (action) => {
   switch (action.type) {
     case actionTypes.networkConfigSet:
       // store.dispatch(pricesRetrieved());
+      if (!action.data) break;
+
       store.dispatch(settingsUpdated({
         network: {
           name: action.data.name,

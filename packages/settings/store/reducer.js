@@ -36,7 +36,6 @@ export const initialState = {
     active: tokenMap.LSK.key,
     list: {
       [tokenMap.LSK.key]: true,
-      [tokenMap.BTC.key]: false,
     },
   },
   sideBarExpanded: true,
