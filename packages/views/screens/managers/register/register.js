@@ -1,10 +1,10 @@
 import React, { useState, useEffect } from 'react';
 import grid from 'flexboxgrid/dist/flexboxgrid.css';
-import { generatePassphrase } from '@common/utilities/passphrase';
+import { generatePassphrase } from '@views/utilities/passphrase';
 import { extractAddressFromPassphrase } from '@wallet/utilities/account';
 import routes from '@screens/router/routes';
 import MultiStepProgressBar from '@shared/multiStepProgressBar';
-import MultiStep from '@shared/registerMultiStep';
+import MultiStep from '@dpos/manage/registerDelegateMultiStep';
 import ChooseAvatar from './chooseAvatar';
 import BackupPassphrase from './backupPassphrase';
 import ConfirmPassphrase from './confirmPassphrase';

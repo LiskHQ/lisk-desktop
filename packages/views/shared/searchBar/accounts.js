@@ -1,5 +1,5 @@
 import React from 'react';
-import AccountVisual from '@basics/accountVisual';
+import AccountVisual from '@wallet/detail/info/accountVisual';
 import { truncateAddress } from '@wallet/utilities/account';
 import styles from './accountsAndDeletegates.css';
 

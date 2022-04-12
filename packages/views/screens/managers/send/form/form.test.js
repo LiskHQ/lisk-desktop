@@ -3,13 +3,13 @@ import { act } from 'react-dom/test-utils';
 import { mount } from 'enzyme';
 import { tokenMap } from '@token/configuration/tokens';
 import { getTransactionBaseFees, getTransactionFee } from '@transaction/utilities/api';
-import useTransactionFeeCalculation from '@shared/transactionPriority/useTransactionFeeCalculation';
+import useTransactionFeeCalculation from '@transaction/manage/transactionPriority/useTransactionFeeCalculation';
 import { fromRawLsk } from '@token/utilities/lsk';
 import accounts from '@tests/constants/accounts';
 import flushPromises from '@tests/unit-test-utils/flushPromises';
 import Form from './form';
 
-jest.mock('@shared/transactionPriority/useTransactionFeeCalculation');
+jest.mock('@transaction/manage/transactionPriority/useTransactionFeeCalculation');
 jest.mock('@transaction/utilities/api');
 
 const transactionBaseFees = {

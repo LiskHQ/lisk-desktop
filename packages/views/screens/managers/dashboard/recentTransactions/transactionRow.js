@@ -1,9 +1,9 @@
 import React from 'react';
 import grid from 'flexboxgrid/dist/flexboxgrid.css';
 import { useSelector } from 'react-redux';
-import TransactionTypeFigure from '@shared/transactionTypeFigure';
-import TransactionAddress from '@basics/accountVisual/transactionAddress';
-import TransactionAmount from '@shared/transactionAmount';
+import TransactionTypeFigure from '@transaction/detail/info/transactionTypeFigure';
+import TransactionAddress from '@wallet/detail/info/accountVisual/transactionAddress';
+import TransactionAmount from '@transaction/detail/info/transactionAmount';
 import DialogLink from '@basics/dialog/link';
 import styles from './recentTransactions.css';
 

@@ -8,10 +8,10 @@ import withData from '@common/utilities/withData';
 import { getTransactions } from '@transaction/utilities/api';
 import { selectTransactions } from '@common/store/selectors';
 import FlashMessageHolder from '@basics/flashMessage/holder';
-import WarnPunishedDelegate from '@shared/warnPunishedDelegate';
+import WarnPunishedDelegate from '@dpos/detail/info/warnPunishedDelegate';
+import AccountInfo from '@wallet/detail/info/accountInfo';
 import { withRouter } from 'react-router';
 import BalanceChart from './balanceChart';
-import AccountInfo from './accountInfo';
 import BalanceInfo from './balanceInfo';
 import styles from './overview.css';
 
