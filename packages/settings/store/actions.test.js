@@ -13,7 +13,6 @@ describe('actions: setting', () => {
     token: {
       active: 'LSK',
       list: {
-        BTC: false,
         LSK: true,
       },
     },
