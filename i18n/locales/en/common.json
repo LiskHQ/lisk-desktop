@@ -176,6 +176,7 @@
   "Expand sidebar": "Expand sidebar",
   "Explorer": "Explorer",
   "Failed to load block details.": "Failed to load block details.",
+  "Failed to process reclaim your legacy balance. You might have been a victim of an address collision attack.": "Failed to process reclaim your legacy balance. You might have been a victim of an address collision attack.",
   "Fee": "Fee",
   "Filter": "Filter",
   "Filter by address...": "Filter by address...",
