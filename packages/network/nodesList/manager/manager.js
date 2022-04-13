@@ -2,7 +2,7 @@ import React from 'react';
 import Box from '@basics/box';
 import BoxContent from '@basics/box/content';
 import Table from '@basics/table';
-import styles from '../../network.css';
+import styles from './nodeList.css';
 import header from './tableHeader';
 import Map from '../../map';
 import PeerRow from '../row';
