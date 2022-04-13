@@ -1,7 +1,7 @@
 import { cryptography } from '@liskhq/lisk-client';
 import { signMessageByHW } from '@wallet/utilities/hwManager';// eslint-disable-line
 
-const useSignUsingPrivateKey = ({ message, account }) => {
+export const signUsingPrivateKey = ({ message, account }) => {
   const msgBytes = cryptography.digestMessage(message);
   const signedMessage = cryptography.signDataWithPrivateKey(msgBytes, Buffer.from(account.summary.privateKey, 'hex'));
   const result = cryptography.printSignedMessage({
@@ -12,7 +12,7 @@ const useSignUsingPrivateKey = ({ message, account }) => {
   return result;
 };
 
-const signUsingHW = async ({ message, account }) => {
+export const signUsingHW = async ({ message, account }) => {
   let signedMessage = await signMessageByHW({
     account,
     message,
@@ -27,5 +27,3 @@ const signUsingHW = async ({ message, account }) => {
   });
   return result;
 };
-
-export default { useSignUsingPrivateKey, signUsingHW };

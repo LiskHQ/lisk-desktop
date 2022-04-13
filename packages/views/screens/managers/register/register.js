@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import grid from 'flexboxgrid/dist/flexboxgrid.css';
 import { generatePassphrase } from '@views/utilities/passphrase';
 import { extractAddressFromPassphrase } from '@wallet/utilities/account';
@@ -10,19 +10,11 @@ import BackupPassphrase from './backupPassphrase';
 import ConfirmPassphrase from './confirmPassphrase';
 import AccountCreated from './accountCreated';
 import styles from './register.css';
+import useCreateAccounts from '../../../../wallet/manager/useCreateAccounts';
 
 const Register = ({ account, token, history }) => {
-  const [accounts, setAccounts] = useState([]);
   const [selectedAccount, setSelectedAccount] = useState({});
-
-  useEffect(() => {
-    const passphrases = [...Array(5)].map(generatePassphrase);
-    const acc = passphrases.map((pass) => ({
-      address: extractAddressFromPassphrase(pass),
-      passphrase: pass,
-    }));
-    setAccounts(acc);
-  }, []);
+  const { accounts } = useCreateAccounts();
 
   useEffect(() => {
     if (account?.info?.[token.active].address) {
@@ -30,9 +22,9 @@ const Register = ({ account, token, history }) => {
     }
   }, [account, history, token]);
 
-  const handleSelectAvatar = (userSelectedAccount) => {
+  const handleSelectAvatar = useCallback((userSelectedAccount) => {
     setSelectedAccount(userSelectedAccount);
-  };
+  }, []);
 
   return (
     <>
