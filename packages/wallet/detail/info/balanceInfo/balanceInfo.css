@@ -1,4 +1,4 @@
-@import '../../../../../../../setup/react/app/mixins.css';
+@import '../../../../../setup/react/app/mixins.css';
 
 .wrapper {
   display: flex;
@@ -13,7 +13,7 @@
     border-bottom-right-radius: var(--border-radius-box);
     padding-left: 0;
     padding-right: 0;
-    background-image: url(../../../../../../../setup/react/assets/images/waves.png);
+    background-image: url(../../../../../setup/react/assets/images/waves.png);
     background-size: 110%;
   }
 }

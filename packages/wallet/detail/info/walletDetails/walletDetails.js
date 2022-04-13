@@ -12,8 +12,8 @@ import Icon from '@basics/icon';
 import Converter from '@shared/converter';
 import { fromRawLsk } from '@token/utilities/lsk';
 import LiskAmount from '@shared/liskAmount';
-import LockedBalanceLink from '@screens/managers/wallet/overview/balanceInfo/unlocking';
 import DiscreetMode from '@shared/discreetMode';
+import LockedBalanceLink from '../balanceInfo/unlocking';
 import styles from './walletDetails.css';
 
 const WalletDetails = ({

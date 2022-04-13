@@ -1,18 +1,19 @@
 /* eslint-disable max-statements */
 import React, { useEffect } from 'react';
 import { useSelector, connect } from 'react-redux';
+import { withRouter } from 'react-router';
 import { compose } from 'redux';
 import { withTranslation } from 'react-i18next';
 import grid from 'flexboxgrid/dist/flexboxgrid.css';
+
 import withData from '@common/utilities/withData';
 import { getTransactions } from '@transaction/utilities/api';
 import { selectTransactions } from '@common/store/selectors';
 import FlashMessageHolder from '@basics/flashMessage/holder';
 import WarnPunishedDelegate from '@dpos/detail/info/warnPunishedDelegate';
 import AccountInfo from '@wallet/detail/info/accountInfo';
-import { withRouter } from 'react-router';
-import BalanceChart from './balanceChart';
-import BalanceInfo from './balanceInfo';
+import BalanceChart from '@wallet/detail/info//balanceChart';
+import BalanceInfo from '@wallet/detail/info//balanceInfo';
 import styles from './overview.css';
 
 const mapStateToProps = (state) => ({
