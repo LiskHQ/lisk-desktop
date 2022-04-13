@@ -1,10 +1,12 @@
 import { compose } from 'redux';
 import { getPeers } from "@network/utilities/api";
 import withData from "@common/utilities/withData";
+import { DEFAULT_LIMIT } from '@views/configuration';
 import { withTranslation } from "react-i18next";
 import withLocalSort from "@common/utilities/withLocalSort";
 import { sortByVersion } from '../../utilities/helpers';
 import NodeList from "./manager";
+import { tokenMap } from '@token/configuration/tokens';
 
 export default compose(
   withData({
