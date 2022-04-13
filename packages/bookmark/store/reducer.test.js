@@ -1,7 +1,7 @@
 import {
   bookmarkAdded, bookmarkUpdated, bookmarkRemoved,
 } from '@common/store/actions';
-import wallets from '@tests/constants/accounts';
+import wallets from '@tests/constants/wallets';
 import actionTypes from './actionTypes';
 import bookmarks from './reducer';
 
