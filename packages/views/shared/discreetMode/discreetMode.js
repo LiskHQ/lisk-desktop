@@ -5,9 +5,10 @@ import { selectSearchParamValue } from '@screens/router/searchParams';
 import styles from './discreetMode.css';
 
 const DiscreetMode = ({
-  children, location, isDiscreetMode, shouldEvaluateForOtherAccounts,
+  children, isDiscreetMode, shouldEvaluateForOtherAccounts,
   addresses, account, token,
 }) => {
+  const location = window.location;
   const isBlurHandledOnOtherWalletPage = useMemo(() => {
     const { search } = location;
     const address = selectSearchParamValue(search, routes.account.searchParam);

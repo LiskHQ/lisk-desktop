@@ -1,7 +1,5 @@
 import React, { useState, useEffect, useCallback } from 'react';
 import grid from 'flexboxgrid/dist/flexboxgrid.css';
-import { generatePassphrase } from '@views/utilities/passphrase';
-import { extractAddressFromPassphrase } from '@wallet/utilities/account';
 import routes from '@screens/router/routes';
 import MultiStepProgressBar from '@shared/multiStepProgressBar';
 import MultiStep from '@dpos/manage/registerDelegateMultiStep';

@@ -14,6 +14,9 @@ import analytics from '@common/utilities/analytics';
 import history from '@common/utilities/history';
 import { getTransactions } from '@transaction/utilities/api';
 import i18n from '@setup/i18n/i18n';
+import blockActionTypes from '@block/store/actionTypes';
+import transactionActionTypes from '@transaction/store/actionTypes';
+import settingsActionTypes from '@settings/store/actionTypes';
 import actionTypes from './actionTypes';
 
 const getRecentTransactionOfType = (transactionsList, type) => (
@@ -128,10 +131,10 @@ const accountMiddleware = store => next => async (action) => {
     case actionTypes.settingsRetrieved:
       readStoredNetwork(store);
       break;
-    case actionTypes.newBlockCreated:
+    case blockActionTypes.newBlockCreated:
       await checkTransactionsAndUpdateAccount(store, action);
       break;
-    case actionTypes.transactionsRetrieved:
+    case transactionActionTypes.transactionsRetrieved:
       votePlaced(store, action);
       break;
     case actionTypes.accountUpdated:
@@ -147,7 +150,7 @@ const accountMiddleware = store => next => async (action) => {
       store.dispatch(settingsUpdated({ token: { active: tokenMap.LSK.key } }));
       store.dispatch(emptyTransactionsData());
       break;
-    case actionTypes.settingsUpdated:
+    case settingsActionTypes.settingsUpdated:
       if (action.data.token && store.getState().account.info) {
         store.dispatch(accountDataUpdated('enabled'));
       }
