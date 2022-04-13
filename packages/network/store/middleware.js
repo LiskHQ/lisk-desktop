@@ -1,5 +1,4 @@
 // eslint-disable-next-line no-unused-vars
-import settings from '@settings/configuration/settings';
 import { getAutoLogInData, shouldAutoLogIn } from '@common/utilities/login';
 // eslint-disable-next-line no-unused-vars
 import { networkConfigSet, login, settingsUpdated } from '@common/store/actions';
