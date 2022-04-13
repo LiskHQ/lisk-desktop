@@ -1,5 +1,5 @@
 import { expect } from 'chai';
-import accounts from '@tests/constants/accounts';
+import accounts from '@tests/constants/wallets';
 import { generateSeed, generatePassphraseFromSeed, isValidPassphrase } from './passphrase';
 
 if (global._bitcore) delete global._bitcore;

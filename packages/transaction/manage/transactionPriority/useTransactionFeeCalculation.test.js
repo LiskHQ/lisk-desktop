@@ -1,5 +1,5 @@
 import { renderHook } from '@testing-library/react-hooks';
-import accounts from '@tests/constants/accounts';
+import accounts from '@tests/constants/wallets';
 import useTransactionFeeCalculation from './useTransactionFeeCalculation';
 
 describe('useTransactionFeeCalculation', () => {

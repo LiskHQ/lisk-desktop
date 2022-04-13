@@ -2,7 +2,7 @@ import React from 'react';
 import { mount } from 'enzyme';
 import { loginTypes } from '@views/configuration';
 import * as hwManager from '@wallet/utilities/hwManager';
-import accounts from '@tests/constants/accounts';
+import accounts from '@tests/constants/wallets';
 import MessageSignature from '.';
 
 jest.mock('@wallet/utilities/hwManager');

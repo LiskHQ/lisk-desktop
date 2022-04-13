@@ -1,6 +1,6 @@
 import * as communication from '@libs/hwManager/communication';
 import * as accountApi from '@wallet/utilities/api';
-import accounts from '@tests/constants/accounts';
+import accounts from '@tests/constants/wallets';
 import {
   getAccountsFromDevice,
   signMessageByHW,

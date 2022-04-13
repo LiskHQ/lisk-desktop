@@ -1,7 +1,7 @@
 import React from 'react';
 import { mount } from 'enzyme';
 import { act } from 'react-dom/test-utils';
-import accounts from '@tests/constants/accounts';
+import accounts from '@tests/constants/wallets';
 import Status from '.';
 
 describe('Sign Message: Status', () => {

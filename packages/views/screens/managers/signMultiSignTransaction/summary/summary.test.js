@@ -2,7 +2,7 @@ import React from 'react';
 import { mount } from 'enzyme';
 import { MODULE_ASSETS_NAME_ID_MAP } from '@transaction/configuration/moduleAssets';
 import { removeSearchParamsFromUrl } from '@screens/router/searchParams';
-import accounts from '@tests/constants/accounts';
+import accounts from '@tests/constants/wallets';
 import Summary from './summary';
 
 jest.mock('@screens/router/searchParams', () => ({

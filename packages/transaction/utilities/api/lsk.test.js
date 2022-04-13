@@ -4,7 +4,7 @@ import { getTxAmount } from '@transaction/utilities/transaction';
 import { getState } from '@fixtures/transactions';
 import * as delegates from '@dpos/utilities/api';
 import http from '@common/utilities/api/http';
-import accounts from '@tests/constants/accounts';
+import accounts from '@tests/constants/wallets';
 import {
   getTransaction,
   getTransactions,

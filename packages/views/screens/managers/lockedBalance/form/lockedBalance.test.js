@@ -6,7 +6,7 @@ import * as hwManager from '@transaction/utilities/hwManager';
 import { create } from '@transaction/utilities/api';
 import useTransactionPriority from '@transaction/manage/transactionPriority/useTransactionPriority';
 import useTransactionFeeCalculation from '@transaction/manage/transactionPriority/useTransactionFeeCalculation';
-import accounts from '@tests/constants/accounts';
+import accounts from '@tests/constants/wallets';
 import flushPromises from '@tests/unit-test-utils/flushPromises';
 import LockedBalance from './index';
 

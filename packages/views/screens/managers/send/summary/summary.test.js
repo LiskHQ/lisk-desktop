@@ -4,7 +4,7 @@ import { tokenMap } from '@token/configuration/tokens';
 import { toRawLsk } from '@token/utilities/lsk';
 import { formatAmountBasedOnLocale } from '@common/utilities/formattedNumber';
 import i18n from '@setup/i18n/i18n';
-import accounts from '@tests/constants/accounts';
+import accounts from '@tests/constants/wallets';
 import Summary from './summary';
 
 describe('Summary', () => {

@@ -1,5 +1,5 @@
 import * as localJSONStorage from '@common/utilities/localJSONStorage';
-import accounts from '@tests/constants/accounts';
+import accounts from '@tests/constants/wallets';
 import actionTypes from './actionTypes';
 import bookmarksMiddleware from './middleware';
 

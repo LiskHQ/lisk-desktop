@@ -2,7 +2,7 @@ import { mountWithRouterAndStore } from '@common/utilities/testHelpers';
 import { truncateAddress } from '@wallet/utilities/account';
 import { addSearchParamsToUrl } from '@screens/router/searchParams';
 import { tokenMap } from '@token/configuration/tokens';
-import accounts from '@tests/constants/accounts';
+import accounts from '@tests/constants/wallets';
 import Reclaim from './reclaim';
 import styles from './index.css';
 

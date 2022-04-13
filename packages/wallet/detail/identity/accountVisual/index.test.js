@@ -1,6 +1,6 @@
 import React from 'react';
 import { mount } from 'enzyme';
-import accounts from '@tests/constants/accounts';
+import accounts from '@tests/constants/wallets';
 import AccountVisual from './index';
 
 describe.skip('AccountVisual', () => {

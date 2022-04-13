@@ -1,6 +1,6 @@
 import { mountWithRouter } from '@common/utilities/testHelpers';
 import routes from '@screens/router/routes';
-import accounts from '@tests/constants/accounts';
+import accounts from '@tests/constants/wallets';
 import Votes from './votes';
 
 describe('Votes Tab Component', () => {
