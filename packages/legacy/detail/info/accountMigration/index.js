@@ -3,7 +3,7 @@ import { withTranslation } from 'react-i18next';
 import CopyToClipboard from '@basics/copyToClipboard';
 import Icon from '@basics/icon';
 import LiskAmount from '@shared/liskAmount';
-import AccountVisualWithAddress from '@wallet/detail/info/accountVisual/accountVisualWithAddress';
+import AccountVisualWithAddress from '@wallet/detail/identity/accountVisual/accountVisualWithAddress';
 import { tokenMap } from '@token/configuration/tokens';
 import styles from './index.css';
 

@@ -1,5 +1,5 @@
 import React from 'react';
-import AccountVisual from '@wallet/detail/info/accountVisual';
+import AccountVisual from '@wallet/detail/identity/accountVisual';
 import LiskAmount from '@shared/liskAmount';
 import { tokenMap } from '@token/configuration/tokens';
 import styles from './transactionInfo.css';

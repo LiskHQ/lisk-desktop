@@ -9,7 +9,7 @@ import Tooltip from '@basics/tooltip/tooltip';
 import { truncateAddress } from '@wallet/utilities/account';
 import { Input } from '@basics/inputs';
 import { PrimaryButton, TertiaryButton } from '@basics/buttons';
-import AccountVisual from '@wallet/detail/info/accountVisual';
+import AccountVisual from '@wallet/detail/identity/accountVisual';
 import Box from '@basics/box';
 import BoxHeader from '@basics/box/header';
 import BoxContent from '@basics/box/content';

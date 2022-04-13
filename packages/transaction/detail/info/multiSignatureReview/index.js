@@ -4,7 +4,7 @@ import { tokenMap } from '@token/configuration/tokens';
 import { toRawLsk } from '@token/utilities/lsk';
 import { truncateAddress } from '@wallet/utilities/account';
 import LiskAmount from '@shared/liskAmount';
-import AccountVisual from '@wallet/detail/info/accountVisual';
+import AccountVisual from '@wallet/detail/identity/accountVisual';
 
 import styles from './styles.css';
 

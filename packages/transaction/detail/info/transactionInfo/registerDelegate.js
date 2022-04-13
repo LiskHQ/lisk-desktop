@@ -1,5 +1,5 @@
 import React from 'react';
-import AccountVisual from '@wallet/detail/info/accountVisual';
+import AccountVisual from '@wallet/detail/identity/accountVisual';
 import styles from './transactionInfo.css';
 
 const RegisterDelegate = ({ account, username, t }) => (

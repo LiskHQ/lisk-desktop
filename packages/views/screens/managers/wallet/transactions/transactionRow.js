@@ -7,7 +7,7 @@ import DateTimeFromTimestamp from '@basics/timestamp';
 import LiskAmount from '@shared/liskAmount';
 import TransactionTypeFigure from '@transaction/detail/info/transactionTypeFigure';
 import TransactionAmount from '@transaction/detail/info/transactionAmount';
-import TransactionAddress from '@wallet/detail/info/accountVisual/transactionAddress';
+import TransactionAddress from '@wallet/detail/identity/accountVisual/transactionAddress';
 import Spinner from '@basics/spinner';
 import DialogLink from '@basics/dialog/link';
 import TransactionAsset from './txAsset';

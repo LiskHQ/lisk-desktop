@@ -9,7 +9,7 @@ import Icon from '@basics/icon';
 import Tooltip from '@basics/tooltip/tooltip';
 import DialogLink from '@basics/dialog/link';
 import LiskAmount from '@shared/liskAmount';
-import AccountVisualWithAddress from '@wallet/detail/info/accountVisual/accountVisualWithAddress';
+import AccountVisualWithAddress from '@wallet/detail/identity/accountVisual/accountVisualWithAddress';
 import styles from './transactionsTable.css';
 
 const roundSize = 103;

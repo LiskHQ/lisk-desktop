@@ -5,7 +5,7 @@ import { selectSearchParamValue } from '@screens/router/searchParams';
 import routes from '@screens/router/routes';
 import Icon from '@basics/icon';
 import DialogLink from '@basics/dialog/link';
-import AccountVisual from '@wallet/detail/info/accountVisual';
+import AccountVisual from '@wallet/detail/identity/accountVisual';
 import Tooltip from '@basics/tooltip/tooltip';
 import styles from './topBar.css';
 

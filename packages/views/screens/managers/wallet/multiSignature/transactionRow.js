@@ -3,7 +3,7 @@ import grid from 'flexboxgrid/dist/flexboxgrid.css';
 import { regex } from '@common/configuration';
 import { tokenMap } from '@token/configuration/tokens';
 import DialogLink from '@basics/dialog/link';
-import AccountVisual from '@wallet/detail/info/accountVisual';
+import AccountVisual from '@wallet/detail/identity/accountVisual';
 import Icon from '@basics/icon';
 import TransactionAmount from '@transaction/detail/info/transactionAmount';
 import styles from './multiSignature.css';

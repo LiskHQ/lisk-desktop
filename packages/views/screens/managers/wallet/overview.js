@@ -11,9 +11,9 @@ import { getTransactions } from '@transaction/utilities/api';
 import { selectTransactions } from '@common/store/selectors';
 import FlashMessageHolder from '@basics/flashMessage/holder';
 import WarnPunishedDelegate from '@dpos/detail/info/warnPunishedDelegate';
-import AccountInfo from '@wallet/detail/info/accountInfo';
-import BalanceChart from '@wallet/detail/info//balanceChart';
-import BalanceInfo from '@wallet/detail/info//balanceInfo';
+import AccountInfo from '@wallet/detail/identity/accountInfo';
+import BalanceChart from '@wallet/detail/holdings/balanceChart';
+import BalanceInfo from '@wallet/detail/holdings/balanceInfo';
 import styles from './overview.css';
 
 const mapStateToProps = (state) => ({
