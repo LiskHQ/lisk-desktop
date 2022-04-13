@@ -16,7 +16,7 @@ import {
   transactionCreated,
   multisigTransactionSigned,
   signatureSkipped,
-} from './action';
+} from './actions';
 
 jest.mock('@dpos/utilities/api');
 jest.mock('@transaction/utilities/hwManager');

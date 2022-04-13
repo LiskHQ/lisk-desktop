@@ -4,7 +4,7 @@ import settingsMiddleware from './middleware';
 
 jest.mock('@common/store/actions/service');
 // jest.mock('@settings/store/middleware');
-jest.mock('@transaction/store/action');
+jest.mock('@transaction/store/actions');
 jest.mock('@common/store/actions');
 
 describe('Middleware: Settings', () => {
