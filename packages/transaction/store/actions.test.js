@@ -5,6 +5,7 @@ import * as transactionUtils from '@transaction/utilities/transaction';
 import { getState } from '@fixtures/transactions';
 import { sampleTransaction } from '@tests/constants/transactions';
 import accounts from '@tests/constants/accounts';
+import commonActionTypes from '@common/store/actions/actionTypes';
 import actionTypes from './actionTypes';
 import {
   emptyTransactionsData,

@@ -105,7 +105,6 @@ export const transactionCreated = data => async (dispatch, getState) => {
   const {
     wallet, settings, network,
   } = getState();
-  console.log({ getState: getState() });
   const activeToken = settings.token.active;
   const hwInfo = isEmpty(wallet.hwInfo) ? undefined : wallet.hwInfo; // @todo remove this by #3898
 

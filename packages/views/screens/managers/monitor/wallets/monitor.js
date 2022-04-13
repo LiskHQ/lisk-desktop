@@ -6,7 +6,7 @@ import BoxContent from '@basics/box/content';
 import WalletListRepeater from '@wallet/list/repeater';
 import styles from './wallets.css';
 
-export const WalletsMonitor = ({ wallets, t, ...restProps}) => (
+const WalletsMonitor = ({ wallets, t, ...restProps }) => (
   <Box main isLoading={wallets.isLoading} className="accounts-box">
     <BoxHeader>
       <h1>{t('All accounts')}</h1>
