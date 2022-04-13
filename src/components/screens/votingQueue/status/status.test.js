@@ -3,8 +3,18 @@ import Result from './status';
 
 const props = {
   t: s => s,
-  transactions: { txSignatureError: null, signedTransaction: {} },
-  statusInfo: { locked: 200, unlockable: 100, selfUnvote: undefined },
+  account: {
+    summary: {},
+  },
+  transactions: {
+    txSignatureError: null,
+    signedTransaction: {},
+  },
+  statusInfo: {
+    locked: 200,
+    unlockable: 100,
+    selfUnvote: undefined,
+  },
 };
 
 describe('VotingQueue.Result', () => {

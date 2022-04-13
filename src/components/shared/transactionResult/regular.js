@@ -39,7 +39,7 @@ const Regular = ({
   };
 
   const getReclaimError = () => {
-    if (message.indexOf('address collision attack') > -1) {
+    if (typeof message === 'string' && message.indexOf('address collision attack') > -1) {
       return (
         <p>
           <span>Read more about </span>
