@@ -191,6 +191,7 @@ module.exports = {
   setupFiles: ['<rootDir>/setup/config/setupJest.js', 'jest-canvas-mock'],
   transform: {
     '^.+\\.js$': 'babel-jest',
+    '^.+\\.svg|png|jpg|jpeg$': '<rootDir>/tests/__mocks__/imageTransform.js',
   },
   testURL: 'http://localhost',
   globals: {
