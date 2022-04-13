@@ -38,6 +38,19 @@ const Regular = ({
     history.push(routes.wallet.path);
   };
 
+  const getReclaimError = () => {
+    if (message.indexOf('address collision attack') > -1) {
+      return (
+        <p>
+          <span>Read more about </span>
+          <a target="_blank" href="https://lisk.com/blog/announcement/lisks-holiday-security-reminder">address collision attack</a>
+          <span>.</span>
+        </p>
+      );
+    }
+    return '';
+  };
+
   return (
     <div className={`${styles.wrapper} ${className}`}>
       {
@@ -46,7 +59,10 @@ const Regular = ({
           : React.cloneElement(illustration)
       }
       <h1 className="result-box-header">{title}</h1>
-      <p className="transaction-status body-message">{message}</p>
+      <p className="transaction-status body-message">
+        {message}
+        {getReclaimError()}
+      </p>
       {children}
       {
         successTypes.includes(status.code) && !noBackButton
