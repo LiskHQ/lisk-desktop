@@ -7,7 +7,7 @@
   "description": "Lisk",
   "homepage": "https://github.com/LiskHQ/lisk-desktop",
   "bugs": "https://github.com/LiskHQ/lisk-desktop/issues",
-  "main": "./scripts/app/src/main.js",
+  "main": "./setup/react/main.js",
   "repository": {
     "type": "git",
     "url": "https://github.com/LiskHQ/lisk-desktop"
@@ -31,9 +31,9 @@
     "pack:win": "cmd /c npm ci && npm run install:electron:dependencies && npm run clean:build && npm run copy:files && npm run build:prod && npm run build:electron && npm run clean:dist && npm run dist:win",
     "test": "jest --config ./setup/jest.config.js",
     "test:live": "npm test -- --watch",
-    "cypress:open": "cypress open --project test/cypress",
-    "cypress:run": "cypress run --project test/cypress",
-    "lint": "eslint -c setup/.eslintrc .",
+    "cypress:open": "cypress open --project tests/cypress",
+    "cypress:run": "cypress run --project tests/cypress",
+    "lint": "eslint --ignore-path setup/.eslintignore -c setup/.eslintrc .",
     "lint:fix": "eslint -c setup/.eslintrc . --fix",
     "storybook": "start-storybook -p 6006",
     "percy": "build-storybook && percy-storybook --widths=769",

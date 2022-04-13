@@ -13,7 +13,7 @@ import NotFound from '../../../packages/views/shared/notFound';
 import NavigationBars from '../../../packages/views/shared/navigationBars';
 import FlashMessageHolder from '../../../packages/views/basics/flashMessage/holder';
 import DialogHolder from '../../../packages/views/basics/dialog/holder';
-import { settingsRetrieved } from '../../../packages/settings/store/action';
+import { settingsRetrieved } from '../../../packages/settings/store/actions';
 import { bookmarksRetrieved } from '../../../packages/bookmark/store/action';
 import { watchListRetrieved } from '../../../packages/dpos/store/actions/watchList';
 import routesMap from '../../../packages/views/screens/router/routesMap';

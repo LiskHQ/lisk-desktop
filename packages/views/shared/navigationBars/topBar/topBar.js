@@ -6,8 +6,10 @@ import Icon from '@basics/icon';
 import DialogLink from '@basics/dialog/link';
 import { PrimaryButton } from '@basics/buttons';
 import Tooltip from '@basics/tooltip/tooltip';
-import Toggle from '@settings/setters/toggles/toggle';
 import VoteQueueToggle from '@settings/setters/toggles/voteQueueToggle';
+import DiscreteModeToggle from '@settings/setters/toggles/discreteModeToggle';
+import LightDarkToggle from '@settings/setters/toggles/lightDarkModeToggle';
+import SideBarToggle from '@settings/setters/toggles/sideBarToggle';
 import styles from './topBar.css';
 import Network from './networkName';
 import NavigationButtons from './navigationButtons';
@@ -37,11 +39,7 @@ const TopBar = ({
           history={history}
           account={account}
         />
-        <Toggle
-          setting="sideBarExpanded"
-          icons={['toggleSidebarActive', 'toggleSidebar']}
-          tips={[t('Collapse sidebar'), t('Expand sidebar')]}
-        />
+        <SideBarToggle />
         <Tooltip
           className={styles.tooltipWrapper}
           size="maxContent"
@@ -66,20 +64,8 @@ const TopBar = ({
         <Search t={t} history={history} disabled={disabled} />
       </div>
       <div className={styles.group}>
-        <Toggle
-          setting="darkMode"
-          icons={['lightMode', 'darkMode']}
-          tips={[t('Disable dark mode'), t('Enable dark mode')]}
-        />
-        {
-          !isUserLogout ? (
-            <Toggle
-              setting="discreetMode"
-              icons={['discreetModeActive', 'discreetMode']}
-              tips={[t('Disable discreet mode'), t('Enable discreet mode')]}
-            />
-          ) : null
-        }
+        <LightDarkToggle />
+        { !isUserLogout && <DiscreteModeToggle /> }
         <Network
           token={token.active}
           network={network}

@@ -150,3 +150,7 @@
   align-items: center;
   height: 100%;
 }
+
+.checkbox {
+  margin-right: 10px;
+}

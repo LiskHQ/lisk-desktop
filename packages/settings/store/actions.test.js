@@ -4,7 +4,7 @@ import {
   settingsReset,
   settingsUpdated,
   settingsRetrieved,
-} from './action';
+} from './actions';
 
 describe('actions: setting', () => {
   const dispatch = jest.fn();
@@ -13,7 +13,6 @@ describe('actions: setting', () => {
     token: {
       active: 'LSK',
       list: {
-        BTC: false,
         LSK: true,
       },
     },

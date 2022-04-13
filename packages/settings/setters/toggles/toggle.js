@@ -1,29 +1,42 @@
 import React from 'react';
-import { useDispatch, useSelector } from 'react-redux';
-
-import { settingsUpdated } from '@common/store/actions';
+import { toast } from 'react-toastify';
+import { useTranslation } from 'react-i18next';
+import useSettings from '@settings/hooks/useSettings';
+import Piwik from '@common/utilities/piwik';
+import CheckBox from '@basics/inputs/checkBox';
 import Tooltip from '@basics/tooltip/tooltip';
 import Icon from '@basics/icon';
 import styles from '@shared/navigationBars/topBar/topBar.css';
-
 /**
  * Toggles boolean values on store.settings
  *
  * @param {String} setting The key to update in store.settings
  * @param {Array} icons [activeIconName, normalIconName]
  * @param {Array} tips [activeTip, normalTip]
+ * @param {boolean} isCheckbox show checkbox or tooltip
  */
 const Toggle = ({
-  setting, icons, tips,
+  setting, icons, tips, isCheckbox,
 }) => {
-  const dispatch = useDispatch();
-  const value = useSelector(state => state.settings[setting]);
+  const { t } = useTranslation();
+  const { toggleSetting, [setting]: value } = useSettings(setting);
 
-  const toggle = () => {
-    dispatch(settingsUpdated({ [setting]: !value }));
+  const toggle = () => { toggleSetting(!value); };
+
+  const handleCheckboxChange = () => {
+    Piwik.trackingEvent('Settings', 'button', 'Update settings');
+    toggleSetting(value?.setting);
+    toast(t('Settings saved!'));
   };
 
-  return (
+  return isCheckbox ? (
+    <CheckBox
+      name={setting}
+      className={`${styles.checkbox} ${setting}`}
+      checked={value}
+      onChange={handleCheckboxChange}
+    />
+  ) : (
     <Tooltip
       className={styles.tooltipWrapper}
       size="maxContent"
@@ -39,6 +52,10 @@ const Toggle = ({
       <p>{value ? tips[0] : tips[1]}</p>
     </Tooltip>
   );
+};
+
+Toggle.defaultProps = {
+  isChecked: false,
 };
 
 export default Toggle;
