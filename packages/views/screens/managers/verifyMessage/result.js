@@ -1,24 +1,26 @@
-import { cryptography } from '@liskhq/lisk-client';
+// import { cryptography } from '@liskhq/lisk-client';
+import React, { useMemo } from 'react';
 import PropTypes from 'prop-types';
-import React from 'react';
 
 import { PrimaryButton } from '@basics/buttons';
 import BoxFooter from '@basics/box/footer';
 import Illustration from '@basics/illustration';
 import routes from '@screens/router/routes';
+import verifyMessageValidator from '@wallet/manager/result';
 import styles from './verifyMessage.css';
 
 export default function Result({ inputs, history, t }) {
-  let isCorrect = false;
-  try {
-    isCorrect = cryptography.verifyMessageWithPublicKey({
-      publicKey: Buffer.from(inputs.publicKey, 'hex'),
-      signature: Buffer.from(inputs.signature, 'hex'),
-      message: inputs.message,
-    });
-  } catch (e) {
-    isCorrect = false;
-  }
+  const isCorrect = useMemo(() => verifyMessageValidator(inputs), [inputs]);
+  // let isCorrect = false;
+  // try {
+  //   isCorrect = cryptography.verifyMessageWithPublicKey({
+  //     publicKey: Buffer.from(inputs.publicKey, 'hex'),
+  //     signature: Buffer.from(inputs.signature, 'hex'),
+  //     message: inputs.message,
+  //   });
+  // } catch (e) {
+  //   isCorrect = false;
+  // }
 
   const closeModal = () => {
     history.push(routes.wallet.path);
