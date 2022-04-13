@@ -5,7 +5,7 @@ import Table from '@basics/table';
 import { DEFAULT_LIMIT } from '@views/configuration';
 import header from './tableHeader';
 
-export const WalletTable = ({
+const WalletTable = ({
   wallets,
   networkStatus,
   t,
