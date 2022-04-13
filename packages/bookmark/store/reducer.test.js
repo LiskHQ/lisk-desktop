@@ -1,112 +1,112 @@
 import {
   bookmarkAdded, bookmarkUpdated, bookmarkRemoved,
 } from '@common/store/actions';
-import accounts from '@tests/constants/accounts';
+import wallets from '@tests/constants/accounts';
 import actionTypes from './actionTypes';
 import bookmarks from './reducer';
 
 // eslint-disable-next-line camelcase
-const { genesis, delegate, empty_account } = accounts;
+const { genesis, delegate, empty_wallet } = wallets;
 
 describe('Reducer: bookmarks(state, action)', () => {
-  const account = {
+  const wallet = {
     address: genesis.summary.address,
     title: genesis.summary.address,
     publicKey: genesis.summary.publicKey,
   };
-  const account2 = {
+  const wallet2 = {
     address: delegate.summary.address,
     title: genesis.summary.address,
     publicKey: delegate.summary.publicKey,
   };
 
-  it(`should return accounts with added account if action.type is ${actionTypes.bookmarkAdded}`, () => {
-    const account3 = {
-      address: empty_account.summary.address,
-      title: empty_account.summary.address,
-      publicKey: empty_account.summary.publicKey,
+  it(`should return wallets with added wallet if action.type is ${actionTypes.bookmarkAdded}`, () => {
+    const wallet3 = {
+      address: empty_wallet.summary.address,
+      title: empty_wallet.summary.address,
+      publicKey: empty_wallet.summary.publicKey,
     };
 
-    const state = { LSK: [account, account2], BTC: [] };
-    const action = bookmarkAdded({ account: account3, token: 'BTC' });
+    const state = { LSK: [wallet, wallet2], BTC: [] };
+    const action = bookmarkAdded({ wallet: wallet3, token: 'BTC' });
     const changedState = bookmarks(state, action);
-    expect(changedState.LSK[0]).toEqual(account);
-    expect(changedState.LSK[1]).toEqual(account2);
-    expect(changedState.BTC[0]).toMatchObject(account3);
+    expect(changedState.LSK[0]).toEqual(wallet);
+    expect(changedState.LSK[1]).toEqual(wallet2);
+    expect(changedState.BTC[0]).toMatchObject(wallet3);
   });
 
-  it(`should return accounts with added account and trimmed title if action.type is ${actionTypes.bookmarkAdded}`, () => {
-    const account3 = {
-      address: empty_account.summary.address,
-      title: empty_account.summary.address,
-      publicKey: empty_account.summary.publicKey,
+  it(`should return wallets with added wallet and trimmed title if action.type is ${actionTypes.bookmarkAdded}`, () => {
+    const wallet3 = {
+      address: empty_wallet.summary.address,
+      title: empty_wallet.summary.address,
+      publicKey: empty_wallet.summary.publicKey,
     };
 
-    const state = { LSK: [account, account2], BTC: [] };
+    const state = { LSK: [wallet, wallet2], BTC: [] };
     const action = bookmarkAdded({
-      account: {
-        ...account3,
-        title: `     ${account3.title}    `,
+      wallet: {
+        ...wallet3,
+        title: `     ${wallet3.title}    `,
       },
       token: 'BTC',
     });
     const changedState = bookmarks(state, action);
-    expect(changedState.LSK[0]).toEqual(account);
-    expect(changedState.LSK[1]).toEqual(account2);
-    expect(changedState.BTC[0]).toMatchObject(account3);
+    expect(changedState.LSK[0]).toEqual(wallet);
+    expect(changedState.LSK[1]).toEqual(wallet2);
+    expect(changedState.BTC[0]).toMatchObject(wallet3);
   });
 
-  it(`should return accounts with updated account if action.type is ${actionTypes.bookmarkUpdated}`, () => {
-    const updatedAccount = {
+  it(`should return wallets with updated wallet if action.type is ${actionTypes.bookmarkUpdated}`, () => {
+    const updatedWallet = {
       address: delegate.summary.address,
       title: 'bob',
       publicKey: delegate.summary.publicKey,
     };
 
-    const state = { LSK: [account, account2], BTC: [] };
-    const action = bookmarkUpdated({ account: updatedAccount });
+    const state = { LSK: [wallet, wallet2], BTC: [] };
+    const action = bookmarkUpdated({ wallet: updatedWallet });
 
     const changedState = bookmarks(state, action);
 
-    expect(changedState.LSK[0]).toEqual(account);
-    expect(changedState.LSK[1]).toEqual(updatedAccount);
+    expect(changedState.LSK[0]).toEqual(wallet);
+    expect(changedState.LSK[1]).toEqual(updatedWallet);
   });
 
-  it(`should return accounts with updated account and trimmed title if action.type is ${actionTypes.bookmarkUpdated}`, () => {
-    const updatedAccount = {
+  it(`should return wallets with updated wallet and trimmed title if action.type is ${actionTypes.bookmarkUpdated}`, () => {
+    const updatedWallet = {
       address: delegate.summary.address,
       title: 'bob',
       publicKey: delegate.summary.publicKey,
     };
 
-    const state = { LSK: [account, account2], BTC: [] };
+    const state = { LSK: [wallet, wallet2], BTC: [] };
     const action = bookmarkUpdated({
-      account: {
-        ...updatedAccount,
+      wallet: {
+        ...updatedWallet,
         title: '     bob     ',
       },
     });
 
     const changedState = bookmarks(state, action);
 
-    expect(changedState.LSK[0]).toEqual(account);
-    expect(changedState.LSK[1]).toEqual(updatedAccount);
+    expect(changedState.LSK[0]).toEqual(wallet);
+    expect(changedState.LSK[1]).toEqual(updatedWallet);
   });
 
-  it(`should return accounts without deleted account if action.type is ${actionTypes.bookmarkRemoved}`, () => {
-    const state = { LSK: [account, account2] };
-    const action = bookmarkRemoved({ address: account2.address, token: 'LSK' });
+  it(`should return wallets without deleted wallet if action.type is ${actionTypes.bookmarkRemoved}`, () => {
+    const state = { LSK: [wallet, wallet2] };
+    const action = bookmarkRemoved({ address: wallet2.address, token: 'LSK' });
 
     const changedState = bookmarks(state, action);
 
-    expect(changedState.LSK[0]).toEqual(account);
+    expect(changedState.LSK[0]).toEqual(wallet);
     expect(changedState.LSK[1]).toEqual(undefined);
   });
 
   it('should return validated bookmarks if action.type = actionType.bookmarksRetrieved', () => {
     const action = {
       type: actionTypes.bookmarksRetrieved,
-      data: { LSK: [account, account2], BTC: [] },
+      data: { LSK: [wallet, wallet2], BTC: [] },
     };
 
     let state;

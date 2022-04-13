@@ -1,7 +1,7 @@
 import { tokenMap } from '@token/configuration/tokens';
 import { getFromStorage } from '@common/utilities/localJSONStorage';
 import { emptyBookmarks } from '@bookmark/utilities/bookmarks';
-import accounts from '@tests/constants/accounts';
+import wallets from '@tests/constants/accounts';
 import actionTypes from './actionTypes';
 import {
   bookmarksRetrieved,
@@ -16,11 +16,11 @@ jest.mock('@common/utilities/localJSONStorage', () => ({
 
 describe('actions: boomarks', () => {
   const data = {
-    account: {
-      address: accounts.genesis.summary.address,
-      publicKey: accounts.genesis.summary.publicKey,
-      balance: accounts.genesis.balance,
-      title: accounts.genesis.summary.address,
+    wallet: {
+      address: wallets.genesis.summary.address,
+      publicKey: wallets.genesis.summary.publicKey,
+      balance: wallets.genesis.balance,
+      title: wallets.genesis.summary.address,
     },
     token: tokenMap.LSK.key,
   };
@@ -53,27 +53,27 @@ describe('actions: boomarks', () => {
     });
   });
 
-  it('should create an action to add a bookmark account', () => {
+  it('should create an action to add a bookmark wallet', () => {
     const expectedAction = {
       data,
       type: actionTypes.bookmarkAdded,
     };
     expect(bookmarkAdded(data)).toEqual(expectedAction);
-    expect(bookmarkAdded({ account: data.account })).toEqual(expectedAction);
+    expect(bookmarkAdded({ wallet: data.wallet })).toEqual(expectedAction);
   });
 
-  it('should create an action to update a bookmark account', () => {
+  it('should create an action to update a bookmark wallet', () => {
     const expectedAction = {
       data,
       type: actionTypes.bookmarkUpdated,
     };
     expect(bookmarkUpdated(data)).toEqual(expectedAction);
-    expect(bookmarkUpdated({ account: data.account })).toEqual(expectedAction);
+    expect(bookmarkUpdated({ wallet: data.wallet })).toEqual(expectedAction);
   });
 
-  it('should create an action to remove a bookmark account', () => {
+  it('should create an action to remove a bookmark wallet', () => {
     const removedData = {
-      address: accounts.genesis.summary.address,
+      address: wallets.genesis.summary.address,
       token: tokenMap.LSK.key,
     };
     const expectedAction = {
@@ -81,6 +81,6 @@ describe('actions: boomarks', () => {
       type: actionTypes.bookmarkRemoved,
     };
     expect(bookmarkRemoved(removedData)).toEqual(expectedAction);
-    expect(bookmarkRemoved({ address: accounts.genesis.summary.address })).toEqual(expectedAction);
+    expect(bookmarkRemoved({ address: wallets.genesis.summary.address })).toEqual(expectedAction);
   });
 });

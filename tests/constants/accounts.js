@@ -1,4 +1,4 @@
-const accounts = {
+const wallets = {
   genesis: {
     passphrase: 'peanut hundred pen hawk invite exclude brain chunk gadget wait wrong ready',
     summary: {
@@ -41,7 +41,7 @@ const accounts = {
       },
     },
   },
-  empty_account: {
+  empty_wallet: {
     passphrase: 'stay undo beyond powder sand laptop grow gloom apology hamster primary arrive',
     summary: {
       publicKey: '197cf311f678406bc72a8edfdc3dffe6f59f49c4550a860e4b68fb20382211d0',
@@ -112,7 +112,7 @@ const accounts = {
       sentVotes: [],
     },
   },
-  send_all_account: {
+  send_all_wallet: {
     passphrase: 'oyster flush inquiry bright leopard gas replace ball hold pudding teach swear',
     summary: {
       publicKey: 'c5e64031407c3ca8d526bf7404f7c78ab60ea0792e90393a73b3b06a8c8841d4',
@@ -224,7 +224,7 @@ const accounts = {
     },
     dpos: { delegate: {} },
   },
-  account2P: {
+  wallet2P: {
     passphrase: 'steak avoid couple fog ability chalk jacket electric rifle fuel tuition van',
     summary: {
       address: 'lskwunwxqmss9w3mtuvzgbsfy665cz4eo3rd2mxdp',
@@ -294,4 +294,4 @@ const accounts = {
   },
 };
 
-export default accounts;
+export default wallets;
