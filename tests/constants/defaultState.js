@@ -1,11 +1,11 @@
-import accounts from './accounts';
+import wallets from './wallets';
 import moduleAssetSchemas from './schemas';
 
 export default {
   account: {
     info: {
       LSK: {
-        ...accounts.genesis,
+        ...wallets.genesis,
       },
       BTC: {},
     },
