@@ -3,9 +3,9 @@ import { withTranslation } from "react-i18next";
 import Box from '@basics/box';
 import BoxHeader from '@basics/box/header';
 import Tooltip from '@basics/tooltip/tooltip';
+import NodesList from '@network/nodesList/manager';
+import Statistics from '@network/statistics';
 import styles from './network.css';
-import NodesList from './nodesList/manager';
-import Statistics from './statistics';
 
 
 export const Network = ({
