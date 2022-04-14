@@ -25,6 +25,7 @@ describe('TransactionResult', () => {
     },
     t: t => t,
     illustration: 'default',
+    message: 'custom error message',
   };
 
   it('should render Regular component with props', () => {

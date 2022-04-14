@@ -55,7 +55,13 @@ export const filterObjectPropsWithValue = (object = {}, value) => (
 
 /**
  * Creates mailto link from an error
- * @param {string} error - error message to put into the email body
+ *
+ * @param {string} error - Stringified error code and transaction object
+ * @param {string} errorMessage - The actual error message received from the API
+ * @param {string} networkIdentifier - Network identifier from the Redux store
+ * @param {string} serviceUrl - Network service URL from the Redux store
+ * @param {string} liskCoreVersion - The version of Lisk Core running by the node
+ *
  * @returns {sting} mailto link with recipient, subject, and body
  */
 export const getErrorReportMailto = ({
