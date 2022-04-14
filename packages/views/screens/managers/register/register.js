@@ -8,7 +8,7 @@ import BackupPassphrase from './backupPassphrase';
 import ConfirmPassphrase from './confirmPassphrase';
 import AccountCreated from './accountCreated';
 import styles from './register.css';
-import useCreateAccounts from '../../../../wallet/manager/useCreateAccounts';
+import useCreateAccounts from '@wallet/hooks/useCreateAccounts';
 
 const Register = ({ account, token, history }) => {
   const [selectedAccount, setSelectedAccount] = useState({});

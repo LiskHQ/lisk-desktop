@@ -11,17 +11,6 @@ import styles from './verifyMessage.css';
 
 export default function Result({ inputs, history, t }) {
   const isCorrect = useMemo(() => verifyMessageValidator(inputs), [inputs]);
-  // let isCorrect = false;
-  // try {
-  //   isCorrect = cryptography.verifyMessageWithPublicKey({
-  //     publicKey: Buffer.from(inputs.publicKey, 'hex'),
-  //     signature: Buffer.from(inputs.signature, 'hex'),
-  //     message: inputs.message,
-  //   });
-  // } catch (e) {
-  //   isCorrect = false;
-  // }
-
   const closeModal = () => {
     history.push(routes.wallet.path);
   };
