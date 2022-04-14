@@ -11,7 +11,7 @@ import styles from './transactionSummary.css';
 
 const TransactionSummary = ({
   title, children, confirmButton, cancelButton,
-  account, t, fee, secondPassphraseStored,
+  wallet, t, fee, secondPassphraseStored,
   classNames, token, footerClassName,
 }) => {
   const tooltip = {
@@ -29,10 +29,10 @@ const TransactionSummary = ({
         </BoxHeader>
       )}
       <BoxContent className={`${styles.content} summary-content`}>
-        {account.loginType
+        {wallet.loginType
           ? (
             <Illustration
-              name={account.loginType}
+              name={wallet.loginType}
               className={styles.illustrationWrapper}
             />
           )
@@ -56,7 +56,7 @@ const TransactionSummary = ({
         confirmButton={confirmButton}
         cancelButton={cancelButton}
         footerClassName={footerClassName}
-        account={account}
+        account={wallet}
         secondPassphraseStored={secondPassphraseStored}
         t={t}
       />

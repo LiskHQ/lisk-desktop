@@ -1,6 +1,6 @@
 import React from 'react';
 import { mount } from 'enzyme';
-import accounts from '@tests/constants/wallets';
+import wallets from '@tests/constants/wallets';
 import Summary from './summary';
 
 describe('Locked balance Summary', () => {
@@ -13,7 +13,7 @@ describe('Locked balance Summary', () => {
     nextStep: jest.fn(),
     prevStep: jest.fn(),
     t: key => key,
-    account: accounts.genesis,
+    wallet: wallets.genesis,
   };
 
   afterEach(() => {

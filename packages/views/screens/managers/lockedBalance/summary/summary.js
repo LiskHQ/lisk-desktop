@@ -15,15 +15,15 @@ const Summary = ({
   rawTransaction,
   prevStep,
   nextStep,
-  account,
+  wallet,
   t,
 }) => {
   const transaction = {
-    nonce: account.sequence.nonce,
+    nonce: wallet.sequence.nonce,
     fee: fromRawLsk(rawTransaction.selectedFee),
     asset: {
       unlockObjects: getUnlockableUnlockObjects(
-        account.dpos?.unlocking, currentBlockHeight,
+        wallet.dpos?.unlocking, currentBlockHeight,
       ),
     },
   };
@@ -49,14 +49,14 @@ const Summary = ({
       title={t('Unlock LSK summary')}
       confirmButton={onConfirmAction}
       cancelButton={onCancelAction}
-      fee={!account.summary.isMultisignature && rawTransaction.selectedFee.value}
+      fee={!wallet.summary.isMultisignature && rawTransaction.selectedFee.value}
       classNames={`${styles.box} ${styles.summaryContainer}`}
     >
       <TransactionInfo
         moduleAssetId={moduleAssetId}
         transaction={transaction}
-        account={account}
-        isMultisignature={account.summary.isMultisignature}
+        account={wallet}
+        isMultisignature={wallet.summary.isMultisignature}
       />
     </TransactionSummary>
   );

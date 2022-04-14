@@ -1,6 +1,6 @@
 import React from 'react';
 import { mount } from 'enzyme';
-import accounts from '@tests/constants/wallets';
+import wallets from '@tests/constants/wallets';
 import TransactionSummary from './transactionSummary';
 
 describe('TransactionSummary', () => {
@@ -9,7 +9,7 @@ describe('TransactionSummary', () => {
   beforeEach(() => {
     props = {
       title: 'mock title',
-      account: accounts.genesis,
+      wallet: wallets.genesis,
       token: 'LSK',
       confirmButton: {
         label: 'Confirm',
@@ -32,10 +32,10 @@ describe('TransactionSummary', () => {
     const createTransaction = jest.fn();
     const wrapper = mount(<TransactionSummary {... {
       ...props,
-      account: {
-        ...props.account,
+      wallet: {
+        ...props.wallet,
         summary: {
-          ...props.account.summary,
+          ...props.wallet.summary,
           isMultisignature: true,
         },
       },
