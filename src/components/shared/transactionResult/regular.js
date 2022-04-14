@@ -42,8 +42,9 @@ const Regular = ({
     if (typeof message === 'string' && message.indexOf('address collision attack') > -1) {
       return (
         <p>
-          <span>Read more about </span>
-          <a target="_blank" href="https://lisk.com/blog/announcement/lisks-holiday-security-reminder">address collision attack</a>
+          <span>{t('Read more about')}</span>
+          &nbsp;
+          <a target="_blank" href="https://lisk.com/blog/announcement/lisks-holiday-security-reminder">{t('address collision attack')}</a>
           <span>.</span>
         </p>
       );
