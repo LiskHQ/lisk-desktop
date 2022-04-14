@@ -1,7 +1,5 @@
-// import { cryptography } from '@liskhq/lisk-client';
 import React, { useMemo } from 'react';
 import PropTypes from 'prop-types';
-
 import { PrimaryButton } from '@basics/buttons';
 import BoxFooter from '@basics/box/footer';
 import Illustration from '@basics/illustration';

@@ -12,7 +12,7 @@ import { getAutoLogInData } from '@common/utilities/login';
 import history from '@common/utilities/history';
 import blockActionTypes from '@block/store/actionTypes';
 import transactionActionTypes from '@transaction/store/actionTypes';
-import walletActionTypes from '@wallet/store/actionTypes';
+import walletActionTypes from '../store/actionTypes';
 import settingsActionTypes from '@settings/store/actionTypes';
 import middleware from './middleware';
 
