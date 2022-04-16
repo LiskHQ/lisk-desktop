@@ -13,7 +13,7 @@ const PeerRow = ({ data, className }) => (
     <span className={grid['col-xs-2']}>
       <Flag code={data.location?.countryCode} />
     </span>
-    <span className={grid['col-xs-2']}>
+    <span className={`${grid['col-xs-2']} network-span`}>
       {data.networkVersion}
     </span>
     <span className={grid['col-xs-3']}>

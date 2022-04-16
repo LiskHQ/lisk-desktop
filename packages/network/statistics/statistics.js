@@ -282,7 +282,7 @@ const ChartsWithData = ({ networkVersion, height, basic, t }) => {
   );
 }
 
-const Overview = ({
+const Statistics = ({
   networkStatistics,
   t,
 }) => (
@@ -303,4 +303,4 @@ const Overview = ({
   </Box>
 );
 
-export default Overview;
+export default Statistics;

@@ -1,66 +1,15 @@
 import React from 'react';
-import { mount, shallow } from 'enzyme';
-import peers from '@tests/constants/peers';
-import { NetworkPure } from './index';
+import { mount } from 'enzyme';
+import Network from './index';
 
-describe('Network Monitor Page', () => {
-  const networkStatistics = {
-    isLoading: false,
-    data: {},
-    loadData: jest.fn(),
-    clearData: jest.fn(),
-    urlSearchParams: {},
-  };
-  const setup = properties => mount(<NetworkPure {...properties} />);
-  const emptyPeers = {
-    isLoading: false,
-    data: [],
-    loadData: jest.fn(),
-    clearData: jest.fn(),
-    urlSearchParams: {},
-  };
-  const fullPeers = {
-    isLoading: false,
-    data: peers,
-    meta: { total: peers.length },
-    loadData: jest.fn(),
-    clearData: jest.fn(),
-    urlSearchParams: {},
-  };
-  const t = key => key;
+describe('Network view', () => {
+  const t = jest.fn().mockImplementation(str => str);
 
-  it('renders a page with header', () => {
-    const wrapper = setup({ t, peers: emptyPeers, networkStatistics });
-    expect(wrapper.find('.contentHeader')).toIncludeText('Connected peers');
-  });
-
-  it('renders the empty state if no peers passed', () => {
-    const wrapper = shallow(<NetworkPure {...{ t, peers: emptyPeers, networkStatistics }} />);
-    expect(wrapper.html().match(/empty-state/gm)).toHaveLength(4);
-  });
-
-  it('shows loading overlay while the API call is being processed', () => {
-    const wrapper = shallow(
-      <NetworkPure
-        t={t}
-        networkStatistics={networkStatistics}
-        peers={{
-          isLoading: true,
-          data: peers,
-          meta: {
-            total: peers.length * 2,
-          },
-          loadData: jest.fn(),
-          clearData: jest.fn(),
-          urlSearchParams: {},
-        }}
-      />,
-    );
-    expect(wrapper.html().match(/loadingOverlay/gm)).toHaveLength(1);
-  });
-
-  it('renders 20 peers', () => {
-    const wrapper = shallow(<NetworkPure {...{ t, peers: fullPeers, networkStatistics }} />);
-    expect(wrapper.html().match(/peer-row/gm)).toHaveLength(20);
+  it('Renders to component correctly', () => {
+    const wrapper = mount(<Network t={t} />);
+    expect(wrapper.find('h1').at(0)).toHaveText('Network statistics');
+    expect(wrapper.find('h1').at(1)).toHaveText('Connected peers');
+    expect(wrapper.find('Statistics')).toHaveLength(1);
+    expect(wrapper.find('NodeList')).toHaveLength(1);
   });
 });
