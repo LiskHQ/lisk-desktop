@@ -3,9 +3,10 @@ import { signMessageByHW } from '@wallet/utilities/hwManager';// eslint-disable-
 
 /**
  * Signs a string with the users private key
- * @param {string} message - string value to be signed
- * @param {Object} account - Account of the user 
- * @returns {string} result - A signed value of the message
+ * @param {Object} signData - consists of the message and account information
+ * @param {string} signData.message - A signed value of the message
+ * @param {Object} signData.account - Account of the signed in user
+ * @return {string} a signed value of the message
  */
 export const signUsingPrivateKey = ({ message, account }) => {
   const msgBytes = cryptography.digestMessage(message);
@@ -20,9 +21,10 @@ export const signUsingPrivateKey = ({ message, account }) => {
 
 /**
  * Signs a string using hardware wallet
- * @param {string} message - string value to be signed
- * @param {Object} account - Account of the user 
- * @returns {string} result - A signed value of the message
+ * @param {Object} signData - consists of the message and account information
+ * @param {string} signData.message - A signed value of the message
+ * @param {Object} signData.account - Account of the signed in user
+ * @return {string} a signed value of the message
  */
 export const signUsingHW = async ({ message, account }) => {
   let signedMessage = await signMessageByHW({

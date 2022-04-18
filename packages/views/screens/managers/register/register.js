@@ -3,12 +3,12 @@ import grid from 'flexboxgrid/dist/flexboxgrid.css';
 import routes from '@screens/router/routes';
 import MultiStepProgressBar from '@shared/multiStepProgressBar';
 import MultiStep from '@dpos/manage/registerDelegateMultiStep';
+import useCreateAccounts from '@wallet/hooks/useCreateAccounts';
 import ChooseAvatar from './chooseAvatar';
 import BackupPassphrase from './backupPassphrase';
 import ConfirmPassphrase from './confirmPassphrase';
 import AccountCreated from './accountCreated';
 import styles from './register.css';
-import useCreateAccounts from '@wallet/hooks/useCreateAccounts';
 
 const Register = ({ account, token, history }) => {
   const [selectedAccount, setSelectedAccount] = useState({});
