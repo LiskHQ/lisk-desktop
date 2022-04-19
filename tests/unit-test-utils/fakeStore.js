@@ -1,6 +1,6 @@
 import configureStore from 'redux-mock-store';
 import { tokenMap } from '@token/configuration/tokens';
-import accounts from '../constants/accounts';
+import accounts from '../constants/wallets';
 import delegates from '../constants/delegates';
 
 const forgers = Object.values(accounts).slice(0, 9).map((account, index) => ({

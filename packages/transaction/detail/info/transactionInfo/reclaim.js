@@ -6,7 +6,7 @@ import { tokenMap } from '@token/configuration/tokens';
 const Reclaim = ({ account, t }) => (
   <>
     <section>
-      <AccountMigration account={account.info.LSK} showBalance={false} />
+      <AccountMigration wallet={account.info.LSK} showBalance={false} />
     </section>
     <section>
       <label>{t('Balance to reclaim')}</label>

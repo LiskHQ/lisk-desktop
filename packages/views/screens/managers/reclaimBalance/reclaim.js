@@ -12,8 +12,8 @@ import { selectActiveTokenAccount } from '@common/store/selectors';
 import styles from './index.css';
 
 const Reclaim = ({ t }) => {
-  const account = useSelector(selectActiveTokenAccount);
-  const hasEnoughBalance = hasEnoughBalanceForReclaim(Number(account.token?.balance));
+  const wallet = useSelector(selectActiveTokenAccount);
+  const hasEnoughBalance = hasEnoughBalanceForReclaim(Number(wallet.token?.balance));
 
   return (
     <div className={`${styles.container} ${styles.reclaim}`}>
@@ -25,7 +25,7 @@ const Reclaim = ({ t }) => {
       </p>
       <section className={styles.box}>
         <div className={styles.accountMigrationContainer}>
-          <AccountMigration account={account} showBalance />
+          <AccountMigration wallet={wallet} showBalance />
         </div>
         <div>
           <h5 className={styles.listHeading}>{t('You will be able to:')}</h5>
