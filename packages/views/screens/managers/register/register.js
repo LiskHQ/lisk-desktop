@@ -12,7 +12,7 @@ import styles from './register.css';
 
 const Register = ({ account, token, history }) => {
   const [selectedAccount, setSelectedAccount] = useState({});
-  const { accounts } = useCreateAccounts();
+  const { suggestionAccounts } = useCreateAccounts();
 
   useEffect(() => {
     if (account?.info?.[token.active].address) {
@@ -32,7 +32,7 @@ const Register = ({ account, token, history }) => {
           progressBar={MultiStepProgressBar}
         >
           <ChooseAvatar
-            accounts={accounts}
+            accounts={suggestionAccounts}
             selected={selectedAccount}
             handleSelectAvatar={handleSelectAvatar}
           />
