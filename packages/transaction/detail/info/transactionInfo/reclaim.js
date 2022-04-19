@@ -1,12 +1,12 @@
 import React from 'react';
-import AccountMigration from '@legacy/detail/info/accountMigration';
+import WalletMigration from '@legacy/detail/info/walletMigration';
 import LiskAmount from '@shared/liskAmount';
 import { tokenMap } from '@token/configuration/tokens';
 
 const Reclaim = ({ account, t }) => (
   <>
     <section>
-      <AccountMigration wallet={account.info.LSK} showBalance={false} />
+      <WalletMigration wallet={account.info.LSK} showBalance={false} />
     </section>
     <section>
       <label>{t('Balance to reclaim')}</label>

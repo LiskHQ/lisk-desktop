@@ -9,10 +9,10 @@ import styles from './index.css';
 
 const token = tokenMap.LSK.key;
 
-const AccountMigration = ({ wallet, showBalance }) => {
+const WalletMigration = ({ wallet, showBalance }) => {
   const { t } = useTranslation();
   return (
-    <div className={styles.accountContainer}>s
+    <div className={styles.accountContainer}>
       <div>
         <h5>{t('Old account')}</h5>
         <div className={styles.addressContainer}>
@@ -42,6 +42,6 @@ const AccountMigration = ({ wallet, showBalance }) => {
       </div>
     </div>
   );
-};  
+};
 
-export default AccountMigration;
+export default WalletMigration;

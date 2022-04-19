@@ -4,7 +4,7 @@ import { useSelector } from 'react-redux';
 import Tooltip from '@basics/tooltip/tooltip';
 import { PrimaryButton } from '@basics/buttons';
 import DialogLink from '@basics/dialog/link';
-import AccountMigration from '@legacy/detail/info/accountMigration';
+import WalletMigration from '@legacy/detail/info/walletMigration';
 import { hasEnoughBalanceForReclaim } from '@wallet/utilities/account';
 import { fromRawLsk } from '@token/utilities/lsk';
 import { balanceNeededForReclaim } from '@wallet/configuration/account';
@@ -24,8 +24,8 @@ const Reclaim = ({ t }) => {
         {t('We kindly ask you to transfer your balance to the new account.')}
       </p>
       <section className={styles.box}>
-        <div className={styles.accountMigrationContainer}>
-          <AccountMigration wallet={wallet} showBalance />
+        <div className={styles.walletMigrationContainer}>
+          <WalletMigration wallet={wallet} showBalance />
         </div>
         <div>
           <h5 className={styles.listHeading}>{t('You will be able to:')}</h5>
