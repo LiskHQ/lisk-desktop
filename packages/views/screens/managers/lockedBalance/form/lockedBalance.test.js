@@ -6,7 +6,7 @@ import * as hwManager from '@transaction/utilities/hwManager';
 import { create } from '@transaction/utilities/api';
 import useTransactionPriority from '@transaction/manage/transactionPriority/useTransactionPriority';
 import useTransactionFeeCalculation from '@transaction/manage/transactionPriority/useTransactionFeeCalculation';
-import accounts from '@tests/constants/wallets';
+import wallets from '@tests/constants/wallets';
 import flushPromises from '@tests/unit-test-utils/flushPromises';
 import LockedBalance from './index';
 
@@ -58,11 +58,11 @@ describe('Unlock LSK modal', () => {
   ];
 
   const store = {
-    account: {
-      ...accounts.genesis,
+    wallet: {
+      ...wallets.genesis,
       info: {
         LSK: {
-          ...accounts.genesis,
+          ...wallets.genesis,
           dpos: {
             unlocking: initUnlocking,
             sentVotes: initVotes,

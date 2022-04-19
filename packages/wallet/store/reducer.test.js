@@ -1,6 +1,6 @@
-import accounts from '@tests/constants/wallets';
+import wallets from '@tests/constants/wallets';
 import actionTypes from './actionTypes';
-import account from './reducer';
+import wallet from './reducer';
 
 describe('Reducer: account(state, action)', () => {
   let state;
@@ -10,7 +10,7 @@ describe('Reducer: account(state, action)', () => {
       passphrase,
       publicKey,
       address,
-    } = accounts.genesis;
+    } = wallets.genesis;
     state = {
       balance: 0,
       passphrase,
@@ -29,8 +29,8 @@ describe('Reducer: account(state, action)', () => {
         },
       },
     };
-    const changedAccount = account(state, action);
-    expect(changedAccount).toEqual({
+    const changedWallet = wallet(state, action);
+    expect(changedWallet).toEqual({
       ...state,
       info: action.data,
     });
@@ -40,8 +40,8 @@ describe('Reducer: account(state, action)', () => {
     const action = {
       type: actionTypes.accountLoggedOut,
     };
-    const changedAccount = account(state, action);
-    expect(changedAccount).toEqual({ afterLogout: true });
+    const changedWallet = wallet(state, action);
+    expect(changedWallet).toEqual({ afterLogout: true });
   });
 
   it('should return account object with changes if action.type = actionTypes.timerReset', () => {
@@ -49,8 +49,8 @@ describe('Reducer: account(state, action)', () => {
       type: actionTypes.timerReset,
       data: new Date('2021-02-09T15:37:25.880Z'),
     };
-    const changedAccount = account(state, action);
-    expect(changedAccount).toEqual({
+    const changedWallet = wallet(state, action);
+    expect(changedWallet).toEqual({
       ...state,
       expireTime: new Date('2021-02-09T15:47:25.880Z'),
     });
@@ -60,20 +60,20 @@ describe('Reducer: account(state, action)', () => {
     const action = {
       type: actionTypes.accountLoading,
     };
-    const changedAccount = account(state, action);
-    expect(changedAccount).toEqual({ loading: true });
+    const changedWallet = wallet(state, action);
+    expect(changedWallet).toEqual({ loading: true });
   });
 
   it('should reduce account when accountLoggedIn has been triggered', () => {
     const action = {
       data: {
-        delegate: accounts.delegate_candidate,
+        delegate: wallets.delegate_candidate,
         date: new Date(),
       },
       type: actionTypes.accountLoggedIn,
     };
-    const accountWithDelegateUpdated = account(state, action);
-    expect(accountWithDelegateUpdated.delegate).toEqual(accounts.delegate_candidate);
+    const accountWithDelegateUpdated = wallet(state, action);
+    expect(accountWithDelegateUpdated.delegate).toEqual(wallets.delegate_candidate);
   });
 
   it('should store the second passphrase once called with secondPassphraseStored', () => {
@@ -81,7 +81,7 @@ describe('Reducer: account(state, action)', () => {
       data: 'sample passphrase',
       type: actionTypes.secondPassphraseStored,
     };
-    const updatedState = account(state, action);
+    const updatedState = wallet(state, action);
     expect(updatedState.secondPassphrase).toEqual(action.data);
   });
 
@@ -93,7 +93,7 @@ describe('Reducer: account(state, action)', () => {
       ...state,
       secondPassphrase: 'sample passphrase',
     };
-    const updatedState = account(oldState, action);
+    const updatedState = wallet(oldState, action);
     expect(updatedState.secondPassphrase).toEqual(null);
   });
 
@@ -101,7 +101,7 @@ describe('Reducer: account(state, action)', () => {
     const action = {
       type: 'UNKNOWN',
     };
-    const changedAccount = account(state, action);
-    expect(changedAccount).toEqual(state);
+    const changedWallet = wallet(state, action);
+    expect(changedWallet).toEqual(state);
   });
 });

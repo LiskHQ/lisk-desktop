@@ -5,7 +5,7 @@ import { act } from 'react-dom/test-utils';
 import { getTransactionBaseFees, getTransactionFee } from '@transaction/utilities/api';
 import useTransactionFeeCalculation from '@transaction/manage/transactionPriority/useTransactionFeeCalculation';
 import { fromRawLsk } from '@token/utilities/lsk';
-import accounts from '@tests/constants/wallets';
+import wallets from '@tests/constants/wallets';
 
 import Form, { validateState } from './form';
 
@@ -39,7 +39,7 @@ describe('Multisignature editor component', () => {
   let wrapper;
   const props = {
     t: v => v,
-    account: accounts.genesis,
+    account: wallets.genesis,
     nextStep: jest.fn(),
   };
 
@@ -87,11 +87,11 @@ describe('Multisignature editor component', () => {
   it('props.nextStep is called when the CTA is clicked', () => {
     wrapper.find('input.input-with-dropdown-input').at(0).simulate(
       'change',
-      { target: { value: accounts.genesis.summary.publicKey } },
+      { target: { value: wallets.genesis.summary.publicKey } },
     );
     wrapper.find('input.input-with-dropdown-input').at(1).simulate(
       'change',
-      { target: { value: accounts.delegate.summary.publicKey } },
+      { target: { value: wallets.delegate.summary.publicKey } },
     );
     act(() => { wrapper.update(); });
     wrapper.find('.confirm-button').at(0).simulate('click');
@@ -101,7 +101,7 @@ describe('Multisignature editor component', () => {
 
 describe('validateState', () => {
   it('should return error if signature are less than mandatory members', () => {
-    const pbk = accounts.genesis.summary.publicKey;
+    const pbk = wallets.genesis.summary.publicKey;
     const params = {
       mandatoryKeys: [pbk, pbk, pbk],
       optionalKeys: [],
@@ -113,7 +113,7 @@ describe('validateState', () => {
   });
 
   it('should return error if signatures are more than all members', () => {
-    const pbk = accounts.genesis.summary.publicKey;
+    const pbk = wallets.genesis.summary.publicKey;
     const params = {
       mandatoryKeys: [pbk, pbk, pbk],
       optionalKeys: [],
@@ -125,7 +125,7 @@ describe('validateState', () => {
   });
 
   it('should return error if optional members are practically mandatory', () => {
-    const pbk = accounts.genesis.summary.publicKey;
+    const pbk = wallets.genesis.summary.publicKey;
     const params = {
       mandatoryKeys: [pbk, pbk, pbk],
       optionalKeys: [pbk],
@@ -137,7 +137,7 @@ describe('validateState', () => {
   });
 
   it('should return error if optional members never get to sign', () => {
-    const pbk = accounts.genesis.summary.publicKey;
+    const pbk = wallets.genesis.summary.publicKey;
     const params = {
       mandatoryKeys: [pbk, pbk, pbk],
       optionalKeys: [pbk],
@@ -149,7 +149,7 @@ describe('validateState', () => {
   });
 
   it('should return error if there are only optional members', () => {
-    const pbk = accounts.genesis.summary.publicKey;
+    const pbk = wallets.genesis.summary.publicKey;
     const params = {
       mandatoryKeys: [],
       optionalKeys: [pbk, pbk, pbk],
@@ -161,7 +161,7 @@ describe('validateState', () => {
   });
 
   it('should return error if the number of signature is equal to optional and mandatory members', () => {
-    const pbk = accounts.genesis.summary.publicKey;
+    const pbk = wallets.genesis.summary.publicKey;
     const params = {
       mandatoryKeys: [pbk, pbk, pbk],
       optionalKeys: [pbk, pbk, pbk],
@@ -173,7 +173,7 @@ describe('validateState', () => {
   });
 
   it('should return error if there are more than 64 members', () => {
-    const pbk = accounts.genesis.summary.publicKey;
+    const pbk = wallets.genesis.summary.publicKey;
     const params = {
       mandatoryKeys: new Array(65).fill(pbk),
       optionalKeys: [],
@@ -184,7 +184,7 @@ describe('validateState', () => {
     expect(validateState(params).messages).toContain(error);
   });
   it('should return error if there are duplicate public keys', () => {
-    const pbk = accounts.genesis.summary.publicKey;
+    const pbk = wallets.genesis.summary.publicKey;
     const params = {
       mandatoryKeys: new Array(2).fill(pbk),
       optionalKeys: [],

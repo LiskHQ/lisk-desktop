@@ -1,13 +1,13 @@
 import { renderHook } from '@testing-library/react-hooks';
-import accounts from '@tests/constants/wallets';
+import wallets from '@tests/constants/wallets';
 import useTransactionFeeCalculation from './useTransactionFeeCalculation';
 
 describe('useTransactionFeeCalculation', () => {
   const props = {
     token: 'LSK',
-    account: {
-      ...accounts.genesis,
-      summary: { ...accounts.genesis.summary, isMultisignature: true },
+    wallet: {
+      ...wallets.genesis,
+      summary: { ...wallets.genesis.summary, isMultisignature: true },
       keys: {
         numberOfSignatures: 10,
         optionalKeys: [],
@@ -18,8 +18,8 @@ describe('useTransactionFeeCalculation', () => {
     selectedPriority: { value: 1, selectedIndex: 0 },
     transaction: {
       moduleAssetId: '2:0',
-      recipientAddress: accounts.genesis.summary.address,
-      senderPublicKey: accounts.genesis.summary.publicKey,
+      recipientAddress: wallets.genesis.summary.address,
+      senderPublicKey: wallets.genesis.summary.publicKey,
       amount: '100000000',
       fee: '1000',
       nonce: 1,
