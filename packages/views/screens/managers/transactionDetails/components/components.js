@@ -15,7 +15,7 @@ import LiskAmount from '@shared/liskAmount';
 import MultiSignatureMembers, { SignedAndRemainingMembers } from '@wallet/detail/identity/multisignatureMembers';
 import Tooltip from '@basics/tooltip/tooltip';
 import { extractAddressFromPublicKey, truncateAddress, calculateRemainingAndSignedMembers } from '@wallet/utilities/account';
-import WalletInfo from '@wallet/detail/identity/walletInfo';
+import WalletInfo from './walletInfo';
 
 import { Context } from '../transactionDetails';
 import styles from './styles.css';
