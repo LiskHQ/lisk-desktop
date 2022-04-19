@@ -4,7 +4,7 @@ import grid from 'flexboxgrid/dist/flexboxgrid.css';
 import gridVisibility from 'flexboxgrid-helpers/dist/flexboxgrid-helpers.min.css';
 
 import DateTimeFromTimestamp from '@basics/timestamp';
-import AccountVisualWithAddress from '@wallet/detail/identity/accountVisual/accountVisualWithAddress';
+import WalletVisualWithAddress from '@wallet/detail/identity/walletVisual/walletVisualWithAddress';
 import DialogLink from '@basics/dialog/link';
 import VoteItem from '@transaction/list/row/voteItem';
 import styles from '../delegates.css';
@@ -58,7 +58,7 @@ const VoteRow = ({
       data={{ transactionId: data.id, token: 'LSK' }}
     >
       <span className={grid['col-xs-4']}>
-        <AccountVisualWithAddress
+        <WalletVisualWithAddress
           address={data.sender.address}
           transactionSubject="senderId"
           transactionType={3}

@@ -134,7 +134,7 @@ describe('TopBar', () => {
     expect(wrapper.find('div.searchDropdown')).not.toHaveClassName('show');
   });
 
-  it('renders searched value in the search container with AccountVisual when the url contains an account address', () => {
+  it('renders searched value in the search container with WalletVisual when the url contains an account address', () => {
     const wrapper = mountWithRouter(
       TopBar,
       {
@@ -147,7 +147,7 @@ describe('TopBar', () => {
     );
     expect(wrapper).toContainMatchingElement('img.search-icon');
     expect(wrapper).toContainMatchingElement('span.searchedValue');
-    expect(wrapper).toContainMatchingElement('AccountVisual');
+    expect(wrapper).toContainMatchingElement('WalletVisual');
     expect(wrapper.find('div.searchDropdown')).not.toHaveClassName('show');
   });
 
@@ -164,7 +164,7 @@ describe('TopBar', () => {
     );
     expect(wrapper).toContainMatchingElement('img.search-icon');
     expect(wrapper).not.toContainMatchingElement('span.searchedValue');
-    expect(wrapper).not.toContainMatchingElement('AccountVisual');
+    expect(wrapper).not.toContainMatchingElement('WalletVisual');
     expect(wrapper.find('div.searchDropdown')).not.toHaveClassName('show');
   });
 

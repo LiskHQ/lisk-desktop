@@ -3,11 +3,11 @@ import PropTypes from 'prop-types';
 import React from 'react';
 import routes from '@screens/router/routes';
 import { validateAddress } from '@common/utilities/validators';
-import AccountVisual from '@wallet/detail/identity/accountVisual';
+import WalletVisual from '@wallet/detail/identity/walletVisual';
 
 import styles from './styles.css';
 
-const AccountInfo = ({
+const WalletInfo = ({
   name = '',
   label,
   address,
@@ -18,10 +18,10 @@ const AccountInfo = ({
 }) => {
   const addressLink = `${routes.account.path}?address=${address}`;
   return (
-    <div className={`${styles.accountInfo} ${className}`}>
+    <div className={`${styles.walletInfo} ${className}`}>
       <p className={styles.label}>{label}</p>
       <div className={styles.addressRow}>
-        <AccountVisual className={styles.avatar} address={address} size={25} />
+        <WalletVisual className={styles.avatar} address={address} size={25} />
         { validateAddress(token, address, network) === 0
           ? (
             <Link
@@ -44,11 +44,11 @@ const AccountInfo = ({
   );
 };
 
-AccountInfo.propTypes = {
+WalletInfo.propTypes = {
   address: PropTypes.string.isRequired,
   label: PropTypes.string.isRequired,
   addressClass: PropTypes.string,
   name: PropTypes.string,
 };
 
-export default AccountInfo;
+export default WalletInfo;

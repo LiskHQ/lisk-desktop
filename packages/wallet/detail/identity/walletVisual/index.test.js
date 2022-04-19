@@ -1,11 +1,11 @@
 import React from 'react';
 import { mount } from 'enzyme';
 import accounts from '@tests/constants/wallets';
-import AccountVisual from './index';
+import WalletVisual from './index';
 
-describe.skip('AccountVisual', () => {
+describe.skip('WalletVisual', () => {
   it('should create account visual of an address', () => {
-    const wrapper = mount(<AccountVisual address="lsks6uckwnap7s72ov3edddwgxab5e89t6uy8gjt6" />);
+    const wrapper = mount(<WalletVisual address="lsks6uckwnap7s72ov3edddwgxab5e89t6uy8gjt6" />);
 
     // should render an svg element
     expect(wrapper.find('svg')).toHaveLength(1);
@@ -44,7 +44,7 @@ describe.skip('AccountVisual', () => {
   });
 
   it('should be able to create account visual that contains a rectangle', () => {
-    const wrapper = mount(<AccountVisual address={accounts.delegate.address} />);
+    const wrapper = mount(<WalletVisual address={accounts.delegate.address} />);
     expect(wrapper.find('rect').getDOMNode().getAttribute('x')).toEqual('11');
     expect(wrapper.find('rect').getDOMNode().getAttribute('y')).toEqual('9');
     expect(wrapper.find('rect').getDOMNode().getAttribute('height')).toEqual('16.56');

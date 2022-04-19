@@ -5,7 +5,7 @@ import { selectSearchParamValue } from '@screens/router/searchParams';
 import routes from '@screens/router/routes';
 import Icon from '@basics/icon';
 import DialogLink from '@basics/dialog/link';
-import AccountVisual from '@wallet/detail/identity/accountVisual';
+import WalletVisual from '@wallet/detail/identity/walletVisual';
 import Tooltip from '@basics/tooltip/tooltip';
 import styles from './topBar.css';
 
@@ -55,8 +55,8 @@ const Search = ({
             {
               relevantSearchParam === routes.account.searchParam && relevantSearchParamValue
                 && (
-                  <AccountVisual
-                    className={styles.accountVisual}
+                  <WalletVisual
+                    className={styles.walletVisual}
                     size={18}
                     address={relevantSearchParamValue}
                   />

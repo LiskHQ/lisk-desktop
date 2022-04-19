@@ -1,7 +1,7 @@
 import PropTypes from 'prop-types';
 import React from 'react';
 import { validateAddress } from '@common/utilities/validators';
-import AccountVisual from '@wallet/detail/identity/accountVisual';
+import WalletVisual from '@wallet/detail/identity/walletVisual';
 import AutoSuggest from '@basics/autoSuggest';
 import styles from './form.css';
 
@@ -80,16 +80,16 @@ class BookmarkAutoSuggest extends React.Component {
         selectedItem={recipient}
         onSelectItem={this.onSelectedAccount}
         renderIcon={() => (
-          <AccountVisual
+          <WalletVisual
             address={recipient.address}
             placeholder={!(recipient.address.length && !recipient.error)}
             size={25}
-            className={styles.recipientAccountVisual}
+            className={styles.recipientWalletVisual}
           />
         )}
         renderItem={bookmark => (
           <>
-            <AccountVisual address={bookmark.address} size={25} />
+            <WalletVisual address={bookmark.address} size={25} />
             <span>{bookmark.title}</span>
             <span>{bookmark.address}</span>
           </>

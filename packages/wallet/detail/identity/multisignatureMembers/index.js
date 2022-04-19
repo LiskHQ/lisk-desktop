@@ -1,6 +1,6 @@
 import React from 'react';
 
-import AccountVisual from '@wallet/detail/identity/accountVisual';
+import WalletVisual from '@wallet/detail/identity/walletVisual';
 import { truncateAddress } from '@wallet/utilities/account';
 
 import styles from './styles.css';
@@ -8,7 +8,7 @@ import styles from './styles.css';
 const Member = ({ member, i, t }) => (
   <div className={`${styles.memberInfo} member-info`}>
     {i !== undefined && <p className={styles.memberInfoIndex}>{`${i + 1}.`}</p>}
-    <AccountVisual address={member.address} />
+    <WalletVisual address={member.address} />
     <div className={styles.memberDetails}>
       <p className={`${styles.memberTitle} member-title`}>
         {member.name || truncateAddress(member.address)}

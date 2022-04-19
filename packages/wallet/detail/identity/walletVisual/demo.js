@@ -3,14 +3,14 @@ import Waypoint from 'react-waypoint';
 import { extractAddressFromPassphrase } from '@wallet/utilities/account';
 import { generatePassphraseFromSeed } from '@views/utilities/passphrase';
 import DemoRenderer from '@basics/demoRenderer';
-import AccountVisual from '.';
+import WalletVisual from '.';
 
 /**
  * Ignored the unit test coverage of this component
  * since it's developed for demonstration purpose only
  */
 /* istanbul ignore next */
-const AccountVisualDemo = () => {
+const WalletVisualDemo = () => {
   const loadMore = (acc) => {
     const offset = acc.length;
     const bytes = [];
@@ -34,7 +34,7 @@ const AccountVisualDemo = () => {
 
   return (
     <div>
-      <h2>AccountVisual</h2>
+      <h2>WalletVisual</h2>
       <div style={{ whiteSpace: 'no-break' }}>
         {accounts.map(account => (
           <DemoRenderer
@@ -49,7 +49,7 @@ const AccountVisualDemo = () => {
               fontSize: 14,
             }}
           >
-            <AccountVisual size={size} address={account} />
+            <WalletVisual size={size} address={account} />
           </DemoRenderer>
         ))}
       </div>
@@ -61,4 +61,4 @@ const AccountVisualDemo = () => {
   );
 };
 
-export default AccountVisualDemo;
+export default WalletVisualDemo;

@@ -5,7 +5,7 @@ import generateUniqueId from '@views/utilities/generateUniqueId';
 import { tokenMap } from '@token/configuration/tokens';
 import { validateAddress } from '@common/utilities/validators';
 import { Gradients, gradientSchemes } from './gradients';
-import styles from './accountVisual.css';
+import styles from './walletVisual.css';
 
 const round = num => Math.round((num + Number.EPSILON) * 100) / 100;
 
@@ -181,7 +181,7 @@ function replaceUrlByHashOnScheme(uniqueSvgUrlHash, gradientScheme) {
   };
 }
 
-class AccountVisual extends React.Component {
+class WalletVisual extends React.Component {
   constructor(props) {
     super(props);
     this.uniqueSvgUrlHash = generateUniqueId();
@@ -240,7 +240,7 @@ class AccountVisual extends React.Component {
 
     return (
       <div style={{ height: size, width: size }} className={`${styles.wrapper} ${className}`}>
-        <svg height={size} width={size} className={styles.accountVisual}>
+        <svg height={size} width={size} className={styles.walletVisual}>
           <Gradients scheme={gradientsSchemesUrlsHashed} />
           {shapes.map((shape, i) => (
             <shape.component {...shape.props} key={i} />
@@ -251,8 +251,8 @@ class AccountVisual extends React.Component {
   }
 }
 
-AccountVisual.defaultProps = {
+WalletVisual.defaultProps = {
   size: 40,
 };
 
-export default AccountVisual;
+export default WalletVisual;

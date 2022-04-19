@@ -1,8 +1,8 @@
 import React from 'react';
 import { mount } from 'enzyme';
-import AccountVisualWithAddress from '.';
+import WalletVisualWithAddress from '.';
 
-describe('AccountVisualWithAddress component', () => {
+describe('WalletVisualWithAddress component', () => {
   const props = {
     showBookmarkedAddress: true,
     transactionSubject: 'senderId',
@@ -16,7 +16,7 @@ describe('AccountVisualWithAddress component', () => {
   };
 
   it('should show bookmarked name if address is bookmarked', () => {
-    const wrapper = mount(<AccountVisualWithAddress {...props} />);
+    const wrapper = mount(<WalletVisualWithAddress {...props} />);
     expect(wrapper.find('.addressValue').at(0)).toHaveText('BM');
   });
 });

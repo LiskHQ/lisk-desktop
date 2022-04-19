@@ -92,7 +92,7 @@ module.exports = {
     'packages/views/shared/transactionInfo/',
     'packages/views/shared/formattedNumber/stories.js',
     'packages/views/shared/header/signInHeader/signInHeader.js',
-    'packages/views/shared/accountVisualWithAddress/index.js',
+    'packages/views/shared/walletVisualWithAddress/index.js',
     'packages/views/shared/voteWeight/index.js',
     'packages/views/shared/transactionTypeFigure/index.js',
     'packages/views/shared/filterDropdownButton/textFilter.js',

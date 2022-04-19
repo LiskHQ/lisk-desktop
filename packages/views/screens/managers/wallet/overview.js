@@ -11,7 +11,7 @@ import { getTransactions } from '@transaction/utilities/api';
 import { selectTransactions } from '@common/store/selectors';
 import FlashMessageHolder from '@basics/flashMessage/holder';
 import WarnPunishedDelegate from '@dpos/detail/info/warnPunishedDelegate';
-import AccountInfo from '@wallet/detail/identity/accountInfo';
+import WalletInfo from '@wallet/detail/identity/walletInfo';
 import BalanceChart from '@wallet/detail/holdings/balanceChart';
 import BalanceInfo from '@wallet/detail/holdings/balanceInfo';
 import styles from './overview.css';
@@ -113,7 +113,7 @@ const Overview = ({
       <div
         className={`${grid['col-xs-6']} ${grid['col-md-3']} ${grid['col-lg-3']}`}
       >
-        <AccountInfo
+        <WalletInfo
           t={t}
           hwInfo={hwInfo}
           activeToken={activeToken}

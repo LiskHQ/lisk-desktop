@@ -1,5 +1,5 @@
 import React from 'react';
-import AccountVisualDemo from '@wallet/detail/identity/accountVisual/demo';
+import WalletVisualDemo from '@wallet/detail/identity/walletVisual/demo';
 import AutoSuggestDemo from './autoSuggest/demo';
 import CalendarDemo from './calendar/demo';
 import IllustrationDemo from './illustration/demo';
@@ -31,7 +31,7 @@ const WithTableOfContents = ({
 
 const ToolboxDemo = () => (
   <WithTableOfContents>
-    <AccountVisualDemo />
+    <WalletVisualDemo />
     <AutoSuggestDemo />
     <CalendarDemo />
     <IllustrationDemo />

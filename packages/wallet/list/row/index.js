@@ -7,7 +7,7 @@ import routes from '@screens/router/routes';
 import { tokenMap } from '@token/configuration/tokens';
 // import { formatAmountBasedOnLocale } from '@common/utilities/formattedNumber';
 import LiskAmount from '@shared/liskAmount';
-import AccountVisualWithAddress from '@wallet/detail/identity/accountVisual/accountVisualWithAddress';
+import WalletVisualWithAddress from '@wallet/detail/identity/walletVisual/walletVisualWithAddress';
 import styles from './wallet.css';
 
 const getOwnerName = (account) => {
@@ -39,7 +39,7 @@ const AccountRow = ({ data, className }) => (
       {data.rank}
     </span>
     <span className={`${grid['col-xs-3']} ${grid['col-md-5']}`}>
-      <AccountVisualWithAddress
+      <WalletVisualWithAddress
         address={data.summary?.address}
         transactionSubject="address"
         showBookmarkedAddress

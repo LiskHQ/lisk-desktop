@@ -1,5 +1,5 @@
 import React from 'react';
-import AccountVisual from '@wallet/detail/identity/accountVisual';
+import WalletVisual from '@wallet/detail/identity/walletVisual';
 import LiskAmount from '@shared/liskAmount';
 import { tokenMap } from '@token/configuration/tokens';
 import styles from './transactionInfo.css';
@@ -9,7 +9,7 @@ const UnlockBalance = ({ account, t, transaction = {} }) => (
     <section className={styles.sender}>
       <label>{t('Sender')}</label>
       <label>
-        <AccountVisual address={account.summary.address} size={25} />
+        <WalletVisual address={account.summary.address} size={25} />
         <label className={`${styles.address} address-label`}>
           {account.summary.address}
         </label>

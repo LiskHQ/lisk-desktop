@@ -1,7 +1,7 @@
 import React from 'react';
 
 import { Link } from 'react-router-dom';
-import AccountVisual from '@wallet/detail/identity/accountVisual';
+import WalletVisual from '@wallet/detail/identity/walletVisual';
 import { truncateAddress } from '@wallet/utilities/account';
 import styles from './delegateProfile.css';
 
@@ -12,8 +12,8 @@ const VoterRow = ({ data = {} }) => {
       className={styles.voteRow}
       to={`account?address=${address}`}
     >
-      <AccountVisual
-        className={styles.accountVisual}
+      <WalletVisual
+        className={styles.walletVisual}
         address={address}
         size={40}
       />

@@ -7,7 +7,7 @@ import Icon from '@basics/icon';
 import CopyToClipboard from '@basics/copyToClipboard';
 import Tooltip from '@basics/tooltip/tooltip';
 import DialogLink from '@basics/dialog/link';
-import styles from './accountInfo.css';
+import styles from './walletInfo.css';
 
 const BookmarkIcon = ({ bookmark }) => (
   <Icon

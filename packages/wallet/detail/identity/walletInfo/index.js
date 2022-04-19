@@ -1,13 +1,13 @@
 import React, { useState } from 'react';
-import AccountVisual from '@wallet/detail/identity/accountVisual';
+import WalletVisual from '@wallet/detail/identity/walletVisual';
 import Box from '@basics/box';
 import BoxContent from '@basics/box/content';
 import Icon from '@basics/icon';
-import styles from './accountInfo.css';
+import styles from './walletInfo.css';
 import Identity from './identity';
 import ActionBar from './actionBar';
 
-const AccountInfo = ({
+const WalletInfo = ({
   address, t, activeToken, hwInfo, account, username, bookmark, isMultisignature, host,
 }) => {
   const [showFullAddress, setShowFullAddress] = useState(false);
@@ -18,7 +18,7 @@ const AccountInfo = ({
       <BoxContent className={`${styles.content} ${styles[activeToken]}`}>
         <h2 className={styles.title}>{t('Wallet address')}</h2>
         <div className={`${styles.info} ${showFullAddress ? styles.showFullAddress : ''}`}>
-          <AccountVisual
+          <WalletVisual
             address={address}
             size={40}
           />
@@ -55,4 +55,4 @@ const AccountInfo = ({
   );
 };
 
-export default AccountInfo;
+export default WalletInfo;

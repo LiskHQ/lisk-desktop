@@ -3,7 +3,7 @@ import React from 'react';
 import { truncateAddress } from '@wallet/utilities/account';
 import Tooltip from '@basics/tooltip/tooltip';
 import CopyToClipboard from '@basics/copyToClipboard';
-import styles from './accountInfo.css';
+import styles from './walletInfo.css';
 
 const Legacy = ({ legacyAddress }) => (
   <div className={styles.legacy}>

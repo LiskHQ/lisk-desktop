@@ -1,5 +1,5 @@
 import React from 'react';
-import WalletVisual from '@wallet/detail/identity/accountVisual';
+import WalletVisual from '@wallet/detail/identity/walletVisual';
 import { truncateAddress } from '@wallet/utilities/account';
 import styles from './walletsAndDeletegates.css';
 
@@ -24,7 +24,7 @@ const Accounts = ({
             onMouseEnter={updateRowItemIndex}
           >
             <WalletVisual address={wallet.summary?.address} />
-            <div className={styles.accountInformation}>
+            <div className={styles.walletInformation}>
               {
                 isDelegate
                   ? (

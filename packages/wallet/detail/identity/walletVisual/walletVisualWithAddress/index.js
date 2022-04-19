@@ -8,10 +8,10 @@ import { MODULE_ASSETS_NAME_ID_MAP, MODULE_ASSETS_MAP } from '@transaction/confi
 import { truncateAddress } from '@wallet/utilities/account';
 import { getModuleAssetTitle } from '@transaction/utilities/moduleAssets';
 import Icon from '@basics/icon';
-import AccountVisual from '@wallet/detail/identity/accountVisual';
-import styles from './accountVisualWithAddress.css';
+import WalletVisual from '@wallet/detail/identity/walletVisual';
+import styles from './walletVisualWithAddress.css';
 
-const AccountVisualWithAddress = ({
+const WalletVisualWithAddress = ({
   bookmarks, showBookmarkedAddress, token, address,
   transactionSubject, moduleAssetId, size, truncate,
 }) => {
@@ -46,7 +46,7 @@ const AccountVisualWithAddress = ({
         </>
       ) : (
         <>
-          <AccountVisual address={address} size={size} />
+          <WalletVisual address={address} size={size} />
           <span className={`${styles.addressValue}`}>
             {truncate ? truncatedAddress : transformedAddress}
           </span>
@@ -56,7 +56,7 @@ const AccountVisualWithAddress = ({
   );
 };
 
-AccountVisualWithAddress.propTypes = {
+WalletVisualWithAddress.propTypes = {
   address: PropTypes.string.isRequired,
   bookmarks: PropTypes.shape().isRequired,
   showBookmarkedAddress: PropTypes.bool,
@@ -66,7 +66,7 @@ AccountVisualWithAddress.propTypes = {
   moduleAssetId: PropTypes.string,
 };
 
-AccountVisualWithAddress.defaultProps = {
+WalletVisualWithAddress.defaultProps = {
   address: '',
   showBookmarkedAddress: false,
   size: 32,
@@ -82,4 +82,4 @@ const mapStateToProps = state => ({
 export default compose(
   connect(mapStateToProps),
   withTranslation(),
-)(AccountVisualWithAddress);
+)(WalletVisualWithAddress);

@@ -1,13 +1,13 @@
 import React from 'react';
-import AccountVisual from '@wallet/detail/identity/accountVisual';
+import WalletVisual from '@wallet/detail/identity/walletVisual';
 import styles from './transactionInfo.css';
 
 const RegisterDelegate = ({ account, username, t }) => (
   <section>
     <label className="username-label">{t('Your username')}</label>
     <div className={styles.userInformation}>
-      <AccountVisual
-        className={styles.accountVisual}
+      <WalletVisual
+        className={styles.walletVisual}
         address={account.summary?.address}
         size={25}
       />

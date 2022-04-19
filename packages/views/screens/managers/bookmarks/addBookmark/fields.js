@@ -1,5 +1,5 @@
 import React from 'react';
-import AccountVisual from '@wallet/detail/identity/accountVisual';
+import WalletVisual from '@wallet/detail/identity/walletVisual';
 import { Input } from '@basics/inputs';
 import styles from './addBookmark.css';
 
@@ -40,7 +40,7 @@ const Fields = ({
             status={status[index].feedback === '' ? 'ok' : 'error'}
           />
           {field.name === 'address' ? (
-            <AccountVisual
+            <WalletVisual
               className={styles.avatar}
               // placeholder={status[index].isInvalid || !status[index].value}
               address={status[index].value}

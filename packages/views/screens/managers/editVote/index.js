@@ -91,7 +91,7 @@ const AddVote = ({
           <BoxInfoText>
             <span>{titles.description}</span>
           </BoxInfoText>
-          <BoxInfoText className={styles.accountInfo}>
+          <BoxInfoText className={styles.walletInfo}>
             <p className={styles.balanceTitle}>{t('Available balance for voting')}</p>
             <div className={styles.balanceDetails}>
               <span className={styles.lskValue}>
