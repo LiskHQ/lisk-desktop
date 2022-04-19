@@ -7,7 +7,7 @@ describe('SearchBarWallets', () => {
 
   const props = {
     t: v => v,
-    accounts: [],
+    wallets: [],
     onSelectedRow: jest.fn(),
     rowItemIndex: 0,
     updateRowItemIndex: jest.fn(),
@@ -26,7 +26,7 @@ describe('SearchBarWallets', () => {
 
   it('should render properly delegate accounts', () => {
     const newProps = { ...props };
-    newProps.accounts = [
+    newProps.wallets = [
       {
         summary: {
           address: 'lskdwsyfmcko6mcd357446yatromr9vzgu7eb8y99',
@@ -50,7 +50,7 @@ describe('SearchBarWallets', () => {
 
   it('should render properly with accounts data', () => {
     const newProps = { ...props };
-    newProps.accounts = [
+    newProps.wallets = [
       {
         summary: {
           address: 'lskdwsyfmcko6mcd357446yatromr9vzgu7eb8y99',
@@ -74,7 +74,7 @@ describe('SearchBarWallets', () => {
 
   it('should call onClick function on selected row', () => {
     const newProps = { ...props };
-    newProps.accounts = [
+    newProps.wallets = [
       {
         summary: {
           address: 'lskdwsyfmcko6mcd357446yatromr9vzgu7eb8y99',

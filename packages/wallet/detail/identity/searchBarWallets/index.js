@@ -3,7 +3,7 @@ import WalletVisual from '@wallet/detail/identity/walletVisual';
 import { truncateAddress } from '@wallet/utilities/account';
 import styles from './walletsAndDeletegates.css';
 
-const Accounts = ({
+const Wallets = ({
   wallets, onSelectedRow, t, rowItemIndex, updateRowItemIndex,
 }) => {
   const isDelegate = wallets.some(wallet => wallet.summary?.isDelegate);
@@ -70,4 +70,4 @@ const Accounts = ({
   );
 };
 
-export default Accounts;
+export default Wallets;
