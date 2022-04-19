@@ -4,8 +4,8 @@ import { keyCodes } from '@views/configuration';
 import { addSearchParamsToUrl } from '@screens/router/searchParams';
 import routes from '@screens/router/routes';
 import { Input } from '@basics/inputs';
-import Accounts from './accounts';
-import Delegates from './delegates';
+import Wallet from '@wallet/detail/identity/searchBarWallets';
+import Delegates from '@wallet/detail/identity/searchBarWallets/delegates';
 import Transactions from './transactions';
 import styles from './searchBar.css';
 import Blocks from './blocks';
@@ -156,8 +156,8 @@ class SearchBar extends React.Component {
         {
           suggestions.data.addresses.length
             ? (
-              <Accounts
-                accounts={suggestions.data.addresses}
+              <Wallet
+                wallets={suggestions.data.addresses}
                 onSelectedRow={this.onSelectAccount}
                 rowItemIndex={rowItemIndex}
                 updateRowItemIndex={this.updateRowItemIndex}

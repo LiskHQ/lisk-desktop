@@ -1,8 +1,8 @@
 import React from 'react';
 import { mount } from 'enzyme';
-import Accounts from './accounts';
+import SearchBarWallets from './accounts';
 
-describe('Accounts', () => {
+describe('SearchBarWallets', () => {
   let wrapper;
 
   const props = {
@@ -14,7 +14,7 @@ describe('Accounts', () => {
   };
 
   beforeEach(() => {
-    wrapper = mount(<Accounts {...props} />);
+    wrapper = mount(<SearchBarWallets {...props} />);
   });
 
   it('should render properly empty accounts', () => {
@@ -41,7 +41,7 @@ describe('Accounts', () => {
         },
       },
     ];
-    wrapper = mount(<Accounts {...newProps} />);
+    wrapper = mount(<SearchBarWallets {...newProps} />);
     expect(wrapper).toContainMatchingElement('.accounts');
     expect(wrapper).toContainMatchingElement('.accounts-header');
     expect(wrapper).toContainMatchingElement('.account-content');
@@ -64,7 +64,7 @@ describe('Accounts', () => {
         },
       },
     ];
-    wrapper = mount(<Accounts {...newProps} />);
+    wrapper = mount(<SearchBarWallets {...newProps} />);
 
     expect(wrapper).toContainMatchingElement('.accounts');
     expect(wrapper).toContainMatchingElement('.accounts-header');
@@ -82,7 +82,7 @@ describe('Accounts', () => {
         },
       },
     ];
-    wrapper = mount(<Accounts {...newProps} />);
+    wrapper = mount(<SearchBarWallets {...newProps} />);
 
     wrapper.find('.account-row').at(0).simulate('click');
     expect(props.onSelectedRow).toBeCalled();

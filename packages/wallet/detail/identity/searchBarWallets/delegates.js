@@ -1,8 +1,8 @@
 import React from 'react';
 import Highlighter from 'react-highlight-words';
-import AccountVisual from '@wallet/detail/identity/accountVisual';
+import WalletVisual from '@wallet/detail/identity/accountVisual';
 import { truncateAddress } from '@wallet/utilities/account';
-import styles from './accountsAndDeletegates.css';
+import styles from './walletsAndDeletegates.css';
 
 const Delegates = ({
   delegates, onSelectedRow, t, rowItemIndex, updateRowItemIndex, searchTextValue,
@@ -21,7 +21,7 @@ const Delegates = ({
           onClick={() => onSelectedRow(delegate.summary.address)}
           onMouseEnter={updateRowItemIndex}
         >
-          <AccountVisual address={delegate.summary.address} />
+          <WalletVisual address={delegate.summary.address} />
           <div className={styles.accountInformation}>
             <div>
               <span className={`${styles.delegateName} delegate-name`}>

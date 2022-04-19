@@ -1,12 +1,12 @@
 import React from 'react';
-import AccountVisual from '@wallet/detail/identity/accountVisual';
+import WalletVisual from '@wallet/detail/identity/accountVisual';
 import { truncateAddress } from '@wallet/utilities/account';
-import styles from './accountsAndDeletegates.css';
+import styles from './walletsAndDeletegates.css';
 
 const Accounts = ({
-  accounts, onSelectedRow, t, rowItemIndex, updateRowItemIndex,
+  wallets, onSelectedRow, t, rowItemIndex, updateRowItemIndex,
 }) => {
-  const isDelegate = accounts.some(account => account.summary?.isDelegate);
+  const isDelegate = wallets.some(wallet => wallet.summary?.isDelegate);
 
   return (
     <div className={`${styles.wrapper} accounts`}>
@@ -15,15 +15,15 @@ const Accounts = ({
       </header>
       <div className={`${styles.content} account-content`}>
         {
-        accounts.map((account, index) => (
+        wallets.map((wallet, index) => (
           <div
             key={index}
             data-index={index}
             className={`${styles.accountRow} ${rowItemIndex === index ? styles.active : ''} account-row`}
-            onClick={() => onSelectedRow(account.summary?.address)}
+            onClick={() => onSelectedRow(wallet.summary?.address)}
             onMouseEnter={updateRowItemIndex}
           >
-            <AccountVisual address={account.summary?.address} />
+            <WalletVisual address={wallet.summary?.address} />
             <div className={styles.accountInformation}>
               {
                 isDelegate
@@ -31,20 +31,20 @@ const Accounts = ({
                     <>
                       <div>
                         <span className={`${styles.accountTitle} account-title`}>
-                          {account.dpos.delegate.username}
+                          {wallet.dpos.delegate.username}
                         </span>
                       </div>
                       <span className={`${styles.accountSubtitle} hideOnLargeViewPort`}>
-                        {truncateAddress(account.summary?.address)}
+                        {truncateAddress(wallet.summary?.address)}
                       </span>
                       <span className={`${styles.accountSubtitle} showOnLargeViewPort`}>
-                        {account.summary?.address}
+                        {wallet.summary?.address}
                       </span>
                     </>
                   )
                   : (
                     <span className={`${styles.accountTitle} account-title`}>
-                      {account.summary?.address}
+                      {wallet.summary?.address}
                     </span>
                   )
               }
@@ -54,8 +54,8 @@ const Accounts = ({
                 ? (
                   <span className={`${styles.tag} tag`}>
                     {
-                      account.dpos
-                        ? t('Delegate #{{rank}}', { rank: account.dpos.delegate.rank })
+                      wallet.dpos
+                        ? t('Delegate #{{rank}}', { rank: wallet.dpos.delegate.rank })
                         : '-'
                     }
                   </span>
