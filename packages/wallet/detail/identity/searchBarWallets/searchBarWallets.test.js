@@ -1,6 +1,6 @@
 import React from 'react';
 import { mount } from 'enzyme';
-import SearchBarWallets from './accounts';
+import SearchBarWallets from './index';
 
 describe('SearchBarWallets', () => {
   let wrapper;
