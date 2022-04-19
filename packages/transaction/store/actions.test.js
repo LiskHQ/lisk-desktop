@@ -173,7 +173,7 @@ describe('actions: transactions', () => {
 
   describe('transactionCreated', () => {
     const state = getState();
-    console.log({ state });
+
     const activeAccount = {
       ...state.wallet.info.LSK,
       hwInfo: {
@@ -235,7 +235,6 @@ describe('actions: transactions', () => {
   });
 
   describe('transactionDoubleSigned', () => {
-    console.log({ getState: getState() });
     const { network, wallet, settings } = getState();
     const getStateWithTx = () => ({
       network,
