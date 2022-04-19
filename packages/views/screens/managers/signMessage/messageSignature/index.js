@@ -32,7 +32,7 @@ const MessageSignature = ({
 
   const signUsingHW = async () => {
     let signedMessage = await signMessageByHW({
-      account,
+      wallet: account,
       message,
     });
     if (signedMessage instanceof Uint8Array) {

@@ -1,6 +1,6 @@
 import * as communication from '@libs/hwManager/communication';
 import * as accountApi from '@wallet/utilities/api';
-import accounts from '@tests/constants/wallets';
+import wallets from '@tests/constants/wallets';
 import {
   getAccountsFromDevice,
   signMessageByHW,
@@ -30,31 +30,31 @@ describe('hwManager util', () => {
 
   describe('getAccountsFromDevice', () => {
     it('should resolve all non-empty and one empty account', async () => {
-      communication.getPublicKey.mockResolvedValueOnce(accounts.genesis.summary.publicKey);
-      communication.getPublicKey.mockResolvedValueOnce(accounts.empty_account.summary.publicKey);
-      accountApi.getAccounts.mockResolvedValueOnce({ data: [accounts.genesis] });
+      communication.getPublicKey.mockResolvedValueOnce(wallets.genesis.summary.publicKey);
+      communication.getPublicKey.mockResolvedValueOnce(wallets.empty_wallet.summary.publicKey);
+      accountApi.getAccounts.mockResolvedValueOnce({ data: [wallets.genesis] });
 
       const device = { deviceId: '1234125125' };
       const network = { name: 'Testnet', networks: {} };
 
-      const accountsOnDevice = await getAccountsFromDevice({ device, network });
+      const walletsOnDevice = await getAccountsFromDevice({ device, network });
 
-      expect(accountsOnDevice).toEqual([accounts.genesis]);
+      expect(walletsOnDevice).toEqual([wallets.genesis]);
     });
   });
 
   describe('getNewAccountByIndex', () => {
     it('should resolve one empty account using a given index', async () => {
-      communication.getPublicKey.mockResolvedValueOnce(accounts.genesis.summary.publicKey);
+      communication.getPublicKey.mockResolvedValueOnce(wallets.genesis.summary.publicKey);
 
       const device = { deviceId: '1234125125' };
 
-      const accountsOnDevice = await getNewAccountByIndex({ device, index: 11 });
+      const walletsOnDevice = await getNewAccountByIndex({ device, index: 11 });
 
-      expect(accountsOnDevice).toEqual({
+      expect(walletsOnDevice).toEqual({
         summary: {
-          publicKey: accounts.genesis.summary.publicKey,
-          address: accounts.genesis.summary.address,
+          publicKey: wallets.genesis.summary.publicKey,
+          address: wallets.genesis.summary.address,
           balance: '0',
         },
       });
@@ -64,7 +64,7 @@ describe('hwManager util', () => {
   describe('signMessageByHW', () => {
     it('should return a signature for given message', async () => {
       // Arrange
-      const account = {
+      const wallet = {
         hwInfo: {
           deviceId: '060E803263E985C022CA2C9B',
           derivationIndex: 0,
@@ -73,13 +73,13 @@ describe('hwManager util', () => {
       const message = 'hello';
 
       // Act
-      const signedMessage = await signMessageByHW({ account, message });
+      const signedMessage = await signMessageByHW({ wallet, message });
 
       // Assert
       expect(signedMessage).toEqual(signature);
       expect(communication.signMessage).toHaveBeenCalledWith({
-        deviceId: account.hwInfo.deviceId,
-        index: account.hwInfo.derivationIndex,
+        deviceId: wallet.hwInfo.deviceId,
+        index: wallet.hwInfo.derivationIndex,
         message,
       });
     });
