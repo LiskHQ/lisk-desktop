@@ -1,12 +1,12 @@
 import React from 'react';
 import { mount } from 'enzyme';
-import accounts from '@tests/constants/wallets';
-import AccountInfo from '@wallet/detail/identity/accountInfo';
+import wallets from '@tests/constants/wallets';
+import AccountInfo from './accountInfo';
 
 describe('TxDetail AccountInfo', () => {
   const props = {
     label: 'Label test',
-    address: accounts.genesis.summary.address,
+    address: wallets.genesis.summary.address,
     token: 'LSK',
     network: {
       name: 'Mainnet',

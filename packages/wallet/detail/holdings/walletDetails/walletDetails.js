@@ -17,10 +17,10 @@ import LockedBalanceLink from '../balanceInfo/unlocking';
 import styles from './walletDetails.css';
 
 const WalletDetails = ({
-  t, account, settings, className, isWalletRoute,
+  t, wallet, settings, className, isWalletRoute,
 }) => {
   const dispatch = useDispatch();
-  const tokens = Object.entries(account.info || {}).filter(
+  const tokens = Object.entries(wallet.info || {}).filter(
     ([key, info]) => settings.token.list[key] && info,
   );
 
@@ -64,7 +64,7 @@ const WalletDetails = ({
                         isWalletRoute={isWalletRoute}
                         style={styles.lockedBalance}
                         icon="lockedBalance"
-                        account={account.info.LSK}
+                        account={wallet.info.LSK}
                       />
                     ) : null}
                   </DiscreetMode>

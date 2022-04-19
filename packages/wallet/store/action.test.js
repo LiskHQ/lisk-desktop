@@ -4,7 +4,7 @@ import * as accountApi from '@wallet/utilities/api';
 import { extractKeyPair } from '@wallet/utilities/account';
 import { create } from '@transaction/utilities/api';
 import { defaultDerivationPath } from '@common/utilities/explicitBipKeyDerivation';
-import accounts from '@tests/constants/wallets';
+import wallets from '@tests/constants/wallets';
 import * as networkActions from '@network/store/action';
 import actionTypes from './actionTypes';
 import {
@@ -115,13 +115,13 @@ describe('actions: account', () => {
             list: { LSK: true },
           },
         },
-        account: {
-          passphrase: accounts.genesis.passphrase,
+        wallet: {
+          passphrase: wallets.genesis.passphrase,
           info: {
             LSK: {
               summary: {
-                address: accounts.genesis.summary.address,
-                publicKey: accounts.genesis.summary.publicKey,
+                address: wallets.genesis.summary.address,
+                publicKey: wallets.genesis.summary.publicKey,
                 balance: 0,
               },
             },
@@ -133,8 +133,8 @@ describe('actions: account', () => {
     it('should call account API methods on newBlockCreated action when online', async () => {
       accountApi.getAccount.mockResolvedValue({
         summary: {
-          address: accounts.genesis.summary.address,
-          publicKey: accounts.genesis.summary.publicKey,
+          address: wallets.genesis.summary.address,
+          publicKey: wallets.genesis.summary.publicKey,
           balance: 10e8,
         },
         token: {
@@ -163,8 +163,8 @@ describe('actions: account', () => {
     it('gets the active token from the token list in settings when token types is enabled', async () => {
       accountApi.getAccount.mockResolvedValue({
         summary: {
-          address: accounts.genesis.summary.address,
-          publicKey: accounts.genesis.summary.publicKey,
+          address: wallets.genesis.summary.address,
+          publicKey: wallets.genesis.summary.publicKey,
           balance: 10e8,
         },
         token: {
@@ -186,7 +186,7 @@ describe('actions: account', () => {
     const {
       passphrase,
       summary: { address, publicKey },
-    } = accounts.genesis;
+    } = wallets.genesis;
 
     beforeEach(() => {
       state = {
@@ -271,10 +271,10 @@ describe('actions: account', () => {
 
   describe('balanceUnlocked', () => {
     const state = {
-      account: {
-        passphrase: accounts.genesis.passphrase,
+      wallet: {
+        passphrase: wallets.genesis.passphrase,
         info: {
-          LSK: accounts.genesis,
+          LSK: wallets.genesis,
         },
       },
       network: {},
@@ -294,11 +294,11 @@ describe('actions: account', () => {
       await balanceUnlocked(params)(dispatch, getState);
       expect(create).toHaveBeenCalledWith({
         network: state.network,
-        account: state.wallet.info.LSK,
+        wallet: state.wallet.info.LSK,
         transactionObject: {
           moduleAssetId: '5:2',
-          senderPublicKey: accounts.genesis.summary.publicKey,
-          nonce: accounts.genesis.sequence?.nonce,
+          senderPublicKey: wallets.genesis.summary.publicKey,
+          nonce: wallets.genesis.sequence?.nonce,
           fee: '10000000',
           unlockObjects: [{}],
         },
@@ -325,10 +325,10 @@ describe('actions: account', () => {
 
   describe('delegateRegistered', () => {
     const state = {
-      account: {
-        passphrase: accounts.delegate_candidate.passphrase,
+      wallet: {
+        passphrase: wallets.delegate_candidate.passphrase,
         info: {
-          LSK: accounts.delegate_candidate,
+          LSK: wallets.delegate_candidate,
         },
       },
       network: {},
@@ -348,10 +348,10 @@ describe('actions: account', () => {
       await delegateRegistered(params)(dispatch, getState);
       expect(create).toHaveBeenCalledWith({
         network: state.network,
-        account: state.wallet.info.LSK,
+        wallet: state.wallet.info.LSK,
         transactionObject: {
-          senderPublicKey: accounts.delegate_candidate.summary.publicKey,
-          nonce: accounts.delegate_candidate.sequence.nonce,
+          senderPublicKey: wallets.delegate_candidate.summary.publicKey,
+          nonce: wallets.delegate_candidate.sequence.nonce,
           fee: 10000000,
           username: params.username,
           moduleAssetId: '5:0',
@@ -379,10 +379,10 @@ describe('actions: account', () => {
 
   describe('multisigGroupRegistered', () => {
     const state = {
-      account: {
-        passphrase: accounts.multiSig_candidate.passphrase,
+      wallet: {
+        passphrase: wallets.multiSig_candidate.passphrase,
         info: {
-          LSK: accounts.multiSig_candidate,
+          LSK: wallets.multiSig_candidate,
         },
       },
       network: {},
@@ -404,15 +404,15 @@ describe('actions: account', () => {
       await multisigGroupRegistered(params)(dispatch, getState);
       expect(create).toHaveBeenCalledWith({
         network: state.network,
-        account: state.wallet.info.LSK,
+        wallet: state.wallet.info.LSK,
         transactionObject: {
           moduleAssetId: '4:0',
           fee: 10000000,
           mandatoryKeys: params.mandatoryKeys,
           optionalKeys: params.optionalKeys,
           numberOfSignatures: params.numberOfSignatures,
-          nonce: accounts.multiSig_candidate.sequence.nonce,
-          senderPublicKey: accounts.multiSig_candidate.summary.publicKey,
+          nonce: wallets.multiSig_candidate.sequence.nonce,
+          senderPublicKey: wallets.multiSig_candidate.summary.publicKey,
         },
       }, 'LSK');
       expect(dispatch).toHaveBeenCalledWith({
@@ -437,10 +437,10 @@ describe('actions: account', () => {
 
   describe('balanceReclaimed', () => {
     const state = {
-      account: {
-        passphrase: accounts.non_migrated.passphrase,
+      wallet: {
+        passphrase: wallets.non_migrated.passphrase,
         info: {
-          LSK: accounts.non_migrated,
+          LSK: wallets.non_migrated,
         },
       },
       network: {},
@@ -456,7 +456,7 @@ describe('actions: account', () => {
       await balanceReclaimed({ fee: { value: '0,1' } })(dispatch, getState);
       expect(create).toHaveBeenCalledWith({
         network: state.network,
-        account: state.wallet.info.LSK,
+        wallet: state.wallet.info.LSK,
         transactionObject: {
           moduleAssetId: '1000:0',
           fee: 100000000,

@@ -2,7 +2,7 @@ import wallets from './wallets';
 import moduleAssetSchemas from './schemas';
 
 export default {
-  account: {
+  wallet: {
     info: {
       LSK: {
         ...wallets.genesis,

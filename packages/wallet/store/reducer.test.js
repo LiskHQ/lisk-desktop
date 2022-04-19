@@ -36,7 +36,7 @@ describe('Reducer: account(state, action)', () => {
     });
   });
 
-  it('should return empty_account object if action.type = actionTypes.accountLoggedOut', () => {
+  it('should return empty_wallet object if action.type = actionTypes.accountLoggedOut', () => {
     const action = {
       type: actionTypes.accountLoggedOut,
     };
