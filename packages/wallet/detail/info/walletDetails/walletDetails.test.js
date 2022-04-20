@@ -6,6 +6,7 @@ describe('WalletDetails', () => {
   let wrapper;
 
   const props = {
+    location: { search: '' },
     account: {
       info: {
         LSK: {
@@ -35,6 +36,8 @@ describe('WalletDetails', () => {
   });
 
   it('Should render properly', () => {
+    wrapper = mount(<WalletDetails {...props} />);
+
     expect(wrapper).toContainMatchingElement('.coin-container');
     expect(wrapper).toContainMatchingElements(1, 'section.coin-row');
   });
