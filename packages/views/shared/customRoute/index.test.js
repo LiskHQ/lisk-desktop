@@ -22,7 +22,7 @@ describe('CustomRoute', () => {
         active: 'LSK',
       },
     },
-    account: {
+    wallet: {
       info: {
         LSK: wallets.genesis,
       },

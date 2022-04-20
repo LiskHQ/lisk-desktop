@@ -2,7 +2,7 @@ import React from 'react';
 import { mount } from 'enzyme';
 import { MODULE_ASSETS_NAME_ID_MAP } from '@transaction/configuration/moduleAssets';
 import { removeSearchParamsFromUrl } from '@screens/router/searchParams';
-import accounts from '@tests/constants/wallets';
+import wallets from '@tests/constants/wallets';
 import Summary from './summary';
 
 jest.mock('@screens/router/searchParams', () => ({
@@ -22,29 +22,29 @@ describe('Sign Multisignature Tx Review component', () => {
       moduleAssetId: MODULE_ASSETS_NAME_ID_MAP.transfer,
       nonce: '158',
       sender: {
-        address: accounts.multiSig.summary.address,
+        address: wallets.multiSig.summary.address,
       },
       fee: '1000000',
       signatures: [
-        accounts.multiSig.summary.publicKey,
+        wallets.multiSig.summary.publicKey,
         '',
         '',
       ],
       asset: {
-        mandatoryKeys: accounts.multiSig.keys.mandatoryKeys,
-        optionalKeys: accounts.multiSig.keys.optionalKeys,
-        numberOfSignatures: accounts.multiSig.keys.numberOfSignatures,
+        mandatoryKeys: wallets.multiSig.keys.mandatoryKeys,
+        optionalKeys: wallets.multiSig.keys.optionalKeys,
+        numberOfSignatures: wallets.multiSig.keys.numberOfSignatures,
         recipient: {
-          address: accounts.genesis.summary.address,
+          address: wallets.genesis.summary.address,
         },
       },
     },
-    account: accounts.genesis,
+    account: wallets.genesis,
     networkIdentifier: 'sample_identifier',
     nextStep: jest.fn(),
     history: {},
     error: undefined,
-    senderAccount: { data: accounts.multiSig },
+    senderAccount: { data: wallets.multiSig },
   };
 
   beforeEach(() => {
@@ -54,7 +54,7 @@ describe('Sign Multisignature Tx Review component', () => {
   it('Should call props.nextStep passing the signed transaction', () => {
     wrapper = mount(<Summary {...props} />);
     const signatures = props.transaction.signatures;
-    signatures[1] = accounts.genesis.summary.publicKey;
+    signatures[1] = wallets.genesis.summary.publicKey;
     wrapper.find('button.sign').simulate('click');
     expect(props.nextStep).toHaveBeenCalledWith(expect.objectContaining({
       rawTransaction: expect.anything(),
