@@ -4,11 +4,11 @@ import { PrimaryButton } from '@basics/buttons';
 import BoxFooter from '@basics/box/footer';
 import Illustration from '@basics/illustration';
 import routes from '@screens/router/routes';
-import verifyMessageValidator from '@wallet/manager/result';
 import styles from './verifyMessage.css';
+import useVerifyMessageValidator from '../../../../wallet/utilities/hooks/useVerifyMessageValidator';
 
 export default function Result({ inputs, history, t }) {
-  const isCorrect = useMemo(() => verifyMessageValidator(inputs), [inputs]);
+  const isCorrect = useVerifyMessageValidator(inputs)
   const closeModal = () => {
     history.push(routes.wallet.path);
   };

@@ -7,10 +7,10 @@ const useCreateAccounts = () => {
 
   useEffect(() => {
     const passphrases = [...Array(5)].map(() => {
-      const generatedPasspharse = generatePassphrase();
+      const generatedPassphrase = generatePassphrase();
       return {
-        passphrase: generatedPasspharse,
-        address: extractAddressFromPassphrase(generatedPasspharse),
+        passphrase: generatedPassphrase,
+        address: extractAddressFromPassphrase(generatedPassphrase),
       };
     });
 

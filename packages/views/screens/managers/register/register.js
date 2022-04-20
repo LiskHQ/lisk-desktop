@@ -3,7 +3,7 @@ import grid from 'flexboxgrid/dist/flexboxgrid.css';
 import routes from '@screens/router/routes';
 import MultiStepProgressBar from '@shared/multiStepProgressBar';
 import MultiStep from '@dpos/manage/registerDelegateMultiStep';
-import useCreateAccounts from '@wallet/hooks/useCreateAccounts';
+import useCreateAccounts from '@wallet/utilities/hooks/useCreateAccounts';
 import ChooseAvatar from './chooseAvatar';
 import BackupPassphrase from './backupPassphrase';
 import ConfirmPassphrase from './confirmPassphrase';
@@ -25,26 +25,24 @@ const Register = ({ account, token, history }) => {
   }, []);
 
   return (
-    <>
-      <div className={`${grid.row} ${styles.register}`}>
-        <MultiStep
-          navStyles={{ multiStepWrapper: styles.wrapper }}
-          progressBar={MultiStepProgressBar}
-        >
-          <ChooseAvatar
-            accounts={suggestionAccounts}
-            selected={selectedAccount}
-            handleSelectAvatar={handleSelectAvatar}
-          />
-          <BackupPassphrase account={selectedAccount} />
-          <ConfirmPassphrase
-            account={selectedAccount}
-            passphrase={selectedAccount.passphrase}
-          />
-          <AccountCreated account={selectedAccount} />
-        </MultiStep>
-      </div>
-    </>
+    <div className={`${grid.row} ${styles.register}`}>
+      <MultiStep
+        navStyles={{ multiStepWrapper: styles.wrapper }}
+        progressBar={MultiStepProgressBar}
+      >
+        <ChooseAvatar
+          accounts={suggestionAccounts}
+          selected={selectedAccount}
+          handleSelectAvatar={handleSelectAvatar}
+        />
+        <BackupPassphrase account={selectedAccount} />
+        <ConfirmPassphrase
+          account={selectedAccount}
+          passphrase={selectedAccount.passphrase}
+        />
+        <AccountCreated account={selectedAccount} />
+      </MultiStep>
+    </div>
   );
 };
 
