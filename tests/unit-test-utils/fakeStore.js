@@ -1,12 +1,12 @@
 import configureStore from 'redux-mock-store';
 import { tokenMap } from '@token/configuration/tokens';
-import accounts from '../constants/wallets';
+import wallets from '../constants/wallets';
 import delegates from '../constants/delegates';
 
-const forgers = Object.values(accounts).slice(0, 9).map((account, index) => ({
+const forgers = Object.values(wallets).slice(0, 9).map((wallet, index) => ({
   username: `genesis_${index}`,
   totalVotesReceived: '100000000000',
-  address: account.summary.address,
+  address: wallet.summary.address,
   minActiveHeight: 1,
   isConsensusParticipant: true,
   nextForgingTime: 1620049927 + 10 * index,
@@ -14,7 +14,7 @@ const forgers = Object.values(accounts).slice(0, 9).map((account, index) => ({
 
 const fakeStore = configureStore();
 const defaultStore = {
-  account: {},
+  wallet: {},
   network: {
     name: 'Custom Node',
     networks: {
