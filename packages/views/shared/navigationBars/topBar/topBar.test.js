@@ -140,10 +140,10 @@ describe('TopBar', () => {
       {
         ...props,
         history: {
-          location: { pathname: routes.account.path, search: '?address=1L' },
+          location: { pathname: routes.explorer.path, search: '?address=1L' },
         },
       },
-      { pathname: routes.account.path },
+      { pathname: routes.explorer.path },
     );
     expect(wrapper).toContainMatchingElement('img.search-icon');
     expect(wrapper).toContainMatchingElement('span.searchedValue');
@@ -157,10 +157,10 @@ describe('TopBar', () => {
       {
         ...props,
         history: {
-          location: { pathname: routes.account.path, search: '?somerandomparam=1L' },
+          location: { pathname: routes.explorer.path, search: '?somerandomparam=1L' },
         },
       },
-      { pathname: routes.account.path },
+      { pathname: routes.explorer.path },
     );
     expect(wrapper).toContainMatchingElement('img.search-icon');
     expect(wrapper).not.toContainMatchingElement('span.searchedValue');

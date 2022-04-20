@@ -16,7 +16,7 @@ const WalletInfo = ({
   addressClass,
   className,
 }) => {
-  const addressLink = `${routes.account.path}?address=${address}`;
+  const addressLink = `${routes.explorer.path}?address=${address}`;
   return (
     <div className={`${styles.walletInfo} ${className}`}>
       <p className={styles.label}>{label}</p>

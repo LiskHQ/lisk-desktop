@@ -33,7 +33,7 @@ const getOwnerName = (account) => {
 const AccountRow = ({ data, className }) => (
   <Link
     className={`${grid.row} ${className} accounts-row`}
-    to={`${routes.account.path}?address=${data.summary?.address}`}
+    to={`${routes.explorer.path}?address=${data.summary?.address}`}
   >
     <span className={`${grid['col-xs-1']} ${grid['col-md-1']} ${styles.counter}`}>
       {data.rank}

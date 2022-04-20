@@ -163,7 +163,7 @@ export class BookmarksList extends React.Component {
                   onClick={e => this.onRowClick(e, bookmark)}
                   key={bookmark.address}
                   className={`${styles.row} ${editedAddress === bookmark.address ? styles.editing : ''} ${bookmark.disabled ? styles.disabled : ''} bookmark-list-row`}
-                  to={`${routes.account.path}?address=${bookmark.address}`}
+                  to={`${routes.explorer.path}?address=${bookmark.address}`}
                 >
                   <div className={styles.avatarAndDescriptionWrapper}>
                     {

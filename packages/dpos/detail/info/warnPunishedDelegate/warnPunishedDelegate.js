@@ -21,7 +21,7 @@ const WarnPunishedDelegate = ({
   const theme = useTheme();
 
   useEffect(() => {
-    if (history.location.pathname !== routes.account.path) {
+    if (history.location.pathname !== routes.explorer.path) {
       FlashMessageHolder.deleteMessage('WarnPunishedDelegate');
     }
   }, [history.location.pathname]);

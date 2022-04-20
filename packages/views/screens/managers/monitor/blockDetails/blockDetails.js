@@ -23,7 +23,7 @@ const Generator = ({
     return (
       <Link
         className={styles.generator}
-        to={`${routes.account.path}?address=${generatorAddress}`}
+        to={`${routes.explorer.path}?address=${generatorAddress}`}
       >
         <WalletVisual
           className={styles.avatar}

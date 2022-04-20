@@ -57,7 +57,7 @@ const DelegateRow = ({
   return (
     <Link
       className={`${className} delegate-row ${styles.tableRow}`}
-      to={`${routes.account.path}?address=${data.address}`}
+      to={`${routes.explorer.path}?address=${data.address}`}
     >
       <DelegateDetails
         t={t}

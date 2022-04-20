@@ -18,7 +18,7 @@ const GroupRow = ({ data, className }) => {
 
   return (
     <Link
-      to={`${routes.account.path}?address=${address}`}
+      to={`${routes.explorer.path}?address=${address}`}
       className={`${grid.row} ${className} ${styles.transactionRow} multisign-group-row`}
     >
       <span className={grid['col-xs-8']}>

@@ -53,7 +53,7 @@ const Search = ({
           <span className={relevantSearchParam ? `${styles.searchContainer} ${styles.searchContainerParam}` : styles.searchContainer}>
             <Icon name={relevantSearchParam ? 'search' : 'searchInput'} className="search-icon" />
             {
-              relevantSearchParam === routes.account.searchParam && relevantSearchParamValue
+              relevantSearchParam === routes.explorer.searchParam && relevantSearchParamValue
                 && (
                   <WalletVisual
                     className={styles.walletVisual}

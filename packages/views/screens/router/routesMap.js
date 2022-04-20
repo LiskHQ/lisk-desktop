@@ -36,7 +36,7 @@ import MultisigAccountDetails from '@screens/managers/multisigAccountDetails';
 export default {
   wallet: Wallet,
   addAccount: Login,
-  account: Explorer,
+  explorer: Explorer,
   hwWallet: HwWalletLogin,
   register: Register,
   login: Login,

@@ -12,8 +12,8 @@ export default {
     isPrivate: false,
     forbiddenTokens: [],
   },
-  account: {
-    path: '/account',
+  explorer: {
+    path: '/explorer',
     searchParam: 'address',
     isPrivate: false,
     forbiddenTokens: [],
