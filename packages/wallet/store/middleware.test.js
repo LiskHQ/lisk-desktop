@@ -13,7 +13,10 @@ import { tokenMap } from '@token/configuration/tokens';
 import * as transactionApi from '@transaction/utilities/api';
 import { getAutoLogInData } from '@common/utilities/login';
 import history from '@common/utilities/history';
-import actionTypes from './actionTypes';
+import blockActionTypes from '@block/store/actionTypes';
+import transactionActionTypes from '@transaction/store/actionTypes';
+import walletActionTypes from '../store/actionTypes';
+import settingsActionTypes from '@settings/store/actionTypes';
 import middleware from './middleware';
 
 jest.mock('@common/utilities/history');
@@ -238,35 +241,9 @@ describe('Account middleware', () => {
       await expect(next).toHaveBeenCalled();
     });
 
-    it('should call account BTC API methods when BTC is the active token', async () => {
-      // Arrange
-      const btcAddress = 'n45uoyzDvep8cwgkfxq3H3te1ujWyu1kkB';
-      store = {
-        dispatch: jest.fn().mockImplementation(() => ({})),
-        getState: () => ({
-          ...defaultState,
-          settings: { token: { active: 'BTC' } },
-          account: { summary: { address: btcAddress } },
-          transactions: { confirmed: [{ senderId: btcAddress, confirmations: 1 }] },
-        }),
-      };
-
-      // Act
-      await middleware(store)(next)(newBlockCreated);
-
-      // Assert
-      expect(transactionApi.getTransactions).toHaveBeenCalledWith({ network: expect.anything(), params: expect.anything() }, 'BTC');
-      expect(accountDataUpdated).toHaveBeenCalled();
-      expect(transactionsRetrieved).toHaveBeenCalledWith({
-        address: btcAddress,
-        filters: undefined,
-      });
-    });
-
     it('should call account LSK API methods when LSK is the active token', async () => {
       // Act
       await middleware(store)(next)(newBlockCreated);
-
       // Assert
       expect(transactionApi.getTransactions).toHaveBeenCalledWith({ network: expect.anything(), params: expect.anything() }, 'LSK');
       expect(accountDataUpdated).toHaveBeenCalled();
@@ -327,7 +304,7 @@ describe('Account middleware', () => {
   describe('on accountLoggedOut', () => {
     it('should clean up', () => {
       const accountLoggedOutAction = {
-        type: actionTypes.accountLoggedOut,
+        type: walletActionTypes.accountLoggedOut,
       };
       middleware(store)(next)(accountLoggedOutAction);
       expect(settingsUpdated).toHaveBeenCalledWith(
@@ -423,7 +400,7 @@ describe('Account middleware', () => {
 
     it('should redirect to the reclaim screen if the account is not migrated', async () => {
       const action = {
-        type: actionTypes.accountLoggedIn,
+        type: walletActionTypes.accountLoggedIn,
         data: { info: { LSK: { summary: { isMigrated: false } } } },
       };
       middleware(store)(next)(action);

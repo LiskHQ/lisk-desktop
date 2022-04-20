@@ -1,27 +1,14 @@
-import { cryptography } from '@liskhq/lisk-client';
-import PropTypes from 'prop-types';
 import React from 'react';
-
+import PropTypes from 'prop-types';
 import { PrimaryButton } from '@basics/buttons';
 import BoxFooter from '@basics/box/footer';
 import Illustration from '@basics/illustration';
 import routes from '@screens/router/routes';
 import styles from './verifyMessage.css';
+import useVerifyMessageValidator from '../../../../wallet/utilities/hooks/useVerifyMessageValidator';
 
-export default function Result({
-  inputs, history, t,
-}) {
-  let isCorrect = false;
-  try {
-    isCorrect = cryptography.verifyMessageWithPublicKey({
-      publicKey: Buffer.from(inputs.publicKey, 'hex'),
-      signature: Buffer.from(inputs.signature, 'hex'),
-      message: inputs.message,
-    });
-  } catch (e) {
-    isCorrect = false;
-  }
-
+export default function Result({ inputs, history, t }) {
+  const isCorrect = useVerifyMessageValidator(inputs)
   const closeModal = () => {
     history.push(routes.wallet.path);
   };
@@ -32,9 +19,15 @@ export default function Result({
         name={isCorrect ? 'verifyMessageSuccess' : 'verifyMessageError'}
         className={styles.illustration}
       />
-      <h1>{isCorrect ? t('The signature is correct') : t('The signature is incorrect')}</h1>
+      <h1>
+        {isCorrect
+          ? t('The signature is correct')
+          : t('The signature is incorrect')}
+      </h1>
       <BoxFooter direction="horizontal">
-        <PrimaryButton onClick={closeModal} className="go-back">{t('Back to wallet')}</PrimaryButton>
+        <PrimaryButton onClick={closeModal} className="go-back">
+          {t('Back to wallet')}
+        </PrimaryButton>
       </BoxFooter>
     </div>
   );

@@ -1,7 +1,7 @@
 /* istanbul ignore file */
-import logo from '@setup/react/assets/images/paperWallet/lisk-logo-blue-on-white-rgb.png';
-import usbStick from '@setup/react/assets/images/paperWallet/usb-stick.png';
-import printer from '@setup/react/assets/images/paperWallet/print.png';
+import logo from '../../../setup/react/assets/images/paperWallet/lisk-logo-blue-on-white-rgb.png';
+import usbStick from '../../../setup/react/assets/images/paperWallet/usb-stick.png';
+import printer from '../../../setup/react/assets/images/paperWallet/print.png';
 import fonts from './paperWalletFonts';
 
 class PaperWallet {

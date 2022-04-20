@@ -40,6 +40,7 @@ const DiscreetMode = ({
 };
 
 DiscreetMode.defaultProps = {
+  location: {},
   addresses: [],
   shouldEvaluateForOtherAccounts: false,
 };
