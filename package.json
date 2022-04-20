@@ -162,7 +162,7 @@
     "lodash.merge": "4.6.2",
     "lodash.throttle": "4.1.1",
     "lottie-web": "5.5.5",
-    "moment": "2.23.0",
+    "moment": "2.29.2",
     "node-hid": "2.1.1",
     "numeral": "git+https://github.com/LiskHQ/Numeral-js.git",
     "path-browserify": "^1.0.1",
