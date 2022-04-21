@@ -1,5 +1,5 @@
 import React, { useMemo } from 'react';
-import { useTranslation } from 'react-i18n';
+import { useTranslation } from 'react-i18next';
 import { toast } from 'react-toastify';
 import Select from '@basics/inputs/select';
 import settingConstants from '@settings/configuration/settingConstants';
@@ -7,7 +7,7 @@ import useSettings from '@settings/hooks/useSettings';
 import Piwik from '@common/utilities/piwik';
 
 function CurrencySelector() {
-  const { t } = useTranslation()
+  const { t } = useTranslation();
   const { currency, toggleSetting } = useSettings(
     settingConstants.keys.currency,
   );
