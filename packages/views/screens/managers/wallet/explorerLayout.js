@@ -23,7 +23,7 @@ const ExplorerLayout = ({
 
   if (!account || !account.data || isEmpty(account.data)) {
     return (<div />);
-  };
+  }
 
   const isDelegate = account.data.summary?.isDelegate;
 
