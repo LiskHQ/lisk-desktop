@@ -65,10 +65,7 @@ const Overview = ({
     state.bookmarks[activeToken].find((item) => item.address === address));
   const host = useSelector(
     (state) =>
-      (state.wallet
-        && state.wallet.info
-        && state.wallet.info[activeToken]
-        && state.wallet.info[activeToken].summary?.address)
+      (state?.wallet?.info[activeToken]?.summary?.address)
       || '',
   );
 

@@ -62,7 +62,7 @@ class Settings extends React.Component {
             <section>
               <h2>{t('Currency')}</h2>
               <div className={styles.fieldGroup}>
-                <CurrencySelector t={t} />
+                <CurrencySelector />
               </div>
             </section>
             <section>

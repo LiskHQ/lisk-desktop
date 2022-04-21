@@ -21,7 +21,9 @@ const ExplorerLayout = ({
     account.loadData();
   }, [address]);
 
-  if (!account || !account.data || isEmpty(account.data)) return (<div />);
+  if (!account || !account.data || isEmpty(account.data)) {
+    return (<div />);
+  };
 
   const isDelegate = account.data.summary?.isDelegate;
 
@@ -42,24 +44,22 @@ const ExplorerLayout = ({
           id="transactions"
           address={address}
         />
-        {activeToken !== 'BTC' ? (
+        {activeToken === 'BTC' ? null : (
           <VotesTab
             history={history}
             address={address}
             name={t('Voting')}
             id="voting"
           />
-        ) : null}
-        {isDelegate
-          ? (
-            <DelegateTab
-              tabClassName="delegate-statistics"
-              name={t('Delegate profile')}
-              id="delegateProfile"
-              account={account.data}
-            />
-          )
-          : null}
+        )}
+        {!isDelegate ? null : (
+          <DelegateTab
+            tabClassName="delegate-statistics"
+            name={t('Delegate profile')}
+            id="delegateProfile"
+            account={account.data}
+          />
+        )}
       </TabsContainer>
     </section>
   );
