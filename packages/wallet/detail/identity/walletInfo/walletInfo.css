@@ -5,12 +5,8 @@
     height: 200px;
     position: relative;
 
-    &.LSK {
+    &.token {
       background-color: var(--color-ultramarine-blue);
-    }
-
-    &.BTC {
-      background-color: var(--color-btc);
     }
   }
 

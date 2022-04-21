@@ -15,7 +15,7 @@ const WalletInfo = ({
 
   return (
     <Box className={styles.wrapper}>
-      <BoxContent className={`${styles.content} ${styles[activeToken]}`}>
+      <BoxContent className={`${styles.content} ${styles.token}`}>
         <h2 className={styles.title}>{t('Wallet address')}</h2>
         <div className={`${styles.info} ${showFullAddress ? styles.showFullAddress : ''}`}>
           <WalletVisual
