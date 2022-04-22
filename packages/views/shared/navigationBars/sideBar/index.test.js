@@ -35,7 +35,7 @@ describe('SideBar', () => {
           active: 'LSK',
         },
       },
-      account: {
+      wallet: {
         info: {},
       },
       network: {

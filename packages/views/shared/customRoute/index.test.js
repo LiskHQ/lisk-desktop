@@ -4,7 +4,7 @@ import { mount } from 'enzyme';
 import { MemoryRouter, Route } from 'react-router';
 import routes from '@screens/router/routes';
 import ReclaimBalance from '@screens/managers/reclaimBalance';
-import accounts from '@tests/constants/accounts';
+import wallets from '@tests/constants/wallets';
 import CustomRoute from './index';
 
 const Public = () => <h1>Public</h1>;
@@ -22,9 +22,9 @@ describe('CustomRoute', () => {
         active: 'LSK',
       },
     },
-    account: {
+    wallet: {
       info: {
-        LSK: accounts.genesis,
+        LSK: wallets.genesis,
       },
     },
     network: {
@@ -74,13 +74,13 @@ describe('CustomRoute', () => {
   });
 
   it('should redirect to root path if user is not authenticated', () => {
-    mockAppState.account.info = {};
+    mockAppState.wallet.info = {};
     const wrapper = isAuth({ isPrivate: true });
     expect(wrapper.find(Public).exists()).toBe(true);
   });
 
   it('should redirect to reclaim path if user is not migrated', () => {
-    mockAppState.account.info.LSK = accounts.empty_account;
+    mockAppState.wallet.info.LSK = wallets.empty_wallet;
     const wrapper = isAuth({ isPrivate: true });
     expect(wrapper.find(ReclaimBalance).exists()).toBe(true);
   });

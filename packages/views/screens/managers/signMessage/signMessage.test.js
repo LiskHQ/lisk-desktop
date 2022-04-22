@@ -1,6 +1,6 @@
 import React from 'react';
 import { shallow } from 'enzyme';
-import accounts from '@tests/constants/accounts';
+import accounts from '@tests/constants/wallets';
 import SignMessage from './signMessage';
 
 describe('Sign Message Component', () => {

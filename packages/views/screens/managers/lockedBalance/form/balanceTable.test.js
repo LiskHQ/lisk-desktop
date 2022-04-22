@@ -4,7 +4,7 @@ import {
   calculateBalanceLockedInVotes,
   calculateUnlockableBalance,
 } from '@wallet/utilities/account';
-import accounts from '@tests/constants/accounts';
+import accounts from '@tests/constants/wallets';
 import BalanceTable from './balanceTable';
 
 describe('unlock transaction Status', () => {

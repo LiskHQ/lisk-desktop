@@ -2,7 +2,7 @@ import React from 'react';
 import { mount } from 'enzyme';
 import { keyCodes } from '@views/configuration';
 import { tokenMap } from '@token/configuration/tokens';
-import AccountVisual from '@wallet/detail/info/accountVisual';
+import WalletVisual from '@wallet/detail/identity/walletVisual';
 import AutoSuggest from './index';
 
 describe('Recipient Input', () => {
@@ -41,7 +41,7 @@ describe('Recipient Input', () => {
     // eslint-disable-next-line react/display-name
     renderItem: item => (
       <>
-        <AccountVisual address={item.address} size={25} />
+        <WalletVisual address={item.address} size={25} />
         <span>{item.title}</span>
         <span>{item.address}</span>
       </>
@@ -71,7 +71,7 @@ describe('Recipient Input', () => {
     props.selectedItem.address = '12345L';
     props.selectedItem.title = 'John Cena';
     wrapper = mount(<AutoSuggest {...props} />);
-    expect(wrapper).toContainMatchingElement('AccountVisual');
+    expect(wrapper).toContainMatchingElement('WalletVisual');
   });
 
   it('should select an account from the available list', () => {

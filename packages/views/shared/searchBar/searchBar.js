@@ -4,8 +4,8 @@ import { keyCodes } from '@views/configuration';
 import { addSearchParamsToUrl } from '@screens/router/searchParams';
 import routes from '@screens/router/routes';
 import { Input } from '@basics/inputs';
-import Accounts from './accounts';
-import Delegates from './delegates';
+import Wallet from '@wallet/detail/identity/searchBarWallets';
+import Delegates from '@wallet/detail/identity/searchBarWallets/delegates';
 import Transactions from './transactions';
 import styles from './searchBar.css';
 import Blocks from './blocks';
@@ -55,7 +55,7 @@ class SearchBar extends React.Component {
     if (type === 'transactions') {
       addSearchParamsToUrl(this.props.history, { modal: 'transactionDetails', transactionId: value });
     } else if (type === 'delegate-account') {
-      this.props.history.push(`${routes.account.path}?${routes.account.searchParam}=${value}&tab=delegateProfile`);
+      this.props.history.push(`${routes.explorer.path}?${routes.explorer.searchParam}=${value}&tab=delegateProfile`);
     } else {
       this.props.history.push(`${routes[type].path}?${routes[type].searchParam}=${value}`);
     }
@@ -156,8 +156,8 @@ class SearchBar extends React.Component {
         {
           suggestions.data.addresses.length
             ? (
-              <Accounts
-                accounts={suggestions.data.addresses}
+              <Wallet
+                wallets={suggestions.data.addresses}
                 onSelectedRow={this.onSelectAccount}
                 rowItemIndex={rowItemIndex}
                 updateRowItemIndex={this.updateRowItemIndex}

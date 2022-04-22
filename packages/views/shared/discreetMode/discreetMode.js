@@ -10,14 +10,14 @@ const DiscreetMode = ({
 }) => {
   const isBlurHandledOnOtherWalletPage = useMemo(() => {
     const { search } = location;
-    const address = selectSearchParamValue(search, routes.account.searchParam);
+    const address = selectSearchParamValue(search, routes.explorer.searchParam);
     return account.info && address === account.info[token].address;
   }, [location, account.info]);
 
   const shouldEnableDiscreetMode = () => {
     if (!isDiscreetMode) return false;
     if (shouldEvaluateForOtherAccounts) {
-      if (location.pathname.includes(routes.account.path)) {
+      if (location.pathname.includes(routes.explorer.path)) {
         return isBlurHandledOnOtherWalletPage;
       }
       const { search } = location;

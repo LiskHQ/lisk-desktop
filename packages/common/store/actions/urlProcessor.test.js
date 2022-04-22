@@ -1,5 +1,5 @@
 import * as accounts from '@wallet/utilities/api';
-import mockAccounts from '@tests/constants/accounts';
+import mockAccounts from '@tests/constants/wallets';
 import setVotesByLaunchProtocol from './urlProcessor';
 
 jest.mock('@wallet/utilities/api', () => ({

@@ -31,6 +31,7 @@ module.exports = {
     '^@bookmark(.*)$': resolve(__dirname, '../packages/bookmark/$1'),
     '^@common(.*)$': resolve(__dirname, '../packages/common/$1'),
     '^@dpos(.*)$': resolve(__dirname, '../packages/dpos/$1'),
+    '^@legacy(.*)$': resolve(__dirname, '../packages/legacy/$1'),
     '^@network(.*)$': resolve(__dirname, '../packages/network/$1'),
     '^@settings(.*)$': resolve(__dirname, '../packages/settings/$1'),
     '^@token(.*)$': resolve(__dirname, '../packages/token/$1'),
@@ -91,7 +92,7 @@ module.exports = {
     'packages/views/shared/transactionInfo/',
     'packages/views/shared/formattedNumber/stories.js',
     'packages/views/shared/header/signInHeader/signInHeader.js',
-    'packages/views/shared/accountVisualWithAddress/index.js',
+    'packages/views/shared/walletVisualWithAddress/index.js',
     'packages/views/shared/voteWeight/index.js',
     'packages/views/shared/transactionTypeFigure/index.js',
     'packages/views/shared/filterDropdownButton/textFilter.js',
@@ -191,6 +192,7 @@ module.exports = {
   setupFiles: ['<rootDir>/setup/config/setupJest.js', 'jest-canvas-mock'],
   transform: {
     '^.+\\.js$': 'babel-jest',
+    '^.+\\.svg|png|jpg|jpeg$': '<rootDir>/tests/__mocks__/imageTransform.js',
   },
   testURL: 'http://localhost',
   globals: {

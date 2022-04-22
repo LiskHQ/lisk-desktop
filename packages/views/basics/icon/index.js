@@ -114,8 +114,8 @@ import darkMode from '../../../../setup/react/assets/images/icons/dark-mode.svg'
 import lightMode from '../../../../setup/react/assets/images/icons/light-mode.svg';
 import blocksMonitor from '../../../../setup/react/assets/images/icons/blocks.svg';
 import blocksMonitorActive from '../../../../setup/react/assets/images/icons/blocksActive.svg';
-import accountsMonitor from '../../../../setup/react/assets/images/icons/accountsMonitor.svg';
-import accountsMonitorActive from '../../../../setup/react/assets/images/icons/accountsMonitorActive.svg';
+import walletsMonitor from '../../../../setup/react/assets/images/icons/walletsMonitor.svg';
+import walletsMonitorActive from '../../../../setup/react/assets/images/icons/walletsMonitorActive.svg';
 import transactions from '../../../../setup/react/assets/images/icons/transactions.svg';
 import transactionsDark from '../../../../setup/react/assets/images/icons/transactions-dark.svg';
 import transactionsMonitor from '../../../../setup/react/assets/images/icons/transactionsMonitor.svg';
@@ -329,8 +329,8 @@ export const icons = {
   lightMode,
   blocksMonitor,
   blocksMonitorActive,
-  accountsMonitor,
-  accountsMonitorActive,
+  walletsMonitor,
+  walletsMonitorActive,
   transactions,
   transactionsDark,
   transactionsMonitor,

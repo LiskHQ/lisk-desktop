@@ -34,7 +34,7 @@ describe('Dialog Holder Component', () => {
         active: 'LSK',
       },
     },
-    account: {
+    wallet: {
       info: {
         LSK: 'some data',
       },

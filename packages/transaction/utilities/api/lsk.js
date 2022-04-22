@@ -312,14 +312,14 @@ export const getTransactionFee = async ({
 // eslint-disable-next-line max-statements
 export const create = async ({
   network,
-  account,
+  wallet,
   transactionObject,
 }) => {
   const {
     summary: { publicKey, isMultisignature, privateKey },
     keys,
     sequence,
-  } = account;
+  } = wallet;
   const networkIdentifier = Buffer.from(network.networks.LSK.networkIdentifier, 'hex');
 
   const { moduleAssetId, ...rawTransaction } = transactionObject;
@@ -333,7 +333,7 @@ export const create = async ({
     === MODULE_ASSETS_NAME_ID_MAP.registerMultisignatureGroup;
 
   const result = await sign(
-    account, schema, transaction, network, networkIdentifier,
+    wallet, schema, transaction, network, networkIdentifier,
     isMultisignature, isMultiSignatureRegistration, keys, publicKey,
     moduleAssetId, rawTransaction, privateKey,
   );

@@ -1,13 +1,13 @@
 import React from 'react';
 import { mount } from 'enzyme';
-import WalletDetails from './walletDetails';
+import WalletDetails from '../../holdings/walletDetails/walletDetails';
 
 describe('WalletDetails', () => {
   let wrapper;
 
   const props = {
     location: { search: '' },
-    account: {
+    wallet: {
       info: {
         LSK: {
           balance: '100',

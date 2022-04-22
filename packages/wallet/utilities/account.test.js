@@ -1,5 +1,5 @@
 import { getCustomDerivationKeyPair } from '@common/utilities/explicitBipKeyDerivation';
-import accounts from '@tests/constants/accounts';
+import accounts from '@tests/constants/wallets';
 import {
   extractPublicKey,
   extractPrivateKey,

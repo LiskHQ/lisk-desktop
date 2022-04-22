@@ -17,7 +17,7 @@ Feature: Multisignature transaction
     Given I login as account2P on devnet
     And I wait 10 seconds
     Given I am on wallet page
-    When I click on accountInfoMsign
+    When I click on walletInfoMsign
     When I clear input multisignatureEditorInput
     And I fill 2 in multisignatureEditorInput field
     Then I enter the publicKey of account2P at input 1
@@ -80,7 +80,7 @@ Feature: Multisignature transaction
     Given I login as multiSig_candidate on devnet
     And I wait 1 seconds
     Given I am on wallet page
-    When I click on accountInfoMsign
+    When I click on walletInfoMsign
     When I clear input multisignatureEditorInput
     And I fill 2 in multisignatureEditorInput field
     When I click on addNewMembers

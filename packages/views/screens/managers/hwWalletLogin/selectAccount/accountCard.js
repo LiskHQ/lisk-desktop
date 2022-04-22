@@ -3,7 +3,7 @@ import { withTranslation } from 'react-i18next';
 import { tokenMap } from '@token/configuration/tokens';
 import { truncateAddress } from '@wallet/utilities/account';
 import { TertiaryButton } from '@basics/buttons';
-import AccountVisual from '@wallet/detail/info/accountVisual';
+import WalletVisual from '@wallet/detail/identity/walletVisual';
 import LiskAmount from '@shared/liskAmount';
 import { Input } from '@basics/inputs';
 import Icon from '@basics/icon';
@@ -35,7 +35,7 @@ const AccountCard = ({
     >
       <div className={styles.content}>
         <div>
-          <AccountVisual
+          <WalletVisual
             address={account.summary?.address || ''}
             size={40}
           />

@@ -4,7 +4,7 @@ import { tokenMap } from '@token/configuration/tokens';
 import { toRawLsk } from '@token/utilities/lsk';
 import { truncateAddress } from '@wallet/utilities/account';
 import LiskAmount from '@shared/liskAmount';
-import AccountVisual from '@wallet/detail/info/accountVisual';
+import WalletVisual from '@wallet/detail/identity/walletVisual';
 
 import styles from './styles.css';
 
@@ -25,7 +25,7 @@ const getAccountRoleText = (accountRole, t) => {
 const Member = ({ member, i, t }) => (
   <div className={`${styles.memberInfo} member-info`}>
     <p className={styles.memberInfoIndex}>{`${i + 1}.`}</p>
-    <AccountVisual address={member.address} />
+    <WalletVisual address={member.address} />
     <div className={styles.memberDetails}>
       <p className={styles.memberTitle}>
         {member.name || truncateAddress(member.address)}

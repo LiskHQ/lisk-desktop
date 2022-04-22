@@ -1,7 +1,7 @@
 import React from 'react';
 import { mount } from 'enzyme';
 import { keyCodes } from '@views/configuration';
-import accounts from '@tests/constants/accounts';
+import accounts from '@tests/constants/wallets';
 import PassphraseInput from '.';
 
 describe('passphraseInput', () => {

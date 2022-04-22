@@ -158,7 +158,7 @@
   transition: opacity var(--animation-speed-fast) linear;
 }
 
-.recipientAccountVisual {
+.recipientWalletVisual {
   margin-left: -4px;
   margin-top: 4px;
 }

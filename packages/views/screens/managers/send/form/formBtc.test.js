@@ -9,7 +9,7 @@ import {
   getTransactionFee,
   getTransactionBaseFees,
 } from '@transaction/utilities/api';
-import accounts from '@tests/constants/accounts';
+import accounts from '@tests/constants/wallets';
 import flushPromises from '@tests/unit-test-utils/flushPromises';
 import Form from './formBtc';
 

@@ -12,8 +12,8 @@ export default {
     isPrivate: false,
     forbiddenTokens: [],
   },
-  account: {
-    path: '/account',
+  explorer: {
+    path: '/explorer',
     searchParam: 'address',
     isPrivate: false,
     forbiddenTokens: [],
@@ -61,8 +61,8 @@ export default {
     exact: true,
     forbiddenTokens: [tokenMap.BTC.key],
   },
-  accounts: {
-    path: '/accounts',
+  wallets: {
+    path: '/wallets',
     isPrivate: false,
     forbiddenTokens: [tokenMap.BTC.key],
   },

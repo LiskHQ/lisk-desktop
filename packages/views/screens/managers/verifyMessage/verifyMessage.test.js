@@ -1,5 +1,5 @@
 import { mountWithRouter } from '@common/utilities/testHelpers';
-import accounts from '@tests/constants/accounts';
+import accounts from '@tests/constants/wallets';
 import VerifyMessage from './verifyMessage';
 
 describe('VerifyMessage Component', () => {

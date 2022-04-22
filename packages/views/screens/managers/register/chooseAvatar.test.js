@@ -30,7 +30,7 @@ describe('Register Process - Choose Avatar', () => {
   });
 
   it('Should render with five avatars', () => {
-    expect(wrapper).to.have.exactly(5).descendants('AccountVisual');
+    expect(wrapper).to.have.exactly(5).descendants('WalletVisual');
   });
 
   it('Should animate avatars when confirm is clicked', () => {
@@ -43,7 +43,7 @@ describe('Register Process - Choose Avatar', () => {
     const randomAvatar = Math.floor(Math.random() * 5);
     const confirmButton = wrapper.find('Button').at(1);
     expect(confirmButton.prop('disabled'));
-    wrapper.find('AccountVisual').at(randomAvatar).simulate('click');
+    wrapper.find('WalletVisual').at(randomAvatar).simulate('click');
     expect(props.handleSelectAvatar).to.have.been.calledWith(accounts[randomAvatar]);
 
     wrapper.setProps({

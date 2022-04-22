@@ -5,7 +5,7 @@ import { tokenMap } from '@token/configuration/tokens';
 import { getTransactionBaseFees, getTransactionFee } from '@transaction/utilities/api';
 import useTransactionFeeCalculation from '@transaction/manage/transactionPriority/useTransactionFeeCalculation';
 import { fromRawLsk } from '@token/utilities/lsk';
-import accounts from '@tests/constants/accounts';
+import accounts from '@tests/constants/wallets';
 import flushPromises from '@tests/unit-test-utils/flushPromises';
 import Form from './form';
 

@@ -1,0 +1,4 @@
+.content {
+  padding: 0 !important;
+  counter-reset: section;
+}

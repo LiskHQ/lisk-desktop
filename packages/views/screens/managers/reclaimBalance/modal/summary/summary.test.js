@@ -8,7 +8,7 @@ import { tokenMap } from '@token/configuration/tokens';
 import useTransactionFeeCalculation from '@transaction/manage/transactionPriority/useTransactionFeeCalculation';
 import { truncateAddress } from '@wallet/utilities/account';
 import * as hwManager from '@transaction/utilities/hwManager';
-import accounts from '@tests/constants/accounts';
+import accounts from '@tests/constants/wallets';
 import flushPromises from '@tests/unit-test-utils/flushPromises';
 import Summary from './summary';
 

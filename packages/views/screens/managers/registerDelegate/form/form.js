@@ -42,7 +42,7 @@ const SelectNameAndFee = ({
     network,
     selectedPriority,
     token,
-    account,
+    wallet: account,
     priorityOptions,
     transaction: {
       moduleAssetId,

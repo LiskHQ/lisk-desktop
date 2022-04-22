@@ -22,7 +22,7 @@ const FormBtc = (props) => {
     network,
     selectedPriority,
     token,
-    account,
+    wallet: account,
     priorityOptions,
     transaction: {
       amount: toRawLsk(amount.value),

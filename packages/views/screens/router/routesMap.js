@@ -7,7 +7,7 @@ import DelegatesMonitor from '@screens/managers/monitor/delegates';
 import DelegatesPerformanceModal from '@screens/managers/wallet/delegatePerformanceModal';
 import HwWalletLogin from '@screens/managers/hwWalletLogin';
 import Login from '@screens/managers/login';
-import MonitorAccounts from '@screens/managers/monitor/accounts';
+import MonitorWallets from '@screens/managers/monitor/wallets';
 import MonitorNetwork from '@screens/managers/monitor/network';
 import MonitorTransactions from '@screens/managers/monitor/transactions';
 import Register from '@screens/managers/register';
@@ -36,7 +36,7 @@ import MultisigAccountDetails from '@screens/managers/multisigAccountDetails';
 export default {
   wallet: Wallet,
   addAccount: Login,
-  account: Explorer,
+  explorer: Explorer,
   hwWallet: HwWalletLogin,
   register: Register,
   login: Login,
@@ -44,7 +44,7 @@ export default {
   transactions: MonitorTransactions,
   blocks: Blocks,
   block: BlockDetails,
-  accounts: MonitorAccounts,
+  wallets: MonitorWallets,
   network: MonitorNetwork,
   delegates: DelegatesMonitor,
   delegatePerformance: DelegatesPerformanceModal,

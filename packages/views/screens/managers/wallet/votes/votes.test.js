@@ -1,6 +1,6 @@
 import { mountWithRouter } from '@common/utilities/testHelpers';
 import routes from '@screens/router/routes';
-import accounts from '@tests/constants/accounts';
+import accounts from '@tests/constants/wallets';
 import Votes from './votes';
 
 describe('Votes Tab Component', () => {
@@ -99,7 +99,7 @@ describe('Votes Tab Component', () => {
     wrapper = setup(customProps);
     wrapper.find('.vote-row > div').at(0).first().simulate('click');
     jest.advanceTimersByTime(300);
-    expect(props.history.push).toBeCalledWith(`${routes.account.path}?address=lsk0`);
+    expect(props.history.push).toBeCalledWith(`${routes.explorer.path}?address=lsk0`);
   });
 
   it('Should filter votes per username and show error message if no results found', () => {

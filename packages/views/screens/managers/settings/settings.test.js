@@ -1,7 +1,7 @@
 /* eslint-disable */
 import React from 'react';
 import Settings from './settings';
-import accounts from '@tests/constants/accounts';
+import accounts from '@tests/constants/wallets';
 import { mountWithRouter } from '@common/utilities/testHelpers';
 
 describe('Setting', () => {

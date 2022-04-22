@@ -1,8 +1,7 @@
 import React from 'react';
 import { mount } from 'enzyme';
-import accounts from '@tests/constants/accounts';
+import accounts from '@tests/constants/wallets';
 import { TransactionVotesComp } from './transactionVotes';
-// import { Context } from '../transactionDetails';
 
 jest.mock('react', () => ({
   ...jest.requireActual('react'),

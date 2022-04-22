@@ -9,7 +9,7 @@ import Icon from '@basics/icon';
 import Tooltip from '@basics/tooltip/tooltip';
 import DialogLink from '@basics/dialog/link';
 import LiskAmount from '@shared/liskAmount';
-import AccountVisualWithAddress from '@wallet/detail/info/accountVisual/accountVisualWithAddress';
+import WalletVisualWithAddress from '@wallet/detail/identity/walletVisual/walletVisualWithAddress';
 import styles from './transactionsTable.css';
 
 const roundSize = 103;
@@ -23,7 +23,7 @@ const TransactionRow = ({
     data={{ transactionId: data.id, token: tokenMap.LSK.key }}
   >
     <span className={`${grid['col-xs-3']} transaction-row-sender`}>
-      <AccountVisualWithAddress
+      <WalletVisualWithAddress
         address={data.sender.address}
         transactionSubject="sender"
         moduleAssetId={data.moduleAssetId}
@@ -31,7 +31,7 @@ const TransactionRow = ({
       />
     </span>
     <span className={`${grid['col-xs-3']} transaction-row-recipient`}>
-      <AccountVisualWithAddress
+      <WalletVisualWithAddress
         address={data.asset.recipient?.address}
         transactionSubject="recipient"
         moduleAssetId={data.moduleAssetId}

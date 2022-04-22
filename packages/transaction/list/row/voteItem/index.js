@@ -23,7 +23,7 @@ const token = tokenMap.LSK.key;
 const VoteItem = ({
   vote, address, title, truncate,
 }) => {
-  const accountPath = routes.account.path;
+  const accountPath = routes.explorer.path;
   return (
     <span className={`${styles.container} vote-item-address`}>
       <Link
