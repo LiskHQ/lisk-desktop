@@ -1,0 +1,65 @@
+.tableHeader {
+  position: sticky;
+  top: 70px;
+  background: var(--color-white);
+  z-index: 2;
+  border-bottom: 2px solid var(--color-mystic);
+}
+
+.sortingColumn {
+  cursor: pointer;
+}
+
+.arrow {
+  width: 0;
+  height: 0;
+  margin-bottom: 5px;
+  margin-left: 5px;
+  border-left: 4px solid transparent;
+  border-right: 4px solid transparent;
+
+  &.arrowUp {
+    border-bottom: 4px solid black;
+  }
+
+  &.arrowDown {
+    border-top: 4px solid black;
+  }
+}
+
+.tooltip {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.content {
+  padding: 0 !important;
+}
+
+.tooltipOffset {
+  left: -145px;
+}
+
+.amount {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+
+  & > .fee {
+    font-family: var(--content-font);
+    font-style: normal;
+    font-weight: normal;
+    font-size: 10px;
+    line-height: 14px;
+    color: var(--color-blue-gray);
+  }
+}
+
+.transactionFeeCell {
+  display: inherit;
+
+  @media (--medium-viewport) {
+    display: none;
+  }
+}
