@@ -1,6 +1,7 @@
 /* eslint-disable max-lines */
 import React, { /* useContext */ useMemo } from 'react';
 import { useSelector } from 'react-redux';
+import ReactJson from 'react-json-view';
 
 import { selectCurrentBlockHeight } from '@common/store/selectors';
 import { getModuleAssetTitle, getModuleAssetSenderLabel } from '@transaction/utilities/moduleAssets';
@@ -334,5 +335,14 @@ export const SignedAndRemainingMembersList = ({ t }) => {
       className={styles.signedAndRemainingMembersList}
       t={t}
     />
+  );
+};
+
+export const PrettyJson = () => {
+  const {
+    transaction,
+  } = React.useContext(TransactionDetailsContext);
+  return (
+    <ReactJson src={transaction} />
   );
 };

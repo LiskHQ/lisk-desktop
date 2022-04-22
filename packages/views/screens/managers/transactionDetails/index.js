@@ -20,12 +20,6 @@ const TransactionDetails = ({ title }) => {
   const { t } = useTranslation();
   const isDataEmpty = useMemo(() => isEmpty(transaction), [transaction]);
 
-  console.log('>>> ', isDataEmpty, schema,
-    error,
-    isLoading,
-    transaction,
-    containerStyle);
-
   if (!error && isDataEmpty) {
     return <div />;
   }
