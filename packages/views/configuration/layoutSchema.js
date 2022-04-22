@@ -5,7 +5,7 @@ import {
   Confirmations, Date, Amount, Fee, RequiredSignatures, TransactionVotes,
   BlockId, BlockHeight, Members, SignedAndRemainingMembersList,
 } from '@transaction/detail/info/transactionDetailsComponents';
-import styles from './transactionDetails.css';
+import styles from '@screens/managers/transactionDetails/transactionDetails.css';
 
 const {
   transfer, voteDelegate, unlockToken, registerDelegate, registerMultisignatureGroup,
