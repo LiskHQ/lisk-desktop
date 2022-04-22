@@ -42,7 +42,6 @@ const Fields = ({
           {field.name === 'address' ? (
             <WalletVisual
               className={styles.avatar}
-              // placeholder={status[index].isInvalid || !status[index].value}
               address={status[index].value}
               size={25}
             />
