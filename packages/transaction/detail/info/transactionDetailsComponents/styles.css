@@ -111,6 +111,10 @@
   }
 }
 
+.transactionAsset {
+  grid-area: transactionAsset;
+}
+
 .votesContainer {
   display: flex;
   align-content: flex-start;

@@ -36,9 +36,9 @@ const TransactionDetails = ({ title }) => {
           <h1>{title}</h1>
         </BoxHeader>
       )}
-      <BoxContent className={`${styles.mainContent} ${Layout.className}`}>
+      <Box className={`${styles.mainContent} ${Layout.className}`}>
         {Layout.components.map((Component, index) => <Component key={index} t={t} />)}
-      </BoxContent>
+      </Box>
     </Box>
   );
 };

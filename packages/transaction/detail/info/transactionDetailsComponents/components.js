@@ -343,6 +343,8 @@ export const PrettyJson = () => {
     transaction,
   } = React.useContext(TransactionDetailsContext);
   return (
-    <ReactJson src={transaction} />
+    <div className ={styles.transactionAsset}>
+      <ReactJson src={transaction} />
+    </div>
   );
 };

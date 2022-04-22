@@ -25,7 +25,8 @@
       "amount message"
       "transactionId date"
       "blockId blockHeight"
-      "fee confirmations";
+      "fee confirmations"
+      "transactionAsset transactionAsset";
 
     & > * {
       width: 100%;
