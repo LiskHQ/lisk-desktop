@@ -1,5 +1,5 @@
 /* eslint-disable max-lines */
-import React, { /* useContext */ useMemo } from 'react';
+import React, { useMemo } from 'react';
 import { useSelector } from 'react-redux';
 import ReactJson from 'react-json-view';
 

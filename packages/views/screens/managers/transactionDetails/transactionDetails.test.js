@@ -154,7 +154,10 @@ describe('Transaction Details Component', () => {
     });
 
     it('Should not render transfer transaction with message (BTC)', () => {
-      const wrapper = mount(<TransactionDetails {...props} activeToken="BTC" />);
+      const wrapper = mountWithRouter(
+        TransactionDetailsWithManager, 
+        {...props, activeToken: "BTC"}
+      );
       expect(wrapper).not.toContain('.tx-reference');
     });
 
@@ -292,11 +295,13 @@ describe('Transaction Details Component', () => {
         data: {},
       };
       mockUseContext({ ...trnx, transaction: {} });
-      const wrapper = mount(<TransactionDetails {...{
-        ...props,
-        transaction: trnx,
-      }}
-      />);
+      const wrapper = mountWithRouter(
+        TransactionDetailsWithManager,
+        {
+          ...props,
+          transaction: trnx,
+        }
+      );
       expect(wrapper).toContainMatchingElement('NotFound');
       expect(wrapper.find('.not-found-state h3').text()).toBe('The transaction was not found.');
     });
