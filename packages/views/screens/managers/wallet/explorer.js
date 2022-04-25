@@ -9,10 +9,10 @@ import { selectActiveToken, selectSettings } from '@common/store/selectors';
 import { getAccount } from '@wallet/utilities/api';
 import { selectSearchParamValue } from '@screens/router/searchParams';
 import TabsContainer from '@basics/tabs/tabsContainer/tabsContainer';
+import Transactions from '@transaction/list/managers/explorer';
 import Overview from './overview';
 import DelegateTab from './delegateProfile';
 import VotesTab from './votes';
-import Transactions from './transactions';
 
 const Wallet = ({
   t, account, history,

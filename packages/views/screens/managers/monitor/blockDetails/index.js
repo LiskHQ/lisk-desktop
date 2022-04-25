@@ -24,20 +24,6 @@ const ComposedBlockDetails = compose(
       getApiParams: (_, ownProps) => ({ blockId: ownProps.id, height: ownProps.height }),
       transformResponse: response => (response.data && response.data[0]),
     },
-    blockTransactions: {
-      apiUtil: (network, params) => getTransactions({ network, params }, tokenMap.LSK.key),
-      defaultData: [],
-      getApiParams: (_, ownProps) => {
-        if (ownProps.id) return { blockId: ownProps.id };
-        return { height: ownProps.height };
-      },
-      transformResponse: (response, oldData, urlSearchParams) => (
-        urlSearchParams.offset
-          ? [...oldData, ...response.data.filter(block =>
-            !oldData.find(({ id }) => id === block.id))]
-          : response.data
-      ),
-    },
   }),
   withTranslation(),
 )(BlockDetails);

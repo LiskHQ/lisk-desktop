@@ -23,7 +23,6 @@ const TransactionRow = ({
     bookmarks: state.bookmarks,
     activeToken: state.settings.token.active,
   }));
-  const isLSK = activeToken === tokenMap.LSK.key;
   const isPending = data.isPending;
   const senderAddress = data.sender.address;
   const recipientAddress = data.asset.recipient?.address;
@@ -36,7 +35,7 @@ const TransactionRow = ({
       component="transactionDetails"
       data={{ transactionId: data.id, token: activeToken }}
     >
-      <span className={grid[isLSK ? 'col-xs-4' : 'col-xs-5']}>
+      <span className={grid['col-xs-4']}>
         <TransactionTypeFigure
           icon={host === recipientAddress ? 'incoming' : 'outgoing'}
           address={address}
@@ -62,16 +61,10 @@ const TransactionRow = ({
       <span className={grid['col-xs-2']}>
         <LiskAmount val={data.fee} token={activeToken} />
       </span>
-      {
-        isLSK
-          ? (
-            <span className={`${grid['col-xs-2']} ${grid['col-md-2']}`}>
-              <TransactionAsset t={t} transaction={data} delegates={delegates} />
-            </span>
-          )
-          : null
-      }
-      <span className={grid[isLSK ? 'col-xs-2' : 'col-xs-3']}>
+      <span className={grid['col-xs-2']}>
+        <TransactionAsset t={t} transaction={data} delegates={delegates} />
+      </span>
+      <span className={grid['col-xs-2']}>
         <TransactionAmount
           host={host}
           token={activeToken}
