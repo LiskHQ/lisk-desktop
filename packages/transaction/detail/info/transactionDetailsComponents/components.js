@@ -17,7 +17,8 @@ import Tooltip from '@basics/tooltip/tooltip';
 import { extractAddressFromPublicKey, truncateAddress, calculateRemainingAndSignedMembers } from '@wallet/utilities/account';
 import WalletInfo from './walletInfo';
 
-import { Context } from '../../../../views/screens/managers/transactionDetails/transactionDetails';
+import AccountInfo from './accountInfo';
+import TransactionDetailsContext from '../../../configuration/context';
 import styles from './styles.css';
 
 const getDelegateName = (transaction, activeToken) => (
@@ -44,7 +45,8 @@ const ValueAndLabel = ({ label, className, children }) => (
 );
 
 export const Illustration = () => {
-  const { transaction: { sender, moduleAssetId } } = useContext(Context);
+  const params = useContext(TransactionDetailsContext);
+  const { transaction: { sender, moduleAssetId } } = params;
   const title = getModuleAssetTitle()[moduleAssetId];
 
   return (
@@ -62,7 +64,7 @@ export const Illustration = () => {
 export const Sender = () => {
   const {
     activeToken, transaction, network,
-  } = useContext(Context);
+  } = useContext(TransactionDetailsContext);
   const delegateName = getDelegateName(transaction, activeToken);
   const senderLabel = getModuleAssetSenderLabel()[transaction.moduleAssetId];
 
@@ -82,7 +84,7 @@ export const Sender = () => {
 export const Recipient = ({ t }) => {
   const {
     activeToken, network, transaction,
-  } = useContext(Context);
+  } = useContext(TransactionDetailsContext);
 
   return (
     <WalletInfo
@@ -99,7 +101,7 @@ export const Recipient = ({ t }) => {
 export const TransactionId = ({ t }) => {
   const {
     transaction: { id },
-  } = useContext(Context);
+  } = useContext(TransactionDetailsContext);
 
   return (
     <ValueAndLabel label={t('Transaction ID')} className={styles.transactionId}>
@@ -122,7 +124,7 @@ export const TransactionId = ({ t }) => {
 export const Message = ({ t }) => {
   const {
     transaction,
-  } = useContext(Context);
+  } = useContext(TransactionDetailsContext);
 
   return (
     <ValueAndLabel label={t('Message')} className={styles.message}>
@@ -138,7 +140,7 @@ export const Amount = ({
 }) => {
   const {
     activeToken, transaction,
-  } = useContext(Context);
+  } = useContext(TransactionDetailsContext);
   const addresses = [transaction.asset.recipient?.address ?? '', transaction.sender.address];
 
   return (
@@ -157,7 +159,7 @@ export const Amount = ({
 export const Date = ({ t }) => {
   const {
     activeToken, transaction,
-  } = useContext(Context);
+  } = useContext(TransactionDetailsContext);
 
   return transaction.block?.timestamp ? (
     <ValueAndLabel label={t('Date')} className={styles.date}>
@@ -178,7 +180,7 @@ export const Date = ({ t }) => {
 export const Fee = ({ t }) => {
   const {
     activeToken, transaction: { fee },
-  } = useContext(Context);
+  } = useContext(TransactionDetailsContext);
 
   return (
     <ValueAndLabel label={t('Transaction fee')} className={styles.fee}>
@@ -193,7 +195,7 @@ export const Confirmations = ({ t }) => {
   const currentBlockHeight = useSelector(selectCurrentBlockHeight);
   const {
     activeToken, transaction,
-  } = useContext(Context);
+  } = useContext(TransactionDetailsContext);
 
   const confirmations = activeToken === tokenMap.LSK.key
     ? (currentBlockHeight - transaction.height)
@@ -224,7 +226,7 @@ export const Confirmations = ({ t }) => {
 export const Nonce = ({ t }) => {
   const {
     transaction: { nonce },
-  } = useContext(Context);
+  } = useContext(TransactionDetailsContext);
 
   return (
     <ValueAndLabel className={styles.nonce} label={t('Nonce')}>
@@ -236,7 +238,7 @@ export const Nonce = ({ t }) => {
 export const RequiredSignatures = ({ t }) => {
   const {
     transaction: { asset },
-  } = useContext(Context);
+  } = useContext(TransactionDetailsContext);
   const requiredSignatures = asset.numberOfSignatures;
 
   return (
@@ -247,7 +249,7 @@ export const RequiredSignatures = ({ t }) => {
 };
 
 export const Members = ({ t }) => {
-  const { transaction: { asset } } = useContext(Context);
+  const { transaction: { asset } } = useContext(TransactionDetailsContext);
 
   const { optionalKeys, mandatoryKeys } = asset;
 
@@ -269,7 +271,7 @@ export const Members = ({ t }) => {
 };
 
 export const BlockId = ({ t }) => {
-  const { transaction } = useContext(Context);
+  const { transaction } = useContext(TransactionDetailsContext);
 
   return (
     <ValueAndLabel className={styles.blockId} label={t('Block ID')}>
@@ -290,7 +292,7 @@ export const BlockId = ({ t }) => {
 };
 
 export const BlockHeight = ({ t }) => {
-  const { transaction } = useContext(Context);
+  const { transaction } = useContext(TransactionDetailsContext);
 
   return (
     <ValueAndLabel className={styles.blockHeight} label={t('Block height')}>
@@ -300,7 +302,7 @@ export const BlockHeight = ({ t }) => {
 };
 
 export const SignedAndRemainingMembersList = ({ t }) => {
-  const { transaction, account } = useContext(Context);
+  const { transaction, account } = useContext(TransactionDetailsContext);
 
   const isMultisignatureGroupRegistration = transaction.moduleAssetId
     === MODULE_ASSETS_NAME_ID_MAP.registerMultisignatureGroup;
