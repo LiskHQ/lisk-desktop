@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react';
 import { useSelector } from 'react-redux';
-import { selectCurrentBlockHeight } from '@common/store/selectors';
+import { selectCurrentBlockHeight, selectActiveToken } from '@common/store/selectors';
 import Box from '@basics/box';
 import BoxContent from '@basics/box/content';
 import Table from '@basics/table';
@@ -15,6 +15,7 @@ const Transactions = ({
   t,
 }) => {
   const currentBlockHeight = useSelector(selectCurrentBlockHeight);
+  const activeToken = useSelector(selectActiveToken);
   useEffect(() => {
     if (blockId || height) {
       transactions.loadData();
@@ -32,6 +33,7 @@ const Transactions = ({
             t,
             currentBlockHeight,
             layout: 'full',
+            activeToken,
           }}
           header={header(t)}
           headerClassName={styles.tableHeader}

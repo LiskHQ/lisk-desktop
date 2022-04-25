@@ -7,7 +7,7 @@ import FilterDropdownButton from '@shared/filterDropdownButton';
 import Box from '@basics/box';
 import BoxContent from '@basics/box/content';
 import Table from '@basics/table';
-import { selectCurrentBlockHeight } from '@common/store/selectors';
+import { selectCurrentBlockHeight, selectActiveToken } from '@common/store/selectors';
 import header from './tableHeader';
 import TransactionRow from '@transaction/list/row';
 import styles from './transactionsTable.css';
@@ -56,6 +56,7 @@ const Transactions = ({
   const fields = getFields(t);
   const [innerFields, setInnerFields] = useState(fields);
   const currentBlockHeight = useSelector(selectCurrentBlockHeight);
+  const activeToken = useSelector(selectActiveToken);
   
   const canLoadMore = transactions.meta
     ? transactions.data.length < transactions.meta.total
@@ -103,8 +104,6 @@ const Transactions = ({
     if (blackListTypes.some((type) => type === moduleAssetId)) setTimeout(() => changeSort('timestamp'), 100);
   };
 
-  console.log(filters, formatters);
-
   return (
     <Box main isLoading={transactions.isLoading} className="transactions-box">
       <BoxContent className={`${styles.content} transaction-results`}>
@@ -144,7 +143,12 @@ const Transactions = ({
           isLoading={transactions.isLoading}
           row={TransactionRow}
           loadData={handleLoadMore}
-          additionalRowProps={{ t, currentBlockHeight }}
+          additionalRowProps={{
+            t,
+            currentBlockHeight,
+            activeToken,
+            layout: 'full',
+          }}
           header={removeSortOnAmount(header(changeSort, t), filters)}
           headerClassName={styles.tableHeader}
           currentSort={sort}

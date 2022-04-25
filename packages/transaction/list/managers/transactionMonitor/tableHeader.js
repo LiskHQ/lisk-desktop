@@ -1,5 +1,5 @@
 import grid from 'flexboxgrid/dist/flexboxgrid.css';
-import styles from '../transactionsTable.css';
+import styles from './transactionsTable.css';
 
 export default (changeSort, t) => ([
   {
