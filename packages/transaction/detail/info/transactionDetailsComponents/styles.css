@@ -113,6 +113,18 @@
 
 .transactionAsset {
   grid-area: transactionAsset;
+  padding-top: 40px;
+
+  & > div:first-child {
+    width: 100%;
+    text-align: left;
+    overflow-x: auto;
+  }
+}
+
+.react-json-view {
+  width: 100%;
+  text-align: left;
 }
 
 .votesContainer {

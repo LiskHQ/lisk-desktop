@@ -23,8 +23,7 @@ const LayoutSchema = {
     className: styles.transferLayout,
   },
   [`${transfer}-preview`]: {
-    components: [...previewBaseComponents, Recipient, Amount, Message, ...restComponents,
-      PrettyJson],
+    components: [...previewBaseComponents, Recipient, Amount, Message, ...restComponents],
     className: styles.transferPreview,
   },
   [voteDelegate]: {
@@ -32,7 +31,7 @@ const LayoutSchema = {
     className: styles.voteLayout,
   },
   [`${voteDelegate}-preview`]: {
-    components: [...previewBaseComponents, TransactionVotes, ...restComponents, PrettyJson],
+    components: [...previewBaseComponents, TransactionVotes, ...restComponents],
     className: styles.votePreview,
   },
   [registerDelegate]: {
@@ -40,7 +39,7 @@ const LayoutSchema = {
     className: styles.registerDelegate,
   },
   [`${registerDelegate}-preview`]: {
-    components: [...previewBaseComponents, ...restComponents, PrettyJson],
+    components: [...previewBaseComponents, ...restComponents],
     className: styles.registerDelegatePreview,
   },
   [registerMultisignatureGroup]: {
@@ -52,7 +51,7 @@ const LayoutSchema = {
     className: styles.multiSigRegisterPreview,
   },
   [unlockToken]: {
-    components: [...baseComponents, Amount, ...timeComponents],
+    components: [...baseComponents, Amount, ...timeComponents, PrettyJson],
     className: styles.unlockToken,
   },
   [`${unlockToken}-preview`]: {
@@ -60,11 +59,11 @@ const LayoutSchema = {
     className: styles.unlockTokenPreview,
   },
   [reportDelegateMisbehavior]: {
-    components: [...baseComponents, ...timeComponents],
+    components: [...baseComponents, ...timeComponents, PrettyJson],
     className: styles.reportDelegateMisbehavior,
   },
   [reclaimLSK]: {
-    components: [...baseComponents, ...timeComponents, Amount],
+    components: [...baseComponents, ...timeComponents, Amount, PrettyJson],
     className: styles.reclaimLSK,
   },
   default: {

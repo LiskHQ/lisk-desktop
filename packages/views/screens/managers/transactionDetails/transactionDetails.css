@@ -43,7 +43,7 @@
 
   & .transferLayout {
     & > * {
-      &:nth-last-child(2) {
+      &:nth-last-child(1) {
         border-bottom: none;
       }
     }
@@ -69,7 +69,8 @@
       "fee confirmations"
       "blockId blockHeight"
       "members members"
-      "requiredSignatures requiredSignatures";
+      "requiredSignatures requiredSignatures"
+      "transactionAsset transactionAsset";
   }
 
   & .voteLayout {
@@ -79,7 +80,8 @@
       "transactionId date"
       "blockId blockHeight"
       "fee confirmations"
-      "votes votes";
+      "votes votes"
+      "transactionAsset transactionAsset";
   }
 
   & .registerDelegate {
@@ -88,7 +90,8 @@
       "sender sender"
       "transactionId date"
       "blockId blockHeight"
-      "fee confirmations";
+      "fee confirmations"
+      "transactionAsset transactionAsset";
 
     & > * {
       &:nth-last-child(2) {
@@ -131,7 +134,8 @@
       "amount amount"
       "transactionId date"
       "blockId blockHeight"
-      "fee confirmations";
+      "fee confirmations"
+      "transactionAsset transactionAsset";
 
     & > * {
       &:nth-last-child(2) {
@@ -165,7 +169,8 @@
       "sender sender"
       "transactionId date"
       "blockId blockHeight"
-      "fee confirmations";
+      "fee confirmations"
+      "transactionAsset transactionAsset";
 
     & > * {
       &:nth-last-child(2) {
@@ -181,7 +186,8 @@
       "transactionId date"
       "blockId blockHeight"
       "fee confirmations"
-      "amount amount";
+      "amount amount"
+      "transactionAsset transactionAsset";
   }
 }
 
