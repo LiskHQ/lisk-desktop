@@ -10,7 +10,7 @@ import { DoughnutChart } from '@basics/charts';
 import Tooltip from '@basics/tooltip/tooltip';
 import GuideTooltip, { GuideTooltipItem } from '@basics/charts/guideTooltip';
 import OthersTooltip from './othersTooltip';
-import styles from './overview.css';
+import styles from './statistics.css';
 
 const createChartData = (data, t) => {
   const list = {
@@ -264,34 +264,43 @@ const ConnectivityDonutChart = ({ t, connectionData, colorPalette }) => {
   );
 };
 
-const Overview = ({
-  networkStatus,
-  t,
-}) => {
-  const { networkVersion, height, basic } = networkStatus;
-  const versionData = networkVersion ? createChartData(networkVersion, t) : null;
-  const heightData = height ? createChartData(height, t) : null;
+const ChartsWithData = ({ networkVersion, height, basic, t }) => {
+  if (!networkVersion) {
+    return null;// @todo Create placeholder
+  }
+
+  const versionData =  createChartData(networkVersion, t);
+  const heightData = createChartData(height, t);
   const colorPalette = getColorPalette(useTheme());
 
   return (
-    <Box className={styles.wrapper}>
-      <BoxHeader>
-        <div>
-          <h1 className={styles.boxHeading}>
-            {t('Network statistics')}
-          </h1>
-          <Tooltip position="bottom right" indent>
-            <p>{t('The statistics shown only reflects peers connected to the current Lisk Service node.')}</p>
-          </Tooltip>
-        </div>
-      </BoxHeader>
-      <BoxContent className={styles.content}>
-        <VersionsDonutChart t={t} versionData={versionData} colorPalette={colorPalette} />
-        <HeightsDonutChart t={t} heightData={heightData} colorPalette={colorPalette} />
-        <ConnectivityDonutChart t={t} connectionData={basic} colorPalette={colorPalette} />
-      </BoxContent>
-    </Box>
+    <>
+      <VersionsDonutChart t={t} versionData={versionData} colorPalette={colorPalette} />
+      <HeightsDonutChart t={t} heightData={heightData} colorPalette={colorPalette} />
+      <ConnectivityDonutChart t={t} connectionData={basic} colorPalette={colorPalette} />
+    </>
   );
-};
+}
 
-export default Overview;
+const Statistics = ({
+  networkStatistics,
+  t,
+}) => (
+  <Box className={styles.wrapper}>
+    <BoxHeader>
+      <div>
+        <h1 className={styles.boxHeading}>
+          {t('Network statistics')}
+        </h1>
+        <Tooltip position="bottom right" indent>
+          <p>{t('The statistics shown only reflects peers connected to the current Lisk Service node.')}</p>
+        </Tooltip>
+      </div>
+    </BoxHeader>
+    <BoxContent className={styles.content}>
+      <ChartsWithData {...networkStatistics.data} t={t} />
+    </BoxContent>
+  </Box>
+);
+
+export default Statistics;

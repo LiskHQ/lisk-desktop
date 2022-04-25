@@ -1,4 +1,4 @@
-import { sortByVersion } from './index';
+import { sortByVersion } from './helpers';
 
 describe('sortByVersion', () => {
   it('sorts versions based on major, minor and patch release values', () => {
