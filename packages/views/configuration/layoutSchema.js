@@ -4,7 +4,7 @@ import {
   TransactionId, Sender, Recipient, Message, Illustration,
   Confirmations, Date, Amount, Fee, RequiredSignatures, TransactionVotes,
   BlockId, BlockHeight, Members, SignedAndRemainingMembersList, PrettyJson,
-} from '@transaction/detail/info/transactionDetailsComponents';
+} from '@transaction/detail/info/transactionDetails';
 import styles from '@screens/managers/transactionDetails/transactionDetails.css';
 
 const {

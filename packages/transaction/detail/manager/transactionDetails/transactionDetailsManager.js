@@ -2,9 +2,13 @@ import React from 'react';
 import TransactionDetailsContext from '../../../configuration/context';
 
 function TransactionDetailsManager({
-  activeToken, network, schema,
-  transaction: { error, isLoading, data }, account,
-  containerStyle, children,
+  activeToken,
+  network,
+  schema,
+  transaction: { error, isLoading, data },
+  account,
+  containerStyle,
+  children,
 }) {
   return (
     <TransactionDetailsContext.Provider value={{
