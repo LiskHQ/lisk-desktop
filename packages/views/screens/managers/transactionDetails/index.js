@@ -1,4 +1,4 @@
-import React, { useContext, useMemo } from 'react';
+import React, { useMemo } from 'react';
 import { useTranslation } from 'react-i18next';
 import { isEmpty } from '@common/utilities/helpers';
 import Box from '@basics/box';
@@ -16,9 +16,15 @@ const TransactionDetails = ({ title }) => {
     isLoading,
     transaction,
     containerStyle,
-  } = useContext(TransactionDetailsContext);
+  } = React.useContext(TransactionDetailsContext);
   const { t } = useTranslation();
   const isDataEmpty = useMemo(() => isEmpty(transaction), [transaction]);
+
+  console.log('>>> ', isDataEmpty, schema,
+    error,
+    isLoading,
+    transaction,
+    containerStyle);
 
   if (!error && isDataEmpty) {
     return <div />;

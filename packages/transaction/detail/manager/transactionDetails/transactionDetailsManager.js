@@ -6,6 +6,14 @@ function TransactionDetailsManager({
   transaction: { error, isLoading, data }, account,
   containerStyle, children,
 }) {
+  console.log('----', {
+    activeToken,
+    network,
+    schema,
+    transaction: { error, isLoading, data },
+    containerStyle,
+    children,
+  });
   return (
     <TransactionDetailsContext.Provider value={{
       error,

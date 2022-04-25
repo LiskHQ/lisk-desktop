@@ -1,10 +1,12 @@
 import React from 'react';
 import { mount } from 'enzyme';
+import { withRouter } from 'react-router';
 import { MODULE_ASSETS_NAME_ID_MAP } from '@transaction/configuration/moduleAssets';
 import { mountWithRouter } from '@common/utilities/testHelpers';
 import { truncateAddress } from '@wallet/utilities/account';
 import accounts from '@tests/constants/wallets';
-import TransactionDetails from './transactionDetails';
+import TransactionDetailsManager from '@transaction/detail/manager/transactionDetails';
+import TransactionDetails from '.';
 
 const transaction = {
   data: {
@@ -89,7 +91,7 @@ describe('Transaction Details Component', () => {
       loadData: jest.fn(),
     },
     match: {
-      url: `/transactions/${transaction.id}`,
+      url: `/transactions/${transaction.data.id}`,
     },
     votedDelegates: {
       data: {},
@@ -98,12 +100,30 @@ describe('Transaction Details Component', () => {
     account: accounts.genesis,
   };
 
+  const mockUseContext = (mockData = {}) => {
+    jest.spyOn(React, 'useContext').mockImplementation(() => ({
+      account: props.account,
+      isLoading: props.transaction.isLoading,
+      activeToken: props.activeToken,
+      transaction: transaction.data,
+      ...mockData,
+    }));
+  };
+
+  beforeEach(mockUseContext);
+
+  const TransactionDetailsWithManager = withRouter((transactionProps) => (
+    <TransactionDetailsManager {...transactionProps}>
+      <TransactionDetails title={props.title} />
+    </TransactionDetailsManager>
+  ));
+
   describe('Transfer transactions', () => {
     it('Should render transaction details after transaction loaded', () => {
       const wrapper = mountWithRouter(
-        TransactionDetails,
+        TransactionDetailsWithManager,
         { ...props, transaction },
-        { id: transaction.id },
+        { id: transaction.data.id },
       );
       expect(wrapper.find('header h1')).toHaveText('Transaction details');
       const expectedId = truncateAddress(transaction.data.id);
@@ -111,19 +131,21 @@ describe('Transaction Details Component', () => {
     });
 
     it('Should load delegate names after vote transaction loading finished', () => {
+      mockUseContext({ transaction: voteTransaction.data });
+
       const wrapper = mountWithRouter(
-        TransactionDetails,
+        TransactionDetailsWithManager,
         { ...props, transaction: voteTransaction },
-        { id: transaction.id },
+        { id: transaction.data.id },
       );
       expect(wrapper.find('VoteItem')).toHaveLength(1);
     });
 
     it('Should render transfer transaction with message (LSK)', () => {
       const wrapper = mountWithRouter(
-        TransactionDetails,
+        TransactionDetailsWithManager,
         { ...props, transaction },
-        { id: transaction.id },
+        { id: transaction.data.id },
       );
       expect(wrapper).toContainMatchingElements(2, '.walletInfo');
       expect(wrapper.find('.walletInfo .sender-address').text()).toBe(transaction.data.sender.address);
@@ -212,6 +234,7 @@ describe('Transaction Details Component', () => {
           isPending: false,
         },
       };
+      mockUseContext({ transaction: voteTx.data });
       const wrapper = mountWithRouter(
         TransactionDetails,
         { ...props, transaction: voteTx },
@@ -251,6 +274,7 @@ describe('Transaction Details Component', () => {
           isPending: false,
         },
       };
+      mockUseContext({ transaction: delegateRegTx.data });
       const wrapper = mountWithRouter(
         TransactionDetails,
         { ...props, transaction: delegateRegTx },
@@ -263,12 +287,14 @@ describe('Transaction Details Component', () => {
 
   describe('No results', () => {
     it('Should render no result screen', () => {
+      const trnx = {
+        error: 'INVALID_REQUEST_PARAMETER',
+        data: {},
+      };
+      mockUseContext({ ...trnx, transaction: {} });
       const wrapper = mount(<TransactionDetails {...{
         ...props,
-        transaction: {
-          error: 'INVALID_REQUEST_PARAMETER',
-          data: {},
-        },
+        transaction: trnx,
       }}
       />);
       expect(wrapper).toContainMatchingElement('NotFound');
@@ -301,6 +327,8 @@ describe('Transaction Details Component', () => {
           block: { height: '1234567890' },
         },
       };
+
+      mockUseContext({ transaction: unlockTx.data });
       const wrapper = mountWithRouter(
         TransactionDetails,
         { ...props, transaction: unlockTx },

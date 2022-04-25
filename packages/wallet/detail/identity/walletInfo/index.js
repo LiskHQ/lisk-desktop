@@ -8,7 +8,7 @@ import Identity from './identity';
 import ActionBar from './actionBar';
 
 const WalletInfo = ({
-  address, t, activeToken, hwInfo, account, username, bookmark, isMultisignature, host,
+  address, activeToken, hwInfo, account, username, bookmark, isMultisignature, host,
 }) => {
   const [showFullAddress, setShowFullAddress] = useState(false);
   const onClick = () => setShowFullAddress(!showFullAddress);
