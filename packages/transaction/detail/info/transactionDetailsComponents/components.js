@@ -17,7 +17,7 @@ import Tooltip from '@basics/tooltip/tooltip';
 import { extractAddressFromPublicKey, truncateAddress, calculateRemainingAndSignedMembers } from '@wallet/utilities/account';
 import WalletInfo from './walletInfo';
 
-import { Context } from '../transactionDetails';
+import { Context } from '../../../../views/screens/managers/transactionDetails/transactionDetails';
 import styles from './styles.css';
 
 const getDelegateName = (transaction, activeToken) => (

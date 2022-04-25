@@ -12,6 +12,7 @@ const WalletInfo = ({
 }) => {
   const [showFullAddress, setShowFullAddress] = useState(false);
   const onClick = () => setShowFullAddress(!showFullAddress);
+  const { t } = useTranslation();
 
   return (
     <Box className={styles.wrapper}>

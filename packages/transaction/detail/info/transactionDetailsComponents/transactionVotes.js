@@ -3,7 +3,7 @@ import React, { useContext, useEffect } from 'react';
 import VoteItem from '@transaction/list/row/voteItem';
 import withData from '@common/utilities/withData';
 import { getDelegates } from '@dpos/utilities/api';
-import { Context } from '../transactionDetails';
+import { Context } from '../../../../views/screens/managers/transactionDetails/transactionDetails';
 import styles from './styles.css';
 
 export const TransactionVotesComp = ({ t, votedDelegates }) => {
