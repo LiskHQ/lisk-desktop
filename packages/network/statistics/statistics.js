@@ -269,7 +269,7 @@ const ChartsWithData = ({ networkVersion, height, basic, t }) => {
     return null;// @todo Create placeholder
   }
 
-  const versionData =  createChartData(networkVersion, t);
+  const versionData = createChartData(networkVersion, t);
   const heightData = createChartData(height, t);
   const colorPalette = getColorPalette(useTheme());
 
@@ -280,7 +280,7 @@ const ChartsWithData = ({ networkVersion, height, basic, t }) => {
       <ConnectivityDonutChart t={t} connectionData={basic} colorPalette={colorPalette} />
     </>
   );
-}
+};
 
 const Statistics = ({
   networkStatistics,

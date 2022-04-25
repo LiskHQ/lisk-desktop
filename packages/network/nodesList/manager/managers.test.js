@@ -1,7 +1,7 @@
 import React from 'react';
 import { mount, shallow } from 'enzyme';
-import NodeList from "./manager";
 import peers from '@tests/constants/peers';
+import NodeList from './manager';
 
 describe('Network Monitor Page', () => {
   const loadData = jest.fn();
