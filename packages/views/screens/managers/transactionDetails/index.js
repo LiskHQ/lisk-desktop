@@ -4,7 +4,6 @@ import { isEmpty } from '@common/utilities/helpers';
 import { LayoutSchema } from '@views/configuration';
 import Box from '@basics/box';
 import BoxHeader from '@basics/box/header';
-import BoxContent from '@basics/box/content';
 import TransactionDetailsContext from '@transaction/configuration/context';
 import NotFound from './notFound';
 import styles from './transactionDetails.css';

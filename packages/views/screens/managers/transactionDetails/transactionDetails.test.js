@@ -1,5 +1,4 @@
 import React from 'react';
-import { mount } from 'enzyme';
 import { withRouter } from 'react-router';
 import { MODULE_ASSETS_NAME_ID_MAP } from '@transaction/configuration/moduleAssets';
 import { mountWithRouter } from '@common/utilities/testHelpers';
@@ -155,7 +154,7 @@ describe('Transaction Details Component', () => {
 
     it('Should not render transfer transaction with message (BTC)', () => {
       const wrapper = mountWithRouter(
-        TransactionDetailsWithManager, 
+        TransactionDetailsWithManager,
         {...props, activeToken: "BTC"}
       );
       expect(wrapper).not.toContain('.tx-reference');
