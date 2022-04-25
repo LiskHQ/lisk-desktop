@@ -128,7 +128,7 @@ const checkAccountInitializationState = (action) => {
 const accountMiddleware = store => next => async (action) => {
   next(action);
   switch (action.type) {
-    case actionTypes.settingsRetrieved:
+    case settingsActionTypes.settingsRetrieved:
       readStoredNetwork(store);
       break;
     case blockActionTypes.newBlockCreated:
@@ -151,7 +151,7 @@ const accountMiddleware = store => next => async (action) => {
       store.dispatch(emptyTransactionsData());
       break;
     case settingsActionTypes.settingsUpdated:
-      if (action.data.token && store.getState().account.info) {
+      if (action.data.token && store.getState().wallet.info) {
         store.dispatch(accountDataUpdated('enabled'));
       }
       break;

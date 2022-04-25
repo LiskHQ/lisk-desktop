@@ -1,11 +1,11 @@
 import { blockSubscribe, blockUnsubscribe } from '@block/utilities/api';
 import { tokenMap } from '@token/configuration/tokens';
 import {
-// eslint-disable-next-line no-unused-vars
   olderBlocksRetrieved,
   forgersRetrieved,
   networkStatusUpdated,
 } from '@common/store/actions';
+import networkActionTypes from '@network/store/actionTypes';
 import actionTypes from './actionTypes';
 
 const oneMinute = 1000 * 60;
@@ -59,9 +59,9 @@ const blockMiddleware = store => (
   next => (action) => {
     next(action);
     switch (action.type) {
-      case actionTypes.networkConfigSet:
-        // store.dispatch(olderBlocksRetrieved());
-        // blockListener(store);
+      case networkActionTypes.networkConfigSet:
+        store.dispatch(olderBlocksRetrieved());
+        blockListener(store);
         break;
       case actionTypes.olderBlocksRetrieved:
         store.dispatch(forgersRetrieved());
