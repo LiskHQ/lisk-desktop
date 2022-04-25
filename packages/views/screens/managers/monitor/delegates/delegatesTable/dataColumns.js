@@ -5,7 +5,7 @@ import { fromRawLsk } from '@token/utilities/lsk';
 import { truncateAddress } from '@wallet/utilities/account';
 import Tooltip from '@basics/tooltip/tooltip';
 import Icon from '@basics/icon';
-import AccountVisual from '@wallet/detail/info/accountVisual';
+import WalletVisual from '@wallet/detail/identity/walletVisual';
 import { DEFAULT_STANDBY_THRESHOLD } from '@dpos/configuration/delegates';
 import {
   getDelegateDetailsClass,
@@ -86,7 +86,7 @@ export const DelegateDetails = ({
         </Tooltip>
 
         <div className={`${styles.delegateDetails}`}>
-          <AccountVisual address={data.address} />
+          <WalletVisual address={data.address} />
           <div>
             <p className={styles.delegateName}>
               {data.username}

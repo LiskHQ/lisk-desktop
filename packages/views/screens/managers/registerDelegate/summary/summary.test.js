@@ -1,7 +1,7 @@
 import React from 'react';
 import { mount } from 'enzyme';
 import { mountWithRouterAndStore } from '@common/utilities/testHelpers';
-import accounts from '@tests/constants/accounts';
+import accounts from '@tests/constants/wallets';
 import Summary from './summary';
 
 describe('Delegate Registration Summary', () => {

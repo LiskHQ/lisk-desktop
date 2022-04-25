@@ -1,6 +1,6 @@
 import { getTransactionBaseFees, getTransactionFee } from '@transaction/utilities/api';
 import { mountWithRouter } from '@common/utilities/testHelpers';
-import accounts from '@tests/constants/accounts';
+import wallets from '@tests/constants/wallets';
 import Send from './index';
 
 jest.mock('@transaction/utilities/api');
@@ -20,8 +20,8 @@ getTransactionFee.mockResolvedValue({
 const props = {
   settings: { currency: 'USD' },
   settingsUpdated: () => {},
-  account: {
-    token: { balance: accounts.genesis.balance },
+  wallet: {
+    token: { balance: wallets.genesis.balance },
   },
   t: v => v,
   prevState: {

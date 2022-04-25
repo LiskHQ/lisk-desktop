@@ -7,7 +7,7 @@ import { balanceReclaimed } from '@wallet/store/action';
 import Summary from './summary';
 
 const mapStateToProps = state => ({
-  account: state.account,
+  account: state.wallet,
   network: state.network,
 });
 

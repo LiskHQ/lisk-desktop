@@ -5,7 +5,7 @@ import { withTranslation } from 'react-i18next';
 import Register from './register';
 
 const mapStateToProps = state => ({
-  account: state.account,
+  account: state.wallet,
   token: state.settings.token,
 });
 

@@ -1,5 +1,5 @@
 import * as communication from '@libs/hwManager/communication';
-import accounts from '@tests/constants/accounts';
+import accounts from '@tests/constants/wallets';
 import {
   signTransactionByHW,
 } from './index';

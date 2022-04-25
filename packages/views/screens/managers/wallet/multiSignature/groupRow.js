@@ -1,7 +1,7 @@
 import React from 'react';
 import grid from 'flexboxgrid/dist/flexboxgrid.css';
 import { Link } from 'react-router-dom';
-import AccountVisual from '@wallet/detail/info/accountVisual';
+import WalletVisual from '@wallet/detail/identity/walletVisual';
 import LiskAmount from '@shared/liskAmount';
 import { regex } from '@common/configuration';
 import routes from '@screens/router/routes';
@@ -18,11 +18,11 @@ const GroupRow = ({ data, className }) => {
 
   return (
     <Link
-      to={`${routes.account.path}?address=${address}`}
+      to={`${routes.explorer.path}?address=${address}`}
       className={`${grid.row} ${className} ${styles.transactionRow} multisign-group-row`}
     >
       <span className={grid['col-xs-8']}>
-        <AccountVisual
+        <WalletVisual
           address={address}
           className={styles.avatar}
         />

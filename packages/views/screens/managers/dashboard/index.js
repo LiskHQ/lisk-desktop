@@ -18,7 +18,7 @@ const mapStateToProps = state => ({
     state.transactions.confirmed,
   ),
   pendingTransactions: state.transactions.pending,
-  account: getActiveTokenAccount(state),
+  wallet: getActiveTokenAccount(state),
   loading: state.loading.length > 0,
   settings: state.settings,
 });

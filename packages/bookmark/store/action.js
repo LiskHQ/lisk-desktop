@@ -11,9 +11,9 @@ export const bookmarksRetrieved = () => (dispatch) => {
   getFromStorage('bookmarks', emptyBookmarks, (data) => {
     const bookmarks = {
       BTC: data.BTC,
-      LSK: data.LSK.map(account => ({
-        ...account,
-        disabled: validateAddress('LSK', account.address) === 1,
+      LSK: data.LSK.map(wallet => ({
+        ...wallet,
+        disabled: validateAddress('LSK', wallet.address) === 1,
       })),
     };
     dispatch({
@@ -23,13 +23,13 @@ export const bookmarksRetrieved = () => (dispatch) => {
   });
 };
 
-export const bookmarkAdded = ({ account, token = tokenMap.LSK.key }) => ({
-  data: { account, token },
+export const bookmarkAdded = ({ wallet, token = tokenMap.LSK.key }) => ({
+  data: { wallet, token },
   type: actionTypes.bookmarkAdded,
 });
 
-export const bookmarkUpdated = ({ account, token = tokenMap.LSK.key }) => ({
-  data: { account, token },
+export const bookmarkUpdated = ({ wallet, token = tokenMap.LSK.key }) => ({
+  data: { wallet, token },
   type: actionTypes.bookmarkUpdated,
 });
 

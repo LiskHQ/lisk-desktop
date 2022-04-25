@@ -19,7 +19,7 @@ const DialogHolder = ({ history }) => {
   const settings = useSelector(state => state.settings);
   const networkIsSet = useSelector(state => !!state.network.name);
   const isAuthenticated = useSelector(state =>
-    (state.account.info && state.account.info[settings.token.active]));
+    (state.wallet.info && state.wallet.info[settings.token.active]));
 
   const backdropRef = useRef();
   const [dismissed, setDismissed] = useState(false);

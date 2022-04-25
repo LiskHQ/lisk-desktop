@@ -13,7 +13,7 @@ import LabeledValue from '@basics/labeledValue';
 import LiskAmount from '@shared/liskAmount';
 import TransactionsTable from '@transaction/list/transactionsTable';
 import { truncateAddress } from '@wallet/utilities/account';
-import AccountVisual from '@wallet/detail/info/accountVisual';
+import WalletVisual from '@wallet/detail/identity/walletVisual';
 import styles from './blockDetails.css';
 
 const Generator = ({
@@ -23,9 +23,9 @@ const Generator = ({
     return (
       <Link
         className={styles.generator}
-        to={`${routes.account.path}?address=${generatorAddress}`}
+        to={`${routes.explorer.path}?address=${generatorAddress}`}
       >
-        <AccountVisual
+        <WalletVisual
           className={styles.avatar}
           address={generatorAddress}
           size={30}

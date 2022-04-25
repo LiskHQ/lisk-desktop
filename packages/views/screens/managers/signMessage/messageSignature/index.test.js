@@ -1,19 +1,19 @@
 import React from 'react';
 import { mount } from 'enzyme';
-import { loginTypes } from '@views/configuration';
+import loginTypes from '@wallet/configuration/loginTypes';
 import * as hwManager from '@wallet/utilities/hwManager';
-import accounts from '@tests/constants/accounts';
+import wallets from '@tests/constants/wallets';
 import MessageSignature from '.';
 
 jest.mock('@wallet/utilities/hwManager');
 
 describe('Sign Message: Status', () => {
-  const accountWithPassphrase = {
-    ...accounts.genesis,
+  const walletWithPassphrase = {
+    ...wallets.genesis,
     loginType: loginTypes.passphrase.code,
   };
-  const accountWithHW = {
-    ...accounts.genesis,
+  const walletWithHW = {
+    ...wallets.genesis,
     loginType: loginTypes.ledger,
     hwInfo: {
       deviceModel: 'Ledger Nano S',
@@ -22,7 +22,7 @@ describe('Sign Message: Status', () => {
 
   describe('Using Passphrase', () => {
     const props = {
-      account: accountWithPassphrase,
+      account: walletWithPassphrase,
       message: 'Random message',
       t: v => v,
       isNext: true,
@@ -48,7 +48,7 @@ describe('Sign Message: Status', () => {
 
   describe('Using hardware wallet', () => {
     const props = {
-      account: accountWithHW,
+      account: walletWithHW,
       message: 'Random message',
       t: (str, data) => {
         if (!data) return str;

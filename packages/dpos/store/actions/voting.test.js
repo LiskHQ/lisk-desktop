@@ -1,11 +1,11 @@
-import { loginTypes } from '@views/configuration';
+import loginTypes from '@wallet/configuration/loginTypes';
 import networks from '@network/configuration/networks';
 import * as transactionApi from '@transaction/utilities/api';
 import * as delegateApi from '@dpos/utilities/api';
 import * as accountApi from '@wallet/utilities/api';
 import * as hwManager from '@transaction/utilities/hwManager';
 import sampleVotes from '@tests/constants/votes';
-import accounts from '@tests/constants/accounts';
+import wallets from '@tests/constants/wallets';
 import actionTypes from './actionTypes';
 import {
   voteEdited,
@@ -42,7 +42,7 @@ describe('actions: voting', () => {
         },
       },
     },
-    account: {
+    wallet: {
       loginType: 0,
       info: {
         LSK: {
@@ -71,7 +71,7 @@ describe('actions: voting', () => {
 
   describe('voteEdited', () => {
     it('should create an action to add data to toggle the vote status for any given delegate', async () => {
-      accountApi.getAccount.mockResolvedValue({ data: accounts.genesis });
+      accountApi.getAccount.mockResolvedValue({ data: wallets.genesis });
       const data = [{
         address: 'dummy',
         amount: 1e10,

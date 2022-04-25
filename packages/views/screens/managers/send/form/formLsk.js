@@ -33,7 +33,7 @@ const FormLsk = (props) => {
     network,
     selectedPriority,
     token,
-    account,
+    wallet: account,
     priorityOptions,
     transaction: {
       moduleAssetId,

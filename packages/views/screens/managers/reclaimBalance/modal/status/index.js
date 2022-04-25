@@ -4,13 +4,13 @@ import { withTranslation } from 'react-i18next';
 import Status from './status';
 
 const mapStateToProps = state => ({
-  isMigrated: state.account.info.LSK.summary.isMigrated,
+  isMigrated: state.wallet.info.LSK.summary.isMigrated,
   transactions: state.transactions,
   network: state.network,
   account: {
-    ...state.account.info[state.settings.token.active],
-    hwInfo: state.account.hwInfo,
-    passphrase: state.account.passphrase,
+    ...state.wallet.info[state.settings.token.active],
+    hwInfo: state.wallet.hwInfo,
+    passphrase: state.wallet.passphrase,
   },
 });
 

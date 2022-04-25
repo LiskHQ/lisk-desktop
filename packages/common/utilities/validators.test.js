@@ -1,6 +1,6 @@
 import networks from '@network/configuration/networks';
 import i18n from '@setup/i18n/i18n';
-import accounts from '@tests/constants/accounts';
+import accounts from '@tests/constants/wallets';
 import {
   validateAddress,
   validateLSKPublicKey,

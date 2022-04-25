@@ -5,7 +5,7 @@ import { selectSearchParamValue } from '@screens/router/searchParams';
 import routes from '@screens/router/routes';
 import Icon from '@basics/icon';
 import DialogLink from '@basics/dialog/link';
-import AccountVisual from '@wallet/detail/info/accountVisual';
+import WalletVisual from '@wallet/detail/identity/walletVisual';
 import Tooltip from '@basics/tooltip/tooltip';
 import styles from './topBar.css';
 
@@ -53,10 +53,10 @@ const Search = ({
           <span className={relevantSearchParam ? `${styles.searchContainer} ${styles.searchContainerParam}` : styles.searchContainer}>
             <Icon name={relevantSearchParam ? 'search' : 'searchInput'} className="search-icon" />
             {
-              relevantSearchParam === routes.account.searchParam && relevantSearchParamValue
+              relevantSearchParam === routes.explorer.searchParam && relevantSearchParamValue
                 && (
-                  <AccountVisual
-                    className={styles.accountVisual}
+                  <WalletVisual
+                    className={styles.walletVisual}
                     size={18}
                     address={relevantSearchParamValue}
                   />

@@ -3,7 +3,7 @@ import { mount } from 'enzyme';
 import { MODULE_ASSETS_NAME_ID_MAP } from '@transaction/configuration/moduleAssets';
 import { mountWithRouter } from '@common/utilities/testHelpers';
 import { truncateAddress } from '@wallet/utilities/account';
-import accounts from '@tests/constants/accounts';
+import accounts from '@tests/constants/wallets';
 import TransactionDetails from './transactionDetails';
 
 const transaction = {
@@ -125,9 +125,9 @@ describe('Transaction Details Component', () => {
         { ...props, transaction },
         { id: transaction.id },
       );
-      expect(wrapper).toContainMatchingElements(2, '.accountInfo');
-      expect(wrapper.find('.accountInfo .sender-address').text()).toBe(transaction.data.sender.address);
-      expect(wrapper.find('.accountInfo .receiver-address').text()).toBe(transaction.data.asset.recipient?.address);
+      expect(wrapper).toContainMatchingElements(2, '.walletInfo');
+      expect(wrapper.find('.walletInfo .sender-address').text()).toBe(transaction.data.sender.address);
+      expect(wrapper.find('.walletInfo .receiver-address').text()).toBe(transaction.data.asset.recipient?.address);
       expect(wrapper).toContainExactlyOneMatchingElement('.tx-reference');
     });
 
@@ -217,8 +217,8 @@ describe('Transaction Details Component', () => {
         { ...props, transaction: voteTx },
         { id: transaction.id },
       );
-      expect(wrapper).toContainExactlyOneMatchingElement('.accountInfo');
-      expect(wrapper.find('.accountInfo .label').text()).toBe('Voter');
+      expect(wrapper).toContainExactlyOneMatchingElement('.walletInfo');
+      expect(wrapper.find('.walletInfo .label').text()).toBe('Voter');
     });
   });
 
@@ -256,7 +256,7 @@ describe('Transaction Details Component', () => {
         { ...props, transaction: delegateRegTx },
         { id: transaction.id },
       );
-      expect(wrapper).toContainExactlyOneMatchingElement('.accountInfo');
+      expect(wrapper).toContainExactlyOneMatchingElement('.walletInfo');
       expect(wrapper.find('.hasName').contains('testUsername')).toBe(true);
     });
   });

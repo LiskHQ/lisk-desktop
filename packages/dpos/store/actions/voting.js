@@ -49,10 +49,10 @@ export const voteEdited = data => async (dispatch, getState) => {
     if (vote.username) {
       return vote;
     }
-    const account = (await getAccount({
+    const wallet = (await getAccount({
       network, params: { address: vote.address },
     }, settings.token.active)) || {};
-    const username = account.dpos?.delegate?.username ?? '';
+    const username = wallet.dpos?.delegate?.username ?? '';
 
     return { ...vote, username };
   }));
@@ -77,20 +77,20 @@ export const votesSubmitted = ({ fee, votes }) =>
   async (dispatch, getState) => {
     const state = getState();
     // @todo Fix this by #3898
-    const activeAccount = {
-      ...state.account.info.LSK,
-      hwInfo: isEmpty(state.account.hwInfo) ? undefined : state.account.hwInfo,
-      passphrase: state.account.passphrase,
+    const activeWallet = {
+      ...state.wallet.info.LSK,
+      hwInfo: isEmpty(state.wallet.hwInfo) ? undefined : state.wallet.hwInfo,
+      passphrase: state.wallet.passphrase,
     };
 
     const [error, tx] = await to(create({
       network: state.network,
-      account: activeAccount,
+      wallet: activeWallet,
       transactionObject: {
         fee,
         votes,
-        nonce: activeAccount.sequence.nonce,
-        senderPublicKey: activeAccount.summary.publicKey,
+        nonce: activeWallet.sequence.nonce,
+        senderPublicKey: activeWallet.summary.publicKey,
         moduleAssetId: MODULE_ASSETS_NAME_ID_MAP.voteDelegate,
       },
     }, tokenMap.LSK.key));
@@ -111,12 +111,12 @@ export const votesSubmitted = ({ fee, votes }) =>
   };
 
 /**
- * Fetches the list of votes of the host account.
+ * Fetches the list of votes of the host wallet.
  */
 export const votesRetrieved = () =>
   async (dispatch, getState) => {
-    const { account, network } = getState();
-    const address = account.info[tokenMap.LSK.key].summary.address;
+    const { wallet, network } = getState();
+    const address = wallet.info[tokenMap.LSK.key].summary.address;
     try {
       const votes = await getVotes({ network, params: { address } });
       dispatch({
@@ -127,7 +127,7 @@ export const votesRetrieved = () =>
       dispatch({
         type: actionTypes.votesRetrieved,
         data: {
-          account: {},
+          wallet: {},
         },
       });
     }

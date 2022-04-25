@@ -5,7 +5,7 @@ import { withRouter } from 'react-router-dom';
 import SignInTooltipWrapper from './signInTooltipWrapper';
 
 const mapStateToProps = state => ({
-  account: state.account,
+  account: state.wallet,
 });
 
 export default withRouter(connect(mapStateToProps)(withTranslation()(SignInTooltipWrapper)));

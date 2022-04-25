@@ -3,7 +3,7 @@ import grid from 'flexboxgrid/dist/flexboxgrid.css';
 import { regex } from '@common/configuration';
 import { tokenMap } from '@token/configuration/tokens';
 import DialogLink from '@basics/dialog/link';
-import AccountVisual from '@wallet/detail/info/accountVisual';
+import WalletVisual from '@wallet/detail/identity/walletVisual';
 import Icon from '@basics/icon';
 import TransactionAmount from '@transaction/detail/info/transactionAmount';
 import styles from './multiSignature.css';
@@ -45,7 +45,7 @@ const TransactionRow = ({
           name={host === recipient.address ? 'incoming' : 'outgoing'}
           className={styles.incomingOutcomingIcon}
         />
-        <AccountVisual
+        <WalletVisual
           address={sender.address}
           className={styles.avatar}
         />
@@ -57,7 +57,7 @@ const TransactionRow = ({
         </div>
       </span>
       <span className={grid['col-xs-4']}>
-        <AccountVisual
+        <WalletVisual
           address={recipient.address}
           className={styles.avatar}
         />

@@ -5,7 +5,7 @@ import { tokenMap } from '@token/configuration/tokens';
 import { voteEdited } from '@common/store/actions';
 import { fromRawLsk, toRawLsk } from '@token/utilities/lsk';
 import { truncateAddress } from '@wallet/utilities/account';
-import AccountVisual from '@wallet/detail/info/accountVisual';
+import WalletVisual from '@wallet/detail/identity/walletVisual';
 import Box from '@basics/box';
 import { SecondaryButton, TertiaryButton } from '@basics/buttons';
 import Icon from '@basics/icon';
@@ -54,7 +54,7 @@ const VoteRow = ({
   return (
     <Box className={styles.voteItemContainer}>
       <div className={`${styles.infoColumn} ${styles.delegateInfoContainer}`}>
-        <AccountVisual address={address} />
+        <WalletVisual address={address} />
         <div className={styles.delegateInfo}>
           <span className={styles.delegateUsername}>{username || ''}</span>
           <span className={styles.delegateAddress}>{truncatedAddress}</span>

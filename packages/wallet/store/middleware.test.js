@@ -3,17 +3,17 @@ import {
   votesRetrieved, emptyTransactionsData, networkSelected, networkStatusUpdated,
 } from '@common/store/actions';
 
-import actionTypes from '@common/store/actions/actionTypes';
+import commonActionTypes from '@common/store/actions/actionTypes';
+import blockActionTypes from '@block/store/actionTypes';
+import settingsActionTypes from '@settings/store/actionTypes';
+import transactionActionTypes from '@transaction/store/actionTypes';
 import { MODULE_ASSETS_NAME_ID_MAP } from '@transaction/configuration/moduleAssets';
 import routes from '@screens/router/routes';
 import { tokenMap } from '@token/configuration/tokens';
 import * as transactionApi from '@transaction/utilities/api';
 import { getAutoLogInData } from '@common/utilities/login';
 import history from '@common/utilities/history';
-import blockActionTypes from '@block/store/actionTypes';
-import transactionActionTypes from '@transaction/store/actionTypes';
-import walletActionTypes from '../store/actionTypes';
-import settingsActionTypes from '@settings/store/actionTypes';
+import walletActionTypes from './actionTypes';
 import middleware from './middleware';
 
 jest.mock('@common/utilities/history');
@@ -44,7 +44,7 @@ jest.mock('@token/utilities/lsk');
 
 const liskAPIClientMock = 'DUMMY_LISK_API_CLIENT';
 const storeCreatedAction = {
-  type: actionTypes.storeCreated,
+  type: commonActionTypes.storeCreated,
 };
 
 const transactions = [
@@ -115,7 +115,7 @@ const network = {
   },
 };
 
-const account = {
+const wallet = {
   info: {
     LSK: {
       summary: {
@@ -138,13 +138,13 @@ const settings = {
 
 const defaultState = {
   network,
-  account,
+  wallet,
   transactions: {
     pending: [{
       id: 12498250891724098,
     }],
     confirmed: [],
-    account: {
+    wallet: {
       summary: {
         address: 'lskgonvfdxt3m6mm7jaeojrj5fnxx7vwmkxq72v79',
         balance: 0,
@@ -183,7 +183,7 @@ describe('Account middleware', () => {
     });
     it('should not pass the action to next middleware', () => {
       const actionNewBlockCreatedAction = {
-        type: actionTypes.newBlockCreated,
+        type: blockActionTypes.newBlockCreated,
         data: {
           block: {
             numberOfTransactions: 0,
@@ -199,7 +199,7 @@ describe('Account middleware', () => {
   describe('on settingsRetrieved', () => {
     it('should set the network from the settings', () => {
       const accountLoggedOutAction = {
-        type: actionTypes.settingsRetrieved,
+        type: settingsActionTypes.settingsRetrieved,
       };
       middleware(store)(next)(accountLoggedOutAction);
       expect(networkSelected).toHaveBeenCalledWith(settings.network);
@@ -208,7 +208,7 @@ describe('Account middleware', () => {
 
     it('should set the network from defaults if no value stored in the settings', () => {
       const accountLoggedOutAction = {
-        type: actionTypes.settingsRetrieved,
+        type: settingsActionTypes.settingsRetrieved,
       };
 
       const noNetworkState = {
@@ -317,7 +317,7 @@ describe('Account middleware', () => {
       store.getState = () => ({
         ...state,
         account: {
-          ...state.account,
+          ...state.wallet,
           info: {
             LSK: { summary: { address: '123456L' } },
             BTC: { summary: { address: '123456L' } },
@@ -325,7 +325,7 @@ describe('Account middleware', () => {
         },
       });
       const accountSettingsUpdatedAction = {
-        type: actionTypes.settingsUpdated,
+        type: settingsActionTypes.settingsUpdated,
         data: { token: 'LSK' },
       };
       middleware(store)(next)(accountSettingsUpdatedAction);
@@ -344,7 +344,7 @@ describe('Account middleware', () => {
   describe('on accountSettingsRetrieved', () => {
     it('Account Setting Retrieve Sucessfull', async () => {
       const accountSettingsRetrievedAction = {
-        type: actionTypes.settingsRetrieved,
+        type: settingsActionTypes.settingsRetrieved,
         data: { token: 'LSK' },
       };
       getAutoLogInData.mockImplementation(() => ({
@@ -369,7 +369,7 @@ describe('Account middleware', () => {
       });
 
       const accountSettingsRetrievedAction = {
-        type: actionTypes.settingsRetrieved,
+        type: settingsActionTypes.settingsRetrieved,
         data: { token: 'LSK' },
       };
       getAutoLogInData.mockImplementation(() => ({
@@ -388,7 +388,7 @@ describe('Account middleware', () => {
   describe('on accountUpdated', () => {
     it('should not redirect to the reclaim screen if the account is migrated', async () => {
       const action = {
-        type: actionTypes.accountLoggedIn,
+        type: walletActionTypes.accountLoggedIn,
         data: { info: { LSK: { summary: { isMigrated: true } } } },
       };
       middleware(store)(next)(action);
@@ -405,7 +405,7 @@ describe('Account middleware', () => {
     });
     it('should not redirect to the reclaim screen if the account is migrated with actionUpdate', async () => {
       const action = {
-        type: actionTypes.accountUpdated,
+        type: walletActionTypes.accountUpdated,
         data: { info: { LSK: { summary: { isMigrated: true } } } },
       };
       middleware(store)(next)(action);

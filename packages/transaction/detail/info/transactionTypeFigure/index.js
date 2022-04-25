@@ -2,7 +2,7 @@ import React from 'react';
 import { MODULE_ASSETS_NAME_ID_MAP, MODULE_ASSETS_MAP } from '@transaction/configuration/moduleAssets';
 import { tokenMap } from '@token/configuration/tokens';
 import { validateAddress } from '@common/utilities/validators';
-import AccountVisual from '@wallet/detail/info/accountVisual';
+import WalletVisual from '@wallet/detail/identity/walletVisual';
 import Icon from '@basics/icon';
 import styles from './transactionTypeFigure.css';
 
@@ -11,7 +11,7 @@ const TransactionTypeFigure = ({
 }) => {
   const renderAvatar = () => {
     if (validateAddress(tokenMap.LSK.key, address) === 0) {
-      return <AccountVisual address={address} size={avatarSize} />;
+      return <WalletVisual address={address} size={avatarSize} />;
     }
     return null;
   };

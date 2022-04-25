@@ -2,7 +2,7 @@ import React from 'react';
 import routes from '@screens/router/routes';
 import DialogHolder from '@basics/dialog/holder';
 import { mountWithRouter } from '@common/utilities/testHelpers';
-import accounts from '@tests/constants/accounts';
+import accounts from '@tests/constants/wallets';
 import TopBar from './topBar';
 
 const mockInputNode = {
@@ -134,20 +134,20 @@ describe('TopBar', () => {
     expect(wrapper.find('div.searchDropdown')).not.toHaveClassName('show');
   });
 
-  it('renders searched value in the search container with AccountVisual when the url contains an account address', () => {
+  it('renders searched value in the search container with WalletVisual when the url contains an account address', () => {
     const wrapper = mountWithRouter(
       TopBar,
       {
         ...props,
         history: {
-          location: { pathname: routes.account.path, search: '?address=1L' },
+          location: { pathname: routes.explorer.path, search: '?address=1L' },
         },
       },
-      { pathname: routes.account.path },
+      { pathname: routes.explorer.path },
     );
     expect(wrapper).toContainMatchingElement('img.search-icon');
     expect(wrapper).toContainMatchingElement('span.searchedValue');
-    expect(wrapper).toContainMatchingElement('AccountVisual');
+    expect(wrapper).toContainMatchingElement('WalletVisual');
     expect(wrapper.find('div.searchDropdown')).not.toHaveClassName('show');
   });
 
@@ -157,14 +157,14 @@ describe('TopBar', () => {
       {
         ...props,
         history: {
-          location: { pathname: routes.account.path, search: '?somerandomparam=1L' },
+          location: { pathname: routes.explorer.path, search: '?somerandomparam=1L' },
         },
       },
-      { pathname: routes.account.path },
+      { pathname: routes.explorer.path },
     );
     expect(wrapper).toContainMatchingElement('img.search-icon');
     expect(wrapper).not.toContainMatchingElement('span.searchedValue');
-    expect(wrapper).not.toContainMatchingElement('AccountVisual');
+    expect(wrapper).not.toContainMatchingElement('WalletVisual');
     expect(wrapper.find('div.searchDropdown')).not.toHaveClassName('show');
   });
 

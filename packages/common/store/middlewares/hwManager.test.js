@@ -1,7 +1,7 @@
 import { toast } from 'react-toastify';
 import { subscribeToDeviceConnected, subscribeToDeviceDisconnected } from '@wallet/utilities/hwManager';
 import { addSearchParamsToUrl } from '@screens/router/searchParams';
-import accounts from '@tests/constants/accounts';
+import accounts from '@tests/constants/wallets';
 import actionTypes from '../actions/actionTypes';
 import hwManagerMiddleware from './hwManager';
 

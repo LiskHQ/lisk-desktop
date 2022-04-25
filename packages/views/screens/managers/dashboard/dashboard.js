@@ -39,8 +39,8 @@ const getOnboardingSlides = (t) => [
   },
 ];
 
-const Dashboard = ({ account, t }) => {
-  const isLoggedIn = !!account?.summary?.address;
+const Dashboard = ({ wallet, t }) => {
+  const isLoggedIn = !!wallet?.summary?.address;
   const OnboardingBannerName = 'dashboardOnboarding';
 
   return (

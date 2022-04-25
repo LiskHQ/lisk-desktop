@@ -16,13 +16,13 @@ import BalanceTable from './balanceTable';
 const moduleAssetId = MODULE_ASSETS_NAME_ID_MAP.unlockToken;
 
 const LockedBalance = (props) => {
-  const account = useSelector(state => getActiveTokenAccount(state));
+  const wallet = useSelector(state => getActiveTokenAccount(state));
   const token = useSelector(state => state.settings.token.active);
   const network = useSelector(state => state.network);
   const currentBlockHeight = useSelector(selectCurrentBlockHeight);
   const lockedInVotes = useSelector(state => calculateBalanceLockedInVotes(state.voting));
   const unlockableBalance = calculateUnlockableBalance(
-    account.dpos?.unlocking, currentBlockHeight,
+    wallet.dpos?.unlocking, currentBlockHeight,
   );
   const [customFee, setCustomFee] = useState();
   const [
@@ -34,14 +34,14 @@ const LockedBalance = (props) => {
     network,
     selectedPriority,
     token,
-    account,
+    wallet,
     priorityOptions,
     transaction: {
       moduleAssetId,
-      senderPublicKey: account.summary?.publicKey,
-      nonce: account.sequence?.nonce,
-      passphrase: account.passphrase,
-      unlockObjects: getUnlockableUnlockObjects(account.dpos?.unlocking, currentBlockHeight),
+      senderPublicKey: wallet.summary?.publicKey,
+      nonce: wallet.sequence?.nonce,
+      passphrase: wallet.passphrase,
+      unlockObjects: getUnlockableUnlockObjects(wallet.dpos?.unlocking, currentBlockHeight),
     },
   });
 
@@ -58,7 +58,7 @@ const LockedBalance = (props) => {
         lockedInVotes={lockedInVotes}
         unlockableBalance={unlockableBalance}
         currentBlockHeight={currentBlockHeight}
-        account={account}
+        account={wallet}
       />
       <TransactionPriority
         token={token}

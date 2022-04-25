@@ -2,7 +2,7 @@ import React from 'react';
 import grid from 'flexboxgrid/dist/flexboxgrid.css';
 import { tokenMap } from '@token/configuration/tokens';
 import { truncateAddress } from '@wallet/utilities/account';
-import AccountVisual from '@wallet/detail/info/accountVisual';
+import WalletVisual from '@wallet/detail/identity/walletVisual';
 import tableStyles from '@basics/table/table.css';
 import LiskAmount from '@shared/liskAmount';
 import DialogLink from '@basics/dialog/link';
@@ -22,12 +22,12 @@ const VoteRow = ({
         {/* Account visual */}
         <div className={grid['col-sm-5']} onClick={onClick}>
           <div className={`${styles.info}`}>
-            <AccountVisual
+            <WalletVisual
               className={`${styles.avatar}`}
               address={truncatedAddress}
               size={40}
             />
-            <div className={styles.accountInfo}>
+            <div className={styles.walletInfo}>
               <span className={`${styles.username} vote-username`}>{data.username}</span>
               <span className={`${styles.address} showOnLargeViewPort`}>{truncatedAddress}</span>
             </div>

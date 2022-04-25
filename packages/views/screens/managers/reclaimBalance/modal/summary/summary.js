@@ -21,7 +21,7 @@ const Summary = ({
     network,
     selectedPriority,
     token: tokenMap.LSK.key,
-    account: account.info.LSK,
+    wallet: account.info.LSK,
     priorityOptions,
     transaction: {
       moduleAssetId: MODULE_ASSETS_NAME_ID_MAP.reclaimLSK,
