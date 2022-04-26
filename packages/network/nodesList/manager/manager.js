@@ -2,12 +2,12 @@ import React from 'react';
 import Box from '@basics/box';
 import BoxContent from '@basics/box/content';
 import Table from '@basics/table';
-import styles from './nodeList.css';
-import header from './tableHeader';
 import Map from '../../map';
 import PeerRow from '../row';
+import styles from './nodeList.css';
+import header from './tableHeader';
 
-export const NodeList = ({
+const NodeList = ({
   peers, t, changeSort, sort,
 }) => {
   /* istanbul ignore next */

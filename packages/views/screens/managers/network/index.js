@@ -7,7 +7,7 @@ import NodesList from '@network/nodesList/manager';
 import Statistics from '@network/statistics';
 import styles from './network.css';
 
-export const Network = ({
+const Network = ({
   t,
 }) => (
   <div>

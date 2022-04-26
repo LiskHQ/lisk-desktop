@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { useTranslation } from 'react-i18next';
 import WalletVisual from '@wallet/detail/identity/walletVisual';
 import Box from '@basics/box';
 import BoxContent from '@basics/box/content';
