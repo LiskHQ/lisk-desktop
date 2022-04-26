@@ -177,6 +177,7 @@
     "react-fast-compare": "2.0.4",
     "react-highlight-words": "0.17.0",
     "react-i18next": "10.12.5",
+    "react-json-view": "^1.21.3",
     "react-piwik": "1.6.0",
     "react-redux": "7.2.4",
     "react-router": "5.0.1",
