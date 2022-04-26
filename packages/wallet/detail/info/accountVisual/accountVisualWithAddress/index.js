@@ -13,7 +13,7 @@ import styles from './accountVisualWithAddress.css';
 
 const AccountVisualWithAddress = ({
   bookmarks, showBookmarkedAddress, token, address,
-  transactionSubject, moduleAssetId, size, truncate,
+  transactionSubject, moduleAssetId, size, truncate, className,
 }) => {
   const getTransformedAddress = (addressValue) => {
     if (showBookmarkedAddress) {
@@ -33,7 +33,7 @@ const AccountVisualWithAddress = ({
     : truncateAddress(transformedAddress);
 
   return (
-    <div className={`${styles.address}`}>
+    <div className={`${styles.address} ${className}`}>
       {moduleAssetId !== MODULE_ASSETS_NAME_ID_MAP.transfer && transactionSubject === 'recipient' ? (
         <>
           <Icon
