@@ -89,12 +89,12 @@ const Transactions = ({
           row={TransactionRow}
           loadData={handleLoadMore}
           additionalRowProps={{
-            t,
             activeToken,
             host: address,
             delegates: votedDelegates.data,
             currentBlockHeight,
             layout: 'hosted',
+            avatarSize: 40,
           }}
           header={header(t, activeToken, changeSort)}
           currentSort={sort}

@@ -68,7 +68,6 @@ const RecentTransactions = ({ className, t, transactions }) => {
           error={transactions.error.code !== 404 ? transactions.error : undefined}
           canLoadMore={false}
           additionalRowProps={{
-            t,
             activeToken,
             host,
             currentBlockHeight,

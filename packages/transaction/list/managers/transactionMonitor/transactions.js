@@ -144,7 +144,6 @@ const Transactions = ({
           row={TransactionRow}
           loadData={handleLoadMore}
           additionalRowProps={{
-            t,
             currentBlockHeight,
             activeToken,
             layout: 'full',

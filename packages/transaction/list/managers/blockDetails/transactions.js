@@ -30,7 +30,6 @@ const Transactions = ({
           isLoading={transactions.isLoading}
           row={TransactionRow}
           additionalRowProps={{
-            t,
             currentBlockHeight,
             layout: 'full',
             activeToken,

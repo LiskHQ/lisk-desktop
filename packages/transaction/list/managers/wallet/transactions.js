@@ -93,7 +93,6 @@ const Transactions = ({
           row={TransactionRow}
           loadData={handleLoadMore}
           additionalRowProps={{
-            t,
             activeToken,
             host: address,
             delegates: votedDelegates.data,
