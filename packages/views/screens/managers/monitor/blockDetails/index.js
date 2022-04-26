@@ -4,10 +4,8 @@ import { connect } from 'react-redux';
 import { withTranslation } from 'react-i18next';
 import { withRouter } from 'react-router-dom';
 import { getBlock } from '@block/utilities/api';
-import { getTransactions } from '@transaction/utilities/api';
 import withData from '@common/utilities/withData';
 import { selectSearchParamValue } from '@screens/router/searchParams';
-import { tokenMap } from '@token/configuration/tokens';
 import BlockDetails from './blockDetails';
 
 const mapStateToProps = (state, ownProps) => ({

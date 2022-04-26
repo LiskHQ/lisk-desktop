@@ -1,6 +1,6 @@
 import React, { useContext, useEffect } from 'react';
 
-import VoteDetails from '@transaction/list/row/voteDetails';
+import VoteItem from '@transaction/detail/info/voteItem';
 import withData from '@common/utilities/withData';
 import { getDelegates } from '@dpos/utilities/api';
 import { Context } from '../transactionDetails';
@@ -25,7 +25,7 @@ export const TransactionVotesComp = ({ t, votedDelegates }) => {
         </span>
         <div className={`${styles.votesContainer} ${styles.added} tx-added-votes`}>
           {votes.map(vote => (
-            <VoteDetails
+            <VoteItem
               key={`vote-${vote.delegateAddress}`}
               vote={{ confirmed: vote.amount }}
               address={vote.delegateAddress}
