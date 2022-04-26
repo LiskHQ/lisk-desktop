@@ -1,3 +1,4 @@
+/* eslint-disable max-lines */
 // istanbul ignore file
 import React from 'react';
 import { useTheme } from '@views/utilities/theme';
@@ -65,56 +66,54 @@ const VersionsDonutChart = ({ t, versionData, colorPalette }) => {
   } : {};
 
   return (
-    <>
-      <div className={styles.column}>
-        {
-          versionData
-            ? (
-              <div className={styles.chartBox}>
-                <h2 className={styles.title}>{t('Peer versions')}</h2>
-                <div className={`${styles.chart} showOnLargeViewPort`}>
-                  <DoughnutChart
-                    data={chartProps.data}
-                    options={{
-                      ...chartProps.options,
-                      legend: { display: true },
-                    }}
-                  />
-                  {
-                    versionData.others.length
-                      ? <OthersTooltip title={t('Version')} data={versionData.others} />
-                      : null
-                  }
-                </div>
-                <div className={`${styles.chart} hideOnLargeViewPort`}>
-                  <DoughnutChart
-                    data={chartProps.data}
-                    options={{
-                      ...chartProps.options,
-                      legend: { display: false },
-                    }}
-                  />
-                </div>
-                <div className="hideOnLargeViewPort">
-                  <GuideTooltip>
-                    {
-                      versionData.labels
-                        .map((label, i) => (
-                          <GuideTooltipItem
-                            key={`version-GuideTooltip-${i}-${label}`}
-                            label={label}
-                            color={colorPalette[i]}
-                          />
-                        ))
-                    }
-                  </GuideTooltip>
-                </div>
+    <div className={styles.column}>
+      {
+        versionData
+          ? (
+            <div className={styles.chartBox}>
+              <h2 className={styles.title}>{t('Peer versions')}</h2>
+              <div className={`${styles.chart} showOnLargeViewPort`}>
+                <DoughnutChart
+                  data={chartProps.data}
+                  options={{
+                    ...chartProps.options,
+                    legend: { display: true },
+                  }}
+                />
+                {
+                  versionData.others.length
+                    ? <OthersTooltip title={t('Version')} data={versionData.others} />
+                    : null
+                }
               </div>
-            )
-            : <BoxEmptyState><p>{t('No version information')}</p></BoxEmptyState>
-        }
-      </div>
-    </>
+              <div className={`${styles.chart} hideOnLargeViewPort`}>
+                <DoughnutChart
+                  data={chartProps.data}
+                  options={{
+                    ...chartProps.options,
+                    legend: { display: false },
+                  }}
+                />
+              </div>
+              <div className="hideOnLargeViewPort">
+                <GuideTooltip>
+                  {
+                    versionData.labels
+                      .map((label, i) => (
+                        <GuideTooltipItem
+                          key={`version-GuideTooltip-${i}-${label}`}
+                          label={label}
+                          color={colorPalette[i]}
+                        />
+                      ))
+                  }
+                </GuideTooltip>
+              </div>
+            </div>
+          )
+          : <BoxEmptyState><p>{t('No version information')}</p></BoxEmptyState>
+      }
+    </div>
   );
 };
 
@@ -141,56 +140,54 @@ const HeightsDonutChart = ({ t, heightData, colorPalette }) => {
   } : {};
 
   return (
-    <>
-      <div className={styles.column}>
-        {
-          heightData
-            ? (
-              <div className={styles.chartBox}>
-                <h2 className={styles.title}>{t('Peer heights')}</h2>
-                <div className={`${styles.chart} showOnLargeViewPort`}>
-                  <DoughnutChart
-                    data={chartProps.data}
-                    options={{
-                      ...chartProps.options,
-                      legend: { display: true },
-                    }}
-                  />
-                  {
-                    heightData.others.length && !false
-                      ? <OthersTooltip title={t('Height')} data={heightData.others} />
-                      : null
-                  }
-                </div>
-                <div className={`${styles.chart} hideOnLargeViewPort`}>
-                  <DoughnutChart
-                    data={chartProps.data}
-                    options={{
-                      ...chartProps.options,
-                      legend: { display: false },
-                    }}
-                  />
-                </div>
-                <div className="hideOnLargeViewPort">
-                  <GuideTooltip>
-                    {
-                      heightData.labels
-                        .map((label, i) => (
-                          <GuideTooltipItem
-                            key={`distribution-GuideTooltip-${i}-${label}`}
-                            label={label}
-                            color={colorPalette[i]}
-                          />
-                        ))
-                    }
-                  </GuideTooltip>
-                </div>
+    <div className={styles.column}>
+      {
+        heightData
+          ? (
+            <div className={styles.chartBox}>
+              <h2 className={styles.title}>{t('Peer heights')}</h2>
+              <div className={`${styles.chart} showOnLargeViewPort`}>
+                <DoughnutChart
+                  data={chartProps.data}
+                  options={{
+                    ...chartProps.options,
+                    legend: { display: true },
+                  }}
+                />
+                {
+                  heightData.others.length && !false
+                    ? <OthersTooltip title={t('Height')} data={heightData.others} />
+                    : null
+                }
               </div>
-            )
-            : <BoxEmptyState><p>{t('No height information')}</p></BoxEmptyState>
-        }
-      </div>
-    </>
+              <div className={`${styles.chart} hideOnLargeViewPort`}>
+                <DoughnutChart
+                  data={chartProps.data}
+                  options={{
+                    ...chartProps.options,
+                    legend: { display: false },
+                  }}
+                />
+              </div>
+              <div className="hideOnLargeViewPort">
+                <GuideTooltip>
+                  {
+                    heightData.labels
+                      .map((label, i) => (
+                        <GuideTooltipItem
+                          key={`distribution-GuideTooltip-${i}-${label}`}
+                          label={label}
+                          color={colorPalette[i]}
+                        />
+                      ))
+                  }
+                </GuideTooltip>
+              </div>
+            </div>
+          )
+          : <BoxEmptyState><p>{t('No height information')}</p></BoxEmptyState>
+      }
+    </div>
   );
 };
 
@@ -264,9 +261,11 @@ const ConnectivityDonutChart = ({ t, connectionData, colorPalette }) => {
   );
 };
 
-const ChartsWithData = ({ networkVersion, height, basic, t }) => {
+const ChartsWithData = ({
+  networkVersion, height, basic, t,
+}) => {
   if (!networkVersion) {
-    return null;// @todo Create placeholder
+    return null; // @todo Create placeholder
   }
 
   const versionData = createChartData(networkVersion, t);
