@@ -6,7 +6,7 @@ import routes from '@screens/router/routes';
 import { tokenMap } from '@token/configuration/tokens';
 import LiskAmount from '@shared/liskAmount';
 
-import styles from './styles.css';
+import styles from './voteItem.css';
 
 const token = tokenMap.LSK.key;
 
@@ -20,7 +20,7 @@ const token = tokenMap.LSK.key;
  * @param {String} title text to use instead of the address e.g. delegate username
  * @param {Boolean} truncate text to use instead of the address e.g. delegate username
  */
-const VoteItem = ({
+const VoteDetails = ({
   vote, address, title, truncate,
 }) => {
   const accountPath = routes.account.path;
@@ -48,4 +48,4 @@ const VoteItem = ({
   );
 };
 
-export default VoteItem;
+export default VoteDetails;
