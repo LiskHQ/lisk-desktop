@@ -1,10 +1,10 @@
 // istanbul ignore file
 import { connect } from 'react-redux';
 import { withTranslation } from 'react-i18next';
-import WalletDetails from '../../info/walletDetails/walletDetails';
+import WalletDetails from '../../holdings/walletDetails/walletDetails';
 
 const mapStateToProps = state => ({
-  account: state.account,
+  wallet: state.wallet,
   settings: state.settings,
 });
 

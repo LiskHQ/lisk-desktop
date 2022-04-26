@@ -24,7 +24,7 @@
     padding: 0 0 var(--horizontal-padding-l) 0;
   }
 
-  & .accountInfo {
+  & .walletInfo {
     color: var(--color-ink-blue);
     border: var(--balance-border);
     box-shadow: var(--balance-shadow);

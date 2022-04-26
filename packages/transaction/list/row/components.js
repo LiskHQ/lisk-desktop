@@ -11,7 +11,7 @@ import Tooltip from '@basics/tooltip/tooltip';
 import LiskAmount from '@shared/liskAmount';
 import TransactionTypeFigure from '@transaction/detail/info/transactionTypeFigure';
 import TransactionAmount from '@transaction/detail/info/transactionAmount';
-import AccountVisualWithAddress from '@wallet/detail/info/accountVisual/accountVisualWithAddress';
+import WalletVisualWithAddress from '@wallet/detail/identity/walletVisual/walletVisualWithAddress';
 import { truncateAddress } from '@wallet/utilities/account';
 import routes from '@screens/router/routes';
 import styles from './row.css';
@@ -23,7 +23,7 @@ const roundSize = 103;
 export const Sender = () => {
   const { data, avatarSize } = useContext(Context);
   return (
-    <AccountVisualWithAddress
+    <WalletVisualWithAddress
       className="transaction-row-sender"
       address={data.sender.address}
       transactionSubject="sender"
@@ -37,7 +37,7 @@ export const Sender = () => {
 export const Recipient = () => {
   const { data, avatarSize } = useContext(Context);
   return (
-    <AccountVisualWithAddress
+    <WalletVisualWithAddress
       className="transaction-row-recipient"
       address={data.asset.recipient?.address}
       transactionSubject="recipient"
@@ -58,7 +58,7 @@ export const Counterpart = () => {
   // Show recipient
   if (data.asset.recipient?.address !== host) {
     return (
-      <AccountVisualWithAddress
+      <WalletVisualWithAddress
         className="transaction-row-recipient"
         address={data.asset.recipient?.address}
         transactionSubject="recipient"
@@ -70,7 +70,7 @@ export const Counterpart = () => {
   }
   // Show sender
   return (
-    <AccountVisualWithAddress
+    <WalletVisualWithAddress
       className="transaction-row-sender"
       address={data.sender.address}
       transactionSubject="sender"
@@ -160,14 +160,13 @@ export const Status = ({ t }) => {
 };
 
 const generateVotes = (asset, delegates, token, t) => {
-  console.log('asset', asset);
   const voteElements = asset.votes.slice(0, 1).map(vote => (
     <span
       className={`${styles.container} vote-item-address`}
       key={`vote-${vote.delegateAddress}`}
     >
       <Link
-        to={`${routes.account.path}?address=${vote.delegateAddress}`}
+        to={`${routes.wallet.path}?address=${vote.delegateAddress}`}
       >
         <span className={styles.primaryText}>
           {delegates[vote.delegateAddress] || truncateAddress(vote.delegateAddress)}
@@ -194,7 +193,6 @@ const generateVotes = (asset, delegates, token, t) => {
 export const Assets = ({ t }) => {
   const { data, delegates = [], activeToken } = useContext(Context);
   const { voteDelegate, registerDelegate, transfer } = MODULE_ASSETS_NAME_ID_MAP;
-  console.log(data.moduleAssetId, '||', voteDelegate, registerDelegate, transfer );
 
   const getDetails = () => {
     switch (data.moduleAssetId) {

@@ -19,7 +19,6 @@ export const Context = React.createContext({
 const TransactionRow = ({
   data, className, t, currentBlockHeight, host, layout, avatarSize,
 }) => {
-  console.log('currentBlockHeight', currentBlockHeight);
   const isPending = data.isPending;
   const senderAddress = data.sender.address;
   const recipientAddress = data.asset.recipient?.address;

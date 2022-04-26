@@ -1,24 +1,24 @@
-const selectAccount = state => state.account;
+const selectAccount = state => state.wallet;
 const selectActiveToken = state => state.settings.token.active;
-const selectAddress = state => state.account.info[state.settings.token.active].address;
+const selectAddress = state => state.wallet.info[state.settings.token.active].address;
 const selectLSKAddress = state =>
-  (state.account.info ? state.account.info.LSK.summary.address : undefined);
+  (state.wallet.info ? state.wallet.info.LSK.summary.address : undefined);
 const selectBTCAddress = state =>
-  (state.account.info ? state.account.info.BTC.summary.address : undefined);
-const selectPublicKey = state => state.account.info[state.settings.token.active].publicKey;
+  (state.wallet.info ? state.wallet.info.BTC.summary.address : undefined);
+const selectPublicKey = state => state.wallet.info[state.settings.token.active].publicKey;
 const selectTransactions = state => state.transactions;
 const selectActiveTokenAccount = (state) => {
-  if (!state.account.info) {
+  if (!state.wallet.info) {
     return {};
   }
   return {
-    ...state.account.info[state.settings.token.active],
+    ...state.wallet.info[state.settings.token.active],
     passphrase: state.passphrase,
     hwInfo: state.hwInfo,
   };
 };
 const selectAccountBalance = state => (
-  state.account.info ? state.account.info[state.settings.token.active].summary.balance : undefined);
+  state.wallet.info ? state.wallet.info[state.settings.token.active].summary.balance : undefined);
 const selectBookmarks = state => state.bookmarks[state.settings.token.active];
 const selectBookmark = (state, address) =>
   state.bookmarks[state.settings.token.active].find(item => (item.address === address));

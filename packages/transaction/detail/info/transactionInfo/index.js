@@ -1,6 +1,6 @@
 import React from 'react';
 import { withTranslation } from 'react-i18next';
-import AccountVisual from '@wallet/detail/info/accountVisual';
+import WalletVisual from '@wallet/detail/identity/walletVisual';
 import LiskAmount from '@shared/liskAmount';
 import { tokenMap } from '@token/configuration/tokens';
 import { MODULE_ASSETS_NAME_ID_MAP } from '@transaction/configuration/moduleAssets';
@@ -35,7 +35,7 @@ const Members = ({ members, t }) => (
           className={styles.memberInfo}
           key={i + 1}
         >
-          <AccountVisual address={member.address} />
+          <WalletVisual address={member.address} />
           <div className={styles.memberDetails}>
             <p className={styles.memberTitle}>
               {member.address}

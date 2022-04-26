@@ -252,7 +252,7 @@ const ss = {
   accountsRow: '.accounts-row',
   showMoreAccountsBtn: '.accounts-box .load-more',
   signMultiSignTransactionToggle: '.signMultiSignTransaction-toggle',
-  accountInfoMsign: '.account-info-msign',
+  walletInfoMsign: '.account-info-msign',
   msignPkInput: '.msign-pk-input',
   addNewMembers: '.add-new-members',
   mandatoryToggle: '.mandatory-toggle',

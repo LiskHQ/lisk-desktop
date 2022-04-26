@@ -12,10 +12,10 @@ import TransactionTypeFigure from '@transaction/detail/info/transactionTypeFigur
 import DateTimeFromTimestamp from '@basics/timestamp';
 import DiscreetMode from '@shared/discreetMode';
 import LiskAmount from '@shared/liskAmount';
-import MultiSignatureMembers, { SignedAndRemainingMembers } from '@wallet/detail/info/multisignatureMembers';
+import MultiSignatureMembers, { SignedAndRemainingMembers } from '@wallet/detail/identity/multisignatureMembers';
 import Tooltip from '@basics/tooltip/tooltip';
 import { extractAddressFromPublicKey, truncateAddress, calculateRemainingAndSignedMembers } from '@wallet/utilities/account';
-import AccountInfo from '@wallet/detail/info/accountInfo';
+import WalletInfo from './walletInfo';
 
 import { Context } from '../transactionDetails';
 import styles from './styles.css';
@@ -67,7 +67,7 @@ export const Sender = () => {
   const senderLabel = getModuleAssetSenderLabel()[transaction.moduleAssetId];
 
   return (
-    <AccountInfo
+    <WalletInfo
       className={`${styles.value} ${styles.sender}`}
       name={delegateName}
       token={activeToken}
@@ -85,7 +85,7 @@ export const Recipient = ({ t }) => {
   } = useContext(Context);
 
   return (
-    <AccountInfo
+    <WalletInfo
       className={`${styles.value} ${styles.recipient}`}
       token={activeToken}
       network={network}

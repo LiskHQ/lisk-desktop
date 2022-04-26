@@ -10,18 +10,18 @@ const bookmarks = (state = emptyBookmarks, action) => {
         ...state,
         [action.data.token]: [
           {
-            ...action.data.account,
-            title: action.data.account.title.trim(),
+            ...action.data.wallet,
+            title: action.data.wallet.title.trim(),
           },
           ...state[action.data.token],
         ],
       };
 
     case actionTypes.bookmarkUpdated: {
-      const { account, token } = action.data;
+      const { wallet, token } = action.data;
       const tokenBookmarks = state[token];
       const indexOfBookmark = getIndexOfBookmark(state, {
-        address: account.address,
+        address: wallet.address,
         token,
       });
       return (indexOfBookmark !== -1
@@ -31,9 +31,9 @@ const bookmarks = (state = emptyBookmarks, action) => {
             ...tokenBookmarks.slice(0, indexOfBookmark),
             {
               ...tokenBookmarks[indexOfBookmark],
-              address: account.address,
-              title: account.title.trim(),
-              publicKey: account.publicKey,
+              address: wallet.address,
+              title: wallet.title.trim(),
+              publicKey: wallet.publicKey,
             },
             ...tokenBookmarks.slice(indexOfBookmark + 1),
           ],

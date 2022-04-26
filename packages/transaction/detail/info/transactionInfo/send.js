@@ -1,5 +1,5 @@
 import React from 'react';
-import AccountVisual from '@wallet/detail/info/accountVisual';
+import WalletVisual from '@wallet/detail/identity/walletVisual';
 import LiskAmount from '@shared/liskAmount';
 import { toRawLsk } from '@token/utilities/lsk';
 import styles from './transactionInfo.css';
@@ -11,7 +11,7 @@ const Send = ({
     <section>
       <label>{t('Recipient')}</label>
       <label className="recipient-value">
-        <AccountVisual address={fields.recipient.address} size={25} />
+        <WalletVisual address={fields.recipient.address} size={25} />
         <label className={`${styles.information} recipient-confirm`}>
           {fields.recipient.title || fields.recipient.address}
         </label>

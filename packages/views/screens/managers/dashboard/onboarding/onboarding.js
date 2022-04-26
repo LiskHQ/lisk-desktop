@@ -11,7 +11,7 @@ const Onboarding = ({
 }) => {
   const [currentSlide, setCurrentSlide] = useState(0);
   const [visibility, setVisibility] = useState(!localStorage.getItem(name) ? 'visible' : 'hidden');
-  const isLoggedIn = useSelector(state => (state.account && state.account.passphrase));
+  const isLoggedIn = useSelector(state => (state.wallet && state.wallet.passphrase));
 
   const handleClose = () => {
     localStorage.setItem(name, true);

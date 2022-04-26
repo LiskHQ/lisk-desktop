@@ -68,7 +68,7 @@ const getWarningTime = (expireTime) => {
 
 const AutoSignOutWrapper = () => {
   const dispatch = useDispatch();
-  const expireTime = useSelector(state => state.account.expireTime);
+  const expireTime = useSelector(state => state.wallet.expireTime);
   const warningTime = getWarningTime(expireTime);
   const autoSignOut = useSelector(state => state.settings.autoLog);
   const renderAutoSignOut = autoSignOut && expireTime;
@@ -96,7 +96,7 @@ const SideBar = ({
 }) => {
   const items = menuLinks(t);
   const token = useSelector(state => state.settings.token.active);
-  const isLoggedOut = useSelector(state => !state.account.info || !state.account.info[token]);
+  const isLoggedOut = useSelector(state => !state.wallet.info || !state.wallet.info[token]);
   const sideBarExpanded = useSelector(state => state.settings.sideBarExpanded);
 
   return (

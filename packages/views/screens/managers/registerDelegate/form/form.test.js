@@ -5,7 +5,7 @@ import * as delegatesApi from '@dpos/utilities/api';
 import { getTransactionBaseFees, getTransactionFee, create } from '@transaction/utilities/api';
 import { fromRawLsk } from '@token/utilities/lsk';
 import * as hwManager from '@transaction/utilities/hwManager';
-import accounts from '@tests/constants/accounts';
+import wallets from '@tests/constants/wallets';
 import flushPromises from '@tests/unit-test-utils/flushPromises';
 import SelectNameAndFee from './form';
 
@@ -41,7 +41,7 @@ describe('SelectNameAndFee', () => {
 
   const props = {
     account: {
-      ...accounts.genesis,
+      ...wallets.genesis,
       delegate: {},
     },
     prevState: {},

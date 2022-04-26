@@ -139,8 +139,8 @@ export const getAddressFromBase32Address = (data) => {
  * @returns {Object} - account details or empty object
  */
 export const getActiveTokenAccount = state => ({
-  ...state.account,
-  ...((state.account.info && state.account.info[
+  ...state.wallet,
+  ...((state.wallet.info && state.wallet.info[
     state.settings.token?.active
       ? state.settings.token.active
       : tokenMap.LSK.key

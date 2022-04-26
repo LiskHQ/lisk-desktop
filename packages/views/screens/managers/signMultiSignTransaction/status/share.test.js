@@ -1,7 +1,7 @@
 import React from 'react';
 import { shallow } from 'enzyme';
 import TransactionResult from '@transaction/detail/manager/transactionResult';
-import accounts from '@tests/constants/accounts';
+import accounts from '@tests/constants/wallets';
 import Status from './status';
 
 describe('Sign Multisignature Tx Status component', () => {

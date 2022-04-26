@@ -8,7 +8,7 @@ import BoxContent from '@basics/box/content';
 import BoxInfoText from '@basics/box/infoText';
 import Dialog from '@basics/dialog/dialog';
 import Tooltip from '@basics/tooltip/tooltip';
-import Members from '@wallet/detail/info/multisignatureMembers';
+import Members from '@wallet/detail/identity/multisignatureMembers';
 
 import styles from './styles.css';
 

@@ -85,7 +85,7 @@ export default class GenericStepDefinition {
    * @param {String} expectedPublicKey - Valid publicKey
    */
   shouldBeLoggedInAs(expectedPublicKey) {
-    expect(this.store.getState().account.publicKey).to.equal(expectedPublicKey);
+    expect(this.store.getState().wallet.publicKey).to.equal(expectedPublicKey);
   }
 
   /**

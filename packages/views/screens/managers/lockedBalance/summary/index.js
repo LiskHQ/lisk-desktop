@@ -6,7 +6,7 @@ import { balanceUnlocked } from '@common/store/actions';
 import Summary from './summary';
 
 const mapStateToProps = state => ({
-  account: getActiveTokenAccount(state),
+  wallet: getActiveTokenAccount(state),
   network: state.network,
   currentBlockHeight: state.blocks.latestBlocks[0].height,
 });

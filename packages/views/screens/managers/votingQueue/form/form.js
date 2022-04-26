@@ -140,7 +140,7 @@ const Editor = ({
     network,
     selectedPriority,
     token,
-    account,
+    wallet: account,
     priorityOptions,
     transaction: {
       moduleAssetId,

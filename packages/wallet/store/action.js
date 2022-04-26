@@ -69,7 +69,7 @@ const getAccounts = async ({ network, params }) =>
  */
 export const accountDataUpdated = tokensTypes =>
   async (dispatch, getState) => {
-    const { network, settings, account } = getState();
+    const { network, settings, wallet } = getState();
 
     // Get the list of tokens that are enabled in settings
     const activeTokens = tokensTypes === 'enabled'
@@ -79,7 +79,7 @@ export const accountDataUpdated = tokensTypes =>
 
     // Collect their addresses to send to the API
     const params = activeTokens.reduce((acc, token) => {
-      acc[token] = { publicKey: account.info[token].summary.publicKey };
+      acc[token] = { publicKey: wallet.info[token].summary.publicKey };
       return acc;
     }, {});
 
@@ -88,8 +88,8 @@ export const accountDataUpdated = tokensTypes =>
     if (info) {
       // Uninitialized account don't have a public key stored on the blockchain.
       // but we already have it on the Redux store.
-      info.LSK.summary.publicKey = account.info.LSK.summary.publicKey;
-      info.LSK.summary.privateKey = account.info.LSK.summary.privateKey;
+      info.LSK.summary.publicKey = wallet.info.LSK.summary.publicKey;
+      info.LSK.summary.privateKey = wallet.info.LSK.summary.privateKey;
       dispatch({
         type: actionTypes.accountUpdated,
         data: info,
@@ -198,10 +198,10 @@ export const balanceUnlocked = data => async (dispatch, getState) => {
   const state = getState();
   const currentBlockHeight = selectCurrentBlockHeight(state);
   // @todo Fix this by #3898
-  const activeAccount = {
-    ...state.account.info.LSK,
-    hwInfo: isEmpty(state.account.hwInfo) ? undefined : state.account.hwInfo,
-    passphrase: state.account.passphrase,
+  const activeWallet = {
+    ...state.wallet.info.LSK,
+    hwInfo: isEmpty(state.wallet.hwInfo) ? undefined : state.wallet.hwInfo,
+    passphrase: state.wallet.passphrase,
   };
 
   //
@@ -210,14 +210,14 @@ export const balanceUnlocked = data => async (dispatch, getState) => {
   const [error, tx] = await to(
     create({
       network: state.network,
-      account: activeAccount,
+      wallet: activeWallet,
       transactionObject: {
         moduleAssetId: MODULE_ASSETS_NAME_ID_MAP.unlockToken,
-        senderPublicKey: activeAccount.summary.publicKey,
-        nonce: activeAccount.sequence?.nonce,
+        senderPublicKey: activeWallet.summary.publicKey,
+        nonce: activeWallet.sequence?.nonce,
         fee: `${toRawLsk(parseFloat(data.selectedFee))}`,
         unlockObjects: getUnlockableUnlockObjects(
-          activeAccount.dpos?.unlocking, currentBlockHeight,
+          activeWallet.dpos?.unlocking, currentBlockHeight,
         ),
       },
     }, tokenMap.LSK.key),
@@ -244,10 +244,10 @@ export const delegateRegistered = ({ fee, username }) => async (dispatch, getSta
   // Collect data
   //
   const state = getState();
-  const activeAccount = {
-    ...state.account.info.LSK,
-    hwInfo: isEmpty(state.account.hwInfo) ? undefined : state.account.hwInfo,
-    passphrase: state.account.passphrase,
+  const activeWallet = {
+    ...state.wallet.info.LSK,
+    hwInfo: isEmpty(state.wallet.hwInfo) ? undefined : state.wallet.hwInfo,
+    passphrase: state.wallet.passphrase,
   };
 
   //
@@ -256,10 +256,10 @@ export const delegateRegistered = ({ fee, username }) => async (dispatch, getSta
   const [error, tx] = await to(
     create({
       network: state.network,
-      account: activeAccount,
+      wallet: activeWallet,
       transactionObject: {
-        senderPublicKey: activeAccount.summary.publicKey,
-        nonce: activeAccount.sequence?.nonce,
+        senderPublicKey: activeWallet.summary.publicKey,
+        nonce: activeWallet.sequence?.nonce,
         fee: toRawLsk(parseFloat(fee.value)),
         username,
         moduleAssetId: MODULE_ASSETS_NAME_ID_MAP.registerDelegate,
@@ -293,10 +293,10 @@ export const multisigGroupRegistered = ({
   // Collect data
   //
   const state = getState();
-  const activeAccount = {
-    ...state.account.info.LSK,
-    hwInfo: isEmpty(state.account.hwInfo) ? undefined : state.account.hwInfo,
-    passphrase: state.account.passphrase,
+  const activeWallet = {
+    ...state.wallet.info.LSK,
+    hwInfo: isEmpty(state.wallet.hwInfo) ? undefined : state.wallet.hwInfo,
+    passphrase: state.wallet.passphrase,
   };
 
   //
@@ -305,15 +305,15 @@ export const multisigGroupRegistered = ({
   const [error, tx] = await to(
     create({
       network: state.network,
-      account: activeAccount,
+      wallet: activeWallet,
       transactionObject: {
         mandatoryKeys,
         optionalKeys,
         numberOfSignatures,
         moduleAssetId: MODULE_ASSETS_NAME_ID_MAP.registerMultisignatureGroup,
         fee: toRawLsk(fee),
-        nonce: activeAccount.sequence.nonce,
-        senderPublicKey: activeAccount.summary.publicKey,
+        nonce: activeWallet.sequence.nonce,
+        senderPublicKey: activeWallet.summary.publicKey,
       },
     }, tokenMap.LSK.key),
   );
@@ -339,10 +339,10 @@ export const balanceReclaimed = ({ fee }) => async (dispatch, getState) => {
   // Collect data
   //
   const state = getState();
-  const activeAccount = {
-    ...state.account.info.LSK,
-    hwInfo: isEmpty(state.account.hwInfo) ? undefined : state.account.hwInfo,
-    passphrase: state.account.passphrase,
+  const activeWallet = {
+    ...state.wallet.info.LSK,
+    hwInfo: isEmpty(state.wallet.hwInfo) ? undefined : state.wallet.hwInfo,
+    passphrase: state.wallet.passphrase,
   };
 
   //
@@ -351,11 +351,11 @@ export const balanceReclaimed = ({ fee }) => async (dispatch, getState) => {
   const [error, tx] = await to(
     create({
       network: state.network,
-      account: activeAccount,
+      wallet: activeWallet,
       transactionObject: {
         moduleAssetId: MODULE_ASSETS_NAME_ID_MAP.reclaimLSK,
         fee: toRawLsk(fee.value),
-        amount: activeAccount.legacy.balance,
+        amount: activeWallet.legacy.balance,
         keys: { numberOfSignatures: 0 },
       },
     }, tokenMap.LSK.key),
