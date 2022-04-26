@@ -3,9 +3,9 @@ import { MODULE_ASSETS_NAME_ID_MAP } from '@transaction/configuration/moduleAsse
 import {
   TransactionId, Sender, Recipient, Message, Illustration,
   Confirmations, Date, Amount, Fee, RequiredSignatures, TransactionVotes,
-  BlockId, BlockHeight, Members, SignedAndRemainingMembersList,
-} from './components';
-import styles from './transactionDetails.css';
+  BlockId, BlockHeight, Members, SignedAndRemainingMembersList, PrettyJson,
+} from '@transaction/detail/info/transactionDetails';
+import styles from '@screens/managers/transactionDetails/transactionDetails.css';
 
 const {
   transfer, voteDelegate, unlockToken, registerDelegate, registerMultisignatureGroup,
@@ -19,7 +19,7 @@ const restComponents = [TransactionId, Fee, SignedAndRemainingMembersList];
 
 const LayoutSchema = {
   [transfer]: {
-    components: [...baseComponents, Recipient, Amount, Message, ...timeComponents],
+    components: [...baseComponents, Recipient, Amount, Message, ...timeComponents, PrettyJson],
     className: styles.transferLayout,
   },
   [`${transfer}-preview`]: {
@@ -27,7 +27,7 @@ const LayoutSchema = {
     className: styles.transferPreview,
   },
   [voteDelegate]: {
-    components: [...baseComponents, ...timeComponents, TransactionVotes],
+    components: [...baseComponents, ...timeComponents, TransactionVotes, PrettyJson],
     className: styles.voteLayout,
   },
   [`${voteDelegate}-preview`]: {
@@ -35,7 +35,7 @@ const LayoutSchema = {
     className: styles.votePreview,
   },
   [registerDelegate]: {
-    components: [...baseComponents, ...timeComponents],
+    components: [...baseComponents, ...timeComponents, PrettyJson],
     className: styles.registerDelegate,
   },
   [`${registerDelegate}-preview`]: {
@@ -43,7 +43,7 @@ const LayoutSchema = {
     className: styles.registerDelegatePreview,
   },
   [registerMultisignatureGroup]: {
-    components: [...baseComponents, ...timeComponents, Members, RequiredSignatures],
+    components: [...baseComponents, ...timeComponents, Members, RequiredSignatures, PrettyJson],
     className: styles.multiSigLayout,
   },
   [`${registerMultisignatureGroup}-preview`]: {
@@ -51,7 +51,7 @@ const LayoutSchema = {
     className: styles.multiSigRegisterPreview,
   },
   [unlockToken]: {
-    components: [...baseComponents, Amount, ...timeComponents],
+    components: [...baseComponents, Amount, ...timeComponents, PrettyJson],
     className: styles.unlockToken,
   },
   [`${unlockToken}-preview`]: {
@@ -59,15 +59,15 @@ const LayoutSchema = {
     className: styles.unlockTokenPreview,
   },
   [reportDelegateMisbehavior]: {
-    components: [...baseComponents, ...timeComponents],
+    components: [...baseComponents, ...timeComponents, PrettyJson],
     className: styles.reportDelegateMisbehavior,
   },
   [reclaimLSK]: {
-    components: [...baseComponents, ...timeComponents, Amount],
+    components: [...baseComponents, ...timeComponents, Amount, PrettyJson],
     className: styles.reclaimLSK,
   },
   default: {
-    components: [...baseComponents],
+    components: [...baseComponents, PrettyJson],
     className: styles.generalLayout,
   },
 };

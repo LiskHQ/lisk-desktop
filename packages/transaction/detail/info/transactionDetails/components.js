@@ -1,9 +1,13 @@
 /* eslint-disable max-lines */
-import React, { useContext, useMemo } from 'react';
+import React, { useMemo } from 'react';
 import { useSelector } from 'react-redux';
+import ReactJson from 'react-json-view';
 
 import { selectCurrentBlockHeight } from '@common/store/selectors';
-import { getModuleAssetTitle, getModuleAssetSenderLabel } from '@transaction/utilities/moduleAssets';
+import {
+  getModuleAssetTitle,
+  getModuleAssetSenderLabel,
+} from '@transaction/utilities/moduleAssets';
 import { getTxAmount } from '@transaction/utilities/transaction';
 import { tokenMap } from '@token/configuration/tokens';
 import { MODULE_ASSETS_NAME_ID_MAP } from '@transaction/configuration/moduleAssets';
@@ -12,20 +16,24 @@ import TransactionTypeFigure from '@transaction/detail/info/transactionTypeFigur
 import DateTimeFromTimestamp from '@basics/timestamp';
 import DiscreetMode from '@shared/discreetMode';
 import LiskAmount from '@shared/liskAmount';
-import MultiSignatureMembers, { SignedAndRemainingMembers } from '@wallet/detail/identity/multisignatureMembers';
+import MultiSignatureMembers, {
+  SignedAndRemainingMembers,
+} from '@wallet/detail/identity/multisignatureMembers';
 import Tooltip from '@basics/tooltip/tooltip';
-import { extractAddressFromPublicKey, truncateAddress, calculateRemainingAndSignedMembers } from '@wallet/utilities/account';
+import {
+  extractAddressFromPublicKey,
+  truncateAddress,
+  calculateRemainingAndSignedMembers,
+} from '@wallet/utilities/account';
 import WalletInfo from './walletInfo';
 
-import { Context } from '../transactionDetails';
+import TransactionDetailsContext from '../../../configuration/context';
 import styles from './styles.css';
 
-const getDelegateName = (transaction, activeToken) => (
-  (activeToken === 'LSK'
-  && transaction.asset
-  && transaction.asset.username)
-    ? transaction.asset.username : null
-);
+const getDelegateName = (transaction, activeToken) =>
+  (activeToken === 'LSK' && transaction.asset && transaction.asset.username
+    ? transaction.asset.username
+    : null);
 
 const getTxAsset = (tx) => {
   if (tx.asset?.data && tx.asset.data.length) {
@@ -36,15 +44,16 @@ const getTxAsset = (tx) => {
 
 const ValueAndLabel = ({ label, className, children }) => (
   <div className={`${styles.value} ${className}`}>
-    <span className={styles.label}>
-      {label}
-    </span>
+    <span className={styles.label}>{label}</span>
     {children}
   </div>
 );
 
 export const Illustration = () => {
-  const { transaction: { sender, moduleAssetId } } = useContext(Context);
+  const params = React.useContext(TransactionDetailsContext);
+  const {
+    transaction: { sender, moduleAssetId },
+  } = params;
   const title = getModuleAssetTitle()[moduleAssetId];
 
   return (
@@ -60,9 +69,9 @@ export const Illustration = () => {
 };
 
 export const Sender = () => {
-  const {
-    activeToken, transaction, network,
-  } = useContext(Context);
+  const { activeToken, transaction, network } = React.useContext(
+    TransactionDetailsContext,
+  );
   const delegateName = getDelegateName(transaction, activeToken);
   const senderLabel = getModuleAssetSenderLabel()[transaction.moduleAssetId];
 
@@ -80,9 +89,9 @@ export const Sender = () => {
 };
 
 export const Recipient = ({ t }) => {
-  const {
-    activeToken, network, transaction,
-  } = useContext(Context);
+  const { activeToken, network, transaction } = React.useContext(
+    TransactionDetailsContext,
+  );
 
   return (
     <WalletInfo
@@ -99,7 +108,7 @@ export const Recipient = ({ t }) => {
 export const TransactionId = ({ t }) => {
   const {
     transaction: { id },
-  } = useContext(Context);
+  } = React.useContext(TransactionDetailsContext);
 
   return (
     <ValueAndLabel label={t('Transaction ID')} className={styles.transactionId}>
@@ -120,26 +129,23 @@ export const TransactionId = ({ t }) => {
 };
 
 export const Message = ({ t }) => {
-  const {
-    transaction,
-  } = useContext(Context);
+  const { transaction } = React.useContext(TransactionDetailsContext);
 
   return (
     <ValueAndLabel label={t('Message')} className={styles.message}>
-      <div className="tx-reference">
-        {getTxAsset(transaction)}
-      </div>
+      <div className="tx-reference">{getTxAsset(transaction)}</div>
     </ValueAndLabel>
   );
 };
 
-export const Amount = ({
-  t,
-}) => {
-  const {
-    activeToken, transaction,
-  } = useContext(Context);
-  const addresses = [transaction.asset.recipient?.address ?? '', transaction.sender.address];
+export const Amount = ({ t }) => {
+  const { activeToken, transaction } = React.useContext(
+    TransactionDetailsContext,
+  );
+  const addresses = [
+    transaction.asset.recipient?.address ?? '',
+    transaction.sender.address,
+  ];
 
   return (
     <ValueAndLabel label={t('Amount of transaction')} className={styles.amount}>
@@ -155,9 +161,9 @@ export const Amount = ({
 };
 
 export const Date = ({ t }) => {
-  const {
-    activeToken, transaction,
-  } = useContext(Context);
+  const { activeToken, transaction } = React.useContext(
+    TransactionDetailsContext,
+  );
 
   return transaction.block?.timestamp ? (
     <ValueAndLabel label={t('Date')} className={styles.date}>
@@ -171,14 +177,16 @@ export const Date = ({ t }) => {
         />
       </span>
     </ValueAndLabel>
-  )
-    : <span>-</span>;
+  ) : (
+    <span>-</span>
+  );
 };
 
 export const Fee = ({ t }) => {
   const {
-    activeToken, transaction: { fee },
-  } = useContext(Context);
+    activeToken,
+    transaction: { fee },
+  } = React.useContext(TransactionDetailsContext);
 
   return (
     <ValueAndLabel label={t('Transaction fee')} className={styles.fee}>
@@ -191,12 +199,12 @@ export const Fee = ({ t }) => {
 
 export const Confirmations = ({ t }) => {
   const currentBlockHeight = useSelector(selectCurrentBlockHeight);
-  const {
-    activeToken, transaction,
-  } = useContext(Context);
+  const { activeToken, transaction } = React.useContext(
+    TransactionDetailsContext,
+  );
 
   const confirmations = activeToken === tokenMap.LSK.key
-    ? (currentBlockHeight - transaction.height)
+    ? currentBlockHeight - transaction.height
     : transaction.confirmations;
 
   return (
@@ -207,16 +215,16 @@ export const Confirmations = ({ t }) => {
           {t('Confirmations')}
           <Tooltip position="top">
             <p>
-              { t('Confirmations refer to the number of blocks added to the {{token}} blockchain after a transaction has been submitted. The more confirmations registered, the more secure the transaction becomes.',
-                { token: tokenMap[activeToken].label })}
+              {t(
+                'Confirmations refer to the number of blocks added to the {{token}} blockchain after a transaction has been submitted. The more confirmations registered, the more secure the transaction becomes.',
+                { token: tokenMap[activeToken].label },
+              )}
             </p>
           </Tooltip>
         </>
-    )}
+      )}
     >
-      <span className="tx-confirmation">
-        {confirmations}
-      </span>
+      <span className="tx-confirmation">{confirmations}</span>
     </ValueAndLabel>
   );
 };
@@ -224,7 +232,7 @@ export const Confirmations = ({ t }) => {
 export const Nonce = ({ t }) => {
   const {
     transaction: { nonce },
-  } = useContext(Context);
+  } = React.useContext(TransactionDetailsContext);
 
   return (
     <ValueAndLabel className={styles.nonce} label={t('Nonce')}>
@@ -236,40 +244,55 @@ export const Nonce = ({ t }) => {
 export const RequiredSignatures = ({ t }) => {
   const {
     transaction: { asset },
-  } = useContext(Context);
+  } = React.useContext(TransactionDetailsContext);
   const requiredSignatures = asset.numberOfSignatures;
 
   return (
-    <ValueAndLabel className={styles.requiredSignatures} label={t('Required signatures')}>
+    <ValueAndLabel
+      className={styles.requiredSignatures}
+      label={t('Required signatures')}
+    >
       <span className="tx-required-signatures">{requiredSignatures}</span>
     </ValueAndLabel>
   );
 };
 
 export const Members = ({ t }) => {
-  const { transaction: { asset } } = useContext(Context);
+  const {
+    transaction: { asset },
+  } = React.useContext(TransactionDetailsContext);
 
   const { optionalKeys, mandatoryKeys } = asset;
 
-  const members = useMemo(() => optionalKeys.map(publicKey => ({
-    address: extractAddressFromPublicKey(publicKey),
-    publicKey,
-    mandatory: false,
-  })).concat(
-    mandatoryKeys.map(publicKey => ({
-      address: extractAddressFromPublicKey(publicKey),
-      publicKey,
-      mandatory: true,
-    })),
-  ), [asset]);
+  const members = useMemo(
+    () =>
+      optionalKeys
+        .map((publicKey) => ({
+          address: extractAddressFromPublicKey(publicKey),
+          publicKey,
+          mandatory: false,
+        }))
+        .concat(
+          mandatoryKeys.map((publicKey) => ({
+            address: extractAddressFromPublicKey(publicKey),
+            publicKey,
+            mandatory: true,
+          })),
+        ),
+    [asset],
+  );
 
   return (
-    <MultiSignatureMembers t={t} members={members} className={styles.multiSignatureMembers} />
+    <MultiSignatureMembers
+      t={t}
+      members={members}
+      className={styles.multiSignatureMembers}
+    />
   );
 };
 
 export const BlockId = ({ t }) => {
-  const { transaction } = useContext(Context);
+  const { transaction } = React.useContext(TransactionDetailsContext);
 
   return (
     <ValueAndLabel className={styles.blockId} label={t('Block ID')}>
@@ -290,7 +313,7 @@ export const BlockId = ({ t }) => {
 };
 
 export const BlockHeight = ({ t }) => {
-  const { transaction } = useContext(Context);
+  const { transaction } = React.useContext(TransactionDetailsContext);
 
   return (
     <ValueAndLabel className={styles.blockHeight} label={t('Block height')}>
@@ -300,7 +323,7 @@ export const BlockHeight = ({ t }) => {
 };
 
 export const SignedAndRemainingMembersList = ({ t }) => {
-  const { transaction, account } = useContext(Context);
+  const { transaction, account } = React.useContext(TransactionDetailsContext);
 
   const isMultisignatureGroupRegistration = transaction.moduleAssetId
     === MODULE_ASSETS_NAME_ID_MAP.registerMultisignatureGroup;
@@ -313,9 +336,15 @@ export const SignedAndRemainingMembersList = ({ t }) => {
     }
     : account.keys;
 
-  const { signed, remaining } = useMemo(() => calculateRemainingAndSignedMembers(
-    keys, transaction.signatures, isMultisignatureGroupRegistration,
-  ), [account]);
+  const { signed, remaining } = useMemo(
+    () =>
+      calculateRemainingAndSignedMembers(
+        keys,
+        transaction.signatures,
+        isMultisignatureGroupRegistration,
+      ),
+    [account],
+  );
 
   const required = isMultisignatureGroupRegistration
     ? keys.optionalKeys.length + keys.mandatoryKeys.length
@@ -332,5 +361,19 @@ export const SignedAndRemainingMembersList = ({ t }) => {
       className={styles.signedAndRemainingMembersList}
       t={t}
     />
+  );
+};
+
+export const PrettyJson = ({ t }) => {
+  const { transaction } = React.useContext(TransactionDetailsContext);
+  return (
+    transaction && (
+      <>
+        <p className={styles.label}>{t('Transaction asset')}</p>
+        <div className={styles.transactionAsset}>
+          <ReactJson src={transaction.asset} />
+        </div>
+      </>
+    )
   );
 };
