@@ -4,7 +4,7 @@ import { regex } from '@common/configuration';
 import { tokenMap } from '@token/configuration/tokens';
 import { MODULE_ASSETS_NAME_ID_MAP } from '@transaction/configuration/moduleAssets';
 import { MIN_ACCOUNT_BALANCE } from '@transaction/configuration/transactions';
-import { getDelegate } from '@dpos/validator/utiles/api';
+import { getDelegate } from '@dpos/validator/utils/api';
 import TransactionPriority, { useTransactionFeeCalculation, useTransactionPriority } from '@transaction/manage/transactionPriority';
 import Box from '@basics/box';
 import BoxHeader from '@basics/box/header';

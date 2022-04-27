@@ -19,7 +19,7 @@ import {
   signatureSkipped,
 } from './actions';
 
-jest.mock('@dpos/validator/utiles/api');
+jest.mock('@dpos/validator/utils/api');
 jest.mock('@transaction/utilities/hwManager');
 jest.mock('@common/utilities/api/http');
 

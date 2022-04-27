@@ -2,7 +2,7 @@ import React, { useEffect } from 'react';
 
 import VoteItem from '@transaction/detail/info/voteItem';
 import withData from '@common/utilities/withData';
-import { getDelegates } from '@dpos/validator/utiles/api';
+import { getDelegates } from '@dpos/validator/utils/api';
 import TransactionDetailsContext from '../../../configuration/context';
 import styles from './styles.css';
 
