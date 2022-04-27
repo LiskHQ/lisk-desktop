@@ -2,66 +2,17 @@ import React, { useEffect, useRef, useState } from 'react';
 import PropTypes from 'prop-types';
 
 import { tokenMap } from '@token/configuration/tokens';
-import { validateAddress } from '@common/utilities/validators';
-import { getIndexOfBookmark } from '@bookmark/utils';
+import { validateBookmarkAddress, validateBookmarkLabel, getBookmarkMode } from '@bookmark/utils';
 import { parseSearchParams, removeSearchParamsFromUrl } from 'src/utils/searchParams';
 import Box from '@basics/box';
 import BoxHeader from '@basics/box/header';
 import BoxContent from '@basics/box/content';
 import BoxFooter from '@basics/box/footer';
 import { PrimaryButton, SecondaryButton } from '@basics/buttons';
+import ModalWrapper from '@bookmark/components/BookmarksListModal/BookmarkModalWrapper';
 import Icon from '@basics/icon';
-import styles from './addBookmark.css';
-import ModalWrapper from '../modalWrapper';
-import Fields from './fields';
-
-/**
- *  Checks the label and returns feedback
- *
- * @param {String} value - The label string to check
- * @param {Function} t - i18n function
- * @returns {String} - Feedback string. Empty string if the label is valid
- */
-const validateLabel = (value = '', t) => {
-  if (value.length > 20) {
-    return t('Label is too long, Max. 20 characters');
-  }
-  return '';
-};
-
-/**
- * Checks the address and returns feedback
- *
- * @param {String} token - LSK or BTC
- * @param {String} value - Address string
- * @param {Object} network - The network object from Redux store
- * @param {Object} bookmarks - Lisk of bookmarks from Redux store
- * @param {Function} t - i18n function
- * @param {Boolean} isUnique - Should check if the account is already a bookmark
- * @returns {String} - Feedback string. Empty string if the address is valid (and unique)
- */
-const validateBookmarkAddress = (token, value = '', network, bookmarks, t, isUnique) => {
-  if (validateAddress(token, value, network) === 1) {
-    return t('Invalid address');
-  }
-  if (isUnique && getIndexOfBookmark(bookmarks, { address: value, token }) !== -1) {
-    return t('Address already bookmarked');
-  }
-  return '';
-};
-
-/**
- * Define edit/add mode
- *
- * @param {Object} history - History object from withRouter
- * @param {Object} bookmarks - Lisk of bookmarks from Redux store
- * @param {String} active - LSK, BTC, etc
- * @returns {String} - edit or add
- */
-const getMode = (history, bookmarks, active) => {
-  const { address } = parseSearchParams(history.location.search);
-  return bookmarks[active].some(bookmark => bookmark.address === address) ? 'edit' : 'add';
-};
+import styles from './AddBookmark.css';
+import BookmarkForm from './BookmarkForm';
 
 const blankField = { value: '', readonly: false, feedback: '' };
 
@@ -77,7 +28,7 @@ const AddBookmark = ({
   network,
   t,
 }) => {
-  const [mode, setMode] = useState(getMode(history, bookmarks, active));
+  const [mode, setMode] = useState(getBookmarkMode(history, bookmarks, active));
   const [fields, setFields] = useState([blankField, blankField]);
   const timeout = useRef(null);
 
@@ -88,7 +39,7 @@ const AddBookmark = ({
       active, formAddress, network, bookmarks, t, false,
     );
     const usernameValue = bookmark?.title || label || '';
-    const usernameFeedback = validateLabel(usernameValue, t);
+    const usernameFeedback = validateBookmarkLabel(usernameValue, t);
 
     setFields([
       {
@@ -120,7 +71,7 @@ const AddBookmark = ({
         }],
       );
 
-      setMode(getMode(history, bookmarks, active));
+      setMode(getBookmarkMode(history, bookmarks, active));
     }
   }, [account.data]);
 
@@ -132,7 +83,7 @@ const AddBookmark = ({
   };
 
   const onLabelChange = ({ target: { value } }) => {
-    const feedback = validateLabel(value, t);
+    const feedback = validateBookmarkLabel(value, t);
     setFields([
       fields[0],
       {
@@ -198,7 +149,7 @@ const AddBookmark = ({
           <Box className={styles.box}>
             <BoxHeader><h2>{mode === 'edit' ? t('Edit bookmark') : t('New bookmark')}</h2></BoxHeader>
             <BoxContent>
-              <Fields
+              <BookmarkForm
                 t={t}
                 status={fields}
                 handlers={[onAddressChange, onLabelChange]}

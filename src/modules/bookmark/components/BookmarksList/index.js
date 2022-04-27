@@ -1,1 +1,1 @@
-export default from './BookmarksList';
+export { default } from './BookmarksList';
