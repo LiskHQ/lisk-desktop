@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { useTranslation } from 'react-i18next';
 import WalletVisual from '@wallet/detail/identity/walletVisual';
 import Box from '@basics/box';
 import BoxContent from '@basics/box/content';
@@ -8,10 +9,11 @@ import Identity from './identity';
 import ActionBar from './actionBar';
 
 const WalletInfo = ({
-  address, t, activeToken, hwInfo, account, username, bookmark, isMultisignature, host,
+  address, activeToken, hwInfo, account, username, bookmark, isMultisignature, host,
 }) => {
   const [showFullAddress, setShowFullAddress] = useState(false);
   const onClick = () => setShowFullAddress(!showFullAddress);
+  const { t } = useTranslation();
 
   return (
     <Box className={styles.wrapper}>

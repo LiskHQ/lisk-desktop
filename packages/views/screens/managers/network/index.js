@@ -1,5 +1,5 @@
 import React from 'react';
-import { withTranslation } from "react-i18next";
+import { withTranslation } from 'react-i18next';
 import Box from '@basics/box';
 import BoxHeader from '@basics/box/header';
 import Tooltip from '@basics/tooltip/tooltip';
@@ -7,8 +7,7 @@ import NodesList from '@network/nodesList/manager';
 import Statistics from '@network/statistics';
 import styles from './network.css';
 
-
-export const Network = ({
+const Network = ({
   t,
 }) => (
   <div>

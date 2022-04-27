@@ -1,13 +1,13 @@
-import React, { useContext, useEffect } from 'react';
+import React, { useEffect } from 'react';
 
 import VoteItem from '@transaction/detail/info/voteItem';
 import withData from '@common/utilities/withData';
 import { getDelegates } from '@dpos/utilities/api';
-import { Context } from '../transactionDetails';
+import TransactionDetailsContext from '../../../configuration/context';
 import styles from './styles.css';
 
 export const TransactionVotesComp = ({ t, votedDelegates }) => {
-  const { transaction } = useContext(Context);
+  const { transaction } = React.useContext(TransactionDetailsContext);
   const { votes } = transaction.asset;
 
   useEffect(() => {
