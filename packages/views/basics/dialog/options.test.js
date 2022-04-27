@@ -1,6 +1,6 @@
 import React from 'react';
 import { mountWithRouter } from '@common/utilities/testHelpers';
-import { removeSearchParamsFromUrl } from '@screens/router/searchParams';
+import { removeSearchParamsFromUrl } from 'src/utils/searchParams';
 import Options from './options';
 import { PrimaryButton } from '../buttons';
 

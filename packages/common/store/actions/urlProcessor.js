@@ -1,4 +1,4 @@
-import { parseSearchParams } from '@screens/router/searchParams';
+import { parseSearchParams } from 'src/utils/searchParams';
 import { getAccounts } from '@wallet/utilities/api';
 import { regex } from '@common/configuration';
 import { tokenMap } from '@token/configuration/tokens';

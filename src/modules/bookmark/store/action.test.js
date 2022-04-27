@@ -1,6 +1,6 @@
 import { tokenMap } from '@token/configuration/tokens';
 import { getFromStorage } from '@common/utilities/localJSONStorage';
-import { emptyBookmarks } from '@bookmark/utilities/bookmarks';
+import { emptyBookmarks } from '@bookmark/utils';
 import wallets from '@tests/constants/wallets';
 import actionTypes from './actionTypes';
 import {

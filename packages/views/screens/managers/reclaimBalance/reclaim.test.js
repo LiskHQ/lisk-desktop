@@ -1,6 +1,6 @@
 import { mountWithRouterAndStore } from '@common/utilities/testHelpers';
 import { truncateAddress } from '@wallet/utilities/account';
-import { addSearchParamsToUrl } from '@screens/router/searchParams';
+import { addSearchParamsToUrl } from 'src/utils/searchParams';
 import { tokenMap } from '@token/configuration/tokens';
 import wallets from '@tests/constants/wallets';
 import Reclaim from './reclaim';

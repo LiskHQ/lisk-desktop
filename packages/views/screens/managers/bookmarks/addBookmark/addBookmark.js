@@ -3,8 +3,8 @@ import PropTypes from 'prop-types';
 
 import { tokenMap } from '@token/configuration/tokens';
 import { validateAddress } from '@common/utilities/validators';
-import { getIndexOfBookmark } from '@bookmark/utilities/bookmarks';
-import { parseSearchParams, removeSearchParamsFromUrl } from '@screens/router/searchParams';
+import { getIndexOfBookmark } from '@bookmark/utils';
+import { parseSearchParams, removeSearchParamsFromUrl } from 'src/utils/searchParams';
 import Box from '@basics/box';
 import BoxHeader from '@basics/box/header';
 import BoxContent from '@basics/box/content';

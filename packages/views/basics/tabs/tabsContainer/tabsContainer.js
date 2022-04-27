@@ -1,7 +1,7 @@
 import PropTypes from 'prop-types';
 import React from 'react';
 import { withRouter } from 'react-router';
-import { selectSearchParamValue } from '@screens/router/searchParams';
+import { selectSearchParamValue } from 'src/utils/searchParams';
 import Switcher from '../switcher';
 import styles from './tabsContainer.css';
 

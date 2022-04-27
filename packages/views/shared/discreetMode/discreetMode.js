@@ -1,7 +1,7 @@
 import React, { useMemo } from 'react';
 import PropTypes from 'prop-types';
 import routes from '@screens/router/routes';
-import { selectSearchParamValue } from '@screens/router/searchParams';
+import { selectSearchParamValue } from 'src/utils/searchParams';
 import styles from './discreetMode.css';
 
 const DiscreetMode = ({

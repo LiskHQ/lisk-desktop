@@ -6,7 +6,7 @@ import { withTranslation } from 'react-i18next';
 import { bookmarkAdded, bookmarkUpdated, bookmarkRemoved } from '@common/store/actions';
 import { getAccount } from '@wallet/utilities/api';
 import withData from '@common/utilities/withData';
-import { selectSearchParamValue } from '@screens/router/searchParams';
+import { selectSearchParamValue } from 'src/utils/searchParams';
 import AddBookmark from './addBookmark';
 
 const mapStateToProps = state => ({

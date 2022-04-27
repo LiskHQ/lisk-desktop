@@ -1,7 +1,7 @@
 import React from 'react';
 import { withRouter } from 'react-router';
-import { removeSearchParamsFromUrl, addSearchParamsToUrl } from '@screens/router/searchParams';
-import List from '@bookmark/list/list';
+import { removeSearchParamsFromUrl, addSearchParamsToUrl } from 'src/utils/searchParams';
+import List from '@bookmark/components/BookmarksList';
 import ModalWrapper from '../modalWrapper';
 import styles from '../bookmarks.css';
 
