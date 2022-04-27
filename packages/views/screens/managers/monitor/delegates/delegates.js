@@ -5,7 +5,7 @@ import Box from '@basics/box';
 import BoxHeader from '@basics/box/header';
 import BoxContent from '@basics/box/content';
 import BoxTabs from '@basics/tabs';
-import { ROUND_LENGTH } from '@dpos/configuration/delegates';
+import { ROUND_LENGTH } from '@dpos/validator/constants';
 import styles from './delegates.css';
 import DelegatesOverview from './overview/delegatesOverview';
 import ForgingDetails from './overview/forgingDetails';

@@ -1,4 +1,4 @@
-import { ROUND_LENGTH } from '@dpos/configuration/delegates';
+import { ROUND_LENGTH } from '@dpos/validator/constants';
 import actionTypes from './actionTypes';
 
 const initialState = {

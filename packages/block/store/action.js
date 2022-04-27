@@ -1,4 +1,4 @@
-import { ROUND_LENGTH } from '@dpos/configuration/delegates';
+import { ROUND_LENGTH } from '@dpos/validator/constants';
 import { convertUnixSecondsToLiskEpochSeconds } from '@views/utilities/dateTime';
 import { getBlocks } from '@block/utilities/api';
 import { getForgers, getDelegates } from '@dpos/validator/utiles/api';

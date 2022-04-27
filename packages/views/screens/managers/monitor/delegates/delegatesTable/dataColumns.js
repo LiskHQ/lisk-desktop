@@ -6,7 +6,7 @@ import { truncateAddress } from '@wallet/utilities/account';
 import Tooltip from '@basics/tooltip/tooltip';
 import Icon from '@basics/icon';
 import WalletVisual from '@wallet/detail/identity/walletVisual';
-import { DEFAULT_STANDBY_THRESHOLD } from '@dpos/configuration/delegates';
+import { DEFAULT_STANDBY_THRESHOLD } from '@dpos/validator/constants';
 import {
   getDelegateDetailsClass,
   getStatusClass,
