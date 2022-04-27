@@ -78,7 +78,7 @@
       "entitlements": "build/entitlements.plist",
       "entitlementsInherit": "build/entitlements.plist",
       "target": {
-        "target": "dmg",
+        "target": "default",
         "arch": [
           "arm64",
           "x64"
@@ -214,7 +214,7 @@
     "cypress-pipe": "2.0.0",
     "cypress-terminal-report": "3.4.1",
     "electron": "17.0.0",
-    "electron-builder": "22.12.0",
+    "electron-builder": "23.0.2",
     "electron-builder-notarize": "1.4.0",
     "electron-devtools-installer": "3.2.0",
     "electron-ipc-mock": "0.0.3",
