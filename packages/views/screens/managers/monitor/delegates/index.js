@@ -4,7 +4,7 @@ import { withRouter } from 'react-router-dom';
 import { withTranslation } from 'react-i18next';
 import { connect } from 'react-redux';
 
-import { getDelegates } from '@dpos/utilities/api';
+import { getDelegates } from '@dpos/validator/utiles/api';
 import { getNetworkStatus } from '@network/utilities/api';
 import { getTransactions, getRegisteredDelegates } from '@transaction/utilities/api';
 import withData from '@common/utilities/withData';

@@ -1,7 +1,7 @@
 import { ROUND_LENGTH } from '@dpos/configuration/delegates';
 import { convertUnixSecondsToLiskEpochSeconds } from '@views/utilities/dateTime';
 import { getBlocks } from '@block/utilities/api';
-import { getForgers, getDelegates } from '@dpos/utilities/api';
+import { getForgers, getDelegates } from '@dpos/validator/utiles/api';
 import actionTypes from './actionTypes';
 
 /**

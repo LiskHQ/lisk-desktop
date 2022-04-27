@@ -4,7 +4,7 @@ import actionTypes from './actionTypes';
 import middleware from './middleware';
 
 jest.mock('@block/utilities/api');
-jest.mock('@dpos/utilities/api');
+jest.mock('@dpos/validator/utiles/api');
 jest.mock('@block/store/action');
 
 describe('Block middleware', () => {

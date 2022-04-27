@@ -12,7 +12,7 @@ const config = {
       '@block': resolve('./packages/block'),
       '@bookmark': resolve('./packages/bookmark'),
       '@common': resolve('./packages/common'),
-      '@dpos': resolve('./packages/dpos'),
+      '@dpos': resolve('./src/modules/dpos'),
       '@legacy': resolve('./packages/legacy'),
       '@network': resolve('./packages/network'),
       '@settings': resolve('./packages/settings'),
