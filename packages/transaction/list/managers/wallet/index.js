@@ -6,7 +6,7 @@ import { getDelegates } from '@dpos/utilities/api';
 import { normalizeTransactionParams } from '@transaction/utilities/transaction';
 import { getTransactions } from '@transaction/utilities/api';
 import { DEFAULT_LIMIT } from '@views/configuration';
-import TransactionsList from './transactions'
+import TransactionsList from './transactions';
 
 const defaultFilters = {
   dateFrom: '',

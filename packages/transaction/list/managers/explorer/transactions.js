@@ -73,10 +73,10 @@ const Transactions = ({
   return (
     <Box main isLoading={transactions.isLoading} className={`${styles.wrapper} transactions-box`}>
       <BoxHeader>
-      <FilterDropdown
-        filters={filters}
-        applyFilters={f => applyFilters({ ...f, address })}
-      />
+        <FilterDropdown
+          filters={filters}
+          applyFilters={f => applyFilters({ ...f, address })}
+        />
       </BoxHeader>
       <FilterBar {...{
         clearFilter, clearAllFilters, filters, formatters, t,

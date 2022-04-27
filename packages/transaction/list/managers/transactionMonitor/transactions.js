@@ -8,8 +8,8 @@ import Box from '@basics/box';
 import BoxContent from '@basics/box/content';
 import Table from '@basics/table';
 import { selectCurrentBlockHeight, selectActiveToken } from '@common/store/selectors';
-import header from './tableHeader';
 import TransactionRow from '@transaction/list/row';
+import header from './tableHeader';
 import styles from './transactionsTable.css';
 
 const getFields = t => [{
@@ -43,6 +43,7 @@ const getFields = t => [{
 }];
 const blackListTypes = ['4:0', '5:0', '5:1', '5:3'];
 
+// eslint-disable-next-line max-statements
 const Transactions = ({
   t,
   sort,
@@ -57,7 +58,7 @@ const Transactions = ({
   const [innerFields, setInnerFields] = useState(fields);
   const currentBlockHeight = useSelector(selectCurrentBlockHeight);
   const activeToken = useSelector(selectActiveToken);
-  
+
   const canLoadMore = transactions.meta
     ? transactions.data.length < transactions.meta.total
     : false;

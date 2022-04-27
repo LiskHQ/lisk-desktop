@@ -13,15 +13,13 @@ import TransactionTypeFigure from '@transaction/detail/info/transactionTypeFigur
 import TransactionAmount from '@transaction/detail/info/transactionAmount';
 import WalletVisualWithAddress from '@wallet/detail/identity/walletVisual/walletVisualWithAddress';
 import { truncateAddress } from '@wallet/utilities/account';
+import Spinner from '@basics/spinner';
 import routes from '@screens/router/routes';
 import styles from './row.css';
-import { Context } from './index';
-
-// @todo read the round size from the length of forgers
-const roundSize = 103;
+import { RowContext } from './index';
 
 export const Sender = () => {
-  const { data, avatarSize } = useContext(Context);
+  const { data, avatarSize } = useContext(RowContext);
   return (
     <WalletVisualWithAddress
       className="transaction-row-sender"
@@ -35,7 +33,7 @@ export const Sender = () => {
 };
 
 export const Recipient = () => {
-  const { data, avatarSize } = useContext(Context);
+  const { data, avatarSize } = useContext(RowContext);
   return (
     <WalletVisualWithAddress
       className="transaction-row-recipient"
@@ -49,11 +47,13 @@ export const Recipient = () => {
 };
 
 export const Counterpart = () => {
-  const { data, host, avatarSize } = useContext(Context);
+  const { data, host, avatarSize } = useContext(RowContext);
 
   // Show tx icon
   if (data.moduleAssetId !== MODULE_ASSETS_NAME_ID_MAP.transfer && host) {
-    return (<TransactionTypeFigure moduleAssetId={data.moduleAssetId} address={data.sender.address} />);
+    return (
+      <TransactionTypeFigure moduleAssetId={data.moduleAssetId} address={data.sender.address} />
+    );
   }
   // Show recipient
   if (data.asset.recipient?.address !== host) {
@@ -82,10 +82,12 @@ export const Counterpart = () => {
 };
 
 export const Date = ({ t }) => {
-  const { data } = useContext(Context);
+  const { data } = useContext(RowContext);
 
   if (data.isPending || !data.block.timestamp) {
-    return (<Spinner completed={!data.isPending || data.block.timestamp} label={t('Pending...')} />);
+    return (
+      <Spinner completed={!data.isPending || data.block.timestamp} label={t('Pending...')} />
+    );
   }
 
   // @todo remove hard coded token
@@ -95,7 +97,9 @@ export const Date = ({ t }) => {
 };
 
 export const Amount = () => {
-  const { data, layout, activeToken, host } = useContext(Context);
+  const {
+    data, layout, activeToken, host,
+  } = useContext(RowContext);
   if (layout !== 'full') {
     return (
       <span>
@@ -124,7 +128,7 @@ export const Amount = () => {
 };
 
 export const Fee = ({ t }) => {
-  const { data, activeToken } = useContext(Context);
+  const { data, activeToken } = useContext(RowContext);
 
   return (
     <span className={styles.transactionFeeCell}>
@@ -142,7 +146,9 @@ export const Fee = ({ t }) => {
 };
 
 export const Status = ({ t }) => {
-  const { data, currentBlockHeight } = useContext(Context);
+  const { data, currentBlockHeight } = useContext(RowContext);
+  const roundSize = 103;
+  const height = currentBlockHeight ? currentBlockHeight - data.block.height : 0;
 
   return (
     <span>
@@ -153,7 +159,7 @@ export const Status = ({ t }) => {
         content={<Icon name={data.isPending ? 'pending' : 'approved'} />}
         size="s"
       >
-        <p>{`${currentBlockHeight ? currentBlockHeight - data.block.height : 0}/${roundSize} ${t('Confirmations')}`}</p>
+        <p>{`${height}/${roundSize} ${t('Confirmations')}`}</p>
       </Tooltip>
     </span>
   );
@@ -191,7 +197,7 @@ const generateVotes = (asset, delegates, token, t) => {
 };
 
 export const Assets = ({ t }) => {
-  const { data, delegates = [], activeToken } = useContext(Context);
+  const { data, delegates = [], activeToken } = useContext(RowContext);
   const { voteDelegate, registerDelegate, transfer } = MODULE_ASSETS_NAME_ID_MAP;
 
   const getDetails = () => {
