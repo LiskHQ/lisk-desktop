@@ -20,7 +20,7 @@ jest.mock('@transaction/utilities/api', () => ({
   computeTransactionId: jest.fn(),
 }));
 
-jest.mock('@dpos/utilities/api', () => ({
+jest.mock('../../utils/api', () => ({
   getVotes: jest.fn(),
 }));
 

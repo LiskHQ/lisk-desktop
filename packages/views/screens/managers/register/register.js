@@ -2,7 +2,7 @@ import React, { useState, useEffect, useCallback } from 'react';
 import grid from 'flexboxgrid/dist/flexboxgrid.css';
 import routes from '@screens/router/routes';
 import MultiStepProgressBar from '@shared/multiStepProgressBar';
-import MultiStep from '@dpos/manage/registerDelegateMultiStep';
+import MultiStep from '@dpos/validator/components/registerDelegateMultiStep';
 import useCreateAccounts from '@wallet/utilities/hooks/useCreateAccounts';
 import ChooseAvatar from './chooseAvatar';
 import BackupPassphrase from './backupPassphrase';
