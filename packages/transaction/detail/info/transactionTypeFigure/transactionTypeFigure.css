@@ -2,8 +2,11 @@
   margin: 0;
   padding: 0;
   box-sizing: border-box;
-  margin-right: 15px;
   display: flex;
+
+  & img {
+    margin-right: 15px;
+  }
 }
 
 .transactionIcon {

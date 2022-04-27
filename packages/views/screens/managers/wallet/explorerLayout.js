@@ -8,7 +8,7 @@ import TabsContainer from '@basics/tabs/tabsContainer/tabsContainer';
 import Overview from './overview';
 import DelegateTab from './delegateProfile';
 import VotesTab from './votes';
-import Transactions from './transactions';
+import Transactions from '@transaction/list/managers/explorer';
 
 const ExplorerLayout = ({
   t, account, history,

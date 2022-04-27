@@ -1,9 +1,11 @@
+import React from 'react';
+import { mount, shallow } from 'enzyme';
 import { act } from 'react-dom/test-utils';
 import { useSelector } from 'react-redux';
 import { mountWithRouter, mountWithRouterAndStore } from '@common/utilities/testHelpers';
 import transactions from '@tests/constants/transactions';
 import defaultState from '@tests/constants/defaultState';
-import TransactionsPure from './index';
+import TransactionsPure from './transactions';
 
 jest.mock('react-redux', () => ({
   ...jest.requireActual('react-redux'),
@@ -15,15 +17,28 @@ afterEach(() => {
 });
 
 describe('Transactions monitor page', () => {
+  const changeSort = jest.fn();
+  const filters = jest.fn();
+  const clearFilter = jest.fn();
+  const applyFilters = jest.fn();
+  const clearAllFilters = jest.fn();
+  const t = jest.fn(str => str);
+  const loadData = jest.fn();
+  const clearData = jest.fn();
   const props = {
-    t: key => key,
+    t,
     transactions: {
       data: [],
       meta: null,
       isLoading: true,
-      loadData: jest.fn(),
-      clearData: jest.fn(),
+      loadData,
+      clearData,
     },
+    changeSort,
+    filters,
+    clearFilter,
+    applyFilters,
+    clearAllFilters,
   };
   const amountFrom = '1.3';
   const sort = 'timestamp:desc';
@@ -40,10 +55,10 @@ describe('Transactions monitor page', () => {
   };
 
   it('should render transactions list', () => {
-    let wrapper = mountWithRouter(TransactionsPure, props);
-    expect(wrapper.find('TransactionRow')).toHaveLength(0);
+    let wrapper = shallow(<TransactionsPure {...props} />);
+    expect(wrapper.find('Row')).toHaveLength(0);
 
-    wrapper = mountWithRouter(TransactionsPure, { ...props, transactions: transactionsWithData });
+    wrapper = mount(<TransactionsPure {...transactionsWithData} />);
     wrapper.update();
     expect(wrapper.find('TransactionRow')).toHaveLength(transactions.length);
   });

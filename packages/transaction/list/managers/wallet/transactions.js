@@ -1,23 +1,15 @@
 import React, { useEffect } from 'react';
-import { compose } from 'redux';
-import { withTranslation } from 'react-i18next';
 import { useSelector } from 'react-redux';
 import { selectCurrentBlockHeight } from '@common/store/selectors';
-import withFilters from '@common/utilities/withFilters';
-import withData from '@common/utilities/withData';
-import { getDelegates } from '@dpos/validator/utiles/api';
-import { normalizeTransactionParams } from '@transaction/utilities/transaction';
-import { getTransactions } from '@transaction/utilities/api';
 import Box from '@basics/box';
 import BoxHeader from '@basics/box/header';
 import BoxContent from '@basics/box/content';
 import Table from '@basics/table';
 import FilterBar from '@shared/filterBar';
-import { DEFAULT_LIMIT } from '@views/configuration';
+import TransactionRow from '@transaction/list/row';
+import FilterDropdown from './filterDropdown';
 import styles from './transactions.css';
 import header from './tableHeader';
-import TransactionRow from './transactionRow';
-import FilterDropdown from './filterDropdown';
 
 const Transactions = ({
   pending,
@@ -101,11 +93,12 @@ const Transactions = ({
           row={TransactionRow}
           loadData={handleLoadMore}
           additionalRowProps={{
-            t,
             activeToken,
             host: address,
             delegates: votedDelegates.data,
             currentBlockHeight,
+            layout: 'hosted',
+            avatarSize: 40,
           }}
           header={header(t, activeToken, changeSort)}
           currentSort={sort}
@@ -118,45 +111,4 @@ const Transactions = ({
   );
 };
 
-const defaultFilters = {
-  dateFrom: '',
-  dateTo: '',
-  amountFrom: '',
-  amountTo: '',
-};
-const defaultSort = 'timestamp:desc';
-
-export default compose(
-  withData({
-    transactions: {
-      apiUtil: (network, { token, ...params }) =>
-        getTransactions({ network, params: normalizeTransactionParams(params) }, token),
-      getApiParams: (state, { address, sort }) => ({
-        token: state.settings.token.active,
-        address,
-        sort,
-        limit: DEFAULT_LIMIT,
-      }),
-      defaultData: { data: [], meta: {} },
-      autoload: true,
-      transformResponse: (response, oldData, urlSearchParams) => (
-        urlSearchParams.offset
-          ? { data: [...oldData.data, ...response.data], meta: response.meta }
-          : response
-      ),
-    },
-    votedDelegates: {
-      apiUtil: ({ networks }, params) => getDelegates({ network: networks.LSK, params }),
-      defaultData: [],
-      transformResponse: (response) => {
-        const responseMap = response.data.reduce((acc, delegate) => {
-          acc[delegate.address] = delegate;
-          return acc;
-        }, {});
-        return responseMap;
-      },
-    },
-  }),
-  withFilters('transactions', defaultFilters, defaultSort),
-  withTranslation(),
-)(Transactions);
+export default Transactions;
