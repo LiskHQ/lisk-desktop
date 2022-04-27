@@ -4,7 +4,7 @@ module.exports = {
   rootDir: '../',
   modulePaths: ['packages'],
   testMatch: [
-    '<rootDir>/src/**/*.test.js',
+    '<rootDir>/packages/**/*.test.js',
     '<rootDir>/app/src/**/*.test.js',
     '<rootDir>/setup/**/*.test.js',
     '<rootDir>/tests/**/*.test.js',
@@ -30,7 +30,7 @@ module.exports = {
     '^@block(.*)$': resolve(__dirname, '../packages/block/$1'),
     '^@bookmark(.*)$': resolve(__dirname, '../packages/bookmark/$1'),
     '^@common(.*)$': resolve(__dirname, '../packages/common/$1'),
-    '^@dpos(.*)$': resolve(__dirname, '../src/modules/dpos/$1'),
+    '^@dpos(.*)$': resolve(__dirname, '../packages/dpos/$1'),
     '^@legacy(.*)$': resolve(__dirname, '../packages/legacy/$1'),
     '^@network(.*)$': resolve(__dirname, '../packages/network/$1'),
     '^@settings(.*)$': resolve(__dirname, '../packages/settings/$1'),
@@ -161,33 +161,33 @@ module.exports = {
     'packages/views/shared/transactionSummary/index.js',
     'packages/views/screens/router/routes.js',
     'packages/common/store/selectors.js',
-    'src/modules/dpos/store/reducers/voting.js',
+    'packages/dpos/store/reducers/voting.js',
     'src/utils/voting.js',
     'packages/views/shared/transactionResult/illustrations.js',
     'packages/views/shared/transactionResult/regular.js',
   ],
   coverageThreshold: {
-    // global: {
-    //   branches: 90,
-    //   functions: 90,
-    //   lines: 90,
-    //   statements: 90,
-    // },
-    // 'app/src/**/*.js': {
-    //   branches: 80,
-    //   functions: 80,
-    //   lines: 80,
-    //   statements: 80,
-    // },
-    // 'packages/**/*.js': {
-    //   branches: 80,
-    //   functions: 80,
-    //   lines: 80,
-    //   statements: 80,
-    // },
-    // 'packages/**/store/**/*.js': {
-    //   statements: 90,
-    // },
+    global: {
+      branches: 90,
+      functions: 90,
+      lines: 90,
+      statements: 90,
+    },
+    'app/src/**/*.js': {
+      branches: 80,
+      functions: 80,
+      lines: 80,
+      statements: 80,
+    },
+    'packages/**/*.js': {
+      branches: 80,
+      functions: 80,
+      lines: 80,
+      statements: 80,
+    },
+    'packages/**/store/**/*.js': {
+      statements: 90,
+    },
   },
   setupFiles: ['<rootDir>/setup/config/setupJest.js', 'jest-canvas-mock'],
   transform: {

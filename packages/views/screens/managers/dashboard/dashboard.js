@@ -2,10 +2,10 @@
 import React from 'react';
 
 import WalletDetails from '@wallet/detail/manager/walletDetails';
+import RecentTransactions from '@transaction/list/managers/recentTransactions';
 import InfoBanner from './infoBanner/infoBanner';
 import Onboarding from './onboarding/onboarding';
 import NewsFeed from './newsFeed';
-import RecentTransactions from '@transaction/list/managers/recentTransactions';
 import styles from './dashboard.css';
 
 const getOnboardingSlides = (t) => [
