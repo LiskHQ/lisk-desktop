@@ -1,4 +1,4 @@
-  import {
+import {
   getNetworksList,
   getNetworkName,
   getConnectionErrorMessage,

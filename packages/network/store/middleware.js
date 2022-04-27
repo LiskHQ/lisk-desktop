@@ -1,6 +1,5 @@
-// eslint-disable-next-line no-unused-vars
+import settings from '@settings/configuration/settingConstants';
 import { getAutoLogInData, shouldAutoLogIn } from '@common/utilities/login';
-// eslint-disable-next-line no-unused-vars
 import { networkConfigSet, login, settingsUpdated } from '@common/store/actions';
 import actionTypes from './actionTypes';
 
@@ -14,7 +13,7 @@ const network = ({ dispatch, getState }) => next => async (action) => {
     case actionTypes.networkConfigSet: {
       const autoLoginData = getAutoLogInData();
       if (shouldAutoLogIn(autoLoginData)) {
-        // dispatch(login({ passphrase: autoLoginData[settings.keys.loginKey] }));
+        dispatch(login({ passphrase: autoLoginData[settings.keys.loginKey] }));
       }
       break;
     }

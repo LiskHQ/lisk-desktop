@@ -3,7 +3,7 @@ import { withRouter } from 'react-router';
 import { MODULE_ASSETS_NAME_ID_MAP } from '@transaction/configuration/moduleAssets';
 import { mountWithRouter } from '@common/utilities/testHelpers';
 import { truncateAddress } from '@wallet/utilities/account';
-import accounts from '@tests/constants/wallets';
+import wallets from '@tests/constants/wallets';
 import TransactionDetailsManager from '@transaction/detail/manager/transactionDetails';
 import TransactionDetails from '.';
 
@@ -96,7 +96,7 @@ describe('Transaction Details Component', () => {
       data: {},
       loadData: jest.fn(),
     },
-    account: accounts.genesis,
+    account: wallets.genesis,
   };
 
   const mockUseContext = (mockData = {}) => {
@@ -155,7 +155,7 @@ describe('Transaction Details Component', () => {
     it('Should not render transfer transaction with message (BTC)', () => {
       const wrapper = mountWithRouter(
         TransactionDetailsWithManager,
-        {...props, activeToken: "BTC"}
+        { ...props, activeToken: 'BTC' },
       );
       expect(wrapper).not.toContain('.tx-reference');
     });
@@ -299,7 +299,7 @@ describe('Transaction Details Component', () => {
         {
           ...props,
           transaction: trnx,
-        }
+        },
       );
       expect(wrapper).toContainMatchingElement('NotFound');
       expect(wrapper.find('.not-found-state h3').text()).toBe('The transaction was not found.');
@@ -312,7 +312,7 @@ describe('Transaction Details Component', () => {
         data: {
           moduleAssetId: MODULE_ASSETS_NAME_ID_MAP.unlockToken,
           sender: {
-            senderId: accounts.genesis.summary.address,
+            senderId: wallets.genesis.summary.address,
           },
           id: '123',
           asset: {
