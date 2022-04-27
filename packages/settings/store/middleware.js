@@ -1,16 +1,14 @@
 import { setInStorage } from '@common/utilities/localJSONStorage';
-// eslint-disable-next-line no-unused-vars
 import { pricesRetrieved, emptyTransactionsData, settingsUpdated } from '@common/store/actions';
+import networkActionTypes from '@network/store/actionTypes';
 import actionTypes from './actionTypes';
 
 const settings = store => next => (action) => {
   const { token } = store.getState().settings;
   next(action);
   switch (action.type) {
-    case actionTypes.networkConfigSet:
-      // store.dispatch(pricesRetrieved());
-      if (!action.data) break;
-
+    case networkActionTypes.networkConfigSet:
+      store.dispatch(pricesRetrieved());
       store.dispatch(settingsUpdated({
         network: {
           name: action.data.name,
