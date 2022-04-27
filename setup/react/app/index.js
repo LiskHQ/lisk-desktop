@@ -15,7 +15,7 @@ import FlashMessageHolder from '../../../packages/views/basics/flashMessage/hold
 import DialogHolder from '../../../packages/views/basics/dialog/holder';
 import { settingsRetrieved } from '../../../packages/settings/store/actions';
 import { bookmarksRetrieved } from '../../../packages/bookmark/store/action';
-import { watchListRetrieved } from '../../../packages/dpos/store/actions/watchList';
+import { watchListRetrieved } from '../../../src/modules/dpos/validator/store/actions/watchList';
 import routesMap from '../../../packages/views/screens/router/routesMap';
 import routes from '../../../packages/views/screens/router/routes';
 import ThemeContext from '../../../packages/views/contexts/theme';

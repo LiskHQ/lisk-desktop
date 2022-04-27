@@ -6,8 +6,8 @@ import block from '@block/store/middleware';
 import settings from '@settings/store/middleware';
 import bookmarks from '@bookmark/store/middleware';
 import network from '@network/store/middleware';
-import watchList from '@dpos/store/middlewares/watchList';
-import voting from '@dpos/store/middlewares/voting';
+import watchList from '@dpos/validator/store/middlewares/watchList';
+import voting from '@dpos/validator/store/middlewares/voting';
 import hwManager from './hwManager';
 import loading from './loadingBar';
 

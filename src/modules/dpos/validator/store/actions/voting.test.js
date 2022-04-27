@@ -1,11 +1,11 @@
 import loginTypes from '@wallet/configuration/loginTypes';
 import networks from '@network/configuration/networks';
 import * as transactionApi from '@transaction/utilities/api';
-import * as delegateApi from '@dpos/utilities/api';
 import * as accountApi from '@wallet/utilities/api';
 import * as hwManager from '@transaction/utilities/hwManager';
 import sampleVotes from '@tests/constants/votes';
 import wallets from '@tests/constants/wallets';
+import * as delegateApi from '../../utils/api';
 import actionTypes from './actionTypes';
 import {
   voteEdited,
