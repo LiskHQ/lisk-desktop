@@ -6,7 +6,7 @@ import gridVisibility from 'flexboxgrid-helpers/dist/flexboxgrid-helpers.min.css
 import DateTimeFromTimestamp from '@basics/timestamp';
 import WalletVisualWithAddress from '@wallet/detail/identity/walletVisual/walletVisualWithAddress';
 import DialogLink from '@basics/dialog/link';
-import VoteItem from '@transaction/list/row/voteItem';
+import VoteDetails from '@transaction/detail/info/voteItem';
 import styles from '../delegates.css';
 
 const VotesItemsList = ({ votes = [], delegates }) => {
@@ -19,7 +19,7 @@ const VotesItemsList = ({ votes = [], delegates }) => {
           <span className={styles.vote}>
             <span className={styles.delegatesList}>
               {votes.slice(0, showAll ? votes.length : 2).map(({ amount, delegateAddress }) => (
-                <VoteItem
+                <VoteDetails
                   key={`vote-${delegateAddress}`}
                   vote={{ confirmed: amount }}
                   address={delegateAddress}

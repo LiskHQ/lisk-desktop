@@ -11,7 +11,7 @@ import CopyToClipboard from '@basics/copyToClipboard';
 import Feedback from '@basics/feedback/feedback';
 import LabeledValue from '@basics/labeledValue';
 import LiskAmount from '@shared/liskAmount';
-import TransactionsTable from '@transaction/list/transactionsTable';
+import Transactions from '@transaction/list/managers/blockDetails';
 import { truncateAddress } from '@wallet/utilities/account';
 import WalletVisual from '@wallet/detail/identity/walletVisual';
 import styles from './blockDetails.css';
@@ -126,16 +126,11 @@ const Rows = ({ data, t, currentHeight }) => {
 };
 
 const BlockDetails = ({
-  t, blockDetails, blockTransactions, match, currentHeight, history,
+  t, blockDetails, currentHeight, id,
 }) => {
-  const canLoadMore = blockTransactions.meta
-    ? blockTransactions.data.length < blockTransactions.meta.total
-    : false;
-
   useEffect(() => {
     blockDetails.loadData();
-    blockTransactions.loadData();
-  }, [match.url, history.location.search]);
+  }, [id]);
 
   return (
     <div>
@@ -158,12 +153,7 @@ const BlockDetails = ({
           )}
         </BoxContent>
       </Box>
-      <TransactionsTable
-        title={t('Transactions')}
-        transactions={blockTransactions}
-        emptyState={{ message: t('There are no transactions for this block.') }}
-        canLoadMore={canLoadMore}
-      />
+      <Transactions blockId={id} />
     </div>
   );
 };

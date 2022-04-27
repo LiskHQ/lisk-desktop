@@ -1,0 +1,40 @@
+.content {
+  padding: 0 !important;
+}
+
+.dataContainer {
+  color: var(--color-maastricht-blue);
+  overflow: hidden;
+  display: flex;
+  flex-flow: row wrap;
+
+  & .dataRow {
+    height: 100px;
+    border-bottom: 1px solid var(--color-platinum);
+    padding-bottom: 20px;
+    padding-top: 10px;
+    margin-bottom: -1px;
+    width: 20%;
+
+    & > span {
+      white-space: nowrap;
+      width: 100%;
+    }
+  }
+
+  & .generator {
+    display: flex;
+    flex-flow: row nowrap;
+    align-items: center;
+    text-decoration: none;
+
+    & > span {
+      padding-left: 5px;
+      color: var(--color-maastricht-blue);
+    }
+  }
+}
+
+h1 {
+  color: var(--color-maastricht-blue);
+}

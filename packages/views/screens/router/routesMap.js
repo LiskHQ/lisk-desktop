@@ -8,7 +8,7 @@ import DelegatesPerformanceModal from '@screens/managers/wallet/delegatePerforma
 import HwWalletLogin from '@screens/managers/hwWalletLogin';
 import Login from '@screens/managers/login';
 import MonitorWallets from '@screens/managers/monitor/wallets';
-import MonitorNetwork from '@network/nodesList/manager';
+import MonitorNetwork from '@screens/managers/network';
 import MonitorTransactions from '@screens/managers/monitor/transactions';
 import Register from '@screens/managers/register';
 import RegisterDelegate from '@screens/managers/registerDelegate';
@@ -18,7 +18,7 @@ import SignMessage from '@screens/managers/signMessage';
 import TermsOfUse from '@screens/managers/termsOfUse';
 import Wallet from '@screens/managers/wallet';
 import Explorer from '@screens/managers/wallet/explorer';
-import TransactionDetailsModal from '@screens/managers/transactionDetailsModal';
+// import TransactionDetailsModal from '@screens/managers/transactionDetailsModal';
 import VerifyMessage from '@screens/managers/verifyMessage';
 import Request from '@screens/managers/request';
 import LockedBalance from '@screens/managers/lockedBalance';
@@ -58,7 +58,7 @@ export default {
   verifyMessage: VerifyMessage,
   registerDelegate: RegisterDelegate,
   search: SearchBar,
-  transactionDetails: TransactionDetailsModal,
+  // transactionDetails: TransactionDetailsModal,
   newRelease: NewReleaseDialog,
   request: Request,
   lockedBalance: LockedBalance,

@@ -1,4 +1,4 @@
-@import '../../../../../../setup/react/app/mixins.css';
+@import '../../../../../setup/react/app/mixins.css';
 
 .box {
   max-width: var(--footer-button-width);

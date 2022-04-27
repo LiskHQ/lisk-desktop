@@ -13,9 +13,9 @@ import BoxContent from '@basics/box/content';
 import BoxEmptyState from '@basics/box/emptyState';
 import Icon from '@basics/icon';
 import Table from '@basics/table';
+import TransactionRow from '@transaction/list/row';
 import styles from './recentTransactions.css';
 import header from './tableHeader';
-import TransactionRow from './transactionRow';
 
 export const NoTransactions = withTranslation()(({ t }) => {
   const activeToken = useSelector(state => tokenMap[state.settings.token.active]);
@@ -57,7 +57,7 @@ const RecentTransactions = ({ className, t, transactions }) => {
       className={`${styles.box} ${className}`}
     >
       <BoxHeader>
-        <h2 className={styles.title}>{t('Recent {{value}} transactions', { value: activeToken.label })}</h2>
+        <h2 className={styles.title}>{t('Recent {{value}} transactions', { value: activeToken })}</h2>
       </BoxHeader>
       <BoxContent className={styles.content}>
         <Table
@@ -68,10 +68,11 @@ const RecentTransactions = ({ className, t, transactions }) => {
           error={transactions.error.code !== 404 ? transactions.error : undefined}
           canLoadMore={false}
           additionalRowProps={{
-            t,
-            activeToken: activeToken.key,
+            activeToken,
             host,
             currentBlockHeight,
+            layout: 'minimal',
+            avatarSize: 40,
           }}
           emptyState={account.passphrase ? NoTransactions : NotSignedIn}
         />

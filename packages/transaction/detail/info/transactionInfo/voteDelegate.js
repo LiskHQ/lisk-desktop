@@ -1,5 +1,5 @@
 import React from 'react';
-import VoteItem from '@transaction/list/row/voteItem';
+import VoteItem from '@transaction/detail/info/voteItem';
 import styles from './transactionInfo.css';
 
 const ItemList = ({ items, heading }) => (
