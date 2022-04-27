@@ -2,7 +2,7 @@ import React from 'react';
 import { MODULE_ASSETS_NAME_ID_MAP, MODULE_ASSETS_MAP } from '@transaction/configuration/moduleAssets';
 import Icon from '@basics/icon';
 import TransactionAddress from '@wallet/detail/identity/walletVisual/transactionAddress';
-import { tokenKeys } from '@token/configuration/tokens';
+import { tokenMap } from '@token/configuration/tokens';
 import styles from './transactionTypeFigure.css';
 
 const TransactionTypeFigure = ({
@@ -22,7 +22,7 @@ const TransactionTypeFigure = ({
           address={address}
           bookmarks={{ LSK: [] }}
           t={str => str}
-          token={tokenKeys.LSK.key}
+          token={tokenMap.LSK.key}
           moduleAssetId={moduleAssetId}
         />
       </span>
