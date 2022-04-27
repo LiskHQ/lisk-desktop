@@ -517,6 +517,7 @@
   "Transaction": "Transaction",
   "Transaction ID": "Transaction ID",
   "Transaction aborted on device": "Transaction aborted on device",
+  "Transaction asset": "Transaction asset",
   "Transaction failed": "Transaction failed",
   "Transaction fee": "Transaction fee",
   "Transaction fees are required for every transaction to be accepted and forged by the {{network}} network. When the network is busy, transactions with a higher fee are confirmed sooner.": "Transaction fees are required for every transaction to be accepted and forged by the {{network}} network. When the network is busy, transactions with a higher fee are confirmed sooner.",
