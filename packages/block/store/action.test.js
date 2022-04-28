@@ -1,5 +1,5 @@
 import networks from '@network/configuration/networks';
-import { getBlocks } from '@block/utilities/api';
+import { getBlocks } from '@block/utils';
 import { getForgers, getDelegates } from '@dpos/utilities/api';
 import forger from '@fixtures/forgers';
 import delegate from '@fixtures/delegates';
