@@ -6,7 +6,7 @@
       "@setup/*": ["./setup/*"],
       "@tests/*": ["./tests/*"],
       "@fixtures/*": ["./tests/fixtures"],
-      "@block/*": ["./packages/block/*"],
+      "@block/*": ["./src/modules/block/*"],
       "@bookmark/*": ["./packages/bookmark/*"],
       "@common/*": ["./packages/common/*"],
       "@legacy/*": ["./packages/legacy/*"],

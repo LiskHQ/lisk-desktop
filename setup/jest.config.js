@@ -152,7 +152,7 @@ module.exports = {
     'packages/settings/setters/toggles/tokenSelector.js',
     'src/store/middlewares/block.js',
     'packages/network/utilities/getNetwork.js',
-    'packages/block/api/index.js',
+    'src/modules/block/api/index.js',
     'packages/transaction/api/lsk.js',
     'src/utils/transaction.js',
     'packages/views/shared/filterDropdownButton/addressFilter.js',

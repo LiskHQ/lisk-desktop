@@ -9,7 +9,7 @@ const config = {
       '@scripts': resolve('./scripts'),
       '@setup': resolve('./setup'),
       '@tests': resolve('./tests'),
-      '@block': resolve('./packages/block'),
+      '@block': resolve('./src/modules/block'),
       '@bookmark': resolve('./packages/bookmark'),
       '@common': resolve('./packages/common'),
       '@dpos': resolve('./packages/dpos'),
