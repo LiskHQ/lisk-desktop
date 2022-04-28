@@ -4,7 +4,7 @@ import { signatureCollectionStatus } from '@transaction/configuration/txStatus';
 import BoxContent from '@basics/box/content';
 import Box from '@basics/box';
 import TransactionDetails from '@screens/managers/transactionDetails';
-import TransactionDetailsManager from '@transaction/detail/manager/transactionDetails';
+import TransactionDetailsManager from '@transaction/components/TransactionDetailsManger';
 
 import ProgressBar from '../progressBar';
 import { showSignButton, getTransactionSignatureStatus } from '../helpers';

@@ -13,7 +13,7 @@ import {
   selectTransactions,
 } from '@common/store/selectors';
 import TabsContainer from '@basics/tabs/tabsContainer/tabsContainer';
-import Transactions from '@transaction/list/managers/wallet';
+import Transactions from '@transaction/components/Wallet';
 import Overview from './overview';
 import DelegateTab from './delegateProfile';
 // import MultiSignatureTab from './multiSignature';

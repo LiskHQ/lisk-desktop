@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { maxMessageLength } from '@transaction/configuration/transactions';
 import { MODULE_ASSETS_NAME_ID_MAP } from '@transaction/configuration/moduleAssets';
 import { toRawLsk } from '@token/utilities/lsk';
-import TransactionPriority, { useTransactionPriority, useTransactionFeeCalculation } from '@transaction/manage/transactionPriority';
+import TransactionPriority, { useTransactionPriority, useTransactionFeeCalculation } from '@transaction/components/transactionPriority';
 import { AutoResizeTextarea } from '@basics/inputs';
 import CircularProgress from '@basics/progress/circularProgress/circularProgress';
 import Icon from '@basics/icon';

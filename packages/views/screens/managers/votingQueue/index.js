@@ -3,7 +3,7 @@ import React, { useEffect } from 'react';
 import { useDispatch } from 'react-redux';
 import { withRouter } from 'react-router-dom';
 
-import TransactionSignature from '@transaction/detail/manager/transactionSignature';
+import TransactionSignature from '@transaction/components/transactionSignature';
 import { removeSearchParamsFromUrl } from '@screens/router/searchParams';
 import { processLaunchProtocol } from '@common/store/actions';
 import MultiStep from '@shared/multiStep';

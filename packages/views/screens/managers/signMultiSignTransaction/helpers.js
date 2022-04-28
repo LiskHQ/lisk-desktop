@@ -1,6 +1,6 @@
 import { MODULE_ASSETS_NAME_ID_MAP } from '@transaction/configuration/moduleAssets';
 import { signatureCollectionStatus } from '@transaction/configuration/txStatus';
-import { joinModuleAndAssetIds } from '@transaction/utilities/moduleAssets';
+import { joinModuleAndAssetIds } from '@transaction/utils/moduleAssets';
 import { getKeys } from '@wallet/utilities/account';
 
 const getNumbersOfSignaturesRequired = ({ keys, isGroupRegistration }) => {

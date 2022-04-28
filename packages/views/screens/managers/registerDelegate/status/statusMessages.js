@@ -1,5 +1,5 @@
 /* istanbul ignore file */
-import { statusMessages } from '@transaction/detail/info/transactionResult/statusConfig';
+import { statusMessages } from '@transaction/components/transactionResult/statusConfig';
 import { txStatusTypes } from '@transaction/configuration/txStatus';
 
 const registerDelegatesMessages = t => ({

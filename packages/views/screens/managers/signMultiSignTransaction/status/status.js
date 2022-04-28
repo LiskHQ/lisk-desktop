@@ -1,8 +1,8 @@
 import React from 'react';
 import Box from '@basics/box';
 import BoxContent from '@basics/box/content';
-import TransactionResult from '@transaction/detail/manager/transactionResult';
-import { statusMessages, getTransactionStatus } from '@transaction/detail/info/transactionResult/statusConfig';
+import TransactionResult from '@transaction/components/transactionResult';
+import { statusMessages, getTransactionStatus } from '@transaction/components/transactionResult/statusConfig';
 
 import ProgressBar from '../progressBar';
 import styles from './styles.css';

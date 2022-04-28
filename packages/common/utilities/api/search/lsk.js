@@ -2,7 +2,7 @@ import { regex } from '@common/configuration';
 import { tokenMap } from '@token/configuration/tokens';
 import { validateAddress } from '@common/utilities/validators';
 import { getAccount } from '@wallet/utilities/api/lsk';
-import { getTransaction } from '@transaction/utilities/api/lsk';
+import { getTransaction } from '@transaction/utils/api/lsk';
 import { getDelegates } from '@dpos/utilities/api/';
 import { getBlock } from '@block/utilities/api';
 

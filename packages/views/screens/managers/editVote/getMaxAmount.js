@@ -1,9 +1,9 @@
-import { getTransactionFee } from '@transaction/utilities/api';
-import { getNumberOfSignatures } from '@transaction/utilities/transaction';
+import { getTransactionFee } from '@transaction/utils/api';
+import { getNumberOfSignatures } from '@transaction/utils/transaction';
 import { MODULE_ASSETS_NAME_ID_MAP } from '@transaction/configuration/moduleAssets';
 import { MIN_ACCOUNT_BALANCE, VOTE_AMOUNT_STEP } from '@transaction/configuration/transactions';
 import { toRawLsk } from '@token/utilities/lsk';
-import { normalizeVotesForTx } from '@transaction/manage/transactionPriority';
+import { normalizeVotesForTx } from '@transaction/components/transactionPriority';
 
 /**
  * Calculates the maximum vote amount possible. It

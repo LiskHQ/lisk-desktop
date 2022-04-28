@@ -1,5 +1,5 @@
 import { regex } from '@common/configuration';
-import { getTransaction } from '@transaction/utilities/api/btc';
+import { getTransaction } from '@transaction/utils/api/btc';
 import { getAccount } from '@wallet/utilities/api/btc';
 
 /**
