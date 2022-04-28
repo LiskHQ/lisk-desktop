@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { withRouter } from 'react-router';
-import { removeSearchParamsFromUrl } from '@screens/router/searchParams';
+import { removeSearchParamsFromUrl } from 'src/utils/searchParams';
 import styles from './dialog.css';
 
 const Options = ({ history, children, align }) => {

@@ -3,7 +3,7 @@ import React, { useEffect } from 'react';
 import { useSelector } from 'react-redux';
 import { isEmpty } from '@common/utilities/helpers';
 import { selectActiveToken, selectSettings } from '@common/store/selectors';
-import { selectSearchParamValue } from '@screens/router/searchParams';
+import { selectSearchParamValue } from 'src/utils/searchParams';
 import TabsContainer from '@basics/tabs/tabsContainer/tabsContainer';
 import Transactions from '@transaction/list/managers/explorer';
 import Overview from './overview';

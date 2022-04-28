@@ -2,12 +2,13 @@
   "compilerOptions": {
     "baseUrl": ".",
     "paths": {
+      "src/*": ["./src/*"],
       "@scripts/*": ["./scripts/*"],
       "@setup/*": ["./setup/*"],
       "@tests/*": ["./tests/*"],
       "@fixtures/*": ["./tests/fixtures"],
       "@block/*": ["./packages/block/*"],
-      "@bookmark/*": ["./packages/bookmark/*"],
+      "@bookmark/*": ["./src/modules/bookmark/*"],
       "@common/*": ["./packages/common/*"],
       "@legacy/*": ["./packages/legacy/*"],
       "@dpos/*": ["./src/modules/dpos/*"],

@@ -4,7 +4,7 @@ import { withTranslation } from 'react-i18next';
 import { useDispatch, useSelector, connect } from 'react-redux';
 import { compose } from 'redux';
 
-import { selectSearchParamValue, removeSearchParamsFromUrl } from '@screens/router/searchParams';
+import { selectSearchParamValue, removeSearchParamsFromUrl } from 'src/utils/searchParams';
 import { tokenMap } from '@token/configuration/tokens';
 import { voteEdited } from '@common/store/actions';
 import { toRawLsk, fromRawLsk } from '@token/utilities/lsk';

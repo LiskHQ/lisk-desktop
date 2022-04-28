@@ -2,7 +2,7 @@ import React from 'react';
 import { withRouter } from 'react-router-dom';
 import { withTranslation } from 'react-i18next';
 import PropTypes from 'prop-types';
-import { addSearchParamsToUrl } from '@screens/router/searchParams';
+import { addSearchParamsToUrl } from 'src/utils/searchParams';
 import FlashMessage from '@basics/flashMessage/flashMessage';
 
 const AnalyticsMessage = ({ t, history }) => (

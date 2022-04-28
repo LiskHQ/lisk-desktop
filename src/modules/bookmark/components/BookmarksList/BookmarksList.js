@@ -14,8 +14,8 @@ import Box from '@basics/box';
 import BoxHeader from '@basics/box/header';
 import BoxContent from '@basics/box/content';
 import Icon from '@basics/icon';
-import EmptyState from './emptyState';
-import styles from './list.css';
+import EmptyState from '../EmptyState/EmptyState';
+import styles from './BookmarksList.css';
 
 export class BookmarksList extends React.Component {
   constructor(props) {

@@ -14,7 +14,7 @@ import NavigationBars from '../../../packages/views/shared/navigationBars';
 import FlashMessageHolder from '../../../packages/views/basics/flashMessage/holder';
 import DialogHolder from '../../../packages/views/basics/dialog/holder';
 import { settingsRetrieved } from '../../../packages/settings/store/actions';
-import { bookmarksRetrieved } from '../../../packages/bookmark/store/action';
+import { bookmarksRetrieved } from '../../../src/modules/bookmark/store/action';
 import { watchListRetrieved } from '../../../src/modules/dpos/validator/store/actions/watchList';
 import routesMap from '../../../packages/views/screens/router/routesMap';
 import routes from '../../../packages/views/screens/router/routes';

@@ -5,12 +5,13 @@ const config = {
   mode: 'development',
   resolve: {
     alias: {
+      src: resolve('./src'),
       '@fixtures': resolve('./tests/fixtures'),
       '@scripts': resolve('./scripts'),
       '@setup': resolve('./setup'),
       '@tests': resolve('./tests'),
       '@block': resolve('./packages/block'),
-      '@bookmark': resolve('./packages/bookmark'),
+      '@bookmark': resolve('./src/modules/bookmark'),
       '@common': resolve('./packages/common'),
       '@dpos': resolve('./src/modules/dpos'),
       '@legacy': resolve('./packages/legacy'),

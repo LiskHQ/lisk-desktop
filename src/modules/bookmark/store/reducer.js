@@ -1,4 +1,4 @@
-import { getIndexOfBookmark, validateBookmarks, emptyBookmarks } from '@bookmark/utilities/bookmarks';
+import { getIndexOfBookmark, validateBookmarks, emptyBookmarks } from '@bookmark/utils';
 import actionTypes from './actionTypes';
 
 const bookmarks = (state = emptyBookmarks, action) => {
