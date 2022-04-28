@@ -6,8 +6,8 @@ import moment from 'moment';
 import { getBlock } from '@block/utilities/api';
 import withData from '@common/utilities/withData';
 import { withTranslation } from 'react-i18next';
-import VoteWarning from './voteWarning';
-import WarnPunishedDelegate from './warnPunishedDelegate';
+import VoteWarning from './VoteWarning';
+import WarnPunishedDelegate from './WarnPunishedDelegate';
 
 const mapStateToProps = (state) => ({
   currentHeight: state.blocks.latestBlocks.length ? state.blocks.latestBlocks[0].height : 0,
