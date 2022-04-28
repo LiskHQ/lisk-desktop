@@ -1,6 +1,6 @@
 import React from 'react';
-import NavigatorButton from './navigatorButton';
-import { Element } from './element';
+import NavigatorButton from './NavigatorButton';
+import Element from './Element';
 import {
   backButtonFn,
   isActiveStep,

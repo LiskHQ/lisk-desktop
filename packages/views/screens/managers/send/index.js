@@ -3,7 +3,7 @@ import { withRouter } from 'react-router-dom';
 
 import routes from '@screens/router/routes';
 import { parseSearchParams } from '@screens/router/searchParams';
-import MultiStep from '@shared/multiStep';
+import MultiStep from 'src/modules/common/components/OldMultiStep';
 import TransactionSignature from '@transaction/detail/manager/transactionSignature';
 import Dialog from '@basics/dialog/dialog';
 import Form from './form';
