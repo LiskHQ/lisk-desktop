@@ -5,7 +5,7 @@ import * as accountApi from '@wallet/utilities/api';
 import * as hwManager from '@transaction/utilities/hwManager';
 import sampleVotes from '@tests/constants/votes';
 import wallets from '@tests/constants/wallets';
-import * as delegateApi from '../../utils/api';
+import * as delegateApi from '../../api';
 import actionTypes from './actionTypes';
 import {
   voteEdited,

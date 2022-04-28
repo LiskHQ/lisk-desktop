@@ -1,7 +1,7 @@
 import React from 'react';
 import { mount } from 'enzyme';
 import networks from '@network/configuration/networks';
-import * as delegatesApi from '@dpos/validator/utils/api';
+import * as delegatesApi from '@dpos/validator/api';
 import { getTransactionBaseFees, getTransactionFee, create } from '@transaction/utilities/api';
 import { fromRawLsk } from '@token/utilities/lsk';
 import * as hwManager from '@transaction/utilities/hwManager';

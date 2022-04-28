@@ -2,7 +2,7 @@ import React from 'react';
 import { compose } from 'redux';
 import withLocalSort from '@common/utilities/withLocalSort';
 import Table from '@basics/table';
-import { DEFAULT_STANDBY_THRESHOLD } from '@dpos/validator/constants';
+import { DEFAULT_STANDBY_THRESHOLD } from '@dpos/validator/consts';
 import DelegateRow from './delegateRow';
 import header from './tableHeader';
 

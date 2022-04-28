@@ -1,6 +1,6 @@
 import networks from '@network/configuration/networks';
 import { getBlocks } from '@block/utilities/api';
-import { getForgers, getDelegates } from '@dpos/validator/utils/api';
+import { getForgers, getDelegates } from '@dpos/validator/api';
 import forger from '@fixtures/forgers';
 import delegate from '@fixtures/delegates';
 import blocks from '@tests/constants/blocks';
