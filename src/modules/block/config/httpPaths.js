@@ -1,4 +1,6 @@
+import { HTTP_PREFIX } from '../constants/constants';
+
 export default {
-    block: `${httpPrefix}/blocks`,
-    blocks: `${httpPrefix}/blocks`,
-  };
+  block: `${HTTP_PREFIX}/blocks`,
+  blocks: `${HTTP_PREFIX}/blocks`,
+};

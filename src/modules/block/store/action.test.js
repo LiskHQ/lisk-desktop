@@ -7,7 +7,7 @@ import blocks from '@tests/constants/blocks';
 import actionTypes from './actionTypes';
 import { olderBlocksRetrieved, forgersRetrieved } from './action';
 
-jest.mock('@block/utilities/api', () => ({
+jest.mock('@block/utils', () => ({
   getBlocks: jest.fn(),
 }));
 jest.mock('@dpos/utilities/api', () => ({
