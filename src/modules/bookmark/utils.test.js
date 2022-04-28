@@ -2,7 +2,7 @@ import { expect } from 'chai';
 import { stub } from 'sinon';
 import {
   getIndexOfBookmark,
-} from './bookmarks';
+} from './utils';
 
 describe('Bookmarks', () => {
   const accounts = {

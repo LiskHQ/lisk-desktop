@@ -3,7 +3,7 @@ import { mount } from 'enzyme';
 import { tokenMap } from '@token/configuration/tokens';
 import EmptyState from '@basics/box/emptyState';
 import bookmarks from '@tests/constants/bookmarks';
-import { BookmarksList } from './list';
+import { BookmarksList } from './BookmarksList';
 
 describe('BookmarksList', () => {
   let wrapper;

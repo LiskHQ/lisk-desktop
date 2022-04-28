@@ -28,12 +28,13 @@
     "import/resolver" : {
       "alias" : {
         "map" : [
+          ["src", "./src/"],
           ["@fixtures", "./tests/fixtures/"],
           ["@scripts", "./scripts/"],
           ["@setup", "./setup/"],
           ["@tests", "./tests/"],
-          ["@block", "./src/modules/block/"],
-          ["@bookmark", "./packages/bookmark/"],
+          ["@block", "./packages/block/"],
+          ["@bookmark", "./src/modules/bookmark/"],
           ["@common", "./packages/common/"],
           ["@dpos", "./packages/dpos/"],
           ["@network", "./packages/network/"],

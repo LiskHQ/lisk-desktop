@@ -3,7 +3,7 @@ import { mount } from 'enzyme';
 import * as bitcoin from 'bitcoinjs-lib';
 import { tokenMap, tokenKeys } from '@token/configuration/tokens';
 import accounts from '@tests/constants/wallets';
-import AddBookmark from './addBookmark';
+import AddBookmark from './AddBookmark';
 
 describe('Add a new bookmark component', () => {
   const bookmarks = {
