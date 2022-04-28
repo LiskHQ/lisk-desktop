@@ -4,7 +4,7 @@ module.exports = {
   rootDir: '../',
   modulePaths: ['packages'],
   testMatch: [
-    '<rootDir>/packages/**/*.test.js',
+    '<rootDir>/src/**/*.test.js',
     '<rootDir>/app/src/**/*.test.js',
     '<rootDir>/setup/**/*.test.js',
     '<rootDir>/tests/**/*.test.js',
@@ -27,7 +27,7 @@ module.exports = {
     '^@setup(.*)$': resolve(__dirname, '../setup/$1'),
     '^@tests(.*)$': resolve(__dirname, '../tests/$1'),
     '^@fixtures(.*)$': resolve(__dirname, '../tests/fixtures/$1'),
-    '^@block(.*)$': resolve(__dirname, '../packages/block/$1'),
+    '^@block(.*)$': resolve(__dirname, '../src/modules/block/$1'),
     '^@bookmark(.*)$': resolve(__dirname, '../packages/bookmark/$1'),
     '^@common(.*)$': resolve(__dirname, '../packages/common/$1'),
     '^@dpos(.*)$': resolve(__dirname, '../packages/dpos/$1'),

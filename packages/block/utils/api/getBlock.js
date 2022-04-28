@@ -1,6 +1,6 @@
 import http from '@common/utilities/api/http';
 import { httpPaths } from '@block/config';
-import { getBlockProps } from '@block/utils/api/getBlockProps';
+import getBlockProps from '@block/utils/getBlockProps';
 
 /**
  * Retrieves block details.
