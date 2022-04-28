@@ -1,7 +1,7 @@
 import React from 'react';
 import WalletVisual from '@wallet/detail/identity/walletVisual';
 import { Input } from '@basics/inputs';
-import styles from './addBookmark.css';
+import styles from './AddBookmark.css';
 
 const getFields = t => [{
   name: 'address',
@@ -16,7 +16,7 @@ const getFields = t => [{
   className: 'input-label',
 }];
 
-const Fields = ({
+const BookmarkForm = ({
   status, handlers, t,
 }) => (
   <>
@@ -52,4 +52,4 @@ const Fields = ({
   </>
 );
 
-export default Fields;
+export default BookmarkForm;

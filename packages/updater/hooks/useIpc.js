@@ -2,7 +2,7 @@ import React, { useEffect } from 'react';
 import { useDispatch } from 'react-redux';
 import htmlStringToReact from '@common/utilities/htmlStringToReact';
 import { regex } from '@common/configuration';
-import { addSearchParamsToUrl, removeSearchParamsFromUrl } from '@screens/router/searchParams';
+import { addSearchParamsToUrl, removeSearchParamsFromUrl } from 'src/utils/searchParams';
 import { appUpdateAvailable } from '@common/store/actions';
 import FlashMessageHolder from '@basics/flashMessage/holder';
 import NewReleaseMessage from '@updater/detail/info/newReleaseMessage/newReleaseMessage';

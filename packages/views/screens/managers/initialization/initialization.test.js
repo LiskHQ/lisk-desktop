@@ -1,5 +1,5 @@
 import { mountWithRouter } from '@common/utilities/testHelpers';
-import { addSearchParamsToUrl } from '@screens/router/searchParams';
+import { addSearchParamsToUrl } from 'src/utils/searchParams';
 import Initialization from '.';
 import styles from './initialization.css';
 
