@@ -4,7 +4,7 @@ import { withRouter } from 'react-router-dom';
 import { getBlocks } from '@block/utils';
 import withData from '@common/utilities/withData';
 import { DEFAULT_LIMIT } from '@views/configuration';
-import BlocksOverview from './blocksOverview';
+import BlocksOverview from '../components/blocksOverview';
 
 export default compose(
   withRouter,

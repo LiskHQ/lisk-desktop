@@ -6,24 +6,28 @@ import { getBlocks } from '@block/utils';
 import withData from '@common/utilities/withData';
 import { transformStringDateToUnixTimestamp } from '@views/utilities/dateTime';
 import { DEFAULT_LIMIT } from '@views/configuration';
-import Blocks from './blocks';
+import Blocks from '../components/blocks';
 
-const transformParams = params => Object.keys(params)
-  .reduce((acc, item) => {
+const transformParams = (params) =>
+  Object.keys(params).reduce((acc, item) => {
     switch (item) {
       case 'dateFrom':
         if (params[item]) {
           if (!acc.timestamp) acc.timestamp = ':';
-          acc.timestamp = acc.timestamp
-            .replace(/(\d+)?:/, `${transformStringDateToUnixTimestamp(params[item])}:`);
+          acc.timestamp = acc.timestamp.replace(
+            /(\d+)?:/,
+            `${transformStringDateToUnixTimestamp(params[item])}:`,
+          );
         }
         break;
       case 'dateTo':
         if (params[item]) {
           if (!acc.timestamp) acc.timestamp = ':';
           // We add 86400 so the range is inclusive
-          acc.timestamp = acc.timestamp
-            .replace(/:(\d+)?/, `:${transformStringDateToUnixTimestamp(params[item]) + 86400}`);
+          acc.timestamp = acc.timestamp.replace(
+            /:(\d+)?/,
+            `:${transformStringDateToUnixTimestamp(params[item]) + 86400}`,
+          );
         }
         break;
       default:
@@ -44,12 +48,15 @@ const ComposedBlocks = compose(
       }),
       defaultData: [],
       autoload: true,
-      transformResponse: (response, oldData, urlSearchParams) => (
-        urlSearchParams.offset
-          ? [...oldData, ...response.data.filter(block =>
-            !oldData.find(({ id }) => id === block.id))]
-          : response.data
-      ),
+      transformResponse: (response, oldData, urlSearchParams) =>
+        (urlSearchParams.offset
+          ? [
+            ...oldData,
+            ...response.data.filter(
+              (block) => !oldData.find(({ id }) => id === block.id),
+            ),
+          ]
+          : response.data),
     },
   }),
   withTranslation(),
