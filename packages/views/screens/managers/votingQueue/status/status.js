@@ -1,7 +1,7 @@
 import React from 'react';
 import Box from '@basics/box';
-import TransactionResult from '@transaction/components/transactionResult';
-import { getTransactionStatus } from '@transaction/components/transactionResult/statusConfig';
+import TransactionResult from '@transaction/components/TransactionResult';
+import { getTransactionStatus } from '@transaction/configuration/statusConfig';
 import ToggleIcon from '../toggleIcon';
 import statusMessages from './statusMessages';
 import styles from './styles.css';

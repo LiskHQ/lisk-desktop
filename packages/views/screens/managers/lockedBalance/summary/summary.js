@@ -1,10 +1,10 @@
 import React from 'react';
 
 import { MODULE_ASSETS_NAME_ID_MAP } from '@transaction/configuration/moduleAssets';
-import TransactionSummary from '@transaction/components/transactionSummary';
+import TransactionSummary from '@transaction/components/TransactionSummary';
 import { fromRawLsk } from '@token/utilities/lsk';
 import { getUnlockableUnlockObjects } from '@wallet/utilities/account';
-import TransactionInfo from '@transaction/components/transactionInfo';
+import TransactionInfo from '@transaction/components/TransactionInfo';
 import styles from './summary.css';
 
 const moduleAssetId = MODULE_ASSETS_NAME_ID_MAP.unlockToken;

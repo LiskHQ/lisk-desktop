@@ -1,5 +1,5 @@
 import { mountWithProps, mountWithRouter, mountWithRouterAndStore } from '@common/utilities/testHelpers';
-import RecentTransactions, { NoTransactions, NotSignedIn } from './recentTransactions';
+import RecentTransactions, { NoTransactions, NotSignedIn } from './RecentTransactions';
 
 const t = str => str;
 const transactionError = { error: { code: 404 } };

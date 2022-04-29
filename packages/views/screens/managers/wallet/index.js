@@ -13,10 +13,9 @@ import {
   selectTransactions,
 } from '@common/store/selectors';
 import TabsContainer from '@basics/tabs/tabsContainer/tabsContainer';
-import Transactions from '@transaction/components/Wallet';
+import Transactions from '@transaction/components/WalletTransactions';
 import Overview from './overview';
 import DelegateTab from './delegateProfile';
-// import MultiSignatureTab from './multiSignature';
 import VotesTab from './votes';
 
 const Wallet = ({ t, history }) => {

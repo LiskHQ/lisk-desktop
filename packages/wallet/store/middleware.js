@@ -12,7 +12,7 @@ import {
 } from '@common/store/actions';
 import analytics from '@common/utilities/analytics';
 import history from '@common/utilities/history';
-import { getTransactions } from '@transaction/utils/api';
+import { getTransactions } from '@transaction/api';
 import i18n from '@setup/i18n/i18n';
 import blockActionTypes from '@block/store/actionTypes';
 import transactionActionTypes from '@transaction/store/actionTypes';

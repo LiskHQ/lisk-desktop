@@ -4,7 +4,7 @@ import { PrimaryButton, SecondaryButton, TertiaryButton } from '@basics/buttons'
 import PassphraseInput from '@wallet/manage/passphraseInput';
 import useSecondPassphrase from '@wallet/utilities/hooks/setSecondPassphrase';
 import BoxFooter from '@basics/box/footer';
-import styles from './transactionSummary.css';
+import styles from './TransactionSummary.css';
 
 const Actions = ({
   isMultisignature,

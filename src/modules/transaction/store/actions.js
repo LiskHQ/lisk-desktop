@@ -1,4 +1,3 @@
-import to from 'await-to-js';
 
 import { DEFAULT_LIMIT } from '@views/configuration';
 import { tokenMap } from '@token/configuration/tokens';
@@ -10,7 +9,7 @@ import { getTransactionSignatureStatus } from '@screens/managers/signMultiSignTr
 import { timerReset } from '@wallet/store/action';
 import { loadingStarted, loadingFinished } from '@common/store/actions/loading';
 import actionTypes from './actionTypes';
-import { getTransactions, create, broadcast } from '../utils/api';
+import { getTransactions, create, broadcast } from '../api';
 import {
   signMultisigTransaction,
   transformTransaction,

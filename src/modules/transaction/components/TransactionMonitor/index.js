@@ -3,9 +3,9 @@ import { compose } from 'redux';
 import { withTranslation } from 'react-i18next';
 import withFilters from '@common/utilities/withFilters';
 import withData from '@common/utilities/withData';
-import { getTransactions } from '@transaction/utils/api';
+import { getTransactions } from '@transaction/api';
 import { DEFAULT_LIMIT } from '@views/configuration';
-import Transactions from './transactions';
+import Transactions from './TransactionMonitorList';
 import { normalizeTransactionParams } from '../../utils/transaction';
 
 const defaultFilters = {

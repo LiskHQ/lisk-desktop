@@ -1,8 +1,8 @@
 import { useSelector } from 'react-redux';
 import { useEffect, useReducer } from 'react';
-import { getTransactionFee } from '../utils/api';
+import { getTransactionFee } from '../api';
 import { getNumberOfSignatures } from '../utils/transaction';
-import { actionTypes, reducer, getInitialState } from '../components/transactionPriority/reducer';
+import { actionTypes, reducer, getInitialState } from '../store/transactionPriorityReducer';
 
 /**
  * Converts the votes object stored in Redux store

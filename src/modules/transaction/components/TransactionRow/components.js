@@ -15,8 +15,8 @@ import routes from '@screens/router/routes';
 import styles from './row.css';
 import { RowContext } from './index';
 import { getModuleAssetTitle } from '../../utils/moduleAssets';
-import TransactionTypeFigure from '../transactionTypeFigure';
-import TransactionAmount from '../transactionAmount';
+import TransactionTypeFigure from '../TransactionTypeFigure';
+import TransactionAmount from '../TransactionAmount';
 
 export const Sender = () => {
   const { data, avatarSize } = useContext(RowContext);

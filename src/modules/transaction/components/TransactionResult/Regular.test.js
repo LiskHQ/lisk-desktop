@@ -3,7 +3,7 @@ import { mount } from 'enzyme';
 import routes from '@screens/router/routes';
 import { txStatusTypes } from '@transaction/configuration/txStatus';
 import accounts from '@tests/constants/wallets';
-import Regular from './regular';
+import Regular from './Regular';
 
 describe('TransactionResult Regular', () => {
   const props = {

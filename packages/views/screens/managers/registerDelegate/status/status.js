@@ -1,6 +1,6 @@
 import React from 'react';
-import TransactionResult from '@transaction/components/transactionResult';
-import { getTransactionStatus } from '@transaction/components/transactionResult/statusConfig';
+import TransactionResult from '@transaction/components/TransactionResult';
+import { getTransactionStatus } from '@transaction/configuration/statusConfig';
 import statusMessages from './statusMessages';
 import styles from './status.css';
 

@@ -1,7 +1,7 @@
 import to from 'await-to-js';
 import { tokenMap } from '@token/configuration/tokens';
 import { MODULE_ASSETS_NAME_ID_MAP } from '@transaction/configuration/moduleAssets';
-import { create } from '@transaction/utils/api';
+import { create } from '@transaction/api';
 import { getAccount } from '@wallet/utilities/api';
 import { getVotes } from '@dpos/utilities/api';
 import { isEmpty } from '@common/utilities/helpers';

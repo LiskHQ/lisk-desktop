@@ -1,1 +1,1 @@
-export { default } from './transactionSignature';
+export { default } from './TransactionSignature';

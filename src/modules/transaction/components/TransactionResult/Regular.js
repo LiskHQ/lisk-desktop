@@ -6,7 +6,7 @@ import routes from '@screens/router/routes';
 import { txStatusTypes } from '@transaction/configuration/txStatus';
 import Illustration from '@basics/illustration';
 import getIllustration from './illustrations';
-import styles from './transactionResult.css';
+import styles from './TransactionResult.css';
 
 const errorTypes = [
   txStatusTypes.signatureError,

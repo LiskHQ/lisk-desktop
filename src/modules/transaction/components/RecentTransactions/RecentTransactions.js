@@ -15,7 +15,7 @@ import Icon from '@basics/icon';
 import Table from '@basics/table';
 import TransactionRow from '../TransactionRow';
 import styles from './RecentTransactions.css';
-import header from './tableHeader';
+import header from './RecentTransactionsHeaderMap';
 
 export const NoTransactions = withTranslation()(({ t }) => {
   const activeToken = useSelector(state => tokenMap[state.settings.token.active]);

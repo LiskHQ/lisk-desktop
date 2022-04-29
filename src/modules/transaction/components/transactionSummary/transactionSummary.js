@@ -7,7 +7,7 @@ import Illustration from '@basics/illustration';
 import Tooltip from '@basics/tooltip/tooltip';
 import { tokenMap } from '@token/configuration/tokens';
 import Footer from './footer';
-import styles from './transactionSummary.css';
+import styles from './TransactionSummary.css';
 
 const TransactionSummary = ({
   title, children, confirmButton, cancelButton,

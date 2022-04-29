@@ -7,7 +7,7 @@ import Illustration from '@basics/illustration';
 import BoxContent from '@basics/box/content';
 import { isEmpty } from '@common/utilities/helpers';
 import { getDeviceType } from '@wallet/utilities/hwManager';
-import styles from './transactionSignature.css';
+import styles from './TransactionSignature.css';
 
 const TransactionSignature = ({
   t, transactions, account, actionFunction, multisigTransactionSigned,

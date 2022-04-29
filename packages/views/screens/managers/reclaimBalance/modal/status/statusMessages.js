@@ -1,5 +1,5 @@
 /* istanbul ignore file */
-import { statusMessages } from '@transaction/components/transactionResult/statusConfig';
+import { statusMessages } from '@transaction/configuration/statusConfig';
 import { txStatusTypes } from '@transaction/configuration/txStatus';
 
 const reclaimBalanceMessages = t => ({

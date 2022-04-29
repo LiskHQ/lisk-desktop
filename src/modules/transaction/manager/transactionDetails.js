@@ -6,7 +6,7 @@ import { getActiveTokenAccount } from '@wallet/utilities/account';
 import withData from '@common/utilities/withData';
 import { parseSearchParams } from '@screens/router/searchParams';
 import TransactionDetailsManager from '../components/TransactionDetailsManger';
-import { getTransaction } from '../utils/api';
+import { getTransaction } from '../api';
 
 const mapStateToProps = (state, ownProps) => ({
   account: getActiveTokenAccount(state),

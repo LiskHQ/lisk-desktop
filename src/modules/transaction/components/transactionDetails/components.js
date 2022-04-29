@@ -24,11 +24,11 @@ import {
   truncateAddress,
   calculateRemainingAndSignedMembers,
 } from '@wallet/utilities/account';
-import WalletInfo from './walletInfo';
+import WalletInfo from '../WalletInfo';
 
 import TransactionDetailsContext from '../../context/transactionDetailsManagerContext';
-import TransactionTypeFigure from '../transactionTypeFigure';
-import styles from './styles.css';
+import TransactionTypeFigure from '../TransactionTypeFigure';
+import styles from './TransactionDetails.css';
 
 const getDelegateName = (transaction, activeToken) =>
   (activeToken === 'LSK' && transaction.asset && transaction.asset.username

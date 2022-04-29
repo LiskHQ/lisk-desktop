@@ -1,7 +1,7 @@
 import React from 'react';
 import { mount } from 'enzyme';
 import accounts from '@tests/constants/wallets';
-import Row, { RowContext } from './index';
+import Row, { RowContext } from '.';
 
 const avatarSize = 40;
 const activeToken = 'LSK';
