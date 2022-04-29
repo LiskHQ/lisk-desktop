@@ -1,7 +1,7 @@
 import React from 'react';
-import TransactionDetailsContext from '../../context/transactionDetailsManagerContext';
+import TransactionDetailsContext from './transactionDetailsContext';
 
-function TransactionDetailsManager({
+function TransactionDetailsProvider({
   activeToken,
   network,
   schema,
@@ -27,4 +27,4 @@ function TransactionDetailsManager({
   );
 }
 
-export default TransactionDetailsManager;
+export default TransactionDetailsProvider;

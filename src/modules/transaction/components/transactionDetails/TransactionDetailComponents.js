@@ -26,7 +26,7 @@ import {
 } from '@wallet/utilities/account';
 import WalletInfo from '../WalletInfo';
 
-import TransactionDetailsContext from '../../context/transactionDetailsManagerContext';
+import TransactionDetailsContext from '../../context/transactionDetailsContext';
 import TransactionTypeFigure from '../TransactionTypeFigure';
 import styles from './TransactionDetails.css';
 import { getDelegateName, getTxAsset } from '../../utils/transactionDetailsHelper';

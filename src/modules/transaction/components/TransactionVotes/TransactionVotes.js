@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react';
 import withData from '@common/utilities/withData';
 import { getDelegates } from '@dpos/utilities/api';
-import TransactionDetailsContext from '../../context/transactionDetailsManagerContext';
+import TransactionDetailsContext from '../../context/transactionDetailsContext';
 import styles from './TransactionVotes.css';
 import VoteItem from '../VoteItem';
 
