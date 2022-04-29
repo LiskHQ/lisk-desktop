@@ -1,4 +1,3 @@
-
 import React from 'react';
 import TransactionsList from '@transaction/components/TransactionMonitor';
 

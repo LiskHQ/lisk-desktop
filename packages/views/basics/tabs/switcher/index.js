@@ -1,7 +1,7 @@
 import PropTypes from 'prop-types';
 import React, { useRef } from 'react';
 import { withRouter } from 'react-router';
-import { addSearchParamsToUrl } from '@screens/router/searchParams';
+import { addSearchParamsToUrl } from 'src/utils/searchParams';
 import styles from './switcher.css';
 
 const TabLink = withRouter(({

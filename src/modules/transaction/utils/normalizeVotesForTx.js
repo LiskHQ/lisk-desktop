@@ -8,9 +8,9 @@
  * @returns {Array} Array of votes as Lisk Element expects
  */
 export const normalizeVotesForTx = votes =>
-    Object.keys(votes)
-        .filter(address => votes[address].confirmed !== votes[address].unconfirmed)
-        .map(delegateAddress => ({
-            delegateAddress,
-            amount: (votes[delegateAddress].unconfirmed - votes[delegateAddress].confirmed).toString(),
-        }));
+  Object.keys(votes)
+    .filter(address => votes[address].confirmed !== votes[address].unconfirmed)
+    .map(delegateAddress => ({
+      delegateAddress,
+      amount: (votes[delegateAddress].unconfirmed - votes[delegateAddress].confirmed).toString(),
+    }));

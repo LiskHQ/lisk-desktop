@@ -4,7 +4,7 @@ import { connect } from 'react-redux';
 import { withRouter } from 'react-router-dom';
 import { getActiveTokenAccount } from '@wallet/utilities/account';
 import withData from '@common/utilities/withData';
-import { parseSearchParams } from '@screens/router/searchParams';
+import { parseSearchParams } from 'src/utils/searchParams';
 import TransactionDetailsProvider from '../context';
 import { getTransaction } from '../api';
 

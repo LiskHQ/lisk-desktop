@@ -1,5 +1,5 @@
 import React from 'react';
-import styles from './bookmarks.css';
+import styles from './BookmarkListModal.css';
 
 const Wrapper = ({ children }) => (
   <div className={styles.wrapper}>

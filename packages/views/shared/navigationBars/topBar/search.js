@@ -1,7 +1,7 @@
 import React from 'react';
 
 import { regex } from '@common/configuration';
-import { selectSearchParamValue } from '@screens/router/searchParams';
+import { selectSearchParamValue } from 'src/utils/searchParams';
 import routes from '@screens/router/routes';
 import Icon from '@basics/icon';
 import DialogLink from '@basics/dialog/link';

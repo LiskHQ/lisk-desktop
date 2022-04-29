@@ -1,6 +1,6 @@
 import { toast } from 'react-toastify';
 import { subscribeToDeviceConnected, subscribeToDeviceDisconnected } from '@wallet/utilities/hwManager';
-import { addSearchParamsToUrl } from '@screens/router/searchParams';
+import { addSearchParamsToUrl } from 'src/utils/searchParams';
 import { accountLoggedOut, login } from '@common/store/actions';
 import {
   getDeviceList,

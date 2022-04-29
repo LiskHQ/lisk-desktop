@@ -4,7 +4,7 @@ import { withRouter } from 'react-router-dom';
 
 import TransactionSignature from '@transaction/components/TransactionSignature';
 import MultiStep from '@shared/multiStep';
-import { removeSearchParamsFromUrl } from '@screens/router/searchParams';
+import { removeSearchParamsFromUrl } from 'src/utils/searchParams';
 import Dialog from '@basics/dialog/dialog';
 
 import Form from './form';
