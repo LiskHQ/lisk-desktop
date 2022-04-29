@@ -1,32 +1,9 @@
 import PropTypes from 'prop-types';
 import React from 'react';
-import { MODULE_ASSETS_NAME_ID_MAP } from '@transaction/configuration/moduleAssets';
 import LiskAmount from '@shared/liskAmount';
 import DiscreetMode from '@shared/discreetMode';
 import styles from './TransactionAmount.css';
-
-const getTxDirectionConfig = (moduleAssetId, host, recipient) => {
-  if (moduleAssetId === MODULE_ASSETS_NAME_ID_MAP.unlockToken
-    || moduleAssetId === MODULE_ASSETS_NAME_ID_MAP.reclaimLSK) {
-    return {
-      sign: '',
-      style: styles.unlock,
-    };
-  }
-  if (moduleAssetId === MODULE_ASSETS_NAME_ID_MAP.transfer && host === recipient) {
-    return {
-      sign: '',
-      style: styles.receive,
-    };
-  }
-  if (moduleAssetId === MODULE_ASSETS_NAME_ID_MAP.transfer) {
-    return {
-      sign: '- ',
-      style: '',
-    };
-  }
-  return false;
-};
+import { getTxDirectionConfig } from '../../utils/helpers'
 
 const TransactionAmount = ({
   recipient, moduleAssetId, token, showRounded, showInt, host, amount,
