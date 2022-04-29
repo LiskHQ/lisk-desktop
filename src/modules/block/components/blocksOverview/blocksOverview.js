@@ -45,7 +45,7 @@ class BlocksOverview extends React.Component {
       labels: [t('Empty'), t('Not empty')],
       datasets: [{
         backgroundColor: [chartStyles.mystic, chartStyles.ultramarineBlue],
-        data: blocks.data.reduce((acc, block) => {
+        data: blocks?.data.reduce((acc, block) => {
           if (block.numberOfTransactions) acc[1]++;
           else acc[0]++;
           return acc;
@@ -86,10 +86,10 @@ class BlocksOverview extends React.Component {
               <div className={styles.chart}>
                 <BarChart
                   data={{
-                    labels: blocks.data.map(block => block.id),
+                    labels: blocks?.data.map(block => block.id),
                     datasets: [{
                       label: t('block'),
-                      data: blocks.data.map(block => block.numberOfTransactions),
+                      data: blocks?.data.map(block => block.numberOfTransactions),
                       backgroundColor: chartStyles.ultramarineBlue,
                     }],
                   }}
