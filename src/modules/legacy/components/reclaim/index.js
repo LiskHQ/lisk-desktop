@@ -5,14 +5,14 @@ import Tooltip from '@basics/tooltip/tooltip';
 import { PrimaryButton } from '@basics/buttons';
 import DialogLink from '@basics/dialog/link';
 import MigrationDetails from 'src/modules/legacy/components/migrationDetails';
-import { hasEnoughBalanceForReclaim, balanceNeededForReclaim } from '@legacy/utils/account';
+import { dustThreshold } from 'src/modules/legacy/utils/constants';
 import { fromRawLsk } from '@token/utilities/lsk';
 import { selectActiveTokenAccount } from '@common/store/selectors';
 import styles from './reclaim.css';
 
 const Reclaim = ({ t }) => {
   const wallet = useSelector(selectActiveTokenAccount);
-  const hasEnoughBalance = hasEnoughBalanceForReclaim(Number(wallet.token?.balance));
+  const hasEnoughBalance = Number(wallet.token?.balance) >= dustThreshold;
 
   return (
     <div className={`${styles.container} ${styles.reclaim}`}>
@@ -39,7 +39,7 @@ const Reclaim = ({ t }) => {
         <ul className={styles.list}>
           <li className={`${styles.step} ${hasEnoughBalance ? styles.check : styles.green}`}>
             <div>
-              {t('Deposit at least {{amount}} LSK to your new account', { amount: fromRawLsk(balanceNeededForReclaim) })}
+              {t('Deposit at least {{amount}} LSK to your new account', { amount: fromRawLsk(dustThreshold) })}
               <Tooltip position="right" size="m">
                 <>
                   <p>

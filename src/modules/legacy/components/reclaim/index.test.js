@@ -3,8 +3,8 @@ import { truncateAddress } from '@wallet/utilities/account';
 import { addSearchParamsToUrl } from 'src/utils/searchParams';
 import { tokenMap } from '@token/configuration/tokens';
 import wallets from '@tests/constants/wallets';
-import Reclaim from './reclaim';
-import styles from './index.css';
+import Reclaim from './index';
+import styles from './reclaim.css';
 
 jest.mock('@screens/router/searchParams', () => ({
   addSearchParamsToUrl: jest.fn(),
