@@ -2,7 +2,7 @@ import React from 'react';
 import { act } from 'react-dom/test-utils';
 import { mount } from 'enzyme';
 import { tokenMap } from '@token/configuration/tokens';
-import { getTransactionBaseFees, getTransactionFee } from '@transaction/utils/api';
+import { getTransactionBaseFees, getTransactionFee } from '@transaction/api';
 import useTransactionFeeCalculation from '@transaction/hooks/useTransactionFeeCalculation';
 import { fromRawLsk } from '@token/utilities/lsk';
 import accounts from '@tests/constants/wallets';
@@ -10,7 +10,7 @@ import flushPromises from '@tests/unit-test-utils/flushPromises';
 import Form from './form';
 
 jest.mock('@transaction/hooks/useTransactionFeeCalculation');
-jest.mock('@transaction/utils/api');
+jest.mock('@transaction/api');
 
 const transactionBaseFees = {
   Low: 156,

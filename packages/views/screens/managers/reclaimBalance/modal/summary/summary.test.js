@@ -3,7 +3,7 @@ import { mount } from 'enzyme';
 import { act } from 'react-dom/test-utils';
 import {
   getTransactionBaseFees,
-} from '@transaction/utils/api';
+} from '@transaction/api';
 import { tokenMap } from '@token/configuration/tokens';
 import useTransactionFeeCalculation from '@transaction/hooks/useTransactionFeeCalculation';
 import { truncateAddress } from '@wallet/utilities/account';

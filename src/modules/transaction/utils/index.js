@@ -1,1 +1,1 @@
-export * from './normalizeVotesForTx'
+export * from './normalizeVotesForTx';

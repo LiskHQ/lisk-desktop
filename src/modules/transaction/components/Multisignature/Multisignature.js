@@ -11,8 +11,8 @@ import { getErrorReportMailto } from '@common/utilities/helpers';
 import copyToClipboard from 'copy-to-clipboard';
 import Icon from '@basics/icon';
 import getIllustration from '../TransactionResult/illustrationsMap';
-import styles from './Multisignature.css';
 import { transactionToJSON, downloadJSON } from '../../utils/transaction';
+import styles from './Multisignature.css';
 
 export const PartiallySignedActions = ({ onDownload, t }) => (
   <PrimaryButton

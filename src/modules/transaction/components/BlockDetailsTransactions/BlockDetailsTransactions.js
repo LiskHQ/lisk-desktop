@@ -5,7 +5,7 @@ import Box from '@basics/box';
 import BoxContent from '@basics/box/content';
 import Table from '@basics/table';
 import TransactionRow from '../TransactionRow';
-import header from './BlocDetailsTransactionHeaderMap';
+import header from './BlockDetailsTransactionHeaderMap';
 import styles from './BlockDetailsTransactions.css';
 
 const Transactions = ({

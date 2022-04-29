@@ -2,8 +2,8 @@ import PropTypes from 'prop-types';
 import React from 'react';
 import LiskAmount from '@shared/liskAmount';
 import DiscreetMode from '@shared/discreetMode';
+import { getTxDirectionConfig } from '../../utils/helpers';
 import styles from './TransactionAmount.css';
-import { getTxDirectionConfig } from '../../utils/helpers'
 
 const TransactionAmount = ({
   recipient, moduleAssetId, token, showRounded, showInt, host, amount,

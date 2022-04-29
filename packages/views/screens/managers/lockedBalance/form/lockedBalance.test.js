@@ -10,9 +10,9 @@ import wallets from '@tests/constants/wallets';
 import flushPromises from '@tests/unit-test-utils/flushPromises';
 import LockedBalance from './index';
 
-jest.mock('@transaction/manage/hooks/useTransactionPriority');
-jest.mock('@transaction/manage/hooks/useTransactionFeeCalculation');
-jest.mock('@transaction/utils/api');
+jest.mock('@transaction/hooks/useTransactionPriority');
+jest.mock('@transaction/hooks/useTransactionFeeCalculation');
+jest.mock('@transaction/api');
 jest.mock('@wallet/store/action', () => ({
   balanceUnlocked: jest.fn(),
 }));

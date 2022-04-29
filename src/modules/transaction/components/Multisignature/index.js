@@ -1,1 +1,1 @@
-export { default } from './Multisignature';
+export { default, PartiallySignedActions, FullySignedActions } from './Multisignature';
