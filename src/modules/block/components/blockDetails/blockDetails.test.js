@@ -73,7 +73,7 @@ describe('BlockDetails page', () => {
     );
   });
 
-  it.skip('renders a page with transaction list', () => {
+  it('renders a page with transaction list', () => {
     wrapper = mountWithRouter(BlockDetails, props);
     expect(wrapper.find('TransactionRow')).toHaveLength(0);
 
