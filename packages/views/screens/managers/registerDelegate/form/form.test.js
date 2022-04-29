@@ -11,7 +11,7 @@ import SelectNameAndFee from './form';
 
 jest.mock('@network/utilities/api');
 jest.mock('@transaction/utilities/api');
-jest.mock('@dpos/validator/utils/api', () => ({
+jest.mock('@dpos/validator/api', () => ({
   getDelegate: jest.fn().mockImplementation(() => Promise.resolve({ data: [] })),
 }));
 jest.mock('@transaction/utilities/hwManager');

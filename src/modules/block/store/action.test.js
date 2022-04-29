@@ -1,5 +1,5 @@
 import networks from '@network/configuration/networks';
-import { getBlocks } from '@block/utilities/api';
+import { getBlocks } from '@block/utils';
 import { getForgers, getDelegates } from '@dpos/validator/api';
 import forger from '@fixtures/forgers';
 import delegate from '@fixtures/delegates';
@@ -7,10 +7,10 @@ import blocks from '@tests/constants/blocks';
 import actionTypes from './actionTypes';
 import { olderBlocksRetrieved, forgersRetrieved } from './action';
 
-jest.mock('@block/utilities/api', () => ({
+jest.mock('@block/utils', () => ({
   getBlocks: jest.fn(),
 }));
-jest.mock('@dpos/validator/utils/api', () => ({
+jest.mock('@dpos/validator/api', () => ({
   getForgers: jest.fn(),
   getDelegates: jest.fn(),
 }));

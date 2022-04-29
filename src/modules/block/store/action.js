@@ -1,6 +1,6 @@
 import { ROUND_LENGTH } from '@dpos/validator/consts';
 import { convertUnixSecondsToLiskEpochSeconds } from '@views/utilities/dateTime';
-import { getBlocks } from '@block/utilities/api';
+import { getBlocks } from '@block/utils';
 import { getForgers, getDelegates } from '@dpos/validator/api';
 import actionTypes from './actionTypes';
 

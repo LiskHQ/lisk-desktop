@@ -29,11 +29,11 @@
       "alias" : {
         "map" : [
           ["src", "./src/"],
-          ["@fixtures", "./tests/fixtures/"],          
+          ["@fixtures", "./tests/fixtures/"],
           ["@scripts", "./scripts/"],
           ["@setup", "./setup/"],
           ["@tests", "./tests/"],
-          ["@block", "./packages/block/"],
+          ["@block", "./src/modules/block/"],
           ["@bookmark", "./src/modules/bookmark/"],
           ["@common", "./packages/common/"],
           ["@dpos", "./src/modules/dpos/"],
