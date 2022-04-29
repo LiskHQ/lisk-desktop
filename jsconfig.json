@@ -10,7 +10,7 @@
       "@block/*": ["./packages/block/*"],
       "@bookmark/*": ["./src/modules/bookmark/*"],
       "@common/*": ["./packages/common/*"],
-      "@legacy/*": ["./packages/legacy/*"],
+      "@legacy/*": ["./src/modules/legacy/*"],
       "@dpos/*": ["./packages/dpos/*"],
       "@network/*": ["./packages/network/*"],
       "@settings/*": ["./packages/settings/*"],
