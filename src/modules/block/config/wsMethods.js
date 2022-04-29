@@ -1,3 +1,3 @@
 export default {
-    blocksChange: 'update.block',
-  };
+  blocksChange: 'update.block',
+};
