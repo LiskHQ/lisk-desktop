@@ -6,8 +6,8 @@ import { toRawLsk } from '@token/utilities/lsk';
 import TransactionPriority, {
   useTransactionFeeCalculation,
   useTransactionPriority,
-  normalizeVotesForTx,
 } from '@transaction/components/TransactionPriority';
+import { normalizeVotesForTx } from '@transaction/utils'
 import Box from '@basics/box';
 import BoxContent from '@basics/box/content';
 import BoxFooter from '@basics/box/footer';
