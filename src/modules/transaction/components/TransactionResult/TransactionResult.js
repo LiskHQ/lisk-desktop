@@ -1,8 +1,8 @@
 /* eslint-disable complexity */
 import React, { useEffect, useState } from 'react';
 import { txStatusTypes } from '@transaction/configuration/txStatus';
-import Regular from './Regular';
-import Multisignature from './Multisignature';
+import Regular from '../Regular';
+import Multisignature from '../Multisignature';
 
 const TransactionResult = (props) => {
   const [txType, setTxType] = useState('pending');

@@ -5,8 +5,8 @@ import { TertiaryButton, PrimaryButton } from '@basics/buttons';
 import routes from '@screens/router/routes';
 import { txStatusTypes } from '@transaction/configuration/txStatus';
 import Illustration from '@basics/illustration';
-import getIllustration from './illustrations';
-import styles from './TransactionResult.css';
+import getIllustration from '../TransactionResult/illustrationsMap';
+import styles from './Regular.css';
 
 const errorTypes = [
   txStatusTypes.signatureError,

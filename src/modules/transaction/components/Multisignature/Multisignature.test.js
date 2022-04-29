@@ -5,7 +5,7 @@ import * as txUtils from '@transaction/utils/transaction';
 import routes from '@screens/router/routes';
 import { txStatusTypes } from '@transaction/configuration/txStatus';
 import accounts from '@tests/constants/wallets';
-import Multisignature, { FullySignedActions, PartiallySignedActions } from './Multisignature';
+import Multisignature, { FullySignedActions, PartiallySignedActions } from '.';
 
 jest.mock('copy-to-clipboard');
 

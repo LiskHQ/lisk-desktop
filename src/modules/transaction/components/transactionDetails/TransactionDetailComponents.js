@@ -29,18 +29,7 @@ import WalletInfo from '../WalletInfo';
 import TransactionDetailsContext from '../../context/transactionDetailsManagerContext';
 import TransactionTypeFigure from '../TransactionTypeFigure';
 import styles from './TransactionDetails.css';
-
-const getDelegateName = (transaction, activeToken) =>
-  (activeToken === 'LSK' && transaction.asset && transaction.asset.username
-    ? transaction.asset.username
-    : null);
-
-const getTxAsset = (tx) => {
-  if (tx.asset?.data && tx.asset.data.length) {
-    return tx.asset.data;
-  }
-  return '-';
-};
+import { getDelegateName, getTxAsset } from '../../utils/transactionDetailsHelper';
 
 const ValueAndLabel = ({ label, className, children }) => (
   <div className={`${styles.value} ${className}`}>
