@@ -2,7 +2,6 @@
 import { passphrase as LiskPassphrase, cryptography } from '@liskhq/lisk-client';
 import { regex } from '@common/configuration';
 import { tokenMap } from '@token/configuration/tokens';
-import { balanceNeededForReclaim, balanceNeededForInitialization } from '@wallet/configuration/account';
 import { getCustomDerivationKeyPair } from '@common/utilities/explicitBipKeyDerivation';
 
 /**
@@ -235,17 +234,6 @@ export const calculateBalanceUnlockableInTheFuture = (unlocking = [], currentBlo
         ? sum + parseInt(vote.amount, 10) : sum),
     0,
   );
-
-export const isAccountInitialized = account => account
-  && account.info
-  && account.info.LSK
-  && !!account.info.LSK.serverPublicKey;
-
-export const hasEnoughBalanceForInitialization = (balance = 0) =>
-  Number(balance) >= balanceNeededForInitialization;
-
-export const hasEnoughBalanceForReclaim = (balance = 0) =>
-  Number(balance) >= balanceNeededForReclaim;
 
 export const calculateRemainingAndSignedMembers = (
   keys = { optionalKeys: [], mandatoryKeys: [] },

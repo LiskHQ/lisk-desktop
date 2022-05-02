@@ -5,11 +5,11 @@ import Icon from '@basics/icon';
 import LiskAmount from '@shared/liskAmount';
 import WalletVisualWithAddress from '@wallet/detail/identity/walletVisual/walletVisualWithAddress';
 import { tokenMap } from '@token/configuration/tokens';
-import styles from './index.css';
+import styles from './migrationDetails.css';
 
 const token = tokenMap.LSK.key;
 
-const WalletMigration = ({ wallet, showBalance }) => {
+const MigrationDetails = ({ wallet, showBalance }) => {
   const { t } = useTranslation();
   return (
     <div className={styles.accountContainer}>
@@ -44,4 +44,4 @@ const WalletMigration = ({ wallet, showBalance }) => {
   );
 };
 
-export default WalletMigration;
+export default MigrationDetails;

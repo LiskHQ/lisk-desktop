@@ -1,7 +1,7 @@
 import React from 'react';
 import { mount } from 'enzyme';
-import Introduction from './introduction';
-import styles from './index.css';
+import Introduction from './index';
+import styles from './introduction.css';
 
 window.open = jest.fn();
 

@@ -1,7 +1,6 @@
 import { toast } from 'react-toastify';
 import networks, { networkKeys } from '@network/configuration/networks';
 import { timeOutId, timeOutWarningId } from '@views/configuration';
-import routes from '@screens/router/routes';
 import { tokenMap } from '@token/configuration/tokens';
 import { MODULE_ASSETS_NAME_ID_MAP } from '@transaction/configuration/moduleAssets';
 import { fromRawLsk, delay } from '@token/utilities/lsk';
@@ -11,7 +10,6 @@ import {
   emptyTransactionsData, transactionsRetrieved, votesRetrieved,
 } from '@common/store/actions';
 import analytics from '@common/utilities/analytics';
-import history from '@common/utilities/history';
 import { getTransactions } from '@transaction/api';
 import i18n from '@setup/i18n/i18n';
 import blockActionTypes from '@block/store/actionTypes';
@@ -115,15 +113,6 @@ const readStoredNetwork = ({ dispatch, getState }) => {
   }
 };
 
-const checkAccountInitializationState = (action) => {
-  if (action.type === actionTypes.accountLoggedIn) {
-    const { isMigrated } = action.data.info.LSK.summary;
-    if (isMigrated === false) { // we need to check against false, check against falsy won't work
-      history.push(routes.reclaim.path);
-    }
-  }
-};
-
 // eslint-disable-next-line complexity
 const accountMiddleware = store => next => async (action) => {
   next(action);
@@ -141,7 +130,6 @@ const accountMiddleware = store => next => async (action) => {
     case actionTypes.accountLoggedIn: {
       toast.dismiss(timeOutId);
       toast.dismiss(timeOutWarningId);
-      checkAccountInitializationState(action);
       break;
     }
     case actionTypes.accountLoggedOut:

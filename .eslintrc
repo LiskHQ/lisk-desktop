@@ -43,7 +43,7 @@
           ["@transaction", "./src/modules/transaction"],
           ["@updater", "./packages/updater/"],
           ["@wallet", "./packages/wallet/"],
-          ["@legacy", "./packages/legacy/"],
+          ["@legacy", "./src/modules/legacy/"],
           ["@views", "./packages/views"],
           ["@screens", "./packages/views/screens"],
           ["@basics", "./packages/views/basics"],

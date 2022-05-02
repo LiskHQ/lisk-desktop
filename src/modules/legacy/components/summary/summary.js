@@ -48,7 +48,7 @@ const Summary = ({
         onClick: onSubmit,
       }}
       fee={minFee.value}
-      classNames={styles.summaryContainer}
+      classNames={styles.container}
     >
       <TransactionInfo
         account={account}
