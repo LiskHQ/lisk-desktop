@@ -1,8 +1,8 @@
 import React from 'react';
 import { withTranslation } from 'react-i18next';
 import MultiStep from '@shared/multiStep';
-import Introduction from '@legacy/components/introduction';
-import Reclaim from '@legacy/components/reclaim';
+import Introduction from '../components/introduction';
+import Reclaim from '../components/reclaim';
 
 const ReclaimBalance = ({ t }) => (
   <MultiStep>

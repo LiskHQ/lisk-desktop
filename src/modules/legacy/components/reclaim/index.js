@@ -4,10 +4,10 @@ import { useSelector } from 'react-redux';
 import Tooltip from '@basics/tooltip/tooltip';
 import { PrimaryButton } from '@basics/buttons';
 import DialogLink from '@basics/dialog/link';
-import MigrationDetails from 'src/modules/legacy/components/migrationDetails';
-import { dustThreshold } from 'src/modules/legacy/utils/constants';
 import { fromRawLsk } from '@token/utilities/lsk';
 import { selectActiveTokenAccount } from '@common/store/selectors';
+import { dustThreshold } from '../../utils/constants';
+import MigrationDetails from '../migrationDetails';
 import styles from './reclaim.css';
 
 const Reclaim = ({ t }) => {
