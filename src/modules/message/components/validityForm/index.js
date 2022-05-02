@@ -14,7 +14,7 @@ import Tooltip from '@basics/tooltip/tooltip';
 import { regex } from '@common/configuration';
 import styles from './validityForm.css';
 
-export default class validityForm extends React.Component {
+export default class ValidityForm extends React.Component {
   constructor(props) {
     super(props);
 
@@ -193,13 +193,13 @@ export default class validityForm extends React.Component {
   }
 }
 
-validityForm.propTypes = {
+ValidityForm.propTypes = {
   history: PropTypes.object.isRequired,
   nextStep: PropTypes.func,
   t: PropTypes.func.isRequired,
   prevState: PropTypes.object,
 };
 
-validityForm.defaultProps = {
+ValidityForm.defaultProps = {
   prevState: {},
 };
