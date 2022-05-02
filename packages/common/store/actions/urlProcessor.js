@@ -3,7 +3,7 @@ import { getAccounts } from '@wallet/utilities/api';
 import { regex } from '@common/configuration';
 import { tokenMap } from '@token/configuration/tokens';
 import { validateAddress } from '@common/utilities/validators';
-import { voteEdited } from '@dpos/store/actions/voting';
+import { voteEdited } from '@dpos/validator/store/actions/voting';
 
 const isUsernameValid = username => regex.delegateName.test(username);
 

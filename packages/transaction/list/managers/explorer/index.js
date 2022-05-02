@@ -2,7 +2,7 @@ import { compose } from 'redux';
 import { withTranslation } from 'react-i18next';
 import withFilters from '@common/utilities/withFilters';
 import withData from '@common/utilities/withData';
-import { getDelegates } from '@dpos/utilities/api';
+import { getDelegates } from '@dpos/validator/api';
 import { normalizeTransactionParams } from '@transaction/utilities/transaction';
 import { getTransactions } from '@transaction/utilities/api';
 import { DEFAULT_LIMIT } from '@views/configuration';

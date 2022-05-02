@@ -1,6 +1,6 @@
 import React from 'react';
-import Nav from './navigator';
-import { Element } from './element';
+import Nav from './Navigator';
+import Element from './Element';
 import { getStyles } from './utils';
 
 /**

@@ -13,7 +13,7 @@ const config = {
       '@block': resolve('./src/modules/block'),
       '@bookmark': resolve('./src/modules/bookmark'),
       '@common': resolve('./packages/common'),
-      '@dpos': resolve('./packages/dpos'),
+      '@dpos': resolve('./src/modules/dpos'),
       '@legacy': resolve('./packages/legacy'),
       '@network': resolve('./packages/network'),
       '@settings': resolve('./packages/settings'),

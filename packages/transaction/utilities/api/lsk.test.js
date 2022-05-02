@@ -2,7 +2,7 @@
 import { MODULE_ASSETS_NAME_ID_MAP } from '@transaction/configuration/moduleAssets';
 import { getTxAmount } from '@transaction/utilities/transaction';
 import { getState } from '@fixtures/transactions';
-import * as delegates from '@dpos/utilities/api';
+import * as delegates from '@dpos/validator/api';
 import http from '@common/utilities/api/http';
 import accounts from '@tests/constants/wallets';
 import {
@@ -24,7 +24,7 @@ jest.mock('@common/utilities/api/http', () =>
 jest.mock('@common/utilities/api/ws', () =>
   jest.fn().mockImplementation(() => Promise.resolve({ data: [{ type: 0 }] })));
 
-jest.mock('@dpos/utilities/api', () => ({
+jest.mock('@dpos/validator/api', () => ({
   getDelegates: jest.fn(),
 }));
 

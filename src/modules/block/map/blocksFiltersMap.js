@@ -6,8 +6,7 @@ const blocksFiltersMap = {
     key: 'addressList',
     test: (addressList) =>
       !addressList.some((address) =>
-        validateAddress(tokenMap.LSK.key, address)
-      ),
+        validateAddress(tokenMap.LSK.key, address)),
   },
   timestamp: { key: 'timestamp', test: (str) => /^(\d+)?:(\d+)?$/.test(str) },
   generatorAddress: {
@@ -17,8 +16,8 @@ const blocksFiltersMap = {
   generatorUsername: {
     key: 'generatorUsername',
     test: (username) =>
-      typeof username === 'string' &&
-      validateAddress(tokenMap.LSK.key, username) === 1,
+      typeof username === 'string'
+      && validateAddress(tokenMap.LSK.key, username) === 1,
   },
   height: { key: 'height', test: (num) => !Number.isNaN(parseInt(num, 10)) },
   limit: { key: 'limit', test: (num) => typeof num === 'number' },
