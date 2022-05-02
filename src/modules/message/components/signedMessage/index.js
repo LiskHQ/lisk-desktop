@@ -7,7 +7,7 @@ import Illustration from '@basics/illustration';
 import { AutoResizeTextarea } from '@basics/inputs';
 import { getDeviceType } from '@wallet/utilities/hwManager';
 import { SecondaryButton, PrimaryButton } from '@basics/buttons';
-import styles from '../signMessage.css';
+import styles from './signedMessage.css';
 
 const Error = ({ t, hwInfo }) => {
   const deviceType = getDeviceType(hwInfo?.deviceModel);
@@ -56,7 +56,7 @@ const Success = ({
   </>
 );
 
-const Status = ({
+const SignedMessage = ({
   t, prevStep, signature, error, account, onPrev,
 }) => {
   const [copied, setCopied] = useState(false);
@@ -86,4 +86,4 @@ const Status = ({
   );
 };
 
-export default Status;
+export default SignedMessage;

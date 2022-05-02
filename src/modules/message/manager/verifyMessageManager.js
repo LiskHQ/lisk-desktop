@@ -2,9 +2,9 @@
 import { compose } from 'redux';
 import { withTranslation } from 'react-i18next';
 import { withRouter } from 'react-router';
-import VerifyMessage from './verifyMessage';
+import VerifyMessageView from '../components/verifyMessageView';
 
 export default compose(
   withRouter,
   withTranslation(),
-)(VerifyMessage);
+)(VerifyMessageView);

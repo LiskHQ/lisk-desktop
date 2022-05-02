@@ -1,0 +1,24 @@
+@import '../../../../../setup/react/app/mixins.css';
+
+.fieldGroup {
+  display: block;
+  margin: 30px 0 40px;
+
+  & > span {
+    @mixin contentNormal bold;
+
+    color: var(--color-maastricht-blue);
+    display: block;
+    margin-bottom: 12px;
+    text-align: left;
+  }
+
+  & .textarea {
+    resize: none;
+    line-height: 28px;
+  }
+}
+
+.noPadding {
+  padding: 0 !important;
+}

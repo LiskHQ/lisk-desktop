@@ -4,9 +4,9 @@ import React from 'react';
 import routes from '@screens/router/routes';
 import MultiStep from 'src/modules/common/components/OldMultiStep';
 import Dialog from '@basics/dialog/dialog';
-import Result from './result';
-import VerifyMessageInput from './verifyMessageInput';
-import styles from './verifyMessage.css';
+import ValidityStatus from '../validityStatus';
+import ValidityForm from '../validityForm';
+import styles from './verifyMessageView.css';
 
 export default function VerifyMessage({
   t, history,
@@ -18,8 +18,8 @@ export default function VerifyMessage({
   return (
     <Dialog hasClose className={styles.wrapper}>
       <MultiStep finalCallback={finalCallback}>
-        <VerifyMessageInput t={t} history={history} />
-        <Result t={t} history={history} />
+        <ValidityForm t={t} history={history} />
+        <ValidityStatus t={t} history={history} />
       </MultiStep>
     </Dialog>
   );
