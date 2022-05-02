@@ -1,5 +1,5 @@
 import { tokenKeys } from '@token/configuration/tokens';
-import { getNetworkConfig } from '@network/utilities/api';
+import { getNetworkConfig } from '@network/utils/api';
 import { getSchemas } from '@transaction/utilities/api';
 import actionTypes from './actionTypes';
 
