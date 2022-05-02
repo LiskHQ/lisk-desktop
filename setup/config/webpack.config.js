@@ -14,6 +14,7 @@ const config = {
       '@bookmark': resolve('./src/modules/bookmark'),
       '@common': resolve('./packages/common'),
       '@legacy': resolve('./src/modules/legacy'),
+      '@message': resolve('./src/modules/message'),
       '@dpos': resolve('./src/modules/dpos'),
       '@network': resolve('./packages/network'),
       '@settings': resolve('./packages/settings'),
