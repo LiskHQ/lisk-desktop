@@ -9,6 +9,7 @@
       "@fixtures/*": ["./tests/fixtures"],
       "@block/*": ["./src/modules/block/*"],
       "@bookmark/*": ["./src/modules/bookmark/*"],
+      "@search/*": ["./src/modules/search/*"],
       "@common/*": ["./packages/common/*"],
       "@legacy/*": ["./src/modules/legacy/*"],
       "@dpos/*": ["./src/modules/dpos/*"],

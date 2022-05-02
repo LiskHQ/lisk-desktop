@@ -1,6 +1,6 @@
 import { keyCodes } from '@views/configuration';
 import { mountWithRouter } from '@common/utilities/testHelpers';
-import SearchBar from './searchBar';
+import SearchBar from './SearchBar';
 
 describe('SearchBar', () => {
   let wrapper;

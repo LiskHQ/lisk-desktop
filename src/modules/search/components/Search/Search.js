@@ -1,40 +1,13 @@
 import React from 'react';
 
 import { regex } from '@common/configuration';
-import { selectSearchParamValue } from 'src/utils/searchParams';
 import routes from '@screens/router/routes';
 import Icon from '@basics/icon';
 import DialogLink from '@basics/dialog/link';
 import WalletVisual from '@wallet/detail/identity/walletVisual';
 import Tooltip from '@basics/tooltip/tooltip';
-import styles from './topBar.css';
-
-/**
- * Extracts only one search param out of the url that is relevant
- * to the screen shown
- * @param {string} path the url path
- */
-const extractRelevantSearchParam = (path) => {
-  const relevantRoute = Object.values(routes).find(route => route.path === path);
-  if (relevantRoute) {
-    return relevantRoute.searchParam;
-  }
-  return undefined;
-};
-
-/**
- * Gets the searched value depending upon the screen the user is on
- * and the url search
- * @param {object} history the history object
- */
-const getSearchedText = (history) => {
-  const screenName = history.location.pathname;
-  const relevantSearchParam = extractRelevantSearchParam(screenName);
-  const relevantSearchParamValue = selectSearchParamValue(
-    history.location.search, relevantSearchParam,
-  );
-  return { relevantSearchParam, relevantSearchParamValue };
-};
+import styles from './Search.css';
+import { getSearchedText } from '../../utils';
 
 const Search = ({
   t,

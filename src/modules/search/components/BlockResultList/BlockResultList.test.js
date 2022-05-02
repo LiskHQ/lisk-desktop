@@ -1,6 +1,6 @@
 import React from 'react';
 import { mount } from 'enzyme';
-import Blocks from './blocks';
+import Blocks from './BlockResultList';
 
 describe('Blocks', () => {
   let wrapper;

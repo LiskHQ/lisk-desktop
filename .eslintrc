@@ -34,6 +34,7 @@
           ["@setup", "./setup/"],
           ["@tests", "./tests/"],
           ["@block", "./src/modules/block/"],
+          ["@search", "./src/modules/search/"],
           ["@bookmark", "./src/modules/bookmark/"],
           ["@common", "./packages/common/"],
           ["@dpos", "./src/modules/dpos/"],

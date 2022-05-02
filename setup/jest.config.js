@@ -30,6 +30,7 @@ module.exports = {
     '^@fixtures(.*)$': resolve(__dirname, '../tests/fixtures/$1'),
     '^@block(.*)$': resolve(__dirname, '../src/modules/block/$1'),
     '^@bookmark(.*)$': resolve(__dirname, '../src/modules/bookmark/$1'),
+    '^@search(.*)$': resolve(__dirname, '../src/modules/search/$1'),
     '^@common(.*)$': resolve(__dirname, '../packages/common/$1'),
     '^@legacy(.*)$': resolve(__dirname, '../src/modules/legacy/$1'),
     '^@dpos(.*)$': resolve(__dirname, '../src/modules/dpos/$1'),
