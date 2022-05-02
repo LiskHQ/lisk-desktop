@@ -2,7 +2,7 @@
 import { toast } from 'react-toastify';
 import * as accountApi from '@wallet/utilities/api';
 import { extractKeyPair } from '@wallet/utilities/account';
-import { create } from '@transaction/utilities/api';
+import { create } from '@transaction/api';
 import { defaultDerivationPath } from '@common/utilities/explicitBipKeyDerivation';
 import wallets from '@tests/constants/wallets';
 import * as networkActions from '@network/store/action';
@@ -41,7 +41,7 @@ jest.mock('@wallet/utilities/account', () => ({
   extractKeyPair: jest.fn(),
   getUnlockableUnlockObjects: () => [{}],
 }));
-jest.mock('@transaction/utilities/api');
+jest.mock('@transaction/api');
 
 const network = {
   name: 'Mainnet',

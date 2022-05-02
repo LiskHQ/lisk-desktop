@@ -20,7 +20,7 @@ class SearchBar extends React.Component {
     };
 
     this.onChangeSearchTextValue = this.onChangeSearchTextValue.bind(this);
-    this.onSelectAccount = this.onSelectedRow.bind(this, 'account');
+    this.onSelectAccount = this.onSelectedRow.bind(this, 'explorer');
     this.onSelectDelegateAccount = this.onSelectedRow.bind(this, 'delegate-account');
     this.onSelectTransaction = this.onSelectedRow.bind(this, 'transactions');
     this.onSelectBlock = this.onSelectedRow.bind(this, 'block');

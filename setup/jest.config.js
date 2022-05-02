@@ -38,7 +38,7 @@ module.exports = {
     '^@network(.*)$': resolve(__dirname, '../packages/network/$1'),
     '^@settings(.*)$': resolve(__dirname, '../packages/settings/$1'),
     '^@token(.*)$': resolve(__dirname, '../packages/token/$1'),
-    '^@transaction(.*)$': resolve(__dirname, '../packages/transaction/$1'),
+    '^@transaction(.*)$': resolve(__dirname, '../src/modules/transaction/$1'),
     '^@updater(.*)$': resolve(__dirname, '../packages/updater/$1'),
     '^@wallet(.*)$': resolve(__dirname, '../packages/wallet/$1'),
     '^@views(.*)$': resolve(__dirname, '../packages/views/$1'),

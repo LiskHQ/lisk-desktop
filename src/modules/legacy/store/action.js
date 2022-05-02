@@ -3,7 +3,7 @@ import { tokenMap } from '@token/configuration/tokens';
 import { MODULE_ASSETS_NAME_ID_MAP } from '@transaction/configuration/moduleAssets';
 import { toRawLsk } from '@token/utilities/lsk';
 import { isEmpty } from '@common/utilities/helpers';
-import { create } from '@transaction/utilities/api';
+import { create } from '@transaction/api';
 import actionTypes from '@transaction/store/actionTypes';
 
 // eslint-disable-next-line import/prefer-default-export
