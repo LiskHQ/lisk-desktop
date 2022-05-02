@@ -16,7 +16,7 @@ jest.mock('@transaction/api');
 jest.mock('@wallet/store/action', () => ({
   balanceUnlocked: jest.fn(),
 }));
-jest.mock('@transaction/utilis/hwManager');
+jest.mock('@transaction/utils/hwManager');
 
 describe('Unlock LSK modal', () => {
   let wrapper;
