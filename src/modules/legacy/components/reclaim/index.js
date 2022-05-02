@@ -4,16 +4,15 @@ import { useSelector } from 'react-redux';
 import Tooltip from '@basics/tooltip/tooltip';
 import { PrimaryButton } from '@basics/buttons';
 import DialogLink from '@basics/dialog/link';
-import WalletMigration from '@legacy/detail/info/walletMigration';
-import { hasEnoughBalanceForReclaim } from '@wallet/utilities/account';
 import { fromRawLsk } from '@token/utilities/lsk';
-import { balanceNeededForReclaim } from '@wallet/configuration/account';
 import { selectActiveTokenAccount } from '@common/store/selectors';
-import styles from './index.css';
+import { dustThreshold } from '@wallet/configuration/constants';
+import MigrationDetails from '../migrationDetails';
+import styles from './reclaim.css';
 
 const Reclaim = ({ t }) => {
   const wallet = useSelector(selectActiveTokenAccount);
-  const hasEnoughBalance = hasEnoughBalanceForReclaim(Number(wallet.token?.balance));
+  const hasEnoughBalance = Number(wallet.token?.balance) >= dustThreshold;
 
   return (
     <div className={`${styles.container} ${styles.reclaim}`}>
@@ -24,8 +23,8 @@ const Reclaim = ({ t }) => {
         {t('We kindly ask you to transfer your balance to the new account.')}
       </p>
       <section className={styles.box}>
-        <div className={styles.walletMigrationContainer}>
-          <WalletMigration wallet={wallet} showBalance />
+        <div className={styles.migrationDetailsContainer}>
+          <MigrationDetails wallet={wallet} showBalance />
         </div>
         <div>
           <h5 className={styles.listHeading}>{t('You will be able to:')}</h5>
@@ -40,7 +39,7 @@ const Reclaim = ({ t }) => {
         <ul className={styles.list}>
           <li className={`${styles.step} ${hasEnoughBalance ? styles.check : styles.green}`}>
             <div>
-              {t('Deposit at least {{amount}} LSK to your new account', { amount: fromRawLsk(balanceNeededForReclaim) })}
+              {t('Deposit at least {{amount}} LSK to your new account', { amount: fromRawLsk(dustThreshold) })}
               <Tooltip position="right" size="m">
                 <>
                   <p>

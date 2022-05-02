@@ -1,9 +1,5 @@
 @import '../../../../../setup/react/app/mixins.css';
 
-.multiStep {
-  height: 100%;
-}
-
 .container {
   display: flex;
   flex-direction: column;
@@ -34,26 +30,6 @@
   }
 }
 
-.illustration {
-  width: 294px;
-}
-
-.header {
-  @mixin headingLarge;
-
-  margin-bottom: 0px;
-  color: var(--color-maastricht-blue);
-  font-size: 28px;
-}
-
-.text {
-  @mixin contentLargest;
-
-  text-align: center;
-  margin-bottom: 0;
-  color: var(--color-blue-gray);
-}
-
 .box {
   background-color: var(--color-white);
   box-shadow: 0px 4px 10px rgba(234, 234, 234, 0.36);
@@ -63,7 +39,7 @@
   padding: 20px;
 }
 
-.walletMigrationContainer {
+.migrationDetailsContainer {
   border-bottom: 1px solid var(--color-periwinkle-blue);
   margin-bottom: 30px;
 }

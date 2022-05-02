@@ -2,7 +2,7 @@ import React from 'react';
 import { withTranslation } from 'react-i18next';
 import Illustration from '@basics/illustration';
 import { PrimaryButton } from '@basics/buttons';
-import styles from './index.css';
+import styles from './introduction.css';
 
 const Introduction = ({ t, nextStep }) => (
   <div className={styles.container}>
