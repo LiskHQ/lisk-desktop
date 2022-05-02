@@ -1,6 +1,9 @@
 import React, { useState, useEffect, useMemo } from 'react';
 
-import TransactionPriority, { useTransactionFeeCalculation, useTransactionPriority } from '@transaction/components/TransactionPriority';
+import TransactionPriority from '@transaction/components/TransactionPriority';
+import useTransactionFeeCalculation from '@transaction/hooks/useTransactionFeeCalculation';
+import useTransactionPriority from '@transaction/hooks/useTransactionPriority';
+
 import Box from '@basics/box';
 import BoxContent from '@basics/box/content';
 import BoxFooter from '@basics/box/footer';

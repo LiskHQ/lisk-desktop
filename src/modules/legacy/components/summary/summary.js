@@ -1,7 +1,8 @@
 import React from 'react';
 import { tokenMap } from '@token/configuration/tokens';
 import { MODULE_ASSETS_NAME_ID_MAP } from '@transaction/configuration/moduleAssets';
-import { useTransactionFeeCalculation, useTransactionPriority } from '@transaction/components/TransactionPriority';
+import useTransactionFeeCalculation from '@transaction/hooks/useTransactionFeeCalculation';
+import useTransactionPriority from '@transaction/hooks/useTransactionPriority';
 import TransactionSummary from '@transaction/components/TransactionSummary';
 import TransactionInfo from '@transaction/components/TransactionInfo';
 import styles from './summary.css';

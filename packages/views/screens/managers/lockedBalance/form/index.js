@@ -7,7 +7,8 @@ import {
   getUnlockableUnlockObjects,
 } from '@wallet/utilities/account';
 import { MODULE_ASSETS_NAME_ID_MAP } from '@transaction/configuration/moduleAssets';
-import TransactionPriority, { useTransactionFeeCalculation } from '@transaction/components/TransactionPriority';
+import TransactionPriority from '@transaction/components/TransactionPriority';
+import useTransactionFeeCalculation from '@transaction/hooks/useTransactionFeeCalculation';
 import useTransactionPriority from '@transaction/hooks/useTransactionPriority';
 import { selectCurrentBlockHeight } from '@common/store/selectors';
 import Form from './form';
