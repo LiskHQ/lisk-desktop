@@ -5,7 +5,7 @@ import { withTranslation } from 'react-i18next';
 import { connect } from 'react-redux';
 
 import { getDelegates } from '@dpos/validator/api';
-import { getNetworkStatus } from '@network/utilities/api';
+import { getNetworkStatus } from '@network/utils/api';
 import { getTransactions, getRegisteredDelegates } from '@transaction/utilities/api';
 import withData from '@common/utilities/withData';
 import withFilters from '@common/utilities/withFilters';

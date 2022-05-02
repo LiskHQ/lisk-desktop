@@ -5,7 +5,7 @@ import grid from 'flexboxgrid/dist/flexboxgrid.css';
 import { Link } from 'react-router-dom';
 import routes from '@screens/router/routes';
 import { parseSearchParams, stringifySearchParams } from 'src/utils/searchParams';
-import { getNetworksList } from '@network/utilities/getNetwork';
+import { getNetworksList } from '@network/utils/getNetwork';
 import Piwik from '@common/utilities/piwik';
 import { PrimaryButton } from '@basics/buttons';
 import PassphraseInput from '@wallet/manage/passphraseInput';

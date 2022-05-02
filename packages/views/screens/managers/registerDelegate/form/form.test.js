@@ -9,7 +9,7 @@ import wallets from '@tests/constants/wallets';
 import flushPromises from '@tests/unit-test-utils/flushPromises';
 import SelectNameAndFee from './form';
 
-jest.mock('@network/utilities/api');
+jest.mock('@network/utils/api');
 jest.mock('@transaction/utilities/api');
 jest.mock('@dpos/validator/api', () => ({
   getDelegate: jest.fn().mockImplementation(() => Promise.resolve({ data: [] })),
