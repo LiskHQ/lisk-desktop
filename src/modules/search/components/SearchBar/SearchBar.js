@@ -6,9 +6,9 @@ import routes from '@screens/router/routes';
 import { Input } from '@basics/inputs';
 import Wallet from '@wallet/detail/identity/searchBarWallets';
 import Delegates from '@wallet/detail/identity/searchBarWallets/delegates';
-import Transactions from '../TransactionResultList';
+import Blocks from '@block/components/BlockResultList';
+import Transactions from '../../../transaction/components/TransactionResultList';
 import styles from './SearchBar.css';
-import Blocks from '../BlockResultList';
 
 class SearchBar extends React.Component {
   constructor() {
