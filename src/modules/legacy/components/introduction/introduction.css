@@ -1,8 +1,8 @@
 @import '../../../../../setup/react/app/mixins.css';
 
-/* .multiStep {
+.multiStep {
   height: 100%;
-} */
+}
 
 .container {
   display: flex;
