@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import Icon from '@basics/icon';
+import Icon from 'src/theme/Icon';
 import styles from './tooltip.css';
 
 class Tooltip extends React.Component {

@@ -3,7 +3,7 @@ import React from 'react';
 import { regex } from '@common/configuration';
 import { selectSearchParamValue } from 'src/utils/searchParams';
 import routes from '@screens/router/routes';
-import Icon from '@basics/icon';
+import Icon from 'src/theme/Icon';
 import DialogLink from '@basics/dialog/link';
 import WalletVisual from '@wallet/detail/identity/walletVisual';
 import Tooltip from 'src/theme/Tooltip';

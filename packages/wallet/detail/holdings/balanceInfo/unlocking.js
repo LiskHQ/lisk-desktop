@@ -9,7 +9,7 @@ import {
   calculateBalanceLockedInVotes,
   getActiveTokenAccount,
 } from '@wallet/utilities/account';
-import Icon from '@basics/icon';
+import Icon from 'src/theme/Icon';
 import styles from './balanceInfo.css';
 
 const Link = ({
@@ -39,7 +39,6 @@ const LockedBalanceLink = ({
 }) => {
   const host = useSelector(state => getActiveTokenAccount(state));
   let lockedInVotes = 0;
-  let lockedInUnvotes = 0;
 
   if (isWalletRoute && host) {
     lockedInVotes = useSelector(state => calculateBalanceLockedInVotes(state.voting));
@@ -47,7 +46,7 @@ const LockedBalanceLink = ({
     lockedInVotes = calculateBalanceLockedInUnvotes(account.dpos?.sentVotes);
   }
 
-  lockedInUnvotes = isWalletRoute && host
+  const lockedInUnvotes = isWalletRoute && host
     ? (calculateBalanceLockedInUnvotes(host.dpos?.unlocking))
     : (
       calculateBalanceLockedInUnvotes(account.dpos?.unlocking)

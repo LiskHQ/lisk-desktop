@@ -1,6 +1,7 @@
 import React from 'react';
 import { storiesOf } from '@storybook/react';
 import { action } from '@storybook/addon-actions';
+import Icon from 'src/theme/Icon';
 import StoryWrapper from '../../../../.storybook/components/StoryWrapper/StoryWrapper';
 import Box from './index';
 import BoxContent from './content';
@@ -11,7 +12,6 @@ import BoxTabs from '../tabs';
 import BoxRow from './row';
 import BoxFooterButton from './footerButton';
 import BoxEmptyState from './emptyState';
-import Icon from '../icon';
 
 storiesOf('Toolbox', module)
   .add('Box', () => (

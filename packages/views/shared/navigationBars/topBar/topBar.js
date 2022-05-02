@@ -2,7 +2,7 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import routes from '@screens/router/routes';
 import { isEmpty } from '@common/utilities/helpers';
-import Icon from '@basics/icon';
+import Icon from 'src/theme/Icon';
 import DialogLink from '@basics/dialog/link';
 import { PrimaryButton } from '@basics/buttons';
 import Tooltip from 'src/theme/Tooltip';

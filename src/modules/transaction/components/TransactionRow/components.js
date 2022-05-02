@@ -5,7 +5,7 @@ import { tokenMap } from '@token/configuration/tokens';
 import { getTxAmount } from '@transaction/utils/transaction';
 import { MODULE_ASSETS_NAME_ID_MAP } from '@transaction/configuration/moduleAssets';
 import DateTimeFromTimestamp from '@basics/timestamp';
-import Icon from '@basics/icon';
+import Icon from 'src/theme/Icon';
 import Tooltip from 'src/theme/Tooltip';
 import LiskAmount from '@shared/liskAmount';
 import WalletVisualWithAddress from '@wallet/detail/identity/walletVisual/walletVisualWithAddress';

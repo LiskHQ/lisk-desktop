@@ -1,6 +1,6 @@
 import React from 'react';
 import { MODULE_ASSETS_MAP } from '@transaction/configuration/moduleAssets';
-import Icon from '@basics/icon';
+import Icon from 'src/theme/Icon';
 import { truncateAddress } from '@wallet/utilities/account';
 import LiskAmount from '@shared/liskAmount';
 import styles from './transactionsAndBlocks.css';

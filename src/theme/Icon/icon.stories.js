@@ -1,6 +1,6 @@
 import React from 'react';
 import { storiesOf } from '@storybook/react';
-import StoryWrapper from '../../../../.storybook/components/StoryWrapper/StoryWrapper';
+import StoryWrapper from '../../../.storybook/components/StoryWrapper/StoryWrapper';
 import Icon, { icons } from './index';
 
 storiesOf('Toolbox', module)

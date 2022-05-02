@@ -5,7 +5,7 @@ import { formatAmountBasedOnLocale } from '@common/utilities/formattedNumber';
 import { fromRawLsk } from '@token/utilities/lsk';
 import { Input } from 'src/theme';
 import { TertiaryButton } from '@basics/buttons';
-import Icon from '@basics/icon';
+import Icon from 'src/theme/Icon';
 import Tooltip from 'src/theme/Tooltip';
 import Converter from '../converter';
 import styles from './amountField.css';

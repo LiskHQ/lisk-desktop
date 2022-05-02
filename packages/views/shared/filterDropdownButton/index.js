@@ -3,7 +3,7 @@ import React from 'react';
 import moment from 'moment';
 import { PrimaryButton, SecondaryButton } from '@basics/buttons';
 import DropdownButton from 'src/theme/DropdownButton';
-import Icon from '@basics/icon';
+import Icon from 'src/theme/Icon';
 import AmountFieldGroup from './amountFieldGroup';
 import DateFieldGroup from './dateFieldGroup';
 import IntegerFilter from './integerFilter';

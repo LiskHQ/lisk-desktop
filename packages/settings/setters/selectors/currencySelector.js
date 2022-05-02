@@ -1,7 +1,7 @@
 import React, { useMemo } from 'react';
 import { useTranslation } from 'react-i18next';
 import { toast } from 'react-toastify';
-import Select from '@basics/inputs/select';
+import Select from 'src/theme/Select';
 import settingConstants from '@settings/configuration/settingConstants';
 import useSettings from '@settings/hooks/useSettings';
 import Piwik from '@common/utilities/piwik';

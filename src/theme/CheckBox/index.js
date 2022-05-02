@@ -1,5 +1,5 @@
 import React from 'react';
-import Icon from '@basics/icon';
+import Icon from 'src/theme/Icon';
 import styles from './checkBox.css';
 
 const CheckBox = ({

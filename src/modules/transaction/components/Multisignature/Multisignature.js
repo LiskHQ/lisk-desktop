@@ -9,9 +9,9 @@ import { txStatusTypes } from '@transaction/configuration/txStatus';
 import { getErrorReportMailto } from '@common/utilities/helpers';
 
 import copyToClipboard from 'copy-to-clipboard';
-import Icon from '@basics/icon';
+import { transactionToJSON, downloadJSON } from '@transaction/utils';
+import Icon from 'src/theme/Icon';
 import getIllustration from '../TransactionResult/illustrationsMap';
-import { transactionToJSON, downloadJSON } from '../../utils/transaction';
 import styles from './Multisignature.css';
 
 export const PartiallySignedActions = ({ onDownload, t }) => (

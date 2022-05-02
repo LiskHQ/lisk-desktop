@@ -6,7 +6,7 @@ import { TertiaryButton } from '@basics/buttons';
 import WalletVisual from '@wallet/detail/identity/walletVisual';
 import LiskAmount from '@shared/liskAmount';
 import { Input } from 'src/theme';
-import Icon from '@basics/icon';
+import Icon from 'src/theme/Icon';
 import Tooltip from 'src/theme/Tooltip';
 import styles from './selectAccount.css';
 

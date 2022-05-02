@@ -7,7 +7,7 @@ import useTransactionFeeCalculation from '@transaction/hooks/useTransactionFeeCa
 import useTransactionPriority from '@transaction/hooks/useTransactionPriority';
 import { AutoResizeTextarea } from 'src/theme';
 import CircularProgress from 'src/theme/ProgressCircular/circularProgress';
-import Icon from '@basics/icon';
+import Icon from 'src/theme/Icon';
 import Tooltip from 'src/theme/Tooltip';
 import FormBase from './formBase';
 import styles from './form.css';

@@ -1,7 +1,7 @@
 import React from 'react';
 
 import { SecondaryButton } from '@basics/buttons';
-import Icon from '@basics/icon';
+import Icon from 'src/theme/Icon';
 import { DropdownInput } from 'src/theme';
 
 import styles from './styles.css';

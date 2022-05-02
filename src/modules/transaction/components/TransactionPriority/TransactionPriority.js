@@ -7,7 +7,7 @@ import {
 } from '@common/utilities/formattedNumber';
 import { toRawLsk, fromRawLsk } from '@token/utilities/lsk';
 import Input from 'src/theme/Input/Input';
-import Icon from '@basics/icon';
+import Icon from 'src/theme/Icon';
 import Tooltip from 'src/theme/Tooltip';
 import Spinner from 'src/theme/Spinner';
 

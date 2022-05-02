@@ -1,6 +1,6 @@
 import React from 'react';
 import { withTranslation } from 'react-i18next';
-import Icon from '@basics/icon';
+import Icon from 'src/theme/Icon';
 import { PrimaryButton } from '@basics/buttons';
 import styles from './updateIndicator.css';
 

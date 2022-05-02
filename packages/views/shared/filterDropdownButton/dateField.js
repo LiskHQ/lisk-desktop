@@ -3,8 +3,8 @@ import moment from 'moment';
 import { firstBlockTime } from '@common/configuration';
 import { Input } from 'src/theme';
 import Calendar from '@basics/calendar/calendar';
-import Dropdown from '@basics/dropdown/dropdown';
-import OutsideClickHandler from '@basics/inputs/select/outsideClickHandler';
+import Dropdown from 'src/theme/Dropdown/dropdown';
+import OutsideClickHandler from 'src/theme/Select/OutsideClickHandler';
 import i18n from '@setup/i18n/i18n';
 import styles from './filters.css';
 

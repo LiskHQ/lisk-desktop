@@ -9,7 +9,7 @@ import BoxHeader from '@basics/box/header';
 import BoxContent from '@basics/box/content';
 import BoxFooter from '@basics/box/footer';
 import BoxInfoText from '@basics/box/infoText';
-import Icon from '@basics/icon';
+import Icon from 'src/theme/Icon';
 import Tooltip from 'src/theme/Tooltip';
 import { regex } from '@common/configuration';
 import styles from './validityForm.css';

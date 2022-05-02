@@ -9,7 +9,7 @@ import { getNetworksList } from '@network/utilities/getNetwork';
 import Piwik from '@common/utilities/piwik';
 import { PrimaryButton } from '@basics/buttons';
 import PassphraseInput from 'src/modules/wallet/components/PassphraseInput/PassphraseInput';
-import Icon from '@basics/icon';
+import Icon from 'src/theme/Icon';
 import DiscreetModeToggle from '@settings/setters/toggles/discreetModeToggle';
 import NetworkSelector from '@settings/setters/selectors/networkSelector';
 import RecoveryPhrase from '../RecoveryPhrase';

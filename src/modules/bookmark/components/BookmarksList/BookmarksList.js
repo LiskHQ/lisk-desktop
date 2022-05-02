@@ -13,7 +13,7 @@ import WalletVisual from '@wallet/detail/identity/walletVisual';
 import Box from '@basics/box';
 import BoxHeader from '@basics/box/header';
 import BoxContent from '@basics/box/content';
-import Icon from '@basics/icon';
+import Icon from 'src/theme/Icon';
 import EmptyState from '../EmptyState/EmptyState';
 import styles from './BookmarksList.css';
 

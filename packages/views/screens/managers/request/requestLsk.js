@@ -6,7 +6,7 @@ import { sizeOfString } from '@common/utilities/helpers';
 import { Input, AutoResizeTextarea } from 'src/theme';
 import CircularProgress from 'src/theme/ProgressCircular/circularProgress';
 import Converter from '@shared/converter';
-import Icon from '@basics/icon';
+import Icon from 'src/theme/Icon';
 import i18n from '@setup/i18n/i18n';
 import RequestWrapper from './requestWrapper';
 import styles from './request.css';

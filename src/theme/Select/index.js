@@ -1,9 +1,9 @@
 import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import Input from 'src/theme/Input';
-import Dropdown from '../../dropdown/dropdown';
+import Dropdown from '../Dropdown/dropdown';
 import styles from './select.css';
-import OutsideClickHandler from './outsideClickHandler';
+import OutsideClickHandler from './OutsideClickHandler';
 
 const Select = ({
   onChange, options, size, className, placeholder, selected,

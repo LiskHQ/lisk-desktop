@@ -1,7 +1,7 @@
 import React from 'react';
 
 import { TertiaryButton } from '@basics/buttons';
-import Icon from '@basics/icon';
+import Icon from 'src/theme/Icon';
 import { networkKeys } from '@network/configuration/networks';
 import styles from '../networkSelector.css';
 

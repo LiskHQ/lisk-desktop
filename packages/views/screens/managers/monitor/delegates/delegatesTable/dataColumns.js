@@ -4,7 +4,7 @@ import { formatAmountBasedOnLocale } from '@common/utilities/formattedNumber';
 import { fromRawLsk } from '@token/utilities/lsk';
 import { truncateAddress } from '@wallet/utilities/account';
 import Tooltip from 'src/theme/Tooltip';
-import Icon from '@basics/icon';
+import Icon from 'src/theme/Icon';
 import WalletVisual from '@wallet/detail/identity/walletVisual';
 import { DEFAULT_STANDBY_THRESHOLD } from '@dpos/validator/consts';
 import {

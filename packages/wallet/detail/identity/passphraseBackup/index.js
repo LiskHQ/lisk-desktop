@@ -3,7 +3,7 @@ import React from 'react';
 import renderPaperWallet from '@common/utilities/paperWallet';
 import { SecondaryButton } from '@basics/buttons';
 import CopyToClipboard from '@basics/copyToClipboard';
-import Icon from '@basics/icon';
+import Icon from 'src/theme/Icon';
 import styles from './passphraseBackup.css';
 import PassphraseRenderer from '../passphraseRenderer';
 

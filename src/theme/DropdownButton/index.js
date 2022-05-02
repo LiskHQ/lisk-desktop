@@ -1,7 +1,7 @@
 import React from 'react';
 import { SecondaryButton } from '@basics/buttons';
-import Dropdown from '@basics/dropdown/dropdown';
-import OutsideClickHandler from '@basics/inputs/select/outsideClickHandler';
+import Dropdown from 'src/theme/Dropdown/dropdown';
+import OutsideClickHandler from 'src/theme/Select/OutsideClickHandler';
 import styles from './dropdownButton.css';
 
 class DropdownButton extends React.Component {

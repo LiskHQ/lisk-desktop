@@ -4,7 +4,7 @@ import PropTypes from 'prop-types';
 import { useTheme } from 'src/theme/Theme';
 import FlashMessage from '@basics/flashMessage/flashMessage';
 import { PrimaryButton, SecondaryButton } from '@basics/buttons';
-import Icon from '@basics/icon';
+import Icon from 'src/theme/Icon';
 import styles from './newReleaseMessage.css';
 
 const NewReleaseMessage = ({

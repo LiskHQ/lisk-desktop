@@ -6,7 +6,7 @@ import { useTheme } from 'src/theme/Theme';
 import { SecondaryButton } from '@basics/buttons';
 import FlashMessage from '@basics/flashMessage/flashMessage';
 import FlashMessageHolder from '@basics/flashMessage/holder';
-import Icon from '@basics/icon';
+import Icon from 'src/theme/Icon';
 import styles from './WarnPunishedDelegate.css';
 
 const WarnPunishedDelegate = ({

@@ -1,7 +1,7 @@
 import React from 'react';
 import { storiesOf } from '@storybook/react';
 import DropdownButton from 'src/theme/DropdownButton';
-import StoryWrapper from '../../../../.storybook/components/StoryWrapper/StoryWrapper';
+import StoryWrapper from '../../../.storybook/components/StoryWrapper/StoryWrapper';
 import Dropdown from './dropdown';
 
 storiesOf('Toolbox', module)

@@ -8,7 +8,7 @@ import BoxHeader from '@basics/box/header';
 import BoxContent from '@basics/box/content';
 import BoxEmptyState from '@basics/box/emptyState';
 import GuideTooltip, { GuideTooltipItem } from '@basics/charts/guideTooltip';
-import Icon from '@basics/icon';
+import Icon from 'src/theme/Icon';
 import { useTheme } from 'src/theme/Theme';
 import { getColorPalette } from '@views/basics/charts/chartOptions';
 import NumericInfo from './numericInfo';

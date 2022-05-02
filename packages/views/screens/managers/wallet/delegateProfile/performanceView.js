@@ -11,7 +11,7 @@ import BoxHeader from '@basics/box/header';
 import BoxContent from '@basics/box/content';
 import LiskAmount from '@shared/liskAmount';
 import DialogLink from '@basics/dialog/link';
-import Icon from '@basics/icon';
+import Icon from 'src/theme/Icon';
 import styles from './delegateProfile.css';
 
 export const getStatus = (data) => {

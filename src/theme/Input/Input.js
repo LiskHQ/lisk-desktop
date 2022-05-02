@@ -1,7 +1,7 @@
 import PropTypes from 'prop-types';
 import React from 'react';
 import Feedback from '@basics/feedback/feedback';
-import Icon from '@basics/icon';
+import Icon from 'src/theme/Icon';
 import Spinner from '../Spinner';
 import styles from './input.css';
 
