@@ -3,7 +3,7 @@ import { withTranslation } from 'react-i18next';
 import { compose } from 'redux';
 import { connect } from 'react-redux';
 import withData from '@common/utilities/withData';
-import { getVoters, getDelegate } from '@dpos/utilities/api';
+import { getVoters, getDelegate } from '@dpos/validator/api';
 import { getBlocks } from '@block/utils';
 import DelegateProfile from './delegateProfile';
 

@@ -17,7 +17,7 @@ import BoxInfoText from '@basics/box/infoText';
 import AmountField from '@shared/amountField';
 import LiskAmount from '@shared/liskAmount';
 import Converter from '@shared/converter';
-import WarnPunishedDelegate from '@dpos/detail/info/warnPunishedDelegate';
+import WarnPunishedDelegate from '@dpos/validator/components/WarnPunishedDelegate';
 import { PrimaryButton, WarningButton } from '@basics/buttons';
 import useVoteAmountField from './useVoteAmountField';
 import getMaxAmount from './getMaxAmount';

@@ -7,7 +7,7 @@ import { SecondaryButton } from '@basics/buttons';
 import FlashMessage from '@basics/flashMessage/flashMessage';
 import FlashMessageHolder from '@basics/flashMessage/holder';
 import Icon from '@basics/icon';
-import styles from './warnPunishedDelegate.css';
+import styles from './WarnPunishedDelegate.css';
 
 const WarnPunishedDelegate = ({
   t,

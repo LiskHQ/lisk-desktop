@@ -36,7 +36,7 @@
           ["@block", "./src/modules/block/"],
           ["@bookmark", "./src/modules/bookmark/"],
           ["@common", "./packages/common/"],
-          ["@dpos", "./packages/dpos/"],
+          ["@dpos", "./src/modules/dpos/"],
           ["@network", "./packages/network/"],
           ["@settings", "./packages/settings/"],
           ["@token", "./packages/token/"],

@@ -11,7 +11,7 @@
       "@bookmark/*": ["./src/modules/bookmark/*"],
       "@common/*": ["./packages/common/*"],
       "@legacy/*": ["./src/modules/legacy/*"],
-      "@dpos/*": ["./packages/dpos/*"],
+      "@dpos/*": ["./src/modules/dpos/*"],
       "@network/*": ["./packages/network/*"],
       "@settings/*": ["./packages/settings/*"],
       "@token/*": ["./packages/token/*"],

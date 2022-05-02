@@ -1,5 +1,5 @@
 import React from 'react';
-import { Button } from './element';
+import Button from './Button';
 
 /**
  * Returns a Button if customButton if not defined and customButton if it's

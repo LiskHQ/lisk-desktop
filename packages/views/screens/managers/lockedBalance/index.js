@@ -1,6 +1,6 @@
 import React from 'react';
 import Dialog from '@basics/dialog/dialog';
-import MultiStep from '@shared/multiStep';
+import MultiStep from 'src/modules/common/components/OldMultiStep';
 import TransactionSignature from '@transaction/detail/manager/transactionSignature';
 import Form from './form';
 import Status from './status';

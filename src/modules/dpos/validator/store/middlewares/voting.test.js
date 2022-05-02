@@ -1,4 +1,5 @@
-import actionTypes from '../actions/actionTypes';
+import walletActionTypes from '@wallet/store/actionTypes';
+import dposActionTypes from '../actions/actionTypes';
 import middleware from './voting';
 
 describe('voting middleware', () => {
@@ -19,10 +20,10 @@ describe('voting middleware', () => {
 
   describe('on accountLoggedOut action', () => {
     const givenAction = {
-      type: actionTypes.accountLoggedOut,
+      type: walletActionTypes.accountLoggedOut,
     };
     const expectedAction = {
-      type: actionTypes.votesReset,
+      type: dposActionTypes.votesReset,
     };
     const next = jest.fn();
     const store = {
@@ -38,7 +39,7 @@ describe('voting middleware', () => {
 
   describe('on accountLoggedIn action', () => {
     const givenAction = {
-      type: actionTypes.accountLoggedIn,
+      type: walletActionTypes.accountLoggedIn,
     };
     const next = jest.fn();
     const store = {
@@ -54,7 +55,7 @@ describe('voting middleware', () => {
 
   describe('on accountUpdated action', () => {
     const givenAction = {
-      type: actionTypes.accountUpdated,
+      type: walletActionTypes.accountUpdated,
     };
     const next = jest.fn();
     const store = {

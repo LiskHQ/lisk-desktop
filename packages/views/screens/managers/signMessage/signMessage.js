@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 
 import Box from '@basics/box';
 import BoxHeader from '@basics/box/header';
-import MultiStep from '@shared/multiStep';
+import MultiStep from 'src/modules/common/components/OldMultiStep';
 import Dialog from '@basics/dialog/dialog';
 import Form from './form';
 import Status from './status';
