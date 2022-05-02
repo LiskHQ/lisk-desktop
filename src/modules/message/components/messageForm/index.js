@@ -9,7 +9,7 @@ import Tooltip from '@basics/tooltip/tooltip';
 import BoxContent from '@basics/box/content';
 import BoxFooter from '@basics/box/footer';
 import BoxInfoText from '@basics/box/infoText';
-import styles from '../signMessage.css';
+import styles from './messageForm.css';
 
 const Form = ({
   nextStep,

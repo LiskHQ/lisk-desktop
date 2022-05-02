@@ -4,10 +4,10 @@ import { PrimaryButton } from '@basics/buttons';
 import BoxFooter from '@basics/box/footer';
 import Illustration from '@basics/illustration';
 import routes from '@screens/router/routes';
-import useVerifyMessageValidator from '../../../../wallet/utilities/hooks/useVerifyMessageValidator';
-import styles from './verifyMessage.css';
+import useVerifyMessageValidator from '../../hooks/useVerifyMessageValidator';
+import styles from './validityStatus.css';
 
-export default function Result({ inputs, history, t }) {
+export default function ValidityStatus({ inputs, history, t }) {
   const isCorrect = useVerifyMessageValidator(inputs);
   const closeModal = () => {
     history.push(routes.wallet.path);
@@ -33,7 +33,7 @@ export default function Result({ inputs, history, t }) {
   );
 }
 
-Result.propTypes = {
+ValidityStatus.propTypes = {
   inputs: PropTypes.object,
   t: PropTypes.func.isRequired,
   history: PropTypes.object,
