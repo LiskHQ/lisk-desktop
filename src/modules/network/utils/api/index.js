@@ -1,8 +1,7 @@
 import functionMapper from '@common/utilities/api/functionMapper';
 import * as lsk from './lsk';
-import * as btc from './btc';
 
-const networkAPI = functionMapper(lsk, btc);
+const networkAPI = functionMapper(lsk);
 
 export const getPeers = networkAPI.getPeers;
 export const isMainnetBTC = networkAPI.isMainnetBTC;
