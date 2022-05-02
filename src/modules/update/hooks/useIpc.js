@@ -5,7 +5,7 @@ import { regex } from '@common/configuration';
 import { addSearchParamsToUrl, removeSearchParamsFromUrl } from 'src/utils/searchParams';
 import { appUpdateAvailable } from '@common/store/actions';
 import FlashMessageHolder from '@basics/flashMessage/holder';
-import NewReleaseMessage from '@updater/detail/info/newReleaseMessage/newReleaseMessage';
+import NewReleaseMessage from '../detail/info/newReleaseMessage/newReleaseMessage';
 
 const useIpc = (history) => {
   const dispatch = useDispatch();
