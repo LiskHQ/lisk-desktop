@@ -1,6 +1,6 @@
 import React from 'react';
 import DemoRenderer from '@basics/demoRenderer';
-import PassphraseInput from '.';
+import PassphraseInput from './PassphraseInput';
 
 /* eslint-disable-next-line no-console */
 const onFill = console.log;

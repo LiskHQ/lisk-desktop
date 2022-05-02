@@ -8,11 +8,11 @@ import { parseSearchParams, stringifySearchParams } from 'src/utils/searchParams
 import { getNetworksList } from '@network/utilities/getNetwork';
 import Piwik from '@common/utilities/piwik';
 import { PrimaryButton } from '@basics/buttons';
-import PassphraseInput from '@wallet/manage/passphraseInput';
-import Icon from '@basics/icon/index';
+import PassphraseInput from 'src/modules/wallet/components/PassphraseInput/PassphraseInput';
+import Icon from '@basics/icon';
 import DiscreetModeToggle from '@settings/setters/toggles/discreetModeToggle';
 import NetworkSelector from '@settings/setters/selectors/networkSelector';
-import RecoveryPhrase from './recoveryPhrase';
+import RecoveryPhrase from '../RecoveryPhrase';
 import styles from './login.css';
 
 const RegisterTitle = ({ t }) => (

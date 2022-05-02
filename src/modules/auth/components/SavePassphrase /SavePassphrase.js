@@ -3,9 +3,9 @@ import React from 'react';
 import grid from 'flexboxgrid/dist/flexboxgrid.css';
 import { PrimaryButton, TertiaryButton } from '@basics/buttons';
 import PassphraseBackup from '@wallet/detail/identity/passphraseBackup';
-import registerStyles from './register.css';
+import registerStyles from '@screens/managers/register/register.css';
 
-const BackupPassphrase = ({
+const SavePassphrase = ({
   t, account, prevStep, nextStep,
 }) => (
   <>
@@ -42,4 +42,4 @@ const BackupPassphrase = ({
   </>
 );
 
-export default withTranslation()(BackupPassphrase);
+export default withTranslation()(SavePassphrase);

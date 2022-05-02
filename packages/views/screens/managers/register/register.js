@@ -4,10 +4,10 @@ import routes from '@screens/router/routes';
 import MultiStepProgressBar from '@shared/multiStepProgressBar';
 import useCreateAccounts from '@wallet/utilities/hooks/useCreateAccounts';
 import MultiStep from 'src/modules/common/components/MultiStep';
-import ChooseAvatar from './chooseAvatar';
-import BackupPassphrase from './backupPassphrase';
-import ConfirmPassphrase from './confirmPassphrase';
-import AccountCreated from './accountCreated';
+import ChooseAvatar from '../../../../../src/modules/auth/components/ChooseAvatar/chooseAvatar';
+import BackupPassphrase from '../../../../../src/modules/auth/components/SavePassphrase /SavePassphrase';
+import ConfirmPassphrase from '../../../../../src/modules/auth/components/ConfirmPassphrase/confirmPassphrase';
+import AccountCreated from '../../../../../src/modules/auth/components/SignupSuccessed/accountCreated';
 import styles from './register.css';
 
 const Register = ({ account, token, history }) => {

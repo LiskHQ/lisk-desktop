@@ -6,7 +6,7 @@ import routes from '@screens/router/routes';
 import { PrimaryButton } from '@basics/buttons';
 import Illustration from '@basics/illustration';
 
-import registerStyles from './register.css';
+import registerStyles from '@screens/managers/register/register.css';
 import styles from './accountCreated.css';
 
 const AccountCreated = ({ t }) => (

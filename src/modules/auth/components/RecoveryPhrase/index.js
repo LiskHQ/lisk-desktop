@@ -4,7 +4,7 @@ import { settingsUpdated } from '@common/store/actions';
 import { selectSettings } from '@common/store/selectors';
 import { Input } from '@basics/inputs';
 import { defaultDerivationPath } from '@common/utilities/explicitBipKeyDerivation';
-import styles from '../login.css';
+import styles from '../Signin/login.css';
 
 const RecoveryPhrase = ({ t }) => {
   const { enableCustomDerivationPath, customDerivationPath } = useSelector(selectSettings);

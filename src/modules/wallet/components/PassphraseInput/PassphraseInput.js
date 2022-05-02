@@ -5,7 +5,7 @@ import { isValidPassphrase, getPassphraseValidationErrors } from '@views/utiliti
 import Icon from '@basics/icon';
 import Input from '@basics/inputs/input';
 import Feedback from '@basics/feedback/feedback';
-import styles from './passphraseInput.css';
+import styles from './PassphraseInput.css';
 
 class passphraseInput extends React.Component {
   constructor(props) {
@@ -129,11 +129,10 @@ class passphraseInput extends React.Component {
       partialPassphraseError,
       passphraseIsInvalid,
       showPassphrase,
-      validationError,
+      validationError: isFeedbackOnError,
       values,
     } = this.state;
     const iconName = showPassphrase ? 'showPassphraseIcon' : 'hidePassphraseIcon';
-    const isFeedbackOnError = validationError;
 
     return (
       <>
