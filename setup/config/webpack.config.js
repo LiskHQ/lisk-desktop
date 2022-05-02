@@ -16,7 +16,7 @@ const config = {
       '@legacy': resolve('./src/modules/legacy'),
       '@message': resolve('./src/modules/message'),
       '@dpos': resolve('./src/modules/dpos'),
-      '@network': resolve('./packages/network'),
+      '@network': resolve('./src/modules/network'),
       '@settings': resolve('./packages/settings'),
       '@token': resolve('./packages/token'),
       '@transaction': resolve('./packages/transaction'),
