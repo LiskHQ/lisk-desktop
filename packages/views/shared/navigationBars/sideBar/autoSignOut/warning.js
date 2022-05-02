@@ -6,7 +6,7 @@ import { useDispatch } from 'react-redux';
 import { withTranslation } from 'react-i18next';
 import { timerReset } from '@common/store/actions';
 import { timeOutWarningId } from '@views/configuration';
-import account from '@wallet/configuration/account';
+import account from '@wallet/configuration/constants';
 import styles from './autoSignOut.css';
 
 const TimeOutToast = ({
