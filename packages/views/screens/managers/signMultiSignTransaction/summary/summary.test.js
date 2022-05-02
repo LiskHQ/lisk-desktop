@@ -9,7 +9,7 @@ jest.mock('@screens/router/searchParams', () => ({
   removeSearchParamsFromUrl: jest.fn(),
 }));
 
-jest.mock('@transaction/utilities/transaction', () => ({
+jest.mock('@transaction/utils/transaction', () => ({
   getTxAmount: () => '1000000000',
 }));
 

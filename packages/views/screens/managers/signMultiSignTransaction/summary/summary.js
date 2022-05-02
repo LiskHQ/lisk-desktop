@@ -4,7 +4,7 @@ import { signatureCollectionStatus } from '@transaction/configuration/txStatus';
 import BoxContent from '@basics/box/content';
 import Box from '@basics/box';
 import TransactionDetails from '@screens/managers/transactionDetails';
-import TransactionDetailsManager from '@transaction/detail/manager/transactionDetails';
+import TransactionDetailsProvider from '@transaction/context';
 
 import ProgressBar from '../progressBar';
 import { showSignButton, getTransactionSignatureStatus } from '../helpers';
@@ -63,7 +63,7 @@ const Summary = ({
       </header>
       <BoxContent>
         <ProgressBar current={2} />
-        <TransactionDetailsManager
+        <TransactionDetailsProvider
           activeToken="LSK"
           error={error}
           transaction={transaction}
@@ -72,7 +72,7 @@ const Summary = ({
           containerStyle={`${styles.txDetails} ${showFeedback && isMember ? styles.small : ''}`}
         >
           <TransactionDetails />
-        </TransactionDetailsManager>
+        </TransactionDetailsProvider>
       </BoxContent>
       {
         isMember ? (

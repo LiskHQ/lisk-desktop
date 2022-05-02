@@ -2,21 +2,21 @@ import { act } from 'react-dom/test-utils';
 import networks from '@network/configuration/networks';
 import { tokenMap } from '@token/configuration/tokens';
 import { mountWithProps } from '@common/utilities/testHelpers';
-import * as hwManager from '@transaction/utilities/hwManager';
-import { create } from '@transaction/utilities/api';
-import useTransactionPriority from '@transaction/manage/transactionPriority/useTransactionPriority';
-import useTransactionFeeCalculation from '@transaction/manage/transactionPriority/useTransactionFeeCalculation';
+import * as hwManager from '@transaction/utils/hwManager';
+import { create } from '@transaction/api';
+import useTransactionPriority from '@transaction/hooks/useTransactionPriority';
+import useTransactionFeeCalculation from '@transaction/hooks/useTransactionFeeCalculation';
 import wallets from '@tests/constants/wallets';
 import flushPromises from '@tests/unit-test-utils/flushPromises';
 import LockedBalance from './index';
 
-jest.mock('@transaction/manage/transactionPriority/useTransactionPriority');
-jest.mock('@transaction/manage/transactionPriority/useTransactionFeeCalculation');
-jest.mock('@transaction/utilities/api');
+jest.mock('@transaction/hooks/useTransactionPriority');
+jest.mock('@transaction/hooks/useTransactionFeeCalculation');
+jest.mock('@transaction/api');
 jest.mock('@wallet/store/action', () => ({
   balanceUnlocked: jest.fn(),
 }));
-jest.mock('@transaction/utilities/hwManager');
+jest.mock('@transaction/utils/hwManager');
 
 describe('Unlock LSK modal', () => {
   let wrapper;

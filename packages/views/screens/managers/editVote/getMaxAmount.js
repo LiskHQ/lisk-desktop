@@ -1,9 +1,9 @@
-import { getTransactionFee } from '@transaction/utilities/api';
-import { getNumberOfSignatures } from '@transaction/utilities/transaction';
+import { getTransactionFee } from '@transaction/api';
+import { getNumberOfSignatures } from '@transaction/utils/transaction';
 import { MODULE_ASSETS_NAME_ID_MAP } from '@transaction/configuration/moduleAssets';
 import { MIN_ACCOUNT_BALANCE, VOTE_AMOUNT_STEP } from '@transaction/configuration/transactions';
 import { toRawLsk } from '@token/utilities/lsk';
-import { normalizeVotesForTx } from '@transaction/manage/transactionPriority';
+import { normalizeVotesForTx } from '@transaction/utils';
 
 /**
  * Calculates the maximum vote amount possible. It
@@ -12,7 +12,7 @@ import { normalizeVotesForTx } from '@transaction/manage/transactionPriority';
  *
  * @param {object} account - Lisk account info from the Redux store
  * @param {object} network - Network info from the Redux store
- * @param {object} transaction - Raw transaction object
+ * @param {object} address - Raw transaction object @todo fix description
  * @param {object} voting - List of votes from the Redux store
  * @returns {Number} - Maximum possible vote amount
  */
