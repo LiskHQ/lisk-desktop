@@ -12,9 +12,9 @@ import BoxInfoText from '@basics/box/infoText';
 import Icon from '@basics/icon';
 import Tooltip from '@basics/tooltip/tooltip';
 import { regex } from '@common/configuration';
-import styles from './verifyMessage.css';
+import styles from './validityForm.css';
 
-export default class VerifyMessageInput extends React.Component {
+export default class ValidityForm extends React.Component {
   constructor(props) {
     super(props);
 
@@ -193,13 +193,13 @@ export default class VerifyMessageInput extends React.Component {
   }
 }
 
-VerifyMessageInput.propTypes = {
+ValidityForm.propTypes = {
   history: PropTypes.object.isRequired,
   nextStep: PropTypes.func,
   t: PropTypes.func.isRequired,
   prevState: PropTypes.object,
 };
 
-VerifyMessageInput.defaultProps = {
+ValidityForm.defaultProps = {
   prevState: {},
 };
