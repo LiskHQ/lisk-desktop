@@ -1,5 +1,5 @@
 import React from 'react';
-import TransactionsList from '@transaction/list/managers/transactionMonitor';
+import TransactionsList from '@transaction/components/TransactionMonitor';
 
 import Overview from './overview';
 

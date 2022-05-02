@@ -3,18 +3,18 @@ import { mount } from 'enzyme';
 import { act } from 'react-dom/test-utils';
 import {
   getTransactionBaseFees,
-} from '@transaction/utilities/api';
+} from '@transaction/api';
 import { tokenMap } from '@token/configuration/tokens';
-import useTransactionFeeCalculation from '@transaction/manage/transactionPriority/useTransactionFeeCalculation';
+import useTransactionFeeCalculation from '@transaction/hooks/useTransactionFeeCalculation';
 import { truncateAddress } from '@wallet/utilities/account';
-import * as hwManager from '@transaction/utilities/hwManager';
+import * as hwManager from '@transaction/utils/hwManager';
 import accounts from '@tests/constants/wallets';
 import flushPromises from '@tests/unit-test-utils/flushPromises';
 import Summary from './summary';
 
-jest.mock('@transaction/manage/transactionPriority/useTransactionFeeCalculation');
-jest.mock('@transaction/utilities/api');
-jest.mock('@transaction/utilities/hwManager');
+jest.mock('@transaction/hooks/useTransactionFeeCalculation');
+jest.mock('@transaction/api');
+jest.mock('@transaction/utils/hwManager');
 
 const transactionBaseFees = {
   Low: 156,

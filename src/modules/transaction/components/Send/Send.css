@@ -1,0 +1,43 @@
+@import '../../../../../setup/react/app/mixins.css';
+
+/* send */
+.information {
+  margin: 0;
+  margin-left: 15px;
+}
+
+.secondText {
+  @mixin contentLargest;
+
+  color: var(--color-blue-gray);
+  margin-left: 10px;
+}
+
+
+.msignRow {
+    display: flex;
+    flex-direction: row !important;
+    justify-content: flex-start;
+  
+    & > .col {
+      display: flex;
+      flex-direction: column;
+      flex-basis: 100%;
+      max-width: 100%;
+  
+      & > label {
+        text-overflow: ellipsis;
+        overflow: hidden;
+        white-space: nowrap;
+      }
+  
+      & > label:first-child {
+        font-family: var(--content-font);
+        font-size: 13px;
+        font-weight: var(--font-weight-bold);
+        letter-spacing: 0.2px;
+        line-height: 20px;
+        margin-bottom: 10px;
+      }
+    }
+}

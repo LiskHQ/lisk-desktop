@@ -1,6 +1,6 @@
 import React from 'react';
 import { shallow } from 'enzyme';
-import TransactionResult from '@transaction/detail/manager/transactionResult';
+import TransactionResult from '@transaction/components/TransactionResult';
 import accounts from '@tests/constants/wallets';
 import Status from './status';
 
