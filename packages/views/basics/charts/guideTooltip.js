@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import Tooltip from 'src/theme/Tooltip';
 import styles from './guideTooltip.css';
-import Tooltip from '../../../../src/theme/Tooltip';
 
 const DoughnutChartIcon = () => (
   <div className={styles.container}>

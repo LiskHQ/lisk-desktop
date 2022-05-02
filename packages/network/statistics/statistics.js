@@ -8,7 +8,7 @@ import BoxHeader from '@basics/box/header';
 import BoxContent from '@basics/box/content';
 import BoxEmptyState from '@basics/box/emptyState';
 import { DoughnutChart } from '@basics/charts';
-import Tooltip from '@basics/../../../src/theme/Tooltip';
+import Tooltip from 'src/theme/Tooltip';
 import GuideTooltip, { GuideTooltipItem } from '@basics/charts/guideTooltip';
 import OthersTooltip from './othersTooltip';
 import styles from './statistics.css';
