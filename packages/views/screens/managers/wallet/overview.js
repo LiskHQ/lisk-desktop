@@ -10,7 +10,7 @@ import withData from '@common/utilities/withData';
 import { getTransactions } from '@transaction/api';
 import { selectTransactions } from '@common/store/selectors';
 import FlashMessageHolder from '@basics/flashMessage/holder';
-import WarnPunishedDelegate from '@dpos/detail/info/warnPunishedDelegate';
+import WarnPunishedDelegate from '@dpos/validator/components/WarnPunishedDelegate';
 import WalletInfo from '@wallet/detail/identity/walletInfo';
 import BalanceChart from '@wallet/detail/holdings/balanceChart';
 import BalanceInfo from '@wallet/detail/holdings/balanceInfo';

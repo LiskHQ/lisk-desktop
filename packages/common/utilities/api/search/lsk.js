@@ -3,7 +3,7 @@ import { tokenMap } from '@token/configuration/tokens';
 import { validateAddress } from '@common/utilities/validators';
 import { getAccount } from '@wallet/utilities/api/lsk';
 import { getTransaction } from '@transaction/api/lsk';
-import { getDelegates } from '@dpos/utilities/api/';
+import { getDelegates } from '@dpos/validator/api/';
 import { getBlock } from '@block/utils';
 
 /**

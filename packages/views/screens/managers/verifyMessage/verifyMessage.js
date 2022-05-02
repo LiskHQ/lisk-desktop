@@ -2,7 +2,7 @@ import PropTypes from 'prop-types';
 import React from 'react';
 
 import routes from '@screens/router/routes';
-import MultiStep from '@shared/multiStep';
+import MultiStep from 'src/modules/common/components/OldMultiStep';
 import Dialog from '@basics/dialog/dialog';
 import Result from './result';
 import VerifyMessageInput from './verifyMessageInput';

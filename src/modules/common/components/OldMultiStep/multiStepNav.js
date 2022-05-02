@@ -1,5 +1,5 @@
 import React from 'react';
-import { FontIcon } from '../fontIcon';
+import { FontIcon } from '../../../../../packages/views/shared/fontIcon';
 import styles from './multiStep.css';
 
 const MultiStepNav = ({

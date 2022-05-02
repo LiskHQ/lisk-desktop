@@ -1,7 +1,7 @@
 import React from 'react';
 import { mount } from 'enzyme';
 import networks from '@network/configuration/networks';
-import * as delegatesApi from '@dpos/utilities/api';
+import * as delegatesApi from '@dpos/validator/api';
 import { getTransactionBaseFees, getTransactionFee, create } from '@transaction/api';
 import { fromRawLsk } from '@token/utilities/lsk';
 import * as hwManager from '@transaction/utils/hwManager';
@@ -11,7 +11,7 @@ import SelectNameAndFee from './form';
 
 jest.mock('@network/utilities/api');
 jest.mock('@transaction/api');
-jest.mock('@dpos/utilities/api', () => ({
+jest.mock('@dpos/validator/api', () => ({
   getDelegate: jest.fn().mockImplementation(() => Promise.resolve({ data: [] })),
 }));
 jest.mock('@transaction/utils/hwManager');
