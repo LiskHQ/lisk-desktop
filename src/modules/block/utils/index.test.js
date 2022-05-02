@@ -1,9 +1,9 @@
 import http from '@common/utilities/api/http';
 import { subscribe, unsubscribe } from '@common/utilities/api/ws';
+import { httpPaths } from '@block/config';
 import {
   getBlock, getBlocks, blockSubscribe, blockUnsubscribe,
 } from './index';
-import { httpPaths } from '@block/config';
 
 jest.mock('@common/utilities/api/http');
 jest.mock('@common/utilities/api/ws');

@@ -2,7 +2,7 @@ import { mountWithRouter } from '@common/utilities/testHelpers';
 import { truncateAddress } from '@wallet/utilities/account';
 import blocks from '@tests/constants/blocks';
 import transactions from '@tests/constants/transactions';
-import BlockDetails from './Transactions';
+import BlockDetails from './BlockDetailsTransactions';
 
 describe('BlockDetails page', () => {
   let wrapper;

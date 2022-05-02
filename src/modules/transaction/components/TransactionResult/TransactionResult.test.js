@@ -3,8 +3,8 @@ import { mount } from 'enzyme';
 import { txStatusTypes } from '@transaction/configuration/txStatus';
 import accounts from '@tests/constants/wallets';
 import TransactionResult from './TransactionResult';
-import Regular from './Regular';
-import Multisignature from './Multisignature';
+import Regular from '../Regular';
+import Multisignature from '../Multisignature';
 
 describe('TransactionResult', () => {
   const props = {

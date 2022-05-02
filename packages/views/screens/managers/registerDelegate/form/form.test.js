@@ -2,19 +2,19 @@ import React from 'react';
 import { mount } from 'enzyme';
 import networks from '@network/configuration/networks';
 import * as delegatesApi from '@dpos/utilities/api';
-import { getTransactionBaseFees, getTransactionFee, create } from '@transaction/utilities/api';
+import { getTransactionBaseFees, getTransactionFee, create } from '@transaction/api';
 import { fromRawLsk } from '@token/utilities/lsk';
-import * as hwManager from '@transaction/utilities/hwManager';
+import * as hwManager from '@transaction/utils/hwManager';
 import wallets from '@tests/constants/wallets';
 import flushPromises from '@tests/unit-test-utils/flushPromises';
 import SelectNameAndFee from './form';
 
 jest.mock('@network/utilities/api');
-jest.mock('@transaction/utilities/api');
+jest.mock('@transaction/api');
 jest.mock('@dpos/utilities/api', () => ({
   getDelegate: jest.fn().mockImplementation(() => Promise.resolve({ data: [] })),
 }));
-jest.mock('@transaction/utilities/hwManager');
+jest.mock('@transaction/utils/hwManager');
 
 const transactionBaseFees = {
   Low: 156,

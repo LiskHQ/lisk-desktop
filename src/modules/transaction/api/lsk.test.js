@@ -1,6 +1,6 @@
 /* eslint-disable max-lines */
 import { MODULE_ASSETS_NAME_ID_MAP } from '@transaction/configuration/moduleAssets';
-import { getTxAmount } from '@transaction/utilities/transaction';
+import { getTxAmount } from '@transaction/utils/transaction';
 import { getState } from '@fixtures/transactions';
 import * as delegates from '@dpos/utilities/api';
 import http from '@common/utilities/api/http';

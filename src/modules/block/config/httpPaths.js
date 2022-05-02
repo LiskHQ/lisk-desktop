@@ -1,4 +1,4 @@
-import { HTTP_PREFIX } from '../const';
+import HTTP_PREFIX from '../const';
 
 export default {
   block: `${HTTP_PREFIX}/blocks`,
