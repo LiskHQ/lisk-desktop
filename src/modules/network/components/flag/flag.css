@@ -12,7 +12,7 @@
 
 .sprite {
   position: relative;
-  background-image: url(../../../../setup/react/assets/images/flags.png);
+  background-image: url(../../../../../setup/react/assets/images/flags.png);
   background-repeat: no-repeat;
   display: block;
   width: 64px;
