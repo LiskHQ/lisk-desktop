@@ -32,6 +32,7 @@ module.exports = {
     '^@bookmark(.*)$': resolve(__dirname, '../src/modules/bookmark/$1'),
     '^@common(.*)$': resolve(__dirname, '../packages/common/$1'),
     '^@legacy(.*)$': resolve(__dirname, '../src/modules/legacy/$1'),
+    '^@message(.*)$': resolve(__dirname, '../src/modules/message/$1'),
     '^@dpos(.*)$': resolve(__dirname, '../src/modules/dpos/$1'),
     '^@network(.*)$': resolve(__dirname, '../packages/network/$1'),
     '^@settings(.*)$': resolve(__dirname, '../packages/settings/$1'),

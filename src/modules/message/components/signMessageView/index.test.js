@@ -1,7 +1,7 @@
 import React from 'react';
 import { shallow } from 'enzyme';
 import accounts from '@tests/constants/wallets';
-import SignMessage from './signMessage';
+import SignMessage from './index';
 
 describe('Sign Message Component', () => {
   const props = {

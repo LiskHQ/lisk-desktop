@@ -6,9 +6,9 @@ import { getDeviceType } from '@wallet/utilities/hwManager';
 import Illustration from '@basics/illustration';
 import BoxContent from '@basics/box/content';
 import { signUsingPrivateKey, signUsingHW } from '@wallet/manager/signMessage';
-import styles from '../signMessage.css';
+import styles from './signatureCollector.css';
 
-const MessageSignature = ({
+const SignatureCollector = ({
   nextStep,
   message,
   account,
@@ -50,4 +50,4 @@ const MessageSignature = ({
   );
 };
 
-export default MessageSignature;
+export default SignatureCollector;

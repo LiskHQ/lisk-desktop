@@ -1,0 +1,25 @@
+@import '../../../../../setup/react/app/mixins.css';
+
+.signedMessage {
+  min-height: 278px;
+  resize: none;
+}
+
+.content {
+  padding: 0 0 30px !important;
+}
+
+.inputViewSwitcher {
+  @mixin contentLarge bold;
+
+  text-align: right;
+  color: var(--color-slate-gray);
+  margin-top: 12px;
+  margin-bottom: -32px;
+
+  & img {
+    cursor: pointer;
+    margin-left: 5px;
+    vertical-align: middle;
+  }
+}
