@@ -4,9 +4,9 @@ import Box from '@basics/box';
 import BoxHeader from '@basics/box/header';
 import BoxContent from '@basics/box/content';
 import WalletListRepeater from '@wallet/list/repeater';
-import styles from './wallets.css';
+import styles from './Accounts.css';
 
-const WalletsMonitor = ({ wallets, t, ...restProps }) => (
+const Accounts = ({ wallets, t, ...restProps }) => (
   <Box main isLoading={wallets.isLoading} className="accounts-box">
     <BoxHeader>
       <h1>{t('All accounts')}</h1>
@@ -17,4 +17,4 @@ const WalletsMonitor = ({ wallets, t, ...restProps }) => (
   </Box>
 );
 
-export default WalletsMonitor;
+export default Accounts;

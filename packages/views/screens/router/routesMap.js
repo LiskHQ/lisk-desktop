@@ -7,7 +7,7 @@ import DelegatesMonitor from '@screens/managers/monitor/delegates';
 import DelegatesPerformanceModal from '@screens/managers/wallet/delegatePerformanceModal';
 import HwWalletLogin from '@screens/managers/hwWalletLogin';
 import Login from 'src/modules/auth/components/Signin';
-import MonitorWallets from '@screens/managers/monitor/wallets';
+import MonitorWallets from 'src/modules/account/components/Accounts';
 import MonitorNetwork from '@screens/managers/network';
 import MonitorTransactions from '@screens/managers/monitor/transactions';
 import Register from 'src/modules/auth/manager/SignupManager';

@@ -2,10 +2,10 @@ import { compose } from 'redux';
 import { withTranslation } from 'react-i18next';
 
 import withData from '@common/utilities/withData';
-import WalletsMonitor from '@screens/managers/monitor/wallets/monitor';
 import { getAccounts } from '@wallet/utilities/api';
 import { getNetworkStatus } from '@network/utilities/api';
 import { DEFAULT_LIMIT } from '@views/configuration';
+import Accounts from '../components/Accounts/Accounts';
 
 export default compose(
   withData({
@@ -35,4 +35,4 @@ export default compose(
     },
   }),
   withTranslation(),
-)(WalletsMonitor);
+)(Accounts);
