@@ -2,7 +2,7 @@ import React from 'react';
 import { withTranslation } from 'react-i18next';
 import grid from 'flexboxgrid/dist/flexboxgrid.css';
 import PassphraseRenderer from '@wallet/detail/identity/passphraseRenderer';
-import registerStyles from '@screens/managers/register/register.css';
+import registerStyles from '../Signup/register.css';
 import styles from './confirmPassphrase.css';
 
 const ConfirmPassphrase = ({

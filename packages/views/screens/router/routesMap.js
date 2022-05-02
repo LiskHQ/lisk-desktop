@@ -10,7 +10,7 @@ import Login from 'src/modules/auth/components/Signin';
 import MonitorWallets from '@screens/managers/monitor/wallets';
 import MonitorNetwork from '@screens/managers/network';
 import MonitorTransactions from '@screens/managers/monitor/transactions';
-import Register from '@screens/managers/register';
+import Register from 'src/modules/auth/manager/SignupManager';
 import RegisterDelegate from '@screens/managers/registerDelegate';
 import Send from '@screens/managers/send';
 import Settings from '@screens/managers/settings';

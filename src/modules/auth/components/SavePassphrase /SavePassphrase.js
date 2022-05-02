@@ -3,7 +3,7 @@ import React from 'react';
 import grid from 'flexboxgrid/dist/flexboxgrid.css';
 import { PrimaryButton, TertiaryButton } from '@basics/buttons';
 import PassphraseBackup from '@wallet/detail/identity/passphraseBackup';
-import registerStyles from '@screens/managers/register/register.css';
+import registerStyles from '../Signup/register.css';
 
 const SavePassphrase = ({
   t, account, prevStep, nextStep,

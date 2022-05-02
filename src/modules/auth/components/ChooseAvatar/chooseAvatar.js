@@ -5,7 +5,7 @@ import grid from 'flexboxgrid/dist/flexboxgrid.css';
 import routes from '@screens/router/routes';
 import { PrimaryButton, TertiaryButton } from '@basics/buttons';
 import WalletVisual from '@wallet/detail/identity/walletVisual';
-import registerStyles from '@screens/managers/register/register.css';
+import registerStyles from '../Signup/register.css';
 import styles from './chooseAvatar.css';
 
 class ChooseAvatar extends React.Component {
