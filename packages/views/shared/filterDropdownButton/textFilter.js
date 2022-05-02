@@ -1,5 +1,5 @@
 import React from 'react';
-import { Input } from '@basics/inputs';
+import { Input } from 'src/theme';
 
 const TextFilter = ({
   filters, label, name, placeholder, updateCustomFilters, valueFormatter,

@@ -3,7 +3,7 @@ import { withTranslation } from 'react-i18next';
 import { keyCodes } from '@views/configuration';
 import { isValidPassphrase, getPassphraseValidationErrors } from '@views/utilities/passphrase';
 import Icon from '@basics/icon';
-import Input from '@basics/inputs/input';
+import Input from 'src/theme/Input';
 import Feedback from '@basics/feedback/feedback';
 import styles from './PassphraseInput.css';
 

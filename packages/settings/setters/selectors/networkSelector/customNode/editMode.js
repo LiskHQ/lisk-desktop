@@ -4,7 +4,7 @@ import { networkKeys } from '@network/configuration/networks';
 import { tokenMap } from '@token/configuration/tokens';
 import { getNetworkConfig } from '@network/utilities/api';
 import { PrimaryButton } from '@basics/buttons';
-import { Input } from '@basics/inputs';
+import { Input } from 'src/theme';
 import { addHttp } from '@common/utilities/login';
 import styles from '../networkSelector.css';
 

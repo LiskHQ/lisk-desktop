@@ -2,7 +2,7 @@ import { withTranslation } from 'react-i18next';
 import React from 'react';
 import moment from 'moment';
 import { PrimaryButton, SecondaryButton } from '@basics/buttons';
-import DropdownButton from '@basics/inputs/select/dropdownButton';
+import DropdownButton from 'src/theme/DropdownButton';
 import Icon from '@basics/icon';
 import AmountFieldGroup from './amountFieldGroup';
 import DateFieldGroup from './dateFieldGroup';

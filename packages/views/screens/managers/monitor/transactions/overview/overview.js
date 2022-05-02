@@ -14,7 +14,7 @@ import BoxTabs from '@basics/tabs';
 import BoxHeader from '@basics/box/header';
 import BoxContent from '@basics/box/content';
 import { DoughnutChart, BarChart } from '@basics/charts';
-import Tooltip from '@basics/tooltip/tooltip';
+import Tooltip from 'src/theme/Tooltip';
 import GuideTooltip, { GuideTooltipItem } from '@basics/charts/guideTooltip';
 import styles from './overview.css';
 

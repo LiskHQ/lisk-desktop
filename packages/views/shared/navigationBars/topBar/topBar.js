@@ -5,7 +5,7 @@ import { isEmpty } from '@common/utilities/helpers';
 import Icon from '@basics/icon';
 import DialogLink from '@basics/dialog/link';
 import { PrimaryButton } from '@basics/buttons';
-import Tooltip from '@basics/tooltip/tooltip';
+import Tooltip from 'src/theme/Tooltip';
 import VoteQueueToggle from '@settings/setters/toggles/voteQueueToggle';
 import DiscreteModeToggle from '@settings/setters/toggles/discreteModeToggle';
 import LightDarkToggle from '@settings/setters/toggles/lightDarkModeToggle';

@@ -2,7 +2,7 @@ import { to } from 'await-to-js';
 import React from 'react';
 import { getPublicKey, validatePin } from '@wallet/utilities/hwManager';
 import { externalLinks } from '@common/configuration';
-import { Input } from '@basics/inputs';
+import { Input } from 'src/theme';
 import { PrimaryButton, TertiaryButton } from '@basics/buttons';
 import styles from './requestPin.css';
 

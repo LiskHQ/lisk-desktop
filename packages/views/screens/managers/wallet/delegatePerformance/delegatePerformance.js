@@ -3,7 +3,7 @@ import grid from 'flexboxgrid/dist/flexboxgrid.css';
 import Box from '@basics/box';
 import BoxHeader from '@basics/box/header';
 import BoxContent from '@basics/box/content';
-import NotFound from '@shared/notFound';
+import NotFound from 'src/modules/common/NotFound';
 import { isEmpty } from '@common/utilities/helpers';
 import delegatePerformanceDetails from './delegatePerformanceDetails';
 import styles from './styles.css';

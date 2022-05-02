@@ -5,9 +5,9 @@ import { truncateAddress } from '@wallet/utilities/account';
 import { TertiaryButton } from '@basics/buttons';
 import WalletVisual from '@wallet/detail/identity/walletVisual';
 import LiskAmount from '@shared/liskAmount';
-import { Input } from '@basics/inputs';
+import { Input } from 'src/theme';
 import Icon from '@basics/icon';
-import Tooltip from '@basics/tooltip/tooltip';
+import Tooltip from 'src/theme/Tooltip';
 import styles from './selectAccount.css';
 
 const AccountCard = ({

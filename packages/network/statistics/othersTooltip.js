@@ -1,6 +1,6 @@
 import React from 'react';
 import { useTranslation } from 'react-i18next';
-import Tooltip from '@basics/tooltip/tooltip';
+import Tooltip from '@basics/../../../src/theme/Tooltip';
 import styles from './othersTooltip.css';
 
 const OthersTooltip = ({ data, title }) => {

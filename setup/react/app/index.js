@@ -3,23 +3,23 @@
 import React, { useEffect, useState } from 'react';
 import { Route, Switch, withRouter } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
+import { settingsRetrieved } from '@settings/store/actions';
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import { hot } from 'react-hot-loader/root';
 import { bookmarksRetrieved } from 'src/modules/bookmark/store/action';
 import { watchListRetrieved } from 'src/modules/dpos/validator/store/actions/watchList';
+import NotFound from 'src/modules/common/NotFound';
+import useIpc from 'src/modules/update/hooks/useIpc';
 import './variables.css';
 import OfflineWrapper from '../../../packages/views/basics/offlineWrapper';
 import CustomRoute from '../../../packages/views/shared/customRoute';
-import NotFound from '../../../packages/views/shared/notFound';
 import NavigationBars from '../../../packages/views/shared/navigationBars';
 import FlashMessageHolder from '../../../packages/views/basics/flashMessage/holder';
 import DialogHolder from '../../../packages/views/basics/dialog/holder';
-import { settingsRetrieved } from '../../../packages/settings/store/actions';
 import routesMap from '../../../packages/views/screens/router/routesMap';
 import routes from '../../../packages/views/screens/router/routes';
 import ThemeContext from '../../../packages/views/contexts/theme';
-import useIpc from '../../../src/modules/update/hooks/useIpc';
 import styles from './app.css';
 
 // eslint-disable-next-line max-statements

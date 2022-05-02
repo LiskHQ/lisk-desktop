@@ -4,7 +4,7 @@ import CopyToClipboard from 'react-copy-to-clipboard';
 import BoxContent from '@basics/box/content';
 import BoxFooter from '@basics/box/footer';
 import Illustration from '@basics/illustration';
-import { AutoResizeTextarea } from '@basics/inputs';
+import { AutoResizeTextarea } from 'src/theme';
 import { getDeviceType } from '@wallet/utilities/hwManager';
 import { SecondaryButton, PrimaryButton } from '@basics/buttons';
 import styles from './signedMessage.css';

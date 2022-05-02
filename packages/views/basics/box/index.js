@@ -1,6 +1,6 @@
 import PropTypes from 'prop-types';
 import React from 'react';
-import ProgressBar from '../progress/progressBar/progressBar';
+import ProgressBar from '../../../../src/theme/ProgressBar/progressBar';
 import styles from './box.css';
 
 const Box = ({
