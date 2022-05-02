@@ -15,7 +15,7 @@ import RegisterDelegate from '@screens/managers/registerDelegate';
 import Send from '@screens/managers/send';
 import Settings from '@screens/managers/settings';
 import SignMessage from '@message/manager/signMessageManager';
-import TermsOfUse from '@screens/managers/termsOfUse';
+import TermsOfUse from 'src/modules/common/components/TermsOfUse';
 import Wallet from '@screens/managers/wallet';
 import Explorer from '@screens/managers/wallet/explorer';
 // import TransactionDetailsModal from '@screens/managers/transactionDetailsModal';

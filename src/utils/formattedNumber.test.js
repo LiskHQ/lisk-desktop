@@ -1,7 +1,7 @@
 import React from 'react';
 import { expect } from 'chai';
 import { mount } from 'enzyme';
-import FormattedNumber from './index';
+import FormattedNumber from './formattedNumber';
 
 describe('FormattedNumber', () => {
   it('renders 0 if raw value is 0', () => {

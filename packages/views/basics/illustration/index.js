@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { useTheme } from '@views/utilities/theme';
+import { useTheme } from 'src/theme/Theme';
 import welcomeLiskDelegates from '../../../../setup/react/assets/images/illustrations/illustration-welcome-to-lisk-delegates-dark.svg';
 import yourVoiceMatters from '../../../../setup/react/assets/images/illustrations/illustration-your-voice-matters-dark.svg';
 import getRewarded from '../../../../setup/react/assets/images/illustrations/illustration-get-rewarded-dark.svg';

@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { Line, Bar, Doughnut } from 'react-chartjs-2';
-import { useTheme } from '@views/utilities/theme';
+import { useTheme } from 'src/theme/Theme';
 import {
   lineChartData,
   barChartData,

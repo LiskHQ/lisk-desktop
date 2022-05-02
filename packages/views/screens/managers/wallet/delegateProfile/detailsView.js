@@ -1,6 +1,6 @@
 import React from 'react';
 import grid from 'flexboxgrid/dist/flexboxgrid.css';
-import { useTheme } from '@views/utilities/theme';
+import { useTheme } from 'src/theme/Theme';
 import { tokenMap } from '@token/configuration/tokens';
 import Box from '@basics/box';
 import BoxContent from '@basics/box/content';

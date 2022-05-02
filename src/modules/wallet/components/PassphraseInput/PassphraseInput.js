@@ -1,7 +1,7 @@
 import React from 'react';
 import { withTranslation } from 'react-i18next';
 import { keyCodes } from '@views/configuration';
-import { isValidPassphrase, getPassphraseValidationErrors } from '@views/utilities/passphrase';
+import { isValidPassphrase, getPassphraseValidationErrors } from 'src/modules/wallet/utils/passphrase';
 import Icon from '@basics/icon';
 import Input from 'src/theme/Input';
 import Feedback from '@basics/feedback/feedback';

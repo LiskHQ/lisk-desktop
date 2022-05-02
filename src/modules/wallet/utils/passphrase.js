@@ -1,6 +1,6 @@
 import crypto from 'crypto';
 import i18next from 'i18next';
-import { inDictionary } from './similarWord';
+import { inDictionary } from 'src/utils/similarWord';
 
 if (global._bitcore) delete global._bitcore;
 const mnemonic = require('bitcore-mnemonic');

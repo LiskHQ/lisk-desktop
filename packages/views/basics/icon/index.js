@@ -1,7 +1,7 @@
 /* eslint-disable max-lines */
 import React from 'react';
 import PropTypes from 'prop-types';
-import { useTheme } from '@views/utilities/theme';
+import { useTheme } from 'src/theme/Theme';
 import academy from '../../../../setup/react/assets/images/icons/academy.svg';
 import academyActive from '../../../../setup/react/assets/images/icons/academy-active.svg';
 import alertIcon from '../../../../setup/react/assets/images/icons/icon-alert.svg';
@@ -409,7 +409,7 @@ export const icons = {
 const Icon = ({ name, noTheme, ...props }) => {
   const theme = useTheme();
   const src = theme === 'dark' && !noTheme && icons[`${name}Dark`] ? icons[`${name}Dark`] : icons[name];
-  return <img src={src} {...props} />;
+  return <img src={src} alt={name} {...props} />;
 };
 
 Icon.propTypes = {

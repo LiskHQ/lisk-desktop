@@ -2,7 +2,7 @@ import React from 'react';
 import { expect } from 'chai';
 import { mount } from 'enzyme';
 import sinon from 'sinon';
-import { generatePassphraseFromSeed } from '@views/utilities/passphrase';
+import { generatePassphraseFromSeed } from 'src/modules/wallet/utils/passphrase';
 import { extractAddressFromPassphrase } from '@wallet/utilities/account';
 import ChooseAvatar from './chooseAvatar';
 

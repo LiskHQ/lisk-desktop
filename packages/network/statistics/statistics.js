@@ -1,7 +1,7 @@
 /* eslint-disable max-lines */
 // istanbul ignore file
 import React from 'react';
-import { useTheme } from '@views/utilities/theme';
+import { useTheme } from 'src/theme/Theme';
 import { getColorPalette } from '@views/basics/charts/chartOptions';
 import Box from '@basics/box';
 import BoxHeader from '@basics/box/header';

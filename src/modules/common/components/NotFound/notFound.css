@@ -1,4 +1,4 @@
-@import '../../../../setup/react/app/mixins.css';
+@import '../../../../../setup/react/app/mixins.css';
 
 .notFoundPage {
   align-items: center;
@@ -26,7 +26,7 @@
     margin-bottom: 32px;
     line-height: 22px;
     letter-spacing: 0.21px;
-    padding: 0px 13px;
+    padding: 0 13px;
   }
 }
 
