@@ -4,7 +4,7 @@ import { MODULE_ASSETS_NAME_ID_MAP } from '@transaction/configuration/moduleAsse
 import { mountWithRouter } from '@common/utilities/testHelpers';
 import { truncateAddress } from '@wallet/utilities/account';
 import wallets from '@tests/constants/wallets';
-import TransactionDetailsManager from '@transaction/detail/manager/transactionDetails';
+import TransactionDetailsManager from '@transaction/context/TransactionDetailsProvider';
 import TransactionDetails from '.';
 
 const transaction = {

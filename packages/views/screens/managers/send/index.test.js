@@ -1,9 +1,9 @@
-import { getTransactionBaseFees, getTransactionFee } from '@transaction/utilities/api';
+import { getTransactionBaseFees, getTransactionFee } from '@transaction/api';
 import { mountWithRouter } from '@common/utilities/testHelpers';
 import wallets from '@tests/constants/wallets';
 import Send from './index';
 
-jest.mock('@transaction/utilities/api');
+jest.mock('@transaction/api');
 
 getTransactionBaseFees.mockResolvedValue({
   Low: 0,

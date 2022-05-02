@@ -1,4 +1,4 @@
-import { create } from '@transaction/utilities/api/lsk';
+import { create } from '@transaction/api/lsk';
 import wallets from '@tests/constants/wallets';
 import actionTypes from '@transaction/store/actionTypes';
 import { balanceReclaimed } from './action';
