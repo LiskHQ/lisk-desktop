@@ -1,7 +1,6 @@
 import loginTypes from '@wallet/configuration/loginTypes';
 import networks from '@network/configuration/networks';
 import * as transactionApi from '@transaction/api';
-import * as delegateApi from '@dpos/validator/api';
 import * as accountApi from '@wallet/utilities/api';
 import * as hwManager from '@transaction/utils/hwManager';
 import sampleVotes from '@tests/constants/votes';
