@@ -3,7 +3,7 @@ import { withRouter } from 'react-router-dom';
 import { keyCodes } from '@views/configuration';
 import { addSearchParamsToUrl } from 'src/utils/searchParams';
 import routes from '@screens/router/routes';
-import { Input } from '@basics/inputs';
+import { Input } from 'src/theme';
 import Wallet from '@wallet/detail/identity/searchBarWallets';
 import Delegates from '@wallet/detail/identity/searchBarWallets/delegates';
 import Transactions from './transactions';

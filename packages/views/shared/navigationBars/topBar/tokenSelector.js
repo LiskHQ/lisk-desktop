@@ -5,7 +5,7 @@ import { settingsUpdated } from '@common/store/actions';
 import routes from '@screens/router/routes';
 import { tokenMap } from '@token/configuration/tokens';
 import Icon from '@basics/icon';
-import Tooltip from '@basics/tooltip/tooltip';
+import Tooltip from 'src/theme/Tooltip';
 import styles from './topBar.css';
 
 const TokenSelector = ({

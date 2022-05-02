@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import styles from './input.css';
+import styles from '../Input/input.css';
 
 const Textarea = ({
   setRef, className, size, ...props

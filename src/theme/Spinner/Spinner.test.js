@@ -1,7 +1,7 @@
 import React from 'react';
 import { expect } from 'chai';
 import { mount } from 'enzyme';
-import Spinner from '.';
+import Spinner from './index';
 
 describe('Spinner', () => {
   it('should render the spinner and wrapper with given className', () => {

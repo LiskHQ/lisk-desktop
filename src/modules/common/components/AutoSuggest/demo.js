@@ -1,7 +1,7 @@
 /* istanbul ignore file */
 import React from 'react';
-import AutoSuggest from '.';
-import DemoRenderer from '../demoRenderer';
+import DemoRenderer from '@basics/demoRenderer';
+import AutoSuggest from './index';
 
 /* eslint-disable-next-line no-console */
 const onChange = console.log;

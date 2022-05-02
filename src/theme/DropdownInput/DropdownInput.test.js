@@ -1,16 +1,16 @@
 import { mount } from 'enzyme';
 import React from 'react';
-import InputWithDropdown from './inputWithDropdown';
+import DropdownInput from './DropdownInput';
 
 describe('InputWithDropdown', () => {
   it('should render with passed props', () => {
     const onChange = jest.fn();
     const wrapper = mount(
-      <InputWithDropdown onChange={onChange}>
+      <DropdownInput onChange={onChange}>
         <span>element 1</span>
         <span>element 2</span>
         <span>element 3</span>
-      </InputWithDropdown>,
+      </DropdownInput>,
     );
 
     expect(wrapper).toContainMatchingElement('.input-with-dropdown-container');

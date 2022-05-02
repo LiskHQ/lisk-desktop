@@ -5,7 +5,7 @@ import { isEmpty } from '@common/utilities/helpers';
 import Box from '@basics/box';
 import BoxHeader from '@basics/box/header';
 import BoxContent from '@basics/box/content';
-import { Input } from '@basics/inputs';
+import { Input } from 'src/theme';
 import Table from '@basics/table';
 import styles from './votes.css';
 import VoteRow from './voteRow';

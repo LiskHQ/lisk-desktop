@@ -1,8 +1,8 @@
 import React from 'react';
 import { storiesOf } from '@storybook/react';
 import { action } from '@storybook/addon-actions';
-import StoryWrapper from '../../../../.storybook/components/StoryWrapper/StoryWrapper';
-import Input from './input';
+import StoryWrapper from '../../../.storybook/components/StoryWrapper/StoryWrapper';
+import Input from './Input';
 
 const DarkWrapper = ({ children, display }) => (
   <span style={{

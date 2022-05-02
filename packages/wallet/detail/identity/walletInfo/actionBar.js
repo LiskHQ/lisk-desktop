@@ -5,7 +5,7 @@ import { getAddress } from '@wallet/utilities/hwManager';
 import { isEmpty } from '@common/utilities/helpers';
 import Icon from '@basics/icon';
 import CopyToClipboard from '@basics/copyToClipboard';
-import Tooltip from '@basics/tooltip/tooltip';
+import Tooltip from 'src/theme/Tooltip';
 import DialogLink from '@basics/dialog/link';
 import styles from './walletInfo.css';
 

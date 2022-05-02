@@ -3,7 +3,7 @@ import React from 'react';
 import { formatAmountBasedOnLocale } from '@common/utilities/formattedNumber';
 import { fromRawLsk } from '@token/utilities/lsk';
 import { truncateAddress } from '@wallet/utilities/account';
-import Tooltip from '@basics/tooltip/tooltip';
+import Tooltip from 'src/theme/Tooltip';
 import Icon from '@basics/icon';
 import WalletVisual from '@wallet/detail/identity/walletVisual';
 import { DEFAULT_STANDBY_THRESHOLD } from '@dpos/validator/consts';

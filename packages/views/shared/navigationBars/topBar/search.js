@@ -6,7 +6,7 @@ import routes from '@screens/router/routes';
 import Icon from '@basics/icon';
 import DialogLink from '@basics/dialog/link';
 import WalletVisual from '@wallet/detail/identity/walletVisual';
-import Tooltip from '@basics/tooltip/tooltip';
+import Tooltip from 'src/theme/Tooltip';
 import styles from './topBar.css';
 
 /**

@@ -1,6 +1,6 @@
 import React from 'react';
-import Spinner from '.';
-import DemoRenderer from '../demoRenderer';
+import DemoRenderer from '@basics/demoRenderer';
+import Spinner from './index';
 
 const SpinnerDemo = () => (
   <div>

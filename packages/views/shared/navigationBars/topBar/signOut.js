@@ -2,7 +2,7 @@ import React from 'react';
 import { useDispatch } from 'react-redux';
 import routes from '@screens/router/routes';
 import Icon from '@basics/icon';
-import Tooltip from '@basics/tooltip/tooltip';
+import Tooltip from 'src/theme/Tooltip';
 import Piwik from '@common/utilities/piwik';
 import { accountLoggedOut } from '@common/store/actions';
 import styles from './topBar.css';

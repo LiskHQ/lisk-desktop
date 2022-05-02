@@ -2,7 +2,7 @@ import React from 'react';
 import { withTranslation } from 'react-i18next';
 import Box from '@basics/box';
 import BoxHeader from '@basics/box/header';
-import Tooltip from '@basics/tooltip/tooltip';
+import Tooltip from 'src/theme/Tooltip';
 import NodesList from '@network/nodesList/manager';
 import Statistics from '@network/statistics';
 import styles from './network.css';

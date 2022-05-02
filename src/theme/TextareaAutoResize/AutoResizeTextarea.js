@@ -1,8 +1,8 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import isEqual from 'react-fast-compare';
-import Textarea from './textarea';
-import styles from './input.css';
+import Textarea from '../Textarea/Textarea';
+import styles from '../Input/input.css';
 
 class AutoResizeTextarea extends React.Component {
   constructor() {
@@ -25,10 +25,7 @@ class AutoResizeTextarea extends React.Component {
       this.textRef.style.height = `${this.height}px`;
       return true;
     }
-    if (!isEqual(this.props, nextProps)) {
-      return true;
-    }
-    return false;
+    return !isEqual(this.props, nextProps);
   }
 
   componentDidUpdate() {

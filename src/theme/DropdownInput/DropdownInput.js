@@ -1,9 +1,9 @@
 import React from 'react';
-import Input from './input';
-import DropdownButton from './select/dropdownButton';
-import styles from './input.css';
+import DropdownButton from '@basics/inputs/select/dropdownButton';
+import Input from '../Input/Input';
+import styles from '../Input/input.css';
 
-const InputWithDropdown = ({
+const DropdownInput = ({
   className, value, onChange, children, buttonLabel, buttonClassName, ButtonComponent, placeholder,
 }) => (
   <div className={`${styles.inputWithDropdown} ${className} input-with-dropdown-container`}>
@@ -27,4 +27,4 @@ const InputWithDropdown = ({
   </div>
 );
 
-export default InputWithDropdown;
+export default DropdownInput;

@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import PropTypes from 'prop-types';
-import { Input } from '..';
+import Input from 'src/theme/Input';
 import Dropdown from '../../dropdown/dropdown';
 import styles from './select.css';
 import OutsideClickHandler from './outsideClickHandler';
@@ -21,8 +21,7 @@ const Select = ({
     setIsOpen(false);
   };
 
-  // eslint-disable-next-line eqeqeq
-  const { value, label } = options.find(item => item.value == selected);
+  const { value, label } = options.find(item => item.value === selected);
 
   return (
     <OutsideClickHandler

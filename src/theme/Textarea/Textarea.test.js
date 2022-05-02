@@ -2,7 +2,7 @@ import React from 'react';
 import { expect } from 'chai';
 import { spy } from 'sinon';
 import { mount } from 'enzyme';
-import Textarea from './textarea';
+import Textarea from './Textarea';
 
 describe('Textarea', () => {
   let wrapper;

@@ -1,6 +1,6 @@
 import React from 'react';
+import Icon from '@basics/icon';
 import styles from './checkBox.css';
-import Icon from '../../icon';
 
 const CheckBox = ({
   added, removed, onChange, accent, checked, className, name, readOnly,

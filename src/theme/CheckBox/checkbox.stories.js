@@ -1,7 +1,7 @@
 import React from 'react';
 import { storiesOf } from '@storybook/react';
 import { action } from '@storybook/addon-actions';
-import StoryWrapper from '../../../../../.storybook/components/StoryWrapper/StoryWrapper';
+import StoryWrapper from '../../../.storybook/components/StoryWrapper/StoryWrapper';
 import CheckBox from './index';
 
 storiesOf('Toolbox', module)

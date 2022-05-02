@@ -1,8 +1,8 @@
 import PropTypes from 'prop-types';
 import React from 'react';
-import Feedback from '../feedback/feedback';
-import Icon from '../icon';
-import Spinner from '../spinner';
+import Feedback from '@basics/feedback/feedback';
+import Icon from '@basics/icon';
+import Spinner from '../Spinner';
 import styles from './input.css';
 
 const statusIconNameMap = {
