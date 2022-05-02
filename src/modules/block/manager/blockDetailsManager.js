@@ -3,10 +3,10 @@ import { compose } from 'redux';
 import { connect } from 'react-redux';
 import { withTranslation } from 'react-i18next';
 import { withRouter } from 'react-router-dom';
-import { getBlock } from '@block/utilities/api';
+import { getBlock } from '@block/utils';
 import withData from '@common/utilities/withData';
 import { selectSearchParamValue } from 'src/utils/searchParams';
-import BlockDetails from './blockDetails';
+import BlockDetails from '../components/blockDetails';
 
 const mapStateToProps = (state, ownProps) => ({
   id: selectSearchParamValue(ownProps.history.location.search, 'id'),

@@ -1,6 +1,9 @@
 import http from '@common/utilities/api/http';
 import { subscribe, unsubscribe } from '@common/utilities/api/ws';
-import * as block from './index';
+import {
+  getBlock, getBlocks, blockSubscribe, blockUnsubscribe,
+} from './index';
+import { httpPaths } from '@block/config';
 
 jest.mock('@common/utilities/api/http');
 jest.mock('@common/utilities/api/ws');
@@ -15,29 +18,29 @@ describe('Block api module', () => {
       const expectedResponse = { data: {} };
       const params = { blockId: 1 };
       http.mockImplementation(() => Promise.resolve(expectedResponse));
-      await expect(block.getBlock({ params })).resolves.toEqual(expectedResponse);
+      await expect(getBlock({ params })).resolves.toEqual(expectedResponse);
       expect(http).toHaveBeenCalledWith({
-        path: block.httpPaths.block,
+        path: httpPaths.block,
         params,
       });
     });
 
     it('should handle parameters correctly', async () => {
-      block.getBlock({ params: { blockId: 1, height: 5000 } });
+      getBlock({ params: { blockId: 1, height: 5000 } });
       expect(http).toHaveBeenCalledWith({
-        path: block.httpPaths.block,
+        path: httpPaths.block,
         params: { blockId: 1 },
       });
-      block.getBlock({ params: { height: 5000 } });
+      getBlock({ params: { height: 5000 } });
       expect(http).toHaveBeenCalledWith({
-        path: block.httpPaths.block,
+        path: httpPaths.block,
         params: { height: 5000 },
       });
     });
 
     it('should return promise rejection when no parameters are sup', async () => {
       await expect(
-        block.getBlock({ params: { } }),
+        getBlock({ params: { } }),
       ).rejects.toEqual(Error('No parameters supplied'));
     });
 
@@ -45,7 +48,7 @@ describe('Block api module', () => {
       const expectedResponse = new Error('API call could not be completed');
       const params = { blockId: 1 };
       http.mockImplementation(() => Promise.reject(new Error(expectedResponse.message)));
-      await expect(block.getBlock({ params })).rejects.toEqual(expectedResponse);
+      await expect(getBlock({ params })).rejects.toEqual(expectedResponse);
     });
   });
 
@@ -58,9 +61,9 @@ describe('Block api module', () => {
       const expectedResponse = [{}, {}, {}];
       const params = { limit: 50, offset: 100 };
       http.mockImplementation(() => Promise.resolve(expectedResponse));
-      await expect(block.getBlocks({ params })).resolves.toEqual(expectedResponse);
+      await expect(getBlocks({ params })).resolves.toEqual(expectedResponse);
       expect(http).toHaveBeenCalledWith({
-        path: block.httpPaths.block,
+        path: httpPaths.block,
         params,
       });
     });
@@ -90,9 +93,9 @@ describe('Block api module', () => {
       };
       const baseUrl = 'https://url.io';
       const network = {};
-      block.getBlocks({ params, baseUrl, network });
+      getBlocks({ params, baseUrl, network });
       expect(http).toHaveBeenCalledWith({
-        path: block.httpPaths.block,
+        path: httpPaths.block,
         params: expectedParams,
         baseUrl,
         network,
@@ -101,9 +104,9 @@ describe('Block api module', () => {
       delete params.dateTo;
       delete expectedParams.addressList;
       delete expectedParams.to;
-      block.getBlocks({ params, baseUrl, network });
+      getBlocks({ params, baseUrl, network });
       expect(http).toHaveBeenCalledWith({
-        path: block.httpPaths.block,
+        path: httpPaths.block,
         params: expectedParams,
         baseUrl,
         network,
@@ -113,7 +116,7 @@ describe('Block api module', () => {
     it('should throw when api fails', async () => {
       const expectedResponse = new Error('API call could not be completed');
       http.mockImplementation(() => Promise.reject(new Error(expectedResponse.message)));
-      await expect(block.getBlocks({})).rejects.toEqual(expectedResponse);
+      await expect(getBlocks({})).rejects.toEqual(expectedResponse);
     });
   });
 
@@ -123,7 +126,7 @@ describe('Block api module', () => {
       const serviceUrl = 'http://sample-service-url.com';
       subscribe.mockImplementation(() => {});
 
-      block.blockSubscribe(
+      blockSubscribe(
         { networks: { LSK: { serviceUrl } } }, fn, fn, fn,
       );
 
@@ -132,7 +135,7 @@ describe('Block api module', () => {
     });
 
     it('Should call ws unsubscribe with parameters', () => {
-      block.blockUnsubscribe();
+      blockUnsubscribe();
       expect(unsubscribe).toHaveBeenCalledTimes(1);
       expect(unsubscribe).toHaveBeenCalledWith('update.block');
     });

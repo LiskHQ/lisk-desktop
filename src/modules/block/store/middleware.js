@@ -1,4 +1,4 @@
-import { blockSubscribe, blockUnsubscribe } from '@block/utilities/api';
+import { blockSubscribe, blockUnsubscribe } from '@block/utils';
 import { tokenMap } from '@token/configuration/tokens';
 import {
   olderBlocksRetrieved,
