@@ -105,7 +105,7 @@ const config = {
       VERSION: `"${bundleVersion}"`,
     }),
     new StyleLintPlugin({
-      context: `${resolve(__dirname, '../../packages')}`,
+      context: `${resolve(__dirname, '../../src')}`,
       files: '**/*.css',
       config: stylelintrc,
     }),
@@ -130,7 +130,7 @@ const config = {
       outputFilePath: './setup/i18n/locales/en/common.json',
       files: [
         './setup/i18n/**/*.js',
-        './packages/**/*.js',
+        './src/**/*.js',
         './app/src/**/*.js',
       ],
     }),
