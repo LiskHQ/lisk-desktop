@@ -44,6 +44,7 @@
           ["@updater", "./packages/updater/"],
           ["@wallet", "./packages/wallet/"],
           ["@legacy", "./src/modules/legacy/"],
+          ["@message", "./src/modules/message/"],
           ["@views", "./packages/views"],
           ["@screens", "./packages/views/screens"],
           ["@basics", "./packages/views/basics"],
