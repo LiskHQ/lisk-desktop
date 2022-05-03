@@ -1,6 +1,6 @@
 import React from 'react';
 import { mount } from 'enzyme';
-import Flag from './flag';
+import Flag from './index';
 
 describe('Flag', () => {
   it('renders a flag for each existing code', () => {

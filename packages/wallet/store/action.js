@@ -9,7 +9,7 @@ import { isEmpty } from '@common/utilities/helpers';
 import { create } from '@transaction/api';
 import { selectCurrentBlockHeight } from '@common/store/selectors';
 import { getAccount, extractAddress as extractBitcoinAddress } from '@wallet/utilities/api';
-import { getConnectionErrorMessage } from '@network/utilities/getNetwork';
+import { getConnectionErrorMessage } from '@network/utils/getNetwork';
 import { extractKeyPair, getUnlockableUnlockObjects } from '@wallet/utilities/account';
 import { defaultDerivationPath } from '@common/utilities/explicitBipKeyDerivation';
 import { networkStatusUpdated } from '@network/store/action';

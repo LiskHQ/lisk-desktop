@@ -1,15 +1,13 @@
 import React from 'react';
-import { withTranslation } from 'react-i18next';
 import Box from '@basics/box';
 import BoxHeader from '@basics/box/header';
 import Tooltip from '@basics/tooltip/tooltip';
-import NodesList from '@network/nodesList/manager';
-import Statistics from '@network/statistics';
+import Peers from '../peers';
+import Map from '../map';
+import Statistics from '../statistics';
 import styles from './network.css';
 
-const Network = ({
-  t,
-}) => (
+const Network = ({ t, peers }) => (
   <div>
     <Statistics />
     <Box className="map-box">
@@ -24,8 +22,9 @@ const Network = ({
         </div>
       </BoxHeader>
     </Box>
-    <NodesList />
+    <Map peers={peers.data} t={t} />
+    <Peers peers={peers} t={t} />
   </div>
 );
 
-export default withTranslation()(Network);
+export default Network;
