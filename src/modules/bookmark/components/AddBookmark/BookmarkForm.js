@@ -1,6 +1,6 @@
 import React from 'react';
 import WalletVisual from '@wallet/components/walletVisual';
-import { Input } from '@basics/inputs';
+import { Input } from 'src/theme';
 import styles from './AddBookmark.css';
 
 const getFields = t => [{

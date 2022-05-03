@@ -8,7 +8,7 @@ import { truncateAddress } from '@wallet/utils/account';
 import WalletVisual from '@wallet/components/walletVisual';
 import Box from '@basics/box';
 import { SecondaryButton, TertiaryButton } from '@basics/buttons';
-import Icon from '@basics/icon';
+import Icon from 'src/theme/Icon';
 import LiskAmount from '@shared/liskAmount';
 import AmountField from '@shared/amountField';
 import useVoteAmountField from '../../editVote/useVoteAmountField';

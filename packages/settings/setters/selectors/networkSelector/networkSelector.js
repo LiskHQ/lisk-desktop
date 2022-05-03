@@ -3,7 +3,7 @@ import React, { useRef } from 'react';
 import networks, { networkKeys } from '@network/configuration/networks';
 import { addHttp } from '@common/utilities/login';
 import { SecondaryButton } from '@basics/buttons';
-import DropdownButton from '@basics/inputs/select/dropdownButton';
+import DropdownButton from 'src/theme/DropdownButton';
 import { getNetworksList } from '@network/utils/getNetwork';
 import CustomNode from './customNode';
 

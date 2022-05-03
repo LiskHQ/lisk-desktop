@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 import { extractAddressFromPassphrase } from '@wallet/utilities/account';
-import { generatePassphrase } from '@views/utilities/passphrase';
+import { generatePassphrase } from 'src/modules/wallet/utils/passphrase';
 
 const useCreateAccounts = () => {
   const [suggestionAccounts, setSuggestionAccounts] = useState([]);

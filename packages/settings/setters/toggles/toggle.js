@@ -3,9 +3,9 @@ import { toast } from 'react-toastify';
 import { useTranslation } from 'react-i18next';
 import useSettings from '@settings/hooks/useSettings';
 import Piwik from '@common/utilities/piwik';
-import CheckBox from '@basics/inputs/checkBox';
-import Tooltip from '@basics/tooltip/tooltip';
-import Icon from '@basics/icon';
+import CheckBox from 'src/theme/CheckBox';
+import Tooltip from 'src/theme/Tooltip';
+import Icon from 'src/theme/Icon';
 import styles from '@shared/navigationBars/topBar/topBar.css';
 /**
  * Toggles boolean values on store.settings

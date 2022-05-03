@@ -11,7 +11,7 @@ import Box from '@basics/box';
 import BoxContent from '@basics/box/content';
 import BoxEmptyState from '@basics/box/emptyState';
 import { LineChart } from '@basics/charts';
-import Icon from '@basics/icon';
+import Icon from 'src/theme/Icon';
 import i18n from '@setup/i18n/i18n';
 import styles from './balanceChart.css';
 

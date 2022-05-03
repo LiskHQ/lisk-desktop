@@ -1,6 +1,6 @@
 import React from 'react';
 import { signatureCollectionStatus } from '@transaction/configuration/txStatus';
-import { useTheme } from '@views/utilities/theme';
+import { useTheme } from 'src/theme/Theme';
 import { removeSearchParamsFromUrl } from 'src/utils/searchParams';
 import { PrimaryButton, SecondaryButton } from '@basics/buttons';
 import BoxFooter from '@basics/box/footer';

@@ -4,7 +4,7 @@ import grid from 'flexboxgrid/dist/flexboxgrid.css';
 import Box from '@basics/box';
 import BoxContent from '@basics/box/content';
 import BoxHeader from '@basics/box/header';
-import { Input } from '@basics/inputs';
+import { Input } from 'src/theme';
 import Table from '@basics/table';
 import VoterRow from './voterRow';
 import tableHeader from './votersTableHeader';

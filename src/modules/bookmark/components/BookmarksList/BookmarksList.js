@@ -5,15 +5,15 @@ import { Link } from 'react-router-dom';
 
 import routes from '@screens/router/routes';
 import { tokenMap } from '@token/configuration/tokens';
-import Tooltip from '@basics/tooltip/tooltip';
 import { truncateAddress } from '@wallet/utils/account';
-import { Input } from '@basics/inputs';
+import Tooltip from 'src/theme/Tooltip';
+import { Input } from 'src/theme';
 import { PrimaryButton, TertiaryButton } from '@basics/buttons';
 import WalletVisual from '@wallet/components/walletVisual';
 import Box from '@basics/box';
 import BoxHeader from '@basics/box/header';
 import BoxContent from '@basics/box/content';
-import Icon from '@basics/icon';
+import Icon from 'src/theme/Icon';
 import EmptyState from '../EmptyState/EmptyState';
 import styles from './BookmarksList.css';
 

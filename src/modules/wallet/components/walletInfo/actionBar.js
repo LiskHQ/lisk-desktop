@@ -3,9 +3,9 @@ import QRCode from 'qrcode.react';
 import { tokenMap } from '@token/configuration/tokens';
 import { getAddress } from '@wallet/utils/hwManager';
 import { isEmpty } from '@common/utilities/helpers';
-import Icon from '@basics/icon';
+import Icon from 'src/theme/Icon';
 import CopyToClipboard from '@basics/copyToClipboard';
-import Tooltip from '@basics/tooltip/tooltip';
+import Tooltip from 'src/theme/Tooltip';
 import DialogLink from '@basics/dialog/link';
 import styles from './walletInfo.css';
 

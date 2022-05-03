@@ -1,5 +1,5 @@
 import { mountWithRouter } from '@common/utilities/testHelpers';
-import Spinner from '@basics/spinner';
+import Spinner from 'src/theme/Spinner';
 import DialogLink from '@basics/dialog/link';
 import accounts from '@tests/constants/wallets';
 import VoteRow from './voteRow';

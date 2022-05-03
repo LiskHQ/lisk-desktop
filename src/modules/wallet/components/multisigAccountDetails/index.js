@@ -11,7 +11,7 @@ import BoxHeader from '@basics/box/header';
 import BoxContent from '@basics/box/content';
 import BoxInfoText from '@basics/box/infoText';
 import Dialog from '@basics/dialog/dialog';
-import Tooltip from '@basics/tooltip/tooltip';
+import Tooltip from 'src/theme/Tooltip';
 import Members from '../multisignatureMembers';
 
 import styles from './styles.css';

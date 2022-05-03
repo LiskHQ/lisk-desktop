@@ -1,7 +1,7 @@
 import React from 'react';
 import { useTranslation } from 'react-i18next';
 import CopyToClipboard from '@basics/copyToClipboard';
-import Icon from '@basics/icon';
+import Icon from 'src/theme/Icon';
 import LiskAmount from '@shared/liskAmount';
 import WalletVisualWithAddress from '@wallet/components/walletVisualWithAddress';
 import { tokenMap } from '@token/configuration/tokens';

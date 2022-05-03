@@ -1,6 +1,6 @@
 import React from 'react';
 import { withTranslation } from 'react-i18next';
-import { Input } from '@basics/inputs';
+import { Input } from 'src/theme';
 import Feedback from '@basics/feedback/feedback';
 import styles from './filters.css';
 

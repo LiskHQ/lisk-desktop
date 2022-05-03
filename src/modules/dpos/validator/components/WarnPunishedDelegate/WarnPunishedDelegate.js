@@ -2,11 +2,11 @@ import React, { useEffect } from 'react';
 import { withTranslation } from 'react-i18next';
 import PropTypes from 'prop-types';
 import routes from '@screens/router/routes';
-import { useTheme } from '@views/utilities/theme';
+import { useTheme } from 'src/theme/Theme';
 import { SecondaryButton } from '@basics/buttons';
 import FlashMessage from '@basics/flashMessage/flashMessage';
 import FlashMessageHolder from '@basics/flashMessage/holder';
-import Icon from '@basics/icon';
+import Icon from 'src/theme/Icon';
 import styles from './WarnPunishedDelegate.css';
 
 const WarnPunishedDelegate = ({

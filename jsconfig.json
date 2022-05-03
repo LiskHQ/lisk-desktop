@@ -13,17 +13,19 @@
       "@common/*": ["./packages/common/*"],
       "@legacy/*": ["./src/modules/legacy/*"],
       "@dpos/*": ["./src/modules/dpos/*"],
-      "@network/*": ["./packages/network/*"],
+      "@network/*": ["./src/modules/network/*"],
       "@settings/*": ["./packages/settings/*"],
       "@token/*": ["./packages/token/*"],
       "@transaction/*": ["./src/modules/transaction/*"],
-      "@updater/*": ["./packages/updater/*"],
-      "@wallet/*": ["./packages/wallet/*"],
+      "@update/*": ["./src/modules/update/*"],
+      "@wallet/*": ["./src/modules/wallet/*"],
       "@views/*": ["./packages/views/*"],
       "@shared/*": ["./packages/views/shared/*"],
       "@basics/*": ["./packages/views/basics/*"],
       "@screens/*": ["./packages/views/screens/*"],
-      "@libs/*": ["./libs/*"]
+      "@libs/*": ["./libs/*"],
+      "@auth/*": ["./src/modules/auth/*"],
+      "@message/*": ["./src/modules/message/*"]
     }
   }
 }

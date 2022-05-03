@@ -18,18 +18,17 @@ import LiskAmount from '@shared/liskAmount';
 import MultiSignatureMembers, {
   SignedAndRemainingMembers,
 } from '@wallet/components/multisignatureMembers';
-import Tooltip from '@basics/tooltip/tooltip';
+import Tooltip from 'src/theme/Tooltip';
 import {
   extractAddressFromPublicKey,
   truncateAddress,
   calculateRemainingAndSignedMembers,
 } from '@wallet/utils/account';
+import { getDelegateName, getTxAsset } from '@transaction/utils';
 import WalletInfo from '../WalletInfo';
-
 import TransactionDetailsContext from '../../context/transactionDetailsContext';
 import TransactionTypeFigure from '../TransactionTypeFigure';
 import styles from './TransactionDetails.css';
-import { getDelegateName, getTxAsset } from '../../utils/transactionDetailsHelper';
 
 const ValueAndLabel = ({ label, className, children }) => (
   <div className={`${styles.value} ${className}`}>

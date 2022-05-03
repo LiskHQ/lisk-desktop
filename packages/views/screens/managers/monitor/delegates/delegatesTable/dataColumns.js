@@ -3,9 +3,9 @@ import React from 'react';
 import { formatAmountBasedOnLocale } from '@common/utilities/formattedNumber';
 import { fromRawLsk } from '@token/utilities/lsk';
 import { truncateAddress } from '@wallet/utils/account';
-import Tooltip from '@basics/tooltip/tooltip';
-import Icon from '@basics/icon';
 import WalletVisual from '@wallet/components/walletVisual';
+import Tooltip from 'src/theme/Tooltip';
+import Icon from 'src/theme/Icon';
 import { DEFAULT_STANDBY_THRESHOLD } from '@dpos/validator/consts';
 import {
   getDelegateDetailsClass,

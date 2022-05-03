@@ -1,9 +1,9 @@
 import React from 'react';
 import WalletVisualDemo from '@wallet/components/walletVisual/demo';
-import AutoSuggestDemo from './autoSuggest/demo';
+import AutoSuggestDemo from 'src/modules/common/components/AutoSuggest/demo';
+import SpinnerDemo from 'src/theme/Spinner/demo';
 import CalendarDemo from './calendar/demo';
 import IllustrationDemo from './illustration/demo';
-import SpinnerDemo from './spinner/demo';
 import SwitcherDemo from './tabs/switcher/demo';
 import styles from './demo.css';
 

@@ -2,10 +2,10 @@ import React, { useEffect, useState } from 'react';
 
 import { parseSearchParams } from 'src/utils/searchParams';
 import Piwik from '@common/utilities/piwik';
-import { AutoResizeTextarea } from '@basics/inputs';
+import { AutoResizeTextarea } from 'src/theme';
 import { PrimaryButton } from '@basics/buttons';
 import Box from '@basics/box';
-import Tooltip from '@basics/tooltip/tooltip';
+import Tooltip from 'src/theme/Tooltip';
 import BoxContent from '@basics/box/content';
 import BoxFooter from '@basics/box/footer';
 import BoxInfoText from '@basics/box/infoText';

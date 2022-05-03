@@ -1,6 +1,6 @@
 import React from 'react';
-import Icon from '@basics/icon';
 import { truncateAddress } from '@wallet/utils/account';
+import Icon from 'src/theme/Icon';
 import { getTxConfig } from '@search/utils';
 import LiskAmount from '@shared/liskAmount';
 import styles from './TransactionResultList.css';
