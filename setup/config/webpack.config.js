@@ -22,7 +22,7 @@ const config = {
       '@token': resolve('./packages/token'),
       '@transaction': resolve('./src/modules/transaction'),
       '@updater': resolve('./packages/updater'),
-      '@wallet': resolve('./packages/wallet'),
+      '@wallet': resolve('./src/modules/wallet'),
       '@views': resolve('./packages/views'),
       '@shared': resolve('./packages/views/shared'),
       '@basics': resolve('./packages/views/basics'),

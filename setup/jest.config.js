@@ -40,7 +40,7 @@ module.exports = {
     '^@token(.*)$': resolve(__dirname, '../packages/token/$1'),
     '^@transaction(.*)$': resolve(__dirname, '../src/modules/transaction/$1'),
     '^@updater(.*)$': resolve(__dirname, '../packages/updater/$1'),
-    '^@wallet(.*)$': resolve(__dirname, '../packages/wallet/$1'),
+    '^@wallet(.*)$': resolve(__dirname, '../src/modules/wallet/$1'),
     '^@views(.*)$': resolve(__dirname, '../packages/views/$1'),
     '^@screens(.*)$': resolve(__dirname, '../packages/views/screens/$1'),
     '^@shared(.*)$': resolve(__dirname, '../packages/views/shared/$1'),

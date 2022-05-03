@@ -43,7 +43,7 @@
           ["@token", "./packages/token/"],
           ["@transaction", "./src/modules/transaction"],
           ["@updater", "./packages/updater/"],
-          ["@wallet", "./packages/wallet/"],
+          ["@wallet", "./src/modules/wallet/"],
           ["@legacy", "./src/modules/legacy/"],
           ["@message", "./src/modules/message/"],
           ["@views", "./packages/views"],
