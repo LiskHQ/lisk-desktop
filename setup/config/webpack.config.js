@@ -19,7 +19,7 @@ const config = {
       '@network': resolve('./src/modules/network'),
       '@settings': resolve('./packages/settings'),
       '@token': resolve('./packages/token'),
-      '@transaction': resolve('./packages/transaction'),
+      '@transaction': resolve('./src/modules/transaction'),
       '@updater': resolve('./packages/updater'),
       '@wallet': resolve('./packages/wallet'),
       '@views': resolve('./packages/views'),

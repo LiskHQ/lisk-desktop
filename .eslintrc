@@ -40,7 +40,7 @@
           ["@network", "./src/modules/network/"],
           ["@settings", "./packages/settings/"],
           ["@token", "./packages/token/"],
-          ["@transaction", "./packages/transaction/"],
+          ["@transaction", "./src/modules/transaction"],
           ["@updater", "./packages/updater/"],
           ["@wallet", "./packages/wallet/"],
           ["@legacy", "./src/modules/legacy/"],
