@@ -3,7 +3,7 @@ import { expect } from 'chai';
 import { mount } from 'enzyme';
 import sinon from 'sinon';
 import { generatePassphraseFromSeed } from '@views/utilities/passphrase';
-import { extractAddressFromPassphrase } from '@wallet/utilities/account';
+import { extractAddressFromPassphrase } from '@wallet/utils/account';
 import ChooseAvatar from './chooseAvatar';
 
 describe('Register Process - Choose Avatar', () => {

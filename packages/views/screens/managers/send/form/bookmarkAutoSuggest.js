@@ -1,7 +1,7 @@
 import PropTypes from 'prop-types';
 import React from 'react';
 import { validateAddress } from '@common/utilities/validators';
-import WalletVisual from '@wallet/detail/identity/walletVisual';
+import WalletVisual from '@wallet/components/walletVisual';
 import AutoSuggest from '@basics/autoSuggest';
 import styles from './form.css';
 

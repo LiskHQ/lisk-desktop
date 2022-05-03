@@ -1,5 +1,5 @@
 import React from 'react';
-import WalletVisual from '@wallet/detail/identity/walletVisual';
+import WalletVisual from '@wallet/components/walletVisual';
 import { Input } from '@basics/inputs';
 import styles from './AddBookmark.css';
 

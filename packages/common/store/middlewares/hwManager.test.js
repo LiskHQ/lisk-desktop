@@ -1,11 +1,11 @@
 import { toast } from 'react-toastify';
-import { subscribeToDeviceConnected, subscribeToDeviceDisconnected } from '@wallet/utilities/hwManager';
+import { subscribeToDeviceConnected, subscribeToDeviceDisconnected } from '@wallet/utils/hwManager';
 import { addSearchParamsToUrl } from 'src/utils/searchParams';
 import accounts from '@tests/constants/wallets';
 import actionTypes from '../actions/actionTypes';
 import hwManagerMiddleware from './hwManager';
 
-jest.mock('@wallet/utilities/hwManager', () => ({
+jest.mock('@wallet/utils/hwManager', () => ({
   subscribeToDeviceConnected: jest.fn().mockImplementation((fn) => fn({ model: 'testHW' })),
   subscribeToDeviceDisconnected: jest.fn().mockImplementation((fn) => fn({ model: 'testHW' })),
 }));

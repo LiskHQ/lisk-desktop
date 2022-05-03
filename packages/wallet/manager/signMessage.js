@@ -1,5 +1,5 @@
 import { cryptography } from '@liskhq/lisk-client';
-import { signMessageByHW } from '@wallet/utilities/hwManager';// eslint-disable-line
+import { signMessageByHW } from '@wallet/utils/hwManager';// eslint-disable-line
 
 /**
  * Signs a string with the users private key

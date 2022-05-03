@@ -4,7 +4,7 @@ import { tokenMap } from '@token/configuration/tokens';
 import { MODULE_ASSETS_NAME_ID_MAP } from '@transaction/configuration/moduleAssets';
 import { signatureCollectionStatus } from '@transaction/configuration/txStatus';
 import { isEmpty } from '@common/utilities/helpers';
-import { extractKeyPair } from '@wallet/utilities/account';
+import { extractKeyPair } from '@wallet/utils/account';
 import { getTransactionSignatureStatus } from '@screens/managers/signMultiSignTransaction/helpers';
 import { timerReset } from '@wallet/store/action';
 import { loadingStarted, loadingFinished } from '@common/store/actions/loading';

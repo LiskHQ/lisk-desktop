@@ -9,7 +9,7 @@ import {
   getBase32AddressFromAddress,
   getAddressFromBase32Address,
   getKeys,
-} from '@wallet/utilities/account';
+} from '@wallet/utils/account';
 import { transformStringDateToUnixTimestamp } from '@views/utilities/dateTime';
 import { toRawLsk } from '@token/utilities/lsk';
 import { isEmpty } from '@common/utilities/helpers';

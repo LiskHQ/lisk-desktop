@@ -2,7 +2,7 @@ import React from 'react';
 import { expect } from 'chai';
 import { mount } from 'enzyme';
 import { spy } from 'sinon';
-import { extractAddressFromPassphrase } from '@wallet/utilities/account';
+import { extractAddressFromPassphrase } from '@wallet/utils/account';
 import { generatePassphrase } from '@views/utilities/passphrase';
 import BackupPassphrase from './backupPassphrase';
 

@@ -6,7 +6,7 @@ import Box from '@basics/box';
 import Illustration from '@basics/illustration';
 import BoxContent from '@basics/box/content';
 import { isEmpty } from '@common/utilities/helpers';
-import { getDeviceType } from '@wallet/utilities/hwManager';
+import { getDeviceType } from '@wallet/utils/hwManager';
 import styles from './TransactionSignature.css';
 
 const TransactionSignature = ({
