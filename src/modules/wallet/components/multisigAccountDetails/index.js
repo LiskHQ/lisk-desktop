@@ -1,22 +1,35 @@
-import React, { useMemo } from 'react';
+import React, { useMemo, useEffect } from 'react';
+import { useSelector } from 'react-redux';
 import grid from 'flexboxgrid/dist/flexboxgrid.css';
 
-import { extractAddressFromPublicKey } from '@wallet/utilities/account';
+import { selectSearchParamValue } from 'src/utils/searchParams';
+import { selectAccount } from '@common/store/selectors';
+import routes from '@screens/router/routes';
+import { extractAddressFromPublicKey } from '@wallet/utils/account';
 import Box from '@basics/box';
 import BoxHeader from '@basics/box/header';
 import BoxContent from '@basics/box/content';
 import BoxInfoText from '@basics/box/infoText';
 import Dialog from '@basics/dialog/dialog';
 import Tooltip from '@basics/tooltip/tooltip';
-import Members from '@wallet/detail/identity/multisignatureMembers';
+import Members from '../multisignatureMembers';
 
 import styles from './styles.css';
 
-const MultisigAccountDetails = ({ t, account }) => {
-  if (Object.keys(account).length === 0) {
+const MultisigAccountDetails = ({
+  t,
+  account,
+  history,
+}) => {
+  const hostAccount = useSelector(selectAccount);
+  const network = useSelector(state => state.network);
+  const isHost = history.location.pathname === routes.wallet.path;
+  const data = isHost ? hostAccount.info.LSK : account.data;
+
+  if (Object.keys(data).length === 0) {
     return null;
   }
-  const { numberOfSignatures, optionalKeys, mandatoryKeys } = account.keys;
+  const { numberOfSignatures, optionalKeys, mandatoryKeys } = data.keys;
 
   const members = useMemo(() => (
     optionalKeys.map(publicKey => ({
@@ -29,7 +42,14 @@ const MultisigAccountDetails = ({ t, account }) => {
         publicKey,
         mandatory: true,
       })),
-    )), [account.address]);
+    )), [data.address]);
+
+  useEffect(() => {
+    if (!isHost) {
+      const address = selectSearchParamValue(history.location.search, 'address');
+      account.loadData({ address });
+    }
+  }, [network]);
 
   return (
     <Dialog hasClose className={`${grid.row} ${grid['center-xs']} ${styles.container}`}>
