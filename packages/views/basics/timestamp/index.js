@@ -1,7 +1,7 @@
 import React from 'react';
 import moment from 'moment';
 import { withTranslation } from 'react-i18next';
-import i18n from '@setup/i18n/i18n';
+import i18n from 'src/utils/i18n/i18n';
 
 const timestampConverters = {
   LSK: timestamp => timestamp * 1000,

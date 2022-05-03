@@ -11,7 +11,7 @@ import {
 } from '@common/store/actions';
 import analytics from '@common/utilities/analytics';
 import { getTransactions } from '@transaction/api';
-import i18n from '@setup/i18n/i18n';
+import i18n from 'src/utils/i18n/i18n';
 import blockActionTypes from '@block/store/actionTypes';
 import transactionActionTypes from '@transaction/store/actionTypes';
 import settingsActionTypes from '@settings/store/actionTypes';
