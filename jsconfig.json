@@ -9,6 +9,7 @@
       "@fixtures/*": ["./tests/fixtures"],
       "@block/*": ["./src/modules/block/*"],
       "@bookmark/*": ["./src/modules/bookmark/*"],
+      "@search/*": ["./src/modules/search/*"],
       "@common/*": ["./packages/common/*"],
       "@legacy/*": ["./src/modules/legacy/*"],
       "@dpos/*": ["./src/modules/dpos/*"],
@@ -22,7 +23,8 @@
       "@shared/*": ["./packages/views/shared/*"],
       "@basics/*": ["./packages/views/basics/*"],
       "@screens/*": ["./packages/views/screens/*"],
-      "@libs/*": ["./libs/*"]
+      "@libs/*": ["./libs/*"],
+      "@message/*": ["./src/modules/message/*"]
     }
   }
 }

@@ -3,7 +3,7 @@ import { withTranslation } from 'react-i18next';
 
 import withData from '@common/utilities/withData';
 import { getAccounts } from '@wallet/utilities/api';
-import { getNetworkStatus } from '@network/utilities/api';
+import { getNetworkStatus } from '@network/utils/api';
 import { DEFAULT_LIMIT } from '@views/configuration';
 import Accounts from '../components/Accounts/Accounts';
 

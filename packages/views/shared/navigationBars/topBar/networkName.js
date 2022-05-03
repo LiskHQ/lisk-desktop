@@ -1,7 +1,7 @@
 import React from 'react';
 
 import { networkKeys } from '@network/configuration/networks';
-import { getNetworkName } from '@network/utilities/getNetwork';
+import { getNetworkName } from '@network/utils/getNetwork';
 import Tooltip from 'src/theme/Tooltip';
 import styles from './network.css';
 

@@ -8,7 +8,7 @@ import DelegatesPerformanceModal from '@screens/managers/wallet/delegatePerforma
 import HwWalletLogin from '@screens/managers/hwWalletLogin';
 import Login from 'src/modules/auth/components/Signin';
 import MonitorWallets from 'src/modules/account/components/Accounts';
-import MonitorNetwork from '@screens/managers/network';
+import MonitorNetwork from '@network/manager/networkManager';
 import MonitorTransactions from '@screens/managers/monitor/transactions';
 import Register from 'src/modules/auth/manager/SignupManager';
 import RegisterDelegate from '@screens/managers/registerDelegate';
@@ -26,7 +26,7 @@ import EditVote from '@screens/managers/editVote';
 import VotingQueue from '@screens/managers/votingQueue';
 import DeviceDisconnect from '@screens/managers/deviceDisconnectDialog';
 import NewReleaseDialog from 'src/modules/update/detail/info/newReleaseDialog';
-import SearchBar from '@shared/searchBar';
+import SearchBar from '@search/components/SearchBar';
 import ReclaimBalance from '@legacy/manager/reclaimBalance';
 import ReclaimBalanceModal from '@legacy/manager/reclaimBalanceModal';
 import MultiSignature from '@screens/managers/multiSignature';

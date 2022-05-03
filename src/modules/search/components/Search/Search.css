@@ -1,0 +1,156 @@
+@import '../../../../../setup/react/app/mixins.css';
+
+.wrapper {
+  background: var(--color-top-bar);
+  display: flex;
+  height: var(--header-height);
+  justify-content: space-between;
+  position: fixed;
+  width: 100%;
+  z-index: calc(var(--normal-index) + 1);
+}
+
+.group {
+  display: flex;
+  flex-flow: row nowrap;
+}
+
+.logo {
+  width: 35px;
+  height: 100%;
+  padding: 0 0px 0 12px;
+  box-sizing: content-box;
+  filter: brightness(100);
+}
+
+.toggle {
+  width: 20px;
+  height: 100%;
+  padding: 0 6px;
+  box-sizing: content-box;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+
+  &.opaqueLogo {
+    opacity: 0.5;
+  }
+
+  & .searchContainer {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    max-width: 300px;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+  }
+
+  & .searchContainerParam {
+    background-color: var(--color-search-container);
+    border-radius: 3px;
+    padding: 8px 10px;
+    margin-left: -10px;
+
+    & .searchedValue {
+      @mixin contentLarge normal;
+
+      color: var(--color-ghost-white);
+      padding-left: 10px;
+      white-space: nowrap;
+      text-overflow: ellipsis;
+      overflow: hidden;
+      display: inline-block;
+      max-width: 250px;
+    }
+
+    & .walletVisual {
+      padding-left: 10px;
+    }
+  }
+}
+
+@media (min-width: 1060px) {
+  .toggle {
+    & .searchContainer {
+      max-width: 390px;
+    }
+
+    & .searchContainerParam {
+      & .searchedValue {
+        max-width: 360px;
+      }
+    }
+  }
+}
+
+.timer {
+  display: none !important;
+}
+
+.signIn {
+  margin: 7px 24px 0 0;
+}
+
+.tooltipWrapper {
+  margin-right: 16px;
+}
+
+.votingQueueVoteCount {
+  @mixin contentSmall;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: white;
+  position: absolute;
+  top: 6px;
+  left: 17px;
+  border: 1px solid transparent;
+  border-radius: 50%;
+  width: 16px;
+  height: 16px;
+  background-color: var(--color-jade-green);
+}
+
+.signedOutTip {
+  & p {
+    padding-top: 5px;
+    padding-bottom: 7px;
+  }
+}
+
+.votingQueueIcon {
+  display: flex;
+  justify-content: center;
+}
+
+.disabled {
+  pointer-events: none;
+  cursor: default;
+}
+
+.tokenSelector {
+  margin-right: 16px;
+
+  &.active {
+    & img {
+      pointer-events: none;
+      cursor: default;
+    }
+  }
+}
+
+.logoutTooltipWrapper {
+  margin-right: 22px;
+}
+
+.logoutBtn {
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  height: 100%;
+}
+
+.checkbox {
+  margin-right: 10px;
+}

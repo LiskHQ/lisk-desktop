@@ -4,7 +4,7 @@ import networks, { networkKeys } from '@network/configuration/networks';
 import { addHttp } from '@common/utilities/login';
 import { SecondaryButton } from '@basics/buttons';
 import DropdownButton from 'src/theme/DropdownButton';
-import { getNetworksList } from '@network/utilities/getNetwork';
+import { getNetworksList } from '@network/utils/getNetwork';
 import CustomNode from './customNode';
 
 import styles from './networkSelector.css';
