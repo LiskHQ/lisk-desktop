@@ -2,15 +2,15 @@ import React from 'react';
 import { act } from 'react-dom/test-utils';
 import { mount } from 'enzyme';
 import { tokenMap } from '@token/fungible/consts/tokens';
-import { getTransactionBaseFees, getTransactionFee } from '@transaction/utilities/api';
-import useTransactionFeeCalculation from '@transaction/manage/transactionPriority/useTransactionFeeCalculation';
+import { getTransactionBaseFees, getTransactionFee } from '@transaction/api';
+import useTransactionFeeCalculation from '@transaction/hooks/useTransactionFeeCalculation';
 import { fromRawLsk } from '@token/fungible/utils/lsk';
 import accounts from '@tests/constants/wallets';
 import flushPromises from '@tests/unit-test-utils/flushPromises';
 import Form from './form';
 
-jest.mock('@transaction/manage/transactionPriority/useTransactionFeeCalculation');
-jest.mock('@transaction/utilities/api');
+jest.mock('@transaction/hooks/useTransactionFeeCalculation');
+jest.mock('@transaction/api');
 
 const transactionBaseFees = {
   Low: 156,

@@ -1,7 +1,7 @@
 import to from 'await-to-js';
 import { tokenMap } from '@token/fungible/consts/tokens';
 import { MODULE_ASSETS_NAME_ID_MAP } from '@transaction/configuration/moduleAssets';
-import { create } from '@transaction/utilities/api';
+import { create } from '@transaction/api';
 import { getAccount } from '@wallet/utilities/api';
 import { isEmpty } from '@common/utilities/helpers';
 import { timerReset } from '@wallet/store/action';

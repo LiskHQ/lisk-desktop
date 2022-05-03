@@ -1,8 +1,8 @@
 import React from 'react';
 import { fromRawLsk } from '@token/fungible/utils/lsk';
-import TransactionInfo from '@transaction/detail/info/transactionInfo';
+import TransactionInfo from '@transaction/components/TransactionInfo';
 import { MODULE_ASSETS_NAME_ID_MAP } from '@transaction/configuration/moduleAssets';
-import TransactionSummary from '@transaction/detail/manager/transactionSummary';
+import TransactionSummary from '@transaction/components/TransactionSummary';
 import ToggleIcon from '../toggleIcon';
 import VoteStats from '../voteStats';
 

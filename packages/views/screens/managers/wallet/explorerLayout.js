@@ -5,7 +5,7 @@ import { isEmpty } from '@common/utilities/helpers';
 import { selectActiveToken, selectSettings } from '@common/store/selectors';
 import { selectSearchParamValue } from 'src/utils/searchParams';
 import TabsContainer from '@basics/tabs/tabsContainer/tabsContainer';
-import Transactions from '@transaction/list/managers/explorer';
+import Transactions from '@transaction/components/Explorer';
 import Overview from './overview';
 import DelegateTab from './delegateProfile';
 import VotesTab from './votes';

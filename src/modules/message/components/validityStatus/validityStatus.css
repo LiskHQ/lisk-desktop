@@ -1,0 +1,18 @@
+@import '../../../../../setup/react/app/mixins.css';
+
+.result {
+  text-align: center;
+  padding: var(--horizontal-padding-l) 0 12px;
+
+  & .illustration {
+    width: 170px;
+    margin-top: 40px;
+    margin-bottom: 0px;
+  }
+
+  & h1 {
+    color: var(--color-maastricht-blue);
+    margin-top: 0;
+    margin-bottom: 50px;
+  }
+}

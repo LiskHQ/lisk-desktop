@@ -10,7 +10,7 @@ import {
   emptyTransactionsData, transactionsRetrieved, votesRetrieved,
 } from '@common/store/actions';
 import analytics from '@common/utilities/analytics';
-import { getTransactions } from '@transaction/utilities/api';
+import { getTransactions } from '@transaction/api';
 import i18n from '@setup/i18n/i18n';
 import blockActionTypes from '@block/store/actionTypes';
 import transactionActionTypes from '@transaction/store/actionTypes';

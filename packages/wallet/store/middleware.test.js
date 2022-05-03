@@ -10,7 +10,7 @@ import transactionActionTypes from '@transaction/store/actionTypes';
 import { MODULE_ASSETS_NAME_ID_MAP } from '@transaction/configuration/moduleAssets';
 import routes from '@screens/router/routes';
 import { tokenMap } from '@token/fungible/consts/tokens';
-import * as transactionApi from '@transaction/utilities/api';
+import * as transactionApi from '@transaction/api';
 import { getAutoLogInData } from '@common/utilities/login';
 import history from '@common/utilities/history';
 import walletActionTypes from './actionTypes';
@@ -18,7 +18,7 @@ import middleware from './middleware';
 
 jest.mock('@common/utilities/history');
 
-jest.mock('@transaction/utilities/api', () => ({
+jest.mock('@transaction/api', () => ({
   getTransactions: jest.fn(),
   emptyTransactionsData: jest.fn(),
 }));
@@ -38,7 +38,7 @@ jest.mock('@common/utilities/login', () => ({
   shouldAutoLogIn: jest.fn(),
 }));
 
-jest.mock('@transaction/utilities/api');
+jest.mock('@transaction/api');
 
 jest.mock('@token/fungible/utils/lsk');
 
