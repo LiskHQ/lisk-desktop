@@ -2,7 +2,7 @@ import { withTranslation } from 'react-i18next';
 import React from 'react';
 import grid from 'flexboxgrid/dist/flexboxgrid.css';
 import { PrimaryButton, TertiaryButton } from '@basics/buttons';
-import PassphraseBackup from '@wallet/detail/identity/passphraseBackup';
+import PassphraseBackup from '@auth/components/passphraseBackup';
 import registerStyles from '../Signup/register.css';
 
 const SavePassphrase = ({

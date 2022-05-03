@@ -17,7 +17,7 @@ import Settings from '@screens/managers/settings';
 import SignMessage from '@message/manager/signMessageManager';
 import TermsOfUse from 'src/modules/common/components/TermsOfUse';
 import Wallet from '@screens/managers/wallet';
-import Explorer from '@screens/managers/wallet/explorer';
+import Explorer from '@wallet/manager/explorerManager';
 // import TransactionDetailsModal from '@screens/managers/transactionDetailsModal';
 import VerifyMessage from '@message/manager/verifyMessageManager';
 import Request from '@screens/managers/request';
@@ -31,7 +31,7 @@ import ReclaimBalance from '@legacy/manager/reclaimBalance';
 import ReclaimBalanceModal from '@legacy/manager/reclaimBalanceModal';
 import MultiSignature from '@screens/managers/multiSignature';
 import SignMultiSigTransaction from '@screens/managers/signMultiSignTransaction';
-import MultisigAccountDetails from '@screens/managers/multisigAccountDetails';
+import MultisigAccountDetails from '@wallet/manager/multisigAccountDetailsManager';
 
 export default {
   wallet: Wallet,

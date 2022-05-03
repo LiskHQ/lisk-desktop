@@ -3,7 +3,7 @@ import React from 'react';
 import Box from '@basics/box';
 import BoxHeader from '@basics/box/header';
 import BoxContent from '@basics/box/content';
-import WalletListRepeater from '@wallet/list/repeater';
+import WalletListRepeater from '@account/manager/AccountsManager';
 import styles from './Accounts.css';
 
 const Accounts = ({ wallets, t, ...restProps }) => (

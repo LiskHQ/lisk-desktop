@@ -4,7 +4,7 @@ import { withRouter } from 'react-router';
 
 import { getAccount } from '@wallet/utils/api';
 import withData from '@common/utilities/withData';
-import MultisigAccountDetails from './multisigAccountDetails';
+import MultisigAccountDetails from '../components/multisigAccountDetails';
 
 export default compose(
   withRouter,

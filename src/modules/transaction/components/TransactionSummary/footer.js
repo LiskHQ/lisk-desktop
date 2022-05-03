@@ -1,8 +1,8 @@
 // istanbul ignore file
 import React, { useEffect, useState } from 'react';
 import { PrimaryButton, SecondaryButton, TertiaryButton } from '@basics/buttons';
-import useSecondPassphrase from '@wallet/hooks/setSecondPassphrase';
-import PassphraseInput from 'src/modules/wallet/components/PassphraseInput/PassphraseInput';
+import useSecondPassphrase from '@transaction/hooks/setSecondPassphrase';
+import PassphraseInput from '@wallet/components/PassphraseInput/PassphraseInput';
 import BoxFooter from '@basics/box/footer';
 import styles from './TransactionSummary.css';
 

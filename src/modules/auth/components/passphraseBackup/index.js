@@ -2,10 +2,10 @@ import QRCode from 'qrcode.react';
 import React from 'react';
 import renderPaperWallet from '@common/utilities/paperWallet';
 import { SecondaryButton } from '@basics/buttons';
+import PassphraseRenderer from '@wallet/components/passphraseRenderer';
 import CopyToClipboard from '@basics/copyToClipboard';
 import Icon from 'src/theme/Icon';
 import styles from './passphraseBackup.css';
-import PassphraseRenderer from '../passphraseRenderer';
 
 class PassphraseBackup extends React.Component {
   constructor(props) {
