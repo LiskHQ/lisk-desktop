@@ -9,7 +9,7 @@ import {
   getModuleAssetSenderLabel,
 } from '@transaction/utilities/moduleAssets';
 import { getTxAmount } from '@transaction/utilities/transaction';
-import { tokenMap } from '@token/configuration/tokens';
+import { tokenMap } from '@token/fungible/consts/tokens';
 import { MODULE_ASSETS_NAME_ID_MAP } from '@transaction/configuration/moduleAssets';
 import CopyToClipboard from '@basics/copyToClipboard';
 import TransactionTypeFigure from '@transaction/detail/info/transactionTypeFigure';

@@ -1,6 +1,6 @@
 import { act } from 'react-dom/test-utils';
 import networks from '@network/configuration/networks';
-import { tokenMap } from '@token/configuration/tokens';
+import { tokenMap } from '@token/fungible/consts/tokens';
 import { mountWithProps } from '@common/utilities/testHelpers';
 import * as hwManager from '@transaction/utilities/hwManager';
 import { create } from '@transaction/utilities/api';

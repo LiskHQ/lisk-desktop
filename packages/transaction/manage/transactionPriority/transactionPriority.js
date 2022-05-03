@@ -1,11 +1,11 @@
 import React, { useState, useMemo } from 'react';
 import PropTypes from 'prop-types';
 import { MODULE_ASSETS_MAP } from '@transaction/configuration/moduleAssets';
-import { tokenMap } from '@token/configuration/tokens';
+import { tokenMap } from '@token/fungible/consts/tokens';
 import {
   formatAmountBasedOnLocale,
 } from '@common/utilities/formattedNumber';
-import { toRawLsk, fromRawLsk } from '@token/utilities/lsk';
+import { toRawLsk, fromRawLsk } from '@token/fungible/utils/lsk';
 import Input from '@basics/inputs/input';
 import Icon from '@basics/icon';
 import Tooltip from '@basics/tooltip/tooltip';

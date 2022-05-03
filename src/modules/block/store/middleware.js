@@ -1,5 +1,5 @@
 import { blockSubscribe, blockUnsubscribe } from '@block/utils';
-import { tokenMap } from '@token/configuration/tokens';
+import { tokenMap } from '@token/fungible/consts/tokens';
 import {
   olderBlocksRetrieved,
   forgersRetrieved,

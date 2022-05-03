@@ -1,5 +1,5 @@
 import { regex } from '@common/configuration';
-import { tokenMap } from '@token/configuration/tokens';
+import { tokenMap } from '@token/fungible/consts/tokens';
 import { HTTP_CODES } from '@wallet/configuration/httpCodes';
 import http from '@common/utilities/api/http';
 import ws from '@common/utilities/api/ws';

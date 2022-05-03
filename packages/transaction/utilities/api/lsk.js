@@ -5,7 +5,7 @@ import {
   MIN_FEE_PER_BYTE,
   DEFAULT_NUMBER_OF_SIGNATURES,
 } from '@transaction/configuration/transactions';
-import { tokenMap } from '@token/configuration/tokens';
+import { tokenMap } from '@token/fungible/consts/tokens';
 import {
   MODULE_ASSETS_MAP,
   BASE_FEES,
@@ -15,7 +15,7 @@ import { joinModuleAndAssetIds } from '@transaction/utilities/moduleAssets';
 import {
   createTransactionObject, sign,
 } from '@transaction/utilities/transaction';
-import { fromRawLsk } from '@token/utilities/lsk';
+import { fromRawLsk } from '@token/fungible/utils/lsk';
 import { validateAddress } from '@common/utilities/validators';
 import http from '@common/utilities/api/http';
 import { getDelegates } from '@dpos/validator/api';

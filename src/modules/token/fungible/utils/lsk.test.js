@@ -1,5 +1,5 @@
 import { expect } from 'chai';
-import { fromRawLsk, toRawLsk } from '@token/utilities/lsk';
+import { fromRawLsk, toRawLsk } from '@token/fungible/utils/lsk';
 
 describe('lsk', () => {
   describe('fromRawLsk', () => {

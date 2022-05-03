@@ -1,7 +1,7 @@
 import { parseSearchParams } from 'src/utils/searchParams';
 import { getAccounts } from '@wallet/utilities/api';
 import { regex } from '@common/configuration';
-import { tokenMap } from '@token/configuration/tokens';
+import { tokenMap } from '@token/fungible/consts/tokens';
 import { validateAddress } from '@common/utilities/validators';
 import { voteEdited } from '@dpos/validator/store/actions/voting';
 

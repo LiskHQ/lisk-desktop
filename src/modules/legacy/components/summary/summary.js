@@ -1,5 +1,5 @@
 import React from 'react';
-import { tokenMap } from '@token/configuration/tokens';
+import { tokenMap } from '@token/fungible/consts/tokens';
 import { MODULE_ASSETS_NAME_ID_MAP } from '@transaction/configuration/moduleAssets';
 import { useTransactionFeeCalculation, useTransactionPriority } from '@transaction/manage/transactionPriority';
 import TransactionSummary from '@transaction/detail/manager/transactionSummary';

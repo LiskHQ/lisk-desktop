@@ -1,6 +1,6 @@
 import React from 'react';
 import grid from 'flexboxgrid/dist/flexboxgrid.css';
-import { tokenMap } from '@token/configuration/tokens';
+import { tokenMap } from '@token/fungible/consts/tokens';
 import { truncateAddress } from '@wallet/utilities/account';
 import WalletVisual from '@wallet/detail/identity/walletVisual';
 import tableStyles from '@basics/table/table.css';

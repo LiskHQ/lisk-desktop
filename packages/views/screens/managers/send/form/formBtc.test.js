@@ -1,8 +1,8 @@
 import { act } from 'react-dom/test-utils';
 import React from 'react';
 import { mount } from 'enzyme';
-import { tokenMap } from '@token/configuration/tokens';
-import { fromRawLsk } from '@token/utilities/lsk';
+import { tokenMap } from '@token/fungible/consts/tokens';
+import { fromRawLsk } from '@token/fungible/utils/lsk';
 import {
   getUnspentTransactionOutputs,
   getTransactionFeeFromUnspentOutputs,

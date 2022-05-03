@@ -4,7 +4,7 @@ import CopyToClipboard from '@basics/copyToClipboard';
 import Icon from '@basics/icon';
 import LiskAmount from '@shared/liskAmount';
 import WalletVisualWithAddress from '@wallet/detail/identity/walletVisual/walletVisualWithAddress';
-import { tokenMap } from '@token/configuration/tokens';
+import { tokenMap } from '@token/fungible/consts/tokens';
 import styles from './migrationDetails.css';
 
 const token = tokenMap.LSK.key;

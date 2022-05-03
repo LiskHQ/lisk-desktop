@@ -1,9 +1,9 @@
 import React, { useState } from 'react';
 import { useDispatch } from 'react-redux';
 
-import { tokenMap } from '@token/configuration/tokens';
+import { tokenMap } from '@token/fungible/consts/tokens';
 import { voteEdited } from '@common/store/actions';
-import { fromRawLsk, toRawLsk } from '@token/utilities/lsk';
+import { fromRawLsk, toRawLsk } from '@token/fungible/utils/lsk';
 import { truncateAddress } from '@wallet/utilities/account';
 import WalletVisual from '@wallet/detail/identity/walletVisual';
 import Box from '@basics/box';

@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { withTranslation } from 'react-i18next';
-import { tokenMap } from '@token/configuration/tokens';
+import { tokenMap } from '@token/fungible/consts/tokens';
 import { truncateAddress } from '@wallet/utilities/account';
 import { TertiaryButton } from '@basics/buttons';
 import WalletVisual from '@wallet/detail/identity/walletVisual';

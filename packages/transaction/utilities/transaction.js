@@ -12,7 +12,7 @@ import {
   getKeys,
 } from '@wallet/utilities/account';
 import { transformStringDateToUnixTimestamp } from '@views/utilities/dateTime';
-import { toRawLsk } from '@token/utilities/lsk';
+import { toRawLsk } from '@token/fungible/utils/lsk';
 import { isEmpty } from '@common/utilities/helpers';
 import { splitModuleAndAssetIds, joinModuleAndAssetIds } from '@transaction/utilities/moduleAssets';
 

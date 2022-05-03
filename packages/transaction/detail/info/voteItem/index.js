@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom';
 
 import { truncateAddress } from '@wallet/utilities/account';
 import routes from '@screens/router/routes';
-import { tokenMap } from '@token/configuration/tokens';
+import { tokenMap } from '@token/fungible/consts/tokens';
 import LiskAmount from '@shared/liskAmount';
 
 import styles from './voteItem.css';

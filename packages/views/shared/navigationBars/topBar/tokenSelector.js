@@ -3,7 +3,7 @@ import { useDispatch, useSelector } from 'react-redux';
 
 import { settingsUpdated } from '@common/store/actions';
 import routes from '@screens/router/routes';
-import { tokenMap } from '@token/configuration/tokens';
+import { tokenMap } from '@token/fungible/consts/tokens';
 import Icon from '@basics/icon';
 import Tooltip from '@basics/tooltip/tooltip';
 import styles from './topBar.css';

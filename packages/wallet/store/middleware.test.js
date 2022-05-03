@@ -9,7 +9,7 @@ import settingsActionTypes from '@settings/store/actionTypes';
 import transactionActionTypes from '@transaction/store/actionTypes';
 import { MODULE_ASSETS_NAME_ID_MAP } from '@transaction/configuration/moduleAssets';
 import routes from '@screens/router/routes';
-import { tokenMap } from '@token/configuration/tokens';
+import { tokenMap } from '@token/fungible/consts/tokens';
 import * as transactionApi from '@transaction/utilities/api';
 import { getAutoLogInData } from '@common/utilities/login';
 import history from '@common/utilities/history';
@@ -40,7 +40,7 @@ jest.mock('@common/utilities/login', () => ({
 
 jest.mock('@transaction/utilities/api');
 
-jest.mock('@token/utilities/lsk');
+jest.mock('@token/fungible/utils/lsk');
 
 const liskAPIClientMock = 'DUMMY_LISK_API_CLIENT';
 const storeCreatedAction = {

@@ -1,4 +1,4 @@
-import { tokenKeys } from '@token/configuration/tokens';
+import { tokenKeys } from '@token/fungible/consts/tokens';
 import actionTypes from '../actions/actionTypes';
 
 export const INITIAL_STATE = {

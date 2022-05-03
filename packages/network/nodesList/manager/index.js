@@ -4,7 +4,7 @@ import { getPeers } from '@network/utilities/api';
 import withData from '@common/utilities/withData';
 import { DEFAULT_LIMIT } from '@views/configuration';
 import withLocalSort from '@common/utilities/withLocalSort';
-import { tokenMap } from '@token/configuration/tokens';
+import { tokenMap } from '@token/fungible/consts/tokens';
 import sortByVersion from '../../utilities/helpers';
 import NodeList from './manager';
 

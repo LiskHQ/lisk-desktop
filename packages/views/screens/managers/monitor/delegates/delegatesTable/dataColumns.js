@@ -1,7 +1,7 @@
 import React from 'react';
 
 import { formatAmountBasedOnLocale } from '@common/utilities/formattedNumber';
-import { fromRawLsk } from '@token/utilities/lsk';
+import { fromRawLsk } from '@token/fungible/utils/lsk';
 import { truncateAddress } from '@wallet/utilities/account';
 import Tooltip from '@basics/tooltip/tooltip';
 import Icon from '@basics/icon';

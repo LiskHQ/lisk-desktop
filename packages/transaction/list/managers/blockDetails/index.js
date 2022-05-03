@@ -3,7 +3,7 @@ import { compose } from 'redux';
 import { withTranslation } from 'react-i18next';
 import { getTransactions } from '@transaction/utilities/api';
 import withData from '@common/utilities/withData';
-import { tokenMap } from '@token/configuration/tokens';
+import { tokenMap } from '@token/fungible/consts/tokens';
 import Transactions from './transactions';
 
 export default compose(
