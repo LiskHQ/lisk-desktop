@@ -14,11 +14,11 @@ import {
 } from '@common/store/selectors';
 import TabsContainer from '@basics/tabs/tabsContainer/tabsContainer';
 import Transactions from '@transaction/components/WalletTransactions';
-import Overview from './overview';
-import DelegateTab from './delegateProfile';
-import VotesTab from './votes';
+import Overview from '@screens/managers/wallet/overview';
+import DelegateTab from '@screens/managers/wallet/delegateProfile';
+import VotesTab from '@screens/managers/wallet/votes';
 
-const Wallet = ({ t, history }) => {
+const AccountDetails = ({ t, history }) => {
   const dispatch = useDispatch();
   const account = useSelector(selectAccount);
   const activeToken = useSelector(selectActiveToken);
@@ -93,4 +93,4 @@ const Wallet = ({ t, history }) => {
   );
 };
 
-export default compose(withRouter, withTranslation())(Wallet);
+export default compose(withRouter, withTranslation())(AccountDetails);

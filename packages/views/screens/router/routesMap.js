@@ -16,7 +16,7 @@ import Send from '@screens/managers/send';
 import Settings from '@screens/managers/settings';
 import SignMessage from '@message/manager/signMessageManager';
 import TermsOfUse from 'src/modules/common/components/TermsOfUse';
-import Wallet from '@screens/managers/wallet';
+import AccountDetails from '@account/components/AccountDetails';
 import Explorer from '@screens/managers/wallet/explorer';
 // import TransactionDetailsModal from '@screens/managers/transactionDetailsModal';
 import VerifyMessage from '@message/manager/verifyMessageManager';
@@ -34,7 +34,7 @@ import SignMultiSigTransaction from '@screens/managers/signMultiSignTransaction'
 import MultisigAccountDetails from '@screens/managers/multisigAccountDetails';
 
 export default {
-  wallet: Wallet,
+  wallet: AccountDetails,
   addAccount: Login,
   explorer: Explorer,
   hwWallet: HwWalletLogin,
