@@ -19,6 +19,7 @@
       "@transaction/*": ["./src/modules/transaction/*"],
       "@update/*": ["./src/modules/update/*"],
       "@wallet/*": ["./src/modules/wallet/*"],
+      "@account/*": ["./src/modules/account/*"],
       "@views/*": ["./packages/views/*"],
       "@shared/*": ["./packages/views/shared/*"],
       "@basics/*": ["./packages/views/basics/*"],

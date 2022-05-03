@@ -44,6 +44,7 @@
           ["@transaction", "./src/modules/transaction"],
           ["@update", "./src/modules/update"],
           ["@wallet", "./src/modules/wallet/"],
+          ["@account", "./src/modules/account/"],
           ["@legacy", "./src/modules/legacy/"],
           ["@message", "./src/modules/message/"],
           ["@auth", "./src/modules/auth/"],
