@@ -1,40 +1,16 @@
-import { toast } from 'react-toastify';
-import networks, { networkKeys } from '@network/configuration/networks';
-import { timeOutId, timeOutWarningId } from '@views/configuration';
-import { tokenMap } from '@token/configuration/tokens';
 import { MODULE_ASSETS_NAME_ID_MAP } from '@transaction/configuration/moduleAssets';
 import { fromRawLsk, delay } from '@token/utilities/lsk';
 import { getActiveTokenAccount } from '@wallet/utils/account';
 import {
-  settingsUpdated, networkSelected, networkStatusUpdated, accountDataUpdated,
-  emptyTransactionsData, transactionsRetrieved, votesRetrieved,
+  settingsUpdated, accountDataUpdated,
+  emptyTransactionsData, transactionsRetrieved,
 } from '@common/store/actions';
-import analytics from '@common/utilities/analytics';
 import { getTransactions } from '@transaction/api';
 import i18n from '@setup/i18n/i18n';
 import blockActionTypes from '@block/store/actionTypes';
-import transactionActionTypes from '@transaction/store/actionTypes';
 import settingsActionTypes from '@settings/store/actionTypes';
+import { selectActiveToken } from '@common/store/selectors';
 import actionTypes from './actionTypes';
-
-const getRecentTransactionOfType = (transactionsList, type) => (
-  transactionsList.filter(transaction => (
-    transaction.type === type
-    // limit the number of confirmations to 5 to not fire each time there is another new transaction
-    // theoretically even less then 5, but just to be on the safe side
-    && transaction.confirmations < 5))[0]
-);
-
-const votePlaced = (store, action) => {
-  const voteTransaction = getRecentTransactionOfType(
-    action.data.confirmed,
-    MODULE_ASSETS_NAME_ID_MAP.voteDelegate,
-  );
-
-  if (voteTransaction) {
-    store.dispatch(votesRetrieved());
-  }
-};
 
 const filterIncomingTransactions = (transactions, account) =>
   transactions.filter(transaction => (
@@ -79,10 +55,8 @@ const checkTransactionsAndUpdateAccount = async (store, action) => {
       );
     }).length > 0;
     showNotificationsForIncomingTransactions(txs, account, token.active);
-    const recentBtcTransaction = token.active === tokenMap.BTC.key
-      && transactions.confirmed.filter(t => t.confirmations === 1).length > 0;
 
-    if (blockContainsRelevantTransaction || recentBtcTransaction) {
+    if (blockContainsRelevantTransaction) {
       store.dispatch(accountDataUpdated());
       store.dispatch(transactionsRetrieved({
         address: account.summary?.address,
@@ -92,50 +66,20 @@ const checkTransactionsAndUpdateAccount = async (store, action) => {
   }
 };
 
-const readStoredNetwork = ({ dispatch, getState }) => {
-  const {
-    statistics, statisticsRequest, statisticsFollowingDay, network,
-  } = getState().settings;
-
-  const config = network?.name && network.address
-    ? network
-    : {
-      name: networkKeys.mainNet,
-      address: networks.mainnet.serviceUrl,
-    };
-  dispatch(networkSelected(config));
-  dispatch(networkStatusUpdated({ online: true }));
-
-  if (!statistics) {
-    analytics.checkIfAnalyticsShouldBeDisplayed({
-      statisticsRequest, statisticsFollowingDay, statistics,
-    });
-  }
-};
-
 // eslint-disable-next-line complexity
 const accountMiddleware = store => next => async (action) => {
   next(action);
+  const activeToken = store.getState(selectActiveToken);
   switch (action.type) {
-    case settingsActionTypes.settingsRetrieved:
-      readStoredNetwork(store);
-      break;
     case blockActionTypes.newBlockCreated:
       await checkTransactionsAndUpdateAccount(store, action);
       break;
-    case transactionActionTypes.transactionsRetrieved:
-      votePlaced(store, action);
-      break;
-    case actionTypes.accountUpdated:
-    case actionTypes.accountLoggedIn: {
-      toast.dismiss(timeOutId);
-      toast.dismiss(timeOutWarningId);
-      break;
-    }
     case actionTypes.accountLoggedOut:
       /* Reset active token setting so in case BTC is selected,
       the Lisk monitoring features are available and Lisk is selected on the next login */
-      store.dispatch(settingsUpdated({ token: { active: tokenMap.LSK.key } }));
+      store.dispatch(settingsUpdated({
+        token: { active: activeToken },
+      }));
       store.dispatch(emptyTransactionsData());
       break;
     case settingsActionTypes.settingsUpdated:
