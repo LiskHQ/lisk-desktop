@@ -10,7 +10,7 @@ import BoxContent from '@basics/box/content';
 import BoxFooter from '@basics/box/footer';
 import { PrimaryButton, SecondaryButton } from '@basics/buttons';
 import ModalWrapper from '@bookmark/components/BookmarksListModal/BookmarkModalWrapper';
-import Icon from '@basics/icon';
+import Icon from 'src/theme/Icon';
 import styles from './AddBookmark.css';
 import BookmarkForm from './BookmarkForm';
 

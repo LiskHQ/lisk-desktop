@@ -1,6 +1,6 @@
 /* istanbul ignore file */
 import { connect } from 'react-redux';
-import withTheme from '@views/utilities/theme';
+import withTheme from 'src/theme/Theme';
 import OfflineWrapper from './offlineWrapper';
 
 const mapStateToProps = state => ({

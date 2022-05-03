@@ -4,8 +4,8 @@ import { useDispatch, useSelector } from 'react-redux';
 import { settingsUpdated } from '@common/store/actions';
 import routes from '@screens/router/routes';
 import { tokenMap } from '@token/fungible/consts/tokens';
-import Icon from '@basics/icon';
-import Tooltip from '@basics/tooltip/tooltip';
+import Icon from 'src/theme/Icon';
+import Tooltip from 'src/theme/Tooltip';
 import styles from './topBar.css';
 
 const TokenSelector = ({

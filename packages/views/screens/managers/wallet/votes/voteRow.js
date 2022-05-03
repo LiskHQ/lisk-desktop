@@ -6,8 +6,8 @@ import WalletVisual from '@wallet/detail/identity/walletVisual';
 import tableStyles from '@basics/table/table.css';
 import LiskAmount from '@shared/liskAmount';
 import DialogLink from '@basics/dialog/link';
-import Spinner from '@basics/spinner';
-import Icon from '@basics/icon';
+import Spinner from 'src/theme/Spinner';
+import Icon from 'src/theme/Icon';
 import styles from './votes.css';
 
 const VoteRow = ({

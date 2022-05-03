@@ -1,7 +1,7 @@
 /* eslint-disable max-lines */
 import { to } from 'await-to-js';
 import { toast } from 'react-toastify';
-import loginTypes from '@wallet/configuration/loginTypes';
+import loginTypes from 'src/modules/auth/const/loginTypes';
 import { tokenMap } from '@token/fungible/consts/tokens';
 import { MODULE_ASSETS_NAME_ID_MAP } from '@transaction/configuration/moduleAssets';
 import { toRawLsk } from '@token/fungible/utils/lsk';

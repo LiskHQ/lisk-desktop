@@ -7,14 +7,14 @@ import { kFormatter } from '@common/utilities/helpers';
 import { chartStyles } from '@common/configuration';
 import { MODULE_ASSETS_NAME_ID_MAP } from '@transaction/configuration/moduleAssets';
 import { getModuleAssetTitle } from '@transaction/utils/moduleAssets';
-import { useTheme } from '@views/utilities/theme';
+import { useTheme } from 'src/theme/Theme';
 import { getColorPalette } from '@views/basics/charts/chartOptions';
 import Box from '@basics/box';
 import BoxTabs from '@basics/tabs';
 import BoxHeader from '@basics/box/header';
 import BoxContent from '@basics/box/content';
 import { DoughnutChart, BarChart } from '@basics/charts';
-import Tooltip from '@basics/tooltip/tooltip';
+import Tooltip from 'src/theme/Tooltip';
 import GuideTooltip, { GuideTooltipItem } from '@basics/charts/guideTooltip';
 import styles from './overview.css';
 

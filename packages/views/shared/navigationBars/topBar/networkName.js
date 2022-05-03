@@ -2,7 +2,7 @@ import React from 'react';
 
 import { networkKeys } from '@network/configuration/networks';
 import { getNetworkName } from '@network/utils/getNetwork';
-import Tooltip from '@basics/tooltip/tooltip';
+import Tooltip from 'src/theme/Tooltip';
 import styles from './network.css';
 
 const Network = ({ network, t, token }) => {

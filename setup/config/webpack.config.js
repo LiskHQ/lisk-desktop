@@ -21,7 +21,7 @@ const config = {
       '@settings': resolve('./packages/settings'),
       '@token': resolve('./src/modules/token'),
       '@transaction': resolve('./src/modules/transaction'),
-      '@updater': resolve('./packages/updater'),
+      '@update': resolve('./src/modules/update'),
       '@wallet': resolve('./packages/wallet'),
       '@views': resolve('./packages/views'),
       '@shared': resolve('./packages/views/shared'),

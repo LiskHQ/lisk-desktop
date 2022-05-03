@@ -1,8 +1,8 @@
 import React from 'react';
 
 import { SecondaryButton } from '@basics/buttons';
-import Icon from '@basics/icon';
-import { InputWithDropdown } from '@basics/inputs';
+import Icon from 'src/theme/Icon';
+import { DropdownInput } from 'src/theme';
 
 import styles from './styles.css';
 
@@ -22,7 +22,7 @@ const MemberField = ({
 
   return (
     <div className={styles.memberFieldContainer}>
-      <InputWithDropdown
+      <DropdownInput
         t={t}
         className={`${styles.inputWithDropdown} msign-pk-input`}
         value={publicKey}
@@ -38,7 +38,7 @@ const MemberField = ({
         <span onClick={() => changeCategory(true)}>
           {t('Mandatory')}
         </span>
-      </InputWithDropdown>
+      </DropdownInput>
       {showDeleteIcon && <span className={`${styles.deleteIcon} delete-icon`} onClick={deleteMember}><Icon name="deleteIcon" /></span>}
     </div>
   );

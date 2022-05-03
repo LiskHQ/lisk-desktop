@@ -42,7 +42,7 @@
           ["@settings", "./packages/settings/"],
           ["@token", "./src/modules/token/"],
           ["@transaction", "./src/modules/transaction"],
-          ["@updater", "./packages/updater/"],
+          ["@update", "./src/modules/update"],
           ["@wallet", "./packages/wallet/"],
           ["@legacy", "./src/modules/legacy/"],
           ["@message", "./src/modules/message/"],

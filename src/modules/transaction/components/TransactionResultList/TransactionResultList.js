@@ -1,5 +1,5 @@
 import React from 'react';
-import Icon from '@basics/icon';
+import Icon from 'src/theme/Icon';
 import { truncateAddress } from '@wallet/utilities/account';
 import { getTxConfig } from '@search/utils';
 import LiskAmount from '@shared/liskAmount';

@@ -10,7 +10,7 @@ import {
   getAddressFromBase32Address,
   getKeys,
 } from '@wallet/utilities/account';
-import { transformStringDateToUnixTimestamp } from '@views/utilities/dateTime';
+import { transformStringDateToUnixTimestamp } from 'src/utils/dateTime';
 import { toRawLsk } from '@token/fungible/utils/lsk';
 import { isEmpty } from '@common/utilities/helpers';
 import { splitModuleAndAssetIds, joinModuleAndAssetIds } from './moduleAssets';

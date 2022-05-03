@@ -2,7 +2,7 @@ import React from 'react';
 import moment from 'moment';
 import { tokenMap } from '@token/fungible/consts/tokens';
 import { isBlockHeightReached } from '@wallet/utilities/account';
-import Icon from '@basics/icon';
+import Icon from 'src/theme/Icon';
 import LiskAmount from '@shared/liskAmount';
 
 const getPendingTime = (unvoteHeight, unlockHeight) => {

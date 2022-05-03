@@ -11,7 +11,7 @@ import Box from '@basics/box';
 import BoxHeader from '@basics/box/header';
 import BoxContent from '@basics/box/content';
 import BoxEmptyState from '@basics/box/emptyState';
-import Icon from '@basics/icon';
+import Icon from 'src/theme/Icon';
 import Table from '@basics/table';
 import TransactionRow from '../TransactionRow';
 import styles from './RecentTransactions.css';

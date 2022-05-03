@@ -5,7 +5,7 @@ import { getAccountsFromDevice, getNewAccountByIndex } from '@wallet/utilities/h
 import routes from '@screens/router/routes';
 import { tokenMap } from '@token/fungible/consts/tokens';
 import { TertiaryButton } from '@basics/buttons';
-import CheckBox from '@basics/inputs/checkBox';
+import CheckBox from 'src/theme/CheckBox';
 import AccountCard from './accountCard';
 import LoadingIcon from '../loadingIcon';
 import styles from './selectAccount.css';

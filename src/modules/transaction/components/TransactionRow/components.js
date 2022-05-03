@@ -5,18 +5,18 @@ import { tokenMap } from '@token/fungible/consts/tokens';
 import { getTxAmount } from '@transaction/utils/transaction';
 import { MODULE_ASSETS_NAME_ID_MAP } from '@transaction/configuration/moduleAssets';
 import DateTimeFromTimestamp from '@basics/timestamp';
-import Icon from '@basics/icon';
-import Tooltip from '@basics/tooltip/tooltip';
+import Icon from 'src/theme/Icon';
+import Tooltip from 'src/theme/Tooltip';
 import LiskAmount from '@shared/liskAmount';
 import WalletVisualWithAddress from '@wallet/detail/identity/walletVisual/walletVisualWithAddress';
 import { truncateAddress } from '@wallet/utilities/account';
-import Spinner from '@basics/spinner';
+import Spinner from 'src/theme/Spinner';
 import routes from '@screens/router/routes';
-import { getModuleAssetTitle } from '../../utils/moduleAssets';
-import TransactionTypeFigure from '../TransactionTypeFigure';
-import TransactionAmount from '../TransactionAmount';
+import { getModuleAssetTitle } from '@transaction/utils';
 import styles from './row.css';
 import { RowContext } from './index';
+import TransactionTypeFigure from '../TransactionTypeFigure';
+import TransactionAmount from '../TransactionAmount';
 
 export const Sender = () => {
   const { data, avatarSize } = useContext(RowContext);

@@ -5,7 +5,7 @@ import BoxHeader from '@basics/box/header';
 import BoxContent from '@basics/box/content';
 import BoxTabs from '@basics/tabs';
 import BoxEmptyState from '@basics/box/emptyState';
-import Icon from '@basics/icon';
+import Icon from 'src/theme/Icon';
 import News from './news';
 import styles from './newsFeed.css';
 

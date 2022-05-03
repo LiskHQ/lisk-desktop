@@ -2,7 +2,7 @@ import React from 'react';
 import { withTranslation } from 'react-i18next';
 import { MODULE_ASSETS_NAME_ID_MAP } from '@transaction/configuration/moduleAssets';
 import { getModuleAssetTitle } from '@transaction/utils/moduleAssets';
-import Select from '@basics/inputs/select';
+import Select from 'src/theme/Select';
 import styles from './filters.css';
 
 const SelectFilter = ({

@@ -2,7 +2,7 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import routes from '@screens/router/routes';
 import { PrimaryButton, TertiaryButton } from '@basics/buttons';
-import Icon from '@basics/icon';
+import Icon from 'src/theme/Icon';
 import styles from './selectDevice.css';
 
 class SelectDevice extends React.Component {

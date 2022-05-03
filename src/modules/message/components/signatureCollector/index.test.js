@@ -1,6 +1,6 @@
 import React from 'react';
 import { mount } from 'enzyme';
-import loginTypes from '@wallet/configuration/loginTypes';
+import loginTypes from 'src/modules/auth/const/loginTypes';
 import * as hwManager from '@wallet/utilities/hwManager';
 import wallets from '@tests/constants/wallets';
 import MessageSignature from '.';

@@ -2,7 +2,7 @@ import React from 'react';
 import Illustration from '@basics/illustration';
 import { PrimaryButton } from '@basics/buttons';
 import BoxEmptyState from '@basics/box/emptyState';
-import Icon from '@basics/icon';
+import Icon from 'src/theme/Icon';
 import styles from '../BookmarksList/BookmarksList.css'; // @todo split the css
 
 const EmptyState = ({

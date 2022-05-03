@@ -8,7 +8,7 @@ import Box from '@basics/box';
 import BoxContent from '@basics/box/content';
 import BoxFooter from '@basics/box/footer';
 import { PrimaryButton, TertiaryButton } from '@basics/buttons';
-import { Input } from '@basics/inputs';
+import { Input } from 'src/theme';
 import { regex } from '@common/configuration';
 import { tokenMap } from '@token/fungible/consts/tokens';
 import { MODULE_ASSETS_NAME_ID_MAP } from '@transaction/configuration/moduleAssets';

@@ -2,7 +2,7 @@ import React from 'react';
 import { withTranslation } from 'react-i18next';
 import { validateAddress, validateLSKPublicKey } from '@common/utilities/validators';
 import { tokenMap } from '@token/fungible/consts/tokens';
-import { Input } from '@basics/inputs';
+import { Input } from 'src/theme';
 import styles from './filters.css';
 
 class AddressFilter extends React.Component {

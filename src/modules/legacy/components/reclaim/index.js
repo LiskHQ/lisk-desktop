@@ -1,7 +1,7 @@
 import React from 'react';
 import { withTranslation } from 'react-i18next';
 import { useSelector } from 'react-redux';
-import Tooltip from '@basics/tooltip/tooltip';
+import Tooltip from 'src/theme/Tooltip';
 import { PrimaryButton } from '@basics/buttons';
 import DialogLink from '@basics/dialog/link';
 import { fromRawLsk } from '@token/fungible/utils/lsk';

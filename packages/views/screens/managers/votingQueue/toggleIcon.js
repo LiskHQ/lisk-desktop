@@ -2,7 +2,7 @@ import React from 'react';
 import { withRouter } from 'react-router';
 
 import { removeSearchParamsFromUrl } from 'src/utils/searchParams';
-import Icon from '@basics/icon';
+import Icon from 'src/theme/Icon';
 
 import styles from './styles.css';
 

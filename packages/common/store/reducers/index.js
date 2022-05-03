@@ -4,7 +4,7 @@ export { default as bookmarks } from '@bookmark/store/reducer';
 export { default as network } from '@network/store/reducer';
 export { default as settings } from '@settings/store/reducer';
 export { default as transactions } from '@transaction/store/reducer';
-export { default as appUpdates } from '@updater/store/reducers/appUpdates';
+export { default as appUpdates } from '@update/store/reducers/appUpdates';
 export { default as voting } from '@dpos/validator/store/reducers/voting';
 export { default as watchList } from '@dpos/validator/store/reducers/watchList';
 export { default as service } from './service';

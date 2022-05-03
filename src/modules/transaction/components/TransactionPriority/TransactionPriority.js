@@ -6,10 +6,10 @@ import {
   formatAmountBasedOnLocale,
 } from '@common/utilities/formattedNumber';
 import { toRawLsk, fromRawLsk } from '@token/fungible/utils/lsk';
-import Input from '@basics/inputs/input';
-import Icon from '@basics/icon';
-import Tooltip from '@basics/tooltip/tooltip';
-import Spinner from '@basics/spinner';
+import Input from 'src/theme/Input/Input';
+import Icon from 'src/theme/Icon';
+import Tooltip from 'src/theme/Tooltip';
+import Spinner from 'src/theme/Spinner';
 
 import styles from './TransactionPriority.css';
 
@@ -37,11 +37,7 @@ const isCustomFeeValid = (value, maxFee, minFee) => {
     return false;
   }
 
-  if (rawValue < toRawLsk(minFee)) {
-    return false;
-  }
-
-  return true;
+  return rawValue >= toRawLsk(minFee);
 };
 
 // eslint-disable-next-line max-statements

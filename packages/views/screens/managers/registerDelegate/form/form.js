@@ -12,9 +12,9 @@ import Box from '@basics/box';
 import BoxHeader from '@basics/box/header';
 import BoxContent from '@basics/box/content';
 import BoxFooter from '@basics/box/footer';
-import { Input } from '@basics/inputs';
+import { Input } from 'src/theme';
 import { PrimaryButton } from '@basics/buttons';
-import Tooltip from '@basics/tooltip/tooltip';
+import Tooltip from 'src/theme/Tooltip';
 import { toRawLsk, fromRawLsk } from '@token/fungible/utils/lsk';
 import styles from './form.css';
 
