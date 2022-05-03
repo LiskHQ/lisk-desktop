@@ -2,7 +2,7 @@
 import React, { useEffect, useState } from 'react';
 import { PrimaryButton, SecondaryButton, TertiaryButton } from '@basics/buttons';
 import PassphraseInput from '@wallet/manage/passphraseInput';
-import useSecondPassphrase from '@wallet/utilities/hooks/setSecondPassphrase';
+import useSecondPassphrase from '@wallet/hooks/setSecondPassphrase';
 import BoxFooter from '@basics/box/footer';
 import styles from './TransactionSummary.css';
 
