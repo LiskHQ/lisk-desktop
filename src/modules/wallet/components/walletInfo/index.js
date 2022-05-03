@@ -1,10 +1,10 @@
 import React, { useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import WalletVisual from '@wallet/detail/identity/walletVisual';
 import Box from '@basics/box';
 import BoxContent from '@basics/box/content';
 import Icon from '@basics/icon';
 import styles from './walletInfo.css';
+import WalletVisual from '../walletVisual';
 import Identity from './identity';
 import ActionBar from './actionBar';
 

@@ -2,7 +2,7 @@
 import { compose } from 'redux';
 import { withTranslation } from 'react-i18next';
 import withData from '@common/utilities/withData';
-import { getAccount } from '@wallet/utilities/api';
+import { getAccount } from '@wallet/utils/api';
 import { selectSearchParamValue } from 'src/utils/searchParams';
 import ExplorerLayout from '@screens/managers/wallet/explorerLayout';
 

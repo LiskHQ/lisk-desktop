@@ -1,7 +1,7 @@
 import React from 'react';
 import Highlighter from 'react-highlight-words';
-import WalletVisual from '@wallet/detail/identity/walletVisual';
-import { truncateAddress } from '@wallet/utilities/account';
+import WalletVisual from '@wallet/components/walletVisual';
+import { truncateAddress } from '@wallet/utils/account';
 import styles from './walletsAndDeletegates.css';
 
 const Delegates = ({

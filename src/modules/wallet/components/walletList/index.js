@@ -1,8 +1,8 @@
 import React from 'react';
 
-import WalletRow from '@wallet/list/row';
 import Table from '@basics/table';
 import { DEFAULT_LIMIT } from '@views/configuration';
+import WalletRow from '../row';
 import header from './tableHeader';
 
 const WalletTable = ({

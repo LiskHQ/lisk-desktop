@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import Waypoint from 'react-waypoint';
-import { extractAddressFromPassphrase } from '@wallet/utilities/account';
+import { extractAddressFromPassphrase } from '@wallet/utils/account';
 import { generatePassphraseFromSeed } from '@views/utilities/passphrase';
 import DemoRenderer from '@basics/demoRenderer';
 import WalletVisual from '.';

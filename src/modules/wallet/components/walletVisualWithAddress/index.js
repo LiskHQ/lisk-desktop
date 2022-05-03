@@ -5,10 +5,10 @@ import { compose } from 'redux';
 import PropTypes from 'prop-types';
 
 import { MODULE_ASSETS_NAME_ID_MAP, MODULE_ASSETS_MAP } from '@transaction/configuration/moduleAssets';
-import { truncateAddress } from '@wallet/utilities/account';
+import { truncateAddress } from '@wallet/utils/account';
 import { getModuleAssetTitle } from '@transaction/utils/moduleAssets';
 import Icon from '@basics/icon';
-import WalletVisual from '@wallet/detail/identity/walletVisual';
+import WalletVisual from '../walletVisual';
 import styles from './walletVisualWithAddress.css';
 
 const WalletVisualWithAddress = ({
