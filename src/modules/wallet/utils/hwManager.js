@@ -10,8 +10,8 @@ import {
   validatePin,
   signMessage,
 } from '@libs/hwManager/communication';
-import { extractAddressFromPublicKey } from '@wallet/utilities/account';
-import { getAccounts } from '@wallet/utilities/api';
+import { extractAddressFromPublicKey } from './account';
+import { getAccounts } from './api';
 
 const getAccountBundle = async (deviceId, network, offset) => {
   const publicKeyList = [];

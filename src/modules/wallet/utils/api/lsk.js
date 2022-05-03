@@ -4,7 +4,7 @@ import { HTTP_CODES } from '@wallet/configuration/httpCodes';
 import http from '@common/utilities/api/http';
 import ws from '@common/utilities/api/ws';
 import { isEmpty } from '@common/utilities/helpers';
-import { extractAddressFromPublicKey, extractPublicKey } from '@wallet/utilities/account';
+import { extractAddressFromPublicKey, extractPublicKey } from '@wallet/utils/account';
 
 const httpPrefix = '/api/v2';
 
