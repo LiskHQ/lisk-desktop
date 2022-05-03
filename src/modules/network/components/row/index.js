@@ -1,6 +1,6 @@
 import React from 'react';
 import grid from 'flexboxgrid/dist/flexboxgrid.css';
-import Flag from './flag';
+import Flag from '../flag';
 
 const PeerRow = ({ data, className }) => (
   <div className={`${grid.row} ${className} peer-row`}>

@@ -1,6 +1,8 @@
 import React, { useEffect, useRef, useState } from 'react';
 import L from 'leaflet';
 import 'leaflet.markercluster/dist/leaflet.markercluster';
+import Box from '@basics/box';
+import BoxContent from '@basics/box/content';
 import markerIcon from '@setup/react/assets/images/marker.svg';
 import mapboxWatermarkImage from '@setup/react/assets/images/mapbox.png';
 import styles from './map.css';
@@ -75,11 +77,15 @@ const FullMap = ({ peers }) => {
   }, []);
 
   return (
-    <div className={styles.map}>
-      <div className={styles.wrapper}>
-        <div id="mapContainer" />
-      </div>
-    </div>
+    <Box className="map-box">
+      <BoxContent className={styles.mapWrapper}>
+        <div className={styles.map}>
+          <div className={styles.wrapper}>
+            <div id="mapContainer" />
+          </div>
+        </div>
+      </BoxContent>
+    </Box>
   );
 };
 

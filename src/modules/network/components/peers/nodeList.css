@@ -1,3 +1,15 @@
+.content {
+  padding: 0 !important;
+}
+
+.contentHeader {
+  display: inline-block;
+}
+
+.height {
+  padding-right: 20px;
+}
+
 .mapWrapper {
   padding: 0 !important;
   margin-bottom: 15px;
@@ -36,7 +48,7 @@
   height: 42px;
   line-height: 42px;
   border: 0;
-  background-image: url('../../../setup/react/assets/images/marker-group.svg');
+  background-image: url('../../../../../setup/react/assets/images/marker-group.svg');
   text-align: center;
   color: var(--color-strong-mystic);
   font-size: 13px;
