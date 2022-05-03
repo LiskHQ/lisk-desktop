@@ -7,7 +7,7 @@ import externalLinks from '@views/configuration/externalLinks';
 import { cryptography } from '@liskhq/lisk-client';
 import store from '@common/store';
 import ipcLocale from '@common/utilities/ipcLocale';
-import updateApp from 'src/modules/update/utils/updateApp';
+import updateApp from '@update/utils/updateApp';
 import i18n from '../i18n/i18n';
 import App from './app';
 

@@ -10,7 +10,7 @@ import { hot } from 'react-hot-loader/root';
 import { bookmarksRetrieved } from 'src/modules/bookmark/store/action';
 import { watchListRetrieved } from 'src/modules/dpos/validator/store/actions/watchList';
 import NotFound from 'src/modules/common/components/NotFound';
-import useIpc from 'src/modules/update/hooks/useIpc';
+import useIpc from '@update/hooks/useIpc';
 import './variables.css';
 import OfflineWrapper from '../../../packages/views/basics/offlineWrapper';
 import CustomRoute from '../../../packages/views/shared/customRoute';

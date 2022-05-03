@@ -25,7 +25,7 @@ import LockedBalance from '@screens/managers/lockedBalance';
 import EditVote from '@screens/managers/editVote';
 import VotingQueue from '@screens/managers/votingQueue';
 import DeviceDisconnect from '@screens/managers/deviceDisconnectDialog';
-import NewReleaseDialog from 'src/modules/update/detail/info/newReleaseDialog';
+import NewReleaseDialog from '@update/detail/info/newReleaseDialog';
 import SearchBar from '@search/components/SearchBar';
 import ReclaimBalance from '@legacy/manager/reclaimBalance';
 import ReclaimBalanceModal from '@legacy/manager/reclaimBalanceModal';
