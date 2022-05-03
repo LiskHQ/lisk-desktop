@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 import { withTranslation } from 'react-i18next';
 import { getActiveTokenAccount } from '@wallet/utilities/account';
 import { balanceUnlocked } from '@common/store/actions';
-import Summary from './summary';
+import Summary from './LockedBalanceSummary';
 
 const mapStateToProps = state => ({
   wallet: getActiveTokenAccount(state),

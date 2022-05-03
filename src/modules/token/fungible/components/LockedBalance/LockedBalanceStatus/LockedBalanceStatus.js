@@ -2,7 +2,7 @@ import React from 'react';
 import { PrimaryButton } from '@basics/buttons';
 import TransactionResult from '@transaction/components/TransactionResult';
 import { getTransactionStatus, statusMessages } from '@transaction/configuration/statusConfig';
-import styles from './status.css';
+import styles from './LockedBalanceStatus.css';
 
 const TransactionStatus = ({ account, transactions, t }) => {
   const status = getTransactionStatus(account, transactions, account.summary.isMultisignature);
