@@ -1,4 +1,4 @@
-import loginTypes from '@wallet/configuration/loginTypes';
+import loginTypes from 'src/modules/auth/const/loginTypes';
 import * as hwManager from '@transaction/utils/hwManager';
 import httpApi from '@common/utilities/api/http';
 import * as transactionUtils from '@transaction/utils/transaction';

@@ -1,6 +1,6 @@
 import React from 'react';
 import { MODULE_ASSETS_NAME_ID_MAP, MODULE_ASSETS_MAP } from '@transaction/configuration/moduleAssets';
-import Icon from '@basics/icon';
+import Icon from 'src/theme/Icon';
 import TransactionAddress from '@wallet/detail/identity/walletVisual/transactionAddress';
 import { tokenMap } from '@token/configuration/tokens';
 import styles from './TransactionTypeFigure.css';

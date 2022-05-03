@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
 
 import { PrimaryButton } from '@basics/buttons';
-import Icon from '@basics/icon';
+import Icon from 'src/theme/Icon';
 import styles from './loadLatestButton.css';
 
 const shouldShow = {

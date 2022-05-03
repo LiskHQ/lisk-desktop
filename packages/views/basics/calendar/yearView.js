@@ -2,9 +2,9 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import moment from 'moment';
 
+import Icon from 'src/theme/Icon';
 import { validations } from './calendarUtils';
 import styles from './calendar.css';
-import Icon from '../icon';
 
 class YearView extends Component {
   constructor(props) {

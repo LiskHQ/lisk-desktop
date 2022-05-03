@@ -2,10 +2,10 @@ import React from 'react';
 
 import { regex } from '@common/configuration';
 import routes from '@screens/router/routes';
-import Icon from '@basics/icon';
+import Icon from 'src/theme/Icon';
 import DialogLink from '@basics/dialog/link';
 import WalletVisual from '@wallet/detail/identity/walletVisual';
-import Tooltip from '@basics/tooltip/tooltip';
+import Tooltip from 'src/theme/Tooltip';
 import styles from './Search.css';
 import { getSearchedText } from '../../utils';
 

@@ -3,7 +3,7 @@ import { withTranslation } from 'react-i18next';
 import { useSelector } from 'react-redux';
 import { networkKeys } from '@network/configuration/networks';
 import { selectNetworkName } from '@common/store/selectors';
-import Tooltip from '@basics/tooltip/tooltip';
+import Tooltip from 'src/theme/Tooltip';
 import styles from './balanceInfo.css';
 
 const getMessage = networkName => {

@@ -1,7 +1,7 @@
 import React from 'react';
 import grid from 'flexboxgrid/dist/flexboxgrid.css';
 import { isReactComponent } from '@common/utilities/helpers';
-import Tooltip from '../tooltip/tooltip';
+import Tooltip from 'src/theme/Tooltip';
 import styles from './table.css';
 
 const Tip = ({ data }) => {

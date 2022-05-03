@@ -6,8 +6,8 @@ import { I18nextProvider } from 'react-i18next';
 import externalLinks from '@views/configuration/externalLinks';
 import { cryptography } from '@liskhq/lisk-client';
 import store from '@common/store';
-import updateApp from '@updater/utilities/updateApp';
 import ipcLocale from '@common/utilities/ipcLocale';
+import updateApp from '@update/utils/updateApp';
 import i18n from '../i18n/i18n';
 import App from './app';
 

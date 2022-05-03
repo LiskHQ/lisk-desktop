@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 
-import { Input } from '@basics/inputs';
+import { Input } from 'src/theme';
 import Box from '@basics/box';
 import BoxHeader from '@basics/box/header';
 import BoxContent from '@basics/box/content';

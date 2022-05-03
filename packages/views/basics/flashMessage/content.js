@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import Icon from '../icon';
+import Icon from 'src/theme/Icon';
 import styles from './flashMessage.css';
 
 const Content = ({

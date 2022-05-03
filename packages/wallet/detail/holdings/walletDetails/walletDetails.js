@@ -8,7 +8,7 @@ import Box from '@basics/box';
 import BoxHeader from '@basics/box/header';
 import BoxContent from '@basics/box/content';
 import BoxRow from '@basics/box/row';
-import Icon from '@basics/icon';
+import Icon from 'src/theme/Icon';
 import Converter from '@shared/converter';
 import { fromRawLsk } from '@token/utilities/lsk';
 import LiskAmount from '@shared/liskAmount';

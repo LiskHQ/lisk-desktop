@@ -3,14 +3,8 @@ import { connect } from 'react-redux';
 import { withTranslation } from 'react-i18next';
 
 import { getActiveTokenAccount } from '@wallet/utilities/account';
+import { removeDuplicateTransactions } from '@transaction/utils';
 import Dashboard from './dashboard';
-
-const removeDuplicateTransactions = (pendingTransactions, confirmedTransactions) =>
-  [...pendingTransactions, ...confirmedTransactions]
-    .filter((transactionA, index, self) =>
-      index === self.findIndex(transactionB => (
-        transactionB.id === transactionA.id
-      )));
 
 const mapStateToProps = state => ({
   transactions: removeDuplicateTransactions(

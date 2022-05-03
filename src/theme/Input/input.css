@@ -1,0 +1,205 @@
+@import '../../../setup/react/app/mixins.css';
+
+:root {
+  --height-l: 48px;
+  --height-m: 40px;
+  --height-s: 36px;
+  --height-xs: 32px;
+}
+
+.wrapper {
+  position: relative;
+  display: inline-block;
+  width: 100%;
+
+  & .status,
+  & .icon {
+    position: absolute;
+    top: calc(var(--height-l) / 2);
+    transform: translateY(-50%);
+  }
+
+  & .status {
+    right: var(--horizontal-padding-l);
+    margin: 0;
+  }
+
+  & .icon {
+    left: var(--horizontal-padding-l);
+  }
+
+  & .loading {
+    color: var(--color-ultramarine-blue);
+  }
+
+  &.l {
+    & .input {
+      @mixin contentLargest;
+
+      height: var(--height-l);
+      padding: var(--vertical-padding-l) var(--horizontal-padding-l);
+    }
+  }
+
+  &.m {
+    & .input {
+      @mixin contentLargest;
+
+      height: var(--height-m);
+      padding: var(--vertical-padding-m) var(--horizontal-padding-m);
+    }
+
+    & .icon {
+      top: calc(var(--height-m) / 2);
+      left: var(--horizontal-padding-m);
+    }
+
+    & .status {
+      top: calc(var(--height-m) / 2);
+      right: var(--horizontal-padding-m);
+    }
+  }
+
+  &.s {
+    & .input {
+      @mixin contentNormal;
+
+      height: var(--height-s);
+      padding: var(--vertical-padding-s) var(--horizontal-padding-s);
+    }
+
+    & .icon {
+      top: calc(var(--height-s) / 2);
+      left: var(--horizontal-padding-s);
+    }
+
+    & .status {
+      top: calc(var(--height-s) / 2);
+      right: var(--horizontal-padding-s);
+    }
+  }
+
+  &.xs {
+    & .input {
+      @mixin contentNormal;
+
+      height: var(--height-xs);
+      padding: var(--vertical-padding-xs) var(--horizontal-padding-xs);
+    }
+
+    & .icon {
+      top: calc(var(--height-xs) / 2);
+      left: var(--horizontal-padding-xs);
+    }
+
+    & .status {
+      top: calc(var(--height-xs) / 2);
+      right: var(--horizontal-padding-xs);
+    }
+  }
+
+  & .input.withIcon {
+    padding-left: 36px;
+  }
+
+  & .feedback {
+    position: absolute;
+    z-index: 1;
+  }
+
+  & .feedback:not(:empty) {
+    margin-top: 10px;
+  }
+}
+
+.label {
+  @mixin contentNormal bold;
+
+  align-items: center;
+  color: var(--color-maastricht-blue);
+  display: flex;
+  margin: 40px 0 12px;
+
+  &.xs {
+    margin: 16px 0 8px;
+  }
+}
+
+.input {
+  @mixin contentLargest;
+
+  background-color: var(--color-white);
+  border: 1px solid var(--dark-border-color);
+  border-radius: var(--border-radius-standard);
+  box-sizing: border-box;
+  color: var(--color-maastricht-blue);
+  height: var(--height-l);
+  outline: none;
+  padding: 8px 10px;
+  text-align: left;
+  transition:
+    border var(--animation-speed-fast) linear,
+    color var(--animation-speed-fast) linear;
+  width: 100%;
+
+  &.dark {
+    border-color: var(--light-border-color);
+    background-color: var(--color-maastricht-blue);
+    color: var(--color-white);
+  }
+
+  &:focus {
+    border-color: var(--color-primary-standard);
+  }
+
+  &:global(.error), /* TODO: Remove after all inputs use props */
+  &.error {
+    border-color: var(--color-burnt-sienna);
+    color: var(--color-burnt-sienna);
+  }
+
+  &::placeholder {
+    color: var(--color-blue-gray);
+  }
+
+  &:read-only {
+    background-color: var(--color-white);
+    border: 1px solid var(--dark-border-color) !important;
+    color: var(--color-blue-gray);
+    outline: none;
+  }
+}
+
+.autoresize {
+  overflow: hidden;
+}
+
+.mask {
+  text-align: center;
+  letter-spacing: 5px !important;
+  font-size: 20px !important;
+}
+
+.inputWithDropdown {
+  border: 1px solid var(--color-platinum);
+  border-radius: 3px;
+  display: flex;
+  flex: 1;
+
+  &:focus {
+    border: 1px solid blue;
+  }
+
+  &:last-child {
+    margin-bottom: 0;
+  }
+
+  & .inputDropdownButton {
+    height: 100%;
+    border: 0;
+  }
+}
+
+.inputDropdownInput {
+  border: 0;
+}

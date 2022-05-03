@@ -1,7 +1,7 @@
 import React from 'react';
 import { withTranslation } from 'react-i18next';
 import { tokenMap } from '@token/configuration/tokens';
-import Icon from '@basics/icon';
+import Icon from 'src/theme/Icon';
 import LiskAmount from '@shared/liskAmount';
 import UnlockingList from './unlockingList';
 import styles from './lockedBalance.css';

@@ -4,7 +4,7 @@ import { regex } from '@common/configuration';
 import { tokenMap } from '@token/configuration/tokens';
 import DialogLink from '@basics/dialog/link';
 import WalletVisual from '@wallet/detail/identity/walletVisual';
-import Icon from '@basics/icon';
+import Icon from 'src/theme/Icon';
 import TransactionAmount from '@transaction/components/TransactionAmount';
 import styles from './multiSignature.css';
 
