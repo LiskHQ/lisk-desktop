@@ -21,7 +21,7 @@ import Explorer from '@screens/managers/wallet/explorer';
 // import TransactionDetailsModal from '@screens/managers/transactionDetailsModal';
 import VerifyMessage from '@screens/managers/verifyMessage';
 import Request from '@screens/managers/request';
-import LockedBalance from '@screens/managers/lockedBalance';
+import LockedBalance from '@token/fungible/components/LockedBalance';
 import EditVote from '@screens/managers/editVote';
 import VotingQueue from '@screens/managers/votingQueue';
 import DeviceDisconnect from '@screens/managers/deviceDisconnectDialog';

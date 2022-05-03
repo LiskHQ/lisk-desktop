@@ -17,7 +17,7 @@ const config = {
       '@dpos': resolve('./src/modules/dpos'),
       '@network': resolve('./packages/network'),
       '@settings': resolve('./packages/settings'),
-      '@token': resolve('./packages/token'),
+      '@token': resolve('./src/modules/token'),
       '@transaction': resolve('./packages/transaction'),
       '@updater': resolve('./packages/updater'),
       '@wallet': resolve('./packages/wallet'),

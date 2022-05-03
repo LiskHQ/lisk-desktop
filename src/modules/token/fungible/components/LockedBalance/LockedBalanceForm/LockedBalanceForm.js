@@ -7,7 +7,7 @@ import BoxFooter from '@basics/box/footer';
 import BoxHeader from '@basics/box/header';
 import { PrimaryButton } from '@basics/buttons';
 import LiskAmount from '@shared/liskAmount';
-import styles from './lockedBalance.css';
+import styles from './LockedBalance.css';
 
 const ButtonTitle = ({ unlockableBalance, t }) => {
   if (unlockableBalance === 0) {

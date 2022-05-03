@@ -10,8 +10,8 @@ import { MODULE_ASSETS_NAME_ID_MAP } from '@transaction/configuration/moduleAsse
 import TransactionPriority, { useTransactionFeeCalculation } from '@transaction/manage/transactionPriority';
 import useTransactionPriority from '@transaction/manage/transactionPriority/useTransactionPriority';
 import { selectCurrentBlockHeight } from '@common/store/selectors';
-import Form from './form';
-import BalanceTable from './balanceTable';
+import Form from './LockedBalanceForm';
+import BalanceTable from './LockedBalanceTable';
 
 const moduleAssetId = MODULE_ASSETS_NAME_ID_MAP.unlockToken;
 

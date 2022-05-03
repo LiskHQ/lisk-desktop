@@ -1,6 +1,6 @@
 import React from 'react';
 import { mount } from 'enzyme';
-import Form from './form';
+import Form from './LockedBalanceForm';
 
 describe('Unlock LSK form', () => {
   const props = {

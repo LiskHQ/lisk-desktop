@@ -2,9 +2,9 @@ import React from 'react';
 import Dialog from '@basics/dialog/dialog';
 import MultiStep from 'src/modules/common/components/OldMultiStep';
 import TransactionSignature from '@transaction/detail/manager/transactionSignature';
-import Form from './form';
-import Status from './status';
-import Summary from './summary';
+import Form from './LockedBalanceForm';
+import Status from './LockedBalanceStatus';
+import Summary from './LockedBalanceSummary';
 
 const Modal = () => (
   <Dialog hasClose>

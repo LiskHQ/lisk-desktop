@@ -3,8 +3,8 @@ import { withTranslation } from 'react-i18next';
 import { tokenMap } from '@token/configuration/tokens';
 import Icon from '@basics/icon';
 import LiskAmount from '@shared/liskAmount';
-import UnlockingList from './unlockingList';
-import styles from './lockedBalance.css';
+import UnlockingList from './UnlockingList';
+import styles from './LockedBalance.css';
 
 const BalanceTable = ({
   t,
