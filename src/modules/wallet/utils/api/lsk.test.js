@@ -1,4 +1,4 @@
-import { HTTP_CODES } from '@wallet/configuration/httpCodes';
+import { HTTP_CODES } from 'src/const/httpCodes';
 import http from '@common/utilities/api/http';
 import ws from '@common/utilities/api/ws';
 import accounts from '@tests/constants/wallets';

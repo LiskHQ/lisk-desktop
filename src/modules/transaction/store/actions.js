@@ -6,7 +6,7 @@ import { signatureCollectionStatus } from '@transaction/configuration/txStatus';
 import { isEmpty } from '@common/utilities/helpers';
 import { extractKeyPair } from '@wallet/utils/account';
 import { getTransactionSignatureStatus } from '@screens/managers/signMultiSignTransaction/helpers';
-import { timerReset } from '@wallet/store/action';
+import { timerReset } from '@auth/store/action';
 import { loadingStarted, loadingFinished } from '@common/store/actions/loading';
 import actionTypes from './actionTypes';
 import { getTransactions, create, broadcast } from '../api';
