@@ -12,6 +12,7 @@ const config = {
       '@tests': resolve('./tests'),
       '@block': resolve('./src/modules/block'),
       '@bookmark': resolve('./src/modules/bookmark'),
+      '@search': resolve('./src/modules/search'),
       '@common': resolve('./packages/common'),
       '@legacy': resolve('./src/modules/legacy'),
       '@message': resolve('./src/modules/message'),

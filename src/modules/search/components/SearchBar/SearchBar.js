@@ -6,9 +6,9 @@ import routes from '@screens/router/routes';
 import { Input } from '@basics/inputs';
 import Wallet from '@wallet/detail/identity/searchBarWallets';
 import Delegates from '@wallet/detail/identity/searchBarWallets/delegates';
-import Transactions from './transactions';
-import styles from './searchBar.css';
-import Blocks from './blocks';
+import Blocks from '@block/components/BlockResultList';
+import Transactions from '../../../transaction/components/TransactionResultList';
+import styles from './SearchBar.css';
 
 class SearchBar extends React.Component {
   constructor() {
@@ -20,7 +20,7 @@ class SearchBar extends React.Component {
     };
 
     this.onChangeSearchTextValue = this.onChangeSearchTextValue.bind(this);
-    this.onSelectAccount = this.onSelectedRow.bind(this, 'account');
+    this.onSelectAccount = this.onSelectedRow.bind(this, 'explorer');
     this.onSelectDelegateAccount = this.onSelectedRow.bind(this, 'delegate-account');
     this.onSelectTransaction = this.onSelectedRow.bind(this, 'transactions');
     this.onSelectBlock = this.onSelectedRow.bind(this, 'block');

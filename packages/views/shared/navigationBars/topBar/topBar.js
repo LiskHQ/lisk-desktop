@@ -10,10 +10,10 @@ import VoteQueueToggle from '@settings/setters/toggles/voteQueueToggle';
 import DiscreteModeToggle from '@settings/setters/toggles/discreteModeToggle';
 import LightDarkToggle from '@settings/setters/toggles/lightDarkModeToggle';
 import SideBarToggle from '@settings/setters/toggles/sideBarToggle';
+import Search from '@search/components/Search';
 import styles from './topBar.css';
 import Network from './networkName';
 import NavigationButtons from './navigationButtons';
-import Search from './search';
 import SignOut from './signOut';
 
 const TopBar = ({

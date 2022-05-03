@@ -1,6 +1,6 @@
 import React from 'react';
 import { mount } from 'enzyme';
-import Transactions from './transactions';
+import Transactions from './TransactionResultList';
 
 describe('Transactions', () => {
   const props = {
