@@ -3,7 +3,7 @@ import { withTranslation } from 'react-i18next';
 import withFilters from 'src/utils/withFilters';
 import withData from 'src/utils/withData';
 import { getDelegates } from '@dpos/validator/api';
-import { DEFAULT_LIMIT } from '@views/configuration';
+import { DEFAULT_LIMIT } from 'src/utils/monitor';
 import TransactionsList from '../components/Explorer/ExplorerTransactions';
 import { normalizeTransactionParams } from '../utils';
 import { getTransactions } from '../api';

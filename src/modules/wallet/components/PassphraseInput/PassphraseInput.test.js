@@ -1,6 +1,6 @@
 import React from 'react';
 import { mount } from 'enzyme';
-import { keyCodes } from '@views/configuration';
+import { keyCodes } from 'src/utils/keyCodes';
 import accounts from '@tests/constants/wallets';
 import PassphraseInput from './PassphraseInput';
 

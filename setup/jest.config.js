@@ -141,7 +141,6 @@ module.exports = {
     'packages/wallet/utilities/hwManager/index.js',
     'packages/common/utilities/api/ws.js',
     'src/utils/account.js',
-    'packages/views/configuration/dateTime.js',
     'src/hooks/useServiceSocketUpdates.js',
     'packages/common/utilities/api/apiClient.js',
     'packages/transaction/api/btc.js',

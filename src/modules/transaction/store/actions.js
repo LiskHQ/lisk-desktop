@@ -1,5 +1,5 @@
 import { to } from 'await-to-js';
-import { DEFAULT_LIMIT } from '@views/configuration';
+import { DEFAULT_LIMIT } from 'src/utils/monitor';
 import { tokenMap } from '@token/fungible/consts/tokens';
 import { MODULE_ASSETS_NAME_ID_MAP } from '@transaction/configuration/moduleAssets';
 import { signatureCollectionStatus } from '@transaction/configuration/txStatus';

@@ -1,7 +1,7 @@
 import PropTypes from 'prop-types';
 import React from 'react';
-import LiskAmount from '@shared/liskAmount';
-import DiscreetMode from '@shared/discreetMode';
+import TokenAmount from '@token/fungible/components/tokenAmount';
+import DiscreetMode from 'src/modules/common/components/discreetMode';
 import getTxDirectionConfig from '../../utils/helpers';
 import styles from './TransactionAmount.css';
 
@@ -16,7 +16,7 @@ const TransactionAmount = ({
           <DiscreetMode shouldEvaluateForOtherAccounts>
             <span className={config.style}>
               {config.sign}
-              <LiskAmount
+              <TokenAmount
                 val={amount}
                 showRounded={showRounded}
                 showInt={showInt}

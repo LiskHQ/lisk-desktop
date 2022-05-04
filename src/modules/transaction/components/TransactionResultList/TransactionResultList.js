@@ -2,7 +2,7 @@ import React from 'react';
 import { truncateAddress } from '@wallet/utils/account';
 import Icon from 'src/theme/Icon';
 import { getTxConfig } from '@search/utils';
-import LiskAmount from '@shared/liskAmount';
+import TokenAmount from '@token/fungible/components/tokenAmount';
 import styles from './TransactionResultList.css';
 
 const Transactions = ({
@@ -28,7 +28,7 @@ const Transactions = ({
           {txConfig.icon ? <Icon name={txConfig.icon} /> : null }
           <span className={`${styles.transactionId} transaction-id`}>{truncateAddress(transactions[0].id)}</span>
           <span className={styles.transactionMessage}>
-            <LiskAmount val={txConfig.value} token={activeToken} />
+            <TokenAmount val={txConfig.value} token={activeToken} />
           </span>
         </div>
       </div>

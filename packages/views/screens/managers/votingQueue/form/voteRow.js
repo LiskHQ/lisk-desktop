@@ -9,8 +9,8 @@ import WalletVisual from '@wallet/components/walletVisual';
 import Box from 'src/theme/box';
 import { SecondaryButton, TertiaryButton } from 'src/theme/buttons';
 import Icon from 'src/theme/Icon';
-import LiskAmount from '@shared/liskAmount';
-import AmountField from '@shared/amountField';
+import TokenAmount from '@token/fungible/components/tokenAmount';
+import AmountField from 'src/modules/common/components/amountField';
 import useVoteAmountField from '../../editVote/useVoteAmountField';
 import styles from './form.css';
 
@@ -74,12 +74,12 @@ const VoteRow = ({
         </div>
       </div>
       <span className={`${styles.oldAmountColumn} ${styles.centerContent}`}>
-        {confirmed ? <LiskAmount val={confirmed} token={token} /> : '-'}
+        {confirmed ? <TokenAmount val={confirmed} token={token} /> : '-'}
       </span>
       {state === ComponentState.notEditing ? (
         <>
           <span className={`${styles.newAmountColumn} ${styles.centerContent}`}>
-            {unconfirmed ? <LiskAmount val={unconfirmed} token={token} /> : '-'}
+            {unconfirmed ? <TokenAmount val={unconfirmed} token={token} /> : '-'}
           </span>
           <div
             className={`${styles.editIconsContainer} ${styles.centerContent}`}

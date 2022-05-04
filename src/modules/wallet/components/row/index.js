@@ -6,7 +6,7 @@ import grid from 'flexboxgrid/dist/flexboxgrid.css';
 import routes from '@screens/router/routes';
 import { tokenMap } from '@token/fungible/consts/tokens';
 // import { formatAmountBasedOnLocale } from '@common/utilities/formattedNumber';
-import LiskAmount from '@shared/liskAmount';
+import TokenAmount from '@token/fungible/components/tokenAmount';
 import WalletVisualWithAddress from '../walletVisualWithAddress';
 import styles from './wallet.css';
 
@@ -46,7 +46,7 @@ const AccountRow = ({ data, className }) => (
       />
     </span>
     <span className={`${grid['col-xs-3']} ${grid['col-md-3']}`}>
-      <LiskAmount val={data.token?.balance} showInt token={tokenMap.LSK.key} />
+      <TokenAmount val={data.token?.balance} showInt token={tokenMap.LSK.key} />
     </span>
     {/* <span className={`${grid['col-xs-2']} ${grid['col-md-1']}`}>
       <BalanceShare balance={data.token?.balance} supply={supply} />

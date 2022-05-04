@@ -1,6 +1,6 @@
 import React, { useState, useRef, useMemo } from 'react';
 import PropTypes from 'prop-types';
-import { keyCodes } from '@views/configuration';
+import { keyCodes } from 'src/utils/keyCodes';
 import { Input } from 'src/theme';
 import styles from './AutoSuggest.css';
 

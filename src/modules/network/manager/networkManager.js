@@ -2,7 +2,7 @@ import { compose } from 'redux';
 import { withTranslation } from 'react-i18next';
 import { getPeers } from '@network/utils/api';
 import withData from 'src/utils/withData';
-import { DEFAULT_LIMIT } from '@views/configuration';
+import { DEFAULT_LIMIT } from 'src/utils/monitor';
 import withLocalSort from 'src/utils/withLocalSort';
 import { tokenMap } from '@token/fungible/consts/tokens';
 import sortByVersion from '../utils/helpers';

@@ -1,0 +1,49 @@
+@import '../../../../../../setup/react/app/mixins.css';
+
+.wrapper {
+  height: auto;
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  padding-right: 22px;
+
+  /* Message */
+  & > .message {
+    @mixin contentNormal semi-bold;
+
+    color: var(--color-blue-gray);
+    margin-left: 8px;
+
+    /* Network name */
+    & > div {
+      margin-left: 5px;
+      font-weight: var(--font-weight-very-bold);
+      text-transform: capitalize;
+      display: inline-block;
+    }
+
+    & > * {
+      vertical-align: middle;
+    }
+
+    & p {
+      text-transform: lowercase;
+    }
+  }
+}
+
+.status {
+  height: 5px;
+  width: 5px;
+  border-radius: 50%;
+}
+
+.online {
+  background-color: #25ca95;
+}
+
+.offline {
+  background-color: red;
+}

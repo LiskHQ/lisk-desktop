@@ -17,9 +17,9 @@ import BoxContent from 'src/theme/box/content';
 import BoxFooter from 'src/theme/box/footer';
 import BoxHeader from 'src/theme/box/header';
 import BoxInfoText from 'src/theme/box/infoText';
-import AmountField from '@shared/amountField';
-import LiskAmount from '@shared/liskAmount';
-import Converter from '@shared/converter';
+import AmountField from 'src/modules/common/components/amountField';
+import TokenAmount from '@token/fungible/components/tokenAmount';
+import Converter from 'src/modules/common/components/converter';
 import WarnPunishedDelegate from '@dpos/validator/components/WarnPunishedDelegate';
 import { PrimaryButton, WarningButton } from 'src/theme/buttons';
 import useVoteAmountField from './useVoteAmountField';
@@ -117,7 +117,7 @@ const AddVote = ({ history, t, currentHeight }) => {
             </p>
             <div className={styles.balanceDetails}>
               <span className={styles.lskValue}>
-                <LiskAmount val={maxAmount} token={tokenMap.LSK.key} />
+                <TokenAmount val={maxAmount} token={tokenMap.LSK.key} />
               </span>
               <Converter
                 className={styles.fiatValue}

@@ -7,10 +7,10 @@ import BoxHeader from 'src/theme/box/header';
 import BoxContent from 'src/theme/box/content';
 import BoxRow from 'src/theme/box/row';
 import Icon from 'src/theme/Icon';
-import Converter from '@shared/converter';
+import Converter from 'src/modules/common/components/converter';
 import { fromRawLsk } from '@token/fungible/utils/lsk';
-import LiskAmount from '@shared/liskAmount';
-import DiscreetMode from '@shared/discreetMode';
+import TokenAmount from '@token/fungible/components/tokenAmount';
+import DiscreetMode from 'src/modules/common/components/discreetMode';
 import LockedBalanceLink from '@token/fungible/components/BalanceInfo/LockedBalanceLink';
 import styles from './WalletDetails.css';
 
@@ -44,7 +44,7 @@ const WalletDetails = ({
                 <div className={styles.valuesRow}>
                   <DiscreetMode>
                     <div className={`${styles.cryptoValue} balance-value`}>
-                      <div><LiskAmount val={info.summary?.balance} token={acctToken} /></div>
+                      <div><TokenAmount val={info.summary?.balance} token={acctToken} /></div>
                       <div>
                         <Converter
                           className={styles.fiatValue}

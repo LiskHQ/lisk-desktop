@@ -3,7 +3,7 @@ import { compose } from 'redux';
 import { withRouter } from 'react-router-dom';
 import { getBlocks } from '@block/utils';
 import withData from 'src/utils/withData';
-import { DEFAULT_LIMIT } from '@views/configuration';
+import { DEFAULT_LIMIT } from 'src/utils/monitor';
 import BlocksOverview from '../components/blocksOverview';
 
 export default compose(

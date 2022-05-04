@@ -1,0 +1,15 @@
+@import '../../../../../setup/react/app/mixins.css';
+
+.wrapper {
+  @mixin contentNormal;
+
+  color: var(--color-blue-gray);
+  display: flex;
+
+  & .price {
+    color: inherit;
+    font-family: inherit;
+    font-size: inherit;
+    text-align: right;
+  }
+}

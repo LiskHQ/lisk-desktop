@@ -2,7 +2,7 @@ import React from 'react';
 import { useTranslation } from 'react-i18next';
 import CopyToClipboard from 'src/modules/common/components/copyToClipboard';
 import Icon from 'src/theme/Icon';
-import LiskAmount from '@shared/liskAmount';
+import TokenAmount from '@token/fungible/components/tokenAmount';
 import WalletVisualWithAddress from '@wallet/components/walletVisualWithAddress';
 import { tokenMap } from '@token/fungible/consts/tokens';
 import styles from './migrationDetails.css';
@@ -29,7 +29,7 @@ const MigrationDetails = ({ wallet, showBalance }) => {
         {showBalance && (
           <p>
             <span>{`${t('Balance')}: `}</span>
-            <LiskAmount val={Number(wallet.legacy?.balance)} token={token} />
+            <TokenAmount val={Number(wallet.legacy?.balance)} token={token} />
           </p>
         )}
       </div>
@@ -53,7 +53,7 @@ const MigrationDetails = ({ wallet, showBalance }) => {
         {showBalance && (
           <p>
             <span>{`${t('Balance')}: `}</span>
-            <LiskAmount val={Number(wallet.token?.balance)} token={token} />
+            <TokenAmount val={Number(wallet.token?.balance)} token={token} />
           </p>
         )}
       </div>

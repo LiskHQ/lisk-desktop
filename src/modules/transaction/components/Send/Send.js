@@ -1,6 +1,6 @@
 import React from 'react';
 import WalletVisual from '@wallet/components/walletVisual';
-import LiskAmount from '@shared/liskAmount';
+import TokenAmount from '@token/fungible/components/tokenAmount';
 import { toRawLsk } from '@token/fungible/utils/lsk';
 import styles from '../TransactionInfo/TransactionInfo.css';
 
@@ -26,7 +26,7 @@ const Send = ({
       <div className={styles.col}>
         <label>{t('Amount')}</label>
         <label className="amount-summary">
-          <LiskAmount
+          <TokenAmount
             val={transaction.asset?.amount || toRawLsk(fields.amount.value)}
             token={token}
           />

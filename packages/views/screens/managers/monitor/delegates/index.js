@@ -9,7 +9,7 @@ import { getNetworkStatus } from '@network/utils/api';
 import { getTransactions, getRegisteredDelegates } from '@transaction/api';
 import withData from 'src/utils/withData';
 import withFilters from 'src/utils/withFilters';
-import { DEFAULT_LIMIT } from '@views/configuration';
+import { DEFAULT_LIMIT } from 'src/utils/monitor';
 import { MODULE_ASSETS_NAME_ID_MAP } from '@transaction/configuration/moduleAssets';
 import { tokenMap } from '@token/fungible/consts/tokens';
 import Delegates from './delegates';

@@ -7,7 +7,7 @@ import { MODULE_ASSETS_NAME_ID_MAP } from '@transaction/configuration/moduleAsse
 import DateTimeFromTimestamp from 'src/modules/common/components/timestamp';
 import Icon from 'src/theme/Icon';
 import Tooltip from 'src/theme/Tooltip';
-import LiskAmount from '@shared/liskAmount';
+import TokenAmount from '@token/fungible/components/tokenAmount';
 import WalletVisualWithAddress from '@wallet/components/walletVisualWithAddress';
 import { truncateAddress } from '@wallet/utils/account';
 import Spinner from 'src/theme/Spinner';
@@ -125,9 +125,9 @@ export const Amount = () => {
   }
   return (
     <span className={styles.amount}>
-      <LiskAmount val={getTxAmount(data)} token={activeToken} />
+      <TokenAmount val={getTxAmount(data)} token={activeToken} />
       <span className={`${styles.fee} hideOnLargeViewPort`}>
-        <LiskAmount val={data.fee} token={activeToken} />
+        <TokenAmount val={data.fee} token={activeToken} />
       </span>
     </span>
   );
@@ -142,7 +142,7 @@ export const Fee = ({ t }) => {
         title={t('Transaction')}
         position="bottom"
         tooltipClassName={`${styles.tooltip} ${styles.tooltipOffset}`}
-        content={<LiskAmount val={data.fee} token={activeToken} />}
+        content={<TokenAmount val={data.fee} token={activeToken} />}
         size="s"
       >
         <p>{getModuleAssetTitle(t)[data.moduleAssetId]}</p>
@@ -186,7 +186,7 @@ const generateVotes = (asset, delegates, token, t) => {
         </span>
       </Link>
       <span className={`${styles.value} vote-item-value`}>
-        <LiskAmount val={vote.amount} token={token} />
+        <TokenAmount val={vote.amount} token={token} />
       </span>
     </span>
   ));
