@@ -1,6 +1,6 @@
 import React from 'react';
 import { mount } from 'enzyme';
-import WalletDetails from './walletDetails';
+import WalletDetails from './WalletDetails';
 
 describe('WalletDetails', () => {
   let wrapper;
