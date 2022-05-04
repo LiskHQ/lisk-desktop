@@ -9,7 +9,7 @@ import settingsActionTypes from '@settings/store/actionTypes';
 import transactionActionTypes from '@transaction/store/actionTypes';
 import { MODULE_ASSETS_NAME_ID_MAP } from '@transaction/configuration/moduleAssets';
 import routes from '@screens/router/routes';
-import { tokenMap } from '@token/configuration/tokens';
+import { tokenMap } from '@token/fungible/consts/tokens';
 import * as transactionApi from '@transaction/api';
 import { getAutoLogInData } from '@common/utilities/login';
 import history from '@common/utilities/history';

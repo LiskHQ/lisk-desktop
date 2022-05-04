@@ -2,15 +2,17 @@
 import React from 'react';
 import moment from 'moment';
 import { ROUND_LENGTH } from '@dpos/validator/consts';
-import { DoughnutChart } from '@basics/charts';
-import Box from '@basics/box';
-import BoxHeader from '@basics/box/header';
-import BoxContent from '@basics/box/content';
-import BoxEmptyState from '@basics/box/emptyState';
-import GuideTooltip, { GuideTooltipItem } from '@basics/charts/guideTooltip';
+import { DoughnutChart } from 'src/modules/common/components/charts';
+import Box from 'src/theme/box';
+import BoxHeader from 'src/theme/box/header';
+import BoxContent from 'src/theme/box/content';
+import BoxEmptyState from 'src/theme/box/emptyState';
+import GuideTooltip, {
+  GuideTooltipItem,
+} from 'src/modules/common/components/charts/guideTooltip';
 import Icon from 'src/theme/Icon';
 import { useTheme } from 'src/theme/Theme';
-import { getColorPalette } from '@views/basics/charts/chartOptions';
+import { getColorPalette } from 'src/modules/common/components/charts/chartOptions';
 import NumericInfo from './numericInfo';
 import Forger from './forger';
 import styles from './overview.css';
@@ -18,23 +20,31 @@ import styles from './overview.css';
 const FORGERS_TO_SHOW = 6;
 
 const getForgingStats = (data, forgedInRound = 0) => {
-  const missedBlocks = data.filter(item => item.state === 'missedBlock').length;
+  const missedBlocks = data.filter(
+    (item) => item.state === 'missedBlock',
+  ).length;
   return [forgedInRound, ROUND_LENGTH - forgedInRound, missedBlocks];
 };
 
 const ProgressBar = ({ forgedInRound, theme }) => (
   <div className={`${styles.progressBar} ${styles[theme]}`}>
-    <div className={`${styles.lineForged} ${styles[theme]}`} style={{ width: `${(forgedInRound / ROUND_LENGTH) * 100}%` }} />
+    <div
+      className={`${styles.lineForged} ${styles[theme]}`}
+      style={{ width: `${(forgedInRound / ROUND_LENGTH) * 100}%` }}
+    />
   </div>
 );
 
-const formatToTwoDigits = str => str.toLocaleString('en-US', { minimumIntegerDigits: 2 });
+const formatToTwoDigits = (str) =>
+  str.toLocaleString('en-US', { minimumIntegerDigits: 2 });
 
 const getPassedMinutes = (startTime) => {
-  const seconds = Math.floor((new Date()).getTime() / 1000) - startTime;
+  const seconds = Math.floor(new Date().getTime() / 1000) - startTime;
   if (!seconds) return '00:00';
   const duration = moment.duration({ seconds });
-  return `${formatToTwoDigits(duration.minutes())}:${formatToTwoDigits(duration.seconds())}`;
+  return `${formatToTwoDigits(duration.minutes())}:${formatToTwoDigits(
+    duration.seconds(),
+  )}`;
 };
 
 const ForgingDetails = ({
@@ -61,7 +71,9 @@ const ForgingDetails = ({
   const doughnutChartOptions = {
     tooltips: {
       callbacks: {
-        title(tooltipItem, data) { return data.labels[tooltipItem[0].index]; },
+        title(tooltipItem, data) {
+          return data.labels[tooltipItem[0].index];
+        },
         label(tooltipItem, data) {
           return data.datasets[0].data[tooltipItem.index];
         },
@@ -78,40 +90,44 @@ const ForgingDetails = ({
       </BoxHeader>
       <BoxContent className={styles.content}>
         <div className={styles.column}>
-          {
-            forgers.length
-              ? (
-                <div className={styles.chartBox}>
-                  <h2 className={styles.title}>{t('Slot status')}</h2>
-                  <div className={`${styles.chart} showOnLargeViewPort`}>
-                    <DoughnutChart
-                      data={doughnutChartData}
-                      options={{
-                        ...doughnutChartOptions,
-                        legend: { display: true },
-                      }}
+          {forgers.length ? (
+            <div className={styles.chartBox}>
+              <h2 className={styles.title}>{t('Slot status')}</h2>
+              <div className={`${styles.chart} showOnLargeViewPort`}>
+                <DoughnutChart
+                  data={doughnutChartData}
+                  options={{
+                    ...doughnutChartOptions,
+                    legend: { display: true },
+                  }}
+                />
+              </div>
+              <div className={`${styles.chart} hideOnLargeViewPort`}>
+                <DoughnutChart
+                  data={doughnutChartData}
+                  options={{
+                    ...doughnutChartOptions,
+                    legend: { display: false },
+                  }}
+                />
+              </div>
+              <div className="hideOnLargeViewPort">
+                <GuideTooltip>
+                  {delegatesForgedLabels.map((label, i) => (
+                    <GuideTooltipItem
+                      key={label}
+                      color={colorPalette[i]}
+                      label={label}
                     />
-                  </div>
-                  <div className={`${styles.chart} hideOnLargeViewPort`}>
-                    <DoughnutChart
-                      data={doughnutChartData}
-                      options={{
-                        ...doughnutChartOptions,
-                        legend: { display: false },
-                      }}
-                    />
-                  </div>
-                  <div className="hideOnLargeViewPort">
-                    <GuideTooltip>
-                      {delegatesForgedLabels.map((label, i) => (
-                        <GuideTooltipItem key={label} color={colorPalette[i]} label={label} />
-                      ))}
-                    </GuideTooltip>
-                  </div>
-                </div>
-              )
-              : <BoxEmptyState><p>{t('No delegates information')}</p></BoxEmptyState>
-          }
+                  ))}
+                </GuideTooltip>
+              </div>
+            </div>
+          ) : (
+            <BoxEmptyState>
+              <p>{t('No delegates information')}</p>
+            </BoxEmptyState>
+          )}
         </div>
         <div className={styles.column}>
           <div className={styles.centered}>
@@ -142,12 +158,9 @@ const ForgingDetails = ({
           <div className={styles.chartBox}>
             <h2 className={styles.title}>{t('Next forgers')}</h2>
             <nav className={styles.list}>
-              {
-                forgersListToShow
-                  .map(forger => (
-                    <Forger key={forger.address} forger={forger} />
-                  ))
-              }
+              {forgersListToShow.map((forger) => (
+                <Forger key={forger.address} forger={forger} />
+              ))}
             </nav>
           </div>
         </div>

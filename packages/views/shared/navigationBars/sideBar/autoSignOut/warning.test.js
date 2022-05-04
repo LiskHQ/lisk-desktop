@@ -8,7 +8,7 @@ jest.mock('react-toastify', () => ({
   toast: (component) => (component),
 }));
 
-jest.mock('@common/store/actions', () => ({
+jest.mock('@auth/store/action', () => ({
   timerReset: jest.fn(),
 }));
 

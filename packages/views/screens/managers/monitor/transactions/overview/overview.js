@@ -2,25 +2,27 @@
 // istanbul ignore file
 import React, { useState } from 'react';
 import moment from 'moment';
-import { fromRawLsk } from '@token/utilities/lsk';
+import { fromRawLsk } from '@token/fungible/utils/lsk';
 import { kFormatter } from '@common/utilities/helpers';
 import { chartStyles } from '@common/configuration';
 import { MODULE_ASSETS_NAME_ID_MAP } from '@transaction/configuration/moduleAssets';
 import { getModuleAssetTitle } from '@transaction/utils/moduleAssets';
 import { useTheme } from 'src/theme/Theme';
-import { getColorPalette } from '@views/basics/charts/chartOptions';
-import Box from '@basics/box';
-import BoxTabs from '@basics/tabs';
-import BoxHeader from '@basics/box/header';
-import BoxContent from '@basics/box/content';
-import { DoughnutChart, BarChart } from '@basics/charts';
+import { getColorPalette } from 'src/modules/common/components/charts/chartOptions';
+import Box from 'src/theme/box';
+import BoxTabs from 'src/theme/tabs';
+import BoxHeader from 'src/theme/box/header';
+import BoxContent from 'src/theme/box/content';
+import { DoughnutChart, BarChart } from 'src/modules/common/components/charts';
 import Tooltip from 'src/theme/Tooltip';
-import GuideTooltip, { GuideTooltipItem } from '@basics/charts/guideTooltip';
+import GuideTooltip, {
+  GuideTooltipItem,
+} from 'src/modules/common/components/charts/guideTooltip';
 import styles from './overview.css';
 
 const moduleAssetIds = Object.values(MODULE_ASSETS_NAME_ID_MAP);
 const titles = getModuleAssetTitle();
-const listOfLabels = moduleAssetIds.map(id => titles[id]);
+const listOfLabels = moduleAssetIds.map((id) => titles[id]);
 
 const options = {
   responsive: true,
@@ -32,57 +34,61 @@ const options = {
     },
   },
   scales: {
-    yAxes: [{
-      id: 'Number',
-      type: 'linear',
-      position: 'left',
-      ticks: {
-        fontColor: chartStyles.ultramarineBlue,
-        fontSize: chartStyles.fontSize,
-        callback: value => kFormatter(value),
-        gridLines: {
-          drawTicks: false,
+    yAxes: [
+      {
+        id: 'Number',
+        type: 'linear',
+        position: 'left',
+        ticks: {
+          fontColor: chartStyles.ultramarineBlue,
+          fontSize: chartStyles.fontSize,
+          callback: (value) => kFormatter(value),
+          gridLines: {
+            drawTicks: false,
+          },
+          padding: 15,
         },
-        padding: 15,
-      },
-      gridLines: {
-        display: true,
-        offsetGridLines: false,
-        lineWidth: 0,
-        zeroLineWidth: 1,
-        drawTicks: false,
-      },
-    },
-    {
-      id: 'Volume',
-      type: 'linear',
-      position: 'left',
-      ticks: {
-        fontColor: chartStyles.ufoGreen,
-        callback: value => kFormatter(value),
-      },
-      gridLines: false,
-    }],
-    xAxes: [{
-      gridLines: {
-        display: true,
-        offsetGridLines: true,
-        lineWidth: 0,
-      },
-      ticks: {
-        display: true,
         gridLines: {
+          display: true,
+          offsetGridLines: false,
+          lineWidth: 0,
+          zeroLineWidth: 1,
           drawTicks: false,
         },
       },
-    }],
+      {
+        id: 'Volume',
+        type: 'linear',
+        position: 'left',
+        ticks: {
+          fontColor: chartStyles.ufoGreen,
+          callback: (value) => kFormatter(value),
+        },
+        gridLines: false,
+      },
+    ],
+    xAxes: [
+      {
+        gridLines: {
+          display: true,
+          offsetGridLines: true,
+          lineWidth: 0,
+        },
+        ticks: {
+          display: true,
+          gridLines: {
+            drawTicks: false,
+          },
+        },
+      },
+    ],
   },
   legend: {
     display: false,
   },
 };
 
-const tabs = (t = str => str) => [
+const tabs = (t = (str) => str) => [
   {
     value: 'week',
     name: t('{{num}} week', { num: 1 }),
@@ -128,23 +134,34 @@ const formatDates = (date, period) => {
   return date.replace(/^\d{4}-/, '');
 };
 
-const formatDistributionByValues = distributions =>
-  moduleAssetIds.map(id => (distributions[id] ? parseInt(distributions[id], 10) : 0));
+const formatDistributionByValues = (distributions) =>
+  moduleAssetIds.map((id) =>
+    (distributions[id] ? parseInt(distributions[id], 10) : 0));
 
 const Overview = ({ t, txStats }) => {
   const [activeTab, setActiveTab] = useState('week');
   const colorPalette = getColorPalette(useTheme());
-  const distributionByType = formatDistributionByValues(txStats.data.distributionByType);
-  const distributionByAmount = normalizeNumberRange(txStats.data.distributionByAmount);
-  const { txCountList, txVolumeList, txDateList } = txStats.data.timeline.reduce((acc, item) => ({
-    txCountList: [...acc.txCountList, item.transactionCount],
-    txDateList: [...acc.txDateList, formatDates(item.date, activeTab).slice(0, 2)],
-    txVolumeList: [...acc.txVolumeList, fromRawLsk(item.volume)],
-  }), {
-    txCountList: [],
-    txDateList: [],
-    txVolumeList: [],
-  });
+  const distributionByType = formatDistributionByValues(
+    txStats.data.distributionByType,
+  );
+  const distributionByAmount = normalizeNumberRange(
+    txStats.data.distributionByAmount,
+  );
+  const { txCountList, txVolumeList, txDateList } = txStats.data.timeline.reduce(
+    (acc, item) => ({
+      txCountList: [...acc.txCountList, item.transactionCount],
+      txDateList: [
+        ...acc.txDateList,
+        formatDates(item.date, activeTab).slice(0, 2),
+      ],
+      txVolumeList: [...acc.txVolumeList, fromRawLsk(item.volume)],
+    }),
+    {
+      txCountList: [],
+      txDateList: [],
+      txVolumeList: [],
+    },
+  );
 
   const changeTab = (tab) => {
     setActiveTab(tab.value);
@@ -152,9 +169,8 @@ const Overview = ({ t, txStats }) => {
   };
 
   const distributionChartData = {
-    labels: listOfLabels
-      .map(item => item
-        .replace('Register multisignature group', 'Regsiter multisig.')),
+    labels: listOfLabels.map((item) =>
+      item.replace('Register multisignature group', 'Regsiter multisig.')),
     datasets: [
       {
         data: distributionByType,
@@ -188,15 +204,16 @@ const Overview = ({ t, txStats }) => {
           <div className={styles.graph}>
             <div>
               <GuideTooltip>
-                {listOfLabels
-                  .map((label, i) => (
-                    <GuideTooltipItem
-                      key={`transaction-GuideTooltip${i}`}
-                      color={colorPalette[i]}
-                      label={label
-                        .replace('Register multisignature group', 'Register multisig.')}
-                    />
-                  ))}
+                {listOfLabels.map((label, i) => (
+                  <GuideTooltipItem
+                    key={`transaction-GuideTooltip${i}`}
+                    color={colorPalette[i]}
+                    label={label.replace(
+                      'Register multisignature group',
+                      'Register multisig.',
+                    )}
+                  />
+                ))}
               </GuideTooltip>
             </div>
             <div>
@@ -222,10 +239,13 @@ const Overview = ({ t, txStats }) => {
           <div className={styles.graph}>
             <div>
               <GuideTooltip>
-                {Object.keys(distributionByAmount)
-                  .map((label, i) => (
-                    <GuideTooltipItem key={`distribution-GuideTooltip${i}`} color={colorPalette[i]} label={label} />
-                  ))}
+                {Object.keys(distributionByAmount).map((label, i) => (
+                  <GuideTooltipItem
+                    key={`distribution-GuideTooltip${i}`}
+                    color={colorPalette[i]}
+                    label={label}
+                  />
+                ))}
               </GuideTooltip>
             </div>
             <div>
@@ -248,18 +268,28 @@ const Overview = ({ t, txStats }) => {
         </div>
         <div className={`${styles.column} ${styles.bar}`}>
           <div className={styles.top}>
-            <h2 className={styles.title}>{t('Transaction volume / number (LSK)')}</h2>
+            <h2 className={styles.title}>
+              {t('Transaction volume / number (LSK)')}
+            </h2>
             <aside className={styles.legends}>
               <h5 className={`${styles.legend} ${styles.volume}`}>
                 <span>{t('Volume')}</span>
                 <Tooltip className={styles.tooltip} position="left">
-                  <p>{t('The aggregated LSK volume transferred over the selected time period.')}</p>
+                  <p>
+                    {t(
+                      'The aggregated LSK volume transferred over the selected time period.',
+                    )}
+                  </p>
                 </Tooltip>
               </h5>
               <h5 className={`${styles.legend} ${styles.number}`}>
                 <span>{t('Number')}</span>
                 <Tooltip className={styles.tooltip} position="left">
-                  <p>{t('The number of transactions submitted over the selected time period.')}</p>
+                  <p>
+                    {t(
+                      'The number of transactions submitted over the selected time period.',
+                    )}
+                  </p>
                 </Tooltip>
               </h5>
             </aside>

@@ -2,7 +2,7 @@ import { getTransactionFee } from '@transaction/api';
 import { getNumberOfSignatures } from '@transaction/utils/transaction';
 import { MODULE_ASSETS_NAME_ID_MAP } from '@transaction/configuration/moduleAssets';
 import { MIN_ACCOUNT_BALANCE, VOTE_AMOUNT_STEP } from '@transaction/configuration/transactions';
-import { toRawLsk } from '@token/utilities/lsk';
+import { toRawLsk } from '@token/fungible/utils/lsk';
 import { normalizeVotesForTx } from '@transaction/utils';
 
 /**

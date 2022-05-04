@@ -1,12 +1,12 @@
 import React from 'react';
 import grid from 'flexboxgrid/dist/flexboxgrid.css';
 import { useTheme } from 'src/theme/Theme';
-import { tokenMap } from '@token/configuration/tokens';
-import Box from '@basics/box';
-import BoxContent from '@basics/box/content';
-import BoxHeader from '@basics/box/header';
+import { tokenMap } from '@token/fungible/consts/tokens';
+import Box from 'src/theme/box';
+import BoxContent from 'src/theme/box/content';
+import BoxHeader from 'src/theme/box/header';
 import Icon from 'src/theme/Icon';
-import DateTimeFromTimestamp from '@basics/timestamp';
+import DateTimeFromTimestamp from 'src/modules/common/components/timestamp';
 import LiskAmount from '@shared/liskAmount';
 import { getStatus } from './performanceView';
 import styles from './delegateProfile.css';
@@ -17,7 +17,9 @@ const DetailsView = ({ t, data, lastBlockForged }) => {
   const status = getStatus(data);
 
   return (
-    <Box className={`${grid.col} ${grid['col-xs-12']} ${grid['col-md-3']} ${styles.detailsContainer} details-container`}>
+    <Box
+      className={`${grid.col} ${grid['col-xs-12']} ${grid['col-md-3']} ${styles.detailsContainer} details-container`}
+    >
       <BoxHeader>
         <h1 className={styles.heading}>{t('Details')}</h1>
       </BoxHeader>
@@ -34,23 +36,30 @@ const DetailsView = ({ t, data, lastBlockForged }) => {
           <div className={`${grid.col} ${styles.item}`}>
             <div className={`${styles.title} ${theme}`}>{t('Status')}</div>
             <div className={`${styles.value} ${styles.capitalized}`}>
-              { status.toLowerCase() }
+              {status.toLowerCase()}
             </div>
           </div>
         </div>
         <div className={`${grid.row} ${styles.itemContainer}`}>
           <Icon name="weight" className={styles.icon} />
           <div className={`${grid.col} ${styles.item}`}>
-            <div className={`${styles.title} ${theme}`}>{t('Delegate weight')}</div>
+            <div className={`${styles.title} ${theme}`}>
+              {t('Delegate weight')}
+            </div>
             <div className={styles.value}>
-              <LiskAmount val={data.totalVotesReceived} token={tokenMap.LSK.key} />
+              <LiskAmount
+                val={data.totalVotesReceived}
+                token={tokenMap.LSK.key}
+              />
             </div>
           </div>
         </div>
         <div className={`${grid.row} ${styles.itemContainer}`}>
           <Icon name="calendar" className={styles.icon} />
           <div className={`${grid.col} ${styles.item}`}>
-            <div className={`${styles.title} ${theme}`}>{t('Last block forged')}</div>
+            <div className={`${styles.title} ${theme}`}>
+              {t('Last block forged')}
+            </div>
             <div className={styles.value}>
               {lastBlockForged ? (
                 <DateTimeFromTimestamp
@@ -59,7 +68,9 @@ const DetailsView = ({ t, data, lastBlockForged }) => {
                   time={lastBlockForged}
                   token={tokenMap.LSK.key}
                 />
-              ) : '-' }
+              ) : (
+                '-'
+              )}
             </div>
           </div>
         </div>

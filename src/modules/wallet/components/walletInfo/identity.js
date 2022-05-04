@@ -2,16 +2,13 @@ import React from 'react';
 
 import { truncateAddress } from '@wallet/utils/account';
 import Tooltip from 'src/theme/Tooltip';
-import CopyToClipboard from '@basics/copyToClipboard';
+import CopyToClipboard from 'src/modules/common/components/copyToClipboard';
 import styles from './walletInfo.css';
 
 const Legacy = ({ legacyAddress }) => (
   <div className={styles.legacy}>
     <span className={`${styles.text} ${styles.label}`}>Old address</span>
-    <CopyToClipboard
-      text={legacyAddress}
-      className={styles.text}
-    >
+    <CopyToClipboard text={legacyAddress} className={styles.text}>
       {legacyAddress}
     </CopyToClipboard>
   </div>
@@ -29,7 +26,7 @@ const Identity = ({
   legacyAddress,
   bookmark,
   username = '',
-  t = str => str,
+  t = (str) => str,
   setShowLegacy,
 }) => {
   const hasTitle = username || !!bookmark;
@@ -51,46 +48,42 @@ const Identity = ({
 
   return (
     <div className={styles.identity}>
-      {
-        hasTitle
-          ? (
-            <span className={`${styles.primary} ${styles.text} ${styles.noSelect} account-primary`}>
-              {username || bookmark.title}
-            </span>
-          )
-          : null
-      }
+      {hasTitle ? (
+        <span
+          className={`${styles.primary} ${styles.text} ${styles.noSelect} account-primary`}
+        >
+          {username || bookmark.title}
+        </span>
+      ) : null}
       <Tooltip
         className={classNames.tooltipTruncated}
         content={(
-          <span
-            className={classNames.spanTruncated}
-            onClick={setShowLegacy}
-          >
+          <span className={classNames.spanTruncated} onClick={setShowLegacy}>
             {truncateAddress(newAddress)}
           </span>
         )}
       >
         <span>
-          {legacyAddress ? t('Click to see full and old addresses') : t('Click to see the full address')}
+          {legacyAddress
+            ? t('Click to see full and old addresses')
+            : t('Click to see the full address')}
         </span>
       </Tooltip>
       <Tooltip
         className={classNames.tooltipFull}
         content={(
-          <span
-            className={classNames.spanFull}
-            onClick={setShowLegacy}
-          >
+          <span className={classNames.spanFull} onClick={setShowLegacy}>
             {newAddress}
           </span>
         )}
       >
-        <span>{legacyAddress ? t('Click to hide full and old addresses') : t('Click to hide the full address')}</span>
+        <span>
+          {legacyAddress
+            ? t('Click to hide full and old addresses')
+            : t('Click to hide the full address')}
+        </span>
       </Tooltip>
-      {
-        legacyAddress ? <Legacy legacyAddress={legacyAddress} /> : null
-      }
+      {legacyAddress ? <Legacy legacyAddress={legacyAddress} /> : null}
     </div>
   );
 };

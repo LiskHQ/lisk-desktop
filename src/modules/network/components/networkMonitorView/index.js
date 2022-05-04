@@ -1,6 +1,6 @@
 import React from 'react';
-import Box from '@basics/box';
-import BoxHeader from '@basics/box/header';
+import Box from 'src/theme/box';
+import BoxHeader from 'src/theme/box/header';
 import Tooltip from 'src/theme/Tooltip';
 import Peers from '../peers';
 import Map from '../map';
@@ -17,7 +17,11 @@ const Network = ({ t, peers }) => (
             {t('Connected peers')}
           </h1>
           <Tooltip position="right">
-            <p>{t('The list shown only contains peers connected to the current Lisk Service node.')}</p>
+            <p>
+              {t(
+                'The list shown only contains peers connected to the current Lisk Service node.',
+              )}
+            </p>
           </Tooltip>
         </div>
       </BoxHeader>

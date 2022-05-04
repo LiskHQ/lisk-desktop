@@ -3,14 +3,12 @@ import React from 'react';
 
 import routes from '@screens/router/routes';
 import MultiStep from 'src/modules/common/components/OldMultiStep';
-import Dialog from '@basics/dialog/dialog';
+import Dialog from 'src/theme/dialog/dialog';
 import ValidityStatus from '../validityStatus';
 import ValidityForm from '../validityForm';
 import styles from './verifyMessageView.css';
 
-export default function VerifyMessage({
-  t, history,
-}) {
+export default function VerifyMessage({ t, history }) {
   function finalCallback() {
     history.push(routes.dashboard.path);
   }

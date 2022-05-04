@@ -1,25 +1,32 @@
 import React, { useEffect, useRef, useState } from 'react';
 
 import { networkKeys } from '@network/configuration/networks';
-import { tokenMap } from '@token/configuration/tokens';
+import { tokenMap } from '@token/fungible/consts/tokens';
 import { getNetworkConfig } from '@network/utils/api';
-import { PrimaryButton } from '@basics/buttons';
+import { PrimaryButton } from 'src/theme/buttons';
 import { Input } from 'src/theme';
 import { addHttp } from '@common/utilities/login';
 import styles from '../networkSelector.css';
 
 const validateNode = async (address) => {
   try {
-    const response = await getNetworkConfig({
-      name: networkKeys.customNode,
-      address,
-    }, tokenMap.LSK.key);
+    const response = await getNetworkConfig(
+      {
+        name: networkKeys.customNode,
+        address,
+      },
+      tokenMap.LSK.key,
+    );
     if (response) {
       return true;
     }
-    throw new Error(`Failed to return response for custom node url: ${address}`);
+    throw new Error(
+      `Failed to return response for custom node url: ${address}`,
+    );
   } catch (err) {
-    throw new Error(`Error getting network config for address: ${address}: ${err.message}`);
+    throw new Error(
+      `Error getting network config for address: ${address}: ${err.message}`,
+    );
   }
 };
 
@@ -38,8 +45,12 @@ const removeTrailingSlash = (url) => {
 };
 
 const EditMode = ({
-  t, setMode, dropdownRef,
-  storedCustomNetwork, networkSelected, customNetworkStored,
+  t,
+  setMode,
+  dropdownRef,
+  storedCustomNetwork,
+  networkSelected,
+  customNetworkStored,
 }) => {
   const [loading, setLoading] = useState(false);
   const [address, setAddress] = useState({
@@ -74,7 +85,9 @@ const EditMode = ({
             setAddress({
               value,
               error: 1,
-              feedback: t('Unable to connect to Lisk Service, please check the address and try again'),
+              feedback: t(
+                'Unable to connect to Lisk Service, please check the address and try again',
+              ),
             });
             setLoading(false);
           }
@@ -114,9 +127,7 @@ const EditMode = ({
   }, [storedCustomNetwork]);
 
   return (
-    <div
-      className={`${styles.customNode} ${styles.editMode} address`}
-    >
+    <div className={`${styles.customNode} ${styles.editMode} address`}>
       <span className={styles.title}>{t('Custom Node')}</span>
       <div className={styles.actions}>
         <Input

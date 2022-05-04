@@ -1,8 +1,8 @@
 import React, { useEffect, useRef, useState } from 'react';
 import L from 'leaflet';
 import 'leaflet.markercluster/dist/leaflet.markercluster';
-import Box from '@basics/box';
-import BoxContent from '@basics/box/content';
+import Box from 'src/theme/box';
+import BoxContent from 'src/theme/box/content';
 import markerIcon from '@setup/react/assets/images/marker.svg';
 import mapboxWatermarkImage from '@setup/react/assets/images/mapbox.png';
 import styles from './map.css';
@@ -21,8 +21,10 @@ const createMarkers = (peers) => {
   });
 
   const markers = L.markerClusterGroup({
-    iconCreateFunction: cluster =>
-      L.divIcon({ html: `<b class="markerCluster">${cluster.getChildCount()}</b>` }),
+    iconCreateFunction: (cluster) =>
+      L.divIcon({
+        html: `<b class="markerCluster">${cluster.getChildCount()}</b>`,
+      }),
   });
 
   peers.forEach((peer) => {
@@ -46,11 +48,14 @@ const getAttributionLinks = () => {
 };
 
 const getTiles = () =>
-  L.tileLayer('https://api.mapbox.com/styles/v1/{id}/tiles/{z}/{x}/{y}?access_token=pk.eyJ1IjoibWFwYm94IiwiYSI6ImNpejY4NXVycTA2emYycXBndHRqcmZ3N3gifQ.rJcFIG214AriISLbB6B5aw', {
-    id: 'mapbox/streets-v11',
-    tileSize: 512,
-    zoomOffset: -1,
-  });
+  L.tileLayer(
+    'https://api.mapbox.com/styles/v1/{id}/tiles/{z}/{x}/{y}?access_token=pk.eyJ1IjoibWFwYm94IiwiYSI6ImNpejY4NXVycTA2emYycXBndHRqcmZ3N3gifQ.rJcFIG214AriISLbB6B5aw',
+    {
+      id: 'mapbox/streets-v11',
+      tileSize: 512,
+      zoomOffset: -1,
+    },
+  );
 
 const FullMap = ({ peers }) => {
   const ref = useRef();
@@ -59,7 +64,10 @@ const FullMap = ({ peers }) => {
   useEffect(() => {
     if (peers.length) {
       if (!ref.current) {
-        const networkMap = L.map('mapContainer', mapOptions).setView([36.414203, 11.250000], 2);
+        const networkMap = L.map('mapContainer', mapOptions).setView(
+          [36.414203, 11.25],
+          2,
+        );
 
         const tiles = getTiles();
         tiles.addTo(networkMap);
@@ -72,9 +80,12 @@ const FullMap = ({ peers }) => {
     }
   }, [peers]);
 
-  useEffect(() => () => {
-    ref.current.remove();
-  }, []);
+  useEffect(
+    () => () => {
+      ref.current.remove();
+    },
+    [],
+  );
 
   return (
     <Box className="map-box">

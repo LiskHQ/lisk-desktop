@@ -2,9 +2,9 @@ import React from 'react';
 import WalletVisualDemo from '@wallet/components/walletVisual/demo';
 import AutoSuggestDemo from 'src/modules/common/components/AutoSuggest/demo';
 import SpinnerDemo from 'src/theme/Spinner/demo';
-import CalendarDemo from './calendar/demo';
-import IllustrationDemo from './illustration/demo';
-import SwitcherDemo from './tabs/switcher/demo';
+import SwitcherDemo from 'src/theme/tabs/switcher/demo';
+import CalendarDemo from 'src/modules/common/components/calendar/demo';
+import IllustrationDemo from 'src/modules/common/components/illustration/demo';
 import styles from './demo.css';
 
 const getName = child => child.type.name.replace('Demo', '');

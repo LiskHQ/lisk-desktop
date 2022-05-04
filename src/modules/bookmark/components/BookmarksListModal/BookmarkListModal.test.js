@@ -1,4 +1,4 @@
-import { tokenMap } from '@token/configuration/tokens';
+import { tokenMap } from '@token/fungible/consts/tokens';
 import { mountWithRouter } from '@common/utilities/testHelpers';
 import bookmarks from '@tests/constants/bookmarks';
 import BookmarkListModal from './BookmarkListModal';

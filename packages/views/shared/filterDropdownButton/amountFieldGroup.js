@@ -1,7 +1,7 @@
 import React from 'react';
 import { withTranslation } from 'react-i18next';
 import { Input } from 'src/theme';
-import Feedback from '@basics/feedback/feedback';
+import Feedback from 'src/theme/feedback/feedback';
 import styles from './filters.css';
 
 class AmountFieldGroup extends React.Component {
@@ -41,8 +41,10 @@ class AmountFieldGroup extends React.Component {
         feedback = t('Invalid amount');
         error = true;
       } else if (
-        (field === 'amountFrom' && parseFloat(value) > parseFloat(fieldsObj.amountTo.value))
-        || (field === 'amountTo' && parseFloat(value) < parseFloat(fieldsObj.amountFrom.value))
+        (field === 'amountFrom'
+          && parseFloat(value) > parseFloat(fieldsObj.amountTo.value))
+        || (field === 'amountTo'
+          && parseFloat(value) < parseFloat(fieldsObj.amountFrom.value))
       ) {
         feedback = t('Max amount must be greater than Min amount');
         error = true;
@@ -67,8 +69,10 @@ class AmountFieldGroup extends React.Component {
     let value = /^\./.test(target.value) ? `0${target.value}` : target.value;
     value = value.replace(/[^\d.]/g, '');
 
-    const fieldsObj = Object.keys(filters).reduce((acc, filter) =>
-      ({ ...acc, [filter]: { value: filters[filter] } }), {});
+    const fieldsObj = Object.keys(filters).reduce(
+      (acc, filter) => ({ ...acc, [filter]: { value: filters[filter] } }),
+      {},
+    );
 
     const fields = {
       ...fieldsObj,
@@ -101,7 +105,9 @@ class AmountFieldGroup extends React.Component {
           name={name}
           value={filters[name] ? filters[name] : ''}
           placeholder={placeholder}
-          className={`${styles.input} ${field.error ? 'error' : ''} ${name}Input`}
+          className={`${styles.input} ${
+            field.error ? 'error' : ''
+          } ${name}Input`}
           isLoading={field.loading}
           status={field.error ? 'error' : 'ok'}
           size="m"
@@ -117,9 +123,9 @@ class AmountFieldGroup extends React.Component {
       <div className={styles.fieldGroup}>
         <span className={styles.fieldLabel}>{label}</span>
         <div className={styles.fieldRow}>
-          { this.generateField({ name: 'amountFrom', placeholder: t('Min') }) }
+          {this.generateField({ name: 'amountFrom', placeholder: t('Min') })}
           <span className={styles.separator} />
-          { this.generateField({ name: 'amountTo', placeholder: t('Max') }) }
+          {this.generateField({ name: 'amountTo', placeholder: t('Max') })}
         </div>
         <Feedback
           className={[styles.feedback, 'amount-feedback'].join(' ')}

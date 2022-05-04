@@ -1,11 +1,9 @@
 import React from 'react';
-import Table from '@basics/table';
+import Table from 'src/theme/table';
 import VoteRow from './voteRow';
 import header from './tableHeader';
 
-const LatestVotes = ({
-  votes, t, delegates,
-}) => {
+const LatestVotes = ({ votes, t, delegates }) => {
   const canLoadMore = votes.meta ? votes.data.length < votes.meta.total : false;
 
   const handleLoadMore = () => {

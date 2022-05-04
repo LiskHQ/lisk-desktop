@@ -5,14 +5,14 @@ import {
   MIN_FEE_PER_BYTE,
   DEFAULT_NUMBER_OF_SIGNATURES,
 } from '@transaction/configuration/transactions';
-import { tokenMap } from '@token/configuration/tokens';
+import { tokenMap } from '@token/fungible/consts/tokens';
 import {
   MODULE_ASSETS_MAP,
   BASE_FEES,
   MODULE_ASSETS_NAME_ID_MAP,
 } from '@transaction/configuration/moduleAssets';
 import { joinModuleAndAssetIds } from '@transaction/utils/moduleAssets';
-import { fromRawLsk } from '@token/utilities/lsk';
+import { fromRawLsk } from '@token/fungible/utils/lsk';
 import { validateAddress } from '@common/utilities/validators';
 import http from '@common/utilities/api/http';
 import { getDelegates } from '@dpos/validator/api';

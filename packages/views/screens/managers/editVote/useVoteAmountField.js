@@ -3,11 +3,11 @@ import { useSelector } from 'react-redux';
 import { useTranslation } from 'react-i18next';
 
 import { validateAmountFormat } from '@common/utilities/validators';
-import { fromRawLsk } from '@token/utilities/lsk';
+import { fromRawLsk } from '@token/fungible/utils/lsk';
 import { selectSearchParamValue } from 'src/utils/searchParams';
 import { selectAccountBalance, selectLSKAddress } from '@common/store/selectors';
 import { regex } from '@common/configuration';
-import { tokenMap } from '@token/configuration/tokens';
+import { tokenMap } from '@token/fungible/consts/tokens';
 
 let loaderTimeout = null;
 

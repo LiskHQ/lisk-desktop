@@ -2,9 +2,9 @@
 import { to } from 'await-to-js';
 import { toast } from 'react-toastify';
 import loginTypes from 'src/modules/auth/const/loginTypes';
-import { tokenMap } from '@token/configuration/tokens';
+import { tokenMap } from '@token/fungible/consts/tokens';
 import { MODULE_ASSETS_NAME_ID_MAP } from '@transaction/configuration/moduleAssets';
-import { toRawLsk } from '@token/utilities/lsk';
+import { toRawLsk } from '@token/fungible/utils/lsk';
 import { isEmpty } from '@common/utilities/helpers';
 import { create } from '@transaction/api';
 import { selectCurrentBlockHeight } from '@common/store/selectors';
@@ -69,17 +69,17 @@ const getAccounts = async ({ network, params }) =>
  */
 export const accountDataUpdated = tokensTypes =>
   async (dispatch, getState) => {
-    const { network, settings, wallet } = getState();
+    const { network, token, wallet } = getState();
 
-    // Get the list of tokens that are enabled in settings
+    // Get the list of tokens that are enabled in tokens
     const activeTokens = tokensTypes === 'enabled'
-      ? Object.keys(settings.token.list)
-        .filter(key => settings.token.list[key])
-      : [settings.token.active];
+      ? Object.keys(token.list)
+        .filter(key => token.list[key])
+      : [token.active];
 
     // Collect their addresses to send to the API
-    const params = activeTokens.reduce((acc, token) => {
-      acc[token] = { publicKey: wallet.info[token].summary.publicKey };
+    const params = activeTokens.reduce((acc, acctToken) => {
+      acc[acctToken] = { publicKey: wallet.info[acctToken].summary.publicKey };
       return acc;
     }, {});
 
@@ -113,15 +113,15 @@ export const login = ({
   passphrase, publicKey, hwInfo,
 }) =>
   async (dispatch, getState) => {
-    const { network, settings } = getState();
+    const { network, settings, token } = getState();
     const { enableCustomDerivationPath, customDerivationPath } = settings;
     dispatch(accountLoading());
 
-    const params = Object.keys(settings.token.list)
-      .filter(key => settings.token.list[key])
-      .reduce((acc, token) => {
-        if (token === tokenMap.BTC.key) {
-          acc[token] = {
+    const params = Object.keys(token.list)
+      .filter(key => token.list[key])
+      .reduce((acc, acctToken) => {
+        if (acctToken === tokenMap.BTC.key) {
+          acc[acctToken] = {
             address: extractBitcoinAddress(passphrase, network),
           };
         } else {
@@ -135,7 +135,7 @@ export const login = ({
           } else if (publicKey) {
             keyPair.publicKey = publicKey;
           }
-          acc[token] = {
+          acc[acctToken] = {
             ...keyPair,
           };
         }

@@ -3,12 +3,12 @@ import React from 'react';
 
 import { parseSearchParams } from 'src/utils/searchParams';
 import { Input } from 'src/theme';
-import { PrimaryButton } from '@basics/buttons';
-import Box from '@basics/box';
-import BoxHeader from '@basics/box/header';
-import BoxContent from '@basics/box/content';
-import BoxFooter from '@basics/box/footer';
-import BoxInfoText from '@basics/box/infoText';
+import { PrimaryButton } from 'src/theme/buttons';
+import Box from 'src/theme/box';
+import BoxHeader from 'src/theme/box/header';
+import BoxContent from 'src/theme/box/content';
+import BoxFooter from 'src/theme/box/footer';
+import BoxInfoText from 'src/theme/box/infoText';
 import Icon from 'src/theme/Icon';
 import Tooltip from 'src/theme/Tooltip';
 import { regex } from '@common/configuration';
@@ -26,11 +26,13 @@ export default class ValidityForm extends React.Component {
         name: 'message',
         placeholder: t('Insert message'),
         label: t('Message'),
-      }, {
+      },
+      {
         name: 'publicKey',
         placeholder: t('Insert public key'),
         label: t('Public key'),
-      }, {
+      },
+      {
         name: 'signature',
         placeholder: t('Insert signature'),
         label: t('Signature'),
@@ -45,13 +47,19 @@ export default class ValidityForm extends React.Component {
     };
 
     this.state = {
-      inputs: [...this.inputs, this.textarea].reduce((inputs, { name }) => ({
-        ...inputs,
-        [name]: {
-          value: valuesFromNextStep[name] || parseSearchParams(props.history.location.search)[name] || '',
-          feedback: '',
-        },
-      }), {}),
+      inputs: [...this.inputs, this.textarea].reduce(
+        (inputs, { name }) => ({
+          ...inputs,
+          [name]: {
+            value:
+              valuesFromNextStep[name]
+              || parseSearchParams(props.history.location.search)[name]
+              || '',
+            feedback: '',
+          },
+        }),
+        {},
+      ),
       isInputsView: false,
     };
 
@@ -68,17 +76,22 @@ export default class ValidityForm extends React.Component {
         if (regex.publicKey.test(value)) {
           return '';
         }
-        return t('This is not a valid public key. Please enter the correct public key.');
+        return t(
+          'This is not a valid public key. Please enter the correct public key.',
+        );
       },
-      message: () => (
-        value !== value.trim()
-          ? t('The message can\'t contain whitespace at the beginning or end.')
-          : ''
-      ),
+      message: () =>
+        (value !== value.trim()
+          ? t("The message can't contain whitespace at the beginning or end.")
+          : ''),
     };
-    const input = [...this.inputs, this.textarea].find(({ name: n }) => name === n);
+    const input = [...this.inputs, this.textarea].find(
+      ({ name: n }) => name === n,
+    );
     const inputLabel = input && input.label.toLowerCase();
-    const emptyError = value === '' ? t('The {{inputLabel}} can\'t be empty', { inputLabel }) : '';
+    const emptyError = value === ''
+      ? t("The {{inputLabel}} can't be empty", { inputLabel })
+      : '';
     return validators[name] ? validators[name]() : emptyError;
   }
 
@@ -103,8 +116,15 @@ export default class ValidityForm extends React.Component {
         signature: inputs.signature.value,
       };
     }
-    const separators = ['MESSAGE', 'PUBLIC KEY', 'SIGNATURE', 'END LISK SIGNED MESSAGE'].join('|');
-    const parsedMessage = inputs.signedMessage.value.split(new RegExp(`\n?-----(${separators})-----\n?`));
+    const separators = [
+      'MESSAGE',
+      'PUBLIC KEY',
+      'SIGNATURE',
+      'END LISK SIGNED MESSAGE',
+    ].join('|');
+    const parsedMessage = inputs.signedMessage.value.split(
+      new RegExp(`\n?-----(${separators})-----\n?`),
+    );
     return {
       message: parsedMessage[2],
       publicKey: parsedMessage[4],
@@ -127,9 +147,9 @@ export default class ValidityForm extends React.Component {
 
   get canSubmit() {
     const { inputs } = this.state;
-    return this.activeViewInputs.every(({ name }) => (
-      inputs[name].value && !inputs[name].feedback
-    ));
+    return this.activeViewInputs.every(
+      ({ name }) => inputs[name].value && !inputs[name].feedback,
+    );
   }
 
   render() {
@@ -145,7 +165,11 @@ export default class ValidityForm extends React.Component {
           <BoxInfoText>
             {t('Verify the integrity of a signed message')}
             <Tooltip position="bottom">
-              <p>{t('To create a signed message use the "Sign message" tool in the sidebar.')}</p>
+              <p>
+                {t(
+                  'To create a signed message use the "Sign message" tool in the sidebar.',
+                )}
+              </p>
             </Tooltip>
           </BoxInfoText>
           <div className={styles.inputViewSwitcher}>
@@ -168,7 +192,9 @@ export default class ValidityForm extends React.Component {
             <Input
               key={name}
               name={name}
-              className={`${[name, styles[name]].filter(Boolean).join(' ')} verify-message-input ${name}`}
+              className={`${[name, styles[name]]
+                .filter(Boolean)
+                .join(' ')} verify-message-input ${name}`}
               placeholder={placeholder}
               label={label}
               value={inputs[name].value}

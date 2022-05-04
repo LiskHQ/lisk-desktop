@@ -1,13 +1,13 @@
 import React from 'react';
 import { shallow } from 'enzyme';
 import TransactionResult from '@transaction/components/TransactionResult';
-import DialogLink from '@basics/dialog/link';
+import DialogLink from 'src/theme/dialog/link';
 import accounts from '@tests/constants/wallets';
 import Status from './status';
 
 describe('unlock transaction Status', () => {
   const props = {
-    t: key => key,
+    t: (key) => key,
     account: accounts.genesis,
     recipientAccount: { data: accounts.delegate },
     rawTransaction: {
@@ -74,9 +74,13 @@ describe('unlock transaction Status', () => {
     expect(wrapper.find('.transaction-status')).toExist();
     expect(wrapper.find(TransactionResult).props()).toMatchObject({
       illustration: 'default',
-      status: { code: 'SIGNATURE_ERROR', message: JSON.stringify({ message: 'error:test' }) },
+      status: {
+        code: 'SIGNATURE_ERROR',
+        message: JSON.stringify({ message: 'error:test' }),
+      },
       title: 'Transaction failed',
-      message: 'An error occurred while signing your transaction. Please try again.',
+      message:
+        'An error occurred while signing your transaction. Please try again.',
     });
   });
 
@@ -90,7 +94,7 @@ describe('unlock transaction Status', () => {
       transactions: {
         txBroadcastError: { message: 'error:test' },
         txSignatureError: null,
-        signedTransaction: { },
+        signedTransaction: {},
       },
     };
 
@@ -98,9 +102,13 @@ describe('unlock transaction Status', () => {
     expect(wrapper.find('.transaction-status')).toExist();
     expect(wrapper.find(TransactionResult).props()).toMatchObject({
       illustration: 'default',
-      status: { code: 'BROADCAST_ERROR', message: JSON.stringify({ message: 'error:test' }) },
+      status: {
+        code: 'BROADCAST_ERROR',
+        message: JSON.stringify({ message: 'error:test' }),
+      },
       title: 'Transaction failed',
-      message: 'An error occurred while sending your transaction to the network. Please try again.',
+      message:
+        'An error occurred while sending your transaction to the network. Please try again.',
     });
   });
 
@@ -110,7 +118,7 @@ describe('unlock transaction Status', () => {
       transactions: {
         txBroadcastError: null,
         txSignatureError: null,
-        signedTransaction: { },
+        signedTransaction: {},
       },
     };
 

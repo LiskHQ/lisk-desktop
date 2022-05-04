@@ -4,7 +4,10 @@ import { useDispatch, useSelector } from 'react-redux';
 import { withRouter } from 'react-router';
 import { withTranslation } from 'react-i18next';
 import { compose } from 'redux';
-import { parseSearchParams, addSearchParamsToUrl } from 'src/utils/searchParams';
+import {
+  parseSearchParams,
+  addSearchParamsToUrl,
+} from 'src/utils/searchParams';
 import { transactionsRetrieved } from '@common/store/actions';
 import {
   selectAccount,
@@ -12,7 +15,7 @@ import {
   selectSettings,
   selectTransactions,
 } from '@common/store/selectors';
-import TabsContainer from '@basics/tabs/tabsContainer/tabsContainer';
+import TabsContainer from 'src/theme/tabs/tabsContainer/tabsContainer';
 import Transactions from '@transaction/components/WalletTransactions';
 import Overview from '@screens/managers/wallet/overview';
 import DelegateTab from '@screens/managers/wallet/delegateProfile';
@@ -69,16 +72,14 @@ const AccountDetails = ({ t, history }) => {
             id="votes"
           />
         ) : null}
-        {isDelegate
-          ? (
-            <DelegateTab
-              tabClassName="delegate-statistics"
-              name={t('Delegate profile')}
-              id="delegateProfile"
-              account={account.info[activeToken]}
-            />
-          )
-          : null}
+        {isDelegate ? (
+          <DelegateTab
+            tabClassName="delegate-statistics"
+            name={t('Delegate profile')}
+            id="delegateProfile"
+            account={account.info[activeToken]}
+          />
+        ) : null}
         {/* {isMultisignature
           ? (
             <MultiSignatureTab

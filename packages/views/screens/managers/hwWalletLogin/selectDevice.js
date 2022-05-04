@@ -1,7 +1,7 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import routes from '@screens/router/routes';
-import { PrimaryButton, TertiaryButton } from '@basics/buttons';
+import { PrimaryButton, TertiaryButton } from 'src/theme/buttons';
 import Icon from 'src/theme/Icon';
 import styles from './selectDevice.css';
 
@@ -35,13 +35,21 @@ class SelectDevice extends React.Component {
     const { t, devices } = this.props;
     return (
       <div>
-        <h1>{t('Found several devices, choose the one you’d like to access')}</h1>
-        <p>{t('Lisk currently supports Ledger Nano S, Ledger Nano X, Trezor One and Trezor T wallets.')}</p>
+        <h1>
+          {t('Found several devices, choose the one you’d like to access')}
+        </h1>
+        <p>
+          {t(
+            'Lisk currently supports Ledger Nano S, Ledger Nano X, Trezor One and Trezor T wallets.',
+          )}
+        </p>
 
         <div className={`${styles.deviceContainer} hw-container`}>
-          {
-          devices.map(device => (
-            <div key={device.deviceId} className={`${styles.device_box} hw-device`}>
+          {devices.map((device) => (
+            <div
+              key={device.deviceId}
+              className={`${styles.device_box} hw-device`}
+            >
               <Icon
                 className={styles.device_image}
                 name={`icon${device.manufacturer}Device`}
@@ -55,14 +63,11 @@ class SelectDevice extends React.Component {
                 {t('Select device')}
               </PrimaryButton>
             </div>
-          ))
-        }
+          ))}
         </div>
 
         <Link to={routes.login.path}>
-          <TertiaryButton>
-            {t('Go back')}
-          </TertiaryButton>
+          <TertiaryButton>{t('Go back')}</TertiaryButton>
         </Link>
       </div>
     );

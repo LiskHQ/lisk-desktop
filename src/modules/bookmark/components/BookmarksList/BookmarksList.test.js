@@ -1,7 +1,7 @@
 import React from 'react';
 import { mount } from 'enzyme';
-import { tokenMap } from '@token/configuration/tokens';
-import EmptyState from '@basics/box/emptyState';
+import { tokenMap } from '@token/fungible/consts/tokens';
+import EmptyState from 'src/theme/box/emptyState';
 import bookmarks from '@tests/constants/bookmarks';
 import { BookmarksList } from './BookmarksList';
 
@@ -9,7 +9,7 @@ describe('BookmarksList', () => {
   let wrapper;
 
   const props = {
-    t: v => v,
+    t: (v) => v,
     history: {
       push: jest.fn(),
     },
@@ -32,7 +32,10 @@ describe('BookmarksList', () => {
 
   it('should render LSK bookmakrs ONLY', () => {
     expect(wrapper).toContainMatchingElement('.bookmark-list-container');
-    expect(wrapper).toContainMatchingElements(props.limit, 'a.bookmark-list-row');
+    expect(wrapper).toContainMatchingElements(
+      props.limit,
+      'a.bookmark-list-row',
+    );
   });
 
   it('should render BTC bookmakrs ONLY', () => {

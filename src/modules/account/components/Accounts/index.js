@@ -1,8 +1,8 @@
 import React from 'react';
 
-import Box from '@basics/box';
-import BoxHeader from '@basics/box/header';
-import BoxContent from '@basics/box/content';
+import Box from 'src/theme/box';
+import BoxHeader from 'src/theme/box/header';
+import BoxContent from 'src/theme/box/content';
 import WalletList from '@wallet/components/walletList';
 import styles from './accounts.css';
 

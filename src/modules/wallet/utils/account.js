@@ -1,7 +1,7 @@
 /* eslint-disable max-lines */
 import { passphrase as LiskPassphrase, cryptography } from '@liskhq/lisk-client';
 import { regex } from '@common/configuration';
-import { tokenMap } from '@token/configuration/tokens';
+import { tokenMap } from '@token/fungible/consts/tokens';
 import { getCustomDerivationKeyPair } from '@common/utilities/explicitBipKeyDerivation';
 
 /**
@@ -140,8 +140,8 @@ export const getAddressFromBase32Address = (data) => {
 export const getActiveTokenAccount = state => ({
   ...state.wallet,
   ...((state.wallet.info && state.wallet.info[
-    state.settings.token?.active
-      ? state.settings.token.active
+    state.token?.active
+      ? state.token.active
       : tokenMap.LSK.key
   ]) || {}),
 });

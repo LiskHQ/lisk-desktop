@@ -22,7 +22,7 @@ const config = {
       '@dpos': resolve('./src/modules/dpos'),
       '@network': resolve('./src/modules/network'),
       '@settings': resolve('./packages/settings'),
-      '@token': resolve('./packages/token'),
+      '@token': resolve('./src/modules/token'),
       '@transaction': resolve('./src/modules/transaction'),
       '@update': resolve('./src/modules/update'),
       '@views': resolve('./packages/views'),

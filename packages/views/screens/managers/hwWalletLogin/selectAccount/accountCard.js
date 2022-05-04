@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import { withTranslation } from 'react-i18next';
-import { tokenMap } from '@token/configuration/tokens';
+import { tokenMap } from '@token/fungible/consts/tokens';
 import { truncateAddress } from '@wallet/utils/account';
-import { TertiaryButton } from '@basics/buttons';
+import { TertiaryButton } from 'src/theme/buttons';
 import WalletVisual from '@wallet/components/walletVisual';
 import LiskAmount from '@shared/liskAmount';
 import { Input } from 'src/theme';
@@ -35,58 +35,58 @@ const AccountCard = ({
     >
       <div className={styles.content}>
         <div>
-          <WalletVisual
-            address={account.summary?.address || ''}
-            size={40}
-          />
+          <WalletVisual address={account.summary?.address || ''} size={40} />
         </div>
         <div>
           <header className={styles.header}>
-            { accountOnEditMode
-              ? (
-                <div className={styles.editAccountTitle}>
-                  <Input
-                    value={inputTitle}
-                    size="s"
-                    onClick={e => e.stopPropagation()}
-                    onChange={e => setInputTitle(e.target.value)}
-                    className="account-name"
-                    placeholder={t('Account name')}
-                    autoFocus
-                  />
-                  <TertiaryButton
-                    className={`${styles.saveBtn} save-account`}
-                    onClick={e => {
+            {accountOnEditMode ? (
+              <div className={styles.editAccountTitle}>
+                <Input
+                  value={inputTitle}
+                  size="s"
+                  onClick={(e) => e.stopPropagation()}
+                  onChange={(e) => setInputTitle(e.target.value)}
+                  className="account-name"
+                  placeholder={t('Account name')}
+                  autoFocus
+                />
+                <TertiaryButton
+                  className={`${styles.saveBtn} save-account`}
+                  onClick={(e) => {
+                    e.stopPropagation();
+                    onSaveNameAccounts(inputTitle, account.summary?.address);
+                    setAccountOnEditMode(false);
+                  }}
+                >
+                  {t('Save')}
+                </TertiaryButton>
+              </div>
+            ) : (
+              <>
+                <p className={`${styles.accountTitle} account-name`}>
+                  {!account.name ? t('Unnamed account') : account.name}
+                  <Icon
+                    className={`${styles.editBtn} edit-account`}
+                    onClick={(e) => {
                       e.stopPropagation();
-                      onSaveNameAccounts(inputTitle, account.summary?.address);
-                      setAccountOnEditMode(false);
+                      setAccountOnEditMode(true);
                     }}
-                  >
-                    {t('Save')}
-                  </TertiaryButton>
-                </div>
-              )
-              : (
-                <>
-                  <p className={`${styles.accountTitle} account-name`}>
-                    {!account.name ? t('Unnamed account') : account.name}
-                    <Icon
-                      className={`${styles.editBtn} edit-account`}
-                      onClick={e => {
-                        e.stopPropagation();
-                        setAccountOnEditMode(true);
-                      }}
-                      name="edit"
-                    />
-                  </p>
-                  <p className={`${styles.accountAddress} row-address`}>{truncateAddress(account.summary?.address)}</p>
-                </>
-              )}
+                    name="edit"
+                  />
+                </p>
+                <p className={`${styles.accountAddress} row-address`}>
+                  {truncateAddress(account.summary?.address)}
+                </p>
+              </>
+            )}
           </header>
           <div className={`${styles.accountBalance} row-balance`}>
             <p>{t('Balance:')}</p>
             <p>
-              <LiskAmount val={account.summary?.balance} token={tokenMap.LSK.key} />
+              <LiskAmount
+                val={account.summary?.balance}
+                token={tokenMap.LSK.key}
+              />
             </p>
           </div>
           {account.legacy && (
@@ -102,7 +102,10 @@ const AccountCard = ({
                 <br />
                 <p>{t('Balance after reclaiming:')}</p>
                 <p className={styles.reclaimBalance}>
-                  <LiskAmount val={account.legacy.balance} token={tokenMap.LSK.key} />
+                  <LiskAmount
+                    val={account.legacy.balance}
+                    token={tokenMap.LSK.key}
+                  />
                 </p>
               </>
             </Tooltip>

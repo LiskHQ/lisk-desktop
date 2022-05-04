@@ -1,13 +1,19 @@
 import React from 'react';
 
-import { SecondaryButton } from '@basics/buttons';
+import { SecondaryButton } from 'src/theme/buttons';
 import Icon from 'src/theme/Icon';
 import { DropdownInput } from 'src/theme';
 
 import styles from './styles.css';
 
 const MemberField = ({
-  t, index, publicKey, isMandatory, showDeleteIcon, onChangeMember, onDeleteMember,
+  t,
+  index,
+  publicKey,
+  isMandatory,
+  showDeleteIcon,
+  onChangeMember,
+  onDeleteMember,
 }) => {
   const changeCategory = (flag) => {
     onChangeMember({ index, publicKey, isMandatory: flag });
@@ -35,11 +41,16 @@ const MemberField = ({
         <span className="select-optional" onClick={() => changeCategory(false)}>
           {t('Optional')}
         </span>
-        <span onClick={() => changeCategory(true)}>
-          {t('Mandatory')}
-        </span>
+        <span onClick={() => changeCategory(true)}>{t('Mandatory')}</span>
       </DropdownInput>
-      {showDeleteIcon && <span className={`${styles.deleteIcon} delete-icon`} onClick={deleteMember}><Icon name="deleteIcon" /></span>}
+      {showDeleteIcon && (
+        <span
+          className={`${styles.deleteIcon} delete-icon`}
+          onClick={deleteMember}
+        >
+          <Icon name="deleteIcon" />
+        </span>
+      )}
     </div>
   );
 };

@@ -3,20 +3,16 @@ import React, { useEffect, useState } from 'react';
 import { parseSearchParams } from 'src/utils/searchParams';
 import Piwik from '@common/utilities/piwik';
 import { AutoResizeTextarea } from 'src/theme';
-import { PrimaryButton } from '@basics/buttons';
-import Box from '@basics/box';
+import { PrimaryButton } from 'src/theme/buttons';
+import Box from 'src/theme/box';
 import Tooltip from 'src/theme/Tooltip';
-import BoxContent from '@basics/box/content';
-import BoxFooter from '@basics/box/footer';
-import BoxInfoText from '@basics/box/infoText';
+import BoxContent from 'src/theme/box/content';
+import BoxFooter from 'src/theme/box/footer';
+import BoxInfoText from 'src/theme/box/infoText';
 import styles from './messageForm.css';
 
 const Form = ({
-  nextStep,
-  t,
-  history,
-  onNext,
-  prevState,
+  nextStep, t, history, onNext, prevState,
 }) => {
   const [message, setMessage] = useState(prevState?.message || '');
   useEffect(() => {
@@ -41,7 +37,11 @@ const Form = ({
         <BoxInfoText>
           <span>{t('Sign a message to prove its integrity')}</span>
           <Tooltip className={styles.tooltip} position="bottom">
-            <p>{t('To verify the integrity of a signed message use the "Verify message" tool in the sidebar.')}</p>
+            <p>
+              {t(
+                'To verify the integrity of a signed message use the "Verify message" tool in the sidebar.',
+              )}
+            </p>
           </Tooltip>
         </BoxInfoText>
         <label className={styles.fieldGroup}>

@@ -1,10 +1,10 @@
 import React from 'react';
 import { useTranslation } from 'react-i18next';
-import CopyToClipboard from '@basics/copyToClipboard';
+import CopyToClipboard from 'src/modules/common/components/copyToClipboard';
 import Icon from 'src/theme/Icon';
 import LiskAmount from '@shared/liskAmount';
 import WalletVisualWithAddress from '@wallet/components/walletVisualWithAddress';
-import { tokenMap } from '@token/configuration/tokens';
+import { tokenMap } from '@token/fungible/consts/tokens';
 import styles from './migrationDetails.css';
 
 const token = tokenMap.LSK.key;
@@ -16,8 +16,15 @@ const MigrationDetails = ({ wallet, showBalance }) => {
       <div>
         <h5>{t('Old account')}</h5>
         <div className={styles.addressContainer}>
-          <WalletVisualWithAddress address={wallet.legacy?.address} truncate={false} />
-          <CopyToClipboard type="icon" value={wallet.legacy?.address} copyClassName={styles.copyIcon} />
+          <WalletVisualWithAddress
+            address={wallet.legacy?.address}
+            truncate={false}
+          />
+          <CopyToClipboard
+            type="icon"
+            value={wallet.legacy?.address}
+            copyClassName={styles.copyIcon}
+          />
         </div>
         {showBalance && (
           <p>
@@ -26,12 +33,22 @@ const MigrationDetails = ({ wallet, showBalance }) => {
           </p>
         )}
       </div>
-      <Icon name="arrowRightWithStroke" className={`${styles.arrow} ${!showBalance && styles.noBalance}`} />
+      <Icon
+        name="arrowRightWithStroke"
+        className={`${styles.arrow} ${!showBalance && styles.noBalance}`}
+      />
       <div>
         <h5>{t('New account')}</h5>
         <div className={styles.addressContainer}>
-          <WalletVisualWithAddress address={wallet.summary?.address} truncate="medium" />
-          <CopyToClipboard type="icon" value={wallet.summary?.address} copyClassName={styles.copyIcon} />
+          <WalletVisualWithAddress
+            address={wallet.summary?.address}
+            truncate="medium"
+          />
+          <CopyToClipboard
+            type="icon"
+            value={wallet.summary?.address}
+            copyClassName={styles.copyIcon}
+          />
         </div>
         {showBalance && (
           <p>

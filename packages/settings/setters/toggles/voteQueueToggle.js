@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom';
 
 import routes from '@screens/router/routes';
 import Tooltip from 'src/theme/Tooltip';
-import DialogLink from '@basics/dialog/link';
+import DialogLink from 'src/theme/dialog/link';
 import Icon from 'src/theme/Icon';
 import styles from '@shared/navigationBars/topBar/topBar.css';
 
@@ -12,10 +12,12 @@ const SignedInTip = ({ t }) => <p>{t('Voting queue')}</p>;
 const SignedOutTip = ({ t }) => (
   <div className={styles.signedOutTip}>
     <b>{t('Please sign in')}</b>
-    <p>{t('In order to use this feature you need to sign in to your Lisk account.')}</p>
-    <Link to={routes.login.path}>
-      {t('Sign in')}
-    </Link>
+    <p>
+      {t(
+        'In order to use this feature you need to sign in to your Lisk account.',
+      )}
+    </p>
+    <Link to={routes.login.path}>{t('Sign in')}</Link>
   </div>
 );
 
@@ -30,15 +32,18 @@ const VoteQueueToggle = ({
     content={(
       <DialogLink
         component="votingQueue"
-        className={`${styles.toggle} voting-queue-toggle ${disabled && `${styles.disabled} disabled`}`}
+        className={`${styles.toggle} voting-queue-toggle ${
+          disabled && `${styles.disabled} disabled`
+        }`}
       >
         <Icon name="votingQueueInactive" />
-        {noOfVotes !== 0
-          && <span className={styles.votingQueueVoteCount}>{noOfVotes}</span>}
+        {noOfVotes !== 0 && (
+          <span className={styles.votingQueueVoteCount}>{noOfVotes}</span>
+        )}
       </DialogLink>
     )}
   >
-    { isUserLogout ? <SignedOutTip t={t} /> : <SignedInTip t={t} /> }
+    {isUserLogout ? <SignedOutTip t={t} /> : <SignedInTip t={t} />}
   </Tooltip>
 );
 

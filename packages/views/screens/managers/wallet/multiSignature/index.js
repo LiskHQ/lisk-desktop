@@ -6,7 +6,7 @@ import { multisignGroups, transactionsData } from './mockData';
 
 const MultiSignature = (props) => {
   const account = useSelector(state => state.wallet);
-  const activeToken = useSelector(state => state.settings.token.active);
+  const activeToken = useSelector(state => state.token.active);
 
   return (
     <MultiSignatureComponent

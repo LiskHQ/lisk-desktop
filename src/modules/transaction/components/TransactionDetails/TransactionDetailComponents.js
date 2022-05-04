@@ -9,10 +9,10 @@ import {
   getModuleAssetSenderLabel,
 } from '@transaction/utils/moduleAssets';
 import { getTxAmount } from '@transaction/utils/transaction';
-import { tokenMap } from '@token/configuration/tokens';
+import { tokenMap } from '@token/fungible/consts/tokens';
 import { MODULE_ASSETS_NAME_ID_MAP } from '@transaction/configuration/moduleAssets';
-import CopyToClipboard from '@basics/copyToClipboard';
-import DateTimeFromTimestamp from '@basics/timestamp';
+import CopyToClipboard from 'src/modules/common/components/copyToClipboard';
+import DateTimeFromTimestamp from 'src/modules/common/components/timestamp';
 import DiscreetMode from '@shared/discreetMode';
 import LiskAmount from '@shared/liskAmount';
 import MultiSignatureMembers, {

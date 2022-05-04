@@ -4,7 +4,7 @@ import networkActionTypes from '@network/store/actionTypes';
 import actionTypes from './actionTypes';
 
 const settings = store => next => (action) => {
-  const { token } = store.getState().settings;
+  const { token } = store.getState();
   next(action);
   switch (action.type) {
     case networkActionTypes.networkConfigSet:

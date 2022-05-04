@@ -3,6 +3,7 @@ export { default as blocks } from '@block/store/reducer';
 export { default as bookmarks } from '@bookmark/store/reducer';
 export { default as network } from '@network/store/reducer';
 export { default as settings } from '@settings/store/reducer';
+export { default as token } from '@token/fungible/store/reducer';
 export { default as transactions } from '@transaction/store/reducer';
 export { default as appUpdates } from '@update/store/reducers/appUpdates';
 export { default as voting } from '@dpos/validator/store/reducers/voting';

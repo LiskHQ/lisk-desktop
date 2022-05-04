@@ -6,7 +6,7 @@ import Register from '../components/Signup/register';
 
 const mapStateToProps = state => ({
   account: state.wallet,
-  token: state.settings.token,
+  token: state.token,
 });
 
 export default withRouter(connect(mapStateToProps)(withTranslation()(Register)));

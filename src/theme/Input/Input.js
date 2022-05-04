@@ -1,6 +1,6 @@
 import PropTypes from 'prop-types';
 import React from 'react';
-import Feedback from '@basics/feedback/feedback';
+import Feedback from 'src/theme/feedback/feedback';
 import Icon from 'src/theme/Icon';
 import Spinner from '../Spinner';
 import styles from './input.css';
@@ -27,14 +27,17 @@ const updateStatus = ({
 
 const getInputClass = ({
   className, dark, icon, isMasked, status,
-}) => ([
-  styles.input,
-  status === 'error' && styles.error,
-  isMasked && styles.mask,
-  className,
-  icon && styles.withIcon,
-  dark && styles.dark,
-].filter(Boolean).join(' '));
+}) =>
+  [
+    styles.input,
+    status === 'error' && styles.error,
+    isMasked && styles.mask,
+    className,
+    icon && styles.withIcon,
+    dark && styles.dark,
+  ]
+    .filter(Boolean)
+    .join(' ');
 
 const Input = ({
   className,
@@ -54,35 +57,50 @@ const Input = ({
   ...props
 }) => {
   status = updateStatus({
-    status, isLoading, error, ...props,
+    status,
+    isLoading,
+    error,
+    ...props,
   });
   const Component = type === 'textarea' ? type : 'input';
   return (
     <>
-      { label && <label className={[styles.label, styles[size]].join(' ')}>{label}</label> }
+      {label && (
+        <label className={[styles.label, styles[size]].join(' ')}>
+          {label}
+        </label>
+      )}
       <span className={`${styles.wrapper} ${styles[size]}`}>
-        { icon && (
-          typeof icon === 'string'
-            ? <Icon name={icon} className={`${styles.icon} ${iconClassName}`} />
-            : <span className={styles.icon}>{icon}</span>
+        {icon
+          && (typeof icon === 'string' ? (
+            <Icon name={icon} className={`${styles.icon} ${iconClassName}`} />
+          ) : (
+            <span className={styles.icon}>{icon}</span>
+          ))}
+        {status === 'pending' && (
+          <Spinner
+            className={`${styles.loading} ${styles.status} node-connection-loading-spinner`}
+          />
         )}
-        { status === 'pending'
-          && <Spinner className={`${styles.loading} ${styles.status} node-connection-loading-spinner`} />}
-        { statusIconNameMap[status]
-          && <Icon name={statusIconNameMap[status]} className={`${styles.status}`} />}
+        {statusIconNameMap[status] && (
+          <Icon
+            name={statusIconNameMap[status]}
+            className={`${styles.status}`}
+          />
+        )}
         <Component
           {...props}
           type={type}
           ref={setRef}
           className={getInputClass({
-            className, dark, icon, isMasked, status,
+            className,
+            dark,
+            icon,
+            isMasked,
+            status,
           })}
         />
-        <Feedback
-          message={feedback}
-          size={size}
-          status={status}
-        />
+        <Feedback message={feedback} size={size} status={status} />
       </span>
     </>
   );

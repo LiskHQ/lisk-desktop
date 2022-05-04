@@ -3,8 +3,8 @@ import { cryptography } from '@liskhq/lisk-client'; // eslint-disable-line
 
 import loginTypes from '@auth/const/loginTypes';
 import { getDeviceType } from '@wallet/utils/hwManager';
-import Illustration from '@basics/illustration';
-import BoxContent from '@basics/box/content';
+import Illustration from 'src/modules/common/components/illustration';
+import BoxContent from 'src/theme/box/content';
 import { signUsingPrivateKey, signUsingHW } from '@wallet/utils/signMessage';
 import styles from './signatureCollector.css';
 
@@ -25,9 +25,7 @@ const SignatureCollector = ({
       if (account.loginType === loginTypes.passphrase.code) {
         setSignature(signUsingPrivateKey({ message, account }));
       } else {
-        signUsingHW({ message, account })
-          .then(setSignature)
-          .catch(setError);
+        signUsingHW({ message, account }).then(setSignature).catch(setError);
       }
     } else if (isNext) {
       nextStep({ signature, error, message });
@@ -37,14 +35,16 @@ const SignatureCollector = ({
   }, [signature, error]);
 
   if (!deviceType) {
-    return (<div />);
+    return <div />;
   }
 
   return (
     <BoxContent className={styles.pendingWrapper}>
       <Illustration name={deviceType} />
       <h5>
-        {t('Please confirm the message on your {{deviceModel}}', { deviceModel: account.hwInfo.deviceModel })}
+        {t('Please confirm the message on your {{deviceModel}}', {
+          deviceModel: account.hwInfo.deviceModel,
+        })}
       </h5>
     </BoxContent>
   );

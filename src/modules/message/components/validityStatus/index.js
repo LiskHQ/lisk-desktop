@@ -1,8 +1,8 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { PrimaryButton } from '@basics/buttons';
-import BoxFooter from '@basics/box/footer';
-import Illustration from '@basics/illustration';
+import { PrimaryButton } from 'src/theme/buttons';
+import BoxFooter from 'src/theme/box/footer';
+import Illustration from 'src/modules/common/components/illustration';
 import routes from '@screens/router/routes';
 import useVerifyMessageValidator from '../../hooks/useVerifyMessageValidator';
 import styles from './validityStatus.css';

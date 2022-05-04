@@ -1,0 +1,82 @@
+@import '../../../setup/react/app/mixins.css';
+
+.wrapper {
+  align-self: center;
+  align-items: center;
+  background-color: var(--color-flash-message);
+  border: 1px solid var(--color-flash-message-border);
+  border-radius: 5px;
+  box-sizing: border-box;
+  display: flex;
+  flex-grow: 0;
+  flex-shrink: 0;
+  flex-direction: row;
+  justify-content: flex-start;
+  overflow: hidden;
+  position: relative;
+  z-index: 99;
+  margin: 20px;
+  padding: 0 20px;
+  max-width: var(--main-box-width);
+  width: calc(100% - 40px);
+
+  & img {
+    margin-right: 16px;
+  }
+
+  & .content {
+    @mixin contentLargest;
+
+    align-items: center;
+    color: var(--color-black);
+    display: flex;
+    padding: 12px 0;
+    width: 100%;
+
+    & strong {
+      font-size: inherit;
+    }
+  }
+
+  & .link {
+    @mixin contentNormal bold;
+
+    cursor: pointer;
+    margin-left: 10px;
+    text-decoration: none;
+  }
+
+  & .button {
+    min-width: 143px;
+    margin-left: auto;
+  }
+
+  & .closeBtn {
+    align-items: center;
+    cursor: pointer;
+    display: flex;
+    height: 10px;
+    justify-content: center;
+    margin-left: 10px;
+    margin-right: -10px;
+    padding: 10px;
+    width: 10px;
+
+    &::before,
+    &::after {
+      background-color: var(--color-white);
+      content: "";
+      height: 14px;
+      position: absolute;
+      width: 1px;
+    }
+
+    &::before {
+      transform: rotate(45deg);
+    }
+
+    &::after {
+      transform: rotate(-45deg);
+    }
+  }
+}

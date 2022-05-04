@@ -1,10 +1,10 @@
 import React from 'react';
 import { mount } from 'enzyme';
-import { accountLoggedOut } from '@common/store/actions';
+import { accountLoggedOut } from '@auth/store/action';
 import routes from '@screens/router/routes';
 import SignOut from './signOut';
 
-jest.mock('@common/store/actions', () => ({
+jest.mock('@auth/store/action', () => ({
   accountLoggedOut: jest.fn(),
 }));
 

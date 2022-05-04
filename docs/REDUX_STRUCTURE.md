@@ -61,7 +61,7 @@ Also there would be some action creators that don't fetch the active token, when
 ```javascript
 // account - token based
 const login = (payload) => (dispatch, getState) => {
-  const activeToken = getState().settings.token.active;
+  const activeToken = getState().token.active;
   dispatch({
     type: 'login',
     data: {

@@ -1,8 +1,8 @@
 import React from 'react';
 import grid from 'flexboxgrid/dist/flexboxgrid.css';
-import Box from '@basics/box';
-import BoxHeader from '@basics/box/header';
-import BoxContent from '@basics/box/content';
+import Box from 'src/theme/box';
+import BoxHeader from 'src/theme/box/header';
+import BoxContent from 'src/theme/box/content';
 import NotFound from 'src/modules/common/components/NotFound';
 import { isEmpty } from '@common/utilities/helpers';
 import delegatePerformanceDetails from './delegatePerformanceDetails';
@@ -18,7 +18,11 @@ const DelegatePerformance = ({ delegate: { error, isLoading, data } } = {}) => {
     return <NotFound />;
   }
 
-  const { dpos: { delegate: { pomHeights, status, consecutiveMissedBlocks } } } = data;
+  const {
+    dpos: {
+      delegate: { pomHeights, status, consecutiveMissedBlocks },
+    },
+  } = data;
   const headerTitle = {
     punished: 'Punishment details',
     banned: 'Ban details',
@@ -33,28 +37,44 @@ const DelegatePerformance = ({ delegate: { error, isLoading, data } } = {}) => {
         <Box className={grid.row}>
           <Box className={`${grid['col-md-12']} ${grid['col-xs-12']}`}>
             <p className={styles.description}>
-              {delegatePerformanceDetails(pomHeights, status, consecutiveMissedBlocks)}
+              {delegatePerformanceDetails(
+                pomHeights,
+                status,
+                consecutiveMissedBlocks,
+              )}
             </p>
           </Box>
         </Box>
         <Box className={`${grid.row} ${styles.performanceContainer}`}>
-          <Box className={`${grid['col-md-6']} ${grid['col-xs-12']} ${styles.start}`}>
+          <Box
+            className={`${grid['col-md-6']} ${grid['col-xs-12']} ${styles.start}`}
+          >
             <p className={styles.header}>Punishment starts</p>
           </Box>
-          <Box className={`${grid['col-md-6']} ${grid['col-xs-12']} ${styles.end}`}>
+          <Box
+            className={`${grid['col-md-6']} ${grid['col-xs-12']} ${styles.end}`}
+          >
             <p className={styles.header}>Punishment ends</p>
           </Box>
         </Box>
-        {pomHeights && pomHeights.map((height, index) => (
-          <Box className={`${grid.row} ${styles.performanceContainer}`} key={`${height.start}-${index}`}>
-            <Box className={`${grid['col-md-6']} ${grid['col-xs-12']} ${styles.start}`}>
-              <p className={styles.details}>{height.start}</p>
+        {pomHeights
+          && pomHeights.map((height, index) => (
+            <Box
+              className={`${grid.row} ${styles.performanceContainer}`}
+              key={`${height.start}-${index}`}
+            >
+              <Box
+                className={`${grid['col-md-6']} ${grid['col-xs-12']} ${styles.start}`}
+              >
+                <p className={styles.details}>{height.start}</p>
+              </Box>
+              <Box
+                className={`${grid['col-md-6']} ${grid['col-xs-12']} ${styles.end}`}
+              >
+                <p className={styles.details}>{height.end}</p>
+              </Box>
             </Box>
-            <Box className={`${grid['col-md-6']} ${grid['col-xs-12']} ${styles.end}`}>
-              <p className={styles.details}>{height.end}</p>
-            </Box>
-          </Box>
-        ))}
+          ))}
       </BoxContent>
     </Box>
   );

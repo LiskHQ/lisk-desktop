@@ -1,0 +1,124 @@
+@import '../../../../setup/react/app/mixins.css';
+
+@define-mixin buttonBasics {
+  @mixin contentLarge bold;
+
+  letter-spacing: 0.7px;
+  border-radius: var(--border-radius-standard);
+  max-width: 100%;
+  outline: none;
+  text-transform: none;
+  transition: var(--transition-button) !important;
+  cursor: pointer;
+  display: inline-block;
+  flex-direction: row;
+  position: relative;
+  text-align: center;
+  text-decoration: none;
+  align-content: center;
+  align-items: center;
+  justify-content: center;
+  white-space: nowrap;
+  box-sizing: border-box;
+  text-size-adjust: 100%;
+  min-width: 90px;
+
+  &.l {
+    height: 48px;
+    padding: 0 28px;
+  }
+
+  &.m {
+    height: 40px;
+    padding: 0 20px;
+  }
+
+  &.s {
+    @mixin contentNormal bold;
+
+    height: 36px;
+    padding: 0 16px;
+  }
+
+  &.xs {
+    @mixin contentNormal bold;
+
+    height: 32px;
+    padding: 0 12px;
+  }
+
+  & * {
+    line-height: inherit !important;
+  }
+
+  & :global(.button-icon) {
+    display: inline-block;
+    vertical-align: middle;
+    height: 1.2em; /* stylelint-disable-line */
+    margin-left: 0.42em; /* stylelint-disable-line */
+    width: 1.2em; /* stylelint-disable-line */
+  }
+
+  & .ripple {
+    display: none;
+  }
+
+  &:disabled {
+    opacity: 0.58;
+  }
+}
+
+@define-mixin buttonPrimary {
+  background-color: var(--color-ultramarine-blue);
+  color: var(--color-strong-white);
+  border: none;
+
+  &:focus,
+  &:hover {
+    box-shadow: 3px 3px 10px 0 rgba(61, 113, 255, 0.36);
+  }
+}
+
+@define-mixin buttonSecondary {
+  background-color: transparent;
+  border: solid 1px var(--dark-border-color);
+  color: var(--color-maastricht-blue);
+
+  &:global(.light) {
+    color: var(--color-strong-white);
+    border-color: var(--light-border-color);
+  }
+
+  &:global(.dark) {
+    border-color: var(--color-manatee-gray);
+  }
+
+  &:focus,
+  &:hover {
+    color: var(--color-ultramarine-blue);
+  }
+}
+
+@define-mixin buttonTertiary {
+  background-color: transparent;
+  border: none;
+  color: var(--color-ultramarine-blue);
+  text-decoration: none;
+
+  &:focus,
+  &:hover {
+    text-decoration: underline;
+  }
+}
+
+@define-mixin buttonWarning {
+  background-color: var(--color-white);
+  color: var(--color-burnt-sienna);
+  border-color: var(--color-burnt-sienna);
+
+  &:focus,
+  &:hover {
+    /* background: color(var(--color-burnt-sienna) l(+4%)); */
+    box-shadow: 3px 3px 10px 0 rgba(236, 104, 104, 0.36);
+  }
+}
