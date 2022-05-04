@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react';
 import { useDispatch } from 'react-redux';
 import { signatureCollectionStatus } from '@transaction/configuration/txStatus';
-import { secondPassphraseRemoved } from '@common/store/actions';
+import { secondPassphraseRemoved } from '@auth/store/action';
 import Box from 'src/theme/box';
 import Illustration from 'src/modules/common/components/illustration';
 import BoxContent from 'src/theme/box/content';

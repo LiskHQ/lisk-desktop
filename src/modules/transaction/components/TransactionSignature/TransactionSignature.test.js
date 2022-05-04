@@ -1,10 +1,10 @@
 import React from 'react';
 import { mount } from 'enzyme';
-import { secondPassphraseRemoved } from '@common/store/actions';
+import { secondPassphraseRemoved } from '@auth/store/action';
 import accounts from '@tests/constants/wallets';
 import TransactionSignature from './TransactionSignature';
 
-jest.mock('@common/store/actions', () => ({
+jest.mock('@auth/store/action', () => ({
   secondPassphraseRemoved: jest.fn(),
 }));
 
