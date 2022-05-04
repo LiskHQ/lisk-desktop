@@ -1,7 +1,7 @@
 import { to } from 'await-to-js';
 import React from 'react';
 import { toast } from 'react-toastify';
-import { getAccountsFromDevice, getNewAccountByIndex } from '@wallet/utilities/hwManager';
+import { getAccountsFromDevice, getNewAccountByIndex } from '@wallet/utils/hwManager';
 import routes from '@screens/router/routes';
 import { tokenMap } from '@token/fungible/consts/tokens';
 import { TertiaryButton } from '@basics/buttons';

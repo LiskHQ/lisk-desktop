@@ -3,7 +3,7 @@ import React from 'react';
 import { MODULE_ASSETS_NAME_ID_MAP } from '@transaction/configuration/moduleAssets';
 import TransactionSummary from '@transaction/components/TransactionSummary';
 import { fromRawLsk } from '@token/fungible/utils/lsk';
-import { getUnlockableUnlockObjects } from '@wallet/utilities/account';
+import { getUnlockableUnlockObjects } from '@wallet/utils/account';
 import TransactionInfo from '@transaction/components/TransactionInfo';
 import styles from './LockedBalanceSummary.css';
 

@@ -3,7 +3,7 @@ import { mount } from 'enzyme';
 import { tokenMap } from '@token/fungible/consts/tokens';
 import { toRawLsk } from '@token/fungible/utils/lsk';
 import { formatAmountBasedOnLocale } from '@common/utilities/formattedNumber';
-import i18n from '@setup/i18n/i18n';
+import i18n from 'src/utils/i18n/i18n';
 import accounts from '@tests/constants/wallets';
 import Summary from './summary';
 

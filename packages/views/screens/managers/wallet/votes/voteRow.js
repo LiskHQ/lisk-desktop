@@ -1,8 +1,8 @@
 import React from 'react';
 import grid from 'flexboxgrid/dist/flexboxgrid.css';
 import { tokenMap } from '@token/fungible/consts/tokens';
-import { truncateAddress } from '@wallet/utilities/account';
-import WalletVisual from '@wallet/detail/identity/walletVisual';
+import { truncateAddress } from '@wallet/utils/account';
+import WalletVisual from '@wallet/components/walletVisual';
 import tableStyles from '@basics/table/table.css';
 import LiskAmount from '@shared/liskAmount';
 import DialogLink from '@basics/dialog/link';

@@ -8,7 +8,7 @@ import { cryptography } from '@liskhq/lisk-client';
 import store from '@common/store';
 import ipcLocale from '@common/utilities/ipcLocale';
 import updateApp from '@update/utils/updateApp';
-import i18n from '../i18n/i18n';
+import i18n from 'src/utils/i18n/i18n';
 import App from './app';
 
 // eslint-disable-next-line no-extend-native

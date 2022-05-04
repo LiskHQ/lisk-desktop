@@ -1,8 +1,8 @@
-import * as accounts from '@wallet/utilities/api';
+import * as accounts from '@wallet/utils/api';
 import mockAccounts from '@tests/constants/wallets';
 import setVotesByLaunchProtocol from './urlProcessor';
 
-jest.mock('@wallet/utilities/api', () => ({
+jest.mock('@wallet/utils/api', () => ({
   getAccount: jest.fn().mockImplementation(data => Promise.resolve({
     summary: { address: 'lskdwsyfmcko6mcd357446yatromr9vzgu7eb8y99' },
     dpos: { delegate: { username: data.username } },

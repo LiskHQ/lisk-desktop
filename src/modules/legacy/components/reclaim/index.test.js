@@ -1,5 +1,5 @@
 import { mountWithRouterAndStore } from '@common/utilities/testHelpers';
-import { truncateAddress } from '@wallet/utilities/account';
+import { truncateAddress } from '@wallet/utils/account';
 import { addSearchParamsToUrl } from 'src/utils/searchParams';
 import { tokenMap } from '@token/fungible/consts/tokens';
 import wallets from '@tests/constants/wallets';

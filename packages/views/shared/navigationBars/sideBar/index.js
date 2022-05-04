@@ -4,7 +4,7 @@ import { withTranslation } from 'react-i18next';
 import { NavLink } from 'react-router-dom';
 import account from '@wallet/configuration/constants';
 import routes, { modals } from '@screens/router/routes';
-import { accountLoggedOut } from '@common/store/actions';
+import { accountLoggedOut } from '@auth/store/action';
 import Icon from 'src/theme/Icon';
 import DialogLink from '@basics/dialog/link';
 import styles from './sideBar.css';

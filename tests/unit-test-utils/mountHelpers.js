@@ -2,7 +2,7 @@ import { spy } from 'sinon';
 import { mount } from 'enzyme';
 import configureMockStore from 'redux-mock-store';
 import PropTypes from 'prop-types';
-import i18n from '@setup/i18n/i18n';
+import i18n from 'src/utils/i18n/i18n';
 
 // eslint-disable-next-line import/prefer-default-export
 export const mountWithContext = (

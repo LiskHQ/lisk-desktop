@@ -1,5 +1,5 @@
 import React from 'react';
-import WalletVisual from '@wallet/detail/identity/walletVisual';
+import WalletVisual from '@wallet/components/walletVisual';
 import LiskAmount from '@shared/liskAmount';
 import { toRawLsk } from '@token/fungible/utils/lsk';
 import styles from '../TransactionInfo/TransactionInfo.css';

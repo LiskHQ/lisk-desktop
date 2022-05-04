@@ -17,15 +17,14 @@ import DiscreetMode from '@shared/discreetMode';
 import LiskAmount from '@shared/liskAmount';
 import MultiSignatureMembers, {
   SignedAndRemainingMembers,
-} from '@wallet/detail/identity/multisignatureMembers';
+} from '@wallet/components/multisignatureMembers';
 import Tooltip from 'src/theme/Tooltip';
 import {
   extractAddressFromPublicKey,
   truncateAddress,
   calculateRemainingAndSignedMembers,
-} from '@wallet/utilities/account';
+} from '@wallet/utils/account';
 import { getDelegateName, getTxAsset } from '@transaction/utils';
-
 import WalletInfo from '../WalletInfo';
 import TransactionDetailsContext from '../../context/transactionDetailsContext';
 import TransactionTypeFigure from '../TransactionTypeFigure';

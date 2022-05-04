@@ -2,7 +2,7 @@ import React from 'react';
 import { mount } from 'enzyme';
 import { keyCodes } from '@views/configuration';
 import { tokenMap } from '@token/fungible/consts/tokens';
-import WalletVisual from '@wallet/detail/identity/walletVisual';
+import WalletVisual from '@wallet/components/walletVisual';
 import AutoSuggest from './index';
 
 describe('Recipient Input', () => {

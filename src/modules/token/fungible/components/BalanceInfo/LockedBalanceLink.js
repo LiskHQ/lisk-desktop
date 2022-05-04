@@ -8,7 +8,7 @@ import {
   calculateBalanceLockedInUnvotes,
   calculateBalanceLockedInVotes,
   getActiveTokenAccount,
-} from '@wallet/utilities/account';
+} from '@wallet/utils/account';
 import Icon from 'src/theme/Icon';
 import styles from './BalanceInfo.css';
 

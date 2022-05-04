@@ -12,7 +12,7 @@ import { Input } from 'src/theme';
 import { regex } from '@common/configuration';
 import { tokenMap } from '@token/fungible/consts/tokens';
 import { MODULE_ASSETS_NAME_ID_MAP } from '@transaction/configuration/moduleAssets';
-import { extractAddressFromPublicKey } from '@wallet/utilities/account';
+import { extractAddressFromPublicKey } from '@wallet/utils/account';
 import ProgressBar from '../progressBar';
 import MemberField from './memberField';
 import Feedback from './feedback';

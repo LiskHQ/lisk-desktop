@@ -1,9 +1,9 @@
 import React, { useState, useEffect } from 'react';
 import { withTranslation } from 'react-i18next';
 import { tokenMap } from '@token/fungible/consts/tokens';
-import { truncateAddress } from '@wallet/utilities/account';
+import { truncateAddress } from '@wallet/utils/account';
 import { TertiaryButton } from '@basics/buttons';
-import WalletVisual from '@wallet/detail/identity/walletVisual';
+import WalletVisual from '@wallet/components/walletVisual';
 import LiskAmount from '@shared/liskAmount';
 import { Input } from 'src/theme';
 import Icon from 'src/theme/Icon';

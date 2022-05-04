@@ -8,7 +8,7 @@ import StickyHeader from '@basics/table/stickyHeader';
 import Table from '@basics/table';
 import BlockFilterDropdown from './blockFilterDropdown';
 import styles from './blocks.css';
-import BlocksOverview from '../blocksOverview';
+import BlocksOverview from '../../manager/blocksOverviewManager';
 import BlockRow from './blockRow';
 import header from './tableHeader';
 
