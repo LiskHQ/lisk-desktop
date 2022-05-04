@@ -6,7 +6,7 @@ import { getActiveTokenAccount } from '@wallet/utils/account';
 import Piwik from '@common/utilities/piwik';
 import routes from '@screens/router/routes';
 import Login from 'src/modules/auth/components/Signin';
-import offlineStyle from 'src/theme/offlineWrapper/offlineWrapper.css';
+import offlineStyle from 'src/modules/common/components/offlineWrapper/offlineWrapper.css';
 import ErrorBoundary from './errorBoundary';
 
 const checkNetwork = (state) =>

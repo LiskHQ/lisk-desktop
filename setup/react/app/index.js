@@ -14,7 +14,7 @@ import useIpc from '@update/hooks/useIpc';
 import FlashMessageHolder from 'src/theme/flashMessage/holder';
 import DialogHolder from 'src/theme/dialog/holder';
 import './variables.css';
-import OfflineWrapper from 'src/theme/offlineWrapper';
+import OfflineWrapper from 'src/modules/common/components/offlineWrapper';
 import CustomRoute from '../../../packages/views/shared/customRoute';
 import NavigationBars from '../../../packages/views/shared/navigationBars';
 import routesMap from '../../../packages/views/screens/router/routesMap';
