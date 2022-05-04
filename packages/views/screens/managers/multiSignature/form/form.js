@@ -134,7 +134,7 @@ export const validateState = ({
     .filter((item) => !!item);
 
   return {
-    error: mandatoryKeys.length + optionalKeys.length ? messages.length : -1,
+    error: (mandatoryKeys.length + optionalKeys.length) ? messages.length : -1,
     messages,
   };
 };
