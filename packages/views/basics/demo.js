@@ -1,5 +1,5 @@
 import React from 'react';
-import WalletVisualDemo from '@wallet/detail/identity/walletVisual/demo';
+import WalletVisualDemo from '@wallet/components/walletVisual/demo';
 import AutoSuggestDemo from 'src/modules/common/components/AutoSuggest/demo';
 import SpinnerDemo from 'src/theme/Spinner/demo';
 import CalendarDemo from './calendar/demo';

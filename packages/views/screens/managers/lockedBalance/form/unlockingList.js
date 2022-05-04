@@ -1,7 +1,7 @@
 import React from 'react';
 import moment from 'moment';
 import { tokenMap } from '@token/configuration/tokens';
-import { isBlockHeightReached } from '@wallet/utilities/account';
+import { isBlockHeightReached } from '@wallet/utils/account';
 import Icon from 'src/theme/Icon';
 import LiskAmount from '@shared/liskAmount';
 

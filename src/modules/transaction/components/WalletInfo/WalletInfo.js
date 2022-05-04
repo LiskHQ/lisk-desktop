@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import React from 'react';
 import routes from '@screens/router/routes';
 import { validateAddress } from '@common/utilities/validators';
-import WalletVisual from '@wallet/detail/identity/walletVisual';
+import WalletVisual from '@wallet/components/walletVisual';
 
 import styles from './WalletInfo.css';
 
