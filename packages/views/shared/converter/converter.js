@@ -1,7 +1,7 @@
 import React from 'react';
 import numeral from 'numeral';
 import 'numeral/locales';
-import i18n from '@setup/i18n/i18n';
+import i18n from 'src/utils/i18n/i18n';
 import styles from './converter.css';
 
 const Converter = ({
