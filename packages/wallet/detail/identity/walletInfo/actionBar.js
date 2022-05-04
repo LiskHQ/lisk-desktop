@@ -53,9 +53,9 @@ const MultiSignatureButton = ({
 );
 
 const CopyAddressAndPublicKey = ({
-  address, publicKey, activeToken, t,
+  address, publicKey, t,
 }) => {
-  if (activeToken === tokenMap.BTC.key || !publicKey) {
+  if (!publicKey) {
     return (
       <Tooltip
         className={styles.tooltipWrapper}
@@ -118,7 +118,6 @@ const ActionBar = ({
         <CopyAddressAndPublicKey
           address={address}
           publicKey={account.summary.publicKey}
-          activeToken={activeToken}
           t={t}
         />
       </div>

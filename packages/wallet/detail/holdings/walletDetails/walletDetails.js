@@ -36,7 +36,7 @@ const WalletDetails = ({
               to={routes.wallet.path}
               className={styles.link}
             >
-              <Icon name={acctToken === tokenMap.BTC.key ? 'btcIcon' : 'lskIcon'} />
+              <Icon name="lskIcon" />
               <div className={styles.details}>
                 <span>
                   {t('{{acctToken}} balance', { token: tokenMap[acctToken].label })}
@@ -53,15 +53,13 @@ const WalletDetails = ({
                         />
                       </div>
                     </div>
-                    {token === tokenMap.LSK.key ? (
-                      <LockedBalanceLink
-                        activeToken={acctToken}
-                        isWalletRoute={isWalletRoute}
-                        style={styles.lockedBalance}
-                        icon="lockedBalance"
-                        account={wallet.info.LSK}
-                      />
-                    ) : null}
+                    <LockedBalanceLink
+                      activeToken={acctToken}
+                      isWalletRoute={isWalletRoute}
+                      style={styles.lockedBalance}
+                      icon="lockedBalance"
+                      account={wallet.info.LSK}
+                    />
                   </DiscreetMode>
                 </div>
               </div>
