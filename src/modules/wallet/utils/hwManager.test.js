@@ -1,5 +1,5 @@
 import * as communication from '@libs/hwManager/communication';
-import * as accountApi from 'src/modules/wallet/utiles/api';
+import * as accountApi from '@wallet/utils/api';
 import wallets from '@tests/constants/wallets';
 import {
   getAccountsFromDevice,

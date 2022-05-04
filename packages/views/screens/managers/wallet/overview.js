@@ -8,7 +8,6 @@ import grid from 'flexboxgrid/dist/flexboxgrid.css';
 
 import withData from '@common/utilities/withData';
 import { getTransactions } from '@transaction/api';
-import { selectTransactions } from '@common/store/selectors';
 import FlashMessageHolder from '@basics/flashMessage/holder';
 import WarnPunishedDelegate from '@dpos/validator/components/WarnPunishedDelegate';
 import WalletInfo from '@wallet/components/walletInfo';
@@ -48,7 +47,6 @@ const Overview = ({
   const {
     address,
     publicKey,
-    balance = 0,
     isMultisignature,
   } = account?.summary ?? {};
 
@@ -59,7 +57,6 @@ const Overview = ({
   const numOfBlockPerDay = 24 * 60 * 6;
   const daysLeft = Math.ceil((end - currentHeight) / numOfBlockPerDay);
 
-  const { confirmed } = useSelector(selectTransactions);
   const bookmark = useSelector((state) =>
     state.bookmarks[activeToken].find((item) => item.address === address));
   const host = useSelector(
