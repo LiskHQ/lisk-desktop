@@ -1,6 +1,6 @@
 import { toast } from 'react-toastify';
 import networks, { networkKeys } from '@network/configuration/networks';
-import { timeOutId, timeOutWarningId } from '@views/configuration';
+import { timeOutId, timeOutWarningId } from 'src/utils/toasts';
 import { tokenMap } from '@token/fungible/consts/tokens';
 import { MODULE_ASSETS_NAME_ID_MAP } from '@transaction/configuration/moduleAssets';
 import { fromRawLsk, delay } from '@token/fungible/utils/lsk';
