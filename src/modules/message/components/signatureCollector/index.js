@@ -1,11 +1,11 @@
 import React, { useEffect, useState } from 'react';
 import { cryptography } from '@liskhq/lisk-client'; // eslint-disable-line
 
-import loginTypes from 'src/modules/auth/const/loginTypes';
-import { getDeviceType } from '@wallet/utilities/hwManager';
+import loginTypes from '@auth/const/loginTypes';
+import { getDeviceType } from '@wallet/utils/hwManager';
 import Illustration from '@basics/illustration';
 import BoxContent from '@basics/box/content';
-import { signUsingPrivateKey, signUsingHW } from '@wallet/manager/signMessage';
+import { signUsingPrivateKey, signUsingHW } from '@wallet/utils/signMessage';
 import styles from './signatureCollector.css';
 
 const SignatureCollector = ({

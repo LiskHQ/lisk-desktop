@@ -8,6 +8,7 @@ const actionTypes = {
   watchListRetrieved: 'WATCHLIST_RETRIEVED',
   addedToWatchList: 'ADDED_TO_WATCHLIST',
   removedFromWatchList: 'REMOVED_FROM_WATCHLIST',
+  delegateRegistered: 'DELEGATE_REGISTERED',
 };
 
 export default actionTypes;

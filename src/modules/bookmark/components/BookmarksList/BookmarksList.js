@@ -5,8 +5,8 @@ import { Link } from 'react-router-dom';
 
 import routes from '@screens/router/routes';
 import { tokenMap } from '@token/configuration/tokens';
+import { truncateAddress } from '@wallet/utils/account';
 import Tooltip from 'src/theme/Tooltip';
-import { truncateAddress } from '@wallet/utilities/account';
 import { Input } from 'src/theme';
 import { PrimaryButton, TertiaryButton } from '@basics/buttons';
 import WalletVisual from '@wallet/detail/identity/walletVisual';

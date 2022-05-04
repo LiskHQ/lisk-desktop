@@ -12,8 +12,8 @@ import Feedback from '@basics/feedback/feedback';
 import LabeledValue from '@basics/labeledValue';
 import LiskAmount from '@shared/liskAmount';
 import Transactions from '@transaction/components/BlockDetailsTransactions';
-import { truncateAddress } from '@wallet/utilities/account';
-import WalletVisual from '@wallet/detail/identity/walletVisual';
+import { truncateAddress } from '@wallet/utils/account';
+import WalletVisual from '@wallet/components/walletVisual';
 import styles from './blockDetails.css';
 
 const Generator = ({ generatorAddress, generatorUsername }) => {

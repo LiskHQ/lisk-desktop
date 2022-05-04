@@ -1,7 +1,7 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 
-import { truncateAddress } from '@wallet/utilities/account';
+import { truncateAddress } from '@wallet/utils/account';
 import routes from '@screens/router/routes';
 import { tokenMap } from '@token/configuration/tokens';
 import LiskAmount from '@shared/liskAmount';

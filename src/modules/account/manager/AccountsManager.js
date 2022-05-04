@@ -2,10 +2,10 @@ import { compose } from 'redux';
 import { withTranslation } from 'react-i18next';
 
 import withData from '@common/utilities/withData';
-import { getAccounts } from '@wallet/utilities/api';
+import { getAccounts } from '@wallet/utils/api';
 import { getNetworkStatus } from '@network/utils/api';
 import { DEFAULT_LIMIT } from '@views/configuration';
-import Accounts from '../components/Accounts/Accounts';
+import Accounts from '../components/Accounts';
 
 export default compose(
   withData({

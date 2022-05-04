@@ -3,7 +3,7 @@ import { useTranslation } from 'react-i18next';
 import CopyToClipboard from '@basics/copyToClipboard';
 import Icon from 'src/theme/Icon';
 import LiskAmount from '@shared/liskAmount';
-import WalletVisualWithAddress from '@wallet/detail/identity/walletVisual/walletVisualWithAddress';
+import WalletVisualWithAddress from '@wallet/components/walletVisualWithAddress';
 import { tokenMap } from '@token/configuration/tokens';
 import styles from './migrationDetails.css';
 

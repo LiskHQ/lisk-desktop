@@ -2,9 +2,9 @@ import React from 'react';
 
 import { tokenMap } from '@token/configuration/tokens';
 import { toRawLsk } from '@token/utilities/lsk';
-import { truncateAddress } from '@wallet/utilities/account';
+import { truncateAddress } from '@wallet/utils/account';
 import LiskAmount from '@shared/liskAmount';
-import WalletVisual from '@wallet/detail/identity/walletVisual';
+import WalletVisual from '@wallet/components/walletVisual';
 
 import styles from './MultiSignatureReview.css';
 

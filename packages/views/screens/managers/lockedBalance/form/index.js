@@ -5,7 +5,7 @@ import {
   calculateUnlockableBalance,
   getActiveTokenAccount,
   getUnlockableUnlockObjects,
-} from '@wallet/utilities/account';
+} from '@wallet/utils/account';
 import { MODULE_ASSETS_NAME_ID_MAP } from '@transaction/configuration/moduleAssets';
 import TransactionPriority from '@transaction/components/TransactionPriority';
 import useTransactionFeeCalculation from '@transaction/hooks/useTransactionFeeCalculation';

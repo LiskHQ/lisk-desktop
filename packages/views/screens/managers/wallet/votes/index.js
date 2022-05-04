@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 import { compose } from 'redux';
 import { withTranslation } from 'react-i18next';
 import { getVotes } from '@dpos/validator/api';
-import { getAccounts } from '@wallet/utilities/api';
+import { getAccounts } from '@wallet/utils/api';
 import withData from '@common/utilities/withData';
 import Votes from './votes';
 

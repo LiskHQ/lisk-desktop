@@ -4,7 +4,7 @@ import grid from 'flexboxgrid/dist/flexboxgrid.css';
 import gridVisibility from 'flexboxgrid-helpers/dist/flexboxgrid-helpers.min.css';
 
 import DateTimeFromTimestamp from '@basics/timestamp';
-import WalletVisualWithAddress from '@wallet/detail/identity/walletVisual/walletVisualWithAddress';
+import WalletVisualWithAddress from '@wallet/components/walletVisualWithAddress';
 import DialogLink from '@basics/dialog/link';
 import VoteDetails from '@transaction/components/VoteItem';
 import styles from '../delegates.css';

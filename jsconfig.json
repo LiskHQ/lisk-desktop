@@ -7,6 +7,7 @@
       "@setup/*": ["./setup/*"],
       "@tests/*": ["./tests/*"],
       "@fixtures/*": ["./tests/fixtures"],
+      "@account/*": ["./src/modules/account/*"],
       "@block/*": ["./src/modules/block/*"],
       "@bookmark/*": ["./src/modules/bookmark/*"],
       "@search/*": ["./src/modules/search/*"],
@@ -18,12 +19,14 @@
       "@token/*": ["./packages/token/*"],
       "@transaction/*": ["./src/modules/transaction/*"],
       "@update/*": ["./src/modules/update/*"],
-      "@wallet/*": ["./packages/wallet/*"],
+      "@wallet/*": ["./src/modules/wallet/*"],
       "@views/*": ["./packages/views/*"],
+      "@packages/*": ["./packages/*"],
       "@shared/*": ["./packages/views/shared/*"],
       "@basics/*": ["./packages/views/basics/*"],
       "@screens/*": ["./packages/views/screens/*"],
       "@libs/*": ["./libs/*"],
+      "@auth/*": ["./src/modules/auth/*"],
       "@message/*": ["./src/modules/message/*"]
     }
   }
