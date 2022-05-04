@@ -4,7 +4,7 @@ import NewReleaseDialog from './index';
 
 jest.mock('@basics/flashMessage/holder');
 jest.mock('@basics/dialog/holder');
-jest.mock('@screens/router/searchParams', () => ({
+jest.mock('src/utils/searchParams', () => ({
   removeSearchParamsFromUrl: jest.fn(),
 }));
 

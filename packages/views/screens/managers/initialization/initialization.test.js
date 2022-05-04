@@ -3,7 +3,7 @@ import { addSearchParamsToUrl } from 'src/utils/searchParams';
 import Initialization from '.';
 import styles from './initialization.css';
 
-jest.mock('@screens/router/searchParams', () => ({
+jest.mock('src/utils/searchParams', () => ({
   addSearchParamsToUrl: jest.fn(),
 }));
 window.open = jest.fn();
