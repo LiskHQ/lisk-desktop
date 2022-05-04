@@ -1,7 +1,7 @@
-import loginTypes from 'src/modules/auth/const/loginTypes';
+import loginTypes from '@auth/const/loginTypes';
 import networks from '@network/configuration/networks';
 import * as transactionApi from '@transaction/api';
-import * as accountApi from '@wallet/utilities/api';
+import * as accountApi from '@wallet/utils/api';
 import * as hwManager from '@transaction/utils/hwManager';
 import sampleVotes from '@tests/constants/votes';
 import wallets from '@tests/constants/wallets';
@@ -24,7 +24,7 @@ jest.mock('../../api', () => ({
   getVotes: jest.fn(),
 }));
 
-jest.mock('@wallet/utilities/api', () => ({
+jest.mock('@wallet/utils/api', () => ({
   getAccount: jest.fn(),
 }));
 

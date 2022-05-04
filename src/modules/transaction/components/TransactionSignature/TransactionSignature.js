@@ -1,12 +1,12 @@
 import React, { useEffect } from 'react';
 import { useDispatch } from 'react-redux';
 import { signatureCollectionStatus } from '@transaction/configuration/txStatus';
-import { secondPassphraseRemoved } from '@common/store/actions';
+import { secondPassphraseRemoved } from '@auth/store/action';
 import Box from '@basics/box';
 import Illustration from '@basics/illustration';
 import BoxContent from '@basics/box/content';
 import { isEmpty } from '@common/utilities/helpers';
-import { getDeviceType } from '@wallet/utilities/hwManager';
+import { getDeviceType } from '@wallet/utils/hwManager';
 import styles from './TransactionSignature.css';
 
 const TransactionSignature = ({

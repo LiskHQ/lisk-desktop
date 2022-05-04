@@ -4,7 +4,7 @@ import { Link } from 'react-router-dom';
 import grid from 'flexboxgrid/dist/flexboxgrid.css';
 import routes from '@screens/router/routes';
 import { PrimaryButton, TertiaryButton } from '@basics/buttons';
-import WalletVisual from '@wallet/detail/identity/walletVisual';
+import WalletVisual from '@wallet/components/walletVisual';
 import registerStyles from '../Signup/register.css';
 import styles from './chooseAvatar.css';
 

@@ -2,9 +2,9 @@ import to from 'await-to-js';
 import { tokenMap } from '@token/configuration/tokens';
 import { MODULE_ASSETS_NAME_ID_MAP } from '@transaction/configuration/moduleAssets';
 import { create } from '@transaction/api';
-import { getAccount } from '@wallet/utilities/api';
+import { getAccount } from '@wallet/utils/api';
 import { isEmpty } from '@common/utilities/helpers';
-import { timerReset } from '@wallet/store/action';
+import { timerReset } from '@auth/store/action';
 import { getVotes } from '../../api';
 import actionTypes from './actionTypes';
 
@@ -127,7 +127,7 @@ export const votesRetrieved = () =>
       dispatch({
         type: actionTypes.votesRetrieved,
         data: {
-          wallet: {},
+          account: {},
         },
       });
     }

@@ -4,7 +4,7 @@ import { regex } from '@common/configuration';
 import routes from '@screens/router/routes';
 import Icon from 'src/theme/Icon';
 import DialogLink from '@basics/dialog/link';
-import WalletVisual from '@wallet/detail/identity/walletVisual';
+import WalletVisual from '@wallet/components/walletVisual';
 import Tooltip from 'src/theme/Tooltip';
 import styles from './Search.css';
 import { getSearchedText } from '../../utils';

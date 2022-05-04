@@ -1,6 +1,6 @@
 import React from 'react';
 import { mount } from 'enzyme';
-import { truncateAddress } from '@wallet/utilities/account';
+import { truncateAddress } from '@wallet/utils/account';
 import DelegateVotesView from './delegateVotesView';
 
 describe('Delegate votes view', () => {

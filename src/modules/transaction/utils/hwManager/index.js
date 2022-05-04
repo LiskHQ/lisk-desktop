@@ -1,4 +1,4 @@
-import { updateTransactionSignatures } from '@wallet/utilities/hwManager';
+import { updateTransactionSignatures } from '@wallet/utils/hwManager';
 import { signTransaction } from '@libs/hwManager/communication';
 /**
  * signTransactionByHW - Function.
