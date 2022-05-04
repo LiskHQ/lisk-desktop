@@ -30,9 +30,11 @@
   0% {
     color: var(--color-ghost);
   }
+
   50% {
     color: var(--color-blue-gray);
   }
+
   100% {
     color: var(--color-ghost);
   }
