@@ -19,7 +19,6 @@ const config = {
       '@message': resolve('./src/modules/message'),
       '@auth': resolve('./src/modules/auth'),
       '@wallet': resolve('./src/modules/wallet'),
-      '@account': resolve('./src/modules/account'),
       '@dpos': resolve('./src/modules/dpos'),
       '@network': resolve('./src/modules/network'),
       '@settings': resolve('./packages/settings'),

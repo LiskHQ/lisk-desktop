@@ -41,7 +41,6 @@ module.exports = {
     '^@token(.*)$': resolve(__dirname, '../packages/token/$1'),
     '^@auth(.*)$': resolve(__dirname, '../src/modules/auth/$1'),
     '^@wallet(.*)$': resolve(__dirname, '../src/modules/wallet/$1'),
-    '^@account(.*)$': resolve(__dirname, '../src/modules/account/$1'),
     '^@transaction(.*)$': resolve(__dirname, '../src/modules/transaction/$1'),
     '^@update(.*)$': resolve(__dirname, '../src/modules/update/$1'),
     '^@views(.*)$': resolve(__dirname, '../packages/views/$1'),

@@ -6,7 +6,7 @@ import {
   emptyTransactionsData, transactionsRetrieved,
 } from '@common/store/actions';
 import { getTransactions } from '@transaction/api';
-import i18n from '@setup/i18n/i18n';
+import i18n from 'src/utils/i18n/i18n';
 import blockActionTypes from '@block/store/actionTypes';
 import settingsActionTypes from '@settings/store/actionTypes';
 import { selectActiveToken } from '@common/store/selectors';
