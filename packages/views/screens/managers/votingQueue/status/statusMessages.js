@@ -2,14 +2,14 @@
 import React from 'react';
 import { txStatusTypes } from '@transaction/configuration/txStatus';
 import { statusMessages } from '@transaction/configuration/statusConfig';
-import LiskAmount from '@shared/liskAmount';
+import TokenAmount from '@token/fungible/components/tokenAmount';
 import styles from './styles.css';
 
 const unlockTime = 5;
 
 const LiskAmountFormatted = ({ val }) => (
   <span className={styles.subHeadingBold}>
-    <LiskAmount val={val} token="LSK" />
+    <TokenAmount val={val} token="LSK" />
   </span>
 );
 

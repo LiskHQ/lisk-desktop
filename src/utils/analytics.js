@@ -1,7 +1,7 @@
 import React from 'react';
 import moment from 'moment';
 import FlashMessageHolder from 'src/theme/flashMessage/holder';
-import AnalyticsMessage from '@shared/analyticsMessage/analyticsMessage';
+import AnalyticsMessage from 'src/modules/common/components/analyticsMessage/analyticsMessage';
 
 export default {
   init() {

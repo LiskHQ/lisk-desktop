@@ -1,7 +1,7 @@
 import React from 'react';
 
 import Table from 'src/theme/table';
-import { DEFAULT_LIMIT } from '@views/configuration';
+import { DEFAULT_LIMIT } from 'src/utils/monitor';
 import WalletRow from '../row';
 import header from './tableHeader';
 

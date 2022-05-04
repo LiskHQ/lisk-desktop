@@ -1,7 +1,7 @@
 import React from 'react';
 import { expect } from 'chai';
 import { mount } from 'enzyme';
-import LiskAmount from '.';
+import LiskAmount from './index';
 
 describe('LiskAmount', () => {
   const normalizeNumber = 100000000;

@@ -17,7 +17,7 @@ const timeComponents = [TransactionId, Date, BlockId, BlockHeight, Fee, Confirma
 const previewBaseComponents = [Illustration, Sender];
 const restComponents = [TransactionId, Fee, SignedAndRemainingMembersList];
 
-const LayoutSchema = {
+export const LayoutSchema = {
   [transfer]: {
     components: [...baseComponents, Recipient, Amount, Message, ...timeComponents, PrettyJson],
     className: styles.transferLayout,

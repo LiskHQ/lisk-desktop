@@ -6,7 +6,7 @@ import Icon from 'src/theme/Icon';
 import DialogLink from 'src/theme/dialog/link';
 import { PrimaryButton } from 'src/theme/buttons';
 import Tooltip from 'src/theme/Tooltip';
-import VoteQueueToggle from '@settings/setters/toggles/voteQueueToggle';
+import VoteQueueToggle from 'src/modules/common/components/bars/topBar/voteQueueToggle';
 import DiscreteModeToggle from 'src/modules/settings/components/discreteModeToggle';
 import LightDarkToggle from 'src/modules/settings/components/lightDarkModeToggle';
 import SideBarToggle from 'src/modules/settings/components/sideBarToggle';

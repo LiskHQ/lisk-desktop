@@ -1,4 +1,4 @@
-const keyCodes = {
+export const keyCodes = {
   arrowRight: 39,
   arrowLeft: 37,
   arrowDown: 40,

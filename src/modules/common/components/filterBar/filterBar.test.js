@@ -1,6 +1,6 @@
 import React from 'react';
 import { mount } from 'enzyme';
-import FilterBar from '.';
+import FilterBar from './index';
 
 describe('FilterBar', () => {
   let wrapper;

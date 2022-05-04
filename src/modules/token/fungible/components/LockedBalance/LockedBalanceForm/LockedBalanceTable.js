@@ -2,7 +2,7 @@ import React from 'react';
 import { withTranslation } from 'react-i18next';
 import { tokenMap } from '@token/fungible/consts/tokens';
 import Icon from 'src/theme/Icon';
-import LiskAmount from '@shared/liskAmount';
+import TokenAmount from '@token/fungible/components/tokenAmount';
 import UnlockingList from './UnlockingList';
 import styles from './LockedBalance.css';
 
@@ -25,7 +25,7 @@ const BalanceTable = ({
       && (
         <li>
           <p className="locked-balance">
-            <LiskAmount val={lockedInVotes} token={tokenMap.LSK.key} />
+            <TokenAmount val={lockedInVotes} token={tokenMap.LSK.key} />
           </p>
           <p>
             <Icon name="lock" />
@@ -45,7 +45,7 @@ const BalanceTable = ({
       && (
       <li>
         <p className="available-balance">
-          <LiskAmount val={unlockableBalance} token={tokenMap.LSK.key} />
+          <TokenAmount val={unlockableBalance} token={tokenMap.LSK.key} />
         </p>
         <p>
           <Icon name="unlock" />

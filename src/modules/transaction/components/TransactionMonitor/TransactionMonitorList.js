@@ -1,8 +1,8 @@
 import React, { useState } from 'react';
 import { useSelector } from 'react-redux';
 import StickyHeader from 'src/theme/table/stickyHeader';
-import FilterBar from '@shared/filterBar';
-import FilterDropdownButton from '@shared/filterDropdownButton';
+import FilterBar from 'src/modules/common/components/filterBar';
+import FilterDropdownButton from 'src/modules/common/components/filterDropdownButton';
 import Box from 'src/theme/box';
 import BoxContent from 'src/theme/box/content';
 import Table from 'src/theme/table';
@@ -13,7 +13,7 @@ import {
 import TransactionRow from '../TransactionRow';
 import header from './TransactionHeaderMap';
 import styles from './transactionsTable.css';
-import { getModuleAssetTitle } from '../../utils/moduleAssets';
+import { getModuleAssetTitle } from '../../utils';
 
 const getFields = (t) => [
   {

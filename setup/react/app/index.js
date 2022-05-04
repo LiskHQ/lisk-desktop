@@ -13,13 +13,13 @@ import NotFound from 'src/modules/common/components/NotFound';
 import useIpc from '@update/hooks/useIpc';
 import FlashMessageHolder from 'src/theme/flashMessage/holder';
 import DialogHolder from 'src/theme/dialog/holder';
-import './variables.css';
 import OfflineWrapper from 'src/modules/common/components/offlineWrapper';
-import CustomRoute from '../../../packages/views/shared/customRoute';
-import NavigationBars from '../../../packages/views/shared/navigationBars';
+import CustomRoute from 'src/modules/common/components/customRoute';
+import NavigationBars from 'src/modules/common/components/bars';
+import ThemeContext from 'src/theme/themeProvider';
 import routesMap from '../../../packages/views/screens/router/routesMap';
 import routes from '../../../packages/views/screens/router/routes';
-import ThemeContext from '../../../packages/views/contexts/theme';
+import './variables.css';
 import styles from './app.css';
 
 // eslint-disable-next-line max-statements

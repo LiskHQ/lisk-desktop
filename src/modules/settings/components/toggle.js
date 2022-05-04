@@ -5,7 +5,7 @@ import Piwik from 'src/utils/piwik';
 import CheckBox from 'src/theme/CheckBox';
 import Tooltip from 'src/theme/Tooltip';
 import Icon from 'src/theme/Icon';
-import styles from '@shared/navigationBars/topBar/topBar.css';
+import styles from 'src/modules/common/components/bars/topBar/topBar.css';
 import useSettings from '../hooks/useSettings';
 /**
  * Toggles boolean values on store.settings

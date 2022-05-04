@@ -3,7 +3,7 @@ import React from 'react';
 import withFilters from 'src/utils/withFilters';
 import Box from 'src/theme/box';
 import BoxContent from 'src/theme/box/content';
-import FilterBar from '@shared/filterBar';
+import FilterBar from 'src/modules/common/components/filterBar';
 import StickyHeader from 'src/theme/table/stickyHeader';
 import Table from 'src/theme/table';
 import BlockFilterDropdown from './blockFilterDropdown';

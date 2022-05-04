@@ -6,7 +6,7 @@ import BoxContent from 'src/theme/box/content';
 import BoxFooter from 'src/theme/box/footer';
 import BoxHeader from 'src/theme/box/header';
 import { PrimaryButton } from 'src/theme/buttons';
-import LiskAmount from '@shared/liskAmount';
+import TokenAmount from '@token/fungible/components/tokenAmount';
 import styles from './LockedBalance.css';
 
 const ButtonTitle = ({ unlockableBalance, t }) => {
@@ -17,7 +17,7 @@ const ButtonTitle = ({ unlockableBalance, t }) => {
     <>
       {t('Unlock')}
       {' '}
-      <LiskAmount val={unlockableBalance} token={tokenMap.LSK.key} />
+      <TokenAmount val={unlockableBalance} token={tokenMap.LSK.key} />
     </>
   );
 };

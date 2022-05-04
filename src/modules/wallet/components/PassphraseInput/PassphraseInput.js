@@ -1,6 +1,6 @@
 import React from 'react';
 import { withTranslation } from 'react-i18next';
-import { keyCodes } from '@views/configuration';
+import { keyCodes } from 'src/utils/keyCodes';
 import {
   isValidPassphrase,
   getPassphraseValidationErrors,

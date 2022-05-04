@@ -24,7 +24,7 @@ const getInt = value => value.replace(IntegerReg, '');
  * @param {Boolean} params.showInt Remove the floating points
  * @param {String?} params.token An option of LSK and BTC
  */
-const LiskAmount = ({
+const TokenAmount = ({
   val, showRounded, showInt, token, convert = true,
 }) => {
   if (val === undefined) return (<span />);
@@ -39,8 +39,8 @@ const LiskAmount = ({
   );
 };
 
-LiskAmount.defaultProps = {
+TokenAmount.defaultProps = {
   token: '',
 };
 
-export default LiskAmount;
+export default TokenAmount;

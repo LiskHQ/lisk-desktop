@@ -1,7 +1,7 @@
 import React, { useMemo } from 'react';
 import { useTranslation } from 'react-i18next';
 import { isEmpty } from 'src/utils/helpers';
-import { LayoutSchema } from '@views/configuration';
+import { LayoutSchema } from 'src/utils/layoutSchema';
 import Box from 'src/theme/box';
 import BoxHeader from 'src/theme/box/header';
 import TransactionDetailsContext from '@transaction/context/transactionDetailsContext';

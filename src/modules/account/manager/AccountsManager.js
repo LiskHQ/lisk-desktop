@@ -4,7 +4,7 @@ import { withTranslation } from 'react-i18next';
 import withData from 'src/utils/withData';
 import { getAccounts } from '@wallet/utils/api';
 import { getNetworkStatus } from '@network/utils/api';
-import { DEFAULT_LIMIT } from '@views/configuration';
+import { DEFAULT_LIMIT } from 'src/utils/monitor';
 import Accounts from '../components/Accounts';
 
 export default compose(
