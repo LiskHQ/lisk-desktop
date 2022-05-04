@@ -10,7 +10,7 @@ import {
   getActiveTokenAccount,
 } from '@wallet/utilities/account';
 import Icon from 'src/theme/Icon';
-import styles from './balanceInfo.css';
+import styles from './BalanceInfo.css';
 
 const Link = ({
   sum, style, icon, isWalletRoute,

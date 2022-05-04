@@ -7,9 +7,9 @@ import BoxContent from '@basics/box/content';
 import LiskAmount from '@shared/liskAmount';
 import DiscreetMode from '@shared/discreetMode';
 import Converter from '@shared/converter';
-import LockedBalanceLink from './unlocking';
-import ActionBar from './actionBar';
-import styles from './balanceInfo.css';
+import LockedBalanceLink from './LockedBalanceLink';
+import ActionBar from './ActionBar';
+import styles from './BalanceInfo.css';
 
 // eslint-disable-next-line complexity
 const BalanceInfo = ({

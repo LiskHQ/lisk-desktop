@@ -1,7 +1,7 @@
 import { act } from 'react-dom/test-utils';
 import { mountWithRouterAndStore } from '@common/utilities/testHelpers';
 import { tokenMap } from '@token/fungible/consts/tokens';
-import ActionBar from './actionBar';
+import ActionBar from './ActionBar';
 
 describe('Reclaim balance screen', () => {
   const hostAddress = 'lskmjr8hrnhzc6j653eto5fbh2p3kwdpa9ccdnhk6';

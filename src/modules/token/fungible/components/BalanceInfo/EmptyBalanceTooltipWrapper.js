@@ -4,7 +4,7 @@ import { useSelector } from 'react-redux';
 import { networkKeys } from '@network/configuration/networks';
 import { selectNetworkName } from '@common/store/selectors';
 import Tooltip from 'src/theme/Tooltip';
-import styles from './balanceInfo.css';
+import styles from './BalanceInfo.css';
 
 const getMessage = networkName => {
   switch (networkName) {

@@ -6,8 +6,8 @@ import DialogLink from '@basics/dialog/link';
 import Tooltip from 'src/theme/Tooltip';
 import SignInTooltipWrapper from '@wallet/manage/signInTooltipWrapper';
 import { selectAccountBalance, selectLSKAddress } from '@common/store/selectors';
-import EmptyBalanceTooltipWrapper from './emptyBalanceTooltipWrapper';
-import styles from './balanceInfo.css';
+import EmptyBalanceTooltipWrapper from './EmptyBalanceTooltipWrapper';
+import styles from './BalanceInfo.css';
 
 // eslint-disable-next-line complexity
 const ActionBar = ({

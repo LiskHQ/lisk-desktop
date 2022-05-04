@@ -11,7 +11,7 @@ import Converter from '@shared/converter';
 import { fromRawLsk } from '@token/fungible/utils/lsk';
 import LiskAmount from '@shared/liskAmount';
 import DiscreetMode from '@shared/discreetMode';
-import LockedBalanceLink from '../balanceInfo/unlocking';
+import LockedBalanceLink from '@token/fungible/components/BalanceInfo/LockedBalanceLink';
 import styles from './walletDetails.css';
 
 const WalletDetails = ({
