@@ -5,10 +5,10 @@ import { extractKeyPair } from '@wallet/utils/account';
 import { defaultDerivationPath } from '@common/utilities/explicitBipKeyDerivation';
 import wallets from '@tests/constants/wallets';
 import * as networkActions from '@network/store/action';
+import { accountDataUpdated } from '@wallet/store/action';
 import actionTypes from './actionTypes';
 import {
   accountLoggedOut,
-  accountDataUpdated,
   login,
   secondPassphraseStored,
   secondPassphraseRemoved,

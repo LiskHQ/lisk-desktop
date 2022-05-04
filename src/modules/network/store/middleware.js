@@ -13,7 +13,7 @@ const readStoredNetwork = ({ dispatch, getState }) => {
     statistics, statisticsRequest, statisticsFollowingDay, network,
   } = getState().settings;
 
-  const config = network?.name && network.address
+  const config = network?.name && network?.address
     ? network
     : {
       name: networkKeys.mainNet,
