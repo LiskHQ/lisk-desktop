@@ -2,9 +2,9 @@
 import { connect } from 'react-redux';
 import { withTranslation } from 'react-i18next';
 import { getActiveTokenAccount } from '@wallet/utils/account';
-import { settingsUpdated } from '@packages/settings/store/actions';
+import { settingsUpdated } from '@common/store/actions';
 import { timerReset } from '@auth/store/action';
-import Settings from './settings';
+import SettingDialog from '../components/SettingDialog';
 
 const mapStateToProps = state => ({
   settings: state.settings,
@@ -20,4 +20,4 @@ const mapDispatchToProps = {
 export default connect(
   mapStateToProps,
   mapDispatchToProps,
-)(withTranslation()(Settings));
+)(withTranslation()(SettingDialog));

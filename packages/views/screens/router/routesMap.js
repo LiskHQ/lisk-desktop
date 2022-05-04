@@ -13,7 +13,7 @@ import MonitorTransactions from '@screens/managers/monitor/transactions';
 import Register from '@auth/manager/SignupManager';
 import RegisterDelegate from '@screens/managers/registerDelegate';
 import Send from '@screens/managers/send';
-import Settings from '@screens/managers/settings';
+import Settings from 'src/modules/settings/manager/SettingsManager';
 import SignMessage from '@message/manager/signMessageManager';
 import TermsOfUse from 'src/modules/common/components/TermsOfUse';
 import Explorer from '@wallet/manager/explorerManager';
