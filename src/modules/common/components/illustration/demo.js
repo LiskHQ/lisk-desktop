@@ -1,5 +1,5 @@
 import React from 'react';
-import DemoRenderer from '@basics/demoRenderer';
+import DemoRenderer from '@views/../../../../theme/demo/demoRenderer';
 import Illustration, { illustrations } from '.';
 
 const IllustrationDemo = () => (

@@ -1,7 +1,7 @@
 import React from 'react';
 import moment from 'moment';
 import { firstBlockTime } from '@block/utils/firstBlockTime';
-import DemoRenderer from '@basics/demoRenderer';
+import DemoRenderer from '@views/../../../../theme/demo/demoRenderer';
 import Calendar from './calendar';
 
 /* eslint-disable-next-line no-console */

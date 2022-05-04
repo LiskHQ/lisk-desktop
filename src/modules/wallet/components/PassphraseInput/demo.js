@@ -1,5 +1,5 @@
 import React from 'react';
-import DemoRenderer from '@basics/demoRenderer';
+import DemoRenderer from '@views/../../../../theme/demo/demoRenderer';
 import PassphraseInput from './PassphraseInput';
 
 /* eslint-disable-next-line no-console */
