@@ -1,4 +1,4 @@
-@import '../../../../setup/react/app/mixins.css';
+@import '../../../setup/react/app/mixins.css';
 
 .footerButton {
   @mixin contentNormal bold;
@@ -27,7 +27,13 @@
 }
 
 @keyframes wave {
-  0% { color: var(--color-ghost); }
-  50% { color: var(--color-blue-gray); }
-  100% { color: var(--color-ghost); }
+  0% {
+    color: var(--color-ghost);
+  }
+  50% {
+    color: var(--color-blue-gray);
+  }
+  100% {
+    color: var(--color-ghost);
+  }
 }
