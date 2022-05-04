@@ -50,6 +50,7 @@
           ["@auth", "./src/modules/auth/"],
           ["@views", "./packages/views"],
           ["@screens", "./packages/views/screens"],
+          ["@packages", "./packages"],
           ["@basics", "./packages/views/basics"],
           ["@shared", "./packages/views/shared"],
           ["@libs", "./libs"]

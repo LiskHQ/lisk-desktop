@@ -21,6 +21,7 @@
       "@wallet/*": ["./src/modules/wallet/*"],
       "@account/*": ["./src/modules/account/*"],
       "@views/*": ["./packages/views/*"],
+      "@packages/*": ["./packages/*"],
       "@shared/*": ["./packages/views/shared/*"],
       "@basics/*": ["./packages/views/basics/*"],
       "@screens/*": ["./packages/views/screens/*"],

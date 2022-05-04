@@ -44,6 +44,7 @@ module.exports = {
     '^@transaction(.*)$': resolve(__dirname, '../src/modules/transaction/$1'),
     '^@update(.*)$': resolve(__dirname, '../src/modules/update/$1'),
     '^@views(.*)$': resolve(__dirname, '../packages/views/$1'),
+    '^@packages(.*)$': resolve(__dirname, '../packages/$1'),
     '^@screens(.*)$': resolve(__dirname, '../packages/views/screens/$1'),
     '^@shared(.*)$': resolve(__dirname, '../packages/views/shared/$1'),
     '^@basics(.*)$': resolve(__dirname, '../packages/views/basics/$1'),

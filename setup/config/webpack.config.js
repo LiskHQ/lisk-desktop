@@ -26,6 +26,7 @@ const config = {
       '@transaction': resolve('./src/modules/transaction'),
       '@update': resolve('./src/modules/update'),
       '@views': resolve('./packages/views'),
+      '@packages': resolve('./packages'),
       '@shared': resolve('./packages/views/shared'),
       '@basics': resolve('./packages/views/basics'),
       '@screens': resolve('./packages/views/screens'),
