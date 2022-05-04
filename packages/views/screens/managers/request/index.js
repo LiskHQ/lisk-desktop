@@ -34,7 +34,7 @@ Request.defaultProps = {
 
 export default connect(
   state => ({
-    token: state.settings.token.active,
+    token: state.token.active,
     account: state.wallet,
   }),
   {},

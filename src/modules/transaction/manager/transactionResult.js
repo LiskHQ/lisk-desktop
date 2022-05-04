@@ -7,14 +7,14 @@ import { transactionBroadcasted, resetTransactionResult } from '@common/store/ac
 import TransactionResult from '../components/TransactionResult/TransactionResult';
 
 const mapStateToProps = state => ({
-  activeToken: state.settings.token.active,
+  activeToken: state.token.active,
   transactions: state.transactions,
   account: {
-    ...state.wallet.info[state.settings.token.active],
+    ...state.wallet.info[state.token.active],
     passphrase: state.wallet.passphrase,
     hwInfo: state.wallet.hwInfo,
   },
-  network: state.network.networks[state.settings.token.active],
+  network: state.network.networks[state.token.active],
 });
 
 const mapDispatchToProps = {

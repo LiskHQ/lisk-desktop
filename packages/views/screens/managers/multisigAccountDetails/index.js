@@ -38,7 +38,7 @@ export default compose(
       apiUtil: (network, params) => getAccount({ network, params }, params.token),
       defaultData: {},
       getApiParams: (state) => ({
-        token: state.settings.token.active,
+        token: state.token.active,
       }),
       autoload: false,
     },

@@ -1,5 +1,4 @@
 import { getFromStorage } from '@common/utilities/localJSONStorage';
-import tokenActionTypes from '@token/fungible/store/actionTypes';
 import actionTypes from './actionTypes';
 import { initialState } from './reducer';
 
@@ -9,25 +8,13 @@ import { initialState } from './reducer';
  */
 export const settingsRetrieved = () => (dispatch) => {
   getFromStorage('settings', initialState, (data) => {
-    if (data.token) {
-      // For cases where token is still stored with settings data,
-      // Ensure retrieved token is stored properly
-      dispatch({
-        type: tokenActionTypes.tokenRetrieved,
-        data: data.token,
-      });
-      // Remove token from retrieved data before storing
-      delete data.token;
-      dispatch({
-        type: actionTypes.settingsRetrieved,
-        data,
-      });
-    } else {
-      dispatch({
-        type: actionTypes.settingsRetrieved,
-        data,
-      });
-    }
+    // For cases where token is still stored with settings data,
+    // Remove token from retrieved data before storing
+    delete data.token;
+    dispatch({
+      type: actionTypes.settingsRetrieved,
+      data,
+    });
   });
 };
 

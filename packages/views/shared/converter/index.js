@@ -6,7 +6,7 @@ import Converter from './converter';
 
 const mapStateToProps = state => ({
   currency: state.settings.currency || 'EUR',
-  token: state.settings.token ? state.settings.token.active : tokenMap.LSK.key,
+  token: state.token ? state.token.active : tokenMap.LSK.key,
   priceTicker: (state.service && state.service.priceTicker)
     ? state.service.priceTicker
     : {

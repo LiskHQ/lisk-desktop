@@ -18,7 +18,7 @@ const moduleAssetId = MODULE_ASSETS_NAME_ID_MAP.unlockToken;
 
 const LockedBalance = (props) => {
   const wallet = useSelector(state => getActiveTokenAccount(state));
-  const token = useSelector(state => state.settings.token.active);
+  const token = useSelector(state => state.token.active);
   const network = useSelector(state => state.network);
   const currentBlockHeight = useSelector(selectCurrentBlockHeight);
   const lockedInVotes = useSelector(state => calculateBalanceLockedInVotes(state.voting));

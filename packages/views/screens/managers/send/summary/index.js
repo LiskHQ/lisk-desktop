@@ -13,7 +13,7 @@ import Summary from './summary';
 const mapStateToProps = state => ({
   account: getActiveTokenAccount(state),
   transactions: state.transactions,
-  token: state.settings.token && state.settings.token.active,
+  token: state.token && state.token.active,
 });
 
 const mapDispatchToProps = {

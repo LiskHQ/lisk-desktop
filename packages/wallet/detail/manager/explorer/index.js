@@ -11,7 +11,7 @@ const apis = {
     apiUtil: (network, { token, ...params }) => getAccount({ network, params }, token),
     defaultData: {},
     getApiParams: (state, props) => ({
-      token: state.settings.token.active,
+      token: state.token.active,
       address: selectSearchParamValue(props.history.location.search, 'address'),
       network: state.network,
     }),

@@ -76,7 +76,7 @@ WalletVisualWithAddress.defaultProps = {
 
 const mapStateToProps = state => ({
   bookmarks: state.bookmarks,
-  token: state.settings.token,
+  token: state.token,
 });
 
 export default compose(

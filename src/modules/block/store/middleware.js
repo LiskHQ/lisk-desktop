@@ -24,8 +24,8 @@ const blockListener = ({ getState, dispatch }) => {
   blockUnsubscribe();
 
   const callback = (block) => {
-    const { settings, network, blocks } = getState();
-    const activeToken = settings.token && state.settings.token.active;
+    const { token, network, blocks } = getState();
+    const activeToken = token && state.token.active;
     const lastBtcUpdate = network.lastBtcUpdate || 0;
     const now = new Date();
 

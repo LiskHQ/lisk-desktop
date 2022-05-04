@@ -1,4 +1,3 @@
-import { tokenMap } from '@token/fungible/consts/tokens';
 import { deepMergeObj } from '@common/utilities/helpers';
 import actionTypes from './actionTypes';
 
@@ -20,12 +19,6 @@ export const initialState = {
   statistics: false,
   areTermsOfUseAccepted: false,
   discreetMode: false,
-  token: {
-    active: tokenMap.LSK.key,
-    list: {
-      [tokenMap.LSK.key]: true,
-    },
-  },
   sideBarExpanded: true,
   currency: 'USD',
 };

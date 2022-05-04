@@ -6,7 +6,7 @@ import BookmarkListModal from '@bookmark/components/BookmarksListModal';
 
 const mapStateToProps = state => ({
   bookmarks: state.bookmarks,
-  token: state.settings.token,
+  token: state.token,
 });
 
 const mapDispatchToProps = {

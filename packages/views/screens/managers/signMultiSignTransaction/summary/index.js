@@ -12,7 +12,7 @@ const apis = {
     apiUtil: (network, { token, publicKey }) =>
       getAccount({ network, params: { publicKey } }, token),
     getApiParams: (state, ownProps) => ({
-      token: state.settings.token.active,
+      token: state.token.active,
       publicKey: ownProps.transaction.sender.publicKey,
       network: state.network,
     }),

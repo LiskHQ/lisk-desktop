@@ -44,14 +44,14 @@ export const votesConfirmed = () => ({
  * @returns {Object} Pure action object
  */
 export const voteEdited = data => async (dispatch, getState) => {
-  const { network, settings } = getState();
+  const { network, token } = getState();
   const normalizedVotes = await Promise.all(data.map(async (vote) => {
     if (vote.username) {
       return vote;
     }
     const wallet = (await getAccount({
       network, params: { address: vote.address },
-    }, settings.token.active)) || {};
+    }, token.active)) || {};
     const username = wallet.dpos?.delegate?.username ?? '';
 
     return { ...vote, username };

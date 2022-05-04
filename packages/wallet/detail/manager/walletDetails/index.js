@@ -5,7 +5,7 @@ import WalletDetails from '../../holdings/walletDetails/walletDetails';
 
 const mapStateToProps = state => ({
   wallet: state.wallet,
-  settings: state.settings,
+  token: state.token,
 });
 
 export default connect(mapStateToProps)(withTranslation()(WalletDetails));

@@ -110,7 +110,7 @@ const ComposedDelegates = compose(
           },
           tokenMap.LSK.key,
         ),
-      getApiParams: (state) => ({ token: state.settings.token.active }),
+      getApiParams: (state) => ({ token: state.token.active }),
       autoload: true,
       defaultData: [],
       transformResponse: mergeUniquelyById,

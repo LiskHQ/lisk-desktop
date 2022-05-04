@@ -54,8 +54,8 @@ export const transactionsRetrieved = ({
 }) => async (dispatch, getState) => {
   dispatch(loadingStarted(actionTypes.transactionsRetrieved));
 
-  const { network, settings } = getState();
-  const token = settings.token.active;
+  const { network, token } = getState();
+  const activeToken = token.active;
 
   const params = {
     address,
@@ -65,7 +65,7 @@ export const transactionsRetrieved = ({
   };
 
   try {
-    const { data, meta } = await getTransactions({ network, params }, token);
+    const { data, meta } = await getTransactions({ network, params }, activeToken);
     dispatch({
       type: actionTypes.transactionsRetrieved,
       data: {
@@ -102,9 +102,9 @@ export const resetTransactionResult = () => ({
 // eslint-disable-next-line max-statements
 export const transactionCreated = data => async (dispatch, getState) => {
   const {
-    wallet, settings, network,
+    wallet, token, network,
   } = getState();
-  const activeToken = settings.token.active;
+  const activeToken = token.active;
   const hwInfo = isEmpty(wallet.hwInfo) ? undefined : wallet.hwInfo; // @todo remove this by #3898
 
   const [error, tx] = await to(create({
@@ -141,17 +141,17 @@ export const transactionCreated = data => async (dispatch, getState) => {
  */
 export const transactionDoubleSigned = () => async (dispatch, getState) => {
   const {
-    transactions, network, wallet, settings,
+    transactions, network, wallet, token,
   } = getState();
   const keyPair = extractKeyPair({
     passphrase: wallet.secondPassphrase,
     enableCustomDerivationPath: false,
   });
   const activeWallet = {
-    ...wallet.info[settings.token.active],
+    ...wallet.info[token.active],
     passphrase: wallet.secondPassphrase,
     summary: {
-      ...wallet.info[settings.token.active].summary,
+      ...wallet.info[token.active].summary,
       ...keyPair,
     },
   };
@@ -191,8 +191,8 @@ export const transactionDoubleSigned = () => async (dispatch, getState) => {
 export const transactionBroadcasted = transaction =>
   // eslint-disable-next-line max-statements
   async (dispatch, getState) => {
-    const { network, settings, wallet } = getState();
-    const activeToken = settings.token.active;
+    const { network, token, wallet } = getState();
+    const activeToken = token.active;
     const serviceUrl = network.networks[activeToken].serviceUrl;
 
     const [error] = await to(broadcast(

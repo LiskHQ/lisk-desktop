@@ -21,7 +21,6 @@ const settings = store => next => (action) => {
         store.dispatch(emptyTransactionsData());
       }
       setInStorage('settings', store.getState().settings);
-      setInStorage('token', token);
       break;
     default:
       break;

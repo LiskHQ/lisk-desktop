@@ -12,7 +12,7 @@ const TokenSelector = ({
   token, history, t, disabled,
 }) => {
   const dispatch = useDispatch();
-  const activeToken = useSelector(state => state.settings.token.active);
+  const activeToken = useSelector(state => state.token.active);
 
   const activateToken = () => {
     if (activeToken !== token && history.location.pathname !== routes.reclaim.path) {
