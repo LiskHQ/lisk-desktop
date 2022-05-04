@@ -9,9 +9,9 @@ import BoxContent from '@basics/box/content';
 import Dialog from '@basics/dialog/dialog';
 import CurrencySelector from '@settings/setters/selectors/currencySelector';
 import Toggle from '@settings/setters/toggles/toggle';
-import styles from './settings.css';
+import styles from './settingDialog.css';
 
-class Settings extends React.Component {
+class SettingDialog extends React.Component {
   constructor() {
     super();
     this.state = {
@@ -145,4 +145,4 @@ class Settings extends React.Component {
   }
 }
 
-export default Settings;
+export default SettingDialog;

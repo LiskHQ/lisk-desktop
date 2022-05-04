@@ -1,6 +1,6 @@
 /* eslint-disable */
 import React from 'react';
-import Settings from './settings';
+import SettingDialog from './SettingDialog';
 import accounts from '@tests/constants/wallets';
 import { mountWithRouter } from '@common/utilities/testHelpers';
 
@@ -48,7 +48,7 @@ describe('Setting', () => {
 
   describe('With no transaction in guest mode', () => {
     beforeEach(() => {
-      wrapper = mountWithRouter(Settings, props);
+      wrapper = mountWithRouter(SettingDialog, props);
     });
 
     it('should change autolog setting when clicking on checkbox', () => {
@@ -96,7 +96,7 @@ describe('Setting', () => {
       const settingsToExpireTime = { ...settings };
       settingsToExpireTime.autoLog = false;
       accountToExpireTime.passphrase = accounts.genesis.passphrase;
-      wrapper = mountWithRouter(Settings, { ...props, account: accountToExpireTime, settings: settingsToExpireTime });
+      wrapper = mountWithRouter(SettingDialog, { ...props, account: accountToExpireTime, settings: settingsToExpireTime });
 
       wrapper.find('.autoLog input').at(0).simulate('change', { target: { name: 'autoLog' } });
 
