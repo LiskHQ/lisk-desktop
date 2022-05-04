@@ -1,10 +1,10 @@
 import React, { useState, useEffect } from 'react';
 
 import { Input } from 'src/theme';
-import Box from '@theme/box';
-import BoxHeader from '@basics/box/header';
-import BoxContent from '@basics/box/content';
-import BoxTabs from '@basics/tabs';
+import Box from 'src/theme/box';
+import BoxHeader from 'src/theme/box/header';
+import BoxContent from 'src/theme/box/content';
+import BoxTabs from 'src/theme/tabs';
 import { ROUND_LENGTH } from '@dpos/validator/consts';
 import styles from './delegates.css';
 import DelegatesOverview from './overview/delegatesOverview';
@@ -37,9 +37,8 @@ const DelegatesMonitor = ({
     : 0;
 
   useEffect(() => {
-    const addressList =
-      votes.data &&
-      votes.data.reduce((acc, data) => {
+    const addressList = votes.data
+      && votes.data.reduce((acc, data) => {
         const votesList = data.asset.votes || [];
         const dataAddresses = votesList.map((vote) => vote.delegateAddress);
         return acc.concat(dataAddresses);
@@ -75,7 +74,7 @@ const DelegatesMonitor = ({
         offset: 0,
         limit: 100,
       },
-      api
+      api,
     );
   };
 

@@ -1,8 +1,8 @@
 import React from 'react';
 import { storiesOf } from '@storybook/react';
+import Box from 'src/theme/box';
+import BoxHeader from 'src/theme/box/header';
 import StoryWrapper from '../../../../.storybook/components/StoryWrapper/StoryWrapper';
-import Box from '../box';
-import BoxHeader from '../box/header';
 import { LineChart, BarChart, DoughnutChart } from './index';
 import style from './chart.stories.css';
 

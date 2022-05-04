@@ -1,12 +1,12 @@
 import React from 'react';
 import Piwik from '@common/utilities/piwik';
-import { PrimaryButton } from '@basics/buttons';
+import { PrimaryButton } from 'src/theme/buttons';
 import { tokenMap } from '@token/configuration/tokens';
 import AmountField from '@shared/amountField';
-import Box from '@theme/box';
-import BoxContent from '@basics/box/content';
-import BoxFooter from '@basics/box/footer';
-import BoxHeader from '@basics/box/header';
+import Box from 'src/theme/box';
+import BoxContent from 'src/theme/box/content';
+import BoxFooter from 'src/theme/box/footer';
+import BoxHeader from 'src/theme/box/header';
 import BookmarkAutoSuggest from './bookmarkAutoSuggest';
 import styles from './form.css';
 
@@ -27,8 +27,10 @@ const FormBase = ({
   };
 
   const isSubmitButtonDisabled = Object.values(fields).some(
-    ({ error, required, value, isLoading }) =>
-      error || (required && value === '') || isLoading
+    ({
+      error, required, value, isLoading,
+    }) =>
+      error || (required && value === '') || isLoading,
   );
 
   return (

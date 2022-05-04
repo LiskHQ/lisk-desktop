@@ -1,11 +1,11 @@
 import React, { useState } from 'react';
 import grid from 'flexboxgrid/dist/flexboxgrid.css';
 
-import Box from '@theme/box';
-import BoxContent from '@basics/box/content';
-import BoxHeader from '@basics/box/header';
+import Box from 'src/theme/box';
+import BoxContent from 'src/theme/box/content';
+import BoxHeader from 'src/theme/box/header';
 import { Input } from 'src/theme';
-import Table from '@basics/table';
+import Table from 'src/theme/table';
 import VoterRow from './voterRow';
 import tableHeader from './votersTableHeader';
 import styles from './delegateProfile.css';
@@ -26,12 +26,11 @@ const DelegateVotesView = ({ voters, t }) => {
 
   const votersInfo = searchInput
     ? voters.data.votes.filter(
-        (v) =>
-          v.username?.includes(searchInput) || v.address?.includes(searchInput)
-      )
+      (v) =>
+        v.username?.includes(searchInput) || v.address?.includes(searchInput),
+    )
     : voters.data.votes;
-  const canLoadMoreData =
-    voters.meta && voters.meta.total > votersInfo.length && !searchInput;
+  const canLoadMoreData = voters.meta && voters.meta.total > votersInfo.length && !searchInput;
   const emptyMessage = searchInput
     ? t('This account does not have any voter for the given address.')
     : t('This account does not have any voters.');
@@ -42,9 +41,9 @@ const DelegateVotesView = ({ voters, t }) => {
         <BoxHeader>
           <h1>
             <span>{t('Voters')}</span>
-            <span className={styles.totalVotes}>{`(${
-              voters.meta ? voters.meta.total : '...'
-            })`}</span>
+            <span className={styles.totalVotes}>
+              {`(${voters.meta ? voters.meta.total : '...'})`}
+            </span>
           </h1>
           {voters.data.votes.length > 0 && (
             <span>

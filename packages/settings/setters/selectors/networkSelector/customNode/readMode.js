@@ -1,13 +1,16 @@
 import React from 'react';
 
-import { TertiaryButton } from '@basics/buttons';
+import { TertiaryButton } from 'src/theme/buttons';
 import Icon from 'src/theme/Icon';
 import { networkKeys } from '@network/configuration/networks';
 import styles from '../networkSelector.css';
 
 const ReadMode = ({
-  dropdownRef, setMode,
-  storedCustomNetwork, customNetworkRemoved, networkSelected,
+  dropdownRef,
+  setMode,
+  storedCustomNetwork,
+  customNetworkRemoved,
+  networkSelected,
 }) => {
   const edit = (e) => {
     e.preventDefault();
@@ -31,23 +34,14 @@ const ReadMode = ({
 
   return (
     <div className={`${styles.customNode} ${styles.readMode}`}>
-      <span
-        className={`${styles.title} custom-node-address`}
-        onClick={connect}
-      >
+      <span className={`${styles.title} custom-node-address`} onClick={connect}>
         {storedCustomNetwork}
       </span>
       <div className={styles.actions}>
-        <TertiaryButton
-          onClick={edit}
-          size="m"
-        >
+        <TertiaryButton onClick={edit} size="m">
           <Icon name="edit" />
         </TertiaryButton>
-        <TertiaryButton
-          onClick={remove}
-          size="m"
-        >
+        <TertiaryButton onClick={remove} size="m">
           <Icon name="remove" />
         </TertiaryButton>
       </div>

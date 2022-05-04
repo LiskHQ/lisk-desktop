@@ -1,7 +1,7 @@
 import { withTranslation } from 'react-i18next';
 import React from 'react';
 import grid from 'flexboxgrid/dist/flexboxgrid.css';
-import { PrimaryButton, TertiaryButton } from '@basics/buttons';
+import { PrimaryButton, TertiaryButton } from 'src/theme/buttons';
 import PassphraseBackup from '@auth/components/passphraseBackup';
 import registerStyles from '../Signup/register.css';
 
@@ -10,12 +10,12 @@ const SavePassphrase = ({
 }) => (
   <>
     <div className={`${registerStyles.titleHolder}`}>
-      <h1>
-        {t('Save your passphrase')}
-      </h1>
+      <h1>{t('Save your passphrase')}</h1>
       <p>{t('Keep it safe as it is the only way to access your wallet.')}</p>
     </div>
-    <div className={`${grid['col-sm-10']} ${registerStyles.passphraseBackupContainer}`}>
+    <div
+      className={`${grid['col-sm-10']} ${registerStyles.passphraseBackupContainer}`}
+    >
       <PassphraseBackup
         account={account}
         t={t}
@@ -26,9 +26,7 @@ const SavePassphrase = ({
 
     <div className={`${registerStyles.buttonsHolder} ${grid.row}`}>
       <span className={`${registerStyles.button} ${registerStyles.backButton}`}>
-        <TertiaryButton onClick={prevStep}>
-          {t('Go back')}
-        </TertiaryButton>
+        <TertiaryButton onClick={prevStep}>{t('Go back')}</TertiaryButton>
       </span>
       <span className={`${registerStyles.button}`}>
         <PrimaryButton

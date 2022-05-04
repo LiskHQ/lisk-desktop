@@ -1,8 +1,8 @@
 import React, { useMemo } from 'react';
 import { isEmpty } from '@common/utilities/helpers';
 import { signatureCollectionStatus } from '@transaction/configuration/txStatus';
-import BoxContent from '@basics/box/content';
-import Box from '@theme/box';
+import BoxContent from 'src/theme/box/content';
+import Box from 'src/theme/box';
 import TransactionDetails from '@screens/managers/transactionDetails';
 import TransactionDetailsProvider from '@transaction/context';
 
@@ -50,10 +50,9 @@ const Summary = ({
     onClick,
   };
 
-  const showFeedback =
-    !isMember ||
-    signatureStatus === signatureCollectionStatus.fullySigned ||
-    signatureStatus === signatureCollectionStatus.occupiedByOptionals;
+  const showFeedback = !isMember
+    || signatureStatus === signatureCollectionStatus.fullySigned
+    || signatureStatus === signatureCollectionStatus.occupiedByOptionals;
 
   if (isEmpty(senderAccount.data)) {
     return <div />;
@@ -65,7 +64,7 @@ const Summary = ({
         <h1>{t('Sign multisignature transaction')}</h1>
         <p>
           {t(
-            'Provide a signature for a transaction which belongs to a multisignature account.'
+            'Provide a signature for a transaction which belongs to a multisignature account.',
           )}
         </p>
       </header>

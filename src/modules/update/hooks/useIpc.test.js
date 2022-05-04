@@ -2,14 +2,15 @@ import { renderHook, act } from '@testing-library/react-hooks';
 import { mountWithRouter } from '@common/utilities/testHelpers';
 import { useDispatch } from 'react-redux';
 import { appUpdateAvailable } from '@common/store/actions';
-import FlashMessageHolder from '@basics/flashMessage/holder';
-import DialogHolder from '@basics/dialog/holder';
+import FlashMessageHolder from 'src/theme/flashMessage/holder';
+import DialogHolder from 'src/theme/dialog/holder';
 import useIpc from './useIpc';
 
 jest.mock('@common/store');
 
 const mockHistory = {
-  push: jest.fn(), location: { search: '', pathname: '' },
+  push: jest.fn(),
+  location: { search: '', pathname: '' },
 };
 
 const mockDispatch = jest.fn();
@@ -18,7 +19,9 @@ useDispatch.mockReturnValue(mockDispatch);
 describe('useIpc', () => {
   const callbacks = {};
   const ipc = {
-    on: jest.fn((event, callback) => { callbacks[event] = callback; }),
+    on: jest.fn((event, callback) => {
+      callbacks[event] = callback;
+    }),
     send: jest.fn(),
   };
   const version = '1.20.1';
@@ -62,12 +65,14 @@ describe('useIpc', () => {
     expect(wrapper).toIncludeText(`Lisk ${version} is out. dummy text`);
     expect(wrapper.find('.read-more').at(0)).toHaveText('Read more');
     expect(wrapper.find('.update-now').at(0)).toHaveText('Update now');
-    expect(mockDispatch).toHaveBeenCalledWith(appUpdateAvailable({
-      releaseNotes,
-      version,
-      remindMeLater: expect.any(Function),
-      updateNow: expect.any(Function),
-    }));
+    expect(mockDispatch).toHaveBeenCalledWith(
+      appUpdateAvailable({
+        releaseNotes,
+        version,
+        remindMeLater: expect.any(Function),
+        updateNow: expect.any(Function),
+      }),
+    );
   });
 
   it('Should call to open modal when readMore is clicked', () => {

@@ -1,11 +1,11 @@
 import PropTypes from 'prop-types';
 import React from 'react';
 import withFilters from '@common/utilities/withFilters';
-import Box from '@theme/box';
-import BoxContent from '@basics/box/content';
+import Box from 'src/theme/box';
+import BoxContent from 'src/theme/box/content';
 import FilterBar from '@shared/filterBar';
-import StickyHeader from '@basics/table/stickyHeader';
-import Table from '@basics/table';
+import StickyHeader from 'src/theme/table/stickyHeader';
+import Table from 'src/theme/table';
 import BlockFilterDropdown from './blockFilterDropdown';
 import styles from './blocks.css';
 import BlocksOverview from '../../manager/blocksOverviewManager';
@@ -38,8 +38,8 @@ const Blocks = ({
         {
           offset: blocks.data.length,
           sort,
-        }
-      )
+        },
+      ),
     );
   };
 
@@ -67,12 +67,12 @@ const Blocks = ({
             label: t('New blocks'),
           }}
           scrollToSelector=".blocks-container"
-          filters={
+          filters={(
             <BlockFilterDropdown
               filters={filters}
               applyFilters={applyFilters}
             />
-          }
+          )}
         />
         <FilterBar
           {...{

@@ -3,8 +3,8 @@ import { Link } from 'react-router-dom';
 import routes from '@screens/router/routes';
 import { isEmpty } from '@common/utilities/helpers';
 import Icon from 'src/theme/Icon';
-import DialogLink from '@basics/dialog/link';
-import { PrimaryButton } from '@basics/buttons';
+import DialogLink from 'src/theme/dialog/link';
+import { PrimaryButton } from 'src/theme/buttons';
 import Tooltip from 'src/theme/Tooltip';
 import VoteQueueToggle from '@settings/setters/toggles/voteQueueToggle';
 import DiscreteModeToggle from '@settings/setters/toggles/discreteModeToggle';
@@ -31,14 +31,8 @@ const TopBar = ({
   return (
     <div className={`${styles.wrapper} top-bar`}>
       <div className={styles.group}>
-        <Icon
-          name="liskLogo"
-          className={`${styles.logo} topbar-logo`}
-        />
-        <NavigationButtons
-          history={history}
-          account={account}
-        />
+        <Icon name="liskLogo" className={`${styles.logo} topbar-logo`} />
+        <NavigationButtons history={history} account={account} />
         <SideBarToggle />
         <Tooltip
           className={styles.tooltipWrapper}
@@ -47,7 +41,9 @@ const TopBar = ({
           content={(
             <DialogLink
               component="bookmarks"
-              className={`${styles.toggle} bookmark-list-toggle ${disabled && `${styles.disabled} disabled`}`}
+              className={`${styles.toggle} bookmark-list-toggle ${
+                disabled && `${styles.disabled} disabled`
+              }`}
             >
               <Icon name="bookmark" className={styles.bookmarksIcon} />
             </DialogLink>
@@ -65,19 +61,13 @@ const TopBar = ({
       </div>
       <div className={styles.group}>
         <LightDarkToggle />
-        { !isUserLogout && <DiscreteModeToggle /> }
-        <Network
-          token={token.active}
-          network={network}
-          t={t}
-        />
-        {
-          isUserLogout && history.location.pathname !== routes.login.path ? (
-            <Link to={routes.login.path} className={styles.signIn}>
-              <PrimaryButton size="s">Sign in</PrimaryButton>
-            </Link>
-          ) : null
-        }
+        {!isUserLogout && <DiscreteModeToggle />}
+        <Network token={token.active} network={network} t={t} />
+        {isUserLogout && history.location.pathname !== routes.login.path ? (
+          <Link to={routes.login.path} className={styles.signIn}>
+            <PrimaryButton size="s">Sign in</PrimaryButton>
+          </Link>
+        ) : null}
         {!isUserLogout && <SignOut t={t} history={history} />}
       </div>
     </div>

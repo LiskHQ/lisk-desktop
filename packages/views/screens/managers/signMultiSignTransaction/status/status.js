@@ -1,6 +1,6 @@
 import React from 'react';
-import Box from '@theme/box';
-import BoxContent from '@basics/box/content';
+import Box from 'src/theme/box';
+import BoxContent from 'src/theme/box/content';
 import TransactionResult from '@transaction/components/TransactionResult';
 import {
   statusMessages,
@@ -14,7 +14,7 @@ const Status = ({ sender, transactions, t }) => {
   const status = getTransactionStatus(
     sender.data,
     transactions,
-    sender.data?.summary.publicKey
+    sender.data?.summary.publicKey,
   );
   const template = statusMessages(t)[status.code];
 
@@ -25,7 +25,7 @@ const Status = ({ sender, transactions, t }) => {
           <h1>{t('Sign multisignature transaction')}</h1>
           <p>
             {t(
-              'Provide a signature for a transaction which belongs to a multisignature account.'
+              'Provide a signature for a transaction which belongs to a multisignature account.',
             )}
           </p>
         </header>

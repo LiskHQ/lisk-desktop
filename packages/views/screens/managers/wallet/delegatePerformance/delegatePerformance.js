@@ -1,8 +1,8 @@
 import React from 'react';
 import grid from 'flexboxgrid/dist/flexboxgrid.css';
-import Box from '@theme/box';
-import BoxHeader from '@basics/box/header';
-import BoxContent from '@basics/box/content';
+import Box from 'src/theme/box';
+import BoxHeader from 'src/theme/box/header';
+import BoxContent from 'src/theme/box/content';
 import NotFound from 'src/modules/common/components/NotFound';
 import { isEmpty } from '@common/utilities/helpers';
 import delegatePerformanceDetails from './delegatePerformanceDetails';
@@ -40,7 +40,7 @@ const DelegatePerformance = ({ delegate: { error, isLoading, data } } = {}) => {
               {delegatePerformanceDetails(
                 pomHeights,
                 status,
-                consecutiveMissedBlocks
+                consecutiveMissedBlocks,
               )}
             </p>
           </Box>
@@ -57,8 +57,8 @@ const DelegatePerformance = ({ delegate: { error, isLoading, data } } = {}) => {
             <p className={styles.header}>Punishment ends</p>
           </Box>
         </Box>
-        {pomHeights &&
-          pomHeights.map((height, index) => (
+        {pomHeights
+          && pomHeights.map((height, index) => (
             <Box
               className={`${grid.row} ${styles.performanceContainer}`}
               key={`${height.start}-${index}`}

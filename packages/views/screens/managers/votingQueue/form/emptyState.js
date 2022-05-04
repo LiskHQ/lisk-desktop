@@ -1,6 +1,6 @@
 import React from 'react';
 
-import EmptyBoxState from '@basics/box/emptyState';
+import EmptyBoxState from 'src/theme/box/emptyState';
 import Illustration from '@basics/illustration';
 
 const EmptyState = ({ t }) => (

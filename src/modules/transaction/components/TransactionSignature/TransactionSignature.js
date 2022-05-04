@@ -2,9 +2,9 @@ import React, { useEffect } from 'react';
 import { useDispatch } from 'react-redux';
 import { signatureCollectionStatus } from '@transaction/configuration/txStatus';
 import { secondPassphraseRemoved } from '@common/store/actions';
-import Box from '@theme/box';
+import Box from 'src/theme/box';
 import Illustration from '@basics/illustration';
-import BoxContent from '@basics/box/content';
+import BoxContent from 'src/theme/box/content';
 import { isEmpty } from '@common/utilities/helpers';
 import { getDeviceType } from '@wallet/utils/hwManager';
 import styles from './TransactionSignature.css';
@@ -34,8 +34,8 @@ const TransactionSignature = ({
      */
     if (sender) {
       if (
-        signatureStatus === signatureCollectionStatus.fullySigned ||
-        signatureStatus === signatureCollectionStatus.overSigned
+        signatureStatus === signatureCollectionStatus.fullySigned
+        || signatureStatus === signatureCollectionStatus.overSigned
       ) {
         // Skip the current member as the all required signature are collected
         signatureSkipped({ rawTransaction });
@@ -67,7 +67,7 @@ const TransactionSignature = ({
     if (!isEmpty(transactions.signedTransaction)) {
       const hasSecondPass = !!account.secondPassphrase;
       const isDoubleSigned = !transactions.signedTransaction.signatures.some(
-        (sig) => sig.length === 0
+        (sig) => sig.length === 0,
       );
       if (!transactions.txSignatureError && hasSecondPass && !isDoubleSigned) {
         transactionDoubleSigned();

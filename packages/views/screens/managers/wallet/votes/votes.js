@@ -2,11 +2,11 @@ import React, { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import routes from '@screens/router/routes';
 import { isEmpty } from '@common/utilities/helpers';
-import Box from '@theme/box';
-import BoxHeader from '@basics/box/header';
-import BoxContent from '@basics/box/content';
+import Box from 'src/theme/box';
+import BoxHeader from 'src/theme/box/header';
+import BoxContent from 'src/theme/box/content';
 import { Input } from 'src/theme';
-import Table from '@basics/table';
+import Table from 'src/theme/table';
 import styles from './votes.css';
 import VoteRow from './voteRow';
 import header from './votesTableHeader';
@@ -14,11 +14,13 @@ import header from './votesTableHeader';
 const getMessages = (t) => ({
   all: t('This account doesn’t have any votes.'),
   filtered: t(
-    'This account doesn’t have any votes matching searched username.'
+    'This account doesn’t have any votes matching searched username.',
   ),
 });
 
-const Votes = ({ votes, accounts, address, t, history }) => {
+const Votes = ({
+  votes, accounts, address, t, history,
+}) => {
   const [filterValue, setFilterValue] = useState('');
   const messages = getMessages(t);
 
@@ -47,8 +49,8 @@ const Votes = ({ votes, accounts, address, t, history }) => {
   const filteredVotes = votes.data.filter((vote) => {
     if (!vote.username) return false;
     return (
-      vote.username.indexOf(filterValue) > -1 ||
-      vote.address.indexOf(filterValue) > -1
+      vote.username.indexOf(filterValue) > -1
+      || vote.address.indexOf(filterValue) > -1
     );
   });
 

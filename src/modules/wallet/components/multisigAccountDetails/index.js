@@ -6,23 +6,19 @@ import { selectSearchParamValue } from 'src/utils/searchParams';
 import { selectAccount } from '@common/store/selectors';
 import routes from '@screens/router/routes';
 import { extractAddressFromPublicKey } from '@wallet/utils/account';
-import Box from '@theme/box';
-import BoxHeader from '@theme/box/header';
-import BoxContent from '@theme/box/content';
-import BoxInfoText from '@theme/box/infoText';
-import Dialog from '@theme/dialog/dialog';
-import Tooltip from '@theme/Tooltip';
+import Box from 'src/theme/box';
+import BoxHeader from 'src/theme/box/header';
+import BoxContent from 'src/theme/box/content';
+import BoxInfoText from 'src/theme/box/infoText';
+import Dialog from 'src/theme/dialog/dialog';
+import Tooltip from 'src/theme/Tooltip';
 import Members from '../multisignatureMembers';
 
 import styles from './styles.css';
 
-const MultisigAccountDetails = ({
-  t,
-  account,
-  history,
-}) => {
+const MultisigAccountDetails = ({ t, account, history }) => {
   const hostAccount = useSelector(selectAccount);
-  const network = useSelector(state => state.network);
+  const network = useSelector((state) => state.network);
   const isHost = history.location.pathname === routes.wallet.path;
   const data = isHost ? hostAccount.info.LSK : account.data;
 
@@ -31,22 +27,30 @@ const MultisigAccountDetails = ({
   }
   const { numberOfSignatures, optionalKeys, mandatoryKeys } = data.keys;
 
-  const members = useMemo(() => (
-    optionalKeys.map(publicKey => ({
-      address: extractAddressFromPublicKey(publicKey),
-      publicKey,
-      mandatory: false,
-    })).concat(
-      mandatoryKeys.map(publicKey => ({
-        address: extractAddressFromPublicKey(publicKey),
-        publicKey,
-        mandatory: true,
-      })),
-    )), [data.address]);
+  const members = useMemo(
+    () =>
+      optionalKeys
+        .map((publicKey) => ({
+          address: extractAddressFromPublicKey(publicKey),
+          publicKey,
+          mandatory: false,
+        }))
+        .concat(
+          mandatoryKeys.map((publicKey) => ({
+            address: extractAddressFromPublicKey(publicKey),
+            publicKey,
+            mandatory: true,
+          })),
+        ),
+    [data.address],
+  );
 
   useEffect(() => {
     if (!isHost) {
-      const address = selectSearchParamValue(history.location.search, 'address');
+      const address = selectSearchParamValue(
+        history.location.search,
+        'address',
+      );
       account.loadData({ address });
     }
   }, [network]);
@@ -64,7 +68,7 @@ const MultisigAccountDetails = ({
           <BoxInfoText>
             <span>
               {t(
-                'This is a multisignature account that is controlled by a group of accounts.'
+                'This is a multisignature account that is controlled by a group of accounts.',
               )}
             </span>
             <span>
@@ -73,7 +77,7 @@ const MultisigAccountDetails = ({
             <span>
               {t(
                 'This account requires {{numberOfSignatures}} signatures to create a valid transaction.',
-                { numberOfSignatures }
+                { numberOfSignatures },
               )}
             </span>
           </BoxInfoText>
@@ -84,7 +88,7 @@ const MultisigAccountDetails = ({
               <Tooltip position="top right" indent>
                 <p>
                   {t(
-                    'To provide a required signature, use the "Sign multisignature" tool in the sidebar."'
+                    'To provide a required signature, use the "Sign multisignature" tool in the sidebar."',
                   )}
                 </p>
               </Tooltip>

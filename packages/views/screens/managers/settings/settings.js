@@ -3,10 +3,10 @@ import { toast } from 'react-toastify';
 import Piwik from '@common/utilities/piwik';
 import { externalLinks } from '@common/configuration';
 import settingsConst from '@settings/configuration/settingConstants';
-import Box from '@theme/box';
-import BoxHeader from '@basics/box/header';
-import BoxContent from '@basics/box/content';
-import Dialog from '@basics/dialog/dialog';
+import Box from 'src/theme/box';
+import BoxHeader from 'src/theme/box/header';
+import BoxContent from 'src/theme/box/content';
+import Dialog from 'src/theme/dialog/dialog';
 import CurrencySelector from '@settings/setters/selectors/currencySelector';
 import Toggle from '@settings/setters/toggles/toggle';
 import styles from './settings.css';
@@ -102,7 +102,7 @@ class Settings extends React.Component {
                   </span>
                   <p>
                     {t(
-                      'Enable network switcher to connect to different networks or service nodes when signing in.'
+                      'Enable network switcher to connect to different networks or service nodes when signing in.',
                     )}
                   </p>
                 </div>

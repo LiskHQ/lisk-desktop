@@ -2,7 +2,7 @@ import React from 'react';
 import grid from 'flexboxgrid/dist/flexboxgrid.css';
 import { regex } from '@common/configuration';
 import { tokenMap } from '@token/configuration/tokens';
-import DialogLink from '@basics/dialog/link';
+import DialogLink from 'src/theme/dialog/link';
 import WalletVisual from '@wallet/components/walletVisual';
 import Icon from 'src/theme/Icon';
 import TransactionAmount from '@transaction/components/TransactionAmount';
@@ -26,41 +26,36 @@ const ActionButton = ({ status, t }) => (
 );
 
 const TransactionRow = ({
-  data,
-  t,
-  host,
-  className,
+  data, t, host, className,
 }) => {
   const {
-    sender,
-    recipient,
-    amount,
-    status,
+    sender, recipient, amount, status,
   } = data;
 
   return (
-    <DialogLink className={`${grid.row} ${className} ${styles.transactionRow} multisign-transaction-row`}>
+    <DialogLink
+      className={`${grid.row} ${className} ${styles.transactionRow} multisign-transaction-row`}
+    >
       <span className={grid['col-xs-4']}>
         <Icon
           name={host === recipient.address ? 'incoming' : 'outgoing'}
           className={styles.incomingOutcomingIcon}
         />
-        <WalletVisual
-          address={sender.address}
-          className={styles.avatar}
-        />
+        <WalletVisual address={sender.address} className={styles.avatar} />
         <div className={styles.signDetails}>
           <p className={styles.addressTitle}>
-            {sender.title || sender.address.replace(regex.lskAddressTrunk, '$1...$3')}
+            {sender.title
+              || sender.address.replace(regex.lskAddressTrunk, '$1...$3')}
           </p>
-          {sender.publicKey && <p className={styles.key}>{sender.publicKey.replace(regex.lskAddressTrunk, '$1...$3')}</p>}
+          {sender.publicKey && (
+            <p className={styles.key}>
+              {sender.publicKey.replace(regex.lskAddressTrunk, '$1...$3')}
+            </p>
+          )}
         </div>
       </span>
       <span className={grid['col-xs-4']}>
-        <WalletVisual
-          address={recipient.address}
-          className={styles.avatar}
-        />
+        <WalletVisual address={recipient.address} className={styles.avatar} />
         <p className={styles.addressTitle}>
           {recipient.address.replace(regex.lskAddressTrunk, '$1...$3')}
         </p>

@@ -7,9 +7,9 @@ import {
   graphOptions,
   getBalanceData,
 } from '@views/utilities/balanceChart';
-import Box from '@theme/box';
-import BoxContent from '@basics/box/content';
-import BoxEmptyState from '@basics/box/emptyState';
+import Box from 'src/theme/box';
+import BoxContent from 'src/theme/box/content';
+import BoxEmptyState from 'src/theme/box/emptyState';
 import { LineChart } from '@basics/charts';
 import Icon from 'src/theme/Icon';
 import i18n from 'src/utils/i18n/i18n';
@@ -26,8 +26,7 @@ const BalanceGraph = ({
   const [data, setData] = useState(null);
   const [options, setOptions] = useState({});
   const theme = useSelector((state) =>
-    state.settings.darkMode ? 'dark' : 'light'
-  );
+    (state.settings.darkMode ? 'dark' : 'light'));
 
   useEffect(() => {
     if (data) {
@@ -43,7 +42,7 @@ const BalanceGraph = ({
           format,
           token,
           locale: i18n.language,
-        })
+        }),
       );
 
       setData(
@@ -54,7 +53,7 @@ const BalanceGraph = ({
           format,
           token,
           theme,
-        })
+        }),
       );
     }
   }, [transactions, theme]);

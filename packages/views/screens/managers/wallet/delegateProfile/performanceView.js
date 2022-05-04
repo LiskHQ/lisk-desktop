@@ -6,11 +6,11 @@ import { DEFAULT_STANDBY_THRESHOLD } from '@dpos/validator/consts';
 import routes from '@screens/router/routes';
 import { useTheme } from 'src/theme/Theme';
 import { capitalize } from '@common/utilities/helpers';
-import Box from '@theme/box';
-import BoxHeader from '@basics/box/header';
-import BoxContent from '@basics/box/content';
+import Box from 'src/theme/box';
+import BoxHeader from 'src/theme/box/header';
+import BoxContent from 'src/theme/box/content';
 import LiskAmount from '@shared/liskAmount';
-import DialogLink from '@basics/dialog/link';
+import DialogLink from 'src/theme/dialog/link';
 import Icon from 'src/theme/Icon';
 import styles from './delegateProfile.css';
 
@@ -40,7 +40,9 @@ const Item = ({ icon, title, children }) => {
   );
 };
 
-const FullItem = ({ icon, title, children, theme }) => (
+const FullItem = ({
+  icon, title, children, theme,
+}) => (
   <BoxContent className={`${styles.full} performance`}>
     <div className={styles.content}>
       <div className={`${styles.title} ${theme}`}>{title}</div>
@@ -70,7 +72,7 @@ const StandByDelegate = ({ theme, t }) => (
     </p>
     <p>
       {t(
-        'Standby delegates can be chosen at random for one of two slots per round for generating a block.'
+        'Standby delegates can be chosen at random for one of two slots per round for generating a block.',
       )}
     </p>
   </div>
@@ -80,7 +82,7 @@ const IneligibleDelegate = ({ theme, t }) => (
   <div className={`${styles.delegateDescription} ${theme}`}>
     <p>
       {t(
-        'The delegate weight is below 1,000 LSK meaning that the delegate is not eligible to forge.'
+        'The delegate weight is below 1,000 LSK meaning that the delegate is not eligible to forge.',
       )}
     </p>
   </div>
@@ -90,7 +92,7 @@ const PunishedDelegate = ({ theme, t }) => (
   <div className={`${styles.delegateDescription} ${theme}`}>
     <p>
       {t(
-        'The delegate is temporarily punished and their delegate weight is set to 0 due to a misbehavior.'
+        'The delegate is temporarily punished and their delegate weight is set to 0 due to a misbehavior.',
       )}
     </p>
     <DialogLink
@@ -109,7 +111,7 @@ const BannedDelegate = ({ theme, t }) => (
   <div className={`${styles.delegateDescription} ${theme}`}>
     <p>
       {t(
-        'The delegate is permanently banned from generating blocks due to repeated protocol violations or missing too many blocks.'
+        'The delegate is permanently banned from generating blocks due to repeated protocol violations or missing too many blocks.',
       )}
     </p>
   </div>

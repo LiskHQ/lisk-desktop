@@ -4,12 +4,12 @@ import React, { useEffect } from 'react';
 import routes from '@screens/router/routes';
 import { tokenMap } from '@token/configuration/tokens';
 import DateTimeFromTimestamp from '@basics/timestamp';
-import Box from '@theme/box';
-import BoxHeader from '@basics/box/header';
-import BoxContent from '@basics/box/content';
+import Box from 'src/theme/box';
+import BoxHeader from 'src/theme/box/header';
+import BoxContent from 'src/theme/box/content';
 import CopyToClipboard from '@basics/copyToClipboard';
-import Feedback from '@basics/feedback/feedback';
-import LabeledValue from '@basics/labeledValue';
+import Feedback from 'src/theme/feedback/feedback';
+import LabeledValue from 'src/theme/labeledValue';
 import LiskAmount from '@shared/liskAmount';
 import Transactions from '@transaction/components/BlockDetailsTransactions';
 import { truncateAddress } from '@wallet/utils/account';
@@ -117,7 +117,9 @@ const Rows = ({ data, t, currentHeight }) => {
   return <div className={styles.dataContainer}>{columns}</div>;
 };
 
-const BlockDetails = ({ t, blockDetails, currentHeight, id }) => {
+const BlockDetails = ({
+  t, blockDetails, currentHeight, id,
+}) => {
   useEffect(() => {
     blockDetails.loadData();
   }, [id]);

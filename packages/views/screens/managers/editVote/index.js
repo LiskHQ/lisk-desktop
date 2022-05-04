@@ -11,17 +11,17 @@ import {
 import { tokenMap } from '@token/configuration/tokens';
 import { voteEdited } from '@common/store/actions';
 import { toRawLsk, fromRawLsk } from '@token/utilities/lsk';
-import Dialog from '@basics/dialog/dialog';
-import Box from '@theme/box';
-import BoxContent from '@basics/box/content';
-import BoxFooter from '@basics/box/footer';
-import BoxHeader from '@basics/box/header';
-import BoxInfoText from '@basics/box/infoText';
+import Dialog from 'src/theme/dialog/dialog';
+import Box from 'src/theme/box';
+import BoxContent from 'src/theme/box/content';
+import BoxFooter from 'src/theme/box/footer';
+import BoxHeader from 'src/theme/box/header';
+import BoxInfoText from 'src/theme/box/infoText';
 import AmountField from '@shared/amountField';
 import LiskAmount from '@shared/liskAmount';
 import Converter from '@shared/converter';
 import WarnPunishedDelegate from '@dpos/validator/components/WarnPunishedDelegate';
-import { PrimaryButton, WarningButton } from '@basics/buttons';
+import { PrimaryButton, WarningButton } from 'src/theme/buttons';
 import useVoteAmountField from './useVoteAmountField';
 import getMaxAmount from './getMaxAmount';
 import styles from './editVote.css';
@@ -36,13 +36,13 @@ const getTitles = (t) => ({
   edit: {
     title: t('Edit vote'),
     description: t(
-      'Increase or decrease your vote amount, or remove your vote from this delegate. Your updated vote will be added to the voting queue.'
+      'Increase or decrease your vote amount, or remove your vote from this delegate. Your updated vote will be added to the voting queue.',
     ),
   },
   add: {
     title: t('Add vote'),
     description: t(
-      'Insert a vote amount for this delegate. Your new vote will be added to the voting queue.'
+      'Insert a vote amount for this delegate. Your new vote will be added to the voting queue.',
     ),
   },
 });
@@ -57,13 +57,13 @@ const AddVote = ({ history, t, currentHeight }) => {
   const end = selectSearchParamValue(history.location.search, 'end');
   const existingVote = useSelector((state) => state.voting[address || host]);
   const [voteAmount, setVoteAmount] = useVoteAmountField(
-    existingVote ? fromRawLsk(existingVote.unconfirmed) : ''
+    existingVote ? fromRawLsk(existingVote.unconfirmed) : '',
   );
   const mode = existingVote ? 'edit' : 'add';
   const [maxAmount, setMaxAmount] = useState(0);
   useEffect(() => {
     getMaxAmount(account.info.LSK, network, voting, address || host).then(
-      setMaxAmount
+      setMaxAmount,
     );
   }, [account, voting]);
 
@@ -74,7 +74,7 @@ const AddVote = ({ history, t, currentHeight }) => {
           address: address || host,
           amount: toRawLsk(voteAmount.value),
         },
-      ])
+      ]),
     );
 
     removeSearchParamsFromUrl(history, ['modal']);
@@ -89,7 +89,7 @@ const AddVote = ({ history, t, currentHeight }) => {
           address: address || host,
           amount: 0,
         },
-      ])
+      ]),
     );
 
     removeSearchParamsFromUrl(history, ['modal']);
@@ -98,7 +98,7 @@ const AddVote = ({ history, t, currentHeight }) => {
   // 6: blocks per minute, 60: minutes, 24: hours
   const numOfBlockPerDay = 24 * 60 * 6;
   const daysLeft = Math.ceil(
-    (parseInt(end, 10) - currentHeight) / numOfBlockPerDay
+    (parseInt(end, 10) - currentHeight) / numOfBlockPerDay,
   );
 
   return (
@@ -143,7 +143,7 @@ const AddVote = ({ history, t, currentHeight }) => {
               placeholder={t('Insert vote amount')}
               useMaxLabel={t('Use maximum amount')}
               useMaxWarning={t(
-                'Caution! You are about to send the majority of your balance'
+                'Caution! You are about to send the majority of your balance',
               )}
               name="vote"
             />
@@ -171,5 +171,5 @@ const AddVote = ({ history, t, currentHeight }) => {
 export default compose(
   withRouter,
   connect(mapStateToProps),
-  withTranslation()
+  withTranslation(),
 )(AddVote);

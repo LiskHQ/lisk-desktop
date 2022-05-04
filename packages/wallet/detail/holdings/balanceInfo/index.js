@@ -2,8 +2,8 @@ import React from 'react';
 import { withTranslation } from 'react-i18next';
 import { tokenMap } from '@token/configuration/tokens';
 import { fromRawLsk } from '@token/utilities/lsk';
-import Box from '@theme/box';
-import BoxContent from '@basics/box/content';
+import Box from 'src/theme/box';
+import BoxContent from 'src/theme/box/content';
 import LiskAmount from '@shared/liskAmount';
 import DiscreetMode from '@shared/discreetMode';
 import Converter from '@shared/converter';
@@ -12,7 +12,9 @@ import ActionBar from './actionBar';
 import styles from './balanceInfo.css';
 
 // eslint-disable-next-line complexity
-const BalanceInfo = ({ t, activeToken, isWalletRoute, account }) => {
+const BalanceInfo = ({
+  t, activeToken, isWalletRoute, account,
+}) => {
   const { address, balance = 0 } = account?.summary ?? {};
 
   const isBanned = account?.dpos?.delegate?.isBanned;

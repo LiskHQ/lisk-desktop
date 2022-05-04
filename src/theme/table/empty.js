@@ -1,7 +1,7 @@
 import React from 'react';
 import { isReactComponent } from '@common/utilities/helpers';
+import Illustration from '@common/components/illustration';
 import styles from '../box/emptyState.css';
-import Illustration from '../illustration';
 
 const Empty = ({
   isListEmpty, isLoading, data, error, className,

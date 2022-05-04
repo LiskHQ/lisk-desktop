@@ -4,14 +4,16 @@ import {
   selectCurrentBlockHeight,
   selectActiveToken,
 } from '@common/store/selectors';
-import Box from '@theme/box';
-import BoxContent from '@basics/box/content';
-import Table from '@basics/table';
+import Box from 'src/theme/box';
+import BoxContent from 'src/theme/box/content';
+import Table from 'src/theme/table';
 import TransactionRow from '../TransactionRow';
 import header from './BlockDetailsTransactionHeaderMap';
 import styles from './BlockDetailsTransactions.css';
 
-const Transactions = ({ transactions, blockId, height, t }) => {
+const Transactions = ({
+  transactions, blockId, height, t,
+}) => {
   const currentBlockHeight = useSelector(selectCurrentBlockHeight);
   const activeToken = useSelector(selectActiveToken);
   useEffect(() => {

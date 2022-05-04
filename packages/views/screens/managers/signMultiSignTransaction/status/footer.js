@@ -1,17 +1,13 @@
 import React, { useState } from 'react';
 import { useTheme } from 'src/theme/Theme';
-import BoxFooter from '@basics/box/footer';
-import { PrimaryButton, SecondaryButton } from '@basics/buttons';
+import BoxFooter from 'src/theme/box/footer';
+import { PrimaryButton, SecondaryButton } from 'src/theme/buttons';
 import routes from '@screens/router/routes';
 import Icon from 'src/theme/Icon';
 import styles from './styles.css';
 
 export const CopyFooter = ({
-  t,
-  onCopy,
-  copied,
-  onDownload,
-  prevStep,
+  t, onCopy, copied, onDownload, prevStep,
 }) => {
   const theme = useTheme();
   return (
@@ -20,9 +16,7 @@ export const CopyFooter = ({
         className={`go-back-button ${theme === 'dark' && 'dark'}`}
         onClick={prevStep}
       >
-        <span className={styles.buttonContent}>
-          {t('Go back')}
-        </span>
+        <span className={styles.buttonContent}>{t('Go back')}</span>
       </SecondaryButton>
       <SecondaryButton
         className={`copy-button ${theme === 'dark' && 'dark'}`}
@@ -65,52 +59,32 @@ export const CopyAndSendFooter = ({
 
   return (
     <BoxFooter className={styles.footer} direction="horizontal">
-      <SecondaryButton
-        className="go-back-button"
-        onClick={prevStep}
-      >
-        <span className={styles.buttonContent}>
-          {t('Go back')}
-        </span>
+      <SecondaryButton className="go-back-button" onClick={prevStep}>
+        <span className={styles.buttonContent}>{t('Go back')}</span>
       </SecondaryButton>
-      {
-        !sent ? (
-          <>
-            <SecondaryButton
-              className="copy-button"
-              onClick={onCopy}
-            >
-              <span className={styles.buttonContent}>
-                <Icon name={copied ? 'checkmark' : 'copy'} />
-                {t(copied ? 'Copied' : 'Copy')}
-              </span>
-            </SecondaryButton>
-            <SecondaryButton onClick={onDownload}>
-              <span className={`${styles.buttonContent} ${styles.download}`}>
-                <Icon name="download" />
-                {t('Download')}
-              </span>
-            </SecondaryButton>
-            <PrimaryButton
-              onClick={onClick}
-              className="send-button"
-            >
-              <span className={styles.buttonContent}>
-                {t('Send')}
-              </span>
-            </PrimaryButton>
-          </>
-        ) : (
-          <PrimaryButton
-            onClick={closeModal}
-            className="send-button"
-          >
+      {!sent ? (
+        <>
+          <SecondaryButton className="copy-button" onClick={onCopy}>
             <span className={styles.buttonContent}>
-              {t('Back to wallet')}
+              <Icon name={copied ? 'checkmark' : 'copy'} />
+              {t(copied ? 'Copied' : 'Copy')}
             </span>
+          </SecondaryButton>
+          <SecondaryButton onClick={onDownload}>
+            <span className={`${styles.buttonContent} ${styles.download}`}>
+              <Icon name="download" />
+              {t('Download')}
+            </span>
+          </SecondaryButton>
+          <PrimaryButton onClick={onClick} className="send-button">
+            <span className={styles.buttonContent}>{t('Send')}</span>
           </PrimaryButton>
-        )
-      }
+        </>
+      ) : (
+        <PrimaryButton onClick={closeModal} className="send-button">
+          <span className={styles.buttonContent}>{t('Back to wallet')}</span>
+        </PrimaryButton>
+      )}
     </BoxFooter>
   );
 };

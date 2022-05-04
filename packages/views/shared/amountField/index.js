@@ -4,7 +4,7 @@ import { useTranslation } from 'react-i18next';
 import { formatAmountBasedOnLocale } from '@common/utilities/formattedNumber';
 import { fromRawLsk } from '@token/utilities/lsk';
 import { Input } from 'src/theme';
-import { TertiaryButton } from '@basics/buttons';
+import { TertiaryButton } from 'src/theme/buttons';
 import Icon from 'src/theme/Icon';
 import Tooltip from 'src/theme/Tooltip';
 import Converter from '../converter';
@@ -13,7 +13,10 @@ import styles from './amountField.css';
 export const MaxAmountWarning = ({ resetInput, message, ignoreClicks }) => {
   const { t } = useTranslation();
   return (
-    <div className={`${styles.entireBalanceWarning} entire-balance-warning`} onClick={ignoreClicks}>
+    <div
+      className={`${styles.entireBalanceWarning} entire-balance-warning`}
+      onClick={ignoreClicks}
+    >
       <Icon name="warningYellow" />
       <span>{message || t('You are about to send your entire balance')}</span>
       <div
@@ -26,9 +29,17 @@ export const MaxAmountWarning = ({ resetInput, message, ignoreClicks }) => {
 
 // eslint-disable-next-line complexity
 const AmountField = ({
-  amount, maxAmount, onChange, className,
-  label, labelClassname, useMaxLabel, placeholder, name,
-  displayConverter, useMaxWarning,
+  amount,
+  maxAmount,
+  onChange,
+  className,
+  label,
+  labelClassname,
+  useMaxLabel,
+  placeholder,
+  name,
+  displayConverter,
+  useMaxWarning,
 }) => {
   const { t } = useTranslation();
   const [showEntireBalanceWarning, setShowEntireBalanceWarning] = useState(false);
@@ -73,26 +84,50 @@ const AmountField = ({
   }, [isMaximum, maxAmount.value]);
 
   return (
-    <label className={`${styles.fieldGroup} ${amount.error ? styles.error : ''} ${className}`}>
-      <div className={labelClassname ? `${styles.customAmountFieldHeader} ${styles.amountFieldHeader}` : `${styles.amountFieldHeader}`} onClick={ignoreClicks}>
-        { label && <span className={labelClassname ? `${styles.customFieldLabel} ${styles.fieldLabel} label` : `${styles.fieldLabel}`}>{label}</span> }
-        {
-          useMaxLabel && (
-            <TertiaryButton
-              onClick={setEntireBalance}
-              className="use-entire-balance-button"
-              size="xs"
-            >
-              {useMaxLabel}
-              <Tooltip
-                position="bottom"
-                tooltipClassName={`${styles.tooltipContainer}`}
-              >
-                <span>{t('Based on your available balance and rounded down to a multiple of 10 LSK, your total remaining balance is {{maxAmount}} LSK', { maxAmount: fromRawLsk(maxAmount.value) })}</span>
-              </Tooltip>
-            </TertiaryButton>
-          )
+    <label
+      className={`${styles.fieldGroup} ${
+        amount.error ? styles.error : ''
+      } ${className}`}
+    >
+      <div
+        className={
+          labelClassname
+            ? `${styles.customAmountFieldHeader} ${styles.amountFieldHeader}`
+            : `${styles.amountFieldHeader}`
         }
+        onClick={ignoreClicks}
+      >
+        {label && (
+          <span
+            className={
+              labelClassname
+                ? `${styles.customFieldLabel} ${styles.fieldLabel} label`
+                : `${styles.fieldLabel}`
+            }
+          >
+            {label}
+          </span>
+        )}
+        {useMaxLabel && (
+          <TertiaryButton
+            onClick={setEntireBalance}
+            className="use-entire-balance-button"
+            size="xs"
+          >
+            {useMaxLabel}
+            <Tooltip
+              position="bottom"
+              tooltipClassName={`${styles.tooltipContainer}`}
+            >
+              <span>
+                {t(
+                  'Based on your available balance and rounded down to a multiple of 10 LSK, your total remaining balance is {{maxAmount}} LSK',
+                  { maxAmount: fromRawLsk(maxAmount.value) },
+                )}
+              </span>
+            </Tooltip>
+          </TertiaryButton>
+        )}
       </div>
       <span className={`${styles.amountField} amount`}>
         <Input
@@ -115,7 +150,7 @@ const AmountField = ({
           />
         )}
       </span>
-      {(showEntireBalanceWarning && useMaxWarning !== false) && (
+      {showEntireBalanceWarning && useMaxWarning !== false && (
         <MaxAmountWarning
           message={useMaxWarning}
           resetInput={resetInput}

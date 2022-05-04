@@ -6,15 +6,13 @@ import account from '@wallet/configuration/constants';
 import routes, { modals } from '@screens/router/routes';
 import { accountLoggedOut } from '@auth/store/action';
 import Icon from 'src/theme/Icon';
-import DialogLink from '@basics/dialog/link';
+import DialogLink from 'src/theme/dialog/link';
 import styles from './sideBar.css';
 import AutoSignOut from './autoSignOut';
 import WarningAutoSignOut from './autoSignOut/warning';
 import menuLinks from './menuLinks';
 
-const Inner = ({
-  data, pathname, sideBarExpanded,
-}) => {
+const Inner = ({ data, pathname, sideBarExpanded }) => {
   let status = '';
   if (pathname && pathname === data.path) {
     status = 'Active';
@@ -33,15 +31,28 @@ const MenuLink = ({
   data, isUserLogout, pathname, sideBarExpanded,
 }) => {
   if (data.modal) {
-    const className = `${styles.item} ${(isUserLogout && modals[data.id].isPrivate) || pathname === routes.reclaim.path ? `${styles.disabled} disabled` : ''}`;
+    const className = `${styles.item} ${
+      (isUserLogout && modals[data.id].isPrivate)
+      || pathname === routes.reclaim.path
+        ? `${styles.disabled} disabled`
+        : ''
+    }`;
     return (
-      <DialogLink component={data.id} className={`${styles.toggle} ${data.id}-toggle ${className}`}>
+      <DialogLink
+        component={data.id}
+        className={`${styles.toggle} ${data.id}-toggle ${className}`}
+      >
         <Inner data={data} modal={data.id} sideBarExpanded={sideBarExpanded} />
       </DialogLink>
     );
   }
 
-  const className = `${styles.item} ${(isUserLogout && routes[data.id].isPrivate) || pathname === routes.reclaim.path ? `${styles.disabled} disabled` : ''}`;
+  const className = `${styles.item} ${
+    (isUserLogout && routes[data.id].isPrivate)
+    || pathname === routes.reclaim.path
+      ? `${styles.disabled} disabled`
+      : ''
+  }`;
   return (
     <NavLink
       to={data.path}
@@ -50,7 +61,11 @@ const MenuLink = ({
       activeClassName={styles.selected}
       exact={routes[data.id].exact}
     >
-      <Inner data={data} pathname={pathname} sideBarExpanded={sideBarExpanded} />
+      <Inner
+        data={data}
+        pathname={pathname}
+        sideBarExpanded={sideBarExpanded}
+      />
     </NavLink>
   );
 };
@@ -68,9 +83,9 @@ const getWarningTime = (expireTime) => {
 
 const AutoSignOutWrapper = () => {
   const dispatch = useDispatch();
-  const expireTime = useSelector(state => state.wallet.expireTime);
+  const expireTime = useSelector((state) => state.wallet.expireTime);
   const warningTime = getWarningTime(expireTime);
-  const autoSignOut = useSelector(state => state.settings.autoLog);
+  const autoSignOut = useSelector((state) => state.settings.autoLog);
   const renderAutoSignOut = autoSignOut && expireTime;
 
   if (!renderAutoSignOut) {
@@ -83,49 +98,44 @@ const AutoSignOutWrapper = () => {
         expireTime={expireTime}
         onCountdownComplete={() => dispatch(accountLoggedOut())}
       />
-      <WarningAutoSignOut
-        warningTime={warningTime}
-        expireTime={expireTime}
-      />
+      <WarningAutoSignOut warningTime={warningTime} expireTime={expireTime} />
     </div>
   );
 };
 
-const SideBar = ({
-  t, location,
-}) => {
+const SideBar = ({ t, location }) => {
   const items = menuLinks(t);
-  const token = useSelector(state => state.settings.token.active);
-  const isLoggedOut = useSelector(state => !state.wallet.info || !state.wallet.info[token]);
-  const sideBarExpanded = useSelector(state => state.settings.sideBarExpanded);
+  const token = useSelector((state) => state.settings.token.active);
+  const isLoggedOut = useSelector(
+    (state) => !state.wallet.info || !state.wallet.info[token],
+  );
+  const sideBarExpanded = useSelector(
+    (state) => state.settings.sideBarExpanded,
+  );
 
   return (
     <nav className={`${styles.wrapper} ${sideBarExpanded ? 'expanded' : ''}`}>
       <AutoSignOutWrapper />
       <div className={`${styles.container} menu-items`}>
-        {
-          items.map((group, i) => (
-            <div
-              className={styles.menuGroup}
-              key={`group-${i}`}
-            >
-              {
-                group.filter(({ id }) => (
+        {items.map((group, i) => (
+          <div className={styles.menuGroup} key={`group-${i}`}>
+            {group
+              .filter(
+                ({ id }) =>
                   (routes[id] && !routes[id].forbiddenTokens.includes(token))
-                  || (modals[id] && !modals[id].forbiddenTokens.includes(token))
-                )).map(item => (
-                  <MenuLink
-                    key={item.id}
-                    isUserLogout={isLoggedOut}
-                    pathname={location.pathname}
-                    data={item}
-                    sideBarExpanded={sideBarExpanded}
-                  />
-                ))
-              }
-            </div>
-          ))
-        }
+                  || (modals[id] && !modals[id].forbiddenTokens.includes(token)),
+              )
+              .map((item) => (
+                <MenuLink
+                  key={item.id}
+                  isUserLogout={isLoggedOut}
+                  pathname={location.pathname}
+                  data={item}
+                  sideBarExpanded={sideBarExpanded}
+                />
+              ))}
+          </div>
+        ))}
       </div>
     </nav>
   );

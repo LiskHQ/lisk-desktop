@@ -3,10 +3,10 @@ import React from 'react';
 import moment from 'moment';
 import { ROUND_LENGTH } from '@dpos/validator/consts';
 import { DoughnutChart } from '@basics/charts';
-import Box from '@theme/box';
-import BoxHeader from '@basics/box/header';
-import BoxContent from '@basics/box/content';
-import BoxEmptyState from '@basics/box/emptyState';
+import Box from 'src/theme/box';
+import BoxHeader from 'src/theme/box/header';
+import BoxContent from 'src/theme/box/content';
+import BoxEmptyState from 'src/theme/box/emptyState';
 import GuideTooltip, { GuideTooltipItem } from '@basics/charts/guideTooltip';
 import Icon from 'src/theme/Icon';
 import { useTheme } from 'src/theme/Theme';
@@ -19,7 +19,7 @@ const FORGERS_TO_SHOW = 6;
 
 const getForgingStats = (data, forgedInRound = 0) => {
   const missedBlocks = data.filter(
-    (item) => item.state === 'missedBlock'
+    (item) => item.state === 'missedBlock',
   ).length;
   return [forgedInRound, ROUND_LENGTH - forgedInRound, missedBlocks];
 };
@@ -41,11 +41,13 @@ const getPassedMinutes = (startTime) => {
   if (!seconds) return '00:00';
   const duration = moment.duration({ seconds });
   return `${formatToTwoDigits(duration.minutes())}:${formatToTwoDigits(
-    duration.seconds()
+    duration.seconds(),
   )}`;
 };
 
-const ForgingDetails = ({ t, forgers, forgedInRound, startTime }) => {
+const ForgingDetails = ({
+  t, forgers, forgedInRound, startTime,
+}) => {
   const theme = useTheme();
   const colorPalette = getColorPalette(theme);
   const delegatesForgedLabels = [

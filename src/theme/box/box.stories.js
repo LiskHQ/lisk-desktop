@@ -2,7 +2,7 @@ import React from 'react';
 import { storiesOf } from '@storybook/react';
 import { action } from '@storybook/addon-actions';
 import Icon from 'src/theme/Icon';
-import StoryWrapper from '../../../../.storybook/components/StoryWrapper/StoryWrapper';
+import StoryWrapper from '../../../.storybook/components/StoryWrapper/StoryWrapper';
 import Box from './index';
 import BoxContent from './content';
 import BoxHeader from './header';

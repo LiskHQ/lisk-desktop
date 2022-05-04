@@ -3,10 +3,10 @@
 import React from 'react';
 import { useTheme } from 'src/theme/Theme';
 import { getColorPalette } from '@views/basics/charts/chartOptions';
-import Box from '@theme/box';
-import BoxHeader from '@basics/box/header';
-import BoxContent from '@basics/box/content';
-import BoxEmptyState from '@basics/box/emptyState';
+import Box from 'src/theme/box';
+import BoxHeader from 'src/theme/box/header';
+import BoxContent from 'src/theme/box/content';
+import BoxEmptyState from 'src/theme/box/emptyState';
 import { DoughnutChart } from '@basics/charts';
 import Tooltip from 'src/theme/Tooltip';
 import GuideTooltip, { GuideTooltipItem } from '@basics/charts/guideTooltip';
@@ -46,27 +46,27 @@ const createChartData = (data, t) => {
 const VersionsDonutChart = ({ t, versionData, colorPalette }) => {
   const chartProps = versionData
     ? {
-        data: {
-          labels: versionData.labels,
-          datasets: [
-            {
-              data: versionData.values,
+      data: {
+        labels: versionData.labels,
+        datasets: [
+          {
+            data: versionData.values,
+          },
+        ],
+      },
+      options: {
+        tooltips: {
+          callbacks: {
+            title(tooltipItem, data) {
+              return data.labels[tooltipItem[0].index];
             },
-          ],
-        },
-        options: {
-          tooltips: {
-            callbacks: {
-              title(tooltipItem, data) {
-                return data.labels[tooltipItem[0].index];
-              },
-              label(tooltipItem, data) {
-                return data.datasets[0].data[tooltipItem.index];
-              },
+            label(tooltipItem, data) {
+              return data.datasets[0].data[tooltipItem.index];
             },
           },
         },
-      }
+      },
+    }
     : {};
 
   return (
@@ -119,27 +119,27 @@ const VersionsDonutChart = ({ t, versionData, colorPalette }) => {
 const HeightsDonutChart = ({ t, heightData, colorPalette }) => {
   const chartProps = heightData
     ? {
-        data: {
-          labels: heightData.labels,
-          datasets: [
-            {
-              data: heightData.values,
+      data: {
+        labels: heightData.labels,
+        datasets: [
+          {
+            data: heightData.values,
+          },
+        ],
+      },
+      options: {
+        tooltips: {
+          callbacks: {
+            title(tooltipItem, data) {
+              return data.labels[tooltipItem[0].index];
             },
-          ],
-        },
-        options: {
-          tooltips: {
-            callbacks: {
-              title(tooltipItem, data) {
-                return data.labels[tooltipItem[0].index];
-              },
-              label(tooltipItem, data) {
-                return data.datasets[0].data[tooltipItem.index];
-              },
+            label(tooltipItem, data) {
+              return data.datasets[0].data[tooltipItem.index];
             },
           },
         },
-      }
+      },
+    }
     : {};
 
   return (
@@ -192,31 +192,31 @@ const HeightsDonutChart = ({ t, heightData, colorPalette }) => {
 const ConnectivityDonutChart = ({ t, connectionData, colorPalette }) => {
   const chartProps = connectionData
     ? {
-        data: {
-          labels: [t('Connected'), t('Disconnected')],
-          datasets: [
-            {
-              label: 'delegates',
-              data: [
-                connectionData.connectedPeers,
-                connectionData.disconnectedPeers,
-              ],
+      data: {
+        labels: [t('Connected'), t('Disconnected')],
+        datasets: [
+          {
+            label: 'delegates',
+            data: [
+              connectionData.connectedPeers,
+              connectionData.disconnectedPeers,
+            ],
+          },
+        ],
+      },
+      options: {
+        tooltips: {
+          callbacks: {
+            title(tooltipItem, data) {
+              return data.labels[tooltipItem[0].index];
             },
-          ],
-        },
-        options: {
-          tooltips: {
-            callbacks: {
-              title(tooltipItem, data) {
-                return data.labels[tooltipItem[0].index];
-              },
-              label(tooltipItem, data) {
-                return data.datasets[0].data[tooltipItem.index];
-              },
+            label(tooltipItem, data) {
+              return data.datasets[0].data[tooltipItem.index];
             },
           },
         },
-      }
+      },
+    }
     : {};
 
   return (
@@ -266,7 +266,9 @@ const ConnectivityDonutChart = ({ t, connectionData, colorPalette }) => {
   );
 };
 
-const ChartsWithData = ({ networkVersion, height, basic, t }) => {
+const ChartsWithData = ({
+  networkVersion, height, basic, t,
+}) => {
   if (!networkVersion) {
     return null; // @todo Create placeholder
   }
@@ -304,7 +306,7 @@ const Statistics = ({ networkStatistics, t }) => (
         <Tooltip position="bottom right" indent>
           <p>
             {t(
-              'The statistics shown only reflects peers connected to the current Lisk Service node.'
+              'The statistics shown only reflects peers connected to the current Lisk Service node.',
             )}
           </p>
         </Tooltip>

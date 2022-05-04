@@ -1,10 +1,10 @@
 import React from 'react';
 import grid from 'flexboxgrid/dist/flexboxgrid.css';
 import { chartStyles } from '@common/configuration';
-import Box from '@theme/box';
-import BoxHeader from '@basics/box/header';
-import BoxContent from '@basics/box/content';
-import BoxTabs from '@basics/tabs';
+import Box from 'src/theme/box';
+import BoxHeader from 'src/theme/box/header';
+import BoxContent from 'src/theme/box/content';
+import BoxTabs from 'src/theme/tabs';
 import { DoughnutChart, BarChart } from '@basics/charts';
 import GuideTooltip, { GuideTooltipItem } from '@basics/charts/guideTooltip';
 import styles from './blocksOverview.css';
@@ -52,7 +52,7 @@ class BlocksOverview extends React.Component {
               else acc[0]++;
               return acc;
             },
-            [0, 0]
+            [0, 0],
           ),
         },
       ],
@@ -103,7 +103,7 @@ class BlocksOverview extends React.Component {
                       {
                         label: t('block'),
                         data: blocks?.data.map(
-                          (block) => block.numberOfTransactions
+                          (block) => block.numberOfTransactions,
                         ),
                         backgroundColor: chartStyles.ultramarineBlue,
                       },

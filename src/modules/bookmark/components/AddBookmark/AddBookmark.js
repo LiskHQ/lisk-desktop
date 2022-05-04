@@ -11,11 +11,11 @@ import {
   parseSearchParams,
   removeSearchParamsFromUrl,
 } from 'src/utils/searchParams';
-import Box from '@theme/box';
-import BoxHeader from '@basics/box/header';
-import BoxContent from '@basics/box/content';
-import BoxFooter from '@basics/box/footer';
-import { PrimaryButton, SecondaryButton } from '@basics/buttons';
+import Box from 'src/theme/box';
+import BoxHeader from 'src/theme/box/header';
+import BoxContent from 'src/theme/box/content';
+import BoxFooter from 'src/theme/box/footer';
+import { PrimaryButton, SecondaryButton } from 'src/theme/buttons';
 import ModalWrapper from '@bookmark/components/BookmarksListModal/BookmarkModalWrapper';
 import Icon from 'src/theme/Icon';
 import styles from './AddBookmark.css';
@@ -41,10 +41,10 @@ const AddBookmark = ({
 
   useEffect(() => {
     const { formAddress, label, isDelegate } = parseSearchParams(
-      history.location.search
+      history.location.search,
     );
     const bookmark = bookmarks[active].find(
-      (item) => item.address === formAddress
+      (item) => item.address === formAddress,
     );
     const addressFeedback = validateBookmarkAddress(
       active,
@@ -52,7 +52,7 @@ const AddBookmark = ({
       network,
       bookmarks,
       t,
-      false
+      false,
     );
     const usernameValue = bookmark?.title || label || '';
     const usernameFeedback = validateBookmarkLabel(usernameValue, t);
@@ -117,7 +117,7 @@ const AddBookmark = ({
       network,
       bookmarks,
       t,
-      true
+      true,
     );
     clearTimeout(timeout.current);
 
@@ -163,7 +163,7 @@ const AddBookmark = ({
   };
 
   const isDisabled = fields.find(
-    (field) => field.feedback || field.value === ''
+    (field) => field.feedback || field.value === '',
   );
 
   return (
@@ -227,7 +227,7 @@ AddBookmark.propTypes = {
       PropTypes.shape({
         address: PropTypes.string.isRequired,
         title: PropTypes.string.isRequired,
-      })
+      }),
     ),
   }).isRequired,
   network: PropTypes.shape({

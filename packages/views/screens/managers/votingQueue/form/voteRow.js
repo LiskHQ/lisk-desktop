@@ -4,10 +4,10 @@ import { useDispatch } from 'react-redux';
 import { tokenMap } from '@token/configuration/tokens';
 import { voteEdited } from '@common/store/actions';
 import { fromRawLsk, toRawLsk } from '@token/utilities/lsk';
-import { truncateAddress } from '@wallet/utilities/account';
-import WalletVisual from '@wallet/detail/identity/walletVisual';
-import Box from '@theme/box';
-import { SecondaryButton, TertiaryButton } from '@basics/buttons';
+import { truncateAddress } from '@wallet/utils/account';
+import WalletVisual from '@wallet/components/walletVisual';
+import Box from 'src/theme/box';
+import { SecondaryButton, TertiaryButton } from 'src/theme/buttons';
 import Icon from 'src/theme/Icon';
 import LiskAmount from '@shared/liskAmount';
 import AmountField from '@shared/amountField';
@@ -19,14 +19,16 @@ const token = tokenMap.LSK.key;
 
 const VoteRow = ({
   t = (s) => s,
-  data: { address, username, confirmed, unconfirmed },
+  data: {
+    address, username, confirmed, unconfirmed,
+  },
 }) => {
   const [state, setState] = useState(
-    unconfirmed === '' ? ComponentState.editing : ComponentState.notEditing
+    unconfirmed === '' ? ComponentState.editing : ComponentState.notEditing,
   );
   const dispatch = useDispatch();
   const [voteAmount, setVoteAmount] = useVoteAmountField(
-    fromRawLsk(unconfirmed)
+    fromRawLsk(unconfirmed),
   );
   const truncatedAddress = truncateAddress(address);
 
@@ -38,7 +40,7 @@ const VoteRow = ({
           address,
           amount: toRawLsk(voteAmount.value),
         },
-      ])
+      ]),
     );
     setState(ComponentState.notEditing);
   };
@@ -50,7 +52,7 @@ const VoteRow = ({
           address,
           amount: confirmed,
         },
-      ])
+      ]),
     );
   };
 

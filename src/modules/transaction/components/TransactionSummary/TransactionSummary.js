@@ -1,8 +1,8 @@
 import React from 'react';
 import LiskAmount from '@shared/liskAmount';
-import Box from '@theme/box';
-import BoxHeader from '@basics/box/header';
-import BoxContent from '@basics/box/content';
+import Box from 'src/theme/box';
+import BoxHeader from 'src/theme/box/header';
+import BoxContent from 'src/theme/box/content';
 import Illustration from '@basics/illustration';
 import Tooltip from 'src/theme/Tooltip';
 import { tokenMap } from '@token/configuration/tokens';
@@ -26,7 +26,7 @@ const TransactionSummary = ({
     title: t('Transaction fee'),
     children: t(
       'Transaction fees are required for every transaction to be accepted and forged by the {{network}} network. When the network is busy, transactions with a higher fee are confirmed sooner.',
-      { network: tokenMap[token].label }
+      { network: tokenMap[token].label },
     ),
   };
 

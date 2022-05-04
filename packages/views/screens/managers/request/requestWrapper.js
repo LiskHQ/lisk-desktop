@@ -1,8 +1,8 @@
 import React from 'react';
 import QRCode from 'qrcode.react';
 import CopyToClipboard from '@basics/copyToClipboard';
-import { PrimaryButton } from '@basics/buttons';
-import Dialog from '@basics/dialog/dialog';
+import { PrimaryButton } from 'src/theme/buttons';
+import Dialog from 'src/theme/dialog/dialog';
 import styles from './request.css';
 
 const RequestWrapper = ({
@@ -31,7 +31,9 @@ const RequestWrapper = ({
       </section>
       <section className={`${styles.qrSection} qrcode-section`}>
         <span className={`${styles.label}`}>
-          {t('Simply scan the QR code using the Lisk Mobile app or any other QR code reader.')}
+          {t(
+            'Simply scan the QR code using the Lisk Mobile app or any other QR code reader.',
+          )}
         </span>
         <div className={`${styles.qrCodeContainer}`}>
           <QRCode value={copyValue} size={176} />

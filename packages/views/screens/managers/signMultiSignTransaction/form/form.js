@@ -6,11 +6,11 @@ import {
   flattenTransaction,
 } from '@transaction/utils/transaction';
 import { joinModuleAndAssetIds } from '@transaction/utils/moduleAssets';
-import Box from '@theme/box';
-import BoxContent from '@basics/box/content';
-import BoxFooter from '@basics/box/footer';
-import { PrimaryButton } from '@basics/buttons';
-import Feedback from '@basics/feedback/feedback';
+import Box from 'src/theme/box';
+import BoxContent from 'src/theme/box/content';
+import BoxFooter from 'src/theme/box/footer';
+import { PrimaryButton } from 'src/theme/buttons';
+import Feedback from 'src/theme/feedback/feedback';
 import { validateTransaction } from '@liskhq/lisk-transactions';
 import ProgressBar from '../progressBar';
 import styles from './styles.css';
@@ -44,7 +44,7 @@ const Form = ({ t, nextStep, network }) => {
       const flattenedTransaction = flattenTransaction(transformedTransaction);
       const transactionObject = createTransactionObject(
         flattenedTransaction,
-        moduleAssetId
+        moduleAssetId,
       );
       const err = validateTransaction(schema, transactionObject);
 
@@ -77,7 +77,7 @@ const Form = ({ t, nextStep, network }) => {
           <h1>{t('Sign multisignature transaction')}</h1>
           <p>
             {t(
-              'Provide a signature for a transaction which belongs to a multisignature account.'
+              'Provide a signature for a transaction which belongs to a multisignature account.',
             )}
           </p>
         </header>

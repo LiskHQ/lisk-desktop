@@ -1,3 +1,4 @@
+/* eslint-disable max-statements */
 import React, { useMemo, useState } from 'react';
 import { tokenMap } from '@token/configuration/tokens';
 import { MODULE_ASSETS_NAME_ID_MAP } from '@transaction/configuration/moduleAssets';
@@ -7,12 +8,12 @@ import TransactionPriority from '@transaction/components/TransactionPriority';
 import useTransactionFeeCalculation from '@transaction/hooks/useTransactionFeeCalculation';
 import useTransactionPriority from '@transaction/hooks/useTransactionPriority';
 import { normalizeVotesForTx } from '@transaction/utils';
-import Box from '@theme/box';
-import BoxContent from '@basics/box/content';
-import BoxFooter from '@basics/box/footer';
-import { PrimaryButton } from '@basics/buttons';
+import Box from 'src/theme/box';
+import BoxContent from 'src/theme/box/content';
+import BoxFooter from 'src/theme/box/footer';
+import { PrimaryButton } from 'src/theme/buttons';
 
-import Table from '@basics/table';
+import Table from 'src/theme/table';
 import ToggleIcon from '../toggleIcon';
 
 import VoteRow from './voteRow';
@@ -64,7 +65,7 @@ const getVoteStats = (votes, account) => {
         removed: {},
         untouched: {},
         selfUnvote: {},
-      }
+      },
     );
 
   const numOfAddededVotes = Object.keys(votesStats.added).length;
@@ -72,10 +73,8 @@ const getVoteStats = (votes, account) => {
   const numOfUntouchedVotes = Object.keys(votesStats.untouched).length;
   const numOfRemovedVotes = Object.keys(votesStats.removed).length;
 
-  const resultingNumOfVotes =
-    numOfAddededVotes + numOfEditedVotes + numOfUntouchedVotes;
-  const availableVotes =
-    VOTE_LIMIT - (numOfEditedVotes + numOfUntouchedVotes + numOfRemovedVotes);
+  const resultingNumOfVotes = numOfAddededVotes + numOfEditedVotes + numOfUntouchedVotes;
+  const availableVotes = VOTE_LIMIT - (numOfEditedVotes + numOfUntouchedVotes + numOfRemovedVotes);
 
   return {
     ...votesStats,
@@ -99,20 +98,20 @@ const getVoteStats = (votes, account) => {
 const validateVotes = (votes, balance, fee, resultingNumOfVotes, t) => {
   const messages = [];
   const areVotesInValid = Object.values(votes).some(
-    (vote) => vote.unconfirmed === '' || vote.unconfirmed === undefined
+    (vote) => vote.unconfirmed === '' || vote.unconfirmed === undefined,
   );
 
   if (areVotesInValid) {
     messages.push(
-      t('Please enter vote amounts for the delegates you wish to vote for')
+      t('Please enter vote amounts for the delegates you wish to vote for'),
     );
   }
 
   if (resultingNumOfVotes > VOTE_LIMIT) {
     messages.push(
       t(
-        `These votes in addition to your current votes will add up to ${resultingNumOfVotes}, exceeding the account limit of ${VOTE_LIMIT}.`
-      )
+        `These votes in addition to your current votes will add up to ${resultingNumOfVotes}, exceeding the account limit of ${VOTE_LIMIT}.`,
+      ),
     );
   }
 
@@ -128,11 +127,11 @@ const validateVotes = (votes, balance, fee, resultingNumOfVotes, t) => {
   }
 
   if (
-    balance - addedVoteAmount < MIN_ACCOUNT_BALANCE &&
-    balance - addedVoteAmount
+    balance - addedVoteAmount < MIN_ACCOUNT_BALANCE
+    && balance - addedVoteAmount
   ) {
     messages.push(
-      'The vote amounts are too high. You should keep 0.05 LSK available in your account.'
+      'The vote amounts are too high. You should keep 0.05 LSK available in your account.',
     );
   }
 
@@ -162,7 +161,7 @@ const Editor = ({
 
   const changedVotes = Object.keys(votes)
     .filter(
-      (address) => votes[address].unconfirmed !== votes[address].confirmed
+      (address) => votes[address].unconfirmed !== votes[address].confirmed,
     )
     .map((address) => ({ address, ...votes[address] }));
 
@@ -196,11 +195,10 @@ const Editor = ({
     Number(account.token?.balance),
     fee.value,
     resultingNumOfVotes,
-    t
+    t,
   );
 
-  const isCTADisabled =
-    feedback.error || Object.keys(changedVotes).length === 0;
+  const isCTADisabled = feedback.error || Object.keys(changedVotes).length === 0;
 
   const goToNextStep = () => {
     const feeValue = customFee ? customFee.value : fee.value;

@@ -2,17 +2,16 @@ import React from 'react';
 import { connect } from 'react-redux';
 import { withTranslation } from 'react-i18next';
 import { Link } from 'react-router-dom';
-
 import routes from '@screens/router/routes';
 import { tokenMap } from '@token/configuration/tokens';
 import { truncateAddress } from '@wallet/utils/account';
 import Tooltip from 'src/theme/Tooltip';
 import { Input } from 'src/theme';
-import { PrimaryButton, TertiaryButton } from '@basics/buttons';
-import WalletVisual from '@wallet/detail/identity/walletVisual';
-import Box from '@theme/box';
-import BoxHeader from '@basics/box/header';
-import BoxContent from '@basics/box/content';
+import { PrimaryButton, TertiaryButton } from 'src/theme/buttons';
+import WalletVisual from '@wallet/components/walletVisual';
+import Box from 'src/theme/box';
+import BoxHeader from 'src/theme/box/header';
+import BoxContent from 'src/theme/box/content';
 import Icon from 'src/theme/Icon';
 import EmptyState from '../EmptyState/EmptyState';
 import styles from './BookmarksList.css';
@@ -40,9 +39,9 @@ export class BookmarksList extends React.Component {
     return bookmarks[token.active]
       .filter(
         ({ title, address }) =>
-          filter === '' ||
-          title.toLowerCase().indexOf(filter.toLowerCase()) !== -1 ||
-          address.toLowerCase().indexOf(filter.toLowerCase()) !== -1
+          filter === ''
+          || title.toLowerCase().indexOf(filter.toLowerCase()) !== -1
+          || address.toLowerCase().indexOf(filter.toLowerCase()) !== -1,
       )
       .slice(0, limit);
   }
@@ -123,7 +122,9 @@ export class BookmarksList extends React.Component {
       limit,
       onAddBookmark,
     } = this.props;
-    const { filter, editedAddress, editedTitle, feedback } = this.state;
+    const {
+      filter, editedAddress, editedTitle, feedback,
+    } = this.state;
 
     const selectedBookmarks = this.getBookmarkListBasedOnSelectedToken();
 
@@ -202,7 +203,7 @@ export class BookmarksList extends React.Component {
                         <span>{bookmark.title}</span>
                         <span>
                           {this.displayAddressBasedOnSelectedToken(
-                            bookmark.address
+                            bookmark.address,
                           )}
                         </span>
                       </span>
@@ -252,9 +253,7 @@ export class BookmarksList extends React.Component {
                               content={<Icon name="delegateWarning" />}
                             >
                               <span>
-                                {t(
-                                  'This is a legacy account and can not be used on this network.'
-                                )}
+                                {t('This is a legacy account and can not be used on this network.')}
                               </span>
                             </Tooltip>
                           )}

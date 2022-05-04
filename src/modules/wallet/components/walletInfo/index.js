@@ -1,8 +1,8 @@
 import React, { useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import Box from '@theme/box';
-import BoxContent from '@theme/box/content';
-import Icon from '@theme/Icon';
+import Box from 'src/theme/box';
+import BoxContent from 'src/theme/box/content';
+import Icon from 'src/theme/Icon';
 import styles from './walletInfo.css';
 import WalletVisual from '../walletVisual';
 import Identity from './identity';

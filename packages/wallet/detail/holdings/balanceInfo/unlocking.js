@@ -3,7 +3,7 @@ import { useSelector } from 'react-redux';
 
 import { tokenMap } from '@token/configuration/tokens';
 import { fromRawLsk } from '@token/utilities/lsk';
-import DialogLink from '@basics/dialog/link';
+import DialogLink from 'src/theme/dialog/link';
 import {
   calculateBalanceLockedInUnvotes,
   calculateBalanceLockedInVotes,
@@ -14,8 +14,8 @@ import styles from './balanceInfo.css';
 
 const Link = ({
   sum, style, icon, isWalletRoute,
-}) => (
-  isWalletRoute ? (
+}) =>
+  (isWalletRoute ? (
     <DialogLink
       className={`${styles.lockedBalance} ${styles.pointer} ${style} open-unlock-balance-dialog unlock-amount-value`}
       component="lockedBalance"
@@ -24,33 +24,30 @@ const Link = ({
       {`${fromRawLsk(sum)} ${tokenMap.LSK.key}`}
       <Icon name="arrowRightCircle" />
     </DialogLink>
-  )
-    : (
-      <div className={`${styles.lockedBalance} ${styles.pointer} ${style}`}>
-        <Icon name={icon || 'lock'} />
-        {`${fromRawLsk(sum)} ${tokenMap.LSK.key}`}
-      </div>
-    )
-);
+  ) : (
+    <div className={`${styles.lockedBalance} ${styles.pointer} ${style}`}>
+      <Icon name={icon || 'lock'} />
+      {`${fromRawLsk(sum)} ${tokenMap.LSK.key}`}
+    </div>
+  ));
 
 // eslint-disable-next-line max-statements
 const LockedBalanceLink = ({
   account, isWalletRoute, style, icon,
 }) => {
-  const host = useSelector(state => getActiveTokenAccount(state));
+  const host = useSelector((state) => getActiveTokenAccount(state));
   let lockedInVotes = 0;
 
   if (isWalletRoute && host) {
-    lockedInVotes = useSelector(state => calculateBalanceLockedInVotes(state.voting));
+    lockedInVotes = useSelector((state) =>
+      calculateBalanceLockedInVotes(state.voting));
   } else {
     lockedInVotes = calculateBalanceLockedInUnvotes(account.dpos?.sentVotes);
   }
 
   const lockedInUnvotes = isWalletRoute && host
-    ? (calculateBalanceLockedInUnvotes(host.dpos?.unlocking))
-    : (
-      calculateBalanceLockedInUnvotes(account.dpos?.unlocking)
-    );
+    ? calculateBalanceLockedInUnvotes(host.dpos?.unlocking)
+    : calculateBalanceLockedInUnvotes(account.dpos?.unlocking);
 
   if (lockedInUnvotes + lockedInVotes > 0) {
     return (

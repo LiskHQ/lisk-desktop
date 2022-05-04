@@ -9,10 +9,10 @@ import { MODULE_ASSETS_NAME_ID_MAP } from '@transaction/configuration/moduleAsse
 import { getModuleAssetTitle } from '@transaction/utils/moduleAssets';
 import { useTheme } from 'src/theme/Theme';
 import { getColorPalette } from '@views/basics/charts/chartOptions';
-import Box from '@theme/box';
-import BoxTabs from '@basics/tabs';
-import BoxHeader from '@basics/box/header';
-import BoxContent from '@basics/box/content';
+import Box from 'src/theme/box';
+import BoxTabs from 'src/theme/tabs';
+import BoxHeader from 'src/theme/box/header';
+import BoxContent from 'src/theme/box/content';
 import { DoughnutChart, BarChart } from '@basics/charts';
 import Tooltip from 'src/theme/Tooltip';
 import GuideTooltip, { GuideTooltipItem } from '@basics/charts/guideTooltip';
@@ -134,34 +134,32 @@ const formatDates = (date, period) => {
 
 const formatDistributionByValues = (distributions) =>
   moduleAssetIds.map((id) =>
-    distributions[id] ? parseInt(distributions[id], 10) : 0
-  );
+    (distributions[id] ? parseInt(distributions[id], 10) : 0));
 
 const Overview = ({ t, txStats }) => {
   const [activeTab, setActiveTab] = useState('week');
   const colorPalette = getColorPalette(useTheme());
   const distributionByType = formatDistributionByValues(
-    txStats.data.distributionByType
+    txStats.data.distributionByType,
   );
   const distributionByAmount = normalizeNumberRange(
-    txStats.data.distributionByAmount
+    txStats.data.distributionByAmount,
   );
-  const { txCountList, txVolumeList, txDateList } =
-    txStats.data.timeline.reduce(
-      (acc, item) => ({
-        txCountList: [...acc.txCountList, item.transactionCount],
-        txDateList: [
-          ...acc.txDateList,
-          formatDates(item.date, activeTab).slice(0, 2),
-        ],
-        txVolumeList: [...acc.txVolumeList, fromRawLsk(item.volume)],
-      }),
-      {
-        txCountList: [],
-        txDateList: [],
-        txVolumeList: [],
-      }
-    );
+  const { txCountList, txVolumeList, txDateList } = txStats.data.timeline.reduce(
+    (acc, item) => ({
+      txCountList: [...acc.txCountList, item.transactionCount],
+      txDateList: [
+        ...acc.txDateList,
+        formatDates(item.date, activeTab).slice(0, 2),
+      ],
+      txVolumeList: [...acc.txVolumeList, fromRawLsk(item.volume)],
+    }),
+    {
+      txCountList: [],
+      txDateList: [],
+      txVolumeList: [],
+    },
+  );
 
   const changeTab = (tab) => {
     setActiveTab(tab.value);
@@ -170,8 +168,7 @@ const Overview = ({ t, txStats }) => {
 
   const distributionChartData = {
     labels: listOfLabels.map((item) =>
-      item.replace('Register multisignature group', 'Regsiter multisig.')
-    ),
+      item.replace('Register multisignature group', 'Regsiter multisig.')),
     datasets: [
       {
         data: distributionByType,
@@ -211,7 +208,7 @@ const Overview = ({ t, txStats }) => {
                     color={colorPalette[i]}
                     label={label.replace(
                       'Register multisignature group',
-                      'Register multisig.'
+                      'Register multisig.',
                     )}
                   />
                 ))}
@@ -278,7 +275,7 @@ const Overview = ({ t, txStats }) => {
                 <Tooltip className={styles.tooltip} position="left">
                   <p>
                     {t(
-                      'The aggregated LSK volume transferred over the selected time period.'
+                      'The aggregated LSK volume transferred over the selected time period.',
                     )}
                   </p>
                 </Tooltip>
@@ -288,7 +285,7 @@ const Overview = ({ t, txStats }) => {
                 <Tooltip className={styles.tooltip} position="left">
                   <p>
                     {t(
-                      'The number of transactions submitted over the selected time period.'
+                      'The number of transactions submitted over the selected time period.',
                     )}
                   </p>
                 </Tooltip>

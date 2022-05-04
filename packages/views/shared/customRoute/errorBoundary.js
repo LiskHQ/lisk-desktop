@@ -1,7 +1,7 @@
 import React from 'react';
 import { withTranslation } from 'react-i18next';
 import Piwik from '@common/utilities/piwik';
-import { PrimaryButton, TertiaryButton } from '@basics/buttons';
+import { PrimaryButton, TertiaryButton } from 'src/theme/buttons';
 import Illustration from '@basics/illustration';
 import styles from './errorBoundary.css';
 
@@ -26,20 +26,35 @@ class ErrorBoundary extends React.Component {
     const getMailReference = () => {
       const recipient = 'desktopdev@lisk.com';
       const subject = `User Reported Error - Lisk - ${VERSION}`; // eslint-disable-line no-undef
-      const body = `${this.state.error}:%0A${this.state.info.componentStack.replace(/\s{4}/g, '%0A')}`;
+      const body = `${
+        this.state.error
+      }:%0A${this.state.info.componentStack.replace(/\s{4}/g, '%0A')}`;
       return `mailto:${recipient}?&subject=${subject}&body=${body}`;
     };
 
     const renderErrorSection = () => (
       <section className={styles.errorBoundaryPage}>
-        <div className={`${styles.errorMessageContainer} error-boundary-container`}>
+        <div
+          className={`${styles.errorMessageContainer} error-boundary-container`}
+        >
           <Illustration name="errorBoundaryPage" />
           <h2>{t('An error occurred.')}</h2>
-          <p>{t('To recover, you can try to reload the page, by clicking the button below. If the problem persists, report the error via email.')}</p>
-          <PrimaryButton className={`${styles.reloadPageButton} error-reload-btn`} onClick={this.reloadPage}>
+          <p>
+            {t(
+              'To recover, you can try to reload the page, by clicking the button below. If the problem persists, report the error via email.',
+            )}
+          </p>
+          <PrimaryButton
+            className={`${styles.reloadPageButton} error-reload-btn`}
+            onClick={this.reloadPage}
+          >
             {t('Reload the page')}
           </PrimaryButton>
-          <a target="_blank" href={getMailReference()} rel="noopener noreferrer">
+          <a
+            target="_blank"
+            href={getMailReference()}
+            rel="noopener noreferrer"
+          >
             <TertiaryButton className={styles.reportButton}>
               {t('Report the error via email')}
             </TertiaryButton>

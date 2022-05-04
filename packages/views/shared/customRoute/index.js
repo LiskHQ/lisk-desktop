@@ -6,14 +6,16 @@ import { getActiveTokenAccount } from '@wallet/utils/account';
 import Piwik from '@common/utilities/piwik';
 import routes from '@screens/router/routes';
 import Login from 'src/modules/auth/components/Signin';
-import offlineStyle from '@basics/offlineWrapper/offlineWrapper.css';
+import offlineStyle from 'src/theme/offlineWrapper/offlineWrapper.css';
 import ErrorBoundary from './errorBoundary';
 
-const checkNetwork = state =>
+const checkNetwork = (state) =>
   !!state.network.name
-  && !!(state.network.networks
+  && !!(
+    state.network.networks
     && state.network.networks.LSK
-    && state.network.networks.LSK.serviceUrl);
+    && state.network.networks.LSK.serviceUrl
+  );
 
 // eslint-disable-next-line max-statements
 const CustomRoute = ({
@@ -25,10 +27,11 @@ const CustomRoute = ({
   t,
   history,
 }) => {
-  const wallet = useSelector(state => getActiveTokenAccount(state));
-  const settings = useSelector(state => state.settings);
-  const isAuthenticated = useSelector(state =>
-    (state.wallet.info && state.wallet.info[settings.token.active]));
+  const wallet = useSelector((state) => getActiveTokenAccount(state));
+  const settings = useSelector((state) => state.settings);
+  const isAuthenticated = useSelector(
+    (state) => state.wallet.info && state.wallet.info[settings.token.active],
+  );
   const isNetworkSet = useSelector(checkNetwork);
   const { search = '' } = history.location;
 
@@ -41,21 +44,32 @@ const CustomRoute = ({
   if (isPrivate && !isAuthenticated) {
     return (
       <Redirect
-        to={`${routes.login.path}?referrer=${path.replace(/\/(send|vote)/, '')}&${search.replace(/^\?/, '')}`}
+        to={`${routes.login.path}?referrer=${path.replace(
+          /\/(send|vote)/,
+          '',
+        )}&${search.replace(/^\?/, '')}`}
       />
     );
   }
 
-  if (wallet.info?.LSK?.summary?.isMigrated === false
+  if (
+    wallet.info?.LSK?.summary?.isMigrated === false
     && history.location.pathname !== routes.reclaim.path
     && history.location.pathname !== routes.login.path
-    && isAuthenticated) {
+    && isAuthenticated
+  ) {
     return <Redirect to={`${routes.reclaim.path}`} />;
   }
 
   return (
-    <main className={`${isPrivate ? offlineStyle.disableWhenOffline : ''} offlineWrapper`}>
-      <ErrorBoundary errorMessage={t('An error occurred while rendering this page')}>
+    <main
+      className={`${
+        isPrivate ? offlineStyle.disableWhenOffline : ''
+      } offlineWrapper`}
+    >
+      <ErrorBoundary
+        errorMessage={t('An error occurred while rendering this page')}
+      >
         <Route
           path={isNetworkSet ? path : routes.login.path}
           exact={exact}
@@ -68,7 +82,7 @@ const CustomRoute = ({
 };
 
 CustomRoute.defaultProps = {
-  t: str => str,
+  t: (str) => str,
   pathSuffix: '',
   pathPrefix: '',
 };

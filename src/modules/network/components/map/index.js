@@ -1,8 +1,8 @@
 import React, { useEffect, useRef, useState } from 'react';
 import L from 'leaflet';
 import 'leaflet.markercluster/dist/leaflet.markercluster';
-import Box from '@theme/box';
-import BoxContent from '@basics/box/content';
+import Box from 'src/theme/box';
+import BoxContent from 'src/theme/box/content';
 import markerIcon from '@setup/react/assets/images/marker.svg';
 import mapboxWatermarkImage from '@setup/react/assets/images/mapbox.png';
 import styles from './map.css';
@@ -30,7 +30,7 @@ const createMarkers = (peers) => {
   peers.forEach((peer) => {
     if (peer.location?.latitude) {
       markers.addLayer(
-        L.marker([peer.location.latitude, peer.location.longitude], { icon })
+        L.marker([peer.location.latitude, peer.location.longitude], { icon }),
       );
     }
   });
@@ -39,12 +39,9 @@ const createMarkers = (peers) => {
 };
 
 const getAttributionLinks = () => {
-  const openStreetMap =
-    '<span>© <a href="https://www.openstreetmap.org/copyright" target="_blank">OpenStreetMap</a> contributors</span>';
-  const mapBox =
-    '<a href="https://www.mapbox.com/about/maps/" target="_blank">© Mapbox</a>';
-  const improveThisMap =
-    '<a href="https://www.mapbox.com/map-feedback/#/-74.5/40/10" target="_blank">Improve this map</a>';
+  const openStreetMap = '<span>© <a href="https://www.openstreetmap.org/copyright" target="_blank">OpenStreetMap</a> contributors</span>';
+  const mapBox = '<a href="https://www.mapbox.com/about/maps/" target="_blank">© Mapbox</a>';
+  const improveThisMap = '<a href="https://www.mapbox.com/map-feedback/#/-74.5/40/10" target="_blank">Improve this map</a>';
   const watermark = `<a href="http://mapbox.com/about/maps" target="_blank"><img src="${mapboxWatermarkImage}" class="mapboxWatermark" /></a>`;
 
   return `${openStreetMap} ${mapBox} ${improveThisMap} ${watermark}`;
@@ -57,7 +54,7 @@ const getTiles = () =>
       id: 'mapbox/streets-v11',
       tileSize: 512,
       zoomOffset: -1,
-    }
+    },
   );
 
 const FullMap = ({ peers }) => {
@@ -69,7 +66,7 @@ const FullMap = ({ peers }) => {
       if (!ref.current) {
         const networkMap = L.map('mapContainer', mapOptions).setView(
           [36.414203, 11.25],
-          2
+          2,
         );
 
         const tiles = getTiles();
@@ -87,7 +84,7 @@ const FullMap = ({ peers }) => {
     () => () => {
       ref.current.remove();
     },
-    []
+    [],
   );
 
   return (

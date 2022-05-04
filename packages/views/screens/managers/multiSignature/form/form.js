@@ -1,13 +1,14 @@
+/* eslint-disable max-lines */
 import React, { useState, useEffect, useMemo } from 'react';
 
 import TransactionPriority from '@transaction/components/TransactionPriority';
 import useTransactionFeeCalculation from '@transaction/hooks/useTransactionFeeCalculation';
 import useTransactionPriority from '@transaction/hooks/useTransactionPriority';
 
-import Box from '@theme/box';
-import BoxContent from '@basics/box/content';
-import BoxFooter from '@basics/box/footer';
-import { PrimaryButton, TertiaryButton } from '@basics/buttons';
+import Box from 'src/theme/box';
+import BoxContent from 'src/theme/box/content';
+import BoxFooter from 'src/theme/box/footer';
+import { PrimaryButton, TertiaryButton } from 'src/theme/buttons';
 import { Input } from 'src/theme';
 import { regex } from '@common/configuration';
 import { tokenMap } from '@token/configuration/tokens';
@@ -38,7 +39,7 @@ const validators = [
     pattern: (_, optional) => optional.length === 1,
     message: (t) =>
       t(
-        'Either change the optional member to mandatory or define more optional members.'
+        'Either change the optional member to mandatory or define more optional members.',
       ),
   },
   {
@@ -46,44 +47,44 @@ const validators = [
       mandatory.length === 0 && optional.length === signatures,
     message: (t) =>
       t(
-        'All members can not be optional. Consider changing them to mandatory.'
+        'All members can not be optional. Consider changing them to mandatory.',
       ),
   },
   {
     pattern: (mandatory, optional, signatures) =>
-      mandatory.length > 0 &&
-      optional.length === 0 &&
-      signatures !== mandatory.length,
+      mandatory.length > 0
+      && optional.length === 0
+      && signatures !== mandatory.length,
     message: (t) =>
       t('Number of signatures must be equal to the number of members.'),
   },
   {
     pattern: (mandatory, optional, signatures) =>
-      mandatory.length > 0 &&
-      optional.length > 0 &&
-      signatures <= mandatory.length,
+      mandatory.length > 0
+      && optional.length > 0
+      && signatures <= mandatory.length,
     message: (t, mandatory) =>
       t(
         t('Number of signatures must be above {{num}}.', {
           num: mandatory.length,
-        })
+        }),
       ),
   },
   {
     pattern: (mandatory, optional, signatures) =>
-      mandatory.length > 0 &&
-      optional.length > 0 &&
-      signatures === mandatory.length + optional.length,
+      mandatory.length > 0
+      && optional.length > 0
+      && signatures === mandatory.length + optional.length,
     message: (t) =>
       t(
-        'Either change the optional member to mandatory or reduce the number of signatures.'
+        'Either change the optional member to mandatory or reduce the number of signatures.',
       ),
   },
   {
     pattern: (mandatory, optional, signatures) =>
-      mandatory.length > 0 &&
-      optional.length > 0 &&
-      signatures > mandatory.length + optional.length,
+      mandatory.length > 0
+      && optional.length > 0
+      && signatures > mandatory.length + optional.length,
     message: (t, mandatory, optional) =>
       t('Number of signatures must be lower than {{num}}.', {
         num: mandatory.length + optional.length,
@@ -99,8 +100,8 @@ const validators = [
   },
   {
     pattern: (mandatory, optional) =>
-      mandatory.some((item) => !regex.publicKey.test(item)) ||
-      optional.some((item) => !regex.publicKey.test(item)),
+      mandatory.some((item) => !regex.publicKey.test(item))
+      || optional.some((item) => !regex.publicKey.test(item)),
     message: (t) => t('Please enter a valid public key for each member.'),
   },
   {
@@ -139,13 +140,13 @@ export const validateState = ({
 };
 
 // eslint-disable-next-line max-statements
-const Editor = ({ t, account, network, nextStep, prevState = {} }) => {
+const Editor = ({
+  t, account, network, nextStep, prevState = {},
+}) => {
   const [requiredSignatures, setRequiredSignatures] = useState(() =>
-    getInitialSignaturesState(prevState)
-  );
+    getInitialSignaturesState(prevState));
   const [members, setMembers] = useState(() =>
-    getInitialMembersState(prevState)
-  );
+    getInitialMembersState(prevState));
 
   const [customFee, setCustomFee] = useState();
   const [
@@ -255,7 +256,7 @@ const Editor = ({ t, account, network, nextStep, prevState = {} }) => {
         requiredSignatures,
         t,
       }),
-    [mandatoryKeys, optionalKeys, requiredSignatures]
+    [mandatoryKeys, optionalKeys, requiredSignatures],
   );
 
   return (
@@ -288,7 +289,9 @@ const Editor = ({ t, account, network, nextStep, prevState = {} }) => {
               onClick={addMemberField}
               className="add-new-members"
             >
-              + {t('Add')}
+              +
+              {' '}
+              {t('Add')}
             </TertiaryButton>
           </div>
           <div className={styles.contentScrollable}>

@@ -1,9 +1,9 @@
 import React, { useState } from 'react';
 
-import Box from '@theme/box';
-import BoxHeader from '@basics/box/header';
+import Box from 'src/theme/box';
+import BoxHeader from 'src/theme/box/header';
 import MultiStep from 'src/modules/common/components/OldMultiStep';
-import Dialog from '@basics/dialog/dialog';
+import Dialog from 'src/theme/dialog/dialog';
 import MessageForm from '../messageForm';
 import SignedMessage from '../signedMessage';
 import SignatureCollector from '../signatureCollector';

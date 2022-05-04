@@ -2,19 +2,12 @@ import React from 'react';
 import { signatureCollectionStatus } from '@transaction/configuration/txStatus';
 import { useTheme } from 'src/theme/Theme';
 import { removeSearchParamsFromUrl } from 'src/utils/searchParams';
-import { PrimaryButton, SecondaryButton } from '@basics/buttons';
-import BoxFooter from '@basics/box/footer';
+import { PrimaryButton, SecondaryButton } from 'src/theme/buttons';
+import BoxFooter from 'src/theme/box/footer';
 import styles from '../styles.css';
 
-export const ActionBar = ({
-  nextButton,
-  history,
-  t,
-}) => (
-  <BoxFooter
-    direction="horizontal"
-    className={styles.footer}
-  >
+export const ActionBar = ({ nextButton, history, t }) => (
+  <BoxFooter direction="horizontal" className={styles.footer}>
     <SecondaryButton
       className={`${useTheme() === 'dark' && 'dark'} reject`}
       size="l"
@@ -28,13 +21,13 @@ export const ActionBar = ({
   </BoxFooter>
 );
 
-export const Feedback = ({
-  t, isMember, signatureStatus,
-}) => {
+export const Feedback = ({ t, isMember, signatureStatus }) => {
   let feedback;
   const statusMessages = {
     fullySigned: t('Transaction is already fully signed.'),
-    occupiedByOptionals: t('Your signature will replace one optional signature.'),
+    occupiedByOptionals: t(
+      'Your signature will replace one optional signature.',
+    ),
   };
   if (!isMember) {
     feedback = t('Only members of the group can sign the transaction.');
@@ -43,11 +36,14 @@ export const Feedback = ({
   }
 
   return (
-    <BoxFooter
-      direction="horizontal"
-      className={styles.footer}
-    >
-      <div className={`${styles.feedback} ${signatureStatus === signatureCollectionStatus.occupiedByOptionals ? styles.warning : styles.error} feedback`}>
+    <BoxFooter direction="horizontal" className={styles.footer}>
+      <div
+        className={`${styles.feedback} ${
+          signatureStatus === signatureCollectionStatus.occupiedByOptionals
+            ? styles.warning
+            : styles.error
+        } feedback`}
+      >
         <span>{feedback}</span>
       </div>
     </BoxFooter>

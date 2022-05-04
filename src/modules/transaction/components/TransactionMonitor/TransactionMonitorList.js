@@ -1,11 +1,11 @@
 import React, { useState } from 'react';
 import { useSelector } from 'react-redux';
-import StickyHeader from '@basics/table/stickyHeader';
+import StickyHeader from 'src/theme/table/stickyHeader';
 import FilterBar from '@shared/filterBar';
 import FilterDropdownButton from '@shared/filterDropdownButton';
-import Box from '@theme/box';
-import BoxContent from '@basics/box/content';
-import Table from '@basics/table';
+import Box from 'src/theme/box';
+import BoxContent from 'src/theme/box/content';
+import Table from 'src/theme/table';
 import {
   selectCurrentBlockHeight,
   selectActiveToken,
@@ -83,7 +83,7 @@ const Transactions = ({
       {
         offset: transactions.meta.count + transactions.meta.offset,
         sort,
-      }
+      },
     );
 
     transactions.loadData(params);
@@ -104,20 +104,18 @@ const Transactions = ({
   const removeSortOnAmount = (headerData, dropdownFilters) =>
     headerData.map((data) => {
       if (
-        data?.sort?.key === 'amount' &&
-        blackListTypes.some((type) => type === dropdownFilters.moduleAssetId)
-      )
-        delete data.sort;
+        data?.sort?.key === 'amount'
+        && blackListTypes.some((type) => type === dropdownFilters.moduleAssetId)
+      ) delete data.sort;
       return data;
     });
 
   const removeField = (rawFields, transactionType) =>
     rawFields.filter((field) => {
       if (
-        (field.name === 'amount' || field.name === 'recipientAddress') &&
-        blackListTypes.some((type) => type === transactionType)
-      )
-        return false;
+        (field.name === 'amount' || field.name === 'recipientAddress')
+        && blackListTypes.some((type) => type === transactionType)
+      ) return false;
 
       return true;
     });
@@ -125,8 +123,7 @@ const Transactions = ({
   const dropdownApplyFilters = (txFilters) => {
     const moduleAssetId = txFilters.moduleAssetId;
     applyFilters(txFilters);
-    if (blackListTypes.some((type) => type === moduleAssetId))
-      setTimeout(() => changeSort('timestamp'), 100);
+    if (blackListTypes.some((type) => type === moduleAssetId)) setTimeout(() => changeSort('timestamp'), 100);
   };
 
   return (
@@ -141,18 +138,18 @@ const Transactions = ({
             label: t('New transactions'),
           }}
           scrollToSelector=".transactions-box"
-          filters={
+          filters={(
             <FilterDropdownButton
               fields={innerFields}
               filters={filters}
               applyFilters={dropdownApplyFilters}
               onTypeSelected={(moduleAssetId) => {
                 setInnerFields(
-                  moduleAssetId ? removeField(fields, moduleAssetId) : fields
+                  moduleAssetId ? removeField(fields, moduleAssetId) : fields,
                 );
               }}
             />
-          }
+          )}
         />
         <FilterBar
           {...{ filters, formatters, t }}

@@ -9,20 +9,20 @@ import {
 } from '@common/store/selectors';
 import routes from '@screens/router/routes';
 import { tokenMap } from '@token/configuration/tokens';
-import { SecondaryButton } from '@basics/buttons';
-import Box from '@theme/box';
-import BoxHeader from '@basics/box/header';
-import BoxContent from '@basics/box/content';
-import BoxEmptyState from '@basics/box/emptyState';
+import { SecondaryButton } from 'src/theme/buttons';
+import Box from 'src/theme/box';
+import BoxHeader from 'src/theme/box/header';
+import BoxContent from 'src/theme/box/content';
+import BoxEmptyState from 'src/theme/box/emptyState';
 import Icon from 'src/theme/Icon';
-import Table from '@basics/table';
+import Table from 'src/theme/table';
 import TransactionRow from '../TransactionRow';
 import styles from './RecentTransactions.css';
 import header from './RecentTransactionsHeaderMap';
 
 export const NoTransactions = withTranslation()(({ t }) => {
   const activeToken = useSelector(
-    (state) => tokenMap[state.settings.token.active]
+    (state) => tokenMap[state.settings.token.active],
   );
   return (
     <BoxEmptyState>
@@ -31,7 +31,7 @@ export const NoTransactions = withTranslation()(({ t }) => {
       <p>
         {t(
           'A great way to start is to top up your account with some {{value}}.',
-          { value: activeToken.key }
+          { value: activeToken.key },
         )}
       </p>
     </BoxEmptyState>
@@ -52,10 +52,9 @@ const RecentTransactions = ({ className, t, transactions }) => {
   const settings = useSelector((state) => state.settings);
   const currentBlockHeight = useSelector(selectCurrentBlockHeight);
   const activeToken = settings.token.active;
-  const host =
-    account.info && account.info[activeToken]
-      ? account.info[activeToken].summary.address
-      : '';
+  const host = account.info && account.info[activeToken]
+    ? account.info[activeToken].summary.address
+    : '';
 
   useEffect(() => {
     if (host && !isLoaded) {

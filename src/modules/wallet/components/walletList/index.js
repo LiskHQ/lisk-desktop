@@ -1,21 +1,19 @@
 import React from 'react';
 
-import Table from '@basics/table';
+import Table from 'src/theme/table';
 import { DEFAULT_LIMIT } from '@views/configuration';
 import WalletRow from '../row';
 import header from './tableHeader';
 
-const WalletTable = ({
-  wallets,
-  networkStatus,
-  t,
-}) => {
+const WalletTable = ({ wallets, networkStatus, t }) => {
   /* istanbul ignore next */
   const handleLoadMore = () => {
     wallets.loadData({ offset: wallets.meta.count + wallets.meta.offset });
   };
   const supply = networkStatus.data.supply;
-  const canLoadMore = wallets.meta ? wallets.meta.count === DEFAULT_LIMIT : false;
+  const canLoadMore = wallets.meta
+    ? wallets.meta.count === DEFAULT_LIMIT
+    : false;
 
   return (
     <Table

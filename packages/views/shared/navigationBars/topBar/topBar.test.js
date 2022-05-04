@@ -1,6 +1,6 @@
 import React from 'react';
 import routes from '@screens/router/routes';
-import DialogHolder from '@basics/dialog/holder';
+import DialogHolder from 'src/theme/dialog/holder';
 import { mountWithRouter } from '@common/utilities/testHelpers';
 import accounts from '@tests/constants/wallets';
 import TopBar from './topBar';
@@ -9,20 +9,26 @@ const mockInputNode = {
   focus: jest.fn(),
 };
 
-jest.mock('../../searchBar', () => function SearchBarMock({ onSearchClick, setSearchBarRef }) {
-  setSearchBarRef(mockInputNode);
-  return (
-    <div className="searchBarMock">
-      <div className="mockSearchResult" onClick={onSearchClick} />
-    </div>
-  );
-});
+jest.mock(
+  '../../searchBar',
+  () =>
+    function SearchBarMock({ onSearchClick, setSearchBarRef }) {
+      setSearchBarRef(mockInputNode);
+      return (
+        <div className="searchBarMock">
+          <div className="mockSearchResult" onClick={onSearchClick} />
+        </div>
+      );
+    },
+);
 
-jest.mock('./navigationButtons', () => function () {
-  return (
-    <div />
-  );
-});
+jest.mock(
+  './navigationButtons',
+  () =>
+    function () {
+      return <div />;
+    },
+);
 
 describe('TopBar', () => {
   const account = {
@@ -40,7 +46,7 @@ describe('TopBar', () => {
   const props = {
     account,
     showDelegate: false,
-    t: val => val,
+    t: (val) => val,
     logOut: jest.fn(),
     location: { pathname: routes.dashboard.path, search: '' },
     history: {
@@ -62,7 +68,8 @@ describe('TopBar', () => {
       networks: {
         LSK: {
           nodeUrl: 'hhtp://localhost:4000',
-          nethash: '198f2b61a8eb95fbeed58b8216780b68f697f26b849acf00c8c93bb9b24f783d',
+          nethash:
+            '198f2b61a8eb95fbeed58b8216780b68f697f26b849acf00c8c93bb9b24f783d',
         },
       },
     },
@@ -78,20 +85,16 @@ describe('TopBar', () => {
   });
 
   it('renders <TopBar /> component', () => {
-    const wrapper = mountWithRouter(
-      TopBar,
-      props,
-      { pathname: routes.wallet.path },
-    );
+    const wrapper = mountWithRouter(TopBar, props, {
+      pathname: routes.wallet.path,
+    });
     expect(wrapper).toContainMatchingElement('.top-bar');
   });
 
   it('renders <TopBar /> component with user log in', () => {
-    const wrapper = mountWithRouter(
-      TopBar,
-      props,
-      { pathname: routes.wallet.path },
-    );
+    const wrapper = mountWithRouter(TopBar, props, {
+      pathname: routes.wallet.path,
+    });
     expect(wrapper).not.toContainMatchingElement('.signIn');
   });
 
@@ -100,20 +103,16 @@ describe('TopBar', () => {
       ...props,
       account: {},
     };
-    const wrapper = mountWithRouter(
-      TopBar,
-      logoutProps,
-      { pathname: routes.wallet.path },
-    );
+    const wrapper = mountWithRouter(TopBar, logoutProps, {
+      pathname: routes.wallet.path,
+    });
     expect(wrapper).toContainMatchingElement('.signIn');
   });
 
   it('renders the search component when user do click in the search icon', () => {
-    const wrapper = mountWithRouter(
-      TopBar,
-      props,
-      { pathname: routes.wallet.path },
-    );
+    const wrapper = mountWithRouter(TopBar, props, {
+      pathname: routes.wallet.path,
+    });
     expect(wrapper).toContainMatchingElement('img.search-icon');
     expect(wrapper.find('div.searchDropdown')).not.toHaveClassName('show');
   });
@@ -157,7 +156,10 @@ describe('TopBar', () => {
       {
         ...props,
         history: {
-          location: { pathname: routes.explorer.path, search: '?somerandomparam=1L' },
+          location: {
+            pathname: routes.explorer.path,
+            search: '?somerandomparam=1L',
+          },
         },
       },
       { pathname: routes.explorer.path },
@@ -169,16 +171,13 @@ describe('TopBar', () => {
   });
 
   it('Should not navigate on Initialization screen', () => {
-    const wrapper = mountWithRouter(
-      TopBar,
-      {
-        ...props,
-        history: {
-          ...props.history,
-          location: { pathname: routes.reclaim.path },
-        },
+    const wrapper = mountWithRouter(TopBar, {
+      ...props,
+      history: {
+        ...props.history,
+        location: { pathname: routes.reclaim.path },
       },
-    );
+    });
     wrapper.find('.bookmark-list-toggle').first().simulate('click');
     wrapper.find('.search-toggle').first().simulate('click');
     expect(props.history.push).not.toHaveBeenCalled();

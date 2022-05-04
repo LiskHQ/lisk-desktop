@@ -1,12 +1,14 @@
 import React from 'react';
-import Box from '@theme/box';
-import BoxContent from '@basics/box/content';
-import Table from '@basics/table';
+import Box from 'src/theme/box';
+import BoxContent from 'src/theme/box/content';
+import Table from 'src/theme/table';
 import PeerRow from '../row';
 import styles from './nodeList.css';
 import header from './tableHeader';
 
-const Peers = ({ peers, t, changeSort, sort }) => {
+const Peers = ({
+  peers, t, changeSort, sort,
+}) => {
   /* istanbul ignore next */
   const handleLoadMore = () => {
     peers.loadData({ offset: peers.data.length });

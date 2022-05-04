@@ -1,7 +1,7 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import routes from '@screens/router/routes';
-import { TertiaryButton } from '@basics/buttons';
+import { TertiaryButton } from 'src/theme/buttons';
 import LoadingIcon from './loadingIcon';
 
 class Loading extends React.Component {
@@ -24,13 +24,13 @@ class Loading extends React.Component {
     return (
       <div>
         <h1>{t('Connect your Hardware Wallet')}</h1>
-        <p>{t('Lisk currently supports Ledger Nano S, Ledger Nano X wallets')}</p>
+        <p>
+          {t('Lisk currently supports Ledger Nano S, Ledger Nano X wallets')}
+        </p>
         <LoadingIcon />
         <p>{t('Looking for a device...')}</p>
         <Link to={routes.login.path}>
-          <TertiaryButton>
-            {t('Go back')}
-          </TertiaryButton>
+          <TertiaryButton>{t('Go back')}</TertiaryButton>
         </Link>
       </div>
     );

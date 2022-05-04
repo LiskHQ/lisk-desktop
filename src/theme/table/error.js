@@ -1,6 +1,6 @@
 import React from 'react';
+import Illustration from '@common/components/illustration';
 import styles from '../box/emptyState.css';
-import Illustration from '../illustration';
 
 const Error = ({ data, isLoading }) => {
   const notFoundReg = /not\sfound/gi;

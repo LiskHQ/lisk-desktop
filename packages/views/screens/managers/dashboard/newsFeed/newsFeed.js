@@ -1,10 +1,10 @@
 import React, { useEffect, useState } from 'react';
-import Box from '@theme/box';
-import BoxRow from '@basics/box/row';
-import BoxHeader from '@basics/box/header';
-import BoxContent from '@basics/box/content';
-import BoxTabs from '@basics/tabs';
-import BoxEmptyState from '@basics/box/emptyState';
+import Box from 'src/theme/box';
+import BoxRow from 'src/theme/box/row';
+import BoxHeader from 'src/theme/box/header';
+import BoxContent from 'src/theme/box/content';
+import BoxTabs from 'src/theme/tabs';
+import BoxEmptyState from 'src/theme/box/emptyState';
 import Icon from 'src/theme/Icon';
 import News from './news';
 import styles from './newsFeed.css';
@@ -51,14 +51,14 @@ const NewsFeed = (props) => {
       <BoxContent className={styles.container}>
         {filteredNewsFeed.length > 0
           ? filteredNewsFeed.map((news, index) => (
-              <BoxRow
-                isClickable
-                key={`${news.sourceId}-${index}`}
-                className={styles.row}
-              >
-                <News t={t} {...news} />
-              </BoxRow>
-            ))
+            <BoxRow
+              isClickable
+              key={`${news.sourceId}-${index}`}
+              className={styles.row}
+            >
+              <News t={t} {...news} />
+            </BoxRow>
+          ))
           : null}
         {newsFeed.error && (
           <BoxEmptyState className="empty-news">
@@ -66,7 +66,7 @@ const NewsFeed = (props) => {
             <h1>{t('No available tweets')}</h1>
             <p>
               {t(
-                'At this moment there is a connection problem with the tweets feed'
+                'At this moment there is a connection problem with the tweets feed',
               )}
             </p>
           </BoxEmptyState>

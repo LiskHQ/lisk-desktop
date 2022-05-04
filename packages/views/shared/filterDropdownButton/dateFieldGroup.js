@@ -2,8 +2,11 @@ import { withTranslation } from 'react-i18next';
 import React from 'react';
 import moment from 'moment';
 import { firstBlockTime } from '@common/configuration';
-import { getDateTimestampFromFirstBlock, formatInputToDate } from 'src/utils/dateTime';
-import Feedback from '@basics/feedback/feedback';
+import {
+  getDateTimestampFromFirstBlock,
+  formatInputToDate,
+} from 'src/utils/dateTime';
+import Feedback from 'src/theme/feedback/feedback';
 import DateField from './dateField';
 import styles from './filters.css';
 
@@ -64,7 +67,10 @@ class DateFieldGroup extends React.Component {
       > moment(fieldsObj.dateTo.value, this.dateFormat)
     ) {
       feedback = t('Invalid dates');
-    } else if (date.isValid() && getDateTimestampFromFirstBlock(value, this.dateFormat) < 0) {
+    } else if (
+      date.isValid()
+      && getDateTimestampFromFirstBlock(value, this.dateFormat) < 0
+    ) {
       feedback = t('Date must be after {{firstBlock}}', {
         firstBlock: moment(firstBlockTime).format(this.dateFormat),
       });
@@ -97,8 +103,10 @@ class DateFieldGroup extends React.Component {
 
     const value = formatInputToDate(target.value, '.');
 
-    const fieldsObj = Object.keys(filters).reduce((acc, filter) =>
-      ({ ...acc, [filter]: { value: filters[filter] } }), {});
+    const fieldsObj = Object.keys(filters).reduce(
+      (acc, filter) => ({ ...acc, [filter]: { value: filters[filter] } }),
+      {},
+    );
 
     const fields = {
       ...fieldsObj,
@@ -125,15 +133,26 @@ class DateFieldGroup extends React.Component {
       setInputRefs: this.setInputRefs,
     };
 
-    const feedback = Object.values(fields).reduce((acc, f) => acc || f.feedback, '');
+    const feedback = Object.values(fields).reduce(
+      (acc, f) => acc || f.feedback,
+      '',
+    );
 
     return (
       <div className={styles.fieldGroup}>
         <span className={styles.fieldLabel}>{label}</span>
         <div className={styles.fieldRow}>
-          <DateField showRightDropdown={showRightDropdown} name="dateFrom" {...dateFieldProps} />
+          <DateField
+            showRightDropdown={showRightDropdown}
+            name="dateFrom"
+            {...dateFieldProps}
+          />
           <span className={styles.separator} />
-          <DateField showRightDropdown={showRightDropdown} name="dateTo" {...dateFieldProps} />
+          <DateField
+            showRightDropdown={showRightDropdown}
+            name="dateTo"
+            {...dateFieldProps}
+          />
         </div>
         <Feedback status="error" size="xs" message={feedback} />
       </div>
