@@ -3,6 +3,7 @@ export * from '@block/store/action';
 export * from '@bookmark/store/action';
 export * from '@network/store/action';
 export * from '@settings/store/actions';
+export * from '@token/fungible/store/actions';
 export * from '@transaction/store/actions';
 export * from '@dpos/validator/store/actions/voting';
 export * from '@dpos/validator/store/actions/watchList';
