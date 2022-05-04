@@ -26,15 +26,15 @@ const CustomRoute = ({
   history,
 }) => {
   const wallet = useSelector(state => getActiveTokenAccount(state));
-  const settings = useSelector(state => state.settings);
+  const token = useSelector(state => state.token);
   const isAuthenticated = useSelector(state =>
-    (state.wallet.info && state.wallet.info[settings.token.active]));
+    (state.wallet.info && state.wallet.info[token.active]));
   const isNetworkSet = useSelector(checkNetwork);
   const { search = '' } = history.location;
 
-  Piwik.tracking(history, settings);
+  Piwik.tracking(history, token);
 
-  if (forbiddenTokens.indexOf(settings.token.active) !== -1) {
+  if (forbiddenTokens.indexOf(token.active) !== -1) {
     return <Redirect to={`${routes.dashboard.path}`} />;
   }
 

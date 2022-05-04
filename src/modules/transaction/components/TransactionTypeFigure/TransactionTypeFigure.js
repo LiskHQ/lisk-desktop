@@ -1,7 +1,7 @@
 import React from 'react';
 import { MODULE_ASSETS_NAME_ID_MAP, MODULE_ASSETS_MAP } from '@transaction/configuration/moduleAssets';
 import Icon from 'src/theme/Icon';
-import { tokenMap } from '@token/configuration/tokens';
+import { tokenMap } from '@token/fungible/consts/tokens';
 import TransactionAddress from '../transactionAddress';
 import styles from './TransactionTypeFigure.css';
 

@@ -41,7 +41,7 @@
           ["@dpos", "./src/modules/dpos/"],
           ["@network", "./src/modules/network/"],
           ["@settings", "./packages/settings/"],
-          ["@token", "./packages/token/"],
+          ["@token", "./src/modules/token/"],
           ["@transaction", "./src/modules/transaction"],
           ["@update", "./src/modules/update"],
           ["@wallet", "./src/modules/wallet/"],

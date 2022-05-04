@@ -6,10 +6,10 @@ import { secondPassphraseStored } from '@common/store/actions';
 import TransactionSummary from '../components/TransactionSummary/TransactionSummary';
 
 const mapStateToProps = state => ({
-  token: state.settings.token.active,
+  token: state.token.active,
   transactions: state.transactions,
   wallet: {
-    ...state.wallet.info[state.settings.token.active],
+    ...state.wallet.info[state.token.active],
     passphrase: state.passphrase,
     hwInfo: state.hwInfo,
   },

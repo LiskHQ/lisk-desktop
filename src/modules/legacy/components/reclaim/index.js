@@ -4,7 +4,7 @@ import { useSelector } from 'react-redux';
 import Tooltip from 'src/theme/Tooltip';
 import { PrimaryButton } from '@basics/buttons';
 import DialogLink from '@basics/dialog/link';
-import { fromRawLsk } from '@token/utilities/lsk';
+import { fromRawLsk } from '@token/fungible/utils/lsk';
 import { selectActiveTokenAccount } from '@common/store/selectors';
 import { dustThreshold } from '@wallet/configuration/constants';
 import MigrationDetails from '../migrationDetails';

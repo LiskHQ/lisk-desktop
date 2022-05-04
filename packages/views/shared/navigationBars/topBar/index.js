@@ -10,7 +10,7 @@ import TopBar from './topBar';
 const mapStateToProps = state => ({
   account: state.wallet,
   network: state.network,
-  token: state.settings.token,
+  token: state.token,
   settings: state.settings,
   noOfVotes: containsTransactionType(
     state.transactions.pending,

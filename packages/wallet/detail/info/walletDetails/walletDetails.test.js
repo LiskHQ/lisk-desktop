@@ -1,6 +1,6 @@
 import React from 'react';
 import { mount } from 'enzyme';
-import WalletDetails from '../../holdings/walletDetails/walletDetails';
+import WalletDetails from '@token/fungible/components/WalletDetails/WalletDetails';
 
 describe('WalletDetails', () => {
   let wrapper;

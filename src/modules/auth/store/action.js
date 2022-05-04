@@ -2,7 +2,7 @@
 import { to } from 'await-to-js';
 import { toast } from 'react-toastify';
 import loginTypes from 'src/modules/auth/const/loginTypes';
-import { tokenMap } from '@token/configuration/tokens';
+import { tokenMap } from '@token/fungible/consts/tokens';
 import { getAccount, extractAddress as extractBitcoinAddress } from '@wallet/utils/api';
 import { getConnectionErrorMessage } from '@network/utils/getNetwork';
 import { extractKeyPair } from '@wallet/utils/account';
@@ -67,15 +67,15 @@ export const login = ({
   passphrase, publicKey, hwInfo,
 }) =>
   async (dispatch, getState) => {
-    const { network, settings } = getState();
+    const { network, settings, token } = getState();
     const { enableCustomDerivationPath, customDerivationPath } = settings;
     dispatch(accountLoading());
 
-    const params = Object.keys(settings.token.list)
-      .filter(key => settings.token.list[key])
-      .reduce((acc, token) => {
-        if (token === tokenMap.BTC.key) {
-          acc[token] = {
+    const params = Object.keys(token.list)
+      .filter(key => token.list[key])
+      .reduce((acc, acctToken) => {
+        if (acctToken === tokenMap.BTC.key) {
+          acc[acctToken] = {
             address: extractBitcoinAddress(passphrase, network),
           };
         } else {
@@ -89,7 +89,7 @@ export const login = ({
           } else if (publicKey) {
             keyPair.publicKey = publicKey;
           }
-          acc[token] = {
+          acc[acctToken] = {
             ...keyPair,
           };
         }

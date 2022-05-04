@@ -16,10 +16,10 @@ const DialogHolder = ({ history }) => {
     return routesMap[modal] ? modal : undefined;
   }, [history.location.search]);
 
-  const settings = useSelector(state => state.settings);
+  const token = useSelector(state => state.token);
   const networkIsSet = useSelector(state => !!state.network.name);
   const isAuthenticated = useSelector(state =>
-    (state.wallet.info && state.wallet.info[settings.token.active]));
+    (state.wallet.info && state.wallet.info[token.active]));
 
   const backdropRef = useRef();
   const [dismissed, setDismissed] = useState(false);
@@ -39,7 +39,7 @@ const DialogHolder = ({ history }) => {
     return null;
   }
 
-  if (modals[modalName].forbiddenTokens.includes(settings.token.active)) {
+  if (modals[modalName].forbiddenTokens.includes(token.active)) {
     return null;
   }
 

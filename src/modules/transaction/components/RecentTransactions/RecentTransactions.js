@@ -5,7 +5,7 @@ import { Link } from 'react-router-dom';
 
 import { selectAccount, selectCurrentBlockHeight } from '@common/store/selectors';
 import routes from '@screens/router/routes';
-import { tokenMap } from '@token/configuration/tokens';
+import { tokenMap } from '@token/fungible/consts/tokens';
 import { SecondaryButton } from '@basics/buttons';
 import Box from '@basics/box';
 import BoxHeader from '@basics/box/header';
@@ -18,7 +18,7 @@ import styles from './RecentTransactions.css';
 import header from './RecentTransactionsHeaderMap';
 
 export const NoTransactions = withTranslation()(({ t }) => {
-  const activeToken = useSelector(state => tokenMap[state.settings.token.active]);
+  const activeToken = useSelector(state => tokenMap[state.token.active]);
   return (
     <BoxEmptyState>
       <Icon name="iconEmptyRecentTransactions" />
@@ -39,9 +39,9 @@ export const NotSignedIn = withTranslation()(({ t }) => (
 const RecentTransactions = ({ className, t, transactions }) => {
   const account = useSelector(selectAccount);
   const [isLoaded, setLoaded] = useState(!!transactions.data.length);
-  const settings = useSelector(state => state.settings);
+  const token = useSelector(state => state.token);
   const currentBlockHeight = useSelector(selectCurrentBlockHeight);
-  const activeToken = settings.token.active;
+  const activeToken = token.active;
   const host = account.info && account.info[activeToken] ? account.info[activeToken].summary.address : '';
 
   useEffect(() => {

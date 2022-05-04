@@ -95,7 +95,7 @@ const SideBar = ({
   t, location,
 }) => {
   const items = menuLinks(t);
-  const token = useSelector(state => state.settings.token.active);
+  const token = useSelector(state => state.token.active);
   const isLoggedOut = useSelector(state => !state.wallet.info || !state.wallet.info[token]);
   const sideBarExpanded = useSelector(state => state.settings.sideBarExpanded);
 

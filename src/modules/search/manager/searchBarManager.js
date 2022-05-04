@@ -8,7 +8,7 @@ import withData from '@common/utilities/withData';
 import SearchBar from '../components/SearchBar/SearchBar';
 
 const mapStateToProps = state => ({
-  activeToken: state.settings.token.active,
+  activeToken: state.token.active,
 });
 
 const defaultData = {

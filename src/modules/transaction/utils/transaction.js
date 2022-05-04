@@ -11,7 +11,7 @@ import {
   getKeys,
 } from '@wallet/utils/account';
 import { transformStringDateToUnixTimestamp } from 'src/utils/dateTime';
-import { toRawLsk } from '@token/utilities/lsk';
+import { toRawLsk } from '@token/fungible/utils/lsk';
 import { isEmpty } from '@common/utilities/helpers';
 import { splitModuleAndAssetIds, joinModuleAndAssetIds } from './moduleAssets';
 import { signTransactionByHW } from './hwManager';

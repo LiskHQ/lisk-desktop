@@ -1,10 +1,10 @@
 import React from 'react';
 import { act } from 'react-dom/test-utils';
 import { mount } from 'enzyme';
-import { tokenMap } from '@token/configuration/tokens';
+import { tokenMap } from '@token/fungible/consts/tokens';
 import { getTransactionBaseFees, getTransactionFee } from '@transaction/api';
 import useTransactionFeeCalculation from '@transaction/hooks/useTransactionFeeCalculation';
-import { fromRawLsk } from '@token/utilities/lsk';
+import { fromRawLsk } from '@token/fungible/utils/lsk';
 import accounts from '@tests/constants/wallets';
 import flushPromises from '@tests/unit-test-utils/flushPromises';
 import Form from './form';

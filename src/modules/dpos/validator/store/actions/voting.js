@@ -1,5 +1,5 @@
 import to from 'await-to-js';
-import { tokenMap } from '@token/configuration/tokens';
+import { tokenMap } from '@token/fungible/consts/tokens';
 import { MODULE_ASSETS_NAME_ID_MAP } from '@transaction/configuration/moduleAssets';
 import { create } from '@transaction/api';
 import { getAccount } from '@wallet/utils/api';
@@ -44,14 +44,14 @@ export const votesConfirmed = () => ({
  * @returns {Object} Pure action object
  */
 export const voteEdited = data => async (dispatch, getState) => {
-  const { network, settings } = getState();
+  const { network, token } = getState();
   const normalizedVotes = await Promise.all(data.map(async (vote) => {
     if (vote.username) {
       return vote;
     }
     const wallet = (await getAccount({
       network, params: { address: vote.address },
-    }, settings.token.active)) || {};
+    }, token.active)) || {};
     const username = wallet.dpos?.delegate?.username ?? '';
 
     return { ...vote, username };

@@ -3,9 +3,9 @@ import { useTranslation } from 'react-i18next';
 import numeral from 'numeral';
 
 import { regex } from '@common/configuration';
-import { tokenMap } from '@token/configuration/tokens';
+import { tokenMap } from '@token/fungible/consts/tokens';
 import { MIN_ACCOUNT_BALANCE } from '@transaction/configuration/transactions';
-import { toRawLsk } from '@token/utilities/lsk';
+import { toRawLsk } from '@token/fungible/utils/lsk';
 import { validateAmountFormat } from '@common/utilities/validators';
 
 let loaderTimeout = null;

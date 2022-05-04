@@ -11,7 +11,7 @@ import { getTransactions } from '@transaction/api';
 import FlashMessageHolder from '@basics/flashMessage/holder';
 import WarnPunishedDelegate from '@dpos/validator/components/WarnPunishedDelegate';
 import WalletInfo from '@wallet/components/walletInfo';
-import BalanceInfo from '../../../../wallet/detail/holdings/balanceInfo';
+import BalanceInfo from '@token/fungible/components/BalanceInfo';
 import styles from './overview.css';
 
 const mapStateToProps = (state) => ({
@@ -143,7 +143,7 @@ export default compose(
       apiUtil: (network, { token, ...params }) =>
         getTransactions({ network, params }, token),
       getApiParams: (state) => ({
-        token: state.settings.token.active,
+        token: state.token.active,
       }),
       defaultData: { data: [], meta: {} },
       autoload: false,
