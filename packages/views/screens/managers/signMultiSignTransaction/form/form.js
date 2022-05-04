@@ -1,8 +1,12 @@
 /* eslint-disable complexity */
 import React, { useState, useEffect } from 'react';
-import { transformTransaction, createTransactionObject, flattenTransaction } from '@transaction/utils/transaction';
+import {
+  transformTransaction,
+  createTransactionObject,
+  flattenTransaction,
+} from '@transaction/utils/transaction';
 import { joinModuleAndAssetIds } from '@transaction/utils/moduleAssets';
-import Box from '@basics/box';
+import Box from '@theme/box';
 import BoxContent from '@basics/box/content';
 import BoxFooter from '@basics/box/footer';
 import { PrimaryButton } from '@basics/buttons';
@@ -38,7 +42,10 @@ const Form = ({ t, nextStep, network }) => {
       const schema = network.networks.LSK.moduleAssetSchemas[moduleAssetId];
       const transformedTransaction = transformTransaction(parsedInput);
       const flattenedTransaction = flattenTransaction(transformedTransaction);
-      const transactionObject = createTransactionObject(flattenedTransaction, moduleAssetId);
+      const transactionObject = createTransactionObject(
+        flattenedTransaction,
+        moduleAssetId
+      );
       const err = validateTransaction(schema, transactionObject);
 
       if (err) {
@@ -68,7 +75,11 @@ const Form = ({ t, nextStep, network }) => {
       <Box className={styles.boxContainer}>
         <header>
           <h1>{t('Sign multisignature transaction')}</h1>
-          <p>{t('Provide a signature for a transaction which belongs to a multisignature account.')}</p>
+          <p>
+            {t(
+              'Provide a signature for a transaction which belongs to a multisignature account.'
+            )}
+          </p>
         </header>
         <BoxContent>
           <ProgressBar current={1} />
@@ -84,7 +95,11 @@ const Form = ({ t, nextStep, network }) => {
               />
             </label>
           </p>
-          <div className={`${styles.textAreaContainer} ${error && styles.error} ${transaction && styles.filled}`}>
+          <div
+            className={`${styles.textAreaContainer} ${error && styles.error} ${
+              transaction && styles.filled
+            }`}
+          >
             <textarea
               onPaste={onPaste}
               onChange={onPaste}

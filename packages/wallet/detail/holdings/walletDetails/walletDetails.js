@@ -4,7 +4,7 @@ import { Link } from 'react-router-dom';
 import { settingsUpdated } from '@common/store/actions';
 import routes from '@screens/router/routes';
 import { tokenMap } from '@token/configuration/tokens';
-import Box from '@basics/box';
+import Box from '@theme/box';
 import BoxHeader from '@basics/box/header';
 import BoxContent from '@basics/box/content';
 import BoxRow from '@basics/box/row';
@@ -16,12 +16,10 @@ import DiscreetMode from '@shared/discreetMode';
 import LockedBalanceLink from '../balanceInfo/unlocking';
 import styles from './walletDetails.css';
 
-const WalletDetails = ({
-  t, wallet, settings, className, isWalletRoute,
-}) => {
+const WalletDetails = ({ t, wallet, settings, className, isWalletRoute }) => {
   const dispatch = useDispatch();
   const tokens = Object.entries(wallet.info || {}).filter(
-    ([key, info]) => settings.token.list[key] && info,
+    ([key, info]) => settings.token.list[key] && info
   );
 
   return (
@@ -38,7 +36,8 @@ const WalletDetails = ({
             <Link
               to={routes.wallet.path}
               onClick={() =>
-                dispatch(settingsUpdated({ token: { active: token } }))}
+                dispatch(settingsUpdated({ token: { active: token } }))
+              }
               className={styles.link}
             >
               <Icon name={token === tokenMap.BTC.key ? 'btcIcon' : 'lskIcon'} />
@@ -49,7 +48,9 @@ const WalletDetails = ({
                 <div className={styles.valuesRow}>
                   <DiscreetMode>
                     <div className={`${styles.cryptoValue} balance-value`}>
-                      <div><LiskAmount val={info.summary?.balance} token={token} /></div>
+                      <div>
+                        <LiskAmount val={info.summary?.balance} token={token} />
+                      </div>
                       <div>
                         <Converter
                           className={styles.fiatValue}

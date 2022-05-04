@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 
 import { Input } from 'src/theme';
-import Box from '@basics/box';
+import Box from '@theme/box';
 import BoxHeader from '@basics/box/header';
 import BoxContent from '@basics/box/content';
 import BoxTabs from '@basics/tabs';
@@ -32,14 +32,18 @@ const DelegatesMonitor = ({
   const [activeTab, setActiveTab] = useState('active');
   const { total, forgers, latestBlocks } = blocks;
   const delegatesWithForgingTimes = { data: forgers };
-  const forgedInRound = latestBlocks.length ? latestBlocks[0].height % ROUND_LENGTH : 0;
+  const forgedInRound = latestBlocks.length
+    ? latestBlocks[0].height % ROUND_LENGTH
+    : 0;
 
   useEffect(() => {
-    const addressList = votes.data && votes.data.reduce((acc, data) => {
-      const votesList = data.asset.votes || [];
-      const dataAddresses = votesList.map(vote => vote.delegateAddress);
-      return acc.concat(dataAddresses);
-    }, []);
+    const addressList =
+      votes.data &&
+      votes.data.reduce((acc, data) => {
+        const votesList = data.asset.votes || [];
+        const dataAddresses = votesList.map((vote) => vote.delegateAddress);
+        return acc.concat(dataAddresses);
+      }, []);
     if (addressList.length > 0) {
       votedDelegates.loadData({ addressList });
     }
@@ -64,12 +68,15 @@ const DelegatesMonitor = ({
         api = 'standByDelegates';
         break;
     }
-    applyFilters({
-      ...filters,
-      search: value,
-      offset: 0,
-      limit: 100,
-    }, api);
+    applyFilters(
+      {
+        ...filters,
+        search: value,
+        offset: 0,
+        limit: 100,
+      },
+      api
+    );
   };
 
   const tabs = {
@@ -94,7 +101,6 @@ const DelegatesMonitor = ({
         name: t('Latest votes'),
         className: 'votes',
       },
-
     ],
     active: activeTab,
     onClick: ({ value }) => setActiveTab(value),
@@ -126,9 +132,11 @@ const DelegatesMonitor = ({
       />
       <Box main isLoading={standByDelegates.isLoading || votes.isLoading}>
         <BoxHeader className={`${styles.tabSelector} delegates-table`}>
-          {tabs.tabs.length === 1
-            ? <h2>{tabs.tabs[0].name}</h2>
-            : <BoxTabs {...tabs} />}
+          {tabs.tabs.length === 1 ? (
+            <h2>{tabs.tabs[0].name}</h2>
+          ) : (
+            <BoxTabs {...tabs} />
+          )}
           <span className={activeTab === 'votes' ? 'hidden' : ''}>
             <Input
               onChange={handleFilter}
@@ -140,24 +148,22 @@ const DelegatesMonitor = ({
           </span>
         </BoxHeader>
         <BoxContent className={`${styles.content} delegate-box`}>
-          {
-            activeTab === 'votes'
-              ? <LatestVotes votes={votes} t={t} delegates={votedDelegates} />
-              : (
-                <DelegatesTable
-                  setActiveTab={setActiveTab}
-                  delegates={delegatesWithForgingTimes}
-                  blocks={blocks}
-                  watchList={watchList}
-                  watchedDelegates={watchedDelegates}
-                  standByDelegates={standByDelegates}
-                  sanctionedDelegates={sanctionedDelegates}
-                  filters={filters}
-                  t={t}
-                  activeTab={activeTab}
-                />
-              )
-          }
+          {activeTab === 'votes' ? (
+            <LatestVotes votes={votes} t={t} delegates={votedDelegates} />
+          ) : (
+            <DelegatesTable
+              setActiveTab={setActiveTab}
+              delegates={delegatesWithForgingTimes}
+              blocks={blocks}
+              watchList={watchList}
+              watchedDelegates={watchedDelegates}
+              standByDelegates={standByDelegates}
+              sanctionedDelegates={sanctionedDelegates}
+              filters={filters}
+              t={t}
+              activeTab={activeTab}
+            />
+          )}
         </BoxContent>
       </Box>
     </div>

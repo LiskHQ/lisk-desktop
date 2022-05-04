@@ -1,6 +1,6 @@
 import React from 'react';
 
-import Box from '@basics/box';
+import Box from '@theme/box';
 import BoxHeader from '@basics/box/header';
 import BoxContent from '@basics/box/content';
 import WalletListRepeater from '@wallet/list/repeater';

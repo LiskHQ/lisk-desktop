@@ -1,6 +1,6 @@
 import React from 'react';
 import Table from '@basics/table';
-import Box from '@basics/box';
+import Box from '@theme/box';
 import BoxHeader from '@basics/box/header';
 import BoxContent from '@basics/box/content';
 import TransactionRow from './transactionRow';

@@ -6,7 +6,7 @@ import { DEFAULT_STANDBY_THRESHOLD } from '@dpos/validator/consts';
 import routes from '@screens/router/routes';
 import { useTheme } from 'src/theme/Theme';
 import { capitalize } from '@common/utilities/helpers';
-import Box from '@basics/box';
+import Box from '@theme/box';
 import BoxHeader from '@basics/box/header';
 import BoxContent from '@basics/box/content';
 import LiskAmount from '@shared/liskAmount';
@@ -24,9 +24,7 @@ export const getStatus = (data) => {
   return 'ineligible';
 };
 
-const Item = ({
-  icon, title, children,
-}) => {
+const Item = ({ icon, title, children }) => {
   const theme = useTheme();
 
   return (
@@ -42,13 +40,11 @@ const Item = ({
   );
 };
 
-const FullItem = ({
-  icon, title, children, theme,
-}) => (
+const FullItem = ({ icon, title, children, theme }) => (
   <BoxContent className={`${styles.full} performance`}>
     <div className={styles.content}>
       <div className={`${styles.title} ${theme}`}>{title}</div>
-      { children }
+      {children}
     </div>
     <div className={`${styles.highlighIcon} ${styles[icon]}`}>
       <Icon name={icon} />
@@ -62,9 +58,7 @@ const ActiveDelegate = ({ theme, t }) => (
       {t('This delegate is among the first 101 delegates by delegate weight.')}
     </p>
 
-    <p>
-      {t('Active delegates are select to generate blocks every round.')}
-    </p>
+    <p>{t('Active delegates are select to generate blocks every round.')}</p>
   </div>
 );
 
@@ -75,9 +69,9 @@ const StandByDelegate = ({ theme, t }) => (
       top 101 by delegate weight.`)}
     </p>
     <p>
-      {
-        t('Standby delegates can be chosen at random for one of two slots per round for generating a block.')
-      }
+      {t(
+        'Standby delegates can be chosen at random for one of two slots per round for generating a block.'
+      )}
     </p>
   </div>
 );
@@ -85,7 +79,9 @@ const StandByDelegate = ({ theme, t }) => (
 const IneligibleDelegate = ({ theme, t }) => (
   <div className={`${styles.delegateDescription} ${theme}`}>
     <p>
-      {t('The delegate weight is below 1,000 LSK meaning that the delegate is not eligible to forge.')}
+      {t(
+        'The delegate weight is below 1,000 LSK meaning that the delegate is not eligible to forge.'
+      )}
     </p>
   </div>
 );
@@ -93,14 +89,18 @@ const IneligibleDelegate = ({ theme, t }) => (
 const PunishedDelegate = ({ theme, t }) => (
   <div className={`${styles.delegateDescription} ${theme}`}>
     <p>
-      {t('The delegate is temporarily punished and their delegate weight is set to 0 due to a misbehavior.')}
+      {t(
+        'The delegate is temporarily punished and their delegate weight is set to 0 due to a misbehavior.'
+      )}
     </p>
     <DialogLink
       className={grid.row}
       component="delegatePerformance"
       data={{ status: 'punished' }}
     >
-      <div className={`${styles.details} ${grid.col} ${grid['col-md-12']}`}><p>Details &gt;</p></div>
+      <div className={`${styles.details} ${grid.col} ${grid['col-md-12']}`}>
+        <p>Details &gt;</p>
+      </div>
     </DialogLink>
   </div>
 );
@@ -108,13 +108,14 @@ const PunishedDelegate = ({ theme, t }) => (
 const BannedDelegate = ({ theme, t }) => (
   <div className={`${styles.delegateDescription} ${theme}`}>
     <p>
-      {t('The delegate is permanently banned from generating blocks due to repeated protocol violations or missing too many blocks.')}
+      {t(
+        'The delegate is permanently banned from generating blocks due to repeated protocol violations or missing too many blocks.'
+      )}
     </p>
   </div>
 );
 
-const getDelegateIcon = (status) =>
-  `delegate${capitalize(status)}`;
+const getDelegateIcon = (status) => `delegate${capitalize(status)}`;
 
 const getDelegateComponent = (status) => {
   const components = {
@@ -127,20 +128,22 @@ const getDelegateComponent = (status) => {
   return components[status];
 };
 
-const PerformanceView = ({
-  t, data,
-}) => {
+const PerformanceView = ({ t, data }) => {
   const theme = useTheme();
   const status = getStatus(data);
   const DelegateComponent = getDelegateComponent(status);
 
   return (
-    <Box className={`${grid['col-xs-12']} ${grid['col-md-9']} ${styles.highlightContainer} performance-container`}>
+    <Box
+      className={`${grid['col-xs-12']} ${grid['col-md-9']} ${styles.highlightContainer} performance-container`}
+    >
       <BoxHeader>
         <h1 className={styles.heading}>{t('Performance')}</h1>
       </BoxHeader>
       <Box className={`${grid.row} ${styles.content}`}>
-        <Box className={`${grid.col} ${grid['col-xs-4']} ${grid['col-md-4']} ${styles.column}`}>
+        <Box
+          className={`${grid.col} ${grid['col-xs-4']} ${grid['col-md-4']} ${styles.column}`}
+        >
           <FullItem
             theme={theme}
             title={t('Status')}
@@ -150,12 +153,11 @@ const PerformanceView = ({
             <DelegateComponent theme={theme} t={t} />
           </FullItem>
         </Box>
-        <Box className={`${grid.col} ${grid['col-xs-4']} ${grid['col-md-4']} ${styles.column}`}>
-          <Item
-            title={t('Last forged block')}
-            icon="productivity"
-          >
-            { data.lastForgedHeight ? (
+        <Box
+          className={`${grid.col} ${grid['col-xs-4']} ${grid['col-md-4']} ${styles.column}`}
+        >
+          <Item title={t('Last forged block')} icon="productivity">
+            {data.lastForgedHeight ? (
               <NavLink
                 to={`${routes.block.path}?height=${data.lastForgedHeight}`}
                 className={styles.performanceValue}
@@ -168,25 +170,27 @@ const PerformanceView = ({
               <span className={styles.performanceValue}>-</span>
             )}
           </Item>
-          <Item
-            title={t('Forged blocks')}
-            icon="forgedBlocks"
-          >
-            <div className={styles.performanceValue}>{data.producedBlocks ?? '-'}</div>
+          <Item title={t('Forged blocks')} icon="forgedBlocks">
+            <div className={styles.performanceValue}>
+              {data.producedBlocks ?? '-'}
+            </div>
           </Item>
         </Box>
-        <Box className={`${grid.col} ${grid['col-xs-4']} ${grid['col-md-4']} ${styles.column}`}>
-          <Item
-            title={t('Rewards (LSK)')}
-            icon="reward"
-          >
-            <div><LiskAmount val={data.rewards || 0} /></div>
+        <Box
+          className={`${grid.col} ${grid['col-xs-4']} ${grid['col-md-4']} ${styles.column}`}
+        >
+          <Item title={t('Rewards (LSK)')} icon="reward">
+            <div>
+              <LiskAmount val={data.rewards || 0} />
+            </div>
           </Item>
           <Item
             title={t('Consecutive missed blocks')}
             icon="consecutiveMissedBlocks"
           >
-            <div className={styles.performanceValue}>{data.consecutiveMissedBlocks}</div>
+            <div className={styles.performanceValue}>
+              {data.consecutiveMissedBlocks}
+            </div>
           </Item>
         </Box>
       </Box>

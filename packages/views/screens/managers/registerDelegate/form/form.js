@@ -8,7 +8,7 @@ import { getDelegate } from '@dpos/validator/api';
 import TransactionPriority from '@transaction/components/TransactionPriority';
 import useTransactionFeeCalculation from '@transaction/hooks/useTransactionFeeCalculation';
 import useTransactionPriority from '@transaction/hooks/useTransactionPriority';
-import Box from '@basics/box';
+import Box from '@theme/box';
 import BoxHeader from '@basics/box/header';
 import BoxContent from '@basics/box/content';
 import BoxFooter from '@basics/box/footer';
@@ -23,8 +23,13 @@ const moduleAssetId = MODULE_ASSETS_NAME_ID_MAP.registerDelegate;
 
 // eslint-disable-next-line max-statements
 const SelectNameAndFee = ({
-  account, t, nextStep, network, prevState,
-  signedTransaction, txSignatureError,
+  account,
+  t,
+  nextStep,
+  network,
+  prevState,
+  signedTransaction,
+  txSignatureError,
 }) => {
   const timeout = useRef();
 
@@ -36,8 +41,11 @@ const SelectNameAndFee = ({
   });
 
   const [
-    selectedPriority, selectTransactionPriority,
-    priorityOptions, prioritiesLoadError, loadingPriorities,
+    selectedPriority,
+    selectTransactionPriority,
+    priorityOptions,
+    prioritiesLoadError,
+    loadingPriorities,
   ] = useTransactionPriority(token);
 
   const { fee, minFee } = useTransactionFeeCalculation({
@@ -54,11 +62,8 @@ const SelectNameAndFee = ({
     },
   });
 
-  const setState = newState => _setState(
-    _state => (
-      { ..._state, ...newState }
-    ),
-  );
+  const setState = (newState) =>
+    _setState((_state) => ({ ..._state, ...newState }));
 
   const onConfirm = () => {
     nextStep({ rawTransaction: { fee, username: state.username } });
@@ -85,7 +90,10 @@ const SelectNameAndFee = ({
     if (!hasFunds) {
       setState({
         inputDisabled: true,
-        error: t('The minimum required balance to register is {{minBalance}} LSK', { minBalance: fromRawLsk(toRawLsk(fee.value) + MIN_ACCOUNT_BALANCE) }),
+        error: t(
+          'The minimum required balance to register is {{minBalance}} LSK',
+          { minBalance: fromRawLsk(toRawLsk(fee.value) + MIN_ACCOUNT_BALANCE) }
+        ),
       });
     }
   };
@@ -174,19 +182,23 @@ const SelectNameAndFee = ({
       </BoxHeader>
       <BoxContent className={`${styles.container} select-name-container`}>
         <p className={`${styles.description} select-name-text-description`}>
-          {
-            t('Register as a delegate to assign a username and allow votes to be locked to your account.')
-          }
+          {t(
+            'Register as a delegate to assign a username and allow votes to be locked to your account.'
+          )}
         </p>
         <p className={`${styles.description} select-name-text-description`}>
-          {
-            t('Depending on the number of votes locked to your account (delegate weight), your account can become eligible to forge new blocks on the Lisk blockchain. With every new round (103 blocks), the top 101 active delegates and 2 randomly selected standby delegates each become eligible to forge a new block. For each block forged and accepted by the Lisk network, a delegate receives a new block reward and the transaction fees collected from each sender. The minimum required delegate weight to become eligible is 1000 LSK.')
-          }
+          {t(
+            'Depending on the number of votes locked to your account (delegate weight), your account can become eligible to forge new blocks on the Lisk blockchain. With every new round (103 blocks), the top 101 active delegates and 2 randomly selected standby delegates each become eligible to forge a new block. For each block forged and accepted by the Lisk network, a delegate receives a new block reward and the transaction fees collected from each sender. The minimum required delegate weight to become eligible is 1000 LSK.'
+          )}
         </p>
         <label className={styles.usernameLabel}>
           {t('Your username')}
           <Tooltip position="right">
-            <p>{t('Max. 20 characters, a-z, 0-1, no special characters except !@$_.')}</p>
+            <p>
+              {t(
+                'Max. 20 characters, a-z, 0-1, no special characters except !@$_.'
+              )}
+            </p>
           </Tooltip>
         </label>
         <div className={styles.inputContainer}>

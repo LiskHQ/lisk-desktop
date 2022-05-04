@@ -4,7 +4,7 @@ import React, { useEffect } from 'react';
 import routes from '@screens/router/routes';
 import { tokenMap } from '@token/configuration/tokens';
 import DateTimeFromTimestamp from '@basics/timestamp';
-import Box from '@basics/box';
+import Box from '@theme/box';
 import BoxHeader from '@basics/box/header';
 import BoxContent from '@basics/box/content';
 import CopyToClipboard from '@basics/copyToClipboard';
@@ -16,9 +16,7 @@ import { truncateAddress } from '@wallet/utilities/account';
 import WalletVisual from '@wallet/detail/identity/walletVisual';
 import styles from './blockDetails.css';
 
-const Generator = ({
-  generatorAddress, generatorUsername,
-}) => {
+const Generator = ({ generatorAddress, generatorUsername }) => {
   if (generatorUsername && generatorAddress) {
     return (
       <Link
@@ -35,9 +33,7 @@ const Generator = ({
     );
   }
 
-  return (
-    <span>None (Genesis block)</span>
-  );
+  return <span>None (Genesis block)</span>;
 };
 
 const getFields = (data = {}, token, t, currentHeight) => ({
@@ -108,7 +104,7 @@ const Rows = ({ data, t, currentHeight }) => {
   const token = tokenMap.LSK.key;
   const fields = getFields(data, token, t, currentHeight);
 
-  const columns = Object.keys(fields).map(field => (
+  const columns = Object.keys(fields).map((field) => (
     <LabeledValue
       key={field}
       label={fields[field].label}
@@ -118,16 +114,10 @@ const Rows = ({ data, t, currentHeight }) => {
     </LabeledValue>
   ));
 
-  return (
-    <div className={styles.dataContainer}>
-      { columns }
-    </div>
-  );
+  return <div className={styles.dataContainer}>{columns}</div>;
 };
 
-const BlockDetails = ({
-  t, blockDetails, currentHeight, id,
-}) => {
+const BlockDetails = ({ t, blockDetails, currentHeight, id }) => {
   useEffect(() => {
     blockDetails.loadData();
   }, [id]);
@@ -139,7 +129,7 @@ const BlockDetails = ({
           <h1>{t('Block details')}</h1>
         </BoxHeader>
         <BoxContent>
-          { blockDetails.error ? (
+          {blockDetails.error ? (
             <Feedback
               message={t('Failed to load block details.')}
               status="error"

@@ -1,7 +1,7 @@
 import React from 'react';
 import { MODULE_ASSETS_NAME_ID_MAP } from '@transaction/configuration/moduleAssets';
 import TransactionInfo from '@transaction/components/TransactionInfo';
-import Box from '@basics/box';
+import Box from '@theme/box';
 import BoxContent from '@basics/box/content';
 import BoxFooter from '@basics/box/footer';
 import { PrimaryButton, SecondaryButton } from '@basics/buttons';
@@ -62,7 +62,9 @@ const Summary = ({
           />
         </BoxContent>
         <BoxFooter className={styles.footer} direction="horizontal">
-          <SecondaryButton className="go-back" onClick={goBack}>{t('Edit')}</SecondaryButton>
+          <SecondaryButton className="go-back" onClick={goBack}>
+            {t('Edit')}
+          </SecondaryButton>
           <PrimaryButton className="confirm" size="l" onClick={onConfirm}>
             {t('Sign')}
           </PrimaryButton>

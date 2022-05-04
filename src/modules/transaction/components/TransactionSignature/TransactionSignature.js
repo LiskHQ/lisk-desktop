@@ -2,7 +2,7 @@ import React, { useEffect } from 'react';
 import { useDispatch } from 'react-redux';
 import { signatureCollectionStatus } from '@transaction/configuration/txStatus';
 import { secondPassphraseRemoved } from '@common/store/actions';
-import Box from '@basics/box';
+import Box from '@theme/box';
 import Illustration from '@basics/illustration';
 import BoxContent from '@basics/box/content';
 import { isEmpty } from '@common/utilities/helpers';
@@ -10,9 +10,18 @@ import { getDeviceType } from '@wallet/utilities/hwManager';
 import styles from './TransactionSignature.css';
 
 const TransactionSignature = ({
-  t, transactions, account, actionFunction, multisigTransactionSigned,
-  rawTransaction, nextStep, statusInfo, sender, transactionDoubleSigned,
-  signatureStatus, signatureSkipped,
+  t,
+  transactions,
+  account,
+  actionFunction,
+  multisigTransactionSigned,
+  rawTransaction,
+  nextStep,
+  statusInfo,
+  sender,
+  transactionDoubleSigned,
+  signatureStatus,
+  signatureSkipped,
 }) => {
   const deviceType = getDeviceType(account.hwInfo?.deviceModel);
   const dispatch = useDispatch();
@@ -24,13 +33,16 @@ const TransactionSignature = ({
      * sender account is required.
      */
     if (sender) {
-      if (signatureStatus === signatureCollectionStatus.fullySigned
-        || signatureStatus === signatureCollectionStatus.overSigned) {
+      if (
+        signatureStatus === signatureCollectionStatus.fullySigned ||
+        signatureStatus === signatureCollectionStatus.overSigned
+      ) {
         // Skip the current member as the all required signature are collected
         signatureSkipped({ rawTransaction });
       } else {
         multisigTransactionSigned({
-          rawTransaction, sender,
+          rawTransaction,
+          sender,
         });
       }
     } else {
@@ -55,7 +67,7 @@ const TransactionSignature = ({
     if (!isEmpty(transactions.signedTransaction)) {
       const hasSecondPass = !!account.secondPassphrase;
       const isDoubleSigned = !transactions.signedTransaction.signatures.some(
-        sig => sig.length === 0,
+        (sig) => sig.length === 0
       );
       if (!transactions.txSignatureError && hasSecondPass && !isDoubleSigned) {
         transactionDoubleSigned();
@@ -70,7 +82,7 @@ const TransactionSignature = ({
   }, [transactions.signedTransaction, transactions.txSignatureError]);
 
   if (!deviceType) {
-    return (<div />);
+    return <div />;
   }
 
   return (
@@ -78,7 +90,9 @@ const TransactionSignature = ({
       <BoxContent className={styles.content}>
         <Illustration name={deviceType} />
         <h5>
-          {t('Please confirm the transaction on your {{deviceModel}}', { deviceModel: account.hwInfo.deviceModel })}
+          {t('Please confirm the transaction on your {{deviceModel}}', {
+            deviceModel: account.hwInfo.deviceModel,
+          })}
         </h5>
       </BoxContent>
     </Box>

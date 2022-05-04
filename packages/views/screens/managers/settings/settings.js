@@ -3,7 +3,7 @@ import { toast } from 'react-toastify';
 import Piwik from '@common/utilities/piwik';
 import { externalLinks } from '@common/configuration';
 import settingsConst from '@settings/configuration/settingConstants';
-import Box from '@basics/box';
+import Box from '@theme/box';
 import BoxHeader from '@basics/box/header';
 import BoxContent from '@basics/box/content';
 import Dialog from '@basics/dialog/dialog';
@@ -102,13 +102,16 @@ class Settings extends React.Component {
                   </span>
                   <p>
                     {t(
-                      'Enable network switcher to connect to different networks or service nodes when signing in.',
+                      'Enable network switcher to connect to different networks or service nodes when signing in.'
                     )}
                   </p>
                 </div>
               </label>
               <label className={`${styles.fieldGroup} ${styles.checkboxField}`}>
-                <Toggle isCheckbox setting={settingsConst.keys.enableCustomDerivationPath} />
+                <Toggle
+                  isCheckbox
+                  setting={settingsConst.keys.enableCustomDerivationPath}
+                />
                 <div>
                   <span className={styles.labelName}>
                     {t('Enable custom derivation path')}

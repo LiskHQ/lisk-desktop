@@ -1,7 +1,7 @@
 import React from 'react';
 import { withTranslation } from 'react-i18next';
 import { tokenMap } from '@token/configuration/tokens';
-import Box from '@basics/box';
+import Box from '@theme/box';
 import BoxContent from '@basics/box/content';
 import BoxFooter from '@basics/box/footer';
 import BoxHeader from '@basics/box/header';
@@ -15,24 +15,14 @@ const ButtonTitle = ({ unlockableBalance, t }) => {
   }
   return (
     <>
-      {t('Unlock')}
-      {' '}
+      {t('Unlock')}{' '}
       <LiskAmount val={unlockableBalance} token={tokenMap.LSK.key} />
     </>
   );
 };
 
-const Form = ({
-  t,
-  children,
-  nextStep,
-  data,
-}) => {
-  const {
-    customFee,
-    fee,
-    unlockableBalance,
-  } = data;
+const Form = ({ t, children, nextStep, data }) => {
+  const { customFee, fee, unlockableBalance } = data;
 
   const onClick = async () => {
     nextStep({
@@ -48,7 +38,11 @@ const Form = ({
         <h1>{t('Locked balance details')}</h1>
       </BoxHeader>
       <BoxContent className={styles.content}>
-        <p>{t('Below are the details of your locked balances and the unlock waiting periods. From here you can submit an unlock transaction when waiting periods are over.')}</p>
+        <p>
+          {t(
+            'Below are the details of your locked balances and the unlock waiting periods. From here you can submit an unlock transaction when waiting periods are over.'
+          )}
+        </p>
         {children}
       </BoxContent>
       <BoxFooter>

@@ -1,7 +1,7 @@
 import React, { useEffect, useRef, useState } from 'react';
 import L from 'leaflet';
 import 'leaflet.markercluster/dist/leaflet.markercluster';
-import Box from '@basics/box';
+import Box from '@theme/box';
 import BoxContent from '@basics/box/content';
 import markerIcon from '@setup/react/assets/images/marker.svg';
 import mapboxWatermarkImage from '@setup/react/assets/images/mapbox.png';
@@ -21,14 +21,16 @@ const createMarkers = (peers) => {
   });
 
   const markers = L.markerClusterGroup({
-    iconCreateFunction: cluster =>
-      L.divIcon({ html: `<b class="markerCluster">${cluster.getChildCount()}</b>` }),
+    iconCreateFunction: (cluster) =>
+      L.divIcon({
+        html: `<b class="markerCluster">${cluster.getChildCount()}</b>`,
+      }),
   });
 
   peers.forEach((peer) => {
     if (peer.location?.latitude) {
       markers.addLayer(
-        L.marker([peer.location.latitude, peer.location.longitude], { icon }),
+        L.marker([peer.location.latitude, peer.location.longitude], { icon })
       );
     }
   });
@@ -37,20 +39,26 @@ const createMarkers = (peers) => {
 };
 
 const getAttributionLinks = () => {
-  const openStreetMap = '<span>© <a href="https://www.openstreetmap.org/copyright" target="_blank">OpenStreetMap</a> contributors</span>';
-  const mapBox = '<a href="https://www.mapbox.com/about/maps/" target="_blank">© Mapbox</a>';
-  const improveThisMap = '<a href="https://www.mapbox.com/map-feedback/#/-74.5/40/10" target="_blank">Improve this map</a>';
+  const openStreetMap =
+    '<span>© <a href="https://www.openstreetmap.org/copyright" target="_blank">OpenStreetMap</a> contributors</span>';
+  const mapBox =
+    '<a href="https://www.mapbox.com/about/maps/" target="_blank">© Mapbox</a>';
+  const improveThisMap =
+    '<a href="https://www.mapbox.com/map-feedback/#/-74.5/40/10" target="_blank">Improve this map</a>';
   const watermark = `<a href="http://mapbox.com/about/maps" target="_blank"><img src="${mapboxWatermarkImage}" class="mapboxWatermark" /></a>`;
 
   return `${openStreetMap} ${mapBox} ${improveThisMap} ${watermark}`;
 };
 
 const getTiles = () =>
-  L.tileLayer('https://api.mapbox.com/styles/v1/{id}/tiles/{z}/{x}/{y}?access_token=pk.eyJ1IjoibWFwYm94IiwiYSI6ImNpejY4NXVycTA2emYycXBndHRqcmZ3N3gifQ.rJcFIG214AriISLbB6B5aw', {
-    id: 'mapbox/streets-v11',
-    tileSize: 512,
-    zoomOffset: -1,
-  });
+  L.tileLayer(
+    'https://api.mapbox.com/styles/v1/{id}/tiles/{z}/{x}/{y}?access_token=pk.eyJ1IjoibWFwYm94IiwiYSI6ImNpejY4NXVycTA2emYycXBndHRqcmZ3N3gifQ.rJcFIG214AriISLbB6B5aw',
+    {
+      id: 'mapbox/streets-v11',
+      tileSize: 512,
+      zoomOffset: -1,
+    }
+  );
 
 const FullMap = ({ peers }) => {
   const ref = useRef();
@@ -59,7 +67,10 @@ const FullMap = ({ peers }) => {
   useEffect(() => {
     if (peers.length) {
       if (!ref.current) {
-        const networkMap = L.map('mapContainer', mapOptions).setView([36.414203, 11.250000], 2);
+        const networkMap = L.map('mapContainer', mapOptions).setView(
+          [36.414203, 11.25],
+          2
+        );
 
         const tiles = getTiles();
         tiles.addTo(networkMap);
@@ -72,9 +83,12 @@ const FullMap = ({ peers }) => {
     }
   }, [peers]);
 
-  useEffect(() => () => {
-    ref.current.remove();
-  }, []);
+  useEffect(
+    () => () => {
+      ref.current.remove();
+    },
+    []
+  );
 
   return (
     <Box className="map-box">

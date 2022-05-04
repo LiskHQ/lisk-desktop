@@ -7,7 +7,7 @@ import TransactionPriority from '@transaction/components/TransactionPriority';
 import useTransactionFeeCalculation from '@transaction/hooks/useTransactionFeeCalculation';
 import useTransactionPriority from '@transaction/hooks/useTransactionPriority';
 import { normalizeVotesForTx } from '@transaction/utils';
-import Box from '@basics/box';
+import Box from '@theme/box';
 import BoxContent from '@basics/box/content';
 import BoxFooter from '@basics/box/footer';
 import { PrimaryButton } from '@basics/buttons';
@@ -32,41 +32,50 @@ const VOTE_LIMIT = 10;
 const getVoteStats = (votes, account) => {
   const votesStats = Object.keys(votes)
     // eslint-disable-next-line max-statements
-    .reduce((stats, address) => {
-      const { confirmed, unconfirmed, username } = votes[address];
+    .reduce(
+      (stats, address) => {
+        const { confirmed, unconfirmed, username } = votes[address];
 
-      if (confirmed === 0 && unconfirmed === 0) {
-        return stats;
-      }
-
-      if (!confirmed && unconfirmed) {
-        // new vote
-        stats.added[address] = { unconfirmed, username };
-      } else if (confirmed && !unconfirmed) {
-        // removed vote
-        stats.removed[address] = { confirmed, username };
-        if (address === account.summary.address) {
-          stats.selfUnvote = { confirmed, username };
+        if (confirmed === 0 && unconfirmed === 0) {
+          return stats;
         }
-      } else if (confirmed !== unconfirmed) {
-        // edited vote
-        stats.edited[address] = { unconfirmed, confirmed, username };
-      } else {
-        // untouched
-        stats.untouched[address] = { unconfirmed, confirmed, username };
+
+        if (!confirmed && unconfirmed) {
+          // new vote
+          stats.added[address] = { unconfirmed, username };
+        } else if (confirmed && !unconfirmed) {
+          // removed vote
+          stats.removed[address] = { confirmed, username };
+          if (address === account.summary.address) {
+            stats.selfUnvote = { confirmed, username };
+          }
+        } else if (confirmed !== unconfirmed) {
+          // edited vote
+          stats.edited[address] = { unconfirmed, confirmed, username };
+        } else {
+          // untouched
+          stats.untouched[address] = { unconfirmed, confirmed, username };
+        }
+        return stats;
+      },
+      {
+        added: {},
+        edited: {},
+        removed: {},
+        untouched: {},
+        selfUnvote: {},
       }
-      return stats;
-    }, {
-      added: {}, edited: {}, removed: {}, untouched: {}, selfUnvote: {},
-    });
+    );
 
   const numOfAddededVotes = Object.keys(votesStats.added).length;
   const numOfEditedVotes = Object.keys(votesStats.edited).length;
   const numOfUntouchedVotes = Object.keys(votesStats.untouched).length;
   const numOfRemovedVotes = Object.keys(votesStats.removed).length;
 
-  const resultingNumOfVotes = numOfAddededVotes + numOfEditedVotes + numOfUntouchedVotes;
-  const availableVotes = VOTE_LIMIT - (numOfEditedVotes + numOfUntouchedVotes + numOfRemovedVotes);
+  const resultingNumOfVotes =
+    numOfAddededVotes + numOfEditedVotes + numOfUntouchedVotes;
+  const availableVotes =
+    VOTE_LIMIT - (numOfEditedVotes + numOfUntouchedVotes + numOfRemovedVotes);
 
   return {
     ...votesStats,
@@ -89,28 +98,42 @@ const getVoteStats = (votes, account) => {
 // eslint-disable-next-line max-statements
 const validateVotes = (votes, balance, fee, resultingNumOfVotes, t) => {
   const messages = [];
-  const areVotesInValid = Object.values(votes).some(vote =>
-    (vote.unconfirmed === '' || vote.unconfirmed === undefined));
+  const areVotesInValid = Object.values(votes).some(
+    (vote) => vote.unconfirmed === '' || vote.unconfirmed === undefined
+  );
 
   if (areVotesInValid) {
-    messages.push(t('Please enter vote amounts for the delegates you wish to vote for'));
+    messages.push(
+      t('Please enter vote amounts for the delegates you wish to vote for')
+    );
   }
 
   if (resultingNumOfVotes > VOTE_LIMIT) {
-    messages.push(t(`These votes in addition to your current votes will add up to ${resultingNumOfVotes}, exceeding the account limit of ${VOTE_LIMIT}.`));
+    messages.push(
+      t(
+        `These votes in addition to your current votes will add up to ${resultingNumOfVotes}, exceeding the account limit of ${VOTE_LIMIT}.`
+      )
+    );
   }
 
   const addedVoteAmount = Object.values(votes)
-    .filter(vote => vote.unconfirmed > vote.confirmed)
-    .reduce((sum,
-      vote) => { sum += (vote.unconfirmed - vote.confirmed); return sum; }, 0);
+    .filter((vote) => vote.unconfirmed > vote.confirmed)
+    .reduce((sum, vote) => {
+      sum += vote.unconfirmed - vote.confirmed;
+      return sum;
+    }, 0);
 
-  if ((addedVoteAmount + toRawLsk(fee)) > balance) {
-    messages.push(t('You don\'t have enough LSK in your account.'));
+  if (addedVoteAmount + toRawLsk(fee) > balance) {
+    messages.push(t("You don't have enough LSK in your account."));
   }
 
-  if ((balance - addedVoteAmount) < MIN_ACCOUNT_BALANCE && (balance - addedVoteAmount)) {
-    messages.push('The vote amounts are too high. You should keep 0.05 LSK available in your account.');
+  if (
+    balance - addedVoteAmount < MIN_ACCOUNT_BALANCE &&
+    balance - addedVoteAmount
+  ) {
+    messages.push(
+      'The vote amounts are too high. You should keep 0.05 LSK available in your account.'
+    );
   }
 
   return { messages, error: !!messages.length };
@@ -121,17 +144,27 @@ const moduleAssetId = MODULE_ASSETS_NAME_ID_MAP.voteDelegate;
 
 // eslint-disable-next-line max-statements
 const Editor = ({
-  t, votes, account, network, isVotingTxPending, nextStep,
+  t,
+  votes,
+  account,
+  network,
+  isVotingTxPending,
+  nextStep,
 }) => {
   const [customFee, setCustomFee] = useState();
   const [
-    selectedPriority, selectTransactionPriority,
-    priorityOptions, prioritiesLoadError, loadingPriorities,
+    selectedPriority,
+    selectTransactionPriority,
+    priorityOptions,
+    prioritiesLoadError,
+    loadingPriorities,
   ] = useTransactionPriority(token);
 
   const changedVotes = Object.keys(votes)
-    .filter(address => votes[address].unconfirmed !== votes[address].confirmed)
-    .map(address => ({ address, ...votes[address] }));
+    .filter(
+      (address) => votes[address].unconfirmed !== votes[address].confirmed
+    )
+    .map((address) => ({ address, ...votes[address] }));
 
   const normalizedVotes = useMemo(() => normalizeVotesForTx(votes), [votes]);
 
@@ -150,21 +183,34 @@ const Editor = ({
   });
 
   const {
-    added, edited, removed, selfUnvote, availableVotes, resultingNumOfVotes,
-  } = useMemo(() =>
-    getVoteStats(votes, account),
-  [votes, account]);
+    added,
+    edited,
+    removed,
+    selfUnvote,
+    availableVotes,
+    resultingNumOfVotes,
+  } = useMemo(() => getVoteStats(votes, account), [votes, account]);
 
   const feedback = validateVotes(
-    votes, Number(account.token?.balance), fee.value, resultingNumOfVotes, t,
+    votes,
+    Number(account.token?.balance),
+    fee.value,
+    resultingNumOfVotes,
+    t
   );
 
-  const isCTADisabled = feedback.error || Object.keys(changedVotes).length === 0;
+  const isCTADisabled =
+    feedback.error || Object.keys(changedVotes).length === 0;
 
   const goToNextStep = () => {
     const feeValue = customFee ? customFee.value : fee.value;
     nextStep({
-      added, edited, removed, selfUnvote, fee: toRawLsk(feeValue), normalizedVotes,
+      added,
+      edited,
+      removed,
+      selfUnvote,
+      fee: toRawLsk(feeValue),
+      normalizedVotes,
     });
   };
 
@@ -180,61 +226,61 @@ const Editor = ({
               <span className={styles.title}>{t('Voting queue')}</span>
               <div className={styles.votesAvailableCounter}>
                 <span className="available-votes-num">{`${availableVotes}/`}</span>
-                <span>{t('{{VOTE_LIMIT}} votes available for your account', { VOTE_LIMIT })}</span>
+                <span>
+                  {t('{{VOTE_LIMIT}} votes available for your account', {
+                    VOTE_LIMIT,
+                  })}
+                </span>
               </div>
             </>
           )}
         </div>
-        {showEmptyState
-          ? (
-            <EmptyState t={t} />
-          )
-          : (
-            <>
-              <BoxContent className={styles.contentContainer}>
-                <div className={styles.contentScrollable}>
-                  <Table
-                    data={changedVotes}
-                    header={header(t)}
-                    row={VoteRow}
-                    iterationKey="address"
-                    canLoadMore={false}
-                  />
-                </div>
-              </BoxContent>
-              <TransactionPriority
-                className={styles.txPriority}
-                token={token}
-                fee={fee}
-                minFee={Number(minFee.value)}
-                customFee={customFee ? customFee.value : undefined}
-                moduleAssetId={moduleAssetId}
-                setCustomFee={setCustomFee}
-                priorityOptions={priorityOptions}
-                selectedPriority={selectedPriority.selectedIndex}
-                setSelectedPriority={selectTransactionPriority}
-                loadError={prioritiesLoadError}
-                isLoading={loadingPriorities}
-              />
-              {
-                feedback.error && (
-                  <div className={`${styles.feedback} feedback`}>
-                    <span>{feedback.messages[0]}</span>
-                  </div>
-                )
-              }
-              <BoxFooter>
-                <PrimaryButton
-                  className="confirm"
-                  size="l"
-                  disabled={isCTADisabled || isVotingTxPending}
-                  onClick={goToNextStep}
-                >
-                  {t('Continue')}
-                </PrimaryButton>
-              </BoxFooter>
-            </>
-          )}
+        {showEmptyState ? (
+          <EmptyState t={t} />
+        ) : (
+          <>
+            <BoxContent className={styles.contentContainer}>
+              <div className={styles.contentScrollable}>
+                <Table
+                  data={changedVotes}
+                  header={header(t)}
+                  row={VoteRow}
+                  iterationKey="address"
+                  canLoadMore={false}
+                />
+              </div>
+            </BoxContent>
+            <TransactionPriority
+              className={styles.txPriority}
+              token={token}
+              fee={fee}
+              minFee={Number(minFee.value)}
+              customFee={customFee ? customFee.value : undefined}
+              moduleAssetId={moduleAssetId}
+              setCustomFee={setCustomFee}
+              priorityOptions={priorityOptions}
+              selectedPriority={selectedPriority.selectedIndex}
+              setSelectedPriority={selectTransactionPriority}
+              loadError={prioritiesLoadError}
+              isLoading={loadingPriorities}
+            />
+            {feedback.error && (
+              <div className={`${styles.feedback} feedback`}>
+                <span>{feedback.messages[0]}</span>
+              </div>
+            )}
+            <BoxFooter>
+              <PrimaryButton
+                className="confirm"
+                size="l"
+                disabled={isCTADisabled || isVotingTxPending}
+                onClick={goToNextStep}
+              >
+                {t('Continue')}
+              </PrimaryButton>
+            </BoxFooter>
+          </>
+        )}
       </Box>
     </section>
   );

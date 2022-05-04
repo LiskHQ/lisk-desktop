@@ -2,9 +2,16 @@ import React, { useEffect, useRef, useState } from 'react';
 import PropTypes from 'prop-types';
 
 import { tokenMap } from '@token/configuration/tokens';
-import { validateBookmarkAddress, validateBookmarkLabel, getBookmarkMode } from '@bookmark/utils';
-import { parseSearchParams, removeSearchParamsFromUrl } from 'src/utils/searchParams';
-import Box from '@basics/box';
+import {
+  validateBookmarkAddress,
+  validateBookmarkLabel,
+  getBookmarkMode,
+} from '@bookmark/utils';
+import {
+  parseSearchParams,
+  removeSearchParamsFromUrl,
+} from 'src/utils/searchParams';
+import Box from '@theme/box';
 import BoxHeader from '@basics/box/header';
 import BoxContent from '@basics/box/content';
 import BoxFooter from '@basics/box/footer';
@@ -33,10 +40,19 @@ const AddBookmark = ({
   const timeout = useRef(null);
 
   useEffect(() => {
-    const { formAddress, label, isDelegate } = parseSearchParams(history.location.search);
-    const bookmark = bookmarks[active].find(item => item.address === formAddress);
+    const { formAddress, label, isDelegate } = parseSearchParams(
+      history.location.search
+    );
+    const bookmark = bookmarks[active].find(
+      (item) => item.address === formAddress
+    );
     const addressFeedback = validateBookmarkAddress(
-      active, formAddress, network, bookmarks, t, false,
+      active,
+      formAddress,
+      network,
+      bookmarks,
+      t,
+      false
     );
     const usernameValue = bookmark?.title || label || '';
     const usernameFeedback = validateBookmarkLabel(usernameValue, t);
@@ -58,8 +74,8 @@ const AddBookmark = ({
   useEffect(() => {
     if (account.data?.summary) {
       const username = account.data.dpos?.delegate?.username ?? '';
-      setFields(
-        [{
+      setFields([
+        {
           value: account.data.summary.address,
           feedback: '',
           readonly: true,
@@ -68,8 +84,8 @@ const AddBookmark = ({
           value: username,
           feedback: '',
           readonly: username !== '',
-        }],
-      );
+        },
+      ]);
 
       setMode(getBookmarkMode(history, bookmarks, active));
     }
@@ -95,7 +111,14 @@ const AddBookmark = ({
   };
 
   const onAddressChange = ({ target: { value } }) => {
-    const feedback = validateBookmarkAddress(active, value, network, bookmarks, t, true);
+    const feedback = validateBookmarkAddress(
+      active,
+      value,
+      network,
+      bookmarks,
+      t,
+      true
+    );
     clearTimeout(timeout.current);
 
     if (active === tokenMap.LSK.key && !feedback && value !== '') {
@@ -139,15 +162,23 @@ const AddBookmark = ({
     onClose();
   };
 
-  const isDisabled = fields.find(field => field.feedback || field.value === '');
+  const isDisabled = fields.find(
+    (field) => field.feedback || field.value === ''
+  );
 
   return (
     <ModalWrapper>
       <div className={styles.wrapper}>
         <div className={styles.content}>
-          <header className={styles.header}><Icon name="bookmarkActive" /></header>
+          <header className={styles.header}>
+            <Icon name="bookmarkActive" />
+          </header>
           <Box className={styles.box}>
-            <BoxHeader><h2>{mode === 'edit' ? t('Edit bookmark') : t('New bookmark')}</h2></BoxHeader>
+            <BoxHeader>
+              <h2>
+                {mode === 'edit' ? t('Edit bookmark') : t('New bookmark')}
+              </h2>
+            </BoxHeader>
             <BoxContent>
               <BookmarkForm
                 t={t}
@@ -160,14 +191,21 @@ const AddBookmark = ({
                 {t('Cancel')}
               </SecondaryButton>
               {mode === 'edit' && (
-                <SecondaryButton className="remove-button" onClick={handleRemoveBookmark}>
+                <SecondaryButton
+                  className="remove-button"
+                  onClick={handleRemoveBookmark}
+                >
                   <div className={styles.removeBtn}>
                     <Icon name="remove" />
                     {t('Remove')}
                   </div>
                 </SecondaryButton>
               )}
-              <PrimaryButton disabled={isDisabled} onClick={handleAddBookmark} className="save-button">
+              <PrimaryButton
+                disabled={isDisabled}
+                onClick={handleAddBookmark}
+                className="save-button"
+              >
                 {t('Save')}
               </PrimaryButton>
             </BoxFooter>
@@ -185,10 +223,12 @@ AddBookmark.propTypes = {
     active: PropTypes.string.isRequired,
   }).isRequired,
   bookmarks: PropTypes.shape({
-    LSK: PropTypes.arrayOf(PropTypes.shape({
-      address: PropTypes.string.isRequired,
-      title: PropTypes.string.isRequired,
-    })),
+    LSK: PropTypes.arrayOf(
+      PropTypes.shape({
+        address: PropTypes.string.isRequired,
+        title: PropTypes.string.isRequired,
+      })
+    ),
   }).isRequired,
   network: PropTypes.shape({
     name: PropTypes.string.isRequired,

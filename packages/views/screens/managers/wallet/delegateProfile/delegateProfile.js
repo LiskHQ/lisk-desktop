@@ -1,16 +1,13 @@
 import React, { useEffect } from 'react';
 import grid from 'flexboxgrid/dist/flexboxgrid.css';
 
-import Box from '@basics/box';
+import Box from '@theme/box';
 import styles from './delegateProfile.css';
 import DetailsView from './detailsView';
 import PerformanceView from './performanceView';
 import DelegateVotesView from './delegateVotesView';
 
-const DelegateProfile = ({
-  delegate, account, t, voters,
-  lastBlockForged,
-}) => {
+const DelegateProfile = ({ delegate, account, t, voters, lastBlockForged }) => {
   const { data } = delegate;
   useEffect(() => {
     voters.loadData({ aggregate: true });
@@ -35,15 +32,9 @@ const DelegateProfile = ({
           data={data.dpos.delegate}
           lastBlockForged={lastBlockForged.data.timestamp}
         />
-        <PerformanceView
-          t={t}
-          data={data.dpos.delegate}
-        />
+        <PerformanceView t={t} data={data.dpos.delegate} />
       </Box>
-      <DelegateVotesView
-        t={t}
-        voters={voters}
-      />
+      <DelegateVotesView t={t} voters={voters} />
     </section>
   );
 };

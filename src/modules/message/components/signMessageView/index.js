@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 
-import Box from '@basics/box';
+import Box from '@theme/box';
 import BoxHeader from '@basics/box/header';
 import MultiStep from 'src/modules/common/components/OldMultiStep';
 import Dialog from '@basics/dialog/dialog';
@@ -9,9 +9,7 @@ import SignedMessage from '../signedMessage';
 import SignatureCollector from '../signatureCollector';
 import styles from './signMessageView.css';
 
-const signMessageView = ({
-  account, t, history,
-}) => {
+const signMessageView = ({ account, t, history }) => {
   const [isNext, setIsNext] = useState(true);
 
   return (
@@ -21,16 +19,8 @@ const signMessageView = ({
           <h1>{t('Sign message')}</h1>
         </BoxHeader>
         <MultiStep>
-          <MessageForm
-            t={t}
-            history={history}
-            onNext={() => setIsNext(true)}
-          />
-          <SignatureCollector
-            t={t}
-            isNext={isNext}
-            account={account}
-          />
+          <MessageForm t={t} history={history} onNext={() => setIsNext(true)} />
+          <SignatureCollector t={t} isNext={isNext} account={account} />
           <SignedMessage
             t={t}
             history={history}

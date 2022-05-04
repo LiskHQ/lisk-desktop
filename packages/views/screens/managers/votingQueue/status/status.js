@@ -1,15 +1,17 @@
 import React from 'react';
-import Box from '@basics/box';
+import Box from '@theme/box';
 import TransactionResult from '@transaction/components/TransactionResult';
 import { getTransactionStatus } from '@transaction/configuration/statusConfig';
 import ToggleIcon from '../toggleIcon';
 import statusMessages from './statusMessages';
 import styles from './styles.css';
 
-const Status = ({
-  account, transactions, statusInfo, t,
-}) => {
-  const status = getTransactionStatus(account, transactions, account?.summary.isMultisignature);
+const Status = ({ account, transactions, statusInfo, t }) => {
+  const status = getTransactionStatus(
+    account,
+    transactions,
+    account?.summary.isMultisignature
+  );
   const template = statusMessages(t, statusInfo)[status.code];
 
   return (
