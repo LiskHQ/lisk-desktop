@@ -127,7 +127,7 @@ export const votesRetrieved = () =>
       dispatch({
         type: actionTypes.votesRetrieved,
         data: {
-          wallet: {},
+          account: {},
         },
       });
     }

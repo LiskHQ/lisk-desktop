@@ -2,7 +2,8 @@
 import { connect } from 'react-redux';
 import { setDefaults, withTranslation } from 'react-i18next';
 import { getActiveTokenAccount } from '@wallet/utils/account';
-import { login, settingsUpdated } from '@auth/store/action';
+import { login } from '@auth/store/action';
+import { settingsUpdated } from '@packages/settings/store/actions';
 import Login from './login';
 
 setDefaults({

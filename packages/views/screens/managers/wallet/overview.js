@@ -12,7 +12,6 @@ import { selectTransactions } from '@common/store/selectors';
 import FlashMessageHolder from '@basics/flashMessage/holder';
 import WarnPunishedDelegate from '@dpos/validator/components/WarnPunishedDelegate';
 import WalletInfo from '@wallet/components/walletInfo';
-import BalanceChart from '@views/utilities/balanceChart';
 import BalanceInfo from '../../../../wallet/detail/holdings/balanceInfo';
 import styles from './overview.css';
 
@@ -134,20 +133,6 @@ const Overview = ({
           account={account}
           address={address}
         />
-      </div>
-      <div
-        className={`${grid['col-xs-12']} ${grid['col-md-6']} ${grid['col-lg-6']} ${styles.balanceChart}`}
-      >
-        {address && (
-          <BalanceChart
-            t={t}
-            transactions={isWalletRoute ? confirmed : transactions.data.data}
-            token={activeToken}
-            isDiscreetMode={discreetMode && host === address}
-            balance={balance}
-            address={address}
-          />
-        )}
       </div>
     </section>
   );

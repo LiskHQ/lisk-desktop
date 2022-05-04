@@ -1,8 +1,8 @@
 /* istanbul ignore file */
 import { connect } from 'react-redux';
 import { withTranslation } from 'react-i18next';
+import { balanceUnlocked } from '@packages/wallet/store/action';
 import { getActiveTokenAccount } from '@wallet/utils/account';
-import { balanceUnlocked } from '@common/store/actions';
 import Summary from './summary';
 
 const mapStateToProps = state => ({

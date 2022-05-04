@@ -2,7 +2,8 @@
 import { connect } from 'react-redux';
 import { withTranslation } from 'react-i18next';
 import { getActiveTokenAccount } from '@wallet/utils/account';
-import { settingsUpdated, timerReset } from '@common/store/actions';
+import { settingsUpdated } from '@packages/settings/store/actions';
+import { timerReset } from '@auth/store/action';
 import Settings from './settings';
 
 const mapStateToProps = state => ({
