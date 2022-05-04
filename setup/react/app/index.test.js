@@ -8,7 +8,7 @@ import { I18nextProvider } from 'react-i18next';
 import routes from '@screens/router/routes';
 import Login from 'src/modules/auth/components/Signin/login';
 import Wallet from '@screens/managers/wallet';
-import i18n from '../../i18n/i18n'; // initialized i18next instance
+import i18n from 'src/utils/i18n/i18n'; // initialized i18next instance
 import App from '.';
 
 const fakeStore = configureStore();

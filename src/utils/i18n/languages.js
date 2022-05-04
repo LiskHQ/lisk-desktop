@@ -4,11 +4,11 @@ const t = key => key; // This is hack to get the names in common.json
 const languages = {
   en: {
     name: t('English'),
-    common: require('./locales/en/common.json'),
+    common: require('../../locales/en/common.json'),
   },
   // de: {
   //   name: t('German'),
-  //   common: require('./locales/de/common.json'),
+  //   common: require('../../locales/de/common.json'),
   // },
 };
 export default languages;
