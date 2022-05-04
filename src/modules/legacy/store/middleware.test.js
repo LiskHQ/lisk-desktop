@@ -4,6 +4,8 @@ import history from '@common/utilities/history';
 import walletActionTypes from '@wallet/store/actionTypes';
 import middleware from './middleware';
 
+jest.mock('@common/utilities/history');
+
 const block = {
   numberOfTransactions: 2,
   id: '513008230952104224',

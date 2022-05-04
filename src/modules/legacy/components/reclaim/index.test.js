@@ -6,7 +6,7 @@ import wallets from '@tests/constants/wallets';
 import Reclaim from './index';
 import styles from './reclaim.css';
 
-jest.mock('@screens/router/searchParams', () => ({
+jest.mock('src/utils/searchParams', () => ({
   addSearchParamsToUrl: jest.fn(),
 }));
 

@@ -3,7 +3,7 @@ import wallets from '@tests/constants/wallets';
 import actionTypes from '@transaction/store/actionTypes';
 import { balanceReclaimed } from './action';
 
-jest.mock('@transaction/utilities/api/lsk');
+jest.mock('@transaction/api/lsk');
 
 describe('actions: legacy', () => {
   const dispatch = jest.fn();
@@ -31,6 +31,7 @@ describe('actions: legacy', () => {
           resolve(tx);
         }));
       await balanceReclaimed({ fee: { value: '0,1' } })(dispatch, getState);
+
       expect(create).toHaveBeenCalledWith({
         network: state.network,
         wallet: state.wallet.info.LSK,
@@ -40,7 +41,7 @@ describe('actions: legacy', () => {
           amount: '13600000000',
           keys: { numberOfSignatures: 0 },
         },
-      }, 'LSK');
+      });
       expect(dispatch).toHaveBeenCalledWith({
         type: actionTypes.transactionCreatedSuccess,
         data: tx,

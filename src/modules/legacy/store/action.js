@@ -14,8 +14,8 @@ export const balanceReclaimed = ({ fee }) => async (dispatch, getState) => {
   const state = getState();
   const activeWallet = {
     ...state.wallet.info.LSK,
-    hwInfo: isEmpty(state.wallet.hwInfo) ? undefined : state.wallet.hwInfo,
-    passphrase: state.wallet.passphrase,
+    ...!isEmpty(state.wallet.hwInfo) && { hwInfo: state.wallet.hwInfo },
+    ...state.wallet.passphrase && { passphrase: state.wallet.passphrase },
   };
 
   //
