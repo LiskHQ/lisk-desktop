@@ -26,7 +26,7 @@ export default compose(
       apiUtil: (network, { token, ...params }) =>
         getTransactions({ network, params: normalizeTransactionParams(params) }, token),
       getApiParams: state => ({
-        token: state.settings.token.active,
+        token: state.token.active,
         limit: DEFAULT_LIMIT,
       }),
       defaultData: [],

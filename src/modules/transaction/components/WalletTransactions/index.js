@@ -22,7 +22,7 @@ export default compose(
       apiUtil: (network, { token, ...params }) =>
         getTransactions({ network, params: normalizeTransactionParams(params) }, token),
       getApiParams: (state, { address, sort }) => ({
-        token: state.settings.token.active,
+        token: state.token.active,
         address,
         sort,
         limit: DEFAULT_LIMIT,

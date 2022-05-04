@@ -1,7 +1,7 @@
 import { to } from 'await-to-js';
-import { tokenMap } from '@token/configuration/tokens';
+import { tokenMap } from '@token/fungible/consts/tokens';
 import { MODULE_ASSETS_NAME_ID_MAP } from '@transaction/configuration/moduleAssets';
-import { toRawLsk } from '@token/utilities/lsk';
+import { toRawLsk } from '@token/fungible/utils/lsk';
 import { isEmpty } from '@common/utilities/helpers';
 import { create } from '@transaction/api';
 import actionTypes from '@transaction/store/actionTypes';

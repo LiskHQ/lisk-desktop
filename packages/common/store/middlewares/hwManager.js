@@ -49,15 +49,15 @@ const hwWalletMiddleware = store => next => (action) => {
      * and in case user is SignIn trigger the logout Dialog and toast message.
      */
     subscribeToDeviceDisconnected((response) => {
-      const { account, settings } = store.getState();
-      const activeToken = settings.token.active || 'LSK';
+      const { wallet, token } = store.getState();
+      const activeToken = token.active || 'LSK';
 
       // Check if user is SignedIn
-      if (account.info
-        && account.info[activeToken]
-        && account.info[activeToken].address
-        && account.hwInfo.deviceId
-        && account.hwInfo.deviceModel === response.model
+      if (wallet.info
+        && wallet.info[activeToken]
+        && wallet.info[activeToken].address
+        && wallet.hwInfo.deviceId
+        && wallet.hwInfo.deviceModel === response.model
       ) {
         addSearchParamsToUrl(history, { modal: 'deviceDisconnectDialog', model: response.model });
         store.dispatch(accountLoggedOut());

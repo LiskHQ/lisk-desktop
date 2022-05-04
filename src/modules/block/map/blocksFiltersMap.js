@@ -1,4 +1,4 @@
-import { tokenMap } from '@token/configuration/tokens';
+import { tokenMap } from '@token/fungible/consts/tokens';
 import { validateAddress } from '@common/utilities/validators';
 
 const blocksFiltersMap = {

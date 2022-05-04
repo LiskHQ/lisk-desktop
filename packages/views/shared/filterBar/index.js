@@ -1,6 +1,6 @@
 import React from 'react';
 import moment from 'moment';
-import { tokenMap } from '@token/configuration/tokens';
+import { tokenMap } from '@token/fungible/consts/tokens';
 import { SecondaryButton } from 'src/theme/buttons';
 import i18n from 'src/utils/i18n/i18n';
 

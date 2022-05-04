@@ -2,7 +2,7 @@ import React from 'react';
 import { withTranslation } from 'react-i18next';
 import WalletVisual from '@wallet/components/walletVisual';
 import LiskAmount from '@shared/liskAmount';
-import { tokenMap } from '@token/configuration/tokens';
+import { tokenMap } from '@token/fungible/consts/tokens';
 import styles from './TransactionInfo.css';
 import CustomTransactionInfo from './CustomTransactionInfo';
 

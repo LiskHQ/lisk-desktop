@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { isEmpty } from '@common/utilities/helpers';
 import { regex } from '@common/configuration';
-import { tokenMap } from '@token/configuration/tokens';
+import { tokenMap } from '@token/fungible/consts/tokens';
 import { MODULE_ASSETS_NAME_ID_MAP } from '@transaction/configuration/moduleAssets';
 import { MIN_ACCOUNT_BALANCE } from '@transaction/configuration/transactions';
 import { getDelegate } from '@dpos/validator/api';
@@ -15,7 +15,7 @@ import BoxFooter from 'src/theme/box/footer';
 import { Input } from 'src/theme';
 import { PrimaryButton } from 'src/theme/buttons';
 import Tooltip from 'src/theme/Tooltip';
-import { toRawLsk, fromRawLsk } from '@token/utilities/lsk';
+import { toRawLsk, fromRawLsk } from '@token/fungible/utils/lsk';
 import styles from './form.css';
 
 const token = tokenMap.LSK.key;

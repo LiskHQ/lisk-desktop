@@ -1,5 +1,5 @@
 import { MODULE_ASSETS_NAME_ID_MAP } from '@transaction/configuration/moduleAssets';
-import { fromRawLsk, delay } from '@token/utilities/lsk';
+import { fromRawLsk, delay } from '@token/fungible/utils/lsk';
 import { getActiveTokenAccount } from '@wallet/utils/account';
 import {
   settingsUpdated, accountDataUpdated,

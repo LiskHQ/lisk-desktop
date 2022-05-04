@@ -1,5 +1,5 @@
 import React from 'react';
-import { fromRawLsk } from '@token/utilities/lsk';
+import { fromRawLsk } from '@token/fungible/utils/lsk';
 import TransactionInfo from '@transaction/components/TransactionInfo';
 import { MODULE_ASSETS_NAME_ID_MAP } from '@transaction/configuration/moduleAssets';
 import TransactionSummary from '@transaction/components/TransactionSummary';

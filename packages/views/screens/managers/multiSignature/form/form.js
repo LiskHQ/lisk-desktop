@@ -11,7 +11,7 @@ import BoxFooter from 'src/theme/box/footer';
 import { PrimaryButton, TertiaryButton } from 'src/theme/buttons';
 import { Input } from 'src/theme';
 import { regex } from '@common/configuration';
-import { tokenMap } from '@token/configuration/tokens';
+import { tokenMap } from '@token/fungible/consts/tokens';
 import { MODULE_ASSETS_NAME_ID_MAP } from '@transaction/configuration/moduleAssets';
 import { extractAddressFromPublicKey } from '@wallet/utils/account';
 import ProgressBar from '../progressBar';

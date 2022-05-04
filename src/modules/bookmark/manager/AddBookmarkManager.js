@@ -11,7 +11,7 @@ import AddBookmark from '../components/AddBookmark';
 
 const mapStateToProps = state => ({
   bookmarks: state.bookmarks,
-  token: state.settings.token,
+  token: state.token,
   network: state.network,
 });
 
@@ -29,7 +29,7 @@ export default compose(
       apiUtil: (network, params) => getAccount({ network, params }, params.token),
       defaultData: {},
       getApiParams: (state, props) => ({
-        token: state.settings.token.active,
+        token: state.token.active,
         address: selectSearchParamValue(props.history.location.search, 'address'),
       }),
     },

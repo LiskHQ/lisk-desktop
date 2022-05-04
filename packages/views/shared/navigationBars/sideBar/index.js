@@ -105,13 +105,9 @@ const AutoSignOutWrapper = () => {
 
 const SideBar = ({ t, location }) => {
   const items = menuLinks(t);
-  const token = useSelector((state) => state.settings.token.active);
-  const isLoggedOut = useSelector(
-    (state) => !state.wallet.info || !state.wallet.info[token],
-  );
-  const sideBarExpanded = useSelector(
-    (state) => state.settings.sideBarExpanded,
-  );
+  const token = useSelector(state => state.token.active);
+  const isLoggedOut = useSelector(state => !state.wallet.info || !state.wallet.info[token]);
+  const sideBarExpanded = useSelector(state => state.settings.sideBarExpanded);
 
   return (
     <nav className={`${styles.wrapper} ${sideBarExpanded ? 'expanded' : ''}`}>

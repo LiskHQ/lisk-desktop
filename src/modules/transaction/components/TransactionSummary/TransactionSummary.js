@@ -5,7 +5,7 @@ import BoxHeader from 'src/theme/box/header';
 import BoxContent from 'src/theme/box/content';
 import Illustration from 'src/modules/common/components/illustration';
 import Tooltip from 'src/theme/Tooltip';
-import { tokenMap } from '@token/configuration/tokens';
+import { tokenMap } from '@token/fungible/consts/tokens';
 import Footer from './footer';
 import styles from './TransactionSummary.css';
 

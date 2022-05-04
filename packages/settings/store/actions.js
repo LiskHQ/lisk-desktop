@@ -1,4 +1,3 @@
-import { tokenMap } from '@token/configuration/tokens';
 import { getFromStorage } from '@common/utilities/localJSONStorage';
 import actionTypes from './actionTypes';
 import { initialState } from './reducer';
@@ -9,17 +8,12 @@ import { initialState } from './reducer';
  */
 export const settingsRetrieved = () => (dispatch) => {
   getFromStorage('settings', initialState, (data) => {
+    // For cases where token is still stored with settings data,
+    // Remove token from retrieved data before storing
+    delete data.token;
     dispatch({
       type: actionTypes.settingsRetrieved,
-      data: {
-        ...data,
-        token: {
-          active: tokenMap.LSK.key,
-          list: {
-            [tokenMap.LSK.key]: true,
-          },
-        },
-      },
+      data,
     });
   });
 };

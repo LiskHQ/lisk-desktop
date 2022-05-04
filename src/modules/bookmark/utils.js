@@ -1,4 +1,4 @@
-import { tokenKeys, tokenMap } from '@token/configuration/tokens';
+import { tokenKeys, tokenMap } from '@token/fungible/consts/tokens';
 import { validateAddress } from '@common/utilities/validators';
 import { parseSearchParams } from 'src/utils/searchParams';
 

@@ -8,9 +8,9 @@ import {
   selectSearchParamValue,
   removeSearchParamsFromUrl,
 } from 'src/utils/searchParams';
-import { tokenMap } from '@token/configuration/tokens';
+import { tokenMap } from '@token/fungible/consts/tokens';
 import { voteEdited } from '@common/store/actions';
-import { toRawLsk, fromRawLsk } from '@token/utilities/lsk';
+import { toRawLsk, fromRawLsk } from '@token/fungible/utils/lsk';
 import Dialog from 'src/theme/dialog/dialog';
 import Box from 'src/theme/box';
 import BoxContent from 'src/theme/box/content';

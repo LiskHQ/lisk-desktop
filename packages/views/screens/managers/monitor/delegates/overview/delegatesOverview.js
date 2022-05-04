@@ -1,6 +1,6 @@
 // istanbul ignore file
 import React from 'react';
-// import { fromRawLsk } from '@token/utilities/lsk';
+// import { fromRawLsk } from '@token/fungible/utils/lsk';
 import { ROUND_LENGTH } from '@dpos/validator/consts';
 import { useTheme } from 'src/theme/Theme';
 import { getColorPalette } from 'src/modules/common/components/charts/chartOptions';

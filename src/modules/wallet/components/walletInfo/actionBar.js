@@ -1,6 +1,6 @@
 import React from 'react';
 import QRCode from 'qrcode.react';
-import { tokenMap } from '@token/configuration/tokens';
+import { tokenMap } from '@token/fungible/consts/tokens';
 import { getAddress } from '@wallet/utils/hwManager';
 import { isEmpty } from '@common/utilities/helpers';
 import Icon from 'src/theme/Icon';
@@ -62,9 +62,9 @@ const MultiSignatureButton = ({ t, component, isMultisignature }) => (
 );
 
 const CopyAddressAndPublicKey = ({
-  address, publicKey, activeToken, t,
+  address, publicKey, t,
 }) => {
-  if (activeToken === tokenMap.BTC.key || !publicKey) {
+  if (!publicKey) {
     return (
       <Tooltip
         className={styles.tooltipWrapper}
@@ -141,7 +141,6 @@ const ActionBar = ({
         <CopyAddressAndPublicKey
           address={address}
           publicKey={account.summary.publicKey}
-          activeToken={activeToken}
           t={t}
         />
       </div>

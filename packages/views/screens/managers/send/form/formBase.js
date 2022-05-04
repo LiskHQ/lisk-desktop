@@ -1,7 +1,7 @@
 import React from 'react';
 import Piwik from '@common/utilities/piwik';
 import { PrimaryButton } from 'src/theme/buttons';
-import { tokenMap } from '@token/configuration/tokens';
+import { tokenMap } from '@token/fungible/consts/tokens';
 import AmountField from '@shared/amountField';
 import Box from 'src/theme/box';
 import BoxContent from 'src/theme/box/content';
