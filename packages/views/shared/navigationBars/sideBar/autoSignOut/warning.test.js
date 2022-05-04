@@ -1,6 +1,6 @@
 import React from 'react';
 import { mount } from 'enzyme';
-import { timerReset } from '@common/store/actions';
+import { timerReset } from '@auth/store/action';
 import account from '@wallet/configuration/constants';
 import Warning from './warning';
 
