@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { PrimaryButton, SecondaryButton } from 'src/theme/buttons';
-import Illustration from '@basics/illustration';
+import Illustration from 'src/modules/common/components/illustration';
 import routes from '@screens/router/routes';
 import { txStatusTypes } from '@transaction/configuration/txStatus';
 import { getErrorReportMailto } from '@common/utilities/helpers';

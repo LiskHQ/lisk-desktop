@@ -1,6 +1,6 @@
 import React from 'react';
 import QRCode from 'qrcode.react';
-import CopyToClipboard from '@basics/copyToClipboard';
+import CopyToClipboard from 'src/modules/common/components/copyToClipboard';
 import { PrimaryButton } from 'src/theme/buttons';
 import Dialog from 'src/theme/dialog/dialog';
 import styles from './request.css';

@@ -4,7 +4,7 @@ import { tokenMap } from '@token/configuration/tokens';
 import { getAddress } from '@wallet/utils/hwManager';
 import { isEmpty } from '@common/utilities/helpers';
 import Icon from 'src/theme/Icon';
-import CopyToClipboard from '@basics/copyToClipboard';
+import CopyToClipboard from 'src/modules/common/components/copyToClipboard';
 import Tooltip from 'src/theme/Tooltip';
 import DialogLink from 'src/theme/dialog/link';
 import styles from './walletInfo.css';

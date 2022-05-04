@@ -9,7 +9,7 @@ import {
   lineChartOptions,
   barChartOptions,
   doughnutChartOptions,
-} from '@views/basics/charts/chartOptions';
+} from 'src/modules/common/components/charts/chartOptions';
 
 const propTypes = {
   data: PropTypes.object.isRequired,
@@ -19,10 +19,7 @@ const propTypes = {
 };
 
 export const LineChart = ({
-  data,
-  width,
-  height,
-  options,
+  data, width, height, options,
 }) => (
   <Line
     data={lineChartData(data)}
@@ -33,10 +30,7 @@ export const LineChart = ({
 );
 
 export const BarChart = ({
-  data,
-  width,
-  height,
-  options,
+  data, width, height, options,
 }) => (
   <Bar
     data={barChartData(data)}
@@ -47,10 +41,7 @@ export const BarChart = ({
 );
 
 export const DoughnutChart = ({
-  data,
-  width,
-  height,
-  options,
+  data, width, height, options,
 }) => (
   <Doughnut
     data={doughnutChartData(data, useTheme())}

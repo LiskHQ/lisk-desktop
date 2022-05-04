@@ -1,6 +1,6 @@
 import React from 'react';
 import boxStyles from 'src/theme/box/emptyState.css';
-import Illustration from '@basics/illustration';
+import Illustration from 'src/modules/common/components/illustration';
 import styles from './transactionDetails.css';
 
 const NotFound = ({ t }) => (

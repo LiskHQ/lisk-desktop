@@ -3,7 +3,7 @@ import { useTranslation } from 'react-i18next';
 import grid from 'flexboxgrid/dist/flexboxgrid.css';
 import gridVisibility from 'flexboxgrid-helpers/dist/flexboxgrid-helpers.min.css';
 
-import DateTimeFromTimestamp from '@basics/timestamp';
+import DateTimeFromTimestamp from 'src/modules/common/components/timestamp';
 import WalletVisualWithAddress from '@wallet/components/walletVisualWithAddress';
 import DialogLink from 'src/theme/dialog/link';
 import VoteDetails from '@transaction/components/VoteItem';

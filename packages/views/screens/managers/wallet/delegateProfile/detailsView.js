@@ -6,7 +6,7 @@ import Box from 'src/theme/box';
 import BoxContent from 'src/theme/box/content';
 import BoxHeader from 'src/theme/box/header';
 import Icon from 'src/theme/Icon';
-import DateTimeFromTimestamp from '@basics/timestamp';
+import DateTimeFromTimestamp from 'src/modules/common/components/timestamp';
 import LiskAmount from '@shared/liskAmount';
 import { getStatus } from './performanceView';
 import styles from './delegateProfile.css';

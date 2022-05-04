@@ -3,11 +3,11 @@ import React, { useEffect } from 'react';
 
 import routes from '@screens/router/routes';
 import { tokenMap } from '@token/configuration/tokens';
-import DateTimeFromTimestamp from '@basics/timestamp';
+import DateTimeFromTimestamp from 'src/modules/common/components/timestamp';
 import Box from 'src/theme/box';
 import BoxHeader from 'src/theme/box/header';
 import BoxContent from 'src/theme/box/content';
-import CopyToClipboard from '@basics/copyToClipboard';
+import CopyToClipboard from 'src/modules/common/components/copyToClipboard';
 import Feedback from 'src/theme/feedback/feedback';
 import LabeledValue from 'src/theme/labeledValue';
 import LiskAmount from '@shared/liskAmount';

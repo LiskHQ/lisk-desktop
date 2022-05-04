@@ -4,7 +4,7 @@ import { getErrorReportMailto, isEmpty } from '@common/utilities/helpers';
 import { TertiaryButton, PrimaryButton } from 'src/theme/buttons';
 import routes from '@screens/router/routes';
 import { txStatusTypes } from '@transaction/configuration/txStatus';
-import Illustration from '@basics/illustration';
+import Illustration from 'src/modules/common/components/illustration';
 import getIllustration from '../TransactionResult/illustrationsMap';
 import styles from './Regular.css';
 

@@ -2,14 +2,16 @@
 // istanbul ignore file
 import React from 'react';
 import { useTheme } from 'src/theme/Theme';
-import { getColorPalette } from '@views/basics/charts/chartOptions';
+import { getColorPalette } from 'src/modules/common/components/charts/chartOptions';
 import Box from 'src/theme/box';
 import BoxHeader from 'src/theme/box/header';
 import BoxContent from 'src/theme/box/content';
 import BoxEmptyState from 'src/theme/box/emptyState';
-import { DoughnutChart } from '@basics/charts';
+import { DoughnutChart } from 'src/modules/common/components/charts';
 import Tooltip from 'src/theme/Tooltip';
-import GuideTooltip, { GuideTooltipItem } from '@basics/charts/guideTooltip';
+import GuideTooltip, {
+  GuideTooltipItem,
+} from 'src/modules/common/components/charts/guideTooltip';
 import OthersTooltip from './othersTooltip';
 import styles from './statistics.css';
 

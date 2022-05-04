@@ -3,7 +3,7 @@ import CopyToClipboard from 'react-copy-to-clipboard';
 
 import BoxContent from 'src/theme/box/content';
 import BoxFooter from 'src/theme/box/footer';
-import Illustration from '@basics/illustration';
+import Illustration from 'src/modules/common/components/illustration';
 import { getDeviceType } from '@wallet/utils/hwManager';
 import { AutoResizeTextarea } from 'src/theme';
 import { SecondaryButton, PrimaryButton } from 'src/theme/buttons';

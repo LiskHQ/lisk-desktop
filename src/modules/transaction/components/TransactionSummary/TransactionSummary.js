@@ -3,7 +3,7 @@ import LiskAmount from '@shared/liskAmount';
 import Box from 'src/theme/box';
 import BoxHeader from 'src/theme/box/header';
 import BoxContent from 'src/theme/box/content';
-import Illustration from '@basics/illustration';
+import Illustration from 'src/modules/common/components/illustration';
 import Tooltip from 'src/theme/Tooltip';
 import { tokenMap } from '@token/configuration/tokens';
 import Footer from './footer';

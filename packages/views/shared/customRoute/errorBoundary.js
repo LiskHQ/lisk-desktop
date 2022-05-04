@@ -2,7 +2,7 @@ import React from 'react';
 import { withTranslation } from 'react-i18next';
 import Piwik from '@common/utilities/piwik';
 import { PrimaryButton, TertiaryButton } from 'src/theme/buttons';
-import Illustration from '@basics/illustration';
+import Illustration from 'src/modules/common/components/illustration';
 import styles from './errorBoundary.css';
 
 /* eslint-disable class-methods-use-this, no-unused-vars */

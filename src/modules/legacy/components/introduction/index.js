@@ -1,6 +1,6 @@
 import React from 'react';
 import { withTranslation } from 'react-i18next';
-import Illustration from '@basics/illustration';
+import Illustration from 'src/modules/common/components/illustration';
 import { PrimaryButton } from 'src/theme/buttons';
 import styles from './introduction.css';
 

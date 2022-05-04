@@ -8,14 +8,16 @@ import { chartStyles } from '@common/configuration';
 import { MODULE_ASSETS_NAME_ID_MAP } from '@transaction/configuration/moduleAssets';
 import { getModuleAssetTitle } from '@transaction/utils/moduleAssets';
 import { useTheme } from 'src/theme/Theme';
-import { getColorPalette } from '@views/basics/charts/chartOptions';
+import { getColorPalette } from 'src/modules/common/components/charts/chartOptions';
 import Box from 'src/theme/box';
 import BoxTabs from 'src/theme/tabs';
 import BoxHeader from 'src/theme/box/header';
 import BoxContent from 'src/theme/box/content';
-import { DoughnutChart, BarChart } from '@basics/charts';
+import { DoughnutChart, BarChart } from 'src/modules/common/components/charts';
 import Tooltip from 'src/theme/Tooltip';
-import GuideTooltip, { GuideTooltipItem } from '@basics/charts/guideTooltip';
+import GuideTooltip, {
+  GuideTooltipItem,
+} from 'src/modules/common/components/charts/guideTooltip';
 import styles from './overview.css';
 
 const moduleAssetIds = Object.values(MODULE_ASSETS_NAME_ID_MAP);

@@ -2,7 +2,7 @@ import React from 'react';
 import moment from 'moment';
 import { firstBlockTime } from '@common/configuration';
 import { Input } from 'src/theme';
-import Calendar from '@basics/calendar/calendar';
+import Calendar from 'src/modules/common/components/calendar/calendar';
 import Dropdown from 'src/theme/Dropdown/dropdown';
 import OutsideClickHandler from 'src/theme/Select/OutsideClickHandler';
 import i18n from 'src/utils/i18n/i18n';
@@ -39,7 +39,13 @@ class DateField extends React.Component {
 
   render() {
     const {
-      name, setInputRefs, onChange, filters, dateFormat, fields, showRightDropdown,
+      name,
+      setInputRefs,
+      onChange,
+      filters,
+      dateFormat,
+      fields,
+      showRightDropdown,
     } = this.props;
     const { shownDropdown, everShownDropdown } = this.state;
 
@@ -67,19 +73,22 @@ class DateField extends React.Component {
           />
         </label>
         <Dropdown
-          className={`${showRightDropdown ? 'showRight' : 'showLeft'} ${styles.calendarDropdown}`}
+          className={`${showRightDropdown ? 'showRight' : 'showLeft'} ${
+            styles.calendarDropdown
+          }`}
           showDropdown={shownDropdown}
         >
-          { everShownDropdown
-            ? (
-              <Calendar
-                locale={i18n.language}
-                onDateSelected={this.dateSelected}
-                dateFormat={dateFormat}
-                minDate={moment(firstBlockTime).format(dateFormat)}
-                date={filters[name]}
-              />
-            ) : <span />}
+          {everShownDropdown ? (
+            <Calendar
+              locale={i18n.language}
+              onDateSelected={this.dateSelected}
+              dateFormat={dateFormat}
+              minDate={moment(firstBlockTime).format(dateFormat)}
+              date={filters[name]}
+            />
+          ) : (
+            <span />
+          )}
         </Dropdown>
       </OutsideClickHandler>
     );

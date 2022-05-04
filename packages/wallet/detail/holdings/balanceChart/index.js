@@ -10,7 +10,7 @@ import {
 import Box from 'src/theme/box';
 import BoxContent from 'src/theme/box/content';
 import BoxEmptyState from 'src/theme/box/emptyState';
-import { LineChart } from '@basics/charts';
+import { LineChart } from 'src/modules/common/components/charts';
 import Icon from 'src/theme/Icon';
 import i18n from 'src/utils/i18n/i18n';
 import styles from './balanceChart.css';

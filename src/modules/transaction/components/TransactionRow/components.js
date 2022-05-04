@@ -4,7 +4,7 @@ import { Link } from 'react-router-dom';
 import { tokenMap } from '@token/configuration/tokens';
 import { getTxAmount } from '@transaction/utils/transaction';
 import { MODULE_ASSETS_NAME_ID_MAP } from '@transaction/configuration/moduleAssets';
-import DateTimeFromTimestamp from '@basics/timestamp';
+import DateTimeFromTimestamp from 'src/modules/common/components/timestamp';
 import Icon from 'src/theme/Icon';
 import Tooltip from 'src/theme/Tooltip';
 import LiskAmount from '@shared/liskAmount';
@@ -52,7 +52,10 @@ export const Counterpart = () => {
   // Show tx icon
   if (data.moduleAssetId !== MODULE_ASSETS_NAME_ID_MAP.transfer && host) {
     return (
-      <TransactionTypeFigure moduleAssetId={data.moduleAssetId} address={data.sender.address} />
+      <TransactionTypeFigure
+        moduleAssetId={data.moduleAssetId}
+        address={data.sender.address}
+      />
     );
   }
   // Show recipient
@@ -86,13 +89,19 @@ export const Date = ({ t }) => {
 
   if (data.isPending || !data.block.timestamp) {
     return (
-      <Spinner completed={!data.isPending || data.block.timestamp} label={t('Pending...')} />
+      <Spinner
+        completed={!data.isPending || data.block.timestamp}
+        label={t('Pending...')}
+      />
     );
   }
 
   // @todo remove hard coded token
   return (
-    <DateTimeFromTimestamp time={data.block.timestamp * 1000} token={tokenMap.BTC.key} />
+    <DateTimeFromTimestamp
+      time={data.block.timestamp * 1000}
+      token={tokenMap.BTC.key}
+    />
   );
 };
 
@@ -116,10 +125,7 @@ export const Amount = () => {
   }
   return (
     <span className={styles.amount}>
-      <LiskAmount
-        val={getTxAmount(data)}
-        token={activeToken}
-      />
+      <LiskAmount val={getTxAmount(data)} token={activeToken} />
       <span className={`${styles.fee} hideOnLargeViewPort`}>
         <LiskAmount val={data.fee} token={activeToken} />
       </span>
@@ -148,7 +154,9 @@ export const Fee = ({ t }) => {
 export const Status = ({ t }) => {
   const { data, currentBlockHeight } = useContext(RowContext);
   const roundSize = 103;
-  const height = currentBlockHeight ? currentBlockHeight - data.block.height : 0;
+  const height = currentBlockHeight
+    ? currentBlockHeight - data.block.height
+    : 0;
 
   return (
     <span>
@@ -166,16 +174,15 @@ export const Status = ({ t }) => {
 };
 
 const generateVotes = (asset, delegates, token, t) => {
-  const voteElements = asset.votes.slice(0, 1).map(vote => (
+  const voteElements = asset.votes.slice(0, 1).map((vote) => (
     <span
       className={`${styles.container} vote-item-address`}
       key={`vote-${vote.delegateAddress}`}
     >
-      <Link
-        to={`${routes.wallet.path}?address=${vote.delegateAddress}`}
-      >
+      <Link to={`${routes.wallet.path}?address=${vote.delegateAddress}`}>
         <span className={styles.primaryText}>
-          {delegates[vote.delegateAddress] || truncateAddress(vote.delegateAddress)}
+          {delegates[vote.delegateAddress]
+            || truncateAddress(vote.delegateAddress)}
         </span>
       </Link>
       <span className={`${styles.value} vote-item-value`}>
@@ -186,12 +193,14 @@ const generateVotes = (asset, delegates, token, t) => {
 
   return (
     <div className={styles.voteDetails}>
-      { voteElements }
-      {
-        asset.votes.length > 1 && (
-          <span className={styles.more}>{`${asset.votes.length - 1} ${t('more')}...`}</span>
-        )
-      }
+      {voteElements}
+      {asset.votes.length > 1 && (
+        <span className={styles.more}>
+          {`${asset.votes.length - 1} ${t(
+            'more',
+          )}...`}
+        </span>
+      )}
     </div>
   );
 };
@@ -213,7 +222,5 @@ export const Assets = ({ t }) => {
     }
   };
 
-  return (
-    <span className="transaction-reference">{getDetails()}</span>
-  );
+  return <span className="transaction-reference">{getDetails()}</span>;
 };

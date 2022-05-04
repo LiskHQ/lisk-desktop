@@ -3,7 +3,7 @@ import { cryptography } from '@liskhq/lisk-client'; // eslint-disable-line
 
 import loginTypes from '@auth/const/loginTypes';
 import { getDeviceType } from '@wallet/utils/hwManager';
-import Illustration from '@basics/illustration';
+import Illustration from 'src/modules/common/components/illustration';
 import BoxContent from 'src/theme/box/content';
 import { signUsingPrivateKey, signUsingHW } from '@wallet/utils/signMessage';
 import styles from './signatureCollector.css';

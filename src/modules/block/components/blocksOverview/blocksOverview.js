@@ -5,8 +5,10 @@ import Box from 'src/theme/box';
 import BoxHeader from 'src/theme/box/header';
 import BoxContent from 'src/theme/box/content';
 import BoxTabs from 'src/theme/tabs';
-import { DoughnutChart, BarChart } from '@basics/charts';
-import GuideTooltip, { GuideTooltipItem } from '@basics/charts/guideTooltip';
+import { DoughnutChart, BarChart } from 'src/modules/common/components/charts';
+import GuideTooltip, {
+  GuideTooltipItem,
+} from 'src/modules/common/components/charts/guideTooltip';
 import styles from './blocksOverview.css';
 
 class BlocksOverview extends React.Component {

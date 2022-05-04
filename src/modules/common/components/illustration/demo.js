@@ -1,6 +1,6 @@
 import React from 'react';
+import DemoRenderer from '@basics/demoRenderer';
 import Illustration, { illustrations } from '.';
-import DemoRenderer from '../demoRenderer';
 
 const IllustrationDemo = () => (
   <>

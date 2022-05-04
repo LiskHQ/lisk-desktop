@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import { useSelector } from 'react-redux';
 import { withTranslation } from 'react-i18next';
 import { PrimaryButton, SecondaryButton } from 'src/theme/buttons';
-import Illustration from '@basics/illustration';
+import Illustration from 'src/modules/common/components/illustration';
 import styles from './onboarding.css';
 
 const Onboarding = ({

@@ -3,13 +3,15 @@ import React from 'react';
 // import { fromRawLsk } from '@token/utilities/lsk';
 import { ROUND_LENGTH } from '@dpos/validator/consts';
 import { useTheme } from 'src/theme/Theme';
-import { getColorPalette } from '@views/basics/charts/chartOptions';
+import { getColorPalette } from 'src/modules/common/components/charts/chartOptions';
 import Box from 'src/theme/box';
 import BoxHeader from 'src/theme/box/header';
 import BoxContent from 'src/theme/box/content';
 import BoxEmptyState from 'src/theme/box/emptyState';
-import { DoughnutChart, LineChart } from '@basics/charts';
-import GuideTooltip, { GuideTooltipItem } from '@basics/charts/guideTooltip';
+import { DoughnutChart, LineChart } from 'src/modules/common/components/charts';
+import GuideTooltip, {
+  GuideTooltipItem,
+} from 'src/modules/common/components/charts/guideTooltip';
 import NumericInfo from './numericInfo';
 import styles from './overview.css';
 

@@ -1,5 +1,5 @@
 import React from 'react';
-import Illustration from '@basics/illustration';
+import Illustration from 'src/modules/common/components/illustration';
 import { PrimaryButton } from 'src/theme/buttons';
 import BoxEmptyState from 'src/theme/box/emptyState';
 import Icon from 'src/theme/Icon';
