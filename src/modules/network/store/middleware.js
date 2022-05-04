@@ -1,10 +1,10 @@
-import settings from '@settings/configuration/settingConstants';
+import settings from 'src/modules/settings/const/settingConstants';
 import { networkKeys } from '@network/configuration/networks';
-import { getAutoLogInData, shouldAutoLogIn } from '@common/utilities/login';
-import analytics from '@common/utilities/analytics';
-import settingsActionTypes from '@settings/store/actionTypes';
+import { getAutoLogInData, shouldAutoLogIn } from 'src/utils/login';
+import analytics from 'src/utils/analytics';
+import settingsActionTypes from 'src/modules/settings/store/actionTypes';
 import { login } from '@auth/store/action';
-import { settingsUpdated } from '@packages/settings/store/actions';
+import { settingsUpdated } from 'src/modules/settings/store/actions';
 import { networkSelected, networkStatusUpdated, networkConfigSet } from './action';
 import actionTypes from './actionTypes';
 

@@ -1,7 +1,7 @@
 import { withTranslation } from 'react-i18next';
 import React from 'react';
 import moment from 'moment';
-import { firstBlockTime } from '@common/configuration';
+import { firstBlockTime } from '@block/utils/firstBlockTime';
 import {
   getDateTimestampFromFirstBlock,
   formatInputToDate,

@@ -1,4 +1,4 @@
-import { mountWithRouter } from '@common/utilities/testHelpers';
+import { mountWithRouter } from 'src/utils/testHelpers';
 import { truncateAddress } from '@wallet/utils/account';
 import blocks from '@tests/constants/blocks';
 import transactions from '@tests/constants/transactions';

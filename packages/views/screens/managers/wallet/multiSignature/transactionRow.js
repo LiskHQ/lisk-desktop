@@ -1,6 +1,6 @@
 import React from 'react';
 import grid from 'flexboxgrid/dist/flexboxgrid.css';
-import { regex } from '@common/configuration';
+import { regex } from 'src/const/regex';
 import { tokenMap } from '@token/fungible/consts/tokens';
 import DialogLink from 'src/theme/dialog/link';
 import WalletVisual from '@wallet/components/walletVisual';

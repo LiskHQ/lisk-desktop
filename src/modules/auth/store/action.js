@@ -6,7 +6,7 @@ import { tokenMap } from '@token/fungible/consts/tokens';
 import { getAccount, extractAddress as extractBitcoinAddress } from '@wallet/utils/api';
 import { getConnectionErrorMessage } from '@network/utils/getNetwork';
 import { extractKeyPair } from '@wallet/utils/account';
-import { defaultDerivationPath } from '@common/utilities/explicitBipKeyDerivation';
+import { defaultDerivationPath } from 'src/utils/explicitBipKeyDerivation';
 import actionTypes from './actionTypes';
 
 /**

@@ -1,4 +1,4 @@
-import { mountWithRouter } from '@common/utilities/testHelpers';
+import { mountWithRouter } from 'src/utils/testHelpers';
 import { addSearchParamsToUrl } from 'src/utils/searchParams';
 import Initialization from '.';
 import styles from './initialization.css';

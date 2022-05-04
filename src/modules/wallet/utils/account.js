@@ -1,8 +1,8 @@
 /* eslint-disable max-lines */
 import { passphrase as LiskPassphrase, cryptography } from '@liskhq/lisk-client';
-import { regex } from '@common/configuration';
+import { regex } from 'src/const/regex';
 import { tokenMap } from '@token/fungible/consts/tokens';
-import { getCustomDerivationKeyPair } from '@common/utilities/explicitBipKeyDerivation';
+import { getCustomDerivationKeyPair } from 'src/utils/explicitBipKeyDerivation';
 
 /**
  * Extracts Lisk PrivateKey/PublicKey pair from a given valid Mnemonic passphrase

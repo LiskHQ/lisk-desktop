@@ -3,7 +3,7 @@ import { tokenMap } from '@token/fungible/consts/tokens';
 import { MODULE_ASSETS_NAME_ID_MAP } from '@transaction/configuration/moduleAssets';
 import { create } from '@transaction/api';
 import { getAccount } from '@wallet/utils/api';
-import { isEmpty } from '@common/utilities/helpers';
+import { isEmpty } from 'src/utils/helpers';
 import { timerReset } from '@auth/store/action';
 import { getVotes } from '../../api';
 import actionTypes from './actionTypes';

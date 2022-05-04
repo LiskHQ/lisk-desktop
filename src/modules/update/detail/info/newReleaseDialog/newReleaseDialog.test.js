@@ -1,5 +1,5 @@
 import React from 'react';
-import { mountWithRouterAndStore } from '@common/utilities/testHelpers';
+import { mountWithRouterAndStore } from 'src/utils/testHelpers';
 import NewReleaseDialog from './index';
 
 jest.mock('src/theme/flashMessage/holder');

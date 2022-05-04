@@ -4,7 +4,7 @@ import { MODULE_ASSETS_MAP } from '@transaction/configuration/moduleAssets';
 import { tokenMap } from '@token/fungible/consts/tokens';
 import {
   formatAmountBasedOnLocale,
-} from '@common/utilities/formattedNumber';
+} from 'src/utils/formattedNumber';
 import { toRawLsk, fromRawLsk } from '@token/fungible/utils/lsk';
 import Input from 'src/theme/Input/Input';
 import Icon from 'src/theme/Icon';

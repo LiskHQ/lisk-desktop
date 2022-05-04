@@ -3,7 +3,7 @@ import { compose } from 'redux';
 import { withTranslation } from 'react-i18next';
 import { withRouter } from 'react-router-dom';
 import { getBlocks } from '@block/utils';
-import withData from '@common/utilities/withData';
+import withData from 'src/utils/withData';
 import { transformStringDateToUnixTimestamp } from 'src/utils/dateTime';
 import { DEFAULT_LIMIT } from '@views/configuration';
 import Blocks from '../components/blocks';

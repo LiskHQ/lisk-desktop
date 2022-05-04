@@ -1,5 +1,5 @@
 import React from 'react';
-import { isReactComponent } from '@common/utilities/helpers';
+import { isReactComponent } from 'src/utils/helpers';
 import styles from './table.css';
 
 const Loading = ({ Element, headerInfo, isLoading }) => {

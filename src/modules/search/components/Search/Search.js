@@ -1,6 +1,6 @@
 import React from 'react';
 
-import { regex } from '@common/configuration';
+import { regex } from 'src/const/regex';
 import routes from '@screens/router/routes';
 import Icon from 'src/theme/Icon';
 import DialogLink from 'src/theme/dialog/link';

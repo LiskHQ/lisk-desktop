@@ -1,6 +1,6 @@
 import { useSelector } from 'react-redux';
 import routes from '@screens/router/routes';
-import { mountWithRouter } from '@common/utilities/testHelpers';
+import { mountWithRouter } from 'src/utils/testHelpers';
 import SideBar from './index';
 
 jest.mock('react-redux', () => ({

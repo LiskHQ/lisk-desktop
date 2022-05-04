@@ -9,12 +9,12 @@ import {
   settingsUpdated, networkSelected, networkStatusUpdated, accountDataUpdated,
   emptyTransactionsData, transactionsRetrieved, votesRetrieved,
 } from '@common/store/actions';
-import analytics from '@common/utilities/analytics';
+import analytics from 'src/utils/analytics';
 import { getTransactions } from '@transaction/api';
 import i18n from 'src/utils/i18n/i18n';
 import blockActionTypes from '@block/store/actionTypes';
 import transactionActionTypes from '@transaction/store/actionTypes';
-import settingsActionTypes from '@settings/store/actionTypes';
+import settingsActionTypes from 'src/modules/settings/store/actionTypes';
 import actionTypes from './actionTypes';
 
 const getRecentTransactionOfType = (transactionsList, type) => (

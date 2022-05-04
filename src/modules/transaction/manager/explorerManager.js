@@ -1,11 +1,11 @@
 import { compose } from 'redux';
 import { withTranslation } from 'react-i18next';
-import withFilters from '@common/utilities/withFilters';
-import withData from '@common/utilities/withData';
+import withFilters from 'src/utils/withFilters';
+import withData from 'src/utils/withData';
 import { getDelegates } from '@dpos/validator/api';
 import { DEFAULT_LIMIT } from '@views/configuration';
 import TransactionsList from '../components/Explorer/ExplorerTransactions';
-import { normalizeTransactionParams } from '../utils/transaction';
+import { normalizeTransactionParams } from '../utils';
 import { getTransactions } from '../api';
 
 const defaultFilters = {
@@ -38,13 +38,10 @@ export default compose(
     votedDelegates: {
       apiUtil: ({ networks }, params) => getDelegates({ network: networks.LSK, params }),
       defaultData: [],
-      transformResponse: (response) => {
-        const responseMap = response.data.reduce((acc, delegate) => {
-          acc[delegate.address] = delegate;
-          return acc;
-        }, {});
-        return responseMap;
-      },
+      transformResponse: (response) => response.data.reduce((acc, delegate) => {
+        acc[delegate.address] = delegate;
+        return acc;
+      }, {}),
     },
   }),
   withFilters('transactions', defaultFilters, defaultSort),

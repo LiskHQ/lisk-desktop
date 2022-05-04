@@ -1,5 +1,5 @@
 import { tokenMap } from '@token/fungible/consts/tokens';
-import { getFromStorage } from '@common/utilities/localJSONStorage';
+import { getFromStorage } from 'src/utils/localJSONStorage';
 import { emptyBookmarks } from '@bookmark/utils';
 import wallets from '@tests/constants/wallets';
 import actionTypes from './actionTypes';

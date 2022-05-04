@@ -1,6 +1,6 @@
 import React from 'react';
 import { withTranslation } from 'react-i18next';
-import Piwik from '@common/utilities/piwik';
+import Piwik from 'src/utils/piwik';
 import { PrimaryButton, TertiaryButton } from 'src/theme/buttons';
 import Illustration from 'src/modules/common/components/illustration';
 import styles from './errorBoundary.css';

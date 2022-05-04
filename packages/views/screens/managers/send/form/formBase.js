@@ -1,5 +1,5 @@
 import React from 'react';
-import Piwik from '@common/utilities/piwik';
+import Piwik from 'src/utils/piwik';
 import { PrimaryButton } from 'src/theme/buttons';
 import { tokenMap } from '@token/fungible/consts/tokens';
 import AmountField from '@shared/amountField';

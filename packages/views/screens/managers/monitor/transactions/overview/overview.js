@@ -3,8 +3,8 @@
 import React, { useState } from 'react';
 import moment from 'moment';
 import { fromRawLsk } from '@token/fungible/utils/lsk';
-import { kFormatter } from '@common/utilities/helpers';
-import { chartStyles } from '@common/configuration';
+import { kFormatter } from 'src/utils/helpers';
+import { chartStyles } from 'src/modules/common/components/charts/chartConfig';
 import { MODULE_ASSETS_NAME_ID_MAP } from '@transaction/configuration/moduleAssets';
 import { getModuleAssetTitle } from '@transaction/utils/moduleAssets';
 import { useTheme } from 'src/theme/Theme';

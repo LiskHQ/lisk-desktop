@@ -9,12 +9,12 @@ import {
   stringifySearchParams,
 } from 'src/utils/searchParams';
 import { getNetworksList } from '@network/utils/getNetwork';
-import Piwik from '@common/utilities/piwik';
+import Piwik from 'src/utils/piwik';
 import { PrimaryButton } from 'src/theme/buttons';
 import PassphraseInput from 'src/modules/wallet/components/PassphraseInput/PassphraseInput';
 import Icon from 'src/theme/Icon';
-import DiscreetModeToggle from '@settings/setters/toggles/discreetModeToggle';
-import NetworkSelector from '@settings/setters/selectors/networkSelector';
+import DiscreetModeToggle from 'src/modules/settings/components/discreetModeToggle';
+import NetworkSelector from 'src/modules/settings/components/networkSelector';
 import RecoveryPhrase from '../RecoveryPhrase';
 import styles from './login.css';
 

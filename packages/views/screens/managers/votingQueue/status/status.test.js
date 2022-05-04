@@ -1,4 +1,4 @@
-import { mountWithRouter } from '@common/utilities/testHelpers';
+import { mountWithRouter } from 'src/utils/testHelpers';
 import Result from './status';
 
 const props = {

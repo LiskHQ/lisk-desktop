@@ -1,7 +1,7 @@
 import { act } from 'react-dom/test-utils';
 import { MIN_ACCOUNT_BALANCE } from '@transaction/configuration/transactions';
 
-import { mountWithRouter } from '@common/utilities/testHelpers';
+import { mountWithRouter } from 'src/utils/testHelpers';
 import { getTransactionBaseFees, getTransactionFee } from '@transaction/api';
 import useTransactionFeeCalculation from '@transaction/hooks/useTransactionFeeCalculation';
 import { fromRawLsk } from '@token/fungible/utils/lsk';

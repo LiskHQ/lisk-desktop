@@ -5,7 +5,7 @@ import { withRouter } from 'react-router';
 import { withTranslation } from 'react-i18next';
 import { bookmarkAdded, bookmarkUpdated, bookmarkRemoved } from '@common/store/actions';
 import { getAccount } from '@wallet/utils/api';
-import withData from '@common/utilities/withData';
+import withData from 'src/utils/withData';
 import { selectSearchParamValue } from 'src/utils/searchParams';
 import AddBookmark from '../components/AddBookmark';
 

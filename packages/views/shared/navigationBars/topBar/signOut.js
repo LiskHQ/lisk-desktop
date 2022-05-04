@@ -3,7 +3,7 @@ import { useDispatch } from 'react-redux';
 import routes from '@screens/router/routes';
 import Icon from 'src/theme/Icon';
 import Tooltip from 'src/theme/Tooltip';
-import Piwik from '@common/utilities/piwik';
+import Piwik from 'src/utils/piwik';
 import { accountLoggedOut } from '@auth/store/action';
 import styles from './topBar.css';
 

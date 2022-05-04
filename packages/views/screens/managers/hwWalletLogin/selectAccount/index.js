@@ -1,6 +1,6 @@
 // istanbul ignore file
 import { connect } from 'react-redux';
-import { settingsUpdated } from '@packages/settings/store/actions';
+import { settingsUpdated } from 'src/modules/settings/store/actions';
 import { login } from '@auth/store/action';
 import { getActiveTokenAccount } from '@wallet/utils/account';
 import SelectAccount from './selectAccount';

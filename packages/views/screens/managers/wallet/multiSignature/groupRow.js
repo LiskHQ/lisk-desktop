@@ -3,7 +3,7 @@ import grid from 'flexboxgrid/dist/flexboxgrid.css';
 import { Link } from 'react-router-dom';
 import WalletVisual from '@wallet/components/walletVisual';
 import LiskAmount from '@shared/liskAmount';
-import { regex } from '@common/configuration';
+import { regex } from 'src/const/regex';
 import routes from '@screens/router/routes';
 import { tokenMap } from '@token/fungible/consts/tokens';
 import styles from './multiSignature.css';

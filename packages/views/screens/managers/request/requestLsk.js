@@ -1,8 +1,8 @@
 import React from 'react';
-import { regex } from '@common/configuration';
+import { regex } from 'src/const/regex';
 import { maxMessageLength } from '@transaction/configuration/transactions';
-import { validateAmountFormat } from '@common/utilities/validators';
-import { sizeOfString } from '@common/utilities/helpers';
+import { validateAmountFormat } from 'src/utils/validators';
+import { sizeOfString } from 'src/utils/helpers';
 import { Input, AutoResizeTextarea } from 'src/theme';
 import CircularProgress from 'src/theme/ProgressCircular/circularProgress';
 import Converter from '@shared/converter';

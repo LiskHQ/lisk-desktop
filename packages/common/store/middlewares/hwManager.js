@@ -6,7 +6,7 @@ import {
   getDeviceList,
   getPublicKey,
 } from '@libs/hwManager/communication';
-import history from '@common/utilities/history';
+import history from 'src/utils/history';
 import actionTypes from '../actions/actionTypes';
 
 async function autoLogInIfNecessary(store) {

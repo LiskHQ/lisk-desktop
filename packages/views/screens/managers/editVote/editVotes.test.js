@@ -1,6 +1,6 @@
 import { act } from 'react-dom/test-utils';
 import * as votingActions from '@common/store/actions';
-import { mountWithRouterAndStore } from '@common/utilities/testHelpers';
+import { mountWithRouterAndStore } from 'src/utils/testHelpers';
 import EditVote from './index';
 
 jest.mock('@transaction/api', () => ({

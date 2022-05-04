@@ -1,5 +1,5 @@
 import moment from 'moment';
-import { chartStyles } from '@common/configuration';
+import { chartStyles } from 'src/modules/common/components/charts/chartConfig';
 import { fromRawLsk } from '@token/fungible/utils/lsk';
 import i18n from 'src/utils/i18n/i18n';
 import { getUnixTimestampFromValue } from 'src/utils/dateTime';

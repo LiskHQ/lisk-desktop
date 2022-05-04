@@ -1,5 +1,5 @@
 import { tokenMap } from '@token/fungible/consts/tokens';
-import { mountWithRouter } from '@common/utilities/testHelpers';
+import { mountWithRouter } from 'src/utils/testHelpers';
 import bookmarks from '@tests/constants/bookmarks';
 import BookmarkListModal from './BookmarkListModal';
 

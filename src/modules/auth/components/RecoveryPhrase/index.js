@@ -3,7 +3,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { settingsUpdated } from '@common/store/actions';
 import { selectSettings } from '@common/store/selectors';
 import { Input } from 'src/theme';
-import { defaultDerivationPath } from '@common/utilities/explicitBipKeyDerivation';
+import { defaultDerivationPath } from 'src/utils/explicitBipKeyDerivation';
 import styles from '../Signin/login.css';
 
 const RecoveryPhrase = ({ t }) => {

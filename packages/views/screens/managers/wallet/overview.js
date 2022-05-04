@@ -6,7 +6,7 @@ import { compose } from 'redux';
 import { withTranslation } from 'react-i18next';
 import grid from 'flexboxgrid/dist/flexboxgrid.css';
 
-import withData from '@common/utilities/withData';
+import withData from 'src/utils/withData';
 import { getTransactions } from '@transaction/api';
 import FlashMessageHolder from 'src/theme/flashMessage/holder';
 import WarnPunishedDelegate from '@dpos/validator/components/WarnPunishedDelegate';

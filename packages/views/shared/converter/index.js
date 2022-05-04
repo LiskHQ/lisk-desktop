@@ -1,6 +1,6 @@
 /* istanbul ignore file */
 import { connect } from 'react-redux';
-import settingConstants from '@settings/configuration/settingConstants';
+import settingConstants from 'src/modules/settings/const/settingConstants';
 import { tokenMap } from '@token/fungible/consts/tokens';
 import Converter from './converter';
 

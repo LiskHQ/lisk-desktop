@@ -1,6 +1,6 @@
 import PropTypes from 'prop-types';
 import React from 'react';
-import withFilters from '@common/utilities/withFilters';
+import withFilters from 'src/utils/withFilters';
 import Box from 'src/theme/box';
 import BoxContent from 'src/theme/box/content';
 import FilterBar from '@shared/filterBar';

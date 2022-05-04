@@ -1,5 +1,5 @@
 import React from 'react';
-import Piwik from '@common/utilities/piwik';
+import Piwik from 'src/utils/piwik';
 import routes from '@screens/router/routes';
 import { PrimaryButton } from 'src/theme/buttons';
 import Icon from 'src/theme/Icon';

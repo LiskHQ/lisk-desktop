@@ -1,6 +1,6 @@
 /* eslint-disable complexity */
 import React, { useEffect } from 'react';
-import { getErrorReportMailto, isEmpty } from '@common/utilities/helpers';
+import { getErrorReportMailto, isEmpty } from 'src/utils/helpers';
 import { TertiaryButton, PrimaryButton } from 'src/theme/buttons';
 import routes from '@screens/router/routes';
 import { txStatusTypes } from '@transaction/configuration/txStatus';

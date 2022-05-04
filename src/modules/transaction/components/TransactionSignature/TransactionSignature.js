@@ -5,7 +5,7 @@ import { secondPassphraseRemoved } from '@auth/store/action';
 import Box from 'src/theme/box';
 import Illustration from 'src/modules/common/components/illustration';
 import BoxContent from 'src/theme/box/content';
-import { isEmpty } from '@common/utilities/helpers';
+import { isEmpty } from 'src/utils/helpers';
 import { getDeviceType } from '@wallet/utils/hwManager';
 import styles from './TransactionSignature.css';
 

@@ -1,5 +1,5 @@
 import { act } from 'react-dom/test-utils';
-import { mountWithRouterAndStore } from '@common/utilities/testHelpers';
+import { mountWithRouterAndStore } from 'src/utils/testHelpers';
 import { tokenMap } from '@token/fungible/consts/tokens';
 import ActionBar from './ActionBar';
 

@@ -3,7 +3,7 @@ import { DEFAULT_LIMIT } from '@views/configuration';
 import { tokenMap } from '@token/fungible/consts/tokens';
 import { MODULE_ASSETS_NAME_ID_MAP } from '@transaction/configuration/moduleAssets';
 import { signatureCollectionStatus } from '@transaction/configuration/txStatus';
-import { isEmpty } from '@common/utilities/helpers';
+import { isEmpty } from 'src/utils/helpers';
 import { extractKeyPair } from '@wallet/utils/account';
 import { getTransactionSignatureStatus } from '@screens/managers/signMultiSignTransaction/helpers';
 import { timerReset } from '@auth/store/action';
@@ -15,7 +15,7 @@ import {
   transformTransaction,
   createTransactionObject,
   flattenTransaction,
-} from '../utils/transaction';
+} from '../utils';
 
 /**
  * Action trigger when user logout from the application

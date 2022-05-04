@@ -5,7 +5,7 @@ import grid from 'flexboxgrid/dist/flexboxgrid.css';
 import { DEFAULT_STANDBY_THRESHOLD } from '@dpos/validator/consts';
 import routes from '@screens/router/routes';
 import { useTheme } from 'src/theme/Theme';
-import { capitalize } from '@common/utilities/helpers';
+import { capitalize } from 'src/utils/helpers';
 import Box from 'src/theme/box';
 import BoxHeader from 'src/theme/box/header';
 import BoxContent from 'src/theme/box/content';

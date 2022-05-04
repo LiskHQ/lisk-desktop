@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react';
 import { useDispatch } from 'react-redux';
-import htmlStringToReact from '@common/utilities/htmlStringToReact';
-import { regex } from '@common/configuration';
+import htmlStringToReact from 'src/utils/htmlStringToReact';
+import { regex } from 'src/const/regex';
 import {
   addSearchParamsToUrl,
   removeSearchParamsFromUrl,

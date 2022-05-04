@@ -1,7 +1,7 @@
 import React from 'react';
 import { useSelector } from 'react-redux';
 import { withTranslation } from 'react-i18next';
-import htmlStringToReact from '@common/utilities/htmlStringToReact';
+import htmlStringToReact from 'src/utils/htmlStringToReact';
 import Dialog from 'src/theme/dialog/dialog';
 import { PrimaryButton, SecondaryButton } from 'src/theme/buttons';
 import styles from './newReleaseDialog.css';

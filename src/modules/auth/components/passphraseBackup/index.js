@@ -1,6 +1,6 @@
 import QRCode from 'qrcode.react';
 import React from 'react';
-import renderPaperWallet from '@common/utilities/paperWallet';
+import renderPaperWallet from 'src/utils/paperWallet';
 import { SecondaryButton } from 'src/theme/buttons';
 import PassphraseRenderer from '@wallet/components/passphraseRenderer';
 import CopyToClipboard from 'src/modules/common/components/copyToClipboard';

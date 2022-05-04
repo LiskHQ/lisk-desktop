@@ -1,4 +1,4 @@
-import history from '@common/utilities/history';
+import history from 'src/utils/history';
 
 const sendRegex = /^\/(wallet|wallet\/send|main\/transactions\/send)$/;
 const sendRedirect = '/wallet?modal=send';
@@ -6,7 +6,8 @@ const sendRedirect = '/wallet?modal=send';
 const voteRegex = /^\/(main\/voting\/vote|delegates\/vote|vote)$/;
 const voteRedirect = '/wallet?modal=votingQueue';
 
-export default {
+// eslint-disable-next-line import/prefer-default-export
+export const externalLinks = {
   init: () => {
     const { ipc } = window;
 
