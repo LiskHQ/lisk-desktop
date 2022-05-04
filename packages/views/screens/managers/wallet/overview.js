@@ -8,14 +8,16 @@ import grid from 'flexboxgrid/dist/flexboxgrid.css';
 
 import withData from '@common/utilities/withData';
 import { getTransactions } from '@transaction/api';
-import FlashMessageHolder from '@basics/flashMessage/holder';
+import FlashMessageHolder from 'src/theme/flashMessage/holder';
 import WarnPunishedDelegate from '@dpos/validator/components/WarnPunishedDelegate';
 import WalletInfo from '@wallet/components/walletInfo';
 import BalanceInfo from '@token/fungible/components/BalanceInfo';
 import styles from './overview.css';
 
 const mapStateToProps = (state) => ({
-  currentHeight: state.blocks.latestBlocks.length ? state.blocks.latestBlocks[0].height : 0,
+  currentHeight: state.blocks.latestBlocks.length
+    ? state.blocks.latestBlocks[0].height
+    : 0,
 });
 
 const addWarningMessage = ({ isBanned, pomHeight, readMore }) => {
@@ -44,15 +46,11 @@ const Overview = ({
   history,
   currentHeight,
 }) => {
-  const {
-    address,
-    publicKey,
-    isMultisignature,
-  } = account?.summary ?? {};
+  const { address, publicKey, isMultisignature } = account?.summary ?? {};
 
   const isBanned = account?.dpos?.delegate?.isBanned;
   const pomHeights = account?.dpos?.delegate?.pomHeights;
-  const { end } = pomHeights ? (pomHeights[pomHeights.length - 1]) : 0;
+  const { end } = pomHeights ? pomHeights[pomHeights.length - 1] : 0;
   // 6: blocks per minute, 60: minutes, 24: hours
   const numOfBlockPerDay = 24 * 60 * 6;
   const daysLeft = Math.ceil((end - currentHeight) / numOfBlockPerDay);
@@ -60,14 +58,17 @@ const Overview = ({
   const bookmark = useSelector((state) =>
     state.bookmarks[activeToken].find((item) => item.address === address));
   const host = useSelector(
-    (state) =>
-      (state?.wallet?.info[activeToken]?.summary?.address)
-      || '',
+    (state) => state?.wallet?.info[activeToken]?.summary?.address || '',
   );
 
   const showWarning = () => {
-    if (!isWalletRoute && host && address && (isBanned || pomHeights?.length)
-      && (isBanned || daysLeft >= 1)) {
+    if (
+      !isWalletRoute
+      && host
+      && address
+      && (isBanned || pomHeights?.length)
+      && (isBanned || daysLeft >= 1)
+    ) {
       addWarningMessage({
         isBanned,
         pomHeight: pomHeights ? pomHeights[pomHeights.length - 1] : 0,
@@ -94,12 +95,7 @@ const Overview = ({
     }
   }, [address]);
 
-  useEffect(showWarning,
-    [isWalletRoute,
-      host,
-      address,
-      pomHeights,
-    ]);
+  useEffect(showWarning, [isWalletRoute, host, address, pomHeights]);
 
   return (
     <section className={`${grid.row} ${styles.wrapper}`}>

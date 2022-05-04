@@ -2,7 +2,7 @@ import React from 'react';
 import fillWordsList from 'bitcore-mnemonic/lib/words/english';
 import grid from 'flexboxgrid/dist/flexboxgrid.css';
 import { withTranslation } from 'react-i18next';
-import { PrimaryButton, TertiaryButton } from '@basics/buttons';
+import { PrimaryButton, TertiaryButton } from 'src/theme/buttons';
 import styles from './passphraseRenderer.css';
 
 class PassphraseRenderer extends React.Component {
@@ -70,10 +70,10 @@ class PassphraseRenderer extends React.Component {
 
   // eslint-disable-next-line class-methods-use-this
   assembleWordOptions(values, missing) {
-    const wordsList = fillWordsList.filter(word => !values.includes(word));
+    const wordsList = fillWordsList.filter((word) => !values.includes(word));
     const numberOfOptions = 3;
 
-    const mixWithMissingWords = options =>
+    const mixWithMissingWords = (options) =>
       options.reduce((accumulator, item, listIndex) => {
         const rand = Math.floor(Math.random() * 0.99 * item.length);
         item[rand] = values[missing[listIndex]];
@@ -123,7 +123,7 @@ class PassphraseRenderer extends React.Component {
 
   chooseWord(selectedIndex, option) {
     const { chosenWords, indexes } = this.state;
-    const otherIndex = indexes.find(index => index !== selectedIndex);
+    const otherIndex = indexes.find((index) => index !== selectedIndex);
     const shouldDisplayOptions = Object.values(chosenWords).length < 2;
 
     this.setState({
@@ -140,10 +140,8 @@ class PassphraseRenderer extends React.Component {
     const {
       t, showInfo, isConfirmation, prevStep, footerStyle,
     } = this.props;
-    const {
-      options, fieldSelected, chosenWords,
-    } = this.state;
-    const missingWordsIndexes = isConfirmation && Object.keys(options).map(k => Number(k));
+    const { options, fieldSelected, chosenWords } = this.state;
+    const missingWordsIndexes = isConfirmation && Object.keys(options).map((k) => Number(k));
 
     return (
       <div>
@@ -151,7 +149,9 @@ class PassphraseRenderer extends React.Component {
           <>
             <h2 className={styles.header}>{t('Passphrase')}</h2>
             <p className={styles.subheader}>
-              {t('Please carefully write down these 12 words and store them in a safe place.')}
+              {t(
+                'Please carefully write down these 12 words and store them in a safe place.',
+              )}
             </p>
           </>
         )}
@@ -163,7 +163,12 @@ class PassphraseRenderer extends React.Component {
                 className={`${grid['col-xs-2']} ${styles.inputContainer}`}
                 key={i}
               >
-                <span className={`${styles.inputValue} ${this.getStyle(i, missingWordsIndexes)} word`}>
+                <span
+                  className={`${styles.inputValue} ${this.getStyle(
+                    i,
+                    missingWordsIndexes,
+                  )} word`}
+                >
                   {isConfirmation && missingWordsIndexes.includes(i)
                     ? this.renderMissingValue(i)
                     : value}
@@ -173,32 +178,31 @@ class PassphraseRenderer extends React.Component {
           </div>
         </div>
         <div className={[styles.optionsContainer, 'word-options'].join(' ')}>
-          {isConfirmation && typeof fieldSelected === 'number' && options[fieldSelected].map((option, i) => (
-            <div
-              className="option"
-              onClick={() => this.chooseWord(fieldSelected, option)}
-              key={i}
-            >
-              {option}
-            </div>
-          ))}
+          {isConfirmation
+            && typeof fieldSelected === 'number'
+            && options[fieldSelected].map((option, i) => (
+              <div
+                className="option"
+                onClick={() => this.chooseWord(fieldSelected, option)}
+                key={i}
+              >
+                {option}
+              </div>
+            ))}
         </div>
         {isConfirmation && (
-        <div className={`${styles.confirmPassphraseFooter} ${footerStyle}`}>
-          <PrimaryButton
-            className={[styles.confirmBtn, 'confirm'].join(' ')}
-            onClick={this.handleConfirm}
-            disabled={Object.keys(chosenWords).length < 2}
-          >
-            {t('Confirm')}
-          </PrimaryButton>
-          <TertiaryButton
-            className={styles.editBtn}
-            onClick={prevStep}
-          >
-            {t('Go back')}
-          </TertiaryButton>
-        </div>
+          <div className={`${styles.confirmPassphraseFooter} ${footerStyle}`}>
+            <PrimaryButton
+              className={[styles.confirmBtn, 'confirm'].join(' ')}
+              onClick={this.handleConfirm}
+              disabled={Object.keys(chosenWords).length < 2}
+            >
+              {t('Confirm')}
+            </PrimaryButton>
+            <TertiaryButton className={styles.editBtn} onClick={prevStep}>
+              {t('Go back')}
+            </TertiaryButton>
+          </div>
         )}
       </div>
     );

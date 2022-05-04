@@ -3,9 +3,9 @@ import { withTranslation } from 'react-i18next';
 import PropTypes from 'prop-types';
 import routes from '@screens/router/routes';
 import { useTheme } from 'src/theme/Theme';
-import { SecondaryButton } from '@basics/buttons';
-import FlashMessage from '@basics/flashMessage/flashMessage';
-import FlashMessageHolder from '@basics/flashMessage/holder';
+import { SecondaryButton } from 'src/theme/buttons';
+import FlashMessage from 'src/theme/flashMessage/flashMessage';
+import FlashMessageHolder from 'src/theme/flashMessage/holder';
 import Icon from 'src/theme/Icon';
 import styles from './WarnPunishedDelegate.css';
 
@@ -27,9 +27,7 @@ const WarnPunishedDelegate = ({
   }, [history.location.pathname]);
 
   const message = isBanned
-    ? t(
-      'This delegate has been permanently banned',
-    )
+    ? t('This delegate has been permanently banned')
     : t(
       'Caution! This delegate was punished on {{punishmentStartDate}}. There is approximately {{daysLeft}} days remaining before the punishment ends.',
       { punishmentStartDate, daysLeft },

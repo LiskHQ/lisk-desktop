@@ -1,7 +1,7 @@
 import React from 'react';
 
-import EmptyBoxState from '@basics/box/emptyState';
-import Illustration from '@basics/illustration';
+import EmptyBoxState from 'src/theme/box/emptyState';
+import Illustration from 'src/modules/common/components/illustration';
 
 const EmptyState = ({ t }) => (
   <EmptyBoxState>

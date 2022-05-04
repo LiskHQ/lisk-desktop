@@ -4,9 +4,9 @@ import { tokenMap } from '@token/fungible/consts/tokens';
 import { getAddress } from '@wallet/utils/hwManager';
 import { isEmpty } from '@common/utilities/helpers';
 import Icon from 'src/theme/Icon';
-import CopyToClipboard from '@basics/copyToClipboard';
+import CopyToClipboard from 'src/modules/common/components/copyToClipboard';
 import Tooltip from 'src/theme/Tooltip';
-import DialogLink from '@basics/dialog/link';
+import DialogLink from 'src/theme/dialog/link';
 import styles from './walletInfo.css';
 
 const BookmarkIcon = ({ bookmark }) => (
@@ -16,7 +16,11 @@ const BookmarkIcon = ({ bookmark }) => (
   />
 );
 
-const getMultiSignatureComponent = (isLoggedInAccount, isMultisignature, activeToken) => {
+const getMultiSignatureComponent = (
+  isLoggedInAccount,
+  isMultisignature,
+  activeToken,
+) => {
   if (activeToken !== tokenMap.LSK.key) {
     return null;
   }
@@ -29,25 +33,30 @@ const getMultiSignatureComponent = (isLoggedInAccount, isMultisignature, activeT
   return 'multiSignature';
 };
 
-const MultiSignatureButton = ({
-  t, component, isMultisignature,
-}) => (
-  <DialogLink
-    className={styles.helperIcon}
-    component={component}
-  >
+const MultiSignatureButton = ({ t, component, isMultisignature }) => (
+  <DialogLink className={styles.helperIcon} component={component}>
     <Tooltip
-      className={`${styles.tooltipWrapper} ${styles.centerContent} ${isMultisignature ? styles.whiteBackground : ''} account-info-msign`}
+      className={`${styles.tooltipWrapper} ${styles.centerContent} ${
+        isMultisignature ? styles.whiteBackground : ''
+      } account-info-msign`}
       position="bottom"
       size="maxContent"
       content={(
         <Icon
-          name={isMultisignature ? 'registerMultisignatureGroup' : 'multiSignatureOutline'}
+          name={
+            isMultisignature
+              ? 'registerMultisignatureGroup'
+              : 'multiSignatureOutline'
+          }
           className={styles.multisigIcon}
         />
       )}
     >
-      <p>{isMultisignature ? t('View multisignature account details') : t('Register multisignature account')}</p>
+      <p>
+        {isMultisignature
+          ? t('View multisignature account details')
+          : t('Register multisignature account')}
+      </p>
     </Tooltip>
   </DialogLink>
 );
@@ -68,7 +77,7 @@ const CopyAddressAndPublicKey = ({
             copyClassName={styles.copyIcon}
             className={styles.copyIcon}
           />
-      )}
+        )}
       >
         <p>{t('Copy address')}</p>
       </Tooltip>
@@ -79,7 +88,9 @@ const CopyAddressAndPublicKey = ({
       className={`${styles.tooltipWrapper} ${styles.noPadding}`}
       position="bottom"
       size="maxContent"
-      content={<Icon name="copy" className={`${styles.qrCodeIcon} ${styles.white}`} />}
+      content={
+        <Icon name="copy" className={`${styles.qrCodeIcon} ${styles.white}`} />
+      }
     >
       <div className={styles.copyButtonWrapper}>
         <div className={styles.row}>
@@ -107,10 +118,22 @@ const CopyAddressAndPublicKey = ({
 
 // eslint-disable-next-line complexity
 const ActionBar = ({
-  address, host, activeToken, username, account, bookmark, hwInfo, isMultisignature, t,
+  address,
+  host,
+  activeToken,
+  username,
+  account,
+  bookmark,
+  hwInfo,
+  isMultisignature,
+  t,
 }) => {
   const isLoggedInAccount = address === host;
-  const component = getMultiSignatureComponent(isLoggedInAccount, isMultisignature, activeToken);
+  const component = getMultiSignatureComponent(
+    isLoggedInAccount,
+    isMultisignature,
+    activeToken,
+  );
 
   return (
     <footer>
@@ -122,8 +145,7 @@ const ActionBar = ({
         />
       </div>
       <div className={`${styles.helperIcon} ${styles.qrCodeWrapper}`}>
-        {
-        host === address ? (
+        {host === address ? (
           <Tooltip
             className={styles.tooltipWrapper}
             position="bottom"
@@ -146,11 +168,9 @@ const ActionBar = ({
           >
             <QRCode value={address} size={154} />
           </Tooltip>
-        )
-      }
+        )}
       </div>
-      {
-      host !== address ? (
+      {host !== address ? (
         <div className={styles.helperIcon}>
           <Tooltip
             className={`${styles.tooltipWrapper} add-bookmark-icon`}
@@ -159,41 +179,54 @@ const ActionBar = ({
             content={(
               <DialogLink
                 component="addBookmark"
-                data={username ? {
-                  formAddress: address,
-                  label: account.dpos?.delegate?.username,
-                  isDelegate: account.summary.isDelegate,
-                } : {
-                  formAddress: address,
-                  label: bookmark ? bookmark.title : '',
-                  isDelegate: account.summary.isDelegate,
-                }}
+                data={
+                  username
+                    ? {
+                      formAddress: address,
+                      label: account.dpos?.delegate?.username,
+                      isDelegate: account.summary.isDelegate,
+                    }
+                    : {
+                      formAddress: address,
+                      label: bookmark ? bookmark.title : '',
+                      isDelegate: account.summary.isDelegate,
+                    }
+                }
               >
                 <BookmarkIcon bookmark={bookmark} />
               </DialogLink>
             )}
           >
-            <p>{t(bookmark === undefined ? 'Add to bookmarks' : 'Edit bookmark')}</p>
+            <p>
+              {t(bookmark === undefined ? 'Add to bookmarks' : 'Edit bookmark')}
+            </p>
           </Tooltip>
         </div>
-      ) : null
-    }
+      ) : null}
       {hwInfo && !isEmpty(hwInfo) && host === address && (
         <div
           className={`${styles.helperIcon} verify-address ${styles.tooltipWrapper}`}
-          onClick={() => getAddress({
-            deviceId: hwInfo.deviceId,
-            index: hwInfo.derivationIndex,
-            showOnDevice: true,
-          })}
+          onClick={() =>
+            getAddress({
+              deviceId: hwInfo.deviceId,
+              index: hwInfo.derivationIndex,
+              showOnDevice: true,
+            })}
         >
           <Tooltip
             className={styles.tooltipWrapper}
             position="bottom"
             title={t('Verify address')}
-            content={<Icon name="verifyWalletAddress" className={styles.hwWalletIcon} />}
+            content={(
+              <Icon
+                name="verifyWalletAddress"
+                className={styles.hwWalletIcon}
+              />
+            )}
           >
-            <span>{t('Verify the address in your hardware wallet device.')}</span>
+            <span>
+              {t('Verify the address in your hardware wallet device.')}
+            </span>
           </Tooltip>
         </div>
       )}

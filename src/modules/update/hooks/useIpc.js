@@ -2,9 +2,12 @@ import React, { useEffect } from 'react';
 import { useDispatch } from 'react-redux';
 import htmlStringToReact from '@common/utilities/htmlStringToReact';
 import { regex } from '@common/configuration';
-import { addSearchParamsToUrl, removeSearchParamsFromUrl } from 'src/utils/searchParams';
+import {
+  addSearchParamsToUrl,
+  removeSearchParamsFromUrl,
+} from 'src/utils/searchParams';
 import { appUpdateAvailable } from '@common/store/actions';
-import FlashMessageHolder from '@basics/flashMessage/holder';
+import FlashMessageHolder from 'src/theme/flashMessage/holder';
 import NewReleaseMessage from '../detail/info/newReleaseMessage/newReleaseMessage';
 
 const useIpc = (history) => {
@@ -32,10 +35,17 @@ const useIpc = (history) => {
         }, 500);
       };
 
-      const [releaseSummary] = releaseNotes.match(regex.releaseSummary).slice(1);
-      dispatch(appUpdateAvailable({
-        version, releaseNotes, remindMeLater, updateNow,
-      }));
+      const [releaseSummary] = releaseNotes
+        .match(regex.releaseSummary)
+        .slice(1);
+      dispatch(
+        appUpdateAvailable({
+          version,
+          releaseNotes,
+          remindMeLater,
+          updateNow,
+        }),
+      );
 
       FlashMessageHolder.addMessage(
         <NewReleaseMessage

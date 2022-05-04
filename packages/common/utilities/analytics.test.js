@@ -2,8 +2,8 @@ import React from 'react';
 import moment from 'moment';
 import { advanceBy, clear } from 'jest-date-mock';
 import { mount } from 'enzyme';
-import DialogHolder from '@basics/dialog/holder';
-import FlashMessageHolder from '@basics/flashMessage/holder';
+import DialogHolder from 'src/theme/dialog/holder';
+import FlashMessageHolder from 'src/theme/flashMessage/holder';
 import analyticsUtil from './analytics';
 
 describe.skip('Analytics Util', () => {
@@ -12,7 +12,7 @@ describe.skip('Analytics Util', () => {
   beforeEach(() => {
     props = {
       settings: { statistics: false },
-      t: k => k,
+      t: (k) => k,
       settingsUpdated: jest.fn((data) => {
         props.settings = {
           ...props.settings,
@@ -33,7 +33,9 @@ describe.skip('Analytics Util', () => {
     expect(dialogWrapper).toBeEmptyRender();
     analyticsUtil.init();
     wrapper.update();
-    expect(wrapper).toIncludeText('Opt-in to sharing anonymous data in order to improve Lisk.');
+    expect(wrapper).toIncludeText(
+      'Opt-in to sharing anonymous data in order to improve Lisk.',
+    );
     wrapper.find('a.url-link').simulate('click');
     dialogWrapper.update();
     expect(dialogWrapper).toIncludeText('Anonymous data collection');
@@ -45,10 +47,13 @@ describe.skip('Analytics Util', () => {
     expect(wrapper).toBeEmptyRender();
     expect(dialogWrapper).toBeEmptyRender();
     analyticsUtil.checkIfAnalyticsShouldBeDisplayed({
-      settings: props.settings, showAnalytics: true,
+      settings: props.settings,
+      showAnalytics: true,
     });
     wrapper.update();
-    expect(wrapper).toIncludeText('Opt-in to sharing anonymous data in order to improve Lisk.');
+    expect(wrapper).toIncludeText(
+      'Opt-in to sharing anonymous data in order to improve Lisk.',
+    );
     wrapper.find('a.url-link').simulate('click');
     dialogWrapper.update();
     expect(dialogWrapper).toIncludeText('Anonymous data collection');
@@ -64,10 +69,13 @@ describe.skip('Analytics Util', () => {
     expect(wrapper).toBeEmptyRender();
     expect(dialogWrapper).toBeEmptyRender();
     analyticsUtil.checkIfAnalyticsShouldBeDisplayed({
-      settings: newSettings, showAnalytics: false,
+      settings: newSettings,
+      showAnalytics: false,
     });
     wrapper.update();
-    expect(wrapper).toIncludeText('Opt-in to sharing anonymous data in order to improve Lisk.');
+    expect(wrapper).toIncludeText(
+      'Opt-in to sharing anonymous data in order to improve Lisk.',
+    );
     wrapper.find('a.url-link').simulate('click');
     dialogWrapper.update();
     expect(dialogWrapper).toIncludeText('Anonymous data collection');
@@ -84,10 +92,13 @@ describe.skip('Analytics Util', () => {
     expect(wrapper).toBeEmptyRender();
     expect(dialogWrapper).toBeEmptyRender();
     analyticsUtil.checkIfAnalyticsShouldBeDisplayed({
-      settings: newSettings, showAnalytics: false,
+      settings: newSettings,
+      showAnalytics: false,
     });
     wrapper.update();
-    expect(wrapper).toIncludeText('Opt-in to sharing anonymous data in order to improve Lisk.');
+    expect(wrapper).toIncludeText(
+      'Opt-in to sharing anonymous data in order to improve Lisk.',
+    );
     wrapper.find('a.url-link').simulate('click');
     dialogWrapper.update();
     expect(dialogWrapper).toIncludeText('Anonymous data collection');
@@ -99,9 +110,12 @@ describe.skip('Analytics Util', () => {
     expect(wrapper).toBeEmptyRender();
     expect(dialogWrapper).toBeEmptyRender();
     analyticsUtil.onTriggerPageLoaded({
-      settings: props.settings, settingsUpdated: props.settingsUpdated,
+      settings: props.settings,
+      settingsUpdated: props.settingsUpdated,
     });
-    expect(props.settingsUpdated).toHaveBeenCalledWith({ statisticsRequest: true });
+    expect(props.settingsUpdated).toHaveBeenCalledWith({
+      statisticsRequest: true,
+    });
     wrapper.update();
     wrapper.find('a.url-link').simulate('click');
     dialogWrapper.update();
@@ -112,12 +126,18 @@ describe.skip('Analytics Util', () => {
     wrapper.mount();
 
     expect(wrapper).toBeEmptyRender();
-    analyticsUtil.checkIfAnalyticsShouldBeDisplayed({ settings: props.settings });
+    analyticsUtil.checkIfAnalyticsShouldBeDisplayed({
+      settings: props.settings,
+    });
     expect(wrapper).toBeEmptyRender();
 
     advanceBy(8 * 24 * 60 * 60 * 1000);
-    analyticsUtil.checkIfAnalyticsShouldBeDisplayed({ settings: props.settings });
+    analyticsUtil.checkIfAnalyticsShouldBeDisplayed({
+      settings: props.settings,
+    });
     wrapper.update();
-    expect(wrapper).toIncludeText('Opt-in to sharing anonymous data in order to improve Lisk.');
+    expect(wrapper).toIncludeText(
+      'Opt-in to sharing anonymous data in order to improve Lisk.',
+    );
   });
 });

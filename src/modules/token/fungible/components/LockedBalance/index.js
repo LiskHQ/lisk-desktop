@@ -1,5 +1,5 @@
 import React from 'react';
-import Dialog from '@basics/dialog/dialog';
+import Dialog from 'src/theme/dialog/dialog';
 import MultiStep from 'src/modules/common/components/OldMultiStep';
 import TransactionSignature from '@transaction/components/TransactionSignature';
 import Form from './LockedBalanceForm';
@@ -8,9 +8,7 @@ import Summary from './LockedBalanceSummary';
 
 const Modal = () => (
   <Dialog hasClose>
-    <MultiStep
-      key="unlockBalance"
-    >
+    <MultiStep key="unlockBalance">
       <Form />
       <Summary />
       <TransactionSignature />

@@ -1,14 +1,21 @@
 import React from 'react';
-import Box from '@basics/box';
-import BoxContent from '@basics/box/content';
+import Box from 'src/theme/box';
+import BoxContent from 'src/theme/box/content';
 import TransactionResult from '@transaction/components/TransactionResult';
-import { statusMessages, getTransactionStatus } from '@transaction/configuration/statusConfig';
+import {
+  statusMessages,
+  getTransactionStatus,
+} from '@transaction/configuration/statusConfig';
 
 import ProgressBar from '../progressBar';
 import styles from './styles.css';
 
 const Status = ({ sender, transactions, t }) => {
-  const status = getTransactionStatus(sender.data, transactions, sender.data?.summary.publicKey);
+  const status = getTransactionStatus(
+    sender.data,
+    transactions,
+    sender.data?.summary.publicKey,
+  );
   const template = statusMessages(t)[status.code];
 
   return (
@@ -16,7 +23,11 @@ const Status = ({ sender, transactions, t }) => {
       <Box className={styles.boxContainer}>
         <header>
           <h1>{t('Sign multisignature transaction')}</h1>
-          <p>{t('Provide a signature for a transaction which belongs to a multisignature account.')}</p>
+          <p>
+            {t(
+              'Provide a signature for a transaction which belongs to a multisignature account.',
+            )}
+          </p>
         </header>
         <BoxContent>
           <ProgressBar current={4} />

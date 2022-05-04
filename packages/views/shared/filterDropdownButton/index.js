@@ -1,7 +1,7 @@
 import { withTranslation } from 'react-i18next';
 import React from 'react';
 import moment from 'moment';
-import { PrimaryButton, SecondaryButton } from '@basics/buttons';
+import { PrimaryButton, SecondaryButton } from 'src/theme/buttons';
 import DropdownButton from 'src/theme/DropdownButton';
 import Icon from 'src/theme/Icon';
 import AmountFieldGroup from './amountFieldGroup';
@@ -62,7 +62,11 @@ class FilterDropdownButton extends React.Component {
 
     if (!this.props.onTypeSelected) return;
 
-    if (blackListTypes.some(blackListType => blackListType === fields.moduleAssetId?.value)) {
+    if (
+      blackListTypes.some(
+        (blackListType) => blackListType === fields.moduleAssetId?.value,
+      )
+    ) {
       this.props.onTypeSelected(fields.moduleAssetId.value);
     } else {
       this.props.onTypeSelected(null);
@@ -88,16 +92,20 @@ class FilterDropdownButton extends React.Component {
 
   getFilters(filter) {
     const { filters } = this.state;
-    return filter.type.indexOf('range') !== -1 ? {
-      [`${filter.name}From`]: filters[`${filter.name}From`],
-      [`${filter.name}To`]: filters[`${filter.name}To`],
-    } : {
-      [filter.name]: filters[filter.name],
-    };
+    return filter.type.indexOf('range') !== -1
+      ? {
+        [`${filter.name}From`]: filters[`${filter.name}From`],
+        [`${filter.name}To`]: filters[`${filter.name}To`],
+      }
+      : {
+        [filter.name]: filters[filter.name],
+      };
   }
 
   extendFilters() {
-    this.setState(({ areFiltersExtended }) => ({ areFiltersExtended: !areFiltersExtended }));
+    this.setState(({ areFiltersExtended }) => ({
+      areFiltersExtended: !areFiltersExtended,
+    }));
   }
 
   renderFields({
@@ -105,12 +113,17 @@ class FilterDropdownButton extends React.Component {
   }) {
     const Component = filterComponents[type];
     const props = {
-      name, label, placeholder, valueFormatter,
+      name,
+      label,
+      placeholder,
+      valueFormatter,
     };
     return (
       <Component
         key={name}
-        showRightDropdown={type === 'date-range' && this.state.areFiltersExtended}
+        showRightDropdown={
+          type === 'date-range' && this.state.areFiltersExtended
+        }
         {...props}
         filters={this.getFilters({ name, type })}
         updateCustomFilters={this.handleFiltersChange}
@@ -125,9 +138,12 @@ class FilterDropdownButton extends React.Component {
     return (
       <>
         {fields.length > 3 && (
-        <span onClick={this.extendFilters} className={[styles.actionable, 'more-less-switch'].join(' ')}>
-          {areFiltersExtended ? t('Less filters') : t('More filters')}
-        </span>
+          <span
+            onClick={this.extendFilters}
+            className={[styles.actionable, 'more-less-switch'].join(' ')}
+          >
+            {areFiltersExtended ? t('Less filters') : t('More filters')}
+          </span>
         )}
         <PrimaryButton
           disabled={hasErrors}
@@ -159,18 +175,28 @@ class FilterDropdownButton extends React.Component {
         align="right"
         ref={this.setChildRef}
       >
-        <form onSubmit={this.applyFilters} className={`${styles.form} filter-container`}>
-          <div className={`${styles.container} ${areFiltersExtended && styles.extendedContainer}`}>
+        <form
+          onSubmit={this.applyFilters}
+          className={`${styles.form} filter-container`}
+        >
+          <div
+            className={`${styles.container} ${
+              areFiltersExtended && styles.extendedContainer
+            }`}
+          >
             {fields
-              .filter((field, index) => (areFiltersExtended ? index <= 3 : index <= 2))
+              .filter((field, index) =>
+                (areFiltersExtended ? index <= 3 : index <= 2))
               .map(this.renderFields)}
             {!areFiltersExtended && this.renderFooter()}
           </div>
           {areFiltersExtended && (
-          <div className={styles.container}>
-              {fields.filter((field, index) => index >= 4).map(this.renderFields)}
-            {this.renderFooter()}
-          </div>
+            <div className={styles.container}>
+              {fields
+                .filter((field, index) => index >= 4)
+                .map(this.renderFields)}
+              {this.renderFooter()}
+            </div>
           )}
         </form>
       </DropdownButton>

@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { withTranslation } from 'react-i18next';
 import { useSelector } from 'react-redux';
 import Icon from 'src/theme/Icon';
-import Illustration from '@basics/illustration';
+import Illustration from 'src/modules/common/components/illustration';
 import styles from './infoBanner.css';
 
 const InfoBanner = ({
@@ -15,8 +15,12 @@ const InfoBanner = ({
   show,
   t,
 }) => {
-  const [visibility, setVisibility] = useState(!localStorage.getItem(name) && show);
-  const isLoggedIn = useSelector(state => (state.wallet && state.wallet.passphrase));
+  const [visibility, setVisibility] = useState(
+    !localStorage.getItem(name) && show,
+  );
+  const isLoggedIn = useSelector(
+    (state) => state.wallet && state.wallet.passphrase,
+  );
 
   const handleClose = () => {
     localStorage.setItem(name, true);

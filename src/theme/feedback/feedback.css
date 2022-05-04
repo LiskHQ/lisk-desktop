@@ -1,0 +1,57 @@
+@import '../../../setup/react/app/mixins.css';
+
+.wrapper {
+  position: relative;
+  width: 100%;
+}
+
+.feedback {
+  @mixin contentNormal;
+
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  box-sizing: border-box;
+  margin-top: 10px;
+  color: var(--color-slate-gray);
+  height: auto;
+  opacity: 1;
+  border-radius: var(--border-radius-standard);
+  transform: scaleY(0);
+  overflow: hidden;
+  position: absolute;
+  top: 0;
+  left: 0;
+  z-index: 1;
+
+  &.error.display {
+    background: var(--error-background-color);
+    color: var(--color-strong-white);
+    animation: fadeIn var(--animation-speed-fastest) forwards;
+    transform-origin: top;
+    display: inline-block;
+  }
+
+  &.l {
+    padding: 12px var(--horizontal-padding-m);
+  }
+
+  &.m {
+    padding: 8px var(--horizontal-padding-m);
+  }
+
+  &.s,
+  &.xs {
+    padding: 8px var(--horizontal-padding-s);
+  }
+}
+
+@keyframes fadeIn {
+  from {
+    transform: scaleY(0);
+  }
+
+  to {
+    transform: scaleY(1);
+  }
+}

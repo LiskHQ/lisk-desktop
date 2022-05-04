@@ -2,14 +2,16 @@ import React from 'react';
 import { useSelector } from 'react-redux';
 import { withTranslation } from 'react-i18next';
 import htmlStringToReact from '@common/utilities/htmlStringToReact';
-import Dialog from '@basics/dialog/dialog';
-import { PrimaryButton, SecondaryButton } from '@basics/buttons';
+import Dialog from 'src/theme/dialog/dialog';
+import { PrimaryButton, SecondaryButton } from 'src/theme/buttons';
 import styles from './newReleaseDialog.css';
 
 const NewReleaseDialog = ({ t }) => {
   const {
     version, releaseNotes, remindMeLater, updateNow,
-  } = useSelector(state => state.appUpdates);
+  } = useSelector(
+    (state) => state.appUpdates,
+  );
 
   return (
     <Dialog hasClose>
@@ -22,14 +24,22 @@ const NewReleaseDialog = ({ t }) => {
         </Dialog.Description>
         <h3>{t('Release notes')}</h3>
         <div className={`${styles.releaseNotes} release-notes`}>
-          {typeof releaseNotes === 'string' ? htmlStringToReact(releaseNotes) : releaseNotes}
+          {typeof releaseNotes === 'string'
+            ? htmlStringToReact(releaseNotes)
+            : releaseNotes}
         </div>
       </div>
       <Dialog.Options align="center">
-        <SecondaryButton className="release-dialog-remind-me-later" onClick={remindMeLater}>
+        <SecondaryButton
+          className="release-dialog-remind-me-later"
+          onClick={remindMeLater}
+        >
           {t('Remind me later')}
         </SecondaryButton>
-        <PrimaryButton className="release-dialog-update-now" onClick={updateNow}>
+        <PrimaryButton
+          className="release-dialog-update-now"
+          onClick={updateNow}
+        >
           {t('Install update')}
         </PrimaryButton>
       </Dialog.Options>

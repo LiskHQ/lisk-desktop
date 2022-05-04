@@ -2,7 +2,7 @@ import React, { createContext } from 'react';
 import { withTranslation } from 'react-i18next';
 import grid from 'flexboxgrid/dist/flexboxgrid.css';
 
-import DialogLink from '@basics/dialog/link';
+import DialogLink from 'src/theme/dialog/link';
 import LayoutSchema from './layoutSchema';
 import styles from './schemas.css';
 
@@ -13,7 +13,14 @@ export const RowContext = createContext({
 });
 
 const TransactionRow = ({
-  data, className, t, currentBlockHeight, host, layout, avatarSize, activeToken,
+  data,
+  className,
+  t,
+  currentBlockHeight,
+  host,
+  layout,
+  avatarSize,
+  activeToken,
 }) => {
   const Layout = LayoutSchema[layout] || LayoutSchema.default;
 
@@ -23,11 +30,18 @@ const TransactionRow = ({
       component="transactionDetails"
       data={{ transactionId: data.id, token: activeToken }}
     >
-      <RowContext.Provider value={{
-        currentBlockHeight, data, host, activeToken, avatarSize,
-      }}
+      <RowContext.Provider
+        value={{
+          currentBlockHeight,
+          data,
+          host,
+          activeToken,
+          avatarSize,
+        }}
       >
-        {Layout.components.map((Component, index) => <Component key={index} t={t} />)}
+        {Layout.components.map((Component, index) => (
+          <Component key={index} t={t} />
+        ))}
       </RowContext.Provider>
     </DialogLink>
   );
@@ -35,7 +49,7 @@ const TransactionRow = ({
 
 /* istanbul ignore next */
 const areEqual = (prevProps, nextProps) =>
-  (prevProps.data.id === nextProps.data.id
-  && prevProps.currentBlockHeight === nextProps.currentBlockHeight);
+  prevProps.data.id === nextProps.data.id
+  && prevProps.currentBlockHeight === nextProps.currentBlockHeight;
 
 export default React.memo(withTranslation()(TransactionRow), areEqual);

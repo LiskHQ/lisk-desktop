@@ -3,22 +3,20 @@ import React, { useEffect } from 'react';
 
 import routes from '@screens/router/routes';
 import { tokenMap } from '@token/fungible/consts/tokens';
-import DateTimeFromTimestamp from '@basics/timestamp';
-import Box from '@basics/box';
-import BoxHeader from '@basics/box/header';
-import BoxContent from '@basics/box/content';
-import CopyToClipboard from '@basics/copyToClipboard';
-import Feedback from '@basics/feedback/feedback';
-import LabeledValue from '@basics/labeledValue';
+import DateTimeFromTimestamp from 'src/modules/common/components/timestamp';
+import Box from 'src/theme/box';
+import BoxHeader from 'src/theme/box/header';
+import BoxContent from 'src/theme/box/content';
+import CopyToClipboard from 'src/modules/common/components/copyToClipboard';
+import Feedback from 'src/theme/feedback/feedback';
+import LabeledValue from 'src/theme/labeledValue';
 import LiskAmount from '@shared/liskAmount';
 import Transactions from '@transaction/components/BlockDetailsTransactions';
 import { truncateAddress } from '@wallet/utils/account';
 import WalletVisual from '@wallet/components/walletVisual';
 import styles from './blockDetails.css';
 
-const Generator = ({
-  generatorAddress, generatorUsername,
-}) => {
+const Generator = ({ generatorAddress, generatorUsername }) => {
   if (generatorUsername && generatorAddress) {
     return (
       <Link
@@ -35,9 +33,7 @@ const Generator = ({
     );
   }
 
-  return (
-    <span>None (Genesis block)</span>
-  );
+  return <span>None (Genesis block)</span>;
 };
 
 const getFields = (data = {}, token, t, currentHeight) => ({
@@ -108,7 +104,7 @@ const Rows = ({ data, t, currentHeight }) => {
   const token = tokenMap.LSK.key;
   const fields = getFields(data, token, t, currentHeight);
 
-  const columns = Object.keys(fields).map(field => (
+  const columns = Object.keys(fields).map((field) => (
     <LabeledValue
       key={field}
       label={fields[field].label}
@@ -118,11 +114,7 @@ const Rows = ({ data, t, currentHeight }) => {
     </LabeledValue>
   ));
 
-  return (
-    <div className={styles.dataContainer}>
-      { columns }
-    </div>
-  );
+  return <div className={styles.dataContainer}>{columns}</div>;
 };
 
 const BlockDetails = ({
@@ -139,7 +131,7 @@ const BlockDetails = ({
           <h1>{t('Block details')}</h1>
         </BoxHeader>
         <BoxContent>
-          { blockDetails.error ? (
+          {blockDetails.error ? (
             <Feedback
               message={t('Failed to load block details.')}
               status="error"

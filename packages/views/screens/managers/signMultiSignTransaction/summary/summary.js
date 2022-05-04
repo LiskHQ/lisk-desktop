@@ -1,8 +1,8 @@
 import React, { useMemo } from 'react';
 import { isEmpty } from '@common/utilities/helpers';
 import { signatureCollectionStatus } from '@transaction/configuration/txStatus';
-import BoxContent from '@basics/box/content';
-import Box from '@basics/box';
+import BoxContent from 'src/theme/box/content';
+import Box from 'src/theme/box';
 import TransactionDetails from '@screens/managers/transactionDetails';
 import TransactionDetailsProvider from '@transaction/context';
 
@@ -43,7 +43,10 @@ const Summary = ({
   };
 
   const nextButton = {
-    title: signatureStatus === signatureCollectionStatus.fullySigned ? t('Continue') : t('Sign'),
+    title:
+      signatureStatus === signatureCollectionStatus.fullySigned
+        ? t('Continue')
+        : t('Sign'),
     onClick,
   };
 
@@ -59,7 +62,11 @@ const Summary = ({
     <Box className={styles.boxContainer}>
       <header>
         <h1>{t('Sign multisignature transaction')}</h1>
-        <p>{t('Provide a signature for a transaction which belongs to a multisignature account.')}</p>
+        <p>
+          {t(
+            'Provide a signature for a transaction which belongs to a multisignature account.',
+          )}
+        </p>
       </header>
       <BoxContent>
         <ProgressBar current={2} />
@@ -69,29 +76,19 @@ const Summary = ({
           transaction={transaction}
           account={senderAccount.data}
           schema={`${transaction.moduleAssetId}-preview`}
-          containerStyle={`${styles.txDetails} ${showFeedback && isMember ? styles.small : ''}`}
+          containerStyle={`${styles.txDetails} ${
+            showFeedback && isMember ? styles.small : ''
+          }`}
         >
           <TransactionDetails />
         </TransactionDetailsProvider>
       </BoxContent>
-      {
-        isMember ? (
-          <ActionBar
-            t={t}
-            history={history}
-            nextButton={nextButton}
-          />
-        ) : null
-      }
-      {
-        showFeedback ? (
-          <Feedback
-            t={t}
-            isMember={isMember}
-            signatureStatus={signatureStatus}
-          />
-        ) : null
-      }
+      {isMember ? (
+        <ActionBar t={t} history={history} nextButton={nextButton} />
+      ) : null}
+      {showFeedback ? (
+        <Feedback t={t} isMember={isMember} signatureStatus={signatureStatus} />
+      ) : null}
     </Box>
   );
 };

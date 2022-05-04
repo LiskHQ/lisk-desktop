@@ -3,16 +3,19 @@ import { withTranslation } from 'react-i18next';
 import { useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
 
-import { selectAccount, selectCurrentBlockHeight } from '@common/store/selectors';
+import {
+  selectAccount,
+  selectCurrentBlockHeight,
+} from '@common/store/selectors';
 import routes from '@screens/router/routes';
 import { tokenMap } from '@token/fungible/consts/tokens';
-import { SecondaryButton } from '@basics/buttons';
-import Box from '@basics/box';
-import BoxHeader from '@basics/box/header';
-import BoxContent from '@basics/box/content';
-import BoxEmptyState from '@basics/box/emptyState';
+import { SecondaryButton } from 'src/theme/buttons';
+import Box from 'src/theme/box';
+import BoxHeader from 'src/theme/box/header';
+import BoxContent from 'src/theme/box/content';
+import BoxEmptyState from 'src/theme/box/emptyState';
 import Icon from 'src/theme/Icon';
-import Table from '@basics/table';
+import Table from 'src/theme/table';
 import TransactionRow from '../TransactionRow';
 import styles from './RecentTransactions.css';
 import header from './RecentTransactionsHeaderMap';
@@ -23,7 +26,12 @@ export const NoTransactions = withTranslation()(({ t }) => {
     <BoxEmptyState>
       <Icon name="iconEmptyRecentTransactions" />
       <h1>{t('No transactions yet')}</h1>
-      <p>{t('A great way to start is to top up your account with some {{value}}.', { value: activeToken.key })}</p>
+      <p>
+        {t(
+          'A great way to start is to top up your account with some {{value}}.',
+          { value: activeToken.key },
+        )}
+      </p>
     </BoxEmptyState>
   );
 });
@@ -57,7 +65,9 @@ const RecentTransactions = ({ className, t, transactions }) => {
       className={`${styles.box} ${className}`}
     >
       <BoxHeader>
-        <h2 className={styles.title}>{t('Recent {{value}} transactions', { value: activeToken })}</h2>
+        <h2 className={styles.title}>
+          {t('Recent {{value}} transactions', { value: activeToken })}
+        </h2>
       </BoxHeader>
       <BoxContent className={styles.content}>
         <Table
@@ -65,7 +75,9 @@ const RecentTransactions = ({ className, t, transactions }) => {
           isLoading={transactions.isLoading}
           row={TransactionRow}
           header={header(t)}
-          error={transactions.error.code !== 404 ? transactions.error : undefined}
+          error={
+            transactions.error.code !== 404 ? transactions.error : undefined
+          }
           canLoadMore={false}
           additionalRowProps={{
             activeToken,
@@ -78,9 +90,7 @@ const RecentTransactions = ({ className, t, transactions }) => {
         />
         <div className={styles.viewAll}>
           <Link to={routes.wallet.path} className="view-all">
-            <SecondaryButton size="s">
-              {t('View all')}
-            </SecondaryButton>
+            <SecondaryButton size="s">{t('View all')}</SecondaryButton>
           </Link>
         </div>
       </BoxContent>

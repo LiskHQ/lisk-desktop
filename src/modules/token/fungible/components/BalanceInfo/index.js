@@ -2,8 +2,8 @@ import React from 'react';
 import { withTranslation } from 'react-i18next';
 import { tokenMap } from '@token/fungible/consts/tokens';
 import { fromRawLsk } from '@token/fungible/utils/lsk';
-import Box from '@basics/box';
-import BoxContent from '@basics/box/content';
+import Box from 'src/theme/box';
+import BoxContent from 'src/theme/box/content';
 import LiskAmount from '@shared/liskAmount';
 import DiscreetMode from '@shared/discreetMode';
 import Converter from '@shared/converter';
@@ -15,10 +15,7 @@ import styles from './BalanceInfo.css';
 const BalanceInfo = ({
   t, activeToken, isWalletRoute, account,
 }) => {
-  const {
-    address,
-    balance = 0,
-  } = account?.summary ?? {};
+  const { address, balance = 0 } = account?.summary ?? {};
 
   const isBanned = account?.dpos?.delegate?.isBanned;
   const pomHeights = account?.dpos?.delegate?.pomHeights;
@@ -40,15 +37,13 @@ const BalanceInfo = ({
                 error=""
               />
             </div>
-            {
-            activeToken === tokenMap.LSK.key && (
+            {activeToken === tokenMap.LSK.key && (
               <LockedBalanceLink
                 activeToken={activeToken}
                 isWalletRoute={isWalletRoute}
                 account={account}
               />
-            )
-          }
+            )}
           </DiscreetMode>
         </div>
         <ActionBar

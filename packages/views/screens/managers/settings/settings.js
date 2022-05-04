@@ -3,10 +3,10 @@ import { toast } from 'react-toastify';
 import Piwik from '@common/utilities/piwik';
 import { externalLinks } from '@common/configuration';
 import settingsConst from '@settings/configuration/settingConstants';
-import Box from '@basics/box';
-import BoxHeader from '@basics/box/header';
-import BoxContent from '@basics/box/content';
-import Dialog from '@basics/dialog/dialog';
+import Box from 'src/theme/box';
+import BoxHeader from 'src/theme/box/header';
+import BoxContent from 'src/theme/box/content';
+import Dialog from 'src/theme/dialog/dialog';
 import CurrencySelector from '@settings/setters/selectors/currencySelector';
 import Toggle from '@settings/setters/toggles/toggle';
 import styles from './settings.css';
@@ -108,7 +108,10 @@ class Settings extends React.Component {
                 </div>
               </label>
               <label className={`${styles.fieldGroup} ${styles.checkboxField}`}>
-                <Toggle isCheckbox setting={settingsConst.keys.enableCustomDerivationPath} />
+                <Toggle
+                  isCheckbox
+                  setting={settingsConst.keys.enableCustomDerivationPath}
+                />
                 <div>
                   <span className={styles.labelName}>
                     {t('Enable custom derivation path')}

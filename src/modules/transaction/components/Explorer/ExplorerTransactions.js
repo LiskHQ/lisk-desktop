@@ -1,10 +1,10 @@
 import React, { useEffect } from 'react';
 import { useSelector } from 'react-redux';
 import { selectCurrentBlockHeight } from '@common/store/selectors';
-import Box from '@basics/box';
-import BoxHeader from '@basics/box/header';
-import BoxContent from '@basics/box/content';
-import Table from '@basics/table';
+import Box from 'src/theme/box';
+import BoxHeader from 'src/theme/box/header';
+import BoxContent from 'src/theme/box/content';
+import Table from 'src/theme/table';
 import FilterBar from '@shared/filterBar';
 import TransactionRow from '../TransactionRow';
 import styles from './ExplorerTransactions.css';
@@ -33,14 +33,15 @@ const Transactions = ({
   }, [activeToken]);
 
   useEffect(() => {
-    const addressList = transactions.data.data && transactions.data.data.reduce((acc, data) => {
-      if (data.title === 'vote') {
-        const votesList = data.asset.votes || [];
-        const dataAddresses = votesList.map(vote => vote.delegateAddress);
-        return acc.concat(dataAddresses);
-      }
-      return acc;
-    }, []);
+    const addressList = transactions.data.data
+      && transactions.data.data.reduce((acc, data) => {
+        if (data.title === 'vote') {
+          const votesList = data.asset.votes || [];
+          const dataAddresses = votesList.map((vote) => vote.delegateAddress);
+          return acc.concat(dataAddresses);
+        }
+        return acc;
+      }, []);
     if (addressList.length > 0) {
       votedDelegates.loadData({ addressList });
     }
@@ -60,27 +61,37 @@ const Transactions = ({
   };
 
   const canLoadMore = transactions.data.meta
-    ? transactions.data.meta.total > transactions.data.meta.count + transactions.data.meta.offset
+    ? transactions.data.meta.total
+      > transactions.data.meta.count + transactions.data.meta.offset
     : false;
 
   const formatters = {
-    dateFrom: value => `${t('From')}: ${value}`,
-    dateTo: value => `${t('To')}: ${value}`,
-    amountFrom: value => `> ${value} ${activeToken}`,
-    amountTo: value => `< ${value} ${activeToken}`,
+    dateFrom: (value) => `${t('From')}: ${value}`,
+    dateTo: (value) => `${t('To')}: ${value}`,
+    amountFrom: (value) => `> ${value} ${activeToken}`,
+    amountTo: (value) => `< ${value} ${activeToken}`,
   };
 
   return (
-    <Box main isLoading={transactions.isLoading} className={`${styles.wrapper} transactions-box`}>
+    <Box
+      main
+      isLoading={transactions.isLoading}
+      className={`${styles.wrapper} transactions-box`}
+    >
       <BoxHeader>
         <FilterDropdown
           filters={filters}
-          applyFilters={f => applyFilters({ ...f, address })}
+          applyFilters={(f) => applyFilters({ ...f, address })}
         />
       </BoxHeader>
-      <FilterBar {...{
-        clearFilter, clearAllFilters, filters, formatters, t,
-      }}
+      <FilterBar
+        {...{
+          clearFilter,
+          clearAllFilters,
+          filters,
+          formatters,
+          t,
+        }}
       />
       <BoxContent className={`${styles.content} transaction-results`}>
         <Table
@@ -99,8 +110,12 @@ const Transactions = ({
           header={header(t, activeToken, changeSort)}
           currentSort={sort}
           canLoadMore={canLoadMore}
-          error={transactions.error.code !== 404 ? transactions.error : undefined}
-          emptyState={{ message: t('This account does not have any transactions.') }}
+          error={
+            transactions.error.code !== 404 ? transactions.error : undefined
+          }
+          emptyState={{
+            message: t('This account does not have any transactions.'),
+          }}
         />
       </BoxContent>
     </Box>
