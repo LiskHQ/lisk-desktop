@@ -1,27 +1,56 @@
 import settings from '@settings/configuration/settingConstants';
+import { networkKeys } from '@network/configuration/networks';
 import { getAutoLogInData, shouldAutoLogIn } from '@common/utilities/login';
-import { networkConfigSet } from '@network/store/action';
+import analytics from '@common/utilities/analytics';
+import settingsActionTypes from '@settings/store/actionTypes';
 import { login } from '@auth/store/action';
 import { settingsUpdated } from '@packages/settings/store/actions';
+import { networkSelected, networkStatusUpdated, networkConfigSet } from './action';
 import actionTypes from './actionTypes';
 
-const network = ({ dispatch, getState }) => next => async (action) => {
+const readStoredNetwork = ({ dispatch, getState }) => {
+  const {
+    statistics, statisticsRequest, statisticsFollowingDay, network,
+  } = getState().settings;
+
+  const config = network?.name && network.address
+    ? network
+    : {
+      name: networkKeys.mainNet,
+      address: network.networks.mainnet.serviceUrl,
+    };
+  dispatch(networkSelected(config));
+  dispatch(networkStatusUpdated({ online: true }));
+
+  if (!statistics) {
+    analytics.checkIfAnalyticsShouldBeDisplayed({
+      statisticsRequest, statisticsFollowingDay, statistics,
+    });
+  }
+};
+
+const network = (store) => next => async (action) => {
   next(action);
   switch (action.type) {
+    case settingsActionTypes.settingsRetrieved:
+      readStoredNetwork(store);
+      break;
     case actionTypes.networkSelected: {
-      dispatch(await networkConfigSet(action.data));
+      store.dispatch(await networkConfigSet(action.data));
       break;
     }
     case actionTypes.networkConfigSet: {
       const autoLoginData = getAutoLogInData();
       if (shouldAutoLogIn(autoLoginData)) {
-        dispatch(login({ passphrase: autoLoginData[settings.keys.loginKey] }));
+        store.dispatch(login({ passphrase: autoLoginData[settings.keys.loginKey] }));
       }
       break;
     }
     case actionTypes.customNetworkStored:
     case actionTypes.customNetworkRemoved:
-      dispatch(settingsUpdated({ storedCustomNetwork: getState().network.storedCustomNetwork }));
+      store.dispatch(
+        settingsUpdated({ storedCustomNetwork: store.getState().network.storedCustomNetwork }),
+      );
       break;
     default:
       break;
