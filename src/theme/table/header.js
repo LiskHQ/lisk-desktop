@@ -1,6 +1,6 @@
 import React from 'react';
 import grid from 'flexboxgrid/dist/flexboxgrid.css';
-import { isReactComponent } from '@common/utilities/helpers';
+import { isReactComponent } from 'src/utils/helpers';
 import Tooltip from 'src/theme/Tooltip';
 import styles from './table.css';
 

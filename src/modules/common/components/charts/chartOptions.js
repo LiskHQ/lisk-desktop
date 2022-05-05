@@ -3,7 +3,7 @@ import {
   chartStyles,
   colorPalette,
   colorPaletteDark,
-} from '@common/configuration';
+} from 'src/modules/common/components/charts/chartConfig';
 
 const merge = (...args) => lodashMerge({}, ...args);
 

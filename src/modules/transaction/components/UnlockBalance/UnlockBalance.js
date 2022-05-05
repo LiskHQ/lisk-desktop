@@ -1,6 +1,6 @@
 import React from 'react';
 import WalletVisual from '@wallet/components/walletVisual';
-import LiskAmount from '@shared/liskAmount';
+import TokenAmount from '@token/fungible/components/tokenAmount';
 import { tokenMap } from '@token/fungible/consts/tokens';
 import styles from './UnlockBalance.css';
 
@@ -19,7 +19,7 @@ const UnlockBalance = ({ account, t, transaction = {} }) => (
       <div className={styles.col}>
         <label>{t('Amount to unlock')}</label>
         <label className="amount-label">
-          <LiskAmount
+          <TokenAmount
             val={transaction.asset.unlockObjects.reduce(
               (total, { amount }) => total + Number(amount), 0,
             )}

@@ -1,4 +1,4 @@
-import { getFromStorage } from '@common/utilities/localJSONStorage';
+import { getFromStorage } from 'src/utils/localJSONStorage';
 import actionTypes from './actionTypes';
 
 export const watchListRetrieved = () => (dispatch) => {

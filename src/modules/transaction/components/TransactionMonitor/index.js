@@ -1,11 +1,11 @@
 /* istanbul ignore file */
 import { compose } from 'redux';
 import { withTranslation } from 'react-i18next';
-import withFilters from '@common/utilities/withFilters';
-import withData from '@common/utilities/withData';
+import withFilters from 'src/utils/withFilters';
+import withData from 'src/utils/withData';
 import { getTransactions } from '@transaction/api';
-import { DEFAULT_LIMIT } from '@views/configuration';
-import { normalizeTransactionParams } from '../../utils/transaction';
+import { DEFAULT_LIMIT } from 'src/utils/monitor';
+import { normalizeTransactionParams } from '../../utils';
 import Transactions from './TransactionMonitorList';
 
 const defaultFilters = {

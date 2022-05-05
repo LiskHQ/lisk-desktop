@@ -1,5 +1,5 @@
 import React from 'react';
-import LiskAmount from '@shared/liskAmount';
+import TokenAmount from '@token/fungible/components/tokenAmount';
 import Box from 'src/theme/box';
 import BoxHeader from 'src/theme/box/header';
 import BoxContent from 'src/theme/box/content';
@@ -58,7 +58,7 @@ const TransactionSummary = ({
               </Tooltip>
             </label>
             <label className={`${styles.feeValue} fee-value`}>
-              <LiskAmount val={fee} token={token} convert={false} />
+              <TokenAmount val={fee} token={token} convert={false} />
             </label>
           </section>
         )}

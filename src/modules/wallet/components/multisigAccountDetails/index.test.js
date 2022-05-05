@@ -1,5 +1,5 @@
 import routes from '@screens/router/routes';
-import { mountWithRouterAndStore } from '@common/utilities/testHelpers';
+import { mountWithRouterAndStore } from 'src/utils/testHelpers';
 import MultisigAccountDetails from './index';
 
 describe('Multisignature account details', () => {

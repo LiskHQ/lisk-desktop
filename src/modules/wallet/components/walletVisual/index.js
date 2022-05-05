@@ -3,7 +3,7 @@ import React from 'react';
 import sha256 from 'js-sha256';
 import generateUniqueId from 'src/utils/generateUniqueId';
 import { tokenMap } from '@token/fungible/consts/tokens';
-import { validateAddress } from '@common/utilities/validators';
+import { validateAddress } from 'src/utils/validators';
 import { Gradients, gradientSchemes } from './gradients';
 import styles from './walletVisual.css';
 

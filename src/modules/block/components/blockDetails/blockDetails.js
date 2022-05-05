@@ -10,7 +10,7 @@ import BoxContent from 'src/theme/box/content';
 import CopyToClipboard from 'src/modules/common/components/copyToClipboard';
 import Feedback from 'src/theme/feedback/feedback';
 import LabeledValue from 'src/theme/labeledValue';
-import LiskAmount from '@shared/liskAmount';
+import TokenAmount from '@token/fungible/components/tokenAmount';
 import Transactions from '@transaction/components/BlockDetailsTransactions';
 import { truncateAddress } from '@wallet/utils/account';
 import WalletVisual from '@wallet/components/walletVisual';
@@ -84,19 +84,19 @@ const getFields = (data = {}, token, t, currentHeight) => ({
   },
   totalForged: {
     label: t('Total forged'),
-    value: <LiskAmount val={data.totalForged} token={token} />,
+    value: <TokenAmount val={data.totalForged} token={token} />,
   },
   reward: {
     label: t('Reward'),
-    value: <LiskAmount val={data.reward} token={token} />,
+    value: <TokenAmount val={data.reward} token={token} />,
   },
   totalBurnt: {
     label: t('Total burnt'),
-    value: <LiskAmount val={data.totalBurnt} token={token} />,
+    value: <TokenAmount val={data.totalBurnt} token={token} />,
   },
   totalFee: {
     label: t('Total fee'),
-    value: <LiskAmount val={data.totalFee} token={token} />,
+    value: <TokenAmount val={data.totalFee} token={token} />,
   },
 });
 

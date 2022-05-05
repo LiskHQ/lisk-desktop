@@ -1,6 +1,6 @@
 import React from 'react';
 import { withRouter } from 'react-router-dom';
-import { keyCodes } from '@views/configuration';
+import { keyCodes } from 'src/utils/keyCodes';
 import { addSearchParamsToUrl } from 'src/utils/searchParams';
 import routes from '@screens/router/routes';
 import { Input } from 'src/theme';

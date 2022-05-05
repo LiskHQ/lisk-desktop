@@ -1,0 +1,33 @@
+@import '../../../../../setup/react/app/mixins.css';
+
+.form {
+  display: flex;
+  flex-direction: row;
+}
+
+.container {
+  display: flex;
+  flex-direction: column;
+  padding: 0 20px;
+  margin: -10px 0;
+  min-width: 300px;
+}
+
+.extendedContainer {
+  padding-bottom: 20px;
+}
+
+.submitButton {
+  margin: 20px 0;
+}
+
+.actionable {
+  color: var(--color-primary-standard);
+  cursor: pointer;
+  font-weight: var(--font-weight-bold);
+  text-align: right;
+  position: relative;
+  top: 10px;
+  font-size: 12px;
+  margin: 3px 0;
+}

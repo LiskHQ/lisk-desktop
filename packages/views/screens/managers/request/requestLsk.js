@@ -1,11 +1,11 @@
 import React from 'react';
-import { regex } from '@common/configuration';
+import { regex } from 'src/const/regex';
 import { maxMessageLength } from '@transaction/configuration/transactions';
-import { validateAmountFormat } from '@common/utilities/validators';
-import { sizeOfString } from '@common/utilities/helpers';
+import { validateAmountFormat } from 'src/utils/validators';
+import { sizeOfString } from 'src/utils/helpers';
 import { Input, AutoResizeTextarea } from 'src/theme';
 import CircularProgress from 'src/theme/ProgressCircular/circularProgress';
-import Converter from '@shared/converter';
+import Converter from 'src/modules/common/components/converter';
 import Icon from 'src/theme/Icon';
 import i18n from 'src/utils/i18n/i18n';
 import RequestWrapper from './requestWrapper';

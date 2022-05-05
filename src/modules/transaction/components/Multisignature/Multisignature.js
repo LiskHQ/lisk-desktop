@@ -3,7 +3,7 @@ import { PrimaryButton, SecondaryButton } from 'src/theme/buttons';
 import Illustration from 'src/modules/common/components/illustration';
 import routes from '@screens/router/routes';
 import { txStatusTypes } from '@transaction/configuration/txStatus';
-import { getErrorReportMailto } from '@common/utilities/helpers';
+import { getErrorReportMailto } from 'src/utils/helpers';
 
 import copyToClipboard from 'copy-to-clipboard';
 import { transactionToJSON, downloadJSON } from '@transaction/utils';

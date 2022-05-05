@@ -1,6 +1,6 @@
 import React from 'react';
 
-import { formatAmountBasedOnLocale } from '@common/utilities/formattedNumber';
+import { formatAmountBasedOnLocale } from 'src/utils/formattedNumber';
 import { fromRawLsk } from '@token/fungible/utils/lsk';
 import { truncateAddress } from '@wallet/utils/account';
 import WalletVisual from '@wallet/components/walletVisual';

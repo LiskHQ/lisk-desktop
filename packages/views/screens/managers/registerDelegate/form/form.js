@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useRef } from 'react';
-import { isEmpty } from '@common/utilities/helpers';
-import { regex } from '@common/configuration';
+import { isEmpty } from 'src/utils/helpers';
+import { regex } from 'src/const/regex';
 import { tokenMap } from '@token/fungible/consts/tokens';
 import { MODULE_ASSETS_NAME_ID_MAP } from '@transaction/configuration/moduleAssets';
 import { MIN_ACCOUNT_BALANCE } from '@transaction/configuration/transactions';

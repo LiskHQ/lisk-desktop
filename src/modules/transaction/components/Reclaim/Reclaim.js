@@ -1,6 +1,6 @@
 import React from 'react';
 import MigrationDetails from '@legacy/components/migrationDetails';
-import LiskAmount from '@shared/liskAmount';
+import TokenAmount from '@token/fungible/components/tokenAmount';
 import { tokenMap } from '@token/fungible/consts/tokens';
 
 const Reclaim = ({ account, t }) => (
@@ -10,7 +10,7 @@ const Reclaim = ({ account, t }) => (
     </section>
     <section>
       <label>{t('Balance to reclaim')}</label>
-      <LiskAmount
+      <TokenAmount
         val={Number(account.info.LSK.legacy.balance)}
         token={tokenMap.LSK.key}
       />

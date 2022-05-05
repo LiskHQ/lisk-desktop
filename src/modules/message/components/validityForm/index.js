@@ -11,7 +11,7 @@ import BoxFooter from 'src/theme/box/footer';
 import BoxInfoText from 'src/theme/box/infoText';
 import Icon from 'src/theme/Icon';
 import Tooltip from 'src/theme/Tooltip';
-import { regex } from '@common/configuration';
+import { regex } from 'src/const/regex';
 import styles from './validityForm.css';
 
 export default class ValidityForm extends React.Component {

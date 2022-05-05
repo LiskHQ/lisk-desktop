@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 import { setDefaults, withTranslation } from 'react-i18next';
 import { getActiveTokenAccount } from '@wallet/utils/account';
 import { login } from '@auth/store/action';
-import { settingsUpdated } from '@packages/settings/store/actions';
+import { settingsUpdated } from 'src/modules/settings/store/actions';
 import Login from './login';
 
 setDefaults({

@@ -1,5 +1,5 @@
 import routes from '@screens/router/routes';
-import history from '@common/utilities/history';
+import history from 'src/utils/history';
 import actionTypes from '@wallet/store/actionTypes';
 
 const checkAccountMigrationState = (action) => {

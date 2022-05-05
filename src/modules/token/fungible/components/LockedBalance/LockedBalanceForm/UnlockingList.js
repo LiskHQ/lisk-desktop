@@ -3,7 +3,7 @@ import moment from 'moment';
 import { tokenMap } from '@token/fungible/consts/tokens';
 import { isBlockHeightReached } from '@wallet/utils/account';
 import Icon from 'src/theme/Icon';
-import LiskAmount from '@shared/liskAmount';
+import TokenAmount from '@token/fungible/components/tokenAmount';
 
 const getPendingTime = (unvoteHeight, unlockHeight) => {
   const awaitingBlocks = unlockHeight - unvoteHeight;
@@ -15,7 +15,7 @@ const getPendingTime = (unvoteHeight, unlockHeight) => {
 const UnlockingListItem = ({ unvote, t, currentBlockHeight }) => (
   <li className="unlocking-balance">
     <p>
-      <LiskAmount val={unvote.amount} token={tokenMap.LSK.key} />
+      <TokenAmount val={unvote.amount} token={tokenMap.LSK.key} />
     </p>
     <p>
       <Icon name="loading" />

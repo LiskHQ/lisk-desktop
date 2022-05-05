@@ -2,7 +2,7 @@ import React from 'react';
 import QRCode from 'qrcode.react';
 import { tokenMap } from '@token/fungible/consts/tokens';
 import { getAddress } from '@wallet/utils/hwManager';
-import { isEmpty } from '@common/utilities/helpers';
+import { isEmpty } from 'src/utils/helpers';
 import Icon from 'src/theme/Icon';
 import CopyToClipboard from 'src/modules/common/components/copyToClipboard';
 import Tooltip from 'src/theme/Tooltip';

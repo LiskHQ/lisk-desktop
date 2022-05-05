@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom';
 import grid from 'flexboxgrid/dist/flexboxgrid.css';
 import routes from '@screens/router/routes';
 import DateTimeFromTimestamp from 'src/modules/common/components/timestamp';
-import LiskAmount from '@shared/liskAmount';
+import TokenAmount from '@token/fungible/components/tokenAmount';
 import styles from './blocks.css';
 
 const BlockRow = ({ data, className }) => (
@@ -18,7 +18,7 @@ const BlockRow = ({ data, className }) => (
     <span className={grid['col-xs-3']}>{data.generatorUsername}</span>
     <span className={grid['col-xs-2']}>{data.numberOfTransactions}</span>
     <span className={grid['col-xs-1']}>
-      <LiskAmount val={data.totalForged} token="LSK" />
+      <TokenAmount val={data.totalForged} token="LSK" />
     </span>
   </Link>
 );

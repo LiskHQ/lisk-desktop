@@ -5,13 +5,13 @@ import loginTypes from 'src/modules/auth/const/loginTypes';
 import { tokenMap } from '@token/fungible/consts/tokens';
 import { MODULE_ASSETS_NAME_ID_MAP } from '@transaction/configuration/moduleAssets';
 import { toRawLsk } from '@token/fungible/utils/lsk';
-import { isEmpty } from '@common/utilities/helpers';
+import { isEmpty } from 'src/utils/helpers';
 import { create } from '@transaction/api';
 import { selectCurrentBlockHeight } from '@common/store/selectors';
 import { getAccount, extractAddress as extractBitcoinAddress } from '@wallet/utils/api';
 import { getConnectionErrorMessage } from '@network/utils/getNetwork';
 import { extractKeyPair, getUnlockableUnlockObjects } from '@wallet/utils/account';
-import { defaultDerivationPath } from '@common/utilities/explicitBipKeyDerivation';
+import { defaultDerivationPath } from 'src/utils/explicitBipKeyDerivation';
 import { networkStatusUpdated } from '@network/store/action';
 import actionTypes from './actionTypes';
 

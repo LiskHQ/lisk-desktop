@@ -4,7 +4,7 @@ import { tokenMap } from '@token/fungible/consts/tokens';
 import { truncateAddress } from '@wallet/utils/account';
 import { TertiaryButton } from 'src/theme/buttons';
 import WalletVisual from '@wallet/components/walletVisual';
-import LiskAmount from '@shared/liskAmount';
+import TokenAmount from '@token/fungible/components/tokenAmount';
 import { Input } from 'src/theme';
 import Icon from 'src/theme/Icon';
 import Tooltip from 'src/theme/Tooltip';
@@ -83,7 +83,7 @@ const AccountCard = ({
           <div className={`${styles.accountBalance} row-balance`}>
             <p>{t('Balance:')}</p>
             <p>
-              <LiskAmount
+              <TokenAmount
                 val={account.summary?.balance}
                 token={tokenMap.LSK.key}
               />
@@ -102,7 +102,7 @@ const AccountCard = ({
                 <br />
                 <p>{t('Balance after reclaiming:')}</p>
                 <p className={styles.reclaimBalance}>
-                  <LiskAmount
+                  <TokenAmount
                     val={account.legacy.balance}
                     token={tokenMap.LSK.key}
                   />

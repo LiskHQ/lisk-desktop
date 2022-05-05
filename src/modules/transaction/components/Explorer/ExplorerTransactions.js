@@ -5,7 +5,7 @@ import Box from 'src/theme/box';
 import BoxHeader from 'src/theme/box/header';
 import BoxContent from 'src/theme/box/content';
 import Table from 'src/theme/table';
-import FilterBar from '@shared/filterBar';
+import FilterBar from 'src/modules/common/components/filterBar';
 import TransactionRow from '../TransactionRow';
 import styles from './ExplorerTransactions.css';
 import header from './ExplorerTransactionsHeaderMap';

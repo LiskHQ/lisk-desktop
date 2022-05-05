@@ -1,5 +1,5 @@
 import React from 'react';
-import { mountWithRouter } from '@common/utilities/testHelpers';
+import { mountWithRouter } from 'src/utils/testHelpers';
 import { removeSearchParamsFromUrl } from 'src/utils/searchParams';
 import Dialog from './dialog';
 

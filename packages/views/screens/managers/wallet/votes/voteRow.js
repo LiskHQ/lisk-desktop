@@ -4,7 +4,7 @@ import { tokenMap } from '@token/fungible/consts/tokens';
 import { truncateAddress } from '@wallet/utils/account';
 import WalletVisual from '@wallet/components/walletVisual';
 import tableStyles from 'src/theme/table/table.css';
-import LiskAmount from '@shared/liskAmount';
+import TokenAmount from '@token/fungible/components/tokenAmount';
 import DialogLink from 'src/theme/dialog/link';
 import Spinner from 'src/theme/Spinner';
 import Icon from 'src/theme/Icon';
@@ -50,7 +50,7 @@ const VoteRow = ({ data, onRowClick, accounts }) => {
           onClick={onClick}
         >
           <span>
-            <LiskAmount
+            <TokenAmount
               val={account?.dpos.delegate.totalVotesReceived ?? 0}
               token={tokenMap.LSK.key}
             />
@@ -64,7 +64,7 @@ const VoteRow = ({ data, onRowClick, accounts }) => {
             onClick={onClick}
           >
             <span className={styles.votes}>
-              <LiskAmount
+              <TokenAmount
                 val={data.amount}
                 token={tokenMap.LSK.key}
                 showInt

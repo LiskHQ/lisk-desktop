@@ -4,7 +4,7 @@ import { compose } from 'redux';
 import { withTranslation } from 'react-i18next';
 import { getAccount } from '@wallet/utils/api';
 import { getActiveTokenAccount } from '@wallet/utils/account';
-import withData from '@common/utilities/withData';
+import withData from 'src/utils/withData';
 import Status from './status';
 
 const mapStateToProps = state => ({

@@ -13,8 +13,8 @@ import { tokenMap } from '@token/fungible/consts/tokens';
 import { MODULE_ASSETS_NAME_ID_MAP } from '@transaction/configuration/moduleAssets';
 import CopyToClipboard from 'src/modules/common/components/copyToClipboard';
 import DateTimeFromTimestamp from 'src/modules/common/components/timestamp';
-import DiscreetMode from '@shared/discreetMode';
-import LiskAmount from '@shared/liskAmount';
+import DiscreetMode from 'src/modules/common/components/discreetMode';
+import TokenAmount from '@token/fungible/components/tokenAmount';
 import MultiSignatureMembers, {
   SignedAndRemainingMembers,
 } from '@wallet/components/multisignatureMembers';
@@ -139,7 +139,7 @@ export const Amount = ({ t }) => {
     <ValueAndLabel label={t('Amount of transaction')} className={styles.amount}>
       <DiscreetMode addresses={addresses} shouldEvaluateForOtherAccounts>
         <span className="tx-amount">
-          <LiskAmount val={getTxAmount(transaction)} />
+          <TokenAmount val={getTxAmount(transaction)} />
           {' '}
           {activeToken}
         </span>
@@ -179,7 +179,7 @@ export const Fee = ({ t }) => {
   return (
     <ValueAndLabel label={t('Transaction fee')} className={styles.fee}>
       <span className="tx-fee">
-        <LiskAmount val={fee} token={activeToken} />
+        <TokenAmount val={fee} token={activeToken} />
       </span>
     </ValueAndLabel>
   );

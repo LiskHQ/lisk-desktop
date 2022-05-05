@@ -1,7 +1,7 @@
 /* istanbul ignore file */
 import React, { useEffect } from 'react';
 import { useSelector } from 'react-redux';
-import { isEmpty } from '@common/utilities/helpers';
+import { isEmpty } from 'src/utils/helpers';
 import { selectActiveToken, selectSettings } from '@common/store/selectors';
 import { selectSearchParamValue } from 'src/utils/searchParams';
 import TabsContainer from 'src/theme/tabs/tabsContainer/tabsContainer';

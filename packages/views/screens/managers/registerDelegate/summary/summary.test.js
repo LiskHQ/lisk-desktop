@@ -1,6 +1,6 @@
 import React from 'react';
 import { mount } from 'enzyme';
-import { mountWithRouterAndStore } from '@common/utilities/testHelpers';
+import { mountWithRouterAndStore } from 'src/utils/testHelpers';
 import accounts from '@tests/constants/wallets';
 import Summary from './summary';
 

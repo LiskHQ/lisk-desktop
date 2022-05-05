@@ -10,7 +10,7 @@ import BoxContent from 'src/theme/box/content';
 import BoxFooter from 'src/theme/box/footer';
 import { PrimaryButton, TertiaryButton } from 'src/theme/buttons';
 import { Input } from 'src/theme';
-import { regex } from '@common/configuration';
+import { regex } from 'src/const/regex';
 import { tokenMap } from '@token/fungible/consts/tokens';
 import { MODULE_ASSETS_NAME_ID_MAP } from '@transaction/configuration/moduleAssets';
 import { extractAddressFromPublicKey } from '@wallet/utils/account';

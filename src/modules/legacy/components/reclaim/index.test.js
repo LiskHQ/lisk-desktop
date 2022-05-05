@@ -1,4 +1,4 @@
-import { mountWithRouterAndStore } from '@common/utilities/testHelpers';
+import { mountWithRouterAndStore } from 'src/utils/testHelpers';
 import { truncateAddress } from '@wallet/utils/account';
 import { addSearchParamsToUrl } from 'src/utils/searchParams';
 import { tokenMap } from '@token/fungible/consts/tokens';

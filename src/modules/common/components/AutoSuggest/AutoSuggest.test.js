@@ -1,6 +1,6 @@
 import React from 'react';
 import { mount } from 'enzyme';
-import { keyCodes } from '@views/configuration';
+import { keyCodes } from 'src/utils/keyCodes';
 import { tokenMap } from '@token/fungible/consts/tokens';
 import WalletVisual from '@wallet/components/walletVisual';
 import AutoSuggest from './index';

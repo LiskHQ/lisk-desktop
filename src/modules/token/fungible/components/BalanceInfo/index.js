@@ -4,9 +4,9 @@ import { tokenMap } from '@token/fungible/consts/tokens';
 import { fromRawLsk } from '@token/fungible/utils/lsk';
 import Box from 'src/theme/box';
 import BoxContent from 'src/theme/box/content';
-import LiskAmount from '@shared/liskAmount';
-import DiscreetMode from '@shared/discreetMode';
-import Converter from '@shared/converter';
+import TokenAmount from '@token/fungible/components/tokenAmount';
+import DiscreetMode from 'src/modules/common/components/discreetMode';
+import Converter from 'src/modules/common/components/converter';
 import LockedBalanceLink from './LockedBalanceLink';
 import ActionBar from './ActionBar';
 import styles from './BalanceInfo.css';
@@ -30,7 +30,7 @@ const BalanceInfo = ({
         <div className={styles.valuesRow}>
           <DiscreetMode shouldEvaluateForOtherAccounts>
             <div className={`${styles.cryptoValue} balance-value`}>
-              <LiskAmount val={balance} token={activeToken} />
+              <TokenAmount val={balance} token={activeToken} />
               <Converter
                 className={styles.fiatValue}
                 value={fromRawLsk(balance)}

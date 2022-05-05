@@ -1,5 +1,5 @@
 import { tokenKeys, tokenMap } from '@token/fungible/consts/tokens';
-import { validateAddress } from '@common/utilities/validators';
+import { validateAddress } from 'src/utils/validators';
 import { parseSearchParams } from 'src/utils/searchParams';
 
 export const emptyBookmarks = tokenKeys.reduce((acc, token) => ({ ...acc, [token]: [] }), {});

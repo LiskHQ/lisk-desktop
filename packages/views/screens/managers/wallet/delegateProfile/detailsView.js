@@ -7,7 +7,7 @@ import BoxContent from 'src/theme/box/content';
 import BoxHeader from 'src/theme/box/header';
 import Icon from 'src/theme/Icon';
 import DateTimeFromTimestamp from 'src/modules/common/components/timestamp';
-import LiskAmount from '@shared/liskAmount';
+import TokenAmount from '@token/fungible/components/tokenAmount';
 import { getStatus } from './performanceView';
 import styles from './delegateProfile.css';
 
@@ -47,7 +47,7 @@ const DetailsView = ({ t, data, lastBlockForged }) => {
               {t('Delegate weight')}
             </div>
             <div className={styles.value}>
-              <LiskAmount
+              <TokenAmount
                 val={data.totalVotesReceived}
                 token={tokenMap.LSK.key}
               />

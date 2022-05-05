@@ -4,7 +4,7 @@ import Box from 'src/theme/box';
 import BoxHeader from 'src/theme/box/header';
 import BoxContent from 'src/theme/box/content';
 import NotFound from 'src/modules/common/components/NotFound';
-import { isEmpty } from '@common/utilities/helpers';
+import { isEmpty } from 'src/utils/helpers';
 import delegatePerformanceDetails from './delegatePerformanceDetails';
 import styles from './styles.css';
 

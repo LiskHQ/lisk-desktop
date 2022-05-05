@@ -3,7 +3,7 @@ import { toast } from 'react-toastify';
 import * as accountApi from '@wallet/utils/api';
 import { extractKeyPair } from '@wallet/utils/account';
 import { create } from '@transaction/api';
-import { defaultDerivationPath } from '@common/utilities/explicitBipKeyDerivation';
+import { defaultDerivationPath } from 'src/utils/explicitBipKeyDerivation';
 import wallets from '@tests/constants/wallets';
 import * as networkActions from '@network/store/action';
 import actionTypes from './actionTypes';

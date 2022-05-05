@@ -13,12 +13,13 @@ import {
 } from '@transaction/configuration/moduleAssets';
 import { joinModuleAndAssetIds } from '@transaction/utils/moduleAssets';
 import { fromRawLsk } from '@token/fungible/utils/lsk';
-import { validateAddress } from '@common/utilities/validators';
+import { validateAddress } from 'src/utils/validators';
 import http from '@common/utilities/api/http';
 import { getDelegates } from '@dpos/validator/api';
 import {
-  createTransactionObject, sign,
-} from '../utils/transaction';
+  createTransactionObject,
+  sign,
+} from '../utils';
 
 const httpPrefix = '/api/v2';
 
