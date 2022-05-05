@@ -2,10 +2,10 @@ import React from 'react';
 import { mount, shallow } from 'enzyme';
 import { act } from 'react-dom/test-utils';
 import { useSelector } from 'react-redux';
-import { mountWithRouter, mountWithRouterAndStore } from '@common/utilities/testHelpers';
+import { mountWithProps, mountWithRouter, mountWithRouterAndStore } from '@common/utilities/testHelpers';
 import transactions from '@tests/constants/transactions';
 import defaultState from '@tests/constants/defaultState';
-import TransactionsPure from './TransactionMonitorList';
+import TransactionMonitorList from './TransactionMonitorList';
 
 jest.mock('react-redux', () => ({
   ...jest.requireActual('react-redux'),
@@ -55,17 +55,24 @@ describe('Transactions monitor page', () => {
   };
 
   it('should render transactions list', () => {
-    let wrapper = shallow(<TransactionsPure {...props} />);
+    let wrapper = shallow(<TransactionMonitorList {...props} />);
     expect(wrapper.find('Row')).toHaveLength(0);
 
-    wrapper = mount(<TransactionsPure {...transactionsWithData} />);
+    console.log('with data ---- ');
+
+    wrapper = mountWithRouter(TransactionMonitorList, {
+      ...{
+        ...props,
+        transactions: transactionsWithData,
+      },
+    });
     wrapper.update();
     expect(wrapper.find('TransactionRow')).toHaveLength(transactions.length);
   });
 
   it('allows to load more transactions', () => {
     const wrapper = mountWithRouter(
-      TransactionsPure,
+      TransactionMonitorList,
       { ...props, transactions: transactionsWithData },
     );
     wrapper.find('button.load-more').simulate('click');
@@ -87,7 +94,7 @@ describe('Transactions monitor page', () => {
       },
     };
     const wrapper = mountWithRouterAndStore(
-      TransactionsPure,
+      TransactionMonitorList,
       { ...props, transactions: transactionsWithData },
       {},
       defaultState,
@@ -115,7 +122,7 @@ describe('Transactions monitor page', () => {
 
   it('shows error if API failed', () => {
     const error = 'Loading failed';
-    const wrapper = mountWithRouter(TransactionsPure, {
+    const wrapper = mountWithRouter(TransactionMonitorList, {
       ...props,
       transactions: {
         ...props.transactions,
@@ -128,7 +135,7 @@ describe('Transactions monitor page', () => {
 
   it('allows to load more transactions when filtered', () => {
     const wrapper = mountWithRouter(
-      TransactionsPure,
+      TransactionMonitorList,
       { ...props, transactions: transactionsWithData },
     );
 
@@ -144,7 +151,7 @@ describe('Transactions monitor page', () => {
 
   it('allows to filter transactions by more filters', () => {
     const wrapper = mountWithRouter(
-      TransactionsPure,
+      TransactionMonitorList,
       { ...props, transactions: transactionsWithData },
     );
 
@@ -161,7 +168,7 @@ describe('Transactions monitor page', () => {
 
   it('allows to reverse sort by clicking "Date" header', () => {
     const wrapper = mountWithRouter(
-      TransactionsPure,
+      TransactionMonitorList,
       { ...props, transactions: transactionsWithData },
     );
     wrapper.find('.sort-by.timestamp').simulate('click');
@@ -171,7 +178,7 @@ describe('Transactions monitor page', () => {
   });
 
   it('allows to clear the filter after filtering by height', () => {
-    const wrapper = mountWithRouter(TransactionsPure, props);
+    const wrapper = mountWithRouter(TransactionMonitorList, props);
     wrapper.find('button.filter').simulate('click');
     wrapper.find('.more-less-switch').simulate('click');
     wrapper.find('input.height').simulate('change', { target: { value: height } });

@@ -100,6 +100,7 @@ export const Amount = () => {
   const {
     data, layout, activeToken, host,
   } = useContext(RowContext);
+  console.log(">>>>>>>>>> +++", data);
   if (layout !== 'full') {
     return (
       <span>

@@ -8,7 +8,7 @@ import TransactionRow from '../TransactionRow';
 import header from './BlockDetailsTransactionHeaderMap';
 import styles from './BlockDetailsTransactions.css';
 
-const Transactions = ({
+const BlockDetailsTransactions = ({
   transactions,
   blockId,
   height,
@@ -45,4 +45,4 @@ const Transactions = ({
   );
 };
 
-export default Transactions;
+export default BlockDetailsTransactions;

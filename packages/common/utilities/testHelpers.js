@@ -34,6 +34,7 @@ export const mountWithRouter = (Component, props, routeConfig = {}) => mount(
   <MemoryRouter
     initialEntries={[routeConfig]}
   >
+    {console.log(Component)}
     <Component {...props} />
   </MemoryRouter>,
 );
