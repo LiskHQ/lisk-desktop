@@ -2,7 +2,7 @@ import React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 
 import { settingsUpdated } from '@common/store/actions';
-import routes from '@screens/router/routes';
+import routes from 'src/routes/routes';
 import { tokenMap } from '@token/fungible/consts/tokens';
 import Icon from 'src/theme/Icon';
 import Tooltip from 'src/theme/Tooltip';

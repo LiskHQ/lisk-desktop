@@ -1,5 +1,5 @@
-import http from '@common/utilities/api/http';
-import { subscribe, unsubscribe } from '@common/utilities/api/ws';
+import http from 'src/utils/http';
+import { subscribe, unsubscribe } from 'src/utils/ws';
 import { httpPaths } from '@block/config';
 import {
   getBlock, getBlocks, blockSubscribe, blockUnsubscribe,

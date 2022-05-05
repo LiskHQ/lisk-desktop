@@ -1,5 +1,5 @@
 import bitcoin from 'bitcoinjs-lib';
-import http from '@common/utilities/api/http';
+import http from 'src/utils/http';
 import { getAccount } from './btc';
 
 jest.mock('@common/utilities/api/http', () => ({

@@ -1,4 +1,4 @@
-import * as marketApi from '@common/utilities/api/market';
+import * as marketApi from 'src/modules/common/api';
 import { initialState as token } from '@token/fungible/store/reducer';
 import prices from '@tests/constants/prices';
 import actionTypes from './actionTypes';

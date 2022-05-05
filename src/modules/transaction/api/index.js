@@ -1,4 +1,4 @@
-import functionMapper from '@common/utilities/api/functionMapper';
+import functionMapper from 'src/utils/functionMapper';
 import * as lsk from './lsk';
 import * as btc from './btc';
 

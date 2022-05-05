@@ -1,7 +1,7 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import grid from 'flexboxgrid/dist/flexboxgrid.css';
-import routes from '@screens/router/routes';
+import routes from 'src/routes/routes';
 import DateTimeFromTimestamp from 'src/modules/common/components/timestamp';
 import TokenAmount from '@token/fungible/components/tokenAmount';
 import styles from './blocks.css';

@@ -3,7 +3,7 @@ import React, { useEffect, useState } from 'react';
 import i18next from 'i18next';
 import grid from 'flexboxgrid/dist/flexboxgrid.css';
 import { Link } from 'react-router-dom';
-import routes from '@screens/router/routes';
+import routes from 'src/routes/routes';
 import {
   parseSearchParams,
   stringifySearchParams,

@@ -1,6 +1,6 @@
 import React from 'react';
 import { mount } from 'enzyme';
-import routes from '@screens/router/routes';
+import routes from 'src/routes/routes';
 import { txStatusTypes } from '@transaction/configuration/txStatus';
 import accounts from '@tests/constants/wallets';
 import Regular from '.';

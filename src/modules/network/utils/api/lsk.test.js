@@ -1,4 +1,4 @@
-import http from '@common/utilities/api/http';
+import http from 'src/utils/http';
 import {
   getPeers,
   getNetworkStatistics,

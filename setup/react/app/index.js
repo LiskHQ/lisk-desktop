@@ -17,8 +17,8 @@ import OfflineWrapper from 'src/modules/common/components/offlineWrapper';
 import CustomRoute from 'src/modules/common/components/customRoute';
 import NavigationBars from 'src/modules/common/components/bars';
 import ThemeContext from 'src/theme/themeProvider';
-import routesMap from '../../../packages/views/screens/router/routesMap';
-import routes from '../../../packages/views/screens/router/routes';
+import routesMap from '../../../src/routes/routesMap';
+import routes from '../../../src/routes/routes';
 import './variables.css';
 import styles from './app.css';
 

@@ -1,4 +1,4 @@
-import { unsubscribe } from '@common/utilities/api/ws';
+import { unsubscribe } from 'src/utils/ws';
 import { wsMethods } from '@block/config';
 
 /**

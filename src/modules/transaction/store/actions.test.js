@@ -1,6 +1,6 @@
 import loginTypes from 'src/modules/auth/const/loginTypes';
 import * as hwManager from '@transaction/utils/hwManager';
-import httpApi from '@common/utilities/api/http';
+import httpApi from 'src/utils/http';
 import * as transactionUtils from '@transaction/utils/transaction';
 import { getState } from '@fixtures/transactions';
 import { sampleTransaction } from '@tests/constants/transactions';

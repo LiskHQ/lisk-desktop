@@ -4,8 +4,8 @@ import React, {
 import { useSelector } from 'react-redux';
 import { withRouter } from 'react-router';
 
-import routesMap from '@screens/router/routesMap';
-import { modals } from '@screens/router/routes';
+import routesMap from 'src/routes/routesMap';
+import { modals } from 'src/routes/routes';
 import { parseSearchParams, removeSearchParamsFromUrl } from 'src/utils/searchParams';
 import styles from './dialog.css';
 

@@ -1,8 +1,8 @@
 import { regex } from 'src/const/regex';
 import { tokenMap } from '@token/fungible/consts/tokens';
 import { HTTP_CODES } from 'src/const/httpCodes';
-import http from '@common/utilities/api/http';
-import ws from '@common/utilities/api/ws';
+import http from 'src/utils/http';
+import ws from 'src/utils/ws';
 import { isEmpty } from 'src/utils/helpers';
 import { extractAddressFromPublicKey, extractPublicKey } from '@wallet/utils/account';
 

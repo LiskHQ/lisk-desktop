@@ -4,7 +4,7 @@ import grid from 'flexboxgrid/dist/flexboxgrid.css';
 
 import { selectSearchParamValue } from 'src/utils/searchParams';
 import { selectAccount } from '@common/store/selectors';
-import routes from '@screens/router/routes';
+import routes from 'src/routes/routes';
 import { extractAddressFromPublicKey } from '@wallet/utils/account';
 import Box from 'src/theme/box';
 import BoxHeader from 'src/theme/box/header';

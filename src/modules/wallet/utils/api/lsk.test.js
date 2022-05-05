@@ -1,6 +1,6 @@
 import { HTTP_CODES } from 'src/const/httpCodes';
-import http from '@common/utilities/api/http';
-import ws from '@common/utilities/api/ws';
+import http from 'src/utils/http';
+import ws from 'src/utils/ws';
 import accounts from '@tests/constants/wallets';
 import { getAccount, getAccounts } from './lsk';
 

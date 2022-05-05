@@ -1,7 +1,7 @@
 import bitcoin from 'bitcoinjs-lib';
 import { passphrase as LiskPassphrase } from '@liskhq/lisk-client';
 import bip32 from 'bip32';
-import http from '@common/utilities/api/http';
+import http from 'src/utils/http';
 
 /**
  * Derives wallet derivation path from passphrase

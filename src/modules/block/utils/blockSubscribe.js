@@ -1,4 +1,4 @@
-import { subscribe } from '@common/utilities/api/ws';
+import { subscribe } from 'src/utils/ws';
 import { wsMethods } from '@block/config';
 /**
  * Connects to block change event via websocket and set function to be called when it fires

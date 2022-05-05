@@ -2,7 +2,7 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 
 import { truncateAddress } from '@wallet/utils/account';
-import routes from '@screens/router/routes';
+import routes from 'src/routes/routes';
 import { tokenMap } from '@token/fungible/consts/tokens';
 import TokenAmount from '@token/fungible/components/tokenAmount';
 

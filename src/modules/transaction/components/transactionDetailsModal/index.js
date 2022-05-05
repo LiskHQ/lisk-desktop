@@ -1,0 +1,19 @@
+import React from 'react';
+import grid from 'flexboxgrid/dist/flexboxgrid.css';
+import Dialog from 'src/theme/dialog/dialog';
+import TransactionDetailsManager from '@transaction/context/TransactionDetailsProvider';
+import TransactionDetails from '../transactionDetails2';
+import styles from './styles.css';
+
+const TransactionDetailsModal = () => (
+  <Dialog
+    hasClose
+    className={`${grid.row} ${grid['center-xs']} ${styles.container}`}
+  >
+    <TransactionDetailsManager>
+      <TransactionDetails title="Transaction details" />
+    </TransactionDetailsManager>
+  </Dialog>
+);
+
+export default TransactionDetailsModal;

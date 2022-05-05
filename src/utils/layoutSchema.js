@@ -1,11 +1,10 @@
 import { MODULE_ASSETS_NAME_ID_MAP } from '@transaction/configuration/moduleAssets';
-
 import {
   TransactionId, Sender, Recipient, Message, Illustration,
   Confirmations, Date, Amount, Fee, RequiredSignatures, TransactionVotes,
   BlockId, BlockHeight, Members, SignedAndRemainingMembersList, PrettyJson,
 } from '@transaction/components/TransactionDetails';
-import styles from '@screens/managers/transactionDetails/transactionDetails.css';
+import styles from '@transaction/components/transactionDetails2/transactionDetails.css';
 
 const {
   transfer, voteDelegate, unlockToken, registerDelegate, registerMultisignatureGroup,

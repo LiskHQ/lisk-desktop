@@ -2,7 +2,7 @@
 import React, { useEffect } from 'react';
 import { getErrorReportMailto, isEmpty } from 'src/utils/helpers';
 import { TertiaryButton, PrimaryButton } from 'src/theme/buttons';
-import routes from '@screens/router/routes';
+import routes from 'src/routes/routes';
 import { txStatusTypes } from '@transaction/configuration/txStatus';
 import Illustration from 'src/modules/common/components/illustration';
 import getIllustration from '../TransactionResult/illustrationsMap';
