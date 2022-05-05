@@ -29,7 +29,7 @@ const SelectFilter = ({
       <Select
         placeholder={placeholder}
         options={options}
-        selected={filters[name]}
+        selected={filters[name] || ''}
         onChange={onChange}
         className={`${styles.input} transaction-options`}
         size="xs"

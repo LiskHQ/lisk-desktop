@@ -15,7 +15,7 @@ const FilterButton = ({
       className={`${styles.filter} filter`}
     >
       <p className={styles.label}>
-        {label}
+        {JSON.stringify(label)}
       </p>
       <span
         className={`${styles.clearBtn} clear-filter`}

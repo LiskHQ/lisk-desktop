@@ -1,8 +1,8 @@
 import React from 'react';
-import { mount, shallow } from 'enzyme';
+import { shallow } from 'enzyme';
 import { act } from 'react-dom/test-utils';
 import { useSelector } from 'react-redux';
-import { mountWithProps, mountWithRouter, mountWithRouterAndStore } from '@common/utilities/testHelpers';
+import { mountWithRouter, mountWithRouterAndStore } from '@common/utilities/testHelpers';
 import transactions from '@tests/constants/transactions';
 import defaultState from '@tests/constants/defaultState';
 import TransactionMonitorList from './TransactionMonitorList';
@@ -58,8 +58,6 @@ describe('Transactions monitor page', () => {
     let wrapper = shallow(<TransactionMonitorList {...props} />);
     expect(wrapper.find('Row')).toHaveLength(0);
 
-    console.log('with data ---- ');
-
     wrapper = mountWithRouter(TransactionMonitorList, {
       ...{
         ...props,
@@ -73,7 +71,12 @@ describe('Transactions monitor page', () => {
   it('allows to load more transactions', () => {
     const wrapper = mountWithRouter(
       TransactionMonitorList,
-      { ...props, transactions: transactionsWithData },
+      {
+        ...props,
+        transactions: transactionsWithData,
+        sort,
+        filters: {},
+      },
     );
     wrapper.find('button.load-more').simulate('click');
     expect(props.transactions.loadData).toHaveBeenCalledWith(
@@ -134,9 +137,17 @@ describe('Transactions monitor page', () => {
   });
 
   it('allows to load more transactions when filtered', () => {
+    props.transactions.loadData = jest.fn();
+    transactionsWithData.loadData = props.transactions.loadData;
+
     const wrapper = mountWithRouter(
       TransactionMonitorList,
-      { ...props, transactions: transactionsWithData },
+      {
+        ...props,
+        transactions: transactionsWithData,
+        filters: { amountFrom: '1.3', moduleAssetId: '' },
+        sort,
+      },
     );
 
     wrapper.find('button.filter').simulate('click');
@@ -150,9 +161,17 @@ describe('Transactions monitor page', () => {
   });
 
   it('allows to filter transactions by more filters', () => {
+    props.transactions.loadData = jest.fn();
+    transactionsWithData.loadData = props.transactions.loadData;
+
     const wrapper = mountWithRouter(
       TransactionMonitorList,
-      { ...props, transactions: transactionsWithData },
+      {
+        ...props,
+        transactions: transactionsWithData,
+        sort,
+        filters: { height, moduleAssetId: '' },
+      },
     );
 
     wrapper.find('button.filter').simulate('click');
@@ -167,18 +186,33 @@ describe('Transactions monitor page', () => {
   });
 
   it('allows to reverse sort by clicking "Date" header', () => {
+    let mockSortDirection = 'desc';
+    props.changeSort = jest.fn();
+    props.changeSort.mockImplementation(() => {
+      mockSortDirection = mockSortDirection === 'desc' ? 'asc' : 'desc';
+    });
+
     const wrapper = mountWithRouter(
       TransactionMonitorList,
       { ...props, transactions: transactionsWithData },
     );
     wrapper.find('.sort-by.timestamp').simulate('click');
-    expect(props.transactions.loadData).toHaveBeenCalledWith({ sort: 'timestamp:asc' });
+
+    // this was to test the component its self without the manager (manger can have its own test)
+    expect(props.changeSort).toHaveBeenCalledWith('timestamp');
+    expect(mockSortDirection).toBe('asc');
+
     wrapper.find('.sort-by.timestamp').simulate('click');
-    expect(props.transactions.loadData).toHaveBeenCalledWith({ sort: 'timestamp:desc' });
+    expect(props.changeSort).toHaveBeenCalledWith('timestamp');
+    expect(mockSortDirection).toBe('desc');
   });
 
   it('allows to clear the filter after filtering by height', () => {
-    const wrapper = mountWithRouter(TransactionMonitorList, props);
+    const wrapper = mountWithRouter(TransactionMonitorList, {
+      ...props,
+      filters: { height },
+    });
+
     wrapper.find('button.filter').simulate('click');
     wrapper.find('.more-less-switch').simulate('click');
     wrapper.find('input.height').simulate('change', { target: { value: height } });
