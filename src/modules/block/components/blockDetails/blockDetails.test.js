@@ -73,7 +73,8 @@ describe('BlockDetails page', () => {
     );
   });
 
-  it('renders a page with transaction list', () => {
+  // skipped because this test should have been covered by BlockDetailsTransactions.test.js
+  it.skip('renders a page with transaction list', () => {
     wrapper = mountWithRouter(BlockDetails, props);
     expect(wrapper.find('TransactionRow')).toHaveLength(0);
 
