@@ -4,7 +4,7 @@ module.exports = {
   rootDir: '../',
   modulePaths: ['packages'],
   testMatch: [
-    '<rootDir>/src/**/transaction/**/*.test.js',
+    '<rootDir>/src/**/account/**/*.test.js',
     // '<rootDir>/src/**/*.test.js',
     // '<rootDir>/app/src/**/*.test.js',
     // '<rootDir>/setup/**/*.test.js',
