@@ -4,11 +4,10 @@ module.exports = {
   rootDir: '../',
   modulePaths: ['packages'],
   testMatch: [
-    '<rootDir>/src/**/block/**/*.test.js',
-    // '<rootDir>/src/**/*.test.js',
-    // '<rootDir>/app/src/**/*.test.js',
-    // '<rootDir>/setup/**/*.test.js',
-    // '<rootDir>/tests/**/*.test.js',
+    '<rootDir>/src/**/*.test.js',
+    '<rootDir>/app/src/**/*.test.js',
+    '<rootDir>/setup/**/*.test.js',
+    '<rootDir>/tests/**/*.test.js',
   ],
   testPathIgnorePatterns: [
     '<rootDir>/test/integration/wallet.test.js',
