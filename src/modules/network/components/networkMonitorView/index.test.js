@@ -7,6 +7,7 @@ describe('Network view', () => {
   const t = jest.fn().mockImplementation(str => str);
 
   it('Renders to component correctly', () => {
+    // @todo Fix failing test with Map component
     const wrapper = mount(
       <Network
         t={t}
