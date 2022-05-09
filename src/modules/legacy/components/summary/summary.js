@@ -41,8 +41,6 @@ const Summary = ({
     });
   };
 
-  console.log(">>>> ", TransactionSummary);
-
   return (
     <TransactionSummary
       title={t('Transaction summary')}

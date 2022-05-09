@@ -10,8 +10,8 @@ import { truncateAddress } from '@wallet/utils/account';
 import * as hwManager from '@transaction/utils/hwManager';
 import accounts from '@tests/constants/wallets';
 import flushPromises from '@tests/unit-test-utils/flushPromises';
+import { mountWithProps } from 'src/utils/testHelpers';
 import Summary from '.';
-import { mountWithProps } from '../../../../../packages/common/utilities/testHelpers'
 
 jest.mock('@transaction/hooks/useTransactionFeeCalculation');
 jest.mock('@transaction/api');
