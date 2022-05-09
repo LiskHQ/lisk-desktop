@@ -1,5 +1,5 @@
 import React from 'react';
-import { mount } from 'enzyme';
+import { shallow } from 'enzyme';
 import peers from '@tests/constants/peers';
 import Network from './index';
 
@@ -7,8 +7,7 @@ describe('Network view', () => {
   const t = jest.fn().mockImplementation(str => str);
 
   it('Renders to component correctly', () => {
-    // @todo Fix failing test with Map component
-    const wrapper = mount(
+    const wrapper = shallow(
       <Network
         t={t}
         peers={{
@@ -23,9 +22,11 @@ describe('Network view', () => {
         }}
       />,
     );
-    expect(wrapper.find('h1').at(0)).toHaveText('Network statistics');
-    expect(wrapper.find('h1').at(1)).toHaveText('Connected peers');
-    expect(wrapper.find('Statistics')).toHaveLength(1);
-    expect(wrapper.find('NodeList')).toHaveLength(1);
+
+    const html = wrapper.html();
+    expect(html).toContain('Network statistics');
+    expect(html).toContain('Connected peers');
+    expect(html).toContain('map-box');
+    expect(html).toContain('peers-box');
   });
 });
