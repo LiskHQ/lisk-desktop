@@ -1,9 +1,12 @@
 import React, { useEffect } from 'react';
 import { useSelector } from 'react-redux';
-import { selectCurrentBlockHeight, selectActiveToken } from '@common/store/selectors';
-import Box from '@basics/box';
-import BoxContent from '@basics/box/content';
-import Table from '@basics/table';
+import {
+  selectCurrentBlockHeight,
+  selectActiveToken,
+} from '@common/store/selectors';
+import Box from 'src/theme/box';
+import BoxContent from 'src/theme/box/content';
+import Table from 'src/theme/table';
 import TransactionRow from '../TransactionRow';
 import header from './BlockDetailsTransactionHeaderMap';
 import styles from './BlockDetailsTransactions.css';
@@ -38,7 +41,9 @@ const BlockDetailsTransactions = ({
           headerClassName={styles.tableHeader}
           canLoadMore={false}
           error={transactions.error}
-          emptyState={{ message: t('There are no transactions for this block.') }}
+          emptyState={{
+            message: t('There are no transactions for this block.'),
+          }}
         />
       </BoxContent>
     </Box>

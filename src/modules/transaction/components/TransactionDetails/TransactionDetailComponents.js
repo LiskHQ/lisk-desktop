@@ -9,23 +9,22 @@ import {
   getModuleAssetSenderLabel,
 } from '@transaction/utils/moduleAssets';
 import { getTxAmount } from '@transaction/utils/transaction';
-import { tokenMap } from '@token/configuration/tokens';
+import { tokenMap } from '@token/fungible/consts/tokens';
 import { MODULE_ASSETS_NAME_ID_MAP } from '@transaction/configuration/moduleAssets';
-import CopyToClipboard from '@basics/copyToClipboard';
-import DateTimeFromTimestamp from '@basics/timestamp';
-import DiscreetMode from '@shared/discreetMode';
-import LiskAmount from '@shared/liskAmount';
+import CopyToClipboard from 'src/modules/common/components/copyToClipboard';
+import DateTimeFromTimestamp from 'src/modules/common/components/timestamp';
+import DiscreetMode from 'src/modules/common/components/discreetMode';
+import TokenAmount from '@token/fungible/components/tokenAmount';
 import MultiSignatureMembers, {
   SignedAndRemainingMembers,
-} from '@wallet/detail/identity/multisignatureMembers';
+} from '@wallet/components/multisignatureMembers';
 import Tooltip from 'src/theme/Tooltip';
 import {
   extractAddressFromPublicKey,
   truncateAddress,
   calculateRemainingAndSignedMembers,
-} from '@wallet/utilities/account';
+} from '@wallet/utils/account';
 import { getDelegateName, getTxAsset } from '@transaction/utils';
-
 import WalletInfo from '../WalletInfo';
 import TransactionDetailsContext from '../../context/transactionDetailsContext';
 import TransactionTypeFigure from '../TransactionTypeFigure';
@@ -140,7 +139,7 @@ export const Amount = ({ t }) => {
     <ValueAndLabel label={t('Amount of transaction')} className={styles.amount}>
       <DiscreetMode addresses={addresses} shouldEvaluateForOtherAccounts>
         <span className="tx-amount">
-          <LiskAmount val={getTxAmount(transaction)} />
+          <TokenAmount val={getTxAmount(transaction)} />
           {' '}
           {activeToken}
         </span>
@@ -180,7 +179,7 @@ export const Fee = ({ t }) => {
   return (
     <ValueAndLabel label={t('Transaction fee')} className={styles.fee}>
       <span className="tx-fee">
-        <LiskAmount val={fee} token={activeToken} />
+        <TokenAmount val={fee} token={activeToken} />
       </span>
     </ValueAndLabel>
   );

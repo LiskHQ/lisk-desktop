@@ -5,7 +5,7 @@ import {
 import { HashRouter as Router } from 'react-router-dom';
 import { Provider } from 'react-redux';
 import { I18nextProvider } from 'react-i18next';
-import i18n from '@setup/i18n/i18n'; // initialized i18next instance
+import i18n from 'src/utils/i18n/i18n'; // initialized i18next instance
 
 export const prepareStore = (reducers, middlewares) => {
   const ApplyedMiddlewares = middlewares ? compose(applyMiddleware(...middlewares)) : {};

@@ -1,0 +1,46 @@
+@import '../../../../../setup/react/app/mixins.css';
+
+.errorBoundaryPage {
+  display: flex;
+  flex-direction: column;
+  flex-grow: 1;
+  align-items: center;
+  height: 100%;
+}
+
+.errorMessageContainer {
+  width: 522px;
+  margin: auto;
+  text-align: center;
+
+  & h2 {
+    @mixin headingLarge;
+
+    margin: 43px 0 20px;
+    color: var(--color-maastricht-blue);
+  }
+
+  & p {
+    @mixin contentLargest;
+
+    color: var(--color-slate-gray);
+    margin-bottom: 32px;
+    line-height: 22px;
+    letter-spacing: 0.21px;
+  }
+
+  & a {
+    @mixin contentLargest;
+
+    color: var(--color-ultramarine-blue);
+    line-height: 16px;
+    letter-spacing: 0.31px;
+  }
+}
+
+.reloadPageButton {
+  width: var(--footer-button-width);
+  margin-bottom: 6px;
+  letter-spacing: 0.25px;
+  line-height: 14px;
+}

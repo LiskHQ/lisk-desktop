@@ -1,4 +1,4 @@
-import { mountWithRouter } from '@common/utilities/testHelpers';
+import { mountWithRouter } from 'src/utils/testHelpers';
 import routes from '@screens/router/routes';
 import accounts from '@tests/constants/wallets';
 import Votes from './votes';

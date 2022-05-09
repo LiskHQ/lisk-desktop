@@ -1,5 +1,5 @@
 import { getTransactionBaseFees, getTransactionFee } from '@transaction/api';
-import { mountWithRouter } from '@common/utilities/testHelpers';
+import { mountWithRouter } from 'src/utils/testHelpers';
 import wallets from '@tests/constants/wallets';
 import Send from './index';
 

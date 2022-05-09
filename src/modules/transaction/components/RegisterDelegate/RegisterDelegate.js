@@ -1,5 +1,5 @@
 import React from 'react';
-import WalletVisual from '@wallet/detail/identity/walletVisual';
+import WalletVisual from '@wallet/components/walletVisual';
 import styles from '../TransactionInfo/TransactionInfo.css'; // @todo create a dedicated css file for this component
 
 const RegisterDelegate = ({ account, username, t }) => (

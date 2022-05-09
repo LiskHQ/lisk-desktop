@@ -1,17 +1,22 @@
 import React, { useEffect } from 'react';
-import { isEmpty } from '@common/utilities/helpers';
+import { isEmpty } from 'src/utils/helpers';
 import { txStatusTypes } from '@transaction/configuration/txStatus';
-import { PrimaryButton } from '@basics/buttons';
+import { PrimaryButton } from 'src/theme/buttons';
 import TransactionResult from '@transaction/components/TransactionResult';
-import { getTransactionStatus, statusMessages } from '@transaction/configuration/statusConfig';
-import DialogLink from '@basics/dialog/link';
+import {
+  getTransactionStatus,
+  statusMessages,
+} from '@transaction/configuration/statusConfig';
+import DialogLink from 'src/theme/dialog/link';
 import styles from './status.css';
 
 const shouldShowBookmark = (bookmarks, account, rawTransaction, token) => {
   if (account.summary.address === rawTransaction.recipientAddress) {
     return false;
   }
-  return !bookmarks[token].find(bookmark => bookmark.address === rawTransaction.recipientAddress);
+  return !bookmarks[token].find(
+    (bookmark) => bookmark.address === rawTransaction.recipientAddress,
+  );
 };
 
 const getMessagesDetails = (transactions, status, t, isHardwareWalletError) => {
@@ -19,8 +24,10 @@ const getMessagesDetails = (transactions, status, t, isHardwareWalletError) => {
   const code = isHardwareWalletError ? txStatusTypes.hwRejected : status.code;
   const messageDetails = messages[code];
 
-  if (status.code === txStatusTypes.broadcastError
-      && transactions.txBroadcastError?.error?.message) {
+  if (
+    status.code === txStatusTypes.broadcastError
+    && transactions.txBroadcastError?.error?.message
+  ) {
     messageDetails.message = transactions.txBroadcastError.error.message;
   }
 
@@ -37,7 +44,10 @@ const TransactionStatus = ({
   t,
 }) => {
   useEffect(() => {
-    if (!isEmpty(transactions.signedTransaction) && !transactions.txSignatureError) {
+    if (
+      !isEmpty(transactions.signedTransaction)
+      && !transactions.txSignatureError
+    ) {
       /**
        * Retrieve recipient info to use for bookmarking
        */
@@ -45,12 +55,18 @@ const TransactionStatus = ({
     }
   }, []);
 
-  const showBookmark = shouldShowBookmark(bookmarks, account, rawTransaction, token);
-  const status = getTransactionStatus(account, transactions, account.summary.isMultisignature);
-  const template = getMessagesDetails(
-    transactions, status, t,
-    false,
+  const showBookmark = shouldShowBookmark(
+    bookmarks,
+    account,
+    rawTransaction,
+    token,
   );
+  const status = getTransactionStatus(
+    account,
+    transactions,
+    account.summary.isMultisignature,
+  );
+  const template = getMessagesDetails(transactions, status, t, false);
 
   return (
     <div className={`${styles.wrapper} transaction-status`}>
@@ -60,24 +76,22 @@ const TransactionStatus = ({
         message={template.message}
         status={status}
       >
-        {
-          showBookmark ? (
-            <div className={`${styles.bookmarkBtn} bookmark-container`}>
-              <DialogLink
-                component="addBookmark"
-                data={{
-                  formAddress: rawTransaction.recipientAddress,
-                  label: recipientAccount.data.dpos?.delegate?.username ?? '',
-                  isDelegate: !!recipientAccount.data.summary?.isDelegate,
-                }}
-              >
-                <PrimaryButton className={`${styles.btn} bookmark-btn`}>
-                  {t('Add address to bookmarks')}
-                </PrimaryButton>
-              </DialogLink>
-            </div>
-          ) : null
-        }
+        {showBookmark ? (
+          <div className={`${styles.bookmarkBtn} bookmark-container`}>
+            <DialogLink
+              component="addBookmark"
+              data={{
+                formAddress: rawTransaction.recipientAddress,
+                label: recipientAccount.data.dpos?.delegate?.username ?? '',
+                isDelegate: !!recipientAccount.data.summary?.isDelegate,
+              }}
+            >
+              <PrimaryButton className={`${styles.btn} bookmark-btn`}>
+                {t('Add address to bookmarks')}
+              </PrimaryButton>
+            </DialogLink>
+          </div>
+        ) : null}
       </TransactionResult>
     </div>
   );

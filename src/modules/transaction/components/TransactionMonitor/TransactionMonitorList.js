@@ -1,46 +1,56 @@
 import React, { useState } from 'react';
 import { useSelector } from 'react-redux';
-import StickyHeader from '@basics/table/stickyHeader';
-import FilterBar from '@shared/filterBar';
-import FilterDropdownButton from '@shared/filterDropdownButton';
-import Box from '@basics/box';
-import BoxContent from '@basics/box/content';
-import Table from '@basics/table';
-import { selectCurrentBlockHeight, selectActiveToken } from '@common/store/selectors';
+import StickyHeader from 'src/theme/table/stickyHeader';
+import FilterBar from 'src/modules/common/components/filterBar';
+import FilterDropdownButton from 'src/modules/common/components/filterDropdownButton';
+import Box from 'src/theme/box';
+import BoxContent from 'src/theme/box/content';
+import Table from 'src/theme/table';
+import {
+  selectCurrentBlockHeight,
+  selectActiveToken,
+} from '@common/store/selectors';
 import TransactionRow from '../TransactionRow';
 import header from './TransactionHeaderMap';
 import styles from './transactionsTable.css';
-import { getModuleAssetTitle } from '../../utils/moduleAssets';
+import { getModuleAssetTitle } from '../../utils';
 
-const getFields = t => [{
-  label: t('Date range'),
-  name: 'date',
-  type: 'date-range',
-}, {
-  label: t('Amount range'),
-  name: 'amount',
-  type: 'number-range',
-}, {
-  label: t('Sender'),
-  placeholder: t('Address or public key'),
-  name: 'senderAddress',
-  type: 'address',
-}, {
-  label: t('Recipient'),
-  placeholder: t('Address or public key'),
-  name: 'recipientAddress',
-  type: 'address',
-}, {
-  label: t('Type'),
-  placeholder: t('All types'),
-  name: 'moduleAssetId',
-  type: 'select',
-}, {
-  label: t('Height'),
-  placeholder: t('e.g. {{value}}', { value: '10180477' }),
-  name: 'height',
-  type: 'integer',
-}];
+const getFields = (t) => [
+  {
+    label: t('Date range'),
+    name: 'date',
+    type: 'date-range',
+  },
+  {
+    label: t('Amount range'),
+    name: 'amount',
+    type: 'number-range',
+  },
+  {
+    label: t('Sender'),
+    placeholder: t('Address or public key'),
+    name: 'senderAddress',
+    type: 'address',
+  },
+  {
+    label: t('Recipient'),
+    placeholder: t('Address or public key'),
+    name: 'recipientAddress',
+    type: 'address',
+  },
+  {
+    label: t('Type'),
+    placeholder: t('All types'),
+    name: 'moduleAssetId',
+    type: 'select',
+  },
+  {
+    label: t('Height'),
+    placeholder: t('e.g. {{value}}', { value: '10180477' }),
+    name: 'height',
+    type: 'integer',
+  },
+];
 const blackListTypes = ['4:0', '5:0', '5:1', '5:3'];
 
 // eslint-disable-next-line max-statements
@@ -65,39 +75,50 @@ const Transactions = ({
 
   const handleLoadMore = () => {
     // filter the blanks out
-    const params = Object.keys(filters).reduce((acc, key) => ({
-      ...acc,
-      ...(filters[key] && { [key]: filters[key] }),
-    }), {
-      offset: transactions.meta.count + transactions.meta.offset,
-      sort,
-    });
+    const params = Object.keys(filters).reduce(
+      (acc, key) => ({
+        ...acc,
+        ...(filters[key] && { [key]: filters[key] }),
+      }),
+      {
+        offset: transactions.meta.count + transactions.meta.offset,
+        sort,
+      },
+    );
 
     transactions.loadData(params);
   };
 
   /* istanbul ignore next */
-  const loadLastTransactions = () => { transactions.loadData(); };
+  const loadLastTransactions = () => {
+    transactions.loadData();
+  };
 
   /* istanbul ignore next */
   const formatters = {
-    height: value => `${t('Height')}: ${value}`,
-    moduleAssetId: value => `${t('Type')}: ${getModuleAssetTitle()[value]}`,
-    senderAddress: value => `${t('Sender')}: ${value}`,
-    recipientAddress: value => `${t('Recipient')}: ${value}`,
+    height: (value) => `${t('Height')}: ${value}`,
+    moduleAssetId: (value) => `${t('Type')}: ${getModuleAssetTitle()[value]}`,
+    senderAddress: (value) => `${t('Sender')}: ${value}`,
+    recipientAddress: (value) => `${t('Recipient')}: ${value}`,
   };
-  const removeSortOnAmount = (headerData, dropdownFilters) => headerData.map(data => {
-    if (data?.sort?.key === 'amount' && blackListTypes.some((type) => type === dropdownFilters.moduleAssetId)) delete data.sort;
-    return data;
-  });
+  const removeSortOnAmount = (headerData, dropdownFilters) =>
+    headerData.map((data) => {
+      if (
+        data?.sort?.key === 'amount'
+        && blackListTypes.some((type) => type === dropdownFilters.moduleAssetId)
+      ) delete data.sort;
+      return data;
+    });
 
-  const removeField = (rawFields, transactionType) => rawFields.filter((field) => {
-    if ((field.name === 'amount' || field.name === 'recipientAddress')
+  const removeField = (rawFields, transactionType) =>
+    rawFields.filter((field) => {
+      if (
+        (field.name === 'amount' || field.name === 'recipientAddress')
         && blackListTypes.some((type) => type === transactionType)
-    ) return false;
+      ) return false;
 
-    return true;
-  });
+      return true;
+    });
 
   const dropdownApplyFilters = (txFilters) => {
     const moduleAssetId = txFilters.moduleAssetId;
@@ -122,8 +143,10 @@ const Transactions = ({
               fields={innerFields}
               filters={filters}
               applyFilters={dropdownApplyFilters}
-              onTypeSelected={moduleAssetId => {
-                setInnerFields(moduleAssetId ? removeField(fields, moduleAssetId) : fields);
+              onTypeSelected={(moduleAssetId) => {
+                setInnerFields(
+                  moduleAssetId ? removeField(fields, moduleAssetId) : fields,
+                );
               }}
             />
           )}
@@ -154,7 +177,9 @@ const Transactions = ({
           currentSort={sort}
           canLoadMore={canLoadMore}
           error={transactions.error}
-          emptyState={{ message: t('There are no transactions for this chain.') }}
+          emptyState={{
+            message: t('There are no transactions for this chain.'),
+          }}
         />
       </BoxContent>
     </Box>

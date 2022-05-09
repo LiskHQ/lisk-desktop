@@ -1,10 +1,13 @@
 import React from 'react';
 import { withTranslation } from 'react-i18next';
-import { keyCodes } from '@views/configuration';
-import { isValidPassphrase, getPassphraseValidationErrors } from 'src/modules/wallet/utils/passphrase';
+import { keyCodes } from 'src/utils/keyCodes';
+import {
+  isValidPassphrase,
+  getPassphraseValidationErrors,
+} from 'src/modules/wallet/utils/passphrase';
 import Icon from 'src/theme/Icon';
 import Input from 'src/theme/Input';
-import Feedback from '@basics/feedback/feedback';
+import Feedback from 'src/theme/feedback/feedback';
 import styles from './PassphraseInput.css';
 
 class passphraseInput extends React.Component {
@@ -32,15 +35,21 @@ class passphraseInput extends React.Component {
   keyAction(event) {
     let { focus, inputsLength } = this.state;
     const index = parseInt(event.target.dataset.index, 10);
-    if (event.which === keyCodes.space
+    if (
+      event.which === keyCodes.space
       || event.which === keyCodes.arrowRight
-      || event.which === keyCodes.tab) {
-      inputsLength = index + 1 > inputsLength - 1 ? this.props.maxInputsLength : inputsLength;
+      || event.which === keyCodes.tab
+    ) {
+      inputsLength = index + 1 > inputsLength - 1
+        ? this.props.maxInputsLength
+        : inputsLength;
       focus = index + 1 > inputsLength - 1 ? index : index + 1;
       event.preventDefault();
     }
-    if ((event.which === keyCodes.delete && !this.state.values[focus])
-      || event.which === keyCodes.arrowLeft) {
+    if (
+      (event.which === keyCodes.delete && !this.state.values[focus])
+      || event.which === keyCodes.arrowLeft
+    ) {
       focus = index - 1 < 0 ? index : index - 1;
       event.preventDefault();
     }
@@ -50,16 +59,18 @@ class passphraseInput extends React.Component {
   handlePaste({ clipboardData, target }) {
     let { values, inputsLength } = this.state;
     const index = parseInt(target.dataset.index, 10);
-    const pastedValue = clipboardData.getData('Text').trim().replace(/\W+/g, ' ').split(/\s/);
+    const pastedValue = clipboardData
+      .getData('Text')
+      .trim()
+      .replace(/\W+/g, ' ')
+      .split(/\s/);
     if (pastedValue.length <= 1) {
       values[index] = '';
     } else {
-      const insertedValue = [
-        ...Array(index),
-        ...pastedValue,
-      ];
+      const insertedValue = [...Array(index), ...pastedValue];
       inputsLength = insertedValue.length > inputsLength
-        ? this.props.maxInputsLength : inputsLength;
+        ? this.props.maxInputsLength
+        : inputsLength;
       values = insertedValue
         .map((value, key) => value || values[key])
         .splice(0, inputsLength);
@@ -78,8 +89,16 @@ class passphraseInput extends React.Component {
     this.validatePassphrase({ values, focus: index });
   }
 
-  validatePassphrase({ values, inputsLength = this.state.inputsLength, focus = 0 }) {
-    let errorState = { validationError: '', partialPassphraseError: [], passphraseIsInvalid: false };
+  validatePassphrase({
+    values,
+    inputsLength = this.state.inputsLength,
+    focus = 0,
+  }) {
+    let errorState = {
+      validationError: '',
+      partialPassphraseError: [],
+      passphraseIsInvalid: false,
+    };
 
     const passphrase = values.join(' ').trim();
     if (!isValidPassphrase(passphrase)) {
@@ -118,7 +137,9 @@ class passphraseInput extends React.Component {
   }
 
   handleToggleShowPassphrase() {
-    this.setState(({ showPassphrase }) => ({ showPassphrase: !showPassphrase }));
+    this.setState(({ showPassphrase }) => ({
+      showPassphrase: !showPassphrase,
+    }));
   }
 
   render() {
@@ -132,53 +153,67 @@ class passphraseInput extends React.Component {
       validationError: isFeedbackOnError,
       values,
     } = this.state;
-    const iconName = showPassphrase ? 'showPassphraseIcon' : 'hidePassphraseIcon';
+    const iconName = showPassphrase
+      ? 'showPassphraseIcon'
+      : 'hidePassphraseIcon';
 
     return (
       <>
         <div className={styles.wrapper}>
-          <label className={`${styles.showPassphrase}`} onClick={this.handleToggleShowPassphrase}>
+          <label
+            className={`${styles.showPassphrase}`}
+            onClick={this.handleToggleShowPassphrase}
+          >
             <Icon name={iconName} />
-            <span className={`${styles.label}`}>{showPassphrase ? t('Hide') : t('Show')}</span>
+            <span className={`${styles.label}`}>
+              {showPassphrase ? t('Hide') : t('Show')}
+            </span>
           </label>
 
-          <div className={[
-            styles.inputs,
-            partialPassphraseError.length ? styles.boxOnError : '',
-            'passphrase',
-          ].join(' ')}
+          <div
+            className={[
+              styles.inputs,
+              partialPassphraseError.length ? styles.boxOnError : '',
+              'passphrase',
+            ].join(' ')}
           >
-            {
-              [...Array(inputsLength)].map((x, i) => (
-                <span key={i} className={styles.inputContainer} autoComplete="off">
-                  <span className={[
+            {[...Array(inputsLength)].map((x, i) => (
+              <span
+                key={i}
+                className={styles.inputContainer}
+                autoComplete="off"
+              >
+                <span
+                  className={[
                     styles.inputNumber,
                     partialPassphraseError[i] ? styles.inputNumberError : '',
                   ].join(' ')}
-                  >
-                    {`${i + 1}. `}
-                  </span>
-                  <Input
-                    setRef={ref => ref !== null && this.state.focus === i && ref.focus()}
-                    placeholder="_________"
-                    className={[
-                      partialPassphraseError[i] || passphraseIsInvalid ? 'error' : '',
-                      focus === i ? 'selected' : '',
-                    ].join(' ')}
-                    value={values[i] || ''}
-                    type={this.state.showPassphrase ? 'text' : 'password'}
-                    autoComplete="off"
-                    onBlur={this.removeFocusedField}
-                    onFocus={this.setFocusedField}
-                    onPaste={this.handlePaste}
-                    onChange={this.handleValueChange}
-                    onKeyDown={this.keyAction}
-                    onKeyPress={keyPress}
-                    data-index={i}
-                  />
+                >
+                  {`${i + 1}. `}
                 </span>
-              ))
-            }
+                <Input
+                  setRef={(ref) =>
+                    ref !== null && this.state.focus === i && ref.focus()}
+                  placeholder="_________"
+                  className={[
+                    partialPassphraseError[i] || passphraseIsInvalid
+                      ? 'error'
+                      : '',
+                    focus === i ? 'selected' : '',
+                  ].join(' ')}
+                  value={values[i] || ''}
+                  type={this.state.showPassphrase ? 'text' : 'password'}
+                  autoComplete="off"
+                  onBlur={this.removeFocusedField}
+                  onFocus={this.setFocusedField}
+                  onPaste={this.handlePaste}
+                  onChange={this.handleValueChange}
+                  onKeyDown={this.keyAction}
+                  onKeyPress={keyPress}
+                  data-index={i}
+                />
+              </span>
+            ))}
           </div>
 
           <div className={styles.footerContent}>

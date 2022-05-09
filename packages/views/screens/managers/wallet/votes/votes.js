@@ -1,19 +1,21 @@
 import React, { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import routes from '@screens/router/routes';
-import { isEmpty } from '@common/utilities/helpers';
-import Box from '@basics/box';
-import BoxHeader from '@basics/box/header';
-import BoxContent from '@basics/box/content';
+import { isEmpty } from 'src/utils/helpers';
+import Box from 'src/theme/box';
+import BoxHeader from 'src/theme/box/header';
+import BoxContent from 'src/theme/box/content';
 import { Input } from 'src/theme';
-import Table from '@basics/table';
+import Table from 'src/theme/table';
 import styles from './votes.css';
 import VoteRow from './voteRow';
 import header from './votesTableHeader';
 
-const getMessages = t => ({
+const getMessages = (t) => ({
   all: t('This account doesn’t have any votes.'),
-  filtered: t('This account doesn’t have any votes matching searched username.'),
+  filtered: t(
+    'This account doesn’t have any votes matching searched username.',
+  ),
 });
 
 const Votes = ({
@@ -37,7 +39,7 @@ const Votes = ({
 
   // Fetch delegate profiles to define rank, productivity and delegate weight
   useEffect(() => {
-    const addressList = votes.data.map(item => item.address);
+    const addressList = votes.data.map((item) => item.address);
     if (isEmpty(accounts.data) && addressList.length) {
       accounts.loadData({ addressList, isDelegate: true });
     }
@@ -46,7 +48,10 @@ const Votes = ({
   const areLoading = accounts.isLoading || votes.isLoading;
   const filteredVotes = votes.data.filter((vote) => {
     if (!vote.username) return false;
-    return vote.username.indexOf(filterValue) > -1 || vote.address.indexOf(filterValue) > -1;
+    return (
+      vote.username.indexOf(filterValue) > -1
+      || vote.address.indexOf(filterValue) > -1
+    );
   });
 
   return (
@@ -70,7 +75,9 @@ const Votes = ({
           data={filteredVotes}
           isLoading={areLoading}
           iterationKey="address"
-          emptyState={{ message: filterValue ? messages.filtered : messages.all }}
+          emptyState={{
+            message: filterValue ? messages.filtered : messages.all,
+          }}
           row={VoteRow}
           additionalRowProps={{
             onRowClick,

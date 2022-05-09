@@ -2,8 +2,8 @@
 import { compose } from 'redux';
 import { connect } from 'react-redux';
 import { withRouter } from 'react-router-dom';
-import { getActiveTokenAccount } from '@wallet/utilities/account';
-import withData from '@common/utilities/withData';
+import { getActiveTokenAccount } from '@wallet/utils/account';
+import withData from 'src/utils/withData';
 import { parseSearchParams } from 'src/utils/searchParams';
 import TransactionDetailsProvider from '../context';
 import { getTransaction } from '../api';
@@ -11,7 +11,7 @@ import { getTransaction } from '../api';
 const mapStateToProps = (state, ownProps) => ({
   account: getActiveTokenAccount(state),
   id: ownProps.match.params.id,
-  activeToken: state.settings.token?.active ?? 'LSK',
+  activeToken: state.token?.active ?? 'LSK',
 });
 
 const apis = {
@@ -19,7 +19,7 @@ const apis = {
     apiUtil: (network, { token, transactionId }) =>
       getTransaction({ network, params: { transactionId } }, token),
     getApiParams: (state, ownProps) => ({
-      token: state.settings.token.active,
+      token: state.token.active,
       transactionId: parseSearchParams(ownProps.location.search).transactionId,
       network: state.network,
     }),

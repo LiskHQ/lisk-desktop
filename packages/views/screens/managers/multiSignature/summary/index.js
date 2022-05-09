@@ -3,7 +3,7 @@ import { compose } from 'redux';
 import { connect } from 'react-redux';
 import { withTranslation } from 'react-i18next';
 import { multisigGroupRegistered } from '@wallet/store/action';
-import { getActiveTokenAccount } from '@wallet/utilities/account';
+import { getActiveTokenAccount } from '@wallet/utils/account';
 
 import Summary from './summary';
 

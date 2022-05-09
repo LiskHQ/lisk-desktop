@@ -1,10 +1,10 @@
 import { compose } from 'redux';
 import { withTranslation } from 'react-i18next';
 import { getPeers } from '@network/utils/api';
-import withData from '@common/utilities/withData';
-import { DEFAULT_LIMIT } from '@views/configuration';
-import withLocalSort from '@common/utilities/withLocalSort';
-import { tokenMap } from '@token/configuration/tokens';
+import withData from 'src/utils/withData';
+import { DEFAULT_LIMIT } from 'src/utils/monitor';
+import withLocalSort from 'src/utils/withLocalSort';
+import { tokenMap } from '@token/fungible/consts/tokens';
 import sortByVersion from '../utils/helpers';
 import NetworkMonitorView from '../components/networkMonitorView';
 

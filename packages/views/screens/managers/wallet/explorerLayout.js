@@ -1,18 +1,16 @@
 /* istanbul ignore file */
 import React, { useEffect } from 'react';
 import { useSelector } from 'react-redux';
-import { isEmpty } from '@common/utilities/helpers';
+import { isEmpty } from 'src/utils/helpers';
 import { selectActiveToken, selectSettings } from '@common/store/selectors';
 import { selectSearchParamValue } from 'src/utils/searchParams';
-import TabsContainer from '@basics/tabs/tabsContainer/tabsContainer';
+import TabsContainer from 'src/theme/tabs/tabsContainer/tabsContainer';
 import Transactions from '@transaction/components/Explorer';
 import Overview from './overview';
 import DelegateTab from './delegateProfile';
 import VotesTab from './votes';
 
-const ExplorerLayout = ({
-  t, account, history,
-}) => {
+const ExplorerLayout = ({ t, account, history }) => {
   const activeToken = useSelector(selectActiveToken);
   const { discreetMode } = useSelector(selectSettings);
   const address = selectSearchParamValue(history.location.search, 'address');
@@ -22,7 +20,7 @@ const ExplorerLayout = ({
   }, [address]);
 
   if (!account || !account.data || isEmpty(account.data)) {
-    return (<div />);
+    return <div />;
   }
 
   const isDelegate = account.data.summary?.isDelegate;

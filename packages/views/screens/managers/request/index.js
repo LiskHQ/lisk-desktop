@@ -2,7 +2,7 @@ import React from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import { withTranslation } from 'react-i18next';
-import { tokenKeys } from '@token/configuration/tokens';
+import { tokenKeys } from '@token/fungible/consts/tokens';
 import RequestBtc from './requestBtc';
 import RequestLsk from './requestLsk';
 
@@ -34,7 +34,7 @@ Request.defaultProps = {
 
 export default connect(
   state => ({
-    token: state.settings.token.active,
+    token: state.token.active,
     account: state.wallet,
   }),
   {},

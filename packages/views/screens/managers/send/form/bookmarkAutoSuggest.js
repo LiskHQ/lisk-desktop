@@ -1,8 +1,8 @@
 import PropTypes from 'prop-types';
 import React from 'react';
-import { validateAddress } from '@common/utilities/validators';
-import WalletVisual from '@wallet/detail/identity/walletVisual';
+import { validateAddress } from 'src/utils/validators';
 import AutoSuggest from 'src/modules/common/components/AutoSuggest';
+import WalletVisual from '@wallet/components/walletVisual';
 import styles from './form.css';
 
 class BookmarkAutoSuggest extends React.Component {

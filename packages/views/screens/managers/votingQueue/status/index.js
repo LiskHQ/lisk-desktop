@@ -2,7 +2,7 @@
 import { connect } from 'react-redux';
 import { compose } from 'redux';
 import { withTranslation } from 'react-i18next';
-import { getActiveTokenAccount } from '@wallet/utilities/account';
+import { getActiveTokenAccount } from '@wallet/utils/account';
 import Status from './status';
 
 const mapStateToProps = state => ({

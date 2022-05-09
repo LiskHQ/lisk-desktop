@@ -2,10 +2,10 @@
 import * as bitcoin from 'bitcoinjs-lib';
 import { BigNumber } from 'bignumber.js';
 
-import { tokenMap } from '@token/configuration/tokens';
-import { fromRawLsk } from '@token/utilities/lsk';
-import { validateAddress } from '@common/utilities/validators';
-import { getDerivedPathFromPassphrase } from '@wallet/utilities/api/btc';
+import { tokenMap } from '@token/fungible/consts/tokens';
+import { fromRawLsk } from '@token/fungible/utils/lsk';
+import { validateAddress } from 'src/utils/validators';
+import { getDerivedPathFromPassphrase } from '@wallet/utils/api/btc';
 import http from '@common/utilities/api/http';
 
 const httpPrefix = '';

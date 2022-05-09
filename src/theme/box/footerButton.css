@@ -1,0 +1,41 @@
+@import '../../../setup/react/app/mixins.css';
+
+.footerButton {
+  @mixin contentNormal bold;
+
+  background-color: var(--color-white-smoke);
+  border-radius: 0 0 var(--border-radius-box) var(--border-radius-box);
+  border: unset;
+  border-top: solid 1px var(--color-platinum);
+  box-shadow: none;
+  color: var(--color-maastricht-blue);
+  cursor: pointer;
+  height: 36px;
+  min-height: 36px;
+  outline: none;
+  width: 100%;
+
+  &:focus,
+  &:hover {
+    color: var(--color-ultramarine-blue);
+  }
+
+  &:disabled {
+    animation: wave infinite 700ms;
+    cursor: default;
+  }
+}
+
+@keyframes wave {
+  0% {
+    color: var(--color-ghost);
+  }
+
+  50% {
+    color: var(--color-blue-gray);
+  }
+
+  100% {
+    color: var(--color-ghost);
+  }
+}

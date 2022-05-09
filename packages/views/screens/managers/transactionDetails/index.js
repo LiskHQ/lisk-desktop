@@ -1,20 +1,16 @@
 import React, { useMemo } from 'react';
 import { useTranslation } from 'react-i18next';
-import { isEmpty } from '@common/utilities/helpers';
-import { LayoutSchema } from '@views/configuration';
-import Box from '@basics/box';
-import BoxHeader from '@basics/box/header';
+import { isEmpty } from 'src/utils/helpers';
+import { LayoutSchema } from 'src/utils/layoutSchema';
+import Box from 'src/theme/box';
+import BoxHeader from 'src/theme/box/header';
 import TransactionDetailsContext from '@transaction/context/transactionDetailsContext';
 import NotFound from './notFound';
 import styles from './transactionDetails.css';
 
 const TransactionDetails = ({ title }) => {
   const {
-    schema,
-    error,
-    isLoading,
-    transaction,
-    containerStyle,
+    schema, error, isLoading, transaction, containerStyle,
   } = React.useContext(TransactionDetailsContext);
   const { t } = useTranslation();
   const isDataEmpty = useMemo(() => isEmpty(transaction), [transaction]);
@@ -29,14 +25,19 @@ const TransactionDetails = ({ title }) => {
   const Layout = LayoutSchema[schema ?? transaction.moduleAssetId] || LayoutSchema.default;
 
   return (
-    <Box isLoading={isLoading} className={`${styles.container} ${containerStyle}`}>
+    <Box
+      isLoading={isLoading}
+      className={`${styles.container} ${containerStyle}`}
+    >
       {title && (
         <BoxHeader>
           <h1>{title}</h1>
         </BoxHeader>
       )}
       <Box className={`${styles.mainContent} ${Layout.className}`}>
-        {Layout.components.map((Component, index) => <Component key={index} t={t} />)}
+        {Layout.components.map((Component, index) => (
+          <Component key={index} t={t} />
+        ))}
       </Box>
     </Box>
   );

@@ -7,8 +7,8 @@ import configureStore from 'redux-mock-store';
 import { I18nextProvider } from 'react-i18next';
 import routes from '@screens/router/routes';
 import Login from 'src/modules/auth/components/Signin/login';
-import Wallet from '@screens/managers/wallet';
-import i18n from '../../i18n/i18n'; // initialized i18next instance
+import AccountDetails from '@account/components/AccountDetails';
+import i18n from 'src/utils/i18n/i18n'; // initialized i18next instance
 import App from '.';
 
 const fakeStore = configureStore();
@@ -27,7 +27,7 @@ const publicComponent = [
 ];
 
 const privateComponent = [
-  { route: `${routes.wallet.path}`, component: Wallet },
+  { route: `${routes.wallet.path}`, component: AccountDetails },
 ];
 
 describe.skip('App', () => {

@@ -2,7 +2,7 @@ import React from 'react';
 import { shallow } from 'enzyme';
 import { act } from 'react-dom/test-utils';
 import { useSelector } from 'react-redux';
-import { mountWithRouter, mountWithRouterAndStore } from '@common/utilities/testHelpers';
+import { mountWithRouter, mountWithRouterAndStore } from 'src/utils/testHelpers';
 import transactions from '@tests/constants/transactions';
 import defaultState from '@tests/constants/defaultState';
 import TransactionMonitorList from './TransactionMonitorList';

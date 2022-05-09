@@ -4,7 +4,7 @@ import { connect } from 'react-redux';
 import { withTranslation } from 'react-i18next';
 import { withRouter } from 'react-router-dom';
 import { getBlock } from '@block/utils';
-import withData from '@common/utilities/withData';
+import withData from 'src/utils/withData';
 import { selectSearchParamValue } from 'src/utils/searchParams';
 import BlockDetails from '../components/blockDetails';
 

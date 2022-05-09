@@ -1,11 +1,11 @@
 import React from 'react';
 
-import { formatAmountBasedOnLocale } from '@common/utilities/formattedNumber';
-import { fromRawLsk } from '@token/utilities/lsk';
-import { truncateAddress } from '@wallet/utilities/account';
+import { formatAmountBasedOnLocale } from 'src/utils/formattedNumber';
+import { fromRawLsk } from '@token/fungible/utils/lsk';
+import { truncateAddress } from '@wallet/utils/account';
+import WalletVisual from '@wallet/components/walletVisual';
 import Tooltip from 'src/theme/Tooltip';
 import Icon from 'src/theme/Icon';
-import WalletVisual from '@wallet/detail/identity/walletVisual';
 import { DEFAULT_STANDBY_THRESHOLD } from '@dpos/validator/consts';
 import {
   getDelegateDetailsClass,

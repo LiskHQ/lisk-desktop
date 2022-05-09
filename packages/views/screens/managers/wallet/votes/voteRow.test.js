@@ -1,6 +1,6 @@
-import { mountWithRouter } from '@common/utilities/testHelpers';
+import { mountWithRouter } from 'src/utils/testHelpers';
 import Spinner from 'src/theme/Spinner';
-import DialogLink from '@basics/dialog/link';
+import DialogLink from 'src/theme/dialog/link';
 import accounts from '@tests/constants/wallets';
 import VoteRow from './voteRow';
 
@@ -32,7 +32,10 @@ describe('VoteRow Component', () => {
   };
 
   it('should render spinner', () => {
-    wrapper = mountWithRouter(VoteRow, { ...props, data: { ...props.data, pending: {} } });
+    wrapper = mountWithRouter(VoteRow, {
+      ...props,
+      data: { ...props.data, pending: {} },
+    });
     expect(wrapper.contains(Spinner)).toBeTruthy();
   });
 

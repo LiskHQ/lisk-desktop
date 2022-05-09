@@ -1,4 +1,4 @@
-import { tokenMap } from '@token/configuration/tokens';
+import { tokenMap } from '@token/fungible/consts/tokens';
 
 export default {
   wallet: {

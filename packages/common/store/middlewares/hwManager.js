@@ -1,12 +1,12 @@
 import { toast } from 'react-toastify';
-import { subscribeToDeviceConnected, subscribeToDeviceDisconnected } from '@wallet/utilities/hwManager';
+import { subscribeToDeviceConnected, subscribeToDeviceDisconnected } from '@wallet/utils/hwManager';
 import { addSearchParamsToUrl } from 'src/utils/searchParams';
-import { accountLoggedOut, login } from '@common/store/actions';
+import { accountLoggedOut, login } from '@auth/store/action';
 import {
   getDeviceList,
   getPublicKey,
 } from '@libs/hwManager/communication';
-import history from '@common/utilities/history';
+import history from 'src/utils/history';
 import actionTypes from '../actions/actionTypes';
 
 async function autoLogInIfNecessary(store) {
@@ -49,15 +49,15 @@ const hwWalletMiddleware = store => next => (action) => {
      * and in case user is SignIn trigger the logout Dialog and toast message.
      */
     subscribeToDeviceDisconnected((response) => {
-      const { account, settings } = store.getState();
-      const activeToken = settings.token.active || 'LSK';
+      const { wallet, token } = store.getState();
+      const activeToken = token.active || 'LSK';
 
       // Check if user is SignedIn
-      if (account.info
-        && account.info[activeToken]
-        && account.info[activeToken].address
-        && account.hwInfo.deviceId
-        && account.hwInfo.deviceModel === response.model
+      if (wallet.info
+        && wallet.info[activeToken]
+        && wallet.info[activeToken].address
+        && wallet.hwInfo.deviceId
+        && wallet.hwInfo.deviceModel === response.model
       ) {
         addSearchParamsToUrl(history, { modal: 'deviceDisconnectDialog', model: response.model });
         store.dispatch(accountLoggedOut());

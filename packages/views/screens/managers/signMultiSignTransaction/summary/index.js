@@ -2,8 +2,8 @@ import { compose } from 'redux';
 import { connect } from 'react-redux';
 import { withTranslation } from 'react-i18next';
 import { multisigTransactionSigned } from '@common/store/actions';
-import { getAccount } from '@wallet/utilities/api';
-import withData from '@common/utilities/withData';
+import { getAccount } from '@wallet/utils/api';
+import withData from 'src/utils/withData';
 import { withRouter } from 'react-router';
 import Summary from './summary';
 
@@ -12,7 +12,7 @@ const apis = {
     apiUtil: (network, { token, publicKey }) =>
       getAccount({ network, params: { publicKey } }, token),
     getApiParams: (state, ownProps) => ({
-      token: state.settings.token.active,
+      token: state.token.active,
       publicKey: ownProps.transaction.sender.publicKey,
       network: state.network,
     }),

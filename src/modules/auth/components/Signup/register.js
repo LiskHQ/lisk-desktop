@@ -1,11 +1,11 @@
 import React, { useState, useEffect, useCallback } from 'react';
 import grid from 'flexboxgrid/dist/flexboxgrid.css';
 import routes from '@screens/router/routes';
+import useCreateAccounts from '@auth/hooks/useCreateAccounts';
 import MultiStepProgressBar from 'src/theme/ProgressBarMultiStep';
-import useCreateAccounts from '@wallet/utilities/hooks/useCreateAccounts';
 import MultiStep from 'src/modules/common/components/MultiStep';
 import ChooseAvatar from '../ChooseAvatar/chooseAvatar';
-import BackupPassphrase from '../SavePassphrase /SavePassphrase';
+import BackupPassphrase from '../SavePassphrase/SavePassphrase';
 import ConfirmPassphrase from '../ConfirmPassphrase/confirmPassphrase';
 import AccountCreated from '../SignupSuccessed/accountCreated';
 import styles from './register.css';

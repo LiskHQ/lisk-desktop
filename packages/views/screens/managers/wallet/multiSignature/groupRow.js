@@ -1,11 +1,11 @@
 import React from 'react';
 import grid from 'flexboxgrid/dist/flexboxgrid.css';
 import { Link } from 'react-router-dom';
-import WalletVisual from '@wallet/detail/identity/walletVisual';
-import LiskAmount from '@shared/liskAmount';
-import { regex } from '@common/configuration';
+import WalletVisual from '@wallet/components/walletVisual';
+import TokenAmount from '@token/fungible/components/tokenAmount';
+import { regex } from 'src/const/regex';
 import routes from '@screens/router/routes';
-import { tokenMap } from '@token/configuration/tokens';
+import { tokenMap } from '@token/fungible/consts/tokens';
 import styles from './multiSignature.css';
 
 const GroupRow = ({ data, className }) => {
@@ -35,7 +35,7 @@ const GroupRow = ({ data, className }) => {
       </span>
       <span className={grid['col-xs-4']}>
         <span className={styles.groupBalance}>
-          <LiskAmount
+          <TokenAmount
             val={balance}
             showRounded
             token={tokenMap.LSK.key}

@@ -1,4 +1,4 @@
-import { tokenKeys } from '@token/configuration/tokens';
+import { tokenKeys } from '@token/fungible/consts/tokens';
 import { getNetworkConfig } from '@network/utils/api';
 import { getSchemas } from '@transaction/api';
 import actionTypes from './actionTypes';

@@ -1,14 +1,16 @@
-import React from 'react';
 import numeral from 'numeral';
 import 'numeral/locales';
-import { withTranslation } from 'react-i18next';
-import i18n from '@setup/i18n/i18n';
+import i18n from 'src/utils/i18n/i18n';
 
-const FormattedNumber = ({ val }) => {
-  // set numeral language
+export const formatAmountBasedOnLocale = ({
+  value,
+  format = '0,0.[0000000000000000]',
+}) => {
   numeral.locale(i18n.language);
-  const formattedVal = numeral(val).format('0,0.[0000000000000]');
-  return <>{formattedVal}</>;
+  const amount = parseFloat(value);
+  return numeral(amount).format(format);
 };
 
-export default withTranslation()(FormattedNumber);
+export default {
+  formatAmountBasedOnLocale,
+};

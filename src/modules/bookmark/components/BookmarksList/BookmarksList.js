@@ -2,17 +2,16 @@ import React from 'react';
 import { connect } from 'react-redux';
 import { withTranslation } from 'react-i18next';
 import { Link } from 'react-router-dom';
-
 import routes from '@screens/router/routes';
-import { tokenMap } from '@token/configuration/tokens';
+import { tokenMap } from '@token/fungible/consts/tokens';
+import { truncateAddress } from '@wallet/utils/account';
 import Tooltip from 'src/theme/Tooltip';
-import { truncateAddress } from '@wallet/utilities/account';
 import { Input } from 'src/theme';
-import { PrimaryButton, TertiaryButton } from '@basics/buttons';
-import WalletVisual from '@wallet/detail/identity/walletVisual';
-import Box from '@basics/box';
-import BoxHeader from '@basics/box/header';
-import BoxContent from '@basics/box/content';
+import { PrimaryButton, TertiaryButton } from 'src/theme/buttons';
+import WalletVisual from '@wallet/components/walletVisual';
+import Box from 'src/theme/box';
+import BoxHeader from 'src/theme/box/header';
+import BoxContent from 'src/theme/box/content';
 import Icon from 'src/theme/Icon';
 import EmptyState from '../EmptyState/EmptyState';
 import styles from './BookmarksList.css';
@@ -37,11 +36,14 @@ export class BookmarksList extends React.Component {
     const { bookmarks, token, limit } = this.props;
     const { filter } = this.state;
 
-    return bookmarks[token.active].filter(({ title, address }) => (
-      filter === ''
-      || title.toLowerCase().indexOf(filter.toLowerCase()) !== -1
-      || address.toLowerCase().indexOf(filter.toLowerCase()) !== -1
-    )).slice(0, limit);
+    return bookmarks[token.active]
+      .filter(
+        ({ title, address }) =>
+          filter === ''
+          || title.toLowerCase().indexOf(filter.toLowerCase()) !== -1
+          || address.toLowerCase().indexOf(filter.toLowerCase()) !== -1,
+      )
+      .slice(0, limit);
   }
 
   displayAddressBasedOnSelectedToken(address) {
@@ -96,7 +98,8 @@ export class BookmarksList extends React.Component {
   onTitleChange({ target }) {
     this.setState({
       editedTitle: target.value,
-      feedback: target.value.length > 20 ? this.props.t('Label is too long.') : '',
+      feedback:
+        target.value.length > 20 ? this.props.t('Label is too long.') : '',
     });
   }
 
@@ -109,8 +112,15 @@ export class BookmarksList extends React.Component {
 
   render() {
     const {
-      t, token, className, enableFilter, isEditable,
-      bookmarks, emptyStateClassName, limit, onAddBookmark,
+      t,
+      token,
+      className,
+      enableFilter,
+      isEditable,
+      bookmarks,
+      emptyStateClassName,
+      limit,
+      onAddBookmark,
     } = this.props;
     const {
       filter, editedAddress, editedTitle, feedback,
@@ -120,162 +130,156 @@ export class BookmarksList extends React.Component {
 
     return (
       <section className={` ${styles.wrapper} ${className} bookmarks-list`}>
-        { enableFilter
-          ? (
-            <header className={styles.header}>
-              <span>
-                <Input
-                  className={`${styles.searchInput} bookmarks-filter-input`}
-                  icon="bookmarkActive"
-                  iconClassName={styles.icon}
-                  size="l"
-                  onChange={this.onFilterChange}
-                  value={filter}
-                  placeholder={t('Search by name or address')}
-                />
-              </span>
-            </header>
-          )
-          : null}
+        {enableFilter ? (
+          <header className={styles.header}>
+            <span>
+              <Input
+                className={`${styles.searchInput} bookmarks-filter-input`}
+                icon="bookmarkActive"
+                iconClassName={styles.icon}
+                size="l"
+                onChange={this.onFilterChange}
+                value={filter}
+                placeholder={t('Search by name or address')}
+              />
+            </span>
+          </header>
+        ) : null}
         <Box className={styles.box}>
           <BoxHeader>
             <h2 className={styles.heading}>{t('Bookmarks')}</h2>
-            {
-              isEditable && selectedBookmarks.length
-                ? (
-                  <PrimaryButton
-                    className={styles.addButton}
-                    onClick={onAddBookmark}
-                    size="s"
-                  >
-                    <Icon name="plus" className={styles.plusIcon} />
-                    {t('Add new')}
-                  </PrimaryButton>
-                ) : null
-            }
+            {isEditable && selectedBookmarks.length ? (
+              <PrimaryButton
+                className={styles.addButton}
+                onClick={onAddBookmark}
+                size="s"
+              >
+                <Icon name="plus" className={styles.plusIcon} />
+                {t('Add new')}
+              </PrimaryButton>
+            ) : null}
           </BoxHeader>
-          <BoxContent className={`${styles.bookmarkList} bookmark-list-container`}>
-            {
-            selectedBookmarks.length
+          <BoxContent
+            className={`${styles.bookmarkList} bookmark-list-container`}
+          >
+            {selectedBookmarks.length ? (
               // eslint-disable-next-line complexity
-              ? selectedBookmarks.map(bookmark => (
+              selectedBookmarks.map((bookmark) => (
                 <Link
-                  onClick={e => this.onRowClick(e, bookmark)}
+                  onClick={(e) => this.onRowClick(e, bookmark)}
                   key={bookmark.address}
-                  className={`${styles.row} ${editedAddress === bookmark.address ? styles.editing : ''} ${bookmark.disabled ? styles.disabled : ''} bookmark-list-row`}
+                  className={`${styles.row} ${
+                    editedAddress === bookmark.address ? styles.editing : ''
+                  } ${
+                    bookmark.disabled ? styles.disabled : ''
+                  } bookmark-list-row`}
                   to={`${routes.explorer.path}?address=${bookmark.address}`}
                 >
                   <div className={styles.avatarAndDescriptionWrapper}>
-                    {
-                      token.active === tokenMap.LSK.key
-                        ? (
-                          <WalletVisual
-                            className={styles.avatar}
-                            address={bookmark.address}
-                          />
-                        )
-                        : null
-                    }
-                    {
-                      editedAddress === bookmark.address
-                        ? (
-                          <Input
-                            autoComplete="off"
-                            className={`bookmarks-edit-input ${styles.editInput}`}
-                            onChange={this.onTitleChange}
-                            placeholder={t('Filter by name or address...')}
-                            setRef={(input) => { this.editInput = input; }}
-                            size="m"
-                            value={editedTitle}
-                            name="bookmarkName"
-                            error={!!feedback}
-                            feedback={feedback}
-                            status={feedback ? 'error' : 'ok'}
-                          />
-                        )
-                        : (
-                          <span className={styles.description}>
-                            <span>{bookmark.title}</span>
-                            <span>{this.displayAddressBasedOnSelectedToken(bookmark.address)}</span>
-                          </span>
-                        )
-                    }
-                  </div>
-                  { isEditable
-                    ? (
-                      <div className={styles.buttonContainer}>
-                        { editedAddress === bookmark.address
-                          ? (
-                            <>
-                              <TertiaryButton
-                                onClick={e => this.updateBookmark(e, {})}
-                                className="bookmarks-cancel-button"
-                                size="m"
-                              >
-                                {t('Cancel')}
-                              </TertiaryButton>
-                              <TertiaryButton
-                                onClick={e => this.saveChanges(e)}
-                                className="bookmarks-save-changes-button"
-                                size="m"
-                                disabled={!!feedback}
-                              >
-                                {t('Save changes')}
-                              </TertiaryButton>
-                            </>
-                          )
-                          : (
-                            <>
-                              {
-                                !bookmark.disabled
-                                  ? (
-                                    <TertiaryButton
-                                      onClick={e => this.editBookmark(e, bookmark)}
-                                      className={
-                                        `bookmarks-edit-button ${bookmark.isDelegate ? styles.hide : ''}`
-                                      }
-                                      size="m"
-                                      disabled={bookmark.isDelegate || bookmark.disabled}
-                                    >
-                                      <Icon name="edit" />
-                                    </TertiaryButton>
-                                  ) : (
-                                    <Tooltip
-                                      tooltipClassName={styles.tooltipContainer}
-                                      position="bottom left"
-                                      size="maxContent"
-                                      indent
-                                      content={<Icon name="delegateWarning" />}
-                                    >
-                                      <span>{t('This is a legacy account and can not be used on this network.')}</span>
-                                    </Tooltip>
-                                  )
-                              }
-                              <TertiaryButton
-                                onClick={e => this.deleteBookmark(e, bookmark)}
-                                className="bookmarks-delete-button"
-                                size="m"
-                              >
-                                <Icon name="remove" />
-                              </TertiaryButton>
-                            </>
+                    {token.active === tokenMap.LSK.key ? (
+                      <WalletVisual
+                        className={styles.avatar}
+                        address={bookmark.address}
+                      />
+                    ) : null}
+                    {editedAddress === bookmark.address ? (
+                      <Input
+                        autoComplete="off"
+                        className={`bookmarks-edit-input ${styles.editInput}`}
+                        onChange={this.onTitleChange}
+                        placeholder={t('Filter by name or address...')}
+                        setRef={(input) => {
+                          this.editInput = input;
+                        }}
+                        size="m"
+                        value={editedTitle}
+                        name="bookmarkName"
+                        error={!!feedback}
+                        feedback={feedback}
+                        status={feedback ? 'error' : 'ok'}
+                      />
+                    ) : (
+                      <span className={styles.description}>
+                        <span>{bookmark.title}</span>
+                        <span>
+                          {this.displayAddressBasedOnSelectedToken(
+                            bookmark.address,
                           )}
-                      </div>
-                    )
-                    : null}
+                        </span>
+                      </span>
+                    )}
+                  </div>
+                  {isEditable ? (
+                    <div className={styles.buttonContainer}>
+                      {editedAddress === bookmark.address ? (
+                        <>
+                          <TertiaryButton
+                            onClick={(e) => this.updateBookmark(e, {})}
+                            className="bookmarks-cancel-button"
+                            size="m"
+                          >
+                            {t('Cancel')}
+                          </TertiaryButton>
+                          <TertiaryButton
+                            onClick={(e) => this.saveChanges(e)}
+                            className="bookmarks-save-changes-button"
+                            size="m"
+                            disabled={!!feedback}
+                          >
+                            {t('Save changes')}
+                          </TertiaryButton>
+                        </>
+                      ) : (
+                        <>
+                          {!bookmark.disabled ? (
+                            <TertiaryButton
+                              onClick={(e) => this.editBookmark(e, bookmark)}
+                              className={`bookmarks-edit-button ${
+                                bookmark.isDelegate ? styles.hide : ''
+                              }`}
+                              size="m"
+                              disabled={
+                                bookmark.isDelegate || bookmark.disabled
+                              }
+                            >
+                              <Icon name="edit" />
+                            </TertiaryButton>
+                          ) : (
+                            <Tooltip
+                              tooltipClassName={styles.tooltipContainer}
+                              position="bottom left"
+                              size="maxContent"
+                              indent
+                              content={<Icon name="delegateWarning" />}
+                            >
+                              <span>
+                                {t('This is a legacy account and can not be used on this network.')}
+                              </span>
+                            </Tooltip>
+                          )}
+                          <TertiaryButton
+                            onClick={(e) => this.deleteBookmark(e, bookmark)}
+                            className="bookmarks-delete-button"
+                            size="m"
+                          >
+                            <Icon name="remove" />
+                          </TertiaryButton>
+                        </>
+                      )}
+                    </div>
+                  ) : null}
                 </Link>
               ))
-              : (
-                <EmptyState
-                  bookmarks={bookmarks}
-                  token={token}
-                  emptyStateClassName={emptyStateClassName}
-                  limit={limit}
-                  t={t}
-                  onAddBookmark={onAddBookmark}
-                />
-              )
-          }
+            ) : (
+              <EmptyState
+                bookmarks={bookmarks}
+                token={token}
+                emptyStateClassName={emptyStateClassName}
+                limit={limit}
+                t={t}
+                onAddBookmark={onAddBookmark}
+              />
+            )}
           </BoxContent>
         </Box>
       </section>
@@ -287,9 +291,9 @@ BookmarksList.defaultProps = {
   emptyStateClassName: '',
 };
 
-const mapStateToProps = state => ({
+const mapStateToProps = (state) => ({
   bookmarks: state.bookmarks,
-  token: state.settings.token,
+  token: state.token,
 });
 
 export default connect(mapStateToProps)(withTranslation()(BookmarksList));

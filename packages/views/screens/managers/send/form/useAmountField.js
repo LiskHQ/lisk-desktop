@@ -2,11 +2,11 @@ import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import numeral from 'numeral';
 
-import { regex } from '@common/configuration';
-import { tokenMap } from '@token/configuration/tokens';
+import { regex } from 'src/const/regex';
+import { tokenMap } from '@token/fungible/consts/tokens';
 import { MIN_ACCOUNT_BALANCE } from '@transaction/configuration/transactions';
-import { toRawLsk } from '@token/utilities/lsk';
-import { validateAmountFormat } from '@common/utilities/validators';
+import { toRawLsk } from '@token/fungible/utils/lsk';
+import { validateAmountFormat } from 'src/utils/validators';
 
 let loaderTimeout = null;
 

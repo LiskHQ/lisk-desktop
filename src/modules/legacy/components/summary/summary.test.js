@@ -4,9 +4,9 @@ import { act } from 'react-dom/test-utils';
 import {
   getTransactionBaseFees,
 } from '@transaction/api';
-import { tokenMap } from '@token/configuration/tokens';
+import { tokenMap } from '@token/fungible/consts/tokens';
 import useTransactionFeeCalculation from '@transaction/hooks/useTransactionFeeCalculation';
-import { truncateAddress } from '@wallet/utilities/account';
+import { truncateAddress } from '@wallet/utils/account';
 import * as hwManager from '@transaction/utils/hwManager';
 import accounts from '@tests/constants/wallets';
 import flushPromises from '@tests/unit-test-utils/flushPromises';

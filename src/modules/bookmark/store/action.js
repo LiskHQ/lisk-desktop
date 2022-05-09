@@ -1,7 +1,7 @@
-import { tokenMap } from '@token/configuration/tokens';
-import { getFromStorage } from '@common/utilities/localJSONStorage';
+import { tokenMap } from '@token/fungible/consts/tokens';
+import { getFromStorage } from 'src/utils/localJSONStorage';
 import { emptyBookmarks } from '@bookmark/utils';
-import { validateAddress } from '@common/utilities/validators';
+import { validateAddress } from 'src/utils/validators';
 import actionTypes from './actionTypes';
 
 /**

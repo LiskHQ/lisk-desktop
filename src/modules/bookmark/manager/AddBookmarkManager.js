@@ -4,14 +4,14 @@ import { compose } from 'redux';
 import { withRouter } from 'react-router';
 import { withTranslation } from 'react-i18next';
 import { bookmarkAdded, bookmarkUpdated, bookmarkRemoved } from '@common/store/actions';
-import { getAccount } from '@wallet/utilities/api';
-import withData from '@common/utilities/withData';
+import { getAccount } from '@wallet/utils/api';
+import withData from 'src/utils/withData';
 import { selectSearchParamValue } from 'src/utils/searchParams';
 import AddBookmark from '../components/AddBookmark';
 
 const mapStateToProps = state => ({
   bookmarks: state.bookmarks,
-  token: state.settings.token,
+  token: state.token,
   network: state.network,
 });
 
@@ -29,7 +29,7 @@ export default compose(
       apiUtil: (network, params) => getAccount({ network, params }, params.token),
       defaultData: {},
       getApiParams: (state, props) => ({
-        token: state.settings.token.active,
+        token: state.token.active,
         address: selectSearchParamValue(props.history.location.search, 'address'),
       }),
     },

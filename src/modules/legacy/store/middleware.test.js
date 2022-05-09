@@ -1,6 +1,6 @@
 import blockActionTypes from '@block/store/actionTypes';
 import routes from '@screens/router/routes';
-import history from '@common/utilities/history';
+import history from 'src/utils/history';
 import walletActionTypes from '@wallet/store/actionTypes';
 import middleware from './middleware';
 

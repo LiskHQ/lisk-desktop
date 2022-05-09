@@ -6,22 +6,22 @@ import Dashboard from '@screens/managers/dashboard';
 import DelegatesMonitor from '@screens/managers/monitor/delegates';
 import DelegatesPerformanceModal from '@screens/managers/wallet/delegatePerformanceModal';
 import HwWalletLogin from '@screens/managers/hwWalletLogin';
-import Login from 'src/modules/auth/components/Signin';
-import MonitorWallets from 'src/modules/account/components/Accounts';
+import Login from '@auth/components/Signin';
+import MonitorWallets from '@account/manager/AccountsManager';
 import MonitorNetwork from '@network/manager/networkManager';
 import MonitorTransactions from '@screens/managers/monitor/transactions';
-import Register from 'src/modules/auth/manager/SignupManager';
+import Register from '@auth/manager/SignupManager';
 import RegisterDelegate from '@screens/managers/registerDelegate';
 import Send from '@screens/managers/send';
-import Settings from '@screens/managers/settings';
+import Settings from 'src/modules/settings/manager/SettingsManager';
 import SignMessage from '@message/manager/signMessageManager';
 import TermsOfUse from 'src/modules/common/components/TermsOfUse';
-import Wallet from '@screens/managers/wallet';
-import Explorer from '@screens/managers/wallet/explorer';
+import Explorer from '@wallet/manager/explorerManager';
+import AccountDetails from '@account/components/AccountDetails';
 // import TransactionDetailsModal from '@screens/managers/transactionDetailsModal';
 import VerifyMessage from '@message/manager/verifyMessageManager';
 import Request from '@screens/managers/request';
-import LockedBalance from '@screens/managers/lockedBalance';
+import LockedBalance from '@token/fungible/components/LockedBalance';
 import EditVote from '@screens/managers/editVote';
 import VotingQueue from '@screens/managers/votingQueue';
 import DeviceDisconnect from '@screens/managers/deviceDisconnectDialog';
@@ -31,10 +31,10 @@ import ReclaimBalance from '@legacy/manager/reclaimBalance';
 import ReclaimBalanceModal from '@legacy/manager/reclaimBalanceModal';
 import MultiSignature from '@screens/managers/multiSignature';
 import SignMultiSigTransaction from '@screens/managers/signMultiSignTransaction';
-import MultisigAccountDetails from '@screens/managers/multisigAccountDetails';
+import MultisigAccountDetails from '@wallet/manager/multisigAccountDetailsManager';
 
 export default {
-  wallet: Wallet,
+  wallet: AccountDetails,
   addAccount: Login,
   explorer: Explorer,
   hwWallet: HwWalletLogin,

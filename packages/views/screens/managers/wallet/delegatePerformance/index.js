@@ -2,7 +2,7 @@
 import { compose } from 'redux';
 import { withRouter } from 'react-router-dom';
 import { getDelegate } from '@dpos/validator/api';
-import withData from '@common/utilities/withData';
+import withData from 'src/utils/withData';
 import { parseSearchParams } from 'src/utils/searchParams';
 import { withTranslation } from 'react-i18next';
 import DelegatePerformance from './delegatePerformance';

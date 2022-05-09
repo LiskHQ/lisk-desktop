@@ -1,18 +1,19 @@
+/* eslint-disable max-lines */
 import React, { useState, useEffect, useMemo } from 'react';
 
 import TransactionPriority from '@transaction/components/TransactionPriority';
 import useTransactionFeeCalculation from '@transaction/hooks/useTransactionFeeCalculation';
 import useTransactionPriority from '@transaction/hooks/useTransactionPriority';
 
-import Box from '@basics/box';
-import BoxContent from '@basics/box/content';
-import BoxFooter from '@basics/box/footer';
-import { PrimaryButton, TertiaryButton } from '@basics/buttons';
+import Box from 'src/theme/box';
+import BoxContent from 'src/theme/box/content';
+import BoxFooter from 'src/theme/box/footer';
+import { PrimaryButton, TertiaryButton } from 'src/theme/buttons';
 import { Input } from 'src/theme';
-import { regex } from '@common/configuration';
-import { tokenMap } from '@token/configuration/tokens';
+import { regex } from 'src/const/regex';
+import { tokenMap } from '@token/fungible/consts/tokens';
 import { MODULE_ASSETS_NAME_ID_MAP } from '@transaction/configuration/moduleAssets';
-import { extractAddressFromPublicKey } from '@wallet/utilities/account';
+import { extractAddressFromPublicKey } from '@wallet/utils/account';
 import ProgressBar from '../progressBar';
 import MemberField from './memberField';
 import Feedback from './feedback';
@@ -24,53 +25,84 @@ const moduleAssetId = MODULE_ASSETS_NAME_ID_MAP.registerMultisignatureGroup;
 const MAX_MULTI_SIG_MEMBERS = 64;
 
 const placeholderMember = {
-  publicKey: undefined, isMandatory: true,
+  publicKey: undefined,
+  isMandatory: true,
 };
 
-const getInitialMembersState = (prevState) => prevState.members ?? [placeholderMember];
-const getInitialSignaturesState = (prevState) => prevState.numberOfSignatures ?? 2;
+const getInitialMembersState = (prevState) =>
+  prevState.members ?? [placeholderMember];
+const getInitialSignaturesState = (prevState) =>
+  prevState.numberOfSignatures ?? 2;
 
 const validators = [
   {
     pattern: (_, optional) => optional.length === 1,
-    message: t => t('Either change the optional member to mandatory or define more optional members.'),
+    message: (t) =>
+      t(
+        'Either change the optional member to mandatory or define more optional members.',
+      ),
   },
   {
     pattern: (mandatory, optional, signatures) =>
       mandatory.length === 0 && optional.length === signatures,
-    message: t => t('All members can not be optional. Consider changing them to mandatory.'),
+    message: (t) =>
+      t(
+        'All members can not be optional. Consider changing them to mandatory.',
+      ),
   },
   {
     pattern: (mandatory, optional, signatures) =>
-      mandatory.length > 0 && optional.length === 0 && signatures !== mandatory.length,
-    message: t => t('Number of signatures must be equal to the number of members.'),
+      mandatory.length > 0
+      && optional.length === 0
+      && signatures !== mandatory.length,
+    message: (t) =>
+      t('Number of signatures must be equal to the number of members.'),
   },
   {
     pattern: (mandatory, optional, signatures) =>
-      mandatory.length > 0 && optional.length > 0 && signatures <= mandatory.length,
-    message: (t, mandatory) => t(t('Number of signatures must be above {{num}}.', { num: mandatory.length })),
+      mandatory.length > 0
+      && optional.length > 0
+      && signatures <= mandatory.length,
+    message: (t, mandatory) =>
+      t(
+        t('Number of signatures must be above {{num}}.', {
+          num: mandatory.length,
+        }),
+      ),
   },
   {
     pattern: (mandatory, optional, signatures) =>
-      mandatory.length > 0 && optional.length > 0
+      mandatory.length > 0
+      && optional.length > 0
       && signatures === mandatory.length + optional.length,
-    message: t => t('Either change the optional member to mandatory or reduce the number of signatures.'),
+    message: (t) =>
+      t(
+        'Either change the optional member to mandatory or reduce the number of signatures.',
+      ),
   },
   {
     pattern: (mandatory, optional, signatures) =>
-      mandatory.length > 0 && optional.length > 0
+      mandatory.length > 0
+      && optional.length > 0
       && signatures > mandatory.length + optional.length,
-    message: (t, mandatory, optional) => t('Number of signatures must be lower than {{num}}.', { num: mandatory.length + optional.length }),
-  },
-  {
-    pattern: (mandatory, optional) => mandatory.length + optional.length > MAX_MULTI_SIG_MEMBERS,
-    message: t => t('Maximum number of members is {{MAX_MULTI_SIG_MEMBERS}}.', { MAX_MULTI_SIG_MEMBERS }),
+    message: (t, mandatory, optional) =>
+      t('Number of signatures must be lower than {{num}}.', {
+        num: mandatory.length + optional.length,
+      }),
   },
   {
     pattern: (mandatory, optional) =>
-      mandatory.some(item => !regex.publicKey.test(item))
-      || optional.some(item => !regex.publicKey.test(item)),
-    message: t => t('Please enter a valid public key for each member.'),
+      mandatory.length + optional.length > MAX_MULTI_SIG_MEMBERS,
+    message: (t) =>
+      t('Maximum number of members is {{MAX_MULTI_SIG_MEMBERS}}.', {
+        MAX_MULTI_SIG_MEMBERS,
+      }),
+  },
+  {
+    pattern: (mandatory, optional) =>
+      mandatory.some((item) => !regex.publicKey.test(item))
+      || optional.some((item) => !regex.publicKey.test(item)),
+    message: (t) => t('Please enter a valid public key for each member.'),
   },
   {
     pattern: (mandatory, optional) => {
@@ -82,12 +114,15 @@ const validators = [
 
       return Object.keys(keysMap).length !== allKeys.length;
     },
-    message: t => t('Duplicate public keys detected.'),
+    message: (t) => t('Duplicate public keys detected.'),
   },
 ];
 
 export const validateState = ({
-  mandatoryKeys, optionalKeys, requiredSignatures, t,
+  mandatoryKeys,
+  optionalKeys,
+  requiredSignatures,
+  t,
 }) => {
   const messages = validators
     .map((scenario) => {
@@ -96,7 +131,7 @@ export const validateState = ({
       }
       return null;
     })
-    .filter(item => !!item);
+    .filter((item) => !!item);
 
   return {
     error: (mandatoryKeys.length + optionalKeys.length) ? messages.length : -1,
@@ -110,23 +145,27 @@ const Editor = ({
 }) => {
   const [requiredSignatures, setRequiredSignatures] = useState(() =>
     getInitialSignaturesState(prevState));
-  const [members, setMembers] = useState(() => getInitialMembersState(prevState));
+  const [members, setMembers] = useState(() =>
+    getInitialMembersState(prevState));
 
   const [customFee, setCustomFee] = useState();
   const [
-    selectedPriority, selectTransactionPriority,
-    priorityOptions, prioritiesLoadError, loadingPriorities,
+    selectedPriority,
+    selectTransactionPriority,
+    priorityOptions,
+    prioritiesLoadError,
+    loadingPriorities,
   ] = useTransactionPriority(token);
 
   const [mandatoryKeys, optionalKeys] = useMemo(() => {
     const mandatory = members
-      .filter(member => member.isMandatory && member.publicKey)
-      .map(member => member.publicKey)
+      .filter((member) => member.isMandatory && member.publicKey)
+      .map((member) => member.publicKey)
       .sort();
 
     const optional = members
-      .filter(member => !member.isMandatory && member.publicKey)
-      .map(member => member.publicKey)
+      .filter((member) => !member.isMandatory && member.publicKey)
+      .map((member) => member.publicKey)
       .sort();
 
     return [mandatory, optional];
@@ -149,7 +188,7 @@ const Editor = ({
 
   const addMemberField = () => {
     if (members.length < MAX_MULTI_SIG_MEMBERS) {
-      setMembers(prevMembers => [...prevMembers, placeholderMember]);
+      setMembers((prevMembers) => [...prevMembers, placeholderMember]);
     }
   };
 
@@ -182,7 +221,7 @@ const Editor = ({
 
   const goToNextStep = () => {
     const feeValue = customFee ? customFee.value : fee.value;
-    const extractedMembers = members.map(member => {
+    const extractedMembers = members.map((member) => {
       if (regex.publicKey.test(member.publicKey)) {
         return {
           ...member,
@@ -205,13 +244,20 @@ const Editor = ({
     const difference = requiredSignatures - members.length;
     if (difference > 0) {
       const newMembers = new Array(difference).fill(placeholderMember);
-      setMembers(prevMembers => [...prevMembers, ...newMembers]);
+      setMembers((prevMembers) => [...prevMembers, ...newMembers]);
     }
   }, [requiredSignatures]);
 
-  const feedback = useMemo(() => validateState({
-    mandatoryKeys, optionalKeys, requiredSignatures, t,
-  }), [mandatoryKeys, optionalKeys, requiredSignatures]);
+  const feedback = useMemo(
+    () =>
+      validateState({
+        mandatoryKeys,
+        optionalKeys,
+        requiredSignatures,
+        t,
+      }),
+    [mandatoryKeys, optionalKeys, requiredSignatures],
+  );
 
   return (
     <section className={styles.wrapper}>
@@ -222,7 +268,9 @@ const Editor = ({
         <BoxContent className={styles.contentContainer}>
           <ProgressBar current={1} />
           <div>
-            <span className={styles.requiredSignaturesHeading}>{t('Required signatures')}</span>
+            <span className={styles.requiredSignaturesHeading}>
+              {t('Required signatures')}
+            </span>
             <Input
               className={`${styles.requiredSignaturesInput} multisignature-editor-input`}
               value={requiredSignatures ?? ''}
@@ -231,7 +279,9 @@ const Editor = ({
               name="required-signatures"
             />
           </div>
-          <div className={`${styles.membersControls} multisignature-members-controls`}>
+          <div
+            className={`${styles.membersControls} multisignature-members-controls`}
+          >
             <span>{t('Members')}</span>
             <TertiaryButton
               size="s"
@@ -272,9 +322,7 @@ const Editor = ({
           loadError={prioritiesLoadError}
           isLoading={loadingPriorities}
         />
-        {
-          feedback.error > 0 && <Feedback messages={feedback.messages} />
-        }
+        {feedback.error > 0 && <Feedback messages={feedback.messages} />}
         <BoxFooter>
           <PrimaryButton
             className="confirm-button"

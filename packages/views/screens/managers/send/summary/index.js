@@ -2,7 +2,7 @@
 import { connect } from 'react-redux';
 import { withTranslation } from 'react-i18next';
 
-import { getActiveTokenAccount } from '@wallet/utilities/account';
+import { getActiveTokenAccount } from '@wallet/utils/account';
 import {
   resetTransactionResult,
   transactionDoubleSigned,
@@ -13,7 +13,7 @@ import Summary from './summary';
 const mapStateToProps = state => ({
   account: getActiveTokenAccount(state),
   transactions: state.transactions,
-  token: state.settings.token && state.settings.token.active,
+  token: state.token && state.token.active,
 });
 
 const mapDispatchToProps = {

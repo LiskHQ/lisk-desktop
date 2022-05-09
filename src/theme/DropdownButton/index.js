@@ -1,5 +1,5 @@
 import React from 'react';
-import { SecondaryButton } from '@basics/buttons';
+import { SecondaryButton } from 'src/theme/buttons';
 import Dropdown from 'src/theme/Dropdown/dropdown';
 import OutsideClickHandler from 'src/theme/Select/OutsideClickHandler';
 import styles from './dropdownButton.css';
@@ -16,7 +16,7 @@ class DropdownButton extends React.Component {
   }
 
   toggleDropdown(_, showDropdown) {
-    this.setState(prevState => ({
+    this.setState((prevState) => ({
       shownDropdown: showDropdown || !prevState.shownDropdown,
     }));
   }
@@ -24,8 +24,15 @@ class DropdownButton extends React.Component {
   render() {
     const { shownDropdown } = this.state;
     const {
-      ButtonComponent, buttonLabel, buttonType, children, align, size,
-      wrapperClassName, buttonClassName, className,
+      ButtonComponent,
+      buttonLabel,
+      buttonType,
+      children,
+      align,
+      size,
+      wrapperClassName,
+      buttonClassName,
+      className,
     } = this.props;
     return (
       <>
@@ -40,7 +47,7 @@ class DropdownButton extends React.Component {
             size={size}
             type={buttonType}
           >
-            { buttonLabel }
+            {buttonLabel}
           </ButtonComponent>
           <Dropdown
             showArrow={false}

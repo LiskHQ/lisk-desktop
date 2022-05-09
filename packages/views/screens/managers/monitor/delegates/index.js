@@ -7,11 +7,11 @@ import { connect } from 'react-redux';
 import { getDelegates } from '@dpos/validator/api';
 import { getNetworkStatus } from '@network/utils/api';
 import { getTransactions, getRegisteredDelegates } from '@transaction/api';
-import withData from '@common/utilities/withData';
-import withFilters from '@common/utilities/withFilters';
-import { DEFAULT_LIMIT } from '@views/configuration';
+import withData from 'src/utils/withData';
+import withFilters from 'src/utils/withFilters';
+import { DEFAULT_LIMIT } from 'src/utils/monitor';
 import { MODULE_ASSETS_NAME_ID_MAP } from '@transaction/configuration/moduleAssets';
-import { tokenMap } from '@token/configuration/tokens';
+import { tokenMap } from '@token/fungible/consts/tokens';
 import Delegates from './delegates';
 
 const defaultUrlSearchParams = { search: '' };
@@ -110,7 +110,7 @@ const ComposedDelegates = compose(
           },
           tokenMap.LSK.key,
         ),
-      getApiParams: (state) => ({ token: state.settings.token.active }),
+      getApiParams: (state) => ({ token: state.token.active }),
       autoload: true,
       defaultData: [],
       transformResponse: mergeUniquelyById,

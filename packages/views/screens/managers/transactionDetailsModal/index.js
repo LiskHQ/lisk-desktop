@@ -1,12 +1,15 @@
 import React from 'react';
 import grid from 'flexboxgrid/dist/flexboxgrid.css';
-import Dialog from '@basics/dialog/dialog';
+import Dialog from 'src/theme/dialog/dialog';
 import TransactionDetailsManager from '@transaction/context/TransactionDetailsProvider';
 import TransactionDetails from '../transactionDetails';
 import styles from './styles.css';
 
 const TransactionDetailsModal = () => (
-  <Dialog hasClose className={`${grid.row} ${grid['center-xs']} ${styles.container}`}>
+  <Dialog
+    hasClose
+    className={`${grid.row} ${grid['center-xs']} ${styles.container}`}
+  >
     <TransactionDetailsManager>
       <TransactionDetails title="Transaction details" />
     </TransactionDetailsManager>

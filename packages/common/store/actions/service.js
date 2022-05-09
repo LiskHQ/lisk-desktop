@@ -1,6 +1,6 @@
 import i18next from 'i18next';
 import { toast } from 'react-toastify';
-import { tokenMap } from '@token/configuration/tokens';
+import { tokenMap } from '@token/fungible/consts/tokens';
 import { getPrices } from '@common/utilities/api/market';
 import actionTypes from './actionTypes';
 

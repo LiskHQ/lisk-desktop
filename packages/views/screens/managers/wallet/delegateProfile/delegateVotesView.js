@@ -1,18 +1,16 @@
 import React, { useState } from 'react';
 import grid from 'flexboxgrid/dist/flexboxgrid.css';
 
-import Box from '@basics/box';
-import BoxContent from '@basics/box/content';
-import BoxHeader from '@basics/box/header';
+import Box from 'src/theme/box';
+import BoxContent from 'src/theme/box/content';
+import BoxHeader from 'src/theme/box/header';
 import { Input } from 'src/theme';
-import Table from '@basics/table';
+import Table from 'src/theme/table';
 import VoterRow from './voterRow';
 import tableHeader from './votersTableHeader';
 import styles from './delegateProfile.css';
 
-const DelegateVotesView = ({
-  voters, t,
-}) => {
+const DelegateVotesView = ({ voters, t }) => {
   const [searchInput, setSearchInput] = useState('');
 
   const onInputChange = ({ target }) => {
@@ -20,18 +18,22 @@ const DelegateVotesView = ({
   };
 
   const handleLoadMore = () => {
-    voters.loadData({ aggregate: true, offset: voters.meta.count + voters.meta.offset });
+    voters.loadData({
+      aggregate: true,
+      offset: voters.meta.count + voters.meta.offset,
+    });
   };
 
   const votersInfo = searchInput
     ? voters.data.votes.filter(
-      v => v.username?.includes(searchInput) || v.address?.includes(searchInput),
+      (v) =>
+        v.username?.includes(searchInput) || v.address?.includes(searchInput),
     )
     : voters.data.votes;
-  const canLoadMoreData = voters.meta
-    && voters.meta.total > votersInfo.length
-    && !searchInput;
-  const emptyMessage = searchInput ? t('This account does not have any voter for the given address.') : t('This account does not have any voters.');
+  const canLoadMoreData = voters.meta && voters.meta.total > votersInfo.length && !searchInput;
+  const emptyMessage = searchInput
+    ? t('This account does not have any voter for the given address.')
+    : t('This account does not have any voters.');
 
   return (
     <div className={`${grid.row} ${styles.votesWrapper}`}>
@@ -39,7 +41,9 @@ const DelegateVotesView = ({
         <BoxHeader>
           <h1>
             <span>{t('Voters')}</span>
-            <span className={styles.totalVotes}>{`(${voters.meta ? voters.meta.total : '...'})`}</span>
+            <span className={styles.totalVotes}>
+              {`(${voters.meta ? voters.meta.total : '...'})`}
+            </span>
           </h1>
           {voters.data.votes.length > 0 && (
             <span>
@@ -54,7 +58,9 @@ const DelegateVotesView = ({
           )}
         </BoxHeader>
         <BoxContent
-          className={`${grid.col} ${grid['col-xs-12']} ${votersInfo.length ? styles.votesContainer : ''} votes-container`}
+          className={`${grid.col} ${grid['col-xs-12']} ${
+            votersInfo.length ? styles.votesContainer : ''
+          } votes-container`}
         >
           <Table
             data={votersInfo}

@@ -21,7 +21,7 @@ const getLocales = (url) => {
   return str.join('|');
 };
 
-const langRegex = getLocales('../i18n/languages.js');
+const langRegex = getLocales('../../src/utils/i18n/languages.js');
 
 const cssLoader = {
   loader: 'css-loader',
@@ -105,7 +105,7 @@ const config = {
       VERSION: `"${bundleVersion}"`,
     }),
     new StyleLintPlugin({
-      context: `${resolve(__dirname, '../../packages')}`,
+      context: `${resolve(__dirname, '../../src')}`,
       files: '**/*.css',
       config: stylelintrc,
     }),
@@ -127,10 +127,10 @@ const config = {
     new InlineChunkHtmlPlugin(HtmlWebpackPlugin, [/runtime/]),
     new I18nScannerPlugin({
       translationFunctionNames: ['i18next.t', 'props.t', 'this.props.t', 't'],
-      outputFilePath: './setup/i18n/locales/en/common.json',
+      outputFilePath: 'src/locales/en/common.json',
       files: [
         './setup/i18n/**/*.js',
-        './packages/**/*.js',
+        './src/**/*.js',
         './app/src/**/*.js',
       ],
     }),

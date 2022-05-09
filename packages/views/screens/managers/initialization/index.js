@@ -1,8 +1,8 @@
 import React from 'react';
 import { withTranslation } from 'react-i18next';
 import Icon from 'src/theme/Icon';
-import { PrimaryButton } from '@basics/buttons';
-import DialogLink from '@basics/dialog/link';
+import { PrimaryButton } from 'src/theme/buttons';
+import DialogLink from 'src/theme/dialog/link';
 import styles from './initialization.css';
 
 const Initialization = ({ t }) => (
@@ -21,16 +21,17 @@ const Initialization = ({ t }) => (
       <span
         className={styles.link}
         onClick={() => {
-          window.open('https://lisk.com/blog/announcement/lisk-account-initialization', '_blank', 'rel=noopener noreferrer');
+          window.open(
+            'https://lisk.com/blog/announcement/lisk-account-initialization',
+            '_blank',
+            'rel=noopener noreferrer',
+          );
         }}
       >
         here
       </span>
     </p>
-    <DialogLink
-      component="send"
-      data={{ initialization: true }}
-    >
+    <DialogLink component="send" data={{ initialization: true }}>
       <PrimaryButton className={styles.button}>{t('Initialize')}</PrimaryButton>
     </DialogLink>
   </div>

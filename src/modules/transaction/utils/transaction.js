@@ -9,10 +9,10 @@ import {
   getBase32AddressFromAddress,
   getAddressFromBase32Address,
   getKeys,
-} from '@wallet/utilities/account';
+} from '@wallet/utils/account';
 import { transformStringDateToUnixTimestamp } from 'src/utils/dateTime';
-import { toRawLsk } from '@token/utilities/lsk';
-import { isEmpty } from '@common/utilities/helpers';
+import { toRawLsk } from '@token/fungible/utils/lsk';
+import { isEmpty } from 'src/utils/helpers';
 import { splitModuleAndAssetIds, joinModuleAndAssetIds } from './moduleAssets';
 import { signTransactionByHW } from './hwManager';
 

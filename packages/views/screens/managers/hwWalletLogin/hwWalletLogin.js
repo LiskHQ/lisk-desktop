@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import grid from 'flexboxgrid/dist/flexboxgrid.css';
-import { subscribeToDevicesList } from '@wallet/utilities/hwManager';
+import { subscribeToDevicesList } from '@wallet/utils/hwManager';
 import routes from '@screens/router/routes';
 import MultiStep from 'src/modules/common/components/OldMultiStep';
 import Loading from './loading';

@@ -1,10 +1,10 @@
 import React from 'react';
 
-import { tokenMap } from '@token/configuration/tokens';
-import { toRawLsk } from '@token/utilities/lsk';
-import { truncateAddress } from '@wallet/utilities/account';
-import LiskAmount from '@shared/liskAmount';
-import WalletVisual from '@wallet/detail/identity/walletVisual';
+import { tokenMap } from '@token/fungible/consts/tokens';
+import { toRawLsk } from '@token/fungible/utils/lsk';
+import { truncateAddress } from '@wallet/utils/account';
+import TokenAmount from '@token/fungible/components/tokenAmount';
+import WalletVisual from '@wallet/components/walletVisual';
 
 import styles from './MultiSignatureReview.css';
 
@@ -81,7 +81,7 @@ const MultiSignatureReview = ({
         {numberOfSignatures}
       </InfoColumn>
       <InfoColumn title={t('Transaction fee')} className="info-fee">
-        <LiskAmount val={toRawLsk(fee)} token={tokenMap.LSK.key} />
+        <TokenAmount val={toRawLsk(fee)} token={tokenMap.LSK.key} />
       </InfoColumn>
     </div>
   </>

@@ -1,10 +1,10 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 
-import { truncateAddress } from '@wallet/utilities/account';
+import { truncateAddress } from '@wallet/utils/account';
 import routes from '@screens/router/routes';
-import { tokenMap } from '@token/configuration/tokens';
-import LiskAmount from '@shared/liskAmount';
+import { tokenMap } from '@token/fungible/consts/tokens';
+import TokenAmount from '@token/fungible/components/tokenAmount';
 
 import styles from './VoteItem.css';
 
@@ -37,12 +37,12 @@ const VoteDetails = ({
         {vote.confirmed && vote.unconfirmed
           ? (
             <>
-              <LiskAmount val={vote.confirmed} token={token} />
+              <TokenAmount val={vote.confirmed} token={token} />
               <span className={styles.arrowIcon}>➞</span>
-              <LiskAmount val={vote.unconfirmed} token={token} />
+              <TokenAmount val={vote.unconfirmed} token={token} />
             </>
           )
-          : <LiskAmount val={Object.values(vote)[0]} token={token} />}
+          : <TokenAmount val={Object.values(vote)[0]} token={token} />}
       </span>
     </span>
   );

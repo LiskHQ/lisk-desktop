@@ -1,8 +1,9 @@
 /* istanbul ignore file */
 import { connect } from 'react-redux';
 import { setDefaults, withTranslation } from 'react-i18next';
-import { getActiveTokenAccount } from '@wallet/utilities/account';
-import { login, settingsUpdated } from '@common/store/actions';
+import { getActiveTokenAccount } from '@wallet/utils/account';
+import { login } from '@auth/store/action';
+import { settingsUpdated } from 'src/modules/settings/store/actions';
 import Login from './login';
 
 setDefaults({

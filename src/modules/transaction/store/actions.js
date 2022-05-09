@@ -1,12 +1,12 @@
 import { to } from 'await-to-js';
-import { DEFAULT_LIMIT } from '@views/configuration';
-import { tokenMap } from '@token/configuration/tokens';
+import { DEFAULT_LIMIT } from 'src/utils/monitor';
+import { tokenMap } from '@token/fungible/consts/tokens';
 import { MODULE_ASSETS_NAME_ID_MAP } from '@transaction/configuration/moduleAssets';
 import { signatureCollectionStatus } from '@transaction/configuration/txStatus';
-import { isEmpty } from '@common/utilities/helpers';
-import { extractKeyPair } from '@wallet/utilities/account';
+import { isEmpty } from 'src/utils/helpers';
+import { extractKeyPair } from '@wallet/utils/account';
 import { getTransactionSignatureStatus } from '@screens/managers/signMultiSignTransaction/helpers';
-import { timerReset } from '@wallet/store/action';
+import { timerReset } from '@auth/store/action';
 import { loadingStarted, loadingFinished } from '@common/store/actions/loading';
 import actionTypes from './actionTypes';
 import { getTransactions, create, broadcast } from '../api';
@@ -15,7 +15,7 @@ import {
   transformTransaction,
   createTransactionObject,
   flattenTransaction,
-} from '../utils/transaction';
+} from '../utils';
 
 /**
  * Action trigger when user logout from the application
@@ -54,8 +54,8 @@ export const transactionsRetrieved = ({
 }) => async (dispatch, getState) => {
   dispatch(loadingStarted(actionTypes.transactionsRetrieved));
 
-  const { network, settings } = getState();
-  const token = settings.token.active;
+  const { network, token } = getState();
+  const activeToken = token.active;
 
   const params = {
     address,
@@ -65,7 +65,7 @@ export const transactionsRetrieved = ({
   };
 
   try {
-    const { data, meta } = await getTransactions({ network, params }, token);
+    const { data, meta } = await getTransactions({ network, params }, activeToken);
     dispatch({
       type: actionTypes.transactionsRetrieved,
       data: {
@@ -102,9 +102,9 @@ export const resetTransactionResult = () => ({
 // eslint-disable-next-line max-statements
 export const transactionCreated = data => async (dispatch, getState) => {
   const {
-    wallet, settings, network,
+    wallet, token, network,
   } = getState();
-  const activeToken = settings.token.active;
+  const activeToken = token.active;
   const hwInfo = isEmpty(wallet.hwInfo) ? undefined : wallet.hwInfo; // @todo remove this by #3898
 
   const [error, tx] = await to(create({
@@ -141,17 +141,17 @@ export const transactionCreated = data => async (dispatch, getState) => {
  */
 export const transactionDoubleSigned = () => async (dispatch, getState) => {
   const {
-    transactions, network, wallet, settings,
+    transactions, network, wallet, token,
   } = getState();
   const keyPair = extractKeyPair({
     passphrase: wallet.secondPassphrase,
     enableCustomDerivationPath: false,
   });
   const activeWallet = {
-    ...wallet.info[settings.token.active],
+    ...wallet.info[token.active],
     passphrase: wallet.secondPassphrase,
     summary: {
-      ...wallet.info[settings.token.active].summary,
+      ...wallet.info[token.active].summary,
       ...keyPair,
     },
   };
@@ -191,8 +191,8 @@ export const transactionDoubleSigned = () => async (dispatch, getState) => {
 export const transactionBroadcasted = transaction =>
   // eslint-disable-next-line max-statements
   async (dispatch, getState) => {
-    const { network, settings, wallet } = getState();
-    const activeToken = settings.token.active;
+    const { network, token, wallet } = getState();
+    const activeToken = token.active;
     const serviceUrl = network.networks[activeToken].serviceUrl;
 
     const [error] = await to(broadcast(

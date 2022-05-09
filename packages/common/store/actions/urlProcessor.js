@@ -1,8 +1,8 @@
 import { parseSearchParams } from 'src/utils/searchParams';
-import { getAccounts } from '@wallet/utilities/api';
-import { regex } from '@common/configuration';
-import { tokenMap } from '@token/configuration/tokens';
-import { validateAddress } from '@common/utilities/validators';
+import { getAccounts } from '@wallet/utils/api';
+import { regex } from 'src/const/regex';
+import { tokenMap } from '@token/fungible/consts/tokens';
+import { validateAddress } from 'src/utils/validators';
 import { voteEdited } from '@dpos/validator/store/actions/voting';
 
 const isUsernameValid = username => regex.delegateName.test(username);

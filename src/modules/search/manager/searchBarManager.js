@@ -3,12 +3,12 @@ import { withRouter } from 'react-router';
 import { connect } from 'react-redux';
 import { compose } from 'redux';
 import { withTranslation } from 'react-i18next';
-import { search } from '@common/utilities/api/search';
-import withData from '@common/utilities/withData';
+import withData from 'src/utils/withData';
+import { search } from '../api';
 import SearchBar from '../components/SearchBar/SearchBar';
 
 const mapStateToProps = state => ({
-  activeToken: state.settings.token.active,
+  activeToken: state.token.active,
 });
 
 const defaultData = {

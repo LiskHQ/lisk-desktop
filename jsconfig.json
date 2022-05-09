@@ -7,6 +7,7 @@
       "@setup/*": ["./setup/*"],
       "@tests/*": ["./tests/*"],
       "@fixtures/*": ["./tests/fixtures"],
+      "@account/*": ["./src/modules/account/*"],
       "@block/*": ["./src/modules/block/*"],
       "@bookmark/*": ["./src/modules/bookmark/*"],
       "@search/*": ["./src/modules/search/*"],
@@ -15,15 +16,17 @@
       "@dpos/*": ["./src/modules/dpos/*"],
       "@network/*": ["./src/modules/network/*"],
       "@settings/*": ["./packages/settings/*"],
-      "@token/*": ["./packages/token/*"],
+      "@token/*": ["./src/modules/token/*"],
       "@transaction/*": ["./src/modules/transaction/*"],
       "@update/*": ["./src/modules/update/*"],
-      "@wallet/*": ["./packages/wallet/*"],
+      "@wallet/*": ["./src/modules/wallet/*"],
       "@views/*": ["./packages/views/*"],
+      "@packages/*": ["./packages/*"],
       "@shared/*": ["./packages/views/shared/*"],
       "@basics/*": ["./packages/views/basics/*"],
       "@screens/*": ["./packages/views/screens/*"],
       "@libs/*": ["./libs/*"],
+      "@auth/*": ["./src/modules/auth/*"],
       "@message/*": ["./src/modules/message/*"]
     }
   }

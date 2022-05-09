@@ -1,15 +1,13 @@
 import * as marketApi from '@common/utilities/api/market';
-import { initialState as settings } from '@settings/store/reducer';
+import { initialState as token } from '@token/fungible/store/reducer';
 import prices from '@tests/constants/prices';
 import actionTypes from './actionTypes';
 import { pricesRetrieved } from './service';
 
 describe('actions: service', () => {
   const getState = () => ({
-    settings: {
-      token: {
-        active: 'LSK',
-      },
+    token: {
+      active: 'LSK',
     },
   });
   const dispatch = jest.fn();
@@ -37,7 +35,7 @@ describe('actions: service', () => {
         type: actionTypes.pricesRetrieved,
         data: {
           priceTicker: tickers,
-          activeToken: settings.token.active,
+          activeToken: token.active,
         },
       });
     });

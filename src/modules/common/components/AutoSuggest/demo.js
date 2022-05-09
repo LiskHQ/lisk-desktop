@@ -1,6 +1,6 @@
 /* istanbul ignore file */
 import React from 'react';
-import DemoRenderer from '@basics/demoRenderer';
+import DemoRenderer from 'src/theme/demo/demoRenderer';
 import AutoSuggest from './index';
 
 /* eslint-disable-next-line no-console */

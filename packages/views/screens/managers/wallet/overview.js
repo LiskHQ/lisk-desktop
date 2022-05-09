@@ -6,18 +6,18 @@ import { compose } from 'redux';
 import { withTranslation } from 'react-i18next';
 import grid from 'flexboxgrid/dist/flexboxgrid.css';
 
-import withData from '@common/utilities/withData';
+import withData from 'src/utils/withData';
 import { getTransactions } from '@transaction/api';
-import { selectTransactions } from '@common/store/selectors';
-import FlashMessageHolder from '@basics/flashMessage/holder';
+import FlashMessageHolder from 'src/theme/flashMessage/holder';
 import WarnPunishedDelegate from '@dpos/validator/components/WarnPunishedDelegate';
-import WalletInfo from '@wallet/detail/identity/walletInfo';
-import BalanceChart from '@wallet/detail/holdings/balanceChart';
-import BalanceInfo from '@wallet/detail/holdings/balanceInfo';
+import WalletInfo from '@wallet/components/walletInfo';
+import BalanceInfo from '@token/fungible/components/BalanceInfo';
 import styles from './overview.css';
 
 const mapStateToProps = (state) => ({
-  currentHeight: state.blocks.latestBlocks.length ? state.blocks.latestBlocks[0].height : 0,
+  currentHeight: state.blocks.latestBlocks.length
+    ? state.blocks.latestBlocks[0].height
+    : 0,
 });
 
 const addWarningMessage = ({ isBanned, pomHeight, readMore }) => {
@@ -46,32 +46,29 @@ const Overview = ({
   history,
   currentHeight,
 }) => {
-  const {
-    address,
-    publicKey,
-    balance = 0,
-    isMultisignature,
-  } = account?.summary ?? {};
+  const { address, publicKey, isMultisignature } = account?.summary ?? {};
 
   const isBanned = account?.dpos?.delegate?.isBanned;
   const pomHeights = account?.dpos?.delegate?.pomHeights;
-  const { end } = pomHeights ? (pomHeights[pomHeights.length - 1]) : 0;
+  const { end } = pomHeights ? pomHeights[pomHeights.length - 1] : 0;
   // 6: blocks per minute, 60: minutes, 24: hours
   const numOfBlockPerDay = 24 * 60 * 6;
   const daysLeft = Math.ceil((end - currentHeight) / numOfBlockPerDay);
 
-  const { confirmed } = useSelector(selectTransactions);
   const bookmark = useSelector((state) =>
     state.bookmarks[activeToken].find((item) => item.address === address));
   const host = useSelector(
-    (state) =>
-      (state?.wallet?.info[activeToken]?.summary?.address)
-      || '',
+    (state) => state?.wallet?.info[activeToken]?.summary?.address || '',
   );
 
   const showWarning = () => {
-    if (!isWalletRoute && host && address && (isBanned || pomHeights?.length)
-      && (isBanned || daysLeft >= 1)) {
+    if (
+      !isWalletRoute
+      && host
+      && address
+      && (isBanned || pomHeights?.length)
+      && (isBanned || daysLeft >= 1)
+    ) {
       addWarningMessage({
         isBanned,
         pomHeight: pomHeights ? pomHeights[pomHeights.length - 1] : 0,
@@ -98,12 +95,7 @@ const Overview = ({
     }
   }, [address]);
 
-  useEffect(showWarning,
-    [isWalletRoute,
-      host,
-      address,
-      pomHeights,
-    ]);
+  useEffect(showWarning, [isWalletRoute, host, address, pomHeights]);
 
   return (
     <section className={`${grid.row} ${styles.wrapper}`}>
@@ -135,20 +127,6 @@ const Overview = ({
           address={address}
         />
       </div>
-      <div
-        className={`${grid['col-xs-12']} ${grid['col-md-6']} ${grid['col-lg-6']} ${styles.balanceChart}`}
-      >
-        {address && (
-          <BalanceChart
-            t={t}
-            transactions={isWalletRoute ? confirmed : transactions.data.data}
-            token={activeToken}
-            isDiscreetMode={discreetMode && host === address}
-            balance={balance}
-            address={address}
-          />
-        )}
-      </div>
     </section>
   );
 };
@@ -161,7 +139,7 @@ export default compose(
       apiUtil: (network, { token, ...params }) =>
         getTransactions({ network, params }, token),
       getApiParams: (state) => ({
-        token: state.settings.token.active,
+        token: state.token.active,
       }),
       defaultData: { data: [], meta: {} },
       autoload: false,

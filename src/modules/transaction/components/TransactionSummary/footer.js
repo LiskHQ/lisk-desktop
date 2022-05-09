@@ -1,9 +1,13 @@
 // istanbul ignore file
 import React, { useEffect, useState } from 'react';
-import { PrimaryButton, SecondaryButton, TertiaryButton } from '@basics/buttons';
-import PassphraseInput from 'src/modules/wallet/components/PassphraseInput/PassphraseInput';
-import useSecondPassphrase from '@wallet/utilities/hooks/setSecondPassphrase';
-import BoxFooter from '@basics/box/footer';
+import {
+  PrimaryButton,
+  SecondaryButton,
+  TertiaryButton,
+} from 'src/theme/buttons';
+import useSecondPassphrase from '@transaction/hooks/setSecondPassphrase';
+import PassphraseInput from '@wallet/components/PassphraseInput/PassphraseInput';
+import BoxFooter from 'src/theme/box/footer';
 import styles from './TransactionSummary.css';
 
 const Actions = ({
@@ -15,16 +19,17 @@ const Actions = ({
 }) => (
   <div className={styles.primaryActions}>
     {cancelButton && (
-      <SecondaryButton
-        className="cancel-button"
-        onClick={cancelButton.onClick}
-      >
+      <SecondaryButton className="cancel-button" onClick={cancelButton.onClick}>
         {cancelButton.label}
       </SecondaryButton>
     )}
     <PrimaryButton
       className="confirm-button"
-      disabled={confirmButton.disabled || inputStatus === 'visible' || inputStatus === 'invalid'}
+      disabled={
+        confirmButton.disabled
+        || inputStatus === 'visible'
+        || inputStatus === 'invalid'
+      }
       onClick={confirmButton.onClick}
     >
       {isMultisignature ? t('Sign') : confirmButton.label}
@@ -33,7 +38,10 @@ const Actions = ({
 );
 
 const SecondPassInput = ({
-  t, secondPassphraseStored, inputStatus, setInputStatus,
+  t,
+  secondPassphraseStored,
+  inputStatus,
+  setInputStatus,
 }) => {
   const [secondPass, set2ndPass] = useSecondPassphrase();
 
@@ -69,28 +77,37 @@ const SecondPassInput = ({
 };
 
 const Footer = ({
-  confirmButton, cancelButton, footerClassName,
-  t, secondPassphraseStored, account,
+  confirmButton,
+  cancelButton,
+  footerClassName,
+  t,
+  secondPassphraseStored,
+  account,
 }) => {
   const isMultisignature = !!account.keys?.numberOfSignatures;
   const hasSecondPass = account.keys?.numberOfSignatures === 2
     && account.keys.mandatoryKeys.length === 2
     && account.keys.optionalKeys.length === 0
     && !account.hwInfo;
-  const [inputStatus, setInputStatus] = useState(hasSecondPass ? 'hidden' : 'notRequired');
+  const [inputStatus, setInputStatus] = useState(
+    hasSecondPass ? 'hidden' : 'notRequired',
+  );
 
   return (
-    <BoxFooter className={`${footerClassName} ${inputStatus === 'hidden' ? styles.reverse : ''} summary-footer`} direction="horizontal">
-      {
-          hasSecondPass ? (
-            <SecondPassInput
-              t={t}
-              secondPassphraseStored={secondPassphraseStored}
-              inputStatus={inputStatus}
-              setInputStatus={setInputStatus}
-            />
-          ) : null
-        }
+    <BoxFooter
+      className={`${footerClassName} ${
+        inputStatus === 'hidden' ? styles.reverse : ''
+      } summary-footer`}
+      direction="horizontal"
+    >
+      {hasSecondPass ? (
+        <SecondPassInput
+          t={t}
+          secondPassphraseStored={secondPassphraseStored}
+          inputStatus={inputStatus}
+          setInputStatus={setInputStatus}
+        />
+      ) : null}
       <Actions
         cancelButton={cancelButton}
         confirmButton={confirmButton}

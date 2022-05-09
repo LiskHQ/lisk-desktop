@@ -1,8 +1,8 @@
 /* istanbul ignore file */
 import { compose } from 'redux';
 import { withTranslation } from 'react-i18next';
-import withData from '@common/utilities/withData';
-import { tokenMap } from '@token/configuration/tokens';
+import withData from 'src/utils/withData';
+import { tokenMap } from '@token/fungible/consts/tokens';
 import BlockDetailsTransactions from '../components/BlockDetailsTransactions/BlockDetailsTransactions';
 import { getTransactions } from '../api';
 

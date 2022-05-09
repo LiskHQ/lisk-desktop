@@ -4,7 +4,7 @@ import { act } from 'react-dom/test-utils';
 
 import { getTransactionBaseFees, getTransactionFee } from '@transaction/api';
 import useTransactionFeeCalculation from '@transaction/hooks/useTransactionFeeCalculation';
-import { fromRawLsk } from '@token/utilities/lsk';
+import { fromRawLsk } from '@token/fungible/utils/lsk';
 import wallets from '@tests/constants/wallets';
 import Form, { validateState } from './form';
 

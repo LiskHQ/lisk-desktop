@@ -1,12 +1,12 @@
 import React, { useEffect, useRef, useState } from 'react';
 import CopyToClipboard from 'react-copy-to-clipboard';
 
-import BoxContent from '@basics/box/content';
-import BoxFooter from '@basics/box/footer';
-import Illustration from '@basics/illustration';
+import BoxContent from 'src/theme/box/content';
+import BoxFooter from 'src/theme/box/footer';
+import Illustration from 'src/modules/common/components/illustration';
+import { getDeviceType } from '@wallet/utils/hwManager';
 import { AutoResizeTextarea } from 'src/theme';
-import { getDeviceType } from '@wallet/utilities/hwManager';
-import { SecondaryButton, PrimaryButton } from '@basics/buttons';
+import { SecondaryButton, PrimaryButton } from 'src/theme/buttons';
 import styles from './signedMessage.css';
 
 const Error = ({ t, hwInfo }) => {
@@ -16,9 +16,7 @@ const Error = ({ t, hwInfo }) => {
     <BoxContent className={`${styles.noPadding} ${styles.statusWrapper}`}>
       <Illustration name={`${deviceType}HwRejection`} />
       <h5>{t('Transaction aborted on device')}</h5>
-      <p>
-        {t('You have cancelled the transaction on your hardware wallet.')}
-      </p>
+      <p>{t('You have cancelled the transaction on your hardware wallet.')}</p>
     </BoxContent>
   );
 };
@@ -44,11 +42,11 @@ const Success = ({
       >
         {t('Go back')}
       </SecondaryButton>
-      <CopyToClipboard
-        onCopy={copy}
-        text={signature}
-      >
-        <PrimaryButton disabled={copied} className={`${styles.button} copy-to-clipboard`}>
+      <CopyToClipboard onCopy={copy} text={signature}>
+        <PrimaryButton
+          disabled={copied}
+          className={`${styles.button} copy-to-clipboard`}
+        >
           {copied ? t('Copied!') : t('Copy to clipboard')}
         </PrimaryButton>
       </CopyToClipboard>
@@ -70,9 +68,7 @@ const SignedMessage = ({
   useEffect(() => () => clearTimeout(ref.current), []);
 
   if (error) {
-    return (
-      <Error t={t} hwInfo={account.hwInfo} />
-    );
+    return <Error t={t} hwInfo={account.hwInfo} />;
   }
   return (
     <Success
