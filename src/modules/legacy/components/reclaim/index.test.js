@@ -6,9 +6,26 @@ import wallets from '@tests/constants/wallets';
 import Reclaim from './index';
 import styles from './reclaim.css';
 
-jest.mock('@screens/router/searchParams', () => ({
+jest.mock('src/utils/searchParams', () => ({
   addSearchParamsToUrl: jest.fn(),
 }));
+
+const mockNonMigrated = wallets.non_migrated;
+
+jest.mock('react-redux', () => {
+  const originalModule = jest.requireActual('react-redux');
+
+  return {
+    __esModule: true,
+    ...originalModule,
+    useSelector: jest.fn(() => ({
+      passphrase: 'test',
+      info: {
+        LSK: mockNonMigrated,
+      },
+    })),
+  };
+});
 
 describe('Reclaim balance screen', () => {
   let props;

@@ -1,7 +1,7 @@
 import React from 'react';
 import { MODULE_ASSETS_NAME_ID_MAP } from '@transaction/configuration/moduleAssets';
 import { toRawLsk } from '@token/fungible/utils/lsk';
-import TransactionSummary from '@transaction/components/TransactionSummary';
+import TransactionSummary from '@transaction/manager/transactionSummary';
 import TransactionInfo from '@transaction/components/TransactionInfo';
 
 const Summary = ({

@@ -33,7 +33,7 @@
           ["@scripts", "./scripts/"],
           ["@setup", "./setup/"],
           ["@tests", "./tests/"],
-          ["@account", "./src/modules/account/"],
+          ["@theme", "./src/theme/"],
           ["@block", "./src/modules/block/"],
           ["@search", "./src/modules/search/"],
           ["@bookmark", "./src/modules/bookmark/"],

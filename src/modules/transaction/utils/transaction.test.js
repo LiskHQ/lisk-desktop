@@ -239,7 +239,7 @@ describe('API: LSK Transactions', () => {
         },
         {
           delegateAddress:
-            getAddressFromBase32Address(accounts.send_all_account.summary.address),
+            getAddressFromBase32Address(accounts.send_all_wallet.summary.address),
           amount: -10000000n,
           unvoteHeight: 1000000,
         },

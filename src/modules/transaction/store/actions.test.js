@@ -2,10 +2,11 @@ import loginTypes from 'src/modules/auth/const/loginTypes';
 import * as hwManager from '@transaction/utils/hwManager';
 import httpApi from '@common/utilities/api/http';
 import * as transactionUtils from '@transaction/utils/transaction';
-import { getState } from '@fixtures/transactions';
+import { getState } from '@tests/fixtures/transactions';
 import { sampleTransaction } from '@tests/constants/transactions';
 import accounts from '@tests/constants/wallets';
 import commonActionTypes from '@common/store/actions/actionTypes';
+import walletActionTypes from '@wallet/store/actionTypes';
 import actionTypes from './actionTypes';
 import {
   emptyTransactionsData,
@@ -298,7 +299,7 @@ describe('actions: transactions', () => {
         data: sampleTransaction,
       };
       const lastExpectedAction = {
-        type: actionTypes.timerReset,
+        type: walletActionTypes.timerReset,
         data: new Date(),
       };
 
@@ -345,7 +346,7 @@ describe('actions: transactions', () => {
       //   type: actionTypes.pendingTransactionAdded,
       //   data: { ...transformedAccountTransaction, isPending: true },
       // };
-      const expectedAction3 = { data: expect.anything(), type: actionTypes.timerReset };
+      const expectedAction3 = { data: expect.anything(), type: walletActionTypes.timerReset };
 
       // Act
       await transactionBroadcasted(sampleTransaction)(dispatch, getState);

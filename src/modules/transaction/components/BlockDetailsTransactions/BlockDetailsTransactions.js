@@ -11,8 +11,11 @@ import TransactionRow from '../TransactionRow';
 import header from './BlockDetailsTransactionHeaderMap';
 import styles from './BlockDetailsTransactions.css';
 
-const Transactions = ({
-  transactions, blockId, height, t,
+const BlockDetailsTransactions = ({
+  transactions,
+  blockId,
+  height,
+  t,
 }) => {
   const currentBlockHeight = useSelector(selectCurrentBlockHeight);
   const activeToken = useSelector(selectActiveToken);
@@ -47,4 +50,4 @@ const Transactions = ({
   );
 };
 
-export default Transactions;
+export default BlockDetailsTransactions;

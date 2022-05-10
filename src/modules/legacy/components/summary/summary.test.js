@@ -1,6 +1,7 @@
 import React from 'react';
 import { mount } from 'enzyme';
 import { act } from 'react-dom/test-utils';
+import { mountWithProps } from 'src/utils/testHelpers';
 import {
   getTransactionBaseFees,
 } from '@transaction/api';
@@ -10,7 +11,7 @@ import { truncateAddress } from '@wallet/utils/account';
 import * as hwManager from '@transaction/utils/hwManager';
 import accounts from '@tests/constants/wallets';
 import flushPromises from '@tests/unit-test-utils/flushPromises';
-import Summary from './summary';
+import Summary from '.';
 
 jest.mock('@transaction/hooks/useTransactionFeeCalculation');
 jest.mock('@transaction/api');
@@ -55,7 +56,8 @@ describe('Reclaim balance Summary', () => {
 
   it('should render summary component', () => {
     // Arrange
-    const wrapper = mount(<Summary {...props} />);
+    // const wrapper = mount(<Summary {...props} />);
+    const wrapper = mountWithProps(Summary, props, {});
 
     // Act
     const html = wrapper.html();

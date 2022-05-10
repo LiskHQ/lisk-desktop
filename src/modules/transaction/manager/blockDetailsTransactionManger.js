@@ -3,7 +3,7 @@ import { compose } from 'redux';
 import { withTranslation } from 'react-i18next';
 import withData from 'src/utils/withData';
 import { tokenMap } from '@token/fungible/consts/tokens';
-import Transactions from '../components/BlockDetailsTransactions/BlockDetailsTransactions';
+import BlockDetailsTransactions from '../components/BlockDetailsTransactions/BlockDetailsTransactions';
 import { getTransactions } from '../api';
 
 export default compose(
@@ -19,4 +19,4 @@ export default compose(
     },
   }),
   withTranslation(),
-)(Transactions);
+)(BlockDetailsTransactions);

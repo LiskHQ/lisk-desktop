@@ -1,11 +1,11 @@
 import React from 'react';
-import { mount, shallow } from 'enzyme';
+import { shallow } from 'enzyme';
 import { act } from 'react-dom/test-utils';
 import { useSelector } from 'react-redux';
 import { mountWithRouter, mountWithRouterAndStore } from 'src/utils/testHelpers';
 import transactions from '@tests/constants/transactions';
 import defaultState from '@tests/constants/defaultState';
-import TransactionsPure from './TransactionMonitorList';
+import TransactionMonitorList from './TransactionMonitorList';
 
 jest.mock('react-redux', () => ({
   ...jest.requireActual('react-redux'),
@@ -55,18 +55,28 @@ describe('Transactions monitor page', () => {
   };
 
   it('should render transactions list', () => {
-    let wrapper = shallow(<TransactionsPure {...props} />);
+    let wrapper = shallow(<TransactionMonitorList {...props} />);
     expect(wrapper.find('Row')).toHaveLength(0);
 
-    wrapper = mount(<TransactionsPure {...transactionsWithData} />);
+    wrapper = mountWithRouter(TransactionMonitorList, {
+      ...{
+        ...props,
+        transactions: transactionsWithData,
+      },
+    });
     wrapper.update();
     expect(wrapper.find('TransactionRow')).toHaveLength(transactions.length);
   });
 
   it('allows to load more transactions', () => {
     const wrapper = mountWithRouter(
-      TransactionsPure,
-      { ...props, transactions: transactionsWithData },
+      TransactionMonitorList,
+      {
+        ...props,
+        transactions: transactionsWithData,
+        sort,
+        filters: {},
+      },
     );
     wrapper.find('button.load-more').simulate('click');
     expect(props.transactions.loadData).toHaveBeenCalledWith(
@@ -87,7 +97,7 @@ describe('Transactions monitor page', () => {
       },
     };
     const wrapper = mountWithRouterAndStore(
-      TransactionsPure,
+      TransactionMonitorList,
       { ...props, transactions: transactionsWithData },
       {},
       defaultState,
@@ -115,7 +125,7 @@ describe('Transactions monitor page', () => {
 
   it('shows error if API failed', () => {
     const error = 'Loading failed';
-    const wrapper = mountWithRouter(TransactionsPure, {
+    const wrapper = mountWithRouter(TransactionMonitorList, {
       ...props,
       transactions: {
         ...props.transactions,
@@ -127,9 +137,17 @@ describe('Transactions monitor page', () => {
   });
 
   it('allows to load more transactions when filtered', () => {
+    props.transactions.loadData = jest.fn();
+    transactionsWithData.loadData = props.transactions.loadData;
+
     const wrapper = mountWithRouter(
-      TransactionsPure,
-      { ...props, transactions: transactionsWithData },
+      TransactionMonitorList,
+      {
+        ...props,
+        transactions: transactionsWithData,
+        filters: { amountFrom: '1.3', moduleAssetId: '' },
+        sort,
+      },
     );
 
     wrapper.find('button.filter').simulate('click');
@@ -143,9 +161,19 @@ describe('Transactions monitor page', () => {
   });
 
   it('allows to filter transactions by more filters', () => {
-    const wrapper = mountWithRouter(
-      TransactionsPure,
-      { ...props, transactions: transactionsWithData },
+    props.transactions.loadData = jest.fn();
+    transactionsWithData.loadData = props.transactions.loadData;
+
+    const wrapper = mountWithRouterAndStore(
+      TransactionMonitorList,
+      {
+        ...props,
+        transactions: transactionsWithData,
+        sort,
+        filters: { height, moduleAssetId: '' },
+      },
+      {},
+      { token: { active: 'LSK' } },
     );
 
     wrapper.find('button.filter').simulate('click');
@@ -160,18 +188,33 @@ describe('Transactions monitor page', () => {
   });
 
   it('allows to reverse sort by clicking "Date" header', () => {
+    let mockSortDirection = 'desc';
+    props.changeSort = jest.fn();
+    props.changeSort.mockImplementation(() => {
+      mockSortDirection = mockSortDirection === 'desc' ? 'asc' : 'desc';
+    });
+
     const wrapper = mountWithRouter(
-      TransactionsPure,
+      TransactionMonitorList,
       { ...props, transactions: transactionsWithData },
     );
     wrapper.find('.sort-by.timestamp').simulate('click');
-    expect(props.transactions.loadData).toHaveBeenCalledWith({ sort: 'timestamp:asc' });
+
+    // this was to test the component its self without the manager (manger can have its own test)
+    expect(props.changeSort).toHaveBeenCalledWith('timestamp');
+    expect(mockSortDirection).toBe('asc');
+
     wrapper.find('.sort-by.timestamp').simulate('click');
-    expect(props.transactions.loadData).toHaveBeenCalledWith({ sort: 'timestamp:desc' });
+    expect(props.changeSort).toHaveBeenCalledWith('timestamp');
+    expect(mockSortDirection).toBe('desc');
   });
 
   it('allows to clear the filter after filtering by height', () => {
-    const wrapper = mountWithRouter(TransactionsPure, props);
+    const wrapper = mountWithRouter(TransactionMonitorList, {
+      ...props,
+      filters: { height },
+    });
+
     wrapper.find('button.filter').simulate('click');
     wrapper.find('.more-less-switch').simulate('click');
     wrapper.find('input.height').simulate('change', { target: { value: height } });

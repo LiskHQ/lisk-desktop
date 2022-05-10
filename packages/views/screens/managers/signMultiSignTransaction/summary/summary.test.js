@@ -5,7 +5,7 @@ import { removeSearchParamsFromUrl } from 'src/utils/searchParams';
 import wallets from '@tests/constants/wallets';
 import Summary from './summary';
 
-jest.mock('@screens/router/searchParams', () => ({
+jest.mock('src/utils/searchParams', () => ({
   removeSearchParamsFromUrl: jest.fn(),
 }));
 

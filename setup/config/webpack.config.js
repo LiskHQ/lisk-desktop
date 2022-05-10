@@ -10,6 +10,7 @@ const config = {
       '@scripts': resolve('./scripts'),
       '@setup': resolve('./setup'),
       '@tests': resolve('./tests'),
+      '@theme': resolve('./src/theme'),
       '@account': resolve('./src/modules/account'),
       '@block': resolve('./src/modules/block'),
       '@bookmark': resolve('./src/modules/bookmark'),

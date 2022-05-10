@@ -1,13 +1,13 @@
 import React from 'react';
 import { mount } from 'enzyme';
 import accounts from '@tests/constants/wallets';
-import WalletsMonitor from './index';
+import WalletsMonitor from '.';
 
 const accountsApiResponse = Object.values(accounts);
 describe('Top Accounts Monitor Page', () => {
   const props = {
     t: key => key,
-    accounts: {
+    wallets: {
       isLoading: true,
       data: [],
       meta: null,
@@ -20,10 +20,11 @@ describe('Top Accounts Monitor Page', () => {
         supply: 9999999999999,
       },
     },
+    token: { active: 'LSK' },
   };
 
   const accountsWithData = {
-    ...props.accounts,
+    ...props.wallets,
     isLoading: false,
     data: [
       {
@@ -63,7 +64,7 @@ describe('Top Accounts Monitor Page', () => {
   it('renders table with accounts', () => {
     const wrapper = setup(props);
     expect(wrapper.find('.accounts-row')).toHaveLength(0);
-    wrapper.setProps({ accounts: accountsWithData });
+    wrapper.setProps({ wallets: accountsWithData });
     expect(wrapper.find('.accounts-row').hostNodes()).toHaveLength(accountsApiResponse.length + 1);
   });
 
@@ -71,8 +72,8 @@ describe('Top Accounts Monitor Page', () => {
     const wrapper = setup(props);
     const error = 'Loading failed';
     wrapper.setProps({
-      accounts: {
-        ...props.accounts,
+      wallets: {
+        ...props.wallets,
         isLoading: false,
         error,
       },

@@ -216,6 +216,7 @@ export const transactionBroadcasted = transaction =>
 
       if (activeToken === tokenMap.LSK.key) {
         const transformedTransaction = transformTransaction(transaction);
+
         if (transformedTransaction.sender.address === wallet.info.LSK.summary.address) {
           dispatch(pendingTransactionAdded({ ...transformedTransaction, isPending: true }));
         }

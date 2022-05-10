@@ -9,8 +9,12 @@ import styles from './filterBar.css';
 const FilterButton = ({ filter, clearFilter, formatters }) => {
   const label = (formatters[filter.key] || ((x) => x))(filter.value);
   return (
-    <div className={`${styles.filter} filter`}>
-      <p className={styles.label}>{label}</p>
+    <div
+      className={`${styles.filter} filter`}
+    >
+      <p className={styles.label}>
+        {label?.toString()}
+      </p>
       <span
         className={`${styles.clearBtn} clear-filter`}
         onClick={() => clearFilter(filter.key)}

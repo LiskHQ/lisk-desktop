@@ -2,7 +2,7 @@ import React, { useEffect } from 'react';
 import { isEmpty } from 'src/utils/helpers';
 import { txStatusTypes } from '@transaction/configuration/txStatus';
 import { PrimaryButton } from 'src/theme/buttons';
-import TransactionResult from '@transaction/components/TransactionResult';
+import TransactionResult from '@transaction/manager/transactionResult';
 import {
   getTransactionStatus,
   statusMessages,
