@@ -1,7 +1,7 @@
 import React from 'react';
 import { mount } from 'enzyme';
 import accounts from '@tests/constants/wallets';
-import WalletsMonitor from './index';
+import WalletsMonitor from '.';
 
 const accountsApiResponse = Object.values(accounts);
 describe('Top Accounts Monitor Page', () => {
@@ -20,6 +20,7 @@ describe('Top Accounts Monitor Page', () => {
         supply: 9999999999999,
       },
     },
+    token: { active: 'LSK' },
   };
 
   const accountsWithData = {

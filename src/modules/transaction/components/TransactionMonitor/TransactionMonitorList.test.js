@@ -164,7 +164,7 @@ describe('Transactions monitor page', () => {
     props.transactions.loadData = jest.fn();
     transactionsWithData.loadData = props.transactions.loadData;
 
-    const wrapper = mountWithRouter(
+    const wrapper = mountWithRouterAndStore(
       TransactionMonitorList,
       {
         ...props,
@@ -172,6 +172,8 @@ describe('Transactions monitor page', () => {
         sort,
         filters: { height, moduleAssetId: '' },
       },
+      {},
+      { token: { active: 'LSK' } },
     );
 
     wrapper.find('button.filter').simulate('click');

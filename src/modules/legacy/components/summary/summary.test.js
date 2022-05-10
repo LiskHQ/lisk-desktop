@@ -1,6 +1,7 @@
 import React from 'react';
 import { mount } from 'enzyme';
 import { act } from 'react-dom/test-utils';
+import { mountWithProps } from 'src/utils/testHelpers';
 import {
   getTransactionBaseFees,
 } from '@transaction/api';
