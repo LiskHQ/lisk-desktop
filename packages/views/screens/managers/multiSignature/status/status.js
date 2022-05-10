@@ -1,5 +1,5 @@
 import React from 'react';
-import TransactionResult from '@transaction/components/TransactionResult';
+import TransactionResult from '@transaction/manager/transactionResult';
 import { statusMessages, getTransactionStatus } from '@transaction/configuration/statusConfig';
 import ProgressBar from '../progressBar';
 import styles from './styles.css';
