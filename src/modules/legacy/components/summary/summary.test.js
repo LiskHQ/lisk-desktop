@@ -11,7 +11,6 @@ import { truncateAddress } from '@wallet/utils/account';
 import * as hwManager from '@transaction/utils/hwManager';
 import accounts from '@tests/constants/wallets';
 import flushPromises from '@tests/unit-test-utils/flushPromises';
-import { mountWithProps } from 'src/utils/testHelpers';
 import Summary from '.';
 
 jest.mock('@transaction/hooks/useTransactionFeeCalculation');
