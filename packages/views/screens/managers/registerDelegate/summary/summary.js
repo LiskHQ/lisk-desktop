@@ -1,6 +1,6 @@
 import React from 'react';
 import { MODULE_ASSETS_NAME_ID_MAP } from '@transaction/configuration/moduleAssets';
-import TransactionSummary from '@transaction/components/TransactionSummary';
+import TransactionSummary from '@transaction/manager/transactionSummary';
 import TransactionInfo from '@transaction/components/TransactionInfo';
 import { toRawLsk } from '@token/fungible/utils/lsk';
 import styles from './summary.css';

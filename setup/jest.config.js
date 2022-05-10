@@ -28,6 +28,7 @@ module.exports = {
     '^@setup(.*)$': resolve(__dirname, '../setup/$1'),
     '^@tests(.*)$': resolve(__dirname, '../tests/$1'),
     '^@fixtures(.*)$': resolve(__dirname, '../tests/fixtures/$1'),
+    '^@theme(.*)$': resolve(__dirname, '../src/theme/$1'),
     '^@account(.*)$': resolve(__dirname, '../src/modules/account/$1'),
     '^@block(.*)$': resolve(__dirname, '../src/modules/block/$1'),
     '^@bookmark(.*)$': resolve(__dirname, '../src/modules/bookmark/$1'),

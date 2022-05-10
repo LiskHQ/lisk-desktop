@@ -1,8 +1,8 @@
 import React, { useEffect, useRef, useState } from 'react';
 import L from 'leaflet';
 import 'leaflet.markercluster/dist/leaflet.markercluster';
-import Box from 'src/theme/box';
-import BoxContent from 'src/theme/box/content';
+import Box from '@theme/box';
+import BoxContent from '@theme/box/content';
 import markerIcon from '@setup/react/assets/images/marker.svg';
 import mapboxWatermarkImage from '@setup/react/assets/images/mapbox.png';
 import styles from './map.css';
@@ -68,7 +68,6 @@ const FullMap = ({ peers }) => {
           [36.414203, 11.25],
           2,
         );
-
         const tiles = getTiles();
         tiles.addTo(networkMap);
         ref.current = networkMap;
