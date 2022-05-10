@@ -3,7 +3,7 @@ import { tokenMap } from '@token/fungible/consts/tokens';
 import { MODULE_ASSETS_NAME_ID_MAP } from '@transaction/configuration/moduleAssets';
 import useTransactionFeeCalculation from '@transaction/hooks/useTransactionFeeCalculation';
 import useTransactionPriority from '@transaction/hooks/useTransactionPriority';
-import TransactionSummary from '@transaction/components/TransactionSummary';
+import TransactionSummary from '@transaction/manager/transactionSummary';
 import TransactionInfo from '@transaction/components/TransactionInfo';
 import styles from './summary.css';
 
