@@ -21,6 +21,7 @@ import AmountField from 'src/modules/common/components/amountField';
 import TokenAmount from '@token/fungible/components/tokenAmount';
 import Converter from 'src/modules/common/components/converter';
 import WarnPunishedDelegate from '@dpos/validator/components/WarnPunishedDelegate';
+import { selectActiveTokenAccount, selectNetwork, selectVoting } from '@common/store';
 import { PrimaryButton, WarningButton } from 'src/theme/buttons';
 import useVoteAmountField from './useVoteAmountField';
 import getMaxAmount from './getMaxAmount';
@@ -50,19 +51,19 @@ const getTitles = (t) => ({
 // eslint-disable-next-line max-statements
 const AddVote = ({ history, t, currentHeight }) => {
   const dispatch = useDispatch();
-  const { account, network, voting } = useSelector((state) => state);
-  const host = useSelector((state) => state.wallet.info.LSK.summary.address);
-  const address = selectSearchParamValue(history.location.search, 'address');
-  const start = selectSearchParamValue(history.location.search, 'start');
-  const end = selectSearchParamValue(history.location.search, 'end');
-  const existingVote = useSelector((state) => state.voting[address || host]);
+  const { account } = useSelector(selectActiveTokenAccount);
+  const { network } = useSelector(selectNetwork);
+  const { voting } = useSelector(selectVoting);
+
+  const [address, start, end] = selectSearchParamValue(history.location.search, ['address', 'start', 'end']);
+  const existingVote = useSelector((state) => state.voting[address || account.summary.address]);
   const [voteAmount, setVoteAmount] = useVoteAmountField(
     existingVote ? fromRawLsk(existingVote.unconfirmed) : '',
   );
   const mode = existingVote ? 'edit' : 'add';
   const [maxAmount, setMaxAmount] = useState(0);
   useEffect(() => {
-    getMaxAmount(account.info.LSK, network, voting, address || host).then(
+    getMaxAmount(account, network, voting, address || account.summary.address).then(
       setMaxAmount,
     );
   }, [account, voting]);
@@ -71,7 +72,7 @@ const AddVote = ({ history, t, currentHeight }) => {
     dispatch(
       voteEdited([
         {
-          address: address || host,
+          address: address || account.summary.address,
           amount: toRawLsk(voteAmount.value),
         },
       ]),
@@ -86,7 +87,7 @@ const AddVote = ({ history, t, currentHeight }) => {
     dispatch(
       voteEdited([
         {
-          address: address || host,
+          address: address || account.summary.address,
           amount: 0,
         },
       ]),
