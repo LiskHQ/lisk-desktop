@@ -4,7 +4,7 @@ import { withRouter } from 'react-router';
 import { removeSearchParamsFromUrl } from 'src/utils/searchParams';
 import Icon from 'src/theme/Icon';
 
-import styles from './styles.css';
+import styles from './toggleIcon.css';
 
 const ToggleIcon = ({ history, isNotHeader }) => {
   const closeModal = () => {

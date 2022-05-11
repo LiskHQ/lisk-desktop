@@ -17,7 +17,7 @@ const Status = ({
   const template = statusMessages(t, statusInfo)[status.code];
 
   return (
-    <section>
+    <section className="ali">
       <Box className={styles.container}>
         <header className={styles.header}>
           <ToggleIcon />

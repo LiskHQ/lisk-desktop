@@ -1,26 +1,21 @@
 /* istanbul ignore file */
 import React, { useEffect } from 'react';
-import { useDispatch } from 'react-redux';
-import { withRouter } from 'react-router-dom';
 
 import TransactionSignature from '@transaction/components/TransactionSignature';
 import { removeSearchParamsFromUrl } from 'src/utils/searchParams';
-import { processLaunchProtocol } from '@common/store/actions';
 import MultiStep from 'src/modules/common/components/OldMultiStep';
-
-import Form from './form';
-import Summary from './summary';
-import Status from './status';
+import Form from '../voteForm';
+import Summary from '../voteSummary';
+import Status from '../voteStatus';
 import styles from './styles.css';
 
-const VotingQueue = ({ history }) => {
-  const dispatch = useDispatch();
+const VotingQueue = ({ history, processLaunchProtocol }) => {
   const closeModal = () => {
     removeSearchParamsFromUrl(history, ['modal'], true);
   };
 
   useEffect(() => {
-    dispatch(processLaunchProtocol(history.location.search));
+    processLaunchProtocol(history.location.search);
 
     // remove the search params from the url after applying the values to the voting queue
     removeSearchParamsFromUrl(history, ['votes', 'unvotes']);
@@ -40,4 +35,4 @@ const VotingQueue = ({ history }) => {
   );
 };
 
-export default withRouter(VotingQueue);
+export default VotingQueue;
