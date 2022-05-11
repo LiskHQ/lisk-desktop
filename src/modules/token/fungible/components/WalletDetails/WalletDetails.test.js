@@ -18,13 +18,11 @@ describe('WalletDetails', () => {
         },
       },
     },
-    settings: {
-      token: {
-        active: 'LSK',
-        list: {
-          LSK: true,
-          BTC: false,
-        },
+    token: {
+      active: 'LSK',
+      list: {
+        LSK: true,
+        BTC: false,
       },
     },
     t: key => key,

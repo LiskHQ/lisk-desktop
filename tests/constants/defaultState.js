@@ -23,11 +23,11 @@ export default {
   },
   settings: {
     currency: 'USD',
-    token: {
-      active: 'LSK',
-      list: [],
-    },
     darkMode: false,
+  },
+  token: {
+    active: 'LSK',
+    list: [],
   },
   network: {
     name: 'Testnet',

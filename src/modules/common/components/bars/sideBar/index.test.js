@@ -30,10 +30,9 @@ describe('SideBar', () => {
 
   beforeEach(() => {
     mockAppState = {
-      settings: {
-        token: {
-          active: 'LSK',
-        },
+      settings: {},
+      token: {
+        active: 'LSK',
       },
       wallet: {
         info: {},

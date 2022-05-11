@@ -4,6 +4,7 @@ import * as accountApi from '@wallet/utils/api';
 import { extractKeyPair } from '@wallet/utils/account';
 import { defaultDerivationPath } from 'src/utils/explicitBipKeyDerivation';
 import wallets from '@tests/constants/wallets';
+import { tokenMap } from '@token/fungible/consts/tokens';
 import * as networkActions from '@network/store/action';
 import { accountDataUpdated } from '@wallet/store/action';
 import actionTypes from './actionTypes';
@@ -23,7 +24,7 @@ jest.mock('react-toastify', () => ({
     error: jest.fn(),
   },
 }));
-jest.mock('@wallet/utilities/api', () => ({
+jest.mock('@wallet/utils/api', () => ({
   getAccount: jest.fn(),
   extractAddress: jest.fn(),
 }));
@@ -33,7 +34,7 @@ jest.mock('@transaction/store/actions', () => ({
 jest.mock('@network/store/action', () => ({
   networkStatusUpdated: jest.fn(),
 }));
-jest.mock('@wallet/utilities/account', () => ({
+jest.mock('@wallet/utils/account', () => ({
   extractKeyPair: jest.fn(),
   getUnlockableUnlockObjects: () => [{}],
 }));
@@ -194,6 +195,12 @@ describe('actions: account', () => {
           },
           enableCustomDerivationPath: true,
           customDerivationPath: '1/2',
+        },
+        token: {
+          active: tokenMap.LSK.key,
+          list: {
+            [tokenMap.LSK.key]: true,
+          },
         },
       };
     });

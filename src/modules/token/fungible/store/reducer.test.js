@@ -1,5 +1,5 @@
-import { tokenMap } from '@token/fungible/consts/tokens';
 import { expect } from 'chai';
+import { tokenMap } from '@token/fungible/consts/tokens';
 
 describe('Reducer: token(state, action)', () => {
   let initializeState;
