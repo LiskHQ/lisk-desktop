@@ -10,7 +10,7 @@ import {
   bookmarkUpdated,
 } from './action';
 
-jest.mock('@common/utilities/localJSONStorage', () => ({
+jest.mock('src/utils/localJSONStorage', () => ({
   getFromStorage: jest.fn(),
 }));
 

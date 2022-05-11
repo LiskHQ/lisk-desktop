@@ -3,7 +3,7 @@ import accounts from '@tests/constants/wallets';
 import actionTypes from './actionTypes';
 import bookmarksMiddleware from './middleware';
 
-jest.mock('@common/utilities/localJSONStorage');
+jest.mock('src/utils/localJSONStorage');
 
 describe('Middleware: Bookmarks', () => {
   const next = jest.fn();
