@@ -1,8 +1,8 @@
 import routes from '@screens/router/routes';
 import history from 'src/utils/history';
-import externalLinks from './externalLinks';
+import { externalLinks } from './externalLinks';
 
-jest.mock('@common/utilities/history', () => ({
+jest.mock('src/utils/history', () => ({
   push: jest.fn(), replace: jest.fn(),
 }));
 

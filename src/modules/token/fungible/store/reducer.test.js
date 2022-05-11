@@ -1,4 +1,5 @@
 import { tokenMap } from '@token/fungible/consts/tokens';
+import { expect } from 'chai';
 
 describe('Reducer: token(state, action)', () => {
   let initializeState;
@@ -11,5 +12,9 @@ describe('Reducer: token(state, action)', () => {
         [tokenMap.LSK.key]: true,
       },
     };
+  });
+
+  it('asserts true', () => {
+    expect(true).to.equal(true);
   });
 });
