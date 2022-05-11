@@ -6,12 +6,12 @@ import { voteEdited } from '@common/store/actions';
 import { fromRawLsk, toRawLsk } from '@token/fungible/utils/lsk';
 import { truncateAddress } from '@wallet/utils/account';
 import WalletVisual from '@wallet/components/walletVisual';
-import Box from 'src/theme/box';
-import { SecondaryButton, TertiaryButton } from 'src/theme/buttons';
-import Icon from 'src/theme/Icon';
+import Box from '@theme/box';
+import { SecondaryButton, TertiaryButton } from '@theme/buttons';
+import Icon from '@theme/Icon';
 import TokenAmount from '@token/fungible/components/tokenAmount';
 import AmountField from 'src/modules/common/components/amountField';
-import useVoteAmountField from '../../editVote/useVoteAmountField';
+import useVoteAmountField from '../../hooks/useVoteAmountField';
 import styles from './form.css';
 
 const ComponentState = Object.freeze({ editing: 1, notEditing: 2 });

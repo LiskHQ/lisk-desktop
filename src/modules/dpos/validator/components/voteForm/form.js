@@ -8,12 +8,11 @@ import TransactionPriority from '@transaction/components/TransactionPriority';
 import useTransactionFeeCalculation from '@transaction/hooks/useTransactionFeeCalculation';
 import useTransactionPriority from '@transaction/hooks/useTransactionPriority';
 import { normalizeVotesForTx } from '@transaction/utils';
-import Box from 'src/theme/box';
-import BoxContent from 'src/theme/box/content';
-import BoxFooter from 'src/theme/box/footer';
-import { PrimaryButton } from 'src/theme/buttons';
-
-import Table from 'src/theme/table';
+import Box from '@theme/box';
+import BoxContent from '@theme/box/content';
+import BoxFooter from '@theme/box/footer';
+import { PrimaryButton } from '@theme/buttons';
+import Table from '@theme/table';
 import ToggleIcon from '../toggleIcon';
 
 import VoteRow from './voteRow';
