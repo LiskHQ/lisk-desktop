@@ -1,4 +1,5 @@
-import { pricesRetrieved, emptyTransactionsData, settingsUpdated } from './actions';
+import { pricesRetrieved, emptyTransactionsData } from '@common/store/actions';
+import { settingsUpdated } from './actions';
 import actionTypes from './actionTypes';
 import settingsMiddleware from './middleware';
 
@@ -12,7 +13,7 @@ describe('Middleware: Settings', () => {
   const store = {
     dispatch: jest.fn(),
     getState: () => ({
-      settings: {},
+      // settings: {},
       token: {},
     }),
   };
