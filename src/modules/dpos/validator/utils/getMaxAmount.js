@@ -16,8 +16,8 @@ import { normalizeVotesForTx } from '@transaction/utils';
  * @param {object} voting - List of votes from the Redux store
  * @returns {Number} - Maximum possible vote amount
  */
-const getMaxAmount = async (account, network, voting, address) => {
-  const balance = account.summary?.balance ?? 0;
+const getMaxAmount = async (wallet, network, voting, address) => {
+  const balance = wallet.summary?.balance ?? 0;
   const totalUnconfirmedVotes = Object.values(voting)
     .filter(vote => vote.confirmed < vote.unconfirmed)
     .map(vote => vote.unconfirmed - vote.confirmed)
@@ -37,18 +37,18 @@ const getMaxAmount = async (account, network, voting, address) => {
         unconfirmed: maxVoteAmount,
       },
     }),
-    nonce: account.sequence?.nonce,
-    senderPublicKey: account.summary?.publicKey,
+    nonce: wallet.sequence?.nonce,
+    senderPublicKey: wallet.summary?.publicKey,
     moduleAssetId: MODULE_ASSETS_NAME_ID_MAP.voteDelegate,
   };
 
   const maxAmountFee = await getTransactionFee({
     token: 'LSK',
-    account,
+    wallet,
     network,
     transaction,
     selectedPriority: { title: 'Normal', value: 0, selectedIndex: 0 }, // Always set to LOW
-    numberOfSignatures: getNumberOfSignatures(account, transaction),
+    numberOfSignatures: getNumberOfSignatures(wallet, transaction),
   }, 'LSK');
 
   // If the "sum of vote amounts + fee + dust" exceeds balance

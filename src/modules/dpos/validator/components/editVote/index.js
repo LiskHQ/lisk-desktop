@@ -1,15 +1,10 @@
 import React, { useEffect, useState } from 'react';
-import { withRouter } from 'react-router-dom';
-import { withTranslation } from 'react-i18next';
-import { useDispatch, useSelector, connect } from 'react-redux';
-import { compose } from 'redux';
-
+import { useSelector } from 'react-redux';
 import {
   selectSearchParamValue,
   removeSearchParamsFromUrl,
 } from 'src/utils/searchParams';
 import { tokenMap } from '@token/fungible/consts/tokens';
-import { voteEdited } from '@common/store/actions';
 import { toRawLsk, fromRawLsk } from '@token/fungible/utils/lsk';
 import Dialog from 'src/theme/dialog/dialog';
 import Box from 'src/theme/box';
@@ -21,17 +16,10 @@ import AmountField from 'src/modules/common/components/amountField';
 import TokenAmount from '@token/fungible/components/tokenAmount';
 import Converter from 'src/modules/common/components/converter';
 import WarnPunishedDelegate from '@dpos/validator/components/WarnPunishedDelegate';
-import { selectActiveTokenAccount, selectNetwork, selectVoting } from '@common/store';
 import { PrimaryButton, WarningButton } from 'src/theme/buttons';
-import useVoteAmountField from './useVoteAmountField';
-import getMaxAmount from './getMaxAmount';
+import useVoteAmountField from '../../hooks/useVoteAmountField';
+import getMaxAmount from '../../utils/getMaxAmount';
 import styles from './editVote.css';
-
-const mapStateToProps = (state) => ({
-  currentHeight: state.blocks.latestBlocks.length
-    ? state.blocks.latestBlocks[0].height
-    : 0,
-});
 
 const getTitles = (t) => ({
   edit: {
@@ -49,34 +37,29 @@ const getTitles = (t) => ({
 });
 
 // eslint-disable-next-line max-statements
-const AddVote = ({ history, t, currentHeight }) => {
-  const dispatch = useDispatch();
-  const { account } = useSelector(selectActiveTokenAccount);
-  const { network } = useSelector(selectNetwork);
-  const { voting } = useSelector(selectVoting);
-
+const EditVote = ({
+  history, t, currentHeight, wallet, network, voting, voteEdited,
+}) => {
   const [address, start, end] = selectSearchParamValue(history.location.search, ['address', 'start', 'end']);
-  const existingVote = useSelector((state) => state.voting[address || account.summary.address]);
+  const existingVote = useSelector((state) => state.voting[address || wallet.summary.address]);
   const [voteAmount, setVoteAmount] = useVoteAmountField(
     existingVote ? fromRawLsk(existingVote.unconfirmed) : '',
   );
   const mode = existingVote ? 'edit' : 'add';
   const [maxAmount, setMaxAmount] = useState(0);
   useEffect(() => {
-    getMaxAmount(account, network, voting, address || account.summary.address).then(
+    getMaxAmount(wallet, network, voting, address || wallet.summary.address).then(
       setMaxAmount,
     );
-  }, [account, voting]);
+  }, [wallet, voting]);
 
   const confirm = () => {
-    dispatch(
-      voteEdited([
-        {
-          address: address || account.summary.address,
-          amount: toRawLsk(voteAmount.value),
-        },
-      ]),
-    );
+    voteEdited([
+      {
+        address: address || wallet.summary.address,
+        amount: toRawLsk(voteAmount.value),
+      },
+    ]);
 
     removeSearchParamsFromUrl(history, ['modal']);
   };
@@ -84,14 +67,12 @@ const AddVote = ({ history, t, currentHeight }) => {
   const titles = getTitles(t)[mode];
 
   const removeVote = () => {
-    dispatch(
-      voteEdited([
-        {
-          address: address || account.summary.address,
-          amount: 0,
-        },
-      ]),
-    );
+    voteEdited([
+      {
+        address: address || wallet.summary.address,
+        amount: 0,
+      },
+    ]);
 
     removeSearchParamsFromUrl(history, ['modal']);
   };
@@ -169,8 +150,4 @@ const AddVote = ({ history, t, currentHeight }) => {
   );
 };
 
-export default compose(
-  withRouter,
-  connect(mapStateToProps),
-  withTranslation(),
-)(AddVote);
+export default EditVote;
