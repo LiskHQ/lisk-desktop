@@ -5,6 +5,7 @@ import { create } from '@transaction/api';
 import { getAccount } from '@wallet/utils/api';
 import { isEmpty } from 'src/utils/helpers';
 import { timerReset } from '@auth/store/action';
+import txActionTypes from '@transaction/store/actionTypes';
 import { getVotes } from '../../api';
 import actionTypes from './actionTypes';
 
@@ -97,14 +98,14 @@ export const votesSubmitted = ({ fee, votes }) =>
 
     if (error) {
       dispatch({
-        type: actionTypes.transactionSignError,
+        type: txActionTypes.transactionSignError,
         data: error,
       });
     } else {
       dispatch({ type: actionTypes.votesSubmitted });
       dispatch(timerReset());
       dispatch({
-        type: actionTypes.transactionCreatedSuccess,
+        type: txActionTypes.transactionCreatedSuccess,
         data: tx,
       });
     }
