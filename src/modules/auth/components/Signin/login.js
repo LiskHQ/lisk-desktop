@@ -17,6 +17,7 @@ import DiscreetModeToggle from 'src/modules/settings/components/discreetModeTogg
 import NetworkSelector from 'src/modules/settings/components/networkSelector';
 import RecoveryPhrase from '../RecoveryPhrase';
 import styles from './login.css';
+import SetPasswordFrom from '../SetPasswordForm';
 
 const RegisterTitle = ({ t }) => (
   <div className={`${styles.titleHolder} ${grid['col-xs-10']}`}>
@@ -89,6 +90,7 @@ const Login = ({
 
   return (
     <>
+      <SetPasswordFrom onSubmit={(data) => { console.log('>>> ', data); }} />
       <div className={`${styles.login} ${grid.row}`}>
         <div
           className={`${styles.wrapper} ${grid['col-xs-12']} ${grid['col-md-10']} ${grid['col-lg-8']}`}

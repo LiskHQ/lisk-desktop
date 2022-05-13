@@ -54,6 +54,7 @@ const Input = ({
   isMasked,
   feedbackType,
   iconClassName,
+  endComponent,
   ...props
 }) => {
   status = updateStatus({
@@ -88,6 +89,14 @@ const Input = ({
             className={`${styles.status}`}
           />
         )}
+
+        {
+          !!endComponent && (
+          <div className={`${styles.status}`}>
+            {endComponent}
+          </div>
+          )
+        }
         <Component
           {...props}
           type={type}
