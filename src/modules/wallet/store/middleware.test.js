@@ -5,8 +5,6 @@ import {
 import commonActionTypes from '@common/store/actions/actionTypes';
 import blockActionTypes from '@block/store/actionTypes';
 import settingsActionTypes from 'src/modules/settings/store/actionTypes';
-import transactionActionTypes from '@transaction/store/actionTypes';
-import { MODULE_ASSETS_NAME_ID_MAP } from '@transaction/configuration/moduleAssets';
 import * as transactionApi from '@transaction/api';
 import { getAutoLogInData } from 'src/utils/login';
 import walletActionTypes from './actionTypes';
@@ -83,16 +81,6 @@ const transactions = [
 const block = {
   numberOfTransactions: 2,
   id: '513008230952104224',
-};
-
-const transactionsRetrievedAction = {
-  type: transactionActionTypes.transactionsRetrieved,
-  data: {
-    confirmed: [{
-      type: MODULE_ASSETS_NAME_ID_MAP.registerDelegate,
-      confirmations: 1,
-    }],
-  },
 };
 
 const newBlockCreated = {
