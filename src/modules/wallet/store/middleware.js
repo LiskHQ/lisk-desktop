@@ -2,14 +2,13 @@ import { MODULE_ASSETS_NAME_ID_MAP } from '@transaction/configuration/moduleAsse
 import { fromRawLsk, delay } from '@token/fungible/utils/lsk';
 import { getActiveTokenAccount } from '@wallet/utils/account';
 import {
-  settingsUpdated, accountDataUpdated,
-  emptyTransactionsData, transactionsRetrieved,
+  accountDataUpdated, emptyTransactionsData, transactionsRetrieved,
 } from '@common/store/actions';
 import { getTransactions } from '@transaction/api';
 import i18n from 'src/utils/i18n/i18n';
 import blockActionTypes from '@block/store/actionTypes';
 import settingsActionTypes from 'src/modules/settings/store/actionTypes';
-import { selectActiveToken } from '@common/store/selectors';
+// import { selectActiveToken } from '@common/store/selectors';
 import actionTypes from './actionTypes';
 
 const filterIncomingTransactions = (transactions, account) =>
@@ -37,7 +36,7 @@ const showNotificationsForIncomingTransactions = (transactions, account, token) 
 // eslint-disable-next-line max-statements
 const checkTransactionsAndUpdateAccount = async (store, action) => {
   const state = store.getState();
-  const { transactions, settings: { token }, network } = state;
+  const { transactions, token, network } = state;
   const account = getActiveTokenAccount(store.getState());
   const { numberOfTransactions, id } = action.data.block;
 
@@ -69,7 +68,8 @@ const checkTransactionsAndUpdateAccount = async (store, action) => {
 // eslint-disable-next-line complexity
 const accountMiddleware = store => next => async (action) => {
   next(action);
-  const activeToken = store.getState(selectActiveToken);
+  // @todo Update token storage when new token management system is ready
+  // const activeToken = store.getState(selectActiveToken);
   switch (action.type) {
     case blockActionTypes.newBlockCreated:
       await checkTransactionsAndUpdateAccount(store, action);
@@ -77,9 +77,9 @@ const accountMiddleware = store => next => async (action) => {
     case actionTypes.accountLoggedOut:
       /* Reset active token setting so in case BTC is selected,
       the Lisk monitoring features are available and Lisk is selected on the next login */
-      store.dispatch(settingsUpdated({
-        token: { active: activeToken },
-      }));
+      // store.dispatch(settingsUpdated({
+      //   token: { active: activeToken },
+      // }));
       store.dispatch(emptyTransactionsData());
       break;
     case settingsActionTypes.settingsUpdated:
