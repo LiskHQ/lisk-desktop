@@ -1,6 +1,5 @@
 import {
-  accountDataUpdated, transactionsRetrieved,
-  votesRetrieved, emptyTransactionsData, networkSelected, networkStatusUpdated,
+  accountDataUpdated, transactionsRetrieved, emptyTransactionsData,
 } from '@common/store/actions';
 
 import commonActionTypes from '@common/store/actions/actionTypes';
@@ -8,10 +7,8 @@ import blockActionTypes from '@block/store/actionTypes';
 import settingsActionTypes from 'src/modules/settings/store/actionTypes';
 import transactionActionTypes from '@transaction/store/actionTypes';
 import { MODULE_ASSETS_NAME_ID_MAP } from '@transaction/configuration/moduleAssets';
-import routes from '@screens/router/routes';
 import * as transactionApi from '@transaction/api';
 import { getAutoLogInData } from 'src/utils/login';
-import history from 'src/utils/history';
 import walletActionTypes from './actionTypes';
 import middleware from './middleware';
 
@@ -277,6 +274,7 @@ describe('Account middleware', () => {
       };
       middleware(store)(next)(accountSettingsUpdatedAction);
       expect(store.dispatch).toHaveBeenCalled();
+      expect(accountDataUpdated).toHaveBeenCalledWith('enabled');
     });
     it('Account Setting Update Unsucessful', () => {
       const accountSettingsUpdatedAction = {
