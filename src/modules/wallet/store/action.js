@@ -44,17 +44,17 @@ const getAccounts = async ({ network, params }) =>
  */
 export const accountDataUpdated = tokensTypes =>
   async (dispatch, getState) => {
-    const { network, settings, wallet } = getState();
+    const { network, token, wallet } = getState();
 
-    // Get the list of tokens that are enabled in settings
+    // Get the list of tokens that are enabled
     const activeTokens = tokensTypes === 'enabled'
-      ? Object.keys(settings.token.list)
-        .filter(key => settings.token.list[key])
-      : [settings.token.active];
+      ? Object.keys(token.list)
+        .filter(key => token.list[key])
+      : [token.active];
 
     // Collect their addresses to send to the API
-    const params = activeTokens.reduce((acc, token) => {
-      acc[token] = { publicKey: wallet.info[token].summary.publicKey };
+    const params = activeTokens.reduce((acc, item) => {
+      acc[item] = { publicKey: wallet.info[item].summary.publicKey };
       return acc;
     }, {});
 
