@@ -31,10 +31,7 @@ export const initialState = {
 const settings = (state = initialState, action) => {
   switch (action.type) {
     case actionTypes.settingsRetrieved: {
-      return {
-        ...state,
-        ...action.data,
-      };
+      return action.data;
     }
     case actionTypes.settingsUpdated:
       return deepMergeObj(state, action.data);

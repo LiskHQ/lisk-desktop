@@ -56,10 +56,8 @@ describe('actions: voting', () => {
         },
       },
     },
-    settings: {
-      token: {
-        active: 'LSK',
-      },
+    token: {
+      active: 'LSK',
     },
   });
 

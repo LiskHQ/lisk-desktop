@@ -1,11 +1,11 @@
 import { pricesRetrieved, emptyTransactionsData } from '@common/store/actions';
+import networkActionTypes from '@network/store/actionTypes';
 import { settingsUpdated } from './actions';
 import actionTypes from './actionTypes';
 import settingsMiddleware from './middleware';
 
 jest.mock('@common/store/actions/service');
 jest.mock('@transaction/store/actions');
-jest.mock('./middleware');
 jest.mock('./actions');
 
 describe('Middleware: Settings', () => {
@@ -13,7 +13,6 @@ describe('Middleware: Settings', () => {
   const store = {
     dispatch: jest.fn(),
     getState: () => ({
-      // settings: {},
       token: {},
     }),
   };
@@ -33,7 +32,7 @@ describe('Middleware: Settings', () => {
   describe('on networkConfigSet', () => {
     it('should dispatch pricesRetrieved', () => {
       const action = {
-        type: actionTypes.networkConfigSet,
+        type: networkActionTypes.networkConfigSet,
         data: {
           name: 'customNode',
           networks: {
