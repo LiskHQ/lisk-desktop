@@ -5,7 +5,7 @@ import TransactionSummary from '@transaction/manager/transactionSummary';
 import { fromRawLsk } from '@token/fungible/utils/lsk';
 import { getUnlockableUnlockObjects } from '@wallet/utils/account';
 import TransactionInfo from '@transaction/components/TransactionInfo';
-import styles from './LockedBalanceSummary.css';
+import styles from './unlockBalanceSummary.css';
 
 const moduleAssetId = MODULE_ASSETS_NAME_ID_MAP.unlockToken;
 

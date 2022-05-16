@@ -11,8 +11,8 @@ import TransactionPriority from '@transaction/components/TransactionPriority';
 import useTransactionFeeCalculation from '@transaction/hooks/useTransactionFeeCalculation';
 import useTransactionPriority from '@transaction/hooks/useTransactionPriority';
 import { selectCurrentBlockHeight } from '@common/store/selectors';
-import Form from './LockedBalanceForm';
-import BalanceTable from './LockedBalanceTable';
+import Form from './unlockBalanceForm';
+import BalanceTable from './unlockBalanceTable';
 
 const moduleAssetId = MODULE_ASSETS_NAME_ID_MAP.unlockToken;
 

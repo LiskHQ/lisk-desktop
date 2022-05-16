@@ -2,7 +2,7 @@ import React from 'react';
 import { shallow } from 'enzyme';
 import TransactionResult from '@transaction/manager/transactionResult';
 import accounts from '@tests/constants/wallets';
-import Status from './LockedBalanceStatus';
+import Status from './unlockBalanceStatus';
 
 describe('unlock transaction Status', () => {
   const props = {

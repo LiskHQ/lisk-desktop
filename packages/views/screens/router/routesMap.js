@@ -21,7 +21,7 @@ import AccountDetails from '@account/components/AccountDetails';
 // import TransactionDetailsModal from '@screens/managers/transactionDetailsModal';
 import VerifyMessage from '@message/manager/verifyMessageManager';
 import Request from '@screens/managers/request';
-import LockedBalance from '@token/fungible/components/LockedBalance';
+import UnlockBalanceView from 'src/modules/dpos/validator/components/unlockBalanceView';
 import EditVote from '@dpos/validator/manager/editVoteManager';
 import VotingQueue from '@dpos/validator/manager/votingQueueManager';
 import DeviceDisconnect from '@screens/managers/deviceDisconnectDialog';
@@ -61,7 +61,7 @@ export default {
   // transactionDetails: TransactionDetailsModal,
   newRelease: NewReleaseDialog,
   request: Request,
-  lockedBalance: LockedBalance,
+  lockedBalance: UnlockBalanceView,
   editVote: EditVote,
   votingQueue: VotingQueue,
   deviceDisconnectDialog: DeviceDisconnect,

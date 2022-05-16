@@ -2,7 +2,7 @@ import React from 'react';
 import { PrimaryButton } from 'src/theme/buttons';
 import TransactionResult from '@transaction/manager/transactionResult';
 import { getTransactionStatus, statusMessages } from '@transaction/configuration/statusConfig';
-import styles from './LockedBalanceStatus.css';
+import styles from './unlockBalanceStatus.css';
 
 const TransactionStatus = ({ account, transactions, t }) => {
   const status = getTransactionStatus(

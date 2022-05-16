@@ -1,9 +1,9 @@
 /* istanbul ignore file */
 import { connect } from 'react-redux';
 import { withTranslation } from 'react-i18next';
-import { balanceUnlocked } from '@packages/wallet/store/action';
+import { balanceUnlocked } from '@dpos/validator/store/actions/voting';
 import { getActiveTokenAccount } from '@wallet/utils/account';
-import Summary from './LockedBalanceSummary';
+import Summary from './unlockBalanceSummary';
 
 const mapStateToProps = state => ({
   wallet: getActiveTokenAccount(state),

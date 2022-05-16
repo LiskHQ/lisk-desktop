@@ -7,7 +7,7 @@ import BoxFooter from 'src/theme/box/footer';
 import BoxHeader from 'src/theme/box/header';
 import { PrimaryButton } from 'src/theme/buttons';
 import TokenAmount from '@token/fungible/components/tokenAmount';
-import styles from './LockedBalance.css';
+import styles from './unlockBalance.css';
 
 const ButtonTitle = ({ unlockableBalance, t }) => {
   if (unlockableBalance === 0) {

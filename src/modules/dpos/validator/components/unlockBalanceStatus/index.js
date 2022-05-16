@@ -1,7 +1,7 @@
 import { connect } from 'react-redux';
 import { compose } from 'redux';
 import { withTranslation } from 'react-i18next';
-import Status from './LockedBalanceStatus';
+import Status from './unlockBalanceStatus';
 
 const mapStateToProps = state => ({
   transactions: state.transactions,
