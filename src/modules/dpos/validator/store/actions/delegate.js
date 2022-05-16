@@ -5,7 +5,7 @@ import { MODULE_ASSETS_NAME_ID_MAP } from '@transaction/configuration/moduleAsse
 import { toRawLsk } from '@token/fungible/utils/lsk';
 import { isEmpty } from 'src/utils/helpers';
 import { create } from '@transaction/api';
-import actionTypes from './actionTypes';
+import transactionActionTypes from '@transaction/store/actionTypes';
 
 // eslint-disable-next-line import/prefer-default-export
 export const delegateRegistered = ({ fee, username }) => async (dispatch, getState) => {
@@ -41,12 +41,12 @@ export const delegateRegistered = ({ fee, username }) => async (dispatch, getSta
   //
   if (!error) {
     dispatch({
-      type: actionTypes.transactionCreatedSuccess,
+      type: transactionActionTypes.transactionCreatedSuccess,
       data: tx,
     });
   } else {
     dispatch({
-      type: actionTypes.transactionSignError,
+      type: transactionActionTypes.transactionSignError,
       data: error,
     });
   }
