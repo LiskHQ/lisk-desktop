@@ -87,7 +87,8 @@ const accountMiddleware = store => next => async (action) => {
         store.dispatch(accountDataUpdated('enabled'));
       }
       break;
-    default: break;
+    default:
+      break;
   }
 };
 
