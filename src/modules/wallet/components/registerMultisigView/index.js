@@ -1,18 +1,17 @@
 /* istanbul ignore file */
 import React from 'react';
-import { withRouter } from 'react-router-dom';
 
 import TransactionSignature from '@transaction/components/TransactionSignature';
 import MultiStep from 'src/modules/common/components/OldMultiStep';
 import { removeSearchParamsFromUrl } from 'src/utils/searchParams';
 import Dialog from 'src/theme/dialog/dialog';
 
-import Form from './form';
-import Summary from './summary';
-import Status from './status';
+import Form from '../registerMultisigForm';
+import Summary from '../registerMultisigSummary';
+import Status from '../registerMultisigStatus';
 import styles from './styles.css';
 
-const MultiSignature = ({ history }) => {
+const RegisterMultisigView = ({ history }) => {
   const closeModal = () => {
     removeSearchParamsFromUrl(history, ['modal'], true);
   };
@@ -33,4 +32,4 @@ const MultiSignature = ({ history }) => {
   );
 };
 
-export default withRouter(MultiSignature);
+export default RegisterMultisigView;

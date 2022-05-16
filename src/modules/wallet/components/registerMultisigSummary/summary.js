@@ -5,7 +5,7 @@ import Box from 'src/theme/box';
 import BoxContent from 'src/theme/box/content';
 import BoxFooter from 'src/theme/box/footer';
 import { PrimaryButton, SecondaryButton } from 'src/theme/buttons';
-import ProgressBar from '../progressBar';
+import ProgressBar from '../registerMultisigView/progressBar';
 import styles from './styles.css';
 
 const moduleAssetId = MODULE_ASSETS_NAME_ID_MAP.registerMultisignatureGroup;

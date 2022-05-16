@@ -14,7 +14,7 @@ import { regex } from 'src/const/regex';
 import { tokenMap } from '@token/fungible/consts/tokens';
 import { MODULE_ASSETS_NAME_ID_MAP } from '@transaction/configuration/moduleAssets';
 import { extractAddressFromPublicKey } from '@wallet/utils/account';
-import ProgressBar from '../progressBar';
+import ProgressBar from '../registerMultisigView/progressBar';
 import MemberField from './memberField';
 import Feedback from './feedback';
 import styles from './styles.css';
