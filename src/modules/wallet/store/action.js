@@ -7,6 +7,7 @@ import { isEmpty } from 'src/utils/helpers';
 import { create } from '@transaction/api';
 import { getAccount } from '@wallet/utils/api';
 import { networkStatusUpdated } from '@network/store/action';
+import transactionActionTypes from '@transaction/store/actionTypes';
 import actionTypes from './actionTypes';
 
 export const accountLoading = () => ({
@@ -115,12 +116,12 @@ export const multisigGroupRegistered = ({
   //
   if (!error) {
     dispatch({
-      type: actionTypes.transactionCreatedSuccess,
+      type: transactionActionTypes.transactionCreatedSuccess,
       data: tx,
     });
   } else {
     dispatch({
-      type: actionTypes.transactionSignError,
+      type: transactionActionTypes.transactionSignError,
       data: error,
     });
   }

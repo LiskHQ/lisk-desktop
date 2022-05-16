@@ -5,7 +5,7 @@ import { MODULE_ASSETS_NAME_ID_MAP } from '@transaction/configuration/moduleAsse
 import { signatureCollectionStatus } from '@transaction/configuration/txStatus';
 import { isEmpty } from 'src/utils/helpers';
 import { extractKeyPair } from '@wallet/utils/account';
-import { getTransactionSignatureStatus } from '@screens/managers/signMultiSignTransaction/helpers';
+import { getTransactionSignatureStatus } from '@wallet/components/signMultisigView/helpers';
 import { timerReset } from '@auth/store/action';
 import { loadingStarted, loadingFinished } from '@common/store/actions/loading';
 import actionTypes from './actionTypes';
