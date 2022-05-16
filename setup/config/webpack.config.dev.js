@@ -23,7 +23,7 @@ const config = {
     new ESLintPlugin({
       context: '../',
     }),
-    new webpack.IgnorePlugin({ resourceRegExp: /\.\/locale$/ }),
+    // new webpack.IgnorePlugin({ resourceRegExp: /\.\/locale$/ }),
     new webpack.DefinePlugin({
       PRODUCTION: JSON.stringify(false),
       VERSION: JSON.stringify(version),
