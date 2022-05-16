@@ -2,7 +2,7 @@ Feature: Sign Message
 
   @basic
   Scenario: I should get the lisk signed message
-    Given I login as genesis on devnet
+    Given I login as genesis on customNode
     And I wait 2 seconds
     And I open signMessage modal
     When I fill test_Message in signMessageInput field

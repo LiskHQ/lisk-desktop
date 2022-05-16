@@ -5,7 +5,7 @@ import networks from '@network/configuration/networks';
 const nets = {
   mainnet: networks.mainnet,
   testnet: networks.testnet,
-  devnet: {
+  customNode: {
     serviceUrl: Cypress.env('serviceUrl'),
   },
 };
