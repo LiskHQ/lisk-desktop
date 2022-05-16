@@ -11,7 +11,7 @@ import MonitorWallets from '@account/manager/AccountsManager';
 import MonitorNetwork from '@network/manager/networkManager';
 import MonitorTransactions from '@screens/managers/monitor/transactions';
 import Register from '@auth/manager/SignupManager';
-import RegisterDelegate from '@screens/managers/registerDelegate';
+import RegisterDelegate from 'src/modules/dpos/validator/manager/registerDelegateManager';
 import Send from '@screens/managers/send';
 import Settings from 'src/modules/settings/manager/SettingsManager';
 import SignMessage from '@message/manager/signMessageManager';

@@ -2,9 +2,9 @@ import React from 'react';
 import MultiStep from 'src/modules/common/components/OldMultiStep';
 import TransactionSignature from '@transaction/components/TransactionSignature';
 import Dialog from 'src/theme/dialog/dialog';
-import Form from './form';
-import Summary from './summary';
-import Status from './status';
+import Form from '../registerDelegateForm';
+import Summary from '../registerDelegateSummary';
+import Status from '../registerDelegateStatus';
 import styles from './registerDelegate.css';
 
 const RegisterDelegate = ({ history, t }) => (
