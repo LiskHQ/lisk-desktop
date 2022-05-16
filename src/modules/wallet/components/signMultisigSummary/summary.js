@@ -6,10 +6,10 @@ import Box from 'src/theme/box';
 import TransactionDetails from '@screens/managers/transactionDetails';
 import TransactionDetailsProvider from '@transaction/context';
 
-import ProgressBar from '../progressBar';
-import { showSignButton, getTransactionSignatureStatus } from '../helpers';
+import ProgressBar from '../signMultisigView/progressBar';
+import { showSignButton, getTransactionSignatureStatus } from '../signMultisigView/helpers';
 import { ActionBar, Feedback } from './footer';
-import styles from '../styles.css';
+import styles from './styles.css';
 
 const Summary = ({
   t,

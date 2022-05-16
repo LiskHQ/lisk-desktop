@@ -12,7 +12,7 @@ import BoxFooter from 'src/theme/box/footer';
 import { PrimaryButton } from 'src/theme/buttons';
 import Feedback from 'src/theme/feedback/feedback';
 import { validateTransaction } from '@liskhq/lisk-transactions';
-import ProgressBar from '../progressBar';
+import ProgressBar from '../signMultisigView/progressBar';
 import styles from './styles.css';
 
 const reader = new FileReader();

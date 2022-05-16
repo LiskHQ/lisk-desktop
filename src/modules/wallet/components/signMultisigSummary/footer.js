@@ -4,7 +4,7 @@ import { useTheme } from 'src/theme/Theme';
 import { removeSearchParamsFromUrl } from 'src/utils/searchParams';
 import { PrimaryButton, SecondaryButton } from 'src/theme/buttons';
 import BoxFooter from 'src/theme/box/footer';
-import styles from '../styles.css';
+import styles from './styles.css';
 
 export const ActionBar = ({ nextButton, history, t }) => (
   <BoxFooter direction="horizontal" className={styles.footer}>

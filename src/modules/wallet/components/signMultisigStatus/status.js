@@ -7,7 +7,7 @@ import {
   getTransactionStatus,
 } from '@transaction/configuration/statusConfig';
 
-import ProgressBar from '../progressBar';
+import ProgressBar from '../signMultisigView/progressBar';
 import styles from './styles.css';
 
 const Status = ({ sender, transactions, t }) => {
