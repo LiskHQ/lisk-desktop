@@ -90,7 +90,11 @@ const Login = ({
 
   return (
     <>
-      <SetPasswordFrom onSubmit={(data) => { console.log('>>> ', data); }} />
+      <SetPasswordFrom onSubmit={(/* data */) => {
+        // console.log('>>> ', data);
+        // alert('>>>>>>>>>>>');
+      }}
+      />
       <div className={`${styles.login} ${grid.row}`}>
         <div
           className={`${styles.wrapper} ${grid['col-xs-12']} ${grid['col-md-10']} ${grid['col-lg-8']}`}

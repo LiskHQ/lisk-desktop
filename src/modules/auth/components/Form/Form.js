@@ -5,10 +5,13 @@ import setPasswordFormContext from '../../context/setPasswordFormContext';
 
 function Form({ onSubmit, validationSchema, children }) {
   const {
-    register, handleSubmit, watch, formState,
-  } = useForm({
+    register,
+    handleSubmit,
+    watch,
+    formState,
+  } = useForm(validationSchema ? {
     resolver: yupResolver(validationSchema),
-  });
+  } : undefined);
 
   return (
     <div>

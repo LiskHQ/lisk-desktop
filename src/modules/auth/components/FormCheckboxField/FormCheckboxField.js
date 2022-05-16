@@ -4,7 +4,7 @@ import CheckBox from 'src/theme/CheckBox';
 import setPasswordFormContext from '../../context/setPasswordFormContext';
 import styles from './FormCheckboxField.css';
 
-function FormInputTextField({ name, label }) {
+function FormInputTextField({ name, label, validation }) {
   const { register } = useContext(setPasswordFormContext);
   const { t } = useTranslation();
 
@@ -12,7 +12,7 @@ function FormInputTextField({ name, label }) {
     <div className={`${styles.wrapper}`}>
       <CheckBox
         className={`${styles.checkbox}`}
-        {...register(name)}
+        {...register(name, validation)}
       />
       <span>{t(label)}</span>
     </div>

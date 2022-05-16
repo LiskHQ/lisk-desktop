@@ -1,5 +1,5 @@
 import PropTypes from 'prop-types';
-import React from 'react';
+import React, { forwardRef, useCallback, useState } from 'react';
 import Feedback from 'src/theme/feedback/feedback';
 import Icon from 'src/theme/Icon';
 import Spinner from '../Spinner';
@@ -39,7 +39,18 @@ const getInputClass = ({
     .filter(Boolean)
     .join(' ');
 
-const Input = ({
+function PasswordTypeToggler({ onClick, isPasswordVisible }) {
+  return (
+    <button onClick={onClick} className={styles.toggleBtn}>
+      <Icon
+        name={isPasswordVisible ? 'eyeActive' : 'eyeInactive'}
+        className={styles.toggleIcon}
+      />
+    </button>
+  );
+}
+
+const Input = forwardRef(({
   className,
   setRef,
   size,
@@ -54,9 +65,9 @@ const Input = ({
   isMasked,
   feedbackType,
   iconClassName,
-  endComponent,
+  secureTextEntry,
   ...props
-}) => {
+}, ref) => {
   status = updateStatus({
     status,
     isLoading,
@@ -64,6 +75,12 @@ const Input = ({
     ...props,
   });
   const Component = type === 'textarea' ? type : 'input';
+  const [isPassword, setIsPassword] = useState(secureTextEntry);
+
+  const toggleFieldType = useCallback(() => {
+    setIsPassword(!isPassword);
+  }, [isPassword]);
+
   return (
     <>
       {label && (
@@ -91,16 +108,17 @@ const Input = ({
         )}
 
         {
-          !!endComponent && (
-          <div className={`${styles.status}`}>
-            {endComponent}
-          </div>
+          !!secureTextEntry && (
+          <PasswordTypeToggler
+            isPasswordVisible={!isPassword}
+            onClick={toggleFieldType}
+          />
           )
         }
         <Component
           {...props}
-          type={type}
-          ref={setRef}
+          type={isPassword ? 'password' : type}
+          ref={setRef || ref}
           className={getInputClass({
             className,
             dark,
@@ -113,7 +131,7 @@ const Input = ({
       </span>
     </>
   );
-};
+});
 
 Input.propTypes = {
   size: PropTypes.oneOf(['l', 'm', 's', 'xs']),

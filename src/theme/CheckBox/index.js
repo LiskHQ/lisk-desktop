@@ -1,14 +1,16 @@
-import React from 'react';
+import React, { forwardRef } from 'react';
 import Icon from 'src/theme/Icon';
 import styles from './checkBox.css';
 
-const CheckBox = ({
-  added, removed, onChange, accent, checked, className, name, readOnly,
-}) => (
+const CheckBox = forwardRef(({
+  added, removed, onChange, accent, checked, className, name, readOnly, value,
+}, ref) => (
   <label className={`${styles.checkbox} ${className} ${checked ? 'checked' : 'unchecked'}`}>
     <input
       type="checkbox"
-      checked={!!checked}
+      // checked={!!checked}
+      ref={ref}
+      value={value}
       name={name}
       readOnly={readOnly}
       onChange={onChange}
@@ -17,7 +19,7 @@ const CheckBox = ({
       <Icon name="checkboxFilled" />
     </span>
   </label>
-);
+));
 
 CheckBox.defaultProps = {
   added: false,
