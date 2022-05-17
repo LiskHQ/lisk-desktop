@@ -46,14 +46,6 @@ export class BookmarksList extends React.Component {
       .slice(0, limit);
   }
 
-  displayAddressBasedOnSelectedToken(address) {
-    const { token } = this.props;
-
-    return token.active === tokenMap.LSK.key
-      ? address
-      : truncateAddress(address);
-  }
-
   onFilterChange({ target }) {
     this.setState({
       filter: target.value,
@@ -202,9 +194,7 @@ export class BookmarksList extends React.Component {
                       <span className={styles.description}>
                         <span>{bookmark.title}</span>
                         <span>
-                          {this.displayAddressBasedOnSelectedToken(
-                            bookmark.address,
-                          )}
+                          {bookmark.address}
                         </span>
                       </span>
                     )}

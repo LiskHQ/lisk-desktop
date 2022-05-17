@@ -3,16 +3,13 @@ import { connect } from 'react-redux';
 import { compose } from 'redux';
 import { withTranslation } from 'react-i18next';
 import { secondPassphraseStored } from 'src/modules/auth/store/action';
+import { selectActiveToken, selectActiveTokenAccount } from '@common/store';
 import TransactionSummary from '../components/TransactionSummary/TransactionSummary';
 
 const mapStateToProps = state => ({
-  token: state.token.active,
+  token: selectActiveToken(state),
   transactions: state.transactions,
-  wallet: {
-    ...state.wallet.info[state.token.active],
-    passphrase: state.passphrase,
-    hwInfo: state.hwInfo,
-  },
+  wallet: selectActiveTokenAccount(state),
 });
 
 const mapDispatchToProps = {

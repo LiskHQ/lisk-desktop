@@ -4,6 +4,7 @@ import { withRouter } from 'react-router';
 
 import { getAccount } from '@wallet/utils/api';
 import withData from 'src/utils/withData';
+import { selectActiveToken } from '@common/store';
 import MultisigAccountDetails from '../components/multisigAccountDetails';
 
 export default compose(
@@ -13,7 +14,7 @@ export default compose(
       apiUtil: (network, params) => getAccount({ network, params }, params.token),
       defaultData: {},
       getApiParams: (state) => ({
-        token: state.settings.token.active,
+        token: selectActiveToken(state),
       }),
       autoload: false,
     },

@@ -3,12 +3,13 @@ import { withRouter } from 'react-router';
 import { connect } from 'react-redux';
 import { compose } from 'redux';
 import { withTranslation } from 'react-i18next';
+import { selectActiveToken } from '@common/store';
 import withData from 'src/utils/withData';
 import { search } from '../api';
 import SearchBar from '../components/SearchBar/SearchBar';
 
 const mapStateToProps = state => ({
-  activeToken: state.token.active,
+  activeToken: selectActiveToken(state),
 });
 
 const defaultData = {
