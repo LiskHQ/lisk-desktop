@@ -1,7 +1,7 @@
 Feature: Transactions
 
   Background:
-    Given Network is set to devnet
+    Given Network is set to customNode
     Given I am on login page
     And I wait 2 seconds
     Given I am on Transactions page

@@ -9,11 +9,11 @@ import MultisigAccountDetails from '../components/multisigAccountDetails';
 export default compose(
   withRouter,
   withData({
-    account: {
+    wallet: {
       apiUtil: (network, params) => getAccount({ network, params }, params.token),
       defaultData: {},
       getApiParams: (state) => ({
-        token: state.settings.token.active,
+        token: state.token.active,
       }),
       autoload: false,
     },

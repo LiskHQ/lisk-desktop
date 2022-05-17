@@ -2,7 +2,7 @@ Feature: Wallet Votes
 
   @basic
   Scenario: See all votes
-    Given Network is set to devnet
+    Given Network is set to customNode
     Given I am on login page
     When I click on searchIcon
     And I search for account lsk29eqdkm88v4zc6tbjv8435td54u33m3a3kgjjk

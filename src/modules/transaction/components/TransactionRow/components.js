@@ -90,7 +90,7 @@ export const Date = ({ t }) => {
   if (data.isPending || !data.block.timestamp) {
     return (
       <Spinner
-        completed={!data.isPending || data.block.timestamp}
+        completed={!data.isPending || data.block?.timestamp}
         label={t('Pending...')}
       />
     );

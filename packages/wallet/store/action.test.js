@@ -13,7 +13,6 @@ import {
   login,
   secondPassphraseStored,
   secondPassphraseRemoved,
-  balanceUnlocked,
   delegateRegistered,
   multisigGroupRegistered,
 } from './action';
@@ -265,60 +264,6 @@ describe('actions: account', () => {
       await login({ passphrase })(dispatch, getState);
       expect(toast.error).toHaveBeenCalledTimes(1);
       expect(dispatch).toHaveBeenCalledWith({ type: actionTypes.accountLoggedOut });
-    });
-  });
-
-  describe('balanceUnlocked', () => {
-    const state = {
-      wallet: {
-        passphrase: wallets.genesis.passphrase,
-        info: {
-          LSK: wallets.genesis,
-        },
-      },
-      network: {},
-      blocks: {
-        latestBlocks: [{ height: 10 }],
-      },
-    };
-    const getState = () => state;
-    const params = { selectedFee: '0.1' };
-
-    it('should dispatch transactionCreatedSuccess', async () => {
-      const tx = { id: 1 };
-      create.mockImplementation(() =>
-        new Promise((resolve) => {
-          resolve(tx);
-        }));
-      await balanceUnlocked(params)(dispatch, getState);
-      expect(create).toHaveBeenCalledWith({
-        network: state.network,
-        wallet: state.wallet.info.LSK,
-        transactionObject: {
-          moduleAssetId: '5:2',
-          senderPublicKey: wallets.genesis.summary.publicKey,
-          nonce: wallets.genesis.sequence?.nonce,
-          fee: '10000000',
-          unlockObjects: [{}],
-        },
-      }, 'LSK');
-      expect(dispatch).toHaveBeenCalledWith({
-        type: actionTypes.transactionCreatedSuccess,
-        data: tx,
-      });
-    });
-
-    it('should dispatch transactionSignError', async () => {
-      const error = { message: 'TestError' };
-      create.mockImplementation(() =>
-        new Promise((_, reject) => {
-          reject(error);
-        }));
-      await balanceUnlocked(params)(dispatch, getState);
-      expect(dispatch).toHaveBeenCalledWith({
-        type: actionTypes.transactionSignError,
-        data: error,
-      });
     });
   });
 

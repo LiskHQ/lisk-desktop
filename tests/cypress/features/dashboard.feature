@@ -1,7 +1,7 @@
 Feature: Dashboard
   Background:
     Given I have a bookmark saved
-    Given I login as genesis on devnet
+    Given I login as genesis on customNode
     And I wait 5 seconds
     Given I am on wallet page
 

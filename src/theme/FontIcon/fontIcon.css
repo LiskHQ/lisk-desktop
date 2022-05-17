@@ -89,7 +89,7 @@
   content: "\f10f";
 }
 
-.devnet::before {
+.customNode::before {
   content: "\f110";
 }
 
