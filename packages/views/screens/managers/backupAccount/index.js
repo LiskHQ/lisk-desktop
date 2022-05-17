@@ -21,19 +21,23 @@ const AddVote = ({ accountSchema, onEnterPasswordSuccess }) => {
     <Box className={styles.container}>
       <BoxContent className={styles.content}>
         <h1>{t('Enter your password')}</h1>
-        <p>{t('Please provide your device password to backup the recovery phrase.')}</p>
+        <p className={styles.subheader}>
+          {t('Please provide your device password to backup the recovery phrase.')}
+        </p>
         <WalletVisual
-          address="lskm555k7nhhw954rw4pqy5q9wn28n3cec94fmp4n"
+          className={styles.avatar}
+          address={accountSchema?.metadata?.address || 'lskm555k7nhhw954rw4pqy5q9wn28n3cec94fmp4n'}
         />
-        <p>{accountSchema?.metadata?.name}</p>
-        <p>{accountSchema?.metadata?.address}</p>
+        <p className={styles.accountName}>{accountSchema?.metadata?.name || 'Lisker'}</p>
+        <p className={styles.accountAddress}>{accountSchema?.metadata?.address || 'lskm555k7nhhw954rw4pqy5q9wn28n3cec94fmp4n'}</p>
         <Input
+          className={styles.input}
           placeholder={t('Enter password or use Touch ID')}
           type="password"
         />
         <PrimaryButton
+          className={styles.button}
           onClick={onSubmit}
-          disabled={}
         >
           {t('Continue')}
         </PrimaryButton>

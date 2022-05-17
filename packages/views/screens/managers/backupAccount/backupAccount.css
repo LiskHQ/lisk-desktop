@@ -1,7 +1,51 @@
-.container {
+@import '../../../../../setup/react/app/mixins.css';
 
+.container {
+  flex-grow: 1;
+  justify-content: center;
+  text-align: center;
+  margin: 0 auto;
+  width: 465px !important;
 }
 
 .content {
-  
+  padding: 32px !important;
+
+  & h1 {
+    margin: 0 0 16px 0;
+  }
+
+  & > .subheader {
+    @mixin contentLargest;
+
+    margin: 0;
+    font-size: var(--subtitle-font-size-s);
+  }
+
+  & > .accountName {
+    @mixin contentLargest semi-bold;
+
+    margin: 8px 0 0 0;
+    font-size: var(--subtitle-font-size-s);
+  }
+
+  & > .accountAddress {
+    @mixin contentNormal;
+
+    margin: 8px 0 0 0;
+    color: var(--color-blue-gray);
+  }
+}
+
+.avatar {
+  margin: 22px auto 0 auto;
+}
+
+.input {
+  margin-top: 32px;
+}
+
+.button {
+  margin-top: 32px;
+  width: 100%;
 }
