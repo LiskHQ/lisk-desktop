@@ -4,20 +4,23 @@ import { useTranslation } from 'react-i18next';
 import WalletVisual from '@wallet/components/walletVisual';
 import useDecryptionAccount from '@account/hooks/useDecryptionAccount';
 import { Input } from 'src/theme';
-import Icon from 'src/theme/Icon';
 import Box from 'src/theme/box';
 import BoxContent from 'src/theme/box/content';
 import { PrimaryButton } from 'src/theme/buttons';
 import styles from './backupAccount.css';
 
-const AddVote = ({ accountSchema, onEnterPasswordSuccess }) => {
+const EnterPasswordForm = ({ accountSchema, onEnterPasswordSuccess }) => {
   const { t } = useTranslation();
-  const [isPasswordVisible, togglePasswordVisibility] = useState(false);
   const [password, setPassword] = useState('');
+  const [feedbackError, setFeedbackError] = useState('');
 
   const onSubmit = () => {
-    const { privateToken, recoveryPhrase } = useDecryptionAccount(accountSchema, password);
-    onEnterPasswordSuccess({ privateToken, recoveryPhrase });
+    const { privateToken, recoveryPhrase, error } = useDecryptionAccount(accountSchema, password);
+    if (error) {
+      return setFeedbackError(error);
+    }
+
+    return onEnterPasswordSuccess({ privateToken, recoveryPhrase });
   };
 
   return (
@@ -33,23 +36,15 @@ const AddVote = ({ accountSchema, onEnterPasswordSuccess }) => {
         />
         <p className={styles.accountName}>{accountSchema?.metadata?.name || 'Lisker'}</p>
         <p className={styles.accountAddress}>{accountSchema?.metadata?.address || 'lskm555k7nhhw954rw4pqy5q9wn28n3cec94fmp4n'}</p>
-        <div className={styles.inputWrapper}>
-          <Input
-            placeholder={t('Enter password or use Touch ID')}
-            type={isPasswordVisible ? 'text' : 'password'}
-            value={password}
-            onChange={(e) => {
-              setPassword(e.target.value);
-            }}
-          />
-          <Icon
-            className={styles.eyeIcon}
-            name={isPasswordVisible ? 'eyeActive' : 'eyeInactive'}
-            onClick={() => {
-              togglePasswordVisibility(!isPasswordVisible);
-            }}
-          />
-        </div>
+        <Input
+          placeholder={t('Enter password')}
+          type="password"
+          value={password}
+          onChange={(e) => {
+            setPassword(e.target.value);
+          }}
+          feedback={feedbackError}
+        />
         <PrimaryButton
           className={styles.button}
           onClick={onSubmit}
@@ -62,4 +57,4 @@ const AddVote = ({ accountSchema, onEnterPasswordSuccess }) => {
   );
 };
 
-export default AddVote;
+export default EnterPasswordForm;
