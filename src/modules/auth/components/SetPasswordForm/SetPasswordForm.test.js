@@ -76,9 +76,9 @@ describe('Set Password Form validation should work', () => {
     });
   });
 
-  it('should display an error if password does not have a combination of upper an lowercase characters', async () => {
+  it('should display an error if password does not have special characters', async () => {
     makeSubmitActive();
-    fireEvent.change(password, { target: { value: 'tesssssttt12$' } });
+    fireEvent.change(password, { target: { value: 'tesssssttt12A' } });
     fireEvent.click(screen.getByText('Save Account'));
 
     await waitFor(() => {
