@@ -1,7 +1,7 @@
 Feature: Add bookmark
 
   Background:
-    Given I login as genesis on devnet
+    Given I login as genesis on customNode
     And I wait 5 seconds
     Given I am on wallet page
     When I click on searchIcon

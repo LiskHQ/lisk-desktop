@@ -10,7 +10,7 @@ import actionTypes from './actionTypes';
  * into reducer to reduce the big-O factor
  *
  * @param {Object} params - API query parameters
- * @param {Object} network - Network configuration for mainnet/testnet/devnet
+ * @param {Object} network - Network configuration for mainnet/testnet/customNode
  * @returns {Array} - the list of blocks
  */
 const loadLastBlocks = async (params, network) => {

@@ -2,7 +2,7 @@ Feature: delegate
 
   @basic
   Scenario: I should be on the delegates page
-    Given Network is set to devnet
+    Given Network is set to customNode
     And I am on delegates page
     And I wait 5 seconds
 
@@ -39,7 +39,7 @@ Feature: delegate
 
   @advanced
   Scenario: Outside round delegates should function properly
-    Given Network is set to devnet
+    Given Network is set to customNode
     And I am on delegates page
     And I wait 5 seconds
     When I click on outsideRoundBtn
@@ -92,7 +92,7 @@ Feature: delegate
 
   @advanced
   Scenario: latest votes list should function properly
-    Given Network is set to devnet
+    Given Network is set to customNode
     And I am on delegates page
     And I wait 5 seconds
     When I click on latestVotesBtn

@@ -2,7 +2,7 @@ Feature: Blocks
 
   Background:
     Given Network switcher is enabled
-    And Network is set to devnet
+    And Network is set to customNode
     Given I am on blocks page
     And I wait 1 seconds
 

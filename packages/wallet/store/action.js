@@ -7,10 +7,10 @@ import { MODULE_ASSETS_NAME_ID_MAP } from '@transaction/configuration/moduleAsse
 import { toRawLsk } from '@token/fungible/utils/lsk';
 import { isEmpty } from 'src/utils/helpers';
 import { create } from '@transaction/api';
-import { selectCurrentBlockHeight } from '@common/store/selectors';
+
 import { getAccount, extractAddress as extractBitcoinAddress } from '@wallet/utils/api';
 import { getConnectionErrorMessage } from '@network/utils/getNetwork';
-import { extractKeyPair, getUnlockableUnlockObjects } from '@wallet/utils/account';
+import { extractKeyPair } from '@wallet/utils/account';
 import { defaultDerivationPath } from 'src/utils/explicitBipKeyDerivation';
 import { networkStatusUpdated } from '@network/store/action';
 import actionTypes from './actionTypes';
@@ -183,61 +183,6 @@ export const secondPassphraseStored = (passphrase) => ({
 export const secondPassphraseRemoved = () => ({
   type: actionTypes.secondPassphraseRemoved,
 });
-
-/**
- * Submits unlock balance transactions
- *
- * @param {object} data
- * @param {string} data.selectedFee
- * @returns {promise}
- */
-export const balanceUnlocked = data => async (dispatch, getState) => {
-  //
-  // Collect data
-  //
-  const state = getState();
-  const currentBlockHeight = selectCurrentBlockHeight(state);
-  // @todo Fix this by #3898
-  const activeWallet = {
-    ...state.wallet.info.LSK,
-    hwInfo: isEmpty(state.wallet.hwInfo) ? undefined : state.wallet.hwInfo,
-    passphrase: state.wallet.passphrase,
-  };
-
-  //
-  // Create the transaction
-  //
-  const [error, tx] = await to(
-    create({
-      network: state.network,
-      wallet: activeWallet,
-      transactionObject: {
-        moduleAssetId: MODULE_ASSETS_NAME_ID_MAP.unlockToken,
-        senderPublicKey: activeWallet.summary.publicKey,
-        nonce: activeWallet.sequence?.nonce,
-        fee: `${toRawLsk(parseFloat(data.selectedFee))}`,
-        unlockObjects: getUnlockableUnlockObjects(
-          activeWallet.dpos?.unlocking, currentBlockHeight,
-        ),
-      },
-    }, tokenMap.LSK.key),
-  );
-
-  //
-  // Dispatch corresponding action
-  //
-  if (!error) {
-    dispatch({
-      type: actionTypes.transactionCreatedSuccess,
-      data: tx,
-    });
-  } else {
-    dispatch({
-      type: actionTypes.transactionSignError,
-      data: error,
-    });
-  }
-};
 
 export const delegateRegistered = ({ fee, username }) => async (dispatch, getState) => {
 //
