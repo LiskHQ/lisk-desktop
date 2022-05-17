@@ -35,7 +35,6 @@ const AddVote = ({ accountSchema, onEnterPasswordSuccess }) => {
         <p className={styles.accountAddress}>{accountSchema?.metadata?.address || 'lskm555k7nhhw954rw4pqy5q9wn28n3cec94fmp4n'}</p>
         <div className={styles.inputWrapper}>
           <Input
-            className={styles.input}
             placeholder={t('Enter password or use Touch ID')}
             type={isPasswordVisible ? 'text' : 'password'}
             value={password}
