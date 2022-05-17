@@ -11,7 +11,7 @@ export { default as PrettyJson } from './prettyJson';
 export { default as Recipient } from './recipient';
 export { default as RequiredSignatures } from './requiredSignatures';
 export { default as Sender } from './sender';
-export { default as SignedAndRemainingMembers } from './signedAndRemainingMembers';
+export { default as SignedAndRemainingMembersList } from './signedAndRemainingMembersList';
 export { default as TransactionId } from './transactionId';
 export { default as TxDate } from './txDate';
 export { Votes } from './votes';

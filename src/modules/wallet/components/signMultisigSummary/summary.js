@@ -3,8 +3,7 @@ import { isEmpty } from 'src/utils/helpers';
 import { signatureCollectionStatus } from '@transaction/configuration/txStatus';
 import BoxContent from 'src/theme/box/content';
 import Box from 'src/theme/box';
-import TransactionDetails from '@screens/managers/transactionDetails';
-import TransactionDetailsProvider from '@transaction/context';
+import TransactionDetails from 'src/modules/transaction/components/TransactionDetailsView';
 
 import ProgressBar from '../signMultisigView/progressBar';
 import { showSignButton, getTransactionSignatureStatus } from '../signMultisigView/helpers';
@@ -17,7 +16,7 @@ const Summary = ({
   account,
   nextStep,
   history,
-  error,
+  // error,
   senderAccount,
 }) => {
   const isMember = useMemo(() => {
@@ -70,18 +69,7 @@ const Summary = ({
       </header>
       <BoxContent>
         <ProgressBar current={2} />
-        <TransactionDetailsProvider
-          activeToken="LSK"
-          error={error}
-          transaction={transaction}
-          account={senderAccount.data}
-          schema={`${transaction.moduleAssetId}-preview`}
-          containerStyle={`${styles.txDetails} ${
-            showFeedback && isMember ? styles.small : ''
-          }`}
-        >
-          <TransactionDetails />
-        </TransactionDetailsProvider>
+        <TransactionDetails />
       </BoxContent>
       {isMember ? (
         <ActionBar t={t} history={history} nextButton={nextButton} />

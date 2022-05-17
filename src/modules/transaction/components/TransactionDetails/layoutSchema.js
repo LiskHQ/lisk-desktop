@@ -2,10 +2,10 @@ import { MODULE_ASSETS_NAME_ID_MAP } from '@transaction/configuration/moduleAsse
 
 import {
   TransactionId, Sender, Recipient, Message, Illustration,
-  Confirmations, Date, Amount, Fee, RequiredSignatures, TransactionVotes,
+  Confirmations, TxDate, Amount, Fee, RequiredSignatures, Votes,
   BlockId, BlockHeight, Members, SignedAndRemainingMembersList, PrettyJson,
-} from '@transaction/components/TransactionDetails';
-import styles from '@screens/managers/transactionDetails/transactionDetails.css';
+} from 'src/modules/transaction/components/TransactionDetails';
+import styles from '@transaction/components/transactionDetailsView/transactionDetails.css';
 
 const {
   transfer, voteDelegate, unlockToken, registerDelegate, registerMultisignatureGroup,
@@ -13,7 +13,7 @@ const {
 } = MODULE_ASSETS_NAME_ID_MAP;
 
 const baseComponents = [Illustration, Sender];
-const timeComponents = [TransactionId, Date, BlockId, BlockHeight, Fee, Confirmations];
+const timeComponents = [TransactionId, TxDate, BlockId, BlockHeight, Fee, Confirmations];
 const previewBaseComponents = [Illustration, Sender];
 const restComponents = [TransactionId, Fee, SignedAndRemainingMembersList];
 
@@ -27,11 +27,11 @@ export const LayoutSchema = {
     className: styles.transferPreview,
   },
   [voteDelegate]: {
-    components: [...baseComponents, ...timeComponents, TransactionVotes, PrettyJson],
+    components: [...baseComponents, ...timeComponents, Votes, PrettyJson],
     className: styles.voteLayout,
   },
   [`${voteDelegate}-preview`]: {
-    components: [...previewBaseComponents, TransactionVotes, ...restComponents],
+    components: [...previewBaseComponents, Votes, ...restComponents],
     className: styles.votePreview,
   },
   [registerDelegate]: {
