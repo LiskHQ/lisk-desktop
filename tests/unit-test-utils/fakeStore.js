@@ -29,12 +29,12 @@ const defaultStore = {
     autoLog: true,
     advancedMode: true,
     areTermsOfUseAccepted: true,
-    token: {
-      active: tokenMap.LSK.key,
-      list: {
-        [tokenMap.BTC.key]: false,
-        [tokenMap.LSK.key]: true,
-      },
+  },
+  token: {
+    active: tokenMap.LSK.key,
+    list: {
+      [tokenMap.BTC.key]: false,
+      [tokenMap.LSK.key]: true,
     },
   },
   search: {

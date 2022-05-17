@@ -2,7 +2,7 @@ import * as accountApi from '@wallet/utils/api';
 import { create } from '@transaction/api';
 import wallets from '@tests/constants/wallets';
 import * as networkActions from '@network/store/action';
-import actionTypes from './actionTypes';
+import txActionTypes from '@transaction/store/actionTypes';
 import {
   accountDataUpdated,
   multisigGroupRegistered,
@@ -48,11 +48,9 @@ describe('actions: account', () => {
             },
           },
         },
-        settings: {
-          token: {
-            active: 'LSK',
-            list: { LSK: true },
-          },
+        token: {
+          active: 'LSK',
+          list: { LSK: true },
         },
         wallet: {
           passphrase: wallets.genesis.passphrase,
@@ -157,7 +155,7 @@ describe('actions: account', () => {
         },
       }, 'LSK');
       expect(dispatch).toHaveBeenCalledWith({
-        type: actionTypes.transactionCreatedSuccess,
+        type: txActionTypes.transactionCreatedSuccess,
         data: tx,
       });
     });
@@ -170,7 +168,7 @@ describe('actions: account', () => {
         }));
       await multisigGroupRegistered(params)(dispatch, getState);
       expect(dispatch).toHaveBeenCalledWith({
-        type: actionTypes.transactionSignError,
+        type: txActionTypes.transactionSignError,
         data: error,
       });
     });

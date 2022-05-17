@@ -105,10 +105,12 @@ describe('actions: account', () => {
           },
         },
         settings: {
-          token: {
-            active: 'LSK',
-            list: { LSK: true },
-          },
+          enableCustomDerivationPath: true,
+          customDerivationPath: '1/2',
+        },
+        token: {
+          active: 'LSK',
+          list: { LSK: true },
         },
         wallet: {
           passphrase: wallets.genesis.passphrase,
@@ -188,11 +190,6 @@ describe('actions: account', () => {
         network,
         settings: {
           autoLog: true,
-          token: {
-            list: {
-              LSK: true,
-            },
-          },
           enableCustomDerivationPath: true,
           customDerivationPath: '1/2',
         },
