@@ -4,7 +4,6 @@ import { withTranslation } from 'react-i18next';
 import { Link } from 'react-router-dom';
 import routes from '@screens/router/routes';
 import { tokenMap } from '@token/fungible/consts/tokens';
-import { truncateAddress } from '@wallet/utils/account';
 import Tooltip from 'src/theme/Tooltip';
 import { Input } from 'src/theme';
 import { PrimaryButton, TertiaryButton } from 'src/theme/buttons';
