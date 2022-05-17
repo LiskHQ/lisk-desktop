@@ -4,7 +4,6 @@ import { MODULE_ASSETS_NAME_ID_MAP } from '@transaction/configuration/moduleAsse
 import { mountWithRouter } from 'src/utils/testHelpers';
 import { truncateAddress } from '@wallet/utils/account';
 import wallets from '@tests/constants/wallets';
-import TransactionDetailsManager from '@transaction/context/TransactionDetailsProvider';
 import TransactionDetails from '.';
 
 const transaction = {
@@ -112,9 +111,9 @@ describe('Transaction Details Component', () => {
   beforeEach(mockUseContext);
 
   const TransactionDetailsWithManager = withRouter((transactionProps) => (
-    <TransactionDetailsManager {...transactionProps}>
-      <TransactionDetails title={props.title} />
-    </TransactionDetailsManager>
+    // <TransactionDetailsManager {...transactionProps}>
+    <TransactionDetails title={props.title} />
+    // </TransactionDetailsManager>
   ));
 
   describe('Transfer transactions', () => {

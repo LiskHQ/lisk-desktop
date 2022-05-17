@@ -2,7 +2,7 @@ import React, { useMemo } from 'react';
 import MultiSignatureMembers from '@wallet/components/multisignatureMembers';
 import { extractAddressFromPublicKey } from '@wallet/utils/account';
 import TransactionDetailsContext from '../../context/transactionDetailsContext';
-import styles from './TransactionDetails.css';
+import styles from './styles.css';
 
 const Members = ({ t }) => {
   const {

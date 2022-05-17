@@ -2,7 +2,7 @@ import React, { useEffect } from 'react';
 import withData from 'src/utils/withData';
 import { getDelegates } from '@dpos/validator/api';
 import TransactionDetailsContext from '../../context/transactionDetailsContext';
-import styles from './TransactionVotes.css';
+import styles from './styles.css';
 import VoteItem from '../VoteItem';
 
 export const Votes = ({ t, votedDelegates }) => {
@@ -17,7 +17,7 @@ export const Votes = ({ t, votedDelegates }) => {
   }, []);
 
   return (
-    <div className={`${styles.value} ${styles.votes}`}>
+    <div className={`${styles.voteValue} ${styles.votes}`}>
       <div className={styles.detailsWrapper}>
         <span className={styles.label}>
           {`${t('Votes')} (${votes.length})`}

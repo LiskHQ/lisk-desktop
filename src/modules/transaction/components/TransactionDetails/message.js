@@ -2,7 +2,7 @@ import React from 'react';
 import { getTxAsset } from '@transaction/utils';
 import TransactionDetailsContext from '../../context/transactionDetailsContext';
 import ValueAndLabel from './valueAndLabel';
-import styles from './TransactionDetails.css';
+import styles from './styles.css';
 
 const Message = ({ t }) => {
   const { transaction } = React.useContext(TransactionDetailsContext);

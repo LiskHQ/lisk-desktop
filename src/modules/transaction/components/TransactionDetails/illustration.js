@@ -2,7 +2,7 @@ import React from 'react';
 import { getModuleAssetTitle } from '@transaction/utils/moduleAssets';
 import TransactionDetailsContext from '../../context/transactionDetailsContext';
 import TransactionTypeFigure from '../TransactionTypeFigure';
-import styles from './TransactionDetails.css';
+import styles from './styles.css';
 
 const Illustration = () => {
   const params = React.useContext(TransactionDetailsContext);

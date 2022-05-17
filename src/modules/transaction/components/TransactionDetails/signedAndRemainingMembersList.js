@@ -3,7 +3,7 @@ import { MODULE_ASSETS_NAME_ID_MAP } from '@transaction/configuration/moduleAsse
 import { SignedAndRemainingMembers } from '@wallet/components/multisignatureMembers';
 import { calculateRemainingAndSignedMembers } from '@wallet/utils/account';
 import TransactionDetailsContext from '../../context/transactionDetailsContext';
-import styles from './TransactionDetails.css';
+import styles from './styles.css';
 
 const SignedAndRemainingMembersList = ({ t }) => {
   const { transaction, account } = React.useContext(TransactionDetailsContext);

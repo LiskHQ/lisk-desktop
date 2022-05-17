@@ -1,5 +1,5 @@
 import React from 'react';
-import styles from './TransactionDetails.css';
+import styles from './styles.css';
 
 const ValueAndLabel = ({ label, className, children }) => (
   <div className={`${styles.value} ${className}`}>

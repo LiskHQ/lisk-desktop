@@ -1,7 +1,7 @@
 import React from 'react';
 import ReactJson from 'react-json-view';
 import TransactionDetailsContext from '../../context/transactionDetailsContext';
-import styles from './TransactionDetails.css';
+import styles from './styles.css';
 
 const PrettyJson = ({ t }) => {
   const { transaction } = React.useContext(TransactionDetailsContext);

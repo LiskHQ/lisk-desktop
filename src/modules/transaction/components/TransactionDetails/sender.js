@@ -3,7 +3,7 @@ import { getModuleAssetSenderLabel } from '@transaction/utils/moduleAssets';
 import { getDelegateName } from '@transaction/utils';
 import WalletInfo from '../WalletInfo';
 import TransactionDetailsContext from '../../context/transactionDetailsContext';
-import styles from './TransactionDetails.css';
+import styles from './styles.css';
 
 const Sender = () => {
   const { activeToken, transaction, network } = React.useContext(

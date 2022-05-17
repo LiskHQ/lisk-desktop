@@ -5,7 +5,7 @@ import BoxHeader from 'src/theme/box/header';
 import TransactionDetailsContext from '@transaction/context/transactionDetailsContext';
 import { LayoutSchema } from '../TransactionDetails/layoutSchema';
 import NotFound from './notFound';
-import styles from './transactionDetails.css';
+import styles from './styles.css';
 
 const TransactionDetails = ({
   t, activeToken, network, schema, title,

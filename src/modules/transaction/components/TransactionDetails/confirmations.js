@@ -5,7 +5,7 @@ import { tokenMap } from '@token/fungible/consts/tokens';
 import Tooltip from 'src/theme/Tooltip';
 import TransactionDetailsContext from '../../context/transactionDetailsContext';
 import ValueAndLabel from './valueAndLabel';
-import styles from './TransactionDetails.css';
+import styles from './styles.css';
 
 const Confirmations = ({ t }) => {
   const currentBlockHeight = useSelector(selectCurrentBlockHeight);

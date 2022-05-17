@@ -4,7 +4,7 @@ import DiscreetMode from 'src/modules/common/components/discreetMode';
 import TokenAmount from '@token/fungible/components/tokenAmount';
 import TransactionDetailsContext from '../../context/transactionDetailsContext';
 import ValueAndLabel from './valueAndLabel';
-import styles from './TransactionDetails.css';
+import styles from './styles.css';
 
 const Amount = ({ t }) => {
   const { activeToken, transaction } = React.useContext(

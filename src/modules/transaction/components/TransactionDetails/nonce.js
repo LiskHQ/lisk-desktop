@@ -1,7 +1,7 @@
 import React from 'react';
 import TransactionDetailsContext from '../../context/transactionDetailsContext';
 import ValueAndLabel from './valueAndLabel';
-import styles from './TransactionDetails.css';
+import styles from './styles.css';
 
 const Nonce = ({ t }) => {
   const {

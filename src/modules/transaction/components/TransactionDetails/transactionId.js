@@ -3,7 +3,7 @@ import CopyToClipboard from 'src/modules/common/components/copyToClipboard';
 import { truncateAddress } from '@wallet/utils/account';
 import TransactionDetailsContext from '../../context/transactionDetailsContext';
 import ValueAndLabel from './valueAndLabel';
-import styles from './TransactionDetails.css';
+import styles from './styles.css';
 
 const TransactionId = ({ t }) => {
   const {
