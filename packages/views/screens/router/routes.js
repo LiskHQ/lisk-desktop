@@ -88,11 +88,6 @@ export default {
     forbiddenTokens: [],
     exact: true,
   },
-  backupAccount: {
-    path: '/backup-account',
-    isPrivate: true,
-    forbiddenTokens: [],
-  },
 };
 
 export const modals = {

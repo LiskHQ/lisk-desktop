@@ -32,7 +32,6 @@ import ReclaimBalanceModal from '@legacy/manager/reclaimBalanceModal';
 import MultiSignature from '@screens/managers/multiSignature';
 import SignMultiSigTransaction from '@screens/managers/signMultiSignTransaction';
 import MultisigAccountDetails from '@wallet/manager/multisigAccountDetailsManager';
-import BackupAccount from '@screens/managers/backupAccount';
 
 export default {
   wallet: AccountDetails,
@@ -70,5 +69,4 @@ export default {
   multiSignature: MultiSignature,
   multisigAccountDetails: MultisigAccountDetails,
   signMultiSignTransaction: SignMultiSigTransaction,
-  backupAccount: BackupAccount,
 };
