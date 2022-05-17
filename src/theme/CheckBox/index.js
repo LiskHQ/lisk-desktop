@@ -9,7 +9,7 @@ const CheckBox = forwardRef(({
     <input
       type="checkbox"
       data-testid={name}
-      // checked={!!checked}
+      checked={checked ? !!checked : undefined}
       ref={ref}
       value={value}
       name={name}

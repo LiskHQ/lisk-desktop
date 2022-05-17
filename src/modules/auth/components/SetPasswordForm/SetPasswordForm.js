@@ -51,7 +51,7 @@ function SetPasswordForm({ onSubmit }) {
             size="xs"
             secureTextEntry
             feedback={errors.password?.message}
-            status={errors?.password ? 'error' : undefined}
+            status={errors.password ? 'error' : undefined}
             defaultValues=""
             value={password}
             label={(
@@ -77,7 +77,7 @@ function SetPasswordForm({ onSubmit }) {
             size="xs"
             secureTextEntry
             feedback={errors.cpassword?.message}
-            status={errors?.cpassword ? 'error' : undefined}
+            status={errors.cpassword ? 'error' : undefined}
             label="Confirm your Password"
             defaultValues=""
             value={cpassword}
@@ -88,7 +88,7 @@ function SetPasswordForm({ onSubmit }) {
           <Input
             size="xs"
             feedback={errors.accountName?.message}
-            status={errors?.accountName ? 'error' : undefined}
+            status={errors.accountName ? 'error' : undefined}
             label="Account name (Optional)"
             defaultValues=""
             value={accountName}
