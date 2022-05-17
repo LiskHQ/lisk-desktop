@@ -2,7 +2,7 @@ Feature: Verify Message
 
   @basic
   Scenario: Verify the integrity of a signed message in textarea
-    Given I login as genesis on devnet
+    Given I login as genesis on customNode
     And I wait 2 seconds
     And I open signMessage modal
     When I fill test_Message in signMessageInput field
@@ -14,7 +14,7 @@ Feature: Verify Message
 
   @basic
   Scenario: Verify the integrity of a tampered message in textArea view
-    Given I login as genesis on devnet
+    Given I login as genesis on customNode
     And I wait 2 seconds
     And I open verifyMessage modal
     And I click on textAreaViewBtn
@@ -25,7 +25,7 @@ Feature: Verify Message
 
   @basic
   Scenario: Verify the integrity of a signed message in input fields view
-    Given I login as genesis on devnet
+    Given I login as genesis on customNode
     And I wait 2 seconds
     And I open verifyMessage modal
     And I click on inputsViewBtn
@@ -38,7 +38,7 @@ Feature: Verify Message
 
   @basic
   Scenario: Verify the integrity of a tampered message in input fields view
-    Given I login as genesis on devnet
+    Given I login as genesis on customNode
     And I wait 2 seconds
     And I open verifyMessage modal
     And I click on inputsViewBtn

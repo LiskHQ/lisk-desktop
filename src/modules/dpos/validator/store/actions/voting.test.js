@@ -13,6 +13,7 @@ import {
   votesSubmitted,
   votesConfirmed,
   votesRetrieved,
+  balanceUnlocked,
 } from './voting';
 
 jest.mock('@transaction/api', () => ({
@@ -182,6 +183,61 @@ describe('actions: voting', () => {
       await votesRetrieved()(dispatch, getState);
 
       expect(dispatch).toHaveBeenCalledWith(expectedAction);
+    });
+  });
+
+  describe('balanceUnlocked', () => {
+    // const state = {
+    //   wallet: {
+    //     passphrase: wallets.genesis.passphrase,
+    //     info: {
+    //       LSK: wallets.genesis,
+    //     },
+    //   },
+    //   network: {},
+    //   blocks: {
+    //     latestBlocks: [{ height: 10 }],
+    //   },
+    // };
+    // const getState = () => state;
+    const state = getState();
+    const params = { selectedFee: '0.1' };
+
+    it('should dispatch transactionCreatedSuccess', async () => {
+      const tx = { id: 1 };
+      transactionApi.create.mockImplementation(() =>
+        new Promise((resolve) => {
+          resolve(tx);
+        }));
+      await balanceUnlocked(params)(dispatch, getState);
+      expect(transactionApi.create).toHaveBeenCalledWith({
+        network: state.network,
+        wallet: state.wallet.info.LSK,
+        transactionObject: {
+          moduleAssetId: '5:2',
+          senderPublicKey: wallets.genesis.summary.publicKey,
+          nonce: wallets.genesis.sequence?.nonce,
+          fee: '10000000',
+          unlockObjects: [{}],
+        },
+      }, 'LSK');
+      expect(dispatch).toHaveBeenCalledWith({
+        type: actionTypes.transactionCreatedSuccess,
+        data: tx,
+      });
+    });
+
+    it('should dispatch transactionSignError', async () => {
+      const error = { message: 'TestError' };
+      transactionApi.create.mockImplementation(() =>
+        new Promise((_, reject) => {
+          reject(error);
+        }));
+      await balanceUnlocked(params)(dispatch, getState);
+      expect(dispatch).toHaveBeenCalledWith({
+        type: actionTypes.transactionSignError,
+        data: error,
+      });
     });
   });
 });

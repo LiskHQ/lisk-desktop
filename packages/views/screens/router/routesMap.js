@@ -11,7 +11,7 @@ import MonitorWallets from '@account/manager/AccountsManager';
 import MonitorNetwork from '@network/manager/networkManager';
 import MonitorTransactions from '@screens/managers/monitor/transactions';
 import Register from '@auth/manager/SignupManager';
-import RegisterDelegate from '@screens/managers/registerDelegate';
+import RegisterDelegate from '@dpos/validator/manager/registerDelegateManager';
 import Send from '@screens/managers/send';
 import Settings from 'src/modules/settings/manager/SettingsManager';
 import SignMessage from '@message/manager/signMessageManager';
@@ -21,16 +21,16 @@ import AccountDetails from '@account/components/AccountDetails';
 // import TransactionDetailsModal from '@screens/managers/transactionDetailsModal';
 import VerifyMessage from '@message/manager/verifyMessageManager';
 import Request from '@screens/managers/request';
-import LockedBalance from '@token/fungible/components/LockedBalance';
-import EditVote from '@screens/managers/editVote';
-import VotingQueue from '@screens/managers/votingQueue';
+import UnlockBalanceView from '@dpos/validator/components/unlockBalanceView';
+import EditVote from '@dpos/validator/manager/editVoteManager';
+import VotingQueue from '@dpos/validator/manager/votingQueueManager';
 import DeviceDisconnect from '@screens/managers/deviceDisconnectDialog';
 import NewReleaseDialog from '@update/detail/info/newReleaseDialog';
 import SearchBar from '@search/components/SearchBar';
 import ReclaimBalance from '@legacy/manager/reclaimBalance';
 import ReclaimBalanceModal from '@legacy/manager/reclaimBalanceModal';
-import MultiSignature from '@screens/managers/multiSignature';
-import SignMultiSigTransaction from '@screens/managers/signMultiSignTransaction';
+import RegisterMultisig from '@wallet/manager/registerMultisigManager';
+import SignMultiSig from '@wallet/manager/signMultisigManager';
 import MultisigAccountDetails from '@wallet/manager/multisigAccountDetailsManager';
 
 export default {
@@ -61,12 +61,12 @@ export default {
   // transactionDetails: TransactionDetailsModal,
   newRelease: NewReleaseDialog,
   request: Request,
-  lockedBalance: LockedBalance,
+  lockedBalance: UnlockBalanceView,
   editVote: EditVote,
   votingQueue: VotingQueue,
   deviceDisconnectDialog: DeviceDisconnect,
   reclaimBalance: ReclaimBalanceModal,
-  multiSignature: MultiSignature,
+  multiSignature: RegisterMultisig,
   multisigAccountDetails: MultisigAccountDetails,
-  signMultiSignTransaction: SignMultiSigTransaction,
+  signMultiSignTransaction: SignMultiSig,
 };

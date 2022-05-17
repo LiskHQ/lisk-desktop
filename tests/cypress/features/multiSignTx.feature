@@ -2,7 +2,7 @@ Feature: Multisignature transaction
 
   @basic
   Scenario: Add funds to account2P
-    Given I login as genesis on devnet
+    Given I login as genesis on customNode
     Given  I wait 1 seconds
     Given I am on Wallet page
     Then I click on sendLink
@@ -14,7 +14,7 @@ Feature: Multisignature transaction
 
   @basic
   Scenario: Register multisignature group (Mandatory, Mandatory)
-    Given I login as account2P on devnet
+    Given I login as account2P on customNode
     And I wait 10 seconds
     Given I am on wallet page
     When I click on walletInfoMsign
@@ -34,7 +34,7 @@ Feature: Multisignature transaction
 
   @basic
   Scenario: Sign transaction and send transaction (Mandatory, Mandatory)
-    Given I login as delegate on devnet
+    Given I login as delegate on customNode
     And I wait 1 seconds
     When I click on signMultiSignTransactionToggle
     Then I paste transaction RegisterSecondPassphraseTx
@@ -55,7 +55,7 @@ Feature: Multisignature transaction
 
   @basic
   Scenario: Send transaction using second passphrase (Mandatory, Mandatory)
-    Given I login as account2P on devnet
+    Given I login as account2P on customNode
     And I wait 1 seconds
     Given I am on wallet page
     Then I click on sendLink
@@ -77,7 +77,7 @@ Feature: Multisignature transaction
 
   @advanced
   Scenario: Register multisignature group (Mandatory, Optional, Optional, 2 signatures)
-    Given I login as multiSig_candidate on devnet
+    Given I login as multiSig_candidate on customNode
     And I wait 1 seconds
     Given I am on wallet page
     When I click on walletInfoMsign
@@ -98,7 +98,7 @@ Feature: Multisignature transaction
 
   @advanced
   Scenario: Sign transaction (Mandatory, Optional, Optional, 2 signatures)
-    Given I login as genesis on devnet
+    Given I login as genesis on customNode
     And I wait 1 seconds
     When I click on signMultiSignTransactionToggle
     Then I paste transaction RegisterMultiSignGroupTx_second_sign
@@ -113,7 +113,7 @@ Feature: Multisignature transaction
 
   @advanced
   Scenario: Send transaction (Mandatory, Optional, Optional, 2 signatures)
-    Given I login as delegate on devnet
+    Given I login as delegate on customNode
     And I wait 1 seconds
     When I click on signMultiSignTransactionToggle
     Then I paste transaction RegisterMultiSignGroupTx_third_sign

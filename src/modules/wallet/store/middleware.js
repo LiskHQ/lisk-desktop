@@ -37,7 +37,7 @@ const showNotificationsForIncomingTransactions = (transactions, account, token) 
 // eslint-disable-next-line max-statements
 const checkTransactionsAndUpdateAccount = async (store, action) => {
   const state = store.getState();
-  const { transactions, settings: { token }, network } = state;
+  const { transactions, token, network } = state;
   const account = getActiveTokenAccount(store.getState());
   const { numberOfTransactions, id } = action.data.block;
 
