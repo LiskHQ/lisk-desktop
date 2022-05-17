@@ -5,7 +5,7 @@ import {
   Confirmations, TxDate, Amount, Fee, RequiredSignatures, Votes,
   BlockId, BlockHeight, Members, SignedAndRemainingMembersList, PrettyJson,
 } from 'src/modules/transaction/components/TransactionDetails';
-import styles from './styles.css';
+import styles from './layoutSchema.css';
 
 const {
   transfer, voteDelegate, unlockToken, registerDelegate, registerMultisignatureGroup,

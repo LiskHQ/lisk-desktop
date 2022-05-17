@@ -5,6 +5,7 @@ import { multisigTransactionSigned } from '@common/store/actions';
 import { getAccount } from '@wallet/utils/api';
 import withData from 'src/utils/withData';
 import { withRouter } from 'react-router';
+import { selectActiveToken } from '@common/store';
 import Summary from './summary';
 
 const apis = {
@@ -27,6 +28,7 @@ const mapStateToProps = state => ({
     hwInfo: state.hwInfo,
   },
   network: state.network,
+  activeToken: selectActiveToken(state),
   networkIdentifier: state.network.networks.LSK.networkIdentifier,
 });
 

@@ -8,7 +8,7 @@ import NotFound from './notFound';
 import styles from './styles.css';
 
 const TransactionDetails = ({
-  t, activeToken, network, schema, title,
+  t, activeToken, network, title,
   transaction: { error, isLoading, data }, wallet,
   containerStyle,
 }) => {
@@ -20,7 +20,7 @@ const TransactionDetails = ({
     return <NotFound t={t} />;
   }
 
-  const Layout = LayoutSchema[schema ?? data.moduleAssetId] || LayoutSchema.default;
+  const Layout = LayoutSchema[data.moduleAssetId] || LayoutSchema.default;
 
   return (
     <Box
