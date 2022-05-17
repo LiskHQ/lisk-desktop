@@ -8,6 +8,7 @@ const CheckBox = forwardRef(({
   <label className={`${styles.checkbox} ${className} ${checked ? 'checked' : 'unchecked'}`}>
     <input
       type="checkbox"
+      data-testid={name}
       // checked={!!checked}
       ref={ref}
       value={value}

@@ -4,10 +4,11 @@ module.exports = {
   rootDir: '../',
   modulePaths: ['packages'],
   testMatch: [
-    '<rootDir>/src/**/*.test.js',
-    '<rootDir>/app/src/**/*.test.js',
-    '<rootDir>/setup/**/*.test.js',
-    '<rootDir>/tests/**/*.test.js',
+    '<rootDir>/src/**/SetPasswordForm/**/*.test.js',
+    // '<rootDir>/src/**/*.test.js',
+    // '<rootDir>/app/src/**/*.test.js',
+    // '<rootDir>/setup/**/*.test.js',
+    // '<rootDir>/tests/**/*.test.js',
   ],
   testPathIgnorePatterns: [
     '<rootDir>/test/integration/wallet.test.js',
@@ -216,7 +217,7 @@ module.exports = {
       { suiteName: 'jest tests', outputDirectory: '<rootDir>/coverage/jest' },
     ],
   ],
-  setupFilesAfterEnv: ['./node_modules/jest-enzyme/lib/index.js'],
+  setupFilesAfterEnv: ['./node_modules/jest-enzyme/lib/index.js', './node_modules/@testing-library/jest-dom/extend-expect'],
   testEnvironment: 'enzyme',
   watchPlugins: [
     ['jest-watch-toggle-config', { setting: 'verbose' }],

@@ -49,8 +49,10 @@ function SetPasswordForm({ onSubmit }) {
         <div style={{ padding: '0px 30px' }}>
           <Input
             size="xs"
+            secureTextEntry
             feedback={errors.password?.message}
             status={errors?.password ? 'error' : undefined}
+            defaultValues=""
             value={password}
             label={(
               <span style={{ display: 'flex', alignItems: 'center' }}>
@@ -73,9 +75,11 @@ function SetPasswordForm({ onSubmit }) {
         <div style={{ padding: '0px 30px' }}>
           <Input
             size="xs"
+            secureTextEntry
             feedback={errors.cpassword?.message}
             status={errors?.cpassword ? 'error' : undefined}
             label="Confirm your Password"
+            defaultValues=""
             value={cpassword}
             {...register('cpassword')}
           />
@@ -86,6 +90,7 @@ function SetPasswordForm({ onSubmit }) {
             feedback={errors.accountName?.message}
             status={errors?.accountName ? 'error' : undefined}
             label="Account name (Optional)"
+            defaultValues=""
             value={accountName}
             {...register('accountName')}
           />

@@ -203,3 +203,23 @@
 .inputDropdownInput {
   border: 0;
 }
+
+.toggleBtn {
+  width: unset;
+  border: none;
+  position: absolute;
+  top: calc(var(--height-xs) / 2);
+  transform: translateY(-50%);
+  right: 10px;
+
+  & .toggleIcon {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+}
+
+.rightOffset {
+  transition: all 200ms linear;
+  right: 26px;
+}

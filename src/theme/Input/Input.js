@@ -1,5 +1,7 @@
 import PropTypes from 'prop-types';
-import React, { forwardRef, useCallback, useState } from 'react';
+import React, {
+  forwardRef, useCallback, useMemo, useState,
+} from 'react';
 import Feedback from 'src/theme/feedback/feedback';
 import Icon from 'src/theme/Icon';
 import Spinner from '../Spinner';
@@ -39,9 +41,9 @@ const getInputClass = ({
     .filter(Boolean)
     .join(' ');
 
-function PasswordTypeToggler({ onClick, isPasswordVisible }) {
+function PasswordTypeToggler({ onClick, isPasswordVisible, hasNotification }) {
   return (
-    <button onClick={onClick} className={styles.toggleBtn}>
+    <button onClick={onClick} className={`${styles.toggleBtn} ${hasNotification ? styles.rightOffset : ''}`}>
       <Icon
         name={isPasswordVisible ? 'eyeActive' : 'eyeInactive'}
         className={styles.toggleIcon}
@@ -81,6 +83,8 @@ const Input = forwardRef(({
     setIsPassword(!isPassword);
   }, [isPassword]);
 
+  const hasNotification = useMemo(() => statusIconNameMap[status] || status === 'pending', [statusIconNameMap[status], status]);
+
   return (
     <>
       {label && (
@@ -112,11 +116,13 @@ const Input = forwardRef(({
           <PasswordTypeToggler
             isPasswordVisible={!isPassword}
             onClick={toggleFieldType}
+            hasNotification={hasNotification}
           />
           )
         }
         <Component
           {...props}
+          data-testid={props.name}
           type={isPassword ? 'password' : type}
           ref={setRef || ref}
           className={getInputClass({
