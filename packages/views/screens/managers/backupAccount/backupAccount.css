@@ -41,8 +41,20 @@
   margin: 22px auto 0 auto;
 }
 
-.input {
+.inputWrapper {
+  display: flex;
+  justify-content: end;
   margin-top: 32px;
+  align-items: center;
+}
+
+.input {
+}
+
+.eyeIcon {
+  width: 18px;
+  position: absolute;
+  margin-right: 18px;
 }
 
 .button {
