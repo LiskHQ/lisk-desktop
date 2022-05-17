@@ -153,7 +153,7 @@ const AddBookmark = ({
 
     func({
       token: active,
-      account: {
+      wallet: {
         address: fields[0].value,
         title: fields[1].value,
         isDelegate: fields[1].readonly,

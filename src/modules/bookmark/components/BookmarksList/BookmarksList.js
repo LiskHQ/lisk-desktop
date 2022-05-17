@@ -77,7 +77,7 @@ export class BookmarksList extends React.Component {
     const { token, bookmarkUpdated } = this.props;
     const { editedAddress, editedTitle } = this.state;
     bookmarkUpdated({
-      account: {
+      wallet: {
         address: editedAddress,
         title: editedTitle,
       },
