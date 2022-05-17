@@ -16,11 +16,11 @@ import Members from '../multisignatureMembers';
 
 import styles from './styles.css';
 
-const MultisigAccountDetails = ({ t, account, history }) => {
+const MultisigAccountDetails = ({ t, wallet, history }) => {
   const hostAccount = useSelector(selectAccount);
   const network = useSelector((state) => state.network);
   const isHost = history.location.pathname === routes.wallet.path;
-  const data = isHost ? hostAccount.info.LSK : account.data;
+  const data = isHost ? hostAccount.info.LSK : wallet.data;
 
   if (Object.keys(data).length === 0) {
     return null;
@@ -51,7 +51,7 @@ const MultisigAccountDetails = ({ t, account, history }) => {
         history.location.search,
         'address',
       );
-      account.loadData({ address });
+      wallet.loadData({ address });
     }
   }, [network]);
 
