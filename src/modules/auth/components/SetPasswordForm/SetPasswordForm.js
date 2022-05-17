@@ -46,7 +46,7 @@ function SetPasswordForm({ onSubmit }) {
         </p>
       </div>
       <form onSubmit={handleSubmit(onSubmit)}>
-        <div style={{ padding: '0px 30px' }}>
+        <div className={styles.fieldWrapper}>
           <Input
             size="xs"
             secureTextEntry
@@ -55,7 +55,7 @@ function SetPasswordForm({ onSubmit }) {
             defaultValues=""
             value={password}
             label={(
-              <span style={{ display: 'flex', alignItems: 'center' }}>
+              <span className=".password-label-wrapper">
                 Enter Password
                 <Tooltip
                   position="right"
@@ -72,7 +72,7 @@ function SetPasswordForm({ onSubmit }) {
             {...register('password')}
           />
         </div>
-        <div style={{ padding: '0px 30px' }}>
+        <div className={styles.fieldWrapper}>
           <Input
             size="xs"
             secureTextEntry
@@ -84,7 +84,7 @@ function SetPasswordForm({ onSubmit }) {
             {...register('cpassword')}
           />
         </div>
-        <div style={{ padding: '0px 30px' }}>
+        <div className={styles.fieldWrapper}>
           <Input
             size="xs"
             feedback={errors.accountName?.message}
@@ -95,16 +95,14 @@ function SetPasswordForm({ onSubmit }) {
             {...register('accountName')}
           />
         </div>
-        <div style={{ padding: '16px 30px 13px 30px' }}>
-          <div className={`${styles.checkBoxWrapper}`}>
-            <CheckBox
-              className={`${styles.checkbox}`}
-              {...register('hasAgreed')}
-            />
-            <span>{t('I agree to store my encrypted secret recovery phrase on this device.')}</span>
-          </div>
+        <div className={`${styles.checkBoxWrapper}`}>
+          <CheckBox
+            className={`${styles.checkbox}`}
+            {...register('hasAgreed')}
+          />
+          <span>{t('I agree to store my encrypted secret recovery phrase on this device.')}</span>
         </div>
-        <div style={{ padding: '10px 30px', width: '100%', boxSizing: 'border-box' }}>
+        <div className={[styles.fieldWrapper, styles.submitWrapper]}>
           <PrimaryButton
             type="submit"
             style={{ width: '100%' }}

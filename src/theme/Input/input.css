@@ -205,6 +205,7 @@
 }
 
 .toggleBtn {
+  transition: right 200ms linear;
   width: unset;
   border: none;
   position: absolute;
@@ -220,6 +221,5 @@
 }
 
 .rightOffset {
-  transition: all 200ms linear;
   right: 26px;
 }
