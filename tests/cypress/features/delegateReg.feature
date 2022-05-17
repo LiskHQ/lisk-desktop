@@ -1,6 +1,6 @@
 Feature: Register delegate
     Background:
-        Given I login as genesis on devnet
+        Given I login as genesis on customNode
         And I wait 5 seconds
 
   @advanced

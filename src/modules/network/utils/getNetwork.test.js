@@ -9,7 +9,6 @@ describe('Utils: getNetwork', () => {
     const response = [
       { label: 'Mainnet', name: 'mainnet' },
       { label: 'Testnet', name: 'testnet' },
-      { label: 'Custom Service Node', name: 'devnet' },
       { label: 'Custom Service Node', name: 'customNode' },
     ];
 

@@ -22,12 +22,12 @@ Feature: Login
     Then I should be connected to testnet
 
   @basic
-  Scenario: Log in on devnet
+  Scenario: Log in on customNode
     Given I am on Login page
-    When I choose devnet
+    When I choose customNode
     When I enter the passphrase of genesis
     When I login
-    Then I should be connected to devnet
+    Then I should be connected to customNode
     And I wait 2 seconds
     When I click on logoutBtn
     And I click on networkDropdown

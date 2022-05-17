@@ -1,0 +1,12 @@
+.toggleIcon {
+  padding-left: 14px;
+  box-sizing: border-box;
+
+  & :hover {
+    cursor: pointer;
+  }
+
+  & img {
+    width: 20px;
+  }
+}

@@ -34,14 +34,14 @@ describe('Network', () => {
   });
 
   describe('Custom Node', () => {
-    it('should show as connected to devNet', () => {
+    it('should show as connected to customNode', () => {
       const props = {
         t,
         token,
         network,
       };
       const wrapper = mount(<Network {...props} />);
-      expect(wrapper.find('.network-name').text()).toBe('devnet');
+      expect(wrapper.find('.network-name').text()).toBe('customNode');
       expect(wrapper.find('.network-address').text()).toBe('http://localhost:4000');
     });
 
@@ -136,7 +136,7 @@ describe('Network', () => {
       },
     };
     const wrapper = mount(<Network {...props} />);
-    expect(wrapper.find('.network-name').text()).toBe('devnet');
+    expect(wrapper.find('.network-name').text()).toBe('customNode');
     expect(wrapper.find('.network-address').text()).toBe('http://localhost:8080');
   });
 });

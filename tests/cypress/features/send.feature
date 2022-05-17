@@ -2,7 +2,7 @@ Feature: Send
 
   @basic
   Scenario: Error message is shown if transfer tx fails
-      Given I login as genesis on devnet
+      Given I login as genesis on customNode
       Given I mock api /transactions
       Given  I wait 5 seconds
       Given I am on Wallet page
@@ -17,7 +17,7 @@ Feature: Send
 
   @basic
    Scenario: Transfer tx + Header balance is affected
-     Given I login as genesis on devnet
+     Given I login as genesis on customNode
      Given  I wait 5 seconds
      Given I am on Wallet page
      And I remember my balance
@@ -35,7 +35,7 @@ Feature: Send
   @advanced
   Scenario: Launch protocol prefills fields  - from logged in state
     Given I am on Login page
-    Given I login as genesis on devnet
+    Given I login as genesis on customNode
     Given  I wait 5 seconds
     When I follow the launch protokol link
     Then Send form fields are prefilled
@@ -43,7 +43,7 @@ Feature: Send
   @advanced
   Scenario: Launch protocol prefills fields  - from logged out state
     Given I follow the launch protokol link
-    When I enter the passphrase of genesis on devnet
+    When I enter the passphrase of genesis on customNode
     When I login
     Then Send form fields are prefilled
 
