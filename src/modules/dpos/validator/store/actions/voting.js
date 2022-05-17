@@ -1,10 +1,14 @@
 import to from 'await-to-js';
 import { tokenMap } from '@token/fungible/consts/tokens';
+import { toRawLsk } from '@token/fungible/utils/lsk';
 import { MODULE_ASSETS_NAME_ID_MAP } from '@transaction/configuration/moduleAssets';
+import { selectCurrentBlockHeight } from '@common/store/selectors';
 import { create } from '@transaction/api';
+import { getUnlockableUnlockObjects } from '@wallet/utils/account';
 import { getAccount } from '@wallet/utils/api';
 import { isEmpty } from 'src/utils/helpers';
 import { timerReset } from '@auth/store/action';
+import txActionTypes from '@transaction/store/actionTypes';
 import { getVotes } from '../../api';
 import actionTypes from './actionTypes';
 
@@ -97,14 +101,14 @@ export const votesSubmitted = ({ fee, votes }) =>
 
     if (error) {
       dispatch({
-        type: actionTypes.transactionSignError,
+        type: txActionTypes.transactionSignError,
         data: error,
       });
     } else {
       dispatch({ type: actionTypes.votesSubmitted });
       dispatch(timerReset());
       dispatch({
-        type: actionTypes.transactionCreatedSuccess,
+        type: txActionTypes.transactionCreatedSuccess,
         data: tx,
       });
     }
@@ -132,3 +136,58 @@ export const votesRetrieved = () =>
       });
     }
   };
+
+/**
+ * Submits unlock balance transactions
+ *
+ * @param {object} data
+ * @param {string} data.selectedFee
+ * @returns {promise}
+ */
+export const balanceUnlocked = data => async (dispatch, getState) => {
+  //
+  // Collect data
+  //
+  const state = getState();
+  const currentBlockHeight = selectCurrentBlockHeight(state);
+  // @todo Fix this by #3898
+  const activeWallet = {
+    ...state.wallet.info.LSK,
+    hwInfo: isEmpty(state.wallet.hwInfo) ? undefined : state.wallet.hwInfo,
+    passphrase: state.wallet.passphrase,
+  };
+
+  //
+  // Create the transaction
+  //
+  const [error, tx] = await to(
+    create({
+      network: state.network,
+      wallet: activeWallet,
+      transactionObject: {
+        moduleAssetId: MODULE_ASSETS_NAME_ID_MAP.unlockToken,
+        senderPublicKey: activeWallet.summary.publicKey,
+        nonce: activeWallet.sequence?.nonce,
+        fee: `${toRawLsk(parseFloat(data.selectedFee))}`,
+        unlockObjects: getUnlockableUnlockObjects(
+          activeWallet.dpos?.unlocking, currentBlockHeight,
+        ),
+      },
+    }, tokenMap.LSK.key),
+  );
+
+  //
+  // Dispatch corresponding action
+  //
+  if (!error) {
+    dispatch({
+      type: txActionTypes.transactionCreatedSuccess,
+      data: tx,
+    });
+  } else {
+    dispatch({
+      type: txActionTypes.transactionSignError,
+      data: error,
+    });
+  }
+};

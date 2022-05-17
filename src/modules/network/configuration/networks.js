@@ -1,7 +1,6 @@
 export const networkKeys = {
   mainNet: 'mainnet',
   testNet: 'testnet',
-  devnet: 'devnet',
   customNode: 'customNode',
 };
 
@@ -18,12 +17,6 @@ const networks = {
     serviceUrl: 'https://testnet-service.lisk.com',
   },
   [networkKeys.customNode]: {
-    label: 'Custom Service Node',
-
-    // a default value, to keep the object signature consistent
-    serviceUrl: 'http://localhost:9901',
-  },
-  [networkKeys.devnet]: {
     label: 'Custom Service Node',
 
     // a default value, to keep the object signature consistent

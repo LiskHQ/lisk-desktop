@@ -21,17 +21,24 @@ export const parseSearchParams = (search) => {
 /**
  * returns the value of a search param from a search string
  * @param {string} search the search string
- * @param {string} paramToSelect the param to get the value of
+ * @param {string|string[]} query The query parameters to search for their value
+ * This can be a string, or an array of string.
+ * @returns {any, any[]} It'll return the value of the given query,
+ * If an array is passed, it'll return an array corresponding values of the query
+ * If a query parameter is not present in search string, it'll return null.
  */
-// eslint-disable-next-line import/prefer-default-export
-export const selectSearchParamValue = (search, paramToSelect) =>
-  parseSearchParams(search)[paramToSelect];
+export const selectSearchParamValue = (search, query) => {
+  const isArray = Array.isArray(query);
+  const parsed = parseSearchParams(search);
+  const queryInArray = isArray ? query : [query];
+  const values = queryInArray.map(item => parsed[item]);
+  return isArray ? values : values[0];
+};
 
 /**
  * returns parsed query params from a url
  * @param {object} params the parsed searchParams object
  */
-// eslint-disable-next-line import/prefer-default-export
 export const stringifySearchParams = (params) => {
   const result = [];
 

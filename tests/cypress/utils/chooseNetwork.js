@@ -13,7 +13,7 @@ export default function chooseNetwork(network) {
     case 'dev':
       cy.get(ss.networkDropdown).click();
       cy.get(ss.networkOptions).eq(2).click();
-      cy.get(ss.addressInput).type(networks.devnet.node);
+      cy.get(ss.addressInput).type(networks.customNode.node);
       cy.get(ss.connectButton).click();
       break;
     case 'invalid':

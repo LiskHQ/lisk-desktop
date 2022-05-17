@@ -19,11 +19,11 @@ Given(/^I should be connected to ([^\s]+)$/, function (networkName) {
     case 'testnet':
       cy.get(ss.networkName).should('have.text', 'testnet');
       break;
-    case 'devnet':
-      cy.get(ss.networkName).should('contain', 'devnet');
+    case 'customNode':
+      cy.get(ss.networkName).should('contain', 'Custom node');
       break;
     default:
-      throw new Error(`Network should be one of : mainnet , testnet, devnet. Was: ${networkName}`);
+      throw new Error(`Network should be one of : mainnet , testnet, customNode. Was: ${networkName}`);
   }
   cy.get(ss.networkName).contains(networkName);
 });
@@ -38,10 +38,10 @@ Given(/^I choose ([^\s]+)$/, function (networkName) {
       cy.get(ss.networkDropdown).click();
       cy.get(ss.networkOptions).eq(1).click();
       break;
-    case 'devnet':
+    case 'customNode':
       cy.get(ss.networkDropdown).click();
       cy.get(ss.networkOptions).eq(2).click();
-      cy.get(ss.addressInput).clear().type(networks.devnet.serviceUrl);
+      cy.get(ss.addressInput).clear().type(networks.customNode.serviceUrl);
       cy.get(ss.connectButton).click();
       break;
     case 'invalid':
@@ -51,7 +51,7 @@ Given(/^I choose ([^\s]+)$/, function (networkName) {
       cy.get(ss.connectButton).click();
       break;
     default:
-      throw new Error(`Network should be one of : mainnet , testnet, devnet, invalid . Was: ${networkName}`);
+      throw new Error(`Network should be one of : mainnet , testnet, customNode, invalid . Was: ${networkName}`);
   }
 });
 
@@ -69,10 +69,10 @@ Given(/^I choose ([^\s]+)$/, function (networkName) {
       cy.get(ss.networkDropdown).click();
       cy.get(ss.networkOptions).eq(1).click();
       break;
-    case 'devnet':
+    case 'customNode':
       cy.get(ss.networkDropdown).click();
       cy.get(ss.networkOptions).eq(2).click();
-      cy.get(ss.addressInput).type(networks.devnet.node);
+      cy.get(ss.addressInput).type(networks.customNode.node);
       cy.get(ss.connectButton).click();
       break;
     case 'invalid':
@@ -82,7 +82,7 @@ Given(/^I choose ([^\s]+)$/, function (networkName) {
       cy.get(ss.connectButton).click();
       break;
     default:
-      throw new Error(`Network should be one of : mainnet , testnet, devnet, invalid . Was: ${networkName}`);
+      throw new Error(`Network should be one of : mainnet , testnet, customNode, invalid . Was: ${networkName}`);
   }
 });
 

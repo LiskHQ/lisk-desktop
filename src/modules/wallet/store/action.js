@@ -7,11 +7,8 @@ import { isEmpty } from 'src/utils/helpers';
 import { create } from '@transaction/api';
 import { getAccount } from '@wallet/utils/api';
 import { networkStatusUpdated } from '@network/store/action';
+import transactionActionTypes from '@transaction/store/actionTypes';
 import actionTypes from './actionTypes';
-
-export const accountLoading = () => ({
-  type: actionTypes.accountLoading,
-});
 
 /**
  * Gets the account info for given addresses of different tokens
@@ -24,7 +21,7 @@ export const accountLoading = () => ({
  * @param {Object} data.params addresses in the form of {[token]: [address]}
  * @returns {Promise<[object]>}
  */
-const getAccounts = async ({ network, params }) =>
+export const getAccounts = async ({ network, params }) =>
   Object.keys(params).reduce(async (accountsPromise, token) => {
     const accounts = await accountsPromise;
     const baseUrl = network.networks[token].serviceUrl;
@@ -44,17 +41,17 @@ const getAccounts = async ({ network, params }) =>
  */
 export const accountDataUpdated = tokensTypes =>
   async (dispatch, getState) => {
-    const { network, settings, wallet } = getState();
+    const { network, token, wallet } = getState();
 
-    // Get the list of tokens that are enabled in settings
+    // Get the list of tokens that are enabled
     const activeTokens = tokensTypes === 'enabled'
-      ? Object.keys(settings.token.list)
-        .filter(key => settings.token.list[key])
-      : [settings.token.active];
+      ? Object.keys(token.list)
+        .filter(key => token.list[key])
+      : [token.active];
 
     // Collect their addresses to send to the API
-    const params = activeTokens.reduce((acc, token) => {
-      acc[token] = { publicKey: wallet.info[token].summary.publicKey };
+    const params = activeTokens.reduce((acc, item) => {
+      acc[item] = { publicKey: wallet.info[item].summary.publicKey };
       return acc;
     }, {});
 
@@ -115,12 +112,12 @@ export const multisigGroupRegistered = ({
   //
   if (!error) {
     dispatch({
-      type: actionTypes.transactionCreatedSuccess,
+      type: transactionActionTypes.transactionCreatedSuccess,
       data: tx,
     });
   } else {
     dispatch({
-      type: actionTypes.transactionSignError,
+      type: transactionActionTypes.transactionSignError,
       data: error,
     });
   }
