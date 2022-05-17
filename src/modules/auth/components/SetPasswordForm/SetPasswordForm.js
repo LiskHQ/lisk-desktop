@@ -55,7 +55,7 @@ function SetPasswordForm({ onSubmit }) {
             defaultValues=""
             value={password}
             label={(
-              <span className=".password-label-wrapper">
+              <span className="password-label-wrapper">
                 Enter Password
                 <Tooltip
                   position="right"
