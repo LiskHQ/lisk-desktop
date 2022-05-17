@@ -7,7 +7,7 @@ import { Input } from 'src/theme';
 import Box from 'src/theme/box';
 import BoxContent from 'src/theme/box/content';
 import { PrimaryButton } from 'src/theme/buttons';
-import styles from './backupAccount.css';
+import styles from './enterPasswordForm.css';
 
 const EnterPasswordForm = ({ accountSchema, onEnterPasswordSuccess }) => {
   const { t } = useTranslation();
@@ -32,10 +32,10 @@ const EnterPasswordForm = ({ accountSchema, onEnterPasswordSuccess }) => {
         </p>
         <WalletVisual
           className={styles.avatar}
-          address={accountSchema?.metadata?.address || 'lskm555k7nhhw954rw4pqy5q9wn28n3cec94fmp4n'}
+          address={accountSchema?.metadata?.address}
         />
-        <p className={styles.accountName}>{accountSchema?.metadata?.name || 'Lisker'}</p>
-        <p className={styles.accountAddress}>{accountSchema?.metadata?.address || 'lskm555k7nhhw954rw4pqy5q9wn28n3cec94fmp4n'}</p>
+        <p className={styles.accountName}>{accountSchema?.metadata?.name}</p>
+        <p className={styles.accountAddress}>{accountSchema?.metadata?.address}</p>
         <Input
           placeholder={t('Enter password')}
           type="password"
