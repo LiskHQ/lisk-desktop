@@ -34,7 +34,9 @@ const EnterPasswordForm = ({ accountSchema, onEnterPasswordSuccess }) => {
           className={styles.avatar}
           address={accountSchema?.metadata?.address}
         />
-        <p className={styles.accountName}>{accountSchema?.metadata?.name}</p>
+        {accountSchema?.metadata?.name && (
+          <p className={styles.accountName}>{accountSchema?.metadata?.name}</p>
+        )}
         <p className={styles.accountAddress}>{accountSchema?.metadata?.address}</p>
         <Input
           placeholder={t('Enter password')}
