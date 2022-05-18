@@ -1,5 +1,4 @@
 import thunk from 'redux-thunk';
-import spy from 'redux-monitor-spy';
 
 import account from '@wallet/store/middleware';
 import auth from '@auth/store/middleware';
@@ -13,7 +12,6 @@ import hwManager from './hwManager';
 import loading from './loadingBar';
 
 export default [
-  spy,
   account,
   auth,
   bookmarks,

@@ -161,6 +161,7 @@ const getState = () => ({
     filters: {},
     signedTransaction: {},
   },
+  settings: {},
   token: {
     active: 'LSK',
   },

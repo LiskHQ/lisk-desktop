@@ -5,7 +5,7 @@ import statusMessages from './statusMessages';
 import styles from './status.css';
 
 const Status = ({
-  account, transactions, isMigrated, t,
+  account, transactions, t,
 }) => {
   const status = getTransactionStatus(account, transactions, account.summary.isMultisignature);
   const template = statusMessages(t)[status.code];
@@ -18,7 +18,7 @@ const Status = ({
         title={template.title}
         message={template.message}
         className={styles.content}
-        noBackButton={!isMigrated}
+        noBackButton={!account.summary.isMigrated}
       />
     </div>
   );

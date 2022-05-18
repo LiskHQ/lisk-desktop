@@ -51,9 +51,18 @@
 }
 
 .txDetails {
-  max-height: calc(100vh - 80px - 290px); /* stylelint-disable-line unit-whitelist */
+  max-height: calc(100vh - 80px - 290px) !important; /* stylelint-disable-line unit-whitelist */
 
   &.small {
-    max-height: calc(100vh - 110px - 290px); /* stylelint-disable-line unit-whitelist */
+    max-height: calc(100vh - 110px - 290px) !important; /* stylelint-disable-line unit-whitelist */
   }
+}
+
+.container {
+  height: auto;
+  overflow-y: auto;
+  max-height: calc(100vh - 80px); /* stylelint-disable-line unit-whitelist */
+  display: block;
+  padding: 0;
+  box-sizing: border-box;
 }

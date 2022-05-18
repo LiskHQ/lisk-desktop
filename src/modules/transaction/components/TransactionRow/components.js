@@ -14,12 +14,12 @@ import Spinner from 'src/theme/Spinner';
 import routes from '@screens/router/routes';
 import { getModuleAssetTitle } from '@transaction/utils';
 import styles from './row.css';
-import { RowContext } from './index';
+import TransactionRowContext from '../../context/transactionRowContext';
 import TransactionTypeFigure from '../TransactionTypeFigure';
 import TransactionAmount from '../TransactionAmount';
 
 export const Sender = () => {
-  const { data, avatarSize } = useContext(RowContext);
+  const { data, avatarSize } = useContext(TransactionRowContext);
   return (
     <WalletVisualWithAddress
       className="transaction-row-sender"
@@ -33,7 +33,7 @@ export const Sender = () => {
 };
 
 export const Recipient = () => {
-  const { data, avatarSize } = useContext(RowContext);
+  const { data, avatarSize } = useContext(TransactionRowContext);
   return (
     <WalletVisualWithAddress
       className="transaction-row-recipient"
@@ -47,7 +47,7 @@ export const Recipient = () => {
 };
 
 export const Counterpart = () => {
-  const { data, host, avatarSize } = useContext(RowContext);
+  const { data, host, avatarSize } = useContext(TransactionRowContext);
 
   // Show tx icon
   if (data.moduleAssetId !== MODULE_ASSETS_NAME_ID_MAP.transfer && host) {
@@ -85,7 +85,7 @@ export const Counterpart = () => {
 };
 
 export const Date = ({ t }) => {
-  const { data } = useContext(RowContext);
+  const { data } = useContext(TransactionRowContext);
 
   if (data.isPending || !data.block.timestamp) {
     return (
@@ -108,7 +108,7 @@ export const Date = ({ t }) => {
 export const Amount = () => {
   const {
     data, layout, activeToken, host,
-  } = useContext(RowContext);
+  } = useContext(TransactionRowContext);
 
   if (layout !== 'full') {
     return (
@@ -135,7 +135,7 @@ export const Amount = () => {
 };
 
 export const Fee = ({ t }) => {
-  const { data, activeToken } = useContext(RowContext);
+  const { data, activeToken } = useContext(TransactionRowContext);
 
   return (
     <span className={styles.transactionFeeCell}>
@@ -153,7 +153,7 @@ export const Fee = ({ t }) => {
 };
 
 export const Status = ({ t }) => {
-  const { data, currentBlockHeight } = useContext(RowContext);
+  const { data, currentBlockHeight } = useContext(TransactionRowContext);
   const roundSize = 103;
   const height = currentBlockHeight
     ? currentBlockHeight - data.block.height
@@ -207,7 +207,7 @@ const generateVotes = (asset, delegates, token, t) => {
 };
 
 export const Assets = ({ t }) => {
-  const { data, delegates = [], activeToken } = useContext(RowContext);
+  const { data, delegates = [], activeToken } = useContext(TransactionRowContext);
   const { voteDelegate, registerDelegate, transfer } = MODULE_ASSETS_NAME_ID_MAP;
 
   const getDetails = () => {
