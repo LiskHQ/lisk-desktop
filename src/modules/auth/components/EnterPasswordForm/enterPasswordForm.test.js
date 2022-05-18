@@ -3,7 +3,6 @@ import { mount } from 'enzyme';
 
 import useDecryptionAccount from '@account/hooks/useDecryptionAccount';
 import EnterPasswordForm from '.';
-import styles from './enterPasswordForm.css';
 
 jest.mock('@account/hooks/useDecryptionAccount');
 
@@ -42,7 +41,7 @@ describe('PassphraseBackup', () => {
         value: 'qwerty',
       },
     });
-    wrapper.find(styles.button).first().simulate('click');
+    wrapper.find('button').first().simulate('click');
     expect(useDecryptionAccount).toHaveBeenCalledWith(
       props.accountSchema,
       'qwerty',
@@ -66,7 +65,7 @@ describe('PassphraseBackup', () => {
         value: 'qwerty',
       },
     });
-    wrapper.find(styles.button).first().simulate('click');
+    wrapper.find('button').first().simulate('click');
     expect(props.onEnterPasswordSuccess).not.toHaveBeenCalledWith();
   });
 });
