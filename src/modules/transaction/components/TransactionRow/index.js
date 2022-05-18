@@ -1,16 +1,11 @@
-import React, { createContext } from 'react';
+import React from 'react';
 import { withTranslation } from 'react-i18next';
 import grid from 'flexboxgrid/dist/flexboxgrid.css';
 
 import DialogLink from 'src/theme/dialog/link';
 import LayoutSchema from './layoutSchema';
+import TransactionRowContext from '../../context/transactionRowContext';
 import styles from './schemas.css';
-
-export const RowContext = createContext({
-  data: {},
-  host: '',
-  currentBlockHeight: 0,
-});
 
 const TransactionRow = ({
   data,
@@ -30,7 +25,7 @@ const TransactionRow = ({
       component="transactionDetails"
       data={{ transactionId: data.id, token: activeToken }}
     >
-      <RowContext.Provider
+      <TransactionRowContext.Provider
         value={{
           currentBlockHeight,
           data,
@@ -42,7 +37,7 @@ const TransactionRow = ({
         {Layout.components.map((Component, index) => (
           <Component key={index} t={t} />
         ))}
-      </RowContext.Provider>
+      </TransactionRowContext.Provider>
     </DialogLink>
   );
 };

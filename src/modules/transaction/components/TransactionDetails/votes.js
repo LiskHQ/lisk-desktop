@@ -5,7 +5,7 @@ import TransactionDetailsContext from '../../context/transactionDetailsContext';
 import styles from './styles.css';
 import VoteItem from '../VoteItem';
 
-export const Votes = ({ t, votedDelegates }) => {
+export const VotesPure = ({ t, votedDelegates }) => {
   const { transaction } = React.useContext(TransactionDetailsContext);
   const { votes } = transaction.asset;
 
@@ -54,4 +54,4 @@ export default withData({
       return responseMap;
     },
   },
-})(Votes);
+})(VotesPure);

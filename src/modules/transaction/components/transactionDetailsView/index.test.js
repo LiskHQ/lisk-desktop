@@ -75,6 +75,34 @@ const voteTx = {
   },
 };
 
+const delegateRegTx = {
+  data: {
+    id: 'fe680a5cfba50acb66c135cc11e92808991c5679b1d5f78f6a777817c5c4157c',
+    moduleAssetId: '5:0',
+    moduleAssetName: 'dpos:registerDelegate',
+    fee: '1500000000',
+    height: 130,
+    nonce: '0',
+    block: {
+      id: '9e42cd5974c07c385897f7a539977f24a0ba1233a2df30d8c44898826f18cef8',
+      height: 130,
+      timestamp: 1615972857,
+    },
+    sender: {
+      address: 'lskd6yo4kkzrbjadh3tx6kz2qt5o3vy5zdnuwycmw',
+      publicKey: 'ea62fbdd5731a748a63b593db2c22129462f47db0f066d4ed3fc70957a456ebc',
+      username: 'testUsername',
+    },
+    signatures: [
+      '7bceb31d6f4dbeae27c3dee1acf0f950381ba3933d74d8b60831ef960fd6f17e9b9c48e88ac4e33bd3015329978e85f03d53d4659bf352b2865a3d2ff56a650b',
+    ],
+    asset: {
+      username: 'testUsername',
+    },
+    isPending: false,
+  },
+};
+
 describe('Transaction Details Component', () => {
   const props = {
     t: v => v,
@@ -96,6 +124,11 @@ describe('Transaction Details Component', () => {
   const popsWithVote = {
     ...props,
     transaction: voteTx,
+  };
+
+  const popsWithRegisterDelegate = {
+    ...props,
+    transaction: delegateRegTx,
   };
 
   const mockUseContext = (mockData = {}) => {
@@ -146,11 +179,12 @@ describe('Transaction Details Component', () => {
     });
   });
 
-  describe.only('Delegate vote transaction', () => {
-    it('Should render delegate vote details', () => {
+  describe('Delegate vote transaction', () => {
+    it('Should render delegate vote details', async () => {
       mockUseContext({ transaction: voteTx.data });
       delegateApi.getDelegates.mockResolvedValue({ data: [wallets.delegate] });
       const wrapper = mount(<TransactionDetails {...popsWithVote} />);
+      await delegateApi.getDelegates();
       expect(wrapper.find('.tx-added-votes')).toHaveLength(1);
       expect(wrapper.find('.vote-item-value').text()).toBe('-10 LSK');
       expect(wrapper.find('.vote-item-address').text()).toBe(wallets.delegate.dpos.delegate.username);
@@ -159,40 +193,8 @@ describe('Transaction Details Component', () => {
 
   describe('Register delegate transaction', () => {
     it('Should render register delegate details', () => {
-      const delegateRegTx = {
-        data: {
-          id: 'fe680a5cfba50acb66c135cc11e92808991c5679b1d5f78f6a777817c5c4157c',
-          moduleAssetId: '5:0',
-          moduleAssetName: 'dpos:registerDelegate',
-          fee: '1500000000',
-          height: 130,
-          nonce: '0',
-          block: {
-            id: '9e42cd5974c07c385897f7a539977f24a0ba1233a2df30d8c44898826f18cef8',
-            height: 130,
-            timestamp: 1615972857,
-          },
-          sender: {
-            address: 'lskd6yo4kkzrbjadh3tx6kz2qt5o3vy5zdnuwycmw',
-            publicKey: 'ea62fbdd5731a748a63b593db2c22129462f47db0f066d4ed3fc70957a456ebc',
-            username: 'testUsername',
-          },
-          signatures: [
-            '7bceb31d6f4dbeae27c3dee1acf0f950381ba3933d74d8b60831ef960fd6f17e9b9c48e88ac4e33bd3015329978e85f03d53d4659bf352b2865a3d2ff56a650b',
-          ],
-          asset: {
-            username: 'testUsername',
-          },
-          isPending: false,
-        },
-      };
       mockUseContext({ transaction: delegateRegTx.data });
-      const wrapper = mountWithRouter(
-        TransactionDetails,
-        { ...props, transaction: delegateRegTx },
-        { id: transferTx.id },
-      );
-      expect(wrapper).toContainExactlyOneMatchingElement('.walletInfo');
+      const wrapper = mount(<TransactionDetails {...popsWithRegisterDelegate} />);
       expect(wrapper.find('.hasName').contains('testUsername')).toBe(true);
     });
   });
