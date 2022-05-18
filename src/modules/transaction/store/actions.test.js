@@ -248,6 +248,9 @@ describe('actions: transactions', () => {
         },
       },
       settings,
+      token: {
+        active: 'LSK',
+      },
       transactions: {
         signedTransaction: sampleTransaction,
       },
