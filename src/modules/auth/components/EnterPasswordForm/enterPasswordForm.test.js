@@ -1,8 +1,11 @@
 import React from 'react';
 import { mount } from 'enzyme';
 
+import useDecryptionAccount from '@account/hooks/useDecryptionAccount';
 import EnterPasswordForm from '.';
 import styles from './enterPasswordForm.css';
+
+jest.mock('@account/hooks/useDecryptionAccount');
 
 describe('PassphraseBackup', () => {
   let wrapper;
@@ -23,7 +26,15 @@ describe('PassphraseBackup', () => {
     expect(wrapper.find('.accountAddress')).toHaveText(props.accountSchema.metadata.address);
   });
 
-  it('should onEnterPasswordSuccess when onSubmit click', () => {
+  it('should call onEnterPasswordSuccess when onSubmit click', () => {
+    const privateToken = 'private-token-mock';
+    const recoveryPhrase = 'target cancel solution recipe vague faint bomb convince pink vendor fresh patrol';
+    useDecryptionAccount.mockImplementation(() => (
+      {
+        privateToken,
+        recoveryPhrase,
+      }
+    ));
     wrapper = mount(<EnterPasswordForm {...props} />);
 
     wrapper.find('input').at(0).simulate('change', {
@@ -32,9 +43,30 @@ describe('PassphraseBackup', () => {
       },
     });
     wrapper.find(styles.button).first().simulate('click');
+    expect(useDecryptionAccount).toHaveBeenCalledWith(
+      props.accountSchema,
+      'qwerty',
+    );
     expect(props.onEnterPasswordSuccess).toHaveBeenCalledWith({
-      privateToken: 'private-token-mock',
-      recoveryPhrase: 'target cancel solution recipe vague faint bomb convince pink vendor fresh patrol',
+      privateToken,
+      recoveryPhrase,
     });
+  });
+
+  it('should not call onEnterPasswordSuccess when onSubmit fails', () => {
+    useDecryptionAccount.mockImplementation(() => (
+      {
+        error: 'error',
+      }
+    ));
+    wrapper = mount(<EnterPasswordForm {...props} />);
+
+    wrapper.find('input').at(0).simulate('change', {
+      target: {
+        value: 'qwerty',
+      },
+    });
+    wrapper.find(styles.button).first().simulate('click');
+    expect(props.onEnterPasswordSuccess).not.toHaveBeenCalledWith();
   });
 });
