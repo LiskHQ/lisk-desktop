@@ -11,7 +11,7 @@ import Dialog from '@theme/dialog/dialog';
 import { parseSearchParams } from 'src/utils/searchParams';
 import { withTranslation } from 'react-i18next';
 import { selectActiveToken } from '@common/store';
-import TransactionDetails from '../components/TransactionDetailsView/index';
+import TransactionDetails from '../components/TransactionDetailsView';
 
 const WrappedInDialog = (props) => (
   <Dialog hasClose className={`${grid.row} ${grid['center-xs']}`}>

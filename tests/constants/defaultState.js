@@ -37,6 +37,9 @@ export default {
         moduleAssetSchemas,
       },
     },
+    statue: {
+      online: true,
+    },
   },
   voting: {
     delegates: [],
