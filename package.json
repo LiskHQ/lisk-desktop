@@ -97,7 +97,7 @@
       }
     },
     "dmg": {
-      "background": "./build/background@2x.png",
+      "background": "scripts/build/background@2x.png",
       "contents": [
         {
           "x": 584,
