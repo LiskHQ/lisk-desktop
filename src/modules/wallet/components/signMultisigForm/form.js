@@ -9,8 +9,8 @@ import { joinModuleAndAssetIds } from '@transaction/utils/moduleAssets';
 import Box from 'src/theme/box';
 import BoxContent from 'src/theme/box/content';
 import BoxFooter from 'src/theme/box/footer';
+import UploadJSONInput from 'src/modules/common/components/uploadJSONInput';
 import { PrimaryButton } from 'src/theme/buttons';
-import Feedback from 'src/theme/feedback/feedback';
 import { validateTransaction } from '@liskhq/lisk-transactions';
 import ProgressBar from '../signMultisigView/progressBar';
 import styles from './styles.css';
@@ -30,17 +30,16 @@ const Form = ({ t, nextStep, network }) => {
   };
 
   // eslint-disable-next-line max-statements
-  const validateAndSetTransaction = (input) => {
+  const validateAndSetTransaction = (value) => {
     try {
-      const parsedInput = JSON.parse(input);
-      setTransaction(parsedInput);
+      setTransaction(value);
       const moduleAssetId = joinModuleAndAssetIds({
-        moduleID: parsedInput.moduleID,
-        assetID: parsedInput.assetID,
+        moduleID: value.moduleID,
+        assetID: value.assetID,
       });
 
       const schema = network.networks.LSK.moduleAssetSchemas[moduleAssetId];
-      const transformedTransaction = transformTransaction(parsedInput);
+      const transformedTransaction = transformTransaction(value);
       const flattenedTransaction = flattenTransaction(transformedTransaction);
       const transactionObject = createTransactionObject(
         flattenedTransaction,
@@ -49,19 +48,13 @@ const Form = ({ t, nextStep, network }) => {
       const err = validateTransaction(schema, transactionObject);
 
       if (err) {
-        throw Error('Unknown transaction');
+        setError(err ? 'Unknown transaction' : undefined);
       }
       setError(undefined);
     } catch (e) {
       setTransaction(undefined);
       setError('Invalid transaction');
     }
-  };
-
-  const onFileInputChange = ({ target }) => reader.readAsText(target.files[0]);
-  const onPaste = (evt) => {
-    const paste = evt.clipboardData.getData('text');
-    validateAndSetTransaction(paste);
   };
 
   useEffect(() => {
@@ -83,36 +76,13 @@ const Form = ({ t, nextStep, network }) => {
         </header>
         <BoxContent>
           <ProgressBar current={1} />
-          <p className={styles.fileInputLabel}>
-            {t('Paste transaction value')}
-            <label className={styles.fileInputBtn}>
-              {t('Read from JSON file')}
-              <input
-                className={`${styles.input} clickableFileInput`}
-                type="file"
-                accept="application/JSON"
-                onChange={onFileInputChange}
-              />
-            </label>
-          </p>
-          <div
-            className={`${styles.textAreaContainer} ${error && styles.error} ${
-              transaction && styles.filled
-            }`}
-          >
-            <textarea
-              onPaste={onPaste}
-              onChange={onPaste}
-              value={transaction ? JSON.stringify(transaction) : ''}
-              readOnly
-              className={`${styles.txInput} tx-sign-input`}
-            />
-            <Feedback
-              message={error}
-              size="m"
-              status={error ? 'error' : 'ok'}
-            />
-          </div>
+          <UploadJSONInput
+            prefixLabel={`${t('Paste transaction value')}  `}
+            label={t('Read from JSON file')}
+            onChange={validateAndSetTransaction}
+            value={transaction}
+            error={error}
+          />
         </BoxContent>
         <BoxFooter className={styles.footer}>
           <PrimaryButton
