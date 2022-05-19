@@ -202,6 +202,7 @@ import reportDelegateMisbehaviorDark from '@setup/react/assets/images/icons/repo
 import downloadUpdateFinish from '@setup/react/assets/images/icons/download-update-finish.svg';
 import downloadUpdateProgress from '@setup/react/assets/images/icons/download-update-progress.svg';
 import whiteLinkIcon from '@setup/react/assets/images/icons/white-link-icon.svg';
+import personIcon from '@setup/react/assets/images/icons/person-blue.svg';
 
 export const icons = {
   academy,
@@ -404,6 +405,7 @@ export const icons = {
   downloadUpdateProgress,
   downloadUpdateFinish,
   whiteLinkIcon,
+  personIcon,
 };
 
 const Icon = ({ name, noTheme, ...props }) => {

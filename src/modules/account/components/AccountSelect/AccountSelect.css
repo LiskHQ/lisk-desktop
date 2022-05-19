@@ -16,7 +16,7 @@
   align-items: center;
   padding: 32px;
   box-sizing: border-box;
-  background-color: white;
+  background-color: var(--color-white);
   max-width: 480px;
   border-radius: 6px;
 }

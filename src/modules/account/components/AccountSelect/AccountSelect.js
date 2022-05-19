@@ -73,7 +73,7 @@ const AccountSelect = () => {
               className={`${styles.button} ${styles.addAccountBtn}`}
               onAddAccount={onAddAccount}
             >
-              <Icon name="walletsMonitor" />
+              <Icon name="personIcon" />
               {' '}
               Add another account
             </OutlineButton>
