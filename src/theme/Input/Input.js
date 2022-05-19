@@ -1,5 +1,7 @@
 import PropTypes from 'prop-types';
-import React from 'react';
+import React, {
+  forwardRef, useCallback, useMemo, useState,
+} from 'react';
 import Feedback from 'src/theme/feedback/feedback';
 import Icon from 'src/theme/Icon';
 import Spinner from '../Spinner';
@@ -39,7 +41,18 @@ const getInputClass = ({
     .filter(Boolean)
     .join(' ');
 
-const Input = ({
+function PasswordTypeToggler({ onClick, isPasswordVisible, hasNotification }) {
+  return (
+    <button onClick={onClick} className={`${styles.toggleBtn} ${hasNotification ? styles.rightOffset : ''}`}>
+      <Icon
+        name={isPasswordVisible ? 'eyeActive' : 'eyeInactive'}
+        className={styles.toggleIcon}
+      />
+    </button>
+  );
+}
+
+const Input = forwardRef(({
   className,
   setRef,
   size,
@@ -54,8 +67,9 @@ const Input = ({
   isMasked,
   feedbackType,
   iconClassName,
+  secureTextEntry,
   ...props
-}) => {
+}, ref) => {
   status = updateStatus({
     status,
     isLoading,
@@ -63,6 +77,14 @@ const Input = ({
     ...props,
   });
   const Component = type === 'textarea' ? type : 'input';
+  const [isPassword, setIsPassword] = useState(secureTextEntry);
+
+  const toggleFieldType = useCallback(() => {
+    setIsPassword(!isPassword);
+  }, [isPassword]);
+
+  const hasNotification = useMemo(() => statusIconNameMap[status] || status === 'pending', [statusIconNameMap[status], status]);
+
   return (
     <>
       {label && (
@@ -88,10 +110,21 @@ const Input = ({
             className={`${styles.status}`}
           />
         )}
+
+        {
+          !!secureTextEntry && (
+          <PasswordTypeToggler
+            isPasswordVisible={!isPassword}
+            onClick={toggleFieldType}
+            hasNotification={hasNotification}
+          />
+          )
+        }
         <Component
           {...props}
-          type={type}
-          ref={setRef}
+          data-testid={props.name}
+          type={isPassword ? 'password' : type}
+          ref={setRef || ref}
           className={getInputClass({
             className,
             dark,
@@ -104,7 +137,7 @@ const Input = ({
       </span>
     </>
   );
-};
+});
 
 Input.propTypes = {
   size: PropTypes.oneOf(['l', 'm', 's', 'xs']),
