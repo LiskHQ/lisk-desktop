@@ -22,6 +22,7 @@
 }
 
 .textAreaContainer {
+  position: relative;
   width: 100%;
   height: 200px;
   border: 1px solid var(--color-very-light-gray);
@@ -33,6 +34,9 @@
   }
 
   & > textarea {
+    position: absolute;
+    left: 0;
+    top: 0;
     cursor: pointer;
     width: 100%;
     height: 100%;
@@ -45,6 +49,13 @@
     color: var(--color-maastricht-blue);
     padding: var(--vertical-padding-l);
     line-height: 1.4em; /* stylelint-disable-line unit-whitelist */
+  }
+
+  & > span {
+    z-index: 100;
+    position: absolute;
+    left: 150px;
+    top: 80%;
   }
 
   &:focus-within {

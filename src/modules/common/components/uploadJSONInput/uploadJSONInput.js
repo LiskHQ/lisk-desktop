@@ -1,4 +1,5 @@
 import React, { useEffect } from 'react';
+import { useTranslation } from 'react-i18next';
 import Feedback from 'src/theme/feedback/feedback';
 import styles from './uploadJSONInput.css';
 
@@ -12,6 +13,8 @@ const UploadJSONInput = ({
 }) => {
   const onInputChange = ({ target }) => reader.readAsText(target.files[0]);
   const onPaste = (event) => onChange(JSON.parse(event.clipboardData.getData('text')));
+
+  const { t } = useTranslation();
 
   useEffect(() => {
     reader.onload = ({ target }) => {
@@ -45,6 +48,7 @@ const UploadJSONInput = ({
           readOnly
           className={`${styles.txInput} tx-sign-input`}
         />
+        <span>{t('Please drag and drop the JSON file from your device.')}</span>
         <Feedback
           message={error}
           size="m"
