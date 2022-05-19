@@ -5,6 +5,7 @@ import secondaryButtonTheme from './css/secondaryButton.css';
 import styles from './css/size.css';
 import tertiaryButtonTheme from './css/tertiaryButton.css';
 import warningButtonTheme from './css/warningButton.css';
+import outlineButtonTheme from './css/outlineButton.css';
 
 const getButtonWithTheme = (theme) => {
   const Button = ({
@@ -38,6 +39,7 @@ const PrimaryButton = getButtonWithTheme(primaryButtonTheme);
 const SecondaryButton = getButtonWithTheme(secondaryButtonTheme);
 const TertiaryButton = getButtonWithTheme(tertiaryButtonTheme);
 const WarningButton = getButtonWithTheme(warningButtonTheme);
+const OutlineButton = getButtonWithTheme(outlineButtonTheme);
 
 export {
   Button,
@@ -45,5 +47,6 @@ export {
   SecondaryButton,
   TertiaryButton,
   WarningButton,
+  OutlineButton,
 };
 export default Button;

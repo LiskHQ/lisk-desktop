@@ -1,0 +1,104 @@
+@import '../../../../../setup/react/app/mixins.css';
+
+.accountListWrapper {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  row-gap: 16px;
+}
+
+.wrapper {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  padding: 32px;
+  box-sizing: border-box;
+  background-color: white;
+  max-width: 480px;
+  border-radius: 6px;
+}
+
+.headerWrapper {
+  text-align: center;
+
+  & > h1 {
+    @mixin headingLarge;
+
+    display: flex;
+    justify-content: center;
+    margin: 0 0 21px;
+    font-size: 28px;
+  }
+}
+
+.button {
+  width: 100%;
+  display: flex;
+  color: var(--color-maastricht-blue);
+  margin-top: 17px;
+
+  & > img {
+    width: 18px;
+    margin-right: 10px;
+  }
+}
+
+.addAccountBtn {
+  color: var(--color-link);
+  margin-top: 16px;
+}
+
+.accountWraper:last-child {
+  border-bottom: none;
+}
+
+.accountWraper:hover {
+  opacity: 0.8;
+}
+
+.accountWraper {
+  width: 100%;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  padding: 0px;
+  padding-bottom: 16px;
+  border: none;
+  border-radius: 0px;
+  justify-content: flex-start;
+  color: var(--color-maastricht-blue);
+  border-bottom: 1px solid#dfe6f2;
+  transition: opacity 100ms linear;
+
+  & > div:first-child ~ div {
+    margin-left: 10px;
+  }
+
+  & > div:first-child ~ div > p {
+    margin-top: 9px;
+    margin-bottom: 0px;
+    color: var(--color-slate-gray);
+    font-size: 13px;
+  }
+}
+
+.accountSelect {
+  align-items: center;
+  display: flex;
+  flex-grow: 1;
+  margin: 0;
+  min-height: 100%;
+  justify-content: center;
+  text-align: center;
+  width: 100%;
+}
+
+.accountSelectWrapper {
+  align-items: center;
+  display: flex;
+  flex-direction: column;
+  padding: 20px 24px;
+}
