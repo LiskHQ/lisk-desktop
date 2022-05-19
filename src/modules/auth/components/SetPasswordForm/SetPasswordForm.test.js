@@ -10,7 +10,7 @@ const props = {
   onSubmit: jest.fn((value) => value),
 };
 let password = null;
-let cpassword = null;
+let cPassword = null;
 let hasAgreed = null;
 let accountName = null;
 
@@ -18,14 +18,14 @@ beforeEach(() => {
   render(<SetPasswordForm {...props} />);
 
   password = screen.getByTestId('password');
-  cpassword = screen.getByTestId('cpassword');
+  cPassword = screen.getByTestId('cPassword');
   accountName = screen.getByTestId('accountName');
   hasAgreed = screen.getByTestId('hasAgreed');
 });
 
 const makeSubmitActive = () => {
   fireEvent.change(password, { target: { value: 'P' } });
-  fireEvent.change(cpassword, { target: { value: 'cp' } });
+  fireEvent.change(cPassword, { target: { value: 'cp' } });
   fireEvent.click(hasAgreed);
 };
 
@@ -34,7 +34,7 @@ describe('Set Password Form validation should work', () => {
     fireEvent.change(password, { target: { value: 'password' } });
     expect(screen.getByText('Save Account')).toHaveAttribute('disabled');
 
-    fireEvent.change(cpassword, { target: { value: 'cpassword' } });
+    fireEvent.change(cPassword, { target: { value: 'cPassword' } });
     expect(screen.getByText('Save Account')).toHaveAttribute('disabled');
 
     fireEvent.click(hasAgreed);
@@ -91,19 +91,19 @@ describe('Set Password Form validation should work', () => {
   it('should display an error if confirm password is not the same as the passowrd', async () => {
     makeSubmitActive();
     fireEvent.change(password, { target: { value: 'Password1$' } });
-    fireEvent.change(cpassword, { target: { value: 'Password1@' } });
+    fireEvent.change(cPassword, { target: { value: 'Password1@' } });
     fireEvent.click(screen.getByText('Save Account'));
 
     await waitFor(() => {
       expect(
-        screen.getByText('Confrim passwords must match password'),
+        screen.getByText('Confirm that passwords match'),
       ).toBeTruthy();
     });
   });
 
   it('should invoke onSubmit with form values when validation is okay', async () => {
     fireEvent.change(password, { target: { value: 'Password1$' } });
-    fireEvent.change(cpassword, { target: { value: 'Password1$' } });
+    fireEvent.change(cPassword, { target: { value: 'Password1$' } });
     fireEvent.change(accountName, { target: { value: 'test account name' } });
     fireEvent.click(hasAgreed);
     fireEvent.click(screen.getByText('Save Account'));

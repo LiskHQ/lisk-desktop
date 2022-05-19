@@ -1,20 +1,20 @@
 import React, { useMemo } from 'react';
 import { useTranslation } from 'react-i18next';
 import * as yup from 'yup';
+import { useForm } from 'react-hook-form';
+import { yupResolver } from '@hookform/resolvers/yup';
+import grid from 'flexboxgrid/dist/flexboxgrid.css';
 import Input from 'src/theme/Input';
 import { PrimaryButton } from 'src/theme/buttons';
-import grid from 'flexboxgrid/dist/flexboxgrid.css';
 import CheckBox from 'src/theme/CheckBox';
 import Tooltip from 'src/theme/Tooltip';
-import { yupResolver } from '@hookform/resolvers/yup';
-import { useForm } from 'react-hook-form';
 import styles from './SetPasswordFormField.css';
 
 const setPasswordFormSchema = yup.object({
   password: yup.string().required()
     .matches(/^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#$%^&*])(?=.{8,})/g, 'Must Contain 8 Characters, One Uppercase, One Lowercase, One Number and One Special Case Character'),
-  cpassword: yup.string().required()
-    .oneOf([yup.ref('password'), null], 'Confrim passwords must match password'),
+  cPassword: yup.string().required()
+    .oneOf([yup.ref('password'), null], 'Confirm that passwords match'),
   hasAgreed: yup.boolean().required(),
 }).required();
 
@@ -30,12 +30,12 @@ function SetPasswordForm({ onSubmit }) {
   });
   const formValues = watch();
   const {
-    password, cpassword, accountName, hasAgreed,
+    password, cPassword, accountName, hasAgreed,
   } = formValues;
 
   const isButtonDisabled = useMemo(() =>
-    !password?.length || !cpassword?.length || !hasAgreed,
-  [formValues.password, formValues.cpassword, formValues.hasAgreed]);
+    !password?.length || !cPassword?.length || !hasAgreed,
+  [formValues.password, formValues.cPassword, formValues.hasAgreed]);
 
   return (
     <div>
@@ -76,12 +76,12 @@ function SetPasswordForm({ onSubmit }) {
           <Input
             size="xs"
             secureTextEntry
-            feedback={errors.cpassword?.message}
-            status={errors.cpassword ? 'error' : undefined}
+            feedback={errors.cPassword?.message}
+            status={errors.cPassword ? 'error' : undefined}
             label="Confirm your Password"
             defaultValues=""
-            value={cpassword}
-            {...register('cpassword')}
+            value={cPassword}
+            {...register('cPassword')}
           />
         </div>
         <div className={styles.fieldWrapper}>
