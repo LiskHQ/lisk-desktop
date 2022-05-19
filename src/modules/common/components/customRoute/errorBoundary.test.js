@@ -1,7 +1,7 @@
 import React from 'react';
 import { PrimaryButton, TertiaryButton } from 'src/theme/buttons';
 import { mountWithContext } from '@tests/unit-test-utils/mountHelpers';
-import ErrorBoundary from './index';
+import ErrorBoundary from './errorBoundary';
 
 describe('ErrorBoundary:', () => {
   const NonProblematicChild = () => <div className="child-no-error"></div>; // eslint-disable-line

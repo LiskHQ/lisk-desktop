@@ -6,7 +6,7 @@ import TransactionDetailsContext from '../../context/transactionDetailsContext';
 import styles from './styles.css';
 
 const SignedAndRemainingMembersList = ({ t }) => {
-  const { transaction, account } = React.useContext(TransactionDetailsContext);
+  const { transaction, wallet } = React.useContext(TransactionDetailsContext);
 
   const isMultisignatureGroupRegistration = transaction.moduleAssetId
     === MODULE_ASSETS_NAME_ID_MAP.registerMultisignatureGroup;
@@ -17,7 +17,7 @@ const SignedAndRemainingMembersList = ({ t }) => {
       mandatoryKeys: transaction.asset.mandatoryKeys,
       numberOfSignatures: transaction.asset.numberOfSignatures,
     }
-    : account.keys;
+    : wallet.keys;
 
   const { signed, remaining } = useMemo(
     () =>
@@ -26,7 +26,7 @@ const SignedAndRemainingMembersList = ({ t }) => {
         transaction.signatures,
         isMultisignatureGroupRegistration,
       ),
-    [account],
+    [wallet],
   );
 
   const required = isMultisignatureGroupRegistration
