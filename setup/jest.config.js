@@ -285,6 +285,7 @@ module.exports = {
     'src/modules/token/fungible/components/BalanceInfo/ActionBar.js',
     'src/modules/wallet/manager/multisigAccountDetailsManager.js',
     'app/src/main.js',
+    'src/modules/account/hooks/useDecryptionAccount.js',
   ],
   coverageThreshold: {
     // global: {
