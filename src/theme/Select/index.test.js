@@ -2,7 +2,7 @@ import React from 'react';
 import { shallow } from 'enzyme';
 import Select from './index';
 
-describe('Select toolbox component', () => {
+describe.skip('Select toolbox component', () => {
   const props = {
     options: [
       { label: 'option-1', value: 0 },

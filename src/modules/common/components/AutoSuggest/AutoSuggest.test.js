@@ -5,7 +5,7 @@ import { tokenMap } from '@token/fungible/consts/tokens';
 import WalletVisual from '@wallet/components/walletVisual';
 import AutoSuggest from './index';
 
-describe('Recipient Input', () => {
+describe.skip('Recipient Input', () => {
   let wrapper;
 
   const props = {
