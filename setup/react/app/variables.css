@@ -67,7 +67,7 @@ or "warn/action" ineastd of "red/green"
         Sizes
   *************************/
   --border-radius-standard: 3px;
-  --border-radius-box: 6px;
+  --border-radius-box: 16px;
   --header-height: 50px;
   --header-logo-size: 56px;
   --search-box-width-l: 597px;
@@ -145,6 +145,7 @@ or "warn/action" ineastd of "red/green"
   --color-background-wrapper: var(--color-mystic);
   --color-background-header: #fbfcfd;
   --color-background-menu: var(--color-white-smoke);
+  --color-background-dropdown: var(--color-maastricht-blue);
   --color-link-active: #4070f4;
   --color-title-header-box: #4c4c4c;
   --color-link: var(--color-primary-standard);
@@ -268,4 +269,5 @@ or "warn/action" ineastd of "red/green"
   --color-tx-priority-btn-default: #86868b;
   --color-progress-bar: var(--color-jade-green);
   --color-zodiac-blue: #0c152e;
+  --color-background-dropdown: var(--color-body-bg);
 }
