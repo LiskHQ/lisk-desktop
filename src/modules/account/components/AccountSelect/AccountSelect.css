@@ -74,6 +74,7 @@
   color: var(--color-maastricht-blue);
   border-bottom: 1px solid#dfe6f2;
   transition: opacity 100ms linear;
+  cursor: pointer;
 
   & > div:first-child ~ div {
     margin-left: 10px;

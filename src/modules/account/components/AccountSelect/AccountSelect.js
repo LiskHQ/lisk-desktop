@@ -17,7 +17,7 @@ function AccountRow({
   const { uuid, metadata: { name, address } } = account;
 
   return (
-    <button
+    <div
       key={uuid}
       data-testid={uuid}
       className={styles.accountWraper}
@@ -33,11 +33,17 @@ function AccountRow({
         </p>
       </div>
       {showRemove && (
-        <button data-testid="delete-icon" onClick={() => onRemove(account)}>
+        <button
+          data-testid="delete-icon"
+          onClick={(event) => {
+            event.stopPropagation();
+            onRemove(account);
+          }}
+        >
           <Icon name="deleteRedIcon" />
         </button>
       )}
-    </button>
+    </div>
   );
 }
 
