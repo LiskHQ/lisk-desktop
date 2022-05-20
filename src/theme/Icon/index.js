@@ -197,12 +197,15 @@ import initialiseRegistration from '@setup/react/assets/images/icons/initialise-
 import warningYellow from '@setup/react/assets/images/icons/warning-yellow.svg';
 import linkIcon from '@setup/react/assets/images/icons/link-icon.svg';
 import refresh from '@setup/react/assets/images/icons/refresh.svg';
+import refreshActive from '@setup/react/assets/images/icons/refresh-active.svg';
 import reportDelegateMisbehavior from '@setup/react/assets/images/icons/reportDelegateMisbehavior.svg';
 import reportDelegateMisbehaviorDark from '@setup/react/assets/images/icons/reportDelegateMisbehavior-dark.svg';
 import downloadUpdateFinish from '@setup/react/assets/images/icons/download-update-finish.svg';
 import downloadUpdateProgress from '@setup/react/assets/images/icons/download-update-progress.svg';
 import whiteLinkIcon from '@setup/react/assets/images/icons/white-link-icon.svg';
 import personIcon from '@setup/react/assets/images/icons/person-blue.svg';
+import verticalDots from '@setup/react/assets/images/icons/vertical-dots.svg';
+import switchIcon from '@setup/react/assets/images/icons/switch.svg';
 
 export const icons = {
   academy,
@@ -398,6 +401,7 @@ export const icons = {
   multisignatureTransaction,
   multisignatureTransactionDark,
   refresh,
+  refreshActive,
   reportDelegateMisbehavior,
   reportDelegateMisbehaviorDark,
   lockedBalance,
@@ -406,6 +410,8 @@ export const icons = {
   downloadUpdateFinish,
   whiteLinkIcon,
   personIcon,
+  verticalDots,
+  switchIcon,
 };
 
 const Icon = ({ name, noTheme, ...props }) => {

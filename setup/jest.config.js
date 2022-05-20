@@ -216,7 +216,7 @@ module.exports = {
       { suiteName: 'jest tests', outputDirectory: '<rootDir>/coverage/jest' },
     ],
   ],
-  setupFilesAfterEnv: ['./node_modules/jest-enzyme/lib/index.js'],
+  setupFilesAfterEnv: ['./node_modules/jest-enzyme/lib/index.js', './node_modules/@testing-library/jest-dom/extend-expect'],
   testEnvironment: 'enzyme',
   watchPlugins: [
     ['jest-watch-toggle-config', { setting: 'verbose' }],
