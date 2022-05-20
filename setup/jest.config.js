@@ -4,11 +4,10 @@ module.exports = {
   rootDir: '../',
   modulePaths: ['packages'],
   testMatch: [
-    '<rootDir>/src/**/AccountSelect/**/*.test.js',
-    // '<rootDir>/src/**/*.test.js',
-    // '<rootDir>/app/src/**/*.test.js',
-    // '<rootDir>/setup/**/*.test.js',
-    // '<rootDir>/tests/**/*.test.js',
+    '<rootDir>/src/**/*.test.js',
+    '<rootDir>/app/src/**/*.test.js',
+    '<rootDir>/setup/**/*.test.js',
+    '<rootDir>/tests/**/*.test.js',
   ],
   testPathIgnorePatterns: [
     '<rootDir>/test/integration/wallet.test.js',
@@ -54,7 +53,7 @@ module.exports = {
     '\\.(jpg|jpeg|png|gif|eot|otf|webp|svg|ttf|woff|woff2|mp4|webm|wav|mp3|m4a|aac|oga)$':
       '<rootDir>/tests/__mocks__/fileMock.js',
   },
-  collectCoverage: false,
+  collectCoverage: true,
   coverageDirectory: '<rootDir>/coverage/jest',
   collectCoverageFrom: ['packages/**/*.js', 'setup/**/*.js', 'app/src/**/*.js'],
   coveragePathIgnorePatterns: [
