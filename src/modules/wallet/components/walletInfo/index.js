@@ -1,8 +1,12 @@
 import React, { useState } from 'react';
 import { useTranslation } from 'react-i18next';
+import { Link } from 'react-router-dom';
 import Box from 'src/theme/box';
 import BoxContent from 'src/theme/box/content';
 import Icon from 'src/theme/Icon';
+import DropdownButton from 'src/theme/DropdownButton';
+import { ACCOUNT_MENU } from '@account/const';
+import { TertiaryButton } from 'src/theme/buttons';
 import styles from './walletInfo.css';
 import WalletVisual from '../walletVisual';
 import Identity from './identity';
@@ -24,8 +28,29 @@ const WalletInfo = ({
 
   return (
     <Box className={styles.wrapper}>
-      <BoxContent className={`${styles.content} ${styles.token}`}>
-        <h2 className={styles.title}>{t('Wallet address')}</h2>
+      <BoxContent className={styles.content}>
+        <div className={styles.header}>
+          <h2 className={styles.title}>{t('Account details')}</h2>
+          <DropdownButton
+            className={styles.dropDownMenu}
+            buttonClassName={styles.dropDownMenuButton}
+            ButtonComponent={TertiaryButton}
+            buttonLabel={<Icon className="button-icon" name="verticalDots" />}
+            size="m"
+          >
+            <ul className={styles.dropDownMenuList}>
+              {ACCOUNT_MENU.map(({ path, icon, label }) => (
+                <li key={label}>
+                  <Link to={path}>
+                    <Icon name={icon} />
+                    {t(label)}
+                  </Link>
+                </li>
+              ))}
+            </ul>
+          </DropdownButton>
+        </div>
+
         <div
           className={`${styles.info} ${
             showFullAddress ? styles.showFullAddress : ''
@@ -43,10 +68,6 @@ const WalletInfo = ({
             />
           ) : null}
         </div>
-        <Icon
-          name={activeToken === 'LSK' ? 'liskLogo' : 'bitcoinLogo'}
-          className={styles.watermarkLogo}
-        />
         <ActionBar
           address={address}
           host={host}
