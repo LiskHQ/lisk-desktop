@@ -1,7 +1,7 @@
 import React from 'react';
 import boxStyles from 'src/theme/box/emptyState.css';
 import Illustration from 'src/modules/common/components/illustration';
-import styles from './transactionDetails.css';
+import styles from './styles.css';
 
 const NotFound = ({ t }) => (
   <div className={`${boxStyles.wrapper} ${styles.emptyState} not-found-state`}>

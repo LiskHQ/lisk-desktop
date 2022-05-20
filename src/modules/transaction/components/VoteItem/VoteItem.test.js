@@ -17,7 +17,7 @@ describe('VoteItem', () => {
     const wrapper = mount(<VoteItem {...props} />);
     expect(wrapper).toBeDefined();
     expect(wrapper).toContainMatchingElement('.vote-item-address');
-    expect(wrapper).toContainMatchingElement('LiskAmount');
+    expect(wrapper).toContainMatchingElement('TokenAmount');
     expect(truncateAddress).toHaveBeenCalled();
   });
 });

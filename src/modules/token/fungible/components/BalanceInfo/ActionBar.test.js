@@ -26,13 +26,13 @@ describe('Reclaim balance screen', () => {
     },
   };
   const state = {
-    account: {
+    wallet: {
       passphrase: 'test',
       info: {
         LSK: { },
       },
     },
-    settings: { token: { active: tokenMap.LSK.key } },
+    token: { active: tokenMap.LSK.key },
     voting: {},
   };
 
@@ -41,7 +41,7 @@ describe('Reclaim balance screen', () => {
       ActionBar,
       props,
       {},
-      { ...state, account: { info: { LSK: balanceAccount } } },
+      { ...state, wallet: { info: { LSK: balanceAccount } } },
     );
     const html = wrapper.html();
 
@@ -55,7 +55,7 @@ describe('Reclaim balance screen', () => {
       ActionBar,
       { ...props, activeToken: tokenMap.BTC.key, address: 'mnrutC4CgQhMos4f8HWYRy8rKQ3UisGwYJ' },
       {},
-      { ...state, account: { info: { LSK: balanceAccount } } },
+      { ...state, wallet: { info: { LSK: balanceAccount } } },
     );
     let html = wrapper.html();
 
@@ -76,7 +76,7 @@ describe('Reclaim balance screen', () => {
       ActionBar,
       { ...props, username: 'delegate' },
       {},
-      { ...state, account: { info: { LSK: balanceAccount } } },
+      { ...state, wallet: { info: { LSK: balanceAccount } } },
     );
     let html = wrapper.html();
 
@@ -92,7 +92,7 @@ describe('Reclaim balance screen', () => {
       {},
       {
         ...state,
-        account: { info: { LSK: balanceAccount } },
+        wallet: { info: { LSK: balanceAccount } },
         voting: {
           [balanceAccount.summary.address]: {},
         },
@@ -110,7 +110,7 @@ describe('Reclaim balance screen', () => {
       ActionBar,
       props,
       {},
-      { ...state, account: { info: { LSK: noBalanceAccount } } },
+      { ...state, wallet: { info: { LSK: noBalanceAccount } } },
     );
     const html = wrapper.html();
 

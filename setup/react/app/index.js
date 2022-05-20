@@ -22,7 +22,6 @@ import routes from '../../../packages/views/screens/router/routes';
 import './variables.css';
 import styles from './app.css';
 
-// eslint-disable-next-line max-statements
 const App = ({ history }) => {
   const dispatch = useDispatch();
   const [loaded, setLoaded] = useState(false);

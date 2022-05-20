@@ -1,12 +1,12 @@
 /* istanbul ignore file */
 import { connect } from 'react-redux';
 import settingConstants from 'src/modules/settings/const/settingConstants';
-import { tokenMap } from '@token/fungible/consts/tokens';
+import { selectActiveToken } from '@common/store';
 import Converter from './converter';
 
 const mapStateToProps = state => ({
   currency: state.settings.currency || 'EUR',
-  token: state.token ? state.token.active : tokenMap.LSK.key,
+  token: selectActiveToken(state),
   priceTicker: (state.service && state.service.priceTicker)
     ? state.service.priceTicker
     : {

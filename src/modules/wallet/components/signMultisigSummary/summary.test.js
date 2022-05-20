@@ -6,6 +6,7 @@ import wallets from '@tests/constants/wallets';
 import Summary from './summary';
 
 jest.mock('src/utils/searchParams', () => ({
+  ...jest.requireActual('src/utils/searchParams'),
   removeSearchParamsFromUrl: jest.fn(),
 }));
 
@@ -40,6 +41,7 @@ describe('Sign Multisignature Tx Review component', () => {
       },
     },
     account: wallets.genesis,
+    activeToken: 'LSK',
     networkIdentifier: 'sample_identifier',
     nextStep: jest.fn(),
     history: {},

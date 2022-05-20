@@ -10,12 +10,6 @@ describe('actions: setting', () => {
   const dispatch = jest.fn();
   const settings = {
     autoLog: false,
-    token: {
-      active: 'LSK',
-      list: {
-        LSK: true,
-      },
-    },
   };
 
   beforeEach(() => {

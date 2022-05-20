@@ -5,6 +5,7 @@ import * as accountApi from '@wallet/utils/api';
 import * as hwManager from '@transaction/utils/hwManager';
 import sampleVotes from '@tests/constants/votes';
 import wallets from '@tests/constants/wallets';
+import txActionTypes from '@transaction/store/actionTypes';
 import * as delegateApi from '../../api';
 import actionTypes from './actionTypes';
 import {
@@ -35,6 +36,13 @@ jest.mock('@transaction/utils/hwManager', () => ({
 
 describe('actions: voting', () => {
   const getState = () => ({
+    blocks: {
+      latestBlocks: [
+        { height: 123123124, numberOfTransactions: 2 },
+        { height: 123123126, numberOfTransactions: 5 },
+        { height: 123123127, numberOfTransactions: 6 },
+      ],
+    },
     network: {
       name: networks.mainnet.name,
       networks: {
@@ -49,18 +57,17 @@ describe('actions: voting', () => {
         LSK: {
           summary: {
             address: '123L',
+            publicKey: '0fe9a3f1a21b5530f27f87a414b549e79a940bf24fdf2b2f05e7f22aeeecc86a',
           },
           sequence: {
-            nonce: 1,
+            nonce: '1',
           },
           votes: [{ delegateAddress: '123L', amount: 1e9 }],
         },
       },
     },
-    settings: {
-      token: {
-        active: 'LSK',
-      },
+    token: {
+      active: 'LSK',
     },
   });
 
@@ -109,7 +116,7 @@ describe('actions: voting', () => {
         type: actionTypes.votesSubmitted,
       });
       expect(dispatch).toHaveBeenCalledWith({
-        type: actionTypes.transactionCreatedSuccess,
+        type: txActionTypes.transactionCreatedSuccess,
         data: tx,
       });
     });
@@ -129,7 +136,7 @@ describe('actions: voting', () => {
         type: actionTypes.votesSubmitted,
       });
       expect(dispatch).toHaveBeenCalledWith({
-        type: actionTypes.transactionCreatedSuccess,
+        type: txActionTypes.transactionCreatedSuccess,
         data: tx,
       });
     });
@@ -146,7 +153,7 @@ describe('actions: voting', () => {
       expect(transactionApi.create).toHaveBeenCalled();
       expect(dispatch).toHaveBeenCalledTimes(1);
       expect(dispatch).toHaveBeenCalledWith({
-        type: actionTypes.transactionSignError,
+        type: txActionTypes.transactionSignError,
         data: error,
       });
     });
@@ -218,11 +225,11 @@ describe('actions: voting', () => {
           senderPublicKey: wallets.genesis.summary.publicKey,
           nonce: wallets.genesis.sequence?.nonce,
           fee: '10000000',
-          unlockObjects: [{}],
+          unlockObjects: [],
         },
       }, 'LSK');
       expect(dispatch).toHaveBeenCalledWith({
-        type: actionTypes.transactionCreatedSuccess,
+        type: txActionTypes.transactionCreatedSuccess,
         data: tx,
       });
     });
@@ -235,7 +242,7 @@ describe('actions: voting', () => {
         }));
       await balanceUnlocked(params)(dispatch, getState);
       expect(dispatch).toHaveBeenCalledWith({
-        type: actionTypes.transactionSignError,
+        type: txActionTypes.transactionSignError,
         data: error,
       });
     });

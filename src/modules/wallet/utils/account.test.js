@@ -19,7 +19,7 @@ const {
   publicKey,
 } = accounts.genesis.summary;
 
-jest.mock('@common/utilities/explicitBipKeyDerivation', () => ({
+jest.mock('src/utils/explicitBipKeyDerivation', () => ({
   getCustomDerivationKeyPair: jest.fn(),
 }));
 
@@ -66,7 +66,7 @@ describe('Utils: Account', () => {
   describe('getActiveTokenAccount', () => {
     it('should get account with active token info on the top level', () => {
       const activeToken = 'BTC';
-      const account = {
+      const wallet = {
         info: {
           BTC: {
             address: 'btc address dummy',
@@ -74,16 +74,14 @@ describe('Utils: Account', () => {
         },
       };
       const state = {
-        account,
-        settings: {
-          token: {
-            active: activeToken,
-          },
+        wallet,
+        token: {
+          active: activeToken,
         },
       };
       expect(getActiveTokenAccount(state)).toStrictEqual({
-        ...account,
-        ...account.info[activeToken],
+        ...wallet,
+        ...wallet.info[activeToken],
       });
     });
   });

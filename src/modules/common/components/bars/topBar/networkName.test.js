@@ -41,7 +41,7 @@ describe('Network', () => {
         network,
       };
       const wrapper = mount(<Network {...props} />);
-      expect(wrapper.find('.network-name').text()).toBe('customNode');
+      expect(wrapper.find('.network-name').text()).toBe('custom node');
       expect(wrapper.find('.network-address').text()).toBe('http://localhost:4000');
     });
 
@@ -136,7 +136,7 @@ describe('Network', () => {
       },
     };
     const wrapper = mount(<Network {...props} />);
-    expect(wrapper.find('.network-name').text()).toBe('customNode');
+    expect(wrapper.find('.network-name').text()).toBe('custom node');
     expect(wrapper.find('.network-address').text()).toBe('http://localhost:8080');
   });
 });

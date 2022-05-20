@@ -2,7 +2,7 @@ import React from 'react';
 import { mount } from 'enzyme';
 import NewReleaseMessage from './newReleaseMessage';
 
-jest.mock('@views/contexts/theme', () => ({
+jest.mock('src/theme/Theme', () => ({
   useTheme: () => 'dark',
 }));
 

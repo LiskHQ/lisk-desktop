@@ -161,10 +161,9 @@ const getState = () => ({
     filters: {},
     signedTransaction: {},
   },
-  settings: {
-    token: {
-      active: 'LSK',
-    },
+  settings: {},
+  token: {
+    active: 'LSK',
   },
   blocks: {
     latestBlocks: [{

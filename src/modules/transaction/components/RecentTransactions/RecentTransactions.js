@@ -5,10 +5,10 @@ import { Link } from 'react-router-dom';
 
 import {
   selectAccount,
+  selectActiveToken,
   selectCurrentBlockHeight,
 } from '@common/store/selectors';
 import routes from '@screens/router/routes';
-import { tokenMap } from '@token/fungible/consts/tokens';
 import { SecondaryButton } from 'src/theme/buttons';
 import Box from 'src/theme/box';
 import BoxHeader from 'src/theme/box/header';
@@ -21,7 +21,7 @@ import styles from './RecentTransactions.css';
 import header from './RecentTransactionsHeaderMap';
 
 export const NoTransactions = withTranslation()(({ t }) => {
-  const activeToken = useSelector(state => tokenMap[state.token.active]);
+  const activeToken = useSelector(selectActiveToken);
   return (
     <BoxEmptyState>
       <Icon name="iconEmptyRecentTransactions" />
