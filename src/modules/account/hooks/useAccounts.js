@@ -54,7 +54,7 @@ const mockAccounts = [
       creationTime: '',
       derivedFromUUID: 'fa3e4ceb-10dc-41ad-810e-17bf51ed93aa',
     },
-    uuid: 'ef52c117-d7cc-4246-bc9d-4dd506bef82f',
+    uuid: 'ef52c117-d7cc-4246-bc9d-4dd506bef82e',
     version: 1,
   },
 ];

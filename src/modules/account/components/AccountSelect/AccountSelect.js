@@ -9,12 +9,20 @@ import { useAccounts } from '../../hooks/useAccounts';
 import styles from './AccountSelect.css';
 
 function AccountRow({
-  account, onSelect, onRemove, showRemove,
+  account,
+  onSelect,
+  onRemove,
+  showRemove,
 }) {
-  const { metadata: { name, address } } = account;
+  const { uuid, metadata: { name, address } } = account;
 
   return (
-    <button className={styles.accountWraper} onClick={() => onSelect(account)}>
+    <button
+      key={uuid}
+      data-testid={uuid}
+      className={styles.accountWraper}
+      onClick={() => onSelect(account)}
+    >
       <WalletVisual address={address} size={40} />
       <div align="left">
         <b className={`${styles.addressValue}`}>
@@ -25,18 +33,18 @@ function AccountRow({
         </p>
       </div>
       {showRemove && (
-      <button onClick={() => onRemove(account)}>
-        <Icon name="deleteIcon" />
-      </button>
+        <button data-testid="delete-icon" onClick={() => onRemove(account)}>
+          <Icon name="deleteRedIcon" />
+        </button>
       )}
     </button>
   );
 }
 
-const AccountSelect = ({ onSelect, onAddAccount, onRemoveAccount }) => {
+const AccountSelect = ({ onSelectAccount, onAddAccount, onRemoveAccount }) => {
   const { t } = useTranslation();
   const [accounts] = useAccounts();
-  const [showRemove, setShowRemove] = useState();
+  const [showRemove, setShowRemove] = useState(false);
 
   return (
     <>
@@ -54,7 +62,7 @@ const AccountSelect = ({ onSelect, onAddAccount, onRemoveAccount }) => {
                  <AccountRow
                    key={account.uuid}
                    account={account}
-                   onSelect={onSelect}
+                   onSelect={onSelectAccount}
                    showRemove={showRemove}
                    onRemove={onRemoveAccount}
                  />

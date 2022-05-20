@@ -6,6 +6,8 @@
   flex-direction: column;
   align-items: center;
   row-gap: 16px;
+  max-height: 240px;
+  overflow-y: scroll;
 }
 
 .wrapper {

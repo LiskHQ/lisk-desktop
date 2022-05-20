@@ -165,6 +165,7 @@ import unlockTokenDark from '@setup/react/assets/images/icons/tx-unlock-dark.svg
 import votingQueueInactive from '@setup/react/assets/images/icons/voting-queue-inactive.svg';
 import votingQueueActive from '@setup/react/assets/images/icons/voting-queue-active.svg';
 import deleteIcon from '@setup/react/assets/images/icons/delete.svg';
+import deleteRedIcon from '@setup/react/assets/images/icons/delete-red-icon.svg';
 import arrowRightTailed from '@setup/react/assets/images/icons/arrow-right-tailed.svg';
 import download from '@setup/react/assets/images/icons/download.svg';
 import registerMultisignatureGroup from '@setup/react/assets/images/icons/multisignature.svg';
@@ -412,6 +413,7 @@ export const icons = {
   personIcon,
   verticalDots,
   switchIcon,
+  deleteRedIcon,
 };
 
 const Icon = ({ name, noTheme, ...props }) => {
