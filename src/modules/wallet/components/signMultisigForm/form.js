@@ -46,11 +46,7 @@ const Form = ({ t, nextStep, network }) => {
         moduleAssetId,
       );
       const err = validateTransaction(schema, transactionObject);
-
-      if (err) {
-        setError(err ? 'Unknown transaction' : undefined);
-      }
-      setError(undefined);
+      setError(err ? 'Unknown transaction' : undefined);
     } catch (e) {
       setTransaction(undefined);
       setError('Invalid transaction');
