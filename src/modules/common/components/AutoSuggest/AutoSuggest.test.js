@@ -3,9 +3,9 @@ import { mount } from 'enzyme';
 import { keyCodes } from 'src/utils/keyCodes';
 import { tokenMap } from '@token/fungible/consts/tokens';
 import WalletVisual from '@wallet/components/walletVisual';
-import AutoSuggest from './index';
+import AutoSuggest from './AutoSuggest';
 
-describe.skip('Recipient Input', () => {
+describe('Recipient Input', () => {
   let wrapper;
 
   const props = {
@@ -54,7 +54,7 @@ describe.skip('Recipient Input', () => {
 
   it('should render properly', () => {
     expect(wrapper).toContainMatchingElement('.recipient');
-    expect(wrapper).toContainMatchingElement('Input.input');
+    expect(wrapper).toContainMatchingElement('input.input');
     expect(wrapper).toContainMatchingElement('.bookmark-list');
   });
 
@@ -79,9 +79,9 @@ describe.skip('Recipient Input', () => {
     wrapper = mount(<AutoSuggest {...props} />);
     expect(wrapper).toContainMatchingElement('.bookmark-list');
     expect(wrapper).toContainMatchingElements(3, 'li');
-    wrapper.find('Input.input input').simulate('keyDown', { keyCode: keyCodes.arrowDown });
-    wrapper.find('Input.input input').simulate('keyDown', { keyCode: keyCodes.arrowUp });
-    wrapper.find('Input.input input').simulate('keyDown', { keyCode: keyCodes.enter });
+    wrapper.find('input.input').simulate('keyDown', { keyCode: keyCodes.arrowDown });
+    wrapper.find('input.input').simulate('keyDown', { keyCode: keyCodes.arrowUp });
+    wrapper.find('input.input').simulate('keyDown', { keyCode: keyCodes.enter });
     wrapper.find('.bookmark-list li').at(0).simulate('click');
     expect(props.onSelectItem).toBeCalled();
     wrapper.find('input.recipient').simulate('blur');

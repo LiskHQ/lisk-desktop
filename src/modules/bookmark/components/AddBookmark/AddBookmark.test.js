@@ -65,7 +65,8 @@ describe('Add a new bookmark component', () => {
 
   it('Should render properly and with pristine state', () => {
     expect(wrapper).not.toContainMatchingElement('.error');
-    expect(wrapper).toContainMatchingElements(2, 'Input');
+    expect(wrapper).toContainMatchingElement('input[name="address"]');
+    expect(wrapper).toContainMatchingElement('input[name="label"]');
     expect(wrapper.find('button.save-button')).toBeDisabled();
   });
 
