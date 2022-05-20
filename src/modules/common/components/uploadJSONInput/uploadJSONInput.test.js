@@ -35,7 +35,8 @@ describe('Upload JSON input component', () => {
     expect(props.onChange).toBeCalledWith(expect.objectContaining(JSONObject));
   });
 
-  it('should show error', () => {
-    
-  })
+  it('should return error if there is an error', () => {
+    wrapper.setProps({ error: 'invalid JSON' });
+    expect(wrapper.find('.feedback').text()).toEqual('invalid JSON');
+  });
 });
