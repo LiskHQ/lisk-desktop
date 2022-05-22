@@ -19,9 +19,9 @@ beforeEach(() => {
   render(<AccountSelect {...props} />);
 });
 
-describe('Select Account Formshould work', () => {
+describe('Account Select Form', () => {
   it('Should render account list properly', async () => {
-    expect(screen.getByText('lsk74ar23k2zk3mpsnryxbxf5yf9ystudqmj4oj6e')).toBeTruthy();
+    expect(screen.getByText(mockSavedAccounts[0].metadata.address)).toBeTruthy();
     expect(screen.getByText('my lisk account')).toBeTruthy();
     expect(screen.getByText('Remove an account')).toBeTruthy();
     expect(screen.getByText('Add another account')).toBeTruthy();
