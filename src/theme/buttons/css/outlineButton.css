@@ -4,7 +4,7 @@
   @mixin buttonBasics;
 
   background-color: transparent;
-  border: solid 1px #dfe6f2;
+  border: solid 1px var(--color-button-outline-color);
   opacity: 1;
   transition: opacity 200ms linear;
 
