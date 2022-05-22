@@ -5,6 +5,7 @@ import { withRouter } from 'react-router';
 import { withTranslation } from 'react-i18next';
 import { bookmarkAdded, bookmarkUpdated, bookmarkRemoved } from '@common/store/actions';
 import { getAccount } from '@wallet/utils/api';
+import { selectActiveToken } from '@common/store';
 import withData from 'src/utils/withData';
 import { selectSearchParamValue } from 'src/utils/searchParams';
 import AddBookmark from '../components/AddBookmark';
@@ -29,7 +30,7 @@ export default compose(
       apiUtil: (network, params) => getAccount({ network, params }, params.token),
       defaultData: {},
       getApiParams: (state, props) => ({
-        token: state.token.active,
+        token: selectActiveToken(state),
         address: selectSearchParamValue(props.history.location.search, 'address'),
       }),
     },

@@ -4,7 +4,6 @@ import { withTranslation } from 'react-i18next';
 import { Link } from 'react-router-dom';
 import routes from '@screens/router/routes';
 import { tokenMap } from '@token/fungible/consts/tokens';
-import { truncateAddress } from '@wallet/utils/account';
 import Tooltip from 'src/theme/Tooltip';
 import { Input } from 'src/theme';
 import { PrimaryButton, TertiaryButton } from 'src/theme/buttons';
@@ -44,14 +43,6 @@ export class BookmarksList extends React.Component {
           || address.toLowerCase().indexOf(filter.toLowerCase()) !== -1,
       )
       .slice(0, limit);
-  }
-
-  displayAddressBasedOnSelectedToken(address) {
-    const { token } = this.props;
-
-    return token.active === tokenMap.LSK.key
-      ? address
-      : truncateAddress(address);
   }
 
   onFilterChange({ target }) {
@@ -202,9 +193,7 @@ export class BookmarksList extends React.Component {
                       <span className={styles.description}>
                         <span>{bookmark.title}</span>
                         <span>
-                          {this.displayAddressBasedOnSelectedToken(
-                            bookmark.address,
-                          )}
+                          {bookmark.address}
                         </span>
                       </span>
                     )}

@@ -18,7 +18,7 @@ import SignMessage from '@message/manager/signMessageManager';
 import TermsOfUse from 'src/modules/common/components/TermsOfUse';
 import Explorer from '@wallet/manager/explorerManager';
 import AccountDetails from '@account/components/AccountDetails';
-// import TransactionDetailsModal from '@screens/managers/transactionDetailsModal';
+import TransactionDetailsModal from '@transaction/manager/transactionDetailViewManager';
 import VerifyMessage from '@message/manager/verifyMessageManager';
 import Request from '@screens/managers/request';
 import UnlockBalanceView from '@dpos/validator/components/unlockBalanceView';
@@ -59,7 +59,7 @@ export default {
   verifyMessage: VerifyMessage,
   registerDelegate: RegisterDelegate,
   search: SearchBar,
-  // transactionDetails: TransactionDetailsModal,
+  transactionDetails: TransactionDetailsModal,
   newRelease: NewReleaseDialog,
   request: Request,
   lockedBalance: UnlockBalanceView,

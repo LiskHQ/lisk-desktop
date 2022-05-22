@@ -1,20 +1,19 @@
-import { /* pricesRetrieved, */ emptyTransactionsData, settingsUpdated } from '@common/store/actions';
+import { pricesRetrieved, emptyTransactionsData } from '@common/store/actions';
+import networkActionTypes from '@network/store/actionTypes';
+import { settingsUpdated } from './actions';
 import actionTypes from './actionTypes';
 import settingsMiddleware from './middleware';
 
 jest.mock('@common/store/actions/service');
-// jest.mock('@settings/store/middleware');
 jest.mock('@transaction/store/actions');
-jest.mock('@common/store/actions');
+jest.mock('./actions');
 
 describe('Middleware: Settings', () => {
   const next = jest.fn();
   const store = {
     dispatch: jest.fn(),
     getState: () => ({
-      settings: {
-        token: { },
-      },
+      token: {},
     }),
   };
 
@@ -33,7 +32,7 @@ describe('Middleware: Settings', () => {
   describe('on networkConfigSet', () => {
     it('should dispatch pricesRetrieved', () => {
       const action = {
-        type: actionTypes.networkConfigSet,
+        type: networkActionTypes.networkConfigSet,
         data: {
           name: 'customNode',
           networks: {
@@ -45,7 +44,7 @@ describe('Middleware: Settings', () => {
       };
 
       settingsMiddleware(store)(next)(action);
-      // expect(pricesRetrieved).toBeCalled();
+      expect(pricesRetrieved).toBeCalled();
       expect(settingsUpdated).toBeCalled();
     });
   });
@@ -60,7 +59,7 @@ describe('Middleware: Settings', () => {
       };
 
       settingsMiddleware(store)(next)(action);
-      // expect(pricesRetrieved).not.toBeCalled();
+      expect(pricesRetrieved).not.toBeCalled();
     });
 
     it('should dispatch pricesRetrieved', () => {

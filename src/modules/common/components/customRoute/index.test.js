@@ -17,10 +17,8 @@ jest.mock('react-redux', () => ({
 
 describe('CustomRoute', () => {
   const mockAppState = {
-    settings: {
-      token: {
-        active: 'LSK',
-      },
+    token: {
+      active: 'LSK',
     },
     wallet: {
       info: {

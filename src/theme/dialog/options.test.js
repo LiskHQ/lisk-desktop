@@ -4,7 +4,7 @@ import { removeSearchParamsFromUrl } from 'src/utils/searchParams';
 import Options from './options';
 import { PrimaryButton } from '../buttons';
 
-jest.mock('@screens/router/searchParams', () => ({
+jest.mock('src/utils/searchParams', () => ({
   removeSearchParamsFromUrl: jest.fn(),
 }));
 

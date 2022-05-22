@@ -1,5 +1,4 @@
 import { act } from 'react-dom/test-utils';
-import * as votingActions from '@common/store/actions';
 import { mountWithRouterAndStore } from 'src/utils/testHelpers';
 import EditVote from './index';
 
@@ -7,14 +6,37 @@ jest.mock('@transaction/api', () => ({
   getTransactionFee: jest.fn().mockImplementation(() => Promise.resolve({ value: '0.046' })),
 }));
 
-jest.mock('@dpos/store/actions/voting', () => ({
-  voteEdited: jest.fn(),
-}));
-
 describe('EditVote', () => {
   const genesis = 'lskdxc4ta5j43jp9ro3f8zqbxta9fn6jwzjucw7yt';
   const delegate = 'lskehj8am9afxdz8arztqajy52acnoubkzvmo9cjy';
+  const defaultProps = {
+    currentHeight: 0,
+    wallet: {
+      passphrase: 'test',
+      info: {
+        LSK: { summary: { address: genesis, balance: 10004674000 } },
+        BTC: { summary: { address: genesis, balance: 0 } },
+      },
+      summary: {
+        address: 'lskdxc4ta5j43jp9ro3f8zqbxta9fn6jwzjucw7yt',
+      },
+    },
+    network: {
+      name: 'testnet',
+      networks: {
+        LSK: {
+          serviceUrl: 'https://service.lisk.com',
+        },
+      },
+    },
+    voting: {
+      delegates: [],
+      votes: {},
+    },
+    voteEdited: jest.fn(),
+  };
   const propsWithoutSearch = {
+    ...defaultProps,
     t: str => str,
     history: {
       push: jest.fn(),
@@ -24,6 +46,7 @@ describe('EditVote', () => {
     },
   };
   const propsWithSearch = {
+    ...defaultProps,
     t: str => str,
     history: {
       push: jest.fn(),
@@ -38,17 +61,9 @@ describe('EditVote', () => {
     [delegate]: { confirmed: 1e9, unconfirmed: 1e9 },
   };
   const state = {
-    account: {
-      passphrase: 'test',
-      info: {
-        LSK: { summary: { address: genesis, balance: 10004674000 } },
-        BTC: { summary: { address: genesis, balance: 0 } },
-      },
-    },
-    settings: {
-      token: {
-        active: 'LSK',
-      },
+    wallet: defaultProps.wallet,
+    token: {
+      active: 'LSK',
     },
   };
   it('Should render as addVote when we have not voted to this account yet', () => {
@@ -73,7 +88,7 @@ describe('EditVote', () => {
       EditVote, propsWithoutSearch, {}, { ...state, voting: withVotes },
     );
     wrapper.find('.remove-vote').at(0).simulate('click');
-    expect(votingActions.voteEdited).toHaveBeenCalledWith([{
+    expect(defaultProps.voteEdited).toHaveBeenCalledWith([{
       address: genesis,
       amount: 0,
     }]);
@@ -84,7 +99,7 @@ describe('EditVote', () => {
       EditVote, propsWithSearch, {}, { ...state, voting: withVotes },
     );
     wrapper.find('.remove-vote').at(0).simulate('click');
-    expect(votingActions.voteEdited).toHaveBeenCalledWith([{
+    expect(defaultProps.voteEdited).toHaveBeenCalledWith([{
       address: delegate,
       amount: 0,
     }]);
@@ -101,7 +116,7 @@ describe('EditVote', () => {
       },
     });
     wrapper.find('.confirm').at(0).simulate('click');
-    expect(votingActions.voteEdited).toHaveBeenCalledWith([{
+    expect(defaultProps.voteEdited).toHaveBeenCalledWith([{
       address: genesis,
       amount: 2e9,
     }]);
@@ -183,7 +198,7 @@ describe('EditVote', () => {
       },
     });
     wrapper.find('.confirm').at(0).simulate('click');
-    expect(votingActions.voteEdited).toHaveBeenCalledWith([{
+    expect(defaultProps.voteEdited).toHaveBeenCalledWith([{
       address: delegate,
       amount: 2e9,
     }]);
