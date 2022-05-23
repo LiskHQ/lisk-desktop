@@ -13,9 +13,6 @@ const AccountCreated = ({ t }) => (
   <>
     <div className={`${registerStyles.titleHolder}`}>
       <h1>{t('Great! You have an account now')}</h1>
-      <p className={styles.text}>
-        {t('You can now start sending and receiving LSK tokens')}
-      </p>
     </div>
     <Illustration className={styles.illustration} name="registrationSuccess" />
     <div className={`${registerStyles.buttonsHolder} ${grid.row}`}>

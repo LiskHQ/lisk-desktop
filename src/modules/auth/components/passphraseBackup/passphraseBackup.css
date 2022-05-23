@@ -2,7 +2,7 @@
 
 .optionsHolder {
   justify-content: center;
-  margin: 0 4px 20px 4px;
+  margin: 0 4px 32px 4px;
 
   & .option {
     display: flex;
@@ -55,15 +55,6 @@
     margin-left: 5px;
     color: var(--color-maastricht-blue);
   }
-}
-
-.copyButtonContainer {
-  margin-top: 15px;
-  height: 32px;
-  display: flex;
-  justify-content: space-between;
-  width: 100%;
-  align-items: center;
 }
 
 .hidden {

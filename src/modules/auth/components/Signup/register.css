@@ -86,7 +86,7 @@
   color: var(--color-content);
   font-family: var(--heading-font);
   text-align: center;
-  margin: 10px 0;
+  margin: 16px 0 60px 0;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -117,7 +117,6 @@
 
 .passphraseBackupContainer {
   width: 100%;
-  margin: 20px 0;
   max-height: fit-content;
   min-width: 645px;
   flex: 1 1 auto;

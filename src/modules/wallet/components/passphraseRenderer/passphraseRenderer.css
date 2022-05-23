@@ -22,6 +22,7 @@
   border: 1px solid var(--dark-border-color);
   flex-wrap: wrap;
   padding: 12px 16px;
+  margin-top: 16px;
   box-sizing: border-box;
   counter-reset: indicator;
 
