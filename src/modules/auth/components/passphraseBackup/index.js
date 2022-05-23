@@ -1,7 +1,7 @@
 // import QRCode from 'qrcode.react';
 import React from 'react';
 import renderPaperWallet from 'src/utils/paperWallet';
-import { SecondaryButton } from 'src/theme/buttons';
+import { TertiaryButton } from 'src/theme/buttons';
 import PassphraseRenderer from '@wallet/components/passphraseRenderer';
 import CopyToClipboard from 'src/modules/common/components/copyToClipboard';
 import Icon from 'src/theme/Icon';
@@ -56,15 +56,14 @@ class PassphraseBackup extends React.Component {
                 passphrase={account.passphrase}
                 subheader
               />
+              <CopyToClipboard
+                onClick={this.handleClick}
+                value={account.passphrase}
+                text={t('Copy')}
+                Container={TertiaryButton}
+                containerProps={{ size: 'xs', className: styles.copyPassphrase }}
+              />
               <div className={styles.copyButtonContainer}>
-                <CopyToClipboard
-                  onClick={this.handleClick}
-                  value={account.passphrase}
-                  text={t('Copy entire passphrase')}
-                  copyClassName={styles.copyIcon}
-                  Container={SecondaryButton}
-                  containerProps={{ size: 'xs' }}
-                />
                 <span
                   className={[
                     'tip',

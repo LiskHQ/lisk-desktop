@@ -150,9 +150,7 @@ class PassphraseRenderer extends React.Component {
             <h2 className={styles.header}>{t('Secret recovery phrase')}</h2>
             {subheader && (
               <p className={styles.subheader}>
-                {t(
-                  'Please carefully write down these 12 words and store them in a safe place.',
-                )}
+                {t('Please carefully write down these 12 words and store them in a safe place.')}
               </p>
             )}
           </>

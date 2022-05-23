@@ -15,6 +15,7 @@
   display: flex;
   flex-direction: column;
   width: 100%;
+  position: relative;
 
   & > h2 {
     @mixin contentLargest bold;
@@ -101,8 +102,10 @@
   color: var(--color-slate-gray);
 }
 
-.copyIcon {
-  display: none;
+.copyPassphrase {
+  position: absolute;
+  top: 0;
+  right: 0;
 }
 
 @media (--medium-viewport) {
