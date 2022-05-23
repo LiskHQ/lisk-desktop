@@ -3,7 +3,6 @@ import { mountWithRouterAndStore } from 'src/utils/testHelpers';
 import MultisigAccountDetails from './index';
 
 describe('Multisignature account details', () => {
-  const props = { t: str => str };
   const ordinaryAccountKeys = {
     numberOfSignatures: 0,
     optionalKeys: [],
@@ -16,10 +15,24 @@ describe('Multisignature account details', () => {
     optionalKeys: [publicKey],
     mandatoryKeys: ['86499879448d1b0215d59cbf078836e3d7d9d2782d56a2274a568761bff36f19'],
   };
+  const props = {
+    t: str => str,
+    history: {
+      location: {
+        pathname: '',
+      },
+    },
+    wallet: {
+      data: { keys: multisigAccountKeys },
+      isLoading: false,
+      loadData: jest.fn(),
+      clearData: jest.fn(),
+    },
+  };
 
   describe('Ordinary account', () => {
     const store = {
-      account: {
+      wallet: {
         info: {
           LSK: {
             address,

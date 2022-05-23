@@ -45,7 +45,7 @@ const LoadLatestButton = ({
         onClick={handleClick}
         className={`${styles.button} ${buttonClassName || ''} load-latest`}
       >
-        <Icon name="refresh" className={styles.icon} />
+        <Icon name="refreshActive" className={styles.icon} />
         <span>{children}</span>
       </PrimaryButton>
     ) : null;

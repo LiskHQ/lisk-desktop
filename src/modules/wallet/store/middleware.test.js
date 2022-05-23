@@ -1,22 +1,16 @@
 import {
-  accountDataUpdated, transactionsRetrieved, settingsUpdated,
-  votesRetrieved, emptyTransactionsData, networkSelected, networkStatusUpdated,
+  accountDataUpdated, transactionsRetrieved, emptyTransactionsData,
 } from '@common/store/actions';
 
 import commonActionTypes from '@common/store/actions/actionTypes';
 import blockActionTypes from '@block/store/actionTypes';
 import settingsActionTypes from 'src/modules/settings/store/actionTypes';
-import transactionActionTypes from '@transaction/store/actionTypes';
-import { MODULE_ASSETS_NAME_ID_MAP } from '@transaction/configuration/moduleAssets';
-import routes from '@screens/router/routes';
-import { tokenMap } from '@token/fungible/consts/tokens';
 import * as transactionApi from '@transaction/api';
 import { getAutoLogInData } from 'src/utils/login';
-import history from 'src/utils/history';
 import walletActionTypes from './actionTypes';
 import middleware from './middleware';
 
-jest.mock('@common/utilities/history');
+jest.mock('src/utils/history');
 
 jest.mock('@transaction/api', () => ({
   getTransactions: jest.fn(),
@@ -33,14 +27,14 @@ jest.mock('@common/store/actions', () => ({
   networkStatusUpdated: jest.fn(),
 }));
 
-jest.mock('@common/utilities/login', () => ({
+jest.mock('src/utils/login', () => ({
   getAutoLogInData: jest.fn(),
   shouldAutoLogIn: jest.fn(),
 }));
 
 jest.mock('@transaction/api');
 
-jest.mock('@token/utilities/lsk');
+jest.mock('@token/fungible/utils/lsk');
 
 const liskAPIClientMock = 'DUMMY_LISK_API_CLIENT';
 const storeCreatedAction = {
@@ -89,16 +83,6 @@ const block = {
   id: '513008230952104224',
 };
 
-const transactionsRetrievedAction = {
-  type: transactionActionTypes.transactionsRetrieved,
-  data: {
-    confirmed: [{
-      type: MODULE_ASSETS_NAME_ID_MAP.registerDelegate,
-      confirmations: 1,
-    }],
-  },
-};
-
 const newBlockCreated = {
   type: blockActionTypes.newBlockCreated,
   data: { block },
@@ -126,7 +110,6 @@ const wallet = {
 };
 
 const settings = {
-  token: { active: 'LSK' },
   statistics: false,
   network: {
     name: 'customNode',
@@ -153,6 +136,7 @@ const defaultState = {
   },
   delegate: {},
   settings,
+  token: { active: 'LSK' },
 };
 
 describe('Account middleware', () => {
@@ -193,41 +177,6 @@ describe('Account middleware', () => {
       };
       middleware(store)(next)(actionNewBlockCreatedAction);
       expect(next).toHaveBeenCalledWith(actionNewBlockCreatedAction);
-    });
-  });
-
-  describe('on settingsRetrieved', () => {
-    it('should set the network from the settings', () => {
-      const accountLoggedOutAction = {
-        type: settingsActionTypes.settingsRetrieved,
-      };
-      middleware(store)(next)(accountLoggedOutAction);
-      expect(networkSelected).toHaveBeenCalledWith(settings.network);
-      expect(networkStatusUpdated).toHaveBeenCalled();
-    });
-
-    it('should set the network from defaults if no value stored in the settings', () => {
-      const accountLoggedOutAction = {
-        type: settingsActionTypes.settingsRetrieved,
-      };
-
-      const noNetworkState = {
-        ...defaultState,
-        settings: {
-          ...defaultState.settings,
-          network: {},
-        },
-      };
-
-      const noNetworkStore = {
-        dispatch: jest.fn().mockImplementation(() => ({})),
-        getState: () => noNetworkState,
-      };
-      middleware(noNetworkStore)(next)(accountLoggedOutAction);
-      expect(networkSelected).toHaveBeenCalledWith({
-        address: 'https://service.lisk.com',
-        name: 'mainnet',
-      });
     });
   });
 
@@ -277,20 +226,6 @@ describe('Account middleware', () => {
     });
   });
 
-  describe('on transactionsRetrieved', () => {
-    it('should dispatch votesRetrieved on transactionsRetrieved if confirmed tx list contains delegateRegistration transactions', () => {
-      transactionsRetrievedAction.data.confirmed[0].type = MODULE_ASSETS_NAME_ID_MAP.voteDelegate;
-      middleware(store)(next)(transactionsRetrievedAction);
-      expect(votesRetrieved).toHaveBeenCalled();
-    });
-    it('should not dispatch votesRetrieved on transactionsRetrieved if confirmed tx list contains delegateRegistration transactions', () => {
-      transactionsRetrievedAction
-        .data.confirmed[0].type = MODULE_ASSETS_NAME_ID_MAP.registerDelegate;
-      middleware(store)(next)(transactionsRetrievedAction);
-      expect(votesRetrieved).not.toHaveBeenCalled();
-    });
-  });
-
   describe('on storeCreated', () => {
     it.skip('should do nothing if autologin data is NOT found in localStorage', () => {
       middleware(store)(next)(storeCreatedAction);
@@ -304,19 +239,16 @@ describe('Account middleware', () => {
         type: walletActionTypes.accountLoggedOut,
       };
       middleware(store)(next)(accountLoggedOutAction);
-      expect(settingsUpdated).toHaveBeenCalledWith(
-        { token: { active: tokenMap.LSK.key } },
-      );
       expect(emptyTransactionsData).toHaveBeenCalled();
     });
   });
 
   describe('on accountSettingsUpdated', () => {
-    it('Account Setting Update Sucessfull', () => {
+    it('Account Setting Update Sucessful', () => {
       const state = store.getState();
       store.getState = () => ({
         ...state,
-        account: {
+        wallet: {
           ...state.wallet,
           info: {
             LSK: { summary: { address: '123456L' } },
@@ -330,8 +262,9 @@ describe('Account middleware', () => {
       };
       middleware(store)(next)(accountSettingsUpdatedAction);
       expect(store.dispatch).toHaveBeenCalled();
+      expect(accountDataUpdated).toHaveBeenCalledWith('enabled');
     });
-    it('Account Setting Update Unsucessfull', () => {
+    it('Account Setting Update Unsucessful', () => {
       const accountSettingsUpdatedAction = {
         type: settingsActionTypes.settingsUpdated,
         data: { token: '' },
@@ -342,7 +275,7 @@ describe('Account middleware', () => {
   });
 
   describe('on accountSettingsRetrieved', () => {
-    it('Account Setting Retrieve Sucessfull', async () => {
+    it('Account Setting Retrieve Sucessful', async () => {
       const accountSettingsRetrievedAction = {
         type: settingsActionTypes.settingsRetrieved,
         data: { token: 'LSK' },
@@ -358,7 +291,7 @@ describe('Account middleware', () => {
       await middleware(store)(next)(accountSettingsRetrievedAction);
       expect(next).toHaveBeenCalledWith(accountSettingsRetrievedAction);
     });
-    it('Account Setting Retrieve Sucessfull without statistics', async () => {
+    it('Account Setting Retrieve Sucessful without statistics', async () => {
       const state = store.getState();
       store.getState = () => ({
         ...state,
@@ -382,34 +315,6 @@ describe('Account middleware', () => {
       }));
       await middleware(store)(next)(accountSettingsRetrievedAction);
       expect(next).toHaveBeenCalledWith(accountSettingsRetrievedAction);
-    });
-  });
-
-  describe('on accountUpdated', () => {
-    it('should not redirect to the reclaim screen if the account is migrated', async () => {
-      const action = {
-        type: walletActionTypes.accountLoggedIn,
-        data: { info: { LSK: { summary: { isMigrated: true } } } },
-      };
-      middleware(store)(next)(action);
-      expect(history.push).not.toHaveBeenCalledWith(routes.reclaim.path);
-    });
-
-    it('should redirect to the reclaim screen if the account is not migrated', async () => {
-      const action = {
-        type: walletActionTypes.accountLoggedIn,
-        data: { info: { LSK: { summary: { isMigrated: false } } } },
-      };
-      middleware(store)(next)(action);
-      expect(history.push).toHaveBeenCalledWith(routes.reclaim.path);
-    });
-    it('should not redirect to the reclaim screen if the account is migrated with actionUpdate', async () => {
-      const action = {
-        type: walletActionTypes.accountUpdated,
-        data: { info: { LSK: { summary: { isMigrated: true } } } },
-      };
-      middleware(store)(next)(action);
-      expect(next).toHaveBeenCalledWith(action);
     });
   });
 });

@@ -124,6 +124,7 @@
   "dependencies": {
     "@electron/universal": "1.1.0",
     "@hirishh/lisk-ledger.js": "2.2.0",
+    "@hookform/resolvers": "2.8.8",
     "@ledgerhq/hw-transport": "6.3.0",
     "@ledgerhq/hw-transport-node-hid": "6.6.0",
     "@liskhq/lisk-client": "5.2.1",
@@ -176,6 +177,7 @@
     "react-dom": "16.14.0",
     "react-fast-compare": "2.0.4",
     "react-highlight-words": "0.17.0",
+    "react-hook-form": "7.31.1",
     "react-i18next": "10.12.5",
     "react-json-view": "^1.21.3",
     "react-piwik": "1.6.0",
@@ -192,7 +194,8 @@
     "trezor-connect": "8.1.26",
     "trezor.js": "9.3.4",
     "usb": "1.7.0",
-    "webpack-merge": "=4.1.5"
+    "webpack-merge": "=4.1.5",
+    "yup": "0.32.11"
   },
   "devDependencies": {
     "@babel/core": "7.13.16",
@@ -206,6 +209,9 @@
     "@storybook/addon-actions": "6.2.9",
     "@storybook/addon-links": "6.2.9",
     "@storybook/react": "6.4.19",
+    "@testing-library/dom": "8.13.0",
+    "@testing-library/jest-dom": "5.16.4",
+    "@testing-library/react": "12.1.2",
     "@welldone-software/why-did-you-render": "6.1.1",
     "babel-eslint": "10.0.1",
     "babel-jest": "24.9.0",

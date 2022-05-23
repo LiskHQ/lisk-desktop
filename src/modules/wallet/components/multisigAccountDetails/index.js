@@ -3,7 +3,7 @@ import { useSelector } from 'react-redux';
 import grid from 'flexboxgrid/dist/flexboxgrid.css';
 
 import { selectSearchParamValue } from 'src/utils/searchParams';
-import { selectAccount } from '@common/store/selectors';
+import { selectAccount, selectNetwork } from '@common/store/selectors';
 import routes from '@screens/router/routes';
 import { extractAddressFromPublicKey } from '@wallet/utils/account';
 import Box from 'src/theme/box';
@@ -18,7 +18,7 @@ import styles from './styles.css';
 
 const MultisigAccountDetails = ({ t, wallet, history }) => {
   const hostAccount = useSelector(selectAccount);
-  const network = useSelector((state) => state.network);
+  const network = useSelector(selectNetwork);
   const isHost = history.location.pathname === routes.wallet.path;
   const data = isHost ? hostAccount.info.LSK : wallet.data;
 
@@ -86,11 +86,11 @@ const MultisigAccountDetails = ({ t, wallet, history }) => {
             <p>
               {t('Required signatures')}
               <Tooltip position="top right" indent>
-                <p>
+                <span>
                   {t(
                     'To provide a required signature, use the "Sign multisignature" tool in the sidebar."',
                   )}
-                </p>
+                </span>
               </Tooltip>
             </p>
             <span>{numberOfSignatures}</span>

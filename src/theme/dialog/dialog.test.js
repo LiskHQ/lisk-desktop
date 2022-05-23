@@ -3,7 +3,7 @@ import { mountWithRouter } from 'src/utils/testHelpers';
 import { removeSearchParamsFromUrl } from 'src/utils/searchParams';
 import Dialog from './dialog';
 
-jest.mock('@screens/router/searchParams', () => ({
+jest.mock('src/utils/searchParams', () => ({
   removeSearchParamsFromUrl: jest.fn(),
 }));
 

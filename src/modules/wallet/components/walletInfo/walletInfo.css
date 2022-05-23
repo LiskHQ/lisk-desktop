@@ -4,18 +4,7 @@
   & .content {
     height: 200px;
     position: relative;
-
-    &.token {
-      background-color: var(--color-ultramarine-blue);
-    }
-  }
-
-  & .title {
-    @mixin contentLargest normal;
-
-    color: var(--color-strong-mystic);
-    margin: 0 0 5px;
-    box-sizing: border-box;
+    background: linear-gradient(90deg, var(--color-ultramarine-blue) 0%, var(--color-strong-ink-blue) 100%);
   }
 
   & .info {
@@ -141,12 +130,14 @@
       width: 40px;
       height: 40px;
       border: solid 1px var(--color-strong-mystic);
-      border-radius: var(--border-radius-standard);
+      border-radius: 20px;
       margin: 0 15px;
       box-sizing: border-box;
       cursor: pointer;
 
       & > div {
+        border-radius: 20px;
+
         & > button {
           padding: 0;
           height: auto;
@@ -181,8 +172,8 @@
     }
 
     & .qrCodeIcon {
-      width: 26px;
-      margin: 6px;
+      width: 20px;
+      margin: 9px;
 
       &.white {
         filter: brightness(100) !important;
@@ -257,4 +248,79 @@
   display: flex;
   justify-content: center;
   align-items: center;
+}
+
+.header {
+  display: flex;
+
+  & .title {
+    @mixin contentLargest normal;
+
+    align-items: center;
+    flex-grow: 1;
+    color: var(--color-strong-mystic);
+    margin: 0 0 10px;
+    box-sizing: border-box;
+  }
+}
+
+.dropDownMenuButton {
+  height: auto !important;
+  min-width: 40px;
+  padding-right: 0 !important;
+
+  & > img {
+    margin-left: 0 !important;
+  }
+}
+
+.dropDownMenu {
+  border: 0;
+
+  & > div {
+    padding: 0;
+  }
+}
+
+.dark .dropDownMenuList {
+  background-color: red !important;
+}
+
+.dropDownMenuList {
+  background-color: var(--color-background-dropdown);
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  border-radius: var(--border-radius-standard);
+
+  & > li {
+    @mixin contentLargest;
+
+    padding: 10px 16px;
+
+    & > a {
+      display: flex;
+      color: var(--color-periwinkle-blue);
+      font-weight: var(--font-weight-bold);
+
+      & > img {
+        margin-right: 10px;
+        width: 16px;
+      }
+    }
+
+    &:hover {
+      background-color: var(--color-link-active);
+      cursor: pointer;
+
+      & > a {
+        color: var(--color-constant-white);
+        text-decoration: none;
+
+        & > img {
+          filter: brightness(2);
+        }
+      }
+    }
+  }
 }
