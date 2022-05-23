@@ -48,6 +48,7 @@ class PassphraseBackup extends React.Component {
                 text={t('Copy')}
                 Container={TertiaryButton}
                 containerProps={{ size: 'xs', className: styles.copyPassphrase }}
+                copyClassName={styles.copyIcon}
               />
               <div className={styles.copyButtonContainer}>
                 <span

@@ -61,6 +61,15 @@
   display: none;
 }
 
+.copyIcon {
+  filter: none;
+  margin-left: 7px;
+
+  &:hover {
+    filter: none;
+  }
+}
+
 .infoText {
   @mixin contentLargest;
 
@@ -77,8 +86,14 @@
 
 .copyPassphrase {
   position: absolute;
-  top: 0;
+  top: 30px;
   right: 0;
+  padding: 0 !important;
+
+  & > * {
+    display: flex;
+    justify-content: end;
+  }
 }
 
 @media (--medium-viewport) {
