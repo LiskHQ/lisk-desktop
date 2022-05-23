@@ -1,3 +1,4 @@
+/* istanbul ignore file */
 import { useState } from 'react';
 
 const mockAccounts = [
