@@ -9,7 +9,7 @@ const ConfirmPassphrase = ({
   t, passphrase, prevStep, nextStep,
 }) => (
   <>
-    <div className={`${registerStyles.titleHolder} ${grid['col-xs-10']}`}>
+    <div className={registerStyles.titleHolder}>
       <h1>
         {t('Confirm your secret recovery phrase')}
       </h1>

@@ -9,7 +9,7 @@ const SavePassphrase = ({
   t, account, prevStep, nextStep,
 }) => (
   <>
-    <div className={`${registerStyles.titleHolder}`}>
+    <div className={registerStyles.titleHolder}>
       <h1>{t('Save your Save your secret recovery phrase')}</h1>
       <p>{t('Keep it safe as it is the only way to access your wallet.')}</p>
     </div>

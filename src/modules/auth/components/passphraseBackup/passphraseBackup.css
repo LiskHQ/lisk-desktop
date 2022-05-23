@@ -44,24 +44,6 @@
   }
 }
 
-.hrSection {
-  display: flex;
-  flex-basis: 100%;
-  align-items: center;
-  color: var(--color-slate-gray);
-  margin: 40px 0;
-}
-
-.hrSection::before,
-.hrSection::after {
-  content: "";
-  flex-grow: 1;
-  background: rgba(0, 0, 0, 0.15);
-  height: 1px;
-  font-size: 0px;
-  line-height: 0px;
-}
-
 .tipContainer {
   display: flex;
   flex-direction: row;
