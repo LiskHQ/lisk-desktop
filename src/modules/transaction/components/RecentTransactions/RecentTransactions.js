@@ -4,8 +4,8 @@ import { useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
 
 import {
-  selectAccount,
   selectActiveToken,
+  selectActiveTokenAccount,
   selectCurrentBlockHeight,
 } from '@common/store/selectors';
 import routes from '@screens/router/routes';
@@ -45,12 +45,12 @@ export const NotSignedIn = withTranslation()(({ t }) => (
 ));
 
 const RecentTransactions = ({ className, t, transactions }) => {
-  const account = useSelector(selectAccount);
+  const account = useSelector(selectActiveTokenAccount);
   const [isLoaded, setLoaded] = useState(!!transactions.data.length);
   const token = useSelector(state => state.token);
   const currentBlockHeight = useSelector(selectCurrentBlockHeight);
   const activeToken = token.active;
-  const host = account.info && account.info[activeToken] ? account.info[activeToken].summary.address : '';
+  const host = account.summary?.address;
 
   useEffect(() => {
     if (host && !isLoaded) {

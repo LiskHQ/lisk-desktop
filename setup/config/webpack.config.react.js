@@ -60,28 +60,28 @@ const reactToastifyLoader = {
 const postCssLoader = {
   loader: 'postcss-loader',
   options: {
-    ident: 'postcss',
     sourceMap: true,
-    sourceComments: true,
-    plugins: [
-      require('postcss-partial-import')({}),
-      require('postcss-mixins')({}),
-      require('postcss-nesting')({}),
-      require('postcss-preset-env')({
-        stage: 0,
-        features: {
-          'custom-properties': {
-            variables: reactToolboxVariables,
+    postcssOptions: {
+      plugins: [
+        require('postcss-partial-import')({}),
+        require('postcss-mixins')({}),
+        require('postcss-nesting')({}),
+        require('postcss-preset-env')({
+          stage: 0,
+          features: {
+            'custom-properties': {
+              variables: reactToolboxVariables,
+            },
           },
-        },
-      }),
-      require('postcss-functions')({
-        functions: {
-          rem: px => `${(px / 10)}rem`,
-        },
-      }),
-      require('postcss-for')({}),
-    ],
+        }),
+        require('postcss-functions')({
+          functions: {
+            rem: px => `${(px / 10)}rem`,
+          },
+        }),
+        require('postcss-for')({}),
+      ],
+    },
   },
 };
 
