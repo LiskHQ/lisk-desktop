@@ -1,4 +1,4 @@
-import QRCode from 'qrcode.react';
+// import QRCode from 'qrcode.react';
 import React from 'react';
 import renderPaperWallet from 'src/utils/paperWallet';
 import { SecondaryButton } from 'src/theme/buttons';
@@ -51,7 +51,11 @@ class PassphraseBackup extends React.Component {
         <div className={`${styles.optionsHolder}`}>
           <div className={`${styles.option}`}>
             <div className={`${styles.optionContent}`}>
-              <PassphraseRenderer showInfo passphrase={account.passphrase} />
+              <PassphraseRenderer
+                showInfo
+                passphrase={account.passphrase}
+                subheader
+              />
               <div className={styles.copyButtonContainer}>
                 <CopyToClipboard
                   onClick={this.handleClick}
@@ -75,7 +79,7 @@ class PassphraseBackup extends React.Component {
             </div>
           </div>
           <div className={styles.hrSection} />
-          <div className={`${styles.option}`}>
+          {/** <div className={`${styles.option}`}>
             <div className={`${styles.optionContent}`}>
               <h2>{t('Paper wallet')}</h2>
               <p className={styles.infoFooterText}>
@@ -98,7 +102,7 @@ class PassphraseBackup extends React.Component {
                 {t('Download')}
               </SecondaryButton>
             </div>
-          </div>
+          </div>* */}
         </div>
       </>
     );

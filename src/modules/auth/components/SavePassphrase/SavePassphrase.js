@@ -10,7 +10,7 @@ const SavePassphrase = ({
 }) => (
   <>
     <div className={`${registerStyles.titleHolder}`}>
-      <h1>{t('Save your passphrase')}</h1>
+      <h1>{t('Save your Save your secret recovery phrase')}</h1>
       <p>{t('Keep it safe as it is the only way to access your wallet.')}</p>
     </div>
     <div
@@ -20,7 +20,6 @@ const SavePassphrase = ({
         account={account}
         t={t}
         paperWalletName="lisk_passphrase_store_safely"
-        passphraseName={t('Passphrase')}
       />
     </div>
 
@@ -33,7 +32,7 @@ const SavePassphrase = ({
           className={`${registerStyles.continueBtn} yes-its-safe-button`}
           onClick={() => nextStep()}
         >
-          {t('I wrote it down')}
+          {t('I have written them down')}
         </PrimaryButton>
       </span>
     </div>

@@ -11,9 +11,9 @@ const ConfirmPassphrase = ({
   <>
     <div className={`${registerStyles.titleHolder} ${grid['col-xs-10']}`}>
       <h1>
-        {t('Confirm your passphrase')}
+        {t('Confirm your secret recovery phrase')}
       </h1>
-      <p className={styles.text}>{t('Keep it safe as it is the only way to access your wallet.')}</p>
+      <p className={styles.text}>{t('Please choose the correct words from the list below to complete your secret recovery phrase.')}</p>
     </div>
 
     <div className={`${grid['col-sm-10']} ${styles.passphraseContainer}`}>

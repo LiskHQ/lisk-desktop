@@ -12,7 +12,7 @@ import styles from './accountCreated.css';
 const AccountCreated = ({ t }) => (
   <>
     <div className={`${registerStyles.titleHolder}`}>
-      <h1>{t("Perfect! You're all set")}</h1>
+      <h1>{t('Great! You have an account now')}</h1>
       <p className={styles.text}>
         {t('You can now start sending and receiving LSK tokens')}
       </p>
@@ -24,7 +24,7 @@ const AccountCreated = ({ t }) => (
         to={routes.login.path}
       >
         <PrimaryButton className={registerStyles.continueBtn}>
-          {t('Continue to sign in')}
+          {t('Continue to Add account')}
         </PrimaryButton>
       </Link>
     </div>

@@ -138,7 +138,7 @@ class PassphraseRenderer extends React.Component {
 
   render() {
     const {
-      t, showInfo, isConfirmation, prevStep, footerStyle,
+      t, showInfo, isConfirmation, prevStep, footerStyle, subheader,
     } = this.props;
     const { options, fieldSelected, chosenWords } = this.state;
     const missingWordsIndexes = isConfirmation && Object.keys(options).map((k) => Number(k));
@@ -147,12 +147,14 @@ class PassphraseRenderer extends React.Component {
       <div>
         {showInfo && (
           <>
-            <h2 className={styles.header}>{t('Passphrase')}</h2>
-            <p className={styles.subheader}>
-              {t(
-                'Please carefully write down these 12 words and store them in a safe place.',
-              )}
-            </p>
+            <h2 className={styles.header}>{t('Secret recovery phrase')}</h2>
+            {subheader && (
+              <p className={styles.subheader}>
+                {t(
+                  'Please carefully write down these 12 words and store them in a safe place.',
+                )}
+              </p>
+            )}
           </>
         )}
         <div className={styles.passphraseContainer}>
