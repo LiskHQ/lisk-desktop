@@ -48,7 +48,7 @@ describe('DiscreetMode Component', () => {
     const newProps = {
       ...props,
       location: {
-        pathname: '/account',
+        pathname: '/explorer',
         search: '?address=lskgonvfdxt3m6mm7jaeojrj5fnxx7vwmkxq72v79',
       },
       shouldEvaluateForOtherAccounts: true,

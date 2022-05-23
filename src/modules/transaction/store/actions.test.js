@@ -236,7 +236,7 @@ describe('actions: transactions', () => {
   });
 
   describe('transactionDoubleSigned', () => {
-    const { network, wallet, settings } = getState();
+    const { network, wallet, token } = getState();
     const getStateWithTx = () => ({
       network,
       wallet: {
@@ -247,7 +247,7 @@ describe('actions: transactions', () => {
           LSK: accounts.multiSig,
         },
       },
-      settings,
+      token,
       transactions: {
         signedTransaction: sampleTransaction,
       },
@@ -360,7 +360,7 @@ describe('actions: transactions', () => {
   });
 
   describe('multisigTransactionSigned', () => {
-    const { network, wallet, settings } = getState();
+    const { network, wallet, token } = getState();
     const getStateWithTx = () => ({
       network,
       wallet: {
@@ -371,7 +371,7 @@ describe('actions: transactions', () => {
           LSK: accounts.multiSig,
         },
       },
-      settings,
+      token,
       transactions: {
         signedTransaction: sampleTransaction,
       },

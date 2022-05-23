@@ -14,17 +14,16 @@ const AccountSelect = ({ onSelectAccount, onAddAccount, onRemoveAccount }) => {
   const [showRemove, setShowRemove] = useState(false);
 
   return (
-    <>
-      <div className={`${styles.accountSelect} ${grid.row}`}>
-        <div
-          className={`${styles.accountSelectWrapper} ${grid['col-xs-12']} ${grid['col-md-8']} ${grid['col-lg-6']}`}
-        >
-          <div className={styles.wrapper}>
-            <div className={styles.headerWrapper}>
-              <h1>{t(showRemove ? 'Choose account' : 'Manage accounts')}</h1>
-            </div>
-            <Box className={styles.accountListWrapper}>
-              {
+    <div className={`${styles.accountSelect} ${grid.row}`}>
+      <div
+        className={`${styles.accountSelectWrapper} ${grid['col-xs-12']} ${grid['col-md-8']} ${grid['col-lg-6']}`}
+      >
+        <div className={styles.wrapper}>
+          <div className={styles.headerWrapper}>
+            <h1>{t(showRemove ? 'Choose account' : 'Manage accounts')}</h1>
+          </div>
+          <Box className={styles.accountListWrapper}>
+            {
                accounts.map((account) => (
                  <AccountRow
                    key={account.uuid}
@@ -35,38 +34,37 @@ const AccountSelect = ({ onSelectAccount, onAddAccount, onRemoveAccount }) => {
                  />
                ))
              }
-            </Box>
-            { showRemove ? (
+          </Box>
+          { showRemove ? (
+            <OutlineButton
+              className={`${styles.button} ${styles.addAccountBtn}`}
+              onClick={() => setShowRemove(false)}
+            >
+              {t('Done')}
+            </OutlineButton>
+          ) : (
+            <>
               <OutlineButton
                 className={`${styles.button} ${styles.addAccountBtn}`}
-                onClick={() => setShowRemove(false)}
+                onClick={onAddAccount}
               >
-                {t('Done')}
+                <Icon name="personIcon" />
+                {t('Add another account')}
               </OutlineButton>
-            ) : (
-              <>
-                <OutlineButton
-                  className={`${styles.button} ${styles.addAccountBtn}`}
-                  onClick={onAddAccount}
-                >
-                  <Icon name="personIcon" />
-                  {t('Add another account')}
-                </OutlineButton>
-                <OutlineButton
-                  className={styles.button}
-                  onClick={() => {
-                    setShowRemove(true);
-                  }}
-                >
-                  <Icon name="deleteIcon" />
-                  {t('Remove an account')}
-                </OutlineButton>
-              </>
-            )}
-          </div>
+              <OutlineButton
+                className={styles.button}
+                onClick={() => {
+                  setShowRemove(true);
+                }}
+              >
+                <Icon name="deleteIcon" />
+                {t('Remove an account')}
+              </OutlineButton>
+            </>
+          )}
         </div>
       </div>
-    </>
+    </div>
   );
 };
 

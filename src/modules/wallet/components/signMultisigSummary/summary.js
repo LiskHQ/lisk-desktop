@@ -3,9 +3,9 @@ import { isEmpty } from 'src/utils/helpers';
 import { signatureCollectionStatus } from '@transaction/configuration/txStatus';
 import BoxContent from 'src/theme/box/content';
 import Box from 'src/theme/box';
-import TransactionDetails from '@screens/managers/transactionDetails';
-import TransactionDetailsProvider from '@transaction/context';
-
+import { LayoutSchema } from '@transaction/components/TransactionDetails/layoutSchema';
+import TransactionDetailsContext from '@transaction/context/transactionDetailsContext';
+import layoutSchemaStyles from '@transaction/components/TransactionDetails/layoutSchema.css';
 import ProgressBar from '../signMultisigView/progressBar';
 import { showSignButton, getTransactionSignatureStatus } from '../signMultisigView/helpers';
 import { ActionBar, Feedback } from './footer';
@@ -17,8 +17,9 @@ const Summary = ({
   account,
   nextStep,
   history,
-  error,
   senderAccount,
+  activeToken,
+  network,
 }) => {
   const isMember = useMemo(() => {
     if (senderAccount.data.keys) {
@@ -57,6 +58,7 @@ const Summary = ({
   if (isEmpty(senderAccount.data)) {
     return <div />;
   }
+  const Layout = LayoutSchema[`${transaction.moduleAssetId}-preview`] || LayoutSchema.default;
 
   return (
     <Box className={styles.boxContainer}>
@@ -70,18 +72,18 @@ const Summary = ({
       </header>
       <BoxContent>
         <ProgressBar current={2} />
-        <TransactionDetailsProvider
-          activeToken="LSK"
-          error={error}
-          transaction={transaction}
-          account={senderAccount.data}
-          schema={`${transaction.moduleAssetId}-preview`}
-          containerStyle={`${styles.txDetails} ${
-            showFeedback && isMember ? styles.small : ''
-          }`}
-        >
-          <TransactionDetails />
-        </TransactionDetailsProvider>
+        <Box className={`${styles.container} ${styles.txDetails}`}>
+          <BoxContent className={`${layoutSchemaStyles.mainContent} ${Layout.className}`}>
+            <TransactionDetailsContext.Provider value={{
+              activeToken, network, wallet: senderAccount.data, transaction,
+            }}
+            >
+              {Layout.components.map((Component, index) => (
+                <Component key={index} t={t} />
+              ))}
+            </TransactionDetailsContext.Provider>
+          </BoxContent>
+        </Box>
       </BoxContent>
       {isMember ? (
         <ActionBar t={t} history={history} nextButton={nextButton} />

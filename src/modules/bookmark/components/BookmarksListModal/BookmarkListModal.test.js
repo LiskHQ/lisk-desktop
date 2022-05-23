@@ -55,7 +55,7 @@ describe('BookmarkListModal', () => {
     });
   });
 
-  it('should allow edditing a bookmark title', () => {
+  it('should allow editing a bookmark title', () => {
     const newTitle = 'New title';
     expect(wrapper).toContainMatchingElements(bookmarks.LSK.length, 'a.bookmark-list-row');
     wrapper.find('.bookmarks-edit-button').first().simulate('click');
@@ -66,7 +66,7 @@ describe('BookmarkListModal', () => {
     );
     wrapper.find('.bookmarks-save-changes-button').first().simulate('click');
     expect(props.bookmarkUpdated).toHaveBeenCalledWith({
-      account: {
+      wallet: {
         address: bookmarks.LSK[0].address,
         title: newTitle,
       },
@@ -75,7 +75,7 @@ describe('BookmarkListModal', () => {
     expect(wrapper).not.toContainMatchingElement('.bookmarks-edit-input');
   });
 
-  it('should allow to cancel edditing a bookmark title', () => {
+  it('should allow to cancel editing a bookmark title', () => {
     const newTitle = 'New title';
     expect(wrapper).toContainMatchingElements(bookmarks.LSK.length, 'a.bookmark-list-row');
     wrapper.find('.bookmarks-edit-button').first().simulate('click');
@@ -86,7 +86,7 @@ describe('BookmarkListModal', () => {
     );
     wrapper.find('.bookmarks-cancel-button').first().simulate('click');
     expect(props.bookmarkUpdated).not.toHaveBeenCalledWith({
-      account: {
+      wallet: {
         address: bookmarks.LSK[0].address,
         title: newTitle,
       },

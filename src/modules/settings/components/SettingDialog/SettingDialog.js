@@ -59,13 +59,13 @@ class SettingDialog extends React.Component {
             <h1>{t('Settings')}</h1>
           </BoxHeader>
           <BoxContent className={styles.content}>
-            <section>
+            <section className="currency">
               <h2>{t('Currency')}</h2>
               <div className={styles.fieldGroup}>
                 <CurrencySelector />
               </div>
             </section>
-            <section>
+            <section className="appearance">
               <h2>{t('Appearance')}</h2>
               <label className={`${styles.fieldGroup} ${styles.checkboxField}`}>
                 <Toggle isCheckbox setting={settingsConst.keys.darkMode} />
@@ -75,7 +75,7 @@ class SettingDialog extends React.Component {
                 </div>
               </label>
             </section>
-            <section>
+            <section className="security">
               <h2>{t('Security')}</h2>
               <label className={`${styles.fieldGroup} ${styles.checkboxField}`}>
                 <Toggle isCheckbox setting={settingsConst.keys.autoLog} />
@@ -92,7 +92,7 @@ class SettingDialog extends React.Component {
                 </div>
               </label>
             </section>
-            <section>
+            <section className="advanced">
               <h2>{t('Advanced')}</h2>
               <label className={`${styles.fieldGroup} ${styles.checkboxField}`}>
                 <Toggle isCheckbox setting={settingsConst.keys.showNetwork} />
@@ -120,7 +120,7 @@ class SettingDialog extends React.Component {
                 </div>
               </label>
             </section>
-            <section>
+            <section className="privacy">
               <h2>{t('Privacy')}</h2>
               <label className={`${styles.fieldGroup} ${styles.checkboxField}`}>
                 <Toggle isCheckbox setting={settingsConst.keys.statistics} />

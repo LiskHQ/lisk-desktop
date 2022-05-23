@@ -6,7 +6,7 @@ import TransactionAddress from '../transactionAddress';
 import styles from './TransactionTypeFigure.css';
 
 const TransactionTypeFigure = ({
-  moduleAssetId, className = '', address,
+  moduleAssetId, className = '', address, iconOnly,
 }) => {
   if (moduleAssetId === MODULE_ASSETS_NAME_ID_MAP.transfer) {
     return null;
@@ -17,15 +17,19 @@ const TransactionTypeFigure = ({
         name={MODULE_ASSETS_MAP[moduleAssetId]?.icon ?? 'txDefault'}
         className={styles.transactionIcon}
       />
-      <span>
-        <TransactionAddress
-          address={address}
-          bookmarks={{ LSK: [] }}
-          t={str => str}
-          token={tokenMap.LSK.key}
-          moduleAssetId={moduleAssetId}
-        />
-      </span>
+      {
+        !iconOnly ? (
+          <span>
+            <TransactionAddress
+              address={address}
+              bookmarks={{ LSK: [] }} // @todo why bookmarks are empty?
+              t={str => str} // @todo this is also a mock
+              token={tokenMap.LSK.key} // @todo why this is hardcoded?
+              moduleAssetId={moduleAssetId}
+            />
+          </span>
+        ) : null
+       }
     </div>
   );
 };

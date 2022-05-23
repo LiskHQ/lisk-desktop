@@ -6,6 +6,7 @@ import account from '@wallet/configuration/constants';
 import routes, { modals } from '@screens/router/routes';
 import { accountLoggedOut } from '@auth/store/action';
 import Icon from 'src/theme/Icon';
+import { selectActiveToken } from '@common/store';
 import DialogLink from 'src/theme/dialog/link';
 import styles from './sideBar.css';
 import AutoSignOut from './autoSignOut';
@@ -105,7 +106,7 @@ const AutoSignOutWrapper = () => {
 
 const SideBar = ({ t, location }) => {
   const items = menuLinks(t);
-  const token = useSelector(state => state.token.active);
+  const token = useSelector(selectActiveToken);
   const isLoggedOut = useSelector(state => !state.wallet.info || !state.wallet.info[token]);
   const sideBarExpanded = useSelector(state => state.settings.sideBarExpanded);
 

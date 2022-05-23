@@ -1,7 +1,7 @@
 import thunk from 'redux-thunk';
-import spy from 'redux-monitor-spy';
 
 import account from '@wallet/store/middleware';
+import auth from '@auth/store/middleware';
 import block from '@block/store/middleware';
 import settings from 'src/modules/settings/store/middleware';
 import bookmarks from '@bookmark/store/middleware';
@@ -12,8 +12,8 @@ import hwManager from './hwManager';
 import loading from './loadingBar';
 
 export default [
-  spy,
   account,
+  auth,
   bookmarks,
   hwManager,
   loading,

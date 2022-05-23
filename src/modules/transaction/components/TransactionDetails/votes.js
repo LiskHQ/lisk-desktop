@@ -2,10 +2,10 @@ import React, { useEffect } from 'react';
 import withData from 'src/utils/withData';
 import { getDelegates } from '@dpos/validator/api';
 import TransactionDetailsContext from '../../context/transactionDetailsContext';
-import styles from './TransactionVotes.css';
+import styles from './styles.css';
 import VoteItem from '../VoteItem';
 
-export const TransactionVotesComp = ({ t, votedDelegates }) => {
+export const VotesPure = ({ t, votedDelegates }) => {
   const { transaction } = React.useContext(TransactionDetailsContext);
   const { votes } = transaction.asset;
 
@@ -17,7 +17,7 @@ export const TransactionVotesComp = ({ t, votedDelegates }) => {
   }, []);
 
   return (
-    <div className={`${styles.value} ${styles.votes}`}>
+    <div className={`${styles.voteValue} ${styles.votes}`}>
       <div className={styles.detailsWrapper}>
         <span className={styles.label}>
           {`${t('Votes')} (${votes.length})`}
@@ -54,4 +54,4 @@ export default withData({
       return responseMap;
     },
   },
-})(TransactionVotesComp);
+})(VotesPure);

@@ -3,9 +3,10 @@ import { to } from 'await-to-js';
 import { toast } from 'react-toastify';
 import loginTypes from 'src/modules/auth/const/loginTypes';
 import { tokenMap } from '@token/fungible/consts/tokens';
-import { getAccount, extractAddress as extractBitcoinAddress } from '@wallet/utils/api';
+import { extractAddress as extractBitcoinAddress } from '@wallet/utils/api';
 import { getConnectionErrorMessage } from '@network/utils/getNetwork';
 import { extractKeyPair } from '@wallet/utils/account';
+import { getAccounts } from '@wallet/store/action';
 import { defaultDerivationPath } from 'src/utils/explicitBipKeyDerivation';
 import actionTypes from './actionTypes';
 
@@ -31,28 +32,6 @@ export const timerReset = () => ({
 export const accountLoading = () => ({
   type: actionTypes.accountLoading,
 });
-
-/**
- * Gets the account info for given addresses of different tokens
- * We have getAccounts functions for retrieving multiple accounts of
- * a single blockchain. This one is for retrieving accounts of
- * different blockchains.
- *
- * @param {Object} data
- * @param {Object} data.network Network config from the Redux store
- * @param {Object} data.params addresses in the form of {[token]: [address]}
- * @returns {Promise<[object]>}
- */
-const getAccounts = async ({ network, params }) =>
-  Object.keys(params).reduce(async (accountsPromise, token) => {
-    const accounts = await accountsPromise;
-    const baseUrl = network.networks[token].serviceUrl;
-    const account = await getAccount({ network, baseUrl, params: params[token] }, token);
-    return {
-      ...accounts,
-      [token]: account,
-    };
-  }, Promise.resolve({}));
 
 /**
  * This action is used on login to fetch account info for all enabled token

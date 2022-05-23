@@ -10,15 +10,15 @@ import { MODULE_ASSETS_NAME_ID_MAP } from '@transaction/configuration/moduleAsse
 import TransactionPriority from '@transaction/components/TransactionPriority';
 import useTransactionFeeCalculation from '@transaction/hooks/useTransactionFeeCalculation';
 import useTransactionPriority from '@transaction/hooks/useTransactionPriority';
-import { selectCurrentBlockHeight } from '@common/store/selectors';
+import { selectActiveToken, selectCurrentBlockHeight } from '@common/store/selectors';
 import Form from './unlockBalanceForm';
 import BalanceTable from './unlockBalanceTable';
 
 const moduleAssetId = MODULE_ASSETS_NAME_ID_MAP.unlockToken;
 
 const LockedBalance = (props) => {
-  const wallet = useSelector(state => getActiveTokenAccount(state));
-  const token = useSelector(state => state.token.active);
+  const wallet = useSelector(getActiveTokenAccount);
+  const token = useSelector(selectActiveToken);
   const network = useSelector(state => state.network);
   const currentBlockHeight = useSelector(selectCurrentBlockHeight);
   const lockedInVotes = useSelector(state => calculateBalanceLockedInVotes(state.voting));

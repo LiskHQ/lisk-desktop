@@ -4,17 +4,14 @@ import { compose } from 'redux';
 import { withRouter } from 'react-router';
 import { withTranslation } from 'react-i18next';
 import { transactionBroadcasted, resetTransactionResult } from '@common/store/actions';
+import { selectActiveToken, selectActiveTokenAccount } from '@common/store';
 import TransactionResult from '../components/TransactionResult/TransactionResult';
 
 const mapStateToProps = state => ({
-  activeToken: state.token.active,
+  activeToken: selectActiveToken(state),
   transactions: state.transactions,
-  account: {
-    ...state.wallet.info[state.token.active],
-    passphrase: state.wallet.passphrase,
-    hwInfo: state.wallet.hwInfo,
-  },
-  network: state.network.networks[state.token.active],
+  account: selectActiveTokenAccount(state),
+  network: state.network.networks[state.token.active], // @todo normalize this
 });
 
 const mapDispatchToProps = {

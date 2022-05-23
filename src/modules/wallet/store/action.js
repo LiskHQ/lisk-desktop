@@ -10,10 +10,6 @@ import { networkStatusUpdated } from '@network/store/action';
 import transactionActionTypes from '@transaction/store/actionTypes';
 import actionTypes from './actionTypes';
 
-export const accountLoading = () => ({
-  type: actionTypes.accountLoading,
-});
-
 /**
  * Gets the account info for given addresses of different tokens
  * We have getAccounts functions for retrieving multiple accounts of
@@ -25,7 +21,7 @@ export const accountLoading = () => ({
  * @param {Object} data.params addresses in the form of {[token]: [address]}
  * @returns {Promise<[object]>}
  */
-const getAccounts = async ({ network, params }) =>
+export const getAccounts = async ({ network, params }) =>
   Object.keys(params).reduce(async (accountsPromise, token) => {
     const accounts = await accountsPromise;
     const baseUrl = network.networks[token].serviceUrl;

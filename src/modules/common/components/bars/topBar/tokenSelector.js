@@ -6,13 +6,14 @@ import routes from '@screens/router/routes';
 import { tokenMap } from '@token/fungible/consts/tokens';
 import Icon from 'src/theme/Icon';
 import Tooltip from 'src/theme/Tooltip';
+import { selectActiveToken } from '@common/store';
 import styles from './topBar.css';
 
 const TokenSelector = ({
   token, history, t, disabled,
 }) => {
   const dispatch = useDispatch();
-  const activeToken = useSelector(state => state.token.active);
+  const activeToken = useSelector(selectActiveToken);
 
   const activateToken = () => {
     if (activeToken !== token && history.location.pathname !== routes.reclaim.path) {

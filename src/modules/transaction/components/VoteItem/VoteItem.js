@@ -25,12 +25,12 @@ const VoteDetails = ({
 }) => {
   const accountPath = routes.explorer.path;
   return (
-    <span className={`${styles.container} vote-item-address`}>
+    <span className={styles.container}>
       <Link
         to={`${accountPath}?address=${address}`}
       >
-        <span className={styles.primaryText}>
-          {title || (truncate ? truncateAddress(address) : address)}
+        <span className={`${styles.primaryText} vote-item-address`}>
+          {title ?? (truncate ? truncateAddress(address) : address)}
         </span>
       </Link>
       <span className={`${styles.value} vote-item-value`}>
