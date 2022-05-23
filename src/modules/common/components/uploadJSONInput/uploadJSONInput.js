@@ -29,6 +29,7 @@ const UploadJSONInput = ({
         <label className={styles.fileInputBtn}>
           {label}
           <input
+            role="button"
             className={`${styles.input} clickableFileInput`}
             type="file"
             accept="application/JSON"
@@ -38,7 +39,7 @@ const UploadJSONInput = ({
       </p>
       <div
         className={`${styles.textAreaContainer} ${error && styles.error} ${
-          value && !error && styles.filled
+          value && !error ? styles.filled : ''
         }`}
       >
         <textarea
