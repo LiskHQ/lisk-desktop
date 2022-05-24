@@ -11,7 +11,7 @@ const RestoreAccountForm = ({ onSubmit, onBack }) => {
   const [error, setError] = useState();
   const onContinue = () => {
     if (!value) {
-      setError(t('upload file is Required'));
+      setError(t('Upload file is required'));
     } else {
       onSubmit(value);
     }

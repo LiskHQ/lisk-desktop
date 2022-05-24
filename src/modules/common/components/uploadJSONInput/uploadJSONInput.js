@@ -4,15 +4,13 @@ import Feedback from 'src/theme/feedback/feedback';
 import styles from './uploadJSONInput.css';
 
 const reader = new FileReader();
+
 const UploadJSONInput = ({
-  value,
-  onChange,
-  error,
-  label,
-  prefixLabel,
+  value, onChange, error, label, prefixLabel,
 }) => {
   const onInputChange = ({ target }) => reader.readAsText(target.files[0]);
-  const onPaste = (event) => onChange(JSON.parse(event.clipboardData.getData('text')));
+  const onPaste = (event) =>
+    onChange(JSON.parse(event.clipboardData.getData('text')));
 
   const { t } = useTranslation();
 
@@ -50,11 +48,7 @@ const UploadJSONInput = ({
           className={`${styles.txInput} tx-sign-input`}
         />
         <span>{t('Please drag and drop the JSON file from your device.')}</span>
-        <Feedback
-          message={error}
-          size="m"
-          status={error ? 'error' : 'ok'}
-        />
+        <Feedback message={error} size="m" status={error ? 'error' : 'ok'} />
       </div>
     </div>
   );
