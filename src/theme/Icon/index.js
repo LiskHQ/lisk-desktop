@@ -165,6 +165,7 @@ import unlockTokenDark from '@setup/react/assets/images/icons/tx-unlock-dark.svg
 import votingQueueInactive from '@setup/react/assets/images/icons/voting-queue-inactive.svg';
 import votingQueueActive from '@setup/react/assets/images/icons/voting-queue-active.svg';
 import deleteIcon from '@setup/react/assets/images/icons/delete.svg';
+import deleteRedIcon from '@setup/react/assets/images/icons/delete-red-icon.svg';
 import arrowRightTailed from '@setup/react/assets/images/icons/arrow-right-tailed.svg';
 import download from '@setup/react/assets/images/icons/download.svg';
 import registerMultisignatureGroup from '@setup/react/assets/images/icons/multisignature.svg';
@@ -203,6 +204,7 @@ import reportDelegateMisbehaviorDark from '@setup/react/assets/images/icons/repo
 import downloadUpdateFinish from '@setup/react/assets/images/icons/download-update-finish.svg';
 import downloadUpdateProgress from '@setup/react/assets/images/icons/download-update-progress.svg';
 import whiteLinkIcon from '@setup/react/assets/images/icons/white-link-icon.svg';
+import personIcon from '@setup/react/assets/images/icons/person-blue.svg';
 import verticalDots from '@setup/react/assets/images/icons/vertical-dots.svg';
 import switchIcon from '@setup/react/assets/images/icons/switch.svg';
 
@@ -408,8 +410,10 @@ export const icons = {
   downloadUpdateProgress,
   downloadUpdateFinish,
   whiteLinkIcon,
+  personIcon,
   verticalDots,
   switchIcon,
+  deleteRedIcon,
 };
 
 const Icon = ({ name, noTheme, ...props }) => {
