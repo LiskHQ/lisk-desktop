@@ -31,6 +31,7 @@ export const accountLoading = () => ({
   type: actionTypes.accountLoading,
 });
 
+export const login = () => {};
 /**
  * This action is used on login to fetch account info for all enabled token
  *
@@ -40,7 +41,7 @@ export const accountLoading = () => ({
  * @param {String} data.publicKey - Lisk publicKey used for hardware wallet login
  * @param {Object} data.hwInfo - info about hardware wallet we're trying to login to
  */
-export const login = ({
+/** export const login = ({
   passphrase, publicKey, hwInfo,
 }) =>
   async (dispatch, getState) => {
@@ -87,7 +88,7 @@ export const login = ({
         },
       });
     }
-  };
+  }; */
 
 /**
  * Store second passphrase in the Redux store

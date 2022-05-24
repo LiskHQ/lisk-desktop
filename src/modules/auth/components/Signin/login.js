@@ -46,7 +46,8 @@ const Login = ({
   t, settings, network, history, account, login,
 }) => {
   const [passphrase, setPass] = useState({ value: '', isValid: false });
-  const canHWSignIn = true;
+  // const canHWSignIn = true;
+  const canHWSignIn = false;
 
   const setPassphrase = (value, error) => {
     setPass({

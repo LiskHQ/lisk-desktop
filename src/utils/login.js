@@ -45,5 +45,6 @@ export const getAutoLogInData = /* istanbul ignore next */ () => ({
 });
 
 // Ignore coverage because this is only development feature
-export const shouldAutoLogIn = /* istanbul ignore next */ autoLogin =>
-  !!autoLogin[settingConstants.keys.loginKey] && autoLogin[settingConstants.keys.loginKey] !== '';
+export const shouldAutoLogIn = false;
+// export const shouldAutoLogIn = /* istanbul ignore next */ autoLogin =>
+//  !!autoLogin[settingConstants.keys.loginKey] && autoLogin[settingConstants.keys.loginKey] !== '';
