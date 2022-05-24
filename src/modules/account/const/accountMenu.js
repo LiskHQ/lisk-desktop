@@ -22,9 +22,4 @@ export const ACCOUNT_MENU = [
     icon: 'remove',
     label: 'Remove account',
   },
-  {
-    path: routes.login.editAccountName,
-    icon: 'edit',
-    label: 'Edit name',
-  },
 ];

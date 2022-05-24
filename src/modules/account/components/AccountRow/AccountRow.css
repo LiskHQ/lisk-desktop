@@ -1,0 +1,43 @@
+@import '../../../../../setup/react/app/mixins.css';
+
+.accountWraper:last-child {
+  border-bottom: none;
+}
+
+.accountWraper:hover {
+  opacity: 0.8;
+}
+
+.accountWraper {
+  width: 100%;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  padding: 0px;
+  padding-bottom: 16px;
+  border: none;
+  border-radius: 0px;
+  justify-content: flex-start;
+  color: var(--color-maastricht-blue);
+  border-bottom: 1px solid var(--color-button-outline-color);
+  transition: opacity 100ms linear;
+  cursor: pointer;
+
+  & > div:first-child ~ div {
+    margin-left: 10px;
+    flex: 1;
+  }
+
+  & > div:first-child ~ div > p {
+    margin-top: 9px;
+    margin-bottom: 0px;
+    color: var(--color-slate-gray);
+    font-size: 13px;
+  }
+
+  & > div:first-child ~ div ~ button {
+    border: none;
+    background-color: transparent;
+    width: 40px;
+  }
+}

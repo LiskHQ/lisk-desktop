@@ -82,6 +82,11 @@ export default {
     isPrivate: true,
     forbiddenTokens: [tokenMap.BTC.key],
   },
+  accountSelect: {
+    path: '/account/manage',
+    isPrivate: false,
+    forbiddenTokens: [],
+  },
   dashboard: {
     path: '/',
     isPrivate: false,

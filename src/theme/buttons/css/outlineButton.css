@@ -1,0 +1,15 @@
+@import './base.css';
+
+.button {
+  @mixin buttonBasics;
+
+  background-color: transparent;
+  border: solid 1px var(--color-button-outline-color);
+  opacity: 1;
+  transition: opacity 200ms linear;
+
+  &:focus,
+  &:hover {
+    opacity: 0.8;
+  }
+}

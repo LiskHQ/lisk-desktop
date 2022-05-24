@@ -11,7 +11,7 @@ export default withData({
     getApiParams: (state) => {
       const token = selectActiveToken(state);
       const wallet = selectActiveTokenAccount(state);
-      const address = wallet.summary.address;
+      const address = wallet.summary?.address;
       return {
         token,
         address,
