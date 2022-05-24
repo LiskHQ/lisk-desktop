@@ -47,7 +47,9 @@ const UploadJSONInput = ({
           readOnly
           className={`${styles.txInput} tx-sign-input`}
         />
-        <span>{t('Please drag and drop the JSON file from your device.')}</span>
+        <span className={styles.fileInputLabel}>
+          {t('Please drag and drop the JSON file from your device.')}
+        </span>
         <Feedback message={error} size="m" status={error ? 'error' : 'ok'} />
       </div>
     </div>

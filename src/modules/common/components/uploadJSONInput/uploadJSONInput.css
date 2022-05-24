@@ -54,7 +54,7 @@
   & > span {
     z-index: 100;
     position: absolute;
-    left: 150px;
+    left: 25%;
     top: 80%;
   }
 
@@ -73,6 +73,10 @@
   &.filled {
     & > textarea {
       background: none;
+    }
+
+    & > span {
+      display: none;
     }
   }
 }
