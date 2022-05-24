@@ -20,6 +20,11 @@ describe('Restore account form component', () => {
     expect(wrapper).toContainMatchingElement('.buttonHolder');
   });
 
+  it('should return error onSubmit if value is undefined', () => {
+    wrapper.find('button').first().simulate('click');
+    expect(props.onSubmit).not.toBeCalled();
+  });
+
   it('should call onSubmit when onContinue is clicked', () => {
     const JSONObject = {};
     const clipboardData = {
