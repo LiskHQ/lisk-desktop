@@ -5,7 +5,6 @@ import ActionBar from './ActionBar';
 
 describe('Reclaim balance screen', () => {
   const hostAddress = 'lskmjr8hrnhzc6j653eto5fbh2p3kwdpa9ccdnhk6';
-  const explorerAddress = 'lskc7ofju4nvnshg6349otmcssme9q87wrpf8umws';
   const props = {
     username: undefined,
     address: hostAddress,

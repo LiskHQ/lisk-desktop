@@ -32,7 +32,7 @@ const LockedBalance = (props) => {
   const [
     selectedPriority, selectTransactionPriority,
     priorityOptions, prioritiesLoadError, loadingPriorities,
-  ] = useTransactionPriority(token);
+  ] = useTransactionPriority();
 
   const { fee, minFee } = useTransactionFeeCalculation({
     network,

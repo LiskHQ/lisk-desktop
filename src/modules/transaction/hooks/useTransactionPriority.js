@@ -5,7 +5,7 @@ import { useSelector } from 'react-redux';
 import { getTransactionBaseFees } from '../api';
 
 // eslint-disable-next-line max-statements
-const useTransactionPriority = (token) => {
+const useTransactionPriority = () => {
   const { t } = useTranslation();
   const network = useSelector(state => state.network);
   const [prioritiesLoadError, setPrioritiesLoadError] = useState(false);
