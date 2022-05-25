@@ -7,10 +7,10 @@ import BoxContent from 'src/theme/box/content';
 import BoxTabs from 'src/theme/tabs';
 import { ROUND_LENGTH } from '@dpos/validator/consts';
 import styles from './delegates.css';
-import DelegatesOverview from './overview/delegatesOverview';
-import ForgingDetails from './overview/forgingDetails';
-import LatestVotes from './latestVotes';
-import DelegatesTable from './delegatesTable';
+import DelegatesOverview from '../overview/delegatesOverview';
+import ForgingDetails from '../overview/forgingDetails';
+import LatestVotes from '../latestVotes';
+import DelegatesTable from '../delegatesTable';
 
 // eslint-disable-next-line max-statements
 const DelegatesMonitor = ({
