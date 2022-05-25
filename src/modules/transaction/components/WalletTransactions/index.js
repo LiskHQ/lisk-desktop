@@ -20,7 +20,7 @@ export default compose(
   withData({
     transactions: {
       apiUtil: (network, { token, ...params }) =>
-        getTransactions({ network, params: normalizeTransactionParams(params) }, token),
+        getTransactions({ network, params: normalizeTransactionParams(params) }),
       getApiParams: (_, { address, sort }) => ({
         address,
         sort,

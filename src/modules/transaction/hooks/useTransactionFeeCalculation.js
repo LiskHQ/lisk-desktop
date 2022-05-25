@@ -22,20 +22,20 @@ const useTransactionFeeCalculation = ({
   const [state, dispatch] = useReducer(reducer, wallet, getInitialState);
 
   const calculateTransactionFees = async (params) => {
-    const fee = await getTransactionFee(params, token);
+    const fee = await getTransactionFee(params);
     dispatch({ type: actionTypes.setFee, payload: { response: fee, wallet, token } });
 
     const minFee = await getTransactionFee({
       ...params,
       selectedPriority: priorityOptions[0],
-    }, token);
+    });
 
     dispatch({ type: actionTypes.setMinFee, payload: { response: minFee, wallet, token } });
 
     const maxAmountFee = await getTransactionFee({
       ...params,
       transaction: { ...params.transaction, amount: wallet.token?.balance },
-    }, token);
+    });
 
     dispatch({
       type: actionTypes.setMaxAmount,

@@ -14,7 +14,6 @@ const FormBase = ({
   token,
   children,
   fields,
-  network,
   maxAmount,
   bookmarks,
   nextStep,
@@ -42,10 +41,8 @@ const FormBase = ({
           <span className={`${styles.fieldLabel}`}>{t('Recipient')}</span>
           <BookmarkAutoSuggest
             bookmarks={bookmarks[token].filter((item) => !item.disabled)}
-            network={network}
             recipient={fields.recipient}
             t={t}
-            token={token}
             updateField={fieldUpdateFunctions.setRecipientField}
           />
         </span>

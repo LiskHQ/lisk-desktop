@@ -51,7 +51,7 @@ const CustomRoute = ({
   }
 
   if (
-    wallet?.summary?.isMigrated === false
+    wallet.summary?.isMigrated === false
     && history.location.pathname !== routes.reclaim.path
     && history.location.pathname !== routes.login.path
     && isAuthenticated

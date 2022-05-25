@@ -115,7 +115,7 @@ export const transactionCreated = data => async (dispatch, getState) => {
       passphrase: wallet.passphrase,
     },
     network,
-  }, activeToken));
+  }));
 
   if (error) {
     dispatch({
@@ -193,7 +193,6 @@ export const transactionBroadcasted = transaction =>
 
     const [error] = await to(broadcast(
       { transaction, serviceUrl, network },
-      activeToken,
     ));
 
     if (error) {

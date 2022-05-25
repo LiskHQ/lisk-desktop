@@ -7,7 +7,7 @@ import { getTransactions } from '../api';
 
 export default withData({
   transactions: {
-    apiUtil: (network, { token, ...params }) => getTransactions({ network, params }, token),
+    apiUtil: (network, params) => getTransactions({ network, params }),
     getApiParams: (state) => {
       const wallet = selectActiveTokenAccount(state);
       const address = wallet.summary?.address;

@@ -5,7 +5,6 @@ import AutoSuggest from 'src/modules/common/components/AutoSuggest';
 import WalletVisual from '@wallet/components/walletVisual';
 import styles from './form.css';
 
-// @todo removed token and network
 class BookmarkAutoSuggest extends React.Component {
   constructor(props) {
     super(props);
@@ -104,9 +103,6 @@ BookmarkAutoSuggest.propTypes = {
     title: PropTypes.string.isRequired,
     address: PropTypes.string.isRequired,
   })).isRequired,
-  network: PropTypes.shape({
-    name: PropTypes.string.isRequired,
-  }).isRequired,
   recipient: PropTypes.shape({
     address: PropTypes.string.isRequired,
     error: PropTypes.bool.isRequired,
@@ -115,7 +111,6 @@ BookmarkAutoSuggest.propTypes = {
     value: PropTypes.string.isRequired,
   }).isRequired,
   t: PropTypes.func.isRequired,
-  token: PropTypes.string.isRequired,
   updateField: PropTypes.func.isRequired,
 };
 
