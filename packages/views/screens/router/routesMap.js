@@ -33,6 +33,7 @@ import RegisterMultisig from '@wallet/manager/registerMultisigManager';
 import SignMultiSig from '@wallet/manager/signMultisigManager';
 import MultisigAccountDetails from '@wallet/manager/multisigAccountDetailsManager';
 import AccountSelect from '@account/components/AccountSelect';
+import AccountAdd from '@account/components/AccountAdd';
 
 export default {
   wallet: AccountDetails,
@@ -71,4 +72,5 @@ export default {
   multisigAccountDetails: MultisigAccountDetails,
   signMultiSignTransaction: SignMultiSig,
   accountSelect: AccountSelect,
+  accountAdd: AccountAdd,
 };

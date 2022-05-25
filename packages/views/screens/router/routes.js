@@ -87,6 +87,11 @@ export default {
     isPrivate: false,
     forbiddenTokens: [],
   },
+  accountAdd: {
+    path: '/account/add',
+    isPrivate: false,
+    forbiddenTokens: [],
+  },
   dashboard: {
     path: '/',
     isPrivate: false,
