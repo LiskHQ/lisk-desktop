@@ -1,9 +1,9 @@
-import React, { useMemo, useEffect } from 'react';
+import React, { useEffect } from 'react';
 import { useSelector } from 'react-redux';
 import grid from 'flexboxgrid/dist/flexboxgrid.css';
 
 import { selectSearchParamValue } from 'src/utils/searchParams';
-import { selectAccount, selectNetwork } from '@common/store/selectors';
+import { selectActiveTokenAccount, selectNetwork } from '@common/store';
 import routes from '@screens/router/routes';
 import { extractAddressFromPublicKey } from '@wallet/utils/account';
 import Box from 'src/theme/box';
@@ -17,33 +17,10 @@ import Members from '../multisignatureMembers';
 import styles from './styles.css';
 
 const MultisigAccountDetails = ({ t, wallet, history }) => {
-  const hostAccount = useSelector(selectAccount);
+  const hostAccount = useSelector(selectActiveTokenAccount);
   const network = useSelector(selectNetwork);
   const isHost = history.location.pathname === routes.wallet.path;
-  const data = isHost ? hostAccount.info.LSK : wallet.data;
-
-  if (Object.keys(data).length === 0) {
-    return null;
-  }
-  const { numberOfSignatures, optionalKeys, mandatoryKeys } = data.keys;
-
-  const members = useMemo(
-    () =>
-      optionalKeys
-        .map((publicKey) => ({
-          address: extractAddressFromPublicKey(publicKey),
-          publicKey,
-          mandatory: false,
-        }))
-        .concat(
-          mandatoryKeys.map((publicKey) => ({
-            address: extractAddressFromPublicKey(publicKey),
-            publicKey,
-            mandatory: true,
-          })),
-        ),
-    [data.address],
-  );
+  const data = isHost ? hostAccount : wallet.data;
 
   useEffect(() => {
     if (!isHost) {
@@ -54,6 +31,25 @@ const MultisigAccountDetails = ({ t, wallet, history }) => {
       wallet.loadData({ address });
     }
   }, [network]);
+
+  if (Object.keys(data).length === 0) {
+    return null;
+  }
+  const { numberOfSignatures, optionalKeys, mandatoryKeys } = data.keys;
+
+  const members = optionalKeys
+    .map((publicKey) => ({
+      address: extractAddressFromPublicKey(publicKey),
+      publicKey,
+      mandatory: false,
+    }))
+    .concat(
+      mandatoryKeys.map((publicKey) => ({
+        address: extractAddressFromPublicKey(publicKey),
+        publicKey,
+        mandatory: true,
+      })),
+    );
 
   return (
     <Dialog
@@ -83,7 +79,7 @@ const MultisigAccountDetails = ({ t, wallet, history }) => {
           </BoxInfoText>
           <Members members={members} t={t} />
           <div className={styles.infoContainer}>
-            <p>
+            <div className={styles.requiredSignatures}>
               {t('Required signatures')}
               <Tooltip position="top right" indent>
                 <span>
@@ -92,7 +88,7 @@ const MultisigAccountDetails = ({ t, wallet, history }) => {
                   )}
                 </span>
               </Tooltip>
-            </p>
+            </div>
             <span>{numberOfSignatures}</span>
           </div>
         </BoxContent>
