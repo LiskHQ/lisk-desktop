@@ -7,7 +7,7 @@ import DateTimeFromTimestamp from 'src/modules/common/components/timestamp';
 import WalletVisualWithAddress from '@wallet/components/walletVisualWithAddress';
 import DialogLink from 'src/theme/dialog/link';
 import VoteDetails from '@transaction/components/VoteItem';
-import styles from '../delegates.css';
+import styles from '../delegatesMonitorView/delegates.css';
 
 const VotesItemsList = ({ votes = [], delegates }) => {
   const [showAll, setShowAll] = useState(false);

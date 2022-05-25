@@ -15,7 +15,7 @@ import {
   getForgingTimeClass,
   getDelegateRankClass,
 } from './tableHeader';
-import styles from '../delegates.css';
+import styles from '../delegatesMonitorView/delegates.css';
 
 const roundStates = {
   forging: 'Forging',
