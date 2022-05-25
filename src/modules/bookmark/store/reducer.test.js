@@ -27,12 +27,11 @@ describe('Reducer: bookmarks(state, action)', () => {
       publicKey: empty_wallet.summary.publicKey,
     };
 
-    const state = { LSK: [wallet, wallet2], BTC: [] };
-    const action = bookmarkAdded({ wallet: wallet3, token: 'BTC' });
+    const state = { LSK: [wallet, wallet2] };
+    const action = bookmarkAdded({ wallet: wallet3, token: 'LSK' });
     const changedState = bookmarks(state, action);
     expect(changedState.LSK[0]).toEqual(wallet);
     expect(changedState.LSK[1]).toEqual(wallet2);
-    expect(changedState.BTC[0]).toMatchObject(wallet3);
   });
 
   it(`should return wallets with added wallet and trimmed title if action.type is ${actionTypes.bookmarkAdded}`, () => {
@@ -42,18 +41,17 @@ describe('Reducer: bookmarks(state, action)', () => {
       publicKey: empty_wallet.summary.publicKey,
     };
 
-    const state = { LSK: [wallet, wallet2], BTC: [] };
+    const state = { LSK: [wallet, wallet2] };
     const action = bookmarkAdded({
       wallet: {
         ...wallet3,
         title: `     ${wallet3.title}    `,
       },
-      token: 'BTC',
+      token: 'LSK',
     });
     const changedState = bookmarks(state, action);
     expect(changedState.LSK[0]).toEqual(wallet);
     expect(changedState.LSK[1]).toEqual(wallet2);
-    expect(changedState.BTC[0]).toMatchObject(wallet3);
   });
 
   it(`should return wallets with updated wallet if action.type is ${actionTypes.bookmarkUpdated}`, () => {
@@ -63,7 +61,7 @@ describe('Reducer: bookmarks(state, action)', () => {
       publicKey: delegate.summary.publicKey,
     };
 
-    const state = { LSK: [wallet, wallet2], BTC: [] };
+    const state = { LSK: [wallet, wallet2] };
     const action = bookmarkUpdated({ wallet: updatedWallet });
 
     const changedState = bookmarks(state, action);
@@ -79,7 +77,7 @@ describe('Reducer: bookmarks(state, action)', () => {
       publicKey: delegate.summary.publicKey,
     };
 
-    const state = { LSK: [wallet, wallet2], BTC: [] };
+    const state = { LSK: [wallet, wallet2] };
     const action = bookmarkUpdated({
       wallet: {
         ...updatedWallet,
@@ -106,7 +104,7 @@ describe('Reducer: bookmarks(state, action)', () => {
   it('should return validated bookmarks if action.type = actionType.bookmarksRetrieved', () => {
     const action = {
       type: actionTypes.bookmarksRetrieved,
-      data: { LSK: [wallet, wallet2], BTC: [] },
+      data: { LSK: [wallet, wallet2] },
     };
 
     let state;

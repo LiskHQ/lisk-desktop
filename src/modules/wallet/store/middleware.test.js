@@ -252,7 +252,6 @@ describe('Account middleware', () => {
           ...state.wallet,
           info: {
             LSK: { summary: { address: '123456L' } },
-            BTC: { summary: { address: '123456L' } },
           },
         },
       });

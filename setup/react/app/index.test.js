@@ -52,7 +52,6 @@ describe.skip('App', () => {
         token: {
           active: 'LSK',
           list: {
-            BTC: false,
             LSK: true,
           },
         },

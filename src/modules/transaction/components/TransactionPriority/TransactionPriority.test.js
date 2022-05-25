@@ -16,7 +16,7 @@ describe('TransactionPriority', () => {
 
   const props = {
     t: str => str,
-    token: tokenMap.BTC.key,
+    token: tokenMap.LSK.key,
     priorityOptions: [{ title: 'Low', value: baseFees.Low },
       { title: 'Medium', value: baseFees.Medium },
       { title: 'High', value: baseFees.High },

@@ -19,9 +19,6 @@ describe('Request', () => {
         LSK: {
           summary: { address: accounts.genesis.summary.address },
         },
-        BTC: {
-          summary: { address: '16Qp9op3fTESTBTCACCOUNTv52ghRzYreUuQ' },
-        },
       },
     },
     token: tokenMap.LSK.key,
@@ -109,11 +106,6 @@ describe('Request', () => {
       jest.advanceTimersByTime(3100);
       wrapper.update();
       expect(wrapper.find('.copy-button button')).not.toBeDisabled();
-    });
-
-    it('Should render BTC request if props.token is BTC', () => {
-      wrapper = mountWithRouter(Request, { ...props, token: 'BTC' }, props.history.location);
-      expect(wrapper.find('.copy-button button').text()).toMatch('Copy address');
     });
   });
 });

@@ -52,7 +52,6 @@ describe('Form', () => {
         title: 'KTG',
         address: 'lskgonvfdxt3m6mm7jaeojrj5fnxx7vwmkxq72v79',
       }],
-      BTC: [],
     };
 
     props = {

@@ -72,9 +72,9 @@ describe('Unlock LSK modal', () => {
       },
     },
     settings: {
-      token: {
-        active: tokenMap.LSK.key,
-      },
+    },
+    token: {
+      active: tokenMap.LSK.key,
     },
     blocks: {
       latestBlocks: [{ height: currentBlockHeight }],

@@ -50,27 +50,6 @@ describe('Reclaim balance screen', () => {
     expect(html).not.toContain('open-add-vote-dialog');
   });
 
-  it('Should not display register delegate button', () => {
-    const wrapper = mountWithRouterAndStore(
-      ActionBar,
-      { ...props, activeToken: tokenMap.BTC.key, address: 'mnrutC4CgQhMos4f8HWYRy8rKQ3UisGwYJ' },
-      {},
-      { ...state, wallet: { info: { LSK: balanceAccount } } },
-    );
-    let html = wrapper.html();
-
-    expect(html).toContain('open-send-dialog');
-    expect(html).not.toContain('register-delegate');
-    expect(html).not.toContain('open-add-vote-dialog');
-
-    wrapper.setProps({ address: explorerAddress });
-    html = wrapper.html();
-
-    expect(html).toContain('open-send-dialog');
-    expect(html).not.toContain('register-delegate');
-    expect(html).not.toContain('open-add-vote-dialog');
-  });
-
   it('Should display add/edit vote correctly', () => {
     let wrapper = mountWithRouterAndStore(
       ActionBar,

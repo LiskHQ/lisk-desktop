@@ -28,10 +28,6 @@ describe('HwWalletLogin', () => {
           address: '123456L',
           balance: 100,
         },
-        BTC: {
-          address: 'jhagsd676587',
-          balance: 100,
-        },
       },
     },
     network: {

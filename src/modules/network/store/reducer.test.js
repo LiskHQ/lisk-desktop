@@ -5,7 +5,7 @@ describe('Reducer: network(state, action)', () => {
   it('should return state object with passed network setup if action is networkSet', () => {
     const state = {
       networks: {
-        BTC: {},
+        LSK: {},
       },
     };
     const action = {
@@ -21,7 +21,6 @@ describe('Reducer: network(state, action)', () => {
       name: action.data.name,
       networks: {
         LSK: action.data.network,
-        BTC: {},
       },
     };
     const changedState = network(state, action);
@@ -39,24 +38,6 @@ describe('Reducer: network(state, action)', () => {
     const newState = {
       status: action.data,
       networks: {},
-      storedCustomNetwork: '',
-    };
-    const changedState = network(state, action);
-    expect(changedState).toEqual(newState);
-  });
-
-  it('should return state object with updated last BTC set', () => {
-    let state;
-    const lastBtcUpdate = 0;
-    const action = {
-      type: actionTypes.lastBtcUpdateSet,
-      data: { lastBtcUpdate },
-    };
-
-    const newState = {
-      status: {},
-      networks: {},
-      lastBtcUpdate: action.data,
       storedCustomNetwork: '',
     };
     const changedState = network(state, action);
