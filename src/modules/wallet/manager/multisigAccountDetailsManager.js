@@ -11,7 +11,7 @@ export default compose(
   withRouter,
   withData({
     wallet: {
-      apiUtil: (network, params) => getAccount({ network, params }, params.token),
+      apiUtil: (network, params) => getAccount({ network, params }),
       defaultData: {},
       getApiParams: (state) => ({
         token: selectActiveToken(state),

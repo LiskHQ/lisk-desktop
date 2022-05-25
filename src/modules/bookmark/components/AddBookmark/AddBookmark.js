@@ -1,7 +1,6 @@
 import React, { useEffect, useRef, useState } from 'react';
 import PropTypes from 'prop-types';
 
-import { tokenMap } from '@token/fungible/consts/tokens';
 import {
   validateBookmarkAddress,
   validateBookmarkLabel,
@@ -121,7 +120,7 @@ const AddBookmark = ({
     );
     clearTimeout(timeout.current);
 
-    if (active === tokenMap.LSK.key && !feedback && value !== '') {
+    if (!feedback && value !== '') {
       timeout.current = setTimeout(() => {
         account.loadData({ address: value });
       }, 300);

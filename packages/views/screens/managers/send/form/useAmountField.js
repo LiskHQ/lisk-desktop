@@ -3,7 +3,6 @@ import { useTranslation } from 'react-i18next';
 import numeral from 'numeral';
 
 import { regex } from 'src/const/regex';
-import { tokenMap } from '@token/fungible/consts/tokens';
 import { MIN_ACCOUNT_BALANCE } from '@transaction/configuration/transactions';
 import { toRawLsk } from '@token/fungible/utils/lsk';
 import { validateAmountFormat } from 'src/utils/validators';
@@ -36,9 +35,8 @@ const useAmountField = (initialValue, balance, token) => {
     let { message: feedback } = validateAmountFormat({
       value,
       token,
-      funds: token !== tokenMap.LSK.key
-        ? maxAmount : Number(maxAmount) + Number(MIN_ACCOUNT_BALANCE),
-      checklist: token !== tokenMap.LSK.key ? checklist : [...checklist, 'MIN_BALANCE'],
+      funds: Number(maxAmount) + Number(MIN_ACCOUNT_BALANCE),
+      checklist: [...checklist, 'MIN_BALANCE'],
     });
 
     if (!feedback && maxAmount < toRawLsk(numeral(value).value())) {

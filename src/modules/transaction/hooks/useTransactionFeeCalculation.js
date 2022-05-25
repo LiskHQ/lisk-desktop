@@ -8,7 +8,7 @@ import { actionTypes, reducer, getInitialState } from '../store/transactionPrior
  * Custom hook to define tx fee
  *
  * @param {object} data
- * @param {string} data.token - Option of LSK and BTC
+ * @param {string} data.token - Option of LSK or any other token
  * @param {object} data.wallet - Active wallet info
  * @param {object} data.selectedPriority - Selected priority info
  * @param {object} data.transaction - Raw transaction payload

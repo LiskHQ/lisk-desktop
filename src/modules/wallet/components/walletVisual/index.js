@@ -2,7 +2,6 @@ import BigNumber from 'bignumber.js';
 import React from 'react';
 import sha256 from 'js-sha256';
 import generateUniqueId from 'src/utils/generateUniqueId';
-import { tokenMap } from '@token/fungible/consts/tokens';
 import { validateAddress } from 'src/utils/validators';
 import { Gradients, gradientSchemes } from './gradients';
 import styles from './walletVisual.css';
@@ -233,7 +232,7 @@ class WalletVisual extends React.Component {
       );
     }
 
-    if (validateAddress(tokenMap.LSK.key, address) === 1 && !(/^[1-9]\d{0,19}L$/.test(address))) {
+    if (validateAddress(address) === 1 && !(/^[1-9]\d{0,19}L$/.test(address))) {
       return null;
     }
     const [shapes, gradientsSchemesUrlsHashed] = this.computeShapesAndGradients(size);

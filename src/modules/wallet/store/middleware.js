@@ -1,6 +1,6 @@
 import { MODULE_ASSETS_NAME_ID_MAP } from '@transaction/configuration/moduleAssets';
 import { fromRawLsk, delay } from '@token/fungible/utils/lsk';
-import { getActiveTokenAccount } from '@wallet/utils/account';
+import { selectActiveTokenAccount } from '@common/store';
 import {
   accountDataUpdated, emptyTransactionsData, transactionsRetrieved,
 } from '@common/store/actions';
@@ -8,7 +8,6 @@ import { getTransactions } from '@transaction/api';
 import i18n from 'src/utils/i18n/i18n';
 import blockActionTypes from '@block/store/actionTypes';
 import settingsActionTypes from 'src/modules/settings/store/actionTypes';
-// import { selectActiveToken } from '@common/store/selectors';
 import actionTypes from './actionTypes';
 
 const filterIncomingTransactions = (transactions, account) =>
@@ -37,7 +36,7 @@ const showNotificationsForIncomingTransactions = (transactions, account, token) 
 const checkTransactionsAndUpdateAccount = async (store, action) => {
   const state = store.getState();
   const { transactions, token, network } = state;
-  const account = getActiveTokenAccount(store.getState());
+  const account = selectActiveTokenAccount(store.getState());
   const { numberOfTransactions, id } = action.data.block;
 
   if (numberOfTransactions) {
@@ -45,7 +44,7 @@ const checkTransactionsAndUpdateAccount = async (store, action) => {
     const { data: txs } = await getTransactions({
       network,
       params: { blockId: id },
-    }, token.active);
+    });
     const blockContainsRelevantTransaction = txs.filter((transaction) => {
       if (!transaction) return false;
       return (
@@ -65,21 +64,14 @@ const checkTransactionsAndUpdateAccount = async (store, action) => {
   }
 };
 
-// eslint-disable-next-line complexity
 const accountMiddleware = store => next => async (action) => {
   next(action);
   // @todo Update token storage when new token management system is ready
-  // const activeToken = store.getState(selectActiveToken);
   switch (action.type) {
     case blockActionTypes.newBlockCreated:
       await checkTransactionsAndUpdateAccount(store, action);
       break;
     case actionTypes.accountLoggedOut:
-      /* Reset active token setting so in case BTC is selected,
-      the Lisk monitoring features are available and Lisk is selected on the next login */
-      // store.dispatch(settingsUpdated({
-      //   token: { active: activeToken },
-      // }));
       store.dispatch(emptyTransactionsData());
       break;
     case settingsActionTypes.settingsUpdated:

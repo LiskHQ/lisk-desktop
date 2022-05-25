@@ -137,7 +137,7 @@ export default compose(
   withData({
     transactions: {
       apiUtil: (network, { token, ...params }) =>
-        getTransactions({ network, params }, token),
+        getTransactions({ network, params }),
       getApiParams: (state) => ({
         token: state.token.active,
       }),

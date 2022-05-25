@@ -1,11 +1,11 @@
 /* istanbul ignore file */
 import { connect } from 'react-redux';
-import { getActiveTokenAccount } from '@wallet/utils/account';
+import { selectActiveTokenAccount } from '@common/store';
 import { delegateRegistered } from '@dpos/validator/store/actions/delegate';
 import Summary from './summary';
 
 const mapStateToProps = state => ({
-  account: getActiveTokenAccount(state),
+  account: selectActiveTokenAccount(state),
 });
 
 const mapDispatchToProps = {

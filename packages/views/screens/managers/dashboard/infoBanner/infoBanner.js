@@ -61,12 +61,6 @@ const InfoBanner = ({
           </section>
         </div>
       </div>
-      <div className={styles.illustrations}>
-        <Illustration
-          className={`${styles.active}`}
-          name="illustrationBtcSupport"
-        />
-      </div>
     </div>
   );
 };

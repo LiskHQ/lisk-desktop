@@ -3,20 +3,14 @@ import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import { withTranslation } from 'react-i18next';
 import { tokenKeys } from '@token/fungible/consts/tokens';
-import RequestBtc from './requestBtc';
+import { selectActiveTokenAccount } from '@common/store';
 import RequestLsk from './requestLsk';
 
-const TagNameMap = {
-  LSK: RequestLsk,
-  BTC: RequestBtc,
-};
-
 const Request = ({
-  account, t, token,
+  account, t,
 }) => {
-  const TagName = TagNameMap[token];
-  const address = account.info ? account.info[token].summary.address : '';
-  return <TagName address={address} t={t} />;
+  const address = account.info ? account.summary.address : '';
+  return <RequestLsk address={address} t={t} />;
 };
 
 Request.propTypes = {
@@ -34,8 +28,7 @@ Request.defaultProps = {
 
 export default connect(
   state => ({
-    token: state.token.active,
-    account: state.wallet,
+    account: selectActiveTokenAccount(state),
   }),
   {},
 )(withTranslation()(Request));

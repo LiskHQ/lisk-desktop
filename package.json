@@ -121,7 +121,6 @@
     "await-to-js": "2.1.1",
     "bignumber.js": "8.0.1",
     "bip32": "1.0.4",
-    "bitcoinjs-lib": "4.0.5",
     "bitcore-lib": "8.25.10",
     "bitcore-mnemonic": "8.25.25",
     "blake2b": "2.1.4",

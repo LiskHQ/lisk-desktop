@@ -1,7 +1,6 @@
 import React from 'react';
 import { withTranslation } from 'react-i18next';
 import { validateAddress, validateLSKPublicKey } from 'src/utils/validators';
-import { tokenMap } from '@token/fungible/consts/tokens';
 import { Input } from 'src/theme';
 import styles from './filters.css';
 
@@ -29,7 +28,7 @@ class AddressFilter extends React.Component {
       const value = fieldsObj[field].value || '';
       let error = false;
 
-      if (validateAddress(tokenMap.LSK.key, value) !== 0 && validateLSKPublicKey(value) !== 0 && value !== '') {
+      if (validateAddress(value) !== 0 && validateLSKPublicKey(value) !== 0 && value !== '') {
         feedback = t('Invalid address or public key');
         error = true;
       }

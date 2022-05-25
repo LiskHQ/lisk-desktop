@@ -106,7 +106,7 @@ class SelectAccount extends React.Component {
     settingsUpdated({
       token: {
         active: tokenMap.LSK.key,
-        list: { BTC: false, LSK: true },
+        list: { LSK: true },
       },
     });
 

@@ -1,6 +1,5 @@
 import React from 'react';
 import { withTranslation } from 'react-i18next';
-import { tokenMap } from '@token/fungible/consts/tokens';
 import { fromRawLsk } from '@token/fungible/utils/lsk';
 import Box from 'src/theme/box';
 import BoxContent from 'src/theme/box/content';
@@ -37,13 +36,11 @@ const BalanceInfo = ({
                 error=""
               />
             </div>
-            {activeToken === tokenMap.LSK.key && (
-              <LockedBalanceLink
-                activeToken={activeToken}
-                isWalletRoute={isWalletRoute}
-                account={account}
-              />
-            )}
+            <LockedBalanceLink
+              activeToken={activeToken}
+              isWalletRoute={isWalletRoute}
+              account={account}
+            />
           </DiscreetMode>
         </div>
         <ActionBar

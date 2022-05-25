@@ -5,6 +5,7 @@ import AutoSuggest from 'src/modules/common/components/AutoSuggest';
 import WalletVisual from '@wallet/components/walletVisual';
 import styles from './form.css';
 
+// @todo removed token and network
 class BookmarkAutoSuggest extends React.Component {
   constructor(props) {
     super(props);
@@ -30,14 +31,12 @@ class BookmarkAutoSuggest extends React.Component {
 
   validateBookmark() {
     const {
-      token, network, recipient, bookmarks, t,
+      recipient, bookmarks, t,
     } = this.props;
     const isValidBookmark = bookmarks
       .find(account => (account.title.toLowerCase() === recipient.value.toLowerCase())
           || account.address.toLowerCase() === recipient.value.toLowerCase()) || false;
-    const isValidAddress = validateAddress(
-      token, recipient.value, network,
-    ) === 0;
+    const isValidAddress = validateAddress(recipient.value) === 0;
     const isInvalid = !isValidBookmark && !isValidAddress && recipient.value;
 
     this.props.updateField({

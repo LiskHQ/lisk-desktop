@@ -27,7 +27,7 @@ export default compose(
   connect(mapStateToProps, mapDispatchToProps),
   withData({
     account: {
-      apiUtil: (network, params) => getAccount({ network, params }, params.token),
+      apiUtil: (network, params) => getAccount({ network, params }),
       defaultData: {},
       getApiParams: (state, props) => ({
         token: selectActiveToken(state),

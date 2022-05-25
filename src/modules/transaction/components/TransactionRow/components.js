@@ -1,7 +1,6 @@
 import React, { useContext } from 'react';
 import { Link } from 'react-router-dom';
 
-import { tokenMap } from '@token/fungible/consts/tokens';
 import { getTxAmount } from '@transaction/utils/transaction';
 import { MODULE_ASSETS_NAME_ID_MAP } from '@transaction/configuration/moduleAssets';
 import DateTimeFromTimestamp from 'src/modules/common/components/timestamp';
@@ -96,12 +95,8 @@ export const Date = ({ t }) => {
     );
   }
 
-  // @todo remove hard coded token
   return (
-    <DateTimeFromTimestamp
-      time={data.block.timestamp * 1000}
-      token={tokenMap.BTC.key}
-    />
+    <DateTimeFromTimestamp time={data.block.timestamp} />
   );
 };
 

@@ -5,7 +5,7 @@ import ValueAndLabel from './valueAndLabel';
 import styles from './styles.css';
 
 const Date = ({ t }) => {
-  const { activeToken, transaction } = React.useContext(
+  const { transaction } = React.useContext(
     TransactionDetailsContext,
   );
 
@@ -16,7 +16,6 @@ const Date = ({ t }) => {
           fulltime
           className="date"
           time={transaction.block.timestamp}
-          token={activeToken}
           showSeconds
         />
       </span>

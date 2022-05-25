@@ -3,8 +3,6 @@ const selectActiveToken = state => state.token.active;
 const selectAddress = state => state.wallet.info[state.token.active].address;
 const selectLSKAddress = state =>
   (state.wallet.info ? state.wallet.info.LSK.summary.address : undefined);
-const selectBTCAddress = state =>
-  (state.wallet.info ? state.wallet.info.BTC.summary.address : undefined);
 const selectPublicKey = state => state.wallet.info[state.token.active].publicKey;
 const selectTransactions = state => state.transactions;
 const selectActiveTokenAccount = (state) => {
@@ -42,7 +40,6 @@ export {
   selectAddress,
   selectAccount,
   selectLSKAddress,
-  selectBTCAddress,
   selectPublicKey,
   selectActiveTokenAccount,
   selectAccountBalance,
