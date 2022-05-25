@@ -103,7 +103,6 @@ const ComposedDelegates = compose(
             },
           },
         ),
-      getApiParams: (state) => ({ token: state.token.active }),
       autoload: true,
       defaultData: [],
       transformResponse: mergeUniquelyById,

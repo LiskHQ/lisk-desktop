@@ -3,7 +3,6 @@ import { withTranslation } from 'react-i18next';
 import withFilters from 'src/utils/withFilters';
 import withData from 'src/utils/withData';
 import { getDelegates } from '@dpos/validator/api';
-import { selectActiveToken } from '@common/store';
 import { DEFAULT_LIMIT } from 'src/utils/monitor';
 import TransactionsList from '../components/Explorer/ExplorerTransactions';
 import { normalizeTransactionParams } from '../utils';
@@ -22,8 +21,7 @@ export default compose(
     transactions: {
       apiUtil: (network, { token, ...params }) =>
         getTransactions({ network, params: normalizeTransactionParams(params) }, token),
-      getApiParams: (state, { address, sort }) => ({
-        token: selectActiveToken(state),
+      getApiParams: (_, { address, sort }) => ({
         address,
         sort,
         limit: DEFAULT_LIMIT,

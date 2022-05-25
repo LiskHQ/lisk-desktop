@@ -17,9 +17,6 @@ const mapStateToProps = state => ({
 const apis = {
   recipientAccount: {
     apiUtil: (network, params) => getAccount({ network, params }),
-    getApiParams: state => ({
-      token: selectActiveToken(state),
-    }),
     defaultData: {},
   },
 };

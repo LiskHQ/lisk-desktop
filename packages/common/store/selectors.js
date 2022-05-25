@@ -11,8 +11,9 @@ const selectActiveTokenAccount = (state) => {
   }
   return {
     ...state.wallet.info[state.token.active],
-    passphrase: state.passphrase,
+    passphrase: state.wallet.passphrase,
     hwInfo: state.hwInfo,
+    loginType: state.wallet.loginType,
   };
 };
 const selectAccountBalance = state => (

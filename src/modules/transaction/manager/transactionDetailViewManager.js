@@ -29,7 +29,6 @@ const apis = {
     apiUtil: (network, { token, transactionId }) =>
       getTransaction({ network, params: { transactionId } }, token),
     getApiParams: (state, ownProps) => ({
-      token: selectActiveToken(state),
       transactionId: parseSearchParams(ownProps.location.search).transactionId,
       network: state.network,
     }),

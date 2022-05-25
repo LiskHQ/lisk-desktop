@@ -4,7 +4,6 @@ import { withTranslation } from 'react-i18next';
 import withFilters from 'src/utils/withFilters';
 import withData from 'src/utils/withData';
 import { getTransactions } from '@transaction/api';
-import { selectActiveToken } from '@common/store';
 import { DEFAULT_LIMIT } from 'src/utils/monitor';
 import { normalizeTransactionParams } from '../../utils';
 import TransactionMonitorist from './TransactionMonitorList';
@@ -26,8 +25,7 @@ export default compose(
     transactions: {
       apiUtil: (network, { token, ...params }) =>
         getTransactions({ network, params: normalizeTransactionParams(params) }, token),
-      getApiParams: state => ({
-        token: selectActiveToken(state),
+      getApiParams: () => ({
         limit: DEFAULT_LIMIT,
       }),
       defaultData: [],

@@ -138,9 +138,6 @@ export default compose(
     transactions: {
       apiUtil: (network, { token, ...params }) =>
         getTransactions({ network, params }),
-      getApiParams: (state) => ({
-        token: state.token.active,
-      }),
       defaultData: { data: [], meta: {} },
       autoload: false,
     },
