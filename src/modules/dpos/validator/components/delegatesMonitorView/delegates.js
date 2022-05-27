@@ -1,3 +1,5 @@
+/* eslint-disable complexity */
+/* eslint-disable no-nested-ternary */
 import React, { useState, useEffect } from 'react';
 
 import { Input } from 'src/theme';
@@ -11,6 +13,10 @@ import DelegatesOverview from '../overview/delegatesOverview';
 import ForgingDetails from '../overview/forgingDetails';
 import LatestVotes from '../latestVotes';
 import DelegatesTable from '../delegatesTable';
+import ActiveDelegatesTab from '../activeDelegatesTab';
+import StandByDelegatesTab from '../standByDelegatesTab';
+import SanctionedDelegatesTab from '../sanctionedDelegatesTab';
+import WatchedDelegatesTab from '../watchedDelegatesTab';
 
 // eslint-disable-next-line max-statements
 const DelegatesMonitor = ({
@@ -149,6 +155,42 @@ const DelegatesMonitor = ({
         <BoxContent className={`${styles.content} delegate-box`}>
           {activeTab === 'votes' ? (
             <LatestVotes votes={votes} t={t} delegates={votedDelegates} />
+          ) : activeTab === 'active' ? (
+            <ActiveDelegatesTab
+              blocks={blocks}
+              delegatesWithForgingTimes={delegatesWithForgingTimes}
+              watchList={watchList}
+              filters={filters}
+              t={t}
+              activeTab={activeTab}
+            />
+          ) : activeTab === 'standby' ? (
+            <StandByDelegatesTab
+              blocks={blocks}
+              standByDelegates={standByDelegates}
+              watchList={watchList}
+              filters={filters}
+              t={t}
+              activeTab={activeTab}
+            />
+          ) : activeTab === 'sanctioned' ? (
+            <SanctionedDelegatesTab
+              blocks={blocks}
+              sanctionedDelegates={sanctionedDelegates}
+              watchList={watchList}
+              filters={filters}
+              t={t}
+              activeTab={activeTab}
+            />
+          ) : activeTab === 'watched' ? (
+            <WatchedDelegatesTab
+              blocks={blocks}
+              watchedDelegates={watchedDelegates}
+              watchList={watchList}
+              filters={filters}
+              t={t}
+              activeTab={activeTab}
+            />
           ) : (
             <DelegatesTable
               setActiveTab={setActiveTab}
