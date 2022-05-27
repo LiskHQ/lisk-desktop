@@ -188,7 +188,7 @@ export const modals = {
     isPrivate: false,
     forbiddenTokens: [tokenMap.BTC.key],
   },
-  setPassword: {
+  accountCreated: {
     isPrivate: false,
     forbiddenTokens: [],
   },

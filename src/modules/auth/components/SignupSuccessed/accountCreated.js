@@ -10,7 +10,7 @@ import registerStyles from '../Signup/register.css';
 import styles from './accountCreated.css';
 
 const AccountCreated = ({ t }) => (
-  <>
+  <div className={styles.container}>
     <div className={`${registerStyles.titleHolder}`}>
       <h1>{t("Perfect! You're all set")}</h1>
       <p className={styles.text}>
@@ -28,7 +28,7 @@ const AccountCreated = ({ t }) => (
         </PrimaryButton>
       </Link>
     </div>
-  </>
+  </div>
 );
 
 export default withTranslation()(AccountCreated);
