@@ -61,7 +61,7 @@
   height: 218px;
   border-radius: 6px;
   background-color: var(--color-white);
-  transition: all 200ms linear;
+  transition: opacity 200ms linear;
   border: none;
 
   & > span {
@@ -77,8 +77,9 @@
   }
 
   &:hover {
+    box-sizing: border-box;
     border: 2px solid var(--color-ultramarine-blue);
-    box-shadow: 0px 4px 10px rgba(234, 234, 234, 0.36);
+    opacity: 0.7;
   }
 }
 

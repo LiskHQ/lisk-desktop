@@ -1,9 +1,10 @@
 /* eslint-disable max-lines */
 import React from 'react';
 import grid from 'flexboxgrid/dist/flexboxgrid.css';
+import { withRouter } from 'react-router';
 import Icon from 'src/theme/Icon';
 import { useTranslation } from 'react-i18next';
-import styles from './AccountAdd.css';
+import styles from './AddAccountChoice.css';
 
 const AddAccountFlowButon = ({ iconName, text, onClick }) => (
   <button onClick={onClick} className={styles.addAccountFlowBtnWrapper}>
@@ -14,7 +15,7 @@ const AddAccountFlowButon = ({ iconName, text, onClick }) => (
   </button>
 );
 
-const AccountAdd = () => {
+const AccountAdd = ({ history }) => {
   const { t } = useTranslation();
 
   return (
@@ -29,7 +30,11 @@ const AccountAdd = () => {
               {t('Select the applicable mode.')}
             </p>
             <div className={styles.selectRowWrapper}>
-              <AddAccountFlowButon text="Secret recovery phrase" iconName="secretPassphrase" />
+              <AddAccountFlowButon
+                text="Secret recovery phrase"
+                iconName="secretPassphrase"
+                onClick={() => history.push('/account/add')}
+              />
               <AddAccountFlowButon text="Restore from file" iconName="accountUpload" />
             </div>
             <p>
@@ -44,4 +49,4 @@ const AccountAdd = () => {
   );
 };
 
-export default AccountAdd;
+export default withRouter(AccountAdd);

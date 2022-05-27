@@ -38,7 +38,7 @@ function SetPasswordForm({ onSubmit }) {
   [formValues.password, formValues.cPassword, formValues.hasAgreed]);
 
   return (
-    <div>
+    <div className={styles.container}>
       <div className={`${styles.titleHolder} ${grid['col-xs-12']}`}>
         <h1>{t('Set up device password')}</h1>
         <p>

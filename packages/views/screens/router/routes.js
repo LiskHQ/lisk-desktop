@@ -91,6 +91,13 @@ export default {
     path: '/account/add',
     isPrivate: false,
     forbiddenTokens: [],
+    exact: true,
+  },
+  addAccountChoice: {
+    path: '/account/add/initiate',
+    isPrivate: false,
+    forbiddenTokens: [],
+    exact: true,
   },
   dashboard: {
     path: '/',
@@ -180,5 +187,9 @@ export const modals = {
   delegatePerformance: {
     isPrivate: false,
     forbiddenTokens: [tokenMap.BTC.key],
+  },
+  setPassword: {
+    isPrivate: false,
+    forbiddenTokens: [],
   },
 };
