@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useContext } from 'react';
 
 import { formatAmountBasedOnLocale } from 'src/utils/formattedNumber';
 import { fromRawLsk } from '@token/fungible/utils/lsk';
@@ -7,6 +7,8 @@ import WalletVisual from '@wallet/components/walletVisual';
 import Tooltip from 'src/theme/Tooltip';
 import Icon from 'src/theme/Icon';
 import { DEFAULT_STANDBY_THRESHOLD } from '@dpos/validator/consts';
+import DelegateRowContext from '../../context/delegateRowContext';
+import styles from '../delegatesMonitorView/delegates.css';
 import {
   getDelegateDetailsClass,
   getStatusClass,
@@ -15,7 +17,6 @@ import {
   getForgingTimeClass,
   getDelegateRankClass,
 } from './tableHeader';
-import styles from '../delegatesMonitorView/delegates.css';
 
 const roundStates = {
   forging: 'Forging',
@@ -37,13 +38,26 @@ const delegateStatus = {
   ineligible: 'Ineligible',
 };
 
-export const DelegateRank = ({ data, activeTab }) => (
-  <span className={getDelegateRankClass(activeTab)}>
-    <span>{data.rank}</span>
-  </span>
-);
+// const {
+//   data, activeTab, watched = false, addToWatchList,
+//   removeFromWatchList, value, /* watchList, setActiveTab, */
+//   /* blocks, */ state, time, status, /* lastBlock, */
+//   isBanned, totalVotesReceived, theme, t,
+// } = useContext(DelegateRowContext);
 
-export const DelegateWeight = ({ value, activeTab }) => {
+// export const DelegateRank = ({ data, activeTab }) => (
+export const DelegateRank = () => {
+  const { data, activeTab } = useContext(DelegateRowContext);
+  return (
+    <span className={getDelegateRankClass(activeTab)}>
+      <span>{data.rank}</span>
+    </span>
+  );
+};
+
+// export const DelegateWeight = ({ value, activeTab }) => {
+export const DelegateWeight = () => {
+  const { value, activeTab } = useContext(DelegateRowContext);
   const formatted = formatAmountBasedOnLocale({
     value: fromRawLsk(value),
     format: '0a',
@@ -56,9 +70,13 @@ export const DelegateWeight = ({ value, activeTab }) => {
   );
 };
 
-export const DelegateDetails = ({
-  t, watched = false, data, activeTab, removeFromWatchList, addToWatchList,
-}) => {
+// export const DelegateDetails = ({
+//   t, watched = false, data, activeTab, removeFromWatchList, addToWatchList,
+// }) => {
+export const DelegateDetails = () => {
+  const {
+    data, activeTab, watched = false, addToWatchList, removeFromWatchList, t,
+  } = useContext(DelegateRowContext);
   const showEyeIcon = activeTab === 'active' || activeTab === 'standby' || activeTab === 'sanctioned' || activeTab === 'watched';
   return (
     <span className={getDelegateDetailsClass(activeTab)}>
@@ -99,9 +117,13 @@ export const DelegateDetails = ({
   );
 };
 
-export const RoundState = ({
-  activeTab, state, isBanned, t, time,
-}) => {
+// export const RoundState = ({
+//   activeTab, state, isBanned, t, time,
+// }) => {
+export const RoundState = () => {
+  const {
+    state, activeTab, isBanned, time, t,
+  } = useContext(DelegateRowContext);
   if (state === undefined) {
     return (
       <span className={`${getRoundStateClass(activeTab)} ${styles.noEllipsis} ${styles.statusIconsContainer}`}>-</span>
@@ -138,31 +160,40 @@ export const RoundState = ({
   );
 };
 
-const getDelegateStatus = (key, totalVotesReceived) => {
+// const getDelegateStatus = (key, totalVotesReceived) => {
+const getDelegateStatus = (key, grossVotesReceived) => {
   if (key === 'banned' || key === 'punished' || key === 'active') {
     return [key, delegateStatus[key]];
   }
-  if (totalVotesReceived < DEFAULT_STANDBY_THRESHOLD) {
+  if (grossVotesReceived < DEFAULT_STANDBY_THRESHOLD) {
     return ['ineligible', delegateStatus.ineligible];
   }
 
   return [key, delegateStatus[key]];
 };
 
-export const DelegateStatus = ({
-  activeTab, status, totalVotesReceived, theme,
-}) => {
-  const [key, value] = getDelegateStatus(status, totalVotesReceived);
+// export const DelegateStatus = ({
+//   activeTab, status, totalVotesReceived, theme,
+// }) => {
+export const DelegateStatus = () => {
+  const {
+    activeTab, status, totalVotesReceived, theme,
+  } = useContext(DelegateRowContext);
+  const [key, val] = getDelegateStatus(status, totalVotesReceived);
 
   return (
     <span className={getStatusClass(activeTab)}>
-      <span className={`${styles.delegateStatus} ${styles[key]} ${styles[theme]}`}>{value}</span>
+      <span className={`${styles.delegateStatus} ${styles[key]} ${styles[theme]}`}>{val}</span>
     </span>
   );
 };
 
-export const ForgingTime = ({ activeTab, time, state }) => (
-  <span className={getForgingTimeClass(activeTab)}>
-    {state === 'missedBlock' ? '-' : time}
-  </span>
-);
+// export const ForgingTime = ({ activeTab, time, state }) => (
+export const ForgingTime = () => {
+  const { activeTab, state, time } = useContext(DelegateRowContext);
+  return (
+    <span className={getForgingTimeClass(activeTab)}>
+      {state === 'missedBlock' ? '-' : time}
+    </span>
+  );
+};

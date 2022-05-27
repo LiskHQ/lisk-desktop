@@ -6,15 +6,17 @@ import routes from '@screens/router/routes';
 import { useTheme } from 'src/theme/Theme';
 import { addedToWatchList, removedFromWatchList } from '@common/store/actions';
 import getForgingTime from '../../utils/getForgingTime';
+import DelegateRowContext from '../../context/delegateRowContext';
 import styles from '../delegatesMonitorView/delegates.css';
-import {
-  DelegateWeight,
-  DelegateDetails,
-  RoundState,
-  DelegateStatus,
-  ForgingTime,
-  DelegateRank,
-} from './dataColumns';
+// import {
+//   DelegateWeight,
+//   DelegateDetails,
+//   RoundState,
+//   DelegateStatus,
+//   ForgingTime,
+//   DelegateRank,
+// } from './dataColumns';
+import LayoutSchema from './layoutSchema';
 
 const DelegateRow = ({
   data, className, t, activeTab, watchList, setActiveTab, blocks,
@@ -42,12 +44,35 @@ const DelegateRow = ({
     dispatch(addedToWatchList({ address: data.address }));
   };
 
+  const Layout = LayoutSchema[activeTab] || LayoutSchema.default;
+
   return (
     <Link
       className={`${className} delegate-row ${styles.tableRow}`}
       to={`${routes.explorer.path}?address=${data.address}`}
     >
-      <DelegateDetails
+      <DelegateRowContext.Provider
+        value={{
+          data,
+          activeTab,
+          watched: isWatched,
+          addToWatchList,
+          removeFromWatchList,
+          value: data.totalVotesReceived,
+          state: data.state,
+          time: formattedForgingTime,
+          status: data.status,
+          isBanned: data.isBanned,
+          totalVotesReceived: data.totalVotesReceived,
+          theme,
+          t,
+        }}
+      >
+        {Layout.components.map((Component, index) => (
+          <Component key={index} t={t} />
+        ))}
+      </DelegateRowContext.Provider>
+      {/* <DelegateDetail
         t={t}
         data={data}
         watched={isWatched}
@@ -99,7 +124,7 @@ const DelegateRow = ({
               theme={theme}
             />
           ) : null
-      }
+      } */}
     </Link>
   );
 };

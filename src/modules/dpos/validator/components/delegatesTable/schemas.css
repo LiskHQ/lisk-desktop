@@ -1,0 +1,140 @@
+.container {
+  & .votes {
+    grid-area: votes;
+  }
+
+  &.full,
+  &.general {
+    grid-template-areas: "sender recipient date amount fee status";
+
+    & > * {
+      height: 100%;
+      display: flex;
+      justify-content: flex-start;
+      align-items: center;
+      flex: 0 0 auto;
+    }
+
+    & > *:nth-child(1),
+    & > *:nth-child(2) {
+      flex-basis: 25%;
+      max-width: 25%;
+    }
+
+    & > *:nth-child(4),
+    & > *:nth-child(3) {
+      flex-basis: 16.66666667%;
+      max-width: 16.66666667%;
+    }
+
+    & > *:nth-child(5),
+    & > *:nth-child(6) {
+      flex-basis: 8.33333333%;
+      max-width: 8.33333333%;
+    }
+
+    & > *:last-child {
+      justify-content: flex-end;
+    }
+
+    @media (--medium-viewport) {
+      & > *:nth-child(4) {
+        flex-basis: 25%;
+        max-width: 25%;
+      }
+
+      & > *:nth-child(5) {
+        display: none;
+      }
+    }
+  }
+
+  &.standbyLayout {
+    grid-template-areas: "counterpart date fee assets amount";
+
+    & > * {
+      height: 100%;
+      display: flex;
+      justify-content: flex-start;
+      align-items: center;
+      flex: 0 0 auto;
+    }
+
+    & > *:nth-child(1) {
+      flex-basis: 33.33333%;
+      max-width: 33.33333%;
+    }
+
+    & > *:nth-child(2),
+    & > *:nth-child(3),
+    & > *:nth-child(4),
+    & > *:nth-child(5) {
+      flex-basis: 16.66666667%;
+      max-width: 16.66666667%;
+    }
+
+    & > *:first-child {
+      padding-left: 10px;
+    }
+
+    & > *:last-child {
+      justify-content: flex-end;
+    }
+  }
+
+  &.watchedLayout {
+    grid-template-areas: "counterpart date fee assets amount";
+
+    & > * {
+      height: 100%;
+      display: flex;
+      justify-content: flex-start;
+      align-items: center;
+      flex: 0 0 auto;
+    }
+
+    & > *:nth-child(1) {
+      flex-basis: 33.33333%;
+      max-width: 33.33333%;
+    }
+
+    & > *:nth-child(2),
+    & > *:nth-child(3),
+    & > *:nth-child(4),
+    & > *:nth-child(5) {
+      flex-basis: 16.66666667%;
+      max-width: 16.66666667%;
+    }
+
+    & > *:first-child {
+      padding-left: 10px;
+    }
+
+    & > *:last-child {
+      justify-content: flex-end;
+    }
+  }
+
+  &.sanctionedLayout {
+    grid-template-areas: "counterpart amount";
+
+    & > * {
+      height: 100%;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+
+    & > *:first-child {
+      flex-flow: row nowrap;
+      justify-content: flex-start;
+      flex-grow: 1;
+      padding-left: 10px;
+    }
+
+    & > *:last-child {
+      width: auto;
+      justify-content: flex-end;
+    }
+  }
+}
