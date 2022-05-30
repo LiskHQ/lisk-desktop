@@ -1,4 +1,4 @@
-import { toast } from 'react-toastify';
+/** import { toast } from 'react-toastify';
 import { timeOutId, timeOutWarningId } from 'src/utils/toasts';
 import actionTypes from './actionTypes';
 import authMiddleware from './middleware';
@@ -23,4 +23,4 @@ describe('Auth middleware', () => {
     expect(toast.dismiss).toHaveBeenCalledWith(timeOutId);
     expect(toast.dismiss).toHaveBeenCalledWith(timeOutWarningId);
   });
-});
+}); */

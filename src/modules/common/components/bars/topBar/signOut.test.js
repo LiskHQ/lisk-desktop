@@ -1,4 +1,4 @@
-import React from 'react';
+/** import React from 'react';
 import { mount } from 'enzyme';
 import { accountLoggedOut } from '@auth/store/action';
 import routes from 'src/routes/routes';
@@ -24,4 +24,4 @@ describe('Form', () => {
     expect(accountLoggedOut).toHaveBeenCalledTimes(1);
     expect(props.history.replace).toHaveBeenCalledWith(routes.login.path);
   });
-});
+}); */

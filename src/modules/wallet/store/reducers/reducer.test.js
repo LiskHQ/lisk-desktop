@@ -36,13 +36,13 @@ describe('Reducer: account(state, action)', () => {
     });
   });
 
-  it('should return empty_wallet object if action.type = actionTypes.accountLoggedOut', () => {
+  /** it('should return empty_wallet object if action.type = actionTypes.accountLoggedOut', () => {
     const action = {
       type: actionTypes.accountLoggedOut,
     };
     const changedWallet = wallet(state, action);
     expect(changedWallet).toEqual({ afterLogout: true });
-  });
+  }); */
 
   it('should return account object with changes if action.type = actionTypes.timerReset', () => {
     const action = {

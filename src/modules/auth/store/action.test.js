@@ -1,16 +1,16 @@
 /* eslint-disable max-lines */
-import { toast } from 'react-toastify';
+// import { toast } from 'react-toastify';
 import * as accountApi from '@wallet/utils/api';
-import { extractKeyPair } from '@wallet/utils/account';
-import { defaultDerivationPath } from 'src/utils/explicitBipKeyDerivation';
+// import { extractKeyPair } from '@wallet/utils/account';
+// import { defaultDerivationPath } from 'src/utils/explicitBipKeyDerivation';
 import wallets from '@tests/constants/wallets';
 import { tokenMap } from '@token/fungible/consts/tokens';
 import * as networkActions from '@network/store/action';
 import { accountDataUpdated } from '@wallet/store/action';
 import actionTypes from './actionTypes';
 import {
-  accountLoggedOut,
-  login,
+  // accountLoggedOut,
+  // login,
   secondPassphraseStored,
   secondPassphraseRemoved,
 } from './action';
@@ -58,7 +58,7 @@ describe('actions: account', () => {
     networkActions.networkStatusUpdated.mockReset();
   });
 
-  describe('accountLoggedOut', () => {
+  /** describe('accountLoggedOut', () => {
     it('should create an action to reset the account', () => {
       const expectedAction = {
         type: actionTypes.accountLoggedOut,
@@ -66,7 +66,7 @@ describe('actions: account', () => {
 
       expect(accountLoggedOut()).toEqual(expectedAction);
     });
-  });
+  }); */
 
   describe('secondPassphraseStored', () => {
     it('should create an action to reset the account', () => {
@@ -176,7 +176,7 @@ describe('actions: account', () => {
     });
   });
 
-  describe('login', () => {
+  /** describe('login', () => {
     let state;
     const getState = () => state;
     const balance = 10e8;
@@ -241,7 +241,8 @@ describe('actions: account', () => {
     it('should call extractPublicKey with params', async () => {
       accountApi.getAccount.mockResolvedValue({ balance, address });
       await login({ passphrase })(dispatch, getState);
-      expect(extractKeyPair).toHaveBeenCalledWith({ passphrase, enableCustomDerivationPath: true, derivationPath: '1/2' });
+      expect(extractKeyPair).toHaveBeenCalledWith({
+        passphrase, enableCustomDerivationPath: true, derivationPath: '1/2' });
 
       const newGetState = () => ({
         ...state,
@@ -265,5 +266,5 @@ describe('actions: account', () => {
       expect(toast.error).toHaveBeenCalledTimes(1);
       expect(dispatch).toHaveBeenCalledWith({ type: actionTypes.accountLoggedOut });
     });
-  });
+  }); */
 });
