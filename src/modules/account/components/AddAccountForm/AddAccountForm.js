@@ -1,11 +1,9 @@
 /* eslint-disable max-lines */
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import i18next from 'i18next';
 import grid from 'flexboxgrid/dist/flexboxgrid.css';
 import { Link } from 'react-router-dom';
 import routes from '@screens/router/routes';
-import { getNetworksList } from '@network/utils/getNetwork';
 import { PrimaryButton } from 'src/theme/buttons';
 import PassphraseInput from 'src/modules/wallet/components/PassphraseInput/PassphraseInput';
 import DiscreetModeToggle from 'src/modules/settings/components/discreetModeToggle';
@@ -14,8 +12,6 @@ import styles from './AddAccountForm.css';
 
 const AddAccountForm = ({
   settings,
-  network,
-  history,
   nextStep,
 }) => {
   const { t } = useTranslation();
@@ -36,19 +32,9 @@ const AddAccountForm = ({
   };
 
   const handleKeyPress = (e) => {
-    if (e.charCode === 13) {
-      onFormSubmit(e);
-    }
+    if (e.charCode === 13) onFormSubmit(e);
   };
 
-  useEffect(() => {
-    // istanbul ignore else
-    if (!settings.areTermsOfUseAccepted && network.networks?.LSK) {
-      history.push(routes.termsOfUse.path);
-    }
-
-    i18next.on('languageChanged', getNetworksList);
-  }, []);
   return (
     <>
       <div className={`${styles.titleHolder} ${grid['col-xs-10']}`}>

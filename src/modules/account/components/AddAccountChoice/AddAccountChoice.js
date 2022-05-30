@@ -1,13 +1,14 @@
 /* eslint-disable max-lines */
 import React from 'react';
-import grid from 'flexboxgrid/dist/flexboxgrid.css';
-import { withRouter } from 'react-router';
-import Icon from 'src/theme/Icon';
 import { useTranslation } from 'react-i18next';
+import { withRouter } from 'react-router';
+import grid from 'flexboxgrid/dist/flexboxgrid.css';
+import Icon from 'src/theme/Icon';
+import routes from '@views/screens/router/routes';
 import styles from './AddAccountChoice.css';
 
 const AddAccountFlowButon = ({ iconName, text, onClick }) => (
-  <button onClick={onClick} className={styles.addAccountFlowBtnWrapper}>
+  <button data-testid={iconName} onClick={onClick} className={styles.addAccountFlowBtnWrapper}>
     <div>
       <Icon name={iconName} />
     </div>
@@ -33,14 +34,14 @@ const AccountAdd = ({ history }) => {
               <AddAccountFlowButon
                 text="Secret recovery phrase"
                 iconName="secretPassphrase"
-                onClick={() => history.push('/account/add')}
+                onClick={() => history.push(routes.addAccountChoice.path)}
               />
               <AddAccountFlowButon text="Restore from file" iconName="accountUpload" />
             </div>
             <p>
               {t('Don’t have a Lisk account yet?')}
               {' '}
-              <a>Create one now</a>
+              <a href="#">Create one now</a>
             </p>
           </div>
         </div>
