@@ -44,7 +44,7 @@ class PassphraseRenderer extends React.Component {
       hasErrors: !isCorrect,
     });
 
-    this.timeout = setTimeout(cb, 1500);
+    this.timeout = setTimeout(cb, 500);
   }
 
   setRandomIndexesFromPassphrase() {
