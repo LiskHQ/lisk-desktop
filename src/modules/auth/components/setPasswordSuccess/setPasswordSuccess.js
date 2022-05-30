@@ -1,13 +1,18 @@
 import React from 'react';
 import { useTranslation } from 'react-i18next';
 import { PrimaryButton, TertiaryButton } from 'src/theme/buttons';
+import { downloadJSON } from '@transaction/utils';
 import Box from 'src/theme/box';
 import BoxContent from 'src/theme/box/content';
 import Icon from 'src/theme/Icon';
 import styles from './setPasswordSuccess.css';
 
-function SetPasswordSuccess() {
+function SetPasswordSuccess({ onClose, backupJSON }) {
   const { t } = useTranslation();
+
+  const onDownload = () => {
+    downloadJSON(backupJSON, 'encrypted_secret_recovery_phrase');
+  };
 
   return (
     <Box className={styles.container}>
@@ -22,11 +27,12 @@ function SetPasswordSuccess() {
           <TertiaryButton
             className={styles.downloadBtn}
             size="xs"
+            onClick={onDownload}
           >
             {t('Download')}
           </TertiaryButton>
         </div>
-        <PrimaryButton className={styles.button}>
+        <PrimaryButton className={styles.button} onClick={onClose}>
           {t('Continue to Dashboard')}
         </PrimaryButton>
       </BoxContent>
