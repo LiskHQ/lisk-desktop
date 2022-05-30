@@ -20,6 +20,7 @@
   width: 100%;
   background-color: var(--color-passphrase-bg);
   border: 1px solid var(--dark-border-color);
+  border-radius: var(--border-radius-standard);
   flex-wrap: wrap;
   padding: 12px 16px;
   margin-top: 16px;
@@ -123,7 +124,7 @@
     font-weight: var(--font-weight-bold);
     color: var(--color-shadow-word-option);
     margin-right: 20px;
-    box-shadow: var(--box-shadow-word-option);
+    border-radius: var(--border-radius-standard);
   }
 }
 

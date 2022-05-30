@@ -110,7 +110,7 @@
     @mixin contentLargest;
 
     margin: 0;
-    color: var(--color-slate-gray);
+    color: var(--color-maastricht-blue);
     min-width: 450px;
   }
 }
