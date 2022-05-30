@@ -20,9 +20,9 @@ export const timerReset = () => ({
   data: new Date(),
 });
 
-export const accountLoading = () => ({
+/** export const accountLoading = () => ({
   type: actionTypes.accountLoading,
-});
+}); */
 
 /**
  * This action is used on login to fetch account info for all enabled token

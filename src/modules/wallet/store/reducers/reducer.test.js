@@ -56,7 +56,7 @@ describe('Reducer: account(state, action)', () => {
     });
   });
 
-  it('should return loading account object if action.type = actionTypes.accountLoading', () => {
+  /** it('should return loading account object if action.type = actionTypes.accountLoading', () => {
     const action = {
       type: actionTypes.accountLoading,
     };
@@ -64,7 +64,7 @@ describe('Reducer: account(state, action)', () => {
     expect(changedWallet).toEqual({ loading: true });
   });
 
-  /** it('should reduce account when accountLoggedIn has been triggered', () => {
+  it('should reduce account when accountLoggedIn has been triggered', () => {
     const action = {
       data: {
         delegate: wallets.delegate_candidate,

@@ -32,10 +32,10 @@ const account = (state = {}, action) => {
         ...state,
         expireTime: new Date(action.data.getTime() + accountConstants.lockDuration),
       };
-    case actionTypes.accountLoading:
+    /** case actionTypes.accountLoading:
       return {
         loading: true,
-      };
+      }; */
     case actionTypes.secondPassphraseStored:
       return {
         ...state,
