@@ -47,7 +47,6 @@ const Login = ({
 }) => {
   const [passphrase, setPass] = useState({ value: '', isValid: false });
   // const canHWSignIn = true;
-  const canHWSignIn = false;
 
   const setPassphrase = (value, error) => {
     setPass({
@@ -120,7 +119,7 @@ const Login = ({
               >
                 {t('Sign in')}
               </PrimaryButton>
-              {canHWSignIn ? (
+              {/** canHWSignIn ? (
                 <Link
                   className={`${styles.hwLink} signin-hwWallet-button`}
                   to={routes.hwWallet.path}
@@ -128,7 +127,7 @@ const Login = ({
                   <Icon name="hwWalletIcon" className={styles.hwWalletIcon} />
                   {t('Sign in with a hardware wallet')}
                 </Link>
-              ) : null}
+              ) : null */}
             </div>
           </form>
         </div>

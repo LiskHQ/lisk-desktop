@@ -112,7 +112,7 @@ const SideBar = ({ t, location }) => {
 
   return (
     <nav className={`${styles.wrapper} ${sideBarExpanded ? 'expanded' : ''}`}>
-      <AutoSignOutWrapper />
+      {/** <AutoSignOutWrapper /> */}
       <div className={`${styles.container} menu-items`}>
         {items.map((group, i) => (
           <div className={styles.menuGroup} key={`group-${i}`}>

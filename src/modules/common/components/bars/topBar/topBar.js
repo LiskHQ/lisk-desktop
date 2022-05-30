@@ -72,7 +72,7 @@ const TopBar = ({
             <PrimaryButton size="s">Sign in</PrimaryButton>
           </Link>
         ) : null}
-        {!isUserLogout && <SignOut t={t} history={history} />}
+        {/** !isUserLogout && <SignOut t={t} history={history} /> */}
       </div>
     </div>
   );
