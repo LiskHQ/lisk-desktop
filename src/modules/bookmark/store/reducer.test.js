@@ -30,8 +30,9 @@ describe('Reducer: bookmarks(state, action)', () => {
     const state = { LSK: [wallet, wallet2] };
     const action = bookmarkAdded({ wallet: wallet3, token: 'LSK' });
     const changedState = bookmarks(state, action);
-    expect(changedState.LSK[0]).toEqual(wallet);
-    expect(changedState.LSK[1]).toEqual(wallet2);
+    expect(changedState.LSK[0]).toEqual(wallet3);
+    expect(changedState.LSK[1]).toEqual(wallet);
+    expect(changedState.LSK[2]).toEqual(wallet2);
   });
 
   it(`should return wallets with added wallet and trimmed title if action.type is ${actionTypes.bookmarkAdded}`, () => {
@@ -50,8 +51,9 @@ describe('Reducer: bookmarks(state, action)', () => {
       token: 'LSK',
     });
     const changedState = bookmarks(state, action);
-    expect(changedState.LSK[0]).toEqual(wallet);
-    expect(changedState.LSK[1]).toEqual(wallet2);
+    expect(changedState.LSK[0]).toEqual(wallet3);
+    expect(changedState.LSK[1]).toEqual(wallet);
+    expect(changedState.LSK[2]).toEqual(wallet2);
   });
 
   it(`should return wallets with updated wallet if action.type is ${actionTypes.bookmarkUpdated}`, () => {

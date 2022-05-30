@@ -1,20 +1,25 @@
-import { pricesRetrieved, emptyTransactionsData } from '@common/store/actions';
+import { pricesRetrieved } from '@common/store/actions';
 import networkActionTypes from '@network/store/actionTypes';
+import * as storageUtils from 'src/utils/localJSONStorage';
 import { settingsUpdated } from './actions';
 import actionTypes from './actionTypes';
 import settingsMiddleware from './middleware';
 
 jest.mock('@common/store/actions/service');
 jest.mock('@transaction/store/actions');
+jest.mock('src/utils/localJSONStorage', () => ({
+  setInStorage: jest.fn(),
+}));
 jest.mock('./actions');
 
 describe('Middleware: Settings', () => {
   const next = jest.fn();
+  const token = {
+    active: 'LSK',
+  };
   const store = {
     dispatch: jest.fn(),
-    getState: () => ({
-      token: {},
-    }),
+    getState: () => ({ token }),
   };
 
   beforeEach(() => {
@@ -62,18 +67,13 @@ describe('Middleware: Settings', () => {
       expect(pricesRetrieved).not.toBeCalled();
     });
 
-    it('should dispatch pricesRetrieved', () => {
+    it('should call setInStorage', () => {
       const action = {
         type: actionTypes.settingsUpdated,
-        data: {
-          token: {
-            active: 'LSK',
-          },
-        },
       };
 
       settingsMiddleware(store)(next)(action);
-      expect(emptyTransactionsData).toBeCalled();
+      expect(storageUtils.setInStorage).toHaveBeenCalledWith('token', token);
     });
   });
 });

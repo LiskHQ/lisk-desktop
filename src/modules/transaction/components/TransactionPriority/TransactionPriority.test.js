@@ -47,12 +47,6 @@ describe('TransactionPriority', () => {
     expect(wrapper).toContainMatchingElement('.option-High');
   });
 
-  it('renders custom fee option only when props.token is lsk', () => {
-    expect(wrapper).not.toContainMatchingElement('.option-Custom');
-    wrapper.setProps({ ...props, token: tokenMap.LSK.key });
-    expect(wrapper).toContainMatchingElement('.option-Custom');
-  });
-
   it('renders custom fee option with input when props.token is lsk', () => {
     expect(wrapper).not.toContainMatchingElement('.custom-fee-input');
     wrapper.setProps({ ...props, token: tokenMap.LSK.key, selectedPriority: 3 });

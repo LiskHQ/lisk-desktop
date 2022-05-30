@@ -1,8 +1,10 @@
 import { MODULE_ASSETS_NAME_ID_MAP } from '@transaction/configuration/moduleAssets';
 import { fromRawLsk, delay } from '@token/fungible/utils/lsk';
-import { selectActiveTokenAccount } from '@common/store';
+import { selectActiveToken, selectActiveTokenAccount } from '@common/store/selectors';
 import {
-  accountDataUpdated, emptyTransactionsData, transactionsRetrieved,
+  accountDataUpdated,
+  emptyTransactionsData,
+  transactionsRetrieved,
 } from '@common/store/actions';
 import { getTransactions } from '@transaction/api';
 import i18n from 'src/utils/i18n/i18n';
@@ -35,16 +37,18 @@ const showNotificationsForIncomingTransactions = (transactions, account, token) 
 // eslint-disable-next-line max-statements
 const checkTransactionsAndUpdateAccount = async (store, action) => {
   const state = store.getState();
-  const { transactions, token, network } = state;
-  const account = selectActiveTokenAccount(store.getState());
+  const { transactions, network } = state;
+  const account = selectActiveTokenAccount(state);
+  const activeToken = selectActiveToken(state);
   const { numberOfTransactions, id } = action.data.block;
 
   if (numberOfTransactions) {
     await delay();
-    const { data: txs } = await getTransactions({
+    const res = await getTransactions({
       network,
       params: { blockId: id },
     });
+    const { data: txs } = res;
     const blockContainsRelevantTransaction = txs.filter((transaction) => {
       if (!transaction) return false;
       return (
@@ -52,7 +56,7 @@ const checkTransactionsAndUpdateAccount = async (store, action) => {
         || account.summary?.address === transaction.asset?.recipient?.address)
       );
     }).length > 0;
-    showNotificationsForIncomingTransactions(txs, account, token.active);
+    showNotificationsForIncomingTransactions(txs, account, activeToken);
 
     if (blockContainsRelevantTransaction) {
       store.dispatch(accountDataUpdated());

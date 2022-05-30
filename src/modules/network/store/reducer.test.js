@@ -13,7 +13,7 @@ describe('Reducer: network(state, action)', () => {
       data: {
         name: 'Custom Node',
         token: 'LSK',
-        network: state.network,
+        network: state.networks.LSK,
       },
     };
 

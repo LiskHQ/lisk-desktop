@@ -136,7 +136,7 @@ const defaultState = {
   },
   delegate: {},
   settings,
-  token: { active: 'LSK' },
+  token: { active: 'LSK', list: { LSK: true } },
 };
 
 describe('Account middleware', () => {
@@ -188,10 +188,15 @@ describe('Account middleware', () => {
     });
 
     it('should call account LSK API methods when LSK is the active token', async () => {
+      transactionApi.getTransactions.mockResolvedValue({
+        data: transactions,
+      });
       // Act
       await middleware(store)(next)(newBlockCreated);
       // Assert
-      expect(transactionApi.getTransactions).toHaveBeenCalledWith({ network: expect.anything(), params: expect.anything() }, 'LSK');
+      expect(transactionApi.getTransactions).toHaveBeenCalledWith({
+        network: expect.anything(), params: expect.anything(),
+      });
       expect(accountDataUpdated).toHaveBeenCalled();
       expect(transactionsRetrieved).toHaveBeenCalledWith({
         address: expect.anything(),
