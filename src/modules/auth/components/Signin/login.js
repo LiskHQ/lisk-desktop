@@ -12,7 +12,7 @@ import { getNetworksList } from '@network/utils/getNetwork';
 import Piwik from 'src/utils/piwik';
 import { PrimaryButton } from 'src/theme/buttons';
 import PassphraseInput from 'src/modules/wallet/components/PassphraseInput/PassphraseInput';
-import Icon from 'src/theme/Icon';
+// import Icon from 'src/theme/Icon';
 import DiscreetModeToggle from 'src/modules/settings/components/discreetModeToggle';
 import NetworkSelector from 'src/modules/settings/components/networkSelector';
 import RecoveryPhrase from '../RecoveryPhrase';
@@ -43,7 +43,8 @@ const redirectToReferrer = (history) => {
 };
 
 const Login = ({
-  t, settings, network, history, account, login,
+  t, settings, network, history, account,
+  // login,
 }) => {
   const [passphrase, setPass] = useState({ value: '', isValid: false });
   // const canHWSignIn = true;
@@ -59,7 +60,7 @@ const Login = ({
     e.preventDefault();
     Piwik.trackingEvent('Login', 'button', 'Login submission');
     if (passphrase.value && passphrase.isValid) {
-      login({ passphrase: passphrase.value });
+      // login({ passphrase: passphrase.value });
     }
   };
 

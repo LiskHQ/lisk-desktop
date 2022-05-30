@@ -15,7 +15,7 @@ import ApplicationManagementDropDown from '@blockchainApplication/manage/compone
 import styles from './topBar.css';
 import Network from './networkName';
 import NavigationButtons from './navigationButtons';
-import SignOut from './signOut';
+// import SignOut from './signOut';
 
 const TopBar = ({
   t,
