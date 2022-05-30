@@ -8,9 +8,8 @@ import {
 } from './dataColumns';
 import styles from './schemas.css';
 
-const basic = [DelegateDetails];
-const minimal = [...basic, DelegateStatus];
-const hosted = [...basic, DelegateWeight];
+const minimal = [DelegateDetails, DelegateStatus];
+const hosted = [DelegateDetails, DelegateWeight];
 const full = [DelegateDetails, DelegateWeight, DelegateRank, ForgingTime, RoundState];
 
 const LayoutSchema = {

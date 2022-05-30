@@ -8,14 +8,6 @@ import { addedToWatchList, removedFromWatchList } from '@common/store/actions';
 import getForgingTime from '../../utils/getForgingTime';
 import DelegateRowContext from '../../context/delegateRowContext';
 import styles from '../delegatesMonitorView/delegates.css';
-// import {
-//   DelegateWeight,
-//   DelegateDetails,
-//   RoundState,
-//   DelegateStatus,
-//   ForgingTime,
-//   DelegateRank,
-// } from './dataColumns';
 import LayoutSchema from './layoutSchema';
 
 const DelegateRow = ({
@@ -58,12 +50,7 @@ const DelegateRow = ({
           watched: isWatched,
           addToWatchList,
           removeFromWatchList,
-          value: data.totalVotesReceived,
-          state: data.state,
           time: formattedForgingTime,
-          status: data.status,
-          isBanned: data.isBanned,
-          totalVotesReceived: data.totalVotesReceived,
           theme,
           t,
         }}
@@ -72,59 +59,6 @@ const DelegateRow = ({
           <Component key={index} t={t} />
         ))}
       </DelegateRowContext.Provider>
-      {/* <DelegateDetail
-        t={t}
-        data={data}
-        watched={isWatched}
-        activeTab={activeTab}
-        addToWatchList={addToWatchList}
-        removeFromWatchList={removeFromWatchList}
-      />
-      <DelegateWeight
-        value={data.totalVotesReceived}
-        activeTab={activeTab}
-      />
-      {
-        (activeTab === 'active' || activeTab === 'watched' || activeTab === 'standby')
-          ? (
-            <DelegateRank
-              data={data}
-              activeTab={activeTab}
-            />
-          ) : null
-      }
-      {
-        (activeTab === 'active' || activeTab === 'watched')
-          ? (
-            <>
-              <ForgingTime
-                state={data.state}
-                time={formattedForgingTime}
-                activeTab={activeTab}
-              />
-              <RoundState
-                status={data.status}
-                state={data.state || blocks.forgers[blocks.indexBook[data.address]]?.state}
-                lastBlock={data.lastBlock}
-                isBanned={data.isBanned}
-                t={t}
-                time={formattedForgingTime}
-                activeTab={activeTab}
-              />
-            </>
-          ) : null
-      }
-      {
-        activeTab !== 'active'
-          ? (
-            <DelegateStatus
-              status={data.status}
-              totalVotesReceived={data.totalVotesReceived}
-              activeTab={activeTab}
-              theme={theme}
-            />
-          ) : null
-      } */}
     </Link>
   );
 };

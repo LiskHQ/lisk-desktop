@@ -38,14 +38,6 @@ const delegateStatus = {
   ineligible: 'Ineligible',
 };
 
-// const {
-//   data, activeTab, watched = false, addToWatchList,
-//   removeFromWatchList, value, /* watchList, setActiveTab, */
-//   /* blocks, */ state, time, status, /* lastBlock, */
-//   isBanned, totalVotesReceived, theme, t,
-// } = useContext(DelegateRowContext);
-
-// export const DelegateRank = ({ data, activeTab }) => (
 export const DelegateRank = () => {
   const { data, activeTab } = useContext(DelegateRowContext);
   return (
@@ -55,9 +47,8 @@ export const DelegateRank = () => {
   );
 };
 
-// export const DelegateWeight = ({ value, activeTab }) => {
 export const DelegateWeight = () => {
-  const { value, activeTab } = useContext(DelegateRowContext);
+  const { data: { value }, activeTab } = useContext(DelegateRowContext);
   const formatted = formatAmountBasedOnLocale({
     value: fromRawLsk(value),
     format: '0a',
@@ -70,9 +61,6 @@ export const DelegateWeight = () => {
   );
 };
 
-// export const DelegateDetails = ({
-//   t, watched = false, data, activeTab, removeFromWatchList, addToWatchList,
-// }) => {
 export const DelegateDetails = () => {
   const {
     data, activeTab, watched = false, addToWatchList, removeFromWatchList, t,
@@ -117,12 +105,9 @@ export const DelegateDetails = () => {
   );
 };
 
-// export const RoundState = ({
-//   activeTab, state, isBanned, t, time,
-// }) => {
 export const RoundState = () => {
   const {
-    state, activeTab, isBanned, time, t,
+    data: { state, isBanned }, activeTab, time, t,
   } = useContext(DelegateRowContext);
   if (state === undefined) {
     return (
@@ -160,7 +145,6 @@ export const RoundState = () => {
   );
 };
 
-// const getDelegateStatus = (key, totalVotesReceived) => {
 const getDelegateStatus = (key, grossVotesReceived) => {
   if (key === 'banned' || key === 'punished' || key === 'active') {
     return [key, delegateStatus[key]];
@@ -172,12 +156,9 @@ const getDelegateStatus = (key, grossVotesReceived) => {
   return [key, delegateStatus[key]];
 };
 
-// export const DelegateStatus = ({
-//   activeTab, status, totalVotesReceived, theme,
-// }) => {
 export const DelegateStatus = () => {
   const {
-    activeTab, status, totalVotesReceived, theme,
+    activeTab, data: { status, totalVotesReceived }, theme,
   } = useContext(DelegateRowContext);
   const [key, val] = getDelegateStatus(status, totalVotesReceived);
 
@@ -188,9 +169,8 @@ export const DelegateStatus = () => {
   );
 };
 
-// export const ForgingTime = ({ activeTab, time, state }) => (
 export const ForgingTime = () => {
-  const { activeTab, state, time } = useContext(DelegateRowContext);
+  const { activeTab, data: { state }, time } = useContext(DelegateRowContext);
   return (
     <span className={getForgingTimeClass(activeTab)}>
       {state === 'missedBlock' ? '-' : time}
