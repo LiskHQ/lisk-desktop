@@ -133,7 +133,7 @@ const ss = {
   settingsBtn: '#settings',
   currencySelect: '.currency input',
   currencyOptions: '.currency .option',
-  autoLogoutTrigger: '.autoLog',
+  // autoLogoutTrigger: '.autoLog',
   switchNetworksTrigger: '.showNetwork',
   customNodeReadMode: '.custom-node-address',
   messageInput: 'textarea',

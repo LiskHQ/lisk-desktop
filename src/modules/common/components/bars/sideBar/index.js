@@ -1,16 +1,12 @@
 import React from 'react';
-import { useSelector, useDispatch } from 'react-redux';
+import { useSelector } from 'react-redux';
 import { withTranslation } from 'react-i18next';
 import { NavLink } from 'react-router-dom';
-import account from '@wallet/configuration/constants';
 import routes, { modals } from 'src/routes/routes';
-import { accountLoggedOut } from '@auth/store/action';
 import Icon from 'src/theme/Icon';
 import { selectActiveToken } from 'src/redux/selectors';
 import DialogLink from 'src/theme/dialog/link';
 import styles from './sideBar.css';
-import AutoSignOut from './autoSignOut';
-import WarningAutoSignOut from './autoSignOut/warning';
 import menuLinks from './menuLinks';
 
 const Inner = ({ data, pathname, sideBarExpanded }) => {
@@ -68,39 +64,6 @@ const MenuLink = ({
         sideBarExpanded={sideBarExpanded}
       />
     </NavLink>
-  );
-};
-
-const getWarningTime = (expireTime) => {
-  if (!expireTime) {
-    return null;
-  }
-
-  const diff = account.lockDuration - account.warnLockDuration;
-  const expireTimeInMilliseconds = new Date(expireTime).getTime();
-
-  return new Date(expireTimeInMilliseconds - diff);
-};
-
-const AutoSignOutWrapper = () => {
-  const dispatch = useDispatch();
-  const expireTime = useSelector((state) => state.wallet.expireTime);
-  const warningTime = getWarningTime(expireTime);
-  const autoSignOut = useSelector((state) => state.settings.autoLog);
-  const renderAutoSignOut = autoSignOut && expireTime;
-
-  if (!renderAutoSignOut) {
-    return null;
-  }
-
-  return (
-    <div className={styles.signOutContainer}>
-      <AutoSignOut
-        expireTime={expireTime}
-        onCountdownComplete={() => dispatch(accountLoggedOut())}
-      />
-      <WarningAutoSignOut warningTime={warningTime} expireTime={expireTime} />
-    </div>
   );
 };
 
