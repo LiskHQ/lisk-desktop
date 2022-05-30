@@ -18,5 +18,9 @@ describe('PassphraseBackup', () => {
     wrapper.find('CopyToClipboard').at(0).simulate('click');
     expect(wrapper.find('.tip')).not.toHaveClassName('hidden');
     expect(wrapper.find('.tip')).toHaveText('Make sure to store it somewhere safe');
+
+    jest.advanceTimersByTime(3100);
+    wrapper.update();
+    expect(wrapper.find('.tip')).toHaveClassName('hidden');
   });
 });
