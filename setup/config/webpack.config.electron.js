@@ -1,12 +1,11 @@
 const { resolve } = require('path');
 const merge = require('webpack-merge');
 const baseConfig = require('./webpack.config');
-const reactConfig = require('./webpack.config.react');
 
 const config = {
   mode: 'production',
   entry: {
-    main: `${resolve(__dirname, '../../setup/react')}/main.js`,
+    main: `${resolve(__dirname, '../../app/src')}/main.js`,
   },
   output: {
     path: resolve(__dirname, '../../app/build'),
@@ -29,4 +28,4 @@ const config = {
   },
 };
 
-module.exports = merge(baseConfig, reactConfig, config);
+module.exports = merge(baseConfig, config);
