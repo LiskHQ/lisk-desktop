@@ -60,7 +60,9 @@ const TopBar = ({
       <div className={styles.group}>
         <LightDarkToggle />
         {!isUserLogout && <DiscreteModeToggle />}
-        <Network token={token.active} network={network} t={t} />
+        {location.pathname !== routes.register.path && (
+          <Network token={token.active} network={network} t={t} />
+        )}
         {!isUserLogout && <SignOut t={t} history={history} />}
       </div>
     </div>
