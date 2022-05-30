@@ -12,9 +12,9 @@ describe('packages/views/basics/timestamp', () => {
   });
 
   describe('<DateTimeFromTimestamp time={1499983200} />', () => {
-    it('renders "13 Jul 2017" if today is 2017-01-13', () => {
+    it('renders "14 Jul 2017" if today is 2017-01-14', () => {
       const wrapper = mount(<DateTimeFromTimestamp time={inputValue} />);
-      expect(wrapper).toHaveText('13 Jul 2017');
+      expect(wrapper).toHaveText('14 Jul 2017');
     });
   });
 });

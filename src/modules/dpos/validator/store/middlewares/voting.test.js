@@ -18,7 +18,7 @@ describe('voting middleware', () => {
     expect(store.dispatch).not.toHaveBeenCalled();
   });
 
-  describe('on accountLoggedOut action', () => {
+  /** describe('on accountLoggedOut action', () => {
     const givenAction = {
       type: walletActionTypes.accountLoggedOut,
     };
@@ -51,7 +51,7 @@ describe('voting middleware', () => {
       expect(next).toHaveBeenCalledWith(givenAction);
       expect(store.dispatch).toHaveBeenCalled();
     });
-  });
+  }); */
 
   describe('on accountUpdated action', () => {
     const givenAction = {

@@ -48,6 +48,7 @@ describe('Legacy middleware', () => {
   });
 
   describe('on accountUpdated', () => {
+    // @todo reclaim needs to be handle with account managment
     it('should not redirect to the reclaim screen if the account is migrated', async () => {
       const action = {
         type: walletActionTypes.accountLoggedIn,
