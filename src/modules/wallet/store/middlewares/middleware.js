@@ -75,9 +75,6 @@ const accountMiddleware = store => next => async (action) => {
     case blockActionTypes.newBlockCreated:
       await checkTransactionsAndUpdateAccount(store, action);
       break;
-    case actionTypes.accountLoggedOut:
-      store.dispatch(emptyTransactionsData());
-      break;
     case settingsActionTypes.settingsUpdated:
       if (action.data.token && store.getState().wallet.info) {
         store.dispatch(accountDataUpdated('enabled'));

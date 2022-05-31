@@ -4,7 +4,7 @@ import * as accountApi from '@wallet/utils/api';
 // import { extractKeyPair } from '@wallet/utils/account';
 // import { defaultDerivationPath } from 'src/utils/explicitBipKeyDerivation';
 import wallets from '@tests/constants/wallets';
-import { tokenMap } from '@token/fungible/consts/tokens';
+// import { tokenMap } from '@token/fungible/consts/tokens';
 import * as networkActions from '@network/store/action';
 import { accountDataUpdated } from '@wallet/store/action';
 import actionTypes from './actionTypes';
@@ -39,12 +39,12 @@ jest.mock('@wallet/utils/account', () => ({
   getUnlockableUnlockObjects: () => [{}],
 }));
 
-const network = {
+/** const network = {
   name: 'Mainnet',
   networks: {
     LSK: {},
   },
-};
+}; */
 
 describe('actions: account', () => {
   const dispatch = jest.fn();

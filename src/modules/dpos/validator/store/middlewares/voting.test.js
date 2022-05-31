@@ -1,5 +1,5 @@
 import walletActionTypes from '@wallet/store/actionTypes';
-import dposActionTypes from '../actions/actionTypes';
+// import dposActionTypes from '../actions/actionTypes';
 import middleware from './voting';
 
 describe('voting middleware', () => {
