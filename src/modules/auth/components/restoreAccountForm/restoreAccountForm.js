@@ -36,6 +36,7 @@ const RestoreAccountForm = ({ onSubmit, onBack }) => {
             className="confirmButton"
             size="l"
             onClick={onContinue}
+            disabled={!value || error}
           >
             {t('Continue')}
           </PrimaryButton>
