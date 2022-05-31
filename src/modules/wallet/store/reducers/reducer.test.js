@@ -42,7 +42,7 @@ describe('Reducer: account(state, action)', () => {
     };
     const changedWallet = wallet(state, action);
     expect(changedWallet).toEqual({ afterLogout: true });
-  }); */
+  });
 
   it('should return account object with changes if action.type = actionTypes.timerReset', () => {
     const action = {
@@ -54,7 +54,7 @@ describe('Reducer: account(state, action)', () => {
       ...state,
       expireTime: new Date('2021-02-09T15:47:25.880Z'),
     });
-  });
+  }); */
 
   /** it('should return loading account object if action.type = actionTypes.accountLoading', () => {
     const action = {

@@ -17,25 +17,7 @@ const account = (state = {}, action) => {
           ...action.data,
         },
       };
-    /** case actionTypes.accountLoggedIn:
-      return {
-        ...action.data,
-        expireTime: new Date(action.data.date.getTime() + accountConstants.lockDuration),
-        votes: state.votes,
-      };
-    case actionTypes.accountLoggedOut:
-      return {
-        afterLogout: true,
-      }; */
-    case actionTypes.timerReset:
-      return {
-        ...state,
-        expireTime: new Date(action.data.getTime() + accountConstants.lockDuration),
-      };
-    /** case actionTypes.accountLoading:
-      return {
-        loading: true,
-      }; */
+
     case actionTypes.secondPassphraseStored:
       return {
         ...state,

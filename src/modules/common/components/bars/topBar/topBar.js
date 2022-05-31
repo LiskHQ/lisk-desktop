@@ -1,10 +1,8 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
 import routes from 'src/routes/routes';
 import { isEmpty } from 'src/utils/helpers';
 import Icon from 'src/theme/Icon';
 import DialogLink from 'src/theme/dialog/link';
-import { PrimaryButton } from 'src/theme/buttons';
 import Tooltip from 'src/theme/Tooltip';
 import VoteQueueToggle from 'src/modules/common/components/bars/topBar/voteQueueToggle';
 import DiscreteModeToggle from 'src/modules/settings/components/discreteModeToggle';
