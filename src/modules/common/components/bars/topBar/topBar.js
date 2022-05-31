@@ -1,8 +1,10 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 import routes from '@screens/router/routes';
 import { isEmpty } from 'src/utils/helpers';
 import Icon from 'src/theme/Icon';
 import DialogLink from 'src/theme/dialog/link';
+import { PrimaryButton } from 'src/theme/buttons';
 import Tooltip from 'src/theme/Tooltip';
 import VoteQueueToggle from 'src/modules/common/components/bars/topBar/voteQueueToggle';
 import DiscreteModeToggle from 'src/modules/settings/components/discreteModeToggle';
@@ -63,6 +65,11 @@ const TopBar = ({
         {location.pathname !== routes.register.path && (
           <Network token={token.active} network={network} t={t} />
         )}
+        {isUserLogout && history.location.pathname !== routes.login.path ? (
+          <Link to={routes.login.path} className={styles.signIn}>
+            <PrimaryButton size="s">Sign in</PrimaryButton>
+          </Link>
+        ) : null}
         {!isUserLogout && <SignOut t={t} history={history} />}
       </div>
     </div>
