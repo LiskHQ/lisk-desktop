@@ -106,7 +106,9 @@
     text-align: left;
 
     & > label {
-      margin-bottom: 7px;
+      @mixin contentNormal;
+
+      margin-bottom: 10px;
       color: var(--color-maastricht-blue);
     }
   }
