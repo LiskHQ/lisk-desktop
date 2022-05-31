@@ -1,14 +1,21 @@
+/* istanbul ignore file */
 import { createContext } from 'react';
 
 const DelegateRowContext = createContext(
   {
-    data: {},
-    activeTab: '',
+    data: {
+      value: '',
+      state: 'forging',
+      status: 'active',
+      time: '',
+      totalVotesReceived: 0,
+    },
+    activeTab: 'active',
     watched: '',
     addToWatchList: () => {},
     removeFromWatchList: () => {},
     time: '',
-    theme: '',
+    theme: 'light',
     t: str => str,
   },
 );
