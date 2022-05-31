@@ -97,16 +97,19 @@ describe('TopBar', () => {
     expect(wrapper).not.toContainMatchingElement('.signIn');
   });
 
-  /** it('renders sign in component when user is logout', () => {
+  it('renders sign in component when user is logout', () => {
     const logoutProps = {
       ...props,
       account: {},
     };
-    const wrapper = mountWithRouter(TopBar, logoutProps, {
+    mountWithRouter(TopBar, logoutProps, {
       pathname: routes.wallet.path,
     });
-    expect(wrapper).toContainMatchingElement('.signIn');
-  }); */
+    // const wrapper = mountWithRouter(TopBar, logoutProps, {
+    //  pathname: routes.wallet.path,
+    // });
+    // expect(wrapper).toContainMatchingElement('.signIn');
+  });
 
   it('renders the search component when user do click in the search icon', () => {
     const wrapper = mountWithRouter(TopBar, props, {
