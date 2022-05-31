@@ -20,12 +20,9 @@ import styles from './login.css';
 
 const RegisterTitle = ({ t }) => (
   <div className={`${styles.titleHolder} ${grid['col-xs-10']}`}>
-    <h1>{t('Sign in with a Passphrase')}</h1>
+    <h1>{t('Add account')}</h1>
     <p>
-      {t('Don’t have a Lisk account yet? ')}
-      <Link className={styles.link} to={routes.register.path}>
-        {t('Create it now')}
-      </Link>
+      {t('Enter your secret recovery phrase to manage your account.')}
     </p>
   </div>
 );
@@ -103,7 +100,7 @@ const Login = ({
                 </fieldset>
               ) : null}
               <fieldset>
-                <label>{t('Passphrase')}</label>
+                <label>{t('Secret recovery phrase')}</label>
                 <PassphraseInput
                   inputsLength={12}
                   maxInputsLength={24}
