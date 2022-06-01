@@ -29,12 +29,6 @@ export default {
     exact: true,
     forbiddenTokens: [],
   },
-  dashboard: {
-    path: '/',
-    isPrivate: false,
-    forbiddenTokens: [],
-    exact: true,
-  },
   delegates: {
     path: '/delegates',
     exact: true,
@@ -107,6 +101,35 @@ export default {
     path: '/account/backup-recovery-phrase',
     isPrivate: true,
     forbiddenTokens: [],
+  },
+  accountSelect: {
+    path: '/account/manage',
+    isPrivate: false,
+    forbiddenTokens: [],
+  },
+  accountAdd: {
+    path: '/account/add',
+    isPrivate: false,
+    forbiddenTokens: [],
+    exact: true,
+  },
+  addAccountChoice: {
+    path: '/account/add/initiate',
+    isPrivate: false,
+    forbiddenTokens: [],
+    exact: true,
+  },
+  addAccountByFile: {
+    path: '/account/add/by-file',
+    isPrivate: false,
+    forbiddenTokens: [],
+    exact: true,
+  },
+  dashboard: {
+    path: '/',
+    isPrivate: false,
+    forbiddenTokens: [],
+    exact: true,
   },
 };
 
