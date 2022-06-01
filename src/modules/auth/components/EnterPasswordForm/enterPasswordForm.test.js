@@ -6,7 +6,7 @@ import EnterPasswordForm from '.';
 
 jest.mock('@account/utils/decryptAccount');
 
-describe('PassphraseBackup', () => {
+describe('EnterPasswordForm', () => {
   let wrapper;
   const props = {
     accountSchema: {
