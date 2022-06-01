@@ -2,7 +2,6 @@ import React, { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { PrimaryButton, TertiaryButton } from 'src/theme/buttons';
 import UploadJSONInput from 'src/modules/common/components/uploadJSONInput';
-import grid from 'flexboxgrid/dist/flexboxgrid.css';
 import styles from './restoreAccountForm.css';
 
 const RestoreAccountForm = ({ onBack, nextStep }) => {
@@ -20,11 +19,11 @@ const RestoreAccountForm = ({ onBack, nextStep }) => {
 
   return (
     <>
-      <div className={`${styles.titleHolder} ${grid['col-xs-10']}`}>
+      <div className={styles.titleHolder}>
         <h1>
           {t('Add account')}
         </h1>
-        <p className={styles.text}>{t('Restore your encrypted secret recovery phrase.')}</p>
+        <p>{t('Restore your encrypted secret recovery phrase.')}</p>
       </div>
       <div className={styles.fullWidth}>
         <UploadJSONInput
