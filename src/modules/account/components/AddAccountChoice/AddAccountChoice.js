@@ -34,7 +34,7 @@ const AccountAdd = ({ history }) => {
               <AddAccountFlowButon
                 text="Secret recovery phrase"
                 iconName="secretPassphrase"
-                onClick={() => history.push(routes.addAccountChoice.path)}
+                onClick={() => history.push(routes.accountAdd.path)}
               />
               <AddAccountFlowButon text="Restore from file" iconName="accountUpload" />
             </div>

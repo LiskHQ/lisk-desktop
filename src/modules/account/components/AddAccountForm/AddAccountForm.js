@@ -12,7 +12,7 @@ import styles from './AddAccountForm.css';
 
 const AddAccountForm = ({
   settings,
-  nextStep,
+  onAddAccount,
 }) => {
   const { t } = useTranslation();
   const [passphrase, setPass] = useState({ value: '', isValid: false });
@@ -27,7 +27,7 @@ const AddAccountForm = ({
   const onFormSubmit = (e) => {
     e.preventDefault();
     if (passphrase.value && passphrase.isValid) {
-      nextStep({ passphrase });
+      onAddAccount?.(passphrase);
     }
   };
 
