@@ -22,7 +22,6 @@ const EnterPasswordForm = ({ accountSchema, onEnterPasswordSuccess }) => {
       return setFeedbackError(decryptedAccount.error);
     }
 
-    console.log(setAccount);
     setAccount(decryptedAccount);
     return onEnterPasswordSuccess(decryptedAccount);
   };
