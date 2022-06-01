@@ -107,18 +107,6 @@ export default {
     isPrivate: false,
     forbiddenTokens: [],
   },
-  accountAdd: {
-    path: '/account/add',
-    isPrivate: false,
-    forbiddenTokens: [],
-    exact: true,
-  },
-  addAccountChoice: {
-    path: '/account/add/initiate',
-    isPrivate: false,
-    forbiddenTokens: [],
-    exact: true,
-  },
   addAccountByFile: {
     path: '/account/add/by-file',
     isPrivate: false,
