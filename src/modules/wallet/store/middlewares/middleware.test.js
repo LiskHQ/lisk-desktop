@@ -238,16 +238,6 @@ describe('Account middleware', () => {
     });
   });
 
-  /** describe('on accountLoggedOut', () => {
-    it('should clean up', () => {
-      const accountLoggedOutAction = {
-        type: walletActionTypes.accountLoggedOut,
-      };
-      middleware(store)(next)(accountLoggedOutAction);
-      expect(emptyTransactionsData).toHaveBeenCalled();
-    });
-  }); */
-
   describe('on accountSettingsUpdated', () => {
     it('Account Setting Update Sucessful', () => {
       const state = store.getState();

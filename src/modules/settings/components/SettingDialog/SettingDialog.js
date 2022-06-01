@@ -20,17 +20,7 @@ class SettingDialog extends React.Component {
 
     this.setCurrency = this.setCurrency.bind(this);
     this.handleCheckboxChange = this.handleCheckboxChange.bind(this);
-    // this.toggleAutoLog = this.toggleAutoLog.bind(this);
   }
-
-  /** toggleAutoLog({ target }) {
-    Piwik.trackingEvent('Settings', 'button', 'Toggle autoLog');
-    const { account, timerReset, settings } = this.props;
-    if (!settings.autolog && account.passphrase) {
-      timerReset();
-    }
-    this.handleCheckboxChange({ target });
-  } */
 
   setCurrency(currency) {
     const { settings } = this.props;
@@ -77,13 +67,6 @@ class SettingDialog extends React.Component {
             </section>
             <section className="security">
               <h2>{t('Security')}</h2>
-              {/** <label className={`${styles.fieldGroup} ${styles.checkboxField}`}>
-                <Toggle isCheckbox setting={settingsConst.keys.autoLog} />
-                <div>
-                  <span className={styles.labelName}>{t('Auto sign out')}</span>
-                  <p>{t('Sign out automatically after 10 minutes.')}</p>
-                </div>
-              </label> */}
               <label className={`${styles.fieldGroup} ${styles.checkboxField}`}>
                 <Toggle isCheckbox setting={settingsConst.keys.discreetMode} />
                 <div>

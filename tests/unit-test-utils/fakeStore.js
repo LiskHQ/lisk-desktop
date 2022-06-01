@@ -26,7 +26,6 @@ const defaultStore = {
     status: { online: true },
   },
   settings: {
-    // autoLog: true,
     advancedMode: true,
     areTermsOfUseAccepted: true,
   },

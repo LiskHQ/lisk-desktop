@@ -105,10 +105,6 @@ describe('TopBar', () => {
     mountWithRouter(TopBar, logoutProps, {
       pathname: routes.wallet.path,
     });
-    // const wrapper = mountWithRouter(TopBar, logoutProps, {
-    //  pathname: routes.wallet.path,
-    // });
-    // expect(wrapper).toContainMatchingElement('.signIn');
   });
 
   it('renders the search component when user do click in the search icon', () => {

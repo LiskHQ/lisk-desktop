@@ -1,9 +1,4 @@
-// import accounts from '@tests/constants/wallets';
-import {
-  validateUrl,
-  // shouldAutoLogIn,
-  addHttp,
-} from './login';
+import { validateUrl, addHttp } from './login';
 
 describe('Login', () => {
   describe('addHttp', () => {
@@ -46,11 +41,4 @@ describe('Login', () => {
       expect(data).toEqual(expectedData);
     });
   });
-
-  /** describe('shouldAutoLogIn', () => {
-    it('should check if loginKey is stored and it is not empty', () => {
-      expect(shouldAutoLogIn({ loginKey: '' })).toEqual(false);
-      expect(shouldAutoLogIn({ loginKey: accounts.genesis.passphrase })).toEqual(true);
-    });
-  }); */
 });

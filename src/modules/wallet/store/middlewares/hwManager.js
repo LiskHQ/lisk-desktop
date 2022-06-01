@@ -1,15 +1,15 @@
 import { toast } from 'react-toastify';
 import { subscribeToDeviceConnected, subscribeToDeviceDisconnected } from '@wallet/utils/hwManager';
 import { addSearchParamsToUrl } from 'src/utils/searchParams';
-// import { accountLoggedOut, login } from '@auth/store/action';
-/** import {
+import { accountLoggedOut, login } from '@auth/store/action';
+import {
   getDeviceList,
   getPublicKey,
-} from '@libs/hwManager/communication'; */
+} from '@libs/hwManager/communication';
 import history from 'src/utils/history';
 import actionTypes from 'src/modules/common/store/actionTypes';
 
-/** async function autoLogInIfNecessary(store) {
+async function autoLogInIfNecessary(store) {
   // not tested as it is just a development helper
   // istanbul ignore next
   if (localStorage.getItem('hwWalletAutoLogin')) {
@@ -27,13 +27,13 @@ import actionTypes from 'src/modules/common/store/actionTypes';
       }, 1000);
     }
   }
-} */
+}
 
 const hwWalletMiddleware = store => next => (action) => {
   const { ipc } = window;
 
   if (action.type === actionTypes.storeCreated && ipc) {
-    // autoLogInIfNecessary(store);
+    autoLogInIfNecessary(store);
 
     /**
      * subscribeToDeviceConnected - Function -> To detect any new hw wallet device connection
@@ -60,7 +60,7 @@ const hwWalletMiddleware = store => next => (action) => {
         && wallet.hwInfo.deviceModel === response.model
       ) {
         addSearchParamsToUrl(history, { modal: 'deviceDisconnectDialog', model: response.model });
-        // store.dispatch(accountLoggedOut());
+        store.dispatch(accountLoggedOut());
       }
 
       toast.error(`${response.model} disconnected`);

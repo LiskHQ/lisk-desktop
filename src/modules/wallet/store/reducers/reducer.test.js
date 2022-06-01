@@ -36,46 +36,6 @@ describe('Reducer: account(state, action)', () => {
     });
   });
 
-  /** it('should return empty_wallet object if action.type = actionTypes.accountLoggedOut', () => {
-    const action = {
-      type: actionTypes.accountLoggedOut,
-    };
-    const changedWallet = wallet(state, action);
-    expect(changedWallet).toEqual({ afterLogout: true });
-  });
-
-  it('should return account object with changes if action.type = actionTypes.timerReset', () => {
-    const action = {
-      type: actionTypes.timerReset,
-      data: new Date('2021-02-09T15:37:25.880Z'),
-    };
-    const changedWallet = wallet(state, action);
-    expect(changedWallet).toEqual({
-      ...state,
-      expireTime: new Date('2021-02-09T15:47:25.880Z'),
-    });
-  }); */
-
-  /** it('should return loading account object if action.type = actionTypes.accountLoading', () => {
-    const action = {
-      type: actionTypes.accountLoading,
-    };
-    const changedWallet = wallet(state, action);
-    expect(changedWallet).toEqual({ loading: true });
-  });
-
-  it('should reduce account when accountLoggedIn has been triggered', () => {
-    const action = {
-      data: {
-        delegate: wallets.delegate_candidate,
-        date: new Date(),
-      },
-      type: actionTypes.accountLoggedIn,
-    };
-    const accountWithDelegateUpdated = wallet(state, action);
-    expect(accountWithDelegateUpdated.delegate).toEqual(wallets.delegate_candidate);
-  }); */
-
   it('should store the second passphrase once called with secondPassphraseStored', () => {
     const action = {
       data: 'sample passphrase',
