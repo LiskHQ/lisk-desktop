@@ -22,6 +22,6 @@ const props = {
 describe('Latest votes', () => {
   it('displays initial table of votes', () => {
     const wrapper = mountWithRouter(LatestVotes, props);
-    expect(wrapper.find('.vote-row-wrapper')).toHaveLength(10);
+    expect(wrapper.find('.transaction-row-wrapper')).toHaveLength(10);
   });
 });
