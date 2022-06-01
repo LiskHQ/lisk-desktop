@@ -3,7 +3,7 @@ import {
   getPeers,
   getNetworkStatistics,
   getNetworkStatus,
-} from './lsk';
+} from './index';
 
 jest.mock('@common/utilities/api/http');
 

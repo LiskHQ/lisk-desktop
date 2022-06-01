@@ -7,12 +7,11 @@ import WalletVisual from '@wallet/components/walletVisual';
 
 import styles from './WalletInfo.css';
 
+// @todo removed token and network
 const WalletInfo = ({
   name = '',
   label,
   address,
-  token,
-  network,
   addressClass,
   className,
 }) => {
@@ -22,7 +21,7 @@ const WalletInfo = ({
       <p className={styles.label}>{label}</p>
       <div className={styles.addressRow}>
         <WalletVisual className={styles.avatar} address={address} size={25} />
-        { validateAddress(token, address, network) === 0
+        { validateAddress(address) === 0
           ? (
             <Link
               to={addressLink}

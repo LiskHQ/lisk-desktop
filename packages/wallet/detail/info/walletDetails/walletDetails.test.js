@@ -13,10 +13,6 @@ describe('WalletDetails', () => {
           balance: '100',
           token: 'LSK',
         },
-        BTC: {
-          balance: '20',
-          token: 'BTC',
-        },
       },
     },
     settings: {
@@ -24,7 +20,6 @@ describe('WalletDetails', () => {
         active: 'LSK',
         list: {
           LSK: true,
-          BTC: false,
         },
       },
     },

@@ -14,7 +14,7 @@ const mockTransaction = {
   optionalKeys: [],
 };
 
-jest.mock('@transaction/api/lsk', () => ({
+jest.mock('@transaction/api/index', () => ({
   create: jest.fn(() => Promise.resolve(mockTransaction)),
   computeTransactionId: jest.fn(() => mockTransaction.id),
 }));
@@ -41,7 +41,6 @@ describe('Multisignature summary component', () => {
     network: {
       networks: {
         LSK: { networkIdentifier: '01e47ba4e3e57981642150f4b45f64c2160c10bac9434339888210a4fa5df097' },
-        BTC: { networkIdentifier: '01e47ba4e3e57981642150f4b45f64c2160c10bac9434339888210a4fa5df097' },
       },
       name: 'customNode',
     },

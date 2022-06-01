@@ -4,7 +4,6 @@ import {
   extractPublicKey,
   extractPrivateKey,
   extractAddressFromPublicKey,
-  getActiveTokenAccount,
   calculateUnlockableBalance,
   getUnlockableUnlockObjects,
   calculateBalanceLockedInVotes,
@@ -60,29 +59,6 @@ describe('Utils: Account', () => {
   describe('extractAddressFromPassphrase', () => {
     it('should return the address corresponding to a passphrase', () => {
       expect(extractAddressFromPassphrase(passphrase)).toEqual(address);
-    });
-  });
-
-  describe('getActiveTokenAccount', () => {
-    it('should get account with active token info on the top level', () => {
-      const activeToken = 'BTC';
-      const wallet = {
-        info: {
-          BTC: {
-            address: 'btc address dummy',
-          },
-        },
-      };
-      const state = {
-        wallet,
-        token: {
-          active: activeToken,
-        },
-      };
-      expect(getActiveTokenAccount(state)).toStrictEqual({
-        ...wallet,
-        ...wallet.info[activeToken],
-      });
     });
   });
 

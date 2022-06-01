@@ -1,9 +1,9 @@
-import { create } from '@transaction/api/lsk';
+import { create } from '@transaction/api';
 import wallets from '@tests/constants/wallets';
 import actionTypes from '@transaction/store/actionTypes';
 import { balanceReclaimed } from './action';
 
-jest.mock('@transaction/api/lsk');
+jest.mock('@transaction/api/index');
 
 describe('actions: legacy', () => {
   const dispatch = jest.fn();

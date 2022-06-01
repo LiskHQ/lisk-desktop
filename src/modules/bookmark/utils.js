@@ -41,7 +41,7 @@ export const validateBookmarkLabel = (value = '', t) => {
 /**
  * Checks the address and returns feedback
  *
- * @param {String} token - LSK or BTC
+ * @param {String} token - LSK or any other token
  * @param {String} value - Address string
  * @param {Object} network - The network object from Redux store
  * @param {Object} bookmarks - Lisk of bookmarks from Redux store
@@ -50,7 +50,7 @@ export const validateBookmarkLabel = (value = '', t) => {
  * @returns {String} - Feedback string. Empty string if the address is valid (and unique)
  */
 export const validateBookmarkAddress = (token, value = '', network, bookmarks, t, isUnique) => {
-  if (validateAddress(token, value, network) === 1) {
+  if (validateAddress(value) === 1) {
     return t('Invalid address');
   }
   if (isUnique && getIndexOfBookmark(bookmarks, { address: value, token }) !== -1) {
@@ -64,7 +64,7 @@ export const validateBookmarkAddress = (token, value = '', network, bookmarks, t
  *
  * @param {Object} history - History object from withRouter
  * @param {Object} bookmarks - Lisk of bookmarks from Redux store
- * @param {String} active - LSK, BTC, etc
+ * @param {String} active - LSK, etc
  * @returns {String} - edit or add
  */
 export const getBookmarkMode = (history, bookmarks, active) => {

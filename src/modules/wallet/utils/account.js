@@ -1,7 +1,6 @@
 /* eslint-disable max-lines */
 import { passphrase as LiskPassphrase, cryptography } from '@liskhq/lisk-client';
 import { regex } from 'src/const/regex';
-import { tokenMap } from '@token/fungible/consts/tokens';
 import { getCustomDerivationKeyPair } from 'src/utils/explicitBipKeyDerivation';
 
 /**
@@ -131,33 +130,18 @@ export const getAddressFromBase32Address = (data) => {
 };
 
 /**
- * This is selector, getting active token account from the Redux store
- *
- * @todo this doesn't return active token, but a mix of entire account
- * @param {Object} state - Redux store state
- * @returns {Object} - account details or empty object
- */
-export const getActiveTokenAccount = state => ({
-  ...state.wallet,
-  ...((state.wallet.info && state.wallet.info[
-    state.token?.active
-      ? state.token.active
-      : tokenMap.LSK.key
-  ]) || {}),
-});
-
-/**
  * Returns a shorter version of a given address
  * by replacing characters by ellipsis except for
  * the first and last 3.
- * @param {String} address LSk or BTC address
+ * @param {String} address LSk address
  * @param {String?} size An option of small and medium
  * @returns {String} Truncated address
  */
-export const truncateAddress = (address, size = 'small') => {
+export const truncateAddress = (address, size) => {
+  const truncateOptions = ['small', 'medium'];
+  const selectedSize = truncateOptions.includes(size) ? size : truncateOptions[0];
   if (!address) return address;
-  const reg = size === 'small' ? regex.lskAddressTrunk : regex.btcAddressTrunk;
-  return address.replace(reg, '$1...$3');
+  return address.replace(regex.truncate[selectedSize], '$1...$3');
 };
 
 /**

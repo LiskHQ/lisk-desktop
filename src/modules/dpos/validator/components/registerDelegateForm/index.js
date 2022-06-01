@@ -1,10 +1,10 @@
 /* istanbul ignore file */
 import { connect } from 'react-redux';
-import { getActiveTokenAccount } from '@wallet/utils/account';
+import { selectActiveTokenAccount } from '@common/store';
 import Form from './form';
 
 const mapStateToProps = state => ({
-  account: getActiveTokenAccount(state),
+  account: selectActiveTokenAccount(state),
   network: state.network,
   signedTransaction: state.transactions.signedTransaction,
   txSignatureError: state.transactions.txSignatureError,

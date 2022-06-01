@@ -67,7 +67,7 @@ const VoteRow = ({ data, className, delegates }) => {
         />
       </span>
       <span className={grid['col-xs-3']}>
-        <DateTimeFromTimestamp time={data.block.timestamp * 1000} token="BTC" />
+        <DateTimeFromTimestamp time={data.block.timestamp} />
       </span>
       <span
         className={`${grid['col-lg-2']} ${gridVisibility['hidden-md']}  ${gridVisibility['hidden-sm']} ${gridVisibility['hidden-xs']}`}

@@ -2,12 +2,12 @@
 import { connect } from 'react-redux';
 import { withTranslation } from 'react-i18next';
 import { containsTransactionType } from '@transaction/utils/transaction';
-import { getActiveTokenAccount } from '@wallet/utils/account';
+import { selectActiveTokenAccount } from '@common/store';
 import { MODULE_ASSETS_NAME_ID_MAP } from '@transaction/configuration/moduleAssets';
 import Form from './form';
 
 const mapStateToProps = state => ({
-  account: getActiveTokenAccount(state),
+  account: selectActiveTokenAccount(state),
   network: state.network,
   votes: state.voting,
   isVotingTxPending: containsTransactionType(

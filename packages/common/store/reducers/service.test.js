@@ -15,7 +15,6 @@ describe('reducers: service', () => {
 
   it('should return updated state in case of actionTypes.pricesRetrieved', () => {
     const priceTicker = {
-      BTC: {},
       LSK: { USD: 1, EUR: 1 },
     };
 
@@ -29,7 +28,6 @@ describe('reducers: service', () => {
 
     expect(service(state, action)).toEqual({
       priceTicker: {
-        BTC: {},
         LSK: { EUR: 1, USD: 1 },
       },
     });

@@ -3,21 +3,24 @@ import { useSelector } from 'react-redux';
 import {
   calculateBalanceLockedInVotes,
   calculateUnlockableBalance,
-  getActiveTokenAccount,
   getUnlockableUnlockObjects,
 } from '@wallet/utils/account';
 import { MODULE_ASSETS_NAME_ID_MAP } from '@transaction/configuration/moduleAssets';
 import TransactionPriority from '@transaction/components/TransactionPriority';
 import useTransactionFeeCalculation from '@transaction/hooks/useTransactionFeeCalculation';
 import useTransactionPriority from '@transaction/hooks/useTransactionPriority';
-import { selectActiveToken, selectCurrentBlockHeight } from '@common/store/selectors';
+import {
+  selectActiveToken,
+  selectCurrentBlockHeight,
+  selectActiveTokenAccount,
+} from '@common/store';
 import Form from './unlockBalanceForm';
 import BalanceTable from './unlockBalanceTable';
 
 const moduleAssetId = MODULE_ASSETS_NAME_ID_MAP.unlockToken;
 
 const LockedBalance = (props) => {
-  const wallet = useSelector(getActiveTokenAccount);
+  const wallet = useSelector(selectActiveTokenAccount);
   const token = useSelector(selectActiveToken);
   const network = useSelector(state => state.network);
   const currentBlockHeight = useSelector(selectCurrentBlockHeight);
@@ -29,7 +32,7 @@ const LockedBalance = (props) => {
   const [
     selectedPriority, selectTransactionPriority,
     priorityOptions, prioritiesLoadError, loadingPriorities,
-  ] = useTransactionPriority(token);
+  ] = useTransactionPriority();
 
   const { fee, minFee } = useTransactionFeeCalculation({
     network,

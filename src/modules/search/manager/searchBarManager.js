@@ -24,8 +24,8 @@ export default compose(
   connect(mapStateToProps),
   withData({
     suggestions: {
-      apiUtil: (network, { token, ...params }) =>
-        search({ network, params }, token),
+      apiUtil: (network, params) =>
+        search({ network, params }),
       defaultData,
       transformResponse: res => ({ ...defaultData, ...res.data }),
     },
