@@ -1,6 +1,6 @@
 {
   "name": "Lisk",
-  "version": "2.3.0-rc.1",
+  "version": "3.0.0-debug.0",
   "author": "Lisk Foundation <admin@lisk.com>, lightcurve GmbH <admin@lightcurve.io>",
   "license": "GPL-3.0",
   "productName": "Lisk",
@@ -43,18 +43,7 @@
     "analyze:bundles": "webpack  --config ./setup/config/webpack.config.analyze",
     "copy:files": "cpx \"./setup/react/{index.html,assets/**/*}\" ./app/build/",
     "clean:build": "rm -rf app/build",
-    "clean:dist": "rm -rf dist",
-    "preinstall": "npx npm-force-resolutions"
-  },
-  "resolutions": {
-    "elliptic": "^6.5.4",
-    "validator": "^13.7.0",
-    "lodash": "^4.17.21",
-    "trim": "^0.0.3",
-    "glob-parent": "^5.1.2",
-    "node-fetch": "^2.6.7",
-    "braces": "^2.3.1",
-    "postcss": "8.4.12"
+    "clean:dist": "rm -rf dist"
   },
   "build": {
     "asar": true,
@@ -86,10 +75,10 @@
     "mac": {
       "hardenedRuntime": true,
       "gatekeeperAssess": false,
-      "entitlements": "scripts/build/entitlements.plist",
-      "entitlementsInherit": "scripts/build/entitlements.plist",
+      "entitlements": "build/entitlements.plist",
+      "entitlementsInherit": "build/entitlements.plist",
       "target": {
-        "target": "dmg",
+        "target": "default",
         "arch": [
           "arm64",
           "x64"
@@ -97,7 +86,7 @@
       }
     },
     "dmg": {
-      "background": "scripts/build/background@2x.png",
+      "background": "build/background@2x.png",
       "contents": [
         {
           "x": 584,
@@ -132,7 +121,6 @@
     "await-to-js": "2.1.1",
     "bignumber.js": "8.0.1",
     "bip32": "1.0.4",
-    "bitcoinjs-lib": "4.0.5",
     "bitcore-lib": "8.25.10",
     "bitcore-mnemonic": "8.25.25",
     "blake2b": "2.1.4",
@@ -164,9 +152,11 @@
     "lodash.throttle": "4.1.1",
     "lottie-web": "5.5.5",
     "moment": "2.23.0",
+    "node-abi": "3.8.0",
     "node-hid": "2.1.1",
     "numeral": "git+https://github.com/LiskHQ/Numeral-js.git",
     "path-browserify": "^1.0.1",
+    "postcss": "8.2.13",
     "prop-types": "15.7.2",
     "qrcode.react": "1.0.1",
     "react": "16.14.0",
@@ -188,7 +178,7 @@
     "react-waypoint": "9.0.3",
     "redux": "4.0.1",
     "redux-thunk": "2.3.0",
-    "socket.io-client": "4.4.1",
+    "socket.io-client": "2.2.0",
     "stream-browserify": "2.0.2",
     "trezor-connect": "8.1.26",
     "trezor.js": "9.3.4",
@@ -207,7 +197,7 @@
     "@percy/storybook": "3.3.1",
     "@storybook/addon-actions": "6.2.9",
     "@storybook/addon-links": "6.2.9",
-    "@storybook/react": "6.4.19",
+    "@storybook/react": "6.2.9",
     "@testing-library/dom": "8.13.0",
     "@testing-library/jest-dom": "5.16.4",
     "@testing-library/react": "12.1.2",
@@ -230,7 +220,7 @@
     "cypress-pipe": "2.0.0",
     "cypress-terminal-report": "3.4.1",
     "electron": "17.0.0",
-    "electron-builder": "22.12.0",
+    "electron-builder": "23.0.2",
     "electron-builder-notarize": "1.4.0",
     "electron-devtools-installer": "3.2.0",
     "electron-ipc-mock": "0.0.3",
@@ -257,19 +247,19 @@
     "jest-canvas-mock": "2.0.0",
     "jest-date-mock": "1.0.7",
     "jest-enzyme": "7.1.1",
-    "jest-junit": "13.0.0",
+    "jest-junit": "10.0.0",
     "jest-localstorage-mock": "2.3.0",
     "jest-watch-toggle-config": "1.0.2",
-    "jest-watch-typeahead": "1.0.0",
-    "mini-css-extract-plugin": "2.6.0",
+    "jest-watch-typeahead": "0.4.0",
+    "mini-css-extract-plugin": "1.3.9",
     "npm-run-all": "4.1.5",
-    "postcss-for": "2.1.1",
-    "postcss-functions": "4.0.2",
-    "postcss-loader": "7.0.0",
-    "postcss-mixins": "9.0.2",
-    "postcss-nesting": "10.1.7",
-    "postcss-partial-import": "4.1.0",
-    "postcss-preset-env": "7.6.0",
+    "postcss-for": "=2.1.1",
+    "postcss-functions": "3.0.0",
+    "postcss-loader": "3.0.0",
+    "postcss-mixins": "6.2.1",
+    "postcss-nesting": "7.0.0",
+    "postcss-partial-import": "=4.1.0",
+    "postcss-preset-env": "6.7.0",
     "react-hot-loader": "4.13.0",
     "redux-mock-store": "1.5.3",
     "sinon": "8.1.1",
@@ -283,6 +273,6 @@
     "webpack": "5.24.2",
     "webpack-bundle-analyzer": "3.3.2",
     "webpack-cli": "^4.2.0",
-    "webpack-dev-server": "4.7.4"
+    "webpack-dev-server": "3.11.2"
   }
 }

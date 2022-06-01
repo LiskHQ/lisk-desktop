@@ -11,7 +11,7 @@ import i18n from 'src/utils/i18n/i18n';
 import RequestWrapper from './requestWrapper';
 import styles from './request.css';
 
-class RequestLsk extends React.Component {
+class Request extends React.Component {
   constructor(props) {
     super();
 
@@ -175,4 +175,4 @@ class RequestLsk extends React.Component {
   }
 }
 
-export default RequestLsk;
+export default Request;

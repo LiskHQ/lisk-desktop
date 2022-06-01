@@ -8,6 +8,7 @@ import grid from 'flexboxgrid/dist/flexboxgrid.css';
 
 import withData from 'src/utils/withData';
 import { getTransactions } from '@transaction/api';
+import { selectActiveTokenAccount } from '@common/store';
 import FlashMessageHolder from 'src/theme/flashMessage/holder';
 import WarnPunishedDelegate from '@dpos/validator/components/WarnPunishedDelegate';
 import WalletInfo from '@wallet/components/walletInfo';
@@ -57,9 +58,8 @@ const Overview = ({
 
   const bookmark = useSelector((state) =>
     state.bookmarks[activeToken].find((item) => item.address === address));
-  const host = useSelector(
-    (state) => state?.wallet?.info[activeToken]?.summary?.address || '',
-  );
+  const wallet = useSelector(selectActiveTokenAccount);
+  const host = wallet.summary?.address ?? '';
 
   const showWarning = () => {
     if (
@@ -137,10 +137,7 @@ export default compose(
   withData({
     transactions: {
       apiUtil: (network, { token, ...params }) =>
-        getTransactions({ network, params }, token),
-      getApiParams: (state) => ({
-        token: state.token.active,
-      }),
+        getTransactions({ network, params }),
       defaultData: { data: [], meta: {} },
       autoload: false,
     },

@@ -66,7 +66,6 @@ const DetailsView = ({ t, data, lastBlockForged }) => {
                   fulltime
                   className="date"
                   time={lastBlockForged}
-                  token={tokenMap.LSK.key}
                 />
               ) : (
                 '-'

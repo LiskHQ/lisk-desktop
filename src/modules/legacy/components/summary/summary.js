@@ -16,7 +16,7 @@ const Summary = ({
 }) => {
   const [
     selectedPriority,, priorityOptions,
-  ] = useTransactionPriority(tokenMap.LSK.key);
+  ] = useTransactionPriority();
 
   const { minFee } = useTransactionFeeCalculation({
     network,

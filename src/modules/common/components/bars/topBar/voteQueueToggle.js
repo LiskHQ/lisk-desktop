@@ -10,7 +10,7 @@ import styles from 'src/modules/common/components/bars/topBar/topBar.css';
 const SignedInTip = ({ t }) => <p>{t('Voting queue')}</p>;
 
 const SignedOutTip = ({ t }) => (
-  <div className={styles.signedOutTip}>
+  <div className={`${styles.signedOutTip} sign-out-tip`}>
     <b>{t('Please sign in')}</b>
     <p>
       {t(

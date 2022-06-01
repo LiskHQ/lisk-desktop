@@ -11,7 +11,6 @@ import withData from 'src/utils/withData';
 import withFilters from 'src/utils/withFilters';
 import { DEFAULT_LIMIT } from 'src/utils/monitor';
 import { MODULE_ASSETS_NAME_ID_MAP } from '@transaction/configuration/moduleAssets';
-import { tokenMap } from '@token/fungible/consts/tokens';
 import Delegates from './delegates';
 
 const defaultUrlSearchParams = { search: '' };
@@ -79,7 +78,7 @@ const ComposedDelegates = compose(
 
     transactionsCount: {
       apiUtil: (network) =>
-        getTransactions({ network, params: { limit: 1 } }, tokenMap.LSK.key),
+        getTransactions({ network, params: { limit: 1 } }),
       defaultData: 0,
       autoload: true,
       transformResponse: (response) => response.meta.total,
@@ -87,12 +86,7 @@ const ComposedDelegates = compose(
 
     registrations: {
       apiUtil: (network) =>
-        getRegisteredDelegates(
-          {
-            network,
-          },
-          tokenMap.LSK.key,
-        ),
+        getRegisteredDelegates({ network }),
       defaultData: [],
       autoload: true,
     },
@@ -108,9 +102,7 @@ const ComposedDelegates = compose(
               sort: 'timestamp:desc',
             },
           },
-          tokenMap.LSK.key,
         ),
-      getApiParams: (state) => ({ token: state.token.active }),
       autoload: true,
       defaultData: [],
       transformResponse: mergeUniquelyById,

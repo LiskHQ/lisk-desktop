@@ -53,7 +53,7 @@ describe('Reclaim balance screen', () => {
   it('Should not display register delegate button', () => {
     const wrapper = mountWithRouterAndStore(
       ActionBar,
-      { ...props, activeToken: tokenMap.BTC.key, address: 'mnrutC4CgQhMos4f8HWYRy8rKQ3UisGwYJ' },
+      { ...props, activeToken: tokenMap.LSK.key, address: 'mnrutC4CgQhMos4f8HWYRy8rKQ3UisGwYJ' },
       {},
       { ...state, wallet: { info: { LSK: balanceAccount } } },
     );

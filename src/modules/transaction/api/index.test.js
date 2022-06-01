@@ -11,7 +11,7 @@ import {
   getTransactionStats,
   getSchemas,
   getTransactionFee, getRegisteredDelegates,
-} from './lsk';
+} from './index';
 
 const {
   transfer, voteDelegate, registerDelegate, registerMultisignatureGroup, unlockToken, reclaimLSK,

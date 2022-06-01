@@ -1,7 +1,6 @@
 import React from 'react';
 import { withTranslation } from 'react-i18next';
 import { Link } from 'react-router-dom';
-import grid from 'flexboxgrid/dist/flexboxgrid.css';
 import routes from '@screens/router/routes';
 import { PrimaryButton, TertiaryButton } from 'src/theme/buttons';
 import WalletVisual from '@wallet/components/walletVisual';
@@ -63,15 +62,13 @@ class ChooseAvatar extends React.Component {
 
     return (
       <>
-        <div className={`${registerStyles.titleHolder} ${grid['col-xs-10']}`}>
+        <div className={registerStyles.titleHolder}>
           <h1 className={styles.title}>{t('Choose your avatar')}</h1>
           <p>{t('This avatar will be linked to your new Lisk address.')}</p>
         </div>
         <div
           ref={this.setWrapperRef}
-          className={`${styles.avatarsHolder} ${grid['col-xs-10']}
-            ${selected.address ? styles.avatarSelected : ''}
-            choose-avatar`}
+          className={`${styles.avatarsHolder} ${selected.address ? styles.avatarSelected : ''} choose-avatar`}
         >
           {accounts.map((account, key) => (
             <span
@@ -87,7 +84,7 @@ class ChooseAvatar extends React.Component {
             </span>
           ))}
         </div>
-        <div className={`${registerStyles.buttonsHolder} ${grid.row}`}>
+        <div className={`${registerStyles.buttonsHolder} ${styles.buttons}`}>
           <Link
             className={`${registerStyles.button} ${registerStyles.backButton}`}
             to={routes.login.path}

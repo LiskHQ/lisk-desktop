@@ -7,6 +7,7 @@ import { withRouter } from 'react-router';
 import routesMap from '@screens/router/routesMap';
 import { modals } from '@screens/router/routes';
 import { parseSearchParams, removeSearchParamsFromUrl } from 'src/utils/searchParams';
+import { selectActiveToken, selectActiveTokenAccount } from '@common/store';
 import styles from './dialog.css';
 
 // eslint-disable-next-line max-statements
@@ -16,10 +17,9 @@ const DialogHolder = ({ history }) => {
     return routesMap[modal] ? modal : undefined;
   }, [history.location.search]);
 
-  const token = useSelector(state => state.token);
+  const activeToken = useSelector(selectActiveToken);
   const networkIsSet = useSelector(state => !!state.network.name);
-  const isAuthenticated = useSelector(state =>
-    (state.wallet.info && state.wallet.info[token.active]));
+  const account = useSelector(selectActiveTokenAccount);
 
   const backdropRef = useRef();
   const [dismissed, setDismissed] = useState(false);
@@ -39,7 +39,7 @@ const DialogHolder = ({ history }) => {
     return null;
   }
 
-  if (modals[modalName].forbiddenTokens.includes(token.active)) {
+  if (modals[modalName].forbiddenTokens.includes(activeToken)) {
     return null;
   }
 
@@ -47,7 +47,7 @@ const DialogHolder = ({ history }) => {
     return null;
   }
 
-  if (modals[modalName].isPrivate && !isAuthenticated) {
+  if (modals[modalName].isPrivate && !account.summary) {
     return null;
   }
 

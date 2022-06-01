@@ -9,7 +9,6 @@ describe('Middleware: Bookmarks', () => {
   const next = jest.fn();
   const bookmarks = {
     LSK: [],
-    BTC: [],
   };
   const store = {
     dispatch: jest.fn(),

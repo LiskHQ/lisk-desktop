@@ -1,7 +1,6 @@
 import React, { useState, useMemo } from 'react';
 import PropTypes from 'prop-types';
 import { MODULE_ASSETS_MAP } from '@transaction/configuration/moduleAssets';
-import { tokenMap } from '@token/fungible/consts/tokens';
 import {
   formatAmountBasedOnLocale,
 } from 'src/utils/formattedNumber';
@@ -24,10 +23,10 @@ const getFeeStatus = ({ fee, token, customFee }) => {
     : fee.feedback;
 };
 
-const getRelevantPriorityOptions = (options, token) =>
+const getRelevantPriorityOptions = (options) =>
   options.filter((_, index) =>
     index !== CUSTOM_FEE_INDEX
-  || (index === CUSTOM_FEE_INDEX && token === tokenMap.LSK.key));
+  || (index === CUSTOM_FEE_INDEX));
 
 const isCustomFeeValid = (value, maxFee, minFee) => {
   if (!value) return false;
@@ -59,10 +58,7 @@ const TransactionPriority = ({
   const [showEditIcon, setShowEditIcon] = useState(false);
   const [inputValue, setInputValue] = useState();
 
-  let maxFee = 0;
-  if (token === tokenMap.LSK.key) {
-    maxFee = MODULE_ASSETS_MAP[moduleAssetId].maxFee;
-  }
+  const maxFee = MODULE_ASSETS_MAP[moduleAssetId].maxFee;
 
   const onClickPriority = (e) => {
     e.preventDefault();
@@ -80,15 +76,11 @@ const TransactionPriority = ({
   const onInputChange = (e) => {
     e.preventDefault();
     const newValue = e.target.value;
-    if (token === tokenMap.LSK.key) {
-      setInputValue(newValue);
-      if (isCustomFeeValid(newValue, maxFee, minFee)) {
-        setCustomFee({ value: newValue, feedback: '', error: false });
-      } else {
-        setCustomFee({ value: undefined, feedback: 'invalid custom fee', error: true });
-      }
+    setInputValue(newValue);
+    if (isCustomFeeValid(newValue, maxFee, minFee)) {
+      setCustomFee({ value: newValue, feedback: '', error: false });
     } else {
-      setCustomFee(newValue);
+      setCustomFee({ value: undefined, feedback: 'invalid custom fee', error: true });
     }
   };
 
@@ -108,7 +100,7 @@ const TransactionPriority = ({
   };
 
   const tokenRelevantPriorities = useMemo(() =>
-    getRelevantPriorityOptions(priorityOptions, token),
+    getRelevantPriorityOptions(priorityOptions),
   [priorityOptions, token]);
 
   const isCustom = selectedPriority === CUSTOM_FEE_INDEX;

@@ -1,8 +1,6 @@
 import React from 'react';
 import { mount } from 'enzyme';
 import { tokenMap } from '@token/fungible/consts/tokens';
-import { toRawLsk } from '@token/fungible/utils/lsk';
-import { formatAmountBasedOnLocale } from 'src/utils/formattedNumber';
 import i18n from 'src/utils/i18n/i18n';
 import accounts from '@tests/constants/wallets';
 import Summary from './summary';
@@ -70,39 +68,5 @@ describe('Summary', () => {
     />);
     expect(wrapper.find('.recipient-value')).toIncludeText(props.fields.recipient.address);
     expect(wrapper.find('.recipient-value')).toIncludeText(title);
-  });
-
-  it('should show props.fields.fee.value and call props.nextStep with properties if props.token is not LSK', () => {
-    const txFee = 0.00012451;
-    const formattedTxFee = formatAmountBasedOnLocale({ value: txFee });
-    const newProps = { ...props };
-    newProps.token = 'BTC';
-    newProps.fields = {
-      ...props.fields,
-      reference: undefined,
-      fee: {
-        value: txFee,
-      },
-    };
-    newProps.transactions = {
-      pending: [],
-      failed: '',
-      signedTransaction: { fee: txFee },
-      txSignatureError: null,
-      txBroadcastError: null,
-    };
-    newProps.account = accounts.genesis;
-    wrapper = mount(<Summary {...newProps} />);
-    expect(wrapper.find('.fee-value')).toIncludeText(formattedTxFee);
-    wrapper.find('.confirm-button').at(0).simulate('click');
-    expect(props.nextStep).toHaveBeenCalledWith({
-      rawTransaction: {
-        amount: `${toRawLsk(props.fields.amount.value)}`,
-        recipientAddress: props.fields.recipient.address,
-        data: '',
-        fee: 12451,
-      },
-      actionFunction: props.transactionCreated,
-    });
   });
 });

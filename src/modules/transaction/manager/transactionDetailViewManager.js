@@ -5,10 +5,9 @@ import { connect } from 'react-redux';
 import { withRouter } from 'react-router-dom';
 import { withTranslation } from 'react-i18next';
 import grid from 'flexboxgrid/dist/flexboxgrid.css';
-import { getActiveTokenAccount } from '@wallet/utils/account';
+import { selectActiveTokenAccount, selectActiveToken } from '@common/store';
 import { getTransaction } from '@transaction/api';
 import Dialog from '@theme/dialog/dialog';
-import { selectActiveToken } from '@common/store';
 import withData from 'src/utils/withData';
 import { parseSearchParams } from 'src/utils/searchParams';
 import TransactionDetails from '../components/TransactionDetailsView';
@@ -20,7 +19,7 @@ const WrappedInDialog = (props) => (
 );
 
 const mapStateToProps = (state, ownProps) => ({
-  account: getActiveTokenAccount(state),
+  account: selectActiveTokenAccount(state),
   id: ownProps.match.params.id,
   activeToken: selectActiveToken(state),
 });
@@ -30,7 +29,6 @@ const apis = {
     apiUtil: (network, { token, transactionId }) =>
       getTransaction({ network, params: { transactionId } }, token),
     getApiParams: (state, ownProps) => ({
-      token: selectActiveToken(state),
       transactionId: parseSearchParams(ownProps.location.search).transactionId,
       network: state.network,
     }),

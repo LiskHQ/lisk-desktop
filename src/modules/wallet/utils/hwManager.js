@@ -21,7 +21,7 @@ const getAccountBundle = async (deviceId, network, offset) => {
     const publicKey = await getPublicKey({ index, deviceId });
     publicKeyList.push(publicKey);
   }
-  const accounts = await getAccounts({ network, params: { publicKeyList } }, 'LSK');
+  const accounts = await getAccounts({ network, params: { publicKeyList } });
   return accounts.data.filter(item => item.summary?.address);
 };
 

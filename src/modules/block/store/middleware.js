@@ -1,5 +1,4 @@
 import { blockSubscribe, blockUnsubscribe } from '@block/utils';
-import { tokenMap } from '@token/fungible/consts/tokens';
 import {
   olderBlocksRetrieved,
   forgersRetrieved,
@@ -7,8 +6,6 @@ import {
 } from '@common/store/actions';
 import networkActionTypes from '@network/store/actionTypes';
 import actionTypes from './actionTypes';
-
-const oneMinute = 1000 * 60;
 
 const generateOnDisconnect = dispatch => () => {
   dispatch(networkStatusUpdated({ online: false }));
@@ -24,13 +21,9 @@ const blockListener = ({ getState, dispatch }) => {
   blockUnsubscribe();
 
   const callback = (block) => {
-    const { token, network, blocks } = getState();
-    const activeToken = token && state.token.active;
-    const lastBtcUpdate = network.lastBtcUpdate || 0;
-    const now = new Date();
+    const { blocks } = getState();
 
-    if (activeToken === tokenMap.LSK.key
-      && block.data[0]?.height !== blocks.latestBlocks[0]?.height) {
+    if (block.data[0]?.height !== blocks.latestBlocks[0]?.height) {
       dispatch({
         type: actionTypes.newBlockCreated,
         data: {
@@ -38,12 +31,6 @@ const blockListener = ({ getState, dispatch }) => {
         },
       });
       dispatch(forgersRetrieved());
-    }
-    if (activeToken === tokenMap.BTC.key && (now - lastBtcUpdate > oneMinute)) {
-      dispatch({
-        type: actionTypes.lastBtcUpdateSet,
-        data: now,
-      });
     }
   };
 
