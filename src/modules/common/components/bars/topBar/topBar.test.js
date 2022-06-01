@@ -180,12 +180,4 @@ describe('TopBar', () => {
     wrapper.find('.search-toggle').first().simulate('click');
     expect(props.history.push).not.toHaveBeenCalled();
   });
-
-  it('Should display tooltip on voting queue', () => {
-    const wrapper = mountWithRouter(TopBar, {
-      ...props,
-      account: undefined,
-    });
-    expect(wrapper).toContainMatchingElement('.sign-out-tip');
-  });
 });
