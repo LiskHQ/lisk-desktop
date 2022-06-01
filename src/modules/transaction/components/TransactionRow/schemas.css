@@ -111,9 +111,15 @@
     & > * {
       height: 100%;
       display: flex;
-      justify-content: center;
+      justify-content: flex-start;
       align-items: center;
       flex: 0 0 auto;
+      flex-basis: 33.3333333%;
+      max-width: 33.3333333%;
+    }
+
+    & > *:last-child {
+      justify-content: flex-end !important;
     }
   }
 }
