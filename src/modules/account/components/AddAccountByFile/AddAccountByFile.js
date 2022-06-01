@@ -2,15 +2,12 @@
 import React from 'react';
 import { withRouter } from 'react-router';
 import routes from '@screens/router/routes';
-import { useAccounts } from '@account/hooks/useAccounts';
 import RestoreAccountForm from 'src/modules/auth/components/RestoreAccountForm';
 import EnterPasswordForm from 'src/modules/auth/components/EnterPasswordForm';
 import MultiStep from 'src/modules/common/components/OldMultiStep';
 import styles from './AddAccountByFile.css';
 
 const AddAccountByPassFile = ({ history }) => {
-  const [account, setAccount] = useAccounts();
-
   const onEnterPasswordSuccess = () => {
     history.push(routes.dashboard.path);
   };
@@ -20,8 +17,8 @@ const AddAccountByPassFile = ({ history }) => {
       key="add-account-file"
       className={styles.container}
     >
-      <RestoreAccountForm onSubmit={setAccount} onBack={history.goBack} />
-      <EnterPasswordForm accountSchema={account} onEnterPasswordSuccess={onEnterPasswordSuccess} />
+      <RestoreAccountForm onBack={history.goBack} />
+      <EnterPasswordForm onEnterPasswordSuccess={onEnterPasswordSuccess} />
     </MultiStep>
   );
 };

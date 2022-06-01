@@ -5,7 +5,7 @@ import UploadJSONInput from 'src/modules/common/components/uploadJSONInput';
 import grid from 'flexboxgrid/dist/flexboxgrid.css';
 import styles from './restoreAccountForm.css';
 
-const RestoreAccountForm = ({ onSubmit, onBack }) => {
+const RestoreAccountForm = ({ onBack, nextStep }) => {
   const { t } = useTranslation();
   const [value, setValue] = useState();
   const [error, setError] = useState();
@@ -14,9 +14,10 @@ const RestoreAccountForm = ({ onSubmit, onBack }) => {
     if (!value) {
       setError(t('Upload file is required'));
     } else {
-      onSubmit(value);
+      nextStep({ accountSchema: value });
     }
   };
+
   return (
     <>
       <div className={`${styles.titleHolder} ${grid['col-xs-10']}`}>
