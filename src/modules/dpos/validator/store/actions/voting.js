@@ -48,14 +48,14 @@ export const votesConfirmed = () => ({
  * @returns {Object} Pure action object
  */
 export const voteEdited = data => async (dispatch, getState) => {
-  const { network, token } = getState();
+  const { network } = getState();
   const normalizedVotes = await Promise.all(data.map(async (vote) => {
     if (vote.username) {
       return vote;
     }
     const wallet = (await getAccount({
       network, params: { address: vote.address },
-    }, token.active)) || {};
+    })) || {};
     const username = wallet.dpos?.delegate?.username ?? '';
 
     return { ...vote, username };
@@ -97,7 +97,7 @@ export const votesSubmitted = ({ fee, votes }) =>
         senderPublicKey: activeWallet.summary.publicKey,
         moduleAssetId: MODULE_ASSETS_NAME_ID_MAP.voteDelegate,
       },
-    }, tokenMap.LSK.key));
+    }));
 
     if (error) {
       dispatch({
@@ -173,7 +173,7 @@ export const balanceUnlocked = data => async (dispatch, getState) => {
           activeWallet.dpos?.unlocking, currentBlockHeight,
         ),
       },
-    }, tokenMap.LSK.key),
+    }),
   );
 
   //

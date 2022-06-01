@@ -18,7 +18,6 @@ import balance from '@setup/react/assets/images/icons/balance.svg';
 import balanceDark from '@setup/react/assets/images/icons/balance-dark.svg';
 import bookmarksIconEmptyState from '@setup/react/assets/images/icons/bookmarks-empty-state.svg';
 import bookmarksIconEmptyStateDark from '@setup/react/assets/images/icons/bookmarks-empty-state-dark.svg';
-import btcIcon from '@setup/react/assets/images/icons/icon-btc.svg';
 import checkboxFilled from '@setup/react/assets/images/icons/checkmark-filled.svg';
 import checkmark from '@setup/react/assets/images/icons/checkmark.svg';
 import copy from '@setup/react/assets/images/icons/copy.svg';
@@ -107,7 +106,6 @@ import verifyMessageActive from '@setup/react/assets/images/icons/verifyActive.s
 import qrCodeActive from '@setup/react/assets/images/icons/qr-code-active.svg';
 import bookmark from '@setup/react/assets/images/icons/icon-bookmark.svg';
 import bookmarkActive from '@setup/react/assets/images/icons/icon-bookmark-active.svg';
-import bitcoinLogo from '@setup/react/assets/images/bitcoin-logo.svg';
 import toggleSidebar from '@setup/react/assets/images/icons/toggle-sidebar.svg';
 import toggleSidebarActive from '@setup/react/assets/images/icons/toggle-sidebar-active.svg';
 import darkMode from '@setup/react/assets/images/icons/dark-mode.svg';
@@ -224,7 +222,6 @@ export const icons = {
   arrowRightCircle,
   balance,
   bookmarksIconEmptyState,
-  btcIcon,
   calendar,
   calendarDark,
   checkboxFilled,
@@ -329,7 +326,6 @@ export const icons = {
   newsFeedBlogDark,
   bookmark,
   bookmarkActive,
-  bitcoinLogo,
   toggleSidebar,
   toggleSidebarActive,
   darkMode,

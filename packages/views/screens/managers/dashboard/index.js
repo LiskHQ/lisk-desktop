@@ -2,7 +2,7 @@
 import { connect } from 'react-redux';
 import { withTranslation } from 'react-i18next';
 
-import { getActiveTokenAccount } from '@wallet/utils/account';
+import { selectActiveTokenAccount } from '@common/store';
 import { removeDuplicateTransactions } from '@transaction/utils';
 import Dashboard from './dashboard';
 
@@ -12,7 +12,7 @@ const mapStateToProps = state => ({
     state.transactions.confirmed,
   ),
   pendingTransactions: state.transactions.pending,
-  wallet: getActiveTokenAccount(state),
+  wallet: selectActiveTokenAccount(state),
   loading: state.loading.length > 0,
   settings: state.settings,
 });

@@ -156,7 +156,7 @@ const Editor = ({
     priorityOptions,
     prioritiesLoadError,
     loadingPriorities,
-  ] = useTransactionPriority(token);
+  ] = useTransactionPriority();
 
   const changedVotes = Object.keys(votes)
     .filter(

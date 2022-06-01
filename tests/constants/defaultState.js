@@ -7,12 +7,10 @@ export default {
       LSK: {
         ...wallets.genesis,
       },
-      BTC: {},
     },
   },
   bookmarks: {
     LSK: [],
-    BTC: [],
   },
   service: {
     priceTicker: {
@@ -27,7 +25,9 @@ export default {
   },
   token: {
     active: 'LSK',
-    list: [],
+    list: {
+      LSK: true,
+    },
   },
   network: {
     name: 'Testnet',

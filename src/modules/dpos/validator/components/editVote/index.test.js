@@ -15,7 +15,6 @@ describe('EditVote', () => {
       passphrase: 'test',
       info: {
         LSK: { summary: { address: genesis, balance: 10004674000 } },
-        BTC: { summary: { address: genesis, balance: 0 } },
       },
       summary: {
         address: 'lskdxc4ta5j43jp9ro3f8zqbxta9fn6jwzjucw7yt',

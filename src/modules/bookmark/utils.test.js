@@ -15,7 +15,6 @@ describe('Bookmarks', () => {
       title: 'some title',
       balance: 100000,
     }],
-    BTC: [],
   };
 
   beforeEach(() => {

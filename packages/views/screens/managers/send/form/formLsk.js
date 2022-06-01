@@ -26,7 +26,7 @@ const FormLsk = (props) => {
   const [
     selectedPriority, selectTransactionPriority,
     priorityOptions, prioritiesLoadError, loadingPriorities,
-  ] = useTransactionPriority(token);
+  ] = useTransactionPriority();
   const [reference, onReferenceChange] = useMessageField(getInitialValue('reference'));
   const [amount, setAmountField] = useAmountField(getInitialValue('amount'), account.summary?.balance ?? 0, token);
   const [recipient, setRecipientField] = useRecipientField(getInitialValue('recipient'));

@@ -34,7 +34,6 @@ describe('actions: boomarks', () => {
       getFromStorage.mockImplementation((_, __, cb) => {
         cb({
           LSK: [{}],
-          BTC: [],
         });
       });
 
@@ -47,7 +46,6 @@ describe('actions: boomarks', () => {
         type: actionTypes.bookmarksRetrieved,
         data: {
           LSK: [{ disabled: true }],
-          BTC: [],
         },
       });
     });

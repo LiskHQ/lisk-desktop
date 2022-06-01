@@ -13,9 +13,7 @@ const Confirmations = ({ t }) => {
     TransactionDetailsContext,
   );
 
-  const confirmations = activeToken === tokenMap.LSK.key
-    ? currentBlockHeight - transaction.height
-    : transaction.confirmations;
+  const confirmations = currentBlockHeight - transaction.height;
 
   return (
     <ValueAndLabel

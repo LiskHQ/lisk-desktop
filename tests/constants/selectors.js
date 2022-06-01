@@ -89,7 +89,6 @@ const ss = {
   logoutBtn: '.logoutBtn',
   userAccount: '.user-account',
   lskToken: '.token-selector-LSK',
-  btcToken: '.token-selector-BTC',
   emptyResultsMessage: '.empty-message',
   revealCheckbox: '.reveal-checkbox',
   passphraseTextarea: 'textarea.passphrase',

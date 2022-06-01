@@ -10,9 +10,6 @@ const getState = () => ({
         },
         sequence: { nonce: 0 },
       },
-      BTC: {
-        summary: { address: '16Qp9op3fTESTBTCACCOUNTv52ghRzYreUuQ' },
-      },
     },
     loginType: 0,
   },
@@ -164,6 +161,9 @@ const getState = () => ({
   settings: {},
   token: {
     active: 'LSK',
+    list: {
+      LSK: true,
+    },
   },
   blocks: {
     latestBlocks: [{

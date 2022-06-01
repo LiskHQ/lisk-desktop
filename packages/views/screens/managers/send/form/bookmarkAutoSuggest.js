@@ -30,14 +30,12 @@ class BookmarkAutoSuggest extends React.Component {
 
   validateBookmark() {
     const {
-      token, network, recipient, bookmarks, t,
+      recipient, bookmarks, t,
     } = this.props;
     const isValidBookmark = bookmarks
       .find(account => (account.title.toLowerCase() === recipient.value.toLowerCase())
           || account.address.toLowerCase() === recipient.value.toLowerCase()) || false;
-    const isValidAddress = validateAddress(
-      token, recipient.value, network,
-    ) === 0;
+    const isValidAddress = validateAddress(recipient.value) === 0;
     const isInvalid = !isValidBookmark && !isValidAddress && recipient.value;
 
     this.props.updateField({
@@ -105,9 +103,6 @@ BookmarkAutoSuggest.propTypes = {
     title: PropTypes.string.isRequired,
     address: PropTypes.string.isRequired,
   })).isRequired,
-  network: PropTypes.shape({
-    name: PropTypes.string.isRequired,
-  }).isRequired,
   recipient: PropTypes.shape({
     address: PropTypes.string.isRequired,
     error: PropTypes.bool.isRequired,
@@ -116,7 +111,6 @@ BookmarkAutoSuggest.propTypes = {
     value: PropTypes.string.isRequired,
   }).isRequired,
   t: PropTypes.func.isRequired,
-  token: PropTypes.string.isRequired,
   updateField: PropTypes.func.isRequired,
 };
 

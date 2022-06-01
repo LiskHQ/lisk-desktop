@@ -38,22 +38,10 @@ describe('BookmarksList', () => {
     );
   });
 
-  it('should render BTC bookmakrs ONLY', () => {
-    wrapper.setProps({
-      token: {
-        active: 'BTC',
-      },
-    });
-    wrapper.update();
-    expect(wrapper).toContainMatchingElement('.bookmark-list-container');
-    expect(wrapper).toContainMatchingElements(1, 'a.bookmark-list-row');
-  });
-
   it('should render EmptyState', () => {
     wrapper.setProps({
       bookmarks: {
         LSK: [],
-        BTC: [],
       },
     });
     wrapper.update();

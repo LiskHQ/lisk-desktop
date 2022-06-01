@@ -13,7 +13,7 @@ import LockedBalance from './index';
 jest.mock('@transaction/hooks/useTransactionPriority');
 jest.mock('@transaction/hooks/useTransactionFeeCalculation');
 jest.mock('@transaction/api');
-jest.mock('@wallet/store/action', () => ({
+jest.mock('@dpos/validator/store/actions/voting', () => ({
   balanceUnlocked: jest.fn(),
 }));
 jest.mock('@transaction/utils/hwManager');
@@ -72,9 +72,10 @@ describe('Unlock LSK modal', () => {
       },
     },
     settings: {
-      token: {
-        active: tokenMap.LSK.key,
-      },
+    },
+    token: {
+      active: tokenMap.LSK.key,
+      list: { LSK: true },
     },
     blocks: {
       latestBlocks: [{ height: currentBlockHeight }],
