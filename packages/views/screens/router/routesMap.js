@@ -34,7 +34,6 @@ import SignMultiSig from '@wallet/manager/signMultisigManager';
 import MultisigAccountDetails from '@wallet/manager/multisigAccountDetailsManager';
 import AccountSelect from '@account/components/AccountSelect';
 import AddAccountByFile from '@account/components/AddAccountByFile';
-import SetPasswordForm from '@auth/components/SetPasswordForm';
 
 export default {
   wallet: AccountDetails,
@@ -74,5 +73,4 @@ export default {
   signMultiSignTransaction: SignMultiSig,
   accountSelect: AccountSelect,
   addAccountByFile: AddAccountByFile,
-  setPassword: SetPasswordForm,
 };
