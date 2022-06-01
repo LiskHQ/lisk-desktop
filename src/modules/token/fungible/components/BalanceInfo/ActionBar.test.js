@@ -5,6 +5,7 @@ import ActionBar from './ActionBar';
 
 describe('Reclaim balance screen', () => {
   const hostAddress = 'lskmjr8hrnhzc6j653eto5fbh2p3kwdpa9ccdnhk6';
+  const explorerAddress = 'lskc7ofju4nvnshg6349otmcssme9q87wrpf8umws';
   const props = {
     username: undefined,
     address: hostAddress,
@@ -46,6 +47,27 @@ describe('Reclaim balance screen', () => {
 
     expect(html).toContain('open-send-dialog');
     expect(html).toContain('register-delegate');
+    expect(html).not.toContain('open-add-vote-dialog');
+  });
+
+  it('Should not display register delegate button', () => {
+    const wrapper = mountWithRouterAndStore(
+      ActionBar,
+      { ...props, activeToken: tokenMap.LSK.key, address: 'mnrutC4CgQhMos4f8HWYRy8rKQ3UisGwYJ' },
+      {},
+      { ...state, wallet: { info: { LSK: balanceAccount } } },
+    );
+    let html = wrapper.html();
+
+    expect(html).toContain('open-send-dialog');
+    expect(html).not.toContain('register-delegate');
+    expect(html).not.toContain('open-add-vote-dialog');
+
+    wrapper.setProps({ address: explorerAddress });
+    html = wrapper.html();
+
+    expect(html).toContain('open-send-dialog');
+    expect(html).not.toContain('register-delegate');
     expect(html).not.toContain('open-add-vote-dialog');
   });
 

@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useMemo } from 'react';
 import { useSelector } from 'react-redux';
 import grid from 'flexboxgrid/dist/flexboxgrid.css';
 
@@ -16,11 +16,36 @@ import Members from '../multisignatureMembers';
 
 import styles from './styles.css';
 
+const emptyKeys = {
+  numberOfSignatures: 1,
+  optionalKeys: [],
+  mandatoryKeys: [],
+};
+
 const MultisigAccountDetails = ({ t, wallet, history }) => {
   const hostAccount = useSelector(selectActiveTokenAccount);
   const network = useSelector(selectNetwork);
   const isHost = history.location.pathname === routes.wallet.path;
   const data = isHost ? hostAccount : wallet.data;
+  const { numberOfSignatures, optionalKeys, mandatoryKeys } = data.keys || emptyKeys;
+
+  const members = useMemo(
+    () =>
+      optionalKeys
+        .map((publicKey) => ({
+          address: extractAddressFromPublicKey(publicKey),
+          publicKey,
+          mandatory: false,
+        }))
+        .concat(
+          mandatoryKeys.map((publicKey) => ({
+            address: extractAddressFromPublicKey(publicKey),
+            publicKey,
+            mandatory: true,
+          })),
+        ),
+    [numberOfSignatures, optionalKeys, mandatoryKeys],
+  );
 
   useEffect(() => {
     if (!isHost) {
@@ -31,25 +56,6 @@ const MultisigAccountDetails = ({ t, wallet, history }) => {
       wallet.loadData({ address });
     }
   }, [network]);
-
-  if (Object.keys(data).length === 0) {
-    return null;
-  }
-  const { numberOfSignatures, optionalKeys, mandatoryKeys } = data.keys;
-
-  const members = optionalKeys
-    .map((publicKey) => ({
-      address: extractAddressFromPublicKey(publicKey),
-      publicKey,
-      mandatory: false,
-    }))
-    .concat(
-      mandatoryKeys.map((publicKey) => ({
-        address: extractAddressFromPublicKey(publicKey),
-        publicKey,
-        mandatory: true,
-      })),
-    );
 
   return (
     <Dialog

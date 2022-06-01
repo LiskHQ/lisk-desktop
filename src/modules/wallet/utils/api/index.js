@@ -1,16 +1,14 @@
 import { regex } from 'src/const/regex';
 import { tokenMap } from '@token/fungible/consts/tokens';
-import { HTTP_CODES } from 'src/const/httpCodes';
+import { HTTP_CODES, HTTP_PREFIX } from 'src/const/httpCodes';
 import http from '@common/utilities/api/http';
 import ws from '@common/utilities/api/ws';
 import { isEmpty } from 'src/utils/helpers';
 import { extractAddressFromPublicKey, extractPublicKey } from '@wallet/utils/account';
 
-const httpPrefix = '/api/v2';
-
 const httpPaths = {
-  account: `${httpPrefix}/accounts`,
-  accounts: `${httpPrefix}/accounts`,
+  account: `${HTTP_PREFIX}/accounts`,
+  accounts: `${HTTP_PREFIX}/accounts`,
 };
 
 const wsMethods = {

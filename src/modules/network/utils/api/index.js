@@ -1,12 +1,11 @@
 import networks, { networkKeys } from '@network/configuration/networks';
 import http from '@common/utilities/api/http';
-
-const httpPrefix = '/api/v2';
+import { HTTP_PREFIX } from 'src/const/httpCodes';
 
 const httpPaths = {
-  peers: `${httpPrefix}/peers`,
-  networkStatus: `${httpPrefix}/network/status`,
-  networkStatistics: `${httpPrefix}/network/statistics`,
+  peers: `${HTTP_PREFIX}/peers`,
+  networkStatus: `${HTTP_PREFIX}/network/status`,
+  networkStatistics: `${HTTP_PREFIX}/network/statistics`,
 };
 
 /**

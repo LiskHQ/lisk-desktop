@@ -15,19 +15,18 @@ import { fromRawLsk } from '@token/fungible/utils/lsk';
 import { validateAddress } from 'src/utils/validators';
 import http from '@common/utilities/api/http';
 import { getDelegates } from '@dpos/validator/api';
+import { HTTP_PREFIX } from 'src/const/httpCodes';
 import {
   createTransactionObject,
   sign,
 } from '../utils';
 
-const httpPrefix = '/api/v2';
-
 const httpPaths = {
-  fees: `${httpPrefix}/fees`,
-  transactions: `${httpPrefix}/transactions`,
-  transaction: `${httpPrefix}/transactions`,
-  transactionStats: `${httpPrefix}/transactions/statistics`,
-  schemas: `${httpPrefix}/transactions/schemas`,
+  fees: `${HTTP_PREFIX}/fees`,
+  transactions: `${HTTP_PREFIX}/transactions`,
+  transaction: `${HTTP_PREFIX}/transactions`,
+  transactionStats: `${HTTP_PREFIX}/transactions/statistics`,
+  schemas: `${HTTP_PREFIX}/transactions/schemas`,
 };
 
 /**
