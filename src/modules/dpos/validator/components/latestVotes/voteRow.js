@@ -26,7 +26,7 @@ const VotesItemsList = ({ votes = [], delegates }) => {
                   address={delegateAddress}
                   title={
                     delegates[delegateAddress]
-                    && delegates[delegateAddress].username
+                    && delegates[delegateAddress].summary?.username
                   }
                   truncate
                 />
@@ -53,33 +53,35 @@ const VotesItemsList = ({ votes = [], delegates }) => {
 const VoteRow = ({ data, className, delegates }) => {
   const { votes } = data.asset;
   return (
-    <DialogLink
-      className={`${grid.row} ${className} ${styles.tableRow} vote-row`}
-      component="transactionDetails"
-      data={{ transactionId: data.id, token: 'LSK' }}
-    >
-      <span className={grid['col-xs-4']}>
-        <WalletVisualWithAddress
-          address={data.sender.address}
-          transactionSubject="senderId"
-          transactionType={3}
-          showBookmarkedAddress
-        />
-      </span>
-      <span className={grid['col-xs-3']}>
-        <DateTimeFromTimestamp time={data.block.timestamp * 1000} token="BTC" />
-      </span>
-      <span
-        className={`${grid['col-lg-2']} ${gridVisibility['hidden-md']}  ${gridVisibility['hidden-sm']} ${gridVisibility['hidden-xs']}`}
+    <div className="vote-row-wrapper">
+      <DialogLink
+        className={`${grid.row} ${className} ${styles.tableRow} vote-row`}
+        component="transactionDetails"
+        data={{ transactionId: data.id, token: 'LSK' }}
       >
-        <span>{Math.ceil(data.height / 101)}</span>
-      </span>
-      <span
-        className={`${grid['col-xs-5']} ${grid['col-lg-3']} ${styles.votesColumn}`}
-      >
-        <VotesItemsList votes={votes} delegates={delegates} />
-      </span>
-    </DialogLink>
+        <span className={grid['col-xs-4']}>
+          <WalletVisualWithAddress
+            address={data.sender.address}
+            transactionSubject="senderId"
+            transactionType={3}
+            showBookmarkedAddress
+          />
+        </span>
+        <span className={grid['col-xs-3']}>
+          <DateTimeFromTimestamp time={data.block.timestamp * 1000} token="BTC" />
+        </span>
+        <span
+          className={`${grid['col-lg-2']} ${gridVisibility['hidden-md']}  ${gridVisibility['hidden-sm']} ${gridVisibility['hidden-xs']}`}
+        >
+          <span>{Math.ceil(data.height / 101)}</span>
+        </span>
+        <span
+          className={`${grid['col-xs-5']} ${grid['col-lg-3']} ${styles.votesColumn}`}
+        >
+          <VotesItemsList votes={votes} delegates={delegates} />
+        </span>
+      </DialogLink>
+    </div>
   );
 };
 

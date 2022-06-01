@@ -182,8 +182,8 @@ const generateVotes = (asset, delegates, token, t) => {
     >
       <Link to={`${routes.wallet.path}?address=${vote.delegateAddress}`}>
         <span className={styles.primaryText}>
-          {delegates[vote.delegateAddress]
-            || truncateAddress(vote.delegateAddress)}
+          {delegates[vote.delegateAddress]?.dpos.delegate.username
+            ?? truncateAddress(vote.delegateAddress)}
         </span>
       </Link>
       <span className={`${styles.value} vote-item-value`}>

@@ -104,4 +104,16 @@
       justify-content: flex-end;
     }
   }
+
+  &.vote {
+    grid-template-areas: "sender date assets";
+
+    & > * {
+      height: 100%;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      flex: 0 0 auto;
+    }
+  }
 }

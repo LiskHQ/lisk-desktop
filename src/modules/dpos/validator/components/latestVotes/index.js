@@ -1,6 +1,6 @@
 import React from 'react';
 import Table from 'src/theme/table';
-import VoteRow from './voteRow';
+import TransactionRow from '@transaction/components/TransactionRow';
 import header from './tableHeader';
 
 const LatestVotes = ({ votes, t, delegates }) => {
@@ -14,10 +14,12 @@ const LatestVotes = ({ votes, t, delegates }) => {
     <Table
       data={votes.data}
       isLoading={votes.isLoading}
-      row={VoteRow}
+      row={TransactionRow}
       additionalRowProps={{
         t,
         delegates: delegates.data,
+        layout: 'vote',
+        activeToken: 'LSK',
       }}
       header={header(t)}
       loadData={handleLoadMore}

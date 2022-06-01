@@ -1,6 +1,6 @@
 /* eslint-disable complexity */
 /* eslint-disable no-nested-ternary */
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 
 import { Input } from 'src/theme';
 import Box from 'src/theme/box';
@@ -8,7 +8,7 @@ import BoxHeader from 'src/theme/box/header';
 import BoxContent from 'src/theme/box/content';
 import BoxTabs from 'src/theme/tabs';
 import { ROUND_LENGTH } from '@dpos/validator/consts';
-import styles from './delegates.css';
+import DelegateTabContext from '../../context/delegateTabContext';
 import DelegatesOverview from '../overview/delegatesOverview';
 import ForgingDetails from '../overview/forgingDetails';
 import LatestVotes from '../latestVotes';
@@ -17,6 +17,7 @@ import ActiveDelegatesTab from '../activeDelegatesTab';
 import StandByDelegatesTab from '../standByDelegatesTab';
 import SanctionedDelegatesTab from '../sanctionedDelegatesTab';
 import WatchedDelegatesTab from '../watchedDelegatesTab';
+import styles from './delegates.css';
 
 // eslint-disable-next-line max-statements
 const DelegatesMonitor = ({
@@ -119,6 +120,14 @@ const DelegatesMonitor = ({
     });
   }
 
+  const displayTab = useCallback((tab) => {
+    if (tab === 'active') return <ActiveDelegatesTab />;
+    if (tab === 'standby') return <StandByDelegatesTab />;
+    if (tab === 'sanctioned') return <SanctionedDelegatesTab />;
+    if (tab === 'watched') return <WatchedDelegatesTab />;
+    return <DelegatesTable />;
+  }, [activeTab]);
+
   return (
     <div>
       <DelegatesOverview
@@ -155,55 +164,23 @@ const DelegatesMonitor = ({
         <BoxContent className={`${styles.content} delegate-box`}>
           {activeTab === 'votes' ? (
             <LatestVotes votes={votes} t={t} delegates={votedDelegates} />
-          ) : activeTab === 'active' ? (
-            <ActiveDelegatesTab
-              blocks={blocks}
-              delegatesWithForgingTimes={delegatesWithForgingTimes}
-              watchList={watchList}
-              filters={filters}
-              t={t}
-              activeTab={activeTab}
-            />
-          ) : activeTab === 'standby' ? (
-            <StandByDelegatesTab
-              blocks={blocks}
-              standByDelegates={standByDelegates}
-              watchList={watchList}
-              filters={filters}
-              t={t}
-              activeTab={activeTab}
-            />
-          ) : activeTab === 'sanctioned' ? (
-            <SanctionedDelegatesTab
-              blocks={blocks}
-              sanctionedDelegates={sanctionedDelegates}
-              watchList={watchList}
-              filters={filters}
-              t={t}
-              activeTab={activeTab}
-            />
-          ) : activeTab === 'watched' ? (
-            <WatchedDelegatesTab
-              blocks={blocks}
-              watchedDelegates={watchedDelegates}
-              watchList={watchList}
-              filters={filters}
-              t={t}
-              activeTab={activeTab}
-            />
           ) : (
-            <DelegatesTable
-              setActiveTab={setActiveTab}
-              delegates={delegatesWithForgingTimes}
-              blocks={blocks}
-              watchList={watchList}
-              watchedDelegates={watchedDelegates}
-              standByDelegates={standByDelegates}
-              sanctionedDelegates={sanctionedDelegates}
-              filters={filters}
-              t={t}
-              activeTab={activeTab}
-            />
+            <DelegateTabContext.Provider
+              value={{
+                blocks,
+                delegatesWithForgingTimes,
+                watchList,
+                filters,
+                t,
+                activeTab,
+                setActiveTab,
+                watchedDelegates,
+                standByDelegates,
+                sanctionedDelegates,
+              }}
+            >
+              {displayTab(activeTab)}
+            </DelegateTabContext.Provider>
           )}
         </BoxContent>
       </Box>

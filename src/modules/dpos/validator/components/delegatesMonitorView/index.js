@@ -141,7 +141,7 @@ const ComposedDelegates = compose(
       transformResponse: (response) => {
         const transformedResponse = mergeUniquelyByUsername(response);
         const responseMap = transformedResponse.reduce((acc, delegate) => {
-          acc[delegate.summary?.address] = delegate;
+          acc[delegate.summary.address] = delegate;
           return acc;
         }, {});
         return responseMap;
