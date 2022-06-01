@@ -36,6 +36,7 @@ import ManageAccounts from '@account/components/ManageAccounts';
 import AddAccountOptions from '@account/components/AddAccountOptions';
 import AddAccountBySecretRecovery from 'src/modules/account/components/AddAccountBySecretRecovery';
 import AddAccountForm from '@account/components/AddAccountForm';
+import BackupAccount from '@account/components/BackupAccount';
 
 export default {
   wallet: AccountDetails,
@@ -77,4 +78,5 @@ export default {
   addAccountOptions: AddAccountOptions,
   accountAdd: AddAccountForm,
   addAccountBySecretRecovery: AddAccountBySecretRecovery,
+  backupAccount: BackupAccount,
 };

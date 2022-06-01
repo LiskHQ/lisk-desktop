@@ -13,7 +13,7 @@ export const ACCOUNT_MENU = [
     label: 'Switch account',
   },
   {
-    path: routes.login.backupAccount,
+    path: routes.backupAccount.path,
     icon: 'refresh',
     label: 'Backup account',
   },

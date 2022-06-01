@@ -103,6 +103,12 @@ export default {
     exact: false,
     forbiddenTokens: [],
   },
+  backupAccount: {
+    path: '/backup-account',
+    isPrivate: false,
+    forbiddenTokens: [],
+    exact: true,
+  },
 };
 
 export const modals = {
