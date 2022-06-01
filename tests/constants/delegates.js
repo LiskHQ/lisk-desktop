@@ -16,4 +16,16 @@ const delegate = index => ({
 
 const delegates = Array(101).fill(1).map((item, index) => delegate(index));
 
+const generateDelegate = (index) => ({
+  [`lskdwsyfmcko6mcd357446yatromr9vzgu7eb8y1${index}`]: {
+    summary: {
+      address: `lskdwsyfmcko6mcd357446yatromr9vzgu7eb8y1${index}`,
+      username: `testUsername_${index}`,
+    },
+  },
+});
+
+export const delegateList = (delegateCount = 0) =>
+  Array(delegateCount).fill(1).map((_, index) => generateDelegate(index));
+
 export default delegates;
