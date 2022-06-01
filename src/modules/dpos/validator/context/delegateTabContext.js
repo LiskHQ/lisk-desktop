@@ -12,6 +12,7 @@ const DelegateTabContext = createContext(
     sanctionedDelegates: [],
     watchedDelegates: [],
     activeTab: '',
+    setActiveTab: () => {},
   },
 );
 
