@@ -1,6 +1,5 @@
 import React, { useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import useDecryptionAccount from '@account/hooks/useDecryptionAccount';
 import { PrimaryButton, TertiaryButton } from 'src/theme/buttons';
 import UploadJSONInput from 'src/modules/common/components/uploadJSONInput';
 import grid from 'flexboxgrid/dist/flexboxgrid.css';
@@ -10,12 +9,12 @@ const RestoreAccountForm = ({ onSubmit, onBack }) => {
   const { t } = useTranslation();
   const [value, setValue] = useState();
   const [error, setError] = useState();
+
   const onContinue = () => {
     if (!value) {
       setError(t('Upload file is required'));
     } else {
-      const decryptedAccount = useDecryptionAccount(value, password);
-      onSubmit(decryptedAccount);
+      onSubmit(value);
     }
   };
   return (
