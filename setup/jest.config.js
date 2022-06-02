@@ -5,12 +5,11 @@ module.exports = {
   rootDir: '../',
   modulePaths: ['src/modules'],
   testMatch: [
-    '<rootDir>/src/**/AddAccountChoice.test.js',
-    // '<rootDir>/src/**/*.test.js',
-    // '<rootDir>/app/src/**/*.test.js',
-    // '<rootDir>/setup/**/*.test.js',
-    // '<rootDir>/tests/**/*.test.js',
-    // '<rootDir>/libs/**/*.test.js',
+    '<rootDir>/src/**/*.test.js',
+    '<rootDir>/app/src/**/*.test.js',
+    '<rootDir>/setup/**/*.test.js',
+    '<rootDir>/tests/**/*.test.js',
+    '<rootDir>/libs/**/*.test.js',
   ],
   testPathIgnorePatterns: [
     '<rootDir>/test/integration/wallet.test.js',
