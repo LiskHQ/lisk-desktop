@@ -1,47 +1,38 @@
 /* istanbul ignore file */
-import React from 'react';
+import React, { useMemo } from 'react';
+import { filterDelegates } from '../../utils';
 import TableWrapper from './TableWrapper';
-import { selectDelegates, shouldAllowLoadMore } from '../../utils';
 
 const DelegatesTable = ({
   setActiveTab,
   delegates,
   watchList,
-  watchedDelegates,
-  standByDelegates,
-  sanctionedDelegates,
+  hasLoadMore,
   activeTab,
   changeSort,
   blocks,
   filters,
   sort,
-  t,
 }) => {
-  const delegatesToShow = selectDelegates({
-    activeTab,
-    delegates,
-    standByDelegates,
-    sanctionedDelegates,
-    watchedDelegates,
-    filters,
-    watchList,
-  });
-
-  const canLoadMore = shouldAllowLoadMore(
-    activeTab,
-    standByDelegates,
-    sanctionedDelegates,
-  );
+  const { delegatesFilter, canLoadMore, currentOffset } = useMemo(() => {
+    const { offset: defaultOffset, count, total } = delegates?.meta || {};
+    const offset = defaultOffset + count;
+    return {
+      delegatesFilter: filterDelegates(delegates, filters),
+      canLoadMore: hasLoadMore && (offset < total),
+      currentOffset: offset,
+    };
+  }, [delegates, filters]);
 
   const handleLoadMore = () => {
-    delegatesToShow.loadData(
+    delegatesFilter.loadData(
       Object.keys(filters).reduce(
         (acc, key) => ({
           ...acc,
           ...(filters[key] && { [key]: filters[key] }),
         }),
         {
-          offset: delegatesToShow.meta.count + delegatesToShow.meta.offset,
+          offset: currentOffset,
         },
       ),
     );
@@ -49,12 +40,11 @@ const DelegatesTable = ({
 
   return (
     <TableWrapper
-      delegates={delegatesToShow}
+      delegates={delegatesFilter}
       blocks={blocks}
       setActiveTab={setActiveTab}
       watchList={watchList}
       handleLoadMore={handleLoadMore}
-      t={t}
       activeTab={activeTab}
       changeSort={changeSort}
       sort={sort}

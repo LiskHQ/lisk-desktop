@@ -9,11 +9,8 @@ import BoxTabs from 'src/theme/tabs';
 import { ROUND_LENGTH } from '@dpos/validator/consts';
 import DelegatesOverview from '../overview/delegatesOverview';
 import ForgingDetails from '../overview/forgingDetails';
+import DelegatesTable from '../delegatesTable';
 import LatestVotes from '../latestVotes';
-import ActiveDelegatesTab from '../activeDelegatesTab';
-import StandByDelegatesTab from '../standByDelegatesTab';
-import SanctionedDelegatesTab from '../sanctionedDelegatesTab';
-import WatchedDelegatesTab from '../watchedDelegatesTab';
 import styles from './delegates.css';
 
 // eslint-disable-next-line max-statements
@@ -121,11 +118,16 @@ const DelegatesMonitor = ({
     blocks, filters, watchList, activeTab,
   };
 
+  const watchedFilters = {
+    search: filters.search || '',
+    address: watchList,
+  };
+
   const displayTab = (tab) => {
-    if (tab === 'active') return <ActiveDelegatesTab {...commonProps} delegates={delegatesWithForgingTimes} />;
-    if (tab === 'standby') return <StandByDelegatesTab {...commonProps} standByDelegates={standByDelegates} />;
-    if (tab === 'sanctioned') return <SanctionedDelegatesTab {...commonProps} sanctionedDelegates={sanctionedDelegates} />;
-    if (tab === 'watched') return <WatchedDelegatesTab {...commonProps} watchList={watchList} setActiveTab={setActiveTab} />;
+    if (tab === 'active') return <DelegatesTable {...commonProps} delegates={delegatesWithForgingTimes} />;
+    if (tab === 'standby') return <DelegatesTable {...commonProps} delegates={standByDelegates} hasLoadMore />;
+    if (tab === 'sanctioned') return <DelegatesTable {...commonProps} delegates={sanctionedDelegates} hasLoadMore />;
+    if (tab === 'watched') return <DelegatesTable {...commonProps} delegates={watchedDelegates} filters={watchedFilters} setActiveTab={setActiveTab} />;
     if (tab === 'votes') return <LatestVotes votes={votes} delegates={votedDelegates} />;
     return null;
   };
