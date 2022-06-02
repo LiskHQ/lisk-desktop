@@ -5,10 +5,10 @@ import { withRouter } from 'react-router';
 import grid from 'flexboxgrid/dist/flexboxgrid.css';
 import Icon from 'src/theme/Icon';
 import routes from '@views/screens/router/routes';
-import styles from './AddAccountChoice.css';
+import styles from './AddAccountOptions.css';
 
-const AddAccountFlowButon = ({ iconName, text, onClick }) => (
-  <button data-testid={iconName} onClick={onClick} className={styles.addAccountFlowBtnWrapper}>
+const AddAccountOptionButton = ({ iconName, text, onClick }) => (
+  <button data-testid={iconName} onClick={onClick} className={styles.addAccountOptionBtnWrapper}>
     <div>
       <Icon name={iconName} />
     </div>
@@ -16,7 +16,7 @@ const AddAccountFlowButon = ({ iconName, text, onClick }) => (
   </button>
 );
 
-const AccountAdd = ({ history }) => {
+const AddAccountOptions = ({ history }) => {
   const { t } = useTranslation();
 
   return (
@@ -31,12 +31,12 @@ const AccountAdd = ({ history }) => {
               {t('Select the applicable mode.')}
             </p>
             <div className={styles.selectRowWrapper}>
-              <AddAccountFlowButon
+              <AddAccountOptionButton
                 text="Secret recovery phrase"
                 iconName="secretPassphrase"
-                onClick={() => history.push(routes.accountAddByPassphrase.path)}
+                onClick={() => history.push(routes.addAccountBySecretRecovery.path)}
               />
-              <AddAccountFlowButon text="Restore from file" iconName="accountUpload" />
+              <AddAccountOptionButton text="Restore from file" iconName="accountUpload" />
             </div>
             <p>
               {t('Don’t have a Lisk account yet?')}
@@ -50,4 +50,4 @@ const AccountAdd = ({ history }) => {
   );
 };
 
-export default withRouter(AccountAdd);
+export default withRouter(AddAccountOptions);

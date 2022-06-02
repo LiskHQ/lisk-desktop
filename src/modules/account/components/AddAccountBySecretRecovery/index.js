@@ -1,7 +1,7 @@
 /* istanbul ignore file */
 import { connect } from 'react-redux';
 import { login } from '@auth/store/action';
-import AddAccountByPassPhrase from './AddAccountByPassPhrase';
+import AddAccountBySecretRecovery from './AddAccountBySecretRecovery';
 
 const mapDispatchToProps = {
   login,
@@ -10,4 +10,4 @@ const mapDispatchToProps = {
 export default connect(
   null,
   mapDispatchToProps,
-)(AddAccountByPassPhrase);
+)(AddAccountBySecretRecovery);

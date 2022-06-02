@@ -5,7 +5,7 @@ import { downloadJSON, transactionToJSON } from '@transaction/utils';
 import Box from 'src/theme/box';
 import BoxContent from 'src/theme/box/content';
 import Icon from 'src/theme/Icon';
-import styles from './setPasswordSuccess.css';
+import styles from './SetPasswordSuccess.css';
 
 function SetPasswordSuccess({ onClose, encryptedPhrase }) {
   const { t } = useTranslation();
@@ -36,6 +36,7 @@ function SetPasswordSuccess({ onClose, encryptedPhrase }) {
           >
             {t('Download')}
           </TertiaryButton>
+          <Icon name="downloadBlue" />
         </div>
         <PrimaryButton className={styles.continueButton} onClick={onContinue}>
           {t('Continue to Dashboard')}

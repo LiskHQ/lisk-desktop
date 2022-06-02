@@ -74,7 +74,7 @@ const AddAccountForm = ({
             </PrimaryButton>
             <Link
               className={`${styles.backLink} signin-hwWallet-button`}
-              to={routes.addAccountChoice.path}
+              to={routes.addAccountOptions.path}
             >
               {t('Go Back')}
             </Link>

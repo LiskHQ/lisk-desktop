@@ -1,7 +1,7 @@
 import { screen } from '@testing-library/react';
 import mockSavedAccounts from '@tests/fixtures/accounts';
 import { renderWithRouter } from 'src/utils/testHelpers';
-import AddAccountChoice from './AddAccountChoice';
+import AddAccountOptions from './AddAccountOptions';
 
 jest.mock('react-i18next');
 jest.mock('../../hooks/useAccounts', () => ({
@@ -13,7 +13,7 @@ const props = {
 };
 
 beforeEach(() => {
-  renderWithRouter(AddAccountChoice, props);
+  renderWithRouter(AddAccountOptions, props);
 });
 
 describe('Add Account Choice', () => {

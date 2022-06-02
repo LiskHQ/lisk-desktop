@@ -1,1 +1,1 @@
-export { default } from './setPasswordSuccess';
+export { default } from './SetPasswordSuccess';

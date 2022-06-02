@@ -9,7 +9,7 @@ import Input from 'src/theme/Input';
 import { PrimaryButton } from 'src/theme/buttons';
 import CheckBox from 'src/theme/CheckBox';
 import Tooltip from 'src/theme/Tooltip';
-import styles from './SetPasswordFormField.css';
+import styles from './SetPasswordForm.css';
 
 const setPasswordFormSchema = yup.object({
   password: yup.string().required()

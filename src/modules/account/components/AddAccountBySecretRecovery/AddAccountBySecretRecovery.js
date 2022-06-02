@@ -4,11 +4,11 @@ import { withRouter } from 'react-router';
 import grid from 'flexboxgrid/dist/flexboxgrid.css';
 import SetPasswordForm from 'src/modules/auth/components/SetPasswordForm/SetPasswordForm';
 import MultiStep from 'src/modules/common/components/MultiStep';
-import SetPasswordSuccess from '@auth/components/setPasswordSuccess';
+import SetPasswordSuccess from 'src/modules/auth/components/SetPasswordSuccess';
 import AddAccountForm from '../AddAccountForm';
-import styles from './AddAccountByPassPhrase.css';
+import styles from './AddAccountBySecretRecovery.css';
 
-const AddAccountByPassPhrase = ({ history, login }) => {
+const AddAccountBySecretRecovery = ({ history, login }) => {
   const multiStepRef = useRef(null);
   const [passphrase, setPassphrase] = useState(null);
   const [encryptedPassphrase] = useState(null);
@@ -46,4 +46,4 @@ const AddAccountByPassPhrase = ({ history, login }) => {
   );
 };
 
-export default withRouter(AddAccountByPassPhrase);
+export default withRouter(AddAccountBySecretRecovery);

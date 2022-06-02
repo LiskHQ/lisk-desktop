@@ -33,8 +33,8 @@ import RegisterMultisig from '@wallet/manager/registerMultisigManager';
 import SignMultiSig from '@wallet/manager/signMultisigManager';
 import MultisigAccountDetails from '@wallet/manager/multisigAccountDetailsManager';
 import ManageAccounts from '@account/components/ManageAccounts';
-import AddAccountChoice from '@account/components/AddAccountChoice';
-import AddAccountByPassPhrase from '@account/components/AddAccountByPassPhrase';
+import AddAccountOptions from '@account/components/AddAccountOptions';
+import AddAccountBySecretRecovery from 'src/modules/account/components/AddAccountBySecretRecovery';
 import AddAccountForm from '@account/components/AddAccountForm';
 
 export default {
@@ -74,7 +74,7 @@ export default {
   multisigAccountDetails: MultisigAccountDetails,
   signMultiSignTransaction: SignMultiSig,
   manageAccounts: ManageAccounts,
-  addAccountChoice: AddAccountChoice,
+  addAccountOptions: AddAccountOptions,
   accountAdd: AddAccountForm,
-  accountAddByPassphrase: AddAccountByPassPhrase,
+  addAccountBySecretRecovery: AddAccountBySecretRecovery,
 };

@@ -3,7 +3,7 @@ import {
 } from '@testing-library/react';
 import mockSavedAccounts from '@tests/fixtures/accounts';
 import { renderWithRouter } from 'src/utils/testHelpers';
-import AddAccountByPassPhrase from './AddAccountByPassPhrase';
+import AddAccountByPassPhrase from './AddAccountBySecretRecovery';
 
 jest.mock('react-i18next');
 jest.mock('../../hooks/useAccounts', () => ({
