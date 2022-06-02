@@ -1,12 +1,11 @@
-/* istanbul ignore file */
-import React, { useContext } from 'react';
-import DelegateTabContext from '../../context/delegateTabContext';
+import React from 'react';
+import { useTranslation } from 'react-i18next';
 import DelegatesTable from '../delegatesTable';
 
-const WatchedDelegatesTab = () => {
-  const {
-    blocks, watchedDelegates, filters, watchList, t, activeTab, setActiveTab,
-  } = useContext(DelegateTabContext);
+const WatchedDelegatesTab = ({
+  blocks, watchedDelegates, filters, watchList, activeTab, setActiveTab,
+}) => {
+  const { t } = useTranslation();
   return (
     <DelegatesTable
       blocks={blocks}

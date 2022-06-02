@@ -1,11 +1,11 @@
-import React, { useContext } from 'react';
-import DelegateTabContext from '../../context/delegateTabContext';
+import React from 'react';
+import { useTranslation } from 'react-i18next';
 import DelegatesTable from '../delegatesTable';
 
-const StandByDelegatesTab = () => {
-  const {
-    blocks, standByDelegates, filters, watchList, t, activeTab,
-  } = useContext(DelegateTabContext);
+const StandByDelegatesTab = ({
+  blocks, standByDelegates, filters, watchList, activeTab,
+}) => {
+  const { t } = useTranslation();
   return (
     <DelegatesTable
       blocks={blocks}

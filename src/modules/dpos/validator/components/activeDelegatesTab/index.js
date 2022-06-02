@@ -1,15 +1,15 @@
-import React, { useContext } from 'react';
-import DelegateTabContext from '../../context/delegateTabContext';
+import React from 'react';
+import { useTranslation } from 'react-i18next';
 import DelegatesTable from '../delegatesTable';
 
-const ActiveDelegatesTab = () => {
-  const {
-    blocks, delegatesWithForgingTimes, filters, watchList, t, activeTab,
-  } = useContext(DelegateTabContext);
+const ActiveDelegatesTab = ({
+  blocks, delegates, filters, watchList, activeTab,
+}) => {
+  const { t } = useTranslation();
   return (
     <DelegatesTable
       blocks={blocks}
-      delegates={delegatesWithForgingTimes}
+      delegates={delegates}
       filters={filters}
       watchList={watchList}
       t={t}

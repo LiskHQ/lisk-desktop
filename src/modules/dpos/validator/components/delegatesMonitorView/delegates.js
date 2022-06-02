@@ -1,5 +1,5 @@
 /* eslint-disable complexity */
-import React, { useState, useEffect, useCallback } from 'react';
+import React, { useState, useEffect } from 'react';
 
 import { Input } from 'src/theme';
 import Box from 'src/theme/box';
@@ -7,7 +7,6 @@ import BoxHeader from 'src/theme/box/header';
 import BoxContent from 'src/theme/box/content';
 import BoxTabs from 'src/theme/tabs';
 import { ROUND_LENGTH } from '@dpos/validator/consts';
-import DelegateTabContext from '../../context/delegateTabContext';
 import DelegatesOverview from '../overview/delegatesOverview';
 import ForgingDetails from '../overview/forgingDetails';
 import LatestVotes from '../latestVotes';
@@ -118,13 +117,18 @@ const DelegatesMonitor = ({
     });
   }
 
-  const displayTab = useCallback((tab) => {
-    if (tab === 'active') return <ActiveDelegatesTab />;
-    if (tab === 'standby') return <StandByDelegatesTab />;
-    if (tab === 'sanctioned') return <SanctionedDelegatesTab />;
-    if (tab === 'watched') return <WatchedDelegatesTab />;
+  const commonProps = {
+    blocks, filters, watchList, activeTab,
+  };
+
+  const displayTab = (tab) => {
+    if (tab === 'active') return <ActiveDelegatesTab {...commonProps} delegates={delegatesWithForgingTimes} />;
+    if (tab === 'standby') return <StandByDelegatesTab {...commonProps} standByDelegates={standByDelegates} />;
+    if (tab === 'sanctioned') return <SanctionedDelegatesTab {...commonProps} sanctionedDelegates={sanctionedDelegates} />;
+    if (tab === 'watched') return <WatchedDelegatesTab {...commonProps} watchList={watchList} setActiveTab={setActiveTab} />;
+    if (tab === 'votes') return <LatestVotes votes={votes} delegates={votedDelegates} />;
     return null;
-  }, [activeTab]);
+  };
 
   return (
     <div>
@@ -160,26 +164,7 @@ const DelegatesMonitor = ({
           </span>
         </BoxHeader>
         <BoxContent className={`${styles.content} delegate-box`}>
-          {activeTab === 'votes' ? (
-            <LatestVotes votes={votes} t={t} delegates={votedDelegates} />
-          ) : (
-            <DelegateTabContext.Provider
-              value={{
-                blocks,
-                delegatesWithForgingTimes,
-                watchList,
-                filters,
-                t,
-                activeTab,
-                setActiveTab,
-                watchedDelegates,
-                standByDelegates,
-                sanctionedDelegates,
-              }}
-            >
-              {displayTab(activeTab)}
-            </DelegateTabContext.Provider>
-          )}
+          {displayTab(activeTab)}
         </BoxContent>
       </Box>
     </div>

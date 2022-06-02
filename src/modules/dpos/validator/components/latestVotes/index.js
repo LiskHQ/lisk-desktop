@@ -1,9 +1,11 @@
 import React from 'react';
+import { useTranslation } from 'react-i18next';
 import Table from 'src/theme/table';
 import TransactionRow from '@transaction/components/TransactionRow';
 import header from './tableHeader';
 
-const LatestVotes = ({ votes, t, delegates }) => {
+const LatestVotes = ({ votes, delegates }) => {
+  const { t } = useTranslation();
   const canLoadMore = votes.meta ? votes.data.length < votes.meta.total : false;
 
   const handleLoadMore = () => {

@@ -1,11 +1,11 @@
-import React, { useContext } from 'react';
-import DelegateTabContext from '../../context/delegateTabContext';
+import React from 'react';
+import { useTranslation } from 'react-i18next';
 import DelegatesTable from '../delegatesTable';
 
-const SanctionedDelegatesTab = () => {
-  const {
-    blocks, sanctionedDelegates, filters, watchList, t, activeTab,
-  } = useContext(DelegateTabContext);
+const SanctionedDelegatesTab = ({
+  blocks, sanctionedDelegates, filters, watchList, activeTab,
+}) => {
+  const { t } = useTranslation();
   return (
     <DelegatesTable
       blocks={blocks}
