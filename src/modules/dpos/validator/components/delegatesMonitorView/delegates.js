@@ -11,7 +11,6 @@ import DelegateTabContext from '../../context/delegateTabContext';
 import DelegatesOverview from '../overview/delegatesOverview';
 import ForgingDetails from '../overview/forgingDetails';
 import LatestVotes from '../latestVotes';
-import DelegatesTable from '../delegatesTable';
 import ActiveDelegatesTab from '../activeDelegatesTab';
 import StandByDelegatesTab from '../standByDelegatesTab';
 import SanctionedDelegatesTab from '../sanctionedDelegatesTab';
@@ -124,7 +123,7 @@ const DelegatesMonitor = ({
     if (tab === 'standby') return <StandByDelegatesTab />;
     if (tab === 'sanctioned') return <SanctionedDelegatesTab />;
     if (tab === 'watched') return <WatchedDelegatesTab />;
-    return <DelegatesTable />;
+    return null;
   }, [activeTab]);
 
   return (
