@@ -1,5 +1,10 @@
 import React from 'react';
-import { createEvent, fireEvent, render, screen } from '@testing-library/react';
+import {
+  createEvent,
+  fireEvent,
+  render,
+  screen,
+} from '@testing-library/react';
 import AddAccountForm from '.';
 
 jest.mock('react-i18next');
