@@ -3,7 +3,7 @@ import {
   fireEvent, render, screen,
 } from '@testing-library/react';
 import mockSavedAccounts from '@tests/fixtures/accounts';
-import AccountSelect from './AccountSelect';
+import AccountSelect from './ManageAccounts';
 
 jest.mock('react-i18next');
 jest.mock('../../hooks/useAccounts', () => ({

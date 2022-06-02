@@ -80,7 +80,7 @@ export default {
     isPrivate: true,
     forbiddenTokens: [],
   },
-  accountSelect: {
+  manageAccounts: {
     path: '/account/manage',
     isPrivate: false,
     forbiddenTokens: [],

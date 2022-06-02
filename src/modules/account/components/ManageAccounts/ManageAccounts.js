@@ -5,7 +5,7 @@ import grid from 'flexboxgrid/dist/flexboxgrid.css';
 import { OutlineButton } from 'src/theme/buttons';
 import Icon from 'src/theme/Icon';
 import { useAccounts } from '../../hooks/useAccounts';
-import styles from './AccountSelect.css';
+import styles from './ManageAccounts.css';
 import AccountRow from '../AccountRow';
 
 const AccountSelect = ({ onSelectAccount, onAddAccount, onRemoveAccount }) => {

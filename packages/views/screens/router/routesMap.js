@@ -32,7 +32,7 @@ import ReclaimBalanceModal from '@legacy/manager/reclaimBalanceModal';
 import RegisterMultisig from '@wallet/manager/registerMultisigManager';
 import SignMultiSig from '@wallet/manager/signMultisigManager';
 import MultisigAccountDetails from '@wallet/manager/multisigAccountDetailsManager';
-import AccountSelect from '@account/components/AccountSelect';
+import ManageAccounts from '@account/components/ManageAccounts';
 import AddAccountChoice from '@account/components/AddAccountChoice';
 import AddAccountByPassPhrase from '@account/components/AddAccountByPassPhrase';
 import AddAccountForm from '@account/components/AddAccountForm';
@@ -73,7 +73,7 @@ export default {
   multiSignature: RegisterMultisig,
   multisigAccountDetails: MultisigAccountDetails,
   signMultiSignTransaction: SignMultiSig,
-  accountSelect: AccountSelect,
+  manageAccounts: ManageAccounts,
   addAccountChoice: AddAccountChoice,
   accountAdd: AddAccountForm,
   accountAddByPassphrase: AddAccountByPassPhrase,
