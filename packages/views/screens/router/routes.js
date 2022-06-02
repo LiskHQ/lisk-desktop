@@ -85,7 +85,7 @@ export default {
     isPrivate: false,
     forbiddenTokens: [],
   },
-  accountAdd: {
+  accountAddByPassphrase: {
     path: '/account/add/secrete-recovery',
     isPrivate: false,
     forbiddenTokens: [],
@@ -93,12 +93,6 @@ export default {
   },
   addAccountChoice: {
     path: '/account/add/initiate',
-    isPrivate: false,
-    forbiddenTokens: [],
-    exact: true,
-  },
-  accountAddByPassphrase: {
-    path: '/account/add/by-passphrase',
     isPrivate: false,
     forbiddenTokens: [],
     exact: true,

@@ -19,7 +19,7 @@ const setPasswordFormSchema = yup.object({
   hasAgreed: yup.boolean().required(),
 }).required();
 
-function SetPasswordForm({ onSubmit, nextStep }) {
+function SetPasswordForm({ onSubmit }) {
   const { t } = useTranslation();
   const {
     register,
@@ -40,9 +40,6 @@ function SetPasswordForm({ onSubmit, nextStep }) {
 
   const onFormSubmit = (values) => {
     onSubmit?.(values);
-    // TODO: Implement encrypt user account with password here and save to localstorage;
-    const encrptedResult = null;
-    nextStep({ encrptedResult });
   };
 
   return (

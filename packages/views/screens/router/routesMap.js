@@ -36,7 +36,6 @@ import AccountSelect from '@account/components/AccountSelect';
 import AddAccountChoice from '@account/components/AddAccountChoice';
 import AddAccountByPassPhrase from '@account/components/AddAccountByPassPhrase';
 import AddAccountForm from '@account/components/AddAccountForm';
-import SetPasswordMultiStep from '@auth/components/SetPasswordMultiStep/SetPasswordMultiStep';
 
 export default {
   wallet: AccountDetails,
@@ -78,5 +77,4 @@ export default {
   addAccountChoice: AddAccountChoice,
   accountAdd: AddAccountForm,
   accountAddByPassphrase: AddAccountByPassPhrase,
-  setPassword: SetPasswordMultiStep,
 };
