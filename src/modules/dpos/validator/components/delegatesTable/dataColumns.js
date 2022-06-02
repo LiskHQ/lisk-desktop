@@ -1,3 +1,4 @@
+/* istanbul ignore file */
 import React, { useContext } from 'react';
 
 import { formatAmountBasedOnLocale } from 'src/utils/formattedNumber';
@@ -78,7 +79,7 @@ export const DelegateDetails = () => {
           content={(
             <span
               className={`
-                ${styles.eyeIcon} ${!showEyeIcon ? 'hidden' : ''} ${watched && showEyeIcon ? styles.watchedDelegate : ''}
+                ${styles.eyeIcon} ${!showEyeIcon ? 'hidden' : ''} ${watched && showEyeIcon ? styles.watchedDelegate : ''} watch-icon
               `}
               onClick={watched ? removeFromWatchList : addToWatchList}
             >

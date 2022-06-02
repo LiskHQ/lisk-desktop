@@ -1,3 +1,4 @@
+/* istanbul ignore file */
 import React from 'react';
 import { compose } from 'redux';
 import withLocalSort from 'src/utils/withLocalSort';
