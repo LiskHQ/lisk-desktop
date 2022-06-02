@@ -11,6 +11,7 @@ import styles from './AddAccountByPassPhrase.css';
 const AddAccountByPassPhrase = ({ history, login }) => {
   const multiStepRef = useRef(null);
   const [passphrase, setPassphrase] = useState(null);
+  const [encryptedPassphrase] = useState(null);
 
   const onAddAccount = (passphraseData) => {
     multiStepRef.current.next();
@@ -18,10 +19,9 @@ const AddAccountByPassPhrase = ({ history, login }) => {
   };
 
   const onSetPassword = (formData) => {
-    console.log('>>.', formData);
     // TODO: Implement encrypt user account with password here and save to localstorage;
 
-    multiStepRef.current.next();
+    multiStepRef.current.next(formData);
   };
 
   const onPasswordSetComplete = () => {
@@ -30,18 +30,19 @@ const AddAccountByPassPhrase = ({ history, login }) => {
   };
 
   return (
-    <>
-      <div className={`${styles.addAccount} ${grid.row}`}>
-        <MultiStep
-          navStyles={{ multiStepWrapper: styles.wrapper }}
-          ref={multiStepRef}
-        >
-          <AddAccountForm onAddAccount={onAddAccount} />
-          <SetPasswordForm onSubmit={onSetPassword} />
-          <SetPasswordSuccess encryptedPhrase={null} onClose={onPasswordSetComplete} />
-        </MultiStep>
-      </div>
-    </>
+    <div className={`${styles.addAccount} ${grid.row}`}>
+      <MultiStep
+        navStyles={{ multiStepWrapper: styles.wrapper }}
+        ref={multiStepRef}
+      >
+        <AddAccountForm onAddAccount={onAddAccount} />
+        <SetPasswordForm onSubmit={onSetPassword} />
+        <SetPasswordSuccess
+          encryptedPhrase={encryptedPassphrase}
+          onClose={onPasswordSetComplete}
+        />
+      </MultiStep>
+    </div>
   );
 };
 

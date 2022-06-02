@@ -88,13 +88,19 @@ export default {
     forbiddenTokens: [],
   },
   accountAdd: {
-    path: '/account/add',
+    path: '/account/add/secrete-recovery',
     isPrivate: false,
     forbiddenTokens: [],
     exact: true,
   },
   addAccountChoice: {
     path: '/account/add/initiate',
+    isPrivate: false,
+    forbiddenTokens: [],
+    exact: true,
+  },
+  accountAddByPassphrase: {
+    path: '/account/add/by-passphrase',
     isPrivate: false,
     forbiddenTokens: [],
     exact: true,
@@ -188,7 +194,7 @@ export const modals = {
     isPrivate: false,
     forbiddenTokens: [tokenMap.BTC.key],
   },
-  setPasswordSuccess: {
+  setPassword: {
     isPrivate: false,
     forbiddenTokens: [],
   },
