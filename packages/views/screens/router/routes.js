@@ -105,7 +105,7 @@ export default {
   },
   backupAccount: {
     path: '/backup-account',
-    isPrivate: false,
+    isPrivate: true,
     forbiddenTokens: [],
     exact: true,
   },
