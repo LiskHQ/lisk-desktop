@@ -1,13 +1,13 @@
 /* istanbul ignore file */
 import { connect } from 'react-redux';
 import { withTranslation } from 'react-i18next';
-import { getActiveTokenAccount } from '@wallet/utils/account';
+import { selectActiveTokenAccount, selectActiveToken } from '@common/store';
 import Form from './form';
 
 const mapStateToProps = state => ({
-  account: getActiveTokenAccount(state),
+  account: selectActiveTokenAccount(state),
   bookmarks: state.bookmarks,
-  token: state.token && state.token.active,
+  token: selectActiveToken(state),
   network: state.network,
 });
 

@@ -2,7 +2,7 @@
 import React from 'react';
 import { useSelector } from 'react-redux';
 import { Redirect, Route } from 'react-router-dom';
-import { getActiveTokenAccount } from '@wallet/utils/account';
+import { selectActiveTokenAccount } from '@common/store';
 import Piwik from 'src/utils/piwik';
 import routes from '@screens/router/routes';
 import Login from '@auth/components/Signin';
@@ -27,11 +27,10 @@ const CustomRoute = ({
   t,
   history,
 }) => {
-  const wallet = useSelector(state => getActiveTokenAccount(state));
+  const wallet = useSelector(state => selectActiveTokenAccount(state));
   const token = useSelector(state => state.token);
-  const isAuthenticated = useSelector(state =>
-    (state.wallet.info && state.wallet.info[token.active]));
   const isNetworkSet = useSelector(checkNetwork);
+  const isAuthenticated = !!wallet.summary;
   const { search = '' } = history.location;
 
   Piwik.tracking(history, token);
@@ -52,7 +51,7 @@ const CustomRoute = ({
   }
 
   if (
-    wallet.info?.LSK?.summary?.isMigrated === false
+    wallet.summary?.isMigrated === false
     && history.location.pathname !== routes.reclaim.path
     && history.location.pathname !== routes.login.path
     && isAuthenticated

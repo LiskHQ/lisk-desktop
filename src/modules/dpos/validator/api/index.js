@@ -1,15 +1,14 @@
 import { regex } from 'src/const/regex';
 import http from '@common/utilities/api/http';
+import { HTTP_PREFIX } from 'src/const/httpCodes';
 import ws, { subscribe, unsubscribe } from '@common/utilities/api/ws';
 import { extractAddressFromPublicKey } from '@wallet/utils/account';
 
-const httpPrefix = '/api/v2';
-
 export const httpPaths = {
-  delegates: `${httpPrefix}/accounts`,
-  votesSent: `${httpPrefix}/votes_sent`,
-  votesReceived: `${httpPrefix}/votes_received`,
-  forgers: `${httpPrefix}/forgers`,
+  delegates: `${HTTP_PREFIX}/accounts`,
+  votesSent: `${HTTP_PREFIX}/votes_sent`,
+  votesReceived: `${HTTP_PREFIX}/votes_received`,
+  forgers: `${HTTP_PREFIX}/forgers`,
 };
 
 export const wsMethods = {

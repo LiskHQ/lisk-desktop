@@ -64,14 +64,12 @@ const AccountDetails = ({ t, history }) => {
           id="Transactions"
           address={address}
         />
-        {activeToken !== 'BTC' ? (
-          <VotesTab
-            history={history}
-            address={address}
-            name={t('Votes')}
-            id="votes"
-          />
-        ) : null}
+        <VotesTab
+          history={history}
+          address={address}
+          name={t('Votes')}
+          id="votes"
+        />
         {isDelegate ? (
           <DelegateTab
             tabClassName="delegate-statistics"

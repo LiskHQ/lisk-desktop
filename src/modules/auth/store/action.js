@@ -2,8 +2,6 @@
 import { to } from 'await-to-js';
 import { toast } from 'react-toastify';
 import loginTypes from 'src/modules/auth/const/loginTypes';
-import { tokenMap } from '@token/fungible/consts/tokens';
-import { extractAddress as extractBitcoinAddress } from '@wallet/utils/api';
 import { getConnectionErrorMessage } from '@network/utils/getNetwork';
 import { extractKeyPair } from '@wallet/utils/account';
 import { getAccounts } from '@wallet/store/action';
@@ -53,25 +51,19 @@ export const login = ({
     const params = Object.keys(token.list)
       .filter(key => token.list[key])
       .reduce((acc, acctToken) => {
-        if (acctToken === tokenMap.BTC.key) {
-          acc[acctToken] = {
-            address: extractBitcoinAddress(passphrase, network),
-          };
-        } else {
-          let keyPair = {};
-          if (passphrase) {
-            keyPair = extractKeyPair({
-              passphrase,
-              enableCustomDerivationPath,
-              derivationPath: customDerivationPath || defaultDerivationPath,
-            });
-          } else if (publicKey) {
-            keyPair.publicKey = publicKey;
-          }
-          acc[acctToken] = {
-            ...keyPair,
-          };
+        let keyPair = {};
+        if (passphrase) {
+          keyPair = extractKeyPair({
+            passphrase,
+            enableCustomDerivationPath,
+            derivationPath: customDerivationPath || defaultDerivationPath,
+          });
+        } else if (publicKey) {
+          keyPair.publicKey = publicKey;
         }
+        acc[acctToken] = {
+          ...keyPair,
+        };
         return acc;
       }, {});
 

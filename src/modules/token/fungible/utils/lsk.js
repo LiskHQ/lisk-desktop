@@ -5,20 +5,20 @@ import 'numeral/locales';
 BigNumber.config({ ERRORS: false });
 
 /**
- * Convert Beddow / Satoshi to LSK / BTC
+ * Convert Beddow to LSK
  *
- * @param {Strong|Number} value - Value in Beddow or Satoshi
- * @returns {BigNumber} Value converted to LSK / BTC
+ * @param {Strong|Number} value - Value in Beddow
+ * @returns {BigNumber} Value converted to LSK
  */
 export const fromRawLsk = value => (
   new BigNumber(value || 0).dividedBy(new BigNumber(10).pow(8)).toFixed()
 );
 
 /**
- * Convert LSK / BTC to Beddow / Satoshi
+ * Convert LSK to Beddow
  *
- * @param {Strong|Number} value - Value in LSK / BTC
- * @returns {BigNumber} Value converted to Beddow / Satoshi
+ * @param {Strong|Number} value - Value in LSK
+ * @returns {BigNumber} Value converted to Beddow
  */
 export const toRawLsk = (value) => {
   const amount = numeral(value).value();

@@ -1,16 +1,16 @@
 import React from 'react';
 import { useSelector } from 'react-redux';
 import { withTranslation } from 'react-i18next';
+import { selectActiveTokenAccount } from '@common/store';
 import MultiSignatureComponent from './multiSignature';
 import { multisignGroups, transactionsData } from './mockData';
 
 const MultiSignature = (props) => {
-  const account = useSelector(state => state.wallet);
-  const activeToken = useSelector(state => state.token.active);
+  const account = useSelector(selectActiveTokenAccount);
 
   return (
     <MultiSignatureComponent
-      host={account.info[activeToken].address}
+      host={account.summary.address}
       {...props}
       multisignGroups={multisignGroups}
       transactions={transactionsData}

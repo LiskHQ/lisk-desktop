@@ -1,6 +1,5 @@
 /* eslint-disable max-lines */
 import { to } from 'await-to-js';
-import { tokenMap } from '@token/fungible/consts/tokens';
 import { MODULE_ASSETS_NAME_ID_MAP } from '@transaction/configuration/moduleAssets';
 import { toRawLsk } from '@token/fungible/utils/lsk';
 import { isEmpty } from 'src/utils/helpers';
@@ -104,7 +103,7 @@ export const multisigGroupRegistered = ({
         nonce: activeWallet.sequence.nonce,
         senderPublicKey: activeWallet.summary.publicKey,
       },
-    }, tokenMap.LSK.key),
+    }),
   );
 
   //

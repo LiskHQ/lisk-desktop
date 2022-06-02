@@ -1,4 +1,3 @@
-import networks from '@network/configuration/networks';
 import i18n from 'src/utils/i18n/i18n';
 import accounts from '@tests/constants/wallets';
 import {
@@ -10,17 +9,12 @@ import {
 
 describe('Validate Address', () => {
   it('Should return -1 if empty adress', () => {
-    expect(validateAddress('LSK', '', networks.testnet.code)).toBe(-1);
-    expect(validateAddress('BTC', '')).toBe(-1);
+    expect(validateAddress('')).toBe(-1);
   });
 
   it('Should validate LSK address', () => {
-    expect(validateAddress('LSK', accounts.genesis.summary.address)).toBe(0);
-    expect(validateAddress('LSK', '12345')).toBe(1);
-  });
-
-  it('Should validate BTC address', () => {
-    expect(validateAddress('BTC', accounts.genesis.summary.address)).toBe(1);
+    expect(validateAddress(accounts.genesis.summary.address)).toBe(0);
+    expect(validateAddress('12345')).toBe(1);
   });
 });
 

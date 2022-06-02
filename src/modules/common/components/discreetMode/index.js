@@ -1,12 +1,11 @@
 /* istanbul ignore file */
 import { connect } from 'react-redux';
 import { withRouter } from 'react-router-dom';
-import { getActiveTokenAccount } from '@wallet/utils/account';
-import { selectActiveToken } from '@common/store';
+import { selectActiveTokenAccount, selectActiveToken } from '@common/store';
 import DiscreetMode from './discreetMode';
 
 const mapStateToProps = state => ({
-  account: getActiveTokenAccount(state),
+  account: selectActiveTokenAccount(state),
   isDiscreetMode: state.settings.discreetMode || false,
   token: selectActiveToken(state),
 });

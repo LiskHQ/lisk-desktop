@@ -50,7 +50,7 @@ const hwWalletMiddleware = store => next => (action) => {
      */
     subscribeToDeviceDisconnected((response) => {
       const { wallet, token } = store.getState();
-      const activeToken = token.active || 'LSK';
+      const activeToken = token.active;
 
       // Check if user is SignedIn
       if (wallet.info

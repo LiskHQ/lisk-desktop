@@ -2,11 +2,11 @@
 import { connect } from 'react-redux';
 import { compose } from 'redux';
 import { withTranslation } from 'react-i18next';
-import { getActiveTokenAccount } from '@wallet/utils/account';
+import { selectActiveTokenAccount } from '@common/store';
 import Status from './status';
 
 const mapStateToProps = state => ({
-  account: getActiveTokenAccount(state),
+  account: selectActiveTokenAccount(state),
   transactions: state.transactions,
 });
 

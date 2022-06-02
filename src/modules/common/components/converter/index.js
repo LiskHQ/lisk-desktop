@@ -11,7 +11,6 @@ const mapStateToProps = state => ({
     ? state.service.priceTicker
     : {
       LSK: settingConstants.currencies.reduce((acc, key) => ({ ...acc, [key]: '0' })),
-      BTC: settingConstants.currencies.reduce((acc, key) => ({ ...acc, [key]: '0' })),
     },
 });
 

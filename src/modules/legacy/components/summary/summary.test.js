@@ -45,7 +45,9 @@ describe('Reclaim balance Summary', () => {
         LSK: accounts.non_migrated,
       },
     },
-    settings: { token: tokenMap.LSK.key },
+    token: {
+      active: tokenMap.LSK.key,
+    },
     network: {
       networks: {
         LSK: { networkIdentifier: 'sample_identifier' },

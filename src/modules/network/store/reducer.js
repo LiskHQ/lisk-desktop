@@ -30,11 +30,6 @@ const network = (state = initialState, action) => {
         ...state,
         status: action.data,
       };
-    case actionTypes.lastBtcUpdateSet:
-      return {
-        ...state,
-        lastBtcUpdate: action.data,
-      };
     case actionTypes.customNetworkStored:
       return {
         ...state,
