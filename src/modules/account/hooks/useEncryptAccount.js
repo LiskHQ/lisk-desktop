@@ -7,6 +7,6 @@ export default (recoveryPhrase, password) => {
     name: 'encrypted recovery phrase',
     phrase: 'target cancel solution recipe vague faint bomb convince pink vendor fresh patrol',
   };
-  JSONSchema = transactionToJSON(JSONSchema);
+  JSONSchema = JSON.parse(transactionToJSON(JSONSchema));
   return JSONSchema;
 };
