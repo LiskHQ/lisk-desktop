@@ -1,5 +1,4 @@
 /* eslint-disable complexity */
-/* eslint-disable no-nested-ternary */
 import React, { useState, useEffect, useCallback } from 'react';
 
 import { Input } from 'src/theme';

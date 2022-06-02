@@ -1,3 +1,4 @@
+/* istanbul ignore file */
 import React from 'react';
 import Icon from 'src/theme/Icon';
 import styles from './overview.css';
