@@ -11,7 +11,7 @@ export default {
     exact: true,
   },
   addAccountOptions: {
-    path: '/account/add/options',
+    path: '/account',
     isPrivate: false,
     forbiddenTokens: [],
     exact: true,
