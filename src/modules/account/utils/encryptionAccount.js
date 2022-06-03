@@ -1,5 +1,3 @@
-import { useState } from 'react';
-
 const mockAccount = {
   crypto: {
     kdf: 'argon2id',
