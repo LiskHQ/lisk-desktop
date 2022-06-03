@@ -1,6 +1,7 @@
 import React from 'react';
 import { mount } from 'enzyme';
 import { Provider } from 'react-redux';
+import { mountWithRouter } from 'src/utils/testHelpers';
 import fakeStore from '@tests/unit-test-utils/fakeStore';
 import delegatesList from '@tests/constants/delegates';
 import accounts from '@tests/constants/wallets';
@@ -154,7 +155,19 @@ describe('Delegates monitor page', () => {
       },
       votes: {
         isLoading: false,
-        data: [{ asset: { votes: [{ delegateAddress: 'lskdwsyfmcko6mcd357446yatromr9vzgu7eb8y11', amount: '100000000' }] } }],
+        data: [{
+          asset: { votes: [{ delegateAddress: 'lskdwsyfmcko6mcd357446yatromr9vzgu7eb8y11', amount: '100000000' }] },
+          block: {
+            height: 164187423,
+            id: '1f48b9f4dae3a027b73685810016edadfff45175955b6ea3b24951597a99b498',
+            timestamp: 1653519360,
+          },
+          sender: {
+            address: 'lskd6yo4kkzrbjadh3tx6kz2qt5o3vy5zdnuwycmw',
+            publicKey: 'ea62fbdd5731a748a63b593db2c22129462f47db0f066d4ed3fc70957a456ebc',
+            username: 'test_del',
+          },
+        }],
         loadData: jest.fn(),
         clearData: jest.fn(),
         urlSearchParams: {},
@@ -215,5 +228,47 @@ describe('Delegates monitor page', () => {
     statuses.forEach((status, index) => {
       expect(status).equal(index === 2 ? 'Punished' : 'Banned');
     });
+  });
+
+  it('displays watched delegates once the watch list is populated', () => {
+    wrapper = setup(props);
+    const updatedProps = { ...props, watchList: ['lsktaa9xuys6hztyaryvx6msu279mpkn9sz6w5or2'] };
+    wrapper = setup(updatedProps);
+    expect(props.watchedDelegates.loadData).toHaveBeenCalledTimes(1);
+  });
+
+  it('does not display watched tab if watchlist is empty', () => {
+    wrapper = setup(props);
+    expect(wrapper.find('.tab.watched')).not.toExist();
+  });
+
+  it('displays latest votes component if active tab is votes', () => {
+    wrapper = mountWithRouter(Delegates, props);
+    wrapper.find('.tab.votes').simulate('click');
+    expect(wrapper.find('.transaction-row-wrapper')).toExist();
+  });
+
+  it('applies the correct filter based on active tab', () => {
+    wrapper = setup(props);
+    const expectedArgs = {
+      limit: 100,
+      offset: 0,
+      search: 'lisk',
+      tab: 'active',
+    };
+    const updatedProps = { ...props, watchList: ['lsktaa9xuys6hztyaryvx6msu279mpkn9sz6w5or2'] };
+
+    switchTab('sanctioned');
+    wrapper.find('.filter-by-name').last().simulate('change', { target: { value: 'lisk' } });
+    expect(props.applyFilters).toHaveBeenCalledWith(expectedArgs, 'sanctionedDelegates');
+
+    wrapper = setup(updatedProps);
+    switchTab('watched');
+    wrapper.find('.filter-by-name').last().simulate('change', { target: { value: 'li' } });
+    expect(props.applyFilters).toHaveBeenCalledWith({ ...expectedArgs, search: 'li' }, 'watchedDelegates');
+
+    switchTab('standby');
+    wrapper.find('.filter-by-name').last().simulate('change', { target: { value: 'lisk' } });
+    expect(props.applyFilters).toHaveBeenCalledWith(expectedArgs, 'standByDelegates');
   });
 });

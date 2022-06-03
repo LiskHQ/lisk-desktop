@@ -1,6 +1,6 @@
 /* eslint-disable no-nested-ternary */
 import grid from 'flexboxgrid/dist/flexboxgrid.css';
-import styles from '../delegates.css';
+import styles from '../delegatesMonitorView/delegates.css';
 
 export const getStatusClass = (activeTab) => {
   switch (activeTab) {

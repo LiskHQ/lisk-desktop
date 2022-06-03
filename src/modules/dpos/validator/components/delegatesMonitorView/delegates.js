@@ -1,3 +1,4 @@
+/* eslint-disable complexity */
 import React, { useState, useEffect } from 'react';
 
 import { Input } from 'src/theme';
@@ -6,11 +7,11 @@ import BoxHeader from 'src/theme/box/header';
 import BoxContent from 'src/theme/box/content';
 import BoxTabs from 'src/theme/tabs';
 import { ROUND_LENGTH } from '@dpos/validator/consts';
+import DelegatesOverview from '../overview/delegatesOverview';
+import ForgingDetails from '../overview/forgingDetails';
+import DelegatesTable from '../delegatesTable';
+import LatestVotes from '../latestVotes';
 import styles from './delegates.css';
-import DelegatesOverview from './overview/delegatesOverview';
-import ForgingDetails from './overview/forgingDetails';
-import LatestVotes from './latestVotes';
-import DelegatesTable from './delegatesTable';
 
 // eslint-disable-next-line max-statements
 const DelegatesMonitor = ({
@@ -113,6 +114,24 @@ const DelegatesMonitor = ({
     });
   }
 
+  const commonProps = {
+    blocks, filters, watchList, activeTab,
+  };
+
+  const watchedFilters = {
+    search: filters.search || '',
+    address: watchList,
+  };
+
+  const displayTab = (tab) => {
+    if (tab === 'active') return <DelegatesTable {...commonProps} delegates={delegatesWithForgingTimes} />;
+    if (tab === 'standby') return <DelegatesTable {...commonProps} delegates={standByDelegates} hasLoadMore />;
+    if (tab === 'sanctioned') return <DelegatesTable {...commonProps} delegates={sanctionedDelegates} hasLoadMore />;
+    if (tab === 'watched') return <DelegatesTable {...commonProps} delegates={watchedDelegates} filters={watchedFilters} setActiveTab={setActiveTab} />;
+    if (tab === 'votes') return <LatestVotes votes={votes} delegates={votedDelegates} />;
+    return null;
+  };
+
   return (
     <div>
       <DelegatesOverview
@@ -147,22 +166,7 @@ const DelegatesMonitor = ({
           </span>
         </BoxHeader>
         <BoxContent className={`${styles.content} delegate-box`}>
-          {activeTab === 'votes' ? (
-            <LatestVotes votes={votes} t={t} delegates={votedDelegates} />
-          ) : (
-            <DelegatesTable
-              setActiveTab={setActiveTab}
-              delegates={delegatesWithForgingTimes}
-              blocks={blocks}
-              watchList={watchList}
-              watchedDelegates={watchedDelegates}
-              standByDelegates={standByDelegates}
-              sanctionedDelegates={sanctionedDelegates}
-              filters={filters}
-              t={t}
-              activeTab={activeTab}
-            />
-          )}
+          {displayTab(activeTab)}
         </BoxContent>
       </Box>
     </div>
