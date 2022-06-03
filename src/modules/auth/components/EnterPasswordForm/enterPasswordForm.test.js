@@ -1,10 +1,10 @@
 import React from 'react';
 import { mount } from 'enzyme';
 
-import { decryptionAccount } from '@account/utils/decryptionAccount';
+import { decryptionAccount } from '../../../account/utils/decryptionAccount';
 import EnterPasswordForm from '.';
 
-jest.mock('@account/hooks/decryptionAccount');
+jest.mock('../../../account/utils/decryptionAccount');
 
 describe('PassphraseBackup', () => {
   let wrapper;
