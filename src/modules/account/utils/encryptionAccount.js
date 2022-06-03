@@ -1,3 +1,4 @@
+/* istanbul ignore file */
 const mockAccount = {
   crypto: {
     kdf: 'argon2id',

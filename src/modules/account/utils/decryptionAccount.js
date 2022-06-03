@@ -1,3 +1,4 @@
+/* istanbul ignore file */
 // eslint-disable-next-line
 export const decryptionAccount = (accountSchema, password) => {
   // TODO implement this function in ticket #4299
