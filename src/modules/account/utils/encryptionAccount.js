@@ -1,3 +1,5 @@
+import { useState } from 'react';
+
 const mockAccount = {
   crypto: {
     kdf: 'argon2id',
@@ -29,11 +31,12 @@ const mockAccount = {
 };
 
 // eslint-disable-next-line
-export function useEncryptionAccount(recoveryPhrase, password) {
+export function encryptionAccount(recoveryPhrase, password) {
   // Todo
   // 1- we need to generate public/Private token from recoveryPhrase
   // 2- we need to generate address
   // 3- we need to encrypt recovery phrase and privateToken { privateToken, recoveryPhrase }
   // we need to generate the account Schema json
+
   return mockAccount;
 }

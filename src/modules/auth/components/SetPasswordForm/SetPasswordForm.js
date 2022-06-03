@@ -9,7 +9,7 @@ import Input from 'src/theme/Input';
 import { PrimaryButton } from 'src/theme/buttons';
 import CheckBox from 'src/theme/CheckBox';
 import Tooltip from 'src/theme/Tooltip';
-import { useEncryptionAccount } from 'src/modules/account/hooks';
+import { encryptionAccount } from 'src/modules/account/utils';
 import styles from './SetPasswordForm.css';
 
 const setPasswordFormSchema = yup.object({
@@ -38,9 +38,8 @@ function SetPasswordForm({ onSubmit, recoveryPhrase }) {
   const isButtonDisabled = useMemo(() =>
     !password?.length || !cPassword?.length || !hasAgreed,
   [formValues.password, formValues.cPassword, formValues.hasAgreed]);
-
   const onFormSubmit = (values) => {
-    const accountSchema = useEncryptionAccount(recoveryPhrase, values.password);
+    const accountSchema = encryptionAccount(recoveryPhrase, values.password);
     onSubmit?.(accountSchema);
   };
 
