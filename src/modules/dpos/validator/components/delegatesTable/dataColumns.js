@@ -7,6 +7,7 @@ import { truncateAddress } from '@wallet/utils/account';
 import WalletVisual from '@wallet/components/walletVisual';
 import Tooltip from 'src/theme/Tooltip';
 import Icon from 'src/theme/Icon';
+import { useTheme } from 'src/theme/Theme';
 import { DEFAULT_STANDBY_THRESHOLD } from '@dpos/validator/consts';
 import DelegateRowContext from '../../context/delegateRowContext';
 import styles from '../delegatesMonitorView/delegates.css';
@@ -159,8 +160,9 @@ const getDelegateStatus = (key, grossVotesReceived) => {
 
 export const DelegateStatus = () => {
   const {
-    activeTab, data: { status, totalVotesReceived }, theme,
+    activeTab, data: { status, totalVotesReceived },
   } = useContext(DelegateRowContext);
+  const theme = useTheme();
   const [key, val] = getDelegateStatus(status, totalVotesReceived);
 
   return (

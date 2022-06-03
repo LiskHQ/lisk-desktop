@@ -3,7 +3,6 @@ import { Link } from 'react-router-dom';
 
 import { useDispatch } from 'react-redux';
 import routes from '@screens/router/routes';
-import { useTheme } from 'src/theme/Theme';
 import { addedToWatchList, removedFromWatchList } from '@common/store/actions';
 import getForgingTime from '../../utils/getForgingTime';
 import DelegateRowContext from '../../context/delegateRowContext';
@@ -18,7 +17,6 @@ const DelegateRow = ({
     data.nextForgingTime || blocks.forgers[blocks.indexBook[data.address]]?.nextForgingTime,
   );
   const dispatch = useDispatch();
-  const theme = useTheme();
 
   const isWatched = watchList.find(address => address === data.address);
 
@@ -53,7 +51,6 @@ const DelegateRow = ({
           addToWatchList,
           removeFromWatchList,
           time: formattedForgingTime,
-          theme,
           t,
         }}
       >
