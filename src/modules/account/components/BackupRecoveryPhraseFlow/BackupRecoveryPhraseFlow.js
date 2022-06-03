@@ -26,7 +26,7 @@ const BackupRecoveryPhraseFlow = ({ history }) => {
 
   return (
     <>
-      <div className={`${styles.BackupRecoveryPhraseFlow} ${grid.row}`}>
+      <div className={`${styles.backupRecoveryPhraseFlow} ${grid.row}`}>
         <MultiStep
           navStyles={{ multiStepWrapper: styles.wrapper }}
           ref={multiStepRef}

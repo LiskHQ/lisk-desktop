@@ -1,10 +1,10 @@
 import { fireEvent, screen, waitFor } from '@testing-library/react';
 import { renderWithRouter } from 'src/utils/testHelpers';
-import MockCurrentAccount from '@account/hooks/useCurrentAccount';
+import mockSavedAccounts from '@tests/fixtures/accounts';
 import BackupRecoveryPhraseFlow from './BackupRecoveryPhraseFlow';
 
-jest.mock('../../hooks/useCurrentAccount', () => ({
-  useCurrentAccount: jest.fn().mockReturnValue(MockCurrentAccount),
+jest.mock('../../hooks/useAccounts', () => ({
+  useAccounts: jest.fn().mockReturnValue([mockSavedAccounts]),
 }));
 
 const props = {

@@ -1,6 +1,6 @@
 @import '../../../../../setup/react/app/mixins.css';
 
-.BackupRecoveryPhraseFlow {
+.backupRecoveryPhraseFlow {
   display: flex;
   flex-direction: column;
   justify-content: center;
