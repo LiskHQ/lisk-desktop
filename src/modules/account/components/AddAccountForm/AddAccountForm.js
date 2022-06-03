@@ -25,6 +25,7 @@ const AddAccountForm = ({
 
   const onFormSubmit = (e) => {
     e.preventDefault();
+    // istanbul ignore else
     if (passphrase.value && passphrase.isValid) {
       onAddAccount(passphrase);
     }

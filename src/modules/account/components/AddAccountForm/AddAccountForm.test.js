@@ -14,9 +14,11 @@ const props = {
   onAddAccount: jest.fn(),
 };
 
+let accountFormInstance = null;
+
 beforeEach(() => {
   props.onAddAccount.mockReset();
-  render(<AddAccountForm {...props} />);
+  accountFormInstance = render(<AddAccountForm {...props} />);
 });
 
 describe('Generals', () => {
@@ -70,5 +72,12 @@ describe('Generals', () => {
     fireEvent(inputField, pasteEvent);
     fireEvent.click(screen.getByText('Continue'));
     expect(props.onAddAccount).not.toBeCalled();
+  });
+
+  it('should show the network selector', () => {
+    props.settings.showNetwork = true;
+
+    accountFormInstance.rerender(<AddAccountForm {...props} />);
+    expect(screen.queryByText('Select Network')).toBeTruthy();
   });
 });
