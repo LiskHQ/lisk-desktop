@@ -4,7 +4,7 @@ import { withRouter } from 'react-router';
 import grid from 'flexboxgrid/dist/flexboxgrid.css';
 import SetPasswordForm from 'src/modules/auth/components/SetPasswordForm/SetPasswordForm';
 import MultiStep from 'src/modules/common/components/MultiStep';
-import SetPasswordSuccess from 'src/modules/auth/components/setPasswordSuccess';
+import SetPasswordSuccess from 'src/modules/auth/components/SetPasswordSuccess';
 import routes from '@views/screens/router/routes';
 import { useCurrentAccount } from '@account/hooks';
 import AddAccountForm from '../AddAccountForm';
