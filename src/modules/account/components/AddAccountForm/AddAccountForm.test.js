@@ -44,6 +44,20 @@ describe('Generals', () => {
     expect(props.onAddAccount).toBeCalled();
   });
 
+  it('should trigger add account on enter key been pressed', () => {
+    const inputField = screen.getByTestId('recovery-1');
+
+    const pasteEvent = createEvent.paste(inputField, {
+      clipboardData: {
+        getData: () => 'below record evolve eye youth post control consider spice swamp hidden easily',
+      },
+    });
+
+    fireEvent(inputField, pasteEvent);
+    fireEvent.keyPress(inputField, { key: 'Enter', code: 13, charCode: 13 });
+    expect(props.onAddAccount).toBeCalled();
+  });
+
   it('should not trigger add account with a wrong mneumoic secrete recovery phrase', () => {
     const inputField = screen.getByTestId('recovery-1');
 
