@@ -7,7 +7,8 @@ import { useTheme } from 'src/theme/Theme';
 import { addedToWatchList, removedFromWatchList } from '@common/store/actions';
 import getForgingTime from '../../utils/getForgingTime';
 import DelegateRowContext from '../../context/delegateRowContext';
-import styles from '../delegatesMonitorView/delegates.css';
+import delegateStyles from '../delegatesMonitorView/delegates.css';
+import styles from './schemas.css';
 import LayoutSchema from './layoutSchema';
 
 const DelegateRow = ({
@@ -37,10 +38,11 @@ const DelegateRow = ({
   };
 
   const Layout = LayoutSchema[activeTab] || LayoutSchema.default;
+  const activeStyle = activeTab === 'active' ? styles.fullLayout : styles[activeTab];
 
   return (
     <Link
-      className={`${className} delegate-row ${styles.tableRow}`}
+      className={`${className} delegate-row ${styles.container} ${activeStyle} ${delegateStyles.tableRow}`}
       to={`${routes.explorer.path}?address=${data.address}`}
     >
       <DelegateRowContext.Provider

@@ -17,7 +17,7 @@ const LayoutSchema = {
     components: full,
     className: styles.fullLayout,
   },
-  standBy: {
+  standby: {
     components: [...hosted, DelegateRank, DelegateStatus],
     className: styles.standbyLayout,
   },
@@ -26,8 +26,8 @@ const LayoutSchema = {
     className: styles.sanctionedLayout,
   },
   watched: {
-    components: [...full, DelegateRank],
-    className: styles.hostedLayout,
+    components: [...full, DelegateStatus],
+    className: styles.watchedLayout,
   },
   default: {
     components: full,
