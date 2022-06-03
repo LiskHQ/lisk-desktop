@@ -39,6 +39,7 @@ const EnterPasswordForm = ({ accountSchema, onEnterPasswordSuccess }) => {
         )}
         <p className={styles.accountAddress}>{accountSchema?.metadata?.address}</p>
         <Input
+          name="passwordField"
           placeholder={t('Enter password')}
           type="password"
           value={password}

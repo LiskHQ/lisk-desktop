@@ -22,7 +22,7 @@ function SetPasswordSuccess({ onClose, encryptedPhrase, buttonText }) {
         <h1>{t("Perfect! You're all set")}</h1>
         <p className={styles.subheader}>
           {t(
-            'You can now download your encrypted secret recovery phrase.',
+            'You can now download your encrypted secret recovery phrase and use it to add your account on other devices.',
           )}
         </p>
         <div className={styles.downloadLisk}>
