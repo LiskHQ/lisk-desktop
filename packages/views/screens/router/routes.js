@@ -103,8 +103,8 @@ export default {
     exact: false,
     forbiddenTokens: [],
   },
-  backupAccount: {
-    path: '/backup-account',
+  backupRecoveryPhraseFlow: {
+    path: '/backup-recovery-phrase',
     isPrivate: true,
     forbiddenTokens: [],
     exact: true,
