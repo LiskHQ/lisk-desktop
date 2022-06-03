@@ -166,6 +166,7 @@ import deleteIcon from '@setup/react/assets/images/icons/delete.svg';
 import deleteRedIcon from '@setup/react/assets/images/icons/delete-red-icon.svg';
 import arrowRightTailed from '@setup/react/assets/images/icons/arrow-right-tailed.svg';
 import download from '@setup/react/assets/images/icons/download.svg';
+import downloadBlue from '@setup/react/assets/images/icons/download-blue.svg';
 import registerMultisignatureGroup from '@setup/react/assets/images/icons/multisignature.svg';
 import multisignatureTransaction from '@setup/react/assets/images/icons/multisignatureTransaction.svg';
 import multisignatureTransactionDark from '@setup/react/assets/images/icons/multisignatureTransaction-dark.svg';
@@ -205,6 +206,8 @@ import whiteLinkIcon from '@setup/react/assets/images/icons/white-link-icon.svg'
 import personIcon from '@setup/react/assets/images/icons/person-blue.svg';
 import verticalDots from '@setup/react/assets/images/icons/vertical-dots.svg';
 import switchIcon from '@setup/react/assets/images/icons/switch.svg';
+import secretPassphrase from '@setup/react/assets/images/icons/secret-passphrase.svg';
+import accountUpload from '@setup/react/assets/images/icons/account-upload.svg';
 
 export const icons = {
   academy,
@@ -368,6 +371,7 @@ export const icons = {
   votingQueueInactive,
   votingQueueActive,
   download,
+  downloadBlue,
   upload,
   delegateForged,
   delegateForgedDark,
@@ -410,6 +414,8 @@ export const icons = {
   verticalDots,
   switchIcon,
   deleteRedIcon,
+  secretPassphrase,
+  accountUpload,
 };
 
 const Icon = ({ name, noTheme, ...props }) => {

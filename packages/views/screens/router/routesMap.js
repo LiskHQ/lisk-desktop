@@ -32,7 +32,10 @@ import ReclaimBalanceModal from '@legacy/manager/reclaimBalanceModal';
 import RegisterMultisig from '@wallet/manager/registerMultisigManager';
 import SignMultiSig from '@wallet/manager/signMultisigManager';
 import MultisigAccountDetails from '@wallet/manager/multisigAccountDetailsManager';
-import AccountSelect from '@account/components/AccountSelect';
+import ManageAccounts from '@account/components/ManageAccounts';
+import AddAccountOptions from '@account/components/AddAccountOptions';
+import AddAccountBySecretRecovery from 'src/modules/account/components/AddAccountBySecretRecovery';
+import AddAccountForm from '@account/components/AddAccountForm';
 
 export default {
   wallet: AccountDetails,
@@ -70,5 +73,8 @@ export default {
   multiSignature: RegisterMultisig,
   multisigAccountDetails: MultisigAccountDetails,
   signMultiSignTransaction: SignMultiSig,
-  accountSelect: AccountSelect,
+  manageAccounts: ManageAccounts,
+  addAccountOptions: AddAccountOptions,
+  accountAdd: AddAccountForm,
+  addAccountBySecretRecovery: AddAccountBySecretRecovery,
 };

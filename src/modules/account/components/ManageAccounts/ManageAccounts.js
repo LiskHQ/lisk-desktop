@@ -5,18 +5,18 @@ import grid from 'flexboxgrid/dist/flexboxgrid.css';
 import { OutlineButton } from 'src/theme/buttons';
 import Icon from 'src/theme/Icon';
 import { useAccounts } from '../../hooks/useAccounts';
-import styles from './AccountSelect.css';
+import styles from './ManageAccounts.css';
 import AccountRow from '../AccountRow';
 
-const AccountSelect = ({ onSelectAccount, onAddAccount, onRemoveAccount }) => {
+const ManageAccounts = ({ onSelectAccount, onAddAccount, onRemoveAccount }) => {
   const { t } = useTranslation();
   const [accounts] = useAccounts();
   const [showRemove, setShowRemove] = useState(false);
 
   return (
-    <div className={`${styles.accountSelect} ${grid.row}`}>
+    <div className={`${styles.manageAccounts} ${grid.row}`}>
       <div
-        className={`${styles.accountSelectWrapper} ${grid['col-xs-12']} ${grid['col-md-8']} ${grid['col-lg-6']}`}
+        className={`${styles.manageAccountWrapper} ${grid['col-xs-12']} ${grid['col-md-8']} ${grid['col-lg-6']}`}
       >
         <div className={styles.wrapper}>
           <div className={styles.headerWrapper}>
@@ -68,4 +68,4 @@ const AccountSelect = ({ onSelectAccount, onAddAccount, onRemoveAccount }) => {
   );
 };
 
-export default AccountSelect;
+export default ManageAccounts;

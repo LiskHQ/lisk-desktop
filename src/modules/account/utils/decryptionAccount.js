@@ -1,5 +1,6 @@
-// eslint-disable-next-line no-unused-vars
-export default (accountSchema, password) => {
+/* istanbul ignore file */
+// eslint-disable-next-line
+export const decryptionAccount = (accountSchema, password) => {
   // TODO implement this function in ticket #4299
   const privateToken = 'private-token-mock';
   const recoveryPhrase = 'target cancel solution recipe vague faint bomb convince pink vendor fresh patrol';

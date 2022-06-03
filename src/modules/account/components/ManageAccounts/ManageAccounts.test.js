@@ -3,7 +3,7 @@ import {
   fireEvent, render, screen,
 } from '@testing-library/react';
 import mockSavedAccounts from '@tests/fixtures/accounts';
-import AccountSelect from './AccountSelect';
+import ManageAccounts from './ManageAccounts';
 
 jest.mock('react-i18next');
 jest.mock('../../hooks/useAccounts', () => ({
@@ -16,7 +16,7 @@ const props = {
 };
 
 beforeEach(() => {
-  render(<AccountSelect {...props} />);
+  render(<ManageAccounts {...props} />);
 });
 
 describe('Account Select Form', () => {
