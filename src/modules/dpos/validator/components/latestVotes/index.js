@@ -1,9 +1,11 @@
 import React from 'react';
+import { useTranslation } from 'react-i18next';
 import Table from 'src/theme/table';
-import VoteRow from './voteRow';
+import TransactionRow from '@transaction/components/TransactionRow';
 import header from './tableHeader';
 
-const LatestVotes = ({ votes, t, delegates }) => {
+const LatestVotes = ({ votes, delegates }) => {
+  const { t } = useTranslation();
   const canLoadMore = votes.meta ? votes.data.length < votes.meta.total : false;
 
   const handleLoadMore = () => {
@@ -14,10 +16,12 @@ const LatestVotes = ({ votes, t, delegates }) => {
     <Table
       data={votes.data}
       isLoading={votes.isLoading}
-      row={VoteRow}
+      row={TransactionRow}
       additionalRowProps={{
         t,
         delegates: delegates.data,
+        layout: 'vote',
+        activeToken: 'LSK',
       }}
       header={header(t)}
       loadData={handleLoadMore}
