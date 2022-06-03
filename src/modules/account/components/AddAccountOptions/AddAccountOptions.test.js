@@ -1,12 +1,10 @@
 import React from 'react';
 import {
-  fireEvent, render, screen, waitFor,
+  fireEvent, render, screen,
 } from '@testing-library/react';
 import mockSavedAccounts from '@tests/fixtures/accounts';
-import { renderWithRouter } from 'src/utils/testHelpers';
 import { Router } from 'react-router';
 import AddAccountOptions from './AddAccountOptions';
-import routes from '../../../../../packages/views/screens/router/routes';
 
 jest.mock('react-i18next');
 jest.mock('../../hooks/useAccounts', () => ({
