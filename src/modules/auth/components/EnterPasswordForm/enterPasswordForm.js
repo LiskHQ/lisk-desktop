@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 
 import WalletVisual from '@wallet/components/walletVisual';
-import useDecryptionAccount from '@account/hooks/useDecryptionAccount';
+import { useDecryptionAccount } from '@account/hooks/useDecryptionAccount';
 import { Input } from 'src/theme';
 import Box from 'src/theme/box';
 import BoxContent from 'src/theme/box/content';

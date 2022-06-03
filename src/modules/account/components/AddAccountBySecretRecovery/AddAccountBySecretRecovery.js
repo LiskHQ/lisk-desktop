@@ -4,29 +4,31 @@ import { withRouter } from 'react-router';
 import grid from 'flexboxgrid/dist/flexboxgrid.css';
 import SetPasswordForm from 'src/modules/auth/components/SetPasswordForm/SetPasswordForm';
 import MultiStep from 'src/modules/common/components/MultiStep';
-import SetPasswordSuccess from 'src/modules/auth/components/SetPasswordSuccess';
+import SetPasswordSuccess from 'src/modules/auth/components/setPasswordSuccess';
+import routes from '@views/screens/router/routes';
+import { useCurrentAccount } from '@account/hooks';
 import AddAccountForm from '../AddAccountForm';
 import styles from './AddAccountBySecretRecovery.css';
 
 const AddAccountBySecretRecovery = ({ history, login }) => {
   const multiStepRef = useRef(null);
   const [passphrase, setPassphrase] = useState(null);
-  const [encryptedPassphrase] = useState(null);
+  const [accountSchema, setAccountSchema] = useState(null);
 
   const onAddAccount = (passphraseData) => {
-    multiStepRef.current.next();
     setPassphrase(passphraseData);
+    multiStepRef.current.next();
   };
 
-  const onSetPassword = (formData) => {
-    // TODO: Implement encrypt user account with password here and save to localstorage;
-
-    multiStepRef.current.next(formData);
+  const onSetPassword = (account) => {
+    useCurrentAccount(account);
+    setAccountSchema(account);
+    multiStepRef.current.next();
   };
 
   const onPasswordSetComplete = () => {
-    login(passphrase);
-    history.push('/');
+    login(passphrase); // Todo this login method is depricated
+    history.push(routes.dashboard.path);
   };
 
   return (
@@ -36,9 +38,9 @@ const AddAccountBySecretRecovery = ({ history, login }) => {
         ref={multiStepRef}
       >
         <AddAccountForm onAddAccount={onAddAccount} />
-        <SetPasswordForm onSubmit={onSetPassword} />
+        <SetPasswordForm recoveryPhrase={passphrase} onSubmit={onSetPassword} />
         <SetPasswordSuccess
-          encryptedPhrase={encryptedPassphrase}
+          encryptedPhrase={accountSchema}
           onClose={onPasswordSetComplete}
         />
       </MultiStep>

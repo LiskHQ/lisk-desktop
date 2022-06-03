@@ -1,7 +1,7 @@
 import React from 'react';
 import { mount } from 'enzyme';
 
-import useDecryptionAccount from '@account/hooks/useDecryptionAccount';
+import { useDecryptionAccount } from '@account/hooks/useDecryptionAccount';
 import EnterPasswordForm from '.';
 
 jest.mock('@account/hooks/useDecryptionAccount');

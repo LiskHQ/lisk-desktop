@@ -9,6 +9,7 @@ import Input from 'src/theme/Input';
 import { PrimaryButton } from 'src/theme/buttons';
 import CheckBox from 'src/theme/CheckBox';
 import Tooltip from 'src/theme/Tooltip';
+import { useEncryptionAccount } from 'src/modules/account/hooks';
 import styles from './SetPasswordForm.css';
 
 const setPasswordFormSchema = yup.object({
@@ -19,7 +20,7 @@ const setPasswordFormSchema = yup.object({
   hasAgreed: yup.boolean().required(),
 }).required();
 
-function SetPasswordForm({ onSubmit }) {
+function SetPasswordForm({ onSubmit, recoveryPhrase }) {
   const { t } = useTranslation();
   const {
     register,
@@ -39,7 +40,8 @@ function SetPasswordForm({ onSubmit }) {
   [formValues.password, formValues.cPassword, formValues.hasAgreed]);
 
   const onFormSubmit = (values) => {
-    onSubmit?.(values);
+    const accountSchema = useEncryptionAccount(recoveryPhrase, values.password);
+    onSubmit?.(accountSchema);
   };
 
   return (
