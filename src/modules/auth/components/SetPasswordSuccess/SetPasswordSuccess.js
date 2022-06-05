@@ -33,9 +33,11 @@ function SetPasswordSuccess({ onClose, encryptedPhrase, buttonText }) {
             size="xs"
             onClick={onDownload}
           >
-            {t('Download')}
+            <span className={styles.buttonContent}>
+              {t('Download')}
+              <Icon name="downloadBlue" />
+            </span>
           </TertiaryButton>
-          <Icon name="downloadBlue" />
         </div>
         <PrimaryButton className={styles.continueButton} onClick={onContinue}>
           {t(buttonText)}

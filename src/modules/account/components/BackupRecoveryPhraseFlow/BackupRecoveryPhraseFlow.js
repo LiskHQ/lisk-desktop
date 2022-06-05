@@ -1,4 +1,5 @@
 import React, { useRef, useState } from 'react';
+import { useTranslation } from 'react-i18next';
 import { withRouter } from 'react-router';
 import routes from '@screens/router/routes';
 import grid from 'flexboxgrid/dist/flexboxgrid.css';
@@ -6,11 +7,12 @@ import MultiStep from 'src/modules/common/components/MultiStep';
 import EnterPasswordForm from '@auth/components/EnterPasswordForm';
 import SavePassphrase from '@auth/components/SavePassphrase/SavePassphrase';
 import ConfirmPassphrase from '@auth/components/ConfirmPassphrase/confirmPassphrase';
-import SetPasswordSuccess from '@auth/components/setPasswordSuccess';
+import SetPasswordSuccess from '@auth/components/SetPasswordSuccess';
 import { useCurrentAccount } from '@account/hooks/useCurrentAccount';
 import styles from './BackupRecoveryPhraseFlow.css';
 
 const BackupRecoveryPhraseFlow = ({ history }) => {
+  const { t } = useTranslation();
   const multiStepRef = useRef(null);
   const [account] = useCurrentAccount();
   const [passphrase, setPassphrase] = useState('');
@@ -38,7 +40,7 @@ const BackupRecoveryPhraseFlow = ({ history }) => {
           <SavePassphrase passphrase={passphrase} />
           <ConfirmPassphrase passphrase={passphrase} />
           <SetPasswordSuccess
-            buttonText="Continue to Wallet"
+            buttonText={t('Continue to Wallet')}
             encryptedPhrase={account}
             onClose={onComplete}
           />
