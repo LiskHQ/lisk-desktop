@@ -104,10 +104,9 @@ export default {
     forbiddenTokens: [],
   },
   backupRecoveryPhraseFlow: {
-    path: 'account/backup-recovery-phrase',
+    path: '/account/backup-recovery-phrase',
     isPrivate: true,
     forbiddenTokens: [],
-    exact: true,
   },
 };
 
