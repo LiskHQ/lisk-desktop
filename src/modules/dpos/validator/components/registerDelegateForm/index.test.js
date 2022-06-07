@@ -7,7 +7,7 @@ import { getTransactionBaseFees, getTransactionFee, create } from '@transaction/
 import * as hwManager from '@transaction/utils/hwManager';
 import wallets from '@tests/constants/wallets';
 import flushPromises from '@tests/unit-test-utils/flushPromises';
-import SelectNameAndFee from './form';
+import SelectNameAndFee from '.';
 
 jest.mock('@network/utils/api');
 jest.mock('@transaction/api');
