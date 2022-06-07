@@ -3,23 +3,20 @@ import { connect } from 'react-redux';
 import { compose } from 'redux';
 import { withTranslation } from 'react-i18next';
 import { getAccount } from '@wallet/utils/api';
-import { getActiveTokenAccount } from '@wallet/utils/account';
+import { selectActiveTokenAccount, selectActiveToken } from '@common/store';
 import withData from 'src/utils/withData';
 import Status from './status';
 
 const mapStateToProps = state => ({
-  account: getActiveTokenAccount(state),
+  account: selectActiveTokenAccount(state),
   bookmarks: state.bookmarks,
   transactions: state.transactions,
-  token: state.token.active,
+  token: selectActiveToken(state),
 });
 
 const apis = {
   recipientAccount: {
-    apiUtil: (network, { token, ...params }) => getAccount({ network, params }, token),
-    getApiParams: state => ({
-      token: state.token.active,
-    }),
+    apiUtil: (network, params) => getAccount({ network, params }),
     defaultData: {},
   },
 };

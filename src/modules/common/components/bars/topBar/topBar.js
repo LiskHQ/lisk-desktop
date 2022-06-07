@@ -62,7 +62,9 @@ const TopBar = ({
       <div className={styles.group}>
         <LightDarkToggle />
         {!isUserLogout && <DiscreteModeToggle />}
-        <Network token={token.active} network={network} t={t} />
+        {location.pathname !== routes.register.path && (
+          <Network token={token.active} network={network} t={t} />
+        )}
         {isUserLogout && history.location.pathname !== routes.login.path ? (
           <Link to={routes.login.path} className={styles.signIn}>
             <PrimaryButton size="s">Sign in</PrimaryButton>

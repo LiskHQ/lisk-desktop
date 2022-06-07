@@ -59,10 +59,7 @@ const getFields = (data = {}, token, t, currentHeight) => ({
   date: {
     label: t('Date'),
     value: (
-      <DateTimeFromTimestamp
-        time={data.timestamp * 1000}
-        token={tokenMap.BTC.key}
-      />
+      <DateTimeFromTimestamp time={data.timestamp} />
     ),
   },
   confirmations: {

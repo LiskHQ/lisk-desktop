@@ -1,14 +1,43 @@
-import { tokenMap } from '@token/fungible/consts/tokens';
-
 export default {
-  wallet: {
-    path: '/wallet',
-    isPrivate: true,
-    exact: false,
-    forbiddenTokens: [],
-  },
   addAccount: {
     path: '/add-account',
+    isPrivate: false,
+    forbiddenTokens: [],
+  },
+  addAccountBySecretRecovery: {
+    path: '/account/add/secrete-recovery',
+    isPrivate: false,
+    forbiddenTokens: [],
+    exact: true,
+  },
+  addAccountOptions: {
+    path: '/account',
+    isPrivate: false,
+    forbiddenTokens: [],
+    exact: true,
+  },
+  block: {
+    path: '/block',
+    searchParam: 'id',
+    isPrivate: false,
+    exact: true,
+    forbiddenTokens: [],
+  },
+  blocks: {
+    path: '/blocks',
+    isPrivate: false,
+    exact: true,
+    forbiddenTokens: [],
+  },
+  dashboard: {
+    path: '/',
+    isPrivate: false,
+    forbiddenTokens: [],
+    exact: true,
+  },
+  delegates: {
+    path: '/delegates',
+    exact: true,
     isPrivate: false,
     forbiddenTokens: [],
   },
@@ -24,17 +53,32 @@ export default {
     isPrivate: false,
     forbiddenTokens: [],
   },
-  register: {
-    path: '/register',
-    isPrivate: false,
-    isSigninFlow: true,
-    forbiddenTokens: [],
-  },
   login: {
     path: '/login',
     isPrivate: false,
     isSigninFlow: true,
     exact: true,
+    forbiddenTokens: [],
+  },
+  manageAccounts: {
+    path: '/account/manage',
+    isPrivate: false,
+    forbiddenTokens: [],
+  },
+  network: {
+    path: '/network',
+    isPrivate: false,
+    forbiddenTokens: [],
+  },
+  reclaim: {
+    path: '/reclaim',
+    isPrivate: true,
+    forbiddenTokens: [],
+  },
+  register: {
+    path: '/register',
+    isPrivate: false,
+    isSigninFlow: true,
     forbiddenTokens: [],
   },
   termsOfUse: {
@@ -46,47 +90,23 @@ export default {
   transactions: {
     path: '/transactions',
     isPrivate: false,
-    forbiddenTokens: [tokenMap.BTC.key],
-  },
-  blocks: {
-    path: '/blocks',
-    isPrivate: false,
-    exact: true,
-    forbiddenTokens: [tokenMap.BTC.key],
-  },
-  block: {
-    path: '/block',
-    searchParam: 'id',
-    isPrivate: false,
-    exact: true,
-    forbiddenTokens: [tokenMap.BTC.key],
+    forbiddenTokens: [],
   },
   wallets: {
     path: '/wallets',
     isPrivate: false,
-    forbiddenTokens: [tokenMap.BTC.key],
-  },
-  network: {
-    path: '/network',
-    isPrivate: false,
-    forbiddenTokens: [tokenMap.BTC.key],
-  },
-  delegates: {
-    path: '/delegates',
-    exact: true,
-    isPrivate: false,
-    forbiddenTokens: [tokenMap.BTC.key],
-  },
-  reclaim: {
-    path: '/reclaim',
-    isPrivate: true,
-    forbiddenTokens: [tokenMap.BTC.key],
-  },
-  dashboard: {
-    path: '/',
-    isPrivate: false,
     forbiddenTokens: [],
-    exact: true,
+  },
+  wallet: {
+    path: '/wallet',
+    isPrivate: true,
+    exact: false,
+    forbiddenTokens: [],
+  },
+  backupRecoveryPhraseFlow: {
+    path: '/account/backup-recovery-phrase',
+    isPrivate: true,
+    forbiddenTokens: [],
   },
 };
 
@@ -109,15 +129,15 @@ export const modals = {
   },
   signMessage: {
     isPrivate: true,
-    forbiddenTokens: [tokenMap.BTC.key],
+    forbiddenTokens: [],
   },
   verifyMessage: {
     isPrivate: false,
-    forbiddenTokens: [tokenMap.BTC.key],
+    forbiddenTokens: [],
   },
   registerDelegate: {
     isPrivate: true,
-    forbiddenTokens: [tokenMap.BTC.key],
+    forbiddenTokens: [],
   },
   search: {
     isPrivate: false,
@@ -137,38 +157,42 @@ export const modals = {
   },
   lockedBalance: {
     isPrivate: true,
-    forbiddenTokens: [tokenMap.BTC.key],
+    forbiddenTokens: [],
   },
   editVote: {
     isPrivate: true,
-    forbiddenTokens: [tokenMap.BTC.key],
+    forbiddenTokens: [],
   },
   votingQueue: {
     isPrivate: true,
-    forbiddenTokens: [tokenMap.BTC.key],
+    forbiddenTokens: [],
   },
   deviceDisconnectDialog: {
     isPrivate: false,
-    forbiddenTokens: [tokenMap.BTC.key],
+    forbiddenTokens: [],
   },
   reclaimBalance: {
     isPrivate: true,
-    forbiddenTokens: [tokenMap.BTC.key],
+    forbiddenTokens: [],
   },
   multiSignature: {
     isPrivate: true,
-    forbiddenTokens: [tokenMap.BTC.key],
+    forbiddenTokens: [],
   },
   multisigAccountDetails: {
     isPrivate: false,
-    forbiddenTokens: [tokenMap.BTC.key],
+    forbiddenTokens: [],
   },
   signMultiSignTransaction: {
     isPrivate: true,
-    forbiddenTokens: [tokenMap.BTC.key],
+    forbiddenTokens: [],
   },
   delegatePerformance: {
     isPrivate: false,
-    forbiddenTokens: [tokenMap.BTC.key],
+    forbiddenTokens: [],
+  },
+  setPassword: {
+    isPrivate: false,
+    forbiddenTokens: [],
   },
 };

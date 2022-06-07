@@ -10,7 +10,6 @@ describe('DiscreetMode Component', () => {
     account: {
       info: {
         LSK: { summary: { address: 'lskehj8am9afxdz8arztqajy52acnoubkzvmo9cjy' } },
-        BTC: { summary: { address: 'mkakDp2f31btaXdATtAogoqwXcdx1PqqFo' } },
       },
     },
     isDiscreetMode: true,

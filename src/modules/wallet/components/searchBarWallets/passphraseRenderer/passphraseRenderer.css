@@ -116,7 +116,7 @@
     @mixin contentLarge bold;
 
     cursor: pointer;
-    margin-top: 20px;
+    margin: 20px 0;
     padding: 8px 26px;
     background-color: var(--color-white);
     font-weight: var(--font-weight-bold);

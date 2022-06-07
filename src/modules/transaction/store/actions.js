@@ -1,6 +1,5 @@
 import { to } from 'await-to-js';
 import { DEFAULT_LIMIT } from 'src/utils/monitor';
-import { tokenMap } from '@token/fungible/consts/tokens';
 import { MODULE_ASSETS_NAME_ID_MAP } from '@transaction/configuration/moduleAssets';
 import { signatureCollectionStatus } from '@transaction/configuration/txStatus';
 import { isEmpty } from 'src/utils/helpers';
@@ -54,8 +53,7 @@ export const transactionsRetrieved = ({
 }) => async (dispatch, getState) => {
   dispatch(loadingStarted(actionTypes.transactionsRetrieved));
 
-  const { network, token } = getState();
-  const activeToken = token.active;
+  const { network } = getState();
 
   const params = {
     address,
@@ -65,7 +63,7 @@ export const transactionsRetrieved = ({
   };
 
   try {
-    const { data, meta } = await getTransactions({ network, params }, activeToken);
+    const { data, meta } = await getTransactions({ network, params });
     dispatch({
       type: actionTypes.transactionsRetrieved,
       data: {
@@ -96,7 +94,6 @@ export const resetTransactionResult = () => ({
  * @param {String} data.recipientAddress
  * @param {Number} data.amount - In raw format (satoshi, beddows)
  * @param {Number} data.fee - In raw format, used for updating the TX List.
- * @param {Number} data.dynamicFeePerByte - In raw format, used for creating BTC transaction.
  * @param {Number} data.reference - Data field for LSK transactions
  */
 // eslint-disable-next-line max-statements
@@ -118,7 +115,7 @@ export const transactionCreated = data => async (dispatch, getState) => {
       passphrase: wallet.passphrase,
     },
     network,
-  }, activeToken));
+  }));
 
   if (error) {
     dispatch({
@@ -185,7 +182,6 @@ export const transactionDoubleSigned = () => async (dispatch, getState) => {
  * @param {String} transaction.recipientAddress
  * @param {Number} transaction.amount - In raw format (satoshi, beddows)
  * @param {Number} transaction.fee - In raw format, used for updating the TX List.
- * @param {Number} transaction.dynamicFeePerByte - In raw format, used for creating BTC transaction.
  * @param {Number} transaction.reference - Data field for LSK transactions
  */
 export const transactionBroadcasted = transaction =>
@@ -197,7 +193,6 @@ export const transactionBroadcasted = transaction =>
 
     const [error] = await to(broadcast(
       { transaction, serviceUrl, network },
-      activeToken,
     ));
 
     if (error) {
@@ -214,12 +209,10 @@ export const transactionBroadcasted = transaction =>
         data: transaction,
       });
 
-      if (activeToken === tokenMap.LSK.key) {
-        const transformedTransaction = transformTransaction(transaction);
+      const transformedTransaction = transformTransaction(transaction);
 
-        if (transformedTransaction.sender.address === wallet.info.LSK.summary.address) {
-          dispatch(pendingTransactionAdded({ ...transformedTransaction, isPending: true }));
-        }
+      if (transformedTransaction.sender.address === wallet.info.LSK.summary.address) {
+        dispatch(pendingTransactionAdded({ ...transformedTransaction, isPending: true }));
       }
 
       dispatch(timerReset());

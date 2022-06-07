@@ -1,9 +1,9 @@
-import React, { useMemo, useEffect } from 'react';
+import React, { useEffect, useMemo } from 'react';
 import { useSelector } from 'react-redux';
 import grid from 'flexboxgrid/dist/flexboxgrid.css';
 
 import { selectSearchParamValue } from 'src/utils/searchParams';
-import { selectAccount, selectNetwork } from '@common/store/selectors';
+import { selectActiveTokenAccount, selectNetwork } from '@common/store';
 import routes from '@screens/router/routes';
 import { extractAddressFromPublicKey } from '@wallet/utils/account';
 import Box from 'src/theme/box';
@@ -16,16 +16,18 @@ import Members from '../multisignatureMembers';
 
 import styles from './styles.css';
 
+const emptyKeys = {
+  numberOfSignatures: 1,
+  optionalKeys: [],
+  mandatoryKeys: [],
+};
+
 const MultisigAccountDetails = ({ t, wallet, history }) => {
-  const hostAccount = useSelector(selectAccount);
+  const hostAccount = useSelector(selectActiveTokenAccount);
   const network = useSelector(selectNetwork);
   const isHost = history.location.pathname === routes.wallet.path;
-  const data = isHost ? hostAccount.info.LSK : wallet.data;
-
-  if (Object.keys(data).length === 0) {
-    return null;
-  }
-  const { numberOfSignatures, optionalKeys, mandatoryKeys } = data.keys;
+  const data = isHost ? hostAccount : wallet.data;
+  const { numberOfSignatures, optionalKeys, mandatoryKeys } = data.keys || emptyKeys;
 
   const members = useMemo(
     () =>
@@ -42,7 +44,7 @@ const MultisigAccountDetails = ({ t, wallet, history }) => {
             mandatory: true,
           })),
         ),
-    [data.address],
+    [numberOfSignatures, optionalKeys, mandatoryKeys],
   );
 
   useEffect(() => {
@@ -83,7 +85,7 @@ const MultisigAccountDetails = ({ t, wallet, history }) => {
           </BoxInfoText>
           <Members members={members} t={t} />
           <div className={styles.infoContainer}>
-            <p>
+            <div className={styles.requiredSignatures}>
               {t('Required signatures')}
               <Tooltip position="top right" indent>
                 <span>
@@ -92,7 +94,7 @@ const MultisigAccountDetails = ({ t, wallet, history }) => {
                   )}
                 </span>
               </Tooltip>
-            </p>
+            </div>
             <span>{numberOfSignatures}</span>
           </div>
         </BoxContent>

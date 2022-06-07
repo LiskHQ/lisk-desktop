@@ -1,7 +1,6 @@
 import { parseSearchParams } from 'src/utils/searchParams';
 import { getAccounts } from '@wallet/utils/api';
 import { regex } from 'src/const/regex';
-import { tokenMap } from '@token/fungible/consts/tokens';
 import { validateAddress } from 'src/utils/validators';
 import { voteEdited } from '@dpos/validator/store/actions/voting';
 
@@ -55,7 +54,7 @@ const urlProcessor = (search, network) => {
   return getAccounts({
     network,
     params: { usernameList: [...votes, ...unvotes] },
-  }, tokenMap.LSK.key);
+  });
 };
 
 const setVotesByLaunchProtocol = search =>
@@ -65,7 +64,7 @@ const setVotesByLaunchProtocol = search =>
 
     return dispatch(
       voteEdited(accounts.data
-        .filter(({ summary }) => validateAddress(tokenMap.LSK.key, summary.address) === 0)
+        .filter(({ summary }) => validateAddress(summary.address) === 0)
         .map(
           ({ summary, dpos }) => ({ address: summary.address, username: dpos.delegate.username, amount: '' }),
         )),

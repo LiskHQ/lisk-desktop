@@ -2,7 +2,7 @@
 
 .optionsHolder {
   justify-content: center;
-  margin: 0 4px 20px 4px;
+  margin: 0 4px 32px 4px;
 
   & .option {
     display: flex;
@@ -15,6 +15,7 @@
   display: flex;
   flex-direction: column;
   width: 100%;
+  position: relative;
 
   & > h2 {
     @mixin contentLargest bold;
@@ -43,24 +44,6 @@
   }
 }
 
-.hrSection {
-  display: flex;
-  flex-basis: 100%;
-  align-items: center;
-  color: var(--color-slate-gray);
-  margin: 40px 0;
-}
-
-.hrSection::before,
-.hrSection::after {
-  content: "";
-  flex-grow: 1;
-  background: rgba(0, 0, 0, 0.15);
-  height: 1px;
-  font-size: 0px;
-  line-height: 0px;
-}
-
 .tipContainer {
   display: flex;
   flex-direction: row;
@@ -74,17 +57,17 @@
   }
 }
 
-.copyButtonContainer {
-  margin-top: 15px;
-  height: 32px;
-  display: flex;
-  justify-content: space-between;
-  width: 100%;
-  align-items: center;
-}
-
 .hidden {
   display: none;
+}
+
+.copyIcon {
+  filter: none;
+  margin-left: 7px;
+
+  &:hover {
+    filter: none;
+  }
 }
 
 .infoText {
@@ -101,8 +84,16 @@
   color: var(--color-slate-gray);
 }
 
-.copyIcon {
-  display: none;
+.copyPassphrase {
+  position: absolute;
+  top: 30px;
+  right: 0;
+  padding: 0 !important;
+
+  & > * {
+    display: flex;
+    justify-content: end;
+  }
 }
 
 @media (--medium-viewport) {

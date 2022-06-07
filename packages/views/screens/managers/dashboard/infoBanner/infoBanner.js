@@ -2,7 +2,6 @@ import React, { useState, useEffect } from 'react';
 import { withTranslation } from 'react-i18next';
 import { useSelector } from 'react-redux';
 import Icon from 'src/theme/Icon';
-import Illustration from 'src/modules/common/components/illustration';
 import styles from './infoBanner.css';
 
 const InfoBanner = ({
@@ -60,12 +59,6 @@ const InfoBanner = ({
             </p>
           </section>
         </div>
-      </div>
-      <div className={styles.illustrations}>
-        <Illustration
-          className={`${styles.active}`}
-          name="illustrationBtcSupport"
-        />
       </div>
     </div>
   );

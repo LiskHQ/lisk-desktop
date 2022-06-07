@@ -1,5 +1,6 @@
 import React, { useMemo } from 'react';
 import { useTranslation } from 'react-i18next';
+import { withRouter } from 'react-router';
 import * as yup from 'yup';
 import { useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
@@ -8,7 +9,8 @@ import Input from 'src/theme/Input';
 import { PrimaryButton } from 'src/theme/buttons';
 import CheckBox from 'src/theme/CheckBox';
 import Tooltip from 'src/theme/Tooltip';
-import styles from './SetPasswordFormField.css';
+import { encryptionAccount } from 'src/modules/account/utils';
+import styles from './SetPasswordForm.css';
 
 const setPasswordFormSchema = yup.object({
   password: yup.string().required()
@@ -18,7 +20,7 @@ const setPasswordFormSchema = yup.object({
   hasAgreed: yup.boolean().required(),
 }).required();
 
-function SetPasswordForm({ onSubmit }) {
+function SetPasswordForm({ onSubmit, recoveryPhrase }) {
   const { t } = useTranslation();
   const {
     register,
@@ -36,16 +38,20 @@ function SetPasswordForm({ onSubmit }) {
   const isButtonDisabled = useMemo(() =>
     !password?.length || !cPassword?.length || !hasAgreed,
   [formValues.password, formValues.cPassword, formValues.hasAgreed]);
+  const onFormSubmit = (values) => {
+    const accountSchema = encryptionAccount(recoveryPhrase, values.password);
+    onSubmit?.(accountSchema);
+  };
 
   return (
-    <div>
+    <div data-testid="setPasswordFormContainer" className={styles.container}>
       <div className={`${styles.titleHolder} ${grid['col-xs-12']}`}>
         <h1>{t('Set up device password')}</h1>
         <p>
           {t('This password is used to encrypt your secret recovery phrase, which will be used for managing your account.')}
         </p>
       </div>
-      <form onSubmit={handleSubmit(onSubmit)}>
+      <form onSubmit={handleSubmit(onFormSubmit)}>
         <div className={styles.fieldWrapper}>
           <Input
             size="xs"
@@ -116,4 +122,4 @@ function SetPasswordForm({ onSubmit }) {
   );
 }
 
-export default SetPasswordForm;
+export default withRouter(SetPasswordForm);

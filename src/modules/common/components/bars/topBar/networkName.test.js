@@ -119,24 +119,4 @@ describe('Network', () => {
       expect(wrapper.find('.network-name').text()).toBe('testnet');
     });
   });
-
-  it('renders nethash option as TESTNET when BTC', () => {
-    const props = {
-      t,
-      token: 'BTC',
-      network: {
-        name: 'customNode',
-        status: { online: true },
-        networks: {
-          BTC: {
-            nethash: customNodeHash,
-            serviceUrl: 'http://localhost:8080',
-          },
-        },
-      },
-    };
-    const wrapper = mount(<Network {...props} />);
-    expect(wrapper.find('.network-name').text()).toBe('custom node');
-    expect(wrapper.find('.network-address').text()).toBe('http://localhost:8080');
-  });
 });

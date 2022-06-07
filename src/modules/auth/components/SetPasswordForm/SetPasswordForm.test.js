@@ -1,7 +1,7 @@
-import React from 'react';
 import {
-  fireEvent, render, screen, waitFor,
+  fireEvent, screen, waitFor,
 } from '@testing-library/react';
+import { renderWithRouter } from 'src/utils/testHelpers';
 import SetPasswordForm from './SetPasswordForm';
 
 jest.mock('react-i18next');
@@ -15,7 +15,7 @@ let hasAgreed = null;
 let accountName = null;
 
 beforeEach(() => {
-  render(<SetPasswordForm {...props} />);
+  renderWithRouter(SetPasswordForm, props);
 
   password = screen.getByTestId('password');
   cPassword = screen.getByTestId('cPassword');

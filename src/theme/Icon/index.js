@@ -18,7 +18,6 @@ import balance from '@setup/react/assets/images/icons/balance.svg';
 import balanceDark from '@setup/react/assets/images/icons/balance-dark.svg';
 import bookmarksIconEmptyState from '@setup/react/assets/images/icons/bookmarks-empty-state.svg';
 import bookmarksIconEmptyStateDark from '@setup/react/assets/images/icons/bookmarks-empty-state-dark.svg';
-import btcIcon from '@setup/react/assets/images/icons/icon-btc.svg';
 import checkboxFilled from '@setup/react/assets/images/icons/checkmark-filled.svg';
 import checkmark from '@setup/react/assets/images/icons/checkmark.svg';
 import copy from '@setup/react/assets/images/icons/copy.svg';
@@ -107,7 +106,6 @@ import verifyMessageActive from '@setup/react/assets/images/icons/verifyActive.s
 import qrCodeActive from '@setup/react/assets/images/icons/qr-code-active.svg';
 import bookmark from '@setup/react/assets/images/icons/icon-bookmark.svg';
 import bookmarkActive from '@setup/react/assets/images/icons/icon-bookmark-active.svg';
-import bitcoinLogo from '@setup/react/assets/images/bitcoin-logo.svg';
 import toggleSidebar from '@setup/react/assets/images/icons/toggle-sidebar.svg';
 import toggleSidebarActive from '@setup/react/assets/images/icons/toggle-sidebar-active.svg';
 import darkMode from '@setup/react/assets/images/icons/dark-mode.svg';
@@ -165,8 +163,10 @@ import unlockTokenDark from '@setup/react/assets/images/icons/tx-unlock-dark.svg
 import votingQueueInactive from '@setup/react/assets/images/icons/voting-queue-inactive.svg';
 import votingQueueActive from '@setup/react/assets/images/icons/voting-queue-active.svg';
 import deleteIcon from '@setup/react/assets/images/icons/delete.svg';
+import deleteRedIcon from '@setup/react/assets/images/icons/delete-red-icon.svg';
 import arrowRightTailed from '@setup/react/assets/images/icons/arrow-right-tailed.svg';
 import download from '@setup/react/assets/images/icons/download.svg';
+import downloadBlue from '@setup/react/assets/images/icons/download-blue.svg';
 import registerMultisignatureGroup from '@setup/react/assets/images/icons/multisignature.svg';
 import multisignatureTransaction from '@setup/react/assets/images/icons/multisignatureTransaction.svg';
 import multisignatureTransactionDark from '@setup/react/assets/images/icons/multisignatureTransaction-dark.svg';
@@ -203,8 +203,11 @@ import reportDelegateMisbehaviorDark from '@setup/react/assets/images/icons/repo
 import downloadUpdateFinish from '@setup/react/assets/images/icons/download-update-finish.svg';
 import downloadUpdateProgress from '@setup/react/assets/images/icons/download-update-progress.svg';
 import whiteLinkIcon from '@setup/react/assets/images/icons/white-link-icon.svg';
+import personIcon from '@setup/react/assets/images/icons/person-blue.svg';
 import verticalDots from '@setup/react/assets/images/icons/vertical-dots.svg';
 import switchIcon from '@setup/react/assets/images/icons/switch.svg';
+import secretPassphrase from '@setup/react/assets/images/icons/secret-passphrase.svg';
+import accountUpload from '@setup/react/assets/images/icons/account-upload.svg';
 
 export const icons = {
   academy,
@@ -220,7 +223,6 @@ export const icons = {
   arrowRightCircle,
   balance,
   bookmarksIconEmptyState,
-  btcIcon,
   calendar,
   calendarDark,
   checkboxFilled,
@@ -325,7 +327,6 @@ export const icons = {
   newsFeedBlogDark,
   bookmark,
   bookmarkActive,
-  bitcoinLogo,
   toggleSidebar,
   toggleSidebarActive,
   darkMode,
@@ -370,6 +371,7 @@ export const icons = {
   votingQueueInactive,
   votingQueueActive,
   download,
+  downloadBlue,
   upload,
   delegateForged,
   delegateForgedDark,
@@ -408,8 +410,12 @@ export const icons = {
   downloadUpdateProgress,
   downloadUpdateFinish,
   whiteLinkIcon,
+  personIcon,
   verticalDots,
   switchIcon,
+  deleteRedIcon,
+  secretPassphrase,
+  accountUpload,
 };
 
 const Icon = ({ name, noTheme, ...props }) => {

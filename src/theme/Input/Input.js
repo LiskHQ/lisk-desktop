@@ -43,7 +43,11 @@ const getInputClass = ({
 
 function PasswordTypeToggler({ onClick, isPasswordVisible, hasNotification }) {
   return (
-    <button onClick={onClick} className={`${styles.toggleBtn} ${hasNotification ? styles.rightOffset : ''}`}>
+    <button
+      type="button"
+      onClick={onClick}
+      className={`${styles.toggleBtn} ${hasNotification ? styles.rightOffset : ''}`}
+    >
       <Icon
         name={isPasswordVisible ? 'eyeActive' : 'eyeInactive'}
         className={styles.toggleIcon}

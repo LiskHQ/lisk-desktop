@@ -23,11 +23,5 @@ const bookmarks = {
     title: 'KTG',
     address: '12395L',
   }],
-  BTC: [
-    {
-      title: 'BBTTCC',
-      address: '324jhg35hg345',
-    },
-  ],
 };
 module.exports = bookmarks;

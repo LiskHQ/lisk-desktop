@@ -16,7 +16,7 @@ describe('TransactionPriority', () => {
 
   const props = {
     t: str => str,
-    token: tokenMap.BTC.key,
+    token: tokenMap.LSK.key,
     priorityOptions: [{ title: 'Low', value: baseFees.Low },
       { title: 'Medium', value: baseFees.Medium },
       { title: 'High', value: baseFees.High },
@@ -45,12 +45,6 @@ describe('TransactionPriority', () => {
     expect(wrapper).toContainMatchingElement('.option-Low');
     expect(wrapper).toContainMatchingElement('.option-Medium');
     expect(wrapper).toContainMatchingElement('.option-High');
-  });
-
-  it('renders custom fee option only when props.token is lsk', () => {
-    expect(wrapper).not.toContainMatchingElement('.option-Custom');
-    wrapper.setProps({ ...props, token: tokenMap.LSK.key });
-    expect(wrapper).toContainMatchingElement('.option-Custom');
   });
 
   it('renders custom fee option with input when props.token is lsk', () => {

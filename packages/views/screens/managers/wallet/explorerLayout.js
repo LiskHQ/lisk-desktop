@@ -42,14 +42,12 @@ const ExplorerLayout = ({ t, account, history }) => {
           id="transactions"
           address={address}
         />
-        {activeToken === 'BTC' ? null : (
-          <VotesTab
-            history={history}
-            address={address}
-            name={t('Voting')}
-            id="voting"
-          />
-        )}
+        <VotesTab
+          history={history}
+          address={address}
+          name={t('Voting')}
+          id="voting"
+        />
         {!isDelegate ? null : (
           <DelegateTab
             tabClassName="delegate-statistics"

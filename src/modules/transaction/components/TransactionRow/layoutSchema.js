@@ -7,6 +7,7 @@ import styles from './schemas.css';
 const hosted = [Counterpart, Date, Fee, Assets, Amount];
 const full = [Sender, Recipient, Date, Amount, Fee, Status];
 const minimal = [Counterpart, Amount];
+const vote = [Sender, Date, Assets];
 
 const LayoutSchema = {
   full: {
@@ -20,6 +21,10 @@ const LayoutSchema = {
   minimal: {
     components: minimal,
     className: styles.minimalLayout,
+  },
+  vote: {
+    components: vote,
+    className: styles.voteLayout,
   },
   default: {
     components: full,

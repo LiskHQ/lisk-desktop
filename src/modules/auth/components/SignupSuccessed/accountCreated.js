@@ -10,12 +10,9 @@ import registerStyles from '../Signup/register.css';
 import styles from './accountCreated.css';
 
 const AccountCreated = ({ t }) => (
-  <>
+  <div className={styles.container}>
     <div className={`${registerStyles.titleHolder}`}>
-      <h1>{t("Perfect! You're all set")}</h1>
-      <p className={styles.text}>
-        {t('You can now start sending and receiving LSK tokens')}
-      </p>
+      <h1>{t('Great! You have an account now')}</h1>
     </div>
     <Illustration className={styles.illustration} name="registrationSuccess" />
     <div className={`${registerStyles.buttonsHolder} ${grid.row}`}>
@@ -24,11 +21,11 @@ const AccountCreated = ({ t }) => (
         to={routes.login.path}
       >
         <PrimaryButton className={registerStyles.continueBtn}>
-          {t('Continue to sign in')}
+          {t('Continue to Add account')}
         </PrimaryButton>
       </Link>
     </div>
-  </>
+  </div>
 );
 
 export default withTranslation()(AccountCreated);

@@ -34,11 +34,11 @@ before(() => {
 
 beforeEach(() => {
   const settingsWithNetworkSelectorEnabled = { ...settingConstants, showNetwork: true };
-  const btcSettings = deepMergeObj(
+  const lskSettings = deepMergeObj(
     settingsWithNetworkSelectorEnabled,
-    { token: { list: { BTC: true } } },
+    { token: { list: { LSK: true } } },
   );
-  window.localStorage.setItem('settings', JSON.stringify(btcSettings));
+  window.localStorage.setItem('settings', JSON.stringify(lskSettings));
   window.localStorage.setItem('serviceUrl', networks.customNode.serviceUrl);
 });
 
