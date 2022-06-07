@@ -13,7 +13,6 @@ import {
   signMultisigTransaction,
   transformTransaction,
   createTransactionObject,
-  flattenTransaction,
 } from '../utils';
 
 /**
@@ -264,8 +263,7 @@ export const multisigTransactionSigned = ({
  * @param {object} data.rawTransaction Transaction config required by Lisk Element
  */
 export const signatureSkipped = ({ rawTransaction }) => {
-  const flatTx = flattenTransaction(rawTransaction);
-  const binaryTx = createTransactionObject(flatTx, rawTransaction.moduleAssetId);
+  const binaryTx = createTransactionObject(rawTransaction, rawTransaction.moduleAssetId);
 
   return ({
     type: actionTypes.signatureSkipped,

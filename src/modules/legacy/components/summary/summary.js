@@ -28,7 +28,9 @@ const Summary = ({
       moduleAssetId: MODULE_ASSETS_NAME_ID_MAP.reclaimLSK,
       nonce: account.info.LSK.sequence.nonce,
       senderPublicKey: account.info.LSK.summary.publicKey,
-      amount: account.info.LSK.legacy.balance,
+      asset: {
+        amount: account.info.LSK.legacy.balance,
+      },
     },
   });
 

@@ -181,8 +181,11 @@ const Editor = ({
       moduleAssetId,
       nonce: account.sequence.nonce,
       senderPublicKey: account.summary.publicKey,
-      optionalKeys,
-      mandatoryKeys,
+      asset: {
+        optionalKeys,
+        mandatoryKeys,
+        numberOfSignatures: requiredSignatures,
+      },
     },
   });
 

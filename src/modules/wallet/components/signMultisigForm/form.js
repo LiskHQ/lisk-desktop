@@ -3,7 +3,6 @@ import React, { useState, useEffect } from 'react';
 import {
   transformTransaction,
   createTransactionObject,
-  flattenTransaction,
 } from '@transaction/utils/transaction';
 import { joinModuleAndAssetIds } from '@transaction/utils/moduleAssets';
 import Box from 'src/theme/box';
@@ -40,9 +39,8 @@ const Form = ({ t, nextStep, network }) => {
 
       const schema = network.networks.LSK.moduleAssetSchemas[moduleAssetId];
       const transformedTransaction = transformTransaction(value);
-      const flattenedTransaction = flattenTransaction(transformedTransaction);
       const transactionObject = createTransactionObject(
-        flattenedTransaction,
+        transformedTransaction,
         moduleAssetId,
       );
       const err = validateTransaction(schema, transactionObject);

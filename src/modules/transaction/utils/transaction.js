@@ -528,6 +528,7 @@ export const sign = async (
   isMultisignature, isMultiSignatureRegistration, keys, publicKey,
   moduleAssetId, rawTransaction, privateKey,
 ) => {
+  // @todo rawTransaction is changed
   if (!isEmpty(wallet.hwInfo)) {
     const signedTx = await signUsingHW(
       schema, transaction, wallet, networkIdentifier, network, keys, rawTransaction,
@@ -583,8 +584,7 @@ const signMultisigTransaction = async (
   /**
    * To do so, we have to  flatten, then create txObject
    */
-  const flatTransaction = flattenTransaction(transaction);
-  const transactionObject = createTransactionObject(flatTransaction, transaction.moduleAssetId);
+  const transactionObject = createTransactionObject(transaction, transaction.moduleAssetId);
 
   /**
    * remove excess optional signatures
@@ -599,7 +599,7 @@ const signMultisigTransaction = async (
     const result = await sign(
       account, schema, transactionObject, network, networkIdentifier,
       !!senderAccount.data, isGroupRegistration, keys, account.summary.publicKey,
-      transaction.moduleAssetId, flatTransaction, account.summary.privateKey,
+      transaction.moduleAssetId, transaction, account.summary.privateKey,
     );
     return [result];
   } catch (e) {

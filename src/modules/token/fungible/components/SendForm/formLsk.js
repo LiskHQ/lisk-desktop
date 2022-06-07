@@ -39,11 +39,13 @@ const FormLsk = (props) => {
     priorityOptions,
     transaction: {
       moduleAssetId,
-      amount: toRawLsk(amount.value),
-      recipientAddress: recipient.value,
       nonce: account.sequence?.nonce,
       senderPublicKey: account.summary?.publicKey,
-      data: reference.value,
+      asset: {
+        amount: toRawLsk(amount.value),
+        recipientAddress: recipient.value,
+        data: reference.value,
+      },
     },
   });
 
