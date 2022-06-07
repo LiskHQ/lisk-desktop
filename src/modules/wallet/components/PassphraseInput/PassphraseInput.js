@@ -192,8 +192,12 @@ class passphraseInput extends React.Component {
                   {`${i + 1}. `}
                 </span>
                 <Input
+                  name={`recovery-${i}`}
                   setRef={(ref) =>
-                    ref !== null && this.state.focus === i && ref.focus()}
+                    ref !== null
+                    && this.state.focus === i
+                    && ref !== document.activeElement
+                    && ref.focus()}
                   placeholder="_________"
                   className={[
                     partialPassphraseError[i] || passphraseIsInvalid

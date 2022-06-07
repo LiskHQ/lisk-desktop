@@ -5,7 +5,7 @@ import useCreateAccounts from '@auth/hooks/useCreateAccounts';
 import MultiStepProgressBar from 'src/theme/ProgressBarMultiStep';
 import MultiStep from 'src/modules/common/components/MultiStep';
 import ChooseAvatar from '../ChooseAvatar/chooseAvatar';
-import BackupPassphrase from '../SavePassphrase/SavePassphrase';
+import SavePassphrase from '../SavePassphrase/SavePassphrase';
 import ConfirmPassphrase from '../ConfirmPassphrase/confirmPassphrase';
 import AccountCreated from '../SignupSuccessed/accountCreated';
 import styles from './register.css';
@@ -35,7 +35,7 @@ const Register = ({ account, token, history }) => {
           selected={selectedAccount}
           handleSelectAvatar={handleSelectAvatar}
         />
-        <BackupPassphrase account={selectedAccount} />
+        <SavePassphrase passphrase={selectedAccount.passphrase} />
         <ConfirmPassphrase
           account={selectedAccount}
           passphrase={selectedAccount.passphrase}

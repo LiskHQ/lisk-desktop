@@ -1,10 +1,9 @@
 import { setInStorage } from 'src/utils/localJSONStorage';
-import { pricesRetrieved, emptyTransactionsData, settingsUpdated } from '@common/store/actions';
+import { pricesRetrieved, settingsUpdated } from '@common/store/actions';
 import networkActionTypes from '@network/store/actionTypes';
 import actionTypes from './actionTypes';
 
 const settings = store => next => (action) => {
-  const { token } = store.getState();
   next(action);
   switch (action.type) {
     case networkActionTypes.networkConfigSet:
@@ -17,9 +16,6 @@ const settings = store => next => (action) => {
       }));
       break;
     case actionTypes.settingsUpdated:
-      if (action.data.token && action.data.token.active !== token.active) {
-        store.dispatch(emptyTransactionsData());
-      }
       setInStorage('token', store.getState().token);
       break;
     default:

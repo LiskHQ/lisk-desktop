@@ -227,7 +227,7 @@ describe('actions: voting', () => {
           fee: '10000000',
           unlockObjects: [],
         },
-      }, 'LSK');
+      });
       expect(dispatch).toHaveBeenCalledWith({
         type: txActionTypes.transactionCreatedSuccess,
         data: tx,

@@ -6,21 +6,20 @@ import PassphraseBackup from '@auth/components/passphraseBackup';
 import registerStyles from '../Signup/register.css';
 
 const SavePassphrase = ({
-  t, account, prevStep, nextStep,
+  t, passphrase, prevStep, nextStep,
 }) => (
   <>
-    <div className={`${registerStyles.titleHolder}`}>
-      <h1>{t('Save your passphrase')}</h1>
+    <div className={registerStyles.titleHolder}>
+      <h1>{t('Save your secret recovery phrase')}</h1>
       <p>{t('Keep it safe as it is the only way to access your wallet.')}</p>
     </div>
     <div
       className={`${grid['col-sm-10']} ${registerStyles.passphraseBackupContainer}`}
     >
       <PassphraseBackup
-        account={account}
+        passphrase={passphrase}
         t={t}
         paperWalletName="lisk_passphrase_store_safely"
-        passphraseName={t('Passphrase')}
       />
     </div>
 
@@ -33,7 +32,7 @@ const SavePassphrase = ({
           className={`${registerStyles.continueBtn} yes-its-safe-button`}
           onClick={() => nextStep()}
         >
-          {t('I wrote it down')}
+          {t('I have written them down')}
         </PrimaryButton>
       </span>
     </div>

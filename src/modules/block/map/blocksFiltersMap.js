@@ -1,4 +1,3 @@
-import { tokenMap } from '@token/fungible/consts/tokens';
 import { validateAddress } from 'src/utils/validators';
 
 const blocksFiltersMap = {
@@ -6,18 +5,18 @@ const blocksFiltersMap = {
     key: 'addressList',
     test: (addressList) =>
       !addressList.some((address) =>
-        validateAddress(tokenMap.LSK.key, address)),
+        validateAddress(address)),
   },
   timestamp: { key: 'timestamp', test: (str) => /^(\d+)?:(\d+)?$/.test(str) },
   generatorAddress: {
     key: 'generatorAddress',
-    test: (address) => !validateAddress(tokenMap.LSK.key, address),
+    test: (address) => !validateAddress(address),
   },
   generatorUsername: {
     key: 'generatorUsername',
     test: (username) =>
       typeof username === 'string'
-      && validateAddress(tokenMap.LSK.key, username) === 1,
+      && validateAddress(username) === 1,
   },
   height: { key: 'height', test: (num) => !Number.isNaN(parseInt(num, 10)) },
   limit: { key: 'limit', test: (num) => typeof num === 'number' },

@@ -2,7 +2,6 @@
 import React from 'react';
 import RecentTransactions from '@transaction/components/RecentTransactions';
 import WalletDetails from '../../../../wallet/detail/manager/walletDetails';
-import InfoBanner from './infoBanner/infoBanner';
 import Onboarding from './onboarding/onboarding';
 import NewsFeed from './newsFeed';
 import styles from './dashboard.css';
@@ -49,14 +48,6 @@ const Dashboard = ({ wallet, t }) => {
           slides={getOnboardingSlides(t)}
           actionButtonLabel={t('Got it, thanks!')}
           name={OnboardingBannerName}
-        />
-        <InfoBanner
-          name="btcRemoval"
-          infoMessage={t('Please note: BTC support has been removed as of Lisk v2.2.0')}
-          infoDescription={t('If you are affected by this change, please click the link below to learn how to access your BTC using an alternative application.')}
-          infoLabel="Update"
-          infoLink="https://lisk.com/blog/development/lisk-desktop-220-release"
-          show={localStorage.getItem(OnboardingBannerName)}
         />
         <div className={`${styles.main}`}>
           <div className={styles.subContainer}>

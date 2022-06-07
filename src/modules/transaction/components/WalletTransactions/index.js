@@ -4,7 +4,6 @@ import withFilters from 'src/utils/withFilters';
 import withData from 'src/utils/withData';
 import { getDelegates } from '@dpos/validator/api';
 import { DEFAULT_LIMIT } from 'src/utils/monitor';
-import { selectActiveToken } from '@common/store';
 import TransactionsList from './TransactionList';
 import { normalizeTransactionParams } from '../../utils';
 import { getTransactions } from '../../api';
@@ -21,9 +20,8 @@ export default compose(
   withData({
     transactions: {
       apiUtil: (network, { token, ...params }) =>
-        getTransactions({ network, params: normalizeTransactionParams(params) }, token),
-      getApiParams: (state, { address, sort }) => ({
-        token: selectActiveToken(state),
+        getTransactions({ network, params: normalizeTransactionParams(params) }),
+      getApiParams: (_, { address, sort }) => ({
         address,
         sort,
         limit: DEFAULT_LIMIT,

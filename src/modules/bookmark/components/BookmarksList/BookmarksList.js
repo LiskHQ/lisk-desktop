@@ -3,7 +3,6 @@ import { connect } from 'react-redux';
 import { withTranslation } from 'react-i18next';
 import { Link } from 'react-router-dom';
 import routes from '@screens/router/routes';
-import { tokenMap } from '@token/fungible/consts/tokens';
 import Tooltip from 'src/theme/Tooltip';
 import { Input } from 'src/theme';
 import { PrimaryButton, TertiaryButton } from 'src/theme/buttons';
@@ -167,12 +166,10 @@ export class BookmarksList extends React.Component {
                   to={`${routes.explorer.path}?address=${bookmark.address}`}
                 >
                   <div className={styles.avatarAndDescriptionWrapper}>
-                    {token.active === tokenMap.LSK.key ? (
-                      <WalletVisual
-                        className={styles.avatar}
-                        address={bookmark.address}
-                      />
-                    ) : null}
+                    <WalletVisual
+                      className={styles.avatar}
+                      address={bookmark.address}
+                    />
                     {editedAddress === bookmark.address ? (
                       <Input
                         autoComplete="off"

@@ -7,8 +7,8 @@ import DialogLink from 'src/theme/dialog/link';
 import {
   calculateBalanceLockedInUnvotes,
   calculateBalanceLockedInVotes,
-  getActiveTokenAccount,
 } from '@wallet/utils/account';
+import { selectActiveTokenAccount } from '@common/store';
 import Icon from 'src/theme/Icon';
 import styles from './BalanceInfo.css';
 
@@ -35,7 +35,7 @@ const Link = ({
 const LockedBalanceLink = ({
   account, isWalletRoute, style, icon,
 }) => {
-  const host = useSelector((state) => getActiveTokenAccount(state));
+  const host = useSelector((state) => selectActiveTokenAccount(state));
   let lockedInVotes = 0;
 
   if (isWalletRoute && host) {

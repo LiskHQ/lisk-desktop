@@ -1,14 +1,9 @@
 /* eslint-disable import/prefer-default-export */
-import { tokenMap } from '@token/fungible/consts/tokens';
 import { MIN_ACCOUNT_BALANCE } from '@transaction/configuration/transactions';
 import { toRawLsk } from '@token/fungible/utils/lsk';
 
-const calculateAvailableBalance = (balance, token) => {
-  if (token !== tokenMap.LSK.key) {
-    return balance;
-  }
-  return Math.max(balance - MIN_ACCOUNT_BALANCE, 0);
-};
+const calculateAvailableBalance = (balance) =>
+  Math.max(balance - MIN_ACCOUNT_BALANCE, 0);
 
 const initialFee = {
   value: 0,
@@ -42,8 +37,7 @@ const reducer = (state, action) => {
 
     case actionTypes.setMaxAmount: {
       const balance = action.payload.wallet.token?.balance;
-      const token = action.payload.token;
-      const availableBalance = calculateAvailableBalance(balance, token);
+      const availableBalance = calculateAvailableBalance(balance);
       const result = {
         ...action.response,
         maxAmount: {

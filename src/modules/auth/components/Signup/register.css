@@ -47,7 +47,8 @@
   align-items: center;
   display: flex;
   flex-direction: column;
-  padding: 20px 0;
+  padding: 30px 0;
+  margin-top: 60px;
   width: 100%;
   max-width: 878px;
 
@@ -65,7 +66,7 @@
     @mixin contentLargest bold;
 
     border: none;
-    margin: 0;
+    margin: 32px 0 0;
     color: var(--color-ultramarine-blue) !important;
   }
 }
@@ -85,7 +86,7 @@
   color: var(--color-content);
   font-family: var(--heading-font);
   text-align: center;
-  margin: 10px 0;
+  margin: 16px 0 60px 0;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -97,7 +98,7 @@
     display: flex;
     justify-content: center;
     margin-top: 0px;
-    margin-bottom: 8px;
+    margin-bottom: 16px;
     color: var(--color-maastricht-blue);
 
     & > img {
@@ -109,14 +110,13 @@
     @mixin contentLargest;
 
     margin: 0;
-    color: var(--color-slate-gray);
+    color: var(--color-maastricht-blue);
     min-width: 450px;
   }
 }
 
 .passphraseBackupContainer {
   width: 100%;
-  margin: 20px 0;
   max-height: fit-content;
   min-width: 645px;
   flex: 1 1 auto;

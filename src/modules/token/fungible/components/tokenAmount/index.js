@@ -15,14 +15,14 @@ const trim = (value) => {
 const getInt = value => value.replace(IntegerReg, '');
 
 /**
- * Displays the LSK/BTC amount with Token sign next to the value
+ * Displays the LSK amount with Token sign next to the value
  *
  * @param {Object} params
- * @param {Boolean?} params.convert Should convert the value to Beddows/Satoshi. Default true.
- * @param {String} params.val Amount in Beddows/Satoshi or LSK/BTC
+ * @param {Boolean?} params.convert Should convert the value to Beddows. Default true.
+ * @param {String} params.val Amount in Beddows or LSK
  * @param {Boolean} params.showRounded Round the number (decimal)
  * @param {Boolean} params.showInt Remove the floating points
- * @param {String?} params.token An option of LSK and BTC
+ * @param {String?} params.token An option of LSK or any other token
  */
 const TokenAmount = ({
   val, showRounded, showInt, token, convert = true,

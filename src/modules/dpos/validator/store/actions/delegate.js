@@ -1,6 +1,5 @@
 /* eslint-disable max-lines */
 import { to } from 'await-to-js';
-import { tokenMap } from '@token/fungible/consts/tokens';
 import { MODULE_ASSETS_NAME_ID_MAP } from '@transaction/configuration/moduleAssets';
 import { toRawLsk } from '@token/fungible/utils/lsk';
 import { isEmpty } from 'src/utils/helpers';
@@ -33,7 +32,7 @@ export const delegateRegistered = ({ fee, username }) => async (dispatch, getSta
         username,
         moduleAssetId: MODULE_ASSETS_NAME_ID_MAP.registerDelegate,
       },
-    }, tokenMap.LSK.key),
+    }),
   );
 
   //

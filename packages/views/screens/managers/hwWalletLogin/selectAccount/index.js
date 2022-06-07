@@ -2,11 +2,11 @@
 import { connect } from 'react-redux';
 import { settingsUpdated } from 'src/modules/settings/store/actions';
 import { login } from '@auth/store/action';
-import { getActiveTokenAccount } from '@wallet/utils/account';
+import { selectActiveTokenAccount } from '@common/store';
 import SelectAccount from './selectAccount';
 
 const mapStateToProps = state => ({
-  account: getActiveTokenAccount(state),
+  account: selectActiveTokenAccount(state),
   settings: state.settings,
   network: state.network,
 });

@@ -1,6 +1,5 @@
 import React from 'react';
 import { mount } from 'enzyme';
-import * as bitcoin from 'bitcoinjs-lib';
 import { tokenMap, tokenKeys } from '@token/fungible/consts/tokens';
 import accounts from '@tests/constants/wallets';
 import AddBookmark from './AddBookmark';
@@ -8,7 +7,6 @@ import AddBookmark from './AddBookmark';
 describe('Add a new bookmark component', () => {
   const bookmarks = {
     LSK: [],
-    BTC: [],
   };
   const props = {
     t: v => v,
@@ -19,12 +17,6 @@ describe('Add a new bookmark component', () => {
     network: {
       name: 'testnet',
       networks: {
-        BTC: {
-          network: bitcoin.networks.testnet,
-          serviceUrl: 'https://btc.lisk.com',
-          minerFeesURL: 'https://bitcoinfees.earn.com/api/v1/fees/recommended',
-          derivationPath: "m/44'/1'/0'/0/0",
-        },
         LSK: {
           serviceUrl: 'https://service.lisk.com',
         },
@@ -47,7 +39,6 @@ describe('Add a new bookmark component', () => {
     prevStep: jest.fn(),
   };
   const addresses = {
-    BTC: 'mkakDp2f31btaXdATtAogoqwXcdx1PqqFo',
     LSK: accounts.genesis.summary.address,
   };
 
@@ -124,7 +115,6 @@ describe('Add a new bookmark component', () => {
       wrapper.setProps({
         bookmarks: {
           LSK: [{ address: addresses.LSK, title: 'genesis' }],
-          BTC: [{ address: addresses.BTC, title: 'btc' }],
         },
       });
     });

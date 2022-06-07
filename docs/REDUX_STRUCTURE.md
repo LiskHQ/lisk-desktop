@@ -43,7 +43,7 @@ Ideally we should end up with a structure similar to:
 {
   "accounts": { "info": { "tokenKey": {} }, "passphrase": "", "other account common info" },
   "bookmarks": {"tokenKey": [{ "address": "", "balance": "" }]},
-  "service": { "fee": {"LSK": {}, "BTC": {}}, "priceTicker": {"BTC": {}, "LSK": {}} },
+  "service": { "fee": {"LSK": {}}, "priceTicker": {"LSK": {}} },
   "LSK": { "delegate": {}, "voting": {}, "filters": {}, },
   "tokenKey": { "specific data for token" },
   "wallets": { "tokenKey": { "netCode": [] } },
@@ -102,17 +102,17 @@ function account(state = {}, action) {
 Above actions are not real use cases, just examples to illustrate.
 
 ## APIs
-APIs should go through the [api util](../src/utils/api/index.js) module so it's only needed to import the function after the api, and passing the desired token, resource and function, BTC API have some examples for `account`, we would need to move the `LSK` resources and calls to the same structure, so we can just call the same API function and get the desired result.  
+APIs should go through the [api util](../src/utils/api/index.js) module so it's only needed to import the function after the api, and passing the desired resource and function, the API have some examples for `account`, we would need to move the `LSK` resources and calls to the same structure, so we can just call the same API function and get the desired result.  
 The function would be something similar to:
 ```javascript
 // account API example
 /**
- * @param {String} {tokenKey} - Token key. e.g. LSK, BTC
+ * @param {String} {tokenKey} - Token key. e.g. LSK
  * @param {String} {address} - Address of the account.
  * @param {Object} {networkConfig} - config for  mainnet, testnet, custom node
  */
 export const getAccount = ({tokenKey, networkConfig, address }) =>
-  api[tokenKey].account.getAccount({ networkConfig, address);
+  api[tokenKey].account.getAccount({ networkConfig, address });
 ```
 In the example above we have a mapped function `getAccount` that expects a `tokenKey`, and the data that will be passed to the real API call, by normalizing the input and output of the API calls it's possible to have a generic API function that only needs the `tokenKey` and the normalized data.  
 And each token having it's own implementation on how to fetch the data and how to normalize it to save on the store.

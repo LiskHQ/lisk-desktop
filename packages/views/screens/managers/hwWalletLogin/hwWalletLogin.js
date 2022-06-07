@@ -22,7 +22,7 @@ const HardwareWalletLogin = ({
     settingsUpdated({
       token: {
         active: 'LSK',
-        list: { BTC: false, LSK: true },
+        list: { LSK: true },
       },
     });
 

@@ -13,7 +13,7 @@ const BlockRow = ({ data, className }) => (
   >
     <span className={grid['col-xs-3']}>{data.height}</span>
     <span className={grid['col-xs-3']}>
-      <DateTimeFromTimestamp time={data.timestamp * 1000} token="BTC" />
+      <DateTimeFromTimestamp time={data.timestamp} />
     </span>
     <span className={grid['col-xs-3']}>{data.generatorUsername}</span>
     <span className={grid['col-xs-2']}>{data.numberOfTransactions}</span>

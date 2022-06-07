@@ -1,7 +1,6 @@
 import React, { useEffect, useRef, useState } from 'react';
 
 import { networkKeys } from '@network/configuration/networks';
-import { tokenMap } from '@token/fungible/consts/tokens';
 import { getNetworkConfig } from '@network/utils/api';
 import { PrimaryButton } from 'src/theme/buttons';
 import { Input } from 'src/theme';
@@ -15,7 +14,6 @@ const validateNode = async (address) => {
         name: networkKeys.customNode,
         address,
       },
-      tokenMap.LSK.key,
     );
     if (response) {
       return true;

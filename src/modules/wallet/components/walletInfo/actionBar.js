@@ -1,6 +1,5 @@
 import React from 'react';
 import QRCode from 'qrcode.react';
-import { tokenMap } from '@token/fungible/consts/tokens';
 import { getAddress } from '@wallet/utils/hwManager';
 import { isEmpty } from 'src/utils/helpers';
 import Icon from 'src/theme/Icon';
@@ -19,11 +18,7 @@ const BookmarkIcon = ({ bookmark }) => (
 const getMultiSignatureComponent = (
   isLoggedInAccount,
   isMultisignature,
-  activeToken,
 ) => {
-  if (activeToken !== tokenMap.LSK.key) {
-    return null;
-  }
   if (!isLoggedInAccount && !isMultisignature) {
     return null;
   }
@@ -132,7 +127,6 @@ const ActionBar = ({
   const component = getMultiSignatureComponent(
     isLoggedInAccount,
     isMultisignature,
-    activeToken,
   );
 
   return (

@@ -161,7 +161,6 @@ or "warn/action" ineastd of "red/green"
   --color-request-textarea: var(--color-white-smoke);
   --color-active-tab: rgba(64, 112, 244, 0.1);
   --tab-border-color: transparent;
-  --color-btc: #f7931a;
   --color-strong-ink-blue: var(--color-ink-blue);
   --color-top-bar: #101c3d;
   --color-side-bar: var(--color-maastricht-blue);
@@ -181,6 +180,7 @@ or "warn/action" ineastd of "red/green"
   --color-tx-priority-btn-default: var(--color-maastricht-blue);
   --color-progress-bar: var(--color-ink-blue);
   --color-ghost-white: #f7f9fb;
+  --color-button-outline-color: var(--color-very-light-gray);
 
   /*************************
         Box
@@ -270,4 +270,5 @@ or "warn/action" ineastd of "red/green"
   --color-progress-bar: var(--color-jade-green);
   --color-zodiac-blue: #0c152e;
   --color-background-dropdown: var(--color-body-bg);
+  --color-button-outline-color: #4c4c4c;
 }

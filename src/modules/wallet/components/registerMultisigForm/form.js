@@ -155,7 +155,7 @@ const Editor = ({
     priorityOptions,
     prioritiesLoadError,
     loadingPriorities,
-  ] = useTransactionPriority(token);
+  ] = useTransactionPriority();
 
   const [mandatoryKeys, optionalKeys] = useMemo(() => {
     const mandatory = members

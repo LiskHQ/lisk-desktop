@@ -5,14 +5,12 @@ import withData from 'src/utils/withData';
 import { getAccount } from '@wallet/utils/api';
 import { selectSearchParamValue } from 'src/utils/searchParams';
 import ExplorerLayout from '@screens/managers/wallet/explorerLayout';
-import { selectActiveToken } from '@common/store';
 
 const apis = {
   account: {
     apiUtil: (network, { token, ...params }) => getAccount({ network, params }, token),
     defaultData: {},
     getApiParams: (state, props) => ({
-      token: selectActiveToken(state),
       address: selectSearchParamValue(props.history.location.search, 'address'),
       network: state.network,
     }),

@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 
 import WalletVisual from '@wallet/components/walletVisual';
-import useDecryptionAccount from '@account/hooks/useDecryptionAccount';
+import { decryptionAccount } from '@account/utils/decryptionAccount';
 import { Input } from 'src/theme';
 import Box from 'src/theme/box';
 import BoxContent from 'src/theme/box/content';
@@ -15,7 +15,7 @@ const EnterPasswordForm = ({ accountSchema, onEnterPasswordSuccess }) => {
   const [feedbackError, setFeedbackError] = useState('');
 
   const onSubmit = () => {
-    const { privateToken, recoveryPhrase, error } = useDecryptionAccount(accountSchema, password);
+    const { privateToken, recoveryPhrase, error } = decryptionAccount(accountSchema, password);
     if (error) {
       return setFeedbackError(error);
     }
@@ -39,6 +39,7 @@ const EnterPasswordForm = ({ accountSchema, onEnterPasswordSuccess }) => {
         )}
         <p className={styles.accountAddress}>{accountSchema?.metadata?.address}</p>
         <Input
+          name="passwordField"
           placeholder={t('Enter password')}
           type="password"
           value={password}

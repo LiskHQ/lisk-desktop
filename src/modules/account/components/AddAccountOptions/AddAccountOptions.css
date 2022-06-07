@@ -1,0 +1,92 @@
+@import '../../../../../setup/react/app/mixins.css';
+
+:root {
+  --login-title-font-size: 24px;
+}
+
+.container {
+  align-items: center;
+  display: flex;
+  flex-grow: 1;
+  margin: 0;
+  min-height: 100%;
+  justify-content: center;
+  text-align: center;
+  width: 100%;
+}
+
+.wrapper {
+  align-items: center;
+  display: flex;
+  flex-direction: column;
+  padding: 20px 24px;
+
+  & .button {
+    @mixin contentLargest bold;
+
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+  }
+}
+
+.titleHolder {
+  text-align: center;
+
+  & > h1 {
+    @mixin headingLarge;
+
+    display: flex;
+    justify-content: center;
+    margin: 0 0 10px;
+  }
+
+  & > p {
+    @mixin contentLargest;
+
+    color: var(--color-slate-gray);
+    margin: 0;
+    letter-spacing: 1px;
+
+    & > a {
+      margin: 20px 0px;
+    }
+  }
+}
+
+.addAccountOptionBtnWrapper {
+  width: 302px;
+  height: 218px;
+  border-radius: 6px;
+  background-color: var(--color-white);
+  transition: opacity 200ms linear;
+  border: none;
+
+  & > span {
+    color: var(--color-maastricht-blue);
+    font-size: 20px;
+    line-height: 130%;
+    font-weight: 600;
+    font-style: normal;
+  }
+
+  & > div {
+    margin-bottom: 29px;
+  }
+
+  &:hover {
+    box-sizing: border-box;
+    border: 2px solid var(--color-ultramarine-blue);
+    opacity: 0.7;
+  }
+}
+
+.selectRowWrapper {
+  width: 100%;
+  display: flex;
+  flex-direction: row;
+  column-gap: 20px;
+  margin: 50px 0px 70px 0px;
+}

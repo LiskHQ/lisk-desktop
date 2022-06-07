@@ -46,7 +46,7 @@ const SelectNameAndFee = ({
     priorityOptions,
     prioritiesLoadError,
     loadingPriorities,
-  ] = useTransactionPriority(token);
+  ] = useTransactionPriority();
 
   const { fee, minFee } = useTransactionFeeCalculation({
     network,

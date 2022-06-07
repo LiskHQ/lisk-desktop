@@ -153,7 +153,7 @@ describe('actions: account', () => {
           nonce: wallets.multiSig_candidate.sequence.nonce,
           senderPublicKey: wallets.multiSig_candidate.summary.publicKey,
         },
-      }, 'LSK');
+      });
       expect(dispatch).toHaveBeenCalledWith({
         type: txActionTypes.transactionCreatedSuccess,
         data: tx,
