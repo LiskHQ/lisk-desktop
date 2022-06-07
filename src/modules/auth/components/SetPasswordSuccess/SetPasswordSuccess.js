@@ -40,7 +40,7 @@ function SetPasswordSuccess({ onClose, encryptedPhrase, buttonText }) {
           </TertiaryButton>
         </div>
         <PrimaryButton className={styles.continueButton} onClick={onContinue}>
-          {t(buttonText)}
+          { buttonText || t('Continue to Dashboard')}
         </PrimaryButton>
       </BoxContent>
     </Box>
@@ -51,7 +51,6 @@ SetPasswordSuccess.defaultProps = {
   encryptedPhrase: {
     error: 'no encrypted backup found',
   },
-  buttonText: 'Continue to Dashboard',
 };
 
 export default SetPasswordSuccess;
