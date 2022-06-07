@@ -34,6 +34,7 @@ describe('EnterPasswordForm', () => {
         recoveryPhrase,
       }
     ));
+    props.recoveryPhrase = recoveryPhrase;
     wrapper = mount(<EnterPasswordForm {...props} />);
 
     wrapper.find('input').at(0).simulate('change', {
@@ -41,7 +42,7 @@ describe('EnterPasswordForm', () => {
         value: 'qwerty',
       },
     });
-    wrapper.find('button').first().simulate('click');
+    wrapper.find('.continue-btn').first().simulate('click');
     expect(decryptionAccount).toHaveBeenCalledWith(
       props.accountSchema,
       'qwerty',
@@ -49,6 +50,7 @@ describe('EnterPasswordForm', () => {
     expect(props.onEnterPasswordSuccess).toHaveBeenCalledWith({
       privateToken,
       recoveryPhrase,
+      accountSchema: props.accountSchema,
     });
   });
 
