@@ -16,6 +16,7 @@ const EnterPasswordForm = ({ accountSchema, onEnterPasswordSuccess }) => {
 
   const onSubmit = () => {
     const { privateToken, recoveryPhrase, error } = decryptionAccount(accountSchema, password);
+    // istanbul ignore else
     if (error) {
       return setFeedbackError(error);
     }
