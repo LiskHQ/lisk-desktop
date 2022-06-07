@@ -1,9 +1,9 @@
 import React from 'react';
 import { mount } from 'enzyme';
 import wallets from '@tests/constants/wallets';
-import TransactionSummary from './TransactionSummary';
+import TxSummarizer from '.';
 
-describe('TransactionSummary', () => {
+describe('TxSummarizer', () => {
   let props;
 
   beforeEach(() => {
@@ -24,13 +24,13 @@ describe('TransactionSummary', () => {
   });
 
   it('should render title', () => {
-    const wrapper = mount(<TransactionSummary {...props} />);
+    const wrapper = mount(<TxSummarizer {...props} />);
     expect(wrapper.find('h2').text()).toEqual(props.title);
   });
 
   it('should call action functions of each button', () => {
     const createTransaction = jest.fn();
-    const wrapper = mount(<TransactionSummary {... {
+    const wrapper = mount(<TxSummarizer {... {
       ...props,
       wallet: {
         ...props.wallet,
