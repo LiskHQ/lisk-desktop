@@ -1,9 +1,9 @@
 import { to } from 'await-to-js';
 import { MODULE_ASSETS_NAME_ID_MAP } from '@transaction/configuration/moduleAssets';
 import { toRawLsk } from '@token/fungible/utils/lsk';
-import { isEmpty } from 'src/utils/helpers';
 import { create } from '@transaction/api';
 import actionTypes from '@transaction/store/actionTypes';
+import { selectActiveTokenAccount } from '@common/store';
 
 // eslint-disable-next-line import/prefer-default-export
 export const balanceReclaimed = ({ fee }) => async (dispatch, getState) => {
@@ -11,11 +11,7 @@ export const balanceReclaimed = ({ fee }) => async (dispatch, getState) => {
   // Collect data
   //
   const state = getState();
-  const activeWallet = {
-    ...state.wallet.info.LSK,
-    ...!isEmpty(state.wallet.hwInfo) && { hwInfo: state.wallet.hwInfo },
-    ...state.wallet.passphrase && { passphrase: state.wallet.passphrase },
-  };
+  const activeWallet = selectActiveTokenAccount(state);
 
   //
   // Create the transaction

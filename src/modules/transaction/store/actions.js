@@ -2,10 +2,10 @@ import { to } from 'await-to-js';
 import { DEFAULT_LIMIT } from 'src/utils/monitor';
 import { MODULE_ASSETS_NAME_ID_MAP } from '@transaction/configuration/moduleAssets';
 import { signatureCollectionStatus } from '@transaction/configuration/txStatus';
-import { isEmpty } from 'src/utils/helpers';
 import { extractKeyPair } from '@wallet/utils/account';
 import { getTransactionSignatureStatus } from '@wallet/components/signMultisigView/helpers';
 import { timerReset } from '@auth/store/action';
+import { selectActiveTokenAccount } from '@common/store';
 import { loadingStarted, loadingFinished } from '@common/store/actions/loading';
 import actionTypes from './actionTypes';
 import { getTransactions, create, broadcast } from '../api';
@@ -98,23 +98,16 @@ export const resetTransactionResult = () => ({
  */
 // eslint-disable-next-line max-statements
 export const transactionCreated = data => async (dispatch, getState) => {
-  const {
-    wallet, token, network,
-  } = getState();
-  const activeToken = token.active;
-  const hwInfo = isEmpty(wallet.hwInfo) ? undefined : wallet.hwInfo; // @todo remove this by #3898
+  const state = getState();
+  const wallet = selectActiveTokenAccount(state);
 
   const [error, tx] = await to(create({
     transactionObject: {
       ...data,
       moduleAssetId: MODULE_ASSETS_NAME_ID_MAP.transfer,
     },
-    wallet: {
-      ...wallet.info[activeToken],
-      hwInfo,
-      passphrase: wallet.passphrase,
-    },
-    network,
+    wallet,
+    network: state.network,
   }));
 
   if (error) {

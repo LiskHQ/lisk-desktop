@@ -2,11 +2,10 @@ import to from 'await-to-js';
 import { tokenMap } from '@token/fungible/consts/tokens';
 import { toRawLsk } from '@token/fungible/utils/lsk';
 import { MODULE_ASSETS_NAME_ID_MAP } from '@transaction/configuration/moduleAssets';
-import { selectCurrentBlockHeight } from '@common/store/selectors';
+import { selectActiveTokenAccount, selectCurrentBlockHeight } from '@common/store/selectors';
 import { create } from '@transaction/api';
 import { getUnlockableUnlockObjects } from '@wallet/utils/account';
 import { getAccount } from '@wallet/utils/api';
-import { isEmpty } from 'src/utils/helpers';
 import { timerReset } from '@auth/store/action';
 import txActionTypes from '@transaction/store/actionTypes';
 import { getVotes } from '../../api';
@@ -80,12 +79,7 @@ export const voteEdited = data => async (dispatch, getState) => {
 export const votesSubmitted = ({ fee, votes }) =>
   async (dispatch, getState) => {
     const state = getState();
-    // @todo Fix this by #3898
-    const activeWallet = {
-      ...state.wallet.info.LSK,
-      hwInfo: isEmpty(state.wallet.hwInfo) ? undefined : state.wallet.hwInfo,
-      passphrase: state.wallet.passphrase,
-    };
+    const activeWallet = selectActiveTokenAccount(state);
 
     const [error, tx] = await to(create({
       network: state.network,
@@ -150,12 +144,7 @@ export const balanceUnlocked = data => async (dispatch, getState) => {
   //
   const state = getState();
   const currentBlockHeight = selectCurrentBlockHeight(state);
-  // @todo Fix this by #3898
-  const activeWallet = {
-    ...state.wallet.info.LSK,
-    hwInfo: isEmpty(state.wallet.hwInfo) ? undefined : state.wallet.hwInfo,
-    passphrase: state.wallet.passphrase,
-  };
+  const activeWallet = selectActiveTokenAccount(state);
 
   //
   // Create the transaction

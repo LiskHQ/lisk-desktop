@@ -2,9 +2,9 @@
 import { to } from 'await-to-js';
 import { MODULE_ASSETS_NAME_ID_MAP } from '@transaction/configuration/moduleAssets';
 import { toRawLsk } from '@token/fungible/utils/lsk';
-import { isEmpty } from 'src/utils/helpers';
 import { create } from '@transaction/api';
 import { getAccount } from '@wallet/utils/api';
+import { selectActiveTokenAccount } from '@common/store';
 import { networkStatusUpdated } from '@network/store/action';
 import transactionActionTypes from '@transaction/store/actionTypes';
 import actionTypes from './actionTypes';
@@ -81,11 +81,7 @@ export const multisigGroupRegistered = ({
   // Collect data
   //
   const state = getState();
-  const activeWallet = {
-    ...state.wallet.info.LSK,
-    hwInfo: isEmpty(state.wallet.hwInfo) ? undefined : state.wallet.hwInfo,
-    passphrase: state.wallet.passphrase,
-  };
+  const activeWallet = selectActiveTokenAccount(state);
 
   //
   // Create the transaction
