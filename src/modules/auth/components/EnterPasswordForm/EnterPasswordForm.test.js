@@ -54,6 +54,24 @@ describe('EnterPasswordForm', () => {
     });
   });
 
+  it('should display error', () => {
+    const error = 'test error';
+    decryptionAccount.mockImplementation(() => (
+      {
+        error,
+      }
+    ));
+    wrapper = mount(<EnterPasswordForm {...props} />);
+
+    wrapper.find('input').at(0).simulate('change', {
+      target: {
+        value: 'qwerty',
+      },
+    });
+    wrapper.find('.continue-btn').first().simulate('click');
+    expect(wrapper.find('.feedback').last()).toHaveText('test error');
+  });
+
   it('should not call onEnterPasswordSuccess when onSubmit fails', () => {
     decryptionAccount.mockImplementation(() => (
       {

@@ -10,7 +10,7 @@ const RestoreAccountForm = ({ onBack, nextStep }) => {
   const [error, setError] = useState();
 
   const onContinue = () => {
-    // istanbul ignore else
+    // istanbul ignore next
     if (!value) {
       setError(t('Upload file is required'));
     } else {
