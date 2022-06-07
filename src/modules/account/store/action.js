@@ -12,3 +12,8 @@ export const setCurrentAccount = (accountSchema) => ({
   type: actionTypes.setCurrentAccount,
   accountSchema,
 });
+
+export const addAccount = (accountSchema) => ({
+  type: actionTypes.addAccount,
+  accountSchema,
+});

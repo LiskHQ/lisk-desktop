@@ -2,9 +2,10 @@
 import actionTypes from './actionTypes';
 import {
   setCurrentAccount,
+  addAccount,
 } from './action';
 
-describe('actions: account', () => {
+describe('actions:  account', () => {
   beforeEach(() => {
     jest.resetAllMocks();
   });
@@ -16,6 +17,16 @@ describe('actions: account', () => {
       };
 
       expect(setCurrentAccount()).toEqual(expectedAction);
+    });
+  });
+
+  describe('add account', () => {
+    it('should create an action to add account', () => {
+      const expectedAction = {
+        type: actionTypes.addAccount,
+      };
+
+      expect(addAccount()).toEqual(expectedAction);
     });
   });
 });
