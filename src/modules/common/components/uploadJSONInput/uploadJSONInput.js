@@ -46,6 +46,7 @@ const UploadJSONInput = ({
           value={value && !error ? JSON.stringify(value) : ''}
           readOnly
           className={`${styles.txInput} tx-sign-input`}
+          data-testid="tx-sign-input"
         />
         <span className={styles.fileInputLabel}>
           {t('Please paste the JSON here.')}

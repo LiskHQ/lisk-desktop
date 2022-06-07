@@ -36,4 +36,9 @@ describe('Restore account form component', () => {
     wrapper.find('button').first().simulate('click');
     expect(props.nextStep).toBeCalledWith(expect.objectContaining(JSONObject));
   });
+
+  it('should display an error message if no file was uploaded', () => {
+    wrapper.find('button').first().simulate('click');
+    expect(wrapper.findWhere((node) => node.text() === 'Upload file is required')).toBeTruthy();
+  });
 });
