@@ -1,6 +1,6 @@
 import { fireEvent, screen, waitFor } from '@testing-library/react';
-import { renderWithRouter } from 'src/utils/testHelpers';
 import * as reactRedux from 'react-redux';
+import { renderWithRouter } from 'src/utils/testHelpers';
 import mockSavedAccounts from '@tests/fixtures/accounts';
 import BackupRecoveryPhraseFlow from './BackupRecoveryPhraseFlow';
 
