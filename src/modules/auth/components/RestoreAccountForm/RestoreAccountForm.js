@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { PrimaryButton, TertiaryButton } from 'src/theme/buttons';
 import UploadJSONInput from 'src/modules/common/components/uploadJSONInput';
-import styles from './restoreAccountForm.css';
+import styles from './RestoreAccountForm.css';
 
 const RestoreAccountForm = ({ onBack, nextStep }) => {
   const { t } = useTranslation();

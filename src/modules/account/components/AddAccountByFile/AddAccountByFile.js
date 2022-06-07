@@ -6,9 +6,13 @@ import RestoreAccountForm from 'src/modules/auth/components/restoreAccountForm';
 import EnterPasswordForm from 'src/modules/auth/components/EnterPasswordForm';
 import MultiStep from 'src/modules/common/components/OldMultiStep';
 import styles from './AddAccountByFile.css';
+import { useCurrentAccount } from '../../hooks';
 
 const AddAccountByPassFile = ({ history }) => {
-  const onEnterPasswordSuccess = () => {
+  const [, setCurrentAccount] = useCurrentAccount();
+
+  const onEnterPasswordSuccess = ({ accountSchema }) => {
+    setCurrentAccount(accountSchema);
     history.push(routes.dashboard.path);
   };
 

@@ -70,6 +70,7 @@
   flex-direction: column;
   align-items: center;
   justify-content: end;
+  width: 100%;
 
   & > h1 {
     @mixin headingLarge;
@@ -89,4 +90,8 @@
 
     margin: 0;
   }
+}
+
+.fullWidth {
+  width: 100%;
 }
