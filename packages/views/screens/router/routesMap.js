@@ -12,7 +12,7 @@ import MonitorNetwork from '@network/manager/networkManager';
 import MonitorTransactions from '@screens/managers/monitor/transactions';
 import Register from '@auth/manager/SignupManager';
 import RegisterDelegate from '@dpos/validator/manager/registerDelegateManager';
-import Send from '@screens/managers/send';
+import Send from 'src/modules/token/fungible/components/SendView';
 import Settings from 'src/modules/settings/manager/SettingsManager';
 import SignMessage from '@message/manager/signMessageManager';
 import TermsOfUse from 'src/modules/common/components/TermsOfUse';
