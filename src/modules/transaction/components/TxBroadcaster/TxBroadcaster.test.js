@@ -2,11 +2,11 @@ import React from 'react';
 import { mount } from 'enzyme';
 import { txStatusTypes } from '@transaction/configuration/txStatus';
 import accounts from '@tests/constants/wallets';
-import TransactionResult from './TransactionResult';
+import TxBroadcaster from './TxBroadcaster';
 import Regular from '../Regular';
 import Multisignature from '../Multisignature';
 
-describe('TransactionResult', () => {
+describe('TxBroadcaster', () => {
   const props = {
     transactions: {
       txBroadcastError: null,
@@ -28,7 +28,7 @@ describe('TransactionResult', () => {
   };
 
   it('should render Regular component with props', () => {
-    const wrapper = mount(<TransactionResult {...props} />);
+    const wrapper = mount(<TxBroadcaster {...props} />);
     expect(wrapper.find(Regular)).toExist();
     expect(wrapper.find(Multisignature)).not.toExist();
   });
@@ -46,7 +46,7 @@ describe('TransactionResult', () => {
       },
       account: accounts.multiSig,
     };
-    const wrapper = mount(<TransactionResult {...customProps} />);
+    const wrapper = mount(<TxBroadcaster {...customProps} />);
     expect(wrapper.find(Multisignature)).toExist();
     expect(wrapper.find(Regular)).not.toExist();
   });

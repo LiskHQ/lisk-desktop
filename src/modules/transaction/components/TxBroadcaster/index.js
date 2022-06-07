@@ -5,7 +5,7 @@ import { withRouter } from 'react-router';
 import { withTranslation } from 'react-i18next';
 import { transactionBroadcasted, resetTransactionResult } from '@common/store/actions';
 import { selectActiveToken, selectActiveTokenAccount } from '@common/store';
-import TxBroadcaster from '../components/TxBroadcaster';
+import TxBroadcaster from './TxBroadcaster';
 
 const mapStateToProps = state => ({
   activeToken: selectActiveToken(state),
