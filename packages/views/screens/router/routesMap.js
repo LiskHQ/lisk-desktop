@@ -3,7 +3,7 @@ import BlockDetails from '@block/manager/blockDetailsManager';
 import Blocks from '@block/manager/blocksManager';
 import Bookmarks from '@bookmark/manager/BookmarkListManager';
 import Dashboard from '@screens/managers/dashboard';
-import DelegatesMonitor from '@screens/managers/monitor/delegates';
+import DelegatesMonitor from '@dpos/validator/components/delegatesMonitorView';
 import DelegatesPerformanceModal from '@screens/managers/wallet/delegatePerformanceModal';
 import HwWalletLogin from '@screens/managers/hwWalletLogin';
 import Login from '@auth/components/Signin';
@@ -32,8 +32,11 @@ import ReclaimBalanceModal from '@legacy/manager/reclaimBalanceModal';
 import RegisterMultisig from '@wallet/manager/registerMultisigManager';
 import SignMultiSig from '@wallet/manager/signMultisigManager';
 import MultisigAccountDetails from '@wallet/manager/multisigAccountDetailsManager';
-import AccountSelect from '@account/components/AccountSelect';
+import ManageAccounts from '@account/components/ManageAccounts';
+import AddAccountOptions from '@account/components/AddAccountOptions';
+import AddAccountBySecretRecovery from 'src/modules/account/components/AddAccountBySecretRecovery';
 import AddAccountByFile from '@account/components/AddAccountByFile';
+import AddAccountForm from '@account/components/AddAccountForm';
 
 export default {
   wallet: AccountDetails,
@@ -71,6 +74,9 @@ export default {
   multiSignature: RegisterMultisig,
   multisigAccountDetails: MultisigAccountDetails,
   signMultiSignTransaction: SignMultiSig,
-  accountSelect: AccountSelect,
+  manageAccounts: ManageAccounts,
+  addAccountOptions: AddAccountOptions,
+  accountAdd: AddAccountForm,
+  addAccountBySecretRecovery: AddAccountBySecretRecovery,
   addAccountByFile: AddAccountByFile,
 };

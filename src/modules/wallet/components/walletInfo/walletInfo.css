@@ -276,6 +276,9 @@
 
 .dropDownMenu {
   border: 0;
+  min-width: 180px !important;
+  top: calc(100% - 6px) !important;
+  margin-left: 14px;
 
   & > div {
     padding: 0;
@@ -301,7 +304,7 @@
     & > a {
       display: flex;
       color: var(--color-periwinkle-blue);
-      font-weight: var(--font-weight-bold);
+      font-weight: var(--font-weight-normal);
 
       & > img {
         margin-right: 10px;

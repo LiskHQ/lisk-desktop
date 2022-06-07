@@ -1,12 +1,43 @@
 export default {
-  wallet: {
-    path: '/wallet',
-    isPrivate: true,
-    exact: false,
-    forbiddenTokens: [],
-  },
   addAccount: {
     path: '/add-account',
+    isPrivate: false,
+    forbiddenTokens: [],
+  },
+  addAccountBySecretRecovery: {
+    path: '/account/add/secrete-recovery',
+    isPrivate: false,
+    forbiddenTokens: [],
+    exact: true,
+  },
+  addAccountOptions: {
+    path: '/account',
+    isPrivate: false,
+    forbiddenTokens: [],
+    exact: true,
+  },
+  block: {
+    path: '/block',
+    searchParam: 'id',
+    isPrivate: false,
+    exact: true,
+    forbiddenTokens: [],
+  },
+  blocks: {
+    path: '/blocks',
+    isPrivate: false,
+    exact: true,
+    forbiddenTokens: [],
+  },
+  dashboard: {
+    path: '/',
+    isPrivate: false,
+    forbiddenTokens: [],
+    exact: true,
+  },
+  delegates: {
+    path: '/delegates',
+    exact: true,
     isPrivate: false,
     forbiddenTokens: [],
   },
@@ -22,18 +53,39 @@ export default {
     isPrivate: false,
     forbiddenTokens: [],
   },
-  register: {
-    path: '/register',
-    isPrivate: false,
-    isSigninFlow: true,
-    forbiddenTokens: [],
-  },
   login: {
     path: '/login',
     isPrivate: false,
     isSigninFlow: true,
     exact: true,
     forbiddenTokens: [],
+  },
+  manageAccounts: {
+    path: '/account/manage',
+    isPrivate: false,
+    forbiddenTokens: [],
+  },
+  network: {
+    path: '/network',
+    isPrivate: false,
+    forbiddenTokens: [],
+  },
+  reclaim: {
+    path: '/reclaim',
+    isPrivate: true,
+    forbiddenTokens: [],
+  },
+  register: {
+    path: '/register',
+    isPrivate: false,
+    isSigninFlow: true,
+    forbiddenTokens: [],
+  },
+  addAccountByFile: {
+    path: '/account/add/by-file',
+    isPrivate: false,
+    forbiddenTokens: [],
+    exact: true,
   },
   termsOfUse: {
     path: '/terms-of-use',
@@ -46,56 +98,16 @@ export default {
     isPrivate: false,
     forbiddenTokens: [],
   },
-  blocks: {
-    path: '/blocks',
-    isPrivate: false,
-    exact: true,
-    forbiddenTokens: [],
-  },
-  block: {
-    path: '/block',
-    searchParam: 'id',
-    isPrivate: false,
-    exact: true,
-    forbiddenTokens: [],
-  },
   wallets: {
     path: '/wallets',
     isPrivate: false,
     forbiddenTokens: [],
   },
-  network: {
-    path: '/network',
-    isPrivate: false,
-    forbiddenTokens: [],
-  },
-  delegates: {
-    path: '/delegates',
-    exact: true,
-    isPrivate: false,
-    forbiddenTokens: [],
-  },
-  reclaim: {
-    path: '/reclaim',
+  wallet: {
+    path: '/wallet',
     isPrivate: true,
+    exact: false,
     forbiddenTokens: [],
-  },
-  accountSelect: {
-    path: '/account/manage',
-    isPrivate: false,
-    forbiddenTokens: [],
-  },
-  addAccountByFile: {
-    path: '/account/add/by-file',
-    isPrivate: false,
-    forbiddenTokens: [],
-    exact: true,
-  },
-  dashboard: {
-    path: '/',
-    isPrivate: false,
-    forbiddenTokens: [],
-    exact: true,
   },
 };
 
@@ -177,6 +189,10 @@ export const modals = {
     forbiddenTokens: [],
   },
   delegatePerformance: {
+    isPrivate: false,
+    forbiddenTokens: [],
+  },
+  setPassword: {
     isPrivate: false,
     forbiddenTokens: [],
   },
