@@ -7,9 +7,9 @@ import Illustration from 'src/modules/common/components/illustration';
 import BoxContent from 'src/theme/box/content';
 import { isEmpty } from 'src/utils/helpers';
 import { getDeviceType } from '@wallet/utils/hwManager';
-import styles from './TransactionSignature.css';
+import styles from './txSignatureCollector.css';
 
-const TransactionSignature = ({
+const TxSignatureCollector = ({
   t,
   transactions,
   account,
@@ -99,4 +99,4 @@ const TransactionSignature = ({
   );
 };
 
-export default TransactionSignature;
+export default TxSignatureCollector;

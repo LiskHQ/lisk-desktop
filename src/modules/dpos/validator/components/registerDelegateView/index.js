@@ -1,6 +1,6 @@
 import React from 'react';
 import MultiStep from 'src/modules/common/components/OldMultiStep';
-import TransactionSignature from '@transaction/components/TransactionSignature';
+import TxSignatureCollector from '@transaction/components/TxSignatureCollector';
 import Dialog from 'src/theme/dialog/dialog';
 import Form from '../registerDelegateForm';
 import Summary from '../registerDelegateSummary';
@@ -16,7 +16,7 @@ const RegisterDelegate = ({ history, t }) => (
     >
       <Form t={t} />
       <Summary t={t} />
-      <TransactionSignature t={t} />
+      <TxSignatureCollector t={t} />
       <Status t={t} />
     </MultiStep>
   </Dialog>

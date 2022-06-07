@@ -1,7 +1,7 @@
 /* istanbul ignore file */
 import React, { useEffect } from 'react';
 
-import TransactionSignature from '@transaction/components/TransactionSignature';
+import TxSignatureCollector from '@transaction/components/TxSignatureCollector';
 import { removeSearchParamsFromUrl } from 'src/utils/searchParams';
 import MultiStep from 'src/modules/common/components/OldMultiStep';
 import Form from '../voteForm';
@@ -29,7 +29,7 @@ const VotingQueue = ({ history, processLaunchProtocol }) => {
     >
       <Form />
       <Summary />
-      <TransactionSignature />
+      <TxSignatureCollector />
       <Status />
     </MultiStep>
   );

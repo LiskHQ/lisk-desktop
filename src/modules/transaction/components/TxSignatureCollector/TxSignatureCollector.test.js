@@ -2,13 +2,13 @@ import React from 'react';
 import { mount } from 'enzyme';
 import { secondPassphraseRemoved } from '@auth/store/action';
 import accounts from '@tests/constants/wallets';
-import TransactionSignature from './TransactionSignature';
+import TxSignatureCollector from './TxSignatureCollector';
 
 jest.mock('@auth/store/action', () => ({
   secondPassphraseRemoved: jest.fn(),
 }));
 
-describe('TransactionSignature', () => {
+describe('TxSignatureCollector', () => {
   const props = {
     t: key => key,
     transactions: {
@@ -27,7 +27,7 @@ describe('TransactionSignature', () => {
   };
 
   it('should call multisigTransactionSigned', () => {
-    mount(<TransactionSignature {...props} />);
+    mount(<TxSignatureCollector {...props} />);
     expect(props.multisigTransactionSigned).toHaveBeenCalledWith({
       rawTransaction: props.rawTransaction,
       sender: props.sender,
@@ -35,12 +35,12 @@ describe('TransactionSignature', () => {
   });
 
   it('should call actionFunction', () => {
-    mount(<TransactionSignature {...props} sender={undefined} />);
+    mount(<TxSignatureCollector {...props} sender={undefined} />);
     expect(props.actionFunction).toHaveBeenCalledWith({});
   });
 
   it('should call nextStep with props', () => {
-    const wrapper = mount(<TransactionSignature {...props} />);
+    const wrapper = mount(<TxSignatureCollector {...props} />);
 
     wrapper.setProps({
       transactions: {
@@ -71,7 +71,7 @@ describe('TransactionSignature', () => {
 
   it('should call transactionDoubleSigned with props', () => {
     const wrapper = mount(
-      <TransactionSignature
+      <TxSignatureCollector
         {...props}
         account={{
           ...props.account,
@@ -91,13 +91,13 @@ describe('TransactionSignature', () => {
   });
 
   it('should render empty div when is not hardware wallet', () => {
-    const wrapper = mount(<TransactionSignature {...props} />);
+    const wrapper = mount(<TxSignatureCollector {...props} />);
     expect(wrapper.html()).toEqual('<div></div>');
   });
 
   it('should render properly when account is hardware wallet', () => {
     const wrapper = mount(
-      <TransactionSignature
+      <TxSignatureCollector
         {...props}
         account={{
           ...accounts.genesis,
@@ -111,7 +111,7 @@ describe('TransactionSignature', () => {
 
   it('should unmount and remove stored second passphrase if it exists', () => {
     const wrapper = mount(
-      <TransactionSignature
+      <TxSignatureCollector
         {...props}
         account={{
           ...accounts.genesis,
