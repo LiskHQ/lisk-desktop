@@ -69,5 +69,6 @@ describe('EnterPasswordForm', () => {
     });
     wrapper.find('button').first().simulate('click');
     expect(props.onEnterPasswordSuccess).not.toHaveBeenCalledWith();
+    expect(wrapper.findWhere((node) => node.text() === 'error')).toBeTruthy();
   });
 });
