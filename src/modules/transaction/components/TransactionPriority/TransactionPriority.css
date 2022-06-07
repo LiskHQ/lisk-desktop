@@ -39,6 +39,8 @@
 }
 
 .wrapper {
+  padding: 0 var(--horizontal-padding-l);
+
   & > .col {
     display: flex;
     flex-direction: column;

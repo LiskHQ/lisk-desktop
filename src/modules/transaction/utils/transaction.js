@@ -138,7 +138,7 @@ const transformTransaction = ({
 const createTransactionObject = (tx, moduleAssetId) => {
   const [moduleID, assetID] = splitModuleAndAssetIds(moduleAssetId);
   const {
-    senderPublicKey, nonce, amount, recipientAddress, data, signatures = [], fee = 0,
+    senderPublicKey, nonce, signatures = [], fee = 0, asset,
   } = tx;
 
   const transaction = {
@@ -152,13 +152,13 @@ const createTransactionObject = (tx, moduleAssetId) => {
 
   switch (moduleAssetId) {
     case transfer: {
-      const binaryAddress = recipientAddress
-        ? getAddressFromBase32Address(recipientAddress) : EMPTY_BUFFER;
+      const binaryAddress = asset.recipientAddress
+        ? getAddressFromBase32Address(asset.recipientAddress) : EMPTY_BUFFER;
 
       transaction.asset = {
         recipientAddress: binaryAddress,
-        amount: BigInt(amount),
-        data,
+        amount: BigInt(asset.amount),
+        data: asset.data,
       };
 
       break;
@@ -166,13 +166,13 @@ const createTransactionObject = (tx, moduleAssetId) => {
 
     case registerDelegate: {
       transaction.asset = {
-        username: tx.username,
+        username: asset.username,
       };
       break;
     }
 
     case voteDelegate: {
-      const votes = tx.votes.map(vote => ({
+      const votes = asset.votes.map(vote => ({
         amount: BigInt(vote.amount),
         delegateAddress: getAddressFromBase32Address(vote.delegateAddress),
       }));
@@ -182,7 +182,7 @@ const createTransactionObject = (tx, moduleAssetId) => {
 
     case unlockToken: {
       transaction.asset = {
-        unlockObjects: tx.unlockObjects.map(unlockObject => ({
+        unlockObjects: asset.unlockObjects.map(unlockObject => ({
           amount: BigInt(unlockObject.amount),
           delegateAddress: getAddressFromBase32Address(unlockObject.delegateAddress),
           unvoteHeight: unlockObject.unvoteHeight,
@@ -193,16 +193,16 @@ const createTransactionObject = (tx, moduleAssetId) => {
 
     case reclaimLSK: {
       transaction.asset = {
-        amount: BigInt(amount),
+        amount: BigInt(asset.amount),
       };
       break;
     }
 
     case registerMultisignatureGroup: {
       transaction.asset = {
-        numberOfSignatures: Number(tx.numberOfSignatures),
-        mandatoryKeys: tx.mandatoryKeys.map(convertStringToBinary),
-        optionalKeys: tx.optionalKeys.map(convertStringToBinary),
+        numberOfSignatures: Number(asset.numberOfSignatures),
+        mandatoryKeys: asset.mandatoryKeys.map(convertStringToBinary),
+        optionalKeys: asset.optionalKeys.map(convertStringToBinary),
       };
       break;
     }
