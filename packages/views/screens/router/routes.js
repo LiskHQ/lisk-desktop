@@ -103,6 +103,11 @@ export default {
     exact: false,
     forbiddenTokens: [],
   },
+  backupRecoveryPhraseFlow: {
+    path: '/account/backup-recovery-phrase',
+    isPrivate: true,
+    forbiddenTokens: [],
+  },
 };
 
 export const modals = {

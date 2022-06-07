@@ -1,18 +1,17 @@
 import React from 'react';
 import { useTranslation } from 'react-i18next';
 import { PrimaryButton, TertiaryButton } from 'src/theme/buttons';
-import { downloadJSON, transactionToJSON } from '@transaction/utils';
+import { downloadJSON } from '@transaction/utils';
 import Box from 'src/theme/box';
 import BoxContent from 'src/theme/box/content';
 import Icon from 'src/theme/Icon';
 import styles from './SetPasswordSuccess.css';
 
-function SetPasswordSuccess({ onClose, encryptedPhrase }) {
+function SetPasswordSuccess({ onClose, encryptedPhrase, buttonText }) {
   const { t } = useTranslation();
 
   const onDownload = () => {
-    const encryptedJSON = JSON.parse(transactionToJSON(encryptedPhrase));
-    downloadJSON(encryptedJSON, 'encrypted_secret_recovery_phrase');
+    downloadJSON(encryptedPhrase, 'encrypted_secret_recovery_phrase');
   };
 
   const onContinue = () => onClose();
@@ -34,12 +33,14 @@ function SetPasswordSuccess({ onClose, encryptedPhrase }) {
             size="xs"
             onClick={onDownload}
           >
-            {t('Download')}
+            <span className={styles.buttonContent}>
+              {t('Download')}
+              <Icon name="downloadBlue" />
+            </span>
           </TertiaryButton>
-          <Icon name="downloadBlue" />
         </div>
         <PrimaryButton className={styles.continueButton} onClick={onContinue}>
-          {t('Continue to Dashboard')}
+          { buttonText || t('Continue to Dashboard')}
         </PrimaryButton>
       </BoxContent>
     </Box>
