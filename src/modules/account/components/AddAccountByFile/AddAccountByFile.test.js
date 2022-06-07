@@ -1,5 +1,5 @@
 import {
-  createEvent, fireEvent, screen, waitFor,
+  createEvent, fireEvent, screen,
 } from '@testing-library/react';
 import mockSavedAccounts from '@tests/fixtures/accounts';
 import * as reactRedux from 'react-redux';
