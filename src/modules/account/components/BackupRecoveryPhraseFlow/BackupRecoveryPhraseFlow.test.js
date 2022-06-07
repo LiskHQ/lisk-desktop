@@ -1,11 +1,13 @@
 import { fireEvent, screen, waitFor } from '@testing-library/react';
 import { renderWithRouter } from 'src/utils/testHelpers';
+import * as reactRedux from 'react-redux';
 import mockSavedAccounts from '@tests/fixtures/accounts';
 import BackupRecoveryPhraseFlow from './BackupRecoveryPhraseFlow';
 
 jest.mock('../../hooks/useAccounts', () => ({
   useAccounts: jest.fn().mockReturnValue([mockSavedAccounts]),
 }));
+reactRedux.useSelector = jest.fn().mockReturnValue(mockSavedAccounts[0]);
 
 const props = {
   history: { push: jest.fn() },
