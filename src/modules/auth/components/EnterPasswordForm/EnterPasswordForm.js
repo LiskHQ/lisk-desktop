@@ -49,7 +49,7 @@ const EnterPasswordForm = ({ accountSchema, onEnterPasswordSuccess }) => {
           feedback={feedbackError}
         />
         <PrimaryButton
-          className={styles.button}
+          className={`${styles.button} continue-btn`}
           onClick={onSubmit}
           disabled={!password}
         >

@@ -6,6 +6,7 @@ describe('Restore account form component', () => {
   let wrapper;
   const props = {
     onSubmit: jest.fn((value) => value),
+    nextStep: jest.fn(),
   };
 
   beforeEach(() => {
@@ -33,6 +34,6 @@ describe('Restore account form component', () => {
 
     wrapper.find('.tx-sign-input').first().simulate('paste', { clipboardData });
     wrapper.find('button').first().simulate('click');
-    expect(props.onSubmit).toBeCalledWith(expect.objectContaining(JSONObject));
+    expect(props.nextStep).toBeCalledWith(expect.objectContaining(JSONObject));
   });
 });

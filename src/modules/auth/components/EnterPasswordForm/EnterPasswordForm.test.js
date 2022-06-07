@@ -1,10 +1,10 @@
 import React from 'react';
 import { mount } from 'enzyme';
 
-import { decryptAccount } from '@account/utils/decryptAccount';
+import { decryptionAccount } from '../../../account/utils/decryptionAccount';
 import EnterPasswordForm from '.';
 
-jest.mock('@account/utils/decryptAccount');
+jest.mock('../../../account/utils/decryptionAccount');
 
 describe('EnterPasswordForm', () => {
   let wrapper;
@@ -28,12 +28,13 @@ describe('EnterPasswordForm', () => {
   it('should call onEnterPasswordSuccess when onSubmit click', () => {
     const privateKey = 'private-key-mock';
     const recoveryPhrase = 'target cancel solution recipe vague faint bomb convince pink vendor fresh patrol';
-    decryptAccount.mockImplementation(() => (
+    decryptionAccount.mockImplementation(() => (
       {
         privateKey,
         recoveryPhrase,
       }
     ));
+    props.recoveryPhrase = recoveryPhrase;
     wrapper = mount(<EnterPasswordForm {...props} />);
 
     wrapper.find('input').at(0).simulate('change', {
@@ -41,19 +42,20 @@ describe('EnterPasswordForm', () => {
         value: 'qwerty',
       },
     });
-    wrapper.find('button').first().simulate('click');
-    expect(decryptAccount).toHaveBeenCalledWith(
+    wrapper.find('.continue-btn').first().simulate('click');
+    expect(decryptionAccount).toHaveBeenCalledWith(
       props.accountSchema,
       'qwerty',
     );
     expect(props.onEnterPasswordSuccess).toHaveBeenCalledWith({
       privateKey,
       recoveryPhrase,
+      accountSchema: props.accountSchema,
     });
   });
 
   it('should not call onEnterPasswordSuccess when onSubmit fails', () => {
-    decryptAccount.mockImplementation(() => (
+    decryptionAccount.mockImplementation(() => (
       {
         error: 'error',
       }
