@@ -58,7 +58,9 @@ const SelectNameAndFee = ({
       moduleAssetId,
       nonce: account.sequence?.nonce,
       senderPublicKey: account.summary?.publicKey,
-      username: state.username,
+      asset: {
+        username: state.username,
+      },
     },
   });
 

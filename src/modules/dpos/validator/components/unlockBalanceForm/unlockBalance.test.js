@@ -124,4 +124,24 @@ describe('Unlock LSK modal', () => {
       },
     });
   });
+
+  it('calls nextStep when clicked on confirm', async () => {
+    wrapper.find('.unlock-btn button').simulate('click');
+    expect(props.nextStep).toBeCalledWith(
+      expect.objectContaining({ rawTransaction: { selectedFee: '100' } }),
+    );
+  });
+
+  it('does not call nextStep when unlockableBalance is zero', async () => {
+    const noUnlockProps = {
+      ...props,
+      data: {
+        ...props.data,
+        unlockableBalance: 0,
+      },
+    };
+    wrapper.setProps(noUnlockProps);
+    wrapper.find('.unlock-btn button').simulate('click');
+    expect(props.nextStep).not.toBeCalled();
+  });
 });

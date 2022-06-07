@@ -1,84 +1,70 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { useSelector } from 'react-redux';
-import {
-  calculateBalanceLockedInVotes,
-  calculateUnlockableBalance,
-  getUnlockableUnlockObjects,
-} from '@wallet/utils/account';
+import { useTranslation } from 'react-i18next';
 import { MODULE_ASSETS_NAME_ID_MAP } from '@transaction/configuration/moduleAssets';
-import TransactionPriority from '@transaction/components/TransactionPriority';
-import useTransactionFeeCalculation from '@transaction/hooks/useTransactionFeeCalculation';
-import useTransactionPriority from '@transaction/hooks/useTransactionPriority';
 import {
-  selectActiveToken,
   selectCurrentBlockHeight,
   selectActiveTokenAccount,
+  selectActiveToken,
 } from '@common/store';
-import Form from './unlockBalanceForm';
-import BalanceTable from './unlockBalanceTable';
+import BoxContent from 'src/theme/box/content';
+import BoxHeader from 'src/theme/box/header';
+import TxComposer from '@transaction/components/TxComposer';
+import getUnlockButtonTitle from '../../utils/getUnlockButtonTitle';
+import useUnlockableCalculator from '../../hooks/useUnlockableCalculator';
+import BalanceTable from './BalanceTable';
+import styles from './unlockBalance.css';
 
-const moduleAssetId = MODULE_ASSETS_NAME_ID_MAP.unlockToken;
-
-const LockedBalance = (props) => {
-  const wallet = useSelector(selectActiveTokenAccount);
-  const token = useSelector(selectActiveToken);
-  const network = useSelector(state => state.network);
+const UnlockBalanceForm = ({
+  nextStep, customFee, fee,
+}) => {
+  const { t } = useTranslation();
+  const activeToken = useSelector(selectActiveToken);
   const currentBlockHeight = useSelector(selectCurrentBlockHeight);
-  const lockedInVotes = useSelector(state => calculateBalanceLockedInVotes(state.voting));
-  const unlockableBalance = calculateUnlockableBalance(
-    wallet.dpos?.unlocking, currentBlockHeight,
-  );
-  const [customFee, setCustomFee] = useState();
-  const [
-    selectedPriority, selectTransactionPriority,
-    priorityOptions, prioritiesLoadError, loadingPriorities,
-  ] = useTransactionPriority();
+  const [unlockObjects, lockedInVotes, unlockableBalance] = useUnlockableCalculator();
+  const wallet = useSelector(selectActiveTokenAccount);
 
-  const { fee, minFee } = useTransactionFeeCalculation({
-    network,
-    selectedPriority,
-    token,
-    wallet,
-    priorityOptions,
-    transaction: {
-      moduleAssetId,
-      senderPublicKey: wallet.summary?.publicKey,
-      nonce: wallet.sequence?.nonce,
-      passphrase: wallet.passphrase,
-      unlockObjects: getUnlockableUnlockObjects(wallet.dpos?.unlocking, currentBlockHeight),
-    },
-  });
+  const onComposed = async (/* Here I can get the composed tx */) => {
+    nextStep({
+      rawTransaction: {
+        selectedFee: customFee ? customFee.value : fee.value,
+      },
+    });
+  };
+
+  const transaction = {
+    moduleAssetId: MODULE_ASSETS_NAME_ID_MAP.unlockToken,
+    asset: { unlockObjects },
+    isValid: unlockableBalance > 0,
+  };
 
   return (
-    <Form
-      data={{
-        customFee,
-        fee,
-        unlockableBalance,
-      }}
-      {...props}
+    <TxComposer
+      onComposed={onComposed}
+      className={styles.wrapper}
+      transaction={transaction}
+      buttonTitle={getUnlockButtonTitle(unlockableBalance, activeToken, t)}
     >
-      <BalanceTable
-        lockedInVotes={lockedInVotes}
-        unlockableBalance={unlockableBalance}
-        currentBlockHeight={currentBlockHeight}
-        account={wallet}
-      />
-      <TransactionPriority
-        token={token}
-        fee={fee}
-        minFee={Number(minFee.value)}
-        customFee={customFee ? customFee.value : undefined}
-        moduleAssetId={moduleAssetId}
-        setCustomFee={setCustomFee}
-        priorityOptions={priorityOptions}
-        selectedPriority={selectedPriority.selectedIndex}
-        setSelectedPriority={selectTransactionPriority}
-        loadError={prioritiesLoadError}
-        isLoading={loadingPriorities}
-      />
-    </Form>
+      <>
+        <BoxHeader className={styles.header}>
+          <h1>{t('Locked balance details')}</h1>
+        </BoxHeader>
+        <BoxContent className={styles.content}>
+          <p>
+            {t(
+              'Below are the details of your locked balances and the unlock waiting periods. From here you can submit an unlock transaction when waiting periods are over.',
+            )}
+          </p>
+          <BalanceTable
+            lockedInVotes={lockedInVotes}
+            unlockableBalance={unlockableBalance}
+            currentBlockHeight={currentBlockHeight}
+            account={wallet}
+          />
+        </BoxContent>
+      </>
+    </TxComposer>
   );
 };
 
-export default LockedBalance;
+export default UnlockBalanceForm;
