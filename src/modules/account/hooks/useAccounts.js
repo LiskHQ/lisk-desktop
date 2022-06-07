@@ -8,7 +8,7 @@ export function useAccounts() {
   const setAccount = (accountSchema) => {
     dispatch(addAccount(accountSchema));
   };
-  const currentAccount = useSelector(selectAccounts);
+  const accounts = useSelector(selectAccounts);
 
-  return [currentAccount, setAccount];
+  return { accounts, setAccount };
 }

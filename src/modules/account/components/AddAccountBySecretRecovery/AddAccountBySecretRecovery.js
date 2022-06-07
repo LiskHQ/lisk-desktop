@@ -6,7 +6,7 @@ import SetPasswordForm from 'src/modules/auth/components/SetPasswordForm/SetPass
 import MultiStep from 'src/modules/common/components/MultiStep';
 import SetPasswordSuccess from 'src/modules/auth/components/SetPasswordSuccess';
 import routes from '@views/screens/router/routes';
-import { useCurrentAccount } from '@account/hooks';
+import { useCurrentAccount, useAccounts } from '@account/hooks';
 import AddAccountForm from '../AddAccountForm';
 import styles from './AddAccountBySecretRecovery.css';
 
@@ -14,6 +14,7 @@ const AddAccountBySecretRecovery = ({ history, login }) => {
   const multiStepRef = useRef(null);
   const [passphrase, setPassphrase] = useState(null);
   const [currentAccount, setCurrentAccount] = useCurrentAccount();
+  const { setAccount } = useAccounts();
   const onAddAccount = (passphraseData) => {
     setPassphrase(passphraseData);
     multiStepRef.current.next();
@@ -21,11 +22,12 @@ const AddAccountBySecretRecovery = ({ history, login }) => {
 
   const onSetPassword = (account) => {
     setCurrentAccount(account);
+    setAccount(account);
     multiStepRef.current.next();
   };
 
   const onPasswordSetComplete = () => {
-    login(passphrase); // Todo this login method is depricated
+    login(passphrase); // Todo this login method is deprecated
     history.push(routes.dashboard.path);
   };
 

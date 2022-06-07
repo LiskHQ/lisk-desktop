@@ -1,4 +1,6 @@
 import { combineReducers } from 'redux';
+import { persistReducer } from 'redux-persist';
+import { storage } from '../../../../packages/common/store/index';
 import actionTypes from './actionTypes';
 
 /**
@@ -6,7 +8,7 @@ import actionTypes from './actionTypes';
  * @param {Object} state
  * @param {type: String, accountSchema: Object} action
  */
-const current = (state = {}, { type, accountSchema }) => {
+export const current = (state = {}, { type, accountSchema }) => {
   switch (type) {
     case actionTypes.setCurrentAccount:
       return accountSchema;
@@ -20,7 +22,7 @@ const current = (state = {}, { type, accountSchema }) => {
  * @param {Object} state
  * @param {type: String, accountSchema: Object} action
  */
-const list = (state = {}, { type, accountSchema }) => {
+export const list = (state = {}, { type, accountSchema }) => {
   switch (type) {
     case actionTypes.addAccount:
       if (!accountSchema?.metadata?.address) {
@@ -35,5 +37,14 @@ const list = (state = {}, { type, accountSchema }) => {
   }
 };
 
+const persistConfig = {
+  key: 'account',
+  storage,
+  whitelist: ['list'], // only navigation will be persisted
+  blacklist: ['current'],
+};
+
+const accountReducer = combineReducers({ current, list });
+
 // eslint-disable-next-line import/prefer-default-export
-export const account = combineReducers({ current, list });
+export const account = persistReducer(persistConfig, accountReducer);

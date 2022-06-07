@@ -7,7 +7,7 @@ import ManageAccounts from './ManageAccounts';
 
 jest.mock('react-i18next');
 jest.mock('../../hooks/useAccounts', () => ({
-  useAccounts: jest.fn().mockReturnValue([mockSavedAccounts]),
+  useAccounts: jest.fn().mockReturnValue({ accounts: mockSavedAccounts }),
 }));
 
 const props = {

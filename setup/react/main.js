@@ -2,10 +2,11 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import { HashRouter as Router } from 'react-router-dom';
 import { Provider } from 'react-redux';
+import { PersistGate } from 'redux-persist/integration/react';
 import { I18nextProvider } from 'react-i18next';
 import { externalLinks } from 'src/utils/externalLinks';
 import { cryptography } from '@liskhq/lisk-client';
-import store from '@common/store';
+import { store, persistedStore } from '@common/store';
 import ipcLocale from 'src/utils/ipcLocale';
 import updateApp from '@update/utils/updateApp';
 import i18n from 'src/utils/i18n/i18n';
@@ -32,11 +33,13 @@ const rootElement = document.getElementById('app');
 
 const renderWithRouter = Component => (
   <Provider store={store}>
-    <Router>
-      <I18nextProvider i18n={i18n}>
-        <Component />
-      </I18nextProvider>
-    </Router>
+    <PersistGate loading={null} persistor={persistedStore}>
+      <Router>
+        <I18nextProvider i18n={i18n}>
+          <Component />
+        </I18nextProvider>
+      </Router>
+    </PersistGate>
   </Provider>
 );
 

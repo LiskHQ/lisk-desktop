@@ -4,13 +4,13 @@ import Box from 'src/theme/box';
 import grid from 'flexboxgrid/dist/flexboxgrid.css';
 import { OutlineButton } from 'src/theme/buttons';
 import Icon from 'src/theme/Icon';
-import { useAccounts } from '../../hooks/useAccounts';
+import { useAccounts } from '@account/hooks';
 import styles from './ManageAccounts.css';
 import AccountRow from '../AccountRow';
 
 const ManageAccounts = ({ onSelectAccount, onAddAccount, onRemoveAccount }) => {
   const { t } = useTranslation();
-  const [accounts] = useAccounts();
+  const { accounts } = useAccounts();
   const [showRemove, setShowRemove] = useState(false);
 
   return (

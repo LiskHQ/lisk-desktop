@@ -8,8 +8,12 @@ import AddAccountByPassPhrase from './AddAccountBySecretRecovery';
 
 jest.mock('react-i18next');
 jest.mock('../../hooks/useAccounts', () => ({
-  useAccounts: jest.fn().mockReturnValue([mockSavedAccounts]),
+  useAccounts: jest.fn().mockReturnValue({
+    accounts: mockSavedAccounts,
+    setAccount: jest.fn(),
+  }),
 }));
+
 reactRedux.useSelector = jest.fn().mockReturnValue(mockSavedAccounts[0]);
 
 const props = {
