@@ -8,7 +8,6 @@ import Form from './form';
 
 const mapStateToProps = state => ({
   account: selectActiveTokenAccount(state),
-  network: state.network,
   votes: state.voting,
   isVotingTxPending: containsTransactionType(
     state.transactions.pending,

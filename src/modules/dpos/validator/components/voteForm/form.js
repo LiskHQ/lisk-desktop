@@ -1,26 +1,17 @@
-/* eslint-disable max-statements */
-import React, { useMemo, useState } from 'react';
-import { tokenMap } from '@token/fungible/consts/tokens';
+import React, { useMemo } from 'react';
 import { MODULE_ASSETS_NAME_ID_MAP } from '@transaction/configuration/moduleAssets';
 import { MIN_ACCOUNT_BALANCE } from '@transaction/configuration/transactions';
 import { toRawLsk } from '@token/fungible/utils/lsk';
-import TransactionPriority from '@transaction/components/TransactionPriority';
-import useTransactionFeeCalculation from '@transaction/hooks/useTransactionFeeCalculation';
-import useTransactionPriority from '@transaction/hooks/useTransactionPriority';
 import { normalizeVotesForTx } from '@transaction/utils';
-import Box from '@theme/box';
 import BoxContent from '@theme/box/content';
-import BoxFooter from '@theme/box/footer';
-import { PrimaryButton } from '@theme/buttons';
+import TxComposer from '@transaction/components/TxComposer';
 import Table from '@theme/table';
 import ToggleIcon from '../toggleIcon';
-
+import { VOTE_LIMIT } from '../../consts';
 import VoteRow from './voteRow';
 import EmptyState from './emptyState';
 import header from './tableHeader';
 import styles from './form.css';
-
-const VOTE_LIMIT = 10;
 
 /**
  * Determines the number of votes that have been
@@ -137,27 +128,13 @@ const validateVotes = (votes, balance, fee, resultingNumOfVotes, t) => {
   return { messages, error: !!messages.length };
 };
 
-const token = tokenMap.LSK.key;
-const moduleAssetId = MODULE_ASSETS_NAME_ID_MAP.voteDelegate;
-
-// eslint-disable-next-line max-statements
-const Editor = ({
+const VoteForm = ({
   t,
   votes,
   account,
-  network,
   isVotingTxPending,
   nextStep,
 }) => {
-  const [customFee, setCustomFee] = useState();
-  const [
-    selectedPriority,
-    selectTransactionPriority,
-    priorityOptions,
-    prioritiesLoadError,
-    loadingPriorities,
-  ] = useTransactionPriority();
-
   const changedVotes = Object.keys(votes)
     .filter(
       (address) => votes[address].unconfirmed !== votes[address].confirmed,
@@ -165,28 +142,11 @@ const Editor = ({
     .map((address) => ({ address, ...votes[address] }));
 
   const normalizedVotes = useMemo(() => normalizeVotesForTx(votes), [votes]);
-
-  const { fee, minFee } = useTransactionFeeCalculation({
-    network,
-    selectedPriority,
-    token,
-    wallet: account,
-    priorityOptions,
-    transaction: {
-      moduleAssetId,
-      nonce: account.sequence?.nonce,
-      senderPublicKey: account.summary?.publicKey,
-      asset: {
-        votes: normalizedVotes,
-      },
-    },
-  });
-
   const {
-    added,
-    edited,
-    removed,
-    selfUnvote,
+    // added,
+    // edited,
+    // removed,
+    // selfUnvote,
     availableVotes,
     resultingNumOfVotes,
   } = useMemo(() => getVoteStats(votes, account), [votes, account]);
@@ -194,95 +154,75 @@ const Editor = ({
   const feedback = validateVotes(
     votes,
     Number(account.token?.balance),
-    fee.value,
+    // fee.value, // @todo make sure this works fine
     resultingNumOfVotes,
     t,
   );
 
   const isCTADisabled = feedback.error || Object.keys(changedVotes).length === 0;
 
-  const goToNextStep = () => {
-    const feeValue = customFee ? customFee.value : fee.value;
-    nextStep({
-      added,
-      edited,
-      removed,
-      selfUnvote,
-      fee: toRawLsk(feeValue),
-      normalizedVotes,
-    });
+  const onComposed = (/* I can get the tx here */) => {
+    nextStep();
   };
 
   const showEmptyState = !changedVotes.length || isVotingTxPending;
+  const transaction = {
+    moduleAssetId: MODULE_ASSETS_NAME_ID_MAP.voteDelegate,
+    isValid: !isCTADisabled && !isVotingTxPending,
+    asset: {
+      votes: normalizedVotes,
+    },
+  };
 
   return (
     <section className={styles.wrapper}>
-      <Box>
-        <ToggleIcon isNotHeader />
-        <div className={styles.headerContainer}>
-          {!showEmptyState && (
+      <TxComposer
+        onComposed={onComposed}
+        transaction={transaction}
+      >
+        <>
+          <ToggleIcon isNotHeader />
+          <div className={styles.headerContainer}>
+            {!showEmptyState && (
+              <>
+                <span className={styles.title}>{t('Voting queue')}</span>
+                <div className={styles.votesAvailableCounter}>
+                  <span className="available-votes-num">{`${availableVotes}/`}</span>
+                  <span>
+                    {t('{{VOTE_LIMIT}} votes available for your account', {
+                      VOTE_LIMIT,
+                    })}
+                  </span>
+                </div>
+              </>
+            )}
+          </div>
+          {showEmptyState ? (
+            <EmptyState t={t} />
+          ) : (
             <>
-              <span className={styles.title}>{t('Voting queue')}</span>
-              <div className={styles.votesAvailableCounter}>
-                <span className="available-votes-num">{`${availableVotes}/`}</span>
-                <span>
-                  {t('{{VOTE_LIMIT}} votes available for your account', {
-                    VOTE_LIMIT,
-                  })}
-                </span>
-              </div>
+              <BoxContent className={styles.contentContainer}>
+                <div className={styles.contentScrollable}>
+                  <Table
+                    data={changedVotes}
+                    header={header(t)}
+                    row={VoteRow}
+                    iterationKey="address"
+                    canLoadMore={false}
+                  />
+                </div>
+              </BoxContent>
+              {feedback.error && (
+                <div className={`${styles.feedback} feedback`}>
+                  <span>{feedback.messages[0]}</span>
+                </div>
+              )}
             </>
           )}
-        </div>
-        {showEmptyState ? (
-          <EmptyState t={t} />
-        ) : (
-          <>
-            <BoxContent className={styles.contentContainer}>
-              <div className={styles.contentScrollable}>
-                <Table
-                  data={changedVotes}
-                  header={header(t)}
-                  row={VoteRow}
-                  iterationKey="address"
-                  canLoadMore={false}
-                />
-              </div>
-            </BoxContent>
-            <TransactionPriority
-              className={styles.txPriority}
-              token={token}
-              fee={fee}
-              minFee={Number(minFee.value)}
-              customFee={customFee ? customFee.value : undefined}
-              moduleAssetId={moduleAssetId}
-              setCustomFee={setCustomFee}
-              priorityOptions={priorityOptions}
-              selectedPriority={selectedPriority.selectedIndex}
-              setSelectedPriority={selectTransactionPriority}
-              loadError={prioritiesLoadError}
-              isLoading={loadingPriorities}
-            />
-            {feedback.error && (
-              <div className={`${styles.feedback} feedback`}>
-                <span>{feedback.messages[0]}</span>
-              </div>
-            )}
-            <BoxFooter>
-              <PrimaryButton
-                className="confirm"
-                size="l"
-                disabled={isCTADisabled || isVotingTxPending}
-                onClick={goToNextStep}
-              >
-                {t('Continue')}
-              </PrimaryButton>
-            </BoxFooter>
-          </>
-        )}
-      </Box>
+        </>
+      </TxComposer>
     </section>
   );
 };
 
-export default Editor;
+export default VoteForm;
