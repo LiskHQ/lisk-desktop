@@ -1,6 +1,6 @@
 import React from 'react';
 import { mount } from 'enzyme';
-import RestoreAccountForm from './index';
+import RestoreAccountForm from '.';
 
 describe('Restore account form component', () => {
   let wrapper;

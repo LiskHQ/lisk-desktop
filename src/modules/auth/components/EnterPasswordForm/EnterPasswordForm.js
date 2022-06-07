@@ -7,7 +7,7 @@ import { Input } from 'src/theme';
 import Box from 'src/theme/box';
 import BoxContent from 'src/theme/box/content';
 import { PrimaryButton } from 'src/theme/buttons';
-import styles from './enterPasswordForm.css';
+import styles from './EnterPasswordForm.css';
 
 const EnterPasswordForm = ({ accountSchema, onEnterPasswordSuccess }) => {
   const { t } = useTranslation();
@@ -19,7 +19,7 @@ const EnterPasswordForm = ({ accountSchema, onEnterPasswordSuccess }) => {
     if (error) {
       return setFeedbackError(error);
     }
-    return onEnterPasswordSuccess({ privateToken, recoveryPhrase });
+    return onEnterPasswordSuccess({ privateToken, recoveryPhrase, accountSchema });
   };
 
   return (
@@ -38,6 +38,8 @@ const EnterPasswordForm = ({ accountSchema, onEnterPasswordSuccess }) => {
         )}
         <p className={styles.accountAddress}>{accountSchema?.metadata?.address}</p>
         <Input
+          secureTextEntry
+          size="xs"
           placeholder={t('Enter password')}
           type="password"
           value={password}
