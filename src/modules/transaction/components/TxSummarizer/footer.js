@@ -8,7 +8,7 @@ import {
 import useSecondPassphrase from '@transaction/hooks/setSecondPassphrase';
 import PassphraseInput from '@wallet/components/PassphraseInput/PassphraseInput';
 import BoxFooter from 'src/theme/box/footer';
-import styles from './TransactionSummary.css';
+import styles from './txSummarizer.css';
 
 const Actions = ({
   isMultisignature,

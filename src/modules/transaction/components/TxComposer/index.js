@@ -41,7 +41,9 @@ const TxComposer = ({
   });
 
   useEffect(() => {
-    onComposed(status, { ...rawTx, fee: status.fee });
+    if (typeof onComposed === 'function') {
+      onComposed(status, { ...rawTx, fee: status.fee });
+    }
   }, [selectedPriority, transaction.asset]);
 
   return (

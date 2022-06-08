@@ -6,22 +6,25 @@ import BoxContent from 'src/theme/box/content';
 import Illustration from 'src/modules/common/components/illustration';
 import Tooltip from 'src/theme/Tooltip';
 import { tokenMap } from '@token/fungible/consts/tokens';
+import TransactionInfo from '../TransactionInfo';
 import Footer from './footer';
-import styles from './TransactionSummary.css';
+import styles from './txSummarizer.css';
 
-const TransactionSummary = ({
+const TxSummarizer = ({
   title,
   children,
   confirmButton,
   cancelButton,
   wallet,
   t,
-  fee,
   secondPassphraseStored,
   classNames,
   token,
   footerClassName,
+  rawTx,
+  summaryInfo,
 }) => {
+  const fee = !wallet.summary.isMultisignature ? rawTx.fee.value : 0;
   const tooltip = {
     title: t('Transaction fee'),
     children: t(
@@ -45,6 +48,13 @@ const TransactionSummary = ({
           />
         ) : null}
         {children}
+        <TransactionInfo
+          token={token}
+          summaryInfo={summaryInfo}
+          rawTx={rawTx}
+          account={wallet}
+          isMultisignature={wallet.summary.isMultisignature}
+        />
         {fee && (
           <section>
             <label>
@@ -75,4 +85,4 @@ const TransactionSummary = ({
   );
 };
 
-export default TransactionSummary;
+export default TxSummarizer;
