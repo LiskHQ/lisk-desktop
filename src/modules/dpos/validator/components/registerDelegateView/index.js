@@ -2,8 +2,8 @@ import React from 'react';
 import MultiStep from 'src/modules/common/components/OldMultiStep';
 import TxSignatureCollector from '@transaction/components/TxSignatureCollector';
 import Dialog from 'src/theme/dialog/dialog';
-import Form from '../registerDelegateForm';
-import Summary from '../registerDelegateSummary';
+import Form from '../RegisterDelegateForm';
+import Summary from '../RegisterDelegateSummary';
 import Status from '../registerDelegateStatus';
 import styles from './registerDelegate.css';
 

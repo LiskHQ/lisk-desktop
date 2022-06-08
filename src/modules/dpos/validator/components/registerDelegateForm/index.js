@@ -1,4 +1,4 @@
-import React, { useState, useRef } from 'react';
+import React, { useState, useRef, useEffect } from 'react';
 import { regex } from 'src/const/regex';
 import { MODULE_ASSETS_NAME_ID_MAP } from '@transaction/configuration/moduleAssets';
 import { getDelegate } from '@dpos/validator/api';
@@ -11,6 +11,24 @@ import { useSelector } from 'react-redux';
 import { useTranslation } from 'react-i18next';
 import styles from './form.css';
 
+const validateUsername = (query, t) => {
+  if (query.length === 0) {
+    return t('Username can not be empty.');
+  }
+  if (query.length < 2) {
+    return t('Username is too short.');
+  }
+  if (query.length > 20) {
+    return t('Username is too long.');
+  }
+  const hasInvalidChars = query.replace(regex.delegateSpecialChars, '');
+  if (hasInvalidChars) {
+    return t(`Invalid character ${hasInvalidChars.trim()}`);
+  }
+  return '';
+};
+
+// eslint-disable-next-line max-statements
 const RegisterDelegateForm = ({
   nextStep,
   // prevState,
@@ -18,75 +36,53 @@ const RegisterDelegateForm = ({
   const timeout = useRef();
   const { t } = useTranslation();
   const network = useSelector(state => state.network);
+  const [error, setError] = useState('');
+  const [loading, setLoading] = useState(false);
+  const [username, setUsername] = useState('');
 
-  const [username, setUsername] = useState({
-    value: '',
-    error: '',
-    loading: false,
-  });
-
-  const onComposed = (/* get the tx here */) => {
-    nextStep();
+  const onConfirm = (rawTx) => {
+    nextStep({ rawTx });
   };
 
-  const validateUsername = (query) => {
-    if (query.length > 20) {
-      return t('Username is too long.');
-    }
-    const hasInvalidChars = query.replace(regex.delegateSpecialChars, '');
-    if (hasInvalidChars) {
-      return t(`Invalid character ${hasInvalidChars.trim()}`);
-    }
-    return '';
-  };
-
-  const isUsernameFree = (value) => {
+  const isUsernameFree = () => {
     clearTimeout(timeout.current);
 
     timeout.current = setTimeout(() => {
-      getDelegate({ network, params: { username: value } })
+      setLoading(true);
+      getDelegate({ network, params: { username } })
         .then((response) => {
+          setLoading(false);
           if (response.data.length) {
-            setUsername({
-              value,
-              loading: false,
-              error: t('"{{username}}" is already taken.', { username: value }),
-            });
-          } else {
-            setUsername({
-              ...username,
-              loading: false,
-            });
+            setError(t('"{{username}}" is already taken.', { username }));
           }
         })
-        .catch(() => setUsername({ ...username, loading: false }));
+        .catch(() => setLoading(false));
     }, 1000);
   };
 
   const onChangeUsername = ({ target: { value } }) => {
-    const error = validateUsername(value);
-    if (value.length && !error) {
-      isUsernameFree(value);
-    }
-    setUsername({
-      loading: value.length && !error,
-      value,
-      error,
-    });
+    setError(validateUsername(value, t));
+    setUsername(value);
   };
+
+  useEffect(() => {
+    if (!error && username) {
+      isUsernameFree();
+    }
+  }, [username]);
 
   const transaction = {
     moduleAssetId: MODULE_ASSETS_NAME_ID_MAP.registerDelegate,
     asset: {
-      username: username.value,
+      username,
     },
-    isValid: !username.error && username.value.length > 0 && !username.loading,
+    isValid: !error && username.length > 0 && !loading,
   };
 
   return (
     <TxComposer
       className={styles.box}
-      onComposed={onComposed}
+      onConfirm={onConfirm}
       transaction={transaction}
     >
       <>
@@ -120,13 +116,13 @@ const RegisterDelegateForm = ({
               autoComplete="off"
               onChange={onChangeUsername}
               name="delegate-username"
-              value={username.username}
+              value={username}
               placeholder={t('e.g. peter_pan')}
               className={`${styles.inputUsername} select-name-input`}
-              error={username.error}
-              isLoading={username.loading}
-              status={username.error ? 'error' : 'ok'}
-              feedback={username.error}
+              error={error}
+              isLoading={loading}
+              status={error ? 'error' : 'ok'}
+              feedback={error}
             />
           </div>
         </BoxContent>
