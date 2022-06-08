@@ -5,7 +5,6 @@ import styles from './registerDelegateSummary.css';
 const RegisterDelegateSummary = ({
   delegateRegistered,
   rawTx,
-  account,
   prevStep,
   nextStep,
   t,
@@ -31,9 +30,7 @@ const RegisterDelegateSummary = ({
       title={t('Delegate registration summary')}
       confirmButton={onConfirmAction}
       cancelButton={onCancelAction}
-      fee={!account.summary.isMultisignature && rawTx.fee.value}
       classNames={`${styles.box} ${styles.summaryContainer}`}
-      isMultisignature={account.summary.isMultisignature}
       rawTx={rawTx}
     />
   );
