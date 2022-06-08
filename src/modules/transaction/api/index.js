@@ -262,7 +262,7 @@ export const getTransactionFee = async ({
   let numberOfEmptySignatures;
 
   if (moduleAssetId === MODULE_ASSETS_NAME_ID_MAP.registerMultisignatureGroup) {
-    const { optionalKeys, mandatoryKeys } = transaction;
+    const { optionalKeys, mandatoryKeys } = transaction.asset;
     numberOfSignatures = optionalKeys.length + mandatoryKeys.length + 1;
   } else if (account?.summary?.isMultisignature) {
     numberOfEmptySignatures = account.keys.members.length - numberOfSignatures;

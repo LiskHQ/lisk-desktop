@@ -619,7 +619,7 @@ const signMultisigTransaction = async (
  */
 const getNumberOfSignatures = (account, transaction) => {
   if (transaction?.moduleAssetId === registerMultisignatureGroup) {
-    return transaction.optionalKeys.length + transaction.mandatoryKeys.length + 1;
+    return transaction.asset.optionalKeys.length + transaction.asset.mandatoryKeys.length + 1;
   }
   if (account?.summary?.isMultisignature) {
     return account.keys.numberOfSignatures;
