@@ -1,5 +1,7 @@
 /* istanbul ignore file */
-const mockAccount = {
+import { extractKeyPair, extractAddressFromPublicKey } from 'src/modules/wallet/utils/account';
+
+export const mockAccount = {
   crypto: {
     kdf: 'argon2id',
     kdfparams: {
@@ -29,13 +31,36 @@ const mockAccount = {
   version: 1,
 };
 
+// eslint-disable-next-line no-unused-vars
+const encryptAES256GCMWithPassword = (plainText, password) => mockAccount.crypto;
+
 // eslint-disable-next-line
 export function encryptionAccount(recoveryPhrase, password) {
   // Todo
-  // 1- we need to generate public/Private token from recoveryPhrase
+  // 1- we need to generate public/Private key from recoveryPhrase
   // 2- we need to generate address
-  // 3- we need to encrypt recovery phrase and privateToken { privateToken, recoveryPhrase }
+  // 3- we need to encrypt recovery phrase and privateKey { privateKey, recoveryPhrase }
   // we need to generate the account Schema json
 
-  return mockAccount;
+  // const { enableCustomDerivationPath, customDerivationPath } = settings;
+  const { privateKey, publicKey, isValid } = extractKeyPair(recoveryPhrase);
+  if (!isValid) {
+    return 'Error extracting key pair';
+  }
+  const address = extractAddressFromPublicKey(publicKey);
+  const plainText = JSON.stringify({ privateKey, recoveryPhrase });
+  const crypto = encryptAES256GCMWithPassword(plainText, password);
+  return {
+    crypto,
+    metadata: {
+      name: 'test account',
+      description: 'ed25519 key pair',
+      pubkey: publicKey,
+      derivationPath: "m/44'/134'/0'",
+      address,
+      creationTime: '',
+      derivedFromUUID: 'fa3e4ceb-10dc-41ad-810e-17bf51ed93aa',
+    },
+    version: 1,
+  };
 }
