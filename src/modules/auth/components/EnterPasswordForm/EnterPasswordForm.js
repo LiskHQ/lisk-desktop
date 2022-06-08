@@ -9,17 +9,18 @@ import BoxContent from 'src/theme/box/content';
 import { PrimaryButton } from 'src/theme/buttons';
 import styles from './EnterPasswordForm.css';
 
-const EnterPasswordForm = ({ accountSchema, onEnterPasswordSuccess }) => {
+const EnterPasswordForm = ({ accountSchema, onEnterPasswordSuccess, nextStep }) => {
   const { t } = useTranslation();
   const [password, setPassword] = useState('');
   const [feedbackError, setFeedbackError] = useState('');
 
   const onSubmit = () => {
-    const { privateToken, recoveryPhrase, error } = decryptionAccount(accountSchema, password);
-    if (error) {
-      return setFeedbackError(error);
+    const account = decryptionAccount(accountSchema, password);
+    if (account.error) {
+      setFeedbackError(account.error);
     }
-    return onEnterPasswordSuccess({ privateToken, recoveryPhrase, accountSchema });
+    onEnterPasswordSuccess({ account, recoveryPhrase: account.recoveryPhrase });
+    nextStep({ encryptedPhrase: accountSchema });
   };
 
   return (
