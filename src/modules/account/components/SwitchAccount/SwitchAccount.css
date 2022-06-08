@@ -1,0 +1,36 @@
+@import '../../../../../setup/react/app/mixins.css';
+
+.container {
+  text-align: center;
+  max-width: 600px;
+  min-width: 350px;
+}
+
+.content {
+  & h1 {
+    margin: 0 0 16px 0;
+  }
+
+  & > .accountList {
+
+    & > .account {
+      display: flex;
+      align-items: center;
+
+      & > div:last-child {
+        text-align: start;
+
+        & > .accountName {
+
+        }
+
+        & > .accountAddress {
+          
+        }
+      }
+    }
+  }
+
+  & > .addAccountLink {
+  }
+}
