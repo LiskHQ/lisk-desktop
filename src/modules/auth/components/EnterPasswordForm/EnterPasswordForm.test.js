@@ -16,6 +16,7 @@ describe('EnterPasswordForm', () => {
       },
     },
     onEnterPasswordSuccess: jest.fn(),
+    nextStep: jest.fn(),
   };
 
   it('should display properly', () => {
@@ -48,9 +49,11 @@ describe('EnterPasswordForm', () => {
       'qwerty',
     );
     expect(props.onEnterPasswordSuccess).toHaveBeenCalledWith({
-      privateToken,
+      account: { privateToken, recoveryPhrase },
       recoveryPhrase,
-      accountSchema: props.accountSchema,
+    });
+    expect(props.nextStep).toHaveBeenCalledWith({
+      encryptedPhrase: props.accountSchema,
     });
   });
 
