@@ -1,6 +1,6 @@
 import { mountWithRouter } from 'src/utils/testHelpers';
 import accounts from '@tests/constants/wallets';
-import Summary from './summary';
+import Summary from './VoteSummary';
 
 const added = {
   lskdwsyfmcko6mcd357446yatromr9vzgu7eb8y11: {

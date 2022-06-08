@@ -28,18 +28,18 @@ const InfoColumn = ({ title, children, className }) => (
 );
 
 const VoteDelegate = ({
-  added, edited, removed, t, account,
+  t, account, summaryInfo,
 }) => {
-  const addedLength = Object.keys(added).length;
-  const editedLength = Object.keys(edited).length;
-  const removedLength = Object.keys(removed).length;
+  const addedLength = Object.keys(summaryInfo.added).length;
+  const editedLength = Object.keys(summaryInfo.edited).length;
+  const removedLength = Object.keys(summaryInfo.removed).length;
   const sentVotes = account?.dpos?.sentVotes?.length ?? 0;
 
   return (
     <>
-      {addedLength ? <ItemList heading={t('Added votes')} items={added} /> : null}
-      {editedLength ? <ItemList heading={t('Changed votes')} items={edited} /> : null}
-      {removedLength ? <ItemList heading={t('Removed votes')} items={removed} /> : null}
+      {addedLength ? <ItemList heading={t('Added votes')} items={summaryInfo.added} /> : null}
+      {editedLength ? <ItemList heading={t('Changed votes')} items={summaryInfo.edited} /> : null}
+      {removedLength ? <ItemList heading={t('Removed votes')} items={summaryInfo.removed} /> : null}
       <div className={styles.infoContainer}>
         <InfoColumn
           title={t('Total votes after confirmation')}

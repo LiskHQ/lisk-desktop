@@ -4,8 +4,8 @@ import React, { useEffect } from 'react';
 import TxSignatureCollector from '@transaction/components/TxSignatureCollector';
 import { removeSearchParamsFromUrl } from 'src/utils/searchParams';
 import MultiStep from 'src/modules/common/components/OldMultiStep';
-import Form from '../voteForm';
-import Summary from '../voteSummary';
+import Form from '../VoteForm';
+import Summary from '../VoteSummary';
 import Status from '../voteStatus';
 import styles from './styles.css';
 

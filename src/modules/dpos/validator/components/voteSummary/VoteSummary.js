@@ -1,7 +1,4 @@
 import React from 'react';
-import { fromRawLsk } from '@token/fungible/utils/lsk';
-import TransactionInfo from '@transaction/components/TransactionInfo';
-import { MODULE_ASSETS_NAME_ID_MAP } from '@transaction/configuration/moduleAssets';
 import TransactionSummary from '@transaction/manager/transactionSummary';
 import ToggleIcon from '../toggleIcon';
 import VoteStats from '../voteStats';
@@ -33,10 +30,9 @@ const getResultProps = ({ added, removed, edited }) => {
   return { locked, unlockable };
 };
 
-const Summary = ({
+const VoteSummary = ({
   t, removed = {}, edited = {}, added = {}, selfUnvote = {},
-  fee, account, prevStep, nextStep,
-  normalizedVotes, votesSubmitted,
+  prevStep, nextStep, rawTx, votesSubmitted,
 }) => {
   const {
     locked, unlockable,
@@ -44,10 +40,7 @@ const Summary = ({
 
   const onConfirm = () => {
     nextStep({
-      rawTransaction: {
-        fee: String(fee),
-        votes: normalizedVotes,
-      },
+      rawTx,
       actionFunction: votesSubmitted,
       statusInfo: {
         locked, unlockable, selfUnvote,
@@ -64,20 +57,13 @@ const Summary = ({
     onClick: prevStep,
   };
 
-  const transaction = {
-    nonce: account.sequence.nonce,
-    fee,
-    added,
-    edited,
-    removed,
-  };
-
   return (
     <TransactionSummary
       confirmButton={onConfirmAction}
       cancelButton={onCancelAction}
       classNames={styles.container}
-      fee={!account.summary.isMultisignature && fromRawLsk(fee)}
+      summaryInfo={{ added, edited, removed }}
+      rawTx={rawTx}
     >
       <ToggleIcon isNotHeader />
       <div className={styles.headerContainer}>
@@ -92,18 +78,8 @@ const Summary = ({
           removed={Object.keys(removed).length}
         />
       </div>
-      <TransactionInfo
-        added={added}
-        edited={edited}
-        removed={removed}
-        fee={fee}
-        moduleAssetId={MODULE_ASSETS_NAME_ID_MAP.voteDelegate}
-        transaction={transaction}
-        account={account}
-        isMultisignature={account.summary.isMultisignature}
-      />
     </TransactionSummary>
   );
 };
 
-export default Summary;
+export default VoteSummary;

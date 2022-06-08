@@ -4,7 +4,7 @@ import { withTranslation } from 'react-i18next';
 import { containsTransactionType } from '@transaction/utils/transaction';
 import { selectActiveTokenAccount } from '@common/store';
 import { MODULE_ASSETS_NAME_ID_MAP } from '@transaction/configuration/moduleAssets';
-import Form from './form';
+import VoteForm from './VoteForm';
 
 const mapStateToProps = state => ({
   account: selectActiveTokenAccount(state),
@@ -17,4 +17,4 @@ const mapStateToProps = state => ({
 
 export default connect(
   mapStateToProps,
-)(withTranslation()(Form));
+)(withTranslation()(VoteForm));

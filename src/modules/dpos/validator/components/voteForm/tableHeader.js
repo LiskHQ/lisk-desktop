@@ -1,4 +1,4 @@
-import styles from './form.css';
+import styles from './voteForm.css';
 
 const header = t => ([
   {

@@ -12,7 +12,7 @@ import Icon from '@theme/Icon';
 import TokenAmount from '@token/fungible/components/tokenAmount';
 import AmountField from 'src/modules/common/components/amountField';
 import useVoteAmountField from '../../hooks/useVoteAmountField';
-import styles from './form.css';
+import styles from './voteForm.css';
 
 const ComponentState = Object.freeze({ editing: 1, notEditing: 2 });
 const token = tokenMap.LSK.key;

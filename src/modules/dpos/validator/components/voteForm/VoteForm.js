@@ -1,4 +1,4 @@
-import React, { useMemo } from 'react';
+import React, { useMemo, useState } from 'react';
 import { MODULE_ASSETS_NAME_ID_MAP } from '@transaction/configuration/moduleAssets';
 import { MIN_ACCOUNT_BALANCE } from '@transaction/configuration/transactions';
 import { toRawLsk } from '@token/fungible/utils/lsk';
@@ -8,10 +8,10 @@ import TxComposer from '@transaction/components/TxComposer';
 import Table from '@theme/table';
 import ToggleIcon from '../toggleIcon';
 import { VOTE_LIMIT } from '../../consts';
-import VoteRow from './voteRow';
-import EmptyState from './emptyState';
+import VoteRow from './VoteRow';
+import EmptyState from './EmptyState';
 import header from './tableHeader';
-import styles from './form.css';
+import styles from './voteForm.css';
 
 /**
  * Determines the number of votes that have been
@@ -22,8 +22,8 @@ import styles from './form.css';
  */
 const getVoteStats = (votes, account) => {
   const votesStats = Object.keys(votes)
-    // eslint-disable-next-line max-statements
     .reduce(
+      // eslint-disable-next-line max-statements
       (stats, address) => {
         const { confirmed, unconfirmed, username } = votes[address];
 
@@ -135,6 +135,7 @@ const VoteForm = ({
   isVotingTxPending,
   nextStep,
 }) => {
+  const [fee, setFee] = useState(0);
   const changedVotes = Object.keys(votes)
     .filter(
       (address) => votes[address].unconfirmed !== votes[address].confirmed,
@@ -143,10 +144,10 @@ const VoteForm = ({
 
   const normalizedVotes = useMemo(() => normalizeVotesForTx(votes), [votes]);
   const {
-    // added,
-    // edited,
-    // removed,
-    // selfUnvote,
+    added,
+    edited,
+    removed,
+    selfUnvote,
     availableVotes,
     resultingNumOfVotes,
   } = useMemo(() => getVoteStats(votes, account), [votes, account]);
@@ -154,13 +155,23 @@ const VoteForm = ({
   const feedback = validateVotes(
     votes,
     Number(account.token?.balance),
-    // fee.value, // @todo make sure this works fine
+    fee,
     resultingNumOfVotes,
     t,
   );
 
-  const onComposed = (/* I can get the tx here */) => {
-    nextStep();
+  const onConfirm = (rawTx) => {
+    nextStep({
+      rawTx,
+      added,
+      edited,
+      removed,
+      selfUnvote,
+    });
+  };
+
+  const onComposed = (rawTx) => {
+    setFee(rawTx.fee);
   };
 
   const showEmptyState = !changedVotes.length || isVotingTxPending;
@@ -176,6 +187,7 @@ const VoteForm = ({
     <section className={styles.wrapper}>
       <TxComposer
         onComposed={onComposed}
+        onConfirm={onConfirm}
         transaction={transaction}
       >
         <>

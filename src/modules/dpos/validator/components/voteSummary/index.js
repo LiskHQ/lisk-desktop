@@ -4,7 +4,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { useTranslation } from 'react-i18next';
 import { votesSubmitted } from '@common/store/actions';
 import { selectActiveTokenAccount } from '@common/store';
-import SummaryComponent from './summary';
+import SummaryComponent from './VoteSummary';
 
 const Summary = (props) => {
   const { t } = useTranslation();
