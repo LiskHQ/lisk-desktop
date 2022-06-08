@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useSelector } from 'react-redux';
 import { useTranslation } from 'react-i18next';
 import useTransactionFeeCalculation from '@transaction/hooks/useTransactionFeeCalculation';
@@ -13,7 +13,7 @@ import TransactionPriority from '@transaction/components/TransactionPriority';
 import { PrimaryButton } from 'src/theme/buttons';
 
 const TxComposer = ({
-  children, transaction, onComposed, className, buttonTitle,
+  children, transaction, onComposed, onConfirm, className, buttonTitle,
 }) => {
   const { t } = useTranslation();
   const network = useSelector(state => state.network);
@@ -24,28 +24,33 @@ const TxComposer = ({
     selectedPriority, selectTransactionPriority,
     priorityOptions, prioritiesLoadError, loadingPriorities,
   ] = useTransactionPriority();
-  const { fee, minFee } = useTransactionFeeCalculation({
+  const rawTx = {
+    senderPublicKey: wallet.summary?.publicKey,
+    nonce: wallet.sequence?.nonce,
+    passphrase: wallet.passphrase, // @todo remove
+    moduleAssetId: transaction.moduleAssetId,
+    asset: transaction.asset,
+  };
+  const status = useTransactionFeeCalculation({
     network,
     selectedPriority,
     token,
     wallet,
     priorityOptions,
-    transaction: {
-      senderPublicKey: wallet.summary?.publicKey,
-      nonce: wallet.sequence?.nonce,
-      passphrase: wallet.passphrase, // @todo remove
-      moduleAssetId: transaction.moduleAssetId,
-      asset: transaction.asset,
-    },
+    transaction: rawTx,
   });
+
+  useEffect(() => {
+    onComposed(status, { ...rawTx, fee: status.fee });
+  }, [selectedPriority, transaction.asset]);
 
   return (
     <Box className={className}>
       {children}
       <TransactionPriority
         token={token}
-        fee={fee}
-        minFee={Number(minFee.value)}
+        fee={status.fee}
+        minFee={Number(status.minFee.value)}
         customFee={customFee ? customFee.value : undefined}
         moduleAssetId={transaction.moduleAssetId}
         setCustomFee={setCustomFee}
@@ -57,7 +62,7 @@ const TxComposer = ({
       />
       <BoxFooter>
         <PrimaryButton
-          onClick={onComposed}
+          onClick={() => onConfirm({ ...rawTx, fee: status.fee })}
           disabled={!transaction.isValid}
         >
           {

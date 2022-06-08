@@ -3,8 +3,8 @@
 .wrapper {
   display: flex;
   flex-direction: column;
-  justify-content: center;
-  align-items: center;
+  justify-content: flex-start;
+  align-items: flex-start;
   box-sizing: border-box;
   width: 100%;
   overflow: initial;

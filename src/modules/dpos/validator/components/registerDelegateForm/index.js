@@ -13,7 +13,7 @@ import styles from './form.css';
 
 const RegisterDelegateForm = ({
   nextStep,
-  prevState,
+  // prevState,
 }) => {
   const timeout = useRef();
   const { t } = useTranslation();

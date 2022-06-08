@@ -159,8 +159,6 @@ const VoteForm = ({
     t,
   );
 
-  const isCTADisabled = feedback.error || Object.keys(changedVotes).length === 0;
-
   const onComposed = (/* I can get the tx here */) => {
     nextStep();
   };
@@ -168,7 +166,7 @@ const VoteForm = ({
   const showEmptyState = !changedVotes.length || isVotingTxPending;
   const transaction = {
     moduleAssetId: MODULE_ASSETS_NAME_ID_MAP.voteDelegate,
-    isValid: !isCTADisabled && !isVotingTxPending,
+    isValid: !feedback.error && Object.keys(changedVotes).length > 0 && !isVotingTxPending,
     asset: {
       votes: normalizedVotes,
     },
