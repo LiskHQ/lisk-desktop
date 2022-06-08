@@ -3,12 +3,11 @@ import { connect } from 'react-redux';
 import { withTranslation } from 'react-i18next';
 import { balanceUnlocked } from '@dpos/validator/store/actions/voting';
 import { selectActiveTokenAccount } from '@common/store';
-import Summary from './unlockBalanceSummary';
+import Summary from './UnlockBalanceSummary';
 
 const mapStateToProps = state => ({
   wallet: selectActiveTokenAccount(state),
   network: state.network,
-  currentBlockHeight: state.blocks.latestBlocks[0].height,
 });
 
 const mapDispatchToProps = {

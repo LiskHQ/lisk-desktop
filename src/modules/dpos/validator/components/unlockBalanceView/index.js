@@ -3,10 +3,10 @@ import Dialog from 'src/theme/dialog/dialog';
 import MultiStep from 'src/modules/common/components/OldMultiStep';
 import TxSignatureCollector from '@transaction/components/TxSignatureCollector';
 import Form from '../UnlockBalanceForm';
-import Status from '../unlockBalanceStatus';
-import Summary from '../unlockBalanceSummary';
+import Status from '../UnlockBalanceStatus';
+import Summary from '../UnlockBalanceSummary';
 
-const Modal = () => (
+const UnlockBalanceView = () => (
   <Dialog hasClose>
     <MultiStep key="unlockBalance">
       <Form />
@@ -17,4 +17,4 @@ const Modal = () => (
   </Dialog>
 );
 
-export default Modal;
+export default UnlockBalanceView;

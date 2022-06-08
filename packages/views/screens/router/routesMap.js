@@ -21,7 +21,7 @@ import AccountDetails from '@account/components/AccountDetails';
 import TransactionDetailsModal from '@transaction/manager/transactionDetailViewManager';
 import VerifyMessage from '@message/manager/verifyMessageManager';
 import Request from '@screens/managers/request';
-import UnlockBalanceView from '@dpos/validator/components/unlockBalanceView';
+import UnlockBalanceView from '@dpos/validator/components/UnlockBalanceView';
 import EditVote from '@dpos/validator/manager/editVoteManager';
 import VotingQueue from '@dpos/validator/manager/votingQueueManager';
 import DeviceDisconnect from '@screens/managers/deviceDisconnectDialog';

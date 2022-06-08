@@ -1,7 +1,7 @@
 import React from 'react';
 import { mount } from 'enzyme';
 import wallets from '@tests/constants/wallets';
-import Summary from './unlockBalanceSummary';
+import Summary from './UnlockBalanceSummary';
 
 describe('Locked balance Summary', () => {
   const props = {

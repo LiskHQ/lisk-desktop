@@ -16,7 +16,7 @@ import BalanceTable from './BalanceTable';
 import styles from './unlockBalance.css';
 
 const UnlockBalanceForm = ({
-  nextStep, customFee, fee,
+  nextStep,
 }) => {
   const { t } = useTranslation();
   const activeToken = useSelector(selectActiveToken);
@@ -24,12 +24,8 @@ const UnlockBalanceForm = ({
   const [unlockObjects, lockedInVotes, unlockableBalance] = useUnlockableCalculator();
   const wallet = useSelector(selectActiveTokenAccount);
 
-  const onComposed = async (/* Here I can get the composed tx */) => {
-    nextStep({
-      rawTransaction: {
-        selectedFee: customFee ? customFee.value : fee.value,
-      },
-    });
+  const onConfirm = async (rawTx) => {
+    nextStep({ rawTx });
   };
 
   const transaction = {
@@ -40,7 +36,7 @@ const UnlockBalanceForm = ({
 
   return (
     <TxComposer
-      onComposed={onComposed}
+      onConfirm={onConfirm}
       className={styles.wrapper}
       transaction={transaction}
       buttonTitle={getUnlockButtonTitle(unlockableBalance, activeToken, t)}

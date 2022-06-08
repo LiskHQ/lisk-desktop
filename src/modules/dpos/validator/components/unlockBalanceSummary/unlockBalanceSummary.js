@@ -9,28 +9,28 @@ import styles from './unlockBalanceSummary.css';
 
 const moduleAssetId = MODULE_ASSETS_NAME_ID_MAP.unlockToken;
 
-const Summary = ({
-  currentBlockHeight,
+const UnlockBalanceSummary = ({
+  // currentBlockHeight,
   balanceUnlocked,
-  rawTransaction,
+  rawTx,
   prevStep,
   nextStep,
   wallet,
   t,
 }) => {
-  const transaction = {
-    nonce: wallet.sequence.nonce,
-    fee: fromRawLsk(rawTransaction.selectedFee),
-    asset: {
-      unlockObjects: getUnlockableUnlockObjects(
-        wallet.dpos?.unlocking, currentBlockHeight,
-      ),
-    },
-  };
+  // const transaction = {
+  //   nonce: wallet.sequence.nonce,
+  //   fee: fromRawLsk(rawTransaction.selectedFee),
+  //   asset: {
+  //     unlockObjects: getUnlockableUnlockObjects(
+  //       wallet.dpos?.unlocking, currentBlockHeight,
+  //     ),
+  //   },
+  // };
 
   const onSubmit = () => {
     nextStep({
-      rawTransaction,
+      rawTx,
       actionFunction: balanceUnlocked,
     });
   };
@@ -49,17 +49,12 @@ const Summary = ({
       title={t('Unlock LSK summary')}
       confirmButton={onConfirmAction}
       cancelButton={onCancelAction}
-      fee={!wallet.summary.isMultisignature && rawTransaction.selectedFee.value}
+      fee={!wallet.summary.isMultisignature && rawTx.fee}
       classNames={`${styles.box} ${styles.summaryContainer}`}
-    >
-      <TransactionInfo
-        moduleAssetId={moduleAssetId}
-        transaction={transaction}
-        account={wallet}
-        isMultisignature={wallet.summary.isMultisignature}
-      />
-    </TransactionSummary>
+      rawTx={rawTx}
+      isMultisignature={wallet.summary.isMultisignature}
+    />
   );
 };
 
-export default Summary;
+export default UnlockBalanceSummary;
