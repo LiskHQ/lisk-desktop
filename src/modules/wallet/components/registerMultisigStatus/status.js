@@ -1,7 +1,7 @@
 import React from 'react';
 import TransactionResult from '@transaction/manager/transactionResult';
 import { statusMessages, getTransactionStatus } from '@transaction/configuration/statusConfig';
-import ProgressBar from '../registerMultisigView/progressBar';
+import ProgressBar from '../RegisterMultisigView/ProgressBar';
 import styles from './styles.css';
 
 const Status = ({ account, transactions, t }) => {

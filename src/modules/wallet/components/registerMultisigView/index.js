@@ -6,8 +6,8 @@ import MultiStep from 'src/modules/common/components/OldMultiStep';
 import { removeSearchParamsFromUrl } from 'src/utils/searchParams';
 import Dialog from 'src/theme/dialog/dialog';
 
-import Form from '../registerMultisigForm';
-import Summary from '../registerMultisigSummary';
+import Form from '../RegisterMultisigForm';
+import Summary from '../RegisterMultisigSummary';
 import Status from '../registerMultisigStatus';
 import styles from './styles.css';
 

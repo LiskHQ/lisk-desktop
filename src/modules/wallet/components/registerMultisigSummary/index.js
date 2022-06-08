@@ -5,7 +5,7 @@ import { withTranslation } from 'react-i18next';
 import { multisigGroupRegistered } from '@wallet/store/action';
 import { selectActiveTokenAccount } from '@common/store';
 
-import Summary from './summary';
+import Summary from './Summary';
 
 const mapStateToProps = state => ({
   account: selectActiveTokenAccount(state),

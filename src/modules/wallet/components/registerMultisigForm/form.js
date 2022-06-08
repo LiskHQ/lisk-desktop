@@ -3,13 +3,11 @@ import React, { useState, useEffect, useMemo } from 'react';
 import BoxContent from 'src/theme/box/content';
 import { TertiaryButton } from 'src/theme/buttons';
 import { Input } from 'src/theme';
-import { tokenMap } from '@token/fungible/consts/tokens';
 import { MODULE_ASSETS_NAME_ID_MAP } from '@transaction/configuration/moduleAssets';
 import TxComposer from '@transaction/components/TxComposer';
-// import { extractAddressFromPublicKey } from '@wallet/utils/account';
-import ProgressBar from '../registerMultisigView/progressBar';
+import ProgressBar from '../RegisterMultisigView/ProgressBar';
 import { MAX_MULTI_SIG_MEMBERS } from '../../configuration/constants';
-import MemberField from './memberField';
+import MemberField from './MemberField';
 import validators from './validators';
 import styles from './styles.css';
 
@@ -46,7 +44,7 @@ export const validateState = ({
 
 // eslint-disable-next-line max-statements
 const Editor = ({
-  t, account, network, nextStep, prevState = {},
+  t, nextStep, prevState = {},
 }) => {
   const [requiredSignatures, setRequiredSignatures] = useState(() =>
     getInitialSignaturesState(prevState));
@@ -100,21 +98,8 @@ const Editor = ({
     setRequiredSignatures(value);
   };
 
-  const onComposed = () => {};
-
   const onConfirm = (rawTx) => {
-    // const feeValue = customFee ? customFee.value : fee.value;
-    // const extractedMembers = members.map((member) => {
-    //   if (regex.publicKey.test(member.publicKey)) {
-    //     return {
-    //       ...member,
-    //       address: extractAddressFromPublicKey(member.publicKey),
-    //     };
-    //   }
-    //   return member;
-    // });
-
-    nextStep(rawTx);
+    nextStep({ rawTx });
   };
 
   useEffect(() => {
@@ -153,7 +138,6 @@ const Editor = ({
       <TxComposer
         className={styles.box}
         transaction={transaction}
-        onComposed={onComposed}
         onConfirm={onConfirm}
       >
         <>
