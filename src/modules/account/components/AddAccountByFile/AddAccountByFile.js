@@ -14,7 +14,7 @@ const AddAccountByPassFile = ({ history, login }) => {
 
   const onEnterPasswordSuccess = ({ account, recoveryPhrase }) => {
     setCurrentAccount(account);
-    login(recoveryPhrase);
+    login(recoveryPhrase); // Todo: this login method is depricated
   };
 
   return (
