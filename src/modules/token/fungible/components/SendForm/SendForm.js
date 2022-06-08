@@ -36,7 +36,7 @@ const SendForm = (props) => {
   };
 
   const onConfirm = (rawTx) => {
-    nextStep(rawTx);
+    nextStep({ rawTx });
   };
 
   const isValid = [amount, recipient, reference].reduce((result, item) => {

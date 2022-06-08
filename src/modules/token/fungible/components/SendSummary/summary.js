@@ -1,17 +1,15 @@
 import React from 'react';
-import { MODULE_ASSETS_NAME_ID_MAP } from '@transaction/configuration/moduleAssets';
-import { toRawLsk } from '@token/fungible/utils/lsk';
+import { toRawLsk, fromRawLsk } from '@token/fungible/utils/lsk';
 import TransactionSummary from '@transaction/manager/transactionSummary';
-import TransactionInfo from '@transaction/components/TransactionInfo';
 
 const Summary = ({
   resetTransactionResult,
   transactionCreated,
   prevStep,
   nextStep,
-  account,
   fields,
   token,
+  rawTx,
   t,
 }) => {
   const signTransaction = () => {
@@ -31,15 +29,15 @@ const Summary = ({
     prevStep({ fields });
   };
 
-  const transaction = {
-    nonce: account.sequence.nonce,
-    fee: toRawLsk(parseFloat(fields.fee.value)),
-    asset: {
-      amount: toRawLsk(fields.amount.value),
-      data: fields.reference?.value ?? '',
-    },
-  };
-  const amount = fields.amount.value;
+  // const transaction = {
+  //   nonce: account.sequence.nonce,
+  //   fee: toRawLsk(parseFloat(fields.fee.value)),
+  //   asset: {
+  //     amount: toRawLsk(fields.amount.value),
+  //     data: fields.reference?.value ?? '',
+  //   },
+  // };
+  const amount = fromRawLsk(rawTx.asset.amount);
 
   return (
     <TransactionSummary
@@ -52,17 +50,8 @@ const Summary = ({
         label: t('Edit transaction'),
         onClick: goBack,
       }}
-      fee={!account.summary.isMultisignature && fields.fee.value}
-    >
-      <TransactionInfo
-        fields={fields}
-        token={token}
-        moduleAssetId={MODULE_ASSETS_NAME_ID_MAP.transfer}
-        transaction={transaction}
-        account={account}
-        isMultisignature={account.summary.isMultisignature}
-      />
-    </TransactionSummary>
+      rawTx={rawTx}
+    />
   );
 };
 
