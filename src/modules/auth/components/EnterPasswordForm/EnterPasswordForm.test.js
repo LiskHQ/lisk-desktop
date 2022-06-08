@@ -16,6 +16,7 @@ describe('EnterPasswordForm', () => {
       },
     },
     onEnterPasswordSuccess: jest.fn(),
+    nextStep: jest.fn(),
   };
 
   it('should display properly', () => {
@@ -26,11 +27,11 @@ describe('EnterPasswordForm', () => {
   });
 
   it('should call onEnterPasswordSuccess when onSubmit click', () => {
-    const privateKey = 'private-key-mock';
+    const privateToken = 'private-key-mock';
     const recoveryPhrase = 'target cancel solution recipe vague faint bomb convince pink vendor fresh patrol';
     decryptionAccount.mockImplementation(() => (
       {
-        privateKey,
+        privateToken,
         recoveryPhrase,
       }
     ));
@@ -48,9 +49,11 @@ describe('EnterPasswordForm', () => {
       'qwerty',
     );
     expect(props.onEnterPasswordSuccess).toHaveBeenCalledWith({
-      privateKey,
+      account: { privateToken, recoveryPhrase },
       recoveryPhrase,
-      accountSchema: props.accountSchema,
+    });
+    expect(props.nextStep).toHaveBeenCalledWith({
+      encryptedPhrase: props.accountSchema,
     });
   });
 

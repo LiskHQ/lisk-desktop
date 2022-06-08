@@ -1,5 +1,5 @@
 import {
-  createEvent, fireEvent, screen,
+  createEvent, fireEvent, screen, waitFor,
 } from '@testing-library/react';
 import mockSavedAccounts from '@tests/fixtures/accounts';
 import * as reactRedux from 'react-redux';
@@ -43,9 +43,14 @@ describe('Add account by file flow', () => {
     expect(screen.getByText(mockSavedAccounts[0].metadata.name)).toBeTruthy();
     expect(screen.getByText(mockSavedAccounts[0].metadata.address)).toBeTruthy();
 
-    const password = screen.getByTestId('password');
+    const password = screen.getByTestId('passwordField');
     fireEvent.change(password, { target: { value: 'Password1$' } });
     fireEvent.click(screen.getByText('Continue'));
     expect(props.login).toBeCalled();
+
+    await waitFor(() => {
+      expect(screen.getByText('Perfect! You\'re all set')).toBeTruthy();
+      fireEvent.click(screen.getByText('Continue to Dashboard'));
+    });
   });
 });

@@ -43,7 +43,6 @@ const EnterPasswordForm = ({ accountSchema, onEnterPasswordSuccess, nextStep }) 
           size="xs"
           placeholder={t('Enter password')}
           type="password"
-          name="password"
           value={password}
           onChange={(e) => {
             setPassword(e.target.value);
