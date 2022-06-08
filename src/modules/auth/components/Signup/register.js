@@ -35,7 +35,7 @@ const Register = ({ account, token, history }) => {
           selected={selectedAccount}
           handleSelectAvatar={handleSelectAvatar}
         />
-        <SavePassphrase account={selectedAccount} />
+        <SavePassphrase passphrase={selectedAccount.passphrase} />
         <ConfirmPassphrase
           account={selectedAccount}
           passphrase={selectedAccount.passphrase}

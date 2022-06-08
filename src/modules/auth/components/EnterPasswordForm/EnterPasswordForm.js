@@ -38,8 +38,7 @@ const EnterPasswordForm = ({ accountSchema, onEnterPasswordSuccess }) => {
         )}
         <p className={styles.accountAddress}>{accountSchema?.metadata?.address}</p>
         <Input
-          secureTextEntry
-          size="xs"
+          name="passwordField"
           placeholder={t('Enter password')}
           type="password"
           name="password"
