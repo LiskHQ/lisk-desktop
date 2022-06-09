@@ -1,5 +1,6 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { useTranslation } from 'react-i18next';
+import { useForm } from 'react-hook-form';
 
 import WalletVisual from '@wallet/components/walletVisual';
 import { decryptionAccount } from '@account/utils/decryptionAccount';
@@ -11,14 +12,17 @@ import styles from './EnterPasswordForm.css';
 
 const EnterPasswordForm = ({ accountSchema, onEnterPasswordSuccess, nextStep }) => {
   const { t } = useTranslation();
-  const [password, setPassword] = useState('');
-  const [feedbackError, setFeedbackError] = useState('');
+  const {
+    register,
+    watch,
+    formState: { errors },
+    handleSubmit,
+  } = useForm();
 
-  const onSubmit = () => {
+  const formValues = watch();
+
+  const onSubmit = ({ password }) => {
     const account = decryptionAccount(accountSchema, password);
-    if (account.error) {
-      setFeedbackError(account.error);
-    }
     onEnterPasswordSuccess({ account, recoveryPhrase: account.recoveryPhrase });
     nextStep({ encryptedPhrase: accountSchema });
   };
@@ -38,23 +42,22 @@ const EnterPasswordForm = ({ accountSchema, onEnterPasswordSuccess, nextStep }) 
           <p className={styles.accountName}>{accountSchema?.metadata?.name}</p>
         )}
         <p className={styles.accountAddress}>{accountSchema?.metadata?.address}</p>
-        <Input
-          name="passwordField"
-          placeholder={t('Enter password')}
-          type="password"
-          value={password}
-          onChange={(e) => {
-            setPassword(e.target.value);
-          }}
-          feedback={feedbackError}
-        />
-        <PrimaryButton
-          className={`${styles.button} continue-btn`}
-          onClick={onSubmit}
-          disabled={!password}
-        >
-          {t('Continue')}
-        </PrimaryButton>
+        <form onSubmit={handleSubmit(onSubmit)}>
+          <Input
+            secureTextEntry
+            size="s"
+            placeholder={t('Enter password')}
+            feedback={errors.password?.message}
+            {...register('password')}
+          />
+          <PrimaryButton
+            type="submit"
+            disabled={!formValues.password}
+            className={`${styles.button} continue-btn`}
+          >
+            {t('Continue')}
+          </PrimaryButton>
+        </form>
       </BoxContent>
     </Box>
   );
