@@ -43,14 +43,13 @@ describe('Add account by file flow', () => {
     expect(screen.getByText(mockSavedAccounts[0].metadata.name)).toBeTruthy();
     expect(screen.getByText(mockSavedAccounts[0].metadata.address)).toBeTruthy();
 
-    const password = screen.getByTestId('passwordField');
+    const password = screen.getByTestId('password');
     fireEvent.change(password, { target: { value: 'Password1$' } });
     fireEvent.click(screen.getByText('Continue'));
-    expect(props.login).toBeCalled();
-
     await waitFor(() => {
       expect(screen.getByText('Perfect! You\'re all set')).toBeTruthy();
       fireEvent.click(screen.getByText('Continue to Dashboard'));
+      expect(props.login).toBeCalled();
     });
   });
 });
