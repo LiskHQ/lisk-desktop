@@ -15,12 +15,12 @@ const EnterPasswordForm = ({ accountSchema, onEnterPasswordSuccess }) => {
   const [feedbackError, setFeedbackError] = useState('');
 
   const onSubmit = () => {
-    const { privateToken, recoveryPhrase, error } = decryptAccount(accountSchema, password);
+    const { privateKey, recoveryPhrase, error } = decryptAccount(accountSchema, password);
     if (error) {
       return setFeedbackError(t('Unable to decrypt account, please check the password'));
     }
 
-    return onEnterPasswordSuccess({ privateToken, recoveryPhrase });
+    return onEnterPasswordSuccess({ privateKey, recoveryPhrase });
   };
 
   return (

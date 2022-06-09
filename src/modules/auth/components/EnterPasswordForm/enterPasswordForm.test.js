@@ -26,11 +26,11 @@ describe('PassphraseBackup', () => {
   });
 
   it('should call onEnterPasswordSuccess when onSubmit click', () => {
-    const privateToken = 'private-token-mock';
+    const privateKey = 'private-token-mock';
     const recoveryPhrase = 'target cancel solution recipe vague faint bomb convince pink vendor fresh patrol';
     decryptAccount.mockImplementation(() => (
       {
-        privateToken,
+        privateKey,
         recoveryPhrase,
       }
     ));
@@ -47,7 +47,7 @@ describe('PassphraseBackup', () => {
       'qwerty',
     );
     expect(props.onEnterPasswordSuccess).toHaveBeenCalledWith({
-      privateToken,
+      privateKey,
       recoveryPhrase,
     });
   });
