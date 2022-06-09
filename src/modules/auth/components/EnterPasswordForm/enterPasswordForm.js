@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 
 import WalletVisual from '@wallet/components/walletVisual';
-import { decryptionAccount } from '@account/utils/decryptionAccount';
+import { decryptAccount } from '@account/utils/decryptAccount';
 import { Input } from 'src/theme';
 import Box from 'src/theme/box';
 import BoxContent from 'src/theme/box/content';
@@ -15,9 +15,9 @@ const EnterPasswordForm = ({ accountSchema, onEnterPasswordSuccess }) => {
   const [feedbackError, setFeedbackError] = useState('');
 
   const onSubmit = () => {
-    const { privateToken, recoveryPhrase, error } = decryptionAccount(accountSchema, password);
+    const { privateToken, recoveryPhrase, error } = decryptAccount(accountSchema, password);
     if (error) {
-      return setFeedbackError(error);
+      return setFeedbackError(t('Unable to decrypt account, please check the password'));
     }
 
     return onEnterPasswordSuccess({ privateToken, recoveryPhrase });

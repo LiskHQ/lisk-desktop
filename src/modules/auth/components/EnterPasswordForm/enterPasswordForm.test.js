@@ -1,10 +1,10 @@
 import React from 'react';
 import { mount } from 'enzyme';
 
-import { decryptionAccount } from '../../../account/utils/decryptionAccount';
+import { decryptAccount } from '@account/utils/decryptAccount';
 import EnterPasswordForm from '.';
 
-jest.mock('../../../account/utils/decryptionAccount');
+jest.mock('@account/utils/decryptionAccount');
 
 describe('PassphraseBackup', () => {
   let wrapper;
@@ -28,7 +28,7 @@ describe('PassphraseBackup', () => {
   it('should call onEnterPasswordSuccess when onSubmit click', () => {
     const privateToken = 'private-token-mock';
     const recoveryPhrase = 'target cancel solution recipe vague faint bomb convince pink vendor fresh patrol';
-    decryptionAccount.mockImplementation(() => (
+    decryptAccount.mockImplementation(() => (
       {
         privateToken,
         recoveryPhrase,
@@ -42,7 +42,7 @@ describe('PassphraseBackup', () => {
       },
     });
     wrapper.find('button').first().simulate('click');
-    expect(decryptionAccount).toHaveBeenCalledWith(
+    expect(decryptAccount).toHaveBeenCalledWith(
       props.accountSchema,
       'qwerty',
     );
@@ -53,7 +53,7 @@ describe('PassphraseBackup', () => {
   });
 
   it('should not call onEnterPasswordSuccess when onSubmit fails', () => {
-    decryptionAccount.mockImplementation(() => (
+    decryptAccount.mockImplementation(() => (
       {
         error: 'error',
       }
