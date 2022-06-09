@@ -18,7 +18,7 @@ export const ACCOUNT_MENU = [
     label: 'Backup account',
   },
   {
-    path: routes.login.removeAccount,
+    path: routes.removeAccount.path,
     icon: 'remove',
     label: 'Remove account',
   },
