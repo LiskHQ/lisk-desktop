@@ -1,5 +1,7 @@
 import React from 'react';
-import { mount } from 'enzyme';
+import {
+  fireEvent, render, screen, waitFor,
+} from '@testing-library/react';
 
 import { decryptionAccount } from '../../../account/utils/decryptionAccount';
 import EnterPasswordForm from '.';
@@ -19,15 +21,18 @@ describe('EnterPasswordForm', () => {
     nextStep: jest.fn(),
   };
 
-  it('should display properly', () => {
-    wrapper = mount(<EnterPasswordForm {...props} />);
-
-    expect(wrapper.find('.accountName')).toHaveText(props.accountSchema.metadata.name);
-    expect(wrapper.find('.accountAddress')).toHaveText(props.accountSchema.metadata.address);
+  beforeEach(() => {
+    jest.clearAllMocks();
+    wrapper = render(<EnterPasswordForm {...props} />);
   });
 
-  it('should call onEnterPasswordSuccess when onSubmit click', () => {
-    const privateToken = 'private-key-mock';
+  it('should display properly', () => {
+    expect(screen.queryByText(props.accountSchema.metadata.name));
+    expect(screen.queryByText(props.accountSchema.metadata.address));
+  });
+
+  it('should call onEnterPasswordSuccess when onSubmit click', async () => {
+    const privateToken = 'private-token-mock';
     const recoveryPhrase = 'target cancel solution recipe vague faint bomb convince pink vendor fresh patrol';
     decryptionAccount.mockImplementation(() => (
       {
@@ -36,60 +41,54 @@ describe('EnterPasswordForm', () => {
       }
     ));
     props.recoveryPhrase = recoveryPhrase;
-    wrapper = mount(<EnterPasswordForm {...props} />);
+    wrapper.rerender(<EnterPasswordForm {...props} />);
 
-    wrapper.find('input').at(0).simulate('change', {
-      target: {
-        value: 'qwerty',
-      },
-    });
-    wrapper.find('.continue-btn').first().simulate('click');
-    expect(decryptionAccount).toHaveBeenCalledWith(
-      props.accountSchema,
-      'qwerty',
-    );
-    expect(props.onEnterPasswordSuccess).toHaveBeenCalledWith({
-      account: { privateToken, recoveryPhrase },
-      recoveryPhrase,
-    });
-    expect(props.nextStep).toHaveBeenCalledWith({
-      encryptedPhrase: props.accountSchema,
+    fireEvent.change(screen.getByTestId('password'), { target: { value: 'qwerty' } });
+    fireEvent.click(screen.getByText('Continue'));
+
+    await waitFor(() => {
+      expect(decryptionAccount).toHaveBeenCalledWith(
+        props.accountSchema,
+        'qwerty',
+      );
+      expect(props.onEnterPasswordSuccess).toHaveBeenCalledWith({
+        account: { privateToken, recoveryPhrase },
+        recoveryPhrase,
+        encryptedPhrase: props.accountSchema,
+      });
     });
   });
 
-  it('should display error', () => {
+  it('should display error', async () => {
     const error = 'test error';
     decryptionAccount.mockImplementation(() => (
       {
         error,
       }
     ));
-    wrapper = mount(<EnterPasswordForm {...props} />);
+    wrapper.rerender(<EnterPasswordForm {...props} />);
 
-    wrapper.find('input').at(0).simulate('change', {
-      target: {
-        value: 'qwerty',
-      },
+    fireEvent.change(screen.getByTestId('password'), { target: { value: 'qwerty' } });
+    fireEvent.click(screen.getByText('Continue'));
+
+    await waitFor(() => {
+      expect(screen.getByText('test error')).toBeTruthy();
     });
-    wrapper.find('.continue-btn').first().simulate('click');
-    expect(wrapper.find('.feedback').last()).toHaveText('test error');
   });
 
-  it('should not call onEnterPasswordSuccess when onSubmit fails', () => {
+  it('should not call onEnterPasswordSuccess when onSubmit fails', async () => {
     decryptionAccount.mockImplementation(() => (
       {
         error: 'error',
       }
     ));
-    wrapper = mount(<EnterPasswordForm {...props} />);
 
-    wrapper.find('input').at(0).simulate('change', {
-      target: {
-        value: 'qwerty',
-      },
+    fireEvent.change(screen.getByTestId('password'), { target: { value: 'qwerty' } });
+    fireEvent.click(screen.getByText('Continue'));
+
+    await waitFor(() => {
+      expect(props.onEnterPasswordSuccess).not.toHaveBeenCalled();
+      expect(screen.getByText('error')).toBeTruthy();
     });
-    wrapper.find('button').first().simulate('click');
-    expect(props.onEnterPasswordSuccess).not.toHaveBeenCalledWith();
-    expect(wrapper.findWhere((node) => node.text() === 'error')).toBeTruthy();
   });
 });

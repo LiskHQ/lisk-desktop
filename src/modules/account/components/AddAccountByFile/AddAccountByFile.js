@@ -1,5 +1,5 @@
 /* eslint-disable max-lines */
-import React from 'react';
+import React, { useRef } from 'react';
 import { withRouter } from 'react-router';
 import routes from '@screens/router/routes';
 import RestoreAccountForm from 'src/modules/auth/components/RestoreAccountForm';
@@ -11,9 +11,11 @@ import { useCurrentAccount } from '../../hooks';
 
 const AddAccountByPassFile = ({ history, login }) => {
   const [, setCurrentAccount] = useCurrentAccount();
+  const multiStepRef = useRef(null);
 
-  const onEnterPasswordSuccess = ({ account, recoveryPhrase }) => {
+  const onEnterPasswordSuccess = ({ account, recoveryPhrase, encryptedPhrase }) => {
     setCurrentAccount(account);
+    multiStepRef.current.next({ encryptedPhrase });
     login(recoveryPhrase); // Todo: this login method is depricated
   };
 
@@ -21,6 +23,7 @@ const AddAccountByPassFile = ({ history, login }) => {
     <MultiStep
       key="add-account-file"
       className={styles.container}
+      ref={multiStepRef}
     >
       <RestoreAccountForm onBack={history.goBack} />
       <EnterPasswordForm onEnterPasswordSuccess={onEnterPasswordSuccess} />

@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useForm } from 'react-hook-form';
 
@@ -10,21 +10,29 @@ import BoxContent from 'src/theme/box/content';
 import { PrimaryButton } from 'src/theme/buttons';
 import styles from './EnterPasswordForm.css';
 
-const EnterPasswordForm = ({ accountSchema, onEnterPasswordSuccess, nextStep }) => {
+const EnterPasswordForm = ({ accountSchema, onEnterPasswordSuccess }) => {
   const { t } = useTranslation();
   const {
     register,
     watch,
-    formState: { errors },
     handleSubmit,
   } = useForm();
+  const [feedbackError, setFeedbackError] = useState('');
 
   const formValues = watch();
 
   const onSubmit = ({ password }) => {
     const account = decryptionAccount(accountSchema, password);
-    onEnterPasswordSuccess({ account, recoveryPhrase: account.recoveryPhrase });
-    nextStep({ encryptedPhrase: accountSchema });
+    if (account.error) {
+      setFeedbackError(account.error);
+      return;
+    }
+
+    onEnterPasswordSuccess({
+      account,
+      recoveryPhrase: account.recoveryPhrase,
+      encryptedPhrase: accountSchema,
+    });
   };
 
   return (
@@ -47,7 +55,7 @@ const EnterPasswordForm = ({ accountSchema, onEnterPasswordSuccess, nextStep }) 
             secureTextEntry
             size="s"
             placeholder={t('Enter password')}
-            feedback={errors.password?.message}
+            feedback={feedbackError}
             {...register('password')}
           />
           <PrimaryButton
