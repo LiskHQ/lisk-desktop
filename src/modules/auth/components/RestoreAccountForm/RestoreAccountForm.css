@@ -54,10 +54,10 @@
   flex-direction: column;
   align-items: center;
   padding-top: 30px;
-}
 
-.confirmButton {
-  width: 65%;
+  & > button {
+    width: 65%;
+  }
 }
 
 .titleHolder {
