@@ -4,7 +4,7 @@ import { mount } from 'enzyme';
 import { decryptAccount } from '@account/utils/decryptAccount';
 import EnterPasswordForm from '.';
 
-jest.mock('@account/utils/decryptionAccount');
+jest.mock('@account/utils/decryptAccount');
 
 describe('PassphraseBackup', () => {
   let wrapper;
@@ -26,7 +26,7 @@ describe('PassphraseBackup', () => {
   });
 
   it('should call onEnterPasswordSuccess when onSubmit click', () => {
-    const privateKey = 'private-token-mock';
+    const privateKey = 'private-key-mock';
     const recoveryPhrase = 'target cancel solution recipe vague faint bomb convince pink vendor fresh patrol';
     decryptAccount.mockImplementation(() => (
       {

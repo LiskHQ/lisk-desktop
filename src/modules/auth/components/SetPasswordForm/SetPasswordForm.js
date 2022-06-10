@@ -41,7 +41,7 @@ function SetPasswordForm({ onSubmit, recoveryPhrase }) {
   [formValues.password, formValues.cPassword, formValues.hasAgreed]);
   const onFormSubmit = (values) => {
     const accountSchema = encryptAccount({
-      recoveryPhrase,
+      recoveryPhrase: recoveryPhrase.value,
       password: values.password,
       name: values.accountName,
     });

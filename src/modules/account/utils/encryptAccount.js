@@ -1,4 +1,3 @@
-/* istanbul ignore file */
 import { extractKeyPair, extractAddressFromPublicKey } from 'src/modules/wallet/utils/account';
 import { defaultDerivationPath } from 'src/utils/explicitBipKeyDerivation';
 
@@ -36,18 +35,18 @@ export const mockAccount = {
 const encryptAES256GCMWithPassword = (plainText, password) => mockAccount.crypto;
 
 // eslint-disable-next-line
-export function encryptAccount({recoveryPhrase, password, name, derivationPath}) {
+export function encryptAccount({recoveryPhrase, password, name, enableCustomDerivationPath = false, derivationPath}) {
+// export function encryptAccount({recoveryPhrase, password, name, derivationPath}) {
   // Todo
   // 1- we need to generate public/Private key from recoveryPhrase
   // 2- we need to generate address
   // 3- we need to encrypt recovery phrase and privateKey { privateKey, recoveryPhrase }
   // we need to generate the account Schema json
 
-  // const { enableCustomDerivationPath, customDerivationPath } = settings;
   const options = {
-    passPhrase: recoveryPhrase,
-    enableCustomDerivationPath: !!derivationPath,
-    derivationPath,
+    passphrase: recoveryPhrase,
+    enableCustomDerivationPath,
+    derivationPath: enableCustomDerivationPath ? derivationPath : defaultDerivationPath,
   };
   const { privateKey, publicKey, isValid } = extractKeyPair(options);
   if (!isValid) {
@@ -63,7 +62,7 @@ export function encryptAccount({recoveryPhrase, password, name, derivationPath})
     metadata: {
       name,
       pubkey: publicKey,
-      derivationPath: derivationPath ?? defaultDerivationPath,
+      path: derivationPath ?? defaultDerivationPath,
       address,
       creationTime: new Date().toISOString(),
     },
