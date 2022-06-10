@@ -36,7 +36,6 @@ const encryptAES256GCMWithPassword = (plainText, password) => mockAccount.crypto
 
 // eslint-disable-next-line
 export function encryptAccount({recoveryPhrase, password, name, enableCustomDerivationPath = false, derivationPath}) {
-// export function encryptAccount({recoveryPhrase, password, name, derivationPath}) {
   // Todo
   // 1- we need to generate public/Private key from recoveryPhrase
   // 2- we need to generate address

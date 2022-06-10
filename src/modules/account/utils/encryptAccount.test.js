@@ -22,4 +22,16 @@ describe('encryptAccount', () => {
     };
     expect(encryptAccount(accountDetails)).toEqual(updatedMockAccount);
   });
+
+  it('returns an error if passphrase is invalid', () => {
+    const recoveryPhrase = 'target cancel solution recipe vague faint bomb convince pink';
+    const password = 'samplePassword@1';
+    const name = 'test account';
+    const derivationPath = "m/44'/134'/0'";
+    const accountDetails = {
+      recoveryPhrase, password, name, derivationPath,
+    };
+    const expectedResult = { error: true };
+    expect(encryptAccount(accountDetails)).toEqual(expectedResult);
+  });
 });
