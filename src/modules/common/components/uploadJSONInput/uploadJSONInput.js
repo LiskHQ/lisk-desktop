@@ -6,7 +6,11 @@ import styles from './uploadJSONInput.css';
 const reader = new FileReader();
 
 const UploadJSONInput = ({
-  value, onChange, error, label, prefixLabel,
+  value,
+  onChange,
+  error,
+  label, prefixLabel,
+  placeholderText,
 }) => {
   const onInputChange = ({ target }) => reader.readAsText(target.files[0]);
   const onPaste = (event) =>
@@ -46,9 +50,10 @@ const UploadJSONInput = ({
           value={value && !error ? JSON.stringify(value) : ''}
           readOnly
           className={`${styles.txInput} tx-sign-input`}
+          data-testid="tx-sign-input"
         />
         <span className={styles.fileInputLabel}>
-          {t('Please paste the JSON here.')}
+          {t(placeholderText || 'Please paste the JSON here.')}
         </span>
         <Feedback message={error} size="m" status={error ? 'error' : 'ok'} />
       </div>

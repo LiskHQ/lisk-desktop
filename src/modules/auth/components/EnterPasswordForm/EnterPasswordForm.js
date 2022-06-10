@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { useTranslation } from 'react-i18next';
+import { useForm } from 'react-hook-form';
 
 import WalletVisual from '@wallet/components/walletVisual';
 import { decryptionAccount } from '@account/utils/decryptionAccount';
@@ -7,20 +8,31 @@ import { Input } from 'src/theme';
 import Box from 'src/theme/box';
 import BoxContent from 'src/theme/box/content';
 import { PrimaryButton } from 'src/theme/buttons';
-import styles from './enterPasswordForm.css';
+import styles from './EnterPasswordForm.css';
 
 const EnterPasswordForm = ({ accountSchema, onEnterPasswordSuccess }) => {
   const { t } = useTranslation();
-  const [password, setPassword] = useState('');
+  const {
+    register,
+    watch,
+    handleSubmit,
+  } = useForm();
   const [feedbackError, setFeedbackError] = useState('');
 
-  const onSubmit = () => {
-    const { privateToken, recoveryPhrase, error } = decryptionAccount(accountSchema, password);
-    if (error) {
-      return setFeedbackError(error);
+  const formValues = watch();
+
+  const onSubmit = ({ password }) => {
+    const account = decryptionAccount(accountSchema, password);
+    if (account.error) {
+      setFeedbackError(account.error);
+      return;
     }
 
-    return onEnterPasswordSuccess({ privateToken, recoveryPhrase });
+    onEnterPasswordSuccess({
+      account,
+      recoveryPhrase: account.recoveryPhrase,
+      encryptedPhrase: accountSchema,
+    });
   };
 
   return (
@@ -38,23 +50,22 @@ const EnterPasswordForm = ({ accountSchema, onEnterPasswordSuccess }) => {
           <p className={styles.accountName}>{accountSchema?.metadata?.name}</p>
         )}
         <p className={styles.accountAddress}>{accountSchema?.metadata?.address}</p>
-        <Input
-          name="passwordField"
-          placeholder={t('Enter password')}
-          type="password"
-          value={password}
-          onChange={(e) => {
-            setPassword(e.target.value);
-          }}
-          feedback={feedbackError}
-        />
-        <PrimaryButton
-          className={styles.button}
-          onClick={onSubmit}
-          disabled={!password}
-        >
-          {t('Continue')}
-        </PrimaryButton>
+        <form onSubmit={handleSubmit(onSubmit)}>
+          <Input
+            secureTextEntry
+            size="s"
+            placeholder={t('Enter password')}
+            feedback={feedbackError}
+            {...register('password')}
+          />
+          <PrimaryButton
+            type="submit"
+            disabled={!formValues.password}
+            className={`${styles.button} continue-btn`}
+          >
+            {t('Continue')}
+          </PrimaryButton>
+        </form>
       </BoxContent>
     </Box>
   );

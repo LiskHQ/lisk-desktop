@@ -22,29 +22,31 @@ describe('Backup account recovery phrase flow', () => {
         'Please provide your device password to backup the recovery phrase.',
       ),
     ).toBeTruthy();
-    expect(screen.getByTestId('passwordField')).toBeTruthy();
+    expect(screen.getByTestId('password')).toBeTruthy();
     expect(screen.getByText('Continue')).toBeTruthy();
 
-    const passwordField = screen.getByTestId('passwordField');
+    const passwordField = screen.getByTestId('password');
     fireEvent.change(passwordField, { target: { value: 't3stP@ssw0rD' } });
     fireEvent.click(screen.getByText('Continue'));
 
-    expect(screen.getByText('Save your secret recovery phrase')).toBeTruthy();
-    expect(
-      screen.getByText(
-        'Keep it safe as it is the only way to access your wallet.',
-      ),
-    ).toBeTruthy();
-    expect(
-      screen.getByText(
-        'Please carefully write down these 12 words and store them in a safe place.',
-      ),
-    ).toBeTruthy();
-    expect(screen.getByText('Copy')).toBeTruthy();
-    expect(screen.getByText('I have written them down')).toBeTruthy();
-    expect(screen.getByText('Go back')).toBeTruthy();
+    await waitFor(() => {
+      expect(screen.getByText('Save your secret recovery phrase')).toBeTruthy();
+      expect(
+        screen.getByText(
+          'Keep it safe as it is the only way to access your wallet.',
+        ),
+      ).toBeTruthy();
+      expect(
+        screen.getByText(
+          'Please carefully write down these 12 words and store them in a safe place.',
+        ),
+      ).toBeTruthy();
+      expect(screen.getByText('Copy')).toBeTruthy();
+      expect(screen.getByText('I have written them down')).toBeTruthy();
+      expect(screen.getByText('Go back')).toBeTruthy();
 
-    fireEvent.click(screen.getByText('I have written them down'));
+      fireEvent.click(screen.getByText('I have written them down'));
+    });
 
     expect(
       screen.getByText('Confirm your secret recovery phrase'),
