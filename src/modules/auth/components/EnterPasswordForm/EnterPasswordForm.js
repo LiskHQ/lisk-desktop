@@ -3,7 +3,7 @@ import { useTranslation } from 'react-i18next';
 import { useForm } from 'react-hook-form';
 
 import WalletVisual from '@wallet/components/walletVisual';
-import { decryptionAccount } from '@account/utils/decryptionAccount';
+import { decryptAccount } from '@account/utils/decryptAccount';
 import { Input } from 'src/theme';
 import Box from 'src/theme/box';
 import BoxContent from 'src/theme/box/content';
@@ -22,9 +22,9 @@ const EnterPasswordForm = ({ accountSchema, onEnterPasswordSuccess }) => {
   const formValues = watch();
 
   const onSubmit = ({ password }) => {
-    const account = decryptionAccount(accountSchema, password);
+    const account = decryptAccount(accountSchema, password);
     if (account.error) {
-      setFeedbackError(account.error);
+      setFeedbackError(t('Unable to decrypt account. Please check your provided details'));
       return;
     }
 
