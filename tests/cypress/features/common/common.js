@@ -1,6 +1,6 @@
 /* eslint-disable */
 import { Given, Then, When } from 'cypress-cucumber-preprocessor/steps';
-import { networks, urls, accounts, ss, settings } from '../../../constants';
+import { networks, urls, wallets, ss, settings } from '../../../constants';
 
 const txConfirmationTimeout = 15000;
 
@@ -29,7 +29,7 @@ Given(/^I login as ([^\s]+) on ([^\s]+)$/, function (account, network) {
 
   cy.get(ss.passphraseInput).first().click();
   cy.get(ss.passphraseInput).each(($el, index) => {
-    const passphraseWordsArray = accounts[account].passphrase.split(' ');
+    const passphraseWordsArray = wallets[account].passphrase.split(' ');
     cy.wrap($el, { log: false }).type(passphraseWordsArray[index], { log: false });
   });
   cy.get(ss.loginBtn).should('be.enabled');
@@ -43,7 +43,7 @@ Given(/^I login$/, function () {
 });
 
 Then(/^I enter the passphrase of ([^\s]+)$/, function (accountName) {
-  const passphrase = accounts[accountName]['passphrase'];
+  const passphrase = wallets[accountName]['passphrase'];
   cy.get(ss.passphraseInput).first().click();
   cy.get(ss.passphraseInput).each(($el, index) => {
     const passphraseWordsArray = passphrase.split(' ');
@@ -59,7 +59,7 @@ When(/^I enter the passphrase of ([^\s]+) on ([^\s]+)$/, function (accountName, 
   cy.get(ss.addressInput).clear().type(networks[network].serviceUrl);
   cy.get(ss.connectButton).click();
 
-  const passphrase = accounts[accountName]['passphrase'];
+  const passphrase = wallets[accountName]['passphrase'];
   cy.get(ss.passphraseInput).first().click();
   cy.get(ss.passphraseInput).each(($el, index) => {
     const passphraseWordsArray = passphrase.split(' ');
@@ -71,24 +71,24 @@ Given(/^I am on (.*?) page$/, function (page) {
   page = page.toLowerCase();
   cy.server();
   switch (page) {
-    case 'dashboard':
-      cy.visit(urls.dashboard);
-      break;
+    // case 'dashboard':
+    //   cy.visit(urls.dashboard);
+    //   break;
     case 'register delegate':
       cy.visit(urls.registerDelegate);
       break;
-    case 'delegates':
-      cy.visit(urls.delegates);
-      break;
-    case 'wallet':
-      cy.visit(urls.wallet);
-      break;
-    case 'send':
-      cy.visit(urls.send);
-      break;
-    case 'login':
-      cy.visit(urls.login);
-      break;
+    // case 'delegates':
+    //   cy.visit(urls.delegates);
+    //   break;
+    // case 'wallet':
+    //   cy.visit(urls.wallet);
+    //   break;
+    // case 'send':
+    //   cy.visit(urls.send);
+    //   break;
+    // case 'login':
+    //   cy.visit(urls.login);
+    //   break;
     default:
       cy.visit(urls[page]);
       break;
@@ -99,7 +99,7 @@ Given(/^I am on (.*?) page of (.*?)$/, function (page, identifier) {
   cy.server();
   switch (page.toLowerCase()) {
     case 'wallet':
-      cy.visit(`${urls.account}?address=${accounts[identifier].summary.address}`);
+      cy.visit(`${urls.account}?address=${wallets[identifier].summary.address}`);
       break;
   }
 });
@@ -208,7 +208,7 @@ Then(/^I should be on (.*?) page of (.*?)$/, function (pageName, identifier) {
       break;
     case 'wallet':
       cy.server();
-      cy.visit(`${urls.accounts}/${accounts[identifier].address}`);
+      cy.visit(`${urls.accounts}/${wallets[identifier].address}`);
   }
 });
 
