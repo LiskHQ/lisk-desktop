@@ -36,35 +36,37 @@ const encryptAES256GCMWithPassword = (plainText, password) => mockAccount.crypto
 
 // eslint-disable-next-line
 export function encryptAccount({recoveryPhrase, password, name, enableCustomDerivationPath = false, derivationPath}) {
-  // Todo
-  // 1- we need to generate public/Private key from recoveryPhrase
-  // 2- we need to generate address
-  // 3- we need to encrypt recovery phrase and privateKey { privateKey, recoveryPhrase }
   // we need to generate the account Schema json
 
-  const options = {
-    passphrase: recoveryPhrase,
-    enableCustomDerivationPath,
-    derivationPath: enableCustomDerivationPath ? derivationPath : defaultDerivationPath,
-  };
-  const { privateKey, publicKey, isValid } = extractKeyPair(options);
-  if (!isValid) {
+  try {
+    const options = {
+      passphrase: recoveryPhrase,
+      enableCustomDerivationPath,
+      derivationPath: enableCustomDerivationPath ? derivationPath : defaultDerivationPath,
+    };
+    const { privateKey, publicKey, isValid } = extractKeyPair(options);
+    if (!isValid) {
+      return {
+        error: true,
+      };
+    }
+    const address = extractAddressFromPublicKey(publicKey);
+    const plainText = JSON.stringify({ privateKey, recoveryPhrase });
+    const crypto = encryptAES256GCMWithPassword(plainText, password);
+    return {
+      crypto,
+      metadata: {
+        name,
+        pubkey: publicKey,
+        path: derivationPath ?? defaultDerivationPath,
+        address,
+        creationTime: new Date().toISOString(),
+      },
+      version: 1,
+    };
+  } catch (error) {
     return {
       error: true,
     };
   }
-  const address = extractAddressFromPublicKey(publicKey);
-  const plainText = JSON.stringify({ privateKey, recoveryPhrase });
-  const crypto = encryptAES256GCMWithPassword(plainText, password);
-  return {
-    crypto,
-    metadata: {
-      name,
-      pubkey: publicKey,
-      path: derivationPath ?? defaultDerivationPath,
-      address,
-      creationTime: new Date().toISOString(),
-    },
-    version: 1,
-  };
 }

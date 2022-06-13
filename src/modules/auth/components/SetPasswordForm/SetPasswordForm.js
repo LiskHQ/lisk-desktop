@@ -3,6 +3,7 @@ import { useTranslation } from 'react-i18next';
 import { withRouter } from 'react-router';
 import * as yup from 'yup';
 import { useForm } from 'react-hook-form';
+import { toast } from 'react-toastify';
 import { yupResolver } from '@hookform/resolvers/yup';
 import grid from 'flexboxgrid/dist/flexboxgrid.css';
 import Input from 'src/theme/Input';
@@ -39,6 +40,7 @@ function SetPasswordForm({ onSubmit, recoveryPhrase }) {
   const isButtonDisabled = useMemo(() =>
     !password?.length || !cPassword?.length || !hasAgreed,
   [formValues.password, formValues.cPassword, formValues.hasAgreed]);
+
   const onFormSubmit = (values) => {
     const accountSchema = encryptAccount({
       recoveryPhrase: recoveryPhrase.value,
@@ -47,7 +49,7 @@ function SetPasswordForm({ onSubmit, recoveryPhrase }) {
     });
 
     if (accountSchema.error) {
-      // we need to set error on a toast
+      toast.error(t('Something went wrong. Please try again'));
       return null;
     }
     return onSubmit?.(accountSchema);

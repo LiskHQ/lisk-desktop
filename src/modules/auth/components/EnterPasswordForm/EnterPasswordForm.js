@@ -24,7 +24,7 @@ const EnterPasswordForm = ({ accountSchema, onEnterPasswordSuccess }) => {
   const onSubmit = ({ password }) => {
     const account = decryptAccount(accountSchema, password);
     if (account.error) {
-      setFeedbackError(t('Unable to decrypt account. Please check your provided details'));
+      setFeedbackError(t('Unable to decrypt account. Please check your password'));
       return;
     }
 
