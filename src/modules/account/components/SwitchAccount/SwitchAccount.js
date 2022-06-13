@@ -1,9 +1,11 @@
 import React from 'react';
+import { useDispatch } from 'react-redux';
 import { useTranslation } from 'react-i18next';
 import { Link } from 'react-router-dom';
 import WalletVisual from '@wallet/components/walletVisual';
 import { useAccounts } from '@account/hooks/useAccounts';
 import routes from '@screens/router/routes';
+import { login } from '@auth/store/action';
 import history from 'src/utils/history';
 import { removeSearchParamsFromUrl } from 'src/utils/searchParams';
 import Box from 'src/theme/box';
@@ -17,7 +19,7 @@ const AccountList = ({ accounts, onAccountClick }) => (
       <div
         key={`switch-account-lisk-${account.metadata.address}`}
         className={styles.account}
-        onClick={onAccountClick}
+        onClick={() => onAccountClick(account)}
       >
         <WalletVisual address={account.metadata.address} />
         <div>
@@ -30,11 +32,13 @@ const AccountList = ({ accounts, onAccountClick }) => (
 );
 
 const SwitchAccount = () => {
+  const dispatch = useDispatch();
   const { t } = useTranslation();
   const [accounts] = useAccounts();
 
-  const onAccountClick = () => {
-    // TODO close modal, refetch data and update redux
+  const onAccountClick = (account) => {
+    removeSearchParamsFromUrl(history, ['modal']);
+    dispatch(login({ publicKey: account.metadata.pubkey })); // Todo this login method is deprecated
   };
 
   return (
