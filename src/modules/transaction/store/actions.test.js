@@ -15,7 +15,7 @@ import {
   pendingTransactionAdded,
   transactionDoubleSigned,
   transactionBroadcasted,
-  transactionCreated,
+  tokensTransferred,
   multisigTransactionSigned,
   signatureSkipped,
 } from './actions';
@@ -172,7 +172,7 @@ describe('actions: transactions', () => {
     });
   });
 
-  describe('transactionCreated', () => {
+  describe('tokensTransferred', () => {
     const state = getState();
 
     const activeAccount = {
@@ -195,7 +195,7 @@ describe('actions: transactions', () => {
       },
     });
 
-    it('should dispatch transactionCreatedSuccess action if there are no errors', async () => {
+    it('should dispatch tokensTransferredSuccess action if there are no errors', async () => {
       // Arrange
       const data = {
         amount: '21000000',
@@ -205,7 +205,7 @@ describe('actions: transactions', () => {
       };
 
       // Act
-      await transactionCreated(data)(dispatch, getState);
+      await tokensTransferred(data)(dispatch, getState);
 
       // Assert
       expect(hwManager.signTransactionByHW).not.toHaveBeenCalled();
@@ -230,7 +230,7 @@ describe('actions: transactions', () => {
         data: transactionError,
       };
       // Act
-      await transactionCreated(data)(dispatch, getStateWithHW);
+      await tokensTransferred(data)(dispatch, getStateWithHW);
       expect(dispatch).toHaveBeenCalledWith(expectedAction);
     });
   });

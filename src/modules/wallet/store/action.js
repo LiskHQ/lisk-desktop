@@ -2,7 +2,7 @@
 import { to } from 'await-to-js';
 import { MODULE_ASSETS_NAME_ID_MAP } from '@transaction/configuration/moduleAssets';
 import { toRawLsk } from '@token/fungible/utils/lsk';
-import { create } from '@transaction/api';
+import { createGenericTx } from '@transaction/api';
 import { getAccount } from '@wallet/utils/api';
 import { selectActiveTokenAccount } from '@common/store';
 import { networkStatusUpdated } from '@network/store/action';
@@ -87,7 +87,7 @@ export const multisigGroupRegistered = ({
   // Create the transaction
   //
   const [error, tx] = await to(
-    create({
+    createGenericTx({
       network: state.network,
       wallet: activeWallet,
       transactionObject: {

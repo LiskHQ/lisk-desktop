@@ -1,7 +1,7 @@
 import { to } from 'await-to-js';
 import { MODULE_ASSETS_NAME_ID_MAP } from '@transaction/configuration/moduleAssets';
 import { toRawLsk } from '@token/fungible/utils/lsk';
-import { create } from '@transaction/api';
+import { createGenericTx } from '@transaction/api';
 import actionTypes from '@transaction/store/actionTypes';
 import { selectActiveTokenAccount } from '@common/store';
 
@@ -17,7 +17,7 @@ export const balanceReclaimed = ({ fee }) => async (dispatch, getState) => {
   // Create the transaction
   //
   const [error, tx] = await to(
-    create({
+    createGenericTx({
       network: state.network,
       wallet: activeWallet,
       transactionObject: {

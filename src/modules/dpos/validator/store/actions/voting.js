@@ -3,7 +3,7 @@ import { tokenMap } from '@token/fungible/consts/tokens';
 import { toRawLsk } from '@token/fungible/utils/lsk';
 import { MODULE_ASSETS_NAME_ID_MAP } from '@transaction/configuration/moduleAssets';
 import { selectActiveTokenAccount, selectCurrentBlockHeight } from '@common/store/selectors';
-import { create } from '@transaction/api';
+import { createGenericTx } from '@transaction/api';
 import { getUnlockableUnlockObjects } from '@wallet/utils/account';
 import { getAccount } from '@wallet/utils/api';
 import { timerReset } from '@auth/store/action';
@@ -81,7 +81,7 @@ export const votesSubmitted = ({ fee, votes }) =>
     const state = getState();
     const activeWallet = selectActiveTokenAccount(state);
 
-    const [error, tx] = await to(create({
+    const [error, tx] = await to(createGenericTx({
       network: state.network,
       wallet: activeWallet,
       transactionObject: {
@@ -150,7 +150,7 @@ export const balanceUnlocked = data => async (dispatch, getState) => {
   // Create the transaction
   //
   const [error, tx] = await to(
-    create({
+    createGenericTx({
       network: state.network,
       wallet: activeWallet,
       transactionObject: {

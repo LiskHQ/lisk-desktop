@@ -1,10 +1,10 @@
 import React from 'react';
-import { toRawLsk, fromRawLsk } from '@token/fungible/utils/lsk';
+import { fromRawLsk } from '@token/fungible/utils/lsk';
 import TransactionSummary from '@transaction/manager/transactionSummary';
 
 const Summary = ({
   resetTransactionResult,
-  transactionCreated,
+  tokensTransferred,
   prevStep,
   nextStep,
   fields,

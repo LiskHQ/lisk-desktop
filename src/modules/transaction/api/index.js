@@ -17,7 +17,7 @@ import http from '@common/utilities/api/http';
 import { getDelegates } from '@dpos/validator/api';
 import { HTTP_PREFIX } from 'src/const/httpCodes';
 import {
-  createTransactionObject,
+  desktopTxToElementsTx,
   sign,
 } from '../utils';
 
@@ -309,7 +309,7 @@ export const getTransactionFee = async ({
  * rejects with an error
  */
 // eslint-disable-next-line max-statements
-export const create = async ({
+export const createGenericTx = async ({
   network,
   wallet,
   transactionObject,

@@ -6,7 +6,7 @@ import { selectActiveToken } from '@common/store';
 import {
   resetTransactionResult,
   transactionDoubleSigned,
-  transactionCreated,
+  tokensTransferred,
 } from '@common/store/actions';
 import Summary from './summary';
 
@@ -18,7 +18,7 @@ const mapStateToProps = state => ({
 const mapDispatchToProps = {
   resetTransactionResult,
   transactionDoubleSigned,
-  transactionCreated,
+  tokensTransferred,
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(withTranslation()(Summary));
