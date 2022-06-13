@@ -1,4 +1,4 @@
-// TODO this function should be imported from SDK
+// TODO: this function should be imported from SDK - #4342
 // eslint-disable-next-line no-unused-vars
 const decryptAES256GCMWithPassword = ({ encryptedPassphrase, password }) => JSON.stringify({
   privateKey: 'private-key-mock',

@@ -31,6 +31,7 @@ export const mockAccount = {
   version: 1,
 };
 
+// TODO: this function should be imported from SDK - #4342
 // eslint-disable-next-line no-unused-vars
 const encryptAES256GCMWithPassword = (plainText, password) => mockAccount.crypto;
 
