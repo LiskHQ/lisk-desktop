@@ -1,5 +1,5 @@
 import React from 'react';
-import TransactionResult from '@transaction/manager/txBroadcaster';
+import TxBroadcaster from '@transaction/components/TxBroadcaster';
 import { statusMessages, getTransactionStatus } from '@transaction/configuration/statusConfig';
 import ProgressBar from '../RegisterMultisigView/ProgressBar';
 import styles from './styles.css';
@@ -14,7 +14,7 @@ const Status = ({ account, transactions, t }) => {
         <h1>{t('Register multisignature account')}</h1>
       </div>
       <ProgressBar current={4} />
-      <TransactionResult
+      <TxBroadcaster
         illustration="registerMultisignature"
         status={status}
         message={template.message}

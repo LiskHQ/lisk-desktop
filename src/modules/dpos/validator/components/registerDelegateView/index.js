@@ -4,7 +4,7 @@ import TxSignatureCollector from '@transaction/components/TxSignatureCollector';
 import Dialog from 'src/theme/dialog/dialog';
 import Form from '../RegisterDelegateForm';
 import Summary from '../RegisterDelegateSummary';
-import Status from '../registerDelegateStatus';
+import Status from '../RegisterDelegateStatus';
 import styles from './registerDelegate.css';
 
 const RegisterDelegate = ({ history, t }) => (

@@ -1,6 +1,6 @@
 import React from 'react';
 import { PrimaryButton } from 'src/theme/buttons';
-import TransactionResult from '@transaction/manager/txBroadcaster';
+import TxBroadcaster from '@transaction/components/TxBroadcaster';
 import { getTransactionStatus, statusMessages } from '@transaction/configuration/statusConfig';
 import styles from './unlockBalanceStatus.css';
 
@@ -14,7 +14,7 @@ const TransactionStatus = ({ account, transactions, t }) => {
 
   return (
     <div className={`${styles.wrapper} transaction-status`}>
-      <TransactionResult
+      <TxBroadcaster
         illustration="default"
         status={status}
         title={template.title}
@@ -29,7 +29,7 @@ const TransactionStatus = ({ account, transactions, t }) => {
             {template.button.title}
           </PrimaryButton>
         )}
-      </TransactionResult>
+      </TxBroadcaster>
     </div>
   );
 };

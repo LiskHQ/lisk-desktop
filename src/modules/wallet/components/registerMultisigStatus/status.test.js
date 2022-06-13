@@ -1,6 +1,6 @@
 import React from 'react';
 import { shallow } from 'enzyme';
-import TransactionResult from '@transaction/manager/txBroadcaster';
+import TxBroadcaster from '@transaction/components/TxBroadcaster';
 import accounts from '@tests/constants/wallets';
 import Status from './status';
 
@@ -24,7 +24,7 @@ describe('Multisignature status component', () => {
     fee: '207000n',
   };
 
-  it('passes correct props to TransactionResult when partial signed transaction', () => {
+  it('passes correct props to TxBroadcaster when partial signed transaction', () => {
     const propsWithSignedTx = {
       ...props,
       account: accounts.multiSig,
@@ -46,7 +46,7 @@ describe('Multisignature status component', () => {
 
     const wrapper = shallow(<Status {...propsWithSignedTx} />);
     expect(wrapper.find('.transaction-status')).toExist();
-    expect(wrapper.find(TransactionResult).props()).toEqual({
+    expect(wrapper.find(TxBroadcaster).props()).toEqual({
       illustration: 'registerMultisignature',
       status: { code: 'MULTISIG_SIGNATURE_PARTIAL_SUCCESS' },
       title: 'Your signature was successful',
@@ -55,7 +55,7 @@ describe('Multisignature status component', () => {
     });
   });
 
-  it('passes correct props to TransactionResult when signed transaction', () => {
+  it('passes correct props to TxBroadcaster when signed transaction', () => {
     const propsWithSignedTx = {
       ...props,
       transactions: {
@@ -67,7 +67,7 @@ describe('Multisignature status component', () => {
 
     const wrapper = shallow(<Status {...propsWithSignedTx} />);
     expect(wrapper.find('.transaction-status')).toExist();
-    expect(wrapper.find(TransactionResult).props()).toEqual({
+    expect(wrapper.find(TxBroadcaster).props()).toEqual({
       illustration: 'registerMultisignature',
       status: { code: 'SIGNATURE_SUCCESS' },
       title: 'Submitting the transaction',
@@ -76,7 +76,7 @@ describe('Multisignature status component', () => {
     });
   });
 
-  it('passes correct props to TransactionResult when transaction sign failed', () => {
+  it('passes correct props to TxBroadcaster when transaction sign failed', () => {
     const propsWithError = {
       ...props,
       transactions: {
@@ -88,7 +88,7 @@ describe('Multisignature status component', () => {
 
     const wrapper = shallow(<Status {...propsWithError} />);
     expect(wrapper.find('.transaction-status')).toExist();
-    expect(wrapper.find(TransactionResult).props()).toEqual({
+    expect(wrapper.find(TxBroadcaster).props()).toEqual({
       illustration: 'registerMultisignature',
       status: { code: 'SIGNATURE_ERROR', message: JSON.stringify({ message: 'error:test' }) },
       title: 'Transaction failed',
@@ -97,7 +97,7 @@ describe('Multisignature status component', () => {
     });
   });
 
-  it('passes correct props to TransactionResult when transaction broadcast fails', () => {
+  it('passes correct props to TxBroadcaster when transaction broadcast fails', () => {
     const propsWithError = {
       ...props,
       transactions: {
@@ -109,7 +109,7 @@ describe('Multisignature status component', () => {
 
     const wrapper = shallow(<Status {...propsWithError} />);
     expect(wrapper.find('.transaction-status')).toExist();
-    expect(wrapper.find(TransactionResult).props()).toEqual({
+    expect(wrapper.find(TxBroadcaster).props()).toEqual({
       illustration: 'registerMultisignature',
       status: { code: 'BROADCAST_ERROR', message: JSON.stringify({ message: 'error:test' }) },
       title: 'Transaction failed',
@@ -118,7 +118,7 @@ describe('Multisignature status component', () => {
     });
   });
 
-  it('passes correct props to TransactionResult when transaction broadcast success', () => {
+  it('passes correct props to TxBroadcaster when transaction broadcast success', () => {
     const propsSuccess = {
       ...props,
       transactions: {
@@ -130,7 +130,7 @@ describe('Multisignature status component', () => {
 
     const wrapper = shallow(<Status {...propsSuccess} />);
     expect(wrapper.find('.transaction-status')).toExist();
-    expect(wrapper.find(TransactionResult).props()).toMatchObject({
+    expect(wrapper.find(TxBroadcaster).props()).toMatchObject({
       illustration: 'registerMultisignature',
       status: { code: 'BROADCAST_SUCCESS' },
       title: 'Transaction submitted',

@@ -1,6 +1,6 @@
 import React from 'react';
 import { shallow } from 'enzyme';
-import TransactionResult from '@transaction/manager/txBroadcaster';
+import TxBroadcaster from '@transaction/components/TxBroadcaster';
 import accounts from '@tests/constants/wallets';
 import Status from './status';
 
@@ -26,7 +26,7 @@ describe('Status', () => {
     fee: '207000n',
   };
 
-  it('passes correct props to TransactionResult when signed transaction', () => {
+  it('passes correct props to TxBroadcaster when signed transaction', () => {
     const propsWithSignedTx = {
       ...props,
       transactions: {
@@ -38,7 +38,7 @@ describe('Status', () => {
 
     const wrapper = shallow(<Status {...propsWithSignedTx} />);
     expect(wrapper.find('.status-container')).toExist();
-    expect(wrapper.find(TransactionResult).props()).toMatchObject({
+    expect(wrapper.find(TxBroadcaster).props()).toMatchObject({
       illustration: 'default',
       status: { code: 'SIGNATURE_SUCCESS' },
       title: 'Submitting the transaction',
@@ -46,7 +46,7 @@ describe('Status', () => {
     });
   });
 
-  it('passes correct props to TransactionResult when transaction sign failed', () => {
+  it('passes correct props to TxBroadcaster when transaction sign failed', () => {
     const propsWithError = {
       ...props,
       transactions: {
@@ -58,7 +58,7 @@ describe('Status', () => {
 
     const wrapper = shallow(<Status {...propsWithError} />);
     expect(wrapper.find('.status-container')).toExist();
-    expect(wrapper.find(TransactionResult).props()).toMatchObject({
+    expect(wrapper.find(TxBroadcaster).props()).toMatchObject({
       illustration: 'default',
       status: { code: 'SIGNATURE_ERROR', message: JSON.stringify({ message: 'error:test' }) },
       title: 'Transaction failed',
@@ -66,7 +66,7 @@ describe('Status', () => {
     });
   });
 
-  it('passes correct props to TransactionResult when transaction broadcast fails', () => {
+  it('passes correct props to TxBroadcaster when transaction broadcast fails', () => {
     const propsWithError = {
       ...props,
       transactions: {
@@ -78,7 +78,7 @@ describe('Status', () => {
 
     const wrapper = shallow(<Status {...propsWithError} />);
     expect(wrapper.find('.status-container')).toExist();
-    expect(wrapper.find(TransactionResult).props()).toMatchObject({
+    expect(wrapper.find(TxBroadcaster).props()).toMatchObject({
       illustration: 'default',
       status: { code: 'BROADCAST_ERROR', message: JSON.stringify({ message: 'error:test' }) },
       title: 'Transaction failed',
@@ -86,7 +86,7 @@ describe('Status', () => {
     });
   });
 
-  it('passes correct props to TransactionResult when transaction broadcast success', () => {
+  it('passes correct props to TxBroadcaster when transaction broadcast success', () => {
     const propsSuccess = {
       ...props,
       transactions: {
@@ -98,7 +98,7 @@ describe('Status', () => {
 
     const wrapper = shallow(<Status {...propsSuccess} />);
     expect(wrapper.find('.status-container')).toExist();
-    expect(wrapper.find(TransactionResult).props()).toMatchObject({
+    expect(wrapper.find(TxBroadcaster).props()).toMatchObject({
       illustration: 'default',
       status: { code: 'BROADCAST_SUCCESS' },
       title: 'Balance reclaimed successfully',

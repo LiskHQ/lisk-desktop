@@ -1,16 +1,16 @@
 import React from 'react';
-import TransactionResult from '@transaction/manager/txBroadcaster';
+import TxBroadcaster from '@transaction/components/TxBroadcaster';
 import { getTransactionStatus } from '@transaction/configuration/statusConfig';
 import statusMessages from './statusMessages';
 import styles from './status.css';
 
-const Status = ({ transactions, account, t }) => {
+const RegisterDelegateStatus = ({ transactions, account, t }) => {
   const status = getTransactionStatus(account, transactions, account.summary.isMultisignature);
   const template = statusMessages(t)[status.code];
 
   return (
     <div className={`${styles.wrapper} status-container`}>
-      <TransactionResult
+      <TxBroadcaster
         illustration="default"
         status={status}
         title={template.title}
@@ -26,4 +26,4 @@ const areEqual = (prev, next) => (
   || prev.account.dpos.delegate.username === next.account.dpos.delegate.username
 );
 
-export default React.memo(Status, areEqual);
+export default React.memo(RegisterDelegateStatus, areEqual);

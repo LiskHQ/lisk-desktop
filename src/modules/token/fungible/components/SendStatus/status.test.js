@@ -1,6 +1,6 @@
 import React from 'react';
 import { shallow } from 'enzyme';
-import TransactionResult from '@transaction/manager/txBroadcaster';
+import TxBroadcaster from '@transaction/components/TxBroadcaster';
 import DialogLink from 'src/theme/dialog/link';
 import accounts from '@tests/constants/wallets';
 import Status from './status';
@@ -32,7 +32,7 @@ describe('unlock transaction Status', () => {
     fee: '207000n',
   };
 
-  it('passes correct props to TransactionResult when signed transaction and display add bookmark lin', () => {
+  it('passes correct props to TxBroadcaster when signed transaction and display add bookmark lin', () => {
     const propsWithSignedTx = {
       ...props,
       transactions: {
@@ -44,7 +44,7 @@ describe('unlock transaction Status', () => {
 
     const wrapper = shallow(<Status {...propsWithSignedTx} />);
     expect(wrapper.find('.transaction-status')).toExist();
-    expect(wrapper.find(TransactionResult).props()).toMatchObject({
+    expect(wrapper.find(TxBroadcaster).props()).toMatchObject({
       illustration: 'default',
       status: { code: 'SIGNATURE_SUCCESS' },
       title: 'Submitting the transaction',
@@ -60,7 +60,7 @@ describe('unlock transaction Status', () => {
     });
   });
 
-  it('passes correct props to TransactionResult when transaction sign failed', () => {
+  it('passes correct props to TxBroadcaster when transaction sign failed', () => {
     const propsWithError = {
       ...props,
       transactions: {
@@ -72,7 +72,7 @@ describe('unlock transaction Status', () => {
 
     const wrapper = shallow(<Status {...propsWithError} />);
     expect(wrapper.find('.transaction-status')).toExist();
-    expect(wrapper.find(TransactionResult).props()).toMatchObject({
+    expect(wrapper.find(TxBroadcaster).props()).toMatchObject({
       illustration: 'default',
       status: {
         code: 'SIGNATURE_ERROR',
@@ -84,7 +84,7 @@ describe('unlock transaction Status', () => {
     });
   });
 
-  it('passes correct props to TransactionResult when transaction broadcast fails', () => {
+  it('passes correct props to TxBroadcaster when transaction broadcast fails', () => {
     const propsWithError = {
       ...props,
       recipientAccount: { data: accounts.delegate_candidate },
@@ -100,7 +100,7 @@ describe('unlock transaction Status', () => {
 
     const wrapper = shallow(<Status {...propsWithError} />);
     expect(wrapper.find('.transaction-status')).toExist();
-    expect(wrapper.find(TransactionResult).props()).toMatchObject({
+    expect(wrapper.find(TxBroadcaster).props()).toMatchObject({
       illustration: 'default',
       status: {
         code: 'BROADCAST_ERROR',
@@ -112,7 +112,7 @@ describe('unlock transaction Status', () => {
     });
   });
 
-  it('passes correct props to TransactionResult when transaction broadcast success and display add bookmark link', () => {
+  it('passes correct props to TxBroadcaster when transaction broadcast success and display add bookmark link', () => {
     const propsSuccess = {
       ...props,
       transactions: {
@@ -124,7 +124,7 @@ describe('unlock transaction Status', () => {
 
     const wrapper = shallow(<Status {...propsSuccess} />);
     expect(wrapper.find('.transaction-status')).toExist();
-    expect(wrapper.find(TransactionResult).props()).toMatchObject({
+    expect(wrapper.find(TxBroadcaster).props()).toMatchObject({
       illustration: 'default',
       status: { code: 'BROADCAST_SUCCESS' },
       title: 'Transaction submitted',

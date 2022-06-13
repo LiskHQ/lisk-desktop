@@ -6,7 +6,7 @@ import { removeSearchParamsFromUrl } from 'src/utils/searchParams';
 import MultiStep from 'src/modules/common/components/OldMultiStep';
 import Form from '../VoteForm';
 import Summary from '../VoteSummary';
-import Status from '../voteStatus';
+import Status from '../VoteStatus';
 import styles from './styles.css';
 
 const VotingQueue = ({ history, processLaunchProtocol }) => {

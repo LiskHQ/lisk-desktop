@@ -1,5 +1,5 @@
 import React from 'react';
-import TransactionResult from '@transaction/manager/txBroadcaster';
+import TxBroadcaster from '@transaction/components/TxBroadcaster';
 import { getTransactionStatus } from '@transaction/configuration/statusConfig';
 import statusMessages from './statusMessages';
 import styles from './status.css';
@@ -12,7 +12,7 @@ const Status = ({
 
   return (
     <div className={`${styles.wrapper} status-container`}>
-      <TransactionResult
+      <TxBroadcaster
         illustration="default"
         status={status}
         title={template.title}

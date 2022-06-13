@@ -1,6 +1,6 @@
 import React from 'react';
 import { shallow } from 'enzyme';
-import TransactionResult from '@transaction/manager/txBroadcaster';
+import TxBroadcaster from '@transaction/components/TxBroadcaster';
 import accounts from '@tests/constants/wallets';
 import Status from './status';
 
@@ -30,7 +30,7 @@ describe('Sign Multisignature Tx Status component', () => {
     },
   };
 
-  it('passes correct props to TransactionResult when transaction sign failed', () => {
+  it('passes correct props to TxBroadcaster when transaction sign failed', () => {
     const propsWithError = {
       ...props,
       transactions: {
@@ -41,7 +41,7 @@ describe('Sign Multisignature Tx Status component', () => {
     };
 
     const wrapper = shallow(<Status {...propsWithError} />);
-    expect(wrapper.find(TransactionResult).props()).toEqual({
+    expect(wrapper.find(TxBroadcaster).props()).toEqual({
       illustration: 'signMultisignature',
       status: { code: 'SIGNATURE_ERROR', message: JSON.stringify({ message: 'error:test' }) },
       title: 'Transaction failed',
@@ -50,7 +50,7 @@ describe('Sign Multisignature Tx Status component', () => {
     });
   });
 
-  it('passes correct props to TransactionResult when transaction broadcast success', () => {
+  it('passes correct props to TxBroadcaster when transaction broadcast success', () => {
     const propsSuccess = {
       ...props,
       transactions: {
@@ -61,7 +61,7 @@ describe('Sign Multisignature Tx Status component', () => {
     };
 
     const wrapper = shallow(<Status {...propsSuccess} />);
-    expect(wrapper.find(TransactionResult).props()).toMatchObject({
+    expect(wrapper.find(TxBroadcaster).props()).toMatchObject({
       illustration: 'signMultisignature',
       status: { code: 'BROADCAST_SUCCESS' },
       title: 'Transaction submitted',
@@ -69,7 +69,7 @@ describe('Sign Multisignature Tx Status component', () => {
     });
   });
 
-  it('passes correct props to TransactionResult when transaction broadcast fails', () => {
+  it('passes correct props to TxBroadcaster when transaction broadcast fails', () => {
     const propsWithError = {
       ...props,
       transactions: {
@@ -80,7 +80,7 @@ describe('Sign Multisignature Tx Status component', () => {
     };
 
     const wrapper = shallow(<Status {...propsWithError} />);
-    expect(wrapper.find(TransactionResult).props()).toEqual({
+    expect(wrapper.find(TxBroadcaster).props()).toEqual({
       illustration: 'signMultisignature',
       status: { code: 'BROADCAST_ERROR', message: JSON.stringify({ message: 'error:test' }) },
       title: 'Transaction failed',
@@ -89,7 +89,7 @@ describe('Sign Multisignature Tx Status component', () => {
     });
   });
 
-  it('passes correct props to TransactionResult when partial signed transaction', () => {
+  it('passes correct props to TxBroadcaster when partial signed transaction', () => {
     const propsWithSignedTx = {
       ...props,
       account: accounts.multiSig,
@@ -101,7 +101,7 @@ describe('Sign Multisignature Tx Status component', () => {
     };
 
     const wrapper = shallow(<Status {...propsWithSignedTx} />);
-    expect(wrapper.find(TransactionResult).props()).toEqual({
+    expect(wrapper.find(TxBroadcaster).props()).toEqual({
       illustration: 'signMultisignature',
       status: { code: 'MULTISIG_SIGNATURE_PARTIAL_SUCCESS' },
       title: 'Your signature was successful',
@@ -110,7 +110,7 @@ describe('Sign Multisignature Tx Status component', () => {
     });
   });
 
-  it('passes correct props to TransactionResult when fully signed transaction', () => {
+  it('passes correct props to TxBroadcaster when fully signed transaction', () => {
     const propsWithSignedTx = {
       ...props,
       account: accounts.multiSig,
@@ -129,7 +129,7 @@ describe('Sign Multisignature Tx Status component', () => {
     };
 
     const wrapper = shallow(<Status {...propsWithSignedTx} />);
-    expect(wrapper.find(TransactionResult).props()).toEqual({
+    expect(wrapper.find(TxBroadcaster).props()).toEqual({
       illustration: 'signMultisignature',
       status: { code: 'MULTISIG_SIGNATURE_SUCCESS' },
       title: 'The transaction is now fully signed',
