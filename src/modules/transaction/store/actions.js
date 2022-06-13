@@ -4,10 +4,9 @@ import { signatureCollectionStatus } from '@transaction/configuration/txStatus';
 import { extractKeyPair } from '@wallet/utils/account';
 import { getTransactionSignatureStatus } from '@wallet/components/signMultisigView/helpers';
 import { timerReset } from '@auth/store/action';
-import { selectActiveTokenAccount } from '@common/store';
 import { loadingStarted, loadingFinished } from '@common/store/actions/loading';
 import actionTypes from './actionTypes';
-import { getTransactions, createGenericTx, broadcast } from '../api';
+import { getTransactions, broadcast } from '../api';
 import {
   signMultisigTransaction,
   elementTxToDesktopTx,
@@ -85,38 +84,6 @@ export const transactionsRetrieved = ({
 export const resetTransactionResult = () => ({
   type: actionTypes.resetTransactionResult,
 });
-
-/**
- * Calls transactionAPI.create for create the tx object that will broadcast
- * @param {Object} data
- * @param {String} data.recipientAddress
- * @param {Number} data.amount - In raw format (satoshi, beddows)
- * @param {Number} data.fee - In raw format, used for updating the TX List.
- * @param {Number} data.reference - Data field for LSK transactions
- */
-// eslint-disable-next-line max-statements
-export const tokensTransferred = transactionObject => async (dispatch, getState) => {
-  const state = getState();
-  const wallet = selectActiveTokenAccount(state);
-
-  const [error, tx] = await to(createGenericTx({
-    transactionObject,
-    wallet,
-    network: state.network,
-  }));
-
-  if (error) {
-    dispatch({
-      type: actionTypes.transactionSignError,
-      data: error,
-    });
-  } else {
-    dispatch({
-      type: actionTypes.transactionCreatedSuccess,
-      data: tx,
-    });
-  }
-};
 
 /**
  * Signs the transaction using a given second passphrase

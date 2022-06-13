@@ -37,10 +37,10 @@ const getMessagesDetails = (transactions, status, t, isHardwareWalletError) => {
 const TransactionStatus = ({
   recipientAccount,
   transactions,
-  rawTransaction,
   bookmarks,
   account,
   token,
+  rawTx,
   t,
 }) => {
   useEffect(() => {
@@ -51,14 +51,14 @@ const TransactionStatus = ({
       /**
        * Retrieve recipient info to use for bookmarking
        */
-      recipientAccount.loadData({ address: rawTransaction.recipientAddress });
+      recipientAccount.loadData({ address: rawTx.recipientAddress });
     }
   }, []);
 
   const showBookmark = shouldShowBookmark(
     bookmarks,
     account,
-    rawTransaction,
+    rawTx,
     token,
   );
   const status = getTransactionStatus(
@@ -81,7 +81,7 @@ const TransactionStatus = ({
             <DialogLink
               component="addBookmark"
               data={{
-                formAddress: rawTransaction.recipientAddress,
+                formAddress: rawTx.recipientAddress,
                 label: recipientAccount.data.dpos?.delegate?.username ?? '',
                 isDelegate: !!recipientAccount.data.summary?.isDelegate,
               }}

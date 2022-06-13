@@ -1,5 +1,3 @@
-import loginTypes from 'src/modules/auth/const/loginTypes';
-import * as hwManager from '@transaction/utils/hwManager';
 import httpApi from '@common/utilities/api/http';
 import * as transactionUtils from '@transaction/utils/transaction';
 import { getState } from '@tests/fixtures/transactions';
@@ -15,13 +13,11 @@ import {
   pendingTransactionAdded,
   transactionDoubleSigned,
   transactionBroadcasted,
-  tokensTransferred,
   multisigTransactionSigned,
   signatureSkipped,
 } from './actions';
 
 jest.mock('@dpos/validator/api');
-jest.mock('@transaction/utils/hwManager');
 jest.mock('@common/utilities/api/http');
 
 describe('actions: transactions', () => {
@@ -169,69 +165,6 @@ describe('actions: transactions', () => {
     it('should create an action to reset transaction result', () => {
       const expectedAction = { type: actionTypes.resetTransactionResult };
       expect(resetTransactionResult()).toEqual(expectedAction);
-    });
-  });
-
-  describe('tokensTransferred', () => {
-    const state = getState();
-
-    const activeAccount = {
-      ...state.wallet.info.LSK,
-      hwInfo: {
-        deviceModel: 'Ledger Nano S',
-      },
-      passphrase: state.wallet.passphrase,
-    };
-    const getStateWithHW = () => ({
-      ...state,
-      wallet: {
-        info: {
-          LSK: activeAccount,
-        },
-        hwInfo: {
-          deviceModel: 'Ledger Nano S',
-        },
-        passphrase: state.wallet.passphrase,
-      },
-    });
-
-    it('should dispatch tokensTransferredSuccess action if there are no errors', async () => {
-      // Arrange
-      const data = {
-        amount: '21000000',
-        data: '',
-        recipientAddress: 'lsky3t7xfxbcjf5xmskrbhkmwzxpowex6eubghtws',
-        fee: 141000,
-      };
-
-      // Act
-      await tokensTransferred(data)(dispatch, getState);
-
-      // Assert
-      expect(hwManager.signTransactionByHW).not.toHaveBeenCalled();
-      // Replace toMatchSnapshot with a definitive assertion.
-      expect(dispatch).toMatchSnapshot();
-    });
-
-    it('should dispatch transactionSignError action if there are errors during transaction creation', async () => {
-      // Arrange
-      const data = {
-        amount: '21000000',
-        data: '',
-        recipientAddress: 'lsky3t7xfxbcjf5xmskrbhkmwzxpowex6eubghtws',
-        fee: 141000,
-      };
-      const transactionError = new Error('Transaction create error');
-      loginTypes.passphrase.code = 1;
-      jest.spyOn(hwManager, 'signTransactionByHW')
-        .mockRejectedValue(transactionError);
-      const expectedAction = {
-        type: actionTypes.transactionSignError,
-        data: transactionError,
-      };
-      // Act
-      await tokensTransferred(data)(dispatch, getStateWithHW);
-      expect(dispatch).toHaveBeenCalledWith(expectedAction);
     });
   });
 

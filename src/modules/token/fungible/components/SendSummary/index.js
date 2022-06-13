@@ -6,8 +6,8 @@ import { selectActiveToken } from '@common/store';
 import {
   resetTransactionResult,
   transactionDoubleSigned,
-  tokensTransferred,
 } from '@common/store/actions';
+import { tokensTransferred } from '../../store/actions';
 import Summary from './summary';
 
 const mapStateToProps = state => ({
