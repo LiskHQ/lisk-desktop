@@ -35,8 +35,10 @@ import MultisigAccountDetails from '@wallet/manager/multisigAccountDetailsManage
 import ManageAccounts from '@account/components/ManageAccounts';
 import AddAccountOptions from '@account/components/AddAccountOptions';
 import AddAccountBySecretRecovery from 'src/modules/account/components/AddAccountBySecretRecovery';
+import AddAccountByFile from '@account/components/AddAccountByFile';
 import AddAccountForm from '@account/components/AddAccountForm';
 import SwitchAccount from '@account/components/SwitchAccount';
+import BackupRecoveryPhraseFlow from '@account/components/BackupRecoveryPhraseFlow';
 
 export default {
   wallet: AccountDetails,
@@ -79,4 +81,6 @@ export default {
   accountAdd: AddAccountForm,
   addAccountBySecretRecovery: AddAccountBySecretRecovery,
   switchAccount: SwitchAccount,
+  backupRecoveryPhraseFlow: BackupRecoveryPhraseFlow,
+  addAccountByFile: AddAccountByFile,
 };
