@@ -75,6 +75,12 @@ export default {
     isSigninFlow: true,
     forbiddenTokens: [],
   },
+  addAccountByFile: {
+    path: '/account/add/by-file',
+    isPrivate: false,
+    forbiddenTokens: [],
+    exact: true,
+  },
   termsOfUse: {
     path: '/terms-of-use',
     isPrivate: false,
