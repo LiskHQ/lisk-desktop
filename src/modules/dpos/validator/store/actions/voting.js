@@ -1,10 +1,7 @@
 import to from 'await-to-js';
 import { tokenMap } from '@token/fungible/consts/tokens';
-import { toRawLsk } from '@token/fungible/utils/lsk';
-import { MODULE_ASSETS_NAME_ID_MAP } from '@transaction/configuration/moduleAssets';
-import { selectActiveTokenAccount, selectCurrentBlockHeight } from '@common/store/selectors';
+import { selectActiveTokenAccount } from '@common/store/selectors';
 import { createGenericTx } from '@transaction/api';
-import { getUnlockableUnlockObjects } from '@wallet/utils/account';
 import { getAccount } from '@wallet/utils/api';
 import { timerReset } from '@auth/store/action';
 import txActionTypes from '@transaction/store/actionTypes';
@@ -76,7 +73,7 @@ export const voteEdited = data => async (dispatch, getState) => {
  * @param {object} data.votes
  * @param {promise} API call response
  */
-export const votesSubmitted = ({ fee, votes }) =>
+export const votesSubmitted = (transactionObject) =>
   async (dispatch, getState) => {
     const state = getState();
     const activeWallet = selectActiveTokenAccount(state);
@@ -84,13 +81,7 @@ export const votesSubmitted = ({ fee, votes }) =>
     const [error, tx] = await to(createGenericTx({
       network: state.network,
       wallet: activeWallet,
-      transactionObject: {
-        fee,
-        votes,
-        nonce: activeWallet.sequence.nonce,
-        senderPublicKey: activeWallet.summary.publicKey,
-        moduleAssetId: MODULE_ASSETS_NAME_ID_MAP.voteDelegate,
-      },
+      transactionObject,
     }));
 
     if (error) {
@@ -138,12 +129,11 @@ export const votesRetrieved = () =>
  * @param {string} data.selectedFee
  * @returns {promise}
  */
-export const balanceUnlocked = data => async (dispatch, getState) => {
+export const balanceUnlocked = transactionObject => async (dispatch, getState) => {
   //
   // Collect data
   //
   const state = getState();
-  const currentBlockHeight = selectCurrentBlockHeight(state);
   const activeWallet = selectActiveTokenAccount(state);
 
   //
@@ -153,15 +143,7 @@ export const balanceUnlocked = data => async (dispatch, getState) => {
     createGenericTx({
       network: state.network,
       wallet: activeWallet,
-      transactionObject: {
-        moduleAssetId: MODULE_ASSETS_NAME_ID_MAP.unlockToken,
-        senderPublicKey: activeWallet.summary.publicKey,
-        nonce: activeWallet.sequence?.nonce,
-        fee: `${toRawLsk(parseFloat(data.selectedFee))}`,
-        unlockObjects: getUnlockableUnlockObjects(
-          activeWallet.dpos?.unlocking, currentBlockHeight,
-        ),
-      },
+      transactionObject,
     }),
   );
 
