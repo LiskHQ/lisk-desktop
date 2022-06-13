@@ -48,7 +48,7 @@ const SwitchAccount = () => {
         <AccountList accounts={accounts} onAccountClick={onAccountClick} />
         <Link
           className={styles.addAccountLink}
-          to={routes.addAccount.path}
+          to={routes.addAccountOptions.path}
         >
           <Icon name="" />
           {t('Add another account')}
