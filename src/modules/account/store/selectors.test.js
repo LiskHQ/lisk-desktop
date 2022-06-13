@@ -18,6 +18,6 @@ describe('Auth selector', () => {
       },
     };
 
-    expect(selectAccounts(state)).toEqual(mockSavedAccounts);
+    expect(selectAccounts(state)).toEqual(list);
   });
 });

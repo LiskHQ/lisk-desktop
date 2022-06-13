@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useCallback } from 'react';
 import { useTranslation } from 'react-i18next';
 import Box from 'src/theme/box';
 import grid from 'flexboxgrid/dist/flexboxgrid.css';
@@ -8,10 +8,14 @@ import { useAccounts } from '@account/hooks';
 import styles from './ManageAccounts.css';
 import AccountRow from '../AccountRow';
 
-const ManageAccounts = ({ onSelectAccount, onAddAccount, onRemoveAccount }) => {
+const ManageAccounts = ({ onSelectAccount, onAddAccount }) => {
   const { t } = useTranslation();
-  const { accounts } = useAccounts();
+  const { accounts, deleteAccountWithAddress } = useAccounts();
   const [showRemove, setShowRemove] = useState(false);
+  const removeAccount = useCallback(
+    (account) => account?.metadata?.address && deleteAccountWithAddress(account?.metadata?.address),
+    [deleteAccountWithAddress],
+  );
 
   return (
     <div className={`${styles.manageAccounts} ${grid.row}`}>
@@ -30,7 +34,7 @@ const ManageAccounts = ({ onSelectAccount, onAddAccount, onRemoveAccount }) => {
                    account={account}
                    onSelect={onSelectAccount}
                    showRemove={showRemove}
-                   onRemove={onRemoveAccount}
+                   onRemove={removeAccount}
                  />
                ))
              }
@@ -66,6 +70,11 @@ const ManageAccounts = ({ onSelectAccount, onAddAccount, onRemoveAccount }) => {
       </div>
     </div>
   );
+};
+
+ManageAccounts.defaultProps = {
+  onSelectAccount: () => null,
+  onAddAccount: () => null,
 };
 
 export default ManageAccounts;

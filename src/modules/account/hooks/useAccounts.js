@@ -1,14 +1,27 @@
+import { useMemo, useCallback } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { selectAccounts } from '@account/store/selectors';
-import { addAccount } from '../store/action';
+import { addAccount, removeAccount } from '../store/action';
 
 // eslint-disable-next-line
 export function useAccounts() {
   const dispatch = useDispatch();
-  const setAccount = (accountSchema) => {
-    dispatch(addAccount(accountSchema));
-  };
-  const accounts = useSelector(selectAccounts);
+  const accountsObject = useSelector(selectAccounts);
+  const setAccount = useCallback((account) => dispatch(addAccount(account)), []);
+  const deleteAccountWithAddress = useCallback(
+    (address) => dispatch(removeAccount(address)),
+    [],
+  );
+  const getAccountWithAddress = (address) => accountsObject[address];
+  const accounts = useMemo(
+    () => Object.values(accountsObject),
+    [accountsObject],
+  );
 
-  return { accounts, setAccount };
+  return {
+    accounts,
+    setAccount,
+    deleteAccountWithAddress,
+    getAccountWithAddress,
+  };
 }

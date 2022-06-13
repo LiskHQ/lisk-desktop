@@ -14,8 +14,6 @@ function SetPasswordSuccess({ onClose, encryptedPhrase, buttonText }) {
     downloadJSON(encryptedPhrase, 'encrypted_secret_recovery_phrase');
   };
 
-  const onContinue = () => onClose();
-
   return (
     <Box className={styles.container}>
       <BoxContent className={styles.content}>
@@ -39,7 +37,7 @@ function SetPasswordSuccess({ onClose, encryptedPhrase, buttonText }) {
             </span>
           </TertiaryButton>
         </div>
-        <PrimaryButton className={styles.continueButton} onClick={onContinue}>
+        <PrimaryButton className={styles.continueButton} onClick={onClose}>
           { buttonText || t('Continue to Dashboard')}
         </PrimaryButton>
       </BoxContent>
@@ -48,6 +46,7 @@ function SetPasswordSuccess({ onClose, encryptedPhrase, buttonText }) {
 }
 
 SetPasswordSuccess.defaultProps = {
+  onClose: () => null,
   encryptedPhrase: {
     error: 'no encrypted backup found',
   },

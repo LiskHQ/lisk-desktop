@@ -16,6 +16,9 @@ jest.mock('react-redux', () => ({
 }));
 
 describe('useAccount hook', () => {
+  beforeEach(() => {
+    mockDispatch.mockClear();
+  });
   const { result } = renderHook(() => useAccounts());
   it('setAccount Should not trigger on mounting', async () => {
     expect(mockDispatch).toHaveBeenCalledTimes(0);
@@ -25,7 +28,7 @@ describe('useAccount hook', () => {
     const { setAccount } = result.current;
     const expectedAction = {
       type: actionTypes.addAccount,
-      accountSchema: mockSavedAccounts[0],
+      encryptedAccount: mockSavedAccounts[0],
     };
     act(() => {
       setAccount(mockSavedAccounts[0]);
@@ -40,5 +43,26 @@ describe('useAccount hook', () => {
       mockSavedAccounts[0],
     ];
     expect(accounts).toMatchObject(expectArrayAccounts);
+  });
+
+  it('getAccount should return specific account selected by address', async () => {
+    const { getAccountWithAddress } = result.current;
+    const address = mockSavedAccounts[0].metadata.address;
+    const account = getAccountWithAddress(address);
+    expect(account).toMatchObject(mockSavedAccounts[0]);
+  });
+
+  it('deleteAccount should dispatch an action', async () => {
+    const { deleteAccountWithAddress } = result.current;
+    const address = mockSavedAccounts[0].metadata.address;
+    const expectedAction = {
+      type: actionTypes.removeAccount,
+      address,
+    };
+    act(() => {
+      deleteAccountWithAddress(address);
+    });
+    expect(mockDispatch).toHaveBeenCalledTimes(1);
+    expect(mockDispatch).toHaveBeenCalledWith(expectedAction);
   });
 });
