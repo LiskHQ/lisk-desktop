@@ -10,11 +10,11 @@ import AccountRow from '../AccountRow';
 
 const ManageAccounts = ({ onSelectAccount, onAddAccount }) => {
   const { t } = useTranslation();
-  const { accounts, deleteAccountWithAddress } = useAccounts();
+  const { accounts, deleteAccountByAddress } = useAccounts();
   const [showRemove, setShowRemove] = useState(false);
   const removeAccount = useCallback(
-    (account) => account?.metadata?.address && deleteAccountWithAddress(account?.metadata?.address),
-    [deleteAccountWithAddress],
+    (account) => account?.metadata?.address && deleteAccountByAddress(account?.metadata?.address),
+    [deleteAccountByAddress],
   );
 
   return (

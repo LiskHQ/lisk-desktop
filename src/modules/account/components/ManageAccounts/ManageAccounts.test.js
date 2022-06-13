@@ -10,7 +10,7 @@ jest.mock('react-i18next');
 jest.mock('@account/hooks', () => ({
   useAccounts: jest.fn(() => ({
     accounts: mockSavedAccounts,
-    deleteAccountWithAddress: mockDeleteAccountWithAddress,
+    deleteAccountByAddress: mockDeleteAccountWithAddress,
   })),
 }));
 

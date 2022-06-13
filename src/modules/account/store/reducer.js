@@ -6,7 +6,7 @@ import actionTypes from './actionTypes';
 /**
  *
  * @param {Object} state
- * @param {type: String, accountSchema: Object} action
+ * @param {type: String, encryptedAccount: Object} action
  */
 export const current = (state = {}, { type, encryptedAccount }) => {
   switch (type) {
@@ -20,7 +20,7 @@ export const current = (state = {}, { type, encryptedAccount }) => {
 /**
  *
  * @param {Object} state
- * @param {type: String, accountSchema: Object} action
+ * @param {type: String, encryptedAccount: Object, address: string} action
  */
 export const list = (state = {}, { type, encryptedAccount, address }) => {
   switch (type) {

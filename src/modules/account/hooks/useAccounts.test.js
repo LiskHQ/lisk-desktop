@@ -46,21 +46,21 @@ describe('useAccount hook', () => {
   });
 
   it('getAccount should return specific account selected by address', async () => {
-    const { getAccountWithAddress } = result.current;
+    const { getAccountByAddress } = result.current;
     const address = mockSavedAccounts[0].metadata.address;
-    const account = getAccountWithAddress(address);
+    const account = getAccountByAddress(address);
     expect(account).toMatchObject(mockSavedAccounts[0]);
   });
 
   it('deleteAccount should dispatch an action', async () => {
-    const { deleteAccountWithAddress } = result.current;
+    const { deleteAccountByAddress } = result.current;
     const address = mockSavedAccounts[0].metadata.address;
     const expectedAction = {
       type: actionTypes.removeAccount,
       address,
     };
     act(() => {
-      deleteAccountWithAddress(address);
+      deleteAccountByAddress(address);
     });
     expect(mockDispatch).toHaveBeenCalledTimes(1);
     expect(mockDispatch).toHaveBeenCalledWith(expectedAction);

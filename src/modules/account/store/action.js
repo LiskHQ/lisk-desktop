@@ -18,7 +18,7 @@ export const addAccount = (encryptedAccount) => ({
   encryptedAccount,
 });
 
-export const removeAccount = (address) => ({
+export const deleteAccount = (address) => ({
   type: actionTypes.removeAccount,
   address,
 });
