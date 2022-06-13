@@ -4,6 +4,12 @@ export default {
     isPrivate: false,
     forbiddenTokens: [],
   },
+  addAccountByFile: {
+    path: '/account/add/by-file',
+    isPrivate: false,
+    forbiddenTokens: [],
+    exact: true,
+  },
   addAccountBySecretRecovery: {
     path: '/account/add/secrete-recovery',
     isPrivate: false,
@@ -15,6 +21,11 @@ export default {
     isPrivate: false,
     forbiddenTokens: [],
     exact: true,
+  },
+  backupRecoveryPhraseFlow: {
+    path: '/account/backup-recovery-phrase',
+    isPrivate: true,
+    forbiddenTokens: [],
   },
   block: {
     path: '/block',
@@ -28,6 +39,12 @@ export default {
     isPrivate: false,
     exact: true,
     forbiddenTokens: [],
+  },
+  dashboard: {
+    path: '/',
+    isPrivate: false,
+    forbiddenTokens: [],
+    exact: true,
   },
   delegates: {
     path: '/delegates',
@@ -75,12 +92,6 @@ export default {
     isSigninFlow: true,
     forbiddenTokens: [],
   },
-  addAccountByFile: {
-    path: '/account/add/by-file',
-    isPrivate: false,
-    forbiddenTokens: [],
-    exact: true,
-  },
   termsOfUse: {
     path: '/terms-of-use',
     isPrivate: false,
@@ -102,28 +113,6 @@ export default {
     isPrivate: true,
     exact: false,
     forbiddenTokens: [],
-  },
-  backupRecoveryPhraseFlow: {
-    path: '/account/backup-recovery-phrase',
-    isPrivate: true,
-    forbiddenTokens: [],
-  },
-  accountSelect: {
-    path: '/account/manage',
-    isPrivate: false,
-    forbiddenTokens: [],
-  },
-  addAccountByFile: {
-    path: '/account/add/by-file',
-    isPrivate: false,
-    forbiddenTokens: [],
-    exact: true,
-  },
-  dashboard: {
-    path: '/',
-    isPrivate: false,
-    forbiddenTokens: [],
-    exact: true,
   },
 };
 
