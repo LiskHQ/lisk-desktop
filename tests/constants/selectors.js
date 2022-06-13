@@ -293,6 +293,7 @@ const ss = {
   verifyMessageInput: '.message',
   verifyPublicKeyInput: '.publicKey',
   verifySignatureInput: '.signature',
+  acceptTermsButton: '.accept-terms',
 };
 
 export default ss;
