@@ -60,7 +60,7 @@ describe('EnterPasswordForm', () => {
   });
 
   it('should display error', async () => {
-    const error = 'Unable to decrypt account. Please check your provided details';
+    const error = 'Unable to decrypt account. Please check your password';
     decryptAccount.mockImplementation(() => (
       {
         error,
@@ -79,7 +79,7 @@ describe('EnterPasswordForm', () => {
   it('should not call onEnterPasswordSuccess when onSubmit fails', async () => {
     decryptAccount.mockImplementation(() => (
       {
-        error: 'Unable to decrypt account. Please check your provided details',
+        error: 'Unable to decrypt account. Please check your password',
       }
     ));
 
@@ -88,7 +88,7 @@ describe('EnterPasswordForm', () => {
 
     await waitFor(() => {
       expect(props.onEnterPasswordSuccess).not.toHaveBeenCalled();
-      expect(screen.getByText('Unable to decrypt account. Please check your provided details')).toBeTruthy();
+      expect(screen.getByText('Unable to decrypt account. Please check your password')).toBeTruthy();
     });
   });
 });
