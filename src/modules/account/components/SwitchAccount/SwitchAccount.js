@@ -18,13 +18,13 @@ const AccountList = ({ accounts, onAccountClick }) => (
     {accounts.map(account => (
       <div
         key={`switch-account-lisk-${account.metadata.address}`}
-        className={styles.account}
+        className={`${styles.account} switch-account-list-item`}
         onClick={() => onAccountClick(account)}
       >
         <WalletVisual address={account.metadata.address} />
         <div>
           <p className={styles.accountName}>{account.metadata.name}</p>
-          <p className={styles.accountAddress}>{account.metadata.address}</p>
+          <p className={`${styles.accountAddress} switch-account-list-item-address`}>{account.metadata.address}</p>
         </div>
       </div>
     ))}
