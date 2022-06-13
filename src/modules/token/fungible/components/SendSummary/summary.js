@@ -14,13 +14,8 @@ const Summary = ({
 }) => {
   const signTransaction = () => {
     nextStep({
-      rawTransaction: {
-        amount: `${toRawLsk(fields.amount.value)}`,
-        data: fields.reference?.value ?? '',
-        recipientAddress: fields.recipient.address,
-        fee: toRawLsk(parseFloat(fields.fee.value)),
-      },
-      actionFunction: transactionCreated,
+      rawTx,
+      actionFunction: tokensTransferred,
     });
   };
 
@@ -29,16 +24,7 @@ const Summary = ({
     prevStep({ fields });
   };
 
-  // const transaction = {
-  //   nonce: account.sequence.nonce,
-  //   fee: toRawLsk(parseFloat(fields.fee.value)),
-  //   asset: {
-  //     amount: toRawLsk(fields.amount.value),
-  //     data: fields.reference?.value ?? '',
-  //   },
-  // };
   const amount = fromRawLsk(rawTx.asset.amount);
-
   return (
     <TransactionSummary
       title={t('Transaction summary')}

@@ -1,6 +1,5 @@
 import { to } from 'await-to-js';
 import { DEFAULT_LIMIT } from 'src/utils/monitor';
-import { MODULE_ASSETS_NAME_ID_MAP } from '@transaction/configuration/moduleAssets';
 import { signatureCollectionStatus } from '@transaction/configuration/txStatus';
 import { extractKeyPair } from '@wallet/utils/account';
 import { getTransactionSignatureStatus } from '@wallet/components/signMultisigView/helpers';
@@ -8,11 +7,11 @@ import { timerReset } from '@auth/store/action';
 import { selectActiveTokenAccount } from '@common/store';
 import { loadingStarted, loadingFinished } from '@common/store/actions/loading';
 import actionTypes from './actionTypes';
-import { getTransactions, create, broadcast } from '../api';
+import { getTransactions, createGenericTx, broadcast } from '../api';
 import {
   signMultisigTransaction,
-  transformTransaction,
-  createTransactionObject,
+  elementTxToDesktopTx,
+  desktopTxToElementsTx,
 } from '../utils';
 
 /**
@@ -96,15 +95,12 @@ export const resetTransactionResult = () => ({
  * @param {Number} data.reference - Data field for LSK transactions
  */
 // eslint-disable-next-line max-statements
-export const transactionCreated = data => async (dispatch, getState) => {
+export const tokensTransferred = transactionObject => async (dispatch, getState) => {
   const state = getState();
   const wallet = selectActiveTokenAccount(state);
 
-  const [error, tx] = await to(create({
-    transactionObject: {
-      ...data,
-      moduleAssetId: MODULE_ASSETS_NAME_ID_MAP.transfer,
-    },
+  const [error, tx] = await to(createGenericTx({
+    transactionObject,
     wallet,
     network: state.network,
   }));
@@ -144,7 +140,7 @@ export const transactionDoubleSigned = () => async (dispatch, getState) => {
       ...keyPair,
     },
   };
-  const transformedTx = transformTransaction(transactions.signedTransaction);
+  const transformedTx = elementTxToDesktopTx(transactions.signedTransaction);
   const [signedTx, err] = await signMultisigTransaction(
     transformedTx,
     activeWallet,
@@ -201,7 +197,7 @@ export const transactionBroadcasted = transaction =>
         data: transaction,
       });
 
-      const transformedTransaction = transformTransaction(transaction);
+      const transformedTransaction = elementTxToDesktopTx(transaction);
 
       if (transformedTransaction.sender.address === wallet.info.LSK.summary.address) {
         dispatch(pendingTransactionAdded({ ...transformedTransaction, isPending: true }));
@@ -263,7 +259,7 @@ export const multisigTransactionSigned = ({
  * @param {object} data.rawTransaction Transaction config required by Lisk Element
  */
 export const signatureSkipped = ({ rawTransaction }) => {
-  const binaryTx = createTransactionObject(rawTransaction, rawTransaction.moduleAssetId);
+  const binaryTx = desktopTxToElementsTx(rawTransaction, rawTransaction.moduleAssetId);
 
   return ({
     type: actionTypes.signatureSkipped,

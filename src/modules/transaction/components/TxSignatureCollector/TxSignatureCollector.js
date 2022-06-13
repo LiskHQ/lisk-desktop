@@ -15,7 +15,7 @@ const TxSignatureCollector = ({
   account,
   actionFunction,
   multisigTransactionSigned,
-  rawTransaction,
+  rawTx,
   nextStep,
   statusInfo,
   sender,
@@ -38,10 +38,10 @@ const TxSignatureCollector = ({
         || signatureStatus === signatureCollectionStatus.overSigned
       ) {
         // Skip the current member as the all required signature are collected
-        signatureSkipped({ rawTransaction });
+        signatureSkipped({ rawTx });
       } else {
         multisigTransactionSigned({
-          rawTransaction,
+          rawTx,
           sender,
         });
       }
@@ -53,7 +53,7 @@ const TxSignatureCollector = ({
        * HW pending screen. For ordinary login we don't display
        * the illustration.
        */
-      actionFunction(rawTransaction);
+      actionFunction({ ...rawTx, fee: rawTx.fee.value });
     }
     return () => {
       // Ensure second passphrase is removed to prevent automatically signing future transactions
@@ -72,12 +72,12 @@ const TxSignatureCollector = ({
       if (!transactions.txSignatureError && hasSecondPass && !isDoubleSigned) {
         transactionDoubleSigned();
       } else if (!hasSecondPass || isDoubleSigned) {
-        nextStep({ rawTransaction, statusInfo, sender });
+        nextStep({ rawTx, statusInfo, sender });
       }
     }
 
     if (transactions.txSignatureError) {
-      nextStep({ rawTransaction, statusInfo, sender });
+      nextStep({ rawTx, statusInfo, sender });
     }
   }, [transactions.signedTransaction, transactions.txSignatureError]);
 

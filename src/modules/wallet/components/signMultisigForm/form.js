@@ -1,8 +1,8 @@
 /* eslint-disable complexity */
 import React, { useState, useEffect } from 'react';
 import {
-  transformTransaction,
-  createTransactionObject,
+  elementTxToDesktopTx,
+  convertTxJSONToBinary,
 } from '@transaction/utils/transaction';
 import { joinModuleAndAssetIds } from '@transaction/utils/moduleAssets';
 import Box from 'src/theme/box';
@@ -22,7 +22,7 @@ const Form = ({ t, nextStep, network }) => {
 
   const onReview = () => {
     try {
-      nextStep({ transaction: transformTransaction(transaction) });
+      nextStep({ transaction: elementTxToDesktopTx(transaction) });
     } catch (e) {
       nextStep({ error: e });
     }
@@ -38,11 +38,7 @@ const Form = ({ t, nextStep, network }) => {
       });
 
       const schema = network.networks.LSK.moduleAssetSchemas[moduleAssetId];
-      const transformedTransaction = transformTransaction(value);
-      const transactionObject = createTransactionObject(
-        transformedTransaction,
-        moduleAssetId,
-      );
+      const transactionObject = convertTxJSONToBinary(value, moduleAssetId);
       const err = validateTransaction(schema, transactionObject);
       setError(err ? 'Unknown transaction' : undefined);
     } catch (e) {

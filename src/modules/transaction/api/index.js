@@ -258,7 +258,7 @@ export const getTransactionFee = async ({
 
   const schema = network.networks.LSK.moduleAssetSchemas[moduleAssetId];
   const maxAssetFee = MODULE_ASSETS_MAP[moduleAssetId].maxFee;
-  const transactionObject = createTransactionObject(rawTransaction, moduleAssetId);
+  const transactionObject = desktopTxToElementsTx(rawTransaction, moduleAssetId);
   let numberOfEmptySignatures;
 
   if (moduleAssetId === MODULE_ASSETS_NAME_ID_MAP.registerMultisignatureGroup) {
@@ -324,7 +324,7 @@ export const createGenericTx = async ({
   const { moduleAssetId, ...rawTransaction } = transactionObject;
   rawTransaction.nonce = sequence.nonce;
   rawTransaction.senderPublicKey = publicKey;
-  const transaction = createTransactionObject(rawTransaction, moduleAssetId);
+  const transaction = desktopTxToElementsTx(rawTransaction, moduleAssetId);
 
   const schema = network.networks.LSK.moduleAssetSchemas[moduleAssetId];
 

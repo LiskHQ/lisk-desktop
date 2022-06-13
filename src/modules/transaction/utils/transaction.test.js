@@ -4,9 +4,9 @@ import { getAddressFromBase32Address } from '@wallet/utils/account';
 import accounts from '@tests/constants/wallets';
 import {
   getTxAmount,
-  transformTransaction,
+  elementTxToDesktopTx,
   containsTransactionType,
-  createTransactionObject,
+  desktopTxToElementsTx,
   transactionToJSON,
   removeExcessSignatures,
 } from './transaction';
@@ -65,7 +65,7 @@ describe('API: LSK Transactions', () => {
     });
   });
 
-  describe('createTransactionObject', () => {
+  describe('desktopTxToElementsTx', () => {
     it('creates a transaction object for transfer transaction', () => {
       const tx = {
         senderPublicKey: '',
@@ -75,7 +75,7 @@ describe('API: LSK Transactions', () => {
         fee: '1000000',
         data: 'test',
       };
-      const txObj = createTransactionObject(tx, transfer);
+      const txObj = desktopTxToElementsTx(tx, transfer);
 
       expect(txObj).toMatchSnapshot();
     });
@@ -95,7 +95,7 @@ describe('API: LSK Transactions', () => {
           },
         ],
       };
-      const txObj = createTransactionObject(tx, voteDelegate);
+      const txObj = desktopTxToElementsTx(tx, voteDelegate);
 
       expect(txObj).toMatchSnapshot();
     });
@@ -107,7 +107,7 @@ describe('API: LSK Transactions', () => {
         fee: '1000000',
         username: 'username',
       };
-      const txObj = createTransactionObject(tx, registerDelegate);
+      const txObj = desktopTxToElementsTx(tx, registerDelegate);
 
       expect(txObj).toMatchSnapshot();
     });
@@ -119,7 +119,7 @@ describe('API: LSK Transactions', () => {
         fee: '1000000',
         amount: '10000000',
       };
-      const txObj = createTransactionObject(tx, reclaimLSK);
+      const txObj = desktopTxToElementsTx(tx, reclaimLSK);
 
       expect(txObj).toMatchSnapshot();
     });
@@ -135,7 +135,7 @@ describe('API: LSK Transactions', () => {
         fee: '1000000',
         unlockObjects,
       };
-      const txObj = createTransactionObject(tx, unlockToken);
+      const txObj = desktopTxToElementsTx(tx, unlockToken);
 
       expect(txObj).toMatchSnapshot();
     });
@@ -150,13 +150,13 @@ describe('API: LSK Transactions', () => {
         mandatoryKeys: [accounts.genesis.summary.publicKey, accounts.delegate.summary.publicKey],
         optionalKeys: [accounts.delegate_candidate.summary.publicKey],
       };
-      const txObj = createTransactionObject(tx, registerMultisignatureGroup);
+      const txObj = desktopTxToElementsTx(tx, registerMultisignatureGroup);
 
       expect(txObj).toMatchSnapshot();
     });
   });
 
-  describe('transformTransaction', () => {
+  describe('elementTxToDesktopTx', () => {
     const binaryAddress = 'd04699e57c4a3846c988f3c15306796f8eae5c1c';
 
     it('should a transfer transaction with type signature of lisk service', () => {
@@ -171,7 +171,7 @@ describe('API: LSK Transactions', () => {
         asset: { amount: 100000000, recipientAddress: binaryAddress, data: '' },
       };
 
-      expect(transformTransaction(tx)).toMatchSnapshot();
+      expect(elementTxToDesktopTx(tx)).toMatchSnapshot();
     });
 
     it('should a register delegate transaction with type signature of lisk service', () => {
@@ -186,7 +186,7 @@ describe('API: LSK Transactions', () => {
         asset: { username: 'super_delegate' },
       };
 
-      expect(transformTransaction(tx)).toMatchSnapshot();
+      expect(elementTxToDesktopTx(tx)).toMatchSnapshot();
     });
 
     it('should a vote delegate transaction with type signature of lisk service', () => {
@@ -208,7 +208,7 @@ describe('API: LSK Transactions', () => {
         },
       };
 
-      expect(transformTransaction(tx)).toMatchSnapshot();
+      expect(elementTxToDesktopTx(tx)).toMatchSnapshot();
     });
 
     it('should transform a reclaimLSK transaction', () => {
@@ -225,7 +225,7 @@ describe('API: LSK Transactions', () => {
         },
       };
 
-      expect(transformTransaction(tx)).toMatchSnapshot();
+      expect(elementTxToDesktopTx(tx)).toMatchSnapshot();
     });
 
     it('should transform a unlockToken transaction', () => {
@@ -255,7 +255,7 @@ describe('API: LSK Transactions', () => {
         asset: { unlockObjects },
       };
 
-      expect(transformTransaction(tx)).toMatchSnapshot();
+      expect(elementTxToDesktopTx(tx)).toMatchSnapshot();
     });
 
     it('should transform a registerMultisignatureGroup transaction', () => {
@@ -278,7 +278,7 @@ describe('API: LSK Transactions', () => {
         },
       };
 
-      expect(transformTransaction(tx)).toMatchSnapshot();
+      expect(elementTxToDesktopTx(tx)).toMatchSnapshot();
     });
   });
 
@@ -310,7 +310,7 @@ describe('API: LSK Transactions', () => {
       // eslint-disable-next-line no-extend-native
       BigInt.prototype.toJSON = undefined;
     });
-    const transaction = createTransactionObject({
+    const transaction = desktopTxToElementsTx({
       nonce: '2',
       amount: 10000,
       fee: '123123',
