@@ -21,4 +21,14 @@ describe('Auth reducer', () => {
     };
     expect(list({}, actionData)).toEqual(expectedState);
   });
+  it('Should remove account while the removeAccount action is triggered', async () => {
+    const actionData = {
+      type: actionTypes.removeAccount,
+      address: mockSavedAccounts[0].metadata.address,
+    };
+    const defaultState = {
+      [mockSavedAccounts[0].metadata.address]: mockSavedAccounts[0],
+    };
+    expect(list(defaultState, actionData)).toEqual({});
+  });
 });

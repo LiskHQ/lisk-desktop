@@ -5,17 +5,18 @@ import {
 import mockSavedAccounts from '@tests/fixtures/accounts';
 import ManageAccounts from './ManageAccounts';
 
-const mockDeleteAccountWithAddress = jest.fn();
+const mockDeleteAccountByAddress = jest.fn();
 jest.mock('react-i18next');
 jest.mock('@account/hooks', () => ({
   useAccounts: jest.fn(() => ({
     accounts: mockSavedAccounts,
-    deleteAccountByAddress: mockDeleteAccountWithAddress,
+    deleteAccountByAddress: mockDeleteAccountByAddress,
   })),
 }));
 
 const props = {
   onSelectAccount: jest.fn(),
+  onAddAccount: jest.fn(),
 };
 
 beforeEach(() => {
@@ -31,6 +32,11 @@ describe('Account Select Form', () => {
     expect(screen.getByText('Manage accounts')).toBeTruthy();
   });
 
+  it('Should trigger the onAddAccount callback', async () => {
+    fireEvent.click(screen.getByText('Add another account'));
+    expect(props.onAddAccount).toHaveBeenCalledTimes(1);
+  });
+
   it('Should trigger the onSelectAccount callback', async () => {
     fireEvent.click(screen.getByTestId(mockSavedAccounts[0].uuid));
     expect(props.onSelectAccount).toBeCalledWith(mockSavedAccounts[0]);
@@ -41,7 +47,7 @@ describe('Account Select Form', () => {
     expect(screen.getByText('Done')).toBeTruthy();
     expect(screen.getByText('Choose account')).toBeTruthy();
     fireEvent.click(screen.getByTestId('delete-icon'));
-    expect(mockDeleteAccountWithAddress).toBeCalledWith(mockSavedAccounts[0].metadata.address);
+    expect(mockDeleteAccountByAddress).toBeCalledWith(mockSavedAccounts[0].metadata.address);
   });
 
   it('Should revert back to select account if done is clicked', async () => {
