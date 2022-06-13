@@ -7,8 +7,10 @@
 }
 
 .content {
+  padding: 32px !important;
+
   & h1 {
-    margin: 0 0 16px 0;
+    margin: 8px 0 16px 0;
   }
 
   & > .accountList {
@@ -16,21 +18,45 @@
     & > .account {
       display: flex;
       align-items: center;
+      padding: 16px 0;
+      border-bottom: 1px solid var(--color-very-light-gray);
+      cursor: pointer;
+
+      &:last-child {
+        border-bottom: none;
+      }
 
       & > div:last-child {
-        text-align: start;
+        margin-left: 12px;
+        text-align: left;
 
         & > .accountName {
+          @mixin contentLargest semi-bold;
 
+          margin: 0 0 8px 0;
+          color: var(--color-maastricht-blue);
         }
 
         & > .accountAddress {
-          
+          @mixin contentLargest;
+
+          margin: 0;
+          color: var(--color-slate-gray);
         }
       }
     }
   }
 
   & > .addAccountLink {
+    @mixin contentLarge;
+
+    margin-top: 16px;
+    border: 1px solid var(--color-very-light-gray);
+    border-radius: 4px;
+    padding: 16px;
+
+    & > img {
+      margin-right: 10px;
+    }
   }
 }

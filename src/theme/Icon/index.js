@@ -208,6 +208,7 @@ import verticalDots from '@setup/react/assets/images/icons/vertical-dots.svg';
 import switchIcon from '@setup/react/assets/images/icons/switch.svg';
 import secretPassphrase from '@setup/react/assets/images/icons/secret-passphrase.svg';
 import accountUpload from '@setup/react/assets/images/icons/account-upload.svg';
+import accountActive from '@setup/react/assets/images/icons/account-active.svg';
 
 export const icons = {
   academy,
@@ -416,6 +417,7 @@ export const icons = {
   deleteRedIcon,
   secretPassphrase,
   accountUpload,
+  accountActive,
 };
 
 const Icon = ({ name, noTheme, ...props }) => {

@@ -50,7 +50,7 @@ const SwitchAccount = () => {
           className={styles.addAccountLink}
           to={routes.addAccountOptions.path}
         >
-          <Icon name="" />
+          <Icon name="accountActive" />
           {t('Add another account')}
         </Link>
       </BoxContent>
