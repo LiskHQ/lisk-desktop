@@ -6,12 +6,12 @@ import { tokenMap } from '@token/fungible/consts/tokens';
 const Reclaim = ({ account, t }) => (
   <>
     <section>
-      <MigrationDetails wallet={account.info.LSK} showBalance={false} />
+      <MigrationDetails wallet={account} showBalance={false} />
     </section>
     <section>
       <label>{t('Balance to reclaim')}</label>
       <TokenAmount
-        val={Number(account.info.LSK.legacy.balance)}
+        val={Number(account.legacy.balance)}
         token={tokenMap.LSK.key}
       />
     </section>

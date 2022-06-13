@@ -10,7 +10,7 @@ import { dustThreshold } from '@wallet/configuration/constants';
 import MigrationDetails from '../migrationDetails';
 import styles from './reclaim.css';
 
-const Reclaim = ({ t }) => {
+const AccountsComparison = ({ t }) => {
   const wallet = useSelector(selectActiveTokenAccount);
   const hasEnoughBalance = Number(wallet.token?.balance) >= dustThreshold;
 
@@ -125,4 +125,4 @@ const Reclaim = ({ t }) => {
   );
 };
 
-export default withTranslation()(Reclaim);
+export default withTranslation()(AccountsComparison);
