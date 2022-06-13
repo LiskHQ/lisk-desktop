@@ -1,11 +1,12 @@
 import React from 'react';
 import { mount } from 'enzyme';
-import RestoreAccountForm from './index';
+import RestoreAccountForm from '.';
 
 describe('Restore account form component', () => {
   let wrapper;
   const props = {
     onSubmit: jest.fn((value) => value),
+    nextStep: jest.fn(),
   };
 
   beforeEach(() => {
@@ -33,6 +34,11 @@ describe('Restore account form component', () => {
 
     wrapper.find('.tx-sign-input').first().simulate('paste', { clipboardData });
     wrapper.find('button').first().simulate('click');
-    expect(props.onSubmit).toBeCalledWith(expect.objectContaining(JSONObject));
+    expect(props.nextStep).toBeCalledWith(expect.objectContaining(JSONObject));
+  });
+
+  it('should display an error message if no file was uploaded', () => {
+    wrapper.find('button').first().simulate('click');
+    expect(wrapper.findWhere((node) => node.text() === 'Upload file is required')).toBeTruthy();
   });
 });

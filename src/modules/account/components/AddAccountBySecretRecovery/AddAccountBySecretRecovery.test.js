@@ -25,7 +25,7 @@ beforeEach(() => {
   renderWithRouter(AddAccountByPassPhrase, props);
 });
 
-describe('Add account by secrete recovery phrase flow', async () => {
+describe('Add account by secrete recovery phrase flow', () => {
   it('Should successfull go though the flow', async () => {
     expect(screen.getByText('Add account')).toBeTruthy();
     expect(screen.getByText('Enter your secret recovery phrase to manage your account.')).toBeTruthy();
