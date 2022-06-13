@@ -24,7 +24,7 @@ const TxSummarizer = ({
   rawTx,
   summaryInfo,
 }) => {
-  const fee = !wallet.summary.isMultisignature ? rawTx.fee.value : 0;
+  const fee = !wallet.summary.isMultisignature ? rawTx.fee : 0;
   const tooltip = {
     title: t('Transaction fee'),
     children: t(
@@ -68,7 +68,7 @@ const TxSummarizer = ({
               </Tooltip>
             </label>
             <label className={`${styles.feeValue} fee-value`}>
-              <TokenAmount val={fee} token={token} convert={false} />
+              <TokenAmount val={fee} token={token} />
             </label>
           </section>
         )}

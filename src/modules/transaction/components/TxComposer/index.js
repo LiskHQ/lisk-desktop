@@ -10,6 +10,7 @@ import {
 import Box from 'src/theme/box';
 import BoxFooter from 'src/theme/box/footer';
 import TransactionPriority from '@transaction/components/TransactionPriority';
+import { toRawLsk } from '@token/fungible/utils/lsk';
 import { PrimaryButton } from 'src/theme/buttons';
 
 const TxComposer = ({
@@ -27,7 +28,7 @@ const TxComposer = ({
   const rawTx = {
     senderPublicKey: wallet.summary?.publicKey,
     nonce: wallet.sequence?.nonce,
-    passphrase: wallet.passphrase, // @todo remove
+    // passphrase: wallet.passphrase, // @todo remove
     moduleAssetId: transaction.moduleAssetId,
     asset: transaction.asset,
   };
@@ -42,7 +43,7 @@ const TxComposer = ({
 
   useEffect(() => {
     if (typeof onComposed === 'function') {
-      onComposed(status, { ...rawTx, fee: status.fee });
+      onComposed(status, { ...rawTx, fee: toRawLsk(status.fee.value) });
     }
   }, [selectedPriority, transaction.asset]);
 
@@ -64,7 +65,7 @@ const TxComposer = ({
       />
       <BoxFooter>
         <PrimaryButton
-          onClick={() => onConfirm({ ...rawTx, fee: status.fee })}
+          onClick={() => onConfirm({ ...rawTx, fee: toRawLsk(status.fee.value) })}
           disabled={!transaction.isValid}
         >
           {

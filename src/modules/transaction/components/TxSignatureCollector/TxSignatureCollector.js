@@ -53,7 +53,7 @@ const TxSignatureCollector = ({
        * HW pending screen. For ordinary login we don't display
        * the illustration.
        */
-      actionFunction({ ...rawTx, fee: rawTx.fee.value });
+      actionFunction(rawTx);
     }
     return () => {
       // Ensure second passphrase is removed to prevent automatically signing future transactions

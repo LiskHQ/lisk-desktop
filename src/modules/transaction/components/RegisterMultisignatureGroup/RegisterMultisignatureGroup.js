@@ -16,7 +16,7 @@ const RegisterMultisignatureGroup = ({ t, transaction }) => {
   return (
     <MultiSignatureReview
       t={t}
-      fee={transaction.fee.value}
+      fee={transaction.fee}
       members={[...mandatory, ...optional]}
       numberOfSignatures={transaction.asset.requiredSignatures}
     />
