@@ -114,11 +114,6 @@ export default {
     isPrivate: true,
     forbiddenTokens: [],
   },
-  removeAccount: {
-    path: '/account/remove-account',
-    isPrivate: true,
-    forbiddenTokens: [],
-  },
 };
 
 export const modals = {
@@ -204,6 +199,10 @@ export const modals = {
   },
   setPassword: {
     isPrivate: false,
+    forbiddenTokens: [],
+  },
+  removeAccount: {
+    isPrivate: true,
     forbiddenTokens: [],
   },
 };

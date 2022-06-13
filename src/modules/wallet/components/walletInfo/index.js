@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { Link } from 'react-router-dom';
+import DialogLink from 'src/theme/dialog/link';
 import Box from 'src/theme/box';
 import BoxContent from 'src/theme/box/content';
 import Icon from 'src/theme/Icon';
@@ -39,12 +40,21 @@ const WalletInfo = ({
             size="m"
           >
             <ul className={styles.dropDownMenuList}>
-              {ACCOUNT_MENU.map(({ path, icon, label }) => (
+              {ACCOUNT_MENU.map(({
+                path, icon, label, component,
+              }) => (
                 <li key={label}>
-                  <Link to={path}>
-                    <Icon name={icon} />
-                    {t(label)}
-                  </Link>
+                  {component ? (
+                    <DialogLink component={component}>
+                      <Icon name={icon} />
+                      {t(label)}
+                    </DialogLink>
+                  ) : (
+                    <Link to={path}>
+                      <Icon name={icon} />
+                      {t(label)}
+                    </Link>
+                  )}
                 </li>
               ))}
             </ul>
