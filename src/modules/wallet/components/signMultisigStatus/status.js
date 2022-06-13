@@ -1,7 +1,7 @@
 import React from 'react';
 import Box from 'src/theme/box';
 import BoxContent from 'src/theme/box/content';
-import TransactionResult from '@transaction/manager/transactionResult';
+import TransactionResult from '@transaction/manager/txBroadcaster';
 import {
   statusMessages,
   getTransactionStatus,

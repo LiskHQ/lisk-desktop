@@ -1,5 +1,5 @@
 import React from 'react';
-import TransactionResult from '@transaction/manager/transactionResult';
+import TransactionResult from '@transaction/manager/txBroadcaster';
 import { getTransactionStatus } from '@transaction/configuration/statusConfig';
 import statusMessages from './statusMessages';
 import styles from './status.css';

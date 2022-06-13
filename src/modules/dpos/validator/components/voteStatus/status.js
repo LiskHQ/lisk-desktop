@@ -1,6 +1,6 @@
 import React from 'react';
 import Box from 'src/theme/box';
-import TransactionResult from '@transaction/manager/transactionResult';
+import TransactionResult from '@transaction/manager/txBroadcaster';
 import { getTransactionStatus } from '@transaction/configuration/statusConfig';
 import ToggleIcon from '../toggleIcon';
 import statusMessages from './statusMessages';

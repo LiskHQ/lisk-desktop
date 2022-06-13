@@ -1,6 +1,6 @@
 import React from 'react';
 import { shallow } from 'enzyme';
-import TransactionResult from '@transaction/manager/transactionResult';
+import TransactionResult from '@transaction/manager/txBroadcaster';
 import accounts from '@tests/constants/wallets';
 import Status from './unlockBalanceStatus';
 

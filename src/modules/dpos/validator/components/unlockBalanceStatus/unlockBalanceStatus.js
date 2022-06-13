@@ -1,6 +1,6 @@
 import React from 'react';
 import { PrimaryButton } from 'src/theme/buttons';
-import TransactionResult from '@transaction/manager/transactionResult';
+import TransactionResult from '@transaction/manager/txBroadcaster';
 import { getTransactionStatus, statusMessages } from '@transaction/configuration/statusConfig';
 import styles from './unlockBalanceStatus.css';
 
