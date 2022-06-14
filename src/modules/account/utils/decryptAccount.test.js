@@ -32,8 +32,8 @@ describe('decryptAccount', () => {
   it('decrypts account when the correct arguments are passed', () => {
     const privateKey = 'private-key-mock';
     const recoveryPhrase = 'target cancel solution recipe vague faint bomb convince pink vendor fresh patrol';
-    const password = 'samplePassword@1';
     const accountSchema = mockAccount.crypto;
+    const password = 'samplePassword@1';
     const expectedResult = { privateKey, recoveryPhrase, error: false };
     expect(decryptAccount(accountSchema, password)).toEqual(expectedResult);
   });
