@@ -4,7 +4,7 @@ import { useTranslation } from 'react-i18next';
 import WalletVisual from '@wallet/components/walletVisual';
 import DownloadJSON from 'src/modules/common/components/DownloadJSON/DownloadJSON';
 import { PrimaryButton, SecondaryButton } from 'src/theme/buttons';
-import styles from '../RemoveAccount/RemoveAccount.css';
+import styles from '../RemoveCurrentAccountFlow/RemoveAccount.css';
 
 const RemoveConfirmation = ({ account, onRemoveAccount }) => {
   const { t } = useTranslation();

@@ -38,7 +38,8 @@ import AddAccountBySecretRecovery from 'src/modules/account/components/AddAccoun
 import AddAccountByFile from '@account/components/AddAccountByFile';
 import AddAccountForm from '@account/components/AddAccountForm';
 import BackupRecoveryPhraseFlow from '@account/components/BackupRecoveryPhraseFlow';
-import RemoveAccount from '@account/components/RemoveAccount';
+import RemoveCurrentAccountFlow from 'src/modules/account/components/RemoveCurrentAccountFlow';
+import RemoveSelectedAccountFlow from 'src/modules/account/components/RemoveSelectedAccountFlow';
 
 export default {
   wallet: AccountDetails,
@@ -81,7 +82,7 @@ export default {
   accountAdd: AddAccountForm,
   addAccountBySecretRecovery: AddAccountBySecretRecovery,
   backupRecoveryPhraseFlow: BackupRecoveryPhraseFlow,
-  removeAccount: RemoveAccount,
-  removeAccountFlow: RemoveAccount,
+  removeCurrentAccountFlow: RemoveCurrentAccountFlow,
+  removeSelectedAccountFlow: RemoveSelectedAccountFlow,
   addAccountByFile: AddAccountByFile,
 };

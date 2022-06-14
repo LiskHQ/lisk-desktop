@@ -10,7 +10,7 @@ import BoxContent from 'src/theme/box/content';
 import { useCurrentAccount, useAccounts } from '../../hooks';
 import styles from './RemoveAccount.css';
 
-const RemoveAccount = ({ history }) => {
+const RemoveCurrentAccountFlow = ({ history }) => {
   const [deleteAccountByAddress] = useAccounts();
   const [account] = useCurrentAccount();
   const multiStepRef = useRef(null);
@@ -44,4 +44,4 @@ const RemoveAccount = ({ history }) => {
   );
 };
 
-export default withRouter(RemoveAccount);
+export default withRouter(RemoveCurrentAccountFlow);

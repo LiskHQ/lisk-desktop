@@ -17,7 +17,7 @@ const ManageAccounts = ({ onSelectAccount, onAddAccount, history }) => {
   const [showRemove, setShowRemove] = useState(false);
 
   const onRemoveAccount = (account) => {
-    history.push(routes.removeAccountFlow.path, { address: account.metadata.address });
+    history.push(routes.removeSelectedAccountFlow.path, { address: account.metadata.address });
   };
 
   return (
