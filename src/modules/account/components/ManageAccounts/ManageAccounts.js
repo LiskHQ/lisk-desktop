@@ -1,5 +1,8 @@
 import React, { useState } from 'react';
 import { useTranslation } from 'react-i18next';
+import { withRouter } from 'react-router';
+
+import routes from '@views/screens/router/routes';
 import Box from 'src/theme/box';
 import grid from 'flexboxgrid/dist/flexboxgrid.css';
 import { OutlineButton } from 'src/theme/buttons';
@@ -8,10 +11,14 @@ import { useAccounts } from '../../hooks/useAccounts';
 import styles from './ManageAccounts.css';
 import AccountRow from '../AccountRow';
 
-const ManageAccounts = ({ onSelectAccount, onAddAccount, onRemoveAccount }) => {
+const ManageAccounts = ({ onSelectAccount, onAddAccount, history }) => {
   const { t } = useTranslation();
   const [accounts] = useAccounts();
   const [showRemove, setShowRemove] = useState(false);
+
+  const onRemoveAccount = (account) => {
+    history.push(routes.removeAccountFlow.path, { address: account.metadata.address });
+  };
 
   return (
     <div className={`${styles.manageAccounts} ${grid.row}`}>
@@ -68,4 +75,4 @@ const ManageAccounts = ({ onSelectAccount, onAddAccount, onRemoveAccount }) => {
   );
 };
 
-export default ManageAccounts;
+export default withRouter(ManageAccounts);

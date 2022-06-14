@@ -114,6 +114,11 @@ export default {
     isPrivate: true,
     forbiddenTokens: [],
   },
+  removeAccountFlow: {
+    path: '/account/remove-account',
+    isPrivate: true,
+    forbiddenTokens: [],
+  },
 };
 
 export const modals = {

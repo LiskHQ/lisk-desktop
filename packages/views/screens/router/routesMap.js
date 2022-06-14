@@ -82,5 +82,6 @@ export default {
   addAccountBySecretRecovery: AddAccountBySecretRecovery,
   backupRecoveryPhraseFlow: BackupRecoveryPhraseFlow,
   removeAccount: RemoveAccount,
+  removeAccountFlow: RemoveAccount,
   addAccountByFile: AddAccountByFile,
 };
