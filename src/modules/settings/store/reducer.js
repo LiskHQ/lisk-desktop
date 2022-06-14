@@ -20,6 +20,7 @@ export const initialState = {
   areTermsOfUseAccepted: false,
   discreetMode: false,
   sideBarExpanded: true,
+  enableCustomDerivationPath: false,
   currency: 'USD',
 };
 
