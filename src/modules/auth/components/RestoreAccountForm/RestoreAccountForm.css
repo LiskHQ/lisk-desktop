@@ -54,15 +54,15 @@
   flex-direction: column;
   align-items: center;
   padding-top: 30px;
-}
 
-.confirmButton {
-  width: 65%;
+  & > button {
+    width: 65%;
+  }
 }
 
 .titleHolder {
   max-height: fit-content;
-  color: var(--color-content);
+  color: var(--color-maastricht-blue);
   font-family: var(--heading-font);
   text-align: center;
   margin: 10px 0;
@@ -70,6 +70,7 @@
   flex-direction: column;
   align-items: center;
   justify-content: end;
+  width: 100%;
 
   & > h1 {
     @mixin headingLarge;
@@ -78,7 +79,6 @@
     justify-content: center;
     margin-top: 0px;
     margin-bottom: 8px;
-    color: var(--color-maastricht-blue);
 
     & > img {
       margin-right: 16px;
@@ -89,7 +89,9 @@
     @mixin contentLargest;
 
     margin: 0;
-    color: var(--color-slate-gray);
-    min-width: 450px;
   }
+}
+
+.fullWidth {
+  width: 100%;
 }
