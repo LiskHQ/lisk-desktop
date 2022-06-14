@@ -1,4 +1,3 @@
-export * from '../utils/encryptionAccount';
-export * from '../utils/decryptionAccount';
+export * from './useEncryptAccount';
 export * from './useCurrentAccount';
 export * from './useAccounts';

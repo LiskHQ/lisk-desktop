@@ -1,2 +1,2 @@
-export * from './encryptionAccount';
-export * from './decryptionAccount';
+export * from './encryptAccount';
+export * from './decryptAccount';
