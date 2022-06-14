@@ -12,10 +12,11 @@ import styles from './AddAccountBySecretRecovery.css';
 
 const AddAccountBySecretRecovery = ({ history, login }) => {
   const multiStepRef = useRef(null);
-  const [passphrase, setPassphrase] = useState(null);
+  const [recoveryPhrase, setRecoveryPhrase] = useState(null);
   const [currentAccount, setCurrentAccount] = useCurrentAccount();
-  const onAddAccount = (passphraseData) => {
-    setPassphrase(passphraseData);
+
+  const onAddAccount = (recoveryPhraseData) => {
+    setRecoveryPhrase(recoveryPhraseData);
     multiStepRef.current.next();
   };
 
@@ -25,7 +26,7 @@ const AddAccountBySecretRecovery = ({ history, login }) => {
   };
 
   const onPasswordSetComplete = () => {
-    login(passphrase); // Todo this login method is depricated
+    login(recoveryPhrase); // Todo this login method is depricated
     history.push(routes.dashboard.path);
   };
 
@@ -36,7 +37,7 @@ const AddAccountBySecretRecovery = ({ history, login }) => {
         ref={multiStepRef}
       >
         <AddAccountForm onAddAccount={onAddAccount} />
-        <SetPasswordForm recoveryPhrase={passphrase} onSubmit={onSetPassword} />
+        <SetPasswordForm recoveryPhrase={recoveryPhrase} onSubmit={onSetPassword} />
         <SetPasswordSuccess
           encryptedPhrase={currentAccount}
           onClose={onPasswordSetComplete}
