@@ -6,21 +6,24 @@
   padding: 20px;
   padding-bottom: 0;
 
-  & .box {
-    margin-bottom: 0;
-  }
-
-  & .contentContainer {
+  & .container {
     display: flex;
     width: auto;
     padding: 0;
     border-radius: 0;
     border-bottom: 1px solid var(--color-platinum);
+    margin-bottom: var(--horizontal-padding-l);
   }
 
   & header {
     height: auto;
     padding: 0;
+
+    & h2 {
+      font-size: var(--font-size-h5);
+      font-weight: var(--font-weight-bold);
+      margin: 0;
+    }
   }
 }
 

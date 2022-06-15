@@ -55,44 +55,45 @@ const SendForm = (props) => {
   };
 
   return (
-    <TxComposer
-      className={styles.wrapper}
-      onComposed={onComposed}
-      onConfirm={onConfirm}
-      transaction={transaction}
-    >
-      <>
-        <BoxHeader>
-          <h1>{t('Send {{token}}', { token })}</h1>
-        </BoxHeader>
-        <BoxContent className={styles.formSection}>
-          <span className={`${styles.fieldGroup} recipient`}>
-            <span className={`${styles.fieldLabel}`}>{t('Recipient')}</span>
-            <BookmarkAutoSuggest
-              bookmarks={bookmarks[token].filter((item) => !item.disabled)}
-              recipient={recipient}
-              t={t}
-              updateField={setRecipientField}
+    <section className={styles.wrapper}>
+      <TxComposer
+        onComposed={onComposed}
+        onConfirm={onConfirm}
+        transaction={transaction}
+      >
+        <>
+          <BoxHeader className={styles.header}>
+            <h2>{t('Send {{token}}', { token })}</h2>
+          </BoxHeader>
+          <BoxContent className={styles.formSection}>
+            <span className={`${styles.fieldGroup} recipient`}>
+              <span className={`${styles.fieldLabel}`}>{t('Recipient')}</span>
+              <BookmarkAutoSuggest
+                bookmarks={bookmarks[token].filter((item) => !item.disabled)}
+                recipient={recipient}
+                t={t}
+                updateField={setRecipientField}
+              />
+            </span>
+            <AmountField
+              amount={amount}
+              onChange={setAmountField}
+              maxAmount={maxAmount}
+              displayConverter
+              label={t('Amount')}
+              placeHolder={t('Insert transaction amount')}
+              useMaxLabel={t('Send maximum amount')}
+              name="amount"
             />
-          </span>
-          <AmountField
-            amount={amount}
-            onChange={setAmountField}
-            maxAmount={maxAmount}
-            displayConverter
-            label={t('Amount')}
-            placeHolder={t('Insert transaction amount')}
-            useMaxLabel={t('Send maximum amount')}
-            name="amount"
-          />
-          <MessageField
-            t={t}
-            reference={reference}
-            setReference={setReference}
-          />
-        </BoxContent>
-      </>
-    </TxComposer>
+            <MessageField
+              t={t}
+              reference={reference}
+              setReference={setReference}
+            />
+          </BoxContent>
+        </>
+      </TxComposer>
+    </section>
   );
 };
 

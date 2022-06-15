@@ -1,6 +1,7 @@
 import React, { useState, useEffect, useMemo } from 'react';
 
 import BoxContent from 'src/theme/box/content';
+import BoxHeader from 'src/theme/box/header';
 import { TertiaryButton } from 'src/theme/buttons';
 import { Input } from 'src/theme';
 import { MODULE_ASSETS_NAME_ID_MAP } from '@transaction/configuration/moduleAssets';
@@ -136,15 +137,14 @@ const Form = ({
   return (
     <section className={styles.wrapper}>
       <TxComposer
-        className={styles.box}
         transaction={transaction}
         onConfirm={onConfirm}
       >
         <>
-          <header className={styles.header}>
-            <h1>{t('Register multisignature account')}</h1>
-          </header>
-          <BoxContent className={styles.contentContainer}>
+          <BoxHeader className={styles.header}>
+            <h2>{t('Register multisignature account')}</h2>
+          </BoxHeader>
+          <BoxContent className={styles.container}>
             <ProgressBar current={1} />
             <div>
               <span className={styles.numberOfSignaturesHeading}>

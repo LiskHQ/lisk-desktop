@@ -1,19 +1,30 @@
 @import '../../../../../../setup/react/app/mixins.css';
 
 .wrapper {
+  box-sizing: border-box;
+  width: 100%;
+  padding: 20px;
+  padding-bottom: 0;
   display: flex;
   flex-direction: column;
   justify-content: flex-start;
   align-items: flex-start;
-  box-sizing: border-box;
-  width: 100%;
-  overflow: initial;
-  height: auto;
+
+  & .header {
+    & h2 {
+      font-size: var(--font-size-h5);
+      font-weight: var(--font-weight-bold);
+      margin: 0;
+    }
+  }
+
+  & .formSection {
+    padding-right: 0;
+    padding-left: 0;
+  }
 }
 
 .formSection {
-  padding: 0 var(--horizontal-padding-l);
-
   & .fieldGroup {
     align-items: flex-start;
     display: flex;

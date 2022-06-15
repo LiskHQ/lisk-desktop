@@ -80,54 +80,55 @@ const RegisterDelegateForm = ({
   };
 
   return (
-    <TxComposer
-      className={styles.box}
-      onConfirm={onConfirm}
-      transaction={transaction}
-    >
-      <>
-        <BoxHeader>
-          <h1>{t('Register delegate')}</h1>
-        </BoxHeader>
-        <BoxContent className={`${styles.container} select-name-container`}>
-          <p className={`${styles.description} select-name-text-description`}>
-            {t(
-              'Register as a delegate to assign a username and allow votes to be locked to your account.',
-            )}
-          </p>
-          <p className={`${styles.description} select-name-text-description`}>
-            {t(
-              'Depending on the number of votes locked to your account (delegate weight), your account can become eligible to forge new blocks on the Lisk blockchain. With every new round (103 blocks), the top 101 active delegates and 2 randomly selected standby delegates each become eligible to forge a new block. For each block forged and accepted by the Lisk network, a delegate receives a new block reward and the transaction fees collected from each sender. The minimum required delegate weight to become eligible is 1000 LSK.',
-            )}
-          </p>
-          <label className={styles.usernameLabel}>
-            {t('Your username')}
-            <Tooltip position="right">
-              <p>
-                {t(
-                  'Max. 20 characters, a-z, 0-1, no special characters except !@$_.',
-                )}
-              </p>
-            </Tooltip>
-          </label>
-          <div className={styles.inputContainer}>
-            <Input
-              data-name="delegate-username"
-              autoComplete="off"
-              onChange={onChangeUsername}
-              name="delegate-username"
-              value={username}
-              placeholder={t('e.g. peter_pan')}
-              className={`${styles.inputUsername} select-name-input`}
-              error={error}
-              isLoading={loading}
-              status={error ? 'error' : 'ok'}
-              feedback={error}
-            />
-          </div>
-        </BoxContent>
-      </>
-    </TxComposer>
+    <section className={styles.wrapper}>
+      <TxComposer
+        onConfirm={onConfirm}
+        transaction={transaction}
+      >
+        <>
+          <BoxHeader className={styles.header}>
+            <h2>{t('Register delegate')}</h2>
+          </BoxHeader>
+          <BoxContent className={`${styles.container} select-name-container`}>
+            <p className={`${styles.description} select-name-text-description`}>
+              {t(
+                'Register as a delegate to assign a username and allow votes to be locked to your account.',
+              )}
+            </p>
+            <p className={`${styles.description} select-name-text-description`}>
+              {t(
+                'Depending on the number of votes locked to your account (delegate weight), your account can become eligible to forge new blocks on the Lisk blockchain. With every new round (103 blocks), the top 101 active delegates and 2 randomly selected standby delegates each become eligible to forge a new block. For each block forged and accepted by the Lisk network, a delegate receives a new block reward and the transaction fees collected from each sender. The minimum required delegate weight to become eligible is 1000 LSK.',
+              )}
+            </p>
+            <label className={styles.usernameLabel}>
+              {t('Your username')}
+              <Tooltip position="right">
+                <p>
+                  {t(
+                    'Max. 20 characters, a-z, 0-1, no special characters except !@$_.',
+                  )}
+                </p>
+              </Tooltip>
+            </label>
+            <div className={styles.inputContainer}>
+              <Input
+                data-name="delegate-username"
+                autoComplete="off"
+                onChange={onChangeUsername}
+                name="delegate-username"
+                value={username}
+                placeholder={t('e.g. peter_pan')}
+                className={`${styles.inputUsername} select-name-input`}
+                error={error}
+                isLoading={loading}
+                status={error ? 'error' : 'ok'}
+                feedback={error}
+              />
+            </div>
+          </BoxContent>
+        </>
+      </TxComposer>
+    </section>
   );
 };
 
