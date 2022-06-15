@@ -19,6 +19,7 @@ const urls = {
   login: '/login',
   network: '/network',
   blocks: '/blocks',
+  explorer: '/explorer',
 };
 
 export default urls;
