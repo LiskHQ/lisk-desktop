@@ -5,18 +5,23 @@ import {
 import mockSavedAccounts from '@tests/fixtures/accounts';
 import ManageAccounts from './ManageAccounts';
 
-const mockDeleteAccountByAddress = jest.fn();
+const mockPush = jest.fn();
+const mockSetAccount = jest.fn();
 jest.mock('react-i18next');
 jest.mock('@account/hooks', () => ({
   useAccounts: jest.fn(() => ({
     accounts: mockSavedAccounts,
-    deleteAccountByAddress: mockDeleteAccountByAddress,
   })),
+  useCurrentAccount: jest.fn(() => (
+    [mockSavedAccounts[0], mockSetAccount]
+  )),
+}));
+jest.mock('src/utils/history', () => ({
+  push: mockPush,
 }));
 
 const props = {
-  onSelectAccount: jest.fn(),
-  onAddAccount: jest.fn(),
+  isRemoveAvailable: true,
 };
 
 beforeEach(() => {
@@ -47,7 +52,7 @@ describe('Account Select Form', () => {
     expect(screen.getByText('Done')).toBeTruthy();
     expect(screen.getByText('Choose account')).toBeTruthy();
     fireEvent.click(screen.getByTestId('delete-icon'));
-    expect(mockDeleteAccountByAddress).toBeCalledWith(mockSavedAccounts[0].metadata.address);
+    expect(mockPush).toBeCalledWith('', { address: mockSavedAccounts[0].metadata.address });
   });
 
   it('Should revert back to select account if done is clicked', async () => {
