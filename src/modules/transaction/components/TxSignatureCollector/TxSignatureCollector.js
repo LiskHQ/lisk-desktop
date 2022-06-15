@@ -6,6 +6,7 @@ import Box from 'src/theme/box';
 import Illustration from 'src/modules/common/components/illustration';
 import BoxContent from 'src/theme/box/content';
 import { isEmpty } from 'src/utils/helpers';
+import EnterPasswordForm from 'src/modules/auth/components/EnterPasswordForm';
 import { getDeviceType } from '@wallet/utils/hwManager';
 import styles from './txSignatureCollector.css';
 
@@ -25,6 +26,9 @@ const TxSignatureCollector = ({
 }) => {
   const deviceType = getDeviceType(account.hwInfo?.deviceModel);
   const dispatch = useDispatch();
+  const onEnterPasswordSuccess = () => {
+    nextStep({ rawTx, statusInfo, sender });
+  };
 
   useEffect(() => {
     /**
@@ -82,7 +86,7 @@ const TxSignatureCollector = ({
   }, [transactions.signedTransaction, transactions.txSignatureError]);
 
   if (!deviceType) {
-    return <div />;
+    return <EnterPasswordForm onEnterPasswordSuccess={onEnterPasswordSuccess} />;
   }
 
   return (
