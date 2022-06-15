@@ -25,7 +25,7 @@ describe('Multisignature Review component', () => {
 
   it('Should render properly', () => {
     expect(wrapper).toContainMatchingElements(props.members.length, '.member-info');
-    expect(wrapper.find('.infoColumn.info-requiredSignatures')).toHaveText('Required signatures2');
+    expect(wrapper.find('.infoColumn.info-numberOfSignatures')).toHaveText('Required signatures2');
     expect(wrapper.find('.infoColumn.info-fee')).toHaveText('Transaction fee0.02 LSK');
   });
 });

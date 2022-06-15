@@ -195,7 +195,7 @@ module.exports = {
     'src/modules/transaction/components/TransactionDetails/confirmations.js',
     'src/modules/transaction/components/TransactionDetails/members.js',
     'src/modules/transaction/components/TransactionDetails/nonce.js',
-    'src/modules/transaction/components/TransactionDetails/requiredSignatures.js',
+    'src/modules/transaction/components/TransactionDetails/numberOfSignatures.js',
     'src/modules/transaction/components/TransactionDetails/signedAndRemainingMembersList.js',
     'src/modules/settings/hooks/useSettings.js',
     'src/modules/settings/components/currencySelector.js',

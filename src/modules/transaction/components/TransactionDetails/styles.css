@@ -68,8 +68,8 @@
   grid-area: date;
 }
 
-.requiredSignatures {
-  grid-area: requiredSignatures;
+.numberOfSignatures {
+  grid-area: numberOfSignatures;
 }
 
 .placeholder {

@@ -18,7 +18,7 @@ const RegisterMultisignatureGroup = ({ t, transaction }) => {
       t={t}
       fee={transaction.fee}
       members={[...mandatory, ...optional]}
-      numberOfSignatures={transaction.asset.requiredSignatures}
+      numberOfSignatures={transaction.asset.numberOfSignatures}
     />
   );
 };

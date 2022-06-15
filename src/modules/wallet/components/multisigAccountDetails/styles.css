@@ -21,12 +21,12 @@
     border-top: 1px solid var(--color-platinum);
     text-align: left;
 
-    & > .requiredSignatures,
+    & > .numberOfSignatures,
     & > span {
       color: var(--color-maastricht-blue);
     }
 
-    & .requiredSignatures {
+    & .numberOfSignatures {
       margin: var(--vertical-padding-l) 0;
     }
   }

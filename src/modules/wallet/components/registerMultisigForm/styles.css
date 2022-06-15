@@ -40,7 +40,7 @@
   display: flex;
 }
 
-.requiredSignaturesInput {
+.numberOfSignaturesInput {
   width: 140px;
   height: 40px;
   margin-top: 10px;
@@ -75,7 +75,7 @@
   }
 }
 
-.requiredSignaturesHeading {
+.numberOfSignaturesHeading {
   @mixin contentNormal;
 
   margin-bottom: 10px;

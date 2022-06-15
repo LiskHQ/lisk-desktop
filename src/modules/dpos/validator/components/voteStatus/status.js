@@ -17,19 +17,17 @@ const Status = ({
   const template = statusMessages(t, statusInfo)[status.code];
 
   return (
-    <section className="ali">
-      <Box className={styles.container}>
-        <header className={styles.header}>
-          <ToggleIcon />
-        </header>
-        <TxBroadcaster
-          title={template.title}
-          illustration="vote"
-          status={status}
-          message={template.message}
-        />
-      </Box>
-    </section>
+    <Box className={styles.container}>
+      <header className={styles.header}>
+        <ToggleIcon />
+      </header>
+      <TxBroadcaster
+        title={template.title}
+        illustration="vote"
+        status={status}
+        message={template.message}
+      />
+    </Box>
   );
 };
 

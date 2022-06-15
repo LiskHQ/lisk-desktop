@@ -3,20 +3,20 @@ import TransactionDetailsContext from '../../context/transactionDetailsContext';
 import ValueAndLabel from './valueAndLabel';
 import styles from './styles.css';
 
-const RequiredSignatures = ({ t }) => {
+const NumberOfSignatures = ({ t }) => {
   const {
     transaction: { asset },
   } = React.useContext(TransactionDetailsContext);
-  const requiredSignatures = asset.numberOfSignatures;
+  const numberOfSignatures = asset.numberOfSignatures;
 
   return (
     <ValueAndLabel
-      className={styles.requiredSignatures}
+      className={styles.numberOfSignatures}
       label={t('Required signatures')}
     >
-      <span className="tx-required-signatures">{requiredSignatures}</span>
+      <span className="tx-required-signatures">{numberOfSignatures}</span>
     </ValueAndLabel>
   );
 };
 
-export default RequiredSignatures;
+export default NumberOfSignatures;

@@ -24,12 +24,12 @@ const getInitialSignaturesState = (prevState) =>
 export const validateState = ({
   mandatoryKeys,
   optionalKeys,
-  requiredSignatures,
+  numberOfSignatures,
   t,
 }) => {
   const messages = validators
     .map((scenario) => {
-      if (scenario.pattern(mandatoryKeys, optionalKeys, requiredSignatures)) {
+      if (scenario.pattern(mandatoryKeys, optionalKeys, numberOfSignatures)) {
         return scenario.message(t, mandatoryKeys, optionalKeys);
       }
       return null;
@@ -43,10 +43,10 @@ export const validateState = ({
 };
 
 // eslint-disable-next-line max-statements
-const Editor = ({
+const Form = ({
   t, nextStep, prevState = {},
 }) => {
-  const [requiredSignatures, setRequiredSignatures] = useState(() =>
+  const [numberOfSignatures, setNumberOfSignatures] = useState(() =>
     getInitialSignaturesState(prevState));
   const [members, setMembers] = useState(() =>
     getInitialMembersState(prevState));
@@ -93,9 +93,9 @@ const Editor = ({
     }
   };
 
-  const changeRequiredSignatures = (e) => {
+  const changeNumberOfSignatures = (e) => {
     const value = e.target.value ? Number(e.target.value) : undefined;
-    setRequiredSignatures(value);
+    setNumberOfSignatures(value);
   };
 
   const onConfirm = (rawTx) => {
@@ -103,22 +103,22 @@ const Editor = ({
   };
 
   useEffect(() => {
-    const difference = requiredSignatures - members.length;
+    const difference = numberOfSignatures - members.length;
     if (difference > 0) {
       const newMembers = new Array(difference).fill(placeholderMember);
       setMembers((prevMembers) => [...prevMembers, ...newMembers]);
     }
-  }, [requiredSignatures]);
+  }, [numberOfSignatures]);
 
   const feedback = useMemo(
     () =>
       validateState({
         mandatoryKeys,
         optionalKeys,
-        requiredSignatures,
+        numberOfSignatures,
         t,
       }),
-    [mandatoryKeys, optionalKeys, requiredSignatures],
+    [mandatoryKeys, optionalKeys, numberOfSignatures],
   );
 
   const transaction = {
@@ -127,7 +127,7 @@ const Editor = ({
     asset: {
       mandatoryKeys,
       optionalKeys,
-      requiredSignatures,
+      numberOfSignatures,
     },
   };
 
@@ -147,13 +147,13 @@ const Editor = ({
           <BoxContent className={styles.contentContainer}>
             <ProgressBar current={1} />
             <div>
-              <span className={styles.requiredSignaturesHeading}>
+              <span className={styles.numberOfSignaturesHeading}>
                 {t('Required signatures')}
               </span>
               <Input
-                className={`${styles.requiredSignaturesInput} multisignature-editor-input`}
-                value={requiredSignatures ?? ''}
-                onChange={changeRequiredSignatures}
+                className={`${styles.numberOfSignaturesInput} multisignature-editor-input`}
+                value={numberOfSignatures ?? ''}
+                onChange={changeNumberOfSignatures}
                 autoComplete="off"
                 name="required-signatures"
               />
@@ -180,7 +180,7 @@ const Editor = ({
                   t={t}
                   {...member}
                   index={i}
-                  showDeleteIcon={members.length > requiredSignatures}
+                  showDeleteIcon={members.length > numberOfSignatures}
                   onChangeMember={changeMember}
                   onDeleteMember={deleteMember}
                 />
@@ -193,4 +193,4 @@ const Editor = ({
   );
 };
 
-export default Editor;
+export default Form;

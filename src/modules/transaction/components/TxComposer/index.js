@@ -28,7 +28,6 @@ const TxComposer = ({
   const rawTx = {
     senderPublicKey: wallet.summary?.publicKey,
     nonce: wallet.sequence?.nonce,
-    // passphrase: wallet.passphrase, // @todo remove
     moduleAssetId: transaction.moduleAssetId,
     asset: transaction.asset,
   };

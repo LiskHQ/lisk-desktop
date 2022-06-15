@@ -1,7 +1,5 @@
 /* eslint-disable max-lines */
 import { to } from 'await-to-js';
-import { MODULE_ASSETS_NAME_ID_MAP } from '@transaction/configuration/moduleAssets';
-import { toRawLsk } from '@token/fungible/utils/lsk';
 import { createGenericTx } from '@transaction/api';
 import { getAccount } from '@wallet/utils/api';
 import { selectActiveTokenAccount } from '@common/store';
@@ -71,12 +69,7 @@ export const accountDataUpdated = tokensTypes =>
     }
   };
 
-export const multisigGroupRegistered = ({
-  fee,
-  mandatoryKeys,
-  optionalKeys,
-  numberOfSignatures,
-}) => async (dispatch, getState) => {
+export const multisigGroupRegistered = (transactionObject) => async (dispatch, getState) => {
   //
   // Collect data
   //
@@ -90,15 +83,7 @@ export const multisigGroupRegistered = ({
     createGenericTx({
       network: state.network,
       wallet: activeWallet,
-      transactionObject: {
-        mandatoryKeys,
-        optionalKeys,
-        numberOfSignatures,
-        moduleAssetId: MODULE_ASSETS_NAME_ID_MAP.registerMultisignatureGroup,
-        fee: toRawLsk(fee),
-        nonce: activeWallet.sequence.nonce,
-        senderPublicKey: activeWallet.summary.publicKey,
-      },
+      transactionObject,
     }),
   );
 
