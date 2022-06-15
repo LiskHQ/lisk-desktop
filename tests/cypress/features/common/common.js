@@ -99,7 +99,7 @@ Given(/^I am on (.*?) page of (.*?)$/, function (page, identifier) {
   cy.server();
   switch (page.toLowerCase()) {
     case 'wallet':
-      cy.visit(`${urls.account}?address=${wallets[identifier].summary.address}`);
+      cy.visit(`${urls.wallet}?address=${wallets[identifier].summary.address}`);
       break;
   }
 });
@@ -129,9 +129,10 @@ Then(/^The latest transaction is (.*?)$/, function (transactionType) {
       cy.get(`${ss.transactionRow} ${ss.transactionAddress}`).eq(0).should('have.text', this.randomAddress);
     } else if (transactionRecipient === 'transfer') {
       throw new Error('Usage: "transfer to {recipient}" where recipient could be "random" or account name');
-    } else {
+    }
+    else {
       /* For uses like: 'transfer to mkakDp2f31btaXdATtAogoqwXcdx1PqqFo' */
-      cy.get(`${ss.transactionRow} ${ss.transactionAddress}`).eq(0).contains(transactionRecipient.substring(0,10));
+      cy.get(`${ss.transactionRow} ${ss.transactionRowRecipient} span`).eq(0).contains(transactionRecipient.substring(0,10));
     }
   }
   switch (transactionType.toLowerCase()) {
