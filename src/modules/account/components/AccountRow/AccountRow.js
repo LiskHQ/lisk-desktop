@@ -9,12 +9,12 @@ function AccountRow({
   onRemove,
   showRemove,
 }) {
-  const { uuid, metadata: { name, address } } = account;
+  const { metadata: { name, address } } = account;
 
   return (
     <div
-      key={uuid}
-      data-testid={uuid}
+      key={address}
+      data-testid={address}
       className={styles.accountWraper}
       onClick={() => onSelect(account)}
     >
@@ -29,7 +29,7 @@ function AccountRow({
       </div>
       {showRemove && (
         <button
-          data-testid="delete-icon"
+          data-testid={`${address}-delete`}
           onClick={(event) => {
             event.stopPropagation();
             onRemove(account);
