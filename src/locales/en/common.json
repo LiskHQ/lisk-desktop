@@ -458,6 +458,7 @@
   "Type": "Type",
   "Unable to connect to Lisk Service, please check the address and try again": "Unable to connect to Lisk Service, please check the address and try again",
   "Unable to connect to the node, no response from the server.": "Unable to connect to the node, no response from the server.",
+  "Unable to decrypt account, please check the password": "Unable to decrypt account, please check the password",
   "Undo": "Undo",
   "Unlock": "Unlock",
   "Unlock LSK summary": "Unlock LSK summary",

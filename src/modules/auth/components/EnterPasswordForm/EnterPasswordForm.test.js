@@ -3,10 +3,10 @@ import {
   fireEvent, render, screen, waitFor,
 } from '@testing-library/react';
 
-import { decryptionAccount } from '../../../account/utils/decryptionAccount';
+import { decryptAccount } from '@account/utils/decryptAccount';
 import EnterPasswordForm from '.';
 
-jest.mock('../../../account/utils/decryptionAccount');
+jest.mock('@account/utils/decryptAccount');
 
 describe('EnterPasswordForm', () => {
   let wrapper;
@@ -34,7 +34,7 @@ describe('EnterPasswordForm', () => {
   it('should call onEnterPasswordSuccess when onSubmit click', async () => {
     const privateToken = 'private-token-mock';
     const recoveryPhrase = 'target cancel solution recipe vague faint bomb convince pink vendor fresh patrol';
-    decryptionAccount.mockImplementation(() => (
+    decryptAccount.mockImplementation(() => (
       {
         privateToken,
         recoveryPhrase,
@@ -47,7 +47,7 @@ describe('EnterPasswordForm', () => {
     fireEvent.click(screen.getByText('Continue'));
 
     await waitFor(() => {
-      expect(decryptionAccount).toHaveBeenCalledWith(
+      expect(decryptAccount).toHaveBeenCalledWith(
         props.accountSchema,
         'qwerty',
       );
@@ -60,8 +60,8 @@ describe('EnterPasswordForm', () => {
   });
 
   it('should display error', async () => {
-    const error = 'test error';
-    decryptionAccount.mockImplementation(() => (
+    const error = 'Unable to decrypt account. Please check your password';
+    decryptAccount.mockImplementation(() => (
       {
         error,
       }
@@ -72,14 +72,14 @@ describe('EnterPasswordForm', () => {
     fireEvent.click(screen.getByText('Continue'));
 
     await waitFor(() => {
-      expect(screen.getByText('test error')).toBeTruthy();
+      expect(screen.getByText(error)).toBeTruthy();
     });
   });
 
   it('should not call onEnterPasswordSuccess when onSubmit fails', async () => {
-    decryptionAccount.mockImplementation(() => (
+    decryptAccount.mockImplementation(() => (
       {
-        error: 'error',
+        error: 'Unable to decrypt account. Please check your password',
       }
     ));
 
@@ -88,7 +88,7 @@ describe('EnterPasswordForm', () => {
 
     await waitFor(() => {
       expect(props.onEnterPasswordSuccess).not.toHaveBeenCalled();
-      expect(screen.getByText('error')).toBeTruthy();
+      expect(screen.getByText('Unable to decrypt account. Please check your password')).toBeTruthy();
     });
   });
 });

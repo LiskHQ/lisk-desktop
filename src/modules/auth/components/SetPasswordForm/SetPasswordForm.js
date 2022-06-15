@@ -3,13 +3,14 @@ import { useTranslation } from 'react-i18next';
 import { withRouter } from 'react-router';
 import * as yup from 'yup';
 import { useForm } from 'react-hook-form';
+import { toast } from 'react-toastify';
 import { yupResolver } from '@hookform/resolvers/yup';
 import grid from 'flexboxgrid/dist/flexboxgrid.css';
 import Input from 'src/theme/Input';
 import { PrimaryButton } from 'src/theme/buttons';
 import CheckBox from 'src/theme/CheckBox';
 import Tooltip from 'src/theme/Tooltip';
-import { encryptionAccount } from 'src/modules/account/utils';
+import { useEncryptAccount } from '@account/hooks';
 import styles from './SetPasswordForm.css';
 
 const setPasswordFormSchema = yup.object({
@@ -22,6 +23,7 @@ const setPasswordFormSchema = yup.object({
 
 function SetPasswordForm({ onSubmit, recoveryPhrase }) {
   const { t } = useTranslation();
+  const { encryptAccount } = useEncryptAccount();
   const {
     register,
     handleSubmit,
@@ -38,9 +40,19 @@ function SetPasswordForm({ onSubmit, recoveryPhrase }) {
   const isButtonDisabled = useMemo(() =>
     !password?.length || !cPassword?.length || !hasAgreed,
   [formValues.password, formValues.cPassword, formValues.hasAgreed]);
+
   const onFormSubmit = (values) => {
-    const accountSchema = encryptionAccount(recoveryPhrase, values.password);
-    onSubmit?.(accountSchema);
+    const accountSchema = encryptAccount({
+      recoveryPhrase: recoveryPhrase.value,
+      password: values.password,
+      name: values.accountName,
+    });
+
+    if (accountSchema.error) {
+      toast.error(t('Something went wrong. Please try again'));
+      return null;
+    }
+    return onSubmit?.(accountSchema);
   };
 
   return (
