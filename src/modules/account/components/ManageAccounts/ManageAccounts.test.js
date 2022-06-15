@@ -2,10 +2,12 @@ import React from 'react';
 import {
   fireEvent, render, screen,
 } from '@testing-library/react';
+import { createMemoryHistory } from 'history';
+import { Router } from 'react-router-dom';
 import mockSavedAccounts from '@tests/fixtures/accounts';
+import routes from '@screens/router/routes';
 import ManageAccounts from './ManageAccounts';
 
-const mockPush = jest.fn();
 const mockSetAccount = jest.fn();
 jest.mock('react-i18next');
 jest.mock('@account/hooks', () => ({
@@ -16,16 +18,16 @@ jest.mock('@account/hooks', () => ({
     [mockSavedAccounts[0], mockSetAccount]
   )),
 }));
-jest.mock('src/utils/history', () => ({
-  push: mockPush,
-}));
 
 const props = {
   isRemoveAvailable: true,
 };
-
+const history = createMemoryHistory({
+  initialEntries: ['/'],
+});
+let wrapper;
 beforeEach(() => {
-  render(<ManageAccounts {...props} />);
+  wrapper = render(<Router history={history}><ManageAccounts {...props} /></Router>);
 });
 
 describe('Account Select Form', () => {
@@ -39,20 +41,29 @@ describe('Account Select Form', () => {
 
   it('Should trigger the onAddAccount callback', async () => {
     fireEvent.click(screen.getByText('Add another account'));
-    expect(props.onAddAccount).toHaveBeenCalledTimes(1);
+    expect(history.location.pathname).toEqual(routes.addAccountOptions.path);
   });
 
   it('Should trigger the onSelectAccount callback', async () => {
-    fireEvent.click(screen.getByTestId(mockSavedAccounts[0].uuid));
-    expect(props.onSelectAccount).toBeCalledWith(mockSavedAccounts[0]);
+    fireEvent.click(screen.getByTestId(mockSavedAccounts[0].metadata.address));
+    expect(history.location.pathname).toEqual(routes.dashboard.path);
   });
 
-  it('Should show accounts with the delete trigger', async () => {
+  it('should show and hide remove button', async () => {
+    expect(screen.getByTestId('manage-title')).toHaveTextContent('Manage accounts');
     fireEvent.click(screen.getByText('Remove an account'));
     expect(screen.getByText('Done')).toBeTruthy();
-    expect(screen.getByText('Choose account')).toBeTruthy();
-    fireEvent.click(screen.getByTestId('delete-icon'));
-    expect(mockPush).toBeCalledWith('', { address: mockSavedAccounts[0].metadata.address });
+    expect(screen.getByTestId('manage-title')).toHaveTextContent('Choose account');
+    expect(screen.getByTestId(`${mockSavedAccounts[0].metadata.address}-delete`)).toBeTruthy();
+    fireEvent.click(screen.getByText('Done'));
+    expect(screen.getByTestId('manage-title')).toHaveTextContent('Manage accounts');
+    expect(() => screen.getByText('Done')).toThrow('Unable to find an element');
+  });
+
+  it('delete Should trigger on remove', async () => {
+    fireEvent.click(screen.getByText('Remove an account'));
+    fireEvent.click(screen.getByTestId(`${mockSavedAccounts[0].metadata.address}-delete`));
+    expect(history.location.pathname).toEqual(routes.removeSelectedAccount.path);
   });
 
   it('Should revert back to select account if done is clicked', async () => {
@@ -61,5 +72,19 @@ describe('Account Select Form', () => {
     expect(screen.getByText('Remove an account')).toBeTruthy();
     expect(screen.getByText('Add another account')).toBeTruthy();
     expect(screen.getByText('Manage accounts')).toBeTruthy();
+  });
+
+  it('Should change title based on props', async () => {
+    expect(screen.getByTestId('manage-title')).toHaveTextContent('Manage accounts');
+    wrapper.rerender(<Router history={history}><ManageAccounts {...props} title="Switch account" /></Router>);
+    expect(screen.getByTestId('manage-title')).toHaveTextContent('Switch account');
+  });
+
+  it('Should change title based on props', async () => {
+    expect(screen.getByText('Remove an account')).toBeTruthy();
+    wrapper.rerender(<Router history={history}>
+      <ManageAccounts {...props} isRemoveAvailable={false} />
+    </Router>);
+    expect(() => screen.getByText('Remove an account')).toThrow('Unable to find an element');
   });
 });

@@ -1,11 +1,11 @@
 import React, { useState, useCallback } from 'react';
 import { useTranslation } from 'react-i18next';
+import { withRouter } from 'react-router';
 import Box from 'src/theme/box';
 import grid from 'flexboxgrid/dist/flexboxgrid.css';
 import { OutlineButton } from 'src/theme/buttons';
 import Icon from 'src/theme/Icon';
 import routes from '@screens/router/routes';
-import history from 'src/utils/history';
 import { useAccounts, useCurrentAccount } from '../../hooks';
 import styles from './ManageAccounts.css';
 import AccountRow from '../AccountRow';
@@ -13,6 +13,7 @@ import AccountRow from '../AccountRow';
 const ManageAccounts = ({
   isRemoveAvailable,
   title: customTitle,
+  history,
 }) => {
   const { t } = useTranslation();
   const { accounts } = useAccounts();
@@ -24,7 +25,7 @@ const ManageAccounts = ({
     history.push(routes.addAccountOptions.path);
   }, []);
   const removeAccount = useCallback((account) => {
-    history.push('', { address: account?.metadata?.address });
+    history.push(routes.removeSelectedAccount.path, { address: account?.metadata?.address });
   }, []);
   const onSelectAccount = useCallback((account) => {
     setAccount(account);
@@ -38,13 +39,13 @@ const ManageAccounts = ({
       >
         <div className={styles.wrapper}>
           <div className={styles.headerWrapper}>
-            <h1>{showRemove ? t('Choose account') : title}</h1>
+            <h1 data-testid="manage-title">{showRemove ? t('Choose account') : title}</h1>
           </div>
           <Box className={styles.accountListWrapper}>
             {
                accounts.map((account) => (
                  <AccountRow
-                   key={account.uuid}
+                   key={account.metadata.address}
                    account={account}
                    onSelect={onSelectAccount}
                    showRemove={showRemove}
@@ -92,4 +93,4 @@ ManageAccounts.defaultProps = {
   isRemoveAvailable: true,
 };
 
-export default ManageAccounts;
+export default withRouter(ManageAccounts);
