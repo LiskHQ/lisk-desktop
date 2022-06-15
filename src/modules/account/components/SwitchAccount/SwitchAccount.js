@@ -5,10 +5,7 @@ import routes from '@screens/router/routes';
 import { login } from '@auth/store/action';
 import history from 'src/utils/history';
 import { removeSearchParamsFromUrl } from 'src/utils/searchParams';
-import Box from 'src/theme/box';
-import BoxContent from 'src/theme/box/content';
 import ManageAccounts from '../ManageAccounts';
-import styles from './SwitchAccount.css';
 
 const SwitchAccount = () => {
   const dispatch = useDispatch();
@@ -24,15 +21,11 @@ const SwitchAccount = () => {
   };
 
   return (
-    <Box className={styles.container}>
-      <BoxContent className={styles.content}>
-        <ManageAccounts
-          title={t('Switch account')}
-          onSelectAccount={onSelectAccount}
-          onAddAccount={onAddAccount}
-        />
-      </BoxContent>
-    </Box>
+    <ManageAccounts
+      title={t('Switch account')}
+      onSelectAccount={onSelectAccount}
+      onAddAccount={onAddAccount}
+    />
   );
 };
 
