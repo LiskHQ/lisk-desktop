@@ -8,6 +8,10 @@ jest.mock('react-i18next');
 
 const props = {
   onSubmit: jest.fn((value) => value),
+  recoveryPhrase: {
+    value: 'target cancel solution recipe vague faint bomb convince pink vendor fresh patrol',
+    isValid: true,
+  },
 };
 let password = null;
 let cPassword = null;
