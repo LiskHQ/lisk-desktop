@@ -3,6 +3,7 @@ Feature: Wallets
   Background:
     Given Network switcher is enabled
     Given I login as genesis on customNode
+    And I wait 2 seconds
     Given I am on wallets page
     And I wait 1 seconds
 

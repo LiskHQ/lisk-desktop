@@ -50,8 +50,9 @@ Feature: Multisignature transaction
     When I click on searchIcon
     And I search for account lskwunwxqmss9w3mtuvzgbsfy665cz4eo3rd2mxdp
     Then I click on searchAccountRow
-    Then I should be on Account page of lskwun...2mxdp
-    Then The latest transaction is register multisignature group
+    And I should be on Account page of lskwun...2mxdp
+    And I wait 2 seconds
+    And The latest transaction is register multisignature group
 
   @basic
   Scenario: Send transaction using second passphrase (Mandatory, Mandatory)
