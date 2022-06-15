@@ -4,7 +4,11 @@ import routes from '@screens/router/routes';
 import { removeSearchParamsFromUrl } from 'src/utils/searchParams';
 import { mountWithProps } from 'src/utils/testHelpers';
 import history from 'src/utils/history';
+import { OutlineButton } from 'src/theme/buttons';
+import AccountRow from '../AccountRow';
 import SwitchAccount from './SwitchAccount';
+
+jest.mock('src/utils/history');
 
 jest.mock('@account/hooks/useAccounts', () => ({
   useAccounts: jest.fn().mockReturnValue([mockSavedAccounts]),
@@ -23,14 +27,18 @@ describe('Switch account', () => {
   });
 
   it('Should render properly', () => {
-    expect(wrapper.find('.switch-account-list-item')).toHaveLength(mockSavedAccounts.length);
-    expect(wrapper.find('.switch-account-list-item-address').first()).toHaveText(mockSavedAccounts[0].metadata.address);
-    expect(wrapper.find('a')).toHaveText('Add another account');
-    expect(wrapper.find('a').props().href).toEqual(routes.addAccountOptions.path);
+    expect(wrapper.find(AccountRow)).toHaveLength(mockSavedAccounts.length);
+    expect(wrapper.find(AccountRow).first()).toHaveText(`${mockSavedAccounts[0].metadata.name}${mockSavedAccounts[0].metadata.address}`);
+    expect(wrapper.find(OutlineButton)).toHaveText('Add another account');
   });
 
-  it('Should work properly when clicking onAccountClick', () => {
-    wrapper.find('.switch-account-list-item-address').first().simulate('click');
+  it('Should work properly when clicking on clicking add account', () => {
+    wrapper.find(OutlineButton).first().simulate('click');
+    expect(history.push).toHaveBeenCalledWith(routes.addAccountOptions.path);
+  });
+
+  it('Should work properly when clicking on clicking select account', () => {
+    wrapper.find(AccountRow).first().simulate('click');
     expect(removeSearchParamsFromUrl).toHaveBeenCalledWith(history, ['modal']);
     expect(mockDispatch).toHaveBeenCalledTimes(1);
   });
