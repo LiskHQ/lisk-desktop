@@ -6,7 +6,7 @@ const SwitchAccount = () => {
   const { t } = useTranslation();
 
   return (
-    <ManageAccounts title={t('Switch account')}/>
+    <ManageAccounts title={t('Switch account')} />
   );
 };
 
