@@ -30,7 +30,7 @@ class PassphraseBackup extends React.Component {
   }
 
   render() {
-    const { t, account } = this.props;
+    const { t, passphrase } = this.props;
 
     return (
       <>
@@ -39,12 +39,12 @@ class PassphraseBackup extends React.Component {
             <div className={`${styles.optionContent}`}>
               <PassphraseRenderer
                 showInfo
-                passphrase={account.passphrase}
+                passphrase={passphrase}
                 subheader
               />
               <CopyToClipboard
                 onClick={this.handleClick}
-                value={account.passphrase}
+                value={passphrase}
                 text={t('Copy')}
                 Container={TertiaryButton}
                 containerProps={{ size: 'xs', className: styles.copyPassphrase }}

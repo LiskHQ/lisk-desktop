@@ -36,7 +36,11 @@ const AddAccountOptions = ({ history }) => {
                 iconName="secretPassphrase"
                 onClick={() => history.push(routes.addAccountBySecretRecovery.path)}
               />
-              <AddAccountOptionButton text="Restore from file" iconName="accountUpload" />
+              <AddAccountOptionButton
+                text="Restore from file"
+                iconName="accountUpload"
+                onClick={() => history.push(routes.addAccountByFile.path)}
+              />
             </div>
             <p>
               {t('Don’t have a Lisk account yet?')}

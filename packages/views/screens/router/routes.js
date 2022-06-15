@@ -11,7 +11,7 @@ export default {
     exact: true,
   },
   addAccountOptions: {
-    path: '/account',
+    path: '/account/add',
     isPrivate: false,
     forbiddenTokens: [],
     exact: true,
@@ -61,7 +61,7 @@ export default {
     forbiddenTokens: [],
   },
   manageAccounts: {
-    path: '/account/manage',
+    path: '/account',
     isPrivate: false,
     forbiddenTokens: [],
   },
@@ -80,6 +80,12 @@ export default {
     isPrivate: false,
     isSigninFlow: true,
     forbiddenTokens: [],
+  },
+  addAccountByFile: {
+    path: '/account/add/by-file',
+    isPrivate: false,
+    forbiddenTokens: [],
+    exact: true,
   },
   termsOfUse: {
     path: '/terms-of-use',
@@ -101,6 +107,16 @@ export default {
     path: '/wallet',
     isPrivate: true,
     exact: false,
+    forbiddenTokens: [],
+  },
+  backupRecoveryPhraseFlow: {
+    path: '/account/backup-recovery-phrase',
+    isPrivate: true,
+    forbiddenTokens: [],
+  },
+  removeSelectedAccount: {
+    path: '/account/remove-account',
+    isPrivate: false,
     forbiddenTokens: [],
   },
 };

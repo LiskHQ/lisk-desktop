@@ -39,7 +39,11 @@ describe('Add Account Choice', () => {
 
   it('should re-direct to /account/add/secrete-recovery', async () => {
     fireEvent.click(screen.getByText('Secret recovery phrase'));
+    expect(props.history.push).toBeCalled();
+  });
 
+  it('should re-direct to /account/add/add/by-file', async () => {
+    fireEvent.click(screen.getByText('Restore from file'));
     expect(props.history.push).toBeCalled();
   });
 });

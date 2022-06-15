@@ -6,9 +6,7 @@ import PassphraseBackup from '.';
 describe('PassphraseBackup', () => {
   let wrapper;
   const props = {
-    account: {
-      passphrase: accounts.genesis.passphrase,
-    },
+    passphrase: accounts.genesis.passphrase,
     t: key => key,
   };
 
