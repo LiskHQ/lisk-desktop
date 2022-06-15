@@ -1,2 +1,2 @@
 export * from './searchUtils';
-export { default as getTxConfig } from '../../transaction/utiles/transactionListUtils';
+export { default as getTxConfig } from '@transaction/utils/transactionListUtils';

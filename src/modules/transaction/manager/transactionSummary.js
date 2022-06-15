@@ -8,7 +8,6 @@ import TxSummarizer from '../components/TxSummarizer';
 
 const mapStateToProps = state => ({
   token: selectActiveToken(state),
-  transactions: state.transactions,
   wallet: selectActiveTokenAccount(state),
 });
 
