@@ -8,9 +8,7 @@ import { useAccounts } from '../../hooks/useAccounts';
 import styles from './ManageAccounts.css';
 import AccountRow from '../AccountRow';
 
-const ManageAccounts = ({
-  title, onSelectAccount, onAddAccount, onRemoveAccount,
-}) => {
+const ManageAccounts = ({ onSelectAccount, onAddAccount, onRemoveAccount }) => {
   const { t } = useTranslation();
   const [accounts] = useAccounts();
   const [showRemove, setShowRemove] = useState(false);
@@ -18,12 +16,11 @@ const ManageAccounts = ({
   return (
     <div className={`${styles.manageAccounts} ${grid.row}`}>
       <div
-        className={`${styles.manageAccountWrapper} ${grid['col-xs-12']}`}
+        className={`${styles.manageAccountWrapper} ${grid['col-xs-12']} ${grid['col-md-8']} ${grid['col-lg-6']}`}
       >
         <div className={styles.wrapper}>
           <div className={styles.headerWrapper}>
-            {title ? <h1>{title}</h1>
-              : <h1>{t(showRemove ? 'Choose account' : 'Manage accounts')}</h1>}
+            <h1>{t(showRemove ? 'Choose account' : 'Manage accounts')}</h1>
           </div>
           <Box className={styles.accountListWrapper}>
             {
@@ -54,17 +51,15 @@ const ManageAccounts = ({
                 <Icon name="personIcon" />
                 {t('Add another account')}
               </OutlineButton>
-              {onRemoveAccount && (
-                <OutlineButton
-                  className={styles.button}
-                  onClick={() => {
-                    setShowRemove(true);
-                  }}
-                >
-                  <Icon name="deleteIcon" />
-                  {t('Remove an account')}
-                </OutlineButton>
-              )}
+              <OutlineButton
+                className={styles.button}
+                onClick={() => {
+                  setShowRemove(true);
+                }}
+              >
+                <Icon name="deleteIcon" />
+                {t('Remove an account')}
+              </OutlineButton>
             </>
           )}
         </div>
