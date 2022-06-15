@@ -8,7 +8,9 @@ import { useAccounts } from '../../hooks/useAccounts';
 import styles from './ManageAccounts.css';
 import AccountRow from '../AccountRow';
 
-const ManageAccounts = ({ onSelectAccount, onAddAccount, onRemoveAccount }) => {
+const ManageAccounts = ({
+  title, onSelectAccount, onAddAccount, onRemoveAccount,
+}) => {
   const { t } = useTranslation();
   const [accounts] = useAccounts();
   const [showRemove, setShowRemove] = useState(false);
@@ -16,11 +18,12 @@ const ManageAccounts = ({ onSelectAccount, onAddAccount, onRemoveAccount }) => {
   return (
     <div className={`${styles.manageAccounts} ${grid.row}`}>
       <div
-        className={`${styles.manageAccountWrapper} ${grid['col-xs-12']} ${grid['col-md-8']} ${grid['col-lg-6']}`}
+        className={`${styles.manageAccountWrapper} ${grid['col-xs-12']}`}
       >
         <div className={styles.wrapper}>
           <div className={styles.headerWrapper}>
-            <h1>{t(showRemove ? 'Choose account' : 'Manage accounts')}</h1>
+            {title ? <h1>{title}</h1>
+              : <h1>{t(showRemove ? 'Choose account' : 'Manage accounts')}</h1>}
           </div>
           <Box className={styles.accountListWrapper}>
             {
@@ -51,15 +54,17 @@ const ManageAccounts = ({ onSelectAccount, onAddAccount, onRemoveAccount }) => {
                 <Icon name="personIcon" />
                 {t('Add another account')}
               </OutlineButton>
-              <OutlineButton
-                className={styles.button}
-                onClick={() => {
-                  setShowRemove(true);
-                }}
-              >
-                <Icon name="deleteIcon" />
-                {t('Remove an account')}
-              </OutlineButton>
+              {onRemoveAccount && (
+                <OutlineButton
+                  className={styles.button}
+                  onClick={() => {
+                    setShowRemove(true);
+                  }}
+                >
+                  <Icon name="deleteIcon" />
+                  {t('Remove an account')}
+                </OutlineButton>
+              )}
             </>
           )}
         </div>

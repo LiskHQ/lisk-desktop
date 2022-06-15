@@ -7,7 +7,7 @@
 }
 
 .content {
-  padding: 32px !important;
+  padding: 0 !important;
 
   & h1 {
     margin: 8px 0 16px 0;
