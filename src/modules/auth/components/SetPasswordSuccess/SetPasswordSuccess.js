@@ -1,3 +1,5 @@
+/* istanbul ignore file */
+
 import React from 'react';
 import { useTranslation } from 'react-i18next';
 import { PrimaryButton, TertiaryButton } from 'src/theme/buttons';
