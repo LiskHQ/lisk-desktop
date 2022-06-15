@@ -21,9 +21,9 @@ describe('Auth reducer', () => {
     };
     expect(list({}, actionData)).toEqual(expectedState);
   });
-  it('Should remove account while the removeAccount action is triggered', async () => {
+  it('Should remove account while the deleteAccount action is triggered', async () => {
     const actionData = {
-      type: actionTypes.removeAccount,
+      type: actionTypes.deleteAccount,
       address: mockSavedAccounts[0].metadata.address,
     };
     const defaultState = {

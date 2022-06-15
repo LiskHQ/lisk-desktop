@@ -56,7 +56,7 @@ describe('useAccount hook', () => {
     const { deleteAccountByAddress } = result.current;
     const address = mockSavedAccounts[0].metadata.address;
     const expectedAction = {
-      type: actionTypes.removeAccount,
+      type: actionTypes.deleteAccount,
       address,
     };
     act(() => {

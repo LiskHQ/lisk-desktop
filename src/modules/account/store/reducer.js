@@ -32,7 +32,7 @@ export const list = (state = {}, { type, encryptedAccount, address }) => {
         ...state,
         [encryptedAccount?.metadata?.address]: encryptedAccount,
       };
-    case actionTypes.removeAccount:
+    case actionTypes.deleteAccount:
       delete state[address];
       return {
         ...state,
