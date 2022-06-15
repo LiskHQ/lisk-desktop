@@ -17,7 +17,7 @@ Feature: Transaction table filtering
     And I clear input amountToInputFilter
     And I fill 20 in amountToInputFilter field
     And I click on applyFilters
-    Then I should see 3 transactions in table
+    Then I should see 4 transactions in table
 
   # @advanced
   @basic
