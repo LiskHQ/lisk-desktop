@@ -1,17 +1,40 @@
 @import '../../../../../../setup/react/app/mixins.css';
 
 .wrapper {
-  & .contentContainer {
+  --reverse-margin: calc(-1 * var(--horizontal-padding-l));
+
+  padding: var(--horizontal-padding-l);
+
+  & .container {
+    border-top: solid 1px var(--color-very-light-gray);
     display: flex;
-    width: auto;
+    width: calc(100% + 2 * var(--horizontal-padding-l));
     padding: 0;
-    margin: 0px 20px 20px 20px;
+    margin: 4px var(--reverse-margin) var(--horizontal-padding-l) var(--reverse-margin);
     border-radius: 0;
     border-bottom: 1px solid var(--color-platinum);
   }
 
+  & .toggle {
+    padding-left: 0;
+    position: relative;
+    left: -8px;
+    top: -5px;
+  }
+
   & .footer {
     margin-top: 48px;
+  }
+
+  & .emptyState {
+    border-top: solid 1px var(--color-very-light-gray);
+    margin-top: 25px;
+    margin: 5px var(--reverse-margin) 0 var(--reverse-margin);
+    width: calc(100% + 2 * var(--horizontal-padding-l));
+  }
+
+  & .emptyState + div {
+    display: none;
   }
 }
 
@@ -94,10 +117,9 @@
 }
 
 .contentScrollable {
-  margin-top: 10px;
   overflow-y: auto;
   max-height: 290px;
-  padding-bottom: 10px;
+  padding: 0px 20px 0;
 
   & header {
     padding: 21px 0 20px 0;

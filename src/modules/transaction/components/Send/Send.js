@@ -35,7 +35,7 @@ const Send = ({
     <section>
       <label>{t('Message')}</label>
       <label className="message-value">
-        {transaction.asset?.data || '-'}
+        {transaction.asset.data || '-'}
       </label>
     </section>
   </>

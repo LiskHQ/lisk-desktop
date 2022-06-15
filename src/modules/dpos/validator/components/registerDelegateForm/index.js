@@ -31,14 +31,14 @@ const validateUsername = (query, t) => {
 // eslint-disable-next-line max-statements
 const RegisterDelegateForm = ({
   nextStep,
-  // prevState,
+  prevState,
 }) => {
   const timeout = useRef();
   const { t } = useTranslation();
   const network = useSelector(state => state.network);
   const [error, setError] = useState('');
   const [loading, setLoading] = useState(false);
-  const [username, setUsername] = useState('');
+  const [username, setUsername] = useState(prevState?.rawTx?.asset.username ?? '');
 
   const onConfirm = (rawTx) => {
     nextStep({ rawTx });

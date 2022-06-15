@@ -9,20 +9,18 @@ const RegisterDelegateSummary = ({
   nextStep,
   t,
 }) => {
-  const onSubmit = () => {
-    nextStep({
-      rawTx,
-      actionFunction: delegateRegistered,
-    });
-  };
-
   const onConfirmAction = {
     label: t('Register delegate'),
-    onClick: onSubmit,
+    onClick: () => {
+      nextStep({
+        rawTx,
+        actionFunction: delegateRegistered,
+      });
+    },
   };
   const onCancelAction = {
     label: t('Go back'),
-    onClick: () => { prevStep({ username: rawTx.asset.username }); },
+    onClick: () => { prevStep({ rawTx }); },
   };
 
   return (

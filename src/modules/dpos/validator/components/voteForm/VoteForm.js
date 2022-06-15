@@ -191,27 +191,23 @@ const VoteForm = ({
         transaction={transaction}
       >
         <>
-          <ToggleIcon isNotHeader />
-          <div className={styles.headerContainer}>
-            {!showEmptyState && (
-              <>
-                <span className={styles.title}>{t('Voting queue')}</span>
-                <div className={styles.votesAvailableCounter}>
-                  <span className="available-votes-num">{`${availableVotes}/`}</span>
-                  <span>
-                    {t('{{VOTE_LIMIT}} votes available for your account', {
-                      VOTE_LIMIT,
-                    })}
-                  </span>
-                </div>
-              </>
-            )}
-          </div>
+          <ToggleIcon isNotHeader className={styles.toggle} />
           {showEmptyState ? (
             <EmptyState t={t} />
           ) : (
             <>
-              <BoxContent className={styles.contentContainer}>
+              <BoxContent className={styles.container}>
+                <header className={styles.headerContainer}>
+                  <span className={styles.title}>{t('Voting queue')}</span>
+                  <div className={styles.votesAvailableCounter}>
+                    <span className="available-votes-num">{`${availableVotes}/`}</span>
+                    <span>
+                      {t('{{VOTE_LIMIT}} votes available for your account', {
+                        VOTE_LIMIT,
+                      })}
+                    </span>
+                  </div>
+                </header>
                 <div className={styles.contentScrollable}>
                   <Table
                     data={changedVotes}
