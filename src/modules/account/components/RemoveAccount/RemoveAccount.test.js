@@ -1,4 +1,7 @@
-import { mountWithRouter } from 'src/utils/testHelpers';
+import {
+  screen,
+} from '@testing-library/react';
+import { renderWithRouter } from 'src/utils/testHelpers';
 import mockSavedAccounts from '@tests/fixtures/accounts';
 import RemoveAccount from './RemoveAccount';
 
@@ -7,6 +10,8 @@ jest.mock('react-i18next');
 jest.mock('@account/hooks', () => ({
   useAccounts: jest.fn(() => ({
     accounts: mockSavedAccounts,
+    getAccountByAddress: jest.fn(),
+    deleteAccountByAddress: jest.fn(),
   })),
   useCurrentAccount: jest.fn(() => (
     [mockSavedAccounts[0], mockSetAccount]
@@ -14,7 +19,6 @@ jest.mock('@account/hooks', () => ({
 }));
 
 describe('Remove account', () => {
-  let wrapper;
   let props;
 
   beforeEach(() => {
@@ -24,12 +28,12 @@ describe('Remove account', () => {
         push: jest.fn(),
       },
     };
-    wrapper = mountWithRouter(RemoveAccount, props);
   });
 
   it('should render properly', async () => {
-    const html = wrapper.html();
-    expect(html).toContain('container');
-    expect(html).toContain('content');
+    renderWithRouter(RemoveAccount, props);
+    expect(screen.getByText('Remove Account?')).toBeTruthy();
+    expect(screen.getByTestId('accountRemovedIcon')).toBeTruthy();
+    expect(screen.getByText('Remove now')).toBeTruthy();
   });
 });

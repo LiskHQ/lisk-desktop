@@ -26,7 +26,7 @@ const ManageAccounts = ({
     history.push(routes.addAccountOptions.path);
   }, []);
   const removeAccount = useCallback((account) => {
-    history.push(routes.removeSelectedAccount.path, { address: account?.metadata?.address });
+    history.push(`${routes.removeSelectedAccount.path}?address=${account?.metadata?.address}`);
   }, []);
   const onSelectAccount = useCallback((account) => {
     setAccount(account);
