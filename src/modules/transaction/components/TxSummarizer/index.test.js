@@ -20,6 +20,18 @@ describe('TxSummarizer', () => {
         onClick: jest.fn(),
       },
       t: key => key,
+      rawTx: {
+        moduleAssetId: '2:0',
+        sender: { publicKey: wallets.genesis.summary.publicKey },
+        fee: 2000000,
+        nonce: 0,
+        signatures: [],
+        asset: {
+          recipient: { address: wallets.genesis.summary.address },
+          amount: 100000000,
+          data: 'test',
+        },
+      },
     };
   });
 

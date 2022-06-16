@@ -15,7 +15,7 @@ import MessageField from './MessageField';
 
 const getInitialData = (rawTx) => rawTx?.asset.data ?? '';
 const getInitialAmount = (rawTx) => fromRawLsk(rawTx?.asset.amount) ?? '';
-const getInitialRecipient = (rawTx) => rawTx?.asset.recipientAddress ?? '';
+const getInitialRecipient = (rawTx) => rawTx?.asset.recipient.address ?? '';
 
 const SendForm = (props) => {
   const {
@@ -52,7 +52,10 @@ const SendForm = (props) => {
     isValid,
     moduleAssetId: MODULE_ASSETS_NAME_ID_MAP.transfer,
     asset: {
-      recipientAddress: recipient.value,
+      recipient: {
+        address: recipient.value,
+        title: recipient.title,
+      },
       amount: toRawLsk(amount.value),
       data: reference.value,
     },

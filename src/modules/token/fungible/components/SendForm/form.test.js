@@ -7,7 +7,7 @@ import useTransactionFeeCalculation from '@transaction/hooks/useTransactionFeeCa
 import { fromRawLsk } from '@token/fungible/utils/lsk';
 import accounts from '@tests/constants/wallets';
 import flushPromises from '@tests/unit-test-utils/flushPromises';
-import Form from './form';
+import Form from './SendForm';
 
 jest.mock('@transaction/hooks/useTransactionFeeCalculation');
 jest.mock('@transaction/api');

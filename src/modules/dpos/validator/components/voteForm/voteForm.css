@@ -28,7 +28,6 @@
 
   & .emptyState {
     border-top: solid 1px var(--color-very-light-gray);
-    margin-top: 25px;
     margin: 5px var(--reverse-margin) 0 var(--reverse-margin);
     width: calc(100% + 2 * var(--horizontal-padding-l));
   }

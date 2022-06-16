@@ -15,7 +15,7 @@ describe('Multisignature Review component', () => {
       { address: 'lskehj2am9afxdz8arztqajy52acnoubkzvmo9cjy', isMandatory: false },
       { address: 'lskehj3am9afxdz8arztqajy52acnoubkzvmo9cjy', isMandatory: false },
     ],
-    fee: 0.02,
+    fee: 2000000,
     numberOfSignatures: 2,
   };
 
