@@ -431,7 +431,7 @@
   "There are no transactions for this chain.": "There are no transactions for this chain.",
   "This account does not have any transactions.": "This account does not have any transactions.",
   "This account requires {{numberOfSignatures}} signatures to create a valid transaction.": "This account requires {{numberOfSignatures}} signatures to create a valid transaction.",
-  "This account will no longer be stored on this device. You can backup your secret recovery phrase before remove it.": "This account will no longer be stored on this device. You can backup your secret recovery phrase before remove it.",
+  "This account will no longer be stored on this device. You can backup your secret recovery phrase before you remove it.": "This account will no longer be stored on this device. You can backup your secret recovery phrase before you remove it.",
   "This avatar will be linked to your new Lisk address.": "This avatar will be linked to your new Lisk address.",
   "This delegate has been permanently banned": "This delegate has been permanently banned",
   "This delegate will be punished in upcoming rounds": "This delegate will be punished in upcoming rounds",

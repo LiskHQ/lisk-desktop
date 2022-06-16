@@ -22,7 +22,7 @@ const RemoveConfirmation = ({ account, onRemoveAccount }) => {
       <p className={styles.accountAddress}>{account?.metadata?.address}</p>
       <p className={styles.subheader}>
         {t(
-          'This account will no longer be stored on this device. You can backup your secret recovery phrase before remove it.',
+          'This account will no longer be stored on this device. You can backup your secret recovery phrase before you remove it.',
         )}
       </p>
       <DownloadJSON

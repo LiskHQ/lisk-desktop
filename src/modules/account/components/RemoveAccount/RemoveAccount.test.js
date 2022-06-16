@@ -1,33 +1,35 @@
-import React from 'react';
 import { mountWithRouter } from 'src/utils/testHelpers';
 import mockSavedAccounts from '@tests/fixtures/accounts';
 import RemoveAccount from './RemoveAccount';
 
-jest.mock('@account/hooks/useAccounts', () => ({
-  useAccounts: jest.fn().mockReturnValue([mockSavedAccounts]),
+const mockSetAccount = jest.fn();
+jest.mock('react-i18next');
+jest.mock('@account/hooks', () => ({
+  useAccounts: jest.fn(() => ({
+    accounts: mockSavedAccounts,
+  })),
+  useCurrentAccount: jest.fn(() => (
+    [mockSavedAccounts[0], mockSetAccount]
+  )),
 }));
 
 describe('Remove account', () => {
-  const props = {
-    address: '',
-    history: {
-      location: {
-        path: '/account/remove-account/',
-        search: '?address=',
-      },
-      push: jest.fn(),
-    },
-  };
+  let wrapper;
+  let props;
 
-  it('should render properly', () => {
-    const wrapper = mountWithRouter(
-      RemoveAccount,
-      props,
-    );
-    expect(wrapper).toContainMatchingElement('Box');
-    expect(wrapper).toContainMatchingElement('BoxContent');
-    expect(wrapper).toContainMatchingElement('MultiStep');
-    expect(wrapper).toContainMatchingElement('RemoveConfirmation');
-    expect(wrapper).toContainMatchingElement('RemoveSuccess');
+  beforeEach(() => {
+    props = {
+      address: 'lskwhocotuu6bwnhwgjt859ugp467f8kuhdo5xfd6',
+      history: {
+        push: jest.fn(),
+      },
+    };
+    wrapper = mountWithRouter(RemoveAccount, props);
+  });
+
+  it('should render properly', async () => {
+    const html = wrapper.html();
+    expect(html).toContain('container');
+    expect(html).toContain('content');
   });
 });
