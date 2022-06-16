@@ -144,7 +144,6 @@
   "Duplicate public keys detected.": "Duplicate public keys detected.",
   "Edit": "Edit",
   "Edit bookmark": "Edit bookmark",
-  "Edit transaction": "Edit transaction",
   "Edit vote": "Edit vote",
   "Either change the optional member to mandatory or define more optional members.": "Either change the optional member to mandatory or define more optional members.",
   "Either change the optional member to mandatory or reduce the number of signatures.": "Either change the optional member to mandatory or reduce the number of signatures.",

@@ -47,7 +47,7 @@ const getDesktopTxAsset = (elementsAsset, moduleAssetId) => {
       return {
         data: elementsAsset.data,
         amount: convertBigIntToString(elementsAsset.amount),
-        recipient: { address: getBase32AddressFromAddress(Buffer.from(elementsAsset.recipientAddress, 'hex')) },
+        recipient: { address: getBase32AddressFromAddress(elementsAsset.recipientAddress) },
       };
     }
 
@@ -61,7 +61,7 @@ const getDesktopTxAsset = (elementsAsset, moduleAssetId) => {
       return {
         votes: elementsAsset.votes.map(vote => ({
           amount: convertBigIntToString(vote.amount),
-          delegateAddress: getBase32AddressFromAddress(Buffer.from(vote.delegateAddress, 'hex')),
+          delegateAddress: getBase32AddressFromAddress(vote.delegateAddress),
         })),
       };
     }
@@ -75,7 +75,7 @@ const getDesktopTxAsset = (elementsAsset, moduleAssetId) => {
     case unlockToken: {
       return {
         unlockObjects: elementsAsset.unlockObjects.map(unlockObject => ({
-          delegateAddress: getBase32AddressFromAddress(Buffer.from(unlockObject.delegateAddress, 'hex')),
+          delegateAddress: getBase32AddressFromAddress(unlockObject.delegateAddress),
           amount: convertBigIntToString(unlockObject.amount),
           unvoteHeight: unlockObject.unvoteHeight,
         })),
@@ -98,8 +98,8 @@ const getDesktopTxAsset = (elementsAsset, moduleAssetId) => {
 const getElementsTxAsset = (desktopAsset, moduleAssetId) => {
   switch (moduleAssetId) {
     case transfer: {
-      const binaryAddress = desktopAsset.recipientAddress
-        ? getAddressFromBase32Address(desktopAsset.recipientAddress) : EMPTY_BUFFER;
+      const binaryAddress = desktopAsset.recipient.address
+        ? getAddressFromBase32Address(desktopAsset.recipient.address) : EMPTY_BUFFER;
 
       return {
         recipientAddress: binaryAddress,
@@ -168,7 +168,7 @@ const elementTxToDesktopTx = ({
     id: id ? convertBinaryToString(id) : '',
     fee: convertBigIntToString(fee),
     nonce: convertBigIntToString(nonce),
-    signatures,
+    signatures: signatures.map(convertBinaryToString),
     sender: {
       address: senderAddress,
       publicKey: convertBinaryToString(senderPublicKey),
@@ -189,16 +189,16 @@ const elementTxToDesktopTx = ({
 const desktopTxToElementsTx = (tx, moduleAssetId) => {
   const [moduleID, assetID] = splitModuleAndAssetIds(moduleAssetId);
   const {
-    senderPublicKey, nonce, signatures = [], fee = 0, asset,
+    sender, nonce, signatures = [], fee = 0, asset,
   } = tx;
 
   const transaction = {
     moduleID,
     assetID,
-    senderPublicKey: convertStringToBinary(senderPublicKey),
+    senderPublicKey: convertStringToBinary(sender.publicKey),
     nonce: BigInt(nonce),
     fee: BigInt(fee),
-    signatures,
+    signatures: signatures.map(convertStringToBinary),
   };
 
   transaction.asset = getElementsTxAsset(asset, moduleAssetId);

@@ -1,9 +1,7 @@
 @import '../../../../../setup/react/app/mixins.css';
 
-/* send */
 .information {
   margin: 0;
-  margin-left: 15px;
 }
 
 .secondText {

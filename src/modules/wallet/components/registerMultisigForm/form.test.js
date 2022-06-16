@@ -104,7 +104,7 @@ describe('validateState', () => {
     const params = {
       mandatoryKeys: [pbk, pbk, pbk],
       optionalKeys: [],
-      requiredSignatures: 2,
+      numberOfSignatures: 2,
       t: str => str,
     };
     const error = 'Number of signatures must be equal to the number of members.';
@@ -116,7 +116,7 @@ describe('validateState', () => {
     const params = {
       mandatoryKeys: [pbk, pbk, pbk],
       optionalKeys: [],
-      requiredSignatures: 5,
+      numberOfSignatures: 5,
       t: str => str,
     };
     const error = 'Number of signatures must be equal to the number of members.';
@@ -128,7 +128,7 @@ describe('validateState', () => {
     const params = {
       mandatoryKeys: [pbk, pbk, pbk],
       optionalKeys: [pbk],
-      requiredSignatures: 4,
+      numberOfSignatures: 4,
       t: str => str,
     };
     const error = 'Either change the optional member to mandatory or define more optional members.';
@@ -140,7 +140,7 @@ describe('validateState', () => {
     const params = {
       mandatoryKeys: [pbk, pbk, pbk],
       optionalKeys: [pbk],
-      requiredSignatures: 3,
+      numberOfSignatures: 3,
       t: str => str,
     };
     const error = 'Either change the optional member to mandatory or define more optional members.';
@@ -152,7 +152,7 @@ describe('validateState', () => {
     const params = {
       mandatoryKeys: [],
       optionalKeys: [pbk, pbk, pbk],
-      requiredSignatures: 3,
+      numberOfSignatures: 3,
       t: str => str,
     };
     const error = 'All members can not be optional. Consider changing them to mandatory.';
@@ -164,7 +164,7 @@ describe('validateState', () => {
     const params = {
       mandatoryKeys: [pbk, pbk, pbk],
       optionalKeys: [pbk, pbk, pbk],
-      requiredSignatures: 6,
+      numberOfSignatures: 6,
       t: str => str,
     };
     const error = 'Either change the optional member to mandatory or reduce the number of signatures.';
@@ -176,7 +176,7 @@ describe('validateState', () => {
     const params = {
       mandatoryKeys: new Array(65).fill(pbk),
       optionalKeys: [],
-      requiredSignatures: 65,
+      numberOfSignatures: 65,
       t: str => str,
     };
     const error = 'Maximum number of members is {{MAX_MULTI_SIG_MEMBERS}}.';
@@ -187,7 +187,7 @@ describe('validateState', () => {
     const params = {
       mandatoryKeys: new Array(2).fill(pbk),
       optionalKeys: [],
-      requiredSignatures: 2,
+      numberOfSignatures: 2,
       t: str => str,
     };
     const error = 'Duplicate public keys detected.';

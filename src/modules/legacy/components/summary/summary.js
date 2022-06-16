@@ -7,6 +7,11 @@ import TransactionSummary from '@transaction/manager/transactionSummary';
 import { toRawLsk } from '@token/fungible/utils/lsk';
 import styles from './summary.css';
 
+const transaction = {
+  moduleAssetId: MODULE_ASSETS_NAME_ID_MAP.reclaimLSK,
+  asset: {},
+};
+
 const Summary = ({
   balanceReclaimed,
   nextStep,
@@ -15,19 +20,14 @@ const Summary = ({
   network,
   t,
 }) => {
-  const transaction = {
-    moduleAssetId: MODULE_ASSETS_NAME_ID_MAP.reclaimLSK,
-    nonce: wallet.sequence.nonce,
-    senderPublicKey: wallet.summary.publicKey,
-    asset: {
-      amount: wallet.legacy.balance,
-    },
-  };
+  transaction.nonce = wallet.sequence.nonce;
+  transaction.sender = { PublicKey: wallet.summary.publicKey };
+  transaction.asset.amount = wallet.legacy.balance;
 
   const [
     selectedPriority,, priorityOptions,
   ] = useTransactionPriority();
-  const status = useTransactionFeeCalculation({
+  const { minFee } = useTransactionFeeCalculation({
     network,
     selectedPriority,
     token: tokenMap.LSK.key,
@@ -38,7 +38,7 @@ const Summary = ({
 
   const rawTx = {
     ...transaction,
-    fee: toRawLsk(status.minFee.value),
+    fee: toRawLsk(minFee.value),
   };
 
   const onSubmit = () => {
@@ -67,6 +67,8 @@ const Summary = ({
     />
   );
 };
+
+Summary.whyDidYouRender = true;
 
 const areEqual = (prevProps, nextProps) => (
   prevProps.wallet.summary.balance === nextProps.wallet.summary.balance

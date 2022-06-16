@@ -7,35 +7,33 @@ const Summary = ({
   tokensTransferred,
   prevStep,
   nextStep,
-  fields,
   token,
   rawTx,
   t,
 }) => {
-  const signTransaction = () => {
-    nextStep({
-      rawTx,
-      actionFunction: tokensTransferred,
-    });
-  };
-
-  const goBack = () => {
-    resetTransactionResult();
-    prevStep({ fields });
-  };
-
   const amount = fromRawLsk(rawTx.asset.amount);
+  const onConfirmAction = {
+    label: t('Send {{amount}} {{token}}', { amount, token }),
+    onClick: () => {
+      nextStep({
+        rawTx,
+        actionFunction: tokensTransferred,
+      });
+    },
+  };
+  const onCancelAction = {
+    label: t('Go back'),
+    onClick: () => {
+      resetTransactionResult();
+      prevStep({ rawTx });
+    },
+  };
+
   return (
     <TransactionSummary
       title={t('Transaction summary')}
-      confirmButton={{
-        label: t('Send {{amount}} {{token}}', { amount, token }),
-        onClick: signTransaction,
-      }}
-      cancelButton={{
-        label: t('Edit transaction'),
-        onClick: goBack,
-      }}
+      confirmButton={onConfirmAction}
+      cancelButton={onCancelAction}
       rawTx={rawTx}
     />
   );

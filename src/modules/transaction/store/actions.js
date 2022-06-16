@@ -3,6 +3,7 @@ import { DEFAULT_LIMIT } from 'src/utils/monitor';
 import { signatureCollectionStatus } from '@transaction/configuration/txStatus';
 import { extractKeyPair } from '@wallet/utils/account';
 import { getTransactionSignatureStatus } from '@wallet/components/signMultisigView/helpers';
+import { selectActiveTokenAccount } from '@common/store';
 import { timerReset } from '@auth/store/action';
 import { loadingStarted, loadingFinished } from '@common/store/actions/loading';
 import actionTypes from './actionTypes';
@@ -92,27 +93,21 @@ export const resetTransactionResult = () => ({
  * @param {string} data.secondPass
  */
 export const transactionDoubleSigned = () => async (dispatch, getState) => {
-  const {
-    transactions, network, wallet, token,
-  } = getState();
+  const state = getState();
+  const { transactions, network } = state;
   const keyPair = extractKeyPair({
-    passphrase: wallet.secondPassphrase,
+    passphrase: state.wallet.secondPassphrase,
     enableCustomDerivationPath: false,
   });
-  const activeWallet = {
-    ...wallet.info[token.active],
-    passphrase: wallet.secondPassphrase,
-    summary: {
-      ...wallet.info[token.active].summary,
-      ...keyPair,
-    },
-  };
-  const transformedTx = elementTxToDesktopTx(transactions.signedTransaction);
+  const activeWallet = selectActiveTokenAccount(state);
+  activeWallet.summary.publicKey = keyPair.publicKey;
+  activeWallet.summary.privateKey = keyPair.privateKey;
+
   const [signedTx, err] = await signMultisigTransaction(
-    transformedTx,
+    elementTxToDesktopTx(transactions.signedTransaction),
     activeWallet,
     {
-      data: activeWallet,
+      data: activeWallet, // SenderAccount is the same of the double-signer
     },
     signatureCollectionStatus.partiallySigned,
     network,
@@ -186,14 +181,8 @@ export const transactionBroadcasted = transaction =>
 export const multisigTransactionSigned = ({
   rawTransaction, sender,
 }) => async (dispatch, getState) => {
-  const {
-    network, wallet,
-  } = getState();
-  const activeWallet = {
-    ...wallet.info.LSK,
-    passphrase: wallet.passphrase,
-    hwInfo: wallet.hwInfo,
-  };
+  const state = getState();
+  const activeWallet = selectActiveTokenAccount(state);
   const txStatus = getTransactionSignatureStatus(sender.data, rawTransaction);
 
   const [tx, error] = await signMultisigTransaction(
@@ -201,7 +190,7 @@ export const multisigTransactionSigned = ({
     activeWallet,
     sender,
     txStatus,
-    network,
+    state.network,
   );
 
   if (!error) {
@@ -225,8 +214,8 @@ export const multisigTransactionSigned = ({
  * @param {object} data
  * @param {object} data.rawTransaction Transaction config required by Lisk Element
  */
-export const signatureSkipped = ({ rawTransaction }) => {
-  const binaryTx = desktopTxToElementsTx(rawTransaction, rawTransaction.moduleAssetId);
+export const signatureSkipped = ({ rawTx }) => {
+  const binaryTx = desktopTxToElementsTx(rawTx, rawTx.moduleAssetId);
 
   return ({
     type: actionTypes.signatureSkipped,

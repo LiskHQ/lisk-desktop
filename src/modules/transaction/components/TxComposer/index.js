@@ -26,9 +26,8 @@ const TxComposer = ({
     priorityOptions, prioritiesLoadError, loadingPriorities,
   ] = useTransactionPriority();
   const rawTx = {
-    senderPublicKey: wallet.summary?.publicKey,
+    sender: { publicKey: wallet.summary?.publicKey },
     nonce: wallet.sequence?.nonce,
-    // passphrase: wallet.passphrase, // @todo remove
     moduleAssetId: transaction.moduleAssetId,
     asset: transaction.asset,
   };

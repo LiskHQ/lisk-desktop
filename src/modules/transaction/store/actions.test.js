@@ -5,6 +5,7 @@ import { sampleTransaction } from '@tests/constants/transactions';
 import accounts from '@tests/constants/wallets';
 import commonActionTypes from '@common/store/actions/actionTypes';
 import walletActionTypes from '@wallet/store/actionTypes';
+import { getAddressFromBase32Address } from '@wallet/utils/account';
 import actionTypes from './actionTypes';
 import {
   emptyTransactionsData,
@@ -182,7 +183,20 @@ describe('actions: transactions', () => {
       },
       token,
       transactions: {
-        signedTransaction: sampleTransaction,
+        signedTransaction: {
+          moduleID: 2,
+          assetID: 0,
+          senderPublicKey: Buffer.from(accounts.genesis.summary.publicKey, 'hex'),
+          nonce: BigInt(49),
+          fee: BigInt(209000),
+          signatures: ['', Buffer.from('d8a75de09db6ea245c9ddba429956e941adb657024fd01ae3223620a6da2f5dada722a2fc7f8a0c795a2bde8c4a18847b1ac633b21babbf4a628df22f84c5600', 'hex')],
+          asset: {
+            recipientAddress: getAddressFromBase32Address('lskdxc4ta5j43jp9ro3f8zqbxta9fn6jwzjucw7yt'),
+            amount: BigInt(100000),
+            data: '2f',
+          },
+          id: Buffer.from('7c98f8f3a042000abac0d1c38e6474f0571347d9d2a25929bcbac2a29747e31d', 'hex'),
+        },
       },
     });
 
@@ -350,14 +364,12 @@ describe('actions: transactions', () => {
 
   describe('signatureSkipped', () => {
     const props = {
-      rawTransaction: {
+      rawTx: {
         id: '9dc584c07c9d7ed77d54b6f8f43b8341c50e108cbcf582ceb3513388fe4ba84c',
         moduleAssetId: '2:0',
         fee: '10000000',
         nonce: 0,
-        sender: {
-          publicKey: '00f046aea2782180c51f7271249a0c107e6b6295c6b3c31e43c1a3ed644dcdeb',
-        },
+        senderPublicKey: '00f046aea2782180c51f7271249a0c107e6b6295c6b3c31e43c1a3ed644dcdeb',
         asset: {
           amount: '200',
           recipient: { address: 'lskz5r2nbgwrzjctbcffyrn8k74jdxdmd9cj9ng45' },

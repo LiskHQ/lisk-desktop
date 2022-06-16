@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import Piwik from 'src/utils/piwik';
 import { MODULE_ASSETS_NAME_ID_MAP } from '@transaction/configuration/moduleAssets';
 import AmountField from 'src/modules/common/components/amountField';
-import { toRawLsk } from '@token/fungible/utils/lsk';
+import { toRawLsk, fromRawLsk } from '@token/fungible/utils/lsk';
 import BoxContent from 'src/theme/box/content';
 import BoxHeader from 'src/theme/box/header';
 import TxComposer from '@transaction/components/TxComposer';
@@ -13,9 +13,9 @@ import useRecipientField from './useRecipientField';
 import styles from './form.css';
 import MessageField from './MessageField';
 
-const getInitialValue = (fieldName, props) => (
-  props.prevState && props.prevState.fields ? props.prevState.fields[fieldName].value : props.initialValue[fieldName] || ''
-);
+const getInitialData = (rawTx) => rawTx?.asset.data ?? '';
+const getInitialAmount = (rawTx) => fromRawLsk(rawTx?.asset.amount) ?? '';
+const getInitialRecipient = (rawTx) => rawTx?.asset.recipient.address ?? '';
 
 const SendForm = (props) => {
   const {
@@ -25,9 +25,13 @@ const SendForm = (props) => {
     bookmarks,
     nextStep,
   } = props;
-  const [reference, setReference] = useMessageField(getInitialValue('reference', props));
-  const [amount, setAmountField] = useAmountField(getInitialValue('amount', props), account.summary?.balance ?? 0, token);
-  const [recipient, setRecipientField] = useRecipientField(getInitialValue('recipient', props));
+  const [reference, setReference] = useMessageField(getInitialData(props.prevState?.rawTx));
+  const [amount, setAmountField] = useAmountField(
+    getInitialAmount(props.prevState?.rawTx), account.summary?.balance, token,
+  );
+  const [recipient, setRecipientField] = useRecipientField(
+    getInitialRecipient(props.prevState?.rawTx),
+  );
   const [maxAmount, setMaxAmount] = useState({ value: 0, error: false });
 
   const onComposed = (status) => {
@@ -48,51 +52,55 @@ const SendForm = (props) => {
     isValid,
     moduleAssetId: MODULE_ASSETS_NAME_ID_MAP.transfer,
     asset: {
-      recipientAddress: recipient.value,
+      recipient: {
+        address: recipient.value,
+        title: recipient.title,
+      },
       amount: toRawLsk(amount.value),
       data: reference.value,
     },
   };
 
   return (
-    <TxComposer
-      className={styles.wrapper}
-      onComposed={onComposed}
-      onConfirm={onConfirm}
-      transaction={transaction}
-    >
-      <>
-        <BoxHeader>
-          <h1>{t('Send {{token}}', { token })}</h1>
-        </BoxHeader>
-        <BoxContent className={styles.formSection}>
-          <span className={`${styles.fieldGroup} recipient`}>
-            <span className={`${styles.fieldLabel}`}>{t('Recipient')}</span>
-            <BookmarkAutoSuggest
-              bookmarks={bookmarks[token].filter((item) => !item.disabled)}
-              recipient={recipient}
-              t={t}
-              updateField={setRecipientField}
+    <section className={styles.wrapper}>
+      <TxComposer
+        onComposed={onComposed}
+        onConfirm={onConfirm}
+        transaction={transaction}
+      >
+        <>
+          <BoxHeader className={styles.header}>
+            <h2>{t('Send {{token}}', { token })}</h2>
+          </BoxHeader>
+          <BoxContent className={styles.formSection}>
+            <span className={`${styles.fieldGroup} recipient`}>
+              <span className={`${styles.fieldLabel}`}>{t('Recipient')}</span>
+              <BookmarkAutoSuggest
+                bookmarks={bookmarks[token].filter((item) => !item.disabled)}
+                recipient={recipient}
+                t={t}
+                updateField={setRecipientField}
+              />
+            </span>
+            <AmountField
+              amount={amount}
+              onChange={setAmountField}
+              maxAmount={maxAmount}
+              displayConverter
+              label={t('Amount')}
+              placeHolder={t('Insert transaction amount')}
+              useMaxLabel={t('Send maximum amount')}
+              name="amount"
             />
-          </span>
-          <AmountField
-            amount={amount}
-            onChange={setAmountField}
-            maxAmount={maxAmount}
-            displayConverter
-            label={t('Amount')}
-            placeHolder={t('Insert transaction amount')}
-            useMaxLabel={t('Send maximum amount')}
-            name="amount"
-          />
-          <MessageField
-            t={t}
-            reference={reference}
-            setReference={setReference}
-          />
-        </BoxContent>
-      </>
-    </TxComposer>
+            <MessageField
+              t={t}
+              reference={reference}
+              setReference={setReference}
+            />
+          </BoxContent>
+        </>
+      </TxComposer>
+    </section>
   );
 };
 

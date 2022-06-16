@@ -317,13 +317,10 @@ export const createGenericTx = async ({
   const {
     summary: { publicKey, isMultisignature, privateKey },
     keys,
-    sequence,
   } = wallet;
   const networkIdentifier = Buffer.from(network.networks.LSK.networkIdentifier, 'hex');
 
   const { moduleAssetId, ...rawTransaction } = transactionObject;
-  rawTransaction.nonce = sequence.nonce;
-  rawTransaction.senderPublicKey = publicKey;
   const transaction = desktopTxToElementsTx(rawTransaction, moduleAssetId);
 
   const schema = network.networks.LSK.moduleAssetSchemas[moduleAssetId];

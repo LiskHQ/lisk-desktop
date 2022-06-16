@@ -35,31 +35,32 @@ const UnlockBalanceForm = ({
   };
 
   return (
-    <TxComposer
-      onConfirm={onConfirm}
-      className={styles.wrapper}
-      transaction={transaction}
-      buttonTitle={getUnlockButtonTitle(unlockableBalance, activeToken, t)}
-    >
-      <>
-        <BoxHeader className={styles.header}>
-          <h1>{t('Locked balance details')}</h1>
-        </BoxHeader>
-        <BoxContent className={styles.content}>
-          <p>
-            {t(
-              'Below are the details of your locked balances and the unlock waiting periods. From here you can submit an unlock transaction when waiting periods are over.',
-            )}
-          </p>
-          <BalanceTable
-            lockedInVotes={lockedInVotes}
-            unlockableBalance={unlockableBalance}
-            currentBlockHeight={currentBlockHeight}
-            account={wallet}
-          />
-        </BoxContent>
-      </>
-    </TxComposer>
+    <section className={styles.wrapper}>
+      <TxComposer
+        onConfirm={onConfirm}
+        transaction={transaction}
+        buttonTitle={getUnlockButtonTitle(unlockableBalance, activeToken, t)}
+      >
+        <>
+          <BoxHeader className={styles.header}>
+            <h2>{t('Locked balance details')}</h2>
+          </BoxHeader>
+          <BoxContent className={styles.container}>
+            <p>
+              {t(
+                'Below are the details of your locked balances and the unlock waiting periods. From here you can submit an unlock transaction when waiting periods are over.',
+              )}
+            </p>
+            <BalanceTable
+              lockedInVotes={lockedInVotes}
+              unlockableBalance={unlockableBalance}
+              currentBlockHeight={currentBlockHeight}
+              account={wallet}
+            />
+          </BoxContent>
+        </>
+      </TxComposer>
+    </section>
   );
 };
 

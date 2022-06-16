@@ -1,0 +1,20 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`actions: transactions tokensTransferred should dispatch tokensTransferredSuccess action if there are no errors 1`] = `
+[MockFunction] {
+  "calls": Array [
+    Array [
+      Object {
+        "data": [TypeError: Cannot read properties of undefined (reading 'split')],
+        "type": "TRANSACTION_SIGN_ERROR",
+      },
+    ],
+  ],
+  "results": Array [
+    Object {
+      "type": "return",
+      "value": undefined,
+    },
+  ],
+}
+`;

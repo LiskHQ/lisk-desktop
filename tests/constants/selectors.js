@@ -262,7 +262,7 @@ const ss = {
   signBtn: '.sign',
   msignSendButton: '.send-button',
   txSignInput: '.tx-sign-input',
-  txRequiredSignatures: '.tx-required-signatures',
+  txNumberOfSignatures: '.tx-required-signatures',
   memberTitle: '.member-title',
   txRemainingMembers: '.tx-remaining-members',
   useSecondPassphraseBtn: '.use-second-passphrase-btn',

@@ -1,14 +1,11 @@
 @import '../../../../../setup/react/app/mixins.css';
 
 .fieldGroup {
+  width: 100%;
   align-items: flex-start;
   display: flex;
   flex-direction: column;
   margin-bottom: 16px;
-
-  &.wrapper {
-    flex-direction: row;
-  }
 }
 
 .fieldLabel {
@@ -39,7 +36,7 @@
 }
 
 .wrapper {
-  padding: 0 var(--horizontal-padding-l);
+  flex-direction: row;
 
   & > .col {
     display: flex;
