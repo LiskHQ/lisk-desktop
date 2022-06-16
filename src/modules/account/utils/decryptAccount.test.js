@@ -1,4 +1,5 @@
-/* istanbul ignore file */
+import { decryptAccount } from './decryptAccount';
+
 const mockAccount = {
   crypto: {
     kdf: 'argon2id',
@@ -18,24 +19,22 @@ const mockAccount = {
   },
   metadata: {
     name: 'test account',
-    description: 'ed25519 key pair',
     pubkey: 'c6bae83af23540096ac58d5121b00f33be6f02f05df785766725acdd5d48be9d',
     path: "m/44'/134'/0'",
     address: 'lsktzb4j7e3knk4mkxckdr3y69gtu2nwmsb3hjbkg',
-    creationTime: '',
+    creationTime: new Date().toISOString(),
     derivedFromUUID: 'fa3e4ceb-10dc-41ad-810e-17bf51ed93aa',
   },
-  uuid: 'ef52c117-d7cc-4246-bc9d-4dd506bef82e',
   version: 1,
 };
 
-// eslint-disable-next-line
-export function encryptionAccount(recoveryPhrase, password) {
-  // Todo
-  // 1- we need to generate public/Private token from recoveryPhrase
-  // 2- we need to generate address
-  // 3- we need to encrypt recovery phrase and privateToken { privateToken, recoveryPhrase }
-  // we need to generate the account Schema json
-
-  return mockAccount;
-}
+describe('decryptAccount', () => {
+  it('decrypts account when the correct arguments are passed', () => {
+    const privateKey = 'private-key-mock';
+    const recoveryPhrase = 'target cancel solution recipe vague faint bomb convince pink vendor fresh patrol';
+    const password = 'samplePassword@1';
+    const accountSchema = mockAccount.crypto;
+    const expectedResult = { privateKey, recoveryPhrase, error: false };
+    expect(decryptAccount(accountSchema, password)).toEqual(expectedResult);
+  });
+});

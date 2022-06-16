@@ -39,6 +39,11 @@
       height: var(--height-l);
       padding: var(--vertical-padding-l) var(--horizontal-padding-l);
     }
+
+    & .toggleBtn {
+      top: calc(var(--height-l) / 2) !important;
+      right: var(--horizontal-padding-m);
+    }
   }
 
   &.m {
@@ -56,6 +61,11 @@
 
     & .status {
       top: calc(var(--height-m) / 2);
+      right: var(--horizontal-padding-m);
+    }
+
+    & .toggleBtn {
+      top: calc(var(--height-m) / 2) !important;
       right: var(--horizontal-padding-m);
     }
   }
@@ -76,6 +86,11 @@
     & .status {
       top: calc(var(--height-s) / 2);
       right: var(--horizontal-padding-s);
+    }
+
+    & .toggleBtn {
+      top: calc(var(--height-s) / 2) !important;
+      right: var(--horizontal-padding-m);
     }
   }
 

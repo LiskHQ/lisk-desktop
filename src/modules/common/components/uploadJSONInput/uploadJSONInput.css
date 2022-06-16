@@ -47,6 +47,7 @@
     border: none;
     box-sizing: border-box;
     color: var(--color-maastricht-blue);
+    background-color: var(--color-white);
     padding: var(--vertical-padding-l);
     line-height: 1.4em; /* stylelint-disable-line unit-whitelist */
   }
@@ -54,7 +55,8 @@
   & > span {
     z-index: 100;
     position: absolute;
-    left: 25%;
+    text-align: center;
+    width: 100%;
     top: 80%;
   }
 

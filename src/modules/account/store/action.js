@@ -8,7 +8,17 @@ import actionTypes from './actionTypes';
  * @returns {Object} - Action object
  */
 // eslint-disable-next-line import/prefer-default-export
-export const setCurrentAccount = (accountSchema) => ({
+export const setCurrentAccount = (encryptedAccount) => ({
   type: actionTypes.setCurrentAccount,
-  accountSchema,
+  encryptedAccount,
+});
+
+export const addAccount = (encryptedAccount) => ({
+  type: actionTypes.addAccount,
+  encryptedAccount,
+});
+
+export const deleteAccount = (address) => ({
+  type: actionTypes.deleteAccount,
+  address,
 });

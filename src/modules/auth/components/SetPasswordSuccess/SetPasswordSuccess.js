@@ -1,3 +1,5 @@
+/* istanbul ignore file */
+
 import React from 'react';
 import { useTranslation } from 'react-i18next';
 import { PrimaryButton, TertiaryButton } from 'src/theme/buttons';
@@ -13,8 +15,6 @@ function SetPasswordSuccess({ onClose, encryptedPhrase, buttonText }) {
   const onDownload = () => {
     downloadJSON(encryptedPhrase, 'encrypted_secret_recovery_phrase');
   };
-
-  const onContinue = () => onClose();
 
   return (
     <Box className={styles.container}>
@@ -39,7 +39,7 @@ function SetPasswordSuccess({ onClose, encryptedPhrase, buttonText }) {
             </span>
           </TertiaryButton>
         </div>
-        <PrimaryButton className={styles.continueButton} onClick={onContinue}>
+        <PrimaryButton className={styles.continueButton} onClick={onClose}>
           { buttonText || t('Continue to Dashboard')}
         </PrimaryButton>
       </BoxContent>
@@ -48,6 +48,7 @@ function SetPasswordSuccess({ onClose, encryptedPhrase, buttonText }) {
 }
 
 SetPasswordSuccess.defaultProps = {
+  onClose: () => null,
   encryptedPhrase: {
     error: 'no encrypted backup found',
   },
