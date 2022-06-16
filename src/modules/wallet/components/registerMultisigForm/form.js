@@ -17,8 +17,16 @@ const placeholderMember = {
   isMandatory: true,
 };
 
-const getInitialMembersState = (prevState) =>
-  prevState.members ?? [placeholderMember];
+const getInitialMembersState = (prevState) => {
+  if (prevState.rawTx) {
+    return [
+      ...prevState.rawTx.asset.mandatoryKeys.map(item => ({ isMandatory: true, publicKey: item })),
+      ...prevState.rawTx.asset.optionalKeys.map(item => ({ isMandatory: false, publicKey: item })),
+    ];
+  }
+
+  return [];
+};
 const getInitialSignaturesState = (prevState) =>
   prevState.numberOfSignatures ?? 2;
 

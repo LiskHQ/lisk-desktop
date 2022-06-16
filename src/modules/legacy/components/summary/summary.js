@@ -21,7 +21,7 @@ const Summary = ({
   t,
 }) => {
   transaction.nonce = wallet.sequence.nonce;
-  transaction.senderPublicKey = wallet.summary.publicKey;
+  transaction.sender = { PublicKey: wallet.summary.publicKey };
   transaction.asset.amount = wallet.legacy.balance;
 
   const [
