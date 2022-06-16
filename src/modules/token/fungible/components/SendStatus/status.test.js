@@ -10,8 +10,10 @@ describe('unlock transaction Status', () => {
     t: (key) => key,
     account: accounts.genesis,
     recipientAccount: { data: accounts.delegate },
-    rawTransaction: {
-      recipientAddress: accounts.delegate.summary.address,
+    rawTx: {
+      asset: {
+        recipient: { address: accounts.delegate.summary.address },
+      },
     },
     transactions: {
       txBroadcastError: null,
@@ -26,7 +28,7 @@ describe('unlock transaction Status', () => {
 
   const signedTransaction = {
     id: '2:0',
-    senderPublicKey: accounts.genesis.summary.publicKey,
+    sender: { publicKey: accounts.genesis.summary.publicKey },
     signatures: [accounts.genesis.summary.publicKey],
     nonce: '19n',
     fee: '207000n',
@@ -88,8 +90,10 @@ describe('unlock transaction Status', () => {
     const propsWithError = {
       ...props,
       recipientAccount: { data: accounts.delegate_candidate },
-      rawTransaction: {
-        recipientAddress: accounts.delegate_candidate.summary.address,
+      rawTx: {
+        asset: {
+          recipient: { address: accounts.delegate_candidate.summary.address },
+        },
       },
       transactions: {
         txBroadcastError: { message: 'error:test' },

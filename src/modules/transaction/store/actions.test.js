@@ -200,7 +200,7 @@ describe('actions: transactions', () => {
       },
     });
 
-    it.only('should create an action to store double signed tx', async () => {
+    it('should create an action to store double signed tx', async () => {
       // Consume the utility
       await transactionDoubleSigned()(dispatch, getStateWithTx);
 
