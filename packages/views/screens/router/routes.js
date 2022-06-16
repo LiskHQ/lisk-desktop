@@ -11,7 +11,7 @@ export default {
     exact: true,
   },
   addAccountOptions: {
-    path: '/account',
+    path: '/account/add',
     isPrivate: false,
     forbiddenTokens: [],
     exact: true,
@@ -61,7 +61,7 @@ export default {
     forbiddenTokens: [],
   },
   manageAccounts: {
-    path: '/account/manage',
+    path: '/account',
     isPrivate: false,
     forbiddenTokens: [],
   },
@@ -114,9 +114,9 @@ export default {
     isPrivate: true,
     forbiddenTokens: [],
   },
-  removeSelectedAccountFlow: {
+  removeSelectedAccount: {
     path: '/account/remove-account',
-    isPrivate: true,
+    isPrivate: false,
     forbiddenTokens: [],
   },
 };

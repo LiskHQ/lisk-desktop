@@ -1,3 +1,5 @@
+/* istanbul ignore file */
+
 import React from 'react';
 import { useTranslation } from 'react-i18next';
 import { PrimaryButton } from 'src/theme/buttons';
@@ -30,6 +32,7 @@ function SetPasswordSuccess({ onClose, encryptedPhrase, buttonText }) {
 }
 
 SetPasswordSuccess.defaultProps = {
+  onClose: () => null,
   encryptedPhrase: {
     error: 'no encrypted backup found',
   },

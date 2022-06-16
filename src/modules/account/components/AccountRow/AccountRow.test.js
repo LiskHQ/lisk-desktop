@@ -23,6 +23,6 @@ describe('Select Account Row', () => {
 
   it('Should  list', async () => {
     container.rerender(<AccountRow {...props} showRemove />);
-    expect(container.queryByTestId('delete-icon')).toBeTruthy();
+    expect(container.queryByTestId(`${mockSavedAccounts[0].metadata.address}-delete`)).toBeTruthy();
   });
 });
