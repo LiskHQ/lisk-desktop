@@ -1,5 +1,5 @@
 import React from 'react';
-import MigrationDetails from '@legacy/components/migrationDetails';
+import MigrationDetails from '@legacy/components/MigrationDetails';
 import TokenAmount from '@token/fungible/components/tokenAmount';
 import { tokenMap } from '@token/fungible/consts/tokens';
 

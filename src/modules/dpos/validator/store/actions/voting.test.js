@@ -78,7 +78,7 @@ describe('actions: voting', () => {
   });
 
   describe('voteEdited', () => {
-    it('should create an action to add data to toggle the vote status for any given delegate', async () => {
+    it('should create an action to add data to toggle the vote Status for any given delegate', async () => {
       accountApi.getAccount.mockResolvedValue({ data: wallets.genesis });
       const data = [{
         address: 'dummy',
@@ -88,7 +88,7 @@ describe('actions: voting', () => {
       expect(accountApi.getAccount).toHaveBeenCalled();
     });
 
-    it('creates an action to add data to toggle the vote status for any given delegate, without calling getAccount', async () => {
+    it('creates an action to add data to toggle the vote Status for any given delegate, without calling getAccount', async () => {
       const data = [{
         address: 'dummy',
         amount: 1e10,

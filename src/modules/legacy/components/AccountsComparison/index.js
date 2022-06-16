@@ -7,7 +7,7 @@ import DialogLink from 'src/theme/dialog/link';
 import { fromRawLsk } from '@token/fungible/utils/lsk';
 import { selectActiveTokenAccount } from '@common/store/selectors';
 import { dustThreshold } from '@wallet/configuration/constants';
-import MigrationDetails from '../migrationDetails';
+import MigrationDetails from '../MigrationDetails';
 import styles from './reclaim.css';
 
 const AccountsComparison = ({ t }) => {

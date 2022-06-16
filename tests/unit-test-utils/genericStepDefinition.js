@@ -16,7 +16,7 @@ export default class GenericStepDefinition {
 
   /**
    * check that dom query entry is disable or enable
-   * if value of status is equal to 'not' query shouldn't be disabled
+   * if value of Status is equal to 'not' query shouldn't be disabled
    * @param {String} query - dom query that we need to check that is disable or not
    * @param {String} status - possible values are 'not' and ''
    */

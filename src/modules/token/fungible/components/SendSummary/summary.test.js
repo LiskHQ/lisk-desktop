@@ -3,7 +3,7 @@ import { mount } from 'enzyme';
 import { tokenMap } from '@token/fungible/consts/tokens';
 import i18n from 'src/utils/i18n/i18n';
 import accounts from '@tests/constants/wallets';
-import Summary from './summary';
+import Summary from './Summary';
 
 describe('Summary', () => {
   let wrapper;
@@ -39,12 +39,12 @@ describe('Summary', () => {
   });
 
   it('should render properly', () => {
-    expect(wrapper).toContainMatchingElement('.summary');
-    expect(wrapper).toContainMatchingElement('.summary-header');
-    expect(wrapper).toContainMatchingElement('.summary-content');
-    expect(wrapper).toContainMatchingElement('.summary-footer');
+    expect(wrapper).toContainMatchingElement('.Summary');
+    expect(wrapper).toContainMatchingElement('.Summary-header');
+    expect(wrapper).toContainMatchingElement('.Summary-content');
+    expect(wrapper).toContainMatchingElement('.Summary-footer');
     expect(wrapper.find('button.confirm-button')).toHaveText('Send 1.123 LSK');
-    expect(wrapper.find('.amount-summary')).toIncludeText('1.123 LSK');
+    expect(wrapper.find('.amount-Summary')).toIncludeText('1.123 LSK');
   });
 
   it('should goind to previous page', () => {

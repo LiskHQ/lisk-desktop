@@ -38,12 +38,12 @@ export const statusMessages = t => ({
 });
 
 /**
- * Defines the status of the broadcasted tx.
+ * Defines the Status of the broadcasted tx.
  *
  * @param {Object} account - active account info
- * @param {Object} transactions - Transactions status from the redux store
+ * @param {Object} transactions - Transactions Status from the redux store
  * @param {boolean?} isMultisignature - Is the sender account multisig
- * @returns {Object} The status code and message
+ * @returns {Object} The Status code and message
  */
 // eslint-disable-next-line max-statements
 export const getTransactionStatus = (account, transactions, isMultisignature) => {
