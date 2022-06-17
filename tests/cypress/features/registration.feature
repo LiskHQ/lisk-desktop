@@ -11,4 +11,4 @@ Feature: Registration
     And I click on itsSafeBtn
     And I confirm my passphrase
     And I click on passphraseConfirmButton
-    Then I see this title: Perfect! You're all set
+    Then I see this title: Great! You have an account now

@@ -17,7 +17,7 @@ const readStoredNetwork = ({ dispatch, getState }) => {
     ? network
     : {
       name: networkKeys.mainNet,
-      address: network.networks.mainnet.serviceUrl,
+      address: network?.networks?.mainnet?.serviceUrl,
     };
   dispatch(networkSelected(config));
   dispatch(networkStatusUpdated({ online: true }));
