@@ -73,7 +73,11 @@ export const voteEdited = data => async (dispatch, getState) => {
  * @param {object} data.votes
  * @param {promise} API call response
  */
-export const votesSubmitted = (transactionObject) =>
+export const votesSubmitted = (
+  transactionObject,
+  privateKey,
+  publicKey,
+) =>
   async (dispatch, getState) => {
     const state = getState();
     const activeWallet = selectActiveTokenAccount(state);
@@ -82,6 +86,8 @@ export const votesSubmitted = (transactionObject) =>
       network: state.network,
       wallet: activeWallet,
       transactionObject,
+      privateKey,
+      publicKey,
     }));
 
     if (error) {
@@ -129,7 +135,11 @@ export const votesRetrieved = () =>
  * @param {string} data.selectedFee
  * @returns {promise}
  */
-export const balanceUnlocked = transactionObject => async (dispatch, getState) => {
+export const balanceUnlocked = (
+  transactionObject,
+  privateKey,
+  publicKey,
+) => async (dispatch, getState) => {
   //
   // Collect data
   //
@@ -144,6 +154,8 @@ export const balanceUnlocked = transactionObject => async (dispatch, getState) =
       network: state.network,
       wallet: activeWallet,
       transactionObject,
+      privateKey,
+      publicKey,
     }),
   );
 

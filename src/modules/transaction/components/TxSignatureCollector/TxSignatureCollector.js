@@ -8,6 +8,7 @@ import BoxContent from 'src/theme/box/content';
 import { isEmpty } from 'src/utils/helpers';
 import EnterPasswordForm from 'src/modules/auth/components/EnterPasswordForm';
 import { getDeviceType } from '@wallet/utils/hwManager';
+import { useCurrentAccount } from 'src/modules/account/hooks';
 import styles from './txSignatureCollector.css';
 
 const TxSignatureCollector = ({
@@ -26,13 +27,11 @@ const TxSignatureCollector = ({
 }) => {
   const deviceType = getDeviceType(account.hwInfo?.deviceModel);
   const dispatch = useDispatch();
-  const onEnterPasswordSuccess = () => {
-    nextStep({ rawTx, statusInfo, sender });
-  };
+  const [currentAccount] = useCurrentAccount();
 
-  useEffect(() => {
+  const txVerification = (privateKey, publicKey) => {
     /**
-     * All multisignature transactions get signed using the a unique action
+     * All multisignature transactions get signed using a unique action
      * Therefore there's no need to pass the action function, instead the
      * sender account is required.
      */
@@ -47,6 +46,8 @@ const TxSignatureCollector = ({
         multisigTransactionSigned({
           rawTx,
           sender,
+          privateKey,
+          publicKey,
         });
       }
     } else {
@@ -57,7 +58,18 @@ const TxSignatureCollector = ({
        * HW pending screen. For ordinary login we don't display
        * the illustration.
        */
-      actionFunction(rawTx);
+      actionFunction(rawTx, privateKey, publicKey);
+    }
+  };
+
+  const onEnterPasswordSuccess = ({ privateKey }) => {
+    const { pubkey } = currentAccount.metadata;
+    txVerification(privateKey, pubkey);
+  };
+
+  useEffect(() => {
+    if (deviceType) {
+      txVerification();
     }
     return () => {
       // Ensure second passphrase is removed to prevent automatically signing future transactions
@@ -86,7 +98,14 @@ const TxSignatureCollector = ({
   }, [transactions.signedTransaction, transactions.txSignatureError]);
 
   if (!deviceType) {
-    return <EnterPasswordForm onEnterPasswordSuccess={onEnterPasswordSuccess} />;
+    return (
+      <div className={styles.container}>
+        <EnterPasswordForm
+          accountSchema={account}
+          onEnterPasswordSuccess={onEnterPasswordSuccess}
+        />
+      </div>
+    );
   }
 
   return (
