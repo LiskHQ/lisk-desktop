@@ -82,7 +82,7 @@ export default {
   accountAdd: AddAccountForm,
   addAccountBySecretRecovery: AddAccountBySecretRecovery,
   backupRecoveryPhraseFlow: BackupRecoveryPhraseFlow,
-  removeCurrentAccount: RemoveCurrentAccountFlow,
+  removeCurrentAccountFlow: RemoveCurrentAccountFlow,
   removeSelectedAccount: RemoveSelectedAccountFlow,
   addAccountByFile: AddAccountByFile,
 };
