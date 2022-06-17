@@ -248,7 +248,7 @@ const ss = {
   feeValue: '.fee-value',
   nodeConnectionLoadingSpinner: '.node-connection-loading-spinner',
   backToWalletButton: '.back-to-wallet-button',
-  accountsRow: '.accounts-row',
+  walletsRow: '.accounts-row',
   showMoreAccountsBtn: '.accounts-box .load-more',
   signMultiSignTransactionToggle: '.signMultiSignTransaction-toggle',
   walletInfoMsign: '.account-info-msign',
@@ -293,6 +293,7 @@ const ss = {
   verifyMessageInput: '.message',
   verifyPublicKeyInput: '.publicKey',
   verifySignatureInput: '.signature',
+  acceptTermsButton: '.accept-terms',
 };
 
 export default ss;

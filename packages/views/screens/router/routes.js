@@ -11,7 +11,7 @@ export default {
     exact: true,
   },
   addAccountOptions: {
-    path: '/account',
+    path: '/account/add',
     isPrivate: false,
     forbiddenTokens: [],
     exact: true,
@@ -61,7 +61,7 @@ export default {
     forbiddenTokens: [],
   },
   manageAccounts: {
-    path: '/account/manage',
+    path: '/account',
     isPrivate: false,
     forbiddenTokens: [],
   },
@@ -112,6 +112,11 @@ export default {
   backupRecoveryPhraseFlow: {
     path: '/account/backup-recovery-phrase',
     isPrivate: true,
+    forbiddenTokens: [],
+  },
+  removeSelectedAccount: {
+    path: '/account/remove-account',
+    isPrivate: false,
     forbiddenTokens: [],
   },
 };

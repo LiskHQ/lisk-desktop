@@ -12,7 +12,8 @@ Feature: Transactions
     When I click on showMoreButton
     Then I should see 40 transactions in table
 
-  @advanced
+  # @advanced
+  @basic
   Scenario: Filter by one amount then add second and third filters for another amount and sender respectively
     When I click on filterTransactionsBtn
     Then I should see filterDropdown
@@ -31,7 +32,8 @@ Feature: Transactions
     And I wait 2 seconds
     Then I should see 1 transactions in table
 
-  @advanced
+  # @advanced
+  @basic
   Scenario: Filter by transaction type
     When I click on filterTransactionsBtn
     Then I should see filterDropdown
@@ -41,7 +43,8 @@ Feature: Transactions
     And I wait 2 seconds
     Then I should see 20 transactions in table
 
-  @advanced
+  # @advanced
+  @basic
   Scenario: Filter by all filters combined, clear all filters
     When I click on filterTransactionsBtn
     Then I should see filterDropdown
