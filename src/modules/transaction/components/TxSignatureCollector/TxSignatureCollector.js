@@ -29,7 +29,7 @@ const TxSignatureCollector = ({
   const dispatch = useDispatch();
   const [currentAccount] = useCurrentAccount();
 
-  const txVerification = (privateKey, publicKey) => {
+  const txVerification = (privateKey = undefined, publicKey = undefined) => {
     /**
      * All multisignature transactions get signed using a unique action
      * Therefore there's no need to pass the action function, instead the
@@ -51,6 +51,7 @@ const TxSignatureCollector = ({
         });
       }
     } else {
+      // console.log('Alwwwaaaayyyyyyysssssss');
       /**
        * The action function must be wrapped in dispatch
        * and passed via the tx Summary screen.
