@@ -31,6 +31,8 @@ describe('TxSignatureCollector', () => {
     expect(props.multisigTransactionSigned).toHaveBeenCalledWith({
       rawTx: props.rawTx,
       sender: props.sender,
+      privateKey: accounts.genesis.summary.privateKey,
+      publicKey: accounts.genesis.summary.publicKey,
     });
   });
 
@@ -90,9 +92,11 @@ describe('TxSignatureCollector', () => {
     expect(props.transactionDoubleSigned).toHaveBeenCalled();
   });
 
-  it('should render empty div when is not hardware wallet', () => {
+  it('should render enter password form when it is not a hardware wallet', () => {
     const wrapper = mount(<TxSignatureCollector {...props} />);
-    expect(wrapper.html()).toEqual('<div></div>');
+    expect(wrapper.find('h1')).toHaveText('Enter your password');
+    expect(wrapper.find('input')).toExist();
+    expect(wrapper.find('.continue-btn')).toExist();
   });
 
   it('should render properly when account is hardware wallet', () => {
