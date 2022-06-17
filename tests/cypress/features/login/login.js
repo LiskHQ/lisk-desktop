@@ -2,7 +2,7 @@
 import { Given, Then } from 'cypress-cucumber-preprocessor/steps';
 import numeral from 'numeral';
 import { networks, ss } from '../../../constants';
-import { fromRawLsk } from '@token/fungible/utils/lsk';
+import { fromRawLsk } from '../../../../src/modules/token/fungible/utils/lsk';
 
 Given(/^showNetwork setting is true$/, function () {
   cy.mergeObjectWithLocalStorage('settings', { showNetwork: true });
@@ -20,12 +20,12 @@ Given(/^I should be connected to ([^\s]+)$/, function (networkName) {
       cy.get(ss.networkName).should('have.text', 'testnet');
       break;
     case 'customNode':
-      cy.get(ss.networkName).should('contain', 'Custom node');
+      cy.get(ss.networkName).should('have.text', 'custom node');
       break;
     default:
       throw new Error(`Network should be one of : mainnet , testnet, customNode. Was: ${networkName}`);
   }
-  cy.get(ss.networkName).contains(networkName);
+  // cy.get(ss.networkName).contains(networkName);
 });
 
 Given(/^I choose ([^\s]+)$/, function (networkName) {
