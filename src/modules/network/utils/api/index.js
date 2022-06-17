@@ -9,7 +9,7 @@ const httpPaths = {
 };
 
 /**
- * Retrieves status information of the network
+ * Retrieves Status information of the network
  *
  * @param {Object} data
  * @param {Object} data.network The network config from the Redux store
@@ -54,7 +54,7 @@ export const getNetworkConfig = ({ name, address }) => {
 };
 
 /**
- * Retrieves status useful statistics about the network
+ * Retrieves Status useful statistics about the network
  *
  * @param {Object} data
  * @param {Object} data.network The network config from the Redux store

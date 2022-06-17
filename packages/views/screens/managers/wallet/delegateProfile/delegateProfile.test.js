@@ -47,6 +47,6 @@ describe('Delegate Profile', () => {
       },
     };
     wrapper = mount(<DelegateProfile {...newProps} />);
-    expect(wrapper.find('.status').at(0)).toIncludeText('Standby');
+    expect(wrapper.find('.Status').at(0)).toIncludeText('Standby');
   });
 });

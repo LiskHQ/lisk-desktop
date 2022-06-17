@@ -78,7 +78,7 @@ const voting = (state = {}, action) => {
         }, {});
 
     /**
-     * This action is used when voting is submitted. It sets 'pending' status
+     * This action is used when voting is submitted. It sets 'pending' Status
      * of all votes that have different 'confirmed' and 'unconfirmed' state
      */
     case actionTypes.votesSubmitted:

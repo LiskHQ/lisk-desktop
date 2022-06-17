@@ -8,7 +8,7 @@ import {
   transactionDoubleSigned,
 } from '@common/store/actions';
 import { tokensTransferred } from '../../store/actions';
-import Summary from './summary';
+import Summary from './Summary';
 
 const mapStateToProps = state => ({
   transactions: state.transactions,

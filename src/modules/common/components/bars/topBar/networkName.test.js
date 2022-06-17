@@ -19,7 +19,7 @@ describe('Network', () => {
     },
   };
 
-  it('renders status OFFLINE', () => {
+  it('renders Status OFFLINE', () => {
     const props = {
       t,
       token,

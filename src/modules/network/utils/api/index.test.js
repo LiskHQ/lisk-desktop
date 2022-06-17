@@ -91,7 +91,7 @@ describe('API: LSK Network', () => {
       resetApiMock();
     });
 
-    it('should return network status info', async () => {
+    it('should return network Status info', async () => {
       const expectedResponse = {
         data: {
           height: '449520',
@@ -123,7 +123,7 @@ describe('API: LSK Network', () => {
       setApiResponseData(expectedResponse, http);
       await expect(getNetworkStatus({ network })).resolves.toEqual(expectedResponse);
       expect(http).toHaveBeenCalledWith(expect.objectContaining({
-        path: '/api/v2/network/status',
+        path: '/api/v2/network/Status',
       }));
     });
 
