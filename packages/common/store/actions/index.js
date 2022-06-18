@@ -9,4 +9,4 @@ export * from '@dpos/validator/store/actions/watchList';
 export * from '@update/store/actions/appUpdates';
 export * from './loading';
 export * from './service';
-export { default as processLaunchProtocol } from './urlProcessor';
+export { default as processLaunchProtocol } from 'src/utils/urlProcessor';
