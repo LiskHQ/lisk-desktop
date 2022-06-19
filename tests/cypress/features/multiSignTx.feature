@@ -1,7 +1,7 @@
 Feature: Multisignature transaction
 
   @basic
-  Scenario: Add funds to account2P
+  Scenario: Add funds to wallet2P
     Given I login as genesis on customNode
     Given  I wait 1 seconds
     Given I am on Wallet page
@@ -14,13 +14,13 @@ Feature: Multisignature transaction
 
   @basic
   Scenario: Register multisignature group (Mandatory, Mandatory)
-    Given I login as account2P on customNode
+    Given I login as wallet2P on customNode
     And I wait 10 seconds
     Given I am on wallet page
     When I click on walletInfoMsign
     When I clear input multisignatureEditorInput
     And I fill 2 in multisignatureEditorInput field
-    Then I enter the publicKey of account2P at input 1
+    Then I enter the publicKey of wallet2P at input 1
     Then I enter the publicKey of delegate at input 2
     When I click on sendButton
     When I click on confirmBtn
@@ -50,12 +50,13 @@ Feature: Multisignature transaction
     When I click on searchIcon
     And I search for account lskwunwxqmss9w3mtuvzgbsfy665cz4eo3rd2mxdp
     Then I click on searchAccountRow
-    Then I should be on Account page of lskwun...2mxdp
-    Then The latest transaction is register multisignature group
+    And I should be on Account page of lskwun...2mxdp
+    And I wait 2 seconds
+    And The latest transaction is register multisignature group
 
   @basic
   Scenario: Send transaction using second passphrase (Mandatory, Mandatory)
-    Given I login as account2P on customNode
+    Given I login as wallet2P on customNode
     And I wait 1 seconds
     Given I am on wallet page
     Then I click on sendLink
@@ -73,9 +74,10 @@ Feature: Multisignature transaction
     Then submittedTransactionMessage should be visible
     And I click on closeDialog
     Then I wait 5 seconds
-    Then The latest transaction is transfer to lsks6w...ehxwz
+    Then The latest transaction is transfer lsks6w...ehxwz
 
-  @advanced
+  # @advanced
+    @basic
   Scenario: Register multisignature group (Mandatory, Optional, Optional, 2 signatures)
     Given I login as multiSig_candidate on customNode
     And I wait 1 seconds
@@ -96,7 +98,8 @@ Feature: Multisignature transaction
     And I click on copyButton
     Then I should have the transaction RegisterMultiSignGroupTx_second_sign in the clipboard
 
-  @advanced
+  # @advanced
+    @basic
   Scenario: Sign transaction (Mandatory, Optional, Optional, 2 signatures)
     Given I login as genesis on customNode
     And I wait 1 seconds
@@ -111,7 +114,8 @@ Feature: Multisignature transaction
     And I click on copyButton
     Then I should have the transaction RegisterMultiSignGroupTx_third_sign in the clipboard
 
-  @advanced
+  # @advanced
+    @basic
   Scenario: Send transaction (Mandatory, Optional, Optional, 2 signatures)
     Given I login as delegate on customNode
     And I wait 1 seconds

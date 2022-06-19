@@ -23,7 +23,9 @@ Feature: delegate
     And next forger list should have a maximum of 6 delegates
     And next forgers should match first members of the inside round list
 
+
   @advanced
+  @basic
   Scenario: Inside round delegates should function properly
     When I click on insideRoundBtn
     Then I should see 103 delegates in table
@@ -38,6 +40,7 @@ Feature: delegate
     Then delegate should be watched
 
   @advanced
+  @basic
   Scenario: Outside round delegates should function properly
     Given Network is set to customNode
     And I am on delegates page
@@ -58,6 +61,7 @@ Feature: delegate
     Then delegate should be watched
 
   @advanced
+  @basic
   Scenario: watch list should function properly
     When I clear input filterDelegateInput
     And I click on insideRoundBtn
@@ -74,6 +78,7 @@ Feature: delegate
     Then I should see 0 delegates in table
 
   @advanced
+  @basic
   Scenario: Sanctioned delegates should function properly
     Given Network is set to testnet
     And I am on delegates page
@@ -91,6 +96,7 @@ Feature: delegate
     Then delegate should be watched
 
   @advanced
+  @basic
   Scenario: latest votes list should function properly
     Given Network is set to customNode
     And I am on delegates page
@@ -99,6 +105,6 @@ Feature: delegate
     Then I should see 10 votes in table
     When I click on showMoreDelegatesBtn
     Then I should see 20 votes in table
-    When I click on voteRow
+    When I click on transactionRow
     Then I should be on a vote transaction details modal
 

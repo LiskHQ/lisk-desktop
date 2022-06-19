@@ -27,6 +27,16 @@ Then(/^I mock api \/transactions$/, function () {
   })
 });
 
+Given(/^I mock api \/transactions$/, function () {
+  cy.intercept({
+    method: 'POST',
+    url: 'http://localhost:9901/api/v2/transactions',
+  }, {
+    statusCode: 409,
+    body: { message: errorMessage },
+  })
+});
+
 Then(/^I see error message$/, function () {
   cy.get(ss.submittedTransactionMessage).contains(errorMessage);
 });
