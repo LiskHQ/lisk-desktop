@@ -8,7 +8,7 @@ import BoxContent from 'src/theme/box/content';
 import { isEmpty } from 'src/utils/helpers';
 import EnterPasswordForm from 'src/modules/auth/components/EnterPasswordForm';
 import { getDeviceType } from '@wallet/utils/hwManager';
-import { useCurrentAccount } from 'src/modules/account/hooks';
+import { useCurrentAccount } from '@account/hooks';
 import styles from './txSignatureCollector.css';
 
 const TxSignatureCollector = ({
@@ -40,7 +40,7 @@ const TxSignatureCollector = ({
         signatureStatus === signatureCollectionStatus.fullySigned
         || signatureStatus === signatureCollectionStatus.overSigned
       ) {
-        // Skip the current member as the all required signature are collected
+        // Skip the current member as all the required signature are collected
         signatureSkipped({ rawTx });
       } else {
         multisigTransactionSigned({
@@ -51,7 +51,6 @@ const TxSignatureCollector = ({
         });
       }
     } else {
-      // console.log('Alwwwaaaayyyyyyysssssss');
       /**
        * The action function must be wrapped in dispatch
        * and passed via the tx Summary screen.
@@ -63,9 +62,9 @@ const TxSignatureCollector = ({
     }
   };
 
-  const onEnterPasswordSuccess = ({ privateKey }) => {
+  const onEnterPasswordSuccess = ({ account: userAccount }) => {
     const { pubkey } = currentAccount.metadata;
-    txVerification(privateKey, pubkey);
+    txVerification(userAccount.privateKey, pubkey);
   };
 
   useEffect(() => {
