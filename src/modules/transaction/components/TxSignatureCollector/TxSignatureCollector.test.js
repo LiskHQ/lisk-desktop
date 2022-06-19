@@ -2,10 +2,15 @@ import React from 'react';
 import { mount } from 'enzyme';
 import { secondPassphraseRemoved } from '@auth/store/action';
 import accounts from '@tests/constants/wallets';
+import { mockAccount as mockCurrentAccount } from '@account/utils';
 import TxSignatureCollector from './TxSignatureCollector';
 
+const mockSetCurrentAccount = jest.fn();
 jest.mock('@auth/store/action', () => ({
   secondPassphraseRemoved: jest.fn(),
+}));
+jest.mock('@account/hooks', () => ({
+  useCurrentAccount: jest.fn(() => ([mockCurrentAccount, mockSetCurrentAccount])),
 }));
 
 describe('TxSignatureCollector', () => {
@@ -19,7 +24,7 @@ describe('TxSignatureCollector', () => {
     account: accounts.genesis,
     actionFunction: jest.fn(),
     multisigTransactionSigned: jest.fn(),
-    rawTransaction: {},
+    rawTx: {},
     nextStep: jest.fn(),
     statusInfo: {},
     sender: { data: accounts.genesis },
@@ -27,9 +32,11 @@ describe('TxSignatureCollector', () => {
   };
 
   it('should call multisigTransactionSigned', () => {
-    mount(<TxSignatureCollector {...props} />);
+    const wrapper = mount(<TxSignatureCollector {...props} />);
+    wrapper.find('input').simulate('change', { target: { value: 'pass' } });
+    wrapper.find('form').simulate('submit');
     expect(props.multisigTransactionSigned).toHaveBeenCalledWith({
-      rawTransaction: props.rawTransaction,
+      rawTx: props.rawTx,
       sender: props.sender,
       privateKey: accounts.genesis.summary.privateKey,
       publicKey: accounts.genesis.summary.publicKey,
@@ -37,8 +44,12 @@ describe('TxSignatureCollector', () => {
   });
 
   it('should call actionFunction', () => {
-    mount(<TxSignatureCollector {...props} sender={undefined} />);
-    expect(props.actionFunction).toHaveBeenCalledWith({});
+    const wrapper = mount(<TxSignatureCollector {...props} sender={undefined} />);
+    wrapper.find('input').simulate('change', { target: { value: 'pass' } });
+    wrapper.find('form').simulate('submit');
+    const privateKey = accounts.genesis.summary.privateKey;
+    const publicKey = accounts.genesis.summary.publicKey;
+    expect(props.actionFunction).toHaveBeenCalledWith({}, privateKey, publicKey);
   });
 
   it('should call nextStep with props', () => {
@@ -52,7 +63,7 @@ describe('TxSignatureCollector', () => {
     });
     wrapper.update();
     expect(props.nextStep).toHaveBeenCalledWith({
-      rawTransaction: props.rawTransaction,
+      rawTx: props.rawTx,
       statusInfo: props.statusInfo,
       sender: props.sender,
     });
@@ -65,7 +76,7 @@ describe('TxSignatureCollector', () => {
     });
     wrapper.update();
     expect(props.nextStep).toHaveBeenCalledWith({
-      rawTransaction: props.rawTransaction,
+      rawTx: props.rawTx,
       statusInfo: props.statusInfo,
       sender: props.sender,
     });
