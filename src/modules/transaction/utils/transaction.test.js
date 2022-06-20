@@ -1,6 +1,9 @@
 import { MODULE_ASSETS_NAME_ID_MAP } from '@transaction/configuration/moduleAssets';
 import { splitModuleAndAssetIds } from '@transaction/utils/moduleAssets';
-import { getAddressFromBase32Address } from '@wallet/utils/account';
+import {
+  getAddressFromBase32Address,
+  getBase32AddressFromAddress,
+} from '@wallet/utils/account';
 import accounts from '@tests/constants/wallets';
 import {
   getTxAmount,
@@ -9,6 +12,7 @@ import {
   desktopTxToElementsTx,
   transactionToJSON,
   removeExcessSignatures,
+  convertStringToBinary,
 } from './transaction';
 
 const {
@@ -16,6 +20,21 @@ const {
 } = MODULE_ASSETS_NAME_ID_MAP;
 
 describe('API: LSK Transactions', () => {
+  const baseDesktopTx = {
+    sender: {
+      publicKey: accounts.genesis.summary.publicKey,
+      address: accounts.genesis.summary.address,
+    },
+    nonce: accounts.genesis.sequence.nonce,
+    fee: '1000000',
+    signatures: [],
+  };
+  const baseElementsTx = {
+    senderPublicKey: convertStringToBinary(accounts.genesis.summary.publicKey),
+    nonce: BigInt(accounts.genesis.sequence.nonce),
+    fee: BigInt(1000000),
+    signatures: [],
+  };
   describe('getTxAmount', () => {
     it('should return amount of transfer in Beddows', () => {
       const tx = {
@@ -68,60 +87,98 @@ describe('API: LSK Transactions', () => {
   describe('desktopTxToElementsTx', () => {
     it('creates a transaction object for transfer transaction', () => {
       const tx = {
-        senderPublicKey: '',
-        nonce: 1,
-        recipient: '',
-        amount: '1',
-        fee: '1000000',
-        data: 'test',
+        ...baseDesktopTx,
+        moduleAssetId: transfer,
+        asset: {
+          recipient: { address: accounts.delegate.summary.address },
+          amount: 100000000,
+          data: 'test',
+        },
       };
       const txObj = desktopTxToElementsTx(tx, transfer);
-
-      expect(txObj).toMatchSnapshot();
+      const [moduleID, assetID] = splitModuleAndAssetIds(transfer);
+      expect(txObj).toEqual({
+        ...baseElementsTx,
+        moduleID,
+        assetID,
+        asset: {
+          recipientAddress: expect.arrayContaining([]),
+          amount: BigInt(100000000),
+          data: 'test',
+        },
+      });
     });
 
     it('creates a transaction object for vote transaction', () => {
       const tx = {
-        senderPublicKey: '',
-        nonce: 1,
-        recipient: '',
-        amount: '1',
-        fee: '1000000',
-        votes: [
-          { amount: '100', delegateAddress: accounts.genesis.summary.address },
-          {
-            amount: '-100',
-            delegateAddress: accounts.delegate.summary.address,
-          },
-        ],
+        ...baseDesktopTx,
+        moduleAssetId: voteDelegate,
+        asset: {
+          votes: [
+            {
+              amount: '100',
+              delegateAddress: accounts.genesis.summary.address,
+            },
+            {
+              amount: '-100',
+              delegateAddress: accounts.delegate.summary.address,
+            },
+          ],
+        },
       };
       const txObj = desktopTxToElementsTx(tx, voteDelegate);
-
-      expect(txObj).toMatchSnapshot();
+      const [moduleID, assetID] = splitModuleAndAssetIds(voteDelegate);
+      expect(txObj).toEqual({
+        ...baseElementsTx,
+        moduleID,
+        assetID,
+        asset: {
+          votes: tx.asset.votes.map(item => ({
+            amount: BigInt(item.amount),
+            delegateAddress: expect.arrayContaining([]),
+          })),
+        },
+      });
     });
 
     it('creates a transaction object for delegate registration transaction', () => {
       const tx = {
-        senderPublicKey: '',
-        nonce: 1,
-        fee: '1000000',
-        username: 'username',
+        ...baseDesktopTx,
+        moduleAssetId: registerDelegate,
+        asset: {
+          username: 'username',
+        },
       };
       const txObj = desktopTxToElementsTx(tx, registerDelegate);
-
-      expect(txObj).toMatchSnapshot();
+      const [moduleID, assetID] = splitModuleAndAssetIds(registerDelegate);
+      expect(txObj).toEqual({
+        ...baseElementsTx,
+        moduleID,
+        assetID,
+        asset: {
+          username: 'username',
+        },
+      });
     });
 
     it('creates a transaction object for reclaimLSK transaction', () => {
       const tx = {
-        senderPublicKey: '',
-        nonce: 1,
-        fee: '1000000',
-        amount: '10000000',
+        ...baseDesktopTx,
+        moduleAssetId: reclaimLSK,
+        asset: {
+          amount: '10000000',
+        },
       };
       const txObj = desktopTxToElementsTx(tx, reclaimLSK);
-
-      expect(txObj).toMatchSnapshot();
+      const [moduleID, assetID] = splitModuleAndAssetIds(reclaimLSK);
+      expect(txObj).toEqual({
+        ...baseElementsTx,
+        moduleID,
+        assetID,
+        asset: {
+          amount: BigInt('10000000'),
+        },
+      });
     });
 
     it('creates a transaction object for unlockToken transaction', () => {
@@ -130,102 +187,145 @@ describe('API: LSK Transactions', () => {
         { delegateAddress: accounts.delegate.summary.address, amount: '1000' },
       ];
       const tx = {
-        senderPublicKey: '',
-        nonce: 1,
-        fee: '1000000',
-        unlockObjects,
+        ...baseDesktopTx,
+        moduleAssetId: unlockToken,
+        asset: {
+          unlockObjects,
+        },
       };
       const txObj = desktopTxToElementsTx(tx, unlockToken);
-
-      expect(txObj).toMatchSnapshot();
+      const [moduleID, assetID] = splitModuleAndAssetIds(unlockToken);
+      expect(txObj).toEqual({
+        ...baseElementsTx,
+        moduleID,
+        assetID,
+        asset: {
+          unlockObjects: tx.asset.unlockObjects.map(item => ({
+            amount: BigInt(item.amount),
+            delegateAddress: expect.arrayContaining([]),
+          })),
+        },
+      });
     });
 
     it('creates a transaction object for registerMultisignatureGroup transaction', () => {
       const tx = {
-        senderPublicKey: '',
-        nonce: 1,
-        fee: '1000000',
-        amount: '10000000',
-        numberOfSignatures: 2,
-        mandatoryKeys: [accounts.genesis.summary.publicKey, accounts.delegate.summary.publicKey],
-        optionalKeys: [accounts.delegate_candidate.summary.publicKey],
+        ...baseDesktopTx,
+        moduleAssetId: registerMultisignatureGroup,
+        asset: {
+          numberOfSignatures: 2,
+          mandatoryKeys: [accounts.genesis.summary.publicKey, accounts.delegate.summary.publicKey],
+          optionalKeys: [accounts.delegate_candidate.summary.publicKey],
+        },
       };
       const txObj = desktopTxToElementsTx(tx, registerMultisignatureGroup);
-
-      expect(txObj).toMatchSnapshot();
+      const [moduleID, assetID] = splitModuleAndAssetIds(registerMultisignatureGroup);
+      expect(txObj).toEqual({
+        ...baseElementsTx,
+        moduleID,
+        assetID,
+        asset: {
+          numberOfSignatures: 2,
+          mandatoryKeys: tx.asset.mandatoryKeys.map(() => expect.arrayContaining([])),
+          optionalKeys: tx.asset.optionalKeys.map(() => expect.arrayContaining([])),
+        },
+      });
     });
   });
 
   describe('elementTxToDesktopTx', () => {
-    const binaryAddress = 'd04699e57c4a3846c988f3c15306796f8eae5c1c';
-
     it('should a transfer transaction with type signature of lisk service', () => {
       const [moduleID, assetID] = splitModuleAndAssetIds(transfer);
       const tx = {
+        ...baseElementsTx,
         moduleID,
         assetID,
-        fee: 0.1,
-        nonce: 1,
-        id: Buffer.from('123', 'hex'),
-        senderPublicKey: accounts.genesis.summary.publicKey,
-        asset: { amount: 100000000, recipientAddress: binaryAddress, data: '' },
+        asset: {
+          amount: BigInt(100000000),
+          recipientAddress: getAddressFromBase32Address(accounts.delegate.summary.address),
+          data: '',
+        },
       };
 
-      expect(elementTxToDesktopTx(tx)).toMatchSnapshot();
+      expect(elementTxToDesktopTx(tx)).toEqual({
+        ...baseDesktopTx,
+        moduleAssetId: transfer,
+        id: '',
+        asset: {
+          amount: '100000000',
+          recipient: { address: accounts.delegate.summary.address },
+          data: '',
+        },
+      });
     });
 
     it('should a register delegate transaction with type signature of lisk service', () => {
       const [moduleID, assetID] = splitModuleAndAssetIds(registerDelegate);
       const tx = {
+        ...baseElementsTx,
         moduleID,
         assetID,
-        fee: 0.1,
-        nonce: 1,
-        id: Buffer.from('123', 'hex'),
-        senderPublicKey: accounts.genesis.summary.publicKey,
         asset: { username: 'super_delegate' },
       };
 
-      expect(elementTxToDesktopTx(tx)).toMatchSnapshot();
+      expect(elementTxToDesktopTx(tx)).toEqual({
+        ...baseDesktopTx,
+        moduleAssetId: registerDelegate,
+        id: '',
+        asset: { username: 'super_delegate' },
+      });
     });
 
     it('should a vote delegate transaction with type signature of lisk service', () => {
       const [moduleID, assetID] = splitModuleAndAssetIds(voteDelegate);
       const tx = {
+        ...baseElementsTx,
         moduleID,
         assetID,
-        fee: 0.1,
-        nonce: 1,
-        id: Buffer.from('123', 'hex'),
-        senderPublicKey: accounts.genesis.summary.publicKey,
         asset: {
           votes: [
             {
-              amount: '100',
-              delegateAddress: '123',
+              amount: BigInt('100'),
+              delegateAddress: getAddressFromBase32Address(accounts.delegate.summary.address),
             },
           ],
         },
       };
 
-      expect(elementTxToDesktopTx(tx)).toMatchSnapshot();
+      expect(elementTxToDesktopTx(tx)).toEqual({
+        ...baseDesktopTx,
+        moduleAssetId: voteDelegate,
+        id: '',
+        asset: {
+          votes: [
+            {
+              amount: '100',
+              delegateAddress: accounts.delegate.summary.address,
+            },
+          ],
+        },
+      });
     });
 
     it('should transform a reclaimLSK transaction', () => {
       const [moduleID, assetID] = splitModuleAndAssetIds(reclaimLSK);
       const tx = {
+        ...baseElementsTx,
         moduleID,
         assetID,
-        fee: 0.1,
-        nonce: 1,
-        id: Buffer.from('123', 'hex'),
-        senderPublicKey: accounts.genesis.summary.publicKey,
         asset: {
-          amount: '100',
+          amount: BigInt(100),
         },
       };
 
-      expect(elementTxToDesktopTx(tx)).toMatchSnapshot();
+      expect(elementTxToDesktopTx(tx)).toEqual({
+        ...baseDesktopTx,
+        moduleAssetId: reclaimLSK,
+        id: '',
+        asset: {
+          amount: '100',
+        },
+      });
     });
 
     it('should transform a unlockToken transaction', () => {
@@ -234,43 +334,52 @@ describe('API: LSK Transactions', () => {
         {
           delegateAddress:
             getAddressFromBase32Address(accounts.delegate.summary.address),
-          amount: 10000000n,
+          amount: BigInt('10000000'),
           unvoteHeight: 1000000,
         },
         {
           delegateAddress:
             getAddressFromBase32Address(accounts.send_all_wallet.summary.address),
-          amount: -10000000n,
+          amount: BigInt('-10000000'),
           unvoteHeight: 1000000,
         },
       ];
 
       const tx = {
+        ...baseElementsTx,
         moduleID,
         assetID,
-        fee: 0.1,
-        nonce: 1,
-        id: Buffer.from('123', 'hex'),
-        senderPublicKey: accounts.genesis.summary.publicKey,
         asset: { unlockObjects },
       };
 
-      expect(elementTxToDesktopTx(tx)).toMatchSnapshot();
+      expect(elementTxToDesktopTx(tx)).toEqual({
+        ...baseDesktopTx,
+        moduleAssetId: unlockToken,
+        id: '',
+        asset: {
+          unlockObjects: tx.asset.unlockObjects.map(item => ({
+            amount: String(item.amount),
+            delegateAddress: getBase32AddressFromAddress(item.delegateAddress),
+            unvoteHeight: item.unvoteHeight,
+          })),
+        },
+      });
     });
 
     it('should transform a registerMultisignatureGroup transaction', () => {
       const [moduleID, assetID] = splitModuleAndAssetIds(registerMultisignatureGroup);
-      const mandatoryKeys = [accounts.genesis.summary.publicKey, accounts.delegate.summary.publicKey].map(key => Buffer.from(key, 'hex'));
-      const optionalKeys = [accounts.delegate_candidate.summary.publicKey].map(key => Buffer.from(key, 'hex'));
+      const mandatoryKeys = [
+        accounts.genesis.summary.publicKey,
+        accounts.delegate.summary.publicKey,
+      ].map(key => convertStringToBinary(key));
+      const optionalKeys = [
+        accounts.delegate_candidate.summary.publicKey,
+      ].map(key => convertStringToBinary(key));
 
       const tx = {
+        ...baseElementsTx,
         moduleID,
         assetID,
-        id: Buffer.from('123', 'hex'),
-        senderPublicKey: accounts.genesis.summary.publicKey,
-        nonce: 1,
-        fee: '1000000',
-        amount: '10000000',
         asset: {
           numberOfSignatures: 2,
           mandatoryKeys,
@@ -278,7 +387,21 @@ describe('API: LSK Transactions', () => {
         },
       };
 
-      expect(elementTxToDesktopTx(tx)).toMatchSnapshot();
+      expect(elementTxToDesktopTx(tx)).toEqual({
+        ...baseDesktopTx,
+        moduleAssetId: registerMultisignatureGroup,
+        id: '',
+        asset: {
+          numberOfSignatures: 2,
+          mandatoryKeys: [
+            accounts.genesis.summary.publicKey,
+            accounts.delegate.summary.publicKey,
+          ],
+          optionalKeys: [
+            accounts.delegate_candidate.summary.publicKey,
+          ],
+        },
+      });
     });
   });
 
@@ -310,23 +433,38 @@ describe('API: LSK Transactions', () => {
       // eslint-disable-next-line no-extend-native
       BigInt.prototype.toJSON = undefined;
     });
-    const transaction = desktopTxToElementsTx({
-      nonce: '2',
-      amount: 10000,
-      fee: '123123',
-      senderPublicKey: accounts.genesis.summary.publicKey,
-      recipientAddress: accounts.delegate.summary.address,
-    }, transfer);
+    const transaction = {
+      ...baseElementsTx,
+      moduleID: 2,
+      assetID: 0,
+      asset: {
+        amount: BigInt(10000),
+        recipientAddress: getBase32AddressFromAddress(accounts.delegate.summary.address),
+        data: '',
+      },
+    };
     it('should return the transaction as JSON', () => {
-      const json = transactionToJSON(transaction);
-      expect(json).toMatchSnapshot();
+      expect(JSON.parse(transactionToJSON(transaction)))
+        .toEqual({
+          senderPublicKey: accounts.genesis.summary.publicKey,
+          nonce: '1n',
+          fee: '1000000n',
+          signatures: [],
+          moduleID: 2,
+          assetID: 0,
+          asset: {
+            amount: '10000n',
+            recipientAddress: expect.stringContaining('lsk'),
+            data: '',
+          },
+        });
     });
   });
 
   describe('removeExcessSignatures', () => {
     it('should remove optional signature considering the sender signature', () => {
-      const nonEmpty = Buffer.from(accounts.genesis.summary.publicKey, 'hex');
-      const empty = Buffer.from('');
+      const nonEmpty = convertStringToBinary(accounts.genesis.summary.publicKey);
+      const empty = convertStringToBinary('');
       const mandatoryKeysNo = 2;
       const hasSenderSignature = true;
       const signatures = [nonEmpty, nonEmpty, empty, nonEmpty];
