@@ -3,7 +3,7 @@ import {
 } from 'redux';
 import storage from 'redux-persist/lib/storage';
 import { persistStore } from 'redux-persist';
-import actionTypes from './actions/actionTypes';
+import actionTypes from 'src/modules/common/store/actionTypes';
 import * as reducers from './reducers';
 import middleWares from './middlewares';
 

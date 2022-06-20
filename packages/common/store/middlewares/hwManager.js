@@ -7,7 +7,7 @@ import {
   getPublicKey,
 } from '@libs/hwManager/communication';
 import history from 'src/utils/history';
-import actionTypes from '../actions/actionTypes';
+import actionTypes from 'src/modules/common/store/actionTypes';
 
 async function autoLogInIfNecessary(store) {
   // not tested as it is just a development helper

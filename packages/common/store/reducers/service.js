@@ -1,5 +1,5 @@
 import { tokenKeys } from '@token/fungible/consts/tokens';
-import actionTypes from '../actions/actionTypes';
+import actionTypes from 'src/modules/common/store/actionTypes';
 
 export const INITIAL_STATE = {
   priceTicker: tokenKeys.reduce((info, tokenKey) => ({

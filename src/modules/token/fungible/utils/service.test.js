@@ -1,7 +1,7 @@
 import * as marketApi from '@common/utilities/api/market';
 import { initialState as token } from '@token/fungible/store/reducer';
 import prices from '@tests/constants/prices';
-import actionTypes from './actionTypes';
+import actionTypes from 'src/modules/common/store/actionTypes';
 import { pricesRetrieved } from './service';
 
 describe('actions: service', () => {

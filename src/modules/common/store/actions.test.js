@@ -3,7 +3,7 @@ import actionTypes from './actionTypes';
 import {
   loadingStarted,
   loadingFinished,
-} from './loading';
+} from './actions';
 
 describe('actions: loading', () => {
   describe('loadingStarted', () => {

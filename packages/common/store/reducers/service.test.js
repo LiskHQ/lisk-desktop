@@ -1,4 +1,4 @@
-import actionTypes from '../actions/actionTypes';
+import actionTypes from 'src/modules/common/store/actionTypes';
 import service, { INITIAL_STATE } from './service';
 
 describe('reducers: service', () => {

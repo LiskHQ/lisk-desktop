@@ -3,7 +3,7 @@ import * as transactionUtils from '@transaction/utils/transaction';
 import { getState } from '@tests/fixtures/transactions';
 import { sampleTransaction } from '@tests/constants/transactions';
 import accounts from '@tests/constants/wallets';
-import commonActionTypes from '@common/store/actions/actionTypes';
+import commonActionTypes from 'src/modules/common/store/actionTypes';
 import walletActionTypes from '@wallet/store/actionTypes';
 import { getAddressFromBase32Address } from '@wallet/utils/account';
 import actionTypes from './actionTypes';

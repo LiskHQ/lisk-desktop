@@ -7,6 +7,6 @@ export * from '@transaction/store/actions';
 export * from '@dpos/validator/store/actions/voting';
 export * from '@dpos/validator/store/actions/watchList';
 export * from '@update/store/actions/appUpdates';
-export * from './loading';
-export * from './service';
+* from 'src/modules/common/store/actions';
+export * from '@token/fungible/utils/service';
 export { default as processLaunchProtocol } from 'src/utils/urlProcessor';

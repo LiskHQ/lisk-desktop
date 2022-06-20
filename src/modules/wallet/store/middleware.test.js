@@ -2,7 +2,7 @@ import {
   accountDataUpdated, transactionsRetrieved, emptyTransactionsData,
 } from '@common/store/actions';
 
-import commonActionTypes from '@common/store/actions/actionTypes';
+import commonActionTypes from 'src/modules/common/store/actionTypes';
 import blockActionTypes from '@block/store/actionTypes';
 import settingsActionTypes from 'src/modules/settings/store/actionTypes';
 import * as transactionApi from '@transaction/api';

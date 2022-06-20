@@ -2,7 +2,7 @@ import { toast } from 'react-toastify';
 import { subscribeToDeviceConnected, subscribeToDeviceDisconnected } from '@wallet/utils/hwManager';
 import { addSearchParamsToUrl } from 'src/utils/searchParams';
 import accounts from '@tests/constants/wallets';
-import actionTypes from '../actions/actionTypes';
+import actionTypes from 'src/modules/common/store/actionTypes';
 import hwManagerMiddleware from './hwManager';
 
 jest.mock('@wallet/utils/hwManager', () => ({
