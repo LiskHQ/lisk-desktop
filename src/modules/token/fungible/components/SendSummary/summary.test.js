@@ -2,7 +2,7 @@ import React from 'react';
 import { mount } from 'enzyme';
 import { tokenMap } from '@token/fungible/consts/tokens';
 import i18n from 'src/utils/i18n/i18n';
-import accounts from '@tests/constants/wallets';
+import wallets from '@tests/constants/wallets';
 import Summary from './Summary';
 
 describe('Summary', () => {
@@ -11,43 +11,33 @@ describe('Summary', () => {
 
   beforeEach(() => {
     props = {
-      transactionCreated: jest.fn(),
       resetTransactionResult: jest.fn(),
       prevStep: jest.fn(),
       nextStep: jest.fn(),
-      account: accounts.genesis,
-      fields: {
-        recipient: {
-          address: '1lskehj8am9afxdz8arztqajy52acnoubkzvmo9cjy',
-        },
-        amount: {
-          value: '1.123',
-        },
-        reference: {
-          value: 1,
-        },
-        fee: {
-          value: 0.1e8,
-        },
-        isLoading: false,
-        isHardwareWalletConnected: false,
-      },
       token: tokenMap.LSK.key,
+      rawTx: {
+        asset: {
+          recipient: { address: wallets.genesis.summary.address },
+          amount: 112300000,
+          data: 'test',
+        },
+        moduleAssetId: '2:0',
+      },
       t: i18n.t,
     };
     wrapper = mount(<Summary {...props} />);
   });
 
   it('should render properly', () => {
-    expect(wrapper).toContainMatchingElement('.Summary');
-    expect(wrapper).toContainMatchingElement('.Summary-header');
-    expect(wrapper).toContainMatchingElement('.Summary-content');
-    expect(wrapper).toContainMatchingElement('.Summary-footer');
+    expect(wrapper).toContainMatchingElement('.summary');
+    expect(wrapper).toContainMatchingElement('.summary-header');
+    expect(wrapper).toContainMatchingElement('.summary-content');
+    expect(wrapper).toContainMatchingElement('.summary-footer');
     expect(wrapper.find('button.confirm-button')).toHaveText('Send 1.123 LSK');
-    expect(wrapper.find('.amount-Summary')).toIncludeText('1.123 LSK');
+    expect(wrapper.find('.amount-summary')).toIncludeText('1.123 LSK');
   });
 
-  it('should goind to previous page', () => {
+  it('should going to previous page', () => {
     wrapper.find('.cancel-button').at(0).simulate('click');
     wrapper.update();
     expect(props.prevStep).toBeCalled();
@@ -57,16 +47,19 @@ describe('Summary', () => {
     const title = 'Custom title';
     wrapper = mount(<Summary {...{
       ...props,
-      fields: {
-        ...props.fields,
-        recipient: {
-          ...props.fields.recipient,
-          title,
+      rawTx: {
+        ...props.rawTx,
+        asset: {
+          ...props.rawTx.asset,
+          recipient: {
+            ...props.rawTx.asset.recipient,
+            title,
+          },
         },
       },
     }}
     />);
-    expect(wrapper.find('.recipient-value')).toIncludeText(props.fields.recipient.address);
+    expect(wrapper.find('.recipient-value')).toIncludeText(props.rawTx.asset.recipient.address);
     expect(wrapper.find('.recipient-value')).toIncludeText(title);
   });
 });
