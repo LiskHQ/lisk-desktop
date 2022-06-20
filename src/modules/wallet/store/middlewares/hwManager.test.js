@@ -10,7 +10,7 @@ jest.mock('@wallet/utils/hwManager', () => ({
   subscribeToDeviceDisconnected: jest.fn().mockImplementation((fn) => fn({ model: 'testHW' })),
 }));
 
-jest.mock('@screens/router/searchParams', () => ({
+jest.mock('src/utils/searchParams', () => ({
   addSearchParamsToUrl: jest.fn(),
 }));
 

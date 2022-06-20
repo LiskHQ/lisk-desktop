@@ -10,4 +10,4 @@ export { default as voting } from '@dpos/validator/store/reducers/voting';
 export { default as watchList } from '@dpos/validator/store/reducers/watchList';
 export { default as service } from '@wallet/store/reducers/service';
 export { default as loading } from 'src/modules/common/store/reducers/loading';
-export { account } from 'src/modules/account/store/reducer';
+export { account } from '@account/store/reducer';

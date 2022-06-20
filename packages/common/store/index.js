@@ -4,8 +4,8 @@ import {
 import storage from 'redux-persist/lib/storage';
 import { persistStore } from 'redux-persist';
 import actionTypes from 'src/modules/common/store/actionTypes';
-import * as reducers from './reducers';
-import middleWares from './middlewares';
+import * as reducers from 'src/redux/rootReducer';
+import middleWares from 'src/redux/middlewares';
 
 export * from './selectors';
 
@@ -18,8 +18,8 @@ const persistedStore = persistStore(store);
 
 // ignore this in coverage as it is hard to test and does not run in production
 if (module.hot) {
-  module.hot.accept('./reducers', () => {
-    const nextReducer = combineReducers(require('./reducers'));
+  module.hot.accept('src/redux/rootReducer', () => {
+    const nextReducer = combineReducers(require('src/redux/rootReducer'));
     store.replaceReducer(nextReducer);
   });
 }

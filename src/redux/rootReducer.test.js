@@ -1,4 +1,4 @@
-import * as reducers from './index';
+import * as reducers from './rootReducer';
 
 describe('Reducer: Initiate reducers', () => {
   it('should initiate the reducers with any first action', () => {

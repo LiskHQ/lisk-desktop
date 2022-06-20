@@ -274,7 +274,7 @@ module.exports = {
     'packages/common/store/actions/urlProcessor.js',
     'packages/common/store/reducers/service.js',
     'packages/common/store/reducers/loading.js',
-    'packages/common/store/middlewares/hwManager.js',
+    'src/modules/wallet/store/middlewares/hwManager.js',
     'packages/common/store/middlewares/loadingBar.js',
     'src/modules/dpos/validator/store/middlewares/voting.js',
     'src/modules/transaction/store/transactionPriorityReducer.js',
