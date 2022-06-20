@@ -525,6 +525,8 @@ const signMultisigTransaction = async (
   senderAccount,
   txStatus,
   network,
+  privateKey,
+  publicKey,
 ) => {
   /**
    * Define keys.
@@ -559,8 +561,8 @@ const signMultisigTransaction = async (
   try {
     const result = await sign(
       account, schema, transactionObject, network, networkIdentifier,
-      !!senderAccount.data, isGroupRegistration, keys, account.summary.publicKey,
-      transaction.moduleAssetId, transaction, account.summary.privateKey,
+      !!senderAccount.data, isGroupRegistration, keys, publicKey,
+      transaction.moduleAssetId, transaction, privateKey,
     );
     return [result];
   } catch (e) {

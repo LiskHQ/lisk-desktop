@@ -179,7 +179,7 @@ export const transactionBroadcasted = transaction =>
  * @param {object} data.sender.data - Sender account info in Lisk API schema
  */
 export const multisigTransactionSigned = ({
-  rawTransaction, sender,
+  rawTransaction, sender, privateKey, publicKey,
 }) => async (dispatch, getState) => {
   const state = getState();
   const activeWallet = selectActiveTokenAccount(state);
@@ -191,6 +191,8 @@ export const multisigTransactionSigned = ({
     sender,
     txStatus,
     state.network,
+    privateKey,
+    publicKey,
   );
 
   if (!error) {
