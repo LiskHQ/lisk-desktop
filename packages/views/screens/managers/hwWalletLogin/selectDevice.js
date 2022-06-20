@@ -1,6 +1,6 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import routes from '@screens/router/routes';
+import routes from 'src/routes/routes';
 import { PrimaryButton, TertiaryButton } from 'src/theme/buttons';
 import Icon from 'src/theme/Icon';
 import styles from './selectDevice.css';

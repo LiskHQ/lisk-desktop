@@ -3,7 +3,7 @@ import { NavLink } from 'react-router-dom';
 import grid from 'flexboxgrid/dist/flexboxgrid.css';
 
 import { DEFAULT_STANDBY_THRESHOLD } from '@dpos/validator/consts';
-import routes from '@screens/router/routes';
+import routes from 'src/routes/routes';
 import { useTheme } from 'src/theme/Theme';
 import { capitalize } from 'src/utils/helpers';
 import Box from 'src/theme/box';

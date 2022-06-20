@@ -34,13 +34,13 @@ import SignMultiSig from '@wallet/manager/signMultisigManager';
 import MultisigAccountDetails from '@wallet/manager/multisigAccountDetailsManager';
 import ManageAccounts from '@account/components/ManageAccounts';
 import AddAccountOptions from '@account/components/AddAccountOptions';
-import AddAccountBySecretRecovery from 'src/modules/account/components/AddAccountBySecretRecovery';
+import AddAccountBySecretRecovery from '@account/components/AddAccountBySecretRecovery';
 import AddAccountByFile from '@account/components/AddAccountByFile';
 import AddAccountForm from '@account/components/AddAccountForm';
 import SwitchAccount from '@account/components/SwitchAccount';
 import BackupRecoveryPhraseFlow from '@account/components/BackupRecoveryPhraseFlow';
-import RemoveCurrentAccountFlow from 'src/modules/account/components/RemoveCurrentAccountFlow';
-import RemoveSelectedAccountFlow from 'src/modules/account/components/RemoveSelectedAccountFlow';
+import RemoveCurrentAccountFlow from '@account/components/RemoveCurrentAccountFlow';
+import RemoveSelectedAccountFlow from '@account/components/RemoveSelectedAccountFlow';
 
 export default {
   wallet: AccountDetails,

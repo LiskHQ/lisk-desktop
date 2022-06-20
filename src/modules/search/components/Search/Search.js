@@ -1,7 +1,7 @@
 import React from 'react';
 
 import { regex } from 'src/const/regex';
-import routes from '@screens/router/routes';
+import routes from 'src/routes/routes';
 import Icon from 'src/theme/Icon';
 import DialogLink from 'src/theme/dialog/link';
 import WalletVisual from '@wallet/components/walletVisual';

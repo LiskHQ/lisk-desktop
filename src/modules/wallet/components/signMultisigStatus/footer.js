@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { useTheme } from 'src/theme/Theme';
 import BoxFooter from 'src/theme/box/footer';
 import { PrimaryButton, SecondaryButton } from 'src/theme/buttons';
-import routes from '@screens/router/routes';
+import routes from 'src/routes/routes';
 import Icon from 'src/theme/Icon';
 import styles from './styles.css';
 

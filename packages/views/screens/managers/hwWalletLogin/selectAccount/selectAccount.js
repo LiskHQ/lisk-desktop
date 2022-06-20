@@ -5,7 +5,7 @@ import {
   getAccountsFromDevice,
   getNewAccountByIndex,
 } from '@wallet/utils/hwManager';
-import routes from '@screens/router/routes';
+import routes from 'src/routes/routes';
 import { tokenMap } from '@token/fungible/consts/tokens';
 import { TertiaryButton } from 'src/theme/buttons';
 import CheckBox from 'src/theme/CheckBox';

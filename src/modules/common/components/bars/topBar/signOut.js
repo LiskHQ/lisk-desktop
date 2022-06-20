@@ -1,6 +1,6 @@
 import React from 'react';
 import { useDispatch } from 'react-redux';
-import routes from '@screens/router/routes';
+import routes from 'src/routes/routes';
 import Icon from 'src/theme/Icon';
 import Tooltip from 'src/theme/Tooltip';
 import Piwik from 'src/utils/piwik';

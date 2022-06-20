@@ -1,5 +1,5 @@
 import { mountWithRouter } from 'src/utils/testHelpers';
-import routes from '@screens/router/routes';
+import routes from 'src/routes/routes';
 import accounts from '@tests/constants/wallets';
 import Votes from './votes';
 

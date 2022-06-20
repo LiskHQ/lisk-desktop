@@ -1,4 +1,4 @@
-import routes from '@screens/router/routes';
+import routes from 'src/routes/routes';
 import history from 'src/utils/history';
 import actionTypes from '@wallet/store/actionTypes';
 

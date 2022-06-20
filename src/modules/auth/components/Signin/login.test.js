@@ -3,7 +3,7 @@ import i18next from 'i18next';
 import { mount } from 'enzyme';
 import { useDispatch } from 'react-redux';
 import { mountWithRouterAndStore } from 'src/utils/testHelpers';
-import routes from '@screens/router/routes';
+import routes from 'src/routes/routes';
 import { defaultDerivationPath } from 'src/utils/explicitBipKeyDerivation';
 import { settingsUpdated } from '@common/store/actions';
 import accounts from '@tests/constants/wallets';

@@ -4,7 +4,7 @@ import { Link } from 'react-router-dom';
 import WalletVisual from '@wallet/components/walletVisual';
 import TokenAmount from '@token/fungible/components/tokenAmount';
 import { regex } from 'src/const/regex';
-import routes from '@screens/router/routes';
+import routes from 'src/routes/routes';
 import { tokenMap } from '@token/fungible/consts/tokens';
 import styles from './multiSignature.css';
 

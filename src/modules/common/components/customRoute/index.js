@@ -5,7 +5,7 @@ import { Redirect, Route } from 'react-router-dom';
 import { selectActiveTokenAccount } from '@common/store';
 import { useAccounts, useCurrentAccount } from '@account/hooks';
 import Piwik from 'src/utils/piwik';
-import routes from '@screens/router/routes';
+import routes from 'src/routes/routes';
 import Login from '@auth/components/Signin';
 import offlineStyle from 'src/modules/common/components/offlineWrapper/offlineWrapper.css';
 import ErrorBoundary from './errorBoundary';
