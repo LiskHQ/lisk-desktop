@@ -60,6 +60,16 @@ export default {
     exact: true,
     forbiddenTokens: [],
   },
+  backupRecoveryPhraseFlow: {
+    path: '/account/backup-recovery-phrase',
+    isPrivate: true,
+    forbiddenTokens: [],
+  },
+  removeSelectedAccount: {
+    path: '/account/remove-account',
+    isPrivate: false,
+    forbiddenTokens: [],
+  },
   manageAccounts: {
     path: '/account',
     isPrivate: false,
@@ -107,16 +117,6 @@ export default {
     path: '/wallet',
     isPrivate: true,
     exact: false,
-    forbiddenTokens: [],
-  },
-  backupRecoveryPhraseFlow: {
-    path: '/account/backup-recovery-phrase',
-    isPrivate: true,
-    forbiddenTokens: [],
-  },
-  removeSelectedAccount: {
-    path: '/account/remove-account',
-    isPrivate: false,
     forbiddenTokens: [],
   },
 };
@@ -207,6 +207,10 @@ export const modals = {
     forbiddenTokens: [],
   },
   switchAccount: {
+    isPrivate: true,
+    forbiddenTokens: [],
+  },
+  removeCurrentAccountFlow: {
     isPrivate: true,
     forbiddenTokens: [],
   },

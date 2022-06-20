@@ -1,6 +1,7 @@
 import React, { useState, useCallback } from 'react';
 import { useTranslation } from 'react-i18next';
 import { withRouter } from 'react-router';
+
 import Box from 'src/theme/box';
 import grid from 'flexboxgrid/dist/flexboxgrid.css';
 import { OutlineButton } from 'src/theme/buttons';
@@ -25,7 +26,7 @@ const ManageAccounts = ({
     history.push(routes.addAccountOptions.path);
   }, []);
   const removeAccount = useCallback((account) => {
-    history.push(routes.removeSelectedAccount.path, { address: account?.metadata?.address });
+    history.push(`${routes.removeSelectedAccount.path}?address=${account?.metadata?.address}`);
   }, []);
   const onSelectAccount = useCallback((account) => {
     setAccount(account);

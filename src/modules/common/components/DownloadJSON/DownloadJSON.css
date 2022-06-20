@@ -1,0 +1,15 @@
+.downloadLisk {
+  display: flex;
+  width: 100%;
+  padding: 8px 0;
+  justify-content: center;
+
+  & > p {
+    @mixin contentLarge bold;
+
+    color: var(--color-maastricht-blue);
+    margin: 20px;
+    text-align: left;
+    word-spacing: 8px;
+  }
+}
