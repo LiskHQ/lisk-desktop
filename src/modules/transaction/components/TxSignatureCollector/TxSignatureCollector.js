@@ -29,7 +29,7 @@ const TxSignatureCollector = ({
   const dispatch = useDispatch();
   const [currentAccount] = useCurrentAccount();
 
-  const txVerification = (privateKey = undefined, publicKey = undefined) => {
+  const signTransaction = (privateKey = undefined, publicKey = undefined) => {
     /**
      * All multisignature transactions get signed using a unique action
      * Therefore there's no need to pass the action function, instead the
@@ -64,12 +64,12 @@ const TxSignatureCollector = ({
 
   const onEnterPasswordSuccess = ({ account: userAccount }) => {
     const { pubkey } = currentAccount.metadata;
-    txVerification(userAccount.privateKey, pubkey);
+    signTransaction(userAccount.privateKey, pubkey);
   };
 
   useEffect(() => {
     if (deviceType) {
-      txVerification();
+      signTransaction();
     }
     return () => {
       // Ensure second passphrase is removed to prevent automatically signing future transactions
