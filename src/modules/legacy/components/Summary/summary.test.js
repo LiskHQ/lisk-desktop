@@ -1,5 +1,3 @@
-import React from 'react';
-import { mount } from 'enzyme';
 import { act } from 'react-dom/test-utils';
 import { mountWithProps } from 'src/utils/testHelpers';
 import {
@@ -36,30 +34,26 @@ useTransactionFeeCalculation.mockImplementation(() => ({
 }));
 
 describe('Reclaim balance Summary', () => {
+  const wallet = { info: { LSK: accounts.non_migrated } };
+  const token = { active: tokenMap.LSK.key };
+  const network = { networks: { LSK: { networkIdentifier: 'sample_identifier' } } };
+  const state = {
+    wallet,
+    token,
+    network,
+  };
   const props = {
     nextStep: jest.fn(),
     t: key => key,
-    account: {
-      passphrase: 'test',
-      info: {
-        LSK: accounts.non_migrated,
-      },
-    },
-    token: {
-      active: tokenMap.LSK.key,
-    },
-    network: {
-      networks: {
-        LSK: { networkIdentifier: 'sample_identifier' },
-      },
-    },
+    wallet: wallet.info.LSK,
+    token,
+    network,
     balanceReclaimed: jest.fn(),
   };
 
   it('should render Summary component', () => {
     // Arrange
-    // const wrapper = mount(<Summary {...props} />);
-    const wrapper = mountWithProps(Summary, props, {});
+    const wrapper = mountWithProps(Summary, props, state);
 
     // Act
     const html = wrapper.html();
@@ -74,7 +68,7 @@ describe('Reclaim balance Summary', () => {
 
   it('should navigate to next page when continue button is clicked', async () => {
     // Arrange
-    const wrapper = mount(<Summary {...props} />);
+    const wrapper = mountWithProps(Summary, props, state);
     wrapper.find('button.confirm-button').simulate('click');
 
     // Act
@@ -83,7 +77,17 @@ describe('Reclaim balance Summary', () => {
 
     // Assert
     expect(props.nextStep).toBeCalledWith({
-      rawTransaction: { fee: { value: 0.001 } },
+      rawTx: {
+        asset: {
+          amount: accounts.non_migrated.legacy.balance,
+        },
+        fee: 100000,
+        moduleAssetId: '1000:0',
+        nonce: accounts.non_migrated.sequence.nonce,
+        sender: {
+          PublicKey: accounts.non_migrated.summary.publicKey,
+        },
+      },
       actionFunction: props.balanceReclaimed,
     });
   });
