@@ -1,11 +1,11 @@
-import http from '@common/utilities/api/http';
+import http from 'src/utils/api/http';
 import {
   getPeers,
   getNetworkStatistics,
   getNetworkStatus,
 } from './index';
 
-jest.mock('@common/utilities/api/http');
+jest.mock('src/utils/api/http');
 
 const setApiResponseData = (data, api) => {
   api.mockImplementation(() => Promise.resolve(data));

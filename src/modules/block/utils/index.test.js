@@ -1,12 +1,12 @@
-import http from '@common/utilities/api/http';
-import { subscribe, unsubscribe } from '@common/utilities/api/ws';
+import http from 'src/utils/api/http';
+import { subscribe, unsubscribe } from 'src/utils/api/ws';
 import { httpPaths } from '@block/config';
 import {
   getBlock, getBlocks, blockSubscribe, blockUnsubscribe,
 } from './index';
 
-jest.mock('@common/utilities/api/http');
-jest.mock('@common/utilities/api/ws');
+jest.mock('src/utils/api/http');
+jest.mock('src/utils/api/ws');
 
 describe('Block api module', () => {
   describe('getBlock', () => {
