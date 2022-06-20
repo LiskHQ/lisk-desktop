@@ -206,6 +206,10 @@ export const modals = {
     isPrivate: false,
     forbiddenTokens: [],
   },
+  switchAccount: {
+    isPrivate: true,
+    forbiddenTokens: [],
+  },
   removeCurrentAccountFlow: {
     isPrivate: true,
     forbiddenTokens: [],
