@@ -68,7 +68,7 @@ const getDesktopTxAsset = (elementsAsset, moduleAssetId) => {
 
     case reclaimLSK: {
       return {
-        amount: elementsAsset.amount,
+        amount: convertBigIntToString(elementsAsset.amount),
       };
     }
 

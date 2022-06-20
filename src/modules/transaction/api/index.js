@@ -246,7 +246,7 @@ export const getTransactionBaseFees = network =>
 export const getTransactionFee = async ({
   transaction,
   selectedPriority,
-  account,
+  wallet,
   numberOfSignatures = DEFAULT_NUMBER_OF_SIGNATURES,
   network,
 }) => {
@@ -264,8 +264,8 @@ export const getTransactionFee = async ({
   if (moduleAssetId === MODULE_ASSETS_NAME_ID_MAP.registerMultisignatureGroup) {
     const { optionalKeys, mandatoryKeys } = transaction.asset;
     numberOfSignatures = optionalKeys.length + mandatoryKeys.length + 1;
-  } else if (account?.summary?.isMultisignature) {
-    numberOfEmptySignatures = account.keys.members.length - numberOfSignatures;
+  } else if (wallet?.summary?.isMultisignature) {
+    numberOfEmptySignatures = wallet.keys.members.length - numberOfSignatures;
   }
 
   const minFee = transactions.computeMinFee(schema, transactionObject, {

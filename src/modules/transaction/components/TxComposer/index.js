@@ -63,7 +63,13 @@ const TxComposer = ({
         isLoading={loadingPriorities}
       />
       <BoxFooter>
+        {
+          status.fee.feedback
+            ? (<span className="feedback">{status.fee.feedback}</span>)
+            : null
+        }
         <PrimaryButton
+          className="confirm-btn"
           onClick={() => onConfirm({ ...rawTx, fee: toRawLsk(status.fee.value) })}
           disabled={!transaction.isValid}
         >

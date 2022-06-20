@@ -3,10 +3,12 @@ import { mount } from 'enzyme';
 import networks from '@network/configuration/networks';
 import * as delegatesApi from '@dpos/validator/api';
 import { fromRawLsk } from '@token/fungible/utils/lsk';
-import { getTransactionBaseFees, getTransactionFee, create } from '@transaction/api';
+import { getTransactionBaseFees, getTransactionFee, createGenericTx } from '@transaction/api';
 import * as hwManager from '@transaction/utils/hwManager';
 import wallets from '@tests/constants/wallets';
 import flushPromises from '@tests/unit-test-utils/flushPromises';
+import { mountWithProps } from 'src/utils/testHelpers';
+import { act } from 'react-dom/test-utils';
 import SelectNameAndFee from '.';
 
 jest.mock('@network/utils/api');
@@ -24,7 +26,7 @@ const transactionBaseFees = {
 
 const mockFeeFactor = 100;
 const mockTransaction = {};
-create.mockResolvedValue(mockTransaction);
+createGenericTx.mockResolvedValue(mockTransaction);
 getTransactionBaseFees.mockResolvedValue(transactionBaseFees);
 getTransactionFee.mockImplementation((params) => {
   const selectedTransactionPriority = params.selectedPriority.selectedIndex;
@@ -85,13 +87,16 @@ describe('SelectNameAndFee', () => {
     wrapper.find('button.confirm-btn').simulate('click');
     await flushPromises();
     expect(props.nextStep).toBeCalledWith({
-      rawTransaction: {
-        fee: {
-          error: false,
-          feedback: '',
-          value: '0.000156',
+      rawTx: {
+        fee: 15600,
+        moduleAssetId: '5:0',
+        nonce: '1',
+        sender: {
+          publicKey: '0fe9a3f1a21b5530f27f87a414b549e79a940bf24fdf2b2f05e7f22aeeecc86a',
         },
-        username: 'mydelegate',
+        asset: {
+          username: 'mydelegate',
+        },
       },
     });
   });
@@ -128,17 +133,27 @@ describe('SelectNameAndFee', () => {
   });
 
   it('disabled confirm button if balance is not enough to pay fee', async () => {
-    wrapper = mount(
-      <SelectNameAndFee
-        {...props}
-        account={{
-          ...props.account,
-          token: { balance: 1e2 },
-        }}
-      />,
+    const account = {
+      ...props.account,
+      summary: {
+        ...props.account.summary,
+        balance: 1e2,
+      },
+      token: { balance: 1e2 },
+    };
+    wrapper = mountWithProps(
+      SelectNameAndFee,
+      props,
+      {
+        wallet: { info: { LSK: account } },
+      },
     );
     await flushPromises();
+    act(() => {
+      wrapper.update();
+    });
+    await flushPromises();
+    // The feedback is shown bellow the amount input
     expect(wrapper.find('button.confirm-btn')).toBeDisabled();
-    expect(wrapper.find('.feedback')).toHaveText('The minimum required balance to register is {{minBalance}} LSK');
   });
 });

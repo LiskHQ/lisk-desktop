@@ -4,7 +4,7 @@ import { txStatusTypes } from '@transaction/configuration/txStatus';
 import Regular from '../Regular';
 import Multisignature from '../Multisignature';
 
-const TransactionResult = (props) => {
+const TxBroadcaster = (props) => {
   const [txType, setTxType] = useState('pending');
 
   useEffect(() => {
@@ -37,4 +37,4 @@ const TransactionResult = (props) => {
   return <div />;
 };
 
-export default TransactionResult;
+export default TxBroadcaster;
