@@ -3,11 +3,11 @@ import grid from 'flexboxgrid/dist/flexboxgrid.css';
 import { tokenMap } from '@token/fungible/consts/tokens';
 import { truncateAddress } from '@wallet/utils/account';
 import WalletVisual from '@wallet/components/walletVisual';
-import tableStyles from 'src/theme/table/table.css';
+import tableStyles from '@theme/table/table.css';
 import TokenAmount from '@token/fungible/components/tokenAmount';
-import DialogLink from 'src/theme/dialog/link';
-import Spinner from 'src/theme/Spinner';
-import Icon from 'src/theme/Icon';
+import DialogLink from '@theme/dialog/link';
+import Spinner from '@theme/Spinner';
+import Icon from '@theme/Icon';
 import styles from './votes.css';
 
 const VoteRow = ({ data, onRowClick, accounts }) => {

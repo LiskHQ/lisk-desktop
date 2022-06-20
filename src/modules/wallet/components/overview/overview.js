@@ -9,7 +9,7 @@ import grid from 'flexboxgrid/dist/flexboxgrid.css';
 import withData from 'src/utils/withData';
 import { getTransactions } from '@transaction/api';
 import { selectActiveTokenAccount } from 'src/redux/selectors';
-import FlashMessageHolder from 'src/theme/flashMessage/holder';
+import FlashMessageHolder from '@theme/flashMessage/holder';
 import WarnPunishedDelegate from '@dpos/validator/components/WarnPunishedDelegate';
 import WalletInfo from '@wallet/components/walletInfo';
 import BalanceInfo from '@token/fungible/components/BalanceInfo';

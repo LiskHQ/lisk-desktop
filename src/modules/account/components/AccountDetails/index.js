@@ -17,9 +17,9 @@ import {
 } from 'src/redux/selectors';
 import TabsContainer from 'src/theme/tabs/tabsContainer/tabsContainer';
 import Transactions from '@transaction/components/WalletTransactions';
-import Overview from '@screens/managers/wallet/overview';
-import DelegateTab from '@screens/managers/wallet/delegateProfile';
-import VotesTab from '@screens/managers/wallet/votes';
+import Overview from '@wallet/components/overview/overview';
+import DelegateTab from '@dpos/validator/components/delegateProfile';
+import VotesTab from '@wallet/components/votes';
 
 const AccountDetails = ({ t, history }) => {
   const dispatch = useDispatch();

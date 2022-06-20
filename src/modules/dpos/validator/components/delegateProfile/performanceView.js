@@ -4,14 +4,14 @@ import grid from 'flexboxgrid/dist/flexboxgrid.css';
 
 import { DEFAULT_STANDBY_THRESHOLD } from '@dpos/validator/consts';
 import routes from 'src/routes/routes';
-import { useTheme } from 'src/theme/Theme';
+import { useTheme } from '@theme/Theme';
 import { capitalize } from 'src/utils/helpers';
-import Box from 'src/theme/box';
-import BoxHeader from 'src/theme/box/header';
-import BoxContent from 'src/theme/box/content';
+import Box from '@theme/box';
+import BoxHeader from '@theme/box/header';
+import BoxContent from '@theme/box/content';
 import TokenAmount from '@token/fungible/components/tokenAmount';
-import DialogLink from 'src/theme/dialog/link';
-import Icon from 'src/theme/Icon';
+import DialogLink from '@theme/dialog/link';
+import Icon from '@theme/Icon';
 import styles from './delegateProfile.css';
 
 export const getStatus = (data) => {

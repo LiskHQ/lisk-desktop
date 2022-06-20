@@ -1,11 +1,11 @@
 import React from 'react';
 import grid from 'flexboxgrid/dist/flexboxgrid.css';
-import { useTheme } from 'src/theme/Theme';
+import { useTheme } from '@theme/Theme';
 import { tokenMap } from '@token/fungible/consts/tokens';
-import Box from 'src/theme/box';
-import BoxContent from 'src/theme/box/content';
-import BoxHeader from 'src/theme/box/header';
-import Icon from 'src/theme/Icon';
+import Box from '@theme/box';
+import BoxContent from '@theme/box/content';
+import BoxHeader from '@theme/box/header';
+import Icon from '@theme/Icon';
 import DateTimeFromTimestamp from 'src/modules/common/components/timestamp';
 import TokenAmount from '@token/fungible/components/tokenAmount';
 import { getStatus } from './performanceView';

@@ -4,7 +4,7 @@ import Blocks from '@block/manager/blocksManager';
 import Bookmarks from '@bookmark/manager/BookmarkListManager';
 import Dashboard from '@screens/managers/dashboard';
 import DelegatesMonitor from '@dpos/validator/components/DelegatesMonitorView';
-import DelegatesPerformanceModal from '@screens/managers/wallet/delegatePerformanceModal';
+import DelegatesPerformanceModal from '@dpos/validator/components/delegatePerformanceModal';
 import HwWalletLogin from '@screens/managers/hwWalletLogin';
 import Login from '@auth/components/Signin';
 import MonitorWallets from '@account/manager/AccountsManager';

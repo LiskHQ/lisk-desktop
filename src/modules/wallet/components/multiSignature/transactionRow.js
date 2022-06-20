@@ -2,9 +2,9 @@ import React from 'react';
 import grid from 'flexboxgrid/dist/flexboxgrid.css';
 import { regex } from 'src/const/regex';
 import { tokenMap } from '@token/fungible/consts/tokens';
-import DialogLink from 'src/theme/dialog/link';
+import DialogLink from '@theme/dialog/link';
 import WalletVisual from '@wallet/components/walletVisual';
-import Icon from 'src/theme/Icon';
+import Icon from '@theme/Icon';
 import TransactionAmount from '@transaction/components/TransactionAmount';
 import styles from './multiSignature.css';
 

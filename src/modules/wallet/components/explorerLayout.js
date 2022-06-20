@@ -4,10 +4,10 @@ import { useSelector } from 'react-redux';
 import { isEmpty } from 'src/utils/helpers';
 import { selectActiveToken, selectSettings } from 'src/redux/selectors';
 import { selectSearchParamValue } from 'src/utils/searchParams';
-import TabsContainer from 'src/theme/tabs/tabsContainer/tabsContainer';
+import TabsContainer from '@theme/tabs/tabsContainer/tabsContainer';
 import Transactions from '@transaction/components/Explorer';
-import Overview from './overview';
-import DelegateTab from './delegateProfile';
+import DelegateTab from '@dpos/validator/components/delegateProfile';
+import Overview from './overview/overviewManager';
 import VotesTab from './votes';
 
 const ExplorerLayout = ({ t, account, history }) => {

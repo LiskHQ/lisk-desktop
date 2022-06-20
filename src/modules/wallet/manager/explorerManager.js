@@ -4,7 +4,7 @@ import { withTranslation } from 'react-i18next';
 import withData from 'src/utils/withData';
 import { getAccount } from '@wallet/utils/api';
 import { selectSearchParamValue } from 'src/utils/searchParams';
-import ExplorerLayout from '@screens/managers/wallet/explorerLayout';
+import ExplorerLayout from '@wallet/components/explorerLayout';
 
 const apis = {
   account: {
