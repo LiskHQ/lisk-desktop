@@ -1,5 +1,5 @@
 import wallets from '@tests/constants/wallets';
-import actionTypes from './actionTypes';
+import actionTypes from '../actionTypes';
 import wallet from './reducer';
 
 describe('Reducer: account(state, action)', () => {

@@ -3,7 +3,7 @@ import { mountWithRouter } from 'src/utils/testHelpers';
 import accounts from '@tests/constants/wallets';
 import Request from './request';
 
-jest.mock('@shared/converter', () => (
+jest.mock('src/modules/common/components/converter', () => (
   function ConverterMock() {
     return <span className="converted-price" />;
   }

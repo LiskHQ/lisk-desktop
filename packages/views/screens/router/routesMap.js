@@ -20,7 +20,7 @@ import Explorer from '@wallet/manager/explorerManager';
 import AccountDetails from '@account/components/AccountDetails';
 import TransactionDetailsModal from '@transaction/manager/transactionDetailViewManager';
 import VerifyMessage from '@message/manager/verifyMessageManager';
-import Request from '@screens/managers/request';
+import Request from '@wallet/components/request';
 import UnlockBalanceView from '@dpos/validator/components/UnlockBalanceView';
 import EditVote from '@dpos/validator/manager/editVoteManager';
 import VotingQueue from '@dpos/validator/manager/votingQueueManager';

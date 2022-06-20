@@ -1,5 +1,5 @@
-import accountConstants from 'src/modules/wallet/configuration/constants';
-import actionTypes from './actionTypes';
+import accountConstants from '@wallet/configuration/constants';
+import actionTypes from '../actionTypes';
 
 /**
  *
