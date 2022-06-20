@@ -34,7 +34,7 @@ describe('unlock transaction Status', () => {
     fee: '207000n',
   };
 
-  it('passes correct props to TxBroadcaster when signed transaction and display add bookmark lin', () => {
+  it('passes correct props to TxBroadcaster when signed transaction and display add bookmark link', () => {
     const propsWithSignedTx = {
       ...props,
       transactions: {
@@ -45,7 +45,6 @@ describe('unlock transaction Status', () => {
     };
 
     const wrapper = shallow(<Status {...propsWithSignedTx} />);
-    expect(wrapper.find('.transaction-Status')).toExist();
     expect(wrapper.find(TxBroadcaster).props()).toMatchObject({
       illustration: 'default',
       status: { code: 'SIGNATURE_SUCCESS' },
@@ -73,7 +72,6 @@ describe('unlock transaction Status', () => {
     };
 
     const wrapper = shallow(<Status {...propsWithError} />);
-    expect(wrapper.find('.transaction-Status')).toExist();
     expect(wrapper.find(TxBroadcaster).props()).toMatchObject({
       illustration: 'default',
       status: {
@@ -103,7 +101,6 @@ describe('unlock transaction Status', () => {
     };
 
     const wrapper = shallow(<Status {...propsWithError} />);
-    expect(wrapper.find('.transaction-Status')).toExist();
     expect(wrapper.find(TxBroadcaster).props()).toMatchObject({
       illustration: 'default',
       status: {
@@ -127,10 +124,10 @@ describe('unlock transaction Status', () => {
     };
 
     const wrapper = shallow(<Status {...propsSuccess} />);
-    expect(wrapper.find('.transaction-Status')).toExist();
     expect(wrapper.find(TxBroadcaster).props()).toMatchObject({
       illustration: 'default',
       status: { code: 'BROADCAST_SUCCESS' },
+      message: 'Your transaction has been submitted and will be confirmed in a few moments.',
       title: 'Transaction submitted',
     });
     expect(wrapper.find(DialogLink).props()).toMatchObject({

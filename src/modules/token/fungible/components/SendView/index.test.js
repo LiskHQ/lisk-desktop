@@ -59,9 +59,9 @@ describe('Send', () => {
     const wrapper = mountWithRouter(Send, props);
     expect(wrapper).toContainMatchingElement('Dialog');
     expect(wrapper).toContainMatchingElement('MultiStep');
-    expect(wrapper).toContainMatchingElement('Form');
-    expect(wrapper).not.toContainMatchingElement('Summary');
-    expect(wrapper).not.toContainMatchingElement('TransactionStatus');
+    expect(wrapper).toContainMatchingElement('SendForm');
+    expect(wrapper).not.toContainMatchingElement('SendSummary');
+    expect(wrapper).not.toContainMatchingElement('SendStatus');
   });
 
   it('should render properly without getting data from URL', () => {
@@ -72,6 +72,6 @@ describe('Send', () => {
     wrapper.update();
     expect(wrapper).toContainMatchingElement('Dialog');
     expect(wrapper).toContainMatchingElement('MultiStep');
-    expect(wrapper).toContainMatchingElement('Form');
+    expect(wrapper).toContainMatchingElement('SendForm');
   });
 });
