@@ -18,7 +18,7 @@ export const ACCOUNT_MENU = [
     label: 'Backup account',
   },
   {
-    path: routes.login.removeAccount,
+    component: 'removeCurrentAccountFlow',
     icon: 'remove',
     label: 'Remove account',
   },
