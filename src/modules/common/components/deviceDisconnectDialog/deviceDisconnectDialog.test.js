@@ -1,5 +1,5 @@
 import { mountWithRouter } from 'src/utils/testHelpers';
-import { DeviceDisconnectDialog } from '.';
+import { DeviceDisconnectDialog } from './index';
 
 describe('DeviceDisconnectModal', () => {
   it('renders properly', () => {

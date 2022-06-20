@@ -2,8 +2,8 @@
 import React from 'react';
 import RecentTransactions from '@transaction/components/RecentTransactions';
 import WalletDetails from '@token/fungible/manager/walletDetails';
-import Onboarding from './onboarding/onboarding';
-import NewsFeed from './newsFeed';
+import Onboarding from '../onboarding/onboarding';
+import NewsFeed from '../newsFeed';
 import styles from './dashboard.css';
 
 const getOnboardingSlides = (t) => [

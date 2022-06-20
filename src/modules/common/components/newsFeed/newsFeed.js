@@ -1,11 +1,11 @@
 import React, { useEffect, useState } from 'react';
-import Box from 'src/theme/box';
-import BoxRow from 'src/theme/box/row';
-import BoxHeader from 'src/theme/box/header';
-import BoxContent from 'src/theme/box/content';
-import BoxTabs from 'src/theme/tabs';
-import BoxEmptyState from 'src/theme/box/emptyState';
-import Icon from 'src/theme/Icon';
+import Box from '@theme/box';
+import BoxRow from '@theme/box/row';
+import BoxHeader from '@theme/box/header';
+import BoxContent from '@theme/box/content';
+import BoxTabs from '@theme/tabs';
+import BoxEmptyState from '@theme/box/emptyState';
+import Icon from '@theme/Icon';
 import News from './news';
 import styles from './newsFeed.css';
 

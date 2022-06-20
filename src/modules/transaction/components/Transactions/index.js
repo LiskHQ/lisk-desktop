@@ -1,7 +1,6 @@
 import React from 'react';
-import TransactionsList from '@transaction/components/TransactionMonitor';
-
-import Overview from './overview';
+import TransactionsList from '../TransactionMonitor';
+import Overview from '../Overview';
 
 const Transactions = () => (
   <div>

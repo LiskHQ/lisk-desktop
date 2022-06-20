@@ -7,8 +7,8 @@ import {
 } from '@wallet/utils/hwManager';
 import routes from 'src/routes/routes';
 import { tokenMap } from '@token/fungible/consts/tokens';
-import { TertiaryButton } from 'src/theme/buttons';
-import CheckBox from 'src/theme/CheckBox';
+import { TertiaryButton } from '@theme/buttons';
+import CheckBox from '@theme/CheckBox';
 import AccountCard from './accountCard';
 import LoadingIcon from '../loadingIcon';
 import styles from './selectAccount.css';

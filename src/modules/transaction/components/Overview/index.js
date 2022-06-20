@@ -4,7 +4,7 @@ import { withTranslation } from 'react-i18next';
 
 import withData from 'src/utils/withData';
 import { getTransactionStats } from '@transaction/api';
-import Overview from './overview';
+import Overview from './Overview';
 
 export default compose(
   withData(

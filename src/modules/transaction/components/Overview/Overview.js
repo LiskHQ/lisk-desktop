@@ -7,18 +7,18 @@ import { kFormatter } from 'src/utils/helpers';
 import { chartStyles } from 'src/modules/common/components/charts/chartConfig';
 import { MODULE_ASSETS_NAME_ID_MAP } from '@transaction/configuration/moduleAssets';
 import { getModuleAssetTitle } from '@transaction/utils/moduleAssets';
-import { useTheme } from 'src/theme/Theme';
+import { useTheme } from '@theme/Theme';
 import { getColorPalette } from 'src/modules/common/components/charts/chartOptions';
-import Box from 'src/theme/box';
-import BoxTabs from 'src/theme/tabs';
-import BoxHeader from 'src/theme/box/header';
-import BoxContent from 'src/theme/box/content';
+import Box from '@theme/box';
+import BoxTabs from '@theme/tabs';
+import BoxHeader from '@theme/box/header';
+import BoxContent from '@theme/box/content';
 import { DoughnutChart, BarChart } from 'src/modules/common/components/charts';
-import Tooltip from 'src/theme/Tooltip';
+import Tooltip from '@theme/Tooltip';
 import GuideTooltip, {
   GuideTooltipItem,
 } from 'src/modules/common/components/charts/guideTooltip';
-import styles from './overview.css';
+import styles from './Overview.css';
 
 const moduleAssetIds = Object.values(MODULE_ASSETS_NAME_ID_MAP);
 const titles = getModuleAssetTitle();

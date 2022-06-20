@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { withTranslation } from 'react-i18next';
 import { useSelector } from 'react-redux';
-import Icon from 'src/theme/Icon';
+import Icon from '@theme/Icon';
 import styles from './infoBanner.css';
 
 const InfoBanner = ({

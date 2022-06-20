@@ -4,8 +4,8 @@ import { withRouter } from 'react-router';
 import { withTranslation } from 'react-i18next';
 
 import { selectSearchParamValue } from 'src/utils/searchParams';
-import Dialog from 'src/theme/dialog/dialog';
-import { PrimaryButton } from 'src/theme/buttons';
+import Dialog from '@theme/dialog/dialog';
+import { PrimaryButton } from '@theme/buttons';
 
 import styles from './styles.css';
 

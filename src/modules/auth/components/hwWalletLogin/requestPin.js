@@ -3,7 +3,7 @@ import React from 'react';
 import { getPublicKey, validatePin } from '@wallet/utils/hwManager';
 import { externalLinks } from 'src/utils/externalLinks';
 import { Input } from 'src/theme';
-import { PrimaryButton, TertiaryButton } from 'src/theme/buttons';
+import { PrimaryButton, TertiaryButton } from '@theme/buttons';
 import styles from './requestPin.css';
 
 class RequestPin extends React.Component {

@@ -2,12 +2,12 @@ import React, { useState, useEffect } from 'react';
 import { withTranslation } from 'react-i18next';
 import { tokenMap } from '@token/fungible/consts/tokens';
 import { truncateAddress } from '@wallet/utils/account';
-import { TertiaryButton } from 'src/theme/buttons';
+import { TertiaryButton } from '@theme/buttons';
 import WalletVisual from '@wallet/components/walletVisual';
 import TokenAmount from '@token/fungible/components/tokenAmount';
 import { Input } from 'src/theme';
-import Icon from 'src/theme/Icon';
-import Tooltip from 'src/theme/Tooltip';
+import Icon from '@theme/Icon';
+import Tooltip from '@theme/Tooltip';
 import styles from './selectAccount.css';
 
 const AccountCard = ({

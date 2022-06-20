@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import { useSelector } from 'react-redux';
 import { withTranslation } from 'react-i18next';
-import { PrimaryButton, SecondaryButton } from 'src/theme/buttons';
+import { PrimaryButton, SecondaryButton } from '@theme/buttons';
 import Illustration from 'src/modules/common/components/illustration';
 import styles from './onboarding.css';
 

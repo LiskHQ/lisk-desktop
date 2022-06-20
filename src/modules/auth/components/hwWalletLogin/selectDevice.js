@@ -1,8 +1,8 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import routes from 'src/routes/routes';
-import { PrimaryButton, TertiaryButton } from 'src/theme/buttons';
-import Icon from 'src/theme/Icon';
+import { PrimaryButton, TertiaryButton } from '@theme/buttons';
+import Icon from '@theme/Icon';
 import styles from './selectDevice.css';
 
 class SelectDevice extends React.Component {
