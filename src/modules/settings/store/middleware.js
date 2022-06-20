@@ -1,5 +1,5 @@
 import { setInStorage } from 'src/utils/localJSONStorage';
-import { pricesRetrieved, settingsUpdated } from '@common/store/actions';
+import { pricesRetrieved, settingsUpdated } from 'src/redux/actions';
 import networkActionTypes from '@network/store/actionTypes';
 import actionTypes from './actionTypes';
 

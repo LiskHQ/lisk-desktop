@@ -6,7 +6,7 @@ import {
   selectCurrentBlockHeight,
   selectActiveTokenAccount,
   selectActiveToken,
-} from '@common/store';
+} from 'src/redux/selectors';
 import BoxContent from 'src/theme/box/content';
 import BoxHeader from 'src/theme/box/header';
 import TxComposer from '@transaction/components/TxComposer';

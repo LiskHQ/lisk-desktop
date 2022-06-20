@@ -3,7 +3,7 @@ import BlockDetails from '@block/manager/blockDetailsManager';
 import Blocks from '@block/manager/blocksManager';
 import Bookmarks from '@bookmark/manager/BookmarkListManager';
 import Dashboard from '@screens/managers/dashboard';
-import DelegatesMonitor from '@dpos/validator/components/delegatesMonitorView';
+import DelegatesMonitor from '@dpos/validator/components/DelegatesMonitorView';
 import DelegatesPerformanceModal from '@screens/managers/wallet/delegatePerformanceModal';
 import HwWalletLogin from '@screens/managers/hwWalletLogin';
 import Login from '@auth/components/Signin';

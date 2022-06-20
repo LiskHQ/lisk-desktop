@@ -2,7 +2,7 @@ import React from 'react';
 import Box from 'src/theme/box';
 import TxBroadcaster from '@transaction/components/TxBroadcaster';
 import { getTransactionStatus } from '@transaction/configuration/statusConfig';
-import ToggleIcon from '../toggleIcon';
+import ToggleIcon from '../ToggleIcon';
 import statusMessages from './statusMessages';
 import styles from './styles.css';
 

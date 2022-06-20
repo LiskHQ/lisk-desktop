@@ -8,7 +8,7 @@ import {
 } from 'src/theme/buttons';
 import DialogLink from 'src/theme/dialog/link';
 import Tooltip from 'src/theme/Tooltip';
-import { selectAccountBalance, selectLSKAddress } from '@common/store/selectors';
+import { selectAccountBalance, selectLSKAddress } from 'src/redux/selectors';
 import SignInTooltipWrapper from 'src/modules/common/components/signInTooltipWrapper';
 import EmptyBalanceTooltipWrapper from './EmptyBalanceTooltipWrapper';
 import styles from './BalanceInfo.css';

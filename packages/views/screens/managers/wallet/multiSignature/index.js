@@ -1,7 +1,7 @@
 import React from 'react';
 import { useSelector } from 'react-redux';
 import { withTranslation } from 'react-i18next';
-import { selectActiveTokenAccount } from '@common/store';
+import { selectActiveTokenAccount } from 'src/redux/selectors';
 import MultiSignatureComponent from './multiSignature';
 import { multisignGroups, transactionsData } from './mockData';
 

@@ -1,6 +1,6 @@
 import {
   accountDataUpdated, transactionsRetrieved, emptyTransactionsData,
-} from '@common/store/actions';
+} from 'src/redux/actions';
 
 import commonActionTypes from 'src/modules/common/store/actionTypes';
 import blockActionTypes from '@block/store/actionTypes';
@@ -17,7 +17,7 @@ jest.mock('@transaction/api', () => ({
   emptyTransactionsData: jest.fn(),
 }));
 
-jest.mock('@common/store/actions', () => ({
+jest.mock('src/redux/actions', () => ({
   accountDataUpdated: jest.fn(),
   transactionsRetrieved: jest.fn(),
   settingsUpdated: jest.fn(),

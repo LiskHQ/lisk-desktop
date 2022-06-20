@@ -1,7 +1,7 @@
 /* istanbul ignore file */
 import { connect } from 'react-redux';
 import settingConstants from 'src/modules/settings/const/settingConstants';
-import { selectActiveToken } from '@common/store';
+import { selectActiveToken } from 'src/redux/selectors';
 import Converter from './converter';
 
 const mapStateToProps = state => ({

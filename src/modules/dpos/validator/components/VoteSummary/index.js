@@ -2,8 +2,8 @@
 import React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useTranslation } from 'react-i18next';
-import { votesSubmitted } from '@common/store/actions';
-import { selectActiveTokenAccount } from '@common/store';
+import { votesSubmitted } from 'src/redux/actions';
+import { selectActiveTokenAccount } from 'src/redux/selectors';
 import SummaryComponent from './VoteSummary';
 
 const Summary = (props) => {

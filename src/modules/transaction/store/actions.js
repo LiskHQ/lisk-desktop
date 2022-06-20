@@ -3,7 +3,7 @@ import { DEFAULT_LIMIT } from 'src/utils/monitor';
 import { signatureCollectionStatus } from '@transaction/configuration/txStatus';
 import { extractKeyPair } from '@wallet/utils/account';
 import { getTransactionSignatureStatus } from '@wallet/components/signMultisigView/helpers';
-import { selectActiveTokenAccount } from '@common/store';
+import { selectActiveTokenAccount } from 'src/redux/selectors';
 import { timerReset } from '@auth/store/action';
 import { loadingStarted, loadingFinished } from 'src/modules/common/store/actions';
 import actionTypes from './actionTypes';

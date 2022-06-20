@@ -1,12 +1,12 @@
 import { renderHook, act } from '@testing-library/react-hooks';
 import { mountWithRouter } from 'src/utils/testHelpers';
 import { useDispatch } from 'react-redux';
-import { appUpdateAvailable } from '@common/store/actions';
+import { appUpdateAvailable } from 'src/redux/actions';
 import FlashMessageHolder from 'src/theme/flashMessage/holder';
 import DialogHolder from 'src/theme/dialog/holder';
 import useIpc from './useIpc';
 
-jest.mock('@common/store');
+jest.mock('src/redux/selectors');
 
 const mockHistory = {
   push: jest.fn(),

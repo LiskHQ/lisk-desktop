@@ -8,7 +8,7 @@ import grid from 'flexboxgrid/dist/flexboxgrid.css';
 
 import withData from 'src/utils/withData';
 import { getTransactions } from '@transaction/api';
-import { selectActiveTokenAccount } from '@common/store';
+import { selectActiveTokenAccount } from 'src/redux/selectors';
 import FlashMessageHolder from 'src/theme/flashMessage/holder';
 import WarnPunishedDelegate from '@dpos/validator/components/WarnPunishedDelegate';
 import WalletInfo from '@wallet/components/walletInfo';

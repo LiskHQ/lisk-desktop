@@ -3,7 +3,7 @@ import { useSelector } from 'react-redux';
 import grid from 'flexboxgrid/dist/flexboxgrid.css';
 
 import { selectSearchParamValue } from 'src/utils/searchParams';
-import { selectActiveTokenAccount, selectNetwork } from '@common/store';
+import { selectActiveTokenAccount, selectNetwork } from 'src/redux/selectors';
 import routes from 'src/routes/routes';
 import { extractAddressFromPublicKey } from '@wallet/utils/account';
 import Box from 'src/theme/box';

@@ -1,4 +1,4 @@
-import { resetTransactionResult } from '@common/store/actions';
+import { resetTransactionResult } from 'src/redux/actions';
 import actionTypes from './actionTypes';
 import transactions from './reducer';
 

@@ -2,7 +2,7 @@
 import { to } from 'await-to-js';
 import { createGenericTx } from '@transaction/api';
 import { getAccount } from '@wallet/utils/api';
-import { selectActiveTokenAccount } from '@common/store/selectors';
+import { selectActiveTokenAccount } from 'src/redux/selectors';
 import { networkStatusUpdated } from '@network/store/action';
 import transactionActionTypes from '@transaction/store/actionTypes';
 import actionTypes from './actionTypes';

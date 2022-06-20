@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { useSelector } from 'react-redux';
-import { selectActiveTokenAccount } from '@common/store/selectors';
+import { selectActiveTokenAccount } from 'src/redux/selectors';
 import { extractPublicKey } from '@wallet/utils/account';
 
 const empty2ndPass = {

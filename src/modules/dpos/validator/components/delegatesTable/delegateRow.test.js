@@ -1,9 +1,9 @@
 import React from 'react';
 import { mountWithContext } from '@tests/unit-test-utils/mountHelpers';
-import { addedToWatchList, removedFromWatchList } from '@common/store/actions';
+import { addedToWatchList, removedFromWatchList } from 'src/redux/actions';
 import DelegateRow from './delegateRow';
 
-jest.mock('@common/store/actions');
+jest.mock('src/redux/actions');
 
 let wrapper;
 const props = {

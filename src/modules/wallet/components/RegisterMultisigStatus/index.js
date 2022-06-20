@@ -2,8 +2,8 @@
 import React from 'react';
 import { withTranslation } from 'react-i18next';
 import { useDispatch, useSelector } from 'react-redux';
-import { selectActiveTokenAccount } from '@common/store/selectors';
-import { transactionBroadcasted } from '@common/store/actions';
+import { selectActiveTokenAccount } from 'src/redux/selectors';
+import { transactionBroadcasted } from 'src/redux/actions';
 import StatusComponent from './status';
 
 const Status = (props) => {

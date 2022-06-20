@@ -7,7 +7,7 @@ import {
   selectActiveToken,
   selectActiveTokenAccount,
   selectCurrentBlockHeight,
-} from '@common/store/selectors';
+} from 'src/redux/selectors';
 import routes from 'src/routes/routes';
 import { SecondaryButton } from 'src/theme/buttons';
 import Box from 'src/theme/box';

@@ -7,10 +7,10 @@ import BoxHeader from 'src/theme/box/header';
 import BoxContent from 'src/theme/box/content';
 import BoxTabs from 'src/theme/tabs';
 import { ROUND_LENGTH } from '@dpos/validator/consts';
-import DelegatesOverview from '../overview/delegatesOverview';
-import ForgingDetails from '../overview/forgingDetails';
-import DelegatesTable from '../delegatesTable';
-import LatestVotes from '../latestVotes';
+import DelegatesOverview from '../Overview/delegatesOverview';
+import ForgingDetails from '../Overview/forgingDetails';
+import DelegatesTable from '../DelegatesTable';
+import LatestVotes from '../LatestVotes';
 import styles from './delegates.css';
 
 // eslint-disable-next-line max-statements

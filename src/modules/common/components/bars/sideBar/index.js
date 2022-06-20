@@ -6,7 +6,7 @@ import account from '@wallet/configuration/constants';
 import routes, { modals } from 'src/routes/routes';
 import { accountLoggedOut } from '@auth/store/action';
 import Icon from 'src/theme/Icon';
-import { selectActiveToken } from '@common/store';
+import { selectActiveToken } from 'src/redux/selectors';
 import DialogLink from 'src/theme/dialog/link';
 import styles from './sideBar.css';
 import AutoSignOut from './autoSignOut';

@@ -10,7 +10,7 @@ import Icon from 'src/theme/Icon';
 import { useTheme } from 'src/theme/Theme';
 import { DEFAULT_STANDBY_THRESHOLD } from '@dpos/validator/consts';
 import DelegateRowContext from '../../context/delegateRowContext';
-import styles from '../delegatesMonitorView/delegates.css';
+import styles from '../DelegatesMonitorView/delegates.css';
 import {
   getDelegateDetailsClass,
   getStatusClass,

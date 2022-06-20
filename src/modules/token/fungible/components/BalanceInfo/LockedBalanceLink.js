@@ -8,7 +8,7 @@ import {
   calculateBalanceLockedInUnvotes,
   calculateBalanceLockedInVotes,
 } from '@wallet/utils/account';
-import { selectActiveTokenAccount } from '@common/store';
+import { selectActiveTokenAccount } from 'src/redux/selectors';
 import Icon from 'src/theme/Icon';
 import styles from './BalanceInfo.css';
 

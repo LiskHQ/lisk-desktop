@@ -5,7 +5,7 @@ import { useTranslation } from 'react-i18next';
 import { validateAmountFormat } from 'src/utils/validators';
 import { fromRawLsk } from '@token/fungible/utils/lsk';
 import { selectSearchParamValue } from 'src/utils/searchParams';
-import { selectAccountBalance, selectLSKAddress } from '@common/store/selectors';
+import { selectAccountBalance, selectLSKAddress } from 'src/redux/selectors';
 import { regex } from 'src/const/regex';
 import { tokenMap } from '@token/fungible/consts/tokens';
 

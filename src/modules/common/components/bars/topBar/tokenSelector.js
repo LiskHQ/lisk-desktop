@@ -1,11 +1,11 @@
 import React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 
-import { settingsUpdated } from '@common/store/actions';
+import { settingsUpdated } from 'src/redux/actions';
 import routes from 'src/routes/routes';
 import Icon from 'src/theme/Icon';
 import Tooltip from 'src/theme/Tooltip';
-import { selectActiveToken } from '@common/store';
+import { selectActiveToken } from 'src/redux/selectors';
 import styles from './topBar.css';
 
 const TokenSelector = ({

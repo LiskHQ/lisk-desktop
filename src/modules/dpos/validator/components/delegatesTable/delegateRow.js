@@ -3,10 +3,10 @@ import { Link } from 'react-router-dom';
 
 import { useDispatch } from 'react-redux';
 import routes from 'src/routes/routes';
-import { addedToWatchList, removedFromWatchList } from '@common/store/actions';
+import { addedToWatchList, removedFromWatchList } from 'src/redux/actions';
 import getForgingTime from '../../utils/getForgingTime';
 import DelegateRowContext from '../../context/delegateRowContext';
-import delegateStyles from '../delegatesMonitorView/delegates.css';
+import delegateStyles from '../DelegatesMonitorView/delegates.css';
 import styles from './schemas.css';
 import LayoutSchema from './layoutSchema';
 

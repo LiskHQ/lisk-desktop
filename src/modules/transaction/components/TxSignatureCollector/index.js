@@ -2,7 +2,7 @@
 import { withRouter } from 'react-router';
 import { connect } from 'react-redux';
 import { compose } from 'redux';
-import { multisigTransactionSigned, transactionDoubleSigned, signatureSkipped } from '@common/store/actions';
+import { multisigTransactionSigned, transactionDoubleSigned, signatureSkipped } from 'src/redux/actions';
 import { withTranslation } from 'react-i18next';
 import TxSignatureCollector from './TxSignatureCollector';
 

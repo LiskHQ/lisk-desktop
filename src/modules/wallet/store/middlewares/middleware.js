@@ -1,11 +1,11 @@
 import { MODULE_ASSETS_NAME_ID_MAP } from '@transaction/configuration/moduleAssets';
 import { fromRawLsk, delay } from '@token/fungible/utils/lsk';
-import { selectActiveToken, selectActiveTokenAccount } from '@common/store/selectors';
+import { selectActiveToken, selectActiveTokenAccount } from 'src/redux/selectors';
 import {
   accountDataUpdated,
   emptyTransactionsData,
   transactionsRetrieved,
-} from '@common/store/actions';
+} from 'src/redux/actions';
 import { getTransactions } from '@transaction/api';
 import i18n from 'src/utils/i18n/i18n';
 import blockActionTypes from '@block/store/actionTypes';

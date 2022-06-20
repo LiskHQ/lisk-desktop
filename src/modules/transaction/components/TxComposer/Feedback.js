@@ -3,7 +3,7 @@ import { useSelector } from 'react-redux';
 import { useTranslation } from 'react-i18next';
 import {
   selectActiveToken,
-} from '@common/store';
+} from 'src/redux/selectors';
 import { isEmpty } from 'src/utils/helpers';
 import { toRawLsk, fromRawLsk } from '@token/fungible/utils/lsk';
 import { dustThreshold } from '@wallet/configuration/constants';

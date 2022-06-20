@@ -7,7 +7,7 @@ import actionTypes from 'src/modules/common/store/actionTypes';
 import * as reducers from 'src/redux/rootReducer';
 import middleWares from 'src/redux/middlewares';
 
-export * from './selectors';
+export * from 'src/redux/selectors';
 
 const rootReducer = combineReducers(reducers);
 const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
@@ -16,7 +16,7 @@ const store = createStore(rootReducer, composeEnhancers(applyMiddleware(...middl
 store.dispatch({ type: actionTypes.storeCreated });
 const persistedStore = persistStore(store);
 
-// ignore this in coverage as it is hard to test and does not run in production
+// ignore this in coverage as it is hard to test andk does not run in production
 if (module.hot) {
   module.hot.accept('src/redux/rootReducer', () => {
     const nextReducer = combineReducers(require('src/redux/rootReducer'));

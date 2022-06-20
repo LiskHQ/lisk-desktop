@@ -5,7 +5,7 @@ import { connect } from 'react-redux';
 import { withRouter } from 'react-router-dom';
 import { withTranslation } from 'react-i18next';
 import grid from 'flexboxgrid/dist/flexboxgrid.css';
-import { selectActiveTokenAccount, selectActiveToken } from '@common/store';
+import { selectActiveTokenAccount, selectActiveToken } from 'src/redux/selectors';
 import { getTransaction } from '@transaction/api';
 import Dialog from '@theme/dialog/dialog';
 import withData from 'src/utils/withData';

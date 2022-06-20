@@ -1,7 +1,7 @@
 // istanbul ignore file
 import { withTranslation } from 'react-i18next';
 import withData from 'src/utils/withData';
-import { selectActiveTokenAccount } from '@common/store';
+import { selectActiveTokenAccount } from 'src/redux/selectors';
 import RecentTransaction from '../components/RecentTransactions/RecentTransactions';
 import { getTransactions } from '../api';
 

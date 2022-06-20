@@ -2,7 +2,7 @@
 import { compose } from 'redux';
 import { connect } from 'react-redux';
 import { withTranslation } from 'react-i18next';
-import { settingsUpdated } from '@common/store/actions';
+import { settingsUpdated } from 'src/redux/actions';
 import HardwareWalletLogin from './hwWalletLogin';
 
 const mapStateToProps = state => ({
