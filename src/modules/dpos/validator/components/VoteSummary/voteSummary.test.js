@@ -59,6 +59,29 @@ const edited = {
   },
 };
 
+const rawTx = {
+  sender: {
+    publicKey: accounts.genesis.summary.publicKey,
+    address: accounts.genesis.summary.address,
+  },
+  nonce: accounts.genesis.sequence.nonce,
+  fee: '1000000',
+  signatures: [],
+  moduleAssetId: '5:1',
+  asset: {
+    votes: [
+      {
+        amount: '100',
+        delegateAddress: accounts.genesis.summary.address,
+      },
+      {
+        amount: '-100',
+        delegateAddress: accounts.delegate.summary.address,
+      },
+    ],
+  },
+};
+
 const transaction = { id: 1 };
 
 const props = {
@@ -69,6 +92,7 @@ const props = {
   fee: 1000000000,
   transactions: { txSignatureError: null, signedTransaction: transaction },
   normalizedVotes: { lsk123: {} },
+  rawTx,
 };
 
 beforeEach(() => {
@@ -124,10 +148,7 @@ describe('VotingQueue.Summary', () => {
     wrapper.find('button.confirm-button').simulate('click');
 
     expect(props.nextStep).toHaveBeenCalledWith({
-      rawTransaction: {
-        fee: String(props.fee),
-        votes: props.normalizedVotes,
-      },
+      rawTx,
       actionFunction: props.votesSubmitted,
       statusInfo: {
         locked: 0,
@@ -148,10 +169,7 @@ describe('VotingQueue.Summary', () => {
     wrapper.find('button.confirm-button').simulate('click');
     expect(props.nextStep).toHaveBeenCalledTimes(1);
     expect(props.nextStep).toHaveBeenCalledWith({
-      rawTransaction: {
-        fee: String(props.fee),
-        votes: props.normalizedVotes,
-      },
+      rawTx,
       actionFunction: props.votesSubmitted,
       statusInfo: {
         locked: 100,
