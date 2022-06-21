@@ -3,7 +3,7 @@ import { useSelector } from 'react-redux';
 import { mountWithRouter, mountWithRouterAndStore } from 'src/utils/testHelpers';
 import transactions from '@tests/constants/transactions';
 import defaultState from '@tests/constants/defaultState';
-import TransactionsPure from './index';
+import TransactionsPure from '../TransactionMonitor';
 
 jest.mock('react-redux', () => ({
   ...jest.requireActual('react-redux'),
