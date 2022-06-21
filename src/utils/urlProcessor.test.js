@@ -52,7 +52,7 @@ describe('setVotesByLaunchProtocol', () => {
     expect(accounts.getAccounts).toHaveBeenCalledWith({
       params: { usernameList: ['genesis_5'] },
       network,
-    }, 'LSK');
+    });
     expect(accounts.getAccount).not.toHaveBeenCalledWith();
     expect(dispatch).toHaveBeenCalled();
   });
@@ -92,6 +92,6 @@ describe('setVotesByLaunchProtocol', () => {
     expect(accounts.getAccounts).toHaveBeenCalledWith({
       params: { usernameList: ['genesis_17', 'test'] },
       network,
-    }, 'LSK');
+    });
   });
 });
