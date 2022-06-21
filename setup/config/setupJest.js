@@ -74,7 +74,6 @@ ReactRedux.connect = jest.fn((mapStateToProps, mapDispatchToProps = {}) => ((Com
 
 ReactRedux.useSelector = jest.fn((filter) => {
   let result;
-  console.log('->>', ReactRedux.useStore().getState());
   try {
     result = filter(lodashMerge(defaultState, ReactRedux.useStore().getState()));
   } catch (e) {
