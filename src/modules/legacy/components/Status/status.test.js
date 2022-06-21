@@ -37,7 +37,7 @@ describe('Status', () => {
     };
 
     const wrapper = shallow(<Status {...propsWithSignedTx} />);
-    expect(wrapper.find('.Status-container')).toExist();
+    expect(wrapper.find('.status-container')).toExist();
     expect(wrapper.find(TxBroadcaster).props()).toMatchObject({
       illustration: 'default',
       status: { code: 'SIGNATURE_SUCCESS' },
@@ -57,7 +57,7 @@ describe('Status', () => {
     };
 
     const wrapper = shallow(<Status {...propsWithError} />);
-    expect(wrapper.find('.Status-container')).toExist();
+    expect(wrapper.find('.status-container')).toExist();
     expect(wrapper.find(TxBroadcaster).props()).toMatchObject({
       illustration: 'default',
       status: { code: 'SIGNATURE_ERROR', message: JSON.stringify({ message: 'error:test' }) },
@@ -77,7 +77,7 @@ describe('Status', () => {
     };
 
     const wrapper = shallow(<Status {...propsWithError} />);
-    expect(wrapper.find('.Status-container')).toExist();
+    expect(wrapper.find('.status-container')).toExist();
     expect(wrapper.find(TxBroadcaster).props()).toMatchObject({
       illustration: 'default',
       status: { code: 'BROADCAST_ERROR', message: JSON.stringify({ message: 'error:test' }) },
@@ -97,7 +97,7 @@ describe('Status', () => {
     };
 
     const wrapper = shallow(<Status {...propsSuccess} />);
-    expect(wrapper.find('.Status-container')).toExist();
+    expect(wrapper.find('.status-container')).toExist();
     expect(wrapper.find(TxBroadcaster).props()).toMatchObject({
       illustration: 'default',
       status: { code: 'BROADCAST_SUCCESS' },
