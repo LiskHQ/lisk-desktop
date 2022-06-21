@@ -18,7 +18,7 @@ describe('Onboarding component', () => {
     className: '',
     t: v => v,
   };
-  const store = configureStore()({ account: { passphrase: 'test' } });
+  const store = configureStore()({ wallet: { passphrase: 'test' } });
   const mountWithProps = (extraProps = {}) => {
     // eslint-disable-next-line prefer-object-spread
     const mergedProps = Object.assign({}, props, extraProps);
