@@ -33,7 +33,7 @@ describe('Delegate Registration Status', () => {
     };
 
     const wrapper = shallow(<Status {...propsWithSignedTx} />);
-    expect(wrapper.find('.Status-container')).toExist();
+    expect(wrapper.find('.status-container')).toExist();
   });
 
   it('passes correct props to TransactionResult when transaction sign failed', () => {
@@ -47,7 +47,7 @@ describe('Delegate Registration Status', () => {
     };
 
     const wrapper = shallow(<Status {...propsWithError} />);
-    expect(wrapper.find('.Status-container')).toExist();
+    expect(wrapper.find('.status-container')).toExist();
   });
 
   it('passes correct props to TransactionResult when transaction broadcast fails', () => {
@@ -61,7 +61,7 @@ describe('Delegate Registration Status', () => {
     };
 
     const wrapper = shallow(<Status {...propsWithError} />);
-    expect(wrapper.find('.Status-container')).toExist();
+    expect(wrapper.find('.status-container')).toExist();
   });
 
   it('passes correct props to TransactionResult when transaction broadcast success', () => {
@@ -75,6 +75,6 @@ describe('Delegate Registration Status', () => {
     };
 
     const wrapper = shallow(<Status {...propsSuccess} />);
-    expect(wrapper.find('.Status-container')).toExist();
+    expect(wrapper.find('.status-container')).toExist();
   });
 });

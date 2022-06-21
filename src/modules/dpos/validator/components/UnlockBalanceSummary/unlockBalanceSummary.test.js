@@ -1,14 +1,19 @@
 import React from 'react';
 import { mount } from 'enzyme';
 import wallets from '@tests/constants/wallets';
+import { MODULE_ASSETS_NAME_ID_MAP } from '@transaction/configuration/moduleAssets';
 import Summary from './UnlockBalanceSummary';
 
 describe('Locked balance Summary', () => {
   const props = {
     currentBlockHeight: 10000000,
     balanceUnlocked: jest.fn(),
-    rawTransaction: {
-      selectedFee: '2500000000000',
+    rawTx: {
+      asset: {
+        unlockObjects: [],
+      },
+      isValid: true,
+      moduleAssetId: MODULE_ASSETS_NAME_ID_MAP.unlockToken,
     },
     nextStep: jest.fn(),
     prevStep: jest.fn(),
@@ -41,7 +46,7 @@ describe('Locked balance Summary', () => {
     wrapper.find('button.confirm-button').simulate('click');
     expect(props.nextStep).toBeCalledWith({
       actionFunction: props.balanceUnlocked,
-      rawTransaction: props.rawTransaction,
+      rawTx: props.rawTx,
     });
   });
 });
