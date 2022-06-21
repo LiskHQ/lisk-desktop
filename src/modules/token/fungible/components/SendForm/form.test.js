@@ -213,6 +213,8 @@ describe('Form', () => {
 
     it('Should allow to send 0 LSK amount', () => {
       const wrapper = mount(<Form {...props} />);
+      const receipientEvt = { target: { name: 'recipient', value: 'lsks6uckwnap7s72ov3edddwgxab5e89t6uy8gjt6' } };
+      wrapper.find('input.recipient').simulate('change', receipientEvt);
       const evt = { target: { name: 'amount', value: '0' } };
       const amountField = wrapper.find('.fieldGroup').at(1);
       amountField.find('input').simulate('change', evt);
