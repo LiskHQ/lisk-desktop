@@ -11,16 +11,14 @@ const UnlockBalanceSummary = ({
   wallet,
   t,
 }) => {
-  const onSubmit = () => {
-    nextStep({
-      rawTx,
-      actionFunction: balanceUnlocked,
-    });
-  };
-
   const onConfirmAction = {
     label: t('Confirm'),
-    onClick: onSubmit,
+    onClick: () => {
+      nextStep({
+        rawTx,
+        actionFunction: balanceUnlocked,
+      });
+    },
   };
   const onCancelAction = {
     label: t('Cancel'),

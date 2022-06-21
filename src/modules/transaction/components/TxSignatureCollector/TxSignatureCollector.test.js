@@ -19,7 +19,7 @@ describe('TxSignatureCollector', () => {
     account: accounts.genesis,
     actionFunction: jest.fn(),
     multisigTransactionSigned: jest.fn(),
-    rawTransaction: {},
+    rawTx: {},
     nextStep: jest.fn(),
     statusInfo: {},
     sender: { data: accounts.genesis },
@@ -29,7 +29,7 @@ describe('TxSignatureCollector', () => {
   it('should call multisigTransactionSigned', () => {
     mount(<TxSignatureCollector {...props} />);
     expect(props.multisigTransactionSigned).toHaveBeenCalledWith({
-      rawTransaction: props.rawTransaction,
+      rawTx: props.rawTx,
       sender: props.sender,
     });
   });
@@ -50,7 +50,7 @@ describe('TxSignatureCollector', () => {
     });
     wrapper.update();
     expect(props.nextStep).toHaveBeenCalledWith({
-      rawTransaction: props.rawTransaction,
+      rawTx: props.rawTx,
       statusInfo: props.statusInfo,
       sender: props.sender,
     });
@@ -63,7 +63,7 @@ describe('TxSignatureCollector', () => {
     });
     wrapper.update();
     expect(props.nextStep).toHaveBeenCalledWith({
-      rawTransaction: props.rawTransaction,
+      rawTx: props.rawTx,
       statusInfo: props.statusInfo,
       sender: props.sender,
     });

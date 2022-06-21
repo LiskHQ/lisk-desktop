@@ -36,7 +36,7 @@ useTransactionFeeCalculation.mockImplementation(() => ({
   maxAmount: { value: 200000000 },
 }));
 
-describe('Form', () => {
+describe.skip('Form', () => {
   let props;
   let bookmarks;
 
