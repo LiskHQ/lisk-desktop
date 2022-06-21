@@ -12,7 +12,9 @@ import BoxFooter from 'src/theme/box/footer';
 import TransactionPriority from '@transaction/components/TransactionPriority';
 import { toRawLsk } from '@token/fungible/utils/lsk';
 import { PrimaryButton } from 'src/theme/buttons';
+import BalanceFeedback, { getMinRequiredBalance } from './BalanceFeedback';
 
+// eslint-disable-next-line max-statements
 const TxComposer = ({
   children, transaction, onComposed, onConfirm, className, buttonTitle,
 }) => {
@@ -46,6 +48,8 @@ const TxComposer = ({
     }
   }, [selectedPriority, transaction.asset]);
 
+  const minRequiredBalance = getMinRequiredBalance(transaction, status.fee);
+
   return (
     <Box className={className}>
       {children}
@@ -62,16 +66,15 @@ const TxComposer = ({
         loadError={prioritiesLoadError}
         isLoading={loadingPriorities}
       />
+      <BalanceFeedback
+        balance={wallet.token.balance}
+        minRequiredBalance={minRequiredBalance}
+      />
       <BoxFooter>
-        {
-          status.fee.feedback
-            ? (<span className="feedback">{status.fee.feedback}</span>)
-            : null
-        }
         <PrimaryButton
           className="confirm-btn"
           onClick={() => onConfirm({ ...rawTx, fee: toRawLsk(status.fee.value) })}
-          disabled={!transaction.isValid}
+          disabled={!transaction.isValid || minRequiredBalance > wallet.token.balance}
         >
           {
             buttonTitle ?? t('Continue')

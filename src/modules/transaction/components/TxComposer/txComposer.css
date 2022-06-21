@@ -1,0 +1,19 @@
+@import '../../../../../setup/react/app/mixins.css';
+
+.feedback {
+  width: 100%;
+  min-height: 40px;
+  height: auto;
+  background: var(--color-burnt-sienna);
+  border-radius: var(--border-radius-standard);
+  padding: var(--vertical-padding-m) var(--horizontal-padding-m);
+  margin-bottom: 5px;
+  box-sizing: border-box;
+
+  & span {
+    @mixin contentNormal;
+
+    line-height: 20px;
+    color: var(--color-strong-white);
+  }
+}
