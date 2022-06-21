@@ -57,7 +57,7 @@ describe('Multisignature editor component', () => {
   });
 
   it('CTA is disabled when form is invalid', () => {
-    expect(wrapper.find('.confirm-button').at(0)).toBeDisabled();
+    expect(wrapper.find('.confirm-btn').at(0)).toBeDisabled();
   });
 
   it('can add no more than 64 members', () => {
@@ -93,7 +93,7 @@ describe('Multisignature editor component', () => {
       { target: { value: wallets.delegate.summary.publicKey } },
     );
     act(() => { wrapper.update(); });
-    wrapper.find('.confirm-button').at(0).simulate('click');
+    wrapper.find('.confirm-btn').at(0).simulate('click');
     expect(props.nextStep).toHaveBeenCalledTimes(1);
   });
 });
