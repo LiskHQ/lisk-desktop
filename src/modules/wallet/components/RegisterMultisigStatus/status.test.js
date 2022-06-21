@@ -45,7 +45,7 @@ describe('Multisignature Status component', () => {
     };
 
     const wrapper = shallow(<Status {...propsWithSignedTx} />);
-    expect(wrapper.find('.transaction-Status')).toExist();
+    expect(wrapper.find('.transaction-status')).toExist();
     expect(wrapper.find(TxBroadcaster).props()).toEqual({
       illustration: 'registerMultisignature',
       status: { code: 'MULTISIG_SIGNATURE_PARTIAL_SUCCESS' },
@@ -66,7 +66,7 @@ describe('Multisignature Status component', () => {
     };
 
     const wrapper = shallow(<Status {...propsWithSignedTx} />);
-    expect(wrapper.find('.transaction-Status')).toExist();
+    expect(wrapper.find('.transaction-status')).toExist();
     expect(wrapper.find(TxBroadcaster).props()).toEqual({
       illustration: 'registerMultisignature',
       status: { code: 'SIGNATURE_SUCCESS' },
@@ -87,7 +87,7 @@ describe('Multisignature Status component', () => {
     };
 
     const wrapper = shallow(<Status {...propsWithError} />);
-    expect(wrapper.find('.transaction-Status')).toExist();
+    expect(wrapper.find('.transaction-status')).toExist();
     expect(wrapper.find(TxBroadcaster).props()).toEqual({
       illustration: 'registerMultisignature',
       status: { code: 'SIGNATURE_ERROR', message: JSON.stringify({ message: 'error:test' }) },
@@ -108,7 +108,7 @@ describe('Multisignature Status component', () => {
     };
 
     const wrapper = shallow(<Status {...propsWithError} />);
-    expect(wrapper.find('.transaction-Status')).toExist();
+    expect(wrapper.find('.transaction-status')).toExist();
     expect(wrapper.find(TxBroadcaster).props()).toEqual({
       illustration: 'registerMultisignature',
       status: { code: 'BROADCAST_ERROR', message: JSON.stringify({ message: 'error:test' }) },
@@ -129,7 +129,7 @@ describe('Multisignature Status component', () => {
     };
 
     const wrapper = shallow(<Status {...propsSuccess} />);
-    expect(wrapper.find('.transaction-Status')).toExist();
+    expect(wrapper.find('.transaction-status')).toExist();
     expect(wrapper.find(TxBroadcaster).props()).toMatchObject({
       illustration: 'registerMultisignature',
       status: { code: 'BROADCAST_SUCCESS' },
