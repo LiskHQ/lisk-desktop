@@ -34,8 +34,7 @@ describe('unlock transaction Status', () => {
     };
 
     const wrapper = shallow(<Status {...propsWithSignedTx} />);
-    expect(wrapper.find('.transaction-Status')).toExist();
-    expect(wrapper.find(TxBroadcaster).props()).toEqual({
+    expect(wrapper.props().children.props).toEqual({
       illustration: 'default',
       status: { code: 'SIGNATURE_SUCCESS' },
       title: 'Submitting the transaction',
@@ -55,8 +54,7 @@ describe('unlock transaction Status', () => {
     };
 
     let wrapper = shallow(<Status {...propsWithError} />);
-    expect(wrapper.find('.transaction-Status')).toExist();
-    expect(wrapper.find(TxBroadcaster).props()).toEqual({
+    expect(wrapper.props().children.props).toEqual({
       illustration: 'default',
       status: { code: 'SIGNATURE_ERROR', message: JSON.stringify({ message: 'error:test' }) },
       title: 'Transaction failed',
@@ -74,8 +72,7 @@ describe('unlock transaction Status', () => {
     };
 
     wrapper = shallow(<Status {...propsWithHWError} />);
-    expect(wrapper.find('.transaction-Status')).toExist();
-    expect(wrapper.find(TxBroadcaster).props()).toEqual({
+    expect(wrapper.props().children.props).toEqual({
       illustration: 'default',
       status: { code: 'HW_REJECTED', message: 'hwCommand' },
       title: 'Transaction aborted on device',
@@ -95,8 +92,7 @@ describe('unlock transaction Status', () => {
     };
 
     const wrapper = shallow(<Status {...propsWithError} />);
-    expect(wrapper.find('.transaction-Status')).toExist();
-    expect(wrapper.find(TxBroadcaster).props()).toEqual({
+    expect(wrapper.props().children.props).toEqual({
       illustration: 'default',
       status: { code: 'BROADCAST_ERROR', message: JSON.stringify({ message: 'error:test' }) },
       title: 'Transaction failed',
@@ -116,8 +112,7 @@ describe('unlock transaction Status', () => {
     };
 
     const wrapper = shallow(<Status {...propsSuccess} />);
-    expect(wrapper.find('.transaction-Status')).toExist();
-    expect(wrapper.find(TxBroadcaster).props()).toMatchObject({
+    expect(wrapper.props().children.props).toMatchObject({
       illustration: 'default',
       status: { code: 'BROADCAST_SUCCESS' },
       title: 'Transaction submitted',
