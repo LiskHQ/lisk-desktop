@@ -2,8 +2,6 @@ import React from 'react';
 import { act } from 'react-dom/test-utils';
 import { mount } from 'enzyme';
 import { tokenMap } from '@token/fungible/consts/tokens';
-import { getTransactionBaseFees, getTransactionFee } from '@transaction/api';
-// import useTransactionFeeCalculation from '@transaction/hooks/useTransactionFeeCalculation';
 import { fromRawLsk } from '@token/fungible/utils/lsk';
 import accounts from '@tests/constants/wallets';
 import flushPromises from '@tests/unit-test-utils/flushPromises';
@@ -14,27 +12,8 @@ jest.mock('@transaction/hooks/useTransactionFeeCalculation', () => jest.fn().moc
   fee: { value: 0.0001 },
   maxAmount: { value: 200000000 },
 }));
-// jest.mock('@transaction/api');
 
-const transactionBaseFees = {
-  Low: 156,
-  Medium: 100,
-  High: 51,
-};
-
-const mockFeeFactor = 100;
-// getTransactionBaseFees.mockResolvedValue(transactionBaseFees);
-// getTransactionFee.mockImplementation((params) => {
-  // const selectedTransactionPriority = params.selectedPriority.selectedIndex;
-  // const fees = fromRawLsk(
-    // Object.values(transactionBaseFees)[selectedTransactionPriority] * mockFeeFactor,
-  // );
-  // return ({
-    // value: fees, feedback: '', error: false,
-  // });
-// });
-
-describe.skip('Form', () => {
+describe('Form', () => {
   let props;
   let bookmarks;
 
@@ -63,10 +42,6 @@ describe.skip('Form', () => {
       nextStep: jest.fn(),
     };
   });
-
-  // afterEach(() => {
-  //   jest.clearAllMocks();
-  // });
 
   it('should render properly', () => {
     const wrapper = mount(<Form {...props} />);
@@ -107,7 +82,7 @@ describe.skip('Form', () => {
     act(() => { wrapper.update(); });
     await flushPromises();
 
-    expect(wrapper.find('.confirm-btn')).not.toBeDisabled();
+    expect(wrapper.find('.confirm-btn').at(0)).not.toBeDisabled();
     wrapper.find('.confirm-btn').at(0).simulate('click');
     expect(props.nextStep).toHaveBeenCalled();
   });
@@ -221,7 +196,7 @@ describe.skip('Form', () => {
       wrapper.update();
 
       expect(wrapper.find('.amount Feedback')).toHaveText('Provided amount will result in a wallet with less than the minimum balance.');
-      expect(wrapper.find('.confirm-btn')).toBeDisabled();
+      expect(wrapper.find('.confirm-btn').at(0)).toBeDisabled();
     });
 
     it('Should show error if amount is negative', () => {
@@ -233,7 +208,7 @@ describe.skip('Form', () => {
       wrapper.update();
 
       expect(wrapper.find('.amount Feedback')).toHaveText('Amount can\'t be negative.');
-      expect(wrapper.find('.confirm-btn')).toBeDisabled();
+      expect(wrapper.find('.confirm-btn').at(0)).toBeDisabled();
     });
 
     it('Should allow to send 0 LSK amount', () => {
@@ -245,7 +220,7 @@ describe.skip('Form', () => {
       wrapper.update();
 
       expect(wrapper.find('.amount Feedback')).not.toHaveText(expect.any(String));
-      expect(wrapper.find('.confirm-btn')).not.toBeDisabled();
+      expect(wrapper.find('.confirm-btn').at(0)).not.toBeDisabled();
     });
 
     it('Should be able to send entire balance', () => {
@@ -257,7 +232,7 @@ describe.skip('Form', () => {
       wrapper.update();
 
       expect(wrapper.find('.amount Feedback')).toHaveText('');
-      expect(wrapper.find('.confirm-btn')).not.toBeDisabled();
+      expect(wrapper.find('.confirm-btn').at(0)).not.toBeDisabled();
     });
 
     it('Should update amount field if maximum value changes', () => {
