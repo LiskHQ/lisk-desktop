@@ -1,39 +1,13 @@
+import React from 'react';
 import { act } from 'react-dom/test-utils';
+import { shallow } from 'enzyme';
+import Table from '@theme/table';
 import { MIN_ACCOUNT_BALANCE } from '@transaction/configuration/transactions';
-
 import { mountWithRouter } from 'src/utils/testHelpers';
-import { getTransactionBaseFees, getTransactionFee } from '@transaction/api';
-import useTransactionFeeCalculation from '@transaction/hooks/useTransactionFeeCalculation';
-import { fromRawLsk } from '@token/fungible/utils/lsk';
 import accounts from '@tests/constants/wallets';
 import flushPromises from '@tests/unit-test-utils/flushPromises';
+import VoteRow from './VoteRow';
 import Form from './VoteForm';
-
-jest.mock('@transaction/hooks/useTransactionFeeCalculation');
-jest.mock('@transaction/api');
-
-const transactionBaseFees = {
-  Low: 156,
-  Medium: 100,
-  High: 51,
-};
-
-const mockFeeFactor = 100;
-getTransactionBaseFees.mockResolvedValue(transactionBaseFees);
-getTransactionFee.mockImplementation((params) => {
-  const selectedTransactionPriority = params.selectedPriority.selectedIndex;
-  const fees = fromRawLsk(
-    Object.values(transactionBaseFees)[selectedTransactionPriority] * mockFeeFactor,
-  );
-  return ({
-    value: fees, feedback: '', error: false,
-  });
-});
-
-useTransactionFeeCalculation.mockImplementation(() => ({
-  minFee: { value: 0.001 },
-  fee: { value: 0.01 },
-}));
 
 const addresses = [
   'lskdwsyfmcko6mcd357446yatromr9vzgu7eb8y99',
@@ -51,12 +25,13 @@ const addresses = [
   'lskarccxj6xqdeqtuvakr3hjdjh8a6df73b6pqk6s',
 ];
 
-describe('VotingQueue.Editor', () => {
+describe('VoteForm', () => {
   const props = {
     t: str => str,
     account: accounts.genesis,
     nextStep: jest.fn(),
   };
+
   const mixedVotes = {
     [addresses[0]]: { confirmed: 1e10, unconfirmed: 1e10 },
     [addresses[1]]: { confirmed: 1e10, unconfirmed: 2e10 },
@@ -95,14 +70,28 @@ describe('VotingQueue.Editor', () => {
     props.account.token.balance = accounts.genesis.token.balance;
   });
 
-  it('Render only the changed votes', () => {
-    const wrapper = mountWithRouter(Form, { ...props, votes: mixedVotes });
-    expect(wrapper.find('VoteRow')).toHaveLength(1);
+  it('Render only the changed votes', async () => {
+    const wrapper = shallow(<Form {...props} votes={mixedVotes} />);
+    const table = wrapper.find(Table);
+    expect(table.props()).toEqual({
+      data: [
+        {
+          address: 'lskyau2yy4993jkbd7kxcsfsrarac8macbbs8saad',
+          confirmed: 10000000000,
+          unconfirmed: 20000000000,
+        },
+      ],
+      header: expect.any(Object),
+      row: VoteRow,
+      iterationKey: 'address',
+      canLoadMore: false,
+    });
     expect(wrapper.find('.available-votes-num').text()).toBe('8/');
   });
 
   it('Shows an error if trying to vote for more than 10 delegates', () => {
-    const wrapper = mountWithRouter(Form, { ...props, votes: elevenVotes });
+    const wrapper = shallow(<Form {...props} votes={elevenVotes} />);
+    // const wrapper = mountWithRouter(Form, { ...props, votes: elevenVotes });
     expect(wrapper.find('.available-votes-num').text()).toBe('2/');
     expect(wrapper.find('.feedback').text()).toBe('These votes in addition to your current votes will add up to 11, exceeding the account limit of 10.');
   });
@@ -112,7 +101,7 @@ describe('VotingQueue.Editor', () => {
     await flushPromises();
     act(() => { wrapper.update(); });
     expect(wrapper.find('.available-votes-num').text()).toBe('10/');
-    expect(wrapper.find('.feedback').text()).toBe('You don\'t have enough LSK in your account.');
+    expect(wrapper.find('.feedback').text()).toBe('The minimum required balance for this action is {{minRequiredBalance}} {{token}}');
   });
 
   it('Shows an error if trying to vote with amounts leading to insufficient balance', async () => {
@@ -121,6 +110,6 @@ describe('VotingQueue.Editor', () => {
     await flushPromises();
     act(() => { wrapper.update(); });
     expect(wrapper.find('.available-votes-num').text()).toBe('10/');
-    expect(wrapper.find('.feedback').text()).toBe('The vote amounts are too high. You should keep 0.05 LSK available in your account.');
+    expect(wrapper.find('.feedback').at(0).text()).toBe('The vote amounts are too high. You should keep 0.05 LSK available in your account.');
   });
 });

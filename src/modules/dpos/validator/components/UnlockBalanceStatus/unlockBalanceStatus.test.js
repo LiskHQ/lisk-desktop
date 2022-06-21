@@ -1,6 +1,5 @@
 import React from 'react';
 import { shallow } from 'enzyme';
-import TxBroadcaster from '@transaction/components/TxBroadcaster';
 import accounts from '@tests/constants/wallets';
 import Status from './UnlockBalanceStatus';
 

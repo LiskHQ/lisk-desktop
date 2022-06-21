@@ -5,25 +5,18 @@ import useTransactionFeeCalculation from './useTransactionFeeCalculation';
 describe('useTransactionFeeCalculation', () => {
   const props = {
     token: 'LSK',
-    wallet: {
-      ...wallets.genesis,
-      summary: { ...wallets.genesis.summary, isMultisignature: true },
-      keys: {
-        numberOfSignatures: 10,
-        optionalKeys: [],
-        mandatoryKeys: [],
-        members: ['1', '2', '3', '4', '5', '6', '7', '8', '9', '10'],
-      },
-    },
+    wallet: wallets.genesis,
     selectedPriority: { value: 1, selectedIndex: 0 },
     transaction: {
       moduleAssetId: '2:0',
-      recipientAddress: wallets.genesis.summary.address,
-      senderPublicKey: wallets.genesis.summary.publicKey,
-      amount: '100000000',
+      sender: { publicKey: wallets.genesis.summary.publicKey },
       fee: '1000',
       nonce: 1,
-      data: 'test',
+      asset: {
+        recipient: { address: wallets.genesis.summary.address },
+        amount: '100000000',
+        data: 'test',
+      },
     },
     priorityOptions: [{ value: 1, selectedIndex: 0 }],
   };
