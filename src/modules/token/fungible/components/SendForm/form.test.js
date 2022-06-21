@@ -3,14 +3,18 @@ import { act } from 'react-dom/test-utils';
 import { mount } from 'enzyme';
 import { tokenMap } from '@token/fungible/consts/tokens';
 import { getTransactionBaseFees, getTransactionFee } from '@transaction/api';
-import useTransactionFeeCalculation from '@transaction/hooks/useTransactionFeeCalculation';
+// import useTransactionFeeCalculation from '@transaction/hooks/useTransactionFeeCalculation';
 import { fromRawLsk } from '@token/fungible/utils/lsk';
 import accounts from '@tests/constants/wallets';
 import flushPromises from '@tests/unit-test-utils/flushPromises';
 import Form from './SendForm';
 
-jest.mock('@transaction/hooks/useTransactionFeeCalculation');
-jest.mock('@transaction/api');
+jest.mock('@transaction/hooks/useTransactionFeeCalculation', () => jest.fn().mockReturnValue({
+  minFee: { value: 0.00001 },
+  fee: { value: 0.0001 },
+  maxAmount: { value: 200000000 },
+}));
+// jest.mock('@transaction/api');
 
 const transactionBaseFees = {
   Low: 156,
@@ -19,22 +23,16 @@ const transactionBaseFees = {
 };
 
 const mockFeeFactor = 100;
-getTransactionBaseFees.mockResolvedValue(transactionBaseFees);
-getTransactionFee.mockImplementation((params) => {
-  const selectedTransactionPriority = params.selectedPriority.selectedIndex;
-  const fees = fromRawLsk(
-    Object.values(transactionBaseFees)[selectedTransactionPriority] * mockFeeFactor,
-  );
-  return ({
-    value: fees, feedback: '', error: false,
-  });
-});
-
-useTransactionFeeCalculation.mockImplementation(() => ({
-  minFee: { value: 0.00001 },
-  fee: { value: 0.0001 },
-  maxAmount: { value: 200000000 },
-}));
+// getTransactionBaseFees.mockResolvedValue(transactionBaseFees);
+// getTransactionFee.mockImplementation((params) => {
+  // const selectedTransactionPriority = params.selectedPriority.selectedIndex;
+  // const fees = fromRawLsk(
+    // Object.values(transactionBaseFees)[selectedTransactionPriority] * mockFeeFactor,
+  // );
+  // return ({
+    // value: fees, feedback: '', error: false,
+  // });
+// });
 
 describe('Form', () => {
   let props;
@@ -55,33 +53,20 @@ describe('Form', () => {
     };
 
     props = {
-      token: tokenMap.LSK.key,
       t: v => v,
+      token: tokenMap.LSK.key,
       account: {
         ...accounts.genesis,
         token: { balance: '200000000' },
       },
       bookmarks,
-      network: {
-        name: 'Mainnet',
-      },
-      history: {
-        location: {
-          path: '/wallet/send',
-          search: '',
-        },
-        push: jest.fn(),
-      },
       nextStep: jest.fn(),
-      initialValue: {
-        recipient: bookmarks.LSK[0].address,
-      },
     };
   });
 
-  afterEach(() => {
-    jest.clearAllMocks();
-  });
+  // afterEach(() => {
+  //   jest.clearAllMocks();
+  // });
 
   it('should render properly', () => {
     const wrapper = mount(<Form {...props} />);
@@ -93,21 +78,23 @@ describe('Form', () => {
 
   it('should render properly with data from prevState', () => {
     const { address } = accounts.genesis.summary;
-    const fields = {
-      recipient: {
-        address, value: address, error: false, feedback: '', title: '',
+    const rawTx = {
+      asset: {
+        recipient: {
+          address, value: address, error: false, feedback: '', title: '',
+        },
+        amount: 1000000000,
+        data: 'message',
       },
-      amount: { value: '1.0' },
-      reference: { value: 'message' },
     };
     const wrapper = mount(<Form {...{
       ...props,
-      prevState: { fields },
+      prevState: { rawTx },
     }}
     />);
     expect(wrapper.find('input.recipient')).toHaveValue(address);
-    expect(wrapper.find('.amount input')).toHaveValue(fields.amount.value);
-    expect(wrapper.find('textarea.message')).toHaveValue(fields.reference.value);
+    expect(wrapper.find('.amount input')).toHaveValue(fromRawLsk(rawTx.asset.amount));
+    expect(wrapper.find('textarea.message')).toHaveValue(rawTx.asset.data);
   });
 
   it('should go to next step when submit button is clicked', async () => {
@@ -120,8 +107,8 @@ describe('Form', () => {
     act(() => { wrapper.update(); });
     await flushPromises();
 
-    expect(wrapper.find('button.btn-submit')).not.toBeDisabled();
-    wrapper.find('button.btn-submit').simulate('click');
+    expect(wrapper.find('.confirm-btn')).not.toBeDisabled();
+    wrapper.find('.confirm-btn').at(0).simulate('click');
     expect(props.nextStep).toHaveBeenCalled();
   });
 
@@ -234,7 +221,7 @@ describe('Form', () => {
       wrapper.update();
 
       expect(wrapper.find('.amount Feedback')).toHaveText('Provided amount will result in a wallet with less than the minimum balance.');
-      expect(wrapper.find('button.btn-submit')).toBeDisabled();
+      expect(wrapper.find('.confirm-btn')).toBeDisabled();
     });
 
     it('Should show error if amount is negative', () => {
@@ -246,7 +233,7 @@ describe('Form', () => {
       wrapper.update();
 
       expect(wrapper.find('.amount Feedback')).toHaveText('Amount can\'t be negative.');
-      expect(wrapper.find('button.btn-submit')).toBeDisabled();
+      expect(wrapper.find('.confirm-btn')).toBeDisabled();
     });
 
     it('Should allow to send 0 LSK amount', () => {
@@ -258,7 +245,7 @@ describe('Form', () => {
       wrapper.update();
 
       expect(wrapper.find('.amount Feedback')).not.toHaveText(expect.any(String));
-      expect(wrapper.find('button.btn-submit')).not.toBeDisabled();
+      expect(wrapper.find('.confirm-btn')).not.toBeDisabled();
     });
 
     it('Should be able to send entire balance', () => {
@@ -270,10 +257,10 @@ describe('Form', () => {
       wrapper.update();
 
       expect(wrapper.find('.amount Feedback')).toHaveText('');
-      expect(wrapper.find('button.btn-submit')).not.toBeDisabled();
+      expect(wrapper.find('.confirm-btn')).not.toBeDisabled();
     });
 
-    it.skip('Should update amount field if maximum value changes', () => {
+    it('Should update amount field if maximum value changes', () => {
       const wrapper = mount(<Form {...props} />);
       const { address } = accounts.genesis.summary;
       wrapper.find('input.recipient').simulate('change', { target: { name: 'recipient', value: address } });
