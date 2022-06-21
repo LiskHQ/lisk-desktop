@@ -14,7 +14,7 @@ import styles from './form.css';
 import MessageField from './MessageField';
 
 const getInitialData = (rawTx) => rawTx?.asset.data ?? '';
-const getInitialAmount = (rawTx) => fromRawLsk(rawTx?.asset.amount) ?? '';
+const getInitialAmount = (rawTx) => (Number(rawTx?.asset.amount) ? fromRawLsk(rawTx?.asset.amount) : '');
 const getInitialRecipient = (rawTx) => rawTx?.asset.recipient.address ?? '';
 
 const SendForm = (props) => {

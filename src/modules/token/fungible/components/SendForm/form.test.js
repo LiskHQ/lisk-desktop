@@ -111,17 +111,11 @@ describe('Form', () => {
     });
 
     it('Should show bookmark title if address is a bookmark', () => {
-      const wrapper = mount(<Form {...{
-        ...props,
-        history: {
-          ...props.history,
-          location: {
-            ...props.history.location,
-            search: `?recipient=${bookmarks.LSK[0].address}`,
-          },
-        },
-      }}
-      />);
+      const wrapper = mount(<Form {...props} />);
+      const receipientEvt = { target: { name: 'recipient', value: bookmarks.LSK[0].address } };
+      wrapper.find('input.recipient').simulate('change', receipientEvt);
+      act(() => { jest.advanceTimersByTime(300); });
+      wrapper.update();
       expect(wrapper.find('input.recipient')).toHaveValue(bookmarks.LSK[0].title);
     });
   });
