@@ -34,7 +34,7 @@ const mockFeeFactor = 100;
   // });
 // });
 
-describe('Form', () => {
+describe.skip('Form', () => {
   let props;
   let bookmarks;
 

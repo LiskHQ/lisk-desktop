@@ -10,16 +10,14 @@ const Summary = ({
   multisigGroupRegistered,
   rawTx,
 }) => {
-  const onSubmit = () => {
-    nextStep({
-      rawTx,
-      actionFunction: multisigGroupRegistered,
-    });
-  };
-
   const onConfirmAction = {
     label: t('Sign'),
-    onClick: onSubmit,
+    onClick: () => {
+      nextStep({
+        rawTx,
+        actionFunction: multisigGroupRegistered,
+      });
+    },
   };
   const onCancelAction = {
     label: t('Go back'),

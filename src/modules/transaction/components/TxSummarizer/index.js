@@ -44,7 +44,7 @@ const TxSummarizer = ({
         {wallet.loginType ? (
           <Illustration
             name={wallet.loginType}
-            className={styles.illustrationWrapper}
+            className={`${styles.illustrationWrapper} illustration`}
           />
         ) : null}
         {children}
@@ -56,7 +56,7 @@ const TxSummarizer = ({
           isMultisignature={wallet.summary.isMultisignature}
         />
         {fee && (
-          <section>
+          <section className="regular-tx-fee">
             <label>
               {t('Transaction fee')}
               <Tooltip

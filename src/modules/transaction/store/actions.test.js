@@ -369,7 +369,7 @@ describe('actions: transactions', () => {
         moduleAssetId: '2:0',
         fee: '10000000',
         nonce: 0,
-        senderPublicKey: '00f046aea2782180c51f7271249a0c107e6b6295c6b3c31e43c1a3ed644dcdeb',
+        sender: { publicKey: '00f046aea2782180c51f7271249a0c107e6b6295c6b3c31e43c1a3ed644dcdeb' },
         asset: {
           amount: '200',
           recipient: { address: 'lskz5r2nbgwrzjctbcffyrn8k74jdxdmd9cj9ng45' },

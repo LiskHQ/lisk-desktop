@@ -220,13 +220,9 @@ describe('API: LSK Transactions', () => {
   });
 
   describe('getTransactionFee', () => {
-    const txData = {
-      amount: '100000000',
-      data: 'to test the instance',
+    const baseTx = {
       nonce: '6',
-      recipientAddress: 'lskz5kf62627u2n8kzqa8jpycee64pgxzutcrbzhz',
-      senderPublicKey: 'c094ebee7ec0c50ebee32918655e089f6e1a604b83bcaa760293c61e0f18ab6f',
-      moduleAssetId: transfer,
+      sender: { publicKey: 'c094ebee7ec0c50ebee32918655e089f6e1a604b83bcaa760293c61e0f18ab6f' },
     };
     const selectedPriority = {
       value: 0,
@@ -234,8 +230,16 @@ describe('API: LSK Transactions', () => {
     };
 
     it('should return fee in Beddows', async () => {
+      const transferTx = {
+        asset: {
+          amount: '100000000',
+          data: 'to test the instance',
+          recipient: { address: 'lskz5kf62627u2n8kzqa8jpycee64pgxzutcrbzhz' },
+        },
+        moduleAssetId: transfer,
+      };
       const result = await getTransactionFee({
-        transaction: txData,
+        transaction: { ...baseTx, ...transferTx },
         selectedPriority,
         network,
       });
@@ -243,15 +247,15 @@ describe('API: LSK Transactions', () => {
     });
 
     it('should calculate fee of vote tx', async () => {
-      const voteTxData = {
+      const voteTx = {
         moduleAssetId: voteDelegate,
-        nonce: '6',
-        senderPublicKey: 'c094ebee7ec0c50ebee32918655e089f6e1a604b83bcaa760293c61e0f18ab6f',
-        votes: [],
+        asset: {
+          votes: [],
+        },
       };
 
       const result = await getTransactionFee({
-        transaction: voteTxData,
+        transaction: { ...baseTx, ...voteTx },
         selectedPriority,
         network,
       });
@@ -259,15 +263,15 @@ describe('API: LSK Transactions', () => {
     });
 
     it('should calculate fee of register delegate tx', async () => {
-      const voteTxData = {
+      const registerDelegateTx = {
         moduleAssetId: registerDelegate,
-        nonce: '6',
-        senderPublicKey: 'c094ebee7ec0c50ebee32918655e089f6e1a604b83bcaa760293c61e0f18ab6f',
-        username: 'some_username',
+        asset: {
+          username: 'some_username',
+        },
       };
 
       const result = await getTransactionFee({
-        transaction: voteTxData,
+        transaction: { ...baseTx, ...registerDelegateTx },
         selectedPriority,
         network,
       });
@@ -275,14 +279,14 @@ describe('API: LSK Transactions', () => {
     });
 
     it('should calculate fee of reclaimLSK tx', async () => {
-      const transaction = {
+      const reclaimTx = {
         moduleAssetId: reclaimLSK,
-        nonce: '1',
-        senderPublicKey: 'c094ebee7ec0c50ebee32918655e089f6e1a604b83bcaa760293c61e0f18ab6f',
-        amount: '4454300000',
+        asset: {
+          amount: '4454300000',
+        },
       };
       const result = await getTransactionFee({
-        transaction,
+        transaction: { ...baseTx, ...reclaimTx },
         selectedPriority,
         network,
       });
@@ -291,18 +295,16 @@ describe('API: LSK Transactions', () => {
     });
 
     it('should calculate fee of registerMultisignatureGroup tx', async () => {
-      const transaction = {
+      const regMultisigTx = {
         moduleAssetId: registerMultisignatureGroup,
-        nonce: 1,
-        fee: '1000000',
-        amount: '10000000',
-        numberOfSignatures: 2,
-        senderPublicKey: 'c094ebee7ec0c50ebee32918655e089f6e1a604b83bcaa760293c61e0f18ab6f',
-        mandatoryKeys: [accounts.genesis.summary.publicKey, accounts.delegate.summary.publicKey],
-        optionalKeys: [accounts.delegate_candidate.summary.publicKey],
+        asset: {
+          numberOfSignatures: 2,
+          mandatoryKeys: [accounts.genesis.summary.publicKey, accounts.delegate.summary.publicKey],
+          optionalKeys: [accounts.delegate_candidate.summary.publicKey],
+        },
       };
       const result = await getTransactionFee({
-        transaction,
+        transaction: { ...baseTx, ...regMultisigTx },
         selectedPriority,
         numberOfSignatures: 2,
         network,
@@ -312,14 +314,16 @@ describe('API: LSK Transactions', () => {
     });
 
     it('should calculate fee of multisignature token transfer tx', async () => {
-      const transaction = {
+      const multisigTransferTx = {
         moduleAssetId: transfer,
-        amount: '100000',
-        nonce: '6',
-        senderPublicKey: 'c094ebee7ec0c50ebee32918655e089f6e1a604b83bcaa760293c61e0f18ab6f',
+        asset: {
+          amount: '100000',
+          data: 'to test the instance',
+          recipient: { address: 'lskz5kf62627u2n8kzqa8jpycee64pgxzutcrbzhz' },
+        },
       };
       const result = await getTransactionFee({
-        transaction,
+        transaction: { ...baseTx, ...multisigTransferTx },
         selectedPriority,
         numberOfSignatures: 3,
         network,
@@ -329,17 +333,17 @@ describe('API: LSK Transactions', () => {
     });
 
     it('should calculate fee of multisignature voteDelegate tx', async () => {
-      const transaction = {
+      const multisigVoteTx = {
         moduleAssetId: voteDelegate,
-        nonce: '6',
-        senderPublicKey: 'c094ebee7ec0c50ebee32918655e089f6e1a604b83bcaa760293c61e0f18ab6f',
-        votes: [
-          { delegateAddress: accounts.genesis.summary.address, amount: '100000000' },
-          { delegateAddress: accounts.delegate.summary.address, amount: '-100000000' },
-        ],
+        asset: {
+          votes: [
+            { delegateAddress: accounts.genesis.summary.address, amount: '100000000' },
+            { delegateAddress: accounts.delegate.summary.address, amount: '-100000000' },
+          ],
+        },
       };
       const result = await getTransactionFee({
-        transaction,
+        transaction: { ...baseTx, ...multisigVoteTx },
         selectedPriority,
         numberOfSignatures: 10,
         network,
@@ -349,14 +353,14 @@ describe('API: LSK Transactions', () => {
     });
 
     it('should calculate fee of multisignature registerDelegate tx', async () => {
-      const transaction = {
+      const multisigRegisterDelegateTx = {
         moduleAssetId: registerDelegate,
-        nonce: '6',
-        senderPublicKey: 'c094ebee7ec0c50ebee32918655e089f6e1a604b83bcaa760293c61e0f18ab6f',
-        username: 'user_name',
+        asset: {
+          username: 'user_name',
+        },
       };
       const result = await getTransactionFee({
-        transaction,
+        transaction: { ...baseTx, ...multisigRegisterDelegateTx },
         selectedPriority,
         numberOfSignatures: 64,
         network,
@@ -366,17 +370,17 @@ describe('API: LSK Transactions', () => {
     });
 
     it('should calculate fee of multisignature unlockToken tx', async () => {
-      const transaction = {
+      const multisigUnlockTx = {
         moduleAssetId: unlockToken,
-        nonce: '6',
-        senderPublicKey: 'c094ebee7ec0c50ebee32918655e089f6e1a604b83bcaa760293c61e0f18ab6f',
-        unlockObjects: [
-          { delegateAddress: accounts.genesis.summary.address, amount: '-10000000', unvoteHeight: 1500 },
-          { delegateAddress: accounts.delegate_candidate.summary.address, amount: '-340000000', unvoteHeight: 1500 },
-        ],
+        asset: {
+          unlockObjects: [
+            { delegateAddress: accounts.genesis.summary.address, amount: '-10000000', unvoteHeight: 1500 },
+            { delegateAddress: accounts.delegate_candidate.summary.address, amount: '-340000000', unvoteHeight: 1500 },
+          ],
+        },
       };
       const result = await getTransactionFee({
-        transaction,
+        transaction: { ...baseTx, ...multisigUnlockTx },
         selectedPriority,
         numberOfSignatures: 4,
         network,
