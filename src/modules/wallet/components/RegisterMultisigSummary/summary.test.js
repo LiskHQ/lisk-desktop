@@ -1,6 +1,7 @@
 import React from 'react';
 import { mount } from 'enzyme';
 import * as hwManager from '@transaction/utils/hwManager';
+import { MODULE_ASSETS_NAME_ID_MAP } from '@transaction/configuration/moduleAssets';
 import accounts from '@tests/constants/wallets';
 import Summary from './Summary';
 
@@ -34,17 +35,20 @@ describe('Multisignature Summary component', () => {
     nextStep: jest.fn(),
     multisigGroupRegistered: jest.fn(),
     rawTx: {
-      fee: 0.02,
-      account: accounts.genesis,
-      members,
-      numberOfSignatures: 2,
-      mandatoryKeys,
-      optionalKeys: [],
-      network: {
-        networks: {
-          LSK: { networkIdentifier: '01e47ba4e3e57981642150f4b45f64c2160c10bac9434339888210a4fa5df097' },
+      fee: 2000000,
+      moduleAssetId: MODULE_ASSETS_NAME_ID_MAP.registerMultisignatureGroup,
+      asset: {
+        account: accounts.genesis,
+        members,
+        numberOfSignatures: 2,
+        mandatoryKeys,
+        optionalKeys: [],
+        network: {
+          networks: {
+            LSK: { networkIdentifier: '01e47ba4e3e57981642150f4b45f64c2160c10bac9434339888210a4fa5df097' },
+          },
+          name: 'customNode',
         },
-        name: 'customNode',
       },
     },
   };
@@ -68,8 +72,7 @@ describe('Multisignature Summary component', () => {
   });
 
   it('Should render properly', () => {
-    const html = wrapper.html();
-    expect(wrapper.find('.member-info').length).toEqual(props.rawTx.members.length);
-    expect(html).toContain('0.02 LSK');
+    expect(wrapper.find('.member-info').length).toEqual(props.rawTx.asset.members.length);
+    expect(wrapper.find('.fee-value')).toHaveText('0.02 LSK');
   });
 });
