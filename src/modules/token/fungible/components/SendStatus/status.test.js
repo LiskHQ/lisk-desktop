@@ -139,4 +139,26 @@ describe('unlock transaction Status', () => {
       },
     });
   });
+
+  it('should not show bookmark button if sent to self', () => {
+    const propsToSelf = {
+      ...props,
+      account: accounts.delegate,
+    };
+
+    const wrapper = shallow(<Status {...propsToSelf} />);
+    expect(wrapper.find('.bookmark-container')).not.toExist();
+  });
+
+  it('should not show bookmark button if already a bookmark', () => {
+    const propsWithBookmarks = {
+      ...props,
+      bookmarks: {
+        LSK: [{ address: accounts.delegate.summary.address }],
+      },
+    };
+
+    const wrapper = shallow(<Status {...propsWithBookmarks} />);
+    expect(wrapper.find('.bookmark-container')).not.toExist();
+  });
 });

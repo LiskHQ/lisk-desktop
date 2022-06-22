@@ -43,6 +43,12 @@ describe('Summary', () => {
     expect(props.prevStep).toBeCalled();
   });
 
+  it('should going to previous page', () => {
+    wrapper.find('.confirm-button').at(0).simulate('click');
+    wrapper.update();
+    expect(props.nextStep).toBeCalled();
+  });
+
   it('should show props.fields.recipient.title if it is present', () => {
     const title = 'Custom title';
     wrapper = mount(<Summary {...{
