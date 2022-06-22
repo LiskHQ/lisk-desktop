@@ -1,3 +1,4 @@
+import { useSelector } from 'react-redux';
 import { truncateAddress } from '@wallet/utils/account';
 import { mountWithRouter } from 'src/utils/testHelpers';
 import { addSearchParamsToUrl } from 'src/utils/searchParams';
@@ -22,6 +23,8 @@ jest.mock('react-redux', () => {
     })),
   };
 });
+
+window.open = jest.fn();
 
 describe('Reclaim balance screen', () => {
   let props;
@@ -51,6 +54,29 @@ describe('Reclaim balance screen', () => {
       1,
       expect.objectContaining({ }),
       { modal: 'reclaimBalance' },
+    );
+  });
+
+  it('Calls windows.open', () => {
+    useSelector.mockImplementation(jest.fn(() => ({
+      ...mockNonMigrated,
+      token: { balance: 0 },
+    })));
+
+    const wrapper = mountWithRouter(Reclaim, props, {});
+    wrapper.find('.link').at(0).simulate('click');
+    wrapper.find('.link').at(1).simulate('click');
+    expect(window.open).toHaveBeenNthCalledWith(
+      1,
+      'https://lisk.com/blog/development/actions-required-upcoming-mainnet-migration#MigrateanunitiliazedAccount',
+      '_blank',
+      'rel=noopener noreferrer',
+    );
+    expect(window.open).toHaveBeenNthCalledWith(
+      2,
+      'https://lisk.com/blog/development/actions-required-upcoming-mainnet-migration#MigrateanunitiliazedAccount',
+      '_blank',
+      'rel=noopener noreferrer',
     );
   });
 });

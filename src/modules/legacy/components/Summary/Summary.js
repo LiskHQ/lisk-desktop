@@ -70,6 +70,7 @@ const Summary = ({
 
 Summary.whyDidYouRender = true;
 
+// istanbul ignore next
 const areEqual = (prevProps, nextProps) => (
   prevProps.wallet.summary.balance === nextProps.wallet.summary.balance
 );

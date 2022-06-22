@@ -61,7 +61,7 @@ const AccountsComparison = ({ t }) => {
                   </p>
                   <br />
                   <p
-                    className={styles.link}
+                    className={`${styles.link} link`}
                     onClick={() => {
                       window.open(
                         'https://lisk.com/blog/development/actions-required-upcoming-mainnet-migration#MigrateanunitiliazedAccount',
@@ -86,7 +86,7 @@ const AccountsComparison = ({ t }) => {
                   <span>
                     {t('Please use ')}
                     <span
-                      className={styles.link}
+                      className={`${styles.link} link`}
                       onClick={() => {
                         window.open(
                           'https://lisk.com/blog/development/actions-required-upcoming-mainnet-migration#MigrateanunitiliazedAccount',
