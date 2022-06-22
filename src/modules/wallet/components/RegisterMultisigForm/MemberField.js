@@ -41,7 +41,7 @@ const MemberField = ({
         <span className="select-optional" onClick={() => changeCategory(false)}>
           {t('Optional')}
         </span>
-        <span onClick={() => changeCategory(true)}>{t('Mandatory')}</span>
+        <span className="select-mandatory" onClick={() => changeCategory(true)}>{t('Mandatory')}</span>
       </DropdownInput>
       {showDeleteIcon && (
         <span
