@@ -133,14 +133,13 @@ const Form = ({
   const transaction = {
     moduleAssetId: MODULE_ASSETS_NAME_ID_MAP.registerMultisignatureGroup,
     isValid: feedback.error === 0,
+    feedback: feedback.messages,
     asset: {
       mandatoryKeys,
       optionalKeys,
       numberOfSignatures,
     },
   };
-
-  // @todo pass feedback message too
 
   return (
     <section className={styles.wrapper}>

@@ -12,7 +12,7 @@ import BoxFooter from 'src/theme/box/footer';
 import TransactionPriority from '@transaction/components/TransactionPriority';
 import { toRawLsk } from '@token/fungible/utils/lsk';
 import { PrimaryButton } from 'src/theme/buttons';
-import BalanceFeedback, { getMinRequiredBalance } from './BalanceFeedback';
+import Feedback, { getMinRequiredBalance } from './Feedback';
 
 // eslint-disable-next-line max-statements
 const TxComposer = ({
@@ -66,8 +66,9 @@ const TxComposer = ({
         loadError={prioritiesLoadError}
         isLoading={loadingPriorities}
       />
-      <BalanceFeedback
+      <Feedback
         balance={wallet.token.balance}
+        feedback={transaction.feedback}
         minRequiredBalance={minRequiredBalance}
       />
       <BoxFooter>

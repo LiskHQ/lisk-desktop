@@ -4,6 +4,7 @@ import { useTranslation } from 'react-i18next';
 import {
   selectActiveToken,
 } from '@common/store';
+import { isEmpty } from 'src/utils/helpers';
 import { toRawLsk, fromRawLsk } from '@token/fungible/utils/lsk';
 import { dustThreshold } from '@wallet/configuration/constants';
 import { getTxAmount } from '@transaction/utils/transaction';
@@ -12,24 +13,21 @@ import styles from './txComposer.css';
 export const getMinRequiredBalance = (transaction, fee) =>
   toRawLsk(fee.value) + dustThreshold + (getTxAmount(transaction) || 0);
 
-const BalanceFeedback = ({ minRequiredBalance, balance }) => {
+const Feedback = ({ minRequiredBalance, balance, feedback }) => {
   const { t } = useTranslation();
   const token = useSelector(selectActiveToken);
-  if (minRequiredBalance <= balance) {
+  if (minRequiredBalance <= balance && isEmpty(feedback)) {
     return null;
   }
+  const message = minRequiredBalance <= balance ? feedback[0] : t(
+    'The minimum required balance for this action is {{minRequiredBalance}} {{token}}',
+    { token, minRequiredBalance: fromRawLsk(minRequiredBalance) },
+  );
   return (
     <div className={`${styles.feedback} feedback`}>
-      <span>
-        {
-          t(
-            'The minimum required balance for this action is {{minRequiredBalance}} {{token}}',
-            { token, minRequiredBalance: fromRawLsk(minRequiredBalance) },
-          )
-        }
-      </span>
+      <span>{ message }</span>
     </div>
   );
 };
 
-export default BalanceFeedback;
+export default Feedback;
