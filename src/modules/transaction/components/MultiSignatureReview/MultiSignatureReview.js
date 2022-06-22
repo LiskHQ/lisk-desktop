@@ -8,14 +8,10 @@ import WalletVisual from '@wallet/components/walletVisual';
 import styles from './MultiSignatureReview.css';
 
 const getAccountRoleText = (accountRole, t) => {
-  switch (accountRole) {
-    case true:
-      return t('Mandatory');
-    case false:
-      return t('Optional');
-    default:
-      return t('Optional');
+  if (accountRole) {
+    return t('Mandatory');
   }
+  return t('Optional');
 };
 
 const Member = ({ member, i, t }) => (

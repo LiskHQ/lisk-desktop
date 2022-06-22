@@ -1,5 +1,6 @@
 import React from 'react';
 import { mount } from 'enzyme';
+import { MODULE_ASSETS_NAME_ID_MAP } from '@transaction/configuration/moduleAssets';
 import wallets from '@tests/constants/wallets';
 import TxSummarizer from '.';
 
@@ -21,7 +22,7 @@ describe('TxSummarizer', () => {
       },
       t: key => key,
       rawTx: {
-        moduleAssetId: '2:0',
+        moduleAssetId: MODULE_ASSETS_NAME_ID_MAP.transfer,
         sender: { publicKey: wallets.genesis.summary.publicKey },
         fee: 2000000,
         nonce: 0,
@@ -93,5 +94,25 @@ describe('TxSummarizer', () => {
     };
     wrapper.setProps(newProps);
     expect(wrapper.find('.regular-tx-fee')).not.toExist();
+  });
+
+  it('should display details of the transaction', () => {
+    const multisigProps = {
+      ...props,
+      rawTx: {
+        ...props.rawTx,
+        moduleAssetId: MODULE_ASSETS_NAME_ID_MAP.registerMultisignatureGroup,
+        asset: {
+          mandatoryKeys: [wallets.genesis.summary.publicKey],
+          optionalKeys: [wallets.delegate.summary.publicKey, wallets.multiSig.summary.publicKey],
+          numberOfSignatures: 2,
+        },
+      },
+    };
+    const wrapper = mount(<TxSummarizer {...multisigProps} />);
+    expect(wrapper.find('.info-numberOfSignatures').at(0).text()).toEqual('Required signatures2');
+    expect(wrapper.find('.member-info').at(0).find('p span').text()).toEqual('(Mandatory)');
+    expect(wrapper.find('.member-info').at(1).find('p span').text()).toEqual('(Optional)');
+    expect(wrapper.find('.member-info').at(2).find('p span').text()).toEqual('(Optional)');
   });
 });

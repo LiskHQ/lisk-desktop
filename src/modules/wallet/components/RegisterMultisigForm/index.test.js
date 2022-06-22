@@ -37,7 +37,6 @@ useTransactionFeeCalculation.mockImplementation(() => ({
 describe('Multisignature editor component', () => {
   let wrapper;
   const props = {
-    t: v => v,
     account: wallets.genesis,
     nextStep: jest.fn(),
   };
@@ -112,6 +111,39 @@ describe('Multisignature editor component', () => {
     wrapper.find('input.input-with-dropdown-input').at(1).simulate(
       'change',
       { target: { value: wallets.delegate.summary.publicKey } },
+    );
+    act(() => { wrapper.update(); });
+    wrapper.find('.confirm-btn').at(0).simulate('click');
+    expect(props.nextStep).toHaveBeenCalledTimes(1);
+  });
+
+  it('should render previous state correctly', () => {
+    const propsWithPrev = {
+      ...props,
+      prevState: {
+        rawTx: {
+          asset: {
+            numberOfSignatures: 2,
+            optionalKeys: [wallets.genesis.summary.publicKey],
+            mandatoryKeys: [wallets.delegate.summary.publicKey, wallets.multiSig.summary.publicKey],
+          },
+        },
+      },
+    };
+    wrapper = mount(<Form {...propsWithPrev} />);
+
+    expect(wrapper.find('MemberField')).toHaveLength(3);
+  });
+
+  it('should be able to change the number of signatures', () => {
+    props.nextStep.mockReset();
+    wrapper.find('.multisignature-editor-input input').at(0).simulate(
+      'change',
+      { target: { value: 1 } },
+    );
+    wrapper.find('input.input-with-dropdown-input').at(0).simulate(
+      'change',
+      { target: { value: wallets.genesis.summary.publicKey } },
     );
     act(() => { wrapper.update(); });
     wrapper.find('.confirm-btn').at(0).simulate('click');
