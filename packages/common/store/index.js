@@ -1,17 +1,20 @@
 import {
   createStore, combineReducers, applyMiddleware, compose,
 } from 'redux';
-
+import storage from 'redux-persist/lib/storage';
+import { persistStore } from 'redux-persist';
 import actionTypes from './actions/actionTypes';
 import * as reducers from './reducers';
 import middleWares from './middlewares';
 
-const App = combineReducers(reducers);
+export * from './selectors';
+
+const rootReducer = combineReducers(reducers);
 const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
 
-const store = createStore(App, composeEnhancers(applyMiddleware(...middleWares)));
-
+const store = createStore(rootReducer, composeEnhancers(applyMiddleware(...middleWares)));
 store.dispatch({ type: actionTypes.storeCreated });
+const persistedStore = persistStore(store);
 
 // ignore this in coverage as it is hard to test and does not run in production
 if (module.hot) {
@@ -21,5 +24,8 @@ if (module.hot) {
   });
 }
 
-export * from './selectors';
-export default store;
+export {
+  storage,
+  store,
+  persistedStore,
+};

@@ -312,11 +312,31 @@
       }
     }
 
+    & > div {
+      display: flex;
+      color: var(--color-periwinkle-blue);
+      font-weight: var(--font-weight-normal);
+
+      & > img {
+        margin-right: 10px;
+        width: 16px;
+      }
+    }
+
     &:hover {
       background-color: var(--color-link-active);
       cursor: pointer;
 
       & > a {
+        color: var(--color-constant-white);
+        text-decoration: none;
+
+        & > img {
+          filter: brightness(2);
+        }
+      }
+
+      & > div {
         color: var(--color-constant-white);
         text-decoration: none;
 

@@ -35,5 +35,6 @@ describe('Setup password success and JSON download component', () => {
   it('should close modal when continue button is clicked', () => {
     const wrapper = mount(<SetPasswordSuccess {...props} />);
     wrapper.find('.continueButton').at(0).simulate('click');
+    expect(props.onClose).toHaveBeenCalledTimes(1);
   });
 });

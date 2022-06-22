@@ -30,5 +30,6 @@ Feature: Login
     Then I should be connected to customNode
     And I wait 2 seconds
     When I click on logoutBtn
+    And I click on acceptTermsButton
     And I click on networkDropdown
     Then I should see customNodeReadMode

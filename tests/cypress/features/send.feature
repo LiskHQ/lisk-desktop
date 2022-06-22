@@ -1,19 +1,19 @@
 Feature: Send
 
-  @basic
-  Scenario: Error message is shown if transfer tx fails
-      Given I login as genesis on customNode
-      Given I mock api /transactions
-      Given  I wait 5 seconds
-      Given I am on Wallet page
-      Then I click on sendLink
-      When I paste lsk29eqdkm88v4zc6tbjv8435td54u33m3a3kgjjk in recipientInput field
-      And I fill 4 in amountInput field
-      And I go to transfer confirmation
-      And I click on sendButton
-      Given  I wait 5 seconds
-      Then submittedTransactionMessage should be visible
-      Then I see error message
+  # @basic
+  # Scenario: Error message is shown if transfer tx fails
+  #     Given I login as genesis on customNode
+  #     Given I mock api /transactions
+  #     Given  I wait 5 seconds
+  #     Given I am on Wallet page
+  #     Then I click on sendLink
+  #     When I paste lsk29eqdkm88v4zc6tbjv8435td54u33m3a3kgjjk in recipientInput field
+  #     And I fill 4 in amountInput field
+  #     And I go to transfer confirmation
+  #     And I click on sendButton
+  #     Given  I wait 5 seconds
+  #     Then submittedTransactionMessage should be visible
+  #     Then I see error message
 
   @basic
    Scenario: Transfer tx + Header balance is affected
@@ -32,7 +32,8 @@ Feature: Send
      Then I wait 10 seconds
      Then The balance is subtracted
 
-  @advanced
+  # @advanced
+  @basic
   Scenario: Launch protocol prefills fields  - from logged in state
     Given I am on Login page
     Given I login as genesis on customNode
@@ -40,7 +41,8 @@ Feature: Send
     When I follow the launch protokol link
     Then Send form fields are prefilled
 
-  @advanced
+  # @advanced
+  @basic
   Scenario: Launch protocol prefills fields  - from logged out state
     Given I follow the launch protokol link
     When I enter the passphrase of genesis on customNode

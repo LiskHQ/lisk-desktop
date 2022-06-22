@@ -6,7 +6,7 @@ import PassphraseBackup from '@auth/components/passphraseBackup';
 import registerStyles from '../Signup/register.css';
 
 const SavePassphrase = ({
-  t, account, prevStep, nextStep,
+  t, passphrase, prevStep, nextStep,
 }) => (
   <>
     <div className={registerStyles.titleHolder}>
@@ -17,7 +17,7 @@ const SavePassphrase = ({
       className={`${grid['col-sm-10']} ${registerStyles.passphraseBackupContainer}`}
     >
       <PassphraseBackup
-        account={account}
+        passphrase={passphrase}
         t={t}
         paperWalletName="lisk_passphrase_store_safely"
       />

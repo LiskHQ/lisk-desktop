@@ -2,31 +2,34 @@ import React, { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { PrimaryButton, TertiaryButton } from 'src/theme/buttons';
 import UploadJSONInput from 'src/modules/common/components/uploadJSONInput';
-import grid from 'flexboxgrid/dist/flexboxgrid.css';
-import styles from './restoreAccountForm.css';
+import styles from './RestoreAccountForm.css';
 
-const RestoreAccountForm = ({ onSubmit, onBack }) => {
+const RestoreAccountForm = ({ onBack, nextStep }) => {
   const { t } = useTranslation();
   const [value, setValue] = useState();
   const [error, setError] = useState();
+
   const onContinue = () => {
+    // istanbul ignore next
     if (!value) {
       setError(t('Upload file is required'));
     } else {
-      onSubmit(value);
+      nextStep({ accountSchema: value });
     }
   };
+
   return (
     <>
-      <div className={`${styles.titleHolder} ${grid['col-xs-10']}`}>
+      <div className={styles.titleHolder}>
         <h1>
           {t('Add account')}
         </h1>
-        <p className={styles.text}>{t('Restore your encrypted secret recovery phrase.')}</p>
+        <p>{t('Restore your encrypted secret recovery phrase.')}</p>
       </div>
       <div className={styles.fullWidth}>
         <UploadJSONInput
           label={t('Restore from JSON file')}
+          placeholderText={t('Please drag and drop the JSON file from your device.')}
           onChange={setValue}
           value={value}
           error={error}
@@ -36,6 +39,7 @@ const RestoreAccountForm = ({ onSubmit, onBack }) => {
             className="confirmButton"
             size="l"
             onClick={onContinue}
+            disabled={!value || error}
           >
             {t('Continue')}
           </PrimaryButton>

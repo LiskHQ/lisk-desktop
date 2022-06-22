@@ -52,7 +52,8 @@ Feature: Blocks
     And I click on applyFilters
     Then I should see 1 blocks in table
 
-  @advanced
+  # @advanced
+  @basic
   Scenario: Navigate to block details page and verify block details
     When I click on filterTransactionsBtn
     Then I should see filterDropdown
@@ -67,7 +68,8 @@ Feature: Blocks
     Then I should see 20 Aug 2021 in blockDateDetails section
     Then I should see genesis_99 in blockGeneratorDetails section
 
-  @advanced
+  # @advanced
+  @basic
   Scenario: Navigate to block details page and verify transaction details
     When I click on filterTransactionsBtn
     Then I should see filterDropdown

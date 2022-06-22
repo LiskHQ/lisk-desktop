@@ -1,19 +1,15 @@
+/* istanbul ignore file */
+
 import React from 'react';
 import { useTranslation } from 'react-i18next';
-import { PrimaryButton, TertiaryButton } from 'src/theme/buttons';
-import { downloadJSON, transactionToJSON } from '@transaction/utils';
+import { PrimaryButton } from 'src/theme/buttons';
 import Box from 'src/theme/box';
+import DownloadJSON from 'src/modules/common/components/DownloadJSON/DownloadJSON';
 import BoxContent from 'src/theme/box/content';
-import Icon from 'src/theme/Icon';
 import styles from './SetPasswordSuccess.css';
 
-function SetPasswordSuccess({ onClose, encryptedPhrase }) {
+function SetPasswordSuccess({ onClose, encryptedPhrase, buttonText }) {
   const { t } = useTranslation();
-
-  const onDownload = () => {
-    const encryptedJSON = JSON.parse(transactionToJSON(encryptedPhrase));
-    downloadJSON(encryptedJSON, 'encrypted_secret_recovery_phrase');
-  };
 
   const onContinue = () => onClose();
 
@@ -26,20 +22,9 @@ function SetPasswordSuccess({ onClose, encryptedPhrase }) {
             'You can now download your encrypted secret recovery phrase and use it to add your account on other devices.',
           )}
         </p>
-        <div className={styles.downloadLisk}>
-          <Icon name="fileOutline" />
-          <p className="option-value">encrypted_secret_recovery_phrase.json</p>
-          <TertiaryButton
-            className={styles.downloadBtn}
-            size="xs"
-            onClick={onDownload}
-          >
-            {t('Download')}
-          </TertiaryButton>
-          <Icon name="downloadBlue" />
-        </div>
+        <DownloadJSON fileName="encrypted_secret_recovery_phrase" encryptedPhrase={encryptedPhrase} />
         <PrimaryButton className={styles.continueButton} onClick={onContinue}>
-          {t('Continue to Dashboard')}
+          { buttonText || t('Continue to Dashboard')}
         </PrimaryButton>
       </BoxContent>
     </Box>
@@ -47,6 +32,7 @@ function SetPasswordSuccess({ onClose, encryptedPhrase }) {
 }
 
 SetPasswordSuccess.defaultProps = {
+  onClose: () => null,
   encryptedPhrase: {
     error: 'no encrypted backup found',
   },

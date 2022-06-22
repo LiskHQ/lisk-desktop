@@ -8,17 +8,17 @@ export const ACCOUNT_MENU = [
     label: 'Edit name',
   },
   {
-    path: routes.login.switchAccount,
+    component: 'switchAccount',
     icon: 'switchIcon',
     label: 'Switch account',
   },
   {
-    path: routes.login.backupAccount,
+    path: routes.backupRecoveryPhraseFlow.path,
     icon: 'refresh',
     label: 'Backup account',
   },
   {
-    path: routes.login.removeAccount,
+    component: 'removeCurrentAccountFlow',
     icon: 'remove',
     label: 'Remove account',
   },
