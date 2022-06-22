@@ -2,8 +2,8 @@ import React from 'react';
 import { mount } from 'enzyme';
 import { MODULE_ASSETS_NAME_ID_MAP } from '@transaction/configuration/moduleAssets';
 import accounts from '@tests/constants/wallets';
-import TxComposer from './index';
 import { mountWithProps } from 'src/utils/testHelpers';
+import TxComposer from './index';
 
 describe('TxComposer', () => {
   const transaction = {
