@@ -160,7 +160,7 @@ const Form = ({
               </span>
               <Input
                 className={`${styles.numberOfSignaturesInput} multisignature-editor-input`}
-                value={numberOfSignatures ?? ''}
+                value={numberOfSignatures}
                 onChange={changeNumberOfSignatures}
                 autoComplete="off"
                 name="required-signatures"

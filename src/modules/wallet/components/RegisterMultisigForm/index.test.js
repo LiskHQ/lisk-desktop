@@ -56,6 +56,25 @@ describe('Multisignature editor component', () => {
     expect(wrapper).toContainMatchingElement('footer');
   });
 
+  it('renders properly when prevState is defined', () => {
+    wrapper = mount(
+      <Form
+        {...props}
+        prevState={{
+          numberOfSignatures: 3,
+          rawTx: {
+            asset: {
+              mandatoryKeys: [{}, {}],
+              optionalKeys: [{}, {}, {}],
+            },
+          },
+        }}
+      />,
+    );
+    expect(wrapper.find('.multisignature-editor-input').at(0).props().value).toEqual(3);
+    expect(wrapper).toContainMatchingElements(5, 'MemberField');
+  });
+
   it('CTA is disabled when form is invalid', () => {
     expect(wrapper.find('.confirm-btn').at(0)).toBeDisabled();
   });
@@ -79,7 +98,9 @@ describe('Multisignature editor component', () => {
 
   it('clicking delete icon deletes a member field', () => {
     wrapper.find('.add-new-members').at(0).simulate('click');
+    expect(wrapper).toContainMatchingElements(3, 'MemberField');
     wrapper.find('.delete-icon').at(0).simulate('click');
+    wrapper.find('.select-optional').at(0).simulate('click');
     expect(wrapper).toContainMatchingElements(2, 'MemberField');
   });
 
