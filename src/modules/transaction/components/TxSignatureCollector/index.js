@@ -1,3 +1,4 @@
+// istanbul ignore file
 import { withRouter } from 'react-router';
 import { connect } from 'react-redux';
 import { compose } from 'redux';

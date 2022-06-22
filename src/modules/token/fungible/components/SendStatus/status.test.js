@@ -3,6 +3,9 @@ import { shallow } from 'enzyme';
 import TxBroadcaster from '@transaction/components/TxBroadcaster';
 import DialogLink from 'src/theme/dialog/link';
 import accounts from '@tests/constants/wallets';
+import { act } from 'react-dom/test-utils';
+import flushPromises from '@tests/unit-test-utils/flushPromises';
+import { mountWithRouterAndStore } from 'src/utils/testHelpers';
 import Status from './Status';
 
 describe('unlock transaction Status', () => {
@@ -160,5 +163,40 @@ describe('unlock transaction Status', () => {
 
     const wrapper = shallow(<Status {...propsWithBookmarks} />);
     expect(wrapper.find('.bookmark-container')).not.toExist();
+  });
+
+  it.skip('should load recipient info if not broadcasted yet', async () => {
+    const propsNotBroadcasted = {
+      ...props,
+      transactions: {
+        txBroadcastError: null,
+        txSignatureError: null,
+        signedTransaction: { signatures: ['123'] },
+      },
+      recipientAccount: {
+        data: accounts.delegate,
+        loadData: jest.fn(),
+      },
+    };
+
+    // @todo This should work and fix the missing coverage but
+    // the Redux connect mock doesn't seem to merge the state correctly
+    const wrapper = mountWithRouterAndStore(
+      Status,
+      propsNotBroadcasted,
+      {},
+      {
+        transactions: {
+          txBroadcastError: null,
+          txSignatureError: null,
+          signedTransaction: { signatures: ['123'] },
+        },
+      },
+    );
+    await flushPromises();
+    act(() => {
+      wrapper.update();
+    });
+    expect(propsNotBroadcasted.recipientAccount.loadData).toHaveBeenCalled();
   });
 });

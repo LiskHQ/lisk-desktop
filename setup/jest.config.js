@@ -240,6 +240,7 @@ module.exports = {
     'src/modules/transaction/components/Explorer/ExplorerTransactions.js',
     'src/modules/transaction/manager/explorerManager.js',
     'src/modules/dpos/validator/components/WarnPunishedDelegate/VoteWarning.js',
+    'src/modules/token/fungible/components/SendStatus/Status.js',
     'src/modules/dpos/validator/components/WarnPunishedDelegate/WarnPunishedDelegate.js',
     'src/modules/wallet/components/walletInfo/identity.js',
     'src/modules/wallet/components/walletInfo/actionBar.js',

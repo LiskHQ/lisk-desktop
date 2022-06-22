@@ -11,7 +11,6 @@ import DialogLink from 'src/theme/dialog/link';
 import styles from './status.css';
 
 const shouldShowBookmark = (bookmarks, account, rawTx, token) => {
-  console.log(account.summary.address, rawTx.asset.recipient.address);
   if (account.summary.address === rawTx.asset.recipient.address) {
     return false;
   }
