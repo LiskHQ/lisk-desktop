@@ -1,5 +1,5 @@
 import { to } from 'await-to-js';
-import { selectActiveTokenAccount } from '@common/store';
+import { selectActiveTokenAccount } from '@common/store/selectors';
 import actionTypes from '@transaction/store/actionTypes';
 import { createGenericTx } from '@transaction/api/index';
 

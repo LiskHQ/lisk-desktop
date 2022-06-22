@@ -164,7 +164,7 @@ describe('Unlock LSK modal', () => {
             sequence: wallets.genesis.sequence,
             token: wallets.genesis.token,
             dpos: {
-              unlocking: [{ amount: '1000000000', height: { start: 4900, end: 5900 }, delegateAddress: 'lskdwsyfmcko6mcd357446yatromr9vzgu7eb8y11' }],
+              unlocking: [],
               sentVotes: [],
             },
           },

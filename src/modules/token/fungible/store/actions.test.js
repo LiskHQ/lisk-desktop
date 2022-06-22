@@ -1,8 +1,10 @@
-import loginTypes from 'src/modules/auth/const/loginTypes';
+import loginTypes from '@auth/const/loginTypes';
 import * as hwManager from '@transaction/utils/hwManager';
 import { getState } from '@tests/fixtures/transactions';
 import actionTypes from '@transaction/store/actionTypes';
 import wallets from '@tests/constants/wallets';
+import { getAddressFromBase32Address } from '@wallet/utils/account';
+import { convertStringToBinary } from '@transaction/utils/transaction';
 import { tokensTransferred } from './actions';
 
 jest.mock('@transaction/utils/hwManager');
@@ -52,18 +54,35 @@ describe('actions: transactions', () => {
           data: 'test',
         },
       };
+      const tx = {
+        fee: BigInt(141000),
+        moduleID: 2,
+        assetID: 0,
+        senderPublicKey: convertStringToBinary(wallets.genesis.summary.publicKey),
+        nonce: BigInt(2),
+        asset: {
+          recipientAddress: getAddressFromBase32Address(wallets.genesis.summary.address),
+          amount: BigInt(112300000),
+          data: 'test',
+        },
+        signatures: expect.any(Array),
+        id: expect.any(Object),
+      };
 
       // Act
       await tokensTransferred(data)(dispatch, getState);
+      const expectedAction = {
+        type: actionTypes.transactionCreatedSuccess,
+        data: tx,
+      };
 
       // Assert
       expect(hwManager.signTransactionByHW).not.toHaveBeenCalled();
       // Replace toMatchSnapshot with a definitive assertion.
-      expect(dispatch).toMatchSnapshot();
+      expect(dispatch).toHaveBeenCalledWith(expectedAction);
     });
 
-    it.skip('should dispatch transactionSignError action if there are errors during transaction creation', async () => {
-      // TODO: Fix this test
+    it('should dispatch transactionSignError action if there are errors during transaction creation', async () => {
       // Arrange
       const data = {
         fee: NaN,
@@ -78,7 +97,7 @@ describe('actions: transactions', () => {
           data: 'test',
         },
       };
-      const transactionError = new Error('Transaction create error');
+      const transactionError = new Error('The number NaN cannot be converted to a BigInt because it is not an integer');
       loginTypes.passphrase.code = 1;
       jest.spyOn(hwManager, 'signTransactionByHW')
         .mockRejectedValue(transactionError);
@@ -87,6 +106,7 @@ describe('actions: transactions', () => {
         data: transactionError,
       };
       // Act
+
       await tokensTransferred(data)(dispatch, getStateWithHW);
       expect(dispatch).toHaveBeenCalledWith(expectedAction);
     });
