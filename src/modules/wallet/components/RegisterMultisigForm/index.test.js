@@ -6,7 +6,7 @@ import { getTransactionBaseFees, getTransactionFee } from '@transaction/api';
 import useTransactionFeeCalculation from '@transaction/hooks/useTransactionFeeCalculation';
 import { fromRawLsk } from '@token/fungible/utils/lsk';
 import wallets from '@tests/constants/wallets';
-import Form, { validateState } from './Form';
+import Form, { validateState } from './index';
 
 jest.mock('@transaction/hooks/useTransactionFeeCalculation');
 jest.mock('@transaction/api');
