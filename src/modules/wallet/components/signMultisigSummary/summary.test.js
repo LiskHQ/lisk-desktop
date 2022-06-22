@@ -78,4 +78,10 @@ describe('Sign Multisignature Tx Review component', () => {
     expect(wrapper).toContainMatchingElements(expectedLength, '.member-info');
     expect(html).toContain('0.01 LSK');
   });
+
+  it('Should render properly when senderAccount.data is empty', () => {
+    wrapper = mount(<Summary {...props} senderAccount={{ data: {} }} />);
+    const html = wrapper.html();
+    expect(html).toEqual('<div></div>');
+  });
 });
