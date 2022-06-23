@@ -3,7 +3,7 @@ import React from 'react';
 import { useSelector } from 'react-redux';
 import { Redirect, Route } from 'react-router-dom';
 import { selectActiveTokenAccount } from '@common/store';
-import { useAccounts } from '@account/hooks';
+import { useAccounts, useCurrentAccount } from '@account/hooks';
 import Piwik from 'src/utils/piwik';
 import routes from '@screens/router/routes';
 import ManageAccounts from '@account/components/ManageAccounts';
@@ -31,9 +31,15 @@ const CustomRoute = ({
   const wallet = useSelector(state => selectActiveTokenAccount(state));
   const token = useSelector(state => state.token);
   const isNetworkSet = useSelector(checkNetwork);
-  const isAuthenticated = !!wallet.summary;
+  const [account] = useCurrentAccount();
+  const isAuthenticated = Object.keys(account).length > 0;
   const { search = '' } = history.location;
   const { accounts } = useAccounts();
+  const hasAccounts = accounts.length > 0;
+
+  console.log(!isAuthenticated, path === routes.manageAccounts.path, !hasAccounts);
+
+  console.log('current acc--', account);
 
   Piwik.tracking(history, token);
 
@@ -41,10 +47,8 @@ const CustomRoute = ({
     return <Redirect to={`${routes.dashboard.path}`} />;
   }
 
-  if (!isAuthenticated && path === routes.dashboard.path) {
-    const route = accounts.length > 0 ? routes.manageAccounts.path : routes.addAccountOptions.path;
-
-    history.replace(route);
+  if (!isAuthenticated && path === routes.manageAccounts.path && !hasAccounts) {
+    history.replace(routes.addAccountOptions.path);
   }
 
   if (isPrivate && !isAuthenticated) {
