@@ -35,11 +35,6 @@ const CustomRoute = ({
   const isAuthenticated = Object.keys(account).length > 0;
   const { search = '' } = history.location;
   const { accounts } = useAccounts();
-  const hasAccounts = accounts.length > 0;
-
-  console.log(!isAuthenticated, path === routes.manageAccounts.path, !hasAccounts);
-
-  console.log('current acc--', account);
 
   Piwik.tracking(history, token);
 
@@ -47,7 +42,7 @@ const CustomRoute = ({
     return <Redirect to={`${routes.dashboard.path}`} />;
   }
 
-  if (!isAuthenticated && path === routes.manageAccounts.path && !hasAccounts) {
+  if (!isAuthenticated && path === routes.manageAccounts.path && !(accounts.length > 0)) {
     history.replace(routes.addAccountOptions.path);
   }
 
