@@ -202,12 +202,12 @@ describe('Delegates monitor page', () => {
     expect(wrapper.find('.tab.standby')).toHaveClassName('active');
   });
 
-  it('renders the forging Status', () => {
+  it('renders the forging status', () => {
     wrapper = setup(props);
     expect(wrapper.find('a.delegate-row')).toHaveLength(blocks.forgers.length);
   });
 
-  it('properly sorts delegates by their Status', () => {
+  it('properly sorts delegates by their status', () => {
     initSanctionedProps();
     wrapper = setup(props);
     switchTab('sanctioned');

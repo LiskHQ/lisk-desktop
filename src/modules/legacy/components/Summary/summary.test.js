@@ -52,7 +52,7 @@ describe('Reclaim balance Summary', () => {
     balanceReclaimed: jest.fn(),
   };
 
-  it('should render Summary component', () => {
+  it('should render summary component', () => {
     // Arrange
     const wrapper = mountWithProps(Summary, props, state);
 

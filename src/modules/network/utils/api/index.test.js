@@ -91,7 +91,7 @@ describe('API: LSK Network', () => {
       resetApiMock();
     });
 
-    it('should return network Status info', async () => {
+    it('should return network status info', async () => {
       const expectedResponse = {
         data: {
           height: '449520',

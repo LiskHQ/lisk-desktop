@@ -92,7 +92,7 @@ const ForgingDetails = ({
         <div className={styles.column}>
           {forgers.length ? (
             <div className={styles.chartBox}>
-              <h2 className={styles.title}>{t('Slot Status')}</h2>
+              <h2 className={styles.title}>{t('Slot status')}</h2>
               <div className={`${styles.chart} showOnLargeViewPort`}>
                 <DoughnutChart
                   data={doughnutChartData}
@@ -132,7 +132,7 @@ const ForgingDetails = ({
         <div className={styles.column}>
           <div className={styles.centered}>
             <h2 className={styles.title}>
-              <span>{t('Round Status')}</span>
+              <span>{t('Round status')}</span>
             </h2>
             <div className={styles.list}>
               <section className={styles.numericInfo}>

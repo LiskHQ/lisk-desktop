@@ -49,7 +49,7 @@ export const olderBlocksRetrieved = () => async (dispatch, getState) => {
 /**
  * Fire this action after network is set.
  * It retrieves the list of forgers in the current
- * round and determines their Status as forging, missedBlock
+ * round and determines their status as forging, missedBlock
  * and awaitingSlot.
  */
 // eslint-disable-next-line max-statements

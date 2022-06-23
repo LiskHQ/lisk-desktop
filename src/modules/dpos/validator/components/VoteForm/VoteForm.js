@@ -82,7 +82,7 @@ const getVoteStats = (votes, account) => {
  * @param {Number} fee - Tx fee in Beddows
  * @param {Number} resultingNumOfVotes - Number of used voted that will result after submitting tx
  * @param {Function} t - i18n translation function
- * @returns {Object} The feedback object including error Status and messages
+ * @returns {Object} The feedback object including error status and messages
  */
 // eslint-disable-next-line max-statements
 const validateVotes = (votes, balance, fee, resultingNumOfVotes, t) => {

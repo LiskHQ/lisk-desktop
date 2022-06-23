@@ -5,7 +5,7 @@
  * @param {string} path - api endpoint
  * @param {string} method - HTTP method
  * @param {string} params - HTTP call parameters
- * @param {Object} network - redux network Status
+ * @param {Object} network - redux network status
  * @param {string} network.serviceUrl - service base url
  * @returns {Promise} - if success it returns data,
  * if fails on server it throws an error,

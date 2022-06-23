@@ -208,7 +208,7 @@
     }
   }
 
-  /** hide the Status spinner **/
+  /** hide the status spinner **/
   & img {
     display: none;
   }
