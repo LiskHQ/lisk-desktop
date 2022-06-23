@@ -2,6 +2,7 @@ import React from 'react';
 import { useSelector } from 'react-redux';
 import { mount } from 'enzyme';
 import { MemoryRouter, Route } from 'react-router';
+import mockSavedAccounts from '@tests/fixtures/accounts';
 import routes from '@screens/router/routes';
 import ReclaimBalance from '@legacy/manager/reclaimBalance';
 import wallets from '@tests/constants/wallets';
@@ -13,6 +14,17 @@ const Private = () => <h1>Private</h1>;
 jest.mock('react-redux', () => ({
   ...jest.requireActual('react-redux'),
   useSelector: jest.fn(),
+}));
+
+const mockSetAccount = jest.fn();
+jest.mock('react-i18next');
+jest.mock('@account/hooks', () => ({
+  useAccounts: jest.fn(() => ({
+    accounts: mockSavedAccounts,
+  })),
+  useCurrentAccount: jest.fn(() => (
+    [mockSavedAccounts[0], mockSetAccount]
+  )),
 }));
 
 describe('CustomRoute', () => {
@@ -69,12 +81,6 @@ describe('CustomRoute', () => {
   it('should render Component if user is authenticated', () => {
     const wrapper = isAuth({ isPrivate: true });
     expect(wrapper.find(Private).exists()).toBe(true);
-  });
-
-  it('should redirect to root path if user is not authenticated', () => {
-    mockAppState.wallet.info = {};
-    const wrapper = isAuth({ isPrivate: true });
-    expect(wrapper.find(Public).exists()).toBe(true);
   });
 
   it('should redirect to reclaim path if user is not migrated', () => {

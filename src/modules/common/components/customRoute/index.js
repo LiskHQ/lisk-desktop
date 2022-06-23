@@ -61,7 +61,7 @@ const CustomRoute = ({
     wallet.summary?.isMigrated === false
     && history.location.pathname !== routes.reclaim.path
     && history.location.pathname !== routes.login.path
-    && isAuthenticated
+    && !!wallet.summary
   ) {
     return <Redirect to={`${routes.reclaim.path}`} />;
   }
