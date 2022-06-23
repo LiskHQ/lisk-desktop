@@ -3,9 +3,10 @@ import React from 'react';
 import { useSelector } from 'react-redux';
 import { Redirect, Route } from 'react-router-dom';
 import { selectActiveTokenAccount } from '@common/store';
+import { useAccounts } from '@account/hooks';
 import Piwik from 'src/utils/piwik';
 import routes from '@screens/router/routes';
-import Login from '@auth/components/Signin';
+import ManageAccounts from '@account/components/ManageAccounts';
 import offlineStyle from 'src/modules/common/components/offlineWrapper/offlineWrapper.css';
 import ErrorBoundary from './errorBoundary';
 
@@ -32,6 +33,7 @@ const CustomRoute = ({
   const isNetworkSet = useSelector(checkNetwork);
   const isAuthenticated = !!wallet.summary;
   const { search = '' } = history.location;
+  const { accounts } = useAccounts();
 
   Piwik.tracking(history, token);
 
@@ -39,10 +41,16 @@ const CustomRoute = ({
     return <Redirect to={`${routes.dashboard.path}`} />;
   }
 
+  if (!isAuthenticated && path === routes.dashboard.path) {
+    const route = accounts.length > 0 ? routes.manageAccounts.path : routes.addAccountOptions.path;
+
+    history.replace(route);
+  }
+
   if (isPrivate && !isAuthenticated) {
     return (
       <Redirect
-        to={`${routes.login.path}?referrer=${path.replace(
+        to={`${routes.manageAccounts.path}?referrer=${path.replace(
           /\/(send|vote)/,
           '',
         )}&${search.replace(/^\?/, '')}`}
@@ -69,10 +77,10 @@ const CustomRoute = ({
         errorMessage={t('An error occurred while rendering this page')}
       >
         <Route
-          path={isNetworkSet ? path : routes.login.path}
+          path={isNetworkSet ? path : routes.manageAccounts.path}
           exact={exact}
-          key={isNetworkSet ? path : routes.login.path}
-          component={isNetworkSet ? component : Login}
+          key={isNetworkSet ? path : routes.manageAccounts.path}
+          component={isNetworkSet ? component : ManageAccounts}
         />
       </ErrorBoundary>
     </main>
