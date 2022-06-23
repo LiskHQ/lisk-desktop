@@ -40,7 +40,9 @@ const getMaxAmount = async (wallet, network, voting, address) => {
       }),
     },
     nonce: wallet.sequence?.nonce,
-    senderPublicKey: wallet.summary?.publicKey,
+    sender: {
+      publicKey: wallet.summary?.publicKey,
+    },
     moduleAssetId: MODULE_ASSETS_NAME_ID_MAP.voteDelegate,
   };
 

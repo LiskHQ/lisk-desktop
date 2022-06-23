@@ -13,9 +13,9 @@ import useRecipientField from './useRecipientField';
 import styles from './form.css';
 import MessageField from './MessageField';
 
-const getInitialData = (rawTx) => rawTx?.asset.data ?? '';
-const getInitialAmount = (rawTx) => (Number(rawTx?.asset.amount) ? fromRawLsk(rawTx?.asset.amount) : '');
-const getInitialRecipient = (rawTx) => rawTx?.asset.recipient.address ?? '';
+const getInitialData = (rawTx, initialValue) => rawTx?.asset.data || initialValue || '';
+const getInitialAmount = (rawTx, initialValue) => (Number(rawTx?.asset.amount) ? fromRawLsk(rawTx?.asset.amount) : initialValue || '');
+const getInitialRecipient = (rawTx, initialValue) => rawTx?.asset.recipient.address || initialValue || '';
 
 const SendForm = (props) => {
   const {
@@ -25,12 +25,19 @@ const SendForm = (props) => {
     bookmarks,
     nextStep,
   } = props;
-  const [reference, setReference] = useMessageField(getInitialData(props.prevState?.rawTx));
+  const [reference, setReference] = useMessageField(
+    getInitialData(props.prevState?.rawTx, props.initialValue.reference),
+  );
   const [amount, setAmountField] = useAmountField(
-    getInitialAmount(props.prevState?.rawTx), account.summary?.balance, token,
+    getInitialAmount(
+      props.prevState?.rawTx,
+      props.initialValue.amount,
+    ),
+    account.summary?.balance,
+    token,
   );
   const [recipient, setRecipientField] = useRecipientField(
-    getInitialRecipient(props.prevState?.rawTx),
+    getInitialRecipient(props.prevState?.rawTx, props.initialValue.recipient),
   );
   const [maxAmount, setMaxAmount] = useState({ value: 0, error: false });
 
