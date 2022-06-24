@@ -49,7 +49,7 @@ const CustomRoute = ({
   if (isPrivate && !isAuthenticated) {
     return (
       <Redirect
-        to={`${routes.manageAccounts.path}?referrer=${path.replace(
+        to={`${routes.login.path}?referrer=${path.replace(
           /\/(send|vote)/,
           '',
         )}&${search.replace(/^\?/, '')}`}
