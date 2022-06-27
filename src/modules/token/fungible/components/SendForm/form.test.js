@@ -40,6 +40,7 @@ describe('Form', () => {
       },
       bookmarks,
       nextStep: jest.fn(),
+      initialValue: {},
     };
   });
 

@@ -26,18 +26,18 @@ const SendForm = (props) => {
     nextStep,
   } = props;
   const [reference, setReference] = useMessageField(
-    getInitialData(props.prevState?.rawTx, props.initialValue.reference),
+    getInitialData(props.prevState?.rawTx, props.initialValue?.reference),
   );
   const [amount, setAmountField] = useAmountField(
     getInitialAmount(
       props.prevState?.rawTx,
-      props.initialValue.amount,
+      props.initialValue?.amount,
     ),
     account.summary?.balance,
     token,
   );
   const [recipient, setRecipientField] = useRecipientField(
-    getInitialRecipient(props.prevState?.rawTx, props.initialValue.recipient),
+    getInitialRecipient(props.prevState?.rawTx, props.initialValue?.recipient),
   );
   const [maxAmount, setMaxAmount] = useState({ value: 0, error: false });
 
