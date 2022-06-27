@@ -151,6 +151,55 @@ const getElementsTxAsset = (desktopAsset, moduleAssetId) => {
   }
 };
 
+const getElementsAssetFromJSON = (JSONAsset, moduleAssetId) => {
+  switch (moduleAssetId) {
+    case transfer:
+      return {
+        recipientAddress: convertStringToBinary(JSONAsset.recipientAddress),
+        amount: BigInt(convertBigIntToString(JSONAsset.amount)),
+        data: JSONAsset.data,
+      };
+
+    case voteDelegate: {
+      const votes = JSONAsset.votes.map(vote => ({
+        amount: BigInt(convertBigIntToString(vote.amount)),
+        delegateAddress: convertStringToBinary(vote.delegateAddress),
+      }));
+      return { votes };
+    }
+
+    case unlockToken: {
+      return {
+        unlockObjects: JSONAsset.unlockObjects.map(unlockObject => ({
+          amount: BigInt(convertBigIntToString(unlockObject.amount)),
+          delegateAddress: convertStringToBinary(unlockObject.delegateAddress),
+          unvoteHeight: unlockObject.unvoteHeight,
+        })),
+      };
+    }
+
+    case reclaimLSK: {
+      return {
+        amount: BigInt((convertBigIntToString(JSONAsset.amount))),
+      };
+    }
+
+    case registerMultisignatureGroup: {
+      return {
+        numberOfSignatures: Number(JSONAsset.numberOfSignatures),
+        mandatoryKeys: JSONAsset.mandatoryKeys.map(convertStringToBinary),
+        optionalKeys: JSONAsset.optionalKeys.map(convertStringToBinary),
+      };
+    }
+
+    case registerDelegate:
+      return JSONAsset;
+
+    default:
+      return Error('Unknown transaction');
+  }
+};
+
 /**
  * Converts a transaction returned by lisk elements back to the signature
  * used by lisk desktop
@@ -210,12 +259,12 @@ const convertTxJSONToBinary = (tx) => {
     moduleID: tx.moduleID,
     assetID: tx.assetID,
     senderPublicKey: convertStringToBinary(tx.senderPublicKey),
-    nonce: BigInt(tx.nonce),
-    fee: BigInt(tx.fee),
+    fee: BigInt(convertBigIntToString(tx.fee)),
+    nonce: BigInt(convertBigIntToString(tx.nonce)),
     signatures: tx.signatures.map(convertStringToBinary),
   };
 
-  transaction.asset = getElementsTxAsset(tx.asset, joinModuleAndAssetIds(tx));
+  transaction.asset = getElementsAssetFromJSON(tx.asset, joinModuleAndAssetIds(tx));
   return transaction;
 };
 
@@ -584,9 +633,6 @@ const signMultisigTransaction = async (
  */
 const getNumberOfSignatures = (account, transaction) => {
   if (transaction?.moduleAssetId === registerMultisignatureGroup) {
-    // console.log('---------------------------------------------------');
-    // console.trace();
-    // console.log('************************************************************');
     return transaction.asset.optionalKeys.length + transaction.asset.mandatoryKeys.length + 1;
   }
   if (account?.summary?.isMultisignature) {
