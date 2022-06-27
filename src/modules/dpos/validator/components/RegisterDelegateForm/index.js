@@ -1,4 +1,6 @@
 import React, { useState, useRef, useEffect } from 'react';
+import { useSelector } from 'react-redux';
+import { useTranslation } from 'react-i18next';
 import { regex } from 'src/const/regex';
 import { MODULE_ASSETS_NAME_ID_MAP } from '@transaction/configuration/moduleAssets';
 import { getDelegate } from '@dpos/validator/api';
@@ -7,8 +9,6 @@ import BoxContent from 'src/theme/box/content';
 import { Input } from 'src/theme';
 import Tooltip from 'src/theme/Tooltip';
 import TxComposer from '@transaction/components/TxComposer';
-import { useSelector } from 'react-redux';
-import { useTranslation } from 'react-i18next';
 import styles from './form.css';
 
 const validateUsername = (query, t) => {

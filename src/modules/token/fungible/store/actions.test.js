@@ -78,7 +78,6 @@ describe('actions: transactions', () => {
 
       // Assert
       expect(hwManager.signTransactionByHW).not.toHaveBeenCalled();
-      // Replace toMatchSnapshot with a definitive assertion.
       expect(dispatch).toHaveBeenCalledWith(expectedAction);
     });
 
