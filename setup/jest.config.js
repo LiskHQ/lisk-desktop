@@ -73,7 +73,7 @@ module.exports = {
     'src/dpos/validator/consts/', // Fix after updating dpos domain
     'src/settings/const/',
     'src/const',
-    'src/token/fungible/consts/',
+    'src/modules/token/fungible/consts/',
     'src/settings/const/',
     'scripts/i18n/i18n-scanner.js',
     'setup/react/main.js',
