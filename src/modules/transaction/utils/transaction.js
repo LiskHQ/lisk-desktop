@@ -489,6 +489,10 @@ export const sign = async (
   isMultisignature, isMultiSignatureRegistration, keys, publicKey,
   moduleAssetId, rawTransaction, privateKey,
 ) => {
+  if (isMultiSignatureRegistration) {
+    keys.optionalKeys = transaction.asset.optionalKeys;
+    keys.mandatoryKeys = transaction.asset.mandatoryKeys;
+  }
   // @todo rawTransaction is changed
   if (!isEmpty(wallet.hwInfo)) {
     const signedTx = await signUsingHW(
@@ -580,6 +584,9 @@ const signMultisigTransaction = async (
  */
 const getNumberOfSignatures = (account, transaction) => {
   if (transaction?.moduleAssetId === registerMultisignatureGroup) {
+    // console.log('---------------------------------------------------');
+    // console.trace();
+    // console.log('************************************************************');
     return transaction.asset.optionalKeys.length + transaction.asset.mandatoryKeys.length + 1;
   }
   if (account?.summary?.isMultisignature) {
