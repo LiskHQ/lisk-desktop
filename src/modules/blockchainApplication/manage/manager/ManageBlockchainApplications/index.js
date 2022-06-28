@@ -1,16 +1,7 @@
 import { compose } from 'redux';
 import withData from 'src/utils/withData';
 import ManageBlockchainApplicationsView from '../../components/ManageBlockchainApplications';
-
-// TODO implement this method in api
-const getApps = () => Promise.resolve([
-  { status: 'registered' }, { status: 'registered' }, { status: 'active' }, { status: 'terminated' },
-]);
-
-const getStatistics = () => Promise.resolve({
-  totalSupplyLSK: 5e13,
-  stakedLSK: 3e13,
-});
+import { getApps, getStatistics } from '../../../utils/api';
 
 export default compose(
   withData({
