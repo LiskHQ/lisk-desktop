@@ -281,7 +281,7 @@ const ss = {
   watchedBtn: '.delegates-table > ul > .tab:last-child',
   filterDelegateInput: '.filter-by-name',
   showMoreDelegatesBtn: '.delegate-box .load-more',
-  summary: '.Summary',
+  summary: '.summary',
   transactionRowSender: '.transaction-row-sender',
   transactionRowRecipient: '.transaction-row-recipient',
   loadLatest: '.load-latest',

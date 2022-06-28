@@ -174,19 +174,19 @@ export const transactionBroadcasted = transaction =>
  * and dispatches the relevant action.
  *
  * @param {object} data
- * @param {object} data.rawTransaction Transaction config required by Lisk Element
+ * @param {object} data.rawTx Transaction config required by Lisk Element
  * @param {object} data.sender
  * @param {object} data.sender.data - Sender account info in Lisk API schema
  */
 export const multisigTransactionSigned = ({
-  rawTransaction, sender,
+  rawTx, sender,
 }) => async (dispatch, getState) => {
   const state = getState();
   const activeWallet = selectActiveTokenAccount(state);
-  const txStatus = getTransactionSignatureStatus(sender.data, rawTransaction);
+  const txStatus = getTransactionSignatureStatus(sender.data, rawTx);
 
   const [tx, error] = await signMultisigTransaction(
-    rawTransaction,
+    rawTx,
     activeWallet,
     sender,
     txStatus,
