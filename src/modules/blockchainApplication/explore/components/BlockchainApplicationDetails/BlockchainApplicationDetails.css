@@ -27,6 +27,9 @@
 
   & > div:first-child {
     position: absolute;
+    display: flex;
+    align-items: center;
+    justify-content: center;
     top: -39px;
     width: 77px;
     height: 77px;
@@ -107,15 +110,40 @@
     color: var(--color-blue-gray);
   }
 
-  & .detail {
-    width: 25%;
+  & .detailContentText {
+    font-size: 15px;
   }
 
-  & .detail:last-of-type {
-    width: 30%;
+  & .statusChip {
+    font-size: 14px !important;
+    padding: 10px 16px;
+    border-radius: 40px;
   }
 
-  & .detail:nth-last-of-type(2) {
-    width: 20%;
+  & .active {
+    background-color: #00d5631a;
+    color: var(--color-jade-green);
   }
+
+  & .reigstered {
+    background-color: #4070f41a;
+    color: var(--color-ultramarine-blue);
+  }
+
+  & .terminated {
+    background-color: var(--color-maastricht-blue);
+    color: var(--color-ghost-white);
+  }
+}
+
+.detail {
+  width: 25%;
+}
+
+.detail:last-of-type {
+  width: 30%;
+}
+
+.detail:nth-last-of-type(3) {
+  width: 20%;
 }
