@@ -119,6 +119,11 @@ export default {
     exact: false,
     forbiddenTokens: [],
   },
+  blockchainApplications: {
+    path: '/applications',
+    isPrivate: false,
+    forbiddenTokens: [],
+  },
 };
 
 export const modals = {

@@ -1,0 +1,11 @@
+.container {
+  max-width: 350px;
+
+  & > header {
+    padding-bottom: 22px;
+  }
+
+  & > div {
+    margin-bottom: 16px;
+  }
+}
