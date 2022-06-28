@@ -24,25 +24,27 @@ const BlockchainApplicationDetails = () => {
           </p>
         </Tooltip>
       </span>,
-      content: <span className="tx-confirmation">10</span>,
+      content: <span className={styles.detailContentText}>10</span>,
     },
     {
       header: <span className={styles.headerText}>
         {t('Status')}
       </span>,
-      content: <span className="tx-confirmation">dskjfsdf</span>,
+      content: <span className={`${styles.detailContentText} ${styles.statusChip} ${styles.reigstered}`}>
+        {t('registered')}
+      </span>,
     },
     {
       header: <span className={styles.headerText}>
         {t('Last Update')}
       </span>,
-      content: <span className="tx-confirmation">26 Jan 2022</span>,
+      content: <span className={styles.detailContentText}>26 Jan 2022</span>,
     },
     {
       header: <span className={styles.headerText}>
         {t('Last Certificate Height')}
       </span>,
-      content: <span className="tx-confirmation">156785</span>,
+      content: <span className={styles.detailContentText}>156785</span>,
     },
   ];
 
@@ -52,10 +54,8 @@ const BlockchainApplicationDetails = () => {
         <div />
         <div>
           <div className={styles.avatarContainer}>
-            <div style={{
-              backgroundColor: 'white ', color: 'black',
-            }}
-            >
+            {/* just a place holder */}
+            <div style={{ backgroundColor: 'white ' }}>
               sdf
             </div>
           </div>
