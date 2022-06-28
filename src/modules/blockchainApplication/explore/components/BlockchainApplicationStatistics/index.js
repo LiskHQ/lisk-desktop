@@ -6,6 +6,7 @@ import BoxContent from 'src/theme/box/content';
 import { DoughnutChart } from 'src/modules/common/components/charts';
 import TokenAmount from '@token/fungible/components/tokenAmount';
 import { tokenMap } from '@token/fungible/consts/tokens';
+import Tooltip from 'src/theme/Tooltip';
 import styles from './blockchainApplicationStatistics.css';
 
 const BlockchainApplicationStatistics = ({ apps, statistics }) => {
@@ -53,6 +54,9 @@ const BlockchainApplicationStatistics = ({ apps, statistics }) => {
       </BoxContent>
       <BoxContent>
         <span>{t('Total Supply')}</span>
+        <Tooltip size="m" position="bottom">
+          <p>{t('Total LSK tokens in circulation')}</p>
+        </Tooltip>
         <TokenAmount
           val={statistics.data.totalSupplyLSK}
           token={tokenMap.LSK.key}
@@ -60,6 +64,9 @@ const BlockchainApplicationStatistics = ({ apps, statistics }) => {
       </BoxContent>
       <BoxContent>
         <span>{t('Staked')}</span>
+        <Tooltip size="m" position="bottom">
+          <p>{t('Amount of LSK tokens staked by validators and nominators for DPoS governance')}</p>
+        </Tooltip>
         <TokenAmount
           val={statistics.data.stakedLSK}
           token={tokenMap.LSK.key}
