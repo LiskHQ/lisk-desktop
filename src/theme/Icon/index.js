@@ -209,6 +209,9 @@ import switchIcon from '@setup/react/assets/images/icons/switch.svg';
 import secretPassphrase from '@setup/react/assets/images/icons/secret-passphrase.svg';
 import accountUpload from '@setup/react/assets/images/icons/account-upload.svg';
 import accountRemoved from '@setup/react/assets/images/icons/account-removed.svg';
+import unpinnedIcon from '@setup/react/assets/images/icons/unpinned.svg';
+import pinnedIcon from '@setup/react/assets/images/icons/pinned.svg';
+import chainLinkIcon from '@setup/react/assets/images/icons/chain-link.svg';
 
 export const icons = {
   academy,
@@ -418,6 +421,9 @@ export const icons = {
   secretPassphrase,
   accountUpload,
   accountRemoved,
+  unpinnedIcon,
+  pinnedIcon,
+  chainLinkIcon,
 };
 
 const Icon = ({ name, noTheme, ...props }) => {
