@@ -50,14 +50,26 @@ const BlockchainApplicationStatistics = ({ apps, statistics }) => {
       <BoxHeader>
         <h1>{t('Statistics')}</h1>
       </BoxHeader>
-      <BoxContent>
+      <BoxContent className={styles.chartBox}>
         <DoughnutChart
           data={doughnutChartData}
           options={{
+            cutoutPercentage: 70,
             legend: {
               display: true,
               position: 'left',
               align: 'start',
+              labels: {
+                padding: 20,
+              },
+            },
+            layout: {
+              padding: {
+                left: 0,
+                right: 0,
+                bottom: 0,
+                top: 0,
+              },
             },
           }}
         />

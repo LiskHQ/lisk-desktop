@@ -12,6 +12,10 @@
   }
 }
 
+.chartBox {
+  padding: 16px 0px !important;
+}
+
 .statsBox {
   flex-direction: row !important;
   justify-content: space-between !important;
