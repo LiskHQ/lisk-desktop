@@ -59,7 +59,7 @@ describe('Sign Multisignature Tx Review component', () => {
     signatures[1] = wallets.genesis.summary.publicKey;
     wrapper.find('button.sign').simulate('click');
     expect(props.nextStep).toHaveBeenCalledWith(expect.objectContaining({
-      rawTransaction: expect.anything(),
+      rawTx: expect.anything(),
       sender: expect.anything(),
     }));
   });

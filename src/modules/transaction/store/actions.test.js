@@ -324,7 +324,7 @@ describe('actions: transactions', () => {
       },
     });
     const params = {
-      rawTransaction: { signatures: [] },
+      rawTx: { signatures: [] },
       sender: { data: accounts.multiSig },
     };
 
