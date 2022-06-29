@@ -51,7 +51,7 @@ Feature: Multisignature transaction
     And I search for account lskwunwxqmss9w3mtuvzgbsfy665cz4eo3rd2mxdp
     Then I click on searchAccountRow
     And I should be on Account page of lskwun...2mxdp
-    And I wait 2 seconds
+    And I wait 5 seconds
     And The latest transaction is register multisignature group
 
   @basic
