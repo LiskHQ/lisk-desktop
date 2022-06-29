@@ -1,3 +1,4 @@
+/* istanbul ignore file */
 import React from 'react';
 import BlockchainApplicationStatistics from '../../../explore/components/BlockchainApplicationStatistics';
 

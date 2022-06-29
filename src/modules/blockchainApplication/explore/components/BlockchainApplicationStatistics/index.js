@@ -36,6 +36,7 @@ const BlockchainApplicationStatistics = ({ apps, statistics }) => {
             case 'terminated':
               acc[2]++;
               break;
+            // istanbul ignore next
             default:
               break;
           }

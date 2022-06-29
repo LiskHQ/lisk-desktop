@@ -1,3 +1,4 @@
+/* istanbul ignore file */
 // TODO unmock api call removing comented code when sdk is ready.
 //   Dependent tickets:
 //   https://github.com/LiskHQ/lisk-service/issues/1111

@@ -1,3 +1,4 @@
+/* istanbul ignore file */
 import { compose } from 'redux';
 import withData from 'src/utils/withData';
 import ManageBlockchainApplicationsView from '../../components/ManageBlockchainApplications';
