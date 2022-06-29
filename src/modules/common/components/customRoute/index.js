@@ -6,7 +6,7 @@ import { selectActiveTokenAccount } from '@common/store';
 import { useAccounts, useCurrentAccount } from '@account/hooks';
 import Piwik from 'src/utils/piwik';
 import routes from '@screens/router/routes';
-import ManageAccounts from '@account/components/ManageAccounts';
+import Login from '@auth/components/Signin';
 import offlineStyle from 'src/modules/common/components/offlineWrapper/offlineWrapper.css';
 import ErrorBoundary from './errorBoundary';
 
@@ -76,10 +76,10 @@ const CustomRoute = ({
         errorMessage={t('An error occurred while rendering this page')}
       >
         <Route
-          path={isNetworkSet ? path : routes.manageAccounts.path}
+          path={isNetworkSet ? path : routes.login.path}
           exact={exact}
-          key={isNetworkSet ? path : routes.manageAccounts.path}
-          component={isNetworkSet ? component : ManageAccounts}
+          key={isNetworkSet ? path : routes.login.path}
+          component={isNetworkSet ? component : Login}
         />
       </ErrorBoundary>
     </main>
