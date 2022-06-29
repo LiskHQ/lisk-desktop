@@ -44,7 +44,7 @@ const RegisterDelegateForm = ({
     nextStep({ rawTx });
   };
 
-  const isUsernameFree = () => {
+  const checkUsername = () => {
     clearTimeout(timeout.current);
 
     timeout.current = setTimeout(() => {
@@ -67,7 +67,7 @@ const RegisterDelegateForm = ({
 
   useEffect(() => {
     if (!error && username) {
-      isUsernameFree();
+      checkUsername();
     }
   }, [username]);
 

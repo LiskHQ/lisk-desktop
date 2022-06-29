@@ -62,7 +62,7 @@ const Overview = ({
           {typeof delegatesCount.data === 'number' ? (
             <>
               <div className={styles.chartBox}>
-                <h2 className={styles.title}>{t('Delegation Status')}</h2>
+                <h2 className={styles.title}>{t('Delegate Status')}</h2>
                 <div className={`${styles.chart} showOnLargeViewPort`}>
                   <DoughnutChart
                     data={doughnutChartData}
