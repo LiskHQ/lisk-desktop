@@ -1,4 +1,4 @@
-import { create } from '@transaction/api';
+import { createGenericTx } from '@transaction/api';
 import wallets from '@tests/constants/wallets';
 import actionTypes from '@transaction/store/actionTypes';
 import { balanceReclaimed } from './action';
@@ -20,27 +20,28 @@ describe('actions: legacy', () => {
           LSK: wallets.non_migrated,
         },
       },
+      token: { active: 'LSK' },
       network: {},
     };
     const getState = () => state;
+    const transactionObject = {
+      sender: { publicKey: wallets.non_migrated.summary.publicKey },
+      asset: { amount: wallets.non_migrated.legacy.amount },
+      fee: 100000,
+    };
 
     it('should dispatch transactionCreatedSuccess', async () => {
       const tx = { id: 1 };
-      create.mockImplementation(() =>
+      createGenericTx.mockImplementation(() =>
         new Promise((resolve) => {
           resolve(tx);
         }));
-      await balanceReclaimed({ fee: { value: '0,1' } })(dispatch, getState);
+      await balanceReclaimed(transactionObject)(dispatch, getState);
 
-      expect(create).toHaveBeenCalledWith({
+      expect(createGenericTx).toHaveBeenCalledWith({
         network: state.network,
         wallet: state.wallet.info.LSK,
-        transactionObject: {
-          moduleAssetId: '1000:0',
-          fee: 100000000,
-          amount: '13600000000',
-          keys: { numberOfSignatures: 0 },
-        },
+        transactionObject,
       });
       expect(dispatch).toHaveBeenCalledWith({
         type: actionTypes.transactionCreatedSuccess,
@@ -50,11 +51,11 @@ describe('actions: legacy', () => {
 
     it('should dispatch transactionSignError', async () => {
       const error = { message: 'TestError' };
-      create.mockImplementation(() =>
+      createGenericTx.mockImplementation(() =>
         new Promise((_, reject) => {
           reject(error);
         }));
-      await balanceReclaimed({ fee: { value: '0,1' } })(dispatch, getState);
+      await balanceReclaimed(transactionObject)(dispatch, getState);
       expect(dispatch).toHaveBeenCalledWith({
         type: actionTypes.transactionSignError,
         data: error,

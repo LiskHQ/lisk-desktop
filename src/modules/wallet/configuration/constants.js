@@ -4,4 +4,5 @@ const account = {
   warnLockDuration: 480000, // warning time is 8 minutes in milliSecond
 };
 
+export const MAX_MULTI_SIG_MEMBERS = 64;
 export default account;

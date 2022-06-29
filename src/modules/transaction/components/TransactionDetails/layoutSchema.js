@@ -2,7 +2,7 @@ import { MODULE_ASSETS_NAME_ID_MAP } from '@transaction/configuration/moduleAsse
 
 import {
   TransactionId, Sender, Recipient, Message, Illustration,
-  Confirmations, TxDate, Amount, Fee, RequiredSignatures, Votes,
+  Confirmations, TxDate, Amount, Fee, NumberOfSignatures, Votes,
   BlockId, BlockHeight, Members, SignedAndRemainingMembersList, PrettyJson,
 } from 'src/modules/transaction/components/TransactionDetails';
 import styles from './layoutSchema.css';
@@ -43,11 +43,11 @@ export const LayoutSchema = {
     className: styles.registerDelegatePreview,
   },
   [registerMultisignatureGroup]: {
-    components: [...baseComponents, ...timeComponents, Members, RequiredSignatures, PrettyJson],
+    components: [...baseComponents, ...timeComponents, Members, NumberOfSignatures, PrettyJson],
     className: styles.multiSigLayout,
   },
   [`${registerMultisignatureGroup}-preview`]: {
-    components: [...previewBaseComponents, Members, RequiredSignatures, ...restComponents],
+    components: [...previewBaseComponents, Members, NumberOfSignatures, ...restComponents],
     className: styles.multiSigRegisterPreview,
   },
   [unlockToken]: {

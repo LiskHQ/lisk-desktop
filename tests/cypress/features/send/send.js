@@ -7,7 +7,7 @@ const transactionFee = 0.00142;
 
 const errorMessage = 'Test error';
 
-Then(/^I follow the launch protokol link$/, function () {
+Then(/^I follow the launch protocol link$/, function () {
   cy.visit(`${urls.send}&recipient=lsk2h73o3bqa4v2u3ehn6c5e787ky38q8wte538mn&amount=5&reference=test`);
 });
 
