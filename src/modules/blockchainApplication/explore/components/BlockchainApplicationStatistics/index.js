@@ -7,10 +7,14 @@ import { DoughnutChart } from 'src/modules/common/components/charts';
 import TokenAmount from '@token/fungible/components/tokenAmount';
 import { tokenMap } from '@token/fungible/consts/tokens';
 import Tooltip from 'src/theme/Tooltip';
+import Icon from 'src/theme/Icon';
+import { useTheme } from 'src/theme/Theme';
+import { getColorPalette } from 'src/modules/common/components/charts/chartOptions';
 import styles from './blockchainApplicationStatistics.css';
 
 const BlockchainApplicationStatistics = ({ apps, statistics }) => {
   const { t } = useTranslation();
+  const colorPalette = getColorPalette(useTheme());
 
   const doughnutChartData = {
     labels: [
@@ -20,7 +24,7 @@ const BlockchainApplicationStatistics = ({ apps, statistics }) => {
     ],
     datasets: [
       {
-        label: 'status',
+        backgroundColor: [colorPalette[1], colorPalette[0], colorPalette[2]],
         data: apps.data.reduce((acc, stats) => {
           switch (stats.status) {
             case 'registered':
@@ -49,28 +53,52 @@ const BlockchainApplicationStatistics = ({ apps, statistics }) => {
       <BoxContent>
         <DoughnutChart
           data={doughnutChartData}
-          options={{ legend: { display: true } }}
+          options={{
+            legend: {
+              display: true,
+              position: 'left',
+              align: 'start',
+            },
+          }}
         />
       </BoxContent>
-      <BoxContent>
-        <span>{t('Total Supply')}</span>
-        <Tooltip size="m" position="bottom">
-          <p>{t('Total LSK tokens in circulation')}</p>
-        </Tooltip>
-        <TokenAmount
-          val={statistics.data.totalSupplyLSK}
-          token={tokenMap.LSK.key}
-        />
+      <BoxContent className={styles.statsBox}>
+        <div>
+          <div>
+            <span className={styles.statsInfoTitle}>{t('Total Supply')}</span>
+            <Tooltip size="m" position="bottom">
+              <p>{t('Total LSK tokens in circulation')}</p>
+            </Tooltip>
+          </div>
+          <p className={`${styles.statsInfo} total-supply-token`}>
+            <TokenAmount
+              val={statistics.data.totalSupplyLSK}
+              token={tokenMap.LSK.key}
+            />
+          </p>
+        </div>
+        <div>
+          <Icon name="totalSupplyToken" />
+        </div>
       </BoxContent>
-      <BoxContent>
-        <span>{t('Staked')}</span>
-        <Tooltip size="m" position="bottom">
-          <p>{t('Amount of LSK tokens staked by validators and nominators for DPoS governance')}</p>
-        </Tooltip>
-        <TokenAmount
-          val={statistics.data.stakedLSK}
-          token={tokenMap.LSK.key}
-        />
+      <BoxContent className={styles.statsBox}>
+        <div>
+          <div>
+            <span className={styles.statsInfoTitle}>{t('Staked')}</span>
+            <Tooltip size="m" position="bottom">
+              <p>{t('Amount of LSK tokens staked by validators and nominators for DPoS governance')}</p>
+            </Tooltip>
+          </div>
+          <p className={`${styles.statsInfo} stacked-token`}>
+            <TokenAmount
+              val={statistics.data.stakedLSK}
+              token={tokenMap.LSK.key}
+            />
+          </p>
+        </div>
+        <div>
+          <Icon name="stackedToken" />
+        </div>
       </BoxContent>
     </Box>
   );
