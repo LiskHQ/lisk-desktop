@@ -1,7 +1,7 @@
 import React from 'react';
 import Box from 'src/theme/box';
 import BoxContent from 'src/theme/box/content';
-import TransactionResult from '@transaction/manager/transactionResult';
+import TxBroadcaster from '@transaction/components/TxBroadcaster';
 import {
   statusMessages,
   getTransactionStatus,
@@ -31,7 +31,7 @@ const Status = ({ sender, transactions, t }) => {
         </header>
         <BoxContent>
           <ProgressBar current={4} />
-          <TransactionResult
+          <TxBroadcaster
             message={template.message}
             title={template.title}
             illustration="signMultisignature"

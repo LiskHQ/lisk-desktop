@@ -32,7 +32,7 @@ describe('setVotesByLaunchProtocol', () => {
   it('Should dispatch voteEdited with empty array if no usernames in query params', async () => {
     accounts.getAccounts.mockImplementation(() => Promise.resolve([]));
     accounts.getAccount.mockImplementation({ data: mockAccounts.genesis });
-    await setVotesByLaunchProtocol('?modal=votingQueue')(dispatch, getState);
+    await setVotesByLaunchProtocol('?modal=VotingQueue')(dispatch, getState);
     expect(accounts.getAccount).not.toHaveBeenCalled();
     expect(dispatch).toHaveBeenCalled();
   });
@@ -48,7 +48,7 @@ describe('setVotesByLaunchProtocol', () => {
     accounts.getAccount.mockImplementation({
       data: account,
     });
-    await setVotesByLaunchProtocol('?modal=votingQueue&unvotes=genesis_5')(dispatch, getState);
+    await setVotesByLaunchProtocol('?modal=VotingQueue&unvotes=genesis_5')(dispatch, getState);
     expect(accounts.getAccounts).toHaveBeenCalledWith({
       params: { usernameList: ['genesis_5'] },
       network,
@@ -60,7 +60,7 @@ describe('setVotesByLaunchProtocol', () => {
   it('Should dispatch voteEdited with empty data if the username is invalid', async () => {
     accounts.getAccounts.mockImplementation(() => Promise.resolve({ data: [] }));
     accounts.getAccount.mockImplementation(() => Promise.resolve({ data: [] }));
-    await setVotesByLaunchProtocol('?modal=votingQueue&unvotes=ad')(dispatch, getState);
+    await setVotesByLaunchProtocol('?modal=VotingQueue&unvotes=ad')(dispatch, getState);
     expect(accounts.getAccounts).not.toHaveBeenCalled();
     expect(accounts.getAccount).not.toHaveBeenCalled();
     expect(dispatch).toHaveBeenCalled();
@@ -75,7 +75,7 @@ describe('setVotesByLaunchProtocol', () => {
       data: [account, account],
     });
     accounts.getAccount.mockImplementation(() => Promise.resolve({ data: [] }));
-    await setVotesByLaunchProtocol('?modal=votingQueue&unvotes=ad,genesis_5')(dispatch, getState);
+    await setVotesByLaunchProtocol('?modal=VotingQueue&unvotes=ad,genesis_5')(dispatch, getState);
     expect(accounts.getAccounts).not.toHaveBeenCalled();
     expect(accounts.getAccount).not.toHaveBeenCalled();
     expect(dispatch).toHaveBeenCalled();

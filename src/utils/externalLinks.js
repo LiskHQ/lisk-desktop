@@ -4,7 +4,7 @@ const sendRegex = /^\/(wallet|wallet\/send|main\/transactions\/send)$/;
 const sendRedirect = '/wallet?modal=send';
 
 const voteRegex = /^\/(main\/voting\/vote|delegates\/vote|vote)$/;
-const voteRedirect = '/wallet?modal=votingQueue';
+const voteRedirect = '/wallet?modal=VotingQueue';
 
 // eslint-disable-next-line import/prefer-default-export
 export const externalLinks = {

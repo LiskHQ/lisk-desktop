@@ -22,8 +22,8 @@ Feature: Multisignature transaction
     And I fill 2 in multisignatureEditorInput field
     Then I enter the publicKey of wallet2P at input 1
     Then I enter the publicKey of delegate at input 2
-    When I click on sendButton
-    When I click on confirmBtn
+    When I click on txNextBtn
+    When I click on confirmButton
     Then msignSendButton should not exist
     Then I should see downloadButton
     And I click on downloadButton
@@ -51,7 +51,7 @@ Feature: Multisignature transaction
     And I search for account lskwunwxqmss9w3mtuvzgbsfy665cz4eo3rd2mxdp
     Then I click on searchAccountRow
     And I should be on Account page of lskwun...2mxdp
-    And I wait 2 seconds
+    And I wait 5 seconds
     And The latest transaction is register multisignature group
 
   @basic
@@ -90,8 +90,8 @@ Feature: Multisignature transaction
     Then I enter the publicKey of genesis at input 2
     Then I enter the publicKey of delegate at input 3
     Then I set 2 inputs as optional
-    When I click on sendButton
-    When I click on confirmBtn
+    When I click on txNextBtn
+    When I click on confirmButton
     Then msignSendButton should not exist
     Then I should see downloadButton
     Then I should see copyButton

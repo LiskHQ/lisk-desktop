@@ -4,7 +4,7 @@ import { withTranslation } from 'react-i18next';
 import { connect } from 'react-redux';
 import { compose } from 'redux';
 import { processLaunchProtocol } from '@common/store/actions';
-import VotingQueue from '../components/votingQueue';
+import VotingQueue from '../components/VotingQueue';
 
 const mapDispatchToProps = {
   processLaunchProtocol,

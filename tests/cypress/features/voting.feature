@@ -16,7 +16,7 @@ Feature: Vote delegate
       And I fill 160 in amountInput field
       And I click on confirmBtn
       And I click on votingQueueToggle
-      And I click on confirmBtn
+      And I click on txNextBtn
       And I click on confirmButton
       And I click on backToWalletButton
       Given I am on wallet page
@@ -29,7 +29,7 @@ Feature: Vote delegate
       And I fill 200 in amountInput field
       And I click on confirmBtn
       And I click on votingQueueToggle
-      And I click on confirmBtn
+      And I click on txNextBtn
       And I click on confirmButton
       And I click on backToWalletButton
       Given I am on wallet page
@@ -40,7 +40,7 @@ Feature: Vote delegate
       When I click on openAddVoteDialog
       And I click on removeVote
       And I click on votingQueueToggle
-      And I click on confirmBtn
+      And I click on txNextBtn
       And I click on confirmButton
       And I click on backToWalletButton
       Given I am on wallet page
@@ -53,7 +53,7 @@ Feature: Vote delegate
       Then I click on openUnlockBalanceDialog
       Then I should see unlocking balance 200
       Then I should see available balance 300
-      And I click on unlockBtn
+      And I click on txNextBtn
       And I click on confirmButton
       And I click on backToWalletButton
       Then The latest transaction is unlocking

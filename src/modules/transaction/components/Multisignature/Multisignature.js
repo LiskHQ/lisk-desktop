@@ -8,7 +8,7 @@ import { getErrorReportMailto } from 'src/utils/helpers';
 import copyToClipboard from 'copy-to-clipboard';
 import { transactionToJSON, downloadJSON } from '@transaction/utils';
 import Icon from 'src/theme/Icon';
-import getIllustration from '../TransactionResult/illustrationsMap';
+import getIllustration from '../TxBroadcaster/illustrationsMap';
 import styles from './Multisignature.css';
 
 export const PartiallySignedActions = ({ onDownload, t }) => (

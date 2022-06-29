@@ -9,7 +9,7 @@ export { default as Message } from './message';
 export { default as Nonce } from './nonce';
 export { default as PrettyJson } from './prettyJson';
 export { default as Recipient } from './recipient';
-export { default as RequiredSignatures } from './requiredSignatures';
+export { default as NumberOfSignatures } from './numberOfSignatures';
 export { default as Sender } from './sender';
 export { default as SignedAndRemainingMembersList } from './signedAndRemainingMembersList';
 export { default as TransactionId } from './transactionId';

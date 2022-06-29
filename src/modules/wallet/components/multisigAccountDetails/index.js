@@ -85,7 +85,7 @@ const MultisigAccountDetails = ({ t, wallet, history }) => {
           </BoxInfoText>
           <Members members={members} t={t} />
           <div className={styles.infoContainer}>
-            <div className={styles.requiredSignatures}>
+            <div className={styles.numberOfSignatures}>
               {t('Required signatures')}
               <Tooltip position="top right" indent>
                 <span>
