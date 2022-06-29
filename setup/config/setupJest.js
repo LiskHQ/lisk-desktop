@@ -11,7 +11,7 @@ import ReactPiwik from 'react-piwik';
 import crypto from 'crypto';
 import ReactRouterDom from 'react-router-dom';
 import * as ReactRedux from 'react-redux';
-import { deepMergeObj } from 'src/utils/helpers';
+import lodashMerge from 'lodash.merge';
 import defaultState from '../../tests/constants/defaultState';
 
 require('jest-localstorage-mock');
@@ -75,7 +75,7 @@ ReactRedux.connect = jest.fn((mapStateToProps, mapDispatchToProps = {}) => ((Com
 ReactRedux.useSelector = jest.fn((filter) => {
   let result;
   try {
-    result = filter(deepMergeObj(defaultState, ReactRedux.useStore().getState()));
+    result = filter(lodashMerge(defaultState, ReactRedux.useStore().getState()));
   } catch (e) {
     result = filter(defaultState);
   }

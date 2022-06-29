@@ -18,7 +18,7 @@ import {
 } from './voting';
 
 jest.mock('@transaction/api', () => ({
-  create: jest.fn(),
+  createGenericTx: jest.fn(),
   computeTransactionId: jest.fn(),
 }));
 
@@ -102,14 +102,14 @@ describe('actions: voting', () => {
   describe('votesSubmitted', () => {
     it('should call create transactions', async () => {
       const tx = { data: sampleVotes[0] };
-      transactionApi.create.mockResolvedValue(tx);
+      transactionApi.createGenericTx.mockResolvedValue(tx);
       const data = [{
         address: 'dummy',
         amount: 1e10,
       }];
 
       await votesSubmitted(data)(dispatch, getState);
-      expect(transactionApi.create).toHaveBeenCalled();
+      expect(transactionApi.createGenericTx).toHaveBeenCalled();
       expect(hwManager.signTransactionByHW).not.toHaveBeenCalled();
       expect(dispatch).toHaveBeenCalledTimes(3);
       expect(dispatch).toHaveBeenCalledWith({
@@ -130,7 +130,7 @@ describe('actions: voting', () => {
       }];
 
       await votesSubmitted(data)(dispatch, getState);
-      expect(transactionApi.create).toHaveBeenCalled();
+      expect(transactionApi.createGenericTx).toHaveBeenCalled();
       expect(dispatch).toHaveBeenCalledTimes(3);
       expect(dispatch).toHaveBeenCalledWith({
         type: actionTypes.votesSubmitted,
@@ -143,14 +143,14 @@ describe('actions: voting', () => {
 
     it('dispatches a transactionSignError action if an error occurs', async () => {
       const error = new Error('Error message.');
-      transactionApi.create.mockRejectedValue(error);
+      transactionApi.createGenericTx.mockRejectedValue(error);
       const data = [{
         address: 'dummy',
         amount: 1e10,
       }];
 
       await votesSubmitted(data)(dispatch, getState);
-      expect(transactionApi.create).toHaveBeenCalled();
+      expect(transactionApi.createGenericTx).toHaveBeenCalled();
       expect(dispatch).toHaveBeenCalledTimes(1);
       expect(dispatch).toHaveBeenCalledWith({
         type: txActionTypes.transactionSignError,
@@ -194,39 +194,34 @@ describe('actions: voting', () => {
   });
 
   describe('balanceUnlocked', () => {
-    // const state = {
-    //   wallet: {
-    //     passphrase: wallets.genesis.passphrase,
-    //     info: {
-    //       LSK: wallets.genesis,
-    //     },
-    //   },
-    //   network: {},
-    //   blocks: {
-    //     latestBlocks: [{ height: 10 }],
-    //   },
-    // };
-    // const getState = () => state;
     const state = getState();
-    const params = { selectedFee: '0.1' };
+    const activeTokenWallet = {
+      hwInfo: undefined,
+      loginType: 0,
+      passphrase: undefined,
+      ...state.wallet.info.LSK,
+    };
+    const params = {
+      moduleAssetId: '5:2',
+      sender: { publicKey: wallets.genesis.summary.publicKey },
+      nonce: wallets.genesis.sequence.nonce,
+      fee: '10000000',
+      asset: {
+        unlockObjects: [],
+      },
+    };
 
     it('should dispatch transactionCreatedSuccess', async () => {
       const tx = { id: 1 };
-      transactionApi.create.mockImplementation(() =>
+      transactionApi.createGenericTx.mockImplementation(() =>
         new Promise((resolve) => {
           resolve(tx);
         }));
       await balanceUnlocked(params)(dispatch, getState);
-      expect(transactionApi.create).toHaveBeenCalledWith({
+      expect(transactionApi.createGenericTx).toHaveBeenCalledWith({
         network: state.network,
-        wallet: state.wallet.info.LSK,
-        transactionObject: {
-          moduleAssetId: '5:2',
-          senderPublicKey: wallets.genesis.summary.publicKey,
-          nonce: wallets.genesis.sequence?.nonce,
-          fee: '10000000',
-          unlockObjects: [],
-        },
+        wallet: activeTokenWallet,
+        transactionObject: params,
       });
       expect(dispatch).toHaveBeenCalledWith({
         type: txActionTypes.transactionCreatedSuccess,
@@ -236,7 +231,7 @@ describe('actions: voting', () => {
 
     it('should dispatch transactionSignError', async () => {
       const error = { message: 'TestError' };
-      transactionApi.create.mockImplementation(() =>
+      transactionApi.createGenericTx.mockImplementation(() =>
         new Promise((_, reject) => {
           reject(error);
         }));

@@ -59,7 +59,7 @@
     "fee confirmations"
     "blockId blockHeight"
     "members members"
-    "requiredSignatures requiredSignatures"
+    "numberOfSignatures numberOfSignatures"
     "transactionAsset transactionAsset";
 }
 
@@ -147,7 +147,7 @@
   grid-template-areas:
     "illustration illustration"
     "sender sender"
-    "requiredSignatures requiredSignatures"
+    "numberOfSignatures numberOfSignatures"
     "members members"
     "transactionId fee"
     "signedAndRemainingMembersList signedAndRemainingMembersList";

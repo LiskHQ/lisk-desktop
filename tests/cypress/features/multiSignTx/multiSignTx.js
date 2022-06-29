@@ -24,7 +24,7 @@ Then(/^I confirm data of ([^\s]+)$/, function (tx) {
   switch (tx) {
     case 'RegisterMultiSignGroupTx_second_sign':
       template.txSenderAddress = 'lsks6wh4zqfd8wyka3rj243rshcdqyug9gyvehxwz';
-      template.txRequiredSignatures = '2';
+      template.txNumberOfSignatures = '2';
       template.memberTitle = [
         'lskdxc...cw7yt(Optional)',
         'lskehj...o9cjy(Optional)',
@@ -38,7 +38,7 @@ Then(/^I confirm data of ([^\s]+)$/, function (tx) {
       break;
     case 'RegisterMultiSignGroupTx_third_sign':
       template.txSenderAddress = 'lsks6wh4zqfd8wyka3rj243rshcdqyug9gyvehxwz';
-      template.txRequiredSignatures = '2';
+      template.txNumberOfSignatures = '2';
       template.memberTitle = [
         'lskdxc...cw7yt(Optional)',        
         'lskehj...o9cjy(Optional)',
@@ -52,7 +52,7 @@ Then(/^I confirm data of ([^\s]+)$/, function (tx) {
       break;
     case 'RegisterSecondPassphraseTx':
       template.txSenderAddress = 'lskwunwxqmss9w3mtuvzgbsfy665cz4eo3rd2mxdp';
-      template.txRequiredSignatures = '2';
+      template.txNumberOfSignatures = '2';
       template.memberTitle = [
         'lskwun...2mxdp(Mandatory)',
         'lskehj...o9cjy(Mandatory)',
@@ -67,7 +67,7 @@ Then(/^I confirm data of ([^\s]+)$/, function (tx) {
   }
   cy.get(ss.txHeader).eq(0).should('have.text', 'Register multisignature group');
   cy.get(ss.txSenderAddress).eq(0).should('have.text', template.txSenderAddress);
-  cy.get(ss.txRequiredSignatures).eq(0).should('have.text', template.txRequiredSignatures);
+  cy.get(ss.txNumberOfSignatures).eq(0).should('have.text', template.txNumberOfSignatures);
   cy.get(ss.txFee).eq(0).should('have.text', template.txFee);
   cy.get(ss.txRemainingMembers).eq(0).should('have.text', template.txRemainingMembers);
   template.memberTitle.forEach((el, index) => {

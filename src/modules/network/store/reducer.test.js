@@ -27,7 +27,7 @@ describe('Reducer: network(state, action)', () => {
     expect(changedState).toEqual(newState);
   });
 
-  it('should return state object with updated status of network if action is networkStatusUpdated', () => {
+  it('should return state object with updated Status of network if action is networkStatusUpdated', () => {
     let state;
     const online = true;
     const action = {

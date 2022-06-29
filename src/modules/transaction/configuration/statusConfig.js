@@ -1,6 +1,6 @@
 import { isEmpty } from 'src/utils/helpers';
 import { txStatusTypes } from '@transaction/configuration/txStatus';
-import { transactionToJSON, getNumberOfSignatures } from '../utils';
+import { transactionToJSON, getNumberOfSignatures, joinModuleAndAssetIds } from '../utils';
 
 export const statusMessages = t => ({
   [txStatusTypes.multisigSignaturePartialSuccess]: {
@@ -38,12 +38,12 @@ export const statusMessages = t => ({
 });
 
 /**
- * Defines the status of the broadcasted tx.
+ * Defines the Status of the broadcasted tx.
  *
  * @param {Object} account - active account info
- * @param {Object} transactions - Transactions status from the redux store
+ * @param {Object} transactions - Transactions Status from the redux store
  * @param {boolean?} isMultisignature - Is the sender account multisig
- * @returns {Object} The status code and message
+ * @returns {Object} The Status code and message
  */
 // eslint-disable-next-line max-statements
 export const getTransactionStatus = (account, transactions, isMultisignature) => {
@@ -65,17 +65,17 @@ export const getTransactionStatus = (account, transactions, isMultisignature) =>
   // signature success
   if (!isEmpty(transactions.signedTransaction)) {
     const transaction = {
-      ...transactions.signedTransaction.asset,
-      moduleAssetId: `${transactions.signedTransaction.moduleID}:${transactions.signedTransaction.assetID}`,
+      ...transactions.signedTransaction,
+      moduleAssetId: joinModuleAndAssetIds(transactions.signedTransaction),
     };
-    const requiredSignatures = getNumberOfSignatures(account, transaction);
+    const numberOfSignatures = getNumberOfSignatures(account, transaction);
     const nonEmptySignatures = transactions
       .signedTransaction.signatures.filter(sig => sig.length > 0).length;
-    if (nonEmptySignatures < requiredSignatures) {
+    if (nonEmptySignatures < numberOfSignatures) {
       return { code: txStatusTypes.multisigSignaturePartialSuccess };
     }
 
-    if (isMultisignature && nonEmptySignatures === requiredSignatures) {
+    if (isMultisignature && nonEmptySignatures === numberOfSignatures) {
       return { code: txStatusTypes.multisigSignatureSuccess };
     }
 

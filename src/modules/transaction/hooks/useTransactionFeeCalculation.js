@@ -53,14 +53,9 @@ const useTransactionFeeCalculation = ({
       numberOfSignatures: getNumberOfSignatures(wallet, transaction),
     });
   }, [
-    transaction.amount,
-    transaction.data,
-    transaction.recipientAddress,
-    transaction.username,
+    transaction.asset,
     selectedPriority.selectedIndex,
     selectedPriority.value,
-    transaction.mandatoryKeys,
-    transaction.optionalKeys,
   ]);
 
   return state;
