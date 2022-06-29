@@ -73,6 +73,6 @@ describe('Multisignature Summary component', () => {
 
   it('Should render properly', () => {
     expect(wrapper.find('.member-info').length).toEqual(props.rawTx.asset.members.length);
-    expect(wrapper.find('.fee-value')).toHaveText('0.02 LSK');
+    expect(wrapper.find('.info-fee').at(0).text()).toContain('0.02 LSK');
   });
 });

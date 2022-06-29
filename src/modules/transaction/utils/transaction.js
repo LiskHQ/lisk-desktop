@@ -262,6 +262,7 @@ const convertTxJSONToBinary = (tx) => {
     fee: BigInt(convertBigIntToString(tx.fee)),
     nonce: BigInt(convertBigIntToString(tx.nonce)),
     signatures: tx.signatures.map(convertStringToBinary),
+    id: convertStringToBinary(tx.id),
   };
 
   transaction.asset = getElementsAssetFromJSON(tx.asset, joinModuleAndAssetIds(tx));

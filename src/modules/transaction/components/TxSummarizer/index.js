@@ -1,5 +1,6 @@
 import React from 'react';
 import TokenAmount from '@token/fungible/components/tokenAmount';
+import { MODULE_ASSETS_NAME_ID_MAP } from '@transaction/configuration/moduleAssets';
 import Box from 'src/theme/box';
 import BoxHeader from 'src/theme/box/header';
 import BoxContent from 'src/theme/box/content';
@@ -24,7 +25,9 @@ const TxSummarizer = ({
   rawTx,
   summaryInfo,
 }) => {
-  const fee = !wallet.summary.isMultisignature ? rawTx.fee : 0;
+  const fee = !(wallet.summary.isMultisignature
+    || rawTx.moduleAssetId === MODULE_ASSETS_NAME_ID_MAP.registerMultisignatureGroup
+  ) ? rawTx.fee : 0;
   const tooltip = {
     title: t('Transaction fee'),
     children: t(
@@ -55,7 +58,7 @@ const TxSummarizer = ({
           account={wallet}
           isMultisignature={wallet.summary.isMultisignature}
         />
-        {fee && (
+        {fee ? (
           <section className="regular-tx-fee">
             <label>
               {t('Transaction fee')}
@@ -71,7 +74,7 @@ const TxSummarizer = ({
               <TokenAmount val={fee} token={token} />
             </label>
           </section>
-        )}
+        ) : null}
       </BoxContent>
       <Footer
         confirmButton={confirmButton}

@@ -52,7 +52,6 @@ const TransactionInfo = ({
             <label>{t('Transaction fee')}</label>
             <label className="fee">
               <TokenAmount
-                convert={false}
                 val={rawTx.fee}
                 token={token}
               />
