@@ -209,6 +209,8 @@ import switchIcon from '@setup/react/assets/images/icons/switch.svg';
 import secretPassphrase from '@setup/react/assets/images/icons/secret-passphrase.svg';
 import accountUpload from '@setup/react/assets/images/icons/account-upload.svg';
 import accountRemoved from '@setup/react/assets/images/icons/account-removed.svg';
+import stackedToken from '@setup/react/assets/images/icons/stacked-token.svg';
+import totalSupplyToken from '@setup/react/assets/images/icons/total-supply-token.svg';
 
 export const icons = {
   academy,
@@ -418,6 +420,8 @@ export const icons = {
   secretPassphrase,
   accountUpload,
   accountRemoved,
+  stackedToken,
+  totalSupplyToken,
 };
 
 const Icon = ({ name, noTheme, ...props }) => {
