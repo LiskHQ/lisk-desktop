@@ -73,7 +73,7 @@ Feature: Multisignature transaction
     And I click on msignSendButton
     Then submittedTransactionMessage should be visible
     And I click on closeDialog
-    Then I wait 5 seconds
+    Then I wait 10 seconds
     Then The latest transaction is transfer lsks6w...ehxwz
 
   # @advanced
