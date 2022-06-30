@@ -579,6 +579,8 @@ const signMultisigTransaction = async (
   senderAccount,
   txStatus,
   network,
+  privateKey,
+  publicKey,
 ) => {
   /**
    * Define keys.
@@ -597,7 +599,7 @@ const signMultisigTransaction = async (
   };
 
   /**
-   * To do so, we have to  flatten, then create txObject
+   * To do so, we have to flatten, then create txObject
    */
   const transactionObject = desktopTxToElementsTx(transaction, transaction.moduleAssetId);
 
@@ -613,8 +615,8 @@ const signMultisigTransaction = async (
   try {
     const result = await sign(
       account, schema, transactionObject, network, networkIdentifier,
-      !!senderAccount.data, isGroupRegistration, keys, account.summary.publicKey,
-      transaction.moduleAssetId, transaction, account.summary.privateKey,
+      !!senderAccount.data, isGroupRegistration, keys, privateKey ?? account.summary.publicKey,
+      transaction.moduleAssetId, transaction, publicKey ?? account.summary.privateKey,
     );
     return [result];
   } catch (e) {

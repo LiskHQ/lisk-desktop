@@ -6,7 +6,9 @@ import Box from 'src/theme/box';
 import Illustration from 'src/modules/common/components/illustration';
 import BoxContent from 'src/theme/box/content';
 import { isEmpty } from 'src/utils/helpers';
+import EnterPasswordForm from 'src/modules/auth/components/EnterPasswordForm';
 import { getDeviceType } from '@wallet/utils/hwManager';
+import { useCurrentAccount } from '@account/hooks';
 import styles from './txSignatureCollector.css';
 
 const TxSignatureCollector = ({
@@ -25,10 +27,11 @@ const TxSignatureCollector = ({
 }) => {
   const deviceType = getDeviceType(account.hwInfo?.deviceModel);
   const dispatch = useDispatch();
+  const [currentAccount] = useCurrentAccount();
 
-  useEffect(() => {
+  const txVerification = (privateKey = undefined, publicKey = undefined) => {
     /**
-     * All multisignature transactions get signed using the a unique action
+     * All multisignature transactions get signed using a unique action
      * Therefore there's no need to pass the action function, instead the
      * sender account is required.
      */
@@ -37,12 +40,14 @@ const TxSignatureCollector = ({
         signatureStatus === signatureCollectionStatus.fullySigned
         || signatureStatus === signatureCollectionStatus.overSigned
       ) {
-        // Skip the current member as the all required signature are collected
+        // Skip the current member as all the required signature are collected
         signatureSkipped({ rawTx });
       } else {
         multisigTransactionSigned({
           rawTx,
           sender,
+          privateKey,
+          publicKey,
         });
       }
     } else {
@@ -53,7 +58,18 @@ const TxSignatureCollector = ({
        * HW pending screen. For ordinary login we don't display
        * the illustration.
        */
-      actionFunction(rawTx);
+      actionFunction(rawTx, privateKey, publicKey);
+    }
+  };
+
+  const onEnterPasswordSuccess = ({ account: userAccount }) => {
+    const { pubkey } = currentAccount.metadata;
+    txVerification(userAccount.privateKey, pubkey);
+  };
+
+  useEffect(() => {
+    if (deviceType) {
+      txVerification();
     }
     return () => {
       // Ensure second passphrase is removed to prevent automatically signing future transactions
@@ -82,7 +98,14 @@ const TxSignatureCollector = ({
   }, [transactions.signedTransaction, transactions.txSignatureError]);
 
   if (!deviceType) {
-    return <div />;
+    return (
+      <div className={styles.container}>
+        <EnterPasswordForm
+          accountSchema={account}
+          onEnterPasswordSuccess={onEnterPasswordSuccess}
+        />
+      </div>
+    );
   }
 
   return (

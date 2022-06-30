@@ -2,10 +2,17 @@ import React from 'react';
 import { mount } from 'enzyme';
 import { secondPassphraseRemoved } from '@auth/store/action';
 import accounts from '@tests/constants/wallets';
+import { mockAccount as mockCurrentAccount } from '@account/utils';
+import flushPromises from '@tests/unit-test-utils/flushPromises';
+import { act } from 'react-dom/test-utils';
 import TxSignatureCollector from './TxSignatureCollector';
 
+const mockSetCurrentAccount = jest.fn();
 jest.mock('@auth/store/action', () => ({
   secondPassphraseRemoved: jest.fn(),
+}));
+jest.mock('@account/hooks', () => ({
+  useCurrentAccount: jest.fn(() => ([mockCurrentAccount, mockSetCurrentAccount])),
 }));
 
 describe('TxSignatureCollector', () => {
@@ -26,17 +33,29 @@ describe('TxSignatureCollector', () => {
     transactionDoubleSigned: jest.fn(),
   };
 
-  it('should call multisigTransactionSigned', () => {
-    mount(<TxSignatureCollector {...props} />);
+  it('should call multisigTransactionSigned', async () => {
+    const wrapper = mount(<TxSignatureCollector {...props} />);
+    wrapper.find('input').simulate('change', { target: { value: 'pass' } });
+    wrapper.find('form').simulate('submit');
+    await flushPromises();
+    act(() => { wrapper.update(); });
     expect(props.multisigTransactionSigned).toHaveBeenCalledWith({
       rawTx: props.rawTx,
       sender: props.sender,
+      privateKey: 'private-key-mock',
+      publicKey: mockCurrentAccount.metadata.pubkey,
     });
   });
 
-  it('should call actionFunction', () => {
-    mount(<TxSignatureCollector {...props} sender={undefined} />);
-    expect(props.actionFunction).toHaveBeenCalledWith({});
+  it('should call actionFunction', async () => {
+    const wrapper = mount(<TxSignatureCollector {...props} sender={undefined} />);
+    wrapper.find('input').simulate('change', { target: { value: 'pass' } });
+    wrapper.find('form').simulate('submit');
+    await flushPromises();
+    act(() => { wrapper.update(); });
+    const privateKey = 'private-key-mock';
+    const publicKey = mockCurrentAccount.metadata.pubkey;
+    expect(props.actionFunction).toHaveBeenCalledWith({}, privateKey, publicKey);
   });
 
   it('should call nextStep with props', () => {
@@ -90,9 +109,11 @@ describe('TxSignatureCollector', () => {
     expect(props.transactionDoubleSigned).toHaveBeenCalled();
   });
 
-  it('should render empty div when is not hardware wallet', () => {
+  it('should render enter password form when it is not a hardware wallet', () => {
     const wrapper = mount(<TxSignatureCollector {...props} />);
-    expect(wrapper.html()).toEqual('<div></div>');
+    expect(wrapper.find('h1')).toHaveText('Enter your password');
+    expect(wrapper.find('input')).toExist();
+    expect(wrapper.find('.continue-btn')).toExist();
   });
 
   it('should render properly when account is hardware wallet', () => {
