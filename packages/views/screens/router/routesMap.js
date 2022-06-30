@@ -41,7 +41,7 @@ import SwitchAccount from '@account/components/SwitchAccount';
 import BackupRecoveryPhraseFlow from '@account/components/BackupRecoveryPhraseFlow';
 import RemoveCurrentAccountFlow from 'src/modules/account/components/RemoveCurrentAccountFlow';
 import RemoveSelectedAccountFlow from 'src/modules/account/components/RemoveSelectedAccountFlow';
-import BlockchainApplicationDetails from 'src/modules/blockchainApplication/explore/components/BlockchainApplicationDetails/BlockchainApplicationDetails';
+import BlockchainApplicationDetails from 'src/modules/blockchainApplication/explore/components/BlockchainApplicationDetails';
 
 export default {
   wallet: AccountDetails,

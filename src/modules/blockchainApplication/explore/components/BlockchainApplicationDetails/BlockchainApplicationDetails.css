@@ -33,6 +33,7 @@
     top: -39px;
     width: 77px;
     height: 77px;
+    background-color: white;
     border-radius: 40px;
   }
 }
@@ -56,6 +57,10 @@
     padding: 0px 0px !important;
     min-width: fit-content;
     margin-left: 16px;
+  }
+
+  & img {
+    width: 17px;
   }
 }
 
@@ -125,7 +130,7 @@
     color: var(--color-jade-green);
   }
 
-  & .reigstered {
+  & .registered {
     background-color: #4070f41a;
     color: var(--color-ultramarine-blue);
   }

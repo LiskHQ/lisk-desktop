@@ -1,5 +1,6 @@
 import React from 'react';
 import { useTranslation } from 'react-i18next';
+import moment from 'moment';
 import ValueAndLabel from 'src/modules/transaction/components/TransactionDetails/valueAndLabel';
 import CopyToClipboard from 'src/modules/common/components/copyToClipboard';
 import { TertiaryButton } from 'src/theme/buttons';
@@ -8,11 +9,38 @@ import Dialog from '@theme/dialog/dialog';
 import Icon from 'src/theme/Icon';
 import Tooltip from 'src/theme/Tooltip';
 import { Link } from 'react-router-dom';
+import { parseSearchParams } from 'src/utils/searchParams';
 import styles from './BlockchainApplicationDetails.css';
+import { usePinBlockchainApplication } from '../../hooks/usePinBlockchainApplication';
 
-const BlockchainApplicationDetails = () => {
+const application = {
+  data: {
+    name: 'Test app',
+    chainID: 'aq02qkbb35u4jdq8szo3pnsq',
+    state: 'active',
+    address: 'lsk24cd35u4jdq8szo3pnsqe5dsxwrnazyqqqg5eu',
+    lastCertificateHeight: 1000,
+    lastUpdated: 123456789,
+  },
+};
+
+const BlockchainApplicationDetails = ({ location }) => {
   const { t } = useTranslation();
-  console.log('>>>', t);
+  const chainId = parseSearchParams(location.search).chainId;
+  const { checkPinByChainId, deletePin, setPin } = usePinBlockchainApplication();
+  const {
+    name, state, address, lastCertificateHeight, lastUpdated,
+  } = application.data;
+
+  const isPinned = checkPinByChainId(chainId);
+
+  const toggleApplicationPin = () => {
+    if (!isPinned) {
+      setPin(chainId);
+    } else {
+      deletePin(chainId);
+    }
+  };
 
   const footerDetails = [
     {
@@ -24,27 +52,27 @@ const BlockchainApplicationDetails = () => {
           </p>
         </Tooltip>
       </span>,
-      content: <span className={styles.detailContentText}>10</span>,
+      content: <span className={styles.detailContentText}>{chainId}</span>,
     },
     {
       header: <span className={styles.headerText}>
         {t('Status')}
       </span>,
-      content: <span className={`${styles.detailContentText} ${styles.statusChip} ${styles.reigstered}`}>
-        {t('registered')}
+      content: <span className={`${styles.detailContentText} ${styles.statusChip} ${styles[state]}`}>
+        {t(state)}
       </span>,
     },
     {
       header: <span className={styles.headerText}>
         {t('Last Update')}
       </span>,
-      content: <span className={styles.detailContentText}>26 Jan 2022</span>,
+      content: <span className={styles.detailContentText}>{moment(lastUpdated).format('DD MMM YYYY')}</span>,
     },
     {
       header: <span className={styles.headerText}>
         {t('Last Certificate Height')}
       </span>,
-      content: <span className={styles.detailContentText}>156785</span>,
+      content: <span className={styles.detailContentText}>{lastCertificateHeight}</span>,
     },
   ];
 
@@ -55,34 +83,35 @@ const BlockchainApplicationDetails = () => {
         <div>
           <div className={styles.avatarContainer}>
             {/* just a place holder */}
-            <div style={{ backgroundColor: 'white ' }}>
+            <div>
               sdf
             </div>
           </div>
           <div className={styles.detailsWrapper}>
             <div className={styles.chainNameWrapper}>
-              <span>Enevti</span>
-              <TertiaryButton><Icon name="pinnedIcon" /></TertiaryButton>
+              <span>{name}</span>
+              <TertiaryButton onClick={toggleApplicationPin}>
+                <Icon name={isPinned ? 'pinnedIcon' : 'unpinnedIcon'} />
+              </TertiaryButton>
             </div>
             <div className={styles.addressRow}>
               <ValueAndLabel className={styles.transactionId}>
                 <span className="copy-address-wrapper">
                   <CopyToClipboard
-                    text="lskemxs5ac6y8vaf2yp6njx9hnk5shdhutdu9prpc"
-                    value="lskemxs5ac6y8vaf2yp6njx9hnk5shdhutdu9prpc"
+                    text={address}
+                    value={address}
                     className="tx-id"
                     containerProps={{
                       size: 'xs',
-                      className: 'copy-title',
+                      className: 'copy-address',
                     }}
-                    copyClassName={styles.copyIcon}
                   />
                 </span>
               </ValueAndLabel>
             </div>
             <div className={styles.addressRow}>
               <Link
-                className={`${styles.appLink} signin-hwWallet-button`}
+                className={`${styles.appLink}`}
                 target="_blank"
                 to="https://enevti.com/"
               >
