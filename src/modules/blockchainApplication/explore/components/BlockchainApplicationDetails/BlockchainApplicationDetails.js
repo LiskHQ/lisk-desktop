@@ -33,7 +33,6 @@ const BlockchainApplicationDetails = ({ location }) => {
   } = application.data;
 
   const isPinned = checkPinByChainId(chainId);
-
   const toggleApplicationPin = () => {
     if (!isPinned) {
       setPin(chainId);
@@ -45,10 +44,10 @@ const BlockchainApplicationDetails = ({ location }) => {
   const footerDetails = [
     {
       header: <span className={styles.headerText}>
-        {t('Confirmations')}
+        {t('Chain ID')}
         <Tooltip position="right">
           <p>
-            {t('ksdjfkjsdfjsdf')}
+            {t('')}
           </p>
         </Tooltip>
       </span>,
@@ -91,7 +90,7 @@ const BlockchainApplicationDetails = ({ location }) => {
             <div className={styles.chainNameWrapper}>
               <span>{name}</span>
               <TertiaryButton onClick={toggleApplicationPin}>
-                <Icon name={isPinned ? 'pinnedIcon' : 'unpinnedIcon'} />
+                <Icon data-testid="pin-button" name={isPinned ? 'pinnedIcon' : 'unpinnedIcon'} />
               </TertiaryButton>
             </div>
             <div className={styles.addressRow}>

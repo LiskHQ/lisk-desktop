@@ -82,6 +82,7 @@
   "Caution! This delegate was punished on {{punishmentStartDate}}. There is approximately {{daysLeft}} days remaining before the punishment ends.": "Caution! This delegate was punished on {{punishmentStartDate}}. There is approximately {{daysLeft}} days remaining before the punishment ends.",
   "Caution! You are about to send the majority of your balance": "Caution! You are about to send the majority of your balance",
   "Caution! You are about to vote for the punished delegate, this will result in your LSK tokens being locked for a period of {{daysLeft}} days.": "Caution! You are about to vote for the punished delegate, this will result in your LSK tokens being locked for a period of {{daysLeft}} days.",
+  "Chain ID": "Chain ID",
   "Changed votes": "Changed votes",
   "Check for Updates...": "Check for Updates...",
   "Choose account": "Choose account",
