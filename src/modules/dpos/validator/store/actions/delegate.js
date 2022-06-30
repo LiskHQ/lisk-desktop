@@ -5,7 +5,11 @@ import { selectActiveTokenAccount } from '@common/store/selectors';
 import transactionActionTypes from '@transaction/store/actionTypes';
 
 // eslint-disable-next-line import/prefer-default-export
-export const delegateRegistered = (transactionObject) => async (dispatch, getState) => {
+export const delegateRegistered = (
+  transactionObject,
+  privateKey,
+  publicKey,
+) => async (dispatch, getState) => {
   const state = getState();
   const activeWallet = selectActiveTokenAccount(state);
   //
@@ -15,6 +19,8 @@ export const delegateRegistered = (transactionObject) => async (dispatch, getSta
     network: state.network,
     wallet: activeWallet,
     transactionObject,
+    privateKey,
+    publicKey,
   }));
 
   //
