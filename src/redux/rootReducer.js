@@ -11,3 +11,4 @@ export { default as watchList } from '@dpos/validator/store/reducers/watchList';
 export { default as service } from '@wallet/store/reducers/service';
 export { default as loading } from 'src/modules/common/store/reducers/loading';
 export { account } from '@account/store/reducer';
+export { blockChainApplications } from '@blockchainApplication/explore/store/reducer';
