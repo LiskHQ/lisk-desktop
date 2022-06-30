@@ -13,6 +13,7 @@ import { parseSearchParams } from 'src/utils/searchParams';
 import styles from './BlockchainApplicationDetails.css';
 import { usePinBlockchainApplication } from '../../hooks/usePinBlockchainApplication';
 
+// TODO: this is a mock response of an application's details
 const application = {
   data: {
     name: 'Test app',
@@ -81,9 +82,8 @@ const BlockchainApplicationDetails = ({ location }) => {
         <div />
         <div>
           <div className={styles.avatarContainer}>
-            {/* just a place holder */}
             <div>
-              sdf
+              {/* TODO: chain logo goes here when its available from service's response */}
             </div>
           </div>
           <div className={styles.detailsWrapper}>
@@ -122,6 +122,7 @@ const BlockchainApplicationDetails = ({ location }) => {
             </div>
             <div className={styles.balanceRow}>
               <span>Deposited:</span>
+              {/* TODO: this is a placeholder value pending when its part of service response */}
               <span>5,351.859 LSK</span>
             </div>
             <div className={styles.footerDetailsRow}>
