@@ -69,7 +69,11 @@ export const accountDataUpdated = tokensTypes =>
     }
   };
 
-export const multisigGroupRegistered = (transactionObject) => async (dispatch, getState) => {
+export const multisigGroupRegistered = (
+  transactionObject,
+  privateKey,
+  publicKey,
+) => async (dispatch, getState) => {
   //
   // Collect data
   //
@@ -84,6 +88,8 @@ export const multisigGroupRegistered = (transactionObject) => async (dispatch, g
       network: state.network,
       wallet: activeWallet,
       transactionObject,
+      privateKey,
+      publicKey,
     }),
   );
 

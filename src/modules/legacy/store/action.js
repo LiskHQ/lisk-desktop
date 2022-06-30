@@ -4,7 +4,11 @@ import actionTypes from '@transaction/store/actionTypes';
 import { selectActiveTokenAccount } from '@common/store';
 
 // eslint-disable-next-line import/prefer-default-export
-export const balanceReclaimed = (transactionObject) => async (dispatch, getState) => {
+export const balanceReclaimed = (
+  transactionObject,
+  privateKey,
+  publicKey,
+) => async (dispatch, getState) => {
   //
   // Collect data
   //
@@ -19,6 +23,8 @@ export const balanceReclaimed = (transactionObject) => async (dispatch, getState
       network: state.network,
       wallet: activeWallet,
       transactionObject,
+      privateKey,
+      publicKey,
     }),
   );
 

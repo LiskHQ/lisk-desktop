@@ -9,51 +9,52 @@ Feature: Vote delegate
       Then I click on searchDelegatesRow
       Then I should be on Account page
 
-   @basic
-   Scenario: Down Vote for a delegate when there are locked lsk
-      And I click on openAddVoteDialog
-      And I clear input amountInput
-      And I fill 160 in amountInput field
-      And I click on confirmBtn
-      And I click on votingQueueToggle
-      And I click on txNextBtn
-      And I click on confirmButton
-      And I click on backToWalletButton
-      Given I am on wallet page
-      Then The latest transaction is vote
+   # @todo: disabled until account management is updated
+   # @basic
+   # Scenario: Down Vote for a delegate when there are locked lsk
+   #    And I click on openAddVoteDialog
+   #    And I clear input amountInput
+   #    And I fill 160 in amountInput field
+   #    And I click on confirmBtn
+   #    And I click on votingQueueToggle
+   #    And I click on txNextBtn
+   #    And I click on confirmButton
+   #    And I click on backToWalletButton
+   #    Given I am on wallet page
+   #    Then The latest transaction is vote
 
-   @basic
-   Scenario: Up Vote for a delegate when there are locked lsk
-      And I click on openAddVoteDialog
-      And I clear input amountInput
-      And I fill 200 in amountInput field
-      And I click on confirmBtn
-      And I click on votingQueueToggle
-      And I click on txNextBtn
-      And I click on confirmButton
-      And I click on backToWalletButton
-      Given I am on wallet page
-      Then The latest transaction is vote
+   # @basic
+   # Scenario: Up Vote for a delegate when there are locked lsk
+   #    And I click on openAddVoteDialog
+   #    And I clear input amountInput
+   #    And I fill 200 in amountInput field
+   #    And I click on confirmBtn
+   #    And I click on votingQueueToggle
+   #    And I click on txNextBtn
+   #    And I click on confirmButton
+   #    And I click on backToWalletButton
+   #    Given I am on wallet page
+   #    Then The latest transaction is vote
 
-   @basic
-   Scenario: Remove Vote for a delegate
-      When I click on openAddVoteDialog
-      And I click on removeVote
-      And I click on votingQueueToggle
-      And I click on txNextBtn
-      And I click on confirmButton
-      And I click on backToWalletButton
-      Given I am on wallet page
-      Then The latest transaction is vote
+   # @basic
+   # Scenario: Remove Vote for a delegate
+   #    When I click on openAddVoteDialog
+   #    And I click on removeVote
+   #    And I click on votingQueueToggle
+   #    And I click on txNextBtn
+   #    And I click on confirmButton
+   #    And I click on backToWalletButton
+   #    Given I am on wallet page
+   #    Then The latest transaction is vote
 
-   @basic
-   Scenario: Unlock balance
-      Given I am on wallet page
-      Then I should see that 540 LSK are locked
-      Then I click on openUnlockBalanceDialog
-      Then I should see unlocking balance 200
-      Then I should see available balance 300
-      And I click on txNextBtn
-      And I click on confirmButton
-      And I click on backToWalletButton
-      Then The latest transaction is unlocking
+   # @basic
+   # Scenario: Unlock balance
+   #    Given I am on wallet page
+   #    Then I should see that 540 LSK are locked
+   #    Then I click on openUnlockBalanceDialog
+   #    Then I should see unlocking balance 200
+   #    Then I should see available balance 300
+   #    And I click on txNextBtn
+   #    And I click on confirmButton
+   #    And I click on backToWalletButton
+   #    Then The latest transaction is unlocking

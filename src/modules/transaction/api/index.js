@@ -313,9 +313,11 @@ export const createGenericTx = async ({
   network,
   wallet,
   transactionObject,
+  privateKey,
+  publicKey,
 }) => {
   const {
-    summary: { publicKey, isMultisignature, privateKey },
+    summary: { publicKey: reduxPublicKey, isMultisignature, privateKey: reduxPrivateKey },
     keys,
   } = wallet;
   const networkIdentifier = Buffer.from(network.networks.LSK.networkIdentifier, 'hex');
@@ -330,8 +332,8 @@ export const createGenericTx = async ({
 
   const result = await sign(
     wallet, schema, transaction, network, networkIdentifier,
-    isMultisignature, isMultiSignatureRegistration, keys, publicKey,
-    moduleAssetId, rawTransaction, privateKey,
+    isMultisignature, isMultiSignatureRegistration, keys, publicKey ?? reduxPublicKey,
+    moduleAssetId, rawTransaction, privateKey ?? reduxPrivateKey,
   );
 
   return result;
