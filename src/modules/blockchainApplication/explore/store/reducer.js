@@ -22,7 +22,7 @@ export const pins = (state = [], { type, chainId }) => {
 const persistConfig = {
   storage,
   key: 'blockChainApplications',
-  whitelist: ['pinnedList'],
+  whitelist: ['pins'],
   blacklist: [],
 };
 
