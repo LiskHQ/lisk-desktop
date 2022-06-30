@@ -2,7 +2,7 @@ import http from '@common/utilities/api/http';
 import { HTTP_PREFIX } from 'src/const/httpCodes';
 
 const httpPaths = {
-  application: `${HTTP_PREFIX}/application`,
+  application: `${HTTP_PREFIX}/blockchain/apps`,
 };
 
 /**
@@ -20,7 +20,7 @@ const httpPaths = {
 export const getApplication = ({
   params, network, baseUrl,
 }) => http({
-  path: httpPaths.transaction,
+  path: httpPaths.application,
   params,
   network,
   baseUrl,
