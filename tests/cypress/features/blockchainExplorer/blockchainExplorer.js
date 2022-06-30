@@ -1,6 +1,6 @@
 /* eslint-disable */
-import { ss, urls } from '@tests/constants';
-import mockBlockchainApplications from '@tests/fixtures/blockchainApplications';
+import { ss, urls } from '../../../constants';
+import mockBlockchainApplications from '../../../fixtures/blockchainApplications';
 import { Given, Then } from 'cypress-cucumber-preprocessor/steps';
 import moment from 'moment';
 
@@ -11,18 +11,18 @@ Given(/^I visit blockchain application details link$/, function () {
 });
 
 Then(/^blockchain details should be accuratly displayed$/, function () {
-  cy.get(`${ss.blockchainName}`).eq(0).should('have.text', chainDetails.name);
-  cy.get(`${ss.lastCertHeightDisplay}`).eq(0).should('have.text', chainDetails.lastCertificateHeight);
-  cy.get(`${ss.chainStatusDisplay}`).eq(0).should('have.text', chainDetails.state);
-  cy.get(`${ss.chainOwnerAddress}`).eq(0).should('have.text', chainDetails.address);
-  cy.get(`${ss.lastChainUpdateDisplay}`).eq(0).should('have.text', moment(chainDetails.lastUpdated).format('DD MMM YYYY'));
+  cy.get(ss.blockchainName).eq(0).should('have.text', chainDetails.name);
+  cy.get(ss.lastCertHeightDisplay).eq(0).should('have.text', chainDetails.lastCertificateHeight);
+  cy.get(ss.chainStatusDisplay).eq(0).should('have.text', chainDetails.state);
+  cy.get(ss.chainOwnerAddress).eq(0).should('have.text', chainDetails.address);
+  cy.get(ss.lastChainUpdateDisplay).eq(0).should('have.text', moment(chainDetails.lastUpdated).format('DD MMM YYYY'));
 });
 
-Then(/^blockchain details should not displayed$/, function () {
-  cy.get(`${ss.blockchainName}`).eq(0).should('not.have.text', chainDetails.name);
-  cy.get(`${ss.lastCertHeightDisplay}`).eq(0).should('not.have.text', chainDetails.lastCertificateHeight);
-  cy.get(`${ss.chainStatusDisplay}`).eq(0).should('not.have.text', chainDetails.state);
-  cy.get(`${ss.chainOwnerAddress}`).eq(0).should('not.have.text', chainDetails.address);
-  cy.get(`${ss.lastChainUpdateDisplay}`).eq(0).should('not.have.text', moment(chainDetails.lastUpdated).format('DD MMM YYYY'));
+Then(/^blockchain details should not be displayed$/, function () {
+  cy.get(ss.blockchainName).should('not.exist');
+  cy.get(ss.lastCertHeightDisplay).should('not.exist');
+  cy.get(ss.chainStatusDisplay).should('not.exist');
+  cy.get(ss.chainOwnerAddress).should('not.exist');
+  cy.get(ss.lastChainUpdateDisplay).should('not.exist');
 });
 

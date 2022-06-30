@@ -5,4 +5,4 @@ Feature: BlockchainExplore
     Given I visit blockchain application details link
     Then blockchain details should be accuratly displayed
     Given I click on closeDialog
-    Given blockchain details should be displayed
+    Then blockchain details should not be displayed

@@ -13,7 +13,7 @@ export function usePinBlockchainApplication() {
     (chainId) => dispatch(removePinnedApplication(chainId)),
     [],
   );
-  const checkPinByChainId = useCallback((chainId) => pins.includes(chainId));
+  const checkPinByChainId = useCallback((chainId) => pins.includes(chainId), []);
 
   return {
     pins, setPin, deletePin, checkPinByChainId,
