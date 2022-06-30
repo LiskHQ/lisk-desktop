@@ -32,7 +32,7 @@ const CustomRoute = ({
   const token = useSelector(state => state.token);
   const isNetworkSet = useSelector(checkNetwork);
   const [account] = useCurrentAccount();
-  const isAuthenticated = Object.keys(account).length > 0;
+  const isAuthenticated = Object.keys(account).length > 0 || !!wallet.summary;
   const { search = '' } = history.location;
   const { accounts } = useAccounts();
 

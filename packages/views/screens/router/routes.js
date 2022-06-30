@@ -30,7 +30,7 @@ export default {
     forbiddenTokens: [],
   },
   dashboard: {
-    path: '/dashboard',
+    path: '/',
     isPrivate: false,
     forbiddenTokens: [],
     exact: true,
@@ -71,7 +71,7 @@ export default {
     forbiddenTokens: [],
   },
   manageAccounts: {
-    path: '/',
+    path: '/account',
     isPrivate: false,
     forbiddenTokens: [],
     exact: true,
