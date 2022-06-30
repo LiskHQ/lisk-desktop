@@ -51,13 +51,13 @@ const BlockchainApplicationDetails = ({ location }) => {
           </p>
         </Tooltip>
       </span>,
-      content: <span className={styles.detailContentText}>{chainId}</span>,
+      content: <span className={`${styles.detailContentText} chain-id`}>{chainId}</span>,
     },
     {
       header: <span className={styles.headerText}>
         {t('Status')}
       </span>,
-      content: <span className={`${styles.detailContentText} ${styles.statusChip} ${styles[state]}`}>
+      content: <span className={`${styles.detailContentText} ${styles.statusChip} ${styles[state]} chain-status`}>
         {t(state)}
       </span>,
     },
@@ -65,13 +65,13 @@ const BlockchainApplicationDetails = ({ location }) => {
       header: <span className={styles.headerText}>
         {t('Last Update')}
       </span>,
-      content: <span className={styles.detailContentText}>{moment(lastUpdated).format('DD MMM YYYY')}</span>,
+      content: <span className={`${styles.detailContentText} last-update`}>{moment(lastUpdated).format('DD MMM YYYY')}</span>,
     },
     {
       header: <span className={styles.headerText}>
         {t('Last Certificate Height')}
       </span>,
-      content: <span className={styles.detailContentText}>{lastCertificateHeight}</span>,
+      content: <span className={`${styles.detailContentText} last-certificate-height`}>{lastCertificateHeight}</span>,
     },
   ];
 
@@ -88,7 +88,7 @@ const BlockchainApplicationDetails = ({ location }) => {
           </div>
           <div className={styles.detailsWrapper}>
             <div className={styles.chainNameWrapper}>
-              <span>{name}</span>
+              <span className="chain-name-text">{name}</span>
               <TertiaryButton onClick={toggleApplicationPin}>
                 <Icon data-testid="pin-button" name={isPinned ? 'pinnedIcon' : 'unpinnedIcon'} />
               </TertiaryButton>
@@ -112,6 +112,8 @@ const BlockchainApplicationDetails = ({ location }) => {
               <Link
                 className={`${styles.appLink}`}
                 target="_blank"
+                // eslint-disable-next-line
+                // TODO: this is just a place holder link pending when its part of the response payload from service
                 to="https://enevti.com/"
               >
                 <Icon name="chainLinkIcon" className={styles.hwWalletIcon} />
