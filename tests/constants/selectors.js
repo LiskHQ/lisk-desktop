@@ -1,3 +1,4 @@
+/* eslint-disable max-lines */
 const delegatesPage = {
   totalVotingNumber: '.total-voting-number',
   startVotingButton: '.start-voting-button',
@@ -294,6 +295,13 @@ const ss = {
   verifyPublicKeyInput: '.publicKey',
   verifySignatureInput: '.signature',
   acceptTermsButton: '.accept-terms',
+
+  blockchainName: '.chain-name-text',
+  chainOwnerAddress: '.copy-address-wrapper .copy-title',
+  chainIdDisplay: '.chain-id',
+  chainStatusDisplay: '.chain-status',
+  lastChainUpdateDisplay: '.last-update',
+  lastCertHeightDisplay: '.last-certificate-height',
 };
 
 export default ss;
