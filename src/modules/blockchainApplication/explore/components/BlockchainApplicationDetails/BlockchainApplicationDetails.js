@@ -62,7 +62,7 @@ const BlockchainApplicationDetails = ({ location }) => {
     },
     {
       header: t('Status'),
-      className: `${styles.detailContentText} ${styles.statusChip} ${styles[state]}`,
+      className: `${styles.detailContentText} ${styles.statusChip} ${styles[state]} chain-status`,
       content: t(state),
     },
     {
