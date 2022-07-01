@@ -74,7 +74,7 @@ describe('usePinBlockchainApplication hook', () => {
     const chainId = mockBlockchainApplications[0].chainID;
     const expectedAction = {
       type: actionTypes.removeApplicationPin,
-      chainId,
+      data: chainId,
     };
 
     act(() => deletePin(chainId));

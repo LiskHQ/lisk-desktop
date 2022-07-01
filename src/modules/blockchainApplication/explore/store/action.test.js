@@ -16,7 +16,7 @@ describe('actions:  blockchainApplication', () => {
   it('should create an action to pin blockchain application', () => {
     const expectedAction = {
       type: actionTypes.setApplicationPin,
-      chainId,
+      data: chainId,
     };
 
     expect(pinApplication(chainId)).toEqual(expectedAction);
@@ -24,7 +24,7 @@ describe('actions:  blockchainApplication', () => {
   it('should create an action to remove blockchain application', () => {
     const expectedAction = {
       type: actionTypes.removeApplicationPin,
-      chainId,
+      data: chainId,
     };
 
     expect(removePinnedApplication(chainId)).toEqual(expectedAction);
