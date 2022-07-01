@@ -1,6 +1,7 @@
 import React from 'react';
 import { useTranslation } from 'react-i18next';
 import moment from 'moment';
+import TokenAmount from '@token/fungible/components/tokenAmount';
 import ValueAndLabel from 'src/modules/transaction/components/TransactionDetails/valueAndLabel';
 import CopyToClipboard from 'src/modules/common/components/copyToClipboard';
 import { TertiaryButton } from 'src/theme/buttons';
@@ -22,6 +23,8 @@ const application = {
     address: 'lsk24cd35u4jdq8szo3pnsqe5dsxwrnazyqqqg5eu',
     lastCertificateHeight: 1000,
     lastUpdated: 123456789,
+    deposit: 5e10,
+    serviceUrl: 'https://enevti.com/',
   },
 };
 
@@ -30,7 +33,7 @@ const BlockchainApplicationDetails = ({ location }) => {
   const chainId = parseSearchParams(location.search).chainId;
   const { checkPinByChainId, deletePin, setPin } = usePinBlockchainApplication();
   const {
-    name, state, address, lastCertificateHeight, lastUpdated,
+    name, state, address, lastCertificateHeight, lastUpdated, deposit, serviceUrl,
   } = application.data;
 
   const isPinned = checkPinByChainId(chainId);
@@ -44,35 +47,33 @@ const BlockchainApplicationDetails = ({ location }) => {
 
   const footerDetails = [
     {
-      header: <span className={styles.headerText}>
-        {t('Chain ID')}
-        <Tooltip position="right">
-          <p>
-            {t('')}
-          </p>
-        </Tooltip>
-      </span>,
-      content: <span className={`${styles.detailContentText} chain-id`}>{chainId}</span>,
+      header: (
+        <>
+          {t('Chain ID')}
+          <Tooltip position="right">
+            <p>
+              {t('')}
+            </p>
+          </Tooltip>
+        </>
+      ),
+      className: `${styles.detailContentText} chain-id`,
+      content: chainId,
     },
     {
-      header: <span className={styles.headerText}>
-        {t('Status')}
-      </span>,
-      content: <span className={`${styles.detailContentText} ${styles.statusChip} ${styles[state]} chain-status`}>
-        {t(state)}
-      </span>,
+      header: t('Status'),
+      className: `${styles.detailContentText} ${styles.statusChip} ${styles[state]}`,
+      content: t(state),
     },
     {
-      header: <span className={styles.headerText}>
-        {t('Last Update')}
-      </span>,
-      content: <span className={`${styles.detailContentText} last-update`}>{moment(lastUpdated).format('DD MMM YYYY')}</span>,
+      header: t('Last Update'),
+      className: `${styles.detailContentText} last-update`,
+      content: moment(lastUpdated).format('DD MMM YYYY'),
     },
     {
-      header: <span className={styles.headerText}>
-        {t('Last Certificate Height')}
-      </span>,
-      content: <span className={`${styles.detailContentText} last-certificate-height`}>{lastCertificateHeight}</span>,
+      header: t('Last Certificate Height'),
+      className: `${styles.detailContentText} last-certificate-height`,
+      content: lastCertificateHeight,
     },
   ];
 
@@ -114,25 +115,35 @@ const BlockchainApplicationDetails = ({ location }) => {
                 target="_blank"
                 // eslint-disable-next-line
                 // TODO: this is just a place holder link pending when its part of the response payload from service
-                to="https://enevti.com/"
+                to={serviceUrl}
               >
                 <Icon name="chainLinkIcon" className={styles.hwWalletIcon} />
-                {t('https://enevti.com/')}
+                {t(serviceUrl)}
               </Link>
             </div>
             <div className={styles.balanceRow}>
-              <span>Deposited:</span>
+              <span>{t('Deposited:')}</span>
               {/* TODO: this is a placeholder value pending when its part of service response */}
-              <span>5,351.859 LSK</span>
+              <span>
+                <TokenAmount val={deposit} />
+                {' '}
+                LSK
+              </span>
             </div>
             <div className={styles.footerDetailsRow}>
-              {footerDetails.map(({ header, content }, index) => (
+              {footerDetails.map(({ header, content, className }, index) => (
                 <ValueAndLabel
                   key={index}
                   className={styles.detail}
-                  label={header}
+                  label={(
+                    <span className={styles.headerText}>
+                      {header}
+                    </span>
+                  )}
                 >
-                  {content}
+                  <span className={className}>
+                    {content}
+                  </span>
                 </ValueAndLabel>
               ))}
             </div>
