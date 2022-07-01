@@ -6,7 +6,7 @@ import {
   addSearchParamsToUrl,
   removeSearchParamsFromUrl,
 } from 'src/utils/searchParams';
-import { appUpdateAvailable } from '@common/store/actions';
+import { appUpdateAvailable } from 'src/redux/actions';
 import FlashMessageHolder from 'src/theme/flashMessage/holder';
 import NewReleaseMessage from '../detail/info/newReleaseMessage/newReleaseMessage';
 

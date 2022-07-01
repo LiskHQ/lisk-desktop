@@ -6,7 +6,7 @@ import useTransactionPriority from '@transaction/hooks/useTransactionPriority';
 import {
   selectActiveToken,
   selectActiveTokenAccount,
-} from '@common/store';
+} from 'src/redux/selectors';
 import Box from 'src/theme/box';
 import BoxFooter from 'src/theme/box/footer';
 import TransactionPriority from '@transaction/components/TransactionPriority';

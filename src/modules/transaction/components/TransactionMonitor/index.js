@@ -6,7 +6,7 @@ import withData from 'src/utils/withData';
 import { getTransactions } from '@transaction/api';
 import { DEFAULT_LIMIT } from 'src/utils/monitor';
 import { normalizeTransactionParams } from '../../utils';
-import TransactionMonitorist from './TransactionMonitorList';
+import TransactionMonitorList from './TransactionMonitorList';
 
 const defaultFilters = {
   dateFrom: '',
@@ -40,4 +40,4 @@ export default compose(
   }),
   withFilters('transactions', defaultFilters, defaultSort),
   withTranslation(),
-)(TransactionMonitorist);
+)(TransactionMonitorList);

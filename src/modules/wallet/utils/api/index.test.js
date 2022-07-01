@@ -1,11 +1,11 @@
 import { HTTP_CODES } from 'src/const/httpCodes';
-import http from '@common/utilities/api/http';
-import ws from '@common/utilities/api/ws';
+import http from 'src/utils/api/http';
+import ws from 'src/utils/api/ws';
 import accounts from '@tests/constants/wallets';
 import { getAccount, getAccounts } from './index';
 
-jest.mock('@common/utilities/api/http', () => jest.fn().mockReturnValue([]));
-jest.mock('@common/utilities/api/ws', () => jest.fn().mockReturnValue([]));
+jest.mock('src/utils/api/http', () => jest.fn().mockReturnValue([]));
+jest.mock('src/utils/api/ws', () => jest.fn().mockReturnValue([]));
 
 describe('API: LSK Account', () => {
   const network = {

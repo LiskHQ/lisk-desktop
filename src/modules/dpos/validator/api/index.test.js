@@ -1,11 +1,11 @@
-import http from '@common/utilities/api/http';
-import ws, { subscribe, unsubscribe } from '@common/utilities/api/ws';
+import http from 'src/utils/api/http';
+import ws, { subscribe, unsubscribe } from 'src/utils/api/ws';
 import accounts from '@tests/constants/wallets';
 
 import * as delegate from './index';
 
-jest.mock('@common/utilities/api/http');
-jest.mock('@common/utilities/api/ws');
+jest.mock('src/utils/api/http');
+jest.mock('src/utils/api/ws');
 
 const setApiResponseData = (data, api) => {
   api.mockImplementation(() => Promise.resolve(data));

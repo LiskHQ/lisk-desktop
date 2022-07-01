@@ -1,4 +1,4 @@
-import { olderBlocksRetrieved } from '@common/store/actions';
+import { olderBlocksRetrieved } from 'src/redux/actions';
 import { blockSubscribe, blockUnsubscribe } from '@block/utils';
 import actionTypes from '@network/store/actionTypes';
 import middleware from './middleware';

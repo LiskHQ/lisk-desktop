@@ -2,7 +2,7 @@ import React from 'react';
 import { mount } from 'enzyme';
 import copyToClipboard from 'copy-to-clipboard';
 import * as txUtils from '@transaction/utils/transaction';
-import routes from '@screens/router/routes';
+import routes from 'src/routes/routes';
 import { txStatusTypes } from '@transaction/configuration/txStatus';
 import accounts from '@tests/constants/wallets';
 import Multisignature, { FullySignedActions, PartiallySignedActions } from '.';

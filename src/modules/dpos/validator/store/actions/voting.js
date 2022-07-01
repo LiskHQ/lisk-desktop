@@ -1,6 +1,6 @@
 import to from 'await-to-js';
 import { tokenMap } from '@token/fungible/consts/tokens';
-import { selectActiveTokenAccount } from '@common/store/selectors';
+import { selectActiveTokenAccount } from 'src/redux/selectors';
 import { createGenericTx } from '@transaction/api';
 import { getAccount } from '@wallet/utils/api';
 import { timerReset } from '@auth/store/action';

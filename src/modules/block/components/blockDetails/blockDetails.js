@@ -1,7 +1,7 @@
 import { Link } from 'react-router-dom';
 import React, { useEffect } from 'react';
 
-import routes from '@screens/router/routes';
+import routes from 'src/routes/routes';
 import { tokenMap } from '@token/fungible/consts/tokens';
 import DateTimeFromTimestamp from 'src/modules/common/components/timestamp';
 import Box from 'src/theme/box';

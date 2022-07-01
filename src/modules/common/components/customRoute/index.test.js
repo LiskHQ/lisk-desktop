@@ -3,7 +3,7 @@ import { useSelector } from 'react-redux';
 import { mount } from 'enzyme';
 import { MemoryRouter, Route } from 'react-router';
 import mockSavedAccounts from '@tests/fixtures/accounts';
-import routes from '@screens/router/routes';
+import routes from 'src/routes/routes';
 import ReclaimBalance from '@legacy/manager/reclaimBalance';
 import wallets from '@tests/constants/wallets';
 import CustomRoute from './index';

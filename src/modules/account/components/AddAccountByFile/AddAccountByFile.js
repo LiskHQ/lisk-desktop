@@ -1,7 +1,7 @@
 /* eslint-disable max-lines */
 import React, { useRef } from 'react';
 import { withRouter } from 'react-router';
-import routes from '@screens/router/routes';
+import routes from 'src/routes/routes';
 import RestoreAccountForm from 'src/modules/auth/components/RestoreAccountForm';
 import EnterPasswordForm from 'src/modules/auth/components/EnterPasswordForm';
 import SetPasswordSuccess from '@auth/components/SetPasswordSuccess';

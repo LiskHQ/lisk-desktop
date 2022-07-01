@@ -1,6 +1,6 @@
 import {
   bookmarkAdded, bookmarkUpdated, bookmarkRemoved,
-} from '@common/store/actions';
+} from 'src/redux/actions';
 import wallets from '@tests/constants/wallets';
 import actionTypes from './actionTypes';
 import bookmarks from './reducer';

@@ -5,7 +5,7 @@ import {
 import { createMemoryHistory } from 'history';
 import { Router } from 'react-router-dom';
 import mockSavedAccounts from '@tests/fixtures/accounts';
-import routes from '@screens/router/routes';
+import routes from 'src/routes/routes';
 import ManageAccounts from './ManageAccounts';
 
 const mockSetAccount = jest.fn();
