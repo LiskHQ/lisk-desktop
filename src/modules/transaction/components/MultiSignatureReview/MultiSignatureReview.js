@@ -1,7 +1,6 @@
 import React from 'react';
 
 import { tokenMap } from '@token/fungible/consts/tokens';
-import { toRawLsk } from '@token/fungible/utils/lsk';
 import { truncateAddress } from '@wallet/utils/account';
 import TokenAmount from '@token/fungible/components/tokenAmount';
 import WalletVisual from '@wallet/components/walletVisual';
@@ -9,17 +8,10 @@ import WalletVisual from '@wallet/components/walletVisual';
 import styles from './MultiSignatureReview.css';
 
 const getAccountRoleText = (accountRole, t) => {
-  switch (accountRole) {
-    case true:
-      return t('Mandatory');
-    case false:
-      return t('Optional');
-    // case 'owner':
-    //   return t('Owner');
-    /* istanbul ignore next */
-    default:
-      return t('Optional');
+  if (accountRole) {
+    return t('Mandatory');
   }
+  return t('Optional');
 };
 
 const Member = ({ member, i, t }) => (
@@ -77,11 +69,11 @@ const MultiSignatureReview = ({
   <>
     <Members members={members} t={t} />
     <div className={styles.infoContainer}>
-      <InfoColumn title={t('Required signatures')} className="info-requiredSignatures">
+      <InfoColumn title={t('Required signatures')} className="info-numberOfSignatures">
         {numberOfSignatures}
       </InfoColumn>
       <InfoColumn title={t('Transaction fee')} className="info-fee">
-        <TokenAmount val={toRawLsk(fee)} token={tokenMap.LSK.key} />
+        <TokenAmount val={fee} token={tokenMap.LSK.key} />
       </InfoColumn>
     </div>
   </>

@@ -59,7 +59,7 @@ describe('Sign Multisignature Tx Review component', () => {
     signatures[1] = wallets.genesis.summary.publicKey;
     wrapper.find('button.sign').simulate('click');
     expect(props.nextStep).toHaveBeenCalledWith(expect.objectContaining({
-      rawTransaction: expect.anything(),
+      rawTx: expect.anything(),
       sender: expect.anything(),
     }));
   });
@@ -77,5 +77,11 @@ describe('Sign Multisignature Tx Review component', () => {
     const html = wrapper.html();
     expect(wrapper).toContainMatchingElements(expectedLength, '.member-info');
     expect(html).toContain('0.01 LSK');
+  });
+
+  it('Should render properly when senderAccount.data is empty', () => {
+    wrapper = mount(<Summary {...props} senderAccount={{ data: {} }} />);
+    const html = wrapper.html();
+    expect(html).toEqual('<div></div>');
   });
 });

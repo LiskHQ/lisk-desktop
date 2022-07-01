@@ -15,7 +15,7 @@ const useTransactionPriority = () => {
     Medium: 0,
     High: 0,
   });
-  const [selectedPriority, setselectedPriority] = useState({
+  const [selectedPriority, setSelectedPriority] = useState({
     value: 0,
     selectedIndex: 0,
   });
@@ -29,7 +29,7 @@ const useTransactionPriority = () => {
   }, []);
 
   const selectTransactionPriority = ({ item, index }) => {
-    setselectedPriority({
+    setSelectedPriority({
       ...item,
       selectedIndex: index,
     });
@@ -47,7 +47,7 @@ const useTransactionPriority = () => {
       item: priorityOptions[selectedPriority.selectedIndex],
       index: selectedPriority.selectedIndex,
     });
-  }, [selectedPriority.index, baseFees]);
+  }, [selectedPriority.value, baseFees.Low, baseFees.Medium, baseFees.High]);
 
   return [
     selectedPriority,

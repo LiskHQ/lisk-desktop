@@ -2,7 +2,6 @@ import React from 'react';
 import { withTranslation } from 'react-i18next';
 import WalletVisual from '@wallet/components/walletVisual';
 import TokenAmount from '@token/fungible/components/tokenAmount';
-import { tokenMap } from '@token/fungible/consts/tokens';
 import styles from './TransactionInfo.css';
 import CustomTransactionInfo from './CustomTransactionInfo';
 
@@ -30,14 +29,15 @@ const Members = ({ members, t }) => (
 );
 
 const TransactionInfo = ({
-  isMultisignature, t, transaction, date, account, ...restProps
+  isMultisignature, t, rawTx, account, date, token, summaryInfo,
 }) => (
   <>
     <CustomTransactionInfo
       t={t}
-      transaction={transaction}
+      transaction={rawTx}
       account={account}
-      {...restProps}
+      token={token}
+      summaryInfo={summaryInfo}
     />
     {isMultisignature && (
       <>
@@ -52,8 +52,8 @@ const TransactionInfo = ({
             <label>{t('Transaction fee')}</label>
             <label className="fee">
               <TokenAmount
-                val={restProps.fee || transaction.fee}
-                token={tokenMap.LSK.key}
+                val={rawTx.fee}
+                token={token}
               />
             </label>
           </div>
@@ -68,7 +68,7 @@ const TransactionInfo = ({
           <div className={styles.col}>
             <label>{t('Nonce')}</label>
             <label>
-              {Number(transaction.nonce)}
+              {Number(rawTx.nonce)}
             </label>
           </div>
         </section>

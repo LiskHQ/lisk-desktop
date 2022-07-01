@@ -1,8 +1,9 @@
 import * as accountApi from '@wallet/utils/api';
-import { create } from '@transaction/api';
+import { createGenericTx } from '@transaction/api';
 import wallets from '@tests/constants/wallets';
 import * as networkActions from '@network/store/action';
 import txActionTypes from '@transaction/store/actionTypes';
+import loginTypes from 'src/modules/auth/const/loginTypes';
 import {
   accountDataUpdated,
   multisigGroupRegistered,
@@ -18,7 +19,9 @@ jest.mock('@wallet/utils/api', () => ({
 jest.mock('@network/store/action', () => ({
   networkStatusUpdated: jest.fn(),
 }));
-jest.mock('@transaction/api');
+jest.mock('@transaction/api', () => ({
+  createGenericTx: jest.fn().mockImplementation(() => Promise.resolve()),
+}));
 
 describe('actions: account', () => {
   const dispatch = jest.fn();
@@ -119,16 +122,21 @@ describe('actions: account', () => {
   describe('multisigGroupRegistered', () => {
     const state = {
       wallet: {
+        loginType: loginTypes.passphrase.code,
         passphrase: wallets.multiSig_candidate.passphrase,
         info: {
           LSK: wallets.multiSig_candidate,
         },
       },
       network: {},
+      token: {
+        active: 'LSK',
+      },
+      hwInfo: {},
     };
     const getState = () => state;
     const params = {
-      fee: '0.1',
+      fee: 10000000,
       mandatoryKeys: ['1'],
       optionalKeys: ['2', '3'],
       numberOfSignatures: 2,
@@ -136,22 +144,23 @@ describe('actions: account', () => {
 
     it('should dispatch transactionCreatedSuccess', async () => {
       const tx = { id: 1 };
-      create.mockImplementation(() =>
+      createGenericTx.mockImplementation(() =>
         new Promise((resolve) => {
           resolve(tx);
         }));
       await multisigGroupRegistered(params)(dispatch, getState);
-      expect(create).toHaveBeenCalledWith({
+      expect(createGenericTx).toHaveBeenCalledWith({
         network: state.network,
-        wallet: state.wallet.info.LSK,
+        wallet: {
+          ...state.wallet.info.LSK,
+          hwInfo: state.hwInfo,
+          loginType: state.wallet.loginType,
+        },
         transactionObject: {
-          moduleAssetId: '4:0',
           fee: 10000000,
           mandatoryKeys: params.mandatoryKeys,
           optionalKeys: params.optionalKeys,
           numberOfSignatures: params.numberOfSignatures,
-          nonce: wallets.multiSig_candidate.sequence.nonce,
-          senderPublicKey: wallets.multiSig_candidate.summary.publicKey,
         },
       });
       expect(dispatch).toHaveBeenCalledWith({
@@ -162,7 +171,7 @@ describe('actions: account', () => {
 
     it('should dispatch transactionSignError', async () => {
       const error = { message: 'TestError' };
-      create.mockImplementation(() =>
+      createGenericTx.mockImplementation(() =>
         new Promise((_, reject) => {
           reject(error);
         }));

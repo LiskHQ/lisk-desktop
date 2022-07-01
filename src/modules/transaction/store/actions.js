@@ -1,19 +1,17 @@
 import { to } from 'await-to-js';
 import { DEFAULT_LIMIT } from 'src/utils/monitor';
-import { MODULE_ASSETS_NAME_ID_MAP } from '@transaction/configuration/moduleAssets';
 import { signatureCollectionStatus } from '@transaction/configuration/txStatus';
-import { isEmpty } from 'src/utils/helpers';
 import { extractKeyPair } from '@wallet/utils/account';
 import { getTransactionSignatureStatus } from '@wallet/components/signMultisigView/helpers';
+import { selectActiveTokenAccount } from '@common/store';
 import { timerReset } from '@auth/store/action';
 import { loadingStarted, loadingFinished } from '@common/store/actions/loading';
 import actionTypes from './actionTypes';
-import { getTransactions, create, broadcast } from '../api';
+import { getTransactions, broadcast } from '../api';
 import {
   signMultisigTransaction,
-  transformTransaction,
-  createTransactionObject,
-  flattenTransaction,
+  elementTxToDesktopTx,
+  desktopTxToElementsTx,
 } from '../utils';
 
 /**
@@ -89,75 +87,27 @@ export const resetTransactionResult = () => ({
 });
 
 /**
- * Calls transactionAPI.create for create the tx object that will broadcast
- * @param {Object} data
- * @param {String} data.recipientAddress
- * @param {Number} data.amount - In raw format (satoshi, beddows)
- * @param {Number} data.fee - In raw format, used for updating the TX List.
- * @param {Number} data.reference - Data field for LSK transactions
- */
-// eslint-disable-next-line max-statements
-export const transactionCreated = data => async (dispatch, getState) => {
-  const {
-    wallet, token, network,
-  } = getState();
-  const activeToken = token.active;
-  const hwInfo = isEmpty(wallet.hwInfo) ? undefined : wallet.hwInfo; // @todo remove this by #3898
-
-  const [error, tx] = await to(create({
-    transactionObject: {
-      ...data,
-      moduleAssetId: MODULE_ASSETS_NAME_ID_MAP.transfer,
-    },
-    wallet: {
-      ...wallet.info[activeToken],
-      hwInfo,
-      passphrase: wallet.passphrase,
-    },
-    network,
-  }));
-
-  if (error) {
-    dispatch({
-      type: actionTypes.transactionSignError,
-      data: error,
-    });
-  } else {
-    dispatch({
-      type: actionTypes.transactionCreatedSuccess,
-      data: tx,
-    });
-  }
-};
-
-/**
  * Signs the transaction using a given second passphrase
  *
  * @param {object} data
  * @param {string} data.secondPass
  */
 export const transactionDoubleSigned = () => async (dispatch, getState) => {
-  const {
-    transactions, network, wallet, token,
-  } = getState();
+  const state = getState();
+  const { transactions, network } = state;
   const keyPair = extractKeyPair({
-    passphrase: wallet.secondPassphrase,
+    passphrase: state.wallet.secondPassphrase,
     enableCustomDerivationPath: false,
   });
-  const activeWallet = {
-    ...wallet.info[token.active],
-    passphrase: wallet.secondPassphrase,
-    summary: {
-      ...wallet.info[token.active].summary,
-      ...keyPair,
-    },
-  };
-  const transformedTx = transformTransaction(transactions.signedTransaction);
+  const activeWallet = selectActiveTokenAccount(state);
+  activeWallet.summary.publicKey = keyPair.publicKey;
+  activeWallet.summary.privateKey = keyPair.privateKey;
+
   const [signedTx, err] = await signMultisigTransaction(
-    transformedTx,
+    elementTxToDesktopTx(transactions.signedTransaction),
     activeWallet,
     {
-      data: activeWallet,
+      data: activeWallet, // SenderAccount is the same of the double-signer
     },
     signatureCollectionStatus.partiallySigned,
     network,
@@ -209,7 +159,7 @@ export const transactionBroadcasted = transaction =>
         data: transaction,
       });
 
-      const transformedTransaction = transformTransaction(transaction);
+      const transformedTransaction = elementTxToDesktopTx(transaction);
 
       if (transformedTransaction.sender.address === wallet.info.LSK.summary.address) {
         dispatch(pendingTransactionAdded({ ...transformedTransaction, isPending: true }));
@@ -224,29 +174,25 @@ export const transactionBroadcasted = transaction =>
  * and dispatches the relevant action.
  *
  * @param {object} data
- * @param {object} data.rawTransaction Transaction config required by Lisk Element
+ * @param {object} data.rawTx Transaction config required by Lisk Element
  * @param {object} data.sender
  * @param {object} data.sender.data - Sender account info in Lisk API schema
  */
 export const multisigTransactionSigned = ({
-  rawTransaction, sender,
+  rawTx, sender, privateKey, publicKey,
 }) => async (dispatch, getState) => {
-  const {
-    network, wallet,
-  } = getState();
-  const activeWallet = {
-    ...wallet.info.LSK,
-    passphrase: wallet.passphrase,
-    hwInfo: wallet.hwInfo,
-  };
-  const txStatus = getTransactionSignatureStatus(sender.data, rawTransaction);
+  const state = getState();
+  const activeWallet = selectActiveTokenAccount(state);
+  const txStatus = getTransactionSignatureStatus(sender.data, rawTx);
 
   const [tx, error] = await signMultisigTransaction(
-    rawTransaction,
+    rawTx,
     activeWallet,
     sender,
     txStatus,
-    network,
+    state.network,
+    privateKey,
+    publicKey,
   );
 
   if (!error) {
@@ -270,9 +216,8 @@ export const multisigTransactionSigned = ({
  * @param {object} data
  * @param {object} data.rawTransaction Transaction config required by Lisk Element
  */
-export const signatureSkipped = ({ rawTransaction }) => {
-  const flatTx = flattenTransaction(rawTransaction);
-  const binaryTx = createTransactionObject(flatTx, rawTransaction.moduleAssetId);
+export const signatureSkipped = ({ rawTx }) => {
+  const binaryTx = desktopTxToElementsTx(rawTx, rawTx.moduleAssetId);
 
   return ({
     type: actionTypes.signatureSkipped,

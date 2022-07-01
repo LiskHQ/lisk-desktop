@@ -8,6 +8,7 @@ Feature: Dashboard
   # @advanced
   @basic
   Scenario: Open last transaction and open a bookmark item
+    Given I am on Dashboard page
     When I click on searchIcon
     And I search for account lskehmcfxh7vq6mpjgexe2c2ftq4gdeb5qfkoq8cm
     Then I click on searchAccountRow

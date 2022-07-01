@@ -2,7 +2,7 @@
 import React from 'react';
 import MultiStep from 'src/modules/common/components/OldMultiStep';
 import { removeSearchParamsFromUrl } from 'src/utils/searchParams';
-import TransactionSignature from '@transaction/components/TransactionSignature';
+import TxSignatureCollector from '@transaction/components/TxSignatureCollector';
 import Dialog from 'src/theme/dialog/dialog';
 
 import Form from '../signMultisigForm';
@@ -22,7 +22,7 @@ const SignMultisigView = ({ history }) => {
       >
         <Form />
         <Summary />
-        <TransactionSignature />
+        <TxSignatureCollector />
         <Status history={history} />
       </MultiStep>
     </Dialog>

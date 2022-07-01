@@ -11,7 +11,7 @@ const transaction = index => ({
   sender: { address: 'lskdwsyfmcko6mcd357446yatromr9vzgu7eb8y11' },
   asset: {
     amount: '200',
-    recipientAddress: 'lskdwsyfmcko6mcd357446yatromr9vzgu7eb8y22',
+    recipient: { address: 'lskdwsyfmcko6mcd357446yatromr9vzgu7eb8y22' },
     data: 'test',
   },
   block: {

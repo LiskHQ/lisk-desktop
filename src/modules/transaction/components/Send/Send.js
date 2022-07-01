@@ -1,23 +1,22 @@
 import React from 'react';
 import WalletVisual from '@wallet/components/walletVisual';
 import TokenAmount from '@token/fungible/components/tokenAmount';
-import { toRawLsk } from '@token/fungible/utils/lsk';
 import styles from '../TransactionInfo/TransactionInfo.css';
 
 const Send = ({
-  fields, token, transaction = {}, t,
+  transaction = {}, t, token,
 }) => (
   <>
     <section>
       <label>{t('Recipient')}</label>
       <label className="recipient-value">
-        <WalletVisual address={fields.recipient.address} size={25} />
+        <WalletVisual address={transaction.asset.recipient} size={25} />
         <label className={`${styles.information} recipient-confirm`}>
-          {fields.recipient.title || fields.recipient.address}
+          {transaction.asset.recipient.title || transaction.asset.recipient.address}
         </label>
-        { fields.recipient.title ? (
+        { transaction.asset.recipient.title ? (
           <span className={styles.secondText}>
-            {fields.recipient.address}
+            {transaction.asset.recipient.address}
           </span>
         ) : null }
       </label>
@@ -27,7 +26,7 @@ const Send = ({
         <label>{t('Amount')}</label>
         <label className="amount-summary">
           <TokenAmount
-            val={transaction.asset?.amount || toRawLsk(fields.amount.value)}
+            val={transaction.asset.amount}
             token={token}
           />
         </label>
@@ -36,7 +35,7 @@ const Send = ({
     <section>
       <label>{t('Message')}</label>
       <label className="message-value">
-        {transaction.asset?.data || '-'}
+        {transaction.asset.data || '-'}
       </label>
     </section>
   </>
