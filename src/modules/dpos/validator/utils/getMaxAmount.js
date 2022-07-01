@@ -30,15 +30,19 @@ const getMaxAmount = async (wallet, network, voting, address) => {
 
   const transaction = {
     fee: 1e6,
-    votes: normalizeVotesForTx({
-      ...voting,
-      [address]: {
-        confirmed: voting[address] ? voting[address].confirmed : 0,
-        unconfirmed: maxVoteAmount,
-      },
-    }),
+    asset: {
+      votes: normalizeVotesForTx({
+        ...voting,
+        [address]: {
+          confirmed: voting[address] ? voting[address].confirmed : 0,
+          unconfirmed: maxVoteAmount,
+        },
+      }),
+    },
     nonce: wallet.sequence?.nonce,
-    senderPublicKey: wallet.summary?.publicKey,
+    sender: {
+      publicKey: wallet.summary?.publicKey,
+    },
     moduleAssetId: MODULE_ASSETS_NAME_ID_MAP.voteDelegate,
   };
 

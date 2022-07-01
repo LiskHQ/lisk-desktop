@@ -154,7 +154,7 @@ const AutoSuggest = ({ // eslint-disable-line max-statements
               onMouseEnter={() => handleUpdateIndex(index)}
               onClick={() => onItemSelect(item)}
               onKeyPress={onHandleKeyPress}
-              className={dropdownIndex === index && styles.active}
+              className={dropdownIndex === index ? styles.active : ''}
             >
               {renderItem(item)}
             </li>

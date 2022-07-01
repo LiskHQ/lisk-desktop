@@ -70,6 +70,6 @@ describe('externalLinks', () => {
 
     externalLinks.init();
     callbacks.openUrl({}, 'lisk://vote?votes=delegate');
-    expect(history.replace).toHaveBeenCalledWith('/wallet?modal=votingQueue&votes=delegate');
+    expect(history.replace).toHaveBeenCalledWith('/wallet?modal=VotingQueue&votes=delegate');
   });
 });

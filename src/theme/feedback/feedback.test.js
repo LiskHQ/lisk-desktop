@@ -3,7 +3,7 @@ import { shallow } from 'enzyme';
 import Feedback from './feedback';
 
 describe('Feedback Component', () => {
-  it('Should render with icon and error status', () => {
+  it('Should render with icon and error Status', () => {
     const props = {
       showIcon: true,
       status: 'error',

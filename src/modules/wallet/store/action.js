@@ -1,10 +1,8 @@
 /* eslint-disable max-lines */
 import { to } from 'await-to-js';
-import { MODULE_ASSETS_NAME_ID_MAP } from '@transaction/configuration/moduleAssets';
-import { toRawLsk } from '@token/fungible/utils/lsk';
-import { isEmpty } from 'src/utils/helpers';
-import { create } from '@transaction/api';
+import { createGenericTx } from '@transaction/api';
 import { getAccount } from '@wallet/utils/api';
+import { selectActiveTokenAccount } from '@common/store/selectors';
 import { networkStatusUpdated } from '@network/store/action';
 import transactionActionTypes from '@transaction/store/actionTypes';
 import actionTypes from './actionTypes';
@@ -71,38 +69,27 @@ export const accountDataUpdated = tokensTypes =>
     }
   };
 
-export const multisigGroupRegistered = ({
-  fee,
-  mandatoryKeys,
-  optionalKeys,
-  numberOfSignatures,
-}) => async (dispatch, getState) => {
+export const multisigGroupRegistered = (
+  transactionObject,
+  privateKey,
+  publicKey,
+) => async (dispatch, getState) => {
   //
   // Collect data
   //
   const state = getState();
-  const activeWallet = {
-    ...state.wallet.info.LSK,
-    hwInfo: isEmpty(state.wallet.hwInfo) ? undefined : state.wallet.hwInfo,
-    passphrase: state.wallet.passphrase,
-  };
+  const activeWallet = selectActiveTokenAccount(state);
 
   //
   // Create the transaction
   //
   const [error, tx] = await to(
-    create({
+    createGenericTx({
       network: state.network,
       wallet: activeWallet,
-      transactionObject: {
-        mandatoryKeys,
-        optionalKeys,
-        numberOfSignatures,
-        moduleAssetId: MODULE_ASSETS_NAME_ID_MAP.registerMultisignatureGroup,
-        fee: toRawLsk(fee),
-        nonce: activeWallet.sequence.nonce,
-        senderPublicKey: activeWallet.summary.publicKey,
-      },
+      transactionObject,
+      privateKey,
+      publicKey,
     }),
   );
 

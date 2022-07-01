@@ -17,7 +17,7 @@ import http from '@common/utilities/api/http';
 import { getDelegates } from '@dpos/validator/api';
 import { HTTP_PREFIX } from 'src/const/httpCodes';
 import {
-  createTransactionObject,
+  desktopTxToElementsTx,
   sign,
 } from '../utils';
 
@@ -246,7 +246,7 @@ export const getTransactionBaseFees = network =>
 export const getTransactionFee = async ({
   transaction,
   selectedPriority,
-  account,
+  wallet,
   numberOfSignatures = DEFAULT_NUMBER_OF_SIGNATURES,
   network,
 }) => {
@@ -258,14 +258,14 @@ export const getTransactionFee = async ({
 
   const schema = network.networks.LSK.moduleAssetSchemas[moduleAssetId];
   const maxAssetFee = MODULE_ASSETS_MAP[moduleAssetId].maxFee;
-  const transactionObject = createTransactionObject(rawTransaction, moduleAssetId);
+  const transactionObject = desktopTxToElementsTx(rawTransaction, moduleAssetId);
   let numberOfEmptySignatures;
 
   if (moduleAssetId === MODULE_ASSETS_NAME_ID_MAP.registerMultisignatureGroup) {
-    const { optionalKeys, mandatoryKeys } = transaction;
+    const { optionalKeys, mandatoryKeys } = transaction.asset;
     numberOfSignatures = optionalKeys.length + mandatoryKeys.length + 1;
-  } else if (account?.summary?.isMultisignature) {
-    numberOfEmptySignatures = account.keys.members.length - numberOfSignatures;
+  } else if (wallet?.summary?.isMultisignature) {
+    numberOfEmptySignatures = wallet.keys.members.length - numberOfSignatures;
   }
 
   const minFee = transactions.computeMinFee(schema, transactionObject, {
@@ -309,22 +309,21 @@ export const getTransactionFee = async ({
  * rejects with an error
  */
 // eslint-disable-next-line max-statements
-export const create = async ({
+export const createGenericTx = async ({
   network,
   wallet,
   transactionObject,
+  privateKey,
+  publicKey,
 }) => {
   const {
-    summary: { publicKey, isMultisignature, privateKey },
+    summary: { publicKey: reduxPublicKey, isMultisignature, privateKey: reduxPrivateKey },
     keys,
-    sequence,
   } = wallet;
   const networkIdentifier = Buffer.from(network.networks.LSK.networkIdentifier, 'hex');
 
   const { moduleAssetId, ...rawTransaction } = transactionObject;
-  rawTransaction.nonce = sequence.nonce;
-  rawTransaction.senderPublicKey = publicKey;
-  const transaction = createTransactionObject(rawTransaction, moduleAssetId);
+  const transaction = desktopTxToElementsTx(rawTransaction, moduleAssetId);
 
   const schema = network.networks.LSK.moduleAssetSchemas[moduleAssetId];
 
@@ -333,8 +332,8 @@ export const create = async ({
 
   const result = await sign(
     wallet, schema, transaction, network, networkIdentifier,
-    isMultisignature, isMultiSignatureRegistration, keys, publicKey,
-    moduleAssetId, rawTransaction, privateKey,
+    isMultisignature, isMultiSignatureRegistration, keys, publicKey ?? reduxPublicKey,
+    moduleAssetId, rawTransaction, privateKey ?? reduxPrivateKey,
   );
 
   return result;

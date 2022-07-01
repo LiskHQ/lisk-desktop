@@ -7,15 +7,15 @@ import RegisterDelegate from '../RegisterDelegate';
 import UnlockBalance from '../UnlockBalance';
 import RegisterMultisignatureGroup from '../RegisterMultisignatureGroup';
 
-export default ({ moduleAssetId, ...restProps }) => {
-  switch (moduleAssetId) {
-    case MODULE_ASSETS_NAME_ID_MAP.reclaimLSK: return <Reclaim {...restProps} />;
-    case MODULE_ASSETS_NAME_ID_MAP.registerDelegate: return <RegisterDelegate {...restProps} />;
-    case MODULE_ASSETS_NAME_ID_MAP.transfer: return <Send {...restProps} />;
-    case MODULE_ASSETS_NAME_ID_MAP.voteDelegate: return <VoteDelegate {...restProps} />;
-    case MODULE_ASSETS_NAME_ID_MAP.unlockToken: return <UnlockBalance {...restProps} />;
+export default (props) => {
+  switch (props.transaction.moduleAssetId) {
+    case MODULE_ASSETS_NAME_ID_MAP.reclaimLSK: return <Reclaim {...props} />;
+    case MODULE_ASSETS_NAME_ID_MAP.registerDelegate: return <RegisterDelegate {...props} />;
+    case MODULE_ASSETS_NAME_ID_MAP.transfer: return <Send {...props} />;
+    case MODULE_ASSETS_NAME_ID_MAP.voteDelegate: return <VoteDelegate {...props} />;
+    case MODULE_ASSETS_NAME_ID_MAP.unlockToken: return <UnlockBalance {...props} />;
     case MODULE_ASSETS_NAME_ID_MAP.registerMultisignatureGroup:
-      return <RegisterMultisignatureGroup {...restProps} />;
+      return <RegisterMultisignatureGroup {...props} />;
     default:
       return null;
   }

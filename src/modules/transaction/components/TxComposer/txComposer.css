@@ -1,0 +1,26 @@
+@import '../../../../../setup/react/app/mixins.css';
+
+.feedback {
+  width: 100%;
+  min-height: 40px;
+  height: auto;
+  background: var(--color-burnt-sienna);
+  border-radius: var(--border-radius-standard);
+  padding: var(--vertical-padding-m) var(--horizontal-padding-m);
+  margin-bottom: 5px;
+  box-sizing: border-box;
+  opacity: 0;
+  animation: fadeIn 200ms 1 forwards ease;
+  animation-delay: 200ms;
+
+  & span {
+    @mixin contentNormal;
+
+    line-height: 20px;
+    color: var(--color-strong-white);
+  }
+}
+
+@keyframes fadeIn {
+  to { opacity: 1; }
+}

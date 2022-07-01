@@ -56,4 +56,8 @@ export default {
     txSignatureError: null,
     txBroadcastError: null,
   },
+  account: {
+    current: {},
+    list: {},
+  },
 };

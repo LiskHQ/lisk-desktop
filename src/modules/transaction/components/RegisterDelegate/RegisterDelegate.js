@@ -2,7 +2,7 @@ import React from 'react';
 import WalletVisual from '@wallet/components/walletVisual';
 import styles from '../TransactionInfo/TransactionInfo.css'; // @todo create a dedicated css file for this component
 
-const RegisterDelegate = ({ account, username, t }) => (
+const RegisterDelegate = ({ account, transaction, t }) => (
   <section>
     <label className="username-label">{t('Your username')}</label>
     <div className={styles.userInformation}>
@@ -11,7 +11,7 @@ const RegisterDelegate = ({ account, username, t }) => (
         address={account.summary?.address}
         size={25}
       />
-      <span className={`${styles.username} username`}>{username}</span>
+      <span className={`${styles.username} username`}>{transaction.asset.username}</span>
       <span className={`${styles.address} address`}>{account.summary?.address}</span>
     </div>
   </section>

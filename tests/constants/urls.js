@@ -1,5 +1,5 @@
 const urls = {
-  dashboard: '/',
+  dashboard: '/dashboard',
   wallet: '/wallet?tab=Transactions',
   wallets: '/wallets',
   send: '/wallet?modal=send',

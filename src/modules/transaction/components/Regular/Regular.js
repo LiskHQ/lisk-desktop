@@ -5,7 +5,7 @@ import { TertiaryButton, PrimaryButton } from 'src/theme/buttons';
 import routes from '@screens/router/routes';
 import { txStatusTypes } from '@transaction/configuration/txStatus';
 import Illustration from 'src/modules/common/components/illustration';
-import getIllustration from '../TransactionResult/illustrationsMap';
+import getIllustration from '../TxBroadcaster/illustrationsMap';
 import styles from './Regular.css';
 
 const errorTypes = [txStatusTypes.signatureError, txStatusTypes.broadcastError];

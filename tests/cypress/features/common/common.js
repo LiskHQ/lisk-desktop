@@ -245,8 +245,8 @@ When(/^I paste ([\w]+) in ([\w]+) field$/, function (value, field) {
 });
 
 Then(/^I go to transfer confirmation$/, function () {
-  cy.get(ss.nextTransferBtn).should('be.enabled');
-  cy.get(ss.nextTransferBtn).click();
+  cy.get(ss.txNextBtn).should('be.enabled');
+  cy.get(ss.txNextBtn).click();
 });
 
 Then(/^(.*?) should be visible$/, function (elementName) {
