@@ -6,16 +6,15 @@ const httpPaths = {
 };
 
 /**
- * Retrieves the details of a single transaction
+ * Retrieves the details of a single blockchain application
  *
  * @param {Object} data
  * @param {String} data.params
- * @param {String} data.params.id - Id of the transaction
+ * @param {String} data.params.chainId - Id of the chain
  * @param {String?} data.baseUrl - Lisk Service API url to override the
- * existing ServiceUrl on the network param. We may use this to retrieve
- * the details of an archived transaction.
+ * existing ServiceUrl on the network param.
  * @param {Object} data.network - Network setting from Redux store
- * @returns {Promise} Transaction details API call
+ * @returns {Promise} Blockchain application details API call
  */
 
 // eslint-disable-next-line import/prefer-default-export
