@@ -17,6 +17,8 @@ const httpPaths = {
  * @param {Object} data.network - Network setting from Redux store
  * @returns {Promise} Transaction details API call
  */
+
+// eslint-disable-next-line import/prefer-default-export
 export const getApplication = ({
   params, network, baseUrl,
 }) => http({
@@ -25,5 +27,3 @@ export const getApplication = ({
   network,
   baseUrl,
 });
-
-export const getApplications = () => {};
