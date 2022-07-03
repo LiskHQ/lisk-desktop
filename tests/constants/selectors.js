@@ -294,7 +294,6 @@ const ss = {
   verifyPublicKeyInput: '.publicKey',
   verifySignatureInput: '.signature',
   acceptTermsButton: '.accept-terms',
-
   blockchainName: '.chain-name-text',
   chainOwnerAddress: '.copy-address-wrapper .copy-title',
   chainIdDisplay: '.chain-id',
