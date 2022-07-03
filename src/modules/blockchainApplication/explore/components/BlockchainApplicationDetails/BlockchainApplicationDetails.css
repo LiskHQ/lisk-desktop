@@ -1,5 +1,13 @@
 @import '../../../../../../setup/react/app/mixins.css';
 
+.dialogWrapper {
+  border: none;
+
+  & > span {
+    color: white !important;
+  }
+}
+
 .wrapper {
   width: 100%;
   box-sizing: border-box;
@@ -25,16 +33,21 @@
   align-items: center;
   justify-content: flex-start;
 
-  & > div:first-child {
+  & > img:first-child {
     position: absolute;
     display: flex;
     align-items: center;
     justify-content: center;
-    top: -39px;
+    bottom: -39px;
     width: 77px;
     height: 77px;
     background-color: white;
     border-radius: 40px;
+  }
+
+  & > img:nth-child(2) {
+    width: 100%;
+    height: 100%;
   }
 }
 
@@ -44,6 +57,7 @@
   flex-direction: column;
   align-items: center;
   justify-content: center;
+  margin-top: 51px;
 }
 
 .chainNameWrapper {
@@ -105,7 +119,6 @@
   width: 100%;
   padding: 32px;
   box-sizing: border-box;
-  display: flex;
   flex-direction: row;
   column-gap: 10px;
 

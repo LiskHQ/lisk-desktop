@@ -1,6 +1,7 @@
 import React from 'react';
 import { useTranslation } from 'react-i18next';
 import moment from 'moment';
+import Box from 'src/theme/box';
 import TokenAmount from '@token/fungible/components/tokenAmount';
 import ValueAndLabel from 'src/modules/transaction/components/TransactionDetails/valueAndLabel';
 import CopyToClipboard from 'src/modules/common/components/copyToClipboard';
@@ -13,6 +14,8 @@ import { Link } from 'react-router-dom';
 import { parseSearchParams } from 'src/utils/searchParams';
 import { usePinBlockchainApplication } from '../../hooks/usePinBlockchainApplication';
 import styles from './BlockchainApplicationDetails.css';
+import defaultBackgroundImage from '../../../../../../setup/react/assets/images/default-chain-background.png';
+import liskLogo from '../../../../../../setup/react/assets/images/LISK.png';
 
 // TODO: this is a mock response of an application's details
 const application = {
@@ -27,7 +30,9 @@ const application = {
 };
 
 const deposit = 5e10;
-const serviceUrl = 'https://enevti.com/';
+const serviceUrl = 'https://lisk.com/';
+const backgroundImage = null;
+const chainLogo = null;
 
 const BlockchainApplicationDetails = ({ location }) => {
   const { t } = useTranslation();
@@ -75,21 +80,20 @@ const BlockchainApplicationDetails = ({ location }) => {
   ];
 
   return (
-    <Dialog hasClose className={`${grid.row} ${grid['center-xs']}`}>
+    <Dialog hasClose className={`${styles.dialogWrapper} ${grid.row} ${grid['center-xs']}`}>
       <div className={styles.wrapper}>
         <div className={styles.avatarContainer}>
-          <div>
-            {/* TODO: chain logo goes here when its available from service's response */}
-          </div>
+          <img src={chainLogo || liskLogo} />
+          <img src={backgroundImage || defaultBackgroundImage} />
         </div>
-        <div className={styles.detailsWrapper}>
+        <Box className={styles.detailsWrapper}>
           <div className={styles.chainNameWrapper}>
             <span className="chain-name-text">{name}</span>
             <TertiaryButton onClick={toggleApplicationPin}>
               <Icon data-testid="pin-button" name={isPinned ? 'pinnedIcon' : 'unpinnedIcon'} />
             </TertiaryButton>
           </div>
-          <div className={styles.addressRow}>
+          <Box className={styles.addressRow}>
             <ValueAndLabel className={styles.transactionId}>
               <span className="copy-address-wrapper">
                 <CopyToClipboard
@@ -103,7 +107,7 @@ const BlockchainApplicationDetails = ({ location }) => {
                 />
               </span>
             </ValueAndLabel>
-          </div>
+          </Box>
           <div className={styles.addressRow}>
             <Link
               className={`${styles.appLink}`}
@@ -125,7 +129,7 @@ const BlockchainApplicationDetails = ({ location }) => {
               LSK
             </span>
           </div>
-          <div className={styles.footerDetailsRow}>
+          <Box className={styles.footerDetailsRow}>
             {footerDetails.map(({ header, content, className }, index) => (
               <ValueAndLabel
                 key={index}
@@ -141,8 +145,8 @@ const BlockchainApplicationDetails = ({ location }) => {
                 </span>
               </ValueAndLabel>
             ))}
-          </div>
-        </div>
+          </Box>
+        </Box>
       </div>
     </Dialog>
   );
