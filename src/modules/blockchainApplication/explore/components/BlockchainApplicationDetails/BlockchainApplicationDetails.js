@@ -11,8 +11,8 @@ import Icon from 'src/theme/Icon';
 import Tooltip from 'src/theme/Tooltip';
 import { Link } from 'react-router-dom';
 import { parseSearchParams } from 'src/utils/searchParams';
-import styles from './BlockchainApplicationDetails.css';
 import { usePinBlockchainApplication } from '../../hooks/usePinBlockchainApplication';
+import styles from './BlockchainApplicationDetails.css';
 
 // TODO: this is a mock response of an application's details
 const application = {
@@ -23,8 +23,6 @@ const application = {
     address: 'lsk24cd35u4jdq8szo3pnsqe5dsxwrnazyqqqg5eu',
     lastCertificateHeight: 1000,
     lastUpdated: 123456789,
-    deposit: 5e10,
-    serviceUrl: 'https://enevti.com/',
   },
 };
 
