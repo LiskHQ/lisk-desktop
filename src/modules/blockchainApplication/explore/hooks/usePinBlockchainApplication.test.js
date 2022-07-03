@@ -1,8 +1,8 @@
 import { renderHook, act } from '@testing-library/react-hooks';
 import mockBlockchainApplications from '@tests/fixtures/blockchainApplications';
-import actionTypes from '@blockchainApplication/explore/store/actionTypes';
+import actionTypes from '@blockchainApplication/manage/store/actionTypes';
 import { usePinBlockchainApplication } from './usePinBlockchainApplication';
-import { pinApplication } from '../store/action';
+import { toggleApplicationPin } from '../../manage/store/action';
 
 const mockDispatch = jest.fn();
 const mockState = {
@@ -21,35 +21,35 @@ describe('usePinBlockchainApplication hook', () => {
   });
   const { result } = renderHook(() => usePinBlockchainApplication());
 
-  it('setPin and deletePin Should not be triggered on mounting', async () => {
+  it('togglePin Should not be triggered on mounting', async () => {
     expect(mockDispatch).toHaveBeenCalledTimes(0);
   });
 
-  it('setPin should dispatch an action', async () => {
-    const { setPin } = result.current;
+  it('togglePin should dispatch an action', async () => {
+    const { togglePin } = result.current;
     const chainId = mockBlockchainApplications[0].chainID;
-    act(() => setPin(chainId));
+    act(() => togglePin(chainId));
 
     expect(mockDispatch).toHaveBeenCalledTimes(1);
     expect(mockDispatch).toHaveBeenCalledWith(
-      pinApplication(chainId),
+      toggleApplicationPin(chainId),
     );
   });
 
-  it('should return pins as an arrray', async () => {
-    const { pins, setPin } = result.current;
+  it('should return pins as an array', async () => {
+    const { pins, togglePin } = result.current;
     const chainId = mockBlockchainApplications[0].chainID;
 
-    act(() => setPin(chainId));
+    act(() => togglePin(chainId));
     const expectPins = mockBlockchainApplications.map(({ chainID }) => chainID);
     expect(pins).toEqual(expect.arrayContaining(expectPins));
   });
 
   it('should flag chain as a pinned application', async () => {
-    const { checkPinByChainId, setPin } = result.current;
+    const { checkPinByChainId, togglePin } = result.current;
     const chainId = mockBlockchainApplications[0].chainID;
 
-    act(() => setPin(chainId));
+    act(() => togglePin(chainId));
     expect(checkPinByChainId(chainId)).toBeTruthy();
   });
 
@@ -69,15 +69,15 @@ describe('usePinBlockchainApplication hook', () => {
     expect(checkPinByChainId(chainId)).not.toBeTruthy();
   });
 
-  it('deletePin should dispatch an action', async () => {
-    const { deletePin } = result.current;
+  it('togglePin should dispatch an action', async () => {
+    const { togglePin } = result.current;
     const chainId = mockBlockchainApplications[0].chainID;
     const expectedAction = {
-      type: actionTypes.removeApplicationPin,
-      data: chainId,
+      type: actionTypes.toggleApplicationPin,
+      chainId,
     };
 
-    act(() => deletePin(chainId));
+    act(() => togglePin(chainId));
     expect(mockDispatch).toHaveBeenCalledTimes(1);
     expect(mockDispatch).toHaveBeenCalledWith(expectedAction);
   });

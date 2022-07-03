@@ -8,12 +8,14 @@ import actionTypes from './actionTypes';
  * @param {Object} state
  * @param {type: String, chainId: string} action
  */
-export const pins = (state = [], { type, data }) => {
+export const pins = (state = [], { type, chainId }) => {
   switch (type) {
-    case actionTypes.setApplicationPin:
-      return data ? [...state, data] : [...state];
-    case actionTypes.removeApplicationPin:
-      return state.filter((pinnedChainId) => pinnedChainId !== data);
+    case actionTypes.toggleApplicationPin:
+      if (state.includes(chainId) && chainId) {
+        return state.filter((pinnedChainId) => pinnedChainId !== chainId);
+      }
+      return chainId ? [...state, chainId] : [...state];
+
     default:
       return state;
   }
