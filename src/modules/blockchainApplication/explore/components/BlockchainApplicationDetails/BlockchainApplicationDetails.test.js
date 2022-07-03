@@ -13,7 +13,7 @@ jest.mock('../../hooks/usePinBlockchainApplication');
 usePinBlockchainApplication.mockReturnValue({
   togglePin: mockTogglePin,
   pins: mockedPins,
-  checkPinByChainId: jest.fn(),
+  checkPinByChainId: jest.fn().mockReturnValue(true),
 });
 
 describe('BlockchainApplicationDetails', () => {
@@ -52,26 +52,20 @@ describe('BlockchainApplicationDetails', () => {
     expect(screen.getByText('Deposited:')).toBeTruthy();
   });
 
-  it('should pin blockchain application', () => {
-    const pinButton = screen.queryByTestId('pin-button');
-    fireEvent.click(pinButton);
-
-    expect(mockTogglePin).toHaveBeenCalled();
+  it('should show application as pinned', () => {
+    expect(screen.getByAltText('pinnedIcon')).toBeTruthy();
   });
 
-  it('should unpin blockchain application', () => {
+  it('should show application as unpinned', () => {
     usePinBlockchainApplication.mockReturnValue(
       {
         togglePin: mockTogglePin,
         pins: mockedPins,
-        checkPinByChainId: jest.fn(),
+        checkPinByChainId: jest.fn().mockReturnValue(false),
       },
     );
 
     renderWithRouter(BlockchainApplicationDetails, props);
-    const pinButton = screen.queryAllByTestId('pin-button')[1];
-    fireEvent.click(pinButton);
-
-    expect(mockTogglePin).toHaveBeenCalled();
+    expect(screen.getByAltText('unpinnedIcon')).toBeTruthy();
   });
 });
