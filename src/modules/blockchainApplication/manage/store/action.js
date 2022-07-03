@@ -5,12 +5,17 @@ import actionTypes from './actionTypes';
  *
  * @returns {Object} - Action object
  */
-export const pinApplication = (data) => ({
+export const pinApplication = (chainId) => ({
   type: actionTypes.setApplicationPin,
-  data,
+  chainId,
 });
 
-export const removePinnedApplication = (data) => ({
+export const toggleApplicationPin = (chainId) => ({
+  type: actionTypes.toggleApplicationPin,
+  chainId,
+});
+
+export const removePinnedApplication = (chainId) => ({
   type: actionTypes.removeApplicationPin,
-  data,
+  chainId,
 });

@@ -28,21 +28,20 @@ const application = {
   },
 };
 
+const deposit = 5e10;
+const serviceUrl = 'https://enevti.com/';
+
 const BlockchainApplicationDetails = ({ location }) => {
   const { t } = useTranslation();
   const chainId = parseSearchParams(location.search).chainId;
-  const { checkPinByChainId, deletePin, setPin } = usePinBlockchainApplication();
+  const { checkPinByChainId, togglePin } = usePinBlockchainApplication();
   const {
-    name, state, address, lastCertificateHeight, lastUpdated, deposit, serviceUrl,
+    name, state, address, lastCertificateHeight, lastUpdated,
   } = application.data;
 
   const isPinned = checkPinByChainId(chainId);
   const toggleApplicationPin = () => {
-    if (!isPinned) {
-      setPin(chainId);
-    } else {
-      deletePin(chainId);
-    }
+    togglePin(chainId);
   };
 
   const footerDetails = [
@@ -80,73 +79,70 @@ const BlockchainApplicationDetails = ({ location }) => {
   return (
     <Dialog hasClose className={`${grid.row} ${grid['center-xs']}`}>
       <div className={styles.wrapper}>
-        <div />
-        <div>
-          <div className={styles.avatarContainer}>
-            <div>
-              {/* TODO: chain logo goes here when its available from service's response */}
-            </div>
+        <div className={styles.avatarContainer}>
+          <div>
+            {/* TODO: chain logo goes here when its available from service's response */}
           </div>
-          <div className={styles.detailsWrapper}>
-            <div className={styles.chainNameWrapper}>
-              <span className="chain-name-text">{name}</span>
-              <TertiaryButton onClick={toggleApplicationPin}>
-                <Icon data-testid="pin-button" name={isPinned ? 'pinnedIcon' : 'unpinnedIcon'} />
-              </TertiaryButton>
-            </div>
-            <div className={styles.addressRow}>
-              <ValueAndLabel className={styles.transactionId}>
-                <span className="copy-address-wrapper">
-                  <CopyToClipboard
-                    text={address}
-                    value={address}
-                    className="tx-id"
-                    containerProps={{
-                      size: 'xs',
-                      className: 'copy-address',
-                    }}
-                  />
-                </span>
-              </ValueAndLabel>
-            </div>
-            <div className={styles.addressRow}>
-              <Link
-                className={`${styles.appLink}`}
-                target="_blank"
+        </div>
+        <div className={styles.detailsWrapper}>
+          <div className={styles.chainNameWrapper}>
+            <span className="chain-name-text">{name}</span>
+            <TertiaryButton onClick={toggleApplicationPin}>
+              <Icon data-testid="pin-button" name={isPinned ? 'pinnedIcon' : 'unpinnedIcon'} />
+            </TertiaryButton>
+          </div>
+          <div className={styles.addressRow}>
+            <ValueAndLabel className={styles.transactionId}>
+              <span className="copy-address-wrapper">
+                <CopyToClipboard
+                  text={address}
+                  value={address}
+                  className="tx-id"
+                  containerProps={{
+                    size: 'xs',
+                    className: 'copy-address',
+                  }}
+                />
+              </span>
+            </ValueAndLabel>
+          </div>
+          <div className={styles.addressRow}>
+            <Link
+              className={`${styles.appLink}`}
+              target="_blank"
                 // eslint-disable-next-line
                 // TODO: this is just a place holder link pending when its part of the response payload from service
-                to={serviceUrl}
-              >
-                <Icon name="chainLinkIcon" className={styles.hwWalletIcon} />
-                {t(serviceUrl)}
-              </Link>
-            </div>
-            <div className={styles.balanceRow}>
-              <span>{t('Deposited:')}</span>
-              {/* TODO: this is a placeholder value pending when its part of service response */}
-              <span>
-                <TokenAmount val={deposit} />
-                {' '}
-                LSK
-              </span>
-            </div>
-            <div className={styles.footerDetailsRow}>
-              {footerDetails.map(({ header, content, className }, index) => (
-                <ValueAndLabel
-                  key={index}
-                  className={styles.detail}
-                  label={(
-                    <span className={styles.headerText}>
-                      {header}
-                    </span>
-                  )}
-                >
-                  <span className={className}>
-                    {content}
+              to={serviceUrl}
+            >
+              <Icon name="chainLinkIcon" className={styles.hwWalletIcon} />
+              {t(serviceUrl)}
+            </Link>
+          </div>
+          <div className={styles.balanceRow}>
+            <span>{t('Deposited:')}</span>
+            {/* TODO: this is a placeholder value pending when its part of service response */}
+            <span>
+              <TokenAmount val={deposit} />
+              {' '}
+              LSK
+            </span>
+          </div>
+          <div className={styles.footerDetailsRow}>
+            {footerDetails.map(({ header, content, className }, index) => (
+              <ValueAndLabel
+                key={index}
+                className={styles.detail}
+                label={(
+                  <span className={styles.headerText}>
+                    {header}
                   </span>
-                </ValueAndLabel>
-              ))}
-            </div>
+                  )}
+              >
+                <span className={className}>
+                  {content}
+                </span>
+              </ValueAndLabel>
+            ))}
           </div>
         </div>
       </div>

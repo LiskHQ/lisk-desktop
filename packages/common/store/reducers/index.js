@@ -9,6 +9,6 @@ export { default as appUpdates } from '@update/store/reducers/appUpdates';
 export { default as voting } from '@dpos/validator/store/reducers/voting';
 export { default as watchList } from '@dpos/validator/store/reducers/watchList';
 export { account } from '@account/store/reducer';
-export { blockChainApplications } from '@blockchainApplication/explore/store/reducer';
+export { blockChainApplications } from '@blockchainApplication/manage/store/reducer';
 export { default as service } from './service';
 export { default as loading } from './loading';

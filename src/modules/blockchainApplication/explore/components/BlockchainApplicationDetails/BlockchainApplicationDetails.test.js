@@ -6,14 +6,12 @@ import BlockchainApplicationDetails from '.';
 import { usePinBlockchainApplication } from '../../hooks/usePinBlockchainApplication';
 
 const mockedPins = ['1111'];
-const mockSetPin = jest.fn();
-const mockDeletePin = jest.fn();
+const mockTogglePin = jest.fn();
 
 jest.mock('../../hooks/usePinBlockchainApplication');
 
 usePinBlockchainApplication.mockReturnValue({
-  setPin: mockSetPin,
-  deletePin: mockDeletePin,
+  togglePin: mockTogglePin,
   pins: mockedPins,
   checkPinByChainId: jest.fn(),
 });
@@ -58,16 +56,15 @@ describe('BlockchainApplicationDetails', () => {
     const pinButton = screen.queryByTestId('pin-button');
     fireEvent.click(pinButton);
 
-    expect(mockSetPin).toHaveBeenCalled();
+    expect(mockTogglePin).toHaveBeenCalled();
   });
 
   it('should unpin blockchain application', () => {
     usePinBlockchainApplication.mockReturnValue(
       {
-        setPin: mockSetPin,
-        deletePin: mockDeletePin,
+        togglePin: mockTogglePin,
         pins: mockedPins,
-        checkPinByChainId: jest.fn().mockReturnValue(true),
+        checkPinByChainId: jest.fn(),
       },
     );
 
@@ -75,6 +72,6 @@ describe('BlockchainApplicationDetails', () => {
     const pinButton = screen.queryAllByTestId('pin-button')[1];
     fireEvent.click(pinButton);
 
-    expect(mockDeletePin).toHaveBeenCalled();
+    expect(mockTogglePin).toHaveBeenCalled();
   });
 });
