@@ -12,6 +12,7 @@ const config = {
       '@tests': resolve('./tests'),
       '@theme': resolve('./src/theme'),
       '@account': resolve('./src/modules/account'),
+      '@blockchainApplication': resolve('./src/modules/blockchainApplication'),
       '@block': resolve('./src/modules/block'),
       '@bookmark': resolve('./src/modules/bookmark'),
       '@search': resolve('./src/modules/search'),
