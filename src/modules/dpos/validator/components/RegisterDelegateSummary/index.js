@@ -1,6 +1,6 @@
 /* istanbul ignore file */
 import { connect } from 'react-redux';
-import { selectActiveTokenAccount } from '@common/store';
+import { selectActiveTokenAccount } from 'src/redux/selectors';
 import { delegateRegistered } from '@dpos/validator/store/actions/delegate';
 import RegisterDelegateSummary from './RegisterDelegateSummary';
 

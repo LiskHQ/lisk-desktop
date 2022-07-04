@@ -1,7 +1,7 @@
 import { Link } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import React from 'react';
-import routes from '@screens/router/routes';
+import routes from 'src/routes/routes';
 import { validateAddress } from 'src/utils/validators';
 import WalletVisual from '@wallet/components/walletVisual';
 

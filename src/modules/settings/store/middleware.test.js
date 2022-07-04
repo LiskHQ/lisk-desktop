@@ -1,11 +1,10 @@
-import { pricesRetrieved } from '@common/store/actions';
+import { pricesRetrieved, settingsUpdated } from 'src/redux/actions';
 import networkActionTypes from '@network/store/actionTypes';
 import * as storageUtils from 'src/utils/localJSONStorage';
-import { settingsUpdated } from './actions';
 import actionTypes from './actionTypes';
 import settingsMiddleware from './middleware';
 
-jest.mock('@common/store/actions/service');
+jest.mock('src/redux/actions');
 jest.mock('@transaction/store/actions');
 jest.mock('src/utils/localJSONStorage', () => ({
   setInStorage: jest.fn(),

@@ -7,7 +7,7 @@ import {
 import {
   selectCurrentBlockHeight,
   selectActiveTokenAccount,
-} from '@common/store';
+} from 'src/redux/selectors';
 
 const useUnlockableCalculator = () => {
   const wallet = useSelector(selectActiveTokenAccount);

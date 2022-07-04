@@ -6,7 +6,7 @@ import Box from 'src/theme/box';
 import grid from 'flexboxgrid/dist/flexboxgrid.css';
 import { OutlineButton } from 'src/theme/buttons';
 import Icon from 'src/theme/Icon';
-import routes from '@screens/router/routes';
+import routes from 'src/routes/routes';
 import { useAccounts, useCurrentAccount } from '../../hooks';
 import styles from './ManageAccounts.css';
 import AccountRow from '../AccountRow';

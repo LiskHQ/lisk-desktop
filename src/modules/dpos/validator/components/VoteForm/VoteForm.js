@@ -6,7 +6,7 @@ import { normalizeVotesForTx } from '@transaction/utils';
 import BoxContent from '@theme/box/content';
 import TxComposer from '@transaction/components/TxComposer';
 import Table from '@theme/table';
-import ToggleIcon from '../toggleIcon';
+import ToggleIcon from '../ToggleIcon';
 import { VOTE_LIMIT } from '../../consts';
 import VoteRow from './VoteRow';
 import EmptyState from './EmptyState';

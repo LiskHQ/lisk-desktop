@@ -5,7 +5,7 @@ import { withRouter } from 'react-router';
 
 import RemoveConfirmation from '@account/components/RemoveConfirmation/RemoveConfirmation';
 import RemoveSuccess from '@account/components/RemoveSuccess/RemoveSuccess';
-import routes from '@screens/router/routes';
+import routes from 'src/routes/routes';
 import MultiStep from 'src/modules/common/components/MultiStep';
 import Box from 'src/theme/box';
 import BoxContent from 'src/theme/box/content';

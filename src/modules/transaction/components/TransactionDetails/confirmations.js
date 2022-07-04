@@ -1,6 +1,6 @@
 import React from 'react';
 import { useSelector } from 'react-redux';
-import { selectCurrentBlockHeight } from '@common/store/selectors';
+import { selectCurrentBlockHeight } from 'src/redux/selectors';
 import { tokenMap } from '@token/fungible/consts/tokens';
 import Tooltip from 'src/theme/Tooltip';
 import TransactionDetailsContext from '../../context/transactionDetailsContext';

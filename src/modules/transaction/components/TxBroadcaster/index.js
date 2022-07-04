@@ -3,8 +3,8 @@ import { connect } from 'react-redux';
 import { compose } from 'redux';
 import { withRouter } from 'react-router';
 import { withTranslation } from 'react-i18next';
-import { transactionBroadcasted, resetTransactionResult } from '@common/store/actions';
-import { selectActiveToken, selectActiveTokenAccount } from '@common/store';
+import { transactionBroadcasted, resetTransactionResult } from 'src/redux/actions';
+import { selectActiveToken, selectActiveTokenAccount } from 'src/redux/selectors';
 import TxBroadcaster from './TxBroadcaster';
 
 const mapStateToProps = state => ({

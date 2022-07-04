@@ -1,7 +1,7 @@
 import PropTypes from 'prop-types';
 import React from 'react';
 
-import routes from '@screens/router/routes';
+import routes from 'src/routes/routes';
 import MultiStep from 'src/modules/common/components/OldMultiStep';
 import Dialog from 'src/theme/dialog/dialog';
 import ValidityStatus from '../validityStatus';

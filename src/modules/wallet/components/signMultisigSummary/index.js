@@ -1,11 +1,11 @@
 import { compose } from 'redux';
 import { connect } from 'react-redux';
 import { withTranslation } from 'react-i18next';
-import { multisigTransactionSigned } from '@common/store/actions';
+import { multisigTransactionSigned } from 'src/redux/actions';
 import { getAccount } from '@wallet/utils/api';
 import withData from 'src/utils/withData';
 import { withRouter } from 'react-router';
-import { selectActiveToken } from '@common/store';
+import { selectActiveToken } from 'src/redux/selectors';
 import Summary from './summary';
 
 const apis = {

@@ -9,7 +9,7 @@ import Table from 'src/theme/table';
 import {
   selectCurrentBlockHeight,
   selectActiveToken,
-} from '@common/store/selectors';
+} from 'src/redux/selectors';
 import TransactionRow from '../TransactionRow';
 import header from './TransactionHeaderMap';
 import styles from './transactionsTable.css';

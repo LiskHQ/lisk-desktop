@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 import { compose } from 'redux';
 import { withTranslation } from 'react-i18next';
 import { getAccount } from '@wallet/utils/api';
-import { selectActiveTokenAccount, selectActiveToken } from '@common/store';
+import { selectActiveTokenAccount, selectActiveToken } from 'src/redux/selectors';
 import withData from 'src/utils/withData';
 import Status from './Status';
 

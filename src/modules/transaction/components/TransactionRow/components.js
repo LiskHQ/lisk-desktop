@@ -10,7 +10,7 @@ import TokenAmount from '@token/fungible/components/tokenAmount';
 import WalletVisualWithAddress from '@wallet/components/walletVisualWithAddress';
 import { truncateAddress } from '@wallet/utils/account';
 import Spinner from 'src/theme/Spinner';
-import routes from '@screens/router/routes';
+import routes from 'src/routes/routes';
 import { getModuleAssetTitle } from '@transaction/utils';
 import styles from './row.css';
 import TransactionRowContext from '../../context/transactionRowContext';

@@ -3,7 +3,7 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import grid from 'flexboxgrid/dist/flexboxgrid.css';
 
-import routes from '@screens/router/routes';
+import routes from 'src/routes/routes';
 import { tokenMap } from '@token/fungible/consts/tokens';
 // import { formatAmountBasedOnLocale } from '@common/utilities/formattedNumber';
 import TokenAmount from '@token/fungible/components/tokenAmount';
@@ -12,11 +12,10 @@ import styles from './wallet.css';
 
 const getOwnerName = (account) => {
   const delegateUsername = account.summary?.username ? account.summary?.username : '';
-  const text = account.knowledge
+  return account.knowledge
     && account.knowledge.owner && account.knowledge.description
     ? `${account.knowledge.owner} ${account.knowledge.description}`
     : delegateUsername;
-  return text;
 };
 
 // const BalanceShare = ({ balance, supply }) => {

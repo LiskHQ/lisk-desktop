@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react';
 import { withTranslation } from 'react-i18next';
 import PropTypes from 'prop-types';
-import routes from '@screens/router/routes';
+import routes from 'src/routes/routes';
 import { useTheme } from 'src/theme/Theme';
 import { SecondaryButton } from 'src/theme/buttons';
 import FlashMessage from 'src/theme/flashMessage/flashMessage';

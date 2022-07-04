@@ -1,7 +1,7 @@
 import { to } from 'await-to-js';
 import { createGenericTx } from '@transaction/api';
 import actionTypes from '@transaction/store/actionTypes';
-import { selectActiveTokenAccount } from '@common/store';
+import { selectActiveTokenAccount } from 'src/redux/selectors';
 
 // eslint-disable-next-line import/prefer-default-export
 export const balanceReclaimed = (

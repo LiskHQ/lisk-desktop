@@ -1,6 +1,6 @@
 import React from 'react';
 import TransactionSummary from '@transaction/manager/transactionSummary';
-import ToggleIcon from '../toggleIcon';
+import ToggleIcon from '../ToggleIcon';
 import VoteStats from '../VoteStats';
 
 import styles from './styles.css';

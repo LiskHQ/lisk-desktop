@@ -1,7 +1,7 @@
 import { regex } from 'src/const/regex';
-import http from '@common/utilities/api/http';
+import http from 'src/utils/api/http';
 import { HTTP_PREFIX } from 'src/const/httpCodes';
-import ws, { subscribe, unsubscribe } from '@common/utilities/api/ws';
+import ws, { subscribe, unsubscribe } from 'src/utils/api/ws';
 import { extractAddressFromPublicKey } from '@wallet/utils/account';
 
 export const httpPaths = {

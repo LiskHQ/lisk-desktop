@@ -2,7 +2,7 @@ import React from 'react';
 import { withRouter } from 'react-router-dom';
 import { keyCodes } from 'src/utils/keyCodes';
 import { addSearchParamsToUrl } from 'src/utils/searchParams';
-import routes from '@screens/router/routes';
+import routes from 'src/routes/routes';
 import { Input } from 'src/theme';
 import Wallet from '@wallet/components/searchBarWallets';
 import Delegates from '@wallet/components/searchBarWallets/delegates';

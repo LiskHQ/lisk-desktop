@@ -2,7 +2,7 @@
 import { connect } from 'react-redux';
 import { withTranslation } from 'react-i18next';
 import { balanceUnlocked } from '@dpos/validator/store/actions/voting';
-import { selectActiveTokenAccount } from '@common/store';
+import { selectActiveTokenAccount } from 'src/redux/selectors';
 import Summary from './UnlockBalanceSummary';
 
 const mapStateToProps = state => ({

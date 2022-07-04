@@ -1,7 +1,7 @@
 // istanbul ignore file
 import { compose } from 'redux';
 import { connect } from 'react-redux';
-import { selectActiveTokenAccount } from '@common/store';
+import { selectActiveTokenAccount } from 'src/redux/selectors';
 import { withTranslation } from 'react-i18next';
 import { balanceReclaimed } from '@legacy/store/action';
 import Summary from './Summary';

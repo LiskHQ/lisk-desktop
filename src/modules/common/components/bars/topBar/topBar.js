@@ -1,6 +1,6 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import routes from '@screens/router/routes';
+import routes from 'src/routes/routes';
 import { isEmpty } from 'src/utils/helpers';
 import Icon from 'src/theme/Icon';
 import DialogLink from 'src/theme/dialog/link';
