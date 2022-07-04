@@ -1,5 +1,5 @@
 import moment from 'moment';
-import { screen } from '@testing-library/react';
+import { fireEvent, screen } from '@testing-library/react';
 import mockBlockchainApplications from '@tests/fixtures/blockchainApplications';
 import { renderWithRouter } from 'src/utils/testHelpers';
 import { usePinBlockchainApplication } from '../../hooks/usePinBlockchainApplication';
@@ -54,6 +54,11 @@ describe('BlockchainApplicationDetails', () => {
 
   it('should show application as pinned', () => {
     expect(screen.getByAltText('pinnedIcon')).toBeTruthy();
+  });
+
+  it('should invoke togglePin', () => {
+    fireEvent.click(screen.getByTestId('pin-button'));
+    expect(mockTogglePin).toHaveBeenCalledWith('test-chain-id');
   });
 
   it('should show application as unpinned', () => {
