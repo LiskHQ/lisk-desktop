@@ -427,6 +427,7 @@
   "Switch account": "Switch account",
   "Terms of Use": "Terms of Use",
   "Testnet": "Testnet",
+  "The chain ID uniquely identifies a chain in the Lisk ecosystem": "The chain ID uniquely identifies a chain in the Lisk ecosystem",
   "The list shown only contains peers connected to the current Lisk Service node.": "The list shown only contains peers connected to the current Lisk Service node.",
   "The message can't contain whitespace at the beginning or end.": "The message can't contain whitespace at the beginning or end.",
   "The message signature has been canceled on your {{model}}": "The message signature has been canceled on your {{model}}",
