@@ -1,5 +1,6 @@
 import React from 'react';
 import { useTranslation } from 'react-i18next';
+import { toRawLsk } from '@token/fungible/utils/lsk';
 import Box from 'src/theme/box';
 import BoxHeader from 'src/theme/box/header';
 import BoxContent from 'src/theme/box/content';
@@ -12,7 +13,7 @@ import { useTheme } from 'src/theme/Theme';
 import { getColorPalette } from 'src/modules/common/components/charts/chartOptions';
 import styles from './blockchainApplicationStatistics.css';
 
-const BlockchainApplicationStatistics = ({ apps, statistics }) => {
+const BlockchainApplicationStatistics = ({ statistics }) => {
   const { t } = useTranslation();
   const colorPalette = getColorPalette(useTheme());
 
@@ -25,23 +26,7 @@ const BlockchainApplicationStatistics = ({ apps, statistics }) => {
     datasets: [
       {
         backgroundColor: [colorPalette[1], colorPalette[0], colorPalette[2]],
-        data: apps.data.reduce((acc, stats) => {
-          switch (stats.status) {
-            case 'registered':
-              acc[0]++;
-              break;
-            case 'active':
-              acc[1]++;
-              break;
-            case 'terminated':
-              acc[2]++;
-              break;
-            // istanbul ignore next
-            default:
-              break;
-          }
-          return acc;
-        }, [0, 0, 0]),
+        data: [statistics.data.registered, statistics.data.active, statistics.data.terminated],
       },
     ],
   };
@@ -85,7 +70,7 @@ const BlockchainApplicationStatistics = ({ apps, statistics }) => {
           </div>
           <p className={`${styles.statsInfo} total-supply-token`}>
             <TokenAmount
-              val={statistics.data.totalSupplyLSK}
+              val={toRawLsk(statistics.data.totalSupplyLSK)}
               token={tokenMap.LSK.key}
             />
           </p>
@@ -104,7 +89,7 @@ const BlockchainApplicationStatistics = ({ apps, statistics }) => {
           </div>
           <p className={`${styles.statsInfo} stacked-token`}>
             <TokenAmount
-              val={statistics.data.stakedLSK}
+              val={toRawLsk(statistics.data.stakedLSK)}
               token={tokenMap.LSK.key}
             />
           </p>

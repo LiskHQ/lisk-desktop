@@ -1,16 +1,11 @@
 /* istanbul ignore file */
-// TODO unmock api call removing comented code when sdk is ready.
-//   Dependent tickets:
-//   https://github.com/LiskHQ/lisk-service/issues/1111
-//   https://github.com/LiskHQ/lisk-service/issues/1113
+import http from 'src/utils/api/http';
+import { HTTP_PREFIX } from 'src/const/httpCodes';
 
-// import http from '@common/utilities/api/http';
-// import { HTTP_PREFIX } from 'src/const/httpCodes';
-
-// const httpPaths = {
-//   blockchainApps: `${HTTP_PREFIX}/blockchain/apps`,
-//   blockchainAppsStatistics: `${HTTP_PREFIX}/blockchain/apps/statistics`,
-// };
+const httpPaths = {
+  blockchainApps: `${HTTP_PREFIX}/blockchain/apps`,
+  blockchainAppsStatistics: `${HTTP_PREFIX}/blockchain/apps/statistics`,
+};
 
 /**
  * Retrieves sidechains applications information
@@ -23,19 +18,16 @@
  *
  * @returns {Promise}
  */
-export const getApps = () => Promise.resolve([
-  { status: 'registered' }, { status: 'registered' }, { status: 'active' }, { status: 'terminated' },
-]);
-// export const getApps = ({
-// network,
-// params = {},
-// baseUrl,
-// }) => http({
-//   path: httpPaths.blockchainApps,
-//   network,
-//   params,
-//   baseUrl,
-// });
+export const getApps = ({
+  network,
+  params = {},
+  baseUrl,
+}) => http({
+  path: httpPaths.blockchainApps,
+  network,
+  params,
+  baseUrl,
+});
 
 /**
  * Retrieves sidechains statistics information
@@ -45,17 +37,13 @@ export const getApps = () => Promise.resolve([
  *
  * @returns {Promise}
  */
-export const getStatistics = () => Promise.resolve({
-  totalSupplyLSK: 5e13,
-  stakedLSK: 3e13,
+export const getStatistics = ({
+  network,
+  params = {},
+  baseUrl,
+}) => http({
+  path: httpPaths.blockchainAppsStatistics,
+  network,
+  params,
+  baseUrl,
 });
-// export const getStatistics = ({
-// network,
-// params = {},
-// baseUrl,
-// }) => http({
-//   path: httpPaths.blockchainAppsStatistics,
-//   network,
-//   params,
-//   baseUrl,
-// });
