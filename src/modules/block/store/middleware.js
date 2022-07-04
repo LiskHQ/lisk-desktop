@@ -3,7 +3,7 @@ import {
   olderBlocksRetrieved,
   forgersRetrieved,
   networkStatusUpdated,
-} from '@common/store/actions';
+} from 'src/redux/actions';
 import networkActionTypes from '@network/store/actionTypes';
 import actionTypes from './actionTypes';
 

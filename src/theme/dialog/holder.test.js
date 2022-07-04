@@ -9,7 +9,7 @@ const mockHistory = {
   push: jest.fn(),
 };
 
-jest.mock('@screens/router/routes', () => ({
+jest.mock('src/routes/routes', () => ({
   modals: {
     testDialog: {
       forbiddenTokens: [],
@@ -17,7 +17,7 @@ jest.mock('@screens/router/routes', () => ({
   },
 }));
 
-jest.mock('@screens/router/routesMap', () => {
+jest.mock('src/routes/routesMap', () => {
   const component = () => <MockDialog.WrappedComponent hasClose history={mockHistory} />;
   return { testDialog: component };
 });

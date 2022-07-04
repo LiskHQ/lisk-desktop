@@ -6,7 +6,7 @@ import { PersistGate } from 'redux-persist/integration/react';
 import { I18nextProvider } from 'react-i18next';
 import { externalLinks } from 'src/utils/externalLinks';
 import { cryptography } from '@liskhq/lisk-client';
-import { store, persistedStore } from '@common/store';
+import { store, persistedStore } from 'src/redux/store';
 import ipcLocale from 'src/utils/ipcLocale';
 import updateApp from '@update/utils/updateApp';
 import i18n from 'src/utils/i18n/i18n';

@@ -13,7 +13,7 @@ import {
 import { joinModuleAndAssetIds } from '@transaction/utils/moduleAssets';
 import { fromRawLsk } from '@token/fungible/utils/lsk';
 import { validateAddress } from 'src/utils/validators';
-import http from '@common/utilities/api/http';
+import http from 'src/utils/api/http';
 import { getDelegates } from '@dpos/validator/api';
 import { HTTP_PREFIX } from 'src/const/httpCodes';
 import {

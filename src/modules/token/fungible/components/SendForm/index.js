@@ -1,7 +1,7 @@
 /* istanbul ignore file */
 import { connect } from 'react-redux';
 import { withTranslation } from 'react-i18next';
-import { selectActiveTokenAccount, selectActiveToken } from '@common/store';
+import { selectActiveTokenAccount, selectActiveToken } from 'src/redux/selectors';
 import SendForm from './SendForm';
 
 const mapStateToProps = state => ({

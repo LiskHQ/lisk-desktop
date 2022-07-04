@@ -1,4 +1,4 @@
-import http from '@common/utilities/api/http';
+import http from 'src/utils/api/http';
 import { transformStringDateToUnixTimestamp } from 'src/utils/dateTime';
 import { httpPaths } from '@block/config';
 import blocksFiltersMap from '@block/map/blocksFiltersMap';

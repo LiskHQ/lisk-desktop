@@ -1,5 +1,5 @@
 import { selectSearchParamValue } from 'src/utils/searchParams';
-import routes from '@screens/router/routes';
+import routes from 'src/routes/routes';
 
 /**
  * Extracts only one search param out of the url that is relevant

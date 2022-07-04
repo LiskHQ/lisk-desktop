@@ -1,6 +1,6 @@
 import { combineReducers } from 'redux';
 import { persistReducer } from 'redux-persist';
-import { storage } from '../../../../../packages/common/store';
+import { storage } from 'src/redux/store';
 import actionTypes from './actionTypes';
 
 /**

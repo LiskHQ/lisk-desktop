@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 import { compose } from 'redux';
 import { withTranslation } from 'react-i18next';
 import { secondPassphraseStored } from 'src/modules/auth/store/action';
-import { selectActiveToken, selectActiveTokenAccount } from '@common/store';
+import { selectActiveToken, selectActiveTokenAccount } from 'src/redux/selectors';
 import TxSummarizer from '../components/TxSummarizer';
 
 const mapStateToProps = state => ({

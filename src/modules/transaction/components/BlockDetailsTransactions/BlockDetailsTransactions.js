@@ -3,7 +3,7 @@ import { useSelector } from 'react-redux';
 import {
   selectCurrentBlockHeight,
   selectActiveToken,
-} from '@common/store/selectors';
+} from 'src/redux/selectors';
 import Box from 'src/theme/box';
 import BoxContent from 'src/theme/box/content';
 import Table from 'src/theme/table';

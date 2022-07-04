@@ -4,7 +4,7 @@ import { useTranslation } from 'react-i18next';
 import { withRouter } from 'react-router';
 import grid from 'flexboxgrid/dist/flexboxgrid.css';
 import Icon from 'src/theme/Icon';
-import routes from '@views/screens/router/routes';
+import routes from 'src/routes/routes';
 import styles from './AddAccountOptions.css';
 
 const AddAccountOptionButton = ({ iconName, text, onClick }) => (

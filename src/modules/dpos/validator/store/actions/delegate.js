@@ -1,7 +1,7 @@
 /* eslint-disable max-lines */
 import { to } from 'await-to-js';
 import { createGenericTx } from '@transaction/api';
-import { selectActiveTokenAccount } from '@common/store/selectors';
+import { selectActiveTokenAccount } from 'src/redux/selectors';
 import transactionActionTypes from '@transaction/store/actionTypes';
 
 // eslint-disable-next-line import/prefer-default-export

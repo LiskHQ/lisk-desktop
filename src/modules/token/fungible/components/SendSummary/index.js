@@ -2,11 +2,11 @@
 import { connect } from 'react-redux';
 import { withTranslation } from 'react-i18next';
 
-import { selectActiveToken } from '@common/store';
+import { selectActiveToken } from 'src/redux/selectors';
 import {
   resetTransactionResult,
   transactionDoubleSigned,
-} from '@common/store/actions';
+} from 'src/redux/actions';
 import { tokensTransferred } from '../../store/actions';
 import Summary from './Summary';
 

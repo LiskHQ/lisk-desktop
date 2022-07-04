@@ -1,4 +1,4 @@
-import routes from '@screens/router/routes';
+import routes from 'src/routes/routes';
 
 // eslint-disable-next-line import/prefer-default-export
 export const ACCOUNT_MENU = [
