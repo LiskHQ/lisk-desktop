@@ -1,5 +1,6 @@
 import React from 'react';
 import { useTranslation } from 'react-i18next';
+import { Link } from 'react-router-dom';
 import moment from 'moment';
 import Box from 'src/theme/box';
 import TokenAmount from '@token/fungible/components/tokenAmount';
@@ -10,7 +11,6 @@ import grid from 'flexboxgrid/dist/flexboxgrid.css';
 import Dialog from '@theme/dialog/dialog';
 import Icon from 'src/theme/Icon';
 import Tooltip from 'src/theme/Tooltip';
-import { Link } from 'react-router-dom';
 import { parseSearchParams } from 'src/utils/searchParams';
 import { usePinBlockchainApplication } from '../../hooks/usePinBlockchainApplication';
 import styles from './BlockchainApplicationDetails.css';
