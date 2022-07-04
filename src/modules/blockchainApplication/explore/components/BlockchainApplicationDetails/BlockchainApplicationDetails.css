@@ -121,6 +121,7 @@
   box-sizing: border-box;
   flex-direction: row;
   column-gap: 10px;
+  align-items: flex-start;
 
   & .headerText {
     font-size: 13px;
