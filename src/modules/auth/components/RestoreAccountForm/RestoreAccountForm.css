@@ -1,0 +1,97 @@
+@import '../../../../../setup/react/app/mixins.css';
+
+.boxContainer {
+  & > header {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    padding: 20px 20px 0 20px;
+    height: auto;
+    overflow-y: auto;
+
+    & > p {
+      margin-bottom: 0;
+      color: var(--color-maastricht-blue);
+    }
+  }
+
+  & > .footer {
+    padding-top: 20px;
+
+    & + footer {
+      padding-top: 0;
+    }
+  }
+
+  & .feedback {
+    width: 100%;
+    padding: 0 var(--horizontal-padding-m);
+    box-sizing: border-box;
+    margin-bottom: 10px;
+
+    & > span {
+      width: 100%;
+      color: var(--color-strong-white);
+      border-radius: var(--border-radius-standard);
+      display: block;
+      padding: var(--vertical-padding-s) var(--horizontal-padding-m);
+      box-sizing: border-box;
+    }
+
+    &.error > span {
+      background: var(--error-background-color);
+    }
+
+    &.warning > span {
+      background: var(--color-danger);
+    }
+  }
+}
+
+.buttonHolder {
+  display: flex;
+  justify-content: end;
+  flex-direction: column;
+  align-items: center;
+  padding-top: 30px;
+
+  & > button {
+    width: 65%;
+  }
+}
+
+.titleHolder {
+  max-height: fit-content;
+  color: var(--color-maastricht-blue);
+  font-family: var(--heading-font);
+  text-align: center;
+  margin: 10px 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: end;
+  width: 100%;
+
+  & > h1 {
+    @mixin headingLarge;
+
+    display: flex;
+    justify-content: center;
+    margin-top: 0px;
+    margin-bottom: 8px;
+
+    & > img {
+      margin-right: 16px;
+    }
+  }
+
+  & > p {
+    @mixin contentLargest;
+
+    margin: 0;
+  }
+}
+
+.fullWidth {
+  width: 100%;
+}

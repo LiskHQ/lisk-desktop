@@ -1,0 +1,149 @@
+@import '../../../setup/react/app/mixins.css';
+
+.dropdown {
+  background-color: var(--color-white);
+  border: 1px solid var(--color-platinum);
+  border-radius: var(--border-radius-standard);
+  box-shadow: var(--box-shadow-standard);
+  box-sizing: border-box;
+  display: flex;
+  opacity: 0;
+  position: absolute;
+  right: 0;
+  transform: scale(0.9);
+  transform-origin: calc(100% - 25px) -5px;
+  transition:
+    opacity var(--animation-speed-fastest) linear,
+    transform var(--animation-speed-fastest) linear,
+    visibility var(--animation-speed-fastest) linear;
+  top: calc(100% + 5px);
+  visibility: hidden;
+  width: 100%;
+
+  &.right {
+    transform-origin: calc(100% - 25px) -5px;
+    right: 0;
+  }
+
+  &.center {
+    transform-origin: 0 -5px;
+    left: 50%;
+    transform: scale(0.9) translateX(-50%);
+
+    &.show {
+      opacity: 1;
+      transform: scale(1) translateX(-50%);
+    }
+  }
+
+  &.left {
+    transform-origin: 25px -5px;
+    left: 0;
+  }
+
+  &.show {
+    opacity: 1;
+    transform: scale(1);
+    visibility: visible;
+    z-index: var(--overlay-index);
+  }
+
+  & .dropdownArrow {
+    color: var(--color-white);
+    height: 9px;
+    font-size: 0;
+    position: absolute;
+    right: 10px;
+    stroke: var(--color-platinum);
+    top: -9px;
+    width: 36px;
+
+    & > svg {
+      display: block;
+    }
+  }
+
+  &:global(.showLeft) {
+    right: calc(100% + 5px);
+    transform-origin: calc(100% + 5px) 5px;
+    top: -1px;
+
+    & .dropdownArrow {
+      right: -18px;
+      transform-origin: bottom;
+      transform: rotate(90deg);
+      top: 9px;
+    }
+  }
+
+  &:global(.showRight) {
+    transform-origin: 9px 50%;
+    top: -1px;
+    left: calc(100% + 15px);
+    min-width: 304px;
+
+    & .dropdownArrow {
+      left: -18px;
+      transform-origin: bottom;
+      transform: rotate(-90deg);
+      top: 9px;
+    }
+  }
+
+  &:global(.dark) {
+    background: var(--color-maastricht-blue);
+    border: 1px solid var(--light-border-color);
+
+    & .dropdownContent {
+      & .option {
+        background: var(--color-maastricht-blue);
+
+        &.active {
+          background-color: var(--color-rows-hover);
+          color: var(--color-ultramarine-blue);
+        }
+
+        &:hover {
+          background-color: var(--color-rows-hover);
+          color: var(--color-ultramarine-blue);
+        }
+      }
+    }
+  }
+
+  & .separator {
+    background: var(--color-mystic);
+    display: block;
+    height: 1px;
+    margin: 12px auto;
+    width: calc(100% - 40px);
+  }
+}
+
+.dropdownContent {
+  display: flex;
+  flex-direction: column;
+  padding: 10px 0;
+  width: 100%;
+
+  & .option:not(.separator) {
+    @mixin contentNormal;
+
+    background-color: var(--color-white);
+    box-sizing: border-box;
+    color: var(--color-slate-gray);
+    cursor: pointer;
+    padding: 5px 20px;
+    width: 100%;
+
+    &:hover {
+      background-color: var(--color-rows-hover);
+      color: var(--color-ultramarine-blue);
+      text-decoration: none;
+    }
+
+    &.active {
+      color: var(--color-ultramarine-blue);
+    }
+  }
+}

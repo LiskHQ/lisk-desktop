@@ -1,10 +1,10 @@
-import * as bitcoin from 'bitcoinjs-lib';
 import { cryptography, transactions } from '@liskhq/lisk-client';
 import numeral from 'numeral';
 
-import { tokenMap, MIN_ACCOUNT_BALANCE, regex as reg } from '@constants';
-import { toRawLsk } from './lsk';
-import i18n from '../i18n';
+import { regex as reg } from 'src/const/regex';
+import { MIN_ACCOUNT_BALANCE } from '@transaction/configuration/transactions';
+import { toRawLsk } from '@token/fungible/utils/lsk';
+import i18n from 'src/utils/i18n/i18n';
 
 /**
  * Validates the given value to be numeric
@@ -12,36 +12,20 @@ import i18n from '../i18n';
 export const isNumeric = (value) => /^(-?[0-9]+\.?[0-9]*|\.[0-9]+)$/.test(value);
 
 /**
- * Validates the given address with respect to the tokenType
- * @param {String} tokenType
+ * Validates the given address
+ *
  * @param {String} address
- * @param {Object} network The network config from Redux store
  * @returns {Number} -> 0: valid, 1: invalid, -1: empty
  */
-export const validateAddress = (tokenType, address, network) => {
+export const validateAddress = (address) => {
   if (address === '') {
     return -1;
   }
 
-  switch (tokenType) {
-    // Reference: https://github.com/bitcoinjs/bitcoinjs-lib/issues/890
-    case tokenMap.BTC.key:
-      try {
-        bitcoin.address.fromBase58Check(address); // eliminates segwit addresses
-        bitcoin.address.toOutputScript(address, network.networks.BTC.network);
-        return 0;
-      } catch (e) {
-        return 1;
-      }
-
-    case tokenMap.LSK.key:
-      try {
-        return cryptography.validateBase32Address(address) ? 0 : 1;
-      } catch (e) {
-        return 1;
-      }
-    default:
-      return 1;
+  try {
+    return cryptography.validateBase32Address(address) ? 0 : 1;
+  } catch (e) {
+    return 1;
   }
 };
 

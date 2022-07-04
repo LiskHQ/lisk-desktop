@@ -1,7 +1,7 @@
 import React from 'react';
 import moment from 'moment';
-import FlashMessageHolder from '@toolbox/flashMessage/holder';
-import AnalyticsMessage from '@shared/analyticsMessage/analyticsMessage';
+import FlashMessageHolder from 'src/theme/flashMessage/holder';
+import AnalyticsMessage from 'src/modules/common/components/analyticsMessage/analyticsMessage';
 
 export default {
   init() {
@@ -17,7 +17,10 @@ export default {
   },
 
   checkIfAnalyticsShouldBeDisplayed({
-    statistics, statisticsRequest, statisticsFollowingDay, showAnalytics = false,
+    statistics,
+    statisticsRequest,
+    statisticsFollowingDay,
+    showAnalytics = false,
   }) {
     // showAnalytics - Trigger ONLY the first time when user is in Wallet page after SignIn
     // or show since the beginning after the user saw the banner for first time but
@@ -27,7 +30,8 @@ export default {
       || (statisticsRequest && statisticsFollowingDay === undefined)
     ) {
       this.init();
-    } else { // Will only trigger if user decline and after some days will show up again
+    } else {
+      // Will only trigger if user decline and after some days will show up again
       const showRemain = moment().diff(statisticsFollowingDay, 'days') >= 7;
       if (!statistics && showRemain) this.init();
     }

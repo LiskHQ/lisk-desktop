@@ -122,8 +122,8 @@ function withData(apis = {}) {
           const { apiParams, ...restOfProps } = this.props;
           return (
             <ChildComponent {...{
-              ...restOfProps,
               ...this.state,
+              ...restOfProps,
             }}
             />
           );

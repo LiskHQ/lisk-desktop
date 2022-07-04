@@ -14,18 +14,16 @@ app/app.js
 .idea
 blockchain_explorer.db.gz
 reports
-test/cypress/screenshots/
-test/cypress/videos/
 .history
 storybook-static
 .env
 cypress.log
 
 ## Commercial fonts
-src/assets/fonts/basierCircle/
-src/assets/fonts/gilroy/
+setup/react/assets/fonts/basierCircle/
+setup/react/assets/fonts/gilroy/
 
 ## Cypress
-test/cypress/cypress
-test/cypress/screenshots
-test/cypress/videos
+tests/cypress/cypress
+tests/cypress/screenshots
+tests/cypress/videos

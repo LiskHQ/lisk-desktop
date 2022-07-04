@@ -1,5 +1,5 @@
 import ReactPiwik from 'react-piwik';
-import { piwikOptions } from '@constants';
+import { piwikOptions } from 'src/const/piwik';
 
 let piwikInstance = false;
 

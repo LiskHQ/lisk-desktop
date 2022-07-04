@@ -1,8 +1,8 @@
-import { routes } from '@constants';
-import externalLinks from './externalLinks';
-import history from '../history';
+import routes from 'src/routes/routes';
+import history from 'src/utils/history';
+import { externalLinks } from './externalLinks';
 
-jest.mock('../history', () => ({
+jest.mock('src/utils/history', () => ({
   push: jest.fn(), replace: jest.fn(),
 }));
 
@@ -70,6 +70,6 @@ describe('externalLinks', () => {
 
     externalLinks.init();
     callbacks.openUrl({}, 'lisk://vote?votes=delegate');
-    expect(history.replace).toHaveBeenCalledWith('/wallet?modal=votingQueue&votes=delegate');
+    expect(history.replace).toHaveBeenCalledWith('/wallet?modal=VotingQueue&votes=delegate');
   });
 });

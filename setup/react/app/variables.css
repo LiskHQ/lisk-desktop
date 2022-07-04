@@ -1,0 +1,274 @@
+/*****************************************
+
+Please Read the guide line
+before adding any rules here
+
+# No component specific rule
+This file is inteded to solely include
+global/common variables, every rule added here
+must be used at least in 2 different
+components.
+
+# Usecases
+Try to isolate these variables with another
+variable in the component specific stylesheet
+in order to make component-wide changes
+faster and consistent.
+
+# Avoid rules and mixins
+Please avoid defining any rules here
+In addition, mixins have their own files,
+Please prefer only variables here.
+
+# Use with :global
+Please do not define any variables outside
+the :root scope, since then it won't be
+available application wide
+
+# naming
+variable names should correspond to the
+role of the value not th presentation
+for example, a color name can include
+the css rule it belongs to e.g. color
+or "background-color" and "primary/secondary"
+or "warn/action" ineastd of "red/green"
+
+****************************************/
+
+:root {
+  /*************************
+        Font
+  *************************/
+  --font-size-h2: 32px;
+  --font-size-h3: 28px;
+  --font-size-h4: 26px;
+  --font-size-h5: 20px;
+  --font-size-h6: 16px;
+  --font-size-small: 10px;
+  --font-size-large: 24px;
+  --heading-font: 'gilroy', 'Open Sans', sans-serif;
+  --content-font: 'basier-circle', sans-serif;
+  --font-weight-normal: 400;
+  --font-weight-semi-bold: 500;
+  --font-weight-bold: 600;
+  --font-weight-very-bold: 700;
+  --subtitle-font-size: 18px;
+  --subtitle-font-size-s: 16px;
+  --paragraph-font-size-l: 15px;
+  --paragraph-font-size-s: 14px;
+  --button-font-size: var(--paragraph-font-size-s);
+  --button-font-size-s: 12px;
+  --footnote-font-size: 12px;
+  --font-size-extra-small: 11px;
+  --font-size-title: 18px;
+  --font-size-small-secondary: 13px;
+
+  /*************************
+        Sizes
+  *************************/
+  --border-radius-standard: 3px;
+  --border-radius-box: 16px;
+  --header-height: 50px;
+  --header-logo-size: 56px;
+  --search-box-width-l: 597px;
+  --footer-button-width: 400px;
+  --main-box-width: 1318px;
+  --medium-box-width: 755px;
+  --dialog-box-width: var(--medium-box-width);
+  --side-bar-shrunk-size: 60px;
+  --side-bar-expanded-size: 260px;
+
+  /*************************
+        Padding
+  *************************/
+  --header-padding: 0 32px;
+  --vertical-padding-l: 15px;
+  --horizontal-padding-l: 20px;
+  --horizontal-padding-xl: 30px;
+  --vertical-padding-m: 11px;
+  --horizontal-padding-m: 16px;
+  --vertical-padding-s: 8px;
+  --horizontal-padding-s: 10px;
+  --vertical-padding-xs: 6px;
+  --horizontal-padding-xs: 10px;
+
+  /*************************
+      Base Colors
+  *************************/
+  --color-ultramarine-blue: #4070f4;
+  --color-maastricht-blue: #0c152e;
+  --color-slate-gray: #70778b;
+  --color-blue-gray: #8a8ca2;
+  --color-manatee-gray: #9999a0;
+  --color-dark-blue: #19224d;
+  --color-ink-blue: #254898;
+  --color-ghost: #bec1cd;
+  --color-platinum: #e1e3eb;
+  --color-mystic: #edf0f5;
+  --color-white-smoke: #f5f7fa;
+  --color-burnt-sienna: #ec6868;
+  --color-ufo-green: #00a04b;
+  --color-deep-green: #00d563;
+  --color-jade-green: #2bd67b;
+  --color-pale-pink: #ffd0d1;
+  --color-silver: #eef0f7;
+  --color-black: #000;
+  --color-cloud-burst: #1b243f;
+
+  /*************************
+      Other Colors
+  *************************/
+  --color-body-bg: var(--color-mystic);
+  --light-border-color: rgba(255, 255, 255, 0.24);
+  --overlay-color: rgba(255, 255, 255, 0.8);
+  --dark-border-color: rgba(0, 0, 0, 0.08);
+  --darker-border-color: rgba(0, 0, 0, 0.15);
+  --primary-background-color: rgba(64, 112, 244, 0.08);
+  --error-background-color: var(--color-burnt-sienna);
+  --color-dialog-bg: rgba(12, 21, 46, 0.52);
+  --color-primary-standard: var(--color-ultramarine-blue);
+  --color-primary-light: #9db8fa;
+  --color-white: #fff;
+  --color-constant-white: #fff;
+  --color-danger: #ff7721;
+  --color-red: #ff4557;
+  --color-content: #19224d;
+  --color-content-light: #0c152e;
+  --color-primary-very-light: #e8f0fa;
+  --color-content-lighter: rgba(46, 44, 59, 0.6);
+  --color-background-dark: #1e194d;
+  --color-dark-gray: #868ba1;
+  --color-light-gray: #e6e6e6;
+  --color-very-light-gray: #dfe6f2;
+  --color-extra-light-gray: #dbe1ee;
+  --color-content-grayblue: #7383a7;
+  --color-background-wrapper: var(--color-mystic);
+  --color-background-header: #fbfcfd;
+  --color-background-menu: var(--color-white-smoke);
+  --color-background-dropdown: var(--color-maastricht-blue);
+  --color-link-active: #4070f4;
+  --color-title-header-box: #4c4c4c;
+  --color-link: var(--color-primary-standard);
+  --color-rows-hover: var(--color-white-smoke);
+  --color-highlight-checkboxes: rgba(64, 112, 244, 0.08);
+  --color-onboarding-bg: var(--color-maastricht-blue);
+  --color-strong-white: var(--color-white);
+  --color-flash-message: rgba(64, 112, 244, 0.15);
+  --color-flash-message-border: rgba(64, 112, 244, 0.3);
+  --color-strong-mystic: var(--color-mystic);
+  --color-passphrase-bg: var(--color-white);
+  --color-shadow-word-option: var(--color-ultramarine-blue);
+  --color-request-textarea: var(--color-white-smoke);
+  --color-active-tab: rgba(64, 112, 244, 0.1);
+  --tab-border-color: transparent;
+  --color-strong-ink-blue: var(--color-ink-blue);
+  --color-top-bar: #101c3d;
+  --color-side-bar: var(--color-maastricht-blue);
+  --color-search-container: #1d2b52;
+  --color-periwinkle-blue: #c5cfe4;
+  --color-vote-item-bg: var(--color-silver);
+  --color-yellow-transparent: rgba(247, 227, 109, 0.3);
+  --color-red-transparent: rgba(255, 69, 87, 0.1);
+  --color-red-semitransparent: rgba(255, 69, 87, 0.3);
+  --color-blue-manatee-transparent: rgba(138, 140, 162, 0.1);
+  --color-jade-green-transparent: rgba(43, 214, 123, 0.1);
+  --color-tooltip-bg: rgb(255, 255, 255, 0.7);
+  --color-tooltip-arrow: rgb(255, 255, 255, 0.7);
+  --color-warning-border: #f7e36d;
+  --color-warning-bg: #fffce8;
+  --color-tx-priority-btn-bg: var(--color-ink-blue);
+  --color-tx-priority-btn-default: var(--color-maastricht-blue);
+  --color-progress-bar: var(--color-ink-blue);
+  --color-ghost-white: #f7f9fb;
+  --color-button-outline-color: var(--color-very-light-gray);
+
+  /*************************
+        Box
+  *************************/
+  --box-shadow-standard: 0 2px 4px 0 rgba(6, 22, 48, 0.06);
+  --box-shadow-word-option: 0 2px 4px 0 rgba(6, 22, 48, 0.1);
+  --box-shadow-button: var(--box-shadow-standard), 0px 0px 12px 0 rgba(72, 77, 97, 0.05);
+  --box-shadow-header: 0 2px 4px 0 rgba(15, 25, 42, 0.02);
+  --box-shadow-avatar: var(--box-shadow-standard);
+  --box-shadow-search: 0 2px 4px 0 rgba(8, 24, 49, 0.06);
+  --box-shadow-graph-selector: 0 1px 5px 0 rgba(30, 25, 77, 0.06);
+  --box-shadow-top: 0 -2px 8px 0 rgba(72, 77, 97, 0.1);
+  --box-shadow-dialog: 0 2px 4px 0 rgba(12, 21, 46, 0.24);
+
+  /*************************
+        Animation
+  *************************/
+  --animation-speed-fastest: 150ms;
+  --animation-speed-fast: 250ms;
+  --animation-speed-standard: 500ms;
+  --animation-speed-slow: 700ms;
+  --animation-speed-slowest: 1000ms;
+  --animation-delay-standard: 100ms;
+
+  /*************************
+        Transitions
+  *************************/
+  --transition-button:
+    background-color var(--animation-speed-fast) ease-in-out,
+    border-color var(--animation-speed-fast) ease-in-out,
+    box-shadow var(--animation-speed-fast) ease-in-out,
+    color var(--animation-speed-fast) ease-in-out;
+
+  /*************************
+        Z-Indexes
+  *************************/
+  --normal-index: 1;
+  --overlay-index: 20;
+  --dialog-index: 50;
+
+  /*************************
+        Media Queries
+  *************************/
+}
+
+@custom-media --xLarge-viewport (max-width: 1600px);
+@custom-media --large-viewport (max-width: 1400px);
+@custom-media --medium-viewport (max-width: 1024px);
+@custom-media --small-viewport (max-width: 768px);
+@custom-media --xSmall-viewport (max-width: 414px);
+@custom-media --xxSmall-viewport (max-width: 320px);
+
+:root [data-theme="dark"] {
+  --box-shadow-standard: 0 2px 4px 0 rgba(6, 22, 48, 0.06);
+  --box-shadow-word-option: 0 0 1px 0 #fff;
+  --color-dialog-bg: rgba(28, 28, 30, 0.8);
+  --color-white: #111112;
+  --color-platinum: #4d4d50;
+  --color-white-smoke: #1c1c1c;
+  --color-maastricht-blue: #fff;
+  --color-black: #fff;
+  --dark-border-color: #373739;
+  --color-mystic: #4d4d50;
+  --color-body-bg: #000;
+  --color-onboarding-bg: #1c1c1e;
+  --color-rows-hover: #1c1c1e;
+  --overlay-color: rgba(28, 28, 30, 0.8);
+  --color-content-light: #fff;
+  --color-ink-blue: #fff;
+  --color-flash-message: rgba(64, 112, 244, 0.25);
+  --color-flash-message-border: rgba(64, 112, 244, 0.6);
+  --color-strong-mystic: #edf0f5;
+  --color-passphrase-bg: #000;
+  --color-dark-blue: var(--color-ultramarine-blue);
+  --color-shadow-word-option: var(--color-strong-white);
+  --color-request-textarea: #2e2e30;
+  --color-strong-ink-blue: #254898;
+  --color-top-bar: #232325;
+  --color-side-bar: #1c1c1e;
+  --tab-border-color: #4070f4;
+  --color-search-container: var(--color-body-bg);
+  --color-vote-item-bg: var(--color-mystic);
+  --color-tooltip-bg: rgb(35, 35, 37, 0.7);
+  --color-tooltip-arrow: rgb(35, 35, 37, 0.7);
+  --color-tx-priority-btn-bg: #254798;
+  --color-tx-priority-btn-default: #86868b;
+  --color-progress-bar: var(--color-jade-green);
+  --color-zodiac-blue: #0c152e;
+  --color-background-dropdown: var(--color-body-bg);
+  --color-button-outline-color: #4c4c4c;
+}

@@ -1,0 +1,33 @@
+.wrapper {
+  padding: 0 !important;
+
+  & .mainContent {
+    padding-top: 0;
+  }
+
+  & header {
+    height: auto !important;
+    padding-left: var(--horizontal-padding-l) !important;
+  }
+
+  & .content {
+    display: flex;
+    width: auto;
+    padding: 0;
+    border-radius: 0;
+  }
+
+  & .infoContainer {
+    border-top: 1px solid var(--color-platinum);
+    text-align: left;
+
+    & > .numberOfSignatures,
+    & > span {
+      color: var(--color-maastricht-blue);
+    }
+
+    & .numberOfSignatures {
+      margin: var(--vertical-padding-l) 0;
+    }
+  }
+}

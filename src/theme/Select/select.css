@@ -1,0 +1,48 @@
+@import '../../../setup/react/app/mixins.css';
+
+.wrapper {
+  position: relative;
+
+  & .dropdown {
+    transform-origin: top center;
+
+    & .option {
+      @mixin contentLargest;
+
+      padding: 15px 20px;
+    }
+
+    & .xs {
+      @mixin contentNormal;
+
+      padding: 10px 15px;
+    }
+  }
+}
+
+.inputHolder {
+  align-items: center;
+  cursor: pointer;
+  display: flex;
+  position: relative;
+
+  & .selectedInput,
+  & .selectedInput:read-only {
+    color: var(--color-maastricht-blue);
+    cursor: inherit;
+  }
+
+  &::after {
+    transition: transform var(--animation-speed-fastest) linear;
+    border: 4px solid transparent;
+    border-bottom: 0 none;
+    border-top: 4px solid var(--color-slate-gray);
+    content: '';
+    position: absolute;
+    right: 20px;
+  }
+
+  &.isOpen::after {
+    transform: rotate(180deg);
+  }
+}

@@ -1,0 +1,28 @@
+.wrapper {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  box-sizing: border-box;
+  font-weight: var(--font-weight-bold);
+
+  & .unlock,
+  & .receive {
+    border-radius: var(--border-radius-standard);
+    display: inline-block;
+    padding: 6px 12px;
+    box-sizing: border-box;
+    line-height: initial;
+    text-align: right;
+  }
+
+  & .receive {
+    background-color: rgba(43, 214, 123, 0.15);
+    color: var(--color-deep-green);
+  }
+
+  & .unlock {
+    background-color: var(--color-active-tab);
+    color: var(--color-ink-blue);
+  }
+}

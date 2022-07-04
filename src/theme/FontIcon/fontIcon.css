@@ -1,0 +1,262 @@
+@font-face {
+  font-family: "icons";
+  src: url("/setup/react/assets/fonts/iconfont/icons.woff?5f5e56aa80edb0d7be1a9633ca07fb10") format("woff"), url("/setup/react/assets/fonts/iconfont/icons.ttf?5f5e56aa80edb0d7be1a9633ca07fb10") format("truetype");
+  font-weight: normal;
+  font-style: normal;
+}
+
+.icon {
+  font-family: "icons"; /* stylelint-disable-line font-family-no-missing-generic-family-keyword */
+  font-weight: normal;
+  font-style: normal;
+  font-size: 24px;
+  display: inline-block;
+  width: 1em; /* stylelint-disable-line unit-whitelist */
+  height: 1em; /* stylelint-disable-line unit-whitelist */
+  line-height: 1 !important;
+  text-transform: none;
+  letter-spacing: normal;
+  word-wrap: normal;
+  white-space: nowrap;
+  direction: ltr;
+  vertical-align: middle;
+  speak: none;
+  text-decoration: none;
+  text-rendering: auto;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* Icons */
+
+.academy::before {
+  content: "\f101";
+}
+
+.add-circled::before {
+  content: "\f102";
+}
+
+.add::before {
+  content: "\f103";
+}
+
+.arrow-down::before {
+  content: "\f104";
+}
+
+.arrow-left::before {
+  content: "\f105";
+}
+
+.arrow-right::before {
+  content: "\f106";
+}
+
+.arrow-up::before {
+  content: "\f107";
+}
+
+.buy-tokens::before {
+  content: "\f108";
+}
+
+.checkmark-check::before {
+  content: "\f109";
+}
+
+.checkmark-circled::before {
+  content: "\f10a";
+}
+
+.checkmark-uncheck::before {
+  content: "\f10b";
+}
+
+.checkmark::before {
+  content: "\f10c";
+}
+
+.close::before {
+  content: "\f10d";
+}
+
+.conversation::before {
+  content: "\f10e";
+}
+
+.copy-to-clipboard::before {
+  content: "\f10f";
+}
+
+.customNode::before {
+  content: "\f110";
+}
+
+.dropdown::before {
+  content: "\f111";
+}
+
+.edit::before {
+  content: "\f112";
+}
+
+.error::before {
+  content: "\f113";
+}
+
+.external-link::before {
+  content: "\f114";
+}
+
+.hide::before {
+  content: "\f115";
+}
+
+.info::before {
+  content: "\f116";
+}
+
+.internet::before {
+  content: "\f117";
+}
+
+.lisk-chat::before {
+  content: "\f118";
+}
+
+.locked::before {
+  content: "\f119";
+}
+
+.login::before {
+  content: "\f11a";
+}
+
+.logo-beta::before {
+  content: "\f11b";
+}
+
+.logo-icon::before {
+  content: "\f11c";
+}
+
+.logo-text::before {
+  content: "\f11d";
+}
+
+.logout::before {
+  content: "\f11e";
+}
+
+.mainnet::before {
+  content: "\f11f";
+}
+
+.menu::before {
+  content: "\f120";
+}
+
+.more::before {
+  content: "\f121";
+}
+
+.network::before {
+  content: "\f122";
+}
+
+.options::before {
+  content: "\f123";
+}
+
+.radio-button-active::before {
+  content: "\f124";
+}
+
+.radio-button-inactive::before {
+  content: "\f125";
+}
+
+.remove-circled::before {
+  content: "\f126";
+}
+
+.remove::before {
+  content: "\f127";
+}
+
+.request-token::before {
+  content: "\f128";
+}
+
+.search::before {
+  content: "\f129";
+}
+
+.send-token::before {
+  content: "\f12a";
+}
+
+.settings::before {
+  content: "\f12b";
+}
+
+.show::before {
+  content: "\f12c";
+}
+
+.smiley-angry::before {
+  content: "\f12d";
+}
+
+.smiley-happy::before {
+  content: "\f12e";
+}
+
+.smiley-laughing::before {
+  content: "\f12f";
+}
+
+.smiley-neutral::before {
+  content: "\f130";
+}
+
+.smiley-sad::before {
+  content: "\f131";
+}
+
+.star-filled::before {
+  content: "\f132";
+}
+
+.star-outline::before {
+  content: "\f133";
+}
+
+.testnet::before {
+  content: "\f134";
+}
+
+.undo::before {
+  content: "\f135";
+}
+
+.unlocked::before {
+  content: "\f136";
+}
+
+.usb-stick::before {
+  content: "\f137";
+}
+
+.warning::before {
+  content: "\f138";
+}
+
+.zoom-in::before {
+  content: "\f139";
+}
+
+.zoom-out::before {
+  content: "\f13a";
+}

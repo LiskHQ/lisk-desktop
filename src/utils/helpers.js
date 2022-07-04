@@ -1,4 +1,4 @@
-// import { transactionToJSON } from './transaction';
+// import { transactionToJSON } from '@transaction/utils/transaction';
 
 /**
  * Deeply merge two objects recursively, if the value isn't an object it considers

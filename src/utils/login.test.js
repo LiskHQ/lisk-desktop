@@ -1,5 +1,5 @@
+import accounts from '@tests/constants/wallets';
 import { validateUrl, shouldAutoLogIn, addHttp } from './login';
-import accounts from '../../test/constants/accounts';
 
 describe('Login', () => {
   describe('addHttp', () => {

@@ -2,16 +2,33 @@
   "compilerOptions": {
     "baseUrl": ".",
     "paths": {
-      "@utils/*": ["./src/utils/*"],
-      "@api/*": ["./src/utils/api/*"],
-      "@constants": ["./src/constants"],
-      "@shared/*": ["./src/components/shared/*"],
-      "@screens/*": ["./src/components/screens/*"],
-      "@toolbox/*": ["./src/components/toolbox/*"],
-      "@actions": ["./src/store/actions"],
-      "@store/*": ["./src/store/*"],
-      "@src/*": ["./src/*"],
-      "@fixtures/*": ["./test/constants/*"]
+      "src/*": ["./src/*"],
+      "@scripts/*": ["./scripts/*"],
+      "@setup/*": ["./setup/*"],
+      "@tests/*": ["./tests/*"],
+      "@fixtures/*": ["./tests/fixtures"],
+      "@theme/*": ["./src/theme/*"],
+      "@account/*": ["./src/modules/account/*"],
+      "@block/*": ["./src/modules/block/*"],
+      "@bookmark/*": ["./src/modules/bookmark/*"],
+      "@search/*": ["./src/modules/search/*"],
+      "@common/*": ["./packages/common/*"],
+      "@legacy/*": ["./src/modules/legacy/*"],
+      "@dpos/*": ["./src/modules/dpos/*"],
+      "@network/*": ["./src/modules/network/*"],
+      "@settings/*": ["./packages/settings/*"],
+      "@token/*": ["./src/modules/token/*"],
+      "@transaction/*": ["./src/modules/transaction/*"],
+      "@update/*": ["./src/modules/update/*"],
+      "@wallet/*": ["./src/modules/wallet/*"],
+      "@views/*": ["./packages/views/*"],
+      "@packages/*": ["./packages/*"],
+      "@shared/*": ["./packages/views/shared/*"],
+      "@basics/*": ["./packages/views/basics/*"],
+      "@screens/*": ["./packages/views/screens/*"],
+      "@libs/*": ["./libs/*"],
+      "@auth/*": ["./src/modules/auth/*"],
+      "@message/*": ["./src/modules/message/*"]
     }
   }
 }

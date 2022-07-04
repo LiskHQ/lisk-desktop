@@ -1,21 +1,27 @@
-import history from '../history';
+import history from 'src/utils/history';
 
 const sendRegex = /^\/(wallet|wallet\/send|main\/transactions\/send)$/;
 const sendRedirect = '/wallet?modal=send';
 
 const voteRegex = /^\/(main\/voting\/vote|delegates\/vote|vote)$/;
-const voteRedirect = '/wallet?modal=votingQueue';
+const voteRedirect = '/wallet?modal=VotingQueue';
 
-export default {
+// eslint-disable-next-line import/prefer-default-export
+export const externalLinks = {
   init: () => {
     const { ipc } = window;
 
     if (ipc) {
-      ipc.on('openUrl', (action, url) => {
-        const [protocol, rest] = url.split(':/');
-        const [normalizedUrl, searchParams] = rest?.split('?') ?? [];
+      // eslint-disable-next-line max-statements
+      ipc.on('openUrl', (_, url) => {
+        const urlDetails = new URL(url);
+        const { protocol, href, search } = urlDetails;
 
-        if (protocol?.toLowerCase() === 'lisk' && normalizedUrl) {
+        // Due to some bug with URL().pathname displaying a blank string
+        // instead of the correct pathname, it was best to use href with a regex
+        const normalizedUrl = href.match(/\/\w+/)[0];
+        const searchParams = search.slice(1);
+        if (protocol?.slice(0, -1).toLowerCase() === 'lisk' && normalizedUrl) {
           let redirectUrl = normalizedUrl;
           if (normalizedUrl.match(sendRegex)) {
             redirectUrl = sendRedirect + (searchParams ? `&${searchParams}` : '');
@@ -23,6 +29,7 @@ export default {
             redirectUrl = voteRedirect + (searchParams ? `&${searchParams}` : '');
           }
 
+          // @todo do we need to both push and replace?
           history.push(redirectUrl);
           history.replace(redirectUrl);
         }

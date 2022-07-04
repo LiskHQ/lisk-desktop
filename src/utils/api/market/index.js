@@ -1,9 +1,8 @@
-import http from '../http';
-
-const httpPrefix = '/api/v2';
+import http from 'src/utils/api/http';
+import { HTTP_PREFIX } from 'src/const/httpCodes';
 
 export const httpPaths = {
-  prices: `${httpPrefix}/market/prices`,
+  prices: `${HTTP_PREFIX}/market/prices`,
 };
 
 /**

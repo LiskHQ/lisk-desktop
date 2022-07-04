@@ -12,7 +12,7 @@ const server = {
     app.set('views', path.join(__dirname, '.'));
     app.use(express.static(path.join(__dirname, '.')));
 
-    app.get('*', (req, res) => res.sendFile(path.join(__dirname, 'index.html')));
+    app.get('*', (req, res) => res.sendFile(path.join(__dirname, '../setup/react/index.html')));
 
     // catch 404 and forward to error handler
     app.use((req, res, next) => {

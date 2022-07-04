@@ -1,0 +1,115 @@
+@import '../../../../../setup/react/app/mixins.css';
+
+.dialogWrapper {
+  max-height: calc(100% - 100px);
+  overflow-y: scroll;
+
+  & .wrapper {
+    & > header {
+      padding-left: var(--horizontal-padding-l);
+      padding-right: var(--horizontal-padding-l);
+    }
+  }
+
+  & .content {
+    padding: 0 var(--horizontal-padding-l);
+
+    & h2 {
+      @mixin contentLargest bold;
+
+      color: var(--color-slate-gray);
+      margin: 0 0 24px;
+    }
+  }
+}
+
+.content {
+  display: block;
+  padding-bottom: 50px;
+  width: 100%;
+
+  & > section {
+    padding: 24px 4px 0 4px;
+
+    &:last-child {
+      padding-bottom: 24px;
+    }
+  }
+
+  & .link {
+    display: inline-block;
+    margin-top: 10px;
+    color: var(--color-ultramarine-blue);
+    cursor: pointer;
+  }
+}
+
+.fieldGroup {
+  margin-bottom: 20px;
+
+  &:last-child {
+    margin-bottom: 0;
+  }
+
+  &.checkboxField {
+    align-items: flex-start;
+    display: flex;
+
+    & > div:last-child {
+      flex-basis: calc(100% - 25px);
+      margin-left: auto;
+    }
+
+    & .checkmark {
+      margin-top: 3px;
+    }
+
+    & .checkbox {
+      margin-right: 10px;
+    }
+  }
+
+  & .labelName {
+    @mixin contentLargest bold;
+
+    color: var(--color-maastricht-blue);
+    display: block;
+    margin-bottom: 9px;
+  }
+
+  & p {
+    @mixin contentNormal;
+
+    color: var(--color-blue-gray);
+    margin: 0;
+
+    &.highlight {
+      color: var(--color-maastricht-blue);
+    }
+  }
+
+  & .disabled {
+    pointer-events: none;
+    opacity: 0.4;
+  }
+
+  & .hide {
+    visibility: hidden;
+  }
+
+  & .loading {
+    margin-top: 10px;
+
+    & :global(.spinner) {
+      color: var(--color-ultramarine-blue);
+      height: 20px;
+      width: 20px;
+    }
+
+    & :global(.spinner-label) {
+      @mixin contentNormal bold;
+
+      color: var(--color-maastricht-blue);
+    }
+  }
+}

@@ -1,0 +1,145 @@
+@import '../../../../../setup/react/app/mixins.css';
+
+.register {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  margin: 20px auto 0 auto;
+
+  & .warning {
+    display: flex;
+    flex-direction: row;
+  }
+}
+
+.warningContent {
+  margin-left: 10px;
+  display: flex;
+  text-align: start;
+  flex-direction: column;
+}
+
+.warningIcon {
+  display: flex;
+  align-items: flex-start;
+}
+
+.warningSubheading {
+  @mixin contentLargest semi-bold;
+
+  color: var(--color-maastricht-blue);
+  margin-top: 0;
+}
+
+.warningPara {
+  @mixin contentLargest;
+
+  color: var(--color-maastricht-blue);
+  line-height: 24px;
+  text-align: start;
+  margin-top: 0;
+  margin-bottom: 10px;
+}
+
+.wrapper {
+  align-items: center;
+  display: flex;
+  flex-direction: column;
+  padding: 30px 0;
+  margin-top: 60px;
+  width: 100%;
+  max-width: 878px;
+
+  & .button {
+    @mixin contentLargest bold;
+
+    width: 431px;
+
+    & > button {
+      width: 100%;
+    }
+  }
+
+  & .backButton {
+    @mixin contentLargest bold;
+
+    border: none;
+    margin: 32px 0 0;
+    color: var(--color-ultramarine-blue) !important;
+  }
+}
+
+.stepsLabel {
+  @mixin contentNormal;
+
+  color: var(--color-slate-gray);
+  height: 18px;
+  letter-spacing: 0.4px;
+  line-height: 1.8;
+  text-transform: uppercase;
+}
+
+.titleHolder {
+  max-height: fit-content;
+  color: var(--color-content);
+  font-family: var(--heading-font);
+  text-align: center;
+  margin: 16px 0 60px 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: end;
+
+  & > h1 {
+    @mixin headingLarge;
+
+    display: flex;
+    justify-content: center;
+    margin-top: 0px;
+    margin-bottom: 16px;
+    color: var(--color-maastricht-blue);
+
+    & > img {
+      margin-right: 16px;
+    }
+  }
+
+  & > p {
+    @mixin contentLargest;
+
+    margin: 0;
+    color: var(--color-maastricht-blue);
+    min-width: 450px;
+  }
+}
+
+.passphraseBackupContainer {
+  width: 100%;
+  max-height: fit-content;
+  min-width: 645px;
+  flex: 1 1 auto;
+}
+
+.buttonsHolder {
+  align-items: center;
+  display: flex;
+  flex-direction: column-reverse;
+  justify-content: center;
+  margin: 0 auto;
+  width: 100%;
+}
+
+.disabledLink {
+  pointer-events: none;
+}
+
+.continueBtn {
+  @mixin contentLargest bold;
+}
+
+.link {
+  color: var(--color-link-active);
+  cursor: pointer;
+}

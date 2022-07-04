@@ -1,0 +1,30 @@
+@import '../../../../../setup/react/app/mixins.css';
+
+.noPadding {
+  padding: 0 !important;
+}
+
+.result {
+  background: #08223c !important;
+  color: #9bf436 !important;
+  margin-bottom: 30px;
+}
+
+.button {
+  min-width: 185px !important;
+}
+
+.statusWrapper {
+  flex-wrap: nowrap;
+  align-items: center !important;
+
+  & img {
+    width: 210px;
+  }
+
+  & h5 {
+    font-weight: var(--font-weight-bold);
+    color: var(--color-maastricht-blue);
+    margin-bottom: 0;
+  }
+}
