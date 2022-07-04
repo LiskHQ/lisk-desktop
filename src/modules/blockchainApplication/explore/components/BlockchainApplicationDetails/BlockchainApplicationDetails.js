@@ -49,16 +49,10 @@ const BlockchainApplicationDetails = ({ location }) => {
 
   const footerDetails = [
     {
-      header: (
-        <>
-          {t('Chain ID')}
-          <Tooltip position="right">
-            <p>
-              {t('')}
-            </p>
-          </Tooltip>
-        </>
-      ),
+      header: {
+        text: t('Chain ID'),
+        toolTipText: t('The chain ID uniquely identifies a chain in the Lisk ecosystem'),
+      },
       className: `${styles.detailContentText} chain-id`,
       content: chainId,
     },
@@ -136,7 +130,16 @@ const BlockchainApplicationDetails = ({ location }) => {
                 className={styles.detail}
                 label={(
                   <span className={styles.headerText}>
-                    {header}
+                    <>
+                      {header.text || header}
+                      {header.toolTipText && (
+                      <Tooltip position="right">
+                        <p>
+                          {header.toolTipText}
+                        </p>
+                      </Tooltip>
+                      )}
+                    </>
                   </span>
                   )}
               >
