@@ -1,0 +1,47 @@
+@import '../../../../../../setup/react/app/mixins.css';
+
+.container {
+  max-width: 350px;
+
+  & > header {
+    padding-bottom: 22px;
+  }
+
+  & > div {
+    margin-bottom: 16px;
+  }
+}
+
+.chartBox {
+  padding: 16px 0px !important;
+}
+
+.statsBox {
+  flex-direction: row !important;
+  justify-content: space-between !important;
+
+  & > div {
+    &:first-child {
+      flex-basis: 70%;
+    }
+
+    &:last-child {
+      flex-basis: 30%;
+      display: flex;
+      justify-content: center;
+    }
+  }
+}
+
+.statsInfoTitle {
+  @mixin contentLarge;
+
+  color: var(--color-blue-gray);
+}
+
+.statsInfo {
+  @mixin headingNormalIntermediate;
+
+  color: var(--color-maastricht-blue);
+  margin: 8px 0 0;
+}
