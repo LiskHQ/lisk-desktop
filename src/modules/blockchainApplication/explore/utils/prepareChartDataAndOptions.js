@@ -1,5 +1,4 @@
-// eslint-disable-next-line import/prefer-default-export
-export const prepareChartDataAndOptions = (statistics, colorPalette, t) => {
+const prepareChartDataAndOptions = (statistics, colorPalette, t) => {
   const doughnutChartData = {
     labels: [
       t('Registered'),
@@ -36,3 +35,5 @@ export const prepareChartDataAndOptions = (statistics, colorPalette, t) => {
 
   return { doughnutChartData, doughnutChartOptions };
 };
+
+export default prepareChartDataAndOptions;

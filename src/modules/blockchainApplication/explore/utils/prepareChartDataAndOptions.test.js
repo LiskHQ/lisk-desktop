@@ -1,4 +1,4 @@
-import { prepareChartDataAndOptions } from './chartUtils';
+import prepareChartDataAndOptions from './prepareChartDataAndOptions';
 
 describe('BlockchainApplication explore utils', () => {
   it('Should return correct data when calling prepareChartDataAndOptions', () => {

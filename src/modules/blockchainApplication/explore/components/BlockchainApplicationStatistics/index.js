@@ -10,7 +10,7 @@ import Tooltip from 'src/theme/Tooltip';
 import Icon from 'src/theme/Icon';
 import { useTheme } from 'src/theme/Theme';
 import { getColorPalette } from 'src/modules/common/components/charts/chartOptions';
-import { prepareChartDataAndOptions } from '../../utils/chartUtils';
+import prepareChartDataAndOptions from '../../utils/prepareChartDataAndOptions';
 import styles from './blockchainApplicationStatistics.css';
 
 const BlockchainApplicationStatistics = ({ statistics }) => {

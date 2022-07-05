@@ -17,7 +17,7 @@ jest.mock('src/utils/api/http', () =>
 const baseUrl = 'http://custom-base-url.com/';
 const { network } = getState();
 
-describe('get blockchain application detail', () => {
+describe('get blockchain application statistics', () => {
   it('Should call http with given params', () => {
     getStatistics({
       network,
