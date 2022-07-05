@@ -1,4 +1,4 @@
-import http from '@common/utilities/api/http';
+import http from 'src/utils/api/http';
 import { HTTP_PREFIX } from 'src/const/httpCodes';
 
 const httpPaths = {

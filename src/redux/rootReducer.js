@@ -1,4 +1,4 @@
-export { default as wallet } from '@wallet/store/reducer';
+export { default as wallet } from '@wallet/store/reducers/reducer';
 export { default as blocks } from '@block/store/reducer';
 export { default as bookmarks } from '@bookmark/store/reducer';
 export { default as network } from '@network/store/reducer';
@@ -11,4 +11,4 @@ export { default as watchList } from '@dpos/validator/store/reducers/watchList';
 export { default as service } from '@wallet/store/reducers/service';
 export { default as loading } from 'src/modules/common/store/reducers/loading';
 export { account } from '@account/store/reducer';
-export { blockChainApplications } from '@blockchainApplication/explore/store/reducer';
+export { blockChainApplications } from '@blockchainApplication/manage/store/reducer';

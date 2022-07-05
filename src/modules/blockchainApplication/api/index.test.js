@@ -1,8 +1,8 @@
 import { getState } from '@fixtures/transactions';
-import http from '@common/utilities/api/http';
+import http from 'src/utils/api/http';
 import { getApplication } from '.';
 
-jest.mock('@common/utilities/api/http', () =>
+jest.mock('src/utils/api/http', () =>
   jest.fn().mockImplementation(() => Promise.resolve({ data: [{ type: 0 }] })));
 
 const baseUrl = 'http://custom-base-url.com/';
