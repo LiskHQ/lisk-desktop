@@ -220,4 +220,8 @@ export const modals = {
     isPrivate: true,
     forbiddenTokens: [],
   },
+  blockChainApplicationDetails: {
+    isPrivate: false,
+    forbiddenTokens: [],
+  },
 };

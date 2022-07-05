@@ -211,6 +211,9 @@ import accountUpload from '@setup/react/assets/images/icons/account-upload.svg';
 import accountRemoved from '@setup/react/assets/images/icons/account-removed.svg';
 import stackedToken from '@setup/react/assets/images/icons/stacked-token.svg';
 import totalSupplyToken from '@setup/react/assets/images/icons/total-supply-token.svg';
+import unpinnedIcon from '@setup/react/assets/images/icons/unpinned.svg';
+import pinnedIcon from '@setup/react/assets/images/icons/pinned.svg';
+import chainLinkIcon from '@setup/react/assets/images/icons/chain-link.svg';
 
 export const icons = {
   academy,
@@ -422,6 +425,9 @@ export const icons = {
   accountRemoved,
   stackedToken,
   totalSupplyToken,
+  unpinnedIcon,
+  pinnedIcon,
+  chainLinkIcon,
 };
 
 const Icon = ({ name, noTheme, ...props }) => {

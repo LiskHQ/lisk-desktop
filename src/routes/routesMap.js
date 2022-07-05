@@ -42,6 +42,7 @@ import BackupRecoveryPhraseFlow from '@account/components/BackupRecoveryPhraseFl
 import RemoveCurrentAccountFlow from '@account/components/RemoveCurrentAccountFlow';
 import RemoveSelectedAccountFlow from '@account/components/RemoveSelectedAccountFlow';
 import ManageBlockchainApplications from '@blockchainApplication/manage/manager/ManageBlockchainApplications';
+import BlockchainApplicationDetails from '@blockchainApplication/explore/components/BlockchainApplicationDetails';
 
 export default {
   wallet: AccountDetails,
@@ -89,4 +90,5 @@ export default {
   removeSelectedAccount: RemoveSelectedAccountFlow,
   addAccountByFile: AddAccountByFile,
   blockchainApplications: ManageBlockchainApplications,
+  blockChainApplicationDetails: BlockchainApplicationDetails,
 };
