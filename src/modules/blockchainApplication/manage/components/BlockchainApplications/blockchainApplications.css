@@ -1,0 +1,25 @@
+.wrapper {
+  padding-top: 20px;
+
+  & > div {
+    margin-top: 25px;
+    display: flex;
+  }
+}
+
+.banner {
+  width: 100%;
+  height: 150px;
+  background-color: aquamarine;
+}
+
+.content {
+  height: 200px;
+  background-color: brown;
+  flex-basis: 75%;
+  padding-right: 20px;
+}
+
+.sideBar {
+  flex-basis: 25%;
+}
