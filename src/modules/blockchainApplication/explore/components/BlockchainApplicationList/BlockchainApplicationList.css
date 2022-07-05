@@ -1,0 +1,12 @@
+@import '../../../../../../setup/react/app/mixins.css';
+
+.content {
+  width: 100%;
+  padding-top: 4px !important;
+}
+
+.boxHeader {
+  font-size: 20px;
+  font-weight: 600;
+  padding-bottom: 22px !important;
+}

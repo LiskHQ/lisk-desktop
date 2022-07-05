@@ -1,0 +1,73 @@
+@import '../../../../../../setup/react/app/mixins.css';
+
+.tooltip {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.content {
+  padding: 0 !important;
+}
+
+.tooltipOffset {
+  left: -145px;
+}
+
+.chainId {
+  font-size: 15px;
+  font-weight: 400;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+}
+
+.amount {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  color: var(--color-ink-blue);
+  font-size: 14px;
+  font-weight: 600;
+
+  & > .fee {
+    font-family: var(--content-font);
+    font-style: normal;
+    font-weight: normal;
+    font-size: 10px;
+    line-height: 14px;
+    color: var(--color-blue-gray);
+  }
+}
+
+.statusChip {
+  font-size: 14px !important;
+  padding: 10px 16px;
+  border-radius: 40px;
+}
+
+.active {
+  background-color: #00d5631a;
+  color: var(--color-jade-green);
+}
+
+.registered {
+  background-color: #4070f41a;
+  color: var(--color-ultramarine-blue);
+}
+
+.terminated {
+  background-color: var(--color-maastricht-blue);
+  color: var(--color-ghost-white);
+}
+
+.chainName {
+  font-size: 15px;
+
+  & img {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    margin-right: 10px;
+  }
+}
