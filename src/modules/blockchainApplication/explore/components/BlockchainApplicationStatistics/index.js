@@ -6,50 +6,27 @@ import BoxHeader from 'src/theme/box/header';
 import BoxContent from 'src/theme/box/content';
 import { DoughnutChart } from 'src/modules/common/components/charts';
 import TokenAmount from '@token/fungible/components/tokenAmount';
-import { tokenMap } from '@token/fungible/consts/tokens';
 import Tooltip from 'src/theme/Tooltip';
 import Icon from 'src/theme/Icon';
 import { useTheme } from 'src/theme/Theme';
 import { getColorPalette } from 'src/modules/common/components/charts/chartOptions';
+import { prepareChartDataAndOptions } from '../../utils/chartUtils';
 import styles from './blockchainApplicationStatistics.css';
 
 const BlockchainApplicationStatistics = ({ statistics }) => {
   const { t } = useTranslation();
   const colorPalette = getColorPalette(useTheme());
-
-  const doughnutChartData = {
-    labels: [
-      t('Registered'),
-      t('Active'),
-      t('Terminated'),
-    ],
-    datasets: [
-      {
-        backgroundColor: [colorPalette[1], colorPalette[0], colorPalette[2]],
-        data: [statistics.data.registered, statistics.data.active, statistics.data.terminated],
-      },
-    ],
-  };
-
-  const doughnutChartOptions = {
-    cutoutPercentage: 70,
-    legend: {
-      display: true,
-      position: 'left',
-      align: 'start',
-      labels: {
-        padding: 20,
-      },
+  const {
+    doughnutChartData, doughnutChartOptions,
+  } = prepareChartDataAndOptions(statistics.data, colorPalette, t);
+  const cardsMap = [
+    {
+      title: t('Total Supply'), description: t('Total LSK tokens in circulation'), amount: toRawLsk(statistics.data.totalSupplyLSK), icon: 'totalSupplyToken',
     },
-    layout: {
-      padding: {
-        left: 0,
-        right: 0,
-        bottom: 0,
-        top: 0,
-      },
+    {
+      title: t('Staked'), description: t('Amount of LSK tokens staked by validators and nominators for DPoS governance'), amount: toRawLsk(statistics.data.stakedLSK), icon: 'stackedToken',
     },
-  };
+  ];
 
   return (
     <Box className={styles.container}>
@@ -62,44 +39,29 @@ const BlockchainApplicationStatistics = ({ statistics }) => {
           options={doughnutChartOptions}
         />
       </BoxContent>
-      <BoxContent className={styles.statsBox}>
-        <div>
+      {cardsMap.map(({
+        title, description, amount, icon,
+      }) => (
+        <BoxContent
+          key={`app-stats-card-${title}`}
+          className={styles.statsBox}
+        >
           <div>
-            <span className={styles.statsInfoTitle}>{t('Total Supply')}</span>
-            <Tooltip size="m" position="bottom">
-              <p>{t('Total LSK tokens in circulation')}</p>
-            </Tooltip>
+            <div>
+              <span className={styles.statsInfoTitle}>{title}</span>
+              <Tooltip size="m" position="bottom">
+                <p>{description}</p>
+              </Tooltip>
+            </div>
+            <p className={`${styles.statsInfo} stacked-token`}>
+              <TokenAmount val={amount} />
+            </p>
           </div>
-          <p className={`${styles.statsInfo} total-supply-token`}>
-            <TokenAmount
-              val={toRawLsk(statistics.data.totalSupplyLSK)}
-              token={tokenMap.LSK.key}
-            />
-          </p>
-        </div>
-        <div>
-          <Icon name="totalSupplyToken" />
-        </div>
-      </BoxContent>
-      <BoxContent className={styles.statsBox}>
-        <div>
           <div>
-            <span className={styles.statsInfoTitle}>{t('Staked')}</span>
-            <Tooltip size="m" position="bottom">
-              <p>{t('Amount of LSK tokens staked by validators and nominators for DPoS governance')}</p>
-            </Tooltip>
+            <Icon name={icon} />
           </div>
-          <p className={`${styles.statsInfo} stacked-token`}>
-            <TokenAmount
-              val={toRawLsk(statistics.data.stakedLSK)}
-              token={tokenMap.LSK.key}
-            />
-          </p>
-        </div>
-        <div>
-          <Icon name="stackedToken" />
-        </div>
-      </BoxContent>
+        </BoxContent>
+      ))}
     </Box>
   );
 };

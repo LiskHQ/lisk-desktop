@@ -2,7 +2,7 @@
 import { compose } from 'redux';
 import withData from 'src/utils/withData';
 import ManageBlockchainApplicationsView from '../../components/ManageBlockchainApplications';
-// import { getApps, getStatistics } from '../../../utils/api';
+// import { getApps, getStatistics } from '../../../explore/utils/api';
 
 const getStatistics = () => Promise.resolve({
   registered: 2503,
