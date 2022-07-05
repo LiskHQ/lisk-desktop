@@ -16,7 +16,7 @@ describe('BlockchainApplication explore utils', () => {
     } = prepareChartDataAndOptions(statistics, colorPalette, t);
 
     expect(doughnutChartData).toEqual({
-      labels: ['Registered','Active','Terminated'],
+      labels: ['Registered', 'Active', 'Terminated'],
       datasets: [
         {
           backgroundColor: ['blue', 'green', 'grey'],
