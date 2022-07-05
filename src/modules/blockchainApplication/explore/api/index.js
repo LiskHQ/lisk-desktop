@@ -1,3 +1,4 @@
+/* istanbul ignore file */
 import http from 'src/utils/api/http';
 import { HTTP_PREFIX } from 'src/const/httpCodes';
 
