@@ -18,7 +18,7 @@ describe('BlockchainApplicationStatistics', () => {
   it('should properly', () => {
     const wrapper = mount(<BlockchainApplicationStatistics {...props} />);
 
-    expect(wrapper.find('.total-supply-token').at(0)).toHaveText('5,000,000 LSK');
-    expect(wrapper.find('.stacked-token').at(0)).toHaveText('3,000,000 LSK');
+    expect(wrapper.find('TokenAmount').at(0)).toHaveText('5,000,000');
+    expect(wrapper.find('TokenAmount').at(1)).toHaveText('3,000,000');
   });
 });

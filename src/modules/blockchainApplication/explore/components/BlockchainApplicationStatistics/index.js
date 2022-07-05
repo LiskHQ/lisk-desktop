@@ -43,7 +43,7 @@ const BlockchainApplicationStatistics = ({ statistics }) => {
         title, description, amount, icon,
       }) => (
         <BoxContent
-          key={`app-stats-card-${title}`}
+          key={`app-stats-card-${icon}`}
           className={styles.statsBox}
         >
           <div>
@@ -53,7 +53,7 @@ const BlockchainApplicationStatistics = ({ statistics }) => {
                 <p>{description}</p>
               </Tooltip>
             </div>
-            <p className={`${styles.statsInfo} stacked-token`}>
+            <p className={styles.statsInfo}>
               <TokenAmount val={amount} />
             </p>
           </div>
