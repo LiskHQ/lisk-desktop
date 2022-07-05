@@ -1,7 +1,7 @@
 /* istanbul ignore file */
 import { compose } from 'redux';
 import withData from 'src/utils/withData';
-import ManageBlockchainApplicationsView from '../../components/ManageBlockchainApplications';
+import ManageBlockchainApplicationsView from '../components/BlockchainApplications';
 // import { getStatistics } from '../../../explore/api';
 
 const getStatistics = () => Promise.resolve({
