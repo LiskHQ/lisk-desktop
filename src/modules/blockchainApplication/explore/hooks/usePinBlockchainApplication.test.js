@@ -1,5 +1,5 @@
 import { renderHook, act } from '@testing-library/react-hooks';
-import mockBlockchainApplications from '@tests/fixtures/blockchainApplications';
+import mockBlockchainApplications from '@tests/fixtures/blockchainApplicationsExplore';
 import actionTypes from '@blockchainApplication/manage/store/actionTypes';
 import { usePinBlockchainApplication } from './usePinBlockchainApplication';
 import { toggleApplicationPin } from '../../manage/store/action';

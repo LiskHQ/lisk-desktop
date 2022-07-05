@@ -11,3 +11,8 @@ export const toggleApplicationPin = (chainId) => ({
   type: actionTypes.toggleApplicationPin,
   chainId,
 });
+
+export const setCurrentApplication = (application) => ({
+  type: actionTypes.setCurrentApplication,
+  application,
+});

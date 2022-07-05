@@ -1,0 +1,38 @@
+import { renderHook, act } from '@testing-library/react-hooks';
+import mockApplications from '@tests/fixtures/blockchainApplicationsManage';
+import actionTypes from '../store/actionTypes';
+import { useCurrentApplication } from './useCurrentApplication';
+
+const mockDispatch = jest.fn();
+const mockState = {
+  blockChainApplications: {
+    current: mockApplications[0],
+  },
+};
+jest.mock('react-redux', () => ({
+  useSelector: jest.fn().mockImplementation((fn) => fn(mockState)),
+  useDispatch: () => mockDispatch,
+}));
+
+describe('useCurrentApplication hook', () => {
+  beforeEach(() => {
+    mockDispatch.mockClear();
+  });
+  const { result } = renderHook(() => useCurrentApplication());
+  it('setAccount Should not trigger on mounting', async () => {
+    expect(mockDispatch).toHaveBeenCalledTimes(0);
+  });
+
+  it('setCurrentApplication should dispatch an action', async () => {
+    const [, setCurrentApplication] = result.current;
+    const expectedAction = {
+      type: actionTypes.setCurrentApplication,
+      application: mockApplications[0],
+    };
+    act(() => {
+      setCurrentApplication(mockApplications[0]);
+    });
+    expect(mockDispatch).toHaveBeenCalledTimes(1);
+    expect(mockDispatch).toHaveBeenCalledWith(expectedAction);
+  });
+});
