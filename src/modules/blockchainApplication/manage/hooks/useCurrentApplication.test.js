@@ -23,6 +23,11 @@ describe('useCurrentApplication hook', () => {
     expect(mockDispatch).toHaveBeenCalledTimes(0);
   });
 
+  it('should return correct current application', async () => {
+    const [currentApplication] = result.current;
+    expect(currentApplication).toEqual(mockApplications[0]);
+  });
+
   it('setCurrentApplication should dispatch an action', async () => {
     const [, setCurrentApplication] = result.current;
     const expectedAction = {
