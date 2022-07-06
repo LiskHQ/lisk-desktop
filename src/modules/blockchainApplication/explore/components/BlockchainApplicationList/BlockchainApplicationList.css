@@ -2,7 +2,8 @@
 
 .content {
   width: 100%;
-  padding-top: 4px !important;
+  padding: 0px !important;
+  overflow-x: auto;
 }
 
 .boxHeader {
@@ -24,4 +25,9 @@
 
 .chainSearch {
   border-radius: 40px;
+}
+
+.tableHeader {
+  padding: 0px 20px;
+  padding-left: 50px;
 }

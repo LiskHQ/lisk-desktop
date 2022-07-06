@@ -1,7 +1,22 @@
 @import '../../../../../../setup/react/app/mixins.css';
 
 .container {
-  border-top: 1px container solid;
+  & > div:first-child {
+    padding: 0px 20px;
+  }
+
+  &:hover .pinWrapper {
+    display: block;
+  }
+}
+
+.container::before {
+  content: '';
+  width: calc(100% - 40px);
+  margin-left: 20px;
+  position: relative;
+  display: block;
+  border-top: 1px #ecf2f9 solid;
 }
 
 .content {
@@ -29,6 +44,7 @@
   color: var(--color-ink-blue);
   font-size: 14px;
   font-weight: 600;
+  padding-right: 23px;
 
   & > .fee {
     font-family: var(--content-font);
@@ -63,11 +79,34 @@
 
 .chainName {
   font-size: 15px;
+  margin-left: 15px;
+  padding-left: 20px;
 
   & img {
     width: 40px;
     height: 40px;
     border-radius: 50%;
     margin-right: 10px;
+  }
+}
+
+.pinWrapper {
+  max-width: fit-content;
+  position: absolute;
+  left: 11px;
+  display: none;
+
+  &.show {
+    display: block !important;
+  }
+
+  & img {
+    width: 20px;
+  }
+
+  & button {
+    min-width: fit-content;
+    height: fit-content !important;
+    padding: 0px !important;
   }
 }

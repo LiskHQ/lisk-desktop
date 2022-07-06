@@ -2,6 +2,9 @@ import React from 'react';
 import { useTranslation } from 'react-i18next';
 import grid from 'flexboxgrid/dist/flexboxgrid.css';
 import DialogLink from 'src/theme/dialog/link';
+import { TertiaryButton } from 'src/theme/buttons';
+import Icon from 'src/theme/Icon';
+import { usePinBlockchainApplication } from '@blockchainApplication/manage/hooks/usePinBlockchainApplication';
 import TokenAmount from 'src/modules/token/fungible/components/tokenAmount';
 import liskLogo from '../../../../../../setup/react/assets/images/LISK.png';
 import styles from './BlockchainApplicationRow.css';
@@ -33,11 +36,24 @@ const ChainName = ({ title, logo }) => (
   </div>
 );
 
+const Pin = ({ isPinned, onTogglePin }) => (
+  <div className={`${styles.pinWrapper} ${isPinned ? styles.show : ''}`}>
+    <TertiaryButton onClick={onTogglePin}>
+      <Icon data-testid="pin-button" name={isPinned ? 'pinnedIcon' : 'unpinnedIcon'} />
+    </TertiaryButton>
+  </div>
+);
+
 const BlockchainApplicationRow = ({
   data,
   className,
 }) => {
   const { t } = useTranslation();
+  const { togglePin } = usePinBlockchainApplication();
+  const handleTogglePin = (event) => {
+    event.stopPropagation();
+    togglePin(data.chainID);
+  };
 
   return (
     <div data-testid="applications-row" className={`transaction-row-wrapper ${styles.container}`}>
@@ -46,6 +62,7 @@ const BlockchainApplicationRow = ({
         component="blockChainApplicationDetails"
         data={{ chainId: data.chainID }}
       >
+        <Pin isPinned={data.isPinned} onTogglePin={handleTogglePin} />
         <ChainName title={data.name} logo={liskLogo} />
         <ChainId id={data.chainID} />
         <ChainStatus status={data.state} t={t} />

@@ -5,6 +5,7 @@ import { useTranslation } from 'react-i18next';
 import BoxHeader from 'src/theme/box/header';
 import Box from 'src/theme/box';
 import BoxContent from 'src/theme/box/content';
+import { usePinBlockchainApplication } from '@blockchainApplication/manage/hooks/usePinBlockchainApplication';
 import grid from 'flexboxgrid/dist/flexboxgrid.css';
 import Table from 'src/theme/table';
 import { Input } from 'src/theme';
@@ -16,13 +17,28 @@ import { BLOCKCHAIN_APPLICATION_LIST_LIMIT } from '../../const/constants';
 
 // eslint-disable-next-line max-statements
 const BlockchainApplicationList = ({
-  applications,
+  applications: apps,
   applyFilters,
   filters,
 }) => {
   const [searchValue, setSearchValue] = useState('');
   const debounceTimeout = useRef(null);
   const { t } = useTranslation();
+  const { pins, checkPinByChainId } = usePinBlockchainApplication();
+
+  const applications = useMemo(() => {
+    if (pins.length) {
+      return {
+        ...apps,
+        data: apps.data.map(chainData => ({
+          ...chainData,
+          isPinned: checkPinByChainId(chainData.chainID),
+        }
+        )),
+      };
+    }
+    return apps;
+  }, [apps, checkPinByChainId]);
 
   const canLoadMore = useMemo(() =>
     (applications.meta
@@ -52,6 +68,8 @@ const BlockchainApplicationList = ({
       });
     }, 500);
   }, [searchValue]);
+
+  console.log('>>> ', applications.data);
 
   return (
     <Box main isLoading={applications.isLoading} className="chain-application-box">
