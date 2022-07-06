@@ -1,7 +1,7 @@
 import { useCallback } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import { selectPinnedApplications } from '@blockchainApplication/manage/store/selectors';
-import { toggleApplicationPin } from '../../manage/store/action';
+import { selectPinnedApplications } from '../store/selectors';
+import { toggleApplicationPin } from '../store/action';
 
 // eslint-disable-next-line
 export function usePinBlockchainApplication() {
