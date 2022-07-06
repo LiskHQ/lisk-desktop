@@ -11,3 +11,8 @@ export const toggleApplicationPin = (chainId) => ({
   type: actionTypes.toggleApplicationPin,
   chainId,
 });
+
+export const filterApplicationsByChainId = (chainId) => ({
+  type: actionTypes.filterApplicationsByChainId,
+  data: chainId,
+});
