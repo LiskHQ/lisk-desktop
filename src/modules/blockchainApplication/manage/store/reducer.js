@@ -34,11 +34,16 @@ export const pins = (state = initialState.pins, { type, chainId }) => {
 export const applications = (state = initialState.applications, { type, data }) => {
   switch (type) {
     case actionTypes.addApplicationByChainId:
-      state[data.chainId] = data;
+      state[data.chainID] = data;
       return state;
 
-    case actionTypes.deleteApplicationByChainId:
-      return state.filter((application) => application.chainId !== data);
+    case actionTypes.deleteApplicationByChainId: {
+      const selectedApplication = Object.keys(state).filter(
+        (applicationChainId) => applicationChainId === data,
+      )[0];
+      delete state[selectedApplication];
+      return state;
+    }
 
     default:
       return state;

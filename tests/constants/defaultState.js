@@ -60,4 +60,8 @@ export default {
     current: {},
     list: {},
   },
+  blockChainApplications: {
+    pins: [],
+    applications: {},
+  },
 };
