@@ -25,7 +25,8 @@ const Transactions = ({
   const { t } = useTranslation();
 
   const canLoadMore = useMemo(() =>
-    applications.data.length < applications?.meta?.total, [applications]);
+    (applications.meta
+      ? applications.data.length < applications.meta.total : false), [applications]);
 
   const handleLoadMore = () => {
     applications.loadData({});
