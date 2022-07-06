@@ -3,13 +3,13 @@
 .content {
   width: 100%;
   padding: 0px !important;
-  overflow-x: auto;
 }
 
 .boxHeader {
   font-size: 20px;
   font-weight: 600;
   padding-bottom: 22px !important;
+  color: var(--color-maastricht-blue);
 
   & .filterHolder {
     max-width: 302px;

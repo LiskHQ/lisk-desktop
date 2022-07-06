@@ -44,9 +44,28 @@ const Pin = ({ isPinned, onTogglePin }) => (
   </div>
 );
 
+const SkeletonLoaderRow = () => (
+  <div className={`${styles.skeletonLoader} ${grid.row}`}>
+    <div className={grid['col-xs-4']}>
+      <div />
+      <div />
+    </div>
+    <div className={grid['col-xs-3']}>
+      <div />
+    </div>
+    <div className={grid['col-xs-2']}>
+      <div />
+    </div>
+    <div className={grid['col-xs-3']}>
+      <div />
+    </div>
+  </div>
+);
+
 const BlockchainApplicationRow = ({
   data,
   className,
+  isLoading,
 }) => {
   const { t } = useTranslation();
   const { togglePin } = usePinBlockchainApplication();
@@ -56,19 +75,21 @@ const BlockchainApplicationRow = ({
   };
 
   return (
-    <div data-testid="applications-row" className={`transaction-row-wrapper ${styles.container}`}>
-      <DialogLink
-        className={`${grid.row} ${className} blockchain-application-row`}
-        component="blockChainApplicationDetails"
-        data={{ chainId: data.chainID }}
-      >
-        <Pin isPinned={data.isPinned} onTogglePin={handleTogglePin} />
-        <ChainName title={data.name} logo={liskLogo} />
-        <ChainId id={data.chainID} />
-        <ChainStatus status={data.state} t={t} />
-        <DepositAmount amount={data.depositedLsk} />
-      </DialogLink>
-    </div>
+    !isLoading ? (
+      <div data-testid="applications-row" className={`transaction-row-wrapper ${styles.container}`}>
+        <DialogLink
+          className={`${grid.row} ${className} blockchain-application-row`}
+          component="blockChainApplicationDetails"
+          data={{ chainId: data.chainID }}
+        >
+          <Pin isPinned={data.isPinned} onTogglePin={handleTogglePin} />
+          <ChainName title={data.name} logo={liskLogo} />
+          <ChainId id={data.chainID} />
+          <ChainStatus status={data.state} t={t} />
+          <DepositAmount amount={data.depositedLsk} />
+        </DialogLink>
+      </div>
+    ) : <SkeletonLoaderRow />
   );
 };
 

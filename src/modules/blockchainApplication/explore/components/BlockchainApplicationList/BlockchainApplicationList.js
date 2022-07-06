@@ -15,6 +15,14 @@ import header from './BlockchainApplicationListHeaderMap';
 import styles from './BlockchainApplicationList.css';
 import { BLOCKCHAIN_APPLICATION_LIST_LIMIT } from '../../const/constants';
 
+const SkeletonLoader = () =>
+  (
+    <>
+      {[...new Array(4).keys()].map((index) =>
+        <BlockchainApplicationRow key={`skeleton-${index}`} isLoading />)}
+    </>
+  );
+
 // eslint-disable-next-line max-statements
 const BlockchainApplicationList = ({
   applications: apps,
@@ -27,7 +35,7 @@ const BlockchainApplicationList = ({
   const { pins, checkPinByChainId } = usePinBlockchainApplication();
 
   const applications = useMemo(() => {
-    if (pins.length) {
+    if (pins.length && apps.data.length) {
       return {
         ...apps,
         data: apps.data.map(chainData => ({
@@ -69,8 +77,6 @@ const BlockchainApplicationList = ({
     }, 500);
   }, [searchValue]);
 
-  console.log('>>> ', applications.data);
-
   return (
     <Box main isLoading={applications.isLoading} className="chain-application-box">
       <BoxHeader className={styles.boxHeader}>
@@ -93,8 +99,10 @@ const BlockchainApplicationList = ({
       </BoxHeader>
       <BoxContent className={`${styles.content} chain-application-result`}>
         <Table
+          showHeader
           data={applications.data}
           isLoading={applications.isLoading}
+          loadingState={SkeletonLoader}
           row={BlockchainApplicationRow}
           loadData={handleLoadMore}
           header={header(t)}
