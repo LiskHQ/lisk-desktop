@@ -1,11 +1,12 @@
 /* eslint-disable max-lines */
-import mockBlockchainApplications from '@tests/fixtures/blockchainApplications';
+import mockApplications from '@tests/fixtures/blockchainApplicationsManage';
 import actionTypes from './actionTypes';
 import {
   toggleApplicationPin,
+  setCurrentApplication,
 } from './action';
 
-const chainId = mockBlockchainApplications[0].chainID;
+const chainId = mockApplications[0].chainID;
 
 describe('actions:  blockchainApplication', () => {
   beforeEach(() => {
@@ -19,5 +20,14 @@ describe('actions:  blockchainApplication', () => {
     };
 
     expect(toggleApplicationPin(chainId)).toEqual(expectedAction);
+  });
+
+  it('should create an action to set current application', () => {
+    const expectedAction = {
+      type: actionTypes.setCurrentApplication,
+      application: mockApplications[0],
+    };
+
+    expect(setCurrentApplication(mockApplications[0])).toEqual(expectedAction);
   });
 });

@@ -1,4 +1,4 @@
-const blockchainApplications = [
+const blockchainApplicationsExplore = [
   {
     name: 'Test app',
     chainID: 'aq02qkbb35u4jdq8szo3pnsq',
@@ -9,4 +9,4 @@ const blockchainApplications = [
   },
 ];
 
-export default blockchainApplications;
+export default blockchainApplicationsExplore;
