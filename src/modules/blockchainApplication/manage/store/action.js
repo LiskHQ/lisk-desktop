@@ -5,13 +5,16 @@ import actionTypes from './actionTypes';
  *
  * @returns {Object} - Action object
  */
-//
-// eslint-disable-next-line import/prefer-default-export
 export const toggleApplicationPin = (chainId) => ({
   type: actionTypes.toggleApplicationPin,
   chainId,
 });
 
+/**
+ * Trigger this action to set current blockchain application
+ *
+ * @returns {Object} - Action object
+ */
 export const setCurrentApplication = (application) => ({
   type: actionTypes.setCurrentApplication,
   application,
