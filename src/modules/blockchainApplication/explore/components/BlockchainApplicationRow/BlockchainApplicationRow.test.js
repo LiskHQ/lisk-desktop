@@ -1,5 +1,5 @@
 import { fireEvent, screen } from '@testing-library/react';
-import mockBlockchainApplications from '@tests/fixtures/blockchainApplications';
+import mockBlockchainApplications from '@tests/fixtures/blockchainApplicationsExplore';
 import { renderWithRouter } from 'src/utils/testHelpers';
 import { addSearchParamsToUrl } from 'src/utils/searchParams';
 import BlockchainApplicationRow from '.';

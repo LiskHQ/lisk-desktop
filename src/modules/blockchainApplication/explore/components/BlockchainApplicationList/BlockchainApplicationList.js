@@ -15,7 +15,7 @@ import styles from './BlockchainApplicationList.css';
 import { BLOCKCHAIN_APPLICATION_LIST_LIMIT } from '../../const/constants';
 
 // eslint-disable-next-line max-statements
-const Transactions = ({
+const BlockchainApplicationList = ({
   applications,
   applyFilters,
   filters,
@@ -92,4 +92,4 @@ const Transactions = ({
   );
 };
 
-export default Transactions;
+export default BlockchainApplicationList;

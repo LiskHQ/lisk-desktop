@@ -1,6 +1,6 @@
 /* eslint-disable */
 import { ss, urls } from '../../../constants';
-import mockBlockchainApplications from '../../../fixtures/blockchainApplications';
+import mockBlockchainApplications from '../../../fixtures/blockchainApplicationsExplore';
 import { Given, Then } from 'cypress-cucumber-preprocessor/steps';
 import moment from 'moment';
 
