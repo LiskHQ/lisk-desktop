@@ -1,9 +1,7 @@
 import React, {
   useCallback, useMemo, useRef, useState,
 } from 'react';
-import { useSelector } from 'react-redux';
 import { useTranslation } from 'react-i18next';
-import { debounce } from 'lodash';
 import BoxHeader from 'src/theme/box/header';
 import Box from 'src/theme/box';
 import BoxContent from 'src/theme/box/content';
@@ -11,10 +9,6 @@ import grid from 'flexboxgrid/dist/flexboxgrid.css';
 import Table from 'src/theme/table';
 import { Input } from 'src/theme';
 import Icon from 'src/theme/Icon';
-import {
-  selectCurrentBlockHeight,
-  selectActiveToken,
-} from 'src/redux/selectors';
 import BlockchainApplicationRow from '../BlockchainApplicationRow';
 import header from './BlockchainApplicationListHeaderMap';
 import styles from './BlockchainApplicationList.css';
@@ -22,16 +16,12 @@ import { BLOCKCHAIN_APPLICATION_LIST_LIMIT } from '../../const/constants';
 
 // eslint-disable-next-line max-statements
 const Transactions = ({
-  sort,
-  changeSort,
   applications,
   applyFilters,
   filters,
 }) => {
-  const currentBlockHeight = useSelector(selectCurrentBlockHeight);
-  const activeToken = useSelector(selectActiveToken);
   const [searchValue, setSearchValue] = useState('');
-  const lastSearchValue = useRef('');
+  const debounceTimeout = useRef(null);
   const { t } = useTranslation();
 
   const canLoadMore = useMemo(() =>
@@ -50,17 +40,16 @@ const Transactions = ({
   const onSearchApplication = useCallback(({ target }) => {
     const value = target.value;
     setSearchValue(value);
-    debounce(() => {
-      lastSearchValue.current = value;
-      if (lastSearchValue.current === searchValue) return;
+    clearTimeout(debounceTimeout.current);
 
+    debounceTimeout.current = setTimeout(() => {
       applyFilters({
         ...filters,
         search: value,
         offset: 0,
         limit: BLOCKCHAIN_APPLICATION_LIST_LIMIT,
       });
-    }, 500)();
+    }, 500);
   }, [searchValue]);
 
   return (
@@ -74,7 +63,7 @@ const Transactions = ({
             <Input
               icon={<Icon className={styles.searchIcon} name="searchActive" />}
               className={styles.chainSearch}
-              name="filter"
+              name="application-filter"
               value={searchValue}
               placeholder={t('Search application')}
               onChange={onSearchApplication}
@@ -89,14 +78,8 @@ const Transactions = ({
           isLoading={applications.isLoading}
           row={BlockchainApplicationRow}
           loadData={handleLoadMore}
-          additionalRowProps={{
-            currentBlockHeight,
-            activeToken,
-            layout: 'full',
-          }}
-          header={header(changeSort, t)}
+          header={header(t)}
           headerClassName={styles.tableHeader}
-          currentSort={sort}
           canLoadMore={canLoadMore}
           error={applications.error}
           emptyState={{

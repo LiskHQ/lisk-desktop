@@ -1,8 +1,8 @@
 import React from 'react';
+import { useTranslation } from 'react-i18next';
 import grid from 'flexboxgrid/dist/flexboxgrid.css';
 import DialogLink from 'src/theme/dialog/link';
 import TokenAmount from 'src/modules/token/fungible/components/tokenAmount';
-import { useTranslation } from 'react-i18next';
 import liskLogo from '../../../../../../setup/react/assets/images/LISK.png';
 import styles from './BlockchainApplicationRow.css';
 
@@ -13,24 +13,24 @@ const DepositAmount = ({ amount }) => (
 );
 
 const ChainId = ({ id }) => (
-  <span className={`${styles.chainId} ${grid['col-xs-3']}`}>
+  <div className={`${styles.chainId} ${grid['col-xs-3']}`}>
     <span>{id}</span>
-  </span>
+  </div>
 );
 
 const ChainStatus = ({ status, t }) => (
-  <span className={grid['col-xs-2']}>
+  <div className={grid['col-xs-2']}>
     <span className={`${styles.statusChip} ${styles[status]}`}>
       {t(status)}
     </span>
-  </span>
+  </div>
 );
 
 const ChainName = ({ title, logo }) => (
-  <span className={`${grid['col-xs-4']} ${styles.chainName}`}>
+  <div className={`${grid['col-xs-4']} ${styles.chainName}`}>
     <img src={logo} />
-    {title}
-  </span>
+    <span>{title}</span>
+  </div>
 );
 
 const BlockchainApplicationRow = ({
@@ -40,16 +40,16 @@ const BlockchainApplicationRow = ({
   const { t } = useTranslation();
 
   return (
-    <div className={`transaction-row-wrapper ${styles.container}`}>
+    <div data-testid="applications-row" className={`transaction-row-wrapper ${styles.container}`}>
       <DialogLink
         className={`${grid.row} ${className} blockchain-application-row`}
-        component="blockchainApplicationDetails"
+        component="blockChainApplicationDetails"
         data={{ chainId: data.chainID }}
       >
         <ChainName title={data.name} logo={liskLogo} />
         <ChainId id={data.chainID} />
         <ChainStatus status={data.state} t={t} />
-        <DepositAmount amount={4000000} />
+        <DepositAmount amount={data.depositedLsk} />
       </DialogLink>
     </div>
   );

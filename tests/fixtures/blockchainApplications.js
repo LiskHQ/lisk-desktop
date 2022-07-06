@@ -6,6 +6,7 @@ const blockchainApplications = [
     address: 'lsk24cd35u4jdq8szo3pnsqe5dsxwrnazyqqqg5eu',
     lastCertificateHeight: 1000,
     lastUpdated: 123456789,
+    depositedLsk: 50000000,
   },
 ];
 
