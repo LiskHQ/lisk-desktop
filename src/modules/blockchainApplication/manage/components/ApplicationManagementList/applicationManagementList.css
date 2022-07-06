@@ -4,6 +4,5 @@
   position: absolute;
   top: 44px;
   right: 22px;
-  min-width: 350px;
-  min-height: 100px;
+  max-width: 400px;
 }
