@@ -12,7 +12,7 @@ export const toggleApplicationPin = (chainId) => ({
   chainId,
 });
 
-export const filterApplicationsByChainId = (chainId) => ({
-  type: actionTypes.filterApplicationsByChainId,
+export const deleteApplication = (chainId) => ({
+  type: actionTypes.deleteApplicationByChainId,
   data: chainId,
 });

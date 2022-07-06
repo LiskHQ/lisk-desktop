@@ -10,7 +10,7 @@ import actionTypes from './actionTypes';
  */
 const initialState = {
   pins: [],
-  applications: [],
+  applications: {},
 };
 
 /**
@@ -33,8 +33,8 @@ export const pins = (state = initialState.pins, { type, chainId }) => {
 
 export const applications = (state = initialState.applications, { type, data: chainId }) => {
   switch (type) {
-    case actionTypes.filterApplicationsByChainId:
-      return state.filter((application) => application.chainId === chainId);
+    case actionTypes.deleteApplicationByChainId:
+      return state.filter((application) => application.chainId !== chainId);
 
     default:
       return state;
