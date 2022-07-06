@@ -1,7 +1,7 @@
 import React from 'react';
 import { useTranslation } from 'react-i18next';
 import { Link } from 'react-router-dom';
-import { useCurrentApplication } from '@blockchainApplication/manage/hooks/useCurrentApplication.js';
+import { useCurrentApplication } from '@blockchainApplication/manage/hooks/useCurrentApplication';
 import Box from 'src/theme/box';
 import BoxHeader from 'src/theme/box/header';
 import BoxContent from 'src/theme/box/content';
@@ -35,7 +35,8 @@ const ApplicationListItem = ({
 );
 
 const ApplicationList = ({ apps }) => {
-  const [currentApplication, setApplication] = useCurrentApplication();
+  let [currentApplication, setApplication] = useCurrentApplication();
+  currentApplication = { chainId: 1 };
 
   return (
     <div>
@@ -60,7 +61,7 @@ const ApplicationManagementList = () => {
       </BoxHeader>
       <BoxContent className={styles.chartBox}>
         <ApplicationList apps={[
-          { name: 'LISK' }, { name: 'Enevti' }, { name: 'DoEdu' },
+          { chainId: 1, name: 'LISK' }, { chainId: 2, name: 'Enevti' }, { chainId: 3, name: 'DoEdu' },
         ]}
         />
       </BoxContent>
