@@ -31,10 +31,14 @@ export const pins = (state = initialState.pins, { type, chainId }) => {
   }
 };
 
-export const applications = (state = initialState.applications, { type, data: chainId }) => {
+export const applications = (state = initialState.applications, { type, data }) => {
   switch (type) {
+    case actionTypes.addApplicationByChainId:
+      state[data.chainId] = data;
+      return state;
+
     case actionTypes.deleteApplicationByChainId:
-      return state.filter((application) => application.chainId !== chainId);
+      return state.filter((application) => application.chainId !== data);
 
     default:
       return state;

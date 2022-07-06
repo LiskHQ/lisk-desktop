@@ -5,11 +5,15 @@ import actionTypes from './actionTypes';
  *
  * @returns {Object} - Action object
  */
-//
-// eslint-disable-next-line import/prefer-default-export
+
 export const toggleApplicationPin = (chainId) => ({
   type: actionTypes.toggleApplicationPin,
   chainId,
+});
+
+export const addApplication = (application) => ({
+  type: actionTypes.addApplicationByChainId,
+  data: application,
 });
 
 export const deleteApplication = (chainId) => ({
