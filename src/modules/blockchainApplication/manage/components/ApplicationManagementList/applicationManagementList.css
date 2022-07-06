@@ -6,3 +6,10 @@
   right: 22px;
   max-width: 400px;
 }
+
+.appAvatar {
+  background-color: grey;
+  border-radius: 20px;
+  width: 38px;
+  height: 38px;
+}
