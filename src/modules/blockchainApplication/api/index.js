@@ -17,7 +17,6 @@ const httpPaths = {
  * @returns {Promise} Blockchain application details API call
  */
 
-// eslint-disable-next-line import/prefer-default-export
 export const getApplication = ({
   params, network, baseUrl,
 }) => http({

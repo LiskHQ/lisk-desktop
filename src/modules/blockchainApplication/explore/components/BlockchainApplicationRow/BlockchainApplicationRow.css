@@ -1,17 +1,11 @@
 @import '../../../../../../setup/react/app/mixins.css';
 
-.tooltip {
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
+.container {
+  border-top: 1px container solid;
 }
 
 .content {
   padding: 0 !important;
-}
-
-.tooltipOffset {
-  left: -145px;
 }
 
 .chainId {
@@ -20,6 +14,12 @@
   display: flex;
   flex-direction: column;
   align-items: flex-start;
+
+  & > span {
+    width: 100%;
+    text-overflow: ellipsis;
+    overflow: hidden;
+  }
 }
 
 .amount {

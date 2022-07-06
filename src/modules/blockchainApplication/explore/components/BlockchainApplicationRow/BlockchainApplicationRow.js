@@ -40,9 +40,9 @@ const BlockchainApplicationRow = ({
   const { t } = useTranslation();
 
   return (
-    <div className="transaction-row-wrapper">
+    <div className={`transaction-row-wrapper ${styles.container}`}>
       <DialogLink
-        className={`${grid.row} ${styles.container} ${className} blockchain-application-row`}
+        className={`${grid.row} ${className} blockchain-application-row`}
         component="blockchainApplicationDetails"
         data={{ chainId: data.chainID }}
       >

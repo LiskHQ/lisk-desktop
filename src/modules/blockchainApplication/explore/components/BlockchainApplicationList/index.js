@@ -5,7 +5,10 @@ import { withRouter } from 'react-router-dom';
 import mockBlockchainApplications from '@tests/fixtures/blockchainApplications';
 import withData from 'src/utils/withData';
 import { parseSearchParams } from 'src/utils/searchParams';
+import withFilters from 'src/utils/withFilters';
 import BlockchainApplicationList from './BlockchainApplicationList';
+
+const defaultUrlSearchParams = { search: '' };
 
 const apis = {
   applications: {
@@ -25,4 +28,5 @@ const apis = {
 export default compose(
   withRouter,
   withData(apis),
+  withFilters('applications', defaultUrlSearchParams),
 )(BlockchainApplicationList);

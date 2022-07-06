@@ -9,4 +9,19 @@
   font-size: 20px;
   font-weight: 600;
   padding-bottom: 22px !important;
+
+  & .filterHolder {
+    max-width: 302px;
+  }
+}
+
+.searchIcon {
+  width: 20px;
+  height: 20px;
+  margin-top: 5px;
+  margin-left: -4px;
+}
+
+.chainSearch {
+  border-radius: 40px;
 }
