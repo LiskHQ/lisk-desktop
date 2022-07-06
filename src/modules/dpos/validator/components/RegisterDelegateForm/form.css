@@ -38,10 +38,6 @@
       margin-top: 25px;
     }
 
-    & .inputContainer {
-      margin-bottom: 16px;
-    }
-
     & > .link {
       @mixin contentLargest bold;
 
@@ -50,14 +46,14 @@
       text-decoration: none;
     }
 
-    & > .usernameLabel {
+    & > .label {
       @mixin contentNormal bold;
 
       color: var(--color-maastricht-blue);
       margin: 22px 0 10px;
     }
 
-    & .inputUsername {
+    & .input {
       padding: 8px 14px;
     }
 
