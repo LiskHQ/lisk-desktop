@@ -14,14 +14,7 @@ import BlockchainApplicationRow from '../BlockchainApplicationRow';
 import header from './BlockchainApplicationListHeaderMap';
 import styles from './BlockchainApplicationList.css';
 import { BLOCKCHAIN_APPLICATION_LIST_LIMIT } from '../../const/constants';
-
-const SkeletonLoader = () =>
-  (
-    <>
-      {[...new Array(4).keys()].map((index) =>
-        <BlockchainApplicationRow key={`skeleton-${index}`} isLoading />)}
-    </>
-  );
+import BlockchainApplicationSkeleton from '../BlockchainApplicationSkeleton';
 
 // eslint-disable-next-line max-statements
 const BlockchainApplicationList = ({
@@ -32,7 +25,7 @@ const BlockchainApplicationList = ({
   const [searchValue, setSearchValue] = useState('');
   const debounceTimeout = useRef(null);
   const { t } = useTranslation();
-  const { pins, checkPinByChainId } = usePinBlockchainApplication();
+  const { pins, checkPinByChainId, togglePin } = usePinBlockchainApplication();
 
   const applications = useMemo(() => {
     if (pins.length && apps.data.length) {
@@ -102,13 +95,17 @@ const BlockchainApplicationList = ({
           showHeader
           data={applications.data}
           isLoading={applications.isLoading}
-          loadingState={SkeletonLoader}
+          loadingState={BlockchainApplicationSkeleton}
           row={BlockchainApplicationRow}
           loadData={handleLoadMore}
           header={header(t)}
           headerClassName={styles.tableHeader}
           canLoadMore={canLoadMore}
           error={applications.error}
+          additionalRowProps={{
+            t,
+            togglePin,
+          }}
           emptyState={{
             message: t('There are no blockchain applications.'),
           }}

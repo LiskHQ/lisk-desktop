@@ -1,10 +1,8 @@
-import React from 'react';
-import { useTranslation } from 'react-i18next';
+import React, { useCallback } from 'react';
 import grid from 'flexboxgrid/dist/flexboxgrid.css';
 import DialogLink from 'src/theme/dialog/link';
 import { TertiaryButton } from 'src/theme/buttons';
 import Icon from 'src/theme/Icon';
-import { usePinBlockchainApplication } from '@blockchainApplication/manage/hooks/usePinBlockchainApplication';
 import TokenAmount from 'src/modules/token/fungible/components/tokenAmount';
 import liskLogo from '../../../../../../setup/react/assets/images/LISK.png';
 import styles from './BlockchainApplicationRow.css';
@@ -44,52 +42,31 @@ const Pin = ({ isPinned, onTogglePin }) => (
   </div>
 );
 
-const SkeletonLoaderRow = () => (
-  <div className={`${styles.skeletonLoader} ${grid.row}`}>
-    <div className={grid['col-xs-4']}>
-      <div />
-      <div />
-    </div>
-    <div className={grid['col-xs-3']}>
-      <div />
-    </div>
-    <div className={grid['col-xs-2']}>
-      <div />
-    </div>
-    <div className={grid['col-xs-3']}>
-      <div />
-    </div>
-  </div>
-);
-
 const BlockchainApplicationRow = ({
   data,
   className,
-  isLoading,
+  togglePin,
+  t,
 }) => {
-  const { t } = useTranslation();
-  const { togglePin } = usePinBlockchainApplication();
-  const handleTogglePin = (event) => {
+  const handleTogglePin = useCallback((event) => {
     event.stopPropagation();
     togglePin(data.chainID);
-  };
+  }, [togglePin]);
 
   return (
-    !isLoading ? (
-      <div data-testid="applications-row" className={`transaction-row-wrapper ${styles.container}`}>
-        <DialogLink
-          className={`${grid.row} ${className} blockchain-application-row`}
-          component="blockChainApplicationDetails"
-          data={{ chainId: data.chainID }}
-        >
-          <Pin isPinned={data.isPinned} onTogglePin={handleTogglePin} />
-          <ChainName title={data.name} logo={liskLogo} />
-          <ChainId id={data.chainID} />
-          <ChainStatus status={data.state} t={t} />
-          <DepositAmount amount={data.depositedLsk} />
-        </DialogLink>
-      </div>
-    ) : <SkeletonLoaderRow />
+    <div data-testid="applications-row" className={`transaction-row-wrapper ${styles.container}`}>
+      <DialogLink
+        className={`${grid.row} ${className} blockchain-application-row`}
+        component="blockChainApplicationDetails"
+        data={{ chainId: data.chainID }}
+      >
+        <Pin isPinned={data.isPinned} onTogglePin={handleTogglePin} />
+        <ChainName title={data.name} logo={liskLogo} />
+        <ChainId id={data.chainID} />
+        <ChainStatus status={data.state} t={t} />
+        <DepositAmount amount={data.depositedLsk} />
+      </DialogLink>
+    </div>
   );
 };
 

@@ -1,10 +1,20 @@
 import { fireEvent, screen } from '@testing-library/react';
 import mockBlockchainApplications from '@tests/fixtures/blockchainApplicationsExplore';
+import { usePinBlockchainApplication } from '@blockchainApplication/manage/hooks/usePinBlockchainApplication';
 import { renderWithRouter } from 'src/utils/testHelpers';
 import BlockchainApplicationList from './BlockchainApplicationList';
 import { BLOCKCHAIN_APPLICATION_LIST_LIMIT } from '../../const/constants';
 
 jest.useFakeTimers();
+jest.mock('@blockchainApplication/manage/hooks/usePinBlockchainApplication');
+const mockTogglePin = jest.fn();
+const mockedPins = [mockBlockchainApplications[0].chainID];
+
+usePinBlockchainApplication.mockReturnValue({
+  togglePin: mockTogglePin,
+  pins: mockedPins,
+  checkPinByChainId: jest.fn().mockReturnValue(true),
+});
 
 describe('BlockchainApplicationList', () => {
   const props = {
@@ -33,7 +43,7 @@ describe('BlockchainApplicationList', () => {
 
   it('should display the right number of applications', () => {
     const blockchainAppRow = screen.getAllByTestId('applications-row');
-    expect(blockchainAppRow).toHaveLength(1);
+    expect(blockchainAppRow).toHaveLength(mockBlockchainApplications.length);
   });
 
   it('should apply search filter', () => {
@@ -46,5 +56,12 @@ describe('BlockchainApplicationList', () => {
       offset: 0,
       limit: BLOCKCHAIN_APPLICATION_LIST_LIMIT,
     }));
+  });
+
+  it('should call the toggle function for the particular blockchain application been toggled', () => {
+    const { chainID } = mockBlockchainApplications[0];
+
+    fireEvent.click(screen.getAllByTestId('pin-button')[0]);
+    expect(mockTogglePin).toHaveBeenCalledWith(chainID);
   });
 });
