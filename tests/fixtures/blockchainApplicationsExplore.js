@@ -1,4 +1,4 @@
-const blockchainApplications = [
+const blockchainApplicationsExplore = [
   {
     name: 'Test app',
     chainID: 'aq02qkbb35u4jdq8szo3pnsq',
@@ -17,7 +17,7 @@ const blockchainApplications = [
   },
 ];
 
-export const applicationsMap = blockchainApplications.reduce(
+export const applicationsMap = blockchainApplicationsExplore.reduce(
   (obj, val) => {
     obj[val.chainID] = val;
     return obj;
@@ -25,4 +25,4 @@ export const applicationsMap = blockchainApplications.reduce(
   {},
 );
 
-export default blockchainApplications;
+export default blockchainApplicationsExplore;

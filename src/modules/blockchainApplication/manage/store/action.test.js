@@ -1,14 +1,15 @@
 /* eslint-disable max-lines */
-import mockBlockchainApplications from '@tests/fixtures/blockchainApplications';
+import mockApplications from '@tests/fixtures/blockchainApplicationsManage';
 import actionTypes from './actionTypes';
 import {
   toggleApplicationPin,
   addApplication,
   deleteApplication,
+  setCurrentApplication,
 } from './action';
 
-const chainId = mockBlockchainApplications[0].chainID;
-const sampleBlockchainApplication = mockBlockchainApplications[0];
+const chainId = mockApplications[0].chainID;
+const sampleBlockchainApplication = mockApplications[0];
 
 describe('actions:  blockchainApplication', () => {
   beforeEach(() => {
@@ -27,7 +28,7 @@ describe('actions:  blockchainApplication', () => {
   it('should create an action to add blockchain application', () => {
     const expectedAction = {
       type: actionTypes.addApplicationByChainId,
-      data: mockBlockchainApplications[0],
+      data: mockApplications[0],
     };
 
     expect(addApplication(sampleBlockchainApplication)).toEqual(expectedAction);
@@ -40,5 +41,14 @@ describe('actions:  blockchainApplication', () => {
     };
 
     expect(deleteApplication(chainId)).toEqual(expectedAction);
+  });
+
+  it('should create an action to set current application', () => {
+    const expectedAction = {
+      type: actionTypes.setCurrentApplication,
+      application: mockApplications[0],
+    };
+
+    expect(setCurrentApplication(mockApplications[0])).toEqual(expectedAction);
   });
 });

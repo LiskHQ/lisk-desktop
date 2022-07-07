@@ -11,6 +11,7 @@ import actionTypes from './actionTypes';
 const initialState = {
   pins: [],
   applications: {},
+  current: null,
 };
 
 /**
@@ -31,6 +32,11 @@ export const pins = (state = initialState.pins, { type, chainId }) => {
   }
 };
 
+/**
+ *
+ * @param {Object} state
+ * @param {type: String, data: Object} action
+ */
 export const applications = (state = initialState.applications, { type, data }) => {
   switch (type) {
     case actionTypes.addApplicationByChainId:
@@ -44,7 +50,20 @@ export const applications = (state = initialState.applications, { type, data }) 
       delete state[selectedApplication];
       return state;
     }
+    default:
+      return state;
+  }
+};
 
+/**
+ *
+ * @param {Object} state
+ * @param {type: String, encryptedAccount: Object} action
+ */
+export const current = (state = null, { type, application }) => {
+  switch (type) {
+    case actionTypes.setCurrentApplication:
+      return application;
     default:
       return state;
   }
@@ -54,10 +73,10 @@ const persistConfig = {
   storage,
   key: 'blockChainApplications',
   whitelist: ['pins', 'applications'],
-  blacklist: [],
+  blacklist: ['current'],
 };
 
-const blockChainApplicationsReducer = combineReducers({ pins, applications });
+const blockChainApplicationsReducer = combineReducers({ pins, applications, current });
 
 // eslint-disable-next-line import/prefer-default-export
 export const blockChainApplications = persistReducer(persistConfig, blockChainApplicationsReducer);

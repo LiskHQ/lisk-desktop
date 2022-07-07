@@ -1,5 +1,6 @@
-import mockPinnedApplications, { applicationsMap } from '@tests/fixtures/blockchainApplications';
-import { selectPinnedApplications, selectApplications } from './selectors';
+import mockPinnedApplications, { applicationsMap } from '@tests/fixtures/blockchainApplicationsExplore';
+import mockApplications from '@tests/fixtures/blockchainApplicationsManage';
+import { selectPinnedApplications, selectApplications, selectCurrentApplication } from './selectors';
 
 describe('Application Explorer selector', () => {
   it('Should return list of pinned applications if action type is triggered', async () => {
@@ -10,5 +11,9 @@ describe('Application Explorer selector', () => {
   it('Should return list of all applications if action type is triggered', async () => {
     const state = { blockChainApplications: { applications: applicationsMap } };
     expect(selectApplications(state)).toEqual(applicationsMap);
+  });
+  it('Should return current application if setCurrentApplication action type is tiggered', async () => {
+    const state = { blockChainApplications: { current: mockApplications[0] } };
+    expect(selectCurrentApplication(state)).toEqual(mockApplications[0]);
   });
 });
