@@ -10,9 +10,12 @@ function useApplicationManagement() {
     (application) => dispatch(addApplication(application)),
     [],
   );
-  const filterApplicationsByChainId = (chainId) =>
-    Object.keys(applications).filter((application) => application.chainID === chainId)[0];
-  const getApplicationByChainId = applications[filterApplicationsByChainId];
+  const getApplicationByChainId = (chainId) => {
+    const filterApplicationsByChainId = Object.keys(applications).filter(
+      (applicationChainId) => applicationChainId === chainId,
+    )[0];
+    return applications[filterApplicationsByChainId];
+  };
   const deleteApplicationByChainId = useCallback(
     (chainId) => dispatch(deleteApplication(chainId)),
     [],

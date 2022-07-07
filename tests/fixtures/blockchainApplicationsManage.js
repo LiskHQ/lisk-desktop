@@ -17,7 +17,7 @@ const blockchainApplicationsManage = [
   },
   {
     name: 'Kalipo',
-    chainID: 'aq86llsb35u4syc8aet7xenf',
+    chainID: 'aq25derd17a4syc8aet3pryt',
     state: 'active',
     nodeURL: ['https://service.kalipo.com'],
     logoURL: 'https://service.kalipo.com',
@@ -25,7 +25,7 @@ const blockchainApplicationsManage = [
   },
   {
     name: 'DoEdu',
-    chainID: 'aq86llsb35u4syc8aet7xenf',
+    chainID: 'aq96eeqk77r4syc8aet9fcey',
     state: 'active',
     nodeURL: ['https://service.doedu.com'],
     logoURL: 'https://service.doedu.com',
