@@ -1,5 +1,6 @@
 import { renderHook, act } from '@testing-library/react-hooks';
 import mockApplications, { applicationsMap } from '@tests/fixtures/blockchainApplicationsManage';
+import flushPromises from '@tests/unit-test-utils/flushPromises';
 import actionTypes from '../store/actionTypes';
 import useApplicationManagement from './useApplicationManagement';
 
@@ -9,9 +10,16 @@ const mockState = {
     applications: applicationsMap,
   },
 };
+const mockSetApplication = jest.fn();
+
 jest.mock('react-redux', () => ({
   useSelector: jest.fn().mockImplementation((fn) => fn(mockState)),
   useDispatch: () => mockDispatch,
+}));
+jest.mock('./useCurrentApplication', () => ({
+  useCurrentApplication: jest.fn(() => (
+    [mockApplications[1], mockSetApplication]
+  )),
 }));
 
 describe('useApplicationManagement hook', () => {
@@ -47,12 +55,28 @@ describe('useApplicationManagement hook', () => {
     const { deleteApplicationByChainId } = result.current;
     const expectedAction = {
       type: actionTypes.deleteApplicationByChainId,
-      data: mockApplications[1],
+      data: mockApplications[2].chainID,
     };
     act(() => {
-      deleteApplicationByChainId(mockApplications[1]);
+      deleteApplicationByChainId(mockApplications[2].chainID);
     });
     expect(mockDispatch).toHaveBeenCalledTimes(1);
     expect(mockDispatch).toHaveBeenCalledWith(expectedAction);
+  });
+
+  it('deleteApplicationByChainId should dispatch an action and set application to Lisk if current application is being deleted', async () => {
+    const { deleteApplicationByChainId } = result.current;
+    const expectedAction = {
+      type: actionTypes.deleteApplicationByChainId,
+      data: mockApplications[1].chainID,
+    };
+    act(() => {
+      deleteApplicationByChainId(mockApplications[1].chainID);
+    });
+    await flushPromises();
+    expect(mockDispatch).toHaveBeenCalledTimes(1);
+    expect(mockDispatch).toHaveBeenCalledWith(expectedAction);
+    expect(mockSetApplication).toHaveBeenCalledTimes(1);
+    expect(mockSetApplication).toHaveBeenCalledWith(mockApplications[0]);
   });
 });

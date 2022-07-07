@@ -40,16 +40,19 @@ export const pins = (state = initialState.pins, { type, chainId }) => {
 export const applications = (state = initialState.applications, { type, data }) => {
   switch (type) {
     case actionTypes.addApplicationByChainId:
-      state[data.chainID] = data;
+      // In cases where a new node for an existing application is being added,
+      // the new node url should be appended to the nodeURL array of the application
+      if (data.chainID in state) {
+        state[data.chainID].nodeURL.push(data.nodeURL);
+      } else {
+        state[data.chainID] = data;
+      }
       return state;
 
-    case actionTypes.deleteApplicationByChainId: {
-      const selectedApplication = Object.keys(state).filter(
-        (applicationChainId) => applicationChainId === data,
-      )[0];
-      delete state[selectedApplication];
+    case actionTypes.deleteApplicationByChainId:
+      delete state[data];
       return state;
-    }
+
     default:
       return state;
   }
