@@ -55,6 +55,7 @@ const defaultStore = {
   blockChainApplications: {
     pins: [],
     applications: {},
+    current: null,
   },
 };
 

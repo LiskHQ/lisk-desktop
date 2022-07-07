@@ -58,7 +58,7 @@ export const applications = (state = initialState.applications, { type, data }) 
 /**
  *
  * @param {Object} state
- * @param {type: String, encryptedAccount: Object} action
+ * @param {type: String, application: Object} action
  */
 export const current = (state = null, { type, application }) => {
   switch (type) {

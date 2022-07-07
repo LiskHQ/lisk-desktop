@@ -11,7 +11,7 @@ function useApplicationManagement() {
     [],
   );
   const filterApplicationsByChainId = (chainId) =>
-    Object.keys(applications).filter((application) => application.chainId === chainId)[0];
+    Object.keys(applications).filter((application) => application.chainID === chainId)[0];
   const getApplicationByChainId = applications[filterApplicationsByChainId];
   const deleteApplicationByChainId = useCallback(
     (chainId) => dispatch(deleteApplication(chainId)),

@@ -63,5 +63,6 @@ export default {
   blockChainApplications: {
     pins: [],
     applications: {},
+    current: null,
   },
 };

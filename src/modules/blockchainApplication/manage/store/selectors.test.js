@@ -1,5 +1,5 @@
-import mockPinnedApplications, { applicationsMap } from '@tests/fixtures/blockchainApplicationsExplore';
-import mockApplications from '@tests/fixtures/blockchainApplicationsManage';
+import mockPinnedApplications from '@tests/fixtures/blockchainApplicationsExplore';
+import mockApplications, { applicationsMap } from '@tests/fixtures/blockchainApplicationsManage';
 import { selectPinnedApplications, selectApplications, selectCurrentApplication } from './selectors';
 
 describe('Application Explorer selector', () => {
