@@ -1,6 +1,6 @@
 import React from 'react';
-import { fireEvent, screen } from '@testing-library/react';
 import { MemoryRouter } from 'react-router';
+import { fireEvent, screen } from '@testing-library/react';
 import mockBlockchainApplications from '@tests/fixtures/blockchainApplicationsExplore';
 import { usePinBlockchainApplication } from '@blockchainApplication/manage/hooks/usePinBlockchainApplication';
 import { renderWithRouter } from 'src/utils/testHelpers';

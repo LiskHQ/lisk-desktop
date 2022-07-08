@@ -2,6 +2,7 @@
 import { compose } from 'redux';
 import withData from 'src/utils/withData';
 import ManageBlockchainApplicationsView from '../../components/ManageBlockchainApplications';
+// TODO: this needs to be reinstated upon connection to latest service's apis
 // import { getApps, getStatistics } from '../../../explore/utils/api';
 
 const getStatistics = () => Promise.resolve({

@@ -1,6 +1,7 @@
 /* istanbul ignore file */
 import { compose } from 'redux';
 import withData from 'src/utils/withData';
+// TODO: this needs to be reinstated upon connection to latest service's apis
 // import { getStatistics } from '../../../explore/api';
 // import { getApplications } from '@blockchainApplication/api';
 import mockBlockchainApplications from '@tests/fixtures/blockchainApplicationsExplore';
