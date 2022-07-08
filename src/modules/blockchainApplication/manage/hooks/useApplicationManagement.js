@@ -1,14 +1,40 @@
-import { useCallback } from 'react';
+import { useCallback, useMemo } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import blockchainApplicationsManage from '@tests/fixtures/blockchainApplicationsManage';
-import { addApplication, deleteApplication } from '../store/action';
+import { toast } from 'react-toastify';
+import defaultApps from '@tests/fixtures/blockchainApplicationsManage';
+import { selectActiveTokenNetwork } from 'src/redux/selectors';
+import { loadApplications, addApplication, deleteApplication } from '../store/action';
 import { selectApplications } from '../store/selectors';
 import { useCurrentApplication } from './useCurrentApplication';
+import { usePinBlockchainApplication } from './usePinBlockchainApplication';
 
+// eslint-disable-next-line max-statements
 function useApplicationManagement() {
   const dispatch = useDispatch();
+  const network = useSelector(selectActiveTokenNetwork);
   const [currentApplication, setApplication] = useCurrentApplication();
-  const applications = useSelector(selectApplications);
+  const { checkPinByChainId } = usePinBlockchainApplication();
+  const getAllApplications = async () => {
+    dispatch(loadApplications({ network }));
+  };
+  getAllApplications();
+  const applicationsObject = useSelector(selectApplications);
+  const modifiedDefaultApps = defaultApps.map((app) => ({
+    ...app,
+    isDefault: true,
+  }));
+  const defaultChainIDs = defaultApps.map(app => app.chainID);
+  const appsList = Object.keys(applicationsObject).map((app) => ({
+    ...applicationsObject[app],
+    isDefault: false,
+  }));
+  const applications = useMemo(
+    () => [...appsList, ...modifiedDefaultApps].map((app) => ({
+      ...app,
+      isPinned: checkPinByChainId(app.chainID),
+    })),
+    [applicationsObject, defaultApps],
+  );
 
   const setNewApplication = useCallback(
     (application) => dispatch(addApplication(application)),
@@ -16,18 +42,22 @@ function useApplicationManagement() {
   );
 
   const getApplicationByChainId = (chainId) => {
-    const filterApplicationsByChainId = Object.keys(applications).filter(
+    const filterApplicationsByChainId = Object.keys(applicationsObject).filter(
       (applicationChainId) => applicationChainId === chainId,
     )[0];
-    return applications[filterApplicationsByChainId];
+    return applicationsObject[filterApplicationsByChainId];
   };
 
   const deleteApplicationByChainId = useCallback(
     async (chainId) => {
-      await dispatch(deleteApplication(chainId));
-      if (currentApplication.chainID === chainId) {
-        // Set Lisk as default if application in use is being deleted
-        setApplication(blockchainApplicationsManage[0]);
+      if (defaultChainIDs.includes(chainId)) {
+        toast.error('Default apps can not be deleted');
+      } else {
+        await dispatch(deleteApplication(chainId));
+        if (currentApplication.chainID === chainId) {
+          // Set Lisk as default if application in use is being deleted
+          setApplication(defaultApps[0]);
+        }
       }
     },
     [],

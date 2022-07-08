@@ -9,6 +9,14 @@ const mockState = {
   blockChainApplications: {
     applications: applicationsMap,
   },
+  network: {
+    name: 'testnet',
+    networks: {
+      LSK: {
+        serviceUrl: 'https://service.lisk.com',
+      },
+    },
+  },
 };
 const mockSetApplication = jest.fn();
 

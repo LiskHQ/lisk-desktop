@@ -1,6 +1,6 @@
 const blockchainApplicationsManage = [
   {
-    name: 'Test app',
+    name: 'Lisk',
     chainID: 'aq02qkbb35u4jdq8szo3pnsq',
     state: 'active',
     nodeURL: ['https://service.lisk.com'],
@@ -8,20 +8,20 @@ const blockchainApplicationsManage = [
     lastUpdated: 123456789,
   },
   {
-    name: 'Demo app',
-    chainID: 'aq86llsb35u4syc8aet7xenf',
+    name: 'Colecti',
+    chainID: 'mi34vyyd12g2lkf0rza1irws',
     state: 'active',
-    nodeURL: ['https://service.demoapp.com'],
-    logoURL: 'https://service.demoapp.com',
-    lastUpdated: 456123789,
+    nodeURL: ['https://service.colecti.com'],
+    logoURL: 'https://service.colecti.com',
+    lastUpdated: 123789456,
   },
   {
-    name: 'Kalipo',
-    chainID: 'aq25derd17a4syc8aet3pryt',
+    name: 'Enevti',
+    chainID: 'aq86llsb35u4syc8aet7xenf',
     state: 'active',
-    nodeURL: ['https://service.kalipo.com'],
-    logoURL: 'https://service.kalipo.com',
-    lastUpdated: 789456123,
+    nodeURL: ['https://service.enevti.com'],
+    logoURL: 'https://service.enevti.com',
+    lastUpdated: 456123789,
   },
   {
     name: 'DoEdu',
@@ -30,6 +30,14 @@ const blockchainApplicationsManage = [
     nodeURL: ['https://service.doedu.com'],
     logoURL: 'https://service.doedu.com',
     lastUpdated: 789123456,
+  },
+  {
+    name: 'Kalipo',
+    chainID: 'aq25derd17a4syc8aet3pryt',
+    state: 'active',
+    nodeURL: ['https://service.kalipo.com'],
+    logoURL: 'https://service.kalipo.com',
+    lastUpdated: 789456123,
   },
 ];
 
