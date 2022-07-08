@@ -46,8 +46,6 @@ const BlockchainApplicationList = ({
       ? applications.data.length < applications.meta.total : false), [applications]);
 
   const handleLoadMore = () => {
-    applications.loadData({});
-
     const params = {
       ...filters,
       offset: applications.meta.count + applications.meta.offset,

@@ -1,4 +1,6 @@
+import React from 'react';
 import { fireEvent, screen } from '@testing-library/react';
+import { MemoryRouter } from 'react-router';
 import mockBlockchainApplications from '@tests/fixtures/blockchainApplicationsExplore';
 import { usePinBlockchainApplication } from '@blockchainApplication/manage/hooks/usePinBlockchainApplication';
 import { renderWithRouter } from 'src/utils/testHelpers';
@@ -17,6 +19,7 @@ usePinBlockchainApplication.mockReturnValue({
 });
 
 describe('BlockchainApplicationList', () => {
+  let wrapper;
   const props = {
     applyFilters: jest.fn(),
     filters: jest.fn(),
@@ -30,7 +33,7 @@ describe('BlockchainApplicationList', () => {
 
   beforeEach(() => {
     jest.clearAllMocks();
-    renderWithRouter(BlockchainApplicationList, props);
+    wrapper = renderWithRouter(BlockchainApplicationList, props);
   });
 
   it('should display properly', () => {
@@ -63,5 +66,35 @@ describe('BlockchainApplicationList', () => {
 
     fireEvent.click(screen.getAllByTestId('pin-button')[0]);
     expect(mockTogglePin).toHaveBeenCalledWith(chainID);
+  });
+
+  it('should invoke the load more action', () => {
+    props.applications.isLoading = false;
+    props.applications.meta = {
+      total: mockBlockchainApplications.length + 1,
+      count: mockBlockchainApplications.length,
+      offset: 0,
+    };
+
+    wrapper = renderWithRouter(BlockchainApplicationList, props);
+    fireEvent.click(screen.getByText('Load more'));
+    expect(props.applications.loadData).toHaveBeenCalledWith(expect.objectContaining({
+      offset: props.applications.meta.count + props.applications.meta.offset,
+    }));
+  });
+
+  it('should not have any pinned application', () => {
+    usePinBlockchainApplication.mockReturnValue({
+      togglePin: mockTogglePin,
+      pins: [],
+      checkPinByChainId: jest.fn().mockReturnValue(true),
+    });
+    wrapper.rerender(<MemoryRouter
+      initialEntries={[]}
+    >
+      <BlockchainApplicationList {...props} />
+    </MemoryRouter>);
+
+    expect(screen.getAllByAltText('unpinnedIcon')).toHaveLength(mockBlockchainApplications.length);
   });
 });

@@ -15,7 +15,6 @@ import PassphraseInput from 'src/modules/wallet/components/PassphraseInput/Passp
 import Icon from 'src/theme/Icon';
 import DiscreetModeToggle from 'src/modules/settings/components/discreetModeToggle';
 import NetworkSelector from 'src/modules/settings/components/networkSelector';
-import BlockchainApplicationList from 'src/modules/blockchainApplication/explore/components/BlockchainApplicationList';
 import RecoveryPhrase from '../RecoveryPhrase';
 import styles from './login.css';
 
@@ -87,7 +86,6 @@ const Login = ({
 
   return (
     <>
-      <BlockchainApplicationList />
       <div className={`${styles.login} ${grid.row}`}>
         <div
           className={`${styles.wrapper} ${grid['col-xs-12']} ${grid['col-md-10']} ${grid['col-lg-8']}`}
