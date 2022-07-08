@@ -9,7 +9,7 @@ const blockchainApplicationsExplore = [
     depositedLsk: 50000000,
   },
   {
-    name: 'Test app',
+    name: 'Test app 2',
     chainID: 'ij239sksf5u4jdq8szo3pnsq',
     state: 'active',
     address: 'lsk24cd35u4jdq8ssd03pnsqe5dsxwrnazyqqqg5eu',
