@@ -41,9 +41,9 @@ export const applications = (state = initialState.applications, { type, data }) 
   switch (type) {
     case actionTypes.addApplicationByChainId:
       // In cases where a new node for an existing application is being added,
-      // the new node url should be appended to the nodeURL array of the application
+      // the new service url should be appended to the serviceURLs array of the application
       if (data.chainID in state) {
-        state[data.chainID].nodeURL.push(data.nodeURL);
+        state[data.chainID].serviceURLs.push(data.serviceURLs);
       } else {
         state[data.chainID] = data;
       }

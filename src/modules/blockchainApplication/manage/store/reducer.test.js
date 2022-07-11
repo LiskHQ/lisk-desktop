@@ -31,8 +31,7 @@ describe('BlockchainApplication reducer', () => {
         name: 'New app',
         chainID: 'aq02qkbb35u4jdq2szo6ytre',
         state: 'active',
-        nodeURL: ['https://service.newapp.com'],
-        logoURL: 'https://service.newapp.com',
+        serviceURLs: ['https://service.newapp.com'],
         lastUpdated: 789456123,
       };
       const actionData = {
