@@ -6,7 +6,7 @@ import Box from 'src/theme/box';
 import TokenAmount from '@token/fungible/components/tokenAmount';
 import ValueAndLabel from 'src/modules/transaction/components/TransactionDetails/valueAndLabel';
 import CopyToClipboard from 'src/modules/common/components/copyToClipboard';
-import { TertiaryButton } from 'src/theme/buttons';
+import { TertiaryButton, PrimaryButton, OutlineButton } from 'src/theme/buttons';
 import grid from 'flexboxgrid/dist/flexboxgrid.css';
 import Dialog from '@theme/dialog/dialog';
 import Icon from 'src/theme/Icon';
@@ -14,27 +14,13 @@ import Tooltip from 'src/theme/Tooltip';
 import { parseSearchParams } from 'src/utils/searchParams';
 import { usePinBlockchainApplication } from '@blockchainApplication/manage/hooks/usePinBlockchainApplication';
 import styles from './RemoveApplicationDetails.css';
-import defaultBackgroundImage from '../../../../../../setup/react/assets/images/default-chain-background.png';
 import liskLogo from '../../../../../../setup/react/assets/images/LISK.png';
-
-// TODO: this is a mock response of an application's details
-const application = {
-  data: {
-    name: 'Test app',
-    chainID: 'aq02qkbb35u4jdq8szo3pnsq',
-    state: 'active',
-    address: 'lsk24cd35u4jdq8szo3pnsqe5dsxwrnazyqqqg5eu',
-    lastCertificateHeight: 1000,
-    lastUpdated: 123456789,
-  },
-};
 
 const deposit = 5e10;
 const serviceUrl = 'https://lisk.com/';
-const backgroundImage = null;
 const chainLogo = null;
 
-const BlockchainApplicationDetails = ({ location }) => {
+const BlockchainApplicationDetails = ({ location, application }) => {
   const { t } = useTranslation();
   const chainId = parseSearchParams(location.search).chainId;
   const { checkPinByChainId, togglePin } = usePinBlockchainApplication();
@@ -53,7 +39,7 @@ const BlockchainApplicationDetails = ({ location }) => {
         text: t('Chain ID'),
         toolTipText: t('The chain ID uniquely identifies a chain in the Lisk ecosystem'),
       },
-      className: `${styles.detailContentText} chain-id`,
+      className: `${styles.detailContentText} ${styles.chainId} chain-id`,
       content: chainId,
     },
     {
@@ -76,10 +62,12 @@ const BlockchainApplicationDetails = ({ location }) => {
   return (
     <Dialog hasClose className={`${styles.dialogWrapper} ${grid.row} ${grid['center-xs']}`}>
       <div className={styles.wrapper}>
-        <div className={styles.avatarContainer}>
-          <img src={chainLogo || liskLogo} />
-          <img src={backgroundImage || defaultBackgroundImage} />
-        </div>
+        <Box className={styles.headerContainer}>
+          <p>Remove application</p>
+          <div>
+            <img src={chainLogo || liskLogo} />
+          </div>
+        </Box>
         <Box className={styles.detailsWrapper}>
           <div className={styles.chainNameWrapper}>
             <span className="chain-name-text">{name}</span>
@@ -148,6 +136,18 @@ const BlockchainApplicationDetails = ({ location }) => {
                 </span>
               </ValueAndLabel>
             ))}
+          </Box>
+          <Box className={styles.actionsRow}>
+            <OutlineButton
+              className={`${styles.button} ${styles.cancelButton}`}
+            >
+              {t('Cancel')}
+            </OutlineButton>
+            <PrimaryButton
+              className={`${styles.button}`}
+            >
+              {t('Remove application now')}
+            </PrimaryButton>
           </Box>
         </Box>
       </div>

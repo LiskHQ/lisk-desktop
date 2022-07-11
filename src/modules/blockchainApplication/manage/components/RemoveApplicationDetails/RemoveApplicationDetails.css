@@ -4,7 +4,7 @@
   border: none;
 
   & > span {
-    color: white !important;
+    color: var(--color-black) !important;
   }
 }
 
@@ -16,38 +16,46 @@
   border-radius: 16px;
   overflow: hidden;
   background-color: var(--color-white);
-
-  & > div:first-child {
-    width: 100%;
-    height: 130px;
-    background: linear-gradient(268.31deg, #0c152e 0%, #254898 100%);
-  }
 }
 
-.avatarContainer {
+.headerContainer {
   width: 100%;
-  height: 51px;
   display: flex;
-  position: relative;
   flex-direction: column;
   align-items: center;
   justify-content: flex-start;
+  margin-bottom: 14px;
 
-  & > img:first-child {
-    position: absolute;
+  & > p {
+    font-size: 20px;
+    font-weight: 600;
+    color: var(--color-maastricht-blue);
+    margin-top: 32px;
+    margin-bottom: 34px;
+  }
+
+  & > div > img {
     display: flex;
     align-items: center;
     justify-content: center;
-    bottom: -39px;
-    width: 77px;
-    height: 77px;
+    width: 70px;
+    height: 70px;
     background-color: white;
     border-radius: 40px;
   }
 
-  & > img:nth-child(2) {
-    width: 100%;
-    height: 100%;
+  & > div::after,
+  & > div::before {
+    content: '';
+    display: block;
+    width: 98px;
+    height: 2px;
+    background-color: var(--color-red);
+    transform: rotate(-45deg) translateY(-35px) translateX(16px);
+  }
+
+  & > div::before {
+    transform: rotate(45deg) translateX(16px) translateY(35px);
   }
 }
 
@@ -57,7 +65,6 @@
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  margin-top: 51px;
 }
 
 .chainNameWrapper {
@@ -79,6 +86,8 @@
 }
 
 .addressRow {
+  margin-top: -2px;
+
   & span {
     font-size: 14px;
   }
@@ -100,7 +109,7 @@
 .balanceRow {
   display: flex;
   align-items: center;
-  margin-top: 22px;
+  margin-top: 17px;
   column-gap: 8px;
 
   & > span:first-child {
@@ -113,6 +122,32 @@
     font-weight: 600;
     color: var(--color-link-active);
   }
+}
+
+.cancelButton {
+  color: var(--color-maastricht-blue);
+}
+
+.button {
+  @mixin contentLarge semi-bold;
+
+  width: 100%;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  border-radius: 10px;
+}
+
+.actionsRow {
+  width: 100%;
+  padding: 32px;
+  padding-top: 0px;
+  box-sizing: border-box;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+  column-gap: 16px;
 }
 
 .footerDetailsRow {
@@ -131,6 +166,13 @@
 
   & .detailContentText {
     font-size: 15px;
+  }
+
+  & .chainId {
+    width: 100%;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    text-align: left;
   }
 
   & .statusChip {

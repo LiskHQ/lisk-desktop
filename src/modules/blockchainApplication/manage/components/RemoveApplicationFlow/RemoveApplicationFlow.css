@@ -1,0 +1,18 @@
+.removeApplicationFlowWrapper {
+  align-items: center;
+  display: flex;
+  flex-grow: 1;
+  margin: 0;
+  min-height: 100%;
+  justify-content: center;
+  text-align: center;
+  width: 100%;
+}
+
+.wrapper {
+  align-items: center;
+  display: flex;
+  flex-direction: column;
+  padding: 20px 24px;
+  width: 100%;
+}
