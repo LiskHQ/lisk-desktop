@@ -1,5 +1,4 @@
 import { renderHook, act } from '@testing-library/react-hooks';
-import { toast } from 'react-toastify';
 import mockApplications, { applicationsMap } from '@tests/fixtures/blockchainApplicationsManage';
 import flushPromises from '@tests/unit-test-utils/flushPromises';
 import actionTypes from '../store/actionTypes';
@@ -59,21 +58,13 @@ describe('useApplicationManagement hook', () => {
 
   it('getApplicationByChainId should return an application if chainId exists', () => {
     const { getApplicationByChainId } = result.current;
-    expect(getApplicationByChainId('aq25derd17a4syc8aet3pryt')).toEqual(mockApplications[4]);
+    const updatedApplication = { ...mockApplications[4], isPinned: false };
+    expect(getApplicationByChainId(mockApplications[4].chainID)).toEqual(updatedApplication);
   });
 
   it('getApplicationByChainId should return undefined if chainId does not exist', () => {
     const { getApplicationByChainId } = result.current;
     expect(getApplicationByChainId('aq25derd17a4syc8aet4abcd')).toBeUndefined();
-  });
-
-  it('shows an error message if user tries to delete default app', () => {
-    const { deleteApplicationByChainId } = result.current;
-    act(() => {
-      deleteApplicationByChainId(mockApplications[1].chainID);
-    });
-    expect(toast.error).toHaveBeenCalledTimes(1);
-    expect(toast.error).toHaveBeenCalledWith('Default apps can not be deleted');
   });
 
   it('deleteApplicationByChainId should dispatch an action', () => {

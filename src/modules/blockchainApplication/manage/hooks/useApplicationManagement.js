@@ -1,7 +1,5 @@
 import { useCallback, useMemo } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { toast } from 'react-toastify';
-import { useTranslation } from 'react-i18next';
 import defaultApps from '@tests/fixtures/blockchainApplicationsManage';
 import { addApplication, deleteApplication } from '../store/action';
 import { selectApplications } from '../store/selectors';
@@ -9,7 +7,6 @@ import { useCurrentApplication } from './useCurrentApplication';
 import { usePinBlockchainApplication } from './usePinBlockchainApplication';
 
 function useApplicationManagement() {
-  const { t } = useTranslation();
   const dispatch = useDispatch();
   const [currentApplication, setCurrentApplication] = useCurrentApplication();
   const { checkPinByChainId } = usePinBlockchainApplication();
@@ -33,18 +30,17 @@ function useApplicationManagement() {
     [],
   );
 
-  const getApplicationByChainId = useCallback((chainId) => applicationsObject[chainId], []);
+  const getApplicationByChainId = useCallback(
+    (chainId) => applications.find((app) => app.chainID === chainId),
+    [applications],
+  );
 
   const deleteApplicationByChainId = useCallback(
     (chainId) => {
-      if (applicationsObject[chainId].isDefault) {
-        toast.error(t('Default apps can not be deleted'));
-      } else {
-        dispatch(deleteApplication(chainId));
-        if (currentApplication.chainID === chainId) {
-          // Set Lisk as default if application in use is being deleted
-          setCurrentApplication(defaultApps[0]);
-        }
+      dispatch(deleteApplication(chainId));
+      if (currentApplication.chainID === chainId) {
+        // Set Lisk as default if application in use is being deleted
+        setCurrentApplication(defaultApps[0]);
       }
     },
     [],
