@@ -19,12 +19,15 @@
 }
 
 .headerContainer {
+  --content-font: 'gilroy';
+
   width: 100%;
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: flex-start;
   margin-bottom: 14px;
+  font-family: var(--content-font);
 
   & > p {
     font-size: 20px;
@@ -69,6 +72,9 @@
 
 .chainNameWrapper {
   & > span {
+    --content-font: 'gilroy';
+
+    font-family: var(--content-font);
     font-size: 28px;
     font-weight: 700;
     color: var(--color-maastricht-blue);

@@ -1,22 +1,26 @@
 /* eslint-disable max-lines */
-import React, { useRef } from 'react';
+import React from 'react';
 import { withRouter } from 'react-router';
 import grid from 'flexboxgrid/dist/flexboxgrid.css';
 import MultiStep from 'src/modules/common/components/MultiStep';
+import { removeSearchParamsFromUrl } from 'src/utils/searchParams';
 import RemoveApplicationDetails from '../RemoveApplicationDetails';
 import RemoveApplicationSuccess from '../RemoveApplicationSuccess/RemoveApplicationSuccess';
 import styles from './RemoveApplicationFlow.css';
 
-const RemoveApplicationFlow = () => {
-  const multiStepRef = useRef(null);
+const RemoveApplicationFlow = ({ history }) => {
+  const handleCancelAppDetails = () => {
+    removeSearchParamsFromUrl(history, ['modal'], true);
+  };
 
   return (
     <div className={`${styles.removeApplicationFlowWrapper} ${grid.row}`}>
       <MultiStep
         navStyles={{ multiStepWrapper: styles.wrapper }}
-        ref={multiStepRef}
       >
-        <RemoveApplicationDetails />
+        <RemoveApplicationDetails
+          onCancel={handleCancelAppDetails}
+        />
         <RemoveApplicationSuccess />
       </MultiStep>
     </div>

@@ -20,7 +20,9 @@ const deposit = 5e10;
 const serviceUrl = 'https://lisk.com/';
 const chainLogo = null;
 
-const BlockchainApplicationDetails = ({ location, application }) => {
+const BlockchainApplicationDetails = ({
+  location, application, onCancel, nextStep,
+}) => {
   const { t } = useTranslation();
   const chainId = parseSearchParams(location.search).chainId;
   const { checkPinByChainId, togglePin } = usePinBlockchainApplication();
@@ -59,11 +61,16 @@ const BlockchainApplicationDetails = ({ location, application }) => {
     },
   ];
 
+  const handleRemoveApplication = () => {
+    // TODO: handle remove appliation using function provided by useApplicationManagement hook
+    nextStep({ application });
+  };
+
   return (
     <Dialog hasClose className={`${styles.dialogWrapper} ${grid.row} ${grid['center-xs']}`}>
       <div className={styles.wrapper}>
         <Box className={styles.headerContainer}>
-          <p>Remove application</p>
+          <p>{t('Remove application')}</p>
           <div>
             <img src={chainLogo || liskLogo} />
           </div>
@@ -140,11 +147,13 @@ const BlockchainApplicationDetails = ({ location, application }) => {
           <Box className={styles.actionsRow}>
             <OutlineButton
               className={`${styles.button} ${styles.cancelButton}`}
+              onClick={onCancel}
             >
               {t('Cancel')}
             </OutlineButton>
             <PrimaryButton
               className={`${styles.button}`}
+              onClick={handleRemoveApplication}
             >
               {t('Remove application now')}
             </PrimaryButton>
