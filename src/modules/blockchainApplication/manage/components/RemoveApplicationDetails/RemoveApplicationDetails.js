@@ -67,7 +67,7 @@ const BlockchainApplicationDetails = ({
   };
 
   return (
-    <Dialog hasClose className={`${styles.dialogWrapper} ${grid.row} ${grid['center-xs']}`}>
+    <Dialog className={`${styles.dialogWrapper} ${grid.row} ${grid['center-xs']}`}>
       <div className={styles.wrapper}>
         <Box className={styles.headerContainer}>
           <p>{t('Remove application')}</p>

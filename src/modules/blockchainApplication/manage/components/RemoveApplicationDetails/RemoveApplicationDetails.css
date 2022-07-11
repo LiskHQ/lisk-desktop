@@ -1,13 +1,5 @@
 @import '../../../../../../setup/react/app/mixins.css';
 
-.dialogWrapper {
-  border: none;
-
-  & > span {
-    color: var(--color-black) !important;
-  }
-}
-
 .wrapper {
   width: 100%;
   box-sizing: border-box;
@@ -49,6 +41,7 @@
 
   & > div::after,
   & > div::before {
+    position: absolute;
     content: '';
     display: block;
     width: 98px;
@@ -58,7 +51,7 @@
   }
 
   & > div::before {
-    transform: rotate(45deg) translateX(16px) translateY(35px);
+    transform: rotate(45deg) translateX(14px) translateY(35px);
   }
 }
 
