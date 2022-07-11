@@ -6,6 +6,7 @@ const blockchainApplicationsManage = [
     nodeURL: ['https://service.lisk.com'],
     logoURL: 'https://service.lisk.com',
     lastUpdated: 123456789,
+    isDefault: true,
   },
   {
     name: 'Colecti',
@@ -14,6 +15,7 @@ const blockchainApplicationsManage = [
     nodeURL: ['https://service.colecti.com'],
     logoURL: 'https://service.colecti.com',
     lastUpdated: 123789456,
+    isDefault: true,
   },
   {
     name: 'Enevti',
@@ -22,6 +24,7 @@ const blockchainApplicationsManage = [
     nodeURL: ['https://service.enevti.com'],
     logoURL: 'https://service.enevti.com',
     lastUpdated: 456123789,
+    isDefault: true,
   },
   {
     name: 'DoEdu',
@@ -30,6 +33,7 @@ const blockchainApplicationsManage = [
     nodeURL: ['https://service.doedu.com'],
     logoURL: 'https://service.doedu.com',
     lastUpdated: 789123456,
+    isDefault: false,
   },
   {
     name: 'Kalipo',
@@ -38,6 +42,16 @@ const blockchainApplicationsManage = [
     nodeURL: ['https://service.kalipo.com'],
     logoURL: 'https://service.kalipo.com',
     lastUpdated: 789456123,
+    isDefault: false,
+  },
+  {
+    name: 'Lisk DEX',
+    chainID: 'dz38fkbb35u4jdq8szo3pnsq',
+    state: 'active',
+    nodeURL: ['https://service.liskdex.com'],
+    logoURL: 'https://service.liskdex.com',
+    lastUpdated: 123456789,
+    isDefault: true,
   },
 ];
 

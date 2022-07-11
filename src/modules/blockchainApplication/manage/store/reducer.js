@@ -39,17 +39,6 @@ export const pins = (state = initialState.pins, { type, chainId }) => {
  */
 export const applications = (state = initialState.applications, { type, data }) => {
   switch (type) {
-    case actionTypes.loadApplicationsSuccess: {
-      const appsObj = data.list.reduce(
-        (obj, val) => {
-          obj[val.chainID] = val;
-          return obj;
-        },
-        {},
-      );
-      return { ...state, appsObj };
-    }
-
     case actionTypes.addApplicationByChainId:
       // In cases where a new node for an existing application is being added,
       // the new node url should be appended to the nodeURL array of the application
