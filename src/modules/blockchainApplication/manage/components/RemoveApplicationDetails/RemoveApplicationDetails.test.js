@@ -27,6 +27,7 @@ describe('BlockchainApplicationDetails', () => {
       loadData: jest.fn(),
       error: false,
     },
+    onCancel: jest.fn(),
   };
 
   beforeEach(() => {
@@ -72,5 +73,14 @@ describe('BlockchainApplicationDetails', () => {
 
     renderWithRouter(RemoveApplicationDetails, props);
     expect(screen.getByAltText('unpinnedIcon')).toBeTruthy();
+  });
+
+  it('should invoke the cancel callback', () => {
+    fireEvent.click(screen.getByText('Cancel'));
+    expect(props.onCancel).toHaveBeenCalled();
+  });
+
+  // TODO: need to re-instated this test when the useApplicationManagement hook is available
+  it('should remove blockchain application', () => {
   });
 });
