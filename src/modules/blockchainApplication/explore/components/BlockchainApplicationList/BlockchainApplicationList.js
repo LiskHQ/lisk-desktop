@@ -18,28 +18,14 @@ import BlockchainApplicationSkeleton from '../BlockchainApplicationSkeleton';
 
 // eslint-disable-next-line max-statements
 const BlockchainApplicationList = ({
-  applications: apps,
+  applications,
   applyFilters,
   filters,
 }) => {
   const [searchValue, setSearchValue] = useState('');
   const debounceTimeout = useRef(null);
   const { t } = useTranslation();
-  const { pins, checkPinByChainId, togglePin } = usePinBlockchainApplication();
-
-  const applications = useMemo(() => {
-    if (pins.length && apps.data.length) {
-      return {
-        ...apps,
-        data: apps.data.map(chainData => ({
-          ...chainData,
-          isPinned: checkPinByChainId(chainData.chainID),
-        }
-        )),
-      };
-    }
-    return apps;
-  }, [apps, checkPinByChainId]);
+  const { togglePin } = usePinBlockchainApplication();
 
   const canLoadMore = useMemo(() =>
     (applications.meta

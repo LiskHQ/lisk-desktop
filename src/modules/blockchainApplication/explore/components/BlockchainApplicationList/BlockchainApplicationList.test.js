@@ -87,7 +87,7 @@ describe('BlockchainApplicationList', () => {
     usePinBlockchainApplication.mockReturnValue({
       togglePin: mockTogglePin,
       pins: [],
-      checkPinByChainId: jest.fn().mockReturnValue(true),
+      checkPinByChainId: jest.fn().mockReturnValue(false),
     });
     wrapper.rerender(<MemoryRouter
       initialEntries={[]}

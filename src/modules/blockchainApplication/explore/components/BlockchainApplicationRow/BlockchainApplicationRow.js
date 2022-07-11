@@ -1,5 +1,6 @@
-import React, { useCallback } from 'react';
+import React, { useCallback, useMemo } from 'react';
 import grid from 'flexboxgrid/dist/flexboxgrid.css';
+import { usePinBlockchainApplication } from '@blockchainApplication/manage/hooks/usePinBlockchainApplication';
 import DialogLink from 'src/theme/dialog/link';
 import { TertiaryButton } from 'src/theme/buttons';
 import Icon from 'src/theme/Icon';
@@ -48,23 +49,30 @@ const BlockchainApplicationRow = ({
   togglePin,
   t,
 }) => {
+  const { checkPinByChainId } = usePinBlockchainApplication();
+
   const handleTogglePin = useCallback((event) => {
     event.stopPropagation();
     togglePin(data.chainID);
   }, [togglePin]);
+
+  const application = useMemo(() => ({
+    ...data,
+    isPinned: checkPinByChainId(data.chainID),
+  }), [checkPinByChainId]);
 
   return (
     <div data-testid="applications-row" className={`application-row ${styles.container}`}>
       <DialogLink
         className={`${grid.row} ${className} blockchain-application-row`}
         component="blockChainApplicationDetails"
-        data={{ chainId: data.chainID }}
+        data={{ chainId: application.chainID }}
       >
-        <Pin isPinned={data.isPinned} onTogglePin={handleTogglePin} />
-        <ChainName title={data.name} logo={liskLogo} />
-        <ChainId id={data.chainID} />
-        <ChainStatus status={data.state} t={t} />
-        <DepositAmount amount={data.depositedLsk} />
+        <Pin isPinned={application.isPinned} onTogglePin={handleTogglePin} />
+        <ChainName title={application.name} logo={liskLogo} />
+        <ChainId id={application.chainID} />
+        <ChainStatus status={application.state} t={t} />
+        <DepositAmount amount={application.depositedLsk} />
       </DialogLink>
     </div>
   );
