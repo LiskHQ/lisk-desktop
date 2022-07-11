@@ -1,7 +1,7 @@
 import React from 'react';
 import WalletVisual from '@wallet/components/walletVisual';
 import TokenAmount from '@token/fungible/components/tokenAmount';
-import styles from '../TransactionInfo/TransactionInfo.css';
+import styles from './send.css';
 
 const Send = ({
   transaction = {}, t, token,
@@ -9,16 +9,22 @@ const Send = ({
   <>
     <section>
       <label>{t('Recipient')}</label>
-      <label className="recipient-value">
-        <WalletVisual address={transaction.asset.recipient} size={25} />
-        <label className={`${styles.information} recipient-confirm`}>
-          {transaction.asset.recipient.title || transaction.asset.recipient.address}
-        </label>
-        { transaction.asset.recipient.title ? (
-          <span className={styles.secondText}>
-            {transaction.asset.recipient.address}
-          </span>
-        ) : null }
+      <label className={`${styles.userInformation} recipient-value`}>
+        <WalletVisual
+          className={styles.walletVisual}
+          address={transaction.asset.recipient.address}
+          size={40}
+        />
+        <div className={styles.titles}>
+          <label className={`${styles.primary} recipient-confirm`}>
+            {transaction.asset.recipient.title || transaction.asset.recipient.address}
+          </label>
+          { transaction.asset.recipient.title ? (
+            <span className={styles.secondary}>
+              {transaction.asset.recipient.address}
+            </span>
+          ) : null }
+        </div>
       </label>
     </section>
     <section className={styles.msignRow}>
