@@ -36,7 +36,7 @@ describe('BlockchainApplication reducer', () => {
       };
       const actionData = {
         type: actionTypes.addApplicationByChainId,
-        data: newApplication,
+        application: newApplication,
       };
       const changedState = applications(applicationsMap, actionData);
 
@@ -46,11 +46,11 @@ describe('BlockchainApplication reducer', () => {
     it('Should return list of applications without the removed one', async () => {
       const actionData = {
         type: actionTypes.deleteApplicationByChainId,
-        data: mockApplicationsManage[1].chainID,
+        chainId: mockApplicationsManage[1].chainID,
       };
       const changedState = applications(applicationsMap, actionData);
 
-      expect(changedState).not.toHaveProperty(actionData.data);
+      expect(changedState).not.toHaveProperty(actionData.chainId);
     });
   });
 

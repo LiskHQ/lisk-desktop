@@ -34,7 +34,7 @@ describe('useApplicationManagement hook', () => {
     const { setApplication } = result.current;
     const expectedAction = {
       type: actionTypes.addApplicationByChainId,
-      data: mockApplications[3],
+      application: mockApplications[3],
     };
     act(() => {
       setApplication(mockApplications[3]);
@@ -66,7 +66,7 @@ describe('useApplicationManagement hook', () => {
     const { deleteApplicationByChainId } = result.current;
     const expectedAction = {
       type: actionTypes.deleteApplicationByChainId,
-      data: mockApplications[4].chainID,
+      chainId: mockApplications[4].chainID,
     };
     act(() => {
       deleteApplicationByChainId(mockApplications[4].chainID);
@@ -79,7 +79,7 @@ describe('useApplicationManagement hook', () => {
     const { deleteApplicationByChainId } = result.current;
     const expectedAction = {
       type: actionTypes.deleteApplicationByChainId,
-      data: mockCurrentApplication.chainID,
+      chainId: mockCurrentApplication.chainID,
     };
     act(() => {
       deleteApplicationByChainId(mockCurrentApplication.chainID);

@@ -17,7 +17,7 @@ export const toggleApplicationPin = (chainId) => ({
  */
 export const addApplication = (application) => ({
   type: actionTypes.addApplicationByChainId,
-  data: application,
+  application,
 });
 
 /**
@@ -27,7 +27,7 @@ export const addApplication = (application) => ({
  */
 export const deleteApplication = (chainId) => ({
   type: actionTypes.deleteApplicationByChainId,
-  data: chainId,
+  chainId,
 });
 
 /**

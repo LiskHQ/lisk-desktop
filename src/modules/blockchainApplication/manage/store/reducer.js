@@ -37,20 +37,20 @@ export const pins = (state = initialState.pins, { type, chainId }) => {
  * @param {Object} state
  * @param {type: String, data: Object} action
  */
-export const applications = (state = initialState.applications, { type, data }) => {
+export const applications = (state = initialState.applications, { type, application, chainId }) => {
   switch (type) {
     case actionTypes.addApplicationByChainId:
       // In cases where a new node for an existing application is being added,
       // the new service url should be appended to the serviceURLs array of the application
-      if (data.chainID in state) {
-        state[data.chainID].serviceURLs.push(data.serviceURLs);
+      if (application.chainID in state) {
+        state[application.chainID].serviceURLs.push(application.serviceURLs);
       } else {
-        state[data.chainID] = data;
+        state[application.chainID] = application;
       }
       return state;
 
     case actionTypes.deleteApplicationByChainId: {
-      delete state[data];
+      delete state[chainId];
       return { ...state };
     }
 
