@@ -24,7 +24,6 @@ describe('BlockchainApplicationRow', () => {
   let wrapper;
   const props = {
     data: mockBlockchainApplications[0],
-    togglePin: jest.fn(),
     t: jest.fn((val) => val),
   };
 
@@ -65,7 +64,7 @@ describe('BlockchainApplicationRow', () => {
   it('should invoke toggle callback', () => {
     const { chainID } = mockBlockchainApplications[0];
     fireEvent.click(screen.getByTestId('pin-button'));
-    expect(props.togglePin).toHaveBeenCalledWith(chainID);
+    expect(mockTogglePin).toHaveBeenCalledWith(chainID);
   });
 
   it('should render the active pin icon', () => {

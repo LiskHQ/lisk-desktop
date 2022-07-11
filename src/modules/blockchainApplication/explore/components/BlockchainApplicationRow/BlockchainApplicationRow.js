@@ -46,10 +46,9 @@ const Pin = ({ isPinned, onTogglePin }) => (
 const BlockchainApplicationRow = ({
   data,
   className,
-  togglePin,
   t,
 }) => {
-  const { checkPinByChainId } = usePinBlockchainApplication();
+  const { checkPinByChainId, togglePin } = usePinBlockchainApplication();
 
   const handleTogglePin = useCallback((event) => {
     event.stopPropagation();

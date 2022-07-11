@@ -5,7 +5,6 @@ import { useTranslation } from 'react-i18next';
 import BoxHeader from 'src/theme/box/header';
 import Box from 'src/theme/box';
 import BoxContent from 'src/theme/box/content';
-import { usePinBlockchainApplication } from '@blockchainApplication/manage/hooks/usePinBlockchainApplication';
 import grid from 'flexboxgrid/dist/flexboxgrid.css';
 import Table from 'src/theme/table';
 import { Input } from 'src/theme';
@@ -25,7 +24,6 @@ const BlockchainApplicationList = ({
   const [searchValue, setSearchValue] = useState('');
   const debounceTimeout = useRef(null);
   const { t } = useTranslation();
-  const { togglePin } = usePinBlockchainApplication();
 
   const canLoadMore = useMemo(() =>
     (applications.meta
@@ -86,10 +84,7 @@ const BlockchainApplicationList = ({
           headerClassName={styles.tableHeader}
           canLoadMore={canLoadMore}
           error={applications.error}
-          additionalRowProps={{
-            t,
-            togglePin,
-          }}
+          additionalRowProps={{ t }}
           emptyState={{
             message: t('There are no blockchain applications.'),
           }}
