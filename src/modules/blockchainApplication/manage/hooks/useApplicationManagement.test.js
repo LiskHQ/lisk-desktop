@@ -23,11 +23,6 @@ jest.mock('./useCurrentApplication', () => ({
     [mockCurrentApplication, mockSetApplication]
   )),
 }));
-jest.mock('react-toastify', () => ({
-  toast: {
-    error: jest.fn(),
-  },
-}));
 
 describe('useApplicationManagement hook', () => {
   beforeEach(() => {
