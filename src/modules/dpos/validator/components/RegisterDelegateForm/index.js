@@ -10,6 +10,11 @@ import useDelegateKey from '../../hooks/useDelegateKey';
 import InputLabel from './InputLabel';
 import styles from './form.css';
 
+const isFormValid = (name, generatorPublicKey, blsPublicKey, proofOfPossession) => (
+  !name.error && !name.loading && !generatorPublicKey.error
+  && !blsPublicKey.error && !proofOfPossession.error
+);
+
 const RegisterDelegateForm = ({
   nextStep,
   prevState,
@@ -41,11 +46,11 @@ const RegisterDelegateForm = ({
     moduleAssetId: MODULE_ASSETS_NAME_ID_MAP.registerDelegate,
     asset: {
       username: name.value,
-      blsPublicKey,
-      generatorPublicKey,
-      proofOfPossession,
+      blsPublicKey: blsPublicKey.value,
+      generatorPublicKey: generatorPublicKey.value,
+      proofOfPossession: proofOfPossession.value,
     },
-    isValid: !(name.error || name.loading),
+    isValid: isFormValid(name, generatorPublicKey, blsPublicKey, proofOfPossession),
   };
 
   return (
