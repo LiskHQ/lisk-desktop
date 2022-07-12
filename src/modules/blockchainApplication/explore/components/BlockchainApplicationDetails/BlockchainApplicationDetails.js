@@ -83,7 +83,7 @@ const BlockchainApplicationDetails = ({ location }) => {
         <Box className={styles.detailsWrapper}>
           <div className={styles.chainNameWrapper}>
             <span className="chain-name-text">{name}</span>
-            <TertiaryButton onClick={toggleApplicationPin}>
+            <TertiaryButton className="chain-details-pin-button" onClick={toggleApplicationPin}>
               <Icon data-testid="pin-button" name={isPinned ? 'pinnedIcon' : 'unpinnedIcon'} />
             </TertiaryButton>
           </div>

@@ -1,6 +1,7 @@
 import { getState } from '@fixtures/transactions';
 import http from 'src/utils/api/http';
 import { getApplication } from '.';
+import { getApplications } from './applicationExplore';
 
 jest.mock('src/utils/api/http', () =>
   jest.fn().mockImplementation(() => Promise.resolve({ data: [{ type: 0 }] })));
@@ -20,6 +21,21 @@ describe('get blockchain application detail', () => {
     expect(http).toHaveBeenCalledWith({
       path: '/api/v2/blockchain/apps',
       params: { chainId: sampleId },
+      network,
+      baseUrl,
+    });
+  });
+
+  it('Should call get applications', () => {
+    getApplications({
+      network,
+      baseUrl,
+      params: {},
+    });
+
+    expect(http).toHaveBeenCalledWith({
+      path: '/api/v2/blockchain/apps',
+      params: {},
       network,
       baseUrl,
     });

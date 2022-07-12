@@ -300,6 +300,9 @@ const ss = {
   chainStatusDisplay: '.chain-status',
   lastChainUpdateDisplay: '.last-update',
   lastCertHeightDisplay: '.last-certificate-height',
+  chainRow: '.blockchain-application-row',
+  chainPinButton: '.blockchain-application-pin-button',
+  chainDetailsPinButton: '.chain-details-pin-button',
 };
 
 export default ss;

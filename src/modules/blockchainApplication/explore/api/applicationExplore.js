@@ -17,8 +17,29 @@ const httpPaths = {
  * @returns {Promise} Blockchain application details API call
  */
 
-// eslint-disable-next-line import/prefer-default-export
 export const getApplication = ({
+  params, network, baseUrl,
+}) => http({
+  path: httpPaths.application,
+  params,
+  network,
+  baseUrl,
+});
+
+/**
+ * Retrieves list of blockchain applications
+ *
+ * @param {Object} data
+ * @param {String} data.params
+ * @param {String} data.params.chainId - Id of the chain
+ * @param {String?} data.baseUrl - Lisk Service API url to override the
+ * existing ServiceUrl on the network param.
+ * @param {Object} data.network - Network setting from Redux store
+ * @returns {Promise} Blockchain application details API call
+ */
+
+// eslint-disable-next-line import/prefer-default-export
+export const getApplications = ({
   params, network, baseUrl,
 }) => http({
   path: httpPaths.application,
