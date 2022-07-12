@@ -6,16 +6,17 @@ import Box from 'src/theme/box';
 import TokenAmount from '@token/fungible/components/tokenAmount';
 import ValueAndLabel from 'src/modules/transaction/components/TransactionDetails/valueAndLabel';
 import CopyToClipboard from 'src/modules/common/components/copyToClipboard';
-import { TertiaryButton } from 'src/theme/buttons';
+import { PrimaryButton, TertiaryButton } from 'src/theme/buttons';
 import grid from 'flexboxgrid/dist/flexboxgrid.css';
 import Dialog from '@theme/dialog/dialog';
 import Icon from 'src/theme/Icon';
 import Tooltip from 'src/theme/Tooltip';
 import { parseSearchParams } from 'src/utils/searchParams';
+import useApplicationManagement from 'src/modules/blockchainApplication/manage/hooks/useApplicationManagement';
 import { usePinBlockchainApplication } from '@blockchainApplication/manage/hooks/usePinBlockchainApplication';
-import styles from './BlockchainApplicationDetails.css';
 import defaultBackgroundImage from '../../../../../../setup/react/assets/images/default-chain-background.png';
 import liskLogo from '../../../../../../setup/react/assets/images/LISK.png';
+import styles from './BlockchainApplicationDetails.css';
 
 // TODO: this is a mock response of an application's details
 const application = {
@@ -34,17 +35,23 @@ const serviceUrl = 'https://lisk.com/';
 const backgroundImage = null;
 const chainLogo = null;
 
+// eslint-disable-next-line max-statements
 const BlockchainApplicationDetails = ({ location }) => {
   const { t } = useTranslation();
   const chainId = parseSearchParams(location.search).chainId;
+  const addApplication = parseSearchParams(location.search).addApplication;
   const { checkPinByChainId, togglePin } = usePinBlockchainApplication();
   const {
     name, state, address, lastCertificateHeight, lastUpdated,
   } = application.data;
+  const { setApplication } = useApplicationManagement();
 
   const isPinned = checkPinByChainId(chainId);
   const toggleApplicationPin = () => {
     togglePin(chainId);
+  };
+  const addNewApplication = () => {
+    setApplication(application.data);
   };
 
   const footerDetails = [
@@ -149,6 +156,16 @@ const BlockchainApplicationDetails = ({ location }) => {
               </ValueAndLabel>
             ))}
           </Box>
+          {addApplication ? (
+            <Box className={styles.footerButton}>
+              <PrimaryButton
+                size="l"
+                onClick={addNewApplication}
+              >
+                {t('Add application to my list')}
+              </PrimaryButton>
+            </Box>
+          ) : null}
         </Box>
       </div>
     </Dialog>
