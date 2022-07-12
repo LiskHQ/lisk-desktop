@@ -3,17 +3,24 @@ import { fireEvent, screen } from '@testing-library/react';
 import mockBlockchainApplications from '@tests/fixtures/blockchainApplicationsExplore';
 import { renderWithRouter } from 'src/utils/testHelpers';
 import { usePinBlockchainApplication } from '@blockchainApplication/manage/hooks/usePinBlockchainApplication';
+import useApplicationManagement from '@blockchainApplication/manage/hooks/useApplicationManagement';
 import RemoveApplicationDetails from '.';
 
 const mockedPins = ['1111'];
 const mockTogglePin = jest.fn();
+const mockDeleteApplicationByChainId = jest.fn();
 
 jest.mock('@blockchainApplication/manage/hooks/usePinBlockchainApplication');
+jest.mock('@blockchainApplication/manage/hooks/useApplicationManagement');
 
 usePinBlockchainApplication.mockReturnValue({
   togglePin: mockTogglePin,
   pins: mockedPins,
   checkPinByChainId: jest.fn().mockReturnValue(true),
+});
+
+useApplicationManagement.mockReturnValue({
+  deleteApplicationByChainId: mockDeleteApplicationByChainId
 });
 
 describe('BlockchainApplicationDetails', () => {
@@ -27,6 +34,7 @@ describe('BlockchainApplicationDetails', () => {
       loadData: jest.fn(),
       error: false,
     },
+    nextStep: jest.fn(),
     onCancel: jest.fn(),
   };
 
@@ -80,7 +88,8 @@ describe('BlockchainApplicationDetails', () => {
     expect(props.onCancel).toHaveBeenCalled();
   });
 
-  // TODO: need to re-instated this test when the useApplicationManagement hook is available
   it('should remove blockchain application', () => {
+    fireEvent.click(screen.getByText('Remove application now'));
+    expect(mockDeleteApplicationByChainId).toHaveBeenCalledWith(props.application.data.chainID);
   });
 });

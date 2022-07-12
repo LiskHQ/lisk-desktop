@@ -15,6 +15,7 @@ import { parseSearchParams } from 'src/utils/searchParams';
 import { usePinBlockchainApplication } from '@blockchainApplication/manage/hooks/usePinBlockchainApplication';
 import styles from './RemoveApplicationDetails.css';
 import liskLogo from '../../../../../../setup/react/assets/images/LISK.png';
+import useApplicationManagement from '../../hooks/useApplicationManagement';
 
 const deposit = 5e10;
 const serviceUrl = 'https://lisk.com/';
@@ -27,7 +28,7 @@ const BlockchainApplicationDetails = ({
   const chainId = parseSearchParams(location.search).chainId;
   const { checkPinByChainId, togglePin } = usePinBlockchainApplication();
   const {
-    name, state, address, lastCertificateHeight, lastUpdated,
+    name, state, address, lastCertificateHeight, lastUpdated, chainID
   } = application.data;
 
   const isPinned = checkPinByChainId(chainId);
@@ -62,7 +63,8 @@ const BlockchainApplicationDetails = ({
   ];
 
   const handleRemoveApplication = () => {
-    // TODO: handle remove appliation using function provided by useApplicationManagement hook
+    const { deleteApplicationByChainId }  = useApplicationManagement()
+    deleteApplicationByChainId(chainID)
     nextStep({ application });
   };
 
