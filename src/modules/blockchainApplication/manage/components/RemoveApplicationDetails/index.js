@@ -13,7 +13,7 @@ const apis = {
       data: mockBlockchainApplications[0],
     })),
     getApiParams: (state, ownProps) => ({
-      chainId: parseSearchParams(ownProps.location.search).chainId,
+      chainId: parseSearchParams(ownProps.location?.search)?.chainId,
       network: state.network,
     }),
     transformResponse: response => response.data,

@@ -10,7 +10,7 @@ const RemoveApplicationSuccess = ({ history, sharedData: { application } }) => {
   const { t } = useTranslation();
   return (
     <Dialog hasClose className={`${styles.dialogWrapper} ${grid.row} ${grid['center-xs']}`}>
-      <div className={styles.wrapper}>
+      <div className={`${styles.wrapper} remove-app-success-wrapper`}>
         <Icon name="successCheckMark" />
         <p>{t('Application has now been removed')}</p>
         <p>
@@ -22,7 +22,9 @@ const RemoveApplicationSuccess = ({ history, sharedData: { application } }) => {
         </p>
         <PrimaryButton
           className={`${styles.button}`}
-          onClick={() => history.push('/dashboard')}
+          onClick={() => {
+            history.push('/dashboard');
+          }}
         >
           {t('Continue to Dashboard')}
         </PrimaryButton>

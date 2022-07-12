@@ -7,7 +7,7 @@ import RemoveApplicationDetails from '../RemoveApplicationDetails';
 import RemoveApplicationSuccess from '../RemoveApplicationSuccess';
 import styles from './RemoveApplicationFlow.css';
 
-const RemoveApplicationFlow = ({ history }) => {
+const RemoveApplicationFlow = ({ history, testHistory, testLocation }) => {
   const handleCancelAppDetails = () => {
     removeSearchParamsFromUrl(history, ['modal'], true);
   };
@@ -18,6 +18,8 @@ const RemoveApplicationFlow = ({ history }) => {
         navStyles={{ multiStepWrapper: styles.wrapper }}
       >
         <RemoveApplicationDetails
+          history={testHistory}
+          location={testLocation}
           onCancel={handleCancelAppDetails}
         />
         <RemoveApplicationSuccess />

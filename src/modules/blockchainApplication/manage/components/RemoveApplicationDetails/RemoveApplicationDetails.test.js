@@ -20,7 +20,7 @@ usePinBlockchainApplication.mockReturnValue({
 });
 
 useApplicationManagement.mockReturnValue({
-  deleteApplicationByChainId: mockDeleteApplicationByChainId
+  deleteApplicationByChainId: mockDeleteApplicationByChainId,
 });
 
 describe('BlockchainApplicationDetails', () => {
@@ -55,6 +55,7 @@ describe('BlockchainApplicationDetails', () => {
     expect(screen.getByText(moment(lastUpdated).format('DD MMM YYYY'))).toBeTruthy();
 
     expect(screen.getByText('Chain ID')).toBeTruthy();
+    expect(screen.getByText('Remove application')).toBeTruthy();
     expect(screen.getByText('Status')).toBeTruthy();
     expect(screen.getByText('Last Update')).toBeTruthy();
     expect(screen.getByText('Last Certificate Height')).toBeTruthy();

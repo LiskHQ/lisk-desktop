@@ -25,10 +25,11 @@ const BlockchainApplicationDetails = ({
   location, application, onCancel, nextStep,
 }) => {
   const { t } = useTranslation();
-  const chainId = parseSearchParams(location.search).chainId;
+  const chainId = parseSearchParams(location.search)?.chainId;
+  const { deleteApplicationByChainId } = useApplicationManagement();
   const { checkPinByChainId, togglePin } = usePinBlockchainApplication();
   const {
-    name, state, address, lastCertificateHeight, lastUpdated, chainID
+    name, state, address, lastCertificateHeight, lastUpdated, chainID,
   } = application.data;
 
   const isPinned = checkPinByChainId(chainId);
@@ -63,8 +64,7 @@ const BlockchainApplicationDetails = ({
   ];
 
   const handleRemoveApplication = () => {
-    const { deleteApplicationByChainId }  = useApplicationManagement()
-    deleteApplicationByChainId(chainID)
+    deleteApplicationByChainId(chainID);
     nextStep({ application });
   };
 
@@ -148,13 +148,13 @@ const BlockchainApplicationDetails = ({
           </Box>
           <Box className={styles.actionsRow}>
             <OutlineButton
-              className={`${styles.button} ${styles.cancelButton}`}
+              className={`${styles.button} ${styles.cancelButton} cancel-remove-blockchain`}
               onClick={onCancel}
             >
               {t('Cancel')}
             </OutlineButton>
             <PrimaryButton
-              className={`${styles.button}`}
+              className={`${styles.button} remove-blockchain`}
               onClick={handleRemoveApplication}
             >
               {t('Remove application now')}
