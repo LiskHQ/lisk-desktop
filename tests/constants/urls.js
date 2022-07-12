@@ -20,6 +20,7 @@ const urls = {
   network: '/network',
   blocks: '/blocks',
   explorer: '/explorer',
+  applications: '/applications',
 };
 
 export default urls;

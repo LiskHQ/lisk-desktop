@@ -12,7 +12,7 @@ import Dialog from '@theme/dialog/dialog';
 import Icon from 'src/theme/Icon';
 import Tooltip from 'src/theme/Tooltip';
 import { parseSearchParams } from 'src/utils/searchParams';
-import { usePinBlockchainApplication } from '../../hooks/usePinBlockchainApplication';
+import { usePinBlockchainApplication } from '@blockchainApplication/manage/hooks/usePinBlockchainApplication';
 import styles from './BlockchainApplicationDetails.css';
 import defaultBackgroundImage from '../../../../../../setup/react/assets/images/default-chain-background.png';
 import liskLogo from '../../../../../../setup/react/assets/images/LISK.png';
@@ -83,7 +83,7 @@ const BlockchainApplicationDetails = ({ location }) => {
         <Box className={styles.detailsWrapper}>
           <div className={styles.chainNameWrapper}>
             <span className="chain-name-text">{name}</span>
-            <TertiaryButton onClick={toggleApplicationPin}>
+            <TertiaryButton className="chain-details-pin-button" onClick={toggleApplicationPin}>
               <Icon data-testid="pin-button" name={isPinned ? 'pinnedIcon' : 'unpinnedIcon'} />
             </TertiaryButton>
           </div>
