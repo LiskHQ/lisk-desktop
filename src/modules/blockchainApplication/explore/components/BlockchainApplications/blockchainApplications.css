@@ -9,12 +9,10 @@
 
 .banner {
   width: 100%;
-  background-color: grey;
 }
 
 .content {
   height: 200px;
-  background-color: grey;
   flex-basis: 75%;
   padding-right: 20px;
 }
