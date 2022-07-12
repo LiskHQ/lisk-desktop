@@ -19,6 +19,10 @@ const {
   transfer, voteDelegate, registerMultisignatureGroup, registerDelegate, reclaimLSK, unlockToken,
 } = MODULE_ASSETS_NAME_ID_MAP;
 
+const genKey = 'dcad7c69505d549803fb6a755e81cdcb0a33ea95b6476e2585149f8a42c9c882';
+const blsKey = '830ce8c4a0b4f40b9b2bd2f16e835676b003ae28ec367432af9bfaa4d5201051786643620eff288077c1e7a8415c0285';
+const pop = '722b19e4b302e3e13ef097b417b651feadc8e28754530119911561c27b9478cdcd6b7ada331037bbda778b0b325aab5a79f34b31ea780acd01bf67d38268c43ea0ea75a5e757a76165253e1e20680c4cfd884ed63f5663c7b940e67162d5f715';
+
 describe('API: LSK Transactions', () => {
   const baseDesktopTx = {
     sender: {
@@ -147,6 +151,9 @@ describe('API: LSK Transactions', () => {
         moduleAssetId: registerDelegate,
         asset: {
           username: 'username',
+          generatorPublicKey: genKey,
+          blsPublicKey: blsKey,
+          proofOfPossession: pop,
         },
       };
       const txObj = desktopTxToElementsTx(tx, registerDelegate);
@@ -157,6 +164,9 @@ describe('API: LSK Transactions', () => {
         assetID,
         asset: {
           username: 'username',
+          generatorPublicKey: convertStringToBinary(genKey),
+          blsPublicKey: convertStringToBinary(blsKey),
+          proofOfPossession: convertStringToBinary(pop),
         },
       });
     });
@@ -265,14 +275,24 @@ describe('API: LSK Transactions', () => {
         ...baseElementsTx,
         moduleID,
         assetID,
-        asset: { username: 'super_delegate' },
+        asset: {
+          username: 'super_delegate',
+          generatorPublicKey: convertStringToBinary(genKey),
+          blsPublicKey: convertStringToBinary(blsKey),
+          proofOfPossession: convertStringToBinary(pop),
+        },
       };
 
       expect(elementTxToDesktopTx(tx)).toEqual({
         ...baseDesktopTx,
         moduleAssetId: registerDelegate,
         id: '',
-        asset: { username: 'super_delegate' },
+        asset: {
+          username: 'super_delegate',
+          generatorPublicKey: genKey,
+          blsPublicKey: blsKey,
+          proofOfPossession: pop,
+        },
       });
     });
 
