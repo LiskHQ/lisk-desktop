@@ -11,6 +11,26 @@ export const toggleApplicationPin = (chainId) => ({
 });
 
 /**
+ * Trigger this action to add blockchain application
+ *
+ * @returns {Object} - Action object
+ */
+export const addApplication = (application) => ({
+  type: actionTypes.addApplicationByChainId,
+  application,
+});
+
+/**
+ * Trigger this action to delete blockchain application
+ *
+ * @returns {Object} - Action object
+ */
+export const deleteApplication = (chainId) => ({
+  type: actionTypes.deleteApplicationByChainId,
+  chainId,
+});
+
+/**
  * Trigger this action to set current blockchain application
  *
  * @returns {Object} - Action object

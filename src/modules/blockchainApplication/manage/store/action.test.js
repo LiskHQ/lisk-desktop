@@ -3,10 +3,13 @@ import mockApplications from '@tests/fixtures/blockchainApplicationsManage';
 import actionTypes from './actionTypes';
 import {
   toggleApplicationPin,
+  addApplication,
+  deleteApplication,
   setCurrentApplication,
 } from './action';
 
 const chainId = mockApplications[0].chainID;
+const sampleBlockchainApplication = mockApplications[0];
 
 describe('actions:  blockchainApplication', () => {
   beforeEach(() => {
@@ -20,6 +23,24 @@ describe('actions:  blockchainApplication', () => {
     };
 
     expect(toggleApplicationPin(chainId)).toEqual(expectedAction);
+  });
+
+  it('should create an action to add blockchain application', () => {
+    const expectedAction = {
+      type: actionTypes.addApplicationByChainId,
+      application: sampleBlockchainApplication,
+    };
+
+    expect(addApplication(sampleBlockchainApplication)).toEqual(expectedAction);
+  });
+
+  it('should create an action to delete blockchain application', () => {
+    const expectedAction = {
+      type: actionTypes.deleteApplicationByChainId,
+      chainId,
+    };
+
+    expect(deleteApplication(chainId)).toEqual(expectedAction);
   });
 
   it('should create an action to set current application', () => {
