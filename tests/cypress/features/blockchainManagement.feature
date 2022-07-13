@@ -3,7 +3,7 @@ Feature: BlockchainManagement
   Scenario: Remove blockchain application
     Given I visit the remove blockchain application page
     And I wait 1 seconds
-    Then blockchain details should be accuratly displayed
+    Then blockchain details should be accurately displayed
 
     #TODO: the below e2e test needs to be reinstated when #4359 is impelemnted 
     #  because presently we don't have a way to set current application

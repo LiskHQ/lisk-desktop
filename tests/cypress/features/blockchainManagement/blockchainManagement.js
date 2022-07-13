@@ -10,7 +10,7 @@ Given(/^I visit the remove blockchain application page$/, function () {
   cy.visit(`${urls.login}?modal=removeApplicationFlow&chainId=${blockchainApplication.chainID}`);
 });
 
-Then(/^blockchain details should be accuratly displayed$/, function () {
+Then(/^blockchain details should be accurately displayed$/, function () {
   cy.get(ss.blockchainName).eq(0).should('have.text', blockchainApplication.name);
   cy.get(ss.lastCertHeightDisplay).eq(0).should('have.text', blockchainApplication.lastCertificateHeight);
   cy.get(ss.chainStatusDisplay).eq(0).should('have.text', blockchainApplication.state);
