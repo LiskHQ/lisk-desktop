@@ -1,6 +1,7 @@
 import React from 'react';
 import { mount } from 'enzyme';
 import wallets from '@tests/constants/wallets';
+import * as keys from '@tests/constants/keys';
 import useDelegateName from '../../hooks/useDelegateName';
 import useDelegateKey from '../../hooks/useDelegateKey';
 import RegisterDelegateForm from '.';
@@ -9,17 +10,17 @@ jest.mock('../../hooks/useDelegateName', () => jest.fn());
 jest.mock('../../hooks/useDelegateKey', () => jest.fn());
 
 const genKey = {
-  value: 'dcad7c69505d549803fb6a755e81cdcb0a33ea95b6476e2585149f8a42c9c882',
+  value: keys.genKey,
   error: false,
   message: '',
 };
 const blsKey = {
-  value: '830ce8c4a0b4f40b9b2bd2f16e835676b003ae28ec367432af9bfaa4d5201051786643620eff288077c1e7a8415c0285',
+  value: keys.blsKey,
   error: false,
   message: '',
 };
 const pop = {
-  value: '722b19e4b302e3e13ef097b417b651feadc8e28754530119911561c27b9478cdcd6b7ada331037bbda778b0b325aab5a79f34b31ea780acd01bf67d38268c43ea0ea75a5e757a76165253e1e20680c4cfd884ed63f5663c7b940e67162d5f715',
+  value: keys.pop,
   error: false,
   message: '',
 };
