@@ -1,6 +1,5 @@
 import React from 'react';
 import { useTranslation } from 'react-i18next';
-import { Link } from 'react-router-dom';
 import moment from 'moment';
 import Box from 'src/theme/box';
 import TokenAmount from '@token/fungible/components/tokenAmount';
@@ -39,7 +38,7 @@ const chainLogo = null;
 const BlockchainApplicationDetails = ({ location }) => {
   const { t } = useTranslation();
   const chainId = parseSearchParams(location.search).chainId;
-  const addApplication = parseSearchParams(location.search).addApplication;
+  const mode = parseSearchParams(location.search).mode;
   const { checkPinByChainId, togglePin } = usePinBlockchainApplication();
   const {
     name, state, address, lastCertificateHeight, lastUpdated,
@@ -110,16 +109,16 @@ const BlockchainApplicationDetails = ({ location }) => {
             </ValueAndLabel>
           </Box>
           <div className={styles.addressRow}>
-            <Link
+            <a
               className={`${styles.appLink}`}
               target="_blank"
                 // eslint-disable-next-line
                 // TODO: this is just a place holder link pending when its part of the response payload from service
-              to={serviceUrl}
+              href={serviceUrl}
             >
               <Icon name="chainLinkIcon" className={styles.hwWalletIcon} />
               {t(serviceUrl)}
-            </Link>
+            </a>
           </div>
           <div className={styles.balanceRow}>
             <span>{t('Deposited:')}</span>
@@ -156,7 +155,7 @@ const BlockchainApplicationDetails = ({ location }) => {
               </ValueAndLabel>
             ))}
           </Box>
-          {addApplication ? (
+          {mode === 'addApplication' ? (
             <Box className={styles.footerButton}>
               <PrimaryButton
                 size="l"
