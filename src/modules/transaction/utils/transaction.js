@@ -22,7 +22,7 @@ const {
 
 const EMPTY_BUFFER = Buffer.from('');
 export const convertStringToBinary = value => Buffer.from(value, 'hex');
-const convertBinaryToString = value => {
+export const convertBinaryToString = value => {
   if (value instanceof Uint8Array) {
     return Buffer.from(value).toString('hex');
   }
@@ -54,6 +54,9 @@ const getDesktopTxAsset = (elementsAsset, moduleAssetId) => {
     case registerDelegate: {
       return {
         username: elementsAsset.username,
+        generatorPublicKey: convertBinaryToString(elementsAsset.generatorPublicKey),
+        blsPublicKey: convertBinaryToString(elementsAsset.blsPublicKey),
+        proofOfPossession: convertBinaryToString(elementsAsset.proofOfPossession),
       };
     }
 
@@ -111,6 +114,9 @@ const getElementsTxAsset = (desktopAsset, moduleAssetId) => {
     case registerDelegate: {
       return {
         username: desktopAsset.username,
+        generatorPublicKey: convertStringToBinary(desktopAsset.generatorPublicKey),
+        blsPublicKey: convertStringToBinary(desktopAsset.blsPublicKey),
+        proofOfPossession: convertStringToBinary(desktopAsset.proofOfPossession),
       };
     }
 
@@ -193,7 +199,12 @@ const getElementsAssetFromJSON = (JSONAsset, moduleAssetId) => {
     }
 
     case registerDelegate:
-      return JSONAsset;
+      return {
+        username: JSONAsset.username,
+        generatorPublicKey: convertStringToBinary(JSONAsset.generatorPublicKey),
+        blsPublicKey: convertStringToBinary(JSONAsset.blsPublicKey),
+        proofOfPossession: convertStringToBinary(JSONAsset.proofOfPossession),
+      };
 
     default:
       return Error('Unknown transaction');

@@ -5,6 +5,7 @@ import {
   getBase32AddressFromAddress,
 } from '@wallet/utils/account';
 import accounts from '@tests/constants/wallets';
+import { genKey, blsKey, pop } from '@tests/constants/keys';
 import {
   getTxAmount,
   elementTxToDesktopTx,
@@ -147,6 +148,9 @@ describe('API: LSK Transactions', () => {
         moduleAssetId: registerDelegate,
         asset: {
           username: 'username',
+          generatorPublicKey: genKey,
+          blsPublicKey: blsKey,
+          proofOfPossession: pop,
         },
       };
       const txObj = desktopTxToElementsTx(tx, registerDelegate);
@@ -157,6 +161,9 @@ describe('API: LSK Transactions', () => {
         assetID,
         asset: {
           username: 'username',
+          generatorPublicKey: convertStringToBinary(genKey),
+          blsPublicKey: convertStringToBinary(blsKey),
+          proofOfPossession: convertStringToBinary(pop),
         },
       });
     });
@@ -265,14 +272,24 @@ describe('API: LSK Transactions', () => {
         ...baseElementsTx,
         moduleID,
         assetID,
-        asset: { username: 'super_delegate' },
+        asset: {
+          username: 'super_delegate',
+          generatorPublicKey: convertStringToBinary(genKey),
+          blsPublicKey: convertStringToBinary(blsKey),
+          proofOfPossession: convertStringToBinary(pop),
+        },
       };
 
       expect(elementTxToDesktopTx(tx)).toEqual({
         ...baseDesktopTx,
         moduleAssetId: registerDelegate,
         id: '',
-        asset: { username: 'super_delegate' },
+        asset: {
+          username: 'super_delegate',
+          generatorPublicKey: genKey,
+          blsPublicKey: blsKey,
+          proofOfPossession: pop,
+        },
       });
     });
 
