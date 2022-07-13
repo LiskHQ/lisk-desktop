@@ -28,9 +28,19 @@ const RegisterDelegateForm = ({
 }) => {
   const { t } = useTranslation();
   const [name, setName] = useDelegateName(prevState?.rawTx?.asset.username);
-  const [generatorPublicKey, blsPublicKey, proofOfPossession, setKey] = useDelegateKey(
+  const [generatorPublicKey, setGenKey] = useDelegateKey(
+    'generatorPublicKey',
+    t('Please enter a valid generator key value'),
     prevState?.rawTx?.asset.generatorPublicKey,
+  );
+  const [blsPublicKey, setBlsKey] = useDelegateKey(
+    'blsPublicKey',
+    t('Please enter a valid bls key value'),
     prevState?.rawTx?.asset.blsPublicKey,
+  );
+  const [proofOfPossession, setPop] = useDelegateKey(
+    'proofOfPossession',
+    t('Please enter a valid proof of possession value'),
     prevState?.rawTx?.asset.proofOfPossession,
   );
 
@@ -43,10 +53,6 @@ const RegisterDelegateForm = ({
       ...name,
       value,
     });
-  };
-
-  const onKeyChange = ({ target }) => {
-    setKey(target.name, target.value);
   };
 
   const transaction = {
@@ -99,7 +105,7 @@ const RegisterDelegateForm = ({
               <Input
                 data-name="generator-publicKey"
                 autoComplete="off"
-                onChange={onKeyChange}
+                onChange={(e) => setGenKey(e.target.value)}
                 name="generatorPublicKey"
                 value={generatorPublicKey.value}
                 placeholder={t('A string value')}
@@ -118,7 +124,7 @@ const RegisterDelegateForm = ({
               <Input
                 data-name="bls-key"
                 autoComplete="off"
-                onChange={onKeyChange}
+                onChange={(e) => setBlsKey(e.target.value)}
                 name="blsPublicKey"
                 value={blsPublicKey.value}
                 placeholder={t('A string value')}
@@ -137,7 +143,7 @@ const RegisterDelegateForm = ({
               <Input
                 data-name="pop"
                 autoComplete="off"
-                onChange={onKeyChange}
+                onChange={(e) => setPop(e.target.value)}
                 name="proofOfPossession"
                 value={proofOfPossession.value}
                 placeholder={t('A string value')}

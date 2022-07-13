@@ -5,74 +5,71 @@ import useDelegateKey from './useDelegateKey';
 describe('useDelegateKey', () => {
   it('Initial values must be empty', () => {
     const { result } = renderHook(
-      () => useDelegateKey(),
+      () => useDelegateKey('blsPublicKey', 'test message'),
     );
-    const [genKey, blsKey, pop] = result.current;
+    const [genKey] = result.current;
 
     expect(genKey.value).toBe('');
-    expect(blsKey.value).toBe('');
-    expect(pop.value).toBe('');
   });
 
   it('It should account for initial params', () => {
     const { result } = renderHook(
-      () => useDelegateKey(keys.genKey, keys.blsKey, keys.pop),
+      () => useDelegateKey('proofOfPossession', 'test message', keys.pop),
     );
-    const [genKey, blsKey, pop] = result.current;
+    const [key] = result.current;
 
-    expect(genKey.value).toBe(keys.genKey);
-    expect(blsKey.value).toBe(keys.blsKey);
-    expect(pop.value).toBe(keys.pop);
+    expect(key.value).toBe(keys.pop);
   });
 
   it('Should set valid values with no errors', () => {
     const { result } = renderHook(
-      () => useDelegateKey(),
+      () => useDelegateKey('generatorPublicKey', 'test message'),
     );
-    const [,,, setKey] = result.current;
+    const [, setKey] = result.current;
     act(() => {
-      setKey('generatorPublicKey', keys.genKey); // 64
-      setKey('blsPublicKey', keys.blsKey); // 96
-      setKey('proofOfPossession', keys.pop); // 192
+      setKey(keys.genKey);
     });
 
-    const [genKey, blsKey, pop] = result.current;
+    const [genKey] = result.current;
     expect(genKey.value).toBe(keys.genKey);
-    expect(blsKey.value).toBe(keys.blsKey);
-    expect(pop.value).toBe(keys.pop);
   });
 
-  it('should show error if the value is not a valid hex string', () => {
+  it('should show generatorPublicKey error if the value is not a valid', () => {
     const { result } = renderHook(
-      () => useDelegateKey(),
+      () => useDelegateKey('generatorPublicKey', 'test message'),
     );
-    const [,,, setKey] = result.current;
+    const [, setKey] = result.current;
     act(() => {
-      setKey('generatorPublicKey', 'qqq');
-      setKey('blsPublicKey', 'qqq');
-      setKey('proofOfPossession', 'qqq');
+      setKey('generatorPublicKey', 'wrong_value');
     });
 
-    const [genKey, blsKey, pop] = result.current;
+    const [genKey] = result.current;
     expect(genKey.error).toBe(true);
-    expect(blsKey.error).toBe(true);
-    expect(pop.error).toBe(true);
   });
 
-  it('should show error if the hex value has a different length than expected', () => {
+  it('should show blsPublicKey error if the value is not a valid', () => {
     const { result } = renderHook(
-      () => useDelegateKey(),
+      () => useDelegateKey('blsPublicKey', 'test message'),
     );
-    const [,,, setKey] = result.current;
+    const [, setKey] = result.current;
     act(() => {
-      setKey('generatorPublicKey', keys.blsKey); // 96
-      setKey('blsPublicKey', keys.pop); // 192
-      setKey('proofOfPossession', keys.genKey); // 64
+      setKey('blsPublicKey', 'wrong_value');
     });
 
-    const [genKey, blsKey, pop] = result.current;
-    expect(genKey.error).toBe(true);
+    const [blsKey] = result.current;
     expect(blsKey.error).toBe(true);
+  });
+
+  it('should show proofOfPossession error if the value is not a valid', () => {
+    const { result } = renderHook(
+      () => useDelegateKey('proofOfPossession', 'test message'),
+    );
+    const [, setKey] = result.current;
+    act(() => {
+      setKey('proofOfPossession', 'wrong_value');
+    });
+
+    const [pop] = result.current;
     expect(pop.error).toBe(true);
   });
 });

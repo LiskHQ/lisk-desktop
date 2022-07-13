@@ -46,7 +46,7 @@ describe('RegisterDelegateForm', () => {
   describe('Renders correctly', () => {
     it('renders properly RegisterDelegateForm component', () => {
       useDelegateName.mockReturnValue([empty, setName]);
-      useDelegateKey.mockReturnValue([empty, empty, empty, setKey]);
+      useDelegateKey.mockReturnValue([empty, setKey]);
       const wrapper = mount(<RegisterDelegateForm {...props} />);
       expect(wrapper).toContainMatchingElement('.select-name-container');
       expect(wrapper).toContainMatchingElement('.select-name-input');
@@ -57,7 +57,7 @@ describe('RegisterDelegateForm', () => {
 
     it('type a valid and unused username', async () => {
       useDelegateName.mockReturnValue([empty, setName]);
-      useDelegateKey.mockReturnValue([empty, empty, empty, setKey]);
+      useDelegateKey.mockReturnValue([empty, setKey]);
       const wrapper = mount(<RegisterDelegateForm {...props} />);
 
       wrapper.find('input.select-name-input')
@@ -69,9 +69,9 @@ describe('RegisterDelegateForm', () => {
       wrapper.find('input.pop-input')
         .simulate('change', { target: { value: pop.value, name: 'proofOfPossession' } });
       expect(setName).toHaveBeenCalledTimes(1);
-      expect(setKey).toHaveBeenCalledWith('generatorPublicKey', genKey.value);
-      expect(setKey).toHaveBeenCalledWith('blsPublicKey', blsKey.value);
-      expect(setKey).toHaveBeenCalledWith('proofOfPossession', pop.value);
+      expect(setKey).toHaveBeenCalledWith(genKey.value);
+      expect(setKey).toHaveBeenCalledWith(blsKey.value);
+      expect(setKey).toHaveBeenCalledWith(pop.value);
     });
   });
 
@@ -87,13 +87,15 @@ describe('RegisterDelegateForm', () => {
       message: '',
     };
     const wrongKey = {
-      value: 'SSSSSSS',
+      value: 'wrong_value',
       error: true,
       message: 'Invalid hex value',
     };
 
     it('Display delegate name input errors', () => {
-      useDelegateKey.mockReturnValue([genKey, blsKey, pop, setKey]); // valid
+      useDelegateKey.mockReturnValueOnce([genKey, setKey]);
+      useDelegateKey.mockReturnValueOnce([blsKey, setKey]);
+      useDelegateKey.mockReturnValueOnce([pop, setKey]);
       useDelegateName.mockReturnValue([wrongName, setName]); // invalid
       const wrapper = mount(<RegisterDelegateForm {...props} />);
       expect(wrapper.find('button.confirm-btn')).toBeDisabled();
@@ -101,7 +103,9 @@ describe('RegisterDelegateForm', () => {
     });
 
     it('Display generator key input error', () => {
-      useDelegateKey.mockReturnValue([wrongKey, blsKey, pop, setKey]); // invalid
+      useDelegateKey.mockReturnValueOnce([wrongKey, setKey]);
+      useDelegateKey.mockReturnValueOnce([blsKey, setKey]);
+      useDelegateKey.mockReturnValueOnce([pop, setKey]);
       useDelegateName.mockReturnValue([validName, setName]); // valid
       const wrapper = mount(<RegisterDelegateForm {...props} />);
       expect(wrapper.find('button.confirm-btn')).toBeDisabled();
@@ -109,7 +113,9 @@ describe('RegisterDelegateForm', () => {
     });
 
     it('Display bls key input error', () => {
-      useDelegateKey.mockReturnValue([genKey, wrongKey, pop, setKey]); // invalid
+      useDelegateKey.mockReturnValueOnce([genKey, setKey]);
+      useDelegateKey.mockReturnValueOnce([wrongKey, setKey]);
+      useDelegateKey.mockReturnValueOnce([pop, setKey]);
       useDelegateName.mockReturnValue([validName, setName]); // valid
       const wrapper = mount(<RegisterDelegateForm {...props} />);
       expect(wrapper.find('button.confirm-btn')).toBeDisabled();
@@ -117,7 +123,9 @@ describe('RegisterDelegateForm', () => {
     });
 
     it('Display pop key input error', () => {
-      useDelegateKey.mockReturnValue([genKey, blsKey, wrongKey, setKey]); // invalid
+      useDelegateKey.mockReturnValueOnce([genKey, setKey]);
+      useDelegateKey.mockReturnValueOnce([blsKey, setKey]);
+      useDelegateKey.mockReturnValueOnce([wrongKey, setKey]);
       useDelegateName.mockReturnValue([validName, setName]); // valid
       const wrapper = mount(<RegisterDelegateForm {...props} />);
       expect(wrapper.find('button.confirm-btn')).toBeDisabled();
@@ -145,12 +153,16 @@ describe('RegisterDelegateForm', () => {
         publicKey: wallets.genesis.summary.publicKey,
       },
     };
-    useDelegateKey.mockReturnValue([genKey, blsKey, pop, setKey]); // valid
-    useDelegateName.mockReturnValue([validName, setName]); // valid
-    const wrapper = mount(<RegisterDelegateForm {...props} />);
-    wrapper.find('button.confirm-btn').simulate('click');
-    expect(props.nextStep).toHaveBeenCalledWith({
-      rawTx,
+    it('accept a valid form', () => {
+      useDelegateKey.mockReturnValueOnce([genKey, setKey]);
+      useDelegateKey.mockReturnValueOnce([blsKey, setKey]);
+      useDelegateKey.mockReturnValueOnce([pop, setKey]);
+      useDelegateName.mockReturnValue([validName, setName]); // valid
+      const wrapper = mount(<RegisterDelegateForm {...props} />);
+      wrapper.find('button.confirm-btn').simulate('click');
+      expect(props.nextStep).toHaveBeenCalledWith({
+        rawTx,
+      });
     });
   });
 });
