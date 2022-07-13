@@ -1,6 +1,5 @@
 import React from 'react';
 import { useTranslation } from 'react-i18next';
-import { Link } from 'react-router-dom';
 import moment from 'moment';
 import Box from 'src/theme/box';
 import TokenAmount from '@token/fungible/components/tokenAmount';
@@ -15,7 +14,7 @@ import { parseSearchParams } from 'src/utils/searchParams';
 import { usePinBlockchainApplication } from '@blockchainApplication/manage/hooks/usePinBlockchainApplication';
 import styles from './RemoveApplicationDetails.css';
 import liskLogo from '../../../../../../setup/react/assets/images/LISK.png';
-import useApplicationManagement from '../../hooks/useApplicationManagement';
+// import useApplicationManagement from '../../hooks/useApplicationManagement';
 
 const deposit = 5e10;
 const serviceUrl = 'https://lisk.com/';
@@ -26,10 +25,13 @@ const BlockchainApplicationDetails = ({
 }) => {
   const { t } = useTranslation();
   const chainId = parseSearchParams(location.search)?.chainId;
-  const { deleteApplicationByChainId } = useApplicationManagement();
+  // TODO: this needs to be reisntated when the set application flow is completed
+  // because presently, there is no way to set current application on runtime
+
+  // const { deleteApplicationByChainId } = useApplicationManagement();
   const { checkPinByChainId, togglePin } = usePinBlockchainApplication();
   const {
-    name, state, address, lastCertificateHeight, lastUpdated, chainID,
+    name, state, address, lastCertificateHeight, lastUpdated,
   } = application.data;
 
   const isPinned = checkPinByChainId(chainId);
@@ -64,7 +66,10 @@ const BlockchainApplicationDetails = ({
   ];
 
   const handleRemoveApplication = () => {
-    deleteApplicationByChainId(chainID);
+    // TODO: this needs to be reisntated when the set application flow is completed
+    // because presently, there is no way to set current application on runtime
+
+    // deleteApplicationByChainId(chainID);
     nextStep({ application });
   };
 
@@ -100,16 +105,16 @@ const BlockchainApplicationDetails = ({
             </ValueAndLabel>
           </Box>
           <div className={styles.addressRow}>
-            <Link
+            <a
               className={`${styles.appLink}`}
               target="_blank"
                 // eslint-disable-next-line
                 // TODO: this is just a place holder link pending when its part of the response payload from service
-              to={serviceUrl}
+              href={serviceUrl}
             >
               <Icon name="chainLinkIcon" className={styles.hwWalletIcon} />
               {t(serviceUrl)}
-            </Link>
+            </a>
           </div>
           <div className={styles.balanceRow}>
             <span>{t('Deposited:')}</span>

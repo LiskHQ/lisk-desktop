@@ -91,6 +91,7 @@ describe('BlockchainApplicationDetails', () => {
 
   it('should remove blockchain application', () => {
     fireEvent.click(screen.getByText('Remove application now'));
-    expect(mockDeleteApplicationByChainId).toHaveBeenCalledWith(props.application.data.chainID);
+    expect(props.nextStep)
+      .toHaveBeenCalledWith(expect.objectContaining({ application: props.application }));
   });
 });
