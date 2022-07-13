@@ -1,0 +1,34 @@
+.wrapper {
+  width: 100%;
+  box-sizing: border-box;
+  max-width: 757px;
+  min-width: 450px;
+  padding: 32px;
+  padding-bottom: 16px;
+  border-radius: 16px;
+  background-color: var(--color-white);
+}
+
+.textContent {
+  color: var(--color-maastricht-blue);
+  text-align: center;
+
+  & .header {
+    font-size: 28px;
+    font-weight: var(--font-weight-very-bold);
+    line-height: 32px;
+    margin: 16px;
+  }
+
+  & .detail {
+    font-size: 16px;
+    margin: 0 8px 16px;
+  }
+}
+
+.footer {
+  & button {
+    margin-top: 32px;
+    border-radius: 10px;
+  }
+}

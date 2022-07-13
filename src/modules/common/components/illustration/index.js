@@ -53,6 +53,7 @@ import trezorHwRejection from '@setup/react/assets/images/illustrations/hw-rejec
 import trezorHwRejectionDark from '@setup/react/assets/images/illustrations/hw-rejection-trezor-dark.svg';
 import ledgerNanoHwRejection from '@setup/react/assets/images/illustrations/hw-rejection-ledger-nano.svg';
 import ledgerNanoHwRejectionDark from '@setup/react/assets/images/illustrations/hw-rejection-ledger-nano-dark.svg';
+import addApplicationSuccess from '@setup/react/assets/images/illustrations/add-application-success.svg';
 
 export const illustrations = {
   welcomeLiskDelegates,
@@ -107,6 +108,7 @@ export const illustrations = {
   trezorHwRejectionDark,
   ledgerNanoHwRejection,
   ledgerNanoHwRejectionDark,
+  addApplicationSuccess,
 };
 
 const Illustration = ({ name, className, noTheme }) => {
