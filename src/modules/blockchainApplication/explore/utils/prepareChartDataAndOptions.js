@@ -37,11 +37,6 @@ const prepareChartDataAndOptions = (statistics, colorPalette, t) => {
       cutoutPercentage: 70,
       legend: {
         display: false,
-        position: 'left',
-        align: 'start',
-        labels: {
-          padding: 20,
-        },
       },
       layout: {
         padding: {
@@ -51,7 +46,7 @@ const prepareChartDataAndOptions = (statistics, colorPalette, t) => {
           top: 0,
         },
       },
-    }
+    },
   };
 
   return { doughnutChartData, doughnutChartOptions };

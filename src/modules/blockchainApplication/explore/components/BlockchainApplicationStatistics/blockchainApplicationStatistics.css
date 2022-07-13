@@ -49,6 +49,7 @@
 .chart {
   position: relative;
   width: calc(100% - 10px);
+  min-height: 120px;
 }
 
 .chartGuides {
