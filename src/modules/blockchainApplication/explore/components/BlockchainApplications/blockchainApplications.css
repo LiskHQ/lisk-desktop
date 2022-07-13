@@ -1,5 +1,9 @@
 .wrapper {
   width: 100%;
+
+  & > div:first-child {
+    margin-top: 10px;
+  }
 }
 
 .banner {
@@ -18,6 +22,7 @@
 }
 
 .sideBar {
+  width: 30%;
+  min-width: 250px;
   max-width: 300px;
-  width: 25%;
 }

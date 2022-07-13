@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useMemo } from 'react';
 import { useTranslation } from 'react-i18next';
 import { toRawLsk } from '@token/fungible/utils/lsk';
 import Box from 'src/theme/box';
@@ -22,14 +22,21 @@ const BlockchainApplicationStatistics = ({ statistics }) => {
   const {
     doughnutChartData, doughnutChartOptions,
   } = prepareChartDataAndOptions(statistics.data, colorPalette, t);
-  const cardsMap = [
+
+  const cardsMap = useMemo(() => [
     {
-      title: t('Total Supply'), description: t('Total LSK tokens in circulation'), amount: toRawLsk(statistics.data.totalSupplyLSK), icon: 'totalSupplyToken',
+      title: t('Total Supply'),
+      description: t('Total LSK tokens in circulation'),
+      amount: toRawLsk(statistics.data.totalSupplyLSK),
+      icon: 'stackedToken',
     },
     {
-      title: t('Staked'), description: t('Amount of LSK tokens staked by validators and nominators for DPoS governance'), amount: toRawLsk(statistics.data.stakedLSK), icon: 'stackedToken',
+      title: t('Staked'),
+      description: t('Amount of LSK tokens staked by validators and nominators for DPoS governance'),
+      amount: toRawLsk(statistics.data.stakedLSK),
+      icon: 'totalSupplyToken',
     },
-  ];
+  ], [statistics]);
 
   return (
     <Box className={styles.container}>
@@ -71,7 +78,7 @@ const BlockchainApplicationStatistics = ({ statistics }) => {
           <div>
             <div>
               <span className={styles.statsInfoTitle}>{title}</span>
-              <Tooltip size="m" position="bottom">
+              <Tooltip size="m" position="left">
                 <p>{description}</p>
               </Tooltip>
             </div>

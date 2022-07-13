@@ -6,6 +6,8 @@
 }
 
 .boxHeader {
+  --content-font: 'gilroy';
+
   font-size: 20px;
   font-weight: 600;
   padding-bottom: 22px !important;

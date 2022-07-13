@@ -7,6 +7,10 @@
     padding-bottom: 22px;
   }
 
+  & > header > h1 {
+    font-size: 20px !important;
+  }
+
   & > div {
     margin-bottom: 16px;
   }
@@ -39,11 +43,16 @@
   color: var(--color-blue-gray);
 }
 
+.container .statsBox:first-of-type {
+  background-color: black;
+}
+
 .statsInfo {
   @mixin headingNormalIntermediate;
 
   color: var(--color-maastricht-blue);
   margin: 8px 0 0;
+  font-weight: 500;
 }
 
 .chart {
