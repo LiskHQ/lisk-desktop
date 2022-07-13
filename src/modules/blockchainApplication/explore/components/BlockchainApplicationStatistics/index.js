@@ -49,7 +49,7 @@ const BlockchainApplicationStatistics = ({ statistics }) => {
             options={doughnutChartOptions.mediumViewport}
           />
         </div>
-        <div className="hideOnLargeViewPort">
+        <div className={`${styles.chartGuides} hideOnLargeViewPort`}>
           <GuideTooltip>
             {doughnutChartData.labels.map((label, i) => (
               <GuideTooltipItem

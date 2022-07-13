@@ -50,3 +50,7 @@
   position: relative;
   width: calc(100% - 10px);
 }
+
+.chartGuides {
+  margin-left: 10px;
+}
