@@ -45,3 +45,8 @@
   color: var(--color-maastricht-blue);
   margin: 8px 0 0;
 }
+
+.chart {
+  position: relative;
+  width: calc(100% - 10px);
+}

@@ -14,23 +14,44 @@ const prepareChartDataAndOptions = (statistics, colorPalette, t) => {
   };
 
   const doughnutChartOptions = {
-    cutoutPercentage: 70,
-    legend: {
-      display: true,
-      position: 'left',
-      align: 'start',
-      labels: {
-        padding: 20,
+    largeViewport: {
+      cutoutPercentage: 70,
+      legend: {
+        display: true,
+        position: 'left',
+        align: 'start',
+        labels: {
+          padding: 20,
+        },
+      },
+      layout: {
+        padding: {
+          left: 0,
+          right: 0,
+          bottom: 0,
+          top: 0,
+        },
       },
     },
-    layout: {
-      padding: {
-        left: 0,
-        right: 0,
-        bottom: 0,
-        top: 0,
+    mediumViewport: {
+      cutoutPercentage: 70,
+      legend: {
+        display: false,
+        position: 'left',
+        align: 'start',
+        labels: {
+          padding: 20,
+        },
       },
-    },
+      layout: {
+        padding: {
+          left: 0,
+          right: 0,
+          bottom: 0,
+          top: 0,
+        },
+      },
+    }
   };
 
   return { doughnutChartData, doughnutChartOptions };

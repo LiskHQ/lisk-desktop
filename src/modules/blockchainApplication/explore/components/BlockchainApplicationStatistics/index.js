@@ -10,6 +10,9 @@ import Tooltip from 'src/theme/Tooltip';
 import Icon from 'src/theme/Icon';
 import { useTheme } from 'src/theme/Theme';
 import { getColorPalette } from 'src/modules/common/components/charts/chartOptions';
+import GuideTooltip, {
+  GuideTooltipItem,
+} from 'src/modules/common/components/charts/guideTooltip';
 import prepareChartDataAndOptions from '../../utils/prepareChartDataAndOptions';
 import styles from './blockchainApplicationStatistics.css';
 
@@ -34,10 +37,29 @@ const BlockchainApplicationStatistics = ({ statistics }) => {
         <h1>{t('Statistics')}</h1>
       </BoxHeader>
       <BoxContent className={styles.chartBox}>
-        <DoughnutChart
-          data={doughnutChartData}
-          options={doughnutChartOptions}
-        />
+        <div className={`${styles.chart} showOnLargeViewPort`}>
+          <DoughnutChart
+            data={doughnutChartData}
+            options={doughnutChartOptions.largeViewport}
+          />
+        </div>
+        <div className={`${styles.chart} hideOnLargeViewPort`}>
+          <DoughnutChart
+            data={doughnutChartData}
+            options={doughnutChartOptions.mediumViewport}
+          />
+        </div>
+        <div className="hideOnLargeViewPort">
+          <GuideTooltip>
+            {doughnutChartData.labels.map((label, i) => (
+              <GuideTooltipItem
+                key={`blockchain-app-statistic-GuideTooltip-${i}-${label}`}
+                label={label}
+                color={doughnutChartData.datasets[0].backgroundColor[i]}
+              />
+            ))}
+          </GuideTooltip>
+        </div>
       </BoxContent>
       {cardsMap.map(({
         title, description, amount, icon,
