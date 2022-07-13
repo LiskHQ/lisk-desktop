@@ -6,7 +6,7 @@ import BlockchainApplicationList from '@blockchainApplication/explore/components
 import BlockchainApplicationStatistics from '../BlockchainApplicationStatistics';
 import styles from './blockchainApplications.css';
 
-const ManageBlockchainAppications = ({
+const BlockchainAppications = ({
   applications,
   statistics,
   // applyFilters,
@@ -37,4 +37,4 @@ const ManageBlockchainAppications = ({
   );
 };
 
-export default ManageBlockchainAppications;
+export default BlockchainAppications;
