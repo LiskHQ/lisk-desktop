@@ -1,22 +1,23 @@
 .wrapper {
-  padding-top: 20px;
-
-  & > div {
-    margin-top: 25px;
-    display: flex;
-  }
+  width: 100%;
 }
 
 .banner {
   width: 100%;
 }
 
+.contentWrapper {
+  display: flex;
+  flex-direction: row;
+  column-gap: 20px;
+  width: 100%;
+}
+
 .content {
-  height: 200px;
-  flex-basis: 75%;
-  padding-right: 20px;
+  flex: 1;
 }
 
 .sideBar {
-  flex-basis: 25%;
+  max-width: 300px;
+  width: 25%;
 }

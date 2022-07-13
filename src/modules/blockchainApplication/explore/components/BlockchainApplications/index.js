@@ -25,7 +25,7 @@ const BlockchainAppications = ({
         infoLink="https://lisk.io"
         show
       />
-      <div>
+      <div className={styles.contentWrapper}>
         <div className={styles.content}>
           <BlockchainApplicationList applications={applications} />
         </div>

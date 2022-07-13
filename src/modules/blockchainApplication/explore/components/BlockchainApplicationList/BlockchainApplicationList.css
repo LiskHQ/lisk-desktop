@@ -10,6 +10,7 @@
   font-weight: 600;
   padding-bottom: 22px !important;
   color: var(--color-maastricht-blue);
+  font-family: var(--content-font);
 
   & .filterHolder {
     max-width: 302px;
