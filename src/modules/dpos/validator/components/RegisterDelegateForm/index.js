@@ -15,6 +15,13 @@ const isFormValid = (name, generatorPublicKey, blsPublicKey, proofOfPossession) 
   && !blsPublicKey.error && !proofOfPossession.error
 );
 
+const getTooltips = (field, t) => {
+  if (field === 'name') {
+    return t('Max. 20 characters, a-z, 0-1, no special characters except !@$_.');
+  }
+  return t('Run lisk keys:generate and copy the value of {{field}}', { field });
+};
+
 const RegisterDelegateForm = ({
   nextStep,
   prevState,
@@ -64,7 +71,10 @@ const RegisterDelegateForm = ({
             <h2>{t('Register delegate')}</h2>
           </BoxHeader>
           <BoxContent className={`${styles.container} select-name-container`}>
-            <InputLabel field="name" />
+            <InputLabel
+              title={t('Your name')}
+              tooltip={getTooltips('name', t)}
+            />
             <div className={styles.inputContainer}>
               <Input
                 data-name="delegate-username"
@@ -81,7 +91,10 @@ const RegisterDelegateForm = ({
               />
             </div>
 
-            <InputLabel field="generatorPublicKey" />
+            <InputLabel
+              title={t('Generator key')}
+              tooltip={getTooltips('generatorPublicKey', t)}
+            />
             <div className={styles.inputContainer}>
               <Input
                 data-name="generator-publicKey"
@@ -97,7 +110,10 @@ const RegisterDelegateForm = ({
               />
             </div>
 
-            <InputLabel field="blsPublicKey" />
+            <InputLabel
+              title={t('BLS Key')}
+              tooltip={getTooltips('blsPublicKey', t)}
+            />
             <div className={styles.inputContainer}>
               <Input
                 data-name="bls-key"
@@ -113,7 +129,10 @@ const RegisterDelegateForm = ({
               />
             </div>
 
-            <InputLabel field="proofOfPossession" />
+            <InputLabel
+              title={t('BLS Proof Of Possession')}
+              tooltip={getTooltips('proofOfPossession', t)}
+            />
             <div className={styles.inputContainer}>
               <Input
                 data-name="pop"
