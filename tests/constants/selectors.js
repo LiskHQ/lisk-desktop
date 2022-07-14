@@ -303,6 +303,9 @@ const ss = {
   chainRow: '.blockchain-application-row',
   chainPinButton: '.blockchain-application-pin-button',
   chainDetailsPinButton: '.chain-details-pin-button',
+  cancelRemoveBlockchainButton: '.cancel-remove-blockchain',
+  removeBlockchainButton: '.remove-blockchain',
+  goToDashboardButton: '.remove-app-success-wrapper > button',
 };
 
 export default ss;
