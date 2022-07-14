@@ -300,6 +300,12 @@ const ss = {
   chainStatusDisplay: '.chain-status',
   lastChainUpdateDisplay: '.last-update',
   lastCertHeightDisplay: '.last-certificate-height',
+  chainRow: '.blockchain-application-row',
+  chainPinButton: '.blockchain-application-pin-button',
+  chainDetailsPinButton: '.chain-details-pin-button',
+  cancelRemoveBlockchainButton: '.cancel-remove-blockchain',
+  removeBlockchainButton: '.remove-blockchain',
+  goToDashboardButton: '.remove-app-success-wrapper > button',
 };
 
 export default ss;

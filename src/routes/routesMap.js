@@ -41,9 +41,10 @@ import SwitchAccount from '@account/components/SwitchAccount';
 import BackupRecoveryPhraseFlow from '@account/components/BackupRecoveryPhraseFlow';
 import RemoveCurrentAccountFlow from '@account/components/RemoveCurrentAccountFlow';
 import RemoveSelectedAccountFlow from '@account/components/RemoveSelectedAccountFlow';
-import BlockchainApplicationStatistics from '@blockchainApplication/explore/manager/BlockchainApplicationStatistics';
+import BlockchainApplications from '@blockchainApplication/explore/manager/BlockchainApplications';
 import BlockchainApplicationDetails from '@blockchainApplication/explore/components/BlockchainApplicationDetails';
 import ApplicationManagementList from '@blockchainApplication/manage/components/ApplicationManagementList';
+import RemoveApplicationFlow from '@blockchainApplication/manage/components/RemoveApplicationFlow';
 
 export default {
   wallet: AccountDetails,
@@ -90,7 +91,8 @@ export default {
   removeCurrentAccountFlow: RemoveCurrentAccountFlow,
   removeSelectedAccount: RemoveSelectedAccountFlow,
   addAccountByFile: AddAccountByFile,
-  blockchainApplications: BlockchainApplicationStatistics,
+  blockchainApplications: BlockchainApplications,
   blockChainApplicationDetails: BlockchainApplicationDetails,
   manageApplications: ApplicationManagementList,
+  removeApplicationFlow: RemoveApplicationFlow,
 };

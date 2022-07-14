@@ -1,0 +1,33 @@
+@import '../../../../../../setup/react/app/mixins.css';
+
+.content {
+  width: 100%;
+  padding: 0px !important;
+}
+
+.boxHeader {
+  font-size: 20px;
+  font-weight: 600;
+  padding-bottom: 22px !important;
+  color: var(--color-maastricht-blue);
+
+  & .filterHolder {
+    max-width: 302px;
+  }
+}
+
+.searchIcon {
+  width: 20px;
+  height: 20px;
+  margin-top: 5px;
+  margin-left: -4px;
+}
+
+.chainSearch {
+  border-radius: 40px;
+}
+
+.tableHeader {
+  padding: 0px 20px;
+  padding-left: 50px;
+}
