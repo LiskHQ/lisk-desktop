@@ -1,11 +1,8 @@
-import React from 'react';
-import { MemoryRouter } from 'react-router';
 import { fireEvent, screen } from '@testing-library/react';
 import mockBlockchainApplications from '@tests/fixtures/blockchainApplicationsExplore';
 import { usePinBlockchainApplication } from '@blockchainApplication/manage/hooks/usePinBlockchainApplication';
 import { renderWithRouter } from 'src/utils/testHelpers';
 import BlockchainApplications from '.';
-import { BLOCKCHAIN_APPLICATION_LIST_LIMIT } from '../../const/constants';
 
 jest.useFakeTimers();
 jest.mock('@blockchainApplication/manage/hooks/usePinBlockchainApplication');
@@ -29,6 +26,15 @@ describe('BlockchainApplicationList', () => {
       loadData: jest.fn(),
       error: false,
     },
+    statistics: {
+      data: {
+        registered: 101,
+        active: 53,
+        terminated: 9,
+        totalSupplyLSK: '5000000',
+        stakedLSK: '3000000',
+      },
+    },
   };
 
   beforeEach(() => {
@@ -42,59 +48,10 @@ describe('BlockchainApplicationList', () => {
     expect(screen.getByText('Status')).toBeTruthy();
     expect(screen.getByText('LSK deposited')).toBeTruthy();
     expect(screen.getByText('Applications')).toBeTruthy();
-  });
 
-  it('should display the right number of applications', () => {
-    const blockchainAppRow = screen.getAllByTestId('applications-row');
-    expect(blockchainAppRow).toHaveLength(mockBlockchainApplications.length);
-  });
-
-  it('should apply search filter', () => {
-    const searchField = screen.getByTestId('application-filter');
-    fireEvent.change(searchField, { target: { value: 'test' } });
-    jest.runAllTimers();
-
-    expect(props.applyFilters).toHaveBeenCalledWith(expect.objectContaining({
-      search: 'test',
-      offset: 0,
-      limit: BLOCKCHAIN_APPLICATION_LIST_LIMIT,
-    }));
-  });
-
-  it('should call the toggle function for the particular blockchain application been toggled', () => {
-    const { chainID } = mockBlockchainApplications[0];
-
-    fireEvent.click(screen.getAllByTestId('pin-button')[0]);
-    expect(mockTogglePin).toHaveBeenCalledWith(chainID);
-  });
-
-  it('should invoke the load more action', () => {
-    props.applications.isLoading = false;
-    props.applications.meta = {
-      total: mockBlockchainApplications.length + 1,
-      count: mockBlockchainApplications.length,
-      offset: 0,
-    };
-
-    wrapper = renderWithRouter(BlockchainApplications, props);
-    fireEvent.click(screen.getByText('Load more'));
-    expect(props.applications.loadData).toHaveBeenCalledWith(expect.objectContaining({
-      offset: props.applications.meta.count + props.applications.meta.offset,
-    }));
-  });
-
-  it('should not have any pinned application', () => {
-    usePinBlockchainApplication.mockReturnValue({
-      togglePin: mockTogglePin,
-      pins: [],
-      checkPinByChainId: jest.fn().mockReturnValue(false),
-    });
-    wrapper.rerender(<MemoryRouter
-      initialEntries={[]}
-    >
-      <BlockchainApplications {...props} />
-    </MemoryRouter>);
-
-    expect(screen.getAllByAltText('unpinnedIcon')).toHaveLength(mockBlockchainApplications.length);
+    expect(screen.getByText('Total Supply')).toBeTruthy();
+    expect(screen.getByText('Staked')).toBeTruthy();
+    expect(screen.getByText('5,000,000 LSK')).toBeTruthy();
+    expect(screen.getByText('3,000,000 LSK')).toBeTruthy();
   });
 });

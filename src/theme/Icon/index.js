@@ -215,6 +215,9 @@ import unpinnedIcon from '@setup/react/assets/images/icons/unpinned.svg';
 import pinnedIcon from '@setup/react/assets/images/icons/pinned.svg';
 import chainLinkIcon from '@setup/react/assets/images/icons/chain-link.svg';
 
+import applicationsIcon from '@setup/react/assets/images/icons/applications-outline.svg';
+import applicationsIconActive from '@setup/react/assets/images/icons/applications-filled.svg';
+
 export const icons = {
   academy,
   academyActive,
@@ -428,6 +431,8 @@ export const icons = {
   unpinnedIcon,
   pinnedIcon,
   chainLinkIcon,
+  applicationsIcon,
+  applicationsIconActive,
 };
 
 const Icon = ({ name, noTheme, ...props }) => {

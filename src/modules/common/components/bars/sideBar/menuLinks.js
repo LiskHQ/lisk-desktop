@@ -17,6 +17,12 @@ const menuLinks = t => ([
   ],
   [
     {
+      icon: 'applicationsIcon',
+      id: 'blockchainApplications',
+      label: t('Applications'),
+      path: routes.blockchainApplications.path,
+    },
+    {
       icon: 'networkMonitor',
       id: 'network',
       label: t('Network'),

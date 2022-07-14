@@ -83,7 +83,7 @@ const BlockchainApplicationStatistics = ({ statistics }) => {
               </Tooltip>
             </div>
             <p className={styles.statsInfo}>
-              <TokenAmount val={amount} />
+              <TokenAmount token="LSK" val={amount} />
             </p>
           </div>
           <div>
