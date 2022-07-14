@@ -26,6 +26,7 @@ const application = {
     address: 'lsk24cd35u4jdq8szo3pnsqe5dsxwrnazyqqqg5eu',
     lastCertificateHeight: 1000,
     lastUpdated: 123456789,
+    depositedLsk: 50000000,
   },
 };
 
@@ -159,6 +160,7 @@ const BlockchainApplicationDetails = ({ location }) => {
             <Box className={styles.footerButton}>
               <PrimaryButton
                 size="l"
+                data-testid="add-application-button"
                 onClick={addNewApplication}
               >
                 {t('Add application to my list')}
