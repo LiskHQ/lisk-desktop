@@ -4,7 +4,7 @@ import { useTranslation } from 'react-i18next';
 import InfoBanner from 'src/modules/common/components/infoBanner/infoBanner';
 import BlockchainApplicationList from '@blockchainApplication/explore/components/BlockchainApplicationList';
 import BlockchainApplicationStatistics from '../BlockchainApplicationStatistics';
-import styles from './blockchainApplications.css';
+import styles from './BlockchainApplications.css';
 
 const BlockchainAppications = ({
   applications,

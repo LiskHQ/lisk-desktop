@@ -16,7 +16,6 @@ usePinBlockchainApplication.mockReturnValue({
 });
 
 describe('BlockchainApplicationList', () => {
-  let wrapper;
   const props = {
     applyFilters: jest.fn(),
     filters: jest.fn(),
@@ -39,7 +38,7 @@ describe('BlockchainApplicationList', () => {
 
   beforeEach(() => {
     jest.clearAllMocks();
-    wrapper = renderWithRouter(BlockchainApplications, props);
+    renderWithRouter(BlockchainApplications, props);
   });
 
   it('should display properly', () => {
