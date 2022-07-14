@@ -224,4 +224,8 @@ export const modals = {
     isPrivate: false,
     forbiddenTokens: [],
   },
+  removeApplicationFlow: {
+    isPrivate: false,
+    forbiddenTokens: [],
+  },
 };
