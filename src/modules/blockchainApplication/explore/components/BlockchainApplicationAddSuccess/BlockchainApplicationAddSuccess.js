@@ -18,6 +18,7 @@ const BlockchainApplicationAddSuccess = ({ history }) => {
       <Box className={styles.wrapper}>
         <Illustration
           name="addApplicationSuccess"
+          className={styles.illustration}
         />
         <Box className={styles.textContent}>
           <div className={styles.header}>{t('Perfect! Application has now been added')}</div>
