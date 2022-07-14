@@ -1,8 +1,8 @@
-import { fireEvent, screen } from '@testing-library/react';
+import { screen } from '@testing-library/react';
 import mockBlockchainApplications from '@tests/fixtures/blockchainApplicationsExplore';
 import { usePinBlockchainApplication } from '@blockchainApplication/manage/hooks/usePinBlockchainApplication';
 import { renderWithRouter } from 'src/utils/testHelpers';
-import BlockchainApplications from '.';
+import BlockchainApplications from './BlockchainApplications';
 
 jest.useFakeTimers();
 jest.mock('@blockchainApplication/manage/hooks/usePinBlockchainApplication');
