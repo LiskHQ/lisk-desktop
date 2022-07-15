@@ -1,4 +1,3 @@
-/* istanbul ignore file */
 import React from 'react';
 import { useTranslation } from 'react-i18next';
 import InfoBanner from 'src/modules/common/components/infoBanner/infoBanner';

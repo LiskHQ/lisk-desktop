@@ -6,7 +6,7 @@ export default (t) => ([
     classList: grid['col-xs-4'],
   },
   {
-    title: t('Chain Id'),
+    title: t('Chain ID'),
     classList: grid['col-xs-3'],
   },
   {

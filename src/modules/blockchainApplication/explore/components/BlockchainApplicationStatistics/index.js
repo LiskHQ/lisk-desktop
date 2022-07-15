@@ -28,13 +28,13 @@ const BlockchainApplicationStatistics = ({ statistics }) => {
       title: t('Total Supply'),
       description: t('Total LSK tokens in circulation'),
       amount: toRawLsk(statistics.data.totalSupplyLSK),
-      icon: 'stackedToken',
+      icon: 'totalSupplyToken',
     },
     {
       title: t('Staked'),
       description: t('Amount of LSK tokens staked by validators and nominators for DPoS governance'),
       amount: toRawLsk(statistics.data.stakedLSK),
-      icon: 'totalSupplyToken',
+      icon: 'stakedToken',
     },
   ], [statistics]);
 
