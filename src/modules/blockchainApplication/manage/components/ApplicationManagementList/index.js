@@ -35,8 +35,7 @@ const ApplicationListItem = ({
 );
 
 const ApplicationList = ({ apps }) => {
-  let [currentApplication, setApplication] = useCurrentApplication();
-  currentApplication = { chainId: 1 };
+  const [currentApplication, setApplication] = useCurrentApplication();
 
   return (
     <div>

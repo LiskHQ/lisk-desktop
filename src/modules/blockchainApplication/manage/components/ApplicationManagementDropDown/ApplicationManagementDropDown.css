@@ -1,0 +1,8 @@
+.wrapper {
+  flex-direction: row;
+  padding: 5px;
+  color: var(--color-white);
+  align-items: center;
+  font-weight: 500px;
+  font-size: 14px;
+}
