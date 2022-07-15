@@ -1,16 +1,19 @@
 import React from 'react';
-// import { useTranslation } from 'react-i18next';
-// import { useCurrentApplication }
-// from '@blockchainApplication/manage/hooks/useCurrentApplication';
-import Box from 'src/theme/box';
+import { TertiaryButton } from 'src/theme/buttons';
+import Icon from 'src/theme/Icon';
+import { useCurrentApplication } from '../../hooks/useCurrentApplication';
+import chainLogo from '../../../../../../setup/react/assets/images/LISK.png';
 
 import styles from './ApplicationManagementDropDown.css';
 
-const ApplicationManagementList = () =>
-//   const { t } = useTranslation();
-  (
-    <Box className={styles.wrapper}>
-      sdfsdfsdf
-    </Box>
+const ApplicationManagementList = () => {
+  const [currentApplication] = useCurrentApplication();
+  return (
+    <TertiaryButton className={styles.wrapper}>
+      <img src={chainLogo} />
+      <span>{currentApplication?.name || 'Lisk'}</span>
+      <Icon name="dropdownArrowIcon" />
+    </TertiaryButton>
   );
+};
 export default ApplicationManagementList;
