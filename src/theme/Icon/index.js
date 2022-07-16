@@ -217,6 +217,7 @@ import chainLinkIcon from '@setup/react/assets/images/icons/chain-link.svg';
 import successCheckMark from '@setup/react/assets/images/icons/success-check-mark.svg';
 import dropdownArrowIcon from '@setup/react/assets/images/icons/dropdown-arrow.svg';
 import plusBlueIcon from '@setup/react/assets/images/icons/plus-blue.svg';
+import cautionFilledIcon from '@setup/react/assets/images/icons/caution-icon-filled.svg';
 
 export const icons = {
   academy,
@@ -434,6 +435,7 @@ export const icons = {
   successCheckMark,
   dropdownArrowIcon,
   plusBlueIcon,
+  cautionFilledIcon,
 };
 
 const Icon = ({ name, noTheme, ...props }) => {

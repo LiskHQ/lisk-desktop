@@ -26,7 +26,7 @@ const blockchainApplicationsManage = [
   {
     name: 'DoEdu',
     chainID: 'aq96eeqk77r4syc8aet9fcey',
-    state: 'active',
+    state: 'terminated',
     serviceURLs: ['https://service.doedu.com'],
     lastUpdated: 789123456,
     isDefault: false,

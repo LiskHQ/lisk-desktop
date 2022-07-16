@@ -1,71 +1,8 @@
-.wrapper {
-  background: var(--color-white);
-  border-radius: 6px;
-  position: absolute;
-  top: 50px;
-  right: 100px;
-  max-width: 400px;
-  padding: 16px;
-  box-sizing: border-box;
-  cursor: pointer;
-
-  & > header {
-    height: fit-content !important;
-    padding: 16px 37px !important;
-    padding-top: 0px !important;
-  }
-
-  & > header > h1 {
-    font-size: 20px !important;
-    font-weight: 600 !important;
-  }
-
-  & > header ~ div {
-    padding: 0px !important;
-    padding-right: 4px !important;
-    border-radius: 0px !important;
-  }
-}
-
-.applicationListContainer {
-  --content-font: 'gilroy';
-
-  max-height: 160px;
-  overflow: auto;
-}
-
-.applicationListContainer::-webkit-scrollbar {
-  width: 4px !important;
-}
-
-.applicationListContainer::-webkit-scrollbar-thumb {
-  background-color: var(--color-platinum);
-}
 
 .activeAppBg {
   --color-ultramarine-blue-blurred: #4070f41a;
 
   background-color: var(--color-ultramarine-blue-blurred) !important;
-}
-
-.addApplicationBtn {
-  width: 100%;
-  color: var(--color-ultramarine-blue);
-  border-radius: 10px;
-  margin-top: 16px;
-  display: flex;
-  opacity: 1;
-
-  & > img {
-    width: 16px;
-    margin-right: 8px;
-  }
-}
-
-.listWrapper {
-  display: flex;
-  flex-direction: column;
-  row-gap: 6px;
 }
 
 .appItemWrapper {
@@ -80,6 +17,16 @@
   box-sizing: border-box;
 }
 
+.appItemWrapper.termiated {
+  & > .leftWrapper {
+    opacity: 0.4;
+  }
+}
+
+.disabledWarning {
+  margin-top: 6px;
+}
+
 .appItemWrapper:hover {
   background-color: var(--color-athens-white);
 }
@@ -88,25 +35,30 @@
   display: block;
 }
 
-.appItemWrapper:hover .deleteBtn {
-  display: block;
-  opacity: 1;
+.appItemWrapper:hover .deleteBtn,
+.appItemWrapper:hover .deleteBtnTooltip,
+.appItemWrapper:hover .diabledDeleteBtn {
+  display: flex;
 }
 
-.deleteBtn {
+.deleteBtnTooltip {
+  display: none;
+}
+
+.deleteBtn,
+.diabledDeleteBtn {
   min-width: 30px;
   display: none;
-  padding: 5px !important;
   width: fit-content;
+  padding: 5px !important;
   margin: 0px;
-  height: fit-content !important;
+  height: 34px !important;
   box-sizing: border-box;
   margin-right: -6px;
-  transition: opacity linear 250ms;
 }
 
-.deleteBtn:hover {
-  opacity: 0.8;
+.diabledDeleteBtn {
+  opacity: 0.4;
 }
 
 .leftWrapper {
@@ -125,6 +77,14 @@
   display: flex;
   justify-content: flex-end;
   align-items: center;
+  margin-top: 2px;
+
+  & > div {
+    display: flex;
+    flex-direction: row;
+    column-gap: 5px;
+    align-items: center;
+  }
 }
 
 .chainLogo {
