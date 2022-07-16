@@ -181,6 +181,7 @@ or "warn/action" ineastd of "red/green"
   --color-progress-bar: var(--color-ink-blue);
   --color-ghost-white: #f7f9fb;
   --color-button-outline-color: var(--color-very-light-gray);
+  --color-athens-white: rgba(247, 249, 251, 1);
 
   /*************************
         Box
