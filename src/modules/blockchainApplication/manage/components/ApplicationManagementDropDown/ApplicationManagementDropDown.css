@@ -4,11 +4,14 @@
   padding: 5px 15px;
   color: white;
   align-items: center;
-  font-weight: 500px;
-  font-size: 14px;
   column-gap: 8px;
   text-decoration: none;
   opacity: 1;
+
+  & > span {
+    font-weight: 500;
+    font-size: 14px;
+  }
 
   & > img:first-child {
     width: 31px;
