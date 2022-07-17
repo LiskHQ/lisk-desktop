@@ -1,14 +1,17 @@
 Feature: BlockchainExplore
   Background:
-  Given I visit blockchain applications link
-  And I wait 1 seconds
+    Given I login as genesis on customNode
+    And I wait 2 seconds
+    Given I am on applications page
 
   @basic
-  Scenario: visit blockchain applications list
-    Then blockchain applications should be accuratly rendered
+  Scenario: visit blockchain applications page
+    Then blockchain applications list should be accuratly rendered
+    Then blockchain applications statistics should be accuratly rendered
     When I toggle pin button for chain id: ij239sksf5u4jdq8szo3pnsq
     Then chain with id: ij239sksf5u4jdq8szo3pnsq should be pinned
     When I toggle pin button for chain id: ij239sksf5u4jdq8szo3pnsq
+    And I wait 0.5 seconds
     Then chain with id: ij239sksf5u4jdq8szo3pnsq should be unpinned
 
   @basic

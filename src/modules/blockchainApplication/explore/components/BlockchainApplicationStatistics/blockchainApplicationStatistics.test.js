@@ -20,7 +20,7 @@ describe('BlockchainApplicationStatistics', () => {
 
     expect(wrapper.find('.statsInfoTitle').at(0)).toHaveText('Total Supply');
     expect(wrapper.find('.statsInfoTitle').at(1)).toHaveText('Staked');
-    expect(wrapper.find('TokenAmount').at(0)).toHaveText('5,000,000');
-    expect(wrapper.find('TokenAmount').at(1)).toHaveText('3,000,000');
+    expect(wrapper.find('TokenAmount').at(0)).toHaveText('5,000,000 LSK');
+    expect(wrapper.find('TokenAmount').at(1)).toHaveText('3,000,000 LSK');
   });
 });
