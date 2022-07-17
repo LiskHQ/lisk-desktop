@@ -18,22 +18,6 @@ const RightRowComponent = ({
 
   return (
     <div>
-      {isTerminated && (
-        <Tooltip
-          content={(
-            <Icon
-              className={styles.disabledWarning}
-              name="cautionFilledIcon"
-            />
-          )}
-          size="s"
-          position="left"
-        >
-          <p>
-            {t('Application is terminated and can no longer be managed. Read more')}
-          </p>
-        </Tooltip>
-      )}
       {isDefault ? (
         <Tooltip
           className={styles.deleteBtnTooltip}
@@ -62,6 +46,28 @@ const RightRowComponent = ({
         >
           <Icon name="remove" />
         </TertiaryButton>
+      )}
+      {isTerminated && (
+        <Tooltip
+          className={styles.disabledWarningTooltip}
+          content={(
+            <Icon
+              className={styles.disabledWarning}
+              name="cautionFilledIcon"
+            />
+          )}
+          size="s"
+          position="left"
+        >
+          <p>
+            {t('Application is terminated and can no longer be managed.')}
+            <p>
+              <a>
+                {t('Read more')}
+              </a>
+            </p>
+          </p>
+        </Tooltip>
       )}
     </div>
   );

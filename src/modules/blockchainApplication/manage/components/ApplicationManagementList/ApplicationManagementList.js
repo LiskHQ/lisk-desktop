@@ -1,4 +1,5 @@
-import React from 'react';
+import React, { useCallback } from 'react';
+import { withRouter } from 'react-router';
 import { useTranslation } from 'react-i18next';
 import Box from 'src/theme/box';
 import BoxHeader from 'src/theme/box/header';
@@ -9,9 +10,15 @@ import styles from './ApplicationManagementList.css';
 import useApplicationManagement from '../../hooks/useApplicationManagement';
 import ApplicationManagementRow from '../ApplicationManagementRow';
 
-const ApplicationManagementList = () => {
+const ApplicationManagementList = ({ history }) => {
   const { t } = useTranslation();
   const { applications } = useApplicationManagement();
+
+  const handleAddApplication = useCallback(() => {
+    // TODO: reinstated the correct route from route.addApplication.path
+    // when the add application flow is done
+    history.push('/dashboard');
+  }, []);
 
   return (
     <Box className={styles.wrapper}>
@@ -28,7 +35,10 @@ const ApplicationManagementList = () => {
           ))}
         </div>
       </BoxContent>
-      <OutlineButton className={styles.addApplicationBtn}>
+      <OutlineButton
+        className={styles.addApplicationBtn}
+        onClick={handleAddApplication}
+      >
         <Icon name="plusBlueIcon" />
         {t('Add application')}
       </OutlineButton>
@@ -36,4 +46,4 @@ const ApplicationManagementList = () => {
   );
 };
 
-export default ApplicationManagementList;
+export default withRouter(ApplicationManagementList);

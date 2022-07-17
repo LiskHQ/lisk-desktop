@@ -15,6 +15,7 @@
   color: var(--color-maastricht-blue);
   border-radius: 10px;
   box-sizing: border-box;
+  user-select: none;
 }
 
 .appItemWrapper.termiated {
@@ -39,6 +40,29 @@
 .appItemWrapper:hover .deleteBtnTooltip,
 .appItemWrapper:hover .diabledDeleteBtn {
   display: flex;
+}
+
+.appItemWrapper:hover .disabledWarning {
+  margin-left: 13px;
+}
+
+.appItemWrapper:hover .disabledWarningTooltip > img ~ div {
+  right: 34px !important;
+}
+
+.disabledWarningTooltip main {
+  & > p {
+    --content-font: 'basier-circle';
+
+    width: 200px;
+    font-size: 12px;
+    line-height: 19px;
+    font-family: var(--content-font);
+  }
+
+  & > p > p {
+    margin-top: 10px;
+  }
 }
 
 .deleteBtnTooltip {
