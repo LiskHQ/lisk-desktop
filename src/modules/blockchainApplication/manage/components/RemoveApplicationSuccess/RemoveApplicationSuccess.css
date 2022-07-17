@@ -1,0 +1,55 @@
+@import '../../../../../../setup/react/app/mixins.css';
+
+.wrapper {
+  width: 100%;
+  box-sizing: border-box;
+  max-width: 757px;
+  min-width: 450px;
+  border-radius: 16px;
+  overflow: hidden;
+  background-color: var(--color-white);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 117px;
+
+  & > img {
+    margin-bottom: 32px;
+  }
+
+  & > img ~ p:first-of-type {
+    --content-font: 'gilroy';
+
+    font-family: var(--content-font);
+    font-weight: 600;
+    font-size: 20px;
+    margin: 0px;
+    margin-bottom: 18px;
+  }
+
+  & > img ~ p:first-of-type ~ p {
+    font-size: 16px;
+    font-weight: 400;
+    margin: 0px;
+    width: 346px;
+    line-height: 20.8px;
+    margin-bottom: 33px;
+
+    & > a {
+      font-weight: 500;
+    }
+  }
+}
+
+.button {
+  @mixin contentLarge semi-bold;
+
+  width: 100%;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  border-radius: 10px;
+  max-width: 338px;
+}
