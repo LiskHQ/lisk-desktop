@@ -29,7 +29,9 @@ Given(/^chain with id: (\w+) should be unpinned$/, function (chainId) {
   cy.get(ss.chainPinButton).should('not.be.visible');
 });
 
-Then(/^blockchain applications should be accuratly rendered$/, function () {
+Then(/^blockchain applications list should be accuratly rendered$/, function () {
+  cy.contains('Explore decentralized applications').eq(0).should('have.text', 'Explore decentralized applications');
+
   cy.get(`${ss.chainRow} .chain-name span`).eq(0).should('have.text', firstChainDetails.name);
   cy.get(`${ss.chainRow} .chain-status`).eq(0).should('have.text', firstChainDetails.state);
   cy.get(`${ss.chainRow} .chain-id span`).eq(0).should('have.text', firstChainDetails.chainID);
@@ -39,6 +41,13 @@ Then(/^blockchain applications should be accuratly rendered$/, function () {
   cy.get(`${ss.chainRow} .chain-status`).eq(1).should('have.text', secondChainDetails.state);
   cy.get(`${ss.chainRow} .chain-id span`).eq(1).should('have.text', secondChainDetails.chainID);
   cy.get(`${ss.chainRow} .deposit-amount`).eq(1).should('have.text', '5 LSK');
+});
+
+Then(/^blockchain applications statistics should be accuratly rendered$/, function () {
+  cy.contains('Total Supply').eq(0).should('have.text', 'Total Supply');
+  cy.contains('Staked').eq(0).should('have.text', 'Staked');
+  cy.get('.stats-info-value').eq(0).should('have.text', '5,000,000 LSK');
+  cy.get('.stats-info-value').eq(1).should('have.text', '3,000,000 LSK');
 });
 
 Then(/^blockchain details should be accuratly displayed$/, function () {
