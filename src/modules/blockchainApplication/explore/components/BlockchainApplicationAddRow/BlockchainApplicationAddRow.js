@@ -1,0 +1,37 @@
+import React from 'react';
+import grid from 'flexboxgrid/dist/flexboxgrid.css';
+import DialogLink from 'src/theme/dialog/link';
+import TokenAmount from 'src/modules/token/fungible/components/tokenAmount';
+import liskLogo from '../../../../../../setup/react/assets/images/LISK.png';
+import styles from './BlockchainApplicationAddRow.css';
+
+const ChainName = ({ title, logo }) => (
+  <div className={`chain-name ${grid['col-xs-4']} ${styles.chainName}`}>
+    <img src={logo} />
+    <span>{title}</span>
+  </div>
+);
+
+const DepositAmount = ({ amount }) => (
+  <span className={`deposit-amount ${styles.amount} ${grid['col-xs-3']}`}>
+    <TokenAmount val={amount} token="LSK" />
+  </span>
+);
+
+const BlockchainApplicationAddRow = ({
+  data,
+  className,
+}) => (
+  <div data-testid="applications-row" className={`application-row ${styles.container}`}>
+    <DialogLink
+      className={`${grid.row} ${className} blockchain-application-add-row`}
+      // component="blockChainApplicationAddDetails"
+      data={{ application: data }}
+    >
+      <ChainName title={data.name} logo={liskLogo} />
+      <DepositAmount amount={data.depositedLsk} />
+    </DialogLink>
+  </div>
+);
+
+export default BlockchainApplicationAddRow;

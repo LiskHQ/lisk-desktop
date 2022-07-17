@@ -1,0 +1,12 @@
+.container {
+  padding: 4px;
+
+  & :hover {
+    background-color: var(--color-rows-hover);
+  }
+
+  & .blockchain-application-add-row {
+    outline: 5px solid red;
+    padding: 0;
+  }
+}
