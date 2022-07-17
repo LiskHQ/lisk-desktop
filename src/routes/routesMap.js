@@ -43,6 +43,7 @@ import RemoveCurrentAccountFlow from '@account/components/RemoveCurrentAccountFl
 import RemoveSelectedAccountFlow from '@account/components/RemoveSelectedAccountFlow';
 import BlockchainApplications from '@blockchainApplication/explore/manager/BlockchainApplications';
 import BlockchainApplicationDetails from '@blockchainApplication/explore/components/BlockchainApplicationDetails';
+import BlockchainApplicationAddList from '@blockchainApplication/explore/components/BlockchainApplicationAddList';
 import BlockchainApplicationAddSuccess from '@blockchainApplication/explore/components/BlockchainApplicationAddSuccess';
 import RemoveApplicationFlow from '@blockchainApplication/manage/components/RemoveApplicationFlow';
 
@@ -93,6 +94,7 @@ export default {
   addAccountByFile: AddAccountByFile,
   blockchainApplications: BlockchainApplications,
   blockChainApplicationDetails: BlockchainApplicationDetails,
+  blockChainApplicationAddList: BlockchainApplicationAddList,
   blockChainApplicationAddSuccess: BlockchainApplicationAddSuccess,
   removeApplicationFlow: RemoveApplicationFlow,
 };

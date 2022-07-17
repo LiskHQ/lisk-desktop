@@ -1,0 +1,10 @@
+.wrapper {
+  padding: 16px;
+}
+
+.header {
+  color: var(--color-maastricht-blue);
+  font-weight: 600;
+  font-size: 20px;
+  line-height: 24px;
+}
