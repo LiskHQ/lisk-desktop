@@ -3,10 +3,28 @@
 
   & :hover {
     background-color: var(--color-rows-hover);
+    border-radius: 10px;
   }
 
-  & .blockchain-application-add-row {
+  > .blockchain-application-add-row {
     outline: 5px solid red;
     padding: 0;
+  }
+
+  & .chainName {
+    --content-font: 'gilroy';
+
+    padding: 2px 0;
+    font-family: var(--content-font);
+    font-weight: 600;
+    font-size: 16px;
+    line-height: 100%;
+  }
+
+  & .amount {
+    text-align: right;
+    color: var(--color-ink-blue);
+    font-size: 14px;
+    font-weight: 600;
   }
 }

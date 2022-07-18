@@ -1,0 +1,17 @@
+.filterWrapper {
+  padding: 8px;
+
+  & .filterHolder {
+    width: 100%;
+
+    & input {
+      border-radius: 40px;
+    }
+
+    & .searchIcon {
+      width: 20px;
+      height: 20px;
+      margin-left: -4px;
+    }
+  }
+}

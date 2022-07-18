@@ -6,14 +6,14 @@ import liskLogo from '../../../../../../setup/react/assets/images/LISK.png';
 import styles from './BlockchainApplicationAddRow.css';
 
 const ChainName = ({ title, logo }) => (
-  <div className={`chain-name ${grid['col-xs-4']} ${styles.chainName}`}>
+  <div className={`chain-name ${grid['col-xs-6']} ${styles.chainName}`}>
     <img src={logo} />
     <span>{title}</span>
   </div>
 );
 
 const DepositAmount = ({ amount }) => (
-  <span className={`deposit-amount ${styles.amount} ${grid['col-xs-3']}`}>
+  <span className={`deposit-amount ${styles.amount} ${grid['col-xs-6']}`}>
     <TokenAmount val={amount} token="LSK" />
   </span>
 );
@@ -26,7 +26,7 @@ const BlockchainApplicationAddRow = ({
     <DialogLink
       className={`${grid.row} ${className} blockchain-application-add-row`}
       // component="blockChainApplicationAddDetails"
-      data={{ application: data }}
+      // data={{ application: data }}
     >
       <ChainName title={data.name} logo={liskLogo} />
       <DepositAmount amount={data.depositedLsk} />

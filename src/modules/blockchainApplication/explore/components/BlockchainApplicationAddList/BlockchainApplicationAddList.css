@@ -1,14 +1,22 @@
 .wrapper {
   padding: 16px;
+  width: auto !important;
 
   & .content {
     padding: 0;
   }
 
   & .header {
+    display: block;
+    padding-bottom: 15px;
+    height: auto;
     color: var(--color-maastricht-blue);
     font-weight: 600;
     font-size: 20px;
     line-height: 24px;
+
+    & > div:first-of-type {
+      margin-bottom: 8px;
+    }
   }
 }

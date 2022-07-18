@@ -5,6 +5,7 @@ import Box from '@theme/box';
 import BoxHeader from '@theme/box/header';
 import BoxContent from '@theme/box/content';
 import Table from '@theme/table';
+import BlockchainApplicationSearch from '../BlockchainApplicationSearch/BlockchainApplicationSearch';
 import BlockchainApplicationAddRow from '../BlockchainApplicationAddRow/BlockchainApplicationAddRow';
 import BlockchainApplicationSkeleton from '../BlockchainApplicationSkeleton';
 import styles from './BlockchainApplicationAddList.css';
@@ -31,6 +32,7 @@ const BlockchainApplicationAddList = ({
       <Box className={styles.wrapper}>
         <BoxHeader className={styles.header}>
           <div>Add Application</div>
+          <BlockchainApplicationSearch />
         </BoxHeader>
         <BoxContent className={`${styles.content} chain-application-add-list`}>
           <Table
