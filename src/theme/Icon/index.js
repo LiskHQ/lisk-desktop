@@ -209,7 +209,7 @@ import switchIcon from '@setup/react/assets/images/icons/switch.svg';
 import secretPassphrase from '@setup/react/assets/images/icons/secret-passphrase.svg';
 import accountUpload from '@setup/react/assets/images/icons/account-upload.svg';
 import accountRemoved from '@setup/react/assets/images/icons/account-removed.svg';
-import stackedToken from '@setup/react/assets/images/icons/stacked-token.svg';
+import stakedToken from '@setup/react/assets/images/icons/staked-token.svg';
 import totalSupplyToken from '@setup/react/assets/images/icons/total-supply-token.svg';
 import unpinnedIcon from '@setup/react/assets/images/icons/unpinned.svg';
 import pinnedIcon from '@setup/react/assets/images/icons/pinned.svg';
@@ -218,6 +218,9 @@ import successCheckMark from '@setup/react/assets/images/icons/success-check-mar
 import dropdownArrowIcon from '@setup/react/assets/images/icons/dropdown-arrow.svg';
 import plusBlueIcon from '@setup/react/assets/images/icons/plus-blue.svg';
 import cautionFilledIcon from '@setup/react/assets/images/icons/caution-icon-filled.svg';
+
+import applicationsIcon from '@setup/react/assets/images/icons/applications-outline.svg';
+import applicationsIconActive from '@setup/react/assets/images/icons/applications-filled.svg';
 
 export const icons = {
   academy,
@@ -427,11 +430,13 @@ export const icons = {
   secretPassphrase,
   accountUpload,
   accountRemoved,
-  stackedToken,
+  stakedToken,
   totalSupplyToken,
   unpinnedIcon,
   pinnedIcon,
   chainLinkIcon,
+  applicationsIcon,
+  applicationsIconActive,
   successCheckMark,
   dropdownArrowIcon,
   plusBlueIcon,
