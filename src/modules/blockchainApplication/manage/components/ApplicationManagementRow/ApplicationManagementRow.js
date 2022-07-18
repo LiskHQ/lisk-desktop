@@ -1,5 +1,4 @@
 import React, { useCallback, useMemo } from 'react';
-import { withRouter } from 'react-router';
 import { useTranslation } from 'react-i18next';
 import { TertiaryButton } from 'src/theme/buttons';
 import Tooltip from 'src/theme/Tooltip';
@@ -18,9 +17,31 @@ const RightRowComponent = ({
 
   return (
     <div>
+      {isTerminated && (
+        <Tooltip
+          className={styles.disabledWarningTooltip}
+          size="s"
+          position="left"
+          content={(
+            <Icon
+              className={styles.disabledWarning}
+              name="cautionFilledIcon"
+            />
+          )}
+        >
+          <p>
+            {t('Application is terminated and can no longer be managed.')}
+            <a href="https://lisk.com/blog/research/lifecycle-sidechain-lisk-ecosystem" target="_blank">
+              {t('Read more')}
+            </a>
+          </p>
+        </Tooltip>
+      )}
       {isDefault ? (
         <Tooltip
           className={styles.deleteBtnTooltip}
+          size="s"
+          position="left"
           content={(
             <TertiaryButton
               disabled
@@ -31,8 +52,6 @@ const RightRowComponent = ({
               <Icon name="remove" />
             </TertiaryButton>
           )}
-          size="s"
-          position="left"
         >
           <p>
             {t('The default application can not be removed')}
@@ -47,28 +66,6 @@ const RightRowComponent = ({
           <Icon name="remove" />
         </TertiaryButton>
       )}
-      {isTerminated && (
-        <Tooltip
-          className={styles.disabledWarningTooltip}
-          content={(
-            <Icon
-              className={styles.disabledWarning}
-              name="cautionFilledIcon"
-            />
-          )}
-          size="s"
-          position="left"
-        >
-          <p>
-            {t('Application is terminated and can no longer be managed.')}
-            <p>
-              <a>
-                {t('Read more')}
-              </a>
-            </p>
-          </p>
-        </Tooltip>
-      )}
     </div>
   );
 };
@@ -82,9 +79,9 @@ const ApplicationManagementRow = ({
   const isPinned = useMemo(() => checkPinByChainId(application.chainID), [checkPinByChainId]);
   const isCurrentApplication = useMemo(
     () => currentApplication?.chainID === application?.chainID,
-    [currentApplication],
+    [currentApplication, application],
   );
-  const isTerminated = useMemo(() => application?.state === 'terminated', []);
+  const isTerminated = useMemo(() => application?.state === 'terminated', [application?.state]);
 
   const handleTogglePin = useCallback((event) => {
     event.stopPropagation();
@@ -94,11 +91,11 @@ const ApplicationManagementRow = ({
   const handleDeleteApplication = useCallback((event) => {
     event.stopPropagation();
     history.push({ pathname: location.pathname, search: `?modal=removeApplicationFlow&chainId=${application.chainID}` });
-  }, []);
+  }, [location]);
 
   const handleSetCurrentApplication = useCallback(() => {
     if (!isTerminated) setApplication(application);
-  }, []);
+  }, [setApplication, isTerminated]);
 
   return (
     <div
@@ -128,4 +125,4 @@ const ApplicationManagementRow = ({
   );
 };
 
-export default withRouter(ApplicationManagementRow);
+export default ApplicationManagementRow;

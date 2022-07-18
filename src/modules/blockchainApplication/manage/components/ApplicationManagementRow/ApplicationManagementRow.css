@@ -29,7 +29,7 @@
 }
 
 .appItemWrapper:hover {
-  background-color: var(--color-athens-white);
+  background-color: var(--color-application-manage-hover-color);
 }
 
 .appItemWrapper:hover .pinWrapper {
@@ -47,7 +47,7 @@
 }
 
 .appItemWrapper:hover .disabledWarningTooltip > img ~ div {
-  right: 34px !important;
+  right: 30px !important;
 }
 
 .disabledWarningTooltip main {
@@ -60,7 +60,8 @@
     font-family: var(--content-font);
   }
 
-  & > p > p {
+  & > p > a {
+    display: block;
     margin-top: 10px;
   }
 }
