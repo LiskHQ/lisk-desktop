@@ -78,10 +78,10 @@ const ApplicationManagementRow = ({
 
   const isPinned = useMemo(() => checkPinByChainId(application.chainID), [checkPinByChainId]);
   const isCurrentApplication = useMemo(
-    () => currentApplication?.chainID === application?.chainID,
+    () => currentApplication?.chainID === application.chainID,
     [currentApplication, application],
   );
-  const isTerminated = useMemo(() => application?.state === 'terminated', [application?.state]);
+  const isTerminated = useMemo(() => application.state === 'terminated', [application.state]);
 
   const handleTogglePin = useCallback((event) => {
     event.stopPropagation();
