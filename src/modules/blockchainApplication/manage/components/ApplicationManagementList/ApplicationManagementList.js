@@ -1,5 +1,4 @@
 import React, { useCallback } from 'react';
-import { withRouter } from 'react-router';
 import { useTranslation } from 'react-i18next';
 import Box from 'src/theme/box';
 import BoxHeader from 'src/theme/box/header';
@@ -40,10 +39,10 @@ const ApplicationManagementList = ({ history }) => {
         onClick={handleAddApplication}
       >
         <Icon name="plusBlueIcon" />
-        {t('Add application')}
+        <span>{t('Add application')}</span>
       </OutlineButton>
     </Box>
   );
 };
 
-export default withRouter(ApplicationManagementList);
+export default ApplicationManagementList;

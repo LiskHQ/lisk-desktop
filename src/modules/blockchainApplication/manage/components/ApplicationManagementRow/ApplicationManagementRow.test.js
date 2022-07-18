@@ -7,9 +7,6 @@ import { renderWithRouter } from 'src/utils/testHelpers';
 import { MemoryRouter } from 'react-router';
 import ApplicationManagementRow from './ApplicationManagementRow';
 
-jest.mock('src/utils/searchParams', () => ({
-  addSearchParamsToUrl: jest.fn(),
-}));
 jest.mock('@blockchainApplication/manage/hooks/usePinBlockchainApplication');
 jest.mock('@blockchainApplication/manage/hooks/useCurrentApplication');
 
