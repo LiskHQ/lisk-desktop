@@ -215,6 +215,10 @@ import unpinnedIcon from '@setup/react/assets/images/icons/unpinned.svg';
 import pinnedIcon from '@setup/react/assets/images/icons/pinned.svg';
 import chainLinkIcon from '@setup/react/assets/images/icons/chain-link.svg';
 import successCheckMark from '@setup/react/assets/images/icons/success-check-mark.svg';
+import dropdownArrowIcon from '@setup/react/assets/images/icons/dropdown-arrow.svg';
+import plusBlueIcon from '@setup/react/assets/images/icons/plus-blue.svg';
+import cautionFilledIcon from '@setup/react/assets/images/icons/caution-icon-filled.svg';
+import cautionFilledIconDark from '@setup/react/assets/images/icons/caution-icon-filled-dark.svg';
 
 import applicationsIcon from '@setup/react/assets/images/icons/applications-outline.svg';
 import applicationsIconActive from '@setup/react/assets/images/icons/applications-filled.svg';
@@ -435,6 +439,10 @@ export const icons = {
   applicationsIcon,
   applicationsIconActive,
   successCheckMark,
+  dropdownArrowIcon,
+  plusBlueIcon,
+  cautionFilledIcon,
+  cautionFilledIconDark,
 };
 
 const Icon = ({ name, noTheme, ...props }) => {

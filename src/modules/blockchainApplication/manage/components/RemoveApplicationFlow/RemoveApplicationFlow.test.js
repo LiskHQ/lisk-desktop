@@ -1,11 +1,11 @@
 import moment from 'moment';
 import { act } from 'react-dom/test-utils';
 import { fireEvent, screen } from '@testing-library/react';
-import mockBlockchainApplications from '@tests/fixtures/blockchainApplicationsExplore';
+import mockManagedApplications from '@tests/fixtures/blockchainApplicationsManage';
 import { renderWithRouter } from 'src/utils/testHelpers';
 import { usePinBlockchainApplication } from '@blockchainApplication/manage/hooks/usePinBlockchainApplication';
 import useApplicationManagement from '@blockchainApplication/manage/hooks/useApplicationManagement';
-import { removeSearchParamsFromUrl } from 'src/utils/searchParams';
+import { removeSearchParamsFromUrl, parseSearchParams } from 'src/utils/searchParams';
 import RemoveApplicationFlow from '.';
 
 const mockedPins = ['1111'];
@@ -25,13 +25,15 @@ usePinBlockchainApplication.mockReturnValue({
 useApplicationManagement.mockReturnValue({
   deleteApplicationByChainId: mockDeleteApplicationByChainId,
 });
+parseSearchParams.mockImplementation(() => (
+  { chainId: mockManagedApplications[0].chainID }));
 
 describe('BlockchainApplicationFlow', () => {
   const props = {
     testHistory: {
       push: jest.fn(),
     },
-    testLocation: { search: `chainId=${mockBlockchainApplications[0].chainID}` },
+    testLocation: { search: `chainId=${mockManagedApplications[0].chainID}` },
   };
 
   beforeEach(() => {
@@ -42,7 +44,7 @@ describe('BlockchainApplicationFlow', () => {
   it('should display properly', () => {
     const {
       name, address, state, lastCertificateHeight, lastUpdated,
-    } = mockBlockchainApplications[0];
+    } = mockManagedApplications[0];
 
     expect(screen.getByText(name)).toBeTruthy();
     expect(screen.getByText(address)).toBeTruthy();
@@ -69,7 +71,7 @@ describe('BlockchainApplicationFlow', () => {
   it('should move the the success page when application is deleted', () => {
     const {
       name,
-    } = mockBlockchainApplications[0];
+    } = mockManagedApplications[0];
 
     act(() => {
       fireEvent.click(screen.getByText('Remove application now'));
