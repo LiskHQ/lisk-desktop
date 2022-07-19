@@ -145,7 +145,6 @@ describe('ApplicationManangementRow', () => {
     expect(deleteButton).not.toHaveAttribute('disabled');
 
     fireEvent.click(deleteButton);
-
     expect(addSearchParamsToUrl).toHaveBeenCalledWith(props.history, { modal: `removeApplicationFlow&chainId=${props.application.chainID}` });
   });
 
