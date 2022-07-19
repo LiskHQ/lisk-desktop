@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useRef } from 'react';
 import { useTranslation } from 'react-i18next';
 import grid from 'flexboxgrid/dist/flexboxgrid.css';
 import Input from '@theme/Input';
@@ -7,10 +7,16 @@ import { useSearchApplications } from '../../hooks/useSearchApplication';
 import styles from './BlockchainApplicationSearch.css';
 
 const BlockchainApplicationSearch = ({ applyFilters, filters }) => {
+  const timeout = useRef();
   const { t } = useTranslation();
-  const { searchValue, setSearchValue, loading } = useSearchApplications(applyFilters, filters);
+  const {
+    searchValue, setSearchValue, urlSearch, loading, searchApplication,
+  } = useSearchApplications(applyFilters, filters);
   const onSearchApplication = ({ target: { value } }) => {
     setSearchValue(value);
+    clearTimeout(timeout.current);
+    // Validate the URL with debouncer
+    timeout.current = (() => { searchApplication(value); }, 500);
   };
   return (
     <div className={`${grid.row} ${styles.filterWrapper}`}>
@@ -24,6 +30,7 @@ const BlockchainApplicationSearch = ({ applyFilters, filters }) => {
           onChange={onSearchApplication}
           size="m"
           isLoading={loading}
+          status={urlSearch ?? undefined}
         />
       </div>
     </div>

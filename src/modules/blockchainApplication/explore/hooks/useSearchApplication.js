@@ -1,62 +1,61 @@
-/* eslint-disable max-statements */
 import { useState } from 'react';
-import { useSelector } from 'react-redux';
-import { selectNetwork } from 'src/redux/selectors';
+import { removeTrailingSlash } from 'src/modules/settings/components/customNode/editMode';
 import { BLOCKCHAIN_APPLICATION_LIST_LIMIT } from '../const/constants';
-import { getFilteredOffChainApplications, getApplications } from '../api';
+import { getFilteredOffChainApplications, getApplicationConfig } from '../api';
 
-// const validateAppNode = async (application) => {
-//   // Implement validation function
-//   try {
-//     const response = await getAppNetworkConfig(
-//       {
-//         name: application.name,
-//         address: application.serviceURLs[0],
-//       },
-//     );
-//     if (response) {
-//       return true;
-//     }
-//     throw new Error(
-//       `Failed to return response for application url: ${application.name}`,
-//     );
-//   } catch (err) {
-//     throw new Error(
-//       `Error getting details for application: ${application.name}: ${err.message}`,
-//     );
-//   }
-// };
+const validateAppNode = async (serviceUrl) => {
+  try {
+    const response = await getApplicationConfig({ serviceUrl });
+    if (response) {
+      return true;
+    }
+    throw new Error(
+      `Failed to return response for application url: ${serviceUrl}`,
+    );
+  } catch (err) {
+    throw new Error(
+      `Error getting details for application url: ${serviceUrl}: ${err.message}`,
+    );
+  }
+};
 
 // eslint-disable-next-line import/prefer-default-export
-export async function useSearchApplications(applyFilters, filters) {
-  const network = useSelector(selectNetwork);
+export function useSearchApplications(applyFilters, filters) {
   const [searchValue, setSearchValue] = useState('');
   const [loading, setLoading] = useState(false);
-  // check if URL or not
+  // Check if search value is URL or not
   const urlSearch = searchValue.startsWith('http');
   // If not URL, call application list endpoint (/apps/list)
   // If URL, ping URL and if successful, then use the URL to get information
   // Use custom hooks to manage the search
-  if (urlSearch) {
-    // ping URL and validate service
-    setLoading(true);
-    await getFilteredOffChainApplications({ network, params: { search: searchValue } });
-    setLoading(false);
-  } else {
-    applyFilters({
-      ...filters,
-      search: searchValue,
-      offset: 0,
-      limit: BLOCKCHAIN_APPLICATION_LIST_LIMIT,
-    });
-    // const appsList = getApplications({ network, params: { isDefault: false } });
-    // appsList.filter(app => app.name.includes(searchValue));
-  }
+  const searchApplication = async (value) => {
+    if (urlSearch) {
+      // Ping URL and validate service
+      setLoading(true);
+      const formattedValue = removeTrailingSlash(value);
+      await validateAppNode(formattedValue)
+        .then(async () => {
+          await getFilteredOffChainApplications({ baseUrl: value, params: { search: value } });
+          setLoading(false);
+        })
+        .catch(() => {
+          setLoading(false);
+        });
+    } else {
+      applyFilters({
+        ...filters,
+        search: value,
+        offset: 0,
+        limit: BLOCKCHAIN_APPLICATION_LIST_LIMIT,
+      });
+    }
+  };
 
   return {
     searchValue,
     setSearchValue,
     urlSearch,
     loading,
+    searchApplication,
   };
 }
