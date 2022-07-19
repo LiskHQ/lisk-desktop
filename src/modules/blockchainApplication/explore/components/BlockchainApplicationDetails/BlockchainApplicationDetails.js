@@ -17,8 +17,6 @@ import styles from './BlockchainApplicationDetails.css';
 import defaultBackgroundImage from '../../../../../../setup/react/assets/images/default-chain-background.png';
 import liskLogo from '../../../../../../setup/react/assets/images/LISK.png';
 
-// TODO: this is a mock response of an application's details
-
 const deposit = 5e10;
 const serviceUrl = 'https://lisk.com/';
 const backgroundImage = null;

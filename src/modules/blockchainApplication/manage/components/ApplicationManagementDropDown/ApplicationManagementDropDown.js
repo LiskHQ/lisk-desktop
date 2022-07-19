@@ -4,7 +4,6 @@ import Icon from 'src/theme/Icon';
 import { addSearchParamsToUrl } from 'src/utils/searchParams';
 import { useCurrentApplication } from '../../hooks/useCurrentApplication';
 import chainLogo from '../../../../../../setup/react/assets/images/LISK.png';
-
 import styles from './ApplicationManagementDropDown.css';
 
 const ApplicationManagementList = ({ history }) => {
