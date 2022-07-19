@@ -1,10 +1,12 @@
 import { fireEvent, screen } from '@testing-library/react';
 import mockManagedApplications from '@tests/fixtures/blockchainApplicationsManage';
 import { renderWithRouter } from 'src/utils/testHelpers';
+import { addSearchParamsToUrl } from 'src/utils/searchParams';
 import ApplicationManagementDropDown from './ApplicationManagementDropDown';
 import { useCurrentApplication } from '../../hooks/useCurrentApplication';
 
 jest.mock('@blockchainApplication/manage/hooks/useCurrentApplication');
+jest.mock('src/utils/searchParams');
 
 const mockSetApplication = jest.fn();
 const mockCurrentApplication = mockManagedApplications[1];
@@ -16,9 +18,6 @@ useCurrentApplication.mockReturnValue([
 
 describe('ApplicationManagementDropDown', () => {
   const props = {
-    location: {
-      pathname: '/',
-    },
     history: {
       push: jest.fn(),
     },
@@ -36,8 +35,6 @@ describe('ApplicationManagementDropDown', () => {
 
   it('should show the manage application list popup', () => {
     fireEvent.click(screen.getByText(mockCurrentApplication.name));
-    expect(props.history.push).toHaveBeenCalledWith(expect.objectContaining(
-      { pathname: props.location.pathname, search: '?modal=manageApplications' },
-    ));
+    expect(addSearchParamsToUrl).toHaveBeenCalledWith(props.history, { modal: 'manageApplications' });
   });
 });

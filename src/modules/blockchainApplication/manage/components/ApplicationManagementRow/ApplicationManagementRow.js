@@ -1,6 +1,7 @@
 import React, { useCallback, useMemo } from 'react';
 import { useTranslation } from 'react-i18next';
 import { TertiaryButton } from 'src/theme/buttons';
+import { addSearchParamsToUrl } from 'src/utils/searchParams';
 import Tooltip from 'src/theme/Tooltip';
 import Icon from 'src/theme/Icon';
 import styles from './ApplicationManagementRow.css';
@@ -45,7 +46,7 @@ const RightRowComponent = ({
           content={(
             <TertiaryButton
               disabled
-              className={styles.diabledDeleteBtn}
+              className={`remove-application-button ${styles.diabledDeleteBtn}`}
               onClick={handleDeleteApplication}
               size="m"
             >
@@ -59,7 +60,7 @@ const RightRowComponent = ({
         </Tooltip>
       ) : (
         <TertiaryButton
-          className={styles.deleteBtn}
+          className={`remove-application-button ${styles.deleteBtn}`}
           onClick={handleDeleteApplication}
           size="m"
         >
@@ -90,7 +91,7 @@ const ApplicationManagementRow = ({
 
   const handleDeleteApplication = useCallback((event) => {
     event.stopPropagation();
-    history.push({ pathname: location.pathname, search: `?modal=removeApplicationFlow&chainId=${application.chainID}` });
+    addSearchParamsToUrl(history, { modal: `removeApplicationFlow&chainId=${application.chainID}` });
   }, [location]);
 
   const handleSetCurrentApplication = useCallback(() => {
@@ -99,7 +100,7 @@ const ApplicationManagementRow = ({
 
   return (
     <div
-      className={`${styles.appItemWrapper} ${isCurrentApplication ? styles.activeAppBg : ''} ${isTerminated ? styles.termiated : ''}`}
+      className={`managed-appliation-row ${styles.appItemWrapper} ${isCurrentApplication ? styles.activeAppBg : ''} ${isTerminated ? styles.termiated : ''}`}
       onClick={handleSetCurrentApplication}
     >
       <div className={styles.leftWrapper}>

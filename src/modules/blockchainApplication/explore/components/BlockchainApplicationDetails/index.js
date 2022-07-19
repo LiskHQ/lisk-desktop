@@ -1,21 +1,25 @@
 /* istanbul ignore file */
 import { compose } from 'redux';
 import { withRouter } from 'react-router-dom';
-import { getApplication } from '@blockchainApplication/explore/api';
+// TODO: this needs to be reinstated upon connection to latest service's apis
+// import { getApplication } from '@blockchainApplication/explore/api';
+import mockBlockchainApplications from '@tests/fixtures/blockchainApplicationsExplore';
 import withData from 'src/utils/withData';
 import { parseSearchParams } from 'src/utils/searchParams';
 import BlockchainApplicationDetails from './BlockchainApplicationDetails';
 
 const apis = {
   application: {
-    apiUtil: (network, { token, chainId }) =>
-      getApplication({ network, params: { chainId } }, token),
+    apiUtil: (network, { chainId }) => new Promise((resolve) => resolve({
+      data: mockBlockchainApplications.find(app => app.chainID === chainId),
+    })),
     getApiParams: (state, ownProps) => ({
       chainId: parseSearchParams(ownProps.location.search).chainId,
       network: state.network,
     }),
-    transformResponse: response => response.data[0] || {},
+    transformResponse: response => response.data,
     autoload: true,
+    defaultData: mockBlockchainApplications[0],
   },
 };
 

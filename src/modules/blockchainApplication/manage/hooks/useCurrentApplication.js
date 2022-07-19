@@ -1,6 +1,6 @@
 import { useCallback, useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import mockBlockchainApplications from '@tests/fixtures/blockchainApplicationsExplore';
+import mockBlockchainApplications from '@tests/fixtures/blockchainApplicationsManage';
 import { selectCurrentApplication } from '../store/selectors';
 import { setCurrentApplication } from '../store/action';
 

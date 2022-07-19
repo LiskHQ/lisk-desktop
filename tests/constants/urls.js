@@ -21,6 +21,7 @@ const urls = {
   blocks: '/blocks',
   explorer: '/explorer',
   applications: '/applications',
+  mangedApplications: '/dashboard?modal=manageApplications',
 };
 
 export default urls;

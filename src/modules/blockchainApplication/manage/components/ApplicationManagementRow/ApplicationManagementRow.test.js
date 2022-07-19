@@ -4,11 +4,13 @@ import mockManagedApplications from '@tests/fixtures/blockchainApplicationsManag
 import { usePinBlockchainApplication } from '@blockchainApplication/manage/hooks/usePinBlockchainApplication';
 import { useCurrentApplication } from '@blockchainApplication/manage/hooks/useCurrentApplication';
 import { renderWithRouter } from 'src/utils/testHelpers';
+import { addSearchParamsToUrl } from 'src/utils/searchParams';
 import { MemoryRouter } from 'react-router';
 import ApplicationManagementRow from './ApplicationManagementRow';
 
 jest.mock('@blockchainApplication/manage/hooks/usePinBlockchainApplication');
 jest.mock('@blockchainApplication/manage/hooks/useCurrentApplication');
+jest.mock('src/utils/searchParams');
 
 const mockTogglePin = jest.fn();
 const mockSetApplication = jest.fn();
@@ -95,11 +97,7 @@ describe('ApplicationManangementRow', () => {
     expect(deleteButton).not.toHaveAttribute('disabled');
 
     fireEvent.click(deleteButton);
-
-    expect(props.history.push).toHaveBeenCalledWith(expect.objectContaining({
-      pathname: '/',
-      search: `?modal=removeApplicationFlow&chainId=${props.application.chainID}`,
-    }));
+    expect(addSearchParamsToUrl).toHaveBeenCalledWith(props.history, { modal: `removeApplicationFlow&chainId=${props.application.chainID}` });
   });
 
   it('should toggle applciation as current application for a non terminated application', () => {
@@ -148,10 +146,7 @@ describe('ApplicationManangementRow', () => {
 
     fireEvent.click(deleteButton);
 
-    expect(props.history.push).toHaveBeenCalledWith(expect.objectContaining({
-      pathname: '/',
-      search: `?modal=removeApplicationFlow&chainId=${props.application.chainID}`,
-    }));
+    expect(addSearchParamsToUrl).toHaveBeenCalledWith(props.history, { modal: `removeApplicationFlow&chainId=${props.application.chainID}` });
   });
 
   it('should render the check mark for current application', () => {
