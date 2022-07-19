@@ -12,6 +12,7 @@ import styles from './BlockchainApplicationAddList.css';
 
 const BlockchainApplicationAddList = ({
   applications,
+  applyFilters,
   filters,
 }) => {
   const { t } = useTranslation();
@@ -32,7 +33,7 @@ const BlockchainApplicationAddList = ({
       <Box className={styles.wrapper}>
         <BoxHeader className={styles.header}>
           <div>Add Application</div>
-          <BlockchainApplicationSearch />
+          <BlockchainApplicationSearch applyFilters={applyFilters} filters={filters} />
         </BoxHeader>
         <BoxContent className={`${styles.content} chain-application-add-list`}>
           <Table

@@ -1,16 +1,17 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { useTranslation } from 'react-i18next';
 import grid from 'flexboxgrid/dist/flexboxgrid.css';
 import Input from '@theme/Input';
 import Icon from '@theme/Icon';
+import { useSearchApplications } from '../../hooks/useSearchApplication';
 import styles from './BlockchainApplicationSearch.css';
 
-const BlockchainApplicationSearch = () => {
-  // console.log();
+const BlockchainApplicationSearch = ({ applyFilters, filters }) => {
   const { t } = useTranslation();
-  // const [searchValue, setSearchValue] = useState('');
-  const [searchValue] = useState('');
-  const onSearchApplication = () => {};
+  const { searchValue, setSearchValue, loading } = useSearchApplications(applyFilters, filters);
+  const onSearchApplication = ({ target: { value } }) => {
+    setSearchValue(value);
+  };
   return (
     <div className={`${grid.row} ${styles.filterWrapper}`}>
       <div className={styles.filterHolder}>
@@ -22,6 +23,7 @@ const BlockchainApplicationSearch = () => {
           placeholder={t('Search by name or application URL')}
           onChange={onSearchApplication}
           size="m"
+          isLoading={loading}
         />
       </div>
     </div>

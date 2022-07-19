@@ -7,7 +7,7 @@ import mockBlockchainApplications from '@tests/fixtures/blockchainApplicationsEx
 import withFilters from 'src/utils/withFilters';
 import BlockchainApplicationAddList from './BlockchainApplicationAddList';
 
-const defaultUrlSearchParams = { search: '' };
+const defaultUrlSearchParams = { isDefault: false, search: '' };
 
 const apis = {
   applications: {
