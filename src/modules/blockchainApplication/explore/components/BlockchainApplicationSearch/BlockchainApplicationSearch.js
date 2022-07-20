@@ -6,17 +6,35 @@ import Icon from '@theme/Icon';
 import { useSearchApplications } from '../../hooks/useSearchApplication';
 import styles from './BlockchainApplicationSearch.css';
 
-const BlockchainApplicationSearch = ({ applications, applyFilters, filters }) => {
+const BlockchainApplicationSearch = ({
+  applications,
+  externalApplications,
+  applyFilters,
+  filters,
+}) => {
   const timeout = useRef();
   const { t } = useTranslation();
   const {
-    searchValue, setSearchValue, error, feedback, urlSearch, loading, searchApplication,
-  } = useSearchApplications(applications, applyFilters, filters);
+    searchValue,
+    setSearchValue,
+    error,
+    feedback,
+    urlSearch,
+    loading,
+    searchApplication,
+  } = useSearchApplications(
+    applications,
+    externalApplications,
+    applyFilters,
+    filters,
+  );
   const onSearchApplication = ({ target: { value } }) => {
     setSearchValue(value);
     clearTimeout(timeout.current);
     // Validate the URL with debouncer
-    timeout.current = setTimeout(() => { searchApplication(value); }, 500);
+    timeout.current = setTimeout(() => {
+      searchApplication(value);
+    }, 500);
   };
   const urlSearchErrorStatus = error < 1 ? 'ok' : 'error';
   return (

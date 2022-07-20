@@ -1,4 +1,4 @@
-import React, { useMemo } from 'react';
+import React from 'react';
 import { useTranslation } from 'react-i18next';
 import Dialog from '@theme/dialog/dialog';
 import Box from '@theme/box';
@@ -11,21 +11,22 @@ import BlockchainApplicationSkeleton from '../BlockchainApplicationSkeleton';
 import styles from './BlockchainApplicationAddList.css';
 
 const BlockchainApplicationAddList = ({
-  applications,
+  liskApplications,
+  externalApplications,
   applyFilters,
   filters,
 }) => {
   const { t } = useTranslation();
-  const canLoadMore = useMemo(() =>
-    (applications.meta
-      ? applications.data.length < applications.meta.total : false), [applications]);
+  const canLoadMore = liskApplications.meta
+    ? liskApplications.data.length < liskApplications.meta.total
+    : false;
 
   const handleLoadMore = () => {
     const params = {
       ...filters,
-      offset: applications.meta.count + applications.meta.offset,
+      offset: liskApplications.meta.count + liskApplications.meta.offset,
     };
-    applications.loadData(params);
+    liskApplications.loadData(params);
   };
 
   return (
@@ -34,20 +35,25 @@ const BlockchainApplicationAddList = ({
         <BoxHeader className={styles.header}>
           <div>Add Application</div>
           <BlockchainApplicationSearch
-            applications={applications}
+            applications={liskApplications}
+            externalApplications={externalApplications}
             applyFilters={applyFilters}
             filters={filters}
           />
         </BoxHeader>
         <BoxContent className={`${styles.content} chain-application-add-list`}>
           <Table
-            data={applications.data}
-            isLoading={applications.isLoading}
+            data={
+              externalApplications.data.length
+                ? externalApplications.data
+                : liskApplications.data
+            }
+            isLoading={liskApplications.isLoading}
             loadingState={BlockchainApplicationSkeleton}
             row={BlockchainApplicationAddRow}
             loadData={handleLoadMore}
             canLoadMore={canLoadMore}
-            error={applications.error}
+            error={liskApplications.error}
             additionalRowProps={{ t }}
             emptyState={{
               message: t('There are no blockchain applications.'),
