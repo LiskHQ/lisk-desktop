@@ -5,7 +5,8 @@
     width: 100%;
 
     & input {
-      border-radius: 40px;
+      border-radius: 6px;
+      border: 1px solid var(--color-very-light-gray);
     }
 
     & .searchIcon {
