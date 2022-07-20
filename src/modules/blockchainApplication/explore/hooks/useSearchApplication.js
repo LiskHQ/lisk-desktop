@@ -1,7 +1,8 @@
 import { useState } from 'react';
+import { useTranslation } from 'react-i18next';
 import { removeTrailingSlash } from 'src/modules/settings/components/customNode/editMode';
 import { BLOCKCHAIN_APPLICATION_LIST_LIMIT } from '../const/constants';
-import { getFilteredOffChainApplications, getApplicationConfig } from '../api';
+import { /* getFilteredOffChainApplications, */ getApplicationConfig } from '../api';
 
 const validateAppNode = async (serviceUrl) => {
   try {
@@ -20,28 +21,37 @@ const validateAppNode = async (serviceUrl) => {
 };
 
 // eslint-disable-next-line import/prefer-default-export
-export function useSearchApplications(applyFilters, filters) {
+export function useSearchApplications(applications, applyFilters, filters) {
   const [searchValue, setSearchValue] = useState('');
   const [loading, setLoading] = useState(false);
-  // Check if search value is URL or not
-  const urlSearch = searchValue.startsWith('http');
-  // If not URL, call application list endpoint (/apps/list)
-  // If URL, ping URL and if successful, then use the URL to get information
-  // Use custom hooks to manage the search
+  const [error, setError] = useState(-1);
+  const [feedback, setFeedback] = useState('');
+  const [urlSearch, setUrlSearch] = useState(false);
+  const { t } = useTranslation();
+
   const searchApplication = async (value) => {
-    if (urlSearch) {
+    setUrlSearch(value.startsWith('http'));
+    // Ensure URL check is up-to-date including while pasting input
+    // If URL, ping URL and if successful, then use the URL to get application information
+    if (value.startsWith('http')) {
       // Ping URL and validate service
       setLoading(true);
       const formattedValue = removeTrailingSlash(value);
       await validateAppNode(formattedValue)
         .then(async () => {
-          await getFilteredOffChainApplications({ baseUrl: value, params: { search: value } });
+          setError(0);
+          setFeedback('');
+          await applications.loadData({ baseUrl: value, params: { search: value } });
           setLoading(false);
         })
         .catch(() => {
+          setError(1);
+          setFeedback(t('Unable to connect to application node. Please check the address and try again'));
           setLoading(false);
         });
     } else {
+      setError(-1);
+      setFeedback('');
       applyFilters({
         ...filters,
         search: value,
@@ -54,6 +64,8 @@ export function useSearchApplications(applyFilters, filters) {
   return {
     searchValue,
     setSearchValue,
+    error,
+    feedback,
     urlSearch,
     loading,
     searchApplication,

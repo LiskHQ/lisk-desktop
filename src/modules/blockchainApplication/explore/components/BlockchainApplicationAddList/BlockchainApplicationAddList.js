@@ -33,7 +33,11 @@ const BlockchainApplicationAddList = ({
       <Box className={styles.wrapper}>
         <BoxHeader className={styles.header}>
           <div>Add Application</div>
-          <BlockchainApplicationSearch applyFilters={applyFilters} filters={filters} />
+          <BlockchainApplicationSearch
+            applications={applications}
+            applyFilters={applyFilters}
+            filters={filters}
+          />
         </BoxHeader>
         <BoxContent className={`${styles.content} chain-application-add-list`}>
           <Table

@@ -6,18 +6,19 @@ import Icon from '@theme/Icon';
 import { useSearchApplications } from '../../hooks/useSearchApplication';
 import styles from './BlockchainApplicationSearch.css';
 
-const BlockchainApplicationSearch = ({ applyFilters, filters }) => {
+const BlockchainApplicationSearch = ({ applications, applyFilters, filters }) => {
   const timeout = useRef();
   const { t } = useTranslation();
   const {
-    searchValue, setSearchValue, urlSearch, loading, searchApplication,
-  } = useSearchApplications(applyFilters, filters);
+    searchValue, setSearchValue, error, feedback, urlSearch, loading, searchApplication,
+  } = useSearchApplications(applications, applyFilters, filters);
   const onSearchApplication = ({ target: { value } }) => {
     setSearchValue(value);
     clearTimeout(timeout.current);
     // Validate the URL with debouncer
     timeout.current = setTimeout(() => { searchApplication(value); }, 500);
   };
+  const urlSearchErrorStatus = error < 1 ? 'ok' : 'error';
   return (
     <div className={`${grid.row} ${styles.filterWrapper}`}>
       <div className={styles.filterHolder}>
@@ -30,7 +31,8 @@ const BlockchainApplicationSearch = ({ applyFilters, filters }) => {
           onChange={onSearchApplication}
           size="m"
           isLoading={loading}
-          status={urlSearch ?? undefined}
+          status={urlSearch ? urlSearchErrorStatus : null}
+          feedback={feedback}
         />
       </div>
     </div>
