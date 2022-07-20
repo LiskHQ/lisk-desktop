@@ -11,6 +11,7 @@ import DiscreteModeToggle from 'src/modules/settings/components/discreteModeTogg
 import LightDarkToggle from 'src/modules/settings/components/lightDarkModeToggle';
 import SideBarToggle from 'src/modules/settings/components/sideBarToggle';
 import Search from '@search/components/Search';
+import ApplicationManagementDropDown from '@blockchainApplication/manage/components/ApplicationManagementDropDown';
 import styles from './topBar.css';
 import Network from './networkName';
 import NavigationButtons from './navigationButtons';
@@ -60,6 +61,7 @@ const TopBar = ({
         <Search t={t} history={history} disabled={disabled} />
       </div>
       <div className={styles.group}>
+        <ApplicationManagementDropDown />
         <LightDarkToggle />
         {!isUserLogout && <DiscreteModeToggle />}
         {location.pathname !== routes.register.path && (

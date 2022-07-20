@@ -17,26 +17,13 @@ import defaultBackgroundImage from '../../../../../../setup/react/assets/images/
 import liskLogo from '../../../../../../setup/react/assets/images/LISK.png';
 import styles from './BlockchainApplicationDetails.css';
 
-// TODO: this is a mock response of an application's details
-const application = {
-  data: {
-    name: 'Test app',
-    chainID: 'aq02qkbb35u4jdq8szo3pnsq',
-    state: 'active',
-    address: 'lsk24cd35u4jdq8szo3pnsqe5dsxwrnazyqqqg5eu',
-    lastCertificateHeight: 1000,
-    lastUpdated: 123456789,
-    depositedLsk: 50000000,
-  },
-};
-
 const deposit = 5e10;
 const serviceUrl = 'https://lisk.com/';
 const backgroundImage = null;
 const chainLogo = null;
 
 // eslint-disable-next-line max-statements
-const BlockchainApplicationDetails = ({ location }) => {
+const BlockchainApplicationDetails = ({ location, application }) => {
   const { t } = useTranslation();
   const chainId = parseSearchParams(location.search).chainId;
   const mode = parseSearchParams(location.search).mode;
@@ -114,7 +101,7 @@ const BlockchainApplicationDetails = ({ location }) => {
               className={`${styles.appLink}`}
               target="_blank"
                 // eslint-disable-next-line
-                // TODO: this is just a place holder link pending when its part of the response payload from service
+                // TODO: this is just a placeholder link pending when its part of the response payload from service
               href={serviceUrl}
             >
               <Icon name="chainLinkIcon" className={styles.hwWalletIcon} />

@@ -232,6 +232,10 @@ export const modals = {
     isPrivate: false,
     forbiddenTokens: [],
   },
+  manageApplications: {
+    isPrivate: false,
+    forbiddenTokens: [],
+  },
   removeApplicationFlow: {
     isPrivate: false,
     forbiddenTokens: [],

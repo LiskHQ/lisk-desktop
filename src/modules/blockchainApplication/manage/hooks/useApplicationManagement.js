@@ -9,7 +9,7 @@ import { usePinBlockchainApplication } from './usePinBlockchainApplication';
 function useApplicationManagement() {
   const dispatch = useDispatch();
   const [currentApplication, setCurrentApplication] = useCurrentApplication();
-  const { checkPinByChainId } = usePinBlockchainApplication();
+  const { checkPinByChainId, pins } = usePinBlockchainApplication();
   const applicationsObject = useSelector(selectApplications);
   const applications = useMemo(
     () => {
@@ -19,7 +19,7 @@ function useApplicationManagement() {
         isPinned: checkPinByChainId(app.chainID),
       })).sort((a) => (a.isPinned ? -1 : 1));
     },
-    [applicationsObject, defaultApps],
+    [applicationsObject, defaultApps, pins],
   );
 
   const setApplication = useCallback(

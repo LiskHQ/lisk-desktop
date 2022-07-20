@@ -8,8 +8,15 @@ const delegatesPage = {
   votingHeader: '.voting-header',
 };
 
+const managedApplications = {
+  managedApplicationRow: '.managed-appliation-row',
+  managedAppDropdown: '.appliation-management-dropdown',
+  removeApplicationButton: '.remove-application-button',
+};
+
 const ss = {
   ...delegatesPage,
+  ...managedApplications,
   becomeDelegateLink: '.register-delegate',
   app: '#app',
   monitorNetwork: '#network',
