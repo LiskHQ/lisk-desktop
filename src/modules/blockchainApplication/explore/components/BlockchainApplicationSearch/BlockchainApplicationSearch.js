@@ -16,7 +16,7 @@ const BlockchainApplicationSearch = ({ applyFilters, filters }) => {
     setSearchValue(value);
     clearTimeout(timeout.current);
     // Validate the URL with debouncer
-    timeout.current = (() => searchApplication(value), 500);
+    timeout.current = setTimeout(() => { searchApplication(value); }, 500);
   };
   return (
     <div className={`${grid.row} ${styles.filterWrapper}`}>
