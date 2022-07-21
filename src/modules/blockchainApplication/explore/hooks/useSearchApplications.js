@@ -25,7 +25,7 @@ export const useSearchApplications = () => {
       setSearchValue(value);
     }, 500);
   };
-  const onSearchApplications = useCallback(({ target: { value } }) => {
+  const onSearchApplications = useCallback((value) => {
     const isURL = regex.url.test(addHttp(value));
     setDebounceSearch(value);
     setURl((state) => ({

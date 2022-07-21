@@ -24,7 +24,7 @@ const BlockchainApplicationSearch = ({
           name="application-filter"
           value={searchValue}
           placeholder={t('Search by name or application URL')}
-          onChange={onSearchApplications}
+          onChange={({ target: { value } }) => onSearchApplications(value)}
           size="m"
           isLoading={isLoading}
           status={isLoading ? 'pending' : status}
