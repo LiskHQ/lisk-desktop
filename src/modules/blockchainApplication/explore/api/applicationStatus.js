@@ -13,7 +13,7 @@ const httpPaths = {
  *
  * @returns {Promise}
  */
-export const getNetworkStatus = ({
+export const getApplicationStatus = ({
   baseUrl, network,
 }) => http({
   baseUrl,
@@ -29,7 +29,7 @@ export const getNetworkStatus = ({
  * @returns {Promise}
  */
 export const getApplicationConfig = ({ serviceUrl }) =>
-  getNetworkStatus({ baseUrl: serviceUrl, network: serviceUrl })
+  getApplicationStatus({ baseUrl: serviceUrl, network: serviceUrl })
     .then(response => ({
       ...response.data,
       serviceUrl,
