@@ -1,45 +1,20 @@
-import React, { useRef } from 'react';
+import React from 'react';
 import { useTranslation } from 'react-i18next';
 import grid from 'flexboxgrid/dist/flexboxgrid.css';
 import Input from '@theme/Input';
 import Icon from '@theme/Icon';
-import { useSearchApplications } from '../../hooks/useSearchApplications';
 import styles from './BlockchainApplicationSearch.css';
 
 const BlockchainApplicationSearch = ({
-  externalApplications,
-  applyFilters,
-  filters,
+  searchValue,
+  error,
+  isURl,
+  urlStatus,
+  isLoading,
+  onSearchApplications,
 }) => {
-  const timeout = useRef();
   const { t } = useTranslation();
-  const {
-    searchValue,
-    setSearchValue,
-    error,
-    feedback,
-    urlSearch,
-    loading,
-    searchApplications,
-  } = useSearchApplications(
-    externalApplications,
-    applyFilters,
-    filters,
-  );
-  const onSearchApplication = ({ target: { value } }) => {
-    console.log('Here?');
-    // console.log({ setSearchValue });
-    // console.log({ searchApplications });
-    setSearchValue(value);
-    clearTimeout(timeout.current);
-    // Validate the URL with debouncer
-    timeout.current = setTimeout(() => {
-      searchApplications(value);
-    }, 500);
-  };
-  // console.log({ urlSearch });
-  // console.log({ useSearchApplications });
-  const urlSearchErrorStatus = error < 1 ? 'ok' : 'error';
+  const status = isURl ? urlStatus : null;
   return (
     <div className={`${grid.row} ${styles.filterWrapper}`}>
       <div className={styles.filterHolder}>
@@ -49,11 +24,11 @@ const BlockchainApplicationSearch = ({
           name="application-filter"
           value={searchValue}
           placeholder={t('Search by name or application URL')}
-          onChange={onSearchApplication}
+          onChange={onSearchApplications}
           size="m"
-          isLoading={loading}
-          status={urlSearch ? urlSearchErrorStatus : null}
-          feedback={feedback}
+          isLoading={isLoading}
+          status={isLoading ? 'pending' : status}
+          feedback={error}
         />
       </div>
     </div>

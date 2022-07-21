@@ -5,6 +5,7 @@ import Box from '@theme/box';
 import BoxHeader from '@theme/box/header';
 import BoxContent from '@theme/box/content';
 import Table from '@theme/table';
+import { useSearchApplications } from '../../hooks/useSearchApplications';
 import BlockchainApplicationSearch from '../BlockchainApplicationSearch/BlockchainApplicationSearch';
 import BlockchainApplicationAddRow from '../BlockchainApplicationAddRow/BlockchainApplicationAddRow';
 import BlockchainApplicationSkeleton from '../BlockchainApplicationSkeleton';
@@ -17,6 +18,14 @@ const BlockchainApplicationAddList = ({
   filters,
 }) => {
   const { t } = useTranslation();
+  const {
+    data,
+    ...searchResponse
+  } = useSearchApplications(
+    externalApplications,
+    applyFilters,
+    filters,
+  );
   const dataList = externalApplications.data.length
     ? externalApplications.data
     : liskApplications.data;
@@ -38,9 +47,7 @@ const BlockchainApplicationAddList = ({
         <BoxHeader className={styles.header}>
           <div>Add Application</div>
           <BlockchainApplicationSearch
-            externalApplications={externalApplications}
-            applyFilters={applyFilters}
-            filters={filters}
+            {...searchResponse}
           />
         </BoxHeader>
         <BoxContent className={`${styles.content} chain-application-add-list`}>

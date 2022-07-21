@@ -1,77 +1,83 @@
-import { useState } from 'react';
-import { useTranslation } from 'react-i18next';
+import { useState, useCallback, useRef } from 'react';
+// import { useTranslation } from 'react-i18next';
 import { removeTrailingSlash } from 'src/modules/settings/components/customNode/editMode';
 import { regex } from 'src/const/regex';
 import { addHttp } from 'src/utils/login';
-import { BLOCKCHAIN_APPLICATION_LIST_LIMIT } from '../const/constants';
-import { getApplicationConfig } from '../api';
-
-const validateAppNode = async (serviceUrl) => {
-  try {
-    const response = await getApplicationConfig({ serviceUrl });
-    if (response) {
-      return true;
-    }
-    throw new Error(
-      `Failed to return response for application url: ${serviceUrl}`,
-    );
-  } catch (err) {
-    throw new Error(
-      `Error getting details for application url: ${serviceUrl}: ${err.message}`,
-    );
-  }
-};
+// import { BLOCKCHAIN_APPLICATION_LIST_LIMIT } from '../const/constants';
+import mockApplicationsExplore from '@tests/fixtures/blockchainApplicationsExplore';
+import { validateAppNode } from '../utils';
 
 // eslint-disable-next-line import/prefer-default-export
-export function useSearchApplications(externalApplications, applyFilters, filters) {
+export const useSearchApplications = () => {
+  const [URl, setURl] = useState({
+    isURL: false,
+    URLStatus: '',
+  });
   const [searchValue, setSearchValue] = useState('');
-  const [loading, setLoading] = useState(false);
-  const [error, setError] = useState(-1);
-  const [feedback, setFeedback] = useState('');
-  const [urlSearch, setUrlSearch] = useState(false);
-  const { t } = useTranslation();
+  // const { t } = useTranslation();
+  const timeout = useRef();
 
-  const searchApplications = async (value) => {
-    setUrlSearch(regex.url.test(addHttp(value)));
+  const setDebounceSearch = (value) => {
+    setSearchValue(value);
+    clearTimeout(timeout.current);
+    // Validate the URL with debouncer
+    timeout.current = setTimeout(() => {
+      setSearchValue(value);
+    }, 500);
+  };
+  const onSearchApplications = useCallback(({ target: { value } }) => {
+    const isURL = regex.url.test(addHttp(value));
+    setDebounceSearch(value);
+    setURl((state) => ({
+      ...state,
+      isURL,
+    }));
     // Ensure URL check is up-to-date including while pasting input
     // If URL, ping URL and if successful, then use the URL to get application information
-    if (regex.url.test(addHttp(value))) {
+    if (isURL) {
       // Ping URL and validate service
-      setLoading(true);
       const formattedValue = removeTrailingSlash(addHttp(value));
-      await validateAppNode(formattedValue)
+      validateAppNode(formattedValue)
         .then(async () => {
-          setError(0);
-          setFeedback('');
-          console.log('Hope it got here');
-          await externalApplications.loadData({ baseUrl: value });
-          console.log({ externalApplicationsData: externalApplications.loadData.mock.calls[0][0] });
-          setLoading(false);
+          setURl({
+            URLStatus: 'ok',
+            isURL,
+          });
         })
         .catch(() => {
-          setError(1);
-          setFeedback(t('Unable to connect to application node. Please check the address and try again'));
-          setLoading(false);
+          setURl({
+            URLStatus: 'error',
+            isURL,
+          });
         });
-    } else {
-      setError(-1);
-      setFeedback('');
-      applyFilters({
-        ...filters,
-        search: value,
-        offset: 0,
-        limit: BLOCKCHAIN_APPLICATION_LIST_LIMIT,
-      });
     }
-  };
+  }, [setSearchValue, setURl]);
 
-  return {
-    searchValue,
-    setSearchValue,
-    error,
-    feedback,
-    urlSearch,
-    loading,
-    searchApplications,
+  if (URl.isURL) {
+    // const result = useQuery()
+    const result = {
+      isLoading: true,
+      error: false,
+      data: [mockApplicationsExplore[0]],
+    };
+    return {
+      ...result,
+      searchValue,
+      ...URl,
+      onSearchApplications,
+    };
+  }
+
+  // const result = useQuery()
+  const result = {
+    isLoading: false,
+    error: false,
+    data: mockApplicationsExplore,
   };
-}
+  return {
+    ...result,
+    searchValue,
+    ...URl,
+    onSearchApplications,
+  };
+};
