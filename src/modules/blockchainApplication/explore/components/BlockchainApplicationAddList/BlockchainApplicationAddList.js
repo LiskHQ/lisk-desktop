@@ -17,6 +17,9 @@ const BlockchainApplicationAddList = ({
   filters,
 }) => {
   const { t } = useTranslation();
+  const dataList = externalApplications.data.length
+    ? externalApplications.data
+    : liskApplications.data;
   const canLoadMore = liskApplications.meta
     ? liskApplications.data.length < liskApplications.meta.total
     : false;
@@ -35,7 +38,6 @@ const BlockchainApplicationAddList = ({
         <BoxHeader className={styles.header}>
           <div>Add Application</div>
           <BlockchainApplicationSearch
-            applications={liskApplications}
             externalApplications={externalApplications}
             applyFilters={applyFilters}
             filters={filters}
@@ -43,11 +45,7 @@ const BlockchainApplicationAddList = ({
         </BoxHeader>
         <BoxContent className={`${styles.content} chain-application-add-list`}>
           <Table
-            data={
-              externalApplications.data.length
-                ? externalApplications.data
-                : liskApplications.data
-            }
+            data={dataList}
             isLoading={liskApplications.isLoading}
             loadingState={BlockchainApplicationSkeleton}
             row={BlockchainApplicationAddRow}

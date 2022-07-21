@@ -1,7 +1,7 @@
 .container {
   padding: 4px;
 
-  & :hover {
+  & > :hover {
     background-color: var(--color-athens-white);
     border-radius: 10px;
   }
@@ -27,6 +27,7 @@
     & img {
       width: 36px;
       height: 36px;
+      margin-right: 8px;
     }
   }
 
@@ -35,5 +36,9 @@
     color: var(--color-ink-blue);
     font-size: 14px;
     font-weight: 600;
+
+    & :hover {
+      background-color: white !important;
+    }
   }
 }

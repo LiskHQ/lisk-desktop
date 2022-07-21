@@ -2,6 +2,7 @@ import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { removeTrailingSlash } from 'src/modules/settings/components/customNode/editMode';
 import { regex } from 'src/const/regex';
+import { addHttp } from 'src/utils/login';
 import { BLOCKCHAIN_APPLICATION_LIST_LIMIT } from '../const/constants';
 import { getApplicationConfig } from '../api';
 
@@ -22,7 +23,7 @@ const validateAppNode = async (serviceUrl) => {
 };
 
 // eslint-disable-next-line import/prefer-default-export
-export function useSearchApplications(applications, externalApplications, applyFilters, filters) {
+export function useSearchApplications(externalApplications, applyFilters, filters) {
   const [searchValue, setSearchValue] = useState('');
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(-1);
@@ -31,13 +32,13 @@ export function useSearchApplications(applications, externalApplications, applyF
   const { t } = useTranslation();
 
   const searchApplication = async (value) => {
-    setUrlSearch(value.match(regex.url));
+    setUrlSearch(regex.url.test(addHttp(value)));
     // Ensure URL check is up-to-date including while pasting input
     // If URL, ping URL and if successful, then use the URL to get application information
-    if (value.match(regex.url)) {
+    if (regex.url.test(addHttp(value))) {
       // Ping URL and validate service
       setLoading(true);
-      const formattedValue = removeTrailingSlash(value);
+      const formattedValue = removeTrailingSlash(addHttp(value));
       await validateAppNode(formattedValue)
         .then(async () => {
           setError(0);

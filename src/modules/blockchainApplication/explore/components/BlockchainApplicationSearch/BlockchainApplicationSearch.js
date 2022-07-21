@@ -7,7 +7,6 @@ import { useSearchApplications } from '../../hooks/useSearchApplication';
 import styles from './BlockchainApplicationSearch.css';
 
 const BlockchainApplicationSearch = ({
-  applications,
   externalApplications,
   applyFilters,
   filters,
@@ -23,7 +22,6 @@ const BlockchainApplicationSearch = ({
     loading,
     searchApplication,
   } = useSearchApplications(
-    applications,
     externalApplications,
     applyFilters,
     filters,
