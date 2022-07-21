@@ -429,7 +429,7 @@ export const computeTransactionId = ({ transaction, network }) => {
   });
   const schema = network.networks.LSK.moduleAssetSchemas[moduleAssetId];
   const transactionBytes = transactions.getBytes(schema, transaction);
-  const id = cryptography.hash(transactionBytes);
+  const id = cryptography.utils.hash(transactionBytes);
 
   return id;
 };

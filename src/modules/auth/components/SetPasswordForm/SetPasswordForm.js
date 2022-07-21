@@ -42,17 +42,15 @@ function SetPasswordForm({ onSubmit, recoveryPhrase }) {
   [formValues.password, formValues.cPassword, formValues.hasAgreed]);
 
   const onFormSubmit = (values) => {
-    const accountSchema = encryptAccount({
+    encryptAccount({
       recoveryPhrase: recoveryPhrase.value,
       password: values.password,
       name: values.accountName,
-    });
-
-    if (accountSchema.error) {
-      toast.error(t('Something went wrong. Please try again'));
-      return null;
-    }
-    return onSubmit?.(accountSchema);
+    })
+      .then(encryptdAccount => onSubmit?.(encryptdAccount))
+      .catch((error) => {
+        toast.error(t('Failed to setup password', error));
+      });
   };
 
   return (

@@ -1,15 +1,11 @@
-// TODO: this function should be imported from SDK - #4342
-// eslint-disable-next-line no-unused-vars
-const decryptAES256GCMWithPassword = ({ encryptedPassphrase, password }) => JSON.stringify({
-  privateKey: 'private-key-mock',
-  recoveryPhrase: 'target cancel solution recipe vague faint bomb convince pink vendor fresh patrol',
-});
+import { cryptography } from '@liskhq/lisk-client';
 
+// Comment: Why do we need separate files for encrypt and decrypt? they can be under one file?
 // eslint-disable-next-line
-export const decryptAccount = (accountSchema, password) => {
+export const decryptAccount = async (encryptedAccount, password) => {
   try {
-    const plainText = decryptAES256GCMWithPassword({
-      encryptedPassphrase: accountSchema,
+    const plainText = await cryptography.encrypt.decryptPassphraseWithPassword({
+      encryptedPassphrase: encryptedAccount,
       password,
     });
     const { privateKey, recoveryPhrase } = JSON.parse(plainText);
