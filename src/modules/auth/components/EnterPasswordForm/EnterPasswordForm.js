@@ -10,7 +10,7 @@ import BoxContent from 'src/theme/box/content';
 import { PrimaryButton } from 'src/theme/buttons';
 import styles from './EnterPasswordForm.css';
 
-const EnterPasswordForm = ({ accountSchema, onEnterPasswordSuccess }) => {
+const EnterPasswordForm = ({ encryptedAccount, onEnterPasswordSuccess }) => {
   const { t } = useTranslation();
   const {
     register,
@@ -22,7 +22,7 @@ const EnterPasswordForm = ({ accountSchema, onEnterPasswordSuccess }) => {
   const formValues = watch();
 
   const onSubmit = ({ password }) => {
-    const account = decryptAccount(accountSchema, password);
+    const account = decryptAccount(encryptedAccount, password);
     if (account.error) {
       setFeedbackError(t('Unable to decrypt account. Please check your password'));
       return;
@@ -31,7 +31,7 @@ const EnterPasswordForm = ({ accountSchema, onEnterPasswordSuccess }) => {
     onEnterPasswordSuccess({
       account,
       recoveryPhrase: account.recoveryPhrase,
-      encryptedPhrase: accountSchema,
+      encryptedPhrase: encryptedAccount,
     });
   };
 
@@ -44,12 +44,12 @@ const EnterPasswordForm = ({ accountSchema, onEnterPasswordSuccess }) => {
         </p>
         <WalletVisual
           className={styles.avatar}
-          address={accountSchema?.metadata?.address}
+          address={encryptedAccount?.metadata?.address}
         />
-        {accountSchema?.metadata?.name && (
-          <p className={styles.accountName}>{accountSchema?.metadata?.name}</p>
+        {encryptedAccount?.metadata?.name && (
+          <p className={styles.accountName}>{encryptedAccount?.metadata?.name}</p>
         )}
-        <p className={styles.accountAddress}>{accountSchema?.metadata?.address}</p>
+        <p className={styles.accountAddress}>{encryptedAccount?.metadata?.address}</p>
         <form onSubmit={handleSubmit(onSubmit)}>
           <Input
             secureTextEntry
