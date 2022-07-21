@@ -31,7 +31,7 @@ export function useSearchApplications(externalApplications, applyFilters, filter
   const [urlSearch, setUrlSearch] = useState(false);
   const { t } = useTranslation();
 
-  const searchApplication = async (value) => {
+  const searchApplications = async (value) => {
     setUrlSearch(regex.url.test(addHttp(value)));
     // Ensure URL check is up-to-date including while pasting input
     // If URL, ping URL and if successful, then use the URL to get application information
@@ -43,7 +43,9 @@ export function useSearchApplications(externalApplications, applyFilters, filter
         .then(async () => {
           setError(0);
           setFeedback('');
+          console.log('Hope it got here');
           await externalApplications.loadData({ baseUrl: value });
+          console.log({ externalApplicationsData: externalApplications.loadData.mock.calls[0][0] });
           setLoading(false);
         })
         .catch(() => {
@@ -70,6 +72,6 @@ export function useSearchApplications(externalApplications, applyFilters, filter
     feedback,
     urlSearch,
     loading,
-    searchApplication,
+    searchApplications,
   };
 }

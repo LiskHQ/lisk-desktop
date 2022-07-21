@@ -3,7 +3,7 @@ import { useTranslation } from 'react-i18next';
 import grid from 'flexboxgrid/dist/flexboxgrid.css';
 import Input from '@theme/Input';
 import Icon from '@theme/Icon';
-import { useSearchApplications } from '../../hooks/useSearchApplication';
+import { useSearchApplications } from '../../hooks/useSearchApplications';
 import styles from './BlockchainApplicationSearch.css';
 
 const BlockchainApplicationSearch = ({
@@ -20,20 +20,25 @@ const BlockchainApplicationSearch = ({
     feedback,
     urlSearch,
     loading,
-    searchApplication,
+    searchApplications,
   } = useSearchApplications(
     externalApplications,
     applyFilters,
     filters,
   );
   const onSearchApplication = ({ target: { value } }) => {
+    console.log('Here?');
+    // console.log({ setSearchValue });
+    // console.log({ searchApplications });
     setSearchValue(value);
     clearTimeout(timeout.current);
     // Validate the URL with debouncer
     timeout.current = setTimeout(() => {
-      searchApplication(value);
+      searchApplications(value);
     }, 500);
   };
+  // console.log({ urlSearch });
+  // console.log({ useSearchApplications });
   const urlSearchErrorStatus = error < 1 ? 'ok' : 'error';
   return (
     <div className={`${grid.row} ${styles.filterWrapper}`}>
