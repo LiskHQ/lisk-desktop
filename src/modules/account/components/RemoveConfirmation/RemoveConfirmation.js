@@ -16,9 +16,10 @@ const RemoveConfirmation = ({ account, onRemoveAccount }) => {
         className={styles.avatar}
         address={account?.metadata?.address}
       />
-      {account?.metadata?.name && (
-      <p className={styles.accountName}>{account?.metadata?.name}</p>
-      )}
+      {
+        account?.metadata?.name
+        && (<p className={styles.accountName}>{account?.metadata?.name}</p>)
+      }
       <p className={styles.accountAddress}>{account?.metadata?.address}</p>
       <p className={styles.subheader}>
         {t(

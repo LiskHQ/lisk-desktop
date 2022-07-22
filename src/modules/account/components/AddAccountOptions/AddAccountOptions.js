@@ -1,5 +1,6 @@
 /* eslint-disable max-lines */
 import React from 'react';
+// import { format } from 'prettier';
 import { Link } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import { withRouter } from 'react-router';
@@ -24,7 +25,7 @@ const AddAccountOptions = ({ history }) => {
     <>
       <div className={`${styles.container} ${grid.row}`}>
         <div
-          className={`${styles.wrapper} ${grid['col-xs-12']} ${grid['col-md-10']} ${grid['col-lg-8']}`}
+          className={`${styles.wrapper} ${grid['col-xs-12']} ${grid['col-md-12']} ${grid['col-lg-10']}`}
         >
           <div className={`${styles.titleHolder} ${grid['col-xs-10']}`}>
             <h1>{t('Add account')}</h1>

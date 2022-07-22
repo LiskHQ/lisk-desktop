@@ -16,11 +16,11 @@
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  padding: 32px;
+  padding: 30px;
   box-sizing: border-box;
   background-color: var(--color-white);
   max-width: 480px;
-  border-radius: 6px;
+  border-radius: 16px;
 }
 
 .headerWrapper {
@@ -41,6 +41,7 @@
   display: flex;
   color: var(--color-maastricht-blue);
   margin-top: 17px;
+  border-radius: 10px;
 
   & > img {
     width: 18px;

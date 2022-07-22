@@ -23,19 +23,19 @@
   transition: opacity 100ms linear;
   cursor: pointer;
 
-  & > div:first-child ~ div {
+  & > .addressWrapper {
     margin-left: 10px;
     flex: 1;
   }
 
-  & > div:first-child ~ div > p {
+  & > .addressWrapper > p {
     margin-top: 9px;
     margin-bottom: 0px;
     color: var(--color-slate-gray);
     font-size: 13px;
   }
 
-  & > div:first-child ~ div ~ button {
+  & > button {
     border: none;
     background-color: transparent;
     width: 40px;
