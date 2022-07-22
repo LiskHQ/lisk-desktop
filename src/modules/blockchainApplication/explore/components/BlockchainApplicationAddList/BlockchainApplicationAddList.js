@@ -14,18 +14,13 @@ import styles from './BlockchainApplicationAddList.css';
 const BlockchainApplicationAddList = ({
   liskApplications,
   externalApplications,
-  applyFilters,
   filters,
 }) => {
   const { t } = useTranslation();
   const {
     data,
     ...searchResponse
-  } = useSearchApplications(
-    externalApplications,
-    applyFilters,
-    filters,
-  );
+  } = useSearchApplications();
   const dataList = externalApplications.data.length
     ? externalApplications.data
     : liskApplications.data;
