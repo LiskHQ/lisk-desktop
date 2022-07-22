@@ -10,7 +10,7 @@ import grid from 'flexboxgrid/dist/flexboxgrid.css';
 import Dialog from '@theme/dialog/dialog';
 import Icon from 'src/theme/Icon';
 import Tooltip from 'src/theme/Tooltip';
-import { parseSearchParams } from 'src/utils/searchParams';
+import { parseSearchParams, removeThenAppendSearchParamsToUrl } from 'src/utils/searchParams';
 import useApplicationManagement from 'src/modules/blockchainApplication/manage/hooks/useApplicationManagement';
 import { usePinBlockchainApplication } from '@blockchainApplication/manage/hooks/usePinBlockchainApplication';
 import defaultBackgroundImage from '../../../../../../setup/react/assets/images/default-chain-background.png';
@@ -23,7 +23,7 @@ const backgroundImage = null;
 const chainLogo = null;
 
 // eslint-disable-next-line max-statements
-const BlockchainApplicationDetails = ({ location, application }) => {
+const BlockchainApplicationDetails = ({ history, location, application }) => {
   const { t } = useTranslation();
   const chainId = parseSearchParams(location.search).chainId;
   const mode = parseSearchParams(location.search).mode;
@@ -39,6 +39,7 @@ const BlockchainApplicationDetails = ({ location, application }) => {
   };
   const addNewApplication = () => {
     setApplication(application.data);
+    removeThenAppendSearchParamsToUrl(history, { modal: 'blockChainApplicationAddSuccess', chainId: application.data.chainID }, ['modal', 'chainId', 'mode']);
   };
 
   const footerDetails = [

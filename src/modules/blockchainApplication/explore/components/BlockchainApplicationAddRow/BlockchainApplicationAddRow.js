@@ -25,8 +25,8 @@ const BlockchainApplicationAddRow = ({
   <div data-testid="applications-row" className={`application-row ${styles.container}`}>
     <DialogLink
       className={`${grid.row} ${className} blockchain-application-add-row`}
-      // component="blockChainApplicationAddDetails"
-      // data={{ application: data }}
+      component="blockChainApplicationDetails"
+      data={{ chainId: data.chainID, mode: 'addApplication' }}
     >
       <ChainName title={data.name} logo={liskLogo} />
       <DepositAmount amount={data.depositedLsk} />

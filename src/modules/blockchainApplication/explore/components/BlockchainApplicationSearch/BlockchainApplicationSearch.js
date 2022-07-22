@@ -7,14 +7,13 @@ import styles from './BlockchainApplicationSearch.css';
 
 const BlockchainApplicationSearch = ({
   searchValue,
-  error,
-  isURl,
+  isURL,
   urlStatus,
   isLoading,
   onSearchApplications,
 }) => {
   const { t } = useTranslation();
-  const status = isURl ? urlStatus : null;
+  const status = isURL ? urlStatus : null;
   return (
     <div className={`${grid.row} ${styles.filterWrapper}`}>
       <div className={styles.filterHolder}>
@@ -28,7 +27,6 @@ const BlockchainApplicationSearch = ({
           size="m"
           isLoading={isLoading}
           status={isLoading ? 'pending' : status}
-          feedback={error}
         />
       </div>
     </div>

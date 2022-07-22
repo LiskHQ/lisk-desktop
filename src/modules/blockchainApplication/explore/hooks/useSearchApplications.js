@@ -9,7 +9,7 @@ import { validateAppNode } from '../utils';
 
 // eslint-disable-next-line import/prefer-default-export
 export const useSearchApplications = () => {
-  const [URl, setURl] = useState({
+  const [URL, setURL] = useState({
     isURL: false,
     URLStatus: '',
   });
@@ -28,7 +28,7 @@ export const useSearchApplications = () => {
   const onSearchApplications = useCallback((value) => {
     const isURL = regex.url.test(addHttp(value));
     setDebounceSearch(value);
-    setURl((state) => ({
+    setURL((state) => ({
       ...state,
       isURL,
     }));
@@ -39,21 +39,21 @@ export const useSearchApplications = () => {
       const formattedValue = removeTrailingSlash(addHttp(value));
       validateAppNode(formattedValue)
         .then(async () => {
-          setURl({
+          setURL({
             URLStatus: 'ok',
             isURL,
           });
         })
         .catch(() => {
-          setURl({
+          setURL({
             URLStatus: 'error',
             isURL,
           });
         });
     }
-  }, [setSearchValue, setURl]);
+  }, [setSearchValue, setURL]);
 
-  if (URl.isURL) {
+  if (URL.isURL) {
     // const result = useQuery()
     const result = {
       isLoading: true,
@@ -63,7 +63,7 @@ export const useSearchApplications = () => {
     return {
       ...result,
       searchValue,
-      ...URl,
+      ...URL,
       onSearchApplications,
     };
   }
@@ -77,7 +77,7 @@ export const useSearchApplications = () => {
   return {
     ...result,
     searchValue,
-    ...URl,
+    ...URL,
     onSearchApplications,
   };
 };
