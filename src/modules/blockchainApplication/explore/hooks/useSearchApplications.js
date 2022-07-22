@@ -1,9 +1,7 @@
 import { useState, useCallback, useRef } from 'react';
-// import { useTranslation } from 'react-i18next';
 import { removeTrailingSlash } from 'src/modules/settings/components/customNode/editMode';
 import { regex } from 'src/const/regex';
 import { addHttp } from 'src/utils/login';
-// import { BLOCKCHAIN_APPLICATION_LIST_LIMIT } from '../const/constants';
 import mockApplicationsExplore from '@tests/fixtures/blockchainApplicationsExplore';
 import { validateAppNode } from '../utils';
 
@@ -14,7 +12,6 @@ export const useSearchApplications = () => {
     URLStatus: '',
   });
   const [searchValue, setSearchValue] = useState('');
-  // const { t } = useTranslation();
   const timeout = useRef();
 
   const setDebounceSearch = (value) => {
@@ -38,7 +35,7 @@ export const useSearchApplications = () => {
       // Ping URL and validate service
       const formattedValue = removeTrailingSlash(addHttp(value));
       validateAppNode(formattedValue)
-        .then(async () => {
+        .then(() => {
           setURL({
             URLStatus: 'ok',
             isURL,

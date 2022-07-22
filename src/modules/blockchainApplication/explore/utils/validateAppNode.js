@@ -12,7 +12,7 @@ export const validateAppNode = async (serviceUrl) => {
     );
   } catch (err) {
     throw new Error(
-      `Error getting details for application url: ${serviceUrl}: ${err.message}`,
+      `Error getting details for application url: ${serviceUrl}`,
     );
   }
 };
