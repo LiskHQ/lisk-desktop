@@ -1,5 +1,6 @@
 /* eslint-disable max-lines */
 import React from 'react';
+import { Link } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import { withRouter } from 'react-router';
 import grid from 'flexboxgrid/dist/flexboxgrid.css';
@@ -45,7 +46,7 @@ const AddAccountOptions = ({ history }) => {
             <p>
               {t('Don’t have a Lisk account yet?')}
               {' '}
-              <a href="#">Create one now</a>
+              <Link to={routes.register.path}>Create one now</Link>
             </p>
           </div>
         </div>

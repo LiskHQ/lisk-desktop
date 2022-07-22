@@ -59,7 +59,7 @@
 .addAccountOptionBtnWrapper {
   width: 302px;
   height: 218px;
-  border-radius: 6px;
+  border-radius: 16px;
   background-color: var(--color-white);
   transition: opacity 200ms linear;
   border: none;
