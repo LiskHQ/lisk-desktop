@@ -7,7 +7,7 @@ Feature: BlockchainManagement
 
   @basic
   Scenario: Visit managed blockchain list
-    Then I should be on manged application list page
+    Then I should be on managed application list page
     When I click on managedApplicationRow
     Then current application name should be: Lisk
   

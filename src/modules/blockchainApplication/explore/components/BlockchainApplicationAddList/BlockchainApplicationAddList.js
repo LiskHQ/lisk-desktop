@@ -39,13 +39,13 @@ const BlockchainApplicationAddList = ({
   return (
     <Dialog hasClose>
       <Box className={styles.wrapper}>
-        <BoxHeader className={styles.header}>
+        <BoxHeader className={`${styles.header} add-application-header`}>
           <div>Add Application</div>
           <BlockchainApplicationSearch
             {...searchResponse}
           />
         </BoxHeader>
-        <BoxContent className={`${styles.content} chain-application-add-list`}>
+        <BoxContent className={`${styles.content} blockchain-application-add-list`}>
           <Table
             data={dataList}
             isLoading={liskApplications.isLoading}

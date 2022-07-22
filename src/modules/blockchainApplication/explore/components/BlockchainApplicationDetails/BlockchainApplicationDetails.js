@@ -148,6 +148,7 @@ const BlockchainApplicationDetails = ({ history, location, application }) => {
             <Box className={styles.footerButton}>
               <PrimaryButton
                 size="l"
+                className="add-application-button"
                 data-testid="add-application-button"
                 onClick={addNewApplication}
               >

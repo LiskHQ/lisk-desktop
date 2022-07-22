@@ -29,7 +29,7 @@ Given(/^chain with id: (\w+) should be unpinned$/, function (chainId) {
   cy.get(ss.chainPinButton).should('not.be.visible');
 });
 
-Then(/^blockchain applications list should be accuratly rendered$/, function () {
+Then(/^blockchain applications list should be accurately rendered$/, function () {
   cy.contains('Explore decentralized applications').eq(0).should('have.text', 'Explore decentralized applications');
 
   cy.get(`${ss.chainRow} .chain-name span`).eq(0).should('have.text', firstChainDetails.name);
@@ -43,14 +43,14 @@ Then(/^blockchain applications list should be accuratly rendered$/, function () 
   cy.get(`${ss.chainRow} .deposit-amount`).eq(1).should('have.text', '5 LSK');
 });
 
-Then(/^blockchain applications statistics should be accuratly rendered$/, function () {
+Then(/^blockchain applications statistics should be accurately rendered$/, function () {
   cy.contains('Total Supply').eq(0).should('have.text', 'Total Supply');
   cy.contains('Staked').eq(0).should('have.text', 'Staked');
   cy.get('.stats-info-value').eq(0).should('have.text', '5,000,000 LSK');
   cy.get('.stats-info-value').eq(1).should('have.text', '3,000,000 LSK');
 });
 
-Then(/^blockchain details should be accuratly displayed$/, function () {
+Then(/^blockchain details should be accurately displayed$/, function () {
   cy.get(ss.blockchainName).eq(0).should('have.text', firstChainDetails.name);
   cy.get(ss.lastCertHeightDisplay).eq(0).should('have.text', firstChainDetails.lastCertificateHeight);
   cy.get(ss.chainStatusDisplay).eq(0).should('have.text', firstChainDetails.state);
@@ -65,3 +65,30 @@ Then(/^blockchain details should not be displayed$/, function () {
   cy.get(ss.lastChainUpdateDisplay).should('not.exist');
 });
 
+Then(/^I should be on add blockchain application modal$/, function () {
+  cy.visit(`${urls.dashboard}?modal=blockChainApplicationAddList`);
+  cy.get(ss.addApplicationHeader).should('have.text', 'Add Application');
+  cy.get(ss.addApplicationTable).should('exist');
+});
+
+Then(/^blockchain details should be in add application mode$/, function() {
+  cy.url().should('include', 'mode=addApplication');
+  cy.get(ss.addApplicationButton).should('be.visible');
+});
+
+Then(/^I should be on add blockchain application success modal$/, function () {
+  cy.url().should('include', 'chainId=aq02qkbb35u4jdq8szo3pnsq');
+  cy.get(ss.addApplicationSuccessHeader).should('have.text', 'Perfect! Application has now been added');
+  cy.get(ss.addApplicationSuccessButton).should('have.text', 'Continue to Dashboard');
+});
+
+Then(/^application list should have (\w+(.*)?)$/, function(applicationName) {
+  cy.visit(`${urls.dashboard}?modal=manageApplications`);
+  cy.get(ss.managedApplicationRow).then(elem => {
+    elem.each((_, el) => {
+      if (el.innerText === applicationName){
+        return;
+      }
+    })
+  });
+});

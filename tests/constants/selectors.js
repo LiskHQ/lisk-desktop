@@ -9,8 +9,15 @@ const delegatesPage = {
 };
 
 const managedApplications = {
-  managedApplicationRow: '.managed-appliation-row',
-  managedAppDropdown: '.appliation-management-dropdown',
+  managedApplicationRow: '.managed-application-row',
+  managedAppDropdown: '.application-management-dropdown',
+  addApplicationLink: '.add-application-link',
+  addApplicationButton: '.add-application-button',
+  addApplicationHeader: '.add-application-header',
+  addApplicationTable: '.blockchain-application-add-list',
+  addApplicationRow: '.blockchain-application-add-row',
+  addApplicationSuccessHeader: '.add-application-success-header',
+  addApplicationSuccessButton: '.add-application-success-button',
   removeApplicationButton: '.remove-application-button',
 };
 

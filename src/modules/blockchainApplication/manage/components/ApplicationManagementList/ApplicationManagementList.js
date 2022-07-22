@@ -34,7 +34,7 @@ const ApplicationManagementList = ({ history }) => {
         </div>
       </BoxContent>
       <OutlineButton
-        className={styles.addApplicationBtn}
+        className={`add-application-link ${styles.addApplicationBtn}`}
         onClick={handleAddApplication}
       >
         <Icon name="plusBlueIcon" />

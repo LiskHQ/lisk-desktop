@@ -34,8 +34,8 @@ Then(/^current application name should be: (.+)$/, function (applicationName) {
 When(/^I trigger remove application on chain: (.+)$/, function (applicationName) {
 
   cy.get(ss.managedApplicationRow).then(eles => {
-    eles.each( (index, ele) => {
-      if(ele.innerText === applicationName){
+    eles.each((index, ele) => {
+      if (ele.innerText === applicationName){
         cy.get(`${ss.managedApplicationRow}:nth-of-type(${index + 1}) ${ss.removeApplicationButton}`).click({force: true})
         return;
       }

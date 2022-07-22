@@ -100,7 +100,7 @@ const ApplicationManagementRow = ({
 
   return (
     <div
-      className={`managed-appliation-row ${styles.appItemWrapper} ${isCurrentApplication ? styles.activeAppBg : ''} ${isTerminated ? styles.termiated : ''}`}
+      className={`managed-application-row ${styles.appItemWrapper} ${isCurrentApplication ? styles.activeAppBg : ''} ${isTerminated ? styles.termiated : ''}`}
       onClick={handleSetCurrentApplication}
     >
       <div className={styles.leftWrapper}>
