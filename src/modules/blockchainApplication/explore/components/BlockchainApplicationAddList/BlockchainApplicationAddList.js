@@ -37,7 +37,7 @@ const BlockchainApplicationAddList = ({
   };
 
   return (
-    <Dialog hasClose>
+    <Dialog className={styles.dialog} hasClose>
       <Box className={styles.wrapper}>
         <BoxHeader className={`${styles.header} add-application-header`}>
           <div>Add Application</div>

@@ -18,6 +18,9 @@
   text-align: center;
 
   & .header {
+    --content-font: 'gilroy';
+
+    font-family: var(--content-font);
     font-size: 28px;
     font-weight: var(--font-weight-very-bold);
     line-height: 32px;
@@ -25,8 +28,9 @@
   }
 
   & .detail {
-    font-size: 16px;
     margin: 0 8px 16px;
+    font-size: 15px;
+    font-weight: 400;
   }
 }
 
@@ -34,5 +38,6 @@
   & button {
     margin-top: 32px;
     border-radius: 10px;
+    width: 60%;
   }
 }

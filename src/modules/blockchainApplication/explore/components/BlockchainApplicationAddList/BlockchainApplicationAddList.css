@@ -1,5 +1,11 @@
+.dialog {
+  & > span {
+    top: 24px;
+  }
+}
+
 .wrapper {
-  padding: 16px;
+  padding: 24px;
   width: auto !important;
 
   & .content {
