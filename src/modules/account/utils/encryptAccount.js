@@ -24,8 +24,9 @@ export const encryptAccount = async ({
   const address = extractAddressFromPublicKey(publicKey);
   const plainText = JSON.stringify({ privateKey, recoveryPhrase });
   const encryptedPassphrase = await encrypt.encryptPassphraseWithPassword(plainText, password);
+
   return {
-    crypto: encryptedPassphrase,
+    encryptedPassphrase,
     metadata: {
       name,
       pubkey: publicKey,
@@ -35,4 +36,13 @@ export const encryptAccount = async ({
     },
     version: 1,
   };
+};
+
+export const decryptAccount = async (encryptedPassphrase, password) => {
+  const plainText = await encrypt.decryptPassphraseWithPassword(
+    encryptedPassphrase,
+    password,
+  );
+  const { recoveryPhrase } = JSON.parse(plainText);
+  return recoveryPhrase;
 };

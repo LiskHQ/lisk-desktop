@@ -3,7 +3,7 @@ import { useTranslation } from 'react-i18next';
 import { useForm } from 'react-hook-form';
 
 import WalletVisual from '@wallet/components/walletVisual';
-import { decryptAccount } from '@account/utils/decryptAccount';
+import { decryptAccount } from '@account/utils/encryptAccount';
 import { Input } from 'src/theme';
 import Box from 'src/theme/box';
 import BoxContent from 'src/theme/box/content';
@@ -21,18 +21,16 @@ const EnterPasswordForm = ({ encryptedAccount, onEnterPasswordSuccess }) => {
 
   const formValues = watch();
 
-  const onSubmit = ({ password }) => {
-    const account = decryptAccount(encryptedAccount, password);
-    if (account.error) {
-      setFeedbackError(t('Unable to decrypt account. Please check your password'));
-      return;
+  const onSubmit = async ({ password }) => {
+    try {
+      const recoveryPhrase = await decryptAccount(encryptedAccount.encryptedPassphrase, password);
+      return onEnterPasswordSuccess({
+        recoveryPhrase,
+      });
+    } catch {
+      const errorMessage = t('Unable to decrypt account. Please check your password');
+      return setFeedbackError(errorMessage);
     }
-
-    onEnterPasswordSuccess({
-      account,
-      recoveryPhrase: account.recoveryPhrase,
-      encryptedPhrase: encryptedAccount,
-    });
   };
 
   return (
