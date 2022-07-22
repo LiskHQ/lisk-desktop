@@ -11,7 +11,7 @@ describe('validateAppNode', () => {
   });
 
   it('throws an error if ping fails', () => {
-    const appError = new Error(`Failed to return response for application url: ${serviceUrl}`);
+    const appError = new Error(`Error getting details for application url: ${serviceUrl}`);
     getApplicationConfig.mockResolvedValue(null);
     expect(validateAppNode(serviceUrl)).rejects.toThrow(appError);
   });
