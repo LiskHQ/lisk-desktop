@@ -22,19 +22,3 @@ Feature: BlockchainExplore
     Then chain with id: ij239sksf5u4jdq8szo3pnsq should be pinned
     When I click on closeDialog
     Then blockchain details should not be displayed
-
-  @basic
-  Scenario: add blockchain application
-    When I click on managedAppDropdown
-    And I wait 1 seconds
-    And I click on addApplicationLink
-    Then I should be on add blockchain application modal
-    When I click on addApplicationRow
-    And I wait 1 seconds
-    Then blockchain details should be accurately displayed
-    Then blockchain details should be in add application mode
-    When I click on addApplicationButton
-    Then I should be on add blockchain application success modal
-    When I click on addApplicationSuccessButton
-    Then I should be on dashboard page
-    Then application list should have Test App

@@ -64,31 +64,3 @@ Then(/^blockchain details should not be displayed$/, function () {
   cy.get(ss.chainOwnerAddress).should('not.exist');
   cy.get(ss.lastChainUpdateDisplay).should('not.exist');
 });
-
-Then(/^I should be on add blockchain application modal$/, function () {
-  cy.visit(`${urls.dashboard}?modal=blockChainApplicationAddList`);
-  cy.get(ss.addApplicationHeader).should('have.text', 'Add Application');
-  cy.get(ss.addApplicationTable).should('exist');
-});
-
-Then(/^blockchain details should be in add application mode$/, function() {
-  cy.url().should('include', 'mode=addApplication');
-  cy.get(ss.addApplicationButton).should('be.visible');
-});
-
-Then(/^I should be on add blockchain application success modal$/, function () {
-  cy.url().should('include', 'chainId=aq02qkbb35u4jdq8szo3pnsq');
-  cy.get(ss.addApplicationSuccessHeader).should('have.text', 'Perfect! Application has now been added');
-  cy.get(ss.addApplicationSuccessButton).should('have.text', 'Continue to Dashboard');
-});
-
-Then(/^application list should have (\w+(.*)?)$/, function(applicationName) {
-  cy.visit(`${urls.dashboard}?modal=manageApplications`);
-  cy.get(ss.managedApplicationRow).then(elem => {
-    elem.each((_, el) => {
-      if (el.innerText === applicationName){
-        return;
-      }
-    })
-  });
-});
