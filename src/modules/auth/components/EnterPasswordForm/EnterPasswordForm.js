@@ -26,6 +26,7 @@ const EnterPasswordForm = ({ encryptedAccount, onEnterPasswordSuccess }) => {
       const recoveryPhrase = await decryptAccount(encryptedAccount.encryptedPassphrase, password);
       return onEnterPasswordSuccess({
         recoveryPhrase,
+        encryptedAccount,
       });
     } catch {
       const errorMessage = t('Unable to decrypt account. Please check your password');

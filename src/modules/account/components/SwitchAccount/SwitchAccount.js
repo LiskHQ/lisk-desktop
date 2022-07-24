@@ -9,7 +9,7 @@ const SwitchAccount = () => {
     <ManageAccounts
       isDialog
       title={t('Switch account')}
-      isRemoveAvailable={false} 
+      isRemoveAvailable={false}
     />
   );
 };

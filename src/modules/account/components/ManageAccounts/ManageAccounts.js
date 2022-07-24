@@ -92,17 +92,16 @@ function ManageAccounts(props) {
         <ManageAccountsContent {...props} />
       </Dialog>
     );
-  }else {
-    return (
-      <div className={`${styles.manageAccounts} ${grid.row}`}>
-        <div
-          className={`${styles.manageAccountWrapper} ${grid['col-xs-12']} ${grid['col-md-8']} ${grid['col-lg-6']}`}
-        >
-          <ManageAccountsContent {...props} />
-        </div>
-      </div>
-    );
   }
+  return (
+    <div className={`${styles.manageAccounts} ${grid.row}`}>
+      <div
+        className={`${styles.manageAccountWrapper} ${grid['col-xs-12']} ${grid['col-md-8']} ${grid['col-lg-6']}`}
+      >
+        <ManageAccountsContent {...props} />
+      </div>
+    </div>
+  );
 }
 
 ManageAccounts.defaultProps = {

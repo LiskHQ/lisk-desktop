@@ -1,9 +1,7 @@
 import { cryptography } from '@liskhq/lisk-client';
-
 import { extractKeyPair, extractAddressFromPublicKey } from 'src/modules/wallet/utils/account';
 import { defaultDerivationPath } from 'src/utils/explicitBipKeyDerivation';
 
-const { encrypt } = cryptography;
 // eslint-disable-next-line
 export const encryptAccount = async ({
   recoveryPhrase,
@@ -12,6 +10,7 @@ export const encryptAccount = async ({
   derivationPath,
   enableCustomDerivationPath = false,
 }) => {
+  const { encrypt } = cryptography;
   const options = {
     passphrase: recoveryPhrase,
     enableCustomDerivationPath,
@@ -39,6 +38,7 @@ export const encryptAccount = async ({
 };
 
 export const decryptAccount = async (encryptedPassphrase, password) => {
+  const { encrypt } = cryptography;
   const plainText = await encrypt.decryptPassphraseWithPassword(
     encryptedPassphrase,
     password,
