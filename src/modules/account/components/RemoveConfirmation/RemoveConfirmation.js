@@ -1,13 +1,18 @@
-import React from 'react';
+import React, { useCallback } from 'react';
 import { useTranslation } from 'react-i18next';
-
+import { withRouter } from 'react-router';
 import WalletVisual from '@wallet/components/walletVisual';
+import { removeSearchParamsFromUrl } from 'src/utils/searchParams';
 import DownloadJSON from 'src/modules/common/components/DownloadJSON/DownloadJSON';
 import { PrimaryButton, SecondaryButton } from 'src/theme/buttons';
 import styles from '../RemoveAccount/RemoveAccount.css';
 
-const RemoveConfirmation = ({ account, onRemoveAccount }) => {
+const RemoveConfirmation = ({ history, account, onRemoveAccount }) => {
   const { t } = useTranslation();
+
+  const handleCancelDialog = useCallback(() => {
+    removeSearchParamsFromUrl(history, ['modal'], true);
+  }, []);
 
   return (
     <>
@@ -31,7 +36,7 @@ const RemoveConfirmation = ({ account, onRemoveAccount }) => {
         encryptedPhrase={account}
       />
       <div className={styles.buttonRow}>
-        <SecondaryButton className={styles.button}>
+        <SecondaryButton className={styles.button} onClick={handleCancelDialog}>
           {t('Cancel')}
         </SecondaryButton>
         <PrimaryButton className={styles.button} onClick={onRemoveAccount}>{t('Remove now')}</PrimaryButton>
@@ -40,4 +45,4 @@ const RemoveConfirmation = ({ account, onRemoveAccount }) => {
   );
 };
 
-export default RemoveConfirmation;
+export default withRouter(RemoveConfirmation);

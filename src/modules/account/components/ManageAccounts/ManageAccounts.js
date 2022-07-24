@@ -12,7 +12,7 @@ import { useAccounts, useCurrentAccount } from '../../hooks';
 import styles from './ManageAccounts.css';
 import AccountRow from '../AccountRow';
 
-const ManageAccounts = ({
+const ManageAccountsContent = ({
   isRemoveAvailable,
   title: customTitle,
   history,
@@ -35,13 +35,12 @@ const ManageAccounts = ({
   }, []);
 
   return (
-    <Dialog hasClose className={`${styles.dialogWrapper}`}>
-      <div className={styles.wrapper}>
-        <div className={styles.headerWrapper}>
-          <h1 data-testid="manage-title">{showRemove ? t('Choose account') : title}</h1>
-        </div>
-        <Box className={styles.accountListWrapper}>
-          {
+    <div className={styles.wrapper}>
+      <div className={styles.headerWrapper}>
+        <h1 data-testid="manage-title">{showRemove ? t('Choose account') : title}</h1>
+      </div>
+      <Box className={styles.accountListWrapper}>
+        {
             accounts.map((account) => (
               <AccountRow
                 key={account.metadata.address}
@@ -52,24 +51,24 @@ const ManageAccounts = ({
               />
             ))
           }
-        </Box>
-        { showRemove ? (
+      </Box>
+      { showRemove ? (
+        <OutlineButton
+          className={`${styles.button} ${styles.addAccountBtn}`}
+          onClick={() => setShowRemove(false)}
+        >
+          {t('Done')}
+        </OutlineButton>
+      ) : (
+        <>
           <OutlineButton
             className={`${styles.button} ${styles.addAccountBtn}`}
-            onClick={() => setShowRemove(false)}
+            onClick={onAddAccount}
           >
-            {t('Done')}
+            <Icon name="personIcon" />
+            {t('Add another account')}
           </OutlineButton>
-        ) : (
-          <>
-            <OutlineButton
-              className={`${styles.button} ${styles.addAccountBtn}`}
-              onClick={onAddAccount}
-            >
-              <Icon name="personIcon" />
-              {t('Add another account')}
-            </OutlineButton>
-            {isRemoveAvailable && (
+          {isRemoveAvailable && (
             <OutlineButton
               className={styles.button}
               onClick={() => {
@@ -79,16 +78,36 @@ const ManageAccounts = ({
               <Icon name="deleteIcon" />
               {t('Remove an account')}
             </OutlineButton>
-            )}
-          </>
-        )}
-      </div>
-    </Dialog>
+          )}
+        </>
+      )}
+    </div>
   );
 };
 
+function ManageAccounts(props) {
+  if (props.isDialog) {
+    return (
+      <Dialog hasClose className={`${styles.dialogWrapper}`}>
+        <ManageAccountsContent {...props} />
+      </Dialog>
+    );
+  }else {
+    return (
+      <div className={`${styles.manageAccounts} ${grid.row}`}>
+        <div
+          className={`${styles.manageAccountWrapper} ${grid['col-xs-12']} ${grid['col-md-8']} ${grid['col-lg-6']}`}
+        >
+          <ManageAccountsContent {...props} />
+        </div>
+      </div>
+    );
+  }
+}
+
 ManageAccounts.defaultProps = {
   isRemoveAvailable: true,
+  isDialog: false,
 };
 
 export default withRouter(ManageAccounts);

@@ -6,7 +6,11 @@ const SwitchAccount = () => {
   const { t } = useTranslation();
 
   return (
-    <ManageAccounts title={t('Switch account')} isRemoveAvailable={false} />
+    <ManageAccounts
+      isDialog
+      title={t('Switch account')}
+      isRemoveAvailable={false} 
+    />
   );
 };
 
