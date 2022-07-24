@@ -41,16 +41,16 @@ const ManageAccountsContent = ({
       </div>
       <Box className={styles.accountListWrapper}>
         {
-            accounts.map((account) => (
-              <AccountRow
-                key={account.metadata.address}
-                account={account}
-                onSelect={onSelectAccount}
-                showRemove={showRemove}
-                onRemove={removeAccount}
-              />
-            ))
-          }
+          accounts.map((account) => (
+            <AccountRow
+              key={account.metadata.address}
+              account={account}
+              onSelect={onSelectAccount}
+              showRemove={showRemove}
+              onRemove={removeAccount}
+            />
+          ))
+        }
       </Box>
       { showRemove ? (
         <OutlineButton

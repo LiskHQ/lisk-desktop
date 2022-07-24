@@ -4,7 +4,7 @@ export const regex = {
   legacyAddress: /^[1-9]\d{0,19}L$/,
   publicKey: /^[0-9a-f]{64}$/,
   username: /^[a-z0-9!@$&_.]{3,20}$/,
-  delegateName: /^[a-z0-9!@$&_.]{3,20}$/,
+  delegateName: /^[a-z0-9!@$&_.]+$/,
   transactionId: /^[0-9a-z]{64}/,
   blockId: /^[0-9a-z]{64}/,
   blockHeight: /^[0-9]+$/,
@@ -30,4 +30,5 @@ export const regex = {
       leadingPoint: /^[,]/,
     },
   },
+  accountName: /^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#$%^&*])(?=.{8,})/g,
 };
