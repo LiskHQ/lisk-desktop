@@ -1,5 +1,6 @@
-import { useCallback } from 'react';
+import { useCallback, useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
+import mockBlockchainApplications from '@tests/fixtures/blockchainApplicationsManage';
 import { selectCurrentApplication } from '../store/selectors';
 import { setCurrentApplication } from '../store/action';
 
@@ -11,5 +12,12 @@ export function useCurrentApplication() {
     (application) => dispatch(setCurrentApplication(application)),
     [],
   );
+
+  useEffect(() => {
+    if (!currentApplication) {
+      setApplication(mockBlockchainApplications[0]);
+    }
+  }, [currentApplication]);
+
   return [currentApplication, setApplication];
 }

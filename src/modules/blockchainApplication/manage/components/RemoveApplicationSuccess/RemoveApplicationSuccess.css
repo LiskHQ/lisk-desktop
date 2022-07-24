@@ -13,6 +13,7 @@
   align-items: center;
   justify-content: center;
   padding: 117px;
+  color: var(--color-maastricht-blue);
 
   & > img {
     margin-bottom: 32px;
@@ -40,6 +41,10 @@
       font-weight: 500;
     }
   }
+}
+
+.dialogWrapper {
+  border: none;
 }
 
 .button {

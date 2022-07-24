@@ -1,0 +1,154 @@
+
+.activeAppBg {
+  --color-ultramarine-blue-blurred: #4070f41a;
+
+  background-color: var(--color-ultramarine-blue-blurred) !important;
+}
+
+.appItemWrapper {
+  width: 100%;
+  padding: 7px;
+  background-color: transparent;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  color: var(--color-maastricht-blue);
+  border-radius: 10px;
+  box-sizing: border-box;
+  user-select: none;
+}
+
+.appItemWrapper.termiated {
+  & > .leftWrapper {
+    opacity: 0.4;
+  }
+}
+
+.disabledWarning {
+  margin-top: 6px;
+}
+
+.appItemWrapper:hover {
+  background-color: var(--color-application-manage-hover-color);
+}
+
+.appItemWrapper:hover .pinWrapper {
+  display: block;
+}
+
+.appItemWrapper:hover .deleteBtn,
+.appItemWrapper:hover .deleteBtnTooltip,
+.appItemWrapper:hover .diabledDeleteBtn {
+  display: flex;
+}
+
+.appItemWrapper:hover .disabledWarning {
+  margin-left: 13px;
+}
+
+.appItemWrapper:hover .disabledWarningTooltip > img ~ div {
+  right: 30px !important;
+}
+
+.disabledWarningTooltip main {
+  & > p {
+    --content-font: 'basier-circle';
+
+    width: 200px;
+    font-size: 12px;
+    line-height: 19px;
+    font-family: var(--content-font);
+  }
+
+  & > p > a {
+    display: block;
+    margin-top: 10px;
+  }
+}
+
+.deleteBtnTooltip {
+  display: none;
+}
+
+.deleteBtn,
+.diabledDeleteBtn {
+  min-width: 30px;
+  display: none;
+  width: fit-content;
+  padding: 5px !important;
+  margin: 0px;
+  height: 34px !important;
+  box-sizing: border-box;
+  margin-right: -6px;
+}
+
+.diabledDeleteBtn {
+  opacity: 0.4;
+}
+
+.leftWrapper {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  position: relative;
+  padding-left: 30px;
+  box-sizing: border-box;
+}
+
+.rightWrapper {
+  width: 30px;
+  padding-right: 17px;
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  margin-top: 2px;
+
+  & > div {
+    display: flex;
+    flex-direction: row;
+    column-gap: 5px;
+    align-items: center;
+  }
+}
+
+.chainLogo {
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+}
+
+.chainLogo ~ span {
+  height: fit-content;
+  font-size: 16px;
+  font-weight: 600;
+  font-family: var(--content-font);
+  padding-left: 8px;
+  white-space: nowrap;
+  max-width: 228px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.pinWrapper {
+  max-width: fit-content;
+  position: absolute;
+  left: 5px;
+  margin-top: 1px;
+  display: none;
+
+  &.show {
+    display: flex !important;
+  }
+
+  & img {
+    width: 20px;
+  }
+
+  & button {
+    display: flex;
+    min-width: fit-content;
+    height: fit-content !important;
+    padding: 0px !important;
+  }
+}
