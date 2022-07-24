@@ -4,6 +4,7 @@ import { withRouter } from 'react-router';
 
 import Box from 'src/theme/box';
 import grid from 'flexboxgrid/dist/flexboxgrid.css';
+import Dialog from '@theme/dialog/dialog';
 import { OutlineButton } from 'src/theme/buttons';
 import Icon from 'src/theme/Icon';
 import routes from 'src/routes/routes';
@@ -34,59 +35,55 @@ const ManageAccounts = ({
   }, []);
 
   return (
-    <div className={`${styles.manageAccounts} ${grid.row}`}>
-      <div
-        className={`${styles.manageAccountWrapper} ${grid['col-xs-12']} ${grid['col-md-8']} ${grid['col-lg-6']}`}
-      >
-        <div className={styles.wrapper}>
-          <div className={styles.headerWrapper}>
-            <h1 data-testid="manage-title">{showRemove ? t('Choose account') : title}</h1>
-          </div>
-          <Box className={styles.accountListWrapper}>
-            {
-               accounts.map((account) => (
-                 <AccountRow
-                   key={account.metadata.address}
-                   account={account}
-                   onSelect={onSelectAccount}
-                   showRemove={showRemove}
-                   onRemove={removeAccount}
-                 />
-               ))
-             }
-          </Box>
-          { showRemove ? (
+    <Dialog hasClose className={`${styles.dialogWrapper}`}>
+      <div className={styles.wrapper}>
+        <div className={styles.headerWrapper}>
+          <h1 data-testid="manage-title">{showRemove ? t('Choose account') : title}</h1>
+        </div>
+        <Box className={styles.accountListWrapper}>
+          {
+            accounts.map((account) => (
+              <AccountRow
+                key={account.metadata.address}
+                account={account}
+                onSelect={onSelectAccount}
+                showRemove={showRemove}
+                onRemove={removeAccount}
+              />
+            ))
+          }
+        </Box>
+        { showRemove ? (
+          <OutlineButton
+            className={`${styles.button} ${styles.addAccountBtn}`}
+            onClick={() => setShowRemove(false)}
+          >
+            {t('Done')}
+          </OutlineButton>
+        ) : (
+          <>
             <OutlineButton
               className={`${styles.button} ${styles.addAccountBtn}`}
-              onClick={() => setShowRemove(false)}
+              onClick={onAddAccount}
             >
-              {t('Done')}
+              <Icon name="personIcon" />
+              {t('Add another account')}
             </OutlineButton>
-          ) : (
-            <>
-              <OutlineButton
-                className={`${styles.button} ${styles.addAccountBtn}`}
-                onClick={onAddAccount}
-              >
-                <Icon name="personIcon" />
-                {t('Add another account')}
-              </OutlineButton>
-              {isRemoveAvailable && (
-              <OutlineButton
-                className={styles.button}
-                onClick={() => {
-                  setShowRemove(true);
-                }}
-              >
-                <Icon name="deleteIcon" />
-                {t('Remove an account')}
-              </OutlineButton>
-              )}
-            </>
-          )}
-        </div>
+            {isRemoveAvailable && (
+            <OutlineButton
+              className={styles.button}
+              onClick={() => {
+                setShowRemove(true);
+              }}
+            >
+              <Icon name="deleteIcon" />
+              {t('Remove an account')}
+            </OutlineButton>
+            )}
+          </>
+        )}
       </div>
-    </div>
+    </Dialog>
   );
 };
 

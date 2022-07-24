@@ -1,6 +1,5 @@
 /* eslint-disable max-lines */
 import React from 'react';
-// import { format } from 'prettier';
 import { Link } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import { withRouter } from 'react-router';

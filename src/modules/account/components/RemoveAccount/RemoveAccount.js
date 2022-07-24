@@ -41,8 +41,6 @@ const RemoveAccount = ({ address, history }) => {
     history.push(routes.manageAccounts.path);
   };
 
-  console.log('---', account);
-
   return (
     <Box className={styles.container}>
       <BoxContent className={styles.content}>
