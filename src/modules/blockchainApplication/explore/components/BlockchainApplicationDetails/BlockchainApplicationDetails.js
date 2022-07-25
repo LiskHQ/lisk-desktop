@@ -69,7 +69,7 @@ const BlockchainApplicationDetails = ({ history, location, application }) => {
   ];
 
   return (
-    <Dialog hasClose className={`${styles.dialogWrapper} ${grid.row} ${grid['center-xs']}`}>
+    <Dialog hasClose hasBack className={`${styles.dialogWrapper} ${grid.row} ${grid['center-xs']}`}>
       <div className={styles.wrapper}>
         <div className={styles.avatarContainer}>
           <img src={chainLogo || liskLogo} />

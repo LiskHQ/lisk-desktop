@@ -157,6 +157,20 @@
   }
 }
 
+.backBtn {
+  align-items: center;
+  box-sizing: border-box;
+  cursor: pointer;
+  display: flex;
+  height: 32px;
+  justify-content: center;
+  position: absolute;
+  top: 12px;
+  left: 12px;
+  width: 32px;
+  z-index: 4;
+}
+
 .closeBtn {
   align-items: center;
   box-sizing: border-box;
