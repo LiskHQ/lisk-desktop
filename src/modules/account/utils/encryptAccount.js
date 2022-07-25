@@ -39,10 +39,12 @@ export const encryptAccount = async ({
 
 export const decryptAccount = async (encryptedPassphrase, password) => {
   const { encrypt } = cryptography;
+  console.log('--- start ---');
   const plainText = await encrypt.decryptPassphraseWithPassword(
     encryptedPassphrase,
     password,
   );
+  console.log('--- end ---');
   const { recoveryPhrase } = JSON.parse(plainText);
   return recoveryPhrase;
 };

@@ -20,6 +20,7 @@
   box-sizing: border-box;
   background-color: var(--color-white);
   border-radius: 16px;
+  max-width: 465px !important;
 }
 
 .headerWrapper {
@@ -65,12 +66,12 @@
 }
 
 .dialogWrapper {
-  max-width: 562px;
-  min-width: 500px;
+  min-width: 450px;
   width: 100%;
   display: flex;
   flex-direction: column;
   align-items: center;
+  max-width: 465px;
 }
 
 .manageAccountWrapper {

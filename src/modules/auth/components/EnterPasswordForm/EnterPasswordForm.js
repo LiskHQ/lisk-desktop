@@ -24,6 +24,7 @@ const EnterPasswordForm = ({ encryptedAccount, onEnterPasswordSuccess }) => {
   const onSubmit = async ({ password }) => {
     try {
       const recoveryPhrase = await decryptAccount(encryptedAccount.encryptedPassphrase, password);
+
       return onEnterPasswordSuccess({
         recoveryPhrase,
         encryptedAccount,

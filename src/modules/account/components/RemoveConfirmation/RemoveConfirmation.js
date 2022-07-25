@@ -7,11 +7,17 @@ import DownloadJSON from 'src/modules/common/components/DownloadJSON/DownloadJSO
 import { PrimaryButton, SecondaryButton } from 'src/theme/buttons';
 import styles from '../RemoveAccount/RemoveAccount.css';
 
-const RemoveConfirmation = ({ history, account, onRemoveAccount }) => {
+const RemoveConfirmation = ({
+  history, location, account, onRemoveAccount,
+}) => {
   const { t } = useTranslation();
 
   const handleCancelDialog = useCallback(() => {
-    removeSearchParamsFromUrl(history, ['modal'], true);
+    if (/modal=/g.test(location.hash)) {
+      removeSearchParamsFromUrl(history, ['modal'], true);
+    } else {
+      history.goBack();
+    }
   }, []);
 
   return (

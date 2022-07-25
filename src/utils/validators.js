@@ -23,7 +23,7 @@ export const validateAddress = (address) => {
   }
 
   try {
-    return cryptography.address.validateBase32Address(address) ? 0 : 1;
+    return cryptography.address.validateLisk32Address(address) ? 0 : 1;
   } catch (e) {
     return 1;
   }
