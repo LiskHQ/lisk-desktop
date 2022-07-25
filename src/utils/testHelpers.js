@@ -55,7 +55,7 @@ const defaultHistoryProps = {
 };
 export const mountWithCustomRouter = (Component, props) => mount(
   <Router
-    history={{ ...defaultHistoryProps, ...props.history } ?? defaultHistoryProps}
+    history={props.history ? { ...defaultHistoryProps, ...props.history } : defaultHistoryProps}
   >
     <Component {...props} />
   </Router>,
