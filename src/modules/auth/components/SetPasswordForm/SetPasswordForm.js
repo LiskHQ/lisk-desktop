@@ -16,7 +16,7 @@ import styles from './SetPasswordForm.css';
 
 const setPasswordFormSchema = yup.object({
   accountName: yup.string()
-    .matches(regex.delegateName, 'Can be alpha numeric with either !,@,$,&,_,. as special characters')
+    .matches(regex.accountName, 'Can be alpha numeric with either !,@,$,&,_,. as special characters')
     .max(20, 'Character length can\'t be more than 20')
     .min(3, 'Character length can\'t be lesser than 3'),
   password: yup.string().required()
