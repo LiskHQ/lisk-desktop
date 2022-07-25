@@ -1,7 +1,7 @@
 /* eslint-disable import/no-extraneous-dependencies */
 import React from 'react';
 import { mount } from 'enzyme';
-import { MemoryRouter } from 'react-router-dom';
+import { MemoryRouter, Router } from 'react-router-dom';
 import configureStore from 'redux-mock-store';
 import { Provider } from 'react-redux';
 import { render } from '@testing-library/react';
@@ -37,6 +37,28 @@ export const mountWithRouter = (Component, props, routeConfig = {}) => mount(
   >
     <Component {...props} />
   </MemoryRouter>,
+);
+
+/**
+ * Mounts components that are wrapped in WithRouter with custom router
+ *
+ * @param {Class|Function} Component - A React component to be tested
+ * @param {Object} props - Set of props to be passed to the component
+ *
+ * @returns {Object} Mounted component
+ */
+const defaultHistoryProps = {
+  listen: () => {},
+  location: {
+    pathname: '',
+  },
+};
+export const mountWithCustomRouter = (Component, props) => mount(
+  <Router
+    history={{ ...defaultHistoryProps, ...props.history } ?? defaultHistoryProps}
+  >
+    <Component {...props} />
+  </Router>,
 );
 
 /**
