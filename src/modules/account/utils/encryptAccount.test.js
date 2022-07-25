@@ -69,7 +69,6 @@ describe('encryptAccount', () => {
 describe('decryptAccount', () => {
   it('decrypts account when the correct arguments are passed', () => {
     const privateKey = 'private-key-mock';
-    const recoveryPhrase = 'target cancel solution recipe vague faint bomb convince pink vendor fresh patrol';
     const password = 'samplePassword@1';
     const encryptedAccount = mockAccount.crypto;
     const expectedResult = { privateKey, recoveryPhrase, error: false };

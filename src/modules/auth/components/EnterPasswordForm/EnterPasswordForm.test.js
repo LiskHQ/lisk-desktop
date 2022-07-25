@@ -3,10 +3,10 @@ import {
   fireEvent, render, screen, waitFor,
 } from '@testing-library/react';
 
-import { decryptAccount } from '@account/utils/decryptAccount';
+import { decryptAccount } from '@account/utils/encryptAccount';
 import EnterPasswordForm from '.';
 
-jest.mock('@account/utils/decryptAccount');
+jest.mock('@account/utils/encryptAccount');
 
 describe('EnterPasswordForm', () => {
   let wrapper;
