@@ -1,0 +1,8 @@
+.wrapper {
+  padding: 8px;
+
+  & .node {
+    border: 1px solid var(--color-athens-white);
+    boeder-radius: 5px;
+  }
+}

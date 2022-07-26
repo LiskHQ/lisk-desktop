@@ -46,6 +46,7 @@ import BlockchainApplicationDetails from '@blockchainApplication/explore/compone
 import BlockchainApplicationAddList from '@blockchainApplication/explore/components/BlockchainApplicationAddList';
 import BlockchainApplicationAddSuccess from '@blockchainApplication/explore/components/BlockchainApplicationAddSuccess';
 import ApplicationManagementList from '@blockchainApplication/manage/components/ApplicationManagementList';
+import SelectNode from '@blockchainApplication/manage/components/SelectNode';
 import RemoveApplicationFlow from '@blockchainApplication/manage/components/RemoveApplicationFlow';
 
 export default {
@@ -89,6 +90,7 @@ export default {
   accountAdd: AddAccountForm,
   addAccountBySecretRecovery: AddAccountBySecretRecovery,
   switchAccount: SwitchAccount,
+  selectNode: SelectNode,
   backupRecoveryPhraseFlow: BackupRecoveryPhraseFlow,
   removeCurrentAccountFlow: RemoveCurrentAccountFlow,
   removeSelectedAccount: RemoveSelectedAccountFlow,

@@ -95,7 +95,13 @@ const ApplicationManagementRow = ({
   }, [location]);
 
   const handleSetCurrentApplication = useCallback(() => {
-    if (!isTerminated) setApplication(application);
+    // Check apis here
+    if (!isTerminated) {
+      if (application.apis.length > 1) {
+        // redirect to select node
+      }
+      setApplication(application);
+    }
   }, [setApplication, isTerminated]);
 
   return (
