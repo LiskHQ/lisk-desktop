@@ -1,8 +1,9 @@
 .container {
   padding: 4px;
+  cursor: pointer;
 
   &:hover {
-    background-color: var(--color-athens-white);
+    background-color: var(--color-application-manage-hover-color);
     border-radius: 10px;
   }
 
@@ -13,6 +14,7 @@
   & > div:first-of-type {
     padding: 8px 16px;
     height: 52px;
+    background: none !important;
   }
 
   & .chainName {
