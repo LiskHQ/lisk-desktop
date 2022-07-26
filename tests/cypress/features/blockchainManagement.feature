@@ -23,8 +23,6 @@ Feature: BlockchainManagement
 
   @basic
   Scenario: add blockchain application
-    When I click on managedAppDropdown
-    And I wait 1 seconds
     And I click on addApplicationLink
     Then I should be on add blockchain application modal
     When I click on addApplicationRow

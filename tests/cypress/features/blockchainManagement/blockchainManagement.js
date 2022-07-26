@@ -3,8 +3,10 @@ import moment from 'moment';
 import { Given, Then } from 'cypress-cucumber-preprocessor/steps';
 import { ss, urls } from '../../../constants';
 import mockBlockchainApplications from '../../../fixtures/blockchainApplicationsManage';
+import mockBlockchainApplicationsExplore from '../../../fixtures/blockchainApplicationsExplore';
 
-const blockchainApplication= mockBlockchainApplications[4]
+const blockchainApplication = mockBlockchainApplications[4]
+const firstChainDetails = mockBlockchainApplicationsExplore[0]
 
 Given(/^I visit the remove blockchain application page$/, function () {
   cy.visit(`${urls.login}?modal=removeApplicationFlow&chainId=${blockchainApplication.chainID}`);
@@ -40,6 +42,14 @@ When(/^I trigger remove application on chain: (.+)$/, function (applicationName)
       }
     })
   })
+});
+
+Then(/^blockchain details should be accurately displayed$/, function () {
+  cy.get(ss.blockchainName).eq(0).should('have.text', firstChainDetails.name);
+  cy.get(ss.lastCertHeightDisplay).eq(0).should('have.text', firstChainDetails.lastCertificateHeight);
+  cy.get(ss.chainStatusDisplay).eq(0).should('have.text', firstChainDetails.state);
+  cy.get(ss.chainOwnerAddress).eq(0).should('have.text', firstChainDetails.address);
+  cy.get(ss.lastChainUpdateDisplay).eq(0).should('have.text', moment(firstChainDetails.lastUpdated).format('DD MMM YYYY'));
 });
 
 Then(/^I should be on add blockchain application modal$/, function () {
