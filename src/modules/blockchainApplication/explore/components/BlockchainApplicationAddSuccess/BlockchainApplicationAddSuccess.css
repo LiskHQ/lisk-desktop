@@ -7,10 +7,12 @@
   padding-bottom: 24px;
   border-radius: 16px;
   background-color: var(--color-white);
+  align-items: center;
 }
 
 .illustration {
   padding: 24px;
+  width: 70%;
 }
 
 .textContent {

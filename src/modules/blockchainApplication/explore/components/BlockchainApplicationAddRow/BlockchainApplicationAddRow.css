@@ -1,5 +1,6 @@
 .container {
   padding: 4px;
+  cursor: pointer;
 
   &:hover {
     background-color: var(--color-athens-white);
