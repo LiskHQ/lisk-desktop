@@ -217,7 +217,7 @@ export const modals = {
     forbiddenTokens: [],
   },
   selectNode: {
-    isPrivate: true,
+    isPrivate: false,
     forbiddenTokens: [],
   },
   removeCurrentAccountFlow: {

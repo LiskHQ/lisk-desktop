@@ -3,6 +3,6 @@
 
   & .node {
     border: 1px solid var(--color-athens-white);
-    boeder-radius: 5px;
+    border-radius: 5px;
   }
 }

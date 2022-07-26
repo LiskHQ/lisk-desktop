@@ -9,9 +9,15 @@ import liskLogo from '../../../../../../setup/react/assets/images/LISK.png';
 import useApplicationManagement from '../../hooks/useApplicationManagement';
 import styles from './SelectNode.css';
 
+const NodeComponent = ({ node }) => (
+  <div className={`${styles.node} grid['col-xs-6']`}>{node.rpc}</div>
+);
+
 const SelectNode = ({ chainId }) => {
   const { t } = useTranslation();
-  const { getApplicationByChainId } = useApplicationManagement();
+  const { applications, getApplicationByChainId } = useApplicationManagement();
+  // figure out how to deal with applications manage data and explore data
+  console.log({ applications });
   const application = getApplicationByChainId(chainId);
   const chainLogo = null;
   return (
@@ -25,7 +31,7 @@ const SelectNode = ({ chainId }) => {
           <div>{t('Choose application URL')}</div>
           <div className={grid.row}>
             {application.apis.map((node) => (
-              <div className={`${styles.node} grid['col-xs-6']`} key={node.rest}>{node.rest}</div>
+              <NodeComponent node={node} key={node.rpc} />
             ))}
           </div>
         </BoxContent>
