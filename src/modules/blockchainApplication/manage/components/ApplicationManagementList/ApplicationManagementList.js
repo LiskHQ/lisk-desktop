@@ -5,6 +5,7 @@ import BoxHeader from 'src/theme/box/header';
 import BoxContent from 'src/theme/box/content';
 import { OutlineButton } from 'src/theme/buttons';
 import Icon from 'src/theme/Icon';
+import { addSearchParamsToUrl } from 'src/utils/searchParams';
 import styles from './ApplicationManagementList.css';
 import useApplicationManagement from '../../hooks/useApplicationManagement';
 import ApplicationManagementRow from '../ApplicationManagementRow';
@@ -14,9 +15,7 @@ const ApplicationManagementList = ({ history }) => {
   const { applications } = useApplicationManagement();
 
   const handleAddApplication = useCallback(() => {
-    // TODO: reinstated the correct route from route.addApplication.path
-    // when the add application flow is done
-    history.push('/dashboard');
+    addSearchParamsToUrl(history, { modal: 'blockChainApplicationAddList' });
   }, []);
 
   return (
@@ -35,7 +34,7 @@ const ApplicationManagementList = ({ history }) => {
         </div>
       </BoxContent>
       <OutlineButton
-        className={styles.addApplicationBtn}
+        className={`add-application-link ${styles.addApplicationBtn}`}
         onClick={handleAddApplication}
       >
         <Icon name="plusBlueIcon" />

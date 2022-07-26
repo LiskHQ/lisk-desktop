@@ -114,3 +114,23 @@ export const removeSearchParamsFromUrl = (history, paramsToRemove, cleanParamsAf
   }
   history.push(`${history.location.pathname}${newSearchString}`);
 };
+
+export const removeThenAppendSearchParamsToUrl = (
+  history, paramsToAdd, paramsToRemove, cleanParamsAfter,
+) => {
+  let newSearchString = '';
+  let formattedSearchString = '';
+  if (Array.isArray(paramsToRemove) && paramsToRemove.length) {
+    newSearchString = removeSearchParams(
+      history.location.search,
+      paramsToRemove,
+      cleanParamsAfter,
+    );
+  }
+  if (newSearchString.length) {
+    formattedSearchString = appendSearchParams(history.location.search, paramsToAdd);
+  } else {
+    formattedSearchString = appendSearchParams('', paramsToAdd);
+  }
+  history.push(`${history.location.pathname}${formattedSearchString}`);
+};

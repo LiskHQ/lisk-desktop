@@ -163,6 +163,7 @@ const Transactions = ({
           }}
         />
         <Table
+          showHeader
           data={transactions.data}
           isLoading={transactions.isLoading}
           row={TransactionRow}

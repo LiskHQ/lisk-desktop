@@ -19,6 +19,7 @@ const Peers = ({
     <Box main isLoading={peers.isLoading} className="peers-box">
       <BoxContent className={styles.content}>
         <Table
+          showHeader
           data={peers.data}
           isLoading={peers.isLoading}
           row={PeerRow}
