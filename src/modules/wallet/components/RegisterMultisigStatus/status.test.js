@@ -35,7 +35,7 @@ describe('Multisignature Status component', () => {
           ...signedTransaction,
           senderPublicKey: accounts.multiSig.summary.publicKey,
           signatures: [accounts.multiSig.summary.publicKey],
-          asset: {
+          params: {
             optionalKeys: accounts.multiSig.keys.optionalKeys,
             mandatoryKeys: accounts.multiSig.keys.mandatoryKeys,
             numberOfSignatures: accounts.multiSig.keys.numberOfSignatures,

@@ -269,7 +269,7 @@ export const calculateRemainingAndSignedMembers = (
  */
 export const getKeys = ({ senderAccount, transaction, isGroupRegistration }) => {
   if (isGroupRegistration) {
-    return transaction.asset;
+    return transaction.params;
   }
 
   return senderAccount.keys;

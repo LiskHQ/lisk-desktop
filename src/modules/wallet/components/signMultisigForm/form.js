@@ -4,7 +4,7 @@ import {
   elementTxToDesktopTx,
   convertTxJSONToBinary,
 } from '@transaction/utils/transaction';
-import { joinModuleAndAssetIds } from '@transaction/utils/moduleAssets';
+import { joinModuleAndCommandIds } from '@transaction/utils/moduleAssets';
 import Box from 'src/theme/box';
 import BoxContent from 'src/theme/box/content';
 import BoxFooter from 'src/theme/box/footer';
@@ -33,13 +33,13 @@ const Form = ({ t, nextStep, network }) => {
   const validateAndSetTransaction = (value) => {
     try {
       setTransaction(value);
-      const moduleAssetId = joinModuleAndAssetIds({
+      const moduleCommandID = joinModuleAndCommandIds({
         moduleID: value.moduleID,
-        assetID: value.assetID,
+        commandID: value.commandID,
       });
 
-      const schema = network.networks.LSK.moduleAssetSchemas[moduleAssetId];
-      const transactionObject = convertTxJSONToBinary(value, moduleAssetId);
+      const schema = network.networks.LSK.moduleCommandSchemas[moduleCommandID];
+      const transactionObject = convertTxJSONToBinary(value, moduleCommandID);
       setBinaryTx(transactionObject);
       const err = validateTransaction(schema, transactionObject);
       setError(err ? 'Unknown transaction' : undefined);

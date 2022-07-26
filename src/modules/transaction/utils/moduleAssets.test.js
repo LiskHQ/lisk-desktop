@@ -1,17 +1,17 @@
-import { MODULE_ASSETS_NAME_ID_MAP } from '@transaction/configuration/moduleAssets';
+import { MODULE_COMMANDS_NAME_ID_MAP } from '@transaction/configuration/moduleAssets';
 import {
-  getModuleAssetSenderLabel,
-  getModuleAssetTitle,
-  splitModuleAndAssetIds,
-  joinModuleAndAssetIds,
+  getModuleCommandSenderLabel,
+  getModuleCommandTitle,
+  splitModuleAndCommandIds,
+  joinModuleAndCommandIds,
 } from './moduleAssets';
 
 describe('Utils: moduleAssets', () => {
-  describe('getModuleAssetSenderLabel', () => {
+  describe('getModuleCommandSenderLabel', () => {
     it('should return a dictionary of strings', () => {
       const t = jest.fn(str => str);
-      const dict = getModuleAssetSenderLabel(t);
-      const label = dict[MODULE_ASSETS_NAME_ID_MAP.transfer];
+      const dict = getModuleCommandSenderLabel(t);
+      const label = dict[MODULE_COMMANDS_NAME_ID_MAP.transfer];
 
       expect(label).toBeDefined();
       expect(typeof label).toBe('string');
@@ -19,11 +19,11 @@ describe('Utils: moduleAssets', () => {
     });
   });
 
-  describe('getModuleAssetTitle', () => {
+  describe('getModuleCommandTitle', () => {
     it('should return a dictionary of strings', () => {
       const t = jest.fn(str => str);
-      const dict = getModuleAssetTitle(t);
-      const label = dict[MODULE_ASSETS_NAME_ID_MAP.transfer];
+      const dict = getModuleCommandTitle(t);
+      const label = dict[MODULE_COMMANDS_NAME_ID_MAP.transfer];
 
       expect(label).toBeDefined();
       expect(typeof label).toBe('string');
@@ -31,21 +31,21 @@ describe('Utils: moduleAssets', () => {
     });
   });
 
-  describe('splitModuleAndAssetIds', () => {
+  describe('splitModuleAndCommandIds', () => {
     it('should split module and asset ids', () => {
-      const moduleAssetId = '5:1';
-      const [moduleID, assetID] = splitModuleAndAssetIds(moduleAssetId);
+      const moduleCommandID = '5:1';
+      const [moduleID, commandID] = splitModuleAndCommandIds(moduleCommandID);
 
       expect(moduleID).toEqual(5);
-      expect(assetID).toEqual(1);
+      expect(commandID).toEqual(1);
     });
   });
 
-  describe('joinModuleAndAssetIds', () => {
+  describe('joinModuleAndCommandIds', () => {
     it('should join module and asset ids', () => {
-      const [moduleID, assetID] = [5, 1];
-      const moduleAssetId = joinModuleAndAssetIds({ moduleID, assetID });
-      expect(moduleAssetId).toEqual('5:1');
+      const [moduleID, commandID] = [5, 1];
+      const moduleCommandID = joinModuleAndCommandIds({ moduleID, commandID });
+      expect(moduleCommandID).toEqual('5:1');
     });
   });
 });

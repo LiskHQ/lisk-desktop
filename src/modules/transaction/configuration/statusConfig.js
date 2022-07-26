@@ -1,6 +1,6 @@
 import { isEmpty } from 'src/utils/helpers';
 import { txStatusTypes } from '@transaction/configuration/txStatus';
-import { transactionToJSON, getNumberOfSignatures, joinModuleAndAssetIds } from '../utils';
+import { transactionToJSON, getNumberOfSignatures, joinModuleAndCommandIds } from '../utils';
 
 export const statusMessages = t => ({
   [txStatusTypes.multisigSignaturePartialSuccess]: {
@@ -66,7 +66,7 @@ export const getTransactionStatus = (account, transactions, isMultisignature) =>
   if (!isEmpty(transactions.signedTransaction)) {
     const transaction = {
       ...transactions.signedTransaction,
-      moduleAssetId: joinModuleAndAssetIds(transactions.signedTransaction),
+      moduleCommandID: joinModuleAndCommandIds(transactions.signedTransaction),
     };
     const numberOfSignatures = getNumberOfSignatures(account, transaction);
     const nonEmptySignatures = transactions

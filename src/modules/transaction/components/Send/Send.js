@@ -10,13 +10,13 @@ const Send = ({
     <section>
       <label>{t('Recipient')}</label>
       <label className="recipient-value">
-        <WalletVisual address={transaction.asset.recipient} size={25} />
+        <WalletVisual address={transaction.params.recipient} size={25} />
         <label className={`${styles.information} recipient-confirm`}>
-          {transaction.asset.recipient.title || transaction.asset.recipient.address}
+          {transaction.params.recipient.title || transaction.params.recipient.address}
         </label>
-        { transaction.asset.recipient.title ? (
+        { transaction.params.recipient.title ? (
           <span className={styles.secondText}>
-            {transaction.asset.recipient.address}
+            {transaction.params.recipient.address}
           </span>
         ) : null }
       </label>
@@ -26,7 +26,7 @@ const Send = ({
         <label>{t('Amount')}</label>
         <label className="amount-summary">
           <TokenAmount
-            val={transaction.asset.amount}
+            val={transaction.params.amount}
             token={token}
           />
         </label>
@@ -35,7 +35,7 @@ const Send = ({
     <section>
       <label>{t('Message')}</label>
       <label className="message-value">
-        {transaction.asset.data || '-'}
+        {transaction.params.data || '-'}
       </label>
     </section>
   </>

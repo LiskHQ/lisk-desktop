@@ -1,7 +1,7 @@
 import React from 'react';
 import { mount } from 'enzyme';
 import { tokenMap } from '@token/fungible/consts/tokens';
-import { MODULE_ASSETS_NAME_ID_MAP } from '@transaction/configuration/moduleAssets';
+import { MODULE_COMMANDS_NAME_ID_MAP } from '@transaction/configuration/moduleAssets';
 import TransactionPriority from '.';
 
 const baseFees = {
@@ -25,7 +25,7 @@ describe('TransactionPriority', () => {
     setSelectedPriority: jest.fn(),
     fee,
     setCustomFee: jest.fn(),
-    moduleAssetId: MODULE_ASSETS_NAME_ID_MAP.transfer,
+    moduleCommandID: MODULE_COMMANDS_NAME_ID_MAP.transfer,
     loadError: false,
     isloading: false,
   };

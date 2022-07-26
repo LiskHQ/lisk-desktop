@@ -1,7 +1,7 @@
 import React from 'react';
 import { mount } from 'enzyme';
 import * as hwManager from '@transaction/utils/hwManager';
-import { MODULE_ASSETS_NAME_ID_MAP } from '@transaction/configuration/moduleAssets';
+import { MODULE_COMMANDS_NAME_ID_MAP } from '@transaction/configuration/moduleAssets';
 import accounts from '@tests/constants/wallets';
 import Summary from './Summary';
 
@@ -36,8 +36,8 @@ describe('Multisignature Summary component', () => {
     multisigGroupRegistered: jest.fn(),
     rawTx: {
       fee: 2000000,
-      moduleAssetId: MODULE_ASSETS_NAME_ID_MAP.registerMultisignatureGroup,
-      asset: {
+      moduleCommandID: MODULE_COMMANDS_NAME_ID_MAP.registerMultisignatureGroup,
+      params: {
         account: accounts.genesis,
         members,
         numberOfSignatures: 2,
@@ -72,7 +72,7 @@ describe('Multisignature Summary component', () => {
   });
 
   it('Should render properly', () => {
-    expect(wrapper.find('.member-info').length).toEqual(props.rawTx.asset.members.length);
+    expect(wrapper.find('.member-info').length).toEqual(props.rawTx.params.members.length);
     expect(wrapper.find('.info-fee').at(0).text()).toContain('0.02 LSK');
   });
 });

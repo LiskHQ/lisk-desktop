@@ -1,7 +1,7 @@
 /* eslint-disable max-lines */
 import { transactions, cryptography } from '@liskhq/lisk-client';
 import { to } from 'await-to-js';
-import { MODULE_ASSETS_NAME_ID_MAP } from '@transaction/configuration/moduleAssets';
+import { MODULE_COMMANDS_NAME_ID_MAP } from '@transaction/configuration/moduleAssets';
 import { DEFAULT_NUMBER_OF_SIGNATURES } from '@transaction/configuration/transactions';
 import { signatureCollectionStatus } from '@transaction/configuration/txStatus';
 import {
@@ -13,12 +13,12 @@ import {
 import { transformStringDateToUnixTimestamp } from 'src/utils/dateTime';
 import { toRawLsk } from '@token/fungible/utils/lsk';
 import { isEmpty } from 'src/utils/helpers';
-import { splitModuleAndAssetIds, joinModuleAndAssetIds } from './moduleAssets';
+import { splitModuleAndCommandIds, joinModuleAndCommandIds } from './moduleAssets';
 import { signTransactionByHW } from './hwManager';
 
 const {
   transfer, voteDelegate, registerDelegate, unlockToken, reclaimLSK, registerMultisignatureGroup,
-} = MODULE_ASSETS_NAME_ID_MAP;
+} = MODULE_COMMANDS_NAME_ID_MAP;
 
 const EMPTY_BUFFER = Buffer.from('');
 export const convertStringToBinary = value => Buffer.from(value, 'hex');
@@ -41,25 +41,25 @@ const convertBigIntToString = value => {
   return String(value);
 };
 
-const getDesktopTxAsset = (elementsAsset, moduleAssetId) => {
-  switch (moduleAssetId) {
+const getDesktopTxAsset = (elementsParams, moduleCommandID) => {
+  switch (moduleCommandID) {
     case transfer: {
       return {
-        data: elementsAsset.data,
-        amount: convertBigIntToString(elementsAsset.amount),
-        recipient: { address: getBase32AddressFromAddress(elementsAsset.recipientAddress) },
+        data: elementsParams.data,
+        amount: convertBigIntToString(elementsParams.amount),
+        recipient: { address: getBase32AddressFromAddress(elementsParams.recipientAddress) },
       };
     }
 
     case registerDelegate: {
       return {
-        username: elementsAsset.username,
+        username: elementsParams.username,
       };
     }
 
     case voteDelegate: {
       return {
-        votes: elementsAsset.votes.map(vote => ({
+        votes: elementsParams.votes.map(vote => ({
           amount: convertBigIntToString(vote.amount),
           delegateAddress: getBase32AddressFromAddress(vote.delegateAddress),
         })),
@@ -68,13 +68,13 @@ const getDesktopTxAsset = (elementsAsset, moduleAssetId) => {
 
     case reclaimLSK: {
       return {
-        amount: convertBigIntToString(elementsAsset.amount),
+        amount: convertBigIntToString(elementsParams.amount),
       };
     }
 
     case unlockToken: {
       return {
-        unlockObjects: elementsAsset.unlockObjects.map(unlockObject => ({
+        unlockObjects: elementsParams.unlockObjects.map(unlockObject => ({
           delegateAddress: getBase32AddressFromAddress(unlockObject.delegateAddress),
           amount: convertBigIntToString(unlockObject.amount),
           unvoteHeight: unlockObject.unvoteHeight,
@@ -84,9 +84,9 @@ const getDesktopTxAsset = (elementsAsset, moduleAssetId) => {
 
     case registerMultisignatureGroup: {
       return {
-        numberOfSignatures: elementsAsset.numberOfSignatures,
-        mandatoryKeys: elementsAsset.mandatoryKeys.map(convertBinaryToString),
-        optionalKeys: elementsAsset.optionalKeys.map(convertBinaryToString),
+        numberOfSignatures: elementsParams.numberOfSignatures,
+        mandatoryKeys: elementsParams.mandatoryKeys.map(convertBinaryToString),
+        optionalKeys: elementsParams.optionalKeys.map(convertBinaryToString),
       };
     }
 
@@ -95,27 +95,27 @@ const getDesktopTxAsset = (elementsAsset, moduleAssetId) => {
   }
 };
 
-const getElementsTxAsset = (desktopAsset, moduleAssetId) => {
-  switch (moduleAssetId) {
+const getElementsTxParams = (desktopParams, moduleCommandID) => {
+  switch (moduleCommandID) {
     case transfer: {
-      const binaryAddress = desktopAsset.recipient.address
-        ? getAddressFromBase32Address(desktopAsset.recipient.address) : EMPTY_BUFFER;
+      const binaryAddress = desktopParams.recipient.address
+        ? getAddressFromBase32Address(desktopParams.recipient.address) : EMPTY_BUFFER;
 
       return {
         recipientAddress: binaryAddress,
-        amount: BigInt(desktopAsset.amount),
-        data: desktopAsset.data,
+        amount: BigInt(desktopParams.amount),
+        data: desktopParams.data,
       };
     }
 
     case registerDelegate: {
       return {
-        username: desktopAsset.username,
+        username: desktopParams.username,
       };
     }
 
     case voteDelegate: {
-      const votes = desktopAsset.votes.map(vote => ({
+      const votes = desktopParams.votes.map(vote => ({
         amount: BigInt(vote.amount),
         delegateAddress: getAddressFromBase32Address(vote.delegateAddress),
       }));
@@ -124,7 +124,7 @@ const getElementsTxAsset = (desktopAsset, moduleAssetId) => {
 
     case unlockToken: {
       return {
-        unlockObjects: desktopAsset.unlockObjects.map(unlockObject => ({
+        unlockObjects: desktopParams.unlockObjects.map(unlockObject => ({
           amount: BigInt(unlockObject.amount),
           delegateAddress: getAddressFromBase32Address(unlockObject.delegateAddress),
           unvoteHeight: unlockObject.unvoteHeight,
@@ -134,15 +134,15 @@ const getElementsTxAsset = (desktopAsset, moduleAssetId) => {
 
     case reclaimLSK: {
       return {
-        amount: BigInt(desktopAsset.amount),
+        amount: BigInt(desktopParams.amount),
       };
     }
 
     case registerMultisignatureGroup: {
       return {
-        numberOfSignatures: Number(desktopAsset.numberOfSignatures),
-        mandatoryKeys: desktopAsset.mandatoryKeys.map(convertStringToBinary),
-        optionalKeys: desktopAsset.optionalKeys.map(convertStringToBinary),
+        numberOfSignatures: Number(desktopParams.numberOfSignatures),
+        mandatoryKeys: desktopParams.mandatoryKeys.map(convertStringToBinary),
+        optionalKeys: desktopParams.optionalKeys.map(convertStringToBinary),
       };
     }
 
@@ -151,17 +151,17 @@ const getElementsTxAsset = (desktopAsset, moduleAssetId) => {
   }
 };
 
-const getElementsAssetFromJSON = (JSONAsset, moduleAssetId) => {
-  switch (moduleAssetId) {
+const getElementsParamsFromJSON = (JSONParams, moduleCommandID) => {
+  switch (moduleCommandID) {
     case transfer:
       return {
-        recipientAddress: convertStringToBinary(JSONAsset.recipientAddress),
-        amount: BigInt(convertBigIntToString(JSONAsset.amount)),
-        data: JSONAsset.data,
+        recipientAddress: convertStringToBinary(JSONParams.recipientAddress),
+        amount: BigInt(convertBigIntToString(JSONParams.amount)),
+        data: JSONParams.data,
       };
 
     case voteDelegate: {
-      const votes = JSONAsset.votes.map(vote => ({
+      const votes = JSONParams.votes.map(vote => ({
         amount: BigInt(convertBigIntToString(vote.amount)),
         delegateAddress: convertStringToBinary(vote.delegateAddress),
       }));
@@ -170,7 +170,7 @@ const getElementsAssetFromJSON = (JSONAsset, moduleAssetId) => {
 
     case unlockToken: {
       return {
-        unlockObjects: JSONAsset.unlockObjects.map(unlockObject => ({
+        unlockObjects: JSONParams.unlockObjects.map(unlockObject => ({
           amount: BigInt(convertBigIntToString(unlockObject.amount)),
           delegateAddress: convertStringToBinary(unlockObject.delegateAddress),
           unvoteHeight: unlockObject.unvoteHeight,
@@ -180,20 +180,20 @@ const getElementsAssetFromJSON = (JSONAsset, moduleAssetId) => {
 
     case reclaimLSK: {
       return {
-        amount: BigInt((convertBigIntToString(JSONAsset.amount))),
+        amount: BigInt((convertBigIntToString(JSONParams.amount))),
       };
     }
 
     case registerMultisignatureGroup: {
       return {
-        numberOfSignatures: Number(JSONAsset.numberOfSignatures),
-        mandatoryKeys: JSONAsset.mandatoryKeys.map(convertStringToBinary),
-        optionalKeys: JSONAsset.optionalKeys.map(convertStringToBinary),
+        numberOfSignatures: Number(JSONParams.numberOfSignatures),
+        mandatoryKeys: JSONParams.mandatoryKeys.map(convertStringToBinary),
+        optionalKeys: JSONParams.optionalKeys.map(convertStringToBinary),
       };
     }
 
     case registerDelegate:
-      return JSONAsset;
+      return JSONParams;
 
     default:
       return Error('Unknown transaction');
@@ -208,12 +208,12 @@ const getElementsAssetFromJSON = (JSONAsset, moduleAssetId) => {
  * @returns the transformed transaction
  */
 const elementTxToDesktopTx = ({
-  moduleID, assetID, id, asset, nonce, fee, senderPublicKey, signatures,
+  moduleID, commandID, id, params, nonce, fee, senderPublicKey, signatures,
 }) => {
-  const moduleAssetId = joinModuleAndAssetIds({ moduleID, assetID });
+  const moduleCommandID = joinModuleAndCommandIds({ moduleID, commandID });
   const senderAddress = extractAddressFromPublicKey(senderPublicKey);
   const transformedTransaction = {
-    moduleAssetId,
+    moduleCommandID,
     id: id ? convertBinaryToString(id) : '',
     fee: convertBigIntToString(fee),
     nonce: convertBigIntToString(nonce),
@@ -224,7 +224,7 @@ const elementTxToDesktopTx = ({
     },
   };
 
-  transformedTransaction.asset = getDesktopTxAsset(asset, moduleAssetId);
+  transformedTransaction.params = getDesktopTxAsset(params, moduleCommandID);
   return transformedTransaction;
 };
 
@@ -232,32 +232,32 @@ const elementTxToDesktopTx = ({
  * creates a transaction object to be used with the api client from
  * lisk elements
  * @param {object} tx - the transaction data
- * @param {string} moduleAssetId - moduleAssetId
+ * @param {string} moduleCommandID - moduleCommandID
  * @returns the transaction object
  */
-const desktopTxToElementsTx = (tx, moduleAssetId) => {
-  const [moduleID, assetID] = splitModuleAndAssetIds(moduleAssetId);
+const desktopTxToElementsTx = (tx, moduleCommandID) => {
+  const [moduleID, commandID] = splitModuleAndCommandIds(moduleCommandID);
   const {
-    sender, nonce, signatures = [], fee = 0, asset,
+    sender, nonce, signatures = [], fee = 0, params,
   } = tx;
 
   const transaction = {
     moduleID,
-    assetID,
+    commandID,
     senderPublicKey: convertStringToBinary(sender.publicKey),
     nonce: BigInt(nonce),
     fee: BigInt(fee),
     signatures: signatures.map(convertStringToBinary),
   };
 
-  transaction.asset = getElementsTxAsset(asset, moduleAssetId);
+  transaction.params = getElementsTxParams(params, moduleCommandID);
   return transaction;
 };
 
 const convertTxJSONToBinary = (tx) => {
   const transaction = {
     moduleID: tx.moduleID,
-    assetID: tx.assetID,
+    commandID: tx.commandID,
     senderPublicKey: convertStringToBinary(tx.senderPublicKey),
     fee: BigInt(convertBigIntToString(tx.fee)),
     nonce: BigInt(convertBigIntToString(tx.nonce)),
@@ -265,7 +265,7 @@ const convertTxJSONToBinary = (tx) => {
     id: convertStringToBinary(tx.id),
   };
 
-  transaction.asset = getElementsAssetFromJSON(tx.asset, joinModuleAndAssetIds(tx));
+  transaction.params = getElementsParamsFromJSON(tx.params, joinModuleAndCommandIds(tx));
   return transaction;
 };
 
@@ -310,7 +310,7 @@ const transactionToJSON = (transaction) => {
 };
 
 const containsTransactionType = (txs = [], type) =>
-  txs.some(tx => tx.moduleAssetId === type);
+  txs.some(tx => tx.moduleCommandID === type);
 
 /**
  * Adapts transaction filter params to match transactions API method
@@ -362,17 +362,17 @@ const normalizeTransactionParams = params => Object.keys(params)
  * @param {Object} transaction The transaction object
  * @returns {String} Amount in Beddows/Satoshi
  */
-const getTxAmount = ({ moduleAssetId, asset }) => {
-  if (moduleAssetId === transfer || moduleAssetId === reclaimLSK) {
-    return asset.amount;
+const getTxAmount = ({ moduleCommandID, params }) => {
+  if (moduleCommandID === transfer || moduleCommandID === reclaimLSK) {
+    return params.amount;
   }
 
-  if (moduleAssetId === unlockToken) {
-    return asset.unlockObjects.reduce((sum, unlockObject) =>
+  if (moduleCommandID === unlockToken) {
+    return params.unlockObjects.reduce((sum, unlockObject) =>
       sum + parseInt(unlockObject.amount, 10), 0);
   }
-  if (moduleAssetId === voteDelegate) {
-    return asset.votes.reduce((sum, vote) =>
+  if (moduleCommandID === voteDelegate) {
+    return params.votes.reduce((sum, vote) =>
       sum + Number(vote.amount), 0);
   }
 
@@ -423,12 +423,12 @@ export const removeExcessSignatures = (signatures, mandatoryKeysNo, hasSenderSig
  * @returns {Promise} returns transaction id for a given transaction object
  */
 export const computeTransactionId = ({ transaction, network }) => {
-  const moduleAssetId = joinModuleAndAssetIds({
+  const moduleCommandID = joinModuleAndCommandIds({
     moduleID: transaction.moduleID,
-    assetID: transaction.assetID,
+    commandID: transaction.commandID,
   });
-  const schema = network.networks.LSK.moduleAssetSchemas[moduleAssetId];
-  const transactionBytes = transactions.getBytes(schema, transaction);
+  const schema = network.networks.LSK.moduleCommandSchemas[moduleCommandID];
+  const transactionBytes = transactions.getBytes(transaction, schema);
   const id = cryptography.utils.hash(transactionBytes);
 
   return id;
@@ -442,7 +442,6 @@ const signMultisigUsingPrivateKey = (
    * Use Lisk Element to Sign with Private Key
    */
   const signedTransaction = transactions.signMultiSignatureTransactionWithPrivateKey(
-    schema,
     transaction,
     networkIdentifier,
     Buffer.from(privateKey, 'hex'),
@@ -450,6 +449,7 @@ const signMultisigUsingPrivateKey = (
       optionalKeys: keys.optionalKeys.map(convertStringToBinary),
       mandatoryKeys: keys.mandatoryKeys.map(convertStringToBinary),
     },
+    schema,
     isMultiSignatureRegistration,
   );
 
@@ -484,20 +484,22 @@ const signMultisigUsingPrivateKey = (
   return signedTransaction;
 };
 
-const signUsingPrivateKey = (schema, transaction, networkIdentifier, privateKey) =>
-  transactions.signTransactionWithPrivateKey(
-    schema,
+const signUsingPrivateKey = (schema, transaction, networkIdentifier, privateKey) => {
+  const res = transactions.signTransactionWithPrivateKey(
     transaction,
     networkIdentifier,
     Buffer.from(privateKey, 'hex'),
+    schema,
   );
+  return res;
+};
 
 // eslint-disable-next-line max-statements
 const signUsingHW = async (
   schema, transaction, wallet, networkIdentifier, network, keys, rawTransaction,
   isMultiSignatureRegistration,
 ) => {
-  const signingBytes = transactions.getSigningBytes(schema, transaction);
+  const signingBytes = transactions.getSigningBytes(transaction, schema);
   const [error, signedTransaction] = await to(signTransactionByHW(
     wallet,
     networkIdentifier,
@@ -537,11 +539,11 @@ const signUsingHW = async (
 export const sign = async (
   wallet, schema, transaction, network, networkIdentifier,
   isMultisignature, isMultiSignatureRegistration, keys, publicKey,
-  moduleAssetId, rawTransaction, privateKey,
+  moduleCommandID, rawTransaction, privateKey,
 ) => {
   if (isMultiSignatureRegistration) {
-    keys.optionalKeys = transaction.asset.optionalKeys;
-    keys.mandatoryKeys = transaction.asset.mandatoryKeys;
+    keys.optionalKeys = transaction.params.optionalKeys;
+    keys.mandatoryKeys = transaction.params.mandatoryKeys;
   }
   // @todo rawTransaction is changed
   if (!isEmpty(wallet.hwInfo)) {
@@ -557,6 +559,7 @@ export const sign = async (
       isMultiSignatureRegistration, publicKey, rawTransaction,
     );
   }
+
   return signUsingPrivateKey(schema, transaction, networkIdentifier, privateKey);
 };
 
@@ -586,8 +589,8 @@ const signMultisigTransaction = async (
    * Define keys.
    * Since the sender is different, the keys are defined based on that
    */
-  const isGroupRegistration = transaction.moduleAssetId === registerMultisignatureGroup;
-  const schema = network.networks.LSK.moduleAssetSchemas[transaction.moduleAssetId];
+  const isGroupRegistration = transaction.moduleCommandID === registerMultisignatureGroup;
+  const schema = network.networks.LSK.moduleCommandSchemas[transaction.moduleCommandID];
   const networkIdentifier = Buffer.from(network.networks.LSK.networkIdentifier, 'hex');
 
   const { mandatoryKeys, optionalKeys } = getKeys({
@@ -601,7 +604,7 @@ const signMultisigTransaction = async (
   /**
    * To do so, we have to flatten, then create txObject
    */
-  const transactionObject = desktopTxToElementsTx(transaction, transaction.moduleAssetId);
+  const transactionObject = desktopTxToElementsTx(transaction, transaction.moduleCommandID);
 
   /**
    * remove excess optional signatures
@@ -616,7 +619,7 @@ const signMultisigTransaction = async (
     const result = await sign(
       account, schema, transactionObject, network, networkIdentifier,
       !!senderAccount.data, isGroupRegistration, keys, privateKey ?? account.summary.publicKey,
-      transaction.moduleAssetId, transaction, publicKey ?? account.summary.privateKey,
+      transaction.moduleCommandID, transaction, publicKey ?? account.summary.privateKey,
     );
     return [result];
   } catch (e) {
@@ -635,8 +638,8 @@ const signMultisigTransaction = async (
  * @returns {number} the number of signatures required
  */
 const getNumberOfSignatures = (account, transaction) => {
-  if (transaction?.moduleAssetId === registerMultisignatureGroup) {
-    return transaction.asset.optionalKeys.length + transaction.asset.mandatoryKeys.length + 1;
+  if (transaction?.moduleCommandID === registerMultisignatureGroup) {
+    return transaction.params.optionalKeys.length + transaction.params.mandatoryKeys.length + 1;
   }
   if (account?.summary?.isMultisignature) {
     return account.keys.numberOfSignatures;

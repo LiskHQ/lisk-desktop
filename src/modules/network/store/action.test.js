@@ -24,8 +24,8 @@ global.fetch = jest.fn(() =>
   Promise.resolve({
     json: () => Promise.resolve({
       data: [{
-        moduleAssetId: '5:1',
-        schema: state.network.networks.LSK.moduleAssetSchemas['5:1'],
+        moduleCommandID: '5:1',
+        schema: state.network.networks.LSK.moduleCommandSchemas['5:1'],
       }],
       meta: { total: 0 },
     }),

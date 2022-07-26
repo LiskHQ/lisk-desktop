@@ -1,6 +1,6 @@
 import React from 'react';
 import { mount } from 'enzyme';
-import { MODULE_ASSETS_NAME_ID_MAP } from '@transaction/configuration/moduleAssets';
+import { MODULE_COMMANDS_NAME_ID_MAP } from '@transaction/configuration/moduleAssets';
 import wallets from '@tests/constants/wallets';
 import TxSummarizer from '.';
 
@@ -22,12 +22,12 @@ describe('TxSummarizer', () => {
       },
       t: key => key,
       rawTx: {
-        moduleAssetId: MODULE_ASSETS_NAME_ID_MAP.transfer,
+        moduleCommandID: MODULE_COMMANDS_NAME_ID_MAP.transfer,
         sender: { publicKey: wallets.genesis.summary.publicKey },
         fee: 2000000,
         nonce: 0,
         signatures: [],
-        asset: {
+        params: {
           recipient: { address: wallets.genesis.summary.address },
           amount: 100000000,
           data: 'test',
@@ -101,8 +101,8 @@ describe('TxSummarizer', () => {
       ...props,
       rawTx: {
         ...props.rawTx,
-        moduleAssetId: MODULE_ASSETS_NAME_ID_MAP.registerMultisignatureGroup,
-        asset: {
+        moduleCommandID: MODULE_COMMANDS_NAME_ID_MAP.registerMultisignatureGroup,
+        params: {
           mandatoryKeys: [wallets.genesis.summary.publicKey],
           optionalKeys: [wallets.delegate.summary.publicKey, wallets.multiSig.summary.publicKey],
           numberOfSignatures: 2,

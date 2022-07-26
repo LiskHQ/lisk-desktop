@@ -1,3 +1,5 @@
+import { cryptography } from '@liskhq/lisk-client';
+
 import loginTypes from '@auth/const/loginTypes';
 import * as hwManager from '@transaction/utils/hwManager';
 import { getState } from '@tests/fixtures/transactions';
@@ -43,12 +45,12 @@ describe('actions: transactions', () => {
       // Arrange
       const data = {
         fee: 141000,
-        moduleAssetId: '2:0',
+        moduleCommandID: '2:0',
         sender: {
           publicKey: wallets.genesis.summary.publicKey,
         },
         nonce: '2',
-        asset: {
+        params: {
           recipient: { address: wallets.genesis.summary.address },
           amount: 112300000,
           data: 'test',
@@ -56,11 +58,11 @@ describe('actions: transactions', () => {
       };
       const tx = {
         fee: BigInt(141000),
-        moduleID: 2,
-        assetID: 0,
+        moduleID: cryptography.utils.intToBuffer(2, 4),
+        commandID: cryptography.utils.intToBuffer(0, 4),
         senderPublicKey: convertStringToBinary(wallets.genesis.summary.publicKey),
         nonce: BigInt(2),
-        asset: {
+        params: {
           recipientAddress: getAddressFromBase32Address(wallets.genesis.summary.address),
           amount: BigInt(112300000),
           data: 'test',
@@ -85,12 +87,12 @@ describe('actions: transactions', () => {
       // Arrange
       const data = {
         fee: NaN,
-        moduleAssetId: '2:0',
+        moduleCommandID: '2:0',
         sender: {
           publicKey: wallets.genesis.summary.publicKey,
         },
         nonce: '2',
-        asset: {
+        params: {
           recipient: { address: wallets.genesis.summary.address },
           amount: 112300000,
           data: 'test',
