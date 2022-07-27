@@ -23,17 +23,10 @@ const NodeComponent = ({ node }) => (
 const SelectNode = ({ location }) => {
   const { t } = useTranslation();
   const chainId = parseSearchParams(location.search).chainId;
-  const { applications, getApplicationByChainId } = useApplicationManagement();
-  // figure out how to deal with applications manage data and explore data
-  // The data for the applications manage list is different from the data
-  // from applications explore list. This enables the user to add an application
-  // and have it show up on the manage list. However, getApplicationByChainId
-  // only gets applications from the applications manage list and therefore
-  // can't get the application details of an application in the manage list
-  console.log({ applications, chainId });
+  const { getApplicationByChainId } = useApplicationManagement();
   const application = getApplicationByChainId(chainId);
-  // console.log({ application });
   const chainLogo = null;
+
   return (
     <Dialog hasBack hasClose className={styles.container}>
       <Box className={styles.wrapper}>
