@@ -2,7 +2,7 @@ import React from 'react';
 import {
   render, fireEvent, screen,
 } from '@testing-library/react';
-import BlockchainApplicationSearch from './BlockchainApplicationSearch';
+import AddApplicationSearch from './AddApplicationSearch';
 
 jest.useFakeTimers();
 const mockSearchApplication = jest.fn();
@@ -12,7 +12,7 @@ beforeEach(() => {
   mockSearchApplication.mockClear();
 });
 
-describe('BlockchainApplicationSearch', () => {
+describe('AddApplicationSearch', () => {
   it('searches application by name', () => {
     const props = {
       searchValue: '',
@@ -22,7 +22,7 @@ describe('BlockchainApplicationSearch', () => {
       isLoading: false,
       onSearchApplications: mockSearchApplication,
     };
-    render(<BlockchainApplicationSearch {...props} />);
+    render(<AddApplicationSearch {...props} />);
     fireEvent.change(screen.getByPlaceholderText('Search by name or application URL'), { target: { value: 'test' } });
     jest.runAllTimers();
     expect(mockSearchApplication).toHaveBeenCalledTimes(1);
@@ -38,7 +38,7 @@ describe('BlockchainApplicationSearch', () => {
       isLoading: false,
       onSearchApplications: mockSearchApplication,
     };
-    const { rerender } = render(<BlockchainApplicationSearch {...props} />);
+    const { rerender } = render(<AddApplicationSearch {...props} />);
     fireEvent.change(screen.getByPlaceholderText('Search by name or application URL'), { target: { value: searchUrl } });
     expect(mockSearchApplication).toHaveBeenCalledTimes(1);
     expect(mockSearchApplication).toHaveBeenCalledWith(searchUrl);
@@ -48,14 +48,14 @@ describe('BlockchainApplicationSearch', () => {
       searchValue: searchUrl,
       isLoading: true,
     };
-    rerender(<BlockchainApplicationSearch {...loadingProps} />);
+    rerender(<AddApplicationSearch {...loadingProps} />);
     expect(screen.getByTestId('spinner')).toBeTruthy();
     const postLoadingProps = {
       ...loadingProps,
       isLoading: false,
       urlStatus: 'ok',
     };
-    rerender(<BlockchainApplicationSearch {...postLoadingProps} />);
+    rerender(<AddApplicationSearch {...postLoadingProps} />);
     expect(screen.getByAltText('okIcon')).toBeTruthy();
   });
 });

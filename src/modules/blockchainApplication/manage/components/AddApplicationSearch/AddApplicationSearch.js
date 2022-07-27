@@ -3,9 +3,9 @@ import { useTranslation } from 'react-i18next';
 import grid from 'flexboxgrid/dist/flexboxgrid.css';
 import Input from '@theme/Input';
 import Icon from '@theme/Icon';
-import styles from './BlockchainApplicationSearch.css';
+import styles from './AddApplicationSearch.css';
 
-const BlockchainApplicationSearch = ({
+const AddApplicationSearch = ({
   searchValue,
   isURL,
   urlStatus,
@@ -33,4 +33,4 @@ const BlockchainApplicationSearch = ({
   );
 };
 
-export default BlockchainApplicationSearch;
+export default AddApplicationSearch;

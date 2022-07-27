@@ -228,11 +228,11 @@ export const modals = {
     isPrivate: false,
     forbiddenTokens: [],
   },
-  blockChainApplicationAddList: {
+  addApplicationList: {
     isPrivate: false,
     forbiddenTokens: [],
   },
-  blockChainApplicationAddSuccess: {
+  addApplicationSuccess: {
     isPrivate: false,
     forbiddenTokens: [],
   },

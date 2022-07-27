@@ -4,8 +4,8 @@ import withData from 'src/utils/withData';
 // TODO: This needs to be reinstated upon connection to latest service APIs
 import mockBlockchainApplications from '@tests/fixtures/blockchainApplicationsExplore';
 import withFilters from 'src/utils/withFilters';
-import { /* getApplications */ getFilteredOffChainApplications } from '../../api';
-import BlockchainApplicationAddList from './BlockchainApplicationAddList';
+import { /* getApplications */ getFilteredOffChainApplications } from '../../../explore/api';
+import AddApplicationList from './AddApplicationList';
 
 const defaultUrlSearchParams = { isDefault: false, search: '' };
 
@@ -36,4 +36,4 @@ const apis = {
 export default compose(
   withData(apis),
   withFilters('liskApplications', defaultUrlSearchParams),
-)(BlockchainApplicationAddList);
+)(AddApplicationList);

@@ -1,6 +1,6 @@
 import { fireEvent, screen } from '@testing-library/react';
 import { renderWithRouter } from 'src/utils/testHelpers';
-import BlockchainApplicationAddSuccess from './BlockchainApplicationAddSuccess';
+import AddApplicationSuccess from './AddApplicationSuccess';
 
 const props = {
   history: {
@@ -8,16 +8,16 @@ const props = {
   },
 };
 
-describe('BlockchainApplicationAddSuccess', () => {
+describe('AddApplicationSuccess', () => {
   it('displays properly', () => {
-    renderWithRouter(BlockchainApplicationAddSuccess, props);
+    renderWithRouter(AddApplicationSuccess, props);
 
     expect(screen.getByText('Perfect! Application has now been added')).toBeTruthy();
     expect(screen.getByText('You can see a list of your applications on the dashboard.')).toBeTruthy();
   });
 
   it('should reroute to the dashboard on success', () => {
-    renderWithRouter(BlockchainApplicationAddSuccess, props);
+    renderWithRouter(AddApplicationSuccess, props);
     fireEvent.click(screen.getByRole('button'));
 
     expect(props.history.push).toHaveBeenCalledTimes(1);

@@ -53,6 +53,6 @@ describe('ApplicationManagementList', () => {
 
   it('should navigate to the add blockchain application flow', () => {
     fireEvent.click(screen.getByText('Add application'));
-    expect(addSearchParamsToUrl).toHaveBeenCalledWith(props.history, { modal: 'blockChainApplicationAddList' });
+    expect(addSearchParamsToUrl).toHaveBeenCalledWith(props.history, { modal: 'addApplicationList' });
   });
 });

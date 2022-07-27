@@ -6,12 +6,12 @@ import BoxHeader from '@theme/box/header';
 import BoxContent from '@theme/box/content';
 import Table from '@theme/table';
 import { useSearchApplications } from '../../hooks/useSearchApplications';
-import BlockchainApplicationSearch from '../BlockchainApplicationSearch/BlockchainApplicationSearch';
-import BlockchainApplicationAddRow from '../BlockchainApplicationAddRow/BlockchainApplicationAddRow';
-import BlockchainApplicationSkeleton from '../BlockchainApplicationSkeleton';
-import styles from './BlockchainApplicationAddList.css';
+import AddApplicationSearch from '../AddApplicationSearch/AddApplicationSearch';
+import AddApplicationRow from '../AddApplicationRow/AddApplicationRow';
+import BlockchainApplicationSkeleton from '../../../explore/components/BlockchainApplicationSkeleton';
+import styles from './AddApplicationList.css';
 
-const BlockchainApplicationAddList = ({
+const AddApplicationList = ({
   liskApplications,
   externalApplications,
   filters,
@@ -41,7 +41,7 @@ const BlockchainApplicationAddList = ({
       <Box className={styles.wrapper}>
         <BoxHeader className={`${styles.header} add-application-header`}>
           <div>Add Application</div>
-          <BlockchainApplicationSearch
+          <AddApplicationSearch
             {...searchResponse}
           />
         </BoxHeader>
@@ -50,7 +50,7 @@ const BlockchainApplicationAddList = ({
             data={dataList}
             isLoading={liskApplications.isLoading}
             loadingState={BlockchainApplicationSkeleton}
-            row={BlockchainApplicationAddRow}
+            row={AddApplicationRow}
             loadData={handleLoadMore}
             canLoadMore={canLoadMore}
             error={liskApplications.error}
@@ -65,4 +65,4 @@ const BlockchainApplicationAddList = ({
   );
 };
 
-export default BlockchainApplicationAddList;
+export default AddApplicationList;
