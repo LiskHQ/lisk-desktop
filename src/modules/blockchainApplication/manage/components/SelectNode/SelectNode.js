@@ -1,7 +1,8 @@
 import React from 'react';
+import { useDispatch } from 'react-redux';
 import { useTranslation } from 'react-i18next';
 import grid from 'flexboxgrid/dist/flexboxgrid.css';
-import { parseSearchParams } from 'src/utils/searchParams';
+import { parseSearchParams, removeSearchParamsFromUrl } from 'src/utils/searchParams';
 import Dialog from 'src/theme/dialog/dialog';
 import Box from 'src/theme/box';
 import BoxHeader from 'src/theme/box/header';
@@ -9,10 +10,11 @@ import BoxContent from 'src/theme/box/content';
 import Icon from 'src/theme/Icon';
 import liskLogo from '../../../../../../setup/react/assets/images/LISK.png';
 import useApplicationManagement from '../../hooks/useApplicationManagement';
+import useCurrentNode from '../../hooks/useCurrentNode';
 import styles from './SelectNode.css';
 
-const NodeComponent = ({ node }) => (
-  <div className={grid['col-xs-6']}>
+const NodeComponent = ({ node, selectAppNode }) => (
+  <div className={grid['col-xs-6']} onClick={() => selectAppNode(node.rest)}>
     <div className={styles.node}>
       {node.rest}
       <Icon name="arrowRightActive" color="red" />
@@ -20,12 +22,19 @@ const NodeComponent = ({ node }) => (
   </div>
 );
 
-const SelectNode = ({ location }) => {
+const SelectNode = ({ history, location }) => {
+  const dispatch = useDispatch();
   const { t } = useTranslation();
   const chainId = parseSearchParams(location.search).chainId;
   const { getApplicationByChainId } = useApplicationManagement();
+  const { setCurrentNode } = useCurrentNode();
   const application = getApplicationByChainId(chainId);
   const chainLogo = null;
+
+  const selectAppNode = (node) => {
+    dispatch(setCurrentNode(node));
+    removeSearchParamsFromUrl(history, ['modal', 'chainId']);
+  };
 
   return (
     <Dialog hasBack hasClose className={styles.container}>
@@ -42,7 +51,7 @@ const SelectNode = ({ location }) => {
           <div className={styles.contentHeader}>{t('Choose application URL')}</div>
           <div className={grid.row}>
             {application.apis.map((node) => (
-              <NodeComponent node={node} key={node.rpc} />
+              <NodeComponent node={node} key={node.rpc} selectAppNode={selectAppNode} />
             ))}
           </div>
         </BoxContent>

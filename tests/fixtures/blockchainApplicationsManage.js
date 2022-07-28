@@ -45,7 +45,7 @@ const blockchainApplicationsManage = [
     state: 'active',
     apis: [
       { rest: 'https://service.kalipo.com', rpc: 'wss://service.kalipo.com' },
-      { rest: 'https://testnet.kalipo.com', rpc: 'wss://testnet.kalipo.com' }
+      { rest: 'https://testnet.kalipo.com', rpc: 'wss://testnet.kalipo.com' },
     ],
     address: 'lsk24cd35u4jdq8szo3pnsqe5gb5wrnazyqqqg5eu',
     lastCertificateHeight: 10000,
