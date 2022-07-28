@@ -1,5 +1,4 @@
 import React from 'react';
-import { useDispatch } from 'react-redux';
 import { useTranslation } from 'react-i18next';
 import grid from 'flexboxgrid/dist/flexboxgrid.css';
 import { parseSearchParams, removeSearchParamsFromUrl } from 'src/utils/searchParams';
@@ -14,7 +13,7 @@ import useCurrentNode from '../../hooks/useCurrentNode';
 import styles from './SelectNode.css';
 
 const NodeComponent = ({ node, selectAppNode }) => (
-  <div className={grid['col-xs-6']} onClick={() => selectAppNode(node.rest)}>
+  <div className={grid['col-xs-6']} onClick={() => selectAppNode(node)} data-testid="application-node-row">
     <div className={styles.node}>
       {node.rest}
       <Icon name="arrowRightActive" color="red" />
@@ -23,7 +22,6 @@ const NodeComponent = ({ node, selectAppNode }) => (
 );
 
 const SelectNode = ({ history, location }) => {
-  const dispatch = useDispatch();
   const { t } = useTranslation();
   const chainId = parseSearchParams(location.search).chainId;
   const { getApplicationByChainId } = useApplicationManagement();
@@ -32,7 +30,7 @@ const SelectNode = ({ history, location }) => {
   const chainLogo = null;
 
   const selectAppNode = (node) => {
-    dispatch(setCurrentNode(node));
+    setCurrentNode(node);
     removeSearchParamsFromUrl(history, ['modal', 'chainId']);
   };
 

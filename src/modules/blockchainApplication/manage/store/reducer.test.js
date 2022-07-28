@@ -1,7 +1,9 @@
 import mockApplicationsManage, { applicationsMap } from '@tests/fixtures/blockchainApplicationsManage';
 import mockApplicationsExplore from '@tests/fixtures/blockchainApplicationsExplore';
 import actionTypes from './actionTypes';
-import { pins, applications, current } from './reducer';
+import {
+  pins, applications, current, node,
+} from './reducer';
 
 describe('BlockchainApplication reducer', () => {
   describe('pins', () => {
@@ -61,6 +63,16 @@ describe('BlockchainApplication reducer', () => {
         application: mockApplicationsManage[0],
       };
       expect(current({}, actionData)).toEqual(mockApplicationsManage[0]);
+    });
+  });
+
+  describe('node', () => {
+    it('Should return application node if setApplicationNode action type is triggered', async () => {
+      const actionData = {
+        type: actionTypes.setApplicationNode,
+        nodeInfo: mockApplicationsManage[0].apis[0],
+      };
+      expect(node({}, actionData)).toEqual(mockApplicationsManage[0].apis[0]);
     });
   });
 });

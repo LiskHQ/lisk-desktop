@@ -12,7 +12,7 @@ const initialState = {
   pins: [],
   applications: {},
   current: null,
-  node: '',
+  node: {},
 };
 
 /**

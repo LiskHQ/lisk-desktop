@@ -14,7 +14,7 @@ export function useCurrentApplication() {
     (application) => {
       dispatch(setCurrentApplication(application));
       // Set default node
-      dispatch(setCurrentNode(application.apis[0].rest));
+      setCurrentNode(application.apis[0]);
     },
     [],
   );
