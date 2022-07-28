@@ -4,7 +4,7 @@ import { MODULE_COMMANDS_NAME_ID_MAP } from '@transaction/configuration/moduleAs
 import wallets from '@tests/constants/wallets';
 import TxSummarizer from '.';
 
-describe('TxSummarizer', () => {
+describe.skip('TxSummarizer', () => {
   let props;
 
   beforeEach(() => {

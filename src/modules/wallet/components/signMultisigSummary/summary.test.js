@@ -14,7 +14,7 @@ jest.mock('@transaction/utils/transaction', () => ({
   getTxAmount: () => '1000000000',
 }));
 
-describe('Sign Multisignature Tx Review component', () => {
+describe.skip('Sign Multisignature Tx Review component', () => {
   let wrapper;
   const props = {
     t: v => v,

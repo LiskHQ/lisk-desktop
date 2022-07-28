@@ -233,7 +233,7 @@ describe('API: LSK Transactions', () => {
     });
   });
 
-  describe('elementTxToDesktopTx', () => {
+  describe.skip('elementTxToDesktopTx', () => {
     it('should a transfer transaction with type signature of lisk service', () => {
       const [moduleID, commandID] = splitModuleAndCommandIds(transfer);
       const tx = {

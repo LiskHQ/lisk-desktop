@@ -29,7 +29,7 @@ const EnterPasswordForm = ({ encryptedAccount, onEnterPasswordSuccess }) => {
         recoveryPhrase,
         encryptedAccount,
       });
-    } catch {
+    } catch (e) {
       const errorMessage = t('Unable to decrypt account. Please check your password');
       return setFeedbackError(errorMessage);
     }

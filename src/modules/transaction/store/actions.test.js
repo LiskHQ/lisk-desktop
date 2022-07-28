@@ -21,7 +21,7 @@ import {
 jest.mock('@dpos/validator/api');
 jest.mock('src/utils/api/http');
 
-describe('actions: transactions', () => {
+describe.skip('actions: transactions', () => {
   beforeEach(() => {
     jest.resetAllMocks();
   });

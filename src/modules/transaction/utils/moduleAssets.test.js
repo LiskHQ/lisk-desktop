@@ -1,3 +1,5 @@
+import { cryptography } from '@liskhq/lisk-client';
+
 import { MODULE_COMMANDS_NAME_ID_MAP } from '@transaction/configuration/moduleAssets';
 import {
   getModuleCommandSenderLabel,
@@ -36,8 +38,8 @@ describe('Utils: moduleAssets', () => {
       const moduleCommandID = '5:1';
       const [moduleID, commandID] = splitModuleAndCommandIds(moduleCommandID);
 
-      expect(moduleID).toEqual(5);
-      expect(commandID).toEqual(1);
+      expect(moduleID).toEqual(cryptography.utils.intToBuffer(5, 4));
+      expect(commandID).toEqual(cryptography.utils.intToBuffer(1, 4));
     });
   });
 

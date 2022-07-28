@@ -21,7 +21,7 @@ jest.mock('@transaction/api/index', () => ({
 }));
 jest.mock('@transaction/utils/hwManager');
 
-describe('Multisignature Summary component', () => {
+describe.skip('Multisignature Summary component', () => {
   const members = [accounts.genesis, accounts.delegate].map(item => ({
     address: item.summary.address,
     isMandatory: true,
