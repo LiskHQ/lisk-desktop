@@ -2,12 +2,13 @@
 
 .container {
   display: flex;
-  padding: 20px;
+  padding: 25px;
   flex-wrap: wrap;
 
   & h5 {
     font-family: var(--heading-font);
     flex-basis: 100%;
+    font-weight: 600;
     margin-top: 0;
     margin-bottom: 30px;
     color: var(--color-maastricht-blue);
@@ -18,13 +19,17 @@
     display: flex;
     flex-direction: column;
     flex-basis: calc(50% - 20px);
-    justify-content: space-between;
   }
 
   & .label {
     @mixin contentLarge;
 
-    color: var(--color-slate-gray);
+    color: var(--color-zodiac-blue);
+  }
+
+  & .label ~ p {
+    font-weight: 400;
+    font-size: 13px;
   }
 
   & .footerContent {
@@ -59,14 +64,14 @@
     align-items: flex-start;
     display: flex;
     flex-direction: column;
-    margin-top: 24px;
+    margin-top: 16px;
   }
 
   & .fieldLabel {
     @mixin contentNormal normal;
 
-    color: var(--color-maastricht-blue);
-    margin-bottom: 10px;
+    color: var(--color-zodiac-blue);
+    margin-bottom: 8px;
   }
 
   & .feedback {
@@ -163,6 +168,7 @@
 
     & button {
       width: 100%;
+      border-radius: 10px;
     }
   }
 }
@@ -170,7 +176,7 @@
 .qrSection {
   width: 300px;
   display: block;
-  margin-left: 40px;
+  margin-left: 20px;
 
   &.hide {
     display: none;
@@ -186,11 +192,13 @@
     flex-grow: 1;
     margin: 24px 0 0;
     width: 100%;
-    width: 236px;
-    height: 236px;
+    width: 306px;
+    max-height: 306px;
 
     & canvas {
       box-shadow: 0 0 1px 0 var(--color-strong-white);
+      width: 80% !important;
+      height: 80% !important;
     }
   }
 }
@@ -229,4 +237,36 @@
 .feedback:not(:empty) {
   opacity: 1;
   transition: opacity var(--animation-speed-fast) linear var(--animation-delay-standard);
+}
+
+.accountWraper {
+  width: 100%;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  padding: 0px;
+  border: none;
+  border-radius: 0px;
+  justify-content: flex-start;
+  color: var(--color-maastricht-blue);
+  transition: opacity 100ms linear;
+  cursor: pointer;
+
+  & > div:first-child ~ div {
+    margin-left: 10px;
+    flex: 1;
+  }
+
+  & > div:first-child ~ div > p {
+    margin-top: 9px;
+    margin-bottom: 0px;
+    color: var(--color-slate-gray);
+    font-size: 13px;
+  }
+
+  & > div:first-child ~ div ~ button {
+    border: none;
+    background-color: transparent;
+    width: 40px;
+  }
 }

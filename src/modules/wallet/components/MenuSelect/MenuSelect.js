@@ -1,0 +1,70 @@
+import React, {
+  createContext, useCallback, useContext, useEffect, useMemo, useState,
+} from 'react';
+import Dropdown from 'src/theme/Dropdown/dropdown';
+import Icon from 'src/theme/Icon';
+import styles from './MenuSelect.css';
+
+const DropdownContext = createContext({ onChange: () => {}, selectedValue: null });
+
+function TokenDropdown({
+  value, children, onChange, /* placeholder, className, */
+}) {
+  const [selectedValue, setSelectedValue] = useState(value);
+  const [showDropdown, setShowDropdown] = useState(false);
+  const onKeyUp = useCallback(({ code }) => {
+    if (code === 'Escape') setShowDropdown(false);
+  }, []);
+
+  useEffect(() => {
+    window.addEventListener('keyup', onKeyUp);
+    return () => {
+      window.removeEventListener('keyup', onKeyUp);
+    };
+  }, []);
+
+  const selectedIndex = useMemo(() => children.reduce(
+    (selected, { props }, index) => (props.value === selectedValue ? index : selected), -1,
+  ), [selectedValue]);
+
+  const handleOnChange = (changeValue) => {
+    setShowDropdown(false);
+    setSelectedValue(changeValue);
+    onChange?.(changeValue);
+  };
+
+  return (
+    <>
+      {showDropdown && <div onClick={() => setShowDropdown(false)} className={styles.overlay} />}
+      <div onClick={() => setShowDropdown(!showDropdown)} className={styles.wrapper}>
+        <div>
+          {children[selectedIndex]}
+        </div>
+        <Icon name="dropdownFieldIcon" />
+      </div>
+      <DropdownContext.Provider value={{ onChange: handleOnChange, selectedValue }}>
+        <Dropdown
+          className={styles.optionListWrapper}
+          showArrow
+          showDropdown={showDropdown}
+          placeholder="lsjdfsdf"
+        >
+          {children}
+        </Dropdown>
+      </DropdownContext.Provider>
+    </>
+  );
+}
+
+export function MenuItem({
+  value, children,
+}) {
+  const { onChange } = useContext(DropdownContext);
+  return (
+    <div className={`${styles.menuItemWrapper} dropdown-option`} onClick={() => onChange(value)}>
+      {children}
+    </div>
+  );
+}
+
+export default TokenDropdown;
