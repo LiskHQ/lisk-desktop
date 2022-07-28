@@ -222,6 +222,7 @@ import cautionFilledIcon from '@setup/react/assets/images/icons/caution-icon-fil
 import cautionFilledIconDark from '@setup/react/assets/images/icons/caution-icon-filled-dark.svg';
 import applicationsIcon from '@setup/react/assets/images/icons/applications-outline.svg';
 import applicationsIconActive from '@setup/react/assets/images/icons/applications-filled.svg';
+import dropdownFieldIcon from '@setup/react/assets/images/icons/drop-down-field-icon.svg';
 
 export const icons = {
   academy,
@@ -444,6 +445,7 @@ export const icons = {
   plusBlueIcon,
   cautionFilledIcon,
   cautionFilledIconDark,
+  dropdownFieldIcon,
 };
 
 const Icon = ({ name, noTheme, ...props }) => {

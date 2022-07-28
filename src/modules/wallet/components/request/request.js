@@ -6,11 +6,32 @@ import { sizeOfString } from 'src/utils/helpers';
 import { Input, AutoResizeTextarea } from 'src/theme';
 import CircularProgress from '@theme/ProgressCircular/circularProgress';
 import Converter from 'src/modules/common/components/converter';
+import { useCurrentAccount } from 'src/modules/account/hooks';
 import Icon from '@theme/Icon';
 import i18n from 'src/utils/i18n/i18n';
+import MenuSelect, { MenuItem } from '../MenuSelect';
 import RequestWrapper from './requestWrapper';
 import styles from './request.css';
+import WalletVisual from '../walletVisual';
 
+const Account = () => {
+  const [currentAccount] = useCurrentAccount();
+  const { address, name } = currentAccount.metadata || {};
+
+  return (
+    <div className={styles.accountWraper}>
+      <WalletVisual address={address} size={40} />
+      <div align="left">
+        <b className={`${styles.addressValue}`}>
+          {name}
+        </b>
+        <p className={`${styles.addressValue}`}>
+          {address}
+        </p>
+      </div>
+    </div>
+  );
+};
 class Request extends React.Component {
   constructor(props) {
     super();
@@ -111,6 +132,10 @@ class Request extends React.Component {
     }, `lisk://wallet/send?recipient=${address}`);
   }
 
+  onSelectReceipentChain(value) {
+    console.log('----', this.props, value);
+  }
+
   // eslint-disable-next-line complexity
   render() {
     const { t } = this.props;
@@ -118,10 +143,39 @@ class Request extends React.Component {
     const byteCount = sizeOfString(fields.reference.value);
 
     return (
-      <RequestWrapper copyLabel={t('Copy link')} copyValue={shareLink} t={t} title={t('Request LSK')}>
+      <RequestWrapper copyLabel={t('Copy link')} copyValue={shareLink} t={t} title={t('Request tokens')}>
         <span className={`${styles.label}`}>
-          {t('Request LSK from another Lisk user. Copy the link or scan the QR code to share your request.')}
+          {t('Use the sharing link to easily request any amount of tokens from Lisk Hub or Lisk Mobile users.')}
         </span>
+
+        <p>Account</p>
+        <Account />
+        <label className={`${styles.fieldGroup}`}>
+          <span className={`${styles.fieldLabel}`}>{t('Recipient Application')}</span>
+          <span className={`${styles.amountField}`}>
+            <MenuSelect showDropdown showArrow>
+              <MenuItem value={23}>
+                <span> (._.) jskdjfs</span>
+              </MenuItem>
+              <MenuItem value={2323}>
+                <span> (._.)-- asdfasdf</span>
+              </MenuItem>
+            </MenuSelect>
+          </span>
+        </label>
+        <label className={`${styles.fieldGroup}`}>
+          <span className={`${styles.fieldLabel}`}>{t('Token')}</span>
+          <span className={`${styles.amountField}`}>
+            <MenuSelect showDropdown showArrow>
+              <MenuItem value={23}>
+                <span> (._.) jskdjfs</span>
+              </MenuItem>
+              <MenuItem value={2323}>
+                <span> (._.)-- asdfasdf</span>
+              </MenuItem>
+            </MenuSelect>
+          </span>
+        </label>
         <label className={`${styles.fieldGroup}`}>
           <span className={`${styles.fieldLabel}`}>{t('Amount')}</span>
           <span className={`${styles.amountField} amount`}>
