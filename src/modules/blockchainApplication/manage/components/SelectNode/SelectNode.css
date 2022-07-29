@@ -51,6 +51,7 @@
       border: 2px solid var(--color-node-border);
       border-radius: 10px;
       padding: 16px;
+      margin: 4px 0;
       color: var(--color-ultramarine-blue);
       cursor: pointer;
     }
