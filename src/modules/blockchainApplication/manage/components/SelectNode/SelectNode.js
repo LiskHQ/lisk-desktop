@@ -14,7 +14,7 @@ import styles from './SelectNode.css';
 
 const NodeComponent = ({ node, selectAppNode }) => (
   <div className={grid['col-xs-6']} onClick={() => selectAppNode(node)} data-testid="application-node-row">
-    <div className={styles.node}>
+    <div className={`${styles.node} select-node-row`}>
       {node.rest}
       <Icon name="arrowRightActive" color="red" />
     </div>
@@ -37,7 +37,7 @@ const SelectNode = ({ history, location }) => {
   return (
     <Dialog hasBack hasClose className={styles.container}>
       <Box className={styles.wrapper}>
-        <BoxHeader className={styles.header}>
+        <BoxHeader className={`${styles.header} application-header`}>
           <span>
             <img src={chainLogo || liskLogo} />
           </span>
@@ -45,8 +45,8 @@ const SelectNode = ({ history, location }) => {
             {application.name}
           </span>
         </BoxHeader>
-        <BoxContent className={styles.content}>
-          <div className={styles.contentHeader}>{t('Choose application URL')}</div>
+        <BoxContent className={styles.contentWrapper}>
+          <div className={`${styles.content} application-content`}>{t('Choose application URL')}</div>
           <div className={grid.row}>
             {application.apis.map((node) => (
               <NodeComponent node={node} key={node.rpc} selectAppNode={selectAppNode} />

@@ -32,11 +32,11 @@
       }
     }
 
-    & .content {
+    & .contentWrapper {
       padding-top: 0;
       padding-left: 40px;
 
-      & > .contentHeader {
+      & > .content {
         color: var(--color-black);
         margin-bottom: 20px;
         font-size: 16px;
