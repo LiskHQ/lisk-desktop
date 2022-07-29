@@ -1,5 +1,8 @@
 .container {
-  & > img,
+  & > img {
+    top: 30px;
+  }
+
   & > span {
     top: 24px;
   }
@@ -19,7 +22,7 @@
         font-weight: 600;
         font-size: 20px;
         line-height: 24px;
-        color: var(--color-zodiac-blue);
+        color: var(--color-maastricht-blue);
 
         & > img {
           width: 35px;
@@ -34,6 +37,7 @@
       padding-left: 40px;
 
       & > .contentHeader {
+        color: var(--color-black);
         margin-bottom: 20px;
         font-size: 16px;
         font-weight: 400;
@@ -43,10 +47,10 @@
     & .node {
       display: flex;
       justify-content: space-between;
-      width: 95%;
-      border: 2px solid var(--color-athens-white);
+      width: 90%;
+      border: 2px solid var(--color-node-border);
       border-radius: 10px;
-      padding: 8px;
+      padding: 16px;
       color: var(--color-ultramarine-blue);
       cursor: pointer;
     }

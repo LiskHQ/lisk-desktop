@@ -9,6 +9,7 @@ import approved from '@setup/react/assets/images/icons/approved.svg';
 import arrowLeftActive from '@setup/react/assets/images/icons/arrow-left-active.svg';
 import arrowLeftInactive from '@setup/react/assets/images/icons/arrow-left-inactive.svg';
 import arrowLeftTailed from '@setup/react/assets/images/icons/arrow-left-tailed.svg';
+import arrowLeftTailedDark from '@setup/react/assets/images/icons/arrow-left-tailed-dark.svg';
 import arrowRightActive from '@setup/react/assets/images/icons/arrow-right-active.svg';
 import arrowRightInactive from '@setup/react/assets/images/icons/arrow-right-inactive.svg';
 import arrowRightWithStroke from '@setup/react/assets/images/icons/arrow-right-with-stroke.svg';
@@ -232,6 +233,7 @@ export const icons = {
   arrowLeftActive,
   arrowLeftInactive,
   arrowLeftTailed,
+  arrowLeftTailedDark,
   arrowRightActive,
   arrowRightInactive,
   arrowUpCircle,
