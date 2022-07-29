@@ -30,7 +30,7 @@
 }
 
 .optionListWrapper .menuItemWrapper {
-  padding: 10px 5px;
+  padding: 10px !important;
   box-sizing: border-box;
 }
 
