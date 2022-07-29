@@ -5,6 +5,7 @@ import { validateAmountFormat } from 'src/utils/validators';
 import { sizeOfString } from 'src/utils/helpers';
 import { Input, AutoResizeTextarea } from 'src/theme';
 import CircularProgress from '@theme/ProgressCircular/circularProgress';
+import blockchainApplicationsExplore from '@tests/fixtures/blockchainApplicationsExplore';
 import Converter from 'src/modules/common/components/converter';
 import { useCurrentAccount } from 'src/modules/account/hooks';
 import Icon from '@theme/Icon';
@@ -13,6 +14,7 @@ import MenuSelect, { MenuItem } from '../MenuSelect';
 import RequestWrapper from './requestWrapper';
 import styles from './request.css';
 import WalletVisual from '../walletVisual';
+import chainLogo from '../../../../../setup/react/assets/images/LISK.png';
 
 const Account = () => {
   const [currentAccount] = useCurrentAccount();
@@ -153,13 +155,13 @@ class Request extends React.Component {
         <label className={`${styles.fieldGroup}`}>
           <span className={`${styles.fieldLabel}`}>{t('Recipient Application')}</span>
           <span className={`${styles.amountField}`}>
-            <MenuSelect showDropdown showArrow>
-              <MenuItem value={23}>
-                <span> (._.) jskdjfs</span>
-              </MenuItem>
-              <MenuItem value={2323}>
-                <span> (._.)-- asdfasdf</span>
-              </MenuItem>
+            <MenuSelect showDropdown showArrow onChange={this.onSelectReceipentChain}>
+              {blockchainApplicationsExplore.map(({ name, chainID }) => (
+                <MenuItem className={styles.chainOptionWrapper} value={chainID} key={chainID}>
+                  <img className={styles.chainLogo} src={chainLogo} />
+                  <span>{name}</span>
+                </MenuItem>
+              ))}
             </MenuSelect>
           </span>
         </label>

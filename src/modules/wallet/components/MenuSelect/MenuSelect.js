@@ -7,7 +7,7 @@ import styles from './MenuSelect.css';
 
 const DropdownContext = createContext({ onChange: () => {}, selectedValue: null });
 
-function TokenDropdown({
+function MenuSelect({
   value, children, onChange, /* placeholder, className, */
 }) {
   const [selectedValue, setSelectedValue] = useState(value);
@@ -44,10 +44,9 @@ function TokenDropdown({
       </div>
       <DropdownContext.Provider value={{ onChange: handleOnChange, selectedValue }}>
         <Dropdown
-          className={styles.optionListWrapper}
           showArrow
+          className={styles.optionListWrapper}
           showDropdown={showDropdown}
-          placeholder="lsjdfsdf"
         >
           {children}
         </Dropdown>
@@ -57,14 +56,14 @@ function TokenDropdown({
 }
 
 export function MenuItem({
-  value, children,
+  value, children, className,
 }) {
   const { onChange } = useContext(DropdownContext);
   return (
-    <div className={`${styles.menuItemWrapper} dropdown-option`} onClick={() => onChange(value)}>
+    <div className={`${styles.menuItemWrapper} ${className} dropdown-option`} onClick={() => onChange(value)}>
       {children}
     </div>
   );
 }
 
-export default TokenDropdown;
+export default MenuSelect;
