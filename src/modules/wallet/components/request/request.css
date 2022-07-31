@@ -150,7 +150,8 @@
   & .textarea {
     @mixin contentNormal;
 
-    height: 36px;
+    height: 48px !important;
+    border-radius: 6px !important;
   }
 
   & .textarea {
