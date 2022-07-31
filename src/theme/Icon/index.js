@@ -129,6 +129,7 @@ import signOut from '@setup/react/assets/images/icons/signOut.svg';
 import plus from '@setup/react/assets/images/icons/plus.svg';
 import plusActive from '@setup/react/assets/images/icons/plusActive.svg';
 import remove from '@setup/react/assets/images/icons/remove.svg';
+import removeBlueIcon from '@setup/react/assets/images/icons/remove-blue.svg';
 import totalBlocks from '@setup/react/assets/images/icons/total-blocks.svg';
 import totalBlocksDark from '@setup/react/assets/images/icons/total-blocks-dark.svg';
 import blocksForged from '@setup/react/assets/images/icons/blocks-forged.svg';
@@ -446,6 +447,7 @@ export const icons = {
   cautionFilledIcon,
   cautionFilledIconDark,
   dropdownFieldIcon,
+  removeBlueIcon,
 };
 
 const Icon = ({ name, noTheme, ...props }) => {

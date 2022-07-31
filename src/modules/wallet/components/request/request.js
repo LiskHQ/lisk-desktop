@@ -1,15 +1,16 @@
 import React from 'react';
 import { regex } from 'src/const/regex';
 import { maxMessageLength } from '@transaction/configuration/transactions';
+import { appTokens } from '@tests/fixtures/token';
 import { validateAmountFormat } from 'src/utils/validators';
 import { sizeOfString } from 'src/utils/helpers';
-import { Input, AutoResizeTextarea } from 'src/theme';
-import CircularProgress from '@theme/ProgressCircular/circularProgress';
+import { Input } from 'src/theme';
 import blockchainApplicationsExplore from '@tests/fixtures/blockchainApplicationsExplore';
 import Converter from 'src/modules/common/components/converter';
 import { useCurrentAccount } from 'src/modules/account/hooks';
-import Icon from '@theme/Icon';
 import i18n from 'src/utils/i18n/i18n';
+// import MessageField from 'src/modules/token/fungible/components/SendForm/MessageField';
+import MessageField from '../MessageField';
 import MenuSelect, { MenuItem } from '../MenuSelect';
 import RequestWrapper from './requestWrapper';
 import styles from './request.css';
@@ -142,7 +143,6 @@ class Request extends React.Component {
   render() {
     const { t } = this.props;
     const { fields, shareLink } = this.state;
-    const byteCount = sizeOfString(fields.reference.value);
 
     return (
       <RequestWrapper copyLabel={t('Copy link')} copyValue={shareLink} t={t} title={t('Request tokens')}>
@@ -169,12 +169,12 @@ class Request extends React.Component {
           <span className={`${styles.fieldLabel}`}>{t('Token')}</span>
           <span className={`${styles.amountField}`}>
             <MenuSelect showDropdown showArrow>
-              <MenuItem value={23}>
-                <span> (._.) jskdjfs</span>
-              </MenuItem>
-              <MenuItem value={2323}>
-                <span> (._.)-- asdfasdf</span>
-              </MenuItem>
+              {appTokens.map(({ display }) => (
+                <MenuItem className={styles.chainOptionWrapper} value={display} key={display}>
+                  <img className={styles.chainLogo} src={chainLogo} />
+                  <span>{display}</span>
+                </MenuItem>
+              ))}
             </MenuSelect>
           </span>
         </label>
@@ -191,7 +191,7 @@ class Request extends React.Component {
               status={fields.amount.error ? 'error' : 'ok'}
               feedback={fields.amount.feedback}
               isLoading={fields.amount.loading}
-              size="s"
+              size="m"
             />
             <Converter
               className={styles.converter}
@@ -200,32 +200,17 @@ class Request extends React.Component {
             />
           </span>
         </label>
-        <label className={`${styles.fieldGroup} reference`}>
-          <span className={`${styles.fieldLabel}`}>{t('Message (optional)')}</span>
-          <span className={`${styles.referenceField}`}>
-            <AutoResizeTextarea
-              maxLength={100}
-              spellCheck={false}
-              onChange={this.handleFieldChange}
-              name="reference"
-              value={fields.reference.value}
-              placeholder={t('Write message')}
-              className={`${styles.textarea} ${fields.reference.error ? 'error' : ''}`}
-            />
-            <CircularProgress
-              max={maxMessageLength}
-              value={byteCount}
-              className={styles.byteCounter}
-            />
-            <Icon
-              className={`${styles.status} ${!fields.reference.loading && fields.reference.value ? styles.show : ''}`}
-              name={fields.reference.error ? 'alertIcon' : 'okIcon'}
-            />
-            <span className={`${styles.feedback} ${maxMessageLength - byteCount < 10 ? styles.error : ''}`}>
-              {fields.reference.feedback}
-            </span>
-          </span>
-        </label>
+        <MessageField
+          t={t}
+          reference={this.state.fields.reference.value}
+          onChange={this.handleFieldChange}
+          maxMessageLength={maxMessageLength}
+          isLoading={this.state.fields.reference.loading}
+          error={this.state.fields.reference.error}
+          feedback={this.state.fields.reference.feedback}
+          label={t('Message (Optional)')}
+          placeholder={t('Write message')}
+        />
       </RequestWrapper>
     );
   }
