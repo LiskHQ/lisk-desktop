@@ -1,16 +1,15 @@
 /* eslint-disable max-lines */
 import { transactions } from '@liskhq/lisk-client';
-
 import {
   MIN_FEE_PER_BYTE,
   DEFAULT_NUMBER_OF_SIGNATURES,
 } from '@transaction/configuration/transactions';
 import {
-  MODULE_ASSETS_MAP,
+  MODULE_COMMANDS_MAP,
   BASE_FEES,
-  MODULE_ASSETS_NAME_ID_MAP,
+  MODULE_COMMANDS_NAME_ID_MAP,
 } from '@transaction/configuration/moduleAssets';
-import { joinModuleAndAssetIds } from '@transaction/utils/moduleAssets';
+import { joinModuleAndCommandIds } from '@transaction/utils/moduleAssets';
 import { fromRawLsk } from '@token/fungible/utils/lsk';
 import { validateAddress } from 'src/utils/validators';
 import http from 'src/utils/api/http';
@@ -27,6 +26,21 @@ const httpPaths = {
   transaction: `${HTTP_PREFIX}/transactions`,
   transactionStats: `${HTTP_PREFIX}/transactions/statistics`,
   schemas: `${HTTP_PREFIX}/transactions/schemas`,
+};
+
+// TODO: Remove this patch once API is integrated
+const patchTransactionResponse = response => {
+  const data = response.data.map(trx => ({
+    ...trx,
+    params: { ...trx.asset },
+    moduleCommandID: trx.moduleAssetId,
+    moduleCommandName: trx.moduleAssetName,
+  }));
+
+  return {
+    ...response,
+    data,
+  };
 };
 
 /**
@@ -48,7 +62,7 @@ export const getTransaction = ({
   params,
   network,
   baseUrl,
-});
+}).then(patchTransactionResponse);
 
 const filters = {
   address: { key: 'address', test: address => !validateAddress(address) },
@@ -58,7 +72,7 @@ const filters = {
   amount: { key: 'amount', test: str => /^(\d+)?:(\d+)?$/.test(str) },
   limit: { key: 'limit', test: num => parseInt(num, 10) > 0 },
   offset: { key: 'offset', test: num => parseInt(num, 10) >= 0 },
-  moduleAssetId: { key: 'moduleAssetId', test: str => /\d:\d/.test(str) },
+  moduleCommandID: { key: 'moduleCommandID', test: str => /\d:\d/.test(str) },
   height: { key: 'height', test: num => parseInt(num, 10) > 0 },
   blockId: { key: 'blockId', test: str => typeof str === 'string' },
   sort: {
@@ -82,7 +96,7 @@ const filters = {
  * @param {String} data.params.dateTo Unix timestamp, the end time of txs
  * @param {String} data.params.amountFrom The minimum value of txs
  * @param {String} data.params.amountTo The maximum value of txs
- * @param {String} data.params.moduleAssetId The moduleAssetId. 2:0, 5:1, etc
+ * @param {String} data.params.moduleCommandID The moduleCommandID. 2:0, 5:1, etc
  * @param {Number} data.params.offset Used for pagination
  * @param {Number} data.params.limit Used for pagination
  * @param {String} data.params.sort an option of 'amount:asc',
@@ -112,7 +126,7 @@ export const getTransactions = ({
     path: httpPaths.transactions,
     params: normParams,
     baseUrl,
-  });
+  }).then(patchTransactionResponse);
 };
 
 /**
@@ -129,7 +143,7 @@ export const getRegisteredDelegates = async ({ network }) => {
   });
   const txs = await getTransactions({
     network,
-    params: { moduleAssetId: '5:0', limit: 100 },
+    params: { moduleCommandID: '5:0', limit: 100 },
   });
 
   if (delegates.error || txs.error) {
@@ -209,6 +223,7 @@ export const getSchemas = ({ baseUrl }) => http({
   baseUrl,
 }).then((response) =>
   response.data.reduce((acc, data) => {
+    // TODO: Need to change this to commandID
     acc[data.moduleAssetId] = data.schema;
     return acc;
   }, {}));
@@ -253,22 +268,22 @@ export const getTransactionFee = async ({
   const feePerByte = selectedPriority.value;
 
   const {
-    moduleAssetId, ...rawTransaction
+    moduleCommandID, ...rawTransaction
   } = transaction;
 
-  const schema = network.networks.LSK.moduleAssetSchemas[moduleAssetId];
-  const maxAssetFee = MODULE_ASSETS_MAP[moduleAssetId].maxFee;
-  const transactionObject = desktopTxToElementsTx(rawTransaction, moduleAssetId);
+  const schema = network.networks.LSK.moduleCommandSchemas[moduleCommandID];
+  const maxAssetFee = MODULE_COMMANDS_MAP[moduleCommandID].maxFee;
+  const transactionObject = desktopTxToElementsTx(rawTransaction, moduleCommandID);
   let numberOfEmptySignatures;
 
-  if (moduleAssetId === MODULE_ASSETS_NAME_ID_MAP.registerMultisignatureGroup) {
-    const { optionalKeys, mandatoryKeys } = transaction.asset;
+  if (moduleCommandID === MODULE_COMMANDS_NAME_ID_MAP.registerMultisignatureGroup) {
+    const { optionalKeys, mandatoryKeys } = transaction.params;
     numberOfSignatures = optionalKeys.length + mandatoryKeys.length + 1;
   } else if (wallet?.summary?.isMultisignature) {
     numberOfEmptySignatures = wallet.keys.members.length - numberOfSignatures;
   }
 
-  const minFee = transactions.computeMinFee(schema, transactionObject, {
+  const minFee = transactions.computeMinFee(transactionObject, schema, {
     baseFees: BASE_FEES,
     numberOfSignatures,
     numberOfEmptySignatures,
@@ -278,7 +293,7 @@ export const getTransactionFee = async ({
   const tieBreaker = selectedPriority.selectedIndex === 0
     ? 0 : (MIN_FEE_PER_BYTE * feePerByte * Math.random());
 
-  const size = transactions.getBytes(schema, transactionObject).length;
+  const size = transactions.getBytes(transactionObject, schema).length;
 
   const calculatedFee = Number(minFee) + size * feePerByte + tieBreaker;
   const cappedFee = Math.min(calculatedFee, maxAssetFee);
@@ -300,7 +315,7 @@ export const getTransactionFee = async ({
  * creates a new transaction
  *
  * @param {Object} transaction The transaction information
- * @param {String} transaction.moduleAssetId The combination of module Id and asset Id.
+ * @param {String} transaction.moduleCommandID The combination of module Id and asset Id.
  * @param {Object} transaction.network Network config from the redux store
  * @param {Object} transaction.keys keys of the multisig account
  * @param {Object} transaction.transactionObject Details of the transaction, including passphrase
@@ -322,18 +337,18 @@ export const createGenericTx = async ({
   } = wallet;
   const networkIdentifier = Buffer.from(network.networks.LSK.networkIdentifier, 'hex');
 
-  const { moduleAssetId, ...rawTransaction } = transactionObject;
-  const transaction = desktopTxToElementsTx(rawTransaction, moduleAssetId);
+  const { moduleCommandID, ...rawTransaction } = transactionObject;
+  const transaction = desktopTxToElementsTx(rawTransaction, moduleCommandID);
 
-  const schema = network.networks.LSK.moduleAssetSchemas[moduleAssetId];
+  const schema = network.networks.LSK.moduleCommandSchemas[moduleCommandID];
 
-  const isMultiSignatureRegistration = moduleAssetId
-    === MODULE_ASSETS_NAME_ID_MAP.registerMultisignatureGroup;
+  const isMultiSignatureRegistration = moduleCommandID
+    === MODULE_COMMANDS_NAME_ID_MAP.registerMultisignatureGroup;
 
   const result = await sign(
     wallet, schema, transaction, network, networkIdentifier,
     isMultisignature, isMultiSignatureRegistration, keys, publicKey ?? reduxPublicKey,
-    moduleAssetId, rawTransaction, privateKey ?? reduxPrivateKey,
+    moduleCommandID, rawTransaction, privateKey ?? reduxPrivateKey,
   );
 
   return result;
@@ -349,12 +364,12 @@ export const createGenericTx = async ({
  * @returns {Promise} promise that resolves to a transaction or rejects with an error
  */
 export const broadcast = async ({ transaction, serviceUrl, network }) => {
-  const moduleAssetId = joinModuleAndAssetIds({
+  const moduleCommandID = joinModuleAndCommandIds({
     moduleID: transaction.moduleID,
-    assetID: transaction.assetID,
+    commandID: transaction.commandID,
   });
-  const schema = network.networks.LSK.moduleAssetSchemas[moduleAssetId];
-  const binary = transactions.getBytes(schema, transaction);
+  const schema = network.networks.LSK.moduleCommandSchemas[moduleCommandID];
+  const binary = transactions.getBytes(transaction, schema);
   const payload = binary.toString('hex');
   const body = JSON.stringify({ transaction: payload });
 

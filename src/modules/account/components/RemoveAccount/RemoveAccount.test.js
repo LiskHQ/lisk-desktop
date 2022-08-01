@@ -12,7 +12,7 @@ jest.mock('@account/hooks', () => ({
   useAccounts: jest.fn(() => ({
     accounts: mockSavedAccounts,
     getAccountByAddress: jest.fn().mockReturnValue(mockSavedAccounts[0]),
-    deleteAccountByAddress: mockDeleteAccount(),
+    deleteAccountByAddress: mockDeleteAccount,
   })),
   useCurrentAccount: jest.fn(() => (
     [mockSavedAccounts[0], mockSetAccount]

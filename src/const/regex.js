@@ -30,4 +30,5 @@ export const regex = {
       leadingPoint: /^[,]/,
     },
   },
+  accountName: /^[a-z0-9!@$&_.]+$/,
 };

@@ -64,10 +64,10 @@ class FilterDropdownButton extends React.Component {
 
     if (
       blackListTypes.some(
-        (blackListType) => blackListType === fields.moduleAssetId?.value,
+        (blackListType) => blackListType === fields.moduleCommandID?.value,
       )
     ) {
-      this.props.onTypeSelected(fields.moduleAssetId.value);
+      this.props.onTypeSelected(fields.moduleCommandID.value);
     } else {
       this.props.onTypeSelected(null);
     }

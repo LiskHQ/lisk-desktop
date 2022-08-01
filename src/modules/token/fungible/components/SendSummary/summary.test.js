@@ -16,12 +16,12 @@ describe('Summary', () => {
       nextStep: jest.fn(),
       token: tokenMap.LSK.key,
       rawTx: {
-        asset: {
+        params: {
           recipient: { address: wallets.genesis.summary.address },
           amount: 112300000,
           data: 'test',
         },
-        moduleAssetId: '2:0',
+        moduleCommandID: '2:0',
       },
       t: i18n.t,
     };
@@ -55,17 +55,17 @@ describe('Summary', () => {
       ...props,
       rawTx: {
         ...props.rawTx,
-        asset: {
-          ...props.rawTx.asset,
+        params: {
+          ...props.rawTx.params,
           recipient: {
-            ...props.rawTx.asset.recipient,
+            ...props.rawTx.params.recipient,
             title,
           },
         },
       },
     }}
     />);
-    expect(wrapper.find('.recipient-value')).toIncludeText(props.rawTx.asset.recipient.address);
+    expect(wrapper.find('.recipient-value')).toIncludeText(props.rawTx.params.recipient.address);
     expect(wrapper.find('.recipient-value')).toIncludeText(title);
   });
 });

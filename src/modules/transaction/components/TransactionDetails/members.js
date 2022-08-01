@@ -6,10 +6,10 @@ import styles from './styles.css';
 
 const Members = ({ t }) => {
   const {
-    transaction: { asset },
+    transaction: { params },
   } = React.useContext(TransactionDetailsContext);
 
-  const { optionalKeys, mandatoryKeys } = asset;
+  const { optionalKeys, mandatoryKeys } = params;
 
   const members = useMemo(
     () =>
@@ -26,7 +26,7 @@ const Members = ({ t }) => {
             mandatory: true,
           })),
         ),
-    [asset],
+    [params],
   );
 
   return (

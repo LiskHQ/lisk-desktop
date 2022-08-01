@@ -33,7 +33,7 @@ describe('TxSignatureCollector', () => {
     transactionDoubleSigned: jest.fn(),
   };
 
-  it('should call multisigTransactionSigned', async () => {
+  it.skip('should call multisigTransactionSigned', async () => {
     const wrapper = mount(<TxSignatureCollector {...props} />);
     wrapper.find('input').simulate('change', { target: { value: 'pass' } });
     wrapper.find('form').simulate('submit');
@@ -47,7 +47,7 @@ describe('TxSignatureCollector', () => {
     });
   });
 
-  it('should call actionFunction', async () => {
+  it.skip('should call actionFunction', async () => {
     const wrapper = mount(<TxSignatureCollector {...props} sender={undefined} />);
     wrapper.find('input').simulate('change', { target: { value: 'pass' } });
     wrapper.find('form').simulate('submit');

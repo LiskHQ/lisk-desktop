@@ -1,13 +1,13 @@
 import {
   Sender, Recipient, Counterpart,
-  Date, Amount, Fee, Assets, Status,
+  Date, Amount, Fee, Params, Status,
 } from './components';
 import styles from './schemas.css';
 
-const hosted = [Counterpart, Date, Fee, Assets, Amount];
+const hosted = [Counterpart, Date, Fee, Params, Amount];
 const full = [Sender, Recipient, Date, Amount, Fee, Status];
 const minimal = [Counterpart, Amount];
-const vote = [Sender, Date, Assets];
+const vote = [Sender, Date, Params];
 
 const LayoutSchema = {
   full: {

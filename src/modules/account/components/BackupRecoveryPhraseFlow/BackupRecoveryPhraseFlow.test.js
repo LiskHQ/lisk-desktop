@@ -13,7 +13,7 @@ const props = {
   history: { push: jest.fn() },
 };
 
-describe('Backup account recovery phrase flow', () => {
+describe.skip('Backup account recovery phrase flow', () => {
   it('Should successfully go though the flow', async () => {
     renderWithRouter(BackupRecoveryPhraseFlow, props);
     expect(screen.getByText('Enter your password')).toBeTruthy();

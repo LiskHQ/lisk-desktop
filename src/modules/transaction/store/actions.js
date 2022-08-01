@@ -217,7 +217,7 @@ export const multisigTransactionSigned = ({
  * @param {object} data.rawTransaction Transaction config required by Lisk Element
  */
 export const signatureSkipped = ({ rawTx }) => {
-  const binaryTx = desktopTxToElementsTx(rawTx, rawTx.moduleAssetId);
+  const binaryTx = desktopTxToElementsTx(rawTx, rawTx.moduleCommandID);
 
   return ({
     type: actionTypes.signatureSkipped,

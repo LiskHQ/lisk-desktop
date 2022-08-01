@@ -8,11 +8,12 @@ import DownloadJSON from 'src/modules/common/components/DownloadJSON/DownloadJSO
 import BoxContent from 'src/theme/box/content';
 import styles from './SetPasswordSuccess.css';
 
-function SetPasswordSuccess({ onClose, encryptedPhrase, buttonText }) {
+function SetPasswordSuccess({
+  onClose, encryptedPhrase, buttonText,
+}) {
   const { t } = useTranslation();
 
   const onContinue = () => onClose();
-
   return (
     <Box className={styles.container}>
       <BoxContent className={styles.content}>

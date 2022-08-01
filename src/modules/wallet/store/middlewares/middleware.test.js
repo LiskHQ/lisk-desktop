@@ -46,14 +46,14 @@ const transactions = [
     sender: {
       address: 'lsks6uckwnap7s72ov3edddwgxab5e89t6uy8gjt6',
     },
-    asset: {
+    params: {
       recipient: {
         address: 'lskgonvfdxt3m6mm7jaeojrj5fnxx7vwmkxq72v79',
       },
       data: 'Message',
       amount: 10e8,
     },
-    moduleAssetId: '2:0',
+    moduleCommandID: '2:0',
     moduleAssetName: 'token:transfer',
     fee: '295000',
     height: 741142,
@@ -63,14 +63,14 @@ const transactions = [
     sender: {
       address: 'lsks6uckwnap7s72ov3edddwgxab5e89t6uy8gjt6',
     },
-    asset: {
+    params: {
       recipient: {
         address: 'lskgonvfdxt3m6mm7jaeojrj5fnxx7vwmkxq72v79',
       },
       data: '',
       amount: 10e8,
     },
-    moduleAssetId: '2:0',
+    moduleCommandID: '2:0',
     moduleAssetName: 'token:transfer',
     fee: '295000',
     height: 741141,

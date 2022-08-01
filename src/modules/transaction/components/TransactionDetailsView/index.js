@@ -22,7 +22,7 @@ const TransactionDetails = ({
     return <NotFound t={t} />;
   }
 
-  const Layout = LayoutSchema[data.moduleAssetId] || LayoutSchema.default;
+  const Layout = LayoutSchema[data.moduleCommandID] || LayoutSchema.default;
 
   return (
     <Box

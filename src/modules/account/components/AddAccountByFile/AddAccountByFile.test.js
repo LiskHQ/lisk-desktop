@@ -1,3 +1,4 @@
+import { cryptography } from '@liskhq/lisk-client';
 import {
   createEvent, fireEvent, screen, waitFor,
 } from '@testing-library/react';
@@ -6,16 +7,29 @@ import * as reactRedux from 'react-redux';
 import { renderWithRouter } from 'src/utils/testHelpers';
 import AddAccountByFile from './AddAccountByFile';
 
-jest.mock('react-i18next');
-jest.mock('../../hooks/useAccounts', () => ({
-  useAccounts: jest.fn().mockReturnValue([mockSavedAccounts]),
-}));
-reactRedux.useSelector = jest.fn().mockReturnValue(mockSavedAccounts[0]);
-
 const props = {
   history: { push: jest.fn() },
   login: jest.fn(),
 };
+const recoveryPhrase = 'target cancel solution recipe vague faint bomb convince pink vendor fresh patrol';
+
+jest.mock('react-i18next');
+
+jest.mock('@account/hooks', () => ({
+  useAccounts: jest.fn(() => ({
+    accounts: mockSavedAccounts,
+    getAccountByAddress: jest.fn().mockReturnValue(mockSavedAccounts[0]),
+    setAccount: jest.fn(),
+  })),
+  useCurrentAccount: jest.fn(() => (
+    [mockSavedAccounts[0], jest.fn()]
+  )),
+}));
+
+reactRedux.useSelector = jest.fn().mockReturnValue(mockSavedAccounts[0]);
+jest.spyOn(cryptography.encrypt, 'decryptPassphraseWithPassword').mockResolvedValue(JSON.stringify({
+  recoveryPhrase,
+}));
 
 beforeEach(() => {
   renderWithRouter(AddAccountByFile, props);
