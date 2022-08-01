@@ -24,12 +24,13 @@
   & .label {
     @mixin contentLarge;
 
-    color: var(--color-zodiac-blue);
+    color: var(--color-maastricht-blue);
   }
 
   & .label ~ p {
     font-weight: 400;
     font-size: 13px;
+    color: var(--color-maastricht-blue);
   }
 
   & .footerContent {
@@ -70,7 +71,7 @@
   & .fieldLabel {
     @mixin contentNormal normal;
 
-    color: var(--color-zodiac-blue);
+    color: var(--color-maastricht-blue);
     margin-bottom: 8px;
   }
 
@@ -294,5 +295,5 @@
   max-width: 228px;
   overflow: hidden;
   text-overflow: ellipsis;
-  color: var(--color-zodiac-blue);
+  color: var(--color-maastricht-blue);
 }

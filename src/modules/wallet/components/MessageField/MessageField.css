@@ -10,7 +10,7 @@
   & .fieldLabel {
     @mixin contentNormal normal;
 
-    color: var(--color-zodiac-blue);
+    color: var(--color-maastricht-blue);
     margin-bottom: 8px;
     display: flex;
     flex-direction: row;
