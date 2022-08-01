@@ -151,26 +151,38 @@ class Request extends React.Component {
 
   // TODO: this would be properly implemented when apis have been hooked up
   onSelectReceipentChain(value) {
+    const recipientApplicationField = {
+      value,
+      error: false,
+      feedback: '',
+      loading: false,
+    };
+    const shareLink = this.updateShareLink(recipientApplicationField);
+
     this.setState(({ fields }) => ({
+      shareLink,
       fields: {
         ...fields,
-        recipientApplication: {
-          ...fields.recipientApplication,
-          value,
-        },
+        recipientApplication: recipientApplicationField,
       },
     }));
   }
 
   // TODO: this would be properly implemented when apis have been hooked up
   onSelectToken(value) {
+    const tokenField = {
+      value,
+      error: false,
+      feedback: '',
+      loading: false,
+    };
+    const shareLink = this.updateShareLink(tokenField);
+
     this.setState(({ fields }) => ({
+      shareLink,
       fields: {
         ...fields,
-        token: {
-          ...fields.token,
-          value,
-        },
+        recipientApplication: tokenField,
       },
     }));
   }
@@ -184,17 +196,18 @@ class Request extends React.Component {
     } = this.state;
 
     return (
-      <RequestWrapper copyLabel={t('Copy link')} copyValue={shareLink} t={t} title={t('Request tokens')}>
+      <RequestWrapper copyLabel={t('Copy link')} copyValue={shareLink} t={t} title={t('Request tokens')} className="request-wrapper">
         <span className={`${styles.label}`}>
           {t('Use the sharing link to easily request any amount of tokens from Lisk Hub or Lisk Mobile users.')}
         </span>
 
         <p>Account</p>
         <Account />
-        <label className={`${styles.fieldGroup}`}>
-          <span className={`${styles.fieldLabel} recipient-application`}>{t('Recipient Application')}</span>
+        <label className={`${styles.fieldGroup} recipient-application`}>
+          <span className={`${styles.fieldLabel}`}>{t('Recipient Application')}</span>
           <span className={`${styles.amountField}`}>
             <MenuSelect
+              className="recipient-chain-select"
               value={fields.recipientApplication.value}
               onChange={this.onSelectReceipentChain}
             >
@@ -211,6 +224,7 @@ class Request extends React.Component {
           <span className={`${styles.fieldLabel}`}>{t('Token')}</span>
           <span className={`${styles.amountField}`}>
             <MenuSelect
+              className="token-select"
               onChange={this.onSelectToken}
               value={fields.token.value}
             >
@@ -232,7 +246,7 @@ class Request extends React.Component {
               name="amount"
               value={fields.amount.value}
               placeholder={t('Requested amount')}
-              className={styles.input}
+              className={`${styles.input} amount-field`}
               status={fields.amount.error ? 'error' : 'ok'}
               feedback={fields.amount.feedback}
               isLoading={fields.amount.loading}
@@ -247,12 +261,12 @@ class Request extends React.Component {
         </label>
         <MessageField
           t={t}
-          reference={this.state.fields.reference.value}
+          reference={fields.reference.value}
           onChange={this.handleFieldChange}
           maxMessageLength={maxMessageLength}
-          isLoading={this.state.fields.reference.loading}
-          error={this.state.fields.reference.error}
-          feedback={this.state.fields.reference.feedback}
+          isLoading={fields.reference.loading}
+          error={fields.reference.error}
+          feedback={fields.reference.feedback}
           label={t('Message (Optional)')}
           placeholder={t('Write message')}
         />

@@ -161,6 +161,9 @@ Then(/^I should be on (.*?) page$/, function (pageName) {
       break;
     case 'dashboard':
       cy.url().should('include', 'dashboard');
+    case 'request token modal':
+      cy.hash().should('eq', '#/wallet?tab=Transactions&modal=request');
+      break;
   }
 });
 
