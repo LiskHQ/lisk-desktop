@@ -94,6 +94,7 @@
       padding-right: 30px;
       border-radius: 6px;
       border-color: var(--color-very-light-gray) !important;
+      padding-top: 12px;
 
       &:focus {
         & + .byteCounter {
