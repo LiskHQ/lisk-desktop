@@ -29,7 +29,7 @@ function MessageField({
         className={styles.addMessageButton}
       >
         <Icon name="plusBlueIcon" />
-        Add message (Optional)
+        <span>Add message (Optional)</span>
       </TertiaryButton>
     )
     : (
@@ -54,6 +54,7 @@ function MessageField({
             value={value}
             placeholder={placeholder}
             className={`${styles.textarea} ${error ? 'error' : ''}`}
+            data-testid="reference-field"
           />
           <CircularProgress
             max={maxMessageLength}
@@ -64,7 +65,10 @@ function MessageField({
             className={`${styles.status} ${!isLoading && value ? styles.show : ''}`}
             name={error ? 'alertIcon' : 'okIcon'}
           />
-          <span className={`${styles.feedback} ${styles.show} ${maxMessageLength - byteCount < 10 ? styles.error : ''}`}>
+          <span
+            data-testid="feedback"
+            className={`${styles.feedback} ${styles.show} ${maxMessageLength - byteCount < 10 ? styles.error : ''}`}
+          >
             {feedback}
             {!!feedback && (
             <Tooltip
