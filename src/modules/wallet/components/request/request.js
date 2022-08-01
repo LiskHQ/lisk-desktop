@@ -139,6 +139,10 @@ class Request extends React.Component {
     console.log('----', this.props, value);
   }
 
+  onSelectToken(value) {
+    console.log('----', this.props, value);
+  }
+
   // eslint-disable-next-line complexity
   render() {
     const { t } = this.props;
@@ -155,7 +159,7 @@ class Request extends React.Component {
         <label className={`${styles.fieldGroup}`}>
           <span className={`${styles.fieldLabel}`}>{t('Recipient Application')}</span>
           <span className={`${styles.amountField}`}>
-            <MenuSelect showDropdown showArrow onChange={this.onSelectReceipentChain}>
+            <MenuSelect onChange={this.onSelectReceipentChain}>
               {blockchainApplicationsExplore.map(({ name, chainID }) => (
                 <MenuItem className={styles.chainOptionWrapper} value={chainID} key={chainID}>
                   <img className={styles.chainLogo} src={chainLogo} />
@@ -168,7 +172,7 @@ class Request extends React.Component {
         <label className={`${styles.fieldGroup}`}>
           <span className={`${styles.fieldLabel}`}>{t('Token')}</span>
           <span className={`${styles.amountField}`}>
-            <MenuSelect showDropdown showArrow>
+            <MenuSelect onChange={this.onSelectToken}>
               {appTokens.map(({ display }) => (
                 <MenuItem className={styles.chainOptionWrapper} value={display} key={display}>
                   <img className={styles.chainLogo} src={chainLogo} />

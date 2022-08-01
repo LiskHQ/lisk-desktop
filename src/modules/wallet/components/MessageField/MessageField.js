@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useMemo } from 'react';
 import { useTranslation } from 'react-i18next';
 import { AutoResizeTextarea } from 'src/theme';
 import { TertiaryButton } from 'src/theme/buttons';
@@ -20,7 +20,7 @@ function MessageField({
 }) {
   const [isCollapsed, setCollapsed] = useState(false);
   const { t } = useTranslation();
-  const byteCount = sizeOfString(value);
+  const byteCount = useMemo(() => sizeOfString(value), [value]);
 
   return !isCollapsed
     ? (

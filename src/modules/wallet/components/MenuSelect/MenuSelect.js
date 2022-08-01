@@ -8,7 +8,7 @@ import styles from './MenuSelect.css';
 const DropdownContext = createContext({ onChange: () => {}, selectedValue: null });
 
 function MenuSelect({
-  value, children, onChange, /* placeholder, className, */
+  value, children, onChange,
 }) {
   const [selectedValue, setSelectedValue] = useState(value);
   const [showDropdown, setShowDropdown] = useState(false);
@@ -25,7 +25,7 @@ function MenuSelect({
 
   const selectedIndex = useMemo(() => children.reduce(
     (selected, { props }, index) => (props.value === selectedValue ? index : selected), -1,
-  ), [selectedValue]);
+  ), [selectedValue, value]);
 
   const handleOnChange = (changeValue) => {
     setShowDropdown(false);
@@ -37,7 +37,7 @@ function MenuSelect({
     <>
       {showDropdown && <div onClick={() => setShowDropdown(false)} className={styles.overlay} />}
       <div onClick={() => setShowDropdown(!showDropdown)} className={styles.wrapper}>
-        <div>
+        <div data-testid="selected-menu-item">
           {children[selectedIndex]}
         </div>
         <Icon name="dropdownFieldIcon" />
