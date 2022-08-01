@@ -26,6 +26,7 @@
   & > .addressWrapper {
     margin-left: 10px;
     flex: 1;
+    text-align: left;
   }
 
   & > .addressWrapper > p {

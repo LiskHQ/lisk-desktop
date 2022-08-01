@@ -19,7 +19,7 @@ function AccountRow({
       onClick={() => onSelect(account)}
     >
       <WalletVisual address={address} size={40} />
-      <div className={styles.addressWrapper} align="left">
+      <div className={styles.addressWrapper}>
         <b className={`${styles.addressValue}`}>
           {name}
         </b>
