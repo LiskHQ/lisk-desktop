@@ -12,8 +12,15 @@ function MenuSelect({
 }) {
   const [selectedValue, setSelectedValue] = useState(value);
   const [showDropdown, setShowDropdown] = useState(false);
+
   const onKeyUp = useCallback(({ code }) => {
     if (code === 'Escape') setShowDropdown(false);
+  }, []);
+
+  const handleOnChange = useCallback((changeValue) => {
+    setShowDropdown(false);
+    setSelectedValue(changeValue);
+    onChange?.(changeValue);
   }, []);
 
   useEffect(() => {
@@ -26,12 +33,6 @@ function MenuSelect({
   const selectedIndex = useMemo(() => children.reduce(
     (selected, { props }, index) => (props.value === selectedValue ? index : selected), -1,
   ), [selectedValue, value]);
-
-  const handleOnChange = (changeValue) => {
-    setShowDropdown(false);
-    setSelectedValue(changeValue);
-    onChange?.(changeValue);
-  };
 
   return (
     <>

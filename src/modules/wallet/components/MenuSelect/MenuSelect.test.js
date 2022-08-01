@@ -35,7 +35,7 @@ describe('MenuSelect', () => {
     expect(screen.getByTestId('dropdown-popup').classList).not.toContain('show');
   });
 
-  it('should render properly', () => {
+  it('should popup options', () => {
     fireEvent.click(screen.getByAltText('dropdownFieldIcon'));
 
     expect(screen.getByTestId('dropdown-popup').classList).toContain('show');
@@ -52,5 +52,11 @@ describe('MenuSelect', () => {
     fireEvent.click(screen.getByText('menu-item-1'));
 
     expect(props.onChange).toHaveBeenCalledWith(1);
+  });
+
+  it('should dismiss the popup option', () => {
+    fireEvent.click(screen.getByAltText('dropdownFieldIcon'));
+    fireEvent.keyUp(window, { key: 'Escape', code: 'Escape', charCode: 27 });
+    expect(screen.getByTestId('dropdown-popup').classList).not.toContain('show');
   });
 });
