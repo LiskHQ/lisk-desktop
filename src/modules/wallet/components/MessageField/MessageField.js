@@ -26,7 +26,7 @@ function MessageField({
     ? (
       <TertiaryButton
         onClick={() => setCollapsed(!isCollapsed)}
-        className={styles.addMessageButton}
+        className={`${styles.addMessageButton} add-message-button`}
       >
         <Icon name="plusBlueIcon" />
         <span>Add message (Optional)</span>
