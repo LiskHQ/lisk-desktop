@@ -1,5 +1,4 @@
 import { cryptography } from '@liskhq/lisk-client';
-
 import {
   fireEvent, screen, waitFor,
 } from '@testing-library/react';

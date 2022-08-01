@@ -1,6 +1,5 @@
 /* eslint-disable max-lines */
 import { transactions } from '@liskhq/lisk-client';
-
 import {
   MIN_FEE_PER_BYTE,
   DEFAULT_NUMBER_OF_SIGNATURES,

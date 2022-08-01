@@ -1,5 +1,4 @@
 import { cryptography } from '@liskhq/lisk-client';
-
 import loginTypes from '@auth/const/loginTypes';
 import * as hwManager from '@transaction/utils/hwManager';
 import { getState } from '@tests/fixtures/transactions';

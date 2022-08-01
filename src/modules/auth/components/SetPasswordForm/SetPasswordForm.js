@@ -20,7 +20,7 @@ const setPasswordFormSchema = yup.object({
     .max(20, 'Character length can\'t be more than 20')
     .min(3, 'Character length can\'t be lesser than 3'),
   password: yup.string().required()
-    .matches(regex.accountNam, 'Must Contain 8 Characters, One Uppercase, One Lowercase, One Number and One Special Case Character'),
+    .matches(regex.accountName, 'Must Contain 8 Characters, One Uppercase, One Lowercase, One Number and One Special Case Character'),
   cPassword: yup.string().required()
     .oneOf([yup.ref('password'), null], 'Confirm that passwords match'),
   hasAgreed: yup.boolean().required(),

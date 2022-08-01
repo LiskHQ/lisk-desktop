@@ -1,5 +1,4 @@
 import { cryptography } from '@liskhq/lisk-client';
-
 import { MODULE_COMMANDS_NAME_ID_MAP } from '@transaction/configuration/moduleAssets';
 import {
   getModuleCommandSenderLabel,
