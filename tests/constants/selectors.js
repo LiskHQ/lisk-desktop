@@ -21,9 +21,22 @@ const managedApplications = {
   removeApplicationButton: '.remove-application-button',
 };
 
+const tokenUsage = {
+  requestTokenButton: '.request-token-button',
+  copyRequestTokenButton: '.request-wrapper .copy-button',
+  recipientChainSelect: '.request-wrapper .recipient-chain-select',
+  tokenSelect: '.request-wrapper .token-select',
+  requestTokenAmountField: '.request-wrapper .amount-field',
+  recipientChainDropdownOption: '.recipient-application .dropdown-option',
+  tokenDropdownOption: '.token .dropdown-option',
+  addMessageBuutton: '.add-message-button',
+  messageTextArea: '.reference textarea',
+};
+
 const ss = {
   ...delegatesPage,
   ...managedApplications,
+  ...tokenUsage,
   becomeDelegateLink: '.register-delegate',
   app: '#app',
   monitorNetwork: '#network',

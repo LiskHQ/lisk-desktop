@@ -8,7 +8,7 @@ import styles from './MenuSelect.css';
 const DropdownContext = createContext({ onChange: () => {}, selectedValue: null });
 
 function MenuSelect({
-  value, children, onChange,
+  value, children, onChange, className,
 }) {
   const [selectedValue, setSelectedValue] = useState(value);
   const [showDropdown, setShowDropdown] = useState(false);
@@ -37,7 +37,7 @@ function MenuSelect({
   return (
     <>
       {showDropdown && <div onClick={() => setShowDropdown(false)} className={styles.overlay} />}
-      <div onClick={() => setShowDropdown(!showDropdown)} className={styles.wrapper}>
+      <div onClick={() => setShowDropdown(!showDropdown)} className={`${styles.wrapper} ${className}`}>
         <div data-testid="selected-menu-item">
           {children[selectedIndex]}
         </div>
