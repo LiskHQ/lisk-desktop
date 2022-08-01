@@ -9,6 +9,7 @@ import BoxContent from 'src/theme/box/content';
 import Icon from 'src/theme/Icon';
 import liskLogo from '../../../../../../setup/react/assets/images/LISK.png';
 import useApplicationManagement from '../../hooks/useApplicationManagement';
+import { useCurrentApplication } from '../../hooks/useCurrentApplication';
 import useCurrentNode from '../../hooks/useCurrentNode';
 import styles from './SelectNode.css';
 
@@ -24,12 +25,14 @@ const NodeComponent = ({ node, selectAppNode }) => (
 const SelectNode = ({ history, location }) => {
   const { t } = useTranslation();
   const chainId = parseSearchParams(location.search).chainId;
+  const [, setApplication] = useCurrentApplication();
   const { getApplicationByChainId } = useApplicationManagement();
   const { setCurrentNode } = useCurrentNode();
   const application = getApplicationByChainId(chainId);
   const chainLogo = null;
 
   const selectAppNode = (node) => {
+    setApplication(application);
     setCurrentNode(node);
     removeSearchParamsFromUrl(history, ['modal', 'chainId']);
   };

@@ -100,8 +100,9 @@ const ApplicationManagementRow = ({
       if (application.apis.length > 1) {
         // redirect to select node
         addSearchParamsToUrl(history, { modal: 'selectNode', chainId: application.chainID });
+      } else {
+        setApplication(application);
       }
-      setApplication(application);
     }
   }, [setApplication, isTerminated]);
 
