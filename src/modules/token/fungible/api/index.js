@@ -21,7 +21,7 @@ const httpPaths = {
 export const getTokens = ({
   params, network, baseUrl,
 }) => http({
-  path: httpPaths.filterOffChainApplications,
+  path: httpPaths.tokens,
   params,
   network,
   baseUrl,

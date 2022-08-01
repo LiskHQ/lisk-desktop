@@ -10,6 +10,7 @@ describe('MessageField', () => {
     maxMessageLength: 10,
     label: 'label',
     placeholder: 'placeholder',
+    error: false,
   };
 
   beforeEach(() => {
@@ -24,13 +25,20 @@ describe('MessageField', () => {
     expect(screen.queryByAltText('removeBlueIcon')).toBeFalsy();
   });
 
-  it('should be collapsed', () => {
+  it('should be toggled between collapsed and shrink mode', () => {
     fireEvent.click(screen.queryByText('Add message (Optional)'));
 
     expect(screen.queryByText('Add message (Optional)')).toBeFalsy();
     expect(screen.queryByText(props.label)).toBeTruthy();
     expect(screen.queryByText('Remove')).toBeTruthy();
     expect(screen.queryByAltText('removeBlueIcon')).toBeTruthy();
+
+    fireEvent.click(screen.queryByText('Remove'));
+
+    expect(screen.queryByText('Add message (Optional)')).toBeTruthy();
+    expect(screen.queryByText(props.label)).toBeFalsy();
+    expect(screen.queryByText('Remove')).toBeFalsy();
+    expect(screen.queryByAltText('removeBlueIcon')).toBeFalsy();
   });
 
   it('should show the byte counter', () => {
@@ -39,5 +47,15 @@ describe('MessageField', () => {
 
     fireEvent.click(screen.queryByText('Add message (Optional)'));
     expect(screen.getByTestId('feedback').textContent).toContain(props.feedback);
+  });
+
+  it('should react with an error on byte count', () => {
+    props.value = 'this is a test value that should be long enough to throw an error testing testing testing testing';
+    props.error = true;
+    wrapper.rerender(<MessageField {...props} />);
+
+    fireEvent.click(wrapper.queryByText('Add message (Optional)'));
+    expect(/error/.test(wrapper.getByTestId('feedback').className)).toBeTruthy();
+    expect(wrapper.getByAltText('alertIcon').className).toBeTruthy();
   });
 });

@@ -1,7 +1,7 @@
 import React from 'react';
 import { regex } from 'src/const/regex';
 import { maxMessageLength } from '@transaction/configuration/transactions';
-import { appTokens } from '@tests/fixtures/token';
+import { mockAppTokens } from '@tests/fixtures/token';
 import { validateAmountFormat } from 'src/utils/validators';
 import { sizeOfString } from 'src/utils/helpers';
 import { Input } from 'src/theme';
@@ -54,6 +54,18 @@ class Request extends React.Component {
           loading: false,
           feedback: '',
         },
+        token: {
+          error: false,
+          value: '',
+          loading: false,
+          feedback: '',
+        },
+        recipientApplication: {
+          error: false,
+          value: '',
+          loading: false,
+          feedback: '',
+        },
       },
     };
 
@@ -64,6 +76,8 @@ class Request extends React.Component {
 
     this.handleFieldChange = this.handleFieldChange.bind(this);
     this.updateShareLink = this.updateShareLink.bind(this);
+    this.onSelectReceipentChain = this.onSelectReceipentChain.bind(this);
+    this.onSelectToken = this.onSelectToken.bind(this);
   }
 
   /* istanbul ignore next */
@@ -135,18 +149,39 @@ class Request extends React.Component {
     }, `lisk://wallet/send?recipient=${address}`);
   }
 
+  // TODO: this would be properly implemented when apis have been hooked up
   onSelectReceipentChain(value) {
-    console.log('----', this.props, value);
+    this.setState(({ fields }) => ({
+      fields: {
+        ...fields,
+        recipientApplication: {
+          ...fields.recipientApplication,
+          value,
+        },
+      },
+    }));
   }
 
+  // TODO: this would be properly implemented when apis have been hooked up
   onSelectToken(value) {
-    console.log('----', this.props, value);
+    this.setState(({ fields }) => ({
+      fields: {
+        ...fields,
+        token: {
+          ...fields.token,
+          value,
+        },
+      },
+    }));
   }
 
   // eslint-disable-next-line complexity
   render() {
     const { t } = this.props;
-    const { fields, shareLink } = this.state;
+    const {
+      fields,
+      shareLink,
+    } = this.state;
 
     return (
       <RequestWrapper copyLabel={t('Copy link')} copyValue={shareLink} t={t} title={t('Request tokens')}>
@@ -157,9 +192,12 @@ class Request extends React.Component {
         <p>Account</p>
         <Account />
         <label className={`${styles.fieldGroup}`}>
-          <span className={`${styles.fieldLabel}`}>{t('Recipient Application')}</span>
+          <span className={`${styles.fieldLabel} recipient-application`}>{t('Recipient Application')}</span>
           <span className={`${styles.amountField}`}>
-            <MenuSelect onChange={this.onSelectReceipentChain}>
+            <MenuSelect
+              value={fields.recipientApplication.value}
+              onChange={this.onSelectReceipentChain}
+            >
               {blockchainApplicationsExplore.map(({ name, chainID }) => (
                 <MenuItem className={styles.chainOptionWrapper} value={chainID} key={chainID}>
                   <img className={styles.chainLogo} src={chainLogo} />
@@ -169,11 +207,14 @@ class Request extends React.Component {
             </MenuSelect>
           </span>
         </label>
-        <label className={`${styles.fieldGroup}`}>
+        <label className={`${styles.fieldGroup} token`}>
           <span className={`${styles.fieldLabel}`}>{t('Token')}</span>
           <span className={`${styles.amountField}`}>
-            <MenuSelect onChange={this.onSelectToken}>
-              {appTokens.map(({ display }) => (
+            <MenuSelect
+              onChange={this.onSelectToken}
+              value={fields.token.value}
+            >
+              {mockAppTokens.map(({ display }) => (
                 <MenuItem className={styles.chainOptionWrapper} value={display} key={display}>
                   <img className={styles.chainLogo} src={chainLogo} />
                   <span>{display}</span>

@@ -39,5 +39,8 @@ describe('Request', () => {
     evt = { target: { name: 'amount', value: 1 } };
     wrapper.find('.fieldGroup').at(2).find('input').simulate('change', evt);
     expect(wrapper.find(Request).state('shareLink')).toMatch(`${shareLink}&${evt.target.name}=${evt.target.value}`);
+
+    expect(wrapper.find('.recipient-application').at(0)).toBeTruthy();
+    expect(wrapper.find('.token').at(0)).toBeTruthy();
   });
 });
