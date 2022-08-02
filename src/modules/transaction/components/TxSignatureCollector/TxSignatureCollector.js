@@ -101,7 +101,7 @@ const TxSignatureCollector = ({
     return (
       <div className={styles.container}>
         <EnterPasswordForm
-          accountSchema={account}
+          encryptedAccount={account}
           onEnterPasswordSuccess={onEnterPasswordSuccess}
         />
       </div>

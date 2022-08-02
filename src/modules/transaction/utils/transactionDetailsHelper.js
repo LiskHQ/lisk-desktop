@@ -1,11 +1,11 @@
 export const getDelegateName = (transaction, activeToken) =>
-  (activeToken === 'LSK' && transaction.asset && transaction.asset.username
-    ? transaction.asset.username
+  (activeToken === 'LSK' && transaction.params && transaction.params.username
+    ? transaction.params.username
     : null);
 
 export const getTxAsset = (tx) => {
-  if (tx.asset?.data && tx.asset.data.length) {
-    return tx.asset.data;
+  if (tx.params?.data && tx.params.data.length) {
+    return tx.params.data;
   }
   return '-';
 };

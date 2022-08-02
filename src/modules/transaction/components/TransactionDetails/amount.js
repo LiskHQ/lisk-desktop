@@ -11,7 +11,7 @@ const Amount = ({ t }) => {
     TransactionDetailsContext,
   );
   const addresses = [
-    transaction.asset.recipient?.address ?? '',
+    transaction.params.recipient?.address ?? '',
     transaction.sender.address,
   ];
 

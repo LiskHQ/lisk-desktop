@@ -5,8 +5,8 @@ import { setCurrentAccount } from '../store/action';
 // eslint-disable-next-line
 export function useCurrentAccount() {
   const dispatch = useDispatch();
-  const setAccount = (accountSchema) => {
-    dispatch(setCurrentAccount(accountSchema));
+  const setAccount = (encryptedAccount) => {
+    dispatch(setCurrentAccount(encryptedAccount));
   };
   const currentAccount = useSelector(selectCurrentAccount);
 

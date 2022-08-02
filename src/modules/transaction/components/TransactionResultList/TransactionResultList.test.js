@@ -7,7 +7,7 @@ describe('Transactions', () => {
     t: v => v,
     transactions: [
       {
-        asset: {
+        params: {
           data: 'testing',
         },
         id: '123',
@@ -33,7 +33,7 @@ describe('Transactions', () => {
     const newProps = { ...props };
     newProps.transactions = [
       {
-        asset: {
+        params: {
           data: 'testing',
         },
         id: '123',
@@ -54,7 +54,7 @@ describe('Transactions', () => {
     const newProps = { ...props };
     newProps.transactions = [
       {
-        asset: {
+        params: {
           data: 'testing',
         },
         id: '123',
@@ -75,7 +75,7 @@ describe('Transactions', () => {
     const newProps = { ...props };
     newProps.transactions = [
       {
-        asset: {
+        params: {
           data: 'testing',
         },
         id: '123',

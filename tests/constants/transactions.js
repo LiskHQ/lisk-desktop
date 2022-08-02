@@ -5,11 +5,11 @@ const transaction = index => ({
   // amount: `${index}00000000`,
   id: `1402835196409030464${index}`,
   type: 0,
-  moduleAssetId: '2:0',
+  moduleCommandID: '2:0',
   fee: '10000000',
   isPending: false,
   sender: { address: 'lskdwsyfmcko6mcd357446yatromr9vzgu7eb8y11' },
-  asset: {
+  params: {
     amount: '200',
     recipient: { address: 'lskdwsyfmcko6mcd357446yatromr9vzgu7eb8y22' },
     data: 'test',
@@ -27,14 +27,14 @@ const transactions = Array(30).fill(1).map((item, index) => transaction(index));
 
 const sampleTransaction = {
   moduleID: 5,
-  assetID: 1,
+  commandID: 1,
   senderPublicKey: Buffer.from('205688492bc52ddabfdc10fa7728b8bcb5942ad17c68ab5c20e96153fd1ac657', 'hex'),
   nonce: BigInt(2),
   fee: BigInt(142000),
   signatures: [
     Buffer.from('4bfc0ab5e1b3c3fb1ca7362acc917775ce6345f26a261d592d83c62ad156e90221269a3b423516c2b84c1ebdd285d3bf83be688f5a158c1daf7245fecea0350a', 'hex'),
   ],
-  asset: {
+  params: {
     votes: [
       {
         amount: BigInt(2000000000),

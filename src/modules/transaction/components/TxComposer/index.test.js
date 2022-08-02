@@ -1,14 +1,14 @@
 import React from 'react';
 import { mount } from 'enzyme';
-import { MODULE_ASSETS_NAME_ID_MAP } from '@transaction/configuration/moduleAssets';
+import { MODULE_COMMANDS_NAME_ID_MAP } from '@transaction/configuration/moduleAssets';
 import accounts from '@tests/constants/wallets';
 import { mountWithProps } from 'src/utils/testHelpers';
 import TxComposer from './index';
 
 describe('TxComposer', () => {
   const transaction = {
-    moduleAssetId: MODULE_ASSETS_NAME_ID_MAP.transfer,
-    asset: {
+    moduleCommandID: MODULE_COMMANDS_NAME_ID_MAP.transfer,
+    params: {
       recipient: { address: accounts.genesis.summary.address },
       amount: 100000,
       data: 'test-data',
@@ -53,8 +53,8 @@ describe('TxComposer', () => {
       ...props,
       transaction: {
         ...props.transaction,
-        moduleAssetId: MODULE_ASSETS_NAME_ID_MAP.registerDelegate,
-        asset: {
+        moduleCommandID: MODULE_COMMANDS_NAME_ID_MAP.registerDelegate,
+        params: {
           username: 'test_username',
         },
       },

@@ -36,7 +36,7 @@ const Transactions = ({
     const addressList = transactions.data.data
       && transactions.data.data.reduce((acc, data) => {
         if (data.title === 'vote') {
-          const votesList = data.asset.votes || [];
+          const votesList = data.params.votes || [];
           const dataAddresses = votesList.map((vote) => vote.delegateAddress);
           return acc.concat(dataAddresses);
         }

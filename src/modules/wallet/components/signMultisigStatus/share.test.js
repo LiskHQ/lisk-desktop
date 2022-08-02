@@ -22,8 +22,8 @@ describe('Sign Multisignature Tx Status component', () => {
     nonce: '19n',
     fee: '207000n',
     moduleID: '4',
-    assetID: '0',
-    asset: {
+    commandID: '0',
+    params: {
       optionalKeys: accounts.multiSig.keys.optionalKeys,
       mandatoryKeys: accounts.multiSig.keys.mandatoryKeys,
       numberOfSignatures: accounts.multiSig.keys.numberOfSignatures,

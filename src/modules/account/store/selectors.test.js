@@ -2,7 +2,7 @@ import mockSavedAccounts from '@tests/fixtures/accounts';
 import { selectCurrentAccount, selectAccounts } from './selectors';
 
 describe('Auth selector', () => {
-  it('Should return accountSchema if setCurrentAccount action type is tiggered', async () => {
+  it('Should return encryptedAccount if setCurrentAccount action type is triggered', async () => {
     const state = { account: { current: mockSavedAccounts[0] } };
     expect(selectCurrentAccount(state)).toEqual(mockSavedAccounts[0]);
   });
