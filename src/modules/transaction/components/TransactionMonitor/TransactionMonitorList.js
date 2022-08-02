@@ -13,7 +13,7 @@ import {
 import TransactionRow from '../TransactionRow';
 import header from './TransactionHeaderMap';
 import styles from './transactionsTable.css';
-import { getModuleAssetTitle } from '../../utils';
+import { getModuleCommandTitle } from '../../utils';
 
 const getFields = (t) => [
   {
@@ -41,7 +41,7 @@ const getFields = (t) => [
   {
     label: t('Type'),
     placeholder: t('All types'),
-    name: 'moduleAssetId',
+    name: 'moduleCommandID',
     type: 'select',
   },
   {
@@ -97,7 +97,7 @@ const Transactions = ({
   /* istanbul ignore next */
   const formatters = {
     height: (value) => `${t('Height')}: ${value}`,
-    moduleAssetId: (value) => `${t('Type')}: ${getModuleAssetTitle()[value]}`,
+    moduleCommandID: (value) => `${t('Type')}: ${getModuleCommandTitle()[value]}`,
     senderAddress: (value) => `${t('Sender')}: ${value}`,
     recipientAddress: (value) => `${t('Recipient')}: ${value}`,
   };
@@ -105,7 +105,7 @@ const Transactions = ({
     headerData.map((data) => {
       if (
         data?.sort?.key === 'amount'
-        && blackListTypes.some((type) => type === dropdownFilters.moduleAssetId)
+        && blackListTypes.some((type) => type === dropdownFilters.moduleCommandID)
       ) delete data.sort;
       return data;
     });
@@ -121,9 +121,9 @@ const Transactions = ({
     });
 
   const dropdownApplyFilters = (txFilters) => {
-    const moduleAssetId = txFilters.moduleAssetId;
+    const moduleCommandID = txFilters.moduleCommandID;
     applyFilters(txFilters);
-    if (blackListTypes.some((type) => type === moduleAssetId)) setTimeout(() => changeSort('timestamp'), 100);
+    if (blackListTypes.some((type) => type === moduleCommandID)) setTimeout(() => changeSort('timestamp'), 100);
   };
 
   return (
@@ -143,9 +143,9 @@ const Transactions = ({
               fields={innerFields}
               filters={filters}
               applyFilters={dropdownApplyFilters}
-              onTypeSelected={(moduleAssetId) => {
+              onTypeSelected={(moduleCommandID) => {
                 setInnerFields(
-                  moduleAssetId ? removeField(fields, moduleAssetId) : fields,
+                  moduleCommandID ? removeField(fields, moduleCommandID) : fields,
                 );
               }}
             />

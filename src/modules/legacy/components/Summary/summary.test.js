@@ -79,11 +79,11 @@ describe('Reclaim balance Summary', () => {
     // Assert
     expect(props.nextStep).toBeCalledWith({
       rawTx: {
-        asset: {
+        params: {
           amount: accounts.non_migrated.legacy.balance,
         },
         fee: 100000,
-        moduleAssetId: '1000:0',
+        moduleCommandID: '1000:0',
         nonce: accounts.non_migrated.sequence.nonce,
         sender: {
           PublicKey: accounts.non_migrated.summary.publicKey,
@@ -105,11 +105,11 @@ describe('Reclaim balance Summary', () => {
     // Assert
     expect(props.prevStep).toBeCalledWith({
       rawTx: {
-        asset: {
+        params: {
           amount: accounts.non_migrated.legacy.balance,
         },
         fee: 100000,
-        moduleAssetId: '1000:0',
+        moduleCommandID: '1000:0',
         nonce: accounts.non_migrated.sequence.nonce,
         sender: {
           PublicKey: accounts.non_migrated.summary.publicKey,

@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import Piwik from 'src/utils/piwik';
-import { MODULE_ASSETS_NAME_ID_MAP } from '@transaction/configuration/moduleAssets';
+import { MODULE_COMMANDS_NAME_ID_MAP } from '@transaction/configuration/moduleAssets';
 import AmountField from 'src/modules/common/components/amountField';
 import { toRawLsk, fromRawLsk } from '@token/fungible/utils/lsk';
 import BoxContent from 'src/theme/box/content';
@@ -13,9 +13,9 @@ import useRecipientField from './useRecipientField';
 import styles from './form.css';
 import MessageField from './MessageField';
 
-const getInitialData = (rawTx, initialValue) => rawTx?.asset.data || initialValue || '';
-const getInitialAmount = (rawTx, initialValue) => (Number(rawTx?.asset.amount) ? fromRawLsk(rawTx?.asset.amount) : initialValue || '');
-const getInitialRecipient = (rawTx, initialValue) => rawTx?.asset.recipient.address || initialValue || '';
+const getInitialData = (rawTx, initialValue) => rawTx?.params.data || initialValue || '';
+const getInitialAmount = (rawTx, initialValue) => (Number(rawTx?.params.amount) ? fromRawLsk(rawTx?.params.amount) : initialValue || '');
+const getInitialRecipient = (rawTx, initialValue) => rawTx?.params.recipient.address || initialValue || '';
 
 const SendForm = (props) => {
   const {
@@ -57,8 +57,8 @@ const SendForm = (props) => {
 
   const transaction = {
     isValid,
-    moduleAssetId: MODULE_ASSETS_NAME_ID_MAP.transfer,
-    asset: {
+    moduleCommandID: MODULE_COMMANDS_NAME_ID_MAP.transfer,
+    params: {
       recipient: {
         address: recipient.value,
         title: recipient.title,

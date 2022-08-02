@@ -1,6 +1,6 @@
 const savedAccounts = [
   {
-    crypto: {
+    encryptedPassphrase: {
       kdf: 'argon2id',
       kdfparams: {
         parallelism: 4,

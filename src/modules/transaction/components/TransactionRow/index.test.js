@@ -18,8 +18,8 @@ const txBase = {
 };
 
 const vote = {
-  moduleAssetId: '5:1',
-  asset: {
+  moduleCommandID: '5:1',
+  params: {
     votes: [
       {
         amount: '2000000000',
@@ -29,16 +29,16 @@ const vote = {
   },
 };
 const registerDelegate = {
-  moduleAssetId: '5:0',
-  asset: {
+  moduleCommandID: '5:0',
+  params: {
     delegate: {
       username: 'sample_username',
     },
   },
 };
 const transfer = {
-  moduleAssetId: '2:0',
-  asset: {
+  moduleCommandID: '2:0',
+  params: {
     recipient: {
       address: accounts.multiSig.summary.address,
     },
@@ -81,7 +81,7 @@ describe('Transaction Row', () => {
       expect(wrapper.find('Sender').text()).toBe(truncateAddress(accounts.genesis.summary.address));
       expect(wrapper.find('Recipient').text()).toBe(truncateAddress(accounts.multiSig.summary.address));
       // We don't show the details in full mode
-      expect(wrapper.find('Assets')).toHaveLength(0);
+      expect(wrapper.find('Params')).toHaveLength(0);
     });
 
     it('Should render in hosted layout mode', () => {
@@ -102,7 +102,7 @@ describe('Transaction Row', () => {
       expect(wrapper.find('Counterpart').text()).toBe(truncateAddress(accounts.multiSig.summary.address));
       expect(wrapper.find('Sender')).toHaveLength(0);
       expect(wrapper.find('Recipient')).toHaveLength(0);
-      expect(wrapper.find('Assets').text()).toBe('sample message');
+      expect(wrapper.find('Params').text()).toBe('sample message');
     });
   });
 
@@ -125,7 +125,7 @@ describe('Transaction Row', () => {
       expect(wrapper.find('Sender').text()).toBe(truncateAddress(accounts.genesis.summary.address));
       expect(wrapper.find('Recipient').text()).toBe('Vote');
       // We don't show the details in full mode
-      expect(wrapper.find('Assets')).toHaveLength(0);
+      expect(wrapper.find('Params')).toHaveLength(0);
     });
 
     it('Should render in hosted layout mode', () => {
@@ -146,7 +146,7 @@ describe('Transaction Row', () => {
       expect(wrapper.find('Counterpart').text()).toBe('Vote');
       expect(wrapper.find('Sender')).toHaveLength(0);
       expect(wrapper.find('Recipient')).toHaveLength(0);
-      expect(wrapper.find('Assets').text()).toBe(
+      expect(wrapper.find('Params').text()).toBe(
         `${truncateAddress(accounts.delegate.summary.address)}20 LSK`,
       );
     });
@@ -171,7 +171,7 @@ describe('Transaction Row', () => {
       expect(wrapper.find('Sender').text()).toBe(truncateAddress(accounts.genesis.summary.address));
       expect(wrapper.find('Recipient').text()).toBe('Register delegate');
       // We don't show the details in full mode
-      expect(wrapper.find('Assets')).toHaveLength(0);
+      expect(wrapper.find('Params')).toHaveLength(0);
     });
 
     it('Should render in hosted layout mode', () => {
@@ -192,7 +192,7 @@ describe('Transaction Row', () => {
       expect(wrapper.find('Counterpart').text()).toBe('Register delegate');
       expect(wrapper.find('Sender')).toHaveLength(0);
       expect(wrapper.find('Recipient')).toHaveLength(0);
-      expect(wrapper.find('Assets').text()).toBe('sample_username');
+      expect(wrapper.find('Params').text()).toBe('sample_username');
     });
   });
 });

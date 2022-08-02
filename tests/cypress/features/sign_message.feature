@@ -1,6 +1,6 @@
 Feature: Sign Message
 
-  @basic
+  @skip
   Scenario: I should get the lisk signed message
     Given I login as genesis on customNode
     And I wait 2 seconds

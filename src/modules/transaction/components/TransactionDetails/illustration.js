@@ -1,5 +1,5 @@
 import React from 'react';
-import { getModuleAssetTitle } from '@transaction/utils/moduleAssets';
+import { getModuleCommandTitle } from '@transaction/utils/moduleAssets';
 import TransactionDetailsContext from '../../context/transactionDetailsContext';
 import TransactionTypeFigure from '../TransactionTypeFigure';
 import styles from './styles.css';
@@ -7,15 +7,15 @@ import styles from './styles.css';
 const Illustration = () => {
   const params = React.useContext(TransactionDetailsContext);
   const {
-    transaction: { sender, moduleAssetId },
+    transaction: { sender, moduleCommandID },
   } = params;
-  const title = getModuleAssetTitle()[moduleAssetId];
+  const title = getModuleCommandTitle()[moduleCommandID];
 
   return (
     <div className={styles.illustration}>
       <TransactionTypeFigure
         address={sender.address}
-        moduleAssetId={moduleAssetId}
+        moduleCommandID={moduleCommandID}
         iconOnly
       />
       <h2 className="tx-header">{title}</h2>

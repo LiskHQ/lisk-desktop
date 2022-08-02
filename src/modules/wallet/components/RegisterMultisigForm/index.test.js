@@ -62,7 +62,7 @@ describe('Multisignature editor component', () => {
         prevState={{
           numberOfSignatures: 3,
           rawTx: {
-            asset: {
+            params: {
               mandatoryKeys: [{}, {}],
               optionalKeys: [{}, {}, {}],
             },
@@ -122,7 +122,7 @@ describe('Multisignature editor component', () => {
       ...props,
       prevState: {
         rawTx: {
-          asset: {
+          params: {
             numberOfSignatures: 2,
             optionalKeys: [wallets.genesis.summary.publicKey],
             mandatoryKeys: [wallets.delegate.summary.publicKey, wallets.multiSig.summary.publicKey],

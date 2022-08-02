@@ -1,5 +1,5 @@
 import wallets from './wallets';
-import moduleAssetSchemas from './schemas';
+import moduleCommandSchemas from './schemas';
 
 export default {
   wallet: {
@@ -34,7 +34,7 @@ export default {
     networks: {
       LSK: {
         serviceUrl: 'http://example.com',
-        moduleAssetSchemas,
+        moduleCommandSchemas,
       },
     },
     statue: {

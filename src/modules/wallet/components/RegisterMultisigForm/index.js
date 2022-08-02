@@ -4,7 +4,7 @@ import BoxContent from 'src/theme/box/content';
 import BoxHeader from 'src/theme/box/header';
 import { TertiaryButton } from 'src/theme/buttons';
 import { Input } from 'src/theme';
-import { MODULE_ASSETS_NAME_ID_MAP } from '@transaction/configuration/moduleAssets';
+import { MODULE_COMMANDS_NAME_ID_MAP } from '@transaction/configuration/moduleAssets';
 import TxComposer from '@transaction/components/TxComposer';
 import ProgressBar from '../RegisterMultisigView/ProgressBar';
 import { MAX_MULTI_SIG_MEMBERS } from '../../configuration/constants';
@@ -20,8 +20,8 @@ const placeholderMember = {
 const getInitialMembersState = (prevState) => {
   if (prevState.rawTx) {
     return [
-      ...prevState.rawTx.asset.mandatoryKeys.map(item => ({ isMandatory: true, publicKey: item })),
-      ...prevState.rawTx.asset.optionalKeys.map(item => ({ isMandatory: false, publicKey: item })),
+      ...prevState.rawTx.params.mandatoryKeys.map(item => ({ isMandatory: true, publicKey: item })),
+      ...prevState.rawTx.params.optionalKeys.map(item => ({ isMandatory: false, publicKey: item })),
     ];
   }
 
@@ -132,10 +132,10 @@ const Form = ({
   );
 
   const transaction = {
-    moduleAssetId: MODULE_ASSETS_NAME_ID_MAP.registerMultisignatureGroup,
+    moduleCommandID: MODULE_COMMANDS_NAME_ID_MAP.registerMultisignatureGroup,
     isValid: feedback.error === 0,
     feedback: feedback.messages,
-    asset: {
+    params: {
       mandatoryKeys,
       optionalKeys,
       numberOfSignatures,

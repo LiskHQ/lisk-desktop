@@ -156,7 +156,7 @@ describe('Delegates monitor page', () => {
       votes: {
         isLoading: false,
         data: [{
-          asset: { votes: [{ delegateAddress: 'lskdwsyfmcko6mcd357446yatromr9vzgu7eb8y11', amount: '100000000' }] },
+          params: { votes: [{ delegateAddress: 'lskdwsyfmcko6mcd357446yatromr9vzgu7eb8y11', amount: '100000000' }] },
           block: {
             height: 164187423,
             id: '1f48b9f4dae3a027b73685810016edadfff45175955b6ea3b24951597a99b498',

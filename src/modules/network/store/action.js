@@ -13,12 +13,12 @@ import actionTypes from './actionTypes';
  */
 export const networkConfigSet = async (data) => {
   const promises = tokenKeys.map(token => getNetworkConfig(data, token));
-  const moduleAssetSchemas = await getSchemas({ baseUrl: data.address });
+  const moduleCommandSchemas = await getSchemas({ baseUrl: data.address });
 
   const networks = await Promise.all(promises);
   const networksWithNames = tokenKeys.reduce((acc, token, index) =>
     ({ ...acc, [token]: networks[index] }), {});
-  networksWithNames.LSK.moduleAssetSchemas = moduleAssetSchemas;
+  networksWithNames.LSK.moduleCommandSchemas = moduleCommandSchemas;
   return {
     type: actionTypes.networkConfigSet,
     data: { name: data.name, networks: networksWithNames },
