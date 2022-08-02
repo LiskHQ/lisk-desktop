@@ -9,8 +9,7 @@ import blockchainApplicationsExplore from '@tests/fixtures/blockchainApplication
 import Converter from 'src/modules/common/components/converter';
 import { useCurrentAccount } from 'src/modules/account/hooks';
 import i18n from 'src/utils/i18n/i18n';
-// import MessageField from 'src/modules/token/fungible/components/SendForm/MessageField';
-import MessageField from '../MessageField';
+import MessageField from '../../../token/fungible/components/MessageField';
 import MenuSelect, { MenuItem } from '../MenuSelect';
 import RequestWrapper from './requestWrapper';
 import styles from './request.css';
@@ -35,6 +34,7 @@ const Account = () => {
     </div>
   );
 };
+
 class Request extends React.Component {
   constructor(props) {
     super();
@@ -198,7 +198,7 @@ class Request extends React.Component {
     return (
       <RequestWrapper copyLabel={t('Copy link')} copyValue={shareLink} t={t} title={t('Request tokens')} className="request-wrapper">
         <span className={`${styles.label}`}>
-          {t('Use the sharing link to easily request any amount of tokens from Lisk Hub or Lisk Mobile users.')}
+          {t('Use the sharing link to easily request any amount of tokens from Lisk Desktop or Lisk Mobile users.')}
         </span>
 
         <p>Account</p>

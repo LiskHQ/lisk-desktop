@@ -1,11 +1,10 @@
 import React, {
-  createContext, useCallback, useContext, useEffect, useMemo, useState,
+  useCallback, useEffect, useMemo, useState,
 } from 'react';
 import Dropdown from 'src/theme/Dropdown/dropdown';
 import Icon from 'src/theme/Icon';
+import DropdownContext from '../../context/dropdownContext';
 import styles from './MenuSelect.css';
-
-const DropdownContext = createContext({ onChange: () => {}, selectedValue: null });
 
 function MenuSelect({
   value, children, onChange, className,
@@ -53,17 +52,6 @@ function MenuSelect({
         </Dropdown>
       </DropdownContext.Provider>
     </>
-  );
-}
-
-export function MenuItem({
-  value, children, className,
-}) {
-  const { onChange } = useContext(DropdownContext);
-  return (
-    <div className={`${styles.menuItemWrapper} ${className} dropdown-option`} onClick={() => onChange(value)}>
-      {children}
-    </div>
   );
 }
 

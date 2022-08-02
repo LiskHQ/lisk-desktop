@@ -1,1 +1,2 @@
-export { default, MenuItem } from './MenuSelect';
+export { default } from './MenuSelect';
+export { default as MenuItem } from './MenuItem';
