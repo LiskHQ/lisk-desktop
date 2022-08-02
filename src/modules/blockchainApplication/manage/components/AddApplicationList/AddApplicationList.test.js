@@ -1,7 +1,7 @@
 import { screen, fireEvent } from '@testing-library/react';
 import { renderWithRouter } from 'src/utils/testHelpers';
 import mockApplications from '@tests/fixtures/blockchainApplicationsExplore';
-import BlockchainApplicationAddList from './BlockchainApplicationAddList';
+import AddApplicationList from './AddApplicationList';
 
 const props = {
   liskApplications: {
@@ -23,9 +23,9 @@ const mockExternalApplication = {
   depositedLsk: 820000000,
 };
 
-describe('BlockchainApplicationAddList', () => {
+describe('AddApplicationList', () => {
   it('displays properly', () => {
-    renderWithRouter(BlockchainApplicationAddList, props);
+    renderWithRouter(AddApplicationList, props);
 
     expect(screen.getByText('Add Application')).toBeTruthy();
     expect(screen.getByPlaceholderText('Search by name or application URL')).toBeTruthy();
@@ -45,7 +45,7 @@ describe('BlockchainApplicationAddList', () => {
         },
       },
     };
-    renderWithRouter(BlockchainApplicationAddList, updatedProps);
+    renderWithRouter(AddApplicationList, updatedProps);
     fireEvent.click(screen.getByText('Load more'));
     expect(props.liskApplications.loadData).toHaveBeenCalledTimes(1);
     expect(props.liskApplications.loadData).toHaveBeenCalledWith({
@@ -61,7 +61,7 @@ describe('BlockchainApplicationAddList', () => {
         data: [mockExternalApplication],
       },
     };
-    renderWithRouter(BlockchainApplicationAddList, newProps);
+    renderWithRouter(AddApplicationList, newProps);
 
     expect(screen.getByText('External test app')).toBeTruthy();
     expect(screen.getByText('8.2 LSK')).toBeTruthy();

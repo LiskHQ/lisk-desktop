@@ -39,7 +39,7 @@ const BlockchainApplicationDetails = ({ history, location, application }) => {
   };
   const addNewApplication = () => {
     setApplication(application.data);
-    removeThenAppendSearchParamsToUrl(history, { modal: 'blockChainApplicationAddSuccess', chainId: application.data.chainID }, ['modal', 'chainId', 'mode']);
+    removeThenAppendSearchParamsToUrl(history, { modal: 'addApplicationSuccess', chainId: application.data.chainID }, ['modal', 'chainId', 'mode']);
   };
 
   const footerDetails = [

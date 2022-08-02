@@ -3,7 +3,7 @@ import grid from 'flexboxgrid/dist/flexboxgrid.css';
 import DialogLink from 'src/theme/dialog/link';
 import TokenAmount from 'src/modules/token/fungible/components/tokenAmount';
 import liskLogo from '../../../../../../setup/react/assets/images/LISK.png';
-import styles from './BlockchainApplicationAddRow.css';
+import styles from './AddApplicationRow.css';
 
 const ChainName = ({ title, logo }) => (
   <div className={`chain-name ${grid['col-xs-6']} ${styles.chainName}`}>
@@ -18,7 +18,7 @@ const DepositAmount = ({ amount }) => (
   </span>
 );
 
-const BlockchainApplicationAddRow = ({
+const AddApplicationRow = ({
   data,
   className,
 }) => (
@@ -34,4 +34,4 @@ const BlockchainApplicationAddRow = ({
   </div>
 );
 
-export default BlockchainApplicationAddRow;
+export default AddApplicationRow;

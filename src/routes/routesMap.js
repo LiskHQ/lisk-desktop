@@ -43,9 +43,10 @@ import RemoveCurrentAccountFlow from '@account/components/RemoveCurrentAccountFl
 import RemoveSelectedAccountFlow from '@account/components/RemoveSelectedAccountFlow';
 import BlockchainApplications from '@blockchainApplication/explore/manager/BlockchainApplications';
 import BlockchainApplicationDetails from '@blockchainApplication/explore/components/BlockchainApplicationDetails';
-import BlockchainApplicationAddList from '@blockchainApplication/explore/components/BlockchainApplicationAddList';
-import BlockchainApplicationAddSuccess from '@blockchainApplication/explore/components/BlockchainApplicationAddSuccess';
+import AddApplicationList from '@blockchainApplication/manage/components/AddApplicationList';
+import AddApplicationSuccess from '@blockchainApplication/manage/components/AddApplicationSuccess';
 import ApplicationManagementList from '@blockchainApplication/manage/components/ApplicationManagementList';
+import SelectNode from '@blockchainApplication/manage/components/SelectNode';
 import RemoveApplicationFlow from '@blockchainApplication/manage/components/RemoveApplicationFlow';
 
 export default {
@@ -89,14 +90,15 @@ export default {
   accountAdd: AddAccountForm,
   addAccountBySecretRecovery: AddAccountBySecretRecovery,
   switchAccount: SwitchAccount,
+  selectNode: SelectNode,
   backupRecoveryPhraseFlow: BackupRecoveryPhraseFlow,
   removeCurrentAccountFlow: RemoveCurrentAccountFlow,
   removeSelectedAccount: RemoveSelectedAccountFlow,
   addAccountByFile: AddAccountByFile,
   blockchainApplications: BlockchainApplications,
   blockChainApplicationDetails: BlockchainApplicationDetails,
-  blockChainApplicationAddList: BlockchainApplicationAddList,
-  blockChainApplicationAddSuccess: BlockchainApplicationAddSuccess,
+  addApplicationList: AddApplicationList,
+  addApplicationSuccess: AddApplicationSuccess,
   manageApplications: ApplicationManagementList,
   removeApplicationFlow: RemoveApplicationFlow,
 };
