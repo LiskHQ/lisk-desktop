@@ -30,7 +30,19 @@ If you have licensed copies of `Basier Circle` and `Gilroy`, you can add them to
 
 ### Setup environment
 
-The development environment currently depends on [Node.js version 16 (lts/gallium)](https://nodejs.org/download/release/latest-v16.x/). The below instructions assume [nvm](https://github.com/nvm-sh/nvm) is being used to manage Node.js versions.
+The development environment currently depends on:
+
+- [Node.js version 16 (lts/gallium)](https://nodejs.org/download/release/latest-v16.x/). The below instructions assume [nvm](https://github.com/nvm-sh/nvm) is being used to manage Node.js versions.
+- [Python version 2.7.18 is required](https://www.python.org/downloads/release/python-2718/) is being used on encrypt/decrypt by sdk.
+
+1. Install `pyenv` with `brew` to manage different Python versions: `brew install pyenv`
+2. List all installable versions with `pyenv install --list`
+3. Install Python `2.7.18` with `pyenv install 2.7.18`
+4. List installed versions with `pyenv versions`
+5. Set global python version with `pyenv global 2.7.18`
+6. Add `eval "$(pyenv init --path)"` to `~/.zprofile` (or `~/.bash_profile` or `~/.zshrc`, whichever you need)
+7. Relaunch the shell by `source ~/.zprofile` (or `source ~/.bash_profile` or `source ~/.zshrc`, whichever you need)
+8. Check Python by `which python`
 
 *Note*:
 For *Windows* users, make sure to set the correct [msvs_version](https://www.npmjs.com/package/node-gyp#on-windows) config for installing and packing the Lisk Desktop application.
