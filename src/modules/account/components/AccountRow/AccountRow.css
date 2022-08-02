@@ -14,7 +14,7 @@
   flex-direction: row;
   align-items: center;
   padding: 0px;
-  padding-bottom: 16px;
+  padding-bottom: 13px;
   border: none;
   border-radius: 0px;
   justify-content: flex-start;
@@ -23,19 +23,20 @@
   transition: opacity 100ms linear;
   cursor: pointer;
 
-  & > div:first-child ~ div {
+  & > .addressWrapper {
     margin-left: 10px;
     flex: 1;
+    text-align: left;
   }
 
-  & > div:first-child ~ div > p {
-    margin-top: 9px;
+  & > .addressWrapper > p {
+    margin-top: 8px;
     margin-bottom: 0px;
     color: var(--color-slate-gray);
     font-size: 13px;
   }
 
-  & > div:first-child ~ div ~ button {
+  & > button {
     border: none;
     background-color: transparent;
     width: 40px;

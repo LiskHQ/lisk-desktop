@@ -1,3 +1,5 @@
+import { cryptography } from '@liskhq/lisk-client';
+
 const modules = {
   token: 2,
   dpos: 5,
@@ -5,7 +7,7 @@ const modules = {
   legacyAccount: 1000,
 };
 
-const assets = {
+const commands = {
   transfer: 0,
   registerDelegate: 0,
   voteDelegate: 1,
@@ -15,59 +17,59 @@ const assets = {
   reportDelegateMisbehavior: 3,
 };
 
-const moduleAssetNameIdMap = {
-  transfer: `${modules.token}:${assets.transfer}`,
-  unlockToken: `${modules.dpos}:${assets.unlockToken}`,
-  voteDelegate: `${modules.dpos}:${assets.voteDelegate}`,
-  registerDelegate: `${modules.dpos}:${assets.registerDelegate}`,
-  reportDelegateMisbehavior: `${modules.dpos}:${assets.reportDelegateMisbehavior}`,
-  registerMultisignatureGroup: `${modules.multiSignature}:${assets.registerMultisignatureGroup}`,
-  reclaimLSK: `${modules.legacyAccount}:${assets.reclaimLSK}`,
+const moduleCommandNameIdMap = {
+  transfer: `${modules.token}:${commands.transfer}`,
+  unlockToken: `${modules.dpos}:${commands.unlockToken}`,
+  voteDelegate: `${modules.dpos}:${commands.voteDelegate}`,
+  registerDelegate: `${modules.dpos}:${commands.registerDelegate}`,
+  reportDelegateMisbehavior: `${modules.dpos}:${commands.reportDelegateMisbehavior}`,
+  registerMultisignatureGroup: `${modules.multiSignature}:${commands.registerMultisignatureGroup}`,
+  reclaimLSK: `${modules.legacyAccount}:${commands.reclaimLSK}`,
 };
 
-const moduleAssetMap = {
-  [moduleAssetNameIdMap.transfer]: {
+const moduleCommandMap = {
+  [moduleCommandNameIdMap.transfer]: {
     maxFee: 1e7,
     icon: 'txDefault',
   },
-  [moduleAssetNameIdMap.unlockToken]: {
+  [moduleCommandNameIdMap.unlockToken]: {
     maxFee: 1e7,
     icon: 'unlockToken',
   },
-  [moduleAssetNameIdMap.voteDelegate]: {
+  [moduleCommandNameIdMap.voteDelegate]: {
     maxFee: 1e8,
     icon: 'vote',
   },
-  [moduleAssetNameIdMap.registerDelegate]: {
+  [moduleCommandNameIdMap.registerDelegate]: {
     maxFee: 25e8,
     icon: 'registerDelegate',
   },
-  [moduleAssetNameIdMap.reportDelegateMisbehavior]: {
+  [moduleCommandNameIdMap.reportDelegateMisbehavior]: {
     maxFee: 1e7,
     icon: 'reportDelegateMisbehavior',
   },
-  [moduleAssetNameIdMap.registerMultisignatureGroup]: {
+  [moduleCommandNameIdMap.registerMultisignatureGroup]: {
     maxFee: 5e8,
     icon: 'multisignatureTransaction',
   },
-  [moduleAssetNameIdMap.reclaimLSK]: {
+  [moduleCommandNameIdMap.reclaimLSK]: {
     maxFee: 1e7,
     icon: 'txDefault',
   },
 };
 
-const MODULE_ASSETS_NAME_ID_MAP = Object.freeze(moduleAssetNameIdMap);
-const MODULE_ASSETS_MAP = Object.freeze(moduleAssetMap);
+const MODULE_COMMANDS_NAME_ID_MAP = Object.freeze(moduleCommandNameIdMap);
+const MODULE_COMMANDS_MAP = Object.freeze(moduleCommandMap);
 const BASE_FEES = [
   Object.freeze({
-    moduleID: modules.dpos,
-    assetID: assets.registerDelegate,
+    moduleID: cryptography.utils.intToBuffer(modules.dpos, 4),
+    commandID: cryptography.utils.intToBuffer(commands.registerDelegate, 4),
     baseFee: '1000000000',
   }),
 ];
 
 export {
   BASE_FEES,
-  MODULE_ASSETS_MAP,
-  MODULE_ASSETS_NAME_ID_MAP,
+  MODULE_COMMANDS_MAP,
+  MODULE_COMMANDS_NAME_ID_MAP,
 };

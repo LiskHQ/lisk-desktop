@@ -13,3 +13,11 @@
     word-spacing: 8px;
   }
 }
+
+.buttonContent {
+  display: flex;
+
+  & > img {
+    margin-left: 4px;
+  }
+}

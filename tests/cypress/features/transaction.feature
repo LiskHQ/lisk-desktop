@@ -33,7 +33,7 @@ Feature: Transactions
     Then I should see 1 transactions in table
 
   # @advanced
-  @basic
+  @skip
   Scenario: Filter by transaction type
     When I click on filterTransactionsBtn
     Then I should see filterDropdown

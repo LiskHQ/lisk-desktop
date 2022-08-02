@@ -67,8 +67,8 @@ const rawTx = {
   nonce: accounts.genesis.sequence.nonce,
   fee: '1000000',
   signatures: [],
-  moduleAssetId: '5:1',
-  asset: {
+  moduleCommandID: '5:1',
+  params: {
     votes: [
       {
         amount: '100',

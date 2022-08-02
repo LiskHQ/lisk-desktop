@@ -3,10 +3,10 @@ import { cryptography } from '@liskhq/lisk-client';
 const verifyMessageValidator = (inputs) => {
   let isCorrect = false;
   try {
-    isCorrect = cryptography.verifyMessageWithPublicKey({
+    isCorrect = cryptography.ed.verifyMessageWithPublicKey({
+      message: inputs.message,
       publicKey: Buffer.from(inputs.publicKey, 'hex'),
       signature: Buffer.from(inputs.signature, 'hex'),
-      message: inputs.message,
     });
   } catch (e) {
     isCorrect = false;
