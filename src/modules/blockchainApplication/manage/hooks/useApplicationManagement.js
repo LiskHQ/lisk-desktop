@@ -6,7 +6,7 @@ import { selectApplications } from '../store/selectors';
 import { useCurrentApplication } from './useCurrentApplication';
 import { usePinBlockchainApplication } from './usePinBlockchainApplication';
 
-function useApplicationManagement() {
+export function useApplicationManagement() {
   const dispatch = useDispatch();
   const [currentApplication, setCurrentApplication] = useCurrentApplication();
   const { checkPinByChainId, pins } = usePinBlockchainApplication();

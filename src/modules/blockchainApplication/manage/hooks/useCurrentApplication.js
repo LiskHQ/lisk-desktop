@@ -3,7 +3,7 @@ import { useSelector, useDispatch } from 'react-redux';
 import mockBlockchainApplications from '@tests/fixtures/blockchainApplicationsManage';
 import { selectCurrentApplication } from '../store/selectors';
 import { setCurrentApplication } from '../store/action';
-import useCurrentNode from './useCurrentNode';
+import { useCurrentNode } from './useCurrentNode';
 
 // eslint-disable-next-line import/prefer-default-export
 export function useCurrentApplication() {
