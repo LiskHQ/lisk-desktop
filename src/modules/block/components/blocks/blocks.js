@@ -85,6 +85,7 @@ const Blocks = ({
         />
         <BoxContent className={`${styles.content} block-results`}>
           <Table
+            showHeader
             data={blocks.data}
             isLoading={blocks.isLoading}
             row={BlockRow}

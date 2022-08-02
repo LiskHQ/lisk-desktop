@@ -1,38 +1,45 @@
 import React from 'react';
 import { useTranslation } from 'react-i18next';
-import { Link } from 'react-router-dom';
 import moment from 'moment';
 import Box from 'src/theme/box';
 import TokenAmount from '@token/fungible/components/tokenAmount';
 import ValueAndLabel from 'src/modules/transaction/components/TransactionDetails/valueAndLabel';
 import CopyToClipboard from 'src/modules/common/components/copyToClipboard';
-import { TertiaryButton } from 'src/theme/buttons';
+import { PrimaryButton, TertiaryButton } from 'src/theme/buttons';
 import grid from 'flexboxgrid/dist/flexboxgrid.css';
 import Dialog from '@theme/dialog/dialog';
 import Icon from 'src/theme/Icon';
 import Tooltip from 'src/theme/Tooltip';
-import { parseSearchParams } from 'src/utils/searchParams';
+import { parseSearchParams, removeThenAppendSearchParamsToUrl } from 'src/utils/searchParams';
+import useApplicationManagement from 'src/modules/blockchainApplication/manage/hooks/useApplicationManagement';
 import { usePinBlockchainApplication } from '@blockchainApplication/manage/hooks/usePinBlockchainApplication';
-import styles from './BlockchainApplicationDetails.css';
 import defaultBackgroundImage from '../../../../../../setup/react/assets/images/default-chain-background.png';
 import liskLogo from '../../../../../../setup/react/assets/images/LISK.png';
+import styles from './BlockchainApplicationDetails.css';
 
 const deposit = 5e10;
 const serviceUrl = 'https://lisk.com/';
 const backgroundImage = null;
 const chainLogo = null;
 
-const BlockchainApplicationDetails = ({ location, application }) => {
+// eslint-disable-next-line max-statements
+const BlockchainApplicationDetails = ({ history, location, application }) => {
   const { t } = useTranslation();
   const chainId = parseSearchParams(location.search).chainId;
+  const mode = parseSearchParams(location.search).mode;
   const { checkPinByChainId, togglePin } = usePinBlockchainApplication();
   const {
     name, state, address, lastCertificateHeight, lastUpdated,
   } = application.data;
+  const { setApplication } = useApplicationManagement();
 
   const isPinned = checkPinByChainId(chainId);
   const toggleApplicationPin = () => {
     togglePin(chainId);
+  };
+  const addNewApplication = () => {
+    setApplication(application.data);
+    removeThenAppendSearchParamsToUrl(history, { modal: 'addApplicationSuccess', chainId: application.data.chainID }, ['modal', 'chainId', 'mode']);
   };
 
   const footerDetails = [
@@ -62,7 +69,7 @@ const BlockchainApplicationDetails = ({ location, application }) => {
   ];
 
   return (
-    <Dialog hasClose className={`${styles.dialogWrapper} ${grid.row} ${grid['center-xs']}`}>
+    <Dialog hasClose hasBack className={`${styles.dialogWrapper} ${grid.row} ${grid['center-xs']}`}>
       <div className={styles.wrapper}>
         <div className={styles.avatarContainer}>
           <img src={chainLogo || liskLogo} />
@@ -91,16 +98,16 @@ const BlockchainApplicationDetails = ({ location, application }) => {
             </ValueAndLabel>
           </Box>
           <div className={styles.addressRow}>
-            <Link
+            <a
               className={`${styles.appLink}`}
               target="_blank"
                 // eslint-disable-next-line
-                // TODO: this is just a place holder link pending when its part of the response payload from service
-              to={serviceUrl}
+                // TODO: this is just a placeholder link pending when its part of the response payload from service
+              href={serviceUrl}
             >
               <Icon name="chainLinkIcon" className={styles.hwWalletIcon} />
               {t(serviceUrl)}
-            </Link>
+            </a>
           </div>
           <div className={styles.balanceRow}>
             <span>{t('Deposited:')}</span>
@@ -137,6 +144,18 @@ const BlockchainApplicationDetails = ({ location, application }) => {
               </ValueAndLabel>
             ))}
           </Box>
+          {mode === 'addApplication' ? (
+            <Box className={styles.footerButton}>
+              <PrimaryButton
+                size="l"
+                className={`${styles.addButton} add-application-button`}
+                data-testid="add-application-button"
+                onClick={addNewApplication}
+              >
+                {t('Add application to my list')}
+              </PrimaryButton>
+            </Box>
+          ) : null}
         </Box>
       </div>
     </Dialog>

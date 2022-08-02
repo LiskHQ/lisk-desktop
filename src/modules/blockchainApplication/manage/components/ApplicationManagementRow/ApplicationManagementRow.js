@@ -95,12 +95,20 @@ const ApplicationManagementRow = ({
   }, [location]);
 
   const handleSetCurrentApplication = useCallback(() => {
-    if (!isTerminated) setApplication(application);
+    // Check apis here
+    if (!isTerminated) {
+      if (application.apis.length > 1) {
+        // redirect to select node
+        addSearchParamsToUrl(history, { modal: 'selectNode', chainId: application.chainID });
+      } else {
+        setApplication(application);
+      }
+    }
   }, [setApplication, isTerminated]);
 
   return (
     <div
-      className={`managed-appliation-row ${styles.appItemWrapper} ${isCurrentApplication ? styles.activeAppBg : ''} ${isTerminated ? styles.termiated : ''}`}
+      className={`managed-application-row ${styles.appItemWrapper} ${isCurrentApplication ? styles.activeAppBg : ''} ${isTerminated ? styles.termiated : ''}`}
       onClick={handleSetCurrentApplication}
     >
       <div className={styles.leftWrapper}>

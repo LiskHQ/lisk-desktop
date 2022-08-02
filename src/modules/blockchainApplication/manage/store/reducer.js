@@ -12,6 +12,7 @@ const initialState = {
   pins: [],
   applications: {},
   current: null,
+  node: {},
 };
 
 /**
@@ -41,9 +42,9 @@ export const applications = (state = initialState.applications, { type, applicat
   switch (type) {
     case actionTypes.addApplicationByChainId:
       // In cases where a new node for an existing application is being added,
-      // the new service url should be appended to the serviceURLs array of the application
+      // the new node url should be appended to the apis array of the application
       if (application.chainID in state) {
-        state[application.chainID].serviceURLs.push(application.serviceURLs);
+        state[application.chainID].apis.push(application.apis);
       } else {
         state[application.chainID] = application;
       }
@@ -64,10 +65,24 @@ export const applications = (state = initialState.applications, { type, applicat
  * @param {Object} state
  * @param {type: String, application: Object} action
  */
-export const current = (state = null, { type, application }) => {
+export const current = (state = initialState.current, { type, application }) => {
   switch (type) {
     case actionTypes.setCurrentApplication:
       return application;
+    default:
+      return state;
+  }
+};
+
+/**
+ *
+ * @param {Object} state
+ * @param {type: String, nodeInfo: Object} action
+ */
+export const node = (state = initialState.node, { type, nodeInfo }) => {
+  switch (type) {
+    case actionTypes.setApplicationNode:
+      return nodeInfo;
     default:
       return state;
   }
@@ -77,10 +92,12 @@ const persistConfig = {
   storage,
   key: 'blockChainApplications',
   whitelist: ['pins', 'applications'],
-  blacklist: ['current'],
+  blacklist: ['current', 'node'],
 };
 
-const blockChainApplicationsReducer = combineReducers({ pins, applications, current });
+const blockChainApplicationsReducer = combineReducers({
+  pins, applications, current, node,
+});
 
 // eslint-disable-next-line import/prefer-default-export
 export const blockChainApplications = persistReducer(persistConfig, blockChainApplicationsReducer);

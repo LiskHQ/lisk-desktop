@@ -22,6 +22,7 @@ const TableWrapper = ({
   const { t } = useTranslation();
   return (
     <Table
+      showHeader
       data={delegates.data}
       error={delegates.error}
       isLoading={delegates.isLoading}

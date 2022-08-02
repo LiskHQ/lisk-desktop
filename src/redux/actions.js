@@ -9,4 +9,5 @@ export * from '@dpos/validator/store/actions/watchList';
 export * from '@update/store/actions/appUpdates';
 export * from 'src/modules/common/store/actions';
 export * from '@token/fungible/utils/service';
+export * from '@blockchainApplication/manage/store/action';
 export { default as processLaunchProtocol } from 'src/utils/urlProcessor';

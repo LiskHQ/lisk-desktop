@@ -166,3 +166,12 @@
 .detail:last-of-type {
   width: 25%;
 }
+
+.footerButton {
+  padding: 16px;
+}
+
+.addButton {
+  border-radius: 10px;
+  font-weight: 500;
+}

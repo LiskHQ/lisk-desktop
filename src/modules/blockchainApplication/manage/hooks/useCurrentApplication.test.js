@@ -37,7 +37,7 @@ describe('useCurrentApplication hook', () => {
     act(() => {
       setCurrentApplication(mockApplications[0]);
     });
-    expect(mockDispatch).toHaveBeenCalledTimes(1);
+    expect(mockDispatch).toHaveBeenCalledTimes(2);
     expect(mockDispatch).toHaveBeenCalledWith(expectedAction);
   });
 });

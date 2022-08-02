@@ -5,7 +5,7 @@ import BlockchainApplicationList from '@blockchainApplication/explore/components
 import BlockchainApplicationStatistics from '../BlockchainApplicationStatistics';
 import styles from './BlockchainApplications.css';
 
-const BlockchainAppications = ({
+const BlockchainApplications = ({
   applications,
   statistics,
   applyFilters,
@@ -40,4 +40,4 @@ const BlockchainAppications = ({
   );
 };
 
-export default BlockchainAppications;
+export default BlockchainApplications;
