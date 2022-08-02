@@ -14,7 +14,7 @@ export const mockAppTokens = [
   },
   {
     description: '', // Optional
-    name: 'Enviti',
+    name: 'Enevti',
     symbol: 'EVT',
     display: 'EVT',
     base: 'beddows',

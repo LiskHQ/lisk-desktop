@@ -6,7 +6,7 @@ const httpPaths = {
 };
 
 /**
- * Retrieves list of blockchain applications with off-chain data
+ * Retrieves list of tokens
  *
  * @param {Object} data
  * @param {String} data.params
@@ -14,7 +14,7 @@ const httpPaths = {
  * @param {String?} data.baseUrl - Lisk Service API url to override the
  * existing ServiceUrl on the network param.
  * @param {Object} data.network - Network setting from Redux store
- * @returns {Promise} Blockchain application details API call
+ * @returns {Promise} Token list API call
  */
 
 // eslint-disable-next-line import/prefer-default-export
