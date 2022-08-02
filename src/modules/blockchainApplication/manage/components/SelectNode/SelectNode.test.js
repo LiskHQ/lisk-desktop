@@ -27,7 +27,7 @@ const props = {
 };
 
 describe('SelectNode', () => {
-  it('displays properly', () => {
+  it('Should render select node component', () => {
     const selectedApplication = { ...mockBlockChainApplications[4], isPinned: false };
 
     renderWithCustomRouter(SelectNode, props);
