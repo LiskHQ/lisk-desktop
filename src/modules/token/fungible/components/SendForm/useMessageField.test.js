@@ -1,14 +1,19 @@
 import { renderHook } from '@testing-library/react-hooks';
 import useMessageField from './useMessageField';
 
-const mockDispatch = jest.fn();
+const mockSetter = jest.fn();
 const mockState = {
   value: 'test-message',
 };
 
+jest.mock('react', () => ({
+  ...jest.requireActual('react'),
+  useState: (value) => ([value, mockSetter]),
+}));
+
 describe('useMessageField hook', () => {
   beforeEach(() => {
-    mockDispatch.mockClear();
+    mockSetter.mockClear();
   });
 
   const { result } = renderHook(() => useMessageField(mockState.value));
@@ -17,5 +22,8 @@ describe('useMessageField hook', () => {
     const [message, onMessageInputChange] = result.current;
     expect(message.value).toBe(mockState.value);
     expect(onMessageInputChange).toBeTruthy();
+
+    onMessageInputChange({ target: { ...mockState } });
+    expect(mockSetter).toHaveBeenCalled();
   });
 });
