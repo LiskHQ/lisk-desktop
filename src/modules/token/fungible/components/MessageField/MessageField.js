@@ -1,4 +1,4 @@
-import React, { useState, useMemo } from 'react';
+import React, { useState, useMemo, useCallback } from 'react';
 import { useTranslation } from 'react-i18next';
 import { AutoResizeTextarea } from 'src/theme';
 import { TertiaryButton } from 'src/theme/buttons';
@@ -18,10 +18,17 @@ function MessageField({
   feedback,
   label,
   placeholder,
+  name,
+  onRemove,
 }) {
   const [isCollapsed, setCollapsed] = useState(false);
   const { t } = useTranslation();
   const byteCount = useMemo(() => sizeOfString(value), [value]);
+
+  const onShrinkField = useCallback(() => {
+    setCollapsed(!isCollapsed);
+    onRemove();
+  }, [isCollapsed]);
 
   return !isCollapsed
     ? (
@@ -34,24 +41,24 @@ function MessageField({
       </TertiaryButton>
     )
     : (
-      <label className={`${styles.container} reference`}>
-        <span className={`${styles.fieldLabel}`}>
-          {label}
+      <div className={`${styles.container} reference`}>
+        <div className={`${styles.fieldLabel}`}>
+          <span>{label}</span>
           {' '}
           <TertiaryButton
-            onClick={() => setCollapsed(!isCollapsed)}
+            onClick={onShrinkField}
             className={styles.removeMessageButton}
           >
             <Icon name="removeBlueIcon" />
             <span>Remove</span>
           </TertiaryButton>
-        </span>
+        </div>
         <span className={`${styles.referenceField}`}>
           <AutoResizeTextarea
             maxLength={100}
             spellCheck={false}
             onChange={onChange}
-            name="reference"
+            name={name}
             value={value}
             placeholder={placeholder}
             className={`${styles.textarea} ${error ? 'error' : ''}`}
@@ -87,7 +94,7 @@ function MessageField({
             )}
           </span>
         </span>
-      </label>
+      </div>
     );
 }
 

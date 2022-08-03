@@ -78,6 +78,7 @@ class Request extends React.Component {
     this.updateShareLink = this.updateShareLink.bind(this);
     this.onSelectReceipentChain = this.onSelectReceipentChain.bind(this);
     this.onSelectToken = this.onSelectToken.bind(this);
+    this.onRemoveMessageField = this.onRemoveMessageField.bind(this);
   }
 
   /* istanbul ignore next */
@@ -151,40 +152,31 @@ class Request extends React.Component {
 
   // TODO: this would be properly implemented when apis have been hooked up
   onSelectReceipentChain(value) {
-    const recipientApplicationField = {
-      value,
-      error: false,
-      feedback: '',
-      loading: false,
-    };
-    const shareLink = this.updateShareLink(recipientApplicationField);
-
-    this.setState(({ fields }) => ({
-      shareLink,
-      fields: {
-        ...fields,
-        recipientApplication: recipientApplicationField,
+    this.handleFieldChange({
+      target: {
+        name: 'recipientApplication',
+        value,
       },
-    }));
+    });
   }
 
   // TODO: this would be properly implemented when apis have been hooked up
   onSelectToken(value) {
-    const tokenField = {
-      value,
-      error: false,
-      feedback: '',
-      loading: false,
-    };
-    const shareLink = this.updateShareLink(tokenField);
-
-    this.setState(({ fields }) => ({
-      shareLink,
-      fields: {
-        ...fields,
-        recipientApplication: tokenField,
+    this.handleFieldChange({
+      target: {
+        name: 'token',
+        value,
       },
-    }));
+    });
+  }
+
+  onRemoveMessageField() {
+    this.handleFieldChange({
+      target: {
+        name: 'reference',
+        value: '',
+      },
+    });
   }
 
   // eslint-disable-next-line complexity
@@ -261,6 +253,7 @@ class Request extends React.Component {
         </label>
         <MessageField
           t={t}
+          name="reference"
           reference={fields.reference.value}
           onChange={this.handleFieldChange}
           maxMessageLength={maxMessageLength}
@@ -269,6 +262,7 @@ class Request extends React.Component {
           feedback={fields.reference.feedback}
           label={t('Message (Optional)')}
           placeholder={t('Write message')}
+          onRemove={this.onRemoveMessageField}
         />
       </RequestWrapper>
     );
