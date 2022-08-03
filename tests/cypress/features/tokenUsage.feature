@@ -15,7 +15,11 @@ Feature: TokenUsage
     And I click on tokenSelect
     And I click on tokenDropdownOption
     And I paste 20 in requestTokenAmountField field
-    And I click on addMessageBuutton
+    And I click on addMessageButton
     And I fill test_Message in messageTextArea field
     And I click on copyRequestTokenButton
     Then request token url should be on clipboard
+    When I click on removeMessageIcon
+    And I click on copyRequestTokenButton
+    And I wait 1 seconds
+    Then request token url on clipboard should not have reference
