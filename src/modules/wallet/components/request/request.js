@@ -21,9 +21,9 @@ const Account = () => {
   const { address, name } = currentAccount.metadata || {};
 
   return (
-    <div className={styles.accountWraper}>
+    <div className={styles.accountWrapper}>
       <WalletVisual address={address} size={40} />
-      <div align="left">
+      <div>
         <b className={`${styles.addressValue}`}>
           {name}
         </b>

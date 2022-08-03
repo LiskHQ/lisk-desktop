@@ -33,7 +33,7 @@ describe('Request', () => {
     evt = { target: { name: 'reference', value: 'test' } };
     wrapper.find('.add-message-button').at(0).simulate('click');
 
-    wrapper.find('label textarea[placeholder="Write message"]').simulate('change', evt);
+    wrapper.find('div textarea[placeholder="Write message"]').simulate('change', evt);
     expect(wrapper.find(Request).state('shareLink')).toMatch(`${shareLink}&${evt.target.name}=${evt.target.value}`);
 
     evt = { target: { name: 'amount', value: 1 } };
