@@ -27,7 +27,7 @@ function MessageField({
 
   const onShrinkField = useCallback(() => {
     setCollapsed(!isCollapsed);
-    onRemove();
+    onRemove?.();
   }, [isCollapsed]);
 
   return !isCollapsed
