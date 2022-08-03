@@ -6,6 +6,7 @@ describe('MessageField', () => {
   let wrapper;
   const props = {
     onChange: jest.fn(),
+    onRemove: jest.fn(),
     value: 'test message',
     maxMessageLength: 10,
     label: 'label',

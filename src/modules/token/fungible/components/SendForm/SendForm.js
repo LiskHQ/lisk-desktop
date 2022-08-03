@@ -100,6 +100,7 @@ const SendForm = (props) => {
               name="amount"
             />
             <MessageField
+              name="reference"
               value={reference.value}
               onChange={setReference}
               label={t('Message (Optional)')}
