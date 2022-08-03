@@ -32,7 +32,8 @@ const tokenUsage = {
   requestTokenAmountField: '.request-wrapper .amount-field',
   recipientChainDropdownOption: '.recipient-application .dropdown-option',
   tokenDropdownOption: '.token .dropdown-option',
-  addMessageBuutton: '.add-message-button',
+  addMessageButton: '.add-message-button',
+  removeMessageIcon: 'img[alt="removeBlueIcon"]',
   messageTextArea: '.reference textarea',
 };
 
