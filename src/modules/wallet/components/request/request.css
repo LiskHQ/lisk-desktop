@@ -18,7 +18,7 @@
     box-sizing: border-box;
     display: flex;
     flex-direction: column;
-    flex-basis: calc(50% - 20px);
+    flex-basis: calc(50% - 18px);
   }
 
   & .label {
@@ -242,7 +242,7 @@
   transition: opacity var(--animation-speed-fast) linear var(--animation-delay-standard);
 }
 
-.accountWraper {
+.accountWrapper {
   width: 100%;
   display: flex;
   flex-direction: row;
@@ -258,6 +258,7 @@
   & > div:first-child ~ div {
     margin-left: 10px;
     flex: 1;
+    width: calc(100% - 50px);
   }
 
   & > div:first-child ~ div > p {
@@ -265,6 +266,9 @@
     margin-bottom: 0px;
     color: var(--color-slate-gray);
     font-size: 13px;
+    text-overflow: ellipsis;
+    width: 100%;
+    overflow: hidden;
   }
 
   & > div:first-child ~ div ~ button {

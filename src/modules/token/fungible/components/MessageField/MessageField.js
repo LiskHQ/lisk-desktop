@@ -8,7 +8,6 @@ import Tooltip from 'src/theme/Tooltip';
 import { sizeOfString } from 'src/utils/helpers';
 import styles from './MessageField.css';
 
-// istanbul ignore
 function MessageField({
   onChange,
   value,
