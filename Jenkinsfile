@@ -4,7 +4,7 @@ properties([disableConcurrentBuilds(), pipelineTriggers([])])
 pipeline {
 	agent { node { label 'lisk-desktop' } }
 	options {
-		timeout(time: 30, unit: 'MINUTES')
+		timeout(time: 45, unit: 'MINUTES')
 		ansiColor('xterm')
 	}
 	parameters {
