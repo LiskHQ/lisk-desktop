@@ -2,14 +2,17 @@ import React, { useState } from 'react';
 import Piwik from 'src/utils/piwik';
 import { MODULE_COMMANDS_NAME_ID_MAP } from '@transaction/configuration/moduleAssets';
 import AmountField from 'src/modules/common/components/amountField';
+import TokenAmount from '@token/fungible/components/tokenAmount';
+import Icon from 'src/theme/Icon';
 import { toRawLsk, fromRawLsk } from '@token/fungible/utils/lsk';
 import BoxContent from 'src/theme/box/content';
 import BoxHeader from 'src/theme/box/header';
+import MenuSelect, { MenuItem } from 'src/modules/wallet/components/MenuSelect';
 import TxComposer from '@transaction/components/TxComposer';
 import BookmarkAutoSuggest from './bookmarkAutoSuggest';
-import useAmountField from './useAmountField';
-import useMessageField from './useMessageField';
-import useRecipientField from './useRecipientField';
+import useAmountField from '../../hooks/useAmountField';
+import useMessageField from '../../hooks/useMessageField';
+import useRecipientField from '../../hooks/useRecipientField';
 import styles from './form.css';
 import MessageField from '../MessageField';
 
@@ -21,10 +24,11 @@ const SendForm = (props) => {
   const {
     t,
     token,
-    account,
+    account = {},
     bookmarks,
     nextStep,
   } = props;
+
   const [reference, setReference] = useMessageField(
     getInitialData(props.prevState?.rawTx, props.initialValue?.reference),
   );
@@ -77,18 +81,63 @@ const SendForm = (props) => {
       >
         <>
           <BoxHeader className={styles.header}>
-            <h2>{t('Send {{token}}', { token })}</h2>
+            <h2>{t('Send Tokens')}</h2>
           </BoxHeader>
           <BoxContent className={styles.formSection}>
-            <span className={`${styles.fieldGroup} recipient`}>
-              <span className={`${styles.fieldLabel}`}>{t('Recipient')}</span>
-              <BookmarkAutoSuggest
-                bookmarks={bookmarks[token].filter((item) => !item.disabled)}
-                recipient={recipient}
-                t={t}
-                updateField={setRecipientField}
-              />
-            </span>
+            <div className={`${styles.ApplilcationFieldWrapper}`}>
+              <div>
+                <label className={`${styles.fieldLabel} recipient-application`}>
+                  <span>{t('Recipient Application')}</span>
+                </label>
+                <MenuSelect>
+                  <MenuItem value={1}>
+                    ******** 12
+                  </MenuItem>
+                  <MenuItem value={2}>
+                    ******** 12
+                  </MenuItem>
+                </MenuSelect>
+              </div>
+              <div>
+                <Icon name="transferArrow" />
+              </div>
+              <div>
+                <label className={`${styles.fieldLabel} recipient-application`}>
+                  <span>{t('Recipient Application')}</span>
+                </label>
+                <MenuSelect>
+                  <MenuItem value={1}>
+                    ******** 12
+                  </MenuItem>
+                  <MenuItem value={2}>
+                    ******** 12
+                  </MenuItem>
+                </MenuSelect>
+              </div>
+            </div>
+
+            <div className={`${styles.fieldGroup} token`}>
+              <label className={`${styles.fieldLabel}`}>
+                <span>{t('Recipient Application')}</span>
+              </label>
+              <span className={styles.balance}>
+                Balance:&nbsp;
+                <span>
+                  <TokenAmount val={amount} />
+                  {' '}
+                  LSK
+                </span>
+              </span>
+              <MenuSelect>
+                <MenuItem value={1}>
+                  ******** 12
+                </MenuItem>
+                <MenuItem value={2}>
+                  ******** 12
+                </MenuItem>
+              </MenuSelect>
+            </div>
+
             <AmountField
               amount={amount}
               onChange={setAmountField}
@@ -96,9 +145,18 @@ const SendForm = (props) => {
               displayConverter
               label={t('Amount')}
               placeHolder={t('Insert transaction amount')}
-              useMaxLabel={t('Send maximum amount')}
               name="amount"
             />
+
+            <div className={`${styles.fieldGroup} ${styles.recipientFieldWrapper}`}>
+              <span className={`${styles.fieldLabel}`}>{t('Recipient Address')}</span>
+              <BookmarkAutoSuggest
+                bookmarks={bookmarks[token].filter((item) => !item.disabled)}
+                recipient={recipient}
+                t={t}
+                updateField={setRecipientField}
+              />
+            </div>
             <MessageField
               name="reference"
               value={reference.value}

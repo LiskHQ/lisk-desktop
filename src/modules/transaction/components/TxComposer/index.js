@@ -1,22 +1,22 @@
-import React, { useEffect, useState } from 'react';
+import React, { /* useEffect , useState  */ } from 'react';
 import { useSelector } from 'react-redux';
-import { useTranslation } from 'react-i18next';
-import useTransactionFeeCalculation from '@transaction/hooks/useTransactionFeeCalculation';
-import useTransactionPriority from '@transaction/hooks/useTransactionPriority';
+// import { useTranslation } from 'react-i18next';
+// import useTransactionFeeCalculation from '@transaction/hooks/useTransactionFeeCalculation';
+// import useTransactionPriority from '@transaction/hooks/useTransactionPriority';
 import {
-  selectActiveToken,
+  // selectActiveToken,
   selectActiveTokenAccount,
 } from 'src/redux/selectors';
 import Box from 'src/theme/box';
-import BoxFooter from 'src/theme/box/footer';
-import TransactionPriority from '@transaction/components/TransactionPriority';
-import { toRawLsk } from '@token/fungible/utils/lsk';
-import { PrimaryButton } from 'src/theme/buttons';
-import Feedback, { getMinRequiredBalance } from './Feedback';
+// import BoxFooter from 'src/theme/box/footer';
+// import TransactionPriority from '@transaction/components/TransactionPriority';
+// import { toRawLsk } from '@token/fungible/utils/lsk';
+// import { PrimaryButton } from 'src/theme/buttons';
+// import Feedback, { getMinRequiredBalance } from './Feedback';
 
 // eslint-disable-next-line max-statements
 const TxComposer = ({
-  children, transaction, onComposed, onConfirm, className, buttonTitle,
+  children, /* transaction, onComposed, */ /* onConfirm, */ className, /* buttonTitle, */
 }) => {
   const { t } = useTranslation();
   const network = useSelector(state => state.network);
@@ -48,12 +48,12 @@ const TxComposer = ({
     }
   }, [selectedPriority, transaction.params]);
 
-  const minRequiredBalance = getMinRequiredBalance(transaction, status.fee);
+  // const minRequiredBalance = getMinRequiredBalance(transaction, status.fee);
 
   return (
     <Box className={className}>
       {children}
-      <TransactionPriority
+      {/* <TransactionPriority
         token={token}
         fee={status.fee}
         minFee={Number(status.minFee.value)}
@@ -81,7 +81,7 @@ const TxComposer = ({
             buttonTitle ?? t('Continue')
           }
         </PrimaryButton>
-      </BoxFooter>
+      </BoxFooter> */}
     </Box>
   );
 };

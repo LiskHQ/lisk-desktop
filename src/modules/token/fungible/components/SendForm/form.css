@@ -30,15 +30,18 @@
     display: flex;
     flex-direction: column;
     margin-bottom: 16px;
+    position: relative;
   }
 
   & .fieldLabel {
     @mixin contentNormal bold;
 
     align-items: center;
-    color: var(--color-maastricht-blue);
+    color: var(--color-zodiac-blue);
     display: flex;
-    margin-bottom: 8px;
+    margin-bottom: 16px;
+    font-weight: 400;
+    font-size: 14px;
   }
 
   & .amountHint {
@@ -116,6 +119,17 @@
       margin-left: 5px;
     }
   }
+
+  & .balance {
+    position: absolute;
+    bottom: calc(50% - 26px);
+    right: 50px;
+  }
+
+  & .balance > span {
+    font-weight: 500;
+    color: var(--color-ultramarine-blue);
+  }
 }
 
 .feedbackMessage {
@@ -172,4 +186,35 @@
 .recipientWalletVisual {
   margin-left: -4px;
   margin-top: 4px;
+}
+
+.recipientFieldWrapper {
+  margin-bottom: 3px !important;
+}
+
+.ApplilcationFieldWrapper {
+  width: 100%;
+  display: flex;
+  flex-direction: row !important;
+  column-gap: 16px;
+  margin-bottom: 16px;
+
+  & > div:first-child {
+    flex: 1;
+    position: relative;
+  }
+
+  & > div:nth-child(2) {
+    width: 20px;
+    position: relative;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding-top: 36px;
+  }
+
+  & > div:last-child {
+    flex: 1;
+    position: relative;
+  }
 }
