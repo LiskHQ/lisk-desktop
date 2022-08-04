@@ -12,8 +12,8 @@ import {
 export const useBlocks = ({ config: customConfig = {}, options } = { }) => {
   const [currentApplication] = useCurrentApplication();
   const config = {
-    baseUrl: currentApplication?.node[0][METHOD] ?? currentApplication?.node[0].rest,
-    path: `/api/${API_VERSION}/blocks/`,
+    baseUrl: currentApplication?.apis[0][METHOD] ?? currentApplication?.apis[0].rest,
+    path: `/api/${API_VERSION}/blocks`,
     event: 'get.blocks',
     ...customConfig,
     params: { limit, ...customConfig.params },
@@ -37,6 +37,11 @@ export const useBlocks = ({ config: customConfig = {}, options } = { }) => {
         const offset = lastPage.meta.count + lastPage.meta.offset;
         const hasMore = offset < lastPage.meta.total;
         return !hasMore ? undefined : { offset };
+      },
+      placeholderData: {
+        data: [],
+        pages: [],
+        pageParams: [],
       },
     },
   );
