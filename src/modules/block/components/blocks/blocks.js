@@ -6,15 +6,15 @@ import BoxContent from 'src/theme/box/content';
 import FilterBar from 'src/modules/common/components/filterBar';
 import StickyHeader from 'src/theme/table/stickyHeader';
 import Table from 'src/theme/table';
-import BlockFilterDropdown from './blockFilterDropdown';
-import styles from './blocks.css';
 import BlocksOverview from '../../manager/blocksOverviewManager';
+import { useBlocks } from '../../hooks/queries/useBlocks';
+import BlockFilterDropdown from './blockFilterDropdown';
 import BlockRow from './blockRow';
 import header from './tableHeader';
+import styles from './blocks.css';
 
 const Blocks = ({
   t,
-  blocks,
   filters,
   applyFilters,
   clearFilter,
@@ -22,6 +22,9 @@ const Blocks = ({
   sort,
   changeSort,
 }) => {
+  const {
+    data: blocks, error, isLoading, fetchNextPage, hasNextPage,
+  } = useBlocks();
   const formatters = {
     height: (value) => `${t('Height')}: ${value}`,
     /* istanbul ignore next */
@@ -29,18 +32,7 @@ const Blocks = ({
   };
 
   const handleLoadMore = () => {
-    blocks.loadData(
-      Object.keys(filters).reduce(
-        (acc, key) => ({
-          ...acc,
-          ...(filters[key] && { [key]: filters[key] }),
-        }),
-        {
-          offset: blocks.data.length,
-          sort,
-        },
-      ),
-    );
+    fetchNextPage();
   };
 
   /* istanbul ignore next */
@@ -48,13 +40,11 @@ const Blocks = ({
     applyFilters(filters);
   };
 
-  const canLoadMore = blocks.meta && blocks.meta.total > blocks.data.length;
-
   return (
     <div>
       <BlocksOverview t={t} />
       <Box
-        isLoading={blocks.isLoading}
+        isLoading={isLoading}
         className="blocks-container"
         width="full"
         main
@@ -63,6 +53,7 @@ const Blocks = ({
           title={t('All blocks')}
           button={{
             entity: 'block',
+            error,
             onClick: loadLastBlocks,
             label: t('New blocks'),
           }}
@@ -87,14 +78,14 @@ const Blocks = ({
           <Table
             showHeader
             data={blocks.data}
-            isLoading={blocks.isLoading}
+            isLoading={isLoading}
             row={BlockRow}
             loadData={handleLoadMore}
             header={header(changeSort, t)}
             headerClassName={styles.tableHeader}
             currentSort={sort}
-            canLoadMore={canLoadMore}
-            error={blocks.error}
+            canLoadMore={hasNextPage}
+            error={error}
           />
         </BoxContent>
       </Box>
