@@ -11,7 +11,7 @@ import useAmountField from './useAmountField';
 import useMessageField from './useMessageField';
 import useRecipientField from './useRecipientField';
 import styles from './form.css';
-import MessageField from './MessageField';
+import MessageField from '../MessageField';
 
 const getInitialData = (rawTx, initialValue) => rawTx?.asset.data || initialValue || '';
 const getInitialAmount = (rawTx, initialValue) => (Number(rawTx?.asset.amount) ? fromRawLsk(rawTx?.asset.amount) : initialValue || '');
@@ -100,9 +100,11 @@ const SendForm = (props) => {
               name="amount"
             />
             <MessageField
-              t={t}
-              reference={reference}
-              setReference={setReference}
+              name="reference"
+              value={reference.value}
+              onChange={setReference}
+              label={t('Message (Optional)')}
+              placeholder={t('Write message')}
             />
           </BoxContent>
         </>

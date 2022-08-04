@@ -1,15 +1,39 @@
 import React from 'react';
 import { regex } from 'src/const/regex';
 import { maxMessageLength } from '@transaction/configuration/transactions';
+import { mockAppTokens } from '@tests/fixtures/token';
 import { validateAmountFormat } from 'src/utils/validators';
 import { sizeOfString } from 'src/utils/helpers';
-import { Input, AutoResizeTextarea } from 'src/theme';
-import CircularProgress from '@theme/ProgressCircular/circularProgress';
+import { Input } from 'src/theme';
+import blockchainApplicationsExplore from '@tests/fixtures/blockchainApplicationsExplore';
 import Converter from 'src/modules/common/components/converter';
-import Icon from '@theme/Icon';
+import { useCurrentAccount } from 'src/modules/account/hooks';
 import i18n from 'src/utils/i18n/i18n';
+import MessageField from '../../../token/fungible/components/MessageField';
+import MenuSelect, { MenuItem } from '../MenuSelect';
 import RequestWrapper from './requestWrapper';
 import styles from './request.css';
+import WalletVisual from '../walletVisual';
+import chainLogo from '../../../../../setup/react/assets/images/LISK.png';
+
+const Account = () => {
+  const [currentAccount] = useCurrentAccount();
+  const { address, name } = currentAccount.metadata || {};
+
+  return (
+    <div className={styles.accountWrapper}>
+      <WalletVisual address={address} size={40} />
+      <div>
+        <b className={`${styles.addressValue}`}>
+          {name}
+        </b>
+        <p className={`${styles.addressValue}`}>
+          {address}
+        </p>
+      </div>
+    </div>
+  );
+};
 
 class Request extends React.Component {
   constructor(props) {
@@ -30,6 +54,18 @@ class Request extends React.Component {
           loading: false,
           feedback: '',
         },
+        token: {
+          error: false,
+          value: '',
+          loading: false,
+          feedback: '',
+        },
+        recipientApplication: {
+          error: false,
+          value: '',
+          loading: false,
+          feedback: '',
+        },
       },
     };
 
@@ -40,6 +76,9 @@ class Request extends React.Component {
 
     this.handleFieldChange = this.handleFieldChange.bind(this);
     this.updateShareLink = this.updateShareLink.bind(this);
+    this.onSelectReceipentChain = this.onSelectReceipentChain.bind(this);
+    this.onSelectToken = this.onSelectToken.bind(this);
+    this.onRemoveMessageField = this.onRemoveMessageField.bind(this);
   }
 
   /* istanbul ignore next */
@@ -111,17 +150,85 @@ class Request extends React.Component {
     }, `lisk://wallet/send?recipient=${address}`);
   }
 
+  // TODO: this would be properly implemented when apis have been hooked up
+  onSelectReceipentChain(value) {
+    this.handleFieldChange({
+      target: {
+        name: 'recipientApplication',
+        value,
+      },
+    });
+  }
+
+  // TODO: this would be properly implemented when apis have been hooked up
+  onSelectToken(value) {
+    this.handleFieldChange({
+      target: {
+        name: 'token',
+        value,
+      },
+    });
+  }
+
+  onRemoveMessageField() {
+    this.handleFieldChange({
+      target: {
+        name: 'reference',
+        value: '',
+      },
+    });
+  }
+
   // eslint-disable-next-line complexity
   render() {
     const { t } = this.props;
-    const { fields, shareLink } = this.state;
-    const byteCount = sizeOfString(fields.reference.value);
+    const {
+      fields,
+      shareLink,
+    } = this.state;
 
     return (
-      <RequestWrapper copyLabel={t('Copy link')} copyValue={shareLink} t={t} title={t('Request LSK')}>
+      <RequestWrapper copyLabel={t('Copy link')} copyValue={shareLink} t={t} title={t('Request tokens')} className="request-wrapper">
         <span className={`${styles.label}`}>
-          {t('Request LSK from another Lisk user. Copy the link or scan the QR code to share your request.')}
+          {t('Use the sharing link to easily request any amount of tokens from Lisk Desktop or Lisk Mobile users.')}
         </span>
+
+        <p>Account</p>
+        <Account />
+        <label className={`${styles.fieldGroup} recipient-application`}>
+          <span className={`${styles.fieldLabel}`}>{t('Recipient Application')}</span>
+          <span className={`${styles.amountField}`}>
+            <MenuSelect
+              className="recipient-chain-select"
+              value={fields.recipientApplication.value}
+              onChange={this.onSelectReceipentChain}
+            >
+              {blockchainApplicationsExplore.map(({ name, chainID }) => (
+                <MenuItem className={styles.chainOptionWrapper} value={chainID} key={chainID}>
+                  <img className={styles.chainLogo} src={chainLogo} />
+                  <span>{name}</span>
+                </MenuItem>
+              ))}
+            </MenuSelect>
+          </span>
+        </label>
+        <label className={`${styles.fieldGroup} token`}>
+          <span className={`${styles.fieldLabel}`}>{t('Token')}</span>
+          <span className={`${styles.amountField}`}>
+            <MenuSelect
+              className="token-select"
+              onChange={this.onSelectToken}
+              value={fields.token.value}
+            >
+              {mockAppTokens.map(({ display }) => (
+                <MenuItem className={styles.chainOptionWrapper} value={display} key={display}>
+                  <img className={styles.chainLogo} src={chainLogo} />
+                  <span>{display}</span>
+                </MenuItem>
+              ))}
+            </MenuSelect>
+          </span>
+        </label>
         <label className={`${styles.fieldGroup}`}>
           <span className={`${styles.fieldLabel}`}>{t('Amount')}</span>
           <span className={`${styles.amountField} amount`}>
@@ -131,11 +238,11 @@ class Request extends React.Component {
               name="amount"
               value={fields.amount.value}
               placeholder={t('Requested amount')}
-              className={styles.input}
+              className={`${styles.input} amount-field`}
               status={fields.amount.error ? 'error' : 'ok'}
               feedback={fields.amount.feedback}
               isLoading={fields.amount.loading}
-              size="s"
+              size="m"
             />
             <Converter
               className={styles.converter}
@@ -144,32 +251,19 @@ class Request extends React.Component {
             />
           </span>
         </label>
-        <label className={`${styles.fieldGroup} reference`}>
-          <span className={`${styles.fieldLabel}`}>{t('Message (optional)')}</span>
-          <span className={`${styles.referenceField}`}>
-            <AutoResizeTextarea
-              maxLength={100}
-              spellCheck={false}
-              onChange={this.handleFieldChange}
-              name="reference"
-              value={fields.reference.value}
-              placeholder={t('Write message')}
-              className={`${styles.textarea} ${fields.reference.error ? 'error' : ''}`}
-            />
-            <CircularProgress
-              max={maxMessageLength}
-              value={byteCount}
-              className={styles.byteCounter}
-            />
-            <Icon
-              className={`${styles.status} ${!fields.reference.loading && fields.reference.value ? styles.show : ''}`}
-              name={fields.reference.error ? 'alertIcon' : 'okIcon'}
-            />
-            <span className={`${styles.feedback} ${maxMessageLength - byteCount < 10 ? styles.error : ''}`}>
-              {fields.reference.feedback}
-            </span>
-          </span>
-        </label>
+        <MessageField
+          t={t}
+          name="reference"
+          reference={fields.reference.value}
+          onChange={this.handleFieldChange}
+          maxMessageLength={maxMessageLength}
+          isLoading={fields.reference.loading}
+          error={fields.reference.error}
+          feedback={fields.reference.feedback}
+          label={t('Message (Optional)')}
+          placeholder={t('Write message')}
+          onRemove={this.onRemoveMessageField}
+        />
       </RequestWrapper>
     );
   }
