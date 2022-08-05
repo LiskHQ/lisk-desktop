@@ -3,31 +3,43 @@ import Piwik from 'src/utils/piwik';
 import { MODULE_COMMANDS_NAME_ID_MAP } from '@transaction/configuration/moduleAssets';
 import AmountField from 'src/modules/common/components/amountField';
 import TokenAmount from '@token/fungible/components/tokenAmount';
+import { mockAppTokens } from '@tests/fixtures/token';
 import Icon from 'src/theme/Icon';
 import { toRawLsk, fromRawLsk } from '@token/fungible/utils/lsk';
 import BoxContent from 'src/theme/box/content';
 import BoxHeader from 'src/theme/box/header';
+import { useCurrentApplication } from 'src/modules/blockchainApplication/manage/hooks/useCurrentApplication';
+import useApplicationManagement from 'src/modules/blockchainApplication/manage/hooks/useApplicationManagement';
 import MenuSelect, { MenuItem } from 'src/modules/wallet/components/MenuSelect';
 import TxComposer from '@transaction/components/TxComposer';
+import blockchainApplicationsExplore from '@tests/fixtures/blockchainApplicationsExplore';
 import BookmarkAutoSuggest from './bookmarkAutoSuggest';
 import useAmountField from '../../hooks/useAmountField';
 import useMessageField from '../../hooks/useMessageField';
 import useRecipientField from '../../hooks/useRecipientField';
 import styles from './form.css';
 import MessageField from '../MessageField';
+import chainLogo from '../../../../../../setup/react/assets/images/LISK.png';
 
-const getInitialData = (rawTx, initialValue) => rawTx?.params.data || initialValue || '';
-const getInitialAmount = (rawTx, initialValue) => (Number(rawTx?.params.amount) ? fromRawLsk(rawTx?.params.amount) : initialValue || '');
-const getInitialRecipient = (rawTx, initialValue) => rawTx?.params.recipient.address || initialValue || '';
+const defaultToken = mockAppTokens[0];
+const getInitialData = (rawTx, initialValue) => rawTx?.asset.data || initialValue || '';
+const getInitialAmount = (rawTx, initialValue) => (Number(rawTx?.asset.amount) ? fromRawLsk(rawTx?.asset.amount) : initialValue || '');
+const getInitialRecipient = (rawTx, initialValue) => rawTx?.asset.recipient.address || initialValue || '';
 
+// eslint-disable-next-line max-statements
 const SendForm = (props) => {
   const {
     t,
-    token,
     account = {},
     bookmarks,
     nextStep,
   } = props;
+
+  const [currentApplication] = useCurrentApplication();
+  const { applications } = useApplicationManagement();
+  const [selectedToken, setSelectedToken] = useState(defaultToken.tokenID);
+  const [recipientChainId, setRecipientChainId] = useState(currentApplication.chainID);
+  const [sendingChainId, setSendingChainId] = useState(currentApplication.chainID);
 
   const [reference, setReference] = useMessageField(
     getInitialData(props.prevState?.rawTx, props.initialValue?.reference),
@@ -38,7 +50,7 @@ const SendForm = (props) => {
       props.initialValue?.amount,
     ),
     account.summary?.balance,
-    token,
+    selectedToken.symbol,
   );
   const [recipient, setRecipientField] = useRecipientField(
     getInitialRecipient(props.prevState?.rawTx, props.initialValue?.recipient),
@@ -63,12 +75,12 @@ const SendForm = (props) => {
     isValid,
     moduleCommandID: MODULE_COMMANDS_NAME_ID_MAP.transfer,
     params: {
+      amount: toRawLsk(amount.value),
+      data: reference.value,
       recipient: {
         address: recipient.value,
         title: recipient.title,
       },
-      amount: toRawLsk(amount.value),
-      data: reference.value,
     },
   };
 
@@ -78,6 +90,7 @@ const SendForm = (props) => {
         onComposed={onComposed}
         onConfirm={onConfirm}
         transaction={transaction}
+        buttonTitle={t('Go to confirmation')}
       >
         <>
           <BoxHeader className={styles.header}>
@@ -87,15 +100,15 @@ const SendForm = (props) => {
             <div className={`${styles.ApplilcationFieldWrapper}`}>
               <div>
                 <label className={`${styles.fieldLabel} recipient-application`}>
-                  <span>{t('Recipient Application')}</span>
+                  <span>{t('From Application')}</span>
                 </label>
-                <MenuSelect>
-                  <MenuItem value={1}>
-                    ******** 12
-                  </MenuItem>
-                  <MenuItem value={2}>
-                    ******** 12
-                  </MenuItem>
+                <MenuSelect value={sendingChainId} onChange={(value) => setSendingChainId(value)}>
+                  {applications.map(({ name, chainID }) => (
+                    <MenuItem className={styles.chainOptionWrapper} value={chainID} key={chainID}>
+                      <img className={styles.chainLogo} src={chainLogo} />
+                      <span>{name}</span>
+                    </MenuItem>
+                  ))}
                 </MenuSelect>
               </div>
               <div>
@@ -103,41 +116,42 @@ const SendForm = (props) => {
               </div>
               <div>
                 <label className={`${styles.fieldLabel} recipient-application`}>
-                  <span>{t('Recipient Application')}</span>
+                  <span>{t('To Application')}</span>
                 </label>
-                <MenuSelect>
-                  <MenuItem value={1}>
-                    ******** 12
-                  </MenuItem>
-                  <MenuItem value={2}>
-                    ******** 12
-                  </MenuItem>
+                <MenuSelect
+                  value={recipientChainId}
+                  onChange={(value) => setRecipientChainId(value)}
+                >
+                  {blockchainApplicationsExplore.map(({ name, chainID }) => (
+                    <MenuItem className={styles.chainOptionWrapper} value={chainID} key={chainID}>
+                      <img className={styles.chainLogo} src={chainLogo} />
+                      <span>{name}</span>
+                    </MenuItem>
+                  ))}
                 </MenuSelect>
               </div>
             </div>
-
             <div className={`${styles.fieldGroup} token`}>
               <label className={`${styles.fieldLabel}`}>
-                <span>{t('Recipient Application')}</span>
+                <span>{t('Token')}</span>
               </label>
               <span className={styles.balance}>
                 Balance:&nbsp;
                 <span>
                   <TokenAmount val={amount} />
                   {' '}
-                  LSK
+                  {selectedToken.symbol}
                 </span>
               </span>
-              <MenuSelect>
-                <MenuItem value={1}>
-                  ******** 12
-                </MenuItem>
-                <MenuItem value={2}>
-                  ******** 12
-                </MenuItem>
+              <MenuSelect value={selectedToken} onChange={(value) => setSelectedToken(value)}>
+                {mockAppTokens.map((token) => (
+                  <MenuItem className={styles.chainOptionWrapper} value={token} key={token.name}>
+                    <img className={styles.chainLogo} src={chainLogo} />
+                    <span>{token.name}</span>
+                  </MenuItem>
+                ))}
               </MenuSelect>
             </div>
-
             <AmountField
               amount={amount}
               onChange={setAmountField}
@@ -147,11 +161,10 @@ const SendForm = (props) => {
               placeHolder={t('Insert transaction amount')}
               name="amount"
             />
-
             <div className={`${styles.fieldGroup} ${styles.recipientFieldWrapper}`}>
               <span className={`${styles.fieldLabel}`}>{t('Recipient Address')}</span>
               <BookmarkAutoSuggest
-                bookmarks={bookmarks[token].filter((item) => !item.disabled)}
+                bookmarks={bookmarks.LSK.filter((item) => !item.disabled)}
                 recipient={recipient}
                 t={t}
                 updateField={setRecipientField}

@@ -21,6 +21,7 @@
   & .formSection {
     padding-right: 0;
     padding-left: 0;
+    padding-bottom: 15px !important;
   }
 }
 
@@ -217,4 +218,29 @@
     flex: 1;
     position: relative;
   }
+}
+
+.chainOptionWrapper {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  padding: 10px;
+}
+
+.chainLogo {
+  width: 24px;
+  height: 24px;
+  border-radius: 50%;
+}
+
+.chainLogo ~ span {
+  height: fit-content;
+  font-size: 16px;
+  font-weight: 500;
+  padding-left: 8px;
+  white-space: nowrap;
+  max-width: 228px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  color: var(--color-maastricht-blue);
 }
