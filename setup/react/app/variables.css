@@ -66,7 +66,7 @@ or "warn/action" ineastd of "red/green"
   /*************************
         Sizes
   *************************/
-  --border-radius-standard: 3px;
+  --border-radius-standard: 10px;
   --border-radius-box: 16px;
   --header-height: 50px;
   --header-logo-size: 56px;
@@ -183,6 +183,7 @@ or "warn/action" ineastd of "red/green"
   --color-button-outline-color: var(--color-very-light-gray);
   --color-athens-white: rgba(247, 249, 251, 1);
   --color-application-manage-hover-color: var(--color-athens-white);
+  --color-ultramarine-blue-blurred: #4070f41a;
 
   /*************************
         Box
