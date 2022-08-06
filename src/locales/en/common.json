@@ -376,7 +376,7 @@
   "Please drag and drop the JSON file from your device.": "Please drag and drop the JSON file from your device.",
   "Please enter a valid public key for each member.": "Please enter a valid public key for each member.",
   "Please enter vote amounts for the delegates you wish to vote for": "Please enter vote amounts for the delegates you wish to vote for",
-  "Please provide your device password to backup the recovery phrase.": "Please provide your device password to backup the recovery phrase.",
+  "Please provide your device password to sign a transaction.": "Please provide your device password to sign a transaction.",
   "Please select the account you’d like to sign in to or": "Please select the account you’d like to sign in to or",
   "Please sign in": "Please sign in",
   "Please use ": "Please use ",
