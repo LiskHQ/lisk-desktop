@@ -1,15 +1,17 @@
 import React from 'react';
-import TokenAmount from '@token/fungible/components/tokenAmount';
 import { MODULE_ASSETS_NAME_ID_MAP } from '@transaction/configuration/moduleAssets';
 import Box from 'src/theme/box';
 import BoxHeader from 'src/theme/box/header';
+import { TertiaryButton } from 'src/theme/buttons';
 import BoxContent from 'src/theme/box/content';
 import Illustration from 'src/modules/common/components/illustration';
 import Tooltip from 'src/theme/Tooltip';
 import { tokenMap } from '@token/fungible/consts/tokens';
+import Icon from 'src/theme/Icon';
 import TransactionInfo from '../TransactionInfo';
 import Footer from './footer';
 import styles from './txSummarizer.css';
+import FeeSummarizer from './FeeSummarizer';
 
 const TxSummarizer = ({
   title,
@@ -39,7 +41,11 @@ const TxSummarizer = ({
   return (
     <Box width="medium" className={`${styles.wrapper} ${classNames} summary`}>
       {title && (
-        <BoxHeader className="summary-header">
+        <BoxHeader className={`${styles.header} summary-header`}>
+          <TertiaryButton onClick={cancelButton.onClick}>
+            <Icon name="arrowLeftTailed" />
+          </TertiaryButton>
+            &nbsp;&nbsp;&nbsp;
           <h2>{title}</h2>
         </BoxHeader>
       )}
@@ -60,25 +66,39 @@ const TxSummarizer = ({
         />
         {fee ? (
           <section className="regular-tx-fee">
-            <label>
-              {t('Transaction fee')}
-              <Tooltip
-                title={tooltip.title}
-                footer={tooltip.footer}
-                position="right"
-              >
-                <p className={styles.tooltipText}>{tooltip.children}</p>
-              </Tooltip>
-            </label>
-            <label className={`${styles.feeValue} fee-value`}>
-              <TokenAmount val={fee} token={token} />
-            </label>
+            <div className={styles.feesWrapper}>
+              <div>
+                <label>
+                  {t('Priority')}
+                  <Tooltip
+                    title={tooltip.title}
+                    footer={tooltip.footer}
+                    position="right"
+                  >
+                    <p className={styles.tooltipText}>{tooltip.children}</p>
+                  </Tooltip>
+                </label>
+                <div>Medium</div>
+              </div>
+              <div>
+                <label>
+                  {t('Fees')}
+                  <Tooltip
+                    title={tooltip.title}
+                    footer={tooltip.footer}
+                    position="top"
+                  >
+                    <p className={styles.tooltipText}>{tooltip.children}</p>
+                  </Tooltip>
+                </label>
+                <FeeSummarizer fees={{ Transactions: 34 }} />
+              </div>
+            </div>
           </section>
         ) : null}
       </BoxContent>
       <Footer
         confirmButton={confirmButton}
-        cancelButton={cancelButton}
         footerClassName={footerClassName}
         account={wallet}
         secondPassphraseStored={secondPassphraseStored}
