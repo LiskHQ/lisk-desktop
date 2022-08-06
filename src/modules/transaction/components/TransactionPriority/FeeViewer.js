@@ -56,15 +56,6 @@ const FeesViewer = ({
     );
   }
 
-  if (isLoading) {
-    return (
-      <span className={styles.loadingWrapper}>
-        <span>{t('Loading')}</span>
-        <Spinner className={styles.spinner} />
-      </span>
-    );
-  }
-
   if (isCustom && !showEditIcon) {
     return (
       <Input
