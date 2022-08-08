@@ -1,22 +1,11 @@
 import React, { useState, useMemo } from 'react';
 import PropTypes from 'prop-types';
 import { MODULE_ASSETS_MAP } from '@transaction/configuration/moduleAssets';
-import {
-  formatAmountBasedOnLocale,
-} from 'src/utils/formattedNumber';
 import Tooltip from 'src/theme/Tooltip';
 import styles from './TransactionPriority.css';
 import FeesViewer from './FeeViewer';
 
 const CUSTOM_FEE_INDEX = 3;
-const getFeeStatus = ({ fee, token, customFee }) => {
-  if (customFee) {
-    return customFee;
-  }
-  return !fee.error
-    ? `${formatAmountBasedOnLocale({ value: fee.value })} ${token}`
-    : fee.feedback;
-};
 
 const getRelevantPriorityOptions = (options) =>
   options.filter((_, index) =>
@@ -28,9 +17,7 @@ const TransactionPriority = ({
   t,
   token,
   moduleAssetId,
-  fee,
   minFee,
-  customFee,
   setCustomFee,
   priorityOptions,
   selectedPriority,
@@ -38,8 +25,7 @@ const TransactionPriority = ({
   className,
   loadError,
   isLoading,
-  sendingChainId,
-  recipientChainId,
+  composedFees,
 }) => {
   const [showEditIcon, setShowEditIcon] = useState(false);
   const [inputValue, setInputValue] = useState();
@@ -64,14 +50,6 @@ const TransactionPriority = ({
   [priorityOptions, token]);
 
   const isCustom = selectedPriority === CUSTOM_FEE_INDEX;
-  const composedFees = {
-    Transaction: getFeeStatus({ fee, token, customFee }),
-  };
-
-  if (sendingChainId !== recipientChainId) {
-    composedFees.CCM = getFeeStatus({ fee, token, customFee });
-    composedFees.Initiation = getFeeStatus({ fee, token, customFee });
-  }
 
   return (
     <div className={`${styles.wrapper} ${styles.fieldGroup} ${className} transaction-priority`}>

@@ -1,4 +1,7 @@
 import { MODULE_ASSETS_NAME_ID_MAP } from '@transaction/configuration/moduleAssets';
+import {
+  formatAmountBasedOnLocale,
+} from 'src/utils/formattedNumber';
 
 const getTxDirectionConfig = (moduleAssetId, host, recipient, styles) => {
   if (moduleAssetId === MODULE_ASSETS_NAME_ID_MAP.unlockToken
@@ -21,6 +24,15 @@ const getTxDirectionConfig = (moduleAssetId, host, recipient, styles) => {
     };
   }
   return false;
+};
+
+export const getFeeStatus = ({ fee, token, customFee }) => {
+  if (customFee) {
+    return customFee;
+  }
+  return !fee.error
+    ? `${formatAmountBasedOnLocale({ value: fee.value })} ${token}`
+    : fee.feedback;
 };
 
 export default getTxDirectionConfig;

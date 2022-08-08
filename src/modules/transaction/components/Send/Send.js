@@ -5,7 +5,7 @@ import styles from '../TransactionInfo/TransactionInfo.css';
 import chainLogo from '../../../../../setup/react/assets/images/LISK.png';
 
 const Send = ({
-  transaction = {}, t, token,
+  transaction = {}, t, transactionData,
 }) => (
   <>
     <section className={styles.msignRow}>
@@ -15,14 +15,14 @@ const Send = ({
             <label>{t('From Application')}</label>
             <div className={styles.chainWrapper}>
               <img className={styles.chainLogo} src={chainLogo} />
-              <span>dfdf</span>
+              <span>{transactionData.sendingChain.name}</span>
             </div>
           </div>
           <div>
             <label>{t('To Application')}</label>
             <div className={styles.chainWrapper}>
               <img className={styles.chainLogo} src={chainLogo} />
-              <span>dfdf</span>
+              <span>{transactionData.recipientChain.name}</span>
             </div>
           </div>
         </div>
@@ -34,7 +34,7 @@ const Send = ({
         <span className={`${styles.valueText} amount-summary`}>
           <TokenAmount
             val={transaction.asset.amount}
-            token={token}
+            token={transactionData.token.name}
           />
         </span>
       </div>
