@@ -15,8 +15,17 @@ import BlockRow from './blockRow';
 import header from './tableHeader';
 import styles from './blocks.css';
 
+const defaultFilters = {
+  dateFrom: '',
+  dateTo: '',
+  height: '',
+  generatorAddress: '',
+};
+
+// eslint-disable-next-line max-statements
 const Blocks = ({
   filters,
+  applyFilters,
   clearFilter,
   clearAllFilters,
   sort,
@@ -78,14 +87,28 @@ const Blocks = ({
   };
 
   const applyBlockFilters = (blockFilters) => {
-    const filterObj = { ...blockFilters, sort };
-    const usedFilters = Object.keys(filterObj)
-      .filter((key) => filterObj[key] !== '')
-      .reduce((acc, key) => {
-        acc[key] = filterObj[key];
-        return acc;
-      }, {});
-    setConfig({ params: transformParams(usedFilters) });
+    const updateApplyFilterData = (usedFilters) =>
+      setConfig({ params: transformParams(usedFilters) });
+    applyFilters(blockFilters, null, updateApplyFilterData);
+  };
+
+  const clearBlockFilter = (name) => {
+    const filterData = {
+      ...filters,
+      [name]: defaultFilters[name],
+    };
+    const updateFilterData = () => setConfig({ params: transformParams(filterData) });
+    clearFilter(name, updateFilterData);
+  };
+
+  const clearAllBlockFilters = () => {
+    const clearFilterData = () => setConfig({ params: {} });
+    clearAllFilters(clearFilterData);
+  };
+
+  const changeBlockSort = (id) => {
+    const updateSort = setConfig({ params: transformParams(filters) });
+    changeSort(id, updateSort);
   };
 
   /* istanbul ignore next */
@@ -120,8 +143,8 @@ const Blocks = ({
         />
         <FilterBar
           {...{
-            clearFilter,
-            clearAllFilters,
+            clearFilter: clearBlockFilter,
+            clearAllFilters: clearAllBlockFilters,
             filters,
             formatters,
             t,
@@ -134,7 +157,7 @@ const Blocks = ({
             isLoading={isLoading}
             row={BlockRow}
             loadData={handleLoadMore}
-            header={header(changeSort, t)}
+            header={header(changeBlockSort, t)}
             headerClassName={styles.tableHeader}
             currentSort={sort}
             canLoadMore={hasNextPage}
@@ -152,13 +175,6 @@ Blocks.propTypes = {
     data: PropTypes.array.isRequired,
     isLoading: PropTypes.bool.isRequired,
   }).isRequired,
-};
-
-const defaultFilters = {
-  dateFrom: '',
-  dateTo: '',
-  height: '',
-  generatorAddress: '',
 };
 const defaultSort = 'height:desc';
 

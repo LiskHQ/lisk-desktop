@@ -17,27 +17,39 @@ function withFilters(apiName, initialFilters, initialSort) {
         };
       }
 
-      applyFilters(f, api = apiName) {
+      applyFilters(f, api = apiName, cb) {
         const { sort } = this.state;
         const filters = { ...f, sort };
         this.setState({ filters: f });
         const usedFilters = Object.keys(filters).filter(key => filters[key] !== '').reduce((acc, key) => { acc[key] = filters[key]; return acc; }, {});
-        this.props[api].loadData(usedFilters);
+        if (cb) {
+          cb(usedFilters);
+        } else {
+          this.props[api].loadData(usedFilters);
+        }
       }
 
-      clearFilter(name) {
-        this.applyFilters({
-          ...this.state.filters,
-          [name]: initialFilters[name],
-        });
+      clearFilter(name, cb) {
+        if (cb) {
+          cb();
+        } else {
+          this.applyFilters({
+            ...this.state.filters,
+            [name]: initialFilters[name],
+          });
+        }
       }
 
-      changeSort(id) {
+      changeSort(id, cb) {
         const { filters, sort } = this.state;
         this.setState({
           sort: `${id}:${sort.includes('asc') ? 'desc' : 'asc'}`,
         }, () => {
-          this.applyFilters(filters);
+          if (cb) {
+            cb();
+          } else {
+            this.applyFilters(filters);
+          }
         });
       }
 
