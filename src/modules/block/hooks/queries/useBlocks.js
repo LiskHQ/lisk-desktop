@@ -7,6 +7,7 @@ import {
   API_VERSION,
   API_METHOD,
 } from 'src/const/config';
+import { wsMethods } from '../../config';
 
 // eslint-disable-next-line import/prefer-default-export
 export const useBlocks = ({ config: customConfig = {}, options } = { }) => {
@@ -14,7 +15,7 @@ export const useBlocks = ({ config: customConfig = {}, options } = { }) => {
   const config = {
     baseUrl: currentApplication?.apis[0][METHOD] ?? currentApplication?.apis[0].rest,
     path: `/api/${API_VERSION}/blocks`,
-    event: 'get.blocks',
+    event: wsMethods.blocksChange,
     ...customConfig,
     params: { limit, ...customConfig.params },
   };
