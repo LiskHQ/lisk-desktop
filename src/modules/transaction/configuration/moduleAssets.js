@@ -1,5 +1,8 @@
 import { cryptography } from '@liskhq/lisk-client';
 
+// TODO: Fix the mapping based on new id changes
+// We will address these problem in issue https://github.com/LiskHQ/lisk-desktop/issues/4400
+
 const modules = {
   token: 2,
   dpos: 5,

@@ -20,7 +20,7 @@ const setPasswordFormSchema = yup.object({
     .max(20, 'Character length can\'t be more than 20')
     .min(3, 'Character length can\'t be lesser than 3'),
   password: yup.string().required()
-    .matches(regex.accountName, 'Must Contain 8 Characters, One Uppercase, One Lowercase, One Number and One Special Case Character'),
+    .matches(regex.password, 'Must Contain 8 Characters, One Uppercase, One Lowercase, One Number and One Special Case Character'),
   cPassword: yup.string().required()
     .oneOf([yup.ref('password'), null], 'Confirm that passwords match'),
   hasAgreed: yup.boolean().required(),
@@ -46,16 +46,19 @@ function SetPasswordForm({ onSubmit, recoveryPhrase }) {
     !password?.length || !cPassword?.length || !hasAgreed,
   [formValues.password, formValues.cPassword, formValues.hasAgreed]);
 
-  const onFormSubmit = (values) => {
-    encryptAccount({
+  const onFormSubmit = async (values) => {
+    const { error, result } = await encryptAccount({
       recoveryPhrase: recoveryPhrase.value,
       password: values.password,
       name: values.accountName,
-    })
-      .then(encryptdAccount => onSubmit?.(encryptdAccount))
-      .catch((error) => {
-        toast.error(t('Failed to setup password', error));
-      });
+    });
+
+    if (error) {
+      toast.error(t('Failed to setup password'));
+      return null;
+    }
+
+    return onSubmit?.(result);
   };
 
   return (

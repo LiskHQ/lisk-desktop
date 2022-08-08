@@ -22,17 +22,19 @@ const EnterPasswordForm = ({ encryptedAccount, onEnterPasswordSuccess }) => {
   const formValues = watch();
 
   const onSubmit = async ({ password }) => {
-    try {
-      const recoveryPhrase = await decryptAccount(encryptedAccount.encryptedPassphrase, password);
+    const { error, result } = await decryptAccount(
+      encryptedAccount.encryptedPassphrase, password,
+    );
 
-      return onEnterPasswordSuccess({
-        recoveryPhrase,
-        encryptedAccount,
-      });
-    } catch (e) {
+    if (error) {
       const errorMessage = t('Unable to decrypt account. Please check your password');
       return setFeedbackError(errorMessage);
     }
+
+    return onEnterPasswordSuccess({
+      recoveryPhrase: result.recoveryPhrase,
+      encryptedAccount,
+    });
   };
 
   return (
