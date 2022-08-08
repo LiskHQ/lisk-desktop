@@ -20,7 +20,7 @@ function MessageField({
   name,
   onRemove,
 }) {
-  const [isCollapsed, setCollapsed] = useState(false);
+  const [isCollapsed, setCollapsed] = useState(!!value);
   const { t } = useTranslation();
   const byteCount = useMemo(() => sizeOfString(value), [value]);
 

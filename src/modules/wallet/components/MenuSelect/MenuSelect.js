@@ -7,7 +7,7 @@ import DropdownContext from '../../context/dropdownContext';
 import styles from './MenuSelect.css';
 
 function MenuSelect({
-  value, children, onChange, className,
+  value, children, onChange, className, select,
 }) {
   const [selectedValue, setSelectedValue] = useState(value);
   const [showDropdown, setShowDropdown] = useState(false);
@@ -30,7 +30,11 @@ function MenuSelect({
   }, []);
 
   const selectedIndex = useMemo(() => children.reduce(
-    (selected, { props }, index) => (props.value === selectedValue ? index : selected), -1,
+    (selected, { props }, index) => (
+      (select?.(selectedValue, props.value) || props.value === selectedValue)
+        ? index
+        : selected
+    ), -1,
   ), [selectedValue, value]);
 
   return (

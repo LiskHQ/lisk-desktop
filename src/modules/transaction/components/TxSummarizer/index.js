@@ -26,6 +26,10 @@ const TxSummarizer = ({
   footerClassName,
   rawTx,
   summaryInfo,
+  transaction,
+  transactionData,
+  selectedPriority,
+  fees,
 }) => {
   const fee = !(wallet.summary.isMultisignature
     || rawTx.moduleCommandID === MODULE_COMMANDS_NAME_ID_MAP.registerMultisignatureGroup
@@ -58,6 +62,8 @@ const TxSummarizer = ({
         ) : null}
         {children}
         <TransactionInfo
+          transaction={transaction}
+          transactionData={transactionData}
           token={token}
           summaryInfo={summaryInfo}
           rawTx={rawTx}
@@ -78,7 +84,7 @@ const TxSummarizer = ({
                     <p className={styles.tooltipText}>{tooltip.children}</p>
                   </Tooltip>
                 </label>
-                <div>Medium</div>
+                <div>{selectedPriority.title}</div>
               </div>
               <div>
                 <label>
@@ -91,7 +97,7 @@ const TxSummarizer = ({
                     <p className={styles.tooltipText}>{tooltip.children}</p>
                   </Tooltip>
                 </label>
-                <FeeSummarizer fees={{ Transactions: 34 }} />
+                <FeeSummarizer fees={fees} />
               </div>
             </div>
           </section>

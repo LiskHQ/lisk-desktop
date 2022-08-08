@@ -13,10 +13,11 @@ import TransactionPriority from '@transaction/components/TransactionPriority';
 import { toRawLsk } from '@token/fungible/utils/lsk';
 import { PrimaryButton } from 'src/theme/buttons';
 import Feedback, { getMinRequiredBalance } from './Feedback';
+import { getFeeStatus } from '../../utils/helpers';
 
 // eslint-disable-next-line max-statements
 const TxComposer = ({
-  children, transaction, onComposed, onConfirm, className, buttonTitle,
+  children, transaction, onComposed, onConfirm, className, buttonTitle, transactionData,
 }) => {
   const { t } = useTranslation();
   const network = useSelector(state => state.network);
@@ -49,6 +50,16 @@ const TxComposer = ({
   }, [selectedPriority, transaction.asset]);
 
   const minRequiredBalance = getMinRequiredBalance(transaction, status.fee);
+  const { recipientChain, sendingChain } = transactionData;
+
+  const composedFees = {
+    Transaction: getFeeStatus({ fee: status.fee, token, customFee }),
+  };
+
+  if (sendingChain.chainID !== recipientChain.chainID) {
+    composedFees.CCM = getFeeStatus({ fee: status.fee, token, customFee });
+    composedFees.Initiation = getFeeStatus({ fee: status.fee, token, customFee });
+  }
 
   return (
     <Box className={className}>
@@ -65,8 +76,9 @@ const TxComposer = ({
         setSelectedPriority={selectTransactionPriority}
         loadError={prioritiesLoadError}
         isLoading={loadingPriorities}
-        recipientChainId={transaction.recipientChainId}
-        sendingChainId={transaction.sendingChainId}
+        recipientChainId={transactionData.recipientChain.chainID}
+        sendingChainId={transactionData.sendingChain.chainID}
+        composedFees={composedFees}
       />
       <Feedback
         balance={wallet.token.balance}
@@ -76,7 +88,12 @@ const TxComposer = ({
       <BoxFooter>
         <PrimaryButton
           className="confirm-btn"
-          onClick={() => onConfirm({ ...rawTx, fee: toRawLsk(status.fee.value) })}
+          onClick={() => onConfirm(
+            { ...rawTx, fee: toRawLsk(status.fee.value) },
+            transactionData,
+            selectedPriority,
+            composedFees,
+          )}
           disabled={!transaction.isValid || minRequiredBalance > wallet.token.balance}
         >
           {

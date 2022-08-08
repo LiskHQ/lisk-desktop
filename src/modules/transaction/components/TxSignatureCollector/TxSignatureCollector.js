@@ -1,6 +1,8 @@
 import React, { useEffect } from 'react';
 import { useDispatch } from 'react-redux';
 import { signatureCollectionStatus } from '@transaction/configuration/txStatus';
+import { TertiaryButton } from 'src/theme/buttons';
+import Icon from 'src/theme/Icon';
 import { secondPassphraseRemoved } from '@auth/store/action';
 import Box from 'src/theme/box';
 import Illustration from 'src/modules/common/components/illustration';
@@ -19,11 +21,15 @@ const TxSignatureCollector = ({
   multisigTransactionSigned,
   rawTx,
   nextStep,
+  prevStep,
   statusInfo,
   sender,
   transactionDoubleSigned,
   signatureStatus,
   signatureSkipped,
+  transactionData,
+  fees,
+  selectedPriority,
 }) => {
   const deviceType = getDeviceType(account.hwInfo?.deviceModel);
   const dispatch = useDispatch();
@@ -58,7 +64,16 @@ const TxSignatureCollector = ({
        * HW pending screen. For ordinary login we don't display
        * the illustration.
        */
-      actionFunction(rawTx, privateKey, publicKey);
+      actionFunction(
+        rawTx,
+        privateKey,
+        publicKey,
+        {
+          transactionData,
+          fees,
+          selectedPriority,
+        },
+      );
     }
   };
 
@@ -100,6 +115,9 @@ const TxSignatureCollector = ({
   if (!deviceType) {
     return (
       <div className={styles.container}>
+        <TertiaryButton className={styles.backButton} onClick={prevStep}>
+          <Icon name="arrowLeftTailed" />
+        </TertiaryButton>
         <EnterPasswordForm
           encryptedAccount={account}
           onEnterPasswordSuccess={onEnterPasswordSuccess}
