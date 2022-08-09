@@ -12,6 +12,7 @@ import {
 export const useBlocks = ({ config: customConfig = {}, options } = { }) => {
   const [currentApplication] = useCurrentApplication();
   const config = {
+    baseURL: currentApplication?.apis[0][METHOD] ?? currentApplication?.apis[0].rest,
     baseUrl: currentApplication?.apis[0][METHOD] ?? currentApplication?.apis[0].rest,
     path: `/api/${API_VERSION}/blocks/`,
     event: 'get.blocks',
