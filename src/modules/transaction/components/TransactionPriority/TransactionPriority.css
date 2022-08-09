@@ -85,7 +85,7 @@
       }
 
       & .value {
-        color: var(--color-maastricht-blue);
+        color: var(--color-content-light) !important;
         font-family: var(--content-font);
         font-weight: normal;
         font-size: var(--font-size-h6);

@@ -326,6 +326,7 @@ export const createGenericTx = async ({
   const transaction = desktopTxToElementsTx(rawTransaction, moduleAssetId);
 
   const schema = network.networks.LSK.moduleAssetSchemas[moduleAssetId];
+  console.log('--->', schema);
 
   const isMultiSignatureRegistration = moduleAssetId
     === MODULE_ASSETS_NAME_ID_MAP.registerMultisignatureGroup;

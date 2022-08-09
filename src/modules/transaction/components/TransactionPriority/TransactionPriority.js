@@ -136,8 +136,6 @@ TransactionPriority.propTypes = {
   priorityOptions: PropTypes.array.isRequired,
   selectedPriority: PropTypes.number,
   setSelectedPriority: PropTypes.func,
-  fee: PropTypes.object,
-  customFee: PropTypes.number,
   minFee: PropTypes.number,
   moduleAssetId: PropTypes.string,
   className: PropTypes.string,

@@ -171,7 +171,7 @@
   & > .feeRow span:first-child ~ span {
     font-size: 16px !important;
     font-weight: 500 !important;
-    color: var(--color-zodiac-blue) !important;
+    color: var(--color-content-light) !important;
   }
 }
 
@@ -179,6 +179,10 @@
   width: 100%;
   display: flex;
   flex-direction: row;
+
+  & label {
+    color: var(--color-content-light) !important;
+  }
 
   & > div {
     width: 50%;
@@ -188,6 +192,7 @@
   & > div:first-child > label ~ div {
     margin-top: 8px;
     font-weight: var(--font-weight-bold);
+    color: var(--color-content-light) !important;
   }
 
   & > div:nth-child(2) > label ~ div {
