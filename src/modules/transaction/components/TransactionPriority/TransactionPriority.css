@@ -49,7 +49,8 @@
       flex-direction: row;
       margin-bottom: 4px;
       border-radius: 40px;
-      width: 85%;
+      width: fit-content;
+      max-width: 85%;
       border: solid 1px var(--color-ultramarine-blue-blurred);
 
       & > .priorityTitle {

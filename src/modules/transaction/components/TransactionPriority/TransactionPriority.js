@@ -83,7 +83,7 @@ const TransactionPriority = ({
                 className={`${styles.priorityTitle} ${index === selectedPriority ? styles.priorityTitleSelected : ''} option-${priority.title}`}
                 onClick={onClickPriority}
                 value={index}
-                disabled={false && disabled}
+                disabled={disabled}
               >
                 {priority.title}
               </button>
@@ -119,6 +119,7 @@ const TransactionPriority = ({
           maxFee={maxFee}
           minFee={minFee}
           fees={composedFees}
+          setCustomFee={setCustomFee}
         />
       </div>
     </div>

@@ -28,6 +28,11 @@ describe('TransactionPriority', () => {
     moduleCommandID: MODULE_COMMANDS_NAME_ID_MAP.transfer,
     loadError: false,
     isloading: false,
+    composedFees: {
+      Transaction: 0.1,
+      CCM: 1,
+      initiation: 1,
+    },
   };
   beforeEach(() => {
     props.setSelectedPriority.mockRestore();
@@ -65,7 +70,7 @@ describe('TransactionPriority', () => {
     wrapper.setProps({ ...props, token: tokenMap.LSK.key, selectedPriority: 3 });
     // simulate blur so that the edit icon is shown
     wrapper.find('.custom-fee-input').at(1).simulate('blur');
-    wrapper.find('span.fee-value').simulate('click');
+    wrapper.find('span.fee-value-Transaction').simulate('click');
     expect(wrapper).not.toContainMatchingElement('Icon[name="edit"]');
     expect(wrapper).toContainMatchingElement('.custom-fee-input');
   });

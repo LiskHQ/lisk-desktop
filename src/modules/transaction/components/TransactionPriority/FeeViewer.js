@@ -26,6 +26,7 @@ const FeesViewer = ({
   maxFee,
   minFee,
   fees,
+  setCustomFee,
 }) => {
   const { t } = useTranslation();
   const [showEditIcon, setShowEditIcon] = useState(false);
@@ -40,6 +41,17 @@ const FeesViewer = ({
   const onInputBlur = (e) => {
     e.preventDefault();
     setShowEditIcon(true);
+  };
+
+  const onInputChange = (e) => {
+    e.preventDefault();
+    const newValue = e.target.value;
+    onInputFee(newValue);
+    if (isCustomFeeValid(newValue, maxFee, minFee)) {
+      setCustomFee({ value: newValue, feedback: '', error: false });
+    } else {
+      setCustomFee({ value: undefined, feedback: 'invalid custom fee', error: true });
+    }
   };
 
   const onClickCustomEdit = (e) => {
@@ -64,7 +76,7 @@ const FeesViewer = ({
         type="text"
         size="m"
         value={feeValue}
-        onChange={onInputFee}
+        onChange={onInputChange}
         onBlur={onInputBlur}
         onFocus={onInputFocus}
         status={!isCustomFeeValid(feeValue, maxFee, minFee) ? 'error' : 'ok'}
@@ -79,7 +91,7 @@ const FeesViewer = ({
       {composedFeeList.map(({ title, value }) => (
         <div className={styles.feeRow} key={title}>
           <span>{title}</span>
-          <span className={`${styles.value} fee-value`} onClick={onClickCustomEdit}>
+          <span className={`${styles.value} fee-value-${title}`} onClick={onClickCustomEdit}>
             {value}
             {isCustom && showEditIcon && title === 'Transaction' && <Icon name="edit" />}
           </span>
