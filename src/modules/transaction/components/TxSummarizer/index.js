@@ -46,7 +46,7 @@ const TxSummarizer = ({
     <Box width="medium" className={`${styles.wrapper} ${classNames} summary`}>
       {title && (
         <BoxHeader className={`${styles.header} summary-header`}>
-          <TertiaryButton onClick={cancelButton.onClick}>
+          <TertiaryButton className="cancel-button" onClick={cancelButton.onClick}>
             <Icon name="arrowLeftTailed" />
           </TertiaryButton>
             &nbsp;&nbsp;&nbsp;
@@ -71,7 +71,7 @@ const TxSummarizer = ({
           isMultisignature={wallet.summary.isMultisignature}
         />
         {fee ? (
-          <section className="regular-tx-fee">
+          <section>
             <div className={styles.feesWrapper}>
               <div>
                 <label>

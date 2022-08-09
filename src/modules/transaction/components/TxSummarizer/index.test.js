@@ -1,6 +1,8 @@
 import React from 'react';
 import { mount } from 'enzyme';
 import { MODULE_ASSETS_NAME_ID_MAP } from '@transaction/configuration/moduleAssets';
+import mockBlockchainApplications from '@tests/fixtures/blockchainApplicationsManage';
+import { mockAppTokens } from '@tests/fixtures/token';
 import wallets from '@tests/constants/wallets';
 import TxSummarizer from '.';
 
@@ -32,6 +34,20 @@ describe('TxSummarizer', () => {
           amount: 100000000,
           data: 'test',
         },
+      },
+      selectedPriority: { title: 'Normal', value: 1 },
+      fees: {
+        Transaction: '1 LSK',
+        CCM: '1 LSK',
+        initiation: '1 LSK',
+      },
+      transactionData: {
+        sendingChain: mockBlockchainApplications[0],
+        recipientChain: mockBlockchainApplications[1],
+        token: mockAppTokens[0],
+        recipient: { value: 'lskyrwej7xuxeo39ptuyff5b524dsmnmuyvcaxkag' },
+        amount: 10,
+        data: 'test message',
       },
     };
   });
@@ -75,8 +91,8 @@ describe('TxSummarizer', () => {
   it('should display tx fee for regular account', () => {
     // Regular account
     const wrapper = mount(<TxSummarizer {...props} />);
-    expect(wrapper.find('.regular-tx-fee')).toExist();
-    expect(wrapper.find('.regular-tx-fee').text()).toContain('0.02 LSK');
+    expect(wrapper.find('.fee-value-Transaction')).toExist();
+    expect(wrapper.find('.fee-value-Transaction').text()).toContain('1 LSK');
 
     // multisig account
     const newProps = {
@@ -93,7 +109,7 @@ describe('TxSummarizer', () => {
       },
     };
     wrapper.setProps(newProps);
-    expect(wrapper.find('.regular-tx-fee')).not.toExist();
+    expect(wrapper.find('.fee-value')).not.toExist();
   });
 
   it('should display details of the transaction', () => {

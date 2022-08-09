@@ -13,7 +13,7 @@ const FeeSummarizer = ({
       {composedFeeList.map(({ title, value }) => (
         <div className={styles.feeRow} key={title}>
           <span>{title}</span>
-          <span className={`${styles.value} fee-value`}>
+          <span className={`${styles.value} fee-value-${title}`}>
             {value}
           </span>
         </div>
