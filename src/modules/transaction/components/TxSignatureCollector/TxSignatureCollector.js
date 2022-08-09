@@ -65,14 +65,14 @@ const TxSignatureCollector = ({
        * the illustration.
        */
       actionFunction(
-        rawTx,
+        {
+          ...rawTx,
+          ...transactionData,
+          selectedPriority,
+          fees,
+        },
         privateKey,
         publicKey,
-        {
-          transactionData,
-          fees,
-          selectedPriority,
-        },
       );
     }
   };

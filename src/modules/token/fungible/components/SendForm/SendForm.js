@@ -1,4 +1,4 @@
-import React, { useMemo, useState } from 'react';
+import React, { useCallback, useMemo, useState } from 'react';
 import Piwik from 'src/utils/piwik';
 import { MODULE_COMMANDS_NAME_ID_MAP } from '@transaction/configuration/moduleAssets';
 import AmountField from 'src/modules/common/components/amountField';
@@ -12,7 +12,6 @@ import { useCurrentApplication } from 'src/modules/blockchainApplication/manage/
 import useApplicationManagement from 'src/modules/blockchainApplication/manage/hooks/useApplicationManagement';
 import MenuSelect, { MenuItem } from 'src/modules/wallet/components/MenuSelect';
 import TxComposer from '@transaction/components/TxComposer';
-import blockchainApplicationsExplore from '@tests/fixtures/blockchainApplicationsExplore';
 import BookmarkAutoSuggest from './bookmarkAutoSuggest';
 import useAmountField from '../../hooks/useAmountField';
 import useMessageField from '../../hooks/useMessageField';
@@ -30,7 +29,7 @@ const getInitialRecipient = (rawTx, initialValue) => rawTx?.asset.recipient.addr
 const SendForm = (props) => {
   const {
     account = {},
-    prevState: { transactionData },
+    prevState,
     t,
     bookmarks,
     nextStep,
@@ -40,13 +39,13 @@ const SendForm = (props) => {
   const { applications } = useApplicationManagement();
 
   const [token, setToken] = useState(
-    transactionData?.token || defaultToken,
+    prevState?.transactionData?.token || defaultToken,
   );
   const [recipientChain, setRecipientChain] = useState(
-    transactionData?.recipientChain || currentApplication,
+    prevState?.transactionData?.recipientChain || currentApplication,
   );
   const [sendingChain, setSendingChain] = useState(
-    transactionData?.sendingChain || currentApplication,
+    prevState?.transactionData?.sendingChain || currentApplication,
   );
   const [maxAmount, setMaxAmount] = useState({ value: 0, error: false });
 
@@ -65,19 +64,23 @@ const SendForm = (props) => {
     getInitialRecipient(props.prevState?.rawTx, props.initialValue?.recipient),
   );
 
-  const onComposed = (status) => {
+  const onComposed = useCallback((status) => {
     Piwik.trackingEvent('Send_Form', 'button', 'Next step');
     setMaxAmount(status.maxAmount);
-  };
+  }, []);
 
-  const onConfirm = (rawTx, trnxData, selectedPriority, fees) => {
+  const onConfirm = useCallback((rawTx, trnxData, selectedPriority, fees) => {
     nextStep({
       transactionData: trnxData,
       selectedPriority,
       rawTx,
       fees,
     });
-  };
+  }, []);
+
+  const handleRemoveMessage = useCallback(() => {
+    setReference({ target: { value: '' } });
+  }, []);
 
   const isValid = useMemo(() => [
     amount,
@@ -168,7 +171,7 @@ const SendForm = (props) => {
                   onChange={(value) => setRecipientChain(value)}
                   select={(selectedValue, option) => selectedValue.chainID === option.chainID}
                 >
-                  {blockchainApplicationsExplore.map((chain) => (
+                  {applications.map((chain) => (
                     <MenuItem
                       className={styles.chainOptionWrapper}
                       value={chain}
@@ -233,6 +236,7 @@ const SendForm = (props) => {
               onChange={setReference}
               label={t('Message (Optional)')}
               placeholder={t('Write message')}
+              onRemove={handleRemoveMessage}
             />
           </BoxContent>
         </>

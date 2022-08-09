@@ -18,10 +18,6 @@ const Send = ({ history }) => {
   };
   const initialValue = parseSearchParams(history.location.search);
 
-  const handleSignAndSendTransaction = (data) => {
-    console.log('--->> ', data);
-  };
-
   return (
     <Dialog hasClose>
       <MultiStep
@@ -31,7 +27,7 @@ const Send = ({ history }) => {
       >
         <Form initialValue={initialValue} />
         <Summary />
-        <TxSignatureCollector actionFunction={handleSignAndSendTransaction} />
+        <TxSignatureCollector />
         <Status history={history} />
       </MultiStep>
     </Dialog>

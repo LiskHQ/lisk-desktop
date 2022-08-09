@@ -50,13 +50,13 @@ const TxComposer = ({
   }, [selectedPriority, transaction.asset]);
 
   const minRequiredBalance = getMinRequiredBalance(transaction, status.fee);
-  const { recipientChain, sendingChain } = transactionData;
+  const { recipientChain, sendingChain } = transactionData || {};
 
   const composedFees = {
     Transaction: getFeeStatus({ fee: status.fee, token, customFee }),
   };
 
-  if (sendingChain.chainID !== recipientChain.chainID) {
+  if (sendingChain && recipientChain && (sendingChain.chainID !== recipientChain.chainID)) {
     composedFees.CCM = getFeeStatus({ fee: status.fee, token, customFee });
     composedFees.Initiation = getFeeStatus({ fee: status.fee, token, customFee });
   }
@@ -76,8 +76,6 @@ const TxComposer = ({
         setSelectedPriority={selectTransactionPriority}
         loadError={prioritiesLoadError}
         isLoading={loadingPriorities}
-        recipientChainId={transactionData.recipientChain.chainID}
-        sendingChainId={transactionData.sendingChain.chainID}
         composedFees={composedFees}
       />
       <Feedback
