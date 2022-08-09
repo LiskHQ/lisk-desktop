@@ -1,5 +1,6 @@
 import React from 'react';
 import chai from 'chai';
+import 'whatwg-fetch';
 import sinonChai from 'sinon-chai';
 import chaiEnzyme from 'chai-enzyme';
 import chaiAsPromised from 'chai-as-promised';
@@ -190,11 +191,3 @@ jest.mock('react-chartjs-2', () => ({
   Doughnut: () => null,
   Bar: () => null,
 }));
-
-global.fetch = jest.fn(() =>
-  Promise.resolve({
-    ok: true,
-    json() {
-      return Promise.resolve({ data: [], meta: { count: 0, total: 0 } });
-    },
-  }));

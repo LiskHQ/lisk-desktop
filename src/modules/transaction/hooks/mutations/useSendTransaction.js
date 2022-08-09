@@ -13,7 +13,7 @@ export const useSendTransaction = (options) => {
 
   return useMutation(async ({ path, customConfig }) => {
     const config = {
-      baseUrl: currentApplication?.node[0][METHOD] ?? currentApplication?.node[0].rest,
+      baseUrl: currentApplication?.apis[0][METHOD] ?? currentApplication?.apis[0].rest,
       path: `/api/${API_VERSION}/transactions/`,
       method: 'POST',
       event: 'get.network.status',
