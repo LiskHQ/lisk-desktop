@@ -19,7 +19,7 @@ export const useBlocks = ({ config: customConfig = {}, options } = { }) => {
     ...customConfig,
     params: { limit, ...customConfig.params },
   };
-  return useInfiniteQuery(
+  const result = useInfiniteQuery(
     [BLOCKS, APPLICATION, METHOD, config],
     async ({ pageParam }) => API_METHOD[METHOD]({
       ...config,
@@ -46,4 +46,9 @@ export const useBlocks = ({ config: customConfig = {}, options } = { }) => {
       },
     },
   );
+  return {
+    ...result,
+    hasUpdate: false,
+    addUpdate: () => undefined,
+  };
 };
