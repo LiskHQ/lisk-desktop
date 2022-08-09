@@ -44,7 +44,7 @@ const Blocks = ({
   };
 
   const transformParams = (params) =>
-    Object.keys(params).reduce((acc, item) => {
+    Object.keys(params).filter((param) => params[param] !== '').reduce((acc, item) => {
       switch (item) {
         case 'dateFrom':
           if (params[item]) {
@@ -107,7 +107,11 @@ const Blocks = ({
   };
 
   const changeBlockSort = (id) => {
-    const updateSort = setConfig({ params: transformParams(filters) });
+    const sortData = {
+      ...filters,
+      sort: `${id}:${sort.includes('asc') ? 'desc' : 'asc'}`,
+    };
+    const updateSort = () => setConfig({ params: transformParams(sortData) });
     changeSort(id, updateSort);
   };
 
@@ -170,10 +174,11 @@ const Blocks = ({
 };
 
 Blocks.propTypes = {
-  t: PropTypes.func.isRequired,
-  blocks: PropTypes.shape({
-    data: PropTypes.array.isRequired,
-    isLoading: PropTypes.bool.isRequired,
+  filters: PropTypes.shape({
+    dateFrom: PropTypes.string.isRequired,
+    dateTo: PropTypes.string.isRequired,
+    height: PropTypes.string.isRequired,
+    generatorAddress: PropTypes.string.isRequired,
   }).isRequired,
 };
 const defaultSort = 'height:desc';

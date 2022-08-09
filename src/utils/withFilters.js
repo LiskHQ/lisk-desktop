@@ -12,7 +12,7 @@ function withFilters(apiName, initialFilters, initialSort) {
         this.actions = {
           applyFilters: this.applyFilters.bind(this),
           clearFilter: this.clearFilter.bind(this),
-          clearAllFilters: this.applyFilters.bind(this, initialFilters),
+          clearAllFilters: this.clearAllFilters.bind(this),
           changeSort: this.changeSort.bind(this),
         };
       }
@@ -31,12 +31,27 @@ function withFilters(apiName, initialFilters, initialSort) {
 
       clearFilter(name, cb) {
         if (cb) {
+          this.setState({
+            filters: {
+              ...this.state.filters,
+              [name]: initialFilters[name],
+            },
+          });
           cb();
         } else {
           this.applyFilters({
             ...this.state.filters,
             [name]: initialFilters[name],
           });
+        }
+      }
+
+      clearAllFilters(cb) {
+        if (cb) {
+          this.setState({ filters: initialFilters });
+          cb();
+        } else {
+          this.applyFilters(initialFilters);
         }
       }
 
