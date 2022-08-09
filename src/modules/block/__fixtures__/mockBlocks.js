@@ -1,5 +1,10 @@
 /* eslint-disable  max-lines, import/prefer-default-export */
 export const mockBlocks = {
+  meta: {
+    count: 20,
+    offset: 0,
+    total: 20,
+  },
   data: [{
     id: '8b920dfc41cf60ec9b5ef7a31bbd4edc4ac20260e2645b0d8bfead4142d0b11f',
     version: 2,
@@ -381,9 +386,4 @@ export const mockBlocks = {
     signature: 'e08788bc6063a860dd66dc67a0069d5224409368a93026a8a30aef9f5d59fa8f181890e287d4eb0e7312d62ad5d8825e9344e97f31e3df559445cb02e9091b01',
     isFinal: false,
   }],
-  meta: {
-    count: 20,
-    offset: 0,
-    total: 393,
-  },
 };
