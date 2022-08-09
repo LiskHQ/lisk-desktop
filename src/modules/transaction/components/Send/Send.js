@@ -34,7 +34,7 @@ const Send = ({
         <span className={`${styles.valueText} amount-summary`}>
           <TokenAmount
             val={transaction.asset.amount}
-            token={transactionData.token.name}
+            token={transactionData.token.symbol}
           />
         </span>
       </div>
