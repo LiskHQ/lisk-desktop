@@ -13,7 +13,7 @@ import { wsMethods } from '../../config';
 export const useBlocks = ({ config: customConfig = {}, options } = { }) => {
   const [currentApplication] = useCurrentApplication();
   const config = {
-    baseUrl: currentApplication?.apis[0][METHOD] ?? currentApplication?.apis[0].rest,
+    baseURL: currentApplication?.apis[0][METHOD] ?? currentApplication?.apis[0].rest,
     path: `/api/${API_VERSION}/blocks`,
     event: wsMethods.blocksChange,
     ...customConfig,

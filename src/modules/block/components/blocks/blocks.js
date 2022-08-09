@@ -34,7 +34,7 @@ const Blocks = ({
   const { t } = useTranslation();
   const [config, setConfig] = useState({ params: {} });
   const {
-    data: blocks, error, isLoading, isFetching, fetchNextPage, hasNextPage,
+    data: blocks, error, isFetching, fetchNextPage, hasNextPage,
   } = useBlocks({ config });
 
   const formatters = {
@@ -158,7 +158,7 @@ const Blocks = ({
           <Table
             showHeader
             data={blocks.data}
-            isLoading={isLoading}
+            isLoading={isFetching}
             row={BlockRow}
             loadData={handleLoadMore}
             header={header(changeBlockSort, t)}
