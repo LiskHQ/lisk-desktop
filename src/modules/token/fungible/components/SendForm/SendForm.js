@@ -8,6 +8,7 @@ import Icon from 'src/theme/Icon';
 import { toRawLsk, fromRawLsk } from '@token/fungible/utils/lsk';
 import BoxContent from 'src/theme/box/content';
 import BoxHeader from 'src/theme/box/header';
+import { maxMessageLength } from 'src/modules/transaction/configuration/transactions';
 import { useCurrentApplication } from 'src/modules/blockchainApplication/manage/hooks/useCurrentApplication';
 import useApplicationManagement from 'src/modules/blockchainApplication/manage/hooks/useApplicationManagement';
 import MenuSelect, { MenuItem } from 'src/modules/wallet/components/MenuSelect';
@@ -139,7 +140,7 @@ const SendForm = (props) => {
           <BoxContent className={styles.formSection}>
             <div className={`${styles.ApplilcationFieldWrapper}`}>
               <div>
-                <label className={`${styles.fieldLabel} recipient-application`}>
+                <label className={`${styles.fieldLabel} sending-application`}>
                   <span>{t('From Application')}</span>
                 </label>
                 <MenuSelect
@@ -237,6 +238,9 @@ const SendForm = (props) => {
               label={t('Message (Optional)')}
               placeholder={t('Write message')}
               onRemove={handleRemoveMessage}
+              maxMessageLength={maxMessageLength}
+              error={reference.error}
+              feedback={reference.feedback}
             />
           </BoxContent>
         </>
