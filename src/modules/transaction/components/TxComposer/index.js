@@ -79,7 +79,7 @@ const TxComposer = ({
         composedFees={composedFees}
       />
       <Feedback
-        balance={wallet.token.balance}
+        balance={wallet.token?.balance}
         feedback={transaction.feedback}
         minRequiredBalance={minRequiredBalance}
       />
@@ -92,7 +92,7 @@ const TxComposer = ({
             selectedPriority,
             composedFees,
           )}
-          disabled={!transaction.isValid || minRequiredBalance > wallet.token.balance}
+          disabled={!transaction.isValid || minRequiredBalance > wallet.token?.balance}
         >
           {
             buttonTitle ?? t('Continue')

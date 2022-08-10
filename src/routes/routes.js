@@ -137,7 +137,7 @@ export const modals = {
     forbiddenTokens: [],
   },
   send: {
-    isPrivate: false,
+    isPrivate: true,
     forbiddenTokens: [],
   },
   settings: {

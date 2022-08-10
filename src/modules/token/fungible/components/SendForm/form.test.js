@@ -1,7 +1,7 @@
 import React from 'react';
 import { act } from 'react-dom/test-utils';
 import { mount } from 'enzyme';
-import { mockSetMessage, tokenMap } from '@token/fungible/consts/tokens';
+import { tokenMap } from '@token/fungible/consts/tokens';
 import { fromRawLsk } from '@token/fungible/utils/lsk';
 import accounts from '@tests/constants/wallets';
 import flushPromises from '@tests/unit-test-utils/flushPromises';
@@ -11,6 +11,7 @@ import mockManagedApplications from '@tests/fixtures/blockchainApplicationsManag
 import { useMessageField } from '../../hooks';
 import Form from './SendForm';
 
+const mockSetMessage = jest.fn();
 const mockSetCurrentApplication = jest.fn();
 const mockSetApplication = jest.fn();
 const mockCurrentApplication = mockManagedApplications[0];
