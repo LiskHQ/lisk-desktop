@@ -33,6 +33,9 @@ const getResultProps = ({ added, removed, edited }) => {
 const VoteSummary = ({
   t, removed = {}, edited = {}, added = {}, selfUnvote = {},
   prevStep, nextStep, rawTx, votesSubmitted,
+  transactionData,
+  selectedPriority,
+  fees,
 }) => {
   const {
     locked, unlockable,
@@ -64,6 +67,9 @@ const VoteSummary = ({
       classNames={styles.container}
       summaryInfo={{ added, edited, removed }}
       rawTx={rawTx}
+      transactionData={transactionData}
+      selectedPriority={selectedPriority}
+      fees={fees}
     >
       <ToggleIcon isNotHeader />
       <div className={styles.headerContainer}>
