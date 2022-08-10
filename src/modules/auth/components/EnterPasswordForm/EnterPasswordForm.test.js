@@ -2,21 +2,23 @@ import React from 'react';
 import {
   fireEvent, render, screen, waitFor,
 } from '@testing-library/react';
-
+import { mockAccount } from 'src/modules/account/utils';
+import mockSavedAccounts from '@tests/fixtures/accounts';
 import { decryptAccount } from '@account/utils/decryptAccount';
 import EnterPasswordForm from '.';
 
+const mockedCurrentAccount = mockSavedAccounts[0];
+
 jest.mock('@account/utils/decryptAccount');
+jest.mock('@account/hooks', () => ({
+  useCurrentAccount: jest.fn(() => (
+    [mockedCurrentAccount, jest.fn()]
+  )),
+}));
 
 describe('EnterPasswordForm', () => {
   let wrapper;
   const props = {
-    accountSchema: {
-      metadata: {
-        address: 'lskm555k7nhhw954rw4pqy5q9wn28n3cec94fmp4n',
-        name: 'Lisker',
-      },
-    },
     onEnterPasswordSuccess: jest.fn(),
     nextStep: jest.fn(),
   };
@@ -27,34 +29,35 @@ describe('EnterPasswordForm', () => {
   });
 
   it('should display properly', () => {
-    expect(screen.queryByText(props.accountSchema.metadata.name));
-    expect(screen.queryByText(props.accountSchema.metadata.address));
+    expect(screen.queryByText(mockAccount.metadata.name));
+    expect(screen.queryByText(mockAccount.metadata.address));
   });
 
   it('should call onEnterPasswordSuccess when onSubmit click', async () => {
-    const privateToken = 'private-token-mock';
+    const privateKey = 'private-token-mock';
+    const password = 'test-password';
     const recoveryPhrase = 'target cancel solution recipe vague faint bomb convince pink vendor fresh patrol';
     decryptAccount.mockImplementation(() => (
       {
-        privateToken,
+        privateKey,
         recoveryPhrase,
       }
     ));
     props.recoveryPhrase = recoveryPhrase;
     wrapper.rerender(<EnterPasswordForm {...props} />);
 
-    fireEvent.change(screen.getByTestId('password'), { target: { value: 'qwerty' } });
+    fireEvent.change(screen.getByTestId('password'), { target: { value: password } });
     fireEvent.click(screen.getByText('Continue'));
 
     await waitFor(() => {
       expect(decryptAccount).toHaveBeenCalledWith(
-        props.accountSchema,
-        'qwerty',
+        mockedCurrentAccount,
+        password,
       );
       expect(props.onEnterPasswordSuccess).toHaveBeenCalledWith({
-        account: { privateToken, recoveryPhrase },
+        account: { privateKey, recoveryPhrase },
+        encryptedPhrase: mockedCurrentAccount,
         recoveryPhrase,
-        encryptedPhrase: props.accountSchema,
       });
     });
   });
