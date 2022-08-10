@@ -11,7 +11,7 @@ import BoxContent from 'src/theme/box/content';
 import { PrimaryButton } from 'src/theme/buttons';
 import styles from './EnterPasswordForm.css';
 
-const EnterPasswordForm = ({ onEnterPasswordSuccess }) => {
+const EnterPasswordForm = ({ onEnterPasswordSuccess, title }) => {
   const { t } = useTranslation();
   const {
     register,
@@ -42,7 +42,7 @@ const EnterPasswordForm = ({ onEnterPasswordSuccess }) => {
       <BoxContent className={styles.content}>
         <h1>{t('Enter your password')}</h1>
         <p className={styles.subheader}>
-          {t('Please provide your device password to sign a transaction.')}
+          {t(title || 'Please provide your device password to backup the recovery phrase.')}
         </p>
         <WalletVisual
           className={styles.avatar}

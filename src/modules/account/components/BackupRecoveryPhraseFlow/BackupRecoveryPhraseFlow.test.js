@@ -60,7 +60,6 @@ describe('Backup account recovery phrase flow', () => {
     expect(screen.getByText('Confirm')).toBeTruthy();
     expect(screen.getByText('Go back')).toBeTruthy();
 
-    // @TODO: Update below when useDecrypt hook becomes available
     fireEvent.click(screen.getByText('solution'));
     fireEvent.click(screen.getByText('vendor'));
     fireEvent.click(screen.getByText('Confirm'));

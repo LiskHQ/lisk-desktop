@@ -120,6 +120,7 @@ const TxSignatureCollector = ({
         </TertiaryButton>
         <EnterPasswordForm
           accountSchema={account}
+          title="Please provide your device password to sign a transaction."
           onEnterPasswordSuccess={onEnterPasswordSuccess}
         />
       </div>
