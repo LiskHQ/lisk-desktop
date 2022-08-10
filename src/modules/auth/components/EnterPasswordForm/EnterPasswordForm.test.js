@@ -2,13 +2,20 @@ import React from 'react';
 import {
   fireEvent, render, screen, waitFor,
 } from '@testing-library/react';
-
-import { decryptAccount } from '@account/utils/encryptAccount';
+import mockSavedAccounts from '@tests/fixtures/accounts';
+import { decryptAccount } from '@account/utils/decryptAccount';
 import EnterPasswordForm from '.';
 
+const mockedCurrentAccount = mockSavedAccounts[0];
 const recoveryPhrase = 'target cancel solution recipe vague faint bomb convince pink vendor fresh patrol';
 
 jest.mock('@account/utils/encryptAccount');
+jest.mock('@account/utils/decryptAccount');
+jest.mock('@account/hooks', () => ({
+  useCurrentAccount: jest.fn(() => (
+    [mockedCurrentAccount, jest.fn()]
+  )),
+}));
 
 describe('EnterPasswordForm', () => {
   let wrapper;
@@ -29,13 +36,6 @@ describe('EnterPasswordForm', () => {
         '44fdb2b132d353a5c65f04e5e3afdd531f63abc45444ffd4cdbc7dedc45f899bf5b7478947d57319ea8c620e13480def8a518cc05e46bdddc8ef7c8cfc21a3bd',
   };
   const props = {
-    encryptedAccount: {
-      encryptedPassphrase,
-      metadata: {
-        address: 'lskm555k7nhhw954rw4pqy5q9wn28n3cec94fmp4n',
-        name: 'Lisker',
-      },
-    },
     onEnterPasswordSuccess: jest.fn(),
     nextStep: jest.fn(),
   };
