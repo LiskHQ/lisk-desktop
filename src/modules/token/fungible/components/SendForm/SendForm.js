@@ -123,7 +123,7 @@ const SendForm = (props) => {
     amount: toRawLsk(amount.value),
     data: reference.value,
   };
-  console.log('---->>> ', reference,  setReference);
+
   return (
     <section className={styles.wrapper}>
       <TxComposer
