@@ -15,7 +15,7 @@ import MenuSelect, { MenuItem } from 'src/modules/wallet/components/MenuSelect';
 import TxComposer from '@transaction/components/TxComposer';
 import BookmarkAutoSuggest from './bookmarkAutoSuggest';
 import useAmountField from '../../hooks/useAmountField';
-import useMessageField from '../../hooks/useMessageField';
+import { useMessageField } from '../../hooks';
 import useRecipientField from '../../hooks/useRecipientField';
 import styles from './form.css';
 import MessageField from '../MessageField';
@@ -123,7 +123,7 @@ const SendForm = (props) => {
     amount: toRawLsk(amount.value),
     data: reference.value,
   };
-
+  console.log('---->>> ', reference,  setReference);
   return (
     <section className={styles.wrapper}>
       <TxComposer

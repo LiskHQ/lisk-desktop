@@ -30,6 +30,7 @@ const TxSummarizer = ({
   transactionData,
   selectedPriority,
   fees,
+  hasCancel,
 }) => {
   const fee = !(wallet.summary.isMultisignature
     || rawTx.moduleAssetId === MODULE_ASSETS_NAME_ID_MAP.registerMultisignatureGroup
@@ -104,6 +105,7 @@ const TxSummarizer = ({
         ) : null}
       </BoxContent>
       <Footer
+        cancelButton={hasCancel && cancelButton}
         confirmButton={confirmButton}
         footerClassName={footerClassName}
         account={wallet}

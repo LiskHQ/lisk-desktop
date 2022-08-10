@@ -61,6 +61,7 @@ const Summary = ({
 
   return (
     <TransactionSummary
+      hasCancel
       className={styles.container}
       confirmButton={onConfirmAction}
       cancelButton={onCancelAction}
