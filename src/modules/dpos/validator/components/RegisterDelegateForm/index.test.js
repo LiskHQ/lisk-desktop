@@ -87,6 +87,10 @@ describe('SelectNameAndFee', () => {
     wrapper.find('button.confirm-btn').simulate('click');
     await flushPromises();
     expect(props.nextStep).toBeCalledWith({
+      selectedPriority: { title: 'Low', value: 156, selectedIndex: 0 },
+      fees: {
+        Transaction: '0.000156 LSK',
+      },
       rawTx: {
         fee: 15600,
         moduleAssetId: '5:0',
