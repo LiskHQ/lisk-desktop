@@ -1,13 +1,14 @@
 import React from 'react';
 import { act } from 'react-dom/test-utils';
 import { mount } from 'enzyme';
-import { tokenMap } from '@token/fungible/consts/tokens';
+import { mockSetMessage, tokenMap } from '@token/fungible/consts/tokens';
 import { fromRawLsk } from '@token/fungible/utils/lsk';
 import accounts from '@tests/constants/wallets';
 import flushPromises from '@tests/unit-test-utils/flushPromises';
 import useApplicationManagement from '@blockchainApplication/manage/hooks/useApplicationManagement';
 import { useCurrentApplication } from '@blockchainApplication/manage/hooks/useCurrentApplication';
 import mockManagedApplications from '@tests/fixtures/blockchainApplicationsManage';
+import { useMessageField } from '../../hooks';
 import Form from './SendForm';
 
 const mockSetCurrentApplication = jest.fn();
@@ -23,6 +24,8 @@ jest.mock('@transaction/hooks/useTransactionFeeCalculation', () => jest.fn().moc
   maxAmount: { value: 200000000 },
 }));
 
+jest.mock('../../hooks');
+
 describe('Form', () => {
   let props;
   let bookmarks;
@@ -36,6 +39,8 @@ describe('Form', () => {
     mockCurrentApplication,
     mockSetCurrentApplication,
   ]);
+
+  useMessageField.mockImplementation(jest.requireActual('../../hooks').useMessageField);
 
   beforeEach(() => {
     bookmarks = {
@@ -83,6 +88,7 @@ describe('Form', () => {
         data: 'message',
       },
     };
+
     const wrapper = mount(<Form {...{
       ...props,
       prevState: { rawTx },
@@ -262,6 +268,22 @@ describe('Form', () => {
       wrapper.update();
       referenceField = wrapper.find('.reference');
       expect(referenceField.find('.feedback.error')).toHaveClassName('show error');
+    });
+
+    it('Should remove the value of the message field', () => {
+      useMessageField.mockReturnValue([
+        {
+          error: false,
+          value: 'test message',
+          feedback: '54 bytes left',
+          byteCount: 10,
+        },
+        mockSetMessage,
+      ]);
+
+      const wrapper = mount(<Form {...props} />);
+      wrapper.find('.reference button').at(0).simulate('click');
+      expect(mockSetMessage).toHaveBeenCalled();
     });
   });
 });

@@ -6,4 +6,6 @@ export const tokenMap = {
   },
 };
 
+export const mockSetMessage = jest.fn();
+
 export const tokenKeys = Object.keys(tokenMap);
