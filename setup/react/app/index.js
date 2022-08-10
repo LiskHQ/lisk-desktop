@@ -11,6 +11,7 @@ import { bookmarksRetrieved } from 'src/modules/bookmark/store/action';
 import { watchListRetrieved } from 'src/modules/dpos/validator/store/actions/watchList';
 import NotFound from 'src/modules/common/components/NotFound';
 import useIpc from '@update/hooks/useIpc';
+import ConnectionManager from '@libs/wcm/components/ConnectionManager';
 import FlashMessageHolder from 'src/theme/flashMessage/holder';
 import DialogHolder from 'src/theme/dialog/holder';
 import OfflineWrapper from 'src/modules/common/components/offlineWrapper';
@@ -43,6 +44,7 @@ const App = ({ history }) => {
     <ThemeContext.Provider value={theme}>
       <OfflineWrapper>
         <DialogHolder history={history} />
+        <ConnectionManager history={history} />
         <ToastContainer
           position="bottom-right"
           hideProgressBar
