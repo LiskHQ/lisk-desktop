@@ -7,7 +7,6 @@ import {
   API_VERSION,
   API_METHOD,
 } from 'src/const/config';
-import { wsMethods } from '../../config';
 
 // eslint-disable-next-line import/prefer-default-export
 export const useBlocks = ({ config: customConfig = {}, options } = { }) => {
@@ -15,11 +14,11 @@ export const useBlocks = ({ config: customConfig = {}, options } = { }) => {
   const config = {
     baseURL: currentApplication?.apis[0][METHOD] ?? currentApplication?.apis[0].rest,
     path: `/api/${API_VERSION}/blocks`,
-    event: wsMethods.blocksChange,
+    event: 'get.blocks',
     ...customConfig,
     params: { limit, ...customConfig.params },
   };
-  const result = useInfiniteQuery(
+  return useInfiniteQuery(
     [BLOCKS, APPLICATION, METHOD, config],
     async ({ pageParam }) => API_METHOD[METHOD]({
       ...config,
@@ -46,9 +45,9 @@ export const useBlocks = ({ config: customConfig = {}, options } = { }) => {
       },
     },
   );
-  return {
-    ...result,
-    hasUpdate: false,
-    addUpdate: () => undefined,
-  };
+  // return {
+  //   ...result,
+  //   hasUpdate: false,
+  //   addUpdate: () => undefined,
+  // };
 };
