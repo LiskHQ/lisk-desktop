@@ -50,6 +50,12 @@ describe('Reclaim balance Summary', () => {
     token,
     network,
     balanceReclaimed: jest.fn(),
+    selectedPriority: { title: 'Normal', value: 1 },
+    fees: {
+      Transaction: '0.001 LSK',
+      CCM: '1 LSK',
+      initiation: '1 LSK',
+    },
   };
 
   it('should render summary component', () => {
@@ -63,7 +69,7 @@ describe('Reclaim balance Summary', () => {
     expect(html).toContain(accounts.non_migrated.legacy.address);
     expect(html).toContain(truncateAddress(accounts.non_migrated.summary.address, 'medium'));
     expect(html).toContain('136 LSK');
-    expect(html).toContain('0.001 LSK');
+    expect(wrapper).toContainMatchingElement('.fee-value-Transaction');
     expect(html).toContain('confirm-button');
   });
 
@@ -90,31 +96,6 @@ describe('Reclaim balance Summary', () => {
         },
       },
       actionFunction: props.balanceReclaimed,
-    });
-  });
-
-  it('should navigate to previous page when cancel button is clicked', async () => {
-    // Arrange
-    const wrapper = mountWithProps(Summary, props, state);
-    wrapper.find('button.cancel-button').simulate('click');
-
-    // Act
-    await flushPromises();
-    act(() => { wrapper.update(); });
-
-    // Assert
-    expect(props.prevStep).toBeCalledWith({
-      rawTx: {
-        params: {
-          amount: accounts.non_migrated.legacy.balance,
-        },
-        fee: 100000,
-        moduleCommandID: '1000:0',
-        nonce: accounts.non_migrated.sequence.nonce,
-        sender: {
-          PublicKey: accounts.non_migrated.summary.publicKey,
-        },
-      },
     });
   });
 });
