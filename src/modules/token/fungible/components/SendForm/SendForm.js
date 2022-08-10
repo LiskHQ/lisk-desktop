@@ -1,4 +1,6 @@
-import React, { useCallback, useMemo, useState } from 'react';
+import React, {
+  useCallback, useMemo, useState,
+} from 'react';
 import Piwik from 'src/utils/piwik';
 import { MODULE_ASSETS_NAME_ID_MAP } from '@transaction/configuration/moduleAssets';
 import AmountField from 'src/modules/common/components/amountField';
@@ -25,6 +27,28 @@ const defaultToken = mockAppTokens[0];
 const getInitialData = (rawTx, initialValue) => rawTx?.asset.data || initialValue || '';
 const getInitialAmount = (rawTx, initialValue) => (Number(rawTx?.asset.amount) ? fromRawLsk(rawTx?.asset.amount) : initialValue || '');
 const getInitialRecipient = (rawTx, initialValue) => rawTx?.asset.recipient.address || initialValue || '';
+const getInitialRecipientChain = (
+  transactionData,
+  initialChainId,
+  currentApplication,
+  applications,
+) => {
+  const initalRecipientChain = initialChainId
+    ? applications.find(({ chainID }) => chainID === initialChainId)
+    : null;
+
+  return transactionData?.recipientChain || initalRecipientChain || currentApplication;
+};
+const getInitialToken = (
+  transactionData,
+  initalTokenId,
+  tokens,
+) => {
+  const initalToken = initalTokenId
+    ? tokens.find(({ tokenID }) => tokenID === initalTokenId)
+    : null;
+  return transactionData?.token || initalToken || defaultToken;
+};
 
 // eslint-disable-next-line max-statements
 const SendForm = (props) => {
@@ -38,12 +62,20 @@ const SendForm = (props) => {
 
   const [currentApplication] = useCurrentApplication();
   const { applications } = useApplicationManagement();
-
   const [token, setToken] = useState(
-    prevState?.transactionData?.token || defaultToken,
+    getInitialToken(
+      prevState?.transactionData,
+      props.initialValue?.token,
+      mockAppTokens,
+    ),
   );
   const [recipientChain, setRecipientChain] = useState(
-    prevState?.transactionData?.recipientChain || currentApplication,
+    getInitialRecipientChain(
+      prevState?.transactionData,
+      props.initialValue?.recipientApplication,
+      currentApplication,
+      applications,
+    ),
   );
   const [sendingChain, setSendingChain] = useState(
     prevState?.transactionData?.sendingChain || currentApplication,
@@ -91,7 +123,7 @@ const SendForm = (props) => {
     sendingChain,
     token,
   ].reduce((result, item) => {
-    result = result && !item.error && (!item.required || item.value !== '') && Object.keys(result);
+    result = result && !item?.error && (!item?.required || item?.value !== '') && !Object.keys(result).length;
 
     return result;
   }, true), [
@@ -146,7 +178,7 @@ const SendForm = (props) => {
                 <MenuSelect
                   value={sendingChain}
                   onChange={(value) => setSendingChain(value)}
-                  select={(selectedValue, option) => selectedValue.chainID === option.chainID}
+                  select={(selectedValue, option) => selectedValue?.chainID === option.chainID}
                 >
                   {applications.map((chain) => (
                     <MenuItem
@@ -170,7 +202,7 @@ const SendForm = (props) => {
                 <MenuSelect
                   value={recipientChain}
                   onChange={(value) => setRecipientChain(value)}
-                  select={(selectedValue, option) => selectedValue.chainID === option.chainID}
+                  select={(selectedValue, option) => selectedValue?.chainID === option.chainID}
                 >
                   {applications.map((chain) => (
                     <MenuItem
@@ -199,7 +231,7 @@ const SendForm = (props) => {
               <MenuSelect
                 value={token}
                 onChange={(value) => setToken(value)}
-                select={(selectedValue, option) => selectedValue.name === option.name}
+                select={(selectedValue, option) => selectedValue?.name === option.name}
               >
                 {mockAppTokens.map((tokenValue) => (
                   <MenuItem

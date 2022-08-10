@@ -220,10 +220,10 @@ class Request extends React.Component {
               onChange={this.onSelectToken}
               value={fields.token.value}
             >
-              {mockAppTokens.map(({ display }) => (
-                <MenuItem className={styles.chainOptionWrapper} value={display} key={display}>
+              {mockAppTokens.map(({ name, tokenID }) => (
+                <MenuItem className={styles.chainOptionWrapper} value={tokenID} key={tokenID}>
                   <img className={styles.chainLogo} src={chainLogo} />
-                  <span>{display}</span>
+                  <span>{name}</span>
                 </MenuItem>
               ))}
             </MenuSelect>
