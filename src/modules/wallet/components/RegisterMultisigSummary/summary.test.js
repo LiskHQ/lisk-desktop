@@ -66,11 +66,6 @@ describe('Multisignature Summary component', () => {
     });
   });
 
-  it('Should call props.prevStep', () => {
-    wrapper.find('.cancel-button').at(0).simulate('click');
-    expect(props.prevStep).toBeCalled();
-  });
-
   it('Should render properly', () => {
     expect(wrapper.find('.member-info').length).toEqual(props.rawTx.asset.members.length);
     expect(wrapper.find('.info-fee').at(0).text()).toContain('0.02 LSK');
