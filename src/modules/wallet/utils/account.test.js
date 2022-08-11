@@ -1,3 +1,4 @@
+import { cryptography } from '@liskhq/lisk-client';
 import { getCustomDerivationKeyPair } from 'src/utils/explicitBipKeyDerivation';
 import accounts from '@tests/constants/wallets';
 import {
@@ -17,6 +18,8 @@ const {
   privateKey,
   publicKey,
 } = accounts.genesis.summary;
+
+jest.spyOn(cryptography.address, 'getLisk32AddressFromPublicKey').mockReturnValue(address);
 
 jest.mock('src/utils/explicitBipKeyDerivation', () => ({
   getCustomDerivationKeyPair: jest.fn(),

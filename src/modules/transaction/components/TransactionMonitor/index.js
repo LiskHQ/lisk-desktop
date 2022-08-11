@@ -13,7 +13,7 @@ const defaultFilters = {
   dateTo: '',
   amountFrom: '',
   amountTo: '',
-  moduleAssetId: '',
+  moduleCommandID: '',
   height: '',
   recipientAddress: '',
   senderAddress: '',

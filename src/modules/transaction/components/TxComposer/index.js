@@ -32,8 +32,8 @@ const TxComposer = ({
   const rawTx = {
     sender: { publicKey: wallet.summary?.publicKey },
     nonce: wallet.sequence?.nonce,
-    moduleAssetId: transaction.moduleAssetId,
-    asset: transaction.asset,
+    moduleCommandID: transaction.moduleCommandID,
+    params: transaction.params,
   };
   const status = useTransactionFeeCalculation({
     network,
@@ -70,7 +70,7 @@ const TxComposer = ({
         fee={status.fee}
         minFee={Number(status.minFee.value)}
         customFee={customFee ? customFee.value : undefined}
-        moduleAssetId={transaction.moduleAssetId}
+        moduleCommandID={transaction.moduleCommandID}
         setCustomFee={setCustomFee}
         priorityOptions={priorityOptions}
         selectedPriority={selectedPriority.selectedIndex}

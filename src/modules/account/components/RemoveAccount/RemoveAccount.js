@@ -23,10 +23,10 @@ const RemoveAccount = ({ address, history }) => {
   }, [address]);
 
   const removeAccount = useCallback(
-    (acc) => {
+    (removeAddress) => {
       // istanbul ignore next
-      if (acc?.metadata?.address) {
-        deleteAccountByAddress(acc?.metadata?.address);
+      if (removeAddress) {
+        deleteAccountByAddress(removeAddress);
       }
     },
     [deleteAccountByAddress],

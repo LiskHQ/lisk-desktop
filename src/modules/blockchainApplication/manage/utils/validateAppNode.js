@@ -1,4 +1,4 @@
-import { getApplicationConfig } from '@blockchainApplication/explore/api';
+import { getApplicationConfig } from '../api';
 
 // eslint-disable-next-line import/prefer-default-export
 export const validateAppNode = async (serviceUrl) => {

@@ -1,14 +1,15 @@
+import { cryptography } from '@liskhq/lisk-client';
 import routes from 'src/routes/routes';
 import { mountWithRouterAndStore } from 'src/utils/testHelpers';
 import MultisigAccountDetails from './index';
 
 describe('Multisignature account details', () => {
+  const address = 'lskdxc4ta5j43jp9ro3f8zqbxta9fn6jwzjucw7yt';
   const ordinaryAccountKeys = {
     numberOfSignatures: 0,
     optionalKeys: [],
     mandatoryKeys: [],
   };
-  const address = '5059876081639179984L';
   const publicKey = '0fe9a3f1a21b5530f27f87a414b549e79a940bf24fdf2b2f05e7f22aeeecc86a';
   const multisigAccountKeys = {
     numberOfSignatures: 1,
@@ -29,6 +30,7 @@ describe('Multisignature account details', () => {
       clearData: jest.fn(),
     },
   };
+  jest.spyOn(cryptography.address, 'getLisk32AddressFromPublicKey').mockReturnValue(address);
 
   describe('Ordinary account', () => {
     const store = {

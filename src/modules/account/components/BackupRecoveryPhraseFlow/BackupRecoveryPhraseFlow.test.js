@@ -4,9 +4,22 @@ import { renderWithRouter } from 'src/utils/testHelpers';
 import mockSavedAccounts from '@tests/fixtures/accounts';
 import BackupRecoveryPhraseFlow from './BackupRecoveryPhraseFlow';
 
+const recoveryPhrase = 'target cancel solution recipe vague faint bomb convince pink vendor fresh patrol';
+
 jest.mock('../../hooks/useAccounts', () => ({
   useAccounts: jest.fn().mockReturnValue([mockSavedAccounts]),
 }));
+
+jest.mock('@account/utils/encryptAccount', () => ({
+  decryptAccount: jest.fn().mockResolvedValue({
+    error: null,
+    result: {
+      privateKey: '',
+      recoveryPhrase,
+    },
+  }),
+}));
+
 reactRedux.useSelector = jest.fn().mockReturnValue(mockSavedAccounts[0]);
 
 const props = {

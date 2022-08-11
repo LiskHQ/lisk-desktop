@@ -19,10 +19,10 @@ Feature: BlockchainManagement
     Then application removal success page should show
     When I click on goToDashboardButton
     And I wait 0.5 seconds
-    Then I should see the dashboard
+    Then I should be on dashboard page
 
   @basic
-  Scenario: add blockchain application
+  Scenario: Add blockchain application
     And I click on addApplicationLink
     Then I should be on add blockchain application modal
     When I click on addApplicationRow
@@ -34,3 +34,10 @@ Feature: BlockchainManagement
     When I click on addApplicationSuccessButton
     Then I should be on dashboard page
     Then application list should have Test App
+
+  @basic
+  Scenario: Select application node
+    When I select application on chain: Kalipo
+    Then I should be on add blockchain application select node modal
+    When I click on selectApplicationNodeRow
+    Then I should be on dashboard page

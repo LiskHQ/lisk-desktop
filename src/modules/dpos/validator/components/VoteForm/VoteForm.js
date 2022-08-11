@@ -1,5 +1,5 @@
 import React, { useMemo, useState } from 'react';
-import { MODULE_ASSETS_NAME_ID_MAP } from '@transaction/configuration/moduleAssets';
+import { MODULE_COMMANDS_NAME_ID_MAP } from '@transaction/configuration/moduleAssets';
 import { MIN_ACCOUNT_BALANCE } from '@transaction/configuration/transactions';
 import { toRawLsk } from '@token/fungible/utils/lsk';
 import { normalizeVotesForTx } from '@transaction/utils';
@@ -179,9 +179,9 @@ const VoteForm = ({
 
   const showEmptyState = !changedVotes.length || isVotingTxPending;
   const transaction = {
-    moduleAssetId: MODULE_ASSETS_NAME_ID_MAP.voteDelegate,
+    moduleCommandID: MODULE_COMMANDS_NAME_ID_MAP.voteDelegate,
     isValid: !feedback.error && Object.keys(changedVotes).length > 0 && !isVotingTxPending,
-    asset: {
+    params: {
       votes: normalizedVotes,
     },
   };

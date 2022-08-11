@@ -1,6 +1,5 @@
 import { cryptography, transactions } from '@liskhq/lisk-client';
 import numeral from 'numeral';
-
 import { regex as reg } from 'src/const/regex';
 import { MIN_ACCOUNT_BALANCE } from '@transaction/configuration/transactions';
 import { toRawLsk } from '@token/fungible/utils/lsk';
@@ -23,7 +22,7 @@ export const validateAddress = (address) => {
   }
 
   try {
-    return cryptography.validateBase32Address(address) ? 0 : 1;
+    return cryptography.address.validateLisk32Address(address) ? 0 : 1;
   } catch (e) {
     return 1;
   }

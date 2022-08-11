@@ -1,4 +1,4 @@
-const moduleAssetSchemas = {
+const moduleCommandSchemas = {
   '2:0': {
     $id: 'lisk/transfer-asset',
     properties: {
@@ -157,4 +157,4 @@ const moduleAssetSchemas = {
   },
 };
 
-export default moduleAssetSchemas;
+export default moduleCommandSchemas;

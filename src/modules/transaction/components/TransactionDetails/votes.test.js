@@ -6,7 +6,7 @@ import { VotesPure } from './votes';
 jest.spyOn(React, 'useContext').mockImplementation(() => ({
   transaction: {
     type: 3,
-    asset: {
+    params: {
       votes: [
         { delegateAddress: 'lsk123', amount: '1000000000' },
         { delegateAddress: 'lsk987', amount: '-2000000000' },

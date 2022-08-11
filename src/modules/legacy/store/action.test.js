@@ -26,7 +26,7 @@ describe('actions: legacy', () => {
     const getState = () => state;
     const transactionObject = {
       sender: { publicKey: wallets.non_migrated.summary.publicKey },
-      asset: { amount: wallets.non_migrated.legacy.amount },
+      params: { amount: wallets.non_migrated.legacy.amount },
       fee: 100000,
     };
 

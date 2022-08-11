@@ -1,6 +1,6 @@
-import { MODULE_ASSETS_NAME_ID_MAP } from '@transaction/configuration/moduleAssets';
+import { MODULE_COMMANDS_NAME_ID_MAP } from '@transaction/configuration/moduleAssets';
 import { signatureCollectionStatus } from '@transaction/configuration/txStatus';
-import { joinModuleAndAssetIds } from '@transaction/utils/moduleAssets';
+import { joinModuleAndCommandIds } from '@transaction/utils/moduleAssets';
 import { getKeys } from '@wallet/utils/account';
 
 const getNumbersOfSignaturesRequired = ({ keys, isGroupRegistration }) => {
@@ -28,9 +28,9 @@ export const findNonEmptySignatureIndices = (signatures) => {
 
 // eslint-disable-next-line max-statements
 export const getTransactionSignatureStatus = (senderAccount, transaction) => {
-  const moduleAssetId = transaction.moduleAssetId || joinModuleAndAssetIds(transaction);
-  const isGroupRegistration = moduleAssetId
-    === MODULE_ASSETS_NAME_ID_MAP.registerMultisignatureGroup;
+  const moduleCommandID = transaction.moduleCommandID || joinModuleAndCommandIds(transaction);
+  const isGroupRegistration = moduleCommandID
+    === MODULE_COMMANDS_NAME_ID_MAP.registerMultisignatureGroup;
   const keys = getKeys({
     senderAccount, transaction, isGroupRegistration,
   });
@@ -60,15 +60,15 @@ export const getTransactionSignatureStatus = (senderAccount, transaction) => {
 
 // eslint-disable-next-line max-statements
 export const showSignButton = (senderAccount, account, transaction) => {
-  const isGroupRegistration = transaction.moduleAssetId
-    === MODULE_ASSETS_NAME_ID_MAP.registerMultisignatureGroup;
+  const isGroupRegistration = transaction.moduleCommandID
+    === MODULE_COMMANDS_NAME_ID_MAP.registerMultisignatureGroup;
 
   let mandatoryKeys = [];
   let optionalKeys = [];
 
   if (isGroupRegistration) {
-    mandatoryKeys = transaction.asset.mandatoryKeys;
-    optionalKeys = transaction.asset.optionalKeys;
+    mandatoryKeys = transaction.params.mandatoryKeys;
+    optionalKeys = transaction.params.optionalKeys;
   } else {
     mandatoryKeys = senderAccount.keys.mandatoryKeys;
     optionalKeys = senderAccount.keys.optionalKeys;

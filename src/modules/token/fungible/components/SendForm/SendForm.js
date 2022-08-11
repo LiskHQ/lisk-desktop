@@ -2,7 +2,7 @@ import React, {
   useCallback, useMemo, useState,
 } from 'react';
 import Piwik from 'src/utils/piwik';
-import { MODULE_ASSETS_NAME_ID_MAP } from '@transaction/configuration/moduleAssets';
+import { MODULE_COMMANDS_NAME_ID_MAP } from '@transaction/configuration/moduleAssets';
 import AmountField from 'src/modules/common/components/amountField';
 import TokenAmount from '@token/fungible/components/tokenAmount';
 import { mockAppTokens } from '@tests/fixtures/token';
@@ -24,9 +24,9 @@ import MessageField from '../MessageField';
 import chainLogo from '../../../../../../setup/react/assets/images/LISK.png';
 
 const defaultToken = mockAppTokens[0];
-const getInitialData = (rawTx, initialValue) => rawTx?.asset.data || initialValue || '';
-const getInitialAmount = (rawTx, initialValue) => (Number(rawTx?.asset.amount) ? fromRawLsk(rawTx?.asset.amount) : initialValue || '');
-const getInitialRecipient = (rawTx, initialValue) => rawTx?.asset.recipient.address || initialValue || '';
+const getInitialData = (rawTx, initialValue) => rawTx?.params.data || initialValue || '';
+const getInitialAmount = (rawTx, initialValue) => (Number(rawTx?.params.amount) ? fromRawLsk(rawTx?.params.amount) : initialValue || '');
+const getInitialRecipient = (rawTx, initialValue) => rawTx?.params.recipient.address || initialValue || '';
 const getInitialRecipientChain = (
   transactionData,
   initialChainId,
@@ -136,8 +136,8 @@ const SendForm = (props) => {
 
   const transaction = {
     isValid,
-    moduleAssetId: MODULE_ASSETS_NAME_ID_MAP.transfer,
-    asset: {
+    moduleCommandID: MODULE_COMMANDS_NAME_ID_MAP.transfer,
+    params: {
       amount: toRawLsk(amount.value),
       data: reference.value,
       recipient: {

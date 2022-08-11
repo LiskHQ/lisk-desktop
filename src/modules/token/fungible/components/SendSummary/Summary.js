@@ -14,7 +14,7 @@ const Summary = ({
   fees,
   t,
 }) => {
-  const amount = fromRawLsk(rawTx.asset.amount);
+  const amount = fromRawLsk(rawTx.params.amount);
   const onConfirmAction = {
     label: t('Send {{amount}} {{token}}', { amount, token }),
     onClick: () => {

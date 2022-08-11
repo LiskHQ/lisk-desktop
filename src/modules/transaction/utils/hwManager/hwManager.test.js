@@ -22,14 +22,14 @@ describe.skip('signTransactionByHW', () => {
     };
 
     const transactionObject = {
-      asset: {
+      params: {
         amount: '100000000',
         data: 'testing',
         recipientAddress: 'lskbgyrx3v76jxowgkgthu9yaf3dr29wqxbtxz8yp',
       },
       fee: '10000000',
       moduleID: 2,
-      assetID: 0,
+      commandID: 0,
       nonce: '1',
       senderAddress: 'lskdxc4ta5j43jp9ro3f8zqbxta9fn6jwzjucw7yt',
       signatures: [],

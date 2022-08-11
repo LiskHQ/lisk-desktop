@@ -1,4 +1,4 @@
-import { MODULE_ASSETS_NAME_ID_MAP } from '@transaction/configuration/moduleAssets';
+import { MODULE_COMMANDS_NAME_ID_MAP } from '@transaction/configuration/moduleAssets';
 
 import {
   TransactionId, Sender, Recipient, Message, Illustration,
@@ -10,7 +10,7 @@ import styles from './layoutSchema.css';
 const {
   transfer, voteDelegate, unlockToken, registerDelegate, registerMultisignatureGroup,
   reportDelegateMisbehavior, reclaimLSK,
-} = MODULE_ASSETS_NAME_ID_MAP;
+} = MODULE_COMMANDS_NAME_ID_MAP;
 
 const baseComponents = [Illustration, Sender];
 const timeComponents = [TransactionId, TxDate, BlockId, BlockHeight, Fee, Confirmations];

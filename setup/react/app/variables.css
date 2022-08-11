@@ -183,6 +183,7 @@ or "warn/action" ineastd of "red/green"
   --color-button-outline-color: var(--color-very-light-gray);
   --color-athens-white: rgba(247, 249, 251, 1);
   --color-application-manage-hover-color: var(--color-athens-white);
+  --color-node-border: var(--color-athens-white);
   --color-ultramarine-blue-blurred: #4070f41a;
 
   /*************************
@@ -275,4 +276,5 @@ or "warn/action" ineastd of "red/green"
   --color-background-dropdown: var(--color-body-bg);
   --color-button-outline-color: #4c4c4c;
   --color-application-manage-hover-color: var(--color-dialog-bg);
+  --color-node-border: var(--color-platinum);
 }

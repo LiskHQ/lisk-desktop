@@ -1,9 +1,9 @@
-import React, { useState } from 'react';
+import React, { useMemo, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useForm } from 'react-hook-form';
 
 import WalletVisual from '@wallet/components/walletVisual';
-import { decryptAccount } from '@account/utils/decryptAccount';
+import { decryptAccount } from '@account/utils/encryptAccount';
 import { useCurrentAccount } from '@account/hooks';
 import { Input } from 'src/theme';
 import Box from 'src/theme/box';
@@ -11,7 +11,7 @@ import BoxContent from 'src/theme/box/content';
 import { PrimaryButton } from 'src/theme/buttons';
 import styles from './EnterPasswordForm.css';
 
-const EnterPasswordForm = ({ onEnterPasswordSuccess, title }) => {
+const EnterPasswordForm = ({ onEnterPasswordSuccess, title, encryptedAccount }) => {
   const { t } = useTranslation();
   const {
     register,
@@ -20,20 +20,23 @@ const EnterPasswordForm = ({ onEnterPasswordSuccess, title }) => {
   } = useForm();
   const [currentAccount] = useCurrentAccount();
   const [feedbackError, setFeedbackError] = useState('');
-
+  const account = useMemo(() => encryptedAccount || currentAccount, [currentAccount]);
   const formValues = watch();
 
-  const onSubmit = ({ password }) => {
-    const account = decryptAccount(currentAccount, password);
-    if (account.error) {
-      setFeedbackError(t('Unable to decrypt account. Please check your password'));
-      return;
+  const onSubmit = async ({ password }) => {
+    const { error, result } = await decryptAccount(
+      account.encryptedPassphrase, password,
+    );
+
+    if (error) {
+      const errorMessage = t('Unable to decrypt account. Please check your password');
+      return setFeedbackError(errorMessage);
     }
 
-    onEnterPasswordSuccess({
-      account,
-      recoveryPhrase: account.recoveryPhrase,
-      encryptedPhrase: currentAccount,
+    return onEnterPasswordSuccess({
+      recoveryPhrase: result.recoveryPhrase,
+      encryptedAccount: account,
+      privateKey: result.privateKey,
     });
   };
 
@@ -46,12 +49,12 @@ const EnterPasswordForm = ({ onEnterPasswordSuccess, title }) => {
         </p>
         <WalletVisual
           className={styles.avatar}
-          address={currentAccount?.metadata?.address}
+          address={account?.metadata?.address}
         />
-        {currentAccount?.metadata?.name && (
-          <p className={styles.accountName}>{currentAccount?.metadata?.name}</p>
+        {account?.metadata?.name && (
+          <p className={styles.accountName}>{account?.metadata?.name}</p>
         )}
-        <p className={styles.accountAddress}>{currentAccount?.metadata?.address}</p>
+        <p className={styles.accountAddress}>{account?.metadata?.address}</p>
         <form onSubmit={handleSubmit(onSubmit)}>
           <Input
             secureTextEntry

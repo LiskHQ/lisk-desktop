@@ -1,4 +1,4 @@
-import { MODULE_ASSETS_NAME_ID_MAP } from '@transaction/configuration/moduleAssets';
+import { MODULE_COMMANDS_NAME_ID_MAP } from '@transaction/configuration/moduleAssets';
 import { fromRawLsk, delay } from '@token/fungible/utils/lsk';
 import { selectActiveToken, selectActiveTokenAccount } from 'src/redux/selectors';
 import {
@@ -15,16 +15,16 @@ import actionTypes from '../actionTypes';
 const filterIncomingTransactions = (transactions, account) =>
   transactions.filter(transaction => (
     transaction
-    && transaction.moduleAssetId === MODULE_ASSETS_NAME_ID_MAP.transfer
-    && transaction.asset.recipient?.address === account.summary?.address
+    && transaction.moduleCommandID === MODULE_COMMANDS_NAME_ID_MAP.transfer
+    && transaction.params.recipient?.address === account.summary?.address
   ));
 
 const showNotificationsForIncomingTransactions = (transactions, account, token) => {
   filterIncomingTransactions(transactions, account).forEach((transaction) => {
-    const amount = fromRawLsk(transaction.asset.amount);
+    const amount = fromRawLsk(transaction.params.amount);
     if (amount > 0) {
-      const message = transaction.asset.data
-        ? i18n.t('with message {{message}}', { message: transaction.asset.data })
+      const message = transaction.params.data
+        ? i18n.t('with message {{message}}', { message: transaction.params.data })
         : '';
       // eslint-disable-next-line no-new
       new Notification(i18n.t('{{amount}} {{token}} Received', { amount, token }), {
@@ -53,7 +53,7 @@ const checkTransactionsAndUpdateAccount = async (store, action) => {
       if (!transaction) return false;
       return (
         account.summary?.address && (account.summary?.address === transaction.sender.address
-        || account.summary?.address === transaction.asset?.recipient?.address)
+        || account.summary?.address === transaction.params?.recipient?.address)
       );
     }).length > 0;
     showNotificationsForIncomingTransactions(txs, account, activeToken);

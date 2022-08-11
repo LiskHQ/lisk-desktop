@@ -1,6 +1,6 @@
 import { screen } from '@testing-library/react';
 import { renderWithRouter } from 'src/utils/testHelpers';
-import BlockchainApplicationAddRow from './BlockchainApplicationAddRow';
+import AddApplicationRow from './AddApplicationRow';
 
 const props = {
   data: {
@@ -9,9 +9,9 @@ const props = {
   },
 };
 
-describe('BlockchainApplicationAddRow', () => {
+describe('AddApplicationRow', () => {
   it('renders properly', () => {
-    renderWithRouter(BlockchainApplicationAddRow, props);
+    renderWithRouter(AddApplicationRow, props);
 
     expect(screen.getByText('Sample app')).toBeTruthy();
     expect(screen.getByText('0.5 LSK')).toBeTruthy();

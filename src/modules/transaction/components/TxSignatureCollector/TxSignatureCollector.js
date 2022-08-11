@@ -77,9 +77,9 @@ const TxSignatureCollector = ({
     }
   };
 
-  const onEnterPasswordSuccess = ({ account: userAccount }) => {
+  const onEnterPasswordSuccess = ({ privateKey }) => {
     const { pubkey } = currentAccount.metadata;
-    txVerification(userAccount.privateKey, pubkey);
+    txVerification(privateKey, pubkey);
   };
 
   useEffect(() => {
@@ -119,7 +119,6 @@ const TxSignatureCollector = ({
           <Icon name="arrowLeftTailed" />
         </TertiaryButton>
         <EnterPasswordForm
-          accountSchema={account}
           title="Please provide your device password to sign a transaction."
           onEnterPasswordSuccess={onEnterPasswordSuccess}
         />

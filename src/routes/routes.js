@@ -216,6 +216,10 @@ export const modals = {
     isPrivate: true,
     forbiddenTokens: [],
   },
+  selectNode: {
+    isPrivate: false,
+    forbiddenTokens: [],
+  },
   removeCurrentAccountFlow: {
     isPrivate: true,
     forbiddenTokens: [],
@@ -224,11 +228,11 @@ export const modals = {
     isPrivate: false,
     forbiddenTokens: [],
   },
-  blockChainApplicationAddList: {
+  addApplicationList: {
     isPrivate: false,
     forbiddenTokens: [],
   },
-  blockChainApplicationAddSuccess: {
+  addApplicationSuccess: {
     isPrivate: false,
     forbiddenTokens: [],
   },
