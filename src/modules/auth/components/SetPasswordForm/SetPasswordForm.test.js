@@ -3,6 +3,7 @@ import {
   fireEvent, screen, waitFor,
 } from '@testing-library/react';
 import { renderWithRouter } from 'src/utils/testHelpers';
+import mockSavedAccounts from '@tests/fixtures/accounts';
 import SetPasswordForm from './SetPasswordForm';
 
 const encryptedPassphrase = {
@@ -22,11 +23,26 @@ const encryptedPassphrase = {
     '44fdb2b132d353a5c65f04e5e3afdd531f63abc45444ffd4cdbc7dedc45f899bf5b7478947d57319ea8c620e13480def8a518cc05e46bdddc8ef7c8cfc21a3bd',
 };
 const recoveryPhrase = 'target cancel solution recipe vague faint bomb convince pink vendor fresh patrol';
+const mockSetAccount = jest.fn();
 
 jest.mock('react-i18next');
-jest.spyOn(cryptography.encrypt, 'encryptPassphraseWithPassword').mockResolvedValue(encryptedPassphrase);
-jest.spyOn(cryptography.encrypt, 'decryptPassphraseWithPassword').mockResolvedValue(JSON.stringify({
+jest.spyOn(cryptography.encrypt, 'encryptMessageWithPassword').mockResolvedValue(encryptedPassphrase);
+jest.spyOn(cryptography.encrypt, 'decryptMessageWithPassword').mockResolvedValue(JSON.stringify({
   recoveryPhrase,
+}));
+jest.mock('@account/hooks', () => ({
+  useAccounts: jest.fn(() => ({
+    accounts: mockSavedAccounts,
+    setAccount: jest.fn(),
+  })),
+  useCurrentAccount: jest.fn(() => (
+    [mockSavedAccounts[0], mockSetAccount]
+  )),
+  useEncryptAccount: jest.fn().mockReturnValue({
+    encryptAccount: jest.fn().mockResolvedValue({
+      recoveryPhrase,
+    }),
+  }),
 }));
 
 const props = {
@@ -56,7 +72,7 @@ const makeSubmitActive = () => {
   fireEvent.click(hasAgreed);
 };
 
-describe.skip('Set Password Form validation should work', () => {
+describe('Set Password Form validation should work', () => {
   it('Submit button should be disabled', async () => {
     fireEvent.change(password, { target: { value: 'password' } });
     expect(screen.getByText('Save Account')).toHaveAttribute('disabled');
@@ -131,10 +147,12 @@ describe.skip('Set Password Form validation should work', () => {
   it('should invoke onSubmit with form values when validation is okay', async () => {
     fireEvent.change(password, { target: { value: 'Password1$' } });
     fireEvent.change(cPassword, { target: { value: 'Password1$' } });
-    fireEvent.change(accountName, { target: { value: 'test account name' } });
+    fireEvent.change(accountName, { target: { value: 'username1' } });
     fireEvent.click(hasAgreed);
     fireEvent.click(screen.getByText('Save Account'));
 
-    await waitFor(() => expect(props.onSubmit).toHaveBeenCalled());
+    await waitFor(() => {
+      expect(props.onSubmit).toBeCalled();
+    });
   });
 });
