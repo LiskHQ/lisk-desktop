@@ -1,6 +1,5 @@
 import React from 'react';
 import chai from 'chai';
-import 'whatwg-fetch';
 import sinonChai from 'sinon-chai';
 import chaiEnzyme from 'chai-enzyme';
 import chaiAsPromised from 'chai-as-promised';
