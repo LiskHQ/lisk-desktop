@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom';
 import grid from 'flexboxgrid/dist/flexboxgrid.css';
 import routes from 'src/routes/routes';
 import DateTimeFromTimestamp from 'src/modules/common/components/timestamp';
-import TokenAmount from '@token/fungible/components/tokenAmount';
+import Icon from 'src/theme/Icon';
 import styles from './blocks.css';
 
 const BlockRow = ({ data, className }) => (
@@ -11,14 +11,14 @@ const BlockRow = ({ data, className }) => (
     className={`${grid.row} ${className} ${styles.tableRow} blocks-row`}
     to={`${routes.block.path}?id=${data.id}`}
   >
-    <span className={grid['col-xs-3']}>{data.height}</span>
+    <span className={grid['col-xs-2']}>{data.height}</span>
     <span className={grid['col-xs-3']}>
       <DateTimeFromTimestamp time={data.timestamp} />
     </span>
     <span className={grid['col-xs-3']}>{data.generatorAddress.name ?? data.generatorAddress}</span>
-    <span className={grid['col-xs-2']}>{data.numberOfTransactions ?? 0}</span>
-    <span className={grid['col-xs-1']}>
-      <TokenAmount val={data.totalForged ?? '100000000'} token="LSK" />
+    <span className={grid['col-xs-1']}>{data.numberOfTransactions ?? 0}</span>
+    <span className={grid['col-xs-3']}>
+      <Icon name="checkmark" />
     </span>
   </Link>
 );

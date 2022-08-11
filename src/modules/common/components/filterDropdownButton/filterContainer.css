@@ -1,5 +1,14 @@
 @import '../../../../../setup/react/app/mixins.css';
 
+.buttonLabel {
+  font-weight: 400;
+
+  & > img {
+    margin-left: 0 !important;
+    margin-right: 0.42em; /* stylelint-disable-line */
+  }
+}
+
 .form {
   display: flex;
   flex-direction: row;
@@ -19,6 +28,8 @@
 
 .submitButton {
   margin: 20px 0;
+  width: 100%;
+  border-radius: 3px;
 }
 
 .actionable {

@@ -171,6 +171,7 @@
   background-color: var(--color-white) !important;
   color: var(--color-link-active) !important;
   font-weight: var(--font-weight-semi-bold) !important;
+  font-size: 14px !important;
 }
 
 @keyframes glare {
