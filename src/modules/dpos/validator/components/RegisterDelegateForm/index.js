@@ -43,6 +43,7 @@ const RegisterDelegateForm = ({
   const onConfirm = (rawTx, trnxData, selectedPriority, fees) => {
     nextStep({
       selectedPriority,
+      trnxData,
       rawTx,
       fees,
     });

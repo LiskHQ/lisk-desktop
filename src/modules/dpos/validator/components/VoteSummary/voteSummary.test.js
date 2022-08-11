@@ -95,7 +95,7 @@ const props = {
   rawTx,
   selectedPriority: { title: 'Normal', value: 1 },
   fees: {
-    Transaction: '1 LSK',
+    transaction: '1 LSK',
     CCM: '1 LSK',
     initiation: '1 LSK',
   },
@@ -111,7 +111,7 @@ describe('VotingQueue.Summary', () => {
     const wrapper = mountWithRouter(Summary, props);
 
     expect(wrapper).toContainMatchingElement('VoteStats');
-    expect(wrapper).toContainMatchingElement('.fee-value-Transaction');
+    expect(wrapper).toContainMatchingElement('.fee-value-transaction');
     expect(wrapper).toContainMatchingElement('.total-votes');
     expect(wrapper).toContainMatchingElement('.confirm-button');
   });
