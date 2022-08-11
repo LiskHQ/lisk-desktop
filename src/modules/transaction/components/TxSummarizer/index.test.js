@@ -1,11 +1,14 @@
 import React from 'react';
+import { cryptography } from '@liskhq/lisk-client';
 import { mount } from 'enzyme';
 import { MODULE_COMMANDS_NAME_ID_MAP } from '@transaction/configuration/moduleAssets';
 import wallets from '@tests/constants/wallets';
 import TxSummarizer from '.';
 
-describe.skip('TxSummarizer', () => {
+describe('TxSummarizer', () => {
   let props;
+  const address = 'lskdxc4ta5j43jp9ro3f8zqbxta9fn6jwzjucw7yt';
+  jest.spyOn(cryptography.address, 'getLisk32AddressFromPublicKey').mockReturnValue(address);
 
   beforeEach(() => {
     props = {

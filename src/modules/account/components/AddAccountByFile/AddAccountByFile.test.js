@@ -27,7 +27,7 @@ jest.mock('@account/hooks', () => ({
 }));
 
 reactRedux.useSelector = jest.fn().mockReturnValue(mockSavedAccounts[0]);
-jest.spyOn(cryptography.encrypt, 'decryptPassphraseWithPassword').mockResolvedValue(JSON.stringify({
+jest.spyOn(cryptography.encrypt, 'decryptMessageWithPassword').mockResolvedValue(JSON.stringify({
   recoveryPhrase,
 }));
 
