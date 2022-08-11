@@ -58,6 +58,8 @@ describe('EnterPasswordForm', () => {
       );
       expect(props.onEnterPasswordSuccess).toHaveBeenCalledWith({
         recoveryPhrase,
+        privateKey,
+        encryptedAccount: mockedCurrentAccount,
       });
     });
   });
