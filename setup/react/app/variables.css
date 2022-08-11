@@ -66,7 +66,7 @@ or "warn/action" ineastd of "red/green"
   /*************************
         Sizes
   *************************/
-  --border-radius-standard: 3px;
+  --border-radius-standard: 6px;
   --border-radius-box: 16px;
   --header-height: 50px;
   --header-logo-size: 56px;
@@ -181,6 +181,9 @@ or "warn/action" ineastd of "red/green"
   --color-progress-bar: var(--color-ink-blue);
   --color-ghost-white: #f7f9fb;
   --color-button-outline-color: var(--color-very-light-gray);
+  --color-athens-white: rgba(247, 249, 251, 1);
+  --color-application-manage-hover-color: var(--color-athens-white);
+  --color-node-border: var(--color-athens-white);
 
   /*************************
         Box
@@ -271,4 +274,6 @@ or "warn/action" ineastd of "red/green"
   --color-zodiac-blue: #0c152e;
   --color-background-dropdown: var(--color-body-bg);
   --color-button-outline-color: #4c4c4c;
+  --color-application-manage-hover-color: var(--color-dialog-bg);
+  --color-node-border: var(--color-platinum);
 }

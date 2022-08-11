@@ -1,6 +1,6 @@
 import React, { useState, useMemo } from 'react';
 import PropTypes from 'prop-types';
-import { MODULE_ASSETS_MAP } from '@transaction/configuration/moduleAssets';
+import { MODULE_COMMANDS_MAP } from '@transaction/configuration/moduleAssets';
 import {
   formatAmountBasedOnLocale,
 } from 'src/utils/formattedNumber';
@@ -43,7 +43,7 @@ const isCustomFeeValid = (value, maxFee, minFee) => {
 const TransactionPriority = ({
   t,
   token,
-  moduleAssetId,
+  moduleCommandID,
   fee,
   minFee,
   customFee,
@@ -58,7 +58,7 @@ const TransactionPriority = ({
   const [showEditIcon, setShowEditIcon] = useState(false);
   const [inputValue, setInputValue] = useState();
 
-  const maxFee = MODULE_ASSETS_MAP[moduleAssetId].maxFee;
+  const maxFee = MODULE_COMMANDS_MAP[moduleCommandID].maxFee;
 
   const onClickPriority = (e) => {
     e.preventDefault();
@@ -212,7 +212,7 @@ TransactionPriority.propTypes = {
   fee: PropTypes.object,
   customFee: PropTypes.number,
   minFee: PropTypes.number,
-  moduleAssetId: PropTypes.string,
+  moduleCommandID: PropTypes.string,
   className: PropTypes.string,
 };
 

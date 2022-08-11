@@ -1,0 +1,177 @@
+@import '../../../../../../setup/react/app/mixins.css';
+
+.dialogWrapper {
+  border: none;
+
+  & > span {
+    color: white !important;
+  }
+}
+
+.wrapper {
+  width: 100%;
+  box-sizing: border-box;
+  max-width: 757px;
+  min-width: 450px;
+  border-radius: 16px;
+  overflow: hidden;
+  background-color: var(--color-white);
+
+  & > div:first-child {
+    width: 100%;
+    height: 130px;
+    background: linear-gradient(268.31deg, #0c152e 0%, #254898 100%);
+  }
+}
+
+.avatarContainer {
+  width: 100%;
+  height: 51px;
+  display: flex;
+  position: relative;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-start;
+
+  & > img:first-child {
+    position: absolute;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    bottom: -39px;
+    width: 77px;
+    height: 77px;
+    background-color: white;
+    border-radius: 40px;
+  }
+
+  & > img:nth-child(2) {
+    width: 100%;
+    height: 100%;
+  }
+}
+
+.detailsWrapper {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  margin-top: 51px;
+}
+
+.chainNameWrapper {
+  & > span {
+    font-size: 28px;
+    font-weight: 700;
+    color: var(--color-maastricht-blue);
+  }
+
+  & > span ~ button {
+    padding: 0px 0px !important;
+    min-width: fit-content;
+    margin-left: 16px;
+  }
+
+  & img {
+    width: 17px;
+  }
+}
+
+.addressRow {
+  & span {
+    font-size: 14px;
+  }
+}
+
+.appLink {
+  margin-top: 14px;
+  display: flex;
+  font-size: 14px;
+  font-weight: 400;
+
+  & > img {
+    width: 16px;
+    height: 16px;
+    margin-right: 8px;
+  }
+}
+
+.balanceRow {
+  display: flex;
+  align-items: center;
+  margin-top: 22px;
+  column-gap: 8px;
+
+  & > span:first-child {
+    font-size: 14px;
+    color: var(--color-blue-gray);
+  }
+
+  & > span:nth-child(2) {
+    font-size: 20px;
+    font-weight: 600;
+    color: var(--color-link-active);
+  }
+}
+
+.footerDetailsRow {
+  width: 100%;
+  padding: 32px;
+  box-sizing: border-box;
+  flex-direction: row;
+  column-gap: 10px;
+  align-items: flex-start;
+
+  & .headerText {
+    font-size: 13px;
+    font-weight: 400;
+    color: var(--color-blue-gray);
+  }
+
+  & .detailContentText {
+    font-size: 15px;
+  }
+
+  & .statusChip {
+    font-size: 14px !important;
+    padding: 10px 16px;
+    border-radius: 40px;
+  }
+
+  & .active {
+    background-color: #00d5631a;
+    color: var(--color-jade-green);
+  }
+
+  & .registered {
+    background-color: #4070f41a;
+    color: var(--color-ultramarine-blue);
+  }
+
+  & .terminated {
+    background-color: var(--color-maastricht-blue);
+    color: var(--color-ghost-white);
+  }
+}
+
+.detail {
+  width: 20%;
+}
+
+.detail:first-of-type {
+  width: 35%;
+}
+
+.detail:last-of-type {
+  width: 25%;
+}
+
+.footerButton {
+  padding: 16px;
+}
+
+.addButton {
+  border-radius: 10px;
+  font-weight: 500;
+}

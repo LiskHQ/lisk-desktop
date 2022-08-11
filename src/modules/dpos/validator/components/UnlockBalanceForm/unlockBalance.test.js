@@ -97,7 +97,7 @@ describe('Unlock LSK modal', () => {
   };
 
   const rawTx = {
-    asset: {
+    params: {
       unlockObjects: [
         {
           amount: '3000000000',
@@ -112,7 +112,7 @@ describe('Unlock LSK modal', () => {
       ],
     },
     fee: 10000000,
-    moduleAssetId: '5:2',
+    moduleCommandID: '5:2',
     nonce: '178',
     sender: {
       publicKey: '0fe9a3f1a21b5530f27f87a414b549e79a940bf24fdf2b2f05e7f22aeeecc86a',

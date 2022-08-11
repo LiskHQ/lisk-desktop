@@ -8,10 +8,10 @@ describe('Delegate Registration Summary', () => {
   const props = {
     delegateRegistered: jest.fn(),
     rawTx: {
-      asset: {
+      params: {
         username: 'mydelegate',
       },
-      moduleAssetId: '5:0',
+      moduleCommandID: '5:0',
     },
     account: accounts.genesis,
     prevStep: jest.fn(),

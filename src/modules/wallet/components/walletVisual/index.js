@@ -231,7 +231,6 @@ class WalletVisual extends React.Component {
         />
       );
     }
-
     if (validateAddress(address) === 1 && !(/^[1-9]\d{0,19}L$/.test(address))) {
       return null;
     }

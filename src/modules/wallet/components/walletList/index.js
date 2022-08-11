@@ -17,6 +17,7 @@ const WalletTable = ({ wallets, networkStatus, t }) => {
 
   return (
     <Table
+      showHeader
       data={wallets.data}
       isLoading={wallets.isLoading}
       row={WalletRow}

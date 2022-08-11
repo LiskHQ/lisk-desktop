@@ -145,7 +145,7 @@ describe('Transactions monitor page', () => {
       {
         ...props,
         transactions: transactionsWithData,
-        filters: { amountFrom: '1.3', moduleAssetId: '' },
+        filters: { amountFrom: '1.3', moduleCommandID: '' },
         sort,
       },
     );
@@ -170,7 +170,7 @@ describe('Transactions monitor page', () => {
         ...props,
         transactions: transactionsWithData,
         sort,
-        filters: { height, moduleAssetId: '' },
+        filters: { height, moduleCommandID: '' },
       },
       {},
       { token: { active: 'LSK' } },

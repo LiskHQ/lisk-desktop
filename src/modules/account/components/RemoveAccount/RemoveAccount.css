@@ -6,6 +6,7 @@
   text-align: center;
   max-width: 565px;
   margin: auto;
+  border-radius: 16px;
 }
 
 .content {
@@ -53,6 +54,7 @@ h1 {
     width: 100%;
     min-width: 160px;
     margin: 0 10px;
+    border-radius: 10px;
   }
 }
 

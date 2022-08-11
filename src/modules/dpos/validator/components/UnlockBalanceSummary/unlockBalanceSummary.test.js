@@ -1,7 +1,7 @@
 import React from 'react';
 import { mount } from 'enzyme';
 import wallets from '@tests/constants/wallets';
-import { MODULE_ASSETS_NAME_ID_MAP } from '@transaction/configuration/moduleAssets';
+import { MODULE_COMMANDS_NAME_ID_MAP } from '@transaction/configuration/moduleAssets';
 import Summary from './UnlockBalanceSummary';
 
 describe('Locked balance Summary', () => {
@@ -9,11 +9,11 @@ describe('Locked balance Summary', () => {
     currentBlockHeight: 10000000,
     balanceUnlocked: jest.fn(),
     rawTx: {
-      asset: {
+      params: {
         unlockObjects: [],
       },
       isValid: true,
-      moduleAssetId: MODULE_ASSETS_NAME_ID_MAP.unlockToken,
+      moduleCommandID: MODULE_COMMANDS_NAME_ID_MAP.unlockToken,
     },
     nextStep: jest.fn(),
     prevStep: jest.fn(),

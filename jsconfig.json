@@ -9,6 +9,7 @@
       "@fixtures/*": ["./tests/fixtures"],
       "@theme/*": ["./src/theme/*"],
       "@account/*": ["./src/modules/account/*"],
+      "@blockchainApplication/*": ["./src/modules/blockchainApplication/*"],
       "@block/*": ["./src/modules/block/*"],
       "@bookmark/*": ["./src/modules/bookmark/*"],
       "@search/*": ["./src/modules/search/*"],

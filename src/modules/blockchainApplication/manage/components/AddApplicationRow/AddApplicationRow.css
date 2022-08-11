@@ -1,0 +1,42 @@
+.container {
+  padding: 4px;
+  cursor: pointer;
+
+  &:hover {
+    background-color: var(--color-application-manage-hover-color);
+    border-radius: 10px;
+  }
+
+  & ::before {
+    display: none !important;
+  }
+
+  & > div:first-of-type {
+    padding: 8px 16px;
+    height: 52px;
+    background: none !important;
+  }
+
+  & .chainName {
+    --content-font: 'gilroy';
+
+    padding: 2px 0;
+    font-family: var(--content-font);
+    font-weight: 600;
+    font-size: 16px;
+    line-height: 100%;
+
+    & img {
+      width: 36px;
+      height: 36px;
+      margin-right: 8px;
+    }
+  }
+
+  & .amount {
+    text-align: right;
+    color: var(--color-ink-blue);
+    font-size: 14px;
+    font-weight: 600;
+  }
+}

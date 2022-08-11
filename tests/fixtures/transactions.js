@@ -20,7 +20,7 @@ const getState = () => ({
       LSK: {
         serviceUrl: 'http://localhost:4000',
         networkIdentifier: '198f2b61a8eb95fbeed58b8216780b68f697f26b849acf00c8c93bb9b24f783d',
-        moduleAssetSchemas: {
+        moduleCommandSchemas: {
           '2:0': {
             $id: 'lisk/transfer-asset',
             title: 'Transfer transaction asset',
@@ -173,7 +173,7 @@ const getState = () => ({
 });
 
 const transformedAccountTransaction = {
-  moduleAssetId: '5:1',
+  moduleCommandID: '5:1',
   id: 'ad0e0acbe8a3ece3087c8362149ca39c470e565d268df32e57de5d3fe2e1ea5c',
   fee: '142000n',
   nonce: '2n',
@@ -199,7 +199,7 @@ const newTransaction = {
   },
   signedTransaction: {
     id: 1,
-    asset: {
+    params: {
       amount: 112300000,
     },
     fee: 0.00012451,

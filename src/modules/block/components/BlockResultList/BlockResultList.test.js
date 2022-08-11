@@ -9,7 +9,7 @@ describe('Blocks', () => {
     t: v => v,
     blocks: [
       {
-        asset: {
+        params: {
           data: 'testing',
         },
         id: 123,

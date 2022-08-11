@@ -1,3 +1,4 @@
+/* eslint-disable max-lines */
 const delegatesPage = {
   totalVotingNumber: '.total-voting-number',
   startVotingButton: '.start-voting-button',
@@ -7,8 +8,25 @@ const delegatesPage = {
   votingHeader: '.voting-header',
 };
 
+const managedApplications = {
+  managedApplicationRow: '.managed-application-row',
+  managedAppDropdown: '.application-management-dropdown',
+  addApplicationLink: '.add-application-link',
+  addApplicationButton: '.add-application-button',
+  addApplicationHeader: '.add-application-header',
+  addApplicationTable: '.blockchain-application-add-list',
+  addApplicationRow: '.blockchain-application-add-row',
+  addApplicationSuccessHeader: '.add-application-success-header',
+  addApplicationSuccessButton: '.add-application-success-button',
+  removeApplicationButton: '.remove-application-button',
+  selectApplicationNodeHeader: '.application-header',
+  selectApplicationNodeContent: '.application-content',
+  selectApplicationNodeRow: '.select-node-row',
+};
+
 const ss = {
   ...delegatesPage,
+  ...managedApplications,
   becomeDelegateLink: '.register-delegate',
   app: '#app',
   monitorNetwork: '#network',
@@ -293,6 +311,18 @@ const ss = {
   verifyPublicKeyInput: '.publicKey',
   verifySignatureInput: '.signature',
   acceptTermsButton: '.accept-terms',
+  blockchainName: '.chain-name-text',
+  chainOwnerAddress: '.copy-address-wrapper .copy-title',
+  chainIdDisplay: '.chain-id',
+  chainStatusDisplay: '.chain-status',
+  lastChainUpdateDisplay: '.last-update',
+  lastCertHeightDisplay: '.last-certificate-height',
+  chainRow: '.blockchain-application-row',
+  chainPinButton: '.blockchain-application-pin-button',
+  chainDetailsPinButton: '.chain-details-pin-button',
+  cancelRemoveBlockchainButton: '.cancel-remove-blockchain',
+  removeBlockchainButton: '.remove-blockchain',
+  goToDashboardButton: '.remove-app-success-wrapper > button',
 };
 
 export default ss;

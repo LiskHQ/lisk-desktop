@@ -13,11 +13,11 @@ const LiskTransactions = {
       amount: '0.001',
       token: 'LSK',
       type: 0,
-      moduleAssetId: '2:0',
+      moduleCommandID: '2:0',
       sender: {
         address: 'lsks6uckwnap7s72ov3edddwgxab5e89t6uy8gjt6',
       },
-      asset: {
+      params: {
         recipient: {
           address: 'lsks6uckwnap7s72ov3edddwgxab5e89t6uy8gjt6',
         },
@@ -29,11 +29,11 @@ const LiskTransactions = {
       amount: '0.008',
       token: 'LSK',
       type: 1,
-      moduleAssetId: '5:0',
+      moduleCommandID: '5:0',
       sender: {
         address: 'lsks6uckwnap7s72ov3edddwgxab5e89t6uy8gjt6',
       },
-      asset: {
+      params: {
         recipient: {
           address: 'lsks6uckwnap7s72ov3edddwgxab5e89t6uy8gjt6',
         },
@@ -45,11 +45,11 @@ const LiskTransactions = {
       amount: '0.0009',
       token: 'LSK',
       type: 2,
-      moduleAssetId: '4:0',
+      moduleCommandID: '4:0',
       sender: {
         address: 'lsks6uckwnap7s72ov3edddwgxab5e89t6uy8gjt6',
       },
-      asset: {
+      params: {
         recipient: {
           address: 'lskehj8am9afxdz8arztqajy52acnoubkzvmo9cjy',
         },
@@ -61,11 +61,11 @@ const LiskTransactions = {
       amount: '25',
       token: 'LSK',
       type: 3,
-      moduleAssetId: '5:1',
+      moduleCommandID: '5:1',
       sender: {
         address: 'lsks6uckwnap7s72ov3edddwgxab5e89t6uy8gjt6',
       },
-      asset: {
+      params: {
         recipient: {
           address: 'lskgonvfdxt3m6mm7jaeojrj5fnxx7vwmkxq72v79',
         },

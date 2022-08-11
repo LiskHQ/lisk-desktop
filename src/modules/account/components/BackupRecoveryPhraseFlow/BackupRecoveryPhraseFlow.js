@@ -34,7 +34,7 @@ const BackupRecoveryPhraseFlow = ({ history }) => {
           ref={multiStepRef}
         >
           <EnterPasswordForm
-            accountSchema={account}
+            encryptedAccount={account}
             onEnterPasswordSuccess={onEnterPasswordSuccess}
           />
           <SavePassphrase passphrase={passphrase} />
