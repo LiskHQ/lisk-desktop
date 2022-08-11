@@ -2,7 +2,8 @@ import { cryptography } from '@liskhq/lisk-client';
 import { extractKeyPair, extractAddressFromPublicKey } from 'src/modules/wallet/utils/account';
 import { defaultDerivationPath } from 'src/utils/explicitBipKeyDerivation';
 
-// eslint-disable-next-line
+const { encrypt } = cryptography;
+
 export const encryptAccount = async ({
   recoveryPhrase,
   password,
@@ -10,39 +11,52 @@ export const encryptAccount = async ({
   derivationPath,
   enableCustomDerivationPath = false,
 }) => {
-  const { encrypt } = cryptography;
   const options = {
     passphrase: recoveryPhrase,
     enableCustomDerivationPath,
     derivationPath: enableCustomDerivationPath ? derivationPath : defaultDerivationPath,
   };
-  const { privateKey, publicKey, isValid } = extractKeyPair(options);
-  if (!isValid) {
-    throw new Error('Failed to extract keypair for given recovery phrase.');
-  }
-  const address = extractAddressFromPublicKey(publicKey);
-  const plainText = JSON.stringify({ privateKey, recoveryPhrase });
-  const encryptedPassphrase = await encrypt.encryptPassphraseWithPassword(plainText, password);
 
-  return {
-    encryptedPassphrase,
-    metadata: {
-      name,
-      pubkey: publicKey,
-      path: derivationPath ?? defaultDerivationPath,
-      address,
-      creationTime: new Date().toISOString(),
-    },
-    version: 1,
-  };
+  try {
+    const { privateKey, publicKey, isValid } = extractKeyPair(options);
+    if (!isValid) {
+      return { error: true };
+    }
+    const address = extractAddressFromPublicKey(publicKey);
+    const plainText = JSON.stringify({ privateKey, recoveryPhrase });
+    const encryptedPassphrase = await encrypt.encryptMessageWithPassword(plainText, password);
+
+    return {
+      error: false,
+      result: {
+        encryptedPassphrase,
+        metadata: {
+          name,
+          pubkey: publicKey,
+          path: options.derivationPath,
+          address,
+          creationTime: new Date().toISOString(),
+        },
+        version: 1,
+      },
+    };
+  } catch {
+    return { error: true };
+  }
 };
 
 export const decryptAccount = async (encryptedPassphrase, password) => {
-  const { encrypt } = cryptography;
-  const plainText = await encrypt.decryptPassphraseWithPassword(
-    encryptedPassphrase,
-    password,
-  );
-  const { recoveryPhrase } = JSON.parse(plainText);
-  return recoveryPhrase;
+  try {
+    const plainText = await encrypt.decryptMessageWithPassword(
+      encryptedPassphrase,
+      password,
+    );
+
+    return {
+      error: null,
+      result: JSON.parse(plainText),
+    };
+  } catch (error) {
+    return { error: true };
+  }
 };

@@ -9,7 +9,7 @@ import { signMessageByHW } from './hwManager';
  * @return {string} a signed value of the message
  */
 export const signUsingPrivateKey = ({ message, account }) => {
-  const msgBytes = cryptography.digestMessage(message);
+  const msgBytes = cryptography.ed.digestMessage(message);
   const signature = cryptography.ed.signDataWithPrivateKey(msgBytes, Buffer.from(account.summary.privateKey, 'hex'));
   const result = cryptography.ed.printSignedMessage({
     message,

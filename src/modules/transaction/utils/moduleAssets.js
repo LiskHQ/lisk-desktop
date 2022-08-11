@@ -1,6 +1,9 @@
 import { cryptography } from '@liskhq/lisk-client';
 import { MODULE_COMMANDS_NAME_ID_MAP } from '@transaction/configuration/moduleAssets';
 
+// TODO: Fix the mapping based on new id changes
+// We will address these problem in issue https://github.com/LiskHQ/lisk-desktop/issues/4400
+
 const getModuleCommandSenderLabel = (t = str => str) => ({
   [MODULE_COMMANDS_NAME_ID_MAP.transfer]: t('Sender'),
   [MODULE_COMMANDS_NAME_ID_MAP.reclaimLSK]: t('Sender'),

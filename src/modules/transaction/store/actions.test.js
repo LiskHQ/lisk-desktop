@@ -1,3 +1,4 @@
+import { cryptography } from '@liskhq/lisk-client';
 import httpApi from 'src/utils/api/http';
 import * as transactionUtils from '@transaction/utils/transaction';
 import { getState } from '@tests/fixtures/transactions';
@@ -18,8 +19,15 @@ import {
   signatureSkipped,
 } from './actions';
 
+const address = 'lskdxc4ta5j43jp9ro3f8zqbxta9fn6jwzjucw7yt';
+jest.spyOn(cryptography.address, 'getLisk32AddressFromPublicKey').mockReturnValue(address);
 jest.mock('@dpos/validator/api');
 jest.mock('src/utils/api/http');
+
+// TODO: All of these tests need to be rewritten to adopt to new transaction schema https://github.com/LiskHQ/lisk-sdk/blob/7e71617d281649a6942434f729a815870aac2394/elements/lisk-transactions/src/schema.ts#L15
+// We need to avoid lot of back and forth convertion from JSON and JS object
+// For consistency we will adopt these changes similar to https://github.com/LiskHQ/lisk-sdk/blob/development/elements/lisk-api-client/src/transaction.ts
+// We will address of these problem in issue https://github.com/LiskHQ/lisk-desktop/issues/4400
 
 describe.skip('actions: transactions', () => {
   beforeEach(() => {
