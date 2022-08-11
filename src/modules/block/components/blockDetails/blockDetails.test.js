@@ -1,32 +1,19 @@
-import { mountWithRouter } from 'src/utils/testHelpers';
+import { mountWithRouter, mountWithQueryClient } from 'src/utils/testHelpers';
 import { truncateAddress } from '@wallet/utils/account';
-import blocks from '@tests/constants/blocks';
 import transactions from '@tests/constants/transactions';
+import { mockTransactions } from '@transaction/__fixtures__';
+import { useTransactions } from '@transaction/hooks/queries/useTransactions';
 import BlockDetails from './blockDetails';
+
+jest.mock('@transaction/hooks/queries/useTransactions');
+useTransactions.mockReturnValue({
+  data: mockTransactions.data[0],
+});
 
 describe('BlockDetails page', () => {
   let wrapper;
   const props = {
-    t: (key) => key,
-    blockDetails: {
-      isLoading: false,
-      data: blocks[0],
-      loadData: jest.fn(),
-      error: false,
-    },
-    blockTransactions: {
-      isLoading: false,
-      data: [],
-      loadData: jest.fn(),
-    },
-    match: {
-      url: `/monitor/blocks/${blocks[0].id}`,
-    },
-    history: {
-      location: {
-        search: `?id=${blocks[0].id}`,
-      },
-    },
+    id: '14028351964090304640',
   };
 
   const resizeWindow = (x, y) => {
@@ -36,14 +23,18 @@ describe('BlockDetails page', () => {
   };
 
   beforeEach(() => {
-    wrapper = mountWithRouter(BlockDetails, props);
+    wrapper = mountWithQueryClient(BlockDetails, props);
+    jest.clearAllMocks();
   });
 
   it('renders a page properly without errors', () => {
+    useTransactions.mockReturnValueOnce({
+      data: mockTransactions.data[0],
+    });
     expect(wrapper.find('h1').at(0)).toHaveText('Block details');
     expect(wrapper.find('label').at(0)).toHaveText('Block ID');
     expect(wrapper.find('span.copy-title').at(0)).toHaveText(
-      truncateAddress(blocks[0].id),
+      truncateAddress(transactions[0].id),
     );
     expect(wrapper.find('label').at(1)).toHaveText('Height');
     expect(wrapper.find('label').at(2)).toHaveText('Date');
@@ -58,14 +49,14 @@ describe('BlockDetails page', () => {
   });
 
   it('renders a page with error', () => {
+    useTransactions.mockReturnValue({
+      error: { error: true, message: 'Not found.' },
+    });
     const newProps = {
       ...props,
-      blockDetails: {
-        ...props.blockDetails,
-        error: true,
-      },
+      id: '1402204103046409640',
     };
-    wrapper = mountWithRouter(BlockDetails, newProps);
+    wrapper = mountWithQueryClient(BlockDetails, newProps);
     expect(wrapper.find('h1').at(0)).toHaveText('Block details');
     expect(wrapper).toContainMatchingElement('Feedback');
     expect(wrapper.find('span').at(0)).toHaveText(
@@ -91,14 +82,14 @@ describe('BlockDetails page', () => {
   });
 
   it('shows a message when empty transactions response', () => {
+    useTransactions.mockReturnValue({
+      data: {},
+    });
     const newProps = {
       ...props,
-      blockTransactions: {
-        ...props.blockTransactions,
-        error: 'not found',
-      },
+      id: '1402204103046404096',
     };
-    wrapper = mountWithRouter(BlockDetails, newProps);
+    wrapper = mountWithQueryClient(BlockDetails, newProps);
     expect(wrapper.find('Empty')).toHaveLength(1);
   });
 });
