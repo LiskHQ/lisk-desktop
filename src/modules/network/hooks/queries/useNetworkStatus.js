@@ -13,7 +13,7 @@ export const useNetworkStatus = ({ config: customConfig = {}, options } = { }) =
   const config = {
     baseUrl: currentApplication?.apis[0][METHOD] ?? currentApplication?.apis[0].rest,
     baseURL: currentApplication?.apis[0][METHOD] ?? currentApplication?.apis[0].rest,
-    path: `/api/${API_VERSION}/network/status/`,
+    path: `/api/${API_VERSION}/network/status`,
     event: 'get.network.status',
     ...customConfig,
   };
