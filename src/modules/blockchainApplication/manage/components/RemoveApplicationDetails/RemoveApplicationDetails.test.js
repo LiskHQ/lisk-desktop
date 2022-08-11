@@ -3,7 +3,7 @@ import { fireEvent, screen } from '@testing-library/react';
 import mockBlockchainApplications from '@tests/fixtures/blockchainApplicationsExplore';
 import { renderWithRouter } from 'src/utils/testHelpers';
 import { usePinBlockchainApplication } from '@blockchainApplication/manage/hooks/usePinBlockchainApplication';
-import useApplicationManagement from '@blockchainApplication/manage/hooks/useApplicationManagement';
+import { useApplicationManagement } from '@blockchainApplication/manage/hooks/useApplicationManagement';
 import RemoveApplicationDetails from '.';
 
 const mockedPins = ['1111'];

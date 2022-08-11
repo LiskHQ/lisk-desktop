@@ -1,7 +1,7 @@
 import { fireEvent, screen } from '@testing-library/react';
 import mockManagedApplications from '@tests/fixtures/blockchainApplicationsManage';
 import { usePinBlockchainApplication } from '@blockchainApplication/manage/hooks/usePinBlockchainApplication';
-import useApplicationManagement from '@blockchainApplication/manage/hooks/useApplicationManagement';
+import { useApplicationManagement } from '@blockchainApplication/manage/hooks/useApplicationManagement';
 import { renderWithRouter } from 'src/utils/testHelpers';
 import { addSearchParamsToUrl } from 'src/utils/searchParams';
 import ApplicationManagementList from './ApplicationManagementList';
