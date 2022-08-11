@@ -97,7 +97,7 @@ describe('Form', () => {
     />);
     expect(wrapper.find('input.recipient')).toHaveValue(address);
     expect(wrapper.find('.amount input')).toHaveValue(fromRawLsk(rawTx.params.amount));
-    expect(wrapper.find('textarea.message')).toHaveValue(rawTx.params.data);
+    expect(wrapper.find('textarea[name="reference"]')).toHaveValue(rawTx.params.data);
   });
 
   it('should go to next step when submit button is clicked', async () => {

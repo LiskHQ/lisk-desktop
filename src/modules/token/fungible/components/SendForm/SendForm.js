@@ -24,9 +24,9 @@ import MessageField from '../MessageField';
 import chainLogo from '../../../../../../setup/react/assets/images/LISK.png';
 
 const defaultToken = mockAppTokens[0];
-const getInitialData = (rawTx, initialValue) => rawTx?.asset.data || initialValue || '';
-const getInitialAmount = (rawTx, initialValue) => (Number(rawTx?.asset.amount) ? fromRawLsk(rawTx?.asset.amount) : initialValue || '');
-const getInitialRecipient = (rawTx, initialValue) => rawTx?.asset.recipient.address || initialValue || '';
+const getInitialData = (rawTx, initialValue) => rawTx?.params.data || initialValue || '';
+const getInitialAmount = (rawTx, initialValue) => (Number(rawTx?.params.amount) ? fromRawLsk(rawTx?.params.amount) : initialValue || '');
+const getInitialRecipient = (rawTx, initialValue) => rawTx?.params.recipient.address || initialValue || '';
 const getInitialRecipientChain = (
   transactionData,
   initialChainId,
