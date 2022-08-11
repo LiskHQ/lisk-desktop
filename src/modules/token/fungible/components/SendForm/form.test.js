@@ -252,6 +252,35 @@ describe('Form', () => {
     });
   });
 
+  describe('Dropdown fields', () => {
+    it('Should pre-populate the from and to dropdown to the current application', () => {
+      const wrapper = mount(<Form {...props} />);
+      const fromChainDropdown = wrapper.find('div[data-testid="selected-menu-item"]').at(0);
+      const toChainDropdown = wrapper.find('div[data-testid="selected-menu-item"]').at(1);
+
+      expect(fromChainDropdown.text()).toBe(mockCurrentApplication.name);
+      expect(toChainDropdown.text()).toBe(mockCurrentApplication.name);
+    });
+
+    it('Should pre-populate the the dropdown fields', () => {
+      props = {
+        ...props,
+        initialValue: {
+          recipientApplication: mockManagedApplications[1].chainID,
+          token: mockAppTokens[1].tokenID,
+        },
+      };
+      const wrapper = mount(<Form {...props} />);
+
+      const fromChainDropdown = wrapper.find('div[data-testid="selected-menu-item"]').at(0);
+      const toChainDropdown = wrapper.find('div[data-testid="selected-menu-item"]').at(1);
+      const tokenDropdown = wrapper.find('div[data-testid="selected-menu-item"]').at(2);
+      expect(fromChainDropdown.text()).toBe(mockCurrentApplication.name);
+      expect(toChainDropdown.text()).toBe(mockManagedApplications[1].name);
+      expect(tokenDropdown.text()).toBe(mockAppTokens[1].name);
+    });
+  });
+
   describe('Reference field', () => {
     it('Should show error feedback over limit of characters', () => {
       const wrapper = mount(<Form {...props} />);
@@ -286,36 +315,6 @@ describe('Form', () => {
       const wrapper = mount(<Form {...props} />);
       wrapper.find('.reference button').at(0).simulate('click');
       expect(mockSetMessage).toHaveBeenCalled();
-    });
-  });
-
-  describe('Dropdown fields', () => {
-    it('Should from and to chain application should default to the current application', () => {
-      const wrapper = mount(<Form {...props} />);
-      wrapper.find('.add-message-button').at(0).simulate('click');
-
-      const fromChainDropdown = wrapper.find('div[data-testid="selected-menu-item"]').at(0);
-      const toChainDropdown = wrapper.find('div[data-testid="selected-menu-item"]').at(1);
-      expect(fromChainDropdown.text()).toBe('Lisk');
-      expect(toChainDropdown.text()).toBe('Lisk');
-    });
-
-    it('Should pre-populate the the dropdown fields', () => {
-      props = {
-        ...props,
-        initialValue: {
-          recipientApplication: mockManagedApplications[1].chainID,
-          token: mockAppTokens[1].tokenID,
-        },
-      };
-      const wrapper = mount(<Form {...props} />);
-
-      const fromChainDropdown = wrapper.find('div[data-testid="selected-menu-item"]').at(0);
-      const toChainDropdown = wrapper.find('div[data-testid="selected-menu-item"]').at(1);
-      const tokenDropdown = wrapper.find('div[data-testid="selected-menu-item"]').at(2);
-      expect(fromChainDropdown.text()).toBe(mockCurrentApplication.name);
-      expect(toChainDropdown.text()).toBe(mockManagedApplications[1].name);
-      expect(tokenDropdown.text()).toBe(mockAppTokens[1].name);
     });
   });
 });
