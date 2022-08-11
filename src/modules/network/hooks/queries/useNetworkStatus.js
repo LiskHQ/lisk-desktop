@@ -22,7 +22,6 @@ export const useNetworkStatus = ({ config: customConfig = {}, options } = { }) =
     async () => API_METHOD[METHOD](config),
     {
       ...options,
-      select: ({ data }) => options?.select(data) ?? data,
     },
   );
 };
