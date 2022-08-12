@@ -46,7 +46,7 @@ describe('AddApplicationList', () => {
       },
     };
     renderWithRouter(AddApplicationList, updatedProps);
-    fireEvent.click(screen.getByText('Load more'));
+    fireEvent.click(screen.getByText('Load More'));
     expect(props.liskApplications.loadData).toHaveBeenCalledTimes(1);
     expect(props.liskApplications.loadData).toHaveBeenCalledWith({
       ...props.filters,
