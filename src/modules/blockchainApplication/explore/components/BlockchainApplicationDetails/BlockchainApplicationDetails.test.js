@@ -2,9 +2,8 @@ import moment from 'moment';
 import { fireEvent, screen } from '@testing-library/react';
 import mockBlockchainApplications from '@tests/fixtures/blockchainApplicationsExplore';
 import { renderWithRouter } from 'src/utils/testHelpers';
-import { usePinBlockchainApplication } from '@blockchainApplication/manage/hooks/usePinBlockchainApplication';
-import { useApplicationManagement } from '@blockchainApplication/manage/hooks/useApplicationManagement';
-import BlockchainApplicationDetails from '.';
+import { useApplicationManagement, usePinBlockchainApplication } from '@blockchainApplication/manage/hooks';
+import BlockchainApplicationDetails from './index';
 
 const mockedPins = ['1111'];
 const mockTogglePin = jest.fn();
