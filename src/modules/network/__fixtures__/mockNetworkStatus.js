@@ -38,5 +38,9 @@ export const mockNetworkStatus = {
       whitelistedPeers: [],
     },
   },
-  meta: { lastUpdate: 1659704150, lastBlockHeight: 411, lastBlockID: '8b920dfc41cf60ec9b5ef7a31bbd4edc4ac20260e2645b0d8bfead4142d0b11f' },
+  meta: {
+    lastUpdate: 1659704150,
+    lastBlockHeight: 411,
+    lastBlockID: '8b920dfc41cf60ec9b5ef7a31bbd4edc4ac20260e2645b0d8bfead4142d0b11f',
+  },
 };

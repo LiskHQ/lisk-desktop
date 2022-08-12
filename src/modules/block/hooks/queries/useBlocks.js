@@ -29,10 +29,13 @@ export const useBlocks = ({ config: customConfig = {}, options } = { }) => {
     }),
     {
       ...options,
-      select: (data) => data.pages.reduce((prevPages, page) => ({
-        ...page,
-        data: prevPages?.data ? [...prevPages.data, ...page?.data] : page?.data,
-      }), {}),
+      select: (data) => data.pages.reduce((prevPages, page) => {
+        const newData = page?.data || [];
+        return {
+          ...page,
+          data: prevPages.data ? [...prevPages.data, ...newData] : newData,
+        };
+      }),
       getNextPageParam: (lastPage) => {
         const offset = lastPage.meta.count + lastPage.meta.offset;
         const hasMore = offset < lastPage.meta.total;

@@ -188,7 +188,6 @@
     "trezor.js": "9.3.4",
     "usb": "1.7.0",
     "webpack-merge": "=4.1.5",
-    "whatwg-fetch": "3.6.2",
     "yup": "0.32.11"
   },
   "devDependencies": {
