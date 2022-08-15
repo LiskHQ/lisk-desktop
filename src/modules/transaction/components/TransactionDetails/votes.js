@@ -7,10 +7,10 @@ import VoteItem from '../VoteItem';
 
 export const VotesPure = ({ t, votedDelegates }) => {
   const { transaction } = React.useContext(TransactionDetailsContext);
-  const { votes } = transaction.asset;
+  const { votes } = transaction.params;
 
   useEffect(() => {
-    if (transaction.asset) {
+    if (transaction.params) {
       const addressList = votes.map(item => item.delegateAddress);
       votedDelegates.loadData({ addressList });
     }

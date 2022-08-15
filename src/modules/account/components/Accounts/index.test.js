@@ -58,7 +58,7 @@ describe('Top Accounts Monitor Page', () => {
 
   it('renders a page with header', () => {
     const wrapper = setup(props);
-    expect(wrapper.find('Box header')).toIncludeText('All accounts');
+    expect(wrapper.find('Box header h1')).toIncludeText('All accounts');
   });
 
   it('renders table with accounts', () => {

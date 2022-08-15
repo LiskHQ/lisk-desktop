@@ -3,14 +3,14 @@ import { useTranslation } from 'react-i18next';
 import { useForm } from 'react-hook-form';
 
 import WalletVisual from '@wallet/components/walletVisual';
-import { decryptAccount } from '@account/utils/decryptAccount';
+import { decryptAccount } from '@account/utils/encryptAccount';
 import { Input } from 'src/theme';
 import Box from 'src/theme/box';
 import BoxContent from 'src/theme/box/content';
 import { PrimaryButton } from 'src/theme/buttons';
 import styles from './EnterPasswordForm.css';
 
-const EnterPasswordForm = ({ accountSchema, onEnterPasswordSuccess }) => {
+const EnterPasswordForm = ({ encryptedAccount, onEnterPasswordSuccess }) => {
   const { t } = useTranslation();
   const {
     register,
@@ -21,17 +21,19 @@ const EnterPasswordForm = ({ accountSchema, onEnterPasswordSuccess }) => {
 
   const formValues = watch();
 
-  const onSubmit = ({ password }) => {
-    const account = decryptAccount(accountSchema, password);
-    if (account.error) {
-      setFeedbackError(t('Unable to decrypt account. Please check your password'));
-      return;
+  const onSubmit = async ({ password }) => {
+    const { error, result } = await decryptAccount(
+      encryptedAccount.encryptedPassphrase, password,
+    );
+
+    if (error) {
+      const errorMessage = t('Unable to decrypt account. Please check your password');
+      return setFeedbackError(errorMessage);
     }
 
-    onEnterPasswordSuccess({
-      account,
-      recoveryPhrase: account.recoveryPhrase,
-      encryptedPhrase: accountSchema,
+    return onEnterPasswordSuccess({
+      recoveryPhrase: result.recoveryPhrase,
+      encryptedAccount,
     });
   };
 
@@ -44,12 +46,12 @@ const EnterPasswordForm = ({ accountSchema, onEnterPasswordSuccess }) => {
         </p>
         <WalletVisual
           className={styles.avatar}
-          address={accountSchema?.metadata?.address}
+          address={encryptedAccount?.metadata?.address}
         />
-        {accountSchema?.metadata?.name && (
-          <p className={styles.accountName}>{accountSchema?.metadata?.name}</p>
+        {encryptedAccount?.metadata?.name && (
+          <p className={styles.accountName}>{encryptedAccount?.metadata?.name}</p>
         )}
-        <p className={styles.accountAddress}>{accountSchema?.metadata?.address}</p>
+        <p className={styles.accountAddress}>{encryptedAccount?.metadata?.address}</p>
         <form onSubmit={handleSubmit(onSubmit)}>
           <Input
             secureTextEntry

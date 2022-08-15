@@ -140,14 +140,14 @@ describe('RegisterDelegateForm', () => {
       message: '',
     };
     const rawTx = {
-      asset: {
+      params: {
         blsPublicKey: blsKey.value,
         generatorPublicKey: genKey.value,
         proofOfPossession: pop.value,
         username: validName.value,
       },
       fee: 0,
-      moduleAssetId: '5:0',
+      moduleCommandID: '5:0',
       nonce: '1',
       sender: {
         publicKey: wallets.genesis.summary.publicKey,

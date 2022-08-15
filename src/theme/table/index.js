@@ -78,11 +78,13 @@ const Table = ({
   canLoadMore,
   error,
   additionalRowProps,
+  showHeader,
 }) => {
   const Row = row;
   return (
     <>
       <List
+        showHeader={showHeader}
         data={data}
         header={header}
         headerClassName={headerClassName}

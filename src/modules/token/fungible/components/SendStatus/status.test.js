@@ -14,7 +14,7 @@ describe('unlock transaction Status', () => {
     account: accounts.genesis,
     recipientAccount: { data: accounts.delegate },
     rawTx: {
-      asset: {
+      params: {
         recipient: { address: accounts.delegate.summary.address },
       },
     },
@@ -92,7 +92,7 @@ describe('unlock transaction Status', () => {
       ...props,
       recipientAccount: { data: accounts.delegate_candidate },
       rawTx: {
-        asset: {
+        params: {
           recipient: { address: accounts.delegate_candidate.summary.address },
         },
       },

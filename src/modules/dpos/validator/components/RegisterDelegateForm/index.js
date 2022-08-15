@@ -1,6 +1,6 @@
 import React from 'react';
 import { useTranslation } from 'react-i18next';
-import { MODULE_ASSETS_NAME_ID_MAP } from '@transaction/configuration/moduleAssets';
+import { MODULE_COMMANDS_NAME_ID_MAP } from '@transaction/configuration/moduleAssets';
 import BoxHeader from 'src/theme/box/header';
 import BoxContent from 'src/theme/box/content';
 import { Input } from 'src/theme';
@@ -27,21 +27,21 @@ const RegisterDelegateForm = ({
   prevState,
 }) => {
   const { t } = useTranslation();
-  const [name, setName] = useDelegateName(prevState?.rawTx?.asset.username);
+  const [name, setName] = useDelegateName(prevState?.rawTx?.params.username);
   const [generatorPublicKey, setGenKey] = useDelegateKey(
     'generatorPublicKey',
     t('Please enter a valid generator key value'),
-    prevState?.rawTx?.asset.generatorPublicKey,
+    prevState?.rawTx?.params.generatorPublicKey,
   );
   const [blsPublicKey, setBlsKey] = useDelegateKey(
     'blsPublicKey',
     t('Please enter a valid bls key value'),
-    prevState?.rawTx?.asset.blsPublicKey,
+    prevState?.rawTx?.params.blsPublicKey,
   );
   const [proofOfPossession, setPop] = useDelegateKey(
     'proofOfPossession',
     t('Please enter a valid proof of possession value'),
-    prevState?.rawTx?.asset.proofOfPossession,
+    prevState?.rawTx?.params.proofOfPossession,
   );
 
   const onConfirm = (rawTx) => {
@@ -56,8 +56,8 @@ const RegisterDelegateForm = ({
   };
 
   const transaction = {
-    moduleAssetId: MODULE_ASSETS_NAME_ID_MAP.registerDelegate,
-    asset: {
+    moduleCommandID: MODULE_COMMANDS_NAME_ID_MAP.registerDelegate,
+    params: {
       username: name.value,
       blsPublicKey: blsPublicKey.value,
       generatorPublicKey: generatorPublicKey.value,

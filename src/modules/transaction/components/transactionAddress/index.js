@@ -1,7 +1,7 @@
 import React from 'react';
 
-import { MODULE_ASSETS_NAME_ID_MAP } from '@transaction/configuration/moduleAssets';
-import { getModuleAssetTitle } from '@transaction/utils/moduleAssets';
+import { MODULE_COMMANDS_NAME_ID_MAP } from '@transaction/configuration/moduleAssets';
+import { getModuleCommandTitle } from '@transaction/utils/moduleAssets';
 import { truncateAddress } from '@wallet/utils/account';
 import styles from './transactionAddress.css';
 
@@ -24,15 +24,15 @@ const Address = ({
 };
 
 const TransactionAddress = ({
-  address, bookmarks, moduleAssetId, token,
+  address, bookmarks, moduleCommandID, token,
 }) => {
   const bookmark = bookmarks[token].find(acc => acc.address === address);
-  const title = getModuleAssetTitle()[moduleAssetId].replace('multisignature', 'multisig.');
+  const title = getModuleCommandTitle()[moduleCommandID].replace('multisignature', 'multisig.');
 
   return (
     <div className={`${styles.wrapper} transaction-address`}>
       {
-        moduleAssetId !== MODULE_ASSETS_NAME_ID_MAP.transfer
+        moduleCommandID !== MODULE_COMMANDS_NAME_ID_MAP.transfer
           ? <span>{title}</span>
           : <Address address={address} bookmark={bookmark} />
       }

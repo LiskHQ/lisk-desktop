@@ -1,3 +1,4 @@
+import { cryptography } from '@liskhq/lisk-client';
 import * as communication from '@libs/hwManager/communication';
 import * as accountApi from '@wallet/utils/api';
 import wallets from '@tests/constants/wallets';
@@ -6,6 +7,8 @@ import {
   signMessageByHW,
   getNewAccountByIndex,
 } from './hwManager';
+
+const address = 'lskdxc4ta5j43jp9ro3f8zqbxta9fn6jwzjucw7yt';
 
 jest.mock('@libs/hwManager/communication', () => ({
   getPublicKey: jest.fn(),
@@ -16,6 +19,8 @@ jest.mock('@libs/hwManager/communication', () => ({
 jest.mock('@wallet/utils/api', () => ({
   getAccounts: jest.fn(),
 }));
+
+jest.spyOn(cryptography.address, 'getLisk32AddressFromPublicKey').mockReturnValue(address);
 
 describe('hwManager util', () => {
   const signature = 'abc123ABC789';

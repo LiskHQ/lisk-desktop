@@ -1,6 +1,6 @@
 import React from 'react';
 import { mount } from 'enzyme';
-import { MODULE_ASSETS_NAME_ID_MAP } from '@transaction/configuration/moduleAssets';
+import { MODULE_COMMANDS_NAME_ID_MAP } from '@transaction/configuration/moduleAssets';
 import { mountWithRouter } from 'src/utils/testHelpers';
 import { truncateAddress } from '@wallet/utils/account';
 import wallets from '@tests/constants/wallets';
@@ -14,7 +14,7 @@ jest.mock('@dpos/validator/api', () => ({
 const transferTx = {
   data: {
     id: '6efc4dcc36f35e0507cf910630aee301b4a31cbadcaf397f23bef728c3fd634e',
-    moduleAssetId: '2:0',
+    moduleCommandID: '2:0',
     moduleAssetName: 'token:transfer',
     fee: '1000000',
     height: 619766,
@@ -31,7 +31,7 @@ const transferTx = {
     signatures: [
       '9948f4378d3ef3c8c1f1e1ba2e84f116e9d077ffb167e50e2ed78a69253f3a3eb210425d08dd68042b2deda869679063578667c530d5e8c52835d1980b9b2a0a',
     ],
-    asset: {
+    params: {
       amount: '150000000000',
       recipient: {
         address: 'lskdxc4ta5j43jp9ro3f8zqbxta9fn6jwzjucw7yt',
@@ -45,7 +45,7 @@ const transferTx = {
 const voteTx = {
   data: {
     id: 'fde8186c272fe8b513faa9e8816e23d6ec9dab883d15c984dbf543681548b595',
-    moduleAssetId: '5:1',
+    moduleCommandID: '5:1',
     moduleAssetName: 'dpos:voteDelegate',
     fee: '30000000',
     height: 134,
@@ -63,7 +63,7 @@ const voteTx = {
     signatures: [
       '32b9318e2e6c81b6125a6f4b88961e95702edeadc5d02887ac08b96bab67b5b393d73377d2e7662300ffc57196c02837b99b310ee447017658ab9b7929ab6304',
     ],
-    asset: {
+    params: {
       votes: [
         {
           delegateAddress: 'lskehj8am9afxdz8arztqajy52acnoubkzvmo9cjy',
@@ -78,7 +78,7 @@ const voteTx = {
 const delegateRegTx = {
   data: {
     id: 'fe680a5cfba50acb66c135cc11e92808991c5679b1d5f78f6a777817c5c4157c',
-    moduleAssetId: '5:0',
+    moduleCommandID: '5:0',
     moduleAssetName: 'dpos:registerDelegate',
     fee: '1500000000',
     height: 130,
@@ -96,7 +96,7 @@ const delegateRegTx = {
     signatures: [
       '7bceb31d6f4dbeae27c3dee1acf0f950381ba3933d74d8b60831ef960fd6f17e9b9c48e88ac4e33bd3015329978e85f03d53d4659bf352b2865a3d2ff56a650b',
     ],
-    asset: {
+    params: {
       username: 'testUsername',
     },
     isPending: false,
@@ -158,7 +158,7 @@ describe('Transaction Details Component', () => {
       const wrapper = mount(<TransactionDetails {...propsWithTransferTx} />);
       expect(wrapper).toContainMatchingElements(2, '.walletInfo');
       expect(wrapper.find('.walletInfo .sender-address').text()).toBe(transferTx.data.sender.address);
-      expect(wrapper.find('.walletInfo .receiver-address').text()).toBe(transferTx.data.asset.recipient?.address);
+      expect(wrapper.find('.walletInfo .receiver-address').text()).toBe(transferTx.data.params.recipient?.address);
       expect(wrapper).toContainExactlyOneMatchingElement('.tx-reference');
     });
 
@@ -222,12 +222,12 @@ describe('Transaction Details Component', () => {
     it('Should render unlock LSK details', () => {
       const unlockTx = {
         data: {
-          moduleAssetId: MODULE_ASSETS_NAME_ID_MAP.unlockToken,
+          moduleCommandID: MODULE_COMMANDS_NAME_ID_MAP.unlockToken,
           sender: {
             senderId: wallets.genesis.summary.address,
           },
           id: '123',
-          asset: {
+          params: {
             unlockObjects: [
               {
                 amount: 100,

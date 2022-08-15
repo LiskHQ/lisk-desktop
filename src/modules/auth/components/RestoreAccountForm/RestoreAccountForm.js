@@ -14,7 +14,7 @@ const RestoreAccountForm = ({ onBack, nextStep }) => {
     if (!value) {
       setError(t('Upload file is required'));
     } else {
-      nextStep({ accountSchema: value });
+      nextStep({ encryptedAccount: value });
     }
   };
 

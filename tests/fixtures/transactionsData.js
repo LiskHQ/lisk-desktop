@@ -1,7 +1,7 @@
 export default [
   {
     id: '6dc372dfcbfd2b1782d4d1964a35908f71e3878c69b5bbe28e5c69973671c8ee',
-    moduleAssetId: '2:0',
+    moduleCommandID: '2:0',
     moduleAssetName: 'token:transfer',
     fee: '143000',
     height: 414,
@@ -18,7 +18,7 @@ export default [
     signatures: [
       '6ab80c376f207f1a1b11d4cef3fbae00fb301d67d15c306ddafc62aaf6c9e5e5ae5c76d940f2ac6eab5d513f6a7f0da2d13b1f6674c367dc047237416bfe8a07',
     ],
-    asset: {
+    params: {
       amount: '2000000000',
       data: '',
       recipient: {
@@ -30,7 +30,7 @@ export default [
   },
   {
     id: '827028a55e5a28f96437bf87531c61255b737ceb3407989dfd41985ed6d5453b',
-    moduleAssetId: '5:0',
+    moduleCommandID: '5:0',
     moduleAssetName: 'dpos:registerDelegate',
     fee: '1000268000',
     height: 329,
@@ -50,14 +50,14 @@ export default [
       'c3ea76f6aeefe0214c021ec82ae5e5cfaa762f2ed7d5110c8d723f62ef73e2ad862768ed6bab13a53d0126b895085075327019a207d7edba0ad692a1ae74b909',
       '9b568bbe264dfb775f6d55a58592c077daa30f6d6abb1e914def734119aa709fe6c08ffe2fdd44375645d377e754dce17c755e2940751a11e786e8198e01ad06',
     ],
-    asset: {
+    params: {
       username: 'multisig_delegateacc',
     },
     isPending: false,
   },
   {
     id: 'ecf56cf27f113893f325f147813bda0f8d5077ea59e8871f668289ccb8f40fa6',
-    moduleAssetId: '4:0',
+    moduleCommandID: '4:0',
     moduleAssetName: 'keys:registerMultisignatureGroup',
     fee: '414000',
     height: 315,
@@ -78,7 +78,7 @@ export default [
       'bbfca9940762ac1df1c4208249cbe1a40676e8babde9e11fb829044d0c8730e9b76317a4ea824e470d5a075b67bbb25e2d90cbc0aad0ab3fbe74e81148a72d02',
       'c14f37f0f0dd8b40a973f0f809623c9ccdf279de76cfb4e7e129bd58fdd4230f1e540467918ea8c0cd3f5a6e18f123666b3d97a6e89521353350acde4e49fe02',
     ],
-    asset: {
+    params: {
       numberOfSignatures: 3,
       mandatoryKeys: [
         '2f3dfb37326c6c42af28d04e6b6a76865430ade3d26969f1b86e3987b500bbaf',
@@ -92,7 +92,7 @@ export default [
   },
   {
     id: 'a1c5521f466ae5476d3908cc8d562444d45adf4ac3af57e77f1f9359999ab9ca',
-    moduleAssetId: '5:1',
+    moduleCommandID: '5:1',
     moduleAssetName: 'dpos:voteDelegate',
     fee: '144000',
     height: 454,
@@ -109,7 +109,7 @@ export default [
     signatures: [
       '4edc354c9d40d1e9280db9744e584a7058ac6a779a73a647e3388cbf05e6351c592c111390d209ae6e87746167a3f58779192065c9e6650c237bf6466d1bd503',
     ],
-    asset: {
+    params: {
       votes: [
         {
           delegateAddress: 'lsk9gf9y56k8emm4byye44c92av2fzd65om95kxp8',
@@ -121,7 +121,7 @@ export default [
   },
   {
     id: '1f1aa24b49859d825cc5ace36b5554a1ee65556852b0c1f5c043853c697a2651',
-    moduleAssetId: '5:3',
+    moduleCommandID: '5:3',
     moduleAssetName: 'dpos:reportDelegateMisbehavior',
     fee: '10000000',
     height: 15334905,
@@ -138,7 +138,7 @@ export default [
     signatures: [
       '6fe09dfdb98bbcc6da9043a4c6153c7276c99c23c29f759b84f1d8c3e71d84ca1487ac0aabe78edb07e424ac1caff2ccf0e1f18c47b7d21797dbe9b44344690c',
     ],
-    asset: {
+    params: {
       header1: {
         version: 2,
         timestamp: 1641017150,
@@ -147,7 +147,7 @@ export default [
         transactionRoot: 'e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855',
         generatorPublicKey: '8100bb532f85183cbf6e99f9fcc5893f45536fbc9dbf7a80cfe1c1e165203ec7',
         reward: '25000000',
-        asset: {
+        params: {
           maxHeightPreviouslyForged: 15329877,
           maxHeightPrevoted: 15329809,
           seedReveal: '9df2fee500047174fe19c4454d32c0e2',
@@ -162,7 +162,7 @@ export default [
         transactionRoot: 'e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855',
         generatorPublicKey: '8100bb532f85183cbf6e99f9fcc5893f45536fbc9dbf7a80cfe1c1e165203ec7',
         reward: '25000000',
-        asset: {
+        params: {
           maxHeightPreviouslyForged: 15329877,
           maxHeightPrevoted: 15329809,
           seedReveal: '9df2fee500047174fe19c4454d32c0e2',

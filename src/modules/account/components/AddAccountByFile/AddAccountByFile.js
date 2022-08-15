@@ -7,15 +7,17 @@ import EnterPasswordForm from 'src/modules/auth/components/EnterPasswordForm';
 import SetPasswordSuccess from '@auth/components/SetPasswordSuccess';
 import MultiStep from 'src/modules/common/components/OldMultiStep';
 import styles from './AddAccountByFile.css';
-import { useCurrentAccount } from '../../hooks';
+import { useAccounts, useCurrentAccount } from '../../hooks';
 
 const AddAccountByPassFile = ({ history, login }) => {
-  const [, setCurrentAccount] = useCurrentAccount();
+  const [currentAccount, setCurrentAccount] = useCurrentAccount();
+  const { setAccount } = useAccounts();
   const multiStepRef = useRef(null);
 
-  const onEnterPasswordSuccess = ({ account, recoveryPhrase, encryptedPhrase }) => {
-    setCurrentAccount(account);
-    multiStepRef.current.next({ encryptedPhrase });
+  const onEnterPasswordSuccess = ({ recoveryPhrase, encryptedAccount }) => {
+    setAccount(encryptedAccount);
+    setCurrentAccount(encryptedAccount);
+    multiStepRef.current.next();
     login(recoveryPhrase); // Todo: this login method is depricated
   };
 
@@ -27,7 +29,10 @@ const AddAccountByPassFile = ({ history, login }) => {
     >
       <RestoreAccountForm onBack={history.goBack} />
       <EnterPasswordForm onEnterPasswordSuccess={onEnterPasswordSuccess} />
-      <SetPasswordSuccess onClose={() => history.push(routes.dashboard.path)} />
+      <SetPasswordSuccess
+        encryptedPhrase={currentAccount}
+        onClose={() => history.push(routes.dashboard.path)}
+      />
     </MultiStep>
   );
 };

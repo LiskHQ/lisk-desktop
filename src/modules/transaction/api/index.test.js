@@ -1,5 +1,5 @@
 /* eslint-disable max-lines */
-import { MODULE_ASSETS_NAME_ID_MAP } from '@transaction/configuration/moduleAssets';
+import { MODULE_COMMANDS_NAME_ID_MAP } from '@transaction/configuration/moduleAssets';
 import {
   getTxAmount,
   convertStringToBinary,
@@ -20,7 +20,7 @@ import {
 
 const {
   transfer, voteDelegate, registerDelegate, registerMultisignatureGroup, unlockToken, reclaimLSK,
-} = MODULE_ASSETS_NAME_ID_MAP;
+} = MODULE_COMMANDS_NAME_ID_MAP;
 const { network } = getState();
 
 jest.mock('src/utils/api/http', () =>
@@ -178,18 +178,18 @@ describe('API: LSK Transactions', () => {
   describe('getTxAmount', () => {
     it('should return amount of transfer in Beddows', () => {
       const tx = {
-        moduleAssetId: transfer,
-        asset: { amount: 100000000 },
+        moduleCommandID: transfer,
+        params: { amount: 100000000 },
       };
 
-      expect(getTxAmount(tx)).toEqual(tx.asset.amount);
+      expect(getTxAmount(tx)).toEqual(tx.params.amount);
     });
 
     it('should return amount of votes in Beddows', () => {
       const tx = {
         title: voteDelegate,
-        moduleAssetId: voteDelegate,
-        asset: {
+        moduleCommandID: voteDelegate,
+        params: {
           votes: [
             {
               amount: '100000000',
@@ -207,8 +207,8 @@ describe('API: LSK Transactions', () => {
     it('should return amount of unlock in Beddows', () => {
       const tx = {
         title: unlockToken,
-        moduleAssetId: unlockToken,
-        asset: {
+        moduleCommandID: unlockToken,
+        params: {
           unlockObjects: [
             {
               amount: '100000000',
@@ -236,12 +236,12 @@ describe('API: LSK Transactions', () => {
 
     it('should return fee in Beddows', async () => {
       const transferTx = {
-        asset: {
+        params: {
           amount: '100000000',
           data: 'to test the instance',
           recipient: { address: 'lskz5kf62627u2n8kzqa8jpycee64pgxzutcrbzhz' },
         },
-        moduleAssetId: transfer,
+        moduleCommandID: transfer,
       };
       const result = await getTransactionFee({
         transaction: { ...baseTx, ...transferTx },
@@ -253,8 +253,8 @@ describe('API: LSK Transactions', () => {
 
     it('should calculate fee of vote tx', async () => {
       const voteTx = {
-        moduleAssetId: voteDelegate,
-        asset: {
+        moduleCommandID: voteDelegate,
+        params: {
           votes: [],
         },
       };
@@ -269,8 +269,8 @@ describe('API: LSK Transactions', () => {
 
     it('should calculate fee of register delegate tx', async () => {
       const registerDelegateTx = {
-        moduleAssetId: registerDelegate,
-        asset: {
+        moduleCommandID: registerDelegate,
+        params: {
           username: 'some_username',
           generatorPublicKey: convertStringToBinary(genKey),
           blsPublicKey: convertStringToBinary(blsKey),
@@ -288,8 +288,8 @@ describe('API: LSK Transactions', () => {
 
     it('should calculate fee of reclaimLSK tx', async () => {
       const reclaimTx = {
-        moduleAssetId: reclaimLSK,
-        asset: {
+        moduleCommandID: reclaimLSK,
+        params: {
           amount: '4454300000',
         },
       };
@@ -304,8 +304,8 @@ describe('API: LSK Transactions', () => {
 
     it('should calculate fee of registerMultisignatureGroup tx', async () => {
       const regMultisigTx = {
-        moduleAssetId: registerMultisignatureGroup,
-        asset: {
+        moduleCommandID: registerMultisignatureGroup,
+        params: {
           numberOfSignatures: 2,
           mandatoryKeys: [accounts.genesis.summary.publicKey, accounts.delegate.summary.publicKey],
           optionalKeys: [accounts.delegate_candidate.summary.publicKey],
@@ -323,8 +323,8 @@ describe('API: LSK Transactions', () => {
 
     it('should calculate fee of multisignature token transfer tx', async () => {
       const multisigTransferTx = {
-        moduleAssetId: transfer,
-        asset: {
+        moduleCommandID: transfer,
+        params: {
           amount: '100000',
           data: 'to test the instance',
           recipient: { address: 'lskz5kf62627u2n8kzqa8jpycee64pgxzutcrbzhz' },
@@ -342,8 +342,8 @@ describe('API: LSK Transactions', () => {
 
     it('should calculate fee of multisignature voteDelegate tx', async () => {
       const multisigVoteTx = {
-        moduleAssetId: voteDelegate,
-        asset: {
+        moduleCommandID: voteDelegate,
+        params: {
           votes: [
             { delegateAddress: accounts.genesis.summary.address, amount: '100000000' },
             { delegateAddress: accounts.delegate.summary.address, amount: '-100000000' },
@@ -362,8 +362,8 @@ describe('API: LSK Transactions', () => {
 
     it('should calculate fee of multisignature registerDelegate tx', async () => {
       const multisigRegisterDelegateTx = {
-        moduleAssetId: registerDelegate,
-        asset: {
+        moduleCommandID: registerDelegate,
+        params: {
           username: 'user_name',
           generatorPublicKey: convertBinaryToString(genKey),
           blsPublicKey: convertBinaryToString(blsKey),
@@ -382,8 +382,8 @@ describe('API: LSK Transactions', () => {
 
     it('should calculate fee of multisignature unlockToken tx', async () => {
       const multisigUnlockTx = {
-        moduleAssetId: unlockToken,
-        asset: {
+        moduleCommandID: unlockToken,
+        params: {
           unlockObjects: [
             { delegateAddress: accounts.genesis.summary.address, amount: '-10000000', unvoteHeight: 1500 },
             { delegateAddress: accounts.delegate_candidate.summary.address, amount: '-340000000', unvoteHeight: 1500 },

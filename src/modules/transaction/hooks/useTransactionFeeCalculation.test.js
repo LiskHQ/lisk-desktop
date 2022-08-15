@@ -8,11 +8,11 @@ describe('useTransactionFeeCalculation', () => {
     wallet: wallets.genesis,
     selectedPriority: { value: 1, selectedIndex: 0 },
     transaction: {
-      moduleAssetId: '2:0',
+      moduleCommandID: '2:0',
       sender: { publicKey: wallets.genesis.summary.publicKey },
       fee: '1000',
       nonce: 1,
-      asset: {
+      params: {
         recipient: { address: wallets.genesis.summary.address },
         amount: '100000000',
         data: 'test',

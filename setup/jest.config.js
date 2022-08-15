@@ -29,6 +29,7 @@ module.exports = {
     '^@fixtures(.*)$': resolve(__dirname, '../tests/fixtures/$1'),
     '^@theme(.*)$': resolve(__dirname, '../src/theme/$1'),
     '^@account(.*)$': resolve(__dirname, '../src/modules/account/$1'),
+    '^@blockchainApplication(.*)$': resolve(__dirname, '../src/modules/blockchainApplication/$1'),
     '^@block(.*)$': resolve(__dirname, '../src/modules/block/$1'),
     '^@bookmark(.*)$': resolve(__dirname, '../src/modules/bookmark/$1'),
     '^@search(.*)$': resolve(__dirname, '../src/modules/search/$1'),
@@ -296,6 +297,8 @@ module.exports = {
     'src/redux/store.js',
     'src/modules/common/components/onboarding/demo.js',
     'src/modules/wallet/components/multiSignature/index.js',
+    'src/modules/account/hooks/useCurrentAccount.js',
+    'src/modules/transaction/store/actions.js',
   ],
   coverageThreshold: {
     // global: {

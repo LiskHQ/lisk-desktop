@@ -202,11 +202,11 @@ describe('actions: voting', () => {
       ...state.wallet.info.LSK,
     };
     const params = {
-      moduleAssetId: '5:2',
+      moduleCommandID: '5:2',
       sender: { publicKey: wallets.genesis.summary.publicKey },
       nonce: wallets.genesis.sequence.nonce,
       fee: '10000000',
-      asset: {
+      params: {
         unlockObjects: [],
       },
     };

@@ -1,3 +1,4 @@
+import { cryptography } from '@liskhq/lisk-client';
 import { HTTP_CODES } from 'src/const/httpCodes';
 import http from 'src/utils/api/http';
 import ws from 'src/utils/api/ws';
@@ -6,6 +7,7 @@ import { getAccount, getAccounts } from './index';
 
 jest.mock('src/utils/api/http', () => jest.fn().mockReturnValue([]));
 jest.mock('src/utils/api/ws', () => jest.fn().mockReturnValue([]));
+jest.spyOn(cryptography.address, 'getLisk32AddressFromPublicKey').mockReturnValue(accounts.delegate.summary.address);
 
 describe('API: LSK Account', () => {
   const network = {

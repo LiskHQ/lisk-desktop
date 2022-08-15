@@ -52,6 +52,11 @@ const defaultStore = {
     indexBook: forgers.reduce((acc, item, index) => { acc[item.address] = index; return acc; }, {}),
     total: 10000,
   },
+  blockChainApplications: {
+    pins: [],
+    applications: {},
+    current: null,
+  },
 };
 
 export default (props = {}) => fakeStore({ ...defaultStore, ...props });
