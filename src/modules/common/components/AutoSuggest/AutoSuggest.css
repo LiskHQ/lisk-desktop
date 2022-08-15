@@ -8,6 +8,7 @@
 
   & .input {
     padding-left: 50px !important;
+    border-radius: 6px;
   }
 
   & .suggestionList {

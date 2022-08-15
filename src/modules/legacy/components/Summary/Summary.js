@@ -19,6 +19,7 @@ const Summary = ({
   wallet,
   network,
   t,
+  fees,
 }) => {
   transaction.nonce = wallet.sequence.nonce;
   transaction.sender = { PublicKey: wallet.summary.publicKey };
@@ -60,10 +61,13 @@ const Summary = ({
 
   return (
     <TransactionSummary
+      hasCancel
       className={styles.container}
       confirmButton={onConfirmAction}
       cancelButton={onCancelAction}
       rawTx={rawTx}
+      selectedPriority={selectedPriority}
+      fees={fees}
     />
   );
 };

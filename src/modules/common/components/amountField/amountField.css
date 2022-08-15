@@ -31,6 +31,7 @@
     padding-right: 120px;
     width: 100%;
     height: 48px;
+    border-radius: 6px;
   }
 }
 
@@ -42,7 +43,7 @@
 }
 
 .fieldLabel {
-  @mixin contentNormal bold;
+  @mixin contentNormal normal;
 
   align-items: center;
   color: var(--color-maastricht-blue);

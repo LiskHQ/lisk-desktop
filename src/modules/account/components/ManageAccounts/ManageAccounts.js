@@ -4,7 +4,7 @@ import { withRouter } from 'react-router';
 
 import Box from 'src/theme/box';
 import grid from 'flexboxgrid/dist/flexboxgrid.css';
-import Dialog from '@theme/dialog/dialog';
+import Dialog from 'src/theme/dialog/dialog';
 import { OutlineButton } from 'src/theme/buttons';
 import Icon from 'src/theme/Icon';
 import routes from 'src/routes/routes';

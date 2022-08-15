@@ -40,8 +40,13 @@ const RegisterDelegateForm = ({
   const [loading, setLoading] = useState(false);
   const [username, setUsername] = useState(prevState?.rawTx?.params.username ?? '');
 
-  const onConfirm = (rawTx) => {
-    nextStep({ rawTx });
+  const onConfirm = (rawTx, trnxData, selectedPriority, fees) => {
+    nextStep({
+      selectedPriority,
+      trnxData,
+      rawTx,
+      fees,
+    });
   };
 
   const checkUsername = () => {

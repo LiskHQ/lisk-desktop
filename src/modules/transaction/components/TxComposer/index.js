@@ -13,10 +13,11 @@ import TransactionPriority from '@transaction/components/TransactionPriority';
 import { toRawLsk } from '@token/fungible/utils/lsk';
 import { PrimaryButton } from 'src/theme/buttons';
 import Feedback, { getMinRequiredBalance } from './Feedback';
+import { getFeeStatus } from '../../utils/helpers';
 
 // eslint-disable-next-line max-statements
 const TxComposer = ({
-  children, transaction, onComposed, onConfirm, className, buttonTitle,
+  children, transaction, onComposed, onConfirm, className, buttonTitle, transactionData,
 }) => {
   const { t } = useTranslation();
   const network = useSelector(state => state.network);
@@ -27,6 +28,7 @@ const TxComposer = ({
     selectedPriority, selectTransactionPriority,
     priorityOptions, prioritiesLoadError, loadingPriorities,
   ] = useTransactionPriority();
+
   const rawTx = {
     sender: { publicKey: wallet.summary?.publicKey },
     nonce: wallet.sequence?.nonce,
@@ -46,9 +48,19 @@ const TxComposer = ({
     if (typeof onComposed === 'function') {
       onComposed(status, { ...rawTx, fee: toRawLsk(status.fee.value) });
     }
-  }, [selectedPriority, transaction.params]);
+  }, [selectedPriority, transaction.asset]);
 
   const minRequiredBalance = getMinRequiredBalance(transaction, status.fee);
+  const { recipientChain, sendingChain } = transactionData || {};
+
+  const composedFees = {
+    Transaction: getFeeStatus({ fee: status.fee, token, customFee }),
+  };
+
+  if (sendingChain && recipientChain && (sendingChain.chainID !== recipientChain.chainID)) {
+    composedFees.CCM = getFeeStatus({ fee: status.fee, token, customFee });
+    composedFees.Initiation = getFeeStatus({ fee: status.fee, token, customFee });
+  }
 
   return (
     <Box className={className}>
@@ -65,17 +77,23 @@ const TxComposer = ({
         setSelectedPriority={selectTransactionPriority}
         loadError={prioritiesLoadError}
         isLoading={loadingPriorities}
+        composedFees={composedFees}
       />
       <Feedback
-        balance={wallet.token.balance}
+        balance={wallet.token?.balance}
         feedback={transaction.feedback}
         minRequiredBalance={minRequiredBalance}
       />
       <BoxFooter>
         <PrimaryButton
           className="confirm-btn"
-          onClick={() => onConfirm({ ...rawTx, fee: toRawLsk(status.fee.value) })}
-          disabled={!transaction.isValid || minRequiredBalance > wallet.token.balance}
+          onClick={() => onConfirm(
+            { ...rawTx, fee: toRawLsk(status.fee.value) },
+            transactionData,
+            selectedPriority,
+            composedFees,
+          )}
+          disabled={!transaction.isValid || minRequiredBalance > wallet.token?.balance}
         >
           {
             buttonTitle ?? t('Continue')
