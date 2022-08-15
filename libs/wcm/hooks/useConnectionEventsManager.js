@@ -1,11 +1,14 @@
-import { useCallback, useEffect } from 'react';
+import { useCallback, useEffect, useContext } from 'react';
 import { addSearchParamsToUrl } from 'src/utils/searchParams';
 import { client } from '@libs/wcm/utils/connectionCreator';
+import ConnectionContext from '../context/connectionContext';
 import { LISK_SIGNING_METHODS } from '../data/chainConfig';
 
 const useWalletConnectEventsManager = (history, pairings, setPairings) => {
+  const { data, setData } = useContext(ConnectionContext);
   const onSessionProposal = useCallback((proposal) => {
-    // @todo pass the proposal to the modal
+    // Use context to send data to the modal
+    setData({ ...data, proposal });
     addSearchParamsToUrl(history, { modal: 'connectionSummary' });
   }, []);
 
@@ -18,6 +21,7 @@ const useWalletConnectEventsManager = (history, pairings, setPairings) => {
       case LISK_SIGNING_METHODS.LISK_SIGN_MESSAGE:
       case LISK_SIGNING_METHODS.LISK_SIGN_TRANSACTION:
         // @todo pass the requestSession to the modal
+        setData({ ...data, requestSession });
         addSearchParamsToUrl(history, { modal: 'requestSummary' });
         break;
       default:

@@ -12,6 +12,7 @@ import { watchListRetrieved } from 'src/modules/dpos/validator/store/actions/wat
 import NotFound from 'src/modules/common/components/NotFound';
 import useIpc from '@update/hooks/useIpc';
 import ConnectionManager from '@libs/wcm/components/ConnectionManager';
+import ConnectionProvider from '@libs/wcm/context/connectionProvider';
 import FlashMessageHolder from 'src/theme/flashMessage/holder';
 import DialogHolder from 'src/theme/dialog/holder';
 import OfflineWrapper from 'src/modules/common/components/offlineWrapper';
@@ -43,8 +44,10 @@ const App = ({ history }) => {
   return (
     <ThemeContext.Provider value={theme}>
       <OfflineWrapper>
-        <DialogHolder history={history} />
-        <ConnectionManager history={history} />
+        <ConnectionProvider>
+          <DialogHolder history={history} />
+          <ConnectionManager history={history} />
+        </ConnectionProvider>
         <ToastContainer
           position="bottom-right"
           hideProgressBar
