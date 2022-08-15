@@ -30,8 +30,8 @@
 
     & > label:first-child {
       font-family: var(--content-font);
-      font-size: 13px;
-      font-weight: var(--font-weight-bold);
+      font-size: 14px;
+      font-weight: var(--font-weight-normal);
       letter-spacing: 0.2px;
       line-height: 20px;
       margin-bottom: 10px;
@@ -63,5 +63,14 @@
       width: 100%;
       line-height: 20px;
     }
+  }
+}
+
+.recipientDetail {
+  display: flex;
+  flex-direction: column;
+
+  & > span:last-child {
+    padding-top: 5px;
   }
 }

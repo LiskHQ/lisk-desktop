@@ -5,7 +5,20 @@ import { tokenMap } from '@token/fungible/consts/tokens';
 import { fromRawLsk } from '@token/fungible/utils/lsk';
 import accounts from '@tests/constants/wallets';
 import flushPromises from '@tests/unit-test-utils/flushPromises';
+import useApplicationManagement from '@blockchainApplication/manage/hooks/useApplicationManagement';
+import { useCurrentApplication } from '@blockchainApplication/manage/hooks/useCurrentApplication';
+import mockManagedApplications from '@tests/fixtures/blockchainApplicationsManage';
+import { mockAppTokens } from '@tests/fixtures/token';
+import { useMessageField } from '../../hooks';
 import Form from './SendForm';
+
+const mockSetMessage = jest.fn();
+const mockSetCurrentApplication = jest.fn();
+const mockSetApplication = jest.fn();
+const mockCurrentApplication = mockManagedApplications[0];
+
+jest.mock('@blockchainApplication/manage/hooks/useApplicationManagement');
+jest.mock('@blockchainApplication/manage/hooks/useCurrentApplication');
 
 jest.mock('@transaction/hooks/useTransactionFeeCalculation', () => jest.fn().mockReturnValue({
   minFee: { value: 0.00001 },
@@ -13,9 +26,23 @@ jest.mock('@transaction/hooks/useTransactionFeeCalculation', () => jest.fn().moc
   maxAmount: { value: 200000000 },
 }));
 
+jest.mock('../../hooks');
+
 describe('Form', () => {
   let props;
   let bookmarks;
+
+  useApplicationManagement.mockReturnValue({
+    setApplication: mockSetApplication,
+    applications: mockManagedApplications,
+  });
+
+  useCurrentApplication.mockReturnValue([
+    mockCurrentApplication,
+    mockSetCurrentApplication,
+  ]);
+
+  useMessageField.mockImplementation(jest.requireActual('../../hooks').useMessageField);
 
   beforeEach(() => {
     bookmarks = {
@@ -48,7 +75,7 @@ describe('Form', () => {
     const wrapper = mount(<Form {...props} />);
     expect(wrapper).toContainMatchingElement('span.recipient');
     expect(wrapper).toContainMatchingElement('span.amount');
-    expect(wrapper).toContainMatchingElement('label.reference');
+    expect(wrapper).toContainMatchingElement('.add-message-button');
     expect(wrapper).not.toContainMatchingElement('PrimaryButton.btn-submit');
   });
 
@@ -63,6 +90,7 @@ describe('Form', () => {
         data: 'message',
       },
     };
+
     const wrapper = mount(<Form {...{
       ...props,
       prevState: { rawTx },
@@ -70,7 +98,7 @@ describe('Form', () => {
     />);
     expect(wrapper.find('input.recipient')).toHaveValue(address);
     expect(wrapper.find('.amount input')).toHaveValue(fromRawLsk(rawTx.params.amount));
-    expect(wrapper.find('textarea.message')).toHaveValue(rawTx.params.data);
+    expect(wrapper.find('textarea[name="reference"]')).toHaveValue(rawTx.params.data);
   });
 
   it('should go to next step when submit button is clicked', async () => {
@@ -99,16 +127,18 @@ describe('Form', () => {
     });
 
     it('should validate address', () => {
-      const wrapper = mount(<Form {...{
-        ...props,
-        bookmarks: { LSK: [] },
-      }}
-      />);
+      const wrapper = mount(
+        <Form
+          {...props}
+          bookmarks={{ LSK: [] }}
+        />,
+      );
       const evt = { target: { name: 'recipient', value: 'invalid_address' } };
       wrapper.find('input.recipient').simulate('change', evt);
       act(() => { jest.advanceTimersByTime(300); });
       wrapper.update();
-      expect(wrapper.find('.feedback').at(0)).toHaveClassName('error');
+
+      expect(wrapper.find('.feedback').at(1)).toHaveClassName('error');
     });
 
     it('Should show bookmark title if address is a bookmark', () => {
@@ -160,26 +190,27 @@ describe('Form', () => {
       expect(amountField.find('.feedback.error')).toHaveClassName('error');
       expect(wrapper.find('.amount Feedback')).toHaveText('Provide a correct amount of LSK');
 
-      // amountField.find('input').simulate('change',
-      //   { target: { name: 'amount', value: '1.1.' } });
-      // act(() => { jest.advanceTimersByTime(300); });
-      // wrapper.update();
-      // amountField = wrapper.find('.fieldGroup').at(1);
+      amountField.find('input[name="amount"]').simulate('change',
+        { target: { name: 'amount', value: '1.1.' } });
 
-      // expect(amountField.find('.feedback.error')).toHaveClassName('error');
-      // expect(wrapper.find('.amount Feedback')).toHaveText('Provide a correct amount of LSK');
+      act(() => { jest.advanceTimersByTime(300); });
+      wrapper.update();
+      amountField = wrapper.find('.fieldGroup').at(1);
 
-      // amountField.find('input').simulate('change', {
-      //   target:
-      //     { name: 'amount', value: props.account.token?.balance + 2 },
-      // });
-      // act(() => { jest.advanceTimersByTime(300); });
-      // await flushPromises();
-      // wrapper.update();
+      expect(amountField.find('.feedback.error')).toHaveClassName('error');
+      expect(wrapper.find('.amount Feedback')).toHaveText('Provide a correct amount of LSK');
 
-      // expect(wrapper.find('.amount Feedback')).toHaveText(
-      //   'Provided amount is higher than your current balance.',
-      // );
+      amountField.find('input').simulate('change', {
+        target:
+          { name: 'amount', value: props.account.token?.balance + 2 },
+      });
+      act(() => { jest.advanceTimersByTime(300); });
+      await flushPromises();
+      wrapper.update();
+
+      expect(wrapper.find('.amount Feedback')).toHaveText(
+        'Provided amount is higher than your current balance.',
+      );
     });
 
     it('Should show error if transaction will result on an account with less than the minimum balance', () => {
@@ -219,56 +250,43 @@ describe('Form', () => {
       expect(wrapper.find('.amount Feedback')).not.toHaveText(expect.any(String));
       expect(wrapper.find('.confirm-btn').at(0)).not.toBeDisabled();
     });
+  });
 
-    it('Should be able to send entire balance', () => {
+  describe('Dropdown fields', () => {
+    it('Should pre-populate the from and to dropdown to the current application', () => {
       const wrapper = mount(<Form {...props} />);
-      const { address } = accounts.genesis.summary;
-      wrapper.find('input.recipient').simulate('change', { target: { name: 'recipient', value: address } });
-      wrapper.find('.use-entire-balance-button').at(1).simulate('click');
-      act(() => { jest.advanceTimersByTime(300); });
-      wrapper.update();
+      const fromChainDropdown = wrapper.find('div[data-testid="selected-menu-item"]').at(0);
+      const toChainDropdown = wrapper.find('div[data-testid="selected-menu-item"]').at(1);
 
-      expect(wrapper.find('.amount Feedback')).toHaveText('');
-      expect(wrapper.find('.confirm-btn').at(0)).not.toBeDisabled();
+      expect(fromChainDropdown.text()).toBe(mockCurrentApplication.name);
+      expect(toChainDropdown.text()).toBe(mockCurrentApplication.name);
     });
 
-    it('Should update amount field if maximum value changes', () => {
+    it('Should pre-populate the the dropdown fields', () => {
+      props = {
+        ...props,
+        initialValue: {
+          recipientApplication: mockManagedApplications[1].chainID,
+          token: mockAppTokens[1].tokenID,
+        },
+      };
       const wrapper = mount(<Form {...props} />);
-      const { address } = accounts.genesis.summary;
-      wrapper.find('input.recipient').simulate('change', { target: { name: 'recipient', value: address } });
-      wrapper.find('.use-entire-balance-button').at(1).simulate('click');
-      act(() => { jest.advanceTimersByTime(300); });
-      wrapper.update();
-      expect(wrapper.find('.amount input').instance().value).toEqual('2');
-      act(() => { jest.advanceTimersByTime(300); });
-      wrapper.update();
-      wrapper.find('textarea.message').simulate('change', { target: { name: 'reference', value: 'Testing maximum balance update' } });
-      act(() => { jest.advanceTimersByTime(300); });
-      wrapper.update();
-      expect(wrapper.find('.amount input').instance().value).toEqual('2');
-    });
 
-    it('Should display send entire balance warning', () => {
-      const wrapper = mount(<Form {...props} />);
-      const { address } = accounts.genesis.summary;
-      wrapper.find('input.recipient').simulate('change', { target: { name: 'recipient', value: address } });
-      wrapper.find('.use-entire-balance-button').at(1).simulate('click');
-      act(() => { jest.advanceTimersByTime(300); });
-      wrapper.update();
-
-      expect(wrapper.find('.entire-balance-warning')).toHaveText('You are about to send your entire balance');
-      wrapper.find('.close-entire-balance-warning').at(0).simulate('click');
-      act(() => { jest.advanceTimersByTime(300); });
-      wrapper.update();
-
-      expect(wrapper.find('.entire-balance-warning'));
+      const fromChainDropdown = wrapper.find('div[data-testid="selected-menu-item"]').at(0);
+      const toChainDropdown = wrapper.find('div[data-testid="selected-menu-item"]').at(1);
+      const tokenDropdown = wrapper.find('div[data-testid="selected-menu-item"]').at(2);
+      expect(fromChainDropdown.text()).toBe(mockCurrentApplication.name);
+      expect(toChainDropdown.text()).toBe(mockManagedApplications[1].name);
+      expect(tokenDropdown.text()).toBe(mockAppTokens[1].name);
     });
   });
 
   describe('Reference field', () => {
     it('Should show error feedback over limit of characters', () => {
       const wrapper = mount(<Form {...props} />);
-      let referenceField = wrapper.find('.fieldGroup').at(2);
+      wrapper.find('.add-message-button').at(0).simulate('click');
+
+      let referenceField = wrapper.find('.reference').at(0);
       const evt = {
         target: {
           name: 'reference',
@@ -279,9 +297,24 @@ describe('Form', () => {
       referenceField.find('AutoResizeTextarea').simulate('change', evt);
       act(() => { jest.advanceTimersByTime(300); });
       wrapper.update();
-      referenceField = wrapper.find('.fieldGroup').at(2);
-
+      referenceField = wrapper.find('.reference');
       expect(referenceField.find('.feedback.error')).toHaveClassName('show error');
+    });
+
+    it('Should remove the value of the message field', () => {
+      useMessageField.mockReturnValue([
+        {
+          error: false,
+          value: 'test message',
+          feedback: '54 bytes left',
+          byteCount: 10,
+        },
+        mockSetMessage,
+      ]);
+
+      const wrapper = mount(<Form {...props} />);
+      wrapper.find('.reference button').at(0).simulate('click');
+      expect(mockSetMessage).toHaveBeenCalled();
     });
   });
 });

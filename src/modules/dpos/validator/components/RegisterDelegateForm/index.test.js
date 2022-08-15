@@ -140,19 +140,27 @@ describe('RegisterDelegateForm', () => {
       message: '',
     };
     const rawTx = {
-      params: {
-        blsPublicKey: blsKey.value,
-        generatorPublicKey: genKey.value,
-        proofOfPossession: pop.value,
-        username: validName.value,
+      fees: {
+        Transaction: '0 LSK',
       },
-      fee: 0,
-      moduleCommandID: '5:0',
-      nonce: '1',
-      sender: {
-        publicKey: wallets.genesis.summary.publicKey,
+      rawTx: {
+        fee: 0,
+        moduleCommandID: '5:0',
+        nonce: '1',
+        params: {
+          blsPublicKey: blsKey.value,
+          generatorPublicKey: genKey.value,
+          proofOfPossession: pop.value,
+          username: validName.value,
+        },
+        sender: {
+          publicKey: wallets.genesis.summary.publicKey,
+        },
       },
+      selectedPriority: { title: 'Normal', selectedIndex: 0, value: 0 },
+      trnxData: undefined,
     };
+
     it('accept a valid form', () => {
       useDelegateKey.mockReturnValueOnce([genKey, setKey]);
       useDelegateKey.mockReturnValueOnce([blsKey, setKey]);
@@ -160,9 +168,7 @@ describe('RegisterDelegateForm', () => {
       useDelegateName.mockReturnValue([validName, setName]); // valid
       const wrapper = mount(<RegisterDelegateForm {...props} />);
       wrapper.find('button.confirm-btn').simulate('click');
-      expect(props.nextStep).toHaveBeenCalledWith({
-        rawTx,
-      });
+      expect(props.nextStep).toHaveBeenCalledWith(rawTx);
     });
   });
 });

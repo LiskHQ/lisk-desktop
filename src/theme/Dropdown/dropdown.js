@@ -10,12 +10,14 @@ const Dropdown = ({
   const isSelectionList = children && Array.isArray(children);
 
   return (
-    <div className={[
-      styles.dropdown,
-      showDropdown ? styles.show : '',
-      className,
-      styles[align],
-    ].join(' ')}
+    <div
+      className={[
+        styles.dropdown,
+        showDropdown ? styles.show : '',
+        className,
+        styles[align],
+      ].join(' ')}
+      data-testid="dropdown-popup"
     >
       {
         showArrow && (

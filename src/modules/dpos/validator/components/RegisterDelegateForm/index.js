@@ -44,8 +44,13 @@ const RegisterDelegateForm = ({
     prevState?.rawTx?.params.proofOfPossession,
   );
 
-  const onConfirm = (rawTx) => {
-    nextStep({ rawTx });
+  const onConfirm = (rawTx, trnxData, selectedPriority, fees) => {
+    nextStep({
+      selectedPriority,
+      trnxData,
+      rawTx,
+      fees,
+    });
   };
 
   const onChangeUsername = ({ target: { value } }) => {
