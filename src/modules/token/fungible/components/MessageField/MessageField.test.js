@@ -1,5 +1,7 @@
 import React from 'react';
-import { fireEvent, screen, render } from '@testing-library/react';
+import {
+  fireEvent, screen, render, waitFor,
+} from '@testing-library/react';
 import MessageField from './MessageField';
 
 describe('MessageField', () => {
@@ -7,7 +9,7 @@ describe('MessageField', () => {
   const props = {
     onChange: jest.fn(),
     onRemove: jest.fn(),
-    value: 'test message',
+    value: '',
     maxMessageLength: 10,
     label: 'label',
     placeholder: 'placeholder',
@@ -58,5 +60,14 @@ describe('MessageField', () => {
     fireEvent.click(wrapper.queryByText('Add message (Optional)'));
     expect(/error/.test(wrapper.getByTestId('feedback').className)).toBeTruthy();
     expect(wrapper.getByAltText('alertIcon').className).toBeTruthy();
+  });
+
+  it('should be collapsed when it has a value', async () => {
+    props.value = 'test message';
+    render(<MessageField {...props} />);
+
+    await waitFor(() => {
+      expect(screen.getAllByText('label')[0]).toBeTruthy();
+    });
   });
 });

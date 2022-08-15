@@ -9,6 +9,7 @@ import approved from '@setup/react/assets/images/icons/approved.svg';
 import arrowLeftActive from '@setup/react/assets/images/icons/arrow-left-active.svg';
 import arrowLeftInactive from '@setup/react/assets/images/icons/arrow-left-inactive.svg';
 import arrowLeftTailed from '@setup/react/assets/images/icons/arrow-left-tailed.svg';
+import arrowLeftTailedDark from '@setup/react/assets/images/icons/arrow-left-tailed-dark.svg';
 import arrowRightActive from '@setup/react/assets/images/icons/arrow-right-active.svg';
 import arrowRightInactive from '@setup/react/assets/images/icons/arrow-right-inactive.svg';
 import arrowRightWithStroke from '@setup/react/assets/images/icons/arrow-right-with-stroke.svg';
@@ -224,6 +225,7 @@ import cautionFilledIconDark from '@setup/react/assets/images/icons/caution-icon
 import applicationsIcon from '@setup/react/assets/images/icons/applications-outline.svg';
 import applicationsIconActive from '@setup/react/assets/images/icons/applications-filled.svg';
 import dropdownFieldIcon from '@setup/react/assets/images/icons/drop-down-field-icon.svg';
+import transferArrow from '@setup/react/assets/images/icons/transfer-arrow.svg';
 
 export const icons = {
   academy,
@@ -234,6 +236,7 @@ export const icons = {
   arrowLeftActive,
   arrowLeftInactive,
   arrowLeftTailed,
+  arrowLeftTailedDark,
   arrowRightActive,
   arrowRightInactive,
   arrowUpCircle,
@@ -448,6 +451,7 @@ export const icons = {
   cautionFilledIconDark,
   dropdownFieldIcon,
   removeBlueIcon,
+  transferArrow,
 };
 
 const Icon = ({ name, noTheme, ...props }) => {

@@ -5,9 +5,9 @@ import styles from './styles.css';
 
 const NumberOfSignatures = ({ t }) => {
   const {
-    transaction: { asset },
+    transaction: { params },
   } = React.useContext(TransactionDetailsContext);
-  const numberOfSignatures = asset.numberOfSignatures;
+  const numberOfSignatures = params.numberOfSignatures;
 
   return (
     <ValueAndLabel

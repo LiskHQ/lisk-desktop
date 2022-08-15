@@ -25,10 +25,6 @@ Then(/^application removal success page should show$/, function () {
   cy.get(`.remove-app-success-wrapper > p`).eq(1).should('contain.text', 'You can always add Kalipo again to your application list.');
 });
 
-Then(/^I should see the dashboard$/, function () {
-  cy.hash().should('eq', '#/dashboard');
-});
-
 Then(/^current application name should be: (.+)$/, function (applicationName) {
   cy.get(ss.managedAppDropdown).eq(0).should('contain.text', applicationName);
 });
@@ -53,7 +49,7 @@ Then(/^blockchain details should be accurately displayed$/, function () {
 });
 
 Then(/^I should be on add blockchain application modal$/, function () {
-  cy.visit(`${urls.dashboard}?modal=blockChainApplicationAddList`);
+  cy.visit(`${urls.dashboard}?modal=addApplicationList`);
   cy.get(ss.addApplicationHeader).should('have.text', 'Add Application');
   cy.get(ss.addApplicationTable).should('exist');
 });
@@ -78,4 +74,22 @@ Then(/^application list should have (\w+(.*)?)$/, function(applicationName) {
       }
     })
   });
+});
+
+When(/^I select application on chain: (.+)$/, function (applicationName) {
+  cy.get(ss.managedApplicationRow).then(eles => {
+    eles.each((index, ele) => {
+      if (ele.innerText === applicationName){
+        cy.get(`${ss.managedApplicationRow}:nth-of-type(${index + 1})`).click()
+        return;
+      }
+    })
+  })
+});
+
+Then(/^I should be on add blockchain application select node modal$/, function () {
+  cy.url().should('include', 'chainId=aq25derd17a4syc8aet3pryt');
+  cy.get(ss.selectApplicationNodeHeader).should('have.text', 'Kalipo');
+  cy.get(ss.selectApplicationNodeContent).should('have.text', 'Choose application URL');
+  cy.get(`${ss.selectApplicationNodeRow}:first()`).should('have.text', 'https://service.kalipo.com');
 });

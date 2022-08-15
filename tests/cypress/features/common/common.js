@@ -159,6 +159,9 @@ Then(/^I should be on (.*?) page$/, function (pageName) {
     case 'managed application list':
       cy.contains('Add application').eq(0).should('be.visible');
       break;
+    case 'dashboard':
+      cy.url().should('include', 'dashboard');
+      break;
     case 'request token modal':
       cy.hash().should('eq', '#/wallet?tab=Transactions&modal=request');
       break;

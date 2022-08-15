@@ -3,7 +3,7 @@ import actionTypes from './actionTypes';
 import { list, current } from './reducer';
 
 describe('Auth reducer', () => {
-  it('Should return accountSchema if setCurrentAccount action type is triggered', async () => {
+  it('Should return encryptedAccount if setCurrentAccount action type is triggered', async () => {
     const actionData = {
       type: actionTypes.setCurrentAccount,
       encryptedAccount: mockSavedAccounts[0],

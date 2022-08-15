@@ -2,24 +2,27 @@ import React from 'react';
 import {
   fireEvent, render, screen, waitFor,
 } from '@testing-library/react';
-
-import { decryptAccount } from '@account/utils/decryptAccount';
+import mockSavedAccounts from '@tests/fixtures/accounts';
+import { decryptAccount } from '@account/utils/encryptAccount';
 import EnterPasswordForm from '.';
 
-jest.mock('@account/utils/decryptAccount');
+const mockedCurrentAccount = mockSavedAccounts[0];
+const recoveryPhrase = 'target cancel solution recipe vague faint bomb convince pink vendor fresh patrol';
+
+jest.mock('@account/utils/encryptAccount');
+jest.mock('@account/hooks', () => ({
+  useCurrentAccount: jest.fn(() => (
+    [mockedCurrentAccount, jest.fn()]
+  )),
+}));
 
 describe('EnterPasswordForm', () => {
   let wrapper;
   const props = {
-    accountSchema: {
-      metadata: {
-        address: 'lskm555k7nhhw954rw4pqy5q9wn28n3cec94fmp4n',
-        name: 'Lisker',
-      },
-    },
     onEnterPasswordSuccess: jest.fn(),
     nextStep: jest.fn(),
   };
+  const accountPassword = 'qwerty';
 
   beforeEach(() => {
     jest.clearAllMocks();
@@ -27,34 +30,36 @@ describe('EnterPasswordForm', () => {
   });
 
   it('should display properly', () => {
-    expect(screen.queryByText(props.accountSchema.metadata.name));
-    expect(screen.queryByText(props.accountSchema.metadata.address));
+    expect(screen.queryByText(mockedCurrentAccount.metadata.name));
+    expect(screen.queryByText(mockedCurrentAccount.metadata.address));
   });
 
   it('should call onEnterPasswordSuccess when onSubmit click', async () => {
-    const privateToken = 'private-token-mock';
-    const recoveryPhrase = 'target cancel solution recipe vague faint bomb convince pink vendor fresh patrol';
+    const privateKey = 'privateKey';
     decryptAccount.mockImplementation(() => (
       {
-        privateToken,
-        recoveryPhrase,
+        error: null,
+        result: {
+          privateKey,
+          recoveryPhrase,
+        },
       }
     ));
     props.recoveryPhrase = recoveryPhrase;
     wrapper.rerender(<EnterPasswordForm {...props} />);
 
-    fireEvent.change(screen.getByTestId('password'), { target: { value: 'qwerty' } });
+    fireEvent.change(screen.getByTestId('password'), { target: { value: accountPassword } });
     fireEvent.click(screen.getByText('Continue'));
 
     await waitFor(() => {
       expect(decryptAccount).toHaveBeenCalledWith(
-        props.accountSchema,
-        'qwerty',
+        mockedCurrentAccount.encryptedPassphrase,
+        accountPassword,
       );
       expect(props.onEnterPasswordSuccess).toHaveBeenCalledWith({
-        account: { privateToken, recoveryPhrase },
         recoveryPhrase,
-        encryptedPhrase: props.accountSchema,
+        privateKey,
+        encryptedAccount: mockedCurrentAccount,
       });
     });
   });
@@ -68,27 +73,12 @@ describe('EnterPasswordForm', () => {
     ));
     wrapper.rerender(<EnterPasswordForm {...props} />);
 
-    fireEvent.change(screen.getByTestId('password'), { target: { value: 'qwerty' } });
+    fireEvent.change(screen.getByTestId('password'), { target: { value: accountPassword } });
     fireEvent.click(screen.getByText('Continue'));
 
     await waitFor(() => {
       expect(screen.getByText(error)).toBeTruthy();
-    });
-  });
-
-  it('should not call onEnterPasswordSuccess when onSubmit fails', async () => {
-    decryptAccount.mockImplementation(() => (
-      {
-        error: 'Unable to decrypt account. Please check your password',
-      }
-    ));
-
-    fireEvent.change(screen.getByTestId('password'), { target: { value: 'qwerty' } });
-    fireEvent.click(screen.getByText('Continue'));
-
-    await waitFor(() => {
       expect(props.onEnterPasswordSuccess).not.toHaveBeenCalled();
-      expect(screen.getByText('Unable to decrypt account. Please check your password')).toBeTruthy();
     });
   });
 });

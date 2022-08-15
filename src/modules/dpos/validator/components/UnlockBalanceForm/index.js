@@ -1,7 +1,7 @@
 import React from 'react';
 import { useSelector } from 'react-redux';
 import { useTranslation } from 'react-i18next';
-import { MODULE_ASSETS_NAME_ID_MAP } from '@transaction/configuration/moduleAssets';
+import { MODULE_COMMANDS_NAME_ID_MAP } from '@transaction/configuration/moduleAssets';
 import {
   selectCurrentBlockHeight,
   selectActiveTokenAccount,
@@ -29,8 +29,8 @@ const UnlockBalanceForm = ({
   };
 
   const transaction = {
-    moduleAssetId: MODULE_ASSETS_NAME_ID_MAP.unlockToken,
-    asset: { unlockObjects },
+    moduleCommandID: MODULE_COMMANDS_NAME_ID_MAP.unlockToken,
+    params: { unlockObjects },
     isValid: unlockableBalance > 0,
   };
 

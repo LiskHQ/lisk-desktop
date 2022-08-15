@@ -15,7 +15,7 @@ const ApplicationManagementList = ({ history }) => {
   const { applications } = useApplicationManagement();
 
   const handleAddApplication = useCallback(() => {
-    addSearchParamsToUrl(history, { modal: 'blockChainApplicationAddList' });
+    addSearchParamsToUrl(history, { modal: 'addApplicationList' });
   }, []);
 
   return (

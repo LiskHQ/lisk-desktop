@@ -2,7 +2,7 @@ import React, { useState, useRef, useEffect } from 'react';
 import { useSelector } from 'react-redux';
 import { useTranslation } from 'react-i18next';
 import { regex } from 'src/const/regex';
-import { MODULE_ASSETS_NAME_ID_MAP } from '@transaction/configuration/moduleAssets';
+import { MODULE_COMMANDS_NAME_ID_MAP } from '@transaction/configuration/moduleAssets';
 import { getDelegate } from '@dpos/validator/api';
 import BoxHeader from 'src/theme/box/header';
 import BoxContent from 'src/theme/box/content';
@@ -38,10 +38,15 @@ const RegisterDelegateForm = ({
   const network = useSelector(state => state.network);
   const [error, setError] = useState('');
   const [loading, setLoading] = useState(false);
-  const [username, setUsername] = useState(prevState?.rawTx?.asset.username ?? '');
+  const [username, setUsername] = useState(prevState?.rawTx?.params.username ?? '');
 
-  const onConfirm = (rawTx) => {
-    nextStep({ rawTx });
+  const onConfirm = (rawTx, trnxData, selectedPriority, fees) => {
+    nextStep({
+      selectedPriority,
+      trnxData,
+      rawTx,
+      fees,
+    });
   };
 
   const checkUsername = () => {
@@ -72,8 +77,8 @@ const RegisterDelegateForm = ({
   }, [username]);
 
   const transaction = {
-    moduleAssetId: MODULE_ASSETS_NAME_ID_MAP.registerDelegate,
-    asset: {
+    moduleCommandID: MODULE_COMMANDS_NAME_ID_MAP.registerDelegate,
+    params: {
       username,
     },
     isValid: !error && username.length > 0 && !loading,

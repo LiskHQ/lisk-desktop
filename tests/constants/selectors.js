@@ -19,6 +19,9 @@ const managedApplications = {
   addApplicationSuccessHeader: '.add-application-success-header',
   addApplicationSuccessButton: '.add-application-success-button',
   removeApplicationButton: '.remove-application-button',
+  selectApplicationNodeHeader: '.application-header',
+  selectApplicationNodeContent: '.application-content',
+  selectApplicationNodeRow: '.select-node-row',
 };
 
 const tokenUsage = {

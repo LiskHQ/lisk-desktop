@@ -95,8 +95,8 @@ Feature: delegate
     And I wait 0.5 seconds
     Then delegate should be watched
 
-  @advanced
-  @basic
+  # @advanced
+  @skip
   Scenario: latest votes list should function properly
     Given Network is set to customNode
     And I am on delegates page

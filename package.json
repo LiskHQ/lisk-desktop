@@ -116,7 +116,7 @@
     "@hookform/resolvers": "2.8.8",
     "@ledgerhq/hw-transport": "6.3.0",
     "@ledgerhq/hw-transport-node-hid": "6.6.0",
-    "@liskhq/lisk-client": "5.2.1",
+    "@liskhq/lisk-client": "6.0.0-alpha.2",
     "@testing-library/react-hooks": "5.1.2",
     "await-to-js": "2.1.1",
     "bignumber.js": "8.0.1",
@@ -188,6 +188,7 @@
     "yup": "0.32.11"
   },
   "devDependencies": {
+    "@chainsafe/blst": "0.2.4",
     "@babel/core": "7.13.16",
     "@babel/plugin-proposal-nullish-coalescing-operator": "7.13.8",
     "@babel/plugin-proposal-optional-chaining": "7.13.12",

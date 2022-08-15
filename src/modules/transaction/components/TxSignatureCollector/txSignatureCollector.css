@@ -25,3 +25,9 @@
   display: flex;
   justify-content: center;
 }
+
+.backButton {
+  position: absolute;
+  top: 10px;
+  left: -8px;
+}

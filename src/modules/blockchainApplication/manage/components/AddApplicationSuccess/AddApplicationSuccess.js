@@ -5,9 +5,9 @@ import { PrimaryButton } from 'src/theme/buttons';
 import Illustration from 'src/modules/common/components/illustration';
 import routes from 'src/routes/routes';
 import Dialog from 'src/theme/dialog/dialog';
-import styles from './BlockchainApplicationAddSuccess.css';
+import styles from './AddApplicationSuccess.css';
 
-const BlockchainApplicationAddSuccess = ({ history }) => {
+const AddApplicationSuccess = ({ history }) => {
   const { t } = useTranslation();
   const onAddSuccess = () => {
     history.push(routes.dashboard.path);
@@ -34,4 +34,4 @@ const BlockchainApplicationAddSuccess = ({ history }) => {
   );
 };
 
-export default BlockchainApplicationAddSuccess;
+export default AddApplicationSuccess;

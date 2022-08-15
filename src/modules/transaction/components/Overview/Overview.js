@@ -5,8 +5,8 @@ import moment from 'moment';
 import { fromRawLsk } from '@token/fungible/utils/lsk';
 import { kFormatter } from 'src/utils/helpers';
 import { chartStyles } from 'src/modules/common/components/charts/chartConfig';
-import { MODULE_ASSETS_NAME_ID_MAP } from '@transaction/configuration/moduleAssets';
-import { getModuleAssetTitle } from '@transaction/utils/moduleAssets';
+import { MODULE_COMMANDS_NAME_ID_MAP } from '@transaction/configuration/moduleAssets';
+import { getModuleCommandTitle } from '@transaction/utils/moduleAssets';
 import { useTheme } from '@theme/Theme';
 import { getColorPalette } from 'src/modules/common/components/charts/chartOptions';
 import Box from '@theme/box';
@@ -20,9 +20,9 @@ import GuideTooltip, {
 } from 'src/modules/common/components/charts/guideTooltip';
 import styles from './Overview.css';
 
-const moduleAssetIds = Object.values(MODULE_ASSETS_NAME_ID_MAP);
-const titles = getModuleAssetTitle();
-const listOfLabels = moduleAssetIds.map((id) => titles[id]);
+const moduleCommandIDs = Object.values(MODULE_COMMANDS_NAME_ID_MAP);
+const titles = getModuleCommandTitle();
+const listOfLabels = moduleCommandIDs.map((id) => titles[id]);
 
 const options = {
   responsive: true,
@@ -135,7 +135,7 @@ const formatDates = (date, period) => {
 };
 
 const formatDistributionByValues = (distributions) =>
-  moduleAssetIds.map((id) =>
+  moduleCommandIDs.map((id) =>
     (distributions[id] ? parseInt(distributions[id], 10) : 0));
 
 const Overview = ({ t, txStats }) => {

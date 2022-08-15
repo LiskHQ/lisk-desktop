@@ -87,14 +87,18 @@ describe('SelectNameAndFee', () => {
     wrapper.find('button.confirm-btn').simulate('click');
     await flushPromises();
     expect(props.nextStep).toBeCalledWith({
+      selectedPriority: { title: 'Low', value: 156, selectedIndex: 0 },
+      fees: {
+        Transaction: '0.000156 LSK',
+      },
       rawTx: {
         fee: 15600,
-        moduleAssetId: '5:0',
+        moduleCommandID: '5:0',
         nonce: '1',
         sender: {
           publicKey: '0fe9a3f1a21b5530f27f87a414b549e79a940bf24fdf2b2f05e7f22aeeecc86a',
         },
-        asset: {
+        params: {
           username: 'mydelegate',
         },
       },

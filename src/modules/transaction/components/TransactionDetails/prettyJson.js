@@ -10,7 +10,7 @@ const PrettyJson = ({ t }) => {
       <>
         <p className={styles.label}>{t('Transaction asset')}</p>
         <div className={styles.transactionAsset}>
-          <ReactJson src={transaction.asset} />
+          <ReactJson src={transaction.params} />
         </div>
       </>
     )

@@ -1,52 +1,23 @@
 import React, { useState, useMemo } from 'react';
 import PropTypes from 'prop-types';
-import { MODULE_ASSETS_MAP } from '@transaction/configuration/moduleAssets';
-import {
-  formatAmountBasedOnLocale,
-} from 'src/utils/formattedNumber';
-import { toRawLsk, fromRawLsk } from '@token/fungible/utils/lsk';
-import Input from 'src/theme/Input/Input';
-import Icon from 'src/theme/Icon';
+import { MODULE_COMMANDS_MAP } from '@transaction/configuration/moduleAssets';
 import Tooltip from 'src/theme/Tooltip';
-import Spinner from 'src/theme/Spinner';
-
 import styles from './TransactionPriority.css';
+import FeesViewer from './FeeViewer';
 
 const CUSTOM_FEE_INDEX = 3;
-
-const getFeeStatus = ({ fee, token, customFee }) => {
-  if (customFee) {
-    return customFee;
-  }
-  return !fee.error
-    ? `${formatAmountBasedOnLocale({ value: fee.value })} ${token}`
-    : fee.feedback;
-};
 
 const getRelevantPriorityOptions = (options) =>
   options.filter((_, index) =>
     index !== CUSTOM_FEE_INDEX
   || (index === CUSTOM_FEE_INDEX));
 
-const isCustomFeeValid = (value, maxFee, minFee) => {
-  if (!value) return false;
-  const rawValue = toRawLsk(parseFloat(value));
-
-  if (rawValue > maxFee) {
-    return false;
-  }
-
-  return rawValue >= toRawLsk(minFee);
-};
-
 // eslint-disable-next-line max-statements
 const TransactionPriority = ({
   t,
   token,
-  moduleAssetId,
-  fee,
+  moduleCommandID,
   minFee,
-  customFee,
   setCustomFee,
   priorityOptions,
   selectedPriority,
@@ -54,11 +25,12 @@ const TransactionPriority = ({
   className,
   loadError,
   isLoading,
+  composedFees,
 }) => {
   const [showEditIcon, setShowEditIcon] = useState(false);
   const [inputValue, setInputValue] = useState();
 
-  const maxFee = MODULE_ASSETS_MAP[moduleAssetId].maxFee;
+  const maxFee = MODULE_COMMANDS_MAP[moduleCommandID].maxFee;
 
   const onClickPriority = (e) => {
     e.preventDefault();
@@ -71,32 +43,6 @@ const TransactionPriority = ({
     if (showEditIcon) {
       setShowEditIcon(false);
     }
-  };
-
-  const onInputChange = (e) => {
-    e.preventDefault();
-    const newValue = e.target.value;
-    setInputValue(newValue);
-    if (isCustomFeeValid(newValue, maxFee, minFee)) {
-      setCustomFee({ value: newValue, feedback: '', error: false });
-    } else {
-      setCustomFee({ value: undefined, feedback: 'invalid custom fee', error: true });
-    }
-  };
-
-  const onInputFocus = (e) => {
-    e.preventDefault();
-    if (!inputValue) setInputValue(minFee);
-  };
-
-  const onInputBlur = (e) => {
-    e.preventDefault();
-    setShowEditIcon(true);
-  };
-
-  const onClickCustomEdit = (e) => {
-    e.preventDefault();
-    setShowEditIcon(false);
   };
 
   const tokenRelevantPriorities = useMemo(() =>
@@ -147,7 +93,7 @@ const TransactionPriority = ({
       </div>
       <div className={`${styles.col} ${styles.fee} fee-container`}>
         <span className={`${styles.fieldLabel}`}>
-          {t('Transaction fee')}
+          {t('Fees')}
           {
             tokenRelevantPriorities.some(item => item.value !== 0) ? (
               <Tooltip position="left">
@@ -165,34 +111,16 @@ const TransactionPriority = ({
             ) : null
           }
         </span>
-        {
-          // eslint-disable-next-line no-nested-ternary
-          isLoading ? (
-            <span className={styles.loadingWrapper}>
-              <span>{t('Loading')}</span>
-              <Spinner className={styles.spinner} />
-            </span>
-          )
-            : (isCustom && !showEditIcon ? (
-              <Input
-                className="custom-fee-input"
-                autoFocus
-                type="text"
-                size="m"
-                value={inputValue}
-                onChange={onInputChange}
-                onBlur={onInputBlur}
-                onFocus={onInputFocus}
-                status={!isCustomFeeValid(inputValue, maxFee, minFee) ? 'error' : 'ok'}
-                feedback={`fee must be between ${minFee} and ${fromRawLsk(maxFee)}`}
-              />
-            ) : (
-              <span className={`${styles.value} fee-value`} onClick={onClickCustomEdit}>
-                {getFeeStatus({ fee, token, customFee })}
-                {isCustom && showEditIcon && <Icon name="edit" />}
-              </span>
-            ))
-        }
+        <FeesViewer
+          isLoading={isLoading}
+          isCustom={isCustom}
+          onInputFee={setInputValue}
+          feeValue={inputValue}
+          maxFee={maxFee}
+          minFee={minFee}
+          fees={composedFees}
+          setCustomFee={setCustomFee}
+        />
       </div>
     </div>
   );
@@ -209,10 +137,8 @@ TransactionPriority.propTypes = {
   priorityOptions: PropTypes.array.isRequired,
   selectedPriority: PropTypes.number,
   setSelectedPriority: PropTypes.func,
-  fee: PropTypes.object,
-  customFee: PropTypes.number,
   minFee: PropTypes.number,
-  moduleAssetId: PropTypes.string,
+  moduleCommandID: PropTypes.string,
   className: PropTypes.string,
 };
 

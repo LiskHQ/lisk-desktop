@@ -1,9 +1,13 @@
 import React from 'react';
+import { cryptography } from '@liskhq/lisk-client';
 import { mount } from 'enzyme';
-import { MODULE_ASSETS_NAME_ID_MAP } from '@transaction/configuration/moduleAssets';
+import { MODULE_COMMANDS_NAME_ID_MAP } from '@transaction/configuration/moduleAssets';
 import { removeSearchParamsFromUrl } from 'src/utils/searchParams';
 import wallets from '@tests/constants/wallets';
 import Summary from './summary';
+
+const address = 'lskdxc4ta5j43jp9ro3f8zqbxta9fn6jwzjucw7yt';
+jest.spyOn(cryptography.address, 'getLisk32AddressFromPublicKey').mockReturnValue(address);
 
 jest.mock('src/utils/searchParams', () => ({
   ...jest.requireActual('src/utils/searchParams'),
@@ -20,7 +24,7 @@ describe('Sign Multisignature Tx Review component', () => {
     t: v => v,
     transaction: {
       id: '12510531279763703865',
-      moduleAssetId: MODULE_ASSETS_NAME_ID_MAP.transfer,
+      moduleCommandID: MODULE_COMMANDS_NAME_ID_MAP.transfer,
       nonce: '158',
       sender: {
         address: wallets.multiSig.summary.address,
@@ -31,7 +35,7 @@ describe('Sign Multisignature Tx Review component', () => {
         '',
         '',
       ],
-      asset: {
+      params: {
         mandatoryKeys: wallets.multiSig.keys.mandatoryKeys,
         optionalKeys: wallets.multiSig.keys.optionalKeys,
         numberOfSignatures: wallets.multiSig.keys.numberOfSignatures,
@@ -72,8 +76,8 @@ describe('Sign Multisignature Tx Review component', () => {
 
   it('Should render properly', () => {
     wrapper = mount(<Summary {...props} />);
-    const { asset } = props.transaction;
-    const expectedLength = asset.mandatoryKeys.length + asset.optionalKeys.length;
+    const { params } = props.transaction;
+    const expectedLength = params.mandatoryKeys.length + params.optionalKeys.length;
     const html = wrapper.html();
     expect(wrapper).toContainMatchingElements(expectedLength, '.member-info');
     expect(html).toContain('0.01 LSK');

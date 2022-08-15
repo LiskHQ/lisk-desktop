@@ -9,12 +9,12 @@ import { signMessageByHW } from './hwManager';
  * @return {string} a signed value of the message
  */
 export const signUsingPrivateKey = ({ message, account }) => {
-  const msgBytes = cryptography.digestMessage(message);
-  const signedMessage = cryptography.signDataWithPrivateKey(msgBytes, Buffer.from(account.summary.privateKey, 'hex'));
-  const result = cryptography.printSignedMessage({
+  const msgBytes = cryptography.ed.digestMessage(message);
+  const signature = cryptography.ed.signDataWithPrivateKey(msgBytes, Buffer.from(account.summary.privateKey, 'hex'));
+  const result = cryptography.ed.printSignedMessage({
     message,
+    signature,
     publicKey: account.summary.publicKey,
-    signature: signedMessage,
   });
   return result;
 };
@@ -27,17 +27,17 @@ export const signUsingPrivateKey = ({ message, account }) => {
  * @return {string} a signed value of the message
  */
 export const signUsingHW = async ({ message, account }) => {
-  let signedMessage = await signMessageByHW({
+  let signature = await signMessageByHW({
     account,
     message,
   });
-  if (signedMessage instanceof Uint8Array) {
-    signedMessage = Buffer.from(signedMessage);
+  if (signature instanceof Uint8Array) {
+    signature = Buffer.from(signature);
   }
-  const result = cryptography.printSignedMessage({
+  const result = cryptography.ed.printSignedMessage({
     message,
+    signature,
     publicKey: account.summary.publicKey,
-    signature: signedMessage,
   });
   return result;
 };

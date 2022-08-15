@@ -1,6 +1,6 @@
 Feature: Verify Message
 
-  @basic
+  @skip
   Scenario: Verify the integrity of a signed message in textarea
     Given I login as genesis on customNode
     And I wait 2 seconds

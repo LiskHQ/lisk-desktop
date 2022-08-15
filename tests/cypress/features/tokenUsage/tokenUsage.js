@@ -15,7 +15,7 @@ Then(/^request token page should be properly displayed$/, function () {
 Then(/^request token url should be on clipboard$/, function () {
   cy.window().then((win) => {
     win.navigator.clipboard.readText().then((clipboardValue) => {
-      expect(clipboardValue).eq('lisk://wallet/send?recipient=lskdxc4ta5j43jp9ro3f8zqbxta9fn6jwzjucw7yt&amount=20&reference=test_Message&token=LSK&recipientApplication=aq02qkbb35u4jdq8szo3pnsq');
+      expect(clipboardValue).eq('lisk://wallet/send?recipient=lskdxc4ta5j43jp9ro3f8zqbxta9fn6jwzjucw7yt&amount=20&reference=test_Message&token=2ba563cf98003d&recipientApplication=aq02qkbb35u4jdq8szo3pnsq');
     });
   });
 })
@@ -23,8 +23,7 @@ Then(/^request token url should be on clipboard$/, function () {
 Then(/^request token url on clipboard should not have reference$/, function () {
   cy.window().then((win) => {
     win.navigator.clipboard.readText().then((clipboardValue) => {
-      console.log('---', clipboardValue);
-      expect(clipboardValue).eq('lisk://wallet/send?recipient=lskdxc4ta5j43jp9ro3f8zqbxta9fn6jwzjucw7yt&amount=20&token=LSK&recipientApplication=aq02qkbb35u4jdq8szo3pnsq');
+      expect(clipboardValue).eq('lisk://wallet/send?recipient=lskdxc4ta5j43jp9ro3f8zqbxta9fn6jwzjucw7yt&amount=20&token=2ba563cf98003d&recipientApplication=aq02qkbb35u4jdq8szo3pnsq');
     });
   });
 })

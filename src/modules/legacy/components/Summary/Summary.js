@@ -1,6 +1,6 @@
 import React from 'react';
 import { tokenMap } from '@token/fungible/consts/tokens';
-import { MODULE_ASSETS_NAME_ID_MAP } from '@transaction/configuration/moduleAssets';
+import { MODULE_COMMANDS_NAME_ID_MAP } from '@transaction/configuration/moduleAssets';
 import useTransactionFeeCalculation from '@transaction/hooks/useTransactionFeeCalculation';
 import useTransactionPriority from '@transaction/hooks/useTransactionPriority';
 import TransactionSummary from '@transaction/manager/transactionSummary';
@@ -8,8 +8,8 @@ import { toRawLsk } from '@token/fungible/utils/lsk';
 import styles from './summary.css';
 
 const transaction = {
-  moduleAssetId: MODULE_ASSETS_NAME_ID_MAP.reclaimLSK,
-  asset: {},
+  moduleCommandID: MODULE_COMMANDS_NAME_ID_MAP.reclaimLSK,
+  params: {},
 };
 
 const Summary = ({
@@ -19,10 +19,11 @@ const Summary = ({
   wallet,
   network,
   t,
+  fees,
 }) => {
   transaction.nonce = wallet.sequence.nonce;
   transaction.sender = { PublicKey: wallet.summary.publicKey };
-  transaction.asset.amount = wallet.legacy.balance;
+  transaction.params.amount = wallet.legacy.balance;
 
   const [
     selectedPriority,, priorityOptions,
@@ -60,10 +61,13 @@ const Summary = ({
 
   return (
     <TransactionSummary
+      hasCancel
       className={styles.container}
       confirmButton={onConfirmAction}
       cancelButton={onCancelAction}
       rawTx={rawTx}
+      selectedPriority={selectedPriority}
+      fees={fees}
     />
   );
 };

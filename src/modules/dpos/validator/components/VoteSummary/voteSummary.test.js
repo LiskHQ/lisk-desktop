@@ -67,8 +67,8 @@ const rawTx = {
   nonce: accounts.genesis.sequence.nonce,
   fee: '1000000',
   signatures: [],
-  moduleAssetId: '5:1',
-  asset: {
+  moduleCommandID: '5:1',
+  params: {
     votes: [
       {
         amount: '100',
@@ -93,6 +93,12 @@ const props = {
   transactions: { txSignatureError: null, signedTransaction: transaction },
   normalizedVotes: { lsk123: {} },
   rawTx,
+  selectedPriority: { title: 'Normal', value: 1 },
+  fees: {
+    transaction: '1 LSK',
+    CCM: '1 LSK',
+    initiation: '1 LSK',
+  },
 };
 
 beforeEach(() => {
@@ -105,10 +111,9 @@ describe('VotingQueue.Summary', () => {
     const wrapper = mountWithRouter(Summary, props);
 
     expect(wrapper).toContainMatchingElement('VoteStats');
-    expect(wrapper).toContainMatchingElement('.fee-value');
+    expect(wrapper).toContainMatchingElement('.fee-value-transaction');
     expect(wrapper).toContainMatchingElement('.total-votes');
     expect(wrapper).toContainMatchingElement('.confirm-button');
-    expect(wrapper).toContainMatchingElement('.cancel-button');
   });
 
   it('renders properly when only new votes are present', () => {
