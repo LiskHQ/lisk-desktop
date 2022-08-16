@@ -11,7 +11,7 @@ const RegisterDelegate = ({ account, transaction, t }) => (
         address={account.summary?.address}
         size={25}
       />
-      <span className={`${styles.username} username`}>{transaction.asset.username}</span>
+      <span className={`${styles.username} username`}>{transaction.params.username}</span>
       <span className={`${styles.address} address`}>{account.summary?.address}</span>
     </div>
   </section>

@@ -34,7 +34,7 @@ const validateNode = async (address) => {
  * @param {string} url - A URL that might end in a slash
  * @returns {string} A URL without a trailing slash
  */
-const removeTrailingSlash = (url) => {
+export const removeTrailingSlash = (url) => {
   if (url.charAt(url.length - 1) !== '/' || /http(s?):(\/){1,2}$/.test(url)) {
     return url;
   }

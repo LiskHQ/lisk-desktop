@@ -7,7 +7,7 @@ import { getAccount, getAccounts } from './index';
 jest.mock('src/utils/api/http', () => jest.fn().mockReturnValue([]));
 jest.mock('src/utils/api/ws', () => jest.fn().mockReturnValue([]));
 
-describe('API: LSK Account', () => {
+describe.skip('API: LSK Account', () => {
   const network = {
     networks: {
       LSK: { serviceUrl: 'http://sample.com/' },

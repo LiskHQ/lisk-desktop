@@ -6,9 +6,9 @@ import getTxDirectionConfig from '../../utils/helpers';
 import styles from './TransactionAmount.css';
 
 const TransactionAmount = ({
-  recipient, moduleAssetId, token, showRounded, showInt, host, amount,
+  recipient, moduleCommandID, token, showRounded, showInt, host, amount,
 }) => {
-  const config = getTxDirectionConfig(moduleAssetId, host, recipient, styles);
+  const config = getTxDirectionConfig(moduleCommandID, host, recipient, styles);
   return (
     <div className={`${styles.wrapper} transaction-amount`}>
       { config

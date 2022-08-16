@@ -90,11 +90,11 @@ describe('SearchBar', () => {
           ...props.suggestions.data,
           transactions: [
             {
-              asset: {
+              params: {
                 data: 'testing',
               },
               id: '123456123234234',
-              moduleAssetId: '2:0',
+              moduleCommandID: '2:0',
             },
           ],
         },

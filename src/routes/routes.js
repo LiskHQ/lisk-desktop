@@ -120,6 +120,11 @@ export default {
     exact: false,
     forbiddenTokens: [],
   },
+  blockchainApplications: {
+    path: '/applications',
+    isPrivate: false,
+    forbiddenTokens: [],
+  },
 };
 
 export const modals = {
@@ -211,8 +216,32 @@ export const modals = {
     isPrivate: true,
     forbiddenTokens: [],
   },
+  selectNode: {
+    isPrivate: false,
+    forbiddenTokens: [],
+  },
   removeCurrentAccountFlow: {
     isPrivate: true,
+    forbiddenTokens: [],
+  },
+  blockChainApplicationDetails: {
+    isPrivate: false,
+    forbiddenTokens: [],
+  },
+  addApplicationList: {
+    isPrivate: false,
+    forbiddenTokens: [],
+  },
+  addApplicationSuccess: {
+    isPrivate: false,
+    forbiddenTokens: [],
+  },
+  manageApplications: {
+    isPrivate: false,
+    forbiddenTokens: [],
+  },
+  removeApplicationFlow: {
+    isPrivate: false,
     forbiddenTokens: [],
   },
 };

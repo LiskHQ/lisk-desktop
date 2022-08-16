@@ -1,0 +1,33 @@
+.wrapper {
+  display: flex;
+  flex-direction: row;
+  padding: 5px 15px;
+  color: white;
+  align-items: center;
+  column-gap: 8px;
+  text-decoration: none;
+  opacity: 1;
+
+  & > span {
+    font-weight: 500;
+    font-size: 14px;
+  }
+
+  & > img:first-child {
+    width: 31px;
+    height: 31px;
+    background-color: white;
+    border-radius: 50%;
+    margin-right: 4px;
+  }
+}
+
+.wrapper:focus,
+.wrapper:hover {
+  text-decoration: none;
+}
+
+.wrapper:hover {
+  opacity: 0.9;
+  transition: all 300ms linear;
+}

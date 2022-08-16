@@ -2,7 +2,7 @@ import React, { useContext } from 'react';
 import { Link } from 'react-router-dom';
 
 import { getTxAmount } from '@transaction/utils/transaction';
-import { MODULE_ASSETS_NAME_ID_MAP } from '@transaction/configuration/moduleAssets';
+import { MODULE_COMMANDS_NAME_ID_MAP } from '@transaction/configuration/moduleAssets';
 import DateTimeFromTimestamp from 'src/modules/common/components/timestamp';
 import Icon from 'src/theme/Icon';
 import Tooltip from 'src/theme/Tooltip';
@@ -11,7 +11,7 @@ import WalletVisualWithAddress from '@wallet/components/walletVisualWithAddress'
 import { truncateAddress } from '@wallet/utils/account';
 import Spinner from 'src/theme/Spinner';
 import routes from 'src/routes/routes';
-import { getModuleAssetTitle } from '@transaction/utils';
+import { getModuleCommandTitle } from '@transaction/utils';
 import styles from './row.css';
 import TransactionRowContext from '../../context/transactionRowContext';
 import TransactionTypeFigure from '../TransactionTypeFigure';
@@ -24,7 +24,7 @@ export const Sender = () => {
       className="transaction-row-sender"
       address={data.sender.address}
       transactionSubject="sender"
-      moduleAssetId={data.moduleAssetId}
+      moduleCommandID={data.moduleCommandID}
       showBookmarkedAddress
       size={avatarSize}
     />
@@ -36,9 +36,9 @@ export const Recipient = () => {
   return (
     <WalletVisualWithAddress
       className="transaction-row-recipient"
-      address={data.asset.recipient?.address}
+      address={data.params.recipient?.address}
       transactionSubject="recipient"
-      moduleAssetId={data.moduleAssetId}
+      moduleCommandID={data.moduleCommandID}
       showBookmarkedAddress
       size={avatarSize}
     />
@@ -49,22 +49,22 @@ export const Counterpart = () => {
   const { data, host, avatarSize } = useContext(TransactionRowContext);
 
   // Show tx icon
-  if (data.moduleAssetId !== MODULE_ASSETS_NAME_ID_MAP.transfer && host) {
+  if (data.moduleCommandID !== MODULE_COMMANDS_NAME_ID_MAP.transfer && host) {
     return (
       <TransactionTypeFigure
-        moduleAssetId={data.moduleAssetId}
+        moduleCommandID={data.moduleCommandID}
         address={data.sender.address}
       />
     );
   }
   // Show recipient
-  if (data.asset.recipient?.address !== host) {
+  if (data.params.recipient?.address !== host) {
     return (
       <WalletVisualWithAddress
         className="transaction-row-recipient"
-        address={data.asset.recipient?.address}
+        address={data.params.recipient?.address}
         transactionSubject="recipient"
-        moduleAssetId={data.moduleAssetId}
+        moduleCommandID={data.moduleCommandID}
         showBookmarkedAddress
         size={avatarSize}
       />
@@ -76,7 +76,7 @@ export const Counterpart = () => {
       className="transaction-row-sender"
       address={data.sender.address}
       transactionSubject="sender"
-      moduleAssetId={data.moduleAssetId}
+      moduleCommandID={data.moduleCommandID}
       showBookmarkedAddress
       size={avatarSize}
     />
@@ -112,8 +112,8 @@ export const Amount = () => {
           host={host}
           token={activeToken}
           showRounded
-          recipient={data.asset.recipient?.address}
-          moduleAssetId={data.moduleAssetId}
+          recipient={data.params.recipient?.address}
+          moduleCommandID={data.moduleCommandID}
           amount={getTxAmount(data)}
         />
       </span>
@@ -141,7 +141,7 @@ export const Fee = ({ t }) => {
         content={<TokenAmount val={data.fee} token={activeToken} />}
         size="s"
       >
-        <p>{getModuleAssetTitle(t)[data.moduleAssetId]}</p>
+        <p>{getModuleCommandTitle(t)[data.moduleCommandID]}</p>
       </Tooltip>
     </span>
   );
@@ -169,8 +169,8 @@ export const Status = ({ t }) => {
   );
 };
 
-const generateVotes = (asset, delegates, token, t) => {
-  const voteElements = asset.votes.slice(0, 1).map((vote) => (
+const generateVotes = (params, delegates, token, t) => {
+  const voteElements = params.votes.slice(0, 1).map((vote) => (
     <span
       className={`${styles.container} vote-item-address`}
       key={`vote-${vote.delegateAddress}`}
@@ -190,9 +190,9 @@ const generateVotes = (asset, delegates, token, t) => {
   return (
     <div className={styles.voteDetails}>
       {voteElements}
-      {asset.votes.length > 1 && (
+      {params.votes.length > 1 && (
         <span className={styles.more}>
-          {`${asset.votes.length - 1} ${t(
+          {`${params.votes.length - 1} ${t(
             'more',
           )}...`}
         </span>
@@ -201,18 +201,18 @@ const generateVotes = (asset, delegates, token, t) => {
   );
 };
 
-export const Assets = ({ t }) => {
+export const Params = ({ t }) => {
   const { data, delegates = [], activeToken } = useContext(TransactionRowContext);
-  const { voteDelegate, registerDelegate, transfer } = MODULE_ASSETS_NAME_ID_MAP;
+  const { voteDelegate, registerDelegate, transfer } = MODULE_COMMANDS_NAME_ID_MAP;
 
   const getDetails = () => {
-    switch (data.moduleAssetId) {
+    switch (data.moduleCommandID) {
       case registerDelegate:
-        return data.asset.delegate?.username;
+        return data.params.delegate?.username;
       case voteDelegate:
-        return generateVotes(data.asset, delegates, activeToken, t);
+        return generateVotes(data.params, delegates, activeToken, t);
       case transfer:
-        return data.asset.data;
+        return data.params.data;
       default:
         return '-';
     }

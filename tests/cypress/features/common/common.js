@@ -71,24 +71,9 @@ Given(/^I am on (.*?) page$/, function (page) {
   page = page.toLowerCase();
   cy.server();
   switch (page) {
-    // case 'dashboard':
-    //   cy.visit(urls.dashboard);
-    //   break;
     case 'register delegate':
       cy.visit(urls.registerDelegate);
       break;
-    // case 'delegates':
-    //   cy.visit(urls.delegates);
-    //   break;
-    // case 'wallet':
-    //   cy.visit(urls.wallet);
-    //   break;
-    // case 'send':
-    //   cy.visit(urls.send);
-    //   break;
-    // case 'login':
-    //   cy.visit(urls.login);
-    //   break;
     default:
       cy.visit(urls[page]);
       break;
@@ -171,6 +156,11 @@ Then(/^I should be on (.*?) page$/, function (pageName) {
     case 'account':
       cy.get(ss.accountName).should('be.visible');
       break;
+    case 'managed application list':
+      cy.contains('Add application').eq(0).should('be.visible');
+      break;
+    case 'dashboard':
+      cy.url().should('include', 'dashboard');
   }
 });
 

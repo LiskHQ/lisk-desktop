@@ -1,0 +1,32 @@
+.dialog {
+  & > span {
+    top: 24px;
+  }
+}
+
+.wrapper {
+  padding: 24px;
+  width: auto !important;
+
+  & .content {
+    padding: 0;
+  }
+
+  & .header {
+    --content-font: 'gilroy';
+
+    display: block;
+    padding-top: 8px;
+    padding-bottom: 15px;
+    height: auto;
+    color: var(--color-maastricht-blue);
+    font-family: var(--content-font);
+    font-weight: 600;
+    font-size: 20px;
+    line-height: 24px;
+
+    & > div:first-of-type {
+      margin-bottom: 8px;
+    }
+  }
+}

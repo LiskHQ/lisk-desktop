@@ -11,11 +11,11 @@ import DialogLink from 'src/theme/dialog/link';
 import styles from './status.css';
 
 const shouldShowBookmark = (bookmarks, account, rawTx, token) => {
-  if (account.summary.address === rawTx.asset.recipient.address) {
+  if (account.summary.address === rawTx.params.recipient.address) {
     return false;
   }
   return !bookmarks[token].find(
-    (bookmark) => bookmark.address === rawTx.asset.recipient.address,
+    (bookmark) => bookmark.address === rawTx.params.recipient.address,
   );
 };
 
@@ -81,7 +81,7 @@ const TransactionStatus = ({
             <DialogLink
               component="addBookmark"
               data={{
-                formAddress: rawTx.asset.recipient.address,
+                formAddress: rawTx.params.recipient.address,
                 label: recipientAccount.data.dpos?.delegate?.username ?? '',
                 isDelegate: !!recipientAccount.data.summary?.isDelegate,
               }}
