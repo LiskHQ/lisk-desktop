@@ -1,57 +1,118 @@
 import React, { useState, useContext } from 'react';
+import { useTranslation } from 'react-i18next';
 import { withRouter } from 'react-router';
+import ValueAndLabel from 'src/modules/transaction/components/TransactionDetails/valueAndLabel';
+import { PrimaryButton, SecondaryButton } from 'src/theme/buttons';
 import { addSearchParamsToUrl } from 'src/utils/searchParams';
 import ConnectionContext from '@libs/wcm/context/connectionContext';
 import { onApprove, onReject } from '@libs/wcm/utils/sessionHandlers';
 import { useAccounts } from '@account/hooks';
+import BlockchainAppDetailsWrapper from '../../../explore/components/BlockchainAppDetailsWrapper';
+import AccountsSelector from './AccountsSelector';
+import styles from './connectionSummary.css';
 
+// eslint-disable-next-line max-statements
 const ConnectSummary = ({ history }) => {
   const [addresses, setAddresses] = useState([]);
+  const { t } = useTranslation();
   const { accounts } = useAccounts();
   const { data } = useContext(ConnectionContext);
 
-  const onSelect = (e) => {
-    if (e.target.value) {
-      setAddresses([...addresses, e.target.name]);
-    } else {
-      setAddresses(addresses.filter(item => item !== e.target.name));
-    }
-  };
-
-  const connectHandler = () => {
-    onApprove(
+  const connectHandler = async () => {
+    const status = await onApprove(
       data.proposal, addresses,
     );
-    addSearchParamsToUrl(history, { modal: 'connectionSuccess' });
+    addSearchParamsToUrl(history, { modal: 'connectionSuccess', status });
   };
 
   const rejectHandler = () => {
     onReject(data.proposal);
   };
 
+  if (!data.proposal?.params?.proposer) {
+    return <div />;
+  }
+
+  const { proposer, requiredNamespaces } = data.proposal.params;
+
+  const application = {
+    data: {
+      name: proposer.metadata.name,
+      serviceUrl: proposer.metadata.url.replace(/\/$/, ''),
+      icons: proposer.metadata.icons,
+      address: `Chain ID: ${requiredNamespaces.lisk.chains[0].replace('lisk:', '')}`,
+    },
+  };
+
   return (
-    <div>
-      <h2>ConnectSummary</h2>
-      <div>
-        <div>
-          <h3>Accounts</h3>
-          {
-            accounts.map((item) => (
-              <label key={item.metadata.address}>
-                <input
-                  type="checkbox"
-                  name={item.metadata.address}
-                  onChange={onSelect}
-                />
-                <span>{item.metadata.address}</span>
-              </label>
-            ))
-          }
-        </div>
-        <button onClick={connectHandler}>Connect</button>
-        <button onClick={rejectHandler}>Reject</button>
+    <BlockchainAppDetailsWrapper
+      application={application}
+    >
+      <div className={styles.wrapper}>
+        <section className={styles.section}>
+          <ValueAndLabel
+            className={styles.labeledValue}
+            label={t('Select accounts(s) to use on this application')}
+          >
+            <AccountsSelector
+              setAddresses={setAddresses}
+              addresses={addresses}
+              accounts={accounts}
+            />
+          </ValueAndLabel>
+        </section>
+        <section className={styles.section}>
+          <ValueAndLabel
+            className={styles.labeledValue}
+            label={t('Connection ID')}
+          >
+            <span>{data.proposal.params.pairingTopic}</span>
+          </ValueAndLabel>
+        </section>
+        <section className={`${styles.section} ${styles.permissions}`}>
+          <span className={styles.label}>{t('Permissions')}</span>
+          <div className={styles.twoColumn}>
+            <ValueAndLabel
+              label={t('Methods')}
+            >
+              <div className={styles.items}>
+                {
+                  requiredNamespaces.lisk.methods.map(
+                    method => (<span key={method} className={styles.label}>{method}</span>),
+                  )
+                }
+              </div>
+            </ValueAndLabel>
+            <ValueAndLabel
+              label={t('Events')}
+            >
+              <div className={styles.items}>
+                {
+                  requiredNamespaces.lisk.events.length
+                    ? requiredNamespaces.lisk.events.map(
+                      event => (<span key={event} className={styles.label}>{event}</span>),
+                    )
+                    : <span className={styles.label}>-</span>
+                }
+              </div>
+            </ValueAndLabel>
+          </div>
+        </section>
+        <footer className={styles.section}>
+          <SecondaryButton
+            onClick={rejectHandler}
+          >
+            {t('Reject')}
+          </SecondaryButton>
+          <PrimaryButton
+            onClick={connectHandler}
+            disabled={addresses.length === 0}
+          >
+            {t('Connect')}
+          </PrimaryButton>
+        </footer>
       </div>
-    </div>
+    </BlockchainAppDetailsWrapper>
   );
 };
 

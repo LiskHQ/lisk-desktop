@@ -1,4 +1,3 @@
-// istanbul ignore file
 import React from 'react';
 import { client } from '@libs/wcm/utils/connectionCreator';
 import usePairings from '@libs/wcm/hooks/usePairings';
