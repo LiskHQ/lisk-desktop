@@ -1,0 +1,98 @@
+@import '../../../../../../setup/react/app/mixins.css';
+
+.dialogWrapper {
+  border: none;
+
+  & > span {
+    color: white !important;
+  }
+}
+
+.wrapper {
+  width: 100%;
+  box-sizing: border-box;
+  max-width: 757px;
+  min-width: 450px;
+  border-radius: 16px;
+  overflow: hidden;
+  background-color: var(--color-white);
+
+  & > div:first-child {
+    width: 100%;
+    height: 130px;
+    background: linear-gradient(268.31deg, #0c152e 0%, #254898 100%);
+  }
+}
+
+.avatarContainer {
+  width: 100%;
+  height: 51px;
+  display: flex;
+  position: relative;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-start;
+
+  & > img:first-child {
+    position: absolute;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    bottom: -39px;
+    width: 77px;
+    height: 77px;
+    background-color: white;
+    border-radius: 40px;
+  }
+
+  & > img:nth-child(2) {
+    width: 100%;
+    height: 100%;
+  }
+}
+
+.detailsWrapper {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  margin-top: 51px;
+}
+
+.chainNameWrapper {
+  & > span {
+    font-size: 28px;
+    font-weight: 700;
+    color: var(--color-maastricht-blue);
+  }
+
+  & > span ~ button {
+    padding: 0px 0px !important;
+    min-width: fit-content;
+    margin-left: 16px;
+  }
+
+  & img {
+    width: 17px;
+  }
+}
+
+.addressRow {
+  & span {
+    font-size: 14px;
+  }
+}
+
+.appLink {
+  margin-top: 14px;
+  display: flex;
+  font-size: 14px;
+  font-weight: 400;
+
+  & > img {
+    width: 16px;
+    height: 16px;
+    margin-right: 8px;
+  }
+}
