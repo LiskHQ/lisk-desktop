@@ -1,7 +1,7 @@
 import React from 'react';
 import WalletVisual from '@wallet/components/walletVisual';
 import TokenAmount from '@token/fungible/components/tokenAmount';
-import styles from '../TransactionInfo/TransactionInfo.css';
+import styles from './send.css';
 import chainLogo from '../../../../../setup/react/assets/images/LISK.png';
 
 const Send = ({

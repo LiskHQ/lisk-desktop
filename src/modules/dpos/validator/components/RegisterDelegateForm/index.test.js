@@ -1,163 +1,174 @@
 import React from 'react';
 import { mount } from 'enzyme';
-import networks from '@network/configuration/networks';
-import * as delegatesApi from '@dpos/validator/api';
-import { fromRawLsk } from '@token/fungible/utils/lsk';
-import { getTransactionBaseFees, getTransactionFee, createGenericTx } from '@transaction/api';
-import * as hwManager from '@transaction/utils/hwManager';
 import wallets from '@tests/constants/wallets';
-import flushPromises from '@tests/unit-test-utils/flushPromises';
-import { mountWithProps } from 'src/utils/testHelpers';
-import { act } from 'react-dom/test-utils';
-import SelectNameAndFee from '.';
+import * as keys from '@tests/constants/keys';
+import useDelegateName from '../../hooks/useDelegateName';
+import useDelegateKey from '../../hooks/useDelegateKey';
+import RegisterDelegateForm from '.';
 
-jest.mock('@network/utils/api');
-jest.mock('@transaction/api');
-jest.mock('@dpos/validator/api', () => ({
-  getDelegate: jest.fn().mockImplementation(() => Promise.resolve({ data: [] })),
-}));
-jest.mock('@transaction/utils/hwManager');
+jest.mock('../../hooks/useDelegateName', () => jest.fn());
+jest.mock('../../hooks/useDelegateKey', () => jest.fn());
 
-const transactionBaseFees = {
-  Low: 156,
-  Medium: 100,
-  High: 51,
+const genKey = {
+  value: keys.genKey,
+  error: false,
+  message: '',
+};
+const blsKey = {
+  value: keys.blsKey,
+  error: false,
+  message: '',
+};
+const pop = {
+  value: keys.pop,
+  error: false,
+  message: '',
+};
+const empty = {
+  value: '',
+  error: true,
+  message: 'Can not be empty',
 };
 
-const mockFeeFactor = 100;
-const mockTransaction = {};
-createGenericTx.mockResolvedValue(mockTransaction);
-getTransactionBaseFees.mockResolvedValue(transactionBaseFees);
-getTransactionFee.mockImplementation((params) => {
-  const selectedTransactionPriority = params.selectedPriority.selectedIndex;
-  const fees = fromRawLsk(
-    Object.values(transactionBaseFees)[selectedTransactionPriority] * mockFeeFactor,
-  );
-  return ({
-    value: fees, feedback: '', error: false,
-  });
-});
-
-describe('SelectNameAndFee', () => {
-  let wrapper;
-
+describe('RegisterDelegateForm', () => {
   const props = {
-    account: {
-      ...wallets.genesis,
-      delegate: {},
-    },
     prevState: {},
-    network: {
-      name: networks.mainnet.name,
-      networks: {
-        LSK: {},
-      },
-    },
     nextStep: jest.fn(),
-    t: key => key,
   };
 
-  beforeEach(() => {
-    wrapper = mount(<SelectNameAndFee {...props} />);
-    hwManager.signTransactionByHW.mockResolvedValue({});
-  });
+  const setName = jest.fn();
+  const setKey = jest.fn();
 
   afterEach(() => {
     jest.clearAllMocks();
   });
 
-  it('renders properly SelectName component', () => {
-    expect(wrapper).toContainMatchingElement('.select-name-container');
-    expect(wrapper).toContainMatchingElements(2, '.select-name-text-description');
-    expect(wrapper).toContainMatchingElement('.select-name-input');
-    expect(wrapper).toContainMatchingElement('.feedback');
-    expect(wrapper).toContainMatchingElement('.confirm-btn');
+  describe('Renders correctly', () => {
+    it('renders properly RegisterDelegateForm component', () => {
+      useDelegateName.mockReturnValue([empty, setName]);
+      useDelegateKey.mockReturnValue([empty, setKey]);
+      const wrapper = mount(<RegisterDelegateForm {...props} />);
+      expect(wrapper).toContainMatchingElement('.select-name-container');
+      expect(wrapper).toContainMatchingElement('.select-name-input');
+      expect(wrapper).toContainMatchingElement('.feedback');
+      expect(wrapper).toContainMatchingElement('.confirm-btn');
+      expect(wrapper.find('button.confirm-btn')).toBeDisabled();
+    });
+
+    it('type a valid and unused username', async () => {
+      useDelegateName.mockReturnValue([empty, setName]);
+      useDelegateKey.mockReturnValue([empty, setKey]);
+      const wrapper = mount(<RegisterDelegateForm {...props} />);
+
+      wrapper.find('input.select-name-input')
+        .simulate('change', { target: { value: 'mydelegate' } });
+      wrapper.find('input.generator-publicKey-input')
+        .simulate('change', { target: { value: genKey.value, name: 'generatorPublicKey' } });
+      wrapper.find('input.bls-key-input')
+        .simulate('change', { target: { value: blsKey.value, name: 'blsPublicKey' } });
+      wrapper.find('input.pop-input')
+        .simulate('change', { target: { value: pop.value, name: 'proofOfPossession' } });
+      expect(setName).toHaveBeenCalledTimes(1);
+      expect(setKey).toHaveBeenCalledWith(genKey.value);
+      expect(setKey).toHaveBeenCalledWith(blsKey.value);
+      expect(setKey).toHaveBeenCalledWith(pop.value);
+    });
   });
 
-  it('type a valid and unused username', async () => {
-    expect(wrapper).toContainMatchingElement('.select-name-input');
-    expect(wrapper.find('button.confirm-btn')).toBeDisabled();
-    wrapper.find('input.select-name-input')
-      .simulate('change', { target: { value: 'mydelegate' } });
-    jest.advanceTimersByTime(1000);
-    expect(delegatesApi.getDelegate).toHaveBeenCalledTimes(1);
-    await flushPromises();
-    wrapper.update();
-    expect(wrapper.find('button.confirm-btn')).not.toBeDisabled();
-    wrapper.find('button.confirm-btn').simulate('click');
-    await flushPromises();
-    expect(props.nextStep).toBeCalledWith({
-      selectedPriority: { title: 'Low', value: 156, selectedIndex: 0 },
+  describe('Handles errors', () => {
+    const wrongName = {
+      value: 's',
+      error: true,
+      message: 'Too short',
+    };
+    const validName = {
+      value: 'some_name',
+      error: false,
+      message: '',
+    };
+    const wrongKey = {
+      value: 'wrong_value',
+      error: true,
+      message: 'Invalid hex value',
+    };
+
+    it('Display delegate name input errors', () => {
+      useDelegateKey.mockReturnValueOnce([genKey, setKey]);
+      useDelegateKey.mockReturnValueOnce([blsKey, setKey]);
+      useDelegateKey.mockReturnValueOnce([pop, setKey]);
+      useDelegateName.mockReturnValue([wrongName, setName]); // invalid
+      const wrapper = mount(<RegisterDelegateForm {...props} />);
+      expect(wrapper.find('button.confirm-btn')).toBeDisabled();
+      expect(wrapper.find('.feedback').at(0)).toHaveText('Too short');
+    });
+
+    it('Display generator key input error', () => {
+      useDelegateKey.mockReturnValueOnce([wrongKey, setKey]);
+      useDelegateKey.mockReturnValueOnce([blsKey, setKey]);
+      useDelegateKey.mockReturnValueOnce([pop, setKey]);
+      useDelegateName.mockReturnValue([validName, setName]); // valid
+      const wrapper = mount(<RegisterDelegateForm {...props} />);
+      expect(wrapper.find('button.confirm-btn')).toBeDisabled();
+      expect(wrapper.find('.feedback').at(1)).toHaveText('Invalid hex value');
+    });
+
+    it('Display bls key input error', () => {
+      useDelegateKey.mockReturnValueOnce([genKey, setKey]);
+      useDelegateKey.mockReturnValueOnce([wrongKey, setKey]);
+      useDelegateKey.mockReturnValueOnce([pop, setKey]);
+      useDelegateName.mockReturnValue([validName, setName]); // valid
+      const wrapper = mount(<RegisterDelegateForm {...props} />);
+      expect(wrapper.find('button.confirm-btn')).toBeDisabled();
+      expect(wrapper.find('.feedback').at(2)).toHaveText('Invalid hex value');
+    });
+
+    it('Display pop key input error', () => {
+      useDelegateKey.mockReturnValueOnce([genKey, setKey]);
+      useDelegateKey.mockReturnValueOnce([blsKey, setKey]);
+      useDelegateKey.mockReturnValueOnce([wrongKey, setKey]);
+      useDelegateName.mockReturnValue([validName, setName]); // valid
+      const wrapper = mount(<RegisterDelegateForm {...props} />);
+      expect(wrapper.find('button.confirm-btn')).toBeDisabled();
+      expect(wrapper.find('.feedback').at(3)).toHaveText('Invalid hex value');
+    });
+  });
+
+  describe('Pass valid tx', () => {
+    const validName = {
+      value: 'some_name',
+      error: false,
+      message: '',
+    };
+    const rawTx = {
       fees: {
-        Transaction: '0.000156 LSK',
+        Transaction: '0 LSK',
       },
       rawTx: {
-        fee: 15600,
+        fee: 0,
         moduleCommandID: '5:0',
         nonce: '1',
-        sender: {
-          publicKey: '0fe9a3f1a21b5530f27f87a414b549e79a940bf24fdf2b2f05e7f22aeeecc86a',
-        },
         params: {
-          username: 'mydelegate',
+          blsPublicKey: blsKey.value,
+          generatorPublicKey: genKey.value,
+          proofOfPossession: pop.value,
+          username: validName.value,
+        },
+        sender: {
+          publicKey: wallets.genesis.summary.publicKey,
         },
       },
-    });
-  });
-
-  it('type an invalid username', () => {
-    expect(wrapper).toContainMatchingElement('.select-name-input');
-    expect(wrapper.find('button.confirm-btn')).toBeDisabled();
-    wrapper.find('input.select-name-input').simulate('change', { target: { value: 'mydelegate+' } });
-    expect(delegatesApi.getDelegate).not.toBeCalled();
-    expect(wrapper.find('button.confirm-btn')).toBeDisabled();
-  });
-
-  it('disabled confirm button if user is already a delegate', () => {
-    wrapper.setProps({
-      account: {
-        ...props.account,
-        isDelegate: true,
-      },
-    });
-    expect(wrapper.find('button.confirm-btn')).toBeDisabled();
-  });
-
-  it('disabled confirm button if username is longer than 20 chars', async () => {
-    expect(wrapper.find('button.confirm-btn')).toBeDisabled();
-    wrapper.find('input.select-name-input').simulate('change', { target: { value: 'mydelegate' } });
-    jest.advanceTimersByTime(1000);
-    await flushPromises();
-    wrapper.update();
-    expect(wrapper.find('button.confirm-btn')).not.toBeDisabled();
-    wrapper.find('input.select-name-input')
-      .simulate('change', { target: { value: 'mydelegate_genesis_1023_gister_number_1' } });
-    jest.advanceTimersByTime(1000);
-    expect(wrapper.find('button.confirm-btn')).toBeDisabled();
-  });
-
-  it('disabled confirm button if balance is not enough to pay fee', async () => {
-    const account = {
-      ...props.account,
-      summary: {
-        ...props.account.summary,
-        balance: 1e2,
-      },
-      token: { balance: 1e2 },
+      selectedPriority: { title: 'Normal', selectedIndex: 0, value: 0 },
+      trnxData: undefined,
     };
-    wrapper = mountWithProps(
-      SelectNameAndFee,
-      props,
-      {
-        wallet: { info: { LSK: account } },
-      },
-    );
-    await flushPromises();
-    act(() => {
-      wrapper.update();
+
+    it('accept a valid form', () => {
+      useDelegateKey.mockReturnValueOnce([genKey, setKey]);
+      useDelegateKey.mockReturnValueOnce([blsKey, setKey]);
+      useDelegateKey.mockReturnValueOnce([pop, setKey]);
+      useDelegateName.mockReturnValue([validName, setName]); // valid
+      const wrapper = mount(<RegisterDelegateForm {...props} />);
+      wrapper.find('button.confirm-btn').simulate('click');
+      expect(props.nextStep).toHaveBeenCalledWith(rawTx);
     });
-    await flushPromises();
-    // The feedback is shown bellow the amount input
-    expect(wrapper.find('button.confirm-btn')).toBeDisabled();
   });
 });

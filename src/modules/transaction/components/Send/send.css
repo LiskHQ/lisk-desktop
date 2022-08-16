@@ -39,6 +39,33 @@
   }
 }
 
+.userInformation {
+  display: flex;
+  flex-flow: row nowrap;
+  align-items: center;
+
+  & .walletVisual {
+    margin-right: 10px;
+  }
+
+  & .titles {
+    margin: 0;
+
+    & .primary {
+      display: block;
+      width: 100%;
+      line-height: 20px;
+      font-weight: bold;
+    }
+
+    & .secondary {
+      display: block;
+      width: 100%;
+      line-height: 20px;
+    }
+  }
+}
+
 .recipientDetail {
   display: flex;
   flex-direction: column;
