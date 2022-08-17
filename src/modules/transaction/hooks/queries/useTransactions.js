@@ -1,3 +1,4 @@
+/* istanbul ignore file */
 import { useInfiniteQuery } from '@tanstack/react-query';
 import { useCurrentApplication } from '@blockchainApplication/manage/hooks';
 import { TRANSACTIONS, APPLICATION } from 'src/const/queries';
@@ -19,7 +20,7 @@ export const useTransactions = ({ config: customConfig = {}, options } = { }) =>
     ...customConfig,
     params: { limit, ...customConfig.params },
   };
-  const result = useInfiniteQuery(
+  return useInfiniteQuery(
     [TRANSACTIONS, APPLICATION, METHOD, config],
     async ({ pageParam }) => API_METHOD[METHOD]({
       ...config,
@@ -49,9 +50,4 @@ export const useTransactions = ({ config: customConfig = {}, options } = { }) =>
       },
     },
   );
-  return {
-    ...result,
-    hasUpdate: false,
-    addUpdate: () => undefined,
-  };
 };
