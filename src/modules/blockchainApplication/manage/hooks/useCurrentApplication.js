@@ -4,7 +4,7 @@ import mockBlockchainApplications from '@tests/fixtures/blockchainApplicationsMa
 import socket from 'src/utils/api/socket';
 import { selectCurrentApplication } from '../store/selectors';
 import { setCurrentApplication } from '../store/action';
-import useCurrentNode from './useCurrentNode';
+import { useCurrentNode } from './useCurrentNode';
 
 // eslint-disable-next-line import/prefer-default-export
 export function useCurrentApplication() {

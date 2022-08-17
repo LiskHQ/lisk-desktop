@@ -3,7 +3,8 @@ import { useSelector, useDispatch } from 'react-redux';
 import { selectCurrentNode } from '../store/selectors';
 import { setApplicationNode } from '../store/action';
 
-function useCurrentNode() {
+// eslint-disable-next-line import/prefer-default-export
+export const useCurrentNode = () => {
   const dispatch = useDispatch();
   const currentNode = useSelector(selectCurrentNode);
 
@@ -12,6 +13,4 @@ function useCurrentNode() {
   }, []);
 
   return { currentNode, setCurrentNode };
-}
-
-export default useCurrentNode;
+};

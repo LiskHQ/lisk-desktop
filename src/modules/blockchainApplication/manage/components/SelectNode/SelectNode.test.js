@@ -7,9 +7,11 @@ const mockSetCurrentApplication = jest.fn();
 const mockSetCurrentNode = jest.fn();
 const mockCurrentApplication = mockBlockChainApplications[0];
 
-jest.mock('../../hooks/useCurrentNode', () => jest.fn(() => ({
-  setCurrentNode: mockSetCurrentNode,
-})));
+jest.mock('../../hooks/useCurrentNode', () => ({
+  useCurrentNode: () => ({
+    setCurrentNode: mockSetCurrentNode,
+  }),
+}));
 jest.mock('../../hooks/useCurrentApplication', () => ({
   useCurrentApplication: () => ([mockCurrentApplication, mockSetCurrentApplication]),
 }));

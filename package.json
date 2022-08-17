@@ -117,8 +117,10 @@
     "@ledgerhq/hw-transport": "6.3.0",
     "@ledgerhq/hw-transport-node-hid": "6.6.0",
     "@liskhq/lisk-client": "6.0.0-alpha.2",
+    "@tanstack/react-query": "4.0.10",
     "@testing-library/react-hooks": "5.1.2",
     "await-to-js": "2.1.1",
+    "axios": "0.27.2",
     "bignumber.js": "8.0.1",
     "bip32": "1.0.4",
     "bitcore-lib": "8.25.10",
@@ -152,6 +154,7 @@
     "lodash.throttle": "4.1.1",
     "lottie-web": "5.5.5",
     "moment": "2.23.0",
+    "msw": "0.44.2",
     "node-abi": "3.8.0",
     "node-hid": "2.1.1",
     "numeral": "git+https://github.com/LiskHQ/Numeral-js.git",
@@ -213,6 +216,7 @@
     "chai": "4.2.0",
     "chai-as-promised": "7.1.1",
     "chai-enzyme": "1.0.0-beta.1",
+    "copy-webpack-plugin": "11.0.0",
     "cpx": "1.5.0",
     "cross-env": "7.0.3",
     "css-loader": "5.2.4",
@@ -276,5 +280,8 @@
     "webpack-bundle-analyzer": "3.3.2",
     "webpack-cli": "^4.2.0",
     "webpack-dev-server": "3.11.2"
+  },
+  "msw": {
+    "workerDirectory": "setup/react/public"
   }
 }

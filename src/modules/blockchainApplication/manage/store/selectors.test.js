@@ -23,6 +23,6 @@ describe('Application Explorer selector', () => {
   });
   it('Should return current application node if setApplicationNode action type is triggered', async () => {
     const state = { blockChainApplications: { node: mockApplications[0].apis[0].rest } };
-    expect(selectCurrentNode(state)).toEqual('https://service.lisk.com');
+    expect(selectCurrentNode(state)).toEqual(mockApplications[0].apis[0].rest);
   });
 });

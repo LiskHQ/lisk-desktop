@@ -1,8 +1,7 @@
 import { getTransactionBaseFees, getTransactionFee } from '@transaction/api';
 import { mountWithRouter } from 'src/utils/testHelpers';
 import mockManagedApplications from '@tests/fixtures/blockchainApplicationsManage';
-import useApplicationManagement from '@blockchainApplication/manage/hooks/useApplicationManagement';
-import { useCurrentApplication } from '@blockchainApplication/manage/hooks/useCurrentApplication';
+import { useCurrentApplication, useApplicationManagement } from '@blockchainApplication/manage/hooks';
 import wallets from '@tests/constants/wallets';
 import Send from './index';
 
