@@ -1,8 +1,10 @@
 import { renderHook, act } from '@testing-library/react-hooks';
 import mockApplications from '@tests/fixtures/blockchainApplicationsManage';
+import socket from 'src/utils/api/socket';
 import actionTypes from '../store/actionTypes';
 import { useCurrentApplication } from './useCurrentApplication';
 
+jest.mock('src/utils/api/socket');
 const mockDispatch = jest.fn();
 const mockState = {
   blockChainApplications: {
@@ -37,6 +39,7 @@ describe('useCurrentApplication hook', () => {
     act(() => {
       setCurrentApplication(mockApplications[0]);
     });
+    expect(socket.create).toHaveBeenCalledWith({ baseUrl: expect.stringMatching('wss') });
     expect(mockDispatch).toHaveBeenCalledTimes(2);
     expect(mockDispatch).toHaveBeenCalledWith(expectedAction);
   });

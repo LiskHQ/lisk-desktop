@@ -14,12 +14,13 @@ const rpc = ({
 }) => new Promise((resolve, reject) => {
   if (socket.client.disconnected) {
     reject(new Error('socket not connected'));
+    return;
   }
   socket.client.emit(event, params || {}, (response) => {
-    if (Object.keys(response).length === 0 || response.error) {
-      reject(response);
+    if (Object.keys(response).length && response.error) {
+      return reject(response);
     }
-    resolve(response);
+    return resolve(response);
   });
 });
 

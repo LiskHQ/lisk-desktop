@@ -14,7 +14,8 @@ export function useCurrentApplication() {
   const setApplication = useCallback(
     (application) => {
       dispatch(setCurrentApplication(application));
-      socket.create({ baseUrl: application?.apis[0]?.rpc ?? application?.apis[0]?.rest });
+      /* istanbul ignore next */
+      socket.create({ baseUrl: (application?.apis[0]?.rpc ?? application?.apis[0]?.rest) || '' });
       setCurrentNode(application.apis[0]);
     },
     [],
