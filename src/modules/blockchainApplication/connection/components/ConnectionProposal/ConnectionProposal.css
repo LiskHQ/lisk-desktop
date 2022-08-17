@@ -1,0 +1,28 @@
+.wrapper {
+  width: 400px;
+  text-align: center;
+  padding: 45px 24px;
+
+  & h3 {
+    font-weight: 700;
+    line-height: 32px;
+    margin: 0;
+  }
+
+  & h6 {
+    line-height: 18px;
+    margin: var(--vertical-padding-m) auto;
+
+    &.error {
+      color: var(--color-red);
+    }
+  }
+
+  & .input {
+    margin: 5px 0 30px;
+  }
+
+  & button {
+    width: 100%;
+  }
+}
