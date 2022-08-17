@@ -6,7 +6,8 @@ import { selectApplications } from '../store/selectors';
 import { useCurrentApplication } from './useCurrentApplication';
 import { usePinBlockchainApplication } from './usePinBlockchainApplication';
 
-function useApplicationManagement() {
+// eslint-disable-next-line import/prefer-default-export
+export function useApplicationManagement() {
   const dispatch = useDispatch();
   const [currentApplication, setCurrentApplication] = useCurrentApplication();
   const { checkPinByChainId, pins } = usePinBlockchainApplication();
@@ -50,5 +51,3 @@ function useApplicationManagement() {
     applications, setApplication, getApplicationByChainId, deleteApplicationByChainId,
   };
 }
-
-export default useApplicationManagement;

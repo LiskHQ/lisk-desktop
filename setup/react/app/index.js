@@ -22,6 +22,11 @@ import routes from 'src/routes/routes';
 import './variables.css';
 import styles from './app.css';
 
+if (process.env.NODE_ENV === 'development' || process.env.REACT_APP_MSW) {
+  const { worker } = require('src/service/mock/runtime');
+  worker.start({ onUnhandledRequest: 'bypass' });
+}
+
 const App = ({ history }) => {
   const dispatch = useDispatch();
   const [loaded, setLoaded] = useState(false);
@@ -38,7 +43,6 @@ const App = ({ history }) => {
 
   const routesList = Object.keys(routes);
   const routeObj = Object.values(routes).find(r => r.path === history.location.pathname) || {};
-
   return (
     <ThemeContext.Provider value={theme}>
       <OfflineWrapper>
