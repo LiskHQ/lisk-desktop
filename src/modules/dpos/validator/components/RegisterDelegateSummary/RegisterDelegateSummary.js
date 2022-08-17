@@ -8,6 +8,9 @@ const RegisterDelegateSummary = ({
   prevStep,
   nextStep,
   t,
+  transactionData,
+  selectedPriority,
+  fees,
 }) => {
   const onConfirmAction = {
     label: t('Register delegate'),
@@ -30,6 +33,9 @@ const RegisterDelegateSummary = ({
       cancelButton={onCancelAction}
       classNames={`${styles.box} ${styles.summaryContainer}`}
       rawTx={rawTx}
+      transactionData={transactionData}
+      selectedPriority={selectedPriority}
+      fees={fees}
     />
   );
 };

@@ -24,7 +24,7 @@ const Actions = ({
       </SecondaryButton>
     )}
     <PrimaryButton
-      className="confirm-button"
+      className={`${!cancelButton ? styles.confirmButton : ''} confirm-button`}
       disabled={
         confirmButton.disabled
         || inputStatus === 'visible'

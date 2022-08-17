@@ -19,3 +19,8 @@ export const transactions = rest.get(
     return res(ctx.json(response));
   },
 );
+
+// eslint-disable-next-line import/prefer-default-export
+export const networkStatus = rest.post(
+  `*/api/${API_VERSION}/transactions`, (req, res, ctx) => res(ctx.status(200)),
+);

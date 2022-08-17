@@ -1,6 +1,8 @@
 import React from 'react';
 import { mount } from 'enzyme';
 import { tokenMap } from '@token/fungible/consts/tokens';
+import mockBlockchainApplications from '@tests/fixtures/blockchainApplicationsManage';
+import { mockAppTokens } from '@tests/fixtures/token';
 import i18n from 'src/utils/i18n/i18n';
 import wallets from '@tests/constants/wallets';
 import Summary from './Summary';
@@ -24,6 +26,20 @@ describe('Summary', () => {
         moduleCommandID: '2:0',
       },
       t: i18n.t,
+      selectedPriority: { title: 'Normal', value: 1 },
+      fees: {
+        Transaction: '1 LSK',
+        CCM: '1 LSK',
+        initiation: '1 LSK',
+      },
+      transactionData: {
+        sendingChain: mockBlockchainApplications[0],
+        recipientChain: mockBlockchainApplications[1],
+        token: mockAppTokens[0],
+        recipient: { value: 'lskyrwej7xuxeo39ptuyff5b524dsmnmuyvcaxkag' },
+        amount: 10,
+        data: 'test message',
+      },
     };
     wrapper = mount(<Summary {...props} />);
   });

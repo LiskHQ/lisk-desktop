@@ -1,10 +1,15 @@
 /* eslint-disable max-lines */
 import { MODULE_COMMANDS_NAME_ID_MAP } from '@transaction/configuration/moduleAssets';
-import { getTxAmount } from '@transaction/utils/transaction';
+import {
+  getTxAmount,
+  convertStringToBinary,
+  convertBinaryToString,
+} from '@transaction/utils/transaction';
 import { getState } from '@fixtures/transactions';
 import * as delegates from '@dpos/validator/api';
 import http from 'src/utils/api/http';
 import accounts from '@tests/constants/wallets';
+import { genKey, blsKey, pop } from '@tests/constants/keys';
 import {
   getTransaction,
   getTransactions,
@@ -267,6 +272,9 @@ describe('API: LSK Transactions', () => {
         moduleCommandID: registerDelegate,
         params: {
           username: 'some_username',
+          generatorPublicKey: convertStringToBinary(genKey),
+          blsPublicKey: convertStringToBinary(blsKey),
+          proofOfPossession: convertStringToBinary(pop),
         },
       };
 
@@ -357,6 +365,9 @@ describe('API: LSK Transactions', () => {
         moduleCommandID: registerDelegate,
         params: {
           username: 'user_name',
+          generatorPublicKey: convertBinaryToString(genKey),
+          blsPublicKey: convertBinaryToString(blsKey),
+          proofOfPossession: convertBinaryToString(pop),
         },
       };
       const result = await getTransactionFee({

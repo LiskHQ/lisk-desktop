@@ -1,3 +1,4 @@
+/* istanbul ignore file */
 import { useInfiniteQuery } from '@tanstack/react-query';
 import { useCurrentApplication } from '@blockchainApplication/manage/hooks';
 import { BLOCKS, APPLICATION } from 'src/const/queries';
@@ -48,9 +49,4 @@ export const useBlocks = ({ config: customConfig = {}, options } = { }) => {
       },
     },
   );
-  // return {
-  //   ...result,
-  //   hasUpdate: false,
-  //   addUpdate: () => undefined,
-  // };
 };

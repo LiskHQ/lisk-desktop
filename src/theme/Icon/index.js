@@ -130,6 +130,7 @@ import signOut from '@setup/react/assets/images/icons/signOut.svg';
 import plus from '@setup/react/assets/images/icons/plus.svg';
 import plusActive from '@setup/react/assets/images/icons/plusActive.svg';
 import remove from '@setup/react/assets/images/icons/remove.svg';
+import removeBlueIcon from '@setup/react/assets/images/icons/remove-blue.svg';
 import totalBlocks from '@setup/react/assets/images/icons/total-blocks.svg';
 import totalBlocksDark from '@setup/react/assets/images/icons/total-blocks-dark.svg';
 import blocksForged from '@setup/react/assets/images/icons/blocks-forged.svg';
@@ -223,6 +224,8 @@ import cautionFilledIcon from '@setup/react/assets/images/icons/caution-icon-fil
 import cautionFilledIconDark from '@setup/react/assets/images/icons/caution-icon-filled-dark.svg';
 import applicationsIcon from '@setup/react/assets/images/icons/applications-outline.svg';
 import applicationsIconActive from '@setup/react/assets/images/icons/applications-filled.svg';
+import dropdownFieldIcon from '@setup/react/assets/images/icons/drop-down-field-icon.svg';
+import transferArrow from '@setup/react/assets/images/icons/transfer-arrow.svg';
 
 export const icons = {
   academy,
@@ -446,6 +449,9 @@ export const icons = {
   plusBlueIcon,
   cautionFilledIcon,
   cautionFilledIconDark,
+  dropdownFieldIcon,
+  removeBlueIcon,
+  transferArrow,
 };
 
 const Icon = ({ name, noTheme, ...props }) => {

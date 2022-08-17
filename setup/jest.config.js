@@ -55,7 +55,12 @@ module.exports = {
   },
   collectCoverage: true,
   coverageDirectory: '<rootDir>/coverage/jest',
-  collectCoverageFrom: ['src/**/*.js', 'setup/**/*.js', 'app/src/**/*.js'],
+  collectCoverageFrom: [
+    'src/**/*.js',
+    'setup/**/*.js',
+    'app/src/**/*.js',
+    '!src/modules/**/mocks/*.js',
+  ],
   coveragePathIgnorePatterns: [
     '/node_modules/',
     '.test.js',

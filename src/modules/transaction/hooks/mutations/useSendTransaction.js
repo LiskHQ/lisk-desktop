@@ -1,8 +1,8 @@
+/* istanbul ignore file */
 import { useMutation } from '@tanstack/react-query';
 import { useCurrentApplication } from '@blockchainApplication/manage/hooks';
 import {
   METHOD,
-  LIMIT as limit,
   API_VERSION,
   API_METHOD,
 } from 'src/const/config';
@@ -11,14 +11,13 @@ import {
 export const useSendTransaction = (options) => {
   const [currentApplication] = useCurrentApplication();
 
-  return useMutation(async ({ path, customConfig }) => {
+  return useMutation(async ({ path, ...customConfig }) => {
     const config = {
       baseUrl: currentApplication?.apis[0][METHOD] ?? currentApplication?.apis[0].rest,
       path: `/api/${API_VERSION}/transactions/`,
-      method: 'POST',
+      method: 'post',
       event: 'get.network.status',
       ...customConfig,
-      params: { limit, ...customConfig.params },
     };
     return API_METHOD[METHOD]({
       path,
