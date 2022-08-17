@@ -30,3 +30,17 @@ export const LISK_SIGNING_METHODS = {
   LISK_SIGN_TRANSACTION: 'lisk_signTransaction',
   LISK_SIGN_MESSAGE: 'lisk_signMessage',
 };
+
+export const PAIRING_PROPOSAL_STATUS = {
+  ERROR: 'ERROR',
+  SUCCESS: 'SUCCESS',
+};
+
+export const EVENTS = {
+  SESSION_PROPOSAL: 'session_proposal',
+  SESSION_REQUEST: 'session_request',
+  SESSION_PING: 'session_ping',
+  SESSION_EVENT: 'session_event',
+  SESSION_UPDATE: 'session_update',
+  SESSION_DELETE: 'session_delete',
+};

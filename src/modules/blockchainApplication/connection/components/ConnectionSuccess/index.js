@@ -27,7 +27,7 @@ const SessionSuccess = ({ history }) => {
   }
 
   const { proposer } = data.proposal.params;
-  const hasError = history.location.search.indexOf('error') > -1;
+  const hasError = history.location.search.indexOf('ERROR') > -1;
 
   return (
     <Dialog className={styles.wrapper}>

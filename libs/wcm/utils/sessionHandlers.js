@@ -1,6 +1,7 @@
 import { getSdkError } from '@walletconnect/utils';
 import { to } from 'await-to-js';
 import { client } from '@libs/wcm/utils/connectionCreator';
+import { PAIRING_PROPOSAL_STATUS } from '../data/chainConfig';
 
 /**
  * The approve handler for connection proposal
@@ -43,10 +44,10 @@ export const onApprove = async (
   if (!err) {
     const { acknowledged } = response;
     await acknowledged();
-    return 'success';
+    return PAIRING_PROPOSAL_STATUS.SUCCESS;
   }
 
-  return 'error';
+  return PAIRING_PROPOSAL_STATUS.ERROR;
 };
 
 /**

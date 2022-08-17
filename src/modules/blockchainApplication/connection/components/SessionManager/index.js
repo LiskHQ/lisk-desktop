@@ -1,37 +1,69 @@
-import React, { useContext } from 'react';
-import { client } from '@libs/wcm/utils/connectionCreator';
+import React, { useState, useEffect, useContext } from 'react';
+import { useTranslation } from 'react-i18next';
 import ConnectionContext from '@libs/wcm/context/connectionContext';
+import { addSearchParamsToUrl } from 'src/utils/searchParams';
+import { withRouter } from 'react-router';
+import { client } from '@libs/wcm/utils/connectionCreator';
 import usePairings from '@libs/wcm/hooks/usePairings';
+import Box from 'src/theme/box';
+import BoxContent from 'src/theme/box/content';
+import { PrimaryButton } from 'src/theme/buttons';
+import Icon from 'src/theme/Icon';
+import Table from 'src/theme/table';
+import SessionRow from './SessionRow';
+import header from './tableHeader';
+import styles from './SessionManager.css';
 
-const SessionManager = () => {
+const SessionManager = ({ history }) => {
   const { pairings, disconnect } = usePairings(!!client);
+  const [loading, setLoading] = useState(true);
   const { data } = useContext(ConnectionContext);
+  const { t } = useTranslation();
+
+  console.log('->', data);
+
+  const addApplication = () => {
+    addSearchParamsToUrl(history, { modal: 'connectionProposal' });
+  };
+
+  useEffect(() => {
+    if (Array.isArray(pairings)) {
+      setLoading(false);
+    }
+  }, [pairings]);
 
   return (
-    <div>
-      <h2>SessionManager</h2>
-      {
-        pairings && pairings.map(item => (
-          <div key={item.topic}>
-            <b>{item.peerMetadata.name}</b>
-            <span>{item.peerMetadata.description}</span>
-            <span>{item.peerMetadata.url}</span>
-            <span>{item.topic}</span>
-            <button onClick={() => (disconnect(item.topic))}>Remove</button>
-          </div>
-        ))
-      }
-      {
-        data.session ? (
-          <>
-            <h2>{`Request: ${data.session.requestEvent.params.request.method}`}</h2>
-            <h4>{`Chain Id: ${data.session.requestEvent.params.chainId}`}</h4>
-            <pre>{JSON.stringify(data.session.requestEvent.params.request.params, null, 2)}</pre>
-          </>
-        ) : null
-      }
-    </div>
+    <Box main isLoading={loading} className={`${styles.wrapper} pairings-list-box`}>
+      <div className={styles.addButtonWrapper}>
+        <PrimaryButton className="copy-button" onClick={addApplication}>
+          <span className={styles.buttonContent}>
+            <Icon name="plus" />
+            <span>
+              {t('Bridge application')}
+            </span>
+          </span>
+        </PrimaryButton>
+      </div>
+      <BoxContent className={`${styles.content} pairings-list`}>
+        <Table
+          showHeader
+          headerClassName={styles.tableHeader}
+          data={pairings}
+          isLoading={loading}
+          row={SessionRow}
+          header={header(t)}
+          canLoadMore={false}
+          additionalRowProps={{
+            t,
+            disconnect,
+          }}
+          emptyState={{
+            message: t('You haven\'t paired with any applications yet.'),
+          }}
+        />
+      </BoxContent>
+    </Box>
   );
 };
 
-export default SessionManager;
+export default withRouter(SessionManager);
