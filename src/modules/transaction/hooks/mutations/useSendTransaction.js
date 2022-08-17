@@ -1,3 +1,4 @@
+/* istanbul ignore file */
 import { useMutation } from '@tanstack/react-query';
 import { useCurrentApplication } from '@blockchainApplication/manage/hooks';
 import {
