@@ -3,14 +3,12 @@ import { fromRawLsk, delay } from '@token/fungible/utils/lsk';
 import { selectActiveToken, selectActiveTokenAccount } from 'src/redux/selectors';
 import {
   accountDataUpdated,
-  emptyTransactionsData,
   transactionsRetrieved,
 } from 'src/redux/actions';
 import { getTransactions } from '@transaction/api';
 import i18n from 'src/utils/i18n/i18n';
 import blockActionTypes from '@block/store/actionTypes';
 import settingsActionTypes from 'src/modules/settings/store/actionTypes';
-import actionTypes from '../actionTypes';
 
 const filterIncomingTransactions = (transactions, account) =>
   transactions.filter(transaction => (

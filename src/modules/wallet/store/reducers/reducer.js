@@ -1,4 +1,3 @@
-import accountConstants from '@wallet/configuration/constants';
 import actionTypes from '../actionTypes';
 
 /**

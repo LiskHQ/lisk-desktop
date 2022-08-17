@@ -7,7 +7,6 @@ import { MODULE_COMMANDS_NAME_ID_MAP } from '@transaction/configuration/moduleAs
 import TopBar from './topBar';
 
 const mapStateToProps = state => ({
-  account: state.wallet,
   network: state.network,
   token: state.token,
   settings: state.settings,
@@ -21,7 +20,7 @@ const mapStateToProps = state => ({
 });
 
 export default withRouter(
-  connect(mapStateToProps, mapDispatchToProps)(
+  connect(mapStateToProps)(
     withTranslation()(TopBar),
   ),
 );

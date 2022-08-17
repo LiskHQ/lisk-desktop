@@ -1,6 +1,5 @@
 import React from 'react';
 import routes from 'src/routes/routes';
-import { isEmpty } from 'src/utils/helpers';
 import Icon from 'src/theme/Icon';
 import DialogLink from 'src/theme/dialog/link';
 import Tooltip from 'src/theme/Tooltip';
@@ -13,25 +12,22 @@ import ApplicationManagementDropDown from '@blockchainApplication/manage/compone
 import styles from './topBar.css';
 import Network from './networkName';
 import NavigationButtons from './navigationButtons';
-// import SignOut from './signOut';
 
 const TopBar = ({
   t,
-  account,
   history,
   network,
   token,
   noOfVotes,
   location,
 }) => {
-  const isUserLogout = isEmpty(account) || account.afterLogout;
   const disabled = location.pathname === routes.reclaim.path;
 
   return (
     <div className={`${styles.wrapper} top-bar`}>
       <div className={styles.group}>
         <Icon name="liskLogo" className={`${styles.logo} topbar-logo`} />
-        <NavigationButtons history={history} account={account} />
+        <NavigationButtons history={history} />
         <SideBarToggle />
         <Tooltip
           className={styles.tooltipWrapper}
@@ -53,7 +49,6 @@ const TopBar = ({
         <VoteQueueToggle
           t={t}
           noOfVotes={noOfVotes}
-          isUserLogout={isUserLogout}
           disabled={disabled}
         />
         <Search t={t} history={history} disabled={disabled} />
@@ -61,7 +56,7 @@ const TopBar = ({
       <div className={styles.group}>
         <ApplicationManagementDropDown />
         <LightDarkToggle />
-        {!isUserLogout && <DiscreteModeToggle />}
+        <DiscreteModeToggle />
         {location.pathname !== routes.register.path && (
           <Network token={token.active} network={network} t={t} />
         )}
