@@ -1,3 +1,4 @@
+/* eslint-disable max-lines */
 import { cryptography } from '@liskhq/lisk-client';
 import { MODULE_COMMANDS_NAME_ID_MAP } from '@transaction/configuration/moduleAssets';
 import { splitModuleAndCommandIds } from '@transaction/utils/moduleAssets';
@@ -6,6 +7,7 @@ import {
   getBase32AddressFromAddress,
 } from '@wallet/utils/account';
 import accounts from '@tests/constants/wallets';
+import { genKey, blsKey, pop } from '@tests/constants/keys';
 import {
   getTxAmount,
   elementTxToDesktopTx,
@@ -156,6 +158,9 @@ describe.skip('API: LSK Transactions', () => {
         moduleCommandID: registerDelegate,
         params: {
           username: 'username',
+          generatorPublicKey: genKey,
+          blsPublicKey: blsKey,
+          proofOfPossession: pop,
         },
       };
       const txObj = desktopTxToElementsTx(tx, registerDelegate);
@@ -166,6 +171,9 @@ describe.skip('API: LSK Transactions', () => {
         commandID,
         params: {
           username: 'username',
+          generatorPublicKey: convertStringToBinary(genKey),
+          blsPublicKey: convertStringToBinary(blsKey),
+          proofOfPossession: convertStringToBinary(pop),
         },
       });
     });
@@ -274,14 +282,24 @@ describe.skip('API: LSK Transactions', () => {
         ...baseElementsTx,
         moduleID,
         commandID,
-        params: { username: 'super_delegate' },
+        params: {
+          username: 'super_delegate',
+          generatorPublicKey: convertStringToBinary(genKey),
+          blsPublicKey: convertStringToBinary(blsKey),
+          proofOfPossession: convertStringToBinary(pop),
+        },
       };
 
       expect(elementTxToDesktopTx(tx)).toEqual({
         ...baseDesktopTx,
         moduleCommandID: registerDelegate,
         id: '',
-        params: { username: 'super_delegate' },
+        params: {
+          username: 'super_delegate',
+          generatorPublicKey: genKey,
+          blsPublicKey: blsKey,
+          proofOfPossession: pop,
+        },
       });
     });
 

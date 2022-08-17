@@ -22,7 +22,7 @@ const RequestWrapper = ({
           <CopyToClipboard
             className={`${styles.copyButton} copy-button`}
             Container={PrimaryButton}
-            containerProps={{ size: 's' }}
+            containerProps={{ size: 'l' }}
             value={copyValue}
             text={copyLabel}
             copyClassName={styles.copyIcon}

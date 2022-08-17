@@ -110,12 +110,14 @@
       text-overflow: ellipsis;
       overflow: hidden;
       white-space: nowrap;
+      font-weight: var(--font-weight-normal) !important;
+      font-size: 14px !important;
     }
 
     & > label:first-child {
       font-family: var(--content-font);
-      font-size: 13px;
-      font-weight: var(--font-weight-bold);
+      font-size: 14px !important;
+      font-weight: var(--font-weight-normal);
       letter-spacing: 0.2px;
       line-height: 20px;
       margin-bottom: 10px;
@@ -162,5 +164,62 @@
       margin: 0;
       color: var(--color-slate-gray);
     }
+  }
+}
+
+.fromToChainWrapper {
+  width: 100%;
+  display: flex;
+  flex-direction: 'row';
+  align-items: center;
+
+  & > div {
+    width: 100%;
+  }
+}
+
+.chainWrapper {
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  margin-top: 5px;
+  flex-direction: row;
+  padding-top: 10px;
+  width: 50%;
+
+  & > img {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+  }
+
+  & > img ~ span {
+    height: fit-content;
+    font-size: 16px;
+    font-weight: 500;
+    padding-left: 8px;
+    white-space: nowrap;
+    max-width: 228px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    color: var(--color-maastricht-blue);
+  }
+
+  &:first-of-type {
+    justify-content: flex-start;
+  }
+}
+
+.valueText {
+  font-weight: var(--font-weight-bold) !important;
+}
+
+.recipientDetail {
+  display: flex;
+  flex-direction: column;
+
+  & > span:first-child {
+    padding-bottom: 5px;
+    margin-left: 10px;
   }
 }

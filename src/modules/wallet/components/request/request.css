@@ -2,12 +2,13 @@
 
 .container {
   display: flex;
-  padding: 20px;
+  padding: 25px;
   flex-wrap: wrap;
 
   & h5 {
     font-family: var(--heading-font);
     flex-basis: 100%;
+    font-weight: 600;
     margin-top: 0;
     margin-bottom: 30px;
     color: var(--color-maastricht-blue);
@@ -17,14 +18,19 @@
     box-sizing: border-box;
     display: flex;
     flex-direction: column;
-    flex-basis: calc(50% - 20px);
-    justify-content: space-between;
+    flex-basis: calc(50% - 18px);
   }
 
   & .label {
     @mixin contentLarge;
 
-    color: var(--color-slate-gray);
+    color: var(--color-maastricht-blue);
+  }
+
+  & .label ~ p {
+    font-weight: 400;
+    font-size: 13px;
+    color: var(--color-maastricht-blue);
   }
 
   & .footerContent {
@@ -59,14 +65,15 @@
     align-items: flex-start;
     display: flex;
     flex-direction: column;
-    margin-top: 24px;
+    margin-top: 16px;
   }
 
   & .fieldLabel {
     @mixin contentNormal normal;
 
     color: var(--color-maastricht-blue);
-    margin-bottom: 10px;
+    margin-bottom: 8px;
+    font-size: 14px;
   }
 
   & .feedback {
@@ -97,7 +104,7 @@
     & .converter {
       position: absolute;
       right: 34px;
-      top: 10px;
+      top: 15px;
     }
 
     & .input {
@@ -145,7 +152,8 @@
   & .textarea {
     @mixin contentNormal;
 
-    height: 36px;
+    height: 48px !important;
+    border-radius: 6px !important;
   }
 
   & .textarea {
@@ -163,6 +171,7 @@
 
     & button {
       width: 100%;
+      border-radius: 10px;
     }
   }
 }
@@ -170,7 +179,7 @@
 .qrSection {
   width: 300px;
   display: block;
-  margin-left: 40px;
+  margin-left: 20px;
 
   &.hide {
     display: none;
@@ -186,11 +195,13 @@
     flex-grow: 1;
     margin: 24px 0 0;
     width: 100%;
-    width: 236px;
-    height: 236px;
+    width: 306px;
+    max-height: 306px;
 
     & canvas {
       box-shadow: 0 0 1px 0 var(--color-strong-white);
+      width: 80% !important;
+      height: 80% !important;
     }
   }
 }
@@ -229,4 +240,65 @@
 .feedback:not(:empty) {
   opacity: 1;
   transition: opacity var(--animation-speed-fast) linear var(--animation-delay-standard);
+}
+
+.accountWrapper {
+  width: 100%;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  padding: 0px;
+  border: none;
+  border-radius: 0px;
+  justify-content: flex-start;
+  color: var(--color-maastricht-blue);
+  transition: opacity 100ms linear;
+  cursor: pointer;
+
+  & > div:first-child ~ div {
+    margin-left: 10px;
+    flex: 1;
+    width: calc(100% - 50px);
+  }
+
+  & > div:first-child ~ div > p {
+    margin-top: 9px;
+    margin-bottom: 0px;
+    color: var(--color-slate-gray);
+    font-size: 13px;
+    text-overflow: ellipsis;
+    width: 100%;
+    overflow: hidden;
+  }
+
+  & > div:first-child ~ div ~ button {
+    border: none;
+    background-color: transparent;
+    width: 40px;
+  }
+}
+
+.chainOptionWrapper {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  padding: 10px;
+}
+
+.chainLogo {
+  width: 24px;
+  height: 24px;
+  border-radius: 50%;
+}
+
+.chainLogo ~ span {
+  height: fit-content;
+  font-size: 16px;
+  font-weight: 500;
+  padding-left: 8px;
+  white-space: nowrap;
+  max-width: 228px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  color: var(--color-maastricht-blue);
 }
