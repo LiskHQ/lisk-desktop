@@ -5,11 +5,11 @@ import { useSendTransaction } from './useSendTransaction';
 jest.useRealTimers();
 
 describe('useSendTransaction hook', () => {
-  const { result, waitFor } = renderHook(() => useSendTransaction(), { wrapper });
 
-  it.skip('fetching data correctly', async () => {
+  it('fetching data correctly', async () => {
+    const { result, waitFor } = renderHook(() => useSendTransaction(), { wrapper });
     act(() => {
-      result.current.mutate({});
+      result.current.mutate();
     });
     await waitFor(() => result.current.isLoading);
     expect(result.current.isLoading).toBeTruthy();
