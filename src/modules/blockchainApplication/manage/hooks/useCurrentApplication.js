@@ -1,7 +1,7 @@
 import { useCallback, useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import mockBlockchainApplications from '@tests/fixtures/blockchainApplicationsManage';
-import socket from 'src/utils/api/socket';
+import client from 'src/utils/api/client';
 import { selectCurrentApplication } from '../store/selectors';
 import { setCurrentApplication } from '../store/action';
 import { useCurrentNode } from './useCurrentNode';
@@ -15,7 +15,7 @@ export function useCurrentApplication() {
     (application) => {
       dispatch(setCurrentApplication(application));
       /* istanbul ignore next */
-      socket.create({ baseUrl: application?.apis[0]?.rpc ?? application?.apis[0]?.rest });
+      client.create(application?.apis[0]);
       setCurrentNode(application?.apis[0]);
     },
     [],

@@ -1,4 +1,4 @@
-import socket from './socket';
+import client from './client';
 // import { createServer } from 'http';
 // import { Server } from 'socket.io';
 
@@ -17,8 +17,8 @@ describe('demo', () => {
   //   server.listen(() => {
   //     const port = server.address().port;
   //     socket.create({ baseUrl: `http://localhost:${port}` });
-  //     // socket.client.on('connect', done);
-  //     socket.client.on('connect', done);
+  //     // client.socket.on('connect', done);
+  //     client.socket.on('connect', done);
   //   });
   // });
   //
@@ -28,18 +28,18 @@ describe('demo', () => {
   // });
 
   it.skip('should work', (done) => {
-    socket.client.on('hello', (arg) => {
+    client.socket.on('hello', (arg) => {
       expect(arg).toBe('world');
       done();
     });
-    socket.client.emit('hello', 'world');
+    client.socket.emit('hello', 'world');
   });
 
   it.skip('should work (with ack)', (done) => {
-    socket.client.on('hi', (cb) => {
+    client.socket.on('hi', (cb) => {
       cb('hola');
     });
-    socket.client.emit('hi', (arg) => {
+    client.socket.emit('hi', (arg) => {
       expect(arg).toBe('hola');
       done();
     });

@@ -1,6 +1,5 @@
 /* istanbul ignore file */
 import { useInfiniteQuery } from '@tanstack/react-query';
-import { useCurrentApplication } from '@blockchainApplication/manage/hooks';
 import { BLOCKS, APPLICATION } from 'src/const/queries';
 import {
   METHOD,
@@ -11,10 +10,9 @@ import {
 
 // eslint-disable-next-line import/prefer-default-export
 export const useBlocks = ({ config: customConfig = {}, options } = { }) => {
-  const [currentApplication] = useCurrentApplication();
   const config = {
-    baseURL: currentApplication?.apis[0][METHOD] ?? currentApplication?.apis[0].rest,
-    path: `/api/${API_VERSION}/blocks`,
+    url: `/api/${API_VERSION}/blocks`,
+    method: 'get',
     event: 'get.blocks',
     ...customConfig,
     params: { limit, ...customConfig.params },

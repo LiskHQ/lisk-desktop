@@ -1,23 +1,26 @@
-import socket from 'src/utils/api/socket';
+import client from 'src/utils/api/client';
 import rpc from './rpc';
 
-jest.mock('src/utils/api/socket', () => ({
-  client: {
+jest.mock('src/utils/api/client', () => ({
+  socket: {
     emit: jest.fn(),
     disconnected: false,
+  },
+  http: {
+    request: jest.fn(),
   },
   create: jest.fn(),
 }));
 
 describe('rpc', () => {
   afterEach(() => {
-    socket.client.disconnected = false;
+    client.socket.disconnected = false;
     jest.resetAllMocks();
     jest.resetModules();
   });
 
   it('rpc should rejected on disconnected', () => {
-    socket.client.disconnected = true;
+    client.socket.disconnected = true;
     expect(rpc({
       event: 'get.data',
       params: {},
@@ -26,7 +29,7 @@ describe('rpc', () => {
 
   it('rpc call should return data', () => {
     const res = { data: [] };
-    socket.client.emit.mockImplementation((evtName, params, callback) => {
+    client.socket.emit.mockImplementation((evtName, params, callback) => {
       callback(res);
     });
     expect(rpc({
@@ -37,7 +40,7 @@ describe('rpc', () => {
 
   it('rpc call should return error', () => {
     const res = { error: true, message: 'server error' };
-    socket.client.emit.mockImplementation((evtName, params, callback) => {
+    client.socket.emit.mockImplementation((evtName, params, callback) => {
       callback(res);
     });
     expect(rpc({
