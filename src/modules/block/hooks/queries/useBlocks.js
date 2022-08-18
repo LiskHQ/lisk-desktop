@@ -1,4 +1,3 @@
-/* istanbul ignore file */
 import { useInfiniteQuery } from '@tanstack/react-query';
 import { BLOCKS, APPLICATION } from 'src/const/queries';
 import {
@@ -15,7 +14,7 @@ export const useBlocks = ({ config: customConfig = {}, options } = { }) => {
     method: 'get',
     event: 'get.blocks',
     ...customConfig,
-    params: { limit, ...customConfig.params },
+    params: { limit, ...(customConfig?.params || {}) },
   };
   return useInfiniteQuery(
     [BLOCKS, APPLICATION, METHOD, config],

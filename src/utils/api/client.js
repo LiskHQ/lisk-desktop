@@ -9,7 +9,7 @@ export class Client {
     timeout: 10000,
   }
 
-  http = axios.create(this.axiosConfig)
+  http = null
 
   create({ rpc, rest }) {
     this.socket = io(

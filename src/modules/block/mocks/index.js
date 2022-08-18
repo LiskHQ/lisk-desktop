@@ -5,7 +5,7 @@ import { mockBlocks } from '@block/__fixtures__';
 export const blocks = rest.get(
   `*/api/${API_VERSION}/blocks`,
   async (req, res, ctx) => {
-    const limit = Number(req.url.searchParams.get('limit'));
+    const limit = Number(req.url.searchParams.get('limit') || 20);
     const offset = Number(req.url.searchParams.get('offset') || 0);
     const response = {
       data: mockBlocks.data.slice(offset, offset + limit),
@@ -15,7 +15,7 @@ export const blocks = rest.get(
         offset,
       },
     };
-    return res(ctx.json(response));
+    return res(ctx.delay(20), ctx.json(response));
   },
 );
 
