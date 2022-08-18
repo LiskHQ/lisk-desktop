@@ -1,11 +1,11 @@
 import { rest } from 'msw';
-import { API_VERSION } from 'src/const/config';
+import { API_VERSION, LIMIT } from 'src/const/config';
 import { mockBlocks } from '@block/__fixtures__';
 
 export const blocks = rest.get(
   `*/api/${API_VERSION}/blocks`,
   async (req, res, ctx) => {
-    const limit = Number(req.url.searchParams.get('limit') || 20);
+    const limit = Number(req.url.searchParams.get('limit') || LIMIT);
     const offset = Number(req.url.searchParams.get('offset') || 0);
     const response = {
       data: mockBlocks.data.slice(offset, offset + limit),

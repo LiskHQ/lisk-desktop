@@ -1,3 +1,4 @@
+/* istanbul ignore file */
 import { useInfiniteQuery } from '@tanstack/react-query';
 import { BLOCKS, APPLICATION } from 'src/const/queries';
 import {
