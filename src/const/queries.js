@@ -2,3 +2,4 @@ export const APPLICATION = 'BLOCKCHAIN_APPLICATION';
 export const BLOCKS = 'GET_BLOCKS';
 export const BLOCKS_ASSETS = 'GET_BLOCKS_ASSETS';
 export const NETWORK_STATUS = 'GET_NETWORK_STATUS';
+export const LEGACY = 'GET_LEGACY';
