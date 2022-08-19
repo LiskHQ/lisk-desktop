@@ -1,4 +1,4 @@
-import tokensBalance from '@tests/constants/tokens';
+import { tokensBalance, tokensTopLskBalance } from '@tests/constants/tokens';
 
 /* eslint-disable import/prefer-default-export */
 export const mockTokensBalance = {
@@ -8,5 +8,15 @@ export const mockTokensBalance = {
     count: 5,
     offset: 0,
     total: 120,
+  },
+};
+
+export const mockTokensTopLskBalance = {
+  data: tokensTopLskBalance,
+  meta: {
+    address: 'lsk6757819470afeb131',
+    count: 10,
+    offset: 0,
+    total: 100,
   },
 };
