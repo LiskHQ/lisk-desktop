@@ -6,9 +6,8 @@ import { useNetworkStatus } from './useNetworkStatus';
 jest.useRealTimers();
 
 describe('useNetworkStatus hook', () => {
-  const { result, waitFor } = renderHook(() => useNetworkStatus(), { wrapper });
-
   it('fetching data correctly', async () => {
+    const { result, waitFor } = renderHook(() => useNetworkStatus(), { wrapper });
     expect(result.current.isLoading).toBeTruthy();
     await waitFor(() => result.current.isFetched);
     expect(result.current.isSuccess).toBeTruthy();
