@@ -13,7 +13,7 @@ describe('useLegacy hook', () => {
     hookResult = renderHook(() => useLegacy({ config }), { wrapper });
   });
 
-  it.skip('fetching data correctly', async () => {
+  it.skip('fetches data correctly', async () => {
     const { result, waitFor } = hookResult;
 
     expect(result.current.isLoading).toBeTruthy();
