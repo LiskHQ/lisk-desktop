@@ -61,6 +61,24 @@ export const tokensBalance = [
   },
 ];
 
+export const tokensSupported = [
+  {
+    tokenID: '2ba563cf98003d',
+  },
+  {
+    tokenID: '6fd163bd15997d',
+  },
+  {
+    tokenID: '7cc242cd46228a',
+  },
+  {
+    tokenID: '4ed385ae59332e',
+  },
+  {
+    tokenID: '0bf709ba38550d',
+  },
+];
+
 export const tokensTopLskBalance = [
   {
     address: 'lskckzngagcs4d5gvsgxmgnabyfyj8pz266gv8s8t',
@@ -123,5 +141,3 @@ export const tokensTopLskBalance = [
     description: '',
   },
 ];
-
-// export default tokensBalance;

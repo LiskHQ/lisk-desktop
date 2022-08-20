@@ -7,9 +7,9 @@ import {
 
 // eslint-disable-next-line import/prefer-default-export
 export const useCustomInfiniteQuery = ({
+  keys = [],
   config = {},
   options = {},
-  keys = [],
 }) => useInfiniteQuery(
   keys,
   async ({ pageParam }) => API_METHOD[METHOD]({
