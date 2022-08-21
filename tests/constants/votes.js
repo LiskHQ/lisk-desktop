@@ -30,8 +30,18 @@ const generateVotes = (index) => ({
   height: 16418742 + index,
 });
 
-const generateVotesWrapper = (extraParams, votes) => ({
+const generateVotesWrapper = (votes, extraParams = {}) => ({
   votes,
+  account: {
+    address: 'lsk24cd35u4jdq8szo3pnsqe5dsxwrnazyqqqg5eu',
+    publicKey: 'aq02qkbb35u4jdq8szo3pnsqe5dsxwrnazyqqqg5eu',
+    name: 'genesis_56',
+    ...extraParams,
+  },
+});
+
+const generateUnlocksWrapper = (unlocking, extraParams = {}) => ({
+  unlocking,
   account: {
     address: 'lsk24cd35u4jdq8szo3pnsqe5dsxwrnazyqqqg5eu',
     publicKey: 'aq02qkbb35u4jdq8szo3pnsqe5dsxwrnazyqqqg5eu',
@@ -46,14 +56,27 @@ const generateVote = (index) => ({
   name: 'liskhq',
 });
 
+const generateUnlock = (index) => ({
+  delegateAddress: `lsk24cd35u4jdq8szo3pnsqe5dsxwrnazyqqqg${index}eu`,
+  amount: `100${index}`,
+  unvoteHeight: {
+    start: 30 + index,
+    end: 300 + index,
+  },
+}
+);
+
 export const votesList = Array(10).fill(1).map((_, idx) => generateVotes(idx));
 
 export const sentVotesList = generateVotesWrapper(
-  { votesUsed: 10 },
   Array(30).fill(1).map((_, idx) => generateVote(idx)),
+  { votesUsed: 10 },
 );
 
 export const receivedVotesList = generateVotesWrapper(
-  {},
   Array(30).fill(1).map((_, idx) => generateVote(idx)),
+);
+
+export const unlockList = generateUnlocksWrapper(
+  Array(30).fill(1).map((_, idx) => generateUnlock(idx)),
 );

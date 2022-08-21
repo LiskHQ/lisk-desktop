@@ -1,6 +1,8 @@
 import { rest } from 'msw';
 import { API_VERSION, LIMIT } from 'src/const/config';
-import { mockDelegates, mockSentVotes, mockReceivedtVotes } from '@dpos/validator/__fixtures__';
+import {
+  mockDelegates, mockSentVotes, mockReceivedtVotes, mockUnlocks,
+} from '@dpos/validator/__fixtures__';
 import composeMockList from 'src/modules/common/utils/composeMockList';
 
 export const delegates = rest.get(
@@ -43,6 +45,26 @@ export const receivedVotes = rest.get(
       },
       meta: {
         ...mockReceivedtVotes.meta,
+        count: limit,
+        offset,
+      },
+    };
+    return res(ctx.delay(20), ctx.json(response));
+  },
+);
+
+export const unlocks = rest.get(
+  `*/api/${API_VERSION}/dpos/unlocks`,
+  async (req, res, ctx) => {
+    const limit = Number(req.url.searchParams.get('limit') || LIMIT);
+    const offset = Number(req.url.searchParams.get('offset') || 0);
+    const response = {
+      data: {
+        ...mockUnlocks.data,
+        unlocking: mockUnlocks.data.unlocking.slice(offset, offset + limit),
+      },
+      meta: {
+        ...mockUnlocks.meta,
         count: limit,
         offset,
       },
