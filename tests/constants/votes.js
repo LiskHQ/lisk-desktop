@@ -40,14 +40,20 @@ const generateVotesWrapper = (extraParams, votes) => ({
   },
 });
 
-const generateSentVotes = (index) => ({
+const generateVote = (index) => ({
   delegateAddress: `lsk24cd35u4jdq8sz${index}ptrn47dsxwrnazyhhkg5eu`,
   amount: `1000${index}`,
   name: 'liskhq',
 });
 
 export const votesList = Array(10).fill(1).map((_, idx) => generateVotes(idx));
+
 export const sentVotesList = generateVotesWrapper(
   { votesUsed: 10 },
-  Array(30).fill(1).map((_, idx) => generateSentVotes(idx)),
+  Array(30).fill(1).map((_, idx) => generateVote(idx)),
+);
+
+export const receivedVotesList = generateVotesWrapper(
+  {},
+  Array(30).fill(1).map((_, idx) => generateVote(idx)),
 );

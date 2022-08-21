@@ -5,7 +5,7 @@ import { useSentVotes } from '.';
 
 jest.useRealTimers();
 
-describe('useSentVotes hook', () => {
+describe('useReceivedVotes hook', () => {
   const limit = 15;
   const config = { params: { limit } };
 

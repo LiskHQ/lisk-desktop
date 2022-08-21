@@ -9,3 +9,4 @@ export const TOKENS_TOP_LSK_BALANCE = 'GET_TOKENS_TOP_LSK_BALANCE';
 export const PEERS = 'GET_PEERS';
 export const DELEGATES = 'GET_DELEGATES';
 export const VOTES_SENT = 'GET_VOTES_SENT';
+export const VOTES_RECEIVED = 'GET_VOTES_RECEIVED';

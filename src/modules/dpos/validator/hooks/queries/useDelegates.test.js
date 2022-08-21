@@ -2,7 +2,7 @@ import { renderHook, act } from '@testing-library/react-hooks';
 import { mockDelegates } from '@dpos/validator/__fixtures__';
 import { queryWrapper as wrapper } from 'src/utils/test/queryWrapper';
 import { LIMIT as defaultLimit } from 'src/const/config';
-import { useDelegates } from './useDelegates';
+import { useDelegates } from '.';
 
 jest.useRealTimers();
 
