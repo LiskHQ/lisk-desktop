@@ -30,4 +30,24 @@ const generateVotes = (index) => ({
   height: 16418742 + index,
 });
 
+const generateVotesWrapper = (extraParams, votes) => ({
+  votes,
+  account: {
+    address: 'lsk24cd35u4jdq8szo3pnsqe5dsxwrnazyqqqg5eu',
+    publicKey: 'aq02qkbb35u4jdq8szo3pnsqe5dsxwrnazyqqqg5eu',
+    name: 'genesis_56',
+    ...extraParams,
+  },
+});
+
+const generateSentVotes = (index) => ({
+  delegateAddress: `lsk24cd35u4jdq8sz${index}ptrn47dsxwrnazyhhkg5eu`,
+  amount: `1000${index}`,
+  name: 'liskhq',
+});
+
 export const votesList = Array(10).fill(1).map((_, idx) => generateVotes(idx));
+export const sentVotesList = generateVotesWrapper(
+  { votesUsed: 10 },
+  Array(30).fill(1).map((_, idx) => generateSentVotes(idx)),
+);
