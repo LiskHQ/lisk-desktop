@@ -37,9 +37,9 @@ describe('useBlocks hook', () => {
     const expectedResponse = {
       data: mockBlocks.data.slice(0, limit * 2),
       meta: {
+        ...mockBlocks.meta,
         count: limit,
         offset: limit,
-        total: 30,
       },
     };
     expect(result.current.data).toEqual(expectedResponse);
