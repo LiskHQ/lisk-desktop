@@ -1,7 +1,11 @@
 import { rest } from 'msw';
 import { API_VERSION, LIMIT } from 'src/const/config';
 import {
-  mockDelegates, mockSentVotes, mockReceivedtVotes, mockUnlocks,
+  mockDelegates,
+  mockSentVotes,
+  mockReceivedtVotes,
+  mockUnlocks,
+  mockValidators,
 } from '@dpos/validator/__fixtures__';
 import composeMockList from 'src/modules/common/utils/composeMockList';
 
@@ -71,4 +75,9 @@ export const unlocks = rest.get(
     };
     return res(ctx.delay(20), ctx.json(response));
   },
+);
+
+export const validator = rest.get(
+  `*/api/${API_VERSION}/validator`,
+  async (req, res, ctx) => res(ctx.delay(20), ctx.json(mockValidators)),
 );
