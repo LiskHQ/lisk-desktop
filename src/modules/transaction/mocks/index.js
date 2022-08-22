@@ -1,6 +1,8 @@
 import { rest } from 'msw';
 import { API_VERSION, LIMIT } from 'src/const/config';
-import { mockEvents, mockTransactions, mockTransactionStatistics } from '@transaction/__fixtures__';
+import {
+  mockEvents, mockFees, mockTransactions, mockTransactionStatistics,
+} from '@transaction/__fixtures__';
 
 export const networkStatus = rest.post(
   `*/api/${API_VERSION}/transactions`, (req, res, ctx) => res(ctx.delay(20), ctx.status(200)),
@@ -59,4 +61,8 @@ export const validator = rest.get(
     };
     return res(ctx.delay(20), ctx.json(response));
   },
+);
+
+export const fees = rest.get(
+  `*/api/${API_VERSION}/fees`, (_, res, ctx) => res(ctx.json(mockFees)),
 );

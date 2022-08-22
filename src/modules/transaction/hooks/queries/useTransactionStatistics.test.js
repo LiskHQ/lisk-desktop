@@ -5,7 +5,7 @@ import { useTransactionStatistics } from '.';
 
 jest.useRealTimers();
 
-describe('useSentVotes hook', () => {
+describe('useTransactionStatistics hook', () => {
   const limit = 15;
   const config = { params: { limit } };
 
