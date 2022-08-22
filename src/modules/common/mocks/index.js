@@ -1,8 +1,7 @@
 import { rest } from 'msw';
 import { API_VERSION, LIMIT } from 'src/const/config';
-import { mockNewsFeed } from '../__fixtures__';
+import { mockNewsFeed, mockPrices } from '../__fixtures__';
 
-// eslint-disable-next-line import/prefer-default-export
 export const webSocket = rest.get(
   '*/socket.io/',
   (_, res, ctx) => res(
@@ -13,7 +12,7 @@ export const webSocket = rest.get(
   ),
 );
 
-export const blocks = rest.get(
+export const newsFeed = rest.get(
   `*/api/${API_VERSION}/newsfeed`,
   async (req, res, ctx) => {
     const limit = Number(req.url.searchParams.get('limit') || LIMIT);
@@ -27,5 +26,13 @@ export const blocks = rest.get(
       },
     };
     return res(ctx.delay(20), ctx.json(response));
+  },
+);
+
+export const managePrices = rest.get(
+  `*/api/${API_VERSION}/market/prices`,
+  async (_, res, ctx) => {
+    const response = mockPrices;
+    return res(ctx.json(response));
   },
 );

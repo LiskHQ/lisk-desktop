@@ -1,6 +1,5 @@
 import { tokensBalance, tokensSupported, tokensTopLskBalance } from '@tests/constants/tokens';
 
-/* eslint-disable import/prefer-default-export */
 export const mockTokensBalance = {
   data: tokensBalance,
   meta: {
