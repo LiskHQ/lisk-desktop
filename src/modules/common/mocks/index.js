@@ -1,9 +1,15 @@
 import { rest } from 'msw';
 import { API_VERSION, LIMIT } from 'src/const/config';
-import { mockCustomInfiniteQuery, mockNewsFeed, mockPrices } from '../__fixtures__';
+import {
+  mockCustomInfiniteQuery,
+  mockNewsFeed,
+  mockPrices,
+  mockCcm,
+  mockCommandParametersSchemas,
+} from '../__fixtures__';
 
 export const webSocket = rest.get(
-  '*/socket.io/',
+  '*/socket.io',
   (_, res, ctx) => res(
     ctx.status(200),
     ctx.set('Connection', 'keep-alive'),
@@ -29,7 +35,7 @@ export const newsFeed = rest.get(
   },
 );
 
-export const managePrices = rest.get(
+export const marketPrices = rest.get(
   `*/api/${API_VERSION}/market/prices`,
   async (_, res, ctx) => {
     const response = mockPrices;
@@ -51,5 +57,30 @@ export const customInfiniteQuery = rest.get(
       },
     };
     return res(ctx.delay(20), ctx.json(response));
+  },
+);
+
+export const ccm = rest.get(
+  `*/api/${API_VERSION}/ccm`,
+  async (req, res, ctx) => {
+    const limit = Number(req.url.searchParams.get('limit') || LIMIT);
+    const offset = Number(req.url.searchParams.get('offset') || 0);
+    const response = {
+      data: mockCcm.data.slice(offset, offset + limit),
+      meta: {
+        ...mockCcm.meta,
+        count: limit,
+        offset,
+      },
+    };
+    return res(ctx.delay(20), ctx.json(response));
+  },
+);
+
+export const commandParametersSchemas = rest.get(
+  `*/api/${API_VERSION}/commands/parameters/schemas`,
+  async (_, res, ctx) => {
+    const response = mockCommandParametersSchemas;
+    return res(ctx.json(response));
   },
 );

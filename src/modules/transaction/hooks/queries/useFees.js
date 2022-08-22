@@ -1,5 +1,5 @@
 import { useQuery } from '@tanstack/react-query';
-import { NETWORK_STATISTICS, APPLICATION } from 'src/const/queries';
+import { FEES, APPLICATION } from 'src/const/queries';
 import {
   METHOD,
   API_VERSION,
@@ -7,15 +7,15 @@ import {
 } from 'src/const/config';
 
 // eslint-disable-next-line import/prefer-default-export
-export const useNetworkStatistics = ({ config: customConfig = {}, options } = { }) => {
+export const useFees = ({ config: customConfig = {}, options } = { }) => {
   const config = {
-    url: `/api/${API_VERSION}/network/statistics`,
+    url: `/api/${API_VERSION}/fees`,
     method: 'get',
-    event: 'get.network.statistics​',
+    event: 'get.fees',
     ...customConfig,
   };
   return useQuery(
-    [NETWORK_STATISTICS, APPLICATION, METHOD, config],
+    [FEES, APPLICATION, METHOD, config],
     async () => API_METHOD[METHOD](config),
     {
       ...options,
