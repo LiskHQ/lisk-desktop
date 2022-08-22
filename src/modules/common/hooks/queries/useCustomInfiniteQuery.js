@@ -30,7 +30,7 @@ export const useCustomInfiniteQuery = ({
     }),
     getNextPageParam: (lastPage) => {
       const offset = lastPage.meta.count + lastPage.meta.offset;
-      const hasMore = offset < lastPage.meta.total;
+      const hasMore = offset < (lastPage?.meta?.total ?? Infinity);
       return !hasMore ? undefined : { offset };
     },
   },
