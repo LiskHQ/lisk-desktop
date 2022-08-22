@@ -6,6 +6,7 @@ import * as network from '@network/mocks';
 import * as tokens from '@token/fungible/mocks';
 import * as transaction from '@transaction/mocks';
 import * as dposValidators from '@dpos/validator/mocks';
+import * as blockchainApplicationExplore from '@blockchainApplication/explore/mocks';
 
 export default [
   ...Object.values(auth),
@@ -16,4 +17,5 @@ export default [
   ...Object.values(network),
   ...Object.values(tokens),
   ...Object.values(transaction),
+  ...Object.values(blockchainApplicationExplore),
 ];
