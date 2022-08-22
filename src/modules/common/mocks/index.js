@@ -37,13 +37,12 @@ export const managePrices = rest.get(
   },
 );
 
-
 export const customInfiniteQuery = rest.get(
-  `*/mock/custom-infinite-query`,
+  '*/mock/custom-infinite-query',
   async (req, res, ctx) => {
     const limit = Number(req.url.searchParams.get('limit') || LIMIT);
     const offset = Number(req.url.searchParams.get('offset') || 0);
-    console.log('asdasd')
+    console.log('asdasd');
     const response = {
       data: mockCustomInfiniteQuery.data.slice(offset, offset + limit),
       meta: {

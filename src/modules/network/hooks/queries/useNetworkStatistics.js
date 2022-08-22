@@ -1,5 +1,5 @@
 import { useQuery } from '@tanstack/react-query';
-import { NETWORK_STATUS, APPLICATION } from 'src/const/queries';
+import { NETWORK_STATISTICS, APPLICATION } from 'src/const/queries';
 import {
   METHOD,
   API_VERSION,
@@ -15,7 +15,7 @@ export const useNetworkStatistics = ({ config: customConfig = {}, options } = { 
     ...customConfig,
   };
   return useQuery(
-    [NETWORK_STATUS, APPLICATION, METHOD, config],
+    [NETWORK_STATISTICS, APPLICATION, METHOD, config],
     async () => API_METHOD[METHOD](config),
     {
       ...options,
