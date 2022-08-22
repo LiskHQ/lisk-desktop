@@ -1,6 +1,6 @@
 import { rest } from 'msw';
 import { API_VERSION, LIMIT } from 'src/const/config';
-import { mockNewsFeed, mockPrices } from '../__fixtures__';
+import { mockCustomInfiniteQuery, mockNewsFeed, mockPrices } from '../__fixtures__';
 
 export const webSocket = rest.get(
   '*/socket.io/',
@@ -34,5 +34,24 @@ export const managePrices = rest.get(
   async (_, res, ctx) => {
     const response = mockPrices;
     return res(ctx.json(response));
+  },
+);
+
+
+export const customInfiniteQuery = rest.get(
+  `*/mock/custom-infinite-query`,
+  async (req, res, ctx) => {
+    const limit = Number(req.url.searchParams.get('limit') || LIMIT);
+    const offset = Number(req.url.searchParams.get('offset') || 0);
+    console.log('asdasd')
+    const response = {
+      data: mockCustomInfiniteQuery.data.slice(offset, offset + limit),
+      meta: {
+        ...mockCustomInfiniteQuery.meta,
+        count: limit,
+        offset,
+      },
+    };
+    return res(ctx.delay(20), ctx.json(response));
   },
 );

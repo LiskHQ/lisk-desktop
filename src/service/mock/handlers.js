@@ -8,12 +8,12 @@ import * as transaction from '@transaction/mocks';
 import * as dposValidators from '@dpos/validator/mocks';
 
 export default [
-  ...Object.values(common),
   ...Object.values(auth),
   ...Object.values(blocks),
+  ...Object.values(common),
+  ...Object.values(dposValidators),
   ...Object.values(legacy),
   ...Object.values(network),
   ...Object.values(tokens),
   ...Object.values(transaction),
-  ...Object.values(dposValidators),
 ];
