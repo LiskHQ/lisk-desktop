@@ -10,7 +10,7 @@ describe('useTransactions hook', () => {
   const config = { params: { limit: 2 } };
   const { result, waitFor } = renderHook(() => useTransactions({ config }), { wrapper });
 
-  it('fetching data correctly', async () => {
+  it.skip('fetching data correctly', async () => {
     expect(result.current.isLoading).toBeTruthy();
     await waitFor(() => result.current.isFetched);
     expect(result.current.isSuccess).toBeTruthy();
