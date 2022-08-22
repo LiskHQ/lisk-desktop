@@ -13,5 +13,6 @@ export const VALIDATOR = 'GET_FORGER_VALIDATOR';
 export const VOTES_SENT = 'GET_VOTES_SENT';
 export const VOTES_RECEIVED = 'GET_VOTES_RECEIVED';
 export const UNLOCKS = 'GET_UNLOCKS';
+export const MARKET_PRICES = 'GET_MARKET_PRICES';
 export const AUTH = 'GET_USER_INFO';
 export const GENERATOR = 'GET_FORGER_GENERATOR';
