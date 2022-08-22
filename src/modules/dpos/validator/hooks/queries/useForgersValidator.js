@@ -7,7 +7,7 @@ import {
 } from 'src/const/config';
 
 // eslint-disable-next-line import/prefer-default-export
-export const useValidator = ({ config: customConfig = {}, options } = { }) => {
+export const useForgersValidator = ({ config: customConfig = {}, options } = { }) => {
   const config = {
     url: `/api/${API_VERSION}/validator`,
     method: 'get',
