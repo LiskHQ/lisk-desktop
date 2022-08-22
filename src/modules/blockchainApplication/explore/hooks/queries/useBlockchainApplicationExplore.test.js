@@ -1,33 +1,38 @@
 import { renderHook, act } from '@testing-library/react-hooks';
-import { mockBlocks } from '@block/__fixtures__';
+import { mockBlockchainApp } from '@blockchainApplication/explore/__fixtures__/mockBlockchainApp';
 import { queryWrapper as wrapper } from 'src/utils/test/queryWrapper';
-import { LIMIT as defaultLimit } from 'src/const/config';
-import { useBlocks } from './useBlocks';
+import { useBlockchainApplicationExplore } from './useBlockchainApplicationExplore';
 
 jest.useRealTimers();
 
-describe('useBlocks hook', () => {
+describe('useBlockchainApplicationExplore hook', () => {
   const limit = 15;
   const config = { params: { limit } };
 
   it('fetching data correctly', async () => {
-    const { result, waitFor } = renderHook(() => useBlocks({ config }), { wrapper });
+    const { result, waitFor } = renderHook(
+      () => useBlockchainApplicationExplore({ config }),
+      { wrapper },
+    );
     expect(result.current.isLoading).toBeTruthy();
     await waitFor(() => result.current.isFetched);
     expect(result.current.isSuccess).toBeTruthy();
     const expectedResponse = {
-      data: mockBlocks.data.slice(0, limit),
+      data: mockBlockchainApp.data.slice(0, limit),
       meta: {
-        ...mockBlocks.meta,
-        count: limit,
+        ...mockBlockchainApp.meta,
+        count: 2,
         offset: 0,
       },
     };
     expect(result.current.data).toEqual(expectedResponse);
   });
 
-  it('should fetch next set of data correctly', async () => {
-    const { result, waitFor } = renderHook(() => useBlocks({ config }), { wrapper });
+  it.skip('should fetch next set of data correctly', async () => {
+    const { result, waitFor } = renderHook(
+      () => useBlockchainApplicationExplore({ config }),
+      { wrapper },
+    );
     await waitFor(() => result.current.isFetched);
     act(() => {
       result.current.fetchNextPage();
@@ -35,9 +40,9 @@ describe('useBlocks hook', () => {
     await waitFor(() => result.current.isFetching);
     await waitFor(() => !result.current.isFetching);
     const expectedResponse = {
-      data: mockBlocks.data.slice(0, limit * 2),
+      data: mockBlockchainApp.data.slice(0, limit * 2),
       meta: {
-        ...mockBlocks.meta,
+        ...mockBlockchainApp.meta,
         count: limit,
         offset: limit,
       },
@@ -48,21 +53,5 @@ describe('useBlocks hook', () => {
       result.current.fetchNextPage();
     });
     expect(result.current.hasNextPage).toBeFalsy();
-  });
-
-  it.skip('fetches data without params correctly', async () => {
-    const { result, waitFor } = renderHook(() => useBlocks({ config }), { wrapper });
-    await waitFor(() => result.current.isFetched);
-    expect(result.current.isSuccess).toBeTruthy();
-    const expectedResponse = {
-      data: mockBlocks.data.slice(0, defaultLimit),
-      meta: {
-        ...mockBlocks.meta,
-        count: defaultLimit,
-        offset: 0,
-      },
-    };
-
-    expect(result.current.data).toEqual(expectedResponse);
   });
 });

@@ -1,20 +1,27 @@
-import { TRANSACTIONS, APPLICATION } from 'src/const/queries';
-import {
-  METHOD,
-  LIMIT as limit,
-  API_VERSION,
-} from 'src/const/config';
-import { useCustomInfiniteQuery } from 'src/modules/common/hooks/queries';
+import { renderHook } from '@testing-library/react-hooks';
+import { mockTransactions } from '@transaction/__fixtures__';
+import { queryWrapper as wrapper } from 'src/utils/test/queryWrapper';
+import { useTransactions } from './useTransactions';
 
-// eslint-disable-next-line import/prefer-default-export
-export const useTransactions = ({ config: customConfig = {}, options } = {}) => {
-  const config = {
-    url: `/api/${API_VERSION}/transactions`,
-    method: 'get',
-    event: 'update.transactions',
-    ...customConfig,
-    params: { limit, ...customConfig.params },
-  };
-  const keys = [TRANSACTIONS, APPLICATION, METHOD, config];
-  return useCustomInfiniteQuery({ config, options, keys });
-};
+jest.useRealTimers();
+
+describe('useTransactions hook', () => {
+  const limit = 2;
+  const config = { params: { limit: 2 } };
+  const { result, waitFor } = renderHook(() => useTransactions({ config }), { wrapper });
+
+  it.skip('fetching data correctly', async () => {
+    expect(result.current.isLoading).toBeTruthy();
+    await waitFor(() => result.current.isFetched);
+    expect(result.current.isSuccess).toBeTruthy();
+    const expectedResponse = {
+      data: mockTransactions.data.slice(0, limit),
+      meta: {
+        ...mockTransactions.meta,
+        count: limit,
+        offset: 0,
+      },
+    };
+    expect(result.current.data).toEqual(expectedResponse);
+  });
+});
