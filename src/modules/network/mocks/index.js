@@ -1,10 +1,12 @@
 import { rest } from 'msw';
 import { API_VERSION, LIMIT } from 'src/const/config';
-import { mockPeers, mockNetworkStatus } from '@network/__fixtures__';
+import { mockPeers, mockNetworkStatus, mockNetworkStatistics } from '@network/__fixtures__';
 
-// eslint-disable-next-line import/prefer-default-export
 export const networkStatus = rest.get(
-  `*/api/${API_VERSION}/network/status`, (req, res, ctx) => res(ctx.json(mockNetworkStatus)),
+  `*/api/${API_VERSION}/network/status`, (_, res, ctx) => res(ctx.json(mockNetworkStatus)),
+);
+export const networkStatistics = rest.get(
+  `*/api/${API_VERSION}/network/statistics`, (_, res, ctx) => res(ctx.json(mockNetworkStatistics)),
 );
 
 export const peers = rest.get(

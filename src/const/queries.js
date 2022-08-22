@@ -16,4 +16,5 @@ export const UNLOCKS = 'GET_UNLOCKS';
 export const MARKET_PRICES = 'GET_MARKET_PRICES';
 export const AUTH = 'GET_USER_INFO';
 export const GENERATOR = 'GET_FORGER_GENERATOR';
+export const TRANSACTIONS = 'GET_TRANSACTIONS';
 export const EVENTS = 'GET_TRANSACTION_EVENTS';
