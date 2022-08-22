@@ -5,10 +5,11 @@ import {
   mockNewsFeed,
   mockPrices,
   mockCcm,
+  mockCommandParametersSchemas,
 } from '../__fixtures__';
 
 export const webSocket = rest.get(
-  '*/socket.io/',
+  '*/socket.io',
   (_, res, ctx) => res(
     ctx.status(200),
     ctx.set('Connection', 'keep-alive'),
@@ -73,5 +74,13 @@ export const ccm = rest.get(
       },
     };
     return res(ctx.delay(20), ctx.json(response));
+  },
+);
+
+export const commandParametersSchemas = rest.get(
+  `*/api/${API_VERSION}/commands/parameters/schemas`,
+  async (_, res, ctx) => {
+    const response = mockCommandParametersSchemas;
+    return res(ctx.json(response));
   },
 );
