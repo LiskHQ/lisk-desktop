@@ -6,6 +6,7 @@ import {
   mockReceivedtVotes,
   mockUnlocks,
   mockValidators,
+  mockGenerator,
 } from '@dpos/validator/__fixtures__';
 import composeMockList from 'src/modules/common/utils/composeMockList';
 
@@ -80,4 +81,21 @@ export const unlocks = rest.get(
 export const validator = rest.get(
   `*/api/${API_VERSION}/validator`,
   async (req, res, ctx) => res(ctx.delay(20), ctx.json(mockValidators)),
+);
+
+export const generators = rest.get(
+  `*/api/${API_VERSION}/generators`,
+  async (req, res, ctx) => {
+    const limit = Number(req.url.searchParams.get('limit') || LIMIT);
+    const offset = Number(req.url.searchParams.get('offset') || 0);
+    const response = {
+      data: mockGenerator.data.slice(offset, offset + limit),
+      meta: {
+        ...mockGenerator.meta,
+        count: limit,
+        offset,
+      },
+    };
+    return res(ctx.delay(20), ctx.json(response));
+  },
 );
