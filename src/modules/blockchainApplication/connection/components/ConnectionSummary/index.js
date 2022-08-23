@@ -3,7 +3,7 @@ import { useTranslation } from 'react-i18next';
 import { withRouter } from 'react-router';
 import ValueAndLabel from 'src/modules/transaction/components/TransactionDetails/valueAndLabel';
 import { PrimaryButton, SecondaryButton } from 'src/theme/buttons';
-import { EVENTS } from '@libs/wcm/data/chainConfig';
+import { EVENTS } from '@libs/wcm/constants/lifeCycle';
 import { addSearchParamsToUrl } from 'src/utils/searchParams';
 import ConnectionContext from '@libs/wcm/context/connectionContext';
 import { onApprove, onReject } from '@libs/wcm/utils/sessionHandlers';

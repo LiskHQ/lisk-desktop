@@ -1,7 +1,7 @@
 import { getSdkError } from '@walletconnect/utils';
 import { to } from 'await-to-js';
 import { client } from '@libs/wcm/utils/connectionCreator';
-import { PAIRING_PROPOSAL_STATUS, ERROR_CASES } from '../data/chainConfig';
+import { PAIRING_PROPOSAL_STATUS, ERROR_CASES } from '../constants/lifeCycle';
 
 /**
  * The approve handler for connection proposal

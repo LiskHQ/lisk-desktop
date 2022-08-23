@@ -2,7 +2,7 @@ import { useEffect, useContext } from 'react';
 import { getSdkError } from '@walletconnect/utils';
 import { client } from '@libs/wcm/utils/connectionCreator';
 import ConnectionContext from '../context/connectionContext';
-import { ERROR_CASES } from '../data/chainConfig';
+import { ERROR_CASES } from '../constants/lifeCycle';
 
 const usePairings = (initialized) => {
   const {

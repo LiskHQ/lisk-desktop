@@ -1,7 +1,7 @@
 import { useCallback, useEffect, useContext } from 'react';
 import { client } from '@libs/wcm/utils/connectionCreator';
 import ConnectionContext from '../context/connectionContext';
-import { EVENTS } from '../data/chainConfig';
+import { EVENTS } from '../constants/lifeCycle';
 
 const useWalletConnectEventsManager = () => {
   const {

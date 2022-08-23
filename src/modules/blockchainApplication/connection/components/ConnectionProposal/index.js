@@ -9,7 +9,7 @@ import { client } from '@libs/wcm/utils/connectionCreator';
 import { Input } from 'src/theme';
 import usePairings from '@libs/wcm/hooks/usePairings';
 import ConnectionContext from '@libs/wcm/context/connectionContext';
-import { EVENTS } from '@libs/wcm/data/chainConfig';
+import { EVENTS } from '@libs/wcm/constants/lifeCycle';
 import styles from './ConnectionProposal.css';
 
 const ConnectionProposal = ({ history }) => {

@@ -3,7 +3,7 @@ import { withRouter } from 'react-router';
 import ConnectionManager from '@libs/wcm/components/ConnectionManager';
 import { addSearchParamsToUrl } from 'src/utils/searchParams';
 import ConnectionContext from '@libs/wcm/context/connectionContext';
-import { EVENTS } from '@libs/wcm/data/chainConfig';
+import { EVENTS } from '@libs/wcm/constants/lifeCycle';
 
 const ConnectionsHandler = ({ history }) => {
   const { events } = useContext(ConnectionContext);

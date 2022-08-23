@@ -1,7 +1,8 @@
 import { formatJsonRpcError, formatJsonRpcResult } from '@json-rpc-tools/utils';
 import { getSdkError } from '@walletconnect/utils';
 import { useAccounts } from '@account/hooks/useAccounts';
-import { LISK_SIGNING_METHODS, ERROR_CASES } from '../data/chainConfig';
+import { ERROR_CASES } from '../constants/lifeCycle';
+import { LISK_SIGNING_METHODS } from '../constants/permissions';
 import { getWalletAddressFromParams } from './helpers';
 import { signMessage, signTransaction } from './methods';
 

@@ -1,7 +1,7 @@
 import React, { useEffect, useContext } from 'react';
 import { useTranslation } from 'react-i18next';
 import ConnectionContext from '@libs/wcm/context/connectionContext';
-import { EVENTS } from '@libs/wcm/data/chainConfig';
+import { EVENTS } from '@libs/wcm/constants/lifeCycle';
 import { withRouter } from 'react-router';
 import Box from 'src/theme/box';
 import Dialog from '@theme/dialog/dialog';
