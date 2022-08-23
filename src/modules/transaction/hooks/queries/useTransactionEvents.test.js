@@ -1,5 +1,6 @@
 import { renderHook, act } from '@testing-library/react-hooks';
 import { mockEvents } from '@transaction/__fixtures__';
+import { LIMIT as defaultLimit } from 'src/const/config';
 import { queryWrapper as wrapper } from 'src/utils/test/queryWrapper';
 import { useTransactionEvents } from './useTransactionEvents';
 
@@ -23,6 +24,20 @@ describe('useTransactionEvent hook', () => {
       },
     };
     expect(result.current.data).toEqual(expectedResponse);
+  });
+
+  it('fetching data correctly without any options/config', async () => {
+    const { result, waitFor } = renderHook(() => useTransactionEvents(), { wrapper });
+    expect(result.current.isLoading).toBeTruthy();
+    await waitFor(() => result.current.isFetched);
+    expect(result.current.isSuccess).toBeTruthy();
+    expect(result.current.data).toEqual({
+      data: mockEvents.data.slice(0, defaultLimit),
+      meta: {
+        ...mockEvents.meta,
+        count: defaultLimit,
+      },
+    });
   });
 
   it('should fetch next set of data correctly', async () => {
