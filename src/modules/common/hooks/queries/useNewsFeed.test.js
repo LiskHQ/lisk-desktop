@@ -44,5 +44,4 @@ describe('useNewsFeed hook', () => {
     expect(result.current.data).toEqual(expectedResponse);
     expect(result.current.hasNextPage).toBeTruthy();
   });
-
 });

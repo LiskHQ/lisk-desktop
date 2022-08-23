@@ -1,7 +1,7 @@
 import { renderHook, act } from '@testing-library/react-hooks';
+import { mockEvents } from '@transaction/__fixtures__';
 import { queryWrapper as wrapper } from 'src/utils/test/queryWrapper';
 import { useTransactionEvents } from './useTransactionEvents';
-import { mockEvents } from '@transaction/__fixtures__';
 
 jest.useRealTimers();
 
