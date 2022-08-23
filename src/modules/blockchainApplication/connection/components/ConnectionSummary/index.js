@@ -39,7 +39,7 @@ const ConnectSummary = ({ history }) => {
     data: {
       name: proposer.metadata.name,
       serviceUrl: proposer.metadata.url.replace(/\/$/, ''),
-      icons: proposer.metadata.icons,
+      icon: proposer.metadata.icons[0],
       address: `Chain ID: ${requiredNamespaces.lisk.chains[0].replace('lisk:', '')}`,
     },
   };

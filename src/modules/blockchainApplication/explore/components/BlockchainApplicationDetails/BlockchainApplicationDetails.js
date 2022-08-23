@@ -13,6 +13,8 @@ import { parseSearchParams } from 'src/utils/searchParams';
 import { usePinBlockchainApplication } from '@blockchainApplication/manage/hooks/usePinBlockchainApplication';
 import styles from './BlockchainApplicationDetails.css';
 import BlockchainAppDetailsWrapper from '../BlockchainAppDetailsWrapper';
+import liskLogo from '../../../../../../setup/react/assets/images/LISK.png';
+import defaultBackgroundImage from '../../../../../../setup/react/assets/images/default-chain-background.png';
 
 const deposit = 5e10;
 
@@ -56,9 +58,18 @@ const BlockchainApplicationDetails = ({ location, application }) => {
     },
   ];
 
+  const app = {
+    data: {
+      ...application,
+      serviceUrl: 'https://lisk.com/',
+      icon: liskLogo,
+      bg: defaultBackgroundImage,
+    },
+  };
+
   return (
     <BlockchainAppDetailsWrapper
-      application={application}
+      application={app}
       chainAction={(
         <TertiaryButton className="chain-details-pin-button" onClick={toggleApplicationPin}>
           <Icon data-testid="pin-button" name={isPinned ? 'pinnedIcon' : 'unpinnedIcon'} />

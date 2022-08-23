@@ -8,23 +8,21 @@ import grid from 'flexboxgrid/dist/flexboxgrid.css';
 import Dialog from '@theme/dialog/dialog';
 import Icon from 'src/theme/Icon';
 import styles from './BlockchainAppDetailsWrapper.css';
-import defaultBackgroundImage from '../../../../../../setup/react/assets/images/default-chain-background.png';
-import liskLogo from '../../../../../../setup/react/assets/images/LISK.png';
-
-const serviceUrl = 'https://lisk.com/';
-const backgroundImage = null;
-const chainLogo = null;
 
 const BlockchainAppDetailsWrapper = ({ application, children, chainAction }) => {
   const { t } = useTranslation();
-  const { name, address } = application.data;
+  const {
+    name, address, serviceUrl, icon, bg,
+  } = application.data;
 
   return (
     <Dialog hasClose className={`${styles.dialogWrapper} ${grid.row} ${grid['center-xs']}`}>
       <div className={styles.wrapper}>
         <div className={styles.avatarContainer}>
-          <img src={chainLogo || liskLogo} />
-          <img src={backgroundImage || defaultBackgroundImage} />
+          <img src={icon} className={styles.logo} />
+          {
+            bg ? <img src={bg} className={styles.bg} /> : null
+          }
         </div>
         <Box className={styles.detailsWrapper}>
           <div className={styles.chainNameWrapper}>
