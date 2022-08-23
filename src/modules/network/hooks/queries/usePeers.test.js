@@ -2,6 +2,7 @@ import { renderHook, act } from '@testing-library/react-hooks';
 import { mockPeers } from '@network/__fixtures__';
 import { queryWrapper as wrapper } from 'src/utils/test/queryWrapper';
 import { usePeers } from '.';
+import { LIMIT as defaultLimit } from 'src/const/config';
 
 jest.useRealTimers();
 
@@ -23,6 +24,20 @@ describe('useBlocks hook', () => {
       },
     };
     expect(result.current.data).toEqual(expectedResponse);
+  });
+
+  it('fetching data correctly without any options/config', async () => {
+    const { result, waitFor } = renderHook(() => usePeers(), { wrapper });
+    expect(result.current.isLoading).toBeTruthy();
+    await waitFor(() => result.current.isFetched);
+    expect(result.current.isSuccess).toBeTruthy();
+    expect(result.current.data).toEqual({
+      data: mockPeers.data.slice(0, defaultLimit),
+      meta: {
+        ...mockPeers.meta,
+        count: defaultLimit,
+      },
+    });
   });
 
   it('should fetch next set of data correctly', async () => {
