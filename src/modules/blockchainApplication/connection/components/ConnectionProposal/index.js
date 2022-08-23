@@ -1,21 +1,32 @@
-import React from 'react';
+import React, { useContext, useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
+import { withRouter } from 'react-router';
 import Box from 'src/theme/box';
 import Dialog from '@theme/dialog/dialog';
 import { PrimaryButton } from 'src/theme/buttons';
+import { addSearchParamsToUrl } from 'src/utils/searchParams';
 import { client } from '@libs/wcm/utils/connectionCreator';
 import { Input } from 'src/theme';
 import usePairings from '@libs/wcm/hooks/usePairings';
+import ConnectionContext from '@libs/wcm/context/connectionContext';
+import { EVENTS } from '@libs/wcm/data/chainConfig';
 import styles from './ConnectionProposal.css';
 
-const ConnectionProposal = () => {
+const ConnectionProposal = ({ history }) => {
   const [value, setValue] = React.useState('');
+  const { events } = useContext(ConnectionContext);
   const { setUri } = usePairings(!!client);
   const { t } = useTranslation();
 
   const clickHandler = () => {
     setUri(value);
   };
+
+  useEffect(() => {
+    if (events[events.length - 1].name === EVENTS.SESSION_PROPOSAL) {
+      addSearchParamsToUrl(history, { modal: 'connectionSummary' });
+    }
+  }, [events]);
 
   return (
     <Dialog className={styles.wrapper} hasClose>
@@ -46,4 +57,4 @@ const ConnectionProposal = () => {
   );
 };
 
-export default ConnectionProposal;
+export default withRouter(ConnectionProposal);

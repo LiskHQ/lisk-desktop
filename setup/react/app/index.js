@@ -11,7 +11,6 @@ import { bookmarksRetrieved } from 'src/modules/bookmark/store/action';
 import { watchListRetrieved } from 'src/modules/dpos/validator/store/actions/watchList';
 import NotFound from 'src/modules/common/components/NotFound';
 import useIpc from '@update/hooks/useIpc';
-import ConnectionManager from '@libs/wcm/components/ConnectionManager';
 import ConnectionProvider from '@libs/wcm/context/connectionProvider';
 import FlashMessageHolder from 'src/theme/flashMessage/holder';
 import DialogHolder from 'src/theme/dialog/holder';
@@ -22,6 +21,7 @@ import ThemeContext from 'src/theme/themeProvider';
 import routesMap from 'src/routes/routesMap';
 import routes from 'src/routes/routes';
 import './variables.css';
+import ConnectionsHandler from './ConnectionsHandler';
 import styles from './app.css';
 
 const App = ({ history }) => {
@@ -46,7 +46,7 @@ const App = ({ history }) => {
       <ThemeContext.Provider value={theme}>
         <OfflineWrapper>
           <DialogHolder history={history} />
-          <ConnectionManager history={history} />
+          <ConnectionsHandler />
           <ToastContainer
             position="bottom-right"
             hideProgressBar

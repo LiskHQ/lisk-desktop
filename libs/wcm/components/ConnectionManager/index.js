@@ -2,9 +2,9 @@ import React, { useEffect, useState } from 'react';
 import { createSignClient } from '@libs/wcm/utils/connectionCreator';
 import useWalletConnectEventsManager from '@libs/wcm/hooks/useConnectionEventsManager';
 
-const ConnectionManager = ({ history }) => {
+const ConnectionManager = () => {
   const [initialized, setInitialized] = useState(false);
-  useWalletConnectEventsManager(history);
+  useWalletConnectEventsManager();
 
   useEffect(() => {
     if (!initialized) {
