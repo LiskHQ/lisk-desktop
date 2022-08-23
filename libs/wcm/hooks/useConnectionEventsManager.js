@@ -5,17 +5,17 @@ import { EVENTS } from '../constants/lifeCycle';
 
 const useWalletConnectEventsManager = () => {
   const {
-    data, setData, pushEvent, removePairing,
+    pushEvent, disconnect, session, setSession,
   } = useContext(ConnectionContext);
 
-  const onSessionRequest = useCallback(async (requestEvent) => {
-    const requestSession = client.session.get(requestEvent.topic);
+  const onSessionRequest = useCallback(async (event) => {
+    const request = client.session.get(event.topic);
 
-    setData({ ...data, requestSession });
+    setSession({ ...session, request });
   }, []);
 
-  const onSessionDelete = useCallback((session) => {
-    removePairing(session.topic);
+  const onSessionDelete = useCallback((event) => {
+    disconnect(event.topic);
   }, []);
 
   const eventHandler = useCallback((name, meta) => {

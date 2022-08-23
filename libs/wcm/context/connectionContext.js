@@ -2,9 +2,13 @@ import { createContext } from 'react';
 
 const ConnectionContext = createContext(
   {
-    data: {},
     events: [],
     pairings: [],
+    session: {
+      request: false,
+      data: false,
+      loaded: false,
+    },
   },
 );
 

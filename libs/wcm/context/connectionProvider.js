@@ -2,7 +2,10 @@ import React, { useState } from 'react';
 import ConnectionContext from './connectionContext';
 
 const ConnectionProvider = ({ children }) => {
-  const [data, setData] = useState({});
+  const [session, setSession] = useState({
+    request: false,
+    data: false,
+  });
   const [events, setEvents] = useState([]);
   const [pairings, setPairings] = useState([]);
 
@@ -10,24 +13,13 @@ const ConnectionProvider = ({ children }) => {
     setEvents([...events, event]);
   };
 
-  const removePairing = (topic) => {
-    const newPairings = pairings.filter(pairing => pairing.topic !== topic);
-    setPairings(newPairings);
-  };
-
-  const addPairing = (pairing) => {
-    setEvents([...pairings, pairing]);
-  };
-
   const value = {
-    data,
     events,
     pairings,
-    setData,
+    session,
+    setSession,
     pushEvent,
-    addPairing,
     setPairings,
-    removePairing,
   };
 
   return (
