@@ -9,6 +9,7 @@ const AccountsSelector = ({ setAddresses, addresses, accounts }) => {
   const { t } = useTranslation();
 
   const onSelect = (e) => {
+    setSelectAll(false);
     if (e.target.checked) {
       setAddresses([...addresses, e.target.name]);
     } else {
@@ -20,7 +21,7 @@ const AccountsSelector = ({ setAddresses, addresses, accounts }) => {
     if (selectAll) {
       setAddresses([]);
     } else {
-      setAddresses(accounts.map(item => item.address));
+      setAddresses(accounts.map(item => item.metadata.address));
     }
     setSelectAll(!selectAll);
   };
