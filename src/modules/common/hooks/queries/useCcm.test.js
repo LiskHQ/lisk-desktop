@@ -1,4 +1,5 @@
 import { renderHook, act } from '@testing-library/react-hooks';
+import { LIMIT as defaultLimit } from 'src/const/config';
 import { queryWrapper as wrapper } from 'src/utils/test/queryWrapper';
 import { mockCcm } from '../../__fixtures__';
 import { useCcm } from './useCcm';
@@ -23,6 +24,20 @@ describe('useCcm hook', () => {
       },
     };
     expect(result.current.data).toEqual(expectedResponse);
+  });
+
+  it('fetching data correctly without any options/config', async () => {
+    const { result, waitFor } = renderHook(() => useCcm(), { wrapper });
+    expect(result.current.isLoading).toBeTruthy();
+    await waitFor(() => result.current.isFetched);
+    expect(result.current.isSuccess).toBeTruthy();
+    expect(result.current.data).toEqual({
+      ...mockCcm,
+      meta: {
+        ...mockCcm.meta,
+        count: defaultLimit,
+      },
+    });
   });
 
   it('should fetch next set of data correctly', async () => {

@@ -1,5 +1,4 @@
 import { renderHook, act } from '@testing-library/react-hooks';
-import { LIMIT } from 'src/const/config';
 import { queryWrapper as wrapper } from 'src/utils/test/queryWrapper';
 import { mockNewsFeed } from '../../__fixtures__';
 import { useNewsFeed } from './useNewsFeed';
