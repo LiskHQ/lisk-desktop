@@ -26,6 +26,22 @@ describe('useDelegates hook', () => {
     expect(result.current.data).toEqual(expectedResponse);
   });
 
+  it('fetches data without params correctly', async () => {
+    const { result, waitFor } = renderHook(() => useDelegates(), { wrapper });
+    await waitFor(() => result.current.isFetched);
+    expect(result.current.isSuccess).toBeTruthy();
+    const expectedResponse = {
+      data: mockDelegates.data.slice(0, defaultLimit),
+      meta: {
+        ...mockDelegates.meta,
+        count: defaultLimit,
+        offset: 0,
+      },
+    };
+
+    expect(result.current.data).toEqual(expectedResponse);
+  });
+
   it('should fetch next set of data correctly', async () => {
     const { result, waitFor } = renderHook(() => useDelegates({ config }), { wrapper });
     await waitFor(() => result.current.isFetched);
