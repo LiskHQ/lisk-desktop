@@ -2,7 +2,6 @@ import React, { useState, useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
 import { addSearchParamsToUrl } from 'src/utils/searchParams';
 import { withRouter } from 'react-router';
-import { client } from '@libs/wcm/utils/connectionCreator';
 import usePairings from '@libs/wcm/hooks/usePairings';
 import Box from 'src/theme/box';
 import BoxContent from 'src/theme/box/content';
@@ -14,7 +13,7 @@ import header from './tableHeader';
 import styles from './SessionManager.css';
 
 const SessionManager = ({ history }) => {
-  const { pairings, disconnect } = usePairings(!!client);
+  const { pairings, disconnect } = usePairings();
   const [loading, setLoading] = useState(true);
   const { t } = useTranslation();
 

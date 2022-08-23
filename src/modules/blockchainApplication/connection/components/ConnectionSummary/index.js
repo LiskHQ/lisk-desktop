@@ -6,7 +6,7 @@ import { PrimaryButton, SecondaryButton } from 'src/theme/buttons';
 import { EVENTS } from '@libs/wcm/constants/lifeCycle';
 import { addSearchParamsToUrl } from 'src/utils/searchParams';
 import ConnectionContext from '@libs/wcm/context/connectionContext';
-import { onApprove, onReject } from '@libs/wcm/utils/sessionHandlers';
+import useSession from '@libs/wcm/hooks/useSession';
 import { useAccounts } from '@account/hooks';
 import BlockchainAppDetailsWrapper from '../../../explore/components/BlockchainAppDetailsWrapper';
 import AccountsSelector from './AccountsSelector';
@@ -18,16 +18,15 @@ const ConnectSummary = ({ history }) => {
   const { t } = useTranslation();
   const { accounts } = useAccounts();
   const { events } = useContext(ConnectionContext);
+  const { approve, reject } = useSession();
 
   const connectHandler = async () => {
-    const status = await onApprove(
-      events[events.length - 1].meta, addresses,
-    );
+    const status = await approve(addresses);
     addSearchParamsToUrl(history, { modal: 'connectionSuccess', status });
   };
 
   const rejectHandler = () => {
-    onReject(events[events.length - 1].meta);
+    reject();
   };
 
   if (!events.length || events[events.length - 1].name !== EVENTS.SESSION_PROPOSAL) {

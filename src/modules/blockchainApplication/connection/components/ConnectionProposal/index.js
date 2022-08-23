@@ -5,7 +5,6 @@ import Box from 'src/theme/box';
 import Dialog from '@theme/dialog/dialog';
 import { PrimaryButton } from 'src/theme/buttons';
 import { addSearchParamsToUrl } from 'src/utils/searchParams';
-import { client } from '@libs/wcm/utils/connectionCreator';
 import { Input } from 'src/theme';
 import usePairings from '@libs/wcm/hooks/usePairings';
 import ConnectionContext from '@libs/wcm/context/connectionContext';
@@ -15,7 +14,7 @@ import styles from './ConnectionProposal.css';
 const ConnectionProposal = ({ history }) => {
   const [value, setValue] = React.useState('');
   const { events } = useContext(ConnectionContext);
-  const { setUri } = usePairings(!!client);
+  const { setUri } = usePairings();
   const { t } = useTranslation();
 
   const clickHandler = () => {
@@ -23,7 +22,7 @@ const ConnectionProposal = ({ history }) => {
   };
 
   useEffect(() => {
-    if (events[events.length - 1].name === EVENTS.SESSION_PROPOSAL) {
+    if (events.length && events[events.length - 1].name === EVENTS.SESSION_PROPOSAL) {
       addSearchParamsToUrl(history, { modal: 'connectionSummary' });
     }
   }, [events]);
