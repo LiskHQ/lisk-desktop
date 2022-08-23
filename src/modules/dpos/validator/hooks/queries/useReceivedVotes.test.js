@@ -1,7 +1,8 @@
 import { renderHook, act } from '@testing-library/react-hooks';
-import { mockSentVotes } from '@dpos/validator/__fixtures__';
+import { mockReceivedtVotes } from '@dpos/validator/__fixtures__';
+import { LIMIT as defaultLimit } from 'src/const/config';
 import { queryWrapper as wrapper } from 'src/utils/test/queryWrapper';
-import { useSentVotes } from '.';
+import { useReceivedVotes } from '.';
 
 jest.useRealTimers();
 
@@ -10,17 +11,17 @@ describe('useReceivedVotes hook', () => {
   const config = { params: { limit } };
 
   it('fetching data correctly', async () => {
-    const { result, waitFor } = renderHook(() => useSentVotes({ config }), { wrapper });
+    const { result, waitFor } = renderHook(() => useReceivedVotes({ config }), { wrapper });
     expect(result.current.isLoading).toBeTruthy();
     await waitFor(() => result.current.isFetched);
     expect(result.current.isSuccess).toBeTruthy();
     const expectedResponse = {
       data: {
-        ...mockSentVotes.data,
-        votes: mockSentVotes.data.votes?.slice(0, limit),
+        ...mockReceivedtVotes.data,
+        votes: mockReceivedtVotes.data.votes?.slice(0, limit),
       },
       meta: {
-        ...mockSentVotes.meta,
+        ...mockReceivedtVotes.meta,
         count: limit,
         offset: 0,
       },
@@ -28,8 +29,27 @@ describe('useReceivedVotes hook', () => {
     expect(result.current.data).toEqual(expectedResponse);
   });
 
+  it('fetches data without params correctly', async () => {
+    const { result, waitFor } = renderHook(() => useReceivedVotes(), { wrapper });
+    expect(result.current.isLoading).toBeTruthy();
+    await waitFor(() => result.current.isFetched);
+    expect(result.current.isSuccess).toBeTruthy();
+    const expectedResponse = {
+      data: {
+        ...mockReceivedtVotes.data,
+        votes: mockReceivedtVotes.data.votes?.slice(0, defaultLimit),
+      },
+      meta: {
+        ...mockReceivedtVotes.meta,
+        count: defaultLimit,
+        offset: 0,
+      },
+    };
+    expect(result.current.data).toEqual(expectedResponse);
+  });
+
   it('should fetch next set of data correctly', async () => {
-    const { result, waitFor } = renderHook(() => useSentVotes({ config }), { wrapper });
+    const { result, waitFor } = renderHook(() => useReceivedVotes({ config }), { wrapper });
     await waitFor(() => result.current.isFetched);
     act(() => {
       result.current.fetchNextPage();
@@ -38,8 +58,8 @@ describe('useReceivedVotes hook', () => {
     await waitFor(() => !result.current.isFetching);
     const expectedResponse = {
       data: {
-        ...mockSentVotes.data,
-        votes: mockSentVotes.data.votes?.slice(0, limit * 2),
+        ...mockReceivedtVotes.data,
+        votes: mockReceivedtVotes.data.votes?.slice(0, limit * 2),
       },
       meta: {
         count: limit,

@@ -1,6 +1,7 @@
 import { renderHook, act } from '@testing-library/react-hooks';
 import { mockUnlocks } from '@dpos/validator/__fixtures__';
 import { queryWrapper as wrapper } from 'src/utils/test/queryWrapper';
+import { LIMIT as defaultLimit } from 'src/const/config';
 import { useUnlocks } from '.';
 
 jest.useRealTimers();
@@ -22,6 +23,25 @@ describe('useUnlocks hook', () => {
       meta: {
         ...mockUnlocks.meta,
         count: limit,
+        offset: 0,
+      },
+    };
+    expect(result.current.data).toEqual(expectedResponse);
+  });
+
+  it('fetches data without params correctly', async () => {
+    const { result, waitFor } = renderHook(() => useUnlocks(), { wrapper });
+    expect(result.current.isLoading).toBeTruthy();
+    await waitFor(() => result.current.isFetched);
+    expect(result.current.isSuccess).toBeTruthy();
+    const expectedResponse = {
+      data: {
+        ...mockUnlocks.data,
+        unlocking: mockUnlocks.data.unlocking?.slice(0, defaultLimit),
+      },
+      meta: {
+        ...mockUnlocks.meta,
+        count: defaultLimit,
         offset: 0,
       },
     };

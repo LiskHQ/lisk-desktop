@@ -12,7 +12,7 @@ export const useUnlocks = ({ config: customConfig = {}, options } = { }) => {
   const config = {
     url: `/api/${API_VERSION}/dpos/unlocks`,
     method: 'get',
-    event: 'get.dpos.umlocks',
+    event: 'get.dpos.unlocks',
     ...customConfig,
     params: { limit, ...(customConfig?.params || {}) },
   };
@@ -22,7 +22,7 @@ export const useUnlocks = ({ config: customConfig = {}, options } = { }) => {
     async ({ pageParam }) => API_METHOD[METHOD]({
       ...config,
       params: {
-        ...(config.params || {}),
+        ...config.params,
         ...pageParam,
       },
     }),
