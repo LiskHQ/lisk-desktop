@@ -1,14 +1,19 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useContext } from 'react';
 import { getSdkError } from '@walletconnect/utils';
 import { client } from '@libs/wcm/utils/connectionCreator';
+import ConnectionContext from '../context/connectionContext';
+import { ERROR_CASES } from '../data/chainConfig';
 
 const usePairings = (initialized) => {
-  const [pairings, setPairings] = useState();
-
+  const {
+    pairings,
+    setPairings,
+    addPairing,
+    removePairing,
+  } = useContext(ConnectionContext);
   const disconnect = async (topic) => {
-    await client.disconnect({ topic, reason: getSdkError('USER_DISCONNECTED') });
-    const newPairings = pairings.filter(pairing => pairing.topic !== topic);
-    setPairings(newPairings);
+    await client.disconnect({ topic, reason: getSdkError(ERROR_CASES.USER_DISCONNECTED) });
+    removePairing(topic);
   };
 
   const setUri = (uri) => {
@@ -17,15 +22,26 @@ const usePairings = (initialized) => {
     }
   };
 
+  const refreshPairings = async () => {
+    const activePairings = client.pairing.getAll({ active: true });
+    setPairings([{ loaded: true }, ...activePairings]);
+  };
+
   useEffect(() => {
-    if (initialized && !pairings) {
-      const active = client.pairing.getAll({ active: true });
-      setPairings(active);
+    if (initialized && !pairings.length) {
+      const activePairings = client.pairing.getAll({ active: true });
+      setPairings([{ loaded: true }, ...activePairings]);
     }
-  }, [pairings, initialized]);
+  }, [initialized]);
 
   return {
-    pairings, setPairings, disconnect, setUri,
+    pairings,
+    setUri,
+    disconnect,
+    addPairing,
+    setPairings,
+    removePairing,
+    refreshPairings,
   };
 };
 

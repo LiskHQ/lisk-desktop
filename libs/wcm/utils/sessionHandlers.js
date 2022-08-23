@@ -1,7 +1,7 @@
 import { getSdkError } from '@walletconnect/utils';
 import { to } from 'await-to-js';
 import { client } from '@libs/wcm/utils/connectionCreator';
-import { PAIRING_PROPOSAL_STATUS } from '../data/chainConfig';
+import { PAIRING_PROPOSAL_STATUS, ERROR_CASES } from '../data/chainConfig';
 
 /**
  * The approve handler for connection proposal
@@ -60,6 +60,6 @@ export const onReject = async (proposal) => {
   const { id } = proposal;
   await client.reject({
     id,
-    reason: getSdkError('USER_REJECTED_METHODS'),
+    reason: getSdkError(ERROR_CASES.USER_REJECTED_METHODS),
   });
 };

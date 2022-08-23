@@ -42,53 +42,53 @@ const App = ({ history }) => {
   const routeObj = Object.values(routes).find(r => r.path === history.location.pathname) || {};
 
   return (
-    <ThemeContext.Provider value={theme}>
-      <OfflineWrapper>
-        <ConnectionProvider>
+    <ConnectionProvider>
+      <ThemeContext.Provider value={theme}>
+        <OfflineWrapper>
           <DialogHolder history={history} />
           <ConnectionManager history={history} />
-        </ConnectionProvider>
-        <ToastContainer
-          position="bottom-right"
-          hideProgressBar
-          draggable
-          newestOnTop
-          closeButton={false}
-          className={styles.toastContainer}
-          toastClassName={styles.toastBody}
-          bodyClassName={styles.toastText}
-        />
-        <NavigationBars
-          isSignInFlow={routeObj.isSigninFlow}
-          location={history.location}
-          history={history}
-        />
-        <main className={`${styles.bodyWrapper} ${loaded ? styles.loaded : ''}`}>
-          <section className="scrollContainer">
-            <FlashMessageHolder />
-            <div className={`${styles.mainContent} ${styles.mainBox}`}>
-              <Switch>
-                {
-                  routesList.map(route => (
-                    <CustomRoute
-                      key={routes[route].path}
-                      route={routes[route]}
-                      path={routes[route].path}
-                      exact={routes[route].exact}
-                      isPrivate={routes[route].isPrivate}
-                      forbiddenTokens={routes[route].forbiddenTokens}
-                      component={routesMap[route]}
-                      history={history}
-                    />
-                  ))
-                }
-                <Route path="*" component={NotFound} />
-              </Switch>
-            </div>
-          </section>
-        </main>
-      </OfflineWrapper>
-    </ThemeContext.Provider>
+          <ToastContainer
+            position="bottom-right"
+            hideProgressBar
+            draggable
+            newestOnTop
+            closeButton={false}
+            className={styles.toastContainer}
+            toastClassName={styles.toastBody}
+            bodyClassName={styles.toastText}
+          />
+          <NavigationBars
+            isSignInFlow={routeObj.isSigninFlow}
+            location={history.location}
+            history={history}
+          />
+          <main className={`${styles.bodyWrapper} ${loaded ? styles.loaded : ''}`}>
+            <section className="scrollContainer">
+              <FlashMessageHolder />
+              <div className={`${styles.mainContent} ${styles.mainBox}`}>
+                <Switch>
+                  {
+                    routesList.map(route => (
+                      <CustomRoute
+                        key={routes[route].path}
+                        route={routes[route]}
+                        path={routes[route].path}
+                        exact={routes[route].exact}
+                        isPrivate={routes[route].isPrivate}
+                        forbiddenTokens={routes[route].forbiddenTokens}
+                        component={routesMap[route]}
+                        history={history}
+                      />
+                    ))
+                  }
+                  <Route path="*" component={NotFound} />
+                </Switch>
+              </div>
+            </section>
+          </main>
+        </OfflineWrapper>
+      </ThemeContext.Provider>
+    </ConnectionProvider>
   );
 };
 

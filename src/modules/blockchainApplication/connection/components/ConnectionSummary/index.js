@@ -3,6 +3,7 @@ import { useTranslation } from 'react-i18next';
 import { withRouter } from 'react-router';
 import ValueAndLabel from 'src/modules/transaction/components/TransactionDetails/valueAndLabel';
 import { PrimaryButton, SecondaryButton } from 'src/theme/buttons';
+import { EVENTS } from '@libs/wcm/data/chainConfig';
 import { addSearchParamsToUrl } from 'src/utils/searchParams';
 import ConnectionContext from '@libs/wcm/context/connectionContext';
 import { onApprove, onReject } from '@libs/wcm/utils/sessionHandlers';
@@ -16,24 +17,24 @@ const ConnectSummary = ({ history }) => {
   const [addresses, setAddresses] = useState([]);
   const { t } = useTranslation();
   const { accounts } = useAccounts();
-  const { data } = useContext(ConnectionContext);
+  const { events } = useContext(ConnectionContext);
 
   const connectHandler = async () => {
     const status = await onApprove(
-      data.proposal, addresses,
+      events[events.length - 1].meta, addresses,
     );
     addSearchParamsToUrl(history, { modal: 'connectionSuccess', status });
   };
 
   const rejectHandler = () => {
-    onReject(data.proposal);
+    onReject(events[events.length - 1].meta);
   };
 
-  if (!data.proposal?.params?.proposer) {
-    return <div />;
+  if (!events.length || events[events.length - 1].name !== EVENTS.SESSION_PROPOSAL) {
+    return <div>{t('Connection summary is not ready yet.')}</div>;
   }
 
-  const { proposer, requiredNamespaces } = data.proposal.params;
+  const { proposer, requiredNamespaces, pairingTopic } = events[events.length - 1].meta.params;
 
   const application = {
     data: {
@@ -66,7 +67,7 @@ const ConnectSummary = ({ history }) => {
             className={styles.labeledValue}
             label={t('Connection ID')}
           >
-            <span>{data.proposal.params.pairingTopic}</span>
+            <span>{pairingTopic}</span>
           </ValueAndLabel>
         </section>
         <section className={`${styles.section} ${styles.permissions}`}>

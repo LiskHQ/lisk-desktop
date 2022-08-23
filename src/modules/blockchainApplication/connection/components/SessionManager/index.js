@@ -1,6 +1,5 @@
-import React, { useState, useEffect, useContext } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
-import ConnectionContext from '@libs/wcm/context/connectionContext';
 import { addSearchParamsToUrl } from 'src/utils/searchParams';
 import { withRouter } from 'react-router';
 import { client } from '@libs/wcm/utils/connectionCreator';
@@ -17,10 +16,7 @@ import styles from './SessionManager.css';
 const SessionManager = ({ history }) => {
   const { pairings, disconnect } = usePairings(!!client);
   const [loading, setLoading] = useState(true);
-  const { data } = useContext(ConnectionContext);
   const { t } = useTranslation();
-
-  console.log('->', data);
 
   const addApplication = () => {
     addSearchParamsToUrl(history, { modal: 'connectionProposal' });
@@ -48,7 +44,7 @@ const SessionManager = ({ history }) => {
         <Table
           showHeader
           headerClassName={styles.tableHeader}
-          data={pairings}
+          data={pairings.slice(1)}
           isLoading={loading}
           row={SessionRow}
           header={header(t)}

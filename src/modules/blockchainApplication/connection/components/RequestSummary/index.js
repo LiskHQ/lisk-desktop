@@ -1,8 +1,8 @@
-import React, { useContext } from 'react';
+import React, { useContext, useEffect } from 'react';
 import ConnectionContext from '@libs/wcm/context/connectionContext';
 
 const RequestSummary = () => {
-  const { data } = useContext(ConnectionContext);
+  const { data, events } = useContext(ConnectionContext);
 
   const approveHandler = () => {
     // sign the tx
@@ -11,6 +11,10 @@ const RequestSummary = () => {
   const rejectHandler = () => {
     // respond
   };
+
+  useEffect(() => {
+    console.log('RequestSummary', events);
+  }, [events]);
 
   return (
     <div>

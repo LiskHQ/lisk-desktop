@@ -1,6 +1,7 @@
 import React, { useEffect, useContext } from 'react';
 import { useTranslation } from 'react-i18next';
 import ConnectionContext from '@libs/wcm/context/connectionContext';
+import { EVENTS } from '@libs/wcm/data/chainConfig';
 import { withRouter } from 'react-router';
 import Box from 'src/theme/box';
 import Dialog from '@theme/dialog/dialog';
@@ -10,7 +11,7 @@ import styles from './connectionSuccess.css';
 
 const SessionSuccess = ({ history }) => {
   const { t } = useTranslation();
-  const { data } = useContext(ConnectionContext);
+  const { events } = useContext(ConnectionContext);
 
   const redirectToHome = () => {
     setTimeout(() => {
@@ -20,13 +21,13 @@ const SessionSuccess = ({ history }) => {
 
   useEffect(() => {
     redirectToHome();
-  });
+  }, []);
 
-  if (!data.proposal?.params?.proposer) {
-    return <div />;
+  if (!events.length || events[events.length - 1].name !== EVENTS.SESSION_PROPOSAL) {
+    return <div>{t('Events are not ready yet.')}</div>;
   }
 
-  const { proposer } = data.proposal.params;
+  const { proposer } = events[events.length - 1].meta.params;
   const hasError = history.location.search.indexOf('ERROR') > -1;
 
   return (

@@ -1,7 +1,7 @@
 import { formatJsonRpcError, formatJsonRpcResult } from '@json-rpc-tools/utils';
 import { getSdkError } from '@walletconnect/utils';
 import { useAccounts } from '@account/hooks/useAccounts';
-import { LISK_SIGNING_METHODS } from '../data/chainConfig';
+import { LISK_SIGNING_METHODS, ERROR_CASES } from '../data/chainConfig';
 import { getWalletAddressFromParams } from './helpers';
 import { signMessage, signTransaction } from './methods';
 
@@ -32,12 +32,12 @@ export async function approveLiskRequest(requestEvent) {
     }
 
     default:
-      throw new Error(getSdkError('INVALID_METHOD').message);
+      throw new Error(getSdkError(ERROR_CASES.INVALID_METHOD).message);
   }
 }
 
 export function rejectLiskRequest(request) {
   const { id } = request;
 
-  return formatJsonRpcError(id, getSdkError('USER_REJECTED_METHODS').message);
+  return formatJsonRpcError(id, getSdkError(ERROR_CASES.USER_REJECTED_METHODS).message);
 }

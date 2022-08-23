@@ -2,7 +2,9 @@ import { createContext } from 'react';
 
 const ConnectionContext = createContext(
   {
-    data: { name: 'something' },
+    data: {},
+    events: [],
+    pairings: [],
   },
 );
 

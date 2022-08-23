@@ -2,73 +2,59 @@ import { useCallback, useEffect, useContext } from 'react';
 import { addSearchParamsToUrl } from 'src/utils/searchParams';
 import { client } from '@libs/wcm/utils/connectionCreator';
 import ConnectionContext from '../context/connectionContext';
-import { LISK_SIGNING_METHODS } from '../data/chainConfig';
+import { EVENTS } from '../data/chainConfig';
 
-const useWalletConnectEventsManager = (history, pairings, setPairings) => {
-  const { data, setData } = useContext(ConnectionContext);
-  const onSessionProposal = useCallback((proposal) => {
-    // Use context to send data to the modal
-    setData({ ...data, proposal });
+const useWalletConnectEventsManager = (history) => {
+  const {
+    data, setData, pushEvent, removePairing,
+  } = useContext(ConnectionContext);
+  const onSessionProposal = useCallback(() => {
+    // @todo handle routing on the UI
     addSearchParamsToUrl(history, { modal: 'connectionSummary' });
   }, []);
 
   const onSessionRequest = useCallback(async (requestEvent) => {
-    const { topic, params } = requestEvent;
-    const { request } = params;
-    const requestSession = client.session.get(topic);
+    const requestSession = client.session.get(requestEvent.topic);
 
-    switch (request.method) {
-      case LISK_SIGNING_METHODS.LISK_SIGN_MESSAGE:
-      case LISK_SIGNING_METHODS.LISK_SIGN_TRANSACTION:
-        // @todo pass the requestSession to the modal
-        setData({ ...data, requestSession });
-        addSearchParamsToUrl(history, { modal: 'requestSummary' });
+    setData({ ...data, requestSession });
+    // @todo handle routing on the UI
+    addSearchParamsToUrl(history, { modal: 'requestSummary' });
+  }, []);
+
+  const onSessionDelete = useCallback((session) => {
+    removePairing(session.topic);
+  }, []);
+
+  const eventHandler = useCallback((name, meta) => {
+    pushEvent({ name, meta });
+
+    switch (name) {
+      case EVENTS.SESSION_PROPOSAL:
+        onSessionProposal(meta);
+        break;
+      case EVENTS.SESSION_DELETE:
+        onSessionDelete(meta);
+        break;
+      case EVENTS.SESSION_REQUEST:
+        onSessionRequest(meta);
         break;
       default:
-        // @todo Notify the user about the unknown request. Enable them to disconnect.
-        console.log('Unknown request');
         break;
     }
   }, []);
 
-  const onCustomEvent = useCallback((session) => {
-    // @todo Assess the custom event and react accordingly.
-    console.log('event', session);
-  }, []);
-
-  const onSessionPing = useCallback((session) => {
-    // @todo Notify the user that the session was pinged.
-    console.log('ping', session);
-  }, []);
-
-  const onSessionUpdate = useCallback((session) => {
-    // @todo Notify the user that the session was updated.
-    console.log('update', session);
-  }, []);
-
-  const onSessionDelete = useCallback((session) => {
-    // @todo Access pairings from Context
-    const newPairings = pairings.filter(pairing => pairing.topic !== session.topic);
-    setPairings(newPairings);
-  }, []);
-
   useEffect(() => {
-    if (pairings) {
-      client.on('session_proposal', onSessionProposal);
-      client.on('session_request', onSessionRequest);
-      client.on('session_ping', onSessionPing);
-      client.on('session_event', onCustomEvent);
-      client.on('session_update', onSessionUpdate);
-      client.on('session_delete', onSessionDelete);
+    if (client?.on) {
+      Object.keys(EVENTS).forEach((eventName) => {
+        client.on(EVENTS[eventName], eventHandler.bind(null, EVENTS[eventName]));
+      });
     }
   }, [
     onSessionProposal,
     onSessionRequest,
-    onSessionPing,
-    onCustomEvent,
-    onSessionUpdate,
     onSessionDelete,
-    pairings,
+    eventHandler,
+    client?.on,
   ]);
 };
 
