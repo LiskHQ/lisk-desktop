@@ -1,5 +1,5 @@
 import { renderHook } from '@testing-library/react-hooks';
-import { mockNetworkStatus } from '@network/__fixtures__';
+import { mockBlockchainAppStatistics } from '@blockchainApplication/explore/__fixtures__';
 import { queryWrapper as wrapper } from 'src/utils/test/queryWrapper';
 import { useBlockchainApplicationStatistics } from './useBlockchainApplicationStatistics';
 
@@ -11,6 +11,6 @@ describe('useNetworkStatus hook', () => {
     expect(result.current.isLoading).toBeTruthy();
     await waitFor(() => result.current.isFetched);
     expect(result.current.isSuccess).toBeTruthy();
-    expect(result.current.data).toEqual(mockNetworkStatus);
+    expect(result.current.data).toEqual(mockBlockchainAppStatistics);
   });
 });
