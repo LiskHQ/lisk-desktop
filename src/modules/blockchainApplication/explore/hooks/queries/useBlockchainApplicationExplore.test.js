@@ -28,6 +28,22 @@ describe('useBlockchainApplicationExplore hook', () => {
     expect(result.current.data).toEqual(expectedResponse);
   });
 
+  it('fetches data without params correctly', async () => {
+    const { result, waitFor } = renderHook(() => useBlockchainApplicationExplore(), { wrapper });
+    await waitFor(() => result.current.isFetched);
+    expect(result.current.isSuccess).toBeTruthy();
+    const expectedResponse = {
+      data: mockBlockchainApp.data,
+      meta: {
+        ...mockBlockchainApp.meta,
+        count: mockBlockchainApp.data.length,
+        offset: 0,
+      },
+    };
+
+    expect(result.current.data).toEqual(expectedResponse);
+  });
+
   it.skip('should fetch next set of data correctly', async () => {
     const { result, waitFor } = renderHook(
       () => useBlockchainApplicationExplore({ config }),
