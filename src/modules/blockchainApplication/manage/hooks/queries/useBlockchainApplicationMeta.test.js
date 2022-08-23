@@ -28,6 +28,16 @@ describe('useBlockchainApplicationMeta hook', () => {
     expect(result.current.data).toEqual(expectedResponse);
   });
 
+  it('fetches data without params correctly', async () => {
+    const { result, waitFor } = renderHook(() => useBlockchainApplicationMeta(), { wrapper });
+    await waitFor(() => result.current.isFetched);
+    expect(result.current.isSuccess).toBeTruthy();
+    const expectedResponse = { ...mockBlockchainAppMeta };
+    delete expectedResponse.links;
+
+    expect(result.current.data).toEqual(expectedResponse);
+  });
+
   it.skip('should fetch next set of data correctly', async () => {
     const { result, waitFor } = renderHook(
       () => useBlockchainApplicationMeta({ config }),
