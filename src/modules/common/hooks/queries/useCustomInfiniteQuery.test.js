@@ -10,7 +10,7 @@ jest.useRealTimers();
 describe('useCustomInfiniteQuery hook', () => {
   const config = {
     baseURL: 'http://127.0.0.1',
-    url: `/mock/custom-infinite-query`,
+    url: '/mock/custom-infinite-query',
     method: 'get',
     params: {
       limit,
@@ -20,7 +20,7 @@ describe('useCustomInfiniteQuery hook', () => {
 
   it('fetch data correctly', async () => {
     const { result, waitFor } = renderHook(
-      () => useCustomInfiniteQuery({ config, keys }), { wrapper }
+      () => useCustomInfiniteQuery({ config, keys }), { wrapper },
     );
 
     expect(result.current.isLoading).toBeTruthy();
@@ -30,10 +30,10 @@ describe('useCustomInfiniteQuery hook', () => {
     expect(result.current.isSuccess).toBeTruthy();
 
     const expectedResponse = {
-      data: mockCustomInfiniteQuery.data.slice(0, LIMIT),
+      data: mockCustomInfiniteQuery.data.slice(0, limit),
       meta: {
         ...mockCustomInfiniteQuery.meta,
-        count: LIMIT,
+        count: limit,
         offset: 0,
       },
     };

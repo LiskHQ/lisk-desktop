@@ -28,9 +28,12 @@ export const useCustomInfiniteQuery = ({
         data: prevPages.data ? [...prevPages.data, ...newData] : newData,
       };
     }),
-    getNextPageParam: (lastPage) => {
-      const offset = lastPage.meta.count + lastPage.meta.offset;
-      const hasMore = offset < (lastPage?.meta?.total ?? Infinity);
+    getNextPageParam: (lastPage = {}) => {
+      const lastPageCount = lastPage.meta?.count || 0;
+      const lastPageOffset = lastPage.meta?.offset || 0;
+
+      const offset = lastPageCount + lastPageOffset;
+      const hasMore = offset < (lastPage.meta?.total ?? Infinity);
       return !hasMore ? undefined : { offset };
     },
   },
