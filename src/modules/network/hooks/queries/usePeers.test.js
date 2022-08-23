@@ -2,7 +2,7 @@ import { renderHook, act } from '@testing-library/react-hooks';
 import { mockPeers } from '@network/__fixtures__';
 import { queryWrapper as wrapper } from 'src/utils/test/queryWrapper';
 import { LIMIT as defaultLimit } from 'src/const/config';
-import { usePeers } from '.';
+import { usePeers } from './usePeers';
 
 jest.useRealTimers();
 
