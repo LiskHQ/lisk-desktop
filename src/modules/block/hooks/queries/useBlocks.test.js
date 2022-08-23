@@ -50,8 +50,8 @@ describe('useBlocks hook', () => {
     expect(result.current.hasNextPage).toBeFalsy();
   });
 
-  it.skip('fetches data without params correctly', async () => {
-    const { result, waitFor } = renderHook(() => useBlocks({ config }), { wrapper });
+  it('fetches data without params correctly', async () => {
+    const { result, waitFor } = renderHook(() => useBlocks(), { wrapper });
     await waitFor(() => result.current.isFetched);
     expect(result.current.isSuccess).toBeTruthy();
     const expectedResponse = {
