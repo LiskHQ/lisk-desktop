@@ -1,6 +1,7 @@
 import { renderHook, act } from '@testing-library/react-hooks';
 import { mockGenerator } from '@dpos/validator/__fixtures__';
 import { queryWrapper as wrapper } from 'src/utils/test/queryWrapper';
+import { LIMIT as defaultLimit } from 'src/const/config';
 import { useForgersGenerator } from './useForgersGenerator';
 
 jest.useRealTimers();
@@ -22,6 +23,22 @@ describe('useBlocks hook', () => {
         offset: 0,
       },
     };
+    expect(result.current.data).toEqual(expectedResponse);
+  });
+
+  it('fetches data without params correctly', async () => {
+    const { result, waitFor } = renderHook(() => useForgersGenerator(), { wrapper });
+    await waitFor(() => result.current.isFetched);
+    expect(result.current.isSuccess).toBeTruthy();
+    const expectedResponse = {
+      data: mockGenerator.data.slice(0, defaultLimit),
+      meta: {
+        ...mockGenerator.meta,
+        count: defaultLimit,
+        offset: 0,
+      },
+    };
+
     expect(result.current.data).toEqual(expectedResponse);
   });
 
