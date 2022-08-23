@@ -1,19 +1,12 @@
 import { formatJsonRpcError, formatJsonRpcResult } from '@json-rpc-tools/utils';
 import { getSdkError } from '@walletconnect/utils';
-import { useAccounts } from '@account/hooks/useAccounts';
 import { ERROR_CASES } from '../constants/lifeCycle';
 import { LISK_SIGNING_METHODS } from '../constants/permissions';
-import { getWalletAddressFromParams } from './helpers';
 import { signMessage, signTransaction } from './methods';
 
-export async function approveLiskRequest(requestEvent) {
+export async function approveLiskRequest(requestEvent, wallet) {
   const { params, id } = requestEvent;
   const { request } = params;
-  // Access those from hooks
-  const { accounts } = useAccounts();
-  const liskAddresses = accounts.map(item => item.summary.address);
-  // const { liskAddresses, liskWallets } = useLiskWallets();
-  const wallet = getWalletAddressFromParams(liskAddresses, params);
 
   switch (request.method) {
     case LISK_SIGNING_METHODS.LISK_SIGN_MESSAGE: {
