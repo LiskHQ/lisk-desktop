@@ -15,7 +15,7 @@ const data = {
   },
 };
 
-export const mockReceivedtVotes = {
+export const mockReceivedVotes = {
   data,
   meta: {
     count: 2,
