@@ -1,12 +1,13 @@
 import { renderHook, act } from '@testing-library/react-hooks';
 import { mockTransactionStatistics } from '@transaction/__fixtures__';
 import { queryWrapper as wrapper } from 'src/utils/test/queryWrapper';
+import { LIMIT as defaultLimit } from 'src/const/config';
 import { useTransactionStatistics } from '.';
 
 jest.useRealTimers();
 
 describe('useTransactionStatistics hook', () => {
-  const limit = 15;
+  const limit = mockTransactionStatistics.meta.total / 2;
   const config = { params: { limit } };
 
   it('fetching data correctly', async () => {
@@ -53,5 +54,24 @@ describe('useTransactionStatistics hook', () => {
       result.current.fetchNextPage();
     });
     expect(result.current.hasNextPage).toBeFalsy();
+  });
+
+  it('fetches data without params correctly', async () => {
+    const { result, waitFor } = renderHook(() => useTransactionStatistics(), { wrapper });
+    expect(result.current.isLoading).toBeTruthy();
+    await waitFor(() => result.current.isFetched);
+    expect(result.current.isSuccess).toBeTruthy();
+    const expectedResponse = {
+      data: {
+        ...mockTransactionStatistics.data,
+        timeline: mockTransactionStatistics.data.timeline?.slice(0, defaultLimit),
+      },
+      meta: {
+        ...mockTransactionStatistics.meta,
+        count: defaultLimit,
+        offset: 0,
+      },
+    };
+    expect(result.current.data).toEqual(expectedResponse);
   });
 });

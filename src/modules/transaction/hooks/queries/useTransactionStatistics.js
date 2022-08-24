@@ -14,7 +14,7 @@ export const useTransactionStatistics = ({ config: customConfig = {}, options } 
     method: 'get',
     event: 'get.transactions.statistics',
     ...customConfig,
-    params: { limit, ...(customConfig?.params || {}) },
+    params: { limit, ...(customConfig?.params || {}), interval: 'day' },
   };
 
   return useInfiniteQuery(
@@ -22,7 +22,7 @@ export const useTransactionStatistics = ({ config: customConfig = {}, options } 
     async ({ pageParam }) => API_METHOD[METHOD]({
       ...config,
       params: {
-        ...(config.params || {}),
+        ...config.params,
         ...pageParam,
       },
     }),
