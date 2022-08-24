@@ -8,7 +8,7 @@ import {
 import { useInfiniteQuery } from '@tanstack/react-query';
 
 /**
- * Creates a custom hook for votes unlocked queries
+ * Creates a custom hook for votes unlocks queries
  *
  * @param {object} configuration - the custom query configuration object
  * @param {object} configuration.config - the query config
