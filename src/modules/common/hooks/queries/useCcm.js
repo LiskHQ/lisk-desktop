@@ -10,8 +10,8 @@ import { useCustomInfiniteQuery } from './useCustomInfiniteQuery';
  * Creates a custom hook for ccm queries
  *
  * @param {object} configuration - the custom query configuration object
- * @param {Object} configuration.config - the query config
- * @param {Object} configuration.config.params - the query config params
+ * @param {object} configuration.config - the query config
+ * @param {object} configuration.config.params - the query config params
  * @param {number} [configuration.config.params.limit] - the query limit
  * @param {number} [configuration.config.params.offset] - the query offset
  * @param {string} [configuration.config.params.sort] - the query sort
