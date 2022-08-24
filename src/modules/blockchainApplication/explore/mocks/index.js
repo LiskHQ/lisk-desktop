@@ -2,7 +2,6 @@ import { rest } from 'msw';
 import { API_VERSION, LIMIT } from 'src/const/config';
 import { mockBlockchainApp, mockBlockchainAppStatistics } from '@blockchainApplication/explore/__fixtures__';
 
-// eslint-disable-next-line import/prefer-default-export
 export const blockchainApp = rest.get(
   `*/api/${API_VERSION}/blockchain/apps`,
   async (req, res, ctx) => {
@@ -21,8 +20,7 @@ export const blockchainApp = rest.get(
   },
 );
 
-// eslint-disable-next-line import/prefer-default-export
 export const blockchainAppStatistics = rest.get(
   `*/api/${API_VERSION}/blockchain/apps/statistics`,
-  async (req, res, ctx) => res(ctx.delay(20), ctx.json(mockBlockchainAppStatistics)),
+  async (_, res, ctx) => res(ctx.delay(20), ctx.json(mockBlockchainAppStatistics)),
 );
