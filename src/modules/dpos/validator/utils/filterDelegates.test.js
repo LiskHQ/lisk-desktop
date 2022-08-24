@@ -55,4 +55,8 @@ describe('filterDelegates', () => {
     };
     expect(filterDelegates(delegates, filters)).toEqual(expectedResult);
   });
+  it('return all data if filter not provided', () => {
+    const filters = {};
+    expect(filterDelegates(delegates, filters)).toEqual(delegates);
+  });
 });
