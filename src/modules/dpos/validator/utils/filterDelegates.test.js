@@ -21,12 +21,11 @@ const delegates = {
   ],
 };
 
-const filters = {
-  search: 'lisk',
-};
-
 describe('filterDelegates', () => {
   it('properly filters delegates based on username', () => {
+    const filters = {
+      search: 'lisk',
+    };
     const expectedResult = {
       data: [
         {
@@ -38,6 +37,21 @@ describe('filterDelegates', () => {
           username: 'liskUsername_7',
         },
       ],
+    };
+    expect(filterDelegates(delegates, filters)).toEqual(expectedResult);
+  });
+  it('properly filters delegates based on username and address', () => {
+    const expectedResult = {
+      data: [
+        {
+          address: 'lskdwsyfmcko6mcd357446yatromr9vzgu7eb8y74',
+          username: 'liskUsername_7',
+        },
+      ],
+    };
+    const filters = {
+      search: 'lisk',
+      address: 'lskdwsyfmcko6mcd357446yatromr9vzgu7eb8y74',
     };
     expect(filterDelegates(delegates, filters)).toEqual(expectedResult);
   });
