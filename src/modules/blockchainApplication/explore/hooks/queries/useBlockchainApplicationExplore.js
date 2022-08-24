@@ -24,7 +24,7 @@ import { useCustomInfiniteQuery } from 'src/modules/common/hooks/queries';
  * @returns the query object
  */
 // eslint-disable-next-line import/prefer-default-export
-export const useBlockchainApplicationExplore = ({ config: customConfig = {}, options } = { }) => {
+export const useBlockchainApplicationExplore = ({ config: customConfig = {}, options } = {}) => {
   const config = {
     url: `/api/${API_VERSION}/blockchain/apps`,
     method: 'get',
