@@ -1,3 +1,4 @@
+/* istanbul ignore file */
 import { renderHook, act } from '@testing-library/react-hooks';
 import { mockSentVotes } from '@dpos/validator/__fixtures__';
 import { queryWrapper as wrapper } from 'src/utils/test/queryWrapper';
