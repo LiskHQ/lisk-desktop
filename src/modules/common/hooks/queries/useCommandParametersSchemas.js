@@ -8,7 +8,7 @@ import {
 } from 'src/const/config';
 
 /**
- * Creates a custom hook for ccm queries
+ * Creates a custom hook for command parameters schemas queries
  *
  * @param {object} configuration - the custom query configuration object
  * @param {Object} configuration.config - the query config
