@@ -6,6 +6,16 @@ import {
   API_METHOD,
 } from 'src/const/config';
 
+/**
+ * Creates a custom hook for network status query
+ *
+ * @param {object} configuration - the custom query configuration object
+ * @param {object} configuration.config - the query config
+ * @param {object} configuration.config.params - the query parameters
+ * @param {string} configuration.options - the query options
+ *
+ * @returns the query object
+ */
 // eslint-disable-next-line import/prefer-default-export
 export const useNetworkStatus = ({ config: customConfig = {}, options } = { }) => {
   const config = {

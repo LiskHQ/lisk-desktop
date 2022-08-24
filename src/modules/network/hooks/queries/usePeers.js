@@ -6,6 +6,22 @@ import {
 } from 'src/const/config';
 import { useCustomInfiniteQuery } from 'src/modules/common/hooks/queries';
 
+/**
+ * Creates a custom hook for peers list queries
+ *
+ * @param {object} configuration - the custom query configuration object
+ * @param {object} configuration.config - the query config
+ * @param {object} configuration.config.params - the query config params
+ * @param {number} [configuration.config.params.limit] - the query limit
+ * @param {number} [configuration.config.params.offset] - the query offset
+ * @param {string} [configuration.config.params.sort] - the query sort
+ * @param {string} [configuration.config.params.height] - filter peers by a given height
+ * @param {string} [configuration.config.params.state] - filter peers by connection status
+ * @param {string} [configuration.config.params.networkVersion] - filter peers by network version
+ * @param {string} [configuration.ip] -filter peers by the peer's ip address
+ *
+ * @returns the query object
+ */
 // eslint-disable-next-line import/prefer-default-export
 export const usePeers = ({ config: customConfig = {}, options } = { }) => {
   const config = {
