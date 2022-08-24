@@ -34,7 +34,7 @@ import { useCustomInfiniteQuery } from 'src/modules/common/hooks/queries';
  * @param {string} [configuration.config.params.moduleCommandID] - filter transactions
  * by moduleCommandID
  * @param {string} [configuration.config.params.moduleCommandName] - filter transactions
- * by nonmoduleCommandNamece
+ * by moduleCommandName
  *
  * @returns the query object
  */
