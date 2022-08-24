@@ -7,7 +7,7 @@ import {
 } from 'src/const/config';
 
 /**
- * Creates a custom hook for blockchain applications list queries
+ * Creates a custom hook for blockchain applications meta queries
  *
  * @param {object} configuration - the custom query configuration object
  * @param {object} configuration.config - the query config
