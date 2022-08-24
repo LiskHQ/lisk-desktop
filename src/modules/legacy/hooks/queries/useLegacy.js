@@ -1,9 +1,5 @@
-import { useCurrentApplication } from '@blockchainApplication/manage/hooks';
 import { LEGACY } from 'src/const/queries';
-import {
-  METHOD,
-  API_VERSION,
-} from 'src/const/config';
+import { API_VERSION } from 'src/const/config';
 import { useCustomQuery } from 'src/modules/common/hooks';
 
 /**
@@ -19,10 +15,9 @@ import { useCustomQuery } from 'src/modules/common/hooks';
  */
 // eslint-disable-next-line import/prefer-default-export
 export const useLegacy = ({ config: customConfig = {}, options } = {}) => {
-  const [currentApplication] = useCurrentApplication();
   const config = {
-    baseURL: currentApplication?.apis[0][METHOD] ?? currentApplication?.apis[0].rest,
-    path: `/api/${API_VERSION}/legacy`,
+    url: `/api/${API_VERSION}/legacy`,
+    method: 'get',
     event: 'get.legacy',
     ...customConfig,
     params: { publicKey: '', ...customConfig.params },
