@@ -34,14 +34,6 @@ export const useCustomInfiniteQuery = ({
     },
   }),
   {
-    ...options,
-    select: (data) => data.pages.reduce((prevPages, page) => {
-      const newData = page?.data || [];
-      return {
-        ...page,
-        data: prevPages.data ? [...prevPages.data, ...newData] : newData,
-      };
-    }),
     getNextPageParam: (lastPage = {}) => {
       const lastPageCount = lastPage.meta?.count || 0;
       const lastPageOffset = lastPage.meta?.offset || 0;
@@ -50,5 +42,13 @@ export const useCustomInfiniteQuery = ({
       const hasMore = offset < (lastPage.meta?.total ?? Infinity);
       return !hasMore ? undefined : { offset };
     },
+    select: (data) => data.pages.reduce((prevPages, page) => {
+      const newData = page?.data || [];
+      return {
+        ...page,
+        data: prevPages.data ? [...prevPages.data, ...newData] : newData,
+      };
+    }),
+    ...options,
   },
 );
