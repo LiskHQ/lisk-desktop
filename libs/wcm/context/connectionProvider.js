@@ -5,6 +5,7 @@ const ConnectionProvider = ({ children }) => {
   const [session, setSession] = useState({
     request: false,
     data: false,
+    loaded: false,
   });
   const [events, setEvents] = useState([]);
   const [pairings, setPairings] = useState([]);

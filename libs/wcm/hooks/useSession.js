@@ -1,4 +1,4 @@
-import { useContext, useEffect } from 'react';
+import { useContext, useEffect, useCallback } from 'react';
 import { client } from '@libs/wcm/utils/connectionCreator';
 import ConnectionContext from '../context/connectionContext';
 import { onApprove, onReject } from '../utils/sessionHandlers';
@@ -9,7 +9,7 @@ const useSession = () => {
   const { events, session, setSession } = useContext(ConnectionContext);
   const { refreshPairings } = usePairings();
 
-  const approve = async (selectedAccounts) => {
+  const approve = useCallback(async (selectedAccounts) => {
     let status = PAIRING_PROPOSAL_STATUS.FAILED;
     const proposalEvents = events.find(e => e.name === EVENTS.SESSION_PROPOSAL);
     if (proposalEvents) {
@@ -23,15 +23,15 @@ const useSession = () => {
     }
 
     return status;
-  };
+  }, []);
 
-  const reject = async () => {
+  const reject = useCallback(async () => {
     const proposalEvents = events.find(e => e.name === EVENTS.SESSION_PROPOSAL);
     if (proposalEvents) {
       setSession({ ...session, request: false });
       await onReject(proposalEvents.meta);
     }
-  };
+  }, []);
 
   useEffect(() => {
     if (client?.session && !session.loaded) {

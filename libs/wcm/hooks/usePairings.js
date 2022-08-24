@@ -1,4 +1,4 @@
-import { useEffect, useContext } from 'react';
+import { useEffect, useContext, useCallback } from 'react';
 import { getSdkError } from '@walletconnect/utils';
 import { client } from '@libs/wcm/utils/connectionCreator';
 import ConnectionContext from '../context/connectionContext';
@@ -14,40 +14,39 @@ const usePairings = () => {
    *
    * @param {string} uri - The URI received from the web app.
    */
-  const setUri = (uri) => {
+  const setUri = useCallback((uri) => {
     if (client?.pair && uri) {
       client.pair({ uri });
     }
-  };
+  }, []);
 
-  const removePairing = (topic) => {
+  const removePairing = useCallback((topic) => {
     const newPairings = pairings.filter(pairing => pairing.topic !== topic);
     // Also inform the bridge
     setPairings(newPairings);
-  };
+  }, []);
 
-  const addPairing = (pairing) => {
+  const addPairing = useCallback((pairing) => {
     setPairings([...pairings, pairing]);
-  };
+  }, []);
 
   /**
    * Disconnect a given pairing. Removes the pairing from context and the bridge.
    *
    * @param {string} topic - The pairing topic (Connection ID) to disconnect.
    */
-  const disconnect = async (topic) => {
-    // @todo remove session if ID is the same as the current session
+  const disconnect = useCallback(async (topic) => {
     removePairing(topic);
     await client.disconnect({ topic, reason: getSdkError(ERROR_CASES.USER_DISCONNECTED) });
-  };
+  }, []);
 
   /**
    * Retrieves the active parings and refreshes the list.
    */
-  const refreshPairings = async () => {
+  const refreshPairings = useCallback(async () => {
     const activePairings = client.pairing.getAll({ active: true });
     setPairings([{ loaded: true }, ...activePairings]);
-  };
+  }, []);
 
   useEffect(() => {
     if (client?.pairing?.getAll && !pairings.length) {

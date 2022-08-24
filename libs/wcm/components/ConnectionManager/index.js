@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
-import { createSignClient } from '@libs/wcm/utils/connectionCreator';
-import useWalletConnectEventsManager from '@libs/wcm/hooks/useConnectionEventsManager';
+import { createSignClient } from '../../utils/connectionCreator';
+import useWalletConnectEventsManager from '../../hooks/useConnectionEventsManager';
 
 const ConnectionManager = () => {
   const [initialized, setInitialized] = useState(false);

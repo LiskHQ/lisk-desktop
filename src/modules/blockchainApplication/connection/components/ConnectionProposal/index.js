@@ -1,4 +1,4 @@
-import React, { useContext, useEffect } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { withRouter } from 'react-router';
 import Box from 'src/theme/box';
@@ -12,7 +12,7 @@ import { EVENTS } from '@libs/wcm/constants/lifeCycle';
 import styles from './ConnectionProposal.css';
 
 const ConnectionProposal = ({ history }) => {
-  const [value, setValue] = React.useState('');
+  const [value, setValue] = useState('');
   const { events } = useContext(ConnectionContext);
   const { setUri } = usePairings();
   const { t } = useTranslation();

@@ -1,6 +1,7 @@
 import SignClient from '@walletconnect/sign-client';
 import pkg from '../../../package.json';
 
+// eslint-disable-next-line import/no-mutable-exports
 export let client;
 
 export async function createSignClient() {
@@ -10,7 +11,7 @@ export async function createSignClient() {
     metadata: {
       name: pkg.name,
       description: pkg.description,
-      url: pkg.url,
+      url: pkg.homepage,
       icons: ['https://lisk.com/documentation/_/img/lisk-symbol.svg'],
     },
   });
