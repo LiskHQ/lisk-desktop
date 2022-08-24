@@ -1,3 +1,4 @@
+/* istanbul ignore file */
 import { VOTES_SENT, APPLICATION } from 'src/const/queries';
 import {
   METHOD,
