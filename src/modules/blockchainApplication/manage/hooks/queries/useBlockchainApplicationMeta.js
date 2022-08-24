@@ -7,7 +7,7 @@ import {
 import { useCustomInfiniteQuery } from 'src/modules/common/hooks/queries';
 
 /**
- * Creates a custom hook for blockchain applications list queries
+ * Creates a custom hook for blockchain applications meta queries
  *
  * @param {object} configuration - the custom query configuration object
  * @param {object} configuration.config - the query config
