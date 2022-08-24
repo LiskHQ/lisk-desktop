@@ -12,9 +12,9 @@ import {
  * @param {string[]} configuration.keys - the query keys
  * @param {object} configuration.config - the query config
  * @param {object} configuration.config.params - the query config params
- * @param {number} configuration.config.params.limit - the query limit
- * @param {number} configuration.config.params.offset - the query offset
- * @param {string} configuration.config.params.sort - the query sort
+ * @param {number} [configuration.config.params.limit] - the query limit
+ * @param {number} [configuration.config.params.offset] - the query offset
+ * @param {string} [configuration.config.params.sort] - the query sort
  * @param {string} configuration.options - the query options
  *
  * @returns the query object
