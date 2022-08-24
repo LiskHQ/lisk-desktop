@@ -18,7 +18,7 @@ import { useCustomInfiniteQuery } from 'src/modules/common/hooks/queries';
  * @param {string} [configuration.config.params.height] - filter peers by a given height
  * @param {string} [configuration.config.params.state] - filter peers by connection status
  * @param {string} [configuration.config.params.networkVersion] - filter peers by network version
- * @param {string} [configuration.ip] -filter peers by the peer's ip address
+ * @param {string} [configuration.config.params.ip] -filter peers by the peer's ip address
  *
  * @returns the query object
  */

@@ -7,6 +7,18 @@ import {
 } from 'src/const/config';
 import { useInfiniteQuery } from '@tanstack/react-query';
 
+/**
+ * Creates a custom hook for transaction statistics list query
+ *
+ * @param {object} configuration - the custom query configuration object
+ * @param {object} configuration.config - the query config
+ * @param {object} configuration.config.params - the query config params
+ * @param {string} configuration.config.params.internal - the query's intrval. i.e "day"|"month"
+ * @param {number} [configuration.config.params.limit] - the query limit
+ * @param {number} [configuration.config.params.offset] - the query offset
+ *
+ * @returns the query object
+ */
 // eslint-disable-next-line import/prefer-default-export
 export const useTransactionStatistics = ({ config: customConfig = {}, options } = { }) => {
   const config = {
