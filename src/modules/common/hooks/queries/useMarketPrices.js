@@ -1,11 +1,9 @@
 /* istanbul ignore file */
-import { useQuery } from '@tanstack/react-query';
-import { MARKET_PRICES, APPLICATION } from 'src/const/queries';
+import { MARKET_PRICES } from 'src/const/queries';
 import {
-  METHOD,
   API_VERSION,
-  API_METHOD,
 } from 'src/const/config';
+import { useCustomQuery } from 'src/modules/common/hooks';
 
 /**
  * Creates a custom hook for market prices queries
@@ -25,16 +23,11 @@ export const useMarketPrices = ({ config: customConfig = {}, options } = {}) => 
     ...customConfig,
     params: { ...customConfig.params },
   };
-  return useQuery(
-    [MARKET_PRICES, APPLICATION, METHOD, config],
-    async () => API_METHOD[METHOD]({
-      ...config,
-      params: {
-        ...(config.params || {}),
-      },
-    }),
+  return useCustomQuery(
     {
-      ...options,
+      keys: [MARKET_PRICES],
+      config,
+      options,
     },
   );
 };

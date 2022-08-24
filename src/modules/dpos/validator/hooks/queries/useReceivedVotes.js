@@ -1,11 +1,10 @@
 /* istanbul ignore file */
-import { VOTES_RECEIVED, APPLICATION } from 'src/const/queries';
+import { VOTES_RECEIVED } from 'src/const/queries';
 import {
-  METHOD,
   LIMIT as limit,
   API_VERSION,
 } from 'src/const/config';
-import { useCustomInfiniteQuery } from 'src/modules/common/hooks/queries';
+import { useCustomInfiniteQuery } from 'src/modules/common/hooks';
 
 /**
  * Creates a custom hook for votes received queries
@@ -44,10 +43,9 @@ export const useReceivedVotes = ({ config: customConfig = {}, options } = { }) =
       };
     }),
   };
-  const keys = [VOTES_RECEIVED, APPLICATION, METHOD, config];
 
   return useCustomInfiniteQuery({
-    keys,
+    keys: [VOTES_RECEIVED],
     options: customOptions,
     config,
   });

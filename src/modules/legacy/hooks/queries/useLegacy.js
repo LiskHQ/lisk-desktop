@@ -1,12 +1,10 @@
-/* istanbul ignore file */
-import { useQuery } from '@tanstack/react-query';
 import { useCurrentApplication } from '@blockchainApplication/manage/hooks';
-import { LEGACY, APPLICATION } from 'src/const/queries';
+import { LEGACY } from 'src/const/queries';
 import {
   METHOD,
   API_VERSION,
-  API_METHOD,
 } from 'src/const/config';
+import { useCustomQuery } from 'src/modules/common/hooks';
 
 /**
  * Creates a custom hook for legacy account queries
@@ -29,16 +27,9 @@ export const useLegacy = ({ config: customConfig = {}, options } = {}) => {
     ...customConfig,
     params: { publicKey: '', ...customConfig.params },
   };
-  return useQuery(
-    [LEGACY, APPLICATION, METHOD, config],
-    async () => API_METHOD[METHOD]({
-      ...config,
-      params: {
-        ...(config.params || {}),
-      },
-    }),
-    {
-      ...options,
-    },
-  );
+  return useCustomQuery({
+    keys: [LEGACY],
+    config,
+    options,
+  });
 };

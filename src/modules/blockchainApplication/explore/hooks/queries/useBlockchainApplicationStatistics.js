@@ -1,10 +1,8 @@
-import { useQuery } from '@tanstack/react-query';
 import { BLOCKCHAIN_APPS_STATICS } from 'src/const/queries';
 import {
-  METHOD,
   API_VERSION,
-  API_METHOD,
 } from 'src/const/config';
+import { useCustomQuery } from 'src/modules/common/hooks';
 
 /**
  * Creates a custom hook for blockchain applications meta queries
@@ -27,11 +25,11 @@ export const useBlockchainApplicationStatistics = ({
     event: 'get.blockchain.apps.statistics',
     ...customConfig,
   };
-  return useQuery(
-    [BLOCKCHAIN_APPS_STATICS, METHOD, config],
-    async () => API_METHOD[METHOD](config),
+  return useCustomQuery(
     {
-      ...options,
+      keys: [BLOCKCHAIN_APPS_STATICS],
+      config,
+      options,
     },
   );
 };

@@ -1,10 +1,9 @@
 import {
-  METHOD,
   LIMIT as limit,
   API_VERSION,
 } from 'src/const/config';
-import { CCM, APPLICATION } from 'src/const/queries';
-import { useCustomInfiniteQuery } from './useCustomInfiniteQuery';
+import { CCM } from 'src/const/queries';
+import { useCustomInfiniteQuery } from '../useCustomInfiniteQuery';
 
 /**
  * Creates a custom hook for ccm queries
@@ -36,9 +35,8 @@ export const useCcm = ({ config: customConfig = {}, options } = { }) => {
     ...customConfig,
     params: { limit, ...(customConfig?.params || {}) },
   };
-  const keys = [CCM, APPLICATION, METHOD, config];
   return useCustomInfiniteQuery({
-    keys,
+    keys: [CCM],
     config,
     options,
   });

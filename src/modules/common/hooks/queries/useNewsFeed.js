@@ -1,10 +1,9 @@
 import {
-  METHOD,
   LIMIT as limit,
   API_VERSION,
 } from 'src/const/config';
 import { NEWSFEED } from 'src/const/queries';
-import { useCustomInfiniteQuery } from './useCustomInfiniteQuery';
+import { useCustomInfiniteQuery } from '../useCustomInfiniteQuery';
 
 /**
  * Creates a custom hook for news feed queries
@@ -28,9 +27,8 @@ export const useNewsFeed = ({ config: customConfig = {}, options } = { }) => {
     ...customConfig,
     params: { limit, ...(customConfig?.params || {}) },
   };
-  const keys = [NEWSFEED, METHOD, config];
   return useCustomInfiniteQuery({
-    keys,
+    keys: [NEWSFEED],
     config,
     options,
   });

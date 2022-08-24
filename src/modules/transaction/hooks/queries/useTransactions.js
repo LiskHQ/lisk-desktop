@@ -1,10 +1,9 @@
-import { TRANSACTIONS, APPLICATION } from 'src/const/queries';
+import { TRANSACTIONS } from 'src/const/queries';
 import {
-  METHOD,
   LIMIT as limit,
   API_VERSION,
 } from 'src/const/config';
-import { useCustomInfiniteQuery } from 'src/modules/common/hooks/queries';
+import { useCustomInfiniteQuery } from 'src/modules/common/hooks';
 
 /**
  * Creates a custom hook for transaction list query
@@ -47,6 +46,9 @@ export const useTransactions = ({ config: customConfig = {}, options } = {}) => 
     ...customConfig,
     params: { limit, ...customConfig.params },
   };
-  const keys = [TRANSACTIONS, APPLICATION, METHOD, config];
-  return useCustomInfiniteQuery({ config, options, keys });
+  return useCustomInfiniteQuery({
+    keys: [TRANSACTIONS],
+    config,
+    options,
+  });
 };

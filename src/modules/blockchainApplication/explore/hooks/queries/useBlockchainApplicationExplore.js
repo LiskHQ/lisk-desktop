@@ -1,10 +1,9 @@
 import { BLOCKCHAIN_APPS } from 'src/const/queries';
 import {
-  METHOD,
   LIMIT as limit,
   API_VERSION,
 } from 'src/const/config';
-import { useCustomInfiniteQuery } from 'src/modules/common/hooks/queries';
+import { useCustomInfiniteQuery } from 'src/modules/common/hooks';
 
 /**
  * Creates a custom hook for blockchain applications list queries
@@ -33,7 +32,9 @@ export const useBlockchainApplicationExplore = ({ config: customConfig = {}, opt
     params: { limit, ...(customConfig?.params || {}) },
   };
 
-  const keys = [BLOCKCHAIN_APPS, METHOD, config];
-
-  return useCustomInfiniteQuery({ config, options, keys });
+  return useCustomInfiniteQuery({
+    config,
+    options,
+    keys: [BLOCKCHAIN_APPS],
+  });
 };

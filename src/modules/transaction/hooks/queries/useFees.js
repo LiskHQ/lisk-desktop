@@ -1,10 +1,8 @@
-import { useQuery } from '@tanstack/react-query';
-import { FEES, APPLICATION } from 'src/const/queries';
+import { FEES } from 'src/const/queries';
 import {
-  METHOD,
   API_VERSION,
-  API_METHOD,
 } from 'src/const/config';
+import { useCustomQuery } from 'src/modules/common/hooks';
 
 /**
  * Creates a custom hook for transaction fees query
@@ -24,11 +22,9 @@ export const useFees = ({ config: customConfig = {}, options } = { }) => {
     event: 'get.fees',
     ...customConfig,
   };
-  return useQuery(
-    [FEES, APPLICATION, METHOD, config],
-    async () => API_METHOD[METHOD](config),
-    {
-      ...options,
-    },
-  );
+  return useCustomQuery({
+    keys: [FEES],
+    config,
+    options,
+  });
 };

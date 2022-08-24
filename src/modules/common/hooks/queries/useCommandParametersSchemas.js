@@ -1,11 +1,7 @@
 /* istanbul ignore file */
-import { useQuery } from '@tanstack/react-query';
-import { COMMAND_PARAMETERS_SCHEMAS, APPLICATION } from 'src/const/queries';
-import {
-  METHOD,
-  API_VERSION,
-  API_METHOD,
-} from 'src/const/config';
+import { COMMAND_PARAMETERS_SCHEMAS } from 'src/const/queries';
+import { API_VERSION } from 'src/const/config';
+import { useCustomQuery } from 'src/modules/common/hooks';
 
 /**
  * Creates a custom hook for command parameters schemas queries
@@ -28,16 +24,9 @@ export const useCommandParametersSchemas = ({ config: customConfig = {}, options
     ...customConfig,
     params: { ...customConfig.params },
   };
-  return useQuery(
-    [COMMAND_PARAMETERS_SCHEMAS, APPLICATION, METHOD, config],
-    async () => API_METHOD[METHOD]({
-      ...config,
-      params: {
-        ...(config.params || {}),
-      },
-    }),
-    {
-      ...options,
-    },
-  );
+  return useCustomQuery({
+    keys: [COMMAND_PARAMETERS_SCHEMAS],
+    config,
+    options,
+  });
 };

@@ -1,10 +1,9 @@
-import { DELEGATES, APPLICATION } from 'src/const/queries';
+import { DELEGATES } from 'src/const/queries';
 import {
-  METHOD,
   LIMIT as limit,
   API_VERSION,
 } from 'src/const/config';
-import { useCustomInfiniteQuery } from 'src/modules/common/hooks/queries';
+import { useCustomInfiniteQuery } from 'src/modules/common/hooks';
 
 /**
  * Creates a custom hook for delegates queries
@@ -31,7 +30,9 @@ export const useDelegates = ({ config: customConfig = {}, options } = { }) => {
     params: { limit, ...(customConfig?.params || {}) },
   };
 
-  const keys = [DELEGATES, APPLICATION, METHOD, config];
-
-  return useCustomInfiniteQuery({ config, options, keys });
+  return useCustomInfiniteQuery({
+    config,
+    options,
+    keys: [DELEGATES],
+  });
 };

@@ -1,10 +1,8 @@
-import { useQuery } from '@tanstack/react-query';
-import { AUTH, APPLICATION } from 'src/const/queries';
+import { AUTH } from 'src/const/queries';
 import {
-  METHOD,
   API_VERSION,
-  API_METHOD,
 } from 'src/const/config';
+import { useCustomQuery } from 'src/modules/common/hooks';
 
 /**
  * Creates a custom hook for command parameters schemas queries
@@ -25,11 +23,11 @@ export const useUserInfo = ({ config: customConfig = {}, options } = { }) => {
     event: 'get.auth',
     ...customConfig,
   };
-  return useQuery(
-    [AUTH, APPLICATION, METHOD, config],
-    async () => API_METHOD[METHOD](config),
+  return useCustomQuery(
     {
-      ...options,
+      keys: [AUTH],
+      config,
+      options,
     },
   );
 };

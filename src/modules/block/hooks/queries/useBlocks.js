@@ -1,10 +1,9 @@
-import { BLOCKS, APPLICATION } from 'src/const/queries';
+import { BLOCKS } from 'src/const/queries';
 import {
-  METHOD,
   LIMIT as limit,
   API_VERSION,
 } from 'src/const/config';
-import { useCustomInfiniteQuery } from 'src/modules/common/hooks/queries';
+import { useCustomInfiniteQuery } from 'src/modules/common/hooks';
 
 /**
  * Creates a custom hook for block queries
@@ -32,8 +31,9 @@ export const useBlocks = ({ config: customConfig = {}, options } = { }) => {
     ...customConfig,
     params: { limit, ...(customConfig?.params || {}) },
   };
-
-  const keys = [BLOCKS, APPLICATION, METHOD, config];
-
-  return useCustomInfiniteQuery({ config, options, keys });
+  return useCustomInfiniteQuery({
+    keys: [BLOCKS],
+    config,
+    options,
+  });
 };

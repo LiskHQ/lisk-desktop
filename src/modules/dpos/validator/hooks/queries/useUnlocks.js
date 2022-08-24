@@ -1,11 +1,10 @@
 /* istanbul ignore file */
-import { UNLOCKS, APPLICATION } from 'src/const/queries';
+import { UNLOCKS } from 'src/const/queries';
 import {
-  METHOD,
   LIMIT as limit,
   API_VERSION,
 } from 'src/const/config';
-import { useCustomInfiniteQuery } from 'src/modules/common/hooks/queries';
+import { useCustomInfiniteQuery } from 'src/modules/common/hooks';
 
 /**
  * Creates a custom hook for votes unlocks queries
@@ -47,9 +46,8 @@ export const useUnlocks = ({ config: customConfig = {}, options } = { }) => {
       };
     }),
   };
-  const keys = [UNLOCKS, APPLICATION, METHOD, config];
   return useCustomInfiniteQuery({
-    keys,
+    keys: [UNLOCKS],
     options: customOptions,
     config,
   });

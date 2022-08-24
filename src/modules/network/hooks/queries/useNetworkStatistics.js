@@ -1,10 +1,8 @@
-import { useQuery } from '@tanstack/react-query';
-import { NETWORK_STATISTICS, APPLICATION } from 'src/const/queries';
+import { NETWORK_STATISTICS } from 'src/const/queries';
 import {
-  METHOD,
   API_VERSION,
-  API_METHOD,
 } from 'src/const/config';
+import { useCustomQuery } from 'src/modules/common/hooks/useCustomQuery';
 
 /**
  * Creates a custom hook for network statistics query
@@ -24,11 +22,9 @@ export const useNetworkStatistics = ({ config: customConfig = {}, options } = { 
     event: 'get.network.statistics​',
     ...customConfig,
   };
-  return useQuery(
-    [NETWORK_STATISTICS, APPLICATION, METHOD, config],
-    async () => API_METHOD[METHOD](config),
-    {
-      ...options,
-    },
-  );
+  return useCustomQuery({
+    keys: [NETWORK_STATISTICS],
+    config,
+    options,
+  });
 };

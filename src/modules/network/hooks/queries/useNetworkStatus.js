@@ -1,10 +1,8 @@
-import { useQuery } from '@tanstack/react-query';
-import { NETWORK_STATUS, APPLICATION } from 'src/const/queries';
+import { NETWORK_STATUS } from 'src/const/queries';
 import {
-  METHOD,
   API_VERSION,
-  API_METHOD,
 } from 'src/const/config';
+import { useCustomQuery } from 'src/modules/common/hooks';
 
 /**
  * Creates a custom hook for network status query
@@ -24,11 +22,11 @@ export const useNetworkStatus = ({ config: customConfig = {}, options } = { }) =
     event: 'get.network.status',
     ...customConfig,
   };
-  return useQuery(
-    [NETWORK_STATUS, APPLICATION, METHOD, config],
-    async () => API_METHOD[METHOD](config),
+  return useCustomQuery(
     {
-      ...options,
+      keys: [NETWORK_STATUS],
+      config,
+      options,
     },
   );
 };

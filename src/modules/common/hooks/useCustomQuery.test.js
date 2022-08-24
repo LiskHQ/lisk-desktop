@@ -2,25 +2,22 @@ import { renderHook } from '@testing-library/react-hooks';
 import { queryWrapper as wrapper } from 'src/utils/test/queryWrapper';
 import { LIMIT as limit } from 'src/const/config';
 
-import { mockCustomInfiniteQuery } from '../../__fixtures__';
-import { useCustomInfiniteQuery } from './useCustomInfiniteQuery';
+import { mockCustomInfiniteQuery } from '../__fixtures__';
+import { useCustomQuery } from './useCustomQuery';
 
 jest.useRealTimers();
 
-describe('useCustomInfiniteQuery hook', () => {
+describe('useCustomQuery hook', () => {
   const config = {
     baseURL: 'http://127.0.0.1',
     url: '/mock/custom-infinite-query',
     method: 'get',
-    params: {
-      limit,
-    },
   };
   const keys = ['CUSTOM_INFINITE_QUERY'];
 
   it('fetch data correctly', async () => {
     const { result, waitFor } = renderHook(
-      () => useCustomInfiniteQuery({ config, keys }), { wrapper },
+      () => useCustomQuery({ config, keys }), { wrapper },
     );
 
     expect(result.current.isLoading).toBeTruthy();

@@ -1,10 +1,8 @@
-import { useQuery } from '@tanstack/react-query';
-import { VALIDATOR, APPLICATION } from 'src/const/queries';
+import { VALIDATOR } from 'src/const/queries';
 import {
-  METHOD,
   API_VERSION,
-  API_METHOD,
 } from 'src/const/config';
+import { useCustomQuery } from 'src/modules/common/hooks';
 
 /**
  * Creates a custom hook for block validator queries
@@ -25,11 +23,9 @@ export const useForgersValidator = ({ config: customConfig = {}, options } = { }
     event: 'get.validator',
     ...customConfig,
   };
-  return useQuery(
-    [VALIDATOR, APPLICATION, METHOD, config],
-    async () => API_METHOD[METHOD](config),
-    {
-      ...options,
-    },
-  );
+  return useCustomQuery({
+    keys: [VALIDATOR],
+    config,
+    options,
+  });
 };

@@ -1,11 +1,10 @@
 /* istanbul ignore file */
-import { TRANSACTION_STATISTICS, APPLICATION } from 'src/const/queries';
+import { TRANSACTION_STATISTICS } from 'src/const/queries';
 import {
-  METHOD,
   LIMIT as limit,
   API_VERSION,
 } from 'src/const/config';
-import { useCustomInfiniteQuery } from 'src/modules/common/hooks/queries';
+import { useCustomInfiniteQuery } from 'src/modules/common/hooks';
 
 /**
  * Creates a custom hook for transaction statistics list query
@@ -28,7 +27,6 @@ export const useTransactionStatistics = ({ config: customConfig = {}, options } 
     ...customConfig,
     params: { limit, ...(customConfig?.params || {}), interval: 'day' },
   };
-  const keys = [TRANSACTION_STATISTICS, APPLICATION, METHOD, config];
   const customOptions = {
     ...options,
     select: (data) => data.pages.reduce((prevPages, page) => {
@@ -44,7 +42,7 @@ export const useTransactionStatistics = ({ config: customConfig = {}, options } 
     }),
   };
   return useCustomInfiniteQuery({
-    keys,
+    keys: [TRANSACTION_STATISTICS],
     options: customOptions,
     config,
   });

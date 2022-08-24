@@ -1,11 +1,10 @@
 /* istanbul ignore file */
-import { TOKENS_TOP_LSK_BALANCE, APPLICATION } from 'src/const/queries';
+import { TOKENS_TOP_LSK_BALANCE } from 'src/const/queries';
 import {
-  METHOD,
   LIMIT as limit,
   API_VERSION,
 } from 'src/const/config';
-import { useCustomInfiniteQuery } from 'src/modules/common/hooks/queries';
+import { useCustomInfiniteQuery } from 'src/modules/common/hooks';
 
 /**
  * Creates a custom hook for supported tokens query
@@ -27,6 +26,9 @@ export const useTokensSupported = ({ config: customConfig = {}, options } = {}) 
     ...customConfig,
     params: { limit, ...(customConfig?.params || {}) },
   };
-  const keys = [TOKENS_TOP_LSK_BALANCE, APPLICATION, METHOD, config];
-  return useCustomInfiniteQuery({ config, options, keys });
+  return useCustomInfiniteQuery({
+    keys: [TOKENS_TOP_LSK_BALANCE],
+    config,
+    options,
+  });
 };
