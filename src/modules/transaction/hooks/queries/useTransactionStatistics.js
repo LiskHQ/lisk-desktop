@@ -1,11 +1,11 @@
+/* istanbul ignore file */
 import { TRANSACTION_STATISTICS, APPLICATION } from 'src/const/queries';
 import {
   METHOD,
   LIMIT as limit,
   API_VERSION,
-  API_METHOD,
 } from 'src/const/config';
-import { useInfiniteQuery } from '@tanstack/react-query';
+import { useCustomInfiniteQuery } from 'src/modules/common/hooks/queries';
 
 /**
  * Creates a custom hook for transaction statistics list query
@@ -28,34 +28,24 @@ export const useTransactionStatistics = ({ config: customConfig = {}, options } 
     ...customConfig,
     params: { limit, ...(customConfig?.params || {}), interval: 'day' },
   };
-
-  return useInfiniteQuery(
-    [TRANSACTION_STATISTICS, APPLICATION, METHOD, config],
-    async ({ pageParam }) => API_METHOD[METHOD]({
-      ...config,
-      params: {
-        ...config.params,
-        ...pageParam,
-      },
+  const keys = [TRANSACTION_STATISTICS, APPLICATION, METHOD, config];
+  const customOptions = {
+    ...options,
+    select: (data) => data.pages.reduce((prevPages, page) => {
+      const newData = page?.data || {};
+      const newTimelines = page?.data.timeline || [];
+      return {
+        ...page,
+        data: {
+          ...newData,
+          timeline: prevPages.data ? [...prevPages.data.timeline, ...newTimelines] : newTimelines,
+        },
+      };
     }),
-    {
-      ...options,
-      select: (data) => data.pages.reduce((prevPages, page) => {
-        const newData = page?.data || {};
-        const newTimelines = page?.data.timeline || [];
-        return {
-          ...page,
-          data: {
-            ...newData,
-            timeline: prevPages.data ? [...prevPages.data.timeline, ...newTimelines] : newTimelines,
-          },
-        };
-      }),
-      getNextPageParam: (lastPage) => {
-        const offset = lastPage.meta.count + lastPage.meta.offset;
-        const hasMore = offset < lastPage.meta.total;
-        return !hasMore ? undefined : { offset };
-      },
-    },
-  );
+  };
+  return useCustomInfiniteQuery({
+    keys,
+    options: customOptions,
+    config,
+  });
 };
