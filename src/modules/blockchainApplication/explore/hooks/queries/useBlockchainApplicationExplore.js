@@ -6,6 +6,23 @@ import {
 } from 'src/const/config';
 import { useCustomInfiniteQuery } from 'src/modules/common/hooks/queries';
 
+/**
+ * Creates a custom hook for blockchain applications list queries
+ *
+ * @param {object} configuration - the custom query configuration object
+ * @param {Object} configuration.config - the query config
+ * @param {Object} configuration.config.params - the query config params
+ * @param {number} [configuration.config.params.limit] - the query limit
+ * @param {number} [configuration.config.params.offset] - the query offset
+ * @param {string} [configuration.config.params.chainID] - application chain ID
+ * @param {string} [configuration.config.params.name] - application name
+ * @param {string} [configuration.config.params.search] - application search string
+ * @param {string} [configuration.config.params.state] - application state
+ * @param {string} [configuration.config.params.isDefault] - default applications filter
+ * @param {string} configuration.options - the query options
+ *
+ * @returns the query object
+ */
 // eslint-disable-next-line import/prefer-default-export
 export const useBlockchainApplicationExplore = ({ config: customConfig = {}, options } = { }) => {
   const config = {
