@@ -6,6 +6,19 @@ import {
 import { NEWSFEED } from 'src/const/queries';
 import { useCustomInfiniteQuery } from './useCustomInfiniteQuery';
 
+/**
+ * Creates a custom hook for news feed queries
+ *
+ * @param {object} configuration - the custom query configuration object
+ * @param {Object} configuration.config - the query config
+ * @param {Object} configuration.config.params - the query config params
+ * @param {number} [configuration.config.params.limit] - the query limit
+ * @param {number} [configuration.config.params.offset] - the query offset
+ * @param {number} [configuration.config.params.source] - news feed source
+ * @param {string} configuration.options - the query options
+ *
+ * @returns the query object
+ */
 // eslint-disable-next-line import/prefer-default-export
 export const useNewsFeed = ({ config: customConfig = {}, options } = { }) => {
   const config = {
