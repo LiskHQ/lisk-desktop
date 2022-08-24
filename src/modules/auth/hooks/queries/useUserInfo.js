@@ -6,6 +6,17 @@ import {
   API_METHOD,
 } from 'src/const/config';
 
+/**
+ * Creates a custom hook for command parameters schemas queries
+ *
+ * @param {object} configuration - the custom query configuration object
+ * @param {Object} configuration.config - the query config
+ * @param {Object} configuration.config.params - the query config params
+ * @param {string} configuration.config.params.address - auth address
+ * @param {string} configuration.options - the query options
+ *
+ * @returns the query object
+ */
 // eslint-disable-next-line import/prefer-default-export
 export const useUserInfo = ({ config: customConfig = {}, options } = { }) => {
   const config = {
