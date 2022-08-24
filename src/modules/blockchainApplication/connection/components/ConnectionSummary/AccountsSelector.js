@@ -34,7 +34,7 @@ const AccountsSelector = ({ setAddresses, addresses, accounts }) => {
           checked={selectAll}
           name="selectAll"
           value={selectAll}
-          className={styles.checkbox}
+          className={`${styles.checkbox} select-all`}
         />
         <span className={styles.label}>{t('Select all')}</span>
       </label>

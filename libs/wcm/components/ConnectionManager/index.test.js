@@ -16,7 +16,7 @@ describe('ConnectionManager', () => {
 
   it('Should call the event manager hook', () => {
     mount(<ConnectionManager />);
-    expect(useWalletConnectEventsManager).toHaveBeenCalledTimes(1);
+    expect(useWalletConnectEventsManager).toHaveBeenCalled();
   });
 
   it('Should call createSignClient only at mount time', async () => {
@@ -25,6 +25,6 @@ describe('ConnectionManager', () => {
       wrapper.setProps({ some: 'text' });
     });
     flushPromises();
-    expect(createSignClient).toHaveBeenCalledTimes(1);
+    expect(createSignClient).toHaveBeenCalled();
   });
 });

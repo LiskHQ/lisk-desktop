@@ -4,6 +4,16 @@ import { usePinBlockchainApplication } from '@blockchainApplication/manage/hooks
 import { renderWithRouter } from 'src/utils/testHelpers';
 import BlockchainApplications from './BlockchainApplications';
 
+jest.mock('@walletconnect/utils', () => ({
+  getSdkError: jest.fn(str => str),
+}));
+jest.mock('@libs/wcm/utils/connectionCreator', () => ({
+  createSignClient: jest.fn(() => Promise.resolve()),
+  client: {
+    pair: jest.fn(),
+  },
+}));
+
 jest.useFakeTimers();
 jest.mock('@blockchainApplication/manage/hooks/usePinBlockchainApplication');
 const mockTogglePin = jest.fn();

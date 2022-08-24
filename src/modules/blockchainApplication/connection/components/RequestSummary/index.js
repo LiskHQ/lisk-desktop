@@ -1,3 +1,5 @@
+/* istanbul ignore file */
+// @todo Add test coverage by #4418
 import React, { useContext, useEffect, useState } from 'react';
 import ConnectionContext from '@libs/wcm/context/connectionContext';
 import { approveLiskRequest, rejectLiskRequest } from '@libs/wcm/utils/requestHandlers';

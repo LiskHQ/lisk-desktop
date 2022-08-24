@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useContext } from 'react';
 import { mount } from 'enzyme';
 import ConnectionProvider from './connectionProvider';
 import ConnectionContext from './connectionContext';
@@ -7,7 +7,7 @@ import { EVENTS } from '../constants/lifeCycle';
 describe('connectionProvider', () => {
   it('Should mount a child with access to the default context', () => {
     const TestComponent = () => {
-      const { session } = React.useContext(ConnectionContext);
+      const { session } = useContext(ConnectionContext);
       return (
         <div>
           {Object.keys(session).map(key => (<span key={key}>{key}</span>))}
@@ -28,7 +28,7 @@ describe('connectionProvider', () => {
     const TestComponent = () => {
       const {
         events, pushEvent, setPairings, pairings,
-      } = React.useContext(ConnectionContext);
+      } = useContext(ConnectionContext);
       useEffect(() => {
         pushEvent([{ name: EVENTS.SESSION_DELETE, meta: { session: { id: '1' } } }]);
         setPairings([{ id: '2' }]);

@@ -2,7 +2,7 @@ import React from 'react';
 import { renderHook } from '@testing-library/react-hooks';
 import wallets from '@tests/constants/wallets';
 import { client } from '@libs/wcm/utils/connectionCreator';
-import { EVENTS, PAIRING_PROPOSAL_STATUS } from '../constants/lifeCycle';
+import { EVENTS } from '../constants/lifeCycle';
 import * as sessionHandlers from '../utils/sessionHandlers';
 import useSession from './useSession';
 

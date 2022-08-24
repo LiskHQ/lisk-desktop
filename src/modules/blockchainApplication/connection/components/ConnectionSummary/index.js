@@ -13,7 +13,7 @@ import AccountsSelector from './AccountsSelector';
 import styles from './connectionSummary.css';
 
 // eslint-disable-next-line max-statements
-const ConnectSummary = ({ history }) => {
+const ConnectionSummary = ({ history }) => {
   const [addresses, setAddresses] = useState([]);
   const { t } = useTranslation();
   const { accounts } = useAccounts();
@@ -34,7 +34,6 @@ const ConnectSummary = ({ history }) => {
   }
 
   const { proposer, requiredNamespaces, pairingTopic } = events[events.length - 1].meta.params;
-
   const application = {
     data: {
       name: proposer.metadata.name,
@@ -66,7 +65,7 @@ const ConnectSummary = ({ history }) => {
             className={styles.labeledValue}
             label={t('Connection ID')}
           >
-            <span>{pairingTopic}</span>
+            <span className="pairing-topic">{pairingTopic}</span>
           </ValueAndLabel>
         </section>
         <section className={`${styles.section} ${styles.permissions}`}>
@@ -75,7 +74,7 @@ const ConnectSummary = ({ history }) => {
             <ValueAndLabel
               label={t('Methods')}
             >
-              <div className={styles.items}>
+              <div className={`${styles.items} methods`}>
                 {
                   requiredNamespaces.lisk.methods.map(
                     method => (<span key={method} className={styles.label}>{method}</span>),
@@ -86,7 +85,7 @@ const ConnectSummary = ({ history }) => {
             <ValueAndLabel
               label={t('Events')}
             >
-              <div className={styles.items}>
+              <div className={`${styles.items} events`}>
                 {
                   requiredNamespaces.lisk.events.length
                     ? requiredNamespaces.lisk.events.map(
@@ -116,4 +115,4 @@ const ConnectSummary = ({ history }) => {
   );
 };
 
-export default withRouter(ConnectSummary);
+export default withRouter(ConnectionSummary);

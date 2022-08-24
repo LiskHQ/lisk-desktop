@@ -9,6 +9,16 @@ const mockInputNode = {
   focus: jest.fn(),
 };
 
+jest.mock('@walletconnect/utils', () => ({
+  getSdkError: jest.fn(str => str),
+}));
+jest.mock('@libs/wcm/utils/connectionCreator', () => ({
+  createSignClient: jest.fn(() => Promise.resolve()),
+  client: {
+    pair: jest.fn(),
+  },
+}));
+
 jest.mock(
   '@search/components/SearchBar',
   () =>

@@ -1,3 +1,4 @@
+/* istanbul ignore file */
 import { createContext } from 'react';
 
 const ConnectionContext = createContext(
