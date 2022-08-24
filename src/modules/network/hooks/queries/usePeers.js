@@ -34,6 +34,6 @@ export const usePeers = ({ config: customConfig = {}, options } = { }) => {
   return useCustomInfiniteQuery({
     keys: [PEERS],
     config,
-    options
+    options,
   });
 };
