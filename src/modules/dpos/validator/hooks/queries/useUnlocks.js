@@ -46,11 +46,6 @@ export const useUnlocks = ({ config: customConfig = {}, options } = { }) => {
         },
       };
     }),
-    getNextPageParam: (lastPage) => {
-      const offset = lastPage.meta.count + lastPage.meta.offset;
-      const hasMore = offset < lastPage.meta.total;
-      return !hasMore ? undefined : { offset };
-    },
   };
   const keys = [UNLOCKS, APPLICATION, METHOD, config];
   return useCustomInfiniteQuery({
