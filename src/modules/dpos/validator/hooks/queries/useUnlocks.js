@@ -1,10 +1,10 @@
+/* istanbul ignore file */
 import { UNLOCKS, APPLICATION } from 'src/const/queries';
 import {
   METHOD,
   LIMIT as limit,
   API_VERSION,
 } from 'src/const/config';
-// import { useInfiniteQuery } from '@tanstack/react-query';
 import { useCustomInfiniteQuery } from 'src/modules/common/hooks/queries';
 
 /**
