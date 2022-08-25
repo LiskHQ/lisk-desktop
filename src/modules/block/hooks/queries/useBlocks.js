@@ -1,9 +1,12 @@
+import { useCallback, useState } from 'react';
+import { useQueryClient } from '@tanstack/react-query';
 import { BLOCKS } from 'src/const/queries';
 import {
   LIMIT as limit,
   API_VERSION,
 } from 'src/const/config';
 import { useCustomInfiniteQuery } from 'src/modules/common/hooks';
+import client from 'src/utils/api/client';
 
 /**
  * Creates a custom hook for block queries
@@ -23,7 +26,9 @@ import { useCustomInfiniteQuery } from 'src/modules/common/hooks';
  * @returns the query object
  */
 // eslint-disable-next-line import/prefer-default-export
-export const useBlocks = ({ config: customConfig = {}, options } = {}) => {
+export const useBlocks = ({ config: customConfig = {}, options } = { }) => {
+  const queryClient = useQueryClient();
+  const [hasUpdate, setHasUpdate] = useState(false);
   const config = {
     url: `/api/${API_VERSION}/blocks`,
     method: 'get',
@@ -31,7 +36,19 @@ export const useBlocks = ({ config: customConfig = {}, options } = {}) => {
     ...customConfig,
     params: { limit, ...(customConfig?.params || {}) },
   };
-  return useCustomInfiniteQuery({
+  client.socket.on('new.block', () => {
+    setHasUpdate(true);
+  });
+  client.socket.on('delete.block', () => {
+    setHasUpdate(true);
+  });
+
+  const invalidData = useCallback(async () => {
+    setHasUpdate(false);
+    await queryClient.invalidateQueries(BLOCKS);
+  }, [queryClient, setHasUpdate]);
+
+  const response = useCustomInfiniteQuery({
     keys: [BLOCKS],
     config,
     options: {
@@ -41,4 +58,10 @@ export const useBlocks = ({ config: customConfig = {}, options } = {}) => {
       },
     },
   });
+
+  return {
+    ...response,
+    hasUpdate,
+    addUpdate: invalidData,
+  };
 };
