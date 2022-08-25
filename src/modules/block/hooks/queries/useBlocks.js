@@ -36,13 +36,18 @@ export const useBlocks = ({ config: customConfig = {}, options } = { }) => {
     ...customConfig,
     params: { limit, ...(customConfig?.params || {}) },
   };
+
+  /* istanbul ignore next */
   client.socket.on('new.block', () => {
     setHasUpdate(true);
   });
+
+  /* istanbul ignore next */
   client.socket.on('delete.block', () => {
     setHasUpdate(true);
   });
 
+  /* istanbul ignore next */
   const invalidData = useCallback(async () => {
     setHasUpdate(false);
     await queryClient.invalidateQueries(BLOCKS);
