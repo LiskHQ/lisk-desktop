@@ -1,33 +1,34 @@
 import React from 'react';
+import { useTranslation } from 'react-i18next';
+import { useSort } from 'src/modules/common/hooks/useSort';
 import Box from 'src/theme/box';
 import BoxContent from 'src/theme/box/content';
 import Table from 'src/theme/table';
+import { usePeers } from '../../hooks/queries';
 import PeerRow from '../row';
 import styles from './nodeList.css';
 import header from './tableHeader';
 
-const Peers = ({
-  peers, t, changeSort, sort,
-}) => {
-  /* istanbul ignore next */
-  const handleLoadMore = () => {
-    peers.loadData({ offset: peers.data.length });
-  };
-  const canLoadMore = peers.meta ? peers.data.length < peers.meta.total : false;
+const Peers = () => {
+  const { t } = useTranslation();
+  const { sort, toggleSort } = useSort({ defaultSort: 'height:desc' });
+  const {
+    data: peers, isLoading, isFetching, error, hasNextPage, fetchNextPage,
+  } = usePeers({ config: { params: { sort } } });
 
   return (
-    <Box main isLoading={peers.isLoading} className="peers-box">
+    <Box main isLoading={isLoading} className="peers-box">
       <BoxContent className={styles.content}>
         <Table
           showHeader
-          data={peers.data}
-          isLoading={peers.isLoading}
+          data={peers?.data || []}
+          isLoading={isFetching}
           row={PeerRow}
-          loadData={handleLoadMore}
-          header={header(changeSort, t)}
+          loadData={fetchNextPage}
+          header={header(toggleSort, t)}
           currentSort={sort}
-          error={peers.error}
-          canLoadMore={canLoadMore}
+          error={error}
+          canLoadMore={hasNextPage}
         />
       </BoxContent>
     </Box>
