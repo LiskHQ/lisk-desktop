@@ -1,3 +1,4 @@
+/* istanbul ignore file */
 /* eslint-disable complexity */
 import React, { useState, useEffect } from 'react';
 

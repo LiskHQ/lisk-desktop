@@ -28,7 +28,6 @@ describe('useBlocks hook', () => {
 
   it('should fetch next set of data correctly', async () => {
     const { result, waitFor } = renderHook(() => useBlocks({ config }), { wrapper });
-    // expect(result.current.isLoading).toBeTruthy();
     await waitFor(() => result.current.isFetched);
     act(() => {
       result.current.fetchNextPage();
@@ -38,9 +37,9 @@ describe('useBlocks hook', () => {
     const expectedResponse = {
       data: mockBlocks.data.slice(0, limit * 2),
       meta: {
+        ...mockBlocks.meta,
         count: limit,
         offset: limit,
-        total: 30,
       },
     };
     expect(result.current.data).toEqual(expectedResponse);
@@ -51,8 +50,8 @@ describe('useBlocks hook', () => {
     expect(result.current.hasNextPage).toBeFalsy();
   });
 
-  it.skip('fetches data without params correctly', async () => {
-    const { result, waitFor } = renderHook(() => useBlocks({ config }), { wrapper });
+  it('fetches data without params correctly', async () => {
+    const { result, waitFor } = renderHook(() => useBlocks(), { wrapper });
     await waitFor(() => result.current.isFetched);
     expect(result.current.isSuccess).toBeTruthy();
     const expectedResponse = {

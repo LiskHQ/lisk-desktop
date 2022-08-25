@@ -21,11 +21,12 @@ export function useCurrentApplication() {
     [],
   );
 
+  // @todo set hardcode default application needs to be fetch from api
   useEffect(() => {
     if (!currentApplication) {
       setApplication(mockBlockchainApplications[0]);
     }
   }, [currentApplication]);
 
-  return [currentApplication, setApplication];
+  return [currentApplication ?? mockBlockchainApplications[0], setApplication];
 }

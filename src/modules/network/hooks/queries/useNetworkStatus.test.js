@@ -1,7 +1,7 @@
 import { renderHook } from '@testing-library/react-hooks';
 import { mockNetworkStatus } from '@network/__fixtures__';
 import { queryWrapper as wrapper } from 'src/utils/test/queryWrapper';
-import { useNetworkStatus } from './useNetworkStatus';
+import { useNetworkStatus } from '.';
 
 jest.useRealTimers();
 
