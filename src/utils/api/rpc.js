@@ -19,7 +19,7 @@ const rpc = ({
     reject(new Error('socket not connected'));
     return;
   }
-  client.socket.emit(event, params || data || {}, (response) => {
+  client.socket.emit('request', { method: event, params: params || data || {} }, (response) => {
     if (Object.keys(response).length && response.error) {
       return reject(response);
     }
