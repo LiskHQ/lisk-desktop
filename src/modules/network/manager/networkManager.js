@@ -1,3 +1,1 @@
-import NetworkMonitorView from '../components/networkMonitorView';
-
-export default NetworkMonitorView;
+export { default } from '../components/networkMonitorView';

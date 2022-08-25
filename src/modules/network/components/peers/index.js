@@ -11,18 +11,22 @@ import header from './tableHeader';
 
 const Peers = () => {
   const { t } = useTranslation();
-  const { sort, toggleSort } = useSort({ defaultSort: 'height:desc' });
   const {
-    data: peers, isLoading, isFetching, error, hasNextPage, fetchNextPage,
-  } = usePeers({ config: { params: { sort } } });
+    data, isLoading, error, hasNextPage, fetchNextPage,
+  } = usePeers();
+
+  const {
+    sort,
+    toggleSort,
+    sortedData: peers,
+  } = useSort({ data: data?.data, defaultSort: 'height:desc' });
 
   return (
     <Box main isLoading={isLoading} className="peers-box">
       <BoxContent className={styles.content}>
         <Table
           showHeader
-          data={peers?.data || []}
-          isLoading={isFetching}
+          data={peers}
           row={PeerRow}
           loadData={fetchNextPage}
           header={header(toggleSort, t)}

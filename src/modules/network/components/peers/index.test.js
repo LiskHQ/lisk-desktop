@@ -47,10 +47,10 @@ describe('Network Monitor: Peers', () => {
     expect(wrapper.html().match(/loadingOverlay/)).toHaveLength(1);
   });
 
-  it('renders 20 peers', () => {
+  it('renders 30 peers', () => {
     usePeers.mockReturnValue(fullPeers);
 
     const wrapper = shallow(<Peers />);
-    expect(wrapper.html().match(/peer-row/gm)).toHaveLength(20);
+    expect(wrapper.html().match(/peer-row/gm)).toHaveLength(30);
   });
 });
