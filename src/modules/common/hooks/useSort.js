@@ -1,7 +1,7 @@
 const { useState, useCallback, useMemo } = require('react');
 
 // eslint-disable-next-line import/prefer-default-export
-export function useSort({ defaultSort, data = [] }) {
+export function useSort({ defaultSort, data = [] } = {}) {
   const [sort, setSort] = useState(defaultSort);
 
   const sortedData = useMemo(() => {
