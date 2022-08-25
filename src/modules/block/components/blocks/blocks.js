@@ -157,7 +157,7 @@ const Blocks = ({
         <BoxContent className={`${styles.content} block-results`}>
           <Table
             showHeader
-            data={blocks?.data || []}
+            data={blocks.data}
             isLoading={isFetching}
             row={BlockRow}
             loadData={handleLoadMore}

@@ -37,9 +37,7 @@ export const useBlocks = ({ config: customConfig = {}, options } = {}) => {
     options: {
       ...options,
       placeholderData: {
-        data: { data: [], meta: { count: 0, offset: 0, total: 0 } },
         pages: [],
-        pageParams: [],
       },
     },
   });

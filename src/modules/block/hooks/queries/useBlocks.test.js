@@ -12,7 +12,7 @@ describe('useBlocks hook', () => {
 
   it('fetching data correctly', async () => {
     const { result, waitFor } = renderHook(() => useBlocks({ config }), { wrapper });
-    expect(result.current.isLoading).toBeTruthy();
+    // Since placeholder data is used, then there's no initial data loading
     await waitFor(() => result.current.isFetched);
     expect(result.current.isSuccess).toBeTruthy();
     const expectedResponse = {
