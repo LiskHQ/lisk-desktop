@@ -15,10 +15,10 @@ const BlockRow = ({ data, className }) => (
     <span className={grid['col-xs-3']}>
       <DateTimeFromTimestamp time={data.timestamp} />
     </span>
-    <span className={grid['col-xs-3']}>{data.generatorAddress.name ?? data.generatorAddress}</span>
-    <span className={grid['col-xs-2']}>{data.numberOfTransactions ?? 0}</span>
+    <span className={grid['col-xs-3']}>{data.generator.name ?? data.generator.address}</span>
+    <span className={grid['col-xs-2']}>{data.numberOfTransactions}</span>
     <span className={grid['col-xs-1']}>
-      <TokenAmount val={data.totalForged ?? '100000000'} token="LSK" />
+      <TokenAmount val={data.totalForged} token="LSK" />
     </span>
   </Link>
 );

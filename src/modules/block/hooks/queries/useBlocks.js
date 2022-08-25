@@ -43,7 +43,7 @@ export const useBlocks = ({ config: customConfig = {}, options } = { }) => {
         return !hasMore ? undefined : { offset };
       },
       placeholderData: {
-        data: [],
+        data: { data: [], meta: { count: 0, offset: 0, total: 0 } },
         pages: [],
         pageParams: [],
       },
