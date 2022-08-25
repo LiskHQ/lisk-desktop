@@ -54,6 +54,7 @@ module.exports = {
       '<rootDir>/tests/__mocks__/fileMock.js',
   },
   collectCoverage: true,
+  resetModules: true,
   coverageDirectory: '<rootDir>/coverage/jest',
   collectCoverageFrom: [
     'src/**/*.js',

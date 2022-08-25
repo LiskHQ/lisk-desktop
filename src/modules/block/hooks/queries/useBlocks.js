@@ -1,52 +1,46 @@
-/* istanbul ignore file */
-import { useInfiniteQuery } from '@tanstack/react-query';
-import { useCurrentApplication } from '@blockchainApplication/manage/hooks';
-import { BLOCKS, APPLICATION } from 'src/const/queries';
+import { BLOCKS } from 'src/const/queries';
 import {
-  METHOD,
   LIMIT as limit,
   API_VERSION,
-  API_METHOD,
 } from 'src/const/config';
+import { useCustomInfiniteQuery } from 'src/modules/common/hooks';
 
+/**
+ * Creates a custom hook for block queries
+ *
+ * @param {object} configuration - the custom query configuration object
+ * @param {Object} configuration.config - the query config
+ * @param {Object} configuration.config.params - the query config params
+ * @param {number} [configuration.config.params.limit] - the query limit
+ * @param {number} [configuration.config.params.offset] - the query offset
+ * @param {string} [configuration.config.params.sort] - the query sort
+ * @param {string} [configuration.config.params.blockID] - block ID
+ * @param {string} [configuration.config.params.height] - block height
+ * @param {string} [configuration.config.params.timestamp] - block timestamp
+ * @param {string} [configuration.config.params.generatorAddress] - block generator address
+ * @param {string} configuration.options - the query options
+ *
+ * @returns the query object
+ */
 // eslint-disable-next-line import/prefer-default-export
-export const useBlocks = ({ config: customConfig = {}, options } = { }) => {
-  const [currentApplication] = useCurrentApplication();
+export const useBlocks = ({ config: customConfig = {}, options } = {}) => {
   const config = {
-    baseURL: currentApplication?.apis[0][METHOD] ?? currentApplication?.apis[0].rest,
-    path: `/api/${API_VERSION}/blocks`,
+    url: `/api/${API_VERSION}/blocks`,
+    method: 'get',
     event: 'get.blocks',
     ...customConfig,
-    params: { limit, ...customConfig.params },
+    params: { limit, ...(customConfig?.params || {}) },
   };
-  return useInfiniteQuery(
-    [BLOCKS, APPLICATION, METHOD, config],
-    async ({ pageParam }) => API_METHOD[METHOD]({
-      ...config,
-      params: {
-        ...(config.params || {}),
-        ...pageParam,
-      },
-    }),
-    {
+  return useCustomInfiniteQuery({
+    keys: [BLOCKS],
+    config,
+    options: {
       ...options,
-      select: (data) => data.pages.reduce((prevPages, page) => {
-        const newData = page?.data || [];
-        return {
-          ...page,
-          data: prevPages.data ? [...prevPages.data, ...newData] : newData,
-        };
-      }),
-      getNextPageParam: (lastPage) => {
-        const offset = lastPage.meta.count + lastPage.meta.offset;
-        const hasMore = offset < lastPage.meta.total;
-        return !hasMore ? undefined : { offset };
-      },
       placeholderData: {
         data: { data: [], meta: { count: 0, offset: 0, total: 0 } },
         pages: [],
         pageParams: [],
       },
     },
-  );
+  });
 };

@@ -1,53 +1,61 @@
-/* istanbul ignore file */
-import { useInfiniteQuery } from '@tanstack/react-query';
-import { useCurrentApplication } from '@blockchainApplication/manage/hooks';
-import { TRANSACTIONS, APPLICATION } from 'src/const/queries';
+import { TRANSACTIONS } from 'src/const/queries';
 import {
-  METHOD,
   LIMIT as limit,
   API_VERSION,
-  API_METHOD,
 } from 'src/const/config';
-import { wsMethods } from '../../configuration';
+import { useCustomInfiniteQuery } from 'src/modules/common/hooks';
 
+/**
+ * Creates a custom hook for transaction list query
+ *
+ * @param {object} configuration - the custom query configuration object
+ * @param {object} configuration.config - the query config
+ * @param {object} configuration.config.params - the query config params
+ * @param {number} [configuration.config.params.limit] - the query limit
+ * @param {number} [configuration.config.params.offset] - the query offset
+ * @param {string} [configuration.config.params.sort] - the query sort
+ * @param {string} [configuration.config.params.height] - filter transactions by
+ * a given height. Can be expressed as an interval ie. 1:20
+ * @param {string} [configuration.config.params.transactionID] - filter transactions
+ * by transaction ID
+ * @param {string} [configuration.config.params.blockID] - filter transactions by block ID
+ * @param {string} [configuration.config.params.senderAddress] - filter transactions by
+ * sender's address
+ * @param {string} [configuration.config.params.timestamp] - filter transactions
+ * by timestamp. Can be expressed as interval ie. 100000:200000
+ * @param {string} [configuration.config.params.recipientAddress] - filter transactions
+ * by recipientAddress
+ * @param {string} [configuration.config.params.address] - filter transactions
+ * by address. Could be either the sender's or recipient's address
+ * @param {string} [configuration.config.params.executionStatus] - filter transactions
+ * by executionStatus
+ * @param {string} [configuration.config.params.nonce] - filter transactions by nonce
+ * @param {string} [configuration.config.params.moduleCommandID] - filter transactions
+ * by moduleCommandID
+ * @param {string} [configuration.config.params.moduleCommandName] - filter transactions
+ * by moduleCommandName
+ *
+ * @returns the query object
+ */
 // eslint-disable-next-line import/prefer-default-export
-export const useTransactions = ({ config: customConfig = {}, options } = { }) => {
-  const [currentApplication] = useCurrentApplication();
+export const useTransactions = ({ config: customConfig = {}, options } = {}) => {
   const config = {
-    baseURL: currentApplication?.apis[0][METHOD] ?? currentApplication?.apis[0].rest,
-    path: `/api/${API_VERSION}/transactions`,
-    event: wsMethods.transactionsChange,
+    url: `/api/${API_VERSION}/transactions`,
+    method: 'get',
+    event: 'update.transactions',
     ...customConfig,
-    params: { limit, ...customConfig.params },
+    params: { limit, ...(customConfig?.params || {}) },
   };
-  return useInfiniteQuery(
-    [TRANSACTIONS, APPLICATION, METHOD, config],
-    async ({ pageParam }) => API_METHOD[METHOD]({
-      ...config,
-      params: {
-        ...(config.params || {}),
-        ...pageParam,
-      },
-    }),
-    {
+  return useCustomInfiniteQuery({
+    keys: [TRANSACTIONS],
+    config,
+    options: {
       ...options,
-      select: (data) => data.pages.reduce((prevPages, page) => {
-        const newData = page?.data || [];
-        return {
-          ...page,
-          data: prevPages?.data ? [...prevPages.data, ...newData] : newData,
-        };
-      }),
-      getNextPageParam: (lastPage) => {
-        const offset = lastPage.meta.count + lastPage.meta.offset;
-        const hasMore = offset < lastPage.meta.total;
-        return !hasMore ? undefined : { offset };
-      },
       placeholderData: {
         data: [],
         pages: [],
         pageParams: [],
       },
     },
-  );
+  });
 };
