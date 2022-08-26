@@ -1,6 +1,7 @@
 import { useCallback, useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import mockBlockchainApplications from '@tests/fixtures/blockchainApplicationsManage';
+import client from 'src/utils/api/client';
 import { selectCurrentApplication } from '../store/selectors';
 import { setCurrentApplication } from '../store/action';
 import { useCurrentNode } from './useCurrentNode';
@@ -13,17 +14,19 @@ export function useCurrentApplication() {
   const setApplication = useCallback(
     (application) => {
       dispatch(setCurrentApplication(application));
-      // Set default node
-      setCurrentNode(application.apis[0]);
+      /* istanbul ignore next */
+      client.create(application?.apis[0]);
+      setCurrentNode(application?.apis[0]);
     },
     [],
   );
 
+  // @todo set hardcode default application needs to be fetch from api
   useEffect(() => {
     if (!currentApplication) {
       setApplication(mockBlockchainApplications[0]);
     }
   }, [currentApplication]);
 
-  return [currentApplication, setApplication];
+  return [currentApplication ?? mockBlockchainApplications[0], setApplication];
 }

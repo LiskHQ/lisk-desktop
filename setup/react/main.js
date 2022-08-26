@@ -4,6 +4,7 @@ import { HashRouter as Router } from 'react-router-dom';
 import { Provider } from 'react-redux';
 import { PersistGate } from 'redux-persist/integration/react';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
+import { ReactQueryDevtools } from '@tanstack/react-query-devtools';
 import { I18nextProvider } from 'react-i18next';
 import { externalLinks } from 'src/utils/externalLinks';
 import { cryptography } from '@liskhq/lisk-client';
@@ -41,6 +42,7 @@ const renderWithRouter = Component => (
             <Component />
           </I18nextProvider>
         </Router>
+        <ReactQueryDevtools />
       </PersistGate>
     </Provider>
   </QueryClientProvider>

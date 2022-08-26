@@ -1,12 +1,12 @@
 import { worker } from './runtime';
 
 jest.mock('msw', () => ({
-  ...(jest.requireActual('msw')),
-  setupWorker: jest.fn(() => 'foo'),
+  setupWorker: jest.fn(() => 'mockServiceWorker'),
 }));
 
-describe('useNetworkStatus hook', () => {
-  it('fetching data correctly', async () => {
-    expect(worker).toEqual('foo');
+describe('MSW worker', () => {
+  it('working correctly', async () => {
+    expect(worker).toBeDefined();
+    expect(worker).toEqual('mockServiceWorker');
   });
 });

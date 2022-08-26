@@ -46,22 +46,22 @@ function withFilters(apiName, initialFilters, initialSort) {
         }
       }
 
-      clearAllFilters(cb) {
-        if (cb) {
+      clearAllFilters(callback) {
+        if (callback) {
           this.setState({ filters: initialFilters });
-          cb();
+          callback();
         } else {
           this.applyFilters(initialFilters);
         }
       }
 
-      changeSort(id, cb) {
+      changeSort(id, callback) {
         const { filters, sort } = this.state;
         this.setState({
           sort: `${id}:${sort.includes('asc') ? 'desc' : 'asc'}`,
         }, () => {
-          if (cb) {
-            cb();
+          if (callback) {
+            callback();
           } else {
             this.applyFilters(filters);
           }

@@ -22,7 +22,7 @@ import routes from 'src/routes/routes';
 import './variables.css';
 import styles from './app.css';
 
-if (process.env.NODE_ENV === 'development' || process.env.REACT_APP_MSW) {
+if (process.env.REACT_APP_MSW) {
   const { worker } = require('src/service/mock/runtime');
   worker.start({ onUnhandledRequest: 'bypass' });
 }

@@ -1,7 +1,11 @@
 import { server } from 'src/service/mock/server';
+import client from 'src/utils/api/client';
 
 // Establish API mocking before all tests.
-beforeAll(() => server.listen({ onUnhandledRequest: 'bypass' }));
+beforeAll(() => {
+  server.listen({ onUnhandledRequest: 'error' });
+  client.create({ rpc: 'ws://localhost', rest: 'http://localhost' });
+});
 // Reset any request handlers that we may add during the tests,
 // so they don't affect other tests.
 afterEach(() => server.resetHandlers());

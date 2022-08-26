@@ -24,9 +24,23 @@ const managedApplications = {
   selectApplicationNodeRow: '.select-node-row',
 };
 
+const tokenUsage = {
+  requestTokenButton: '.request-token-button',
+  copyRequestTokenButton: '.request-wrapper .copy-button',
+  recipientChainSelect: '.request-wrapper .recipient-chain-select',
+  tokenSelect: '.request-wrapper .token-select',
+  requestTokenAmountField: '.request-wrapper .amount-field',
+  recipientChainDropdownOption: '.recipient-application .dropdown-option',
+  tokenDropdownOption: '.token .dropdown-option',
+  addMessageButton: '.add-message-button',
+  removeMessageIcon: 'img[alt="removeBlueIcon"]',
+  messageTextArea: '.reference textarea',
+};
+
 const ss = {
   ...delegatesPage,
   ...managedApplications,
+  ...tokenUsage,
   becomeDelegateLink: '.register-delegate',
   app: '#app',
   monitorNetwork: '#network',
@@ -69,8 +83,10 @@ const ss = {
   bookmarkList: '.bookmarkList',
   sendButton: '.confirm-button',
   transactionAddress: '.transaction-address span',
-  chooseDelegateName: '.confirm-btn',
   delegateNameInput: '.select-name-input',
+  genKeyInput: '.generator-publicKey-input',
+  blsKeyInput: '.bls-key-input',
+  popInput: '.pop-input',
   submitDelagateNameBtn: '.submit-delegate-name',
   successText: '.success-description',
   goToDashboardAfterDelegateReg: '.registration-success',

@@ -1,4 +1,5 @@
 import transactions from '@tests/constants/transactions';
+
 /* eslint-disable import/prefer-default-export */
 export const mockTransactions = {
   meta: {

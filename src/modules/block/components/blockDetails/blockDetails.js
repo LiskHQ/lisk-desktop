@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React from 'react';
 import { Link } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import routes from 'src/routes/routes';
@@ -119,11 +119,8 @@ const BlockDetails = ({
   currentHeight, id,
 }) => {
   const { t } = useTranslation();
-  const [config, setConfig] = useState({ params: {} });
-  const { data, error, isLoading } = useTransactions({ config });
-  useEffect(() => {
-    setConfig({ params: { blockID: id } });
-  }, [id]);
+  const config = { params: { blockID: id } };
+  const { data: transactions, error, isLoading } = useTransactions({ config });
 
   return (
     <div>
@@ -139,7 +136,7 @@ const BlockDetails = ({
             />
           ) : (
             <Rows
-              data={data}
+              data={transactions}
               currentHeight={currentHeight}
               t={t}
             />

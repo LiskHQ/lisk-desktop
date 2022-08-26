@@ -3,6 +3,7 @@ import { mount } from 'enzyme';
 import { MODULE_COMMANDS_NAME_ID_MAP } from '@transaction/configuration/moduleAssets';
 import accounts from '@tests/constants/wallets';
 import { mountWithProps } from 'src/utils/testHelpers';
+import { genKey, blsKey, pop } from '@tests/constants/keys';
 import TxComposer from './index';
 
 describe('TxComposer', () => {
@@ -52,10 +53,14 @@ describe('TxComposer', () => {
     const newProps = {
       ...props,
       transaction: {
-        ...props.transaction,
+        isValid: true,
+        feedback: [],
         moduleCommandID: MODULE_COMMANDS_NAME_ID_MAP.registerDelegate,
         params: {
           username: 'test_username',
+          generatorPublicKey: genKey,
+          blsPublicKey: blsKey,
+          proofOfPossession: pop,
         },
       },
     };

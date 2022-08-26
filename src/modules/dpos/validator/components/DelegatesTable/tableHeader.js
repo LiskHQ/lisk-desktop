@@ -1,3 +1,4 @@
+/* istanbul ignore file */
 /* eslint-disable no-nested-ternary */
 import grid from 'flexboxgrid/dist/flexboxgrid.css';
 import styles from '../DelegatesMonitorView/delegates.css';
