@@ -12,7 +12,6 @@ describe('useUnlocks hook', () => {
 
   it('fetching data correctly', async () => {
     const { result, waitFor } = renderHook(() => useUnlocks({ config }), { wrapper });
-    expect(result.current.isLoading).toBeTruthy();
     await waitFor(() => result.current.isFetched);
     expect(result.current.isSuccess).toBeTruthy();
     const expectedResponse = {
@@ -31,7 +30,6 @@ describe('useUnlocks hook', () => {
 
   it('fetches data without params correctly', async () => {
     const { result, waitFor } = renderHook(() => useUnlocks(), { wrapper });
-    expect(result.current.isLoading).toBeTruthy();
     await waitFor(() => result.current.isFetched);
     expect(result.current.isSuccess).toBeTruthy();
     const expectedResponse = {

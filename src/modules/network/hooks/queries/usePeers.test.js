@@ -12,7 +12,6 @@ describe('useBlocks hook', () => {
 
   it('fetching data correctly', async () => {
     const { result, waitFor } = renderHook(() => usePeers({ config }), { wrapper });
-    expect(result.current.isLoading).toBeTruthy();
     await waitFor(() => result.current.isFetched);
     expect(result.current.isSuccess).toBeTruthy();
     const expectedResponse = {
@@ -28,7 +27,6 @@ describe('useBlocks hook', () => {
 
   it('fetching data correctly without any options/config', async () => {
     const { result, waitFor } = renderHook(() => usePeers(), { wrapper });
-    expect(result.current.isLoading).toBeTruthy();
     await waitFor(() => result.current.isFetched);
     expect(result.current.isSuccess).toBeTruthy();
     expect(result.current.data).toEqual({

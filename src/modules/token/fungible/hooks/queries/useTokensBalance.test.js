@@ -17,7 +17,6 @@ describe('useTokensBalance hook', () => {
   it.skip('fetches data correctly', async () => {
     const { result, waitFor } = hookResult;
 
-    expect(result.current.isLoading).toBeTruthy();
     await waitFor(() => result.current.isFetched);
     expect(result.current.isSuccess).toBeTruthy();
     expect(result.current.data).toEqual(mockLegacy);
@@ -26,7 +25,6 @@ describe('useTokensBalance hook', () => {
   it.skip('should fetch next set of data correctly', async () => {
     const { result, waitFor } = hookResult;
 
-    expect(result.current.isLoading).toBeTruthy();
     await waitFor(() => result.current.isFetched);
     expect(result.current.isSuccess).toBeTruthy();
     const expectedResponse = {
@@ -56,7 +54,6 @@ describe('useTokensBalance hook', () => {
     hookResult = renderHook(() => useTokensBalance({ config: errorConfig }), { wrapper });
     const { result, waitFor } = hookResult;
 
-    expect(result.current.isLoading).toBeTruthy();
     await waitFor(() => result.current.isFetched);
     expect(result.current.isSuccess).toBeTruthy();
     const expectedResponse = {
@@ -72,7 +69,6 @@ describe('useTokensBalance hook', () => {
     hookResult = renderHook(() => useTokensBalance({ config: errorConfig }), { wrapper });
     const { result, waitFor } = hookResult;
 
-    expect(result.current.isLoading).toBeTruthy();
     await waitFor(() => result.current.isFetched);
     expect(result.current.isSuccess).toBeTruthy();
     const expectedResponse = {
@@ -88,7 +84,6 @@ describe('useTokensBalance hook', () => {
     hookResult = renderHook(() => useTokensBalance({ config: errorConfig }), { wrapper });
     const { result, waitFor } = hookResult;
 
-    expect(result.current.isLoading).toBeTruthy();
     await waitFor(() => result.current.isFetched);
     expect(result.current.isSuccess).toBeTruthy();
     const expectedResponse = {

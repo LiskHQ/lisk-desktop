@@ -11,7 +11,6 @@ describe('useNewsFeed hook', () => {
 
   it('fetching data correctly', async () => {
     const { result, waitFor } = renderHook(() => useNewsFeed({ config }), { wrapper });
-    expect(result.current.isLoading).toBeTruthy();
     await waitFor(() => result.current.isFetched);
     expect(result.current.isSuccess).toBeTruthy();
     const expectedResponse = {
@@ -27,7 +26,6 @@ describe('useNewsFeed hook', () => {
 
   it('fetching data correctly without any options/config', async () => {
     const { result, waitFor } = renderHook(() => useNewsFeed(), { wrapper });
-    expect(result.current.isLoading).toBeTruthy();
     await waitFor(() => result.current.isFetched);
     expect(result.current.isSuccess).toBeTruthy();
     expect(result.current.data).toEqual(mockNewsFeed);

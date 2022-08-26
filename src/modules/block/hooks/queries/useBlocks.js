@@ -48,7 +48,7 @@ export const useBlocks = ({ config: customConfig = {}, options } = { }) => {
   });
 
   /* istanbul ignore next */
-  const invalidData = useCallback(async () => {
+  const invalidateData = useCallback(async () => {
     setHasUpdate(false);
     await queryClient.invalidateQueries(BLOCKS);
   }, [queryClient, setHasUpdate]);
@@ -56,18 +56,12 @@ export const useBlocks = ({ config: customConfig = {}, options } = { }) => {
   const response = useCustomInfiniteQuery({
     keys: [BLOCKS],
     config,
-    options: {
-      ...options,
-      // TODO: Update custom infinite query with these
-      placeholderData: {
-        pages: [],
-      },
-    },
+    options,
   });
 
   return {
     ...response,
     hasUpdate,
-    addUpdate: invalidData,
+    addUpdate: invalidateData,
   };
 };

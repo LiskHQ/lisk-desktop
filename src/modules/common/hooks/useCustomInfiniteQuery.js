@@ -54,6 +54,10 @@ export const useCustomInfiniteQuery = ({
         };
       }, { data: [], meta: {} }),
       ...options,
+      placeholderData: {
+        pages: [],
+        ...options.placeholderData,
+      },
     },
   );
 };

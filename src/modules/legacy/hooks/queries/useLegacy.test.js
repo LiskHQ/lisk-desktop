@@ -13,7 +13,6 @@ describe('useLegacy hook', () => {
     const config = { params: { publicKey: '6e0291140a28148267e30ac69b5e6965680190dc7de13b0a859bda556c9f0f86' } };
     const { result, waitFor } = renderHook(() => useLegacy({ config }), { wrapper });
 
-    expect(result.current.isLoading).toBeTruthy();
     await waitFor(() => result.current.isFetched);
     expect(result.current.isSuccess).toBeTruthy();
     expect(result.current.data).toEqual(mockLegacy);
@@ -33,7 +32,6 @@ describe('useLegacy hook', () => {
       }),
     );
 
-    expect(result.current.isLoading).toBeTruthy();
     await waitFor(() => result.current.isFetched);
     expect(result.current.isSuccess).toBeTruthy();
     expect(result.current.error).toEqual(expectedResponse);
@@ -42,7 +40,6 @@ describe('useLegacy hook', () => {
   it('returns an error object if URL is called without options/config', async () => {
     const { result, waitFor } = renderHook(() => useLegacy(), { wrapper });
 
-    expect(result.current.isLoading).toBeTruthy();
     await waitFor(() => result.current.isFetched);
     expect(result.current.isSuccess).toBeTruthy();
     expect(result.current.data).toEqual(mockLegacy);
