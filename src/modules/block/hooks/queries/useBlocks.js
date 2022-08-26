@@ -58,6 +58,7 @@ export const useBlocks = ({ config: customConfig = {}, options } = { }) => {
     config,
     options: {
       ...options,
+      // TODO: Update custom infinite query with these
       placeholderData: {
         pages: [],
       },
