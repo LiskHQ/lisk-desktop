@@ -1,6 +1,6 @@
 import { renderHook } from '@testing-library/react-hooks';
 import { waitFor } from '@testing-library/dom';
-import { useSort } from './useSort';
+import { useSort } from '.';
 
 describe('useSort hook', () => {
   const data = [

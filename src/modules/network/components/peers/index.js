@@ -1,6 +1,6 @@
 import React from 'react';
 import { useTranslation } from 'react-i18next';
-import { useSort } from 'src/modules/common/hooks/useSort';
+import { useSort } from 'src/modules/common/hooks';
 import Box from 'src/theme/box';
 import BoxContent from 'src/theme/box/content';
 import Table from 'src/theme/table';

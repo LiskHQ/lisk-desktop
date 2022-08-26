@@ -27,7 +27,7 @@ describe('Network Monitor: Peers', () => {
     data: mockPeers,
   };
 
-  const lodingProps = {
+  const loadingProps = {
     ...emptyPeers,
     isLoading: true,
     isFetching: true,
@@ -41,7 +41,7 @@ describe('Network Monitor: Peers', () => {
   });
 
   it('shows loading overlay while the API call is being processed', () => {
-    usePeers.mockReturnValue(lodingProps);
+    usePeers.mockReturnValue(loadingProps);
 
     const wrapper = shallow(<Peers />);
     expect(wrapper.html().match(/loadingOverlay/)).toHaveLength(1);
