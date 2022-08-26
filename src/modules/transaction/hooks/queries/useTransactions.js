@@ -49,13 +49,6 @@ export const useTransactions = ({ config: customConfig = {}, options } = {}) => 
   return useCustomInfiniteQuery({
     keys: [TRANSACTIONS],
     config,
-    options: {
-      ...options,
-      placeholderData: {
-        data: [],
-        pages: [],
-        pageParams: [],
-      },
-    },
+    options,
   });
 };

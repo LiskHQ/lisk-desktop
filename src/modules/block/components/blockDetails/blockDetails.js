@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import routes from 'src/routes/routes';
@@ -12,9 +12,9 @@ import Feedback from 'src/theme/feedback/feedback';
 import LabeledValue from 'src/theme/labeledValue';
 import TokenAmount from '@token/fungible/components/tokenAmount';
 import Transactions from '@transaction/components/BlockDetailsTransactions';
-import { useTransactions } from '@transaction/hooks/queries/useTransactions';
 import { truncateAddress } from '@wallet/utils/account';
 import WalletVisual from '@wallet/components/walletVisual';
+import { useBlocks } from '../../hooks/queries/useBlocks';
 import styles from './blockDetails.css';
 
 const Generator = ({ generatorAddress, generatorUsername }) => {
@@ -116,11 +116,23 @@ const Rows = ({ data, t, currentHeight }) => {
 };
 
 const BlockDetails = ({
-  currentHeight, id,
+  currentHeight, height, id,
 }) => {
   const { t } = useTranslation();
-  const config = { params: { blockID: id } };
-  const { data: transactions, error, isLoading } = useTransactions({ config });
+  const [config, setConfig] = useState({ params: {} });
+  const { data: blocks, error, isLoading } = useBlocks({ config });
+  useEffect(() => {
+    // Ensure query supports both ID and height
+    if (id && !height) {
+      setConfig({ params: { blockID: id } });
+    }
+    if (!id && height) {
+      setConfig({ params: { height } });
+    }
+    if (id && height) {
+      setConfig({ params: { blockID: id, height } });
+    }
+  }, [id, height]);
 
   return (
     <div>
@@ -136,7 +148,7 @@ const BlockDetails = ({
             />
           ) : (
             <Rows
-              data={transactions}
+              data={blocks}
               currentHeight={currentHeight}
               t={t}
             />
