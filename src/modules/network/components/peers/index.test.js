@@ -1,51 +1,56 @@
 import React from 'react';
 import { mount, shallow } from 'enzyme';
-import peers from '@tests/constants/peers';
 import Peers from '.';
+import { mockPeers } from '../../__fixtures__';
+import { usePeers } from '../../hooks/queries';
+
+jest.mock('react-i18next', () => ({
+  ...jest.requireActual('react-i18next'),
+  useTranslation: jest.fn().mockReturnValue({ t: jest.fn().mockImplementation(key => key) }),
+}));
+
+jest.mock('../../hooks/queries');
 
 describe('Network Monitor: Peers', () => {
-  const loadData = jest.fn();
-  const clearData = jest.fn();
-  const urlSearchParams = {};
+  const mockFetchNextPage = jest.fn();
+
   const emptyPeers = {
-    isLoading: false,
     data: [],
-    loadData,
-    clearData,
-    urlSearchParams,
-  };
-  const fullPeers = {
     isLoading: false,
-    data: peers,
-    meta: { total: peers.length },
-    loadData,
-    clearData,
-    urlSearchParams,
+    isFetching: false,
+    hasNextPage: false,
+    fetchNextPage: mockFetchNextPage,
   };
-  const t = key => key;
-  const lodingProps = {
-    t,
-    peers: {
-      isLoading: true,
-      data: [],
-      meta: {},
-      loadData,
-      clearData,
-      urlSearchParams,
-    },
+
+  const fullPeers = {
+    ...emptyPeers,
+    data: mockPeers,
   };
-  it('renders the empty state if no peers passed', () => {
-    const wrapper = mount(<Peers {...{ t, peers: emptyPeers }} />);
+
+  const loadingProps = {
+    ...emptyPeers,
+    isLoading: true,
+    isFetching: true,
+  };
+
+  it('renders the empty state if no peers passed', async () => {
+    usePeers.mockReturnValue(emptyPeers);
+
+    const wrapper = mount(<Peers />);
     expect(wrapper.find('.empty-state')).toHaveLength(1);
   });
 
   it('shows loading overlay while the API call is being processed', () => {
-    const wrapper = shallow(<Peers {...lodingProps} />);
+    usePeers.mockReturnValue(loadingProps);
+
+    const wrapper = shallow(<Peers />);
     expect(wrapper.html().match(/loadingOverlay/)).toHaveLength(1);
   });
 
-  it('renders 20 peers', () => {
-    const wrapper = shallow(<Peers {...{ t, peers: fullPeers }} />);
-    expect(wrapper.html().match(/peer-row/gm)).toHaveLength(20);
+  it('renders 30 peers', () => {
+    usePeers.mockReturnValue(fullPeers);
+
+    const wrapper = shallow(<Peers />);
+    expect(wrapper.html().match(/peer-row/gm)).toHaveLength(30);
   });
 });
