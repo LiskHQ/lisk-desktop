@@ -1,6 +1,6 @@
 import { useEffect, useContext, useCallback } from 'react';
 import { getSdkError } from '@walletconnect/utils';
-import { client } from '@libs/wcm/utils/connectionCreator';
+import { client } from '../utils/connectionCreator';
 import ConnectionContext from '../context/connectionContext';
 import { ERROR_CASES } from '../constants/lifeCycle';
 
@@ -49,7 +49,7 @@ const usePairings = () => {
   }, []);
 
   useEffect(() => {
-    if (client?.pairing?.getAll && !pairings.length) {
+    if (client?.pairing?.getAll && pairings?.length === 0) {
       const activePairings = client.pairing.getAll({ active: true });
       setPairings([{ loaded: true }, ...activePairings]);
     }

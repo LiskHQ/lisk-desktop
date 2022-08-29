@@ -1,5 +1,5 @@
 import SignClient from '@walletconnect/sign-client';
-import { createSignClient, client} from './connectionCreator';
+import { createSignClient, client } from './connectionCreator';
 
 jest.mock('@walletconnect/sign-client', () => ({
   init: jest.fn().mockResolvedValue(Promise.resolve({ mock: true })),

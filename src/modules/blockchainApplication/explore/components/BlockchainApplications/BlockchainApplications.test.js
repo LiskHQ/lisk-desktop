@@ -52,11 +52,12 @@ describe('BlockchainApplicationList', () => {
   });
 
   it('should display properly', () => {
-    expect(screen.getByText('Name')).toBeTruthy();
+    expect(screen.queryAllByText('name')).toBeTruthy();
     expect(screen.getByText('Chain ID')).toBeTruthy();
     expect(screen.getByText('Status')).toBeTruthy();
     expect(screen.getByText('LSK deposited')).toBeTruthy();
-    expect(screen.getByText('Applications')).toBeTruthy();
+    expect(screen.getByText('All applications')).toBeTruthy();
+    expect(screen.getByText('Connections')).toBeTruthy();
 
     expect(screen.getByText('Total Supply')).toBeTruthy();
     expect(screen.getByText('Staked')).toBeTruthy();

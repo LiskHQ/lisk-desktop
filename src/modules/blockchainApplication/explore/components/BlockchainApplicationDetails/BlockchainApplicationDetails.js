@@ -60,7 +60,7 @@ const BlockchainApplicationDetails = ({ location, application }) => {
 
   const app = {
     data: {
-      ...application,
+      ...application.data,
       serviceUrl: 'https://lisk.com/',
       icon: liskLogo,
       bg: defaultBackgroundImage,
