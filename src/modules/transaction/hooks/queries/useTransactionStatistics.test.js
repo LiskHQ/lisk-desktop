@@ -12,6 +12,7 @@ describe('useTransactionStatistics hook', () => {
 
   it('fetching data correctly', async () => {
     const { result, waitFor } = renderHook(() => useTransactionStatistics({ config }), { wrapper });
+    expect(result.current.isLoading).toBeTruthy();
     await waitFor(() => result.current.isFetched);
     expect(result.current.isSuccess).toBeTruthy();
     const expectedResponse = {
@@ -57,6 +58,7 @@ describe('useTransactionStatistics hook', () => {
 
   it('fetches data without params correctly', async () => {
     const { result, waitFor } = renderHook(() => useTransactionStatistics(), { wrapper });
+    expect(result.current.isLoading).toBeTruthy();
     await waitFor(() => result.current.isFetched);
     expect(result.current.isSuccess).toBeTruthy();
     const expectedResponse = {

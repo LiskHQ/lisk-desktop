@@ -8,13 +8,13 @@ const PeerRow = ({ data, className }) => (
       {data.ip}
     </span>
     <span className={grid['col-xs-2']}>
-      {data.port}
+      {data.httpPort}
     </span>
     <span className={grid['col-xs-2']}>
       <Flag code={data.location?.countryCode} />
     </span>
     <span className={`${grid['col-xs-2']} network-span`}>
-      {data.networkVersion}
+      {data.version}
     </span>
     <span className={grid['col-xs-3']}>
       {data.height}

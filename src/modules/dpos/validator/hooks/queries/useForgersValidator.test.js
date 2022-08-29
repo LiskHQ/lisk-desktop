@@ -8,6 +8,7 @@ jest.useRealTimers();
 describe('useForgersValidator hook', () => {
   it('fetching data correctly', async () => {
     const { result, waitFor } = renderHook(() => useForgersValidator(), { wrapper });
+    expect(result.current.isLoading).toBeTruthy();
     await waitFor(() => result.current.isFetched);
     expect(result.current.isSuccess).toBeTruthy();
     expect(result.current.data).toEqual(mockValidators);
