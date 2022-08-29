@@ -11,10 +11,15 @@ export const networkStatus = rest.post(
 export const transactions = rest.get(
   `*/api/${API_VERSION}/transactions`,
   async (req, res, ctx) => {
-    const limit = Number(req.url.searchParams.get('limit'));
+    const limit = Number(req.url.searchParams.get('limit') || LIMIT);
     const offset = Number(req.url.searchParams.get('offset') || 0);
+    const blockID = req.url.searchParams.get('blockID');
+    let mockTransactionsData = mockTransactions.data;
+    if (blockID) {
+      mockTransactionsData = mockTransactionsData.filter((tx) => tx.block.id === blockID)[0];
+    }
     const response = {
-      data: mockTransactions.data.slice(offset, offset + limit),
+      data: mockTransactionsData.slice(offset, offset + limit),
       meta: {
         ...mockTransactions.meta,
         count: limit,
