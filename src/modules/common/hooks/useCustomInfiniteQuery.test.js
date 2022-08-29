@@ -23,6 +23,8 @@ describe('useCustomInfiniteQuery hook', () => {
       () => useCustomInfiniteQuery({ config, keys }), { wrapper },
     );
 
+    expect(result.current.isLoading).toBeTruthy();
+
     await waitFor(() => result.current.isFetched);
 
     expect(result.current.isSuccess).toBeTruthy();

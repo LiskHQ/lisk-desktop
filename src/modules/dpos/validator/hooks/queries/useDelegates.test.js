@@ -12,6 +12,7 @@ describe('useDelegates hook', () => {
 
   it('fetching data correctly', async () => {
     const { result, waitFor } = renderHook(() => useDelegates({ config }), { wrapper });
+    expect(result.current.isLoading).toBeTruthy();
     await waitFor(() => result.current.isFetched);
     expect(result.current.isSuccess).toBeTruthy();
     const expectedResponse = {

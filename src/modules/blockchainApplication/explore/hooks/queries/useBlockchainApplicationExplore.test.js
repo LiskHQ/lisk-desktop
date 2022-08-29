@@ -14,6 +14,7 @@ describe('useBlockchainApplicationExplore hook', () => {
       () => useBlockchainApplicationExplore({ config }),
       { wrapper },
     );
+    expect(result.current.isLoading).toBeTruthy();
     await waitFor(() => result.current.isFetched);
     expect(result.current.isSuccess).toBeTruthy();
     const expectedResponse = {
