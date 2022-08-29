@@ -1,27 +1,30 @@
 import React from 'react';
 import { shallow } from 'enzyme';
-import peers from '@tests/constants/peers';
 import Network from './index';
+import { mockPeers, mockNetworkStatistics } from '../../__fixtures__';
+import { usePeers, useNetworkStatistics } from '../../hooks/queries';
+
+jest.mock('react-i18next', () => ({
+  ...jest.requireActual('react-i18next'),
+  useTranslation: jest.fn().mockReturnValue({ t: jest.fn().mockImplementation(key => key) }),
+}));
+
+jest.mock('../../hooks/queries');
 
 describe('Network view', () => {
-  const t = jest.fn().mockImplementation(str => str);
-
   it('Renders to component correctly', () => {
-    const wrapper = shallow(
-      <Network
-        t={t}
-        peers={{
-          isLoading: true,
-          data: peers,
-          meta: {
-            total: 2,
-          },
-          loadData: jest.fn(),
-          clearData: jest.fn(),
-          urlSearchParams: {},
-        }}
-      />,
-    );
+    usePeers.mockReturnValue({
+      data: mockPeers,
+      isLoading: false,
+      isFetching: false,
+      hasNextPage: false,
+      fetchNextPage: jest.fn(),
+    });
+    useNetworkStatistics.mockReturnValue({
+      data: mockNetworkStatistics,
+    });
+
+    const wrapper = shallow(<Network />);
 
     const html = wrapper.html();
     expect(html).toContain('Network statistics');

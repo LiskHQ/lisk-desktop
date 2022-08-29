@@ -148,7 +148,7 @@ const BlockDetails = ({
             />
           ) : (
             <Rows
-              data={blocks}
+              data={blocks?.data ?? {}}
               currentHeight={currentHeight}
               t={t}
             />

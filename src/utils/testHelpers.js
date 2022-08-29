@@ -132,20 +132,3 @@ export const renderWithCustomRouter = (Component, props) => render(
     <Component {...props} />
   </Router>,
 );
-
-/**
- * Renders components that are wrapped in Query Client
- *
- * @param {Class|Function} Component - A React component to be tested
- * @param {Object} props - Set of props to be passed to the component
- *
- * @returns {Object} Rendered component
- */
-export const renderWithQueryClient = (Component, props = {}) => {
-  const queryClient = new QueryClient();
-  return render(
-    <QueryClientProvider client={queryClient}>
-      <Component {...props} />
-    </QueryClientProvider>,
-  );
-};
