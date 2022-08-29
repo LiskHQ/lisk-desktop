@@ -14,19 +14,11 @@ import { fromRawLsk } from '@token/fungible/utils/lsk';
 import { validateAddress } from 'src/utils/validators';
 import http from 'src/utils/api/http';
 import { getDelegates } from '@dpos/validator/api';
-import { HTTP_PREFIX } from 'src/const/httpCodes';
+import { httpPaths } from '../configuration';
 import {
   desktopTxToElementsTx,
   sign,
 } from '../utils';
-
-const httpPaths = {
-  fees: `${HTTP_PREFIX}/fees`,
-  transactions: `${HTTP_PREFIX}/transactions`,
-  transaction: `${HTTP_PREFIX}/transactions`,
-  transactionStats: `${HTTP_PREFIX}/transactions/statistics`,
-  schemas: `${HTTP_PREFIX}/transactions/schemas`,
-};
 
 // TODO: Remove this patch once API is integrated
 const patchTransactionResponse = response => {

@@ -12,7 +12,7 @@ describe('useTransactions hook', () => {
 
   it('fetches data correctly', async () => {
     const { result, waitFor } = renderHook(() => useTransactions({ config }), { wrapper });
-    expect(result.current.isLoading).toBeTruthy();
+    // Since placeholder data is used, then there's no initial data loading
     await waitFor(() => result.current.isFetched);
     expect(result.current.isSuccess).toBeTruthy();
     const expectedResponse = {

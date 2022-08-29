@@ -1,6 +1,6 @@
 import AddBookmark from '@bookmark/manager/AddBookmarkManager';
 import BlockDetails from '@block/manager/blockDetailsManager';
-import Blocks from '@block/manager/blocksManager';
+import Blocks from '@block/components/blocks';
 import Bookmarks from '@bookmark/manager/BookmarkListManager';
 import Dashboard from 'src/modules/common/components/dashboard';
 import DelegatesMonitor from '@dpos/validator/components/DelegatesMonitorView';

@@ -21,7 +21,7 @@ const BlockFilterDropdown = ({ t, filters, applyFilters }) => {
         value2: 'lskzmeyea4ead534jnq9dho5vsust6h9x552zqtor',
       },
     ),
-    name: 'generator',
+    name: 'generatorAddress',
     type: 'text',
   }];
 

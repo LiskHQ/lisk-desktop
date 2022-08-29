@@ -44,7 +44,7 @@ export const useTransactions = ({ config: customConfig = {}, options } = {}) => 
     method: 'get',
     event: 'update.transactions',
     ...customConfig,
-    params: { limit, ...customConfig.params },
+    params: { limit, ...(customConfig?.params || {}) },
   };
   return useCustomInfiniteQuery({
     keys: [TRANSACTIONS],

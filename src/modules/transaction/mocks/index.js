@@ -5,7 +5,29 @@ import {
 } from '@transaction/__fixtures__';
 
 export const networkStatus = rest.post(
-  `*/api/${API_VERSION}/transactions`, (req, res, ctx) => res(ctx.delay(20), ctx.status(200)),
+  `*/api/${API_VERSION}/transactions`, (_, res, ctx) => res(ctx.delay(20), ctx.status(200)),
+);
+
+export const transactions = rest.get(
+  `*/api/${API_VERSION}/transactions`,
+  async (req, res, ctx) => {
+    const limit = Number(req.url.searchParams.get('limit') || LIMIT);
+    const offset = Number(req.url.searchParams.get('offset') || 0);
+    const blockID = req.url.searchParams.get('blockID');
+    let mockTransactionsData = mockTransactions.data;
+    if (blockID) {
+      mockTransactionsData = mockTransactionsData.filter((tx) => tx.block.id === blockID)[0];
+    }
+    const response = {
+      data: mockTransactionsData.slice(offset, offset + limit),
+      meta: {
+        ...mockTransactions.meta,
+        count: limit,
+        offset,
+      },
+    };
+    return res(ctx.json(response));
+  },
 );
 
 export const transactionStatistics = rest.get(
@@ -25,24 +47,6 @@ export const transactionStatistics = rest.get(
       },
     };
     return res(ctx.delay(20), ctx.json(response));
-  },
-);
-
-// eslint-disable-next-line import/prefer-default-export
-export const transactions = rest.get(
-  `*/api/${API_VERSION}/transactions`,
-  async (req, res, ctx) => {
-    const limit = Number(req.url.searchParams.get('limit'));
-    const offset = Number(req.url.searchParams.get('offset') || 0);
-    const response = {
-      data: mockTransactions.data.slice(offset, offset + limit),
-      meta: {
-        ...mockTransactions.meta,
-        count: limit,
-        offset,
-      },
-    };
-    return res(ctx.json(response));
   },
 );
 
