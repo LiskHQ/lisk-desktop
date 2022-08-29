@@ -2,6 +2,10 @@ import React from 'react';
 import { mount } from 'enzyme';
 import peers from '@tests/constants/peers';
 import Map from './index';
+import { mockPeers } from '../../__fixtures__';
+import { usePeers } from '../../hooks/queries';
+
+jest.mock('../../hooks/queries');
 
 const mockAddLayer = jest.fn();
 const mockAddAttribution = jest.fn();
@@ -34,7 +38,14 @@ jest.mock('leaflet.markercluster/dist/leaflet.markercluster', () => ({}));
 
 describe('Map view', () => {
   it('Renders the map correctly', () => {
-    mount(<Map peers={peers} />);
+    usePeers.mockReturnValue({
+      data: mockPeers,
+      isLoading: false,
+      isFetching: false,
+    });
+
+    mount(<Map />);
+
     expect(mockSetView).toBeCalled();
     expect(mockAddTo).toBeCalledWith(networkMap);
     expect(mockAddLayer).toHaveBeenCalledTimes(peers.length + 1);

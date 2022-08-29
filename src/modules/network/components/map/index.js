@@ -1,4 +1,6 @@
-import React, { useEffect, useRef, useState } from 'react';
+import React, {
+  useEffect, useMemo, useRef, useState,
+} from 'react';
 import L from 'leaflet';
 import 'leaflet.markercluster/dist/leaflet.markercluster';
 import Box from '@theme/box';
@@ -6,6 +8,7 @@ import BoxContent from '@theme/box/content';
 import markerIcon from '@setup/react/assets/images/marker.svg';
 import mapboxWatermarkImage from '@setup/react/assets/images/mapbox.png';
 import styles from './map.css';
+import { usePeers } from '../../hooks/queries';
 
 const mapOptions = {
   minZoom: 2,
@@ -57,9 +60,12 @@ const getTiles = () =>
     },
   );
 
-const FullMap = ({ peers }) => {
+const FullMap = () => {
   const ref = useRef();
   const [peersCount, setPeersCount] = useState(0);
+  const { data } = usePeers();
+
+  const peers = useMemo(() => data?.data || [], [data]);
 
   useEffect(() => {
     if (peers.length) {
@@ -79,12 +85,7 @@ const FullMap = ({ peers }) => {
     }
   }, [peers]);
 
-  useEffect(
-    () => () => {
-      ref.current.remove();
-    },
-    [],
-  );
+  useEffect(() => ref.current?.remove, []);
 
   return (
     <Box className="map-box">
