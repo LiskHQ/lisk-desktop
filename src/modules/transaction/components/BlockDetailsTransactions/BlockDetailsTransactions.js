@@ -20,7 +20,9 @@ const BlockDetailsTransactions = ({
   const currentBlockHeight = useSelector(selectCurrentBlockHeight);
   const activeToken = useSelector(selectActiveToken);
   const [config, setConfig] = useState({ params: {} });
-  const { data: transactions } = useTransactions({ config });
+  const {
+    data: transactions, isLoading, isFetching, error,
+  } = useTransactions({ config });
   useEffect(() => {
     // Ensure query supports both ID and height
     if (blockId && !height) {
@@ -35,11 +37,11 @@ const BlockDetailsTransactions = ({
   }, [blockId, height]);
 
   return (
-    <Box main isLoading={transactions.isLoading} className="transactions-box">
+    <Box main isLoading={isLoading} className="transactions-box">
       <BoxContent className={`${styles.content} transaction-results`}>
         <Table
-          data={transactions.data}
-          isLoading={transactions.isLoading}
+          data={transactions?.data || []}
+          isLoading={isFetching}
           row={TransactionRow}
           additionalRowProps={{
             currentBlockHeight,
@@ -49,7 +51,7 @@ const BlockDetailsTransactions = ({
           header={header(t)}
           headerClassName={styles.tableHeader}
           canLoadMore={false}
-          error={transactions.error}
+          error={error}
           emptyState={{
             message: t('There are no transactions for this block.'),
           }}
