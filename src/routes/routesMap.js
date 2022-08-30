@@ -48,7 +48,7 @@ import RemoveApplicationFlow from '@blockchainApplication/manage/components/Remo
 import ConnectionProposal from 'src/modules/blockchainApplication/connection/components/ConnectionProposal';
 import SessionManager from '@blockchainApplication/connection/components/SessionManager';
 import ConnectionSummary from 'src/modules/blockchainApplication/connection/components/ConnectionSummary';
-import RequestSummary from '@blockchainApplication/connection/components/RequestSummary';
+import RequestView from '@blockchainApplication/connection/components/RequestView';
 import ConnectionSuccess from 'src/modules/blockchainApplication/connection/components/ConnectionSuccess';
 
 export default {
@@ -102,7 +102,7 @@ export default {
   removeApplicationFlow: RemoveApplicationFlow,
   connectionProposal: ConnectionProposal,
   sessionManager: SessionManager,
-  requestSummary: RequestSummary,
+  requestView: RequestView,
   connectionSummary: ConnectionSummary,
   connectionSuccess: ConnectionSuccess,
 };

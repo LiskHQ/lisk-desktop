@@ -10,7 +10,7 @@ const ConnectionsHandler = ({ history }) => {
 
   useEffect(() => {
     if (events.length && events[events.length - 1].name === EVENTS.SESSION_REQUEST) {
-      addSearchParamsToUrl(history, { modal: 'requestSummary' });
+      addSearchParamsToUrl(history, { modal: 'requestView' });
     }
   }, [events]);
 
