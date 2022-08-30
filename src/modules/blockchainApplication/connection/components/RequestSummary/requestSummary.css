@@ -3,6 +3,7 @@
 .wrapper {
   width: 100%;
   box-sizing: border-box;
+  max-width: 520px;
   min-width: 450px;
   border-radius: 16px;
   overflow: hidden;
