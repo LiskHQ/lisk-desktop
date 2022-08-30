@@ -1,11 +1,11 @@
 import {
-  Sender, Recipient, Counterpart,
+  ID, Height, Sender, Counterpart,
   Date, Amount, Fee, Params, Status,
 } from './components';
 import styles from './schemas.css';
 
 const hosted = [Counterpart, Date, Fee, Params, Amount];
-const full = [Sender, Recipient, Date, Amount, Fee, Status];
+const full = [ID, Sender, Height, Fee, Date, Status];
 const minimal = [Counterpart, Amount];
 const vote = [Sender, Date, Params];
 
