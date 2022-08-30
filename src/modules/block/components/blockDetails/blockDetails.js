@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import routes from 'src/routes/routes';
@@ -122,22 +122,15 @@ const BlockDetails = ({
   currentHeight, height, id,
 }) => {
   const { t } = useTranslation();
-  const [config, setConfig] = useState({ params: {} });
-  const { data: blocks, error, isLoading } = useBlocks({ config });
+  const { data: blocks, error, isLoading } = useBlocks({
+    config: {
+      params: {
+        ...id && { blockID: id },
+        ...height && { height },
+      },
+    },
+  });
   const [activeTab, setActiveTab] = useState('transactions');
-
-  useEffect(() => {
-    // Ensure query supports both ID and height
-    if (id && !height) {
-      setConfig({ params: { blockID: id } });
-    }
-    if (!id && height) {
-      setConfig({ params: { height } });
-    }
-    if (id && height) {
-      setConfig({ params: { blockID: id, height } });
-    }
-  }, [id, height]);
 
   const tabs = {
     tabs: [
@@ -170,7 +163,7 @@ const BlockDetails = ({
             />
           ) : (
             <Rows
-              data={blocks?.data ?? {}}
+              data={blocks?.data?.[0] || {}}
               currentHeight={currentHeight}
               t={t}
             />

@@ -40,6 +40,7 @@ const BlockDetailsTransactions = ({
     <Box main isLoading={isLoading} className="transactions-box">
       <BoxContent className={`${styles.content} transaction-results`}>
         <Table
+          showHeader
           data={transactions?.data || []}
           isLoading={isFetching}
           row={TransactionRow}
