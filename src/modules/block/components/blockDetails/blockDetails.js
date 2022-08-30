@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import routes from 'src/routes/routes';
 import { tokenMap } from '@token/fungible/consts/tokens';
+import BoxTabs from 'src/theme/tabs';
 import DateTimeFromTimestamp from 'src/modules/common/components/timestamp';
 import Box from 'src/theme/box';
 import BoxHeader from 'src/theme/box/header';
@@ -121,6 +122,8 @@ const BlockDetails = ({
   const { t } = useTranslation();
   const [config, setConfig] = useState({ params: {} });
   const { data: blocks, error, isLoading } = useBlocks({ config });
+  const [activeTab, setActiveTab] = useState('transactions');
+
   useEffect(() => {
     // Ensure query supports both ID and height
     if (id && !height) {
@@ -133,6 +136,23 @@ const BlockDetails = ({
       setConfig({ params: { blockID: id, height } });
     }
   }, [id, height]);
+
+  const tabs = {
+    tabs: [
+      {
+        value: 'transactions',
+        name: t('Transactions'),
+        className: 'transactions',
+      },
+      {
+        value: 'events',
+        name: t('Events'),
+        className: 'events',
+      },
+    ],
+    active: activeTab,
+    onClick: ({ value }) => setActiveTab(value),
+  };
 
   return (
     <div>
@@ -155,7 +175,14 @@ const BlockDetails = ({
           )}
         </BoxContent>
       </Box>
-      <Transactions blockId={id} />
+      <Box>
+        <BoxHeader>
+          <BoxTabs {...tabs} />
+        </BoxHeader>
+        <BoxContent>
+          {activeTab === 'transactions' ? <Transactions blockId={id} /> : <div>eniola</div>}
+        </BoxContent>
+      </Box>
     </div>
   );
 };
