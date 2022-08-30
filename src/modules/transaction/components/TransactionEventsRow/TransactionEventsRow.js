@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import ReactJson from 'react-json-view';
 import grid from 'flexboxgrid/dist/flexboxgrid.css';
 import Icon from 'src/theme/Icon';
 import { TertiaryButton } from 'src/theme/buttons';
@@ -35,7 +36,7 @@ const CollapseToggle = ({ isCollapsed, onToggle }) => (
 const TransactionEventRow = ({ data: transactionEvent }) => {
   const [isCollapsed, toggleCollapsed] = useState(false);
   const {
-    id, data, action, hash,
+    id, data, moduleName, moduleID, hash,
   } = transactionEvent;
 
   return (
@@ -43,14 +44,14 @@ const TransactionEventRow = ({ data: transactionEvent }) => {
       <div data-testid="transaction-event-row" className={`transaction-event-row ${styles.container}`}>
         <EventId id={id} />
         <EventHash hash={hash} />
-        <EventAction action={action} />
+        <EventAction action={`${moduleName}(${moduleID})`} />
         <CollapseToggle
           isCollapsed={isCollapsed}
           onToggle={() => toggleCollapsed((state) => !state)}
         />
       </div>
       <div className={`${styles.jsonContainer} ${!isCollapsed ? styles.collapsed : ''}`}>
-        <span>{JSON.stringify(data)}</span>
+        <ReactJson src={data} />
       </div>
     </div>
   );

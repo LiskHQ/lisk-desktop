@@ -79,7 +79,7 @@
   font-size: var(--paragraph-font-size-s);
   overflow: hidden auto;
   transition: height 250ms linear, margin-bottom 250ms linear, padding-top 250ms linear, padding-bottom 250ms linear;
-  max-height: 120px;
+  max-height: 150px;
 
   &.collapsed {
     height: 0px;
