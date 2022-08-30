@@ -15,6 +15,7 @@ import TokenAmount from '@token/fungible/components/tokenAmount';
 import Transactions from '@transaction/components/BlockDetailsTransactions';
 import { truncateAddress } from '@wallet/utils/account';
 import WalletVisual from '@wallet/components/walletVisual';
+import TransactionEvents from '@transaction/components/TransactionEvents';
 import { useBlocks } from '../../hooks/queries/useBlocks';
 import styles from './blockDetails.css';
 
@@ -180,7 +181,9 @@ const BlockDetails = ({
           <BoxTabs {...tabs} />
         </BoxHeader>
         <BoxContent>
-          {activeTab === 'transactions' ? <Transactions blockId={id} /> : <div>eniola</div>}
+          {activeTab === 'transactions'
+            ? <Transactions blockId={id} />
+            : <TransactionEvents blockId={id} />}
         </BoxContent>
       </Box>
     </div>
