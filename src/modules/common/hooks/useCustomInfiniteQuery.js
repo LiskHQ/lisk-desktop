@@ -52,7 +52,7 @@ export const useCustomInfiniteQuery = ({
           ...page,
           data: prevPages.data ? [...prevPages.data, ...newData] : newData,
         };
-      }, { data: [], meta: {} }),
+      }),
       ...options,
     },
   );
