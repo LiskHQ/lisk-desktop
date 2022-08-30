@@ -1,18 +1,9 @@
 @import '../../../../../../setup/react/app/mixins.css';
 
-.dialogWrapper {
-  border: none;
-  max-width: 520px;
-
-  & > span {
-    color: white !important;
-  }
-}
-
 .wrapper {
   width: 100%;
   box-sizing: border-box;
-  max-width: 757px;
+  max-width: 520px;
   min-width: 450px;
   border-radius: 16px;
   overflow: hidden;
@@ -60,6 +51,7 @@
 .chainId {
   text-align: center;
   padding-top: var(--vertical-padding-l);
+  width: 100%;
 }
 
 .chainNameWrapper {
