@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import { createSignClient } from '../../utils/connectionCreator';
 import useWalletConnectEventsManager from '../../hooks/useConnectionEventsManager';
 
@@ -12,7 +12,7 @@ const ConnectionManager = () => {
     }
   }, [initialized]);
 
-  return (<div />);
+  return null;
 };
 
 export default ConnectionManager;

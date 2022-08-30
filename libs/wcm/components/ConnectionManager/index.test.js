@@ -14,17 +14,18 @@ jest.mock('../../utils/connectionCreator', () => ({
 describe('ConnectionManager', () => {
   useWalletConnectEventsManager.mockImplementation(key => key);
 
-  it('Should call the event manager hook', () => {
-    mount(<ConnectionManager />);
-    expect(useWalletConnectEventsManager).toHaveBeenCalled();
+  beforeEach(() => {
+    jest.clearAllMocks();
   });
 
   it('Should call createSignClient only at mount time', async () => {
     const wrapper = mount(<ConnectionManager />);
+    expect(useWalletConnectEventsManager).toHaveBeenCalled();
     act(() => {
       wrapper.setProps({ some: 'text' });
     });
+    wrapper.update();
     flushPromises();
-    expect(createSignClient).toHaveBeenCalled();
+    expect(createSignClient).toHaveBeenCalledTimes(1);
   });
 });
