@@ -22,6 +22,7 @@ const ConnectionProposal = ({ history }) => {
   };
 
   useEffect(() => {
+    // istanbul ignore else
     if (events.length && events[events.length - 1].name === EVENTS.SESSION_PROPOSAL) {
       addSearchParamsToUrl(history, { modal: 'connectionSummary' });
     }

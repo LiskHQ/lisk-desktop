@@ -22,6 +22,7 @@ const SessionManager = ({ history }) => {
   };
 
   useEffect(() => {
+    // istanbul ignore else
     if (Array.isArray(pairings)) {
       setLoading(false);
     }
@@ -30,7 +31,7 @@ const SessionManager = ({ history }) => {
   return (
     <Box main isLoading={loading} className={`${styles.wrapper} pairings-list-box`}>
       <div className={styles.addButtonWrapper}>
-        <PrimaryButton className="copy-button" onClick={addApplication}>
+        <PrimaryButton className="add-button" onClick={addApplication}>
           <span className={styles.buttonContent}>
             <Icon name="plus" />
             <span>

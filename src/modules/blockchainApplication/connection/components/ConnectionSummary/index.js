@@ -29,6 +29,7 @@ const ConnectionSummary = ({ history }) => {
     reject();
   };
 
+  // istanbul ignore next
   if (!events.length || events[events.length - 1].name !== EVENTS.SESSION_PROPOSAL) {
     return <div>{t('Connection summary is not ready yet.')}</div>;
   }

@@ -69,6 +69,10 @@ describe('ConnectionSummary', () => {
     events: [{ name: EVENTS.SESSION_PROPOSAL, meta: proposal }],
   };
 
+  afterEach(() => {
+    jest.clearAllMocks();
+  });
+
   it('Display the connecting app information and connection summary', () => {
     const wrapper = setup(context);
     expect(wrapper.find('.chain-name-text').text()).toEqual(proposal.params.proposer.metadata.name);
@@ -84,14 +88,60 @@ describe('ConnectionSummary', () => {
   });
 
   it('Approve the connection if the approve button is clicked', () => {
-    const wrapper = setup(context);
+    const proposalWithNoEvents = {
+      params: {
+        proposer: proposal.params.proposer,
+        requiredNamespaces: {
+          lisk: {
+            chains: ['lsk:1'],
+            events: [],
+            methods: ['sign_transaction'],
+          },
+        },
+        pairingTopic: '0x123',
+      },
+    };
+    const newContext = {
+      events: [
+        { name: EVENTS.SESSION_PROPOSAL, meta: proposalWithNoEvents },
+      ],
+    };
+    const wrapper = setup(newContext);
+    wrapper.find('.events span').forEach((event) => {
+      expect(event.text()).toEqual('-');
+    });
     act(() => {
-      wrapper.find('.select-all input').at(0).simulate('change');
+      wrapper.find('.select-all input').at(0).simulate('change', { target: { checked: true } });
+    });
+    wrapper.update();
+    expect(wrapper.find('button').at(1)).not.toBeDisabled();
+    act(() => {
+      wrapper.find('.select-all input').at(0).simulate('change', { target: { checked: false } });
+    });
+    wrapper.update();
+    expect(wrapper.find('button').at(1)).toBeDisabled();
+    act(() => {
+      wrapper.find('.select-all input').at(0).simulate('change', { target: { checked: true } });
     });
     wrapper.update();
     expect(wrapper.find('button').at(1)).not.toBeDisabled();
     wrapper.find('button').at(1).simulate('click');
     expect(approve).toHaveBeenCalled();
+  });
+
+  it('Select accounts on a random basis', () => {
+    const wrapper = setup(context);
+    expect(wrapper.find('button').at(1)).toBeDisabled();
+    act(() => {
+      wrapper.find('.accounts-list input').simulate('change', { target: { checked: true } });
+    });
+    wrapper.update();
+    expect(wrapper.find('button').at(1)).not.toBeDisabled();
+    act(() => {
+      wrapper.find('.accounts-list input').simulate('change', { target: { checked: false } });
+    });
+    wrapper.update();
+    expect(wrapper.find('button').at(1)).toBeDisabled();
   });
 
   it('Reject the connection if the reject button is clicked', () => {

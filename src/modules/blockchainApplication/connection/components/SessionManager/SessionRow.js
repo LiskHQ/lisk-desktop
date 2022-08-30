@@ -7,7 +7,7 @@ import grid from 'flexboxgrid/dist/flexboxgrid.css';
 import styles from './SessionManager.css';
 
 const SessionRow = ({ data, t, disconnect }) => (
-  <div key={data.topic} className={`${styles.sessionRow} ${tableStyles.row} ${grid.row}`}>
+  <div key={data.topic} className={`connection ${styles.sessionRow} ${tableStyles.row} ${grid.row}`}>
     <div className={grid['col-xs-3']}>
       <span>{data.peerMetadata.name}</span>
     </div>

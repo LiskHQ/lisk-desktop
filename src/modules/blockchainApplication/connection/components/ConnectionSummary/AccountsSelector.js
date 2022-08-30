@@ -38,7 +38,7 @@ const AccountsSelector = ({ setAddresses, addresses, accounts }) => {
         />
         <span className={styles.label}>{t('Select all')}</span>
       </label>
-      <div className={`${styles.accountsList} ${styles.twoColumn}`}>
+      <div className={`${styles.accountsList} ${styles.twoColumn} accounts-list`}>
         {
           accounts.map(account => (
             <label
