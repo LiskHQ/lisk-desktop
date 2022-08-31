@@ -14,6 +14,10 @@ jest.mock('@account/hooks', () => ({
     accounts: [{ metadata: { address: 'lskdxc4ta5j43jp9ro3f8zqbxta9fn6jwzjucw7yt' } }],
   })),
 }));
+jest.mock('@transaction/utils/transaction', () => ({
+  elementTxToDesktopTx: jest.fn().mockReturnValue({}),
+  convertTxJSONToBinary: jest.fn().mockReturnValue({}),
+}));
 jest.mock('@walletconnect/utils', () => ({
   getSdkError: jest.fn(str => str),
 }));
@@ -103,6 +107,6 @@ describe('RequestSummary', () => {
   it('Normalize the rawTx object and send it to the next step', () => {
     const wrapper = setup(context);
     wrapper.find('button').at(1).simulate('click');
-    expect(nextStep).toHaveBeenCalledWith({});
+    expect(nextStep).toHaveBeenCalled();
   });
 });
