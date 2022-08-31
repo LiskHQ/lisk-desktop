@@ -5,20 +5,26 @@ import Icon from 'src/theme/Icon';
 import { TertiaryButton } from 'src/theme/buttons';
 import styles from './TransactionEventsRow.css';
 
-const EventHash = ({ hash }) => (
+const EventId = ({ hash }) => (
   <div className={`event-hash ${styles.eventHash} ${grid['col-xs-6']}`}>
     <span>{hash}</span>
   </div>
 );
 
-const EventAction = ({ action }) => (
-  <div className={`${grid['col-xs-3']} event-action ${styles.eventAction}`}>
+const EventType = ({ action }) => (
+  <div className={`${grid['col-xs-1']} event-action ${styles.eventAction}`}>
     {action}
   </div>
 );
 
-const EventId = ({ id }) => (
-  <div className={grid['col-xs-2']}>
+const EventModule = ({ module }) => (
+  <div className={`${grid['col-xs-3']} event-action ${styles.eventAction}`}>
+    {module}
+  </div>
+);
+
+const EventIndex = ({ id }) => (
+  <div className={grid['col-xs-1']}>
     {id}
   </div>
 );
@@ -36,15 +42,16 @@ const CollapseToggle = ({ isCollapsed, onToggle }) => (
 const TransactionEventRow = ({ data: transactionEvent }) => {
   const [isCollapsed, toggleCollapsed] = useState(false);
   const {
-    id, data, moduleName, moduleID, hash,
+    id, data, module, typeID, index,
   } = transactionEvent;
 
   return (
     <div className={styles.rowWrapper}>
       <div data-testid="transaction-event-row" className={`transaction-event-row ${styles.container}`}>
-        <EventId id={id} />
-        <EventHash hash={hash} />
-        <EventAction action={`${moduleName}(${moduleID})`} />
+        <EventIndex id={index} />
+        <EventId hash={id} />
+        <EventModule module={module} />
+        <EventType action={typeID} />
         <CollapseToggle
           isCollapsed={isCollapsed}
           onToggle={() => toggleCollapsed((state) => !state)}
