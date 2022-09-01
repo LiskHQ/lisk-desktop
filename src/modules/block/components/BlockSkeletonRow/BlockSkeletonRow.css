@@ -20,64 +20,14 @@
     border-top: none;
   }
 
-  & > div > div {
-    background-color: var(--color-very-light-gray);
-  }
-
   & > div {
     height: 100%;
     width: 100%;
     display: flex;
     align-items: center;
-    animation: skeletonLoaderAnimation 2s linear;
-    animation-iteration-count: infinite;
   }
 
-  & > div:first-child > div {
-    width: 60%;
-    height: 15px;
-    border-radius: 40px;
-  }
-
-  & > div:nth-child(2) > div {
-    width: 35%;
-    height: 15px;
-    border-radius: 40px;
-  }
-
-  & > div:nth-child(3) > div {
-    width: 40%;
-    height: 15px;
-    border-radius: 40px;
-  }
-
-  & > div:nth-child(4) > div {
-    width: 50%;
-    height: 15px;
-    border-radius: 40px;
-  }
-
-  & > div:nth-child(5) {
+  & > div:last-child {
     justify-content: flex-end;
-  }
-
-  & > div:nth-child(5) > div {
-    width: 30px;
-    height: 30px;
-    border-radius: 15px;
-  }
-}
-
-@keyframes skeletonLoaderAnimation {
-  0% {
-    opacity: 100%;
-  }
-
-  50% {
-    opacity: 20%;
-  }
-
-  100% {
-    opacity: 100%;
   }
 }

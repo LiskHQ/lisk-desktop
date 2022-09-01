@@ -123,6 +123,7 @@ const Blocks = ({
         <BoxContent className={`${styles.content} block-results`}>
           <QueryTable
             showHeader
+            isLoading
             queryHook={useBlocks}
             queryConfig={{ config: { params } }}
             row={BlockRow}
