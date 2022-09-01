@@ -53,7 +53,6 @@ export const decryptAccount = async (encryptedPassphrase, password) => {
       encryptedPassphrase,
       password,
     );
-
     return {
       error: null,
       result: JSON.parse(plainText),
