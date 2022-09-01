@@ -4,7 +4,7 @@ import Table from '../table';
 // eslint-disable-next-line import/prefer-default-export
 export const QueryTable = ({ queryHook, queryConfig, ...props }) => {
   const {
-    data: response,
+    // data: response,
     error,
     isLoading,
     isFetching,
@@ -13,7 +13,7 @@ export const QueryTable = ({ queryHook, queryConfig, ...props }) => {
   } = queryHook(queryConfig);
   return (
     <Table
-      data={response?.data || []}
+      data={[]}
       isLoading={isLoading}
       isFetching={isFetching}
       loadData={fetchNextPage}

@@ -1,5 +1,5 @@
 import React from 'react';
-import Loading from './loading';
+// import Loading from './loading';
 import Empty from './empty';
 import Error from './error';
 import List from './list';
@@ -71,7 +71,6 @@ const Table = ({
   headerClassName,
   row,
   currentSort,
-  loadingState,
   isLoading,
   emptyState,
   iterationKey,
@@ -79,6 +78,9 @@ const Table = ({
   error,
   additionalRowProps,
   showHeader,
+  skeletonRow: SkeletonRow,
+  skeletonCount = 5,
+  isFetching,
 }) => {
   const Row = row;
   return (
@@ -94,11 +96,11 @@ const Table = ({
         error={error}
         additionalRowProps={additionalRowProps || {}}
       />
-      <Loading
-        Element={loadingState}
-        headerInfo={header}
-        isLoading={isLoading}
-      />
+      {
+        isLoading && [...new Array(skeletonCount).values()].map((item) => (
+          <SkeletonRow key={item} />
+        ))
+      }
       <Empty
         data={emptyState}
         error={error}
@@ -107,13 +109,19 @@ const Table = ({
         className={styles.emptyState}
       />
       <Error data={error} isLoading={isLoading} />
-      <LoadMoreButton
-        onClick={loadData}
-        isLoading={isLoading}
-        dataLength={data.length}
-        canLoadMore={canLoadMore}
-        error={error}
-      />
+      {
+        !isFetching
+          ? (
+            <LoadMoreButton
+              onClick={loadData}
+              isLoading={isLoading}
+              dataLength={data.length}
+              canLoadMore={canLoadMore}
+              error={error}
+            />
+          )
+          : <SkeletonRow />
+      }
     </>
   );
 };
