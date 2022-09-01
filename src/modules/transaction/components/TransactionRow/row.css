@@ -77,3 +77,14 @@
     margin-bottom: calc(-1 * var(--vertical-padding-m));
   }
 }
+
+.trnxId {
+  & > img {
+    padding-right: 8px;
+  }
+}
+
+.walletVisualWithAddress span {
+  font-weight: var(--font-weight-semi-bold);
+  font-size: var(--font-size-h6);
+}

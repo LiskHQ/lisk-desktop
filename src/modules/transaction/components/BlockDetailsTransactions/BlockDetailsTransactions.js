@@ -41,13 +41,15 @@ const BlockDetailsTransactions = ({
       <BoxContent className={`${styles.content} transaction-results`}>
         <Table
           showHeader
-          data={transactions?.data || []}
+          data={transactions?.data.reduce((acc, item) => new Array(10).fill(item), []) || []}
           isLoading={isFetching}
           row={TransactionRow}
           additionalRowProps={{
             currentBlockHeight,
             layout: 'full',
             activeToken,
+            className: styles.row,
+            avatarSize: 40,
           }}
           header={header(t)}
           headerClassName={styles.tableHeader}

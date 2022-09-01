@@ -19,12 +19,17 @@ import TransactionAmount from '../TransactionAmount';
 
 export const ID = () => {
   const { data } = useContext(TransactionRowContext);
-  return <span>{truncateAddress(data.id)}</span>;
+  return (
+    <span className={styles.trnxId}>
+      <Icon name="sentTransactionIcon" />
+      {truncateAddress(data.id)}
+    </span>
+  );
 };
 
 export const Height = () => {
   const { data } = useContext(TransactionRowContext);
-  return <span>{data.height}</span>;
+  return <span>{data.block.height}</span>;
 };
 
 export const Type = () => {
@@ -37,7 +42,7 @@ export const Sender = () => {
   const { data, avatarSize } = useContext(TransactionRowContext);
   return (
     <WalletVisualWithAddress
-      className="transaction-row-sender"
+      className={`transaction-row-sender ${styles.walletVisualWithAddress}`}
       address={data.sender.address}
       transactionSubject="sender"
       moduleCommandID={data.moduleCommandID}
