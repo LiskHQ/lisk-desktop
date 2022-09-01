@@ -1,6 +1,8 @@
 import React from 'react';
 import { useTranslation } from 'react-i18next';
 import moment from 'moment';
+import Dialog from '@theme/dialog/dialog';
+import grid from 'flexboxgrid/dist/flexboxgrid.css';
 import Box from 'src/theme/box';
 import { useSelector } from 'react-redux';
 import { selectActiveToken } from 'src/redux/selectors';
@@ -12,7 +14,7 @@ import Tooltip from 'src/theme/Tooltip';
 import { parseSearchParams } from 'src/utils/searchParams';
 import { usePinBlockchainApplication } from '@blockchainApplication/manage/hooks/usePinBlockchainApplication';
 import styles from './BlockchainApplicationDetails.css';
-import BlockchainAppDetailsWrapper from '../BlockchainAppDetailsWrapper';
+import BlockchainAppDetailsHeader from '../BlockchainAppDetailsHeader';
 import liskLogo from '../../../../../../setup/react/assets/images/LISK.png';
 import defaultBackgroundImage from '../../../../../../setup/react/assets/images/default-chain-background.png';
 
@@ -68,15 +70,16 @@ const BlockchainApplicationDetails = ({ location, application }) => {
   };
 
   return (
-    <BlockchainAppDetailsWrapper
-      application={app}
-      chainAction={(
-        <TertiaryButton className="chain-details-pin-button" onClick={toggleApplicationPin}>
-          <Icon data-testid="pin-button" name={isPinned ? 'pinnedIcon' : 'unpinnedIcon'} />
-        </TertiaryButton>
-      )}
-    >
-      <>
+    <Dialog hasClose className={`${styles.dialogWrapper} ${grid.row} ${grid['center-xs']}`}>
+      <div className={styles.wrapper}>
+        <BlockchainAppDetailsHeader
+          application={app}
+          chainAction={(
+            <TertiaryButton className="chain-details-pin-button" onClick={toggleApplicationPin}>
+              <Icon data-testid="pin-button" name={isPinned ? 'pinnedIcon' : 'unpinnedIcon'} />
+            </TertiaryButton>
+          )}
+        />
         <div className={styles.balanceRow}>
           <ValueAndLabel
             label={t('Deposited:')}
@@ -113,8 +116,8 @@ const BlockchainApplicationDetails = ({ location, application }) => {
             </ValueAndLabel>
           ))}
         </Box>
-      </>
-    </BlockchainAppDetailsWrapper>
+      </div>
+    </Dialog>
   );
 };
 

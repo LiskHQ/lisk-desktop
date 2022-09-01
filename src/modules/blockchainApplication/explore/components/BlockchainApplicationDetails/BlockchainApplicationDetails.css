@@ -1,10 +1,29 @@
 @import '../../../../../../setup/react/app/mixins.css';
 
+.dialogWrapper {
+  border: none;
+
+  & > span {
+    color: white !important;
+  }
+}
+
+.wrapper {
+  width: 100%;
+  box-sizing: border-box;
+  max-width: 757px;
+  min-width: 450px;
+  border-radius: 16px;
+  overflow: hidden;
+  background-color: var(--color-white);
+}
+
 .balanceRow {
   display: flex;
   align-items: center;
   margin-top: 22px;
   column-gap: 8px;
+  justify-content: center;
 
   & span:first-child {
     font-size: 14px;

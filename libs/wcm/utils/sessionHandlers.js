@@ -17,22 +17,15 @@ export const onApprove = async (
   const { requiredNamespaces, relays } = params;
 
   // Normalize the information according to requirements of the bridge
-  const namespaces = Object.keys(requiredNamespaces).reduce((nms, key) => {
-    const accounts = requiredNamespaces[key].chains.reduce((acc, chain) => {
-      selectedAccounts.forEach((account) => {
-        acc.push(`${chain}:${account}`);
-      });
+  const namespaces = Object.entries(requiredNamespaces).reduce((namespace, [key, value]) => {
+    const accounts = value.chains.map((chain) => selectedAccounts.map(account => `${chain}:${account}`)).flat();
 
-      return acc;
-    }, []);
-
-    nms[key] = {
+    namespace[key] = {
       accounts,
-      methods: requiredNamespaces[key].methods,
-      events: requiredNamespaces[key].events,
+      ...value,
     };
 
-    return nms;
+    return namespace;
   }, {});
 
   const [err, response] = await to(client.approve({

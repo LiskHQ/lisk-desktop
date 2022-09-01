@@ -1,5 +1,7 @@
 import React, { useState, useContext } from 'react';
 import { useTranslation } from 'react-i18next';
+import Dialog from '@theme/dialog/dialog';
+import grid from 'flexboxgrid/dist/flexboxgrid.css';
 import { withRouter } from 'react-router';
 import ValueAndLabel from 'src/modules/transaction/components/TransactionDetails/valueAndLabel';
 import { PrimaryButton, SecondaryButton } from 'src/theme/buttons';
@@ -7,8 +9,7 @@ import { EVENTS } from '@libs/wcm/constants/lifeCycle';
 import { addSearchParamsToUrl } from 'src/utils/searchParams';
 import ConnectionContext from '@libs/wcm/context/connectionContext';
 import useSession from '@libs/wcm/hooks/useSession';
-import { useAccounts } from '@account/hooks';
-import BlockchainAppDetailsWrapper from '../../../explore/components/BlockchainAppDetailsWrapper';
+import BlockchainAppDetailsHeader from '../../../explore/components/BlockchainAppDetailsHeader';
 import AccountsSelector from './AccountsSelector';
 import styles from './connectionSummary.css';
 
@@ -16,7 +17,6 @@ import styles from './connectionSummary.css';
 const ConnectionSummary = ({ history }) => {
   const [addresses, setAddresses] = useState([]);
   const { t } = useTranslation();
-  const { accounts } = useAccounts();
   const { events } = useContext(ConnectionContext);
   const { approve, reject } = useSession();
 
@@ -45,9 +45,10 @@ const ConnectionSummary = ({ history }) => {
   };
 
   return (
-    <BlockchainAppDetailsWrapper
-      application={application}
-    >
+    <Dialog hasClose className={`${styles.dialogWrapper} ${grid.row} ${grid['center-xs']}`}>
+      <BlockchainAppDetailsHeader
+        application={application}
+      />
       <div className={styles.wrapper}>
         <section className={styles.section}>
           <ValueAndLabel
@@ -57,7 +58,6 @@ const ConnectionSummary = ({ history }) => {
             <AccountsSelector
               setAddresses={setAddresses}
               addresses={addresses}
-              accounts={accounts}
             />
           </ValueAndLabel>
         </section>
@@ -112,7 +112,7 @@ const ConnectionSummary = ({ history }) => {
           </PrimaryButton>
         </footer>
       </div>
-    </BlockchainAppDetailsWrapper>
+    </Dialog>
   );
 };
 

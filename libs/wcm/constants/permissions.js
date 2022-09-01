@@ -1,9 +1,9 @@
-export const LISK_SIGNING_METHODS = {
-  LISK_SIGN_TRANSACTION: 'lisk_signTransaction',
-  LISK_SIGN_MESSAGE: 'lisk_signMessage',
+export const SIGNING_METHODS = {
+  SIGN_TRANSACTION: 'sign_transaction',
+  SIGN_MESSAGE: 'sign-message',
 };
 
-export const LISK_EVENTS = {
-  LISK_TRANSACTION_MADE: 'lisk_transaction_made',
-  LISK_TOKEN_RECEIVED: 'lisk_token_received',
+export const EVENTS = {
+  TRANSACTION_MADE: 'transaction_made',
+  TOKEN_RECEIVED: 'token_received',
 };
