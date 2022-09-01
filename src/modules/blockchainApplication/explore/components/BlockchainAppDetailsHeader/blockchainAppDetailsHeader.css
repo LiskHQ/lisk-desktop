@@ -1,37 +1,14 @@
 @import '../../../../../../setup/react/app/mixins.css';
 
-.dialogWrapper {
-  border: none;
-
-  & > span {
-    color: white !important;
-  }
-}
-
-.wrapper {
-  width: 100%;
-  box-sizing: border-box;
-  max-width: 757px;
-  min-width: 450px;
-  border-radius: 16px;
-  overflow: hidden;
-  background-color: var(--color-white);
-
-  & > div:first-child {
-    width: 100%;
-    height: 130px;
-    background: var(--color-ultramarine-blue);
-  }
-}
-
 .avatarContainer {
   width: 100%;
-  height: 51px;
+  height: 130px;
   display: flex;
   position: relative;
   flex-direction: column;
   align-items: center;
   justify-content: flex-start;
+  background: var(--color-ultramarine-blue);
 
   & > img.logo {
     position: absolute;

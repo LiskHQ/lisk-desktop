@@ -1,11 +1,13 @@
 import React, { useState } from 'react';
 import { useTranslation } from 'react-i18next';
+import { useAccounts } from '@account/hooks';
 import AccountRow from '@account/components/AccountRow';
 import CheckBox from '@theme/CheckBox';
 import styles from './connectionSummary.css';
 
-const AccountsSelector = ({ setAddresses, addresses, accounts }) => {
+const AccountsSelector = ({ setAddresses, addresses }) => {
   const [selectAll, setSelectAll] = useState(false);
+  const { accounts } = useAccounts();
   const { t } = useTranslation();
 
   const onSelect = (e) => {
@@ -17,13 +19,13 @@ const AccountsSelector = ({ setAddresses, addresses, accounts }) => {
     }
   };
 
-  const onSelectAll = () => {
-    if (selectAll) {
-      setAddresses([]);
-    } else {
+  const onSelectAll = (e) => {
+    if (e.target.checked) {
       setAddresses(accounts.map(item => item.metadata.pubkey));
+    } else {
+      setAddresses([]);
     }
-    setSelectAll(!selectAll);
+    setSelectAll(e.target.checked);
   };
 
   return (

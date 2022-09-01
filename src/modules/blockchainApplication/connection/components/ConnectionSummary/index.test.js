@@ -77,7 +77,6 @@ describe('ConnectionSummary', () => {
     const wrapper = setup(context);
     expect(wrapper.find('.chain-name-text').text()).toEqual(proposal.params.proposer.metadata.name);
     expect(wrapper.find('img').at(0).prop('src')).toEqual(proposal.params.proposer.metadata.icons[0]);
-    // expect(wrapper.find('.accounts').text()).toEqual(proposal.params.accounts[0].address);
     expect(wrapper.find('.pairing-topic').text()).toEqual(proposal.params.pairingTopic);
     wrapper.find('.methods span').forEach((method, index) => {
       expect(method.text()).toEqual(proposal.params.requiredNamespaces.lisk.methods[index]);
