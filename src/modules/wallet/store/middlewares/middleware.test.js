@@ -1,5 +1,5 @@
 import {
-  accountDataUpdated, transactionsRetrieved, emptyTransactionsData,
+  accountDataUpdated, transactionsRetrieved,
 } from 'src/redux/actions';
 
 import commonActionTypes from 'src/modules/common/store/actionTypes';
@@ -7,14 +7,12 @@ import blockActionTypes from '@block/store/actionTypes';
 import settingsActionTypes from 'src/modules/settings/store/actionTypes';
 import * as transactionApi from '@transaction/api';
 import { getAutoLogInData } from 'src/utils/login';
-import walletActionTypes from '../actionTypes';
 import middleware from './middleware';
 
 jest.mock('src/utils/history');
 
 jest.mock('@transaction/api', () => ({
   getTransactions: jest.fn(),
-  emptyTransactionsData: jest.fn(),
 }));
 
 jest.mock('src/redux/actions', () => ({
@@ -22,7 +20,6 @@ jest.mock('src/redux/actions', () => ({
   transactionsRetrieved: jest.fn(),
   settingsUpdated: jest.fn(),
   votesRetrieved: jest.fn(),
-  emptyTransactionsData: jest.fn(),
   networkSelected: jest.fn(),
   networkStatusUpdated: jest.fn(),
 }));

@@ -1,7 +1,7 @@
 import { toast } from 'react-toastify';
 import { subscribeToDeviceConnected, subscribeToDeviceDisconnected } from '@wallet/utils/hwManager';
 import { addSearchParamsToUrl } from 'src/utils/searchParams';
-import { accountLoggedOut, login } from '@auth/store/action';
+import { /* accountLoggedOut, */ login } from '@auth/store/action';
 import {
   getDeviceList,
   getPublicKey,
@@ -60,7 +60,7 @@ const hwWalletMiddleware = store => next => (action) => {
         && wallet.hwInfo.deviceModel === response.model
       ) {
         addSearchParamsToUrl(history, { modal: 'deviceDisconnectDialog', model: response.model });
-        store.dispatch(accountLoggedOut());
+        // store.dispatch(accountLoggedOut());
       }
 
       toast.error(`${response.model} disconnected`);

@@ -2,7 +2,6 @@
 // import history from 'src/utils/history';
 // import actionTypes from '@wallet/store/actionTypes';
 
-
 /** const checkAccountMigrationState = (action) => {
   if (action.type === actionTypes.accountLoggedIn) {
     const { isMigrated } = action.data.info.LSK.summary;
