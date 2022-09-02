@@ -8,9 +8,7 @@ import BoxHeader from 'src/theme/box/header';
 import BoxContent from 'src/theme/box/content';
 import Icon from 'src/theme/Icon';
 import liskLogo from '../../../../../../setup/react/assets/images/LISK.png';
-import useApplicationManagement from '../../hooks/useApplicationManagement';
-import { useCurrentApplication } from '../../hooks/useCurrentApplication';
-import useCurrentNode from '../../hooks/useCurrentNode';
+import { useApplicationManagement, useCurrentApplication, useCurrentNode } from '../../hooks';
 import styles from './SelectNode.css';
 
 const NodeComponent = ({ node, selectAppNode }) => (

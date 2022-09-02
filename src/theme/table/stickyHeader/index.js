@@ -5,13 +5,14 @@ import styles from './stickyHeader.css';
 const StickyHeader = ({
   title,
   button,
+  error,
   filters,
   scrollToSelector,
 }) => (
   <div className={styles.header}>
     <h1>{title}</h1>
     {// istanbul ignore next
-      button && (
+      button && !error && (
         <LoadLatestButton
           buttonClassName={`${styles.loadButton} ${button.className}`}
           entity={button.entity}

@@ -11,7 +11,7 @@ import Dialog from '@theme/dialog/dialog';
 import Icon from 'src/theme/Icon';
 import Tooltip from 'src/theme/Tooltip';
 import { parseSearchParams, removeThenAppendSearchParamsToUrl } from 'src/utils/searchParams';
-import useApplicationManagement from 'src/modules/blockchainApplication/manage/hooks/useApplicationManagement';
+import { useApplicationManagement } from 'src/modules/blockchainApplication/manage/hooks';
 import { usePinBlockchainApplication } from '@blockchainApplication/manage/hooks/usePinBlockchainApplication';
 import defaultBackgroundImage from '../../../../../../setup/react/assets/images/default-chain-background.png';
 import liskLogo from '../../../../../../setup/react/assets/images/LISK.png';

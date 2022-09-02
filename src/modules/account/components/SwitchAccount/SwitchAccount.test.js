@@ -6,6 +6,7 @@ import SwitchAccount from './SwitchAccount';
 
 jest.mock('@account/hooks/useAccounts', () => ({
   useAccounts: jest.fn().mockReturnValue([mockSavedAccounts]),
+
 }));
 
 jest.mock('react-i18next');

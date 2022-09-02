@@ -54,8 +54,14 @@ module.exports = {
       '<rootDir>/tests/__mocks__/fileMock.js',
   },
   collectCoverage: true,
+  resetModules: true,
   coverageDirectory: '<rootDir>/coverage/jest',
-  collectCoverageFrom: ['src/**/*.js', 'setup/**/*.js', 'app/src/**/*.js'],
+  collectCoverageFrom: [
+    'src/**/*.js',
+    'setup/**/*.js',
+    'app/src/**/*.js',
+    '!src/modules/**/mocks/*.js',
+  ],
   coveragePathIgnorePatterns: [
     '/node_modules/',
     '.test.js',
@@ -344,7 +350,7 @@ module.exports = {
       { suiteName: 'jest tests', outputDirectory: '<rootDir>/coverage/jest' },
     ],
   ],
-  setupFilesAfterEnv: ['./node_modules/@testing-library/jest-dom/extend-expect', './node_modules/jest-enzyme/lib/index.js'],
+  setupFilesAfterEnv: ['./setup/config/setupJestAfterEnv', './node_modules/@testing-library/jest-dom/extend-expect', './node_modules/jest-enzyme/lib/index.js'],
   testEnvironment: 'enzyme',
   watchPlugins: [
     ['jest-watch-toggle-config', { setting: 'verbose' }],

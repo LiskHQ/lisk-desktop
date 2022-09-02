@@ -1,6 +1,7 @@
+/* istanbul ignore file */
+import React from 'react';
 import { Link } from 'react-router-dom';
-import React, { useEffect } from 'react';
-
+import { useTranslation } from 'react-i18next';
 import routes from 'src/routes/routes';
 import { tokenMap } from '@token/fungible/consts/tokens';
 import DateTimeFromTimestamp from 'src/modules/common/components/timestamp';
@@ -12,6 +13,7 @@ import Feedback from 'src/theme/feedback/feedback';
 import LabeledValue from 'src/theme/labeledValue';
 import TokenAmount from '@token/fungible/components/tokenAmount';
 import Transactions from '@transaction/components/BlockDetailsTransactions';
+import { useTransactions } from '@transaction/hooks/queries/useTransactions';
 import { truncateAddress } from '@wallet/utils/account';
 import WalletVisual from '@wallet/components/walletVisual';
 import styles from './blockDetails.css';
@@ -115,27 +117,27 @@ const Rows = ({ data, t, currentHeight }) => {
 };
 
 const BlockDetails = ({
-  t, blockDetails, currentHeight, id,
+  currentHeight, id,
 }) => {
-  useEffect(() => {
-    blockDetails.loadData();
-  }, [id]);
+  const { t } = useTranslation();
+  const config = { params: { blockID: id } };
+  const { data: transactions, error, isLoading } = useTransactions({ config });
 
   return (
     <div>
-      <Box isLoading={blockDetails.isLoading} width="full">
+      <Box isLoading={isLoading} width="full">
         <BoxHeader>
           <h1>{t('Block details')}</h1>
         </BoxHeader>
         <BoxContent>
-          {blockDetails.error ? (
+          {error ? (
             <Feedback
               message={t('Failed to load block details.')}
               status="error"
             />
           ) : (
             <Rows
-              data={blockDetails.data}
+              data={transactions?.data ?? {}}
               currentHeight={currentHeight}
               t={t}
             />

@@ -5,6 +5,7 @@ import { MemoryRouter, Router } from 'react-router-dom';
 import configureStore from 'redux-mock-store';
 import { Provider } from 'react-redux';
 import { render } from '@testing-library/react';
+import { QueryClientProvider, QueryClient } from '@tanstack/react-query';
 
 /**
  * Mounts components that require to access Redux store
@@ -83,7 +84,24 @@ export const mountWithRouterAndStore = (Component, props, routeConfig = {}, stor
 );
 
 /**
- * Mounts components that are wrapped in WithRouter
+ * Mounts components that are wrapped in Query Client
+ *
+ * @param {Class|Function} Component - A React component to be tested
+ * @param {Object} props - Set of props to be passed to the component
+ *
+ * @returns {Object} Mounted component
+ */
+export const mountWithQueryClient = (Component, props = {}) => {
+  const queryClient = new QueryClient();
+  return mount(
+    <QueryClientProvider client={queryClient}>
+      <Component {...props} />
+    </QueryClientProvider>,
+  );
+};
+
+/**
+ * Renders components that are wrapped in WithRouter
  *
  * @param {Class|Function} Component - A React component to be tested
  * @param {Object} props - Set of props to be passed to the component
@@ -105,7 +123,7 @@ export const renderWithRouter = (Component, props, routeConfig = {}) => render(
  * @param {Class|Function} Component - A React component to be tested
  * @param {Object} props - Set of props to be passed to the component
  *
- * @returns {Object} Mounted component
+ * @returns {Object} Rendered component
  */
 export const renderWithCustomRouter = (Component, props) => render(
   <Router
