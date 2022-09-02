@@ -12,7 +12,7 @@ export const QueryTable = ({
   ...props
 }) => {
   const {
-    data: response,
+    // data: response,
     error,
     isLoading,
     isFetching,
@@ -42,7 +42,7 @@ export const QueryTable = ({
 
   return (
     <Table
-      data={response?.data || []}
+      data={[]}
       isLoading={isLoading}
       isFetching={isFetching}
       loadData={fetchNextPage}
