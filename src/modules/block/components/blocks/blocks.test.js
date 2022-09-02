@@ -1,5 +1,3 @@
-import React from 'react';
-import blocks from '@tests/constants/blocks';
 import { mountWithQueryClient } from 'src/utils/testHelpers';
 import { useBlocks } from '../../hooks/queries/useBlocks';
 import Blocks from './blocks';
