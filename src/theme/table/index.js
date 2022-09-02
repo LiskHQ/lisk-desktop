@@ -69,6 +69,7 @@ const Table = ({
   loadData,
   header,
   headerClassName,
+  subHeader,
   row,
   currentSort,
   loadingState,
@@ -88,6 +89,7 @@ const Table = ({
         data={data}
         header={header}
         headerClassName={headerClassName}
+        subHeader={subHeader}
         currentSort={currentSort}
         iterationKey={iterationKey}
         Row={Row}
