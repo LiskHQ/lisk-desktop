@@ -1,6 +1,7 @@
 /* eslint-disable max-lines */
 // istanbul ignore file
 import React from 'react';
+import { useTranslation } from 'react-i18next';
 import { useTheme } from 'src/theme/Theme';
 import { getColorPalette } from 'src/modules/common/components/charts/chartOptions';
 import Box from 'src/theme/box';
@@ -14,6 +15,7 @@ import GuideTooltip, {
 } from 'src/modules/common/components/charts/guideTooltip';
 import OthersTooltip from './othersTooltip';
 import styles from './statistics.css';
+import { useNetworkStatistics } from '../../hooks/queries';
 
 const createChartData = (data, t) => {
   const list = {
@@ -300,24 +302,29 @@ const ChartsWithData = ({
   );
 };
 
-const Statistics = ({ networkStatistics, t }) => (
-  <Box className={styles.wrapper}>
-    <BoxHeader>
-      <div>
-        <h1 className={styles.boxHeading}>{t('Network statistics')}</h1>
-        <Tooltip position="bottom right" indent>
-          <p>
-            {t(
-              'The statistics shown only reflects peers connected to the current Lisk Service node.',
-            )}
-          </p>
-        </Tooltip>
-      </div>
-    </BoxHeader>
-    <BoxContent className={styles.content}>
-      <ChartsWithData {...networkStatistics.data} t={t} />
-    </BoxContent>
-  </Box>
-);
+const Statistics = () => {
+  const { t } = useTranslation();
+  const { data: networkStatistics } = useNetworkStatistics();
+
+  return (
+    <Box className={styles.wrapper}>
+      <BoxHeader>
+        <div>
+          <h1 className={styles.boxHeading}>{t('Network statistics')}</h1>
+          <Tooltip position="bottom right" indent>
+            <p>
+              {t(
+                'The statistics shown only reflects peers connected to the current Lisk Service node.',
+              )}
+            </p>
+          </Tooltip>
+        </div>
+      </BoxHeader>
+      <BoxContent className={styles.content}>
+        <ChartsWithData {...networkStatistics?.data} t={t} />
+      </BoxContent>
+    </Box>
+  );
+};
 
 export default Statistics;

@@ -7,7 +7,7 @@ import { OutlineButton } from 'src/theme/buttons';
 import Icon from 'src/theme/Icon';
 import { addSearchParamsToUrl } from 'src/utils/searchParams';
 import styles from './ApplicationManagementList.css';
-import useApplicationManagement from '../../hooks/useApplicationManagement';
+import { useApplicationManagement } from '../../hooks';
 import ApplicationManagementRow from '../ApplicationManagementRow';
 
 const ApplicationManagementList = ({ history }) => {

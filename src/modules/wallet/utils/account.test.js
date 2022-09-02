@@ -1,3 +1,4 @@
+import { cryptography } from '@liskhq/lisk-client';
 import { getCustomDerivationKeyPair } from 'src/utils/explicitBipKeyDerivation';
 import accounts from '@tests/constants/wallets';
 import {
@@ -18,11 +19,13 @@ const {
   publicKey,
 } = accounts.genesis.summary;
 
+jest.spyOn(cryptography.address, 'getLisk32AddressFromPublicKey').mockReturnValue(address);
+
 jest.mock('src/utils/explicitBipKeyDerivation', () => ({
   getCustomDerivationKeyPair: jest.fn(),
 }));
 
-describe.skip('Utils: Account', () => {
+describe('Utils: Account', () => {
   describe('extractPublicKey', () => {
     it('should return a hex string from any given string', () => {
       expect(extractPublicKey(passphrase)).toEqual(publicKey);

@@ -19,6 +19,7 @@ const Summary = ({
       });
     },
   };
+
   const onCancelAction = {
     label: t('Go back'),
     onClick: () => { prevStep({ rawTx }); },
@@ -27,6 +28,7 @@ const Summary = ({
   return (
     <section className={styles.wrapper}>
       <TransactionSummary
+        hasCancel
         className={styles.container}
         confirmButton={onConfirmAction}
         cancelButton={onCancelAction}

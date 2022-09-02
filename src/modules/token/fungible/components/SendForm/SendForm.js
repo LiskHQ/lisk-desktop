@@ -1,30 +1,86 @@
-import React, { useState } from 'react';
+import React, {
+  useCallback, useMemo, useState,
+} from 'react';
 import Piwik from 'src/utils/piwik';
 import { MODULE_COMMANDS_NAME_ID_MAP } from '@transaction/configuration/moduleAssets';
 import AmountField from 'src/modules/common/components/amountField';
+import TokenAmount from '@token/fungible/components/tokenAmount';
+import { mockAppTokens } from '@tests/fixtures/token';
+import Icon from 'src/theme/Icon';
 import { toRawLsk, fromRawLsk } from '@token/fungible/utils/lsk';
 import BoxContent from 'src/theme/box/content';
 import BoxHeader from 'src/theme/box/header';
+import { maxMessageLength } from 'src/modules/transaction/configuration/transactions';
+import { useCurrentApplication, useApplicationManagement } from 'src/modules/blockchainApplication/manage/hooks';
+import MenuSelect, { MenuItem } from 'src/modules/wallet/components/MenuSelect';
 import TxComposer from '@transaction/components/TxComposer';
 import BookmarkAutoSuggest from './bookmarkAutoSuggest';
-import useAmountField from './useAmountField';
-import useMessageField from './useMessageField';
-import useRecipientField from './useRecipientField';
+import useAmountField from '../../hooks/useAmountField';
+import { useMessageField } from '../../hooks';
+import useRecipientField from '../../hooks/useRecipientField';
 import styles from './form.css';
-import MessageField from './MessageField';
+import MessageField from '../MessageField';
+import chainLogo from '../../../../../../setup/react/assets/images/LISK.png';
 
+const defaultToken = mockAppTokens[0];
 const getInitialData = (rawTx, initialValue) => rawTx?.params.data || initialValue || '';
 const getInitialAmount = (rawTx, initialValue) => (Number(rawTx?.params.amount) ? fromRawLsk(rawTx?.params.amount) : initialValue || '');
 const getInitialRecipient = (rawTx, initialValue) => rawTx?.params.recipient.address || initialValue || '';
+const getInitialRecipientChain = (
+  transactionData,
+  initialChainId,
+  currentApplication,
+  applications,
+) => {
+  const initalRecipientChain = initialChainId
+    ? applications.find(({ chainID }) => chainID === initialChainId)
+    : null;
 
+  return transactionData?.recipientChain || initalRecipientChain || currentApplication;
+};
+const getInitialToken = (
+  transactionData,
+  initalTokenId,
+  tokens,
+) => {
+  const initalToken = initalTokenId
+    ? tokens.find(({ tokenID }) => tokenID === initalTokenId)
+    : null;
+  return transactionData?.token || initalToken || defaultToken;
+};
+
+// eslint-disable-next-line max-statements
 const SendForm = (props) => {
   const {
+    account = {},
+    prevState,
     t,
-    token,
-    account,
     bookmarks,
     nextStep,
   } = props;
+
+  const [currentApplication] = useCurrentApplication();
+  const { applications } = useApplicationManagement();
+  const [token, setToken] = useState(
+    getInitialToken(
+      prevState?.transactionData,
+      props.initialValue?.token,
+      mockAppTokens,
+    ),
+  );
+  const [recipientChain, setRecipientChain] = useState(
+    getInitialRecipientChain(
+      prevState?.transactionData,
+      props.initialValue?.recipientApplication,
+      currentApplication,
+      applications,
+    ),
+  );
+  const [sendingChain, setSendingChain] = useState(
+    prevState?.transactionData?.sendingChain || currentApplication,
+  );
+  const [maxAmount, setMaxAmount] = useState({ value: 0, error: false });
+
   const [reference, setReference] = useMessageField(
     getInitialData(props.prevState?.rawTx, props.initialValue?.reference),
   );
@@ -34,38 +90,69 @@ const SendForm = (props) => {
       props.initialValue?.amount,
     ),
     account.summary?.balance,
-    token,
+    token.symbol,
   );
   const [recipient, setRecipientField] = useRecipientField(
     getInitialRecipient(props.prevState?.rawTx, props.initialValue?.recipient),
   );
-  const [maxAmount, setMaxAmount] = useState({ value: 0, error: false });
 
-  const onComposed = (status) => {
+  const onComposed = useCallback((status) => {
     Piwik.trackingEvent('Send_Form', 'button', 'Next step');
     setMaxAmount(status.maxAmount);
-  };
+  }, []);
 
-  const onConfirm = (rawTx) => {
-    nextStep({ rawTx });
-  };
+  const onConfirm = useCallback((rawTx, trnxData, selectedPriority, fees) => {
+    nextStep({
+      transactionData: trnxData,
+      selectedPriority,
+      rawTx,
+      fees,
+    });
+  }, []);
 
-  const isValid = [amount, recipient, reference].reduce((result, item) => {
-    result = result && !item.error && (!item.required || item.value !== '');
+  const handleRemoveMessage = useCallback(() => {
+    setReference({ target: { value: '' } });
+  }, []);
+
+  const isValid = useMemo(() => [
+    amount,
+    recipient,
+    reference,
+    recipientChain,
+    sendingChain,
+    token,
+  ].reduce((result, item) => {
+    result = result && !item?.error && (!item?.required || item?.value !== '') && !Object.keys(result).length;
+
     return result;
-  }, true);
+  }, true), [
+    amount,
+    recipient,
+    reference,
+    recipientChain,
+    sendingChain,
+  ]);
 
   const transaction = {
     isValid,
     moduleCommandID: MODULE_COMMANDS_NAME_ID_MAP.transfer,
     params: {
+      amount: toRawLsk(amount.value),
+      data: reference.value,
       recipient: {
         address: recipient.value,
         title: recipient.title,
       },
-      amount: toRawLsk(amount.value),
-      data: reference.value,
     },
+  };
+
+  const formData = {
+    sendingChain,
+    recipientChain,
+    token,
+    recipient,
+    amount: toRawLsk(amount.value),
+    data: reference.value,
   };
 
   return (
@@ -74,21 +161,89 @@ const SendForm = (props) => {
         onComposed={onComposed}
         onConfirm={onConfirm}
         transaction={transaction}
+        transactionData={formData}
+        buttonTitle={t('Go to confirmation')}
       >
         <>
           <BoxHeader className={styles.header}>
-            <h2>{t('Send {{token}}', { token })}</h2>
+            <h2>{t('Send Tokens')}</h2>
           </BoxHeader>
           <BoxContent className={styles.formSection}>
-            <span className={`${styles.fieldGroup} recipient`}>
-              <span className={`${styles.fieldLabel}`}>{t('Recipient')}</span>
-              <BookmarkAutoSuggest
-                bookmarks={bookmarks[token].filter((item) => !item.disabled)}
-                recipient={recipient}
-                t={t}
-                updateField={setRecipientField}
-              />
-            </span>
+            <div className={`${styles.ApplilcationFieldWrapper}`}>
+              <div>
+                <label className={`${styles.fieldLabel} sending-application`}>
+                  <span>{t('From Application')}</span>
+                </label>
+                <MenuSelect
+                  value={sendingChain}
+                  onChange={(value) => setSendingChain(value)}
+                  select={(selectedValue, option) => selectedValue?.chainID === option.chainID}
+                >
+                  {applications.map((chain) => (
+                    <MenuItem
+                      className={styles.chainOptionWrapper}
+                      value={chain}
+                      key={chain.chainID}
+                    >
+                      <img className={styles.chainLogo} src={chainLogo} />
+                      <span>{chain.name}</span>
+                    </MenuItem>
+                  ))}
+                </MenuSelect>
+              </div>
+              <div>
+                <Icon name="transferArrow" />
+              </div>
+              <div>
+                <label className={`${styles.fieldLabel} recipient-application`}>
+                  <span>{t('To Application')}</span>
+                </label>
+                <MenuSelect
+                  value={recipientChain}
+                  onChange={(value) => setRecipientChain(value)}
+                  select={(selectedValue, option) => selectedValue?.chainID === option.chainID}
+                >
+                  {applications.map((chain) => (
+                    <MenuItem
+                      className={styles.chainOptionWrapper}
+                      value={chain}
+                      key={chain.chainID}
+                    >
+                      <img className={styles.chainLogo} src={chainLogo} />
+                      <span>{chain.name}</span>
+                    </MenuItem>
+                  ))}
+                </MenuSelect>
+              </div>
+            </div>
+            <div className={`${styles.fieldGroup} token`}>
+              <label className={`${styles.fieldLabel}`}>
+                <span>{t('Token')}</span>
+              </label>
+              <span className={styles.balance}>
+                Balance:&nbsp;&nbsp;
+                <span>
+                  <TokenAmount val={amount} />
+                  {token.symbol}
+                </span>
+              </span>
+              <MenuSelect
+                value={token}
+                onChange={(value) => setToken(value)}
+                select={(selectedValue, option) => selectedValue?.name === option.name}
+              >
+                {mockAppTokens.map((tokenValue) => (
+                  <MenuItem
+                    className={styles.chainOptionWrapper}
+                    value={tokenValue}
+                    key={tokenValue.name}
+                  >
+                    <img className={styles.chainLogo} src={chainLogo} />
+                    <span>{tokenValue.name}</span>
+                  </MenuItem>
+                ))}
+              </MenuSelect>
+            </div>
             <AmountField
               amount={amount}
               onChange={setAmountField}
@@ -96,13 +251,27 @@ const SendForm = (props) => {
               displayConverter
               label={t('Amount')}
               placeHolder={t('Insert transaction amount')}
-              useMaxLabel={t('Send maximum amount')}
               name="amount"
             />
+            <div className={`${styles.fieldGroup} ${styles.recipientFieldWrapper}`}>
+              <span className={`${styles.fieldLabel}`}>{t('Recipient Address')}</span>
+              <BookmarkAutoSuggest
+                bookmarks={bookmarks.LSK.filter((item) => !item.disabled)}
+                recipient={recipient}
+                t={t}
+                updateField={setRecipientField}
+              />
+            </div>
             <MessageField
-              t={t}
-              reference={reference}
-              setReference={setReference}
+              name="reference"
+              value={reference.value}
+              onChange={setReference}
+              label={t('Message (Optional)')}
+              placeholder={t('Write message')}
+              onRemove={handleRemoveMessage}
+              maxMessageLength={maxMessageLength}
+              error={reference.error}
+              feedback={reference.feedback}
             />
           </BoxContent>
         </>

@@ -1,5 +1,7 @@
 const webpack = require('webpack');
 const { resolve } = require('path');
+const { SERVICE_WORKER_BUILD_PATH } = require('msw/config/constants');
+const CopyPlugin = require('copy-webpack-plugin');
 
 const config = {
   mode: 'development',
@@ -110,6 +112,9 @@ const config = {
   plugins: [
     new webpack.EnvironmentPlugin({
       NACL_FAST: 'disable',
+    }),
+    new CopyPlugin({
+      patterns: [{ from: SERVICE_WORKER_BUILD_PATH }],
     }),
   ],
 };

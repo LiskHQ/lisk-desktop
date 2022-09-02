@@ -10,19 +10,14 @@
     "jest"
   ],
   "globals": {
-    "describe": true,
-    "it": true,
-    "beforeEach": true,
-    "afterEach": true,
     "ipc": true,
-    "jest": true,
-    "expect": true,
     "PRODUCTION": true
   },
   "env": {
     "es2020": true,
     "browser": true,
-    "node": true
+    "node": true,
+    "jest": true
   },
   "settings": {
     "import/resolver" : {

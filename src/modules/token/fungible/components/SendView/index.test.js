@@ -1,9 +1,27 @@
 import { getTransactionBaseFees, getTransactionFee } from '@transaction/api';
 import { mountWithRouter } from 'src/utils/testHelpers';
+import mockManagedApplications from '@tests/fixtures/blockchainApplicationsManage';
+import { useCurrentApplication, useApplicationManagement } from '@blockchainApplication/manage/hooks';
 import wallets from '@tests/constants/wallets';
 import Send from './index';
 
+const mockSetCurrentApplication = jest.fn();
+const mockSetApplication = jest.fn();
+const mockCurrentApplication = mockManagedApplications[0];
+
+jest.mock('@blockchainApplication/manage/hooks/useApplicationManagement');
+jest.mock('@blockchainApplication/manage/hooks/useCurrentApplication');
 jest.mock('@transaction/api');
+
+useApplicationManagement.mockReturnValue({
+  setApplication: mockSetApplication,
+  applications: mockManagedApplications,
+});
+
+useCurrentApplication.mockReturnValue([
+  mockCurrentApplication,
+  mockSetCurrentApplication,
+]);
 
 getTransactionBaseFees.mockResolvedValue({
   Low: 0,
