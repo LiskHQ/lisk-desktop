@@ -46,8 +46,8 @@ const TransactionEventRow = ({ data: transactionEvent }) => {
   } = transactionEvent;
 
   return (
-    <div className={styles.rowWrapper}>
-      <div data-testid="transaction-event-row" className={`transaction-event-row ${styles.container}`}>
+    <div data-testid="transaction-event-row-wrapper" className={styles.rowWrapper}>
+      <div className={`transaction-event-row ${styles.container}`}>
         <EventIndex id={index} />
         <EventId hash={id} />
         <EventModule module={module} />
@@ -57,7 +57,7 @@ const TransactionEventRow = ({ data: transactionEvent }) => {
           onToggle={() => toggleCollapsed((state) => !state)}
         />
       </div>
-      <div className={`${styles.jsonContainer} ${!isCollapsed ? styles.collapsed : ''}`}>
+      <div data-testid="transaction-event-json-viewer" className={`${styles.jsonContainer} ${!isCollapsed ? styles.shrink : ''}`}>
         <ReactJson src={data} />
       </div>
     </div>

@@ -81,7 +81,7 @@
   transition: height 250ms linear, margin-bottom 250ms linear, padding-top 250ms linear, padding-bottom 250ms linear;
   max-height: 150px;
 
-  &.collapsed {
+  &.shrink {
     height: 0px;
     padding: 0px;
     margin-bottom: 0px;
