@@ -34,20 +34,20 @@ Feature: Send
   #    Then The balance is subtracted
 
   # @advanced
-  @basic
-  Scenario: Launch protocol prefills fields  - from logged in state
-    Given I am on Login page
-    Given I login as genesis on customNode
-    Given  I wait 5 seconds
-    When I follow the launch protocol link
-    Then Send form fields are prefilled
+  # @basic
+  # Scenario: Launch protocol prefills fields  - from logged in state
+  #   Given I am on Login page
+  #   Given I login as genesis on customNode
+  #   Given  I wait 5 seconds
+  #   When I follow the launch protocol link
+  #   Then Send form fields are prefilled
 
-  # @advanced
-  @basic
-  Scenario: Launch protocol prefills fields  - from logged out state
-    Given I follow the launch protocol link
-    When I enter the passphrase of genesis on customNode
-    When I login
-    Then Send form fields are prefilled
+  # # @advanced
+  # @basic
+  # Scenario: Launch protocol prefills fields  - from logged out state
+  #   Given I follow the launch protocol link
+  #   When I enter the passphrase of genesis on customNode
+  #   When I login
+  #   Then Send form fields are prefilled
 
 
