@@ -1,102 +1,129 @@
-// import React from 'react';
-// import { mount } from 'enzyme';
-// import Blocks from './blocks';
-// import blocks from '@tests/constants/blocks';
+import React from 'react';
+import blocks from '@tests/constants/blocks';
+import { mountWithQueryClient } from 'src/utils/testHelpers';
+import { useBlocks } from '../../hooks/queries/useBlocks';
+import Blocks from './blocks';
+import { mockBlocks } from '../../__fixtures__';
 
-describe('dummy', () => {
-  it('placeholder', () => {
-    expect(true).toBe(true);
+jest.mock('../../hooks/queries/useBlocks');
+
+describe('Blocks page', () => {
+  let props;
+  const sort = 'height:desc';
+  const height = '1234';
+  const mockFetchNextPage = jest.fn();
+
+  beforeEach(() => {
+    jest.clearAllMocks();
+    props = {
+      filters: {},
+      applyFilters: jest.fn(),
+      clearFilter: jest.fn(),
+      changeSort: jest.fn(),
+    };
+  });
+
+  it('renders a page with header', () => {
+    useBlocks.mockReturnValue({
+      data: mockBlocks,
+      isFetching: false,
+      fetchNextPage: mockFetchNextPage,
+      hasNextPage: false,
+    });
+    const wrapper = mountWithQueryClient(Blocks, props);
+    expect(wrapper.find('.blocks-container h1')).toHaveText('All blocks');
+  });
+
+  it('renders table with blocks', () => {
+    useBlocks.mockReturnValue({
+      data: mockBlocks,
+      isFetching: false,
+      fetchNextPage: mockFetchNextPage,
+      hasNextPage: false,
+    });
+    const wrapper = mountWithQueryClient(Blocks, props);
+    expect(wrapper.find('a.blocks-row')).toHaveLength(mockBlocks.data.length);
+  });
+
+  it('allows to load more blocks', () => {
+    useBlocks.mockReturnValue({
+      data: { ...mockBlocks, data: mockBlocks.data.slice(0, 20) },
+      isFetching: false,
+      fetchNextPage: mockFetchNextPage,
+      hasNextPage: true,
+    });
+    const wrapper = mountWithQueryClient(Blocks, { ...props });
+    wrapper.find('button.load-more').simulate('click');
+    expect(mockFetchNextPage).toHaveBeenCalledWith({ pageParam: { offset: 20 } });
+  });
+
+  it('shows error if API failed', () => {
+    const error = 'Loading failed';
+    useBlocks.mockReturnValue({
+      error,
+      data: { ...mockBlocks, data: mockBlocks.data.slice(0, 20) },
+      isFetching: false,
+      fetchNextPage: mockFetchNextPage,
+      hasNextPage: true,
+    });
+    const wrapper = mountWithQueryClient(Blocks, props);
+    expect(wrapper).toIncludeText(error);
+  });
+
+  it('allows to filter blocks by height and clear the filter', () => {
+    useBlocks.mockReturnValue({
+      data: mockBlocks,
+      isFetching: false,
+      fetchNextPage: mockFetchNextPage,
+      hasNextPage: true,
+    });
+    props.filters = {
+      height,
+    };
+    const wrapper = mountWithQueryClient(Blocks, props);
+    wrapper.find('button.filter').simulate('click');
+    wrapper.find('input.height').simulate('change', { target: { value: height } });
+    wrapper.find('form.filter-container').simulate('submit');
+    expect(props.applyFilters).toHaveBeenCalledWith({
+      dateFrom: undefined,
+      dateTo: undefined,
+      height,
+    }, null, expect.any(Function));
+    wrapper.find('span.clear-filter').simulate('click');
+    expect(props.clearFilter).toHaveBeenCalledWith('height', expect.any(Function));
+  });
+
+  it('allows to load more blocks when filtered', () => {
+    useBlocks.mockReturnValue({
+      data: { ...mockBlocks, data: mockBlocks.data.slice(0, 20) },
+      isFetching: false,
+      fetchNextPage: mockFetchNextPage,
+      hasNextPage: true,
+    });
+    props.filters = {
+      height,
+    };
+    const wrapper = mountWithQueryClient(Blocks, props);
+    wrapper.find('button.filter').simulate('click');
+    wrapper.find('input.height').simulate('change', { target: { value: height } });
+    wrapper.find('form.filter-container').simulate('submit');
+
+    wrapper.find('button.load-more').simulate('click');
+
+    expect(mockFetchNextPage).toHaveBeenCalled();
+  });
+
+  it('allows to reverse sort by clicking height header', () => {
+    useBlocks.mockReturnValue({
+      data: { ...mockBlocks, data: mockBlocks.data.slice(0, 20) },
+      isFetching: false,
+      fetchNextPage: mockFetchNextPage,
+      hasNextPage: true,
+    });
+    props.sort = sort;
+    const wrapper = mountWithQueryClient(Blocks, props);
+
+    wrapper.find('.sort-by.height').simulate('click');
+    expect(props.changeSort).toHaveBeenCalledWith('height', expect.any(Function));
   });
 });
-
-// describe.skip('Blocks page', () => {
-//   let props;
-//   let blocksWithData;
-//   const sort = 'height:desc';
-//   const height = '1234';
-
-//   beforeEach(() => {
-//     props = {
-//       t: key => key,
-//       blocks: {
-//         isLoading: true,
-//         data: [],
-//         meta: null,
-//         loadData: jest.fn(),
-//         clearData: jest.fn(),
-//         urlSearchParams: {},
-//       },
-//     };
-
-//     blocksWithData = {
-//       ...props.blocks,
-//       isLoading: false,
-//       data: blocks,
-//       meta: {
-//         count: blocks.length,
-//         total: blocks.length * 3,
-//         offset: 0,
-//       },
-//     };
-//   });
-
-//   it('renders a page with header', () => {
-//     const wrapper = mount(<Blocks {...props} />);
-//     expect(wrapper.find('.blocks-header-title')).toHaveText('All blocks');
-//   });
-
-//   it('renders table with blocks', () => {
-//     const wrapper = mount(<Blocks {...props} />);
-//     expect(wrapper.find('a.row')).toHaveLength(0);
-//     wrapper.setProps({ blocks: blocksWithData });
-//     expect(wrapper.find('a.row')).toHaveLength(blocks.length);
-//   });
-
-//   it('allows to load more blocks', () => {
-//     const wrapper = mount(<Blocks {...{ ...props, blocks: blocksWithData }} />);
-//     wrapper.find('button.load-more').simulate('click');
-//     expect(props.blocks.loadData).toHaveBeenCalledWith({ offset: blocks.length, sort });
-//   });
-
-//   it('shows error if API failed', () => {
-//     const error = 'Loading failed';
-//     const wrapper = mount(<Blocks {...props} />);
-//     wrapper.setProps({
-//       blocks: {
-//         ...props.blocks,
-//         isLoading: false,
-//         error,
-//       },
-//     });
-//     expect(wrapper).toIncludeText(error);
-//   });
-
-//   it('allows to filter blocks by height and clear the filter', () => {
-//     const wrapper = mount(<Blocks {...props} />);
-//     wrapper.find('button.filter').simulate('click');
-//     wrapper.find('input.height').simulate('change', { target: { value: height } });
-//     wrapper.find('form.filter-container').simulate('submit');
-//     expect(props.blocks.loadData).toHaveBeenCalledWith({ height, sort });
-//     wrapper.find('span.clear-filter').simulate('click');
-//     expect(props.blocks.loadData).toHaveBeenCalledWith({ sort });
-//   });
-
-//   it('allows to load more blocks when filtered', () => {
-//     const wrapper = mount(<Blocks {...{ ...props, blocks: blocksWithData }} />);
-
-//     wrapper.find('button.filter').simulate('click');
-//     wrapper.find('input.height').simulate('change', { target: { value: height } });
-//     wrapper.find('form.filter-container').simulate('submit');
-//     wrapper.find('button.load-more').simulate('click');
-
-//     expect(props.blocks.loadData).toHaveBeenCalledWith({ offset: blocks.length, height, sort });
-//   });
-
-//   it('allows to reverse sort by clicking height header', () => {
-//     const wrapper = mount(<Blocks {...{ ...props, blocks: blocksWithData }} />);
-//     wrapper.find('.sort-by.height').simulate('click');
-//     expect(props.blocks.loadData).toHaveBeenCalledWith({ sort: 'height:asc' });
-//     wrapper.find('.sort-by.height').simulate('click');
-//     expect(props.blocks.loadData).toHaveBeenCalledWith({ sort: 'height:desc' });
-//   });
-// });

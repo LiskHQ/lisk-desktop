@@ -134,7 +134,7 @@ export const renderWithCustomRouter = (Component, props) => render(
 );
 
 /**
- * Renders components that are wrapped in WithRouter
+ * Renders components that are wrapped in QueryClientProvider
  *
  * @param {Class|Function} Component - A React component to be tested
  * @param {Object} props - Set of props to be passed to the component

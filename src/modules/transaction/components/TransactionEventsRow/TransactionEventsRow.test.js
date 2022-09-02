@@ -1,5 +1,7 @@
 import React from 'react';
-import { fireEvent, screen, render, waitFor } from '@testing-library/react';
+import {
+  fireEvent, screen, render, waitFor,
+} from '@testing-library/react';
 import { mockEvents } from '../../__fixtures__';
 import TransactionEventsRow from './TransactionEventsRow';
 
