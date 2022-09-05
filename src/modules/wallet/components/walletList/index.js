@@ -3,6 +3,7 @@ import React from 'react';
 import Table from 'src/theme/table';
 import { DEFAULT_LIMIT } from 'src/utils/monitor';
 import WalletRow from '../row';
+import WalletSkeletonRow from '../WalletSkeletonRow/WalletSkeletonRow';
 import header from './tableHeader';
 
 const WalletTable = ({ wallets, networkStatus, t }) => {
@@ -24,6 +25,7 @@ const WalletTable = ({ wallets, networkStatus, t }) => {
       loadData={handleLoadMore}
       header={header(t)}
       additionalRowProps={{ supply }}
+      skeletonRow={WalletSkeletonRow}
       error={wallets.error}
       canLoadMore={canLoadMore}
     />

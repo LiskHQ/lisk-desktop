@@ -77,7 +77,7 @@ const BlockchainApplicationList = ({
           showHeader
           data={applications.data}
           isLoading={applications.isLoading}
-          loadingState={BlockchainApplicationSkeleton}
+          skeletonRow={BlockchainApplicationSkeleton}
           row={BlockchainApplicationRow}
           loadData={handleLoadMore}
           header={header(t)}
