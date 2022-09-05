@@ -56,4 +56,16 @@ describe('TransactionEvents', () => {
       expect(mockFetchNextPage).toHaveBeenCalled();
     });
   });
+
+  it('should display empty state text', async () => {
+    useTransactionEvents.mockReturnValue({
+      isLoading: true,
+      error: undefined,
+      hasNextPage: true,
+      isFetching: false,
+      fetchNextPage: mockFetchNextPage,
+    });
+    renderWithQueryClient(TransactionEvents, props);
+    expect(screen.getByText('There are no Transaction Events')).toBeTruthy();
+  });
 });
