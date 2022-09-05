@@ -15,7 +15,7 @@ pipeline {
 		stage('install') {
 			steps {
 				nvm(getNodejsVersion()) {
-					sh 'npm ci'
+					sh 'npm ci --registry https://npm.lisk.com'
 				}
 			}
 		}
