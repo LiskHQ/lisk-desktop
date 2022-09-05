@@ -3,9 +3,9 @@ import { shallow } from 'enzyme';
 import { act } from 'react-dom/test-utils';
 import { useSelector } from 'react-redux';
 import { mountWithRouter, mountWithRouterAndStore } from 'src/utils/testHelpers';
-import transactions from '@tests/constants/transactions';
 import defaultState from '@tests/constants/defaultState';
 import TransactionMonitorList from './TransactionMonitorList';
+import { mockTransactions } from '../../__fixtures__';
 
 jest.mock('react-redux', () => ({
   ...jest.requireActual('react-redux'),
@@ -40,6 +40,7 @@ describe('Transactions monitor page', () => {
     applyFilters,
     clearAllFilters,
   };
+  const transactions = mockTransactions.data;
   const amountFrom = '1.3';
   const sort = 'timestamp:desc';
   const height = '1234';
