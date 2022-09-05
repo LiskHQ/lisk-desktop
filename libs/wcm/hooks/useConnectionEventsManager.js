@@ -21,15 +21,10 @@ const useWalletConnectEventsManager = () => {
   const eventHandler = useCallback((name, meta) => {
     pushEvent({ name, meta });
 
-    switch (name) {
-      case EVENTS.SESSION_DELETE:
-        onSessionDelete(meta);
-        break;
-      case EVENTS.SESSION_REQUEST:
-        onSessionRequest(meta);
-        break;
-      default:
-        break;
+    if (name === EVENTS.SESSION_DELETE) {
+      onSessionDelete(meta);
+    } else if (name === EVENTS.SESSION_REQUEST) {
+      onSessionRequest(meta);
     }
   }, []);
 

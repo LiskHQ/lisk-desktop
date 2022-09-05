@@ -56,7 +56,11 @@ const RequestSummary = ({ nextStep }) => {
     <div className={`${styles.wrapper} ${grid.row} ${grid['center-xs']}`}>
       <div className={styles.avatarContainer}>
         <h2>{request.params.request.method}</h2>
-        <img src={icons[0]} className={styles.logo} />
+        <img
+          data-testid="logo"
+          src={icons[0]}
+          className={styles.logo}
+        />
       </div>
       <div className={styles.chainNameWrapper}>
         <h3 className="chain-name-text">{name}</h3>
@@ -100,12 +104,14 @@ const RequestSummary = ({ nextStep }) => {
           <SecondaryButton
             className={styles.button}
             onClick={rejectHandler}
+            data-testid="cancel-button"
           >
             {t('Cancel')}
           </SecondaryButton>
           <PrimaryButton
             className={styles.button}
             onClick={approveHandler}
+            data-testid="approve-button"
           >
             {t('Continue')}
           </PrimaryButton>

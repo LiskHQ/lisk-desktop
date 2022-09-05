@@ -1,6 +1,6 @@
 export const SIGNING_METHODS = {
   SIGN_TRANSACTION: 'sign_transaction',
-  SIGN_MESSAGE: 'sign-message',
+  SIGN_MESSAGE: 'sign_message',
 };
 
 export const EVENTS = {
