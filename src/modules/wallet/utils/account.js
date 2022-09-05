@@ -98,7 +98,6 @@ export const extractAddressFromPublicKey = (data) => {
  */
 export const extractAddressFromPassphrase = (data) => {
   if (LiskPassphrase.Mnemonic.validateMnemonic(data)) {
-    // return cryptography.address.getLisk32AddressFromPassphrase(data).toString('hex');
     const { publicKey } = cryptography.legacy.getKeys(data);
     return cryptography.address.getLisk32AddressFromPublicKey(publicKey).toString('hex');
   }

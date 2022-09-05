@@ -6,24 +6,33 @@ import { Transaction } from '../utils/transactions';
 
 // eslint-disable-next-line import/prefer-default-export
 export const useCreateTransaction = ({
-  module,
-  command,
+  module = null,
+  command = null,
+  encodedTransaction = null,
 }) => {
-  const { data: networkStatus, isNetworkStatusLoading } = useNetworkStatus();
-  const { data: auth, isAuthLoading } = useAuth();
-  const { data: commandParametersSchemas, isSchemasLoading } = useCommandParametersSchemas();
+  const { data: networkStatus, isLoading: isNetworkStatusLoading } = useNetworkStatus();
   const [currentAccount] = useCurrentAccount();
+  const { pubkey, address } = currentAccount.metadata;
+  const {
+    data: auth,
+    isLoading: isAuthLoading,
+  } = useAuth({ config: { params: { address } } });
+  const {
+    data: commandParametersSchemas,
+    isLoading: isSchemasLoading,
+  } = useCommandParametersSchemas();
   const [transaction] = useState(new Transaction());
 
   useEffect(() => {
-    if (isNetworkStatusLoading && isAuthLoading && isSchemasLoading) {
+    if (!isNetworkStatusLoading && !isAuthLoading && !isSchemasLoading) {
       transaction.init({
-        networkStatus,
-        auth,
-        commandParametersSchemas,
+        pubkey,
+        networkStatus: networkStatus.data,
+        auth: auth.data,
+        commandParametersSchemas: commandParametersSchemas.data,
         module,
         command,
-        pubkey: 'fd061b9146691f3c56504be051175d5b76d1b1d0179c5c4370e18534c5882122' || currentAccount.metadata.pubkey,
+        encodedTransaction,
       });
     }
   }, [isNetworkStatusLoading, isAuthLoading, isSchemasLoading]);

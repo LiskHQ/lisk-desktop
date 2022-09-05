@@ -6,180 +6,221 @@ import {
 import { validator } from '@liskhq/lisk-validator';
 import { codec } from '@liskhq/lisk-codec';
 import {
+  baseTransactionSchema,
   getCommandParamsSchema,
   decodeTransaction,
+  decodeBaseTransaction,
   encodeTransaction,
   toTransactionJSON,
   fromTransactionJSON,
 } from './encoding';
 
-/**
- * Create transaction for network specific schema, metadata and nodeInfo
- *
- * @param {Object} commandSchemas Network specific transaction command schemas
- * @param {Object} networkMetadata Network specific metadata (includes nodeInfo and moduleMedata)
- *
- * @returns {create, sign, decode, encode, computeMinFee, toJSON, fromJSON}
- */
 // eslint-disable-next-line import/prefer-default-export
 export class Transaction {
+  _paramsSchema = null;
+
   _networkStatus = null;
 
   _auth = null;
 
-  _schema = {};
-
-  _module = null
-
-  _command = null
-
-  _pubkey = null
-
-  _transaction = null
+  transaction = {
+    module: null,
+    command: null,
+    nonce: BigInt(0),
+    fee: BigInt(0),
+    senderPublicKey: null,
+    params: {},
+    signatures: [],
+  }
 
   isLoading = true
 
+  /**
+   * Initialise transaction with required network and account information
+   * @param {object} param transaction initialisation parameters
+   */
+  // eslint-disable-next-line max-statements
   init({
+    pubkey,
     networkStatus,
     auth,
     commandParametersSchemas,
-    module,
-    command,
-    pubkey,
+    module = null,
+    command = null,
+    encodedTransaction = null,
   }) {
-    this.loading = false;
+    this.isLoading = false;
     this._networkStatus = networkStatus;
-    this._module = module;
-    this._command = command;
-    this.pubkey = pubkey;
     this._auth = auth;
-    this._schema = getCommandParamsSchema(
-      { module, command },
-      commandParametersSchemas,
+    this.transaction.senderPublicKey = Buffer.isBuffer(pubkey) ? pubkey : Buffer.from(pubkey, 'hex');
+    this.transaction.module = module;
+    this.transaction.command = command;
+    let baseTrx = null;
+
+    if (encodedTransaction) {
+      baseTrx = this.getBaseTransaction(Buffer.from(encodedTransaction, 'hex'));
+      this.transaction.module = baseTrx.module;
+      this.transaction.command = baseTrx.command;
+    } else if (!(this.transaction.module && this.transaction.command)) {
+      throw new Error('Failed to initialise transaction');
+    }
+
+    this._paramsSchema = getCommandParamsSchema(
+      this.transaction.module, this.transaction.command, commandParametersSchemas,
     );
+
+    if (encodeTransaction) {
+      this.transaction.params = codec.decode(this._paramsSchema, baseTrx.params);
+    }
+    this.computeFee();
   }
 
   /**
-   * Create transaction object
-   * @param {string} module - Module name e.g token
-   * @param {string} command - Command name e.g transfer
-   * @param {object} options - Transaction options e.g {nonce, pubkey}
-   * @returns Transaction object
+   * Update transaction object
+   * @param {object} params transaction parameters
+   * @returns void
    */
-  async create(
+  update({
     params,
-  ) {
-    this._transaction = {
-      module: this._module,
-      command: this._command,
-      nonce: BigInt(this._auth.nonce),
-      senderPublicKey: Buffer.from(this._pubkey, 'hex'),
-      params: codec.fromJSON(this._schema ?? {}, params),
-      fee: BigInt(0),
-      signatures: [],
-    };
+    nonce = null,
+  }) {
+    this.transaction.params = codec.fromJSON(this._paramsSchema, params);
+    if (nonce) {
+      this.transaction.nonce = BigInt(nonce);
+    }
     this.computeFee();
   }
 
   /**
    * Sign transaction for a given privateKey and its options
-   * @param {object} transaction
-   * @param {string} privateKey
-   * @param {object} options {includeSenderSignature, authAccount}
-   * @returns
+   * @param {string} privateKey key to sign the transaction
+   * @param {object} options transaction signing options {includeSenderSignature}
+   * @returns void
    */
   // eslint-disable-next-line max-statements
-  async sign(privateKey, { includeSenderSignature = false }) {
-    const chainID = Buffer.from(this._networkStatus.chainID, 'hex');
-    const decodedTx = this.fromJSON(this._transaction);
-    const { optionalKeys, mandatoryKeys } = this._transaction.params;
+  async sign(privateKey, options = { includeSenderSignature: false }) {
+    // TODO: Update networkIdentifier to chainID once service endpoint is updated
+    const chainID = Buffer.from(this._networkStatus.networkIdentifier, 'hex');
+    const decodedTx = this.fromJSON(this.transaction);
+    const { optionalKeys, mandatoryKeys } = this.transaction.params;
     const isMultiSignature = this._auth.numberOfSignatures > 0;
     const isMultiSignatureRegistration = (optionalKeys?.length || mandatoryKeys?.length)
-      && includeSenderSignature;
-    this._validateTransaction(decodedTx);
+      && options.includeSenderSignature;
+    this._validateTransaction();
 
     if (isMultiSignature || isMultiSignatureRegistration) {
       const signedTx = signMultiSignatureTransaction(
-        this._transaction,
+        this.transaction,
         chainID,
         privateKey,
         {
           mandatoryKeys: this._auth.mandatoryKeys.map(k => Buffer.from(k, 'hex')),
           optionalKeys: this._auth.optionalKeys.map(k => Buffer.from(k, 'hex')),
         },
-        this._schema,
-        includeSenderSignature,
+        this._paramsSchema,
+        options.includeSenderSignature,
       );
 
-      return this.toJSON(signedTx);
+      this.transaction = signedTx;
+      return;
     }
 
     const signedTx = signTransaction(
       decodedTx,
-      this._networkStatus.networkIdentifier,
+      Buffer.from(this._networkStatus.networkIdentifier, 'hex'),
       Buffer.from(privateKey, 'hex'),
-      this._schema,
+      this._paramsSchema,
     );
-    return this.toJSON(signedTx);
+    this.transaction = signedTx;
   }
 
+  /**
+   * Compute transaction fee
+   */
   computeFee() {
-    this._validateTransaction(this._transaction);
-
-    // MultiSig registration
-
-    const { optionalKeys, mandatoryKeys } = this._transaction.params;
-    const isMultiSignatureRegistration = (optionalKeys?.length || mandatoryKeys?.length);
-    const numberOfSignatures = this._auth.numberOfSignatures > 0
-      ? this._auth.numberOfSignatures
-      : 1;
-    // Transaction from multisignature
+    this._validateTransaction();
     const computeMinFeeOptions = {
-      minFeePerByte: this._networkStatus.genesisConfig.minFeePerByte,
-      numberOfSignatures,
+      minFeePerByte: this._networkStatus.genesis.minFeePerByte,
+      numberOfSignatures: this._auth.numberOfSignatures || 1,
+      numberOfEmptySignatures: 0,
     };
-    if (isMultiSignatureRegistration) {
+
+    if (this.transaction.module === 'auth' && this.transaction.command === 'registerMultisignatureGroup') {
+      const { optionalKeys, mandatoryKeys } = this.transaction.params;
+
       computeMinFeeOptions.numberOfEmptySignatures = optionalKeys?.length
         + mandatoryKeys?.length
         - this._auth.numberOfSignatures;
-    }
-    if (!isMultiSignatureRegistration) {
+    } else {
+      const { optionalKeys, mandatoryKeys } = this._auth;
       computeMinFeeOptions.numberOfSignatures = optionalKeys?.length + mandatoryKeys?.length + 1;
     }
-    this._transaction.fee = computeMinFee(this._transaction, this._schema, computeMinFeeOptions);
-  }
 
-  decode() {
-    const transactionBuffer = Buffer.isBuffer(this._transaction)
-      ? this._transaction
-      : Buffer.from(this._transaction, 'hex');
-    return decodeTransaction(transactionBuffer, this._schema, this._networkStatus);
-  }
-
-  encode() {
-    this._validateTransaction(this._transaction);
-    return encodeTransaction(this._transaction, this._schema, this._networkStatus);
-  }
-
-  toJSON() {
-    this._validateTransaction(this._transaction);
-    return toTransactionJSON(
-      this._transaction,
-      this._schema,
-      this._networkStatus,
+    this.transaction.fee = computeMinFee(
+      this.transaction, this._paramsSchema, computeMinFeeOptions,
     );
   }
 
-  fromJSON() {
-    return fromTransactionJSON(this._transaction, this._schema, this._networkStatus);
+  /**
+   * Decode encoded transaction
+   * @param {buffer} encodedTransaction encoded transaction buffer
+   * @returns transaction object
+   */
+  decode(encodedTransaction) {
+    const transactionBuffer = Buffer.isBuffer(encodedTransaction)
+      ? this.transaction
+      : this.encode();
+    return decodeTransaction(transactionBuffer, this._paramsSchema);
   }
 
+  /**
+   * Encode transaction object
+   * @returns encoded transaction hex string
+   */
+  encode() {
+    this._validateTransaction(this.transaction);
+    return encodeTransaction(this.transaction, this._paramsSchema);
+  }
+
+  /**
+   * Convert transaction object to JSON
+   * @returns transaction in JSON format
+   */
+  toJSON() {
+    this._validateTransaction(this.transaction);
+    return toTransactionJSON(
+      this.transaction,
+      this._paramsSchema,
+    );
+  }
+
+  /**
+   * Convert transaction JSON to object
+   * @returns transaction in Object format
+   */
+  fromJSON() {
+    return fromTransactionJSON(this.transaction, this._paramsSchema);
+  }
+
+  /**
+   * Get base transaction object
+   * @param {buffer} encodedTransaction encoded transaction buffer
+   * @returns transaction object
+   */
+  // eslint-disable-next-line class-methods-use-this
+  getBaseTransaction(encodedTransaction) {
+    return decodeBaseTransaction(encodedTransaction);
+  }
+
+  /**
+   * Validate transaction to be compatible with lisk protocol
+   */
   _validateTransaction() {
-    if (typeof this._transaction !== 'object' || this._transaction === null) {
+    if (typeof this.transaction !== 'object' || this.transaction === null) {
       throw new Error('Transaction must be an object.');
     }
-    const { params, ...rest } = this._transaction;
-    validator.validate(this._schema.transaction, {
+    const { params, ...rest } = this.transaction;
+    validator.validate(baseTransactionSchema, {
       ...rest,
       params: Buffer.alloc(0),
     });
