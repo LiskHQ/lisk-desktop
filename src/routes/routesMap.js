@@ -45,6 +45,11 @@ import BlockchainApplications from '@blockchainApplication/explore/manager/Block
 import BlockchainApplicationDetails from '@blockchainApplication/explore/components/BlockchainApplicationDetails';
 import ApplicationManagementList from '@blockchainApplication/manage/components/ApplicationManagementList';
 import RemoveApplicationFlow from '@blockchainApplication/manage/components/RemoveApplicationFlow';
+import ConnectionProposal from 'src/modules/blockchainApplication/connection/components/ConnectionProposal';
+import SessionManager from '@blockchainApplication/connection/components/SessionManager';
+import ConnectionSummary from 'src/modules/blockchainApplication/connection/components/ConnectionSummary';
+import RequestSummary from '@blockchainApplication/connection/components/RequestSummary';
+import ConnectionSuccess from 'src/modules/blockchainApplication/connection/components/ConnectionSuccess';
 
 export default {
   wallet: AccountDetails,
@@ -95,4 +100,9 @@ export default {
   blockChainApplicationDetails: BlockchainApplicationDetails,
   manageApplications: ApplicationManagementList,
   removeApplicationFlow: RemoveApplicationFlow,
+  connectionProposal: ConnectionProposal,
+  sessionManager: SessionManager,
+  requestSummary: RequestSummary,
+  connectionSummary: ConnectionSummary,
+  connectionSuccess: ConnectionSuccess,
 };
