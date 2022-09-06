@@ -51,7 +51,7 @@ describe('QueryTable', () => {
   });
 
   it('displays the load new button', () => {
-    const mockScrollIntoView = jest.fn().mockReturnValue(undefined)
+    const mockScrollIntoView = jest.fn().mockReturnValue(undefined);
     document.querySelector = jest.fn(() => ({
       getBoundingClientRect: jest.fn().mockReturnValue({ top: 80 }),
       scrollIntoView: mockScrollIntoView,
