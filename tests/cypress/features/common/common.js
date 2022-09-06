@@ -6,21 +6,21 @@ const txConfirmationTimeout = 15000;
 
 Given(/^Network switcher is (enabled|disabled)$/, function (status) {
   const showNetwork = status === 'enabled';
-  window.localStorage.setItem('settings', 
+  window.localStorage.setItem('settings',
     JSON.stringify({ ...settings, 'showNetwork': showNetwork }));
 });
 
 Given(/^Network is set to testnet$/, function () {
-  window.localStorage.setItem('settings', 
+  window.localStorage.setItem('settings',
     JSON.stringify({ ...settings, 'showNetwork': true, network: { name: 'testnet', address:'https://testnet-service.lisk.com' } }));
 });
 
 Given(/^Network is set to ([^\s]+)$/, function (network) {
-  window.localStorage.setItem('settings', 
+  window.localStorage.setItem('settings',
     JSON.stringify({ ...settings, 'showNetwork': true, network: { name: network, address:networks[network].serviceUrl } }));
 });
 
-Given(/^I login as ([^\s]+) on ([^\s]+)$/, function (account, network) {
+/** Given(/^I login as ([^\s]+) on ([^\s]+)$/, function (account, network) {
   cy.visit(urls.login);
   cy.get(ss.networkDropdown).click();
   cy.get(ss.networkOptions).eq(2).click();
@@ -40,7 +40,7 @@ Given(/^I login$/, function () {
   cy.server();
   cy.get(ss.loginBtn).should('be.enabled');
   cy.get(ss.loginBtn).click();
-});
+}); */
 
 Then(/^I enter the passphrase of ([^\s]+)$/, function (accountName) {
   const passphrase = wallets[accountName]['passphrase'];
@@ -114,8 +114,7 @@ Then(/^The latest transaction is (.*?)$/, function (transactionType) {
       cy.get(`${ss.transactionRow} ${ss.transactionAddress}`).eq(0).should('have.text', this.randomAddress);
     } else if (transactionRecipient === 'transfer') {
       throw new Error('Usage: "transfer to {recipient}" where recipient could be "random" or account name');
-    }
-    else {
+    } else {
       /* For uses like: 'transfer to mkakDp2f31btaXdATtAogoqwXcdx1PqqFo' */
       cy.get(`${ss.transactionRow} ${ss.transactionRowRecipient} span`).eq(0).contains(transactionRecipient.substring(0,10));
     }

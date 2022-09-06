@@ -1,16 +1,9 @@
-/* eslint-disable max-lines */
-import { toast } from 'react-toastify';
 import * as accountApi from '@wallet/utils/api';
-import { extractKeyPair } from '@wallet/utils/account';
-import { defaultDerivationPath } from 'src/utils/explicitBipKeyDerivation';
 import wallets from '@tests/constants/wallets';
-import { tokenMap } from '@token/fungible/consts/tokens';
 import * as networkActions from '@network/store/action';
 import { accountDataUpdated } from '@wallet/store/action';
 import actionTypes from './actionTypes';
 import {
-  accountLoggedOut,
-  login,
   secondPassphraseStored,
   secondPassphraseRemoved,
 } from './action';
@@ -39,13 +32,6 @@ jest.mock('@wallet/utils/account', () => ({
   getUnlockableUnlockObjects: () => [{}],
 }));
 
-const network = {
-  name: 'Mainnet',
-  networks: {
-    LSK: {},
-  },
-};
-
 describe('actions: account', () => {
   const dispatch = jest.fn();
 
@@ -56,16 +42,6 @@ describe('actions: account', () => {
   afterEach(() => {
     accountApi.getAccount.mockReset();
     networkActions.networkStatusUpdated.mockReset();
-  });
-
-  describe('accountLoggedOut', () => {
-    it('should create an action to reset the account', () => {
-      const expectedAction = {
-        type: actionTypes.accountLoggedOut,
-      };
-
-      expect(accountLoggedOut()).toEqual(expectedAction);
-    });
   });
 
   describe('secondPassphraseStored', () => {
@@ -173,97 +149,6 @@ describe('actions: account', () => {
       expect(networkActions.networkStatusUpdated).toHaveBeenCalledWith({
         online: true,
       });
-    });
-  });
-
-  describe('login', () => {
-    let state;
-    const getState = () => state;
-    const balance = 10e8;
-    const {
-      passphrase,
-      summary: { address, publicKey },
-    } = wallets.genesis;
-
-    beforeEach(() => {
-      state = {
-        network,
-        settings: {
-          autoLog: true,
-          enableCustomDerivationPath: true,
-          customDerivationPath: '1/2',
-        },
-        token: {
-          active: tokenMap.LSK.key,
-          list: {
-            [tokenMap.LSK.key]: true,
-          },
-        },
-      };
-    });
-
-    it('should call account api and dispatch accountLoggedIn', async () => {
-      await login({ passphrase })(dispatch, getState);
-      expect(dispatch).toHaveBeenNthCalledWith(
-        1,
-        expect.objectContaining({
-          type: actionTypes.accountLoading,
-        }),
-      );
-
-      expect(dispatch).toHaveBeenNthCalledWith(
-        2,
-        expect.objectContaining({
-          type: actionTypes.accountLoggedIn,
-        }),
-      );
-    });
-
-    it('should call account api and dispatch accountLoggedIn with ledger loginType', async () => {
-      accountApi.getAccount.mockResolvedValue({ balance, address });
-      await login({ hwInfo: { deviceModel: 'Ledger Nano S' }, publicKey })(
-        dispatch,
-        getState,
-      );
-      expect(dispatch).toHaveBeenNthCalledWith(
-        2,
-        expect.objectContaining({
-          type: actionTypes.accountLoggedIn,
-          data: expect.objectContaining({
-            info: {
-              LSK: expect.objectContaining({ address, balance }),
-            },
-          }),
-        }),
-      );
-    });
-
-    it('should call extractPublicKey with params', async () => {
-      accountApi.getAccount.mockResolvedValue({ balance, address });
-      await login({ passphrase })(dispatch, getState);
-      expect(extractKeyPair).toHaveBeenCalledWith({ passphrase, enableCustomDerivationPath: true, derivationPath: '1/2' });
-
-      const newGetState = () => ({
-        ...state,
-        settings: {
-          ...state.settings,
-          enableCustomDerivationPath: false,
-          customDerivationPath: undefined,
-        },
-      });
-
-      await login({ passphrase })(dispatch, newGetState);
-      expect(extractKeyPair).toHaveBeenLastCalledWith({
-        passphrase, enableCustomDerivationPath: false, derivationPath: defaultDerivationPath,
-      });
-    });
-
-    it('should fire an error toast if getAccount fails ', async () => {
-      jest.spyOn(toast, 'error');
-      accountApi.getAccount.mockRejectedValue({ message: 'custom error' });
-      await login({ passphrase })(dispatch, getState);
-      expect(toast.error).toHaveBeenCalledTimes(1);
-      expect(dispatch).toHaveBeenCalledWith({ type: actionTypes.accountLoggedOut });
     });
   });
 });
