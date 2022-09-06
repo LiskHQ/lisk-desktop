@@ -23,4 +23,6 @@ const getTxDirectionConfig = (moduleCommandID, host, recipient, styles) => {
   return false;
 };
 
+export const getSpaceSeparated = str => str.replace(/([A-Z])/g, ' $1');
+
 export default getTxDirectionConfig;

@@ -1,0 +1,64 @@
+.wrapper {
+  width: 100%;
+  height: auto;
+  padding: 0 !important;
+
+  & .object {
+    width: 100%;
+    box-sizing: border-box;
+
+    & .object {
+      padding-left: var(--horizontal-padding-m);
+    }
+  }
+
+  & .pair {
+    width: 100%;
+    border-bottom: 1px solid var(--color-platinum);
+    box-sizing: border-box;
+
+    &:last-child {
+      border-bottom: none;
+    }
+  }
+
+  & .list {
+    counter-reset: section;
+
+    & > .listItem {
+      display: block;
+      position: relative;
+      padding-left: var(--horizontal-padding-m);
+
+      &::before {
+        counter-increment: section;
+        content: counter(section) ".";
+        position: absolute;
+        left: 0px;
+        color: gray;
+        top: 13px;
+      }
+    }
+  }
+
+  & .label,
+  & .value {
+    display: block;
+    width: 100%;
+  }
+
+  & .label {
+    @mixin contentLarge;
+
+    color: var(--color-maastricht-blue);
+    padding-top: 8px;
+    line-height: 30px;
+    text-transform: capitalize;
+  }
+
+  & .value {
+    line-height: 26px;
+    font-weight: 500;
+    padding-bottom: 8px;
+  }
+}
