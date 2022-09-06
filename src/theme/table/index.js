@@ -97,7 +97,7 @@ const Table = ({
         additionalRowProps={additionalRowProps || {}}
       />
       {
-        isLoading && [...new Array(skeletonCount).values()].map((item) => (
+        isLoading && SkeletonRow && [...new Array(skeletonCount).values()].map((item) => (
           <SkeletonRow key={item} />
         ))
       }
