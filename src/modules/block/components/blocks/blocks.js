@@ -57,7 +57,6 @@ const Blocks = ({
   };
 
   const applyBlockFilters = (blockFilters) => {
-    console.log('+++', blockFilters);
     const updateApplyFilterData = (usedFilters) =>
       setConfig({ params: transformParams(usedFilters) });
     applyFilters(blockFilters, null, updateApplyFilterData);

@@ -21,7 +21,6 @@ const TransactionRow = ({
   const Layout = LayoutSchema[layout] || LayoutSchema.default;
 
   return (
-  // <div className="transaction-row-wrapper">
     <DialogLink
       className={`${grid.row} ${styles.container} ${styles[layout]} ${className} transactions-row`}
       component="transactionDetails"
@@ -42,7 +41,6 @@ const TransactionRow = ({
         ))}
       </TransactionRowContext.Provider>
     </DialogLink>
-  // </div>
   );
 };
 

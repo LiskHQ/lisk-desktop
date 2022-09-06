@@ -7,7 +7,7 @@ const data = new Array(30).fill({})
     typeID: index % 5,
     data: { // Depends on event typeID
       numberOfSignatures: 2,
-      mandatoryKeys: '0fe9a3f1a21b5530f27f87a414b549e79a940bf24fdf2b2f05e7f22aeeecc86a',
+      mandatoryKeys: '0000a3f1a21b5530f27f87a010b549e79a934bf24fdf2b2f05e7e12aeeecc67b',
       optionalKeys: '0fe9a3f1a21b5530f27f87a414b549e79a940bf24fdf2b2f05e7f22aeeecc86a',
     },
     topics: [],

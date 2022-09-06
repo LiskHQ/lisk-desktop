@@ -18,6 +18,7 @@ const txBase = {
   id: 'ad0e0acbe8a3ece3087c8362149ca39c470e565d268df32e57de5d3fe2e1ea5c',
 };
 
+// @TODO: this would be re-instated when work is done in re-instating
 // const vote = {
 //   moduleCommandID: '5:1',
 //   params: {
