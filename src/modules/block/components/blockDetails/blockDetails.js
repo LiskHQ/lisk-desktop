@@ -148,7 +148,7 @@ const BlockDetails = ({
     active: activeTab,
     onClick: ({ value }) => setActiveTab(value),
   };
-  console.log('---', blocks?.data?.[0]);
+
   return (
     <div>
       <Box isLoading={isLoading} width="full">
