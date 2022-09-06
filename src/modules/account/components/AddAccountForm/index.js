@@ -1,7 +1,6 @@
 /* istanbul ignore file */
 import { connect } from 'react-redux';
 import { setDefaults, withTranslation } from 'react-i18next';
-import { login } from '@auth/store/action';
 import { settingsUpdated } from 'src/modules/settings/store/actions';
 import AddAccountForm from './AddAccountForm';
 
@@ -21,7 +20,6 @@ const mapStateToProps = state => ({
 });
 
 const mapDispatchToProps = {
-  login,
   settingsUpdated,
 };
 

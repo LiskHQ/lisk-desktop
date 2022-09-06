@@ -9,13 +9,14 @@ pipeline {
 	}
 	parameters {
 		string(name: 'CORE_VERSION', defaultValue: '3.0.2')
-		string(name: 'SERVICE_BRANCH_NAME', defaultValue: 'development')
+		// @todo: this should be re-instated when the issue with lisk-client is fixed
+		string(name: 'SERVICE_BRANCH_NAME', defaultValue: 'v0.6.4')
 	}
 	stages {
 		stage('install') {
 			steps {
 				nvm(getNodejsVersion()) {
-					sh 'npm ci'
+					sh 'npm i --registry https://npm.lisk.com'
 				}
 			}
 		}

@@ -2,7 +2,6 @@ const config = {
   currencies: ['USD', 'EUR', 'CHF'],
   keys: {
     loginKey: 'loginKey',
-    autoLog: 'autoLog',
     showNetwork: 'showNetwork',
     channels: 'channels',
     hardwareAccounts: 'hardwareAccounts',

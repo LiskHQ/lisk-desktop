@@ -11,7 +11,6 @@ export const channels = {
 
 // load setting data from localStorage if it exists and merge with initial state
 export const initialState = {
-  autoLog: true,
   showNetwork: false,
   channels,
   hardwareAccounts: {},
@@ -39,7 +38,6 @@ const settings = (state = initialState, action) => {
     case actionTypes.settingsReset:
       return {
         ...state,
-        autoLog: true,
       };
     default:
       return state;

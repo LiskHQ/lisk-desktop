@@ -1,9 +1,6 @@
-import settings from 'src/modules/settings/const/settingConstants';
 import { networkKeys } from '@network/configuration/networks';
-import { getAutoLogInData, shouldAutoLogIn } from 'src/utils/login';
 import analytics from 'src/utils/analytics';
 import settingsActionTypes from 'src/modules/settings/store/actionTypes';
-import { login } from '@auth/store/action';
 import { settingsUpdated } from 'src/modules/settings/store/actions';
 import { networkSelected, networkStatusUpdated, networkConfigSet } from './action';
 import actionTypes from './actionTypes';
@@ -37,13 +34,6 @@ const network = (store) => next => async (action) => {
       break;
     case actionTypes.networkSelected: {
       store.dispatch(await networkConfigSet(action.data));
-      break;
-    }
-    case actionTypes.networkConfigSet: {
-      const autoLoginData = getAutoLogInData();
-      if (shouldAutoLogIn(autoLoginData)) {
-        store.dispatch(login({ passphrase: autoLoginData[settings.keys.loginKey] }));
-      }
       break;
     }
     case actionTypes.customNetworkStored:

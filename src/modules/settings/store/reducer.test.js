@@ -7,7 +7,6 @@ describe('Reducer: settings(state, action)', () => {
 
   beforeEach(() => {
     initializeState = {
-      autoLog: true,
       token: {
         active: tokenMap.LSK.key,
         list: {
@@ -20,10 +19,10 @@ describe('Reducer: settings(state, action)', () => {
   it('should return updated settings if action.type = actionTypes.settingsUpdated', () => {
     const action = {
       type: actionTypes.settingsUpdated,
-      data: { autoLog: false },
+      data: { testSetting: false },
     };
     const changedState = settings(initializeState, action);
-    expect(changedState).toEqual({ ...initializeState, autoLog: false });
+    expect(changedState).toEqual({ ...initializeState, testSetting: false });
   });
 
   it('should return updated initializeState if action.type = actionTypes.settingsReset', () => {
@@ -32,7 +31,6 @@ describe('Reducer: settings(state, action)', () => {
     };
     const changedState = {
       ...initializeState,
-      autoLog: false,
     };
     const FinalStep = settings(changedState, action);
     expect(FinalStep).toEqual(initializeState);

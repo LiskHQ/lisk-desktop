@@ -1,13 +1,13 @@
 Feature: Vote delegate
 
-   Background:
-      Given I login as genesis on customNode
-      And I wait 5 seconds
-      Given I am on wallet page
-      When I click on searchIcon
-      And I search for account genesis_69
-      Then I click on searchDelegatesRow
-      Then I should be on Account page
+   # Background:
+   #    Given I login as genesis on customNode
+   #    And I wait 5 seconds
+   #    Given I am on wallet page
+   #    When I click on searchIcon
+   #    And I search for account genesis_69
+   #    Then I click on searchDelegatesRow
+   #    Then I should be on Account page
 
    # @todo: disabled until account management is updated
    # @basic
