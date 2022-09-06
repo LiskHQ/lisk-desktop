@@ -23,7 +23,7 @@ export const extractKeyPair = ({
   }
 
   if (LiskPassphrase.Mnemonic.validateMnemonic(passphrase)) {
-    const keyPair = cryptography.ed.getKeys(passphrase);
+    const keyPair = cryptography.legacy.getKeys(passphrase);
     return {
       publicKey: keyPair.publicKey.toString('hex'),
       privateKey: keyPair.privateKey.toString('hex'),
@@ -98,7 +98,9 @@ export const extractAddressFromPublicKey = (data) => {
  */
 export const extractAddressFromPassphrase = (data) => {
   if (LiskPassphrase.Mnemonic.validateMnemonic(data)) {
-    return cryptography.address.getLisk32AddressFromPassphrase(data).toString('hex');
+    // return cryptography.address.getLisk32AddressFromPassphrase(data).toString('hex');
+    const { publicKey } = cryptography.legacy.getKeys(data);
+    return cryptography.address.getLisk32AddressFromPublicKey(publicKey).toString('hex');
   }
   throw Error('Invalid passphrase');
 };

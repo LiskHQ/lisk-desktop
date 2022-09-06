@@ -1,7 +1,7 @@
 Feature: Register delegate
-    Background:
-        Given I login as genesis on customNode
-        And I wait 5 seconds
+  # Background:
+  #     Given I login as genesis on customNode
+  #     And I wait 5 seconds
 
 #   @advanced
   # @todo: disabled until account management is updated
