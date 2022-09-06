@@ -7,7 +7,6 @@ jest.mock('src/redux/selectors');
 
 // const mockSelector = jest.fn();
 useSelector.mockReturnValue(accounts.secondPass);
-
 describe('setSecondPassphrase', () => {
   it('Should return second passphrase with no error message', () => {
     const result = renderHook(() => setSecondPassphrase());

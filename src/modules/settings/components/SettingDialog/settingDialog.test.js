@@ -6,7 +6,6 @@ import { mountWithRouter } from 'src/utils/testHelpers';
 
 describe('Setting', () => {
   const settings = {
-    autoLog: true,
     showNetwork: false,
     currency: undefined,
     statistics: false,

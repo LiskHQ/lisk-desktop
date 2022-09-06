@@ -98,13 +98,6 @@ const Blocks = ({
       >
         <StickyHeader
           title={t('All blocks')}
-          button={{
-            entity: 'block',
-            // error,
-            onClick: loadLastBlocks,
-            label: t('New blocks'),
-          }}
-          scrollToSelector=".blocks-container"
           filters={(
             <BlockFilterDropdown
               filters={filters}
@@ -124,12 +117,17 @@ const Blocks = ({
           <QueryTable
             showHeader
             isLoading
+            button={{
+              label: t('New blocks'),
+              onClick: loadLastBlocks,
+            }}
             queryHook={useBlocks}
             queryConfig={{ config: { params } }}
             row={BlockRow}
             header={header(changeBlockSort, t)}
             headerClassName={styles.tableHeader}
             currentSort={sort}
+            scrollToSelector=".blocks-container"
             skeletonRow={BlockSkeletonRow}
           />
         </BoxContent>

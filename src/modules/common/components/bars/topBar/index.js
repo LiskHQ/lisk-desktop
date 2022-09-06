@@ -4,11 +4,9 @@ import { withRouter } from 'react-router';
 import { withTranslation } from 'react-i18next';
 import { containsTransactionType } from '@transaction/utils/transaction';
 import { MODULE_COMMANDS_NAME_ID_MAP } from '@transaction/configuration/moduleAssets';
-import { accountLoggedOut, timerReset } from '@auth/store/action';
 import TopBar from './topBar';
 
 const mapStateToProps = state => ({
-  account: state.wallet,
   network: state.network,
   token: state.token,
   settings: state.settings,
@@ -21,13 +19,8 @@ const mapStateToProps = state => ({
       .length,
 });
 
-const mapDispatchToProps = {
-  logOut: accountLoggedOut,
-  resetTimer: () => timerReset(),
-};
-
 export default withRouter(
-  connect(mapStateToProps, mapDispatchToProps)(
+  connect(mapStateToProps)(
     withTranslation()(TopBar),
   ),
 );

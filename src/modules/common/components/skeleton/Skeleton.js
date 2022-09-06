@@ -2,7 +2,7 @@ import React from 'react';
 import styles from './Skeleton.css';
 
 const Skeleton = ({
-  circle, radius = 20, width = '100%', height = 15,
+  circle, radius = 20, width = '100%', height = 15, right = false,
 }) => (
   <div
     data-testid="skeleton-wrapper"
@@ -10,6 +10,7 @@ const Skeleton = ({
     style={{
       width: circle ? 2 * radius : width,
       height: circle ? 2 * radius : height,
+      textAlign: right ? 'right' : 'left',
     }}
   />
 );

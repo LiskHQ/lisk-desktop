@@ -10,6 +10,7 @@ import {
   selectCurrentBlockHeight,
   selectActiveToken,
 } from 'src/redux/selectors';
+import TransactionSkeletonRow from '../TransactionSkeletonRow/TransactionSkeletonRow';
 import TransactionRow from '../TransactionRow';
 import header from './TransactionHeaderMap';
 import styles from './transactionsTable.css';
@@ -177,6 +178,7 @@ const Transactions = ({
           headerClassName={styles.tableHeader}
           currentSort={sort}
           canLoadMore={canLoadMore}
+          skeletonRow={TransactionSkeletonRow}
           error={transactions.error}
           emptyState={{
             message: t('There are no transactions for this chain.'),

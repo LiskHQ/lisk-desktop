@@ -1,16 +1,16 @@
 Feature: Multisignature transaction
 
-  @basic
-  Scenario: Add funds to wallet2P
-    Given I login as genesis on customNode
-    Given  I wait 1 seconds
-    Given I am on Wallet page
-    Then I click on sendLink
-    When I paste lskwunwxqmss9w3mtuvzgbsfy665cz4eo3rd2mxdp in recipientInput field
-    And I fill 10 in amountInput field
-    And I go to transfer confirmation
-    And I click on sendButton
-    And I click on closeDialog
+  # @basic
+  # Scenario: Add funds to wallet2P
+  #   Given I login as genesis on customNode
+  #   Given  I wait 1 seconds
+  #   Given I am on Wallet page
+  #   Then I click on sendLink
+  #   When I paste lskwunwxqmss9w3mtuvzgbsfy665cz4eo3rd2mxdp in recipientInput field
+  #   And I fill 10 in amountInput field
+  #   And I go to transfer confirmation
+  #   And I click on sendButton
+  #   And I click on closeDialog
 
   # @todo: disabled until account management is updated
   # @basic

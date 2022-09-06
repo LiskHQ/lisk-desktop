@@ -9,17 +9,12 @@
   height: calc(var(--header-height) + 25px);
   justify-content: space-between;
   padding: 30px 0 25px;
-  z-index: 3;
+  z-index: 2;
 
   & > h1 {
     font-size: 18px;
     letter-spacing: 0;
     line-height: 25px;
+    margin-bottom: 0;
   }
-}
-
-.loadButton {
-  position: absolute;
-  top: 0;
-  z-index: 4;
 }

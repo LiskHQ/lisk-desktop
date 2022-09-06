@@ -41,7 +41,7 @@ import styles from './table.css';
  * rendering rounds to a minimum.
  * @param {String} currentSort
  * one of the properties of each item in the data array or null.
- * @param {Function} loadingState
+ * @param {Function} skeletonRow
  * A valid react component to be shown when the table is loading data
  * @param {Boolean} isLoading
  * Determines if the data is being loaded or not. the other states are error and success.
@@ -69,6 +69,7 @@ const Table = ({
   loadData,
   header,
   headerClassName,
+  subHeader,
   row,
   currentSort,
   isLoading,
@@ -90,6 +91,7 @@ const Table = ({
         data={data}
         header={header}
         headerClassName={headerClassName}
+        subHeader={subHeader}
         currentSort={currentSort}
         iterationKey={iterationKey}
         Row={Row}

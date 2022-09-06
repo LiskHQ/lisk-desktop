@@ -39,7 +39,9 @@ const Sort = ({
   return <span className={styles.titleWrapper}>{children}</span>;
 };
 
-const Header = ({ data, currentSort, headerClassName }) => {
+const Header = ({
+  data, currentSort, headerClassName, subHeader,
+}) => {
   /**
    * In case we define a config array for header
    */
@@ -73,6 +75,7 @@ const Header = ({ data, currentSort, headerClassName }) => {
             </div>
           ))
         }
+        {subHeader}
       </header>
     );
   }

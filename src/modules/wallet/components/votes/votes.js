@@ -8,6 +8,7 @@ import BoxContent from '@theme/box/content';
 import { Input } from 'src/theme';
 import Table from '@theme/table';
 import styles from './votes.css';
+import VotesSkeletonRow from '../VotesSkeletonRow/VotesSkeletonRow';
 import VoteRow from './voteRow';
 import header from './votesTableHeader';
 
@@ -78,6 +79,7 @@ const Votes = ({
           emptyState={{
             message: filterValue ? messages.filtered : messages.all,
           }}
+          skeletonRow={VotesSkeletonRow}
           row={VoteRow}
           additionalRowProps={{
             onRowClick,
