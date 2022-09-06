@@ -1,3 +1,5 @@
+// @todo: this should be re-instated when the issue with lisk-client is fixed
+/* istanbul ignore file */
 import React from 'react';
 import Tooltip from 'src/theme/Tooltip';
 import DialogLink from 'src/theme/dialog/link';

@@ -1,3 +1,5 @@
+// @todo: this should be re-instated when the issue with lisk-client is fixed
+/* istanbul ignore file */
 import { cryptography } from '@liskhq/lisk-client';
 import { extractKeyPair, extractAddressFromPublicKey } from 'src/modules/wallet/utils/account';
 import { defaultDerivationPath } from 'src/utils/explicitBipKeyDerivation';

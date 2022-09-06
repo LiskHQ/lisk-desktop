@@ -1,39 +1,14 @@
 import { toast } from 'react-toastify';
 import { subscribeToDeviceConnected, subscribeToDeviceDisconnected } from '@wallet/utils/hwManager';
 import { addSearchParamsToUrl } from 'src/utils/searchParams';
-import { /* accountLoggedOut, */ login } from '@auth/store/action';
-import {
-  getDeviceList,
-  getPublicKey,
-} from '@libs/hwManager/communication';
 import history from 'src/utils/history';
 import actionTypes from 'src/modules/common/store/actionTypes';
-
-async function autoLogInIfNecessary(store) {
-  // not tested as it is just a development helper
-  // istanbul ignore next
-  if (localStorage.getItem('hwWalletAutoLogin')) {
-    const device = (await getDeviceList())[0];
-    if (device) {
-      const index = 0;
-      const publicKey = await getPublicKey({ index, deviceId: device.deviceId });
-      const hwInfo = {
-        derivationIndex: index,
-        deviceId: device.deviceId,
-        deviceModel: device.model,
-      };
-      setTimeout(() => {
-        store.dispatch(login({ hwInfo, publicKey }));
-      }, 1000);
-    }
-  }
-}
 
 const hwWalletMiddleware = store => next => (action) => {
   const { ipc } = window;
 
   if (action.type === actionTypes.storeCreated && ipc) {
-    autoLogInIfNecessary(store);
+    // autoLogInIfNecessary(store);
 
     /**
      * subscribeToDeviceConnected - Function -> To detect any new hw wallet device connection
