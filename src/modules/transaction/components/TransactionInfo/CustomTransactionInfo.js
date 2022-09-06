@@ -6,6 +6,7 @@ import Send from '../Send';
 import RegisterDelegate from '../RegisterDelegate';
 import UnlockBalance from '../UnlockBalance';
 import RegisterMultisignatureGroup from '../RegisterMultisignatureGroup';
+import GenericTxParams from '../GenericTxParams';
 
 export default (props) => {
   switch (props.transaction.moduleCommandID) {
@@ -17,6 +18,6 @@ export default (props) => {
     case MODULE_COMMANDS_NAME_ID_MAP.registerMultisignatureGroup:
       return <RegisterMultisignatureGroup {...props} />;
     default:
-      return null;
+      return <GenericTxParams {...props} />;
   }
 };
