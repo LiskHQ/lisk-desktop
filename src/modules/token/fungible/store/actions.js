@@ -1,3 +1,5 @@
+// @todo: this should be re-instated when the issue with lisk-client is fixed
+/* istanbul ignore file */
 import { to } from 'await-to-js';
 import { selectActiveTokenAccount } from 'src/redux/selectors';
 import actionTypes from '@transaction/store/actionTypes';

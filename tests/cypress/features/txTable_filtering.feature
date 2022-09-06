@@ -1,10 +1,10 @@
 Feature: Transaction table filtering
 
-  Background:
-    Given I login as genesis on customNode
-    And I wait 5 seconds
-    Given I am on Wallet page
-    And I click on filterTransactionsBtn
+  # Background:
+  #   Given I login as genesis on customNode
+  #   And I wait 5 seconds
+  #   Given I am on Wallet page
+  #   And I click on filterTransactionsBtn
 
   # @advanced
   # @todo: disabled until account management is updated
