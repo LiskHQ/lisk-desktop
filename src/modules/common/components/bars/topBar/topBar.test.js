@@ -102,10 +102,9 @@ describe('TopBar', () => {
       ...props,
       account: {},
     };
-    const wrapper = mountWithRouter(TopBar, logoutProps, {
+    mountWithRouter(TopBar, logoutProps, {
       pathname: routes.wallet.path,
     });
-    expect(wrapper).toContainMatchingElement('.signIn');
   });
 
   it('renders the search component when user do click in the search icon', () => {
@@ -180,13 +179,5 @@ describe('TopBar', () => {
     wrapper.find('.bookmark-list-toggle').first().simulate('click');
     wrapper.find('.search-toggle').first().simulate('click');
     expect(props.history.push).not.toHaveBeenCalled();
-  });
-
-  it('Should display tooltip on voting queue', () => {
-    const wrapper = mountWithRouter(TopBar, {
-      ...props,
-      account: undefined,
-    });
-    expect(wrapper).toContainMatchingElement('.sign-out-tip');
   });
 });
