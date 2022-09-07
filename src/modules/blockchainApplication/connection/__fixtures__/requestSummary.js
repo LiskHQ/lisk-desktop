@@ -8,7 +8,7 @@ export const context = {
       params: {
         chainId: 'lisk:2',
         request: {
-          method: ['sign_transaction'],
+          method: 'sign_transaction',
           params: {
             rawTx: {
               moduleID: 2,

@@ -4,6 +4,7 @@ import ConnectionContext from '@libs/wcm/context/connectionContext';
 import ValueAndLabel from '@transaction/components/TransactionDetails/valueAndLabel';
 import AccountRow from '@account/components/AccountRow';
 import { rejectLiskRequest } from '@libs/wcm/utils/requestHandlers';
+import { SIGNING_METHODS } from '@libs/wcm/constants/permissions';
 import { EVENTS } from '@libs/wcm/constants/lifeCycle';
 import { elementTxToDesktopTx, convertTxJSONToBinary } from '@transaction/utils/transaction';
 import { joinModuleAndCommandIds } from '@transaction/utils/moduleAssets';
@@ -14,6 +15,10 @@ import { PrimaryButton, SecondaryButton } from 'src/theme/buttons';
 import Box from 'src/theme/box';
 import grid from 'flexboxgrid/dist/flexboxgrid.css';
 import styles from './requestSummary.css';
+
+const getTitle = (key, t) =>
+  Object.values(SIGNING_METHODS).find(item => item.key === key)?.title
+    ?? t('Method not found');
 
 // eslint-disable-next-line max-statements
 const RequestSummary = ({ nextStep }) => {
@@ -55,7 +60,7 @@ const RequestSummary = ({ nextStep }) => {
   return (
     <div className={`${styles.wrapper} ${grid.row} ${grid['center-xs']}`}>
       <div className={styles.avatarContainer}>
-        <h2>{request.params.request.method}</h2>
+        <h2>{getTitle(request.params.request.method, t)}</h2>
         <img
           data-testid="logo"
           src={icons[0]}
