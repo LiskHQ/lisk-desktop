@@ -78,10 +78,8 @@
   }
 }
 
-.trnxId {
-  & > img {
-    padding-right: 8px;
-  }
+.txId > img {
+  padding-right: 8px;
 }
 
 .walletVisualWithAddress span {

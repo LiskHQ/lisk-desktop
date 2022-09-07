@@ -43,3 +43,7 @@
 h1 {
   color: var(--color-maastricht-blue);
 }
+
+.wrapper {
+  margin-bottom: 25px;
+}

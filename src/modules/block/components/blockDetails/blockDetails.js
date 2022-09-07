@@ -170,7 +170,7 @@ const BlockDetails = ({
           )}
         </BoxContent>
       </Box>
-      <Box>
+      <Box className={styles.wrapper}>
         <BoxHeader>
           <BoxTabs {...tabs} />
         </BoxHeader>

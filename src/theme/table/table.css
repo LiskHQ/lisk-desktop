@@ -172,6 +172,8 @@
   color: var(--color-link-active) !important;
   font-weight: var(--font-weight-semi-bold) !important;
   font-size: 14px !important;
+  padding: 10px 0px !important;
+  min-height: 55px !important;
 }
 
 @keyframes glare {

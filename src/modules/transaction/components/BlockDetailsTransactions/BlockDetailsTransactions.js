@@ -49,9 +49,9 @@ const BlockDetailsTransactions = ({
           headerClassName={styles.tableHeader}
           canLoadMore={false}
           error={error}
-          emptyState={{
+          emptyState={!error ? {
             message: t('There are no transactions for this block.'),
-          }}
+          } : undefined}
         />
       </BoxContent>
     </Box>

@@ -20,7 +20,7 @@ import TransactionAmount from '../TransactionAmount';
 export const ID = () => {
   const { data } = useContext(TransactionRowContext);
   return (
-    <span className={styles.trnxId}>
+    <span className={styles.txId}>
       <Icon name="sentTransactionIcon" />
       {truncateAddress(data.id)}
     </span>
