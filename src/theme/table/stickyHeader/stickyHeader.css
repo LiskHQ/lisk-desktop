@@ -9,7 +9,7 @@
   height: calc(var(--header-height) + 25px);
   justify-content: space-between;
   padding: 30px 0 25px;
-  z-index: 2;
+  z-index: 3;
 
   & > h1 {
     font-size: 18px;

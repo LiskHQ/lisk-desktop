@@ -59,6 +59,7 @@ describe('QueryTable', () => {
     window.scrollY = 40;
     queryHook.mockReturnValue({
       hasUpdate: true,
+      addUpdate: jest.fn(),
       data: mockBlocks,
     });
     render(<QueryTable {...props} />);

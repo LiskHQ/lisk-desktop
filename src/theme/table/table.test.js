@@ -9,19 +9,13 @@ describe('Table', () => {
       data: [],
       canLoadMore: false,
       isLoading: true,
-      skeletonRow: () => <div className="skeleton-wrapper">Loading</div>,
+      isFetching: true,
       row: () => <div />,
       header: [],
     };
-    it('should render a loader if data is loading with default template', () => {
+    it('should render a loader if data is loading', () => {
       const wrapper = mount(<Table {...props} />);
-      expect(wrapper.find('.skeleton-wrapper').at(0)).toHaveText('Loading');
-    });
-
-    it('should render a loader if data is loading with default template', () => {
-      props.skeletonRow = () => <div className="skeleton-wrapper">custom_loading</div>;
-      const wrapper = mount(<Table {...props} />);
-      expect(wrapper.find('.skeleton-wrapper').at(0)).toHaveText('custom_loading');
+      expect(wrapper.find('.skeletonRowWrapper').at(0)).toBeTruthy();
     });
   });
 
