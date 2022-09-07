@@ -15,9 +15,6 @@ import Icon from '@theme/Icon';
 import styles from './delegateProfile.css';
 
 export const getStatus = (data) => {
-  if (data.status) {
-    return data.status.replace('non-eligible', 'ineligible');
-  }
   if (data.voteWeight >= DEFAULT_STANDBY_THRESHOLD) {
     return 'standby';
   }
