@@ -2,7 +2,7 @@
   position: sticky;
   top: 70px;
   background: var(--color-white);
-  z-index: 2;
+  z-index: 3;
   border-bottom: 1px solid var(--color-mystic);
 }
 

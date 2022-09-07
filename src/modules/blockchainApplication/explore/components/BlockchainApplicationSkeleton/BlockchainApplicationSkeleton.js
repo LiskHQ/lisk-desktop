@@ -1,7 +1,6 @@
 import React from 'react';
 import grid from 'flexboxgrid/dist/flexboxgrid.css';
 import styles from './BlockchainApplicationSkeleton.css';
-import { BLOCKCHAIN_APPLICATION_SKELETON_COUNT } from '../../const/constants';
 
 const BlockchainApplicationSkeletonRow = () => (
   <div data-testid="skeleton-row" className={`${styles.skeletonLoader} ${grid.row}`}>
@@ -23,7 +22,7 @@ const BlockchainApplicationSkeletonRow = () => (
 
 const BlockchainApplicationSkeleton = () => (
   <>
-    {[...new Array(BLOCKCHAIN_APPLICATION_SKELETON_COUNT).keys()].map((index) =>
+    {[...new Array(5).keys()].map((index) =>
       <BlockchainApplicationSkeletonRow isLoading key={`skeleton-${index}`} />)}
   </>
 );
