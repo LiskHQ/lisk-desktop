@@ -1,9 +1,11 @@
+import React from 'react';
 import { fireEvent, screen, waitFor } from '@testing-library/react';
 import mockManagedApplications from '@tests/fixtures/blockchainApplicationsManage';
 import { renderWithQueryClient } from 'src/utils/testHelpers';
 import {
   useCurrentApplication,
 } from '@blockchainApplication/manage/hooks';
+import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { mockEvents } from '../../__fixtures__';
 import TransactionEvents from './TransactionEvents';
 import { useTransactionEvents } from '../../hooks/queries';
@@ -18,7 +20,9 @@ useCurrentApplication.mockReturnValue([
 ]);
 
 describe('TransactionEvents', () => {
+  const queryClient = new QueryClient();
   const mockFetchNextPage = jest.fn();
+  let wrapper;
   const props = {
     blockId: 1,
   };
@@ -34,7 +38,7 @@ describe('TransactionEvents', () => {
 
   beforeEach(() => {
     jest.clearAllMocks();
-    renderWithQueryClient(TransactionEvents, props);
+    wrapper = renderWithQueryClient(TransactionEvents, props);
   });
 
   it('should display properly', async () => {
@@ -61,11 +65,16 @@ describe('TransactionEvents', () => {
     useTransactionEvents.mockReturnValue({
       isLoading: true,
       error: undefined,
-      hasNextPage: true,
+      hasNextPage: false,
       isFetching: false,
       fetchNextPage: mockFetchNextPage,
     });
-    renderWithQueryClient(TransactionEvents, props);
-    expect(screen.getByText('There are no Transaction Events')).toBeTruthy();
+    wrapper.rerender(
+      <QueryClientProvider client={queryClient}>
+        <TransactionEvents {...props} />
+      </QueryClientProvider>,
+    );
+
+    expect(wrapper.getByText('There are no transaction events')).toBeTruthy();
   });
 });

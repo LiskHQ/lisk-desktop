@@ -1,7 +1,7 @@
 import React from 'react';
 import Loading from './loading';
 import Empty from './empty';
-// import Error from './error';
+import Error from './error';
 import List from './list';
 import LoadMoreButton from './loadMoreButton';
 import styles from './table.css';
@@ -91,6 +91,7 @@ const Table = ({
         currentSort={currentSort}
         iterationKey={iterationKey}
         Row={Row}
+        error={error}
         additionalRowProps={additionalRowProps || {}}
       />
       <Loading
@@ -102,9 +103,10 @@ const Table = ({
         data={emptyState}
         error={error}
         isLoading={isLoading}
-        isListEmpty={data.length === 0}
+        isListEmpty={data.length === 0 && !error}
         className={styles.emptyState}
       />
+      <Error data={error} isLoading={isLoading} />
       <LoadMoreButton
         onClick={loadData}
         isLoading={isLoading}

@@ -77,7 +77,7 @@ describe('BlockchainApplicationList', () => {
     };
 
     wrapper = renderWithRouter(BlockchainApplicationList, props);
-    fireEvent.click(screen.getByText('Load ore'));
+    fireEvent.click(screen.getByText('Load more'));
     expect(props.applications.loadData).toHaveBeenCalledWith(expect.objectContaining({
       offset: props.applications.meta.count + props.applications.meta.offset,
     }));
