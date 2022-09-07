@@ -19,6 +19,7 @@ export const QueryTable = ({
     fetchNextPage,
     hasNextPage,
     hasUpdate,
+    addUpdate,
   } = queryHook(queryConfig);
 
   const handleClick = () => {
@@ -27,8 +28,7 @@ export const QueryTable = ({
     if (document.querySelector(`.${styles.header}`).getBoundingClientRect().top - window.scrollY <= 50) {
       document.querySelector(scrollToSelector).scrollIntoView(true);
     }
-    // Update the table with new data
-    // button.onClick();
+    addUpdate();
   };
 
   const subHeader = hasUpdate ? (
