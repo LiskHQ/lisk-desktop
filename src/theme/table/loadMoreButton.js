@@ -17,7 +17,7 @@ const LoadMoreButton = ({
       onClick={onClick}
       disabled={isLoading}
     >
-      {t('Load More')}
+      {t('Load more')}
     </FooterButton>
   );
 };

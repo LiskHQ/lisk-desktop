@@ -58,7 +58,7 @@ const TransactionEventRow = ({ data: transactionEvent }) => {
         />
       </div>
       <div data-testid="transaction-event-json-viewer" className={`${styles.jsonContainer} ${!isCollapsed ? styles.shrink : ''}`}>
-        <ReactJson src={data} />
+        <ReactJson name={false} src={data} />
       </div>
     </div>
   );

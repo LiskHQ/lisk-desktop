@@ -32,7 +32,7 @@ const TransactionEvents = ({ blockId }) => {
           loadData={fetchNextPage}
           error={error}
           emptyState={{
-            message: t('There are no Transaction Events'),
+            message: t('There are no transaction events'),
           }}
         />
       </BoxContent>

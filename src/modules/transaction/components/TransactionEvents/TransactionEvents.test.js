@@ -50,7 +50,7 @@ describe('TransactionEvents', () => {
       expect(screen.queryAllByText(item.module)).toBeTruthy();
     });
 
-    fireEvent.click(screen.getByText('Load More'));
+    fireEvent.click(screen.getByText('Load more'));
 
     await waitFor(() => {
       expect(mockFetchNextPage).toHaveBeenCalled();
