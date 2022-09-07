@@ -14,7 +14,6 @@ import BlockFilterDropdown from './blockFilterDropdown';
 import BlockRow from './blockRow';
 import header from './tableHeader';
 import styles from './blocks.css';
-import BlockSkeletonRow from '../BlockSkeletonRow/BlockSkeletonRow';
 
 const defaultFilters = {
   dateFrom: '',
@@ -127,7 +126,6 @@ const Blocks = ({
             headerClassName={styles.tableHeader}
             currentSort={sort}
             scrollToSelector=".blocks-container"
-            skeletonRow={BlockSkeletonRow}
           />
         </BoxContent>
       </Box>

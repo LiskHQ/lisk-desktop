@@ -6,7 +6,6 @@ import BoxHeader from 'src/theme/box/header';
 import BoxContent from 'src/theme/box/content';
 import Table from 'src/theme/table';
 import FilterBar from 'src/modules/common/components/filterBar';
-import WalletTransactionSkeletonRow from './WalletTransactionSkeletonRow/WalletTransactionSkeletonRow';
 import TransactionRow from '../TransactionRow';
 import FilterDropdown from '../FilterDropdown';
 import styles from './TransactionList.css';
@@ -100,7 +99,6 @@ const Transactions = ({
         <Table
           data={pending.concat(transactions.data.data)}
           isLoading={transactions.isLoading}
-          skeletonRow={WalletTransactionSkeletonRow}
           row={TransactionRow}
           loadData={handleLoadMore}
           additionalRowProps={{

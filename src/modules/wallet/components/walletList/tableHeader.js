@@ -8,6 +8,7 @@ export default t => ([
   {
     title: t('Address'),
     classList: `${grid['col-xs-3']} ${grid['col-md-5']}`,
+    placeholder: 'circle',
   },
   {
     title: t('Balance'),

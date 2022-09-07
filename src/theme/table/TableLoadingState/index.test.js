@@ -1,10 +1,10 @@
 import React from 'react';
 import { render } from '@testing-library/react';
-import BlockSkeletonRow from './BlockSkeletonRow';
+import TableLoadingState from './index';
 
-describe('BlockSkeletonRow', () => {
+describe('TableLoadingState', () => {
   it('renders a blocks skeleton row skeleton', () => {
-    const wrapper = render(<BlockSkeletonRow />);
+    const wrapper = render(<TableLoadingState />);
     expect(wrapper).toBeTruthy();
   });
 });

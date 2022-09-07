@@ -8,14 +8,14 @@ describe('Skeleton', () => {
 
   beforeEach(() => {
     props = {
-      rect: true,
+      theme: 'rect',
     };
     wrapper = render(<Skeleton {...props} />);
   });
 
   it('renders a rectangular skeleton', () => {
     const skeleton = wrapper.getByTestId('skeleton-wrapper');
-    expect(skeleton.style).toHaveProperty('width', '100%');
+    expect(skeleton.style).toHaveProperty('width', '50%');
     expect(skeleton.style).toHaveProperty('height', '15px');
 
     props.height = 30;
@@ -28,8 +28,8 @@ describe('Skeleton', () => {
   });
 
   it('renders a circular skeleton', () => {
-    delete props.rect;
-    props.circle = true;
+    props.theme = 'circle';
+    props.height = 40;
     wrapper.rerender(<Skeleton {...props} />);
     const skeleton = wrapper.getByTestId('skeleton-wrapper');
     expect(skeleton.style).toHaveProperty('width', '40px');
