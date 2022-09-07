@@ -42,12 +42,12 @@ describe('Table', () => {
         message: 'custom_message',
         illustration: 'emptyBookmarksList',
       };
-      const wrapper = mount(<Table {...props} emptyState={emptyState} />);
+      const wrapper = mount(<Table {...props} error={undefined} emptyState={emptyState} />);
       expect(wrapper).toHaveText('custom_message');
     });
     it('should render an empty template if data is empty with custom template', () => {
       const emptyState = () => <div>custom_empty_template</div>;
-      const wrapper = mount(<Table {...props} emptyState={emptyState} />);
+      const wrapper = mount(<Table {...props} emptyState={emptyState} error={undefined} />);
       expect(wrapper).toHaveText('custom_empty_template');
     });
   });
