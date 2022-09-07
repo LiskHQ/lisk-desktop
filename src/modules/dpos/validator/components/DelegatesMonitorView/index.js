@@ -61,7 +61,7 @@ const ComposedDelegates = compose(
           params: {
             ...params,
             limit: params.limit || DEFAULT_LIMIT,
-            status: 'standby,non-eligible',
+            status: 'standby,ineligible',
           },
         }),
       defaultData: [],
