@@ -1,5 +1,4 @@
 import React from 'react';
-// import Loading from './loading';
 import Empty from './empty';
 import Error from './error';
 import List from './list';

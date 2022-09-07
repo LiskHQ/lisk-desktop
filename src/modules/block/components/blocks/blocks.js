@@ -116,7 +116,6 @@ const Blocks = ({
         <BoxContent className={`${styles.content} block-results`}>
           <QueryTable
             showHeader
-            isLoading
             button={{
               label: t('New blocks'),
               onClick: loadLastBlocks,
