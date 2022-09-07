@@ -8,6 +8,6 @@ describe('BlockchainApplicationSkeleton', () => {
   });
 
   it('should display correctly', () => {
-    expect(screen.getAllByTestId('skeleton-row')).toHaveLength(1);
+    expect(screen.getAllByTestId('skeleton-row')).toHaveLength(5);
   });
 });
