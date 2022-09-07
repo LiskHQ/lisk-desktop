@@ -6,13 +6,18 @@ import styles from './genericTxParams.css';
 // address/publicKey -> show avatar and address/publicKey
 // amount -> normalize and display the token name next ot it
 // timestamp -> show correct date
-const PrimaryValue = ({ value }) => (
-  <span className={styles.value}>
-    {
-      typeof value === 'boolean' ? value.toString() : value
-    }
-  </span>
-);
+// At some point we can even adapt the components under TransactionDetails.
+const PrimaryValue = ({ value }) => {
+  let data = typeof value === 'boolean' ? value.toString() : value;
+  if (!data) {
+    data = '-';
+  }
+  return (
+    <span className={styles.value}>
+      { data }
+    </span>
+  );
+};
 
 /**
  * This function iterates over the params object and returns
@@ -30,14 +35,16 @@ const ParsedParams = ({ value, itx }) => {
     return (
       <div className={styles.list}>
         {
-          value.map((item, index) => (
-            <label
-              key={`list-${itx}-${index}`}
-              className={styles.listItem}
-            >
-              <ParsedParams value={item} index={index} />
-            </label>
-          ))
+          value.length
+            ? value.map((item, index) => (
+              <label
+                key={`list-${itx}-${index}`}
+                className={styles.listItem}
+              >
+                <ParsedParams value={item} index={index} />
+              </label>
+            ))
+            : <PrimaryValue value="-" />
         }
       </div>
     );

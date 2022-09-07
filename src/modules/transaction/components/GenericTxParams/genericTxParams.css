@@ -8,7 +8,7 @@
     box-sizing: border-box;
 
     & .object {
-      padding-left: var(--horizontal-padding-m);
+      padding-left: var(--horizontal-padding-l);
     }
   }
 
@@ -28,7 +28,12 @@
     & > .listItem {
       display: block;
       position: relative;
-      padding-left: var(--horizontal-padding-m);
+      padding-left: var(--horizontal-padding-l);
+      padding-top: 9px;
+
+      & > .object {
+        padding-left: 0;
+      }
 
       &::before {
         counter-increment: section;
@@ -51,7 +56,6 @@
     @mixin contentLarge;
 
     color: var(--color-maastricht-blue);
-    padding-top: 8px;
     line-height: 30px;
     text-transform: capitalize;
   }

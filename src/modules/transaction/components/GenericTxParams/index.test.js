@@ -35,6 +35,7 @@ describe('GenericTxParams', () => {
           amount: numericValue,
           recipient: stringValue,
           object: objectValue,
+          empty: '',
         },
       },
     };
@@ -43,6 +44,7 @@ describe('GenericTxParams', () => {
     expect(screen.getByText(stringValue)).toBeInTheDocument();
     expect(screen.getByText(objectValue.key1)).toBeInTheDocument();
     expect(screen.getByText(objectValue.key2)).toBeInTheDocument();
+    expect(screen.getByText('-')).toBeInTheDocument();
   });
 
   it('should render list in transaction params correctly', () => {
@@ -62,6 +64,7 @@ describe('GenericTxParams', () => {
       expect(screen.getByText(item)).toBeInTheDocument();
     });
   });
+
   it('should render transaction params with compound values correctly', () => {
     const props = {
       transaction: {
