@@ -15,7 +15,7 @@ const TableLoadingState = ({ header, count, isFetching }) => {
         {
           header.map((field, index) => (
             <div className={field.classList} key={`${index}-${idx}`}>
-              <Skeleton theme={field?.placeholder ?? 'rect'} />
+              <Skeleton theme={field.placeholder ?? 'rect'} />
             </div>
           ))
         }
