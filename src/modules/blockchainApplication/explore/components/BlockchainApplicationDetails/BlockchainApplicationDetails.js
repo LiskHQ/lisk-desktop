@@ -100,15 +100,15 @@ const BlockchainApplicationDetails = ({ location, application }) => {
                   <>
                     {header.text || header}
                     {header.toolTipText && (
-                    <Tooltip position="right">
-                      <p>
-                        {header.toolTipText}
-                      </p>
-                    </Tooltip>
+                      <Tooltip position="right">
+                        <p>
+                          {header.toolTipText}
+                        </p>
+                      </Tooltip>
                     )}
                   </>
                 </span>
-                )}
+              )}
             >
               <span className={className}>
                 {content}

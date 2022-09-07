@@ -1,5 +1,6 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import ConnectionContext from './connectionContext';
+import { createSignClient } from '../utils/connectionCreator';
 
 const ConnectionProvider = ({ children }) => {
   const [session, setSession] = useState({
@@ -22,6 +23,10 @@ const ConnectionProvider = ({ children }) => {
     pushEvent,
     setPairings,
   };
+
+  useEffect(() => {
+    createSignClient();
+  }, []);
 
   return (
     <ConnectionContext.Provider value={value}>

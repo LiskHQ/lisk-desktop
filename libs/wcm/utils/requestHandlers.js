@@ -42,12 +42,12 @@ export async function approveLiskRequest(requestEvent, wallet) {
   const { request } = params;
 
   switch (request.method) {
-    case SIGNING_METHODS.SIGN_MESSAGE: {
+    case SIGNING_METHODS.SIGN_MESSAGE.key: {
       const signedMessage = await signMessage(request.params.message, wallet);
       return formatJsonRpcResult(id, signedMessage);
     }
 
-    case SIGNING_METHODS.SIGN_TRANSACTION: {
+    case SIGNING_METHODS.SIGN_TRANSACTION.key: {
       const signedTransaction = await signTransaction(
         request.params.rawTx,
         request.params.networkIdentifier,

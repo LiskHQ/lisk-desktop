@@ -240,7 +240,7 @@ export const modals = {
     isPrivate: false,
     forbiddenTokens: [],
   },
-  requestSummary: {
+  requestView: {
     isPrivate: false,
     forbiddenTokens: [],
   },

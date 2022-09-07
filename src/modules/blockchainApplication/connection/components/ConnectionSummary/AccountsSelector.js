@@ -21,7 +21,7 @@ const AccountsSelector = ({ setAddresses, addresses }) => {
 
   const onSelectAll = (e) => {
     if (e.target.checked) {
-      setAddresses(accounts.map(item => item.metadata.address));
+      setAddresses(accounts.map(item => item.metadata.pubkey));
     } else {
       setAddresses([]);
     }
@@ -45,17 +45,17 @@ const AccountsSelector = ({ setAddresses, addresses }) => {
           accounts.map(account => (
             <label
               className={styles.accountWrapper}
-              key={account.metadata.address}
+              key={account.metadata.pubkey}
             >
               <CheckBox
                 onChange={onSelect}
-                checked={addresses.includes(account.metadata.address)}
-                name={account.metadata.address}
-                value={account.metadata.address}
+                checked={addresses.includes(account.metadata.pubkey)}
+                name={account.metadata.pubkey}
+                value={account.metadata.pubkey}
                 className={styles.checkbox}
               />
               <AccountRow
-                key={account.metadata.address}
+                key={account.metadata.pubkey}
                 account={account}
                 truncate
                 onSelect={() => {}}
