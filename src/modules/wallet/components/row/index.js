@@ -11,6 +11,7 @@ import styles from './wallet.css';
 const AccountRow = ({ data, className }) => (
   <Link
     className={`${grid.row} ${className} accounts-row`}
+    data-testid="accounts-row"
     to={`${routes.explorer.path}?address=${data.address}`}
   >
     <span className={`${grid['col-xs-1']} ${grid['col-md-1']} ${styles.counter}`}>
