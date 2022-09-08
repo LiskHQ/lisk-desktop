@@ -1,5 +1,5 @@
-import { withTranslation } from 'react-i18next';
 import React from 'react';
+import { withTranslation } from 'react-i18next';
 import moment from 'moment';
 import { PrimaryButton, SecondaryButton } from 'src/theme/buttons';
 import DropdownButton from 'src/theme/DropdownButton';
@@ -163,11 +163,11 @@ class FilterDropdownButton extends React.Component {
 
     return fields.length === 0 ? null : (
       <DropdownButton
-        buttonClassName="filterTransactions filter"
+        buttonClassName={`filterTransactions filter ${styles.buttonLabel}`}
         buttonLabel={(
           <>
-            {t('Filter')}
             <Icon className="button-icon" name="iconFilter" />
+            {t('Filter')}
           </>
         )}
         size="l"
@@ -185,7 +185,7 @@ class FilterDropdownButton extends React.Component {
             }`}
           >
             {fields
-              .filter((field, index) =>
+              .filter((_, index) =>
                 (areFiltersExtended ? index <= 3 : index <= 2))
               .map(this.renderFields)}
             {!areFiltersExtended && this.renderFooter()}
@@ -193,7 +193,7 @@ class FilterDropdownButton extends React.Component {
           {areFiltersExtended && (
             <div className={styles.container}>
               {fields
-                .filter((field, index) => index >= 4)
+                .filter((_, index) => index >= 4)
                 .map(this.renderFields)}
               {this.renderFooter()}
             </div>

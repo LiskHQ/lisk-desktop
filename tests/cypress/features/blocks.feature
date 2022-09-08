@@ -1,17 +1,18 @@
 Feature: Blocks
 
-  Background:
-    Given Network switcher is enabled
-    And Network is set to customNode
-    Given I am on blocks page
-    And I wait 1 seconds
+  # TODO: tests would be enabled when service and core has been updated
+  # Background:
+  #   Given Network switcher is enabled
+  #   And Network is set to customNode
+  #   Given I am on blocks page
+  #   And I wait 1 seconds
 
   # @basic
   # Scenario: Load all blocks and load more blocks
   #   Then I should see 20 blocks in table
   #   When I click on showMoreBlocksBtn
   #   And I wait 1 seconds
-  #   Then I should see 40 blocks in table
+  #   Then I should see 30 blocks in table
 
   # @basic
   # Scenario: Sorting by height should work as expected

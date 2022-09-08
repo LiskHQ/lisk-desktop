@@ -15,9 +15,11 @@ export const transactions = rest.get(
     const offset = Number(req.url.searchParams.get('offset') || 0);
     const blockID = req.url.searchParams.get('blockID');
     let mockTransactionsData = mockTransactions.data;
+
     if (blockID) {
-      mockTransactionsData = mockTransactionsData.filter((tx) => tx.block.id === blockID)[0];
+      mockTransactionsData = mockTransactionsData.filter((tx) => tx.block.id === blockID);
     }
+
     const response = {
       data: mockTransactionsData.slice(offset, offset + limit),
       meta: {

@@ -1,11 +1,15 @@
 /* eslint-disable  import/prefer-default-export */
 const data = new Array(30).fill({})
-  .map((item, index) => ({
-    moduleID: '2',
-    moduleName: 'token',
-    typeID: '2',
-
-    data: '0a14e135813f51103e7645ed87a0562a823d2fd48bc612207eef331c6d58f3962f5fb35b13f780f0ee7d93fbc37a3e9f4ccbdc6d1551db801a303629827aaa0836111137215708fd2007e9221ca1d56b29b98d8e9747ec3243c0549dc2091515d2bdd72fb28acef50160',
+  .map((_, index) => ({
+    index,
+    id: `0fe9a3f1a21b5530f27f87a414b549e79a940bf24fdf2b2f05e7f22aeeecc8a${index.toString(16)}`,
+    module: 'token',
+    typeID: index % 5,
+    data: { // Depends on event typeID
+      numberOfSignatures: 2,
+      mandatoryKeys: '0000a3f1a21b5530f27f87a010b549e79a934bf24fdf2b2f05e7e12aeeecc67b',
+      optionalKeys: '0fe9a3f1a21b5530f27f87a414b549e79a940bf24fdf2b2f05e7f22aeeecc86a',
+    },
     topics: [],
     block: {
       id: `625835480267616579${index}`,

@@ -1,6 +1,6 @@
 import { mountWithRouter } from 'src/utils/testHelpers';
 import { delegateList } from '@tests/constants/delegates';
-import { votesList } from '@tests/constants/votes';
+import { mockTransactions } from 'src/modules/transaction/__fixtures__';
 import LatestVotes from './index';
 
 const delegateDataList = delegateList(10);
@@ -9,7 +9,7 @@ const delegateData = Object.assign({}, ...delegateDataList);
 const props = {
   votes: {
     isLoading: false,
-    data: votesList,
+    data: mockTransactions.data.slice(0, 10),
     loadData: jest.fn(),
     clearData: jest.fn(),
     urlSearchParams: {},
@@ -22,7 +22,7 @@ const props = {
 describe('Latest votes', () => {
   it('displays initial table of votes', () => {
     const wrapper = mountWithRouter(LatestVotes, props);
-    expect(wrapper.find('.transaction-row-wrapper')).toHaveLength(10);
+    expect(wrapper.find('.transactions-row').hostNodes()).toHaveLength(10);
   });
 
   it('can load more votes if possible', () => {
