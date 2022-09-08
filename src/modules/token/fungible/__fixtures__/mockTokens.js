@@ -14,9 +14,9 @@ export const mockTokensTopLskBalance = {
   data: tokensTopLskBalance,
   meta: {
     address: 'lsk6757819470afeb131',
-    count: 10,
+    count: 20,
     offset: 0,
-    total: 100,
+    total: 30,
   },
 };
 
