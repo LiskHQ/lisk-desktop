@@ -52,7 +52,7 @@ describe('Blocks page', () => {
     });
     const wrapper = mountWithQueryClient(Blocks, { ...props });
     wrapper.find('button.load-more').simulate('click');
-    expect(mockFetchNextPage).toHaveBeenCalledWith({ pageParam: { offset: 20 } });
+    expect(mockFetchNextPage).toHaveBeenCalled();
   });
 
   it('shows error if API failed', () => {
