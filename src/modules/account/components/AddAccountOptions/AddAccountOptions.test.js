@@ -37,7 +37,7 @@ describe('Add Account Choice', () => {
     expect(screen.getByText('Secret recovery phrase')).toBeTruthy();
   });
 
-  it('should re-direct to /account/add/secrete-recovery', async () => {
+  it('should re-direct to /account/add/secret-recovery', async () => {
     fireEvent.click(screen.getByText('Secret recovery phrase'));
     expect(props.history.push).toBeCalled();
   });

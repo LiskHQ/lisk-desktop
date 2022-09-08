@@ -1,13 +1,15 @@
 /* istanbul ignore file */
 /* eslint-disable complexity */
 import React, { useState, useEffect } from 'react';
-
+import grid from 'flexboxgrid/dist/flexboxgrid.css';
 import { Input } from 'src/theme';
 import Box from 'src/theme/box';
 import BoxHeader from 'src/theme/box/header';
 import BoxContent from 'src/theme/box/content';
 import BoxTabs from 'src/theme/tabs';
+import Icon from 'src/theme/Icon';
 import { ROUND_LENGTH } from '@dpos/validator/consts';
+import { PrimaryButton } from 'src/theme/buttons';
 import DelegatesOverview from '../Overview/delegatesOverview';
 import ForgingDetails from '../Overview/forgingDetails';
 import DelegatesTable from '../DelegatesTable';
@@ -31,6 +33,7 @@ const DelegatesMonitor = ({
   votes,
   t,
 }) => {
+  const [activeDetailTab, setSctiveDetailTab] = useState('overview');
   const [activeTab, setActiveTab] = useState('active');
   const { total, forgers, latestBlocks } = blocks;
   const delegatesWithForgingTimes = { data: forgers };
@@ -107,6 +110,23 @@ const DelegatesMonitor = ({
     onClick: ({ value }) => setActiveTab(value),
   };
 
+  const pageTabs = {
+    tabs: [
+      {
+        value: 'overview',
+        name: t('Overview'),
+        className: 'overview',
+      },
+      {
+        value: 'forging-details',
+        name: t('Forging details'),
+        className: 'forging-details',
+      },
+    ],
+    active: activeDetailTab,
+    onClick: ({ value }) => setSctiveDetailTab(value),
+  };
+
   if (watchList.length) {
     tabs.tabs.push({
       value: 'watched',
@@ -134,21 +154,37 @@ const DelegatesMonitor = ({
   };
 
   return (
-    <div>
-      <DelegatesOverview
-        delegatesCount={delegatesCount}
-        transactionsCount={transactionsCount}
-        registrations={registrations}
-        t={t}
-        totalBlocks={total}
-        supply={networkStatus.data.supply}
-      />
-      <ForgingDetails
-        t={t}
-        forgers={forgers}
-        forgedInRound={forgedInRound}
-        startTime={latestBlocks[forgedInRound]?.timestamp}
-      />
+    <Box>
+      <BoxHeader className={`${styles.delegatePageWrapper}`}>
+        <div className={grid.row}>
+          <div className={grid['col-md-8']}>
+            <h3>{t('Delegates')}</h3>
+            <BoxTabs {...pageTabs} />
+          </div>
+          <div className={grid['col-md-4']}>
+            <PrimaryButton>Register delegate</PrimaryButton>
+          </div>
+        </div>
+      </BoxHeader>
+      {activeDetailTab === 'overview'
+        ? (
+          <DelegatesOverview
+            delegatesCount={delegatesCount}
+            transactionsCount={transactionsCount}
+            registrations={registrations}
+            t={t}
+            totalBlocks={total}
+            supply={networkStatus.data.supply}
+          />
+        )
+        : (
+          <ForgingDetails
+            t={t}
+            forgers={forgers}
+            forgedInRound={forgedInRound}
+            startTime={latestBlocks[forgedInRound]?.timestamp}
+          />
+        )}
       <Box main isLoading={standByDelegates.isLoading || votes.isLoading}>
         <BoxHeader className={`${styles.tabSelector} delegates-table`}>
           {tabs.tabs.length === 1 ? (
@@ -158,11 +194,12 @@ const DelegatesMonitor = ({
           )}
           <span className={activeTab === 'votes' ? 'hidden' : ''}>
             <Input
+              icon={<Icon className={styles.searchIcon} name="searchActive" />}
               onChange={handleFilter}
               value={filters.search}
-              className="filter-by-name"
+              className={`${styles.filterDelegates} filter-by-name`}
               size="m"
-              placeholder={t('Filter by name...')}
+              placeholder={t('Search by name')}
             />
           </span>
         </BoxHeader>
@@ -170,7 +207,7 @@ const DelegatesMonitor = ({
           {displayTab(activeTab)}
         </BoxContent>
       </Box>
-    </div>
+    </Box>
   );
 };
 

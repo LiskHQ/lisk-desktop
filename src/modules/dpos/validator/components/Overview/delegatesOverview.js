@@ -1,11 +1,9 @@
 // istanbul ignore file
 import React from 'react';
-// import { fromRawLsk } from '@token/fungible/utils/lsk';
 import { ROUND_LENGTH } from '@dpos/validator/consts';
 import { useTheme } from 'src/theme/Theme';
 import { getColorPalette } from 'src/modules/common/components/charts/chartOptions';
 import Box from 'src/theme/box';
-import BoxHeader from 'src/theme/box/header';
 import BoxContent from 'src/theme/box/content';
 import BoxEmptyState from 'src/theme/box/emptyState';
 import { DoughnutChart, LineChart } from 'src/modules/common/components/charts';
@@ -26,7 +24,6 @@ const Overview = ({
   registrations,
   t,
   totalBlocks,
-  // supply,
 }) => {
   const colorPalette = getColorPalette(useTheme());
   const doughnutChartData = {
@@ -52,22 +49,28 @@ const Overview = ({
     },
   };
 
+  const totalDelegates = () => (
+    <>
+      <p>1804</p>
+      <span>Total delegates</span>
+    </>
+  );
+
   return (
     <Box className={styles.wrapper}>
-      <BoxHeader>
-        <h1>{t('Delegates overview')}</h1>
-      </BoxHeader>
       <BoxContent className={styles.content}>
         <div className={styles.column}>
           {typeof delegatesCount.data === 'number' ? (
             <>
               <div className={styles.chartBox}>
-                <h2 className={styles.title}>{t('Delegate Status')}</h2>
-                <div className={`${styles.chart} showOnLargeViewPort`}>
+                <h2 className={styles.title}>{t('Total')}</h2>
+                <div className={`${styles.chart} ${styles.showOnLargeViewPort} showOnLargeViewPort`}>
                   <DoughnutChart
                     data={doughnutChartData}
+                    label={totalDelegates}
                     options={{
                       ...doughnutChartOptions,
+                      cutoutPercentage: 70,
                       legend: { display: true },
                     }}
                   />
@@ -75,8 +78,10 @@ const Overview = ({
                 <div className={`${styles.chart} hideOnLargeViewPort`}>
                   <DoughnutChart
                     data={doughnutChartData}
+                    label={totalDelegates}
                     options={{
                       ...doughnutChartOptions,
+                      cutoutPercentage: 70,
                       legend: { display: false },
                     }}
                   />

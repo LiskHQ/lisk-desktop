@@ -5,7 +5,7 @@ export default {
     forbiddenTokens: [],
   },
   addAccountBySecretRecovery: {
-    path: '/account/add/secrete-recovery',
+    path: '/account/add/secret-recovery',
     isPrivate: false,
     forbiddenTokens: [],
     exact: true,

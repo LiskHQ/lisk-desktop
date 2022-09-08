@@ -10,6 +10,7 @@ import {
   barChartOptions,
   doughnutChartOptions,
 } from 'src/modules/common/components/charts/chartOptions';
+import styles from './index.css';
 
 const propTypes = {
   data: PropTypes.object.isRequired,
@@ -41,14 +42,19 @@ export const BarChart = ({
 );
 
 export const DoughnutChart = ({
-  data, width, height, options,
+  data, width, height, options, label: Label,
 }) => (
-  <Doughnut
-    data={doughnutChartData(data, useTheme())}
-    width={width}
-    height={height}
-    options={doughnutChartOptions(useTheme(), options)}
-  />
+  <>
+    <Doughnut
+      data={doughnutChartData(data, useTheme())}
+      width={width}
+      height={height}
+      options={doughnutChartOptions(useTheme(), options)}
+    />
+    <span className={styles.centerLabel}>
+      {Label && <Label />}
+    </span>
+  </>
 );
 
 LineChart.propTypes = propTypes;
