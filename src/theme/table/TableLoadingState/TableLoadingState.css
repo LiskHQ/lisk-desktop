@@ -1,0 +1,37 @@
+@import '../../../../setup/react/app/mixins.css';
+
+.skeletonRowWrapper {
+  height: 80px;
+  padding: 0px 20px;
+  padding-left: 15px;
+  width: 100%;
+  box-sizing: border-box;
+  margin-left: 0px;
+
+  &::before {
+    content: '';
+    width: 100%;
+    position: relative;
+    display: block;
+    border-top: 1px var(--color-platinum) solid;
+  }
+
+  &:first-of-type::before {
+    border-top: none;
+  }
+
+  & > div {
+    height: 100%;
+    width: 100%;
+    display: flex;
+    align-items: center;
+
+    & > div {
+      width: 50% !important;
+    }
+  }
+
+  & > div:last-child {
+    justify-content: flex-end;
+  }
+}

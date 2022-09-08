@@ -5,10 +5,12 @@ export default (changeSort, t) => ([
   {
     title: t('Sender'),
     classList: grid['col-xs-3'],
+    placeholder: 'circle',
   },
   {
     title: t('Recipient'),
     classList: grid['col-xs-3'],
+    placeholder: 'circle',
   },
   {
     title: t('Date'),

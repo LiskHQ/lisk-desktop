@@ -1,3 +1,4 @@
+/* istanbul ignore file */
 import React from 'react';
 import { isReactComponent } from 'src/utils/helpers';
 import styles from './table.css';

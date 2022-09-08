@@ -5,6 +5,7 @@ export default (t, activeToken, changeSort) => ([
   {
     title: t('Transaction'),
     classList: `${grid['col-xs-4']} ${styles.transactionTitle}`,
+    placeholder: 'circle',
   },
   {
     title: t('Date'),

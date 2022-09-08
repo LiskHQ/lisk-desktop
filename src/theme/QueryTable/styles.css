@@ -1,0 +1,38 @@
+@keyframes slideDown {
+  0% {
+    transform: translateX(-50%) translateY(0px);
+  }
+
+  100% {
+    transform: translateX(-50%) translateY(30px);
+  }
+}
+
+.button {
+  animation: slideDown var(--animation-speed-fast) ease-in;
+  animation-fill-mode: forwards;
+  position: absolute;
+  top: -70px;
+  z-index: 4;
+  left: 50%;
+  transform: translateX(-50%);
+  background: var(--color-white);
+  color: var(--color-ultramarine-blue);
+  border-radius: 30px;
+  box-shadow: var(--box-shadow-standard), 0 0 0 10px var(--color-body-bg);
+  width: auto;
+
+  & .icon {
+    vertical-align: bottom;
+    padding-right: 12px;
+  }
+
+  & .icon,
+  & span {
+    vertical-align: middle;
+  }
+
+  &:hover {
+    box-shadow: var(--box-shadow-standard), 0 0 0 10px var(--color-body-bg);
+  }
+}

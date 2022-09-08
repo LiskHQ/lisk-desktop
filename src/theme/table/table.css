@@ -75,6 +75,8 @@
 .header {
   padding: 0 var(--vertical-padding-l);
   margin: 0 !important;
+  border-top-left-radius: var(--border-radius-box);
+  border-top-right-radius: var(--border-radius-box);
 
   & > * {
     @mixin contentNormal bold;

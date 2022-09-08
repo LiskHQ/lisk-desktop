@@ -9,18 +9,13 @@ describe('Table', () => {
       data: [],
       canLoadMore: false,
       isLoading: true,
+      isFetching: true,
       row: () => <div />,
       header: [],
     };
-    it('should render a loader if data is loading with default template', () => {
+    it('should render a loader if data is loading', () => {
       const wrapper = mount(<Table {...props} />);
-      expect(wrapper.find('Loading')).toHaveLength(1);
-    });
-
-    it('should render a loader if data is loading with default template', () => {
-      props.loadingState = () => <div>custom_loading</div>;
-      const wrapper = mount(<Table {...props} />);
-      expect(wrapper).toHaveText('custom_loading');
+      expect(wrapper.find('.skeletonRowWrapper').at(0)).toBeTruthy();
     });
   });
 
