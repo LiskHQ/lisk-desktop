@@ -226,6 +226,8 @@ import applicationsIcon from '@setup/react/assets/images/icons/applications-outl
 import applicationsIconActive from '@setup/react/assets/images/icons/applications-filled.svg';
 import dropdownFieldIcon from '@setup/react/assets/images/icons/drop-down-field-icon.svg';
 import transferArrow from '@setup/react/assets/images/icons/transfer-arrow.svg';
+import receivedTransactionIcon from '@setup/react/assets/images/icons/received_transaction_icon.svg';
+import sentTransactionIcon from '@setup/react/assets/images/icons/sent_transaction_icon.svg';
 
 export const icons = {
   academy,
@@ -452,6 +454,8 @@ export const icons = {
   dropdownFieldIcon,
   removeBlueIcon,
   transferArrow,
+  receivedTransactionIcon,
+  sentTransactionIcon,
 };
 
 const Icon = ({ name, noTheme, ...props }) => {

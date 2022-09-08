@@ -1,7 +1,6 @@
 import PropTypes from 'prop-types';
 import React, { useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import withFilters from 'src/utils/withFilters';
 import Box from 'src/theme/box';
 import BoxContent from 'src/theme/box/content';
 import FilterBar from 'src/modules/common/components/filterBar';
@@ -15,7 +14,7 @@ import BlockRow from './blockRow';
 import header from './tableHeader';
 import styles from './blocks.css';
 
-const defaultFilters = {
+export const defaultFilters = {
   dateFrom: '',
   dateTo: '',
   height: '',
@@ -142,6 +141,5 @@ Blocks.propTypes = {
     generatorAddress: PropTypes.string.isRequired,
   }).isRequired,
 };
-const defaultSort = 'height:desc';
 
-export default withFilters('blocks', defaultFilters, defaultSort)(Blocks);
+export default Blocks;

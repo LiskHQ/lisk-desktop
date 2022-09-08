@@ -4,6 +4,10 @@
   background: var(--color-white);
   z-index: 3;
   border-bottom: 1px solid var(--color-mystic);
+
+  & > div:last-child {
+    justify-content: center;
+  }
 }
 
 .content {
@@ -35,5 +39,6 @@
     padding-right: 0px;
     text-overflow: initial;
     white-space: unset;
+    text-align: center;
   }
 }

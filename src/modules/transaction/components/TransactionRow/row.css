@@ -14,6 +14,11 @@
   left: -145px;
 }
 
+.type {
+  font-weight: bold;
+  text-transform: capitalize;
+}
+
 .amount {
   display: flex;
   flex-direction: column;
@@ -71,4 +76,13 @@
 
     margin-bottom: calc(-1 * var(--vertical-padding-m));
   }
+}
+
+.txId > img {
+  padding-right: 8px;
+}
+
+.walletVisualWithAddress span {
+  font-weight: var(--font-weight-semi-bold);
+  font-size: var(--font-size-h6);
 }

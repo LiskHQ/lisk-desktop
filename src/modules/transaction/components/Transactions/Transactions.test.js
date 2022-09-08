@@ -4,6 +4,7 @@ import { mountWithRouter, mountWithRouterAndStore } from 'src/utils/testHelpers'
 import transactions from '@tests/constants/transactions';
 import defaultState from '@tests/constants/defaultState';
 import TransactionsPure from '../TransactionMonitor';
+import { mockTransactions } from '../../__fixtures__';
 
 jest.mock('react-redux', () => ({
   ...jest.requireActual('react-redux'),
@@ -31,7 +32,7 @@ describe('Transactions monitor page', () => {
   const transactionsWithData = {
     ...props.transactions,
     isLoading: false,
-    data: transactions,
+    data: mockTransactions.data,
     meta: {
       count: transactions.length,
       offset: 0,
