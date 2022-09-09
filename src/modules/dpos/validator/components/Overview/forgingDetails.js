@@ -12,6 +12,7 @@ import GuideTooltip, {
 import Icon from 'src/theme/Icon';
 import { useTheme } from 'src/theme/Theme';
 import { getColorPalette } from 'src/modules/common/components/charts/chartOptions';
+import { useForgersGenerator } from '../../hooks/queries/useForgersGenerator';
 import NumericInfo from './numericInfo';
 import Forger from './forger';
 import styles from './overview.css';
@@ -47,7 +48,7 @@ const getPassedMinutes = (startTime) => {
 };
 
 const ForgingDetails = ({
-  t, forgers, forgedInRound, startTime,
+  t, forgedInRound, startTime,
 }) => {
   const theme = useTheme();
   const colorPalette = getColorPalette(theme);
@@ -56,6 +57,8 @@ const ForgingDetails = ({
     t('Awaiting slot        '),
     t('Missed blocks'),
   ];
+  const { data: forgersData } = useForgersGenerator({ config: { params: { limit: 103 } } });
+  const forgers = forgersData?.data ?? [];
 
   const doughnutChartData = {
     labels: delegatesForgedLabels,

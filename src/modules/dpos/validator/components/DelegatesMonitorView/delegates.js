@@ -33,7 +33,7 @@ const DelegatesMonitor = ({
   votes,
   t,
 }) => {
-  const [activeDetailTab, setSctiveDetailTab] = useState('overview');
+  const [activeDetailTab, setActiveDetailTab] = useState('overview');
   const [activeTab, setActiveTab] = useState('active');
   const { total, forgers, latestBlocks } = blocks;
   const delegatesWithForgingTimes = { data: forgers };
@@ -124,7 +124,7 @@ const DelegatesMonitor = ({
       },
     ],
     active: activeDetailTab,
-    onClick: ({ value }) => setSctiveDetailTab(value),
+    onClick: ({ value }) => setActiveDetailTab(value),
   };
 
   if (watchList.length) {
