@@ -1,14 +1,7 @@
 {
   "parser": "babel-eslint",
-  "extends": [
-    "airbnb",
-    "plugin:react/recommended"
-  ],
-  "plugins": [
-    "import",
-    "babel",
-    "jest"
-  ],
+  "extends": ["airbnb", "plugin:react/recommended", "prettier"],
+  "plugins": ["import", "babel", "jest", "prettier"],
   "globals": {
     "ipc": true,
     "PRODUCTION": true
@@ -20,9 +13,9 @@
     "jest": true
   },
   "settings": {
-    "import/resolver" : {
-      "alias" : {
-        "map" : [
+    "import/resolver": {
+      "alias": {
+        "map": [
           ["src", "./src/"],
           ["@fixtures", "./tests/fixtures/"],
           ["@scripts", "./scripts/"],
@@ -100,9 +93,12 @@
     "prefer-object-spread": 2,
     "func-names": "off",
     "global-require": "off",
-    "new-cap": ["error", {
-      "newIsCapExceptions": ["mnemonic"]
-    }],
+    "new-cap": [
+      "error",
+      {
+        "newIsCapExceptions": ["mnemonic"]
+      }
+    ],
 
     "react/prop-types": "off",
     "no-plusplus": "off",
@@ -118,10 +114,7 @@
   },
   "overrides": [
     {
-      "files": [
-        "*.test.js",
-        "*.spec.js"
-      ],
+      "files": ["*.test.js", "*.spec.js"],
       "rules": {
         "max-depth": ["error", 2],
         "max-nested-callbacks": ["error", 4],
