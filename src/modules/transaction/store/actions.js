@@ -95,7 +95,7 @@ export const resetTransactionResult = () => ({
 export const transactionDoubleSigned = () => async (dispatch, getState) => {
   const state = getState();
   const { transactions, network } = state;
-  const keyPair = extractKeyPair({
+  const keyPair = await extractKeyPair({
     passphrase: state.wallet.secondPassphrase,
     enableCustomDerivationPath: false,
   });

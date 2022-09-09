@@ -8,24 +8,23 @@ const mockState = {
   },
 };
 const recoveryPhrase = 'target cancel solution recipe vague faint bomb convince pink vendor fresh patrol';
-const encryptedPassphrase = {
-  kdf: 'argon2id',
-  kdfparams: {
-    parallelism: 4,
-    iterations: 1,
-    memory: 2048,
-    salt: '30fc0301d36fcdc7bd8204e19a0043fc',
-  },
-  cipher: 'aes-256-gcm',
-  cipherparams: {
-    iv: '281d21872c2d303e59850ce4',
-    tag: '2458479edf6aea5c748021ae296e467d',
-  },
-  ciphertext:
-      '44fdb2b132d353a5c65f04e5e3afdd531f63abc45444ffd4cdbc7dedc45f899bf5b7478947d57319ea8c620e13480def8a518cc05e46bdddc8ef7c8cfc21a3bd',
-};
 const encryptedAccount = {
-  encryptedPassphrase,
+  encryptedPassphrase: {
+    kdf: 'argon2id',
+    kdfparams: {
+      parallelism: 4,
+      iterations: 1,
+      memory: 2048,
+      salt: '30fc0301d36fcdc7bd8204e19a0043fc',
+    },
+    cipher: 'aes-256-gcm',
+    cipherparams: {
+      iv: '281d21872c2d303e59850ce4',
+      tag: '2458479edf6aea5c748021ae296e467d',
+    },
+    ciphertext:
+      '44fdb2b132d353a5c65f04e5e3afdd531f63abc45444ffd4cdbc7dedc45f899bf5b7478947d57319ea8c620e13480def8a518cc05e46bdddc8ef7c8cfc21a3bd',
+  },
   metadata: {},
   version: 1,
 };

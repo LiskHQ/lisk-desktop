@@ -1,7 +1,6 @@
-/* eslint-disable max-lines */
+/* eslint-disable max-lines, max-len */
 import { passphrase as LiskPassphrase, cryptography } from '@liskhq/lisk-client';
 import { regex } from 'src/const/regex';
-import { getCustomDerivationKeyPair } from 'src/utils/explicitBipKeyDerivation';
 
 /**
  * Extracts Lisk PrivateKey/PublicKey pair from a given valid Mnemonic passphrase
@@ -11,13 +10,15 @@ import { getCustomDerivationKeyPair } from 'src/utils/explicitBipKeyDerivation';
  * @param {String} derivationPath - custom derivation path for HW
  * @returns {object} - Extracted publicKey for a given valid passphrase
  */
-export const extractKeyPair = ({
+export const extractKeyPair = async ({
   passphrase, enableCustomDerivationPath = false, derivationPath,
 }) => {
   if (enableCustomDerivationPath) {
-    const keyPair = getCustomDerivationKeyPair(passphrase, derivationPath);
+    const privateKey = await cryptography.ed.getKeyPairFromPhraseAndPath(passphrase, derivationPath);
+    const publicKey = cryptography.ed.getPublicKeyFromPrivateKey(privateKey).toString('hex');
     return {
-      ...keyPair,
+      publicKey,
+      privateKey: privateKey.toString('hex'),
       isValid: true,
     };
   }
@@ -41,10 +42,10 @@ export const extractKeyPair = ({
  * @param {String} derivationPath - custom derivation path for HW
  * @returns {String?} - Extracted publicKey for a given valid passphrase
  */
-export const extractPublicKey = (
+export const extractPublicKey = async (
   passphrase, enableCustomDerivationPath = false, derivationPath,
 ) => {
-  const keyPair = extractKeyPair({ passphrase, enableCustomDerivationPath, derivationPath });
+  const keyPair = await extractKeyPair({ passphrase, enableCustomDerivationPath, derivationPath });
 
   if (keyPair.isValid) {
     return keyPair.publicKey;
@@ -61,11 +62,10 @@ export const extractPublicKey = (
  * @param {String} derivationPath - custom derivation path for HW
  * @returns {String?} - Extracted PrivateKey for a given valid passphrase
  */
-export const extractPrivateKey = (
+export const extractPrivateKey = async (
   passphrase, enableCustomDerivationPath = false, derivationPath,
 ) => {
-  const keyPair = extractKeyPair({ passphrase, enableCustomDerivationPath, derivationPath });
-
+  const keyPair = await extractKeyPair({ passphrase, enableCustomDerivationPath, derivationPath });
   if (keyPair.isValid) {
     return keyPair.privateKey;
   }
@@ -79,15 +79,14 @@ export const extractPrivateKey = (
  * @param {String} data PublicKey in Hex
  * @returns {String} - address derived from the given publicKey
  */
-export const extractAddressFromPublicKey = (data) => {
-  if (regex.publicKey.test(data)) {
-    const binaryPublicKey = Buffer.from(data, 'hex');
-    return cryptography.address.getLisk32AddressFromPublicKey(binaryPublicKey).toString('hex');
+export const extractAddressFromPublicKey = (publicKey) => {
+  if (regex.publicKey.test(publicKey)) {
+    return cryptography.address.getLisk32AddressFromPublicKey(Buffer.from(publicKey, 'hex')).toString('hex');
   }
-  if (Buffer.isBuffer(data)) {
-    return cryptography.address.getLisk32AddressFromPublicKey(data);
+  if (Buffer.isBuffer(publicKey)) {
+    return cryptography.address.getLisk32AddressFromPublicKey(publicKey);
   }
-  throw Error(`Unable to convert publicKey ${data} to address`);
+  throw Error(`Unable to convert publicKey ${publicKey} to address`);
 };
 
 /**
@@ -274,4 +273,22 @@ export const getKeys = ({ senderAccount, transaction, isGroupRegistration }) => 
   }
 
   return senderAccount.keys;
+};
+
+export const validate2ndPass = async (account, passphrase, error) => {
+  const messages = [];
+  if (error) {
+    messages.push(messages);
+    return messages;
+  }
+
+  const secondPublicKey = account.keys.mandatoryKeys
+    .filter(item => item !== account.summary.publicKey);
+  const publicKey = await extractPublicKey(passphrase);
+  console.log(publicKey, !secondPublicKey.length, publicKey !== secondPublicKey[0]);
+  // compare them
+  if (!secondPublicKey.length || publicKey !== secondPublicKey[0]) {
+    messages.push('This passphrase does not belong to your account.');
+  }
+  return messages;
 };

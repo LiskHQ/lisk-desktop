@@ -147,6 +147,6 @@ export const toTransactionJSON = (
     params: paramsSchema
       ? codec.toJSON(paramsSchema, transaction.params)
       : {},
-    id: transaction.id.toString('hex'),
+    id: transaction.id && transaction.id.toString('hex'),
   };
 };

@@ -20,7 +20,7 @@ export const encryptAccount = async ({
   };
 
   try {
-    const { privateKey, publicKey, isValid } = extractKeyPair(options);
+    const { privateKey, publicKey, isValid } = await extractKeyPair(options);
     if (!isValid) {
       return { error: true };
     }

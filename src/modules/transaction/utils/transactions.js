@@ -55,10 +55,12 @@ export class Transaction {
     this.transaction.senderPublicKey = Buffer.isBuffer(pubkey) ? pubkey : Buffer.from(pubkey, 'hex');
     this.transaction.module = module;
     this.transaction.command = command;
+    this.transaction.params = {};
+    this.transaction.signatures = [];
     let baseTrx = null;
 
     if (encodedTransaction) {
-      baseTrx = this.getBaseTransaction(Buffer.from(encodedTransaction, 'hex'));
+      baseTrx = decodeBaseTransaction(Buffer.from(encodedTransaction, 'hex'));
       this.transaction.module = baseTrx.module;
       this.transaction.command = baseTrx.command;
     } else if (!(this.transaction.module && this.transaction.command)) {
@@ -69,7 +71,7 @@ export class Transaction {
       this.transaction.module, this.transaction.command, commandParametersSchemas,
     );
 
-    if (encodeTransaction) {
+    if (encodedTransaction) {
       this.transaction.params = codec.decode(this._paramsSchema, baseTrx.params);
     }
     this.computeFee();
@@ -81,10 +83,12 @@ export class Transaction {
    * @returns void
    */
   update({
-    params,
+    params = null,
     nonce = null,
   }) {
-    this.transaction.params = codec.fromJSON(this._paramsSchema, params);
+    if (params) {
+      this.transaction.params = codec.fromJSON(this._paramsSchema, params);
+    }
     if (nonce) {
       this.transaction.nonce = BigInt(nonce);
     }
@@ -200,16 +204,6 @@ export class Transaction {
    */
   fromJSON() {
     return fromTransactionJSON(this.transaction, this._paramsSchema);
-  }
-
-  /**
-   * Get base transaction object
-   * @param {buffer} encodedTransaction encoded transaction buffer
-   * @returns transaction object
-   */
-  // eslint-disable-next-line class-methods-use-this
-  getBaseTransaction(encodedTransaction) {
-    return decodeBaseTransaction(encodedTransaction);
   }
 
   /**
