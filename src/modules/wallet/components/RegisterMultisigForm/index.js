@@ -45,8 +45,9 @@ export const validateState = ({ mandatoryKeys, optionalKeys, numberOfSignatures,
     })
     .filter((item) => !!item);
 
+  const hasError = mandatoryKeys.length + optionalKeys.length > 0
   return {
-    error: mandatoryKeys.length + optionalKeys.length ? messages.length : -1,
+    error: hasError ? messages.length : -1,
     messages,
   };
 };

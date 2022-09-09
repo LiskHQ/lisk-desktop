@@ -1,3 +1,4 @@
+/* eslint-disable max-lines */
 const wallets = {
   genesis: {
     passphrase: 'peanut hundred pen hawk invite exclude brain chunk gadget wait wrong ready',

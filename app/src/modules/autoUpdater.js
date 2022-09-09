@@ -10,8 +10,8 @@ const getErrorMessage = (error) => {
   return error || 'There was a problem updating the application';
 };
 
+// eslint-disable-next-line max-statements
 export default ({
-  // eslint-disable-line max-statements
   autoUpdater,
   dialog,
   win,
