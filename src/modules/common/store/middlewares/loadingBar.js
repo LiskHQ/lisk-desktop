@@ -1,10 +1,8 @@
 import actionTypes from 'src/modules/common/store/actionTypes';
 
-const ignoredLoadingActionKeys = [
-  'transactions',
-];
+const ignoredLoadingActionKeys = ['transactions'];
 
-const loadingBarMiddleware = () => next => (action) => {
+const loadingBarMiddleware = () => (next) => (action) => {
   switch (action.type) {
     case actionTypes.loadingStarted:
     case actionTypes.loadingFinished:

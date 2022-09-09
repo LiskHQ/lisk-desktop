@@ -2,11 +2,7 @@ import React from 'react';
 import { useTranslation } from 'react-i18next';
 import styles from './BlockResultList.css';
 
-const Blocks = ({
-  blocks,
-  onSelectedRow,
-  updateRowItemIndex,
-}) => {
+const Blocks = ({ blocks, onSelectedRow, updateRowItemIndex }) => {
   const { t } = useTranslation();
 
   return (

@@ -1,7 +1,5 @@
 import { cryptography } from '@liskhq/lisk-client';
-import {
-  createEvent, fireEvent, screen, waitFor,
-} from '@testing-library/react';
+import { createEvent, fireEvent, screen, waitFor } from '@testing-library/react';
 import mockSavedAccounts from '@tests/fixtures/accounts';
 import * as reactRedux from 'react-redux';
 import { renderWithRouter } from 'src/utils/testHelpers';
@@ -11,7 +9,8 @@ const props = {
   history: { push: jest.fn() },
   login: jest.fn(),
 };
-const recoveryPhrase = 'target cancel solution recipe vague faint bomb convince pink vendor fresh patrol';
+const recoveryPhrase =
+  'target cancel solution recipe vague faint bomb convince pink vendor fresh patrol';
 
 jest.mock('react-i18next');
 
@@ -21,15 +20,15 @@ jest.mock('@account/hooks', () => ({
     getAccountByAddress: jest.fn().mockReturnValue(mockSavedAccounts[0]),
     setAccount: jest.fn(),
   })),
-  useCurrentAccount: jest.fn(() => (
-    [mockSavedAccounts[0], jest.fn()]
-  )),
+  useCurrentAccount: jest.fn(() => [mockSavedAccounts[0], jest.fn()]),
 }));
 
 reactRedux.useSelector = jest.fn().mockReturnValue(mockSavedAccounts[0]);
-jest.spyOn(cryptography.encrypt, 'decryptMessageWithPassword').mockResolvedValue(JSON.stringify({
-  recoveryPhrase,
-}));
+jest.spyOn(cryptography.encrypt, 'decryptMessageWithPassword').mockResolvedValue(
+  JSON.stringify({
+    recoveryPhrase,
+  })
+);
 
 beforeEach(() => {
   renderWithRouter(AddAccountByFile, props);
@@ -53,7 +52,9 @@ describe('Add account by file flow', () => {
     fireEvent.click(screen.getByText('Continue'));
 
     expect(screen.getByText('Enter your password')).toBeTruthy();
-    expect(screen.getByText('Please provide your device password to backup the recovery phrase.')).toBeTruthy();
+    expect(
+      screen.getByText('Please provide your device password to backup the recovery phrase.')
+    ).toBeTruthy();
     expect(screen.getByText(mockSavedAccounts[0].metadata.name)).toBeTruthy();
     expect(screen.getByText(mockSavedAccounts[0].metadata.address)).toBeTruthy();
 
@@ -61,7 +62,7 @@ describe('Add account by file flow', () => {
     fireEvent.change(password, { target: { value: 'Password1$' } });
     fireEvent.click(screen.getByText('Continue'));
     await waitFor(() => {
-      expect(screen.getByText('Perfect! You\'re all set')).toBeTruthy();
+      expect(screen.getByText("Perfect! You're all set")).toBeTruthy();
       fireEvent.click(screen.getByText('Continue to Dashboard'));
       expect(props.login).toBeCalled();
     });

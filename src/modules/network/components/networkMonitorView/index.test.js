@@ -6,7 +6,7 @@ import { usePeers, useNetworkStatistics } from '../../hooks/queries';
 
 jest.mock('react-i18next', () => ({
   ...jest.requireActual('react-i18next'),
-  useTranslation: jest.fn().mockReturnValue({ t: jest.fn().mockImplementation(key => key) }),
+  useTranslation: jest.fn().mockReturnValue({ t: jest.fn().mockImplementation((key) => key) }),
 }));
 
 jest.mock('../../hooks/queries');

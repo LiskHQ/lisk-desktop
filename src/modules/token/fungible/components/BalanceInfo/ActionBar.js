@@ -1,11 +1,7 @@
 import React from 'react';
 import { withTranslation } from 'react-i18next';
 import { useSelector } from 'react-redux';
-import {
-  PrimaryButton,
-  SecondaryButton,
-  TertiaryButton,
-} from 'src/theme/buttons';
+import { PrimaryButton, SecondaryButton, TertiaryButton } from 'src/theme/buttons';
 import DialogLink from 'src/theme/dialog/link';
 import Tooltip from 'src/theme/Tooltip';
 import { selectAccountBalance, selectLSKAddress } from 'src/redux/selectors';
@@ -14,15 +10,7 @@ import EmptyBalanceTooltipWrapper from './EmptyBalanceTooltipWrapper';
 import styles from './BalanceInfo.css';
 
 // eslint-disable-next-line complexity
-const ActionBar = ({
-  username,
-  address,
-  t,
-  isWalletRoute,
-  activeToken,
-  isBanned,
-  pomStart,
-}) => {
+const ActionBar = ({ username, address, t, isWalletRoute, activeToken, isBanned, pomStart }) => {
   const hostBalance = useSelector(selectAccountBalance);
   const disableButtons = hostBalance === 0;
   const vote = useSelector((state) => state.voting[address]);
@@ -48,35 +36,24 @@ const ActionBar = ({
               <Tooltip
                 position="bottom"
                 size="maxContent"
-                content={(
+                content={
                   <SecondaryButton
-                    className={`${styles.voteButton} ${
-                      isBanned && styles.disabled
-                    } ${!isBanned && 'open-add-vote-dialog'}`}
+                    className={`${styles.voteButton} ${isBanned && styles.disabled} ${
+                      !isBanned && 'open-add-vote-dialog'
+                    }`}
                     size="m"
                   >
                     {voteButtonTitle}
                   </SecondaryButton>
-                )}
+                }
               >
-                <p>
-                  {isBanned
-                    ? t('You cannot vote for this delegate')
-                    : t('Vote for delegate')}
-                </p>
+                <p>{isBanned ? t('You cannot vote for this delegate') : t('Vote for delegate')}</p>
               </Tooltip>
             </DialogLink>
           )}
           {!username && lskAddress === address && (
-            <DialogLink
-              className={styles.registerDelegate}
-              component="registerDelegate"
-            >
-              <TertiaryButton
-                className="register-delegate"
-                size="m"
-                disabled={disableButtons}
-              >
+            <DialogLink className={styles.registerDelegate} component="registerDelegate">
+              <TertiaryButton className="register-delegate" size="m" disabled={disableButtons}>
                 {t('Register delegate')}
               </TertiaryButton>
             </DialogLink>

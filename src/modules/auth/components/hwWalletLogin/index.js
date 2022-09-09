@@ -5,7 +5,7 @@ import { withTranslation } from 'react-i18next';
 import { settingsUpdated } from 'src/redux/actions';
 import HardwareWalletLogin from './hwWalletLogin';
 
-const mapStateToProps = state => ({
+const mapStateToProps = (state) => ({
   network: state.network,
 });
 
@@ -15,5 +15,5 @@ const mapDispatchToProps = {
 
 export default compose(
   connect(mapStateToProps, mapDispatchToProps),
-  withTranslation(),
+  withTranslation()
 )(HardwareWalletLogin);

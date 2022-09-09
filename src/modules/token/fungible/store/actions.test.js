@@ -97,10 +97,11 @@ describe('actions: transactions', () => {
           data: 'test',
         },
       };
-      const transactionError = new Error('The number NaN cannot be converted to a BigInt because it is not an integer');
+      const transactionError = new Error(
+        'The number NaN cannot be converted to a BigInt because it is not an integer'
+      );
       loginTypes.passphrase.code = 1;
-      jest.spyOn(hwManager, 'signTransactionByHW')
-        .mockRejectedValue(transactionError);
+      jest.spyOn(hwManager, 'signTransactionByHW').mockRejectedValue(transactionError);
       const expectedAction = {
         type: actionTypes.transactionSignError,
         data: transactionError,

@@ -6,7 +6,7 @@ describe('validators', () => {
     expect(delegateKeyValidator()).toBe(false);
   });
 
-  it('return false if the key doesn\'t exist', () => {
+  it("return false if the key doesn't exist", () => {
     expect(delegateKeyValidator('someKey', 'someValue')).toBe(false);
   });
 

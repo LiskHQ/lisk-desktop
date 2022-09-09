@@ -5,7 +5,9 @@ import { Html5Entities } from 'html-entities';
 const NewsParser = ({ children }) => {
   const REGEX_USER = /\B(@[a-zA-Z0-9_]+)/g; // regex for @users
   const REGEX_HASHTAG = /\B(#[A-Za-z0-9-_]+)/g; // regex for #hashtags
-  const textWithHashtag = reactStringReplace(Html5Entities.decode(children), REGEX_HASHTAG,
+  const textWithHashtag = reactStringReplace(
+    Html5Entities.decode(children),
+    REGEX_HASHTAG,
     (hashtag, index, offset) => (
       <a
         key={hashtag + index + offset}
@@ -15,7 +17,8 @@ const NewsParser = ({ children }) => {
       >
         {hashtag}
       </a>
-    ));
+    )
+  );
   const textWithUsers = reactStringReplace(textWithHashtag, REGEX_USER, (user, index, offset) => (
     <a
       key={user + index + offset}
@@ -26,12 +29,6 @@ const NewsParser = ({ children }) => {
       {user}
     </a>
   ));
-  return (
-    <span>
-      {
-        textWithUsers
-      }
-    </span>
-  );
+  return <span>{textWithUsers}</span>;
 };
 export default NewsParser;

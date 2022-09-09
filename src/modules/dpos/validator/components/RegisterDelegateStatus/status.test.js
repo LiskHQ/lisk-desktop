@@ -11,7 +11,7 @@ describe('Delegate Registration Status', () => {
       txBroadcastError: null,
     },
     transactionBroadcasted: jest.fn(),
-    t: key => key,
+    t: (key) => key,
   };
 
   const signedTransaction = {
@@ -56,7 +56,7 @@ describe('Delegate Registration Status', () => {
       transactions: {
         txBroadcastError: { message: 'error:test' },
         txSignatureError: null,
-        signedTransaction: { },
+        signedTransaction: {},
       },
     };
 
@@ -70,7 +70,7 @@ describe('Delegate Registration Status', () => {
       transactions: {
         txBroadcastError: null,
         txSignatureError: null,
-        signedTransaction: { },
+        signedTransaction: {},
       },
     };
 

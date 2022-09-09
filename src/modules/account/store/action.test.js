@@ -1,10 +1,6 @@
 /* eslint-disable max-lines */
 import actionTypes from './actionTypes';
-import {
-  setCurrentAccount,
-  addAccount,
-  deleteAccount,
-} from './action';
+import { setCurrentAccount, addAccount, deleteAccount } from './action';
 
 describe('actions:  account', () => {
   beforeEach(() => {

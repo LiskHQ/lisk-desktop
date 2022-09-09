@@ -1,4 +1,4 @@
-const castBalanceStringToNumber = number => parseFloat(number.replace(/,/g, ''));
+const castBalanceStringToNumber = (number) => parseFloat(number.replace(/,/g, ''));
 
 export default function compareBalances(balanceBeforeString, balanceAfterString, cost) {
   const balanceBefore = castBalanceStringToNumber(balanceBeforeString.replace(' LSK', ''));

@@ -80,25 +80,18 @@ class SettingDialog extends React.Component {
               <label className={`${styles.fieldGroup} ${styles.checkboxField}`}>
                 <Toggle isCheckbox setting={settingsConst.keys.showNetwork} />
                 <div>
-                  <span className={styles.labelName}>
-                    {t('Network switcher')}
-                  </span>
+                  <span className={styles.labelName}>{t('Network switcher')}</span>
                   <p>
                     {t(
-                      'Enable network switcher to connect to different networks or service nodes when signing in.',
+                      'Enable network switcher to connect to different networks or service nodes when signing in.'
                     )}
                   </p>
                 </div>
               </label>
               <label className={`${styles.fieldGroup} ${styles.checkboxField}`}>
-                <Toggle
-                  isCheckbox
-                  setting={settingsConst.keys.enableCustomDerivationPath}
-                />
+                <Toggle isCheckbox setting={settingsConst.keys.enableCustomDerivationPath} />
                 <div>
-                  <span className={styles.labelName}>
-                    {t('Enable custom derivation path')}
-                  </span>
+                  <span className={styles.labelName}>{t('Enable custom derivation path')}</span>
                   <p>{t('Modify recovery phrase derivation path')}</p>
                 </div>
               </label>
@@ -108,17 +101,9 @@ class SettingDialog extends React.Component {
               <label className={`${styles.fieldGroup} ${styles.checkboxField}`}>
                 <Toggle isCheckbox setting={settingsConst.keys.statistics} />
                 <div>
-                  <span className={styles.labelName}>
-                    {t('Anonymous analytics collection')}
-                  </span>
-                  <p>
-                    {t('Help improve Lisk by sending anonymous usage data.')}
-                  </p>
-                  <a
-                    target="_blank"
-                    href={externalLinks.privacyPolicy}
-                    className={styles.link}
-                  >
+                  <span className={styles.labelName}>{t('Anonymous analytics collection')}</span>
+                  <p>{t('Help improve Lisk by sending anonymous usage data.')}</p>
+                  <a target="_blank" href={externalLinks.privacyPolicy} className={styles.link}>
                     {t('Privacy policy')}
                   </a>
                 </div>

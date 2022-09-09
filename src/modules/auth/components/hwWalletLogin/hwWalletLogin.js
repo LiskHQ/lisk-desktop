@@ -10,12 +10,7 @@ import SelectDevice from './selectDevice';
 import UnlockDevice from './unlockDevice';
 import styles from './hwWalletLogin.css';
 
-const HardwareWalletLogin = ({
-  settingsUpdated,
-  history,
-  network,
-  t,
-}) => {
+const HardwareWalletLogin = ({ settingsUpdated, history, network, t }) => {
   const [devices, setDevices] = useState([]);
 
   useEffect(() => {
@@ -38,9 +33,7 @@ const HardwareWalletLogin = ({
   return (
     <>
       <div className={`${styles.wrapper} ${grid.row}`}>
-        <MultiStep
-          className={`${grid['col-xs-10']}`}
-        >
+        <MultiStep className={`${grid['col-xs-10']}`}>
           <Loading t={t} devices={devices} network={network} />
           <SelectDevice t={t} devices={devices} />
           <RequestPin t={t} devices={devices} goBack={goBack} />

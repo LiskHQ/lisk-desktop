@@ -3,18 +3,20 @@ import { mountWithRouter } from 'src/utils/testHelpers';
 import accounts from '@tests/constants/wallets';
 import Request from './request';
 
-jest.mock('src/modules/common/components/converter', () => (
-  function ConverterMock() {
-    return <span className="converted-price" />;
-  }
-));
+jest.mock(
+  'src/modules/common/components/converter',
+  () =>
+    function ConverterMock() {
+      return <span className="converted-price" />;
+    }
+);
 
 describe('Request', () => {
   let wrapper;
 
   const props = {
     address: accounts.genesis.summary.address,
-    t: v => v,
+    t: (v) => v,
   };
   const routeConfig = {
     pathname: 'wallet',
@@ -34,11 +36,15 @@ describe('Request', () => {
     wrapper.find('.add-message-button').at(0).simulate('click');
 
     wrapper.find('div textarea[placeholder="Write message"]').simulate('change', evt);
-    expect(wrapper.find(Request).state('shareLink')).toMatch(`${shareLink}&${evt.target.name}=${evt.target.value}`);
+    expect(wrapper.find(Request).state('shareLink')).toMatch(
+      `${shareLink}&${evt.target.name}=${evt.target.value}`
+    );
 
     evt = { target: { name: 'amount', value: 1 } };
     wrapper.find('.fieldGroup').at(2).find('input').simulate('change', evt);
-    expect(wrapper.find(Request).state('shareLink')).toMatch(`${shareLink}&${evt.target.name}=${evt.target.value}`);
+    expect(wrapper.find(Request).state('shareLink')).toMatch(
+      `${shareLink}&${evt.target.name}=${evt.target.value}`
+    );
 
     expect(wrapper.find('.recipient-application').at(0)).toBeTruthy();
     expect(wrapper.find('.token').at(0)).toBeTruthy();

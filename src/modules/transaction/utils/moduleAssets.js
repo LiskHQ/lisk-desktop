@@ -4,7 +4,7 @@ import { MODULE_COMMANDS_NAME_ID_MAP } from '@transaction/configuration/moduleAs
 // TODO: Fix the mapping based on new id changes
 // We will address these problem in issue https://github.com/LiskHQ/lisk-desktop/issues/4400
 
-const getModuleCommandSenderLabel = (t = str => str) => ({
+const getModuleCommandSenderLabel = (t = (str) => str) => ({
   [MODULE_COMMANDS_NAME_ID_MAP.transfer]: t('Sender'),
   [MODULE_COMMANDS_NAME_ID_MAP.reclaimLSK]: t('Sender'),
   [MODULE_COMMANDS_NAME_ID_MAP.unlockToken]: t('Sender'),
@@ -14,7 +14,7 @@ const getModuleCommandSenderLabel = (t = str => str) => ({
   [MODULE_COMMANDS_NAME_ID_MAP.reportDelegateMisbehavior]: t('Reporter'),
 });
 
-const getModuleCommandTitle = (t = str => str) => ({
+const getModuleCommandTitle = (t = (str) => str) => ({
   [MODULE_COMMANDS_NAME_ID_MAP.transfer]: t('Send'),
   [MODULE_COMMANDS_NAME_ID_MAP.reclaimLSK]: t('Reclaim'),
   [MODULE_COMMANDS_NAME_ID_MAP.unlockToken]: t('Unlock'),

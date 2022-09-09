@@ -10,7 +10,10 @@ import { usePinBlockchainApplication } from '../../hooks/usePinBlockchainApplica
 import { useCurrentApplication } from '../../hooks/useCurrentApplication';
 
 const RightRowComponent = ({
-  isCurrentApplication, isTerminated, handleDeleteApplication, isDefault,
+  isCurrentApplication,
+  isTerminated,
+  handleDeleteApplication,
+  isDefault,
 }) => {
   const { t } = useTranslation();
 
@@ -23,16 +26,14 @@ const RightRowComponent = ({
           className={styles.disabledWarningTooltip}
           size="s"
           position="left"
-          content={(
-            <Icon
-              className={styles.disabledWarning}
-              name="cautionFilledIcon"
-            />
-          )}
+          content={<Icon className={styles.disabledWarning} name="cautionFilledIcon" />}
         >
           <p>
             {t('Application is terminated and can no longer be managed.')}
-            <a href="https://lisk.com/blog/research/lifecycle-sidechain-lisk-ecosystem" target="_blank">
+            <a
+              href="https://lisk.com/blog/research/lifecycle-sidechain-lisk-ecosystem"
+              target="_blank"
+            >
               {t('Read more')}
             </a>
           </p>
@@ -43,7 +44,7 @@ const RightRowComponent = ({
           className={styles.deleteBtnTooltip}
           size="s"
           position="left"
-          content={(
+          content={
             <TertiaryButton
               disabled
               className={`remove-application-button ${styles.diabledDeleteBtn}`}
@@ -52,11 +53,9 @@ const RightRowComponent = ({
             >
               <Icon name="remove" />
             </TertiaryButton>
-          )}
+          }
         >
-          <p>
-            {t('The default application can not be removed')}
-          </p>
+          <p>{t('The default application can not be removed')}</p>
         </Tooltip>
       ) : (
         <TertiaryButton
@@ -71,16 +70,14 @@ const RightRowComponent = ({
   );
 };
 
-const ApplicationManagementRow = ({
-  application, history, location,
-}) => {
+const ApplicationManagementRow = ({ application, history, location }) => {
   const { togglePin, checkPinByChainId } = usePinBlockchainApplication();
   const [currentApplication, setApplication] = useCurrentApplication();
 
   const isPinned = useMemo(() => checkPinByChainId(application.chainID), [checkPinByChainId]);
   const isCurrentApplication = useMemo(
     () => currentApplication?.chainID === application.chainID,
-    [currentApplication, application],
+    [currentApplication, application]
   );
   const isTerminated = useMemo(() => application.state === 'terminated', [application.state]);
 
@@ -89,10 +86,15 @@ const ApplicationManagementRow = ({
     togglePin(application.chainID);
   }, []);
 
-  const handleDeleteApplication = useCallback((event) => {
-    event.stopPropagation();
-    addSearchParamsToUrl(history, { modal: `removeApplicationFlow&chainId=${application.chainID}` });
-  }, [location]);
+  const handleDeleteApplication = useCallback(
+    (event) => {
+      event.stopPropagation();
+      addSearchParamsToUrl(history, {
+        modal: `removeApplicationFlow&chainId=${application.chainID}`,
+      });
+    },
+    [location]
+  );
 
   const handleSetCurrentApplication = useCallback(() => {
     // Check apis here
@@ -108,7 +110,9 @@ const ApplicationManagementRow = ({
 
   return (
     <div
-      className={`managed-application-row ${styles.appItemWrapper} ${isCurrentApplication ? styles.activeAppBg : ''} ${isTerminated ? styles.termiated : ''}`}
+      className={`managed-application-row ${styles.appItemWrapper} ${
+        isCurrentApplication ? styles.activeAppBg : ''
+      } ${isTerminated ? styles.termiated : ''}`}
       onClick={handleSetCurrentApplication}
     >
       <div className={styles.leftWrapper}>

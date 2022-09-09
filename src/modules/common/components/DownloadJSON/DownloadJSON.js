@@ -16,11 +16,7 @@ function DownloadJSON({ encryptedPhrase, fileName }) {
     <div className={styles.downloadLisk}>
       <Icon name="fileOutline" />
       <p className="option-value">{`${fileName}.json`}</p>
-      <TertiaryButton
-        className={styles.downloadBtn}
-        size="xs"
-        onClick={onDownload}
-      >
+      <TertiaryButton className={styles.downloadBtn} size="xs" onClick={onDownload}>
         <span className={styles.buttonContent}>
           {t('Download')}
           <Icon name="downloadBlue" />

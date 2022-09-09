@@ -28,7 +28,7 @@ describe('Setup password success and JSON download component', () => {
     wrapper.find('.downloadBtn').at(0).simulate('click');
     expect(spyOnJSONDownload).toHaveBeenCalledWith(
       props.encryptedPhrase,
-      'encrypted_secret_recovery_phrase',
+      'encrypted_secret_recovery_phrase'
     );
   });
 

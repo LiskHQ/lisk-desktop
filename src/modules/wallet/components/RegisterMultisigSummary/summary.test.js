@@ -25,15 +25,15 @@ jest.mock('@transaction/utils/hwManager');
 jest.spyOn(cryptography.address, 'getLisk32AddressFromPublicKey').mockReturnValue(address);
 
 describe('Multisignature Summary component', () => {
-  const members = [accounts.genesis, accounts.delegate].map(item => ({
+  const members = [accounts.genesis, accounts.delegate].map((item) => ({
     address: item.summary.address,
     isMandatory: true,
   }));
-  const mandatoryKeys = [accounts.genesis, accounts.delegate].map(item => item.summary.publicKey);
+  const mandatoryKeys = [accounts.genesis, accounts.delegate].map((item) => item.summary.publicKey);
 
   let wrapper;
   const props = {
-    t: v => v,
+    t: (v) => v,
     prevStep: jest.fn(),
     nextStep: jest.fn(),
     multisigGroupRegistered: jest.fn(),
@@ -48,7 +48,9 @@ describe('Multisignature Summary component', () => {
         optionalKeys: [],
         network: {
           networks: {
-            LSK: { networkIdentifier: '01e47ba4e3e57981642150f4b45f64c2160c10bac9434339888210a4fa5df097' },
+            LSK: {
+              networkIdentifier: '01e47ba4e3e57981642150f4b45f64c2160c10bac9434339888210a4fa5df097',
+            },
           },
           name: 'customNode',
         },

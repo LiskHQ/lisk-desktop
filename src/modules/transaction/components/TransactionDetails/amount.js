@@ -7,21 +7,14 @@ import ValueAndLabel from './valueAndLabel';
 import styles from './styles.css';
 
 const Amount = ({ t }) => {
-  const { activeToken, transaction } = React.useContext(
-    TransactionDetailsContext,
-  );
-  const addresses = [
-    transaction.params.recipient?.address ?? '',
-    transaction.sender.address,
-  ];
+  const { activeToken, transaction } = React.useContext(TransactionDetailsContext);
+  const addresses = [transaction.params.recipient?.address ?? '', transaction.sender.address];
 
   return (
     <ValueAndLabel label={t('Amount of transaction')} className={styles.amount}>
       <DiscreetMode addresses={addresses} shouldEvaluateForOtherAccounts>
         <span className="tx-amount">
-          <TokenAmount val={getTxAmount(transaction)} />
-          {' '}
-          {activeToken}
+          <TokenAmount val={getTxAmount(transaction)} /> {activeToken}
         </span>
       </DiscreetMode>
     </ValueAndLabel>

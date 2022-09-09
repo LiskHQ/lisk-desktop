@@ -24,7 +24,6 @@ const BlockRow = ({ data, className }) => (
   </Link>
 );
 
-const areEqual = (prevProps, nextProps) =>
-  prevProps.data.id === nextProps.data.id;
+const areEqual = (prevProps, nextProps) => prevProps.data.id === nextProps.data.id;
 
 export default React.memo(BlockRow, areEqual);

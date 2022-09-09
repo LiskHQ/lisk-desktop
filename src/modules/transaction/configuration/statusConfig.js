@@ -2,14 +2,16 @@ import { isEmpty } from 'src/utils/helpers';
 import { txStatusTypes } from '@transaction/configuration/txStatus';
 import { transactionToJSON, getNumberOfSignatures, joinModuleAndCommandIds } from '../utils';
 
-export const statusMessages = t => ({
+export const statusMessages = (t) => ({
   [txStatusTypes.multisigSignaturePartialSuccess]: {
     title: t('Your signature was successful'),
     message: t('You can download or copy the transaction and share it with other members.'),
   },
   [txStatusTypes.multisigSignatureSuccess]: {
     title: t('The transaction is now fully signed'),
-    message: t('Now you can send it to the blockchain. You may also copy or download it, if you wish to send the transaction using another device later.'),
+    message: t(
+      'Now you can send it to the blockchain. You may also copy or download it, if you wish to send the transaction using another device later.'
+    ),
   },
   [txStatusTypes.signatureSuccess]: {
     title: t('Submitting the transaction'),
@@ -17,7 +19,9 @@ export const statusMessages = t => ({
   },
   [txStatusTypes.multisigBroadcastSuccess]: {
     title: t('Transaction submitted'),
-    message: t('Your transaction has been submitted and will appear in sender account\'s wallet after confirmation.'),
+    message: t(
+      "Your transaction has been submitted and will appear in sender account's wallet after confirmation."
+    ),
   },
   [txStatusTypes.broadcastSuccess]: {
     title: t('Transaction submitted'),
@@ -29,7 +33,9 @@ export const statusMessages = t => ({
   },
   [txStatusTypes.broadcastError]: {
     title: t('Transaction failed'),
-    message: t('An error occurred while sending your transaction to the network. Please try again.'),
+    message: t(
+      'An error occurred while sending your transaction to the network. Please try again.'
+    ),
   },
   [txStatusTypes.hwRejected]: {
     title: t('Transaction aborted on device'),
@@ -69,8 +75,9 @@ export const getTransactionStatus = (account, transactions, isMultisignature) =>
       moduleCommandID: joinModuleAndCommandIds(transactions.signedTransaction),
     };
     const numberOfSignatures = getNumberOfSignatures(account, transaction);
-    const nonEmptySignatures = transactions
-      .signedTransaction.signatures.filter(sig => sig.length > 0).length;
+    const nonEmptySignatures = transactions.signedTransaction.signatures.filter(
+      (sig) => sig.length > 0
+    ).length;
     if (nonEmptySignatures < numberOfSignatures) {
       return { code: txStatusTypes.multisigSignaturePartialSuccess };
     }

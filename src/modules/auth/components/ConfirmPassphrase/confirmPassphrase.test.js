@@ -13,11 +13,15 @@ describe('Register Process - Confirm Passphrase', () => {
   };
 
   const selectWrongWords = (comp) => {
-    comp.find('div.option').forEach(option => !props.passphrase.includes(option.text()) && option.simulate('click'));
+    comp
+      .find('div.option')
+      .forEach((option) => !props.passphrase.includes(option.text()) && option.simulate('click'));
   };
 
   const selectRightWords = (comp) => {
-    comp.find('div.option').forEach(option => props.passphrase.includes(option.text()) && option.simulate('click'));
+    comp
+      .find('div.option')
+      .forEach((option) => props.passphrase.includes(option.text()) && option.simulate('click'));
   };
 
   beforeEach(() => {

@@ -1,7 +1,5 @@
 import React from 'react';
-import {
-  fireEvent, screen, render, waitFor,
-} from '@testing-library/react';
+import { fireEvent, screen, render, waitFor } from '@testing-library/react';
 import { mockEvents } from '../../__fixtures__';
 import TransactionEventsRow from './TransactionEventsRow';
 
@@ -12,9 +10,7 @@ describe('TransactionEventsRow', () => {
     };
     render(<TransactionEventsRow {...props} />);
 
-    const {
-      id, index, typeID, module,
-    } = props.data;
+    const { id, index, typeID, module } = props.data;
     expect(screen.queryAllByText(id));
     expect(screen.queryAllByText(index));
     expect(screen.queryAllByText(typeID));
@@ -33,7 +29,9 @@ describe('TransactionEventsRow', () => {
     fireEvent.click(screen.queryByAltText('arrowRightInactive'));
 
     await waitFor(() => {
-      expect(screen.queryByTestId('transaction-event-json-viewer').className).not.toContain('shrink');
+      expect(screen.queryByTestId('transaction-event-json-viewer').className).not.toContain(
+        'shrink'
+      );
     });
 
     fireEvent.click(screen.queryByAltText('arrowRightInactive'));

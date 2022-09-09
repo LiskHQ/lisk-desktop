@@ -5,19 +5,25 @@ import { truncateAddress } from '@wallet/utils/account';
 import styles from './walletsAndDeletegates.css';
 
 const Delegates = ({
-  delegates, onSelectedRow, t, rowItemIndex, updateRowItemIndex, searchTextValue,
+  delegates,
+  onSelectedRow,
+  t,
+  rowItemIndex,
+  updateRowItemIndex,
+  searchTextValue,
 }) => (
   <div className={`${styles.wrapper} delegates`}>
     <header className={`${styles.header} delegates-header`}>
       <label>{t('Account')}</label>
     </header>
     <div className={`${styles.content} delegates-content`}>
-      {
-      delegates.map((delegate, index) => (
+      {delegates.map((delegate, index) => (
         <div
           key={index}
           data-index={index}
-          className={`${styles.accountRow} ${rowItemIndex === index ? styles.active : ''} delegates-row`}
+          className={`${styles.accountRow} ${
+            rowItemIndex === index ? styles.active : ''
+          } delegates-row`}
           onClick={() => onSelectedRow(delegate.summary.address)}
           onMouseEnter={updateRowItemIndex}
         >
@@ -46,8 +52,7 @@ const Delegates = ({
             </span>
           </span>
         </div>
-      ))
-    }
+      ))}
     </div>
   </div>
 );

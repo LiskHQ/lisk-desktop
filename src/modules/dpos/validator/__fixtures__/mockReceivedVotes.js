@@ -7,7 +7,9 @@ const generateVote = (index) => ({
 });
 
 const data = {
-  votes: Array(30).fill(1).map((_, idx) => generateVote(idx)),
+  votes: Array(30)
+    .fill(1)
+    .map((_, idx) => generateVote(idx)),
   account: {
     address: 'lsk24cd35u4jdq8szo3pnsqe5dsxwrnazyqqqg5eu',
     publicKey: 'aq02qkbb35u4jdq8szo3pnsqe5dsxwrnazyqqqg5eu',

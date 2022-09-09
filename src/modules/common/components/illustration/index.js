@@ -113,7 +113,8 @@ export const illustrations = {
 
 const Illustration = ({ name, className, noTheme }) => {
   const theme = useTheme();
-  const themed = theme === 'dark' && !noTheme && illustrations[`${name}Dark`] ? `${name}Dark` : name;
+  const themed =
+    theme === 'dark' && !noTheme && illustrations[`${name}Dark`] ? `${name}Dark` : name;
   return <img src={illustrations[themed]} className={className} />;
 };
 

@@ -23,7 +23,9 @@ const RegisterDelegateSummary = ({
   };
   const onCancelAction = {
     label: t('Go back'),
-    onClick: () => { prevStep({ rawTx }); },
+    onClick: () => {
+      prevStep({ rawTx });
+    },
   };
 
   return (

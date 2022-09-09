@@ -23,7 +23,7 @@ describe('TxBroadcaster', () => {
     status: {
       code: txStatusTypes.signatureSuccess,
     },
-    t: t => t,
+    t: (t) => t,
     illustration: 'default',
   };
 

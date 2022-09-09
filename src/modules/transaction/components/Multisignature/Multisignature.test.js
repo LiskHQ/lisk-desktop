@@ -22,7 +22,7 @@ describe('TransactionResult Multisignature', () => {
     },
     title: 'Test title',
     message: 'lorem ipsum',
-    t: t => t,
+    t: (t) => t,
     status: {
       code: txStatusTypes.signatureSuccess,
     },
@@ -47,7 +47,7 @@ describe('TransactionResult Multisignature', () => {
         status={{
           code: txStatusTypes.broadcastSuccess,
         }}
-      />,
+      />
     );
     wrapper.find('.back-to-wallet-button').at(0).simulate('click');
     expect(props.history.push).toHaveBeenCalledWith(routes.wallet.path);
@@ -61,7 +61,7 @@ describe('TransactionResult Multisignature', () => {
         status={{
           code: txStatusTypes.multisigSignaturePartialSuccess,
         }}
-      />,
+      />
     );
     expect(wrapper.find(FullySignedActions)).not.toExist();
     expect(wrapper.find(PartiallySignedActions)).toExist();
@@ -70,7 +70,7 @@ describe('TransactionResult Multisignature', () => {
     expect(downloadJSONSpy).toHaveBeenCalledWith(props.transactions.signedTransaction, 'tx-1');
     wrapper.find('.copy-button').at(0).simulate('click');
     expect(copyToClipboard).toHaveBeenCalledWith(
-      JSON.stringify(props.transactions.signedTransaction),
+      JSON.stringify(props.transactions.signedTransaction)
     );
   });
 
@@ -81,7 +81,7 @@ describe('TransactionResult Multisignature', () => {
         status={{
           code: txStatusTypes.multisigSignatureSuccess,
         }}
-      />,
+      />
     );
     expect(wrapper.find(FullySignedActions)).toExist();
     expect(wrapper.find(PartiallySignedActions)).not.toExist();

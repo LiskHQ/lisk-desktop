@@ -1,7 +1,5 @@
 import React from 'react';
-import {
-  fireEvent, render, screen,
-} from '@testing-library/react';
+import { fireEvent, render, screen } from '@testing-library/react';
 import { createMemoryHistory } from 'history';
 import { Router } from 'react-router-dom';
 import mockSavedAccounts from '@tests/fixtures/accounts';
@@ -14,9 +12,7 @@ jest.mock('@account/hooks', () => ({
   useAccounts: jest.fn(() => ({
     accounts: mockSavedAccounts,
   })),
-  useCurrentAccount: jest.fn(() => (
-    [mockSavedAccounts[0], mockSetAccount]
-  )),
+  useCurrentAccount: jest.fn(() => [mockSavedAccounts[0], mockSetAccount]),
 }));
 
 const props = {
@@ -27,7 +23,11 @@ const history = createMemoryHistory({
 });
 let wrapper;
 beforeEach(() => {
-  wrapper = render(<Router history={history}><ManageAccounts {...props} /></Router>);
+  wrapper = render(
+    <Router history={history}>
+      <ManageAccounts {...props} />
+    </Router>
+  );
 });
 
 describe('Account Select Form', () => {
@@ -76,15 +76,21 @@ describe('Account Select Form', () => {
 
   it('Should change title based on props', async () => {
     expect(screen.getByTestId('manage-title')).toHaveTextContent('Manage accounts');
-    wrapper.rerender(<Router history={history}><ManageAccounts {...props} title="Switch account" /></Router>);
+    wrapper.rerender(
+      <Router history={history}>
+        <ManageAccounts {...props} title="Switch account" />
+      </Router>
+    );
     expect(screen.getByTestId('manage-title')).toHaveTextContent('Switch account');
   });
 
   it('Should change title based on props', async () => {
     expect(screen.getByText('Remove an account')).toBeTruthy();
-    wrapper.rerender(<Router history={history}>
-      <ManageAccounts {...props} isRemoveAvailable={false} />
-    </Router>);
+    wrapper.rerender(
+      <Router history={history}>
+        <ManageAccounts {...props} isRemoveAvailable={false} />
+      </Router>
+    );
     expect(() => screen.getByText('Remove an account')).toThrow('Unable to find an element');
   });
 });

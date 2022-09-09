@@ -3,12 +3,7 @@ import { getFromStorage } from 'src/utils/localJSONStorage';
 import { emptyBookmarks } from '@bookmark/utils';
 import wallets from '@tests/constants/wallets';
 import actionTypes from './actionTypes';
-import {
-  bookmarksRetrieved,
-  bookmarkAdded,
-  bookmarkRemoved,
-  bookmarkUpdated,
-} from './action';
+import { bookmarksRetrieved, bookmarkAdded, bookmarkRemoved, bookmarkUpdated } from './action';
 
 jest.mock('src/utils/localJSONStorage', () => ({
   getFromStorage: jest.fn(),

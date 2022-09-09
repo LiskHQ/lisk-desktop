@@ -22,14 +22,7 @@ export const defaultFilters = {
 };
 
 // eslint-disable-next-line max-statements
-const Blocks = ({
-  filters,
-  applyFilters,
-  clearFilter,
-  clearAllFilters,
-  sort,
-  changeSort,
-}) => {
+const Blocks = ({ filters, applyFilters, clearFilter, clearAllFilters, sort, changeSort }) => {
   const { t } = useTranslation();
   const [params, setParams] = useState();
   const formatters = {
@@ -54,8 +47,7 @@ const Blocks = ({
   // };
 
   const applyBlockFilters = (blockFilters) => {
-    const updateApplyFilterData = (usedFilters) =>
-      setParams(transformParams(usedFilters));
+    const updateApplyFilterData = (usedFilters) => setParams(transformParams(usedFilters));
     applyFilters(blockFilters, null, updateApplyFilterData);
   };
 
@@ -90,19 +82,10 @@ const Blocks = ({
   return (
     <div>
       <BlocksOverview t={t} />
-      <Box
-        className="blocks-container"
-        width="full"
-        main
-      >
+      <Box className="blocks-container" width="full" main>
         <StickyHeader
           title={t('All blocks')}
-          filters={(
-            <BlockFilterDropdown
-              filters={filters}
-              applyFilters={applyBlockFilters}
-            />
-          )}
+          filters={<BlockFilterDropdown filters={filters} applyFilters={applyBlockFilters} />}
         />
         <FilterBar
           {...{

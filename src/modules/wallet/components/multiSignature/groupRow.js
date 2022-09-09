@@ -9,12 +9,7 @@ import { tokenMap } from '@token/fungible/consts/tokens';
 import styles from './multiSignature.css';
 
 const GroupRow = ({ data, className }) => {
-  const {
-    address,
-    name,
-    key,
-    balance,
-  } = data;
+  const { address, name, key, balance } = data;
 
   return (
     <Link
@@ -22,10 +17,7 @@ const GroupRow = ({ data, className }) => {
       className={`${grid.row} ${className} ${styles.transactionRow} multisign-group-row`}
     >
       <span className={grid['col-xs-8']}>
-        <WalletVisual
-          address={address}
-          className={styles.avatar}
-        />
+        <WalletVisual address={address} className={styles.avatar} />
         <div className={styles.signDetails}>
           <p className={styles.addressTitle}>
             {name || address.replace(regex.lskAddressTrunk, '$1...$3')}
@@ -35,11 +27,7 @@ const GroupRow = ({ data, className }) => {
       </span>
       <span className={grid['col-xs-4']}>
         <span className={styles.groupBalance}>
-          <TokenAmount
-            val={balance}
-            showRounded
-            token={tokenMap.LSK.key}
-          />
+          <TokenAmount val={balance} showRounded token={tokenMap.LSK.key} />
         </span>
       </span>
     </Link>

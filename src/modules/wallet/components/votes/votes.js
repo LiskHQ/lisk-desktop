@@ -13,14 +13,10 @@ import header from './votesTableHeader';
 
 const getMessages = (t) => ({
   all: t('This account doesn’t have any votes.'),
-  filtered: t(
-    'This account doesn’t have any votes matching searched username.',
-  ),
+  filtered: t('This account doesn’t have any votes matching searched username.'),
 });
 
-const Votes = ({
-  votes, accounts, address, t, history,
-}) => {
+const Votes = ({ votes, accounts, address, t, history }) => {
   const [filterValue, setFilterValue] = useState('');
   const messages = getMessages(t);
 
@@ -48,10 +44,7 @@ const Votes = ({
   const areLoading = accounts.isLoading || votes.isLoading;
   const filteredVotes = votes.data.filter((vote) => {
     if (!vote.username) return false;
-    return (
-      vote.username.indexOf(filterValue) > -1
-      || vote.address.indexOf(filterValue) > -1
-    );
+    return vote.username.indexOf(filterValue) > -1 || vote.address.indexOf(filterValue) > -1;
   });
 
   return (

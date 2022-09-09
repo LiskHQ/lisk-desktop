@@ -22,7 +22,7 @@ describe('Transactions monitor page', () => {
   const clearFilter = jest.fn();
   const applyFilters = jest.fn();
   const clearAllFilters = jest.fn();
-  const t = jest.fn(str => str);
+  const t = jest.fn((str) => str);
   const loadData = jest.fn();
   const clearData = jest.fn();
   const props = {
@@ -70,19 +70,17 @@ describe('Transactions monitor page', () => {
   });
 
   it('allows to load more transactions', () => {
-    const wrapper = mountWithRouter(
-      TransactionMonitorList,
-      {
-        ...props,
-        transactions: transactionsWithData,
-        sort,
-        filters: {},
-      },
-    );
+    const wrapper = mountWithRouter(TransactionMonitorList, {
+      ...props,
+      transactions: transactionsWithData,
+      sort,
+      filters: {},
+    });
     wrapper.find('button.load-more').simulate('click');
-    expect(props.transactions.loadData).toHaveBeenCalledWith(
-      { offset: transactionsWithData.data.length, sort },
-    );
+    expect(props.transactions.loadData).toHaveBeenCalledWith({
+      offset: transactionsWithData.data.length,
+      sort,
+    });
   });
 
   it.skip('allows to load latest transactions', () => {
@@ -101,12 +99,12 @@ describe('Transactions monitor page', () => {
       TransactionMonitorList,
       { ...props, transactions: transactionsWithData },
       {},
-      defaultState,
+      defaultState
     );
     wrapper.update();
     // simulate new transactions
     // mock selector used in transactions table
-    useSelector.mockImplementation(callback => callback(newState));
+    useSelector.mockImplementation((callback) => callback(newState));
     // store.dispatch({
     //   type: actionTypes.newBlockCreated,
     //   data: {
@@ -119,7 +117,9 @@ describe('Transactions monitor page', () => {
     //     block: { height: 123123127, numberOfTransactions: 6 },
     //   },
     // });
-    act(() => { wrapper.update(); });
+    act(() => {
+      wrapper.update();
+    });
     wrapper.find('button.load-latest').simulate('click');
     expect(props.transactions.loadData).toHaveBeenCalled();
   });
@@ -141,23 +141,24 @@ describe('Transactions monitor page', () => {
     props.transactions.loadData = jest.fn();
     transactionsWithData.loadData = props.transactions.loadData;
 
-    const wrapper = mountWithRouter(
-      TransactionMonitorList,
-      {
-        ...props,
-        transactions: transactionsWithData,
-        filters: { amountFrom: '1.3', moduleCommandID: '' },
-        sort,
-      },
-    );
+    const wrapper = mountWithRouter(TransactionMonitorList, {
+      ...props,
+      transactions: transactionsWithData,
+      filters: { amountFrom: '1.3', moduleCommandID: '' },
+      sort,
+    });
 
     wrapper.find('button.filter').simulate('click');
-    wrapper.find('input.amountFromInput').simulate('change', { target: { value: amountFrom, name: 'amountFrom' } });
+    wrapper
+      .find('input.amountFromInput')
+      .simulate('change', { target: { value: amountFrom, name: 'amountFrom' } });
     wrapper.find('form.filter-container').simulate('submit');
     wrapper.find('button.load-more').simulate('click');
 
     expect(props.transactions.loadData).toHaveBeenCalledWith({
-      offset: transactions.length, amountFrom, sort,
+      offset: transactions.length,
+      amountFrom,
+      sort,
     });
   });
 
@@ -174,7 +175,7 @@ describe('Transactions monitor page', () => {
         filters: { height, moduleCommandID: '' },
       },
       {},
-      { token: { active: 'LSK' } },
+      { token: { active: 'LSK' } }
     );
 
     wrapper.find('button.filter').simulate('click');
@@ -184,7 +185,9 @@ describe('Transactions monitor page', () => {
     wrapper.find('button.load-more').simulate('click');
 
     expect(props.transactions.loadData).toHaveBeenCalledWith({
-      offset: transactions.length, height, sort,
+      offset: transactions.length,
+      height,
+      sort,
     });
   });
 
@@ -195,10 +198,10 @@ describe('Transactions monitor page', () => {
       mockSortDirection = mockSortDirection === 'desc' ? 'asc' : 'desc';
     });
 
-    const wrapper = mountWithRouter(
-      TransactionMonitorList,
-      { ...props, transactions: transactionsWithData },
-    );
+    const wrapper = mountWithRouter(TransactionMonitorList, {
+      ...props,
+      transactions: transactionsWithData,
+    });
     wrapper.find('.sort-by.timestamp').simulate('click');
 
     // this was to test the component its self without the manager (manger can have its own test)

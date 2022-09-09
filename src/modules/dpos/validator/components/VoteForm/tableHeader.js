@@ -1,6 +1,6 @@
 import styles from './voteForm.css';
 
-const header = t => ([
+const header = (t) => [
   {
     title: t('Delegate'),
     classList: styles.infoColumn,
@@ -20,6 +20,6 @@ const header = t => ([
   {
     classList: styles.editColumn,
   },
-]);
+];
 
 export default header;

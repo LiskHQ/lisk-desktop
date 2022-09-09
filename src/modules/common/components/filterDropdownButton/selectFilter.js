@@ -5,14 +5,11 @@ import { getModuleCommandTitle } from '@transaction/utils/moduleAssets';
 import Select from 'src/theme/Select';
 import styles from './filters.css';
 
-const SelectFilter = ({
-  label, placeholder, filters, name, updateCustomFilters,
-}) => {
-  const options = Object.keys(MODULE_COMMANDS_NAME_ID_MAP)
-    .map(key => ({
-      value: MODULE_COMMANDS_NAME_ID_MAP[key],
-      label: getModuleCommandTitle()[MODULE_COMMANDS_NAME_ID_MAP[key]],
-    }));
+const SelectFilter = ({ label, placeholder, filters, name, updateCustomFilters }) => {
+  const options = Object.keys(MODULE_COMMANDS_NAME_ID_MAP).map((key) => ({
+    value: MODULE_COMMANDS_NAME_ID_MAP[key],
+    label: getModuleCommandTitle()[MODULE_COMMANDS_NAME_ID_MAP[key]],
+  }));
   options.unshift({ value: '', label: placeholder });
 
   const onChange = (value) => {

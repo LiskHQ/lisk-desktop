@@ -7,21 +7,19 @@ import { getTransactionStats } from '@transaction/api';
 import Overview from './Overview';
 
 export default compose(
-  withData(
-    {
-      txStats: {
-        apiUtil: (network, { token, period }) =>
-          getTransactionStats({ network, params: { period } }, token),
-        defaultData: {
-          distributionByType: {},
-          distributionByAmount: {},
-          timeline: [],
-        },
-        autoload: true,
-        defaultUrlSearchParams: { period: 'week' },
-        transformResponse: response => response.data,
+  withData({
+    txStats: {
+      apiUtil: (network, { token, period }) =>
+        getTransactionStats({ network, params: { period } }, token),
+      defaultData: {
+        distributionByType: {},
+        distributionByAmount: {},
+        timeline: [],
       },
+      autoload: true,
+      defaultUrlSearchParams: { period: 'week' },
+      transformResponse: (response) => response.data,
     },
-  ),
-  withTranslation(),
+  }),
+  withTranslation()
 )(Overview);

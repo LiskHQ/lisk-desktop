@@ -4,13 +4,18 @@ import AnalyticsMessage from './analyticsMessage';
 
 describe('Analytics Message banner', () => {
   const props = {
-    t: v => v,
+    t: (v) => v,
   };
   let wrapper;
   const pushMock = jest.fn();
 
   beforeEach(() => {
-    wrapper = mount(<AnalyticsMessage history={{ push: pushMock, location: { search: '', path: '' } }} {...props} />);
+    wrapper = mount(
+      <AnalyticsMessage
+        history={{ push: pushMock, location: { search: '', path: '' } }}
+        {...props}
+      />
+    );
   });
 
   it('Should render correctly with all passed props', () => {

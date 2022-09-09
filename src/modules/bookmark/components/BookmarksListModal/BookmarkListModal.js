@@ -5,9 +5,7 @@ import BookmarksList from '@bookmark/components/BookmarksList';
 import ModalWrapper from '@bookmark/components/BookmarksListModal/BookmarkModalWrapper';
 import styles from '@bookmark/components/BookmarksListModal/BookmarkListModal.css';
 
-const Bookmarks = ({
-  bookmarks, token, t, bookmarkRemoved, bookmarkUpdated, history,
-}) => (
+const Bookmarks = ({ bookmarks, token, t, bookmarkRemoved, bookmarkUpdated, history }) => (
   <ModalWrapper>
     <BookmarksList
       enableFilter

@@ -20,9 +20,7 @@ const deposit = 5e10;
 const serviceUrl = 'https://lisk.com/';
 const chainLogo = null;
 
-const BlockchainApplicationDetails = ({
-  location, application, onCancel, nextStep,
-}) => {
+const BlockchainApplicationDetails = ({ location, application, onCancel, nextStep }) => {
   const { t } = useTranslation();
   const chainId = parseSearchParams(location.search)?.chainId;
   // TODO: this needs to be reisntated when the set application flow is completed
@@ -30,9 +28,7 @@ const BlockchainApplicationDetails = ({
 
   // const { deleteApplicationByChainId } = useApplicationManagement();
   const { checkPinByChainId, togglePin } = usePinBlockchainApplication();
-  const {
-    name, state, address, lastCertificateHeight, lastUpdated,
-  } = application.data;
+  const { name, state, address, lastCertificateHeight, lastUpdated } = application.data;
 
   const isPinned = checkPinByChainId(chainId);
   const toggleApplicationPin = () => {
@@ -108,8 +104,8 @@ const BlockchainApplicationDetails = ({
             <a
               className={`${styles.appLink}`}
               target="_blank"
-                // eslint-disable-next-line
-                // TODO: this is just a place holder link pending when its part of the response payload from service
+              // eslint-disable-next-line
+              // TODO: this is just a place holder link pending when its part of the response payload from service
               href={serviceUrl}
             >
               <Icon name="chainLinkIcon" className={styles.hwWalletIcon} />
@@ -120,9 +116,7 @@ const BlockchainApplicationDetails = ({
             <span>{t('Deposited:')}</span>
             {/* TODO: this is a placeholder value pending when its part of service response */}
             <span>
-              <TokenAmount val={deposit} />
-              {' '}
-              LSK
+              <TokenAmount val={deposit} /> LSK
             </span>
           </div>
           <Box className={styles.footerDetailsRow}>
@@ -130,24 +124,20 @@ const BlockchainApplicationDetails = ({
               <ValueAndLabel
                 key={index}
                 className={styles.detail}
-                label={(
+                label={
                   <span className={styles.headerText}>
                     <>
                       {header.text || header}
                       {header.toolTipText && (
-                      <Tooltip position="right">
-                        <p>
-                          {header.toolTipText}
-                        </p>
-                      </Tooltip>
+                        <Tooltip position="right">
+                          <p>{header.toolTipText}</p>
+                        </Tooltip>
                       )}
                     </>
                   </span>
-                  )}
+                }
               >
-                <span className={className}>
-                  {content}
-                </span>
+                <span className={className}>{content}</span>
               </ValueAndLabel>
             ))}
           </Box>

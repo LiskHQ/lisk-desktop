@@ -8,22 +8,21 @@ import Description from './description';
 import Options from './options';
 import styles from './dialog.css';
 
-const Dialog = ({
-  children, hasClose, hasBack, className, history,
-}) => {
+const Dialog = ({ children, hasClose, hasBack, className, history }) => {
   const onCloseClick = () => removeSearchParamsFromUrl(history, ['modal'], true);
   const onBackClick = () => history.goBack();
 
   return (
     <div className={`${styles.wrapper} ${className}`}>
       {hasBack && (
-        <Icon name="arrowLeftTailed" className={`${styles.backBtn} dialog-back-button`} onClick={onBackClick} />
+        <Icon
+          name="arrowLeftTailed"
+          className={`${styles.backBtn} dialog-back-button`}
+          onClick={onBackClick}
+        />
       )}
       {hasClose && (
-        <span
-          onClick={onCloseClick}
-          className={`${styles.closeBtn} dialog-close-button`}
-        />
+        <span onClick={onCloseClick} className={`${styles.closeBtn} dialog-close-button`} />
       )}
       {children}
     </div>

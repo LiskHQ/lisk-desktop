@@ -32,12 +32,10 @@ class PassphraseRenderer extends React.Component {
     const { chosenWords, indexes } = this.state;
 
     const answers = Object.values(chosenWords);
-    const isCorrect = answers.filter((answer, index) => answer === this.values[indexes[index]])
-      .length === 2;
+    const isCorrect =
+      answers.filter((answer, index) => answer === this.values[indexes[index]]).length === 2;
 
-    const cb = isCorrect
-      ? this.props.nextStep
-      : this.setRandomIndexesFromPassphrase;
+    const cb = isCorrect ? this.props.nextStep : this.setRandomIndexesFromPassphrase;
 
     this.setState({
       isCorrect,
@@ -82,9 +80,8 @@ class PassphraseRenderer extends React.Component {
       }, {});
 
     const wordOptions = [...Array(missing.length)].map(() =>
-      [...Array(numberOfOptions)].map(
-        () => wordsList[Math.floor(Math.random() * wordsList.length)],
-      ));
+      [...Array(numberOfOptions)].map(() => wordsList[Math.floor(Math.random() * wordsList.length)])
+    );
 
     return mixWithMissingWords(wordOptions);
   }
@@ -137,9 +134,7 @@ class PassphraseRenderer extends React.Component {
   }
 
   render() {
-    const {
-      t, showInfo, isConfirmation, prevStep, footerStyle,
-    } = this.props;
+    const { t, showInfo, isConfirmation, prevStep, footerStyle } = this.props;
     const { options, fieldSelected, chosenWords } = this.state;
     const missingWordsIndexes = isConfirmation && Object.keys(options).map((k) => Number(k));
 
@@ -149,9 +144,7 @@ class PassphraseRenderer extends React.Component {
           <>
             <h2 className={styles.header}>{t('Passphrase')}</h2>
             <p className={styles.subheader}>
-              {t(
-                'Please carefully write down these 12 words and store them in a safe place.',
-              )}
+              {t('Please carefully write down these 12 words and store them in a safe place.')}
             </p>
           </>
         )}
@@ -164,10 +157,7 @@ class PassphraseRenderer extends React.Component {
                 key={i}
               >
                 <span
-                  className={`${styles.inputValue} ${this.getStyle(
-                    i,
-                    missingWordsIndexes,
-                  )} word`}
+                  className={`${styles.inputValue} ${this.getStyle(i, missingWordsIndexes)} word`}
                 >
                   {isConfirmation && missingWordsIndexes.includes(i)
                     ? this.renderMissingValue(i)
@@ -178,9 +168,9 @@ class PassphraseRenderer extends React.Component {
           </div>
         </div>
         <div className={[styles.optionsContainer, 'word-options'].join(' ')}>
-          {isConfirmation
-            && typeof fieldSelected === 'number'
-            && options[fieldSelected].map((option, i) => (
+          {isConfirmation &&
+            typeof fieldSelected === 'number' &&
+            options[fieldSelected].map((option, i) => (
               <div
                 className="option"
                 onClick={() => this.chooseWord(fieldSelected, option)}

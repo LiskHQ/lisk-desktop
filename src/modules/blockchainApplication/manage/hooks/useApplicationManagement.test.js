@@ -19,9 +19,7 @@ jest.mock('react-redux', () => ({
   useDispatch: () => mockDispatch,
 }));
 jest.mock('./useCurrentApplication', () => ({
-  useCurrentApplication: jest.fn(() => (
-    [mockCurrentApplication, mockSetApplication]
-  )),
+  useCurrentApplication: jest.fn(() => [mockCurrentApplication, mockSetApplication]),
 }));
 
 describe('useApplicationManagement hook', () => {

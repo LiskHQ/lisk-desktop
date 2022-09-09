@@ -62,11 +62,7 @@ class FilterDropdownButton extends React.Component {
 
     if (!this.props.onTypeSelected) return;
 
-    if (
-      blackListTypes.some(
-        (blackListType) => blackListType === fields.moduleCommandID?.value,
-      )
-    ) {
+    if (blackListTypes.some((blackListType) => blackListType === fields.moduleCommandID?.value)) {
       this.props.onTypeSelected(fields.moduleCommandID.value);
     } else {
       this.props.onTypeSelected(null);
@@ -94,12 +90,12 @@ class FilterDropdownButton extends React.Component {
     const { filters } = this.state;
     return filter.type.indexOf('range') !== -1
       ? {
-        [`${filter.name}From`]: filters[`${filter.name}From`],
-        [`${filter.name}To`]: filters[`${filter.name}To`],
-      }
+          [`${filter.name}From`]: filters[`${filter.name}From`],
+          [`${filter.name}To`]: filters[`${filter.name}To`],
+        }
       : {
-        [filter.name]: filters[filter.name],
-      };
+          [filter.name]: filters[filter.name],
+        };
   }
 
   extendFilters() {
@@ -108,9 +104,7 @@ class FilterDropdownButton extends React.Component {
     }));
   }
 
-  renderFields({
-    name, label, placeholder, valueFormatter, type,
-  }) {
+  renderFields({ name, label, placeholder, valueFormatter, type }) {
     const Component = filterComponents[type];
     const props = {
       name,
@@ -121,9 +115,7 @@ class FilterDropdownButton extends React.Component {
     return (
       <Component
         key={name}
-        showRightDropdown={
-          type === 'date-range' && this.state.areFiltersExtended
-        }
+        showRightDropdown={type === 'date-range' && this.state.areFiltersExtended}
         {...props}
         filters={this.getFilters({ name, type })}
         updateCustomFilters={this.handleFiltersChange}
@@ -164,37 +156,27 @@ class FilterDropdownButton extends React.Component {
     return fields.length === 0 ? null : (
       <DropdownButton
         buttonClassName={`filterTransactions filter ${styles.buttonLabel}`}
-        buttonLabel={(
+        buttonLabel={
           <>
             <Icon className="button-icon" name="iconFilter" />
             {t('Filter')}
           </>
-        )}
+        }
         size="l"
         ButtonComponent={SecondaryButton}
         align="right"
         ref={this.setChildRef}
       >
-        <form
-          onSubmit={this.applyFilters}
-          className={`${styles.form} filter-container`}
-        >
-          <div
-            className={`${styles.container} ${
-              areFiltersExtended && styles.extendedContainer
-            }`}
-          >
+        <form onSubmit={this.applyFilters} className={`${styles.form} filter-container`}>
+          <div className={`${styles.container} ${areFiltersExtended && styles.extendedContainer}`}>
             {fields
-              .filter((_, index) =>
-                (areFiltersExtended ? index <= 3 : index <= 2))
+              .filter((_, index) => (areFiltersExtended ? index <= 3 : index <= 2))
               .map(this.renderFields)}
             {!areFiltersExtended && this.renderFooter()}
           </div>
           {areFiltersExtended && (
             <div className={styles.container}>
-              {fields
-                .filter((_, index) => index >= 4)
-                .map(this.renderFields)}
+              {fields.filter((_, index) => index >= 4).map(this.renderFields)}
               {this.renderFooter()}
             </div>
           )}

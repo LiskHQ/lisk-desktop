@@ -9,9 +9,8 @@ Given(/^showNetwork setting is true$/, function () {
 });
 
 Given(/^I should be connected to ([^\s]+)$/, function (networkName) {
-  const castNumberToBalanceString = number => (
-    numeral(fromRawLsk(number)).format('0,0.[0000000000000]') + ' LSK'
-  );
+  const castNumberToBalanceString = (number) =>
+    numeral(fromRawLsk(number)).format('0,0.[0000000000000]') + ' LSK';
   switch (networkName) {
     case 'mainnet':
       cy.get(ss.networkName).should('have.text', 'mainnet');
@@ -23,7 +22,9 @@ Given(/^I should be connected to ([^\s]+)$/, function (networkName) {
       cy.get(ss.networkName).should('have.text', 'custom node');
       break;
     default:
-      throw new Error(`Network should be one of : mainnet , testnet, customNode. Was: ${networkName}`);
+      throw new Error(
+        `Network should be one of : mainnet , testnet, customNode. Was: ${networkName}`
+      );
   }
   // cy.get(ss.networkName).contains(networkName);
 });
@@ -51,7 +52,9 @@ Given(/^I choose ([^\s]+)$/, function (networkName) {
       cy.get(ss.connectButton).click();
       break;
     default:
-      throw new Error(`Network should be one of : mainnet , testnet, customNode, invalid . Was: ${networkName}`);
+      throw new Error(
+        `Network should be one of : mainnet , testnet, customNode, invalid . Was: ${networkName}`
+      );
   }
 });
 
@@ -82,7 +85,9 @@ Given(/^I choose ([^\s]+)$/, function (networkName) {
       cy.get(ss.connectButton).click();
       break;
     default:
-      throw new Error(`Network should be one of : mainnet , testnet, customNode, invalid . Was: ${networkName}`);
+      throw new Error(
+        `Network should be one of : mainnet , testnet, customNode, invalid . Was: ${networkName}`
+      );
   }
 });
 

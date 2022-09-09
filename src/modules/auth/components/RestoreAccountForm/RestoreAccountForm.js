@@ -21,9 +21,7 @@ const RestoreAccountForm = ({ onBack, nextStep }) => {
   return (
     <>
       <div className={styles.titleHolder}>
-        <h1>
-          {t('Add account')}
-        </h1>
+        <h1>{t('Add account')}</h1>
         <p>{t('Restore your encrypted secret recovery phrase.')}</p>
       </div>
       <div className={styles.fullWidth}>
@@ -43,11 +41,7 @@ const RestoreAccountForm = ({ onBack, nextStep }) => {
           >
             {t('Continue')}
           </PrimaryButton>
-          <TertiaryButton
-            className="confirmButton"
-            size="l"
-            onClick={onBack}
-          >
+          <TertiaryButton className="confirmButton" size="l" onClick={onBack}>
             {t('Go back')}
           </TertiaryButton>
         </div>

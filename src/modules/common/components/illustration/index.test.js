@@ -11,7 +11,11 @@ describe('Illustration', () => {
   });
 
   it('should render dark illustration if available', () => {
-    const wrapper = mount(<ThemeContext.Provider value="dark"><Illustration name="emptyBookmarksList" /></ThemeContext.Provider>);
+    const wrapper = mount(
+      <ThemeContext.Provider value="dark">
+        <Illustration name="emptyBookmarksList" />
+      </ThemeContext.Provider>
+    );
     expect(wrapper.find('img').props().src).to.deep.equal({});
   });
 });

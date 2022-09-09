@@ -3,10 +3,12 @@ import mockAccounts from '@tests/constants/wallets';
 import setVotesByLaunchProtocol from './urlProcessor';
 
 jest.mock('@wallet/utils/api', () => ({
-  getAccount: jest.fn().mockImplementation(data => Promise.resolve({
-    summary: { address: 'lskdwsyfmcko6mcd357446yatromr9vzgu7eb8y99' },
-    dpos: { delegate: { username: data.username } },
-  })),
+  getAccount: jest.fn().mockImplementation((data) =>
+    Promise.resolve({
+      summary: { address: 'lskdwsyfmcko6mcd357446yatromr9vzgu7eb8y99' },
+      dpos: { delegate: { username: data.username } },
+    })
+  ),
   getAccounts: jest.fn(),
 }));
 
@@ -42,9 +44,11 @@ describe('setVotesByLaunchProtocol', () => {
       summary: { address: 'lskdwsyfmcko6mcd357446yatromr9vzgu7eb8y99' },
       dpos: { delegate: { username: 'genesis_5' } },
     };
-    accounts.getAccounts.mockImplementation(() => Promise.resolve({
-      data: [account],
-    }));
+    accounts.getAccounts.mockImplementation(() =>
+      Promise.resolve({
+        data: [account],
+      })
+    );
     accounts.getAccount.mockImplementation({
       data: account,
     });
@@ -82,9 +86,10 @@ describe('setVotesByLaunchProtocol', () => {
   });
 
   it('Should dispatch voteEdited with an array of valid usernames in query params', async () => {
-    const delegates = Object.values(mockAccounts)
-      .filter(account => account.dpos.delegate.username && account.summary.address);
-    const usernameList = delegates.map(account => account.dpos.delegate.username);
+    const delegates = Object.values(mockAccounts).filter(
+      (account) => account.dpos.delegate.username && account.summary.address
+    );
+    const usernameList = delegates.map((account) => account.dpos.delegate.username);
     const url = `?modal=votingQueue&unvotes=${usernameList.join(',')}`;
     accounts.getAccounts.mockImplementation(() => Promise.resolve({ data: delegates }));
 

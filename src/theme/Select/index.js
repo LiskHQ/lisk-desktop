@@ -5,9 +5,7 @@ import Dropdown from '../Dropdown/dropdown';
 import styles from './select.css';
 import OutsideClickHandler from './OutsideClickHandler';
 
-const Select = ({
-  onChange, options, size, className, placeholder, selected,
-}) => {
+const Select = ({ onChange, options, size, className, placeholder, selected }) => {
   const [isOpen, setIsOpen] = useState(false);
 
   const toggleIsOpen = () => {
@@ -21,7 +19,7 @@ const Select = ({
     setIsOpen(false);
   };
 
-  const { value, label } = options.find(item => item.value === selected);
+  const { value, label } = options.find((item) => item.value === selected);
 
   return (
     <OutsideClickHandler
@@ -32,9 +30,7 @@ const Select = ({
       <label className={`${styles.inputHolder} ${isOpen ? styles.isOpen : ''}`}>
         <Input
           readOnly
-          className={
-            value !== placeholder.value ? styles.selectedInput : null
-          }
+          className={value !== placeholder.value ? styles.selectedInput : null}
           placeholder={placeholder}
           value={label}
           onClick={toggleIsOpen}
@@ -64,13 +60,13 @@ const Select = ({
 };
 
 Select.propTypes = {
-  options: PropTypes.arrayOf(PropTypes.shape({
-    label: PropTypes.string,
-    value: PropTypes.any,
-  })).isRequired,
-  size: PropTypes.oneOf([
-    'l', 'm', 's', 'xs',
-  ]),
+  options: PropTypes.arrayOf(
+    PropTypes.shape({
+      label: PropTypes.string,
+      value: PropTypes.any,
+    })
+  ).isRequired,
+  size: PropTypes.oneOf(['l', 'm', 's', 'xs']),
   onChange: PropTypes.func.isRequired,
   className: PropTypes.string,
 };

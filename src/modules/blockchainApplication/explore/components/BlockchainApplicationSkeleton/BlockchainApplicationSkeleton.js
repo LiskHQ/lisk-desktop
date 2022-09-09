@@ -22,8 +22,9 @@ const BlockchainApplicationSkeletonRow = () => (
 
 const BlockchainApplicationSkeleton = () => (
   <>
-    {[...new Array(5).keys()].map((index) =>
-      <BlockchainApplicationSkeletonRow isLoading key={`skeleton-${index}`} />)}
+    {[...new Array(5).keys()].map((index) => (
+      <BlockchainApplicationSkeletonRow isLoading key={`skeleton-${index}`} />
+    ))}
   </>
 );
 

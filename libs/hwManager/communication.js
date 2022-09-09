@@ -10,7 +10,7 @@ const IPC = window.ipc;
  * executeCommand - Function.
  * Use for send and request data to the HWManager.
  */
-const executeCommand = (action, payload) => (
+const executeCommand = (action, payload) =>
   new Promise((resolve, reject) => {
     // Listening for response
     IPC.once(`${action}.${RESPONSE}`, (event, response) => {
@@ -19,8 +19,7 @@ const executeCommand = (action, payload) => (
     });
     // Requesting data
     IPC.send(`${action}.${REQUEST}`, payload);
-  })
-);
+  });
 
 /**
  * getPublicKey - Function.
@@ -33,7 +32,8 @@ const executeCommand = (action, payload) => (
  */
 const getPublicKey = async (data) => {
   const response = await executeCommand(IPC_MESSAGES.HW_COMMAND, {
-    action: IPC_MESSAGES.GET_PUBLIC_KEY, data,
+    action: IPC_MESSAGES.GET_PUBLIC_KEY,
+    data,
   });
   return response;
 };
@@ -49,7 +49,8 @@ const getPublicKey = async (data) => {
  */
 const getAddress = async (data) => {
   const response = await executeCommand(IPC_MESSAGES.HW_COMMAND, {
-    action: IPC_MESSAGES.GET_ADDRESS, data,
+    action: IPC_MESSAGES.GET_ADDRESS,
+    data,
   });
   return response;
 };
@@ -64,13 +65,10 @@ const getAddress = async (data) => {
  * @param {object} data.transactionBytes -> transaction bytes to be signed
  */
 const signTransaction = async (data) => {
-  const response = await executeCommand(
-    IPC_MESSAGES.HW_COMMAND,
-    {
-      action: IPC_MESSAGES.SIGN_TRANSACTION,
-      data,
-    },
-  );
+  const response = await executeCommand(IPC_MESSAGES.HW_COMMAND, {
+    action: IPC_MESSAGES.SIGN_TRANSACTION,
+    data,
+  });
   return response;
 };
 
@@ -83,13 +81,10 @@ const signTransaction = async (data) => {
  * @param {object} data.message -> Object with all transaction information
  */
 const signMessage = async (data) => {
-  const response = await executeCommand(
-    IPC_MESSAGES.HW_COMMAND,
-    {
-      action: IPC_MESSAGES.SIGN_MSG,
-      data,
-    },
-  );
+  const response = await executeCommand(IPC_MESSAGES.HW_COMMAND, {
+    action: IPC_MESSAGES.SIGN_MSG,
+    data,
+  });
   return response;
 };
 
@@ -99,9 +94,7 @@ const signMessage = async (data) => {
  * @param {object} data -> Object that contain the information about the device and data
  * @param {string} data.id -> Id of the hw device
  */
-const checkIfInsideLiskApp = async data => (
-  executeCommand(IPC_MESSAGES.CHECK_LEDGER, data)
-);
+const checkIfInsideLiskApp = async (data) => executeCommand(IPC_MESSAGES.CHECK_LEDGER, data);
 
 /**
  * subscribeToDeviceConnected - Function.
@@ -121,9 +114,7 @@ const subscribeToDeviceDisconnected = (fn) => {
   IPC.on(IPC_MESSAGES.HW_DISCONNECTED, (event, response) => fn(response));
 };
 
-const getDeviceList = () => (
-  executeCommand(IPC_MESSAGES.GET_CONNECTED_DEVICES_LIST, null)
-);
+const getDeviceList = () => executeCommand(IPC_MESSAGES.GET_CONNECTED_DEVICES_LIST, null);
 
 /**
  * subscribeToDevicesList - Function.

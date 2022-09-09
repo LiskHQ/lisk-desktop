@@ -2,10 +2,7 @@
 import { cryptography } from '@liskhq/lisk-client';
 import { MODULE_COMMANDS_NAME_ID_MAP } from '@transaction/configuration/moduleAssets';
 import { splitModuleAndCommandIds } from '@transaction/utils/moduleAssets';
-import {
-  getAddressFromBase32Address,
-  getBase32AddressFromAddress,
-} from '@wallet/utils/account';
+import { getAddressFromBase32Address, getBase32AddressFromAddress } from '@wallet/utils/account';
 import accounts from '@tests/constants/wallets';
 import { genKey, blsKey, pop } from '@tests/constants/keys';
 import {
@@ -22,7 +19,12 @@ const address = 'lskdxc4ta5j43jp9ro3f8zqbxta9fn6jwzjucw7yt';
 jest.spyOn(cryptography.address, 'getLisk32AddressFromPublicKey').mockReturnValue(address);
 
 const {
-  transfer, voteDelegate, registerMultisignatureGroup, registerDelegate, reclaimLSK, unlockToken,
+  transfer,
+  voteDelegate,
+  registerMultisignatureGroup,
+  registerDelegate,
+  reclaimLSK,
+  unlockToken,
 } = MODULE_COMMANDS_NAME_ID_MAP;
 
 // TODO: All of these tests need to be rewritten to adopt to new transaction schema https://github.com/LiskHQ/lisk-sdk/blob/7e71617d281649a6942434f729a815870aac2394/elements/lisk-transactions/src/schema.ts#L15
@@ -144,7 +146,7 @@ describe.skip('API: LSK Transactions', () => {
         moduleID,
         commandID,
         params: {
-          votes: tx.params.votes.map(item => ({
+          votes: tx.params.votes.map((item) => ({
             amount: BigInt(item.amount),
             delegateAddress: expect.arrayContaining([]),
           })),
@@ -217,7 +219,7 @@ describe.skip('API: LSK Transactions', () => {
         moduleID,
         commandID,
         params: {
-          unlockObjects: tx.params.unlockObjects.map(item => ({
+          unlockObjects: tx.params.unlockObjects.map((item) => ({
             amount: BigInt(item.amount),
             delegateAddress: expect.arrayContaining([]),
           })),
@@ -359,14 +361,12 @@ describe.skip('API: LSK Transactions', () => {
       const [moduleID, commandID] = splitModuleAndCommandIds(unlockToken);
       const unlockObjects = [
         {
-          delegateAddress:
-            getAddressFromBase32Address(accounts.delegate.summary.address),
+          delegateAddress: getAddressFromBase32Address(accounts.delegate.summary.address),
           amount: BigInt('10000000'),
           unvoteHeight: 1000000,
         },
         {
-          delegateAddress:
-            getAddressFromBase32Address(accounts.send_all_wallet.summary.address),
+          delegateAddress: getAddressFromBase32Address(accounts.send_all_wallet.summary.address),
           amount: BigInt('-10000000'),
           unvoteHeight: 1000000,
         },
@@ -384,7 +384,7 @@ describe.skip('API: LSK Transactions', () => {
         moduleCommandID: unlockToken,
         id: '',
         params: {
-          unlockObjects: tx.params.unlockObjects.map(item => ({
+          unlockObjects: tx.params.unlockObjects.map((item) => ({
             amount: String(item.amount),
             delegateAddress: getBase32AddressFromAddress(item.delegateAddress),
             unvoteHeight: item.unvoteHeight,
@@ -398,10 +398,10 @@ describe.skip('API: LSK Transactions', () => {
       const mandatoryKeys = [
         accounts.genesis.summary.publicKey,
         accounts.delegate.summary.publicKey,
-      ].map(key => convertStringToBinary(key));
-      const optionalKeys = [
-        accounts.delegate_candidate.summary.publicKey,
-      ].map(key => convertStringToBinary(key));
+      ].map((key) => convertStringToBinary(key));
+      const optionalKeys = [accounts.delegate_candidate.summary.publicKey].map((key) =>
+        convertStringToBinary(key)
+      );
 
       const tx = {
         ...baseElementsTx,
@@ -420,13 +420,8 @@ describe.skip('API: LSK Transactions', () => {
         id: '',
         params: {
           numberOfSignatures: 2,
-          mandatoryKeys: [
-            accounts.genesis.summary.publicKey,
-            accounts.delegate.summary.publicKey,
-          ],
-          optionalKeys: [
-            accounts.delegate_candidate.summary.publicKey,
-          ],
+          mandatoryKeys: [accounts.genesis.summary.publicKey, accounts.delegate.summary.publicKey],
+          optionalKeys: [accounts.delegate_candidate.summary.publicKey],
         },
       });
     });
@@ -453,7 +448,9 @@ describe.skip('API: LSK Transactions', () => {
   describe('transactionToJSON', () => {
     beforeEach(() => {
       // eslint-disable-next-line no-extend-native
-      BigInt.prototype.toJSON = function () { return `${this.toString()}n`; };
+      BigInt.prototype.toJSON = function () {
+        return `${this.toString()}n`;
+      };
     });
 
     afterEach(() => {
@@ -471,20 +468,19 @@ describe.skip('API: LSK Transactions', () => {
       },
     };
     it('should return the transaction as JSON', () => {
-      expect(JSON.parse(transactionToJSON(transaction)))
-        .toEqual({
-          senderPublicKey: accounts.genesis.summary.publicKey,
-          nonce: '1n',
-          fee: '1000000n',
-          signatures: [],
-          moduleID: 2,
-          commandID: 0,
-          params: {
-            amount: '10000n',
-            recipientAddress: expect.stringContaining('lsk'),
-            data: '',
-          },
-        });
+      expect(JSON.parse(transactionToJSON(transaction))).toEqual({
+        senderPublicKey: accounts.genesis.summary.publicKey,
+        nonce: '1n',
+        fee: '1000000n',
+        signatures: [],
+        moduleID: 2,
+        commandID: 0,
+        params: {
+          amount: '10000n',
+          recipientAddress: expect.stringContaining('lsk'),
+          data: '',
+        },
+      });
     });
   });
 
@@ -496,9 +492,9 @@ describe.skip('API: LSK Transactions', () => {
       const hasSenderSignature = true;
       const signatures = [nonEmpty, nonEmpty, empty, nonEmpty];
       const expectSignatures = [nonEmpty, nonEmpty, empty, empty];
-      expect(
-        removeExcessSignatures(signatures, mandatoryKeysNo, hasSenderSignature),
-      ).toEqual(expectSignatures);
+      expect(removeExcessSignatures(signatures, mandatoryKeysNo, hasSenderSignature)).toEqual(
+        expectSignatures
+      );
     });
   });
 });

@@ -10,13 +10,7 @@ import Icon from '@theme/Icon';
 import Tooltip from '@theme/Tooltip';
 import styles from './selectAccount.css';
 
-const AccountCard = ({
-  account,
-  index,
-  onSaveNameAccounts,
-  onSelectAccount,
-  t,
-}) => {
+const AccountCard = ({ account, index, onSaveNameAccounts, onSelectAccount, t }) => {
   const [inputTitle, setInputTitle] = useState(account.name);
   const [accountOnEditMode, setAccountOnEditMode] = useState(false);
 
@@ -83,10 +77,7 @@ const AccountCard = ({
           <div className={`${styles.accountBalance} row-balance`}>
             <p>{t('Balance:')}</p>
             <p>
-              <TokenAmount
-                val={account.summary?.balance}
-                token={tokenMap.LSK.key}
-              />
+              <TokenAmount val={account.summary?.balance} token={tokenMap.LSK.key} />
             </p>
           </div>
           {account.legacy && (
@@ -102,10 +93,7 @@ const AccountCard = ({
                 <br />
                 <p>{t('Balance after reclaiming:')}</p>
                 <p className={styles.reclaimBalance}>
-                  <TokenAmount
-                    val={account.legacy.balance}
-                    token={tokenMap.LSK.key}
-                  />
+                  <TokenAmount val={account.legacy.balance} token={tokenMap.LSK.key} />
                 </p>
               </>
             </Tooltip>

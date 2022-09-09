@@ -85,7 +85,7 @@ const rawTx = {
 const transaction = { id: 1 };
 
 const props = {
-  t: s => s,
+  t: (s) => s,
   account: accounts.genesis,
   votesSubmitted: jest.fn(),
   nextStep: jest.fn(),
@@ -118,7 +118,8 @@ describe('VotingQueue.Summary', () => {
 
   it('renders properly when only new votes are present', () => {
     const wrapper = mountWithRouter(Summary, {
-      ...props, added,
+      ...props,
+      added,
     });
 
     expect(wrapper).toContainMatchingElements(4, '.vote-item-address');
@@ -126,7 +127,8 @@ describe('VotingQueue.Summary', () => {
 
   it('renders properly when only removed votes are present', () => {
     const wrapper = mountWithRouter(Summary, {
-      ...props, removed,
+      ...props,
+      removed,
     });
 
     expect(wrapper).toContainMatchingElements(4, '.vote-item-address');
@@ -134,7 +136,8 @@ describe('VotingQueue.Summary', () => {
 
   it('renders properly when only edited votes are present', () => {
     const wrapper = mountWithRouter(Summary, {
-      ...props, edited,
+      ...props,
+      edited,
     });
 
     expect(wrapper).toContainMatchingElements(4, '.vote-item-address');
@@ -142,7 +145,10 @@ describe('VotingQueue.Summary', () => {
 
   it('renders properly when a mixture of votes is present', () => {
     const wrapper = mountWithRouter(Summary, {
-      ...props, edited, removed, added,
+      ...props,
+      edited,
+      removed,
+      added,
     });
 
     expect(wrapper).toContainMatchingElements(12, '.vote-item-address');

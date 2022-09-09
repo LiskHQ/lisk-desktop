@@ -7,7 +7,8 @@ const mockState = {
     customDerivationPath: "m/44'/134'/1'",
   },
 };
-const recoveryPhrase = 'target cancel solution recipe vague faint bomb convince pink vendor fresh patrol';
+const recoveryPhrase =
+  'target cancel solution recipe vague faint bomb convince pink vendor fresh patrol';
 const encryptedPassphrase = {
   kdf: 'argon2id',
   kdfparams: {
@@ -22,7 +23,7 @@ const encryptedPassphrase = {
     tag: '2458479edf6aea5c748021ae296e467d',
   },
   ciphertext:
-      '44fdb2b132d353a5c65f04e5e3afdd531f63abc45444ffd4cdbc7dedc45f899bf5b7478947d57319ea8c620e13480def8a518cc05e46bdddc8ef7c8cfc21a3bd',
+    '44fdb2b132d353a5c65f04e5e3afdd531f63abc45444ffd4cdbc7dedc45f899bf5b7478947d57319ea8c620e13480def8a518cc05e46bdddc8ef7c8cfc21a3bd',
 };
 const encryptedAccount = {
   encryptedPassphrase,
@@ -50,7 +51,10 @@ describe('useEncryptAccount', () => {
 
     const { encryptAccount } = useEncryptAccount();
     const account = await encryptAccount({
-      recoveryPhrase, password, name, derivationPath,
+      recoveryPhrase,
+      password,
+      name,
+      derivationPath,
     });
 
     expect(account).toEqual(encryptedAccount);

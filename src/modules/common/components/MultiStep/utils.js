@@ -5,7 +5,7 @@ export const noGroupTitle = 'groups-not-defined-properly';
  * @param {Array} group - Array of group elements.
  */
 export const isActiveGroup = (current, group) =>
-  group.steps.map(step => step.index).includes(current);
+  group.steps.map((step) => step.index).includes(current);
 
 /**
  * @param {Number} current - The index number of the currently active group.
@@ -36,13 +36,12 @@ export const backButtonFn = (current, prevPage, prevStep) => {
  */
 export const groupSteps = (steps) => {
   const allGroupsValid = steps.reduce(
-    (prevGroupsWereValid, step) =>
-      typeof step.props.group === 'string' && prevGroupsWereValid,
-    true,
+    (prevGroupsWereValid, step) => typeof step.props.group === 'string' && prevGroupsWereValid,
+    true
   );
 
   return steps.reduce((grouped, step, index) => {
-    const g = grouped.filter(group => group.title === step.props.group);
+    const g = grouped.filter((group) => group.title === step.props.group);
     if (g.length) g[0].steps.push({ index, component: step });
     else {
       grouped[index] = {
@@ -64,10 +63,9 @@ export const groupSteps = (steps) => {
  * @param {Object} styles - Object of the styles or class names
  * @returns {Object} - Objects with defined key names for React and RN
  */
-export const getStyles = styles =>
+export const getStyles = (styles) =>
   Object.keys(styles).reduce((acc, key) => {
-    acc[key] = typeof document !== 'undefined'
-      ? { className: styles[key] }
-      : { style: styles[key] };
+    acc[key] =
+      typeof document !== 'undefined' ? { className: styles[key] } : { style: styles[key] };
     return acc;
   }, {});

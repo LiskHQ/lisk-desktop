@@ -3,13 +3,11 @@ import { isReactComponent } from 'src/utils/helpers';
 import Illustration from 'src/modules/common/components/illustration';
 import styles from '../box/emptyState.css';
 
-const Empty = ({
-  isListEmpty, isLoading, data, error, className,
-}) => {
+const Empty = ({ isListEmpty, isLoading, data, error, className }) => {
   if (isLoading || !isListEmpty) return null;
   if (isReactComponent(data)) {
     const Element = data;
-    return (<Element />);
+    return <Element />;
   }
   return (
     <div className={`${styles.wrapper} ${className} empty-state`}>

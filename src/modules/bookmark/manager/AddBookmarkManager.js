@@ -9,7 +9,7 @@ import withData from 'src/utils/withData';
 import { selectSearchParamValue } from 'src/utils/searchParams';
 import AddBookmark from '../components/AddBookmark';
 
-const mapStateToProps = state => ({
+const mapStateToProps = (state) => ({
   bookmarks: state.bookmarks,
   token: state.token,
   network: state.network,
@@ -33,5 +33,5 @@ export default compose(
       }),
     },
   }),
-  withTranslation(),
+  withTranslation()
 )(AddBookmark);

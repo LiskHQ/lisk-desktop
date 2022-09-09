@@ -8,7 +8,7 @@ describe('GuideTooltip', () => {
       <GuideTooltip>
         <GuideTooltipItem color="red">test1</GuideTooltipItem>
         <GuideTooltipItem color="blue">test2</GuideTooltipItem>
-      </GuideTooltip>,
+      </GuideTooltip>
     );
     expect(wrapper).toContainExactlyOneMatchingElement('.guideTooltipContentList');
     expect(wrapper).toContainMatchingElement('.guideTooltipContentListItem');

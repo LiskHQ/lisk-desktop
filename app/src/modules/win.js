@@ -5,9 +5,7 @@ import process from './process';
 const win = {
   browser: null,
   eventStack: [],
-  init: ({
-    electron, path, electronLocalshortcut, serverUrl,
-  }) => {
+  init: ({ electron, path, electronLocalshortcut, serverUrl }) => {
     const { width, height } = electron.screen.getPrimaryDisplay().workAreaSize;
     const { BrowserWindow } = electron;
 
@@ -37,13 +35,22 @@ const win = {
     win.browser.loadURL(serverUrl);
   },
 
-  create: ({ // eslint-disable-line max-statements
-    electron, path, electronLocalshortcut, storage, checkForUpdates, serverUrl,
+  create: ({
+    // eslint-disable-line max-statements
+    electron,
+    path,
+    electronLocalshortcut,
+    storage,
+    checkForUpdates,
+    serverUrl,
   }) => {
     const { Menu } = electron;
 
     win.init({
-      electron, path, electronLocalshortcut, serverUrl,
+      electron,
+      path,
+      electronLocalshortcut,
+      serverUrl,
     });
     localeHandler.send({ storage });
 
@@ -97,7 +104,9 @@ const win = {
       sendEventsFromEventStack(); // eslint-disable-line no-use-before-define
     });
 
-    win.browser.on('closed', () => { win.browser = null; });
+    win.browser.on('closed', () => {
+      win.browser = null;
+    });
   },
 
   send: ({ event, value }) => {

@@ -15,9 +15,7 @@ import useUnlockableCalculator from '../../hooks/useUnlockableCalculator';
 import BalanceTable from './BalanceTable';
 import styles from './unlockBalance.css';
 
-const UnlockBalanceForm = ({
-  nextStep,
-}) => {
+const UnlockBalanceForm = ({ nextStep }) => {
   const { t } = useTranslation();
   const activeToken = useSelector(selectActiveToken);
   const currentBlockHeight = useSelector(selectCurrentBlockHeight);
@@ -48,7 +46,7 @@ const UnlockBalanceForm = ({
           <BoxContent className={styles.container}>
             <p>
               {t(
-                'Below are the details of your locked balances and the unlock waiting periods. From here you can submit an unlock transaction when waiting periods are over.',
+                'Below are the details of your locked balances and the unlock waiting periods. From here you can submit an unlock transaction when waiting periods are over.'
               )}
             </p>
             <BalanceTable

@@ -14,32 +14,29 @@ describe('autoUpdater', () => {
   let callbacks;
   let clock;
   const electron = {
-    BrowserWindow: ({
-      width, height, center, webPreferences,
-    }) =>
-      ({
-        width,
-        height,
-        center,
-        webPreferences,
-        loadURL,
-        show,
-        close: () => {
-          close();
-          callbacks.closed();
-        },
+    BrowserWindow: ({ width, height, center, webPreferences }) => ({
+      width,
+      height,
+      center,
+      webPreferences,
+      loadURL,
+      show,
+      close: () => {
+        close();
+        callbacks.closed();
+      },
+      on: (item, callback) => {
+        callbacks[item] = callback;
+      },
+      webContents: {
         on: (item, callback) => {
           callbacks[item] = callback;
         },
-        webContents: {
-          on: (item, callback) => {
-            callbacks[item] = callback;
-          },
-          send: (event, value) => {
-            events.push({ event, value });
-          },
+        send: (event, value) => {
+          events.push({ event, value });
         },
-      }),
+      },
+    }),
     app: {
       getVersion: () => 123,
     },
@@ -60,7 +57,7 @@ describe('autoUpdater', () => {
         downloadUpdate: spy(),
       },
       dialog: {
-        showMessageBox: () => new Promise(resolve => resolve()),
+        showMessageBox: () => new Promise((resolve) => resolve()),
         showErrorBox: spy(),
       },
       win: {
@@ -124,7 +121,10 @@ describe('autoUpdater', () => {
     checkForUpdates({});
 
     callbacks['update-not-available']({ version });
-    expect(dialogSpy).to.have.been.calledWith({ title: 'No updates', message: 'Current version is up-to-date.' });
+    expect(dialogSpy).to.have.been.calledWith({
+      title: 'No updates',
+      message: 'Current version is up-to-date.',
+    });
 
     dialogSpy.resetHistory();
     callbacks['update-not-available']({ version });
@@ -159,7 +159,10 @@ describe('autoUpdater', () => {
   it('should set the progress bar when being in download progress', () => {
     autoUpdater(params);
     callbacks['download-progress']({ transferred: 50, total: 100 });
-    expect(params.win.send).to.have.been.calledWith({ event: 'downloadUpdateProgress', value: { transferred: 50, total: 100 } });
+    expect(params.win.send).to.have.been.calledWith({
+      event: 'downloadUpdateProgress',
+      value: { transferred: 50, total: 100 },
+    });
   });
 
   it('should not fail if browser is not defined when being in download progress', () => {

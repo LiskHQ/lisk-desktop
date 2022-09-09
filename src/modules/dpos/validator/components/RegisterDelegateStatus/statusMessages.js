@@ -2,7 +2,7 @@
 import { statusMessages } from '@transaction/configuration/statusConfig';
 import { txStatusTypes } from '@transaction/configuration/txStatus';
 
-const registerDelegatesMessages = t => ({
+const registerDelegatesMessages = (t) => ({
   ...statusMessages(t),
   [txStatusTypes.broadcastSuccess]: {
     title: t('Delegate registration succeeded'),

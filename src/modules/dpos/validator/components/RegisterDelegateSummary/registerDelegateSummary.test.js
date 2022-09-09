@@ -16,7 +16,7 @@ describe('Delegate Registration Summary', () => {
     account: accounts.genesis,
     prevStep: jest.fn(),
     nextStep: jest.fn(),
-    t: key => key,
+    t: (key) => key,
   };
 
   afterEach(() => {
@@ -40,9 +40,7 @@ describe('Delegate Registration Summary', () => {
   });
 
   it('submit user data when click in confirm button', () => {
-    const wrapper = mountWithRouterAndStore(
-      Summary, props, {}, {},
-    );
+    const wrapper = mountWithRouterAndStore(Summary, props, {}, {});
     expect(props.nextStep).not.toBeCalled();
     wrapper.find('button.confirm-button').simulate('click');
     expect(props.nextStep).toBeCalledWith({

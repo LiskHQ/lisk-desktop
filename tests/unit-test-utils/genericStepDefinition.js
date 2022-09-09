@@ -73,7 +73,10 @@ export default class GenericStepDefinition {
    */
   selectOptionItem(optionIndex, field) {
     const selector = `.${field.replace(/ /g, '-')} ul li`;
-    this.wrapper.find(selector).at(parseInt(optionIndex, 10) - 1).simulate('click');
+    this.wrapper
+      .find(selector)
+      .at(parseInt(optionIndex, 10) - 1)
+      .simulate('click');
   }
 
   submitForm() {

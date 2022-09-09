@@ -2,7 +2,8 @@ const fs = require('fs');
 const glob = require('glob');
 const Parser = require('i18next-scanner').Parser;
 
-function i18nScanner(params) { // eslint-disable-line
+function i18nScanner(params) {
+  // eslint-disable-line
   const parser = new Parser({
     keySeparator: '>',
     nsSeparator: '|',
@@ -29,8 +30,9 @@ function i18nScanner(params) { // eslint-disable-line
     }
   };
 
-  params.files.map(filePattern => glob.sync(filePattern, {}))
-    .reduce(((accumulator, files) => [...accumulator, ...files]), [])
+  params.files
+    .map((filePattern) => glob.sync(filePattern, {}))
+    .reduce((accumulator, files) => [...accumulator, ...files], [])
     .forEach((file) => {
       const content = fs.readFileSync(file, 'utf-8');
       parser.parseFuncFromString(content, { list: params.translationFunctionNames }, customHandler);
@@ -42,7 +44,9 @@ function i18nScanner(params) { // eslint-disable-line
   const outputJSON = `${JSON.stringify(translations, null, 2)}\n`;
   if (outputJSON !== sourceJSON) {
     fs.writeFileSync(params.outputFilePath, outputJSON);
-    process.stdout.write(`i18nScanner: ${count} translation keys parsed and written to '${params.outputFilePath}'\n`);
+    process.stdout.write(
+      `i18nScanner: ${count} translation keys parsed and written to '${params.outputFilePath}'\n`
+    );
   }
 }
 

@@ -19,7 +19,7 @@ describe('DiscreetMode Component', () => {
     addresses: [],
   };
 
-  const setup = data => shallow(<DiscreetMode {...data} />);
+  const setup = (data) => shallow(<DiscreetMode {...data} />);
 
   beforeEach(() => {
     wrapper = setup(props);
@@ -36,7 +36,10 @@ describe('DiscreetMode Component', () => {
       location: {
         pathname: '/explorer/transactions',
       },
-      addresses: ['lskehj8am9afxdz8arztqajy52acnoubkzvmo9cjy', 'lskdxc4ta5j43jp9ro3f8zqbxta9fn6jwzjucw7yt'],
+      addresses: [
+        'lskehj8am9afxdz8arztqajy52acnoubkzvmo9cjy',
+        'lskdxc4ta5j43jp9ro3f8zqbxta9fn6jwzjucw7yt',
+      ],
     };
     wrapper = setup(newProps);
     expect(wrapper).toContainMatchingElements(1, 'div');
@@ -63,7 +66,10 @@ describe('DiscreetMode Component', () => {
       location: {
         pathname: '/explorer/transactions',
       },
-      addresses: ['lskehj8am9afxdz8arztqajy52acnoubkzvmo9cjy', 'lskdxc4ta5j43jp9ro3f8zqbxta9fn6jwzjucw7yt'],
+      addresses: [
+        'lskehj8am9afxdz8arztqajy52acnoubkzvmo9cjy',
+        'lskdxc4ta5j43jp9ro3f8zqbxta9fn6jwzjucw7yt',
+      ],
       shouldEvaluateForOtherAccounts: true,
     };
     wrapper = setup(newProps);

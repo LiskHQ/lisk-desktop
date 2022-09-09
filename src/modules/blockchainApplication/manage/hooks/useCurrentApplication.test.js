@@ -39,7 +39,10 @@ describe('useCurrentApplication hook', () => {
     act(() => {
       setCurrentApplication(mockApplications[0]);
     });
-    expect(client.create).toHaveBeenCalledWith({ rpc: expect.stringMatching('ws'), rest: expect.stringMatching('http') });
+    expect(client.create).toHaveBeenCalledWith({
+      rpc: expect.stringMatching('ws'),
+      rest: expect.stringMatching('http'),
+    });
     expect(mockDispatch).toHaveBeenCalledTimes(2);
     expect(mockDispatch).toHaveBeenCalledWith(expectedAction);
   });

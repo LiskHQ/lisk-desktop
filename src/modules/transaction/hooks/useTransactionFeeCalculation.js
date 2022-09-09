@@ -16,9 +16,13 @@ import { actionTypes, reducer, getInitialState } from '../store/transactionPrior
  * @returns {object}
  */
 const useTransactionFeeCalculation = ({
-  token, wallet, selectedPriority, transaction, priorityOptions,
+  token,
+  wallet,
+  selectedPriority,
+  transaction,
+  priorityOptions,
 }) => {
-  const network = useSelector(state => state.network);
+  const network = useSelector((state) => state.network);
   const [state, dispatch] = useReducer(reducer, wallet, getInitialState);
 
   const calculateTransactionFees = async (params) => {
@@ -52,11 +56,7 @@ const useTransactionFeeCalculation = ({
       selectedPriority,
       numberOfSignatures: getNumberOfSignatures(wallet, transaction),
     });
-  }, [
-    transaction.params,
-    selectedPriority.selectedIndex,
-    selectedPriority.value,
-  ]);
+  }, [transaction.params, selectedPriority.selectedIndex, selectedPriority.value]);
 
   return state;
 };

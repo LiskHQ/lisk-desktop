@@ -3,9 +3,7 @@ import { validateAddress } from 'src/utils/validators';
 const blocksFiltersMap = {
   addressList: {
     key: 'addressList',
-    test: (addressList) =>
-      !addressList.some((address) =>
-        validateAddress(address)),
+    test: (addressList) => !addressList.some((address) => validateAddress(address)),
   },
   timestamp: { key: 'timestamp', test: (str) => /^(\d+)?:(\d+)?$/.test(str) },
   generatorAddress: {
@@ -14,9 +12,7 @@ const blocksFiltersMap = {
   },
   generatorUsername: {
     key: 'generatorUsername',
-    test: (username) =>
-      typeof username === 'string'
-      && validateAddress(username) === 1,
+    test: (username) => typeof username === 'string' && validateAddress(username) === 1,
   },
   height: { key: 'height', test: (num) => !Number.isNaN(parseInt(num, 10)) },
   limit: { key: 'limit', test: (num) => typeof num === 'number' },

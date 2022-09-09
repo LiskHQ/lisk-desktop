@@ -4,9 +4,7 @@ import TokenAmount from '@token/fungible/components/tokenAmount';
 import styles from './send.css';
 import chainLogo from '../../../../../setup/react/assets/images/LISK.png';
 
-const Send = ({
-  transaction = {}, t, transactionData,
-}) => (
+const Send = ({ transaction = {}, t, transactionData }) => (
   <>
     <section className={styles.msignRow}>
       <div className={styles.col}>
@@ -32,10 +30,7 @@ const Send = ({
       <div className={styles.col}>
         <label>{t('Amount')}</label>
         <span className={`${styles.valueText} amount-summary`}>
-          <TokenAmount
-            val={transaction.params.amount}
-            token={transactionData.token.symbol}
-          />
+          <TokenAmount val={transaction.params.amount} token={transactionData.token.symbol} />
         </span>
       </div>
     </section>
@@ -47,17 +42,13 @@ const Send = ({
           <span className={`${styles.information} recipient-confirm`}>
             <b>{transaction.params.recipient.title}</b>
           </span>
-          <span className={styles.secondText}>
-            {transaction.params.recipient.address}
-          </span>
+          <span className={styles.secondText}>{transaction.params.recipient.address}</span>
         </div>
       </label>
     </section>
     <section>
       <label>{t('Message')}</label>
-      <span className={`${styles.valueText} message-value`}>
-        {transaction.params.data || '-'}
-      </span>
+      <span className={`${styles.valueText} message-value`}>{transaction.params.data || '-'}</span>
     </section>
   </>
 );

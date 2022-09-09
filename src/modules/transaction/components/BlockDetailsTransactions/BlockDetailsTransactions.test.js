@@ -9,10 +9,7 @@ const mockSetApplication = jest.fn();
 jest.mock('@blockchainApplication/manage/hooks/useCurrentApplication');
 jest.mock('../../hooks/queries');
 
-useCurrentApplication.mockReturnValue([
-  mockManagedApplications[1],
-  mockSetApplication,
-]);
+useCurrentApplication.mockReturnValue([mockManagedApplications[1], mockSetApplication]);
 
 describe('BlockDetails page', () => {
   let wrapper;

@@ -10,7 +10,7 @@ import actionTypes from './actionTypes';
 export const bookmarksRetrieved = () => (dispatch) => {
   getFromStorage('bookmarks', emptyBookmarks, (data) => {
     const bookmarks = {
-      LSK: data.LSK.map(wallet => ({
+      LSK: data.LSK.map((wallet) => ({
         ...wallet,
         disabled: validateAddress(wallet.address) === 1,
       })),

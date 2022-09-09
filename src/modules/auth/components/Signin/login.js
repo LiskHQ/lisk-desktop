@@ -4,10 +4,7 @@ import i18next from 'i18next';
 import grid from 'flexboxgrid/dist/flexboxgrid.css';
 import { Link } from 'react-router-dom';
 import routes from 'src/routes/routes';
-import {
-  parseSearchParams,
-  stringifySearchParams,
-} from 'src/utils/searchParams';
+import { parseSearchParams, stringifySearchParams } from 'src/utils/searchParams';
 import { getNetworksList } from '@network/utils/getNetwork';
 import Piwik from 'src/utils/piwik';
 import { PrimaryButton } from 'src/theme/buttons';
@@ -21,9 +18,7 @@ import styles from './login.css';
 const RegisterTitle = ({ t }) => (
   <div className={`${styles.titleHolder} ${grid['col-xs-10']}`}>
     <h1>{t('Add account')}</h1>
-    <p>
-      {t('Enter your secret recovery phrase to manage your account.')}
-    </p>
+    <p>{t('Enter your secret recovery phrase to manage your account.')}</p>
   </div>
 );
 
@@ -32,9 +27,7 @@ const RegisterTitle = ({ t }) => (
  * @param {object} history - The history object from react-router
  */
 const redirectToReferrer = (history) => {
-  const { referrer, ...restParams } = parseSearchParams(
-    history.location.search,
-  );
+  const { referrer, ...restParams } = parseSearchParams(history.location.search);
   const route = referrer
     ? `${referrer}${stringifySearchParams(restParams)}`
     : routes.dashboard.path;
@@ -42,9 +35,7 @@ const redirectToReferrer = (history) => {
   history.replace(route);
 };
 
-const Login = ({
-  t, settings, network, history, account,
-}) => {
+const Login = ({ t, settings, network, history, account }) => {
   const [passphrase, setPass] = useState({ value: '', isValid: false });
   const canHWSignIn = true;
 

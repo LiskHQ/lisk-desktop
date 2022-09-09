@@ -20,7 +20,7 @@ describe('Delegate Profile', () => {
       loadData: jest.fn(),
     },
     address: delegate.address,
-    t: v => v,
+    t: (v) => v,
   };
   reactRedux.useSelector = jest.fn().mockImplementation(() => '2');
 
@@ -31,7 +31,9 @@ describe('Delegate Profile', () => {
   it.skip('Should render active delegate with passed props', () => {
     // expect(wrapper.find('.rank')).toIncludeText(props.delegate.data.rank);
     expect(wrapper.find('.productivity')).toIncludeText(`${props.delegate.data.productivity}%`);
-    expect(wrapper.find('.blocks')).toIncludeText(`${props.delegate.data.producedBlocks} (${props.delegate.data.missedBlocks})`);
+    expect(wrapper.find('.blocks')).toIncludeText(
+      `${props.delegate.data.producedBlocks} (${props.delegate.data.missedBlocks})`
+    );
     expect(wrapper.find('.forged')).toIncludeText('1,405 LSK');
   });
 

@@ -69,7 +69,9 @@ describe('TxComposer', () => {
     };
     const wrapper = mountWithProps(TxComposer, newProps, state);
     expect(wrapper.find('TransactionPriority')).toExist();
-    expect(wrapper.find('Feedback').text()).toEqual('The minimum required balance for this action is {{minRequiredBalance}} {{token}}');
+    expect(wrapper.find('Feedback').text()).toEqual(
+      'The minimum required balance for this action is {{minRequiredBalance}} {{token}}'
+    );
     expect(wrapper.find('.confirm-btn').at(0).props().disabled).toEqual(true);
   });
 });

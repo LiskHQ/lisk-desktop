@@ -8,15 +8,9 @@ export function useAccounts() {
   const dispatch = useDispatch();
   const accountsObject = useSelector(selectAccounts);
   const setAccount = useCallback((account) => dispatch(addAccount(account)), []);
-  const deleteAccountByAddress = useCallback(
-    (address) => dispatch(deleteAccount(address)),
-    [],
-  );
+  const deleteAccountByAddress = useCallback((address) => dispatch(deleteAccount(address)), []);
   const getAccountByAddress = (address) => accountsObject[address];
-  const accounts = useMemo(
-    () => Object.values(accountsObject),
-    [accountsObject],
-  );
+  const accounts = useMemo(() => Object.values(accountsObject), [accountsObject]);
 
   return {
     accounts,

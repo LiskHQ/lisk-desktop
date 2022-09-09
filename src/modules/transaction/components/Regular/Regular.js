@@ -34,10 +34,7 @@ const Regular = ({
   transactionBroadcasted,
 }) => {
   useEffect(() => {
-    if (
-      !isEmpty(transactions.signedTransaction)
-      && !transactions.txSignatureError
-    ) {
+    if (!isEmpty(transactions.signedTransaction) && !transactions.txSignatureError) {
       transactionBroadcasted(transactions.signedTransaction);
     }
 
@@ -51,9 +48,7 @@ const Regular = ({
   return (
     <div className={`${styles.wrapper} ${className}`}>
       {typeof illustration === 'string' ? (
-        <Illustration
-          name={getIllustration(status.code, illustration, account.hwInfo)}
-        />
+        <Illustration name={getIllustration(status.code, illustration, account.hwInfo)} />
       ) : (
         React.cloneElement(illustration)
       )}

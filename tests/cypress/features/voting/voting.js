@@ -14,4 +14,3 @@ Then(/^I should see unlocking balance (.*?)$/, function (amount) {
 Then(/^I should see available balance (.*?)$/, function (amount) {
   cy.get(`${ss.availableBalance}`).eq(0).contains(amount);
 });
-

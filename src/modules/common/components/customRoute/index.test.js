@@ -22,9 +22,7 @@ jest.mock('@account/hooks', () => ({
   useAccounts: jest.fn(() => ({
     accounts: mockSavedAccounts,
   })),
-  useCurrentAccount: jest.fn(() => (
-    [mockSavedAccounts[0], mockSetAccount]
-  )),
+  useCurrentAccount: jest.fn(() => [mockSavedAccounts[0], mockSetAccount]),
 }));
 
 describe('CustomRoute', () => {
@@ -49,7 +47,7 @@ describe('CustomRoute', () => {
   };
 
   beforeEach(() => {
-    useSelector.mockImplementation(callback => callback(mockAppState));
+    useSelector.mockImplementation((callback) => callback(mockAppState));
   });
 
   afterEach(() => {
@@ -57,27 +55,23 @@ describe('CustomRoute', () => {
   });
 
   const props = {
-    t: key => key,
+    t: (key) => key,
     history: { location: { pathname: '' } },
     path: '/private',
     component: Private,
     forbiddenTokens: [],
   };
 
-  const isAuth = ({ isPrivate }) => (
+  const isAuth = ({ isPrivate }) =>
     mount(
       <MemoryRouter initialEntries={['/private/test']}>
         <div>
           <Route path={routes.login.path} component={Public} />
           <Route path={routes.reclaim.path} component={ReclaimBalance} />
-          <CustomRoute
-            {...props}
-            isPrivate={isPrivate}
-          />
+          <CustomRoute {...props} isPrivate={isPrivate} />
         </div>
-      </MemoryRouter>,
-    )
-  );
+      </MemoryRouter>
+    );
   it('should render Component if user is authenticated', () => {
     const wrapper = isAuth({ isPrivate: true });
     expect(wrapper.find(Private).exists()).toBe(true);

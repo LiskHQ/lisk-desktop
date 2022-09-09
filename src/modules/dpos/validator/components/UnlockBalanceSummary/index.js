@@ -5,7 +5,7 @@ import { balanceUnlocked } from '@dpos/validator/store/actions/voting';
 import { selectActiveTokenAccount } from 'src/redux/selectors';
 import Summary from './UnlockBalanceSummary';
 
-const mapStateToProps = state => ({
+const mapStateToProps = (state) => ({
   wallet: selectActiveTokenAccount(state),
   network: state.network,
 });
@@ -14,6 +14,4 @@ const mapDispatchToProps = {
   balanceUnlocked,
 };
 
-export default connect(
-  mapStateToProps, mapDispatchToProps,
-)(withTranslation()(Summary));
+export default connect(mapStateToProps, mapDispatchToProps)(withTranslation()(Summary));

@@ -18,7 +18,7 @@ jest.spyOn(React, 'useContext').mockImplementation(() => ({
 describe('Transaction Votes', () => {
   let wrapper;
   const props = {
-    t: v => v,
+    t: (v) => v,
     votedDelegates: {
       data: {},
       loadData: jest.fn(),

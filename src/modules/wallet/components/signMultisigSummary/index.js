@@ -20,7 +20,7 @@ const apis = {
   },
 };
 
-const mapStateToProps = state => ({
+const mapStateToProps = (state) => ({
   account: {
     ...state.wallet.info.LSK,
     passphrase: state.passphrase,
@@ -39,5 +39,5 @@ export default compose(
   connect(mapStateToProps, dispatchToProps),
   withRouter,
   withData(apis),
-  withTranslation(),
+  withTranslation()
 )(Summary);

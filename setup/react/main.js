@@ -15,7 +15,9 @@ import i18n from 'src/utils/i18n/i18n';
 import App from './app';
 
 // eslint-disable-next-line no-extend-native
-BigInt.prototype.toJSON = function () { return `${this.toString()}n`; };
+BigInt.prototype.toJSON = function () {
+  return `${this.toString()}n`;
+};
 
 ipcLocale.init(i18n);
 updateApp.init();
@@ -33,7 +35,7 @@ if (!PRODUCTION) {
 const queryClient = new QueryClient();
 const rootElement = document.getElementById('app');
 
-const renderWithRouter = Component => (
+const renderWithRouter = (Component) => (
   <QueryClientProvider client={queryClient}>
     <Provider store={store}>
       <PersistGate loading={null} persistor={persistedStore}>

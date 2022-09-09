@@ -10,10 +10,12 @@ import useDelegateKey from '../../hooks/useDelegateKey';
 import InputLabel from './InputLabel';
 import styles from './form.css';
 
-const isFormValid = (name, generatorPublicKey, blsPublicKey, proofOfPossession) => (
-  !name.error && !name.loading && !generatorPublicKey.error
-  && !blsPublicKey.error && !proofOfPossession.error
-);
+const isFormValid = (name, generatorPublicKey, blsPublicKey, proofOfPossession) =>
+  !name.error &&
+  !name.loading &&
+  !generatorPublicKey.error &&
+  !blsPublicKey.error &&
+  !proofOfPossession.error;
 
 const getTooltips = (field, t) => {
   if (field === 'name') {
@@ -22,26 +24,23 @@ const getTooltips = (field, t) => {
   return t('Run lisk keys:generate and copy the value of {{field}}', { field });
 };
 
-const RegisterDelegateForm = ({
-  nextStep,
-  prevState,
-}) => {
+const RegisterDelegateForm = ({ nextStep, prevState }) => {
   const { t } = useTranslation();
   const [name, setName] = useDelegateName(prevState?.rawTx?.params.username);
   const [generatorPublicKey, setGenKey] = useDelegateKey(
     'generatorPublicKey',
     t('Please enter a valid generator key value'),
-    prevState?.rawTx?.params.generatorPublicKey,
+    prevState?.rawTx?.params.generatorPublicKey
   );
   const [blsPublicKey, setBlsKey] = useDelegateKey(
     'blsPublicKey',
     t('Please enter a valid bls key value'),
-    prevState?.rawTx?.params.blsPublicKey,
+    prevState?.rawTx?.params.blsPublicKey
   );
   const [proofOfPossession, setPop] = useDelegateKey(
     'proofOfPossession',
     t('Please enter a valid proof of possession value'),
-    prevState?.rawTx?.params.proofOfPossession,
+    prevState?.rawTx?.params.proofOfPossession
   );
 
   const onConfirm = (rawTx, trnxData, selectedPriority, fees) => {
@@ -73,19 +72,13 @@ const RegisterDelegateForm = ({
 
   return (
     <section className={styles.wrapper}>
-      <TxComposer
-        onConfirm={onConfirm}
-        transaction={transaction}
-      >
+      <TxComposer onConfirm={onConfirm} transaction={transaction}>
         <>
           <BoxHeader className={styles.header}>
             <h2>{t('Register delegate')}</h2>
           </BoxHeader>
           <BoxContent className={`${styles.container} select-name-container`}>
-            <InputLabel
-              title={t('Your name')}
-              tooltip={getTooltips('name', t)}
-            />
+            <InputLabel title={t('Your name')} tooltip={getTooltips('name', t)} />
             <div className={styles.inputContainer}>
               <Input
                 data-name="delegate-username"
@@ -102,10 +95,7 @@ const RegisterDelegateForm = ({
               />
             </div>
 
-            <InputLabel
-              title={t('Generator key')}
-              tooltip={getTooltips('generatorPublicKey', t)}
-            />
+            <InputLabel title={t('Generator key')} tooltip={getTooltips('generatorPublicKey', t)} />
             <div className={styles.inputContainer}>
               <Input
                 data-name="generator-publicKey"
@@ -121,10 +111,7 @@ const RegisterDelegateForm = ({
               />
             </div>
 
-            <InputLabel
-              title={t('BLS Key')}
-              tooltip={getTooltips('blsPublicKey', t)}
-            />
+            <InputLabel title={t('BLS Key')} tooltip={getTooltips('blsPublicKey', t)} />
             <div className={styles.inputContainer}>
               <Input
                 data-name="bls-key"

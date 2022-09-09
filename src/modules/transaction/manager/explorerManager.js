@@ -28,21 +28,21 @@ export default compose(
       }),
       defaultData: { data: [], meta: {} },
       autoload: true,
-      transformResponse: (response, oldData, urlSearchParams) => (
+      transformResponse: (response, oldData, urlSearchParams) =>
         urlSearchParams.offset
           ? { data: [...oldData.data, ...response.data], meta: response.meta }
-          : response
-      ),
+          : response,
     },
     votedDelegates: {
       apiUtil: ({ networks }, params) => getDelegates({ network: networks.LSK, params }),
       defaultData: [],
-      transformResponse: (response) => response.data.reduce((acc, delegate) => {
-        acc[delegate.address] = delegate;
-        return acc;
-      }, {}),
+      transformResponse: (response) =>
+        response.data.reduce((acc, delegate) => {
+          acc[delegate.address] = delegate;
+          return acc;
+        }, {}),
     },
   }),
   withFilters('transactions', defaultFilters, defaultSort),
-  withTranslation(),
+  withTranslation()
 )(TransactionsList);

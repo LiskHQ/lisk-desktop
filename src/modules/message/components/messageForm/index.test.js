@@ -11,11 +11,11 @@ describe('Sign Message Input Component', () => {
       goBack: jest.fn(),
     },
     nextStep: jest.fn(),
-    t: v => v,
+    t: (v) => v,
   };
 
   const event = { target: { name: 'message', value: 'Any new value' } };
-  const setup = data => mount(<SignMessageInput {...data} />);
+  const setup = (data) => mount(<SignMessageInput {...data} />);
 
   it('Should render with empty textarea and update when typed', () => {
     const wrapper = setup(props);

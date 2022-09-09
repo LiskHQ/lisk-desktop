@@ -7,9 +7,7 @@ import BoxHeader from 'src/theme/box/header';
 import BoxContent from 'src/theme/box/content';
 import BoxTabs from 'src/theme/tabs';
 import { DoughnutChart, BarChart } from 'src/modules/common/components/charts';
-import GuideTooltip, {
-  GuideTooltipItem,
-} from 'src/modules/common/components/charts/guideTooltip';
+import GuideTooltip, { GuideTooltipItem } from 'src/modules/common/components/charts/guideTooltip';
 import { useBlocks } from '../../hooks/queries/useBlocks';
 import styles from './blocksOverview.css';
 
@@ -50,7 +48,7 @@ const BlocksOverview = () => {
             else acc[0]++;
             return acc;
           },
-          [0, 0],
+          [0, 0]
         ),
       },
     ],
@@ -78,21 +76,14 @@ const BlocksOverview = () => {
     <Box className={styles.wrapper}>
       <BoxHeader className="box-header">
         <h2>{t('Blocks overview')}</h2>
-        <BoxTabs
-          tabs={tabs}
-          active={activeTab}
-          onClick={changeTab}
-          className="box-tabs"
-        />
+        <BoxTabs tabs={tabs} active={activeTab} onClick={changeTab} className="box-tabs" />
       </BoxHeader>
       <BoxContent>
         <div className={`${grid.row} ${styles.row}`}>
           <div
             className={`${grid['col-sm-8']} ${grid['col-xs-7']} ${styles.chartBox} ${styles.barChartContainer}`}
           >
-            <h2 className={styles.chartTitle}>
-              {t('Transactions per block')}
-            </h2>
+            <h2 className={styles.chartTitle}>{t('Transactions per block')}</h2>
             <div className={styles.chart}>
               <BarChart
                 data={{
@@ -100,9 +91,7 @@ const BlocksOverview = () => {
                   datasets: [
                     {
                       label: t('block'),
-                      data: blocks?.data?.map(
-                        (block) => block.numberOfTransactions,
-                      ),
+                      data: blocks?.data?.map((block) => block.numberOfTransactions),
                       backgroundColor: chartStyles.ultramarineBlue,
                     },
                   ],
@@ -167,8 +156,7 @@ const BlocksOverview = () => {
                       // istanbul ignore next
                       label(tooltipItem, data) {
                         return t('{{transactions}} transactions', {
-                          transactions:
-                            data.datasets[0].data[tooltipItem.index],
+                          transactions: data.datasets[0].data[tooltipItem.index],
                         });
                       },
                     },
@@ -202,14 +190,8 @@ const BlocksOverview = () => {
             </div>
             <div className="hideOnLargeViewPort">
               <GuideTooltip>
-                <GuideTooltipItem
-                  color={chartStyles.mystic}
-                  label={t('Empty')}
-                />
-                <GuideTooltipItem
-                  color={chartStyles.ultramarineBlue}
-                  label={t('Not empty')}
-                />
+                <GuideTooltipItem color={chartStyles.mystic} label={t('Empty')} />
+                <GuideTooltipItem color={chartStyles.ultramarineBlue} label={t('Not empty')} />
               </GuideTooltip>
             </div>
           </div>

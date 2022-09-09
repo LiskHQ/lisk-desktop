@@ -4,7 +4,7 @@ import Transactions from './TransactionResultList';
 
 describe('Transactions', () => {
   const props = {
-    t: v => v,
+    t: (v) => v,
     transactions: [
       {
         params: {

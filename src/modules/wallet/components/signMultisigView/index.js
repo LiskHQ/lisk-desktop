@@ -16,10 +16,7 @@ const SignMultisigView = ({ history }) => {
 
   return (
     <Dialog hasClose>
-      <MultiStep
-        key="sign-multisignature-transaction"
-        finalCallback={closeModal}
-      >
+      <MultiStep key="sign-multisignature-transaction" finalCallback={closeModal}>
         <Form />
         <Summary />
         <TxSignatureCollector />

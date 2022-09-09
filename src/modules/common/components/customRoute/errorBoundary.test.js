@@ -21,17 +21,15 @@ describe('ErrorBoundary:', () => {
         <ErrorBoundary {...props}>
           <ProblematicChild />
         </ErrorBoundary>,
-        { storeState: {} },
+        { storeState: {} }
       );
 
       expect(wrapper.find('.error-boundary-container').exists()).toBeTruthy();
       expect(wrapper.find('h2')).toHaveText('An error occurred.');
       expect(wrapper.find(PrimaryButton)).toHaveText('Reload the page');
-      expect(wrapper.find(TertiaryButton)).toHaveText(
-        'Report the error via email',
-      );
+      expect(wrapper.find(TertiaryButton)).toHaveText('Report the error via email');
       expect(wrapper.find('a').at(0).props().href).toEqual(
-        'mailto:desktopdev@lisk.com?&subject=User Reported Error - Lisk - &body=Error: Error thrown from problem child:%0A%0A in ProblematicChild%0A in ErrorBoundary%0A in Unknown (created by WrapperComponent)%0A in WrapperComponent',
+        'mailto:desktopdev@lisk.com?&subject=User Reported Error - Lisk - &body=Error: Error thrown from problem child:%0A%0A in ProblematicChild%0A in ErrorBoundary%0A in Unknown (created by WrapperComponent)%0A in WrapperComponent'
       );
     });
 
@@ -40,7 +38,7 @@ describe('ErrorBoundary:', () => {
         <ErrorBoundary {...props}>
           <NonProblematicChild />
         </ErrorBoundary>,
-        { storeState: {} },
+        { storeState: {} }
       );
 
       expect(wrapper.find('.error-boundary-container').exists()).toBeFalsy();

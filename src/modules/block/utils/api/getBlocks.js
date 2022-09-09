@@ -20,9 +20,7 @@ import blocksFiltersMap from '@block/map/blocksFiltersMap';
  * @returns {Promise} http call
  */
 
-const getBlocks = ({
-  params = {}, network, baseUrl,
-}) => {
+const getBlocks = ({ params = {}, network, baseUrl }) => {
   if (typeof params.dateFrom === 'string') {
     params.dateFrom = transformStringDateToUnixTimestamp(params.dateFrom);
   }

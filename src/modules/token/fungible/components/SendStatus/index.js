@@ -7,7 +7,7 @@ import { selectActiveTokenAccount, selectActiveToken } from 'src/redux/selectors
 import withData from 'src/utils/withData';
 import Status from './Status';
 
-const mapStateToProps = state => ({
+const mapStateToProps = (state) => ({
   account: selectActiveTokenAccount(state),
   bookmarks: state.bookmarks,
   transactions: state.transactions,
@@ -21,8 +21,4 @@ const apis = {
   },
 };
 
-export default compose(
-  connect(mapStateToProps),
-  withData(apis),
-  withTranslation(),
-)(Status);
+export default compose(connect(mapStateToProps), withData(apis), withTranslation())(Status);

@@ -5,9 +5,13 @@ describe('localJSONStorage', () => {
   const storage = {};
 
   beforeEach(() => {
-    window.localStorage.getItem = key => (storage[key]);
-    window.localStorage.setItem = (key, item) => { storage[key] = item; };
-    window.localStorage.removeItem = (key) => { storage[key] = undefined; };
+    window.localStorage.getItem = (key) => storage[key];
+    window.localStorage.setItem = (key, item) => {
+      storage[key] = item;
+    };
+    window.localStorage.removeItem = (key) => {
+      storage[key] = undefined;
+    };
   });
 
   const item = { test: 'test' };

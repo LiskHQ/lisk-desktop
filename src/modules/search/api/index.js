@@ -60,14 +60,14 @@ const getTransactionOrBlock = async ({ network, params, baseUrl }) => {
     console.log(`There is no account with the given public key: ${params.query}`);
   }
 
-  return ({
+  return {
     data: {
       transactions,
       blocks,
       addresses,
     },
     meta: transactions.length || blocks.length || addresses.length,
-  });
+  };
 };
 
 /**
@@ -88,7 +88,7 @@ export const search = ({ network, params, baseUrl }) => {
       network,
       params: { address: params.query },
       baseUrl,
-    }).then(res => ({ data: { addresses: [res] }, meta: res.meta }));
+    }).then((res) => ({ data: { addresses: [res] }, meta: res.meta }));
   }
   if (regex.transactionId.test(params.query)) {
     return getTransactionOrBlock({ network, params, baseUrl });
@@ -98,11 +98,11 @@ export const search = ({ network, params, baseUrl }) => {
       network,
       params: { height: params.query },
       baseUrl,
-    }).then(res => ({ data: { blocks: res.data }, meta: res.meta }));
+    }).then((res) => ({ data: { blocks: res.data }, meta: res.meta }));
   }
   return getDelegates({
     network,
     params: { search: params.query, limit: 4 },
     baseUrl,
-  }).then(res => ({ data: { delegates: res.data }, meta: res.meta }));
+  }).then((res) => ({ data: { delegates: res.data }, meta: res.meta }));
 };

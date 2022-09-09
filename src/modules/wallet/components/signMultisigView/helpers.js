@@ -12,7 +12,7 @@ const getNumbersOfSignaturesRequired = ({ keys, isGroupRegistration }) => {
 };
 
 const getNonEmptySignatures = (signatures) =>
-  signatures.filter(signature => signature !== null && signature.length);
+  signatures.filter((signature) => signature !== null && signature.length);
 
 export const findNonEmptySignatureIndices = (signatures) => {
   const indices = [];
@@ -29,21 +29,25 @@ export const findNonEmptySignatureIndices = (signatures) => {
 // eslint-disable-next-line max-statements
 export const getTransactionSignatureStatus = (senderAccount, transaction) => {
   const moduleCommandID = transaction.moduleCommandID || joinModuleAndCommandIds(transaction);
-  const isGroupRegistration = moduleCommandID
-    === MODULE_COMMANDS_NAME_ID_MAP.registerMultisignatureGroup;
+  const isGroupRegistration =
+    moduleCommandID === MODULE_COMMANDS_NAME_ID_MAP.registerMultisignatureGroup;
   const keys = getKeys({
-    senderAccount, transaction, isGroupRegistration,
+    senderAccount,
+    transaction,
+    isGroupRegistration,
   });
 
   const required = getNumbersOfSignaturesRequired({
-    keys, transaction, isGroupRegistration,
+    keys,
+    transaction,
+    isGroupRegistration,
   });
 
   const alreadySigned = getNonEmptySignatures(transaction.signatures).length;
   const registrationExtra = isGroupRegistration ? 1 : 0;
   const mandatorySigs = keys.mandatoryKeys.length + registrationExtra;
   const nonEmptyMandatorySigs = getNonEmptySignatures(
-    transaction.signatures.slice(0, mandatorySigs),
+    transaction.signatures.slice(0, mandatorySigs)
   ).length;
 
   if (required > alreadySigned) {
@@ -60,8 +64,8 @@ export const getTransactionSignatureStatus = (senderAccount, transaction) => {
 
 // eslint-disable-next-line max-statements
 export const showSignButton = (senderAccount, account, transaction) => {
-  const isGroupRegistration = transaction.moduleCommandID
-    === MODULE_COMMANDS_NAME_ID_MAP.registerMultisignatureGroup;
+  const isGroupRegistration =
+    transaction.moduleCommandID === MODULE_COMMANDS_NAME_ID_MAP.registerMultisignatureGroup;
 
   let mandatoryKeys = [];
   let optionalKeys = [];
@@ -74,6 +78,8 @@ export const showSignButton = (senderAccount, account, transaction) => {
     optionalKeys = senderAccount.keys.optionalKeys;
   }
 
-  return mandatoryKeys.includes(account.summary.publicKey)
-    || optionalKeys.includes(account.summary.publicKey);
+  return (
+    mandatoryKeys.includes(account.summary.publicKey) ||
+    optionalKeys.includes(account.summary.publicKey)
+  );
 };

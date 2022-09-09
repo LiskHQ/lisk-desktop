@@ -1,9 +1,14 @@
 import { getState } from '@fixtures/transactions';
 import http from 'src/utils/api/http';
-import { getApplication, getApplications, getFilteredOffChainApplications } from './applicationExplore';
+import {
+  getApplication,
+  getApplications,
+  getFilteredOffChainApplications,
+} from './applicationExplore';
 
 jest.mock('src/utils/api/http', () =>
-  jest.fn().mockImplementation(() => Promise.resolve({ data: [{ type: 0 }] })));
+  jest.fn().mockImplementation(() => Promise.resolve({ data: [{ type: 0 }] }))
+);
 
 const baseUrl = 'http://custom-base-url.com/';
 const sampleId = 'sample_id';

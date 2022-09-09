@@ -30,8 +30,10 @@ const FeesViewer = ({
 }) => {
   const { t } = useTranslation();
   const [showEditIcon, setShowEditIcon] = useState(false);
-  const composedFeeList = useMemo(() =>
-    Object.keys(fees).map(feeKey => ({ title: feeKey, value: fees[feeKey] })), [fees]);
+  const composedFeeList = useMemo(
+    () => Object.keys(fees).map((feeKey) => ({ title: feeKey, value: fees[feeKey] })),
+    [fees]
+  );
 
   const onInputFocus = (e) => {
     e.preventDefault();
@@ -87,7 +89,6 @@ const FeesViewer = ({
 
   return (
     <div className={styles.feesListWrapper}>
-
       {composedFeeList.map(({ title, value }) => (
         <div className={styles.feeRow} key={title}>
           <span>{title}</span>

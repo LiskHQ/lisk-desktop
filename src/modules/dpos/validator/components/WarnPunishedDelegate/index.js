@@ -32,7 +32,7 @@ const Warning = ({ vote, ...props }) => {
   const { daysLeft, punishmentStartDate } = getPunishmentDetails(
     props.block.data.timestamp,
     props.pomHeight,
-    props.currentHeight,
+    props.currentHeight
   );
 
   if (vote) {
@@ -49,11 +49,7 @@ const Warning = ({ vote, ...props }) => {
 };
 
 export const DelegateProfileWarning = ({ daysLeft, punishmentStartDate, ...props }) => (
-  <WarnPunishedDelegate
-    daysLeft={daysLeft}
-    punishmentStartDate={punishmentStartDate}
-    {...props}
-  />
+  <WarnPunishedDelegate daysLeft={daysLeft} punishmentStartDate={punishmentStartDate} {...props} />
 );
 
 export const EditVoteWarning = ({ daysLeft, ...props }) => (
@@ -66,7 +62,7 @@ const apis = {
     getApiParams: (_, ownProps) => ({
       height: ownProps.pomHeight.start,
     }),
-    transformResponse: response => (response.data && response.data[0]),
+    transformResponse: (response) => response.data && response.data[0],
     autoLoad: false,
   },
 };
@@ -75,5 +71,5 @@ export default compose(
   withRouter,
   connect(mapStateToProps),
   withData(apis),
-  withTranslation(),
+  withTranslation()
 )(Warning);

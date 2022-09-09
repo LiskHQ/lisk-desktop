@@ -11,7 +11,7 @@ describe('Sign Message Component', () => {
       location: { search: '?modal=signMessage' },
       goBack: jest.fn(),
     },
-    t: v => v,
+    t: (v) => v,
   };
 
   it('Should render properly', () => {

@@ -27,7 +27,10 @@ describe('Calendar YearView', () => {
   });
 
   it('Should set selected date when clicking on a day', () => {
-    wrapper.find('.monthItem').filter('[value="Feb"]').simulate('click', { target: { value: 'Feb' } });
+    wrapper
+      .find('.monthItem')
+      .filter('[value="Feb"]')
+      .simulate('click', { target: { value: 'Feb' } });
     expect(props.setCurrentView).toBeCalledWith('month');
     expect(props.setShowingDate).toBeCalled();
   });

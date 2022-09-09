@@ -1,18 +1,20 @@
 import { expect } from 'chai';
 
-import {
-  LEDGER,
-} from './constants';
+import { LEDGER } from './constants';
 import * as ledger from './index';
 
 jest.mock('@liskhq/lisk-client');
 jest.mock('@hirishh/lisk-ledger.js', () => ({
   LedgerAccount: () => ({
     derivePath: () => Buffer.from(''),
-    account: () => ({ publicKey: Buffer.from('0fe9a3f1a21b5530f27f87a414b549e79a940bf24fdf2b2f05e7f22aeeecc86a') }),
+    account: () => ({
+      publicKey: Buffer.from('0fe9a3f1a21b5530f27f87a414b549e79a940bf24fdf2b2f05e7f22aeeecc86a'),
+    }),
   }),
   LiskLedger: () => ({
-    getPubKey: () => ({ publicKey: Buffer.from('0fe9a3f1a21b5530f27f87a414b549e79a940bf24fdf2b2f05e7f22aeeecc86a') }),
+    getPubKey: () => ({
+      publicKey: Buffer.from('0fe9a3f1a21b5530f27f87a414b549e79a940bf24fdf2b2f05e7f22aeeecc86a'),
+    }),
     signTX: () => Buffer.from('68656c6c6f'),
     signMSG: () => Buffer.from('hello'),
   }),

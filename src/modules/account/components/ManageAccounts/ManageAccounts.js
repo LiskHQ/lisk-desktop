@@ -12,11 +12,7 @@ import { useAccounts, useCurrentAccount } from '../../hooks';
 import styles from './ManageAccounts.css';
 import AccountRow from '../AccountRow';
 
-const ManageAccountsContent = ({
-  isRemoveAvailable,
-  title: customTitle,
-  history,
-}) => {
+const ManageAccountsContent = ({ isRemoveAvailable, title: customTitle, history }) => {
   const { t } = useTranslation();
   const { accounts } = useAccounts();
   const [, setAccount] = useCurrentAccount();
@@ -40,19 +36,17 @@ const ManageAccountsContent = ({
         <h1 data-testid="manage-title">{showRemove ? t('Choose account') : title}</h1>
       </div>
       <Box className={styles.accountListWrapper}>
-        {
-          accounts.map((account) => (
-            <AccountRow
-              key={account.metadata.address}
-              account={account}
-              onSelect={onSelectAccount}
-              showRemove={showRemove}
-              onRemove={removeAccount}
-            />
-          ))
-        }
+        {accounts.map((account) => (
+          <AccountRow
+            key={account.metadata.address}
+            account={account}
+            onSelect={onSelectAccount}
+            showRemove={showRemove}
+            onRemove={removeAccount}
+          />
+        ))}
       </Box>
-      { showRemove ? (
+      {showRemove ? (
         <OutlineButton
           className={`${styles.button} ${styles.addAccountBtn}`}
           onClick={() => setShowRemove(false)}

@@ -21,9 +21,8 @@ const RegisterDelegateStatus = ({ transactions, account, t }) => {
   );
 };
 
-const areEqual = (prev, next) => (
-  !next.account.dpos.delegate
-  || prev.account.dpos.delegate.username === next.account.dpos.delegate.username
-);
+const areEqual = (prev, next) =>
+  !next.account.dpos.delegate ||
+  prev.account.dpos.delegate.username === next.account.dpos.delegate.username;
 
 export default React.memo(RegisterDelegateStatus, areEqual);

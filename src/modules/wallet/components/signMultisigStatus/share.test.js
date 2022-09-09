@@ -56,7 +56,7 @@ describe('Sign Multisignature Tx Status component', () => {
       transactions: {
         txBroadcastError: null,
         txSignatureError: null,
-        signedTransaction: { },
+        signedTransaction: {},
       },
     };
 
@@ -75,7 +75,7 @@ describe('Sign Multisignature Tx Status component', () => {
       transactions: {
         txBroadcastError: { message: 'error:test' },
         txSignatureError: null,
-        signedTransaction: { },
+        signedTransaction: {},
       },
     };
 
@@ -133,7 +133,8 @@ describe('Sign Multisignature Tx Status component', () => {
       illustration: 'signMultisignature',
       status: { code: 'MULTISIG_SIGNATURE_SUCCESS' },
       title: 'The transaction is now fully signed',
-      message: 'Now you can send it to the blockchain. You may also copy or download it, if you wish to send the transaction using another device later.',
+      message:
+        'Now you can send it to the blockchain. You may also copy or download it, if you wish to send the transaction using another device later.',
       className: 'content',
     });
   });

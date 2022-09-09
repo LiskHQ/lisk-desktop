@@ -1,9 +1,6 @@
 /* istanbul ignore file */
 import { VOTES_RECEIVED } from 'src/const/queries';
-import {
-  LIMIT as limit,
-  API_VERSION,
-} from 'src/const/config';
+import { LIMIT as limit, API_VERSION } from 'src/const/config';
 import { useCustomInfiniteQuery } from 'src/modules/common/hooks';
 
 /**
@@ -21,7 +18,7 @@ import { useCustomInfiniteQuery } from 'src/modules/common/hooks';
  * @returns the query object
  */
 // eslint-disable-next-line import/prefer-default-export
-export const useReceivedVotes = ({ config: customConfig = {}, options } = { }) => {
+export const useReceivedVotes = ({ config: customConfig = {}, options } = {}) => {
   const config = {
     url: `/api/${API_VERSION}/dpos/votes/received`,
     method: 'get',
@@ -31,17 +28,18 @@ export const useReceivedVotes = ({ config: customConfig = {}, options } = { }) =
   };
   const customOptions = {
     ...options,
-    select: (data) => data.pages.reduce((prevPages, page) => {
-      const newData = page?.data || {};
-      const newVotes = page?.data.votes || [];
-      return {
-        ...page,
-        data: {
-          ...newData,
-          votes: prevPages.data ? [...prevPages.data.votes, ...newVotes] : newVotes,
-        },
-      };
-    }),
+    select: (data) =>
+      data.pages.reduce((prevPages, page) => {
+        const newData = page?.data || {};
+        const newVotes = page?.data.votes || [];
+        return {
+          ...page,
+          data: {
+            ...newData,
+            votes: prevPages.data ? [...prevPages.data.votes, ...newVotes] : newVotes,
+          },
+        };
+      }),
   };
 
   return useCustomInfiniteQuery({

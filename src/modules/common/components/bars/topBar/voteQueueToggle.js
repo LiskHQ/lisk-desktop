@@ -6,14 +6,12 @@ import DialogLink from 'src/theme/dialog/link';
 import Icon from 'src/theme/Icon';
 import styles from 'src/modules/common/components/bars/topBar/topBar.css';
 
-const VoteQueueToggle = ({
-  t, noOfVotes, disabled,
-}) => (
+const VoteQueueToggle = ({ t, noOfVotes, disabled }) => (
   <Tooltip
     className={styles.tooltipWrapper}
     size="maxContent"
     position="bottom"
-    content={(
+    content={
       <DialogLink
         component="votingQueue"
         className={`${styles.toggle} voting-queue-toggle ${
@@ -21,11 +19,9 @@ const VoteQueueToggle = ({
         }`}
       >
         <Icon name="votingQueueInactive" />
-        {noOfVotes !== 0 && (
-          <span className={styles.votingQueueVoteCount}>{noOfVotes}</span>
-        )}
+        {noOfVotes !== 0 && <span className={styles.votingQueueVoteCount}>{noOfVotes}</span>}
       </DialogLink>
-    )}
+    }
   >
     <p>{t('Voting queue')}</p>
   </Tooltip>

@@ -12,13 +12,13 @@ const apis = {
     apiUtil: (network, params) => getVotes({ network, params }),
     defaultData: [],
     autoload: false,
-    transformResponse: response => response.data?.votes ?? [],
+    transformResponse: (response) => response.data?.votes ?? [],
   },
   accounts: {
     apiUtil: (network, params) => getAccounts({ network, params }),
     autoload: false,
     defaultData: {},
-    transformResponse: response =>
+    transformResponse: (response) =>
       response.data.reduce((dict, account) => {
         dict[account.summary.address] = account;
         return dict;
@@ -26,13 +26,9 @@ const apis = {
   },
 };
 
-const mapStateToProps = state => ({
+const mapStateToProps = (state) => ({
   sentVotes: state.voting,
   isDelegate: state.wallet?.info?.LSK?.summary.isDelegate,
 });
 
-export default compose(
-  connect(mapStateToProps),
-  withData(apis),
-  withTranslation(),
-)(Votes);
+export default compose(connect(mapStateToProps), withData(apis), withTranslation())(Votes);

@@ -1,6 +1,4 @@
-import {
-  accountDataUpdated, transactionsRetrieved,
-} from 'src/redux/actions';
+import { accountDataUpdated, transactionsRetrieved } from 'src/redux/actions';
 
 import commonActionTypes from 'src/modules/common/store/actionTypes';
 import blockActionTypes from '@block/store/actionTypes';
@@ -120,9 +118,11 @@ const defaultState = {
   network,
   wallet,
   transactions: {
-    pending: [{
-      id: 12498250891724098,
-    }],
+    pending: [
+      {
+        id: 12498250891724098,
+      },
+    ],
     confirmed: [],
     wallet: {
       summary: {
@@ -140,7 +140,7 @@ describe('Account middleware', () => {
   const next = jest.fn();
   let store;
 
-  window.Notification = () => { };
+  window.Notification = () => {};
   const windowNotificationSpy = jest.spyOn(window, 'Notification');
 
   beforeEach(() => {
@@ -192,7 +192,8 @@ describe('Account middleware', () => {
       await middleware(store)(next)(newBlockCreated);
       // Assert
       expect(transactionApi.getTransactions).toHaveBeenCalledWith({
-        network: expect.anything(), params: expect.anything(),
+        network: expect.anything(),
+        params: expect.anything(),
       });
       expect(accountDataUpdated).toHaveBeenCalled();
       expect(transactionsRetrieved).toHaveBeenCalledWith({
@@ -217,14 +218,9 @@ describe('Account middleware', () => {
 
     it.skip('should show Notification on incoming transaction', () => {
       middleware(store)(next)(newBlockCreated);
-      expect(windowNotificationSpy).nthCalledWith(
-        1,
-        '10 LSK Received',
-        {
-          body:
-            'Your account just received 10 LSK with message Message',
-        },
-      );
+      expect(windowNotificationSpy).nthCalledWith(1, '10 LSK Received', {
+        body: 'Your account just received 10 LSK with message Message',
+      });
     });
   });
 

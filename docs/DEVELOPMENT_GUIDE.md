@@ -3,7 +3,6 @@
 Please review the different sections of our guidelines to ensure your contribution meets our standards.
 This is a live document, please expect updates and unfinished content.
 
-
 ## Table Of Contents
 
 1. [Code of Conduct](#code-of-conduct)

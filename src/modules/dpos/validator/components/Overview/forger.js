@@ -9,10 +9,7 @@ import styles from './overview.css';
 const Forger = ({ forger }) => (
   <div className={`${styles.forger} forger-item`}>
     <Link to={`${routes.explorer.path}?address=${forger.address}`}>
-      <WalletVisual
-        address={forger.address}
-        className={styles.walletVisual}
-      />
+      <WalletVisual address={forger.address} className={styles.walletVisual} />
       <span>{forger.username}</span>
     </Link>
   </div>

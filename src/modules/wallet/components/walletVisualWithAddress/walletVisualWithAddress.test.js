@@ -8,10 +8,12 @@ describe('WalletVisualWithAddress component', () => {
     transactionSubject: 'senderId',
     address: '283470127032187L',
     bookmarks: {
-      LSK: [{
-        title: 'BM',
-        address: '283470127032187L',
-      }],
+      LSK: [
+        {
+          title: 'BM',
+          address: '283470127032187L',
+        },
+      ],
     },
   };
 

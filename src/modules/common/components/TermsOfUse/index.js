@@ -4,7 +4,7 @@ import { withTranslation } from 'react-i18next';
 import { settingsUpdated } from 'src/redux/actions';
 import TermsOfUse from './termsOfUse';
 
-const mapStateToProps = state => ({
+const mapStateToProps = (state) => ({
   settings: state.settings,
 });
 
@@ -12,7 +12,4 @@ const mapDispatchToProps = {
   settingsUpdated,
 };
 
-export default connect(
-  mapStateToProps,
-  mapDispatchToProps,
-)(withTranslation()(TermsOfUse));
+export default connect(mapStateToProps, mapDispatchToProps)(withTranslation()(TermsOfUse));

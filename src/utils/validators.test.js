@@ -32,7 +32,7 @@ describe('Validate Public Key', () => {
 
 describe('Validate Amount Format', () => {
   const errors = {
-    ZERO: i18n.t('Amount can\'t be zero.'),
+    ZERO: i18n.t("Amount can't be zero."),
     INVALID: i18n.t('Provide a correct amount of {{token}}', { token: 'LSK' }),
     FLOATING_POINT: i18n.t('Maximum floating point is 8.'),
   };

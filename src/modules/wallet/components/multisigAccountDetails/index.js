@@ -42,26 +42,20 @@ const MultisigAccountDetails = ({ t, wallet, history }) => {
             address: extractAddressFromPublicKey(publicKey),
             publicKey,
             mandatory: true,
-          })),
+          }))
         ),
-    [numberOfSignatures, optionalKeys, mandatoryKeys],
+    [numberOfSignatures, optionalKeys, mandatoryKeys]
   );
 
   useEffect(() => {
     if (!isHost) {
-      const address = selectSearchParamValue(
-        history.location.search,
-        'address',
-      );
+      const address = selectSearchParamValue(history.location.search, 'address');
       wallet.loadData({ address });
     }
   }, [network]);
 
   return (
-    <Dialog
-      hasClose
-      className={`${grid.row} ${grid['center-xs']} ${styles.container}`}
-    >
+    <Dialog hasClose className={`${grid.row} ${grid['center-xs']} ${styles.container}`}>
       <Box isLoading={false} className={styles.wrapper}>
         <BoxHeader>
           <h1>{t('Multisignature account details')}</h1>
@@ -69,9 +63,7 @@ const MultisigAccountDetails = ({ t, wallet, history }) => {
         <BoxContent className={styles.mainContent}>
           <BoxInfoText>
             <span>
-              {t(
-                'This is a multisignature account that is controlled by a group of accounts.',
-              )}
+              {t('This is a multisignature account that is controlled by a group of accounts.')}
             </span>
             <span>
               <br />
@@ -79,7 +71,7 @@ const MultisigAccountDetails = ({ t, wallet, history }) => {
             <span>
               {t(
                 'This account requires {{numberOfSignatures}} signatures to create a valid transaction.',
-                { numberOfSignatures },
+                { numberOfSignatures }
               )}
             </span>
           </BoxInfoText>
@@ -90,7 +82,7 @@ const MultisigAccountDetails = ({ t, wallet, history }) => {
               <Tooltip position="top right" indent>
                 <span>
                   {t(
-                    'To provide a required signature, use the "Sign multisignature" tool in the sidebar."',
+                    'To provide a required signature, use the "Sign multisignature" tool in the sidebar."'
                   )}
                 </span>
               </Tooltip>

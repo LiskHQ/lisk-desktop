@@ -17,18 +17,23 @@ import { splitModuleAndCommandIds, joinModuleAndCommandIds } from './moduleAsset
 import { signTransactionByHW } from './hwManager';
 
 const {
-  transfer, voteDelegate, registerDelegate, unlockToken, reclaimLSK, registerMultisignatureGroup,
+  transfer,
+  voteDelegate,
+  registerDelegate,
+  unlockToken,
+  reclaimLSK,
+  registerMultisignatureGroup,
 } = MODULE_COMMANDS_NAME_ID_MAP;
 
 const EMPTY_BUFFER = Buffer.from('');
-export const convertStringToBinary = value => Buffer.from(value, 'hex');
-export const convertBinaryToString = value => {
+export const convertStringToBinary = (value) => Buffer.from(value, 'hex');
+export const convertBinaryToString = (value) => {
   if (value instanceof Uint8Array) {
     return Buffer.from(value).toString('hex');
   }
   return value.toString('hex');
 };
-const convertBigIntToString = value => {
+const convertBigIntToString = (value) => {
   if (typeof value === 'bigint') {
     return String(value);
   }
@@ -62,7 +67,7 @@ const getDesktopTxAsset = (elementsParams, moduleCommandID) => {
 
     case voteDelegate: {
       return {
-        votes: elementsParams.votes.map(vote => ({
+        votes: elementsParams.votes.map((vote) => ({
           amount: convertBigIntToString(vote.amount),
           delegateAddress: getBase32AddressFromAddress(vote.delegateAddress),
         })),
@@ -77,7 +82,7 @@ const getDesktopTxAsset = (elementsParams, moduleCommandID) => {
 
     case unlockToken: {
       return {
-        unlockObjects: elementsParams.unlockObjects.map(unlockObject => ({
+        unlockObjects: elementsParams.unlockObjects.map((unlockObject) => ({
           delegateAddress: getBase32AddressFromAddress(unlockObject.delegateAddress),
           amount: convertBigIntToString(unlockObject.amount),
           unvoteHeight: unlockObject.unvoteHeight,
@@ -102,7 +107,8 @@ const getElementsTxParams = (desktopParams, moduleCommandID) => {
   switch (moduleCommandID) {
     case transfer: {
       const binaryAddress = desktopParams.recipient.address
-        ? getAddressFromBase32Address(desktopParams.recipient.address) : EMPTY_BUFFER;
+        ? getAddressFromBase32Address(desktopParams.recipient.address)
+        : EMPTY_BUFFER;
 
       return {
         recipientAddress: binaryAddress,
@@ -121,7 +127,7 @@ const getElementsTxParams = (desktopParams, moduleCommandID) => {
     }
 
     case voteDelegate: {
-      const votes = desktopParams.votes.map(vote => ({
+      const votes = desktopParams.votes.map((vote) => ({
         amount: BigInt(vote.amount),
         delegateAddress: getAddressFromBase32Address(vote.delegateAddress),
       }));
@@ -130,7 +136,7 @@ const getElementsTxParams = (desktopParams, moduleCommandID) => {
 
     case unlockToken: {
       return {
-        unlockObjects: desktopParams.unlockObjects.map(unlockObject => ({
+        unlockObjects: desktopParams.unlockObjects.map((unlockObject) => ({
           amount: BigInt(unlockObject.amount),
           delegateAddress: getAddressFromBase32Address(unlockObject.delegateAddress),
           unvoteHeight: unlockObject.unvoteHeight,
@@ -167,7 +173,7 @@ const getElementsParamsFromJSON = (JSONParams, moduleCommandID) => {
       };
 
     case voteDelegate: {
-      const votes = JSONParams.votes.map(vote => ({
+      const votes = JSONParams.votes.map((vote) => ({
         amount: BigInt(convertBigIntToString(vote.amount)),
         delegateAddress: convertStringToBinary(vote.delegateAddress),
       }));
@@ -176,7 +182,7 @@ const getElementsParamsFromJSON = (JSONParams, moduleCommandID) => {
 
     case unlockToken: {
       return {
-        unlockObjects: JSONParams.unlockObjects.map(unlockObject => ({
+        unlockObjects: JSONParams.unlockObjects.map((unlockObject) => ({
           amount: BigInt(convertBigIntToString(unlockObject.amount)),
           delegateAddress: convertStringToBinary(unlockObject.delegateAddress),
           unvoteHeight: unlockObject.unvoteHeight,
@@ -186,7 +192,7 @@ const getElementsParamsFromJSON = (JSONParams, moduleCommandID) => {
 
     case reclaimLSK: {
       return {
-        amount: BigInt((convertBigIntToString(JSONParams.amount))),
+        amount: BigInt(convertBigIntToString(JSONParams.amount)),
       };
     }
 
@@ -219,7 +225,14 @@ const getElementsParamsFromJSON = (JSONParams, moduleCommandID) => {
  * @returns the transformed transaction
  */
 const elementTxToDesktopTx = ({
-  moduleID, commandID, id, params, nonce, fee, senderPublicKey, signatures,
+  moduleID,
+  commandID,
+  id,
+  params,
+  nonce,
+  fee,
+  senderPublicKey,
+  signatures,
 }) => {
   const moduleCommandID = joinModuleAndCommandIds({ moduleID, commandID });
   const senderAddress = extractAddressFromPublicKey(senderPublicKey);
@@ -248,9 +261,7 @@ const elementTxToDesktopTx = ({
  */
 const desktopTxToElementsTx = (tx, moduleCommandID) => {
   const [moduleID, commandID] = splitModuleAndCommandIds(moduleCommandID);
-  const {
-    sender, nonce, signatures = [], fee = 0, params,
-  } = tx;
+  const { sender, nonce, signatures = [], fee = 0, params } = tx;
 
   const transaction = {
     moduleID,
@@ -280,13 +291,14 @@ const convertTxJSONToBinary = (tx) => {
   return transaction;
 };
 
-const isBufferArray = (arr) => arr.every(element => {
-  if (element instanceof Uint8Array) {
-    return Buffer.isBuffer(Buffer.from(element));
-  }
+const isBufferArray = (arr) =>
+  arr.every((element) => {
+    if (element instanceof Uint8Array) {
+      return Buffer.isBuffer(Buffer.from(element));
+    }
 
-  return Buffer.isBuffer(element);
-});
+    return Buffer.isBuffer(element);
+  });
 
 const convertBuffersToHex = (value) => {
   let result = value;
@@ -305,7 +317,7 @@ const convertObjectToHex = (data) => {
   for (const key in data) {
     const value = data[key];
     if (key === 'votes' || key === 'unlockObjects') {
-      obj[key] = value.map(item => convertObjectToHex(item));
+      obj[key] = value.map((item) => convertObjectToHex(item));
     } else if (typeof value === 'object' && !Buffer.isBuffer(value) && !Array.isArray(value)) {
       obj[key] = convertObjectToHex(value);
     } else {
@@ -320,8 +332,7 @@ const transactionToJSON = (transaction) => {
   return JSON.stringify(obj);
 };
 
-const containsTransactionType = (txs = [], type) =>
-  txs.some(tx => tx.moduleCommandID === type);
+const containsTransactionType = (txs = [], type) => txs.some((tx) => tx.moduleCommandID === type);
 
 /**
  * Adapts transaction filter params to match transactions API method
@@ -329,43 +340,48 @@ const containsTransactionType = (txs = [], type) =>
  * @param {Object} params - Params received from withFilters HOC
  * @returns {Object} - Parameters consumable by transaction API method
  */
-const normalizeTransactionParams = params => Object.keys(params)
-  // eslint-disable-next-line complexity
-  .reduce((acc, item) => {
-    switch (item) {
-      case 'dateFrom':
-        if (params[item]) {
-          if (!acc.timestamp) acc.timestamp = ':';
-          acc.timestamp = acc.timestamp
-            .replace(/(\d+)?:/, `${transformStringDateToUnixTimestamp(params[item])}:`);
-        }
-        break;
-      case 'dateTo':
-        if (params[item]) {
-          if (!acc.timestamp) acc.timestamp = ':';
-          // We add 86400 so the range is inclusive
-          acc.timestamp = acc.timestamp
-            .replace(/:(\d+)?/, `:${transformStringDateToUnixTimestamp(params[item]) + 86400}`);
-        }
-        break;
-      case 'amountFrom':
-        if (params[item]) {
-          if (!acc.amount) acc.amount = ':';
-          acc.amount = acc.amount.replace(/(\d+)?:/, `${toRawLsk(params[item])}:`);
-        }
-        break;
-      case 'amountTo':
-        if (params[item]) {
-          if (!acc.amount) acc.amount = ':';
-          acc.amount = acc.amount.replace(/:(\d+)?/, `:${toRawLsk(params[item])}`);
-        }
-        break;
-      default:
-        acc[item] = params[item];
-    }
+const normalizeTransactionParams = (params) =>
+  Object.keys(params)
+    // eslint-disable-next-line complexity
+    .reduce((acc, item) => {
+      switch (item) {
+        case 'dateFrom':
+          if (params[item]) {
+            if (!acc.timestamp) acc.timestamp = ':';
+            acc.timestamp = acc.timestamp.replace(
+              /(\d+)?:/,
+              `${transformStringDateToUnixTimestamp(params[item])}:`
+            );
+          }
+          break;
+        case 'dateTo':
+          if (params[item]) {
+            if (!acc.timestamp) acc.timestamp = ':';
+            // We add 86400 so the range is inclusive
+            acc.timestamp = acc.timestamp.replace(
+              /:(\d+)?/,
+              `:${transformStringDateToUnixTimestamp(params[item]) + 86400}`
+            );
+          }
+          break;
+        case 'amountFrom':
+          if (params[item]) {
+            if (!acc.amount) acc.amount = ':';
+            acc.amount = acc.amount.replace(/(\d+)?:/, `${toRawLsk(params[item])}:`);
+          }
+          break;
+        case 'amountTo':
+          if (params[item]) {
+            if (!acc.amount) acc.amount = ':';
+            acc.amount = acc.amount.replace(/:(\d+)?/, `:${toRawLsk(params[item])}`);
+          }
+          break;
+        default:
+          acc[item] = params[item];
+      }
 
-    return acc;
-  }, {});
+      return acc;
+    }, {});
 
 /**
  * Gets the amount of a given transaction
@@ -379,12 +395,13 @@ const getTxAmount = ({ moduleCommandID, params }) => {
   }
 
   if (moduleCommandID === unlockToken) {
-    return params.unlockObjects.reduce((sum, unlockObject) =>
-      sum + parseInt(unlockObject.amount, 10), 0);
+    return params.unlockObjects.reduce(
+      (sum, unlockObject) => sum + parseInt(unlockObject.amount, 10),
+      0
+    );
   }
   if (moduleCommandID === voteDelegate) {
-    return params.votes.reduce((sum, vote) =>
-      sum + Number(vote.amount), 0);
+    return params.votes.reduce((sum, vote) => sum + Number(vote.amount), 0);
   }
 
   return undefined;
@@ -446,8 +463,14 @@ export const computeTransactionId = ({ transaction, network }) => {
 };
 
 const signMultisigUsingPrivateKey = (
-  schema, transaction, networkIdentifier, keys, privateKey,
-  isMultiSignatureRegistration, publicKey, rawTransaction,
+  schema,
+  transaction,
+  networkIdentifier,
+  keys,
+  privateKey,
+  isMultiSignatureRegistration,
+  publicKey,
+  rawTransaction
 ) => {
   /**
    * Use Lisk Element to Sign with Private Key
@@ -461,7 +484,7 @@ const signMultisigUsingPrivateKey = (
       mandatoryKeys: keys.mandatoryKeys.map(convertStringToBinary),
     },
     schema,
-    isMultiSignatureRegistration,
+    isMultiSignatureRegistration
   );
 
   /**
@@ -476,10 +499,7 @@ const signMultisigUsingPrivateKey = (
   /**
    * Check if the tx is multisigReg
    */
-  const members = [
-    ...transactionKeys.mandatoryKeys.sort(),
-    ...transactionKeys.optionalKeys.sort(),
-  ];
+  const members = [...transactionKeys.mandatoryKeys.sort(), ...transactionKeys.optionalKeys.sort()];
   const senderIndex = members.indexOf(publicKey);
   const isSender = rawTransaction.senderPublicKey === publicKey;
 
@@ -500,24 +520,26 @@ const signUsingPrivateKey = (schema, transaction, networkIdentifier, privateKey)
     transaction,
     networkIdentifier,
     Buffer.from(privateKey, 'hex'),
-    schema,
+    schema
   );
   return res;
 };
 
 // eslint-disable-next-line max-statements
 const signUsingHW = async (
-  schema, transaction, wallet, networkIdentifier, network, keys, rawTransaction,
-  isMultiSignatureRegistration,
+  schema,
+  transaction,
+  wallet,
+  networkIdentifier,
+  network,
+  keys,
+  rawTransaction,
+  isMultiSignatureRegistration
 ) => {
   const signingBytes = transactions.getSigningBytes(transaction, schema);
-  const [error, signedTransaction] = await to(signTransactionByHW(
-    wallet,
-    networkIdentifier,
-    transaction,
-    signingBytes,
-    keys,
-  ));
+  const [error, signedTransaction] = await to(
+    signTransactionByHW(wallet, networkIdentifier, transaction, signingBytes, keys)
+  );
   if (error) {
     throw error;
   }
@@ -527,10 +549,7 @@ const signUsingHW = async (
     optionalKeys: rawTransaction.optionalKeys ?? [],
   };
 
-  const members = [
-    ...transactionKeys.mandatoryKeys.sort(),
-    ...transactionKeys.optionalKeys.sort(),
-  ];
+  const members = [...transactionKeys.mandatoryKeys.sort(), ...transactionKeys.optionalKeys.sort()];
   const senderIndex = members.indexOf(wallet.summary.publicKey);
   const isSender = rawTransaction.senderPublicKey === wallet.summary.publicKey;
 
@@ -548,9 +567,18 @@ const signUsingHW = async (
 };
 
 export const sign = async (
-  wallet, schema, transaction, network, networkIdentifier,
-  isMultisignature, isMultiSignatureRegistration, keys, publicKey,
-  moduleCommandID, rawTransaction, privateKey,
+  wallet,
+  schema,
+  transaction,
+  network,
+  networkIdentifier,
+  isMultisignature,
+  isMultiSignatureRegistration,
+  keys,
+  publicKey,
+  moduleCommandID,
+  rawTransaction,
+  privateKey
 ) => {
   if (isMultiSignatureRegistration) {
     keys.optionalKeys = transaction.params.optionalKeys;
@@ -559,15 +587,27 @@ export const sign = async (
   // @todo rawTransaction is changed
   if (!isEmpty(wallet.hwInfo)) {
     const signedTx = await signUsingHW(
-      schema, transaction, wallet, networkIdentifier, network, keys, rawTransaction,
-      isMultiSignatureRegistration,
+      schema,
+      transaction,
+      wallet,
+      networkIdentifier,
+      network,
+      keys,
+      rawTransaction,
+      isMultiSignatureRegistration
     );
     return signedTx;
   }
   if (isMultisignature || isMultiSignatureRegistration) {
     return signMultisigUsingPrivateKey(
-      schema, transaction, networkIdentifier, keys, privateKey,
-      isMultiSignatureRegistration, publicKey, rawTransaction,
+      schema,
+      transaction,
+      networkIdentifier,
+      keys,
+      privateKey,
+      isMultiSignatureRegistration,
+      publicKey,
+      rawTransaction
     );
   }
 
@@ -594,7 +634,7 @@ const signMultisigTransaction = async (
   txStatus,
   network,
   privateKey,
-  publicKey,
+  publicKey
 ) => {
   /**
    * Define keys.
@@ -605,11 +645,13 @@ const signMultisigTransaction = async (
   const networkIdentifier = Buffer.from(network.networks.LSK.networkIdentifier, 'hex');
 
   const { mandatoryKeys, optionalKeys } = getKeys({
-    senderAccount: senderAccount.data, transaction, isGroupRegistration,
+    senderAccount: senderAccount.data,
+    transaction,
+    isGroupRegistration,
   });
   const keys = {
-    mandatoryKeys: mandatoryKeys.map(key => Buffer.from(key, 'hex')),
-    optionalKeys: optionalKeys.map(key => Buffer.from(key, 'hex')),
+    mandatoryKeys: mandatoryKeys.map((key) => Buffer.from(key, 'hex')),
+    optionalKeys: optionalKeys.map((key) => Buffer.from(key, 'hex')),
   };
 
   /**
@@ -622,15 +664,26 @@ const signMultisigTransaction = async (
    */
   if (txStatus === signatureCollectionStatus.occupiedByOptionals) {
     transactionObject.signatures = removeExcessSignatures(
-      transactionObject.signatures, keys.mandatoryKeys.length, isGroupRegistration,
+      transactionObject.signatures,
+      keys.mandatoryKeys.length,
+      isGroupRegistration
     );
   }
 
   try {
     const result = await sign(
-      account, schema, transactionObject, network, networkIdentifier,
-      !!senderAccount.data, isGroupRegistration, keys, privateKey ?? account.summary.publicKey,
-      transaction.moduleCommandID, transaction, publicKey ?? account.summary.privateKey,
+      account,
+      schema,
+      transactionObject,
+      network,
+      networkIdentifier,
+      !!senderAccount.data,
+      isGroupRegistration,
+      keys,
+      privateKey ?? account.summary.publicKey,
+      transaction.moduleCommandID,
+      transaction,
+      publicKey ?? account.summary.privateKey
     );
     return [result];
   } catch (e) {

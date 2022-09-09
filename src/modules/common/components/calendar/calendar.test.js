@@ -41,7 +41,10 @@ describe('Calendar component', () => {
     wrapper.find('.monthView .viewName').last().simulate('click');
     expect(wrapper.find('.monthView')).toHaveClassName('hidden');
     expect(wrapper.find('.yearView')).not.toHaveClassName('hidden');
-    wrapper.find('.monthItem').filter('[value="Feb"]').simulate('click', { target: { value: 'Feb' } });
+    wrapper
+      .find('.monthItem')
+      .filter('[value="Feb"]')
+      .simulate('click', { target: { value: 'Feb' } });
     expect(wrapper.find('.yearView')).toHaveClassName('hidden');
     expect(wrapper.find('.monthView')).not.toHaveClassName('hidden');
   });

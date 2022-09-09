@@ -1,14 +1,20 @@
 /* eslint-disable */
 import { ss } from '../../../constants';
 
-const getDelegateNameFromRow = (ele) => ele.find('span:first-child > div > div:last-child > div:last-child > p:first-child').text();
+const getDelegateNameFromRow = (ele) =>
+  ele.find('span:first-child > div > div:last-child > div:last-child > p:first-child').text();
 
-Then(/(\w+) count should have value greater than (\d+)/, (displayElementClassName, displayContent) => {
-  cy.get(`.${displayElementClassName} > p`).eq(0).then((ele) => {
-    const count = +ele.text();
-    expect(count).gte(+displayContent);
-  });
-});
+Then(
+  /(\w+) count should have value greater than (\d+)/,
+  (displayElementClassName, displayContent) => {
+    cy.get(`.${displayElementClassName} > p`)
+      .eq(0)
+      .then((ele) => {
+        const count = +ele.text();
+        expect(count).gte(+displayContent);
+      });
+  }
+);
 
 When(/I observe (\w+)/, (elementClass) => {
   if (elementClass === 'forger') {
@@ -21,7 +27,7 @@ When(/I observe (\w+)/, (elementClass) => {
 
 Then(/^(\w+) should be incremented by at least (\d+)$/, function (elementClass, incrementValue) {
   const className = ss[elementClass];
-  cy.get(className).then(ele => {
+  cy.get(className).then((ele) => {
     const value = +ele.text();
     expect(value).gte(+this[elementClass] + +incrementValue);
   });
@@ -31,34 +37,41 @@ Then(/^next forger list should be updated accordingly$/, function () {
   const forgerList = this.forgerList;
   const secondForger = forgerList.eq(1);
 
-  cy.get(ss.forgerItem).eq(0).then(ele => {
-    expect(ele.text() === secondForger.text());
-  });
+  cy.get(ss.forgerItem)
+    .eq(0)
+    .then((ele) => {
+      expect(ele.text() === secondForger.text());
+    });
 });
 
-Then(/^time (\w+) should be incremented by at least (\d+) seconds/, function (elementClass, incrementValue) {
-  const className = ss[elementClass];
-  const parseTimeToSeconds = (time) => {
-    const minutes = time.match(/^\d+(?=:)/g)?.[0] || 0;
-    const seconds = time.match(/(?<=:)\d+$/g) || 0;
-    return 60 * +minutes + +seconds;
-  };
+Then(
+  /^time (\w+) should be incremented by at least (\d+) seconds/,
+  function (elementClass, incrementValue) {
+    const className = ss[elementClass];
+    const parseTimeToSeconds = (time) => {
+      const minutes = time.match(/^\d+(?=:)/g)?.[0] || 0;
+      const seconds = time.match(/(?<=:)\d+$/g) || 0;
+      return 60 * +minutes + +seconds;
+    };
 
-  cy.get(className).then(ele => {
-    const nowSeconds = parseTimeToSeconds(ele.text());
-    expect(nowSeconds).gte(parseTimeToSeconds(this[elementClass]) + +incrementValue);
-  });
-});
+    cy.get(className).then((ele) => {
+      const nowSeconds = parseTimeToSeconds(ele.text());
+      expect(nowSeconds).gte(parseTimeToSeconds(this[elementClass]) + +incrementValue);
+    });
+  }
+);
 
 Then(/^next forger list should have a maximum of (\d+) delegates/, (forgerCount) => {
   cy.get(ss.forgerItem).should('have.length.at.most', forgerCount);
 });
 
 Then(/^next forgers should match first members of the inside round list$/, () => {
-  cy.get(ss.delegateRow).eq(1).then((ele) => {
-    const delegateName = getDelegateNameFromRow(ele);
-    cy.get(ss.forgerItem).eq(0).contains(delegateName);
-  });
+  cy.get(ss.delegateRow)
+    .eq(1)
+    .then((ele) => {
+      const delegateName = getDelegateNameFromRow(ele);
+      cy.get(ss.forgerItem).eq(0).contains(delegateName);
+    });
 });
 
 Then(/^first delegate should be forging$/, () => {
@@ -102,32 +115,47 @@ Then(/^filtered results should be displayed$/, () => {
 });
 
 When(/^I watch a delegate$/, function () {
-  cy.get(`${ss.delegateRow}`).eq(0).then((ele) => {
-    const watchToggleBtn = ele.find('span:first-child > div:first-child > div:first-child > span:first-child');
-    this.watchedDelegate = getDelegateNameFromRow(ele);
-    watchToggleBtn.trigger('click');
-  });
+  cy.get(`${ss.delegateRow}`)
+    .eq(0)
+    .then((ele) => {
+      const watchToggleBtn = ele.find(
+        'span:first-child > div:first-child > div:first-child > span:first-child'
+      );
+      this.watchedDelegate = getDelegateNameFromRow(ele);
+      watchToggleBtn.trigger('click');
+    });
 });
 
 When(/^I don't watch a delegate$/, () => {
-  cy.get(`${ss.delegateRow}`).eq(0).then((ele) => {
-    const watchToggleBtn = ele.find('span:first-child > div:first-child > div:first-child > span:first-child');
-    watchToggleBtn.trigger('click');
-  });
+  cy.get(`${ss.delegateRow}`)
+    .eq(0)
+    .then((ele) => {
+      const watchToggleBtn = ele.find(
+        'span:first-child > div:first-child > div:first-child > span:first-child'
+      );
+      watchToggleBtn.trigger('click');
+    });
 });
 
 Then(/^delegate should be watched$/, function () {
   cy.get(`${ss.delegateRow}`).each((ele) => {
     const delegateName = getDelegateNameFromRow(ele);
     if (delegateName === this.watchedDelegate) {
-      expect(ele.find('span:first-child > div:first-child > div:first-child > span:first-child ~ div > main')).contain('Remove from watched');
+      expect(
+        ele.find(
+          'span:first-child > div:first-child > div:first-child > span:first-child ~ div > main'
+        )
+      ).contain('Remove from watched');
     }
   });
 });
 
 Then(/^I should be on a vote transaction details modal$/, () => {
   cy.location().should((location) => {
-    const hasAddress = /\?modal=transactionDetails&transactionId=a1c5521f466ae5476d3908cc8d562444d45adf4ac3af57e77f1f9359999ab9ca&token=LSK/.test(location.href);
+    const hasAddress =
+      /\?modal=transactionDetails&transactionId=a1c5521f466ae5476d3908cc8d562444d45adf4ac3af57e77f1f9359999ab9ca&token=LSK/.test(
+        location.href
+      );
     expect(hasAddress).true;
   });
 });

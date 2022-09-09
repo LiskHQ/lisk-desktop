@@ -7,7 +7,7 @@ describe('Multisignature wallet tab component', () => {
   let wrapper;
 
   const props = {
-    t: v => v,
+    t: (v) => v,
     host: accounts.genesis.address,
     multisignGroups,
     transactions: transactionsData,

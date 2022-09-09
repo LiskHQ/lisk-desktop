@@ -2,9 +2,7 @@ import PropTypes from 'prop-types';
 import React from 'react';
 import styles from './box.css';
 
-const Row = ({
-  children, className, isClickable, ...rest
-}) => (
+const Row = ({ children, className, isClickable, ...rest }) => (
   <section
     {...rest}
     className={`${styles.row} ${className} ${isClickable ? styles.clickableRow : ''}`}

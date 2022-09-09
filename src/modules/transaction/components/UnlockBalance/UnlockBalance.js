@@ -10,9 +10,7 @@ const UnlockBalance = ({ account, t, transaction = {} }) => (
       <label>{t('Sender')}</label>
       <label>
         <WalletVisual address={account.summary.address} size={25} />
-        <label className={`${styles.address} address-label`}>
-          {account.summary.address}
-        </label>
+        <label className={`${styles.address} address-label`}>{account.summary.address}</label>
       </label>
     </section>
     <section className={styles.msignRow}>
@@ -21,7 +19,8 @@ const UnlockBalance = ({ account, t, transaction = {} }) => (
         <label className="amount-label">
           <TokenAmount
             val={transaction.params.unlockObjects.reduce(
-              (total, { amount }) => total + Number(amount), 0,
+              (total, { amount }) => total + Number(amount),
+              0
             )}
             token={tokenMap.LSK.key}
           />

@@ -8,19 +8,21 @@ import Piwik from 'src/utils/piwik';
 
 function CurrencySelector() {
   const { t } = useTranslation();
-  const { currency, toggleSetting } = useSettings(
-    settingConstants.keys.currency,
-  );
+  const { currency, toggleSetting } = useSettings(settingConstants.keys.currency);
   const onChangeCurrency = (value) => {
     Piwik.trackingEvent('Settings', 'button', 'Update settings');
     toggleSetting(value);
     toast(t('Settings saved!'));
   };
 
-  const currencies = useMemo(() => settingConstants.currencies.map((currencyName) => ({
-    label: currencyName,
-    value: currencyName,
-  })), []);
+  const currencies = useMemo(
+    () =>
+      settingConstants.currencies.map((currencyName) => ({
+        label: currencyName,
+        value: currencyName,
+      })),
+    []
+  );
 
   return (
     <Select

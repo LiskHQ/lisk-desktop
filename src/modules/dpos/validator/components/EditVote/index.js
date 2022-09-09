@@ -1,9 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { useSelector } from 'react-redux';
-import {
-  selectSearchParamValue,
-  removeSearchParamsFromUrl,
-} from 'src/utils/searchParams';
+import { selectSearchParamValue, removeSearchParamsFromUrl } from 'src/utils/searchParams';
 import { tokenMap } from '@token/fungible/consts/tokens';
 import { toRawLsk, fromRawLsk } from '@token/fungible/utils/lsk';
 import Dialog from 'src/theme/dialog/dialog';
@@ -25,32 +22,32 @@ const getTitles = (t) => ({
   edit: {
     title: t('Edit vote'),
     description: t(
-      'Increase or decrease your vote amount, or remove your vote from this delegate. Your updated vote will be added to the voting queue.',
+      'Increase or decrease your vote amount, or remove your vote from this delegate. Your updated vote will be added to the voting queue.'
     ),
   },
   add: {
     title: t('Add vote'),
     description: t(
-      'Insert a vote amount for this delegate. Your new vote will be added to the voting queue.',
+      'Insert a vote amount for this delegate. Your new vote will be added to the voting queue.'
     ),
   },
 });
 
 // eslint-disable-next-line max-statements
-const EditVote = ({
-  history, t, currentHeight, wallet, network, voting, voteEdited,
-}) => {
-  const [address, start, end] = selectSearchParamValue(history.location.search, ['address', 'start', 'end']);
+const EditVote = ({ history, t, currentHeight, wallet, network, voting, voteEdited }) => {
+  const [address, start, end] = selectSearchParamValue(history.location.search, [
+    'address',
+    'start',
+    'end',
+  ]);
   const existingVote = useSelector((state) => state.voting[address || wallet.summary.address]);
   const [voteAmount, setVoteAmount] = useVoteAmountField(
-    existingVote ? fromRawLsk(existingVote.unconfirmed) : '',
+    existingVote ? fromRawLsk(existingVote.unconfirmed) : ''
   );
   const mode = existingVote ? 'edit' : 'add';
   const [maxAmount, setMaxAmount] = useState(0);
   useEffect(() => {
-    getMaxAmount(wallet, network, voting, address || wallet.summary.address).then(
-      setMaxAmount,
-    );
+    getMaxAmount(wallet, network, voting, address || wallet.summary.address).then(setMaxAmount);
   }, [wallet, voting]);
 
   const confirm = () => {
@@ -79,9 +76,7 @@ const EditVote = ({
 
   // 6: blocks per minute, 60: minutes, 24: hours
   const numOfBlockPerDay = 24 * 60 * 6;
-  const daysLeft = Math.ceil(
-    (parseInt(end, 10) - currentHeight) / numOfBlockPerDay,
-  );
+  const daysLeft = Math.ceil((parseInt(end, 10) - currentHeight) / numOfBlockPerDay);
 
   return (
     <Dialog hasClose className={styles.wrapper}>
@@ -94,18 +89,12 @@ const EditVote = ({
             <span>{titles.description}</span>
           </BoxInfoText>
           <BoxInfoText className={styles.walletInfo}>
-            <p className={styles.balanceTitle}>
-              {t('Available balance for voting')}
-            </p>
+            <p className={styles.balanceTitle}>{t('Available balance for voting')}</p>
             <div className={styles.balanceDetails}>
               <span className={styles.lskValue}>
                 <TokenAmount val={maxAmount} token={tokenMap.LSK.key} />
               </span>
-              <Converter
-                className={styles.fiatValue}
-                value={fromRawLsk(maxAmount)}
-                error=""
-              />
+              <Converter className={styles.fiatValue} value={fromRawLsk(maxAmount)} error="" />
             </div>
           </BoxInfoText>
           {daysLeft >= 1 && start !== undefined && (
@@ -124,9 +113,7 @@ const EditVote = ({
               labelClassname={`${styles.fieldLabel}`}
               placeholder={t('Insert vote amount')}
               useMaxLabel={t('Use maximum amount')}
-              useMaxWarning={t(
-                'Caution! You are about to send the majority of your balance',
-              )}
+              useMaxWarning={t('Caution! You are about to send the majority of your balance')}
               name="vote"
             />
           </label>

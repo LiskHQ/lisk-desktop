@@ -30,14 +30,15 @@ export default compose(
       }),
       defaultData: [],
       autoload: true,
-      transformResponse: (response, oldData, urlSearchParams) => (
+      transformResponse: (response, oldData, urlSearchParams) =>
         urlSearchParams.offset
-          ? [...oldData, ...response.data.filter(block =>
-            !oldData.find(({ id }) => id === block.id))]
-          : response.data
-      ),
+          ? [
+              ...oldData,
+              ...response.data.filter((block) => !oldData.find(({ id }) => id === block.id)),
+            ]
+          : response.data,
     },
   }),
   withFilters('transactions', defaultFilters, defaultSort),
-  withTranslation(),
+  withTranslation()
 )(TransactionMonitorList);

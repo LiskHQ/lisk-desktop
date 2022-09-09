@@ -41,9 +41,7 @@ class RequestPin extends React.Component {
   }
 
   get selectedDevice() {
-    return this.props.devices.find(
-      (device) => device.deviceId === this.props.deviceId,
-    );
+    return this.props.devices.find((device) => device.deviceId === this.props.deviceId);
   }
 
   onButtonClicked(e) {
@@ -81,9 +79,7 @@ class RequestPin extends React.Component {
   }
 
   render() {
-    const {
-      error, feedback, pin, isLoading,
-    } = this.state;
+    const { error, feedback, pin, isLoading } = this.state;
     const { t, goBack } = this.props;
     const device = this.selectedDevice;
 
@@ -95,13 +91,8 @@ class RequestPin extends React.Component {
           })}
         </h1>
         <p>
-          {t('If you’re not sure how to do this please follow the')}
-          {' '}
-          <a
-            href={externalLinks.trezorOneHelp}
-            target="_blank"
-            rel="noopener noreferrer"
-          >
+          {t('If you’re not sure how to do this please follow the')}{' '}
+          <a href={externalLinks.trezorOneHelp} target="_blank" rel="noopener noreferrer">
             {t('Official guidelines')}
           </a>
         </p>
@@ -122,55 +113,19 @@ class RequestPin extends React.Component {
 
             <div className={styles.gridSystem}>
               <div className={styles.gridSystemRow}>
-                <button
-                  className={styles.squareBtn}
-                  onClick={this.onButtonClicked}
-                  value="7"
-                />
-                <button
-                  className={styles.squareBtn}
-                  onClick={this.onButtonClicked}
-                  value="8"
-                />
-                <button
-                  className={styles.squareBtn}
-                  onClick={this.onButtonClicked}
-                  value="9"
-                />
+                <button className={styles.squareBtn} onClick={this.onButtonClicked} value="7" />
+                <button className={styles.squareBtn} onClick={this.onButtonClicked} value="8" />
+                <button className={styles.squareBtn} onClick={this.onButtonClicked} value="9" />
               </div>
               <div className={styles.gridSystemRow}>
-                <button
-                  className={styles.squareBtn}
-                  onClick={this.onButtonClicked}
-                  value="4"
-                />
-                <button
-                  className={styles.squareBtn}
-                  onClick={this.onButtonClicked}
-                  value="5"
-                />
-                <button
-                  className={styles.squareBtn}
-                  onClick={this.onButtonClicked}
-                  value="6"
-                />
+                <button className={styles.squareBtn} onClick={this.onButtonClicked} value="4" />
+                <button className={styles.squareBtn} onClick={this.onButtonClicked} value="5" />
+                <button className={styles.squareBtn} onClick={this.onButtonClicked} value="6" />
               </div>
               <div className={styles.gridSystemRow}>
-                <button
-                  className={styles.squareBtn}
-                  onClick={this.onButtonClicked}
-                  value="1"
-                />
-                <button
-                  className={styles.squareBtn}
-                  onClick={this.onButtonClicked}
-                  value="2"
-                />
-                <button
-                  className={styles.squareBtn}
-                  onClick={this.onButtonClicked}
-                  value="3"
-                />
+                <button className={styles.squareBtn} onClick={this.onButtonClicked} value="1" />
+                <button className={styles.squareBtn} onClick={this.onButtonClicked} value="2" />
+                <button className={styles.squareBtn} onClick={this.onButtonClicked} value="3" />
               </div>
             </div>
 

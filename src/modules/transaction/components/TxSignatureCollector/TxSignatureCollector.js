@@ -43,8 +43,8 @@ const TxSignatureCollector = ({
      */
     if (sender) {
       if (
-        signatureStatus === signatureCollectionStatus.fullySigned
-        || signatureStatus === signatureCollectionStatus.overSigned
+        signatureStatus === signatureCollectionStatus.fullySigned ||
+        signatureStatus === signatureCollectionStatus.overSigned
       ) {
         // Skip the current member as all the required signature are collected
         signatureSkipped({ rawTx });
@@ -72,7 +72,7 @@ const TxSignatureCollector = ({
           fees,
         },
         privateKey,
-        publicKey,
+        publicKey
       );
     }
   };
@@ -98,7 +98,7 @@ const TxSignatureCollector = ({
     if (!isEmpty(transactions.signedTransaction)) {
       const hasSecondPass = !!account.secondPassphrase;
       const isDoubleSigned = !transactions.signedTransaction.signatures.some(
-        (sig) => sig.length === 0,
+        (sig) => sig.length === 0
       );
       if (!transactions.txSignatureError && hasSecondPass && !isDoubleSigned) {
         transactionDoubleSigned();

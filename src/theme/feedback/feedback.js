@@ -2,12 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import styles from './feedback.css';
 
-const Feedback = ({
-  className,
-  message,
-  size,
-  status,
-}) => {
+const Feedback = ({ className, message, size, status }) => {
   const classNames = [
     styles.feedback,
     styles[size],
@@ -15,13 +10,13 @@ const Feedback = ({
     message.length ? styles.display : '',
     className,
     'feedback',
-  ].filter(name => name).join(' ');
+  ]
+    .filter((name) => name)
+    .join(' ');
 
   return (
     <div className={styles.wrapper}>
-      <span className={classNames}>
-        {message}
-      </span>
+      <span className={classNames}>{message}</span>
     </div>
   );
 };
@@ -40,8 +35,7 @@ Feedback.defaultProps = {
   status: '',
 };
 
-const areEqual = (prev, next) => (
-  prev.status === next.status && prev.message === next.message && prev.className === next.className
-);
+const areEqual = (prev, next) =>
+  prev.status === next.status && prev.message === next.message && prev.className === next.className;
 
 export default React.memo(Feedback, areEqual);

@@ -22,9 +22,7 @@ const ChainId = ({ id }) => (
 
 const ChainStatus = ({ status, t }) => (
   <div className={grid['col-xs-2']}>
-    <span className={`chain-status ${styles.statusChip} ${styles[status]}`}>
-      {t(status)}
-    </span>
+    <span className={`chain-status ${styles.statusChip} ${styles[status]}`}>{t(status)}</span>
   </div>
 );
 
@@ -43,22 +41,24 @@ const Pin = ({ isPinned, onTogglePin }) => (
   </div>
 );
 
-const BlockchainApplicationRow = ({
-  data,
-  className,
-  t,
-}) => {
+const BlockchainApplicationRow = ({ data, className, t }) => {
   const { checkPinByChainId, togglePin } = usePinBlockchainApplication();
 
-  const handleTogglePin = useCallback((event) => {
-    event.stopPropagation();
-    togglePin(data.chainID);
-  }, [togglePin]);
+  const handleTogglePin = useCallback(
+    (event) => {
+      event.stopPropagation();
+      togglePin(data.chainID);
+    },
+    [togglePin]
+  );
 
-  const application = useMemo(() => ({
-    ...data,
-    isPinned: checkPinByChainId(data.chainID),
-  }), [checkPinByChainId]);
+  const application = useMemo(
+    () => ({
+      ...data,
+      isPinned: checkPinByChainId(data.chainID),
+    }),
+    [checkPinByChainId]
+  );
 
   return (
     <div data-testid="applications-row" className={`application-row ${styles.container}`}>

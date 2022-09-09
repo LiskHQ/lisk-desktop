@@ -59,6 +59,9 @@ describe('Middleware: hwManager', () => {
     expect(subscribeToDeviceDisconnected).toBeCalledWith(expect.any(Function));
     // expect(store.dispatch).toBeCalledWith({ type: authActionTypes.accountLoggedOut });
     expect(toast.error).toBeCalledWith('testHW disconnected');
-    expect(addSearchParamsToUrl).toBeCalledWith(expect.any(Object), { modal: 'deviceDisconnectDialog', model: 'testHW' });
+    expect(addSearchParamsToUrl).toBeCalledWith(expect.any(Object), {
+      modal: 'deviceDisconnectDialog',
+      model: 'testHW',
+    });
   });
 });

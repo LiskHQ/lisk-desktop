@@ -109,11 +109,7 @@ const Table = ({
       canLoadMore={canLoadMore}
       error={error}
     />
-    <TableLoadingState
-      header={header}
-      isFetching={isFetching}
-      count={data.length === 0 ? 5 : 1}
-    />
+    <TableLoadingState header={header} isFetching={isFetching} count={data.length === 0 ? 5 : 1} />
   </>
 );
 

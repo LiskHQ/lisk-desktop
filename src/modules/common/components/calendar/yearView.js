@@ -48,10 +48,9 @@ class YearView extends Component {
     const showingDate = moment(this.props.showingDate, dateFormat);
     const options = { ...this.options, amount: 'month' };
     const day = moment(showingDate).month(month);
-    const selected = selectedDate.isValid()
-      && day.format('MM.YYYY') === selectedDate.format('MM.YYYY');
-    const isDisabled = validations
-      .shouldBeDisabled(day, minDate, maxDate, options);
+    const selected =
+      selectedDate.isValid() && day.format('MM.YYYY') === selectedDate.format('MM.YYYY');
+    const isDisabled = validations.shouldBeDisabled(day, minDate, maxDate, options);
 
     return (
       <button
@@ -68,15 +67,15 @@ class YearView extends Component {
   }
 
   render() {
-    const {
-      locale, dateFormat, isShown, minDate, maxDate,
-    } = this.props;
+    const { locale, dateFormat, isShown, minDate, maxDate } = this.props;
     moment.locale(locale);
     const showingDate = moment(this.props.showingDate, dateFormat);
     const prevIcon = validations.canGoToPrevious(showingDate, minDate, this.options)
-      ? 'arrowLeftActive' : 'arrowLeftInactive';
+      ? 'arrowLeftActive'
+      : 'arrowLeftInactive';
     const nextIcon = validations.canGoToNext(showingDate, maxDate, this.options)
-      ? 'arrowRightActive' : 'arrowRightInactive';
+      ? 'arrowRightActive'
+      : 'arrowRightInactive';
 
     return (
       <div className={`${!isShown ? styles.hidden : ''} yearView`}>
@@ -91,9 +90,7 @@ class YearView extends Component {
         </header>
         <div className={styles.contentWrapper}>
           <div className={styles.itemsContent}>
-
             {moment.monthsShort(true).map(this.generateMonths)}
-
           </div>
         </div>
       </div>
@@ -109,10 +106,7 @@ YearView.propTypes = {
   dateFormat: PropTypes.string.isRequired,
   minDate: PropTypes.string,
   maxDate: PropTypes.string,
-  locale: PropTypes.oneOfType([
-    PropTypes.string,
-    PropTypes.arrayOf(PropTypes.string),
-  ]).isRequired,
+  locale: PropTypes.oneOfType([PropTypes.string, PropTypes.arrayOf(PropTypes.string)]).isRequired,
   showingDate: PropTypes.instanceOf(moment).isRequired,
 };
 

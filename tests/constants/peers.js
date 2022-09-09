@@ -1,4 +1,4 @@
-const peer = index => ({
+const peer = (index) => ({
   ip: `94.130.96.${index}`,
   httpPort: 5000,
   wsPort: 5001,
@@ -14,6 +14,8 @@ const peer = index => ({
   },
 });
 
-const peers = Array(30).fill(1).map((item, index) => peer(index));
+const peers = Array(30)
+  .fill(1)
+  .map((item, index) => peer(index));
 
 export default peers;

@@ -8,15 +8,15 @@ import styles from './styles.css';
 const SignedAndRemainingMembersList = ({ t }) => {
   const { transaction, wallet } = React.useContext(TransactionDetailsContext);
 
-  const isMultisignatureGroupRegistration = transaction.moduleCommandID
-    === MODULE_COMMANDS_NAME_ID_MAP.registerMultisignatureGroup;
+  const isMultisignatureGroupRegistration =
+    transaction.moduleCommandID === MODULE_COMMANDS_NAME_ID_MAP.registerMultisignatureGroup;
 
   const keys = isMultisignatureGroupRegistration
     ? {
-      optionalKeys: transaction.params.optionalKeys,
-      mandatoryKeys: transaction.params.mandatoryKeys,
-      numberOfSignatures: transaction.params.numberOfSignatures,
-    }
+        optionalKeys: transaction.params.optionalKeys,
+        mandatoryKeys: transaction.params.mandatoryKeys,
+        numberOfSignatures: transaction.params.numberOfSignatures,
+      }
     : wallet.keys;
 
   const { signed, remaining } = useMemo(
@@ -24,9 +24,9 @@ const SignedAndRemainingMembersList = ({ t }) => {
       calculateRemainingAndSignedMembers(
         keys,
         transaction.signatures,
-        isMultisignatureGroupRegistration,
+        isMultisignatureGroupRegistration
       ),
-    [wallet],
+    [wallet]
   );
 
   const required = isMultisignatureGroupRegistration

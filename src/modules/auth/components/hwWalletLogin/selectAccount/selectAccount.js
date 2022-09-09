@@ -1,10 +1,7 @@
 import { to } from 'await-to-js';
 import React from 'react';
 import { toast } from 'react-toastify';
-import {
-  getAccountsFromDevice,
-  getNewAccountByIndex,
-} from '@wallet/utils/hwManager';
+import { getAccountsFromDevice, getNewAccountByIndex } from '@wallet/utils/hwManager';
 import routes from 'src/routes/routes';
 import { tokenMap } from '@token/fungible/consts/tokens';
 import { TertiaryButton } from '@theme/buttons';
@@ -44,7 +41,7 @@ class SelectAccount extends React.Component {
     // istanbul ignore else
     if (Array.isArray(settings.hardwareAccounts[device.model])) {
       const storedAccount = settings.hardwareAccounts[device.model].filter(
-        (account) => account.address === address,
+        (account) => account.address === address
       );
       return storedAccount.length ? storedAccount[0].name : null;
     }
@@ -54,9 +51,7 @@ class SelectAccount extends React.Component {
 
   async getAccountsFromDevice() {
     const { device, network } = this.props;
-    const [error, accounts] = await to(
-      getAccountsFromDevice({ device, network }),
-    );
+    const [error, accounts] = await to(getAccountsFromDevice({ device, network }));
     if (error) {
       toast.error(`Error retrieving accounts from device: ${error}`);
     } else {
@@ -126,9 +121,7 @@ class SelectAccount extends React.Component {
 
     return (
       <div className={styles.selectAccountWrapper}>
-        <h1>
-          {t('Lisk accounts on {{WalletModel}}', { WalletModel: device.model })}
-        </h1>
+        <h1>{t('Lisk accounts on {{WalletModel}}', { WalletModel: device.model })}</h1>
         <p>
           {t('Please select the account you’d like to sign in to or')}
           <TertiaryButton
@@ -141,9 +134,7 @@ class SelectAccount extends React.Component {
         </p>
         {hwAccounts.length ? (
           <>
-            <label
-              className={`${styles.hideAccountsCheckbox} ${styles[hideEmptyAccounts]}`}
-            >
+            <label className={`${styles.hideAccountsCheckbox} ${styles[hideEmptyAccounts]}`}>
               <CheckBox
                 name="hideEmptyAccounts"
                 className={`${styles.checkbox} hideEmptyAccounts`}

@@ -17,6 +17,6 @@ export default withData({
       };
     },
     defaultData: [],
-    transformResponse: response => response.data.splice(0, 5),
+    transformResponse: (response) => response.data.splice(0, 5),
   },
 })(withTranslation()(RecentTransaction));

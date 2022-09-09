@@ -15,7 +15,7 @@ const props = {
     urlSearchParams: {},
     meta: { total: delegateList.length, count: 10, offset: 0 },
   },
-  t: str => str,
+  t: (str) => str,
   delegates: { data: delegateData },
 };
 

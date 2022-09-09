@@ -3,15 +3,18 @@ import actionTypes from './actionTypes';
 import blocksReducer from './reducer';
 
 describe('Reducer: blocks(state, action)', () => {
-  const blocks = [{
-    id: 19812401289461240,
-    timestamp: 7124087134,
-    height: 123457,
-  }, {
-    id: 29812401289461240,
-    timestamp: 7124087124,
-    height: 123456,
-  }];
+  const blocks = [
+    {
+      id: 19812401289461240,
+      timestamp: 7124087134,
+      height: 123457,
+    },
+    {
+      id: 29812401289461240,
+      timestamp: 7124087124,
+      height: 123456,
+    },
+  ];
   it('should return blocks object last blocks if action.type = actionTypes.newBlockCreated', () => {
     const state = {
       latestBlocks: [blocks[1]],

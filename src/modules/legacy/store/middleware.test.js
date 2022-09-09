@@ -19,9 +19,8 @@ const newBlockCreated = {
 describe('Legacy middleware', () => {
   const next = jest.fn();
 
-  window.Notification = () => { };
-  beforeEach(() => {
-  });
+  window.Notification = () => {};
+  beforeEach(() => {});
 
   afterEach(() => {
     jest.resetAllMocks();

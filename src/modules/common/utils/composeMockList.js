@@ -1,12 +1,6 @@
 import { LIMIT } from 'src/const/config';
 
-function composeMockList({
-  req,
-  res,
-  ctx,
-  mockData,
-  delay = 20,
-}) {
+function composeMockList({ req, res, ctx, mockData, delay = 20 }) {
   const limit = Number(req.url.searchParams.get('limit') || LIMIT);
   const offset = Number(req.url.searchParams.get('offset') || 0);
   const response = {

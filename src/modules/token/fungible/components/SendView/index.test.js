@@ -1,7 +1,10 @@
 import { getTransactionBaseFees, getTransactionFee } from '@transaction/api';
 import { mountWithRouter } from 'src/utils/testHelpers';
 import mockManagedApplications from '@tests/fixtures/blockchainApplicationsManage';
-import { useCurrentApplication, useApplicationManagement } from '@blockchainApplication/manage/hooks';
+import {
+  useCurrentApplication,
+  useApplicationManagement,
+} from '@blockchainApplication/manage/hooks';
 import wallets from '@tests/constants/wallets';
 import Send from './index';
 
@@ -18,10 +21,7 @@ useApplicationManagement.mockReturnValue({
   applications: mockManagedApplications,
 });
 
-useCurrentApplication.mockReturnValue([
-  mockCurrentApplication,
-  mockSetCurrentApplication,
-]);
+useCurrentApplication.mockReturnValue([mockCurrentApplication, mockSetCurrentApplication]);
 
 getTransactionBaseFees.mockResolvedValue({
   Low: 0,
@@ -41,26 +41,28 @@ const props = {
   wallet: {
     token: { balance: wallets.genesis.balance },
   },
-  t: v => v,
+  t: (v) => v,
   prevState: {
     fields: {},
   },
   bookmarks: {
-    LSK: [{
-      title: 'ABC',
-      address: '12345L',
-      balance: 10,
-    },
-    {
-      title: 'FRG',
-      address: '12375L',
-      balance: 15,
-    },
-    {
-      title: 'KTG',
-      address: '12395L',
-      balance: 7,
-    }],
+    LSK: [
+      {
+        title: 'ABC',
+        address: '12345L',
+        balance: 10,
+      },
+      {
+        title: 'FRG',
+        address: '12375L',
+        balance: 15,
+      },
+      {
+        title: 'KTG',
+        address: '12395L',
+        balance: 7,
+      },
+    ],
   },
   history: {
     location: {

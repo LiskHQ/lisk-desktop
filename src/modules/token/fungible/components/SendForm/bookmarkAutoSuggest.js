@@ -22,30 +22,33 @@ class BookmarkAutoSuggest extends React.Component {
   checkIfBookmarkedAccount() {
     const { recipient, bookmarks } = this.props;
     const account = bookmarks.length
-      ? bookmarks.find(acc => acc.address === recipient.address)
+      ? bookmarks.find((acc) => acc.address === recipient.address)
       : false;
 
     if (account) this.onSelectedAccount(account);
   }
 
   validateBookmark() {
-    const {
-      recipient, bookmarks, t,
-    } = this.props;
-    const isValidBookmark = bookmarks
-      .find(account => (account.title.toLowerCase() === recipient.value.toLowerCase())
-          || account.address.toLowerCase() === recipient.value.toLowerCase()) || false;
+    const { recipient, bookmarks, t } = this.props;
+    const isValidBookmark =
+      bookmarks.find(
+        (account) =>
+          account.title.toLowerCase() === recipient.value.toLowerCase() ||
+          account.address.toLowerCase() === recipient.value.toLowerCase()
+      ) || false;
     const isValidAddress = validateAddress(recipient.value) === 0;
     const isInvalid = !isValidBookmark && !isValidAddress && recipient.value;
 
     this.props.updateField({
-      ...(isInvalid ? {
-        feedback: t('Provide a correct wallet address or the name of a bookmarked account'),
-        address: '',
-      } : {
-        feedback: '',
-        address: isValidBookmark ? isValidBookmark.address : recipient.value,
-      }),
+      ...(isInvalid
+        ? {
+            feedback: t('Provide a correct wallet address or the name of a bookmarked account'),
+            address: '',
+          }
+        : {
+            feedback: '',
+            address: isValidBookmark ? isValidBookmark.address : recipient.value,
+          }),
       error: !!isInvalid,
       selected: !!isValidBookmark,
       title: isValidBookmark ? isValidBookmark.title : '',
@@ -85,7 +88,7 @@ class BookmarkAutoSuggest extends React.Component {
             className={styles.recipientWalletVisual}
           />
         )}
-        renderItem={bookmark => (
+        renderItem={(bookmark) => (
           <>
             <WalletVisual address={bookmark.address} size={25} />
             <span>{bookmark.title}</span>
@@ -99,10 +102,12 @@ class BookmarkAutoSuggest extends React.Component {
 }
 
 BookmarkAutoSuggest.propTypes = {
-  bookmarks: PropTypes.arrayOf(PropTypes.shape({
-    title: PropTypes.string.isRequired,
-    address: PropTypes.string.isRequired,
-  })).isRequired,
+  bookmarks: PropTypes.arrayOf(
+    PropTypes.shape({
+      title: PropTypes.string.isRequired,
+      address: PropTypes.string.isRequired,
+    })
+  ).isRequired,
   recipient: PropTypes.shape({
     address: PropTypes.string.isRequired,
     error: PropTypes.bool.isRequired,

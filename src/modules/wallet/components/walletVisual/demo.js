@@ -16,11 +16,14 @@ const WalletVisualDemo = () => {
     const bytes = [];
     for (let j = 1 + offset; j <= 152 + offset; j += 1) {
       const crypotObj = window.crypto || window.msCrypto;
-      const byte = [...crypotObj.getRandomValues(new Uint16Array(16))].map(x => (`00${(x % 256).toString(16)}`).slice(-2));
+      const byte = [...crypotObj.getRandomValues(new Uint16Array(16))].map((x) =>
+        `00${(x % 256).toString(16)}`.slice(-2)
+      );
       bytes.push(byte);
     }
 
-    const generateAccounts = bytes.map(seed => generatePassphraseFromSeed({ seed }))
+    const generateAccounts = bytes
+      .map((seed) => generatePassphraseFromSeed({ seed }))
       .map(extractAddressFromPassphrase);
 
     function onlyUnique(value, index, self) {
@@ -36,7 +39,7 @@ const WalletVisualDemo = () => {
     <div>
       <h2>WalletVisual</h2>
       <div style={{ whiteSpace: 'no-break' }}>
-        {accounts.map(account => (
+        {accounts.map((account) => (
           <DemoRenderer
             key={account}
             style={{
@@ -53,9 +56,10 @@ const WalletVisualDemo = () => {
           </DemoRenderer>
         ))}
       </div>
-      <Waypoint onEnter={() => {
-        setAccounts(loadMore(accounts));
-      }}
+      <Waypoint
+        onEnter={() => {
+          setAccounts(loadMore(accounts));
+        }}
       />
     </div>
   );

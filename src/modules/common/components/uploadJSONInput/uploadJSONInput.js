@@ -5,16 +5,9 @@ import styles from './uploadJSONInput.css';
 
 const reader = new FileReader();
 
-const UploadJSONInput = ({
-  value,
-  onChange,
-  error,
-  label, prefixLabel,
-  placeholderText,
-}) => {
+const UploadJSONInput = ({ value, onChange, error, label, prefixLabel, placeholderText }) => {
   const onInputChange = ({ target }) => reader.readAsText(target.files[0]);
-  const onPaste = (event) =>
-    onChange(JSON.parse(event.clipboardData.getData('text')));
+  const onPaste = (event) => onChange(JSON.parse(event.clipboardData.getData('text')));
 
   const { t } = useTranslation();
 

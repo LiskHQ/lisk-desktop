@@ -3,7 +3,7 @@ import { mount } from 'enzyme';
 import NewsParser from './newsParser';
 
 describe('NewsParser', () => {
-  it('should render no hashtags and mentioned user twitter links when they don\'t exist in a twit', () => {
+  it("should render no hashtags and mentioned user twitter links when they don't exist in a twit", () => {
     const value = 'test twit';
     const wrapper = mount(<NewsParser>{value}</NewsParser>);
     expect(wrapper.find('.hashtag')).toHaveLength(0);

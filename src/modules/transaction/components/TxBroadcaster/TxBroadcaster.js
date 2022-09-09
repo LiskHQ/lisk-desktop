@@ -8,14 +8,14 @@ const TxBroadcaster = (props) => {
   const [txType, setTxType] = useState('pending');
 
   useEffect(() => {
-    const isMultisig = !props.transactions.txSignatureError
-      && props.status.code !== txStatusTypes.broadcastSuccess
-      && (
-        props.transactions.signedTransaction.signatures.length > 1
-        || props.status.code === txStatusTypes.multisigSignaturePartialSuccess
-        || props.account.summary.isMultisignature
-        || props.account.summary.publicKey !== props.transactions.signedTransaction.senderPublicKey.toString('hex')
-      );
+    const isMultisig =
+      !props.transactions.txSignatureError &&
+      props.status.code !== txStatusTypes.broadcastSuccess &&
+      (props.transactions.signedTransaction.signatures.length > 1 ||
+        props.status.code === txStatusTypes.multisigSignaturePartialSuccess ||
+        props.account.summary.isMultisignature ||
+        props.account.summary.publicKey !==
+          props.transactions.signedTransaction.senderPublicKey.toString('hex'));
     if (isMultisig) {
       setTxType('isMultisig');
     } else {
@@ -28,11 +28,11 @@ const TxBroadcaster = (props) => {
    * 2. 2nd passphrase accounts
    */
   if (txType === 'regular') {
-    return (<Regular {...props} />);
+    return <Regular {...props} />;
   }
 
   if (txType === 'isMultisig') {
-    return (<Multisignature {...props} />);
+    return <Multisignature {...props} />;
   }
   return <div />;
 };

@@ -7,7 +7,7 @@ import Calendar from './calendar';
 /* eslint-disable-next-line no-console */
 const onDateSelected = console.log;
 
-const dateFormat = ('DD.MM.YY');
+const dateFormat = 'DD.MM.YY';
 const CalendarDemo = () => (
   <div>
     <h2>Calendar</h2>

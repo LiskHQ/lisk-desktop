@@ -16,10 +16,7 @@ const MigrationDetails = ({ wallet, showBalance }) => {
       <div>
         <h5>{t('Old account')}</h5>
         <div className={styles.addressContainer}>
-          <WalletVisualWithAddress
-            address={wallet.legacy?.address}
-            truncate={false}
-          />
+          <WalletVisualWithAddress address={wallet.legacy?.address} truncate={false} />
           <CopyToClipboard
             type="icon"
             value={wallet.legacy?.address}
@@ -40,10 +37,7 @@ const MigrationDetails = ({ wallet, showBalance }) => {
       <div>
         <h5>{t('New account')}</h5>
         <div className={styles.addressContainer}>
-          <WalletVisualWithAddress
-            address={wallet.summary?.address}
-            truncate="medium"
-          />
+          <WalletVisualWithAddress address={wallet.summary?.address} truncate="medium" />
           <CopyToClipboard
             type="icon"
             value={wallet.summary?.address}

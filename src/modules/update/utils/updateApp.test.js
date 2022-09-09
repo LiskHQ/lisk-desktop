@@ -32,7 +32,9 @@ describe('updateApp', () => {
   it('should create toast when downloadUpdateStart', () => {
     const callbacks = {};
     window.ipc = {
-      on: (event, callback) => { callbacks[event] = callback; },
+      on: (event, callback) => {
+        callbacks[event] = callback;
+      },
     };
 
     updateApp.init();
@@ -43,7 +45,9 @@ describe('updateApp', () => {
   it('should when toast when downloadUpdateProgress', () => {
     const callbacks = {};
     window.ipc = {
-      on: (event, callback) => { callbacks[event] = callback; },
+      on: (event, callback) => {
+        callbacks[event] = callback;
+      },
     };
 
     updateApp.init();
@@ -54,7 +58,9 @@ describe('updateApp', () => {
   it('should when toast when downloadUpdateCompleted', () => {
     const callbacks = {};
     window.ipc = {
-      on: (event, callback) => { callbacks[event] = callback; },
+      on: (event, callback) => {
+        callbacks[event] = callback;
+      },
     };
 
     updateApp.init();

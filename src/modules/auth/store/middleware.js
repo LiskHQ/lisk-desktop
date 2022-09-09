@@ -1,4 +1,4 @@
-const authMiddleware = () => next => async (action) => {
+const authMiddleware = () => (next) => async (action) => {
   next(action);
 };
 

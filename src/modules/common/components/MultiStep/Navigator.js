@@ -1,13 +1,7 @@
 import React from 'react';
 import NavigatorButton from './NavigatorButton';
 import Element from './Element';
-import {
-  backButtonFn,
-  isActiveStep,
-  isActiveGroup,
-  groupSteps,
-  noGroupTitle,
-} from './utils';
+import { backButtonFn, isActiveStep, isActiveGroup, groupSteps, noGroupTitle } from './utils';
 
 const MultiStepNav = ({
   steps,
@@ -45,10 +39,7 @@ const MultiStepNav = ({
       ) : null}
       <Element {...normalizedStyles.multiStepGroupWrapper}>
         {groupedSteps.map((group, gIdx) => (
-          <Element
-            {...normalizedStyles.multiStepGroup}
-            key={`group-${group.title}-${gIdx}`}
-          >
+          <Element {...normalizedStyles.multiStepGroup} key={`group-${group.title}-${gIdx}`}>
             {!hideGroups && group.title !== noGroupTitle ? (
               <NavigatorButton
                 customButton={groupButton}
@@ -62,17 +53,17 @@ const MultiStepNav = ({
             ) : null}
             {!hideSteps
               ? group.steps.map((step, sIdx) => (
-                <NavigatorButton
-                  customButton={stepButton}
-                  key={`step-${step.component.props.title}-${sIdx}`}
-                  onClick={() => {
-                    if (interactive) move({ to: step.index });
-                  }}
-                  disabled={isActiveStep(current, step.index)}
-                >
-                  {step.component.props.title}
-                </NavigatorButton>
-              ))
+                  <NavigatorButton
+                    customButton={stepButton}
+                    key={`step-${step.component.props.title}-${sIdx}`}
+                    onClick={() => {
+                      if (interactive) move({ to: step.index });
+                    }}
+                    disabled={isActiveStep(current, step.index)}
+                  >
+                    {step.component.props.title}
+                  </NavigatorButton>
+                ))
               : null}
           </Element>
         ))}

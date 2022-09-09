@@ -24,18 +24,12 @@ const Members = ({ t }) => {
             address: extractAddressFromPublicKey(publicKey),
             publicKey,
             mandatory: true,
-          })),
+          }))
         ),
-    [params],
+    [params]
   );
 
-  return (
-    <MultiSignatureMembers
-      t={t}
-      members={members}
-      className={styles.multiSignatureMembers}
-    />
-  );
+  return <MultiSignatureMembers t={t} members={members} className={styles.multiSignatureMembers} />;
 };
 
 export default Members;

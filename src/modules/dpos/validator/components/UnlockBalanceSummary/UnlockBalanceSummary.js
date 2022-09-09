@@ -3,14 +3,7 @@ import React from 'react';
 import TransactionSummary from '@transaction/manager/transactionSummary';
 import styles from './unlockBalanceSummary.css';
 
-const UnlockBalanceSummary = ({
-  balanceUnlocked,
-  rawTx,
-  prevStep,
-  nextStep,
-  wallet,
-  t,
-}) => {
+const UnlockBalanceSummary = ({ balanceUnlocked, rawTx, prevStep, nextStep, wallet, t }) => {
   const onConfirmAction = {
     label: t('Confirm'),
     onClick: () => {
@@ -22,7 +15,9 @@ const UnlockBalanceSummary = ({
   };
   const onCancelAction = {
     label: t('Cancel'),
-    onClick: () => { prevStep(); },
+    onClick: () => {
+      prevStep();
+    },
   };
 
   return (

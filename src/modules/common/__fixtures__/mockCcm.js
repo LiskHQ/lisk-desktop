@@ -24,10 +24,7 @@ export const mockCcm = {
         timestamp: 28227090,
         transactionID: '12435autb1353anmbmab',
       },
-      ccms: [
-        'ccmID1',
-        'ccmID2',
-      ],
+      ccms: ['ccmID1', 'ccmID2'],
     },
   ],
   meta: {

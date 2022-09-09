@@ -7,7 +7,7 @@ import { getTransactionBaseFees } from '../api';
 // eslint-disable-next-line max-statements
 const useTransactionPriority = () => {
   const { t } = useTranslation();
-  const network = useSelector(state => state.network);
+  const network = useSelector((state) => state.network);
   const [prioritiesLoadError, setPrioritiesLoadError] = useState(false);
   const [loading, setLoading] = useState(false);
   const [baseFees, setBaseFees] = useState({

@@ -6,7 +6,7 @@ import DelegateVotesView from './delegateVotesView';
 describe('Delegate votes view', () => {
   const loadData = jest.fn();
   const props = {
-    t: v => v,
+    t: (v) => v,
     voters: {
       loadData,
       meta: { count: 5, offset: 0, total: 10 },
@@ -46,7 +46,9 @@ describe('Delegate votes view', () => {
 
     expect(wrapper.find('.totalVotes')).toHaveText(`(${props.voters.meta.total})`);
     expect(wrapper.find('.voteRow').hostNodes().length).toEqual(5);
-    expect(wrapper.find('.voteRow').hostNodes().at(0)).toHaveText(truncateAddress('lskc7ofju4nvnshg6349otmcssme9q87wrpf8umws'));
+    expect(wrapper.find('.voteRow').hostNodes().at(0)).toHaveText(
+      truncateAddress('lskc7ofju4nvnshg6349otmcssme9q87wrpf8umws')
+    );
     expect(wrapper.find('.voteRow').hostNodes().at(1)).toHaveText('zero');
     expect(wrapper.find('.voteRow').hostNodes().at(2)).toHaveText('o_');
     expect(wrapper.find('.voteRow').hostNodes().at(3)).toHaveText('k3');
@@ -83,7 +85,9 @@ describe('Delegate votes view', () => {
     wrapper.update();
 
     expect(wrapper.find('.voteRow').hostNodes().length).toEqual(2);
-    expect(wrapper.find('.voteRow').hostNodes().at(0)).toHaveText(truncateAddress('lskc7ofju4nvnshg6349otmcssme9q87wrpf8umws'));
+    expect(wrapper.find('.voteRow').hostNodes().at(0)).toHaveText(
+      truncateAddress('lskc7ofju4nvnshg6349otmcssme9q87wrpf8umws')
+    );
     expect(wrapper.find('.voteRow').hostNodes().at(1)).toHaveText('zero');
     expect(wrapper.find('.voteRow').hostNodes().at(2).exists()).toBeFalsy();
   });

@@ -6,7 +6,12 @@ import TokenAmount from '@token/fungible/components/tokenAmount';
 import styles from './TransactionResultList.css';
 
 const Transactions = ({
-  t, transactions, onSelectedRow, rowItemIndex, updateRowItemIndex, activeToken,
+  t,
+  transactions,
+  onSelectedRow,
+  rowItemIndex,
+  updateRowItemIndex,
+  activeToken,
 }) => {
   const txConfig = getTxConfig(t, transactions);
 
@@ -21,12 +26,16 @@ const Transactions = ({
       <div className={`${styles.content} transactions-content`}>
         <div
           data-index={0}
-          className={`${styles.resultRow} ${rowItemIndex === 0 ? styles.active : ''} search-transaction-row`}
+          className={`${styles.resultRow} ${
+            rowItemIndex === 0 ? styles.active : ''
+          } search-transaction-row`}
           onClick={() => onSelectedRow(transactions[0].id)}
           onMouseEnter={updateRowItemIndex}
         >
-          {txConfig.icon ? <Icon name={txConfig.icon} /> : null }
-          <span className={`${styles.transactionId} transaction-id`}>{truncateAddress(transactions[0].id)}</span>
+          {txConfig.icon ? <Icon name={txConfig.icon} /> : null}
+          <span className={`${styles.transactionId} transaction-id`}>
+            {truncateAddress(transactions[0].id)}
+          </span>
           <span className={styles.transactionMessage}>
             <TokenAmount val={txConfig.value} token={activeToken} />
           </span>

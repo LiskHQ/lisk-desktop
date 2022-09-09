@@ -36,75 +36,71 @@ export const getAccounts = async ({ network, params }) =>
  *
  * @param {String} tokensTypes - Options of 'enabled' and 'active'
  */
-export const accountDataUpdated = tokensTypes =>
-  async (dispatch, getState) => {
-    const { network, token, wallet } = getState();
+export const accountDataUpdated = (tokensTypes) => async (dispatch, getState) => {
+  const { network, token, wallet } = getState();
 
-    // Get the list of tokens that are enabled
-    const activeTokens = tokensTypes === 'enabled'
-      ? Object.keys(token.list)
-        .filter(key => token.list[key])
+  // Get the list of tokens that are enabled
+  const activeTokens =
+    tokensTypes === 'enabled'
+      ? Object.keys(token.list).filter((key) => token.list[key])
       : [token.active];
 
-    // Collect their addresses to send to the API
-    const params = activeTokens.reduce((acc, item) => {
-      acc[item] = { publicKey: wallet.info[item].summary.publicKey };
-      return acc;
-    }, {});
+  // Collect their addresses to send to the API
+  const params = activeTokens.reduce((acc, item) => {
+    acc[item] = { publicKey: wallet.info[item].summary.publicKey };
+    return acc;
+  }, {});
 
-    const [error, info] = await to(getAccounts({ network, params }));
+  const [error, info] = await to(getAccounts({ network, params }));
 
-    if (info) {
-      // Uninitialized account don't have a public key stored on the blockchain.
-      // but we already have it on the Redux store.
-      info.LSK.summary.publicKey = wallet.info.LSK.summary.publicKey;
-      info.LSK.summary.privateKey = wallet.info.LSK.summary.privateKey;
-      dispatch({
-        type: actionTypes.accountUpdated,
-        data: info,
-      });
-      dispatch(networkStatusUpdated({ online: true }));
-    } else {
-      dispatch(networkStatusUpdated({ online: false, code: error.error.code }));
-    }
-  };
-
-export const multisigGroupRegistered = (
-  transactionObject,
-  privateKey,
-  publicKey,
-) => async (dispatch, getState) => {
-  //
-  // Collect data
-  //
-  const state = getState();
-  const activeWallet = selectActiveTokenAccount(state);
-
-  //
-  // Create the transaction
-  //
-  const [error, tx] = await to(
-    createGenericTx({
-      network: state.network,
-      wallet: activeWallet,
-      transactionObject,
-      privateKey,
-      publicKey,
-    }),
-  );
-
-  //
-  // Dispatch corresponding action
-  //
-  if (!error) {
+  if (info) {
+    // Uninitialized account don't have a public key stored on the blockchain.
+    // but we already have it on the Redux store.
+    info.LSK.summary.publicKey = wallet.info.LSK.summary.publicKey;
+    info.LSK.summary.privateKey = wallet.info.LSK.summary.privateKey;
     dispatch({
-      type: transactionActionTypes.transactionCreatedSuccess,
-      data: tx,
+      type: actionTypes.accountUpdated,
+      data: info,
     });
+    dispatch(networkStatusUpdated({ online: true }));
   } else {
-    dispatch({
-      type: transactionActionTypes.transactionSignError,
-      data: error,
-    });
+    dispatch(networkStatusUpdated({ online: false, code: error.error.code }));
   }
 };
+
+export const multisigGroupRegistered =
+  (transactionObject, privateKey, publicKey) => async (dispatch, getState) => {
+    //
+    // Collect data
+    //
+    const state = getState();
+    const activeWallet = selectActiveTokenAccount(state);
+
+    //
+    // Create the transaction
+    //
+    const [error, tx] = await to(
+      createGenericTx({
+        network: state.network,
+        wallet: activeWallet,
+        transactionObject,
+        privateKey,
+        publicKey,
+      })
+    );
+
+    //
+    // Dispatch corresponding action
+    //
+    if (!error) {
+      dispatch({
+        type: transactionActionTypes.transactionCreatedSuccess,
+        data: tx,
+      });
+    } else {
+      dispatch({
+        type: transactionActionTypes.transactionSignError,
+        data: error,
+      });
+    }
+  };

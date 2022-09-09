@@ -13,14 +13,7 @@ import styles from './topBar.css';
 import Network from './networkName';
 import NavigationButtons from './navigationButtons';
 
-const TopBar = ({
-  t,
-  history,
-  network,
-  token,
-  noOfVotes,
-  location,
-}) => {
+const TopBar = ({ t, history, network, token, noOfVotes, location }) => {
   const disabled = location.pathname === routes.reclaim.path;
 
   return (
@@ -33,7 +26,7 @@ const TopBar = ({
           className={styles.tooltipWrapper}
           size="maxContent"
           position="bottom"
-          content={(
+          content={
             <DialogLink
               component="bookmarks"
               className={`${styles.toggle} bookmark-list-toggle ${
@@ -42,15 +35,11 @@ const TopBar = ({
             >
               <Icon name="bookmark" className={styles.bookmarksIcon} />
             </DialogLink>
-          )}
+          }
         >
           <p>{t('Bookmarks')}</p>
         </Tooltip>
-        <VoteQueueToggle
-          t={t}
-          noOfVotes={noOfVotes}
-          disabled={disabled}
-        />
+        <VoteQueueToggle t={t} noOfVotes={noOfVotes} disabled={disabled} />
         <Search t={t} history={history} disabled={disabled} />
       </div>
       <div className={styles.group}>

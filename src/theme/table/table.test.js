@@ -50,14 +50,18 @@ describe('Table', () => {
   describe('List', () => {
     const Row = ({ data }) => <div>{data.address}</div>;
     const props = {
-      data: Object.keys(accounts).filter(key => key !== 'any account').map(key => accounts[key]),
+      data: Object.keys(accounts)
+        .filter((key) => key !== 'any account')
+        .map((key) => accounts[key]),
       canLoadMore: false,
       isLoading: false,
       row: Row,
-      header: [{
-        title: 'Header Item',
-        classList: 'header-item',
-      }],
+      header: [
+        {
+          title: 'Header Item',
+          classList: 'header-item',
+        },
+      ],
     };
 
     it('should render the data array in rows and use index for iteration key by default', () => {
@@ -66,7 +70,7 @@ describe('Table', () => {
     });
 
     it('should render accept function to define iteration key', () => {
-      const iterationKey = jest.fn().mockImplementation(data => data.address);
+      const iterationKey = jest.fn().mockImplementation((data) => data.address);
       mount(<Table {...props} iterationKey={iterationKey} />);
       expect(iterationKey.mock.calls.length).toBe(props.data.length);
     });

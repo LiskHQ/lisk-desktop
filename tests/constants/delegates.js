@@ -1,4 +1,4 @@
-const delegate = index => ({
+const delegate = (index) => ({
   name: `gr33ndrag0n_${index}`,
   totalVotesReceived: `100600000000${index}`,
   selfVotes: `10060000000${index}`,
@@ -16,7 +16,9 @@ const delegate = index => ({
   consecutiveMissedBlocks: index < 15 ? index : 0,
 });
 
-const delegates = Array(30).fill(1).map((item, index) => delegate(index));
+const delegates = Array(30)
+  .fill(1)
+  .map((item, index) => delegate(index));
 
 const generateDelegate = (index) => ({
   [`lskdwsyfmcko6mcd357446yatromr9vzgu7eb8y1${index}`]: {
@@ -28,6 +30,8 @@ const generateDelegate = (index) => ({
 });
 
 export const delegateList = (delegateCount = 0) =>
-  Array(delegateCount).fill(1).map((_, index) => generateDelegate(index));
+  Array(delegateCount)
+    .fill(1)
+    .map((_, index) => generateDelegate(index));
 
 export default delegates;

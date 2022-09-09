@@ -11,7 +11,7 @@ describe('SignInTooltipWrapper', () => {
   };
   const props = {
     children: <span />,
-    t: key => key,
+    t: (key) => key,
     history,
     router: { route: history, history },
   };

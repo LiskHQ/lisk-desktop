@@ -20,7 +20,7 @@ describe('WalletDetails', () => {
         LSK: true,
       },
     },
-    t: key => key,
+    t: (key) => key,
   };
 
   beforeEach(() => {

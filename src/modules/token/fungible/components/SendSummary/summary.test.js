@@ -67,20 +67,23 @@ describe('Summary', () => {
 
   it('should show props.fields.recipient.title if it is present', () => {
     const title = 'Custom title';
-    wrapper = mount(<Summary {...{
-      ...props,
-      rawTx: {
-        ...props.rawTx,
-        params: {
-          ...props.rawTx.params,
-          recipient: {
-            ...props.rawTx.params.recipient,
-            title,
+    wrapper = mount(
+      <Summary
+        {...{
+          ...props,
+          rawTx: {
+            ...props.rawTx,
+            params: {
+              ...props.rawTx.params,
+              recipient: {
+                ...props.rawTx.params.recipient,
+                title,
+              },
+            },
           },
-        },
-      },
-    }}
-    />);
+        }}
+      />
+    );
     expect(wrapper.find('.recipient-value')).toIncludeText(props.rawTx.params.recipient.address);
     expect(wrapper.find('.recipient-value')).toIncludeText(title);
   });

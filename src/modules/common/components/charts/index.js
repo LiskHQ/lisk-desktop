@@ -18,9 +18,7 @@ const propTypes = {
   options: PropTypes.object,
 };
 
-export const LineChart = ({
-  data, width, height, options,
-}) => (
+export const LineChart = ({ data, width, height, options }) => (
   <Line
     data={lineChartData(data)}
     width={width}
@@ -29,9 +27,7 @@ export const LineChart = ({
   />
 );
 
-export const BarChart = ({
-  data, width, height, options,
-}) => (
+export const BarChart = ({ data, width, height, options }) => (
   <Bar
     data={barChartData(data)}
     width={width}
@@ -40,9 +36,7 @@ export const BarChart = ({
   />
 );
 
-export const DoughnutChart = ({
-  data, width, height, options,
-}) => (
+export const DoughnutChart = ({ data, width, height, options }) => (
   <Doughnut
     data={doughnutChartData(data, useTheme())}
     width={width}

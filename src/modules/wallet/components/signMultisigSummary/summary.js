@@ -44,16 +44,14 @@ const Summary = ({
   };
 
   const nextButton = {
-    title:
-      signatureStatus === signatureCollectionStatus.fullySigned
-        ? t('Continue')
-        : t('Sign'),
+    title: signatureStatus === signatureCollectionStatus.fullySigned ? t('Continue') : t('Sign'),
     onClick,
   };
 
-  const showFeedback = !isMember
-    || signatureStatus === signatureCollectionStatus.fullySigned
-    || signatureStatus === signatureCollectionStatus.occupiedByOptionals;
+  const showFeedback =
+    !isMember ||
+    signatureStatus === signatureCollectionStatus.fullySigned ||
+    signatureStatus === signatureCollectionStatus.occupiedByOptionals;
 
   if (isEmpty(senderAccount.data)) {
     return <div />;
@@ -65,18 +63,20 @@ const Summary = ({
       <header>
         <h1>{t('Sign multisignature transaction')}</h1>
         <p>
-          {t(
-            'Provide a signature for a transaction which belongs to a multisignature account.',
-          )}
+          {t('Provide a signature for a transaction which belongs to a multisignature account.')}
         </p>
       </header>
       <BoxContent>
         <ProgressBar current={2} />
         <Box className={`${styles.container} ${styles.txDetails}`}>
           <BoxContent className={`${layoutSchemaStyles.mainContent} ${Layout.className}`}>
-            <TransactionDetailsContext.Provider value={{
-              activeToken, network, wallet: senderAccount.data, transaction,
-            }}
+            <TransactionDetailsContext.Provider
+              value={{
+                activeToken,
+                network,
+                wallet: senderAccount.data,
+                transaction,
+              }}
             >
               {Layout.components.map((Component, index) => (
                 <Component key={index} t={t} />
@@ -85,9 +85,7 @@ const Summary = ({
           </BoxContent>
         </Box>
       </BoxContent>
-      {isMember ? (
-        <ActionBar t={t} history={history} nextButton={nextButton} />
-      ) : null}
+      {isMember ? <ActionBar t={t} history={history} nextButton={nextButton} /> : null}
       {showFeedback ? (
         <Feedback t={t} isMember={isMember} signatureStatus={signatureStatus} />
       ) : null}

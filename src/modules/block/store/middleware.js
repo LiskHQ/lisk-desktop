@@ -1,17 +1,13 @@
 import { blockSubscribe, blockUnsubscribe } from '@block/utils';
-import {
-  olderBlocksRetrieved,
-  forgersRetrieved,
-  networkStatusUpdated,
-} from 'src/redux/actions';
+import { olderBlocksRetrieved, forgersRetrieved, networkStatusUpdated } from 'src/redux/actions';
 import networkActionTypes from '@network/store/actionTypes';
 import actionTypes from './actionTypes';
 
-const generateOnDisconnect = dispatch => () => {
+const generateOnDisconnect = (dispatch) => () => {
   dispatch(networkStatusUpdated({ online: false }));
 };
 
-const generateOnReconnect = dispatch => () => {
+const generateOnReconnect = (dispatch) => () => {
   dispatch(networkStatusUpdated({ online: true }));
 };
 
@@ -38,25 +34,24 @@ const blockListener = ({ getState, dispatch }) => {
     state.network,
     callback,
     generateOnDisconnect(dispatch),
-    generateOnReconnect(dispatch),
+    generateOnReconnect(dispatch)
   );
 };
 
-const blockMiddleware = store => (
-  next => (action) => {
-    next(action);
-    switch (action.type) {
-      case networkActionTypes.networkConfigSet:
-        store.dispatch(olderBlocksRetrieved());
-        blockListener(store);
-        break;
-      case actionTypes.olderBlocksRetrieved:
-        store.dispatch(forgersRetrieved());
-        break;
+const blockMiddleware = (store) => (next) => (action) => {
+  next(action);
+  switch (action.type) {
+    case networkActionTypes.networkConfigSet:
+      store.dispatch(olderBlocksRetrieved());
+      blockListener(store);
+      break;
+    case actionTypes.olderBlocksRetrieved:
+      store.dispatch(forgersRetrieved());
+      break;
 
-      default:
-        break;
-    }
-  });
+    default:
+      break;
+  }
+};
 
 export default blockMiddleware;

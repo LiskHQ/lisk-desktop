@@ -8,7 +8,7 @@ jest.mock('src/theme/Theme', () => ({
 
 describe('New release message banner', () => {
   const props = {
-    t: v => v,
+    t: (v) => v,
     version: '1.20.1',
     releaseSummary: 'Release Summary',
     releaseNotes: '<h3>Fixed bugs</h3>',

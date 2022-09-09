@@ -1,7 +1,7 @@
 import grid from 'flexboxgrid/dist/flexboxgrid.css';
 import styles from './transactionsTable.css';
 
-export default (changeSort, t) => ([
+export default (changeSort, t) => [
   {
     title: t('Sender'),
     classList: grid['col-xs-3'],
@@ -36,4 +36,4 @@ export default (changeSort, t) => ([
     title: t('Status'),
     classList: grid['col-xs-1'],
   },
-]);
+];

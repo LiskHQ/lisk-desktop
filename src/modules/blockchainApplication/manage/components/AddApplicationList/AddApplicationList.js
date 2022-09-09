@@ -11,16 +11,9 @@ import AddApplicationRow from '../AddApplicationRow/AddApplicationRow';
 import BlockchainApplicationSkeleton from '../../../explore/components/BlockchainApplicationSkeleton';
 import styles from './AddApplicationList.css';
 
-const AddApplicationList = ({
-  liskApplications,
-  externalApplications,
-  filters,
-}) => {
+const AddApplicationList = ({ liskApplications, externalApplications, filters }) => {
   const { t } = useTranslation();
-  const {
-    data,
-    ...searchResponse
-  } = useSearchApplications();
+  const { data, ...searchResponse } = useSearchApplications();
   const dataList = externalApplications.data.length
     ? externalApplications.data
     : liskApplications.data;
@@ -41,9 +34,7 @@ const AddApplicationList = ({
       <Box className={styles.wrapper}>
         <BoxHeader className={`${styles.header} add-application-header`}>
           <div>Add Application</div>
-          <AddApplicationSearch
-            {...searchResponse}
-          />
+          <AddApplicationSearch {...searchResponse} />
         </BoxHeader>
         <BoxContent className={`${styles.content} blockchain-application-add-list`}>
           <Table

@@ -10,8 +10,12 @@ import NotFound from './notFound';
 import styles from './styles.css';
 
 const TransactionDetails = ({
-  t, activeToken, network, title,
-  transaction: { error, isLoading, data }, wallet,
+  t,
+  activeToken,
+  network,
+  title,
+  transaction: { error, isLoading, data },
+  wallet,
   containerStyle,
 }) => {
   if (!error && isEmpty(data)) {
@@ -25,10 +29,7 @@ const TransactionDetails = ({
   const Layout = LayoutSchema[data.moduleCommandID] || LayoutSchema.default;
 
   return (
-    <Box
-      isLoading={isLoading}
-      className={`${styles.container} ${containerStyle}`}
-    >
+    <Box isLoading={isLoading} className={`${styles.container} ${containerStyle}`}>
       {title && (
         <BoxHeader>
           <h1>{title}</h1>
@@ -36,9 +37,13 @@ const TransactionDetails = ({
       )}
       <Box>
         <BoxContent className={`${layoutSchemaStyles.mainContent} ${Layout.className}`}>
-          <TransactionDetailsContext.Provider value={{
-            activeToken, network, wallet, transaction: data,
-          }}
+          <TransactionDetailsContext.Provider
+            value={{
+              activeToken,
+              network,
+              wallet,
+              transaction: data,
+            }}
           >
             {Layout.components.map((Component, index) => (
               <Component key={index} t={t} />

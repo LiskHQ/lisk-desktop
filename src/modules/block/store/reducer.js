@@ -13,17 +13,12 @@ const blocks = (state = initialState, action) => {
     case actionTypes.newBlockCreated:
       return {
         ...state,
-        latestBlocks: [
-          action.data.block,
-          ...state.latestBlocks,
-        ].slice(0, ROUND_LENGTH * 2),
+        latestBlocks: [action.data.block, ...state.latestBlocks].slice(0, ROUND_LENGTH * 2),
       };
     case actionTypes.olderBlocksRetrieved:
       return {
         ...state,
-        latestBlocks: [
-          ...action.data.list,
-        ],
+        latestBlocks: [...action.data.list],
         total: action.data.total,
       };
     case actionTypes.forgersRetrieved:

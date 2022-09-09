@@ -7,14 +7,7 @@ import { PrimaryButton, SecondaryButton } from 'src/theme/buttons';
 import Icon from 'src/theme/Icon';
 import styles from './newReleaseMessage.css';
 
-const NewReleaseMessage = ({
-  t,
-  version,
-  releaseSummary,
-  updateNow,
-  readMore,
-  ...props
-}) => {
+const NewReleaseMessage = ({ t, version, releaseSummary, updateNow, readMore, ...props }) => {
   const theme = useTheme();
 
   return (
@@ -27,9 +20,7 @@ const NewReleaseMessage = ({
           {releaseSummary}
           <div className={styles.btnContainer}>
             <SecondaryButton
-              className={`${styles.button} read-more ${
-                theme === 'dark' ? theme : ''
-              }`}
+              className={`${styles.button} read-more ${theme === 'dark' ? theme : ''}`}
               size="s"
               onClick={readMore}
             >
@@ -51,8 +42,7 @@ const NewReleaseMessage = ({
 
 NewReleaseMessage.propTypes = {
   version: PropTypes.string.isRequired,
-  releaseSummary: PropTypes.oneOfType([PropTypes.string, PropTypes.element])
-    .isRequired,
+  releaseSummary: PropTypes.oneOfType([PropTypes.string, PropTypes.element]).isRequired,
   updateNow: PropTypes.func.isRequired,
   readMore: PropTypes.func.isRequired,
 };

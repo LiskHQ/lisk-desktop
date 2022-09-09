@@ -1,4 +1,4 @@
-import React/* , { useState, useEffect }  */from 'react';
+import React /* , { useState, useEffect }  */ from 'react';
 import { useTranslation } from 'react-i18next';
 import Box from 'src/theme/box';
 import BoxContent from 'src/theme/box/content';
@@ -12,7 +12,8 @@ const TransactionEvents = ({ blockId }) => {
   const { t } = useTranslation();
   const {
     data: transactionEvents,
-    isLoading, isFetching,
+    isLoading,
+    isFetching,
     error,
     hasNextPage,
     fetchNextPage,

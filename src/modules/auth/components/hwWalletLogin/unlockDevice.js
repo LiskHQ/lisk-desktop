@@ -5,9 +5,7 @@ import Illustration from 'src/modules/common/components/illustration';
 import Spinner from '@theme/Spinner';
 import styles from './hwWalletLogin.css';
 
-const UnlockDevice = ({
-  deviceId, devices, prevStep, nextStep, goBack, t,
-}) => {
+const UnlockDevice = ({ deviceId, devices, prevStep, nextStep, goBack, t }) => {
   const timeOut = useRef();
   const selected = devices.find((d) => d.deviceId === deviceId) || {};
 
@@ -39,10 +37,7 @@ const UnlockDevice = ({
           deviceModel: selected.model,
         })}
       </h1>
-      <p>
-        {t('If you’re not sure how to do this please follow the')}
-        {' '}
-      </p>
+      <p>{t('If you’re not sure how to do this please follow the')} </p>
       <div className={styles.illustration}>
         <Illustration name="ledgerNano" />
       </div>

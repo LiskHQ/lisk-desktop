@@ -3,15 +3,19 @@ import { FontIcon } from 'src/theme/FontIcon';
 import styles from './multiStep.css';
 
 const MultiStepNav = ({
-  steps, showNav, current, prevStep,
-  browsable, backButtonLabel, prevPage,
+  steps,
+  showNav,
+  current,
+  prevStep,
+  browsable,
+  backButtonLabel,
+  prevPage,
 }) => {
   // Checks if all titles are defined and showNav is not false
   const validateTitles = () => {
     const titlesAreValid = steps.reduce(
-      (acc, step) =>
-        (acc && typeof step.props.title === 'string' && step.props.title.length > 0),
-      true,
+      (acc, step) => acc && typeof step.props.title === 'string' && step.props.title.length > 0,
+      true
     );
     return showNav !== false && titlesAreValid;
   };
@@ -37,38 +41,39 @@ const MultiStepNav = ({
     }
   };
 
-  return (validateTitles()
-    ? (
-      <nav className={styles.navigation}>
-        {
-        typeof backButtonLabel === 'string'
-          ? (
-            <a onClick={backButtonFn} className={`${styles.backButton} multistep-back`}>
-              <FontIcon className={styles.icon}>arrow-left</FontIcon>
-              <span className={styles.label}>{backButtonLabel}</span>
-            </a>
-          ) : null
-      }
-        <section>
-          {
-          dashedSteps().map((step, index) => (
-            <div
-              key={step.props.title}
-              onClick={() => { if (browsable) { prevStep({ to: (index / 2) }); } }}
-              className={`${current === (index / 2) ? styles.current : ''} ${styles.navEl} ${step.dash ? styles.dash : 'title'}`}
-            >
-              {
-                step.props.icon
-                  ? <FontIcon className={styles.icon} value={step.props.icon} /> : null
+  return validateTitles() ? (
+    <nav className={styles.navigation}>
+      {typeof backButtonLabel === 'string' ? (
+        <a onClick={backButtonFn} className={`${styles.backButton} multistep-back`}>
+          <FontIcon className={styles.icon}>arrow-left</FontIcon>
+          <span className={styles.label}>{backButtonLabel}</span>
+        </a>
+      ) : null}
+      <section>
+        {dashedSteps().map((step, index) => (
+          <div
+            key={step.props.title}
+            onClick={() => {
+              if (browsable) {
+                prevStep({ to: index / 2 });
               }
-              <b className={styles.label}><small>{ step.props.title }</small></b>
-            </div>
-          ))
-        }
-        </section>
-        <span className={styles.backButtonShadow} />
-      </nav>
-    ) : <div className={styles.hidden} />);
+            }}
+            className={`${current === index / 2 ? styles.current : ''} ${styles.navEl} ${
+              step.dash ? styles.dash : 'title'
+            }`}
+          >
+            {step.props.icon ? <FontIcon className={styles.icon} value={step.props.icon} /> : null}
+            <b className={styles.label}>
+              <small>{step.props.title}</small>
+            </b>
+          </div>
+        ))}
+      </section>
+      <span className={styles.backButtonShadow} />
+    </nav>
+  ) : (
+    <div className={styles.hidden} />
+  );
 };
 
 export default MultiStepNav;

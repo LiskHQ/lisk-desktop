@@ -51,7 +51,7 @@ describe('Dialog Holder Component', () => {
   let wrapper;
 
   beforeEach(() => {
-    useSelector.mockImplementation(callback => callback(mockAppState));
+    useSelector.mockImplementation((callback) => callback(mockAppState));
     wrapper = mount(<DialogHolder.WrappedComponent history={mockHistory} />);
   });
 

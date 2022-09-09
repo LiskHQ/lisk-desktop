@@ -27,7 +27,7 @@ const addresses = [
 
 describe('VoteForm', () => {
   const props = {
-    t: str => str,
+    t: (str) => str,
     account: accounts.genesis,
     nextStep: jest.fn(),
   };
@@ -49,19 +49,23 @@ describe('VoteForm', () => {
 
   const expensiveVotes = {
     [addresses[0]]: {
-      confirmed: 0, unconfirmed: Math.floor(parseInt(accounts.genesis.token.balance, 10) / 2),
+      confirmed: 0,
+      unconfirmed: Math.floor(parseInt(accounts.genesis.token.balance, 10) / 2),
     },
     [addresses[1]]: {
-      confirmed: 0, unconfirmed: Math.floor(parseInt(accounts.genesis.token.balance, 10) / 2),
+      confirmed: 0,
+      unconfirmed: Math.floor(parseInt(accounts.genesis.token.balance, 10) / 2),
     },
   };
 
   const minimumBalanceVotes = {
     [addresses[0]]: {
-      confirmed: 0, unconfirmed: Math.floor(parseInt(accounts.genesis.token.balance, 10) * 0.6),
+      confirmed: 0,
+      unconfirmed: Math.floor(parseInt(accounts.genesis.token.balance, 10) * 0.6),
     },
     [addresses[1]]: {
-      confirmed: 0, unconfirmed: Math.floor(parseInt(accounts.genesis.token.balance, 10) * 0.4),
+      confirmed: 0,
+      unconfirmed: Math.floor(parseInt(accounts.genesis.token.balance, 10) * 0.4),
     },
   };
 
@@ -93,23 +97,35 @@ describe('VoteForm', () => {
     const wrapper = shallow(<Form {...props} votes={elevenVotes} />);
     // const wrapper = mountWithRouter(Form, { ...props, votes: elevenVotes });
     expect(wrapper.find('.available-votes-num').text()).toBe('2/');
-    expect(wrapper.find('.feedback').text()).toBe('These votes in addition to your current votes will add up to 11, exceeding the account limit of 10.');
+    expect(wrapper.find('.feedback').text()).toBe(
+      'These votes in addition to your current votes will add up to 11, exceeding the account limit of 10.'
+    );
   });
 
   it('Shows an error if trying to vote more than your balance', async () => {
     const wrapper = mountWithRouter(Form, { ...props, votes: expensiveVotes });
     await flushPromises();
-    act(() => { wrapper.update(); });
+    act(() => {
+      wrapper.update();
+    });
     expect(wrapper.find('.available-votes-num').text()).toBe('10/');
-    expect(wrapper.find('.feedback').text()).toBe('The minimum required balance for this action is {{minRequiredBalance}} {{token}}');
+    expect(wrapper.find('.feedback').text()).toBe(
+      'The minimum required balance for this action is {{minRequiredBalance}} {{token}}'
+    );
   });
 
   it('Shows an error if trying to vote with amounts leading to insufficient balance', async () => {
-    props.account.token.balance = `${parseInt(accounts.genesis.token.balance, 10) + (MIN_ACCOUNT_BALANCE * 0.8)}`;
+    props.account.token.balance = `${
+      parseInt(accounts.genesis.token.balance, 10) + MIN_ACCOUNT_BALANCE * 0.8
+    }`;
     const wrapper = mountWithRouter(Form, { ...props, votes: minimumBalanceVotes });
     await flushPromises();
-    act(() => { wrapper.update(); });
+    act(() => {
+      wrapper.update();
+    });
     expect(wrapper.find('.available-votes-num').text()).toBe('10/');
-    expect(wrapper.find('.feedback').at(0).text()).toBe('The vote amounts are too high. You should keep 0.05 LSK available in your account.');
+    expect(wrapper.find('.feedback').at(0).text()).toBe(
+      'The vote amounts are too high. You should keep 0.05 LSK available in your account.'
+    );
   });
 });

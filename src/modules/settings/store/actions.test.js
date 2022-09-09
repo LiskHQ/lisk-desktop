@@ -1,10 +1,6 @@
 import { getFromStorage } from 'src/utils/localJSONStorage';
 import actionTypes from './actionTypes';
-import {
-  settingsReset,
-  settingsUpdated,
-  settingsRetrieved,
-} from './actions';
+import { settingsReset, settingsUpdated, settingsRetrieved } from './actions';
 
 describe('actions: setting', () => {
   const dispatch = jest.fn();

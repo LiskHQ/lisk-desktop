@@ -1,7 +1,5 @@
 import { AUTH } from 'src/const/queries';
-import {
-  API_VERSION,
-} from 'src/const/config';
+import { API_VERSION } from 'src/const/config';
 import { useCustomQuery } from 'src/modules/common/hooks';
 
 /**
@@ -16,18 +14,16 @@ import { useCustomQuery } from 'src/modules/common/hooks';
  * @returns the query object
  */
 // eslint-disable-next-line import/prefer-default-export
-export const useUserInfo = ({ config: customConfig = {}, options } = { }) => {
+export const useUserInfo = ({ config: customConfig = {}, options } = {}) => {
   const config = {
     url: `/api/${API_VERSION}/auth`,
     method: 'get',
     event: 'get.auth',
     ...customConfig,
   };
-  return useCustomQuery(
-    {
-      keys: [AUTH],
-      config,
-      options,
-    },
-  );
+  return useCustomQuery({
+    keys: [AUTH],
+    config,
+    options,
+  });
 };

@@ -22,11 +22,7 @@ const VotingQueue = ({ history, processLaunchProtocol }) => {
   }, []);
 
   return (
-    <MultiStep
-      key="voting-queue"
-      finalCallback={closeModal}
-      className={styles.modal}
-    >
+    <MultiStep key="voting-queue" finalCallback={closeModal} className={styles.modal}>
       <Form />
       <Summary />
       <TxSignatureCollector />

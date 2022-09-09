@@ -11,29 +11,33 @@ const defaultUrlSearchParams = { isDefault: false, search: '' };
 
 const apis = {
   liskApplications: {
-    apiUtil: (/* network, { token, chainId } */) => new Promise((resolve) => resolve({
-      data: mockBlockchainApplications,
-    })),
+    apiUtil: (/* network, { token, chainId } */) =>
+      new Promise((resolve) =>
+        resolve({
+          data: mockBlockchainApplications,
+        })
+      ),
     getApiParams: (state) => ({
       network: state.network,
     }),
-    transformResponse: response => response.data,
+    transformResponse: (response) => response.data,
     autoload: true,
     defaultData: mockBlockchainApplications,
   },
   externalApplications: {
-    apiUtil: (/* network, { token, chainId } */) => getFilteredOffChainApplications({
-      data: mockBlockchainApplications,
-    }),
+    apiUtil: (/* network, { token, chainId } */) =>
+      getFilteredOffChainApplications({
+        data: mockBlockchainApplications,
+      }),
     getApiParams: (state) => ({
       network: state.network,
     }),
-    transformResponse: response => response.data,
+    transformResponse: (response) => response.data,
     autoload: false,
   },
 };
 
 export default compose(
   withData(apis),
-  withFilters('liskApplications', defaultUrlSearchParams),
+  withFilters('liskApplications', defaultUrlSearchParams)
 )(AddApplicationList);

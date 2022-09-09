@@ -24,7 +24,10 @@ describe('Select toolbox component', () => {
     const wrapper = mount(<Select {...newProps} />);
     expect(wrapper.find('input')).toHaveValue(props.options[1].label);
     wrapper.find('input').simulate('click');
-    wrapper.find('.option').first().simulate('click', { target: { getAttribute: () => 0 } });
+    wrapper
+      .find('.option')
+      .first()
+      .simulate('click', { target: { getAttribute: () => 0 } });
     expect(wrapper.find('input')).toHaveValue(props.options[1].label);
   });
 });

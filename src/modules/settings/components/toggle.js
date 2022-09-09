@@ -15,13 +15,13 @@ import useSettings from '../hooks/useSettings';
  * @param {Array} tips [activeTip, normalTip]
  * @param {boolean} isCheckbox show checkbox or tooltip
  */
-const Toggle = ({
-  setting, icons, tips, isCheckbox,
-}) => {
+const Toggle = ({ setting, icons, tips, isCheckbox }) => {
   const { t } = useTranslation();
   const { toggleSetting, [setting]: value } = useSettings(setting);
 
-  const toggle = () => { toggleSetting(!value); };
+  const toggle = () => {
+    toggleSetting(!value);
+  };
 
   const handleCheckboxChange = () => {
     Piwik.trackingEvent('Settings', 'button', 'Update settings');
@@ -41,13 +41,9 @@ const Toggle = ({
       className={styles.tooltipWrapper}
       size="maxContent"
       position="bottom"
-      content={(
-        <Icon
-          name={value ? icons[0] : icons[1]}
-          className={styles.toggle}
-          onClick={toggle}
-        />
-      )}
+      content={
+        <Icon name={value ? icons[0] : icons[1]} className={styles.toggle} onClick={toggle} />
+      }
     >
       <p>{value ? tips[0] : tips[1]}</p>
     </Tooltip>

@@ -20,7 +20,7 @@ export const chartStyles = {
   orange: '#ff7721',
   rainbowEnd: '#35f2b6',
   transparent: 'rgba(0, 0, 0, 0)',
-  contentFontFamily: '\'basier-circle\', sans-serif',
+  contentFontFamily: "'basier-circle', sans-serif",
   fontSize: 13,
 };
 

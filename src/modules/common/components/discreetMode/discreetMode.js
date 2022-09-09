@@ -5,8 +5,13 @@ import { selectSearchParamValue } from 'src/utils/searchParams';
 import styles from './discreetMode.css';
 
 const DiscreetMode = ({
-  children, location, isDiscreetMode, shouldEvaluateForOtherAccounts,
-  addresses, account, token,
+  children,
+  location,
+  isDiscreetMode,
+  shouldEvaluateForOtherAccounts,
+  addresses,
+  account,
+  token,
 }) => {
   const isBlurHandledOnOtherWalletPage = useMemo(() => {
     const { search } = location;

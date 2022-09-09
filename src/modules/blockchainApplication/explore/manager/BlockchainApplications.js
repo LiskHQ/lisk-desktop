@@ -10,14 +10,15 @@ import ManageBlockchainApplicationsView from '../components/BlockchainApplicatio
 
 const defaultUrlSearchParams = { search: '' };
 
-const getStatistics = () => Promise.resolve({
-  registered: 2503,
-  active: 2328,
-  terminated: 35,
-  totalSupplyLSK: '5000000',
-  stakedLSK: '3000000',
-  inflationRate: '4.50',
-});
+const getStatistics = () =>
+  Promise.resolve({
+    registered: 2503,
+    active: 2328,
+    terminated: 35,
+    totalSupplyLSK: '5000000',
+    stakedLSK: '3000000',
+    inflationRate: '4.50',
+  });
 
 const apis = {
   statistics: {
@@ -27,13 +28,16 @@ const apis = {
     autoload: true,
   },
   applications: {
-    apiUtil: (/* network, { token, chainId } */) => new Promise((resolve) => resolve({
-      data: mockBlockchainApplications,
-    })),
+    apiUtil: (/* network, { token, chainId } */) =>
+      new Promise((resolve) =>
+        resolve({
+          data: mockBlockchainApplications,
+        })
+      ),
     getApiParams: (state) => ({
       network: state.network,
     }),
-    transformResponse: response => response.data,
+    transformResponse: (response) => response.data,
     autoload: true,
     defaultData: mockBlockchainApplications,
   },
@@ -41,5 +45,5 @@ const apis = {
 
 export default compose(
   withData(apis),
-  withFilters('applications', defaultUrlSearchParams),
+  withFilters('applications', defaultUrlSearchParams)
 )(ManageBlockchainApplicationsView);

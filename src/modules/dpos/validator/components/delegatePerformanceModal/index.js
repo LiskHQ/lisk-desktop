@@ -5,10 +5,7 @@ import DelegatePerformance from '../delegatePerformance';
 import styles from './styles.css';
 
 const DelegatePerformanceModal = (props) => (
-  <Dialog
-    hasClose
-    className={`${grid.row} ${grid['center-xs']} ${styles.wrapper}`}
-  >
+  <Dialog hasClose className={`${grid.row} ${grid['center-xs']} ${styles.wrapper}`}>
     <DelegatePerformance {...props} />
   </Dialog>
 );

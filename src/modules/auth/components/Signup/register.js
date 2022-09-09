@@ -36,10 +36,7 @@ const Register = ({ account, token, history }) => {
           handleSelectAvatar={handleSelectAvatar}
         />
         <SavePassphrase passphrase={selectedAccount.passphrase} />
-        <ConfirmPassphrase
-          account={selectedAccount}
-          passphrase={selectedAccount.passphrase}
-        />
+        <ConfirmPassphrase account={selectedAccount} passphrase={selectedAccount.passphrase} />
         <AccountCreated account={selectedAccount} />
       </MultiStep>
     </div>

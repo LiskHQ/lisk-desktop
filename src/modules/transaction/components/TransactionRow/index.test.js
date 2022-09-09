@@ -50,7 +50,7 @@ const transfer = {
 };
 
 describe('Transaction Row', () => {
-  const t = str => str;
+  const t = (str) => str;
   const avatarSize = 40;
   const activeToken = 'LSK';
   const currentBlockHeight = 14000000;
@@ -71,11 +71,7 @@ describe('Transaction Row', () => {
         data: mockTransactions.data[0],
         layout: 'full',
       };
-      const wrapper = mountWithRouter(
-        Row,
-        props,
-        {},
-      );
+      const wrapper = mountWithRouter(Row, props, {});
       expect(wrapper.find('Height').text()).toBe('8350681');
       expect(wrapper.find('Sender').text()).toBe(truncateAddress(props.data.sender.address));
       expect(wrapper.find('Date').text()).toBe('23 Nov 1970');
@@ -91,13 +87,11 @@ describe('Transaction Row', () => {
         },
         layout: 'hosted',
       };
-      const wrapper = mountWithRouter(
-        Row,
-        props,
-        {},
-      );
+      const wrapper = mountWithRouter(Row, props, {});
       expect(wrapper.find('Amount').text()).toBe('- 100 LSK');
-      expect(wrapper.find('Counterpart').text()).toBe(truncateAddress(accounts.multiSig.summary.address));
+      expect(wrapper.find('Counterpart').text()).toBe(
+        truncateAddress(accounts.multiSig.summary.address)
+      );
       expect(wrapper.find('Sender')).toHaveLength(0);
       expect(wrapper.find('Recipient')).toHaveLength(0);
       expect(wrapper.find('Params').text()).toBe('sample message');

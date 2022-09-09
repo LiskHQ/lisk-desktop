@@ -82,8 +82,7 @@ describe('unlock transaction Status', () => {
         message: JSON.stringify({ message: 'error:test' }),
       },
       title: 'Transaction failed',
-      message:
-        'An error occurred while signing your transaction. Please try again.',
+      message: 'An error occurred while signing your transaction. Please try again.',
     });
   });
 
@@ -111,8 +110,7 @@ describe('unlock transaction Status', () => {
         message: JSON.stringify({ message: 'error:test' }),
       },
       title: 'Transaction failed',
-      message:
-        'An error occurred while sending your transaction to the network. Please try again.',
+      message: 'An error occurred while sending your transaction to the network. Please try again.',
     });
   });
 
@@ -191,7 +189,7 @@ describe('unlock transaction Status', () => {
           txSignatureError: null,
           signedTransaction: { signatures: ['123'] },
         },
-      },
+      }
     );
     await flushPromises();
     act(() => {

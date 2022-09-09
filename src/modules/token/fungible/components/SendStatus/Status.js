@@ -3,10 +3,7 @@ import { isEmpty } from 'src/utils/helpers';
 import { txStatusTypes } from '@transaction/configuration/txStatus';
 import { PrimaryButton } from 'src/theme/buttons';
 import TxBroadcaster from '@transaction/components/TxBroadcaster';
-import {
-  getTransactionStatus,
-  statusMessages,
-} from '@transaction/configuration/statusConfig';
+import { getTransactionStatus, statusMessages } from '@transaction/configuration/statusConfig';
 import DialogLink from 'src/theme/dialog/link';
 import styles from './status.css';
 
@@ -14,9 +11,7 @@ const shouldShowBookmark = (bookmarks, account, rawTx, token) => {
   if (account.summary.address === rawTx.params.recipient.address) {
     return false;
   }
-  return !bookmarks[token].find(
-    (bookmark) => bookmark.address === rawTx.params.recipient.address,
-  );
+  return !bookmarks[token].find((bookmark) => bookmark.address === rawTx.params.recipient.address);
 };
 
 const getMessagesDetails = (transactions, status, t, isHardwareWalletError) => {
@@ -25,8 +20,8 @@ const getMessagesDetails = (transactions, status, t, isHardwareWalletError) => {
   const messageDetails = messages[code];
 
   if (
-    status.code === txStatusTypes.broadcastError
-    && transactions.txBroadcastError?.error?.message
+    status.code === txStatusTypes.broadcastError &&
+    transactions.txBroadcastError?.error?.message
   ) {
     messageDetails.message = transactions.txBroadcastError.error.message;
   }
@@ -44,10 +39,7 @@ const TransactionStatus = ({
   t,
 }) => {
   useEffect(() => {
-    if (
-      !isEmpty(transactions.signedTransaction)
-      && !transactions.txSignatureError
-    ) {
+    if (!isEmpty(transactions.signedTransaction) && !transactions.txSignatureError) {
       /**
        * Retrieve recipient info to use for bookmarking
        */
@@ -55,17 +47,8 @@ const TransactionStatus = ({
     }
   }, []);
 
-  const showBookmark = shouldShowBookmark(
-    bookmarks,
-    account,
-    rawTx,
-    token,
-  );
-  const status = getTransactionStatus(
-    account,
-    transactions,
-    account.summary.isMultisignature,
-  );
+  const showBookmark = shouldShowBookmark(bookmarks, account, rawTx, token);
+  const status = getTransactionStatus(account, transactions, account.summary.isMultisignature);
   const template = getMessagesDetails(transactions, status, t, false);
 
   return (

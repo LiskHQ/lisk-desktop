@@ -49,19 +49,17 @@ const Identity = ({
   return (
     <div className={styles.identity}>
       {hasTitle ? (
-        <span
-          className={`${styles.primary} ${styles.text} ${styles.noSelect} account-primary`}
-        >
+        <span className={`${styles.primary} ${styles.text} ${styles.noSelect} account-primary`}>
           {username || bookmark.title}
         </span>
       ) : null}
       <Tooltip
         className={classNames.tooltipTruncated}
-        content={(
+        content={
           <span className={classNames.spanTruncated} onClick={setShowLegacy}>
             {truncateAddress(newAddress)}
           </span>
-        )}
+        }
       >
         <span>
           {legacyAddress
@@ -71,11 +69,11 @@ const Identity = ({
       </Tooltip>
       <Tooltip
         className={classNames.tooltipFull}
-        content={(
+        content={
           <span className={classNames.spanFull} onClick={setShowLegacy}>
             {newAddress}
           </span>
-        )}
+        }
       >
         <span>
           {legacyAddress

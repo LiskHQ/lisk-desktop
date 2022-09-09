@@ -7,7 +7,7 @@ describe('FilterBar', () => {
   const props = {
     clearFilter: jest.fn(),
     clearAllFilters: jest.fn(),
-    t: v => v,
+    t: (v) => v,
     filters: {
       dateFrom: '11.12.16',
       dateTo: '12.12.16',

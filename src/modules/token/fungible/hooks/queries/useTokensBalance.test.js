@@ -7,7 +7,9 @@ jest.useRealTimers();
 
 describe('useTokensBalance hook', () => {
   const limit = 5;
-  const config = { params: { publicKey: '6e0291140a28148267e30ac69b5e6965680190dc7de13b0a859bda556c9f0f86' } };
+  const config = {
+    params: { publicKey: '6e0291140a28148267e30ac69b5e6965680190dc7de13b0a859bda556c9f0f86' },
+  };
   let hookResult;
 
   beforeEach(() => {
@@ -61,14 +63,17 @@ describe('useTokensBalance hook', () => {
     expect(result.current.isSuccess).toBeTruthy();
     const expectedResponse = {
       error: true,
-      message: "Invalid input: The 'address' field length must be less than or equal to 41 characters long., The 'address' field fails to match the required pattern.",
+      message:
+        "Invalid input: The 'address' field length must be less than or equal to 41 characters long., The 'address' field fails to match the required pattern.",
     };
 
     expect(result.current.error).toEqual(expectedResponse);
   });
 
   it.skip('returns error if param is invalid', async () => {
-    const errorConfig = { params: { publicKey: '6e0291140a28148267e30ac69b5e6965680190dc7de13b0a859bda556c9f0f86' } };
+    const errorConfig = {
+      params: { publicKey: '6e0291140a28148267e30ac69b5e6965680190dc7de13b0a859bda556c9f0f86' },
+    };
     hookResult = renderHook(() => useTokensBalance({ config: errorConfig }), { wrapper });
     const { result, waitFor } = hookResult;
 

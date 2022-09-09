@@ -9,7 +9,9 @@ const generateTimeline = (index) => ({
 });
 
 const data = {
-  timeline: Array(30).fill(1).map((_, idx) => generateTimeline(idx)),
+  timeline: Array(30)
+    .fill(1)
+    .map((_, idx) => generateTimeline(idx)),
   distributionByOperation: {},
   distributionByAmount: {},
 };

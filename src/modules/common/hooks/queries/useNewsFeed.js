@@ -1,7 +1,4 @@
-import {
-  LIMIT as limit,
-  API_VERSION,
-} from 'src/const/config';
+import { LIMIT as limit, API_VERSION } from 'src/const/config';
 import { NEWSFEED } from 'src/const/queries';
 import { useCustomInfiniteQuery } from '../useCustomInfiniteQuery';
 
@@ -19,7 +16,7 @@ import { useCustomInfiniteQuery } from '../useCustomInfiniteQuery';
  * @returns the query object
  */
 // eslint-disable-next-line import/prefer-default-export
-export const useNewsFeed = ({ config: customConfig = {}, options } = { }) => {
+export const useNewsFeed = ({ config: customConfig = {}, options } = {}) => {
   const config = {
     url: `/api/${API_VERSION}/newsfeed`,
     method: 'get',

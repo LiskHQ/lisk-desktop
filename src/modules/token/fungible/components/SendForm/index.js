@@ -4,7 +4,7 @@ import { withTranslation } from 'react-i18next';
 import { selectActiveTokenAccount, selectActiveToken } from 'src/redux/selectors';
 import SendForm from './SendForm';
 
-const mapStateToProps = state => ({
+const mapStateToProps = (state) => ({
   account: selectActiveTokenAccount(state),
   bookmarks: state.bookmarks,
   token: selectActiveToken(state),

@@ -3,13 +3,10 @@ import Icon from 'src/theme/Icon';
 import WalletVisual from '@wallet/components/walletVisual';
 import styles from './AccountRow.css';
 
-function AccountRow({
-  account,
-  onSelect,
-  onRemove,
-  showRemove,
-}) {
-  const { metadata: { name, address } } = account;
+function AccountRow({ account, onSelect, onRemove, showRemove }) {
+  const {
+    metadata: { name, address },
+  } = account;
 
   return (
     <div
@@ -20,12 +17,8 @@ function AccountRow({
     >
       <WalletVisual address={address} size={40} />
       <div className={styles.addressWrapper}>
-        <b className={`${styles.addressValue}`}>
-          {name}
-        </b>
-        <p className={`${styles.addressValue}`}>
-          {address}
-        </p>
+        <b className={`${styles.addressValue}`}>{name}</b>
+        <p className={`${styles.addressValue}`}>{address}</p>
       </div>
       {showRemove && (
         <button

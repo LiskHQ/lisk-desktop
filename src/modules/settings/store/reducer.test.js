@@ -40,7 +40,7 @@ describe('Reducer: settings(state, action)', () => {
     let state;
     const action = {
       type: actionTypes.settingsRetrieved,
-      data: { },
+      data: {},
     };
 
     const changedState = settings(state, action);

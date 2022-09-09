@@ -11,10 +11,10 @@ describe('sortByVersion', () => {
       ['1.2.3-rc.0', '1.2.3-beta.0'],
       ['1.2.3-beta.1', '1.2.3-beta.0'],
       ['1.2.3-rc.1', '1.2.3-rc.0'],
-    ].map(versions =>
-      expect(sortByVersion(
-        { networkVersion: versions[0] },
-        { networkVersion: versions[1] },
-      )).toEqual(-1));
+    ].map((versions) =>
+      expect(
+        sortByVersion({ networkVersion: versions[0] }, { networkVersion: versions[1] })
+      ).toEqual(-1)
+    );
   });
 });

@@ -15,9 +15,7 @@ import BoxHeader from '@theme/box/header';
 import BoxContent from '@theme/box/content';
 import { DoughnutChart, BarChart } from 'src/modules/common/components/charts';
 import Tooltip from '@theme/Tooltip';
-import GuideTooltip, {
-  GuideTooltipItem,
-} from 'src/modules/common/components/charts/guideTooltip';
+import GuideTooltip, { GuideTooltipItem } from 'src/modules/common/components/charts/guideTooltip';
 import styles from './Overview.css';
 
 const moduleCommandIDs = Object.values(MODULE_COMMANDS_NAME_ID_MAP);
@@ -135,32 +133,24 @@ const formatDates = (date, period) => {
 };
 
 const formatDistributionByValues = (distributions) =>
-  moduleCommandIDs.map((id) =>
-    (distributions[id] ? parseInt(distributions[id], 10) : 0));
+  moduleCommandIDs.map((id) => (distributions[id] ? parseInt(distributions[id], 10) : 0));
 
 const Overview = ({ t, txStats }) => {
   const [activeTab, setActiveTab] = useState('week');
   const colorPalette = getColorPalette(useTheme());
-  const distributionByType = formatDistributionByValues(
-    txStats.data.distributionByType,
-  );
-  const distributionByAmount = normalizeNumberRange(
-    txStats.data.distributionByAmount,
-  );
+  const distributionByType = formatDistributionByValues(txStats.data.distributionByType);
+  const distributionByAmount = normalizeNumberRange(txStats.data.distributionByAmount);
   const { txCountList, txVolumeList, txDateList } = txStats.data.timeline.reduce(
     (acc, item) => ({
       txCountList: [...acc.txCountList, item.transactionCount],
-      txDateList: [
-        ...acc.txDateList,
-        formatDates(item.date, activeTab).slice(0, 2),
-      ],
+      txDateList: [...acc.txDateList, formatDates(item.date, activeTab).slice(0, 2)],
       txVolumeList: [...acc.txVolumeList, fromRawLsk(item.volume)],
     }),
     {
       txCountList: [],
       txDateList: [],
       txVolumeList: [],
-    },
+    }
   );
 
   const changeTab = (tab) => {
@@ -170,7 +160,8 @@ const Overview = ({ t, txStats }) => {
 
   const distributionChartData = {
     labels: listOfLabels.map((item) =>
-      item.replace('Register multisignature group', 'Regsiter multisig.')),
+      item.replace('Register multisignature group', 'Regsiter multisig.')
+    ),
     datasets: [
       {
         data: distributionByType,
@@ -208,10 +199,7 @@ const Overview = ({ t, txStats }) => {
                   <GuideTooltipItem
                     key={`transaction-GuideTooltip${i}`}
                     color={colorPalette[i]}
-                    label={label.replace(
-                      'Register multisignature group',
-                      'Register multisig.',
-                    )}
+                    label={label.replace('Register multisignature group', 'Register multisig.')}
                   />
                 ))}
               </GuideTooltip>
@@ -268,28 +256,18 @@ const Overview = ({ t, txStats }) => {
         </div>
         <div className={`${styles.column} ${styles.bar}`}>
           <div className={styles.top}>
-            <h2 className={styles.title}>
-              {t('Transaction volume / number (LSK)')}
-            </h2>
+            <h2 className={styles.title}>{t('Transaction volume / number (LSK)')}</h2>
             <aside className={styles.legends}>
               <h5 className={`${styles.legend} ${styles.volume}`}>
                 <span>{t('Volume')}</span>
                 <Tooltip className={styles.tooltip} position="left">
-                  <p>
-                    {t(
-                      'The aggregated LSK volume transferred over the selected time period.',
-                    )}
-                  </p>
+                  <p>{t('The aggregated LSK volume transferred over the selected time period.')}</p>
                 </Tooltip>
               </h5>
               <h5 className={`${styles.legend} ${styles.number}`}>
                 <span>{t('Number')}</span>
                 <Tooltip className={styles.tooltip} position="left">
-                  <p>
-                    {t(
-                      'The number of transactions submitted over the selected time period.',
-                    )}
-                  </p>
+                  <p>{t('The number of transactions submitted over the selected time period.')}</p>
                 </Tooltip>
               </h5>
             </aside>

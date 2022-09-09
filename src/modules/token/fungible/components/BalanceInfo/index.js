@@ -11,16 +11,12 @@ import ActionBar from './ActionBar';
 import styles from './BalanceInfo.css';
 
 // eslint-disable-next-line complexity
-const BalanceInfo = ({
-  t, activeToken, isWalletRoute, account,
-}) => {
+const BalanceInfo = ({ t, activeToken, isWalletRoute, account }) => {
   const { address, balance = 0 } = account?.summary ?? {};
 
   const isBanned = account?.dpos?.delegate?.isBanned;
   const pomHeights = account?.dpos?.delegate?.pomHeights;
-  const pomStart = pomHeights?.length
-    ? { ...pomHeights[pomHeights.length - 1] }
-    : {};
+  const pomStart = pomHeights?.length ? { ...pomHeights[pomHeights.length - 1] } : {};
 
   return (
     <Box className={`${styles.wrapper}`}>
@@ -30,11 +26,7 @@ const BalanceInfo = ({
           <DiscreetMode shouldEvaluateForOtherAccounts>
             <div className={`${styles.cryptoValue} balance-value`}>
               <TokenAmount val={balance} token={activeToken} />
-              <Converter
-                className={styles.fiatValue}
-                value={fromRawLsk(balance)}
-                error=""
-              />
+              <Converter className={styles.fiatValue} value={fromRawLsk(balance)} error="" />
             </div>
             <LockedBalanceLink
               activeToken={activeToken}

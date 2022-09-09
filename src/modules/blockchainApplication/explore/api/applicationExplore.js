@@ -18,14 +18,13 @@ const httpPaths = {
  * @returns {Promise} Blockchain application details API call
  */
 
-export const getApplication = ({
-  params, network, baseUrl,
-}) => http({
-  path: httpPaths.application,
-  params,
-  network,
-  baseUrl,
-});
+export const getApplication = ({ params, network, baseUrl }) =>
+  http({
+    path: httpPaths.application,
+    params,
+    network,
+    baseUrl,
+  });
 
 /**
  * Retrieves list of blockchain applications
@@ -40,14 +39,13 @@ export const getApplication = ({
  */
 
 // eslint-disable-next-line import/prefer-default-export
-export const getApplications = ({
-  params, network, baseUrl,
-}) => http({
-  path: httpPaths.application,
-  params,
-  network,
-  baseUrl,
-});
+export const getApplications = ({ params, network, baseUrl }) =>
+  http({
+    path: httpPaths.application,
+    params,
+    network,
+    baseUrl,
+  });
 
 /**
  * Retrieves list of blockchain applications with off-chain data
@@ -61,11 +59,10 @@ export const getApplications = ({
  * @returns {Promise} Blockchain application details API call
  */
 
-export const getFilteredOffChainApplications = ({
-  params, network, baseUrl,
-}) => http({
-  path: httpPaths.filterOffChainApplications,
-  params,
-  network,
-  baseUrl,
-});
+export const getFilteredOffChainApplications = ({ params, network, baseUrl }) =>
+  http({
+    path: httpPaths.filterOffChainApplications,
+    params,
+    network,
+    baseUrl,
+  });

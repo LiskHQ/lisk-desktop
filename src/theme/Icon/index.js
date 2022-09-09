@@ -460,7 +460,8 @@ export const icons = {
 
 const Icon = ({ name, noTheme, ...props }) => {
   const theme = useTheme();
-  const src = theme === 'dark' && !noTheme && icons[`${name}Dark`] ? icons[`${name}Dark`] : icons[name];
+  const src =
+    theme === 'dark' && !noTheme && icons[`${name}Dark`] ? icons[`${name}Dark`] : icons[name];
   return <img src={src} alt={name} {...props} />;
 };
 

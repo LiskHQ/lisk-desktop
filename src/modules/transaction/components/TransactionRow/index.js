@@ -46,7 +46,7 @@ const TransactionRow = ({
 
 /* istanbul ignore next */
 const areEqual = (prevProps, nextProps) =>
-  prevProps.data.id === nextProps.data.id
-  && prevProps.currentBlockHeight === nextProps.currentBlockHeight;
+  prevProps.data.id === nextProps.data.id &&
+  prevProps.currentBlockHeight === nextProps.currentBlockHeight;
 
 export default React.memo(withTranslation()(TransactionRow), areEqual);

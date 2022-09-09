@@ -32,7 +32,7 @@ const apis = {
       transactionId: parseSearchParams(ownProps.location.search).transactionId,
       network: state.network,
     }),
-    transformResponse: response => response.data[0] || {},
+    transformResponse: (response) => response.data[0] || {},
     autoload: true,
   },
 };
@@ -41,5 +41,5 @@ export default compose(
   withRouter,
   connect(mapStateToProps),
   withData(apis),
-  withTranslation(),
+  withTranslation()
 )(WrappedInDialog);

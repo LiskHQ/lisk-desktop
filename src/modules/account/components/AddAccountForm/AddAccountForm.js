@@ -10,9 +10,7 @@ import DiscreetModeToggle from 'src/modules/settings/components/discreetModeTogg
 import NetworkSelector from 'src/modules/settings/components/networkSelector';
 import styles from './AddAccountForm.css';
 
-const AddAccountForm = ({
-  settings, onAddAccount,
-}) => {
+const AddAccountForm = ({ settings, onAddAccount }) => {
   const { t } = useTranslation();
   const [passphrase, setPass] = useState({ value: '', isValid: false });
 
@@ -37,22 +35,18 @@ const AddAccountForm = ({
 
   return (
     <div className={`${styles.addAccount}`}>
-      <div
-        className={`${styles.wrapper} ${grid['col-xs-12']}`}
-      >
+      <div className={`${styles.wrapper} ${grid['col-xs-12']}`}>
         <div className={`${styles.titleHolder} ${grid['col-xs-12']}`}>
           <h1>{t('Add account')}</h1>
-          <p>
-            {t('Enter your secret recovery phrase to manage your account.')}
-          </p>
+          <p>{t('Enter your secret recovery phrase to manage your account.')}</p>
         </div>
         <form onSubmit={onFormSubmit}>
           <div className={styles.inputFields}>
             {settings.showNetwork && (
-            <fieldset>
-              <label>{t('Select Network')}</label>
-              <NetworkSelector />
-            </fieldset>
+              <fieldset>
+                <label>{t('Select Network')}</label>
+                <NetworkSelector />
+              </fieldset>
             )}
             <fieldset>
               <label>{t('Secret recovery phrase')}</label>

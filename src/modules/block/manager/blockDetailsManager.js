@@ -10,9 +10,6 @@ const mapStateToProps = (state, ownProps) => ({
   height: selectSearchParamValue(ownProps.history.location.search, 'height'),
   currentHeight: state.blocks.latestBlocks.length ? state.blocks.latestBlocks[0].height : 0,
 });
-const ComposedBlockDetails = compose(
-  withRouter,
-  connect(mapStateToProps),
-)(BlockDetails);
+const ComposedBlockDetails = compose(withRouter, connect(mapStateToProps))(BlockDetails);
 
 export default ComposedBlockDetails;

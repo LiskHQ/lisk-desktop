@@ -2,8 +2,7 @@
 import { MIN_ACCOUNT_BALANCE } from '@transaction/configuration/transactions';
 import { toRawLsk } from '@token/fungible/utils/lsk';
 
-const calculateAvailableBalance = (balance) =>
-  Math.max(balance - MIN_ACCOUNT_BALANCE, 0);
+const calculateAvailableBalance = (balance) => Math.max(balance - MIN_ACCOUNT_BALANCE, 0);
 
 const initialFee = {
   value: 0,
@@ -11,7 +10,7 @@ const initialFee = {
   feedback: '',
 };
 
-const getInitialState = wallet => ({
+const getInitialState = (wallet) => ({
   fee: initialFee,
   minFee: initialFee,
   maxAmount: {
@@ -54,8 +53,4 @@ const reducer = (state, action) => {
   }
 };
 
-export {
-  actionTypes,
-  getInitialState,
-  reducer,
-};
+export { actionTypes, getInitialState, reducer };

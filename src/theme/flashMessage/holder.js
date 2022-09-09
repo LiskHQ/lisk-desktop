@@ -14,7 +14,7 @@ class FlashMessageHolder extends React.Component {
 
   static deleteMessage(name) {
     const prevChildren = this.singletonRef.state.children;
-    const keys = Object.keys(prevChildren).filter(key => key !== name);
+    const keys = Object.keys(prevChildren).filter((key) => key !== name);
     const children = keys.reduce((acc, key) => ({ ...acc, [key]: prevChildren[key] }), {});
     this.singletonRef.setState({ children });
   }

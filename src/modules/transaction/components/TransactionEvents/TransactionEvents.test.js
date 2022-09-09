@@ -2,9 +2,7 @@ import React from 'react';
 import { fireEvent, screen, waitFor } from '@testing-library/react';
 import mockManagedApplications from '@tests/fixtures/blockchainApplicationsManage';
 import { renderWithQueryClient } from 'src/utils/testHelpers';
-import {
-  useCurrentApplication,
-} from '@blockchainApplication/manage/hooks';
+import { useCurrentApplication } from '@blockchainApplication/manage/hooks';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { mockEvents } from '../../__fixtures__';
 import TransactionEvents from './TransactionEvents';
@@ -14,10 +12,7 @@ const mockSetApplication = jest.fn();
 jest.mock('@blockchainApplication/manage/hooks/useCurrentApplication');
 jest.mock('../../hooks/queries');
 
-useCurrentApplication.mockReturnValue([
-  mockManagedApplications[1],
-  mockSetApplication,
-]);
+useCurrentApplication.mockReturnValue([mockManagedApplications[1], mockSetApplication]);
 
 describe('TransactionEvents', () => {
   const queryClient = new QueryClient();
@@ -72,7 +67,7 @@ describe('TransactionEvents', () => {
     wrapper.rerender(
       <QueryClientProvider client={queryClient}>
         <TransactionEvents {...props} />
-      </QueryClientProvider>,
+      </QueryClientProvider>
     );
 
     expect(wrapper.getByText('There are no transaction events')).toBeTruthy();

@@ -6,7 +6,7 @@ import Status from './Status';
 
 describe('Status', () => {
   const props = {
-    t: v => v,
+    t: (v) => v,
     account: accounts.non_migrated,
     balance: 1e20,
     transactions: {
@@ -72,7 +72,7 @@ describe('Status', () => {
       transactions: {
         txBroadcastError: { message: 'error:test' },
         txSignatureError: null,
-        signedTransaction: { },
+        signedTransaction: {},
       },
     };
 
@@ -92,7 +92,7 @@ describe('Status', () => {
       transactions: {
         txBroadcastError: null,
         txSignatureError: null,
-        signedTransaction: { },
+        signedTransaction: {},
       },
     };
 

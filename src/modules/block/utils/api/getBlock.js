@@ -14,9 +14,7 @@ import getBlockProps from '@block/utils/getBlockProps';
  * @param {Object} data.network - Network setting from Redux store
  * @returns {Promise} http call
  */
-const getBlock = ({
-  params = {}, network, baseUrl,
-}) => {
+const getBlock = ({ params = {}, network, baseUrl }) => {
   try {
     const blockProps = getBlockProps(params);
     return http({

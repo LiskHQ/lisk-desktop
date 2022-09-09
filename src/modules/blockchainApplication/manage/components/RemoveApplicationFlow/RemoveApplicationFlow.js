@@ -14,9 +14,7 @@ const RemoveApplicationFlow = ({ history, testHistory, testLocation }) => {
 
   return (
     <div className={`${styles.removeApplicationFlowWrapper} ${grid.row}`}>
-      <MultiStep
-        navStyles={{ multiStepWrapper: styles.wrapper }}
-      >
+      <MultiStep navStyles={{ multiStepWrapper: styles.wrapper }}>
         <RemoveApplicationDetails
           history={testHistory}
           location={testLocation}

@@ -10,7 +10,7 @@ describe('InputWithDropdown', () => {
         <span>element 1</span>
         <span>element 2</span>
         <span>element 3</span>
-      </DropdownInput>,
+      </DropdownInput>
     );
 
     expect(wrapper).toContainMatchingElement('.input-with-dropdown-container');

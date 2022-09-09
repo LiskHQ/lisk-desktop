@@ -27,33 +27,47 @@ const Members = ({ members, t, className }) => {
     <div className={`${styles.membersContainer} ${className}`}>
       <p className={styles.title}>{t('Members')}</p>
       <div>
-        {leftColumn.map((member, i) =>
-          <Member member={member} i={i} key={`registerMultiSignature-members-list-${i}`} t={t} />)}
+        {leftColumn.map((member, i) => (
+          <Member member={member} i={i} key={`registerMultiSignature-members-list-${i}`} t={t} />
+        ))}
       </div>
       <div>
-        {rightColumn.map((member, i) =>
-          <Member member={member} i={i + sliceIndex} key={`registerMultiSignature-members-list-${i + sliceIndex}`} t={t} />)}
+        {rightColumn.map((member, i) => (
+          <Member
+            member={member}
+            i={i + sliceIndex}
+            key={`registerMultiSignature-members-list-${i + sliceIndex}`}
+            t={t}
+          />
+        ))}
       </div>
     </div>
   );
 };
 
 export const SignedAndRemainingMembers = ({
-  signed, remaining, needed, required, className, t,
+  signed,
+  remaining,
+  needed,
+  required,
+  className,
+  t,
 }) => (
   <div className={`${styles.membersContainer} ${className}`}>
     <div>
       <p className={styles.label}>{t('Signed')}</p>
-      {signed.map((member, i) =>
-        <Member member={member} key={`registerMultiSignature-members-list-${i}`} t={t} />)}
+      {signed.map((member, i) => (
+        <Member member={member} key={`registerMultiSignature-members-list-${i}`} t={t} />
+      ))}
     </div>
     <div>
       <p className={styles.label}>
         <span>{t('Remaining')}</span>
         <span className="tx-remaining-members">{` ${needed}/${required}`}</span>
       </p>
-      {remaining.map((member, i) =>
-        <Member member={member} key={`registerMultiSignature-members-list-${i}-remaining`} t={t} />)}
+      {remaining.map((member, i) => (
+        <Member member={member} key={`registerMultiSignature-members-list-${i}-remaining`} t={t} />
+      ))}
     </div>
   </div>
 );

@@ -4,7 +4,7 @@ import { withRouter } from 'react-router-dom';
 import { selectActiveTokenAccount, selectActiveToken } from 'src/redux/selectors';
 import DiscreetMode from './discreetMode';
 
-const mapStateToProps = state => ({
+const mapStateToProps = (state) => ({
   account: selectActiveTokenAccount(state),
   isDiscreetMode: state.settings.discreetMode || false,
   token: selectActiveToken(state),

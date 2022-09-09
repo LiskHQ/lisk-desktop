@@ -1,7 +1,5 @@
 import { NETWORK_STATUS } from 'src/const/queries';
-import {
-  API_VERSION,
-} from 'src/const/config';
+import { API_VERSION } from 'src/const/config';
 import { useCustomQuery } from 'src/modules/common/hooks';
 
 /**
@@ -15,18 +13,16 @@ import { useCustomQuery } from 'src/modules/common/hooks';
  * @returns the query object
  */
 // eslint-disable-next-line import/prefer-default-export
-export const useNetworkStatus = ({ config: customConfig = {}, options } = { }) => {
+export const useNetworkStatus = ({ config: customConfig = {}, options } = {}) => {
   const config = {
     url: `/api/${API_VERSION}/network/status`,
     method: 'get',
     event: 'get.network.status',
     ...customConfig,
   };
-  return useCustomQuery(
-    {
-      keys: [NETWORK_STATUS],
-      config,
-      options,
-    },
-  );
+  return useCustomQuery({
+    keys: [NETWORK_STATUS],
+    config,
+    options,
+  });
 };

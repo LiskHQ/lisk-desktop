@@ -7,11 +7,12 @@ const generateUnlock = (index) => ({
     start: 30 + index,
     end: 300 + index,
   },
-}
-);
+});
 
 const data = {
-  unlocking: Array(30).fill(1).map((_, idx) => generateUnlock(idx)),
+  unlocking: Array(30)
+    .fill(1)
+    .map((_, idx) => generateUnlock(idx)),
   account: {
     address: 'lsk24cd35u4jdq8szo3pnsqe5dsxwrnazyqqqg5eu',
     publicKey: 'aq02qkbb35u4jdq8szo3pnsqe5dsxwrnazyqqqg5eu',

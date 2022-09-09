@@ -31,7 +31,7 @@ describe.skip('Sign Message: Status', () => {
     const props = {
       account: walletWithPassphrase,
       message: 'Random message',
-      t: v => v,
+      t: (v) => v,
       isNext: true,
       nextStep: jest.fn(),
     };

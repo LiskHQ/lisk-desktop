@@ -15,19 +15,27 @@ import {
   getTransactions,
   getTransactionStats,
   getSchemas,
-  getTransactionFee, getRegisteredDelegates,
+  getTransactionFee,
+  getRegisteredDelegates,
 } from './index';
 
 const {
-  transfer, voteDelegate, registerDelegate, registerMultisignatureGroup, unlockToken, reclaimLSK,
+  transfer,
+  voteDelegate,
+  registerDelegate,
+  registerMultisignatureGroup,
+  unlockToken,
+  reclaimLSK,
 } = MODULE_COMMANDS_NAME_ID_MAP;
 const { network } = getState();
 
 jest.mock('src/utils/api/http', () =>
-  jest.fn().mockImplementation(() => Promise.resolve({ data: [{ type: 0 }] })));
+  jest.fn().mockImplementation(() => Promise.resolve({ data: [{ type: 0 }] }))
+);
 
 jest.mock('src/utils/api/ws', () =>
-  jest.fn().mockImplementation(() => Promise.resolve({ data: [{ type: 0 }] })));
+  jest.fn().mockImplementation(() => Promise.resolve({ data: [{ type: 0 }] }))
+);
 
 jest.mock('@dpos/validator/api', () => ({
   getDelegates: jest.fn(),
@@ -65,7 +73,8 @@ describe('API: LSK Transactions', () => {
 
     it('should call http with block id', async () => {
       await getTransactions({
-        network, params: { blockId: sampleId },
+        network,
+        params: { blockId: sampleId },
       });
 
       expect(http).toHaveBeenCalledWith({
@@ -116,8 +125,7 @@ describe('API: LSK Transactions', () => {
         network,
         path: '/api/v2/transactions',
         baseUrl: undefined,
-        params: {
-        },
+        params: {},
       });
     });
   });
@@ -132,15 +140,14 @@ describe('API: LSK Transactions', () => {
       http.mockRejectedValue(Error('Error fetching data.'));
 
       // call and anticipate failure
-      await expect(getRegisteredDelegates({ network }))
-        .rejects
-        .toThrow('Error fetching data.');
+      await expect(getRegisteredDelegates({ network })).rejects.toThrow('Error fetching data.');
     });
 
     it('should return correct stats of registered delegates', async () => {
       // create sample delegate registration transactions
-      const txs = [7, 6, 6, 6, 5, 5, 5, 4, 4, 4]
-        .map(d => ({ block: { timestamp: (new Date(`2020-${d}-1`)).getTime() / 1000 } }));
+      const txs = [7, 6, 6, 6, 5, 5, 5, 4, 4, 4].map((d) => ({
+        block: { timestamp: new Date(`2020-${d}-1`).getTime() / 1000 },
+      }));
 
       // mock internals
       delegates.getDelegates.mockResolvedValue({
@@ -155,7 +162,11 @@ describe('API: LSK Transactions', () => {
       // Call and expect right values
       const response = await getRegisteredDelegates({ network });
       expect(response).toEqual([
-        ['2020-3', 90], ['2020-4', 93], ['2020-5', 96], ['2020-6', 99], ['2020-7', 100],
+        ['2020-3', 90],
+        ['2020-4', 93],
+        ['2020-5', 96],
+        ['2020-6', 99],
+        ['2020-7', 100],
       ]);
     });
   });
@@ -385,8 +396,16 @@ describe('API: LSK Transactions', () => {
         moduleCommandID: unlockToken,
         params: {
           unlockObjects: [
-            { delegateAddress: accounts.genesis.summary.address, amount: '-10000000', unvoteHeight: 1500 },
-            { delegateAddress: accounts.delegate_candidate.summary.address, amount: '-340000000', unvoteHeight: 1500 },
+            {
+              delegateAddress: accounts.genesis.summary.address,
+              amount: '-10000000',
+              unvoteHeight: 1500,
+            },
+            {
+              delegateAddress: accounts.delegate_candidate.summary.address,
+              amount: '-340000000',
+              unvoteHeight: 1500,
+            },
           ],
         },
       };

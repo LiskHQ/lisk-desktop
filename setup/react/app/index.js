@@ -30,7 +30,7 @@ if (process.env.REACT_APP_MSW) {
 const App = ({ history }) => {
   const dispatch = useDispatch();
   const [loaded, setLoaded] = useState(false);
-  const theme = useSelector(state => (state.settings.darkMode ? 'dark' : 'light'));
+  const theme = useSelector((state) => (state.settings.darkMode ? 'dark' : 'light'));
 
   useIpc(history);
 
@@ -42,7 +42,7 @@ const App = ({ history }) => {
   }, []);
 
   const routesList = Object.keys(routes);
-  const routeObj = Object.values(routes).find(r => r.path === history.location.pathname) || {};
+  const routeObj = Object.values(routes).find((r) => r.path === history.location.pathname) || {};
   return (
     <ThemeContext.Provider value={theme}>
       <OfflineWrapper>
@@ -67,20 +67,18 @@ const App = ({ history }) => {
             <FlashMessageHolder />
             <div className={`${styles.mainContent} ${styles.mainBox}`}>
               <Switch>
-                {
-                  routesList.map(route => (
-                    <CustomRoute
-                      key={routes[route].path}
-                      route={routes[route]}
-                      path={routes[route].path}
-                      exact={routes[route].exact}
-                      isPrivate={routes[route].isPrivate}
-                      forbiddenTokens={routes[route].forbiddenTokens}
-                      component={routesMap[route]}
-                      history={history}
-                    />
-                  ))
-                }
+                {routesList.map((route) => (
+                  <CustomRoute
+                    key={routes[route].path}
+                    route={routes[route]}
+                    path={routes[route].path}
+                    exact={routes[route].exact}
+                    isPrivate={routes[route].isPrivate}
+                    forbiddenTokens={routes[route].forbiddenTokens}
+                    component={routesMap[route]}
+                    history={history}
+                  />
+                ))}
                 <Route path="*" component={NotFound} />
               </Switch>
             </div>

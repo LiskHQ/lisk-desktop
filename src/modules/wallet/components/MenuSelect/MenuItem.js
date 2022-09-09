@@ -2,9 +2,7 @@ import React, { useContext } from 'react';
 import DropdownContext from '../../context/dropdownContext';
 import styles from './MenuSelect.css';
 
-function MenuItem({
-  value, children, className,
-}) {
+function MenuItem({ value, children, className }) {
   const { onChange } = useContext(DropdownContext);
   return (
     <div

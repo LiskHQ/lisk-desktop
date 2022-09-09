@@ -1,6 +1,6 @@
 import routes from 'src/routes/routes';
 
-const menuLinks = t => ([
+const menuLinks = (t) => [
   [
     {
       icon: 'dashboardIcon',
@@ -81,6 +81,6 @@ const menuLinks = t => ([
       modal: 'settings',
     },
   ],
-]);
+];
 
 export default menuLinks;

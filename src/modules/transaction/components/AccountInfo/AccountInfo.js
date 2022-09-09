@@ -8,36 +8,24 @@ import WalletVisual from '@wallet/components/walletVisual';
 import styles from './AccountInfo.css';
 
 // @todo removed token and network
-const WalletInfo = ({
-  name = '',
-  label,
-  address,
-  addressClass,
-  className,
-}) => {
+const WalletInfo = ({ name = '', label, address, addressClass, className }) => {
   const addressLink = `${routes.explorer.path}?address=${address}`;
   return (
     <div className={`${styles.walletInfo} ${className}`}>
       <p className={styles.label}>{label}</p>
       <div className={styles.addressRow}>
         <WalletVisual className={styles.avatar} address={address} size={25} />
-        { validateAddress(address) === 0
-          ? (
-            <Link
-              to={addressLink}
-              className={`${styles.link} ${name ? styles.hasName : ''}`}
-            >
-              {name}
-              <span className={`${styles.address} ${addressClass}`}>{address}</span>
-            </Link>
-          ) : (
-            <span
-              className={`${styles.link} ${name ? styles.hasName : ''}`}
-            >
-              {name}
-              <span className={`${styles.address} ${addressClass}`}>{address}</span>
-            </span>
-          )}
+        {validateAddress(address) === 0 ? (
+          <Link to={addressLink} className={`${styles.link} ${name ? styles.hasName : ''}`}>
+            {name}
+            <span className={`${styles.address} ${addressClass}`}>{address}</span>
+          </Link>
+        ) : (
+          <span className={`${styles.link} ${name ? styles.hasName : ''}`}>
+            {name}
+            <span className={`${styles.address} ${addressClass}`}>{address}</span>
+          </span>
+        )}
       </div>
     </div>
   );

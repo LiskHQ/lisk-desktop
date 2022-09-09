@@ -33,16 +33,10 @@ const AddAccountBySecretRecovery = ({ history, login }) => {
 
   return (
     <div className={`${styles.addAccount} ${grid.row}`}>
-      <MultiStep
-        navStyles={{ multiStepWrapper: styles.wrapper }}
-        ref={multiStepRef}
-      >
+      <MultiStep navStyles={{ multiStepWrapper: styles.wrapper }} ref={multiStepRef}>
         <AddAccountForm onAddAccount={onAddAccount} />
         <SetPasswordForm recoveryPhrase={recoveryPhrase} onSubmit={onSetPassword} />
-        <SetPasswordSuccess
-          encryptedPhrase={currentAccount}
-          onClose={onPasswordSetComplete}
-        />
+        <SetPasswordSuccess encryptedPhrase={currentAccount} onClose={onPasswordSetComplete} />
       </MultiStep>
     </div>
   );

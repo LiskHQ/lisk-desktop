@@ -1,9 +1,7 @@
 /* istanbul ignore file */
 import { LedgerAccount, LiskLedger } from '@hirishh/lisk-ledger.js';
 
-import {
-  ADD_DEVICE,
-} from '../../constants';
+import { ADD_DEVICE } from '../../constants';
 import { LEDGER } from './constants';
 
 // ============================================ //
@@ -38,9 +36,9 @@ const addDevice = (device, path, { add }) => {
 const removeDevice = async (transport, { remove }) => {
   const connectedPaths = await transport.list();
   devices
-    .filter(device => !connectedPaths.includes(device.path))
-    .forEach(device => remove(device.path));
-  devices = devices.filter(device => connectedPaths.includes(device.path));
+    .filter((device) => !connectedPaths.includes(device.path))
+    .forEach((device) => remove(device.path));
+  devices = devices.filter((device) => connectedPaths.includes(device.path));
 };
 
 /**
@@ -79,10 +77,7 @@ const getLedgerAccount = (index = 0) => {
  * @param {object} param.transporter - Object for handle the ledger device.
  * @param {object} param.device - Object with device information.
  */
-const checkIfInsideLiskApp = async ({
-  transporter,
-  device,
-}) => {
+const checkIfInsideLiskApp = async ({ transporter, device }) => {
   let transport;
   try {
     transport = await transporter.open(device.path);

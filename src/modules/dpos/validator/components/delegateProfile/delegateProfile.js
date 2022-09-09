@@ -7,9 +7,7 @@ import DetailsView from './detailsView';
 import PerformanceView from './performanceView';
 import DelegateVotesView from './delegateVotesView';
 
-const DelegateProfile = ({
-  delegate, account, t, voters, lastBlockForged,
-}) => {
+const DelegateProfile = ({ delegate, account, t, voters, lastBlockForged }) => {
   const { data } = delegate;
   useEffect(() => {
     voters.loadData({ aggregate: true });

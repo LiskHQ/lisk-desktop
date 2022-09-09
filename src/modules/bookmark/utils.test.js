@@ -1,20 +1,21 @@
 import { expect } from 'chai';
 import { stub } from 'sinon';
-import {
-  getIndexOfBookmark,
-} from './utils';
+import { getIndexOfBookmark } from './utils';
 
 describe('Bookmarks', () => {
   const accounts = {
-    LSK: [{
-      address: '1234L',
-      title: 'some title',
-      balance: 0,
-    }, {
-      address: '5678L',
-      title: 'some title',
-      balance: 100000,
-    }],
+    LSK: [
+      {
+        address: '1234L',
+        title: 'some title',
+        balance: 0,
+      },
+      {
+        address: '5678L',
+        title: 'some title',
+        balance: 100000,
+      },
+    ],
   };
 
   beforeEach(() => {

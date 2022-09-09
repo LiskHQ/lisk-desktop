@@ -1,6 +1,6 @@
 import React from 'react';
 
-const withLocalSort = (dataKey, initialSort, sortFn) => WrapperComponent => (
+const withLocalSort = (dataKey, initialSort, sortFn) => (WrapperComponent) =>
   class WithSort extends React.Component {
     constructor(props) {
       super(props);
@@ -18,7 +18,7 @@ const withLocalSort = (dataKey, initialSort, sortFn) => WrapperComponent => (
       if (sortFn?.[id]) {
         return data.sort((a, b) => sortFn[id](a, b, direction));
       }
-      return data.sort((a, b) => ((a[id] > b[id]) ? 1 : -1) * (direction === 'asc' ? 1 : -1));
+      return data.sort((a, b) => (a[id] > b[id] ? 1 : -1) * (direction === 'asc' ? 1 : -1));
     }
 
     changeSort(id) {
@@ -30,19 +30,19 @@ const withLocalSort = (dataKey, initialSort, sortFn) => WrapperComponent => (
 
     render() {
       return (
-        <WrapperComponent {...{
-          ...this.props,
-          [dataKey]: {
-            ...this.props[dataKey],
-            data: this.sort(this.props[dataKey].data),
-          },
-          ...this.state,
-          ...this.actions,
-        }}
+        <WrapperComponent
+          {...{
+            ...this.props,
+            [dataKey]: {
+              ...this.props[dataKey],
+              data: this.sort(this.props[dataKey].data),
+            },
+            ...this.state,
+            ...this.actions,
+          }}
         />
       );
     }
-  }
-);
+  };
 
 export default withLocalSort;

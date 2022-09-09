@@ -22,7 +22,7 @@ describe('Setting', () => {
     },
   };
 
-  const t = key => key;
+  const t = (key) => key;
   let wrapper;
 
   const props = {
@@ -56,7 +56,7 @@ describe('Setting', () => {
       expect(wrapper.find('section.privacy')).toContainMatchingElement('Toggle');
     });
   });
-  
+
   // @todo - Move tests to currencySelector and toggle components
   // describe('With no transaction in guest mode', () => {
   //   beforeEach(() => {

@@ -14,7 +14,9 @@ const delegatePerformanceDetails = (pomHeights, status, consecutiveMissedBlocks 
     const timesLeft = 5 - pomHeights.length;
     const textCount = textConversion[timesLeft];
 
-    return `The delegate was punished ${pomHeights.length} time${pomHeights.length !== 1 ? 's' : ''}. ${textCount} more punishments will cause the permanent ban of the delegate.`;
+    return `The delegate was punished ${pomHeights.length} time${
+      pomHeights.length !== 1 ? 's' : ''
+    }. ${textCount} more punishments will cause the permanent ban of the delegate.`;
   }
   return `The delegate is banned because of not forging blocks for 1 month and missing ${consecutiveMissedBlocks} consecutive blocks`;
 };

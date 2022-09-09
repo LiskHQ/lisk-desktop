@@ -1,10 +1,7 @@
 import { useCallback, useState } from 'react';
 import { useQueryClient } from '@tanstack/react-query';
 import { BLOCKS } from 'src/const/queries';
-import {
-  LIMIT as limit,
-  API_VERSION,
-} from 'src/const/config';
+import { LIMIT as limit, API_VERSION } from 'src/const/config';
 import { useCustomInfiniteQuery } from 'src/modules/common/hooks';
 import client from 'src/utils/api/client';
 
@@ -26,7 +23,7 @@ import client from 'src/utils/api/client';
  * @returns the query object
  */
 // eslint-disable-next-line import/prefer-default-export
-export const useBlocks = ({ config: customConfig = {}, options } = { }) => {
+export const useBlocks = ({ config: customConfig = {}, options } = {}) => {
   const queryClient = useQueryClient();
   const [hasUpdate, setHasUpdate] = useState(false);
   const config = {

@@ -6,21 +6,16 @@ import { containsTransactionType } from '@transaction/utils/transaction';
 import { MODULE_COMMANDS_NAME_ID_MAP } from '@transaction/configuration/moduleAssets';
 import TopBar from './topBar';
 
-const mapStateToProps = state => ({
+const mapStateToProps = (state) => ({
   network: state.network,
   token: state.token,
   settings: state.settings,
   noOfVotes: containsTransactionType(
     state.transactions.pending,
-    MODULE_COMMANDS_NAME_ID_MAP.voteDelegate,
-  ) ? 0
-    : Object.values(state.voting)
-      .filter(vote => (vote.confirmed !== vote.unconfirmed))
-      .length,
+    MODULE_COMMANDS_NAME_ID_MAP.voteDelegate
+  )
+    ? 0
+    : Object.values(state.voting).filter((vote) => vote.confirmed !== vote.unconfirmed).length,
 });
 
-export default withRouter(
-  connect(mapStateToProps)(
-    withTranslation()(TopBar),
-  ),
-);
+export default withRouter(connect(mapStateToProps)(withTranslation()(TopBar)));

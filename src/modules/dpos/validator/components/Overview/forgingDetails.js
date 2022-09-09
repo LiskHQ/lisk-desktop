@@ -7,9 +7,7 @@ import Box from 'src/theme/box';
 import BoxHeader from 'src/theme/box/header';
 import BoxContent from 'src/theme/box/content';
 import BoxEmptyState from 'src/theme/box/emptyState';
-import GuideTooltip, {
-  GuideTooltipItem,
-} from 'src/modules/common/components/charts/guideTooltip';
+import GuideTooltip, { GuideTooltipItem } from 'src/modules/common/components/charts/guideTooltip';
 import Icon from 'src/theme/Icon';
 import { useTheme } from 'src/theme/Theme';
 import { getColorPalette } from 'src/modules/common/components/charts/chartOptions';
@@ -20,9 +18,7 @@ import styles from './overview.css';
 const FORGERS_TO_SHOW = 6;
 
 const getForgingStats = (data, forgedInRound = 0) => {
-  const missedBlocks = data.filter(
-    (item) => item.state === 'missedBlock',
-  ).length;
+  const missedBlocks = data.filter((item) => item.state === 'missedBlock').length;
   return [forgedInRound, ROUND_LENGTH - forgedInRound, missedBlocks];
 };
 
@@ -35,28 +31,19 @@ const ProgressBar = ({ forgedInRound, theme }) => (
   </div>
 );
 
-const formatToTwoDigits = (str) =>
-  str.toLocaleString('en-US', { minimumIntegerDigits: 2 });
+const formatToTwoDigits = (str) => str.toLocaleString('en-US', { minimumIntegerDigits: 2 });
 
 const getPassedMinutes = (startTime) => {
   const seconds = Math.floor(new Date().getTime() / 1000) - startTime;
   if (!seconds) return '00:00';
   const duration = moment.duration({ seconds });
-  return `${formatToTwoDigits(duration.minutes())}:${formatToTwoDigits(
-    duration.seconds(),
-  )}`;
+  return `${formatToTwoDigits(duration.minutes())}:${formatToTwoDigits(duration.seconds())}`;
 };
 
-const ForgingDetails = ({
-  t, forgers, forgedInRound, startTime,
-}) => {
+const ForgingDetails = ({ t, forgers, forgedInRound, startTime }) => {
   const theme = useTheme();
   const colorPalette = getColorPalette(theme);
-  const delegatesForgedLabels = [
-    t('Forging'),
-    t('Awaiting slot'),
-    t('Missed slot'),
-  ];
+  const delegatesForgedLabels = [t('Forging'), t('Awaiting slot'), t('Missed slot')];
 
   const doughnutChartData = {
     labels: delegatesForgedLabels,
@@ -114,11 +101,7 @@ const ForgingDetails = ({
               <div className="hideOnLargeViewPort">
                 <GuideTooltip>
                   {delegatesForgedLabels.map((label, i) => (
-                    <GuideTooltipItem
-                      key={label}
-                      color={colorPalette[i]}
-                      label={label}
-                    />
+                    <GuideTooltipItem key={label} color={colorPalette[i]} label={label} />
                   ))}
                 </GuideTooltip>
               </div>

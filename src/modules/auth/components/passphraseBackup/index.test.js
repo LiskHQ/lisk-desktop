@@ -7,7 +7,7 @@ describe('PassphraseBackup', () => {
   let wrapper;
   const props = {
     passphrase: accounts.genesis.passphrase,
-    t: key => key,
+    t: (key) => key,
   };
 
   it('should show tip after copying passphrase', () => {

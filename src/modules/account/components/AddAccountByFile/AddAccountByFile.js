@@ -22,11 +22,7 @@ const AddAccountByPassFile = ({ history, login }) => {
   };
 
   return (
-    <MultiStep
-      key="add-account-file"
-      className={styles.container}
-      ref={multiStepRef}
-    >
+    <MultiStep key="add-account-file" className={styles.container} ref={multiStepRef}>
       <RestoreAccountForm onBack={history.goBack} />
       <EnterPasswordForm onEnterPasswordSuccess={onEnterPasswordSuccess} />
       <SetPasswordSuccess

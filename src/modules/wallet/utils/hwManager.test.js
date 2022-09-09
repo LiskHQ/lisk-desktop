@@ -2,11 +2,7 @@ import { cryptography } from '@liskhq/lisk-client';
 import * as communication from '@libs/hwManager/communication';
 import * as accountApi from '@wallet/utils/api';
 import wallets from '@tests/constants/wallets';
-import {
-  getAccountsFromDevice,
-  signMessageByHW,
-  getNewAccountByIndex,
-} from './hwManager';
+import { getAccountsFromDevice, signMessageByHW, getNewAccountByIndex } from './hwManager';
 
 const address = 'lskdxc4ta5j43jp9ro3f8zqbxta9fn6jwzjucw7yt';
 

@@ -7,7 +7,11 @@ describe('Dropdow', () => {
   const DummyChild = () => <span />;
 
   beforeEach(() => {
-    wrapper = mount(<Dropdown showDropdown={false}><DummyChild /></Dropdown>);
+    wrapper = mount(
+      <Dropdown showDropdown={false}>
+        <DummyChild />
+      </Dropdown>
+    );
   });
 
   it('Should render with dropdown closed', () => {

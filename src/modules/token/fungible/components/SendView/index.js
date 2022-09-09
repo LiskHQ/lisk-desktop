@@ -20,11 +20,7 @@ const Send = ({ history }) => {
 
   return (
     <Dialog hasClose>
-      <MultiStep
-        key="send"
-        finalCallback={backToWallet}
-        className={styles.wrapper}
-      >
+      <MultiStep key="send" finalCallback={backToWallet} className={styles.wrapper}>
         <Form initialValue={initialValue} />
         <Summary />
         <TxSignatureCollector />

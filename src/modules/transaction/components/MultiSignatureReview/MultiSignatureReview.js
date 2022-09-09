@@ -23,11 +23,7 @@ const Member = ({ member, i, t }) => (
         {member.name || truncateAddress(member.address)}
         <span>{`(${getAccountRoleText(member.isMandatory, t)})`}</span>
       </p>
-      {member.publicKey && (
-        <p className={styles.memberKey}>
-          {truncateAddress(member.publicKey)}
-        </p>
-      )}
+      {member.publicKey && <p className={styles.memberKey}>{truncateAddress(member.publicKey)}</p>}
     </div>
   </div>
 );
@@ -40,12 +36,19 @@ const Members = ({ members = [], t }) => {
     <div className={styles.membersContainer}>
       <p>{t('Members')}</p>
       <div>
-        {leftColumn.map((member, i) =>
-          <Member member={member} i={i} key={`registerMultiSignature-members-list-${i}`} t={t} />)}
+        {leftColumn.map((member, i) => (
+          <Member member={member} i={i} key={`registerMultiSignature-members-list-${i}`} t={t} />
+        ))}
       </div>
       <div>
-        {rightColumn.map((member, i) =>
-          <Member member={member} i={i + sliceIndex} key={`registerMultiSignature-members-list-${i + sliceIndex}`} t={t} />)}
+        {rightColumn.map((member, i) => (
+          <Member
+            member={member}
+            i={i + sliceIndex}
+            key={`registerMultiSignature-members-list-${i + sliceIndex}`}
+            t={t}
+          />
+        ))}
       </div>
     </div>
   );
@@ -54,18 +57,11 @@ const Members = ({ members = [], t }) => {
 const InfoColumn = ({ title, children, className }) => (
   <div className={`${styles.infoColumn} ${className}`}>
     <span className={styles.infoTitle}>{title}</span>
-    <span className={styles.infoValue}>
-      {children}
-    </span>
+    <span className={styles.infoValue}>{children}</span>
   </div>
 );
 
-const MultiSignatureReview = ({
-  t,
-  members,
-  fee,
-  numberOfSignatures,
-}) => (
+const MultiSignatureReview = ({ t, members, fee, numberOfSignatures }) => (
   <>
     <Members members={members} t={t} />
     <div className={styles.infoContainer}>

@@ -50,8 +50,10 @@ class AddressFilter extends React.Component {
   onChange({ target }) {
     const { filters, name } = this.props;
 
-    const fieldsObj = Object.keys(filters).reduce((acc, filter) =>
-      ({ ...acc, [filter]: { value: filters[filter] } }), {});
+    const fieldsObj = Object.keys(filters).reduce(
+      (acc, filter) => ({ ...acc, [filter]: { value: filters[filter] } }),
+      {}
+    );
 
     const fields = {
       ...fieldsObj,
@@ -69,9 +71,7 @@ class AddressFilter extends React.Component {
   }
 
   render() {
-    const {
-      filters, name, label, placeholder,
-    } = this.props;
+    const { filters, name, label, placeholder } = this.props;
     const { fields } = this.state;
 
     return (

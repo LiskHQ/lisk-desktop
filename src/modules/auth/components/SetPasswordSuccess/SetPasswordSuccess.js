@@ -8,9 +8,7 @@ import DownloadJSON from 'src/modules/common/components/DownloadJSON/DownloadJSO
 import BoxContent from 'src/theme/box/content';
 import styles from './SetPasswordSuccess.css';
 
-function SetPasswordSuccess({
-  onClose, encryptedPhrase, buttonText,
-}) {
+function SetPasswordSuccess({ onClose, encryptedPhrase, buttonText }) {
   const { t } = useTranslation();
 
   const onContinue = () => onClose();
@@ -20,12 +18,15 @@ function SetPasswordSuccess({
         <h1>{t("Perfect! You're all set")}</h1>
         <p className={styles.subheader}>
           {t(
-            'You can now download your encrypted secret recovery phrase and use it to add your account on other devices.',
+            'You can now download your encrypted secret recovery phrase and use it to add your account on other devices.'
           )}
         </p>
-        <DownloadJSON fileName="encrypted_secret_recovery_phrase" encryptedPhrase={encryptedPhrase} />
+        <DownloadJSON
+          fileName="encrypted_secret_recovery_phrase"
+          encryptedPhrase={encryptedPhrase}
+        />
         <PrimaryButton className={styles.continueButton} onClick={onContinue}>
-          { buttonText || t('Continue to Dashboard')}
+          {buttonText || t('Continue to Dashboard')}
         </PrimaryButton>
       </BoxContent>
     </Box>

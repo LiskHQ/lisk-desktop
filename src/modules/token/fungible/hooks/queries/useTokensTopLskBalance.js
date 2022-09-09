@@ -1,9 +1,6 @@
 /* istanbul ignore file */
 import { TOKENS_TOP_LSK_BALANCE } from 'src/const/queries';
-import {
-  LIMIT as limit,
-  API_VERSION,
-} from 'src/const/config';
+import { LIMIT as limit, API_VERSION } from 'src/const/config';
 import { useCustomInfiniteQuery } from 'src/modules/common/hooks';
 
 /**

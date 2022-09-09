@@ -8,9 +8,7 @@ import { getTransactions } from '@transaction/api';
 import Overview from './overview';
 
 const mapStateToProps = (state) => ({
-  currentHeight: state.blocks.latestBlocks.length
-    ? state.blocks.latestBlocks[0].height
-    : 0,
+  currentHeight: state.blocks.latestBlocks.length ? state.blocks.latestBlocks[0].height : 0,
 });
 
 export default compose(
@@ -18,11 +16,10 @@ export default compose(
   connect(mapStateToProps),
   withData({
     transactions: {
-      apiUtil: (network, { token, ...params }) =>
-        getTransactions({ network, params }),
+      apiUtil: (network, { token, ...params }) => getTransactions({ network, params }),
       defaultData: { data: [], meta: {} },
       autoload: false,
     },
   }),
-  withTranslation(),
+  withTranslation()
 )(Overview);

@@ -13,7 +13,7 @@ setDefaults({
   withTranslationFuncName: 't',
 });
 
-const mapStateToProps = state => ({
+const mapStateToProps = (state) => ({
   account: state.wallet,
   network: state.network,
   settings: state.settings,
@@ -23,7 +23,4 @@ const mapDispatchToProps = {
   settingsUpdated,
 };
 
-export default connect(
-  mapStateToProps,
-  mapDispatchToProps,
-)(withTranslation()(AddAccountForm));
+export default connect(mapStateToProps, mapDispatchToProps)(withTranslation()(AddAccountForm));

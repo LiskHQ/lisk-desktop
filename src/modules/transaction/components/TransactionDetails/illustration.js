@@ -13,11 +13,7 @@ const Illustration = () => {
 
   return (
     <div className={styles.illustration}>
-      <TransactionTypeFigure
-        address={sender.address}
-        moduleCommandID={moduleCommandID}
-        iconOnly
-      />
+      <TransactionTypeFigure address={sender.address} moduleCommandID={moduleCommandID} iconOnly />
       <h2 className="tx-header">{title}</h2>
     </div>
   );

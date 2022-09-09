@@ -34,13 +34,12 @@ const DelegatesMonitor = ({
   const [activeTab, setActiveTab] = useState('active');
   const { total, forgers, latestBlocks } = blocks;
   const delegatesWithForgingTimes = { data: forgers };
-  const forgedInRound = latestBlocks.length
-    ? latestBlocks[0].height % ROUND_LENGTH
-    : 0;
+  const forgedInRound = latestBlocks.length ? latestBlocks[0].height % ROUND_LENGTH : 0;
 
   useEffect(() => {
-    const addressList = votes.data
-      && votes.data.reduce((acc, data) => {
+    const addressList =
+      votes.data &&
+      votes.data.reduce((acc, data) => {
         const votesList = data.params.votes || [];
         const dataAddresses = votesList.map((vote) => vote.delegateAddress);
         return acc.concat(dataAddresses);
@@ -76,7 +75,7 @@ const DelegatesMonitor = ({
         offset: 0,
         limit: 100,
       },
-      api,
+      api
     );
   };
 
@@ -116,7 +115,10 @@ const DelegatesMonitor = ({
   }
 
   const commonProps = {
-    blocks, filters, watchList, activeTab,
+    blocks,
+    filters,
+    watchList,
+    activeTab,
   };
 
   const watchedFilters = {
@@ -125,10 +127,21 @@ const DelegatesMonitor = ({
   };
 
   const displayTab = (tab) => {
-    if (tab === 'active') return <DelegatesTable {...commonProps} delegates={delegatesWithForgingTimes} />;
-    if (tab === 'standby') return <DelegatesTable {...commonProps} delegates={standByDelegates} hasLoadMore />;
-    if (tab === 'sanctioned') return <DelegatesTable {...commonProps} delegates={sanctionedDelegates} hasLoadMore />;
-    if (tab === 'watched') return <DelegatesTable {...commonProps} delegates={watchedDelegates} filters={watchedFilters} setActiveTab={setActiveTab} />;
+    if (tab === 'active')
+      return <DelegatesTable {...commonProps} delegates={delegatesWithForgingTimes} />;
+    if (tab === 'standby')
+      return <DelegatesTable {...commonProps} delegates={standByDelegates} hasLoadMore />;
+    if (tab === 'sanctioned')
+      return <DelegatesTable {...commonProps} delegates={sanctionedDelegates} hasLoadMore />;
+    if (tab === 'watched')
+      return (
+        <DelegatesTable
+          {...commonProps}
+          delegates={watchedDelegates}
+          filters={watchedFilters}
+          setActiveTab={setActiveTab}
+        />
+      );
     if (tab === 'votes') return <LatestVotes votes={votes} delegates={votedDelegates} />;
     return null;
   };
@@ -151,11 +164,7 @@ const DelegatesMonitor = ({
       />
       <Box main isLoading={standByDelegates.isLoading || votes.isLoading}>
         <BoxHeader className={`${styles.tabSelector} delegates-table`}>
-          {tabs.tabs.length === 1 ? (
-            <h2>{tabs.tabs[0].name}</h2>
-          ) : (
-            <BoxTabs {...tabs} />
-          )}
+          {tabs.tabs.length === 1 ? <h2>{tabs.tabs[0].name}</h2> : <BoxTabs {...tabs} />}
           <span className={activeTab === 'votes' ? 'hidden' : ''}>
             <Input
               onChange={handleFilter}

@@ -11,15 +11,12 @@ export function useCurrentApplication() {
   const dispatch = useDispatch();
   const currentApplication = useSelector(selectCurrentApplication);
   const { setCurrentNode } = useCurrentNode();
-  const setApplication = useCallback(
-    (application) => {
-      dispatch(setCurrentApplication(application));
-      /* istanbul ignore next */
-      client.create(application?.apis[0]);
-      setCurrentNode(application?.apis[0]);
-    },
-    [],
-  );
+  const setApplication = useCallback((application) => {
+    dispatch(setCurrentApplication(application));
+    /* istanbul ignore next */
+    client.create(application?.apis[0]);
+    setCurrentNode(application?.apis[0]);
+  }, []);
 
   // @todo set hardcode default application needs to be fetch from api
   useEffect(() => {

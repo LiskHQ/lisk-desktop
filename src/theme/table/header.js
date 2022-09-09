@@ -6,9 +6,7 @@ import styles from './table.css';
 
 const Tip = ({ data }) => {
   if (!data || typeof data !== 'object' || isReactComponent(data.message)) return null;
-  const Message = typeof data.message === 'string'
-    ? () => <p>{data.message}</p>
-    : data.message;
+  const Message = typeof data.message === 'string' ? () => <p>{data.message}</p> : data.message;
   return (
     <Tooltip {...data}>
       <Message />
@@ -16,9 +14,7 @@ const Tip = ({ data }) => {
   );
 };
 
-const Sort = ({
-  data, currentSort, children,
-}) => {
+const Sort = ({ data, currentSort, children }) => {
   if (data && typeof data.fn === 'function') {
     const [currentKey, direction] = currentSort ? currentSort.split(':') : [null, 'inactive'];
     const directions = {
@@ -30,7 +26,9 @@ const Sort = ({
     return (
       <span
         onClick={() => data.fn(data.key)}
-        className={`${styles.titleWrapper} sort-by ${data.key} ${currentKey === data.key ? directions[direction] : directions.inactive}`}
+        className={`${styles.titleWrapper} sort-by ${data.key} ${
+          currentKey === data.key ? directions[direction] : directions.inactive
+        }`}
       >
         {children}
       </span>
@@ -39,9 +37,7 @@ const Sort = ({
   return <span className={styles.titleWrapper}>{children}</span>;
 };
 
-const Header = ({
-  data, currentSort, headerClassName, subHeader,
-}) => {
+const Header = ({ data, currentSort, headerClassName, subHeader }) => {
   /**
    * In case we define a config array for header
    */
@@ -49,32 +45,24 @@ const Header = ({
     const defaultSize = Math.floor(12 / data.length);
     return (
       <header className={`${grid.row} ${styles.row} ${styles.header} ${headerClassName || ''}`}>
-        {
-          data.map((item, index) => (
-            <div
-              className={item.classList ? item.classList : grid[`col-md-${defaultSize}`]}
-              key={`table-header-${index}`}
-            >
-              {
-                (typeof item === 'object')
-                  ? (
-                    <Sort
-                      data={item.sort}
-                      currentSort={currentSort}
-                    >
-                      <span>{item.title}</span>
-                      {item.tooltip && <Tip data={item.tooltip} />}
-                    </Sort>
-                  ) : (
-                    <>
-                      <span>{item}</span>
-                      {item.tooltip && <Tip data={item.tooltip} />}
-                    </>
-                  )
-              }
-            </div>
-          ))
-        }
+        {data.map((item, index) => (
+          <div
+            className={item.classList ? item.classList : grid[`col-md-${defaultSize}`]}
+            key={`table-header-${index}`}
+          >
+            {typeof item === 'object' ? (
+              <Sort data={item.sort} currentSort={currentSort}>
+                <span>{item.title}</span>
+                {item.tooltip && <Tip data={item.tooltip} />}
+              </Sort>
+            ) : (
+              <>
+                <span>{item}</span>
+                {item.tooltip && <Tip data={item.tooltip} />}
+              </>
+            )}
+          </div>
+        ))}
         {subHeader}
       </header>
     );
@@ -91,7 +79,7 @@ const Header = ({
   /**
    * If the data is not passed or it's none of the above
    */
-  return (<header className={styles.header}>Header</header>);
+  return <header className={styles.header}>Header</header>;
 };
 
 export default Header;

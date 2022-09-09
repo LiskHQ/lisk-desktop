@@ -11,7 +11,11 @@ describe('Box', () => {
   };
 
   beforeEach(() => {
-    wrapper = mount(<Box {...props}><header>Activities</header></Box>);
+    wrapper = mount(
+      <Box {...props}>
+        <header>Activities</header>
+      </Box>
+    );
   });
 
   it('Should render child tags', () => {

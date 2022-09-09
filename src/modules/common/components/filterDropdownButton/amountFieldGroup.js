@@ -41,10 +41,8 @@ class AmountFieldGroup extends React.Component {
         feedback = t('Invalid amount');
         error = true;
       } else if (
-        (field === 'amountFrom'
-          && parseFloat(value) > parseFloat(fieldsObj.amountTo.value))
-        || (field === 'amountTo'
-          && parseFloat(value) < parseFloat(fieldsObj.amountFrom.value))
+        (field === 'amountFrom' && parseFloat(value) > parseFloat(fieldsObj.amountTo.value)) ||
+        (field === 'amountTo' && parseFloat(value) < parseFloat(fieldsObj.amountFrom.value))
       ) {
         feedback = t('Max amount must be greater than Min amount');
         error = true;
@@ -71,7 +69,7 @@ class AmountFieldGroup extends React.Component {
 
     const fieldsObj = Object.keys(filters).reduce(
       (acc, filter) => ({ ...acc, [filter]: { value: filters[filter] } }),
-      {},
+      {}
     );
 
     const fields = {
@@ -105,9 +103,7 @@ class AmountFieldGroup extends React.Component {
           name={name}
           value={filters[name] ? filters[name] : ''}
           placeholder={placeholder}
-          className={`${styles.input} ${
-            field.error ? 'error' : ''
-          } ${name}Input`}
+          className={`${styles.input} ${field.error ? 'error' : ''} ${name}Input`}
           isLoading={field.loading}
           status={field.error ? 'error' : 'ok'}
           size="m"

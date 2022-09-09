@@ -32,10 +32,12 @@ describe('actions: legacy', () => {
 
     it('should dispatch transactionCreatedSuccess', async () => {
       const tx = { id: 1 };
-      createGenericTx.mockImplementation(() =>
-        new Promise((resolve) => {
-          resolve(tx);
-        }));
+      createGenericTx.mockImplementation(
+        () =>
+          new Promise((resolve) => {
+            resolve(tx);
+          })
+      );
       await balanceReclaimed(transactionObject)(dispatch, getState);
 
       expect(createGenericTx).toHaveBeenCalledWith({
@@ -51,10 +53,12 @@ describe('actions: legacy', () => {
 
     it('should dispatch transactionSignError', async () => {
       const error = { message: 'TestError' };
-      createGenericTx.mockImplementation(() =>
-        new Promise((_, reject) => {
-          reject(error);
-        }));
+      createGenericTx.mockImplementation(
+        () =>
+          new Promise((_, reject) => {
+            reject(error);
+          })
+      );
       await balanceReclaimed(transactionObject)(dispatch, getState);
       expect(dispatch).toHaveBeenCalledWith({
         type: actionTypes.transactionSignError,

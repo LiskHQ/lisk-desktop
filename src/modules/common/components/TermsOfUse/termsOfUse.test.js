@@ -19,7 +19,7 @@ describe('TermsOfUse', () => {
   const props = {
     history,
     settings,
-    t: v => v,
+    t: (v) => v,
     settingsUpdated: spy(),
   };
 

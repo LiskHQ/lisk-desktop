@@ -51,15 +51,12 @@ describe('action: blocks', () => {
         version: 2,
         timestamp: 1633345430,
         generatorAddress: 'lskgtrrftvoxhtknhamjab5wenfauk32z9pzk79uj',
-        generatorPublicKey:
-          '974bcc5ad09e80f48a81a1425eddfe4af3f332264a9b418196cb2c11e73f61f8',
+        generatorPublicKey: '974bcc5ad09e80f48a81a1425eddfe4af3f332264a9b418196cb2c11e73f61f8',
         generatorUsername: 'grumlin',
-        transactionRoot:
-          'e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855',
+        transactionRoot: 'e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855',
         signature:
           'ca1069abb04b39bb232c61e5d6a230a1bff81c24b26ef6594998a8a75df7b9f94e2d31a4dbb704d7ecc93b9e8d65d9d0d8b0e24f356ca0bd802614118572070b',
-        previousBlockId:
-          '63640f2b98863854119b3669f069d6d1477b8bf678229bfa83a0f21d3de78525',
+        previousBlockId: '63640f2b98863854119b3669f069d6d1477b8bf678229bfa83a0f21d3de78525',
         numberOfTransactions: 0,
         totalForged: '100000000',
         totalBurnt: '0',

@@ -50,7 +50,10 @@ export const DelegateRank = () => {
 };
 
 export const DelegateWeight = () => {
-  const { data: { value }, activeTab } = useContext(DelegateRowContext);
+  const {
+    data: { value },
+    activeTab,
+  } = useContext(DelegateRowContext);
   const formatted = formatAmountBasedOnLocale({
     value: fromRawLsk(value),
     format: '0a',
@@ -65,9 +68,18 @@ export const DelegateWeight = () => {
 
 export const DelegateDetails = () => {
   const {
-    data, activeTab, watched = false, addToWatchList, removeFromWatchList, t,
+    data,
+    activeTab,
+    watched = false,
+    addToWatchList,
+    removeFromWatchList,
+    t,
   } = useContext(DelegateRowContext);
-  const showEyeIcon = activeTab === 'active' || activeTab === 'standby' || activeTab === 'sanctioned' || activeTab === 'watched';
+  const showEyeIcon =
+    activeTab === 'active' ||
+    activeTab === 'standby' ||
+    activeTab === 'sanctioned' ||
+    activeTab === 'watched';
   return (
     <span className={getDelegateDetailsClass(activeTab)}>
       <div className={styles.delegateColumn}>
@@ -77,16 +89,18 @@ export const DelegateDetails = () => {
           position="bottom right"
           size="maxContent"
           indent
-          content={(
+          content={
             <span
               className={`
-                ${styles.eyeIcon} ${!showEyeIcon ? 'hidden' : ''} ${watched && showEyeIcon ? styles.watchedDelegate : ''} watch-icon
+                ${styles.eyeIcon} ${!showEyeIcon ? 'hidden' : ''} ${
+                watched && showEyeIcon ? styles.watchedDelegate : ''
+              } watch-icon
               `}
               onClick={watched ? removeFromWatchList : addToWatchList}
             >
               <Icon name={watched ? 'eyeActive' : 'eyeInactive'} />
             </span>
-          )}
+          }
         >
           <p className={styles.watchedTooltip}>
             {watched ? t('Remove from watched') : t('Add to watched')}
@@ -96,9 +110,7 @@ export const DelegateDetails = () => {
         <div className={`${styles.delegateDetails}`}>
           <WalletVisual address={data.address} />
           <div>
-            <p className={styles.delegateName}>
-              {data.username}
-            </p>
+            <p className={styles.delegateName}>{data.username}</p>
             <p className={styles.delegateAddress}>{truncateAddress(data.address)}</p>
           </div>
         </div>
@@ -109,38 +121,45 @@ export const DelegateDetails = () => {
 
 export const RoundState = () => {
   const {
-    data: { state, isBanned }, activeTab, time, t,
+    data: { state, isBanned },
+    activeTab,
+    time,
+    t,
   } = useContext(DelegateRowContext);
   if (state === undefined) {
     return (
-      <span className={`${getRoundStateClass(activeTab)} ${styles.noEllipsis} ${styles.statusIconsContainer}`}>-</span>
+      <span
+        className={`${getRoundStateClass(activeTab)} ${styles.noEllipsis} ${
+          styles.statusIconsContainer
+        }`}
+      >
+        -
+      </span>
     );
   }
 
   return (
-    <span className={`${getRoundStateClass(activeTab)} ${styles.noEllipsis} ${styles.statusIconsContainer}`}>
+    <span
+      className={`${getRoundStateClass(activeTab)} ${styles.noEllipsis} ${
+        styles.statusIconsContainer
+      }`}
+    >
       <Tooltip
         title={t('Round state:')}
         position="left"
         size="maxContent"
         content={<Icon className={styles.statusIcon} name={icons[state]} />}
       >
-        <p className={styles.statusToolip}>
-          {roundStates[state]}
-        </p>
+        <p className={styles.statusToolip}>{roundStates[state]}</p>
       </Tooltip>
       {isBanned && (
         <Tooltip
           position="left"
           size="maxContent"
           content={<Icon className={styles.statusIcon} name="delegateWarning" />}
-          footer={(
-            <p>{time}</p>
-          )}
+          footer={<p>{time}</p>}
         >
-          <p>
-            {t('This delegate will be punished in upcoming rounds')}
-          </p>
+          <p>{t('This delegate will be punished in upcoming rounds')}</p>
         </Tooltip>
       )}
     </span>
@@ -160,7 +179,8 @@ const getDelegateStatus = (key, grossVotesReceived) => {
 
 export const DelegateStatus = () => {
   const {
-    activeTab, data: { status, totalVotesReceived },
+    activeTab,
+    data: { status, totalVotesReceived },
   } = useContext(DelegateRowContext);
   const theme = useTheme();
   const [key, val] = getDelegateStatus(status, totalVotesReceived);
@@ -173,10 +193,12 @@ export const DelegateStatus = () => {
 };
 
 export const ForgingTime = () => {
-  const { activeTab, data: { state }, time } = useContext(DelegateRowContext);
+  const {
+    activeTab,
+    data: { state },
+    time,
+  } = useContext(DelegateRowContext);
   return (
-    <span className={getForgingTimeClass(activeTab)}>
-      {state === 'missedBlock' ? '-' : time}
-    </span>
+    <span className={getForgingTimeClass(activeTab)}>{state === 'missedBlock' ? '-' : time}</span>
   );
 };

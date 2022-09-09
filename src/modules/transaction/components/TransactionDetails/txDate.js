@@ -5,9 +5,7 @@ import ValueAndLabel from './valueAndLabel';
 import styles from './styles.css';
 
 const Date = ({ t }) => {
-  const { transaction } = React.useContext(
-    TransactionDetailsContext,
-  );
+  const { transaction } = React.useContext(TransactionDetailsContext);
 
   return transaction.block?.timestamp ? (
     <ValueAndLabel label={t('Date')} className={styles.date}>

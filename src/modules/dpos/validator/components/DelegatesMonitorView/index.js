@@ -25,9 +25,7 @@ const defaultUrlSearchParams = { search: '' };
  */
 const mergeUniquely = (key, newData, oldData = []) => [
   ...oldData,
-  ...newData.data.filter(
-    (newItem) => !oldData.find((oldItem) => oldItem[key] === newItem[key]),
-  ),
+  ...newData.data.filter((newItem) => !oldData.find((oldItem) => oldItem[key] === newItem[key])),
 ];
 const mergeUniquelyByUsername = mergeUniquely.bind(this, 'username');
 const mergeUniquelyById = mergeUniquely.bind(this, 'id');
@@ -77,32 +75,28 @@ const ComposedDelegates = compose(
     },
 
     transactionsCount: {
-      apiUtil: (network) =>
-        getTransactions({ network, params: { limit: 1 } }),
+      apiUtil: (network) => getTransactions({ network, params: { limit: 1 } }),
       defaultData: 0,
       autoload: true,
       transformResponse: (response) => response.meta.total,
     },
 
     registrations: {
-      apiUtil: (network) =>
-        getRegisteredDelegates({ network }),
+      apiUtil: (network) => getRegisteredDelegates({ network }),
       defaultData: [],
       autoload: true,
     },
 
     votes: {
       apiUtil: (network, params) =>
-        getTransactions(
-          {
-            network,
-            params: {
-              ...params,
-              moduleCommandID: MODULE_COMMANDS_NAME_ID_MAP.voteDelegate,
-              sort: 'timestamp:desc',
-            },
+        getTransactions({
+          network,
+          params: {
+            ...params,
+            moduleCommandID: MODULE_COMMANDS_NAME_ID_MAP.voteDelegate,
+            sort: 'timestamp:desc',
           },
-        ),
+        }),
       autoload: true,
       defaultData: [],
       transformResponse: mergeUniquelyById,
@@ -127,8 +121,7 @@ const ComposedDelegates = compose(
     },
 
     votedDelegates: {
-      apiUtil: ({ networks }, params) =>
-        getDelegates({ network: networks.LSK, params }),
+      apiUtil: ({ networks }, params) => getDelegates({ network: networks.LSK, params }),
       defaultData: {},
       transformResponse: (response) => {
         const transformedResponse = mergeUniquelyByUsername(response);
@@ -141,15 +134,14 @@ const ComposedDelegates = compose(
     },
 
     watchedDelegates: {
-      apiUtil: ({ networks }, params) =>
-        getDelegates({ network: networks.LSK, params }),
+      apiUtil: ({ networks }, params) => getDelegates({ network: networks.LSK, params }),
       defaultData: [],
       getApiParams: (state) => ({ addressList: state.watchList }),
       transformResponse: stripAccountDataAndMerge,
     },
   }),
   withFilters('standByDelegates', defaultUrlSearchParams),
-  withTranslation(),
+  withTranslation()
 )(Delegates);
 
 export default ComposedDelegates;

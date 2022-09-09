@@ -16,19 +16,13 @@ import BalanceInfo from '@token/fungible/components/BalanceInfo';
 import styles from './overview.css';
 
 const mapStateToProps = (state) => ({
-  currentHeight: state.blocks.latestBlocks.length
-    ? state.blocks.latestBlocks[0].height
-    : 0,
+  currentHeight: state.blocks.latestBlocks.length ? state.blocks.latestBlocks[0].height : 0,
 });
 
 const addWarningMessage = ({ isBanned, pomHeight, readMore }) => {
   FlashMessageHolder.addMessage(
-    <WarnPunishedDelegate
-      isBanned={isBanned}
-      pomHeight={pomHeight}
-      readMore={readMore}
-    />,
-    'WarnPunishedDelegate',
+    <WarnPunishedDelegate isBanned={isBanned} pomHeight={pomHeight} readMore={readMore} />,
+    'WarnPunishedDelegate'
   );
 };
 
@@ -57,17 +51,18 @@ const Overview = ({
   const daysLeft = Math.ceil((end - currentHeight) / numOfBlockPerDay);
 
   const bookmark = useSelector((state) =>
-    state.bookmarks[activeToken].find((item) => item.address === address));
+    state.bookmarks[activeToken].find((item) => item.address === address)
+  );
   const wallet = useSelector(selectActiveTokenAccount);
   const host = wallet.summary?.address ?? '';
 
   const showWarning = () => {
     if (
-      !isWalletRoute
-      && host
-      && address
-      && (isBanned || pomHeights?.length)
-      && (isBanned || daysLeft >= 1)
+      !isWalletRoute &&
+      host &&
+      address &&
+      (isBanned || pomHeights?.length) &&
+      (isBanned || daysLeft >= 1)
     ) {
       addWarningMessage({
         isBanned,
@@ -99,9 +94,7 @@ const Overview = ({
 
   return (
     <section className={`${grid.row} ${styles.wrapper}`}>
-      <div
-        className={`${grid['col-xs-6']} ${grid['col-md-3']} ${grid['col-lg-3']}`}
-      >
+      <div className={`${grid['col-xs-6']} ${grid['col-md-3']} ${grid['col-lg-3']}`}>
         <WalletInfo
           t={t}
           hwInfo={hwInfo}
@@ -115,9 +108,7 @@ const Overview = ({
           isMultisignature={isMultisignature}
         />
       </div>
-      <div
-        className={`${grid['col-xs-6']} ${grid['col-md-3']} ${grid['col-lg-3']}`}
-      >
+      <div className={`${grid['col-xs-6']} ${grid['col-md-3']} ${grid['col-lg-3']}`}>
         <BalanceInfo
           t={t}
           activeToken={activeToken}
@@ -136,11 +127,10 @@ export default compose(
   connect(mapStateToProps),
   withData({
     transactions: {
-      apiUtil: (network, { token, ...params }) =>
-        getTransactions({ network, params }),
+      apiUtil: (network, { token, ...params }) => getTransactions({ network, params }),
       defaultData: { data: [], meta: {} },
       autoload: false,
     },
   }),
-  withTranslation(),
+  withTranslation()
 )(Overview);

@@ -1,6 +1,4 @@
-import {
-  screen, fireEvent, waitFor,
-} from '@testing-library/react';
+import { screen, fireEvent, waitFor } from '@testing-library/react';
 import { renderWithRouter } from 'src/utils/testHelpers';
 import mockSavedAccounts from '@tests/fixtures/accounts';
 import RemoveAccount from './RemoveAccount';
@@ -14,9 +12,7 @@ jest.mock('@account/hooks', () => ({
     getAccountByAddress: jest.fn().mockReturnValue(mockSavedAccounts[0]),
     deleteAccountByAddress: mockDeleteAccount,
   })),
-  useCurrentAccount: jest.fn(() => (
-    [mockSavedAccounts[0], mockSetAccount]
-  )),
+  useCurrentAccount: jest.fn(() => [mockSavedAccounts[0], mockSetAccount]),
 }));
 
 describe('Remove account', () => {
@@ -34,7 +30,11 @@ describe('Remove account', () => {
 
   it('Should successfully go though the flow', async () => {
     expect(screen.getByText('Remove Account?')).toBeTruthy();
-    expect(screen.getByText('This account will no longer be stored on this device. You can backup your secret recovery phrase before you remove it.')).toBeTruthy();
+    expect(
+      screen.getByText(
+        'This account will no longer be stored on this device. You can backup your secret recovery phrase before you remove it.'
+      )
+    ).toBeTruthy();
     expect(screen.getByText('encrypted_secret_recovery_phrase.json')).toBeTruthy();
     expect(screen.getByText('Download')).toBeTruthy();
     expect(screen.getByText('Cancel')).toBeTruthy();

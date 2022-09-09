@@ -12,7 +12,11 @@ describe('Icon', () => {
   });
 
   it('should render dark icons if available', () => {
-    const wrapper = mount(<ThemeContext.Provider value="dark"><Icon name="fileOutline" /></ThemeContext.Provider>);
+    const wrapper = mount(
+      <ThemeContext.Provider value="dark">
+        <Icon name="fileOutline" />
+      </ThemeContext.Provider>
+    );
     expect(wrapper.find('img').props().src).to.deep.equal({});
   });
 });

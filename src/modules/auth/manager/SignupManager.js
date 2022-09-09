@@ -4,7 +4,7 @@ import { withRouter } from 'react-router';
 import { withTranslation } from 'react-i18next';
 import Register from '../components/Signup/register';
 
-const mapStateToProps = state => ({
+const mapStateToProps = (state) => ({
   account: state.wallet,
   token: state.token,
 });

@@ -24,7 +24,10 @@ class MonthView extends Component {
 
   previousMonth() {
     if (validations.canGoToPrevious(this.props.showingDate, this.props.minDate, this.options)) {
-      const showingDate = moment(this.props.showingDate, this.props.dateFormat).subtract(1, 'month');
+      const showingDate = moment(this.props.showingDate, this.props.dateFormat).subtract(
+        1,
+        'month'
+      );
       this.props.setShowingDate(showingDate);
     }
   }
@@ -49,8 +52,8 @@ class MonthView extends Component {
     const options = { ...this.options, amount: 'day' };
     const selectedDate = moment(this.props.selectedDate, dateFormat);
     const day = moment(this.props.showingDate, dateFormat).date(d + 1);
-    const selected = selectedDate.isValid()
-      && day.format(dateFormat) === selectedDate.format(dateFormat);
+    const selected =
+      selectedDate.isValid() && day.format(dateFormat) === selectedDate.format(dateFormat);
     const isDisabled = validations.shouldBeDisabled(day, minDate, maxDate, options);
 
     return (
@@ -68,16 +71,16 @@ class MonthView extends Component {
   }
 
   render() {
-    const {
-      locale, dateFormat, isShown, minDate, maxDate,
-    } = this.props;
+    const { locale, dateFormat, isShown, minDate, maxDate } = this.props;
     moment.locale(locale);
     const showingDate = moment(this.props.showingDate, dateFormat).startOf('month');
     const daysInMonth = [...Array(showingDate.daysInMonth())];
     const prevIcon = validations.canGoToPrevious(showingDate, minDate, this.options)
-      ? 'arrowLeftActive' : 'arrowLeftInactive';
+      ? 'arrowLeftActive'
+      : 'arrowLeftInactive';
     const nextIcon = validations.canGoToNext(showingDate, maxDate, this.options)
-      ? 'arrowRightActive' : 'arrowRightInactive';
+      ? 'arrowRightActive'
+      : 'arrowRightInactive';
 
     return (
       <div className={`${!isShown ? styles.hidden : ''} monthView`}>
@@ -85,10 +88,7 @@ class MonthView extends Component {
           <span className={styles.navigationButton} onClick={this.previousMonth}>
             <Icon name={prevIcon} />
           </span>
-          <span
-            onClick={this.showYearView}
-            className={`${styles.viewName} ${styles.clickable}`}
-          >
+          <span onClick={this.showYearView} className={`${styles.viewName} ${styles.clickable}`}>
             {showingDate.format('MMMM YYYY')}
           </span>
           <span className={styles.navigationButton} onClick={this.nextMonth}>
@@ -97,14 +97,17 @@ class MonthView extends Component {
         </header>
         <div className={styles.contentWrapper}>
           <div className={styles.monthHeader}>
-            {moment.weekdaysMin(true).map((weekday, key) =>
-              <div className={styles.weekday} key={key}>{weekday}</div>)}
+            {moment.weekdaysMin(true).map((weekday, key) => (
+              <div className={styles.weekday} key={key}>
+                {weekday}
+              </div>
+            ))}
           </div>
           <div className={styles.itemsContent}>
             {generateDayPlaceholder(
               showingDate.weekday(),
               moment(showingDate).subtract(showingDate.weekday(), 'days'),
-              `${styles.item} ${styles.dayItem}`,
+              `${styles.item} ${styles.dayItem}`
             )}
 
             {daysInMonth.map(this.generateDays)}
@@ -112,7 +115,7 @@ class MonthView extends Component {
             {generateDayPlaceholder(
               6 - moment(showingDate).endOf('month').weekday(),
               moment(showingDate).add(1, 'days'),
-              `${styles.item} ${styles.dayItem}`,
+              `${styles.item} ${styles.dayItem}`
             )}
           </div>
         </div>
@@ -130,14 +133,9 @@ MonthView.propTypes = {
   dateFormat: PropTypes.string.isRequired,
   minDate: PropTypes.string,
   maxDate: PropTypes.string,
-  locale: PropTypes.oneOfType([
-    PropTypes.string,
-    PropTypes.arrayOf(PropTypes.string),
-  ]).isRequired,
-  showingDate: PropTypes.oneOfType([
-    PropTypes.instanceOf(moment).isRequired,
-    PropTypes.string,
-  ]).isRequired,
+  locale: PropTypes.oneOfType([PropTypes.string, PropTypes.arrayOf(PropTypes.string)]).isRequired,
+  showingDate: PropTypes.oneOfType([PropTypes.instanceOf(moment).isRequired, PropTypes.string])
+    .isRequired,
 };
 
 /* istanbul ignore next */

@@ -71,7 +71,7 @@ describe('useIpc', () => {
         version,
         remindMeLater: expect.any(Function),
         updateNow: expect.any(Function),
-      }),
+      })
     );
   });
 

@@ -18,7 +18,7 @@ describe('Account Card', () => {
       index: 1,
       onSaveNameAccounts: jest.fn(),
       onSelectAccount: jest.fn(),
-      t: v => v,
+      t: (v) => v,
     };
   });
 

@@ -12,21 +12,23 @@ const props = {
     username: 'test_del_2',
   },
   className: '',
-  t: str => str,
+  t: (str) => str,
   activeTab: 'active',
   watchList: [],
   setActiveTab: jest.fn(),
   blocks: {
-    forgers: [{
-      address: 'lskbgyrx3v76jxowgkgthu9yaf3dr29wqxbtxz8yp',
-      isConsensusParticipant: true,
-      minActiveHeight: 14075261,
-      nextForgingTime: 1654135710,
-      rank: 22,
-      state: 'awaitingSlot',
-      totalVotesReceived: '10828000000000',
-      username: 'test_del_2',
-    }],
+    forgers: [
+      {
+        address: 'lskbgyrx3v76jxowgkgthu9yaf3dr29wqxbtxz8yp',
+        isConsensusParticipant: true,
+        minActiveHeight: 14075261,
+        nextForgingTime: 1654135710,
+        rank: 22,
+        state: 'awaitingSlot',
+        totalVotesReceived: '10828000000000',
+        username: 'test_del_2',
+      },
+    ],
     indexBook: { lskbgyrx3v76jxowgkgthu9yaf3dr29wqxbtxz8yp: 0 },
   },
 };
@@ -39,7 +41,11 @@ describe('DelegateRow', () => {
   });
 
   it('removes delegate from watched list when watch icon is clicked', () => {
-    const updatedProps = { ...props, activeTab: 'watched', watchList: ['lskbgyrx3v76jxowgkgthu9yaf3dr29wqxbtxz8yp'] };
+    const updatedProps = {
+      ...props,
+      activeTab: 'watched',
+      watchList: ['lskbgyrx3v76jxowgkgthu9yaf3dr29wqxbtxz8yp'],
+    };
     wrapper = mountWithContext(<DelegateRow {...updatedProps} />, { storeState: {} });
     wrapper.find('.watch-icon').simulate('click');
     expect(removedFromWatchList).toHaveBeenCalledWith({ address: props.data.address });

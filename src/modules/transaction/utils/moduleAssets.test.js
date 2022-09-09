@@ -10,7 +10,7 @@ import {
 describe('Utils: moduleAssets', () => {
   describe('getModuleCommandSenderLabel', () => {
     it('should return a dictionary of strings', () => {
-      const t = jest.fn(str => str);
+      const t = jest.fn((str) => str);
       const dict = getModuleCommandSenderLabel(t);
       const label = dict[MODULE_COMMANDS_NAME_ID_MAP.transfer];
 
@@ -22,7 +22,7 @@ describe('Utils: moduleAssets', () => {
 
   describe('getModuleCommandTitle', () => {
     it('should return a dictionary of strings', () => {
-      const t = jest.fn(str => str);
+      const t = jest.fn((str) => str);
       const dict = getModuleCommandTitle(t);
       const label = dict[MODULE_COMMANDS_NAME_ID_MAP.transfer];
 

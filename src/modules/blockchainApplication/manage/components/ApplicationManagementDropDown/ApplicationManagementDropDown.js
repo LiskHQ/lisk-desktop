@@ -14,7 +14,10 @@ const ApplicationManagementList = ({ history }) => {
   }, []);
 
   return (
-    <TertiaryButton className={`application-management-dropdown ${styles.wrapper}`} onClick={handleShowApplications}>
+    <TertiaryButton
+      className={`application-management-dropdown ${styles.wrapper}`}
+      onClick={handleShowApplications}
+    >
       <img src={chainLogo} />
       <span>{currentApplication?.name}</span>
       <Icon name="dropdownArrowIcon" />

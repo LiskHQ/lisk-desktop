@@ -7,7 +7,7 @@ describe('HW Wallet -> Loading', () => {
   const props = {
     devices: [],
     nextStep: jest.fn(),
-    t: key => key,
+    t: (key) => key,
     network: { name: 'Mainnet' },
   };
 

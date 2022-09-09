@@ -9,16 +9,12 @@ import BoxHeader from 'src/theme/box/header';
 import BoxContent from 'src/theme/box/content';
 import BoxEmptyState from 'src/theme/box/emptyState';
 import { DoughnutChart, LineChart } from 'src/modules/common/components/charts';
-import GuideTooltip, {
-  GuideTooltipItem,
-} from 'src/modules/common/components/charts/guideTooltip';
+import GuideTooltip, { GuideTooltipItem } from 'src/modules/common/components/charts/guideTooltip';
 import NumericInfo from './numericInfo';
 import styles from './overview.css';
 
-const getAmountOfDelegatesInTime = (registrations) =>
-  registrations.data.map((item) => item[1]);
-const getAmountOfDelegatesLabels = (registrations) =>
-  registrations.data.map((item) => item[0]);
+const getAmountOfDelegatesInTime = (registrations) => registrations.data.map((item) => item[1]);
+const getAmountOfDelegatesLabels = (registrations) => registrations.data.map((item) => item[0]);
 
 const Overview = ({
   delegatesCount,
@@ -83,14 +79,8 @@ const Overview = ({
                 </div>
                 <div className="hideOnLargeViewPort">
                   <GuideTooltip>
-                    <GuideTooltipItem
-                      color={colorPalette[0]}
-                      label={t('Standby delegates')}
-                    />
-                    <GuideTooltipItem
-                      color={colorPalette[1]}
-                      label={t('Active delegates')}
-                    />
+                    <GuideTooltipItem color={colorPalette[0]} label={t('Standby delegates')} />
+                    <GuideTooltipItem color={colorPalette[1]} label={t('Active delegates')} />
                   </GuideTooltip>
                 </div>
               </div>
@@ -107,11 +97,7 @@ const Overview = ({
               <span>{t('Forging totals')}</span>
             </h2>
             <div className={styles.list}>
-              <NumericInfo
-                title="Total blocks"
-                value={totalBlocks}
-                icon="totalBlocks"
-              />
+              <NumericInfo title="Total blocks" value={totalBlocks} icon="totalBlocks" />
               <NumericInfo
                 title="Total transactions"
                 value={transactionsCount.data}

@@ -6,7 +6,7 @@ describe('Delegates', () => {
   let wrapper;
 
   const props = {
-    t: v => v,
+    t: (v) => v,
     delegates: [],
     onSelectedRow: jest.fn(),
     rowItemIndex: 0,

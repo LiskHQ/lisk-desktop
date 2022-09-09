@@ -1,6 +1,6 @@
-export default t => ([
+export default (t) => [
   {
     title: t(''),
     classList: 'hidden',
   },
-]);
+];

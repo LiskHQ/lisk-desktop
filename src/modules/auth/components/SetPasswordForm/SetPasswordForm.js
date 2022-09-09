@@ -14,17 +14,30 @@ import { regex } from 'src/const/regex';
 import { useEncryptAccount } from '@account/hooks';
 import styles from './SetPasswordForm.css';
 
-const setPasswordFormSchema = yup.object({
-  accountName: yup.string()
-    .matches(regex.accountName, 'Can be alpha numeric with either !,@,$,&,_,. as special characters')
-    .max(20, 'Character length can\'t be more than 20')
-    .min(3, 'Character length can\'t be lesser than 3'),
-  password: yup.string().required()
-    .matches(regex.password, 'Must Contain 8 Characters, One Uppercase, One Lowercase, One Number and One Special Case Character'),
-  cPassword: yup.string().required()
-    .oneOf([yup.ref('password'), null], 'Confirm that passwords match'),
-  hasAgreed: yup.boolean().required(),
-}).required();
+const setPasswordFormSchema = yup
+  .object({
+    accountName: yup
+      .string()
+      .matches(
+        regex.accountName,
+        'Can be alpha numeric with either !,@,$,&,_,. as special characters'
+      )
+      .max(20, "Character length can't be more than 20")
+      .min(3, "Character length can't be lesser than 3"),
+    password: yup
+      .string()
+      .required()
+      .matches(
+        regex.password,
+        'Must Contain 8 Characters, One Uppercase, One Lowercase, One Number and One Special Case Character'
+      ),
+    cPassword: yup
+      .string()
+      .required()
+      .oneOf([yup.ref('password'), null], 'Confirm that passwords match'),
+    hasAgreed: yup.boolean().required(),
+  })
+  .required();
 
 function SetPasswordForm({ onSubmit, recoveryPhrase }) {
   const { t } = useTranslation();
@@ -38,13 +51,12 @@ function SetPasswordForm({ onSubmit, recoveryPhrase }) {
     resolver: yupResolver(setPasswordFormSchema),
   });
   const formValues = watch();
-  const {
-    password, cPassword, accountName, hasAgreed,
-  } = formValues;
+  const { password, cPassword, accountName, hasAgreed } = formValues;
 
-  const isButtonDisabled = useMemo(() =>
-    !password?.length || !cPassword?.length || !hasAgreed,
-  [formValues.password, formValues.cPassword, formValues.hasAgreed]);
+  const isButtonDisabled = useMemo(
+    () => !password?.length || !cPassword?.length || !hasAgreed,
+    [formValues.password, formValues.cPassword, formValues.hasAgreed]
+  );
 
   const onFormSubmit = async (values) => {
     const { error, result } = await encryptAccount({
@@ -66,7 +78,9 @@ function SetPasswordForm({ onSubmit, recoveryPhrase }) {
       <div className={`${styles.titleHolder} ${grid['col-xs-12']}`}>
         <h1>{t('Set up device password')}</h1>
         <p>
-          {t('This password is used to encrypt your secret recovery phrase, which will be used for managing your account.')}
+          {t(
+            'This password is used to encrypt your secret recovery phrase, which will be used for managing your account.'
+          )}
         </p>
       </div>
       <form onSubmit={handleSubmit(onFormSubmit)}>
@@ -78,21 +92,18 @@ function SetPasswordForm({ onSubmit, recoveryPhrase }) {
             status={errors.password ? 'error' : undefined}
             defaultValues=""
             value={password}
-            label={(
+            label={
               <span className="password-label-wrapper">
                 Enter Password
-                <Tooltip
-                  position="right"
-                  title={t('Requirements')}
-                >
+                <Tooltip position="right" title={t('Requirements')}>
                   <p>
-                    {
-                      t('Password should be a combination of uppercase and lowercase alpha numeric characters with length more than 8')
-                    }
+                    {t(
+                      'Password should be a combination of uppercase and lowercase alpha numeric characters with length more than 8'
+                    )}
                   </p>
                 </Tooltip>
               </span>
-            )}
+            }
             {...register('password')}
           />
         </div>
@@ -120,18 +131,11 @@ function SetPasswordForm({ onSubmit, recoveryPhrase }) {
           />
         </div>
         <div className={`${styles.checkBoxWrapper}`}>
-          <CheckBox
-            className={`${styles.checkbox}`}
-            {...register('hasAgreed')}
-          />
+          <CheckBox className={`${styles.checkbox}`} {...register('hasAgreed')} />
           <span>{t('I agree to store my encrypted secret recovery phrase on this device.')}</span>
         </div>
         <div className={[styles.fieldWrapper, styles.submitWrapper]}>
-          <PrimaryButton
-            type="submit"
-            style={{ width: '100%' }}
-            disabled={isButtonDisabled}
-          >
+          <PrimaryButton type="submit" style={{ width: '100%' }} disabled={isButtonDisabled}>
             {t('Save Account')}
           </PrimaryButton>
         </div>

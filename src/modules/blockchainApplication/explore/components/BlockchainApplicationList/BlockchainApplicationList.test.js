@@ -54,11 +54,13 @@ describe('BlockchainApplicationList', () => {
     fireEvent.change(searchField, { target: { value: 'test' } });
     jest.runAllTimers();
 
-    expect(props.applyFilters).toHaveBeenCalledWith(expect.objectContaining({
-      search: 'test',
-      offset: 0,
-      limit: BLOCKCHAIN_APPLICATION_LIST_LIMIT,
-    }));
+    expect(props.applyFilters).toHaveBeenCalledWith(
+      expect.objectContaining({
+        search: 'test',
+        offset: 0,
+        limit: BLOCKCHAIN_APPLICATION_LIST_LIMIT,
+      })
+    );
   });
 
   it('should call the toggle function for the particular blockchain application been toggled', () => {
@@ -78,9 +80,11 @@ describe('BlockchainApplicationList', () => {
 
     wrapper = renderWithRouter(BlockchainApplicationList, props);
     fireEvent.click(screen.getByText('Load more'));
-    expect(props.applications.loadData).toHaveBeenCalledWith(expect.objectContaining({
-      offset: props.applications.meta.count + props.applications.meta.offset,
-    }));
+    expect(props.applications.loadData).toHaveBeenCalledWith(
+      expect.objectContaining({
+        offset: props.applications.meta.count + props.applications.meta.offset,
+      })
+    );
   });
 
   it('should not have any pinned application', () => {
@@ -89,11 +93,11 @@ describe('BlockchainApplicationList', () => {
       pins: [],
       checkPinByChainId: jest.fn().mockReturnValue(false),
     });
-    wrapper.rerender(<MemoryRouter
-      initialEntries={[]}
-    >
-      <BlockchainApplicationList {...props} />
-    </MemoryRouter>);
+    wrapper.rerender(
+      <MemoryRouter initialEntries={[]}>
+        <BlockchainApplicationList {...props} />
+      </MemoryRouter>
+    );
 
     expect(screen.getAllByAltText('unpinnedIcon')).toHaveLength(mockBlockchainApplications.length);
   });

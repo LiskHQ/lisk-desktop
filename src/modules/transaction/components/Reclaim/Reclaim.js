@@ -10,10 +10,7 @@ const Reclaim = ({ account, t }) => (
     </section>
     <section>
       <label>{t('Balance to reclaim')}</label>
-      <TokenAmount
-        val={Number(account.legacy.balance)}
-        token={tokenMap.LSK.key}
-      />
+      <TokenAmount val={Number(account.legacy.balance)} token={tokenMap.LSK.key} />
     </section>
   </>
 );

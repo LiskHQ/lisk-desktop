@@ -3,18 +3,15 @@ import PropTypes from 'prop-types';
 import CheckBox from 'src/theme/CheckBox';
 import styles from './discreetModeToggle.css';
 
-const DiscreetModeToggle = ({
-  className,
-  isDiscreetMode,
-  settingsUpdated,
-  t,
-}) => (
+const DiscreetModeToggle = ({ className, isDiscreetMode, settingsUpdated, t }) => (
   <div className={`${styles.wrapper} ${className}`}>
     <CheckBox
       name="discreetMode"
       className={`${styles.checkbox} discreetMode`}
       checked={isDiscreetMode}
-      onChange={() => { settingsUpdated({ discreetMode: !isDiscreetMode }); }}
+      onChange={() => {
+        settingsUpdated({ discreetMode: !isDiscreetMode });
+      }}
     />
     <span>{t('Enable discreet mode when signed in (optional)')}</span>
   </div>

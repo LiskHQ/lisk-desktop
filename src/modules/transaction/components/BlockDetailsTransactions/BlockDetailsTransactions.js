@@ -1,9 +1,6 @@
 import React from 'react';
 import { useSelector } from 'react-redux';
-import {
-  selectCurrentBlockHeight,
-  selectActiveToken,
-} from 'src/redux/selectors';
+import { selectCurrentBlockHeight, selectActiveToken } from 'src/redux/selectors';
 import Box from 'src/theme/box';
 import BoxContent from 'src/theme/box/content';
 import Table from 'src/theme/table';
@@ -12,20 +9,19 @@ import TransactionRow from '../TransactionRow';
 import header from './BlockDetailsTransactionHeaderMap';
 import styles from './BlockDetailsTransactions.css';
 
-const BlockDetailsTransactions = ({
-  blockId,
-  height,
-  t,
-}) => {
+const BlockDetailsTransactions = ({ blockId, height, t }) => {
   const currentBlockHeight = useSelector(selectCurrentBlockHeight);
   const activeToken = useSelector(selectActiveToken);
   const {
-    data: transactions, isLoading, isFetching, error,
+    data: transactions,
+    isLoading,
+    isFetching,
+    error,
   } = useTransactions({
     config: {
       params: {
-        ...blockId && { blockID: blockId },
-        ...height && { height },
+        ...(blockId && { blockID: blockId }),
+        ...(height && { height }),
       },
     },
   });
@@ -49,9 +45,13 @@ const BlockDetailsTransactions = ({
           headerClassName={styles.tableHeader}
           canLoadMore={false}
           error={error}
-          emptyState={!error ? {
-            message: t('There are no transactions for this block.'),
-          } : undefined}
+          emptyState={
+            !error
+              ? {
+                  message: t('There are no transactions for this block.'),
+                }
+              : undefined
+          }
         />
       </BoxContent>
     </Box>

@@ -25,7 +25,14 @@ const getAmountFeedbackAndError = (value, balance, minValue, inputValue) => {
     value,
     token: tokenMap.LSK.key,
     funds: parseInt(balance, 10),
-    checklist: ['NEGATIVE_VOTE', 'ZERO', 'VOTE_10X', 'INSUFFICIENT_VOTE_FUNDS', 'MIN_BALANCE', 'FORMAT'],
+    checklist: [
+      'NEGATIVE_VOTE',
+      'ZERO',
+      'VOTE_10X',
+      'INSUFFICIENT_VOTE_FUNDS',
+      'MIN_BALANCE',
+      'FORMAT',
+    ],
     minValue,
     inputValue,
   });
@@ -47,12 +54,12 @@ const useVoteAmountField = (initialValue) => {
   const host = useSelector(selectLSKAddress);
   const searchDetails = window.location.href.replace(/.*[?]/, '');
   const address = selectSearchParamValue(`?${searchDetails}`, 'address');
-  const voting = useSelector(state => state.voting);
+  const voting = useSelector((state) => state.voting);
   const existingVote = voting[address || host];
   const totalUnconfirmedVotes = Object.values(voting)
-    .filter(vote => vote.confirmed < vote.unconfirmed)
-    .map(vote => vote.unconfirmed - vote.confirmed)
-    .reduce((total, amount) => (total + amount), 0);
+    .filter((vote) => vote.confirmed < vote.unconfirmed)
+    .map((vote) => vote.unconfirmed - vote.confirmed)
+    .reduce((total, amount) => total + amount, 0);
   const previouslyConfirmedVotes = existingVote ? existingVote.confirmed : 0;
   const [amountField, setAmountField] = useState({
     value: initialValue,
@@ -86,7 +93,7 @@ const useVoteAmountField = (initialValue) => {
       value - fromRawLsk(previouslyConfirmedVotes - totalUnconfirmedVotes),
       balance,
       -1 * fromRawLsk(previouslyConfirmedVotes),
-      value,
+      value
     );
     loaderTimeout = setTimeout(() => {
       setAmountField({

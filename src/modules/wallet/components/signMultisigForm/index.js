@@ -5,7 +5,7 @@ import FormComp from './form';
 
 const Form = (props) => {
   const { t } = useTranslation();
-  const network = useSelector(state => state.network);
+  const network = useSelector((state) => state.network);
   return <FormComp network={network} t={t} {...props} />;
 };
 

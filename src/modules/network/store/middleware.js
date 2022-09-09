@@ -6,27 +6,28 @@ import { networkSelected, networkStatusUpdated, networkConfigSet } from './actio
 import actionTypes from './actionTypes';
 
 const readStoredNetwork = ({ dispatch, getState }) => {
-  const {
-    statistics, statisticsRequest, statisticsFollowingDay, network,
-  } = getState().settings;
+  const { statistics, statisticsRequest, statisticsFollowingDay, network } = getState().settings;
 
-  const config = network?.name && network?.address
-    ? network
-    : {
-      name: networkKeys.mainNet,
-      address: network?.networks?.mainnet?.serviceUrl,
-    };
+  const config =
+    network?.name && network?.address
+      ? network
+      : {
+          name: networkKeys.mainNet,
+          address: network?.networks?.mainnet?.serviceUrl,
+        };
   dispatch(networkSelected(config));
   dispatch(networkStatusUpdated({ online: true }));
 
   if (!statistics) {
     analytics.checkIfAnalyticsShouldBeDisplayed({
-      statisticsRequest, statisticsFollowingDay, statistics,
+      statisticsRequest,
+      statisticsFollowingDay,
+      statistics,
     });
   }
 };
 
-const network = (store) => next => async (action) => {
+const network = (store) => (next) => async (action) => {
   next(action);
   switch (action.type) {
     case settingsActionTypes.settingsRetrieved:
@@ -39,7 +40,7 @@ const network = (store) => next => async (action) => {
     case actionTypes.customNetworkStored:
     case actionTypes.customNetworkRemoved:
       store.dispatch(
-        settingsUpdated({ storedCustomNetwork: store.getState().network.storedCustomNetwork }),
+        settingsUpdated({ storedCustomNetwork: store.getState().network.storedCustomNetwork })
       );
       break;
     default:

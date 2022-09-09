@@ -2,11 +2,15 @@
 import { withRouter } from 'react-router';
 import { connect } from 'react-redux';
 import { compose } from 'redux';
-import { multisigTransactionSigned, transactionDoubleSigned, signatureSkipped } from 'src/redux/actions';
+import {
+  multisigTransactionSigned,
+  transactionDoubleSigned,
+  signatureSkipped,
+} from 'src/redux/actions';
 import { withTranslation } from 'react-i18next';
 import TxSignatureCollector from './TxSignatureCollector';
 
-const mapStateToProps = state => ({
+const mapStateToProps = (state) => ({
   transactions: state.transactions,
   account: state.wallet,
 });
@@ -20,5 +24,5 @@ const dispatchToProps = {
 export default compose(
   withRouter,
   connect(mapStateToProps, dispatchToProps),
-  withTranslation(),
+  withTranslation()
 )(TxSignatureCollector);

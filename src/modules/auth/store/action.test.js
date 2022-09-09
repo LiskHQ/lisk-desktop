@@ -3,10 +3,7 @@ import wallets from '@tests/constants/wallets';
 import * as networkActions from '@network/store/action';
 import { accountDataUpdated } from '@wallet/store/action';
 import actionTypes from './actionTypes';
-import {
-  secondPassphraseStored,
-  secondPassphraseRemoved,
-} from './action';
+import { secondPassphraseStored, secondPassphraseRemoved } from './action';
 
 jest.mock('i18next', () => ({
   t: jest.fn((key) => key),
@@ -75,8 +72,7 @@ describe('actions: account', () => {
           networks: {
             LSK: {
               serviceUrl: 'http://localhost:4000',
-              nethash:
-                '198f2b61a8eb95fbeed58b8216780b68f697f26b849acf00c8c93bb9b24f783d',
+              nethash: '198f2b61a8eb95fbeed58b8216780b68f697f26b849acf00c8c93bb9b24f783d',
             },
           },
         },

@@ -11,10 +11,10 @@ describe('DiscreetModeToggle Component', () => {
     iconPosition: 'left',
     isDiscreetMode: false,
     settingsUpdated: jest.fn(),
-    t: k => k,
+    t: (k) => k,
   };
 
-  const setup = data => shallow(<DiscreetModeToggle {...data} />);
+  const setup = (data) => shallow(<DiscreetModeToggle {...data} />);
 
   it('Should render properly with className and disabled discreet Mode', () => {
     wrapper = setup(props);

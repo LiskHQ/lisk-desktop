@@ -1,9 +1,6 @@
 /* eslint-disable complexity */
 import React, { useState, useEffect } from 'react';
-import {
-  elementTxToDesktopTx,
-  convertTxJSONToBinary,
-} from '@transaction/utils/transaction';
+import { elementTxToDesktopTx, convertTxJSONToBinary } from '@transaction/utils/transaction';
 import { joinModuleAndCommandIds } from '@transaction/utils/moduleAssets';
 import Box from 'src/theme/box';
 import BoxContent from 'src/theme/box/content';
@@ -61,9 +58,7 @@ const Form = ({ t, nextStep, network }) => {
         <header>
           <h1>{t('Sign multisignature transaction')}</h1>
           <p>
-            {t(
-              'Provide a signature for a transaction which belongs to a multisignature account.',
-            )}
+            {t('Provide a signature for a transaction which belongs to a multisignature account.')}
           </p>
         </header>
         <BoxContent>

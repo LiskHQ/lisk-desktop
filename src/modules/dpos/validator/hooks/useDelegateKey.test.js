@@ -4,17 +4,15 @@ import useDelegateKey from './useDelegateKey';
 
 describe('useDelegateKey', () => {
   it('Initial values must be empty', () => {
-    const { result } = renderHook(
-      () => useDelegateKey('blsPublicKey', 'test message'),
-    );
+    const { result } = renderHook(() => useDelegateKey('blsPublicKey', 'test message'));
     const [genKey] = result.current;
 
     expect(genKey.value).toBe('');
   });
 
   it('It should account for initial params', () => {
-    const { result } = renderHook(
-      () => useDelegateKey('proofOfPossession', 'test message', keys.pop),
+    const { result } = renderHook(() =>
+      useDelegateKey('proofOfPossession', 'test message', keys.pop)
     );
     const [key] = result.current;
 
@@ -22,9 +20,7 @@ describe('useDelegateKey', () => {
   });
 
   it('Should set valid values with no errors', () => {
-    const { result } = renderHook(
-      () => useDelegateKey('generatorPublicKey', 'test message'),
-    );
+    const { result } = renderHook(() => useDelegateKey('generatorPublicKey', 'test message'));
     const [, setKey] = result.current;
     act(() => {
       setKey(keys.genKey);
@@ -35,9 +31,7 @@ describe('useDelegateKey', () => {
   });
 
   it('should show generatorPublicKey error if the value is not a valid', () => {
-    const { result } = renderHook(
-      () => useDelegateKey('generatorPublicKey', 'test message'),
-    );
+    const { result } = renderHook(() => useDelegateKey('generatorPublicKey', 'test message'));
     const [, setKey] = result.current;
     act(() => {
       setKey('generatorPublicKey', 'wrong_value');
@@ -48,9 +42,7 @@ describe('useDelegateKey', () => {
   });
 
   it('should show blsPublicKey error if the value is not a valid', () => {
-    const { result } = renderHook(
-      () => useDelegateKey('blsPublicKey', 'test message'),
-    );
+    const { result } = renderHook(() => useDelegateKey('blsPublicKey', 'test message'));
     const [, setKey] = result.current;
     act(() => {
       setKey('blsPublicKey', 'wrong_value');
@@ -61,9 +53,7 @@ describe('useDelegateKey', () => {
   });
 
   it('should show proofOfPossession error if the value is not a valid', () => {
-    const { result } = renderHook(
-      () => useDelegateKey('proofOfPossession', 'test message'),
-    );
+    const { result } = renderHook(() => useDelegateKey('proofOfPossession', 'test message'));
     const [, setKey] = result.current;
     act(() => {
       setKey('proofOfPossession', 'wrong_value');

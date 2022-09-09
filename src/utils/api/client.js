@@ -7,15 +7,12 @@ export class Client {
 
   axiosConfig = {
     timeout: 10000,
-  }
+  };
 
-  http = null
+  http = null;
 
   create({ rpc, rest }) {
-    this.socket = io(
-      rpc,
-      { transports: ['websocket'] },
-    );
+    this.socket = io(rpc, { transports: ['websocket'] });
     const request = axios.create({
       ...this.axiosConfig,
       baseURL: rest,

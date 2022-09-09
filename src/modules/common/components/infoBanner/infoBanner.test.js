@@ -14,14 +14,18 @@ describe('InfoBanner component', () => {
     infoLink: 'https://lisk.io',
     className: '',
     show: true,
-    t: v => v,
+    t: (v) => v,
   };
 
   const store = configureStore()({ wallet: { passphrase: 'test' } });
   const mountWithProps = (extraProps = {}) => {
     // eslint-disable-next-line prefer-object-spread
     const mergedProps = Object.assign({}, props, extraProps);
-    return mount(<Provider store={store}><InfoBanner {...mergedProps} /></Provider>);
+    return mount(
+      <Provider store={store}>
+        <InfoBanner {...mergedProps} />
+      </Provider>
+    );
   };
 
   beforeEach(() => {

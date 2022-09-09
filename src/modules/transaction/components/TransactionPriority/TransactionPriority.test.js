@@ -15,12 +15,14 @@ describe('TransactionPriority', () => {
   const fee = 0.123;
 
   const props = {
-    t: str => str,
+    t: (str) => str,
     token: tokenMap.LSK.key,
-    priorityOptions: [{ title: 'Low', value: baseFees.Low },
+    priorityOptions: [
+      { title: 'Low', value: baseFees.Low },
       { title: 'Medium', value: baseFees.Medium },
       { title: 'High', value: baseFees.High },
-      { title: 'Custom', value: baseFees.Low }],
+      { title: 'Custom', value: baseFees.Low },
+    ],
     selectedPriority: 0,
     setSelectedPriority: jest.fn(),
     fee,
@@ -62,7 +64,10 @@ describe('TransactionPriority', () => {
 
   it('when typed in custom fee input, the custom fee cb is called', () => {
     wrapper.setProps({ ...props, token: tokenMap.LSK.key, selectedPriority: 3 });
-    wrapper.find('.custom-fee-input').at(1).simulate('change', { target: { value: '0.20' } });
+    wrapper
+      .find('.custom-fee-input')
+      .at(1)
+      .simulate('change', { target: { value: '0.20' } });
     expect(props.setCustomFee).toHaveBeenCalledTimes(1);
   });
 
@@ -79,10 +84,12 @@ describe('TransactionPriority', () => {
     wrapper.setProps({
       ...props,
       token: tokenMap.LSK.key,
-      priorityOptions: [{ title: 'Low', value: 0 },
+      priorityOptions: [
+        { title: 'Low', value: 0 },
         { title: 'Medium', value: 0 },
         { title: 'High', value: 0 },
-        { title: 'Custom', value: 0 }],
+        { title: 'Custom', value: 0 },
+      ],
     });
     expect(wrapper.find('.option-Medium')).toBeDisabled();
     expect(wrapper.find('.option-High')).toBeDisabled();
@@ -107,7 +114,10 @@ describe('TransactionPriority', () => {
 
   it('Should disable confirmation button when fee is higher than hard cap', async () => {
     wrapper.setProps({ ...props, token: tokenMap.LSK.key, selectedPriority: 3 });
-    wrapper.find('.custom-fee-input').at(1).simulate('change', { target: { name: 'amount', value: '0.5' } });
+    wrapper
+      .find('.custom-fee-input')
+      .at(1)
+      .simulate('change', { target: { name: 'amount', value: '0.5' } });
     expect(props.setCustomFee).toHaveBeenCalledWith({
       error: true,
       feedback: 'invalid custom fee',
@@ -122,7 +132,10 @@ describe('TransactionPriority', () => {
       selectedPriority: 3,
       minFee: 1000,
     });
-    wrapper.find('.custom-fee-input').at(1).simulate('change', { target: { name: 'amount', value: '0.00000000001' } });
+    wrapper
+      .find('.custom-fee-input')
+      .at(1)
+      .simulate('change', { target: { name: 'amount', value: '0.00000000001' } });
     expect(props.setCustomFee).toHaveBeenCalledWith({
       error: true,
       feedback: 'invalid custom fee',
@@ -132,7 +145,10 @@ describe('TransactionPriority', () => {
 
   it('Should enable confirmation button when fee is within bounds', async () => {
     wrapper.setProps({ ...props, token: tokenMap.LSK.key, selectedPriority: 3 });
-    wrapper.find('.custom-fee-input').at(1).simulate('change', { target: { name: 'amount', value: '0.019' } });
+    wrapper
+      .find('.custom-fee-input')
+      .at(1)
+      .simulate('change', { target: { name: 'amount', value: '0.019' } });
     expect(props.setCustomFee).toHaveBeenCalledWith({
       error: false,
       feedback: '',

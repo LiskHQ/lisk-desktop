@@ -1,11 +1,11 @@
 import { MODULE_COMMANDS_NAME_ID_MAP } from '@transaction/configuration/moduleAssets';
-import {
-  formatAmountBasedOnLocale,
-} from 'src/utils/formattedNumber';
+import { formatAmountBasedOnLocale } from 'src/utils/formattedNumber';
 
 const getTxDirectionConfig = (moduleCommandID, host, recipient, styles) => {
-  if (moduleCommandID === MODULE_COMMANDS_NAME_ID_MAP.unlockToken
-      || moduleCommandID === MODULE_COMMANDS_NAME_ID_MAP.reclaimLSK) {
+  if (
+    moduleCommandID === MODULE_COMMANDS_NAME_ID_MAP.unlockToken ||
+    moduleCommandID === MODULE_COMMANDS_NAME_ID_MAP.reclaimLSK
+  ) {
     return {
       sign: '',
       style: styles.unlock,
@@ -30,9 +30,7 @@ export const getFeeStatus = ({ fee, token, customFee }) => {
   if (customFee) {
     return customFee;
   }
-  return !fee.error
-    ? `${formatAmountBasedOnLocale({ value: fee.value })} ${token}`
-    : fee.feedback;
+  return !fee.error ? `${formatAmountBasedOnLocale({ value: fee.value })} ${token}` : fee.feedback;
 };
 
 export default getTxDirectionConfig;

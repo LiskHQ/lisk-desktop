@@ -9,11 +9,7 @@ import styles from './registerDelegate.css';
 
 const RegisterDelegate = ({ history, t }) => (
   <Dialog hasClose>
-    <MultiStep
-      className={styles.multiStep}
-      prevPage={history.goBack}
-      backButtonLabel={t('Back')}
-    >
+    <MultiStep className={styles.multiStep} prevPage={history.goBack} backButtonLabel={t('Back')}>
       <Form t={t} />
       <Summary t={t} />
       <TxSignatureCollector t={t} />

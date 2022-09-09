@@ -13,22 +13,20 @@ import App from '.';
 
 const fakeStore = configureStore();
 
-const addRouter = Component => (props, path) =>
-  mount(<Provider {...props}>
-    <MemoryRouter initialEntries={path}>
-      <I18nextProvider i18n={i18n}>
-        <Component />
-      </I18nextProvider>
-    </MemoryRouter>
-  </Provider>);
+const addRouter = (Component) => (props, path) =>
+  mount(
+    <Provider {...props}>
+      <MemoryRouter initialEntries={path}>
+        <I18nextProvider i18n={i18n}>
+          <Component />
+        </I18nextProvider>
+      </MemoryRouter>
+    </Provider>
+  );
 
-const publicComponent = [
-  { route: '/', component: Login },
-];
+const publicComponent = [{ route: '/', component: Login }];
 
-const privateComponent = [
-  { route: `${routes.wallet.path}`, component: AccountDetails },
-];
+const privateComponent = [{ route: `${routes.wallet.path}`, component: AccountDetails }];
 
 describe.skip('App', () => {
   const navigateTo = addRouter(App);

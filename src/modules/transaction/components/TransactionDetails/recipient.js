@@ -4,9 +4,7 @@ import TransactionDetailsContext from '../../context/transactionDetailsContext';
 import styles from './styles.css';
 
 const Recipient = ({ t }) => {
-  const { activeToken, network, transaction } = React.useContext(
-    TransactionDetailsContext,
-  );
+  const { activeToken, network, transaction } = React.useContext(TransactionDetailsContext);
 
   return (
     <WalletInfo

@@ -8,7 +8,7 @@ import StatusComponent from './status';
 
 const Status = (props) => {
   const dispatch = useDispatch();
-  const transactions = useSelector(state => state.transactions);
+  const transactions = useSelector((state) => state.transactions);
   const account = useSelector(selectActiveTokenAccount);
 
   return (
@@ -16,8 +16,7 @@ const Status = (props) => {
       {...props}
       transactions={transactions}
       account={account}
-      transactionBroadcasted={params =>
-        dispatch(transactionBroadcasted(params))}
+      transactionBroadcasted={(params) => dispatch(transactionBroadcasted(params))}
     />
   );
 };

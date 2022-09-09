@@ -82,11 +82,15 @@ describe('Blocks page', () => {
     wrapper.find('button.filter').simulate('click');
     wrapper.find('input.height').simulate('change', { target: { value: height } });
     wrapper.find('form.filter-container').simulate('submit');
-    expect(props.applyFilters).toHaveBeenCalledWith({
-      dateFrom: undefined,
-      dateTo: undefined,
-      height,
-    }, null, expect.any(Function));
+    expect(props.applyFilters).toHaveBeenCalledWith(
+      {
+        dateFrom: undefined,
+        dateTo: undefined,
+        height,
+      },
+      null,
+      expect.any(Function)
+    );
     wrapper.find('span.clear-filter').simulate('click');
     expect(props.clearFilter).toHaveBeenCalledWith('height', expect.any(Function));
   });

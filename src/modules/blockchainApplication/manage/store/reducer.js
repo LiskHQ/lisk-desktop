@@ -96,7 +96,10 @@ const persistConfig = {
 };
 
 const blockChainApplicationsReducer = combineReducers({
-  pins, applications, current, node,
+  pins,
+  applications,
+  current,
+  node,
 });
 
 // eslint-disable-next-line import/prefer-default-export

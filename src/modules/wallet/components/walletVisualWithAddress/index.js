@@ -4,7 +4,10 @@ import { connect } from 'react-redux';
 import { compose } from 'redux';
 import PropTypes from 'prop-types';
 
-import { MODULE_COMMANDS_NAME_ID_MAP, MODULE_COMMANDS_MAP } from '@transaction/configuration/moduleAssets';
+import {
+  MODULE_COMMANDS_NAME_ID_MAP,
+  MODULE_COMMANDS_MAP,
+} from '@transaction/configuration/moduleAssets';
 import { truncateAddress } from '@wallet/utils/account';
 import { getModuleCommandTitle } from '@transaction/utils/moduleAssets';
 import Icon from 'src/theme/Icon';
@@ -12,13 +15,20 @@ import WalletVisual from '../walletVisual';
 import styles from './walletVisualWithAddress.css';
 
 const WalletVisualWithAddress = ({
-  bookmarks, showBookmarkedAddress, token, address,
-  transactionSubject, moduleCommandID, size, truncate, className,
+  bookmarks,
+  showBookmarkedAddress,
+  token,
+  address,
+  transactionSubject,
+  moduleCommandID,
+  size,
+  truncate,
+  className,
 }) => {
   const getTransformedAddress = (addressValue) => {
     if (showBookmarkedAddress) {
       const bookmarkedAddress = bookmarks[token.active].find(
-        element => element.address === addressValue,
+        (element) => element.address === addressValue
       );
       if (bookmarkedAddress) return bookmarkedAddress.title;
     }
@@ -28,21 +38,21 @@ const WalletVisualWithAddress = ({
 
   const title = getModuleCommandTitle()[moduleCommandID];
   const transformedAddress = getTransformedAddress(address);
-  const truncatedAddress = (truncate === 'small' || truncate === 'medium')
-    ? truncateAddress(transformedAddress, truncate)
-    : truncateAddress(transformedAddress);
+  const truncatedAddress =
+    truncate === 'small' || truncate === 'medium'
+      ? truncateAddress(transformedAddress, truncate)
+      : truncateAddress(transformedAddress);
 
   return (
     <div className={`${styles.address} ${className}`}>
-      {moduleCommandID !== MODULE_COMMANDS_NAME_ID_MAP.transfer && transactionSubject === 'recipient' ? (
+      {moduleCommandID !== MODULE_COMMANDS_NAME_ID_MAP.transfer &&
+      transactionSubject === 'recipient' ? (
         <>
           <Icon
             className={styles.txIcon}
             name={MODULE_COMMANDS_MAP[moduleCommandID]?.icon ?? 'txDefault'}
           />
-          <span className={styles.addressValue}>
-            {title}
-          </span>
+          <span className={styles.addressValue}>{title}</span>
         </>
       ) : (
         <>
@@ -74,12 +84,9 @@ WalletVisualWithAddress.defaultProps = {
   truncate: true,
 };
 
-const mapStateToProps = state => ({
+const mapStateToProps = (state) => ({
   bookmarks: state.bookmarks,
   token: state.token,
 });
 
-export default compose(
-  connect(mapStateToProps),
-  withTranslation(),
-)(WalletVisualWithAddress);
+export default compose(connect(mapStateToProps), withTranslation())(WalletVisualWithAddress);

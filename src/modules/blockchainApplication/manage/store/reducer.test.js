@@ -1,9 +1,9 @@
-import mockApplicationsManage, { applicationsMap } from '@tests/fixtures/blockchainApplicationsManage';
+import mockApplicationsManage, {
+  applicationsMap,
+} from '@tests/fixtures/blockchainApplicationsManage';
 import mockApplicationsExplore from '@tests/fixtures/blockchainApplicationsExplore';
 import actionTypes from './actionTypes';
-import {
-  pins, applications, current, node,
-} from './reducer';
+import { pins, applications, current, node } from './reducer';
 
 describe('BlockchainApplication reducer', () => {
   describe('pins', () => {
@@ -22,8 +22,7 @@ describe('BlockchainApplication reducer', () => {
         chainId: mockApplicationsExplore[0].chainID,
       };
 
-      expect(pins([mockApplicationsExplore[0].chainID], actionData)).not
-        .toContain(actionData.data);
+      expect(pins([mockApplicationsExplore[0].chainID], actionData)).not.toContain(actionData.data);
     });
   });
 

@@ -4,10 +4,16 @@ const moduleCommandSchemas = {
     properties: {
       amount: { dataType: 'uint64', fieldNumber: 1 },
       recipientAddress: {
-        dataType: 'bytes', fieldNumber: 2, maxLength: 20, minLength: 20,
+        dataType: 'bytes',
+        fieldNumber: 2,
+        maxLength: 20,
+        minLength: 20,
       },
       data: {
-        dataType: 'string', fieldNumber: 3, maxLength: 64, minLength: 0,
+        dataType: 'string',
+        fieldNumber: 3,
+        maxLength: 64,
+        minLength: 0,
       },
     },
     required: ['amount', 'recipientAddress', 'data'],
@@ -17,11 +23,7 @@ const moduleCommandSchemas = {
   '4:0': {
     $id: 'lisk/keys/register',
     type: 'object',
-    required: [
-      'numberOfSignatures',
-      'optionalKeys',
-      'mandatoryKeys',
-    ],
+    required: ['numberOfSignatures', 'optionalKeys', 'mandatoryKeys'],
     properties: {
       numberOfSignatures: {
         dataType: 'uint32',
@@ -56,9 +58,7 @@ const moduleCommandSchemas = {
   '5:0': {
     $id: 'lisk/dpos/register',
     type: 'object',
-    required: [
-      'username',
-    ],
+    required: ['username'],
     properties: {
       username: {
         dataType: 'string',
@@ -71,9 +71,7 @@ const moduleCommandSchemas = {
   '5:1': {
     $id: 'lisk/dpos/vote',
     type: 'object',
-    required: [
-      'votes',
-    ],
+    required: ['votes'],
     properties: {
       votes: {
         type: 'array',
@@ -81,10 +79,7 @@ const moduleCommandSchemas = {
         maxItems: 20,
         items: {
           type: 'object',
-          required: [
-            'delegateAddress',
-            'amount',
-          ],
+          required: ['delegateAddress', 'amount'],
           properties: {
             delegateAddress: {
               dataType: 'bytes',
@@ -105,9 +100,7 @@ const moduleCommandSchemas = {
   '5:2': {
     $id: 'lisk/dpos/unlock',
     type: 'object',
-    required: [
-      'unlockObjects',
-    ],
+    required: ['unlockObjects'],
     properties: {
       unlockObjects: {
         type: 'array',
@@ -115,11 +108,7 @@ const moduleCommandSchemas = {
         maxItems: 20,
         items: {
           type: 'object',
-          required: [
-            'delegateAddress',
-            'amount',
-            'unvoteHeight',
-          ],
+          required: ['delegateAddress', 'amount', 'unvoteHeight'],
           properties: {
             delegateAddress: {
               dataType: 'bytes',
@@ -145,9 +134,7 @@ const moduleCommandSchemas = {
     $id: 'lisk/legacyAccount/reclaim',
     title: 'Reclaim transaction asset',
     type: 'object',
-    required: [
-      'amount',
-    ],
+    required: ['amount'],
     properties: {
       amount: {
         dataType: 'uint64',

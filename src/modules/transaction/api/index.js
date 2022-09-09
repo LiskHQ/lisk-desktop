@@ -15,14 +15,11 @@ import { validateAddress } from 'src/utils/validators';
 import http from 'src/utils/api/http';
 import { getDelegates } from '@dpos/validator/api';
 import { httpPaths } from '../configuration';
-import {
-  desktopTxToElementsTx,
-  sign,
-} from '../utils';
+import { desktopTxToElementsTx, sign } from '../utils';
 
 // TODO: Remove this patch once API is integrated
-const patchTransactionResponse = response => {
-  const data = response.data.map(trx => ({
+const patchTransactionResponse = (response) => {
+  const data = response.data.map((trx) => ({
     ...trx,
     params: { ...trx.asset },
     moduleCommandID: trx.moduleAssetId,
@@ -47,29 +44,36 @@ const patchTransactionResponse = response => {
  * @param {Object} data.network - Network setting from Redux store
  * @returns {Promise} Transaction details API call
  */
-export const getTransaction = ({
-  params, network, baseUrl,
-}) => http({
-  path: httpPaths.transaction,
-  params,
-  network,
-  baseUrl,
-}).then(patchTransactionResponse);
+export const getTransaction = ({ params, network, baseUrl }) =>
+  http({
+    path: httpPaths.transaction,
+    params,
+    network,
+    baseUrl,
+  }).then(patchTransactionResponse);
 
 const filters = {
-  address: { key: 'address', test: address => !validateAddress(address) },
-  senderAddress: { key: 'senderAddress', test: address => !validateAddress(address) },
-  recipientAddress: { key: 'recipientAddress', test: address => !validateAddress(address) },
-  timestamp: { key: 'timestamp', test: str => /^(\d+)?:(\d+)?$/.test(str) },
-  amount: { key: 'amount', test: str => /^(\d+)?:(\d+)?$/.test(str) },
-  limit: { key: 'limit', test: num => parseInt(num, 10) > 0 },
-  offset: { key: 'offset', test: num => parseInt(num, 10) >= 0 },
-  moduleCommandID: { key: 'moduleCommandID', test: str => /\d:\d/.test(str) },
-  height: { key: 'height', test: num => parseInt(num, 10) > 0 },
-  blockId: { key: 'blockId', test: str => typeof str === 'string' },
+  address: { key: 'address', test: (address) => !validateAddress(address) },
+  senderAddress: { key: 'senderAddress', test: (address) => !validateAddress(address) },
+  recipientAddress: { key: 'recipientAddress', test: (address) => !validateAddress(address) },
+  timestamp: { key: 'timestamp', test: (str) => /^(\d+)?:(\d+)?$/.test(str) },
+  amount: { key: 'amount', test: (str) => /^(\d+)?:(\d+)?$/.test(str) },
+  limit: { key: 'limit', test: (num) => parseInt(num, 10) > 0 },
+  offset: { key: 'offset', test: (num) => parseInt(num, 10) >= 0 },
+  moduleCommandID: { key: 'moduleCommandID', test: (str) => /\d:\d/.test(str) },
+  height: { key: 'height', test: (num) => parseInt(num, 10) > 0 },
+  blockId: { key: 'blockId', test: (str) => typeof str === 'string' },
   sort: {
     key: 'sort',
-    test: str => ['amount:asc', 'amount:desc', 'fee:asc', 'fee:desc', 'timestamp:asc', 'timestamp:desc'].includes(str),
+    test: (str) =>
+      [
+        'amount:asc',
+        'amount:desc',
+        'fee:asc',
+        'fee:desc',
+        'timestamp:asc',
+        'timestamp:desc',
+      ].includes(str),
   },
 };
 
@@ -97,11 +101,7 @@ const filters = {
  * If passed, all other parameter will be ignored.
  * @returns {Promise} Transactions list API call
  */
-export const getTransactions = ({
-  network,
-  params,
-  baseUrl,
-}) => {
+export const getTransactions = ({ network, params, baseUrl }) => {
   const normParams = {};
   // Validate params and fix keys
   Object.keys(params).forEach((key) => {
@@ -149,7 +149,7 @@ export const getRegisteredDelegates = async ({ network }) => {
 
   // create monthly number of registration as a dictionary
   const monthStats = txs.data
-    .map(tx => tx.block.timestamp)
+    .map((tx) => tx.block.timestamp)
     .reduce((acc, timestamp) => {
       const date = getDate(timestamp);
       acc[date] = typeof acc[date] === 'number' ? acc[date] + 1 : 1;
@@ -159,16 +159,19 @@ export const getRegisteredDelegates = async ({ network }) => {
   // Create a sorted array of monthly accumulated number of registrations
   const res = Object.keys(monthStats)
     .sort((a, b) => -1 * (b - 1))
-    .reduce((acc, month) => {
-      if (acc[0][0] === month) {
-        acc.unshift([null, acc[0][1] - monthStats[month]]);
-      } else if (acc[0][0] === null) {
-        acc[0][0] = month;
-        acc.unshift([null, acc[0][1] - monthStats[month]]);
-      }
+    .reduce(
+      (acc, month) => {
+        if (acc[0][0] === month) {
+          acc.unshift([null, acc[0][1] - monthStats[month]]);
+        } else if (acc[0][0] === null) {
+          acc[0][0] = month;
+          acc.unshift([null, acc[0][1] - monthStats[month]]);
+        }
 
-      return acc;
-    }, [[getDate(txs.data[0].block.timestamp), delegates.meta.total]]);
+        return acc;
+      },
+      [[getDate(txs.data[0].block.timestamp), delegates.meta.total]]
+    );
 
   // Add the date of one month before the last tx
   res[0][0] = getDate(txs.data[txs.data.length - 1].block.timestamp - 2670000);
@@ -210,36 +213,37 @@ export const getTransactionStats = ({ network, params: { period } }) => {
  * @param {Object} data.network - Network setting from Redux store
  * @returns {Promise} http call
  */
-export const getSchemas = ({ baseUrl }) => http({
-  path: httpPaths.schemas,
-  baseUrl,
-}).then((response) =>
-  response.data.reduce((acc, data) => {
-    // TODO: Need to change this to commandID
-    acc[data.moduleAssetId] = data.schema;
-    return acc;
-  }, {}));
+export const getSchemas = ({ baseUrl }) =>
+  http({
+    path: httpPaths.schemas,
+    baseUrl,
+  }).then((response) =>
+    response.data.reduce((acc, data) => {
+      // TODO: Need to change this to commandID
+      acc[data.moduleAssetId] = data.schema;
+      return acc;
+    }, {})
+  );
 
 /**
  * Returns a dictionary of base fees for low, medium and high processing speeds
  * @returns {Promise<{Low: number, Medium: number, High: number}>} with low,
  * medium and high priority fee options
  */
-export const getTransactionBaseFees = network =>
+export const getTransactionBaseFees = (network) =>
   http({
     path: httpPaths.fees,
     searchParams: {},
     network,
-  })
-    .then((response) => {
-      const { feeEstimatePerByte } = response.data;
+  }).then((response) => {
+    const { feeEstimatePerByte } = response.data;
 
-      return {
-        Low: feeEstimatePerByte.low,
-        Medium: feeEstimatePerByte.medium,
-        High: feeEstimatePerByte.high,
-      };
-    });
+    return {
+      Low: feeEstimatePerByte.low,
+      Medium: feeEstimatePerByte.medium,
+      High: feeEstimatePerByte.high,
+    };
+  });
 
 /**
  * Returns the actual tx fee based on given tx details
@@ -259,9 +263,7 @@ export const getTransactionFee = async ({
 }) => {
   const feePerByte = selectedPriority.value;
 
-  const {
-    moduleCommandID, ...rawTransaction
-  } = transaction;
+  const { moduleCommandID, ...rawTransaction } = transaction;
 
   const schema = network.networks.LSK.moduleCommandSchemas[moduleCommandID];
   const maxAssetFee = MODULE_COMMANDS_MAP[moduleCommandID].maxFee;
@@ -282,8 +284,8 @@ export const getTransactionFee = async ({
   });
 
   // tie breaker is only meant for medium and high processing speeds
-  const tieBreaker = selectedPriority.selectedIndex === 0
-    ? 0 : (MIN_FEE_PER_BYTE * feePerByte * Math.random());
+  const tieBreaker =
+    selectedPriority.selectedIndex === 0 ? 0 : MIN_FEE_PER_BYTE * feePerByte * Math.random();
 
   const size = transactions.getBytes(transactionObject, schema).length;
 
@@ -292,9 +294,7 @@ export const getTransactionFee = async ({
   const feeInLsk = fromRawLsk(cappedFee.toString());
   const roundedValue = Number(feeInLsk).toFixed(7).toString();
 
-  const feedback = transaction.amount === ''
-    ? '-'
-    : `${(roundedValue ? '' : 'Invalid amount')}`;
+  const feedback = transaction.amount === '' ? '-' : `${roundedValue ? '' : 'Invalid amount'}`;
 
   return {
     value: roundedValue,
@@ -334,13 +334,22 @@ export const createGenericTx = async ({
 
   const schema = network.networks.LSK.moduleCommandSchemas[moduleCommandID];
 
-  const isMultiSignatureRegistration = moduleCommandID
-    === MODULE_COMMANDS_NAME_ID_MAP.registerMultisignatureGroup;
+  const isMultiSignatureRegistration =
+    moduleCommandID === MODULE_COMMANDS_NAME_ID_MAP.registerMultisignatureGroup;
 
   const result = await sign(
-    wallet, schema, transaction, network, networkIdentifier,
-    isMultisignature, isMultiSignatureRegistration, keys, publicKey ?? reduxPublicKey,
-    moduleCommandID, rawTransaction, privateKey ?? reduxPrivateKey,
+    wallet,
+    schema,
+    transaction,
+    network,
+    networkIdentifier,
+    isMultisignature,
+    isMultiSignatureRegistration,
+    keys,
+    publicKey ?? reduxPublicKey,
+    moduleCommandID,
+    rawTransaction,
+    privateKey ?? reduxPrivateKey
   );
 
   return result;

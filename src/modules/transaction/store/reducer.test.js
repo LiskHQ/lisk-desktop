@@ -10,19 +10,23 @@ describe('Reducer: transactions', () => {
     txSignatureError: null,
     txBroadcastError: null,
   };
-  const mockTransactions = [{
-    amount: 100000000000,
-    id: '16295820046284152875',
-    timestamp: 33505748,
-  }, {
-    amount: 200000000000,
-    id: '8504241460062789191',
-    timestamp: 33505746,
-  }, {
-    amount: 300000000000,
-    id: '18310904473760006068',
-    timestamp: 33505743,
-  }];
+  const mockTransactions = [
+    {
+      amount: 100000000000,
+      id: '16295820046284152875',
+      timestamp: 33505748,
+    },
+    {
+      amount: 200000000000,
+      id: '8504241460062789191',
+      timestamp: 33505746,
+    },
+    {
+      amount: 300000000000,
+      id: '18310904473760006068',
+      timestamp: 33505743,
+    },
+  ];
 
   describe('emptyTransactionsData', () => {
     it('should reset all data', () => {

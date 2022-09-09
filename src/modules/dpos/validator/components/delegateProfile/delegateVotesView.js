@@ -26,9 +26,8 @@ const DelegateVotesView = ({ voters, t }) => {
 
   const votersInfo = searchInput
     ? voters.data.votes.filter(
-      (v) =>
-        v.username?.includes(searchInput) || v.address?.includes(searchInput),
-    )
+        (v) => v.username?.includes(searchInput) || v.address?.includes(searchInput)
+      )
     : voters.data.votes;
   const canLoadMoreData = voters.meta && voters.meta.total > votersInfo.length && !searchInput;
   const emptyMessage = searchInput

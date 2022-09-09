@@ -12,7 +12,11 @@ import { useApplicationManagement, useCurrentApplication, useCurrentNode } from 
 import styles from './SelectNode.css';
 
 const NodeComponent = ({ node, selectAppNode }) => (
-  <div className={grid['col-xs-6']} onClick={() => selectAppNode(node)} data-testid="application-node-row">
+  <div
+    className={grid['col-xs-6']}
+    onClick={() => selectAppNode(node)}
+    data-testid="application-node-row"
+  >
     <div className={`${styles.node} select-node-row`}>
       {node.rest}
       <Icon name="arrowRightActive" color="red" />
@@ -42,12 +46,12 @@ const SelectNode = ({ history, location }) => {
           <span>
             <img src={chainLogo || liskLogo} />
           </span>
-          <span>
-            {application.name}
-          </span>
+          <span>{application.name}</span>
         </BoxHeader>
         <BoxContent className={styles.contentWrapper}>
-          <div className={`${styles.content} application-content`}>{t('Choose application URL')}</div>
+          <div className={`${styles.content} application-content`}>
+            {t('Choose application URL')}
+          </div>
           <div className={grid.row}>
             {application.apis.map((node) => (
               <NodeComponent node={node} key={node.rpc} selectAppNode={selectAppNode} />

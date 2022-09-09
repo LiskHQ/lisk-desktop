@@ -4,7 +4,7 @@ import { selectActiveTokenAccount } from 'src/redux/selectors';
 import { delegateRegistered } from '@dpos/validator/store/actions/delegate';
 import RegisterDelegateSummary from './RegisterDelegateSummary';
 
-const mapStateToProps = state => ({
+const mapStateToProps = (state) => ({
   account: selectActiveTokenAccount(state),
 });
 
@@ -12,6 +12,4 @@ const mapDispatchToProps = {
   delegateRegistered,
 };
 
-export default connect(
-  mapStateToProps, mapDispatchToProps,
-)(RegisterDelegateSummary);
+export default connect(mapStateToProps, mapDispatchToProps)(RegisterDelegateSummary);

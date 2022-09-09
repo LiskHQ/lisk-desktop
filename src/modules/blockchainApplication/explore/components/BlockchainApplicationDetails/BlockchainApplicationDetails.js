@@ -28,9 +28,7 @@ const BlockchainApplicationDetails = ({ history, location, application }) => {
   const chainId = parseSearchParams(location.search).chainId;
   const mode = parseSearchParams(location.search).mode;
   const { checkPinByChainId, togglePin } = usePinBlockchainApplication();
-  const {
-    name, state, address, lastCertificateHeight, lastUpdated,
-  } = application.data;
+  const { name, state, address, lastCertificateHeight, lastUpdated } = application.data;
   const { setApplication } = useApplicationManagement();
 
   const isPinned = checkPinByChainId(chainId);
@@ -39,7 +37,11 @@ const BlockchainApplicationDetails = ({ history, location, application }) => {
   };
   const addNewApplication = () => {
     setApplication(application.data);
-    removeThenAppendSearchParamsToUrl(history, { modal: 'addApplicationSuccess', chainId: application.data.chainID }, ['modal', 'chainId', 'mode']);
+    removeThenAppendSearchParamsToUrl(
+      history,
+      { modal: 'addApplicationSuccess', chainId: application.data.chainID },
+      ['modal', 'chainId', 'mode']
+    );
   };
 
   const footerDetails = [
@@ -101,8 +103,8 @@ const BlockchainApplicationDetails = ({ history, location, application }) => {
             <a
               className={`${styles.appLink}`}
               target="_blank"
-                // eslint-disable-next-line
-                // TODO: this is just a placeholder link pending when its part of the response payload from service
+              // eslint-disable-next-line
+              // TODO: this is just a placeholder link pending when its part of the response payload from service
               href={serviceUrl}
             >
               <Icon name="chainLinkIcon" className={styles.hwWalletIcon} />
@@ -113,9 +115,7 @@ const BlockchainApplicationDetails = ({ history, location, application }) => {
             <span>{t('Deposited:')}</span>
             {/* TODO: this is a placeholder value pending when its part of service response */}
             <span>
-              <TokenAmount val={deposit} />
-              {' '}
-              LSK
+              <TokenAmount val={deposit} /> LSK
             </span>
           </div>
           <Box className={styles.footerDetailsRow}>
@@ -123,24 +123,20 @@ const BlockchainApplicationDetails = ({ history, location, application }) => {
               <ValueAndLabel
                 key={index}
                 className={styles.detail}
-                label={(
+                label={
                   <span className={styles.headerText}>
                     <>
                       {header.text || header}
                       {header.toolTipText && (
-                      <Tooltip position="right">
-                        <p>
-                          {header.toolTipText}
-                        </p>
-                      </Tooltip>
+                        <Tooltip position="right">
+                          <p>{header.toolTipText}</p>
+                        </Tooltip>
                       )}
                     </>
                   </span>
-                  )}
+                }
               >
-                <span className={className}>
-                  {content}
-                </span>
+                <span className={className}>{content}</span>
               </ValueAndLabel>
             ))}
           </Box>

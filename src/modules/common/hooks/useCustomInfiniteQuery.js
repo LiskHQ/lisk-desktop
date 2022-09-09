@@ -1,9 +1,6 @@
 /* istanbul ignore file */
 import { useInfiniteQuery } from '@tanstack/react-query';
-import {
-  METHOD,
-  API_METHOD,
-} from 'src/const/config';
+import { METHOD, API_METHOD } from 'src/const/config';
 import { APPLICATION } from 'src/const/queries';
 import { useCurrentApplication } from '@blockchainApplication/manage/hooks';
 
@@ -22,21 +19,18 @@ import { useCurrentApplication } from '@blockchainApplication/manage/hooks';
  * @returns the query object
  */
 // eslint-disable-next-line import/prefer-default-export
-export const useCustomInfiniteQuery = ({
-  keys,
-  config,
-  options = {},
-}) => {
+export const useCustomInfiniteQuery = ({ keys, config, options = {} }) => {
   const [{ chainID }] = useCurrentApplication();
   return useInfiniteQuery(
     [chainID, config, APPLICATION, METHOD, ...keys],
-    async ({ pageParam }) => API_METHOD[METHOD]({
-      ...config,
-      params: {
-        ...(config.params || {}),
-        ...pageParam,
-      },
-    }),
+    async ({ pageParam }) =>
+      API_METHOD[METHOD]({
+        ...config,
+        params: {
+          ...(config.params || {}),
+          ...pageParam,
+        },
+      }),
     {
       getNextPageParam: (lastPage = {}) => {
         const lastPageCount = lastPage.meta?.count || 0;
@@ -46,14 +40,15 @@ export const useCustomInfiniteQuery = ({
         const hasMore = offset < (lastPage.meta?.total ?? Infinity);
         return !hasMore ? undefined : { offset };
       },
-      select: (data) => data.pages.reduce((prevPages, page) => {
-        const newData = page?.data || [];
-        return {
-          ...page,
-          data: prevPages.data ? [...prevPages.data, ...newData] : newData,
-        };
-      }, {}),
+      select: (data) =>
+        data.pages.reduce((prevPages, page) => {
+          const newData = page?.data || [];
+          return {
+            ...page,
+            data: prevPages.data ? [...prevPages.data, ...newData] : newData,
+          };
+        }, {}),
       ...options,
-    },
+    }
   );
 };

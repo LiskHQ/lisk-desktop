@@ -18,5 +18,5 @@ export const blockchainApp = rest.get(
       },
     };
     return res(ctx.delay(20), ctx.json(response));
-  },
+  }
 );

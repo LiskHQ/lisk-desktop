@@ -72,10 +72,7 @@ export const Counterpart = () => {
   // Show tx icon
   if (data.moduleCommandID !== MODULE_COMMANDS_NAME_ID_MAP.transfer && host) {
     return (
-      <TransactionTypeFigure
-        moduleCommandID={data.moduleCommandID}
-        address={data.sender.address}
-      />
+      <TransactionTypeFigure moduleCommandID={data.moduleCommandID} address={data.sender.address} />
     );
   }
   // Show recipient
@@ -108,23 +105,14 @@ export const Date = ({ t }) => {
   const { data } = useContext(TransactionRowContext);
 
   if (data.isPending || !data.block.timestamp) {
-    return (
-      <Spinner
-        completed={!data.isPending || data.block?.timestamp}
-        label={t('Pending...')}
-      />
-    );
+    return <Spinner completed={!data.isPending || data.block?.timestamp} label={t('Pending...')} />;
   }
 
-  return (
-    <DateTimeFromTimestamp time={data.block.timestamp} />
-  );
+  return <DateTimeFromTimestamp time={data.block.timestamp} />;
 };
 
 export const Amount = () => {
-  const {
-    data, layout, activeToken, host,
-  } = useContext(TransactionRowContext);
+  const { data, layout, activeToken, host } = useContext(TransactionRowContext);
 
   if (layout !== 'full') {
     return (
@@ -171,9 +159,7 @@ export const Fee = ({ t }) => {
 export const Status = ({ t }) => {
   const { data, currentBlockHeight } = useContext(TransactionRowContext);
   const roundSize = 103;
-  const height = currentBlockHeight
-    ? currentBlockHeight - data.block.height
-    : 0;
+  const height = currentBlockHeight ? currentBlockHeight - data.block.height : 0;
 
   return (
     <span>
@@ -192,14 +178,11 @@ export const Status = ({ t }) => {
 
 const generateVotes = (params, delegates, token, t) => {
   const voteElements = params.votes.slice(0, 1).map((vote) => (
-    <span
-      className={`${styles.container} vote-item-address`}
-      key={`vote-${vote.delegateAddress}`}
-    >
+    <span className={`${styles.container} vote-item-address`} key={`vote-${vote.delegateAddress}`}>
       <Link to={`${routes.wallet.path}?address=${vote.delegateAddress}`}>
         <span className={styles.primaryText}>
-          {delegates[vote.delegateAddress]?.dpos.delegate.username
-            ?? truncateAddress(vote.delegateAddress)}
+          {delegates[vote.delegateAddress]?.dpos.delegate.username ??
+            truncateAddress(vote.delegateAddress)}
         </span>
       </Link>
       <span className={`${styles.value} vote-item-value`}>
@@ -212,11 +195,7 @@ const generateVotes = (params, delegates, token, t) => {
     <div className={styles.voteDetails}>
       {voteElements}
       {params.votes.length > 1 && (
-        <span className={styles.more}>
-          {`${params.votes.length - 1} ${t(
-            'more',
-          )}...`}
-        </span>
+        <span className={styles.more}>{`${params.votes.length - 1} ${t('more')}...`}</span>
       )}
     </div>
   );

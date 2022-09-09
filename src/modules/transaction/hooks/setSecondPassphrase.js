@@ -20,8 +20,9 @@ const setSecondPassphrase = () => {
       return messages;
     }
 
-    const secondPublicKey = account.keys.mandatoryKeys
-      .filter(item => item !== account.summary.publicKey);
+    const secondPublicKey = account.keys.mandatoryKeys.filter(
+      (item) => item !== account.summary.publicKey
+    );
     const publicKey = extractPublicKey(data);
 
     // compare them

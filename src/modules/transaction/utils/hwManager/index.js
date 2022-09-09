@@ -9,7 +9,7 @@ const signTransactionByHW = async (
   networkIdentifier,
   transactionObject,
   transactionBytes,
-  keys,
+  keys
 ) => {
   const data = {
     deviceId: wallet.hwInfo.deviceId,

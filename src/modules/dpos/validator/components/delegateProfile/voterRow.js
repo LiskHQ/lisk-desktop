@@ -8,15 +8,8 @@ import styles from './delegateProfile.css';
 const VoterRow = ({ data = {} }) => {
   const { address, username } = data;
   return (
-    <Link
-      className={styles.voteRow}
-      to={`account?address=${address}`}
-    >
-      <WalletVisual
-        className={styles.walletVisual}
-        address={address}
-        size={40}
-      />
+    <Link className={styles.voteRow} to={`account?address=${address}`}>
+      <WalletVisual className={styles.walletVisual} address={address} size={40} />
       <span className={styles.address}>{username || truncateAddress(address)}</span>
     </Link>
   );

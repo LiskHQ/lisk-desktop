@@ -5,22 +5,28 @@ import withLocalSort from './withLocalSort';
 describe('withLocalSort', () => {
   const className = 'dummy';
   const dataKey = 'dataKey';
-  const DummyComponent = props => (
+  const DummyComponent = (props) => (
     <span className={className}>
       <span className="sort" onClick={() => props.changeSort('id')} />
-      {props[dataKey].data.map(data => <span key={data.id}>{data.id}</span>)}
+      {props[dataKey].data.map((data) => (
+        <span key={data.id}>{data.id}</span>
+      ))}
     </span>
   );
   const initialSort = 'id:asc';
   const props = {
     [dataKey]: {
-      data: [{
-        id: 2,
-      }, {
-        id: 1,
-      }, {
-        id: 3,
-      }],
+      data: [
+        {
+          id: 2,
+        },
+        {
+          id: 1,
+        },
+        {
+          id: 3,
+        },
+      ],
     },
   };
   const setup = () => {

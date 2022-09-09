@@ -10,7 +10,10 @@ import { signMessageByHW } from './hwManager';
  */
 export const signUsingPrivateKey = ({ message, account }) => {
   const msgBytes = cryptography.ed.digestMessage(message);
-  const signature = cryptography.ed.signDataWithPrivateKey(msgBytes, Buffer.from(account.summary.privateKey, 'hex'));
+  const signature = cryptography.ed.signDataWithPrivateKey(
+    msgBytes,
+    Buffer.from(account.summary.privateKey, 'hex')
+  );
   const result = cryptography.ed.printSignedMessage({
     message,
     signature,

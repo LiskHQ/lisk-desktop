@@ -9,9 +9,7 @@ import { timeOutWarningId } from 'src/utils/toasts';
 import account from '@wallet/configuration/constants';
 import styles from './autoSignOut.css';
 
-const TimeOutToast = ({
-  t, upDateCount, completed, expireTime,
-}) => {
+const TimeOutToast = ({ t, upDateCount, completed, expireTime }) => {
   const dispatch = useDispatch();
 
   const onResetTime = () => {
@@ -27,33 +25,29 @@ const TimeOutToast = ({
   const seconds = absTime % 60 >= 1 ? `${absTime % 60}s` : '';
 
   return (
-    completed && toast(
+    completed &&
+    toast(
       <div className={styles.toastText}>
         <h5 className={styles.title}>{t('Warning: Session Timeout')}</h5>
-        <p className={styles.content}>{t('Your session will be timed out in {{time}} if no network activity occurs.', { time: `${minutes}${seconds}` })}</p>
-        <button
-          className={`${styles.button} reset-time-button`}
-          onClick={onResetTime}
-        >
+        <p className={styles.content}>
+          {t('Your session will be timed out in {{time}} if no network activity occurs.', {
+            time: `${minutes}${seconds}`,
+          })}
+        </p>
+        <button className={`${styles.button} reset-time-button`} onClick={onResetTime}>
           {t('Reset time')}
         </button>
       </div>,
       {
         toastId: timeOutWarningId,
         autoClose: false,
-        closeButton: <span
-          className={styles.closeBtn}
-        />,
-      },
+        closeButton: <span className={styles.closeBtn} />,
+      }
     )
   );
 };
 
-const WarningAutoSignOut = ({
-  t,
-  warningTime,
-  expireTime,
-}) => {
+const WarningAutoSignOut = ({ t, warningTime, expireTime }) => {
   const [count, setCount] = useState(1);
 
   const upDateCount = () => {
@@ -64,16 +58,14 @@ const WarningAutoSignOut = ({
     <Countdown
       key={`timeout-warning-countdown-${count}`}
       date={warningTime}
-      renderer={
-        ({ completed }) => (
-          <TimeOutToast
-            t={t}
-            completed={completed}
-            upDateCount={upDateCount}
-            expireTime={expireTime}
-          />
-        )
-      }
+      renderer={({ completed }) => (
+        <TimeOutToast
+          t={t}
+          completed={completed}
+          upDateCount={upDateCount}
+          expireTime={expireTime}
+        />
+      )}
     />
   );
 };

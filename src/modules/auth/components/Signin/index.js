@@ -15,7 +15,7 @@ setDefaults({
   withTranslationFuncName: 't',
 });
 
-const mapStateToProps = state => ({
+const mapStateToProps = (state) => ({
   account: selectActiveTokenAccount(state),
   network: state.network,
   settings: state.settings,
@@ -26,7 +26,4 @@ const mapDispatchToProps = {
   settingsUpdated,
 };
 
-export default connect(
-  mapStateToProps,
-  mapDispatchToProps,
-)(withTranslation()(Login));
+export default connect(mapStateToProps, mapDispatchToProps)(withTranslation()(Login));

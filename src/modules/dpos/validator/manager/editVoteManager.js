@@ -7,9 +7,7 @@ import { selectActiveTokenAccount, selectNetwork, selectVoting } from 'src/redux
 import EditVote from '../components/EditVote';
 
 const mapStateToProps = (state) => ({
-  currentHeight: state.blocks.latestBlocks.length
-    ? state.blocks.latestBlocks[0].height
-    : 0,
+  currentHeight: state.blocks.latestBlocks.length ? state.blocks.latestBlocks[0].height : 0,
   wallet: selectActiveTokenAccount(state),
   network: selectNetwork(state),
   voting: selectVoting(state),
@@ -22,5 +20,5 @@ const mapDispatchToProps = {
 export default compose(
   withRouter,
   withTranslation(),
-  connect(mapStateToProps, mapDispatchToProps),
+  connect(mapStateToProps, mapDispatchToProps)
 )(EditVote);

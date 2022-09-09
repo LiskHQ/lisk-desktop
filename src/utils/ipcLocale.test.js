@@ -6,7 +6,9 @@ describe('ipcLocale', () => {
   let localStorageStub;
   let callbacks;
   const ipc = {
-    on: (event, callback) => { callbacks[event] = callback; },
+    on: (event, callback) => {
+      callbacks[event] = callback;
+    },
     send: spy(),
   };
 
@@ -66,7 +68,9 @@ describe('ipcLocale', () => {
         ipcLocale.init({
           changeLanguage: spy(),
           language: 'en',
-          on: (event, callback) => { callbacks[event] = callback; },
+          on: (event, callback) => {
+            callbacks[event] = callback;
+          },
         });
 
         callbacks.languageChanged('de');
@@ -98,7 +102,9 @@ describe('ipcLocale', () => {
         ipcLocale.init({
           changeLanguage: spy(),
           language: 'en',
-          on: (event, callback) => { callbacks[event] = callback; },
+          on: (event, callback) => {
+            callbacks[event] = callback;
+          },
         });
 
         callbacks.languageChanged('de');

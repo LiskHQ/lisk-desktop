@@ -1,6 +1,4 @@
-import React, {
-  useState, useRef, useMemo,
-} from 'react';
+import React, { useState, useRef, useMemo } from 'react';
 import { useSelector } from 'react-redux';
 import { withRouter } from 'react-router';
 
@@ -18,7 +16,7 @@ const DialogHolder = ({ history }) => {
   }, [history.location.search]);
 
   const activeToken = useSelector(selectActiveToken);
-  const networkIsSet = useSelector(state => !!state.network.name);
+  const networkIsSet = useSelector((state) => !!state.network.name);
   const account = useSelector(selectActiveTokenAccount);
 
   const backdropRef = useRef();
@@ -65,15 +63,17 @@ const DialogHolder = ({ history }) => {
     }
   };
 
-  return ModalComponent && (
-    <div
-      ref={backdropRef}
-      className={`${styles.mask} ${dismissed ? styles.hide : styles.show}`}
-      onAnimationEnd={onAnimationEnd}
-      onClick={onBackDropClick}
-    >
-      <ModalComponent />
-    </div>
+  return (
+    ModalComponent && (
+      <div
+        ref={backdropRef}
+        className={`${styles.mask} ${dismissed ? styles.hide : styles.show}`}
+        onAnimationEnd={onAnimationEnd}
+        onClick={onBackDropClick}
+      >
+        <ModalComponent />
+      </div>
+    )
   );
 };
 

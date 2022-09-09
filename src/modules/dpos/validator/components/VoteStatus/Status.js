@@ -6,14 +6,8 @@ import ToggleIcon from '../ToggleIcon';
 import statusMessages from './statusMessages';
 import styles from './styles.css';
 
-const Status = ({
-  account, transactions, statusInfo, t,
-}) => {
-  const status = getTransactionStatus(
-    account,
-    transactions,
-    account?.summary.isMultisignature,
-  );
+const Status = ({ account, transactions, statusInfo, t }) => {
+  const status = getTransactionStatus(account, transactions, account?.summary.isMultisignature);
   const template = statusMessages(t, statusInfo)[status.code];
 
   return (

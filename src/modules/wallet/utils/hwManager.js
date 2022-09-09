@@ -22,7 +22,7 @@ const getAccountBundle = async (deviceId, network, offset) => {
     publicKeyList.push(publicKey);
   }
   const accounts = await getAccounts({ network, params: { publicKeyList } });
-  return accounts.data.filter(item => item.summary?.address);
+  return accounts.data.filter((item) => item.summary?.address);
 };
 
 /**
@@ -53,9 +53,10 @@ const getNewAccountByIndex = async ({ device: { deviceId }, index }) => {
   };
 };
 
-const isKeyMatch = (aPublicKey, signerPublicKey) => (Buffer.isBuffer(aPublicKey)
-  ? aPublicKey.equals(signerPublicKey)
-  : Buffer.from(aPublicKey, 'hex').equals(signerPublicKey));
+const isKeyMatch = (aPublicKey, signerPublicKey) =>
+  Buffer.isBuffer(aPublicKey)
+    ? aPublicKey.equals(signerPublicKey)
+    : Buffer.from(aPublicKey, 'hex').equals(signerPublicKey);
 
 /**
  * updateTransactionSignatures - Function.
@@ -63,30 +64,26 @@ const isKeyMatch = (aPublicKey, signerPublicKey) => (Buffer.isBuffer(aPublicKey)
  * The below logic is copied from Lisk SDK https://github.com/LiskHQ/lisk-sdk/blob/2593d1fe70154a9209b713994a252c494cad7123/elements/lisk-transactions/src/sign.ts#L228-L297
  */
 /* eslint-disable max-statements, complexity */
-const updateTransactionSignatures = (
-  account,
-  transactionObject,
-  signature,
-  keys,
-) => {
+const updateTransactionSignatures = (account, transactionObject, signature, keys) => {
   const isMultiSignatureRegistration = transactionObject.moduleID === 4;
   const signerPublicKey = Buffer.from(account.summary.publicKey, 'hex');
-  const isSender = Buffer.isBuffer(transactionObject.senderPublicKey)
-    && signerPublicKey.equals(transactionObject.senderPublicKey);
+  const isSender =
+    Buffer.isBuffer(transactionObject.senderPublicKey) &&
+    signerPublicKey.equals(transactionObject.senderPublicKey);
   const { mandatoryKeys, optionalKeys } = keys;
   if (
-    mandatoryKeys.length + optionalKeys.length === 0
-    || (isSender && isMultiSignatureRegistration)
+    mandatoryKeys.length + optionalKeys.length === 0 ||
+    (isSender && isMultiSignatureRegistration)
   ) {
     transactionObject.signatures[0] = signature;
   }
 
   if (mandatoryKeys.length + optionalKeys.length > 0) {
-    const mandatoryKeyIndex = mandatoryKeys.findIndex(
-      aPublicKey => isKeyMatch(aPublicKey, signerPublicKey),
+    const mandatoryKeyIndex = mandatoryKeys.findIndex((aPublicKey) =>
+      isKeyMatch(aPublicKey, signerPublicKey)
     );
-    const optionalKeyIndex = optionalKeys.findIndex(
-      aPublicKey => isKeyMatch(aPublicKey, signerPublicKey),
+    const optionalKeyIndex = optionalKeys.findIndex((aPublicKey) =>
+      isKeyMatch(aPublicKey, signerPublicKey)
     );
     const signatureOffset = isMultiSignatureRegistration ? 1 : 0;
     if (mandatoryKeyIndex !== -1) {
@@ -98,8 +95,10 @@ const updateTransactionSignatures = (
     }
     const numberOfSignatures = signatureOffset + mandatoryKeys.length + optionalKeys.length;
     for (let i = 0; i < numberOfSignatures; i += 1) {
-      if (Array.isArray(transactionObject.signatures)
-        && transactionObject.signatures[i] === undefined) {
+      if (
+        Array.isArray(transactionObject.signatures) &&
+        transactionObject.signatures[i] === undefined
+      ) {
         transactionObject.signatures[i] = Buffer.alloc(0);
       }
     }
@@ -109,10 +108,7 @@ const updateTransactionSignatures = (
 };
 /* eslint-disable max-statements */
 
-const signMessageByHW = async ({
-  wallet,
-  message,
-}) => {
+const signMessageByHW = async ({ wallet, message }) => {
   try {
     const signature = await signMessage({
       deviceId: wallet.hwInfo.deviceId,
@@ -121,18 +117,20 @@ const signMessageByHW = async ({
     });
 
     if (!signature) {
-      throw new Error(i18next.t(
-        'The message signature has been canceled on your {{model}}',
-        { model: wallet.hwInfo.deviceModel },
-      ));
+      throw new Error(
+        i18next.t('The message signature has been canceled on your {{model}}', {
+          model: wallet.hwInfo.deviceModel,
+        })
+      );
     }
 
     return signature;
   } catch (error) {
-    throw new Error(i18next.t(
-      'The message signature has been canceled on your {{model}}',
-      { model: wallet.hwInfo.deviceModel },
-    ));
+    throw new Error(
+      i18next.t('The message signature has been canceled on your {{model}}', {
+        model: wallet.hwInfo.deviceModel,
+      })
+    );
   }
 };
 

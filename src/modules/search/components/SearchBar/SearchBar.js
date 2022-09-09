@@ -53,9 +53,14 @@ class SearchBar extends React.Component {
 
   onSelectedRow(type, value) {
     if (type === 'transactions') {
-      addSearchParamsToUrl(this.props.history, { modal: 'transactionDetails', transactionId: value });
+      addSearchParamsToUrl(this.props.history, {
+        modal: 'transactionDetails',
+        transactionId: value,
+      });
     } else if (type === 'delegate-account') {
-      this.props.history.push(`${routes.explorer.path}?${routes.explorer.searchParam}=${value}&tab=delegateProfile`);
+      this.props.history.push(
+        `${routes.explorer.path}?${routes.explorer.searchParam}=${value}&tab=delegateProfile`
+      );
     } else {
       this.props.history.push(`${routes[type].path}?${routes[type].searchParam}=${value}`);
     }
@@ -77,9 +82,7 @@ class SearchBar extends React.Component {
   onKeyPress() {
     const {
       suggestions: {
-        data: {
-          addresses, delegates, transactions, blocks,
-        },
+        data: { addresses, delegates, transactions, blocks },
       },
     } = this.props;
     const { rowItemIndex } = this.state;
@@ -92,9 +95,10 @@ class SearchBar extends React.Component {
 
   onHandleKeyPress(e) {
     const { suggestions } = this.props;
-    const suggestionsLength = suggestions.data.addresses.length
-      || suggestions.data.delegates.length
-      || suggestions.data.transactions.length;
+    const suggestionsLength =
+      suggestions.data.addresses.length ||
+      suggestions.data.delegates.length ||
+      suggestions.data.transactions.length;
 
     // istanbul ignore else
     if (suggestionsLength >= 1) {
@@ -121,19 +125,23 @@ class SearchBar extends React.Component {
   // eslint-disable-next-line complexity
   render() {
     const { searchTextValue, rowItemIndex } = this.state;
-    const {
-      t, suggestions, setSearchBarRef, activeToken,
-    } = this.props;
+    const { t, suggestions, setSearchBarRef, activeToken } = this.props;
     const isSearchTextError = searchTextValue.length && searchTextValue.length < 3;
-    const isEmptyResults = !suggestions.isLoading && !suggestions.data.addresses.length
-      && !suggestions.data.delegates.length
-      && !suggestions.data.transactions.length
-      && !suggestions.data.blocks.length
-      && searchTextValue.length
-      && !isSearchTextError;
+    const isEmptyResults =
+      !suggestions.isLoading &&
+      !suggestions.data.addresses.length &&
+      !suggestions.data.delegates.length &&
+      !suggestions.data.transactions.length &&
+      !suggestions.data.blocks.length &&
+      searchTextValue.length &&
+      !isSearchTextError;
 
-    let feedback = isSearchTextError ? t('A bit more. Make sure to type at least 3 characters.') : null;
-    feedback = isEmptyResults ? t('Nothing has been found. Make sure to double check the ID you typed.') : feedback;
+    let feedback = isSearchTextError
+      ? t('A bit more. Make sure to type at least 3 characters.')
+      : null;
+    feedback = isEmptyResults
+      ? t('Nothing has been found. Make sure to double check the ID you typed.')
+      : feedback;
 
     return (
       <div className={`${styles.wrapper} search-bar`}>
@@ -152,59 +160,41 @@ class SearchBar extends React.Component {
           onKeyDown={this.onHandleKeyPress}
           isLoading={suggestions.isLoading || this.timeout}
         />
-        { feedback ? <span className={`${styles.searchFeedback} search-bar-feedback`}>{feedback}</span> : null }
-        {
-          suggestions.data.addresses.length
-            ? (
-              <Wallet
-                wallets={suggestions.data.addresses}
-                onSelectedRow={this.onSelectAccount}
-                rowItemIndex={rowItemIndex}
-                updateRowItemIndex={this.updateRowItemIndex}
-                t={t}
-              />
-            )
-            : null
-        }
-        {
-          suggestions.data.delegates.length
-            ? (
-              <Delegates
-                searchTextValue={searchTextValue}
-                delegates={suggestions.data.delegates}
-                onSelectedRow={this.onSelectDelegateAccount}
-                rowItemIndex={rowItemIndex}
-                updateRowItemIndex={this.updateRowItemIndex}
-                t={t}
-              />
-            )
-            : null
-        }
-        {
-          suggestions.data.transactions.length
-            ? (
-              <Transactions
-                transactions={suggestions.data.transactions}
-                onSelectedRow={this.onSelectTransaction}
-                rowItemIndex={rowItemIndex}
-                updateRowItemIndex={this.updateRowItemIndex}
-                t={t}
-                activeToken={activeToken}
-              />
-            )
-            : null
-        }
-        {
-          suggestions.data.blocks.length
-            ? (
-              <Blocks
-                blocks={suggestions.data.blocks}
-                onSelectedRow={this.onSelectBlock}
-                t={t}
-              />
-            )
-            : null
-        }
+        {feedback ? (
+          <span className={`${styles.searchFeedback} search-bar-feedback`}>{feedback}</span>
+        ) : null}
+        {suggestions.data.addresses.length ? (
+          <Wallet
+            wallets={suggestions.data.addresses}
+            onSelectedRow={this.onSelectAccount}
+            rowItemIndex={rowItemIndex}
+            updateRowItemIndex={this.updateRowItemIndex}
+            t={t}
+          />
+        ) : null}
+        {suggestions.data.delegates.length ? (
+          <Delegates
+            searchTextValue={searchTextValue}
+            delegates={suggestions.data.delegates}
+            onSelectedRow={this.onSelectDelegateAccount}
+            rowItemIndex={rowItemIndex}
+            updateRowItemIndex={this.updateRowItemIndex}
+            t={t}
+          />
+        ) : null}
+        {suggestions.data.transactions.length ? (
+          <Transactions
+            transactions={suggestions.data.transactions}
+            onSelectedRow={this.onSelectTransaction}
+            rowItemIndex={rowItemIndex}
+            updateRowItemIndex={this.updateRowItemIndex}
+            t={t}
+            activeToken={activeToken}
+          />
+        ) : null}
+        {suggestions.data.blocks.length ? (
+          <Blocks blocks={suggestions.data.blocks} onSelectedRow={this.onSelectBlock} t={t} />
+        ) : null}
       </div>
     );
   }

@@ -20,18 +20,16 @@ jest.mock('@transaction/utils/hwManager');
 
 describe('Unlock LSK modal', () => {
   let wrapper;
-  useTransactionPriority.mockImplementation(() => (
+  useTransactionPriority.mockImplementation(() => [
+    { selectedIndex: 1 },
+    () => {},
     [
-      { selectedIndex: 1 },
-      () => { },
-      [
-        { title: 'Low', value: 0.001 },
-        { title: 'Medium', value: 0.005 },
-        { title: 'High', value: 0.01 },
-        { title: 'Custom', value: undefined },
-      ],
-    ]
-  ));
+      { title: 'Low', value: 0.001 },
+      { title: 'Medium', value: 0.005 },
+      { title: 'High', value: 0.01 },
+      { title: 'Custom', value: undefined },
+    ],
+  ]);
   useTransactionFeeCalculation.mockImplementation(() => ({
     fee: { value: '0.1' },
     maxAmount: 0.1,
@@ -52,9 +50,21 @@ describe('Unlock LSK modal', () => {
     { amount: '2000000000', delegateAddress: 'lskdwsyfmcko6mcd357446yatromr9vzgu7eb8y11' },
   ];
   const initUnlocking = [
-    { amount: '1000000000', height: { start: 4900, end: 5900 }, delegateAddress: 'lskdwsyfmcko6mcd357446yatromr9vzgu7eb8y11' },
-    { amount: '3000000000', height: { start: 100, end: 200 }, delegateAddress: 'lskdwsyfmcko6mcd357446yatromr9vzgu7eb8y11' },
-    { amount: '1000000000', height: { start: 3000, end: 4000 }, delegateAddress: 'lskdwsyfmcko6mcd357446yatromr9vzgu7eb8y13' },
+    {
+      amount: '1000000000',
+      height: { start: 4900, end: 5900 },
+      delegateAddress: 'lskdwsyfmcko6mcd357446yatromr9vzgu7eb8y11',
+    },
+    {
+      amount: '3000000000',
+      height: { start: 100, end: 200 },
+      delegateAddress: 'lskdwsyfmcko6mcd357446yatromr9vzgu7eb8y11',
+    },
+    {
+      amount: '1000000000',
+      height: { start: 3000, end: 4000 },
+      delegateAddress: 'lskdwsyfmcko6mcd357446yatromr9vzgu7eb8y13',
+    },
   ];
 
   const store = {
@@ -71,8 +81,7 @@ describe('Unlock LSK modal', () => {
         },
       },
     },
-    settings: {
-    },
+    settings: {},
     token: {
       active: tokenMap.LSK.key,
       list: { LSK: true },
@@ -136,23 +145,25 @@ describe('Unlock LSK modal', () => {
 
   it('fires balanceUnlocked action with selected fee', async () => {
     const tx = { id: 1 };
-    createGenericTx.mockImplementation(() =>
-      new Promise((resolve) => {
-        resolve(tx);
-      }));
+    createGenericTx.mockImplementation(
+      () =>
+        new Promise((resolve) => {
+          resolve(tx);
+        })
+    );
 
     // Act
     wrapper.find('.confirm-btn').at(0).simulate('click');
-    act(() => { wrapper.update(); });
+    act(() => {
+      wrapper.update();
+    });
     await flushPromises();
     expect(props.nextStep).toBeCalledWith({ rawTx });
   });
 
   it('calls nextStep when clicked on confirm', async () => {
     wrapper.find('.confirm-btn button').simulate('click');
-    expect(props.nextStep).toBeCalledWith(
-      expect.objectContaining({ rawTx }),
-    );
+    expect(props.nextStep).toBeCalledWith(expect.objectContaining({ rawTx }));
   });
 
   it.skip('does not call nextStep when unlockableBalance is zero', async () => {

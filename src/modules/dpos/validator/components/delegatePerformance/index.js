@@ -9,19 +9,14 @@ import DelegatePerformance from './delegatePerformance';
 
 const apis = {
   delegate: {
-    apiUtil: (network, { address }) =>
-      getDelegate({ network, params: { address } }),
+    apiUtil: (network, { address }) => getDelegate({ network, params: { address } }),
     getApiParams: (state, ownProps) => ({
       address: parseSearchParams(ownProps.location.search).address,
       network: state.network,
     }),
-    transformResponse: response => response.data[0] || {},
+    transformResponse: (response) => response.data[0] || {},
     autoload: true,
   },
 };
 
-export default compose(
-  withRouter,
-  withData(apis),
-  withTranslation(),
-)(DelegatePerformance);
+export default compose(withRouter, withData(apis), withTranslation())(DelegatePerformance);

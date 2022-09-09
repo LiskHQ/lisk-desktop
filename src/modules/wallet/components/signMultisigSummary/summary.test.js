@@ -21,7 +21,7 @@ jest.mock('@transaction/utils/transaction', () => ({
 describe('Sign Multisignature Tx Review component', () => {
   let wrapper;
   const props = {
-    t: v => v,
+    t: (v) => v,
     transaction: {
       id: '12510531279763703865',
       moduleCommandID: MODULE_COMMANDS_NAME_ID_MAP.transfer,
@@ -30,11 +30,7 @@ describe('Sign Multisignature Tx Review component', () => {
         address: wallets.multiSig.summary.address,
       },
       fee: '1000000',
-      signatures: [
-        wallets.multiSig.summary.publicKey,
-        '',
-        '',
-      ],
+      signatures: [wallets.multiSig.summary.publicKey, '', ''],
       params: {
         mandatoryKeys: wallets.multiSig.keys.mandatoryKeys,
         optionalKeys: wallets.multiSig.keys.optionalKeys,
@@ -62,10 +58,12 @@ describe('Sign Multisignature Tx Review component', () => {
     const signatures = props.transaction.signatures;
     signatures[1] = wallets.genesis.summary.publicKey;
     wrapper.find('button.sign').simulate('click');
-    expect(props.nextStep).toHaveBeenCalledWith(expect.objectContaining({
-      rawTx: expect.anything(),
-      sender: expect.anything(),
-    }));
+    expect(props.nextStep).toHaveBeenCalledWith(
+      expect.objectContaining({
+        rawTx: expect.anything(),
+        sender: expect.anything(),
+      })
+    );
   });
 
   it('Should call props.prevStep', () => {

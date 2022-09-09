@@ -6,8 +6,7 @@ import { firstBlockTime } from '@block/utils/firstBlockTime';
  * @param {Number} value - Date value
  * @returns {Number} - timestamp in Unix timestamp format
  */
-export const getUnixTimestampFromValue = value =>
-  +moment(value).format('x') * 1000;
+export const getUnixTimestampFromValue = (value) => +moment(value).format('x') * 1000;
 
 /**
  * returns timestamp from first block not considering time
@@ -27,15 +26,20 @@ export const getDateTimestampFromFirstBlock = (value, format) =>
 export const formatInputToDate = (value, separator = '.') => {
   const suffix = /\d{2}[./-]$/.test(value) ? '.' : '';
   return [
-    value.replace(/\D/g, '').split('').reduce((acc, digit, idx) => {
-      const separatorCounter = acc.split(separator).length;
-      const shouldAddSeparator = idx !== 0 && idx % 2 === 0;
-      return (shouldAddSeparator && separatorCounter < 3)
-        ? `${acc}${separator}${digit}`
-        : `${acc}${digit}`;
-    }, ''),
+    value
+      .replace(/\D/g, '')
+      .split('')
+      .reduce((acc, digit, idx) => {
+        const separatorCounter = acc.split(separator).length;
+        const shouldAddSeparator = idx !== 0 && idx % 2 === 0;
+        return shouldAddSeparator && separatorCounter < 3
+          ? `${acc}${separator}${digit}`
+          : `${acc}${digit}`;
+      }, ''),
     suffix,
-  ].join('').substring(0, 8);
+  ]
+    .join('')
+    .substring(0, 8);
 };
 
 /**
@@ -44,16 +48,16 @@ export const formatInputToDate = (value, separator = '.') => {
  * @param {Number} timmestamp - Unix timestamp in seconds
  * @returns {Number} - Timestamp in seconds from first block
  */
-export const convertUnixSecondsToLiskEpochSeconds = timestamp => (
-  moment(timestamp * 1000).unix() - moment(firstBlockTime).unix()
-);
+export const convertUnixSecondsToLiskEpochSeconds = (timestamp) =>
+  moment(timestamp * 1000).unix() - moment(firstBlockTime).unix();
 
 /**
  * Converts a date in DD-MM-YYYY format to timestamp
  * @param {String} date - Date in DD-MM-YYYY format
  * @returns {Number} - Unix timestamp
  */
-export const transformStringDateToUnixTimestamp = date => new Date(moment(date, 'DD-MM-YYYY').format('MM/DD/YYYY')).valueOf() / 1000;
+export const transformStringDateToUnixTimestamp = (date) =>
+  new Date(moment(date, 'DD-MM-YYYY').format('MM/DD/YYYY')).valueOf() / 1000;
 
 export default {
   convertUnixSecondsToLiskEpochSeconds,

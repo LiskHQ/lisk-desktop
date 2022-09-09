@@ -12,9 +12,11 @@ describe('API: Market', () => {
     it('should return prices data', async () => {
       const expectedResponse = { data: [{}, {}] };
       http.mockImplementation(() => Promise.resolve(expectedResponse));
-      await expect(market.getPrices({
-        network: { networks: { LSK: { serviceUrl: 'example.com' } } },
-      })).resolves.toEqual(expectedResponse);
+      await expect(
+        market.getPrices({
+          network: { networks: { LSK: { serviceUrl: 'example.com' } } },
+        })
+      ).resolves.toEqual(expectedResponse);
 
       expect(http).toHaveBeenCalledWith({
         path: market.httpPaths.prices,
@@ -25,9 +27,11 @@ describe('API: Market', () => {
     it('should throw when api fails', async () => {
       const expectedResponse = new Error('API call could not be completed');
       http.mockImplementation(() => Promise.reject(new Error(expectedResponse.message)));
-      await expect(market.getPrices({
-        network: { networks: { LSK: { serviceUrl: 'example.com' } } },
-      })).rejects.toEqual(expectedResponse);
+      await expect(
+        market.getPrices({
+          network: { networks: { LSK: { serviceUrl: 'example.com' } } },
+        })
+      ).rejects.toEqual(expectedResponse);
     });
   });
 

@@ -28,9 +28,7 @@ const AddAccountOptions = ({ history }) => {
         >
           <div className={`${styles.titleHolder} ${grid['col-xs-10']}`}>
             <h1>{t('Add account')}</h1>
-            <p>
-              {t('Select the applicable mode.')}
-            </p>
+            <p>{t('Select the applicable mode.')}</p>
             <div className={styles.selectRowWrapper}>
               <AddAccountOptionButton
                 text="Secret recovery phrase"
@@ -44,8 +42,7 @@ const AddAccountOptions = ({ history }) => {
               />
             </div>
             <p>
-              {t('Don’t have a Lisk account yet?')}
-              {' '}
+              {t('Don’t have a Lisk account yet?')}{' '}
               <Link to={routes.register.path}>Create one now</Link>
             </p>
           </div>

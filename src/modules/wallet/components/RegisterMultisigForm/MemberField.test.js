@@ -4,7 +4,7 @@ import wallets from '@tests/constants/wallets';
 import MemberField from './MemberField';
 
 const props = {
-  t: str => str,
+  t: (str) => str,
   index: 1,
   publicKey: wallets.genesis.summary.publicKey,
   isMandatory: true,

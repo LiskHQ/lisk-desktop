@@ -18,11 +18,10 @@ const httpPaths = {
  */
 
 // eslint-disable-next-line import/prefer-default-export
-export const getTokens = ({
-  params, network, baseUrl,
-}) => http({
-  path: httpPaths.tokens,
-  params,
-  network,
-  baseUrl,
-});
+export const getTokens = ({ params, network, baseUrl }) =>
+  http({
+    path: httpPaths.tokens,
+    params,
+    network,
+    baseUrl,
+  });

@@ -1,7 +1,4 @@
-import {
-  LIMIT as limit,
-  API_VERSION,
-} from 'src/const/config';
+import { LIMIT as limit, API_VERSION } from 'src/const/config';
 import { CCM } from 'src/const/queries';
 import { useCustomInfiniteQuery } from '../useCustomInfiniteQuery';
 
@@ -27,7 +24,7 @@ import { useCustomInfiniteQuery } from '../useCustomInfiniteQuery';
  * @returns the query object
  */
 // eslint-disable-next-line import/prefer-default-export
-export const useCcm = ({ config: customConfig = {}, options } = { }) => {
+export const useCcm = ({ config: customConfig = {}, options } = {}) => {
   const config = {
     url: `/api/${API_VERSION}/ccm`,
     method: 'get',

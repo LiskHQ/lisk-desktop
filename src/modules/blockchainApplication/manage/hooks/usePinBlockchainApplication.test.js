@@ -31,9 +31,7 @@ describe('usePinBlockchainApplication hook', () => {
     act(() => togglePin(chainId));
 
     expect(mockDispatch).toHaveBeenCalledTimes(1);
-    expect(mockDispatch).toHaveBeenCalledWith(
-      toggleApplicationPin(chainId),
-    );
+    expect(mockDispatch).toHaveBeenCalledWith(toggleApplicationPin(chainId));
   });
 
   it('should return pins as an array', async () => {
@@ -61,8 +59,9 @@ describe('usePinBlockchainApplication hook', () => {
     }));
 
     const {
-      result:
-        { current: { checkPinByChainId } },
+      result: {
+        current: { checkPinByChainId },
+      },
     } = renderHook(() => usePinBlockchainApplication());
 
     const chainId = mockBlockchainApplications[0].chainID;

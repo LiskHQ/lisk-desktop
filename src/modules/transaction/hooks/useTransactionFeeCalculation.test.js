@@ -22,9 +22,7 @@ describe('useTransactionFeeCalculation', () => {
   };
 
   it('should return calculated fees', async () => {
-    const {
-      result, waitForValueToChange,
-    } = renderHook(() => useTransactionFeeCalculation(props));
+    const { result, waitForValueToChange } = renderHook(() => useTransactionFeeCalculation(props));
 
     await waitForValueToChange(() => result.current.maxAmount.value);
 
@@ -34,9 +32,7 @@ describe('useTransactionFeeCalculation', () => {
   });
 
   it('should return calculated fees for multisignature transactions', async () => {
-    const {
-      result, waitForValueToChange,
-    } = renderHook(() => useTransactionFeeCalculation(props));
+    const { result, waitForValueToChange } = renderHook(() => useTransactionFeeCalculation(props));
 
     await waitForValueToChange(() => result.current.maxAmount.value);
 

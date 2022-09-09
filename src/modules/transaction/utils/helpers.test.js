@@ -12,26 +12,34 @@ describe('helpers', () => {
     it('should return correct sign and styles for incoming transfer', () => {
       const moduleCommandID = MODULE_COMMANDS_NAME_ID_MAP.transfer;
       const recipient = host;
-      expect(getTxDirectionConfig(moduleCommandID, host, recipient, styles))
-        .toEqual({ sign: '', style: styles.receive });
+      expect(getTxDirectionConfig(moduleCommandID, host, recipient, styles)).toEqual({
+        sign: '',
+        style: styles.receive,
+      });
     });
     it('should return correct sign and styles for outgoing transfer', () => {
       const moduleCommandID = MODULE_COMMANDS_NAME_ID_MAP.transfer;
       const recipient = wallets.delegate.summary.address;
-      expect(getTxDirectionConfig(moduleCommandID, host, recipient, styles))
-        .toEqual({ sign: '- ', style: '' });
+      expect(getTxDirectionConfig(moduleCommandID, host, recipient, styles)).toEqual({
+        sign: '- ',
+        style: '',
+      });
     });
     it('should return correct sign and styles for unlock', () => {
       const moduleCommandID = MODULE_COMMANDS_NAME_ID_MAP.unlockToken;
       const recipient = null;
-      expect(getTxDirectionConfig(moduleCommandID, host, recipient, styles))
-        .toEqual({ sign: '', style: styles.unlock });
+      expect(getTxDirectionConfig(moduleCommandID, host, recipient, styles)).toEqual({
+        sign: '',
+        style: styles.unlock,
+      });
     });
     it('should return correct sign and styles for reclaim LSK', () => {
       const moduleCommandID = MODULE_COMMANDS_NAME_ID_MAP.reclaimLSK;
       const recipient = null;
-      expect(getTxDirectionConfig(moduleCommandID, host, recipient, styles))
-        .toEqual({ sign: '', style: styles.unlock });
+      expect(getTxDirectionConfig(moduleCommandID, host, recipient, styles)).toEqual({
+        sign: '',
+        style: styles.unlock,
+      });
     });
   });
 });

@@ -5,7 +5,7 @@ import Form from './form';
 describe.skip('Multisignature Form component', () => {
   let wrapper;
   const props = {
-    t: v => v,
+    t: (v) => v,
     nextStep: jest.fn(),
   };
 

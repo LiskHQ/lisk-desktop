@@ -1,6 +1,4 @@
-import {
-  screen,
-} from '@testing-library/react';
+import { screen } from '@testing-library/react';
 import { renderWithRouter } from 'src/utils/testHelpers';
 import mockSavedAccounts from '@tests/fixtures/accounts';
 import RemoveSelectedAccountFlow from './RemoveSelectedAccountFlow';
@@ -12,9 +10,7 @@ jest.mock('@account/hooks', () => ({
     getAccountByAddress: jest.fn().mockReturnValue(mockSavedAccounts[0]),
     deleteAccountByAddress: jest.fn(),
   })),
-  useCurrentAccount: jest.fn(() => (
-    [mockSavedAccounts[0], mockSetAccount]
-  )),
+  useCurrentAccount: jest.fn(() => [mockSavedAccounts[0], mockSetAccount]),
 }));
 
 describe('Remove current account flow', () => {

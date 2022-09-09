@@ -1,9 +1,6 @@
 import { expect } from 'chai';
 import actionTypes from './actionTypes';
-import {
-  loadingStarted,
-  loadingFinished,
-} from './actions';
+import { loadingStarted, loadingFinished } from './actions';
 
 describe('actions: loading', () => {
   describe('loadingStarted', () => {

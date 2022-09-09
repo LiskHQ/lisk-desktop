@@ -2,23 +2,21 @@
 import React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useTranslation } from 'react-i18next';
-import {
-  networkSelected, customNetworkRemoved, customNetworkStored,
-} from 'src/redux/actions';
+import { networkSelected, customNetworkRemoved, customNetworkStored } from 'src/redux/actions';
 import CustomNode from './customNode';
 
 const CustomNodeHOC = (props) => {
   const dispatch = useDispatch();
   const { t } = useTranslation();
-  const settings = useSelector(state => state.settings);
+  const settings = useSelector((state) => state.settings);
 
   return (
     <CustomNode
       t={t}
       settings={settings}
-      networkSelected={params => dispatch(networkSelected(params))}
+      networkSelected={(params) => dispatch(networkSelected(params))}
       customNetworkRemoved={() => dispatch(customNetworkRemoved())}
-      customNetworkStored={params => dispatch(customNetworkStored(params))}
+      customNetworkStored={(params) => dispatch(customNetworkStored(params))}
       {...props}
     />
   );

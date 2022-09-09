@@ -1,6 +1,4 @@
-import React, {
-  useRef, useCallback, useState, useEffect,
-} from 'react';
+import React, { useRef, useCallback, useState, useEffect } from 'react';
 import { withRouter } from 'react-router';
 
 import RemoveConfirmation from '@account/components/RemoveConfirmation/RemoveConfirmation';
@@ -29,7 +27,7 @@ const RemoveAccount = ({ address, history }) => {
         deleteAccountByAddress(removeAddress);
       }
     },
-    [deleteAccountByAddress],
+    [deleteAccountByAddress]
   );
 
   const onRemoveAccount = () => {
@@ -44,10 +42,7 @@ const RemoveAccount = ({ address, history }) => {
   return (
     <Box className={styles.container}>
       <BoxContent className={styles.content}>
-        <MultiStep
-          navStyles={{ multiStepWrapper: styles.wrapper }}
-          ref={multiStepRef}
-        >
+        <MultiStep navStyles={{ multiStepWrapper: styles.wrapper }} ref={multiStepRef}>
           <RemoveConfirmation account={account} onRemoveAccount={onRemoveAccount} />
           <RemoveSuccess onComplete={onComplete} />
         </MultiStep>

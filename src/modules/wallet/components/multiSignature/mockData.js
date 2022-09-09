@@ -17,7 +17,11 @@ export const multisignGroups = [
 
 export const transactionsData = [
   {
-    sender: { address: '6195226421328336181L', publicKey: '8155694652104526882', title: 'Wilson Geidt' },
+    sender: {
+      address: '6195226421328336181L',
+      publicKey: '8155694652104526882',
+      title: 'Wilson Geidt',
+    },
     recipient: { address: '1195226421328336181L' },
     amount: '10000000000',
     status: 1,
@@ -41,7 +45,11 @@ export const transactionsData = [
     status: 2,
   },
   {
-    sender: { address: '8885299921311236181L', publicKey: '8155694652104526882', title: 'Lola Flores' },
+    sender: {
+      address: '8885299921311236181L',
+      publicKey: '8155694652104526882',
+      title: 'Lola Flores',
+    },
     recipient: { address: '3195226421328336181L' },
     amount: '4000000000',
     status: 1,

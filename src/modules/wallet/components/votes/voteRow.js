@@ -20,35 +20,21 @@ const VoteRow = ({ data, onRowClick, accounts }) => {
         {/* Account visual */}
         <div className={grid['col-sm-5']} onClick={onClick}>
           <div className={`${styles.info}`}>
-            <WalletVisual
-              className={`${styles.avatar}`}
-              address={truncatedAddress}
-              size={40}
-            />
+            <WalletVisual className={`${styles.avatar}`} address={truncatedAddress} size={40} />
             <div className={styles.walletInfo}>
-              <span className={`${styles.username} vote-username`}>
-                {data.username}
-              </span>
-              <span className={`${styles.address} showOnLargeViewPort`}>
-                {truncatedAddress}
-              </span>
+              <span className={`${styles.username} vote-username`}>{data.username}</span>
+              <span className={`${styles.address} showOnLargeViewPort`}>{truncatedAddress}</span>
             </div>
           </div>
         </div>
 
         {/* Delegate rank */}
-        <div
-          className={`${grid['col-sm-2']} ${styles.flexLeftAlign}`}
-          onClick={onClick}
-        >
+        <div className={`${grid['col-sm-2']} ${styles.flexLeftAlign}`} onClick={onClick}>
           <span>{account?.dpos.delegate.rank}</span>
         </div>
 
         {/* Delegate weight */}
-        <div
-          className={`${grid['col-sm-2']} ${styles.flexLeftAlign}`}
-          onClick={onClick}
-        >
+        <div className={`${grid['col-sm-2']} ${styles.flexLeftAlign}`} onClick={onClick}>
           <span>
             <TokenAmount
               val={account?.dpos.delegate.totalVotesReceived ?? 0}
@@ -59,10 +45,7 @@ const VoteRow = ({ data, onRowClick, accounts }) => {
 
         {/* Vote amount */}
         {account ? (
-          <div
-            className={`${grid['col-sm-2']} ${styles.flexRightAlign}`}
-            onClick={onClick}
-          >
+          <div className={`${grid['col-sm-2']} ${styles.flexRightAlign}`} onClick={onClick}>
             <span className={styles.votes}>
               <TokenAmount
                 val={data.amount}
@@ -95,9 +78,8 @@ const VoteRow = ({ data, onRowClick, accounts }) => {
 
 /* istanbul ignore next */
 const areEqual = (prevProps, nextProps) =>
-  prevProps.data.address === nextProps.data.address
-  && prevProps.data.amount === nextProps.data.amount
-  && (!!prevProps.accounts[nextProps.data.address]
-    || !nextProps.accounts[nextProps.data.address]);
+  prevProps.data.address === nextProps.data.address &&
+  prevProps.data.amount === nextProps.data.amount &&
+  (!!prevProps.accounts[nextProps.data.address] || !nextProps.accounts[nextProps.data.address]);
 
 export default React.memo(VoteRow, areEqual);

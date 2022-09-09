@@ -72,7 +72,7 @@ export const getDelegateDetailsClass = (activeTab) => {
 };
 
 // eslint-disable-next-line complexity
-export default (activeTab, changeSort, t) => ([
+export default (activeTab, changeSort, t) => [
   {
     title: t('Delegate'),
     classList: getDelegateDetailsClass(activeTab),
@@ -110,4 +110,4 @@ export default (activeTab, changeSort, t) => ([
       key: activeTab === 'sanctioned' ? 'sanctionedStatus' : 'status',
     },
   },
-]);
+];

@@ -6,43 +6,33 @@ import TokenAmount from '@token/fungible/components/tokenAmount';
 import UnlockingList from './UnlockingList';
 import styles from './unlockBalance.css';
 
-const BalanceTable = ({
-  t,
-  lockedInVotes,
-  unlockableBalance,
-  currentBlockHeight,
-  account,
-}) => (
+const BalanceTable = ({ t, lockedInVotes, unlockableBalance, currentBlockHeight, account }) => (
   <ul className={`${styles.amountStatusContainer} lock-balance-amount-container`}>
-    {(lockedInVotes !== 0 || account?.dpos?.unlocking?.length > 0 || unlockableBalance !== 0)
-      && (
+    {(lockedInVotes !== 0 || account?.dpos?.unlocking?.length > 0 || unlockableBalance !== 0) && (
       <li>
         <p className={styles.columnTitle}>{t('Amount')}</p>
         <p className={styles.columnTitle}>{t('Status')}</p>
       </li>
-      )}
-    {lockedInVotes !== 0
-      && (
-        <li>
-          <p className="locked-balance">
-            <TokenAmount val={lockedInVotes} token={tokenMap.LSK.key} />
-          </p>
-          <p>
-            <Icon name="lock" />
-            {t('locked')}
-          </p>
-        </li>
-      )}
-    {account?.dpos?.unlocking?.length > 0
-      && (
+    )}
+    {lockedInVotes !== 0 && (
+      <li>
+        <p className="locked-balance">
+          <TokenAmount val={lockedInVotes} token={tokenMap.LSK.key} />
+        </p>
+        <p>
+          <Icon name="lock" />
+          {t('locked')}
+        </p>
+      </li>
+    )}
+    {account?.dpos?.unlocking?.length > 0 && (
       <UnlockingList
         unlocking={account?.dpos?.unlocking}
         currentBlockHeight={currentBlockHeight}
         t={t}
       />
-      )}
-    {unlockableBalance !== 0
-      && (
+    )}
+    {unlockableBalance !== 0 && (
       <li>
         <p className="available-balance">
           <TokenAmount val={unlockableBalance} token={tokenMap.LSK.key} />
@@ -52,7 +42,7 @@ const BalanceTable = ({
           {t('available to unlock')}
         </p>
       </li>
-      )}
+    )}
   </ul>
 );
 

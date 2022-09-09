@@ -1,7 +1,7 @@
 import grid from 'flexboxgrid/dist/flexboxgrid.css';
 import styles from './votes.css';
 
-export default t => ([
+export default (t) => [
   {
     title: t('Delegate'),
     classList: grid['col-sm-5'],
@@ -32,4 +32,4 @@ export default t => ([
     title: t(''),
     classList: grid['col-sm-1'],
   },
-]);
+];

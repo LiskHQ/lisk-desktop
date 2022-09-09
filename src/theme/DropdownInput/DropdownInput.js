@@ -4,7 +4,14 @@ import Input from '../Input/Input';
 import styles from '../Input/input.css';
 
 const DropdownInput = ({
-  className, value, onChange, children, buttonLabel, buttonClassName, ButtonComponent, placeholder,
+  className,
+  value,
+  onChange,
+  children,
+  buttonLabel,
+  buttonClassName,
+  ButtonComponent,
+  placeholder,
 }) => (
   <div className={`${styles.inputWithDropdown} ${className} input-with-dropdown-container`}>
     <Input

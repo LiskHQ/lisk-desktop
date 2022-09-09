@@ -12,16 +12,16 @@ jest.mock('@auth/store/action', () => ({
   secondPassphraseRemoved: jest.fn(),
 }));
 jest.mock('@account/hooks', () => ({
-  useCurrentAccount: jest.fn(() => ([mockCurrentAccount, mockSetCurrentAccount])),
+  useCurrentAccount: jest.fn(() => [mockCurrentAccount, mockSetCurrentAccount]),
 }));
 
 describe('TxSignatureCollector', () => {
   const props = {
-    t: key => key,
+    t: (key) => key,
     transactions: {
       txBroadcastError: null,
       txSignatureError: null,
-      signedTransaction: { },
+      signedTransaction: {},
     },
     account: accounts.genesis,
     actionFunction: jest.fn(),
@@ -38,7 +38,9 @@ describe('TxSignatureCollector', () => {
     wrapper.find('input').simulate('change', { target: { value: 'pass' } });
     wrapper.find('form').simulate('submit');
     await flushPromises();
-    act(() => { wrapper.update(); });
+    act(() => {
+      wrapper.update();
+    });
     expect(props.multisigTransactionSigned).toHaveBeenCalledWith({
       rawTx: props.rawTx,
       sender: props.sender,
@@ -52,7 +54,9 @@ describe('TxSignatureCollector', () => {
     wrapper.find('input').simulate('change', { target: { value: 'pass' } });
     wrapper.find('form').simulate('submit');
     await flushPromises();
-    act(() => { wrapper.update(); });
+    act(() => {
+      wrapper.update();
+    });
     const privateKey = 'private-key-mock';
     const publicKey = mockCurrentAccount.metadata.pubkey;
     expect(props.actionFunction).toHaveBeenCalledWith({}, privateKey, publicKey);
@@ -77,7 +81,7 @@ describe('TxSignatureCollector', () => {
     wrapper.setProps({
       transactions: {
         ...props.transactions,
-        txSignatureError: { },
+        txSignatureError: {},
       },
     });
     wrapper.update();
@@ -96,7 +100,7 @@ describe('TxSignatureCollector', () => {
           ...props.account,
           secondPassphrase: accounts.delegate.passphrase,
         }}
-      />,
+      />
     );
 
     wrapper.setProps({
@@ -124,7 +128,7 @@ describe('TxSignatureCollector', () => {
           ...accounts.genesis,
           hwInfo: { deviceModel: 'ledgerNano' },
         }}
-      />,
+      />
     );
     expect(wrapper.find('.hwConfirmation')).toExist();
     expect(wrapper.find('h5')).toHaveText('Please confirm the transaction on your {{deviceModel}}');
@@ -136,9 +140,10 @@ describe('TxSignatureCollector', () => {
         {...props}
         account={{
           ...accounts.genesis,
-          secondPassphrase: 'pen hawk chunk better gadget flat picture wait exclude zero hung broom',
+          secondPassphrase:
+            'pen hawk chunk better gadget flat picture wait exclude zero hung broom',
         }}
-      />,
+      />
     );
     wrapper.unmount();
     expect(secondPassphraseRemoved).toBeCalledTimes(1);

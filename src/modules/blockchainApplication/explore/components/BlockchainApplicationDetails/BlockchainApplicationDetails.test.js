@@ -2,7 +2,10 @@ import moment from 'moment';
 import { fireEvent, screen } from '@testing-library/react';
 import mockBlockchainApplications from '@tests/fixtures/blockchainApplicationsExplore';
 import { renderWithRouter } from 'src/utils/testHelpers';
-import { useApplicationManagement, usePinBlockchainApplication } from '@blockchainApplication/manage/hooks';
+import {
+  useApplicationManagement,
+  usePinBlockchainApplication,
+} from '@blockchainApplication/manage/hooks';
 import BlockchainApplicationDetails from './index';
 
 const mockedPins = ['1111'];
@@ -41,9 +44,8 @@ describe('BlockchainApplicationDetails', () => {
   });
 
   it('should display properly', () => {
-    const {
-      name, address, state, lastCertificateHeight, lastUpdated,
-    } = mockBlockchainApplications[0];
+    const { name, address, state, lastCertificateHeight, lastUpdated } =
+      mockBlockchainApplications[0];
 
     expect(screen.getByText(name)).toBeTruthy();
     expect(screen.getByText(address)).toBeTruthy();
@@ -68,13 +70,11 @@ describe('BlockchainApplicationDetails', () => {
   });
 
   it('should show application as unpinned', () => {
-    usePinBlockchainApplication.mockReturnValue(
-      {
-        togglePin: mockTogglePin,
-        pins: mockedPins,
-        checkPinByChainId: jest.fn().mockReturnValue(false),
-      },
-    );
+    usePinBlockchainApplication.mockReturnValue({
+      togglePin: mockTogglePin,
+      pins: mockedPins,
+      checkPinByChainId: jest.fn().mockReturnValue(false),
+    });
 
     renderWithRouter(BlockchainApplicationDetails, props);
     expect(screen.getByAltText('unpinnedIcon')).toBeTruthy();

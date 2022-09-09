@@ -3,7 +3,7 @@ import { useSelector } from 'react-redux';
 import { mountWithProps, mountWithRouter, mountWithRouterAndStore } from 'src/utils/testHelpers';
 import RecentTransactions, { NoTransactions, NotSignedIn } from './RecentTransactions';
 
-const t = str => str;
+const t = (str) => str;
 const transactionError = { error: { code: 404 } };
 
 const LiskTransactions = {
@@ -145,17 +145,13 @@ describe('Recent Transactions', () => {
       RecentTransactions,
       { t, transactions: LiskTransactions },
       {},
-      LiskState,
+      LiskState
     );
     expect(wrapper.find('TransactionRow')).toHaveLength(LiskTransactions.data.length);
   });
 
   it('Should render Recent Transactions with empty state', () => {
-    const wrapper = mountWithProps(
-      RecentTransactions,
-      { t, transactions: noTx },
-      LiskState,
-    );
+    const wrapper = mountWithProps(RecentTransactions, { t, transactions: noTx }, LiskState);
     expect(wrapper).not.toContainMatchingElement('TransactionRow');
     expect(wrapper).toContainMatchingElement(NoTransactions);
   });
@@ -170,7 +166,7 @@ describe('Recent Transactions', () => {
     const wrapper = mountWithRouter(
       RecentTransactions,
       { t, transactions: noTx },
-      NotSignedInState,
+      NotSignedInState
     );
     expect(wrapper).not.toContainMatchingElement('.transactions-row');
     expect(wrapper).toContainMatchingElement(NotSignedIn);

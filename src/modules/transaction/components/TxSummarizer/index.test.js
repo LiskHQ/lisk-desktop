@@ -25,7 +25,7 @@ describe('TxSummarizer', () => {
         label: 'Cancel',
         onClick: jest.fn(),
       },
-      t: key => key,
+      t: (key) => key,
       rawTx: {
         moduleCommandID: MODULE_COMMANDS_NAME_ID_MAP.transfer,
         sender: { publicKey: wallets.genesis.summary.publicKey },
@@ -86,7 +86,7 @@ describe('TxSummarizer', () => {
     const wrapper = mount(
       <TxSummarizer {...props}>
         <span className="child-span" />
-      </TxSummarizer>,
+      </TxSummarizer>
     );
     expect(wrapper.find('.child-span')).toExist();
   });

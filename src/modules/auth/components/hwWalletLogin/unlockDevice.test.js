@@ -21,7 +21,7 @@ describe('Unlock Device', () => {
     goBack: jest.fn(),
   };
 
-  const setup = data => mount(<UnlockDevice {...data} />);
+  const setup = (data) => mount(<UnlockDevice {...data} />);
 
   beforeEach(() => {
     wrapper = setup(props);

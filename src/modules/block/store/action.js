@@ -18,7 +18,7 @@ const loadLastBlocks = async (params, network) => {
   const total = blocks.meta.total;
   return {
     total,
-    list: blocks.data.map(block => ({
+    list: blocks.data.map((block) => ({
       ...block,
       timestamp: convertUnixSecondsToLiskEpochSeconds(block.timestamp),
     })),
@@ -30,17 +30,18 @@ export const olderBlocksRetrieved = () => async (dispatch, getState) => {
   const { network } = getState();
 
   const batch1 = await loadLastBlocks({ limit: blocksFetchLimit }, network);
-  const batch2 = await loadLastBlocks({
-    offset: blocksFetchLimit, limit: blocksFetchLimit,
-  }, network);
+  const batch2 = await loadLastBlocks(
+    {
+      offset: blocksFetchLimit,
+      limit: blocksFetchLimit,
+    },
+    network
+  );
 
   return dispatch({
     type: actionTypes.olderBlocksRetrieved,
     data: {
-      list: [
-        ...batch1.list,
-        ...batch2.list,
-      ],
+      list: [...batch1.list, ...batch2.list],
       total: batch1.total,
     },
   });
@@ -54,7 +55,10 @@ export const olderBlocksRetrieved = () => async (dispatch, getState) => {
  */
 // eslint-disable-next-line max-statements
 export const forgersRetrieved = () => async (dispatch, getState) => {
-  const { network, blocks: { latestBlocks } } = getState();
+  const {
+    network,
+    blocks: { latestBlocks },
+  } = getState();
   const forgedBlocksInRound = latestBlocks[0].height % ROUND_LENGTH;
   const remainingBlocksInRound = ROUND_LENGTH - forgedBlocksInRound;
   const { data } = await getForgers({
@@ -67,18 +71,18 @@ export const forgersRetrieved = () => async (dispatch, getState) => {
   // Get the list of usernames that already forged in this round
   const haveForgedInRound = latestBlocks
     .filter((b, i) => forgedBlocksInRound >= i)
-    .map(b => b.generatorUsername);
+    .map((b) => b.generatorUsername);
 
   // check previous blocks and define missed blocks
   if (data) {
     const delegates = await getDelegates({
       network: network.networks.LSK,
-      params: { addressList: data.map(forger => forger.address) },
+      params: { addressList: data.map((forger) => forger.address) },
     });
 
     forgers = data.map((forger, index) => {
       forger.rank = delegates.data.find(
-        delegate => forger.address === delegate.summary.address,
+        (delegate) => forger.address === delegate.summary.address
       )?.dpos?.delegate?.rank;
       indexBook[forger.address] = index;
       if (haveForgedInRound.indexOf(forger.username) > -1) {

@@ -3,13 +3,7 @@ import TransactionSummary from '@transaction/manager/transactionSummary';
 import ProgressBar from '../RegisterMultisigView/ProgressBar';
 import styles from './styles.css';
 
-const Summary = ({
-  t,
-  prevStep,
-  nextStep,
-  multisigGroupRegistered,
-  rawTx,
-}) => {
+const Summary = ({ t, prevStep, nextStep, multisigGroupRegistered, rawTx }) => {
   const onConfirmAction = {
     label: t('Sign'),
     onClick: () => {
@@ -22,7 +16,9 @@ const Summary = ({
 
   const onCancelAction = {
     label: t('Go back'),
-    onClick: () => { prevStep({ rawTx }); },
+    onClick: () => {
+      prevStep({ rawTx });
+    },
   };
 
   return (

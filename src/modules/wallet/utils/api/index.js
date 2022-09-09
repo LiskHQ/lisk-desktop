@@ -30,12 +30,7 @@ const wsMethods = {
  */
 const getAccountParams = (params) => {
   if (!params || isEmpty(params)) return {};
-  const {
-    username,
-    address,
-    passphrase,
-    publicKey,
-  } = params;
+  const { username, address, passphrase, publicKey } = params;
 
   if (username) return { username };
   if (publicKey) return { publicKey };
@@ -62,9 +57,7 @@ const getAccountParams = (params) => {
  * @returns {Promise}
  */
 // eslint-disable-next-line complexity, max-statements
-export const getAccount = async ({
-  network, params, baseUrl,
-}) => {
+export const getAccount = async ({ network, params, baseUrl }) => {
   const normParams = getAccountParams(params);
 
   try {
@@ -112,27 +105,28 @@ export const getAccount = async ({
 };
 
 const accountFilters = {
-  limit: { key: 'limit', test: num => (typeof num === 'number') },
-  offset: { key: 'offset', test: num => (typeof num === 'number' && num > 0) },
+  limit: { key: 'limit', test: (num) => typeof num === 'number' },
+  offset: { key: 'offset', test: (num) => typeof num === 'number' && num > 0 },
   sort: {
     key: 'sort',
-    test: str => ['balance:asc', 'balance:desc'].includes(str),
+    test: (str) => ['balance:asc', 'balance:desc'].includes(str),
   },
 };
 
 const getRequests = (values, isDelegate) => {
-  const paramList = values.find(item => Array.isArray(item.list) && item.list.length);
+  const paramList = values.find((item) => Array.isArray(item.list) && item.list.length);
   if (paramList) {
     return paramList.list
-      .filter(item => regex[paramList.name].test(item))
+      .filter((item) => regex[paramList.name].test(item))
       .map((item) => {
         const params = isDelegate
           ? {
-            [paramList.name]: item,
-            isDelegate: true,
-          } : {
-            [paramList.name]: item,
-          };
+              [paramList.name]: item,
+              isDelegate: true,
+            }
+          : {
+              [paramList.name]: item,
+            };
         return {
           method: wsMethods.accounts,
           params,
@@ -159,17 +153,16 @@ const getRequests = (values, isDelegate) => {
  *
  * @returns {Promise}
  */
-export const getAccounts = async ({
-  network,
-  params = {},
-  baseUrl,
-}) => {
+export const getAccounts = async ({ network, params = {}, baseUrl }) => {
   // Use websocket to retrieve accounts with a given array of addresses
-  const requests = getRequests([
-    { name: 'address', list: params.addressList },
-    { name: 'publicKey', list: params.publicKeyList },
-    { name: 'username', list: params.usernameList },
-  ], params.isDelegate);
+  const requests = getRequests(
+    [
+      { name: 'address', list: params.addressList },
+      { name: 'publicKey', list: params.publicKeyList },
+      { name: 'username', list: params.usernameList },
+    ],
+    params.isDelegate
+  );
   if (requests.length) {
     return ws({
       requests,

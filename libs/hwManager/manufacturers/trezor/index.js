@@ -1,14 +1,7 @@
 /* istanbul ignore file */
-import {
-  IPC_MESSAGES,
-  PIN,
-  PASSPHRASE,
-} from '../../constants';
+import { IPC_MESSAGES, PIN, PASSPHRASE } from '../../constants';
 import { TREZOR } from './constants';
-import {
-  getHardenedPath,
-  toTrezorGrammar,
-} from './utils';
+import { getHardenedPath, toTrezorGrammar } from './utils';
 
 /**
  * addDevice - function - Add a new device to the devices list.
@@ -19,9 +12,8 @@ const addDevice = (device, { add }) => {
   add({
     deviceId: device.features.device_id,
     label: device.features.label,
-    model: device.features.model === '1'
-      ? TREZOR.models.Trezor_Model_One
-      : TREZOR.models.Trezor_Model_T,
+    model:
+      device.features.model === '1' ? TREZOR.models.Trezor_Model_One : TREZOR.models.Trezor_Model_T,
     path: device.originalDescriptor.path,
     manufacturer: TREZOR.name,
     openApp: true,
@@ -42,7 +34,7 @@ const onPinCallback = (device, { pinCallback }) => {
 };
 
 const onPassphraseCallback = (device, { passphraseCallback }) => {
-  device.on(PASSPHRASE, callback => passphraseCallback(callback));
+  device.on(PASSPHRASE, (callback) => passphraseCallback(callback));
 };
 
 /**
@@ -58,26 +50,28 @@ const listener = (transport, actions) => {
     onPinCallback(device, actions);
     onPassphraseCallback(device, actions);
   });
-  transport.on(IPC_MESSAGES.DISCONNECT, (device) => { removeDevice(device, actions); });
-  transport.on(IPC_MESSAGES.ERROR, (error) => { throw new Error(error); });
-  process.on(IPC_MESSAGES.EXIT, () => { transport.onbeforeunload(); });
+  transport.on(IPC_MESSAGES.DISCONNECT, (device) => {
+    removeDevice(device, actions);
+  });
+  transport.on(IPC_MESSAGES.ERROR, (error) => {
+    throw new Error(error);
+  });
+  process.on(IPC_MESSAGES.EXIT, () => {
+    transport.onbeforeunload();
+  });
 };
 
 const getPublicKey = async (transporter, { device, data }) => {
-  const trezorDevice = transporter.asArray().find(d => d.features.device_id === device.deviceId);
+  const trezorDevice = transporter.asArray().find((d) => d.features.device_id === device.deviceId);
   if (!trezorDevice) Promise.reject(new Error('DEVICE_IS_NOT_CONNECTED'));
 
   return new Promise((resolve, reject) => {
     trezorDevice.waitForSessionAndRun(async (session) => {
       try {
-        const { message } = await session.typedCall(
-          'LiskGetPublicKey',
-          'LiskPublicKey',
-          {
-            address_n: getHardenedPath(data.index),
-            show_display: data.showOnDevice,
-          },
-        );
+        const { message } = await session.typedCall('LiskGetPublicKey', 'LiskPublicKey', {
+          address_n: getHardenedPath(data.index),
+          show_display: data.showOnDevice,
+        });
         return resolve(message.public_key);
       } catch (err) {
         return reject();
@@ -87,20 +81,16 @@ const getPublicKey = async (transporter, { device, data }) => {
 };
 
 const getAddress = async (transporter, { device, data }) => {
-  const trezorDevice = transporter.asArray().find(d => d.features.device_id === device.deviceId);
+  const trezorDevice = transporter.asArray().find((d) => d.features.device_id === device.deviceId);
   if (!trezorDevice) Promise.reject(new Error('DEVICE_IS_NOT_CONNECTED'));
 
   return new Promise((resolve, reject) => {
     trezorDevice.waitForSessionAndRun(async (session) => {
       try {
-        const { message } = await session.typedCall(
-          'LiskGetAddress',
-          'LiskAddress',
-          {
-            address_n: getHardenedPath(data.index),
-            show_display: data.showOnDevice,
-          },
-        );
+        const { message } = await session.typedCall('LiskGetAddress', 'LiskAddress', {
+          address_n: getHardenedPath(data.index),
+          show_display: data.showOnDevice,
+        });
         return resolve(message.public_key);
       } catch (err) {
         return reject();
@@ -110,20 +100,16 @@ const getAddress = async (transporter, { device, data }) => {
 };
 
 const signTransaction = (transporter, { device, data }) => {
-  const trezorDevice = transporter.asArray().find(d => d.features.device_id === device.deviceId);
+  const trezorDevice = transporter.asArray().find((d) => d.features.device_id === device.deviceId);
   if (!trezorDevice) Promise.reject(new Error('DEVICE_IS_NOT_CONNECTED'));
 
   return new Promise((resolve, reject) => {
     trezorDevice.waitForSessionAndRun(async (session) => {
       try {
-        const { message } = await session.typedCall(
-          'LiskSignTx',
-          'LiskSignedTx',
-          {
-            address_n: getHardenedPath(data.index),
-            transaction: toTrezorGrammar(data.tx),
-          },
-        );
+        const { message } = await session.typedCall('LiskSignTx', 'LiskSignedTx', {
+          address_n: getHardenedPath(data.index),
+          transaction: toTrezorGrammar(data.tx),
+        });
         return resolve(message.signature);
       } catch (err) {
         return reject();
@@ -133,21 +119,17 @@ const signTransaction = (transporter, { device, data }) => {
 };
 
 const signMessage = (transporter, { device, data }) => {
-  const trezorDevice = transporter.asArray().find(d => d.features.device_id === device.deviceId);
+  const trezorDevice = transporter.asArray().find((d) => d.features.device_id === device.deviceId);
   if (!trezorDevice) Promise.reject(new Error('DEVICE_IS_NOT_CONNECTED'));
 
   return new Promise((resolve, reject) => {
     trezorDevice.waitForSessionAndRun(async (session) => {
       try {
-        const { message } = await session.typedCall(
-          'LiskSignMessage',
-          'LiskMessageSignature',
-          {
-            address_n: getHardenedPath(data.index),
-            // eslint-disable-next-line new-cap
-            message: new Buffer.from(data.message, 'utf8').toString('hex'),
-          },
-        );
+        const { message } = await session.typedCall('LiskSignMessage', 'LiskMessageSignature', {
+          address_n: getHardenedPath(data.index),
+          // eslint-disable-next-line new-cap
+          message: new Buffer.from(data.message, 'utf8').toString('hex'),
+        });
         return resolve(message.signature);
       } catch (err) {
         return reject();

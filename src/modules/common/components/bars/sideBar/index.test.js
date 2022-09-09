@@ -12,7 +12,7 @@ describe('SideBar', () => {
   let mockAppState;
 
   beforeEach(() => {
-    useSelector.mockImplementation(callback => callback(mockAppState));
+    useSelector.mockImplementation((callback) => callback(mockAppState));
   });
 
   afterEach(() => {
@@ -25,7 +25,7 @@ describe('SideBar', () => {
     location: {
       pathname: routes.dashboard.path,
     },
-    t: val => val,
+    t: (val) => val,
   };
 
   beforeEach(() => {
@@ -56,7 +56,7 @@ describe('SideBar', () => {
   describe('renders 8 menu items', () => {
     it('without labels if sideBarExpanded is false', () => {
       expect(wrapper).toContainMatchingElements(8, 'a');
-      wrapper.find('a').forEach(link => expect(link).not.toContain(/\w*/));
+      wrapper.find('a').forEach((link) => expect(link).not.toContain(/\w*/));
     });
 
     it('without labels if sideBarExpanded is true', () => {
@@ -90,16 +90,13 @@ describe('SideBar', () => {
   });
 
   it('renders 8 disabled menu items on Initialization screen', () => {
-    wrapper = mountWithRouter(
-      SideBar,
-      {
-        ...myProps,
-        isUserLogout: false,
-        location: {
-          pathname: routes.reclaim.path,
-        },
+    wrapper = mountWithRouter(SideBar, {
+      ...myProps,
+      isUserLogout: false,
+      location: {
+        pathname: routes.reclaim.path,
       },
-    );
+    });
     expect(wrapper).toContainMatchingElements(8, 'a');
     expect(wrapper.find('a').at(0)).toHaveClassName('disabled');
     expect(wrapper.find('a').at(1)).toHaveClassName('disabled');

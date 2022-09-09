@@ -14,8 +14,8 @@ export default compose(
         if (ownProps.blockId) return { blockId: ownProps.blockId };
         return { height: ownProps.height };
       },
-      transformResponse: response => response.data,
+      transformResponse: (response) => response.data,
     },
   }),
-  withTranslation(),
+  withTranslation()
 )(BlockDetailsTransactions);

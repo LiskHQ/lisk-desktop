@@ -18,11 +18,7 @@ const RegisterMultisigView = ({ history }) => {
 
   return (
     <Dialog hasClose>
-      <MultiStep
-        key="multisignature"
-        finalCallback={closeModal}
-        className={styles.modal}
-      >
+      <MultiStep key="multisignature" finalCallback={closeModal} className={styles.modal}>
         <Form />
         <Summary />
         <TxSignatureCollector />

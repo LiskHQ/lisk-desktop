@@ -14,33 +14,30 @@ import { createGenericTx } from '@transaction/api/index';
  * @param {Number} data.reference - Data field for LSK transactions
  */
 // eslint-disable-next-line import/prefer-default-export
-export const tokensTransferred = (
-  transactionObject,
-  privateKey,
-  publicKey,
-) => async (dispatch, getState) => {
-  const state = getState();
-  const wallet = selectActiveTokenAccount(state);
+export const tokensTransferred =
+  (transactionObject, privateKey, publicKey) => async (dispatch, getState) => {
+    const state = getState();
+    const wallet = selectActiveTokenAccount(state);
 
-  const [error, tx] = await to(
-    createGenericTx({
-      transactionObject,
-      wallet,
-      network: state.network,
-      privateKey,
-      publicKey,
-    }),
-  );
+    const [error, tx] = await to(
+      createGenericTx({
+        transactionObject,
+        wallet,
+        network: state.network,
+        privateKey,
+        publicKey,
+      })
+    );
 
-  if (error) {
-    dispatch({
-      type: actionTypes.transactionSignError,
-      data: error,
-    });
-  } else {
-    dispatch({
-      type: actionTypes.transactionCreatedSuccess,
-      data: tx,
-    });
-  }
-};
+    if (error) {
+      dispatch({
+        type: actionTypes.transactionSignError,
+        data: error,
+      });
+    } else {
+      dispatch({
+        type: actionTypes.transactionCreatedSuccess,
+        data: tx,
+      });
+    }
+  };

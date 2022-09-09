@@ -9,27 +9,21 @@ jest.mock('@dpos/validator/api', () => ({
 
 describe('useDelegateName', () => {
   it('Initial values must be empty', () => {
-    const { result } = renderHook(
-      () => useDelegateName(),
-    );
+    const { result } = renderHook(() => useDelegateName());
     const [name] = result.current;
 
     expect(name.value).toBe('');
   });
 
   it('should account for the initial values', () => {
-    const { result } = renderHook(
-      () => useDelegateName('some_name'),
-    );
+    const { result } = renderHook(() => useDelegateName('some_name'));
     const [name] = result.current;
 
     expect(name.value).toBe('some_name');
   });
 
   it('should mark as error if the value is empty or too short', () => {
-    const { result } = renderHook(
-      () => useDelegateName('s'),
-    );
+    const { result } = renderHook(() => useDelegateName('s'));
     let [name, setName] = result.current;
     expect(name.error).toBe(true);
     expect(name.message).toBe('Username is too short.');
@@ -50,9 +44,7 @@ describe('useDelegateName', () => {
       data: [{}],
       meta: {},
     });
-    const { result } = renderHook(
-      () => useDelegateName('test_1'),
-    );
+    const { result } = renderHook(() => useDelegateName('test_1'));
     jest.advanceTimersByTime(1001);
     await flushPromises();
     let [name, setName] = result.current;
@@ -74,9 +66,7 @@ describe('useDelegateName', () => {
 
   it('should return no errors if the value is unique', async () => {
     delegateAPI.getDelegate.mockRejectedValue({ message: 'Data not found.' });
-    const { result } = renderHook(
-      () => useDelegateName('test_1'),
-    );
+    const { result } = renderHook(() => useDelegateName('test_1'));
     jest.advanceTimersByTime(1001);
     await flushPromises();
     let [name, setName] = result.current;

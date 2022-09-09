@@ -24,10 +24,7 @@ usePinBlockchainApplication.mockReturnValue({
   checkPinByChainId: jest.fn().mockReturnValue(true),
 });
 
-useCurrentApplication.mockReturnValue([
-  mockManagedApplications[1],
-  mockSetApplication,
-]);
+useCurrentApplication.mockReturnValue([mockManagedApplications[1], mockSetApplication]);
 
 useApplicationManagement.mockReturnValue({
   applications: mockManagedApplications,
@@ -55,6 +52,8 @@ describe('ApplicationManagementList', () => {
 
   it('should navigate to the add blockchain application flow', () => {
     fireEvent.click(screen.getByText('Add application'));
-    expect(addSearchParamsToUrl).toHaveBeenCalledWith(props.history, { modal: 'addApplicationList' });
+    expect(addSearchParamsToUrl).toHaveBeenCalledWith(props.history, {
+      modal: 'addApplicationList',
+    });
   });
 });

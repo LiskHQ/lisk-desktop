@@ -17,19 +17,12 @@ import styles from './voteForm.css';
 const ComponentState = Object.freeze({ editing: 1, notEditing: 2 });
 const token = tokenMap.LSK.key;
 
-const VoteRow = ({
-  t = (s) => s,
-  data: {
-    address, username, confirmed, unconfirmed,
-  },
-}) => {
+const VoteRow = ({ t = (s) => s, data: { address, username, confirmed, unconfirmed } }) => {
   const [state, setState] = useState(
-    unconfirmed === '' ? ComponentState.editing : ComponentState.notEditing,
+    unconfirmed === '' ? ComponentState.editing : ComponentState.notEditing
   );
   const dispatch = useDispatch();
-  const [voteAmount, setVoteAmount] = useVoteAmountField(
-    fromRawLsk(unconfirmed),
-  );
+  const [voteAmount, setVoteAmount] = useVoteAmountField(fromRawLsk(unconfirmed));
   const truncatedAddress = truncateAddress(address);
 
   const handleFormSubmission = (e) => {
@@ -40,7 +33,7 @@ const VoteRow = ({
           address,
           amount: toRawLsk(voteAmount.value),
         },
-      ]),
+      ])
     );
     setState(ComponentState.notEditing);
   };
@@ -52,7 +45,7 @@ const VoteRow = ({
           address,
           amount: confirmed,
         },
-      ]),
+      ])
     );
   };
 
@@ -81,9 +74,7 @@ const VoteRow = ({
           <span className={`${styles.newAmountColumn} ${styles.centerContent}`}>
             {unconfirmed ? <TokenAmount val={unconfirmed} token={token} /> : '-'}
           </span>
-          <div
-            className={`${styles.editIconsContainer} ${styles.centerContent}`}
-          >
+          <div className={`${styles.editIconsContainer} ${styles.centerContent}`}>
             <span onClick={changeToEditingMode}>
               <Icon name="edit" className={styles.editIcon} />
             </span>
@@ -113,11 +104,7 @@ const VoteRow = ({
             >
               {t('Cancel')}
             </SecondaryButton>
-            <TertiaryButton
-              size="s"
-              className={styles.formButtons}
-              onClick={handleFormSubmission}
-            >
+            <TertiaryButton size="s" className={styles.formButtons} onClick={handleFormSubmission}>
               {t('Save')}
             </TertiaryButton>
           </div>

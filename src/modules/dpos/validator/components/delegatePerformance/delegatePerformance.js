@@ -37,40 +37,28 @@ const DelegatePerformance = ({ delegate: { error, isLoading, data } } = {}) => {
         <Box className={grid.row}>
           <Box className={`${grid['col-md-12']} ${grid['col-xs-12']}`}>
             <p className={styles.description}>
-              {delegatePerformanceDetails(
-                pomHeights,
-                status,
-                consecutiveMissedBlocks,
-              )}
+              {delegatePerformanceDetails(pomHeights, status, consecutiveMissedBlocks)}
             </p>
           </Box>
         </Box>
         <Box className={`${grid.row} ${styles.performanceContainer}`}>
-          <Box
-            className={`${grid['col-md-6']} ${grid['col-xs-12']} ${styles.start}`}
-          >
+          <Box className={`${grid['col-md-6']} ${grid['col-xs-12']} ${styles.start}`}>
             <p className={styles.header}>Punishment starts</p>
           </Box>
-          <Box
-            className={`${grid['col-md-6']} ${grid['col-xs-12']} ${styles.end}`}
-          >
+          <Box className={`${grid['col-md-6']} ${grid['col-xs-12']} ${styles.end}`}>
             <p className={styles.header}>Punishment ends</p>
           </Box>
         </Box>
-        {pomHeights
-          && pomHeights.map((height, index) => (
+        {pomHeights &&
+          pomHeights.map((height, index) => (
             <Box
               className={`${grid.row} ${styles.performanceContainer}`}
               key={`${height.start}-${index}`}
             >
-              <Box
-                className={`${grid['col-md-6']} ${grid['col-xs-12']} ${styles.start}`}
-              >
+              <Box className={`${grid['col-md-6']} ${grid['col-xs-12']} ${styles.start}`}>
                 <p className={styles.details}>{height.start}</p>
               </Box>
-              <Box
-                className={`${grid['col-md-6']} ${grid['col-xs-12']} ${styles.end}`}
-              >
+              <Box className={`${grid['col-md-6']} ${grid['col-xs-12']} ${styles.end}`}>
                 <p className={styles.details}>{height.end}</p>
               </Box>
             </Box>

@@ -30,7 +30,7 @@ const useDelegateName = (value) => {
   });
   const timeout = useRef();
   const { t } = useTranslation();
-  const network = useSelector(state => state.network);
+  const network = useSelector((state) => state.network);
 
   const checkUsername = () => {
     clearTimeout(timeout.current);

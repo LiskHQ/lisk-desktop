@@ -19,7 +19,7 @@ jest.mock(
           <div className="mockSearchResult" onClick={onSearchClick} />
         </div>
       );
-    },
+    }
 );
 
 jest.mock(
@@ -27,7 +27,7 @@ jest.mock(
   () =>
     function () {
       return <div />;
-    },
+    }
 );
 
 describe('TopBar', () => {
@@ -67,8 +67,7 @@ describe('TopBar', () => {
       networks: {
         LSK: {
           nodeUrl: 'hhtp://localhost:4000',
-          nethash:
-            '198f2b61a8eb95fbeed58b8216780b68f697f26b849acf00c8c93bb9b24f783d',
+          nethash: '198f2b61a8eb95fbeed58b8216780b68f697f26b849acf00c8c93bb9b24f783d',
         },
       },
     },
@@ -124,7 +123,7 @@ describe('TopBar', () => {
           location: { pathname: routes.block.path, search: '?id=1L' },
         },
       },
-      { pathname: routes.block.path },
+      { pathname: routes.block.path }
     );
     expect(wrapper).toContainMatchingElement('img.search-icon');
     expect(wrapper).toContainMatchingElement('span.searchedValue');
@@ -140,7 +139,7 @@ describe('TopBar', () => {
           location: { pathname: routes.explorer.path, search: '?address=1L' },
         },
       },
-      { pathname: routes.explorer.path },
+      { pathname: routes.explorer.path }
     );
     expect(wrapper).toContainMatchingElement('img.search-icon');
     expect(wrapper).toContainMatchingElement('span.searchedValue');
@@ -160,7 +159,7 @@ describe('TopBar', () => {
           },
         },
       },
-      { pathname: routes.explorer.path },
+      { pathname: routes.explorer.path }
     );
     expect(wrapper).toContainMatchingElement('img.search-icon');
     expect(wrapper).not.toContainMatchingElement('span.searchedValue');

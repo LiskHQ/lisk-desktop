@@ -1,6 +1,4 @@
-import React, {
-  useCallback, useMemo, useRef, useState,
-} from 'react';
+import React, { useCallback, useMemo, useRef, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import BoxHeader from 'src/theme/box/header';
 import Box from 'src/theme/box';
@@ -14,18 +12,15 @@ import header from './BlockchainApplicationListHeaderMap';
 import styles from './BlockchainApplicationList.css';
 import { BLOCKCHAIN_APPLICATION_LIST_LIMIT } from '../../const/constants';
 
-const BlockchainApplicationList = ({
-  applications,
-  applyFilters,
-  filters,
-}) => {
+const BlockchainApplicationList = ({ applications, applyFilters, filters }) => {
   const [searchValue, setSearchValue] = useState('');
   const debounceTimeout = useRef(null);
   const { t } = useTranslation();
 
-  const canLoadMore = useMemo(() =>
-    (applications.meta
-      ? applications.data.length < applications.meta.total : false), [applications]);
+  const canLoadMore = useMemo(
+    () => (applications.meta ? applications.data.length < applications.meta.total : false),
+    [applications]
+  );
 
   const handleLoadMore = () => {
     const params = {
@@ -35,27 +30,28 @@ const BlockchainApplicationList = ({
     applications.loadData(params);
   };
 
-  const onSearchApplication = useCallback(({ target }) => {
-    const value = target.value;
-    setSearchValue(value);
-    clearTimeout(debounceTimeout.current);
+  const onSearchApplication = useCallback(
+    ({ target }) => {
+      const value = target.value;
+      setSearchValue(value);
+      clearTimeout(debounceTimeout.current);
 
-    debounceTimeout.current = setTimeout(() => {
-      applyFilters({
-        ...filters,
-        search: value,
-        offset: 0,
-        limit: BLOCKCHAIN_APPLICATION_LIST_LIMIT,
-      });
-    }, 500);
-  }, [searchValue]);
+      debounceTimeout.current = setTimeout(() => {
+        applyFilters({
+          ...filters,
+          search: value,
+          offset: 0,
+          limit: BLOCKCHAIN_APPLICATION_LIST_LIMIT,
+        });
+      }, 500);
+    },
+    [searchValue]
+  );
 
   return (
     <Box main isLoading={applications.isLoading} className="chain-application-box">
       <BoxHeader className={styles.boxHeader}>
-        <div className={grid['col-xs-6']}>
-          {t('Applications')}
-        </div>
+        <div className={grid['col-xs-6']}>{t('Applications')}</div>
         <div align="right" className={grid['col-xs-6']}>
           <div className={styles.filterHolder}>
             <Input

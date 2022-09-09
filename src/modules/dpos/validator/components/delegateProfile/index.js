@@ -7,7 +7,7 @@ import { getVoters, getDelegate } from '@dpos/validator/api';
 import { getBlocks } from '@block/utils';
 import DelegateProfile from './delegateProfile';
 
-const mapStateToProps = state => ({
+const mapStateToProps = (state) => ({
   forgers: state.blocks.forgers,
 });
 
@@ -24,35 +24,34 @@ const apis = {
     getApiParams: (_, ownProps) => ({
       address: ownProps.account.summary?.address,
     }),
-    transformResponse: response => response.data[0],
+    transformResponse: (response) => response.data[0],
   },
   voters: {
     apiUtil: (network, params) => getVoters({ network, params }),
     defaultData: defaultVoters,
     getApiParams: (_, ownProps) => ({ address: ownProps.account.summary.address }),
-    transformResponse: (response, oldData, urlSearchParams) => (
+    transformResponse: (response, oldData, urlSearchParams) =>
       urlSearchParams.offset
         ? {
-          account: oldData.account,
-          votes: [...oldData.votes, ...response.data.votes],
-        }
+            account: oldData.account,
+            votes: [...oldData.votes, ...response.data.votes],
+          }
         : {
-          account: response.data.account,
-          votes: Array.isArray(response.data.votes) ? response.data.votes : [],
-        }
-    ),
+            account: response.data.account,
+            votes: Array.isArray(response.data.votes) ? response.data.votes : [],
+          },
   },
   lastBlockForged: {
     apiUtil: (network, params) => getBlocks({ network, params }),
     defaultData: {},
-    transformResponse: response => (response ? response.data[0] : {}),
+    transformResponse: (response) => (response ? response.data[0] : {}),
   },
 };
 
 const ComposedDelegateProfile = compose(
   connect(mapStateToProps),
   withData(apis),
-  withTranslation(),
+  withTranslation()
 )(DelegateProfile);
 
 export default ComposedDelegateProfile;

@@ -8,40 +8,33 @@ import {
   mockCommandParametersSchemas,
 } from '../__fixtures__';
 
-export const webSocket = rest.get(
-  '*/socket.io',
-  (_, res, ctx) => res(
+export const webSocket = rest.get('*/socket.io', (_, res, ctx) =>
+  res(
     ctx.status(200),
     ctx.set('Connection', 'keep-alive'),
     ctx.set('Content-Type', 'text/event-stream'),
-    ctx.body('data: SUCCESS\n\n'),
-  ),
+    ctx.body('data: SUCCESS\n\n')
+  )
 );
 
-export const newsFeed = rest.get(
-  `*/api/${API_VERSION}/newsfeed`,
-  async (req, res, ctx) => {
-    const limit = Number(req.url.searchParams.get('limit') || LIMIT);
-    const offset = Number(req.url.searchParams.get('offset') || 0);
-    const response = {
-      data: mockNewsFeed.data.slice(offset, offset + limit),
-      meta: {
-        ...mockNewsFeed.meta,
-        count: limit,
-        offset,
-      },
-    };
-    return res(ctx.delay(20), ctx.json(response));
-  },
-);
+export const newsFeed = rest.get(`*/api/${API_VERSION}/newsfeed`, async (req, res, ctx) => {
+  const limit = Number(req.url.searchParams.get('limit') || LIMIT);
+  const offset = Number(req.url.searchParams.get('offset') || 0);
+  const response = {
+    data: mockNewsFeed.data.slice(offset, offset + limit),
+    meta: {
+      ...mockNewsFeed.meta,
+      count: limit,
+      offset,
+    },
+  };
+  return res(ctx.delay(20), ctx.json(response));
+});
 
-export const marketPrices = rest.get(
-  `*/api/${API_VERSION}/market/prices`,
-  async (_, res, ctx) => {
-    const response = mockPrices;
-    return res(ctx.json(response));
-  },
-);
+export const marketPrices = rest.get(`*/api/${API_VERSION}/market/prices`, async (_, res, ctx) => {
+  const response = mockPrices;
+  return res(ctx.json(response));
+});
 
 export const customInfiniteQuery = rest.get(
   '*/mock/custom-infinite-query',
@@ -57,30 +50,27 @@ export const customInfiniteQuery = rest.get(
       },
     };
     return res(ctx.delay(20), ctx.json(response));
-  },
+  }
 );
 
-export const ccm = rest.get(
-  `*/api/${API_VERSION}/ccm`,
-  async (req, res, ctx) => {
-    const limit = Number(req.url.searchParams.get('limit') || LIMIT);
-    const offset = Number(req.url.searchParams.get('offset') || 0);
-    const response = {
-      data: mockCcm.data.slice(offset, offset + limit),
-      meta: {
-        ...mockCcm.meta,
-        count: limit,
-        offset,
-      },
-    };
-    return res(ctx.delay(20), ctx.json(response));
-  },
-);
+export const ccm = rest.get(`*/api/${API_VERSION}/ccm`, async (req, res, ctx) => {
+  const limit = Number(req.url.searchParams.get('limit') || LIMIT);
+  const offset = Number(req.url.searchParams.get('offset') || 0);
+  const response = {
+    data: mockCcm.data.slice(offset, offset + limit),
+    meta: {
+      ...mockCcm.meta,
+      count: limit,
+      offset,
+    },
+  };
+  return res(ctx.delay(20), ctx.json(response));
+});
 
 export const commandParametersSchemas = rest.get(
   `*/api/${API_VERSION}/commands/parameters/schemas`,
   async (_, res, ctx) => {
     const response = mockCommandParametersSchemas;
     return res(ctx.json(response));
-  },
+  }
 );

@@ -22,11 +22,13 @@ getTransactionBaseFees.mockResolvedValue(transactionBaseFees);
 getTransactionFee.mockImplementation((params) => {
   const selectedTransactionPriority = params.selectedPriority.selectedIndex;
   const fees = fromRawLsk(
-    Object.values(transactionBaseFees)[selectedTransactionPriority] * mockFeeFactor,
+    Object.values(transactionBaseFees)[selectedTransactionPriority] * mockFeeFactor
   );
-  return ({
-    value: fees, feedback: '', error: false,
-  });
+  return {
+    value: fees,
+    feedback: '',
+    error: false,
+  };
 });
 
 useTransactionFeeCalculation.mockImplementation(() => ({
@@ -68,7 +70,7 @@ describe('Multisignature editor component', () => {
             },
           },
         }}
-      />,
+      />
     );
     expect(wrapper.find('.multisignature-editor-input').at(0).props().value).toEqual(3);
     expect(wrapper).toContainMatchingElements(5, 'MemberField');
@@ -104,15 +106,17 @@ describe('Multisignature editor component', () => {
   });
 
   it('props.nextStep is called when the CTA is clicked', () => {
-    wrapper.find('input.input-with-dropdown-input').at(0).simulate(
-      'change',
-      { target: { value: wallets.genesis.summary.publicKey } },
-    );
-    wrapper.find('input.input-with-dropdown-input').at(1).simulate(
-      'change',
-      { target: { value: wallets.delegate.summary.publicKey } },
-    );
-    act(() => { wrapper.update(); });
+    wrapper
+      .find('input.input-with-dropdown-input')
+      .at(0)
+      .simulate('change', { target: { value: wallets.genesis.summary.publicKey } });
+    wrapper
+      .find('input.input-with-dropdown-input')
+      .at(1)
+      .simulate('change', { target: { value: wallets.delegate.summary.publicKey } });
+    act(() => {
+      wrapper.update();
+    });
     wrapper.find('.confirm-btn').at(0).simulate('click');
     expect(props.nextStep).toHaveBeenCalledTimes(1);
   });
@@ -137,15 +141,17 @@ describe('Multisignature editor component', () => {
 
   it('should be able to change the number of signatures', () => {
     props.nextStep.mockReset();
-    wrapper.find('.multisignature-editor-input input').at(0).simulate(
-      'change',
-      { target: { value: 1 } },
-    );
-    wrapper.find('input.input-with-dropdown-input').at(0).simulate(
-      'change',
-      { target: { value: wallets.genesis.summary.publicKey } },
-    );
-    act(() => { wrapper.update(); });
+    wrapper
+      .find('.multisignature-editor-input input')
+      .at(0)
+      .simulate('change', { target: { value: 1 } });
+    wrapper
+      .find('input.input-with-dropdown-input')
+      .at(0)
+      .simulate('change', { target: { value: wallets.genesis.summary.publicKey } });
+    act(() => {
+      wrapper.update();
+    });
     wrapper.find('.confirm-btn').at(0).simulate('click');
     expect(props.nextStep).toHaveBeenCalledTimes(1);
   });
@@ -158,7 +164,7 @@ describe('validateState', () => {
       mandatoryKeys: [pbk, pbk, pbk],
       optionalKeys: [],
       numberOfSignatures: 2,
-      t: str => str,
+      t: (str) => str,
     };
     const error = 'Number of signatures must be equal to the number of members.';
     expect(validateState(params).messages).toContain(error);
@@ -170,7 +176,7 @@ describe('validateState', () => {
       mandatoryKeys: [pbk, pbk, pbk],
       optionalKeys: [],
       numberOfSignatures: 5,
-      t: str => str,
+      t: (str) => str,
     };
     const error = 'Number of signatures must be equal to the number of members.';
     expect(validateState(params).messages).toContain(error);
@@ -182,7 +188,7 @@ describe('validateState', () => {
       mandatoryKeys: [pbk, pbk, pbk],
       optionalKeys: [pbk],
       numberOfSignatures: 4,
-      t: str => str,
+      t: (str) => str,
     };
     const error = 'Either change the optional member to mandatory or define more optional members.';
     expect(validateState(params).messages).toContain(error);
@@ -194,7 +200,7 @@ describe('validateState', () => {
       mandatoryKeys: [pbk, pbk, pbk],
       optionalKeys: [pbk],
       numberOfSignatures: 3,
-      t: str => str,
+      t: (str) => str,
     };
     const error = 'Either change the optional member to mandatory or define more optional members.';
     expect(validateState(params).messages).toContain(error);
@@ -206,7 +212,7 @@ describe('validateState', () => {
       mandatoryKeys: [],
       optionalKeys: [pbk, pbk, pbk],
       numberOfSignatures: 3,
-      t: str => str,
+      t: (str) => str,
     };
     const error = 'All members can not be optional. Consider changing them to mandatory.';
     expect(validateState(params).messages).toContain(error);
@@ -218,9 +224,10 @@ describe('validateState', () => {
       mandatoryKeys: [pbk, pbk, pbk],
       optionalKeys: [pbk, pbk, pbk],
       numberOfSignatures: 6,
-      t: str => str,
+      t: (str) => str,
     };
-    const error = 'Either change the optional member to mandatory or reduce the number of signatures.';
+    const error =
+      'Either change the optional member to mandatory or reduce the number of signatures.';
     expect(validateState(params).messages).toContain(error);
   });
 
@@ -230,7 +237,7 @@ describe('validateState', () => {
       mandatoryKeys: new Array(65).fill(pbk),
       optionalKeys: [],
       numberOfSignatures: 65,
-      t: str => str,
+      t: (str) => str,
     };
     const error = 'Maximum number of members is {{MAX_MULTI_SIG_MEMBERS}}.';
     expect(validateState(params).messages).toContain(error);
@@ -241,7 +248,7 @@ describe('validateState', () => {
       mandatoryKeys: new Array(2).fill(pbk),
       optionalKeys: [],
       numberOfSignatures: 2,
-      t: str => str,
+      t: (str) => str,
     };
     const error = 'Duplicate public keys detected.';
     expect(validateState(params).messages).toContain(error);

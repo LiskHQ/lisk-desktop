@@ -31,7 +31,7 @@ describe('Reclaim balance screen', () => {
 
   beforeEach(() => {
     props = {
-      t: v => v,
+      t: (v) => v,
       history: {
         push: jest.fn(),
       },
@@ -48,20 +48,18 @@ describe('Reclaim balance screen', () => {
   it('Opens send modal', () => {
     const wrapper = mountWithRouter(Reclaim, props, {});
     wrapper.find(styles.button).first().simulate('click');
-    expect(
-      addSearchParamsToUrl,
-    ).toHaveBeenNthCalledWith(
-      1,
-      expect.objectContaining({ }),
-      { modal: 'reclaimBalance' },
-    );
+    expect(addSearchParamsToUrl).toHaveBeenNthCalledWith(1, expect.objectContaining({}), {
+      modal: 'reclaimBalance',
+    });
   });
 
   it('Calls windows.open', () => {
-    useSelector.mockImplementation(jest.fn(() => ({
-      ...mockNonMigrated,
-      token: { balance: 0 },
-    })));
+    useSelector.mockImplementation(
+      jest.fn(() => ({
+        ...mockNonMigrated,
+        token: { balance: 0 },
+      }))
+    );
 
     const wrapper = mountWithRouter(Reclaim, props, {});
     wrapper.find('.link').at(0).simulate('click');
@@ -70,13 +68,13 @@ describe('Reclaim balance screen', () => {
       1,
       'https://lisk.com/blog/development/actions-required-upcoming-mainnet-migration#MigrateanunitiliazedAccount',
       '_blank',
-      'rel=noopener noreferrer',
+      'rel=noopener noreferrer'
     );
     expect(window.open).toHaveBeenNthCalledWith(
       2,
       'https://lisk.com/blog/development/actions-required-upcoming-mainnet-migration#MigrateanunitiliazedAccount',
       '_blank',
-      'rel=noopener noreferrer',
+      'rel=noopener noreferrer'
     );
   });
 });

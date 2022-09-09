@@ -1,10 +1,6 @@
 const prepareChartDataAndOptions = (statistics, colorPalette, t) => {
   const doughnutChartData = {
-    labels: [
-      t('Registered'),
-      t('Active'),
-      t('Terminated'),
-    ],
+    labels: [t('Registered'), t('Active'), t('Terminated')],
     datasets: [
       {
         backgroundColor: [colorPalette[1], colorPalette[0], colorPalette[2]],

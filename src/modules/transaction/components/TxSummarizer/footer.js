@@ -1,22 +1,12 @@
 // istanbul ignore file
 import React, { useEffect, useState } from 'react';
-import {
-  PrimaryButton,
-  SecondaryButton,
-  TertiaryButton,
-} from 'src/theme/buttons';
+import { PrimaryButton, SecondaryButton, TertiaryButton } from 'src/theme/buttons';
 import useSecondPassphrase from '@transaction/hooks/setSecondPassphrase';
 import PassphraseInput from '@wallet/components/PassphraseInput/PassphraseInput';
 import BoxFooter from 'src/theme/box/footer';
 import styles from './txSummarizer.css';
 
-const Actions = ({
-  isMultisignature,
-  cancelButton,
-  confirmButton,
-  inputStatus,
-  t,
-}) => (
+const Actions = ({ isMultisignature, cancelButton, confirmButton, inputStatus, t }) => (
   <div className={styles.primaryActions}>
     {cancelButton && (
       <SecondaryButton className="cancel-button" onClick={cancelButton.onClick}>
@@ -25,11 +15,7 @@ const Actions = ({
     )}
     <PrimaryButton
       className={`${!cancelButton ? styles.confirmButton : ''} confirm-button`}
-      disabled={
-        confirmButton.disabled
-        || inputStatus === 'visible'
-        || inputStatus === 'invalid'
-      }
+      disabled={confirmButton.disabled || inputStatus === 'visible' || inputStatus === 'invalid'}
       onClick={confirmButton.onClick}
     >
       {isMultisignature ? t('Sign') : confirmButton.label}
@@ -37,12 +23,7 @@ const Actions = ({
   </div>
 );
 
-const SecondPassInput = ({
-  t,
-  secondPassphraseStored,
-  inputStatus,
-  setInputStatus,
-}) => {
+const SecondPassInput = ({ t, secondPassphraseStored, inputStatus, setInputStatus }) => {
   const [secondPass, set2ndPass] = useSecondPassphrase();
 
   useEffect(() => {
@@ -66,12 +47,7 @@ const SecondPassInput = ({
     </div>
   ) : (
     <div className={styles.secondPassphrase}>
-      <PassphraseInput
-        t={t}
-        onFill={set2ndPass}
-        inputsLength={12}
-        maxInputsLength={24}
-      />
+      <PassphraseInput t={t} onFill={set2ndPass} inputsLength={12} maxInputsLength={24} />
     </div>
   );
 };
@@ -85,13 +61,12 @@ const Footer = ({
   account,
 }) => {
   const isMultisignature = !!account.keys?.numberOfSignatures;
-  const hasSecondPass = account.keys?.numberOfSignatures === 2
-    && account.keys.mandatoryKeys.length === 2
-    && account.keys.optionalKeys.length === 0
-    && !account.hwInfo;
-  const [inputStatus, setInputStatus] = useState(
-    hasSecondPass ? 'hidden' : 'notRequired',
-  );
+  const hasSecondPass =
+    account.keys?.numberOfSignatures === 2 &&
+    account.keys.mandatoryKeys.length === 2 &&
+    account.keys.optionalKeys.length === 0 &&
+    !account.hwInfo;
+  const [inputStatus, setInputStatus] = useState(hasSecondPass ? 'hidden' : 'notRequired');
 
   return (
     <BoxFooter

@@ -12,22 +12,12 @@ const transaction = {
   params: {},
 };
 
-const Summary = ({
-  balanceReclaimed,
-  nextStep,
-  prevStep,
-  wallet,
-  network,
-  t,
-  fees,
-}) => {
+const Summary = ({ balanceReclaimed, nextStep, prevStep, wallet, network, t, fees }) => {
   transaction.nonce = wallet.sequence.nonce;
   transaction.sender = { PublicKey: wallet.summary.publicKey };
   transaction.params.amount = wallet.legacy.balance;
 
-  const [
-    selectedPriority,, priorityOptions,
-  ] = useTransactionPriority();
+  const [selectedPriority, , priorityOptions] = useTransactionPriority();
   const { minFee } = useTransactionFeeCalculation({
     network,
     selectedPriority,
@@ -56,7 +46,9 @@ const Summary = ({
 
   const onCancelAction = {
     label: t('Go back'),
-    onClick: () => { prevStep({ rawTx }); },
+    onClick: () => {
+      prevStep({ rawTx });
+    },
   };
 
   return (
@@ -75,8 +67,7 @@ const Summary = ({
 Summary.whyDidYouRender = true;
 
 // istanbul ignore next
-const areEqual = (prevProps, nextProps) => (
-  prevProps.wallet.summary.balance === nextProps.wallet.summary.balance
-);
+const areEqual = (prevProps, nextProps) =>
+  prevProps.wallet.summary.balance === nextProps.wallet.summary.balance;
 
 export default React.memo(Summary, areEqual);

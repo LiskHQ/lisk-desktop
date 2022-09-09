@@ -9,16 +9,10 @@ import DialogLink from 'src/theme/dialog/link';
 import styles from './walletInfo.css';
 
 const BookmarkIcon = ({ bookmark }) => (
-  <Icon
-    name={bookmark === undefined ? 'bookmark' : 'bookmarkActive'}
-    className={styles.bookmark}
-  />
+  <Icon name={bookmark === undefined ? 'bookmark' : 'bookmarkActive'} className={styles.bookmark} />
 );
 
-const getMultiSignatureComponent = (
-  isLoggedInAccount,
-  isMultisignature,
-) => {
+const getMultiSignatureComponent = (isLoggedInAccount, isMultisignature) => {
   if (!isLoggedInAccount && !isMultisignature) {
     return null;
   }
@@ -36,16 +30,12 @@ const MultiSignatureButton = ({ t, component, isMultisignature }) => (
       } account-info-msign`}
       position="bottom"
       size="maxContent"
-      content={(
+      content={
         <Icon
-          name={
-            isMultisignature
-              ? 'registerMultisignatureGroup'
-              : 'multiSignatureOutline'
-          }
+          name={isMultisignature ? 'registerMultisignatureGroup' : 'multiSignatureOutline'}
           className={styles.multisigIcon}
         />
-      )}
+      }
     >
       <p>
         {isMultisignature
@@ -56,23 +46,21 @@ const MultiSignatureButton = ({ t, component, isMultisignature }) => (
   </DialogLink>
 );
 
-const CopyAddressAndPublicKey = ({
-  address, publicKey, t,
-}) => {
+const CopyAddressAndPublicKey = ({ address, publicKey, t }) => {
   if (!publicKey) {
     return (
       <Tooltip
         className={styles.tooltipWrapper}
         position="bottom"
         size="maxContent"
-        content={(
+        content={
           <CopyToClipboard
             value={address}
             type="icon"
             copyClassName={styles.copyIcon}
             className={styles.copyIcon}
           />
-        )}
+        }
       >
         <p>{t('Copy address')}</p>
       </Tooltip>
@@ -83,9 +71,7 @@ const CopyAddressAndPublicKey = ({
       className={`${styles.tooltipWrapper} ${styles.noPadding}`}
       position="bottom"
       size="maxContent"
-      content={
-        <Icon name="copy" className={`${styles.qrCodeIcon} ${styles.white}`} />
-      }
+      content={<Icon name="copy" className={`${styles.qrCodeIcon} ${styles.white}`} />}
     >
       <div className={styles.copyButtonWrapper}>
         <div className={styles.row}>
@@ -124,19 +110,12 @@ const ActionBar = ({
   t,
 }) => {
   const isLoggedInAccount = address === host;
-  const component = getMultiSignatureComponent(
-    isLoggedInAccount,
-    isMultisignature,
-  );
+  const component = getMultiSignatureComponent(isLoggedInAccount, isMultisignature);
 
   return (
     <footer>
       <div className={styles.helperIcon}>
-        <CopyAddressAndPublicKey
-          address={address}
-          publicKey={account.summary.publicKey}
-          t={t}
-        />
+        <CopyAddressAndPublicKey address={address} publicKey={account.summary.publicKey} t={t} />
       </div>
       <div className={`${styles.helperIcon} ${styles.qrCodeWrapper}`}>
         {host === address ? (
@@ -144,11 +123,11 @@ const ActionBar = ({
             className={styles.tooltipWrapper}
             position="bottom"
             size="maxContent"
-            content={(
+            content={
               <DialogLink component="request">
                 <Icon name="qrCodeActive" className={`${styles.qrCodeIcon} request-token-button`} />
               </DialogLink>
-            )}
+            }
           >
             <p>{t(`Request ${activeToken}`)}</p>
           </Tooltip>
@@ -170,30 +149,28 @@ const ActionBar = ({
             className={`${styles.tooltipWrapper} add-bookmark-icon`}
             position="bottom"
             size="maxContent"
-            content={(
+            content={
               <DialogLink
                 component="addBookmark"
                 data={
                   username
                     ? {
-                      formAddress: address,
-                      label: account.dpos?.delegate?.username,
-                      isDelegate: account.summary.isDelegate,
-                    }
+                        formAddress: address,
+                        label: account.dpos?.delegate?.username,
+                        isDelegate: account.summary.isDelegate,
+                      }
                     : {
-                      formAddress: address,
-                      label: bookmark ? bookmark.title : '',
-                      isDelegate: account.summary.isDelegate,
-                    }
+                        formAddress: address,
+                        label: bookmark ? bookmark.title : '',
+                        isDelegate: account.summary.isDelegate,
+                      }
                 }
               >
                 <BookmarkIcon bookmark={bookmark} />
               </DialogLink>
-            )}
+            }
           >
-            <p>
-              {t(bookmark === undefined ? 'Add to bookmarks' : 'Edit bookmark')}
-            </p>
+            <p>{t(bookmark === undefined ? 'Add to bookmarks' : 'Edit bookmark')}</p>
           </Tooltip>
         </div>
       ) : null}
@@ -205,31 +182,21 @@ const ActionBar = ({
               deviceId: hwInfo.deviceId,
               index: hwInfo.derivationIndex,
               showOnDevice: true,
-            })}
+            })
+          }
         >
           <Tooltip
             className={styles.tooltipWrapper}
             position="bottom"
             title={t('Verify address')}
-            content={(
-              <Icon
-                name="verifyWalletAddress"
-                className={styles.hwWalletIcon}
-              />
-            )}
+            content={<Icon name="verifyWalletAddress" className={styles.hwWalletIcon} />}
           >
-            <span>
-              {t('Verify the address in your hardware wallet device.')}
-            </span>
+            <span>{t('Verify the address in your hardware wallet device.')}</span>
           </Tooltip>
         </div>
       )}
       {component && (
-        <MultiSignatureButton
-          t={t}
-          component={component}
-          isMultisignature={isMultisignature}
-        />
+        <MultiSignatureButton t={t} component={component} isMultisignature={isMultisignature} />
       )}
     </footer>
   );

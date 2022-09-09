@@ -17,7 +17,7 @@ describe('Locked balance Summary', () => {
     },
     nextStep: jest.fn(),
     prevStep: jest.fn(),
-    t: key => key,
+    t: (key) => key,
     wallet: wallets.genesis,
   };
 

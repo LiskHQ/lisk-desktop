@@ -1,8 +1,4 @@
-import {
-  getNetworksList,
-  getNetworkName,
-  getConnectionErrorMessage,
-} from './getNetwork';
+import { getNetworksList, getNetworkName, getConnectionErrorMessage } from './getNetwork';
 
 describe('Utils: getNetwork', () => {
   describe('getNetworksList', () => {
@@ -47,9 +43,11 @@ describe('Utils: getNetwork', () => {
 
   describe('getConnectionErrorMessage', () => {
     it('should display the error message if presented', () => {
-      expect(getConnectionErrorMessage({
-        message: 'sample error message',
-      })).toEqual('Unable to connect to the node, Error: sample error message');
+      expect(
+        getConnectionErrorMessage({
+          message: 'sample error message',
+        })
+      ).toEqual('Unable to connect to the node, Error: sample error message');
     });
   });
 });

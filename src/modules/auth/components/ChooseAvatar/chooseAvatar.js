@@ -24,9 +24,7 @@ class ChooseAvatar extends React.Component {
 
   // eslint-disable-next-line class-methods-use-this
   getAvatarAnimationClassName({ address, selected, previous }) {
-    return selected === address
-      ? styles.selected
-      : (previous === address && styles.deselect) || '';
+    return selected === address ? styles.selected : (previous === address && styles.deselect) || '';
   }
 
   componentDidUpdate(prevProps) {
@@ -49,17 +47,12 @@ class ChooseAvatar extends React.Component {
       const animateClass = `${styles.animate}`;
       clearTimeout(this.timeout);
       this.wrapperRef.classList.add(animateClass);
-      this.timeout = setTimeout(
-        () => this.wrapperRef.classList.remove(animateClass),
-        1250,
-      );
+      this.timeout = setTimeout(() => this.wrapperRef.classList.remove(animateClass), 1250);
     }
   }
 
   render() {
-    const {
-      t, handleSelectAvatar, accounts, selected,
-    } = this.props;
+    const { t, handleSelectAvatar, accounts, selected } = this.props;
     const { deselect } = this.state;
 
     return (
@@ -70,7 +63,9 @@ class ChooseAvatar extends React.Component {
         </div>
         <div
           ref={this.setWrapperRef}
-          className={`${styles.avatarsHolder} ${selected.address ? styles.avatarSelected : ''} choose-avatar`}
+          className={`${styles.avatarsHolder} ${
+            selected.address ? styles.avatarSelected : ''
+          } choose-avatar`}
         >
           {accounts.map((account, key) => (
             <span

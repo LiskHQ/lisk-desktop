@@ -16,22 +16,29 @@ const baseState = {
   feedback: '',
 };
 
-const getAmountFieldState = (initialValue, getAmountFeedbackAndError) => (initialValue
-  ? {
-    ...baseState,
-    ...getAmountFeedbackAndError(initialValue),
-    value: initialValue,
-  }
-  : {
-    ...baseState,
-    value: '',
-  });
+const getAmountFieldState = (initialValue, getAmountFeedbackAndError) =>
+  initialValue
+    ? {
+        ...baseState,
+        ...getAmountFeedbackAndError(initialValue),
+        value: initialValue,
+      }
+    : {
+        ...baseState,
+        value: '',
+      };
 
 const useAmountField = (initialValue, balance, token) => {
   const { t, i18n } = useTranslation();
 
   const getAmountFeedbackAndError = (value, maxAmount = balance) => {
-    const checklist = ['NEGATIVE_AMOUNT', 'MAX_ACCURACY', 'INSUFFICIENT_FUNDS', 'MIN_BALANCE', 'FORMAT'];
+    const checklist = [
+      'NEGATIVE_AMOUNT',
+      'MAX_ACCURACY',
+      'INSUFFICIENT_FUNDS',
+      'MIN_BALANCE',
+      'FORMAT',
+    ];
     let { message: feedback } = validateAmountFormat({
       value,
       token,
@@ -46,7 +53,7 @@ const useAmountField = (initialValue, balance, token) => {
   };
 
   const [amountField, setAmountField] = useState(
-    getAmountFieldState(initialValue, getAmountFeedbackAndError),
+    getAmountFieldState(initialValue, getAmountFeedbackAndError)
   );
 
   const onAmountInputChange = ({ value }, maxAmount) => {

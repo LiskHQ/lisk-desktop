@@ -13,16 +13,10 @@ import styles from './amountField.css';
 export const MaxAmountWarning = ({ resetInput, message, ignoreClicks }) => {
   const { t } = useTranslation();
   return (
-    <div
-      className={`${styles.entireBalanceWarning} entire-balance-warning`}
-      onClick={ignoreClicks}
-    >
+    <div className={`${styles.entireBalanceWarning} entire-balance-warning`} onClick={ignoreClicks}>
       <Icon name="warningYellow" />
       <span>{message || t('You are about to send your entire balance')}</span>
-      <div
-        className={`${styles.closeBtn} close-entire-balance-warning`}
-        onClick={resetInput}
-      />
+      <div className={`${styles.closeBtn} close-entire-balance-warning`} onClick={resetInput} />
     </div>
   );
 };
@@ -84,11 +78,7 @@ const AmountField = ({
   }, [isMaximum, maxAmount.value]);
 
   return (
-    <label
-      className={`${styles.fieldGroup} ${
-        amount.error ? styles.error : ''
-      } ${className}`}
-    >
+    <label className={`${styles.fieldGroup} ${amount.error ? styles.error : ''} ${className}`}>
       <div
         className={
           labelClassname
@@ -115,14 +105,11 @@ const AmountField = ({
             size="xs"
           >
             {useMaxLabel}
-            <Tooltip
-              position="bottom"
-              tooltipClassName={`${styles.tooltipContainer}`}
-            >
+            <Tooltip position="bottom" tooltipClassName={`${styles.tooltipContainer}`}>
               <span>
                 {t(
                   'Based on your available balance and rounded down to a multiple of 10 LSK, your total remaining balance is {{maxAmount}} LSK',
-                  { maxAmount: fromRawLsk(maxAmount.value) },
+                  { maxAmount: fromRawLsk(maxAmount.value) }
                 )}
               </span>
             </Tooltip>

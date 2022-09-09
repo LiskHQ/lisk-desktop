@@ -19,14 +19,13 @@ import { normalizeVotesForTx } from '@transaction/utils';
 const getMaxAmount = async (wallet, network, voting, address) => {
   const balance = wallet.summary?.balance ?? 0;
   const totalUnconfirmedVotes = Object.values(voting)
-    .filter(vote => vote.confirmed < vote.unconfirmed)
-    .map(vote => vote.unconfirmed - vote.confirmed)
-    .reduce((total, amount) => (total + amount), 0);
+    .filter((vote) => vote.confirmed < vote.unconfirmed)
+    .map((vote) => vote.unconfirmed - vote.confirmed)
+    .reduce((total, amount) => total + amount, 0);
   const currentVote = voting[address] ? voting[address].confirmed : 0;
 
-  const maxVoteAmount = Math.floor(
-    (balance - totalUnconfirmedVotes + currentVote - MIN_ACCOUNT_BALANCE) / 1e9,
-  ) * 1e9;
+  const maxVoteAmount =
+    Math.floor((balance - totalUnconfirmedVotes + currentVote - MIN_ACCOUNT_BALANCE) / 1e9) * 1e9;
 
   const transaction = {
     fee: 1e6,
@@ -46,19 +45,24 @@ const getMaxAmount = async (wallet, network, voting, address) => {
     moduleCommandID: MODULE_COMMANDS_NAME_ID_MAP.voteDelegate,
   };
 
-  const maxAmountFee = await getTransactionFee({
-    token: 'LSK',
-    wallet,
-    network,
-    transaction,
-    selectedPriority: { title: 'Normal', value: 0, selectedIndex: 0 }, // Always set to LOW
-    numberOfSignatures: getNumberOfSignatures(wallet, transaction),
-  }, 'LSK');
+  const maxAmountFee = await getTransactionFee(
+    {
+      token: 'LSK',
+      wallet,
+      network,
+      transaction,
+      selectedPriority: { title: 'Normal', value: 0, selectedIndex: 0 }, // Always set to LOW
+      numberOfSignatures: getNumberOfSignatures(wallet, transaction),
+    },
+    'LSK'
+  );
 
   // If the "sum of vote amounts + fee + dust" exceeds balance
   // return 10 LSK less, since votes must be multiplications of 10 LSK.
-  if ((maxVoteAmount + toRawLsk(maxAmountFee.value)) <= (
-    balance - totalUnconfirmedVotes + currentVote - MIN_ACCOUNT_BALANCE)) {
+  if (
+    maxVoteAmount + toRawLsk(maxAmountFee.value) <=
+    balance - totalUnconfirmedVotes + currentVote - MIN_ACCOUNT_BALANCE
+  ) {
     return maxVoteAmount;
   }
   return maxVoteAmount - VOTE_AMOUNT_STEP;

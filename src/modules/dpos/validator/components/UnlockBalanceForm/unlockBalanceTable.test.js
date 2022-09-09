@@ -1,9 +1,6 @@
 import React from 'react';
 import { mount } from 'enzyme';
-import {
-  calculateBalanceLockedInVotes,
-  calculateUnlockableBalance,
-} from '@wallet/utils/account';
+import { calculateBalanceLockedInVotes, calculateUnlockableBalance } from '@wallet/utils/account';
 import accounts from '@tests/constants/wallets';
 import BalanceTable from './BalanceTable';
 
@@ -14,9 +11,21 @@ describe('unlock transaction Status', () => {
     ...accounts.genesis,
     dpos: {
       unlocking: [
-        { amount: '1000000000', height: { start: 4900, end: 5900 }, delegateAddress: 'lskdwsyfmcko6mcd357446yatromr9vzgu7eb8y11' },
-        { amount: '3000000000', height: { start: 100, end: 10100 }, delegateAddress: 'lskdwsyfmcko6mcd357446yatromr9vzgu7eb8y11' },
-        { amount: '1000000000', height: { start: 3000, end: 4000 }, delegateAddress: 'lskdwsyfmcko6mcd357446yatromr9vzgu7eb8y13' },
+        {
+          amount: '1000000000',
+          height: { start: 4900, end: 5900 },
+          delegateAddress: 'lskdwsyfmcko6mcd357446yatromr9vzgu7eb8y11',
+        },
+        {
+          amount: '3000000000',
+          height: { start: 100, end: 10100 },
+          delegateAddress: 'lskdwsyfmcko6mcd357446yatromr9vzgu7eb8y11',
+        },
+        {
+          amount: '1000000000',
+          height: { start: 3000, end: 4000 },
+          delegateAddress: 'lskdwsyfmcko6mcd357446yatromr9vzgu7eb8y13',
+        },
       ],
     },
     sequence: { nonce: '178' },
@@ -30,7 +39,7 @@ describe('unlock transaction Status', () => {
   const currentBlockHeight = 5000;
 
   const props = {
-    t: key => key,
+    t: (key) => key,
     lockedInVotes: calculateBalanceLockedInVotes(voting),
     unlockableBalance: calculateUnlockableBalance(account.dpos.unlocking, currentBlockHeight),
     currentBlockHeight,
@@ -50,9 +59,21 @@ describe('unlock transaction Status', () => {
       ...account,
       dpos: {
         unlocking: [
-          { amount: '1000000000', height: { start: 4900, end: 5900 }, delegateAddress: 'lskdwsyfmcko6mcd357446yatromr9vzgu7eb8y11' },
-          { amount: '3000000000', height: { start: 2500, end: 30500 }, delegateAddress: accounts.genesis.summary.address },
-          { amount: '3000000000', height: { start: 2900, end: 30900 }, delegateAddress: accounts.genesis.summary.address },
+          {
+            amount: '1000000000',
+            height: { start: 4900, end: 5900 },
+            delegateAddress: 'lskdwsyfmcko6mcd357446yatromr9vzgu7eb8y11',
+          },
+          {
+            amount: '3000000000',
+            height: { start: 2500, end: 30500 },
+            delegateAddress: accounts.genesis.summary.address,
+          },
+          {
+            amount: '3000000000',
+            height: { start: 2900, end: 30900 },
+            delegateAddress: accounts.genesis.summary.address,
+          },
         ],
       },
     };
@@ -68,7 +89,7 @@ describe('unlock transaction Status', () => {
       lockedInVotes: calculateBalanceLockedInVotes(customVoting),
       unlockableBalance: calculateUnlockableBalance(
         customAccount.dpos.unlocking,
-        currentBlockHeight,
+        currentBlockHeight
       ),
       currentBlockHeight,
     };

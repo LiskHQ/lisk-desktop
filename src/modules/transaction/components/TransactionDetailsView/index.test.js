@@ -105,7 +105,7 @@ const delegateRegTx = {
 
 describe('Transaction Details Component', () => {
   const props = {
-    t: v => v,
+    t: (v) => v,
     title: 'Transaction details',
     activeToken: 'LSK',
     transaction: {
@@ -157,8 +157,12 @@ describe('Transaction Details Component', () => {
     it('Should render transfer transaction with message (LSK)', () => {
       const wrapper = mount(<TransactionDetails {...propsWithTransferTx} />);
       expect(wrapper).toContainMatchingElements(2, '.walletInfo');
-      expect(wrapper.find('.walletInfo .sender-address').text()).toBe(transferTx.data.sender.address);
-      expect(wrapper.find('.walletInfo .receiver-address').text()).toBe(transferTx.data.params.recipient?.address);
+      expect(wrapper.find('.walletInfo .sender-address').text()).toBe(
+        transferTx.data.sender.address
+      );
+      expect(wrapper.find('.walletInfo .receiver-address').text()).toBe(
+        transferTx.data.params.recipient?.address
+      );
       expect(wrapper).toContainExactlyOneMatchingElement('.tx-reference');
     });
 
@@ -187,7 +191,9 @@ describe('Transaction Details Component', () => {
       await delegateApi.getDelegates();
       expect(wrapper.find('.tx-added-votes')).toHaveLength(1);
       expect(wrapper.find('.vote-item-value').text()).toBe('-10 LSK');
-      expect(wrapper.find('.vote-item-address').text()).toBe(wallets.delegate.dpos.delegate.username);
+      expect(wrapper.find('.vote-item-address').text()).toBe(
+        wallets.delegate.dpos.delegate.username
+      );
     });
   });
 
@@ -206,13 +212,10 @@ describe('Transaction Details Component', () => {
         data: {},
       };
       mockUseContext({ ...trnx, transaction: {} });
-      const wrapper = mountWithRouter(
-        TransactionDetails,
-        {
-          ...props,
-          transaction: trnx,
-        },
-      );
+      const wrapper = mountWithRouter(TransactionDetails, {
+        ...props,
+        transaction: trnx,
+      });
       expect(wrapper).toContainMatchingElement('NotFound');
       expect(wrapper.find('.not-found-state h3').text()).toBe('The transaction was not found.');
     });
@@ -231,7 +234,8 @@ describe('Transaction Details Component', () => {
             unlockObjects: [
               {
                 amount: 100,
-              }, {
+              },
+              {
                 amount: 20,
               },
               {
@@ -248,7 +252,7 @@ describe('Transaction Details Component', () => {
       const wrapper = mountWithRouter(
         TransactionDetails,
         { ...props, transaction: unlockTx },
-        { id: transferTx.id },
+        { id: transferTx.id }
       );
       expect(wrapper).toContainMatchingElement('.transaction-image');
       expect(wrapper.find('.tx-header').text()).toEqual('Unlock');

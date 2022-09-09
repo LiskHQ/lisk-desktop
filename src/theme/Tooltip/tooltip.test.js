@@ -11,7 +11,11 @@ describe('Tooltip wrapper', () => {
   const props = {
     title: 'Title of the tooltip',
     children: <p>Some text content here!</p>,
-    footer: <a href="http://lisk.com" rel="noopener noreferrer" target="_blank">Read more</a>,
+    footer: (
+      <a href="http://lisk.com" rel="noopener noreferrer" target="_blank">
+        Read more
+      </a>
+    ),
   };
 
   beforeEach(() => {

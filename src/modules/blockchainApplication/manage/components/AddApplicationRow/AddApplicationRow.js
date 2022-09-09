@@ -18,10 +18,7 @@ const DepositAmount = ({ amount }) => (
   </span>
 );
 
-const AddApplicationRow = ({
-  data,
-  className,
-}) => (
+const AddApplicationRow = ({ data, className }) => (
   <div data-testid="applications-row" className={`application-row ${styles.container}`}>
     <DialogLink
       className={`${grid.row} ${className} blockchain-application-add-row`}

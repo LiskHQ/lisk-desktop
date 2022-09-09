@@ -11,7 +11,7 @@ const VoteWarning = ({ t, daysLeft }) => (
       'Caution! You are about to vote for the punished delegate, this will result in your LSK tokens being locked for a period of {{daysLeft}} days.',
       {
         daysLeft,
-      },
+      }
     )}
   </div>
 );

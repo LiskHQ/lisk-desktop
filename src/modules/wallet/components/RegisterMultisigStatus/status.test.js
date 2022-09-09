@@ -6,7 +6,7 @@ import Status from './status';
 
 describe('Multisignature Status component', () => {
   const props = {
-    t: v => v,
+    t: (v) => v,
     transactions: {
       confirmed: [],
       txBroadcastError: null,
@@ -103,7 +103,7 @@ describe('Multisignature Status component', () => {
       transactions: {
         txBroadcastError: { message: 'error:test' },
         txSignatureError: null,
-        signedTransaction: { },
+        signedTransaction: {},
       },
     };
 
@@ -124,7 +124,7 @@ describe('Multisignature Status component', () => {
       transactions: {
         txBroadcastError: null,
         txSignatureError: null,
-        signedTransaction: { },
+        signedTransaction: {},
       },
     };
 

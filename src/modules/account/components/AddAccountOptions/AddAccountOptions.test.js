@@ -1,7 +1,5 @@
 import React from 'react';
-import {
-  fireEvent, render, screen,
-} from '@testing-library/react';
+import { fireEvent, render, screen } from '@testing-library/react';
 import mockSavedAccounts from '@tests/fixtures/accounts';
 import { Router } from 'react-router';
 import AddAccountOptions from './AddAccountOptions';
@@ -16,7 +14,6 @@ const props = {
     listen: jest.fn(),
     location: { pathname: '/test' },
     push: jest.fn(),
-
   },
 };
 
@@ -24,7 +21,7 @@ beforeEach(() => {
   render(
     <Router history={props.history}>
       <AddAccountOptions />
-    </Router>,
+    </Router>
   );
 });
 

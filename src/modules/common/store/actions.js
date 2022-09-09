@@ -4,7 +4,7 @@ import actionTypes from './actionTypes';
  * An action to dispatch loadingStarted
  *
  */
-export const loadingStarted = data => ({
+export const loadingStarted = (data) => ({
   data,
   type: actionTypes.loadingStarted,
 });
@@ -13,7 +13,7 @@ export const loadingStarted = data => ({
  * An action to dispatch loadingFinished
  *
  */
-export const loadingFinished = data => ({
+export const loadingFinished = (data) => ({
   data,
   type: actionTypes.loadingFinished,
 });

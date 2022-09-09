@@ -17,12 +17,10 @@ const Search = ({ t, history, disabled }) => {
       className={styles.tooltipWrapper}
       size="maxContent"
       position="bottom"
-      content={(
+      content={
         <DialogLink
           component="search"
-          className={`${styles.toggle} search-toggle ${
-            disabled && `${styles.disabled} disabled`
-          }`}
+          className={`${styles.toggle} search-toggle ${disabled && `${styles.disabled} disabled`}`}
         >
           <span
             className={
@@ -31,17 +29,13 @@ const Search = ({ t, history, disabled }) => {
                 : styles.searchContainer
             }
           >
-            <Icon
-              name={relevantSearchParam ? 'search' : 'searchInput'}
-              className="search-icon"
-            />
-            {relevantSearchParam === routes.explorer.searchParam
-              && relevantSearchParamValue && (
-                <WalletVisual
-                  className={styles.walletVisual}
-                  size={18}
-                  address={relevantSearchParamValue}
-                />
+            <Icon name={relevantSearchParam ? 'search' : 'searchInput'} className="search-icon" />
+            {relevantSearchParam === routes.explorer.searchParam && relevantSearchParamValue && (
+              <WalletVisual
+                className={styles.walletVisual}
+                size={18}
+                address={relevantSearchParamValue}
+              />
             )}
             {relevantSearchParamValue && (
               <>
@@ -51,15 +45,13 @@ const Search = ({ t, history, disabled }) => {
                   </span>
                 </div>
                 <div className="showOnLargeViewPort">
-                  <span className={styles.searchedValue}>
-                    {relevantSearchParamValue}
-                  </span>
+                  <span className={styles.searchedValue}>{relevantSearchParamValue}</span>
                 </div>
               </>
             )}
           </span>
         </DialogLink>
-      )}
+      }
     >
       <p>{t('Search')}</p>
     </Tooltip>

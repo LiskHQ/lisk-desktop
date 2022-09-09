@@ -4,9 +4,7 @@ import Content from './content';
 import Button from './button';
 import styles from './flashMessage.css';
 
-const FlashMessage = ({
-  onDismiss, className, shouldShow, children, hasCloseAction,
-}) => {
+const FlashMessage = ({ onDismiss, className, shouldShow, children, hasCloseAction }) => {
   const [dismissed, setDismissed] = useState(false);
 
   const dismiss = () => {
@@ -14,19 +12,17 @@ const FlashMessage = ({
     if (typeof onDismiss === 'function') onDismiss();
   };
 
-  return shouldShow && !dismissed && (
-    <div className={`${styles.wrapper} ${className}`}>
-      {children}
-      {
-        hasCloseAction
-        && !(Array.isArray(children) && children.some(child => child.type === Button)) && (
-          <span
-            className={styles.closeBtn}
-            onClick={dismiss}
-          />
-        )
-      }
-    </div>
+  return (
+    shouldShow &&
+    !dismissed && (
+      <div className={`${styles.wrapper} ${className}`}>
+        {children}
+        {hasCloseAction &&
+          !(Array.isArray(children) && children.some((child) => child.type === Button)) && (
+            <span className={styles.closeBtn} onClick={dismiss} />
+          )}
+      </div>
+    )
   );
 };
 

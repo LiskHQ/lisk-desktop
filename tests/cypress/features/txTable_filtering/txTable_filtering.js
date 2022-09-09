@@ -25,6 +25,3 @@ Then(/^I click filter incoming$/, function () {
 Then(/^I click filter outgoing$/, function () {
   cy.get(ss.filterOutgoing).click().should('have.class', 'active');
 });
-
-
-

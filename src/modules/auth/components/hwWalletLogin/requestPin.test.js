@@ -22,7 +22,7 @@ describe('Request PIN Component', () => {
       { deviceId: 3, model: 'Ledger Nano X', manufactor: 'Ledger' },
       { deviceId: 4, model: 'Trezor Model One', manufactor: 'Trezor' },
     ],
-    t: v => v,
+    t: (v) => v,
     nextStep: jest.fn(),
     prevStep: jest.fn(),
     goBack: jest.fn(),

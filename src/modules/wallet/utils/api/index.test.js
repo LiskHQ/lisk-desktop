@@ -7,7 +7,9 @@ import { getAccount, getAccounts } from './index';
 
 jest.mock('src/utils/api/http', () => jest.fn().mockReturnValue([]));
 jest.mock('src/utils/api/ws', () => jest.fn().mockReturnValue([]));
-jest.spyOn(cryptography.address, 'getLisk32AddressFromPublicKey').mockReturnValue(accounts.delegate.summary.address);
+jest
+  .spyOn(cryptography.address, 'getLisk32AddressFromPublicKey')
+  .mockReturnValue(accounts.delegate.summary.address);
 
 describe('API: LSK Account', () => {
   const network = {
@@ -32,22 +34,31 @@ describe('API: LSK Account', () => {
 
     it('should call ws with addressList if it is provided', async () => {
       const expectedApiCallParams = [
-        { method: 'get.accounts', params: { address: 'lskdwsyfmcko6mcd357446yatromr9vzgu7eb8y99' }, jsonrpc: '2.0' },
-        { method: 'get.accounts', params: { address: 'lskdwsyfmcko6mcd357446yatromr9vzgu7eb8y91' }, jsonrpc: '2.0' },
+        {
+          method: 'get.accounts',
+          params: { address: 'lskdwsyfmcko6mcd357446yatromr9vzgu7eb8y99' },
+          jsonrpc: '2.0',
+        },
+        {
+          method: 'get.accounts',
+          params: { address: 'lskdwsyfmcko6mcd357446yatromr9vzgu7eb8y91' },
+          jsonrpc: '2.0',
+        },
       ];
       // BaseUrl is not used for WS calls
       const response = await getAccounts({
         network,
         params: {
-          addressList: ['lskdwsyfmcko6mcd357446yatromr9vzgu7eb8y99', 'lskdwsyfmcko6mcd357446yatromr9vzgu7eb8y91'],
+          addressList: [
+            'lskdwsyfmcko6mcd357446yatromr9vzgu7eb8y99',
+            'lskdwsyfmcko6mcd357446yatromr9vzgu7eb8y91',
+          ],
         },
         path: 'transactions',
       });
 
       expect(response).toBeDefined();
-      expect(ws).toHaveBeenCalledWith(
-        expect.objectContaining({ requests: expectedApiCallParams }),
-      );
+      expect(ws).toHaveBeenCalledWith(expect.objectContaining({ requests: expectedApiCallParams }));
       expect(http).not.toHaveBeenCalled();
     });
 
@@ -66,7 +77,10 @@ describe('API: LSK Account', () => {
 
       expect(response).toBeDefined();
       expect(http).toHaveBeenCalledWith({
-        network, params, baseUrl, path,
+        network,
+        params,
+        baseUrl,
+        path,
       });
       expect(ws).not.toHaveBeenCalled();
     });
@@ -84,7 +98,10 @@ describe('API: LSK Account', () => {
 
       expect(response).toBeDefined();
       expect(http).toHaveBeenCalledWith({
-        network, params, baseUrl: undefined, path,
+        network,
+        params,
+        baseUrl: undefined,
+        path,
       });
       expect(ws).not.toHaveBeenCalled();
     });
@@ -93,7 +110,9 @@ describe('API: LSK Account', () => {
   describe('getAccount', () => {
     const {
       summary: { address, publicKey, privateKey },
-      dpos: { delegate: { username } },
+      dpos: {
+        delegate: { username },
+      },
       passphrase,
     } = accounts.delegate;
 
@@ -221,13 +240,20 @@ describe('API: LSK Account', () => {
     });
 
     it('should use the public key from params if the account is uninitialized', async () => {
-      http.mockImplementation(() => Promise.resolve({
-        data: [{
-          summary: {
-            publicKey: '', address, balance: 0, token: 'LSK',
-          },
-        }],
-      }));
+      http.mockImplementation(() =>
+        Promise.resolve({
+          data: [
+            {
+              summary: {
+                publicKey: '',
+                address,
+                balance: 0,
+                token: 'LSK',
+              },
+            },
+          ],
+        })
+      );
       // Checks the baseUrl too
       const result = await getAccount({
         network,
@@ -248,13 +274,20 @@ describe('API: LSK Account', () => {
     });
 
     it('should use extract the public key from params.passphrase if the account is uninitialized', async () => {
-      http.mockImplementation(() => Promise.resolve({
-        data: [{
-          summary: {
-            publicKey: '', address, balance: 0, token: 'LSK',
-          },
-        }],
-      }));
+      http.mockImplementation(() =>
+        Promise.resolve({
+          data: [
+            {
+              summary: {
+                publicKey: '',
+                address,
+                balance: 0,
+                token: 'LSK',
+              },
+            },
+          ],
+        })
+      );
       // Checks the baseUrl too
       const result = await getAccount({
         network,

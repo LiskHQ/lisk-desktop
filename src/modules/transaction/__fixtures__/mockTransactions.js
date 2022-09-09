@@ -1,4 +1,4 @@
-const transaction = index => ({
+const transaction = (index) => ({
   id: `22267562542235376${index}`,
   moduleCommandID: '2:0',
   moduleCommandName: 'token:transfer',
@@ -31,7 +31,9 @@ const transaction = index => ({
   },
 });
 
-const transactions = Array(30).fill(1).map((item, index) => transaction(index));
+const transactions = Array(30)
+  .fill(1)
+  .map((item, index) => transaction(index));
 
 /* eslint-disable import/prefer-default-export */
 export const mockTransactions = {

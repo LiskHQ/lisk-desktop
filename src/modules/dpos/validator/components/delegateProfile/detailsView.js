@@ -35,38 +35,25 @@ const DetailsView = ({ t, data, lastBlockForged }) => {
           <Icon name="clockActive" className={styles.icon} />
           <div className={`${grid.col} ${styles.item}`}>
             <div className={`${styles.title} ${theme}`}>{t('Status')}</div>
-            <div className={`${styles.value} ${styles.capitalized}`}>
-              {status.toLowerCase()}
-            </div>
+            <div className={`${styles.value} ${styles.capitalized}`}>{status.toLowerCase()}</div>
           </div>
         </div>
         <div className={`${grid.row} ${styles.itemContainer}`}>
           <Icon name="weight" className={styles.icon} />
           <div className={`${grid.col} ${styles.item}`}>
-            <div className={`${styles.title} ${theme}`}>
-              {t('Delegate weight')}
-            </div>
+            <div className={`${styles.title} ${theme}`}>{t('Delegate weight')}</div>
             <div className={styles.value}>
-              <TokenAmount
-                val={data.totalVotesReceived}
-                token={tokenMap.LSK.key}
-              />
+              <TokenAmount val={data.totalVotesReceived} token={tokenMap.LSK.key} />
             </div>
           </div>
         </div>
         <div className={`${grid.row} ${styles.itemContainer}`}>
           <Icon name="calendar" className={styles.icon} />
           <div className={`${grid.col} ${styles.item}`}>
-            <div className={`${styles.title} ${theme}`}>
-              {t('Last block forged')}
-            </div>
+            <div className={`${styles.title} ${theme}`}>{t('Last block forged')}</div>
             <div className={styles.value}>
               {lastBlockForged ? (
-                <DateTimeFromTimestamp
-                  fulltime
-                  className="date"
-                  time={lastBlockForged}
-                />
+                <DateTimeFromTimestamp fulltime className="date" time={lastBlockForged} />
               ) : (
                 '-'
               )}

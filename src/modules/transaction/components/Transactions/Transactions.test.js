@@ -17,7 +17,7 @@ afterEach(() => {
 
 describe('Transactions monitor page', () => {
   const props = {
-    t: key => key,
+    t: (key) => key,
     transactions: {
       data: [],
       meta: null,
@@ -50,14 +50,15 @@ describe('Transactions monitor page', () => {
   });
 
   it('allows to load more transactions', () => {
-    const wrapper = mountWithRouter(
-      TransactionsPure,
-      { ...props, transactions: transactionsWithData },
-    );
+    const wrapper = mountWithRouter(TransactionsPure, {
+      ...props,
+      transactions: transactionsWithData,
+    });
     wrapper.find('button.load-more').simulate('click');
-    expect(props.transactions.loadData).toHaveBeenCalledWith(
-      { offset: transactionsWithData.data.length, sort },
-    );
+    expect(props.transactions.loadData).toHaveBeenCalledWith({
+      offset: transactionsWithData.data.length,
+      sort,
+    });
   });
 
   it.skip('allows to load latest transactions', () => {
@@ -76,12 +77,12 @@ describe('Transactions monitor page', () => {
       TransactionsPure,
       { ...props, transactions: transactionsWithData },
       {},
-      defaultState,
+      defaultState
     );
     wrapper.update();
     // simulate new transactions
     // mock selector used in transactions table
-    useSelector.mockImplementation(callback => callback(newState));
+    useSelector.mockImplementation((callback) => callback(newState));
     // store.dispatch({
     //   type: actionTypes.newBlockCreated,
     //   data: {
@@ -94,7 +95,9 @@ describe('Transactions monitor page', () => {
     //     block: { height: 123123127, numberOfTransactions: 6 },
     //   },
     // });
-    act(() => { wrapper.update(); });
+    act(() => {
+      wrapper.update();
+    });
     wrapper.find('button.load-latest').simulate('click');
     expect(props.transactions.loadData).toHaveBeenCalled();
   });
@@ -113,26 +116,30 @@ describe('Transactions monitor page', () => {
   });
 
   it('allows to load more transactions when filtered', () => {
-    const wrapper = mountWithRouter(
-      TransactionsPure,
-      { ...props, transactions: transactionsWithData },
-    );
+    const wrapper = mountWithRouter(TransactionsPure, {
+      ...props,
+      transactions: transactionsWithData,
+    });
 
     wrapper.find('button.filter').simulate('click');
-    wrapper.find('input.amountFromInput').simulate('change', { target: { value: amountFrom, name: 'amountFrom' } });
+    wrapper
+      .find('input.amountFromInput')
+      .simulate('change', { target: { value: amountFrom, name: 'amountFrom' } });
     wrapper.find('form.filter-container').simulate('submit');
     wrapper.find('button.load-more').simulate('click');
 
     expect(props.transactions.loadData).toHaveBeenCalledWith({
-      offset: transactions.length, amountFrom, sort,
+      offset: transactions.length,
+      amountFrom,
+      sort,
     });
   });
 
   it('allows to filter transactions by more filters', () => {
-    const wrapper = mountWithRouter(
-      TransactionsPure,
-      { ...props, transactions: transactionsWithData },
-    );
+    const wrapper = mountWithRouter(TransactionsPure, {
+      ...props,
+      transactions: transactionsWithData,
+    });
 
     wrapper.find('button.filter').simulate('click');
     wrapper.find('.more-less-switch').simulate('click');
@@ -141,15 +148,17 @@ describe('Transactions monitor page', () => {
     wrapper.find('button.load-more').simulate('click');
 
     expect(props.transactions.loadData).toHaveBeenCalledWith({
-      offset: transactions.length, height, sort,
+      offset: transactions.length,
+      height,
+      sort,
     });
   });
 
   it('allows to reverse sort by clicking "Date" header', () => {
-    const wrapper = mountWithRouter(
-      TransactionsPure,
-      { ...props, transactions: transactionsWithData },
-    );
+    const wrapper = mountWithRouter(TransactionsPure, {
+      ...props,
+      transactions: transactionsWithData,
+    });
     wrapper.find('.sort-by.timestamp').simulate('click');
     expect(props.transactions.loadData).toHaveBeenCalledWith({ sort: 'timestamp:asc' });
     wrapper.find('.sort-by.timestamp').simulate('click');

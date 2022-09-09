@@ -43,8 +43,7 @@ const NavigationButtons = ({ history }) => {
       </button>
       <button
         className="go-forward"
-        disabled={pageIndex >= history.length
-          || history.location.pathname === routes.reclaim.path}
+        disabled={pageIndex >= history.length || history.location.pathname === routes.reclaim.path}
         onClick={goForward}
       >
         <Icon name="arrowRightActive" />

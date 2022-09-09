@@ -17,16 +17,12 @@ const DoughnutChartIcon = () => (
 
 const GuideTooltip = ({ children }) => (
   <Tooltip size="maxContent" position="bottom right" indent content={<DoughnutChartIcon />}>
-    <ul className={styles.guideTooltipContentList}>
-      {children}
-    </ul>
+    <ul className={styles.guideTooltipContentList}>{children}</ul>
   </Tooltip>
 );
 
 export const GuideTooltipItem = ({ color, label }) => (
-  <li
-    className={styles.guideTooltipContentListItem}
-  >
+  <li className={styles.guideTooltipContentListItem}>
     <div className={styles.circle} style={{ backgroundColor: color }} />
     {label}
   </li>

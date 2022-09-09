@@ -5,12 +5,11 @@ import UpdateIndicator from './index';
 describe('UpdateIndicator', () => {
   let wrapper;
   const props = {
-    t: t => t,
+    t: (t) => t,
     closeToast: jest.fn(),
   };
 
-  beforeEach(() => {
-  });
+  beforeEach(() => {});
 
   it('should render progress and has close icon', () => {
     wrapper = mount(<UpdateIndicator {...props} tranferred={50} total={100} />);

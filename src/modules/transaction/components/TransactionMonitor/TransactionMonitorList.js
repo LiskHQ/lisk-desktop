@@ -6,10 +6,7 @@ import FilterDropdownButton from 'src/modules/common/components/filterDropdownBu
 import Box from 'src/theme/box';
 import BoxContent from 'src/theme/box/content';
 import Table from 'src/theme/table';
-import {
-  selectCurrentBlockHeight,
-  selectActiveToken,
-} from 'src/redux/selectors';
+import { selectCurrentBlockHeight, selectActiveToken } from 'src/redux/selectors';
 import TransactionRow from '../TransactionRow';
 import header from './TransactionHeaderMap';
 import styles from './transactionsTable.css';
@@ -83,7 +80,7 @@ const Transactions = ({
       {
         offset: transactions.meta.count + transactions.meta.offset,
         sort,
-      },
+      }
     );
 
     transactions.loadData(params);
@@ -104,18 +101,20 @@ const Transactions = ({
   const removeSortOnAmount = (headerData, dropdownFilters) =>
     headerData.map((data) => {
       if (
-        data?.sort?.key === 'amount'
-        && blackListTypes.some((type) => type === dropdownFilters.moduleCommandID)
-      ) delete data.sort;
+        data?.sort?.key === 'amount' &&
+        blackListTypes.some((type) => type === dropdownFilters.moduleCommandID)
+      )
+        delete data.sort;
       return data;
     });
 
   const removeField = (rawFields, transactionType) =>
     rawFields.filter((field) => {
       if (
-        (field.name === 'amount' || field.name === 'recipientAddress')
-        && blackListTypes.some((type) => type === transactionType)
-      ) return false;
+        (field.name === 'amount' || field.name === 'recipientAddress') &&
+        blackListTypes.some((type) => type === transactionType)
+      )
+        return false;
 
       return true;
     });
@@ -123,7 +122,8 @@ const Transactions = ({
   const dropdownApplyFilters = (txFilters) => {
     const moduleCommandID = txFilters.moduleCommandID;
     applyFilters(txFilters);
-    if (blackListTypes.some((type) => type === moduleCommandID)) setTimeout(() => changeSort('timestamp'), 100);
+    if (blackListTypes.some((type) => type === moduleCommandID))
+      setTimeout(() => changeSort('timestamp'), 100);
   };
 
   return (
@@ -138,18 +138,16 @@ const Transactions = ({
             label: t('New transactions'),
           }}
           scrollToSelector=".transactions-box"
-          filters={(
+          filters={
             <FilterDropdownButton
               fields={innerFields}
               filters={filters}
               applyFilters={dropdownApplyFilters}
               onTypeSelected={(moduleCommandID) => {
-                setInnerFields(
-                  moduleCommandID ? removeField(fields, moduleCommandID) : fields,
-                );
+                setInnerFields(moduleCommandID ? removeField(fields, moduleCommandID) : fields);
               }}
             />
-          )}
+          }
         />
         <FilterBar
           {...{ filters, formatters, t }}

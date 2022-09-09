@@ -1,9 +1,7 @@
 import http from 'src/utils/api/http';
 import { subscribe, unsubscribe } from 'src/utils/api/ws';
 import { httpPaths } from '@block/config';
-import {
-  getBlock, getBlocks, blockSubscribe, blockUnsubscribe,
-} from './index';
+import { getBlock, getBlocks, blockSubscribe, blockUnsubscribe } from './index';
 
 jest.mock('src/utils/api/http');
 jest.mock('src/utils/api/ws');
@@ -39,9 +37,7 @@ describe('Block api module', () => {
     });
 
     it('should return promise rejection when no parameters are sup', async () => {
-      await expect(
-        getBlock({ params: { } }),
-      ).rejects.toEqual(Error('No parameters supplied'));
+      await expect(getBlock({ params: {} })).rejects.toEqual(Error('No parameters supplied'));
     });
 
     it('should throw when api fails', async () => {
@@ -74,7 +70,10 @@ describe('Block api module', () => {
         getTime: () => 100000000,
       }));
       const params = {
-        addressList: ['lskdwsyfmcko6mcd357446yatromr9vzgu7eb8y11', 'lskdwsyfmcko6mcd357446yatromr9vzgu7eb8y99'],
+        addressList: [
+          'lskdwsyfmcko6mcd357446yatromr9vzgu7eb8y11',
+          'lskdwsyfmcko6mcd357446yatromr9vzgu7eb8y99',
+        ],
         dateFrom: '02.02.2021',
         dateTo: '02.02.2021',
         generatorAddress: 'lskdwsyfmcko6mcd357446yatromr9vzgu7eb8y33',
@@ -126,12 +125,16 @@ describe('Block api module', () => {
       const serviceUrl = 'http://sample-service-url.com';
       subscribe.mockImplementation(() => {});
 
-      blockSubscribe(
-        { networks: { LSK: { serviceUrl } } }, fn, fn, fn,
-      );
+      blockSubscribe({ networks: { LSK: { serviceUrl } } }, fn, fn, fn);
 
       expect(subscribe).toHaveBeenCalledTimes(1);
-      expect(subscribe).toHaveBeenCalledWith(`${serviceUrl}/blockchain`, 'update.block', fn, fn, fn);
+      expect(subscribe).toHaveBeenCalledWith(
+        `${serviceUrl}/blockchain`,
+        'update.block',
+        fn,
+        fn,
+        fn
+      );
     });
 
     it('Should call ws unsubscribe with parameters', () => {

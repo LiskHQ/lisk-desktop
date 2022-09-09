@@ -1,8 +1,5 @@
 import { useQuery } from '@tanstack/react-query';
-import {
-  METHOD,
-  API_METHOD,
-} from 'src/const/config';
+import { METHOD, API_METHOD } from 'src/const/config';
 import { APPLICATION } from 'src/const/queries';
 import { useCurrentApplication } from '@blockchainApplication/manage/hooks';
 
@@ -21,15 +18,11 @@ import { useCurrentApplication } from '@blockchainApplication/manage/hooks';
  * @returns the query object
  */
 // eslint-disable-next-line import/prefer-default-export
-export const useCustomQuery = ({
-  keys,
-  config,
-  options = {},
-}) => {
+export const useCustomQuery = ({ keys, config, options = {} }) => {
   const [{ chainID }] = useCurrentApplication();
   return useQuery(
     [chainID, config, APPLICATION, METHOD, ...keys],
     async () => API_METHOD[METHOD](config),
-    options,
+    options
   );
 };

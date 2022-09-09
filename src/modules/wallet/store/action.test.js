@@ -4,10 +4,7 @@ import wallets from '@tests/constants/wallets';
 import * as networkActions from '@network/store/action';
 import txActionTypes from '@transaction/store/actionTypes';
 import loginTypes from 'src/modules/auth/const/loginTypes';
-import {
-  accountDataUpdated,
-  multisigGroupRegistered,
-} from './action';
+import { accountDataUpdated, multisigGroupRegistered } from './action';
 
 jest.mock('i18next', () => ({
   t: jest.fn((key) => key),
@@ -46,8 +43,7 @@ describe('actions: account', () => {
           networks: {
             LSK: {
               serviceUrl: 'http://localhost:4000',
-              nethash:
-                '198f2b61a8eb95fbeed58b8216780b68f697f26b849acf00c8c93bb9b24f783d',
+              nethash: '198f2b61a8eb95fbeed58b8216780b68f697f26b849acf00c8c93bb9b24f783d',
             },
           },
         },
@@ -144,10 +140,12 @@ describe('actions: account', () => {
 
     it('should dispatch transactionCreatedSuccess', async () => {
       const tx = { id: 1 };
-      createGenericTx.mockImplementation(() =>
-        new Promise((resolve) => {
-          resolve(tx);
-        }));
+      createGenericTx.mockImplementation(
+        () =>
+          new Promise((resolve) => {
+            resolve(tx);
+          })
+      );
       await multisigGroupRegistered(params)(dispatch, getState);
       expect(createGenericTx).toHaveBeenCalledWith({
         network: state.network,
@@ -171,10 +169,12 @@ describe('actions: account', () => {
 
     it('should dispatch transactionSignError', async () => {
       const error = { message: 'TestError' };
-      createGenericTx.mockImplementation(() =>
-        new Promise((_, reject) => {
-          reject(error);
-        }));
+      createGenericTx.mockImplementation(
+        () =>
+          new Promise((_, reject) => {
+            reject(error);
+          })
+      );
       await multisigGroupRegistered(params)(dispatch, getState);
       expect(dispatch).toHaveBeenCalledWith({
         type: txActionTypes.transactionSignError,

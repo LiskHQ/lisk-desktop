@@ -19,7 +19,7 @@ const DelegatesTable = ({
     const offset = defaultOffset + count;
     return {
       delegatesFilter: filterDelegates(delegates, filters),
-      canLoadMore: hasLoadMore && (offset < total),
+      canLoadMore: hasLoadMore && offset < total,
       currentOffset: offset,
     };
   }, [delegates, filters]);
@@ -33,8 +33,8 @@ const DelegatesTable = ({
         }),
         {
           offset: currentOffset,
-        },
-      ),
+        }
+      )
     );
   };
 

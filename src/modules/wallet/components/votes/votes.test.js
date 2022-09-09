@@ -19,7 +19,7 @@ describe('Votes Tab Component', () => {
       loadData: jest.fn(),
     },
     address: accounts.genesis.summary.address,
-    t: v => v,
+    t: (v) => v,
     history: { push: jest.fn() },
   };
   const votes = {
@@ -39,7 +39,7 @@ describe('Votes Tab Component', () => {
     props.accounts.loadData.mockRestore();
   });
 
-  const setup = customProps => mountWithRouter(Votes, customProps);
+  const setup = (customProps) => mountWithRouter(Votes, customProps);
 
   it('Should render with empty state', () => {
     wrapper = setup(props);
@@ -59,16 +59,7 @@ describe('Votes Tab Component', () => {
       accounts: { data: [], loadData },
     });
     expect(loadData).toBeCalledWith({
-      addressList: ['lsk0',
-        'lsk1',
-        'lsk2',
-        'lsk3',
-        'lsk4',
-        'lsk5',
-        'lsk6',
-        'lsk7',
-        'lsk8',
-        'lsk9'],
+      addressList: ['lsk0', 'lsk1', 'lsk2', 'lsk3', 'lsk4', 'lsk5', 'lsk6', 'lsk7', 'lsk8', 'lsk9'],
       isDelegate: true,
     });
   });

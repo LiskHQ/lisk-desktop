@@ -45,17 +45,10 @@ class OutsideClickHandler extends React.Component {
   }
 
   render() {
-    const {
-      useCapture, onOutsideClick, disabled,
-      children, className, wrapper,
-      ...props
-    } = this.props;
+    const { useCapture, onOutsideClick, disabled, children, className, wrapper, ...props } =
+      this.props;
     return (
-      <wrapper.type
-        ref={this.setChildNodeRef}
-        className={className}
-        {...props}
-      >
+      <wrapper.type ref={this.setChildNodeRef} className={className} {...props}>
         {children}
       </wrapper.type>
     );

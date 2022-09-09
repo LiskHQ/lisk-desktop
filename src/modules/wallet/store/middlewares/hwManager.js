@@ -4,7 +4,7 @@ import { addSearchParamsToUrl } from 'src/utils/searchParams';
 import history from 'src/utils/history';
 import actionTypes from 'src/modules/common/store/actionTypes';
 
-const hwWalletMiddleware = store => next => (action) => {
+const hwWalletMiddleware = (store) => (next) => (action) => {
   const { ipc } = window;
 
   if (action.type === actionTypes.storeCreated && ipc) {
@@ -28,11 +28,12 @@ const hwWalletMiddleware = store => next => (action) => {
       const activeToken = token.active;
 
       // Check if user is SignedIn
-      if (wallet.info
-        && wallet.info[activeToken]
-        && wallet.info[activeToken].address
-        && wallet.hwInfo.deviceId
-        && wallet.hwInfo.deviceModel === response.model
+      if (
+        wallet.info &&
+        wallet.info[activeToken] &&
+        wallet.info[activeToken].address &&
+        wallet.hwInfo.deviceId &&
+        wallet.hwInfo.deviceModel === response.model
       ) {
         addSearchParamsToUrl(history, { modal: 'deviceDisconnectDialog', model: response.model });
         // store.dispatch(accountLoggedOut());

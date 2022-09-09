@@ -16,10 +16,7 @@ const AccountCreated = ({ t }) => (
     </div>
     <Illustration className={styles.illustration} name="registrationSuccess" />
     <div className={`${registerStyles.buttonsHolder} ${grid.row}`}>
-      <Link
-        className={`${registerStyles.button} login-button`}
-        to={routes.login.path}
-      >
+      <Link className={`${registerStyles.button} login-button`} to={routes.login.path}>
         <PrimaryButton className={registerStyles.continueBtn}>
           {t('Continue to Add account')}
         </PrimaryButton>

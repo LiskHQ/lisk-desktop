@@ -20,5 +20,7 @@ module.exports = (on) => {
     failed: require('cypress-failed-log/src/failed')(),
   });
 
-  require('cypress-terminal-report/src/installLogsPrinter')(on, { includeSuccessfulHookLogs: true });
+  require('cypress-terminal-report/src/installLogsPrinter')(on, {
+    includeSuccessfulHookLogs: true,
+  });
 };

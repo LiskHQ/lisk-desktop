@@ -5,7 +5,7 @@ import account from '@wallet/configuration/constants';
 import Warning from './warning';
 
 jest.mock('react-toastify', () => ({
-  toast: (component) => (component),
+  toast: (component) => component,
 }));
 
 jest.mock('@auth/store/action', () => ({
@@ -20,7 +20,7 @@ describe('Warning', () => {
   const props = {
     warningTime,
     expireTime,
-    t: v => v,
+    t: (v) => v,
   };
   let wrapper;
 

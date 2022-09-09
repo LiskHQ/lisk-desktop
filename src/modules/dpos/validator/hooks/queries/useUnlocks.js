@@ -1,9 +1,6 @@
 /* istanbul ignore file */
 import { UNLOCKS } from 'src/const/queries';
-import {
-  LIMIT as limit,
-  API_VERSION,
-} from 'src/const/config';
+import { LIMIT as limit, API_VERSION } from 'src/const/config';
 import { useCustomInfiniteQuery } from 'src/modules/common/hooks';
 
 /**
@@ -22,7 +19,7 @@ import { useCustomInfiniteQuery } from 'src/modules/common/hooks';
  * @returns the query object
  */
 // eslint-disable-next-line import/prefer-default-export
-export const useUnlocks = ({ config: customConfig = {}, options } = { }) => {
+export const useUnlocks = ({ config: customConfig = {}, options } = {}) => {
   const config = {
     url: `/api/${API_VERSION}/dpos/unlocks`,
     method: 'get',
@@ -32,19 +29,18 @@ export const useUnlocks = ({ config: customConfig = {}, options } = { }) => {
   };
   const customOptions = {
     ...options,
-    select: (data) => data.pages.reduce((prevPages, page) => {
-      const newData = page?.data || {};
-      const newUnlocks = page?.data.unlocking || [];
-      return {
-        ...page,
-        data: {
-          ...newData,
-          unlocking: prevPages.data
-            ? [...prevPages.data.unlocking, ...newUnlocks]
-            : newUnlocks,
-        },
-      };
-    }),
+    select: (data) =>
+      data.pages.reduce((prevPages, page) => {
+        const newData = page?.data || {};
+        const newUnlocks = page?.data.unlocking || [];
+        return {
+          ...page,
+          data: {
+            ...newData,
+            unlocking: prevPages.data ? [...prevPages.data.unlocking, ...newUnlocks] : newUnlocks,
+          },
+        };
+      }),
   };
   return useCustomInfiniteQuery({
     keys: [UNLOCKS],

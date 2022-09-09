@@ -4,6 +4,6 @@
 
 /* istanbul ignore file */
 export default {
-  isPlatform: os => process.platform === os,
+  isPlatform: (os) => process.platform === os,
   getArgv: () => process.argv,
 };

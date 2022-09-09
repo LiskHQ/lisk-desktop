@@ -1,10 +1,5 @@
 import React from 'react';
-import {
-  createEvent,
-  fireEvent,
-  render,
-  screen,
-} from '@testing-library/react';
+import { createEvent, fireEvent, render, screen } from '@testing-library/react';
 import AddAccountForm from '.';
 
 jest.mock('react-i18next');
@@ -24,7 +19,9 @@ beforeEach(() => {
 describe('Generals', () => {
   it('should render successfully', () => {
     expect(screen.getByText('Add account')).toBeTruthy();
-    expect(screen.getByText('Enter your secret recovery phrase to manage your account.')).toBeTruthy();
+    expect(
+      screen.getByText('Enter your secret recovery phrase to manage your account.')
+    ).toBeTruthy();
     expect(screen.getByText('Continue')).toBeTruthy();
     expect(screen.getByText('Go Back')).toBeTruthy();
 
@@ -37,7 +34,8 @@ describe('Generals', () => {
 
     const pasteEvent = createEvent.paste(inputField, {
       clipboardData: {
-        getData: () => 'below record evolve eye youth post control consider spice swamp hidden easily',
+        getData: () =>
+          'below record evolve eye youth post control consider spice swamp hidden easily',
       },
     });
 
@@ -51,7 +49,8 @@ describe('Generals', () => {
 
     const pasteEvent = createEvent.paste(inputField, {
       clipboardData: {
-        getData: () => 'below record evolve eye youth post control consider spice swamp hidden easily',
+        getData: () =>
+          'below record evolve eye youth post control consider spice swamp hidden easily',
       },
     });
 
@@ -65,7 +64,8 @@ describe('Generals', () => {
 
     const pasteEvent = createEvent.paste(inputField, {
       clipboardData: {
-        getData: () => 'below rord evolve eye youth post control consider spice swamp hidden easily',
+        getData: () =>
+          'below rord evolve eye youth post control consider spice swamp hidden easily',
       },
     });
 

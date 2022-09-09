@@ -3,7 +3,7 @@ import { useDispatch, useSelector } from 'react-redux';
 
 function useSettings(settingKey) {
   const dispatch = useDispatch();
-  const value = useSelector(state => state.settings[settingKey]);
+  const value = useSelector((state) => state.settings[settingKey]);
 
   const toggleSetting = (settingValue) => {
     dispatch(settingsUpdated({ [settingKey]: settingValue || !value }));

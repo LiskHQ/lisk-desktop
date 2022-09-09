@@ -40,9 +40,7 @@ const WalletInfo = ({
             size="m"
           >
             <ul className={styles.dropDownMenuList}>
-              {ACCOUNT_MENU.map(({
-                path, icon, label, component,
-              }) => (
+              {ACCOUNT_MENU.map(({ path, icon, label, component }) => (
                 <li key={label}>
                   {component ? (
                     <DialogLink component={component}>
@@ -61,11 +59,7 @@ const WalletInfo = ({
           </DropdownButton>
         </div>
 
-        <div
-          className={`${styles.info} ${
-            showFullAddress ? styles.showFullAddress : ''
-          }`}
-        >
+        <div className={`${styles.info} ${showFullAddress ? styles.showFullAddress : ''}`}>
           <WalletVisual address={address} size={40} />
           {address ? (
             <Identity

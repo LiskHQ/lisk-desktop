@@ -41,7 +41,7 @@ export default {
               toastId,
               autoClose: false,
               closeOnClick: false,
-            },
+            }
           );
         } else {
           state = 'completed';

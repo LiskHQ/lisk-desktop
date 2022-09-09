@@ -10,10 +10,7 @@ const NumberOfSignatures = ({ t }) => {
   const numberOfSignatures = params.numberOfSignatures;
 
   return (
-    <ValueAndLabel
-      className={styles.numberOfSignatures}
-      label={t('Required signatures')}
-    >
+    <ValueAndLabel className={styles.numberOfSignatures} label={t('Required signatures')}>
       <span className="tx-required-signatures">{numberOfSignatures}</span>
     </ValueAndLabel>
   );

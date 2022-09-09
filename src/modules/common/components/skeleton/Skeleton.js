@@ -1,9 +1,7 @@
 import React from 'react';
 import styles from './Skeleton.css';
 
-const Skeleton = ({
-  radius = 20, width = '50%', height = 15, right = false, theme = 'rect',
-}) => (
+const Skeleton = ({ radius = 20, width = '50%', height = 15, right = false, theme = 'rect' }) => (
   <div
     data-testid="skeleton-wrapper"
     className={`${styles.skeletonWrapper} ${styles[theme]}`}

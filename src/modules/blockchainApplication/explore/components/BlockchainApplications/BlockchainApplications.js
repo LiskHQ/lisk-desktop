@@ -5,12 +5,7 @@ import BlockchainApplicationList from '@blockchainApplication/explore/components
 import BlockchainApplicationStatistics from '../BlockchainApplicationStatistics';
 import styles from './BlockchainApplications.css';
 
-const BlockchainApplications = ({
-  applications,
-  statistics,
-  applyFilters,
-  filters,
-}) => {
+const BlockchainApplications = ({ applications, statistics, applyFilters, filters }) => {
   const { t } = useTranslation();
   return (
     <div className={styles.wrapper}>

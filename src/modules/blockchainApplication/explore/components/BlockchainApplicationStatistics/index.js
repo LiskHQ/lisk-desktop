@@ -10,33 +10,38 @@ import Tooltip from 'src/theme/Tooltip';
 import Icon from 'src/theme/Icon';
 import { useTheme } from 'src/theme/Theme';
 import { getColorPalette } from 'src/modules/common/components/charts/chartOptions';
-import GuideTooltip, {
-  GuideTooltipItem,
-} from 'src/modules/common/components/charts/guideTooltip';
+import GuideTooltip, { GuideTooltipItem } from 'src/modules/common/components/charts/guideTooltip';
 import prepareChartDataAndOptions from '../../utils/prepareChartDataAndOptions';
 import styles from './blockchainApplicationStatistics.css';
 
 const BlockchainApplicationStatistics = ({ statistics }) => {
   const { t } = useTranslation();
   const colorPalette = getColorPalette(useTheme());
-  const {
-    doughnutChartData, doughnutChartOptions,
-  } = prepareChartDataAndOptions(statistics.data, colorPalette, t);
+  const { doughnutChartData, doughnutChartOptions } = prepareChartDataAndOptions(
+    statistics.data,
+    colorPalette,
+    t
+  );
 
-  const cardsMap = useMemo(() => [
-    {
-      title: t('Total Supply'),
-      description: t('Total LSK tokens in circulation'),
-      amount: toRawLsk(statistics.data.totalSupplyLSK),
-      icon: 'totalSupplyToken',
-    },
-    {
-      title: t('Staked'),
-      description: t('Amount of LSK tokens staked by validators and nominators for DPoS governance'),
-      amount: toRawLsk(statistics.data.stakedLSK),
-      icon: 'stakedToken',
-    },
-  ], [statistics]);
+  const cardsMap = useMemo(
+    () => [
+      {
+        title: t('Total Supply'),
+        description: t('Total LSK tokens in circulation'),
+        amount: toRawLsk(statistics.data.totalSupplyLSK),
+        icon: 'totalSupplyToken',
+      },
+      {
+        title: t('Staked'),
+        description: t(
+          'Amount of LSK tokens staked by validators and nominators for DPoS governance'
+        ),
+        amount: toRawLsk(statistics.data.stakedLSK),
+        icon: 'stakedToken',
+      },
+    ],
+    [statistics]
+  );
 
   return (
     <Box className={styles.container}>
@@ -45,16 +50,10 @@ const BlockchainApplicationStatistics = ({ statistics }) => {
       </BoxHeader>
       <BoxContent className={styles.chartBox}>
         <div className={`${styles.chart} showOnLargeViewPort`}>
-          <DoughnutChart
-            data={doughnutChartData}
-            options={doughnutChartOptions.largeViewport}
-          />
+          <DoughnutChart data={doughnutChartData} options={doughnutChartOptions.largeViewport} />
         </div>
         <div className={`${styles.chart} hideOnLargeViewPort`}>
-          <DoughnutChart
-            data={doughnutChartData}
-            options={doughnutChartOptions.mediumViewport}
-          />
+          <DoughnutChart data={doughnutChartData} options={doughnutChartOptions.mediumViewport} />
         </div>
         <div className={`${styles.chartGuides} hideOnLargeViewPort`}>
           <GuideTooltip>
@@ -68,13 +67,8 @@ const BlockchainApplicationStatistics = ({ statistics }) => {
           </GuideTooltip>
         </div>
       </BoxContent>
-      {cardsMap.map(({
-        title, description, amount, icon,
-      }) => (
-        <BoxContent
-          key={`app-stats-card-${icon}`}
-          className={styles.statsBox}
-        >
+      {cardsMap.map(({ title, description, amount, icon }) => (
+        <BoxContent key={`app-stats-card-${icon}`} className={styles.statsBox}>
           <div>
             <div>
               <span className={styles.statsInfoTitle}>{title}</span>

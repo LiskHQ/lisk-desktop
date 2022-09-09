@@ -48,8 +48,7 @@ const TableWrapper = ({
 export default compose(
   withLocalSort('delegates', 'forgingTime:asc', {
     forgingTime: (a, b, direction) =>
-      (a.nextForgingTime > b.nextForgingTime ? 1 : -1)
-      * (direction === 'asc' ? 1 : -1),
+      (a.nextForgingTime > b.nextForgingTime ? 1 : -1) * (direction === 'asc' ? 1 : -1),
     status: (a, b, direction) => {
       if (a.status === 'active') {
         return 1 * (direction === 'asc' ? 1 : -1);
@@ -66,8 +65,6 @@ export default compose(
       return 0;
     },
     sanctionedStatus: (a, b, direction) =>
-      ((direction === 'asc' ? a.status > b.status : b.status > a.status)
-        ? 1
-        : -1),
-  }),
+      (direction === 'asc' ? a.status > b.status : b.status > a.status) ? 1 : -1,
+  })
 )(TableWrapper);

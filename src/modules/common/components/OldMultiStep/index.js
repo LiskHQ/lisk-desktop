@@ -65,7 +65,7 @@ class MultiStep extends React.Component {
     };
     const newState = { ...this.state };
     newState.step.current = getTarget(this.state.step.current);
-    newState.step.data = (config?.reset && !config.amount) ? [{}] : newState.step.data;
+    newState.step.data = config?.reset && !config.amount ? [{}] : newState.step.data;
     this.setState(newState);
   }
 
@@ -74,10 +74,7 @@ class MultiStep extends React.Component {
   }
 
   render() {
-    const {
-      children, className, finalCallback,
-      browsable, backButtonLabel, prevPage,
-    } = this.props;
+    const { children, className, finalCallback, browsable, backButtonLabel, prevPage } = this.props;
     const { step } = this.state;
     const extraProps = {
       nextStep: step.nextStep,
@@ -100,9 +97,7 @@ class MultiStep extends React.Component {
           current={step.current}
           prevStep={step.prevStep}
         />
-        {
-        React.cloneElement(children[step.current], extraProps)
-      }
+        {React.cloneElement(children[step.current], extraProps)}
       </div>
     );
   }

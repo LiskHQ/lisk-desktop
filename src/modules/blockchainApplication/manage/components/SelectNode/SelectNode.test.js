@@ -13,7 +13,7 @@ jest.mock('../../hooks/useCurrentNode', () => ({
   }),
 }));
 jest.mock('../../hooks/useCurrentApplication', () => ({
-  useCurrentApplication: () => ([mockCurrentApplication, mockSetCurrentApplication]),
+  useCurrentApplication: () => [mockCurrentApplication, mockSetCurrentApplication],
 }));
 
 const props = {

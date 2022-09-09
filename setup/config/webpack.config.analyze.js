@@ -10,9 +10,7 @@ const config = {
     filename: 'bundle.[name].js',
   },
   devtool: 'inline-source-map',
-  plugins: [
-    new BundleAnalyzerPlugin(),
-  ],
+  plugins: [new BundleAnalyzerPlugin()],
 };
 
 module.exports = merge(baseConfig, reactConfig, config);

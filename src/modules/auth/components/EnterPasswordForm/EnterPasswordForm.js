@@ -13,20 +13,14 @@ import styles from './EnterPasswordForm.css';
 
 const EnterPasswordForm = ({ onEnterPasswordSuccess, title, encryptedAccount }) => {
   const { t } = useTranslation();
-  const {
-    register,
-    watch,
-    handleSubmit,
-  } = useForm();
+  const { register, watch, handleSubmit } = useForm();
   const [currentAccount] = useCurrentAccount();
   const [feedbackError, setFeedbackError] = useState('');
   const account = useMemo(() => encryptedAccount || currentAccount, [currentAccount]);
   const formValues = watch();
 
   const onSubmit = async ({ password }) => {
-    const { error, result } = await decryptAccount(
-      account.encryptedPassphrase, password,
-    );
+    const { error, result } = await decryptAccount(account.encryptedPassphrase, password);
 
     if (error) {
       const errorMessage = t('Unable to decrypt account. Please check your password');
@@ -47,13 +41,8 @@ const EnterPasswordForm = ({ onEnterPasswordSuccess, title, encryptedAccount }) 
         <p className={styles.subheader}>
           {t(title || 'Please provide your device password to backup the recovery phrase.')}
         </p>
-        <WalletVisual
-          className={styles.avatar}
-          address={account?.metadata?.address}
-        />
-        {account?.metadata?.name && (
-          <p className={styles.accountName}>{account?.metadata?.name}</p>
-        )}
+        <WalletVisual className={styles.avatar} address={account?.metadata?.address} />
+        {account?.metadata?.name && <p className={styles.accountName}>{account?.metadata?.name}</p>}
         <p className={styles.accountAddress}>{account?.metadata?.address}</p>
         <form onSubmit={handleSubmit(onSubmit)}>
           <Input

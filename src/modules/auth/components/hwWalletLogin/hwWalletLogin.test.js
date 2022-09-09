@@ -4,16 +4,19 @@ import * as hwManager from '@wallet/utils/hwManager';
 import HwWalletLogin from './hwWalletLogin';
 
 jest.mock('@wallet/utils/hwManager', () => ({
-  subscribeToDevicesList: jest.fn().mockImplementation(fn => new Promise((resolve) => {
-    fn([
-      { deviceId: 1, openApp: false, manufacturer: 'Ledger' },
-      { deviceId: 2, manufacturer: 'Trezor' },
-      { deviceId: 3, openApp: true, manufacturer: 'Ledger' },
-    ]);
-    resolve({
-      unsubscribe: jest.fn(),
-    });
-  })),
+  subscribeToDevicesList: jest.fn().mockImplementation(
+    (fn) =>
+      new Promise((resolve) => {
+        fn([
+          { deviceId: 1, openApp: false, manufacturer: 'Ledger' },
+          { deviceId: 2, manufacturer: 'Trezor' },
+          { deviceId: 3, openApp: true, manufacturer: 'Ledger' },
+        ]);
+        resolve({
+          unsubscribe: jest.fn(),
+        });
+      })
+  ),
 }));
 
 describe('HwWalletLogin', () => {
@@ -38,7 +41,7 @@ describe('HwWalletLogin', () => {
         nethash: '198f2b61a8eb95fbeed58b8216780b68f697f26b849acf00c8c93bb9b24f783d',
       },
     },
-    t: key => key,
+    t: (key) => key,
   };
 
   it('should render Loading component and call hwManager.subscribeToDevicesList', async () => {

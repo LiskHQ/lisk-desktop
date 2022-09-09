@@ -10,22 +10,24 @@ describe('Recipient Input', () => {
 
   const props = {
     token: tokenMap.LSK.key,
-    t: v => v,
+    t: (v) => v,
     onChangeDelayed: jest.fn(),
     onChange: jest.fn(),
     onSelectItem: jest.fn(),
-    items: [{
-      title: 'ABC',
-      address: '12345L',
-    },
-    {
-      title: 'FRG',
-      address: '12375L',
-    },
-    {
-      title: 'KTG',
-      address: '12395L',
-    }],
+    items: [
+      {
+        title: 'ABC',
+        address: '12345L',
+      },
+      {
+        title: 'FRG',
+        address: '12375L',
+      },
+      {
+        title: 'KTG',
+        address: '12395L',
+      },
+    ],
     placeholder: 'e.g. 1234523423L or John Doe',
     selectedItem: {
       address: '',
@@ -39,7 +41,7 @@ describe('Recipient Input', () => {
     className: 'recipient',
     matchProps: ['address', 'title'],
     // eslint-disable-next-line react/display-name
-    renderItem: item => (
+    renderItem: (item) => (
       <>
         <WalletVisual address={item.address} size={25} />
         <span>{item.title}</span>

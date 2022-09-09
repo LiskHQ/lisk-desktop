@@ -6,7 +6,8 @@ const getState = () => ({
         summary: {
           address: 'lskwnxvy7wmgbt8y3mh7fcs4u4cwj7f48eh58kga9',
           publicKey: '205688492bc52ddabfdc10fa7728b8bcb5942ad17c68ab5c20e96153fd1ac657',
-          privateKey: 'ae7522b1fd7a24886b1396b392368fe6c9b2e0e40cf86ecf193e46babe3cbe8a0fe9a3f1a21b5530f27f87a414b549e79a940bf24fdf2b2f05e7f22aeeecc86a',
+          privateKey:
+            'ae7522b1fd7a24886b1396b392368fe6c9b2e0e40cf86ecf193e46babe3cbe8a0fe9a3f1a21b5530f27f87a414b549e79a940bf24fdf2b2f05e7f22aeeecc86a',
         },
         sequence: { nonce: 0 },
       },
@@ -25,11 +26,7 @@ const getState = () => ({
             $id: 'lisk/transfer-asset',
             title: 'Transfer transaction asset',
             type: 'object',
-            required: [
-              'amount',
-              'recipientAddress',
-              'data',
-            ],
+            required: ['amount', 'recipientAddress', 'data'],
             properties: {
               amount: {
                 dataType: 'uint64',
@@ -55,12 +52,17 @@ const getState = () => ({
             required: ['numberOfSignatures', 'optionalKeys', 'mandatoryKeys'],
             properties: {
               numberOfSignatures: {
-                dataType: 'uint32', fieldNumber: 1, minimum: 1, maximum: 64,
+                dataType: 'uint32',
+                fieldNumber: 1,
+                minimum: 1,
+                maximum: 64,
               },
               mandatoryKeys: {
                 type: 'array',
                 items: {
-                  dataType: 'bytes', minLength: 32, maxLength: 32,
+                  dataType: 'bytes',
+                  minLength: 32,
+                  maxLength: 32,
                 },
                 fieldNumber: 2,
                 minItems: 0,
@@ -80,7 +82,10 @@ const getState = () => ({
             type: 'object',
             properties: {
               username: {
-                dataType: 'string', fieldNumber: 1, minLength: 1, maxLength: 20,
+                dataType: 'string',
+                fieldNumber: 1,
+                minLength: 1,
+                maxLength: 20,
               },
             },
             required: ['username'],
@@ -88,9 +93,7 @@ const getState = () => ({
           '5:1': {
             $id: 'lisk/dpos/vote',
             type: 'object',
-            required: [
-              'votes',
-            ],
+            required: ['votes'],
             properties: {
               votes: {
                 type: 'array',
@@ -98,10 +101,7 @@ const getState = () => ({
                 maxItems: 20,
                 items: {
                   type: 'object',
-                  required: [
-                    'delegateAddress',
-                    'amount',
-                  ],
+                  required: ['delegateAddress', 'amount'],
                   properties: {
                     delegateAddress: {
                       dataType: 'bytes',
@@ -133,7 +133,10 @@ const getState = () => ({
                   properties: {
                     amount: { dataType: 'uint64', fieldNumber: 2 },
                     delegateAddress: {
-                      dataType: 'bytes', fieldNumber: 1, minLength: 20, maxLength: 20,
+                      dataType: 'bytes',
+                      fieldNumber: 1,
+                      minLength: 20,
+                      maxLength: 20,
                     },
                     unvoteHeight: { dataType: 'uint32', fieldNumber: 3 },
                   },
@@ -166,9 +169,11 @@ const getState = () => ({
     },
   },
   blocks: {
-    latestBlocks: [{
-      timestamp: 123123123,
-    }],
+    latestBlocks: [
+      {
+        timestamp: 123123123,
+      },
+    ],
   },
 });
 

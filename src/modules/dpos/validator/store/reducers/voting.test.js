@@ -1,7 +1,8 @@
 import actionTypes from '../actions/actionTypes';
 import voting from './voting';
 
-describe('Reducer: voting(state, action)', () => { // eslint-disable-line max-statements
+describe('Reducer: voting(state, action)', () => {
+  // eslint-disable-line max-statements
   const delegate1 = {
     address: '100001L',
   };
@@ -64,10 +65,12 @@ describe('Reducer: voting(state, action)', () => { // eslint-disable-line max-st
     it('should add delegate with voteAmount if does not exist among votes', () => {
       const action = {
         type: actionTypes.voteEdited,
-        data: [{
-          ...delegate1,
-          amount: dirtyVotes[delegate1.address].unconfirmed,
-        }],
+        data: [
+          {
+            ...delegate1,
+            amount: dirtyVotes[delegate1.address].unconfirmed,
+          },
+        ],
       };
       const expectedState = {
         [delegate1.address]: {
@@ -83,10 +86,12 @@ describe('Reducer: voting(state, action)', () => { // eslint-disable-line max-st
     it('should change voteAmount if delegates exist among votes', () => {
       const action = {
         type: actionTypes.voteEdited,
-        data: [{
-          ...delegate1,
-          amount: dirtyVotes[delegate1.address].unconfirmed,
-        }],
+        data: [
+          {
+            ...delegate1,
+            amount: dirtyVotes[delegate1.address].unconfirmed,
+          },
+        ],
       };
       const expectedState = {
         [delegate1.address]: {

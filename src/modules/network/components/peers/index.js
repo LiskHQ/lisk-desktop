@@ -11,9 +11,7 @@ import header from './tableHeader';
 
 const Peers = () => {
   const { t } = useTranslation();
-  const {
-    data, isLoading, error, hasNextPage, fetchNextPage,
-  } = usePeers();
+  const { data, isLoading, error, hasNextPage, fetchNextPage } = usePeers();
 
   const {
     sort,

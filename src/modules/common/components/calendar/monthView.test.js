@@ -38,7 +38,10 @@ describe('Calendar MonthView', () => {
   });
 
   it('Should set selected date when clicking on a day', () => {
-    wrapper.find('.dayItem').filter('[value="02.03.19"]').simulate('click', { target: { value: '02.03.19' } });
+    wrapper
+      .find('.dayItem')
+      .filter('[value="02.03.19"]')
+      .simulate('click', { target: { value: '02.03.19' } });
     expect(props.onDateSelected).toBeCalledWith('02.03.19');
   });
 

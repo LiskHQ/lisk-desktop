@@ -10,15 +10,13 @@ import delegateStyles from '../DelegatesMonitorView/delegates.css';
 import styles from './schemas.css';
 import LayoutSchema from './layoutSchema';
 
-const DelegateRow = ({
-  data, className, t, activeTab, watchList, setActiveTab, blocks,
-}) => {
+const DelegateRow = ({ data, className, t, activeTab, watchList, setActiveTab, blocks }) => {
   const formattedForgingTime = getForgingTime(
-    data.nextForgingTime || blocks.forgers[blocks.indexBook[data.address]]?.nextForgingTime,
+    data.nextForgingTime || blocks.forgers[blocks.indexBook[data.address]]?.nextForgingTime
   );
   const dispatch = useDispatch();
 
-  const isWatched = watchList.find(address => address === data.address);
+  const isWatched = watchList.find((address) => address === data.address);
 
   const removeFromWatchList = (e) => {
     e.preventDefault();

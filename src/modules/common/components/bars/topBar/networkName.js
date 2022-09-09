@@ -23,16 +23,10 @@ const Network = ({ network, t, token }) => {
           className={styles.tooltipWrapper}
           size="maxContent"
           position="bottom left"
-          content={(
-            <span className="network-name">{networksList[activeNetwork]}</span>
-          )}
+          content={<span className="network-name">{networksList[activeNetwork]}</span>}
         >
           <p className="network-address">
-            {
-              network.networks
-                ? network.networks[token]?.serviceUrl
-                : '-'
-            }
+            {network.networks ? network.networks[token]?.serviceUrl : '-'}
           </p>
         </Tooltip>
       </div>

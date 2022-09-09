@@ -74,18 +74,18 @@ export const validateAmountFormat = ({
   const { maxFloating } = reg.amount[locale];
   const errors = {
     NEGATIVE_VOTE: {
-      message: i18n.t('Vote amount can\'t be zero or negative.'),
+      message: i18n.t("Vote amount can't be zero or negative."),
       fn: () =>
-        numeral(value).value() < minValue
-        || numeral(inputValue).value() < 0
-        || Object.is(numeral(inputValue).value(), -0),
+        numeral(value).value() < minValue ||
+        numeral(inputValue).value() < 0 ||
+        Object.is(numeral(inputValue).value(), -0),
     },
     NEGATIVE_AMOUNT: {
-      message: i18n.t('Amount can\'t be negative.'),
+      message: i18n.t("Amount can't be negative."),
       fn: () => numeral(value).value() < 0,
     },
     ZERO: {
-      message: i18n.t('Amount can\'t be zero.'),
+      message: i18n.t("Amount can't be zero."),
       fn: () => numeral(Math.abs(value)).value() === 0,
     },
     FORMAT: {
@@ -117,7 +117,9 @@ export const validateAmountFormat = ({
       fn: () => funds < toRawLsk(numeral(value).value()),
     },
     MIN_BALANCE: {
-      message: i18n.t('Provided amount will result in a wallet with less than the minimum balance.'),
+      message: i18n.t(
+        'Provided amount will result in a wallet with less than the minimum balance.'
+      ),
       fn: () => {
         const rawValue = toRawLsk(numeral(value).value());
         return funds - rawValue < MIN_ACCOUNT_BALANCE;
@@ -125,7 +127,7 @@ export const validateAmountFormat = ({
     },
   };
 
-  const errorType = checklist.find(type => errors[type].fn());
+  const errorType = checklist.find((type) => errors[type].fn());
   return {
     error: !!errorType,
     message: errorType ? errors[errorType].message : '',

@@ -6,10 +6,10 @@ import { selectActiveTokenAccount } from 'src/redux/selectors';
 import { removeDuplicateTransactions } from '@transaction/utils';
 import Dashboard from './dashboard';
 
-const mapStateToProps = state => ({
+const mapStateToProps = (state) => ({
   transactions: removeDuplicateTransactions(
     state.transactions.pending,
-    state.transactions.confirmed,
+    state.transactions.confirmed
   ),
   pendingTransactions: state.transactions.pending,
   wallet: selectActiveTokenAccount(state),

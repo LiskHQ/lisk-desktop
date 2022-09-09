@@ -12,10 +12,8 @@ import { selectActiveTokenAccount } from 'src/redux/selectors';
 import Icon from 'src/theme/Icon';
 import styles from './BalanceInfo.css';
 
-const Link = ({
-  sum, style, icon, isWalletRoute,
-}) =>
-  (isWalletRoute ? (
+const Link = ({ sum, style, icon, isWalletRoute }) =>
+  isWalletRoute ? (
     <DialogLink
       className={`${styles.lockedBalance} ${styles.pointer} ${style} open-unlock-balance-dialog unlock-amount-value`}
       component="lockedBalance"
@@ -29,25 +27,23 @@ const Link = ({
       <Icon name={icon || 'lock'} />
       {`${fromRawLsk(sum)} ${tokenMap.LSK.key}`}
     </div>
-  ));
+  );
 
 // eslint-disable-next-line max-statements
-const LockedBalanceLink = ({
-  account, isWalletRoute, style, icon,
-}) => {
+const LockedBalanceLink = ({ account, isWalletRoute, style, icon }) => {
   const host = useSelector((state) => selectActiveTokenAccount(state));
   let lockedInVotes = 0;
 
   if (isWalletRoute && host) {
-    lockedInVotes = useSelector((state) =>
-      calculateBalanceLockedInVotes(state.voting));
+    lockedInVotes = useSelector((state) => calculateBalanceLockedInVotes(state.voting));
   } else {
     lockedInVotes = calculateBalanceLockedInUnvotes(account.dpos?.sentVotes);
   }
 
-  const lockedInUnvotes = isWalletRoute && host
-    ? calculateBalanceLockedInUnvotes(host.dpos?.unlocking)
-    : calculateBalanceLockedInUnvotes(account.dpos?.unlocking);
+  const lockedInUnvotes =
+    isWalletRoute && host
+      ? calculateBalanceLockedInUnvotes(host.dpos?.unlocking)
+      : calculateBalanceLockedInUnvotes(account.dpos?.unlocking);
 
   if (lockedInUnvotes + lockedInVotes > 0) {
     return (

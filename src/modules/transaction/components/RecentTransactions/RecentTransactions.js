@@ -27,10 +27,9 @@ export const NoTransactions = withTranslation()(({ t }) => {
       <Icon name="iconEmptyRecentTransactions" />
       <h1>{t('No transactions yet')}</h1>
       <p>
-        {t(
-          'A great way to start is to top up your account with some {{value}}.',
-          { value: activeToken.key },
-        )}
+        {t('A great way to start is to top up your account with some {{value}}.', {
+          value: activeToken.key,
+        })}
       </p>
     </BoxEmptyState>
   );
@@ -47,7 +46,7 @@ export const NotSignedIn = withTranslation()(({ t }) => (
 const RecentTransactions = ({ className, t, transactions }) => {
   const account = useSelector(selectActiveTokenAccount);
   const [isLoaded, setLoaded] = useState(!!transactions.data.length);
-  const token = useSelector(state => state.token);
+  const token = useSelector((state) => state.token);
   const currentBlockHeight = useSelector(selectCurrentBlockHeight);
   const activeToken = token.active;
   const host = account.summary?.address;
@@ -60,10 +59,7 @@ const RecentTransactions = ({ className, t, transactions }) => {
   }, [host]);
 
   return (
-    <Box
-      isLoading={transactions.isLoading}
-      className={`${styles.box} ${className}`}
-    >
+    <Box isLoading={transactions.isLoading} className={`${styles.box} ${className}`}>
       <BoxHeader>
         <h2 className={styles.title}>
           {t('Recent {{value}} transactions', { value: activeToken })}
@@ -75,9 +71,7 @@ const RecentTransactions = ({ className, t, transactions }) => {
           isLoading={transactions.isLoading}
           row={TransactionRow}
           header={header(t)}
-          error={
-            transactions.error.code !== 404 ? transactions.error : undefined
-          }
+          error={transactions.error.code !== 404 ? transactions.error : undefined}
           canLoadMore={false}
           additionalRowProps={{
             activeToken,

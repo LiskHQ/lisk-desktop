@@ -8,17 +8,10 @@ import warningButtonTheme from './css/warningButton.css';
 import outlineButtonTheme from './css/outlineButton.css';
 
 const getButtonWithTheme = (theme) => {
-  const Button = ({
-    className, size, ...props
-  }) => (
+  const Button = ({ className, size, ...props }) => (
     <button
       {...props}
-      className={[
-        theme.button,
-        className,
-        styles.button,
-        styles[size],
-      ].join(' ')}
+      className={[theme.button, className, styles.button, styles[size]].join(' ')}
     />
   );
 
@@ -41,12 +34,5 @@ const TertiaryButton = getButtonWithTheme(tertiaryButtonTheme);
 const WarningButton = getButtonWithTheme(warningButtonTheme);
 const OutlineButton = getButtonWithTheme(outlineButtonTheme);
 
-export {
-  Button,
-  PrimaryButton,
-  SecondaryButton,
-  TertiaryButton,
-  WarningButton,
-  OutlineButton,
-};
+export { Button, PrimaryButton, SecondaryButton, TertiaryButton, WarningButton, OutlineButton };
 export default Button;

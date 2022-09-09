@@ -32,14 +32,17 @@ const TxSummarizer = ({
   fees,
   hasCancel,
 }) => {
-  const fee = !(wallet.summary.isMultisignature
-    || rawTx.moduleCommandID === MODULE_COMMANDS_NAME_ID_MAP.registerMultisignatureGroup
-  ) ? rawTx.fee : 0;
+  const fee = !(
+    wallet.summary.isMultisignature ||
+    rawTx.moduleCommandID === MODULE_COMMANDS_NAME_ID_MAP.registerMultisignatureGroup
+  )
+    ? rawTx.fee
+    : 0;
   const tooltip = {
     title: t('Transaction fee'),
     children: t(
       'Transaction fees are required for every transaction to be accepted and forged by the {{network}} network. When the network is busy, transactions with a higher fee are confirmed sooner.',
-      { network: tokenMap[token].label },
+      { network: tokenMap[token].label }
     ),
   };
 
@@ -50,7 +53,7 @@ const TxSummarizer = ({
           <TertiaryButton className="cancel-button" onClick={cancelButton.onClick}>
             <Icon name="arrowLeftTailed" />
           </TertiaryButton>
-            &nbsp;&nbsp;&nbsp;
+          &nbsp;&nbsp;&nbsp;
           <h2>{title}</h2>
         </BoxHeader>
       )}
@@ -77,11 +80,7 @@ const TxSummarizer = ({
               <div>
                 <label>
                   {t('Priority')}
-                  <Tooltip
-                    title={tooltip.title}
-                    footer={tooltip.footer}
-                    position="right"
-                  >
+                  <Tooltip title={tooltip.title} footer={tooltip.footer} position="right">
                     <p className={styles.tooltipText}>{tooltip.children}</p>
                   </Tooltip>
                 </label>
@@ -90,11 +89,7 @@ const TxSummarizer = ({
               <div>
                 <label>
                   {t('Fees')}
-                  <Tooltip
-                    title={tooltip.title}
-                    footer={tooltip.footer}
-                    position="top"
-                  >
+                  <Tooltip title={tooltip.title} footer={tooltip.footer} position="top">
                     <p className={styles.tooltipText}>{tooltip.children}</p>
                   </Tooltip>
                 </label>

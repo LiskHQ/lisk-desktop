@@ -7,25 +7,17 @@ import styles from './loadLatestButton.css';
 
 const shouldShow = {
   block: (updateHeight, latestBlocks) =>
-    latestBlocks.length > 0
-    && updateHeight > 0
-    && latestBlocks[0].height > updateHeight + 2,
+    latestBlocks.length > 0 && updateHeight > 0 && latestBlocks[0].height > updateHeight + 2,
   transaction: (updateHeight, latestBlocks) =>
-    latestBlocks.length > 0
-    && updateHeight > 0
-    && latestBlocks[0].height > updateHeight
-    && latestBlocks[0].numberOfTransactions > 0,
+    latestBlocks.length > 0 &&
+    updateHeight > 0 &&
+    latestBlocks[0].height > updateHeight &&
+    latestBlocks[0].numberOfTransactions > 0,
 };
 
-const LoadLatestButton = ({
-  children,
-  buttonClassName,
-  onClick,
-  entity,
-  latestBlocks,
-}) => {
+const LoadLatestButton = ({ children, buttonClassName, onClick, entity, latestBlocks }) => {
   const [updateHeight, setUpdateHeight] = useState(
-    latestBlocks.length ? latestBlocks[0].height : 0,
+    latestBlocks.length ? latestBlocks[0].height : 0
   );
 
   const handleClick = () => {
@@ -39,16 +31,15 @@ const LoadLatestButton = ({
     }
   }, [latestBlocks.length]);
 
-  return shouldShow[entity]
-    && shouldShow[entity](updateHeight, latestBlocks) ? (
-      <PrimaryButton
-        onClick={handleClick}
-        className={`${styles.button} ${buttonClassName || ''} load-latest`}
-      >
-        <Icon name="refreshActive" className={styles.icon} />
-        <span>{children}</span>
-      </PrimaryButton>
-    ) : null;
+  return shouldShow[entity] && shouldShow[entity](updateHeight, latestBlocks) ? (
+    <PrimaryButton
+      onClick={handleClick}
+      className={`${styles.button} ${buttonClassName || ''} load-latest`}
+    >
+      <Icon name="refreshActive" className={styles.icon} />
+      <span>{children}</span>
+    </PrimaryButton>
+  ) : null;
 };
 
 LoadLatestButton.propTypes = {

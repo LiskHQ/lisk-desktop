@@ -33,8 +33,9 @@ const Transactions = ({
   }, [activeToken]);
 
   useEffect(() => {
-    const addressList = transactions.data.data
-      && transactions.data.data.reduce((acc, data) => {
+    const addressList =
+      transactions.data.data &&
+      transactions.data.data.reduce((acc, data) => {
         if (data.title === 'vote') {
           const votesList = data.params.votes || [];
           const dataAddresses = votesList.map((vote) => vote.delegateAddress);
@@ -61,8 +62,7 @@ const Transactions = ({
   };
 
   const canLoadMore = transactions.data.meta
-    ? transactions.data.meta.total
-      > transactions.data.meta.count + transactions.data.meta.offset
+    ? transactions.data.meta.total > transactions.data.meta.count + transactions.data.meta.offset
     : false;
 
   const formatters = {
@@ -73,17 +73,10 @@ const Transactions = ({
   };
 
   return (
-    <Box
-      main
-      isLoading={transactions.isLoading}
-      className={`${styles.wrapper} transactions-box`}
-    >
+    <Box main isLoading={transactions.isLoading} className={`${styles.wrapper} transactions-box`}>
       <BoxHeader>
         {activeToken === 'LSK' ? (
-          <FilterDropdown
-            filters={filters}
-            applyFilters={(f) => applyFilters({ ...f, address })}
-          />
+          <FilterDropdown filters={filters} applyFilters={(f) => applyFilters({ ...f, address })} />
         ) : null}
       </BoxHeader>
       <FilterBar
@@ -112,9 +105,7 @@ const Transactions = ({
           header={header(t, activeToken, changeSort)}
           currentSort={sort}
           canLoadMore={canLoadMore}
-          error={
-            transactions.error.code !== 404 ? transactions.error : undefined
-          }
+          error={transactions.error.code !== 404 ? transactions.error : undefined}
           emptyState={{
             message: t('This account does not have any transactions.'),
           }}

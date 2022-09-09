@@ -5,11 +5,7 @@ import FlashMessage from './flashMessage';
 
 describe('Flash Message Holder', () => {
   let wrapper;
-  const DummyMessage = (
-    <FlashMessage shouldShow>
-      Dummy text
-    </FlashMessage>
-  );
+  const DummyMessage = <FlashMessage shouldShow>Dummy text</FlashMessage>;
 
   beforeEach(() => {
     wrapper = mount(<FlashMessageHolder />);

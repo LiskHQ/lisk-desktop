@@ -11,9 +11,7 @@ import BoxFooter from 'src/theme/box/footer';
 import BoxInfoText from 'src/theme/box/infoText';
 import styles from './messageForm.css';
 
-const Form = ({
-  nextStep, t, history, onNext, prevState,
-}) => {
+const Form = ({ nextStep, t, history, onNext, prevState }) => {
   const [message, setMessage] = useState(prevState?.message || '');
   useEffect(() => {
     const params = parseSearchParams(history.location.search);
@@ -39,7 +37,7 @@ const Form = ({
           <Tooltip className={styles.tooltip} position="bottom">
             <p>
               {t(
-                'To verify the integrity of a signed message use the "Verify message" tool in the sidebar.',
+                'To verify the integrity of a signed message use the "Verify message" tool in the sidebar.'
               )}
             </p>
           </Tooltip>

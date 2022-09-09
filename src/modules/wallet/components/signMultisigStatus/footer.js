@@ -6,9 +6,7 @@ import routes from 'src/routes/routes';
 import Icon from 'src/theme/Icon';
 import styles from './styles.css';
 
-export const CopyFooter = ({
-  t, onCopy, copied, onDownload, prevStep,
-}) => {
+export const CopyFooter = ({ t, onCopy, copied, onDownload, prevStep }) => {
   const theme = useTheme();
   return (
     <BoxFooter className={styles.footer} direction="horizontal">
@@ -18,10 +16,7 @@ export const CopyFooter = ({
       >
         <span className={styles.buttonContent}>{t('Go back')}</span>
       </SecondaryButton>
-      <SecondaryButton
-        className={`copy-button ${theme === 'dark' && 'dark'}`}
-        onClick={onCopy}
-      >
+      <SecondaryButton className={`copy-button ${theme === 'dark' && 'dark'}`} onClick={onCopy}>
         <span className={styles.buttonContent}>
           <Icon name={copied ? 'checkmark' : 'copy'} />
           {t(copied ? 'Copied' : 'Copy')}
@@ -37,15 +32,7 @@ export const CopyFooter = ({
   );
 };
 
-export const CopyAndSendFooter = ({
-  t,
-  onSend,
-  onCopy,
-  copied,
-  onDownload,
-  history,
-  prevStep,
-}) => {
+export const CopyAndSendFooter = ({ t, onSend, onCopy, copied, onDownload, history, prevStep }) => {
   const [sent, setSent] = useState(false);
 
   const onClick = (e) => {

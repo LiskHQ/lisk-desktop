@@ -51,24 +51,16 @@ const NewsFeed = (props) => {
       <BoxContent className={styles.container}>
         {filteredNewsFeed.length > 0
           ? filteredNewsFeed.map((news, index) => (
-            <BoxRow
-              isClickable
-              key={`${news.sourceId}-${index}`}
-              className={styles.row}
-            >
-              <News t={t} {...news} />
-            </BoxRow>
-          ))
+              <BoxRow isClickable key={`${news.sourceId}-${index}`} className={styles.row}>
+                <News t={t} {...news} />
+              </BoxRow>
+            ))
           : null}
         {newsFeed.error && (
           <BoxEmptyState className="empty-news">
             <Icon name="noTweetsIcon" />
             <h1>{t('No available tweets')}</h1>
-            <p>
-              {t(
-                'At this moment there is a connection problem with the tweets feed',
-              )}
-            </p>
+            <p>{t('At this moment there is a connection problem with the tweets feed')}</p>
           </BoxEmptyState>
         )}
       </BoxContent>

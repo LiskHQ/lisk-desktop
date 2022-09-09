@@ -8,7 +8,7 @@ import withData from 'src/utils/withData';
 import { search } from '../api';
 import SearchBar from '../components/SearchBar/SearchBar';
 
-const mapStateToProps = state => ({
+const mapStateToProps = (state) => ({
   activeToken: selectActiveToken(state),
 });
 
@@ -24,11 +24,10 @@ export default compose(
   connect(mapStateToProps),
   withData({
     suggestions: {
-      apiUtil: (network, params) =>
-        search({ network, params }),
+      apiUtil: (network, params) => search({ network, params }),
       defaultData,
-      transformResponse: res => ({ ...defaultData, ...res.data }),
+      transformResponse: (res) => ({ ...defaultData, ...res.data }),
     },
   }),
-  withTranslation(),
+  withTranslation()
 )(SearchBar);

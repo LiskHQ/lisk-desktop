@@ -2,11 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import styles from './dialog.css';
 
-const Description = ({ children }) => (
-  <div className={styles.description}>
-    {children}
-  </div>
-);
+const Description = ({ children }) => <div className={styles.description}>{children}</div>;
 
 Description.propTypes = {
   children: PropTypes.oneOfType([

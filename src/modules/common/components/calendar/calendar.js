@@ -11,9 +11,9 @@ class Calendar extends React.Component {
 
     const locale = Array.isArray(props.locale) ? [...props.locale, 'en'] : [props.locale, 'en'];
     moment.locale(locale);
-    const showingDate = (
-      moment(props.date, props.dateFormat).isValid() && moment(props.date, props.dateFormat))
-      || moment();
+    const showingDate =
+      (moment(props.date, props.dateFormat).isValid() && moment(props.date, props.dateFormat)) ||
+      moment();
 
     this.state = {
       showingDate,
@@ -29,8 +29,11 @@ class Calendar extends React.Component {
     const { dateFormat } = this.props;
     const prevDate = moment(this.props.date, dateFormat);
     const newDate = moment(nextProps.date, dateFormat);
-    if (prevDate.isValid() && newDate.isValid()
-      && newDate.format('MM.YYYY') !== prevDate.format('MM.YYYY')) {
+    if (
+      prevDate.isValid() &&
+      newDate.isValid() &&
+      newDate.format('MM.YYYY') !== prevDate.format('MM.YYYY')
+    ) {
       this.setState({ showingDate: newDate });
       return false;
     }
@@ -84,10 +87,7 @@ class Calendar extends React.Component {
 }
 
 Calendar.propTypes = {
-  locale: PropTypes.oneOfType([
-    PropTypes.string,
-    PropTypes.arrayOf(PropTypes.string),
-  ]).isRequired,
+  locale: PropTypes.oneOfType([PropTypes.string, PropTypes.arrayOf(PropTypes.string)]).isRequired,
   date: PropTypes.string.isRequired,
   dateFormat: PropTypes.string.isRequired,
   onDateSelected: PropTypes.func.isRequired,

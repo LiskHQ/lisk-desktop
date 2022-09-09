@@ -22,7 +22,7 @@ export const settingsRetrieved = () => (dispatch) => {
  * An action to dispatch settingsUpdated
  *
  */
-export const settingsUpdated = data => ({
+export const settingsUpdated = (data) => ({
   type: actionTypes.settingsUpdated,
   data,
 });
