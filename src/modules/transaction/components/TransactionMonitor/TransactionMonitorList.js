@@ -51,7 +51,7 @@ const getFields = (t) => [
     type: 'integer',
   },
 ];
-const blackListTypes = ['auth:registerMultisignatureGroup', 'dpos:registerDelegate', 'dpos:voteDelegate', '5:3'];
+const blackListTypes = ['auth:registerMultisignatureGroup', 'dpos:registerDelegate', 'dpos:voteDelegate', 'dpos:reportDelegateMisbehavior'];
 
 // eslint-disable-next-line max-statements
 const Transactions = ({

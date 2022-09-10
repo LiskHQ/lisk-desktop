@@ -107,7 +107,7 @@ describe('API: LSK Network', () => {
             { id: 'dpos:registerDelegate', name: 'dpos:registerDelegate' },
             { id: 'dpos:voteDelegate', name: 'dpos:voteDelegate' },
             { id: 'dpos:unlock', name: 'dpos:unlockToken' },
-            { id: '5:3', name: 'dpos:reportDelegateMisbehavior' },
+            { id: 'dpos:reportDelegateMisbehavior', name: 'dpos:reportDelegateMisbehavior' },
             { id: 'legacy:reclaim', name: 'legacyAccount:reclaimLSK' },
           ],
           milestone: ['500000000', '400000000', '300000000', '200000000', '100000000'],

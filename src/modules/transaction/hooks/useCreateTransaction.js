@@ -35,7 +35,7 @@ export const useCreateTransaction = ({
         encodedTransaction,
       });
     }
-  }, [isNetworkStatusLoading, isAuthLoading, isSchemasLoading]);
+  }, [transaction, isNetworkStatusLoading, isAuthLoading, isSchemasLoading]);
 
   return transaction;
 };

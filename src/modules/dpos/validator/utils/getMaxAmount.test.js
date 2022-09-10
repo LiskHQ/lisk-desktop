@@ -35,7 +35,7 @@ const network = {
             name: 'dpos:unlockToken',
           },
           {
-            id: '5:3',
+            id: 'dpos:reportDelegateMisbehavior',
             name: 'dpos:reportDelegateMisbehavior',
           },
           {

@@ -8,6 +8,8 @@ import styles from './filters.css';
 const SelectFilter = ({
   label, placeholder, filters, name, updateCustomFilters,
 }) => {
+  // TODO: This logic is static, different blockchain application can have different commands
+  // We need this logic to be dynamic based on selected chain.
   const options = Object.keys(MODULE_COMMANDS_NAME_MAP)
     .map(key => ({
       value: MODULE_COMMANDS_NAME_MAP[key],

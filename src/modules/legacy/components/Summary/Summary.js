@@ -1,6 +1,6 @@
 import React from 'react';
 import { tokenMap } from '@token/fungible/consts/tokens';
-import { MODULE_COMMANDS_NAME_MAP } from 'src/modules/transaction/configuration/moduleCommand';
+import { MODULE_COMMANDS_NAME_MAP } from '@transaction/configuration/moduleCommand';
 import useTransactionFeeCalculation from '@transaction/hooks/useTransactionFeeCalculation';
 import useTransactionPriority from '@transaction/hooks/useTransactionPriority';
 import TransactionSummary from '@transaction/manager/transactionSummary';

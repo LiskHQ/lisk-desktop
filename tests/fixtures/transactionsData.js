@@ -121,7 +121,7 @@ export default [
   },
   {
     id: '1f1aa24b49859d825cc5ace36b5554a1ee65556852b0c1f5c043853c697a2651',
-    moduleCommand: '5:3',
+    moduleCommand: 'dpos:reportDelegateMisbehavior',
     moduleAssetName: 'dpos:reportDelegateMisbehavior',
     fee: '10000000',
     height: 15334905,

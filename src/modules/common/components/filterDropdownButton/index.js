@@ -21,7 +21,7 @@ const filterComponents = {
   select: SelectFilter,
 };
 
-const blackListTypes = ['auth:registerMultisignatureGroup', 'dpos:registerDelegate', 'dpos:voteDelegate', '5:3'];
+const blackListTypes = ['auth:registerMultisignatureGroup', 'dpos:registerDelegate', 'dpos:voteDelegate', 'dpos:reportDelegateMisbehavior'];
 
 class FilterDropdownButton extends React.Component {
   constructor(props) {
