@@ -10,6 +10,7 @@ import BoxTabs from 'src/theme/tabs';
 import Icon from 'src/theme/Icon';
 import { ROUND_LENGTH } from '@dpos/validator/consts';
 import { PrimaryButton } from 'src/theme/buttons';
+import { useBlocks } from 'src/modules/block/hooks/queries/useBlocks';
 import DelegatesOverview from '../Overview/delegatesOverview';
 import ForgingDetails from '../Overview/forgingDetails';
 import DelegatesTable from '../DelegatesTable';
@@ -22,17 +23,17 @@ const DelegatesMonitor = ({
   watchList,
   delegatesCount,
   registrations,
-  transactionsCount,
-  networkStatus,
   applyFilters,
   filters,
   blocks,
   votes,
   t,
 }) => {
-  const [activeDetailTab, setSctiveDetailTab] = useState('overview');
+  const [activeDetailTab, setActiveDetailTab] = useState('overview');
   const [activeTab, setActiveTab] = useState('active');
-  const { total, forgers, latestBlocks } = blocks;
+  const { latestBlocks } = blocks;
+  const { data: blocksData } = useBlocks({ config: { params: { limit: 1 } } });
+  const total = blocksData?.meta?.total ?? 0;
   const forgedInRound = latestBlocks.length
     ? latestBlocks[0].height % ROUND_LENGTH
     : 0;
@@ -120,7 +121,7 @@ const DelegatesMonitor = ({
       },
     ],
     active: activeDetailTab,
-    onClick: ({ value }) => setSctiveDetailTab(value),
+    onClick: ({ value }) => setActiveDetailTab(value),
   };
 
   if (watchList.length) {
@@ -163,17 +164,14 @@ const DelegatesMonitor = ({
         ? (
           <DelegatesOverview
             delegatesCount={delegatesCount}
-            transactionsCount={transactionsCount}
             registrations={registrations}
             t={t}
             totalBlocks={total}
-            supply={networkStatus.data.supply}
           />
         )
         : (
           <ForgingDetails
             t={t}
-            forgers={forgers}
             forgedInRound={forgedInRound}
             startTime={latestBlocks[forgedInRound]?.timestamp}
           />

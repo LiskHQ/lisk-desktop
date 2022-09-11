@@ -5,7 +5,6 @@ import { withTranslation } from 'react-i18next';
 import { connect } from 'react-redux';
 
 import { getDelegates } from '@dpos/validator/api';
-import { getNetworkStatus } from '@network/utils/api';
 import { getTransactions, getRegisteredDelegates } from '@transaction/api';
 import withData from 'src/utils/withData';
 import withFilters from 'src/utils/withFilters';
@@ -76,14 +75,6 @@ const ComposedDelegates = compose(
       transformResponse: (response) => response.meta.total,
     },
 
-    transactionsCount: {
-      apiUtil: (network) =>
-        getTransactions({ network, params: { limit: 1 } }),
-      defaultData: 0,
-      autoload: true,
-      transformResponse: (response) => response.meta.total,
-    },
-
     registrations: {
       apiUtil: (network) =>
         getRegisteredDelegates({ network }),
@@ -106,13 +97,6 @@ const ComposedDelegates = compose(
       autoload: true,
       defaultData: [],
       transformResponse: mergeUniquelyById,
-    },
-
-    networkStatus: {
-      apiUtil: (network) => getNetworkStatus({ network }),
-      defaultData: {},
-      autoload: true,
-      transformResponse: (response) => response,
     },
 
     sanctionedDelegates: {

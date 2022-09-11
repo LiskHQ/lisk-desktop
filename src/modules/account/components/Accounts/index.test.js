@@ -1,83 +1,24 @@
-import React from 'react';
-import { mount } from 'enzyme';
-import accounts from '@tests/constants/wallets';
-import WalletsMonitor from '.';
+import { screen, waitFor } from '@testing-library/react';
+import { renderWithQueryClient } from 'src/utils/testHelpers';
+import WalletsMonitor from './Accounts';
 
-const accountsApiResponse = Object.values(accounts);
 describe('Top Accounts Monitor Page', () => {
-  const props = {
-    t: key => key,
-    wallets: {
-      isLoading: true,
-      data: [],
-      meta: null,
-      loadData: jest.fn(),
-      clearData: jest.fn(),
-      urlSearchParams: {},
-    },
-    networkStatus: {
-      data: {
-        supply: 9999999999999,
-      },
-    },
-    token: { active: 'LSK' },
-  };
-
-  const accountsWithData = {
-    ...props.wallets,
-    isLoading: false,
-    data: [
-      {
-        summary: {
-          address: accounts.delegate.summary.address,
-        },
-        dpos: {
-          delegate: {
-            username: 'geenesis',
-          },
-        },
-        knowledge: {
-          owner: 'Lisk',
-          description: 'assetes',
-        },
-      },
-      ...accountsApiResponse,
-    ],
-    meta: {
-      count: accountsApiResponse.length + 1,
-      offset: 0,
-      total: accountsApiResponse.length * 3,
-    },
-  };
-
-  const setup = properties => mount(<WalletsMonitor {...properties} />);
+  beforeEach(() => {
+    renderWithQueryClient(WalletsMonitor);
+  });
 
   afterEach(() => {
     jest.clearAllMocks();
   });
 
   it('renders a page with header', () => {
-    const wrapper = setup(props);
-    expect(wrapper.find('Box header h1')).toIncludeText('All accounts');
+    expect(screen.getByText('All accounts')).toBeInTheDocument();
   });
 
-  it('renders table with accounts', () => {
-    const wrapper = setup(props);
-    expect(wrapper.find('.accounts-row')).toHaveLength(0);
-    wrapper.setProps({ wallets: accountsWithData });
-    expect(wrapper.find('.accounts-row').hostNodes()).toHaveLength(accountsApiResponse.length + 1);
-  });
-
-  it('shows error if API failed', () => {
-    const wrapper = setup(props);
-    const error = 'Loading failed';
-    wrapper.setProps({
-      wallets: {
-        ...props.wallets,
-        isLoading: false,
-        error,
-      },
-    });
-    expect(wrapper).toIncludeText(error);
+  it('renders table with accounts', async () => {
+    expect(screen.queryByTestId('accounts-row')).not.toBeInTheDocument();
+    await waitFor(() => expect(screen.getByText('Top Account from Testnet')).toBeInTheDocument());
+    expect(screen.getByText('80,241,837 LSK')).toBeInTheDocument();
+    expect(screen.getByText('Oliver Personal Assets')).toBeInTheDocument();
   });
 });

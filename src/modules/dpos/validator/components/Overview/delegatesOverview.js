@@ -6,6 +6,7 @@ import { getColorPalette } from 'src/modules/common/components/charts/chartOptio
 import Box from 'src/theme/box';
 import BoxContent from 'src/theme/box/content';
 import BoxEmptyState from 'src/theme/box/emptyState';
+import { useTransactions } from 'src/modules/transaction/hooks/queries';
 import { DoughnutChart, LineChart } from 'src/modules/common/components/charts';
 import GuideTooltip, {
   GuideTooltipItem,
@@ -20,12 +21,13 @@ const getAmountOfDelegatesLabels = (registrations) =>
 
 const Overview = ({
   delegatesCount,
-  transactionsCount,
   registrations,
   t,
   totalBlocks,
 }) => {
   const colorPalette = getColorPalette(useTheme());
+  const { data: transactions } = useTransactions({ config: { params: { limit: 1 } } });
+  const transactionsCount = transactions?.meta.total ?? 0;
   const doughnutChartData = {
     labels: [t('Standby delegates'), t('Active delegates')],
     datasets: [
@@ -119,14 +121,9 @@ const Overview = ({
               />
               <NumericInfo
                 title="Total transactions"
-                value={transactionsCount.data}
+                value={transactionsCount}
                 icon="transactions"
               />
-              {/* <NumericInfo
-                title="Total LSK"
-                value={fromRawLsk(supply)}
-                icon="distribution"
-              /> */}
             </div>
           </div>
         </div>
