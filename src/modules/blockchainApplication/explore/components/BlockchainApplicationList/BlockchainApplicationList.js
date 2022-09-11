@@ -2,10 +2,8 @@ import React, {
   useCallback, useMemo, useRef, useState,
 } from 'react';
 import { useTranslation } from 'react-i18next';
-import BoxHeader from 'src/theme/box/header';
 import Box from 'src/theme/box';
 import BoxContent from 'src/theme/box/content';
-import grid from 'flexboxgrid/dist/flexboxgrid.css';
 import Table from 'src/theme/table';
 import { Input } from 'src/theme';
 import Icon from 'src/theme/Icon';
@@ -52,24 +50,19 @@ const BlockchainApplicationList = ({
 
   return (
     <Box main isLoading={applications.isLoading} className="chain-application-box">
-      <BoxHeader className={styles.boxHeader}>
-        <div className={grid['col-xs-6']}>
-          {t('Applications')}
+      <div className={styles.searchInputWrapper}>
+        <div className={styles.filterHolder}>
+          <Input
+            icon={<Icon className={styles.searchIcon} name="searchActive" />}
+            className={styles.chainSearch}
+            name="application-filter"
+            value={searchValue}
+            placeholder={t('Search application')}
+            onChange={onSearchApplication}
+            size="m"
+          />
         </div>
-        <div align="right" className={grid['col-xs-6']}>
-          <div className={styles.filterHolder}>
-            <Input
-              icon={<Icon className={styles.searchIcon} name="searchActive" />}
-              className={styles.chainSearch}
-              name="application-filter"
-              value={searchValue}
-              placeholder={t('Search application')}
-              onChange={onSearchApplication}
-              size="m"
-            />
-          </div>
-        </div>
-      </BoxHeader>
+      </div>
       <BoxContent className={`${styles.content} chain-application-result`}>
         <Table
           showHeader

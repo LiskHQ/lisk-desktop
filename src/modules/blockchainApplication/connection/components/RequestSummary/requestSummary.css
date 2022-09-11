@@ -1,0 +1,124 @@
+@import '../../../../../../setup/react/app/mixins.css';
+
+.wrapper {
+  width: 100%;
+  box-sizing: border-box;
+  min-width: 450px;
+  border-radius: 16px;
+  overflow: hidden;
+  background-color: var(--color-white);
+}
+
+.avatarContainer {
+  width: 100%;
+  height: 115px;
+  display: flex;
+  position: relative;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  background: var(--color-ultramarine-blue);
+
+  & > img.logo {
+    position: absolute;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    bottom: -39px;
+    width: 77px;
+    height: 77px;
+    background-color: white;
+    border-radius: 40px;
+  }
+
+  & > h2 {
+    color: var(--color-white-smoke);
+  }
+}
+
+.detailsWrapper {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  margin-top: 51px;
+}
+
+.chainNameWrapper,
+.addressRow,
+.chainId {
+  text-align: center;
+  padding-top: var(--vertical-padding-l);
+  width: 100%;
+}
+
+.chainNameWrapper {
+  & > h3 {
+    font-weight: 700;
+    color: var(--color-maastricht-blue);
+    margin-bottom: 0;
+  }
+
+  & > span ~ button {
+    padding: 0px 0px !important;
+    min-width: fit-content;
+    margin-left: 16px;
+  }
+
+  & img {
+    width: 17px;
+  }
+}
+
+.addressRow {
+  & a {
+    display: flex;
+    flex-flow: row nowrap;
+    align-items: center;
+    justify-content: center;
+  }
+
+  & img {
+    margin-right: 5px;
+  }
+}
+
+.chainId {
+  & span:first-child {
+    font-size: 14px;
+    color: var(--color-slate-gray);
+    padding-right: 10px;
+  }
+
+  & span:last-child {
+    font-size: 16px;
+    font-weight: 400;
+    color: var(--color-maastricht-blue);
+  }
+}
+
+.information {
+  margin: var(--horizontal-padding-xl);
+  border-color: var(--color-button-outline-color);
+  border-width: 1px 0;
+  border-style: solid;
+
+  & > div {
+    padding: var(--vertical-padding-m) 0;
+  }
+}
+
+.actionBar {
+  display: flex;
+  flex-flow: row nowrap;
+  align-items: center;
+  justify-content: space-between;
+  padding-bottom: var(--horizontal-padding-xl);
+  margin: 0 var(--horizontal-padding-xl);
+  column-gap: 20px;
+
+  & .button {
+    flex-grow: 1;
+  }
+}

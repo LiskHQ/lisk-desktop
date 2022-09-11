@@ -4,6 +4,16 @@ import { usePinBlockchainApplication } from '@blockchainApplication/manage/hooks
 import { renderWithRouter } from 'src/utils/testHelpers';
 import BlockchainApplications from './BlockchainApplications';
 
+jest.mock('@walletconnect/utils', () => ({
+  getSdkError: jest.fn(str => str),
+}));
+jest.mock('@libs/wcm/utils/connectionCreator', () => ({
+  createSignClient: jest.fn(() => Promise.resolve()),
+  client: {
+    pair: jest.fn(),
+  },
+}));
+
 jest.useFakeTimers();
 jest.mock('@blockchainApplication/manage/hooks/usePinBlockchainApplication');
 const mockTogglePin = jest.fn();
@@ -42,11 +52,12 @@ describe('BlockchainApplicationList', () => {
   });
 
   it('should display properly', () => {
-    expect(screen.getByText('Name')).toBeTruthy();
+    expect(screen.queryAllByText('name')).toBeTruthy();
     expect(screen.getByText('Chain ID')).toBeTruthy();
     expect(screen.getByText('Status')).toBeTruthy();
     expect(screen.getByText('LSK deposited')).toBeTruthy();
-    expect(screen.getByText('Applications')).toBeTruthy();
+    expect(screen.getByText('All applications')).toBeTruthy();
+    expect(screen.getByText('Connections')).toBeTruthy();
 
     expect(screen.getByText('Total Supply')).toBeTruthy();
     expect(screen.getByText('Staked')).toBeTruthy();

@@ -1,5 +1,6 @@
 import React from 'react';
 import Icon from 'src/theme/Icon';
+import { truncateAddress } from '@wallet/utils/account';
 import WalletVisual from '@wallet/components/walletVisual';
 import styles from './AccountRow.css';
 
@@ -8,6 +9,7 @@ function AccountRow({
   onSelect,
   onRemove,
   showRemove,
+  truncate,
 }) {
   const { metadata: { name, address } } = account;
 
@@ -24,7 +26,7 @@ function AccountRow({
           {name}
         </b>
         <p className={`${styles.addressValue}`}>
-          {address}
+          {truncate ? truncateAddress(address) : address}
         </p>
       </div>
       {showRemove && (
