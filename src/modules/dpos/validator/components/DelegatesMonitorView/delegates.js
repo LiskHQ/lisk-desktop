@@ -1,6 +1,6 @@
 /* istanbul ignore file */
 /* eslint-disable complexity */
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import grid from 'flexboxgrid/dist/flexboxgrid.css';
 import { Input } from 'src/theme';
 import Box from 'src/theme/box';
@@ -19,13 +19,10 @@ import styles from './delegates.css';
 // eslint-disable-next-line max-statements
 const DelegatesMonitor = ({
   votedDelegates,
-  sanctionedDelegates,
-  watchedDelegates,
   watchList,
   delegatesCount,
   registrations,
   transactionsCount,
-  standByDelegates,
   networkStatus,
   applyFilters,
   filters,
@@ -36,28 +33,27 @@ const DelegatesMonitor = ({
   const [activeDetailTab, setSctiveDetailTab] = useState('overview');
   const [activeTab, setActiveTab] = useState('active');
   const { total, forgers, latestBlocks } = blocks;
-  const delegatesWithForgingTimes = { data: forgers };
   const forgedInRound = latestBlocks.length
     ? latestBlocks[0].height % ROUND_LENGTH
     : 0;
 
-  useEffect(() => {
-    const addressList = votes.data
-      && votes.data.reduce((acc, data) => {
-        const votesList = data.params.votes || [];
-        const dataAddresses = votesList.map((vote) => vote.delegateAddress);
-        return acc.concat(dataAddresses);
-      }, []);
-    if (addressList.length > 0) {
-      votedDelegates.loadData({ addressList });
-    }
-  }, [votes.data]);
+  // useEffect(() => {
+  //   const addressList = votes.data
+  //     && votes.data.reduce((acc, data) => {
+  //       const votesList = data.params.votes || [];
+  //       const dataAddresses = votesList.map((vote) => vote.delegateAddress);
+  //       return acc.concat(dataAddresses);
+  //     }, []);
+  //   if (addressList.length > 0) {
+  //     votedDelegates.loadData({ addressList });
+  //   }
+  // }, [votes.data]);
 
-  useEffect(() => {
-    if (watchList.length) {
-      watchedDelegates.loadData({ addressList: watchList });
-    }
-  }, [watchList.length]);
+  // useEffect(() => {
+  //   if (watchList.length) {
+  //     watchedDelegates.loadData({ addressList: watchList });
+  //   }
+  // }, [watchList.length]);
 
   const handleFilter = ({ target: { value } }) => {
     let api;
@@ -136,21 +132,18 @@ const DelegatesMonitor = ({
   }
 
   const commonProps = {
-    blocks, filters, watchList, activeTab,
+    blocks, activeTab, setActiveTab,
   };
 
-  const watchedFilters = {
-    search: filters.search || '',
-    address: watchList,
-  };
+  // const watchedFilters = {
+  //   search: filters.search || '',
+  //   address: watchList,
+  // };
 
   const displayTab = (tab) => {
-    if (tab === 'active') return <DelegatesTable {...commonProps} delegates={delegatesWithForgingTimes} />;
-    if (tab === 'standby') return <DelegatesTable {...commonProps} delegates={standByDelegates} hasLoadMore />;
-    if (tab === 'sanctioned') return <DelegatesTable {...commonProps} delegates={sanctionedDelegates} hasLoadMore />;
-    if (tab === 'watched') return <DelegatesTable {...commonProps} delegates={watchedDelegates} filters={watchedFilters} setActiveTab={setActiveTab} />;
     if (tab === 'votes') return <LatestVotes votes={votes} delegates={votedDelegates} />;
-    return null;
+
+    return <DelegatesTable {...commonProps} />;
   };
 
   return (
@@ -185,7 +178,7 @@ const DelegatesMonitor = ({
             startTime={latestBlocks[forgedInRound]?.timestamp}
           />
         )}
-      <Box main isLoading={standByDelegates.isLoading || votes.isLoading}>
+      <Box main isLoading={votes.isLoading}>
         <BoxHeader className={`${styles.tabSelector} delegates-table`}>
           {tabs.tabs.length === 1 ? (
             <h2>{tabs.tabs[0].name}</h2>

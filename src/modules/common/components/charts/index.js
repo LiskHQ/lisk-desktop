@@ -51,9 +51,11 @@ export const DoughnutChart = ({
       height={height}
       options={doughnutChartOptions(useTheme(), options)}
     />
-    <span className={styles.centerLabel}>
-      {Label && <Label />}
-    </span>
+    {Label && (
+      <span className={styles.centerLabel}>
+        <Label />
+      </span>
+    )}
   </>
 );
 

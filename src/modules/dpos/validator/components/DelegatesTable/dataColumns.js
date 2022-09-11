@@ -44,15 +44,18 @@ export const DelegateRank = () => {
   const { data, activeTab } = useContext(DelegateRowContext);
   return (
     <span className={getDelegateRankClass(activeTab)}>
-      <span>{data.rank}</span>
+      <span>
+        #
+        {data.rank}
+      </span>
     </span>
   );
 };
 
 export const DelegateWeight = () => {
-  const { data: { value }, activeTab } = useContext(DelegateRowContext);
+  const { data: { voteWeight }, activeTab } = useContext(DelegateRowContext);
   const formatted = formatAmountBasedOnLocale({
-    value: fromRawLsk(value),
+    value: fromRawLsk(voteWeight),
     format: '0a',
   });
 
@@ -92,12 +95,11 @@ export const DelegateDetails = () => {
             {watched ? t('Remove from watched') : t('Add to watched')}
           </p>
         </Tooltip>
-
         <div className={`${styles.delegateDetails}`}>
           <WalletVisual address={data.address} />
           <div>
             <p className={styles.delegateName}>
-              {data.username}
+              {data.name}
             </p>
             <p className={styles.delegateAddress}>{truncateAddress(data.address)}</p>
           </div>
