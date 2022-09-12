@@ -1,12 +1,9 @@
 import { mountWithRouter } from 'src/utils/testHelpers';
-import { delegateList } from '@tests/constants/delegates';
 import { mockTransactions } from 'src/modules/transaction/__fixtures__';
 import { useTransactions } from 'src/modules/transaction/hooks/queries';
 import { useDelegates } from '../../hooks/queries';
 import LatestVotes from './index';
 import { mockDelegates } from '../../__fixtures__';
-
-const delegateDataList = delegateList(10);
 
 jest.mock('src/modules/transaction/hooks/queries');
 jest.mock('../../hooks/queries');
