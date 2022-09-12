@@ -35,4 +35,6 @@ export const getFeeStatus = ({ fee, token, customFee }) => {
     : fee.feedback;
 };
 
+export const getSpaceSeparated = str => str.replace(/([A-Z])/g, ' $1');
+
 export default getTxDirectionConfig;
