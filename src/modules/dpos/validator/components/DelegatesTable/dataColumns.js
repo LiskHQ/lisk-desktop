@@ -19,6 +19,7 @@ import {
   getForgingTimeClass,
   getDelegateRankClass,
 } from './tableHeader';
+import DelegateSummary from '../DelegateSummary/DelegateSummary';
 
 const roundStates = {
   forging: 'Forging',
@@ -38,6 +39,17 @@ const delegateStatus = {
   banned: 'Banned',
   punished: 'Punished',
   ineligible: 'Ineligible',
+};
+
+const getDelegateStatus = (key, grossVotesReceived) => {
+  if (key === 'banned' || key === 'punished' || key === 'active') {
+    return [key, delegateStatus[key]];
+  }
+  if (grossVotesReceived < DEFAULT_STANDBY_THRESHOLD) {
+    return ['ineligible', delegateStatus.ineligible];
+  }
+
+  return [key, delegateStatus[key]];
 };
 
 export const DelegateRank = () => {
@@ -68,9 +80,17 @@ export const DelegateWeight = () => {
 
 export const DelegateDetails = () => {
   const {
-    data, activeTab, watched = false, addToWatchList, removeFromWatchList, t,
+    data, activeTab, time, watched = false, addToWatchList, removeFromWatchList, t,
   } = useContext(DelegateRowContext);
+  const theme = useTheme();
+  const { status, totalVotesReceived, voteWeight } = data;
   const showEyeIcon = activeTab === 'active' || activeTab === 'standby' || activeTab === 'sanctioned' || activeTab === 'watched';
+  const [key, val] = getDelegateStatus(status, totalVotesReceived);
+  const formattedVoteWeight = formatAmountBasedOnLocale({
+    value: fromRawLsk(voteWeight),
+    format: '0a',
+  });
+
   return (
     <span className={getDelegateDetailsClass(activeTab)}>
       <div className={styles.delegateColumn}>
@@ -96,7 +116,21 @@ export const DelegateDetails = () => {
           </p>
         </Tooltip>
         <div className={`${styles.delegateDetails}`}>
-          <WalletVisual address={data.address} />
+          <Tooltip
+            noArrow
+            tooltipClassName={styles.summaryTooltipContainer}
+            className={styles.summaryTooltip}
+            position="center right"
+            size="maxContent"
+            content={<WalletVisual address={data.address} />}
+          >
+            <DelegateSummary
+              delegate={data}
+              weight={formattedVoteWeight}
+              lastForgeTime={time}
+              status={{ value: val, className: `${styles.delegateStatus} ${styles[key]} ${styles[theme]}` }}
+            />
+          </Tooltip>
           <div>
             <p className={styles.delegateName}>
               {data.name}
@@ -147,17 +181,6 @@ export const RoundState = () => {
       )}
     </span>
   );
-};
-
-const getDelegateStatus = (key, grossVotesReceived) => {
-  if (key === 'banned' || key === 'punished' || key === 'active') {
-    return [key, delegateStatus[key]];
-  }
-  if (grossVotesReceived < DEFAULT_STANDBY_THRESHOLD) {
-    return ['ineligible', delegateStatus.ineligible];
-  }
-
-  return [key, delegateStatus[key]];
 };
 
 export const DelegateStatus = () => {

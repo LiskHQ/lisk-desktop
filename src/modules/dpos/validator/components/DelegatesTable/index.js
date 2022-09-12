@@ -8,6 +8,7 @@ import { useDelegates } from '../../hooks/queries';
 import { useForgersGenerator } from '../../hooks/queries/useForgersGenerator';
 import DelegateRow from './delegateRow';
 import header from './tableHeader';
+// import { ROUND_LENGTH } from '../../consts';
 
 const DelegatesTable = ({
   setActiveTab,
@@ -28,7 +29,7 @@ const DelegatesTable = ({
       return result;
     }
     if (activeTab === 'active') {
-      result.config.params = { limit: 103 };
+      result.config.params = { limit: 1 };
       return result;
     }
     if (activeTab === 'sanctioned') {

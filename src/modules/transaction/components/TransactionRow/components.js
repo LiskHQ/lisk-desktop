@@ -7,6 +7,7 @@ import DateTimeFromTimestamp from 'src/modules/common/components/timestamp';
 import WalletVisual from 'src/modules/wallet/components/walletVisual';
 import Icon from 'src/theme/Icon';
 import Tooltip from 'src/theme/Tooltip';
+import { ROUND_LENGTH } from 'src/modules/dpos/validator/consts';
 import TokenAmount from '@token/fungible/components/tokenAmount';
 import WalletVisualWithAddress from '@wallet/components/walletVisualWithAddress';
 import { truncateAddress } from '@wallet/utils/account';
@@ -32,6 +33,11 @@ export const ID = () => {
 export const Height = () => {
   const { data } = useContext(TransactionRowContext);
   return <span>{data.block.height}</span>;
+};
+
+export const Round = () => {
+  const { data } = useContext(TransactionRowContext);
+  return <span>{Math.ceil(data.block.height / ROUND_LENGTH)}</span>;
 };
 
 export const Type = () => {

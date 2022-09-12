@@ -112,6 +112,11 @@
     & > .delegateColumn {
       display: flex;
 
+      & > .summaryTooltip {
+        align-self: flex-start;
+        z-index: 100000;
+      }
+
       & > .eyeIconTooltip {
         align-self: center;
 
@@ -139,6 +144,15 @@
 
       & .tooltipContainer {
         left: -25px;
+      }
+
+      & .summaryTooltipContainer {
+        left: -36px !important;
+        top: -25px !important;
+        background-color: transparent;
+        border: none;
+        box-shadow: unset;
+        backdrop-filter: unset;
       }
     }
   }

@@ -198,6 +198,7 @@ or "warn/action" ineastd of "red/green"
   --box-shadow-graph-selector: 0 1px 5px 0 rgba(30, 25, 77, 0.06);
   --box-shadow-top: 0 -2px 8px 0 rgba(72, 77, 97, 0.1);
   --box-shadow-dialog: 0 2px 4px 0 rgba(12, 21, 46, 0.24);
+  --box-shadow-popover: 0px 4px 15px rgba(25, 40, 82, 0.15);
 
   /*************************
         Animation
