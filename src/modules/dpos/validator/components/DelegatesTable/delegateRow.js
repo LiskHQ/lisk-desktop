@@ -14,7 +14,7 @@ const DelegateRow = ({
   data, className, t, activeTab, watchList, setActiveTab, blocks,
 }) => {
   const formattedForgingTime = getForgingTime(
-    data.nextForgingTime || blocks.forgers[blocks.indexBook[data.address]]?.nextForgingTime,
+    data.nextForgingTime || blocks.forgers?.[blocks.indexBook?.[data.address]]?.nextForgingTime,
   );
   const dispatch = useDispatch();
 

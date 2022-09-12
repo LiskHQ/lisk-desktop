@@ -80,10 +80,12 @@ export const DelegateWeight = () => {
 
 export const DelegateDetails = () => {
   const {
-    data, activeTab, time, watched = false, addToWatchList, removeFromWatchList, t,
+    data, activeTab, watched = false, addToWatchList, removeFromWatchList, t,
   } = useContext(DelegateRowContext);
   const theme = useTheme();
-  const { status, totalVotesReceived, voteWeight } = data;
+  const {
+    status, totalVotesReceived, voteWeight, nextForgingTime,
+  } = data;
   const showEyeIcon = activeTab === 'active' || activeTab === 'standby' || activeTab === 'sanctioned' || activeTab === 'watched';
   const [key, val] = getDelegateStatus(status, totalVotesReceived);
   const formattedVoteWeight = formatAmountBasedOnLocale({
@@ -127,7 +129,7 @@ export const DelegateDetails = () => {
             <DelegateSummary
               delegate={data}
               weight={formattedVoteWeight}
-              lastForgeTime={time}
+              lastForgeTime={nextForgingTime}
               status={{ value: val, className: `${styles.delegateStatus} ${styles[key]} ${styles[theme]}` }}
             />
           </Tooltip>

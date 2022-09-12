@@ -8,12 +8,13 @@ import { useDelegates } from '../../hooks/queries';
 import { useForgersGenerator } from '../../hooks/queries/useForgersGenerator';
 import DelegateRow from './delegateRow';
 import header from './tableHeader';
-// import { ROUND_LENGTH } from '../../consts';
+import { ROUND_LENGTH } from '../../consts';
 
 const DelegatesTable = ({
   setActiveTab,
   activeTab,
   blocks,
+  filters,
 }) => {
   const { t } = useTranslation();
   const watchList = useSelector((state) => state.watchList);
@@ -22,27 +23,39 @@ const DelegatesTable = ({
 
   // eslint-disable-next-line max-statements
   const queryConfig = useMemo(() => {
-    const result = { config: { params: { sort } } };
+    const result = { config: { params: { ...filters, ...sort && { sort } } } };
 
     if (activeTab === 'standby') {
-      result.config.params = { status: 'standby,ineligible' };
+      result.config.params = {
+        ...result.config.params,
+        status: 'standby,ineligible',
+      };
       return result;
     }
     if (activeTab === 'active') {
-      result.config.params = { limit: 1 };
+      result.config.params = {
+        ...result.config.params,
+        limit: ROUND_LENGTH,
+      };
       return result;
     }
     if (activeTab === 'sanctioned') {
-      result.config.params = { status: 'punished,banned' };
+      result.config.params = {
+        ...result.config.params,
+        status: 'punished,banned',
+      };
       return result;
     }
     if (activeTab === 'watched') {
-      result.config.params = { addressList: watchList };
+      result.config.params = {
+        ...result.config.params,
+        addressList: watchList,
+      };
       return result;
     }
 
     return result;
-  }, [activeTab, sort]);
+  }, [activeTab, sort, filters]);
 
   return (
     <QueryTable

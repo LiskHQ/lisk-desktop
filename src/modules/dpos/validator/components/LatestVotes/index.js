@@ -8,12 +8,13 @@ import header from './tableHeader';
 import { useDelegates } from '../../hooks/queries';
 import mergeUniquely from '../../utils/mergeUniquely';
 
-const LatestVotes = () => {
+const LatestVotes = ({ filters }) => {
   const { t } = useTranslation();
   const { data: delegates } = useDelegates();
   const queryConfig = useRef({
     config: {
       params: {
+        ...filters,
         moduleCommandID: MODULE_COMMANDS_NAME_ID_MAP.voteDelegate,
         sort: 'timestamp:desc',
       },

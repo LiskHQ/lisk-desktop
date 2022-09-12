@@ -5,6 +5,7 @@ import BoxHeader from 'src/theme/box/header';
 import BoxContent from 'src/theme/box/content';
 import Icon from 'src/theme/Icon';
 import { truncateAddress } from 'src/modules/wallet/utils/account';
+import DateTimeFromTimestamp from 'src/modules/common/components/timestamp';
 import WalletVisual from 'src/modules/wallet/components/walletVisual';
 import { PrimaryButton } from 'src/theme/buttons';
 import styles from './DelegateSummary.css';
@@ -62,7 +63,9 @@ const DelegateSummary = ({
           </div>
           <div>
             <span>{t('Last forged :')}</span>
-            <span>{lastForgeTime}</span>
+            <span>
+              <DateTimeFromTimestamp time={lastForgeTime} />
+            </span>
           </div>
         </div>
       </BoxContent>
