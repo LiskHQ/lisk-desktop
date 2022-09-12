@@ -21,21 +21,19 @@ import styles from './delegates.css';
 const DelegatesMonitor = ({
   votedDelegates,
   watchList,
-  delegatesCount,
   registrations,
   applyFilters,
   filters,
-  blocks,
   votes,
   t,
 }) => {
   const [activeDetailTab, setActiveDetailTab] = useState('overview');
   const [activeTab, setActiveTab] = useState('active');
-  const { latestBlocks } = blocks;
-  const { data: blocksData } = useBlocks({ config: { params: { limit: 1 } } });
+  const { data: blocksData } = useBlocks({ config: { params: { limit: 100 } } });
   const total = blocksData?.meta?.total ?? 0;
-  const forgedInRound = latestBlocks.length
-    ? latestBlocks[0].height % ROUND_LENGTH
+  const blocks = blocksData?.data ?? [];
+  const forgedInRound = blocks.length
+    ? blocks[0].height % ROUND_LENGTH
     : 0;
 
   // useEffect(() => {
@@ -163,7 +161,6 @@ const DelegatesMonitor = ({
       {activeDetailTab === 'overview'
         ? (
           <DelegatesOverview
-            delegatesCount={delegatesCount}
             registrations={registrations}
             t={t}
             totalBlocks={total}
@@ -173,7 +170,7 @@ const DelegatesMonitor = ({
           <ForgingDetails
             t={t}
             forgedInRound={forgedInRound}
-            startTime={latestBlocks[forgedInRound]?.timestamp}
+            startTime={blocks[forgedInRound]?.timestamp}
           />
         )}
       <Box main isLoading={votes.isLoading}>

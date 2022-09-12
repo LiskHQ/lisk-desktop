@@ -11,6 +11,7 @@ import { DoughnutChart, LineChart } from 'src/modules/common/components/charts';
 import GuideTooltip, {
   GuideTooltipItem,
 } from 'src/modules/common/components/charts/guideTooltip';
+import { useDelegates } from '../../hooks/queries';
 import NumericInfo from './numericInfo';
 import styles from './overview.css';
 
@@ -20,20 +21,21 @@ const getAmountOfDelegatesLabels = (registrations) =>
   registrations.data.map((item) => item[0]);
 
 const Overview = ({
-  delegatesCount,
   registrations,
   t,
   totalBlocks,
 }) => {
   const colorPalette = getColorPalette(useTheme());
+  const { data: delegates } = useDelegates({ config: { params: { limit: 1 } } });
   const { data: transactions } = useTransactions({ config: { params: { limit: 1 } } });
+  const delegatesCount = delegates?.meta.total ?? 0;
   const transactionsCount = transactions?.meta.total ?? 0;
   const doughnutChartData = {
     labels: [t('Standby delegates'), t('Active delegates')],
     datasets: [
       {
         label: 'delegates',
-        data: [Math.max(0, delegatesCount.data - ROUND_LENGTH), ROUND_LENGTH],
+        data: [Math.max(0, delegatesCount - ROUND_LENGTH), ROUND_LENGTH],
       },
     ],
   };
@@ -62,7 +64,7 @@ const Overview = ({
     <Box className={styles.wrapper}>
       <BoxContent className={styles.content}>
         <div className={styles.column}>
-          {typeof delegatesCount.data === 'number' ? (
+          {typeof delegatesCount === 'number' ? (
             <>
               <div className={styles.chartBox}>
                 <h2 className={styles.title}>{t('Total')}</h2>
