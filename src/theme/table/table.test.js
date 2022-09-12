@@ -9,18 +9,13 @@ describe('Table', () => {
       data: [],
       canLoadMore: false,
       isLoading: true,
+      isFetching: true,
       row: () => <div />,
       header: [],
     };
-    it('should render a loader if data is loading with default template', () => {
+    it('should render a loader if data is loading', () => {
       const wrapper = mount(<Table {...props} />);
-      expect(wrapper.find('Loading')).toHaveLength(1);
-    });
-
-    it('should render a loader if data is loading with default template', () => {
-      props.loadingState = () => <div>custom_loading</div>;
-      const wrapper = mount(<Table {...props} />);
-      expect(wrapper).toHaveText('custom_loading');
+      expect(wrapper.find('.skeletonRowWrapper').at(0)).toBeTruthy();
     });
   });
 
@@ -42,12 +37,12 @@ describe('Table', () => {
         message: 'custom_message',
         illustration: 'emptyBookmarksList',
       };
-      const wrapper = mount(<Table {...props} emptyState={emptyState} />);
+      const wrapper = mount(<Table {...props} error={undefined} emptyState={emptyState} />);
       expect(wrapper).toHaveText('custom_message');
     });
     it('should render an empty template if data is empty with custom template', () => {
       const emptyState = () => <div>custom_empty_template</div>;
-      const wrapper = mount(<Table {...props} emptyState={emptyState} />);
+      const wrapper = mount(<Table {...props} emptyState={emptyState} error={undefined} />);
       expect(wrapper).toHaveText('custom_empty_template');
     });
   });

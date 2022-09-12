@@ -75,6 +75,8 @@
 .header {
   padding: 0 var(--vertical-padding-l);
   margin: 0 !important;
+  border-top-left-radius: var(--border-radius-box);
+  border-top-right-radius: var(--border-radius-box);
 
   & > * {
     @mixin contentNormal bold;
@@ -171,6 +173,9 @@
   background-color: var(--color-white) !important;
   color: var(--color-link-active) !important;
   font-weight: var(--font-weight-semi-bold) !important;
+  font-size: 14px !important;
+  padding: 10px 0px !important;
+  min-height: 55px !important;
 }
 
 @keyframes glare {

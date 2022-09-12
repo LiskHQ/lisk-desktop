@@ -2,18 +2,24 @@ import moment from 'moment';
 import { fireEvent, screen } from '@testing-library/react';
 import mockBlockchainApplications from '@tests/fixtures/blockchainApplicationsExplore';
 import { renderWithRouter } from 'src/utils/testHelpers';
-import { usePinBlockchainApplication } from '@blockchainApplication/manage/hooks/usePinBlockchainApplication';
-import BlockchainApplicationDetails from '.';
+import { useApplicationManagement, usePinBlockchainApplication } from '@blockchainApplication/manage/hooks';
+import BlockchainApplicationDetails from './index';
 
 const mockedPins = ['1111'];
 const mockTogglePin = jest.fn();
+const mockSetApplication = jest.fn();
 
 jest.mock('@blockchainApplication/manage/hooks/usePinBlockchainApplication');
+jest.mock('@blockchainApplication/manage/hooks/useApplicationManagement');
 
 usePinBlockchainApplication.mockReturnValue({
   togglePin: mockTogglePin,
   pins: mockedPins,
   checkPinByChainId: jest.fn().mockReturnValue(true),
+});
+
+useApplicationManagement.mockReturnValue({
+  setApplication: mockSetApplication,
 });
 
 describe('BlockchainApplicationDetails', () => {
@@ -72,5 +78,19 @@ describe('BlockchainApplicationDetails', () => {
 
     renderWithRouter(BlockchainApplicationDetails, props);
     expect(screen.getByAltText('unpinnedIcon')).toBeTruthy();
+  });
+
+  it('should display add application button if in add application mode', () => {
+    const updatedProps = {
+      ...props,
+      location: {
+        ...props.location,
+        search: 'chainId=test-chain-id&mode=addApplication',
+      },
+    };
+    renderWithRouter(BlockchainApplicationDetails, updatedProps);
+    expect(screen.getByTestId('add-application-button')).toBeTruthy();
+    fireEvent.click(screen.getByTestId('add-application-button'));
+    expect(mockSetApplication).toHaveBeenCalledWith(props.application.data);
   });
 });

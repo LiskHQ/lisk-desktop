@@ -2,7 +2,7 @@ import { renderHook, act } from '@testing-library/react-hooks';
 import mockApplications, { applicationsMap } from '@tests/fixtures/blockchainApplicationsManage';
 import flushPromises from '@tests/unit-test-utils/flushPromises';
 import actionTypes from '../store/actionTypes';
-import useApplicationManagement from './useApplicationManagement';
+import { useApplicationManagement } from './useApplicationManagement';
 
 const mockDispatch = jest.fn();
 const mockState = {

@@ -38,3 +38,12 @@
 h1 {
   color: var(--color-maastricht-blue);
 }
+
+.row {
+  font-size: var(--font-size-h6);
+  width: 100%;
+  padding: 5px 15px 5px 15px;
+  display: flex;
+  align-items: center;
+  position: relative;
+}

@@ -3,24 +3,24 @@ import styles from './BlockDetailsTransactionsTable.css';
 
 export default (t) => ([
   {
+    title: t('ID'),
+    classList: grid['col-xs-2'],
+  },
+  {
     title: t('Sender'),
     classList: grid['col-xs-3'],
   },
   {
-    title: t('Recipient'),
-    classList: grid['col-xs-3'],
-  },
-  {
-    title: t('Date'),
+    title: t('Height'),
     classList: grid['col-xs-2'],
   },
   {
-    title: t('Amount'),
+    title: t('Type'),
     classList: `${grid['col-xs-3']} ${grid['col-md-2']}`,
   },
   {
-    title: t('Fee'),
-    classList: `${grid['col-md-1']} ${styles.transactionFeeCell}`,
+    title: t('Date'),
+    classList: `${grid['col-md-2']} ${styles.transactionFeeCell}`,
   },
   {
     title: t('Status'),

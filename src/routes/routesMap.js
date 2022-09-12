@@ -1,13 +1,13 @@
 import AddBookmark from '@bookmark/manager/AddBookmarkManager';
 import BlockDetails from '@block/manager/blockDetailsManager';
-import Blocks from '@block/manager/blocksManager';
+import Blocks from '@block/components/blocks';
 import Bookmarks from '@bookmark/manager/BookmarkListManager';
 import Dashboard from 'src/modules/common/components/dashboard';
 import DelegatesMonitor from '@dpos/validator/components/DelegatesMonitorView';
 import DelegatesPerformanceModal from '@dpos/validator/components/delegatePerformanceModal';
 import HwWalletLogin from '@auth/components/hwWalletLogin';
 import Login from '@auth/components/Signin';
-import MonitorWallets from '@account/manager/AccountsManager';
+import MonitorWallets from '@account/components/Accounts';
 import MonitorNetwork from '@network/manager/networkManager';
 import MonitorTransactions from '@transaction/components/Transactions';
 import Register from '@auth/manager/SignupManager';
@@ -43,7 +43,10 @@ import RemoveCurrentAccountFlow from '@account/components/RemoveCurrentAccountFl
 import RemoveSelectedAccountFlow from '@account/components/RemoveSelectedAccountFlow';
 import BlockchainApplications from '@blockchainApplication/explore/manager/BlockchainApplications';
 import BlockchainApplicationDetails from '@blockchainApplication/explore/components/BlockchainApplicationDetails';
+import AddApplicationList from '@blockchainApplication/manage/components/AddApplicationList';
+import AddApplicationSuccess from '@blockchainApplication/manage/components/AddApplicationSuccess';
 import ApplicationManagementList from '@blockchainApplication/manage/components/ApplicationManagementList';
+import SelectNode from '@blockchainApplication/manage/components/SelectNode';
 import RemoveApplicationFlow from '@blockchainApplication/manage/components/RemoveApplicationFlow';
 import ConnectionProposal from 'src/modules/blockchainApplication/connection/components/ConnectionProposal';
 import SessionManager from '@blockchainApplication/connection/components/SessionManager';
@@ -92,12 +95,15 @@ export default {
   accountAdd: AddAccountForm,
   addAccountBySecretRecovery: AddAccountBySecretRecovery,
   switchAccount: SwitchAccount,
+  selectNode: SelectNode,
   backupRecoveryPhraseFlow: BackupRecoveryPhraseFlow,
   removeCurrentAccountFlow: RemoveCurrentAccountFlow,
   removeSelectedAccount: RemoveSelectedAccountFlow,
   addAccountByFile: AddAccountByFile,
   blockchainApplications: BlockchainApplications,
   blockChainApplicationDetails: BlockchainApplicationDetails,
+  addApplicationList: AddApplicationList,
+  addApplicationSuccess: AddApplicationSuccess,
   manageApplications: ApplicationManagementList,
   removeApplicationFlow: RemoveApplicationFlow,
   connectionProposal: ConnectionProposal,

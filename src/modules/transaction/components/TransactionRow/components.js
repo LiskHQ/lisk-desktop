@@ -17,11 +17,32 @@ import TransactionRowContext from '../../context/transactionRowContext';
 import TransactionTypeFigure from '../TransactionTypeFigure';
 import TransactionAmount from '../TransactionAmount';
 
+export const ID = () => {
+  const { data } = useContext(TransactionRowContext);
+  return (
+    <span className={styles.txId}>
+      <Icon name="sentTransactionIcon" />
+      {truncateAddress(data.id)}
+    </span>
+  );
+};
+
+export const Height = () => {
+  const { data } = useContext(TransactionRowContext);
+  return <span>{data.block.height}</span>;
+};
+
+export const Type = () => {
+  const { data } = useContext(TransactionRowContext);
+  const formatTransactionType = (txType) => txType.replace(':', ' ');
+  return <span className={styles.type}>{formatTransactionType(data.moduleCommandName)}</span>;
+};
+
 export const Sender = () => {
   const { data, avatarSize } = useContext(TransactionRowContext);
   return (
     <WalletVisualWithAddress
-      className="transaction-row-sender"
+      className={`transaction-row-sender ${styles.walletVisualWithAddress}`}
       address={data.sender.address}
       transactionSubject="sender"
       moduleCommandID={data.moduleCommandID}

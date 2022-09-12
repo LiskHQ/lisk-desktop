@@ -21,28 +21,26 @@ const TransactionRow = ({
   const Layout = LayoutSchema[layout] || LayoutSchema.default;
 
   return (
-    <div className="transaction-row-wrapper">
-      <DialogLink
-        className={`${grid.row} ${styles.container} ${styles[layout]} ${className} transactions-row`}
-        component="transactionDetails"
-        data={{ transactionId: data.id, token: activeToken }}
+    <DialogLink
+      className={`${grid.row} ${styles.container} ${styles[layout]} ${className} transactions-row`}
+      component="transactionDetails"
+      data={{ transactionId: data.id, token: activeToken }}
+    >
+      <TransactionRowContext.Provider
+        value={{
+          currentBlockHeight,
+          data,
+          host,
+          activeToken,
+          avatarSize,
+          delegates,
+        }}
       >
-        <TransactionRowContext.Provider
-          value={{
-            currentBlockHeight,
-            data,
-            host,
-            activeToken,
-            avatarSize,
-            delegates,
-          }}
-        >
-          {Layout.components.map((Component, index) => (
-            <Component key={index} t={t} />
-          ))}
-        </TransactionRowContext.Provider>
-      </DialogLink>
-    </div>
+        {Layout.components.map((Component, index) => (
+          <Component key={index} t={t} />
+        ))}
+      </TransactionRowContext.Provider>
+    </DialogLink>
   );
 };
 

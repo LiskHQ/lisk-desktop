@@ -14,6 +14,7 @@
     & h2 {
       font-size: var(--font-size-h5);
       font-weight: var(--font-weight-bold);
+      color: var(--color-black);
       margin: 0;
     }
   }
@@ -21,6 +22,7 @@
   & .formSection {
     padding-right: 0;
     padding-left: 0;
+    padding-bottom: 15px !important;
   }
 }
 
@@ -30,15 +32,18 @@
     display: flex;
     flex-direction: column;
     margin-bottom: 16px;
+    position: relative;
   }
 
   & .fieldLabel {
     @mixin contentNormal bold;
 
     align-items: center;
-    color: var(--color-maastricht-blue);
+    color: var(--color-content-light);
     display: flex;
-    margin-bottom: 8px;
+    margin-bottom: 16px;
+    font-weight: 400;
+    font-size: 14px;
   }
 
   & .amountHint {
@@ -116,6 +121,18 @@
       margin-left: 5px;
     }
   }
+
+  & .balance {
+    position: absolute;
+    bottom: calc(50% - 26px);
+    right: 50px;
+    color: var(--color-content-light);
+  }
+
+  & .balance > span {
+    font-weight: 500;
+    color: var(--color-ultramarine-blue);
+  }
 }
 
 .feedbackMessage {
@@ -172,4 +189,60 @@
 .recipientWalletVisual {
   margin-left: -4px;
   margin-top: 4px;
+}
+
+.recipientFieldWrapper {
+  margin-bottom: 3px !important;
+}
+
+.ApplilcationFieldWrapper {
+  width: 100%;
+  display: flex;
+  flex-direction: row !important;
+  column-gap: 16px;
+  margin-bottom: 16px;
+
+  & > div:first-child {
+    flex: 1;
+    position: relative;
+  }
+
+  & > div:nth-child(2) {
+    width: 20px;
+    position: relative;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding-top: 36px;
+  }
+
+  & > div:last-child {
+    flex: 1;
+    position: relative;
+  }
+}
+
+.chainOptionWrapper {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  padding: 10px;
+}
+
+.chainLogo {
+  width: 24px;
+  height: 24px;
+  border-radius: 50%;
+}
+
+.chainLogo ~ span {
+  height: fit-content;
+  font-size: 16px;
+  font-weight: 500;
+  padding-left: 8px;
+  white-space: nowrap;
+  max-width: 228px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  color: var(--color-maastricht-blue);
 }

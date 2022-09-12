@@ -3,9 +3,9 @@ const peer = index => ({
   httpPort: 5000,
   wsPort: 5001,
   os: 'linux4.15.0-76-generic',
-  version: '3.0.0-beta.0',
+  version: `3.0.0-beta.${index}`,
   state: 2,
-  height: 259417,
+  height: 25941 + index,
   location: {
     countryCode: 'DE',
     ip: `94.130.96.${index}`,
@@ -14,6 +14,6 @@ const peer = index => ({
   },
 });
 
-const peers = Array(20).fill(1).map((item, index) => peer(index));
+const peers = Array(30).fill(1).map((item, index) => peer(index));
 
 export default peers;

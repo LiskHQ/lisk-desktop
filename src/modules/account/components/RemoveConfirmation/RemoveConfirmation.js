@@ -1,6 +1,5 @@
 import React, { useCallback } from 'react';
 import { useTranslation } from 'react-i18next';
-import { withRouter } from 'react-router';
 import WalletVisual from '@wallet/components/walletVisual';
 import { removeSearchParamsFromUrl } from 'src/utils/searchParams';
 import DownloadJSON from 'src/modules/common/components/DownloadJSON/DownloadJSON';
@@ -18,7 +17,7 @@ const RemoveConfirmation = ({
     } else {
       history.goBack();
     }
-  }, []);
+  }, [history, location]);
 
   return (
     <>
@@ -51,4 +50,4 @@ const RemoveConfirmation = ({
   );
 };
 
-export default withRouter(RemoveConfirmation);
+export default RemoveConfirmation;

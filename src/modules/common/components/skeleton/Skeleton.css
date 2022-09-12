@@ -1,0 +1,28 @@
+.skeletonWrapper {
+  width: 100%;
+  background-color: var(--color-very-light-gray);
+  animation: skeletonLoaderAnimation 2s linear;
+  animation-iteration-count: infinite;
+
+  &.circle {
+    border-radius: 50%;
+  }
+
+  &.rect {
+    border-radius: 100px;
+  }
+}
+
+@keyframes skeletonLoaderAnimation {
+  0% {
+    opacity: 100%;
+  }
+
+  50% {
+    opacity: 20%;
+  }
+
+  100% {
+    opacity: 100%;
+  }
+}

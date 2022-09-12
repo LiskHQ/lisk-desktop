@@ -11,9 +11,7 @@ import BlockchainApplicationRow from '../BlockchainApplicationRow';
 import header from './BlockchainApplicationListHeaderMap';
 import styles from './BlockchainApplicationList.css';
 import { BLOCKCHAIN_APPLICATION_LIST_LIMIT } from '../../const/constants';
-import BlockchainApplicationSkeleton from '../BlockchainApplicationSkeleton';
 
-// eslint-disable-next-line max-statements
 const BlockchainApplicationList = ({
   applications,
   applyFilters,
@@ -70,7 +68,6 @@ const BlockchainApplicationList = ({
           showHeader
           data={applications.data}
           isLoading={applications.isLoading}
-          loadingState={BlockchainApplicationSkeleton}
           row={BlockchainApplicationRow}
           loadData={handleLoadMore}
           header={header(t)}

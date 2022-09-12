@@ -3,6 +3,9 @@ export const regex = {
   address: /^lsk[a-z0-9]{0,38}$/,
   legacyAddress: /^[1-9]\d{0,19}L$/,
   publicKey: /^[0-9a-f]{64}$/,
+  generatorPublicKey: /^[0-9a-f]{64}$/,
+  blsPublicKey: /^[0-9a-f]{96}$/,
+  proofOfPossession: /^[0-9a-f]{192}$/,
   username: /^[a-z0-9!@$&_.]{3,20}$/,
   delegateName: /^[a-z0-9!@$&_.]{3,20}$/,
   transactionId: /^[0-9a-z]{64}/,
@@ -30,5 +33,7 @@ export const regex = {
       leadingPoint: /^[,]/,
     },
   },
+  url: /https?:\/\/(www\.)?[-a-zA-Z0-9@:%._+~#=]{1,256}\.[a-zA-Z0-9()]{1,6}\b([-a-zA-Z0-9()@:%_+.~#?&/=]*)/,
   accountName: /^[a-z0-9!@$&_.]+$/,
+  password: /^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$%^&*-]).{8,}$/,
 };

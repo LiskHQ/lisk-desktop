@@ -8,6 +8,8 @@ import alertIcon from '@setup/react/assets/images/icons/icon-alert.svg';
 import approved from '@setup/react/assets/images/icons/approved.svg';
 import arrowLeftActive from '@setup/react/assets/images/icons/arrow-left-active.svg';
 import arrowLeftInactive from '@setup/react/assets/images/icons/arrow-left-inactive.svg';
+import arrowLeftTailed from '@setup/react/assets/images/icons/arrow-left-tailed.svg';
+import arrowLeftTailedDark from '@setup/react/assets/images/icons/arrow-left-tailed-dark.svg';
 import arrowRightActive from '@setup/react/assets/images/icons/arrow-right-active.svg';
 import arrowRightInactive from '@setup/react/assets/images/icons/arrow-right-inactive.svg';
 import arrowRightWithStroke from '@setup/react/assets/images/icons/arrow-right-with-stroke.svg';
@@ -128,6 +130,7 @@ import signOut from '@setup/react/assets/images/icons/signOut.svg';
 import plus from '@setup/react/assets/images/icons/plus.svg';
 import plusActive from '@setup/react/assets/images/icons/plusActive.svg';
 import remove from '@setup/react/assets/images/icons/remove.svg';
+import removeBlueIcon from '@setup/react/assets/images/icons/remove-blue.svg';
 import totalBlocks from '@setup/react/assets/images/icons/total-blocks.svg';
 import totalBlocksDark from '@setup/react/assets/images/icons/total-blocks-dark.svg';
 import blocksForged from '@setup/react/assets/images/icons/blocks-forged.svg';
@@ -219,9 +222,12 @@ import dropdownArrowIcon from '@setup/react/assets/images/icons/dropdown-arrow.s
 import plusBlueIcon from '@setup/react/assets/images/icons/plus-blue.svg';
 import cautionFilledIcon from '@setup/react/assets/images/icons/caution-icon-filled.svg';
 import cautionFilledIconDark from '@setup/react/assets/images/icons/caution-icon-filled-dark.svg';
-
 import applicationsIcon from '@setup/react/assets/images/icons/applications-outline.svg';
 import applicationsIconActive from '@setup/react/assets/images/icons/applications-filled.svg';
+import dropdownFieldIcon from '@setup/react/assets/images/icons/drop-down-field-icon.svg';
+import transferArrow from '@setup/react/assets/images/icons/transfer-arrow.svg';
+import receivedTransactionIcon from '@setup/react/assets/images/icons/received_transaction_icon.svg';
+import sentTransactionIcon from '@setup/react/assets/images/icons/sent_transaction_icon.svg';
 
 export const icons = {
   academy,
@@ -231,6 +237,8 @@ export const icons = {
   arrowRightTailed,
   arrowLeftActive,
   arrowLeftInactive,
+  arrowLeftTailed,
+  arrowLeftTailedDark,
   arrowRightActive,
   arrowRightInactive,
   arrowUpCircle,
@@ -443,6 +451,11 @@ export const icons = {
   plusBlueIcon,
   cautionFilledIcon,
   cautionFilledIconDark,
+  dropdownFieldIcon,
+  removeBlueIcon,
+  transferArrow,
+  receivedTransactionIcon,
+  sentTransactionIcon,
 };
 
 const Icon = ({ name, noTheme, ...props }) => {

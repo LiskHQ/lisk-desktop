@@ -3,7 +3,7 @@ import grid from 'flexboxgrid/dist/flexboxgrid.css';
 export default (changeSort, t) => ([
   {
     title: t('Height'),
-    classList: `${grid['col-xs-3']}`,
+    classList: `${grid['col-xs-2']}`,
     sort: {
       fn: changeSort,
       key: 'height',
@@ -19,10 +19,10 @@ export default (changeSort, t) => ([
   },
   {
     title: t('Transactions'),
-    classList: `${grid['col-xs-2']}`,
+    classList: `${grid['col-xs-1']}`,
   },
   {
-    title: t('Forged'),
-    classList: `${grid['col-xs-1']}`,
+    title: t('Status'),
+    classList: `${grid['col-xs-3']}`,
   },
 ]);

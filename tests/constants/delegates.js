@@ -1,20 +1,22 @@
 const delegate = index => ({
-  username: `genesis_${index}`,
-  vote: '9987212990000000',
-  rewards: '4500000000',
-  producedBlocks: 30 + (index % 3),
-  missedBlocks: 3 - (index % 3),
-  productivity: (((30 + (index % 3)) / (3 - (index % 3))) * 100).toFixed(2),
-  rank: index,
-  address: `1401833615129611201${index}L`,
-  account: {
-    address: `1401833615129611201${index}L`,
-    publicKey: `3ff32442bb6da7d60c1b7752b24e6467813c9b698e0f278d48c43580da972${index}`,
-  },
-  approval: 100 - (index % 5),
+  name: `gr33ndrag0n_${index}`,
+  totalVotesReceived: `100600000000${index}`,
+  selfVotes: `10060000000${index}`,
+  voteWeight: `100600000${index}000`,
+  address: `lskaq5cbv3tjy3wf9789v834ndjpvn${index}vj7bpawsc`,
+  lastGeneratedHeight: 27605 + index,
+  status: 'active',
+  isBanned: index < 15,
+  pomHeights: [
+    {
+      start: 100 + index,
+      end: 500 + index,
+    },
+  ],
+  consecutiveMissedBlocks: index < 15 ? index : 0,
 });
 
-const delegates = Array(101).fill(1).map((item, index) => delegate(index));
+const delegates = Array(30).fill(1).map((item, index) => delegate(index));
 
 const generateDelegate = (index) => ({
   [`lskdwsyfmcko6mcd357446yatromr9vzgu7eb8y1${index}`]: {

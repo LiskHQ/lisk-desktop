@@ -1,0 +1,45 @@
+.wrapper {
+  width: 100%;
+  box-sizing: border-box;
+  max-width: 757px;
+  min-width: 450px;
+  padding: 32px;
+  padding-bottom: 24px;
+  border-radius: 16px;
+  background-color: var(--color-white);
+  align-items: center;
+}
+
+.illustration {
+  padding: 24px;
+  width: 70%;
+}
+
+.textContent {
+  color: var(--color-maastricht-blue);
+  text-align: center;
+
+  & .header {
+    --content-font: 'gilroy';
+
+    font-family: var(--content-font);
+    font-size: 28px;
+    font-weight: var(--font-weight-very-bold);
+    line-height: 32px;
+    margin: 16px;
+  }
+
+  & .detail {
+    margin: 0 8px 16px;
+    font-size: 15px;
+    font-weight: 400;
+  }
+}
+
+.footer {
+  & button {
+    margin-top: 32px;
+    border-radius: 10px;
+    width: 60%;
+  }
+}

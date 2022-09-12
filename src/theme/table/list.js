@@ -16,6 +16,7 @@ const List = ({
   data,
   header,
   headerClassName,
+  subHeader,
   currentSort,
   iterationKey,
   Row,
@@ -26,7 +27,14 @@ const List = ({
   if ((data.length === 0 || error) && !showHeader) return null;
   return (
     <>
-      <Header data={header} currentSort={currentSort} headerClassName={headerClassName} />
+      {showHeader ? (
+        <Header
+          data={header}
+          currentSort={currentSort}
+          headerClassName={headerClassName}
+          subHeader={subHeader}
+        />
+      ) : null}
       {data.map((item, index) => (
         <Row
           key={getUniqueKey(item, index, iterationKey)}

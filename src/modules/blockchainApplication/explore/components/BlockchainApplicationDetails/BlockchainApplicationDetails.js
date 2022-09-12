@@ -2,36 +2,44 @@ import React from 'react';
 import { useTranslation } from 'react-i18next';
 import moment from 'moment';
 import Dialog from '@theme/dialog/dialog';
-import grid from 'flexboxgrid/dist/flexboxgrid.css';
 import Box from 'src/theme/box';
 import { useSelector } from 'react-redux';
 import { selectActiveToken } from 'src/redux/selectors';
 import TokenAmount from '@token/fungible/components/tokenAmount';
 import ValueAndLabel from 'src/modules/transaction/components/TransactionDetails/valueAndLabel';
-import { TertiaryButton } from 'src/theme/buttons';
+import { PrimaryButton, TertiaryButton } from 'src/theme/buttons';
+import grid from 'flexboxgrid/dist/flexboxgrid.css';
 import Icon from 'src/theme/Icon';
 import Tooltip from 'src/theme/Tooltip';
-import { parseSearchParams } from 'src/utils/searchParams';
+import { parseSearchParams, removeThenAppendSearchParamsToUrl } from 'src/utils/searchParams';
+import { useApplicationManagement } from 'src/modules/blockchainApplication/manage/hooks';
 import { usePinBlockchainApplication } from '@blockchainApplication/manage/hooks/usePinBlockchainApplication';
 import styles from './BlockchainApplicationDetails.css';
-import BlockchainAppDetailsHeader from '../BlockchainAppDetailsHeader';
-import liskLogo from '../../../../../../setup/react/assets/images/LISK.png';
 import defaultBackgroundImage from '../../../../../../setup/react/assets/images/default-chain-background.png';
+import liskLogo from '../../../../../../setup/react/assets/images/LISK.png';
+import BlockchainAppDetailsHeader from '../BlockchainAppDetailsHeader';
 
 const deposit = 5e10;
 
-const BlockchainApplicationDetails = ({ location, application }) => {
+// eslint-disable-next-line max-statements
+const BlockchainApplicationDetails = ({ history, location, application }) => {
   const { t } = useTranslation();
   const active = useSelector(selectActiveToken);
   const chainId = parseSearchParams(location.search).chainId;
+  const mode = parseSearchParams(location.search).mode;
   const { checkPinByChainId, togglePin } = usePinBlockchainApplication();
   const {
     state, lastCertificateHeight, lastUpdated,
   } = application.data;
+  const { setApplication } = useApplicationManagement();
 
   const isPinned = checkPinByChainId(chainId);
   const toggleApplicationPin = () => {
     togglePin(chainId);
+  };
+  const addNewApplication = () => {
+    setApplication(application.data);
+    removeThenAppendSearchParamsToUrl(history, { modal: 'addApplicationSuccess', chainId: application.data.chainID }, ['modal', 'chainId', 'mode']);
   };
 
   const footerDetails = [
@@ -70,7 +78,7 @@ const BlockchainApplicationDetails = ({ location, application }) => {
   };
 
   return (
-    <Dialog hasClose className={`${styles.dialogWrapper} ${grid.row} ${grid['center-xs']}`}>
+    <Dialog hasClose hasBack className={`${styles.dialogWrapper} ${grid.row} ${grid['center-xs']}`}>
       <div className={styles.wrapper}>
         <BlockchainAppDetailsHeader
           application={app}
@@ -116,6 +124,18 @@ const BlockchainApplicationDetails = ({ location, application }) => {
             </ValueAndLabel>
           ))}
         </Box>
+        {mode === 'addApplication' ? (
+          <Box className={styles.footerButton}>
+            <PrimaryButton
+              size="l"
+              className={`${styles.addButton} add-application-button`}
+              data-testid="add-application-button"
+              onClick={addNewApplication}
+            >
+              {t('Add application to my list')}
+            </PrimaryButton>
+          </Box>
+        ) : null}
       </div>
     </Dialog>
   );

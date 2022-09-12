@@ -12,32 +12,59 @@ function withFilters(apiName, initialFilters, initialSort) {
         this.actions = {
           applyFilters: this.applyFilters.bind(this),
           clearFilter: this.clearFilter.bind(this),
-          clearAllFilters: this.applyFilters.bind(this, initialFilters),
+          clearAllFilters: this.clearAllFilters.bind(this),
           changeSort: this.changeSort.bind(this),
         };
       }
 
-      applyFilters(f, api = apiName) {
+      applyFilters(f, api = apiName, cb) {
         const { sort } = this.state;
         const filters = { ...f, sort };
         this.setState({ filters: f });
         const usedFilters = Object.keys(filters).filter(key => filters[key] !== '').reduce((acc, key) => { acc[key] = filters[key]; return acc; }, {});
-        this.props[api].loadData(usedFilters);
+        if (cb) {
+          cb(usedFilters);
+        } else {
+          this.props[api].loadData(usedFilters);
+        }
       }
 
-      clearFilter(name) {
-        this.applyFilters({
-          ...this.state.filters,
-          [name]: initialFilters[name],
-        });
+      clearFilter(name, cb) {
+        if (cb) {
+          this.setState({
+            filters: {
+              ...this.state.filters,
+              [name]: initialFilters[name],
+            },
+          });
+          cb();
+        } else {
+          this.applyFilters({
+            ...this.state.filters,
+            [name]: initialFilters[name],
+          });
+        }
       }
 
-      changeSort(id) {
+      clearAllFilters(callback) {
+        if (callback) {
+          this.setState({ filters: initialFilters });
+          callback();
+        } else {
+          this.applyFilters(initialFilters);
+        }
+      }
+
+      changeSort(id, callback) {
         const { filters, sort } = this.state;
         this.setState({
           sort: `${id}:${sort.includes('asc') ? 'desc' : 'asc'}`,
         }, () => {
-          this.applyFilters(filters);
+          if (callback) {
+            callback();
+          } else {
+            this.applyFilters(filters);
+          }
         });
       }
 

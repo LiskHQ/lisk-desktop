@@ -21,6 +21,11 @@ import MainRouter from './MainRouter';
 import './variables.css';
 import styles from './app.css';
 
+if (process.env.REACT_APP_MSW) {
+  const { worker } = require('src/service/mock/runtime');
+  worker.start({ onUnhandledRequest: 'bypass' });
+}
+
 const App = ({ history }) => {
   const dispatch = useDispatch();
   const [loaded, setLoaded] = useState(false);
@@ -36,7 +41,6 @@ const App = ({ history }) => {
   }, []);
 
   const routeObj = Object.values(routes).find(r => r.path === history.location.pathname) || {};
-
   return (
     <ConnectionProvider>
       <ThemeContext.Provider value={theme}>
