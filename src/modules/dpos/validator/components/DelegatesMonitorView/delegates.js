@@ -21,7 +21,6 @@ import styles from './delegates.css';
 const DelegatesMonitor = ({
   votedDelegates,
   watchList,
-  delegatesCount,
   registrations,
   applyFilters,
   filters,
@@ -163,7 +162,6 @@ const DelegatesMonitor = ({
       {activeDetailTab === 'overview'
         ? (
           <DelegatesOverview
-            delegatesCount={delegatesCount}
             registrations={registrations}
             t={t}
             totalBlocks={total}

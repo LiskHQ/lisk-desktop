@@ -68,13 +68,6 @@ const ComposedDelegates = compose(
       transformResponse: stripAccountDataAndMerge,
     },
 
-    delegatesCount: {
-      apiUtil: (network) => getDelegates({ network, params: { limit: 1 } }),
-      defaultData: 0,
-      autoload: true,
-      transformResponse: (response) => response.meta.total,
-    },
-
     registrations: {
       apiUtil: (network) =>
         getRegisteredDelegates({ network }),
