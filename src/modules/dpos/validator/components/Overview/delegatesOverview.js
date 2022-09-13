@@ -24,6 +24,7 @@ const Overview = ({
   registrations,
   t,
   totalBlocks,
+  total,
 }) => {
   const colorPalette = getColorPalette(useTheme());
   const { data: delegates } = useDelegates({ config: { params: { limit: 1 } } });
@@ -55,8 +56,8 @@ const Overview = ({
 
   const totalDelegates = () => (
     <>
-      <p>1804</p>
-      <span>Total delegates</span>
+      <p>{total}</p>
+      <span>{t('Total delegates')}</span>
     </>
   );
 

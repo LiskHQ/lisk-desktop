@@ -48,7 +48,7 @@ const getPassedMinutes = (startTime) => {
 };
 
 const ForgingDetails = ({
-  t, forgedInRound, startTime,
+  t, forgedInRound, startTime, total,
 }) => {
   const theme = useTheme();
   const colorPalette = getColorPalette(theme);
@@ -86,8 +86,8 @@ const ForgingDetails = ({
   const forgersListToShow = forgers.slice(1, FORGERS_TO_SHOW + 1);
   const totalDelegates = () => (
     <>
-      <p>1804</p>
-      <span>Total delegates</span>
+      <p>{total}</p>
+      <span>{t('Total delegates')}</span>
     </>
   );
 

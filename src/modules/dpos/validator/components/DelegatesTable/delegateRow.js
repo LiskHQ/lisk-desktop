@@ -11,10 +11,10 @@ import styles from './schemas.css';
 import LayoutSchema from './layoutSchema';
 
 const DelegateRow = ({
-  data, className, t, activeTab, watchList, setActiveTab, blocks,
+  data, className, t, activeTab, watchList, setActiveTab,
 }) => {
   const formattedForgingTime = getForgingTime(
-    data.nextForgingTime
+    data.nextForgingTimef
   );
   const dispatch = useDispatch();
 
