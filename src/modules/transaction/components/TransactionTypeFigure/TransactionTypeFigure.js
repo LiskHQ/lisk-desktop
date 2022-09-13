@@ -1,20 +1,20 @@
 import React from 'react';
-import { MODULE_COMMANDS_NAME_ID_MAP, MODULE_COMMANDS_MAP } from '@transaction/configuration/moduleAssets';
+import { MODULE_COMMANDS_NAME_MAP, MODULE_COMMANDS_MAP } from 'src/modules/transaction/configuration/moduleCommand';
 import Icon from 'src/theme/Icon';
 import { tokenMap } from '@token/fungible/consts/tokens';
 import TransactionAddress from '../transactionAddress';
 import styles from './TransactionTypeFigure.css';
 
 const TransactionTypeFigure = ({
-  moduleCommandID, className = '', address, iconOnly,
+  moduleCommand, className = '', address, iconOnly,
 }) => {
-  if (moduleCommandID === MODULE_COMMANDS_NAME_ID_MAP.transfer) {
+  if (moduleCommand === MODULE_COMMANDS_NAME_MAP.transfer) {
     return null;
   }
   return (
     <div className={`${styles.wrapper} ${className} transaction-image`}>
       <Icon
-        name={MODULE_COMMANDS_MAP[moduleCommandID]?.icon ?? 'txDefault'}
+        name={MODULE_COMMANDS_MAP[moduleCommand]?.icon ?? 'txDefault'}
         className={styles.transactionIcon}
       />
       {
@@ -25,7 +25,7 @@ const TransactionTypeFigure = ({
               bookmarks={{ LSK: [] }} // @todo why bookmarks are empty?
               t={str => str} // @todo this is also a mock
               token={tokenMap.LSK.key} // @todo why this is hardcoded?
-              moduleCommandID={moduleCommandID}
+              moduleCommand={moduleCommand}
             />
           </span>
         ) : null

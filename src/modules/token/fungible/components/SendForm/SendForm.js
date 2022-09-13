@@ -2,7 +2,7 @@ import React, {
   useCallback, useMemo, useState,
 } from 'react';
 import Piwik from 'src/utils/piwik';
-import { MODULE_COMMANDS_NAME_ID_MAP } from '@transaction/configuration/moduleAssets';
+import { MODULE_COMMANDS_NAME_MAP } from 'src/modules/transaction/configuration/moduleCommand';
 import AmountField from 'src/modules/common/components/amountField';
 import TokenAmount from '@token/fungible/components/tokenAmount';
 import { mockAppTokens } from '@tests/fixtures/token';
@@ -135,7 +135,7 @@ const SendForm = (props) => {
 
   const transaction = {
     isValid,
-    moduleCommandID: MODULE_COMMANDS_NAME_ID_MAP.transfer,
+    moduleCommand: MODULE_COMMANDS_NAME_MAP.transfer,
     params: {
       amount: toRawLsk(amount.value),
       data: reference.value,

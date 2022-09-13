@@ -89,7 +89,7 @@ describe('Reclaim balance Summary', () => {
           amount: accounts.non_migrated.legacy.balance,
         },
         fee: 100000,
-        moduleCommandID: '1000:0',
+        moduleCommand: 'legacy:reclaim',
         nonce: accounts.non_migrated.sequence.nonce,
         sender: {
           PublicKey: accounts.non_migrated.summary.publicKey,
@@ -115,7 +115,7 @@ describe('Reclaim balance Summary', () => {
           amount: accounts.non_migrated.legacy.balance,
         },
         fee: 100000,
-        moduleCommandID: '1000:0',
+        moduleCommand: 'legacy:reclaim',
         nonce: accounts.non_migrated.sequence.nonce,
         sender: {
           PublicKey: accounts.non_migrated.summary.publicKey,

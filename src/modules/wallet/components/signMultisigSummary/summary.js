@@ -58,7 +58,7 @@ const Summary = ({
   if (isEmpty(senderAccount.data)) {
     return <div />;
   }
-  const Layout = LayoutSchema[`${transaction.moduleCommandID}-preview`] || LayoutSchema.default;
+  const Layout = LayoutSchema[`${transaction.moduleCommand}-preview`] || LayoutSchema.default;
 
   return (
     <Box className={styles.boxContainer}>

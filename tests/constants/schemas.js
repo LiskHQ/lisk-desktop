@@ -1,5 +1,5 @@
 const moduleCommandSchemas = {
-  '2:0': {
+  'token:transfer': {
     $id: 'lisk/transfer-asset',
     properties: {
       amount: { dataType: 'uint64', fieldNumber: 1 },
@@ -14,7 +14,7 @@ const moduleCommandSchemas = {
     title: 'Transfer transaction asset',
     type: 'object',
   },
-  '4:0': {
+  'auth:registerMultisignatureGroup': {
     $id: 'lisk/keys/register',
     type: 'object',
     required: [
@@ -53,7 +53,7 @@ const moduleCommandSchemas = {
       },
     },
   },
-  '5:0': {
+  'dpos:registerDelegate': {
     $id: 'lisk/dpos/register',
     type: 'object',
     required: [
@@ -68,7 +68,7 @@ const moduleCommandSchemas = {
       },
     },
   },
-  '5:1': {
+  'dpos:voteDelegate': {
     $id: 'lisk/dpos/vote',
     type: 'object',
     required: [
@@ -102,7 +102,7 @@ const moduleCommandSchemas = {
       },
     },
   },
-  '5:2': {
+  'dpos:unlock': {
     $id: 'lisk/dpos/unlock',
     type: 'object',
     required: [
@@ -141,7 +141,7 @@ const moduleCommandSchemas = {
       },
     },
   },
-  '1000:0': {
+  'legacy:reclaim': {
     $id: 'lisk/legacyAccount/reclaim',
     title: 'Reclaim transaction asset',
     type: 'object',

@@ -2,7 +2,7 @@ import React, { useContext } from 'react';
 import { Link } from 'react-router-dom';
 
 import { getTxAmount } from '@transaction/utils/transaction';
-import { MODULE_COMMANDS_NAME_ID_MAP } from '@transaction/configuration/moduleAssets';
+import { MODULE_COMMANDS_NAME_MAP } from 'src/modules/transaction/configuration/moduleCommand';
 import DateTimeFromTimestamp from 'src/modules/common/components/timestamp';
 import WalletVisual from '@wallet/components/walletVisual';
 import Icon from 'src/theme/Icon';
@@ -74,7 +74,7 @@ export const Sender = () => {
       className={`transaction-row-sender ${styles.walletVisualWithAddress}`}
       address={data.sender.address}
       transactionSubject="sender"
-      moduleCommandID={data.moduleCommandID}
+      moduleCommand={data.moduleCommand}
       showBookmarkedAddress
       size={avatarSize}
     />
@@ -88,7 +88,7 @@ export const Recipient = () => {
       className="transaction-row-recipient"
       address={data.params.recipient?.address}
       transactionSubject="recipient"
-      moduleCommandID={data.moduleCommandID}
+      moduleCommand={data.moduleCommand}
       showBookmarkedAddress
       size={avatarSize}
     />
@@ -99,10 +99,10 @@ export const Counterpart = () => {
   const { data, host, avatarSize } = useContext(TransactionRowContext);
 
   // Show tx icon
-  if (data.moduleCommandID !== MODULE_COMMANDS_NAME_ID_MAP.transfer && host) {
+  if (data.moduleCommand !== MODULE_COMMANDS_NAME_MAP.transfer && host) {
     return (
       <TransactionTypeFigure
-        moduleCommandID={data.moduleCommandID}
+        moduleCommand={data.moduleCommand}
         address={data.sender.address}
       />
     );
@@ -114,7 +114,7 @@ export const Counterpart = () => {
         className="transaction-row-recipient"
         address={data.params.recipient?.address}
         transactionSubject="recipient"
-        moduleCommandID={data.moduleCommandID}
+        moduleCommand={data.moduleCommand}
         showBookmarkedAddress
         size={avatarSize}
       />
@@ -126,7 +126,7 @@ export const Counterpart = () => {
       className="transaction-row-sender"
       address={data.sender.address}
       transactionSubject="sender"
-      moduleCommandID={data.moduleCommandID}
+      moduleCommand={data.moduleCommand}
       showBookmarkedAddress
       size={avatarSize}
     />
@@ -163,7 +163,7 @@ export const Amount = () => {
           token={activeToken}
           showRounded
           recipient={data.params.recipient?.address}
-          moduleCommandID={data.moduleCommandID}
+          moduleCommand={data.moduleCommand}
           amount={getTxAmount(data)}
         />
       </span>
@@ -191,7 +191,7 @@ export const Fee = ({ t }) => {
         content={<TokenAmount val={data.fee} token={activeToken} />}
         size="s"
       >
-        <p>{getModuleCommandTitle(t)[data.moduleCommandID]}</p>
+        <p>{getModuleCommandTitle(t)[data.moduleCommand]}</p>
       </Tooltip>
     </span>
   );
@@ -253,9 +253,10 @@ const generateVotes = (params, delegates, token, t) => {
 
 export const Params = ({ t }) => {
   const { data, delegates = [], activeToken } = useContext(TransactionRowContext);
-  const { voteDelegate, registerDelegate, transfer } = MODULE_COMMANDS_NAME_ID_MAP;
+  const { voteDelegate, registerDelegate, transfer } = MODULE_COMMANDS_NAME_MAP;
+
   const getDetails = () => {
-    switch (data.moduleCommandID) {
+    switch (data.moduleCommand) {
       case registerDelegate:
         return data.params.delegate?.username;
       case voteDelegate:

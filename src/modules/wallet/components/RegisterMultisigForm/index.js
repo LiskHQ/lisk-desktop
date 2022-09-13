@@ -4,7 +4,7 @@ import BoxContent from 'src/theme/box/content';
 import BoxHeader from 'src/theme/box/header';
 import { TertiaryButton } from 'src/theme/buttons';
 import { Input } from 'src/theme';
-import { MODULE_COMMANDS_NAME_ID_MAP } from '@transaction/configuration/moduleAssets';
+import { MODULE_COMMANDS_NAME_MAP } from 'src/modules/transaction/configuration/moduleCommand';
 import TxComposer from '@transaction/components/TxComposer';
 import ProgressBar from '../RegisterMultisigView/ProgressBar';
 import { MAX_MULTI_SIG_MEMBERS } from '../../configuration/constants';
@@ -133,7 +133,7 @@ const Form = ({
   );
 
   const transaction = {
-    moduleCommandID: MODULE_COMMANDS_NAME_ID_MAP.registerMultisignatureGroup,
+    moduleCommand: MODULE_COMMANDS_NAME_MAP.registerMultisignatureGroup,
     isValid: feedback.error === 0,
     feedback: feedback.messages,
     params: {

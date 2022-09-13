@@ -1,7 +1,7 @@
 import React from 'react';
 import { cryptography } from '@liskhq/lisk-client';
 import { mount } from 'enzyme';
-import { MODULE_COMMANDS_NAME_ID_MAP } from '@transaction/configuration/moduleAssets';
+import { MODULE_COMMANDS_NAME_MAP } from 'src/modules/transaction/configuration/moduleCommand';
 import { removeSearchParamsFromUrl } from 'src/utils/searchParams';
 import wallets from '@tests/constants/wallets';
 import Summary from './summary';
@@ -24,7 +24,7 @@ describe('Sign Multisignature Tx Review component', () => {
     t: v => v,
     transaction: {
       id: '12510531279763703865',
-      moduleCommandID: MODULE_COMMANDS_NAME_ID_MAP.transfer,
+      moduleCommand: MODULE_COMMANDS_NAME_MAP.transfer,
       nonce: '158',
       sender: {
         address: wallets.multiSig.summary.address,

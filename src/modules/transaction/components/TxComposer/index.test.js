@@ -1,6 +1,6 @@
 import React from 'react';
 import { mount } from 'enzyme';
-import { MODULE_COMMANDS_NAME_ID_MAP } from '@transaction/configuration/moduleAssets';
+import { MODULE_COMMANDS_NAME_MAP } from 'src/modules/transaction/configuration/moduleCommand';
 import accounts from '@tests/constants/wallets';
 import { mountWithProps } from 'src/utils/testHelpers';
 import { genKey, blsKey, pop } from '@tests/constants/keys';
@@ -8,7 +8,7 @@ import TxComposer from './index';
 
 describe('TxComposer', () => {
   const transaction = {
-    moduleCommandID: MODULE_COMMANDS_NAME_ID_MAP.transfer,
+    moduleCommand: MODULE_COMMANDS_NAME_MAP.transfer,
     params: {
       recipient: { address: accounts.genesis.summary.address },
       amount: 100000,
@@ -55,7 +55,7 @@ describe('TxComposer', () => {
       transaction: {
         isValid: true,
         feedback: [],
-        moduleCommandID: MODULE_COMMANDS_NAME_ID_MAP.registerDelegate,
+        moduleCommand: MODULE_COMMANDS_NAME_MAP.registerDelegate,
         params: {
           username: 'test_username',
           generatorPublicKey: genKey,

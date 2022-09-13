@@ -1,23 +1,23 @@
-import { MODULE_COMMANDS_NAME_ID_MAP } from '@transaction/configuration/moduleAssets';
+import { MODULE_COMMANDS_NAME_MAP } from 'src/modules/transaction/configuration/moduleCommand';
 import {
   formatAmountBasedOnLocale,
 } from 'src/utils/formattedNumber';
 
-const getTxDirectionConfig = (moduleCommandID, host, recipient, styles) => {
-  if (moduleCommandID === MODULE_COMMANDS_NAME_ID_MAP.unlockToken
-      || moduleCommandID === MODULE_COMMANDS_NAME_ID_MAP.reclaimLSK) {
+const getTxDirectionConfig = (moduleCommand, host, recipient, styles) => {
+  if (moduleCommand === MODULE_COMMANDS_NAME_MAP.unlock
+      || moduleCommand === MODULE_COMMANDS_NAME_MAP.reclaim) {
     return {
       sign: '',
       style: styles.unlock,
     };
   }
-  if (moduleCommandID === MODULE_COMMANDS_NAME_ID_MAP.transfer && host === recipient) {
+  if (moduleCommand === MODULE_COMMANDS_NAME_MAP.transfer && host === recipient) {
     return {
       sign: '',
       style: styles.receive,
     };
   }
-  if (moduleCommandID === MODULE_COMMANDS_NAME_ID_MAP.transfer) {
+  if (moduleCommand === MODULE_COMMANDS_NAME_MAP.transfer) {
     return {
       sign: '- ',
       style: '',

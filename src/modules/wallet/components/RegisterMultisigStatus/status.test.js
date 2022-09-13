@@ -17,7 +17,7 @@ describe('Multisignature Status component', () => {
   };
 
   const signedTransaction = {
-    id: '4:0',
+    id: 'auth:registerMultisignatureGroup',
     senderPublicKey: accounts.genesis.summary.publicKey,
     signatures: [accounts.genesis.summary.publicKey],
     nonce: '19n',

@@ -304,6 +304,7 @@ module.exports = {
     'src/modules/wallet/components/multiSignature/index.js',
     'src/modules/account/hooks/useCurrentAccount.js',
     'src/modules/transaction/store/actions.js',
+    'src/modules/transaction/hooks/useCreateTransaction.js',
   ],
   coverageThreshold: {
     // global: {
