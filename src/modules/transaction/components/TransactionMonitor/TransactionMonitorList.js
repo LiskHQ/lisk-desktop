@@ -41,7 +41,7 @@ const getFields = (t) => [
   {
     label: t('Type'),
     placeholder: t('All types'),
-    name: 'moduleCommandID',
+    name: 'moduleCommand',
     type: 'select',
   },
   {
@@ -51,7 +51,7 @@ const getFields = (t) => [
     type: 'integer',
   },
 ];
-const blackListTypes = ['4:0', '5:0', '5:1', '5:3'];
+const blackListTypes = ['auth:registerMultisignatureGroup', 'dpos:registerDelegate', 'dpos:voteDelegate', '5:3'];
 
 // eslint-disable-next-line max-statements
 const Transactions = ({
@@ -97,7 +97,7 @@ const Transactions = ({
   /* istanbul ignore next */
   const formatters = {
     height: (value) => `${t('Height')}: ${value}`,
-    moduleCommandID: (value) => `${t('Type')}: ${getModuleCommandTitle()[value]}`,
+    moduleCommand: (value) => `${t('Type')}: ${getModuleCommandTitle()[value]}`,
     senderAddress: (value) => `${t('Sender')}: ${value}`,
     recipientAddress: (value) => `${t('Recipient')}: ${value}`,
   };
@@ -105,7 +105,7 @@ const Transactions = ({
     headerData.map((data) => {
       if (
         data?.sort?.key === 'amount'
-        && blackListTypes.some((type) => type === dropdownFilters.moduleCommandID)
+        && blackListTypes.some((type) => type === dropdownFilters.moduleCommand)
       ) delete data.sort;
       return data;
     });
@@ -121,9 +121,9 @@ const Transactions = ({
     });
 
   const dropdownApplyFilters = (txFilters) => {
-    const moduleCommandID = txFilters.moduleCommandID;
+    const moduleCommand = txFilters.moduleCommand;
     applyFilters(txFilters);
-    if (blackListTypes.some((type) => type === moduleCommandID)) setTimeout(() => changeSort('timestamp'), 100);
+    if (blackListTypes.some((type) => type === moduleCommand)) setTimeout(() => changeSort('timestamp'), 100);
   };
 
   return (
@@ -143,9 +143,9 @@ const Transactions = ({
               fields={innerFields}
               filters={filters}
               applyFilters={dropdownApplyFilters}
-              onTypeSelected={(moduleCommandID) => {
+              onTypeSelected={(moduleCommand) => {
                 setInnerFields(
-                  moduleCommandID ? removeField(fields, moduleCommandID) : fields,
+                  moduleCommand ? removeField(fields, moduleCommand) : fields,
                 );
               }}
             />

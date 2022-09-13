@@ -21,7 +21,7 @@ const filterComponents = {
   select: SelectFilter,
 };
 
-const blackListTypes = ['4:0', '5:0', '5:1', '5:3'];
+const blackListTypes = ['auth:registerMultisignatureGroup', 'dpos:registerDelegate', 'dpos:voteDelegate', '5:3'];
 
 class FilterDropdownButton extends React.Component {
   constructor(props) {
@@ -64,10 +64,10 @@ class FilterDropdownButton extends React.Component {
 
     if (
       blackListTypes.some(
-        (blackListType) => blackListType === fields.moduleCommandID?.value,
+        (blackListType) => blackListType === fields.moduleCommand?.value,
       )
     ) {
-      this.props.onTypeSelected(fields.moduleCommandID.value);
+      this.props.onTypeSelected(fields.moduleCommand.value);
     } else {
       this.props.onTypeSelected(null);
     }

@@ -1,7 +1,7 @@
 import React from 'react';
 import { mount } from 'enzyme';
 import wallets from '@tests/constants/wallets';
-import { MODULE_COMMANDS_NAME_ID_MAP } from '@transaction/configuration/moduleAssets';
+import { MODULE_COMMANDS_NAME_MAP } from 'src/modules/transaction/configuration/moduleCommand';
 import Summary from './UnlockBalanceSummary';
 
 describe('Locked balance Summary', () => {
@@ -13,7 +13,7 @@ describe('Locked balance Summary', () => {
         unlockObjects: [],
       },
       isValid: true,
-      moduleCommandID: MODULE_COMMANDS_NAME_ID_MAP.unlockToken,
+      moduleCommand: MODULE_COMMANDS_NAME_MAP.unlock,
     },
     nextStep: jest.fn(),
     prevStep: jest.fn(),

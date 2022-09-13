@@ -1,4 +1,4 @@
-import { MODULE_COMMANDS_NAME_ID_MAP } from '@transaction/configuration/moduleAssets';
+import { MODULE_COMMANDS_NAME_MAP } from 'src/modules/transaction/configuration/moduleCommand';
 import { fromRawLsk, delay } from '@token/fungible/utils/lsk';
 import { selectActiveToken, selectActiveTokenAccount } from 'src/redux/selectors';
 import {
@@ -13,7 +13,7 @@ import settingsActionTypes from 'src/modules/settings/store/actionTypes';
 const filterIncomingTransactions = (transactions, account) =>
   transactions.filter(transaction => (
     transaction
-    && transaction.moduleCommandID === MODULE_COMMANDS_NAME_ID_MAP.transfer
+    && transaction.moduleCommand === MODULE_COMMANDS_NAME_MAP.transfer
     && transaction.params.recipient?.address === account.summary?.address
   ));
 

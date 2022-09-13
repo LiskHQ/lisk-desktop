@@ -5,7 +5,7 @@ const transaction = index => ({
   // amount: `${index}00000000`,
   id: `1402835196409030464${index}`,
   type: 0,
-  moduleCommandID: '2:0',
+  moduleCommand: 'token:transfer',
   fee: '10000000',
   isPending: false,
   sender: { address: 'lskdwsyfmcko6mcd357446yatromr9vzgu7eb8y11' },
@@ -26,8 +26,8 @@ const transaction = index => ({
 const transactions = Array(30).fill(1).map((item, index) => transaction(index));
 
 const sampleTransaction = {
-  moduleID: 5,
-  commandID: 1,
+  module: 5,
+  command: 1,
   senderPublicKey: Buffer.from('205688492bc52ddabfdc10fa7728b8bcb5942ad17c68ab5c20e96153fd1ac657', 'hex'),
   nonce: BigInt(2),
   fee: BigInt(142000),

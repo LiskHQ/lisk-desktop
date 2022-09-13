@@ -145,7 +145,7 @@ describe('RegisterDelegateForm', () => {
       },
       rawTx: {
         fee: 0,
-        moduleCommandID: '5:0',
+        moduleCommand: 'dpos:registerDelegate',
         nonce: '1',
         params: {
           blsPublicKey: blsKey.value,

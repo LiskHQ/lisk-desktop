@@ -15,23 +15,23 @@ const network = {
         networkIdentifier: '15f0dacc1060e91818224a94286b13aa04279c640bd5d6f193182031d133df7c',
         moduleAssets: [
           {
-            id: '2:0',
+            id: 'token:transfer',
             name: 'token:transfer',
           },
           {
-            id: '4:0',
+            id: 'auth:registerMultisignatureGroup',
             name: 'keys:registerMultisignatureGroup',
           },
           {
-            id: '5:0',
+            id: 'dpos:registerDelegate',
             name: 'dpos:registerDelegate',
           },
           {
-            id: '5:1',
+            id: 'dpos:voteDelegate',
             name: 'dpos:voteDelegate',
           },
           {
-            id: '5:2',
+            id: 'dpos:unlock',
             name: 'dpos:unlockToken',
           },
           {
@@ -39,7 +39,7 @@ const network = {
             name: 'dpos:reportDelegateMisbehavior',
           },
           {
-            id: '1000:0',
+            id: 'legacy:reclaim',
             name: 'legacyAccount:reclaimLSK',
           },
         ],

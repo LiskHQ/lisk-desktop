@@ -39,7 +39,7 @@ const txBase = {
 //   },
 // };
 const transfer = {
-  moduleCommandID: '2:0',
+  moduleCommand: 'token:transfer',
   params: {
     recipient: {
       address: accounts.multiSig.summary.address,

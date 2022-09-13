@@ -1,6 +1,6 @@
 import React from 'react';
 import { mount } from 'enzyme';
-import { MODULE_COMMANDS_NAME_ID_MAP } from '@transaction/configuration/moduleAssets';
+import { MODULE_COMMANDS_NAME_MAP } from 'src/modules/transaction/configuration/moduleCommand';
 import { mountWithRouter } from 'src/utils/testHelpers';
 import { truncateAddress } from '@wallet/utils/account';
 import wallets from '@tests/constants/wallets';
@@ -14,8 +14,7 @@ jest.mock('@dpos/validator/api', () => ({
 const transferTx = {
   data: {
     id: '6efc4dcc36f35e0507cf910630aee301b4a31cbadcaf397f23bef728c3fd634e',
-    moduleCommandID: '2:0',
-    moduleAssetName: 'token:transfer',
+    moduleCommand: 'token:transfer',
     fee: '1000000',
     height: 619766,
     nonce: '31',
@@ -45,8 +44,7 @@ const transferTx = {
 const voteTx = {
   data: {
     id: 'fde8186c272fe8b513faa9e8816e23d6ec9dab883d15c984dbf543681548b595',
-    moduleCommandID: '5:1',
-    moduleAssetName: 'dpos:voteDelegate',
+    moduleCommand: 'dpos:voteDelegate',
     fee: '30000000',
     height: 134,
     nonce: '2',
@@ -78,8 +76,7 @@ const voteTx = {
 const delegateRegTx = {
   data: {
     id: 'fe680a5cfba50acb66c135cc11e92808991c5679b1d5f78f6a777817c5c4157c',
-    moduleCommandID: '5:0',
-    moduleAssetName: 'dpos:registerDelegate',
+    moduleCommand: 'dpos:registerDelegate',
     fee: '1500000000',
     height: 130,
     nonce: '0',
@@ -222,7 +219,7 @@ describe('Transaction Details Component', () => {
     it('Should render unlock LSK details', () => {
       const unlockTx = {
         data: {
-          moduleCommandID: MODULE_COMMANDS_NAME_ID_MAP.unlockToken,
+          moduleCommand: MODULE_COMMANDS_NAME_MAP.unlock,
           sender: {
             senderId: wallets.genesis.summary.address,
           },
