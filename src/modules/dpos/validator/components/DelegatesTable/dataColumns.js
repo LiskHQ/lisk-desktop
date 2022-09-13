@@ -84,7 +84,7 @@ export const DelegateDetails = () => {
   } = useContext(DelegateRowContext);
   const theme = useTheme();
   const {
-    status, totalVotesReceived, voteWeight, nextForgingTime,
+    status, totalVotesReceived, voteWeight,
   } = data;
   const showEyeIcon = activeTab === 'active' || activeTab === 'standby' || activeTab === 'sanctioned' || activeTab === 'watched';
   const [key, val] = getDelegateStatus(status, totalVotesReceived);
@@ -129,7 +129,6 @@ export const DelegateDetails = () => {
             <DelegateSummary
               delegate={data}
               weight={formattedVoteWeight}
-              lastForgeTime={nextForgingTime}
               status={{ value: val, className: `${styles.delegateStatus} ${styles[key]} ${styles[theme]}` }}
             />
           </Tooltip>

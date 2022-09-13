@@ -14,7 +14,6 @@ const DelegateSummary = ({
   delegate,
   status,
   weight,
-  lastForgeTime,
 }) => {
   const {
     address, name, rank, consecutiveMissedBlocks,
@@ -59,12 +58,12 @@ const DelegateSummary = ({
           </div>
           <div>
             <span>{t('CMB :')}</span>
-            <span>{consecutiveMissedBlocks}</span>
+            <span data-testid="cmb">{consecutiveMissedBlocks}</span>
           </div>
           <div>
             <span>{t('Last forged :')}</span>
             <span>
-              <DateTimeFromTimestamp time={lastForgeTime} />
+              <DateTimeFromTimestamp time={delegate.nextForgingTime} />
             </span>
           </div>
         </div>
