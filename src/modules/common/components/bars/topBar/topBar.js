@@ -1,6 +1,7 @@
 import React from 'react';
 import routes from 'src/routes/routes';
 import Icon from 'src/theme/Icon';
+import AccountManagementDropdown from 'src/modules/account/components/AccountManagementDropdown';
 import DialogLink from 'src/theme/dialog/link';
 import Tooltip from 'src/theme/Tooltip';
 import VoteQueueToggle from 'src/modules/common/components/bars/topBar/voteQueueToggle';
@@ -13,27 +14,21 @@ import styles from './topBar.css';
 import Network from './networkName';
 import NavigationButtons from './navigationButtons';
 
-const TopBar = ({
-  t,
-  history,
-  network,
-  token,
-  noOfVotes,
-  location,
-}) => {
+const TopBar = ({ t, history, network, token, noOfVotes, location }) => {
   const disabled = location.pathname === routes.reclaim.path;
 
   return (
     <div className={`${styles.wrapper} top-bar`}>
       <div className={styles.group}>
         <Icon name="liskLogo" className={`${styles.logo} topbar-logo`} />
+        <AccountManagementDropdown />
         <NavigationButtons history={history} />
         <SideBarToggle />
         <Tooltip
           className={styles.tooltipWrapper}
           size="maxContent"
           position="bottom"
-          content={(
+          content={
             <DialogLink
               component="bookmarks"
               className={`${styles.toggle} bookmark-list-toggle ${
@@ -42,15 +37,11 @@ const TopBar = ({
             >
               <Icon name="bookmark" className={styles.bookmarksIcon} />
             </DialogLink>
-          )}
+          }
         >
           <p>{t('Bookmarks')}</p>
         </Tooltip>
-        <VoteQueueToggle
-          t={t}
-          noOfVotes={noOfVotes}
-          disabled={disabled}
-        />
+        <VoteQueueToggle t={t} noOfVotes={noOfVotes} disabled={disabled} />
         <Search t={t} history={history} disabled={disabled} />
       </div>
       <div className={styles.group}>
