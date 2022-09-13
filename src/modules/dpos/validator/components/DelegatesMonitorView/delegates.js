@@ -22,8 +22,6 @@ import styles from './delegates.css';
 const DelegatesMonitor = ({
   watchList,
   registrations,
-  // applyFilters,
-  // filters,
 }) => {
   const { t } = useTranslation();
   const timeout = useRef();

@@ -16,7 +16,7 @@ const DelegateSummary = ({
   weight,
 }) => {
   const {
-    address, name, rank, consecutiveMissedBlocks,
+    address, name, rank, consecutiveMissedBlocks, nextForgingTime,
   } = delegate;
   const { t } = useTranslation();
 
@@ -63,7 +63,7 @@ const DelegateSummary = ({
           <div>
             <span>{t('Last forged :')}</span>
             <span>
-              <DateTimeFromTimestamp time={delegate.nextForgingTime} />
+              <DateTimeFromTimestamp time={nextForgingTime} />
             </span>
           </div>
         </div>

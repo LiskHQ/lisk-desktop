@@ -6,7 +6,7 @@ import { useForgersGenerator } from './useForgersGenerator';
 
 jest.useRealTimers();
 
-describe('useBlocks hook', () => {
+describe('useForgersGenerator hook', () => {
   const limit = 52;
   const config = { params: { limit } };
 

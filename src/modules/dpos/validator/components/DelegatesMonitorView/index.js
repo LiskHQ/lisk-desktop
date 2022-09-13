@@ -8,7 +8,6 @@ import Delegates from './delegates';
 
 const mapStateToProps = (state) => ({
   watchList: state.watchList,
-  blocks: state.blocks,
 });
 
 const ComposedDelegates = compose(
