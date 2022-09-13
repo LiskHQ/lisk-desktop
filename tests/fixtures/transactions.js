@@ -21,7 +21,7 @@ const getState = () => ({
         serviceUrl: 'http://localhost:4000',
         networkIdentifier: '198f2b61a8eb95fbeed58b8216780b68f697f26b849acf00c8c93bb9b24f783d',
         moduleCommandSchemas: {
-          '2:0': {
+          'token:transfer': {
             $id: 'lisk/transfer-asset',
             title: 'Transfer transaction asset',
             type: 'object',
@@ -49,7 +49,7 @@ const getState = () => ({
               },
             },
           },
-          '4:0': {
+          'auth:registerMultisignatureGroup': {
             $id: 'lisk/keys/register',
             type: 'object',
             required: ['numberOfSignatures', 'optionalKeys', 'mandatoryKeys'],
@@ -75,7 +75,7 @@ const getState = () => ({
               },
             },
           },
-          '5:0': {
+          'dpos:registerDelegate': {
             $id: 'lisk/dpos/register',
             type: 'object',
             properties: {
@@ -85,7 +85,7 @@ const getState = () => ({
             },
             required: ['username'],
           },
-          '5:1': {
+          'dpos:voteDelegate': {
             $id: 'lisk/dpos/vote',
             type: 'object',
             required: [
@@ -119,7 +119,7 @@ const getState = () => ({
               },
             },
           },
-          '5:2': {
+          'dpos:unlock': {
             $id: 'lisk/dpos/unlock',
             type: 'object',
             required: ['unlockObjects'],
@@ -143,7 +143,7 @@ const getState = () => ({
               },
             },
           },
-          '1000:0': {
+          'legacy:reclaim': {
             $id: 'lisk/legacyAccount/reclaim',
             properties: { amount: { dataType: 'uint64', fieldNumber: 1 } },
             required: ['amount'],
@@ -173,7 +173,7 @@ const getState = () => ({
 });
 
 const transformedAccountTransaction = {
-  moduleCommandID: '5:1',
+  moduleCommand: 'dpos:voteDelegate',
   id: 'ad0e0acbe8a3ece3087c8362149ca39c470e565d268df32e57de5d3fe2e1ea5c',
   fee: '142000n',
   nonce: '2n',

@@ -69,7 +69,7 @@ const updateTransactionSignatures = (
   signature,
   keys,
 ) => {
-  const isMultiSignatureRegistration = transactionObject.moduleID === 4;
+  const isMultiSignatureRegistration = transactionObject.module === 4;
   const signerPublicKey = Buffer.from(account.summary.publicKey, 'hex');
   const isSender = Buffer.isBuffer(transactionObject.senderPublicKey)
     && signerPublicKey.equals(transactionObject.senderPublicKey);

@@ -1,10 +1,10 @@
-import { useState } from 'react';
+import { useCallback, useState } from 'react';
 import { useSelector } from 'react-redux';
 import { selectActiveTokenAccount } from 'src/redux/selectors';
-import { extractPublicKey } from '@wallet/utils/account';
+import { validate2ndPass } from '@wallet/utils/account';
 
 const empty2ndPass = {
-  data: '',
+  passphrase: '',
   error: -1,
   feedback: [],
 };
@@ -13,32 +13,15 @@ const setSecondPassphrase = () => {
   const [secondPass, set2ndPass] = useState(empty2ndPass);
   const account = useSelector(selectActiveTokenAccount);
 
-  const validate2ndPass = (data, error) => {
-    const messages = [];
-    if (error) {
-      messages.push(messages);
-      return messages;
-    }
-
-    const secondPublicKey = account.keys.mandatoryKeys
-      .filter(item => item !== account.summary.publicKey);
-    const publicKey = extractPublicKey(data);
-
-    // compare them
-    if (!secondPublicKey.length || publicKey !== secondPublicKey[0]) {
-      messages.push('This passphrase does not belong to your account.');
-    }
-    return messages;
-  };
-
-  const setter = (data, error) => {
-    const feedback = validate2ndPass(data, error);
-    set2ndPass({
-      data,
-      error: data === '' ? -1 : feedback.length,
-      feedback,
+  const setter = useCallback((data, error) => {
+    validate2ndPass(account, data, error).then(feedback => {
+      set2ndPass({
+        data,
+        error: data === '' ? -1 : feedback.length,
+        feedback,
+      });
     });
-  };
+  }, [set2ndPass]);
 
   return [secondPass, setter];
 };

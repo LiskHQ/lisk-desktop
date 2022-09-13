@@ -94,7 +94,7 @@ describe('SearchBar', () => {
                 data: 'testing',
               },
               id: '123456123234234',
-              moduleCommandID: '2:0',
+              moduleCommand: 'token:transfer',
             },
           ],
         },

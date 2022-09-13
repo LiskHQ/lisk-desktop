@@ -1,5 +1,5 @@
+/* eslint-disable max-len */
 import { cryptography } from '@liskhq/lisk-client';
-import { getCustomDerivationKeyPair } from 'src/utils/explicitBipKeyDerivation';
 import accounts from '@tests/constants/wallets';
 import {
   extractPublicKey,
@@ -18,33 +18,33 @@ const {
   privateKey,
   publicKey,
 } = accounts.genesis.summary;
+const customDerivationPath = "m/44'/134'/1'";
 
 jest.spyOn(cryptography.address, 'getLisk32AddressFromPublicKey').mockReturnValue(address);
-
-jest.mock('src/utils/explicitBipKeyDerivation', () => ({
-  getCustomDerivationKeyPair: jest.fn(),
-}));
+jest.spyOn(cryptography.ed, 'getKeyPairFromPhraseAndPath');
 
 describe('Utils: Account', () => {
   describe('extractPublicKey', () => {
-    it('should return a hex string from any given string', () => {
-      expect(extractPublicKey(passphrase)).toEqual(publicKey);
+    it('should return a hex string from any given string', async () => {
+      const key = await extractPublicKey(passphrase);
+      await expect(key).toEqual(publicKey);
     });
 
-    it('should call getCustomDerivationKeyPair', () => {
-      extractPublicKey(passphrase, true, '1/2');
-      expect(getCustomDerivationKeyPair).toHaveBeenCalledWith(passphrase, '1/2');
+    it('should call getCustomDerivationKeyPair', async () => {
+      await extractPublicKey(passphrase, true, customDerivationPath);
+      expect(cryptography.ed.getKeyPairFromPhraseAndPath).toHaveBeenCalledWith(passphrase, customDerivationPath);
     });
   });
 
   describe('extractPrivateKey', () => {
-    it('should return a hex string from any given string', () => {
-      expect(extractPrivateKey(passphrase)).toEqual(privateKey);
+    it('should return a hex string from any given string', async () => {
+      const key = await extractPrivateKey(passphrase);
+      expect(key).toEqual(privateKey);
     });
 
-    it('should call getCustomDerivationKeyPair', () => {
-      extractPrivateKey(passphrase, true, '1/2');
-      expect(getCustomDerivationKeyPair).toHaveBeenCalledWith(passphrase, '1/2');
+    it('should call getCustomDerivationKeyPair', async () => {
+      await extractPrivateKey(passphrase, true, customDerivationPath);
+      expect(cryptography.ed.getKeyPairFromPhraseAndPath).toHaveBeenCalledWith(passphrase, customDerivationPath);
     });
   });
 

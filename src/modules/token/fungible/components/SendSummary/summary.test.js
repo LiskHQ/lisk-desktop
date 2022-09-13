@@ -23,7 +23,7 @@ describe('Summary', () => {
           amount: 112300000,
           data: 'test',
         },
-        moduleCommandID: '2:0',
+        moduleCommand: 'token:transfer',
       },
       t: i18n.t,
       selectedPriority: { title: 'Normal', value: 1 },

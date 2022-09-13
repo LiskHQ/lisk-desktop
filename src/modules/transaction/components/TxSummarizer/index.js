@@ -1,5 +1,5 @@
 import React from 'react';
-import { MODULE_COMMANDS_NAME_ID_MAP } from '@transaction/configuration/moduleAssets';
+import { MODULE_COMMANDS_NAME_MAP } from 'src/modules/transaction/configuration/moduleCommand';
 import Box from 'src/theme/box';
 import BoxHeader from 'src/theme/box/header';
 import { TertiaryButton } from 'src/theme/buttons';
@@ -33,7 +33,7 @@ const TxSummarizer = ({
   hasCancel,
 }) => {
   const fee = !(wallet.summary.isMultisignature
-    || rawTx.moduleCommandID === MODULE_COMMANDS_NAME_ID_MAP.registerMultisignatureGroup
+    || rawTx.moduleCommand === MODULE_COMMANDS_NAME_MAP.registerMultisignatureGroup
   ) ? rawTx.fee : 0;
   const tooltip = {
     title: t('Transaction fee'),

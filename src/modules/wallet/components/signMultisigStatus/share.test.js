@@ -16,13 +16,12 @@ describe('Sign Multisignature Tx Status component', () => {
   };
 
   const signedTransaction = {
-    id: '4:0',
     senderPublicKey: accounts.multiSig.summary.publicKey,
     signatures: [accounts.multiSig.summary.publicKey],
     nonce: '19n',
     fee: '207000n',
-    moduleID: '4',
-    commandID: '0',
+    module: 'auth',
+    command: 'registerMultisignatureGroup',
     params: {
       optionalKeys: accounts.multiSig.keys.optionalKeys,
       mandatoryKeys: accounts.multiSig.keys.mandatoryKeys,

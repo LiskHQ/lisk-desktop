@@ -1,6 +1,6 @@
 import React from 'react';
 import { tokenMap } from '@token/fungible/consts/tokens';
-import { MODULE_COMMANDS_NAME_ID_MAP } from '@transaction/configuration/moduleAssets';
+import { MODULE_COMMANDS_NAME_MAP } from '@transaction/configuration/moduleCommand';
 import useTransactionFeeCalculation from '@transaction/hooks/useTransactionFeeCalculation';
 import useTransactionPriority from '@transaction/hooks/useTransactionPriority';
 import TransactionSummary from '@transaction/manager/transactionSummary';
@@ -8,7 +8,7 @@ import { toRawLsk } from '@token/fungible/utils/lsk';
 import styles from './summary.css';
 
 const transaction = {
-  moduleCommandID: MODULE_COMMANDS_NAME_ID_MAP.reclaimLSK,
+  moduleCommand: MODULE_COMMANDS_NAME_MAP.reclaim,
   params: {},
 };
 

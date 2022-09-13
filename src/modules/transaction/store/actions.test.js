@@ -149,7 +149,7 @@ describe.skip('actions: transactions', () => {
     it('should create an action to add pending transaction', () => {
       // Arrange
       const data = {
-        moduleCommandID: '1938573839:g45krEIjwK',
+        moduleCommand: '1938573839:g45krEIjwK',
         id: '4emF3me9YJSbcIuOp',
         fee: '1032519n',
         nonce: '2n',
@@ -192,8 +192,8 @@ describe.skip('actions: transactions', () => {
       token,
       transactions: {
         signedTransaction: {
-          moduleID: 2,
-          commandID: 0,
+          module: 2,
+          command: 0,
           senderPublicKey: Buffer.from(accounts.genesis.summary.publicKey, 'hex'),
           nonce: BigInt(49),
           fee: BigInt(209000),
@@ -374,7 +374,7 @@ describe.skip('actions: transactions', () => {
     const props = {
       rawTx: {
         id: '9dc584c07c9d7ed77d54b6f8f43b8341c50e108cbcf582ceb3513388fe4ba84c',
-        moduleCommandID: '2:0',
+        moduleCommand: 'token:transfer',
         fee: '10000000',
         nonce: 0,
         sender: { publicKey: '00f046aea2782180c51f7271249a0c107e6b6295c6b3c31e43c1a3ed644dcdeb' },

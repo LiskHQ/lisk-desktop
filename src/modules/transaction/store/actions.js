@@ -95,7 +95,7 @@ export const resetTransactionResult = () => ({
 export const transactionDoubleSigned = () => async (dispatch, getState) => {
   const state = getState();
   const { transactions, network } = state;
-  const keyPair = extractKeyPair({
+  const keyPair = await extractKeyPair({
     passphrase: state.wallet.secondPassphrase,
     enableCustomDerivationPath: false,
   });
@@ -217,7 +217,7 @@ export const multisigTransactionSigned = ({
  * @param {object} data.rawTransaction Transaction config required by Lisk Element
  */
 export const signatureSkipped = ({ rawTx }) => {
-  const binaryTx = desktopTxToElementsTx(rawTx, rawTx.moduleCommandID);
+  const binaryTx = desktopTxToElementsTx(rawTx, rawTx.moduleCommand);
 
   return ({
     type: actionTypes.signatureSkipped,

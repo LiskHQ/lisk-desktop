@@ -20,7 +20,7 @@ export const encryptAccount = async ({
   };
 
   try {
-    const { privateKey, publicKey, isValid } = extractKeyPair(options);
+    const { privateKey, publicKey, isValid } = await extractKeyPair(options);
     if (!isValid) {
       return { error: true };
     }
@@ -53,7 +53,6 @@ export const decryptAccount = async (encryptedPassphrase, password) => {
       encryptedPassphrase,
       password,
     );
-
     return {
       error: null,
       result: JSON.parse(plainText),

@@ -1,4 +1,4 @@
-import { MODULE_COMMANDS_NAME_ID_MAP } from '@transaction/configuration/moduleAssets';
+import { MODULE_COMMANDS_NAME_MAP } from 'src/modules/transaction/configuration/moduleCommand';
 
 import {
   TransactionId, Sender, Recipient, Message, Illustration,
@@ -8,9 +8,9 @@ import {
 import styles from './layoutSchema.css';
 
 const {
-  transfer, voteDelegate, unlockToken, registerDelegate, registerMultisignatureGroup,
-  reportDelegateMisbehavior, reclaimLSK,
-} = MODULE_COMMANDS_NAME_ID_MAP;
+  transfer, voteDelegate, unlock, registerDelegate, registerMultisignatureGroup,
+  reportDelegateMisbehavior, reclaim,
+} = MODULE_COMMANDS_NAME_MAP;
 
 const baseComponents = [Illustration, Sender];
 const timeComponents = [TransactionId, TxDate, BlockId, BlockHeight, Fee, Confirmations];
@@ -50,11 +50,11 @@ export const LayoutSchema = {
     components: [...previewBaseComponents, Members, NumberOfSignatures, ...restComponents],
     className: styles.multiSigRegisterPreview,
   },
-  [unlockToken]: {
+  [unlock]: {
     components: [...baseComponents, Amount, ...timeComponents, PrettyJson],
     className: styles.unlockToken,
   },
-  [`${unlockToken}-preview`]: {
+  [`${unlock}-preview`]: {
     components: [...previewBaseComponents, Amount, ...restComponents],
     className: styles.unlockTokenPreview,
   },
@@ -62,7 +62,7 @@ export const LayoutSchema = {
     components: [...baseComponents, ...timeComponents, PrettyJson],
     className: styles.reportDelegateMisbehavior,
   },
-  [reclaimLSK]: {
+  [reclaim]: {
     components: [...baseComponents, ...timeComponents, Amount, PrettyJson],
     className: styles.reclaimLSK,
   },
