@@ -9,8 +9,12 @@ const getErrorMessage = (error) => {
   return error || 'There was a problem updating the application';
 };
 
-export default ({ // eslint-disable-line max-statements
-  autoUpdater, dialog, win, electron,
+// eslint-disable-next-line max-statements
+export default ({
+  autoUpdater,
+  dialog,
+  win,
+  electron,
 }) => {
   const updater = {
     menuItem: { enabled: true },
