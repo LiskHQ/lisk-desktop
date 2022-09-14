@@ -1,4 +1,4 @@
-import routes, { modals } from 'src/routes/routes';
+import routes from 'src/routes/routes';
 
 // eslint-disable-next-line import/prefer-default-export
 export const ACCOUNT_MENU = [
@@ -23,13 +23,13 @@ export const ACCOUNT_MENU = [
     label: 'Add new account',
   },
   {
-    path: modals.multiSignature.path,
+    path: '/delegates?modal=registerDelegate',
     icon: 'multiSignatureOutline',
     label: 'Upgrade to multisignature',
   },
   {
     component: 'removeCurrentAccountFlow',
-    icon: 'remove',
+    icon: 'removeRed',
     label: 'Remove account',
   },
 ];
