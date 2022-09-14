@@ -1,6 +1,6 @@
 import { getTransactionFee } from '@transaction/api';
 import { getNumberOfSignatures } from '@transaction/utils/transaction';
-import { MODULE_COMMANDS_NAME_ID_MAP } from '@transaction/configuration/moduleAssets';
+import { MODULE_COMMANDS_NAME_MAP } from 'src/modules/transaction/configuration/moduleCommand';
 import { MIN_ACCOUNT_BALANCE, VOTE_AMOUNT_STEP } from '@transaction/configuration/transactions';
 import { toRawLsk } from '@token/fungible/utils/lsk';
 import { normalizeVotesForTx } from '@transaction/utils';
@@ -43,7 +43,7 @@ const getMaxAmount = async (wallet, network, voting, address) => {
     sender: {
       publicKey: wallet.summary?.publicKey,
     },
-    moduleCommandID: MODULE_COMMANDS_NAME_ID_MAP.voteDelegate,
+    moduleCommand: MODULE_COMMANDS_NAME_MAP.voteDelegate,
   };
 
   const maxAmountFee = await getTransactionFee({

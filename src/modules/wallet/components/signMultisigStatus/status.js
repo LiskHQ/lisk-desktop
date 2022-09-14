@@ -16,6 +16,7 @@ const Status = ({ sender, transactions, t }) => {
     transactions,
     sender.data?.summary.publicKey,
   );
+
   const template = statusMessages(t)[status.code];
 
   return (

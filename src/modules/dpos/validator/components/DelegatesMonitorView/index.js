@@ -10,7 +10,7 @@ import { getTransactions, getRegisteredDelegates } from '@transaction/api';
 import withData from 'src/utils/withData';
 import withFilters from 'src/utils/withFilters';
 import { DEFAULT_LIMIT } from 'src/utils/monitor';
-import { MODULE_COMMANDS_NAME_ID_MAP } from '@transaction/configuration/moduleAssets';
+import { MODULE_COMMANDS_NAME_MAP } from 'src/modules/transaction/configuration/moduleCommand';
 import Delegates from './delegates';
 
 const defaultUrlSearchParams = { search: '' };
@@ -98,7 +98,7 @@ const ComposedDelegates = compose(
             network,
             params: {
               ...params,
-              moduleCommandID: MODULE_COMMANDS_NAME_ID_MAP.voteDelegate,
+              moduleCommand: MODULE_COMMANDS_NAME_MAP.voteDelegate,
               sort: 'timestamp:desc',
             },
           },

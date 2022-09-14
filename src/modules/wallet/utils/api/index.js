@@ -28,7 +28,7 @@ const wsMethods = {
  *
  * @returns {Object} Params containing either address or username
  */
-const getAccountParams = (params) => {
+const getAccountParams = async (params) => {
   if (!params || isEmpty(params)) return {};
   const {
     username,
@@ -41,7 +41,7 @@ const getAccountParams = (params) => {
   if (publicKey) return { publicKey };
   if (address) return { address };
   if (passphrase) {
-    return { publicKey: extractPublicKey(passphrase) };
+    return { publicKey: await extractPublicKey(passphrase) };
   }
 
   return {};
@@ -65,7 +65,7 @@ const getAccountParams = (params) => {
 export const getAccount = async ({
   network, params, baseUrl,
 }) => {
-  const normParams = getAccountParams(params);
+  const normParams = await getAccountParams(params);
 
   try {
     const response = await http({

@@ -1,6 +1,6 @@
 import React from 'react';
 import { useTranslation } from 'react-i18next';
-import { MODULE_COMMANDS_NAME_ID_MAP } from '@transaction/configuration/moduleAssets';
+import { MODULE_COMMANDS_NAME_MAP } from 'src/modules/transaction/configuration/moduleCommand';
 import BoxHeader from 'src/theme/box/header';
 import BoxContent from 'src/theme/box/content';
 import { Input } from 'src/theme';
@@ -61,7 +61,7 @@ const RegisterDelegateForm = ({
   };
 
   const transaction = {
-    moduleCommandID: MODULE_COMMANDS_NAME_ID_MAP.registerDelegate,
+    moduleCommand: MODULE_COMMANDS_NAME_MAP.registerDelegate,
     params: {
       username: name.value,
       blsPublicKey: blsPublicKey.value,

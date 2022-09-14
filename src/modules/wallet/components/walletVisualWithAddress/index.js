@@ -4,16 +4,16 @@ import { connect } from 'react-redux';
 import { compose } from 'redux';
 import PropTypes from 'prop-types';
 
-import { MODULE_COMMANDS_NAME_ID_MAP, MODULE_COMMANDS_MAP } from '@transaction/configuration/moduleAssets';
+import { MODULE_COMMANDS_NAME_MAP, MODULE_COMMANDS_MAP } from 'src/modules/transaction/configuration/moduleCommand';
 import { truncateAddress } from '@wallet/utils/account';
-import { getModuleCommandTitle } from '@transaction/utils/moduleAssets';
+import { getModuleCommandTitle } from 'src/modules/transaction/utils/moduleCommand';
 import Icon from 'src/theme/Icon';
 import WalletVisual from '../walletVisual';
 import styles from './walletVisualWithAddress.css';
 
 const WalletVisualWithAddress = ({
   bookmarks, showBookmarkedAddress, token, address,
-  transactionSubject, moduleCommandID, size, truncate, className,
+  transactionSubject, moduleCommand, size, truncate, className,
 }) => {
   const getTransformedAddress = (addressValue) => {
     if (showBookmarkedAddress) {
@@ -26,7 +26,7 @@ const WalletVisualWithAddress = ({
     return addressValue;
   };
 
-  const title = getModuleCommandTitle()[moduleCommandID];
+  const title = getModuleCommandTitle()[moduleCommand];
   const transformedAddress = getTransformedAddress(address);
   const truncatedAddress = (truncate === 'small' || truncate === 'medium')
     ? truncateAddress(transformedAddress, truncate)
@@ -34,11 +34,11 @@ const WalletVisualWithAddress = ({
 
   return (
     <div className={`${styles.address} ${className}`}>
-      {moduleCommandID !== MODULE_COMMANDS_NAME_ID_MAP.transfer && transactionSubject === 'recipient' ? (
+      {moduleCommand !== MODULE_COMMANDS_NAME_MAP.transfer && transactionSubject === 'recipient' ? (
         <>
           <Icon
             className={styles.txIcon}
-            name={MODULE_COMMANDS_MAP[moduleCommandID]?.icon ?? 'txDefault'}
+            name={MODULE_COMMANDS_MAP[moduleCommand]?.icon ?? 'txDefault'}
           />
           <span className={styles.addressValue}>
             {title}
@@ -63,7 +63,7 @@ WalletVisualWithAddress.propTypes = {
   size: PropTypes.number,
   token: PropTypes.shape().isRequired,
   transactionSubject: PropTypes.string,
-  moduleCommandID: PropTypes.string,
+  moduleCommand: PropTypes.string,
 };
 
 WalletVisualWithAddress.defaultProps = {

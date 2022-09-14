@@ -2,7 +2,7 @@ import React from 'react';
 import { cryptography } from '@liskhq/lisk-client';
 import { mount } from 'enzyme';
 import * as hwManager from '@transaction/utils/hwManager';
-import { MODULE_COMMANDS_NAME_ID_MAP } from '@transaction/configuration/moduleAssets';
+import { MODULE_COMMANDS_NAME_MAP } from 'src/modules/transaction/configuration/moduleCommand';
 import accounts from '@tests/constants/wallets';
 import Summary from './Summary';
 
@@ -39,7 +39,7 @@ describe('Multisignature Summary component', () => {
     multisigGroupRegistered: jest.fn(),
     rawTx: {
       fee: 2000000,
-      moduleCommandID: MODULE_COMMANDS_NAME_ID_MAP.registerMultisignatureGroup,
+      moduleCommand: MODULE_COMMANDS_NAME_MAP.registerMultisignatureGroup,
       params: {
         account: accounts.genesis,
         members,

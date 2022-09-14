@@ -8,7 +8,7 @@ describe('useTransactionFeeCalculation', () => {
     wallet: wallets.genesis,
     selectedPriority: { value: 1, selectedIndex: 0 },
     transaction: {
-      moduleCommandID: '2:0',
+      moduleCommand: 'token:transfer',
       sender: { publicKey: wallets.genesis.summary.publicKey },
       fee: '1000',
       nonce: 1,
