@@ -10,7 +10,7 @@ jest.mock('../../hooks/queries');
 
 describe('Latest votes', () => {
   const mockFetchNextDelegates = jest.fn();
-  const mockFetchNextTranactions = jest.fn();
+  const mockFetchNextTransactions = jest.fn();
   const props = {
     filters: {},
   };
@@ -25,7 +25,7 @@ describe('Latest votes', () => {
     useTransactions.mockReturnValue({
       data: { ...mockTransactions, data: mockTransactions.data.slice(0, 10) },
       isFetching: false,
-      fetchNextPage: mockFetchNextTranactions,
+      fetchNextPage: mockFetchNextTransactions,
       hasNextPage: false,
     });
     const wrapper = mountWithRouter(LatestVotes, props);
@@ -42,14 +42,14 @@ describe('Latest votes', () => {
     useTransactions.mockReturnValue({
       data: { ...mockTransactions, data: mockTransactions.data.slice(0, 10) },
       isFetching: false,
-      fetchNextPage: mockFetchNextTranactions,
+      fetchNextPage: mockFetchNextTransactions,
       hasNextPage: true,
     });
 
     const wrapper = mountWithRouter(LatestVotes);
     expect(wrapper.find('.load-more')).toExist();
     wrapper.find('.load-more').first().simulate('click');
-    expect(mockFetchNextTranactions).toHaveBeenCalledTimes(1);
+    expect(mockFetchNextTransactions).toHaveBeenCalledTimes(1);
   });
 
   it('can not load more votes if meta property is unavailable', () => {
@@ -60,7 +60,7 @@ describe('Latest votes', () => {
     });
     useTransactions.mockReturnValue({
       isFetching: false,
-      fetchNextPage: mockFetchNextTranactions,
+      fetchNextPage: mockFetchNextTransactions,
     });
 
     const wrapper = mountWithRouter(LatestVotes);

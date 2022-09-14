@@ -10,7 +10,7 @@ jest.mock('react-i18next', () => ({
   }),
 }));
 
-describe('ApplicationManagementList', () => {
+describe('DelegateSummary', () => {
   let wrapper;
   const props = {
     delegate: { ...mockDelegates.data[0], nextForgingTime: 1661165000 },

@@ -13,9 +13,7 @@ import LayoutSchema from './layoutSchema';
 const DelegateRow = ({
   data, className, t, activeTab, watchList, setActiveTab,
 }) => {
-  const formattedForgingTime = getForgingTime(
-    data.nextForgingTimef
-  );
+  const formattedForgingTime = getForgingTime(data.nextForgingTime);
   const dispatch = useDispatch();
 
   const isWatched = watchList.find(address => address === data.address);
