@@ -6,10 +6,12 @@ import { TertiaryButton } from 'src/theme/buttons';
 import Icon from 'src/theme/Icon';
 import DialogLink from 'src/theme/dialog/link';
 import { ACCOUNT_MENU } from '@account/const';
+import { truncateAddress } from '@wallet/utils/account';
 import styles from './AccountManagementDropdown.css';
 
-const AccountManagementDropdown = () => {
+const AccountManagementDropdown = ({ currentAccount }) => {
   const { t } = useTranslation();
+  const { name, address } = currentAccount.metadata;
 
   return (
     <DropdownButton
@@ -20,8 +22,8 @@ const AccountManagementDropdown = () => {
       buttonLabel={
         <>
           <div className={styles.account}>
-            <span className={styles.name}>Lisker</span>
-            <span className={styles.address}>lskh3y...xmymn</span>
+            <span className={styles.name}>{name}</span>
+            <span className={styles.address}>{truncateAddress(address)}</span>
           </div>
           <Icon name="dropdownArrowIcon" />
         </>

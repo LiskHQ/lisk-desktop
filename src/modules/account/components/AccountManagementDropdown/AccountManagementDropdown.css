@@ -37,6 +37,8 @@
   min-width: 180px !important;
   top: calc(100% + 3px) !important;
   margin-left: -30px;
+  background-color: var(--color-background-dropdown);
+  border-radius: var(--border-radius-standard);
 
   & > div {
     padding: 0;
@@ -44,11 +46,9 @@
 }
 
 .dropDownMenuList {
-  background-color: var(--color-background-dropdown);
   list-style: none;
   padding: 0;
   margin: 0;
-  border-radius: var(--border-radius-standard);
 
   & > li {
     @mixin contentLargest;
