@@ -1,6 +1,4 @@
-import React, {
-  useState, useRef, useMemo,
-} from 'react';
+import React, { useState, useRef, useMemo } from 'react';
 import { useSelector } from 'react-redux';
 import { withRouter } from 'react-router';
 
@@ -8,6 +6,7 @@ import routesMap from 'src/routes/routesMap';
 import { modals } from 'src/routes/routes';
 import { parseSearchParams, removeSearchParamsFromUrl } from 'src/utils/searchParams';
 import { selectActiveToken, selectActiveTokenAccount } from 'src/redux/selectors';
+import { useCurrentAccount } from '@account/hooks';
 import styles from './dialog.css';
 
 // eslint-disable-next-line max-statements
@@ -18,8 +17,10 @@ const DialogHolder = ({ history }) => {
   }, [history.location.search]);
 
   const activeToken = useSelector(selectActiveToken);
-  const networkIsSet = useSelector(state => !!state.network.name);
-  const account = useSelector(selectActiveTokenAccount);
+  const networkIsSet = useSelector((state) => !!state.network.name);
+  const wallet = useSelector(selectActiveTokenAccount);
+  const [account] = useCurrentAccount();
+  const isAuthenticated = Object.keys(account).length > 0 || !!wallet.summary;
 
   const backdropRef = useRef();
   const [dismissed, setDismissed] = useState(false);
@@ -47,7 +48,7 @@ const DialogHolder = ({ history }) => {
     return null;
   }
 
-  if (modals[modalName].isPrivate && !account.summary) {
+  if (modals[modalName].isPrivate && !isAuthenticated) {
     return null;
   }
 
@@ -65,15 +66,17 @@ const DialogHolder = ({ history }) => {
     }
   };
 
-  return ModalComponent && (
-    <div
-      ref={backdropRef}
-      className={`${styles.mask} ${dismissed ? styles.hide : styles.show}`}
-      onAnimationEnd={onAnimationEnd}
-      onClick={onBackDropClick}
-    >
-      <ModalComponent />
-    </div>
+  return (
+    ModalComponent && (
+      <div
+        ref={backdropRef}
+        className={`${styles.mask} ${dismissed ? styles.hide : styles.show}`}
+        onAnimationEnd={onAnimationEnd}
+        onClick={onBackDropClick}
+      >
+        <ModalComponent />
+      </div>
+    )
   );
 };
 

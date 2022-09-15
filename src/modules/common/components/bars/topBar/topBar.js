@@ -23,10 +23,12 @@ const TopBar = ({ t, history, network, token, noOfVotes, location }) => {
   return (
     <div className={`${styles.wrapper} top-bar`}>
       <div className={styles.group}>
-        <Icon name="liskLogo" className={`${styles.logo} topbar-logo`} />
-        {!isEmpty(currentAccount) ? (
-          <AccountManagementDropdown currentAccount={currentAccount} />
-        ) : null}
+        <div className={styles.section}>
+          <Icon name="liskLogo" className={`${styles.logo} topbar-logo`} />
+          {!isEmpty(currentAccount) ? (
+            <AccountManagementDropdown currentAccount={currentAccount} />
+          ) : null}
+        </div>
         <NavigationButtons history={history} />
         <SideBarToggle />
         <Tooltip

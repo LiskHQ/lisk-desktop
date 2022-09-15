@@ -3,7 +3,7 @@ import routes from 'src/routes/routes';
 // eslint-disable-next-line import/prefer-default-export
 export const ACCOUNT_MENU = [
   {
-    path: routes.login.editAccountName,
+    component: 'editAccountName',
     icon: 'edit',
     label: 'Edit name',
   },
@@ -23,7 +23,7 @@ export const ACCOUNT_MENU = [
     label: 'Add new account',
   },
   {
-    path: '/delegates?modal=registerDelegate',
+    component: 'registerDelegate',
     icon: 'multiSignatureOutline',
     label: 'Upgrade to multisignature',
   },
