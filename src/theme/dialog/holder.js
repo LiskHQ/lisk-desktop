@@ -5,7 +5,7 @@ import { withRouter } from 'react-router';
 import routesMap from 'src/routes/routesMap';
 import { modals } from 'src/routes/routes';
 import { parseSearchParams, removeSearchParamsFromUrl } from 'src/utils/searchParams';
-import { selectActiveToken, selectActiveTokenAccount } from 'src/redux/selectors';
+import { selectActiveToken } from 'src/redux/selectors';
 import { useCurrentAccount } from '@account/hooks';
 import styles from './dialog.css';
 
@@ -18,9 +18,8 @@ const DialogHolder = ({ history }) => {
 
   const activeToken = useSelector(selectActiveToken);
   const networkIsSet = useSelector((state) => !!state.network.name);
-  const wallet = useSelector(selectActiveTokenAccount);
   const [account] = useCurrentAccount();
-  const isAuthenticated = Object.keys(account).length > 0 || !!wallet.summary;
+  const isAuthenticated = Object.keys(account).length > 0;
 
   const backdropRef = useRef();
   const [dismissed, setDismissed] = useState(false);

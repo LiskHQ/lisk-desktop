@@ -9,7 +9,7 @@ import { ACCOUNT_MENU } from '@account/const';
 import { truncateAddress } from '@wallet/utils/account';
 import styles from './AccountManagementDropdown.css';
 
-const AccountManagementDropdown = ({ currentAccount }) => {
+const AccountManagementDropdown = ({ currentAccount, onMenuClick }) => {
   const { t } = useTranslation();
   const { name, address } = currentAccount.metadata;
 
@@ -20,15 +20,16 @@ const AccountManagementDropdown = ({ currentAccount }) => {
       ButtonComponent={TertiaryButton}
       buttonClassName={`account-management-dropdown ${styles.dropdownButton}`}
       buttonLabel={
-        <>
+        <div className={styles.accountWrapper}>
           <div className={styles.account}>
             <span className={styles.name}>{name}</span>
             <span className={styles.address}>{truncateAddress(address)}</span>
           </div>
           <Icon name="dropdownArrowIcon" />
-        </>
+        </div>
       }
       size="m"
+      trackDropdownState={onMenuClick}
     >
       <ul className={styles.dropDownMenuList}>
         {ACCOUNT_MENU.map(({ path, icon, label, component }) => (

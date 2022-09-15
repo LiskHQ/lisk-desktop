@@ -15,6 +15,10 @@
   }
 }
 
+.accountWrapper {
+  display: contents;
+}
+
 .account {
   display: flex;
   flex-direction: column;

@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import routes from 'src/routes/routes';
 import Icon from 'src/theme/Icon';
 import AccountManagementDropdown from '@account/components/AccountManagementDropdown';
@@ -19,14 +19,19 @@ import NavigationButtons from './navigationButtons';
 const TopBar = ({ t, history, network, token, noOfVotes, location }) => {
   const disabled = location.pathname === routes.reclaim.path;
   const [currentAccount] = useCurrentAccount();
+  const [menuOpen, setMenuOpen] = useState(false);
+
+  const onMenuClick = (menuOpenStatus) => {
+    setMenuOpen(menuOpenStatus);
+  };
 
   return (
     <div className={`${styles.wrapper} top-bar`}>
       <div className={styles.group}>
-        <div className={styles.section}>
+        <div className={`${styles.section} ${menuOpen ? styles.menuOpen : ''}`}>
           <Icon name="liskLogo" className={`${styles.logo} topbar-logo`} />
           {!isEmpty(currentAccount) ? (
-            <AccountManagementDropdown currentAccount={currentAccount} />
+            <AccountManagementDropdown currentAccount={currentAccount} onMenuClick={onMenuClick} />
           ) : null}
         </div>
         <NavigationButtons history={history} />

@@ -18,9 +18,12 @@
 .section {
   display: flex;
   align-items: center;
-  background-color: var(--color-menu-black);
   border-right: 1px solid var(--color-periwinkle-blue);
   padding-right: 7px;
+
+  &.menuOpen {
+    background-color: var(--color-menu-black);
+  }
 }
 
 .logo {
