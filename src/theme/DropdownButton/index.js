@@ -21,6 +21,12 @@ class DropdownButton extends React.Component {
     }));
   }
 
+  componentDidUpdate(_, prevState) {
+    if (this.state.shownDropdown !== prevState.shownDropdown) {
+      this.props.trackDropdownState(this.state.shownDropdown || !prevState.shownDropdown);
+    }
+  }
+
   render() {
     const { shownDropdown } = this.state;
     const {
@@ -71,6 +77,7 @@ DropdownButton.defaultProps = {
   ButtonComponent: SecondaryButton,
   align: 'left',
   size: 'l',
+  trackDropdownState: () => {},
 };
 
 export default DropdownButton;
