@@ -28,7 +28,7 @@ const TopBar = ({ t, history, network, token, noOfVotes, location }) => {
   return (
     <div className={`${styles.wrapper} top-bar`}>
       <div className={styles.group}>
-        <div className={`${styles.section} ${menuOpen ? styles.menuOpen : ''}`}>
+        <div className={`${styles.section} ${menuOpen ? styles.menuOpen : ''} user-menu-section`}>
           <Icon name="liskLogo" className={`${styles.logo} topbar-logo`} />
           {!isEmpty(currentAccount) ? (
             <AccountManagementDropdown currentAccount={currentAccount} onMenuClick={onMenuClick} />

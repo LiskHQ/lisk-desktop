@@ -5,6 +5,7 @@ import { truncateAddress } from '@wallet/utils/account';
 import AccountManagementDropdown from './AccountManagementDropdown';
 
 const mockCurrentAccount = mockSavedAccounts[0];
+const mockOnMenuClick = jest.fn();
 jest.mock('../../../account/hooks/useCurrentAccount.js', () => ({
   useCurrentAccount: jest.fn(() => [mockCurrentAccount]),
 }));
@@ -13,7 +14,7 @@ describe('AccountManagementDropdown', () => {
   it('displays properly', () => {
     const props = {
       currentAccount: mockCurrentAccount,
-      onMenuClick: jest.fn(),
+      onMenuClick: mockOnMenuClick,
     };
     renderWithRouter(AccountManagementDropdown, props);
     expect(screen.getByText('my lisk account')).toBeInTheDocument();
@@ -21,6 +22,7 @@ describe('AccountManagementDropdown', () => {
       screen.getByText(truncateAddress(mockCurrentAccount.metadata.address))
     ).toBeInTheDocument();
     fireEvent.click(screen.getByAltText('dropdownArrowIcon'));
+    expect(mockOnMenuClick).toHaveBeenCalledTimes(1);
     expect(screen.getByText('Edit name')).toBeInTheDocument();
     expect(screen.getByText('Switch account')).toBeInTheDocument();
     expect(screen.getByText('Backup account')).toBeInTheDocument();

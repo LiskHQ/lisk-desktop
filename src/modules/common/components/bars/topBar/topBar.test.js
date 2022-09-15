@@ -109,6 +109,17 @@ describe('TopBar', () => {
     expect(wrapper).toContainMatchingElement('.account-management-dropdown');
   });
 
+  it('renders <AccountManagementDropdown /> component if current account exists and updates background on click', () => {
+    const wrapper = mountWithRouter(TopBar, props, {
+      pathname: routes.wallet.path,
+    });
+    expect(wrapper).toContainMatchingElement('.account-management-dropdown');
+    wrapper.find('.account-management-dropdown').at(0).simulate('click');
+    expect(wrapper.find('.user-menu-section').hasClass(/menuOpen/)).toBe(true);
+    wrapper.find('.account-management-dropdown').at(0).simulate('click');
+    expect(wrapper.find('.user-menu-section').hasClass(/menuOpen/)).toBe(false);
+  });
+
   it('does not render <AccountManagementDropdown /> component if current account does not exist', () => {
     useCurrentAccount.mockImplementation(() => [{}]);
     const wrapper = mountWithRouter(TopBar, props, {
