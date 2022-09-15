@@ -77,6 +77,7 @@ DropdownButton.defaultProps = {
   ButtonComponent: SecondaryButton,
   align: 'left',
   size: 'l',
+  trackDropdownState: () => {},
 };
 
 export default DropdownButton;

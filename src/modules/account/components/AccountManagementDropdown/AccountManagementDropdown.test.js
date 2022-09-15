@@ -13,6 +13,7 @@ describe('AccountManagementDropdown', () => {
   it('displays properly', () => {
     const props = {
       currentAccount: mockCurrentAccount,
+      onMenuClick: jest.fn(),
     };
     renderWithRouter(AccountManagementDropdown, props);
     expect(screen.getByText('my lisk account')).toBeInTheDocument();
