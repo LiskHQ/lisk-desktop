@@ -1,15 +1,15 @@
 import React, { useState } from 'react';
 import { useSelector } from 'react-redux';
-import StickyHeader from 'src/theme/table/stickyHeader';
+import StickyHeader from '@theme/table/stickyHeader';
+import { QueryTable } from '@theme/QueryTable';
+import { useSort } from 'src/modules/common/hooks';
+import useFilter from 'src/modules/common/hooks/useFilter';
 import FilterBar from 'src/modules/common/components/filterBar';
 import FilterDropdownButton from 'src/modules/common/components/filterDropdownButton';
 import Box from 'src/theme/box';
 import BoxContent from 'src/theme/box/content';
-import Table from 'src/theme/table';
-import {
-  selectCurrentBlockHeight,
-  selectActiveToken,
-} from 'src/redux/selectors';
+import { selectCurrentBlockHeight, selectActiveToken } from 'src/redux/selectors';
+import { useTransactions } from '../../hooks/queries';
 import TransactionRow from '../TransactionRow';
 import header from './TransactionHeaderMap';
 import styles from './transactionsTable.css';
@@ -51,48 +51,56 @@ const getFields = (t) => [
     type: 'integer',
   },
 ];
-const blackListTypes = ['auth:registerMultisignatureGroup', 'dpos:registerDelegate', 'dpos:voteDelegate', 'dpos:reportDelegateMisbehavior'];
+const blackListTypes = [
+  'auth:registerMultisignatureGroup',
+  'dpos:registerDelegate',
+  'dpos:voteDelegate',
+  'dpos:reportDelegateMisbehavior',
+];
 
 // eslint-disable-next-line max-statements
 const Transactions = ({
   t,
-  sort,
-  changeSort,
-  filters,
-  clearFilter,
-  applyFilters,
-  transactions,
-  clearAllFilters,
+  // sort,
+  // changeSort,
+  // filters,
+  // clearFilter,
+  // applyFilters,
+  // transactions,
+  // clearAllFilters,
 }) => {
   const fields = getFields(t);
   const [innerFields, setInnerFields] = useState(fields);
+  const [params, setParams] = useState();
   const currentBlockHeight = useSelector(selectCurrentBlockHeight);
   const activeToken = useSelector(selectActiveToken);
+  const { sort, toggleSort } = useSort();
+  const { filters, applyFilters, clearFilters } = useFilter({});
 
-  const canLoadMore = transactions.meta
-    ? transactions.data.length < transactions.meta.total
-    : false;
+  // const canLoadMore = transactions.meta
+  //   ? transactions.data.length < transactions.meta.total
+  //   : false;
 
-  const handleLoadMore = () => {
-    // filter the blanks out
-    const params = Object.keys(filters).reduce(
-      (acc, key) => ({
-        ...acc,
-        ...(filters[key] && { [key]: filters[key] }),
-      }),
-      {
-        offset: transactions.meta.count + transactions.meta.offset,
-        sort,
-      },
-    );
+  // const handleLoadMore = () => {
+  //   // filter the blanks out
+  //   const params = Object.keys(filters).reduce(
+  //     (acc, key) => ({
+  //       ...acc,
+  //       ...(filters[key] && { [key]: filters[key] }),
+  //     }),
+  //     {
+  //       offset: transactions.meta.count + transactions.meta.offset,
+  //       sort,
+  //     }
+  //   );
 
-    transactions.loadData(params);
-  };
+  //   transactions.loadData(params);
+  // };
 
   /* istanbul ignore next */
-  const loadLastTransactions = () => {
-    transactions.loadData();
-  };
+  // const loadLastTransactions = () => {
+  //   transactions.loadData();
+  // };
 
   /* istanbul ignore next */
   const formatters = {
@@ -104,18 +112,20 @@ const Transactions = ({
   const removeSortOnAmount = (headerData, dropdownFilters) =>
     headerData.map((data) => {
       if (
-        data?.sort?.key === 'amount'
-        && blackListTypes.some((type) => type === dropdownFilters.moduleCommand)
-      ) delete data.sort;
+        data?.sort?.key === 'amount' &&
+        blackListTypes.some((type) => type === dropdownFilters.moduleCommand)
+      )
+        delete data.sort;
       return data;
     });
 
   const removeField = (rawFields, transactionType) =>
     rawFields.filter((field) => {
       if (
-        (field.name === 'amount' || field.name === 'recipientAddress')
-        && blackListTypes.some((type) => type === transactionType)
-      ) return false;
+        (field.name === 'amount' || field.name === 'recipientAddress') &&
+        blackListTypes.some((type) => type === transactionType)
+      )
+        return false;
 
       return true;
     });
@@ -123,64 +133,69 @@ const Transactions = ({
   const dropdownApplyFilters = (txFilters) => {
     const moduleCommand = txFilters.moduleCommand;
     applyFilters(txFilters);
-    if (blackListTypes.some((type) => type === moduleCommand)) setTimeout(() => changeSort('timestamp'), 100);
+    if (blackListTypes.some((type) => type === moduleCommand))
+      setTimeout(() => toggleSort('timestamp'), 100);
+  };
+
+  const clearAllTxnFilters = () => {
+    const clearFilterData = () => setParams({});
+    clearFilters(clearFilterData);
   };
 
   return (
-    <Box main isLoading={transactions.isLoading} className="transactions-box">
+    <Box main className="transactions-box">
       <BoxContent className={`${styles.content} transaction-results`}>
         <StickyHeader
           title={t('All transactions')}
-          button={{
-            className: 'load-latest',
-            entity: 'transaction',
-            onClick: loadLastTransactions,
-            label: t('New transactions'),
-          }}
-          scrollToSelector=".transactions-box"
-          filters={(
+          filters={
             <FilterDropdownButton
               fields={innerFields}
               filters={filters}
               applyFilters={dropdownApplyFilters}
               onTypeSelected={(moduleCommand) => {
-                setInnerFields(
-                  moduleCommand ? removeField(fields, moduleCommand) : fields,
-                );
+                setInnerFields(moduleCommand ? removeField(fields, moduleCommand) : fields);
               }}
             />
-          )}
+          }
         />
         <FilterBar
           {...{ filters, formatters, t }}
           clearFilter={(filterKey) => {
             setInnerFields(fields);
-            clearFilter(filterKey);
+            clearFilters(filterKey);
           }}
           clearAllFilters={() => {
             setInnerFields(fields);
-            clearAllFilters();
+            clearAllTxnFilters();
           }}
         />
-        <Table
+        <QueryTable
           showHeader
-          data={transactions.data}
-          isLoading={transactions.isLoading}
+          button={{
+            className: 'load-latest',
+            // entity: 'transaction',
+            // onClick: loadLastTransactions,
+            label: t('New transactions'),
+          }}
+          // data={transactions.data}
+          queryHook={useTransactions}
+          queryConfig={{ config: { params } }}
           row={TransactionRow}
-          loadData={handleLoadMore}
+          // loadData={handleLoadMore}
           additionalRowProps={{
             currentBlockHeight,
             activeToken,
             layout: 'full',
           }}
-          header={removeSortOnAmount(header(changeSort, t), filters)}
+          header={removeSortOnAmount(header(toggleSort, t), filters)}
           headerClassName={styles.tableHeader}
           currentSort={sort}
-          canLoadMore={canLoadMore}
-          error={transactions.error}
+          // canLoadMore={canLoadMore}
+          // error={transactions.error}
           emptyState={{
             message: t('There are no transactions for this chain.'),
           }}
+          scrollToSelector=".transactions-box"
         />
       </BoxContent>
     </Box>
