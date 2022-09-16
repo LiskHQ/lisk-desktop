@@ -1,6 +1,6 @@
 .centerLabel {
   position: absolute;
-  left: calc(60% + 1px);
+  left: calc(61% + 1px);
   font-size: 75%;
   text-align: center;
   padding: 0px;
@@ -14,25 +14,37 @@
 
 @media (min-width: 1327px) {
   .centerLabel {
-    left: calc(57% + 7px) !important;
+    left: calc(58% + 8px) !important;
   }
 }
 
 @media (min-width: 1400px) {
   .centerLabel {
-    left: calc(56% + 7px) !important;
+    left: calc(58% + 5px) !important;
   }
 }
 
 @media (max-width: 1024px) {
   .centerLabel {
     left: 35% !important;
+    font-size: 16px;
   }
 }
 
 @media (max-width: 1130px) and (min-width: 1030px) {
   .centerLabel {
     left: 66% !important;
+    top: 45% !important;
+
+    & span {
+      display: none;
+    }
+  }
+}
+
+@media (max-width: 1360px) {
+  .centerLabel {
+    left: calc(68% - 5px) !important;
     top: 45% !important;
 
     & span {

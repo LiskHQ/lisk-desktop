@@ -1,6 +1,6 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-
+import { useTranslation } from 'react-i18next';
 import { useDispatch } from 'react-redux';
 import routes from 'src/routes/routes';
 import { addedToWatchList, removedFromWatchList } from 'src/redux/actions';
@@ -11,10 +11,11 @@ import styles from './schemas.css';
 import LayoutSchema from './layoutSchema';
 
 const DelegateRow = ({
-  data, className, t, activeTab, watchList, setActiveTab,
+  data, className, activeTab, watchList, setActiveTab,
 }) => {
-  const formattedForgingTime = getForgingTime(data.nextForgingTime);
   const dispatch = useDispatch();
+  const { t } = useTranslation();
+  const formattedForgingTime = getForgingTime(data.nextForgingTime);
 
   const isWatched = watchList.find(address => address === data.address);
 

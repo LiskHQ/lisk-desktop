@@ -22,40 +22,18 @@ const DelegatesTable = ({
   const { sort, toggleSort } = useSort();
 
   // eslint-disable-next-line max-statements
-  const queryConfig = useMemo(() => {
-    const result = { config: { params: { ...filters, ...sort && { sort } } } };
-
-    if (activeTab === 'standby') {
-      result.config.params = {
-        ...result.config.params,
-        status: 'standby,ineligible',
-      };
-      return result;
-    }
-    if (activeTab === 'active') {
-      result.config.params = {
-        ...result.config.params,
-        limit: ROUND_LENGTH,
-      };
-      return result;
-    }
-    if (activeTab === 'sanctioned') {
-      result.config.params = {
-        ...result.config.params,
-        status: 'punished,banned',
-      };
-      return result;
-    }
-    if (activeTab === 'watched') {
-      result.config.params = {
-        ...result.config.params,
-        addressList: watchList,
-      };
-      return result;
-    }
-
-    return result;
-  }, [activeTab, sort, filters]);
+  const queryConfig = useMemo(() => ({
+      config: { 
+        params: { 
+          ...filters, 
+          ...sort && { sort },
+          ...(activeTab === 'standby' && { status: 'standby,ineligible' }),
+          ...(activeTab === 'active' && { limit: ROUND_LENGTH }),
+          ...(activeTab === 'sanctioned' && { status: 'punished,banned' }),
+          ...(activeTab === 'watched' && { addressList: watchList }),
+        } 
+      }
+    }), [activeTab, sort, filters]);
 
   return (
     <QueryTable
