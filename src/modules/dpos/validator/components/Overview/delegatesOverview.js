@@ -22,9 +22,8 @@ const getAmountOfDelegatesLabels = (registrations) =>
 
 const Overview = ({
   registrations,
-  t,
   totalBlocks,
-  total,
+  t,
 }) => {
   const colorPalette = getColorPalette(useTheme());
   const { data: delegates } = useDelegates({ config: { params: { limit: 1 } } });
@@ -54,13 +53,6 @@ const Overview = ({
     },
   };
 
-  const totalDelegates = () => (
-    <>
-      <p>{total}</p>
-      <span>{t('Total delegates')}</span>
-    </>
-  );
-
   return (
     <Box className={styles.wrapper}>
       <BoxContent className={styles.content}>
@@ -72,7 +64,6 @@ const Overview = ({
                 <div className={`${styles.chart} ${styles.showOnLargeViewPort} showOnLargeViewPort`}>
                   <DoughnutChart
                     data={doughnutChartData}
-                    label={totalDelegates}
                     options={{
                       ...doughnutChartOptions,
                       cutoutPercentage: 70,
@@ -83,7 +74,6 @@ const Overview = ({
                 <div className={`${styles.chart} hideOnLargeViewPort`}>
                   <DoughnutChart
                     data={doughnutChartData}
-                    label={totalDelegates}
                     options={{
                       ...doughnutChartOptions,
                       cutoutPercentage: 70,

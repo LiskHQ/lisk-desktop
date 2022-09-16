@@ -17,7 +17,6 @@ import ForgingDetails from '../Overview/forgingDetails';
 import DelegatesTable from '../DelegatesTable';
 import LatestVotes from '../LatestVotes';
 import styles from './delegates.css';
-import { useDelegates } from '../../hooks/queries';
 
 // eslint-disable-next-line max-statements
 const DelegatesMonitor = ({
@@ -30,8 +29,6 @@ const DelegatesMonitor = ({
   const [activeDetailTab, setActiveDetailTab] = useState('overview');
   const [activeTab, setActiveTab] = useState('active');
   const [search, setSearch] = useState('');
-
-  const { data: { meta } = {} } = useDelegates();
   const { data: blocksData } = useBlocks({ config: { params: { limit: 100 } } });
 
   const total = blocksData?.meta?.total ?? 0;
@@ -127,7 +124,6 @@ const DelegatesMonitor = ({
       {activeDetailTab === 'overview'
         ? (
           <DelegatesOverview
-            total={meta?.total || '-'}
             registrations={registrations}
             t={t}
             totalBlocks={total}
@@ -136,7 +132,6 @@ const DelegatesMonitor = ({
         : (
           <ForgingDetails
             t={t}
-            total={meta?.total || '-'}
             forgedInRound={forgedInRound}
             startTime={blocks[forgedInRound]?.timestamp}
           />

@@ -48,7 +48,7 @@ const getPassedMinutes = (startTime) => {
 };
 
 const ForgingDetails = ({
-  t, forgedInRound, startTime, total,
+  t, forgedInRound, startTime,
 }) => {
   const theme = useTheme();
   const colorPalette = getColorPalette(theme);
@@ -84,12 +84,6 @@ const ForgingDetails = ({
   };
 
   const forgersListToShow = forgers.slice(1, FORGERS_TO_SHOW + 1);
-  const totalDelegates = () => (
-    <>
-      <p>{total}</p>
-      <span>{t('Total delegates')}</span>
-    </>
-  );
 
   return (
     <Box className={styles.wrapper}>
@@ -101,7 +95,6 @@ const ForgingDetails = ({
               <div className={`${styles.chart} showOnLargeViewPort`}>
                 <DoughnutChart
                   data={doughnutChartData}
-                  label={totalDelegates}
                   options={{
                     ...doughnutChartOptions,
                     cutoutPercentage: 70,
@@ -112,7 +105,6 @@ const ForgingDetails = ({
               <div className={`${styles.chart} hideOnLargeViewPort`}>
                 <DoughnutChart
                   data={doughnutChartData}
-                  label={totalDelegates}
                   options={{
                     ...doughnutChartOptions,
                     cutoutPercentage: 70,
