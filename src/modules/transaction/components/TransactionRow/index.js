@@ -1,5 +1,6 @@
 import React from 'react';
 import { withTranslation } from 'react-i18next';
+import routes from 'src/routes/routes';
 import grid from 'flexboxgrid/dist/flexboxgrid.css';
 
 import DialogLink from 'src/theme/dialog/link';
@@ -24,7 +25,8 @@ const TransactionRow = ({
     <DialogLink
       className={`${grid.row} ${styles.container} ${styles[layout]} ${className} transactions-row`}
       component="transactionDetails"
-      data={{ transactionId: data.id, token: activeToken }}
+      path={routes.transactionDetails.path}
+      data={{ transactionId: data.id }}
     >
       <TransactionRowContext.Provider
         value={{

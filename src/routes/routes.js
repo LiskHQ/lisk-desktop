@@ -107,6 +107,7 @@ export default {
   transactions: {
     path: '/transactions',
     isPrivate: false,
+    exact: true,
     forbiddenTokens: [],
   },
   wallets: {
@@ -127,6 +128,7 @@ export default {
   },
   transactionDetails: {
     path: '/transactions/details',
+    exact: true,
     isPrivate: false,
     forbiddenTokens: [],
   },

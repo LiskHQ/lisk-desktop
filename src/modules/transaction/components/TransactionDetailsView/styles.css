@@ -6,3 +6,28 @@
   padding: 0 var(--horizontal-padding-l);
   box-sizing: border-box;
 }
+
+.wrapper {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: row;
+  column-gap: 20px;
+
+  & > div {
+    width: 50%;
+    padding: 0px;
+    height: 100%;
+    overflow: unset;
+    display: flex !important;
+  }
+
+  & > div:last-child header ~ div {
+    overflow: auto;
+    padding-top: 0px;
+  }
+
+  & > div:last-child header ~ div::-webkit-scrollbar {
+    display: none;
+  }
+}

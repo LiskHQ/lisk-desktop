@@ -1,19 +1,17 @@
 import React from 'react';
 import { isEmpty } from 'src/utils/helpers';
+import { useTranslation } from 'react-i18next';
 import Box from 'src/theme/box';
 import BoxContent from 'src/theme/box/content';
 import BoxHeader from 'src/theme/box/header';
-import TransactionDetailsContext from '@transaction/context/transactionDetailsContext';
-import { LayoutSchema } from '../TransactionDetails/layoutSchema';
-import layoutSchemaStyles from '../TransactionDetails/layoutSchema.css';
 import NotFound from './notFound';
 import styles from './styles.css';
+import TransactionEvents from '../TransactionEvents';
 
 const TransactionDetails = ({
-  t, activeToken, network, title,
-  transaction: { error, isLoading, data }, wallet,
-  containerStyle,
+  transaction: { error, isLoading, data }, containerStyle
 }) => {
+  const { t } = useTranslation();
   if (!error && isEmpty(data)) {
     return <div />;
   }
@@ -21,30 +19,31 @@ const TransactionDetails = ({
   if (error && isEmpty(data)) {
     return <NotFound t={t} />;
   }
-
-  // const Layout = LayoutSchema[data.moduleCommand] || LayoutSchema.default;
-
   return (
-    <Box
-      isLoading={isLoading}
-      className={`${styles.container} ${containerStyle}`}
-    >
-      {title && (
+    <div className={styles.wrapper}>
+      <Box
+        isLoading={isLoading}
+        className={`${styles.container} ${containerStyle}`}
+      >
         <BoxHeader>
-          <h1>{title}</h1>
+          <h1>{t('Details')}</h1>
         </BoxHeader>
-      )}
-      {/* <BoxContent className={`${layoutSchemaStyles.mainContent} ${Layout.className}`}>
-        <TransactionDetailsContext.Provider value={{
-          activeToken, network, wallet, transaction: data,
-        }}
-        >
-          {Layout.components.map((Component, index) => (
-            <Component key={index} t={t} />
-          ))}
-        </TransactionDetailsContext.Provider>
-      </BoxContent> */}
-    </Box>
+        <BoxContent>
+          Transaction details
+        </BoxContent>
+      </Box>
+      <Box
+        isLoading={isLoading}
+        className={`${styles.container} ${containerStyle}`}
+      >
+        <BoxHeader>
+          <h1>{t('Events')}</h1>
+        </BoxHeader>
+        <BoxContent>
+          <TransactionEvents />
+        </BoxContent>
+      </Box>
+    </div>
   );
 };
 
