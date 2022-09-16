@@ -1,0 +1,23 @@
+.wrapper {
+  width: 100%;
+  padding: 5px 0px;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+
+  & > button:first-child {
+    padding: 3px 0px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: fit-content;
+    max-width: fit-content;
+    min-width: fit-content;
+    margin-right: 10px;
+
+    & > img {
+      width: 26px;
+      height: 26px;
+    }
+  }
+}
