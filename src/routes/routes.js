@@ -125,6 +125,11 @@ export default {
     isPrivate: false,
     forbiddenTokens: [],
   },
+  transactionDetails: {
+    path: '/transactions/details',
+    isPrivate: false,
+    forbiddenTokens: [],
+  },
 };
 
 export const modals = {
@@ -160,10 +165,10 @@ export const modals = {
     isPrivate: false,
     forbiddenTokens: [],
   },
-  transactionDetails: {
-    isPrivate: false,
-    forbiddenTokens: [],
-  },
+  // transactionDetails: {
+  //   isPrivate: false,
+  //   forbiddenTokens: [],
+  // },
   newRelease: {
     isPrivate: false,
     forbiddenTokens: [],

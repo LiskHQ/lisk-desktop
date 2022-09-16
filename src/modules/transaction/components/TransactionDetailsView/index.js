@@ -22,7 +22,7 @@ const TransactionDetails = ({
     return <NotFound t={t} />;
   }
 
-  const Layout = LayoutSchema[data.moduleCommand] || LayoutSchema.default;
+  // const Layout = LayoutSchema[data.moduleCommand] || LayoutSchema.default;
 
   return (
     <Box
@@ -34,18 +34,16 @@ const TransactionDetails = ({
           <h1>{title}</h1>
         </BoxHeader>
       )}
-      <Box>
-        <BoxContent className={`${layoutSchemaStyles.mainContent} ${Layout.className}`}>
-          <TransactionDetailsContext.Provider value={{
-            activeToken, network, wallet, transaction: data,
-          }}
-          >
-            {Layout.components.map((Component, index) => (
-              <Component key={index} t={t} />
-            ))}
-          </TransactionDetailsContext.Provider>
-        </BoxContent>
-      </Box>
+      {/* <BoxContent className={`${layoutSchemaStyles.mainContent} ${Layout.className}`}>
+        <TransactionDetailsContext.Provider value={{
+          activeToken, network, wallet, transaction: data,
+        }}
+        >
+          {Layout.components.map((Component, index) => (
+            <Component key={index} t={t} />
+          ))}
+        </TransactionDetailsContext.Provider>
+      </BoxContent> */}
     </Box>
   );
 };
