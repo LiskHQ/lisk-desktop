@@ -1,17 +1,17 @@
 // istanbul ignore file
 import React from 'react';
-// import { fromRawLsk } from '@token/fungible/utils/lsk';
 import { ROUND_LENGTH } from '@dpos/validator/consts';
 import { useTheme } from 'src/theme/Theme';
 import { getColorPalette } from 'src/modules/common/components/charts/chartOptions';
 import Box from 'src/theme/box';
-import BoxHeader from 'src/theme/box/header';
 import BoxContent from 'src/theme/box/content';
 import BoxEmptyState from 'src/theme/box/emptyState';
+import { useTransactions } from 'src/modules/transaction/hooks/queries';
 import { DoughnutChart, LineChart } from 'src/modules/common/components/charts';
 import GuideTooltip, {
   GuideTooltipItem,
 } from 'src/modules/common/components/charts/guideTooltip';
+import { useDelegates } from '../../hooks/queries';
 import NumericInfo from './numericInfo';
 import styles from './overview.css';
 
@@ -21,20 +21,22 @@ const getAmountOfDelegatesLabels = (registrations) =>
   registrations.data.map((item) => item[0]);
 
 const Overview = ({
-  delegatesCount,
-  transactionsCount,
   registrations,
   t,
   totalBlocks,
-  // supply,
+  total,
 }) => {
   const colorPalette = getColorPalette(useTheme());
+  const { data: delegates } = useDelegates({ config: { params: { limit: 1 } } });
+  const { data: transactions } = useTransactions({ config: { params: { limit: 1 } } });
+  const delegatesCount = delegates?.meta.total ?? 0;
+  const transactionsCount = transactions?.meta.total ?? 0;
   const doughnutChartData = {
     labels: [t('Standby delegates'), t('Active delegates')],
     datasets: [
       {
         label: 'delegates',
-        data: [Math.max(0, delegatesCount.data - ROUND_LENGTH), ROUND_LENGTH],
+        data: [Math.max(0, delegatesCount - ROUND_LENGTH), ROUND_LENGTH],
       },
     ],
   };
@@ -52,22 +54,28 @@ const Overview = ({
     },
   };
 
+  const totalDelegates = () => (
+    <>
+      <p>{total}</p>
+      <span>{t('Total delegates')}</span>
+    </>
+  );
+
   return (
     <Box className={styles.wrapper}>
-      <BoxHeader>
-        <h1>{t('Delegates overview')}</h1>
-      </BoxHeader>
       <BoxContent className={styles.content}>
         <div className={styles.column}>
-          {typeof delegatesCount.data === 'number' ? (
+          {typeof delegatesCount === 'number' ? (
             <>
               <div className={styles.chartBox}>
-                <h2 className={styles.title}>{t('Delegate Status')}</h2>
-                <div className={`${styles.chart} showOnLargeViewPort`}>
+                <h2 className={styles.title}>{t('Total')}</h2>
+                <div className={`${styles.chart} ${styles.showOnLargeViewPort} showOnLargeViewPort`}>
                   <DoughnutChart
                     data={doughnutChartData}
+                    label={totalDelegates}
                     options={{
                       ...doughnutChartOptions,
+                      cutoutPercentage: 70,
                       legend: { display: true },
                     }}
                   />
@@ -75,8 +83,10 @@ const Overview = ({
                 <div className={`${styles.chart} hideOnLargeViewPort`}>
                   <DoughnutChart
                     data={doughnutChartData}
+                    label={totalDelegates}
                     options={{
                       ...doughnutChartOptions,
+                      cutoutPercentage: 70,
                       legend: { display: false },
                     }}
                   />
@@ -114,14 +124,9 @@ const Overview = ({
               />
               <NumericInfo
                 title="Total transactions"
-                value={transactionsCount.data}
+                value={transactionsCount}
                 icon="transactions"
               />
-              {/* <NumericInfo
-                title="Total LSK"
-                value={fromRawLsk(supply)}
-                icon="distribution"
-              /> */}
             </div>
           </div>
         </div>

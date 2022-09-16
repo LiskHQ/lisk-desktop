@@ -1,0 +1,42 @@
+.centerLabel {
+  position: absolute;
+  left: calc(60% + 1px);
+  font-size: 75%;
+  text-align: center;
+  padding: 0px;
+  top: 40%;
+
+  & > p {
+    font-size: 25px;
+    margin: 0px;
+  }
+}
+
+@media (min-width: 1327px) {
+  .centerLabel {
+    left: calc(57% + 7px) !important;
+  }
+}
+
+@media (min-width: 1400px) {
+  .centerLabel {
+    left: calc(56% + 7px) !important;
+  }
+}
+
+@media (max-width: 1024px) {
+  .centerLabel {
+    left: 35% !important;
+  }
+}
+
+@media (max-width: 1130px) and (min-width: 1030px) {
+  .centerLabel {
+    left: 66% !important;
+    top: 45% !important;
+
+    & span {
+      display: none;
+    }
+  }
+}

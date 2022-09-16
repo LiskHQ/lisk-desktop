@@ -19,6 +19,7 @@ import {
   getForgingTimeClass,
   getDelegateRankClass,
 } from './tableHeader';
+import DelegateSummary from '../DelegateSummary/DelegateSummary';
 
 const roundStates = {
   forging: 'Forging',
@@ -40,19 +41,33 @@ const delegateStatus = {
   ineligible: 'Ineligible',
 };
 
+const getDelegateStatus = (key, grossVotesReceived) => {
+  if (key === 'banned' || key === 'punished' || key === 'active') {
+    return [key, delegateStatus[key]];
+  }
+  if (grossVotesReceived < DEFAULT_STANDBY_THRESHOLD) {
+    return ['ineligible', delegateStatus.ineligible];
+  }
+
+  return [key, delegateStatus[key]];
+};
+
 export const DelegateRank = () => {
   const { data, activeTab } = useContext(DelegateRowContext);
   return (
     <span className={getDelegateRankClass(activeTab)}>
-      <span>{data.rank}</span>
+      <span>
+        #
+        {data.rank}
+      </span>
     </span>
   );
 };
 
 export const DelegateWeight = () => {
-  const { data: { value }, activeTab } = useContext(DelegateRowContext);
+  const { data: { voteWeight }, activeTab } = useContext(DelegateRowContext);
   const formatted = formatAmountBasedOnLocale({
-    value: fromRawLsk(value),
+    value: fromRawLsk(voteWeight),
     format: '0a',
   });
 
@@ -67,7 +82,17 @@ export const DelegateDetails = () => {
   const {
     data, activeTab, watched = false, addToWatchList, removeFromWatchList, t,
   } = useContext(DelegateRowContext);
+  const theme = useTheme();
+  const {
+    status, totalVotesReceived, voteWeight,
+  } = data;
   const showEyeIcon = activeTab === 'active' || activeTab === 'standby' || activeTab === 'sanctioned' || activeTab === 'watched';
+  const [key, val] = getDelegateStatus(status, totalVotesReceived);
+  const formattedVoteWeight = formatAmountBasedOnLocale({
+    value: fromRawLsk(voteWeight),
+    format: '0a',
+  });
+
   return (
     <span className={getDelegateDetailsClass(activeTab)}>
       <div className={styles.delegateColumn}>
@@ -92,12 +117,24 @@ export const DelegateDetails = () => {
             {watched ? t('Remove from watched') : t('Add to watched')}
           </p>
         </Tooltip>
-
         <div className={`${styles.delegateDetails}`}>
-          <WalletVisual address={data.address} />
+          <Tooltip
+            noArrow
+            tooltipClassName={styles.summaryTooltipContainer}
+            className={styles.summaryTooltip}
+            position="center right"
+            size="maxContent"
+            content={<WalletVisual address={data.address} />}
+          >
+            <DelegateSummary
+              delegate={data}
+              weight={formattedVoteWeight}
+              status={{ value: val, className: `${styles.delegateStatus} ${styles[key]} ${styles[theme]}` }}
+            />
+          </Tooltip>
           <div>
             <p className={styles.delegateName}>
-              {data.username}
+              {data.name}
             </p>
             <p className={styles.delegateAddress}>{truncateAddress(data.address)}</p>
           </div>
@@ -145,17 +182,6 @@ export const RoundState = () => {
       )}
     </span>
   );
-};
-
-const getDelegateStatus = (key, grossVotesReceived) => {
-  if (key === 'banned' || key === 'punished' || key === 'active') {
-    return [key, delegateStatus[key]];
-  }
-  if (grossVotesReceived < DEFAULT_STANDBY_THRESHOLD) {
-    return ['ineligible', delegateStatus.ineligible];
-  }
-
-  return [key, delegateStatus[key]];
 };
 
 export const DelegateStatus = () => {

@@ -3,10 +3,11 @@ const delegate = index => ({
   totalVotesReceived: `100600000000${index}`,
   selfVotes: `10060000000${index}`,
   voteWeight: `100600000${index}000`,
-  address: `lskaq5cbv3tjy3wf9789v834ndjpvn${index}vj7bpawsc`,
+  address: 'lskhbxua8tpdckcewntcttfqfo4rbatampo2dgrno',
   lastGeneratedHeight: 27605 + index,
   status: 'active',
   isBanned: index < 15,
+  rank: index,
   pomHeights: [
     {
       start: 100 + index,

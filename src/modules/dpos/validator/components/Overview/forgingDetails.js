@@ -4,7 +4,6 @@ import moment from 'moment';
 import { ROUND_LENGTH } from '@dpos/validator/consts';
 import { DoughnutChart } from 'src/modules/common/components/charts';
 import Box from 'src/theme/box';
-import BoxHeader from 'src/theme/box/header';
 import BoxContent from 'src/theme/box/content';
 import BoxEmptyState from 'src/theme/box/emptyState';
 import GuideTooltip, {
@@ -13,6 +12,7 @@ import GuideTooltip, {
 import Icon from 'src/theme/Icon';
 import { useTheme } from 'src/theme/Theme';
 import { getColorPalette } from 'src/modules/common/components/charts/chartOptions';
+import { useForgersGenerator } from '../../hooks/queries/useForgersGenerator';
 import NumericInfo from './numericInfo';
 import Forger from './forger';
 import styles from './overview.css';
@@ -48,15 +48,17 @@ const getPassedMinutes = (startTime) => {
 };
 
 const ForgingDetails = ({
-  t, forgers, forgedInRound, startTime,
+  t, forgedInRound, startTime, total,
 }) => {
   const theme = useTheme();
   const colorPalette = getColorPalette(theme);
   const delegatesForgedLabels = [
-    t('Forging'),
-    t('Awaiting slot'),
-    t('Missed slot'),
+    t('Forged blocks'),
+    t('Awaiting slot        '),
+    t('Missed blocks'),
   ];
+  const { data: forgersData } = useForgersGenerator({ config: { params: { limit: 103 } } });
+  const forgers = forgersData?.data ?? [];
 
   const doughnutChartData = {
     labels: delegatesForgedLabels,
@@ -82,22 +84,27 @@ const ForgingDetails = ({
   };
 
   const forgersListToShow = forgers.slice(1, FORGERS_TO_SHOW + 1);
+  const totalDelegates = () => (
+    <>
+      <p>{total}</p>
+      <span>{t('Total delegates')}</span>
+    </>
+  );
 
   return (
     <Box className={styles.wrapper}>
-      <BoxHeader>
-        <h1>{t('Forging details')}</h1>
-      </BoxHeader>
       <BoxContent className={styles.content}>
         <div className={styles.column}>
           {forgers.length ? (
             <div className={styles.chartBox}>
-              <h2 className={styles.title}>{t('Slot status')}</h2>
+              <h2 className={styles.title}>{t('Delegate Forging Status')}</h2>
               <div className={`${styles.chart} showOnLargeViewPort`}>
                 <DoughnutChart
                   data={doughnutChartData}
+                  label={totalDelegates}
                   options={{
                     ...doughnutChartOptions,
+                    cutoutPercentage: 70,
                     legend: { display: true },
                   }}
                 />
@@ -105,8 +112,10 @@ const ForgingDetails = ({
               <div className={`${styles.chart} hideOnLargeViewPort`}>
                 <DoughnutChart
                   data={doughnutChartData}
+                  label={totalDelegates}
                   options={{
                     ...doughnutChartOptions,
+                    cutoutPercentage: 70,
                     legend: { display: false },
                   }}
                 />

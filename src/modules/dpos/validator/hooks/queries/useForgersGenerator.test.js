@@ -6,8 +6,8 @@ import { useForgersGenerator } from './useForgersGenerator';
 
 jest.useRealTimers();
 
-describe('useBlocks hook', () => {
-  const limit = 15;
+describe('useForgersGenerator hook', () => {
+  const limit = 52;
   const config = { params: { limit } };
 
   it('fetching data correctly', async () => {
@@ -51,7 +51,7 @@ describe('useBlocks hook', () => {
     await waitFor(() => result.current.isFetching);
     await waitFor(() => !result.current.isFetching);
     const expectedResponse = {
-      data: mockGenerator.data.slice(0, limit * 2),
+      data: mockGenerator.data,
       meta: {
         ...mockGenerator.meta,
         count: limit,

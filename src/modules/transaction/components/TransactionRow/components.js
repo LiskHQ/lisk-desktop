@@ -4,14 +4,17 @@ import { Link } from 'react-router-dom';
 import { getTxAmount } from '@transaction/utils/transaction';
 import { MODULE_COMMANDS_NAME_MAP } from 'src/modules/transaction/configuration/moduleCommand';
 import DateTimeFromTimestamp from 'src/modules/common/components/timestamp';
+import WalletVisual from '@wallet/components/walletVisual';
 import Icon from 'src/theme/Icon';
 import Tooltip from 'src/theme/Tooltip';
+import { ROUND_LENGTH } from '@dpos/validator/consts';
 import TokenAmount from '@token/fungible/components/tokenAmount';
 import WalletVisualWithAddress from '@wallet/components/walletVisualWithAddress';
 import { truncateAddress } from '@wallet/utils/account';
 import Spinner from 'src/theme/Spinner';
 import routes from 'src/routes/routes';
 import { getModuleCommandTitle } from '@transaction/utils';
+import { getDelegateDetailsClass } from '@dpos/validator/components/DelegatesTable/tableHeader';
 import styles from './row.css';
 import TransactionRowContext from '../../context/transactionRowContext';
 import TransactionTypeFigure from '../TransactionTypeFigure';
@@ -32,10 +35,36 @@ export const Height = () => {
   return <span>{data.block.height}</span>;
 };
 
+export const Round = () => {
+  const { data } = useContext(TransactionRowContext);
+  return <span>{Math.ceil(data.block.height / ROUND_LENGTH)}</span>;
+};
+
 export const Type = () => {
   const { data } = useContext(TransactionRowContext);
   const formatTransactionType = (txType) => txType.replace(':', ' ');
   return <span className={styles.type}>{formatTransactionType(data.moduleCommandName)}</span>;
+};
+
+export const DelegateDetails = () => {
+  const {
+    data, activeTab,
+  } = useContext(TransactionRowContext);
+  return (
+    <span className={getDelegateDetailsClass(activeTab)}>
+      <div className={styles.delegateColumn}>
+        <div className={`${styles.delegateDetails}`}>
+          <WalletVisual address={data.sender.address} />
+          <div>
+            <p className={styles.delegateName}>
+              {data.sender.name}
+            </p>
+            <p className={styles.delegateAddress}>{truncateAddress(data.sender.address)}</p>
+          </div>
+        </div>
+      </div>
+    </span>
+  );
 };
 
 export const Sender = () => {
@@ -198,7 +227,7 @@ const generateVotes = (params, delegates, token, t) => {
     >
       <Link to={`${routes.wallet.path}?address=${vote.delegateAddress}`}>
         <span className={styles.primaryText}>
-          {delegates[vote.delegateAddress]?.dpos.delegate.username
+          {delegates[vote.delegateAddress]?.name
             ?? truncateAddress(vote.delegateAddress)}
         </span>
       </Link>
