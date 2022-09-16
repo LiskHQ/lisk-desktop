@@ -59,7 +59,7 @@ class Tooltip extends React.Component {
   render() {
     const {
       title, children, footer, className, position = 'bottom',
-      alwaysShow, content, tooltipClassName, size, indent,
+      alwaysShow, content, tooltipClassName, size, indent, noArrow
     } = this.props;
     const {
       showTooltip,
@@ -98,7 +98,7 @@ class Tooltip extends React.Component {
           tooltipClassName,
         ].join(' ')}
         >
-          {!this.props?.noArrow && (
+          {!noArrow && (
             <span className={`${styles.tooltipArrow} tooltip-arrow`}>
               <svg stroke="inherit" fill="currentColor" viewBox="0 0 14 28">
                 <path d="M13.307.5S.5 10.488.5 13.896c0 3.409 12.785 12.893 12.785 12.893" />
