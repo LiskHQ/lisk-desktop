@@ -11,9 +11,12 @@
   margin: 24px 0px -19px 0px;
   font-weight: var(--font-weight-very-bold);
   font-size: var(--font-size-h3);
+  font-family: var(--content-font);
 }
 
 .wrapper {
+  --content-font: 'gilroy';
+
   width: 100%;
   height: 100%;
   display: flex;
@@ -47,6 +50,7 @@
 
     & > h1 {
       font-size: 20px !important;
+      font-family: var(--content-font) !important;
     }
   }
 

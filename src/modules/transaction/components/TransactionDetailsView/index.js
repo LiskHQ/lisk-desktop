@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useMemo } from 'react';
 import { isEmpty } from 'src/utils/helpers';
 import { useTranslation } from 'react-i18next';
 import { parseSearchParams } from 'src/utils/searchParams';
@@ -28,12 +28,14 @@ const TransactionDetails = ({ location }) => {
     },
   });
 
+  const transaction = useMemo(() => transactions?.data?.[0] || {}, [transactions]);
+
   if (error && isEmpty(transactions?.data)) {
     return <NotFound t={t} />;
   }
   return (
     <div className={styles.wrapper}>
-      <Heading title="Transaction xxxx" className={styles.heading} />
+      <Heading title={`Transaction ${transaction.id}`} className={styles.heading} />
       <div className={styles.body}>
         <Box isLoading={isLoading} className={styles.container}>
           <BoxHeader>
