@@ -68,7 +68,7 @@ or "warn/action" ineastd of "red/green"
   *************************/
   --border-radius-standard: 10px;
   --border-radius-box: 16px;
-  --header-height: 50px;
+  --header-height: 60px;
   --header-logo-size: 56px;
   --search-box-width-l: 597px;
   --footer-button-width: 400px;
@@ -185,6 +185,7 @@ or "warn/action" ineastd of "red/green"
   --color-application-manage-hover-color: var(--color-athens-white);
   --color-node-border: var(--color-athens-white);
   --color-ultramarine-blue-blurred: #4070f41a;
+  --color-menu-black: #030815;
 
   /*************************
         Box

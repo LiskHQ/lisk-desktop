@@ -1,6 +1,7 @@
 import React from 'react';
 import { useSelector } from 'react-redux';
 import { mount } from 'enzyme';
+import mockSavedAccounts from '@tests/fixtures/accounts';
 import DialogHolder from './holder';
 import MockDialog from './dialog';
 
@@ -29,6 +30,9 @@ jest.mock('react-redux', () => ({
 
 describe('Dialog Holder Component', () => {
   const mockAppState = {
+    account: {
+      current: mockSavedAccounts[0],
+    },
     token: {
       active: 'LSK',
     },
@@ -51,7 +55,7 @@ describe('Dialog Holder Component', () => {
   let wrapper;
 
   beforeEach(() => {
-    useSelector.mockImplementation(callback => callback(mockAppState));
+    useSelector.mockImplementation((callback) => callback(mockAppState));
     wrapper = mount(<DialogHolder.WrappedComponent history={mockHistory} />);
   });
 
