@@ -1,5 +1,4 @@
 import React from 'react';
-import { withRouter } from 'react-router';
 import { TertiaryButton } from 'src/theme/buttons';
 import Icon from 'src/theme/Icon';
 import styles from './Heading.css';
@@ -15,4 +14,4 @@ const Heading = ({ title, onGoBack, history, noBackButton, className }) => (
   </div>
 );
 
-export default withRouter(Heading);
+export default Heading;
