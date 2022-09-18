@@ -23,12 +23,12 @@ export const ExpandToggle = ({ isCollapsed, onToggle }) => (
   </TertiaryButton>
 );
 
-export const Title = ({ tooltip, text }) => {
+export const Title = ({ tooltip, label }) => {
   const { t } = useTranslation();
 
   return (
     <div className={`${styles.title} ${grid['col-xs-5']}`}>
-      <span>{text}</span>
+      <span>{label}</span>
       {tooltip && (
         <Tooltip position="right" size="s" indent>
           <p>{t(tooltip)}</p>
@@ -50,7 +50,7 @@ export const AddressWithName = ({ address, name }) => (
 
 export const TransactionStatus = ({ status }) => {
   const theme = useTheme();
-  console.log('--', status);
+
   return (
     <div className={styles.statusWrapper}>
       <span className={`${styles.transactionStatus} ${styles[status]} ${styles[theme]}`}>

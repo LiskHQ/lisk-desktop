@@ -3,7 +3,7 @@ import { AddressWithName, ExpandToggle, Text, Title, TransactionStatus } from '.
 import styles from './TransactionDetailRow.css';
 
 const TransactionEventRow = ({ data, isParamsCollasped, onToggleJsonView }) => {
-  const { type, tooltip, value, title, isCapitalized } = data;
+  const { type, tooltip, value, label, isCapitalized } = data;
 
   const valueToRender = {
     address: <AddressWithName {...value} />,
@@ -13,7 +13,7 @@ const TransactionEventRow = ({ data, isParamsCollasped, onToggleJsonView }) => {
 
   return (
     <div data-testid="transaction-event-row-wrapper" className={styles.container}>
-      <Title tooltip={tooltip} text={title} />
+      <Title tooltip={tooltip} label={label} />
       {valueToRender[type] || <Text isCapitalized={isCapitalized} value={value} />}
     </div>
   );

@@ -46,51 +46,51 @@ const TransactionDetails = ({ location }) => {
 
     return [
       {
-        title: 'Transaction type',
+        label: 'Transaction type',
         value: `${txModule} ${txType}`,
         isCapitalized: true
       },
       {
-        title: 'Sender',
+        label: 'Sender',
         value: sender,
         type: 'address',
       },
       {
-        title: 'Transaction Fee',
+        label: 'Transaction Fee',
         value: <TokenAmount val={fee} token="LSK" />,
       },
       {
-        title: 'Date',
+        label: 'Date',
         value: <DateTimeFromTimestamp fulltime time={block.timestamp} />,
       },
       {
-        title: 'Nonce',
+        label: 'Nonce',
         value: nonce,
       },
       {
-        title: 'Confirmations',
+        label: 'Confirmations',
         value: confirmations,
       },
       {
-        title: 'Status',
+        label: 'Status',
         value: executionStatus,
         type: 'status',
         tooltip: 'status sdfasdf',
       },
       {
-        title: 'Transaction ID',
+        label: 'Transaction ID',
         value: id,
       },
       {
-        title: 'Block ID',
+        label: 'Block ID',
         value: block.id,
       },
       {
-        title: 'Block Height',
+        label: 'Block Height',
         value: block.height,
       },
       {
-        title: 'Parameters',
+        label: 'Parameters',
         type: 'expand',
       },
     ];
