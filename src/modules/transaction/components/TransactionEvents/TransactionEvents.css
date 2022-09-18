@@ -40,7 +40,7 @@ h1 {
 }
 
 .tableHeader {
-  top: -10px;
+  top: -14px;
   background: var(--color-white);
   z-index: 2;
   padding: 5px 0px;
