@@ -2,7 +2,7 @@ const transaction = index => ({
   id: `22267562542235376${index}`,
   moduleCommandID: '2:0',
   moduleCommandName: 'token:transfer',
-  nonce: '0',
+  nonce: '111',
   fee: '1000000',
   sender: {
     address: 'lsk24cd35u4jdq8szo3pnsqe5dsxwrnazyqqqg5eu',
@@ -20,7 +20,7 @@ const transaction = index => ({
     height: 8350681 + index,
     timestamp: 28227090,
   },
-  confirmations: 0 + index,
+  confirmations: 22 + index,
   executionStatus: 'pending',
   meta: {
     recipient: {

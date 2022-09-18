@@ -38,17 +38,25 @@ const TransactionDetails = ({ location }) => {
 
   const transaction = useMemo(() => transactions?.data?.[0] || {}, [transactions]);
   const transactionDetailList = useMemo(() => {
-    if (isLoading) return [];
+    if (isLoading || error || isEmpty(transactions?.data)) return [];
 
-    const { id, moduleCommandName, sender, nonce, fee, block, confirmations, executionStatus } =
-      transaction;
+    const {
+      id,
+      moduleCommandName,
+      sender = {},
+      nonce,
+      fee,
+      block = {},
+      confirmations,
+      executionStatus,
+    } = transaction;
     const [txModule, txType] = moduleCommandName.split(':');
 
     return [
       {
         label: 'Transaction type',
         value: `${txModule} ${txType}`,
-        isCapitalized: true
+        isCapitalized: true,
       },
       {
         label: 'Sender',
@@ -75,7 +83,7 @@ const TransactionDetails = ({ location }) => {
         label: 'Status',
         value: executionStatus,
         type: 'status',
-        tooltip: 'status sdfasdf',
+        tooltip: 'Execution status for this transaction',
       },
       {
         label: 'Transaction ID',
@@ -96,7 +104,7 @@ const TransactionDetails = ({ location }) => {
     ];
   }, [transaction]);
 
-  if (error && isEmpty(transactions?.data)) {
+  if (error || isEmpty(transactions?.data)) {
     return <NotFound t={t} />;
   }
 
@@ -121,7 +129,7 @@ const TransactionDetails = ({ location }) => {
               }}
             />
             <div
-              data-testid="transaction-event-json-viewer"
+              data-testid="transaction-param-json-viewer"
               className={`${styles.jsonContainer} ${!isParamsCollasped ? styles.shrink : ''}`}
             >
               <ReactJson name={false} src={transaction.params} />

@@ -20,7 +20,7 @@ export const mountWithProps = (Component, props, store) =>
   mount(
     <Provider store={configureStore()(store)}>
       <Component {...props} />
-    </Provider>,
+    </Provider>
   );
 
 /**
@@ -32,13 +32,12 @@ export const mountWithProps = (Component, props, store) =>
  *
  * @returns {Object} Mounted component
  */
-export const mountWithRouter = (Component, props, routeConfig = {}) => mount(
-  <MemoryRouter
-    initialEntries={[routeConfig]}
-  >
-    <Component {...props} />
-  </MemoryRouter>,
-);
+export const mountWithRouter = (Component, props, routeConfig = {}) =>
+  mount(
+    <MemoryRouter initialEntries={[routeConfig]}>
+      <Component {...props} />
+    </MemoryRouter>
+  );
 
 /**
  * Mounts components that are wrapped in WithRouter with custom router
@@ -55,13 +54,14 @@ const defaultHistoryProps = {
   },
 };
 
-export const mountWithCustomRouter = (Component, props) => mount(
-  <Router
-    history={props.history ? { ...defaultHistoryProps, ...props.history } : defaultHistoryProps}
-  >
-    <Component {...props} />
-  </Router>,
-);
+export const mountWithCustomRouter = (Component, props) =>
+  mount(
+    <Router
+      history={props.history ? { ...defaultHistoryProps, ...props.history } : defaultHistoryProps}
+    >
+      <Component {...props} />
+    </Router>
+  );
 
 /**
  * Mounts components that are wrapped in WithRouter
@@ -73,15 +73,14 @@ export const mountWithCustomRouter = (Component, props) => mount(
  *
  * @returns {Object} Mounted component
  */
-export const mountWithRouterAndStore = (Component, props, routeConfig = {}, store) => mount(
-  <Provider store={configureStore()(store)}>
-    <MemoryRouter
-      initialEntries={[routeConfig]}
-    >
-      <Component {...props} />
-    </MemoryRouter>
-  </Provider>,
-);
+export const mountWithRouterAndStore = (Component, props, routeConfig = {}, store) =>
+  mount(
+    <Provider store={configureStore()(store)}>
+      <MemoryRouter initialEntries={[routeConfig]}>
+        <Component {...props} />
+      </MemoryRouter>
+    </Provider>
+  );
 
 /**
  * Mounts components that are wrapped in Query Client
@@ -96,7 +95,7 @@ export const mountWithQueryClient = (Component, props = {}) => {
   return mount(
     <QueryClientProvider client={queryClient}>
       <Component {...props} />
-    </QueryClientProvider>,
+    </QueryClientProvider>
   );
 };
 
@@ -109,13 +108,12 @@ export const mountWithQueryClient = (Component, props = {}) => {
  *
  * @returns {Object} Mounted component
  */
-export const renderWithRouter = (Component, props, routeConfig = {}) => render(
-  <MemoryRouter
-    initialEntries={[routeConfig]}
-  >
-    <Component {...props} />
-  </MemoryRouter>,
-);
+export const renderWithRouter = (Component, props, routeConfig = {}) =>
+  render(
+    <MemoryRouter initialEntries={[routeConfig]}>
+      <Component {...props} />
+    </MemoryRouter>
+  );
 
 /**
  * Renders components that are wrapped in WithRouter
@@ -125,13 +123,14 @@ export const renderWithRouter = (Component, props, routeConfig = {}) => render(
  *
  * @returns {Object} Rendered component
  */
-export const renderWithCustomRouter = (Component, props) => render(
-  <Router
-    history={props.history ? { ...defaultHistoryProps, ...props.history } : defaultHistoryProps}
-  >
-    <Component {...props} />
-  </Router>,
-);
+export const renderWithCustomRouter = (Component, props) =>
+  render(
+    <Router
+      history={props.history ? { ...defaultHistoryProps, ...props.history } : defaultHistoryProps}
+    >
+      <Component {...props} />
+    </Router>
+  );
 
 /**
  * Renders components that are wrapped in QueryClientProvider
@@ -146,6 +145,28 @@ export const renderWithQueryClient = (Component, props) => {
   return render(
     <QueryClientProvider client={queryClient}>
       <Component {...props} />
-    </QueryClientProvider>,
+    </QueryClientProvider>
+  );
+};
+
+/**
+ * Renders components that are wrapped in QueryClientProvider
+ *
+ * @param {Class|Function} Component - A React component to be tested
+ * @param {Object} props - Set of props to be passed to the component
+ *
+ * @returns {Object} Rendered component
+ */
+export const renderWithRouterAndQueryClient = (Component, props) => {
+  const queryClient = new QueryClient();
+
+  return render(
+    <Router
+      history={props.history ? { ...defaultHistoryProps, ...props.history } : defaultHistoryProps}
+    >
+      <QueryClientProvider client={queryClient}>
+        <Component {...props} />
+      </QueryClientProvider>
+    </Router>
   );
 };
