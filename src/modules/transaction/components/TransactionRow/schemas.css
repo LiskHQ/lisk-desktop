@@ -127,7 +127,11 @@
   }
 
   &.vote {
-    grid-template-areas: "sender date assets";
+    grid-template-areas: "sender date height assets";
+
+    &::before {
+      left: 0px !important;
+    }
 
     & > * {
       height: 100%;
@@ -137,6 +141,17 @@
       flex: 0 0 auto;
       flex-basis: 33.3333333%;
       max-width: 33.3333333%;
+    }
+
+    & > *:nth-child(2),
+    & > *:nth-child(3) {
+      height: 100%;
+      display: flex;
+      justify-content: flex-start;
+      align-items: center;
+      flex: 0 0 auto;
+      flex-basis: 16.66666666667%;
+      max-width: 16.66666666667%;
     }
 
     & > *:last-child {

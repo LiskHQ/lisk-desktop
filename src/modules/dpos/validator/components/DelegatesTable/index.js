@@ -1,54 +1,58 @@
 /* istanbul ignore file */
 import React, { useMemo } from 'react';
-import { filterDelegates } from '../../utils';
-import TableWrapper from './TableWrapper';
+import { useSelector } from 'react-redux';
+import { useTranslation } from 'react-i18next';
+import { QueryTable } from 'src/theme/QueryTable';
+import { useSort } from 'src/modules/common/hooks';
+import { useDelegates } from '../../hooks/queries';
+import { useForgersGenerator } from '../../hooks/queries/useForgersGenerator';
+import DelegateRow from './delegateRow';
+import header from './tableHeader';
+import { ROUND_LENGTH } from '../../consts';
 
 const DelegatesTable = ({
   setActiveTab,
-  delegates,
-  watchList,
-  hasLoadMore,
   activeTab,
-  changeSort,
   blocks,
   filters,
-  sort,
 }) => {
-  const { delegatesFilter, canLoadMore, currentOffset } = useMemo(() => {
-    const { offset: defaultOffset, count, total } = delegates?.meta || {};
-    const offset = defaultOffset + count;
-    return {
-      delegatesFilter: filterDelegates(delegates, filters),
-      canLoadMore: hasLoadMore && (offset < total),
-      currentOffset: offset,
-    };
-  }, [delegates, filters]);
+  const { t } = useTranslation();
+  const watchList = useSelector((state) => state.watchList);
+  const queryHook = activeTab === 'active' ? useForgersGenerator : useDelegates;
+  const { sort, toggleSort } = useSort();
 
-  const handleLoadMore = () => {
-    delegatesFilter.loadData(
-      Object.keys(filters).reduce(
-        (acc, key) => ({
-          ...acc,
-          ...(filters[key] && { [key]: filters[key] }),
-        }),
-        {
-          offset: currentOffset,
-        },
-      ),
-    );
-  };
+  // eslint-disable-next-line max-statements
+  const queryConfig = useMemo(() => ({
+      config: { 
+        params: { 
+          ...filters, 
+          ...sort && { sort },
+          ...(activeTab === 'standby' && { status: 'standby,ineligible' }),
+          ...(activeTab === 'active' && { limit: ROUND_LENGTH }),
+          ...(activeTab === 'sanctioned' && { status: 'punished,banned' }),
+          ...(activeTab === 'watched' && { addressList: watchList }),
+        } 
+      }
+    }), [activeTab, sort, filters]);
 
   return (
-    <TableWrapper
-      delegates={delegatesFilter}
-      blocks={blocks}
-      setActiveTab={setActiveTab}
-      watchList={watchList}
-      handleLoadMore={handleLoadMore}
-      activeTab={activeTab}
-      changeSort={changeSort}
-      sort={sort}
-      canLoadMore={canLoadMore}
+    <QueryTable
+      showHeader
+      queryHook={queryHook}
+      queryConfig={queryConfig}
+      row={DelegateRow}
+      header={header(activeTab, toggleSort, t)}
+      currentSort={sort}
+      emptyState={{
+        message: t('No {{activeTab}} delegates found.', { activeTab }),
+      }}
+      additionalRowProps={{
+        t,
+        activeTab,
+        watchList,
+        setActiveTab,
+        blocks,
+      }}
     />
   );
 };

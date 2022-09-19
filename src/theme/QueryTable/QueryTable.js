@@ -9,6 +9,7 @@ export const QueryTable = ({
   queryConfig,
   button,
   scrollToSelector,
+  responseTransform,
   ...props
 }) => {
   const {
@@ -42,7 +43,7 @@ export const QueryTable = ({
 
   return (
     <Table
-      data={response?.data || []}
+      data={responseTransform?.(response?.data) || response?.data || []}
       isLoading={isLoading}
       isFetching={isFetching}
       loadData={fetchNextPage}

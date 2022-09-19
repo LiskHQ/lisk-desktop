@@ -1,6 +1,6 @@
 const transaction = index => ({
   id: `22267562542235376${index}`,
-  moduleCommandID: '2:0',
+  moduleCommandID: index >= 15 ? '5:1' : '2:0',
   moduleCommandName: 'token:transfer',
   nonce: '0',
   fee: '1000000',
@@ -14,6 +14,14 @@ const transaction = index => ({
     amount: '150000000',
     recipientAddress: 'lsk24cd35u4jdq8szo3pnsqe5dsxwrnazyqqqg5eu',
     data: 'message',
+    votes: index >= 15 ? [
+      {
+        delegateAddress: 'lskkkb9gcggfqzsusrnu7zb9uzfop96u7596zr5w2',
+      },
+      {
+        delegateAddress: 'lskma5wphbxzf8zkvwumtamjosauzdo5s2qepgrty',
+      },
+    ] : undefined,
   },
   block: {
     id: 35998991827805762 + index,
