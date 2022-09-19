@@ -10,14 +10,22 @@ export const networkStatus = rest.post(
 
 export const transactions = rest.get(
   `*/api/${API_VERSION}/transactions`,
+  // eslint-disable-next-line max-statements
   async (req, res, ctx) => {
     const limit = Number(req.url.searchParams.get('limit') || LIMIT);
     const offset = Number(req.url.searchParams.get('offset') || 0);
     const blockID = req.url.searchParams.get('blockID');
+    const moduleCommandID = req.url.searchParams.get('moduleCommandID');
     let mockTransactionsData = mockTransactions.data;
 
     if (blockID) {
       mockTransactionsData = mockTransactionsData.filter((tx) => tx.block.id === blockID);
+    }
+
+    if (moduleCommandID) {
+      mockTransactionsData = mockTransactionsData.filter(
+        (tx) => tx.moduleCommandID === moduleCommandID,
+      );
     }
 
     const response = {
