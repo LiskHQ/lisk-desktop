@@ -1,8 +1,13 @@
 import React from 'react';
-import { screen, render, fireEvent } from '@testing-library/react';
+import { screen, render, fireEvent, waitFor } from '@testing-library/react';
 import { truncateAddress } from 'src/modules/wallet/utils/account';
 import TransactionDetailRow from './TransactionDetailRow';
 import { mockTransactions } from '../../__fixtures__';
+
+jest.mock('react-i18next', () => ({
+  ...jest.requireActual('react-i18next'),
+  useTranslation: jest.fn().mockReturnValue({ t: jest.fn((val) => val) }),
+}));
 
 describe('TransactionDetailRow', () => {
   const props = {
@@ -57,12 +62,21 @@ describe('TransactionDetailRow', () => {
     render(<TransactionDetailRow {...props} data={{ ...props.data, type: 'expand' }} />);
 
     expect(screen.getByText('Expand')).toBeTruthy();
-    fireEvent.click(screen.getByText('Expand')).toHaveBeenCalledTimes(1);
+    fireEvent.click(screen.getByText('Expand'));
+
+    await waitFor(() => {
+      expect(props.onToggleJsonView).toHaveBeenCalledTimes(1);
+    });
 
     render(
       <TransactionDetailRow {...props} data={{ ...props.data, type: 'expand' }} isParamsCollasped />
     );
     expect(screen.getByText('Close')).toBeTruthy();
-    fireEvent.click(screen.getByText('Close')).toHaveBeenCalledTimes(1);
+
+    jest.resetAllMocks();
+    fireEvent.click(screen.getByText('Close'));
+    await waitFor(() => {
+      expect(props.onToggleJsonView).toHaveBeenCalledTimes(1);
+    });
   });
 });
