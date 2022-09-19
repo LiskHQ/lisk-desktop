@@ -14,14 +14,17 @@ export const Text = ({ value, isCapitalized }) => (
   </div>
 );
 
-export const ExpandToggle = ({ isCollapsed, onToggle }) => (
+export const ExpandToggle = ({ isCollapsed, onToggle }) => {
+  const { t } = useTranslation();
+
+  return(
   <TertiaryButton
     onClick={onToggle}
     className={`${styles.expandToggle} ${isCollapsed ? styles.collapsed : ''} ${grid['col-xs-5']}`}
   >
-    <span>{isCollapsed ? 'Close' : 'Expand'}</span>
+    <span>{isCollapsed ? t('Close') : t('Expand')}</span>
   </TertiaryButton>
-);
+)};
 
 export const Title = ({ tooltip, label }) => {
   const { t } = useTranslation();
@@ -30,7 +33,7 @@ export const Title = ({ tooltip, label }) => {
     <div className={`${styles.title} ${grid['col-xs-5']}`}>
       <span>{label}</span>
       {tooltip && (
-        <Tooltip position="right" size="s" indent>
+        <Tooltip position="right" indent>
           <p>{t(tooltip)}</p>
         </Tooltip>
       )}

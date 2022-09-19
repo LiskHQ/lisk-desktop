@@ -38,7 +38,7 @@ const TransactionDetails = ({ location }) => {
 
   const transaction = useMemo(() => transactions?.data?.[0] || {}, [transactions]);
   const transactionDetailList = useMemo(() => {
-    if (isLoading || error || isEmpty(transactions?.data)) return [];
+    if (error || isEmpty(transactions?.data)) return [];
 
     const {
       id,
@@ -54,51 +54,51 @@ const TransactionDetails = ({ location }) => {
 
     return [
       {
-        label: 'Transaction type',
+        label: t('Transaction type'),
         value: `${txModule} ${txType}`,
         isCapitalized: true,
       },
       {
-        label: 'Sender',
+        label: t('Sender'),
         value: sender,
         type: 'address',
       },
       {
-        label: 'Transaction Fee',
+        label: t('Transaction Fee'),
         value: <TokenAmount val={fee} token="LSK" />,
       },
       {
-        label: 'Date',
+        label: t('Date'),
         value: <DateTimeFromTimestamp fulltime time={block.timestamp} />,
       },
       {
-        label: 'Nonce',
+        label: t('Nonce'),
         value: nonce,
       },
       {
-        label: 'Confirmations',
+        label: t('Confirmations'),
         value: confirmations,
+        tooltip: t('Confirmations refer to the number of blocks added to the Lisk blockchain after a transaction has been submitted. The more confirmations registered, the more secure the transaction becomes.'),
       },
       {
-        label: 'Status',
+        label: t('Status'),
         value: executionStatus,
         type: 'status',
-        tooltip: 'Execution status for this transaction',
       },
       {
-        label: 'Transaction ID',
+        label: t('Transaction ID'),
         value: id,
       },
       {
-        label: 'Block ID',
+        label: t('Block ID'),
         value: block.id,
       },
       {
-        label: 'Block Height',
+        label: t('Block Height'),
         value: block.height,
       },
       {
-        label: 'Parameters',
+        label: t('Parameters'),
         type: 'expand',
       },
     ];
