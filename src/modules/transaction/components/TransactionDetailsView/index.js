@@ -1,9 +1,9 @@
 import React, { useMemo, useState } from 'react';
-import { isEmpty } from 'src/utils/helpers';
+import { withRouter } from 'react-router';
 import ReactJson from 'react-json-view';
 import { useTranslation } from 'react-i18next';
+import { isEmpty } from 'src/utils/helpers';
 import { parseSearchParams } from 'src/utils/searchParams';
-import { withRouter } from 'react-router';
 import Box from 'src/theme/box';
 import BoxContent from 'src/theme/box/content';
 import Heading from 'src/modules/common/components/amountField/Heading';
@@ -21,7 +21,7 @@ import header from './headerMap';
 const TransactionDetails = ({ location }) => {
   const transactionId = parseSearchParams(location.search).transactionId;
   const { t } = useTranslation();
-  const [isParamsCollasped, setIsparamsCollapsed] = useState(false);
+  const [isParamsCollasped, setIsParamsCollapsed] = useState(false);
 
   const {
     data: transactions,
@@ -125,7 +125,7 @@ const TransactionDetails = ({ location }) => {
               headerClassName={styles.tableHeader}
               additionalRowProps={{
                 isParamsCollasped,
-                onToggleJsonView: () => setIsparamsCollapsed((state) => !state),
+                onToggleJsonView: () => setIsParamsCollapsed((state) => !state),
               }}
             />
             <div

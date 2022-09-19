@@ -46,7 +46,7 @@
 .text {
   padding: 0px 16px 0px 5px;
 
-  &.capitlized span {
+  &.capitalized span {
     text-transform: capitalize;
   }
 

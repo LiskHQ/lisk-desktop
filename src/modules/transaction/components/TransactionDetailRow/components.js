@@ -9,7 +9,7 @@ import { truncateAddress } from 'src/modules/wallet/utils/account';
 import styles from './TransactionDetailRow.css';
 
 export const Text = ({ value, isCapitalized }) => (
-  <div className={`${styles.text} ${isCapitalized ? styles.capitlized : ''} ${grid['col-xs-7']}`}>
+  <div className={`${styles.text} ${isCapitalized ? styles.capitalized : ''} ${grid['col-xs-7']}`}>
     <span>{value}</span>
   </div>
 );

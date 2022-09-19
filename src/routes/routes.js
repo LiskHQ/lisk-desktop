@@ -167,10 +167,6 @@ export const modals = {
     isPrivate: false,
     forbiddenTokens: [],
   },
-  // transactionDetails: {
-  //   isPrivate: false,
-  //   forbiddenTokens: [],
-  // },
   newRelease: {
     isPrivate: false,
     forbiddenTokens: [],
