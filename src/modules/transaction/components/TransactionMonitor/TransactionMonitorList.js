@@ -1,10 +1,12 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useSelector } from 'react-redux';
+import { useTranslation } from 'react-i18next';
 import StickyHeader from '@theme/table/stickyHeader';
 import { QueryTable } from '@theme/QueryTable';
 import { useSort } from 'src/modules/common/hooks';
 import useFilter from 'src/modules/common/hooks/useFilter';
 import FilterBar from 'src/modules/common/components/filterBar';
+import transformParams from 'src/utils/transformParams';
 import FilterDropdownButton from 'src/modules/common/components/filterDropdownButton';
 import Box from 'src/theme/box';
 import BoxContent from 'src/theme/box/content';
@@ -59,16 +61,8 @@ const blackListTypes = [
 ];
 
 // eslint-disable-next-line max-statements
-const Transactions = ({
-  t,
-  // sort,
-  // changeSort,
-  // filters,
-  // clearFilter,
-  // applyFilters,
-  // transactions,
-  // clearAllFilters,
-}) => {
+const Transactions = () => {
+  const { t } = useTranslation();
   const fields = getFields(t);
   const [innerFields, setInnerFields] = useState(fields);
   const [params, setParams] = useState();
@@ -77,30 +71,9 @@ const Transactions = ({
   const { sort, toggleSort } = useSort();
   const { filters, applyFilters, clearFilters } = useFilter({});
 
-  // const canLoadMore = transactions.meta
-  //   ? transactions.data.length < transactions.meta.total
-  //   : false;
-
-  // const handleLoadMore = () => {
-  //   // filter the blanks out
-  //   const params = Object.keys(filters).reduce(
-  //     (acc, key) => ({
-  //       ...acc,
-  //       ...(filters[key] && { [key]: filters[key] }),
-  //     }),
-  //     {
-  //       offset: transactions.meta.count + transactions.meta.offset,
-  //       sort,
-  //     }
-  //   );
-
-  //   transactions.loadData(params);
-  // };
-
-  /* istanbul ignore next */
-  // const loadLastTransactions = () => {
-  //   transactions.loadData();
-  // };
+  useEffect(() => {
+    setParams(transformParams({ ...filters, ...(sort && { sort }) }));
+  }, [filters, sort]);
 
   /* istanbul ignore next */
   const formatters = {
@@ -137,9 +110,12 @@ const Transactions = ({
       setTimeout(() => toggleSort('timestamp'), 100);
   };
 
+  const clearTxnFilter = (filterKey) => {
+    clearFilters([filterKey]);
+  };
+
   const clearAllTxnFilters = () => {
-    const clearFilterData = () => setParams({});
-    clearFilters(clearFilterData);
+    clearFilters();
   };
 
   return (
@@ -162,7 +138,7 @@ const Transactions = ({
           {...{ filters, formatters, t }}
           clearFilter={(filterKey) => {
             setInnerFields(fields);
-            clearFilters(filterKey);
+            clearTxnFilter(filterKey);
           }}
           clearAllFilters={() => {
             setInnerFields(fields);
@@ -173,15 +149,11 @@ const Transactions = ({
           showHeader
           button={{
             className: 'load-latest',
-            // entity: 'transaction',
-            // onClick: loadLastTransactions,
             label: t('New transactions'),
           }}
-          // data={transactions.data}
           queryHook={useTransactions}
           queryConfig={{ config: { params } }}
           row={TransactionRow}
-          // loadData={handleLoadMore}
           additionalRowProps={{
             currentBlockHeight,
             activeToken,
@@ -190,8 +162,6 @@ const Transactions = ({
           header={removeSortOnAmount(header(toggleSort, t), filters)}
           headerClassName={styles.tableHeader}
           currentSort={sort}
-          // canLoadMore={canLoadMore}
-          // error={transactions.error}
           emptyState={{
             message: t('There are no transactions for this chain.'),
           }}
