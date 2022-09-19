@@ -1,7 +1,9 @@
 import React from 'react';
+import moment from 'moment';
 import { MemoryRouter } from 'react-router';
 import { fireEvent, screen, waitFor } from '@testing-library/react';
 import { truncateAddress } from 'src/modules/wallet/utils/account';
+import i18n from 'src/utils/i18n/i18n';
 import { renderWithRouter } from 'src/utils/testHelpers';
 import { mockEvents, mockTransactions } from '../../__fixtures__';
 import TransactionDetailView from '.';
@@ -17,6 +19,7 @@ describe('TransactionDetailsView', () => {
   const props = {
     blockId: 1,
   };
+  moment.locale(i18n.language);
 
   useTransactionEvents.mockReturnValue({
     data: { data: mockEvents.data.slice(0, 20) },
@@ -87,7 +90,9 @@ describe('TransactionDetailsView', () => {
     expect(screen.getByText(transaction.block.id)).toBeTruthy();
     expect(screen.getByText(transaction.block.height)).toBeTruthy();
     expect(screen.getByText('0.01 LSK')).toBeTruthy();
-    expect(screen.getByText('23 Nov 1970, 05:51:30 PM')).toBeTruthy();
+    expect(
+      screen.getByText(moment(transaction.block.timestamp * 1000).format('DD MMM YYYY, hh:mm:ss A'))
+    ).toBeTruthy();
 
     expect(screen.getByText('Expand')).toBeTruthy();
     expect(screen.queryByTestId('transaction-param-json-viewer').className).toContain('shrink');

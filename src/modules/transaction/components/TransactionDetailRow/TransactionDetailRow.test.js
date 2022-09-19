@@ -1,5 +1,5 @@
 import React from 'react';
-import { screen, render } from '@testing-library/react';
+import { screen, render, fireEvent } from '@testing-library/react';
 import { truncateAddress } from 'src/modules/wallet/utils/account';
 import TransactionDetailRow from './TransactionDetailRow';
 import { mockTransactions } from '../../__fixtures__';
@@ -51,5 +51,18 @@ describe('TransactionDetailRow', () => {
       <TransactionDetailRow {...props} data={{ ...props.data, type: 'status', value: 'fail' }} />
     );
     expect(screen.queryByText('fail').className).toMatch(/fail/g);
+  });
+
+  it('should render expand button', async () => {
+    render(<TransactionDetailRow {...props} data={{ ...props.data, type: 'expand' }} />);
+
+    expect(screen.getByText('Expand')).toBeTruthy();
+    fireEvent.click(screen.getByText('Expand')).toHaveBeenCalledTimes(1);
+
+    render(
+      <TransactionDetailRow {...props} data={{ ...props.data, type: 'expand' }} isParamsCollasped />
+    );
+    expect(screen.getByText('Close')).toBeTruthy();
+    fireEvent.click(screen.getByText('Close')).toHaveBeenCalledTimes(1);
   });
 });
