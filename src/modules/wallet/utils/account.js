@@ -285,7 +285,6 @@ export const validate2ndPass = async (account, passphrase, error) => {
   const secondPublicKey = account.keys.mandatoryKeys
     .filter(item => item !== account.summary.publicKey);
   const publicKey = await extractPublicKey(passphrase);
-  console.log(publicKey, !secondPublicKey.length, publicKey !== secondPublicKey[0]);
   // compare them
   if (!secondPublicKey.length || publicKey !== secondPublicKey[0]) {
     messages.push('This passphrase does not belong to your account.');

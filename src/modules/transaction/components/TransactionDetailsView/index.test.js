@@ -1,11 +1,11 @@
 import React from 'react';
+import { MemoryRouter } from 'react-router';
 import { fireEvent, screen, waitFor } from '@testing-library/react';
 import { truncateAddress } from 'src/modules/wallet/utils/account';
 import { renderWithRouter } from 'src/utils/testHelpers';
 import { mockEvents, mockTransactions } from '../../__fixtures__';
 import TransactionDetailView from '.';
 import { useTransactionEvents, useTransactions } from '../../hooks/queries';
-import { MemoryRouter } from 'react-router';
 
 jest.mock('../../hooks/queries');
 
