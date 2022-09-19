@@ -54,7 +54,7 @@ const ForgingDetails = ({
   const colorPalette = getColorPalette(theme);
   const delegatesForgedLabels = [
     t('Forged blocks'),
-    t('Awaiting slot        '),
+    t('Awaiting slot'),
     t('Missed blocks'),
   ];
   const { data: forgersData } = useForgersGenerator({ config: { params: { limit: 103 } } });
