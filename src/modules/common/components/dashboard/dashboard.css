@@ -17,7 +17,7 @@
 
     & > .subContainer {
       width: 100%;
-      max-width: var(--fashboard-aside-width);
+      max-width: var(--dashboard-aside-width);
       display: flex;
       flex-direction: column;
       justify-content: flex-start;

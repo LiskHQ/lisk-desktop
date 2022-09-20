@@ -8,15 +8,19 @@ describe('AccountCreationTips', () => {
   it('displays properly', () => {
     render(<AccountCreationTips />);
     expect(screen.getByText('Get started')).toBeInTheDocument();
-    expect(screen.getByText('Your Lisk address')).toBeInTheDocument();
-    expect(screen.getByText('A unique avatar')).toBeInTheDocument();
-    expect(screen.getByText('Manage your account')).toBeInTheDocument();
+    expect(screen.getByText('Don’t have a Lisk account yet?')).toBeInTheDocument();
+    expect(screen.getByText('Why do I need an account?')).toBeInTheDocument();
+    expect(screen.getByText('Send and request tokens')).toBeInTheDocument();
+    expect(screen.getByText('Participate in blockchain governance')).toBeInTheDocument();
+    expect(screen.getByText('Monitor the Blockchain')).toBeInTheDocument();
+    expect(screen.getByText('Create account')).toBeInTheDocument();
+    expect(screen.getByText('Add account')).toBeInTheDocument();
   });
 
   it('navigates to correct routes', () => {
     render(<AccountCreationTips />);
     const links = screen.queryAllByRole('link');
     expect(links.at(0).href).toBe(`http://localhost${routes.register.path}`);
-    expect(links.at(1).href).toBe(`http://localhost${routes.addAccount.path}`);
+    expect(links.at(1).href).toBe(`http://localhost${routes.addAccountOptions.path}`);
   });
 });

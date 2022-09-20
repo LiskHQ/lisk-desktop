@@ -54,7 +54,6 @@ import trezorHwRejectionDark from '@setup/react/assets/images/illustrations/hw-r
 import ledgerNanoHwRejection from '@setup/react/assets/images/illustrations/hw-rejection-ledger-nano.svg';
 import ledgerNanoHwRejectionDark from '@setup/react/assets/images/illustrations/hw-rejection-ledger-nano-dark.svg';
 import addApplicationSuccess from '@setup/react/assets/images/illustrations/add-application-success.svg';
-import eclipsedHumanoid from '@setup/react/assets/images/illustrations/eclipsed-humanoid.svg';
 
 export const illustrations = {
   welcomeLiskDelegates,
@@ -110,7 +109,6 @@ export const illustrations = {
   ledgerNanoHwRejection,
   ledgerNanoHwRejectionDark,
   addApplicationSuccess,
-  eclipsedHumanoid,
 };
 
 const Illustration = ({ name, className, noTheme }) => {
