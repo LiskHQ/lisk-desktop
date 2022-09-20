@@ -2,13 +2,13 @@ import React from 'react';
 import { AddressWithName, ExpandToggle, Text, Title, TransactionStatus } from './components';
 import styles from './TransactionDetailRow.css';
 
-const TransactionEventRow = ({ data, isParamsCollasped, onToggleJsonView }) => {
+const TransactionEventRow = ({ data, isParamsCollapsed, onToggleJsonView }) => {
   const { type, tooltip, value, label, isCapitalized } = data;
 
   const valueToRender = {
     address: <AddressWithName {...value} />,
     status: <TransactionStatus status={value} />,
-    expand: <ExpandToggle isCollapsed={isParamsCollasped} onToggle={onToggleJsonView} />,
+    expand: <ExpandToggle isCollapsed={isParamsCollapsed} onToggle={onToggleJsonView} />,
   };
 
   return (

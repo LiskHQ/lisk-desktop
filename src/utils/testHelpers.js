@@ -150,7 +150,7 @@ export const renderWithQueryClient = (Component, props) => {
 };
 
 /**
- * Renders components that are wrapped in QueryClientProvider
+ * Renders components that are wrapped in QueryClientProvider and Router
  *
  * @param {Class|Function} Component - A React component to be tested
  * @param {Object} props - Set of props to be passed to the component

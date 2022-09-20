@@ -304,7 +304,7 @@ module.exports = {
     'src/modules/account/hooks/useCurrentAccount.js',
     'src/modules/transaction/store/actions.js',
     'src/modules/transaction/hooks/useCreateTransaction.js',
-    'src/modules/transaction/components/TransactionDetails', // @Todo: would resolve this when all transation implentations are finallized
+    'src/modules/transaction/components/TransactionDetails', // @Todo: would resolve this when all transation implementations are finallized
   ],
   coverageThreshold: {
     // global: {

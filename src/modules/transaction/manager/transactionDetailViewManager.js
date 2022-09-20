@@ -10,7 +10,7 @@ import withData from 'src/utils/withData';
 import { parseSearchParams } from 'src/utils/searchParams';
 import TransactionDetails from '../components/TransactionDetailsView';
 
-const WrappedInDialog = (props) => (
+const TransactionDetailsPage = (props) => (
   <TransactionDetails {...props} title="Transaction details" />
 );
 
@@ -38,4 +38,4 @@ export default compose(
   connect(mapStateToProps),
   withData(apis),
   withTranslation(),
-)(WrappedInDialog);
+)(TransactionDetailsPage);

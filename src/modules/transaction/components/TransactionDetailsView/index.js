@@ -21,7 +21,7 @@ import header from './headerMap';
 const TransactionDetails = ({ location }) => {
   const transactionId = parseSearchParams(location.search).transactionId;
   const { t } = useTranslation();
-  const [isParamsCollasped, setIsParamsCollapsed] = useState(false);
+  const [isParamsCollapsed, setIsParamsCollapsed] = useState(false);
 
   const {
     data: transactions,
@@ -78,7 +78,9 @@ const TransactionDetails = ({ location }) => {
       {
         label: t('Confirmations'),
         value: confirmations,
-        tooltip: t('Confirmations refer to the number of blocks added to the Lisk blockchain after a transaction has been submitted. The more confirmations registered, the more secure the transaction becomes.'),
+        tooltip: t(
+          'Confirmations refer to the number of blocks added to the Lisk blockchain after a transaction has been submitted. The more confirmations registered, the more secure the transaction becomes.'
+        ),
       },
       {
         label: t('Status'),
@@ -124,13 +126,13 @@ const TransactionDetails = ({ location }) => {
               header={header(t)}
               headerClassName={styles.tableHeader}
               additionalRowProps={{
-                isParamsCollasped,
+                isParamsCollapsed,
                 onToggleJsonView: () => setIsParamsCollapsed((state) => !state),
               }}
             />
             <div
               data-testid="transaction-param-json-viewer"
-              className={`${styles.jsonContainer} ${!isParamsCollasped ? styles.shrink : ''}`}
+              className={`${styles.jsonContainer} ${!isParamsCollapsed ? styles.shrink : ''}`}
             >
               <ReactJson name={false} src={transaction.params} />
             </div>
