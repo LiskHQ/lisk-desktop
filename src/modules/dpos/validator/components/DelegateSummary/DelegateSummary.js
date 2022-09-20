@@ -34,7 +34,7 @@ const DelegateSummary = ({
           </div>
           <div>
             <PrimaryButton disabled={status.className === 'banned'}>
-              Vote
+              {t('Vote')}
             </PrimaryButton>
           </div>
         </div>

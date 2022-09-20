@@ -57,8 +57,7 @@ export const DelegateRank = () => {
   return (
     <span className={getDelegateRankClass(activeTab)}>
       <span>
-        #
-        {data.rank}
+        #{data.rank}
       </span>
     </span>
   );

@@ -1,4 +1,4 @@
-import React, { useMemo, useRef } from 'react';
+import React, { useMemo } from 'react';
 import { useTranslation } from 'react-i18next';
 import { QueryTable } from 'src/theme/QueryTable';
 import { useTransactions } from 'src/modules/transaction/hooks/queries';
@@ -6,12 +6,11 @@ import { MODULE_COMMANDS_NAME_MAP } from 'src/modules/transaction/configuration/
 import TransactionRow from '@transaction/components/TransactionRow';
 import header from './tableHeader';
 import { useDelegates } from '../../hooks/queries';
-import mergeUniquely from '../../utils/mergeUniquely';
 
 const LatestVotes = ({ filters }) => {
   const { t } = useTranslation();
   const { data: delegates } = useDelegates();
-  const queryConfig = useRef({
+  const queryConfig = useMemo(() => ({
     config: {
       params: {
         ...filters,
@@ -19,13 +18,12 @@ const LatestVotes = ({ filters }) => {
         sort: 'timestamp:desc',
       },
     },
-  });
+  }), [filters]);
 
   const votedDelegates = useMemo(() => {
-    if (!delegates) return {};
+    if (!delegates || !delegates.data) return {};
 
-    const transformedResponse = mergeUniquely('username', delegates);
-    const responseMap = transformedResponse.reduce((acc, delegate) => {
+    const responseMap = delegates.data.reduce((acc, delegate) => {
       acc[delegate.address] = delegate;
       return acc;
     }, {});
