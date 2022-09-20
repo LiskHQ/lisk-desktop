@@ -658,6 +658,48 @@ const getNumberOfSignatures = (account, transaction) => {
   return DEFAULT_NUMBER_OF_SIGNATURES;
 };
 
+/**
+ * Adapts transaction statistics params to match transactions statistics API method
+ *
+ * @param {Object} period - Period received from active tab
+ * @returns {Object} - Parameters consumable by transaction statistics API method
+ */
+const normalizeTransactionsStatisticsParams = (period) => {
+  const paramsConfig = {
+    week: { interval: 'day', limit: 7 },
+    month: { interval: 'month', limit: 6 },
+    year: { interval: 'month', limit: 12 },
+  }
+  return paramsConfig[period];
+};
+
+/**
+ * Adapts chart amount distributions to distribution displayed in chart
+ *
+ * @param {Object} distributions - Amount distribution
+ * @returns {Object} - Distribution data for chart
+ */
+const normalizeNumberRange = (distributions) => {
+  const values = {
+    '0.001_0.01': '0 - 10 LSK',
+    '0.01_0.1': '0 - 10 LSK',
+    '0.1_1': '0 - 10 LSK',
+    '1_10': '0 - 10 LSK',
+    '10_100': '11 - 100 LSK',
+    '100_1000': '101 - 1000 LSK',
+    '1000_10000': '1001 - 10,000 LSK',
+    '10000_100000': '10,001 - 100,000 LSK',
+    '100000_1000000': '100,001 - 1,000,000 LSK',
+    '1000000_10000000': '1,000,001 - 10,000,000 LSK',
+    '10000000_100000000': '10,000,001 - 100,000,000 LSK',
+    '100000000_1000000000': '100,000,001 - 1,000,000,000 LSK',
+  };
+  return Object.keys(distributions).reduce((acc, item) => {
+    acc[values[item]] = (acc[values[item]] || 0) + distributions[item];
+    return acc;
+  }, {});
+};
+
 export {
   getTxAmount,
   convertTxJSONToBinary,
@@ -669,4 +711,6 @@ export {
   normalizeTransactionParams,
   signMultisigTransaction,
   getNumberOfSignatures,
+  normalizeTransactionsStatisticsParams,
+  normalizeNumberRange,
 };
