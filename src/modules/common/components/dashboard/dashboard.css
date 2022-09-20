@@ -17,7 +17,7 @@
 
     & > .subContainer {
       width: 100%;
-      max-width: var(--footer-button-width);
+      max-width: var(--fashboard-aside-width);
       display: flex;
       flex-direction: column;
       justify-content: flex-start;
@@ -60,6 +60,12 @@
   color: var(--color-link-active);
   font-size: var(--paragraph-font-size-l);
   text-decoration: none;
+}
+
+.manageAccounts {
+  & h1 {
+    display: none;
+  }
 }
 
 @media (--medium-viewport) {
