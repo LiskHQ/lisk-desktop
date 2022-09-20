@@ -181,7 +181,7 @@ const Overview = () => {
       </BoxHeader>
       <BoxContent className={styles.content}>
         <div className={`${styles.column} ${styles.pie}`}>
-          <h2 className={styles.title}>{t('Transaction types')}</h2>
+          <h2 className={styles.title}>{t('Distribution of transaction types')}</h2>
           <div className={styles.graph}>
             <div>
               <GuideTooltip>
@@ -246,7 +246,7 @@ const Overview = () => {
         </div>
         <div className={`${styles.column} ${styles.bar}`}>
           <div className={styles.top}>
-            <h2 className={styles.title}>{t('Transaction volume / number (LSK)')}</h2>
+            <h2 className={styles.title}>{t('Number of transactions / Volume (LSK)')}</h2>
             <aside className={styles.legends}>
               <h5 className={`${styles.legend} ${styles.volume}`}>
                 <span>{t('Volume')}</span>

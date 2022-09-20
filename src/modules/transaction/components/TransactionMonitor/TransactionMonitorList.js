@@ -34,12 +34,6 @@ const getFields = (t) => [
     type: 'address',
   },
   {
-    label: t('Recipient'),
-    placeholder: t('Address or public key'),
-    name: 'recipientAddress',
-    type: 'address',
-  },
-  {
     label: t('Type'),
     placeholder: t('All types'),
     name: 'moduleCommand',
@@ -79,7 +73,6 @@ const Transactions = () => {
     height: (value) => `${t('Height')}: ${value}`,
     moduleCommand: (value) => `${t('Type')}: ${getModuleCommandTitle()[value]}`,
     senderAddress: (value) => `${t('Sender')}: ${value}`,
-    recipientAddress: (value) => `${t('Recipient')}: ${value}`,
   };
   const removeSortOnAmount = (headerData, dropdownFilters) =>
     headerData.map((data) => {
@@ -94,7 +87,7 @@ const Transactions = () => {
   const removeField = (rawFields, transactionType) =>
     rawFields.filter((field) => {
       if (
-        (field.name === 'amount' || field.name === 'recipientAddress') &&
+        (field.name === 'amount') &&
         blackListTypes.some((type) => type === transactionType)
       )
         return false;
