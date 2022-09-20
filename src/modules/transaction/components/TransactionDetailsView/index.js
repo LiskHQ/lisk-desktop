@@ -19,7 +19,7 @@ import TransactionDetailRow from '../TransactionDetailRow';
 import header from './headerMap';
 
 const TransactionDetails = ({ location }) => {
-  const transactionId = parseSearchParams(location.search).transactionId;
+  const transactionID = parseSearchParams(location.search).transactionId;
   const { t } = useTranslation();
   const [isParamsCollapsed, setIsParamsCollapsed] = useState(false);
 
@@ -31,7 +31,7 @@ const TransactionDetails = ({ location }) => {
   } = useTransactions({
     config: {
       params: {
-        id: transactionId,
+        transactionID,
       },
     },
   });
