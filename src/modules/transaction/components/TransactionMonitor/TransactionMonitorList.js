@@ -6,7 +6,6 @@ import { QueryTable } from '@theme/QueryTable';
 import { useSort } from 'src/modules/common/hooks';
 import useFilter from 'src/modules/common/hooks/useFilter';
 import FilterBar from 'src/modules/common/components/filterBar';
-import transformParams from 'src/utils/transformParams';
 import FilterDropdownButton from 'src/modules/common/components/filterDropdownButton';
 import Box from 'src/theme/box';
 import BoxContent from 'src/theme/box/content';
@@ -15,7 +14,7 @@ import { useTransactions } from '../../hooks/queries';
 import TransactionRow from '../TransactionRow';
 import header from './TransactionHeaderMap';
 import styles from './transactionsTable.css';
-import { getModuleCommandTitle } from '../../utils';
+import { getModuleCommandTitle, normalizeTransactionParams } from '../../utils';
 
 const getFields = (t) => [
   {
@@ -72,7 +71,7 @@ const Transactions = () => {
   const { filters, applyFilters, clearFilters } = useFilter({});
 
   useEffect(() => {
-    setParams(transformParams({ ...filters, ...(sort && { sort }) }));
+    setParams(normalizeTransactionParams({ ...filters, ...(sort && { sort }) }));
   }, [filters, sort]);
 
   /* istanbul ignore next */
