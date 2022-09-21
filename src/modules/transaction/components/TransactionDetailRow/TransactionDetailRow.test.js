@@ -16,7 +16,6 @@ describe('TransactionDetailRow', () => {
       value: 'test value',
       label: 'test-title',
     },
-    isParamsCollasped: false,
     onToggleJsonView: jest.fn(),
   };
 
