@@ -1,27 +1,16 @@
 import React, { useRef } from 'react';
 import { withRouter } from 'react-router';
-import { addSearchParamsToUrl, appendSearchParams } from 'src/utils/searchParams';
+import { addSearchParamsToUrl } from 'src/utils/searchParams';
 
-const DialogLink = ({
-  children, component, className, history, data, path,
-}) => {
+const DialogLink = ({ children, component, className, history, data }) => {
   const linkEl = useRef(null);
   const onClick = () => {
-    if(!path) {
-      addSearchParamsToUrl(history, { modal: component, ...data });
-    } else {
-      const newSearchString = appendSearchParams(history.location.search, data);
-      history.push(`${path}${newSearchString}`);
-    }
+    addSearchParamsToUrl(history, { modal: component, ...data });
   };
 
   return (
-    <div
-      onClick={onClick}
-      ref={linkEl}
-      className={className}
-    >
-      { children }
+    <div onClick={onClick} ref={linkEl} className={className}>
+      {children}
     </div>
   );
 };
