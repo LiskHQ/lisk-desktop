@@ -101,6 +101,28 @@ export const mountWithQueryClient = (Component, props = {}) => {
 };
 
 /**
+ * Mounts components that are wrapped in QueryClientProvider and Router
+ *
+ * @param {Class|Function} Component - A React component to be tested
+ * @param {Object} props - Set of props to be passed to the component
+ *
+ * @returns {Object} Rendered component
+ */
+export const mountWithRouterAndQueryClient = (Component, props) => {
+  const queryClient = new QueryClient();
+
+  return mount(
+    <Router
+      history={props.history ? { ...defaultHistoryProps, ...props.history } : defaultHistoryProps}
+    >
+      <QueryClientProvider client={queryClient}>
+        <Component {...props} />
+      </QueryClientProvider>
+    </Router>
+  );
+};
+
+/**
  * Renders components that are wrapped in WithRouter
  *
  * @param {Class|Function} Component - A React component to be tested

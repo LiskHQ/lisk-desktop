@@ -1,7 +1,7 @@
 const transaction = index => ({
   id: `22267562542235376${index}`,
   moduleCommandID: index >= 15 ? '5:1' : '2:0',
-  moduleCommandName: 'token:transfer',
+  moduleCommand: 'token:transfer',
   nonce: '0',
   fee: '1000000',
   sender: {
