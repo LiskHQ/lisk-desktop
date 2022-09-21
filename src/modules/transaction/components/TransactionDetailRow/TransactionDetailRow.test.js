@@ -69,7 +69,7 @@ describe('TransactionDetailRow', () => {
     });
 
     render(
-      <TransactionDetailRow {...props} data={{ ...props.data, type: 'expand' }} isParamsCollasped />
+      <TransactionDetailRow {...props} data={{ ...props.data, type: 'expand' }} isParamsCollapsed />
     );
     expect(screen.getByText('Close')).toBeTruthy();
 
