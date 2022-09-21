@@ -1,8 +1,8 @@
-const transaction = index => ({
+const transaction = (index) => ({
   id: `22267562542235376${index}`,
   moduleCommandID: index >= 15 ? '5:1' : '2:0',
   moduleCommand: 'token:transfer',
-  nonce: '0',
+  nonce: '111',
   fee: '1000000',
   sender: {
     address: 'lsk24cd35u4jdq8szo3pnsqe5dsxwrnazyqqqg5eu',
@@ -14,21 +14,24 @@ const transaction = index => ({
     amount: '150000000',
     recipientAddress: 'lsk24cd35u4jdq8szo3pnsqe5dsxwrnazyqqqg5eu',
     data: 'message',
-    votes: index >= 15 ? [
-      {
-        delegateAddress: 'lskkkb9gcggfqzsusrnu7zb9uzfop96u7596zr5w2',
-      },
-      {
-        delegateAddress: 'lskma5wphbxzf8zkvwumtamjosauzdo5s2qepgrty',
-      },
-    ] : undefined,
+    votes:
+      index >= 15
+        ? [
+            {
+              delegateAddress: 'lskkkb9gcggfqzsusrnu7zb9uzfop96u7596zr5w2',
+            },
+            {
+              delegateAddress: 'lskma5wphbxzf8zkvwumtamjosauzdo5s2qepgrty',
+            },
+          ]
+        : undefined,
   },
   block: {
     id: 35998991827805762 + index,
     height: 8350681 + index,
     timestamp: 28227090,
   },
-  confirmations: 0 + index,
+  confirmations: 22 + index,
   executionStatus: 'pending',
   meta: {
     recipient: {
@@ -39,7 +42,9 @@ const transaction = index => ({
   },
 });
 
-const transactions = Array(30).fill(1).map((item, index) => transaction(index));
+const transactions = Array(30)
+  .fill(1)
+  .map((item, index) => transaction(index));
 
 /* eslint-disable import/prefer-default-export */
 export const mockTransactions = {

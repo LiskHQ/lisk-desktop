@@ -107,6 +107,7 @@ export default {
   transactions: {
     path: '/transactions',
     isPrivate: false,
+    exact: true,
     forbiddenTokens: [],
   },
   wallets: {
@@ -122,6 +123,12 @@ export default {
   },
   blockchainApplications: {
     path: '/applications',
+    isPrivate: false,
+    forbiddenTokens: [],
+  },
+  transactionDetails: {
+    path: '/transactions/details',
+    exact: true,
     isPrivate: false,
     forbiddenTokens: [],
   },
@@ -157,10 +164,6 @@ export const modals = {
     forbiddenTokens: [],
   },
   search: {
-    isPrivate: false,
-    forbiddenTokens: [],
-  },
-  transactionDetails: {
     isPrivate: false,
     forbiddenTokens: [],
   },

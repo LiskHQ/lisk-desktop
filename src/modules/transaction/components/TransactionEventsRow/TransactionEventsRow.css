@@ -57,11 +57,21 @@
 
   & > button {
     display: flex;
+    margin: 0px;
+    padding: 0px !important;
+    max-width: 40px;
+    min-width: 40px;
   }
 }
 
 .eventHash {
   padding: 0px 16px 0px 5px;
+
+  & > span {
+    width: 100%;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
 }
 
 .rowWrapper {
