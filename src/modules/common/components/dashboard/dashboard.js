@@ -70,10 +70,10 @@ const Dashboard = ({ t, history }) => {
               )
             }
             {
-              isEmpty(currentAccount) && !accounts.length && <AccountCreationTips />
+              isEmpty(currentAccount) && accounts.length === 0 && <AccountCreationTips />
             }
             {
-              isEmpty(currentAccount) && accounts.length
+              isEmpty(currentAccount) && accounts.length > 0
                 && (
                   <Box className={styles.wrapper}>
                     <BoxHeader>
