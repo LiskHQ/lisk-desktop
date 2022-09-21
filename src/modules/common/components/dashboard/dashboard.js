@@ -63,27 +63,27 @@ const Dashboard = ({ t, history }) => {
                 <>
                   <WalletDetails className={styles.marginFix} isWalletRoute={false} />
                   <RecentTransactions
-                    className={styles.marginFix}
                     isLoggedIn
+                    className={styles.marginFix}
                   />
                 </>
               )
             }
             {
-              isEmpty(currentAccount) && accounts.length === 0 && <AccountCreationTips />
+              isEmpty(currentAccount) && !accounts.length && <AccountCreationTips />
             }
             {
-              isEmpty(currentAccount) && accounts.length > 0
+              isEmpty(currentAccount) && accounts.length
                 && (
                   <Box className={styles.wrapper}>
                     <BoxHeader>
                       <h1>{t('Manage accounts')}</h1>
                     </BoxHeader>
                     <ManageAccountsContent
+                      truncate
                       isRemoveAvailable
                       history={history}
                       className={styles.manageAccounts}
-                      truncate
                     />
                   </Box>
                 )

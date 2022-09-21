@@ -7,7 +7,8 @@ import AccountCreationTips from './index';
 describe('AccountCreationTips', () => {
   it('displays properly', () => {
     render(<AccountCreationTips />);
-    expect(screen.getByText('Get started')).toBeInTheDocument();
+    expect(screen.getByText('Welcome to')).toBeInTheDocument();
+    expect(screen.getByText('Lisk')).toBeInTheDocument();
     expect(screen.getByText('Don’t have a Lisk account yet?')).toBeInTheDocument();
     expect(screen.getByText('Why do I need an account?')).toBeInTheDocument();
     expect(screen.getByText('Send and request tokens')).toBeInTheDocument();

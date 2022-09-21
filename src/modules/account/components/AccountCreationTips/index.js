@@ -14,7 +14,11 @@ const AccountCreationTips = () => {
   return (
     <Box className={styles.wrapper}>
       <BoxHeader>
-        <h1>{t('Get started')}</h1>
+        <h1>
+          <span>{t('Welcome to')}</span>
+          &nbsp;
+          <span className={styles.name}>{t('Lisk')}</span>
+        </h1>
       </BoxHeader>
       <BoxContent className={`${styles.container} coin-container`}>
         <header>

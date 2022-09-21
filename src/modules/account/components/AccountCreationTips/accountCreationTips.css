@@ -1,18 +1,24 @@
 .wrapper {
-  & .container {
-    padding-bottom: 125px;
+  & h1 {
+    & .name {
+      color: var(--color-ink-blue);
+    }
   }
 
   & h5 {
     margin: 5px 0 0;
     color: var(--color-maastricht-blue);
-    font-weight: 500;
+    
+    font-family: var(--heading-font);
+    font-weight: 600;
   }
 
   & header {
     & p {
       color: var(--color-blue-gray);
       font-size: 16px;
+      line-height: 20px;
+      margin-bottom: 6px;
     }
 
     & .actions {
@@ -20,8 +26,7 @@
       flex-flow: row nowrap;
       column-gap: 15px;
       border-bottom: 1px solid var(--color-very-light-gray);
-      padding: 10px 0 35px;
-      margin-bottom: 30px;
+      padding: 10px 0 40px;
 
       & a {
         flex: 1 auto;
@@ -38,7 +43,7 @@
 
   & .tips {
     list-style-type: none;
-    padding: 5px 0;
+    padding: 35px 0 0;
     margin: 0;
 
     & li {
