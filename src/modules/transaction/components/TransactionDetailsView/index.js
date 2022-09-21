@@ -17,6 +17,7 @@ import TransactionEvents from '../TransactionEvents';
 import { useTransactions } from '../../hooks/queries';
 import TransactionDetailRow from '../TransactionDetailRow';
 import header from './headerMap';
+import { splitModuleAndCommand } from '../../utils';
 
 const TransactionDetails = ({ location }) => {
   const transactionID = parseSearchParams(location.search).transactionId;
@@ -50,7 +51,7 @@ const TransactionDetails = ({ location }) => {
       confirmations,
       executionStatus,
     } = transaction;
-    const [txModule, txType] = moduleCommandName.split(':');
+    const [txModule, txType] = splitModuleAndCommand(moduleCommandName);
 
     return [
       {
@@ -65,7 +66,7 @@ const TransactionDetails = ({ location }) => {
       },
       {
         label: t('Transaction Fee'),
-        value: <TokenAmount val={fee} token="LSK" />,
+        value: <TokenAmount val={fee} token="LSK" />, // @Todo: token value needs to be dynamic
       },
       {
         label: t('Date'),

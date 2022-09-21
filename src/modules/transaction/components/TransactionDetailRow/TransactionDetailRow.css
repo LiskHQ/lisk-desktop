@@ -6,10 +6,10 @@
   position: relative;
 
   & > div:first-child {
+    @mixin contentLarge;
+
     padding: 20px 22px 20px 0px;
     color: var(--color-content-light);
-    font-weight: var(--font-weight-normal);
-    font-size: 14px;
   }
 
   & > .eventAction {
@@ -62,7 +62,7 @@
 .expandToggle {
   --content-font: 'basier-circle';
 
-  padding: 0px 5px !important;
+  padding-left: 0px !important;
   max-width: fit-content !important;
   min-width: fit-content !important;
   text-decoration: none !important;
@@ -142,26 +142,12 @@
   }
 
   &.pending {
-    &.light {
-      color: var(--color-ink-blue);
-      background-color: var(--color-active-tab);
-    }
-
-    &.dark {
-      color: var(--color-ultramarine-blue);
-      background-color: var(--color-cloud-burst);
-    }
+    color: var(--color-tx-pending-status-text);
+    background-color: var(--color-tx-pending-status-bg);
   }
 
   &.fail {
-    &.light {
-      color: var(--color-red);
-      background-color: var(--color-red-transparent);
-    }
-
-    &.dark {
-      color: var(--color-red);
-      background-color: var(--color-red-semitransparent);
-    }
+    color: var(--color-tx-fail-status-text);
+    background-color: var(--color-tx-fail-status-bg);
   }
 }

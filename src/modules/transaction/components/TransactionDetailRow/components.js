@@ -2,7 +2,6 @@ import React from 'react';
 import grid from 'flexboxgrid/dist/flexboxgrid.css';
 import { useTranslation } from 'react-i18next';
 import Tooltip from 'src/theme/Tooltip';
-import { useTheme } from 'src/theme/Theme';
 import { TertiaryButton } from 'src/theme/buttons';
 import WalletVisual from 'src/modules/wallet/components/walletVisual';
 import { truncateAddress } from 'src/modules/wallet/utils/account';
@@ -51,14 +50,10 @@ export const AddressWithName = ({ address, name }) => (
   </div>
 );
 
-export const TransactionStatus = ({ status }) => {
-  const theme = useTheme();
-
-  return (
+export const TransactionStatus = ({ status }) => (
     <div className={styles.statusWrapper}>
-      <span className={`${styles.transactionStatus} ${styles[status]} ${styles[theme]}`}>
+      <span className={`${styles.transactionStatus} ${styles[status]}`}>
         {status}
       </span>
     </div>
   );
-};
