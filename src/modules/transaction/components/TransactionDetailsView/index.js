@@ -144,7 +144,7 @@ const TransactionDetails = ({ location }) => {
             <h1>{t('Events')}</h1>
           </BoxHeader>
           <BoxContent>
-            <TransactionEvents blockId={transaction?.block?.id} />
+            <TransactionEvents blockId={!isEmpty(transaction) ? transaction?.block?.id : ''} />
           </BoxContent>
         </Box>
       </div>
