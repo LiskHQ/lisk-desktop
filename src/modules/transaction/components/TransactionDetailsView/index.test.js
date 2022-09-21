@@ -79,7 +79,7 @@ describe('TransactionDetailsView', () => {
     expect(screen.getByText('Block Height')).toBeTruthy();
     expect(screen.getByText('Parameters')).toBeTruthy();
 
-    const [moduleName, txType] = transaction.moduleCommandName.split(':');
+    const [moduleName, txType] = transaction.moduleCommand.split(':');
     expect(screen.getByText(`${moduleName} ${txType}`)).toBeTruthy();
     expect(screen.getByText(truncateAddress(transaction.sender.address))).toBeTruthy();
     expect(screen.getByText(transaction.sender.name)).toBeTruthy();

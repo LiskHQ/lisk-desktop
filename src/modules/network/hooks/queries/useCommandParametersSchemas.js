@@ -10,7 +10,7 @@ import { useCustomQuery } from 'src/modules/common/hooks';
  * @param {Object} configuration.config - the query config
  * @param {Object} configuration.config.params - the query config params
  * @param {string} [configuration.config.params.moduleCommandID] - the transaction type
- * @param {string} [configuration.config.params.moduleCommandName] - the transaction name
+ * @param {string} [configuration.config.params.moduleCommand] - the transaction name
  * @param {string} configuration.options - the query options
  *
  * @returns the query object
