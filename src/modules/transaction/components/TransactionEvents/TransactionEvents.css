@@ -40,10 +40,11 @@ h1 {
 }
 
 .tableHeader {
-  top: -7px;
+  top: -14px;
   background: var(--color-white);
   z-index: 2;
-  padding-left: 0px;
+  padding: 5px 0px;
+  position: sticky;
 
   & > div:first-child {
     padding-left: 0px;
@@ -52,5 +53,10 @@ h1 {
 
   & > div:nth-child(3) {
     padding-left: 8px;
+  }
+
+  & > div:last-child {
+    justify-content: flex-start !important;
+    padding-left: 0px;
   }
 }
