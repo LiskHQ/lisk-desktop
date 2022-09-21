@@ -44,12 +44,10 @@ describe('TransactionDetailsView', () => {
 
   it('should display Transaction Events properly', async () => {
     expect(screen.getByText('Index')).toBeTruthy();
-    expect(screen.getByText('ID')).toBeTruthy();
     expect(screen.getByText('Module')).toBeTruthy();
     expect(screen.getByText('Type ID')).toBeTruthy();
 
     mockEvents.data.slice(0, 20).forEach((item) => {
-      expect(screen.queryAllByText(item.id)).toBeTruthy();
       expect(screen.queryAllByText(item.index)).toBeTruthy();
       expect(screen.queryAllByText(item.typeID)).toBeTruthy();
       expect(screen.queryAllByText(item.module)).toBeTruthy();
