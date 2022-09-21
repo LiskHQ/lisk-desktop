@@ -293,6 +293,7 @@ module.exports = {
     'src/modules/dpos/validator/components/delegatePerformance/delegatePerformance.js',
     'src/modules/dpos/validator/components/delegatePerformanceModal/index.js',
     'src/modules/transaction/components/Overview/index.js',
+    'src/modules/transaction/components/Transactions/index.js',
     'src/modules/wallet/components/overview/overview.js',
     'src/modules/wallet/components/overview/overviewManager.js',
     'src/modules/wallet/components/request/request.js',
