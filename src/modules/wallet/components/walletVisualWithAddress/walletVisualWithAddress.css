@@ -3,9 +3,16 @@
   display: flex;
   align-items: center;
 
-  & .addressValue {
+  & .detailsWrapper {
+    display: flex;
+    flex-direction: column;
     margin-left: 10px;
   }
+}
+
+.copyIcon {
+  /* filter: brightness(100) !important; */
+  margin-left: 8px;
 }
 
 .txIcon {
