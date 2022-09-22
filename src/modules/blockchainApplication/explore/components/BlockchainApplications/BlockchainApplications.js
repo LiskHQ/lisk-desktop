@@ -2,6 +2,7 @@ import React from 'react';
 import { useTranslation } from 'react-i18next';
 import TokenCard from 'src/modules/wallet/components/TokenCard';
 import InfoBanner from 'src/modules/common/components/infoBanner/infoBanner';
+import TokenCarousel from 'src/modules/wallet/components/TokenCarousel/TokenCarousel';
 import BlockchainApplicationList from '@blockchainApplication/explore/components/BlockchainApplicationList';
 import BlockchainApplicationStatistics from '../BlockchainApplicationStatistics';
 import styles from './BlockchainApplications.css';
@@ -38,7 +39,7 @@ const BlockchainApplications = ({
           <BlockchainApplicationStatistics statistics={statistics} />
         </div>
       </div>
-      <TokenCard balance={30000000000000} lockedBalance={3000000000} symbol="LSK" url={chainLogo} />
+      <TokenCarousel data={[...new Array(16).keys()]} renderItem={() => <TokenCard balance={30000000000000} lockedBalance={3000000000} symbol="LSK" url={chainLogo} />} />
     </div>
   );
 };
