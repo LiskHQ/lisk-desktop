@@ -4,7 +4,7 @@ import React, {
 import Piwik from 'src/utils/piwik';
 import { MODULE_COMMANDS_NAME_MAP } from 'src/modules/transaction/configuration/moduleCommand';
 import AmountField from 'src/modules/common/components/amountField';
-import TokenAmount from '@token/fungible/components/tokenAmount';
+import { TokenField } from 'src/modules/common/components/TokenField';
 import { mockAppTokens } from '@tests/fixtures/token';
 import Icon from 'src/theme/Icon';
 import { toRawLsk, fromRawLsk } from '@token/fungible/utils/lsk';
@@ -65,7 +65,6 @@ const SendForm = (props) => {
     getInitialToken(
       prevState?.transactionData,
       props.initialValue?.token,
-      mockAppTokens,
     ),
   );
   const [recipientChain, setRecipientChain] = useState(
@@ -216,34 +215,12 @@ const SendForm = (props) => {
                 </MenuSelect>
               </div>
             </div>
-            <div className={`${styles.fieldGroup} token`}>
-              <label className={`${styles.fieldLabel}`}>
-                <span>{t('Token')}</span>
-              </label>
-              <span className={styles.balance}>
-                Balance:&nbsp;&nbsp;
-                <span>
-                  <TokenAmount val={amount} />
-                  {token.symbol}
-                </span>
-              </span>
-              <MenuSelect
-                value={token}
-                onChange={(value) => setToken(value)}
-                select={(selectedValue, option) => selectedValue?.name === option.name}
-              >
-                {mockAppTokens.map((tokenValue) => (
-                  <MenuItem
-                    className={styles.chainOptionWrapper}
-                    value={tokenValue}
-                    key={tokenValue.name}
-                  >
-                    <img className={styles.chainLogo} src={chainLogo} />
-                    <span>{tokenValue.name}</span>
-                  </MenuItem>
-                ))}
-              </MenuSelect>
-            </div>
+            <TokenField
+              styles={styles}
+              value={token}
+              tokens={mockAppTokens}
+              onChange={setToken}
+            />
             <AmountField
               amount={amount}
               onChange={setAmountField}
