@@ -31,7 +31,7 @@ const AccountDetails = ({ t, history }) => {
     isDelegate,
     address,
     // isMultisignature,
-  } = account.info[activeToken].summary;
+  } = account?.info?.[activeToken]?.summary || {address: 'lskdxc4ta5j43jp9ro3f8zqbxta9fn6jwzjucw7yt' };
 
   useEffect(() => {
     dispatch(transactionsRetrieved({ address }));
@@ -43,14 +43,14 @@ const AccountDetails = ({ t, history }) => {
       addSearchParamsToUrl(history, { modal: 'send' });
     }
   }, []);
-
+  // account.info[activeToken]
   return (
     <section>
       <Overview
         isWalletRoute
         activeToken={activeToken}
         discreetMode={discreetMode}
-        account={account.info[activeToken]}
+        account={{}}
         hwInfo={account.hwInfo}
         transactions={confirmed}
       />

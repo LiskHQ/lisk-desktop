@@ -6,6 +6,8 @@ import { compose } from 'redux';
 import { withTranslation } from 'react-i18next';
 import grid from 'flexboxgrid/dist/flexboxgrid.css';
 
+import TokenCard from 'src/modules/wallet/components/TokenCard';
+import TokenCarousel from 'src/modules/wallet/components/TokenCarousel/TokenCarousel';
 import withData from 'src/utils/withData';
 import { getTransactions } from '@transaction/api';
 import { selectActiveTokenAccount } from 'src/redux/selectors';
@@ -18,6 +20,7 @@ import WalletVisualWithAddress from '@wallet/components/walletVisualWithAddress'
 import DialogLink from 'src/theme/dialog/link';
 import { SecondaryButton, PrimaryButton } from '@theme/buttons';
 import styles from './overview.css';
+import chainLogo from '../../../../../setup/react/assets/images/LISK.png';
 
 const mapStateToProps = (state) => ({
   currentHeight: state.blocks.latestBlocks.length ? state.blocks.latestBlocks[0].height : 0,
@@ -147,6 +150,19 @@ const Overview = ({
             </DialogLink>
           </div>
         </div>
+      </div>
+      <div className={styles.tokenCarouselWrapper}>
+        <TokenCarousel
+          data={[...new Array(16).keys()]}
+          renderItem={() => (
+            <TokenCard
+              balance={30000000000000}
+              lockedBalance={3000000000}
+              symbol="LSK"
+              url={chainLogo}
+            />
+          )}
+        />
       </div>
     </section>
   );
