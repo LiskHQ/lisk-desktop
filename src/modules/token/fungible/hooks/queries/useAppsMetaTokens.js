@@ -1,5 +1,5 @@
 /* istanbul ignore file */
-import { TOKENS_SUPPORTED } from 'src/const/queries';
+import { BLOCKCHAIN_APPS_META_TOKENS } from 'src/const/queries';
 import {
   LIMIT as limit,
   API_VERSION,
@@ -18,19 +18,20 @@ import { useCustomInfiniteQuery } from 'src/modules/common/hooks';
  * @returns the query object
  */
 // eslint-disable-next-line import/prefer-default-export
-export const useTokensSupported = ({ config: customConfig = {}, options } = {}, client) => {
+export const useAppsMetaTokens = ({ config: customConfig = {}, options } = {}) => {
   const config = {
-    url: `/api/${API_VERSION}/tokens/supported
-`,
+    url: `/api/${API_VERSION}/blockchain/apps/meta/tokens`,
     method: 'get',
-    event: 'get.tokens.supported',
+    event: 'get.blockchain.apps.meta.tokens',
     ...customConfig,
     params: { limit, ...(customConfig?.params || {}) },
   };
   return useCustomInfiniteQuery({
-    keys: [TOKENS_SUPPORTED],
+    keys: [BLOCKCHAIN_APPS_META_TOKENS],
     config,
-    options,
-    client
+    options: {
+      cacheTime: Infinity,
+      ...options,
+    },
   });
 };

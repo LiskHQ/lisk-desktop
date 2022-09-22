@@ -1,36 +1,39 @@
-import React, {
-  useCallback, useMemo, useState,
-} from 'react';
+import React, { useCallback, useMemo, useState } from 'react';
 import Piwik from 'src/utils/piwik';
 import { MODULE_COMMANDS_NAME_MAP } from 'src/modules/transaction/configuration/moduleCommand';
 import AmountField from 'src/modules/common/components/amountField';
-import TokenAmount from '@token/fungible/components/tokenAmount';
+import { TokenField } from 'src/modules/common/components/TokenField';
 import { mockAppTokens } from '@tests/fixtures/token';
 import Icon from 'src/theme/Icon';
 import { toRawLsk, fromRawLsk } from '@token/fungible/utils/lsk';
 import BoxContent from 'src/theme/box/content';
 import BoxHeader from 'src/theme/box/header';
 import { maxMessageLength } from 'src/modules/transaction/configuration/transactions';
-import { useCurrentApplication, useApplicationManagement } from 'src/modules/blockchainApplication/manage/hooks';
-import MenuSelect, { MenuItem } from 'src/modules/wallet/components/MenuSelect';
+import {
+  useCurrentApplication,
+  useApplicationManagement,
+} from 'src/modules/blockchainApplication/manage/hooks';
+import { ApplicationField } from 'src/modules/common/components/ApplicationField';
+import { useBlockchainApplicationMeta } from '@blockchainApplication/manage/hooks/queries/useBlockchainApplicationMeta';
 import TxComposer from '@transaction/components/TxComposer';
 import BookmarkAutoSuggest from './bookmarkAutoSuggest';
 import useAmountField from '../../hooks/useAmountField';
-import { useMessageField } from '../../hooks';
+import { useMessageField, useTokensBalanceSupportedFrom } from '../../hooks';
 import useRecipientField from '../../hooks/useRecipientField';
 import styles from './form.css';
 import MessageField from '../MessageField';
-import chainLogo from '../../../../../../setup/react/assets/images/LISK.png';
 
 const defaultToken = mockAppTokens[0];
 const getInitialData = (rawTx, initialValue) => rawTx?.params.data || initialValue || '';
-const getInitialAmount = (rawTx, initialValue) => (Number(rawTx?.params.amount) ? fromRawLsk(rawTx?.params.amount) : initialValue || '');
-const getInitialRecipient = (rawTx, initialValue) => rawTx?.params.recipient.address || initialValue || '';
+const getInitialAmount = (rawTx, initialValue) =>
+  Number(rawTx?.params.amount) ? fromRawLsk(rawTx?.params.amount) : initialValue || '';
+const getInitialRecipient = (rawTx, initialValue) =>
+  rawTx?.params.recipient.address || initialValue || '';
 const getInitialRecipientChain = (
   transactionData,
   initialChainId,
   currentApplication,
-  applications,
+  applications
 ) => {
   const initalRecipientChain = initialChainId
     ? applications.find(({ chainID }) => chainID === initialChainId)
@@ -38,11 +41,7 @@ const getInitialRecipientChain = (
 
   return transactionData?.recipientChain || initalRecipientChain || currentApplication;
 };
-const getInitialToken = (
-  transactionData,
-  initalTokenId,
-  tokens,
-) => {
+const getInitialToken = (transactionData, initalTokenId, tokens) => {
   const initalToken = initalTokenId
     ? tokens.find(({ tokenID }) => tokenID === initalTokenId)
     : null;
@@ -51,49 +50,38 @@ const getInitialToken = (
 
 // eslint-disable-next-line max-statements
 const SendForm = (props) => {
-  const {
-    account = {},
-    prevState,
-    t,
-    bookmarks,
-    nextStep,
-  } = props;
+  const { account = {}, prevState, t, bookmarks, nextStep } = props;
 
   const [currentApplication] = useCurrentApplication();
   const { applications } = useApplicationManagement();
   const [token, setToken] = useState(
-    getInitialToken(
-      prevState?.transactionData,
-      props.initialValue?.token,
-      mockAppTokens,
-    ),
+    getInitialToken(prevState?.transactionData, props.initialValue?.token)
   );
   const [recipientChain, setRecipientChain] = useState(
     getInitialRecipientChain(
       prevState?.transactionData,
       props.initialValue?.recipientApplication,
       currentApplication,
-      applications,
-    ),
+      applications
+    )
   );
+  const { data: recipientApplication, isSuccess: isRecipientAppSuccess } = useBlockchainApplicationMeta();
   const [sendingChain, setSendingChain] = useState(
-    prevState?.transactionData?.sendingChain || currentApplication,
+    prevState?.transactionData?.sendingChain || currentApplication
   );
+  const tokens = useTokensBalanceSupportedFrom(sendingChain)
   const [maxAmount, setMaxAmount] = useState({ value: 0, error: false });
 
   const [reference, setReference] = useMessageField(
-    getInitialData(props.prevState?.rawTx, props.initialValue?.reference),
+    getInitialData(props.prevState?.rawTx, props.initialValue?.reference)
   );
   const [amount, setAmountField] = useAmountField(
-    getInitialAmount(
-      props.prevState?.rawTx,
-      props.initialValue?.amount,
-    ),
+    getInitialAmount(props.prevState?.rawTx, props.initialValue?.amount),
     account.summary?.balance,
-    token.symbol,
+    token.symbol
   );
   const [recipient, setRecipientField] = useRecipientField(
-    getInitialRecipient(props.prevState?.rawTx, props.initialValue?.recipient),
+    getInitialRecipient(props.prevState?.rawTx, props.initialValue?.recipient)
   );
 
   const onComposed = useCallback((status) => {
@@ -114,24 +102,19 @@ const SendForm = (props) => {
     setReference({ target: { value: '' } });
   }, []);
 
-  const isValid = useMemo(() => [
-    amount,
-    recipient,
-    reference,
-    recipientChain,
-    sendingChain,
-    token,
-  ].reduce((result, item) => {
-    result = result && !item?.error && (!item?.required || item?.value !== '') && !Object.keys(result).length;
+  const isValid = useMemo(
+    () =>
+      [amount, recipient, reference, recipientChain, sendingChain, token].reduce((result, item) => {
+        result =
+          result &&
+          !item?.error &&
+          (!item?.required || item?.value !== '') &&
+          !Object.keys(result).length;
 
-    return result;
-  }, true), [
-    amount,
-    recipient,
-    reference,
-    recipientChain,
-    sendingChain,
-  ]);
+        return result;
+      }, true),
+    [amount, recipient, reference, recipientChain, sendingChain]
+  );
 
   const transaction = {
     isValid,
@@ -170,80 +153,26 @@ const SendForm = (props) => {
           </BoxHeader>
           <BoxContent className={styles.formSection}>
             <div className={`${styles.ApplilcationFieldWrapper}`}>
-              <div>
-                <label className={`${styles.fieldLabel} sending-application`}>
-                  <span>{t('From Application')}</span>
-                </label>
-                <MenuSelect
-                  value={sendingChain}
-                  onChange={(value) => setSendingChain(value)}
-                  select={(selectedValue, option) => selectedValue?.chainID === option.chainID}
-                >
-                  {applications.map((chain) => (
-                    <MenuItem
-                      className={styles.chainOptionWrapper}
-                      value={chain}
-                      key={chain.chainID}
-                    >
-                      <img className={styles.chainLogo} src={chainLogo} />
-                      <span>{chain.name}</span>
-                    </MenuItem>
-                  ))}
-                </MenuSelect>
-              </div>
+              <ApplicationField
+                styles={styles}
+                label={t('From Application')}
+                value={sendingChain}
+                applications={isRecipientAppSuccess ? recipientApplication.data : []}
+                onChange={setSendingChain}
+              />
               <div>
                 <Icon name="transferArrow" />
               </div>
-              <div>
-                <label className={`${styles.fieldLabel} recipient-application`}>
-                  <span>{t('To Application')}</span>
-                </label>
-                <MenuSelect
-                  value={recipientChain}
-                  onChange={(value) => setRecipientChain(value)}
-                  select={(selectedValue, option) => selectedValue?.chainID === option.chainID}
-                >
-                  {applications.map((chain) => (
-                    <MenuItem
-                      className={styles.chainOptionWrapper}
-                      value={chain}
-                      key={chain.chainID}
-                    >
-                      <img className={styles.chainLogo} src={chainLogo} />
-                      <span>{chain.name}</span>
-                    </MenuItem>
-                  ))}
-                </MenuSelect>
-              </div>
+              <ApplicationField
+                styles={styles}
+                label={t('To Application')}
+                value={recipientChain}
+                applications={isRecipientAppSuccess ? recipientApplication.data : []}
+                onChange={setRecipientChain}
+                isLoading
+              />
             </div>
-            <div className={`${styles.fieldGroup} token`}>
-              <label className={`${styles.fieldLabel}`}>
-                <span>{t('Token')}</span>
-              </label>
-              <span className={styles.balance}>
-                Balance:&nbsp;&nbsp;
-                <span>
-                  <TokenAmount val={amount} />
-                  {token.symbol}
-                </span>
-              </span>
-              <MenuSelect
-                value={token}
-                onChange={(value) => setToken(value)}
-                select={(selectedValue, option) => selectedValue?.name === option.name}
-              >
-                {mockAppTokens.map((tokenValue) => (
-                  <MenuItem
-                    className={styles.chainOptionWrapper}
-                    value={tokenValue}
-                    key={tokenValue.name}
-                  >
-                    <img className={styles.chainLogo} src={chainLogo} />
-                    <span>{tokenValue.name}</span>
-                  </MenuItem>
-                ))}
-              </MenuSelect>
-            </div>
+            <TokenField styles={styles} value={token} onChange={setToken} tokens={tokens} />
             <AmountField
               amount={amount}
               onChange={setAmountField}
