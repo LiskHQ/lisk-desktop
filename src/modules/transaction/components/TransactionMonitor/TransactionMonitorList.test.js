@@ -9,6 +9,7 @@ import TransactionMonitorList from './TransactionMonitorList';
 
 const mockFetchNextPage = jest.fn();
 const mockAddUpdate = jest.fn();
+const mockToggleSort = jest.fn();
 const originalQuerySelector = document.querySelector;
 const originalScrollY = window.scrollY;
 
@@ -19,6 +20,11 @@ jest.mock('react-i18next', () => ({
 jest.mock('react-redux', () => ({
   ...jest.requireActual('react-redux'),
   useSelector: jest.fn(),
+}));
+jest.mock('src/modules/common/hooks', () => ({
+  useSort: jest.fn(() => ({
+    toggleSort: mockToggleSort,
+  })),
 }));
 jest.mock('../../hooks/queries');
 
@@ -137,23 +143,14 @@ describe('Transactions monitor page', () => {
     expect(mockFetchNextPage).toHaveBeenCalledTimes(1);
   });
 
-  it.skip('allows to reverse sort by clicking "Date" header', () => {
-    let mockSortDirection = 'desc';
-    props.changeSort = jest.fn();
-    props.changeSort.mockImplementation(() => {
-      mockSortDirection = mockSortDirection === 'desc' ? 'asc' : 'desc';
-    });
-
+  it('allows to reverse sort by clicking "Date" header', () => {
+    useTransactions.mockReturnValue(successQueryObj);
     const wrapper = mountWithRouterAndQueryClient(TransactionMonitorList, props);
     wrapper.find('.sort-by.timestamp').simulate('click');
 
-    // this was to test the component its self without the manager (manger can have its own test)
-    expect(props.changeSort).toHaveBeenCalledWith('timestamp');
-    expect(mockSortDirection).toBe('asc');
-
-    wrapper.find('.sort-by.timestamp').simulate('click');
-    expect(props.changeSort).toHaveBeenCalledWith('timestamp');
-    expect(mockSortDirection).toBe('desc');
+    expect(mockToggleSort).toHaveBeenCalledWith('timestamp');
+    wrapper.find('.sort-by.height').simulate('click');
+    expect(mockToggleSort).toHaveBeenCalledWith('height');
   });
 
   it('allows to clear the filter after filtering by height', () => {
