@@ -11,24 +11,22 @@ import { getTransactions } from '@transaction/api';
 import { selectActiveTokenAccount } from 'src/redux/selectors';
 import FlashMessageHolder from '@theme/flashMessage/holder';
 import WarnPunishedDelegate from '@dpos/validator/components/WarnPunishedDelegate';
-import WalletInfo from '@wallet/components/walletInfo';
-import BalanceInfo from '@token/fungible/components/BalanceInfo';
+// import WalletInfo from '@wallet/components/walletInfo';
+// import BalanceInfo from '@token/fungible/components/BalanceInfo';
+import WalletVisualWithAddress from '@wallet/components/walletVisualWithAddress';
+// import WalletVisual from '@wallet/components/walletVisual';
+import DialogLink from 'src/theme/dialog/link';
+import { SecondaryButton, PrimaryButton } from '@theme/buttons';
 import styles from './overview.css';
 
 const mapStateToProps = (state) => ({
-  currentHeight: state.blocks.latestBlocks.length
-    ? state.blocks.latestBlocks[0].height
-    : 0,
+  currentHeight: state.blocks.latestBlocks.length ? state.blocks.latestBlocks[0].height : 0,
 });
 
 const addWarningMessage = ({ isBanned, pomHeight, readMore }) => {
   FlashMessageHolder.addMessage(
-    <WarnPunishedDelegate
-      isBanned={isBanned}
-      pomHeight={pomHeight}
-      readMore={readMore}
-    />,
-    'WarnPunishedDelegate',
+    <WarnPunishedDelegate isBanned={isBanned} pomHeight={pomHeight} readMore={readMore} />,
+    'WarnPunishedDelegate'
   );
 };
 
@@ -38,16 +36,16 @@ const removeWarningMessage = () => {
 
 const Overview = ({
   t,
-  activeToken,
+  // activeToken,
   transactions,
-  hwInfo,
-  discreetMode,
+  // hwInfo,
+  // discreetMode,
   isWalletRoute,
   account,
   history,
   currentHeight,
 }) => {
-  const { address, publicKey, isMultisignature } = account?.summary ?? {};
+  const { address /* , publicKey, isMultisignature */ } = account?.summary ?? {};
 
   const isBanned = account?.dpos?.delegate?.isBanned;
   const pomHeights = account?.dpos?.delegate?.pomHeights;
@@ -56,18 +54,19 @@ const Overview = ({
   const numOfBlockPerDay = 24 * 60 * 6;
   const daysLeft = Math.ceil((end - currentHeight) / numOfBlockPerDay);
 
-  const bookmark = useSelector((state) =>
-    state.bookmarks[activeToken].find((item) => item.address === address));
+  // const bookmark = useSelector((state) =>
+  //   state.bookmarks[activeToken].find((item) => item.address === address)
+  // );
   const wallet = useSelector(selectActiveTokenAccount);
   const host = wallet.summary?.address ?? '';
 
   const showWarning = () => {
     if (
-      !isWalletRoute
-      && host
-      && address
-      && (isBanned || pomHeights?.length)
-      && (isBanned || daysLeft >= 1)
+      !isWalletRoute &&
+      host &&
+      address &&
+      (isBanned || pomHeights?.length) &&
+      (isBanned || daysLeft >= 1)
     ) {
       addWarningMessage({
         isBanned,
@@ -99,10 +98,8 @@ const Overview = ({
 
   return (
     <section className={`${grid.row} ${styles.wrapper}`}>
-      <div
-        className={`${grid['col-xs-6']} ${grid['col-md-3']} ${grid['col-lg-3']}`}
-      >
-        <WalletInfo
+      <div className={`${grid['col-xs-6']} ${grid['col-md-6']} ${grid['col-lg-6']}`}>
+        {/* <WalletInfo
           t={t}
           hwInfo={hwInfo}
           activeToken={activeToken}
@@ -113,11 +110,21 @@ const Overview = ({
           host={host}
           account={account}
           isMultisignature={isMultisignature}
+        /> */}
+        <WalletVisualWithAddress
+          copy
+          address={address}
+          accountName={account?.dpos?.delegate?.username || 'Lisker'}
+          detailsClassName={styles.accountSummary}
+          truncate={false}
         />
+        {/* <WalletVisual address={address} />
+        <div className={styles.accountSummary}>
+          <p className={styles.accountName}>{account?.dpos?.delegate?.username || 'Lisker'}</p>
+          <p className={styles.accountAddress}>{address}</p>
+        </div> */}
       </div>
-      <div
-        className={`${grid['col-xs-6']} ${grid['col-md-3']} ${grid['col-lg-3']}`}
-      >
+      {/* <div className={`${grid['col-xs-6']} ${grid['col-md-3']} ${grid['col-lg-3']}`}>
         <BalanceInfo
           t={t}
           activeToken={activeToken}
@@ -125,7 +132,21 @@ const Overview = ({
           isWalletRoute={isWalletRoute}
           account={account}
           address={address}
-        />
+        /> */}
+      {/* </div> */}
+      <div className={`${grid['col-xs-6']} ${grid['col-md-6']} ${grid['col-lg-6']}`}>
+        <div className={`${grid.row} ${styles.actionButtons}`}>
+          <div className={`${grid['col-xs-3']} ${grid['col-md-3']} ${grid['col-lg-3']}`}>
+            <DialogLink component="request">
+              <SecondaryButton>{t('Request')}</SecondaryButton>
+            </DialogLink>
+          </div>
+          <div className={`${grid['col-xs-3']} ${grid['col-md-3']} ${grid['col-lg-3']}`}>
+            <DialogLink component="send">
+              <PrimaryButton>{t('Send')}</PrimaryButton>
+            </DialogLink>
+          </div>
+        </div>
       </div>
     </section>
   );
@@ -136,11 +157,10 @@ export default compose(
   connect(mapStateToProps),
   withData({
     transactions: {
-      apiUtil: (network, { token, ...params }) =>
-        getTransactions({ network, params }),
+      apiUtil: (network, { token, ...params }) => getTransactions({ network, params }),
       defaultData: { data: [], meta: {} },
       autoload: false,
     },
   }),
-  withTranslation(),
+  withTranslation()
 )(Overview);

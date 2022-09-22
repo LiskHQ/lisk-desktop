@@ -19,6 +19,7 @@ import NavigationBars from 'src/modules/common/components/bars';
 import ThemeContext from 'src/theme/themeProvider';
 import routesMap from 'src/routes/routesMap';
 import routes from 'src/routes/routes';
+import { MOCK_SERVICE_WORKER } from 'src/const/config';
 import './variables.css';
 import styles from './app.css';
 

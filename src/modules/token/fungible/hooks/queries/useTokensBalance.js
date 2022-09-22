@@ -1,10 +1,8 @@
 /* istanbul ignore file */
 import { TOKENS_BALANCE } from 'src/const/queries';
-import {
-  LIMIT as limit,
-  API_VERSION,
-} from 'src/const/config';
+import { LIMIT as limit, API_VERSION } from 'src/const/config';
 import { useCustomInfiniteQuery } from 'src/modules/common/hooks';
+import { useCurrentAccount } from '@account/hooks';
 
 /**
  * Creates a custom hook for Token balance list queries
@@ -20,17 +18,20 @@ import { useCustomInfiniteQuery } from 'src/modules/common/hooks';
  * @returns the query object
  */
 // eslint-disable-next-line import/prefer-default-export
-export const useTokensBalance = ({ config: customConfig = {}, options } = {}) => {
+export const useTokensBalance = ({ config: customConfig = {}, options, client } = {}) => {
+  const [currentAccount] = useCurrentAccount();
+  const { address } = currentAccount.metadata;
   const config = {
     url: `/api/${API_VERSION}/tokens`,
     method: 'get',
     event: 'get.tokens',
     ...customConfig,
-    params: { limit, ...(customConfig?.params || {}) },
+    params: { limit, address, ...(customConfig?.params || {}) },
   };
   return useCustomInfiniteQuery({
     keys: [TOKENS_BALANCE],
     config,
     options,
+    client,
   });
 };
