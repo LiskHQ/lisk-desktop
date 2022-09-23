@@ -11,7 +11,7 @@
 }
 
 .copyIcon {
-  /* filter: brightness(100) !important; */
+  filter: none;
   margin-left: 8px;
 }
 
