@@ -122,6 +122,8 @@ const Overview = () => {
   const [params, setParams] = useState({ limit: 7, interval: 'day' });
   const [activeTab, setActiveTab] = useState('week');
   const colorPalette = getColorPalette(useTheme());
+  // Fallback token for transaction statistics // @TODO: Add selector for active token when available in service
+  const tokenID = '0000000000000000';
   const { data: txStatsData } = useTransactionStatistics({ config: { params } });
   const txStats = txStatsData?.data ?? {
     distributionByType: {},
@@ -129,19 +131,25 @@ const Overview = () => {
     timeline: {},
   };
   const distributionByType = formatDistributionByValues(txStats.distributionByType);
-  const distributionByAmount = normalizeNumberRange(txStats.distributionByAmount);
-  const { txCountList, txVolumeList, txDateList } = Object.keys(txStats.timeline).reduce(
-    (acc, item) => ({
-      txCountList: [...acc.txCountList, item.transactionCount],
-      txDateList: [...acc.txDateList, formatDates(item.date, activeTab).slice(0, 2)],
-      txVolumeList: [...acc.txVolumeList, fromRawLsk(item.volume)],
-    }),
-    {
-      txCountList: [],
-      txDateList: [],
-      txVolumeList: [],
-    }
-  );
+  const distributionByAmount = normalizeNumberRange(txStats.distributionByAmount?.[tokenID] ?? {});
+  const { txCountList, txVolumeList, txDateList } = Object.keys(txStats.timeline).length
+    ? txStats.timeline?.[tokenID].reduce(
+        (acc, item) => ({
+          txCountList: [...acc.txCountList, item.transactionCount],
+          txDateList: [...acc.txDateList, formatDates(item.date, activeTab).slice(0, 2)],
+          txVolumeList: [...acc.txVolumeList, fromRawLsk(item.volume)],
+        }),
+        {
+          txCountList: [],
+          txDateList: [],
+          txVolumeList: [],
+        }
+      )
+    : {
+        txCountList: [],
+        txVolumeList: [],
+        txDateList: [],
+      };
 
   const changeTab = (tab) => {
     setActiveTab(tab.value);
