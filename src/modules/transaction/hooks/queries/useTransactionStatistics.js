@@ -30,14 +30,18 @@ export const useTransactionStatistics = ({ config: customConfig = {}, options } 
       data.pages.reduce((prevPages, page) => {
         const newData = page?.data || {};
         const newTimelines = page?.data.timeline || {};
+        const mergedTimelines = Object.keys(prevPages.data.timeline).reduce(
+          (acc, key) => ({
+            ...acc,
+            [key]: [...prevPages.data.timeline[key], ...newTimelines[key]],
+          }),
+          {}
+        );
         return {
           ...page,
           data: {
             ...newData,
-            // Do an array spread for each TL key
-            timeline: prevPages.data
-              ? { ...prevPages.data.timeline, ...newTimelines }
-              : newTimelines,
+            timeline: prevPages.data ? mergedTimelines : newTimelines,
           },
         };
       }),

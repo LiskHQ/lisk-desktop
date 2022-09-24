@@ -41,22 +41,11 @@ describe('useTransactionStatistics hook', () => {
     act(() => {
       result.current.fetchNextPage();
     });
-    console.log({
-      obj: Object.keys(mockTransactionStatistics.data.timeline).reduce(
-        (acc, key) => ({
-          ...acc,
-          [key]: mockTransactionStatistics.data.timeline[key].slice(0, limit * 2),
-        }),
-        {}
-      ),
-    });
-    // await waitFor(() => result.current.isFetching);
-    // console.log('Here!!');
+    await waitFor(() => result.current.isFetching);
     await waitFor(() => !result.current.isFetching);
     const expectedResponse = {
       data: {
         ...mockTransactionStatistics.data,
-        // timeline: mockTransactionStatistics.data.timeline?.slice(0, limit * 2),
         timeline: Object.keys(mockTransactionStatistics.data.timeline).reduce(
           (acc, key) => ({
             ...acc,
