@@ -29,12 +29,15 @@ export const useTransactionStatistics = ({ config: customConfig = {}, options } 
     select: (data) =>
       data.pages.reduce((prevPages, page) => {
         const newData = page?.data || {};
-        const newTimelines = page?.data.timeline || [];
+        const newTimelines = page?.data.timeline || {};
         return {
           ...page,
           data: {
             ...newData,
-            timeline: prevPages.data ? [...prevPages.data.timeline, ...newTimelines] : newTimelines,
+            // Do an array spread for each TL key
+            timeline: prevPages.data
+              ? { ...prevPages.data.timeline, ...newTimelines }
+              : newTimelines,
           },
         };
       }),
