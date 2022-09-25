@@ -36,22 +36,14 @@
   }
 }
 
-.toggleButton {
+.lockedBalance {
   display: flex;
-  flex-direction: column;
+  flex-direction: row;
   align-items: center;
-  align-items: flex-end;
-  color: var(--color-ink-blue);
-  font-size: 14px;
-  font-weight: 600;
+  column-gap: 10px;
 
   & img {
     width: 10px;
-    transition: all 250ms linear;
-  }
-
-  & img.collapsed {
-    transform: rotate(90deg);
     transition: all 250ms linear;
   }
 
@@ -64,37 +56,42 @@
   }
 }
 
-.eventHash {
+.token {
   padding: 0px 16px 0px 5px;
+  display: flex;
+  flex-direction: row;
+  column-gap: 5;
+  color: var(--color-content-light);
+  align-items: center;
 
-  & > span {
-    width: 100%;
-    overflow: hidden;
-    text-overflow: ellipsis;
+  & > img:first-child {
+    width: 40px;
+    height: 40px;
   }
+
+  & > img:first-child ~ div {
+    flex: 1;
+
+    & > p {
+      @mixin headingSmall;
+
+      margin: 0px 0px 8px 0px;
+    }
+
+    & > p ~ span {
+      @mixin contentSmall;
+
+      color: var(--color-slate-gray);
+    }
+  }
+}
+
+.balance {
+  @mixin headingSmall;
+
+  padding: 0px 16px 0px 16px;
 }
 
 .rowWrapper {
   width: 100%;
-}
-
-.jsonContainer {
-  width: 100%;
-  position: relative;
-  border-radius: 5px;
-  background-color: var(--color-ghost-white);
-  margin-bottom: 29px;
-  padding: 12px 8px;
-  box-sizing: border-box;
-  font-size: var(--paragraph-font-size-s);
-  overflow: hidden auto;
-  transition: height 250ms linear, margin-bottom 250ms linear, padding-top 250ms linear, padding-bottom 250ms linear;
-  max-height: 150px;
-
-  &.shrink {
-    height: 0px;
-    padding: 0px;
-    margin-bottom: 0px;
-    transition: height 250ms linear, margin-bottom 250ms linear, padding-top 250ms linear, padding-bottom 250ms linear, padding-left 1000ms linear;
-  }
 }

@@ -15,10 +15,6 @@ export default (t) => ([
   },
   {
     title: t('Type ID'),
-    classList: grid['col-xs-1'],
-  },
-  {
-    title: '',
-    classList: `${grid['col-xs-1']} ${grid['col-md-1']}`,
+    classList: grid['col-xs-2'],
   },
 ]);

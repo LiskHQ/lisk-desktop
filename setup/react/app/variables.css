@@ -72,6 +72,7 @@ or "warn/action" ineastd of "red/green"
   --header-logo-size: 56px;
   --search-box-width-l: 597px;
   --footer-button-width: 400px;
+  --dashboard-aside-width: 420px;
   --main-box-width: 1318px;
   --medium-box-width: 755px;
   --dialog-box-width: var(--medium-box-width);
@@ -187,6 +188,10 @@ or "warn/action" ineastd of "red/green"
   --color-node-border: var(--color-athens-white);
   --color-ultramarine-blue-blurred: #4070f41a;
   --color-menu-black: #030815;
+  --color-tx-pending-status-text: var(--color-ink-blue);
+  --color-tx-pending-status-bg: var(--color-active-tab);
+  --color-tx-fail-status-text: var(--color-red);
+  --color-tx-fail-status-bg: var(--color-red-transparent);
 
   /*************************
         Box
@@ -281,4 +286,8 @@ or "warn/action" ineastd of "red/green"
   --color-button-outline-color: #4c4c4c;
   --color-application-manage-hover-color: var(--color-dialog-bg);
   --color-node-border: var(--color-platinum);
+  --color-tx-pending-status-text: var(--color-ultramarine-blue);
+  --color-tx-pending-status-bg: var(--color-cloud-burst);
+  --color-tx-fail-status-text: var(--color-red);
+  --color-tx-fail-status-bg: var(--color-red-semitransparent);
 }
