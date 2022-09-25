@@ -1,7 +1,8 @@
 import React from 'react';
 import grid from 'flexboxgrid/dist/flexboxgrid.css';
 import Icon from 'src/theme/Icon';
-import { TertiaryButton } from 'src/theme/buttons';
+// import { TertiaryButton } from 'src/theme/buttons';
+import DialogLink from 'src/theme/dialog/link';
 import styles from './TokenRow.css';
 import chainImage from '../../../../../setup/react/assets/images/LISK.png';
 
@@ -22,8 +23,8 @@ export const Balance = ({ amount }) => (
 export const LockedBalance = ({ onClick, amount }) => (
   <div className={`${styles.lockedBalance} ${grid['col-xs-3']}`}>
     <p className={styles.balance}>{amount}</p>
-    <TertiaryButton onClick={onClick}>
+    <DialogLink component="lockedBalance" onClick={onClick}>
       <Icon name="arrowRightInactive" />
-    </TertiaryButton>
+    </DialogLink>
   </div>
 );

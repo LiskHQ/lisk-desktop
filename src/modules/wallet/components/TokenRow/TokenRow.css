@@ -43,15 +43,13 @@
 
   & img {
     width: 10px;
-    transition: all 250ms linear;
   }
 
-  & > button {
+  & > p ~ div {
     display: flex;
-    margin: 0px;
-    padding: 0px !important;
-    max-width: 40px;
-    min-width: 40px;
+    margin-left: 10px;
+    padding: 10px;
+    cursor: pointer;
   }
 }
 
