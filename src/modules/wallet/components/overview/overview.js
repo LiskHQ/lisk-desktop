@@ -113,7 +113,7 @@ const Overview = ({ t, transactions, isWalletRoute, account, history, currentHei
           <div className={`${styles.carouselHeader}`}>
             <div>Tokens</div>
             <div>
-              <Link to="view-tokens">View all tokens</Link>
+              <Link to="/wallet/tokens/all">View all tokens</Link>
             </div>
           </div>
           <TokenCarousel

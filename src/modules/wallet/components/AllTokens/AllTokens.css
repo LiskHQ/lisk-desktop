@@ -4,6 +4,10 @@
   width: 100%;
   padding-top: 0px;
   box-sizing: border-box;
+
+  & > header ~ div {
+    padding-top: 6px !important;
+  }
 }
 
 .searchIcon {
@@ -41,4 +45,13 @@
   & button {
     padding: 30px 0px;
   }
+}
+
+.tableHeader {
+  font-weight: 14px !important;
+  padding: 0px;
+  position: sticky;
+  top: -7px;
+  background-color: var(--color-white);
+  z-index: 1;
 }

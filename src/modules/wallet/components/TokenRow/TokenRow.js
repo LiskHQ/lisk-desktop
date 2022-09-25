@@ -1,26 +1,33 @@
-import React from 'react';
+import React, { useMemo } from 'react';
+import { fromRawLsk } from 'src/modules/token/fungible/utils/lsk';
+import Converter from 'src/modules/common/components/converter';
 import styles from './TokenRow.css';
 import { Token, Balance, LockedBalance } from './components';
 
 const TransactionEventRow = ({ data: token }) => {
   const {
-    tokenSymbol,
+    symbol: tokenSymbol,
     chainUrl,
-    chainName,
-    totalBalance,
+    name: chainName,
     availableBalance,
     fiatBalance,
-    lockedBalance,
+    lockedBalances,
+    // tokenID,
   } = token;
+
+  const totalLockedBalance = useMemo(
+    () => lockedBalances.reduce((total, { amount }) => +amount + total, 0),
+    [lockedBalances]
+  );
 
   return (
     <div data-testid="transaction-event-row-wrapper" className={styles.rowWrapper}>
       <div className={`transaction-event-row ${styles.container}`}>
         <Token chainName={chainName} chainLogo={chainUrl} tokenSymbol={tokenSymbol} />
-        <Balance amount={totalBalance} />
-        <Balance amount={availableBalance} />
-        <Balance amount={fiatBalance} />
-        <LockedBalance amount={lockedBalance} onClick={() => {}} />
+        <Balance amount={fromRawLsk(+availableBalance + totalLockedBalance)} />
+        <Balance amount={fromRawLsk(availableBalance)} />
+        <Balance amount={<Converter value={fromRawLsk(fiatBalance)} />} />
+        <LockedBalance amount={fromRawLsk(totalLockedBalance)} onClick={() => {}} />
       </div>
     </div>
   );

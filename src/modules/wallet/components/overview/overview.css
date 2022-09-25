@@ -60,7 +60,7 @@
     & .carouselHeader {
       display: flex;
       justify-content: space-between;
-      margin: 8px 0;
+      margin: 12px 0;
 
       & > div:first-child {
         font-size: var(--font-size-h6);
@@ -70,6 +70,7 @@
 
       & > div:last-child {
         color: var(--color-ultramarine-blue);
+        font-size: var(--paragraph-font-size-s);
       }
     }
   }

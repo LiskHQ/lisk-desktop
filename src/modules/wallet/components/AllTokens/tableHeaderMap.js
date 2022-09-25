@@ -3,7 +3,7 @@ import grid from 'flexboxgrid/dist/flexboxgrid.css';
 export default (t) => [
   {
     title: t('Token'),
-    classList: `${grid['col-xs-4']}`,
+    classList: `${grid['col-xs-3']}`,
   },
   {
     title: t('Token balance'),
@@ -19,6 +19,6 @@ export default (t) => [
   },
   {
     title: t('Locked balance'),
-    classList: `${grid['col-xs-2']}`,
+    classList: `${grid['col-xs-3']}`,
   },
 ];
