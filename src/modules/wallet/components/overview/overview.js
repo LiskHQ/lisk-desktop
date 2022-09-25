@@ -15,8 +15,9 @@ import { selectActiveTokenAccount } from 'src/redux/selectors';
 import FlashMessageHolder from '@theme/flashMessage/holder';
 import WarnPunishedDelegate from '@dpos/validator/components/WarnPunishedDelegate';
 import WalletVisualWithAddress from '@wallet/components/walletVisualWithAddress';
-import DialogLink from 'src/theme/dialog/link';
+import DialogLink from '@theme/dialog/link';
 import { SecondaryButton, PrimaryButton } from '@theme/buttons';
+import { useTokensBalance } from 'src/modules/token/fungible/hooks/queries';
 import styles from './overview.css';
 import chainLogo from '../../../../../setup/react/assets/images/LISK.png';
 
@@ -46,6 +47,7 @@ const Overview = ({ t, transactions, isWalletRoute, account, history, currentHei
   const daysLeft = Math.ceil((end - currentHeight) / numOfBlockPerDay);
   const wallet = useSelector(selectActiveTokenAccount);
   const host = wallet.summary?.address ?? '';
+  const { data: tokensBalance } = useTokensBalance();
 
   const showWarning = () => {
     if (
@@ -117,13 +119,14 @@ const Overview = ({ t, transactions, isWalletRoute, account, history, currentHei
             </div>
           </div>
           <TokenCarousel
-            data={[...new Array(16).keys()]}
-            renderItem={() => (
+            data={tokensBalance?.data ?? []}
+            renderItem={(props) => (
               <TokenCard
-                balance={30000000000000}
-                lockedBalance={3000000000}
-                symbol="LSK"
+                // balance={30000000000000}
+                // lockedBalance={3000000000}
+                // symbol="LSK"
                 url={chainLogo}
+                {...props}
               />
             )}
           />
