@@ -1,4 +1,4 @@
-import React /* , { useState, useEffect }  */ from 'react';
+import React from 'react';
 import { useTranslation } from 'react-i18next';
 import Box from 'src/theme/box';
 import BoxContent from 'src/theme/box/content';
@@ -18,7 +18,9 @@ const TransactionEvents = ({ blockId, address }) => {
     hasNextPage,
     fetchNextPage,
   } = useTransactionEvents({
-    config: { params: { ...(blockId && { blockID: blockId }), ...(address && { address }) } },
+    config: {
+      params: { ...(blockId && { blockID: blockId }), ...(address && { senderAddress: address }) },
+    },
   });
 
   return (

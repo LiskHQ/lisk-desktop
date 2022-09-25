@@ -56,9 +56,6 @@ const AccountDetails = ({ history }) => {
       addSearchParamsToUrl(history, { modal: 'send' });
     }
   }, []);
-
-  // account.info[activeToken]
-
   return (
     <section>
       <Overview
@@ -66,7 +63,6 @@ const AccountDetails = ({ history }) => {
         activeToken={activeToken}
         discreetMode={discreetMode}
         account={{}}
-        // hwInfo={account.hwInfo}
         transactions={confirmed}
       />
       <Box>
