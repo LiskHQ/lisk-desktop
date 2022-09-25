@@ -55,7 +55,7 @@ const AccountDetails = ({ t, history }) => {
           id="Transactions"
           address={address}
         />
-        <TransactionEvents address={address} />
+        <TransactionEvents address={address} name={t('Events')} id="Transaction Events" />
       </TabsContainer>
     </section>
   );

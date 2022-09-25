@@ -49,7 +49,7 @@
 }
 
 .tokenCarouselWrapper {
-  margin: 43px 0px;
+  margin: 43px 0px 20px;
   width: 100%;
 
   & .contentWrapper {
