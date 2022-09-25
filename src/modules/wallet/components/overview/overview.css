@@ -51,6 +51,28 @@
 .tokenCarouselWrapper {
   margin: 43px 0px 20px;
   width: 100%;
+
+  & .contentWrapper {
+    flex: 0 1 auto;
+    flex-wrap: wrap;
+    padding: 8px;
+
+    & .carouselHeader {
+      display: flex;
+      justify-content: space-between;
+      margin: 8px 0;
+
+      & > div:first-child {
+        font-size: var(--font-size-h6);
+        font-weight: 500;
+        color: var(--color-maastricht-blue);
+      }
+
+      & > div:last-child {
+        color: var(--color-ultramarine-blue);
+      }
+    }
+  }
 }
 
 @media (--xLarge-viewport) {
