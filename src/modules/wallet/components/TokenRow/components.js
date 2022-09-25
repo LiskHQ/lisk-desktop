@@ -20,10 +20,10 @@ export const Balance = ({ amount }) => (
   <p className={`${grid['col-xs-2']} ${styles.balance}`}>{amount}</p>
 );
 
-export const LockedBalance = ({ onClick, amount }) => (
+export const LockedBalance = ({ amount, address }) => (
   <div className={`${styles.lockedBalance} ${grid['col-xs-3']}`}>
     <p className={styles.balance}>{amount}</p>
-    <DialogLink component="lockedBalance" onClick={onClick}>
+    <DialogLink component="lockedBalance"  data={{ address }} >
       <Icon name="arrowRightInactive" />
     </DialogLink>
   </div>

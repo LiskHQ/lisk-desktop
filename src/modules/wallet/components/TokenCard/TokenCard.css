@@ -11,7 +11,7 @@
   flex-direction: row;
   align-items: center;
   padding: 16px;
-  filter: drop-shadow(0px 4px 10px rgba(234, 234, 234, 0.36));
+  filter: drop-shadow(0px 4px 10px var(--color-token-card-shadow));
   background-image: url(../../../../../setup/react/assets/images/waves.png);
   background-color: var(--color-token-card-bg);
   background-repeat: round;
@@ -43,25 +43,28 @@
       font-size: 18px;
       font-weight: 600;
       color: var(--color-content-light);
+      margin-bottom: 3px;
     }
 
-    &:nth-of-type(2) {
+    &.fiatBalance {
       color: var(--color-blue-gray);
-      margin-top: 3px;
     }
+  }
+}
 
-    &:nth-of-type(3) {
-      margin-top: 8px;
-      color: var(--color-ink-blue);
-      display: flex;
-      flex-direction: row;
-      align-items: center;
-      column-gap: 8px;
+.lockedBalance {
+  @mixin contentLarge;
 
-      & > img {
-        width: 16px;
-        height: 16px;
-      }
-    }
+  margin-top: 3px;
+  color: var(--color-ink-blue);
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  column-gap: 8px;
+  text-decoration: none !important;
+
+  & > img {
+    width: 16px;
+    height: 16px;
   }
 }

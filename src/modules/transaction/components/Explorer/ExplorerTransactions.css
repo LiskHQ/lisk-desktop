@@ -5,6 +5,7 @@
     justify-content: flex-end !important;
     padding: 0 !important;
     height: 20px !important;
+    margin-top: -30px !important;
 
     & > div {
       margin-top: -70px;

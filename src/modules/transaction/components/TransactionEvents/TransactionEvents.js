@@ -1,4 +1,4 @@
-import React/* , { useState, useEffect }  */from 'react';
+import React /* , { useState, useEffect }  */ from 'react';
 import { useTranslation } from 'react-i18next';
 import Box from 'src/theme/box';
 import BoxContent from 'src/theme/box/content';
@@ -8,15 +8,18 @@ import TransactionEventRow from '../TransactionEventsRow';
 import header from './TransactionEventsHeaderMap';
 import styles from './TransactionEvents.css';
 
-const TransactionEvents = ({ blockId }) => {
+const TransactionEvents = ({ blockId, address }) => {
   const { t } = useTranslation();
   const {
     data: transactionEvents,
-    isLoading, isFetching,
+    isLoading,
+    isFetching,
     error,
     hasNextPage,
     fetchNextPage,
-  } = useTransactionEvents({ config: { params: { blockID: blockId } } });
+  } = useTransactionEvents({
+    config: { params: { ...(blockId && { blockID: blockId }), ...(address && { address }) } },
+  });
 
   return (
     <Box main isLoading={isLoading} className="transaction-events-box">

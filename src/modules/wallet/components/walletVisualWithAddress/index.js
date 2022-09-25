@@ -46,7 +46,7 @@ const WalletVisualWithAddress = ({
     truncate === 'small' || truncate === 'medium'
       ? truncateAddress(transformedAddress, truncate)
       : truncateAddress(transformedAddress);
-
+  
   return (
     <div className={`${styles.address} ${className}`}>
       {moduleCommand !== MODULE_COMMANDS_NAME_MAP.transfer && transactionSubject === 'recipient' ? (
@@ -61,7 +61,7 @@ const WalletVisualWithAddress = ({
         <>
           <WalletVisual address={address} size={size} />
           <div className={`${styles.detailsWrapper} ${detailsClassName || ''}`}>
-            {accountName ? <p className="accountName">{accountName}</p> : null}
+            {accountName && <p className="accountName">{accountName}</p>}
             <span className={`${styles.address} accountAddress`}>
               {truncate ? truncatedAddress : transformedAddress}
               {copy ? (

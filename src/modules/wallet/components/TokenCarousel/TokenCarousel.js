@@ -1,4 +1,5 @@
 import React, { useMemo, useRef, useState } from 'react';
+import Skeleton from 'src/modules/common/components/skeleton';
 import { TertiaryButton } from 'src/theme/buttons';
 import Icon from 'src/theme/Icon';
 import { Navigation } from 'swiper';
@@ -16,7 +17,7 @@ const NavButton = React.forwardRef(({ isNext, onClick }, ref) => (
   </div>
 ));
 
-const Carousel = ({ renderItem: RenderItem, data = [], ...rest }) => {
+const Carousel = ({ renderItem: RenderItem, data = [], isLoading, error, ...rest }) => {
   const nextRef = useRef(null);
   const prevRef = useRef(null);
   const swiperInstance = useRef(null);
@@ -27,6 +28,14 @@ const Carousel = ({ renderItem: RenderItem, data = [], ...rest }) => {
     [virtualSize, width, activeIndex]
   );
   const isPrevVisible = useMemo(() => activeIndex > 0, [activeIndex]);
+  const renderData = useMemo(() => (isLoading ? [...new Array(4).keys()] : data), [data]);
+
+  if (error)
+    return (
+      <div className={styles.errorWrapper}>
+        <p>{error.message || error}</p>
+      </div>
+    );
 
   return (
     <div className={styles.wrapper}>
@@ -47,13 +56,17 @@ const Carousel = ({ renderItem: RenderItem, data = [], ...rest }) => {
         }}
         {...rest}
       >
-        {data.map((props, index) => (
+        {renderData.map((props, index) => (
           <SwiperSlide key={index}>
-            <RenderItem {...props} />
+            {isLoading ? (
+              <Skeleton className={styles.skeletonLoader} width="240px" height="96px" />
+            ) : (
+              <RenderItem {...props} />
+            )}
           </SwiperSlide>
         ))}
 
-        {isPrevVisible && (
+        {isPrevVisible && !isLoading && (
           <NavButton
             ref={prevRef}
             onClick={() => {
@@ -62,7 +75,7 @@ const Carousel = ({ renderItem: RenderItem, data = [], ...rest }) => {
             }}
           />
         )}
-        {isNextVisible && (
+        {isNextVisible && !isLoading && (
           <NavButton
             isNext
             ref={nextRef}

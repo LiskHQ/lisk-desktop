@@ -8,6 +8,7 @@
   font-weight: var(--font-weight-very-bold);
   font-size: var(--font-size-h3);
   font-family: var(--content-font);
+  color: var(--color-content-light);
 
   & > .rightSection {
     flex: 1;

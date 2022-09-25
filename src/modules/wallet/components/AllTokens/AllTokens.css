@@ -43,7 +43,7 @@
   column-gap: 16px;
 
   & button {
-    padding: 30px 0px;
+    padding: 0px 45px !important;
   }
 }
 

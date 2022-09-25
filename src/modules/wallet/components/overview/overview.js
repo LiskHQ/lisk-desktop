@@ -1,28 +1,30 @@
 /* eslint-disable max-statements */
-import React, { useEffect } from 'react';
-import { useSelector, connect } from 'react-redux';
+import React, { useCallback, useEffect, useMemo } from 'react';
+import { useSelector } from 'react-redux';
 import { withRouter } from 'react-router';
 import { Link } from 'react-router-dom';
 import { compose } from 'redux';
-import { withTranslation } from 'react-i18next';
+import { useTranslation } from 'react-i18next';
 import grid from 'flexboxgrid/dist/flexboxgrid.css';
-
+import { useTokensBalance } from 'src/modules/token/fungible/hooks/queries';
 import TokenCard from 'src/modules/wallet/components/TokenCard';
 import TokenCarousel from 'src/modules/wallet/components/TokenCarousel/TokenCarousel';
-import withData from 'src/utils/withData';
-import { getTransactions } from '@transaction/api';
 import { selectActiveTokenAccount } from 'src/redux/selectors';
 import FlashMessageHolder from '@theme/flashMessage/holder';
 import WarnPunishedDelegate from '@dpos/validator/components/WarnPunishedDelegate';
 import WalletVisualWithAddress from '@wallet/components/walletVisualWithAddress';
 import DialogLink from 'src/theme/dialog/link';
+import { useCurrentAccount } from '@account/hooks';
+import { useBlocks } from '@block/hooks/queries/useBlocks';
 import { SecondaryButton, PrimaryButton } from '@theme/buttons';
+import { useDelegates } from '@dpos/validator/hooks/queries';
+import { selectSearchParamValue } from 'src/utils/searchParams';
+import { useAuth } from '@auth/hooks/queries';
 import styles from './overview.css';
 import chainLogo from '../../../../../setup/react/assets/images/LISK.png';
 
-const mapStateToProps = (state) => ({
-  currentHeight: state.blocks.latestBlocks.length ? state.blocks.latestBlocks[0].height : 0,
-});
+// 6: blocks per minute, 60: minutes, 24: hours
+const numOfBlockPerDay = 24 * 60 * 6;
 
 const addWarningMessage = ({ isBanned, pomHeight, readMore }) => {
   FlashMessageHolder.addMessage(
@@ -35,16 +37,30 @@ const removeWarningMessage = () => {
   FlashMessageHolder.deleteMessage('WarnPunishedDelegate');
 };
 
-const Overview = ({ t, transactions, isWalletRoute, account, history, currentHeight }) => {
-  const { address } = account?.summary ?? {};
+const Overview = ({ isWalletRoute, history }) => {
+  const searchAddress = selectSearchParamValue(history.location.search, 'address');
+  const { t } = useTranslation();
+  const [
+    {
+      metadata: { address: currentAddress },
+    },
+  ] = useCurrentAccount();
 
-  const isBanned = account?.dpos?.delegate?.isBanned;
-  const pomHeights = account?.dpos?.delegate?.pomHeights;
+  const address = useMemo(() => searchAddress || currentAddress, [searchAddress, currentAddress]);
+  const { data: delegates } = useDelegates({ config: { params: { address } } });
+  const { data: account } = useAuth({ config: { params: { address } } });
+  const { data: blocks } = useBlocks();
+
+  const delegate = useMemo(() => delegates?.data?.[0] || 0, [delegates]);
+  const currentHeight = useMemo(() => blocks?.data?.[0]?.height, [blocks]);
+
+  const isBanned = delegate?.isBanned;
+  const pomHeights = delegate?.pomHeights;
   const { end } = pomHeights ? pomHeights[pomHeights.length - 1] : 0;
-  // 6: blocks per minute, 60: minutes, 24: hours
-  const numOfBlockPerDay = 24 * 60 * 6;
+
   const daysLeft = Math.ceil((end - currentHeight) / numOfBlockPerDay);
   const wallet = useSelector(selectActiveTokenAccount);
+  const { data: tokens, isLoading, error } = useTokensBalance();
   const host = wallet.summary?.address ?? '';
 
   const showWarning = () => {
@@ -68,18 +84,30 @@ const Overview = ({ t, transactions, isWalletRoute, account, history, currentHei
     }
   };
 
-  useEffect(() => {
-    const params = history?.location.search;
-    if (params === '') {
-      removeWarningMessage();
-    }
-  }, []);
+  const renderTokenCard = useCallback(
+    ({ chainUrl = chainLogo, symbol, availableBalance, lockedBalances }) => {
+      const totalLockedBalance = useMemo(
+        () => lockedBalances.reduce((total, { amount }) => +amount + total, 0),
+        [lockedBalances]
+      );
+
+      return (
+        <TokenCard
+          availableBalance={availableBalance}
+          lockedBalance={totalLockedBalance}
+          address={address}
+          symbol={symbol}
+          url={chainUrl}
+        />
+      );
+    },
+    [address]
+  );
 
   useEffect(() => {
-    if (!isWalletRoute && address) {
-      transactions.loadData({ address });
-    }
-  }, [address]);
+    const params = history?.location.search;
+    if (params === '') removeWarningMessage();
+  }, []);
 
   useEffect(showWarning, [isWalletRoute, host, address, pomHeights]);
 
@@ -88,8 +116,9 @@ const Overview = ({ t, transactions, isWalletRoute, account, history, currentHei
       <div className={`${grid['col-xs-6']} ${grid['col-md-6']} ${grid['col-lg-6']}`}>
         <WalletVisualWithAddress
           copy
+          size={50}
           address={address}
-          accountName={account?.dpos?.delegate?.username || 'Lisker'}
+          accountName={account?.meta?.name}
           detailsClassName={styles.accountSummary}
           truncate={false}
         />
@@ -117,15 +146,10 @@ const Overview = ({ t, transactions, isWalletRoute, account, history, currentHei
             </div>
           </div>
           <TokenCarousel
-            data={[...new Array(16).keys()]}
-            renderItem={() => (
-              <TokenCard
-                balance={30000000000000}
-                lockedBalance={3000000000}
-                symbol="LSK"
-                url={chainLogo}
-              />
-            )}
+            data={tokens?.data ?? []}
+            error={error}
+            isLoading={isLoading}
+            renderItem={renderTokenCard}
           />
         </div>
       </div>
@@ -133,15 +157,4 @@ const Overview = ({ t, transactions, isWalletRoute, account, history, currentHei
   );
 };
 
-export default compose(
-  withRouter,
-  connect(mapStateToProps),
-  withData({
-    transactions: {
-      apiUtil: (network, { token, ...params }) => getTransactions({ network, params }),
-      defaultData: { data: [], meta: {} },
-      autoload: false,
-    },
-  }),
-  withTranslation()
-)(Overview);
+export default compose(withRouter)(Overview);

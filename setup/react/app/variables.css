@@ -192,6 +192,7 @@ or "warn/action" ineastd of "red/green"
   --color-tx-pending-status-bg: var(--color-active-tab);
   --color-tx-fail-status-text: var(--color-red);
   --color-tx-fail-status-bg: var(--color-red-transparent);
+  --color-token-card-shadow: #eaeaea5c;
 
   /*************************
         Box
@@ -290,4 +291,5 @@ or "warn/action" ineastd of "red/green"
   --color-tx-pending-status-bg: var(--color-cloud-burst);
   --color-tx-fail-status-text: var(--color-red);
   --color-tx-fail-status-bg: var(--color-red-semitransparent);
+  --color-token-card-shadow: transparent;
 }

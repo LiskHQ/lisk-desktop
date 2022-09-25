@@ -4,13 +4,12 @@ import Converter from 'src/modules/common/components/converter';
 import styles from './TokenRow.css';
 import { Token, Balance, LockedBalance } from './components';
 
-const TransactionEventRow = ({ data: token }) => {
+const TransactionEventRow = ({ data: token, address }) => {
   const {
     symbol: tokenSymbol,
     chainUrl,
     name: chainName,
     availableBalance,
-    fiatBalance,
     lockedBalances,
     // tokenID,
   } = token;
@@ -26,8 +25,8 @@ const TransactionEventRow = ({ data: token }) => {
         <Token chainName={chainName} chainLogo={chainUrl} tokenSymbol={tokenSymbol} />
         <Balance amount={fromRawLsk(+availableBalance + totalLockedBalance)} />
         <Balance amount={fromRawLsk(availableBalance)} />
-        <Balance amount={<Converter value={fromRawLsk(fiatBalance)} />} />
-        <LockedBalance amount={fromRawLsk(totalLockedBalance)} onClick={() => {}} />
+        <Balance amount={<Converter value={fromRawLsk(availableBalance)} />} />
+        <LockedBalance amount={fromRawLsk(totalLockedBalance)} address={address} />
       </div>
     </div>
   );
