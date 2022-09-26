@@ -334,6 +334,7 @@ module.exports = {
     '^.+\\.js$': 'babel-jest',
     '^.+\\.svg|png|jpg|jpeg$': '<rootDir>/tests/__mocks__/imageTransform.js',
   },
+  transformIgnorePatterns: ['node_modules/(?!(swiper|ssr-window|dom7)/)'],
   testURL: 'http://localhost',
   globals: {
     PRODUCTION: true,

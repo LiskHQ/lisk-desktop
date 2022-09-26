@@ -55,7 +55,7 @@
     }
 
     & > *:last-child {
-      justify-content: flex-end;
+      justify-content: center;
     }
 
     @media (--medium-viewport) {

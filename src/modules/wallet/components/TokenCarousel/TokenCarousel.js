@@ -17,6 +17,7 @@ const NavButton = React.forwardRef(({ isNext, onClick }, ref) => (
   </div>
 ));
 
+// eslint-disable-next-line max-statements
 const Carousel = ({ renderItem: RenderItem, data = [], isLoading, error, ...rest }) => {
   const nextRef = useRef(null);
   const prevRef = useRef(null);
@@ -30,13 +31,13 @@ const Carousel = ({ renderItem: RenderItem, data = [], isLoading, error, ...rest
   const isPrevVisible = useMemo(() => activeIndex > 0, [activeIndex]);
   const renderData = useMemo(() => (isLoading ? [...new Array(4).keys()] : data), [data]);
 
-  if (error)
+  if (error) {
     return (
       <div className={styles.errorWrapper}>
         <p>{error.message || error}</p>
       </div>
     );
-
+  }
   return (
     <div className={styles.wrapper}>
       <Swiper

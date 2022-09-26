@@ -11,19 +11,19 @@ const liskSymbol = 'LSK';
 const TokenCard = ({ lockedBalance, availableBalance, symbol, url, address }) => (
   <div className={styles.wrapper}>
     <div className={!lockedBalance || symbol.toUpperCase() !== liskSymbol ? styles.vCenter : ''}>
-      <img className={styles.tokenLogo} src={url} />
+      <img alt={symbol} className={styles.tokenLogo} src={url} />
     </div>
     <div>
       <p>
         <TokenAmount val={availableBalance} token={symbol} />
       </p>
       {symbol === 'LSK' && (
-        <p className={styles.fiatBalance}>
+        <p data-testid="fiat-balance" className={styles.fiatBalance}>
           <Converter value={fromRawLsk(availableBalance)} />
         </p>
       )}
       {lockedBalance && (
-        <DialogLink component="lockedBalance" data={{ address }} className={styles.lockedBalance}>
+        <DialogLink data-testid="locked-balance" component="lockedBalance" data={{ address }} className={styles.lockedBalance}>
           <Icon name="lock" /> <TokenAmount val={lockedBalance} token={symbol} />
         </DialogLink>
       )}

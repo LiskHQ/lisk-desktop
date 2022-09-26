@@ -95,6 +95,7 @@ const Transactions = ({
       />
       <BoxContent className={`${styles.content} transaction-results`}>
         <Table
+          showHeader
           data={pending.concat(transactions.data.data)}
           isLoading={transactions.isLoading}
           row={TransactionRow}
