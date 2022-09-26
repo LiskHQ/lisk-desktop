@@ -51,11 +51,11 @@ const Overview = ({ isWalletRoute, history }) => {
   const { data: account } = useAuth({ config: { params: { address } } });
   const { data: blocks } = useBlocks();
 
-  const delegate = useMemo(() => delegates?.data?.[0] || 0, [delegates]);
+  const delegate = useMemo(() => delegates?.data?.[0] || {}, [delegates]);
   const currentHeight = useMemo(() => blocks?.data?.[0]?.height, [blocks]);
 
-  const isBanned = delegate?.isBanned;
-  const pomHeights = delegate?.pomHeights;
+  const isBanned = delegate.isBanned;
+  const pomHeights = delegate.pomHeights;
   const { end } = pomHeights ? pomHeights[pomHeights.length - 1] : 0;
 
   const daysLeft = Math.ceil((end - currentHeight) / numOfBlockPerDay);
@@ -140,9 +140,9 @@ const Overview = ({ isWalletRoute, history }) => {
       <div main className={styles.tokenCarouselWrapper}>
         <div className={styles.contentWrapper}>
           <div className={`${styles.carouselHeader}`}>
-            <div>Tokens</div>
+            <div>{t('Tokens')}</div>
             <div>
-              <Link to="/wallet/tokens/all">View all tokens</Link>
+              <Link to="/wallet/tokens/all">{t('View all tokens')}</Link>
             </div>
           </div>
           <TokenCarousel

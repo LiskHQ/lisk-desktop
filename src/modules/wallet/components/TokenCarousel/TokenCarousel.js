@@ -72,7 +72,7 @@ const Carousel = ({ renderItem: RenderItem, data = [], isLoading, error, ...rest
             ref={prevRef}
             onClick={() => {
               swiperInstance.current?.slidePrev();
-              setSwiperIndex(swiperInstance.current.activeIndex);
+              setSwiperIndex(swiperInstance.current?.activeIndex);
             }}
           />
         )}
@@ -82,7 +82,7 @@ const Carousel = ({ renderItem: RenderItem, data = [], isLoading, error, ...rest
             ref={nextRef}
             onClick={() => {
               swiperInstance.current?.slideNext();
-              setSwiperIndex(swiperInstance.current.activeIndex);
+              setSwiperIndex(swiperInstance.current?.activeIndex);
             }}
           />
         )}
