@@ -1,0 +1,44 @@
+/* eslint-disable import/prefer-default-export */
+import { useEffect } from 'react';
+import { useDispatch } from 'react-redux';
+import {
+  API_VERSION,
+} from 'src/const/config';
+import { useCustomQuery } from 'src/modules/common/hooks';
+import actionTypes from '@network/store/actionTypes';
+
+/**
+ * Creates a custom hook for transaction fees query
+ *
+ * @param {object} configuration - the custom query configuration object
+ * @param {object} configuration.config - the query config
+ * @param {object} configuration.config.params - the query parameters
+ * @param {string} configuration.options - the query options
+ *
+ * @returns the query object
+ */
+export const useSchemas = ({ config: customConfig = {}, options } = { }) => {
+  const dispatch = useDispatch();
+  const config = {
+    url: `/api/${API_VERSION}/commands/parameters/schemas`,
+    method: 'get',
+    event: 'get.commands.parameters.schemas',
+    ...customConfig,
+  };
+  const schemas = useCustomQuery({
+    keys: ['schemas', customConfig.chainId],
+    config,
+    options,
+  });
+
+  useEffect(() => {
+    if (schemas.data) {
+      dispatch({
+        type: actionTypes.schemasRetrieved,
+        data: schemas.data.data,
+      });
+    }
+  }, [schemas.data]);
+
+  return schemas;
+};

@@ -4,6 +4,7 @@ const actionTypes = {
   networkStatusUpdated: 'NETWORK_STATUS_UPDATED',
   customNetworkStored: 'CUSTOM_NETWORK_STORED',
   customNetworkRemoved: 'CUSTOM_NETWORK_REMOVED',
+  schemasRetrieved: 'SCHEMAS_RETRIEVED',
 };
 
 export default actionTypes;

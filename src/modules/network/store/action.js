@@ -1,6 +1,5 @@
 import { tokenKeys } from '@token/fungible/consts/tokens';
 import { getNetworkConfig } from '@network/utils/api';
-import { getSchemas } from '@transaction/api';
 import actionTypes from './actionTypes';
 
 /**
@@ -13,12 +12,10 @@ import actionTypes from './actionTypes';
  */
 export const networkConfigSet = async (data) => {
   const promises = tokenKeys.map(token => getNetworkConfig(data, token));
-  const moduleCommandSchemas = await getSchemas({ baseUrl: data.address });
 
   const networks = await Promise.all(promises);
   const networksWithNames = tokenKeys.reduce((acc, token, index) =>
     ({ ...acc, [token]: networks[index] }), {});
-  networksWithNames.LSK.moduleCommandSchemas = moduleCommandSchemas;
   return {
     type: actionTypes.networkConfigSet,
     data: { name: data.name, networks: networksWithNames },

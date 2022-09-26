@@ -44,18 +44,21 @@ const useTransactionFeeCalculation = ({
   };
 
   useEffect(() => {
-    calculateTransactionFees({
-      token,
-      wallet,
-      network,
-      transaction,
-      selectedPriority,
-      numberOfSignatures: getNumberOfSignatures(wallet, transaction),
-    });
+    if (network.networks.LSK.moduleCommandSchemas) {
+      calculateTransactionFees({
+        token,
+        wallet,
+        network,
+        transaction,
+        selectedPriority,
+        numberOfSignatures: getNumberOfSignatures(wallet, transaction),
+      });
+    }
   }, [
     transaction.params,
     selectedPriority.selectedIndex,
     selectedPriority.value,
+    network,
   ]);
 
   return state;
