@@ -1,8 +1,5 @@
 import { TRANSACTIONS } from 'src/const/queries';
-import {
-  LIMIT as limit,
-  API_VERSION,
-} from 'src/const/config';
+import { LIMIT as limit, API_VERSION } from 'src/const/config';
 import { useCustomInfiniteQuery } from 'src/modules/common/hooks';
 
 /**
@@ -32,8 +29,8 @@ import { useCustomInfiniteQuery } from 'src/modules/common/hooks';
  * @param {string} [configuration.config.params.nonce] - filter transactions by nonce
  * @param {string} [configuration.config.params.moduleCommandID] - filter transactions
  * by moduleCommandID
- * @param {string} [configuration.config.params.moduleCommandName] - filter transactions
- * by moduleCommandName
+ * @param {string} [configuration.config.params.moduleCommand] - filter transactions
+ * by moduleCommand
  *
  * @returns the query object
  */

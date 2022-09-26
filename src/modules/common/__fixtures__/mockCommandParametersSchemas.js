@@ -3,7 +3,7 @@ export const mockCommandParametersSchemas = {
   data: [
     {
       moduleCommandID: '00000002:00000000',
-      moduleCommandName: 'token:transfer',
+      moduleCommand: 'token:transfer',
       schema: {
         $id: '/lisk/transferParams',
         title: 'Transfer transaction params',
@@ -37,7 +37,7 @@ export const mockCommandParametersSchemas = {
     },
     {
       moduleCommandID: '00000002:00000000',
-      moduleCommandName: 'token:crossChaintransfer',
+      moduleCommand: 'token:crossChaintransfer',
       schema: {
         $id: '/lisk/ccTransferParams',
         type: 'object',
@@ -87,7 +87,7 @@ export const mockCommandParametersSchemas = {
     },
     {
       moduleCommandID: '0000000c:00000000',
-      moduleCommandName: 'auth:registerMultisignatureGroup',
+      moduleCommand: 'auth:registerMultisignatureGroup',
       schema: {
         $id: '/auth/command/regMultisig',
         type: 'object',
@@ -126,7 +126,7 @@ export const mockCommandParametersSchemas = {
     },
     {
       moduleCommandID: '0000000d:00000000',
-      moduleCommandName: 'dpos:registerDelegate',
+      moduleCommand: 'dpos:registerDelegate',
       schema: {
         $id: '/dpos/command/registerDelegateParams',
         type: 'object',
@@ -161,7 +161,7 @@ export const mockCommandParametersSchemas = {
     },
     {
       moduleCommandID: '0000000d:00000003',
-      moduleCommandName: 'dpos:reportDelegateMisbehavior',
+      moduleCommand: 'dpos:reportDelegateMisbehavior',
       schema: {
         $id: '/dpos/command/reportDelegateMisbehaviorParams',
         type: 'object',
@@ -180,11 +180,11 @@ export const mockCommandParametersSchemas = {
     },
     {
       moduleCommandID: '0000000d:00000002',
-      moduleCommandName: 'dpos:unlockToken',
+      moduleCommand: 'dpos:unlockToken',
     },
     {
       moduleCommandID: '0000000d:00000004',
-      moduleCommandName: 'dpos:updateGeneratorKey',
+      moduleCommand: 'dpos:updateGeneratorKey',
       schema: {
         $id: '/dpos/command/updateGeneratorKeyParams',
         type: 'object',
@@ -201,7 +201,7 @@ export const mockCommandParametersSchemas = {
     },
     {
       moduleCommandID: '0000000d:00000001',
-      moduleCommandName: 'dpos:voteDelegate',
+      moduleCommand: 'dpos:voteDelegate',
       schema: {
         $id: '/dpos/command/voteDelegateParams',
         type: 'object',
@@ -234,7 +234,7 @@ export const mockCommandParametersSchemas = {
     },
     {
       moduleCommandID: '00008000:00000000',
-      moduleCommandName: 'legacy:reclaimLSK',
+      moduleCommand: 'legacy:reclaimLSK',
       schema: {
         $id: 'lisk/legacy/reclaim',
         type: 'object',
@@ -249,7 +249,7 @@ export const mockCommandParametersSchemas = {
     },
     {
       moduleCommandID: '00008000:00000001',
-      moduleCommandName: 'legacy:registerkeys',
+      moduleCommand: 'legacy:registerkeys',
       schema: {
         $id: 'lisk/legacy/registerKeys',
         type: 'object',

@@ -16,6 +16,8 @@ import {
   transactionToJSON,
   removeExcessSignatures,
   convertStringToBinary,
+  normalizeTransactionsStatisticsParams,
+  normalizeNumberRange,
 } from './transaction';
 
 const address = 'lskdxc4ta5j43jp9ro3f8zqbxta9fn6jwzjucw7yt';
@@ -499,6 +501,42 @@ describe('API: LSK Transactions', () => {
       expect(
         removeExcessSignatures(signatures, mandatoryKeysNo, hasSenderSignature),
       ).toEqual(expectSignatures);
+    });
+  });
+
+  describe('normalizeTransactionsStatisticsParams', () => {
+    it('returns expected API params', () => {
+      let expectedResult = { interval: 'day', limit: 7 };
+      expect(normalizeTransactionsStatisticsParams('week')).toEqual(expectedResult);
+      expectedResult = { interval: 'month', limit: 6 };
+      expect(normalizeTransactionsStatisticsParams('month')).toEqual(expectedResult);
+      expectedResult = { interval: 'month', limit: 12 };
+      expect(normalizeTransactionsStatisticsParams('year')).toEqual(expectedResult);
+    });
+  });
+
+  describe('normalizeNumberRange', () => {
+    it('returns distribution data by amount', () => {
+      const distributionData = {
+        "1_10": 1705,
+        "10_100": 371,
+        "100_1000": 287,
+        "1000_10000": 180,
+        "10000_100000": 53,
+        "100000_1000000": 5,
+        "0.1_1": 2258,
+        "0.01_0.1": 697,
+        "0.001_0.01": 306
+      }
+      const expectedResult = {
+        "0 - 10 LSK": 4966,
+        "11 - 100 LSK": 371,
+        "101 - 1000 LSK": 287,
+        "1001 - 10,000 LSK": 180,
+        "10,001 - 100,000 LSK": 53,
+        "100,001 - 1,000,000 LSK": 5
+      }
+      expect(normalizeNumberRange(distributionData)).toEqual(expectedResult);
     });
   });
 });
