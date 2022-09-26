@@ -1,4 +1,4 @@
-import React /* , { useState, useEffect }  */ from 'react';
+import React from 'react';
 import { useTranslation } from 'react-i18next';
 import Box from 'src/theme/box';
 import BoxContent from 'src/theme/box/content';

@@ -112,20 +112,20 @@ const Transactions = () => {
 
   return (
     <Box main className="transactions-box">
+      <StickyHeader
+        title={t('All transactions')}
+        filters={
+          <FilterDropdownButton
+            fields={innerFields}
+            filters={filters}
+            applyFilters={dropdownApplyFilters}
+            onTypeSelected={(moduleCommand) => {
+              setInnerFields(moduleCommand ? removeField(fields, moduleCommand) : fields);
+            }}
+          />
+        }
+      />
       <BoxContent className={`${styles.content} transaction-results`}>
-        <StickyHeader
-          title={t('All transactions')}
-          filters={
-            <FilterDropdownButton
-              fields={innerFields}
-              filters={filters}
-              applyFilters={dropdownApplyFilters}
-              onTypeSelected={(moduleCommand) => {
-                setInnerFields(moduleCommand ? removeField(fields, moduleCommand) : fields);
-              }}
-            />
-          }
-        />
         <FilterBar
           {...{ filters, formatters, t }}
           clearFilter={(filterKey) => {
