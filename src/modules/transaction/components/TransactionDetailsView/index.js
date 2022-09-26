@@ -48,14 +48,13 @@ const TransactionDetails = ({ location }) => {
       nonce,
       fee,
       block = {},
-      confirmations,
       executionStatus,
     } = transaction;
     const [txModule, txType] = splitModuleAndCommand(moduleCommandName);
 
     return [
       {
-        label: t('Transaction type'),
+        label: t('Type'),
         value: `${txModule} ${txType}`,
         isCapitalized: true,
       },
@@ -65,7 +64,7 @@ const TransactionDetails = ({ location }) => {
         type: 'address',
       },
       {
-        label: t('Transaction Fee'),
+        label: t('Transaction fee'),
         value: <TokenAmount val={fee} token="LSK" />, // @Todo: token value needs to be dynamic
       },
       {
@@ -75,13 +74,6 @@ const TransactionDetails = ({ location }) => {
       {
         label: t('Nonce'),
         value: nonce,
-      },
-      {
-        label: t('Confirmations'),
-        value: confirmations,
-        tooltip: t(
-          'Confirmations refer to the number of blocks added to the Lisk blockchain after a transaction has been submitted. The more confirmations registered, the more secure the transaction becomes.'
-        ),
       },
       {
         label: t('Status'),
@@ -97,7 +89,11 @@ const TransactionDetails = ({ location }) => {
         value: block.id,
       },
       {
-        label: t('Block Height'),
+        label: t('Block status'),
+        value: block.isFinal ? 'Final' : 'Not final',
+      },
+      {
+        label: t('Block height'),
         value: block.height,
       },
       {

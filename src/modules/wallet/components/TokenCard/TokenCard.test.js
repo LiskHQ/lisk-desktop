@@ -1,6 +1,6 @@
 import React from 'react';
 import { MemoryRouter } from 'react-router';
-import { fromRawLsk } from 'src/modules/token/fungible/utils/lsk';
+import { fromRawLsk } from '@token/fungible/utils/lsk';
 import { renderWithRouter } from 'src/utils/testHelpers';
 import { screen } from '@testing-library/react';
 import { mockTokensBalance } from '../../../token/fungible/__fixtures__';

@@ -46,7 +46,7 @@ const AllTokens = ({ history }) => {
   return (
     <Box className={styles.wrapper}>
       <BoxHeader>
-        <Heading title="All my tokens">
+        <Heading title={t("All tokens")}>
           <div className={styles.rightHeaderSection}>
             <Input
               icon={<Icon className={styles.searchIcon} name="searchActive" />}

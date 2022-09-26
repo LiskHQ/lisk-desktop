@@ -1,14 +1,13 @@
 import React from 'react';
 import grid from 'flexboxgrid/dist/flexboxgrid.css';
 import Icon from 'src/theme/Icon';
-// import { TertiaryButton } from 'src/theme/buttons';
 import DialogLink from 'src/theme/dialog/link';
 import styles from './TokenRow.css';
 import chainImage from '../../../../../setup/react/assets/images/LISK.png';
 
 export const Token = ({ tokenSymbol, chainName, chainLogo = chainImage }) => (
   <div className={`${styles.token} ${grid['col-xs-3']}`}>
-    <img src={chainLogo} />
+    <img alt={tokenSymbol} src={chainLogo} />
     <div>
       <p>{tokenSymbol}</p>
       <span>{chainName}</span>
@@ -16,8 +15,8 @@ export const Token = ({ tokenSymbol, chainName, chainLogo = chainImage }) => (
   </div>
 );
 
-export const Balance = ({ amount }) => (
-  <p className={`${grid['col-xs-2']} ${styles.balance}`}>{amount}</p>
+export const Balance = ({ amount, ...rest }) => (
+  <p className={`${grid['col-xs-2']} ${styles.balance}`} {...rest}>{amount}</p>
 );
 
 export const LockedBalance = ({ amount, address }) => (

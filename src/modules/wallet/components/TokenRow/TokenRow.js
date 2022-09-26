@@ -11,7 +11,6 @@ const TransactionEventRow = ({ data: token, address }) => {
     name: chainName,
     availableBalance,
     lockedBalances,
-    // tokenID,
   } = token;
 
   const totalLockedBalance = useMemo(
@@ -25,7 +24,7 @@ const TransactionEventRow = ({ data: token, address }) => {
         <Token chainName={chainName} chainLogo={chainUrl} tokenSymbol={tokenSymbol} />
         <Balance amount={fromRawLsk(+availableBalance + totalLockedBalance)} />
         <Balance amount={fromRawLsk(availableBalance)} />
-        <Balance amount={<Converter value={fromRawLsk(availableBalance)} />} />
+        <Balance data-testid="fiat-balance" amount={<Converter value={fromRawLsk(availableBalance)} />} />
         <LockedBalance amount={fromRawLsk(totalLockedBalance)} address={address} />
       </div>
     </div>
