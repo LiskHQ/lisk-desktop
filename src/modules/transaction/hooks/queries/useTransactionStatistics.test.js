@@ -18,7 +18,13 @@ describe('useTransactionStatistics hook', () => {
     const expectedResponse = {
       data: {
         ...mockTransactionStatistics.data,
-        timeline: mockTransactionStatistics.data.timeline?.slice(0, limit),
+        timeline: Object.keys(mockTransactionStatistics.data.timeline).reduce(
+          (acc, key) => ({
+            ...acc,
+            [key]: mockTransactionStatistics.data.timeline[key].slice(0, limit),
+          }),
+          {}
+        ),
       },
       meta: {
         ...mockTransactionStatistics.meta,
@@ -40,7 +46,13 @@ describe('useTransactionStatistics hook', () => {
     const expectedResponse = {
       data: {
         ...mockTransactionStatistics.data,
-        timeline: mockTransactionStatistics.data.timeline?.slice(0, limit * 2),
+        timeline: Object.keys(mockTransactionStatistics.data.timeline).reduce(
+          (acc, key) => ({
+            ...acc,
+            [key]: mockTransactionStatistics.data.timeline[key].slice(0, limit * 2),
+          }),
+          {}
+        ),
       },
       meta: {
         count: limit,
@@ -64,7 +76,13 @@ describe('useTransactionStatistics hook', () => {
     const expectedResponse = {
       data: {
         ...mockTransactionStatistics.data,
-        timeline: mockTransactionStatistics.data.timeline?.slice(0, defaultLimit),
+        timeline: Object.keys(mockTransactionStatistics.data.timeline).reduce(
+          (acc, key) => ({
+            ...acc,
+            [key]: mockTransactionStatistics.data.timeline[key].slice(0, defaultLimit),
+          }),
+          {}
+        ),
       },
       meta: {
         ...mockTransactionStatistics.meta,

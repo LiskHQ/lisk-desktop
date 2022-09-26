@@ -11,28 +11,18 @@ export const EventId = ({ hash }) => (
 );
 
 export const EventType = ({ action }) => (
-  <div className={`${grid['col-xs-1']} event-action ${styles.eventAction}`}>
-    {action}
-  </div>
+  <div className={`${grid['col-xs-3']} event-action ${styles.eventAction}`}>{action}</div>
 );
 
 export const EventModule = ({ module }) => (
-  <div className={`${grid['col-xs-3']} event-action ${styles.eventAction}`}>
-    {module}
-  </div>
+  <div className={`${grid['col-xs-4']} event-action ${styles.eventAction}`}>{module}</div>
 );
 
-export const EventIndex = ({ id }) => (
-  <div className={grid['col-xs-1']}>
-    {id}
-  </div>
-);
+export const EventIndex = ({ id }) => <div className={grid['col-xs-4']}>{id}</div>;
 
 export const CollapseToggle = ({ isCollapsed, onToggle }) => (
   <div className={`${styles.toggleButton} ${grid['col-xs-1']}`}>
-    <TertiaryButton
-      onClick={onToggle}
-    >
+    <TertiaryButton onClick={onToggle}>
       <Icon name="arrowRightInactive" className={isCollapsed ? styles.collapsed : ''} />
     </TertiaryButton>
   </div>

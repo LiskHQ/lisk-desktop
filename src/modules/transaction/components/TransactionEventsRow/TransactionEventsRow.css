@@ -10,7 +10,8 @@
   }
 
   & > .eventAction {
-    padding: 0px 8px;
+    padding: 8px;
+    text-transform: capitalize;
   }
 
   &::before {

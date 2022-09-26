@@ -43,7 +43,7 @@ export const Round = () => {
 export const Type = () => {
   const { data } = useContext(TransactionRowContext);
   const formatTransactionType = (txType) => txType.replace(':', ' ');
-  return <span className={styles.type}>{formatTransactionType(data.moduleCommandName)}</span>;
+  return <span className={styles.type}>{formatTransactionType(data.moduleCommand)}</span>;
 };
 
 export const DelegateDetails = () => {

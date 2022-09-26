@@ -14,7 +14,7 @@
 
   &.full,
   &.general {
-    grid-template-areas: "sender recipient date amount fee status";
+    grid-template-areas: "id sender height type date status";
 
     & > * {
       height: 100%;
@@ -28,8 +28,8 @@
     }
 
     & > *:nth-child(1) {
-      flex-basis: 17%;
-      max-width: 17%;
+      flex-basis: 25%;
+      max-width: 25%;
     }
 
     & > *:nth-child(2) {
@@ -44,13 +44,13 @@
     }
 
     & > *:nth-child(5) {
-      flex-basis: 16.66666667%;
-      max-width: 16.66666667%;
+      flex-basis: 8.33333333%;
+      max-width: 8.33333333%;
     }
 
     & > *:nth-child(6) {
-      flex-basis: 6.33333333%;
-      max-width: 6.33333333%;
+      flex-basis: 8.33333333%;
+      max-width: 8.33333333%;
       padding-right: 5px;
     }
 

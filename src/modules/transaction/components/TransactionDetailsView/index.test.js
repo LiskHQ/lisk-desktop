@@ -44,12 +44,10 @@ describe('TransactionDetailsView', () => {
 
   it('should display Transaction Events properly', async () => {
     expect(screen.getByText('Index')).toBeTruthy();
-    expect(screen.getByText('ID')).toBeTruthy();
     expect(screen.getByText('Module')).toBeTruthy();
     expect(screen.getByText('Type ID')).toBeTruthy();
 
     mockEvents.data.slice(0, 20).forEach((item) => {
-      expect(screen.queryAllByText(item.id)).toBeTruthy();
       expect(screen.queryAllByText(item.index)).toBeTruthy();
       expect(screen.queryAllByText(item.typeID)).toBeTruthy();
       expect(screen.queryAllByText(item.module)).toBeTruthy();
@@ -79,7 +77,7 @@ describe('TransactionDetailsView', () => {
     expect(screen.getByText('Block Height')).toBeTruthy();
     expect(screen.getByText('Parameters')).toBeTruthy();
 
-    const [moduleName, txType] = transaction.moduleCommandName.split(':');
+    const [moduleName, txType] = transaction.moduleCommand.split(':');
     expect(screen.getByText(`${moduleName} ${txType}`)).toBeTruthy();
     expect(screen.getByText(truncateAddress(transaction.sender.address))).toBeTruthy();
     expect(screen.getByText(transaction.sender.name)).toBeTruthy();
