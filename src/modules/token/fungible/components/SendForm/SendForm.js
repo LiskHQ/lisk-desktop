@@ -41,10 +41,9 @@ const getInitialRecipientChain = (
 const getInitialToken = (
   transactionData,
   initalTokenId,
-  tokens,
 ) => {
   const initalToken = initalTokenId
-    ? tokens.find(({ tokenID }) => tokenID === initalTokenId)
+    ? mockAppTokens.find(({ tokenID }) => tokenID === initalTokenId)
     : null;
   return transactionData?.token || initalToken || defaultToken;
 };
