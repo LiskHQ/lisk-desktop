@@ -1,3 +1,4 @@
+// istanbul ignore file
 import React, { useMemo, useRef, useState } from 'react';
 import Skeleton from 'src/modules/common/components/skeleton';
 import { TertiaryButton } from 'src/theme/buttons';
@@ -21,9 +22,12 @@ const NavButton = React.forwardRef(({ isNext, onClick }, ref) => (
 const Carousel = ({ renderItem: RenderItem, data = [], isLoading, error, ...rest }) => {
   const nextRef = useRef(null);
   const prevRef = useRef(null);
-  const swiperInstance = useRef(null);
-  const { virtualSize, width, activeIndex } = swiperInstance.current || {};
-  const [, setSwiperIndex] = useState(null);
+
+  const [activeIndex, setSwiperIndex] = useState(0);
+  const [swiperInstance, setSwiperInstance] = useState(null);
+
+  const { virtualSize, width } = swiperInstance || {};
+
   const isNextVisible = useMemo(
     () => Math.floor(virtualSize / width) > activeIndex + 1,
     [virtualSize, width, activeIndex]
@@ -46,14 +50,14 @@ const Carousel = ({ renderItem: RenderItem, data = [], isLoading, error, ...rest
         spaceBetween={20}
         modules={[Navigation]}
         onSlideChange={(ref) => {
-          swiperInstance.current = ref;
+          setSwiperInstance(ref);
           setSwiperIndex(ref.activeIndex);
         }}
         onSwiper={(swiperRef) => {
           swiperRef.params.navigation.prevEl = prevRef.current;
           swiperRef.params.navigation.nextEl = nextRef.current;
           swiperRef.navigation.update();
-          swiperInstance.current = swiperRef;
+          setSwiperInstance(swiperRef);
         }}
         {...rest}
       >
@@ -71,8 +75,8 @@ const Carousel = ({ renderItem: RenderItem, data = [], isLoading, error, ...rest
           <NavButton
             ref={prevRef}
             onClick={() => {
-              swiperInstance.current?.slidePrev();
-              setSwiperIndex(swiperInstance.current?.activeIndex);
+              swiperInstance?.slidePrev();
+              setSwiperIndex(swiperInstance?.activeIndex);
             }}
           />
         )}
@@ -81,8 +85,8 @@ const Carousel = ({ renderItem: RenderItem, data = [], isLoading, error, ...rest
             isNext
             ref={nextRef}
             onClick={() => {
-              swiperInstance.current?.slideNext();
-              setSwiperIndex(swiperInstance.current?.activeIndex);
+              swiperInstance?.slideNext();
+              setSwiperIndex(swiperInstance?.activeIndex);
             }}
           />
         )}

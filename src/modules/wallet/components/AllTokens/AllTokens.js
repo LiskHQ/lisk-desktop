@@ -30,7 +30,6 @@ const AllTokens = ({ history }) => {
 
   const [search, setSearch] = useState('');
   const { filters, setFilter } = useFilter({});
-
   const address = useMemo(() => searchAddress || currentAddress, [searchAddress, currentAddress]);
   const params = useMemo(() => ({ address, ...filters }), [address, filters]);
 
@@ -46,7 +45,7 @@ const AllTokens = ({ history }) => {
   return (
     <Box className={styles.wrapper}>
       <BoxHeader>
-        <Heading title={t("All tokens")}>
+        <Heading title={t('All tokens')}>
           <div className={styles.rightHeaderSection}>
             <Input
               icon={<Icon className={styles.searchIcon} name="searchActive" />}
@@ -54,6 +53,7 @@ const AllTokens = ({ history }) => {
               value={search}
               className={styles.filterTokens}
               size="l"
+              name="search-token"
               placeholder={t('Search Token')}
             />
             <div className={styles.actionButtons}>

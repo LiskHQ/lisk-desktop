@@ -1,10 +1,11 @@
-import { screen } from '@testing-library/react';
+import { fireEvent, screen, waitFor } from '@testing-library/react';
 import mockSavedAccounts from '@tests/fixtures/accounts';
 import { useTokensBalance } from '@token/fungible/hooks/queries';
 import { useBlocks } from '@block/hooks/queries/useBlocks';
 import { useDelegates } from '@dpos/validator/hooks/queries';
 import { useAuth } from '@auth/hooks/queries';
 import { fromRawLsk } from '@token/fungible/utils/lsk';
+import { useFilter } from 'src/modules/common/hooks';
 
 import { mockBlocks } from '@block/__fixtures__';
 import { mockDelegates } from '@dpos/validator/__fixtures__';
@@ -25,20 +26,22 @@ jest.mock('@account/hooks');
 jest.mock('@block/hooks/queries/useBlocks');
 jest.mock('@dpos/validator/hooks/queries');
 jest.mock('@auth/hooks/queries');
+jest.mock('src/modules/common/hooks');
 
 describe('AllTokens', () => {
   const history = { location: { search: '' } };
+
+  useTokensBalance.mockReturnValue({ data: mockTokensBalance, isLoading: false });
+  useAuth.mockReturnValue({ data: mockAuth });
+  useDelegates.mockReturnValue({ data: mockDelegates });
+  useBlocks.mockReturnValue({ data: mockBlocks });
 
   it('should display properly', async () => {
     const props = {
       history,
     };
 
-    useTokensBalance.mockReturnValue({ data: mockTokensBalance, isLoading: false });
-    useAuth.mockReturnValue({ data: mockAuth });
-    useDelegates.mockReturnValue({ data: mockDelegates });
-    useBlocks.mockReturnValue({ data: mockBlocks });
-
+    useFilter.mockReturnValue({ filters: {} });
     renderWithRouter(AllTokens, props);
 
     expect(screen.getByText('Request')).toBeTruthy();
@@ -68,6 +71,25 @@ describe('AllTokens', () => {
           )
       ).toBeTruthy();
       expect(screen.getByAltText(symbol)).toBeTruthy();
+    });
+  });
+
+  jest.useFakeTimers();
+
+  it('should display properly', async () => {
+    const setFilter = jest.fn();
+    const props = {
+      history,
+    };
+
+    useFilter.mockReturnValue({ filters: {}, setFilter });
+
+    renderWithRouter(AllTokens, props);
+
+    fireEvent.change(screen.getByTestId('search-token'), { target: { value: 'test' } });
+
+    await waitFor(() => {
+      expect(setFilter).toHaveBeenCalledWith('search', 'test');
     });
   });
 });

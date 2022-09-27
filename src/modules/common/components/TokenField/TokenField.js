@@ -12,11 +12,10 @@ export const TokenField = ({ styles, onChange, value }) => {
   const { data: { data: tokens = [] } = {}, isSuccess } = useTokensBalance();
 
   useEffect(() => {
-    if(tokens.length > 0) {
-      onChange(tokens[0])
+    if (tokens.length > 0) {
+      onChange(tokens[0]);
     }
-  }, [isSuccess])
-
+  }, [isSuccess]);
   return (
     <div className={`${styles.fieldGroup} token`}>
       <label className={`${styles.fieldLabel}`}>
@@ -26,8 +25,7 @@ export const TokenField = ({ styles, onChange, value }) => {
         <span className={styles.balance}>
           {t('Balance')}:&nbsp;&nbsp;
           <span>
-            <TokenAmount val={value.availableBalance} />
-            {` ${value.symbol}`}
+            <TokenAmount val={value.availableBalance} token={value.symbol} />
           </span>
         </span>
       )}

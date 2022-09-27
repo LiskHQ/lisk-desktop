@@ -23,7 +23,7 @@ import { MOCK_SERVICE_WORKER } from 'src/const/config';
 import './variables.css';
 import styles from './app.css';
 
-if (MOCK_SERVICE_WORKER) {
+if (MOCK_SERVICE_WORKER || true) {
   const { worker } = require('src/service/mock/runtime');
   worker.start({ onUnhandledRequest: 'bypass' });
 }

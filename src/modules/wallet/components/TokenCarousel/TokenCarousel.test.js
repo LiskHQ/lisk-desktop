@@ -52,4 +52,13 @@ describe('TokenCarousel', () => {
       expect(screen.queryByText(`render-item-${item}`)).toBeFalsy();
     });
   });
+
+  it('should display no carousel item', async () => {
+    const props = {
+      renderItem: ({ item }) => `render-item-${item}`,
+    };
+    wrapper = render(<TokenCarousel {...props} />);
+
+    expect(screen.queryByText('render-item-0')).toBeFalsy();
+  });
 });
