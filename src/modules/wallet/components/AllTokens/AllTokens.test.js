@@ -1,6 +1,4 @@
-import React from 'react';
-import { MemoryRouter } from 'react-router';
-import { render, screen } from '@testing-library/react';
+import { screen } from '@testing-library/react';
 import mockSavedAccounts from '@tests/fixtures/accounts';
 import { useTokensBalance } from '@token/fungible/hooks/queries';
 import { useBlocks } from '@block/hooks/queries/useBlocks';
@@ -12,9 +10,8 @@ import { mockBlocks } from '@block/__fixtures__';
 import { mockDelegates } from '@dpos/validator/__fixtures__';
 import { mockAuth } from '@auth/__fixtures__/mockAuth';
 import { mockTokensBalance } from '@token/fungible/__fixtures__/mockTokens';
-import FlashMessageHolder from 'src/theme/flashMessage/holder';
-import AllTokens from './AllTokens';
 import { renderWithRouter } from 'src/utils/testHelpers';
+import AllTokens from './AllTokens';
 import tableHeaderMap from './tableHeaderMap';
 
 const mockedCurrentAccount = mockSavedAccounts[0];
