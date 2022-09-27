@@ -12,7 +12,7 @@ import {
   selectTransactions,
 } from 'src/redux/selectors';
 import Transactions from '@transaction/components/Explorer';
-import Overview from '@wallet/components/overview/overview';
+import Overview from '@wallet/components/overview/overviewManager';
 
 import Box from 'src/theme/box';
 import BoxTabs from 'src/theme/tabs';

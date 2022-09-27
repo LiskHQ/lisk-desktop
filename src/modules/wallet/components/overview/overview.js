@@ -1,9 +1,7 @@
 /* eslint-disable max-statements */
 import React, { useCallback, useEffect, useMemo } from 'react';
 import { useSelector } from 'react-redux';
-import { withRouter } from 'react-router';
 import { Link } from 'react-router-dom';
-import { compose } from 'redux';
 import { useTranslation } from 'react-i18next';
 import grid from 'flexboxgrid/dist/flexboxgrid.css';
 import { useTokensBalance } from 'src/modules/token/fungible/hooks/queries';
@@ -117,7 +115,7 @@ const Overview = ({ isWalletRoute, history }) => {
         <WalletVisualWithAddress
           copy
           size={50}
-          address={address}
+          address={account?.meta?.address}
           accountName={account?.meta?.name}
           detailsClassName={styles.accountSummary}
           truncate={false}
@@ -157,4 +155,4 @@ const Overview = ({ isWalletRoute, history }) => {
   );
 };
 
-export default compose(withRouter)(Overview);
+export default Overview;
