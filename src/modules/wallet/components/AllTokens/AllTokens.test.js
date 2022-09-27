@@ -13,7 +13,9 @@ import { mockDelegates } from '@dpos/validator/__fixtures__';
 import { mockAuth } from '@auth/__fixtures__/mockAuth';
 import { mockTokensBalance } from '@token/fungible/__fixtures__/mockTokens';
 import FlashMessageHolder from 'src/theme/flashMessage/holder';
-import Overview from './overview';
+import AllTokens from './AllTokens';
+import { renderWithRouter } from 'src/utils/testHelpers';
+import tableHeaderMap from './tableHeaderMap';
 
 const mockedCurrentAccount = mockSavedAccounts[0];
 
@@ -27,7 +29,8 @@ jest.mock('@block/hooks/queries/useBlocks');
 jest.mock('@dpos/validator/hooks/queries');
 jest.mock('@auth/hooks/queries');
 
-describe('Overview', () => {
+describe('AllTokens', () => {
+  let wrapper;
   const history = { location: { search: '' } };
 
   it('should display properly', async () => {
@@ -40,28 +43,34 @@ describe('Overview', () => {
     useDelegates.mockReturnValue({ data: mockDelegates });
     useBlocks.mockReturnValue({ data: mockBlocks });
 
-    render(
-      <MemoryRouter>
-        <FlashMessageHolder />
-        <Overview {...props} />
-      </MemoryRouter>
-    );
+    wrapper = renderWithRouter(AllTokens, props);
 
     expect(screen.getByText('Request')).toBeTruthy();
     expect(screen.getByText('Send')).toBeTruthy();
-    expect(screen.getByText('Tokens')).toBeTruthy();
-    expect(screen.getByText(mockAuth.meta.address)).toBeTruthy();
-    expect(screen.getByText(mockAuth.meta.name)).toBeTruthy();
-    expect(screen.getByText('View all tokens')).toBeTruthy();
+    expect(screen.getByText('All tokens')).toBeTruthy();
+    expect(screen.getAllByAltText('arrowRightInactive')).toHaveLength(
+      mockTokensBalance.data.length
+    );
 
-    expect(screen.getAllByTestId('token-card')).toHaveLength(mockTokensBalance.data.length);
+    tableHeaderMap(jest.fn((t) => t)).forEach(({ title }) => {
+      expect(screen.getByText(title)).toBeTruthy();
+    });
 
-    mockTokensBalance.data.forEach(({ symbol, availableBalance, lockedBalances }) => {
+    mockTokensBalance.data.forEach(({ name, symbol, availableBalance, lockedBalances }, index) => {
       const lockedBalance = lockedBalances.reduce((total, { amount }) => +amount + total, 0);
 
-      expect(screen.queryByText(`${fromRawLsk(lockedBalance)} ${symbol.toUpperCase()}`));
-      expect(screen.queryByText(`${fromRawLsk(availableBalance)}`));
-      expect(screen.queryByText(`${fromRawLsk(+availableBalance + lockedBalance)}`));
+      expect(screen.getByText(name)).toBeTruthy();
+      expect(screen.getByText(fromRawLsk(lockedBalance))).toBeTruthy();
+      expect(screen.queryByText(fromRawLsk(availableBalance))).toBeTruthy();
+      expect(screen.queryByText(fromRawLsk(+availableBalance + lockedBalance))).toBeTruthy();
+
+      expect(
+        screen
+          .getAllByTestId('fiat-balance')
+          [index].innerHTML.match(
+            new RegExp(`~${fromRawLsk(availableBalance)}`.replace('.', '\\.'))
+          )
+      ).toBeTruthy();
       expect(screen.getByAltText(symbol)).toBeTruthy();
     });
   });
