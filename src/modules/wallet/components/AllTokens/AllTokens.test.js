@@ -27,7 +27,6 @@ jest.mock('@dpos/validator/hooks/queries');
 jest.mock('@auth/hooks/queries');
 
 describe('AllTokens', () => {
-  let wrapper;
   const history = { location: { search: '' } };
 
   it('should display properly', async () => {
@@ -40,7 +39,7 @@ describe('AllTokens', () => {
     useDelegates.mockReturnValue({ data: mockDelegates });
     useBlocks.mockReturnValue({ data: mockBlocks });
 
-    wrapper = renderWithRouter(AllTokens, props);
+    renderWithRouter(AllTokens, props);
 
     expect(screen.getByText('Request')).toBeTruthy();
     expect(screen.getByText('Send')).toBeTruthy();
