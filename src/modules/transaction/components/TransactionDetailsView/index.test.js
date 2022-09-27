@@ -65,16 +65,16 @@ describe('TransactionDetailsView', () => {
   });
 
   it('should display Transaction Events properly', async () => {
-    expect(screen.getByText('Transaction type')).toBeTruthy();
+    expect(screen.getByText('Type')).toBeTruthy();
     expect(screen.getByText('Sender')).toBeTruthy();
-    expect(screen.getByText('Transaction Fee')).toBeTruthy();
+    expect(screen.getByText('Transaction fee')).toBeTruthy();
     expect(screen.getByText('Date')).toBeTruthy();
     expect(screen.getByText('Nonce')).toBeTruthy();
-    expect(screen.getByText('Confirmations')).toBeTruthy();
+    expect(screen.getByText('Block status')).toBeTruthy();
     expect(screen.getByText('Status')).toBeTruthy();
     expect(screen.getByText('Transaction ID')).toBeTruthy();
     expect(screen.getByText('Block ID')).toBeTruthy();
-    expect(screen.getByText('Block Height')).toBeTruthy();
+    expect(screen.getByText('Block height')).toBeTruthy();
     expect(screen.getByText('Parameters')).toBeTruthy();
 
     const [moduleName, txType] = transaction.moduleCommand.split(':');
@@ -82,7 +82,7 @@ describe('TransactionDetailsView', () => {
     expect(screen.getByText(truncateAddress(transaction.sender.address))).toBeTruthy();
     expect(screen.getByText(transaction.sender.name)).toBeTruthy();
     expect(screen.getByText(transaction.nonce)).toBeTruthy();
-    expect(screen.getByText(transaction.confirmations)).toBeTruthy();
+    expect(screen.getByText(transaction.block.isFinal ? 'Final' : 'Not final')).toBeTruthy();
     expect(screen.getByText(transaction.executionStatus)).toBeTruthy();
     expect(screen.getByText(transaction.id)).toBeTruthy();
     expect(screen.getByText(transaction.block.id)).toBeTruthy();
