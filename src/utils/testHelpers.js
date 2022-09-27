@@ -170,3 +170,26 @@ export const renderWithRouterAndQueryClient = (Component, props) => {
     </Router>
   );
 };
+
+
+/**
+ * Mounts components that require to access Redux store and QueryClient
+ *
+ * @param {Class|Function} Component - A React component to be tested
+ * @param {Object} props - Set of props to be passed to the component
+ * @param {Object} store - A fake Redux store object
+ *
+ * @returns {Object} Mounted component
+ */
+ export const mountWithQueryAndProps = (Component, props, store) => {
+  const queryClient = new QueryClient();
+
+  return mount(
+    <Provider store={configureStore()(store)}>
+      <QueryClientProvider client={queryClient}>
+        <Component {...props} />
+      </QueryClientProvider>
+    </Provider>
+  );
+ }
+ 
