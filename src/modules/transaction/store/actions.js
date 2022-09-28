@@ -216,10 +216,12 @@ export const multisigTransactionSigned = ({
  * @param {object} data
  * @param {object} data.rawTransaction Transaction config required by Lisk Element
  */
-export const signatureSkipped = ({ rawTx }) => {
-  const binaryTx = desktopTxToElementsTx(rawTx, rawTx.moduleCommand);
+export const signatureSkipped = ({ rawTx }) => (dispatch, getState) => {
+  const { network } = getState();
+  const schema = network.networks.LSK.moduleCommandSchemas[rawTx.moduleCommand]
+  const binaryTx = desktopTxToElementsTx(rawTx, rawTx.moduleCommand, schema);
 
-  return ({
+  dispatch({
     type: actionTypes.signatureSkipped,
     data: binaryTx,
   });

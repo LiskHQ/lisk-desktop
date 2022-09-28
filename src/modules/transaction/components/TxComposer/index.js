@@ -22,7 +22,6 @@ const TxComposer = ({
   onConfirm,
   className,
   buttonTitle,
-  transactionData,
 }) => {
   const { t } = useTranslation();
   useSchemas();
@@ -59,7 +58,7 @@ const TxComposer = ({
 
 
   const minRequiredBalance = getMinRequiredBalance(transaction, status.fee);
-  const { recipientChain, sendingChain } = transactionData || {};
+  const { recipientChain, sendingChain } = transaction || {};
 
   const composedFees = {
     Transaction: getFeeStatus({ fee: status.fee, token, customFee }),
@@ -104,7 +103,16 @@ const TxComposer = ({
       <BoxFooter>
         <PrimaryButton
           className="confirm-btn"
-          onClick={confirmTxn}
+          onClick={() => onConfirm(
+            {
+              ...rawTx,
+              fee: toRawLsk(status.fee.value),
+              recipientChain,
+              sendingChain,
+              composedFees,
+            },
+            selectedPriority,
+          )}
           disabled={!transaction.isValid || minRequiredBalance > wallet.token?.balance}
         >
           {buttonTitle ?? t('Continue')}

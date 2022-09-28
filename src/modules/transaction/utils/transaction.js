@@ -1,5 +1,5 @@
 /* eslint-disable max-lines */
-import { transactions, cryptography } from '@liskhq/lisk-client';
+import { transactions, cryptography, codec } from '@liskhq/lisk-client';
 import { to } from 'await-to-js';
 import { MODULE_COMMANDS_NAME_MAP } from 'src/modules/transaction/configuration/moduleCommand';
 import { DEFAULT_NUMBER_OF_SIGNATURES } from '@transaction/configuration/transactions';
@@ -7,7 +7,6 @@ import { signatureCollectionStatus } from '@transaction/configuration/txStatus';
 import {
   extractAddressFromPublicKey,
   getBase32AddressFromAddress,
-  getAddressFromBase32Address,
   getKeys,
 } from '@wallet/utils/account';
 import { transformStringDateToUnixTimestamp } from 'src/utils/dateTime';
@@ -20,7 +19,7 @@ const {
   transfer, voteDelegate, registerDelegate, unlock, reclaim, registerMultisignatureGroup,
 } = MODULE_COMMANDS_NAME_MAP;
 
-const EMPTY_BUFFER = Buffer.from('');
+const EMPTY_BUFFER = Buffer.alloc(0);
 export const convertStringToBinary = value => Buffer.from(value, 'hex');
 export const convertBinaryToString = value => {
   if (value instanceof Uint8Array) {
@@ -101,54 +100,49 @@ const getDesktopTxAsset = (elementsParams, moduleCommand) => {
 const getElementsTxParams = (desktopParams, moduleCommand) => {
   switch (moduleCommand) {
     case transfer: {
+      console.log('desktopParams', desktopParams);
       const binaryAddress = desktopParams.recipient.address
-        ? getAddressFromBase32Address(desktopParams.recipient.address) : EMPTY_BUFFER;
-
+        ? desktopParams.recipient.address : EMPTY_BUFFER;
       return {
         recipientAddress: binaryAddress,
-        amount: BigInt(desktopParams.amount),
+        amount: desktopParams.amount,
         data: desktopParams.data,
+        // TODO: desktopParams.token.tokenID was returning invalid value
+        // We need remove the below value once we fix the desktopParams.token.tokenID 
+        tokenID: '0000000000000000',
       };
     }
 
     case registerDelegate: {
       return {
         username: desktopParams.username,
-        generatorPublicKey: convertStringToBinary(desktopParams.generatorPublicKey),
-        blsPublicKey: convertStringToBinary(desktopParams.blsPublicKey),
-        proofOfPossession: convertStringToBinary(desktopParams.proofOfPossession),
+        generatorPublicKey: desktopParams.generatorPublicKey,
+        blsPublicKey: desktopParams.blsPublicKey,
+        proofOfPossession: desktopParams.proofOfPossession,
       };
     }
 
     case voteDelegate: {
-      const votes = desktopParams.votes.map(vote => ({
-        amount: BigInt(vote.amount),
-        delegateAddress: getAddressFromBase32Address(vote.delegateAddress),
-      }));
-      return { votes };
+      return { votes: desktopParams.votes };
     }
 
     case unlock: {
       return {
-        unlockObjects: desktopParams.unlockObjects.map(unlockObject => ({
-          amount: BigInt(unlockObject.amount),
-          delegateAddress: getAddressFromBase32Address(unlockObject.delegateAddress),
-          unvoteHeight: unlockObject.unvoteHeight,
-        })),
+        unlockObjects: desktopParams.unlockObjects,
       };
     }
 
     case reclaim: {
       return {
-        amount: BigInt(desktopParams.amount),
+        amount: desktopParams.amount,
       };
     }
 
     case registerMultisignatureGroup: {
       return {
-        numberOfSignatures: Number(desktopParams.numberOfSignatures),
-        mandatoryKeys: desktopParams.mandatoryKeys.map(convertStringToBinary),
-        optionalKeys: desktopParams.optionalKeys.map(convertStringToBinary),
+        numberOfSignatures: desktopParams.numberOfSignatures,
+        mandatoryKeys: desktopParams.mandatoryKeys,
+        optionalKeys: desktopParams.optionalKeys,
       };
     }
 
@@ -246,7 +240,7 @@ const elementTxToDesktopTx = ({
  * @param {string} moduleCommand - moduleCommand
  * @returns the transaction object
  */
-const desktopTxToElementsTx = (tx, moduleCommand) => {
+const desktopTxToElementsTx = (tx, moduleCommand, schema) => {
   const [module, command] = splitModuleAndCommand(moduleCommand);
   const {
     sender, nonce, signatures = [], fee = 0, params,
@@ -261,7 +255,11 @@ const desktopTxToElementsTx = (tx, moduleCommand) => {
     signatures: signatures.map(convertStringToBinary),
   };
 
-  transaction.params = getElementsTxParams(params, moduleCommand);
+  // TODO: Ideally the parameter conversion from JSON to JS Object and vice versa can now be handled with code directly
+  // This below code is a patch, if we can construct the params JSON properly from each form then we can remove getElementsTxParams
+  // and directly use codec.codec.fromJSON to convert JSON to JS Object and codec.codec.toJSON to get JSON from JS Object
+  transaction.params = codec.codec.fromJSON(schema, getElementsTxParams(params, moduleCommand));
+  console.log('transaction', transaction);
   return transaction;
 };
 
@@ -433,57 +431,44 @@ export const removeExcessSignatures = (signatures, mandatoryKeysNo, hasSenderSig
  * @param {object} transaction
  * @returns {Promise} returns transaction id for a given transaction object
  */
-export const computeTransactionId = ({ transaction, network }) => {
-  const moduleCommand = joinModuleAndCommand({
-    module: transaction.module,
-    command: transaction.command,
-  });
-  const schema = network.networks.LSK.moduleCommandSchemas[moduleCommand];
+export const computeTransactionId = ({ transaction, schema }) => {
   const transactionBytes = transactions.getBytes(transaction, schema);
-  const id = cryptography.utils.hash(transactionBytes);
-
-  return id;
+  return  cryptography.utils.hash(transactionBytes);
 };
 
 const signMultisigUsingPrivateKey = (
-  schema, transaction, networkIdentifier, keys, privateKey,
-  isMultiSignatureRegistration, publicKey, rawTransaction,
+  schema, chainID, transaction, moduleCommand, wallet, privateKey,
 ) => {
+  const isMultisigReg = moduleCommand === registerMultisignatureGroup;
+  const keys = isMultisigReg
+    ? transaction.asset
+    : wallet.keys;
   /**
    * Use Lisk Element to Sign with Private Key
    */
   const signedTransaction = transactions.signMultiSignatureTransactionWithPrivateKey(
     transaction,
-    networkIdentifier,
+    Buffer.from(chainID, 'hex'),
     Buffer.from(privateKey, 'hex'),
     {
       optionalKeys: keys.optionalKeys.map(convertStringToBinary),
       mandatoryKeys: keys.mandatoryKeys.map(convertStringToBinary),
     },
     schema,
-    isMultiSignatureRegistration,
+    isMultisigReg,
   );
-
-  /**
-   * Define keys. Since we are creating the tx
-   * The keys only exist for MultisigReg
-   */
-  const transactionKeys = {
-    mandatoryKeys: rawTransaction.mandatoryKeys ?? [],
-    optionalKeys: rawTransaction.optionalKeys ?? [],
-  };
 
   /**
    * Check if the tx is multisigReg
    */
   const members = [
-    ...transactionKeys.mandatoryKeys.sort(),
-    ...transactionKeys.optionalKeys.sort(),
+    ...transaction.asset.mandatoryKeys.sort(),
+    ...transaction.asset.optionalKeys.sort(),
   ];
-  const senderIndex = members.indexOf(publicKey);
-  const isSender = rawTransaction.senderPublicKey === publicKey;
+  const senderIndex = members.indexOf(wallet.summary.publicKey);
+  const isSender = transaction.senderPublicKey === wallet.summary.publicKey;
 
-  if (isMultiSignatureRegistration && isSender && senderIndex > -1) {
+  if (isMultisigReg && isSender && senderIndex > -1) {
     const signatures = Array.from(Array(members.length + 1).keys()).map((index) => {
       if (signedTransaction.signatures[index]) return signedTransaction.signatures[index];
       if (index === senderIndex + 1) return signedTransaction.signatures[0];
@@ -495,10 +480,10 @@ const signMultisigUsingPrivateKey = (
   return signedTransaction;
 };
 
-const signUsingPrivateKey = (schema, transaction, networkIdentifier, privateKey) => {
+const signUsingPrivateKey = (schema, chainID, transaction, privateKey) => {
   const res = transactions.signTransactionWithPrivateKey(
     transaction,
-    networkIdentifier,
+    Buffer.from(chainID, 'hex'),
     Buffer.from(privateKey, 'hex'),
     schema,
   );
@@ -507,34 +492,29 @@ const signUsingPrivateKey = (schema, transaction, networkIdentifier, privateKey)
 
 // eslint-disable-next-line max-statements
 const signUsingHW = async (
-  schema, transaction, wallet, networkIdentifier, network, keys, rawTransaction,
-  isMultiSignatureRegistration,
+  schema, chainID, moduleCommand, transaction, wallet,
 ) => {
-  const signingBytes = transactions.getSigningBytes(transaction, schema);
+  const isMultisigReg = moduleCommand
+    === MODULE_COMMANDS_NAME_MAP.registerMultisignatureGroup
+  const transactionBytes = transactions.getSigningBytes(transaction, schema);
   const [error, signedTransaction] = await to(signTransactionByHW(
     wallet,
-    networkIdentifier,
+    chainID,
     transaction,
-    signingBytes,
-    keys,
+    transactionBytes,
   ));
   if (error) {
     throw error;
   }
 
-  const transactionKeys = {
-    mandatoryKeys: rawTransaction.mandatoryKeys ?? [],
-    optionalKeys: rawTransaction.optionalKeys ?? [],
-  };
-
   const members = [
-    ...transactionKeys.mandatoryKeys.sort(),
-    ...transactionKeys.optionalKeys.sort(),
+    ...transaction.asset.mandatoryKeys.sort(),
+    ...transaction.asset.optionalKeys.sort(),
   ];
   const senderIndex = members.indexOf(wallet.summary.publicKey);
-  const isSender = rawTransaction.senderPublicKey === wallet.summary.publicKey;
+  const isSender = transaction.senderPublicKey === wallet.summary.publicKey;
 
-  if (isMultiSignatureRegistration && isSender && senderIndex > -1) {
+  if (isMultisigReg && isSender && senderIndex > -1) {
     const signatures = Array.from(Array(members.length + 1).keys()).map((index) => {
       if (signedTransaction.signatures[index]) return signedTransaction.signatures[index];
       if (index === senderIndex + 1) return signedTransaction.signatures[0];
@@ -543,35 +523,31 @@ const signUsingHW = async (
     signedTransaction.signatures = signatures;
   }
 
-  const id = computeTransactionId({ transaction: signedTransaction, network });
+  const id = computeTransactionId({ transaction: signedTransaction, schema });
   return { ...signedTransaction, id };
 };
 
 export const sign = async (
-  wallet, schema, transaction, network, networkIdentifier,
-  isMultisignature, isMultiSignatureRegistration, keys, publicKey,
-  rawTransaction, privateKey,
+  wallet, schema, chainID, transaction,
+  moduleCommand, privateKey,
 ) => {
-  if (isMultiSignatureRegistration) {
-    keys.optionalKeys = transaction.params.optionalKeys;
-    keys.mandatoryKeys = transaction.params.mandatoryKeys;
-  }
+  const isMultisigReg = moduleCommand
+    === MODULE_COMMANDS_NAME_MAP.registerMultisignatureGroup
+
   // @todo rawTransaction is changed
   if (!isEmpty(wallet.hwInfo)) {
     const signedTx = await signUsingHW(
-      schema, transaction, wallet, networkIdentifier, network, keys, rawTransaction,
-      isMultiSignatureRegistration,
+      schema, chainID, moduleCommand, transaction, wallet,
     );
     return signedTx;
   }
-  if (isMultisignature || isMultiSignatureRegistration) {
+  if (wallet.summary.isMultisignature || isMultisigReg) {
     return signMultisigUsingPrivateKey(
-      schema, transaction, networkIdentifier, keys, privateKey,
-      isMultiSignatureRegistration, publicKey, rawTransaction,
+      schema, chainID, transaction, moduleCommand, wallet, privateKey,
     );
   }
 
-  return signUsingPrivateKey(schema, transaction, networkIdentifier, privateKey);
+  return signUsingPrivateKey(schema, chainID, transaction, privateKey);
 };
 
 /**

@@ -40,13 +40,13 @@ const getInitialRecipientChain = (
 };
 const getInitialToken = (
   transactionData,
-  initalTokenId,
+  initialTokenId,
 ) => {
   // @Todo: this should be refactored to use actual api data when the query hook has been integrated
-  const initalToken = initalTokenId
-    ? mockAppTokens.find(({ tokenID }) => tokenID === initalTokenId)
+  const initialToken = initialTokenId
+    ? mockAppTokens.find(({ tokenID }) => tokenID === initialTokenId)
     : null;
-  return transactionData?.token || initalToken || defaultToken;
+  return transactionData?.token || initialToken || defaultToken;
 };
 
 // eslint-disable-next-line max-statements
@@ -100,9 +100,8 @@ const SendForm = (props) => {
     setMaxAmount(status.maxAmount);
   }, []);
 
-  const onConfirm = useCallback((rawTx, trnxData, selectedPriority, fees) => {
+  const onConfirm = useCallback((rawTx, selectedPriority, fees) => {
     nextStep({
-      transactionData: trnxData,
       selectedPriority,
       rawTx,
       fees,
@@ -142,16 +141,10 @@ const SendForm = (props) => {
         address: recipient.value,
         title: recipient.title,
       },
+      token,
     },
-  };
-
-  const formData = {
     sendingChain,
     recipientChain,
-    token,
-    recipient,
-    amount: toRawLsk(amount.value),
-    data: reference.value,
   };
 
   return (
@@ -160,7 +153,6 @@ const SendForm = (props) => {
         onComposed={onComposed}
         onConfirm={onConfirm}
         transaction={transaction}
-        transactionData={formData}
         buttonTitle={t('Go to confirmation')}
       >
         <>

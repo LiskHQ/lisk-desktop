@@ -264,7 +264,7 @@ export const getTransactionFee = async ({
 
   const schema = network.networks.LSK.moduleCommandSchemas[moduleCommand];
   const maxCommandFee = MODULE_COMMANDS_MAP[moduleCommand].maxFee;
-  const transactionObject = desktopTxToElementsTx(rawTransaction, moduleCommand);
+  const transactionObject = desktopTxToElementsTx(rawTransaction, moduleCommand, schema);
   let numberOfEmptySignatures;
 
   if (moduleCommand === MODULE_COMMANDS_NAME_MAP.registerMultisignatureGroup) {
@@ -317,32 +317,19 @@ export const getTransactionFee = async ({
  * @returns {Promise} promise that resolves to a transaction or
  * rejects with an error
  */
-// eslint-disable-next-line max-statements
 export const createGenericTx = async ({
-  network,
+  schema,
+  chainID,
   wallet,
   transactionObject,
   privateKey,
-  publicKey,
 }) => {
-  const {
-    summary: { publicKey: reduxPublicKey, isMultisignature, privateKey: reduxPrivateKey },
-    keys,
-  } = wallet;
-  const networkIdentifier = Buffer.from(network.networks.LSK.networkIdentifier, 'hex');
-
   const { moduleCommand, ...rawTransaction } = transactionObject;
-  const transaction = desktopTxToElementsTx(rawTransaction, moduleCommand);
-
-  const schema = network.networks.LSK.moduleCommandSchemas[moduleCommand];
-
-  const isMultiSignatureRegistration = moduleCommand
-    === MODULE_COMMANDS_NAME_MAP.registerMultisignatureGroup;
+  const transaction = desktopTxToElementsTx(rawTransaction, moduleCommand, schema);
 
   const result = await sign(
-    wallet, schema, transaction, network, networkIdentifier,
-    isMultisignature, isMultiSignatureRegistration, keys, publicKey ?? reduxPublicKey,
-    rawTransaction, privateKey ?? reduxPrivateKey,
+    wallet, schema, chainID, transaction,
+    moduleCommand, privateKey,
   );
 
   return result;
@@ -370,7 +357,7 @@ export const broadcast = async ({ transaction, serviceUrl, network }) => {
   const response = await http({
     method: 'POST',
     baseUrl: serviceUrl,
-    path: '/api/v2/transactions',
+    path: '/api/v3/transactions',
     body,
   });
 

@@ -26,10 +26,7 @@ const TxSummarizer = ({
   footerClassName,
   rawTx,
   summaryInfo,
-  transaction,
-  transactionData,
   selectedPriority,
-  fees,
   hasCancel,
 }) => {
   const fee = !(wallet.summary.isMultisignature
@@ -63,8 +60,6 @@ const TxSummarizer = ({
         ) : null}
         {children}
         <TransactionInfo
-          transaction={transaction}
-          transactionData={transactionData}
           token={token}
           summaryInfo={summaryInfo}
           rawTx={rawTx}
@@ -98,7 +93,7 @@ const TxSummarizer = ({
                     <p className={styles.tooltipText}>{tooltip.children}</p>
                   </Tooltip>
                 </label>
-                <FeeSummarizer fees={fees} />
+                <FeeSummarizer fees={rawTx.composedFees} />
               </div>
             </div>
           </section>
