@@ -10,6 +10,7 @@ jest.mock('@token/fungible/hooks/queries');
 useTokensBalance.mockReturnValue({ data: mockTokensBalance, isLoading: false });
 
 describe('TokenField', () => {
+  let wrapper;
   const props = {
     onChange: jest.fn(),
     styles: {},
@@ -33,5 +34,16 @@ describe('TokenField', () => {
     await waitFor(() => {
       expect(props.onChange).toHaveBeenCalled();
     });
+  });
+
+  it('should render no tokens in the dropdown options', async () => {
+    useTokensBalance.mockReturnValue({ data: {}, isLoading: false });
+    wrapper = render(<TokenField {...props} />);
+    expect(screen.queryByText(mockTokensBalance.data[0].name)).toBeFalsy();
+
+    useTokensBalance.mockReturnValue({ isLoading: false, isSuccess: true });
+    wrapper.rerender(<TokenField {...props} />);
+
+    expect(screen.queryByText(mockTokensBalance.data[0].name)).toBeFalsy();
   });
 });
