@@ -10,8 +10,6 @@ jest.mock('@token/fungible/hooks/queries');
 useTokensBalance.mockReturnValue({ data: mockTokensBalance, isLoading: false });
 
 describe('TokenField', () => {
-  let wrapper;
-
   const props = {
     onChange: jest.fn(),
     styles: {},
