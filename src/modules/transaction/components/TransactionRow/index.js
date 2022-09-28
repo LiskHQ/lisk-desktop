@@ -18,6 +18,7 @@ const TransactionRow = ({
   avatarSize,
   activeToken,
   delegates,
+  address,
 }) => {
   const Layout = LayoutSchema[layout] || LayoutSchema.default;
 
@@ -34,6 +35,7 @@ const TransactionRow = ({
           activeToken,
           avatarSize,
           delegates,
+          address,
         }}
       >
         {Layout.components.map((Component, index) => (
