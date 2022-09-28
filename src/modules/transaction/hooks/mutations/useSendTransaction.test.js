@@ -10,7 +10,7 @@ describe('useSendTransaction hook', () => {
     act(() => {
       result.current.mutate();
     });
-    await waitFor(() => result.current.isLoading);
+    await waitFor(() => !result.current.isLoading);
     expect(result.current.isLoading).toBeTruthy();
     await waitFor(() => result.current.isSuccess);
     expect(result.current.isSuccess).toBeTruthy();
