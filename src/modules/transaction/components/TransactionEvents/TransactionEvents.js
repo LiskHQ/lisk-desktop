@@ -8,7 +8,7 @@ import TransactionEventRow from '../TransactionEventsRow';
 import header from './TransactionEventsHeaderMap';
 import styles from './TransactionEvents.css';
 
-const TransactionEvents = ({ blockId, address }) => {
+const TransactionEvents = ({ blockId, address, isWallet }) => {
   const { t } = useTranslation();
   const {
     data: transactionEvents,
@@ -31,10 +31,13 @@ const TransactionEvents = ({ blockId, address }) => {
           data={transactionEvents?.data || []}
           isLoading={isFetching}
           row={TransactionEventRow}
-          header={header(t)}
+          header={header(t, isWallet)}
           headerClassName={styles.tableHeader}
           canLoadMore={hasNextPage}
           loadData={fetchNextPage}
+          additionalRowProps={{
+            isWallet,
+          }}
           error={error}
           emptyState={{
             message: t('There are no transaction events'),

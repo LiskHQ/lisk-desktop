@@ -13,11 +13,11 @@ describe('TransactionEventsRow', () => {
     render(<TransactionEventsRow {...props} />);
 
     const {
-      id, index, typeID, module,
+      id, index, name, module,
     } = props.data;
     expect(screen.queryAllByText(id));
     expect(screen.queryAllByText(index));
-    expect(screen.queryAllByText(typeID));
+    expect(screen.queryAllByText(name));
     expect(screen.queryAllByText(module));
     expect(screen.queryByAltText('arrowRightInactive'));
 

@@ -39,11 +39,11 @@ describe('TransactionEvents', () => {
   it('should display properly', async () => {
     expect(screen.getByText('Index')).toBeTruthy();
     expect(screen.getByText('Module')).toBeTruthy();
-    expect(screen.getByText('Type ID')).toBeTruthy();
+    expect(screen.getByText('Name')).toBeTruthy();
 
     mockEvents.data.slice(0, 20).forEach((item) => {
       expect(screen.queryAllByText(item.index)).toBeTruthy();
-      expect(screen.queryAllByText(item.typeID)).toBeTruthy();
+      expect(screen.queryAllByText(item.name)).toBeTruthy();
       expect(screen.queryAllByText(item.module)).toBeTruthy();
     });
 
