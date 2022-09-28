@@ -77,7 +77,7 @@ const postCssLoader = {
       }),
       require('postcss-functions')({
         functions: {
-          rem: px => `${(px / 10)}rem`,
+          rem: (px) => `${px / 10}rem`,
         },
       }),
       require('postcss-for')({}),
@@ -130,11 +130,7 @@ const config = {
     new I18nScannerPlugin({
       translationFunctionNames: ['i18next.t', 'props.t', 'this.props.t', 't'],
       outputFilePath: 'src/locales/en/common.json',
-      files: [
-        './setup/i18n/**/*.js',
-        './src/**/*.js',
-        './app/src/**/*.js',
-      ],
+      files: ['./setup/i18n/**/*.js', './src/**/*.js', './app/src/**/*.js'],
     }),
     new ContextReplacementPlugin(/moment[/\\]locale$/, new RegExp(langRegex)),
   ],
@@ -149,7 +145,11 @@ const config = {
         use: [MiniCssExtractPluginLoader, reactToastifyLoader, postCssLoader],
       },
       {
-        test: /^((?!(styles\.head|ReactToastify)).)*\.css$/,
+        test: /swiper\.min\.css$/,
+        use: [MiniCssExtractPluginLoader, reactToastifyLoader],
+      },
+      {
+        test: /^((?!(styles\.head|ReactToastify|(swiper\.min))).)*\.css$/,
         use: [MiniCssExtractPluginLoader, cssLoader, postCssLoader],
       },
     ],

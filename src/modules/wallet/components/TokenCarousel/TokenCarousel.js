@@ -5,6 +5,8 @@ import { TertiaryButton } from 'src/theme/buttons';
 import Icon from 'src/theme/Icon';
 import { Navigation } from 'swiper';
 import { Swiper, SwiperSlide } from 'swiper/react';
+
+import 'swiper/css';
 import styles from './TokenCarousel.css';
 
 const NavButton = React.forwardRef(({ isNext, onClick }, ref) => (
