@@ -27,6 +27,13 @@ describe('Skeleton', () => {
     expect(skeleton.style).toHaveProperty('width', '50px');
   });
 
+  it('renders a rectangular skeleton if no theme is passed', () => {
+    wrapper = render(<Skeleton />);
+    const skeleton = wrapper.getAllByTestId('skeleton-wrapper')[0];
+    expect(skeleton.style).toHaveProperty('width', '50%');
+    expect(skeleton.style).toHaveProperty('height', '15px');
+  });
+
   it('renders a circular skeleton', () => {
     props.theme = 'circle';
     props.height = 40;
@@ -45,5 +52,15 @@ describe('Skeleton', () => {
     wrapper.rerender(<Skeleton {...props} />);
     expect(skeleton.style).toHaveProperty('width', '0px');
     expect(skeleton.style).toHaveProperty('height', '0px');
+  });
+
+  it('renders a circular and rectangular skeleton', () => {
+    const walletWithAddressProps = { ...props, theme: 'walletWithAddress' };
+    wrapper = render(<Skeleton {...walletWithAddressProps} />);
+    const skeleton = wrapper.getAllByTestId('skeleton-wrapper')[0];
+    const walletAddressSkeleton = wrapper.getAllByTestId('wallet-address-skeleton-wrapper')[0];
+    expect(skeleton.style).toHaveProperty('width', '50%');
+    expect(skeleton.style).toHaveProperty('height', '15px');
+    expect(walletAddressSkeleton).toBeInTheDocument();
   });
 });

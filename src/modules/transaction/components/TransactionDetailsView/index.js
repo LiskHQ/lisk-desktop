@@ -43,7 +43,7 @@ const TransactionDetails = ({ location }) => {
 
     const {
       id,
-      moduleCommandName,
+      moduleCommand,
       sender = {},
       nonce,
       fee,
@@ -51,7 +51,7 @@ const TransactionDetails = ({ location }) => {
       confirmations,
       executionStatus,
     } = transaction;
-    const [txModule, txType] = splitModuleAndCommand(moduleCommandName);
+    const [txModule, txType] = splitModuleAndCommand(moduleCommand);
 
     return [
       {
@@ -144,7 +144,7 @@ const TransactionDetails = ({ location }) => {
             <h1>{t('Events')}</h1>
           </BoxHeader>
           <BoxContent>
-            <TransactionEvents />
+            <TransactionEvents blockId={transaction.block?.id} />
           </BoxContent>
         </Box>
       </div>
