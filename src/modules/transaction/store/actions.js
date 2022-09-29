@@ -100,17 +100,17 @@ export const transactionDoubleSigned = () => async (dispatch, getState) => {
     enableCustomDerivationPath: false,
   });
   const activeWallet = selectActiveTokenAccount(state);
-  activeWallet.summary.publicKey = keyPair.publicKey;
-  activeWallet.summary.privateKey = keyPair.privateKey;
 
   const [signedTx, err] = await signMultisigTransaction(
-    elementTxToDesktopTx(transactions.signedTransaction),
     activeWallet,
     {
       data: activeWallet, // SenderAccount is the same of the double-signer
     },
+    elementTxToDesktopTx(transactions.signedTransaction),
     signatureCollectionStatus.partiallySigned,
-    network,
+    network.networks.LSK.moduleCommandSchemas[transactions.moduleCommand],
+    network.networks.LSK.chainID,
+    keyPair.privateKey,
   );
 
   if (!err) {
@@ -179,20 +179,20 @@ export const transactionBroadcasted = transaction =>
  * @param {object} data.sender.data - Sender account info in Lisk API schema
  */
 export const multisigTransactionSigned = ({
-  rawTx, sender, privateKey, publicKey,
+  rawTx, sender, privateKey,
 }) => async (dispatch, getState) => {
   const state = getState();
   const activeWallet = selectActiveTokenAccount(state);
   const txStatus = getTransactionSignatureStatus(sender.data, rawTx);
 
   const [tx, error] = await signMultisigTransaction(
-    rawTx,
     activeWallet,
     sender,
+    rawTx,
     txStatus,
-    state.network,
+    state.network.networks.LSK.moduleCommandSchemas[rawTx.moduleCommand],
+    state.network.networks.LSK.chainID,
     privateKey,
-    publicKey,
   );
 
   if (!error) {

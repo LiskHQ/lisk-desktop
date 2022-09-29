@@ -53,7 +53,6 @@ const TxSignatureCollector = ({
           rawTx,
           sender,
           privateKey,
-          publicKey,
         });
       }
     } else {

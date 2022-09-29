@@ -564,24 +564,23 @@ export const sign = async (
  */
 // eslint-disable-next-line max-statements
 const signMultisigTransaction = async (
-  transaction,
-  account,
+  wallet,
   senderAccount,
+  transaction,
   txStatus,
   network,
   privateKey,
-  publicKey,
+  chainID,
 ) => {
   /**
    * Define keys.
    * Since the sender is different, the keys are defined based on that
    */
-  const isGroupRegistration = transaction.moduleCommand === registerMultisignatureGroup;
+  const isMultisigReg = transaction.moduleCommand === registerMultisignatureGroup;
   const schema = network.networks.LSK.moduleCommandSchemas[transaction.moduleCommand];
-  const networkIdentifier = Buffer.from(network.networks.LSK.networkIdentifier, 'hex');
 
   const { mandatoryKeys, optionalKeys } = getKeys({
-    senderAccount: senderAccount.data, transaction, isGroupRegistration,
+    senderAccount: senderAccount.data, transaction, isMultisigReg,
   });
   const keys = {
     mandatoryKeys: mandatoryKeys.map(key => Buffer.from(key, 'hex')),
@@ -598,15 +597,14 @@ const signMultisigTransaction = async (
    */
   if (txStatus === signatureCollectionStatus.occupiedByOptionals) {
     transactionObject.signatures = removeExcessSignatures(
-      transactionObject.signatures, keys.mandatoryKeys.length, isGroupRegistration,
+      transactionObject.signatures, keys.mandatoryKeys.length, isMultisigReg,
     );
   }
 
   try {
     const result = await sign(
-      account, schema, transactionObject, network, networkIdentifier,
-      !!senderAccount.data, isGroupRegistration, keys, privateKey ?? account.summary.publicKey,
-      transaction, publicKey ?? account.summary.privateKey,
+      wallet, schema, chainID, transactionObject,
+      transaction.moduleCommand, privateKey,
     );
     return [result];
   } catch (e) {
