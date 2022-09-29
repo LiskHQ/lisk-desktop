@@ -1,6 +1,6 @@
 import { getTransactionBaseFees, getTransactionFee } from '@transaction/api';
-import { mountWithRouter } from 'src/utils/testHelpers';
 import { mockTokensBalance } from '@token/fungible/__fixtures__/mockTokens';
+import { mountWithRouterAndQueryClient } from 'src/utils/testHelpers';
 import mockManagedApplications from '@tests/fixtures/blockchainApplicationsManage';
 import mockSavedAccounts from '@tests/fixtures/accounts';
 import {
@@ -85,7 +85,7 @@ const props = {
 
 describe('Send', () => {
   it('should render properly getting data from URL', () => {
-    const wrapper = mountWithRouter(Send, props);
+    const wrapper = mountWithRouterAndQueryClient(Send, props);
     expect(wrapper).toContainMatchingElement('Dialog');
     expect(wrapper).toContainMatchingElement('MultiStep');
     expect(wrapper).toContainMatchingElement('SendForm');
@@ -97,7 +97,7 @@ describe('Send', () => {
     const newProps = { ...props };
     newProps.history.location.path = '';
     newProps.history.location.search = '';
-    const wrapper = mountWithRouter(Send, newProps);
+    const wrapper = mountWithRouterAndQueryClient(Send, newProps);
     wrapper.update();
     expect(wrapper).toContainMatchingElement('Dialog');
     expect(wrapper).toContainMatchingElement('MultiStep');
