@@ -1,6 +1,5 @@
-import React from 'react';
-import { mount } from 'enzyme';
 import { act } from 'react-dom/test-utils';
+import { mountWithQueryClient } from 'src/utils/testHelpers';
 
 import { getTransactionBaseFees, getTransactionFee } from '@transaction/api';
 import useTransactionFeeCalculation from '@transaction/hooks/useTransactionFeeCalculation';
@@ -42,7 +41,7 @@ describe('Multisignature editor component', () => {
   };
 
   beforeEach(() => {
-    wrapper = mount(<Form {...props} />);
+    wrapper = mountWithQueryClient(Form, props);
   });
 
   it('renders properly', () => {
@@ -56,10 +55,11 @@ describe('Multisignature editor component', () => {
   });
 
   it('renders properly when prevState is defined', () => {
-    wrapper = mount(
-      <Form
-        {...props}
-        prevState={{
+    wrapper = mountWithQueryClient(
+      Form,
+      {
+        ...props,
+        prevState: {
           numberOfSignatures: 3,
           rawTx: {
             params: {
@@ -67,8 +67,8 @@ describe('Multisignature editor component', () => {
               optionalKeys: [{}, {}, {}],
             },
           },
-        }}
-      />,
+        }
+      }
     );
     expect(wrapper.find('.multisignature-editor-input').at(0).props().value).toEqual(3);
     expect(wrapper).toContainMatchingElements(5, 'MemberField');
@@ -130,7 +130,7 @@ describe('Multisignature editor component', () => {
         },
       },
     };
-    wrapper = mount(<Form {...propsWithPrev} />);
+    wrapper = mountWithQueryClient(Form, propsWithPrev);
 
     expect(wrapper.find('MemberField')).toHaveLength(3);
   });

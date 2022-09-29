@@ -7,6 +7,7 @@ import {
   selectActiveToken,
   selectActiveTokenAccount,
 } from 'src/redux/selectors';
+import { useSchemas } from '@transaction/hooks/queries/useSchemas';
 import Box from 'src/theme/box';
 import BoxFooter from 'src/theme/box/footer';
 import TransactionPriority from '@transaction/components/TransactionPriority';
@@ -20,7 +21,7 @@ const TxComposer = ({
   children, transaction, onComposed, onConfirm, className, buttonTitle, transactionData,
 }) => {
   const { t } = useTranslation();
-  const network = useSelector(state => state.network);
+  useSchemas();
   const wallet = useSelector(selectActiveTokenAccount);
   const token = useSelector(selectActiveToken);
   const [customFee, setCustomFee] = useState();
@@ -36,10 +37,9 @@ const TxComposer = ({
     params: transaction.params,
   };
   const status = useTransactionFeeCalculation({
-    network,
-    selectedPriority,
     token,
     wallet,
+    selectedPriority,
     priorityOptions,
     transaction: rawTx,
   });
