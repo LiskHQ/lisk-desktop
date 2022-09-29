@@ -192,4 +192,3 @@ export const renderWithRouterAndQueryClient = (Component, props) => {
     </Provider>
   );
  }
- 

@@ -21,7 +21,7 @@ const TxComposer = ({
   children, transaction, onComposed, onConfirm, className, buttonTitle, transactionData,
 }) => {
   const { t } = useTranslation();
-  useSchemas({ chainId: 1 });
+  useSchemas();
   const wallet = useSelector(selectActiveTokenAccount);
   const token = useSelector(selectActiveToken);
   const [customFee, setCustomFee] = useState();

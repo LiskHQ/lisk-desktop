@@ -44,6 +44,7 @@ const useTransactionFeeCalculation = ({
   };
 
   useEffect(() => {
+    // istanbul ignore else
     if (network.networks.LSK.moduleCommandSchemas) {
       calculateTransactionFees({
         token,

@@ -8,7 +8,9 @@ import { useCustomQuery } from 'src/modules/common/hooks';
 import actionTypes from '@network/store/actionTypes';
 
 /**
- * Creates a custom hook for transaction fees query
+ * Custom React hook for retrieving schemas from the network
+ * This hook can be called at the time of creating or signing
+ * a transaction
  *
  * @param {object} configuration - the custom query configuration object
  * @param {object} configuration.config - the query config
@@ -26,7 +28,7 @@ export const useSchemas = ({ config: customConfig = {}, options } = { }) => {
     ...customConfig,
   };
   const schemas = useCustomQuery({
-    keys: ['schemas', customConfig.chainId],
+    keys: ['schemas', customConfig.serviceURL],
     config,
     options,
   });
