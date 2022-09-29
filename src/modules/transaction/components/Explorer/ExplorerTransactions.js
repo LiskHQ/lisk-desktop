@@ -62,6 +62,7 @@ const Transactions = ({ activeToken, address }) => {
             currentBlockHeight,
             activeToken,
             layout: 'hosted',
+            isWallet: true,
             address,
           }}
           header={header(t, activeToken, toggleSort)}

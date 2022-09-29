@@ -54,7 +54,7 @@ const AllTokens = ({ history }) => {
               className={styles.filterTokens}
               size="l"
               name="search-token"
-              placeholder={t('Search Token')}
+              placeholder={t('Search token')}
             />
             <div className={styles.actionButtons}>
               <DialogLink component="request">

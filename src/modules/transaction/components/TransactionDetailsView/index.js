@@ -41,15 +41,7 @@ const TransactionDetails = ({ location }) => {
   const transactionDetailList = useMemo(() => {
     if (error || isEmpty(transactions?.data)) return [];
 
-    const {
-      id,
-      moduleCommand,
-      sender = {},
-      nonce,
-      fee,
-      block = {},
-      executionStatus,
-    } = transaction;
+    const { id, moduleCommand, sender = {}, nonce, fee, block = {}, executionStatus } = transaction;
     const [txModule, txType] = splitModuleAndCommand(moduleCommand);
 
     return [
@@ -64,7 +56,7 @@ const TransactionDetails = ({ location }) => {
         type: 'address',
       },
       {
-        label: t('Transaction fee'),
+        label: t('Fee'),
         value: <TokenAmount val={fee} token="LSK" />, // @Todo: token value needs to be dynamic
       },
       {
@@ -81,7 +73,7 @@ const TransactionDetails = ({ location }) => {
         type: 'status',
       },
       {
-        label: t('Transaction ID'),
+        label: t('ID'),
         value: id,
       },
       {

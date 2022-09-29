@@ -14,7 +14,7 @@ const walletEventHeaderMap = (t) => [
     classList: grid['col-xs-3'],
   },
   {
-    title: t('Type ID'),
+    title: t('Name'),
     classList: grid['col-xs-2'],
   },
 ];
@@ -29,7 +29,7 @@ const defaultEventHeaderMap = (t) => [
     classList: grid['col-xs-4'],
   },
   {
-    title: t('Type ID'),
+    title: t('Name'),
     classList: grid['col-xs-3'],
   },
 ];

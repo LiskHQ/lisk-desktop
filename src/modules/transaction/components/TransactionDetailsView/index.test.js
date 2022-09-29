@@ -45,7 +45,7 @@ describe('TransactionDetailsView', () => {
   it('should display Transaction Events properly', async () => {
     expect(screen.getByText('Index')).toBeTruthy();
     expect(screen.getByText('Module')).toBeTruthy();
-    expect(screen.getByText('Type ID')).toBeTruthy();
+    expect(screen.getByText('Name')).toBeTruthy();
 
     mockEvents.data.slice(0, 20).forEach((item) => {
       expect(screen.queryAllByText(item.index)).toBeTruthy();
@@ -67,12 +67,12 @@ describe('TransactionDetailsView', () => {
   it('should display Transaction Events properly', async () => {
     expect(screen.getByText('Type')).toBeTruthy();
     expect(screen.getByText('Sender')).toBeTruthy();
-    expect(screen.getByText('Transaction fee')).toBeTruthy();
+    expect(screen.getByText('Fee')).toBeTruthy();
     expect(screen.getByText('Date')).toBeTruthy();
     expect(screen.getByText('Nonce')).toBeTruthy();
     expect(screen.getByText('Block status')).toBeTruthy();
     expect(screen.getByText('Status')).toBeTruthy();
-    expect(screen.getByText('Transaction ID')).toBeTruthy();
+    expect(screen.getByText('ID')).toBeTruthy();
     expect(screen.getByText('Block ID')).toBeTruthy();
     expect(screen.getByText('Block height')).toBeTruthy();
     expect(screen.getByText('Parameters')).toBeTruthy();

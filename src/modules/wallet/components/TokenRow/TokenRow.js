@@ -4,7 +4,7 @@ import Converter from 'src/modules/common/components/converter';
 import styles from './TokenRow.css';
 import { Token, Balance, LockedBalance } from './components';
 
-const TransactionEventRow = ({ data: token, address }) => {
+const TokenRow = ({ data: token, address }) => {
   const {
     symbol: tokenSymbol,
     chainUrl,
@@ -24,11 +24,14 @@ const TransactionEventRow = ({ data: token, address }) => {
         <Token chainName={chainName} chainLogo={chainUrl} tokenSymbol={tokenSymbol} />
         <Balance amount={fromRawLsk(+availableBalance + totalLockedBalance)} />
         <Balance amount={fromRawLsk(availableBalance)} />
-        <Balance data-testid="fiat-balance" amount={<Converter value={fromRawLsk(availableBalance)} />} />
+        <Balance
+          data-testid="fiat-balance"
+          amount={<Converter value={fromRawLsk(availableBalance)} />}
+        />
         <LockedBalance amount={fromRawLsk(totalLockedBalance)} address={address} />
       </div>
     </div>
   );
 };
 
-export default TransactionEventRow;
+export default TokenRow;

@@ -4,7 +4,7 @@ import React, {
 import Piwik from 'src/utils/piwik';
 import { MODULE_COMMANDS_NAME_MAP } from 'src/modules/transaction/configuration/moduleCommand';
 import AmountField from 'src/modules/common/components/amountField';
-import { TokenField } from 'src/modules/common/components/TokenField';
+import { TokenSelector } from 'src/modules/common/components/TokenSelector';
 import { mockAppTokens } from '@tests/fixtures/token';
 import Icon from 'src/theme/Icon';
 import { toRawLsk, fromRawLsk } from '@token/fungible/utils/lsk';
@@ -42,6 +42,7 @@ const getInitialToken = (
   transactionData,
   initalTokenId,
 ) => {
+  // @Todo: this should be refactored to use actual api data when the query hook has been integrated
   const initalToken = initalTokenId
     ? mockAppTokens.find(({ tokenID }) => tokenID === initalTokenId)
     : null;
@@ -214,7 +215,7 @@ const SendForm = (props) => {
                 </MenuSelect>
               </div>
             </div>
-            <TokenField
+            <TokenSelector
               styles={styles}
               value={token}
               tokens={mockAppTokens}

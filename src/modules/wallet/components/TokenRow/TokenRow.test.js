@@ -2,14 +2,14 @@ import { renderWithRouter } from 'src/utils/testHelpers';
 import { screen } from '@testing-library/react';
 import { fromRawLsk } from '@token/fungible/utils/lsk';
 import { mockTokensBalance } from '../../../token/fungible/__fixtures__/mockTokens';
-import TransactionEventsRow from './TokenRow';
+import TokenRow from './TokenRow';
 
 describe('TokenRow', () => {
   it('should display properly', async () => {
     const props = {
       data: mockTokensBalance.data[0],
     };
-    renderWithRouter(TransactionEventsRow, props);
+    renderWithRouter(TokenRow, props);
 
     const { symbol, name, availableBalance, lockedBalances } = props.data;
     const lockedBalance = lockedBalances.reduce((total, { amount }) => +amount + total, 0);

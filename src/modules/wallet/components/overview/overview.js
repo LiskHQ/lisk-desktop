@@ -21,6 +21,7 @@ import { useAuth } from '@auth/hooks/queries';
 import styles from './overview.css';
 import chainLogo from '../../../../../setup/react/assets/images/LISK.png';
 
+// @Todo: this should be remove as sdk would provide this data
 // 6: blocks per minute, 60: minutes, 24: hours
 const numOfBlockPerDay = 24 * 60 * 6;
 

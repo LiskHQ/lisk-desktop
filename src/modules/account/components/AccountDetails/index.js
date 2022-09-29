@@ -62,7 +62,6 @@ const AccountDetails = ({ history }) => {
         isWalletRoute
         activeToken={activeToken}
         discreetMode={discreetMode}
-        account={{}}
         transactions={confirmed}
       />
       <Box>

@@ -20,13 +20,15 @@ import TransactionRowContext from '../../context/transactionRowContext';
 import TransactionTypeFigure from '../TransactionTypeFigure';
 import TransactionAmount from '../TransactionAmount';
 
-export const ID = ({ address }) => {
+export const ID = ({ address, isWallet }) => {
   const { data } = useContext(TransactionRowContext);
   return (
     <span className={styles.txId}>
-      <Icon
-        name={data.sender.address === address ? 'sentTransactionIcon' : 'receivedTransactionIcon'}
-      />
+      {isWallet && (
+        <Icon
+          name={data.sender.address === address ? 'sentTransactionIcon' : 'receivedTransactionIcon'}
+        />
+      )}
       {truncateTransactionID(data.id)}
     </span>
   );

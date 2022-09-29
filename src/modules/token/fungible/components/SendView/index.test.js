@@ -58,17 +58,17 @@ const props = {
     LSK: [
       {
         title: 'ABC',
-        address: '12345L',
+        address: 'lskhbxua8tpdckcewntcttfqfo4rbatampo2dgrno',
         balance: 10,
       },
       {
         title: 'FRG',
-        address: '12375L',
+        address: 'lskhbxua8tpdckcewntcttfqfo4rbatampo2dgrno',
         balance: 15,
       },
       {
         title: 'KTG',
-        address: '12395L',
+        address: 'lskhbxua8tpdckcewntcttfqfo4rbatampo2dgrno',
         balance: 7,
       },
     ],

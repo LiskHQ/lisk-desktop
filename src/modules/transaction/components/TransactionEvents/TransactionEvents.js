@@ -20,7 +20,7 @@ const getFilterFields = (t) => [
   },
   {
     label: t('Transaction ID'),
-    placeholder: t('transactionId'),
+    placeholder: t('transactionID'),
     name: 'transactionID',
     type: 'text',
   },
