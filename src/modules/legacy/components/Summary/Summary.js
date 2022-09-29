@@ -75,7 +75,7 @@ const Summary = ({
 Summary.whyDidYouRender = true;
 
 // istanbul ignore next
-const areEqual = (prevProps, nextProps) => (
+const areEqual = (prevProps, nextProps) => ( // @todo account has multiple balance now
   prevProps.wallet.summary.balance === nextProps.wallet.summary.balance
 );
 

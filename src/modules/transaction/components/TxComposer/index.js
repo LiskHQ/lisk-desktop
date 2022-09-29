@@ -12,24 +12,34 @@ import Box from 'src/theme/box';
 import BoxFooter from 'src/theme/box/footer';
 import TransactionPriority from '@transaction/components/TransactionPriority';
 import { toRawLsk } from '@token/fungible/utils/lsk';
+import { useDeprecatedAccount } from '@account/hooks/useDeprecatedAccount';
 import { PrimaryButton } from 'src/theme/buttons';
 import Feedback, { getMinRequiredBalance } from './Feedback';
 import { getFeeStatus } from '../../utils/helpers';
 
 // eslint-disable-next-line max-statements
 const TxComposer = ({
-  children, transaction, onComposed, onConfirm, className, buttonTitle, transactionData,
+  children,
+  transaction,
+  onComposed,
+  onConfirm,
+  className,
+  buttonTitle,
+  transactionData,
 }) => {
   const { t } = useTranslation();
   useSchemas();
+  useDeprecatedAccount();
   const wallet = useSelector(selectActiveTokenAccount);
   const token = useSelector(selectActiveToken);
   const [customFee, setCustomFee] = useState();
   const [
-    selectedPriority, selectTransactionPriority,
-    priorityOptions, prioritiesLoadError, loadingPriorities,
+    selectedPriority,
+    selectTransactionPriority,
+    priorityOptions,
+    prioritiesLoadError,
+    loadingPriorities,
   ] = useTransactionPriority();
-
   const rawTx = {
     sender: { publicKey: wallet.summary?.publicKey },
     nonce: wallet.sequence?.nonce,
@@ -50,6 +60,7 @@ const TxComposer = ({
     }
   }, [selectedPriority, transaction.asset]);
 
+
   const minRequiredBalance = getMinRequiredBalance(transaction, status.fee);
   const { recipientChain, sendingChain } = transactionData || {};
 
@@ -57,7 +68,7 @@ const TxComposer = ({
     Transaction: getFeeStatus({ fee: status.fee, token, customFee }),
   };
 
-  if (sendingChain && recipientChain && (sendingChain.chainID !== recipientChain.chainID)) {
+  if (sendingChain && recipientChain && sendingChain.chainID !== recipientChain.chainID) {
     composedFees.CCM = getFeeStatus({ fee: status.fee, token, customFee });
     composedFees.Initiation = getFeeStatus({ fee: status.fee, token, customFee });
   }
@@ -87,17 +98,17 @@ const TxComposer = ({
       <BoxFooter>
         <PrimaryButton
           className="confirm-btn"
-          onClick={() => onConfirm(
-            { ...rawTx, fee: toRawLsk(status.fee.value) },
-            transactionData,
-            selectedPriority,
-            composedFees,
-          )}
+          onClick={() =>
+            onConfirm(
+              { ...rawTx, fee: toRawLsk(status.fee.value) },
+              transactionData,
+              selectedPriority,
+              composedFees
+            )
+          }
           disabled={!transaction.isValid || minRequiredBalance > wallet.token?.balance}
         >
-          {
-            buttonTitle ?? t('Continue')
-          }
+          {buttonTitle ?? t('Continue')}
         </PrimaryButton>
       </BoxFooter>
     </Box>
