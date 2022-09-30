@@ -6,17 +6,24 @@ import accounts from '@tests/constants/wallets';
 import flushPromises from '@tests/unit-test-utils/flushPromises';
 import { useApplicationManagement, useCurrentApplication } from '@blockchainApplication/manage/hooks';
 import mockManagedApplications from '@tests/fixtures/blockchainApplicationsManage';
+import { useCurrentAccount } from '@account/hooks';
 import { mockAppTokens } from '@tests/fixtures/token';
+import mockSavedAccounts from '@tests/fixtures/accounts';
+import { mockTokensBalance } from '@token/fungible/__fixtures__/mockTokens';
 import { useMessageField } from '../../hooks';
 import Form from './SendForm';
+import { useTokensBalance } from '../../hooks/queries';
 
 const mockSetMessage = jest.fn();
 const mockSetCurrentApplication = jest.fn();
+const mockSetAccount = jest.fn();
 const mockSetApplication = jest.fn();
 const mockCurrentApplication = mockManagedApplications[0];
 
 jest.mock('@blockchainApplication/manage/hooks/useApplicationManagement');
 jest.mock('@blockchainApplication/manage/hooks/useCurrentApplication');
+jest.mock('@account/hooks/useCurrentAccount');
+jest.mock('@token/fungible/hooks/queries');
 
 jest.mock('@transaction/hooks/useTransactionFeeCalculation', () => jest.fn().mockReturnValue({
   minFee: { value: 0.00001 },
@@ -30,6 +37,7 @@ describe('Form', () => {
   let props;
   let bookmarks;
 
+  useTokensBalance.mockReturnValue({ data: mockTokensBalance, isLoading: false });
   useApplicationManagement.mockReturnValue({
     setApplication: mockSetApplication,
     applications: mockManagedApplications,
@@ -40,6 +48,7 @@ describe('Form', () => {
     mockSetCurrentApplication,
   ]);
 
+  useCurrentAccount.mockReturnValue([mockSavedAccounts[0], mockSetAccount]);
   useMessageField.mockImplementation(jest.requireActual('../../hooks').useMessageField);
 
   beforeEach(() => {

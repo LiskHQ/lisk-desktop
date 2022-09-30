@@ -153,6 +153,7 @@ or "warn/action" ineastd of "red/green"
   --color-rows-hover: var(--color-white-smoke);
   --color-highlight-checkboxes: rgba(64, 112, 244, 0.08);
   --color-onboarding-bg: var(--color-maastricht-blue);
+  --color-token-card-bg: var(--color-white);
   --color-strong-white: var(--color-white);
   --color-flash-message: rgba(64, 112, 244, 0.15);
   --color-flash-message-border: rgba(64, 112, 244, 0.3);
@@ -191,6 +192,7 @@ or "warn/action" ineastd of "red/green"
   --color-tx-pending-status-bg: var(--color-active-tab);
   --color-tx-fail-status-text: var(--color-red);
   --color-tx-fail-status-bg: var(--color-red-transparent);
+  --color-token-card-shadow: #eaeaea5c;
 
   /*************************
         Box
@@ -257,6 +259,7 @@ or "warn/action" ineastd of "red/green"
   --color-mystic: #4d4d50;
   --color-body-bg: #000;
   --color-onboarding-bg: #1c1c1e;
+  --color-token-card-bg: var(--color-onboarding-bg);
   --color-rows-hover: #1c1c1e;
   --overlay-color: rgba(28, 28, 30, 0.8);
   --color-content-light: #fff;
@@ -288,4 +291,5 @@ or "warn/action" ineastd of "red/green"
   --color-tx-pending-status-bg: var(--color-cloud-burst);
   --color-tx-fail-status-text: var(--color-red);
   --color-tx-fail-status-bg: var(--color-red-semitransparent);
+  --color-token-card-shadow: transparent;
 }

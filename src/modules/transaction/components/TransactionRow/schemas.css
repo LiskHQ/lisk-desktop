@@ -55,7 +55,7 @@
     }
 
     & > *:last-child {
-      justify-content: flex-end;
+      justify-content: center;
     }
 
     @media (--medium-viewport) {
@@ -71,7 +71,7 @@
   }
 
   &.hosted {
-    grid-template-areas: "counterpart date fee assets amount";
+    grid-template-areas: "id height type date status";
 
     & > * {
       height: 100%;
@@ -82,16 +82,24 @@
     }
 
     & > *:nth-child(1) {
+      flex-basis: 25%;
+      max-width: 25%;
+    }
+
+    & > *:nth-child(3) {
       flex-basis: 33.33333%;
       max-width: 33.33333%;
     }
 
     & > *:nth-child(2),
-    & > *:nth-child(3),
-    & > *:nth-child(4),
-    & > *:nth-child(5) {
+    & > *:nth-child(4) {
       flex-basis: 16.66666667%;
       max-width: 16.66666667%;
+    }
+
+    & > *:nth-child(5) {
+      flex-basis: 8.33333333%;
+      max-width: 8.33333333%;
     }
 
     & > *:first-child {

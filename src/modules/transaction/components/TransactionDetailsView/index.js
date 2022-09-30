@@ -6,7 +6,7 @@ import { isEmpty } from 'src/utils/helpers';
 import { parseSearchParams } from 'src/utils/searchParams';
 import Box from 'src/theme/box';
 import BoxContent from 'src/theme/box/content';
-import Heading from 'src/modules/common/components/amountField/Heading';
+import Heading from 'src/modules/common/components/Heading';
 import BoxHeader from 'src/theme/box/header';
 import Table from 'src/theme/table';
 import TokenAmount from 'src/modules/token/fungible/components/tokenAmount';
@@ -41,21 +41,12 @@ const TransactionDetails = ({ location }) => {
   const transactionDetailList = useMemo(() => {
     if (error || isEmpty(transactions?.data)) return [];
 
-    const {
-      id,
-      moduleCommand,
-      sender = {},
-      nonce,
-      fee,
-      block = {},
-      confirmations,
-      executionStatus,
-    } = transaction;
+    const { id, moduleCommand, sender = {}, nonce, fee, block = {}, executionStatus } = transaction;
     const [txModule, txType] = splitModuleAndCommand(moduleCommand);
 
     return [
       {
-        label: t('Transaction type'),
+        label: t('Type'),
         value: `${txModule} ${txType}`,
         isCapitalized: true,
       },
@@ -65,7 +56,7 @@ const TransactionDetails = ({ location }) => {
         type: 'address',
       },
       {
-        label: t('Transaction Fee'),
+        label: t('Fee'),
         value: <TokenAmount val={fee} token="LSK" />, // @Todo: token value needs to be dynamic
       },
       {
@@ -77,19 +68,12 @@ const TransactionDetails = ({ location }) => {
         value: nonce,
       },
       {
-        label: t('Confirmations'),
-        value: confirmations,
-        tooltip: t(
-          'Confirmations refer to the number of blocks added to the Lisk blockchain after a transaction has been submitted. The more confirmations registered, the more secure the transaction becomes.'
-        ),
-      },
-      {
         label: t('Status'),
         value: executionStatus,
         type: 'status',
       },
       {
-        label: t('Transaction ID'),
+        label: t('ID'),
         value: id,
       },
       {
@@ -97,7 +81,11 @@ const TransactionDetails = ({ location }) => {
         value: block.id,
       },
       {
-        label: t('Block Height'),
+        label: t('Block status'),
+        value: block.isFinal ? 'Final' : 'Not final',
+      },
+      {
+        label: t('Block height'),
         value: block.height,
       },
       {

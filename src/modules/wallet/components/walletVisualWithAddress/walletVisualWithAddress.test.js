@@ -8,15 +8,22 @@ describe('WalletVisualWithAddress component', () => {
     transactionSubject: 'senderId',
     address: '283470127032187L',
     bookmarks: {
-      LSK: [{
-        title: 'BM',
-        address: '283470127032187L',
-      }],
+      LSK: [
+        {
+          title: 'BM',
+          address: '283470127032187L',
+        },
+      ],
     },
   };
 
   it('should show bookmarked name if address is bookmarked', () => {
     const wrapper = mount(<WalletVisualWithAddress {...props} />);
-    expect(wrapper.find('.addressValue').at(0)).toHaveText('BM');
+    expect(wrapper.find('.accountAddress').at(0)).toHaveText('BM');
+  });
+
+  it('should show account name', () => {
+    const wrapper = mount(<WalletVisualWithAddress {...props} accountName="test" />);
+    expect(wrapper.find('.accountName').at(0)).toHaveText('test');
   });
 });

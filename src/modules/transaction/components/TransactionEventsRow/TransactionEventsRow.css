@@ -75,6 +75,29 @@
   }
 }
 
+.blockHeight {
+  padding: 0px 16px 0px 5px;
+
+  & > a {
+    width: 100%;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    text-decoration: none;
+  }
+}
+
+.transactionID {
+  padding: 0px 16px 0px 5px;
+
+  & > a {
+    width: 100%;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    text-decoration: none;
+    color: var(--color-ultramarine-blue);
+  }
+}
+
 .rowWrapper {
   width: 100%;
 }
