@@ -3,6 +3,7 @@
 .wrapper {
   padding-bottom: var(--horizontal-padding-l);
   padding-top: 30px;
+  margin-bottom: -27px;
 
   & > div:not(:nth-child(3)) {
     min-width: 320px;

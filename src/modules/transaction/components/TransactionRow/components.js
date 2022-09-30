@@ -126,7 +126,12 @@ export const Date = ({ t }) => {
     return <Spinner completed={!data.isPending || data.block?.timestamp} label={t('Pending...')} />;
   }
 
-  return <DateTimeFromTimestamp time={data.block.timestamp} />;
+  return (
+    <div className={styles.dateTime}>
+      <DateTimeFromTimestamp time={data.block.timestamp} />
+      <DateTimeFromTimestamp onlyTime time={data.block.timestamp} />
+    </div>
+  );
 };
 
 export const Amount = () => {

@@ -63,7 +63,7 @@ h1 {
   }
 
   & > div:nth-child(3) {
-    padding-left: 8px;
+    padding-left: 8px !important;
   }
 
   & > div:last-child {
