@@ -1,25 +1,29 @@
 import React from 'react';
-import { fireEvent, screen, waitFor } from '@testing-library/react';
+import { fireEvent, render, screen, waitFor } from '@testing-library/react';
 import mockManagedApplications from '@tests/fixtures/blockchainApplicationsManage';
 import { renderWithQueryClient } from 'src/utils/testHelpers';
 import { useCurrentApplication } from '@blockchainApplication/manage/hooks';
-import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
+import { useFilter } from 'src/modules/common/hooks';
 import { mockEvents } from '../../__fixtures__';
 import TransactionEvents from './TransactionEvents';
 import { useTransactionEvents } from '../../hooks/queries';
 
 const mockSetApplication = jest.fn();
+const mockClearFilters = jest.fn();
+const mockApplyFilters = jest.fn();
+
 jest.mock('@blockchainApplication/manage/hooks/useCurrentApplication');
 jest.mock('../../hooks/queries');
+jest.mock('src/modules/common/hooks');
 
 useCurrentApplication.mockReturnValue([mockManagedApplications[1], mockSetApplication]);
 
 describe('TransactionEvents', () => {
-  const queryClient = new QueryClient();
   const mockFetchNextPage = jest.fn();
   let wrapper;
   const props = {
     blockId: 1,
+    address: 'lskhbxua8tpdckcewntcttfqfo4rbatampo2dgrno',
   };
 
   useTransactionEvents.mockReturnValue({
@@ -29,6 +33,12 @@ describe('TransactionEvents', () => {
     hasNextPage: true,
     isFetching: false,
     fetchNextPage: mockFetchNextPage,
+  });
+
+  useFilter.mockReturnValue({
+    filters: { dateFrom: '', dateTo: '' },
+    applyFilters: mockApplyFilters,
+    clearFilters: mockClearFilters,
   });
 
   beforeEach(() => {
@@ -54,6 +64,28 @@ describe('TransactionEvents', () => {
     });
   });
 
+  it('should display properly in wallet mode', async () => {
+    wrapper.rerender(<TransactionEvents {...props} isWallet />);
+
+    expect(screen.getByText('Block height')).toBeTruthy();
+    expect(screen.getByText('Transaction ID')).toBeTruthy();
+    expect(screen.getByText('Module')).toBeTruthy();
+    expect(screen.getByText('Name')).toBeTruthy();
+
+    mockEvents.data.slice(0, 20).forEach((item) => {
+      expect(screen.queryAllByText(item.block.height)).toBeTruthy();
+      expect(screen.queryAllByText(item.topics[0])).toBeTruthy();
+      expect(screen.queryAllByText(item.name)).toBeTruthy();
+      expect(screen.queryAllByText(item.module)).toBeTruthy();
+    });
+
+    fireEvent.click(screen.getByText('Load more'));
+
+    await waitFor(() => {
+      expect(mockFetchNextPage).toHaveBeenCalled();
+    });
+  });
+
   it('should display empty state text', async () => {
     useTransactionEvents.mockReturnValue({
       isLoading: true,
@@ -62,12 +94,65 @@ describe('TransactionEvents', () => {
       isFetching: false,
       fetchNextPage: mockFetchNextPage,
     });
-    wrapper.rerender(
-      <QueryClientProvider client={queryClient}>
-        <TransactionEvents {...props} />
-      </QueryClientProvider>
-    );
+    wrapper.rerender(<TransactionEvents {...props} />);
 
     expect(wrapper.getByText('There are no transaction events')).toBeTruthy();
+  });
+
+  it('should display filter fields', async () => {
+    render(<TransactionEvents {...props} hasFilter />);
+
+    fireEvent.click(screen.queryByText('Filter'));
+
+    expect(screen.getByText('Date range')).toBeTruthy();
+    expect(screen.getByText('Transaction ID')).toBeTruthy();
+    expect(screen.getByText('Block height')).toBeTruthy();
+  });
+
+  it('should render based on provided filters', async () => {
+    wrapper = render(<TransactionEvents {...props} isWallet hasFilter />);
+    const transactionIdField = screen.getByTestId('transactionID');
+    const blockHeightField = screen.getByTestId('height');
+    const dateFrom = screen.getByTestId('dateFrom');
+    const dateTo = screen.getByTestId('dateTo');
+    const filters = {
+      transactionID: '1234',
+      height: '1234',
+      dateTo: '20.04.20',
+      dateFrom: '20.03.20',
+    };
+
+    fireEvent.click(screen.queryByText('Filter'));
+    fireEvent.change(transactionIdField, { target: { value: '1234' } });
+    fireEvent.change(blockHeightField, { target: { value: '1234' } });
+    fireEvent.change(dateFrom, { target: { value: '20.03.20' } });
+    fireEvent.change(dateTo, { target: { value: '20.04.20' } });
+
+    fireEvent.click(screen.getByText('Apply filters'));
+
+    await waitFor(() => {
+      expect(mockApplyFilters).toHaveBeenCalledWith({
+        address: props.address,
+        ...filters,
+      });
+    });
+
+    useFilter.mockReturnValue({
+      filters,
+      applyFilters: mockApplyFilters,
+      clearFilters: mockClearFilters,
+    });
+
+    wrapper.rerender(<TransactionEvents {...props} isWallet hasFilter />);
+
+    fireEvent.click(screen.getByTestId('transactionID-filter'));
+    await waitFor(() => {
+      expect(mockClearFilters).toHaveBeenCalledWith(['transactionID']);
+    });
+
+    fireEvent.click(screen.getByText('Clear all filters'));
+    await waitFor(() => {
+      expect(mockClearFilters).toHaveBeenCalled();
+    });
   });
 });

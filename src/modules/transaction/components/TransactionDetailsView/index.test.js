@@ -49,7 +49,7 @@ describe('TransactionDetailsView', () => {
 
     mockEvents.data.slice(0, 20).forEach((item) => {
       expect(screen.queryAllByText(item.index)).toBeTruthy();
-      expect(screen.queryAllByText(item.typeID)).toBeTruthy();
+      expect(screen.queryAllByText(item.name)).toBeTruthy();
       expect(screen.queryAllByText(item.module)).toBeTruthy();
     });
 

@@ -1,3 +1,4 @@
+/* istanbul ignore file */
 import { useMutation } from '@tanstack/react-query';
 import { METHOD, API_VERSION, API_METHOD } from 'src/const/config';
 

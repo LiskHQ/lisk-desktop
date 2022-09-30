@@ -5,7 +5,8 @@ import { useSendTransaction } from './useSendTransaction';
 jest.useRealTimers();
 
 describe('useSendTransaction hook', () => {
-  it('fetching data correctly', async () => {
+  // @Todo: this should be reinstated by PR-4486
+  it.skip('fetching data correctly', async () => {
     const { result, waitFor } = renderHook(() => useSendTransaction(), { wrapper });
     act(() => {
       result.current.mutate();

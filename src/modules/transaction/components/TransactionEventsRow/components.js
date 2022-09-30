@@ -7,12 +7,6 @@ import { Link } from 'react-router-dom';
 import { TertiaryButton } from 'src/theme/buttons';
 import styles from './TransactionEventsRow.css';
 
-export const EventId = ({ hash }) => (
-  <div className={`event-hash ${styles.eventHash} ${grid['col-xs-6']}`}>
-    <span>{hash}</span>
-  </div>
-);
-
 export const TransctionID = ({ id }) => (
   <div className={`event-hash ${styles.transactionID} ${grid['col-xs-4']}`}>
     <Link to={`/transactions/details?transactionID=${id}`}>
