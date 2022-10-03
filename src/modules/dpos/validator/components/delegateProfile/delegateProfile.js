@@ -13,7 +13,7 @@ import styles from './delegateProfile.css';
 import DetailsView from './detailsView';
 import PerformanceView from './performanceView';
 import DelegateVotesView from './delegateVotesView';
-import { useDelegates, useReceivedVotes } from '../../hooks/queries';
+import { useDelegates, useSentVotes } from '../../hooks/queries';
 
 // eslint-disable-next-line max-statements
 const DelegateProfile = ({ history }) => {
@@ -24,20 +24,27 @@ const DelegateProfile = ({ history }) => {
   const { data: delegates, isLoading } = useDelegates({
     config: { params: { address } },
   });
-
-  const { data: voterData, isLoading: receivedVotesLoading } = useReceivedVotes();
-
   const delegate = useMemo(() => delegates?.data?.[0] || {}, [delegates]);
+
+  const { data: sentVotes, isLoading: sentVotesLoading } = useSentVotes({
+    config: { params: { address: currentAddress } },
+  });
 
   const { data: blocks } = useBlocks({
     config: { params: { height: delegate.lastGeneratedHeight } },
   });
+  const lastBlockForged = useMemo(() => blocks?.data?.[0] || {}, [blocks]);
 
   const { data: forgedBlocks } = useBlocks({
     config: { params: { generatorAddress: address } },
   });
 
-  const lastBlockForged = useMemo(() => blocks?.data?.[0] || {}, [blocks]);
+
+  const hasSentVoteToDelegate = useMemo(() => {
+    if (!sentVotes?.data) return false;
+
+    return sentVotes.data.votes.some(({ delegateAddress }) => delegateAddress === address);
+  }, [sentVotes]);
 
   if (!delegate) history.goBack();
 
@@ -62,13 +69,13 @@ const DelegateProfile = ({ history }) => {
       >
         <div className={styles.rightHeaderSection}>
           <div className={styles.actionButtons}>
-            {voterData?.meta?.total && !receivedVotesLoading ? (
+            {hasSentVoteToDelegate ? (
               <DialogLink>
-                <SecondaryButton>{t('Edit Vote')}</SecondaryButton>
+                <SecondaryButton disabled={sentVotesLoading}>{t('Edit Vote')}</SecondaryButton>
               </DialogLink>
             ) : (
               <DialogLink>
-                <PrimaryButton>{t('Vote delegate')}</PrimaryButton>
+                <PrimaryButton disabled={sentVotesLoading}>{t('Vote delegate')}</PrimaryButton>
               </DialogLink>
             )}
           </div>
