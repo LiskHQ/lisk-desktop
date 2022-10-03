@@ -13,10 +13,10 @@ import tableHeader from './votersTableHeader';
 import styles from './delegateProfile.css';
 import { useReceivedVotes } from '../../hooks/queries';
 
-const DelegateVotesView = () => {
+const DelegateVotesView = ({ address }) => {
   const { t } = useTranslation();
   const [searchInput, setSearchInput] = useState('');
-  const { filters, applyFilters } = useFilter();
+  const { filters, applyFilters } = useFilter({ address });
   const timeout = useRef();
 
   const { data: voterData } = useReceivedVotes({
@@ -24,12 +24,11 @@ const DelegateVotesView = () => {
   });
 
   const handleFilter = useCallback(
-    ({ target: { search } }) => {
+    ({ target: { value: search } }) => {
       setSearchInput(search);
       clearTimeout(timeout.current);
 
       timeout.current = setTimeout(() => {
-        console.log('---');
         applyFilters({ search });
       }, 500);
     },
@@ -38,16 +37,10 @@ const DelegateVotesView = () => {
 
   const voter = useMemo(() => voterData?.data || { votes: [] }, [voterData]);
 
-  const voterInfo = searchInput
-    ? voter.votes.filter(
-        (v) => v.username?.includes(searchInput) || v.address?.includes(searchInput)
-      )
-    : voter.votes;
-
   const emptyMessage = searchInput
     ? t('This account does not have any voter for the given address.')
     : t('This account does not have any voters.');
-  // console.log('---', filters);
+
   return (
     <div className={`${grid.row} ${styles.votesWrapper}`}>
       <Box className={`${grid.col} ${grid['col-xs-12']}`}>
@@ -69,9 +62,7 @@ const DelegateVotesView = () => {
           )}
         </BoxHeader>
         <BoxContent
-          className={`${grid.col} ${grid['col-xs-12']} ${
-            voterInfo.length ? styles.votesContainer : ''
-          } votes-container`}
+          className={`${grid.col} ${grid['col-xs-12']} ${styles.votesContainer} votes-container`}
         >
           <QueryTable
             queryHook={useReceivedVotes}

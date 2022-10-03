@@ -3,17 +3,19 @@ import grid from 'flexboxgrid/dist/flexboxgrid.css';
 import { useTranslation } from 'react-i18next';
 import { selectSearchParamValue } from 'src/utils/searchParams';
 import { useCurrentAccount } from 'src/modules/account/hooks';
+import WalletVisualWithAddress from 'src/modules/wallet/components/walletVisualWithAddress';
 import { useBlocks } from 'src/modules/block/hooks/queries/useBlocks';
 import DialogLink from 'src/theme/dialog/link';
 import Heading from 'src/modules/common/components/Heading';
-import { PrimaryButton } from 'src/theme/buttons';
+import { PrimaryButton, SecondaryButton } from 'src/theme/buttons';
 import Box from '@theme/box';
 import styles from './delegateProfile.css';
 import DetailsView from './detailsView';
 import PerformanceView from './performanceView';
 import DelegateVotesView from './delegateVotesView';
-import { useDelegates } from '../../hooks/queries';
+import { useDelegates, useReceivedVotes } from '../../hooks/queries';
 
+// eslint-disable-next-line max-statements
 const DelegateProfile = ({ history }) => {
   const { t } = useTranslation();
   const [{ metadata: { address: currentAddress } = {} }] = useCurrentAccount();
@@ -22,6 +24,8 @@ const DelegateProfile = ({ history }) => {
   const { data: delegates, isLoading } = useDelegates({
     config: { params: { address } },
   });
+
+  const { data: voterData, isLoading: receivedVotesLoading } = useReceivedVotes();
 
   const delegate = useMemo(() => delegates?.data?.[0] || {}, [delegates]);
 
@@ -35,14 +39,38 @@ const DelegateProfile = ({ history }) => {
 
   const lastBlockForged = useMemo(() => blocks?.data?.[0] || {}, [blocks]);
 
+  if (!delegate) history.goBack();
+
   return (
     <section className={`${styles.container} container`}>
-      <Heading className={styles.header} title={t('My delegate profixle')}>
+      <Heading
+        className={styles.header}
+        title={
+          address === currentAddress ? (
+            t('My delegate profile')
+          ) : (
+            <WalletVisualWithAddress
+              copy
+              size={50}
+              address={address}
+              accountName={delegate.name}
+              detailsClassName={styles.accountSummary}
+              truncate={false}
+            />
+          )
+        }
+      >
         <div className={styles.rightHeaderSection}>
           <div className={styles.actionButtons}>
-            <DialogLink>
-              <PrimaryButton>{t('Vote delegate')}</PrimaryButton>
-            </DialogLink>
+            {voterData?.meta?.total && !receivedVotesLoading ? (
+              <DialogLink>
+                <SecondaryButton>{t('Edit Vote')}</SecondaryButton>
+              </DialogLink>
+            ) : (
+              <DialogLink>
+                <PrimaryButton>{t('Vote delegate')}</PrimaryButton>
+              </DialogLink>
+            )}
           </div>
         </div>
       </Heading>
@@ -50,7 +78,7 @@ const DelegateProfile = ({ history }) => {
         <DetailsView data={delegate} lastBlockForged={lastBlockForged.timestamp} />
         <PerformanceView data={{ ...delegate, producedBlocks: forgedBlocks?.meta?.total }} />
       </Box>
-      <DelegateVotesView />
+      <DelegateVotesView address={address} />
     </section>
   );
 };

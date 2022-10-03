@@ -60,6 +60,37 @@
       border-top: none;
     }
   }
+
+  & .accountSummary {
+    display: flex;
+    flex-direction: column;
+    margin-left: 8px;
+
+    & p {
+      @mixin headingSmall;
+
+      --content-font: 'gilroy';
+
+      font-family: var(--content-font);
+      font-weight: 600;
+      font-size: var(--font-size-h5);
+      line-height: var(--font-size-h5);
+      margin-top: 0;
+      margin-bottom: 5px;
+    }
+
+    & span {
+      @mixin contentNormal;
+
+      --content-font: 'gilroy';
+
+      font-family: var(--content-font);
+      font-size: var(--paragraph-font-size-s);
+      font-weight: 500;
+      margin: 0;
+      color: var(--color-blue-gray);
+    }
+  }
 }
 
 @media (--medium-viewport) {
