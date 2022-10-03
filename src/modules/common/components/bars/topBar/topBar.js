@@ -16,7 +16,7 @@ import styles from './topBar.css';
 import Network from './networkName';
 import NavigationButtons from './navigationButtons';
 
-const TopBar = ({ t, history, network, token, noOfVotes, location }) => {
+const TopBar = ({ t, history, noOfVotes, location }) => {
   const disabled = location.pathname === routes.reclaim.path;
   const [currentAccount] = useCurrentAccount();
   const [menuOpen, setMenuOpen] = useState(false);
@@ -61,7 +61,7 @@ const TopBar = ({ t, history, network, token, noOfVotes, location }) => {
         <LightDarkToggle />
         <DiscreteModeToggle />
         {location.pathname !== routes.register.path && (
-          <Network token={token.active} network={network} t={t} />
+          <Network t={t} />
         )}
       </div>
     </div>

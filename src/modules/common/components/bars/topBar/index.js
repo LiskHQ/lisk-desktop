@@ -7,9 +7,6 @@ import { MODULE_COMMANDS_NAME_MAP } from 'src/modules/transaction/configuration/
 import TopBar from './topBar';
 
 const mapStateToProps = state => ({
-  network: state.network,
-  token: state.token,
-  settings: state.settings,
   noOfVotes: containsTransactionType(
     state.transactions.pending,
     MODULE_COMMANDS_NAME_MAP.voteDelegate,

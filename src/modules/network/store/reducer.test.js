@@ -2,6 +2,23 @@ import actionTypes from './actionTypes';
 import network from './reducer';
 
 describe('Reducer: network(state, action)', () => {
+  it('should return state object with passed network name if action is networkSelected', () => {
+    const state = {
+      name: 'mainnet'
+    };
+    const action = {
+      type: actionTypes.networkSelected,
+      data: {
+        name: 'testnet',
+      },
+    };
+
+    const newState = {
+      name: action.data.name,
+    };
+    const changedState = network(state, action);
+    expect(changedState).toEqual(newState);
+  });
   it('should return state object with passed network setup if action is networkSet', () => {
     const state = {
       networks: {
