@@ -1,4 +1,5 @@
 import React from 'react';
+import { useTranslation } from 'react-i18next';
 import grid from 'flexboxgrid/dist/flexboxgrid.css';
 import { useTheme } from '@theme/Theme';
 import { tokenMap } from '@token/fungible/consts/tokens';
@@ -11,8 +12,9 @@ import TokenAmount from '@token/fungible/components/tokenAmount';
 import { getStatus } from './performanceView';
 import styles from './delegateProfile.css';
 
-const DetailsView = ({ t, data, lastBlockForged }) => {
+const DetailsView = ({ data, lastBlockForged }) => {
   const theme = useTheme();
+  const { t } = useTranslation();
   const { rank } = data;
   const status = getStatus(data);
 

@@ -1,42 +1,56 @@
-import React, { useEffect } from 'react';
+import React, { useMemo } from 'react';
 import grid from 'flexboxgrid/dist/flexboxgrid.css';
-
+import { useTranslation } from 'react-i18next';
+import { selectSearchParamValue } from 'src/utils/searchParams';
+import { useCurrentAccount } from 'src/modules/account/hooks';
+import { useBlocks } from 'src/modules/block/hooks/queries/useBlocks';
+import DialogLink from 'src/theme/dialog/link';
+import Heading from 'src/modules/common/components/Heading';
+import { PrimaryButton } from 'src/theme/buttons';
 import Box from '@theme/box';
 import styles from './delegateProfile.css';
 import DetailsView from './detailsView';
 import PerformanceView from './performanceView';
 import DelegateVotesView from './delegateVotesView';
+import { useDelegates } from '../../hooks/queries';
 
-const DelegateProfile = ({
-  delegate, account, t, voters, lastBlockForged,
-}) => {
-  const { data } = delegate;
-  useEffect(() => {
-    voters.loadData({ aggregate: true });
-    delegate.loadData();
-  }, [account]);
+const DelegateProfile = ({ history }) => {
+  const { t } = useTranslation();
+  const [{ metadata: { address: currentAddress } = {} }] = useCurrentAccount();
+  const address = selectSearchParamValue(history.location.search, 'address') || currentAddress;
 
-  useEffect(() => {
-    if (data.dpos?.delegate?.lastForgedHeight) {
-      lastBlockForged.loadData({ height: data.dpos.delegate.lastForgedHeight });
-    }
-  }, [data.dpos?.delegate?.lastForgedHeight]);
+  const { data: delegates, isLoading } = useDelegates({
+    config: { params: { address } },
+  });
 
-  if (!data.dpos?.delegate) {
-    return null;
-  }
+  const delegate = useMemo(() => delegates?.data?.[0] || {}, [delegates]);
+
+  const { data: blocks } = useBlocks({
+    config: { params: { height: delegate.lastGeneratedHeight } },
+  });
+
+  const { data: forgedBlocks } = useBlocks({
+    config: { params: { generatorAddress: address } },
+  });
+
+  const lastBlockForged = useMemo(() => blocks?.data?.[0] || {}, [blocks]);
 
   return (
     <section className={`${styles.container} container`}>
-      <Box className={`${grid.row} ${styles.statsContainer} stats-container`}>
-        <DetailsView
-          t={t}
-          data={data.dpos.delegate}
-          lastBlockForged={lastBlockForged.data.timestamp}
-        />
-        <PerformanceView t={t} data={data.dpos.delegate} />
+      <Heading className={styles.header} title={t('My delegate profixle')}>
+        <div className={styles.rightHeaderSection}>
+          <div className={styles.actionButtons}>
+            <DialogLink>
+              <PrimaryButton>{t('Vote delegate')}</PrimaryButton>
+            </DialogLink>
+          </div>
+        </div>
+      </Heading>
+      <Box isLoading={isLoading} className={`${grid.row} ${styles.statsContainer} stats-container`}>
+        <DetailsView data={delegate} lastBlockForged={lastBlockForged.timestamp} />
+        <PerformanceView data={{ ...delegate, producedBlocks: forgedBlocks?.meta?.total }} />
       </Box>
-      <DelegateVotesView t={t} voters={voters} />
+      <DelegateVotesView />
     </section>
   );
 };
