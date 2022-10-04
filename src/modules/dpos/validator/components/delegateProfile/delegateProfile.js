@@ -46,7 +46,7 @@ const DelegateProfile = ({ history }) => {
     return sentVotes.data.votes.some(({ delegateAddress }) => delegateAddress === address);
   }, [sentVotes]);
 
-  if (!delegate) history.goBack();
+  if (!delegate.address) history.goBack();
 
   return (
     <section className={`${styles.container} container`}>

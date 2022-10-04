@@ -3,7 +3,7 @@
 const generateVote = (index) => ({
   delegateAddress: `lsktzb4j7e3knk4mkxckdr3y69gtu2nwmsb3hjbkg`,
   amount: `1000${index}`,
-  name: 'liskhq',
+  name: `liskhq-${index}`,
 });
 
 const data = {

@@ -54,6 +54,7 @@ const DelegateVotesView = ({ address }) => {
               <Input
                 onChange={handleFilter}
                 value={searchInput}
+                name="addressFilter"
                 className="filter-by-address"
                 size="m"
                 placeholder={t('Filter by address...')}

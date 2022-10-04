@@ -1,90 +1,51 @@
 import React from 'react';
-import { mount } from 'enzyme';
-import { truncateAddress } from '@wallet/utils/account';
+import { fireEvent, render, screen } from '@testing-library/react';
+import { useFilter } from 'src/modules/common/hooks';
 import DelegateVotesView from './delegateVotesView';
+import { useReceivedVotes } from '../../hooks/queries';
+import { mockReceivedVotes } from '../../__fixtures__';
+
+const mockApplyFilters = jest.fn();
+const mockClearFilters = jest.fn();
+
+jest.mock('../../hooks/queries');
+jest.mock('src/modules/common/hooks');
 
 describe('Delegate votes view', () => {
-  const loadData = jest.fn();
+  useReceivedVotes.mockReturnValue({ data: mockReceivedVotes });
+
   const props = {
-    t: v => v,
-    voters: {
-      loadData,
-      meta: { count: 5, offset: 0, total: 10 },
-      data: {
-        votes: [
-          {
-            address: 'lskc7ofju4nvnshg6349otmcssme9q87wrpf8umws',
-            amount: '3000000000',
-          },
-          {
-            address: 'lskc7yrx3v76jxowgkgthu9yaf3dr29wqxbtxz8yp',
-            amount: '1000000000',
-            username: 'zero',
-          },
-          {
-            address: 'lsk57pw74fg4tgx2uzjdja4vxbmouvzw5vbz3bvyo',
-            amount: '20000000000',
-            username: 'o_',
-          },
-          {
-            address: 'lskajfb4mystpab9t87n5z8hprvbj6efzpr57rsky',
-            amount: '300000000000',
-            username: 'k3',
-          },
-          {
-            address: 'lsk6nqfyzpof3xbn8gyvq3k3meusp6d43udgcc6y7',
-            amount: '18000000000000',
-            username: 'korben3',
-          },
-        ],
-      },
-    },
+    address: 'lskc7ofju4nvnshg6349otmcssme9q87wrpf8umws',
   };
 
+  useFilter.mockReturnValue({
+    filters: { adress: props.address },
+    applyFilters: mockApplyFilters,
+    clearFilters: mockClearFilters,
+  });
+
   it('Should render a list of voters', () => {
-    const wrapper = mount(<DelegateVotesView {...props} />);
+    render(<DelegateVotesView {...props} />);
 
-    expect(wrapper.find('.totalVotes')).toHaveText(`(${props.voters.meta.total})`);
-    expect(wrapper.find('.voteRow').hostNodes().length).toEqual(5);
-    expect(wrapper.find('.voteRow').hostNodes().at(0)).toHaveText(truncateAddress('lskc7ofju4nvnshg6349otmcssme9q87wrpf8umws'));
-    expect(wrapper.find('.voteRow').hostNodes().at(1)).toHaveText('zero');
-    expect(wrapper.find('.voteRow').hostNodes().at(2)).toHaveText('o_');
-    expect(wrapper.find('.voteRow').hostNodes().at(3)).toHaveText('k3');
-    expect(wrapper.find('.voteRow').hostNodes().at(4)).toHaveText('korben3');
+    expect(screen.getByText('Voters')).toBeTruthy();
+    mockReceivedVotes.data.votes.forEach(({ name }) => {
+      expect(screen.getByText(name)).toBeTruthy();
+    });
   });
 
-  it('Should call loadData', () => {
-    const wrapper = mount(<DelegateVotesView {...props} />);
-
-    wrapper.find('.load-more').at(0).simulate('click');
-    expect(loadData).toHaveBeenCalledWith({ aggregate: true, offset: 5 });
-  });
-
-  it('Should filter voters', () => {
-    const wrapper = mount(<DelegateVotesView {...props} />);
-
-    wrapper.find('input.filter-by-address').simulate('change', {
-      target: {
-        value: 'zero',
-      },
+  it('Should filter voters by search value', () => {
+    useFilter.mockReturnValue({
+      filters: { adress: props.address },
+      applyFilters: mockApplyFilters,
+      clearFilters: mockClearFilters,
     });
-    wrapper.update();
 
-    expect(wrapper.find('.totalVotes')).toHaveText(`(${props.voters.meta.total})`);
-    expect(wrapper.find('.voteRow').hostNodes().length).toEqual(1);
-    expect(wrapper.find('.voteRow').hostNodes().at(0)).toHaveText('zero');
-    expect(wrapper.find('.voteRow').hostNodes().at(1).exists()).toBeFalsy();
+    render(<DelegateVotesView {...props} />);
 
-    wrapper.find('input.filter-by-address').simulate('change', {
-      target: {
-        value: 'lskc7',
-      },
-    });
-    wrapper.update();
+    const searchField = screen.getByTestId('addressFilter');
+    fireEvent.change(searchField, { target: { value: 'test' } });
+    jest.runAllTimers();
 
-    expect(wrapper.find('.voteRow').hostNodes().length).toEqual(2);
-    expect(wrapper.find('.voteRow').hostNodes().at(0)).toHaveText(truncateAddress('lskc7ofju4nvnshg6349otmcssme9q87wrpf8umws'));
-    expect(wrapper.find('.voteRow').hostNodes().at(1)).toHaveText('zero');
-    expect(wrapper.find('.voteRow').hostNodes().at(2).exists()).toBeFalsy();
+    expect(mockApplyFilters).toHaveBeenCalledWith({ search: 'test' });
   });
 });

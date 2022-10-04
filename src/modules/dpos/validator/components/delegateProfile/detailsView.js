@@ -9,14 +9,13 @@ import BoxHeader from '@theme/box/header';
 import Icon from '@theme/Icon';
 import DateTimeFromTimestamp from 'src/modules/common/components/timestamp';
 import TokenAmount from '@token/fungible/components/tokenAmount';
-import { getStatus } from './performanceView';
 import styles from './delegateProfile.css';
 
 const DetailsView = ({ data, lastBlockForged }) => {
   const theme = useTheme();
   const { t } = useTranslation();
   const { rank } = data;
-  const status = getStatus(data);
+  const status = data.status;
 
   return (
     <Box

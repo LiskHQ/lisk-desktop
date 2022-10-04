@@ -123,7 +123,7 @@ const getDelegateComponent = (status) => {
 const PerformanceView = ({ data }) => {
   const { t } = useTranslation();
   const theme = useTheme();
-  const status = getStatus(data);
+  const status = data.status;
   const DelegateComponent = getDelegateComponent(status);
 
   return (
