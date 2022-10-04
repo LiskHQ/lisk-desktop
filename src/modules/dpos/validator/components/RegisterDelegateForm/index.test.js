@@ -68,14 +68,11 @@ describe('RegisterDelegateForm', () => {
       wrapper
         .find('input.select-name-input')
         .simulate('change', { target: { value: 'mydelegate' } });
-      wrapper
-        .find('input.generator-publicKey-input')
-        .simulate('change', { target: { value: genKey.value, name: 'generatorPublicKey' } });
-      wrapper
-        .find('input.bls-key-input')
-        .simulate('change', { target: { value: blsKey.value, name: 'blsPublicKey' } });
-      wrapper
-        .find('input.pop-input')
+      wrapper.find('input.generator-publicKey-input')
+        .simulate('change', { target: { value: genKey.value, name: 'generatorKey' } });
+      wrapper.find('input.bls-key-input')
+        .simulate('change', { target: { value: blsKey.value, name: 'blsKey' } });
+      wrapper.find('input.pop-input')
         .simulate('change', { target: { value: pop.value, name: 'proofOfPossession' } });
       expect(setName).toHaveBeenCalledTimes(1);
       expect(setKey).toHaveBeenCalledWith(genKey.value);
@@ -158,8 +155,8 @@ describe('RegisterDelegateForm', () => {
         moduleCommand: 'dpos:registerDelegate',
         nonce: '1',
         params: {
-          blsPublicKey: blsKey.value,
-          generatorPublicKey: genKey.value,
+          blsKey: blsKey.value,
+          generatorKey: genKey.value,
           proofOfPossession: pop.value,
           username: validName.value,
         },

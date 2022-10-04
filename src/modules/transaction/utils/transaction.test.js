@@ -160,8 +160,8 @@ describe('API: LSK Transactions', () => {
         moduleCommand: registerDelegate,
         params: {
           username: 'username',
-          generatorPublicKey: genKey,
-          blsPublicKey: blsKey,
+          generatorKey: genKey,
+          blsKey: blsKey,
           proofOfPossession: pop,
         },
       };
@@ -173,8 +173,8 @@ describe('API: LSK Transactions', () => {
         command,
         params: {
           username: 'username',
-          generatorPublicKey: convertStringToBinary(genKey),
-          blsPublicKey: convertStringToBinary(blsKey),
+          generatorKey: convertStringToBinary(genKey),
+          blsKey: convertStringToBinary(blsKey),
           proofOfPossession: convertStringToBinary(pop),
         },
       });
@@ -286,8 +286,8 @@ describe('API: LSK Transactions', () => {
         command,
         params: {
           username: 'super_delegate',
-          generatorPublicKey: convertStringToBinary(genKey),
-          blsPublicKey: convertStringToBinary(blsKey),
+          generatorKey: convertStringToBinary(genKey),
+          blsKey: convertStringToBinary(blsKey),
           proofOfPossession: convertStringToBinary(pop),
         },
       };
@@ -298,8 +298,8 @@ describe('API: LSK Transactions', () => {
         id: '',
         params: {
           username: 'super_delegate',
-          generatorPublicKey: genKey,
-          blsPublicKey: blsKey,
+          generatorKey: genKey,
+          blsKey,
           proofOfPossession: pop,
         },
       });

@@ -11,8 +11,8 @@ describe('validators', () => {
   });
 
   it('return true if the key exist and the value is valid', () => {
-    expect(delegateKeyValidator('blsPublicKey', keys.blsKey)).toBe(true);
-    expect(delegateKeyValidator('generatorPublicKey', keys.genKey)).toBe(true);
+    expect(delegateKeyValidator('blsKey', keys.blsKey)).toBe(true);
+    expect(delegateKeyValidator('generatorKey', keys.genKey)).toBe(true);
     expect(delegateKeyValidator('proofOfPossession', keys.pop)).toBe(true);
   });
 });

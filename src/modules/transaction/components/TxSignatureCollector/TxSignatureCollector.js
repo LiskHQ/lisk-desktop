@@ -27,7 +27,6 @@ const TxSignatureCollector = ({
   transactionDoubleSigned,
   signatureStatus,
   signatureSkipped,
-  transactionData,
   fees,
   selectedPriority,
 }) => {
@@ -66,7 +65,6 @@ const TxSignatureCollector = ({
       actionFunction(
         {
           ...rawTx,
-          ...transactionData,
           selectedPriority,
           fees,
         },

@@ -272,8 +272,8 @@ describe('API: LSK Transactions', () => {
         moduleCommand: registerDelegate,
         params: {
           username: 'some_username',
-          generatorPublicKey: convertStringToBinary(genKey),
-          blsPublicKey: convertStringToBinary(blsKey),
+          generatorKey: convertStringToBinary(genKey),
+          blsKey: convertStringToBinary(blsKey),
           proofOfPossession: convertStringToBinary(pop),
         },
       };
@@ -365,8 +365,8 @@ describe('API: LSK Transactions', () => {
         moduleCommand: registerDelegate,
         params: {
           username: 'user_name',
-          generatorPublicKey: convertBinaryToString(genKey),
-          blsPublicKey: convertBinaryToString(blsKey),
+          generatorKey: convertBinaryToString(genKey),
+          blsKey: convertBinaryToString(blsKey),
           proofOfPossession: convertBinaryToString(pop),
         },
       };

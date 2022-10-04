@@ -8,7 +8,6 @@ const RegisterDelegateSummary = ({
   prevStep,
   nextStep,
   t,
-  transactionData,
   selectedPriority,
   fees,
 }) => {
@@ -26,6 +25,8 @@ const RegisterDelegateSummary = ({
     onClick: () => { prevStep({ rawTx }); },
   };
 
+  console.log('RegisterDelegateSummary 1', rawTx);
+
   return (
     <TransactionSummary
       title={t('Delegate registration Summary')}
@@ -33,7 +34,6 @@ const RegisterDelegateSummary = ({
       cancelButton={onCancelAction}
       classNames={`${styles.box} ${styles.summaryContainer}`}
       rawTx={rawTx}
-      transactionData={transactionData}
       selectedPriority={selectedPriority}
       fees={fees}
     />

@@ -52,9 +52,9 @@ const getDesktopTxAsset = (elementsParams, moduleCommand) => {
 
     case registerDelegate: {
       return {
-        username: elementsParams.username,
-        generatorPublicKey: convertBinaryToString(elementsParams.generatorPublicKey),
-        blsPublicKey: convertBinaryToString(elementsParams.blsPublicKey),
+        name: elementsParams.name,
+        generatorKey: convertBinaryToString(elementsParams.generatorKey),
+        blsKey: convertBinaryToString(elementsParams.blsKey),
         proofOfPossession: convertBinaryToString(elementsParams.proofOfPossession),
       };
     }
@@ -100,7 +100,6 @@ const getDesktopTxAsset = (elementsParams, moduleCommand) => {
 const getElementsTxParams = (desktopParams, moduleCommand) => {
   switch (moduleCommand) {
     case transfer: {
-      console.log('desktopParams', desktopParams);
       const binaryAddress = desktopParams.recipient.address
         ? desktopParams.recipient.address : EMPTY_BUFFER;
       return {
@@ -115,9 +114,9 @@ const getElementsTxParams = (desktopParams, moduleCommand) => {
 
     case registerDelegate: {
       return {
-        username: desktopParams.username,
-        generatorPublicKey: desktopParams.generatorPublicKey,
-        blsPublicKey: desktopParams.blsPublicKey,
+        name: desktopParams.name,
+        generatorKey: desktopParams.generatorKey,
+        blsKey: desktopParams.blsKey,
         proofOfPossession: desktopParams.proofOfPossession,
       };
     }
@@ -194,9 +193,9 @@ const getElementsParamsFromJSON = (JSONParams, moduleCommand) => {
 
     case registerDelegate:
       return {
-        username: JSONParams.username,
-        generatorPublicKey: convertStringToBinary(JSONParams.generatorPublicKey),
-        blsPublicKey: convertStringToBinary(JSONParams.blsPublicKey),
+        name: JSONParams.name,
+        generatorKey: convertStringToBinary(JSONParams.generatorKey),
+        blsKey: convertStringToBinary(JSONParams.blsKey),
         proofOfPossession: convertStringToBinary(JSONParams.proofOfPossession),
       };
 
@@ -259,7 +258,6 @@ const desktopTxToElementsTx = (tx, moduleCommand, schema) => {
   // This below code is a patch, if we can construct the params JSON properly from each form then we can remove getElementsTxParams
   // and directly use codec.codec.fromJSON to convert JSON to JS Object and codec.codec.toJSON to get JSON from JS Object
   transaction.params = codec.codec.fromJSON(schema, getElementsTxParams(params, moduleCommand));
-  console.log('transaction', transaction);
   return transaction;
 };
 

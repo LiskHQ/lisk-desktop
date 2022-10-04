@@ -5,7 +5,7 @@ import useDelegateKey from './useDelegateKey';
 describe('useDelegateKey', () => {
   it('Initial values must be empty', () => {
     const { result } = renderHook(
-      () => useDelegateKey('blsPublicKey', 'test message'),
+      () => useDelegateKey('blsKey', 'test message'),
     );
     const [genKey] = result.current;
 
@@ -23,7 +23,7 @@ describe('useDelegateKey', () => {
 
   it('Should set valid values with no errors', () => {
     const { result } = renderHook(
-      () => useDelegateKey('generatorPublicKey', 'test message'),
+      () => useDelegateKey('generatorKey', 'test message'),
     );
     const [, setKey] = result.current;
     act(() => {
@@ -34,26 +34,26 @@ describe('useDelegateKey', () => {
     expect(genKey.value).toBe(keys.genKey);
   });
 
-  it('should show generatorPublicKey error if the value is not a valid', () => {
+  it('should show generatorKey error if the value is not a valid', () => {
     const { result } = renderHook(
-      () => useDelegateKey('generatorPublicKey', 'test message'),
+      () => useDelegateKey('generatorKey', 'test message'),
     );
     const [, setKey] = result.current;
     act(() => {
-      setKey('generatorPublicKey', 'wrong_value');
+      setKey('generatorKey', 'wrong_value');
     });
 
     const [genKey] = result.current;
     expect(genKey.error).toBe(true);
   });
 
-  it('should show blsPublicKey error if the value is not a valid', () => {
+  it('should show blsKey error if the value is not a valid', () => {
     const { result } = renderHook(
-      () => useDelegateKey('blsPublicKey', 'test message'),
+      () => useDelegateKey('blsKey', 'test message'),
     );
     const [, setKey] = result.current;
     act(() => {
-      setKey('blsPublicKey', 'wrong_value');
+      setKey('blsKey', 'wrong_value');
     });
 
     const [blsKey] = result.current;
