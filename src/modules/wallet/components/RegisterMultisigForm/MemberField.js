@@ -1,8 +1,8 @@
-import React from 'react';
+import React, { useState } from 'react';
 
-import { SecondaryButton } from 'src/theme/buttons';
 import Icon from 'src/theme/Icon';
-import { DropdownInput } from 'src/theme';
+import { Input } from 'src/theme';
+import Tabs from 'src/theme/tabs';
 
 import styles from './styles.css';
 
@@ -15,8 +15,31 @@ const MemberField = ({
   onChangeMember,
   onDeleteMember,
 }) => {
+  const [mandatoryFlag, setMandatoryFlag] = useState('mandatory');
+
   const changeCategory = (flag) => {
-    onChangeMember({ index, publicKey, isMandatory: flag });
+    onChangeMember({ index, publicKey, isMandatory: flag === t('Mandatory') });
+  };
+  const categoryTabs = {
+    tabs: [
+      {
+        value: 'mandatory',
+        name: t('Mandatory'),
+        className: 'mandatory select-mandatory',
+      },
+      {
+        value: 'optional',
+        name: t('Optional'),
+        className: 'optional select-optional',
+      },
+    ],
+    active: mandatoryFlag,
+    onClick: ({ value }) => {
+      setMandatoryFlag(value);
+      changeCategory(mandatoryFlag);
+    },
+    className: `${styles.memberCategory} mandatory-toggle`,
+    wrapperClassName: styles.categoryWrapper,
   };
 
   const changeIdentifier = (e) => {
@@ -28,26 +51,17 @@ const MemberField = ({
 
   return (
     <div className={styles.memberFieldContainer}>
-      <DropdownInput
-        t={t}
-        className={`${styles.inputWithDropdown} msign-pk-input`}
-        value={publicKey}
-        onChange={changeIdentifier}
-        placeholder={t('Account public key')}
-        ButtonComponent={SecondaryButton}
-        buttonLabel={isMandatory ? t('Mandatory') : t('Optional')}
-        buttonClassName="mandatory-toggle"
-      >
-        <span className="select-optional" onClick={() => changeCategory(false)}>
-          {t('Optional')}
-        </span>
-        <span className="select-mandatory" onClick={() => changeCategory(true)}>{t('Mandatory')}</span>
-      </DropdownInput>
+      <div className={styles.memberInput}>
+        <Input
+          className={`${styles.inputWithSwitcher} msign-pk-input`}
+          onChange={changeIdentifier}
+          placeholder={t('Public key')}
+          size="m"
+        />
+        <Tabs {...categoryTabs} />
+      </div>
       {showDeleteIcon && (
-        <span
-          className={`${styles.deleteIcon} delete-icon`}
-          onClick={deleteMember}
-        >
+        <span className={`${styles.deleteIcon} delete-icon`} onClick={deleteMember}>
           <Icon name="deleteIcon" />
         </span>
       )}
