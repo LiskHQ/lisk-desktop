@@ -4,14 +4,19 @@ import InfoBanner from 'src/modules/common/components/infoBanner/infoBanner';
 import BlockchainApplicationList from '@blockchainApplication/explore/components/BlockchainApplicationList';
 import BlockchainApplicationStatistics from '../BlockchainApplicationStatistics';
 import styles from './BlockchainApplications.css';
+import useBlockchainApplicationExplore from '../../hooks/queries/useBlockchainApplicationExplore';
+import useBlockchainApplicationStatistics from '../../hooks/queries/useBlockchainApplicationStatistics';
 
 const BlockchainApplications = ({
-  applications,
-  statistics,
   applyFilters,
   filters,
 }) => {
   const { t } = useTranslation();
+
+  const applications = useBlockchainApplicationExplore();
+
+  const statistics = useBlockchainApplicationStatistics();
+
   return (
     <div className={styles.wrapper}>
       <InfoBanner

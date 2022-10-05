@@ -25,14 +25,11 @@ const BlockchainApplicationList = ({
 
   const canLoadMore = useMemo(() =>
     (applications.meta
-      ? applications.data.length < applications.meta.total : false), [applications]);
+      ? applications.data.length < applications.meta.total : false), [applications], 
+      [applications.data]);
 
   const handleLoadMore = () => {
-    const params = {
-      ...filters,
-      offset: applications.meta.count + applications.meta.offset,
-    };
-    applications.loadData(params);
+    applications.fetchNextPage();
   };
 
   const onSearchApplication = useCallback(({ target }) => {
