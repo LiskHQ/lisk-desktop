@@ -20,7 +20,7 @@ import { PrimaryButton, WarningButton } from 'src/theme/buttons';
 import useVoteAmountField from '../../hooks/useVoteAmountField';
 // import getMaxAmount from '../../utils/getMaxAmount';
 import styles from './editVote.css';
-import { useSentVotes } from '../../hooks/queries';
+import { useDelegates, useSentVotes } from '../../hooks/queries';
 import { NUMBER_OF_BLOCKS_PER_DAY } from '../../consts';
 
 const getTitles = (t) => ({
@@ -52,6 +52,12 @@ const EditVote = ({ history, voteEdited }) => {
     'start',
     'end',
   ]);
+
+  const { data: delegates, isLoading: isLoadingDelegates } = useDelegates({
+    config: { params: { address: address || currentAddress } },
+  });
+
+  const delegate = useMemo(() => delegates?.data?.[0] || {}, [isLoadingDelegates]);
 
   const { data: blocks } = useBlocks({ config: { params: { limit: 1 } } });
   const currentHeight = useMemo(() => blocks?.data?.[0]?.height, [blocks]);
@@ -132,7 +138,8 @@ const EditVote = ({ history, voteEdited }) => {
           </BoxInfoText>
           <BoxInfoText className={styles.accountInfo}>
             <WalletVisual size={40} address={address || currentAddress} />
-            <p>{}</p>
+            <p>{delegate.name}</p>
+            <p>{delegate.address}</p>
           </BoxInfoText>
           {daysLeft >= 1 && start !== undefined && (
             <>
@@ -149,8 +156,7 @@ const EditVote = ({ history, voteEdited }) => {
               label={t('Vote amount (LSK)')}
               labelClassname={`${styles.fieldLabel}`}
               placeholder={t('Insert vote amount')}
-              // useMaxLabel={t('Use maximum amount')}
-              // useMaxWarning={t('Caution! You are about to send the majority of your balance')}
+              useMaxLabel={t('Use maximum amount')}
               name="vote"
             />
           </label>
