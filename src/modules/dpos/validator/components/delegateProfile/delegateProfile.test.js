@@ -75,7 +75,9 @@ describe('Delegate Profile', () => {
 
     expect(screen.getByText('Rank')).toBeTruthy();
     expect(screen.getByTestId('addressFilter')).toBeTruthy();
-    expect(screen.getAllByText(mockReceivedVotes.data.votes[0]?.name)).toHaveLength(30);
+    mockReceivedVotes.data.votes.forEach(({ name }) => {
+      expect(screen.getByText(name)).toBeTruthy();
+    });
   });
 
   it('Should render ineligible delegate profile details', () => {
