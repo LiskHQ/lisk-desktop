@@ -2,6 +2,8 @@
 
 .detailsContainer,
 .highlightContainer {
+  overflow: hidden;
+
   & h1.heading {
     @mixin headingNormal;
 
@@ -17,6 +19,12 @@
       text-decoration: none;
     }
   }
+
+  & > header {
+    padding-top: 0px !important;
+    padding-bottom: 16px !important;
+    height: fit-content !important;
+  }
 }
 
 .container {
@@ -29,6 +37,10 @@
 
   & .votesWrapper {
     width: 100%;
+
+    & > div:first-child {
+      height: fit-content;
+    }
   }
 
   & .votesContainer {
@@ -45,6 +57,30 @@
     & button {
       grid-column: 1/5;
       margin-top: -15px;
+      border-top: none;
+    }
+  }
+
+  & .accountSummary {
+    display: flex;
+    flex-direction: column;
+    margin-left: 8px;
+
+    & p {
+      @mixin addressFont;
+
+      margin-top: 0;
+      margin-bottom: 5px;
+    }
+
+    & span {
+      @mixin contentNormal;
+
+      font-family: var(--heading-font);
+      font-size: var(--paragraph-font-size-s);
+      font-weight: 500;
+      margin: 0;
+      color: var(--color-blue-gray);
     }
   }
 }
@@ -227,7 +263,7 @@
 
       & .delegateDescription {
         & p {
-          font-size: var(--paragraph-font-size-s);
+          font-size: var(--font-size-small-secondary);
         }
 
         & p:first-child {
@@ -347,4 +383,8 @@
 .totalVotes {
   color: var(--color-slate-gray);
   padding-left: 5px;
+}
+
+.header {
+  padding: 24px 0px;
 }

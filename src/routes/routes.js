@@ -41,6 +41,12 @@ export default {
     isPrivate: false,
     forbiddenTokens: [],
   },
+  delegateProfile: {
+    path: '/delegates/profile',
+    exact: true,
+    isPrivate: false,
+    forbiddenTokens: [],
+  },
   explorer: {
     path: '/explorer',
     searchParam: 'address',
