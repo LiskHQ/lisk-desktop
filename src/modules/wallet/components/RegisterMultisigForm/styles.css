@@ -76,12 +76,23 @@
   flex: 1;
   margin-right: 18px;
   border: 1px solid var(--color-platinum);
+
+  &:focus {
+    border: 1px solid blue;
+  }
 }
 
 .memberCategory {
   position: relative;
   display: inline-block;
   padding: 4px 8px;
+  font-size: 12px !important;
+  line-height: 20px !important;
+  color: var(--color-slate-gray) !important;
+
+  &.active {
+    color: var(--color-maastricht-blue) !important;
+  }
 }
 
 .inputWithSwitcher {
@@ -89,10 +100,6 @@
   display: inline-block;
   border: 0;
   margin-right: 18px;
-
-  &:focus {
-    border: 1px solid blue;
-  }
 
   &:last-child {
     margin-bottom: 0;

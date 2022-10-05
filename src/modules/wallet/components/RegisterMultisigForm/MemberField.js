@@ -25,12 +25,12 @@ const MemberField = ({
       {
         value: 'mandatory',
         name: t('Mandatory'),
-        className: 'mandatory select-mandatory',
+        className: `mandatory select-mandatory ${mandatoryFlag === 'mandatory' ? styles.active : ''}`,
       },
       {
         value: 'optional',
         name: t('Optional'),
-        className: 'optional select-optional',
+        className: `optional select-optional ${mandatoryFlag === 'optional' ? styles.active : ''}`,
       },
     ],
     active: mandatoryFlag,
