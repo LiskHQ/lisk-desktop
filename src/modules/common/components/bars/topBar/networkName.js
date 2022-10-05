@@ -31,15 +31,15 @@ const Network = () => {
 
   return (
     <>
-      <section className={styles.wrapper} onClick={() => setShowDropdown(true)} >
+      <section className={styles.wrapper} onClick={() => setShowDropdown(true)}>
         <span className={`${styles.status} ${statusColor}`} />
         <div className={styles.message}>
           <span>{activeNetwork}</span>
           <Icon name="dropdownArrowIcon" />
         </div>
       </section>
-      <Dropdown showDropdown={showDropdown} active={activeNetworkIndex} className={styles.dropdown} closeDropdown={closeDropdown} title={t('Select network')} >
-        {Object.values(networkKeys).map(networkName => <button key={networkName} className={styles.networkItem} onClick={() => setActiveNetwork(networkName)} >{t(networkName)}</button>)}
+      <Dropdown showDropdown={showDropdown} active={activeNetworkIndex} className={styles.dropdown} closeDropdown={closeDropdown} title={t('Select network')}>
+        {Object.values(networkKeys).map(networkName => <button key={networkName} className={styles.networkItem} onClick={() => setActiveNetwork(networkName)}>{t(networkName)}</button>)}
       </Dropdown>
     </>
   );

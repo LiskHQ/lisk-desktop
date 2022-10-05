@@ -33,7 +33,7 @@ const Dropdown = ({
         )
       }
       <div className={`${styles.dropdownContent} dropdown-content ${isSelectionList ? 'options' : ''}`}>
-        {title && <div className={styles.title} >{title}</div>}
+        {title && <div className={styles.title}>{title}</div>}
         {
           isSelectionList ? flattenArray(children).map((child, key) => (
             child.type === Separator
