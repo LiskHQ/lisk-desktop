@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { useTranslation } from 'react-i18next';
 import routes from 'src/routes/routes';
 import Icon from 'src/theme/Icon';
 import AccountManagementDropdown from '@account/components/AccountManagementDropdown';
@@ -16,10 +17,11 @@ import styles from './topBar.css';
 import Network from './networkName';
 import NavigationButtons from './navigationButtons';
 
-const TopBar = ({ t, history, noOfVotes, location }) => {
+const TopBar = ({ history, noOfVotes, location }) => {
   const disabled = location.pathname === routes.reclaim.path;
   const [currentAccount] = useCurrentAccount();
   const [menuOpen, setMenuOpen] = useState(false);
+  const { t } = useTranslation()
 
   const onMenuClick = (menuOpenStatus) => {
     setMenuOpen(menuOpenStatus);

@@ -13,7 +13,7 @@ const Network = () => {
   const [showDropdown, setShowDropdown] = useState(false)
   const network = useSelector(state => state.network);
   const dispatch = useDispatch()
-  const activeNetwork = getNetworkName(network);
+  const activeNetworkName = getNetworkName(network);
   const { t } = useTranslation()
 
   const statusColor = network.status.online ? styles.online : styles.offline;
@@ -27,14 +27,14 @@ const Network = () => {
     closeDropdown();
   }
 
-  const activeNetworkIndex = useMemo(() => Object.values(networkKeys).indexOf(activeNetwork), [activeNetwork])
+  const activeNetworkIndex = useMemo(() => Object.values(networkKeys).indexOf(activeNetworkName), [activeNetworkName])
 
   return (
     <>
       <section className={styles.wrapper} onClick={() => setShowDropdown(true)}>
         <span className={`${styles.status} ${statusColor}`} />
         <div className={styles.message}>
-          <span>{activeNetwork}</span>
+          <span>{activeNetworkName}</span>
           <Icon name="dropdownArrowIcon" />
         </div>
       </section>
