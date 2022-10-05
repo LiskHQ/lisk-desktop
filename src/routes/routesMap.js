@@ -48,6 +48,7 @@ import AddApplicationSuccess from '@blockchainApplication/manage/components/AddA
 import ApplicationManagementList from '@blockchainApplication/manage/components/ApplicationManagementList';
 import SelectNode from '@blockchainApplication/manage/components/SelectNode';
 import RemoveApplicationFlow from '@blockchainApplication/manage/components/RemoveApplicationFlow';
+import AllTokens from '@wallet/components/AllTokens';
 
 export default {
   wallet: AccountDetails,
@@ -101,4 +102,5 @@ export default {
   addApplicationSuccess: AddApplicationSuccess,
   manageApplications: ApplicationManagementList,
   removeApplicationFlow: RemoveApplicationFlow,
+  allTokens: AllTokens,
 };

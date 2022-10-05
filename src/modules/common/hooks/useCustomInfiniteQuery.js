@@ -3,8 +3,8 @@ import { useSelector } from 'react-redux';
 import { useInfiniteQuery } from '@tanstack/react-query';
 import {
   METHOD,
-  API_METHOD,
 } from 'src/const/config';
+import defaultClient from 'src/utils/api/client';
 import { APPLICATION } from 'src/const/queries';
 import { useCurrentApplication } from '@blockchainApplication/manage/hooks';
 import { getNetworkName } from 'src/modules/network/utils/getNetwork';
@@ -28,6 +28,7 @@ export const useCustomInfiniteQuery = ({
   keys,
   config,
   options = {},
+  client = defaultClient
 }) => {
   const [{ chainID }] = useCurrentApplication();
   const network = useSelector(state => state.network);
@@ -35,7 +36,7 @@ export const useCustomInfiniteQuery = ({
 
   return useInfiniteQuery(
     [chainID, config, APPLICATION, METHOD, ...keys],
-    async ({ pageParam }) => API_METHOD[METHOD]({
+    async ({ pageParam }) => client[METHOD]({
       ...config,
       params: {
         ...(config.params || {}),

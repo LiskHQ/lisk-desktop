@@ -2,6 +2,17 @@
   padding: 0 !important;
 }
 
+.wrapper {
+  position: relative;
+
+  & > header {
+    position: absolute;
+    top: -82px;
+    right: -18px;
+    z-index: 10;
+  }
+}
+
 .dataContainer {
   color: var(--color-maastricht-blue);
   overflow: hidden;
@@ -52,7 +63,7 @@ h1 {
   }
 
   & > div:nth-child(3) {
-    padding-left: 8px;
+    padding-left: 8px !important;
   }
 
   & > div:last-child {

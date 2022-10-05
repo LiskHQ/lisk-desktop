@@ -8,6 +8,8 @@ import BoxHeader from 'src/theme/box/header';
 import BoxContent from 'src/theme/box/content';
 import BoxTabs from 'src/theme/tabs';
 import useFilter from 'src/modules/common/hooks/useFilter';
+import DialogLink from 'src/theme/dialog/link';
+import { useCurrentAccount } from 'src/modules/account/hooks';
 import Icon from 'src/theme/Icon';
 import { ROUND_LENGTH } from '@dpos/validator/consts';
 import { PrimaryButton } from 'src/theme/buttons';
@@ -19,10 +21,7 @@ import LatestVotes from '../LatestVotes';
 import styles from './delegates.css';
 
 // eslint-disable-next-line max-statements
-const DelegatesMonitor = ({
-  watchList,
-  registrations,
-}) => {
+const DelegatesMonitor = ({ watchList, registrations }) => {
   const { t } = useTranslation();
   const timeout = useRef();
   const { filters, setFilter } = useFilter({});
@@ -30,12 +29,12 @@ const DelegatesMonitor = ({
   const [activeTab, setActiveTab] = useState('active');
   const [search, setSearch] = useState('');
   const { data: blocksData } = useBlocks({ config: { params: { limit: 100 } } });
+  const [currentAccount] = useCurrentAccount();
 
   const total = blocksData?.meta?.total ?? 0;
   const blocks = blocksData?.data ?? [];
-  const forgedInRound = blocks.length
-    ? blocks[0].height % ROUND_LENGTH
-    : 0;
+  const forgedInRound = blocks.length ? blocks[0].height % ROUND_LENGTH : 0;
+  const { address } = currentAccount.metadata || {};
 
   const handleFilter = ({ target: { value } }) => {
     setSearch(value);
@@ -99,7 +98,10 @@ const DelegatesMonitor = ({
   }
 
   const commonProps = {
-    blocks, activeTab, setActiveTab, filters,
+    blocks,
+    activeTab,
+    setActiveTab,
+    filters,
   };
 
   const displayTab = (tab) => {
@@ -117,32 +119,24 @@ const DelegatesMonitor = ({
             <BoxTabs {...pageTabs} />
           </div>
           <div className={grid['col-md-4']}>
-            <PrimaryButton>Register delegate</PrimaryButton>
+            <DialogLink component="registerDelegate">
+              <PrimaryButton disabled={!address}>Register delegate</PrimaryButton>
+            </DialogLink>
           </div>
         </div>
       </BoxHeader>
-      {activeDetailTab === 'overview'
-        ? (
-          <DelegatesOverview
-            registrations={registrations}
-            t={t}
-            totalBlocks={total}
-          />
-        )
-        : (
-          <ForgingDetails
-            t={t}
-            forgedInRound={forgedInRound}
-            startTime={blocks[forgedInRound]?.timestamp}
-          />
-        )}
+      {activeDetailTab === 'overview' ? (
+        <DelegatesOverview registrations={registrations} t={t} totalBlocks={total} />
+      ) : (
+        <ForgingDetails
+          t={t}
+          forgedInRound={forgedInRound}
+          startTime={blocks[forgedInRound]?.timestamp}
+        />
+      )}
       <Box main>
         <BoxHeader className={`${styles.tabSelector} delegates-table`}>
-          {tabs.tabs.length === 1 ? (
-            <h2>{tabs.tabs[0].name}</h2>
-          ) : (
-            <BoxTabs {...tabs} />
-          )}
+          {tabs.tabs.length === 1 ? <h2>{tabs.tabs[0].name}</h2> : <BoxTabs {...tabs} />}
           <span className={activeTab === 'votes' ? 'hidden' : ''}>
             <Input
               icon={<Icon className={styles.searchIcon} name="searchActive" />}

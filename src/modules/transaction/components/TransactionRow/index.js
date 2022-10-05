@@ -18,6 +18,8 @@ const TransactionRow = ({
   avatarSize,
   activeToken,
   delegates,
+  address,
+  isWallet,
 }) => {
   const Layout = LayoutSchema[layout] || LayoutSchema.default;
 
@@ -34,10 +36,11 @@ const TransactionRow = ({
           activeToken,
           avatarSize,
           delegates,
+          address,
         }}
       >
         {Layout.components.map((Component, index) => (
-          <Component key={index} t={t} />
+          <Component key={index} t={t} isWallet={isWallet} />
         ))}
       </TransactionRowContext.Provider>
     </Link>

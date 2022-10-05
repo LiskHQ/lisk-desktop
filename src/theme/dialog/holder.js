@@ -4,9 +4,9 @@ import { withRouter } from 'react-router';
 
 import routesMap from 'src/routes/routesMap';
 import { modals } from 'src/routes/routes';
+import { useCurrentAccount } from '@account/hooks';
 import { parseSearchParams, removeSearchParamsFromUrl } from 'src/utils/searchParams';
 import { selectActiveToken } from 'src/redux/selectors';
-import { useCurrentAccount } from '@account/hooks';
 import styles from './dialog.css';
 
 // eslint-disable-next-line max-statements
@@ -15,11 +15,10 @@ const DialogHolder = ({ history }) => {
     const { modal = '' } = parseSearchParams(history.location.search);
     return routesMap[modal] ? modal : undefined;
   }, [history.location.search]);
-
+  const [currentAccount] = useCurrentAccount();
+  const isAuthenticated = Object.keys(currentAccount).length > 0;
   const activeToken = useSelector(selectActiveToken);
   const networkIsSet = useSelector((state) => !!state.network.name);
-  const [account] = useCurrentAccount();
-  const isAuthenticated = Object.keys(account).length > 0;
 
   const backdropRef = useRef();
   const [dismissed, setDismissed] = useState(false);

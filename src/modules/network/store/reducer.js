@@ -45,6 +45,20 @@ const network = (state = initialState, action) => {
         ...state,
         storedCustomNetwork: '',
       };
+    case actionTypes.schemasRetrieved:
+      return {
+        ...state,
+        networks: {
+          ...state.networks,
+          LSK: {
+            ...state.networks.LSK,
+            moduleCommandSchemas: action.data.reduce((acc, item) => {
+              acc[item.moduleCommand] = item.schema;
+              return acc;
+            }, {}),
+          },
+        },
+      };
     default:
       return state;
   }

@@ -1,27 +1,36 @@
 import { getTransactionBaseFees, getTransactionFee } from '@transaction/api';
-import { mountWithRouter } from 'src/utils/testHelpers';
+import { mockTokensBalance } from '@token/fungible/__fixtures__/mockTokens';
+import { mountWithRouterAndQueryClient } from 'src/utils/testHelpers';
 import mockManagedApplications from '@tests/fixtures/blockchainApplicationsManage';
-import { useCurrentApplication, useApplicationManagement } from '@blockchainApplication/manage/hooks';
+import mockSavedAccounts from '@tests/fixtures/accounts';
+import {
+  useCurrentApplication,
+  useApplicationManagement,
+} from '@blockchainApplication/manage/hooks';
+import { useCurrentAccount } from '@account/hooks';
 import wallets from '@tests/constants/wallets';
 import Send from './index';
+import { useTokensBalance } from '../../hooks/queries';
 
 const mockSetCurrentApplication = jest.fn();
 const mockSetApplication = jest.fn();
+const mockSetAccount = jest.fn();
 const mockCurrentApplication = mockManagedApplications[0];
 
 jest.mock('@blockchainApplication/manage/hooks/useApplicationManagement');
 jest.mock('@blockchainApplication/manage/hooks/useCurrentApplication');
+jest.mock('@account/hooks/useCurrentAccount');
 jest.mock('@transaction/api');
+jest.mock('@token/fungible/hooks/queries');
 
 useApplicationManagement.mockReturnValue({
   setApplication: mockSetApplication,
   applications: mockManagedApplications,
 });
 
-useCurrentApplication.mockReturnValue([
-  mockCurrentApplication,
-  mockSetCurrentApplication,
-]);
+useCurrentAccount.mockReturnValue([mockSavedAccounts[0], mockSetAccount]);
+useCurrentApplication.mockReturnValue([mockCurrentApplication, mockSetCurrentApplication]);
+useTokensBalance.mockReturnValue({ data: mockTokensBalance, isLoading: false });
 
 getTransactionBaseFees.mockResolvedValue({
   Low: 0,
@@ -41,26 +50,28 @@ const props = {
   wallet: {
     token: { balance: wallets.genesis.balance },
   },
-  t: v => v,
+  t: (v) => v,
   prevState: {
     fields: {},
   },
   bookmarks: {
-    LSK: [{
-      title: 'ABC',
-      address: '12345L',
-      balance: 10,
-    },
-    {
-      title: 'FRG',
-      address: '12375L',
-      balance: 15,
-    },
-    {
-      title: 'KTG',
-      address: '12395L',
-      balance: 7,
-    }],
+    LSK: [
+      {
+        title: 'ABC',
+        address: 'lskhbxua8tpdckcewntcttfqfo4rbatampo2dgrno',
+        balance: 10,
+      },
+      {
+        title: 'FRG',
+        address: 'lskhbxua8tpdckcewntcttfqfo4rbatampo2dgrno',
+        balance: 15,
+      },
+      {
+        title: 'KTG',
+        address: 'lskhbxua8tpdckcewntcttfqfo4rbatampo2dgrno',
+        balance: 7,
+      },
+    ],
   },
   history: {
     location: {
@@ -74,7 +85,7 @@ const props = {
 
 describe('Send', () => {
   it('should render properly getting data from URL', () => {
-    const wrapper = mountWithRouter(Send, props);
+    const wrapper = mountWithRouterAndQueryClient(Send, props);
     expect(wrapper).toContainMatchingElement('Dialog');
     expect(wrapper).toContainMatchingElement('MultiStep');
     expect(wrapper).toContainMatchingElement('SendForm');
@@ -86,7 +97,7 @@ describe('Send', () => {
     const newProps = { ...props };
     newProps.history.location.path = '';
     newProps.history.location.search = '';
-    const wrapper = mountWithRouter(Send, newProps);
+    const wrapper = mountWithRouterAndQueryClient(Send, newProps);
     wrapper.update();
     expect(wrapper).toContainMatchingElement('Dialog');
     expect(wrapper).toContainMatchingElement('MultiStep');

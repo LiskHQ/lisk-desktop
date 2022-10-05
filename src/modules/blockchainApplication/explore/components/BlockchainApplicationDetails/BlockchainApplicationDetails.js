@@ -4,7 +4,6 @@ import moment from 'moment';
 import Box from 'src/theme/box';
 import TokenAmount from '@token/fungible/components/tokenAmount';
 import ValueAndLabel from 'src/modules/transaction/components/TransactionDetails/valueAndLabel';
-import CopyToClipboard from 'src/modules/common/components/copyToClipboard';
 import { PrimaryButton, TertiaryButton } from 'src/theme/buttons';
 import grid from 'flexboxgrid/dist/flexboxgrid.css';
 import Dialog from '@theme/dialog/dialog';
@@ -29,7 +28,7 @@ const BlockchainApplicationDetails = ({ history, location, application }) => {
   const mode = parseSearchParams(location.search).mode;
   const { checkPinByChainId, togglePin } = usePinBlockchainApplication();
   const {
-    name, state, address, lastCertificateHeight, lastUpdated,
+    name, state, lastCertificateHeight, lastUpdated,
   } = application.data;
   const { setApplication } = useApplicationManagement();
 
@@ -82,21 +81,6 @@ const BlockchainApplicationDetails = ({ history, location, application }) => {
               <Icon data-testid="pin-button" name={isPinned ? 'pinnedIcon' : 'unpinnedIcon'} />
             </TertiaryButton>
           </div>
-          <Box className={styles.addressRow}>
-            <ValueAndLabel className={styles.transactionId}>
-              <span className="copy-address-wrapper">
-                <CopyToClipboard
-                  text={address}
-                  value={address}
-                  className="tx-id"
-                  containerProps={{
-                    size: 'xs',
-                    className: 'copy-address',
-                  }}
-                />
-              </span>
-            </ValueAndLabel>
-          </Box>
           <div className={styles.addressRow}>
             <a
               className={`${styles.appLink}`}

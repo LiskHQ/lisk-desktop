@@ -28,3 +28,40 @@ export const mockTokensSupported = {
     total: 5,
   },
 };
+
+export const mockAppsTokens = {
+  data: [
+    {
+      chainID: '00000001',
+      chainName: 'Lisk',
+      tokenID: '0000000100000000',
+      tokenName: 'Lisk',
+      networkType: 'mainnet',
+      description: 'Base token for the Lisk ecosystem',
+      denomUnits: [
+        {
+          denom: 'beddows',
+          decimals: 0,
+        },
+        {
+          denom: 'lisk',
+          decimals: 8,
+          aliases: ['Lisk'], // Optional
+        },
+      ],
+      baseDenom: 'beddows',
+      displayDenom: 'lisk',
+      symbol: 'LSK',
+      logo: {
+        png: 'https://downloads.lisk.com/lisk/images/tokens/lsk.png',
+        svg: 'https://downloads.lisk.com/lisk/images/tokens/lsk.svg',
+      },
+    },
+  ],
+  meta: {
+    count: 1,
+    offset: 0,
+    total: 1,
+  },
+  links: {},
+};

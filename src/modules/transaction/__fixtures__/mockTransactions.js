@@ -30,6 +30,7 @@ const transaction = (index) => ({
     id: 35998991827805762 + index,
     height: 8350681 + index,
     timestamp: 28227090,
+    isFinal: true,
   },
   confirmations: 22 + index,
   executionStatus: 'pending',

@@ -118,7 +118,7 @@ export default {
   wallet: {
     path: '/wallet',
     isPrivate: true,
-    exact: false,
+    exact: true,
     forbiddenTokens: [],
   },
   blockchainApplications: {
@@ -128,6 +128,12 @@ export default {
   },
   transactionDetails: {
     path: '/transactions/details',
+    exact: true,
+    isPrivate: false,
+    forbiddenTokens: [],
+  },
+  allTokens: {
+    path: '/wallet/tokens/all',
     exact: true,
     isPrivate: false,
     forbiddenTokens: [],

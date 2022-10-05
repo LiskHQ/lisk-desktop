@@ -1,23 +1,29 @@
-import React from 'react';
 import { act } from 'react-dom/test-utils';
-import { mount } from 'enzyme';
+import { mountWithQueryClient } from 'src/utils/testHelpers';
 import { tokenMap } from '@token/fungible/consts/tokens';
 import { fromRawLsk } from '@token/fungible/utils/lsk';
 import accounts from '@tests/constants/wallets';
 import flushPromises from '@tests/unit-test-utils/flushPromises';
 import { useApplicationManagement, useCurrentApplication } from '@blockchainApplication/manage/hooks';
 import mockManagedApplications from '@tests/fixtures/blockchainApplicationsManage';
+import { useCurrentAccount } from '@account/hooks';
 import { mockAppTokens } from '@tests/fixtures/token';
+import mockSavedAccounts from '@tests/fixtures/accounts';
+import { mockTokensBalance } from '@token/fungible/__fixtures__/mockTokens';
 import { useMessageField } from '../../hooks';
 import Form from './SendForm';
+import { useTokensBalance } from '../../hooks/queries';
 
 const mockSetMessage = jest.fn();
 const mockSetCurrentApplication = jest.fn();
+const mockSetAccount = jest.fn();
 const mockSetApplication = jest.fn();
 const mockCurrentApplication = mockManagedApplications[0];
 
 jest.mock('@blockchainApplication/manage/hooks/useApplicationManagement');
 jest.mock('@blockchainApplication/manage/hooks/useCurrentApplication');
+jest.mock('@account/hooks/useCurrentAccount');
+jest.mock('@token/fungible/hooks/queries');
 
 jest.mock('@transaction/hooks/useTransactionFeeCalculation', () => jest.fn().mockReturnValue({
   minFee: { value: 0.00001 },
@@ -31,6 +37,7 @@ describe('Form', () => {
   let props;
   let bookmarks;
 
+  useTokensBalance.mockReturnValue({ data: mockTokensBalance, isLoading: false });
   useApplicationManagement.mockReturnValue({
     setApplication: mockSetApplication,
     applications: mockManagedApplications,
@@ -41,6 +48,7 @@ describe('Form', () => {
     mockSetCurrentApplication,
   ]);
 
+  useCurrentAccount.mockReturnValue([mockSavedAccounts[0], mockSetAccount]);
   useMessageField.mockImplementation(jest.requireActual('../../hooks').useMessageField);
 
   beforeEach(() => {
@@ -71,7 +79,7 @@ describe('Form', () => {
   });
 
   it('should render properly', () => {
-    const wrapper = mount(<Form {...props} />);
+    const wrapper = mountWithQueryClient(Form, props);
     expect(wrapper).toContainMatchingElement('span.recipient');
     expect(wrapper).toContainMatchingElement('span.amount');
     expect(wrapper).toContainMatchingElement('.add-message-button');
@@ -90,18 +98,20 @@ describe('Form', () => {
       },
     };
 
-    const wrapper = mount(<Form {...{
-      ...props,
-      prevState: { rawTx },
-    }}
-    />);
+    const wrapper = mountWithQueryClient(
+      Form,
+      {
+        ...props,
+        prevState: { rawTx },
+      },
+    );
     expect(wrapper.find('input.recipient')).toHaveValue(address);
     expect(wrapper.find('.amount input')).toHaveValue(fromRawLsk(rawTx.params.amount));
     expect(wrapper.find('textarea[name="reference"]')).toHaveValue(rawTx.params.data);
   });
 
   it('should go to next step when submit button is clicked', async () => {
-    const wrapper = mount(<Form {...props} />);
+    const wrapper = mountWithQueryClient(Form, props);
     const { address } = accounts.genesis.summary;
     wrapper.find('input.recipient').simulate('change', { target: { name: 'recipient', value: address } });
     wrapper.find('.amount input').simulate('change', { target: { name: 'amount', value: '1' } });
@@ -117,7 +127,7 @@ describe('Form', () => {
 
   describe('Recipient field', () => {
     it('should validate bookmark', () => {
-      const wrapper = mount(<Form {...props} />);
+      const wrapper = mountWithQueryClient(Form, props);
       const evt = { target: { name: 'recipient', value: 'lsks6uckwnap7s72ov3edddwgxab5e89t6uy8gjt6' } };
       wrapper.find('input.recipient').simulate('change', evt);
       act(() => { jest.advanceTimersByTime(300); });
@@ -126,11 +136,12 @@ describe('Form', () => {
     });
 
     it('should validate address', () => {
-      const wrapper = mount(
-        <Form
-          {...props}
-          bookmarks={{ LSK: [] }}
-        />,
+      const wrapper = mountWithQueryClient(
+        Form,
+          {
+            ...props,
+            bookmarks: { LSK: [] },
+          },
       );
       const evt = { target: { name: 'recipient', value: 'invalid_address' } };
       wrapper.find('input.recipient').simulate('change', evt);
@@ -141,7 +152,7 @@ describe('Form', () => {
     });
 
     it('Should show bookmark title if address is a bookmark', () => {
-      const wrapper = mount(<Form {...props} />);
+      const wrapper = mountWithQueryClient(Form, props);
       const receipientEvt = { target: { name: 'recipient', value: bookmarks.LSK[0].address } };
       wrapper.find('input.recipient').simulate('change', receipientEvt);
       act(() => { jest.advanceTimersByTime(300); });
@@ -152,7 +163,7 @@ describe('Form', () => {
 
   describe('Amount field', () => {
     it('Should show converter on correct input', () => {
-      const wrapper = mount(<Form {...props} />);
+      const wrapper = mountWithQueryClient(Form, props);
       const evt = { target: { name: 'amount', value: 1 } };
       let amountField = wrapper.find('.fieldGroup').at(1);
 
@@ -167,7 +178,7 @@ describe('Form', () => {
     });
 
     it('Should add leading 0 if . is inserted as first character', () => {
-      const wrapper = mount(<Form {...props} />);
+      const wrapper = mountWithQueryClient(Form, props);
       const evt = { target: { name: 'amount', value: '.1' } };
       let amountField = wrapper.find('.fieldGroup').at(1);
       amountField.find('input').simulate('change', evt);
@@ -179,7 +190,7 @@ describe('Form', () => {
     });
 
     it('Should show error feedback if wrong data is inserted', async () => {
-      const wrapper = mount(<Form {...props} />);
+      const wrapper = mountWithQueryClient(Form, props);
       let amountField = wrapper.find('.fieldGroup').at(1);
       amountField.find('input').simulate('change', { target: { name: 'amount', value: 'abc' } });
       act(() => { jest.advanceTimersByTime(300); });
@@ -213,7 +224,7 @@ describe('Form', () => {
     });
 
     it('Should show error if transaction will result on an account with less than the minimum balance', () => {
-      const wrapper = mount(<Form {...props} />);
+      const wrapper = mountWithQueryClient(Form, props);
       const evt = { target: { name: 'amount', value: '2.01' } };
       const amountField = wrapper.find('.fieldGroup').at(1);
       amountField.find('input').simulate('change', evt);
@@ -225,7 +236,7 @@ describe('Form', () => {
     });
 
     it('Should show error if amount is negative', () => {
-      const wrapper = mount(<Form {...props} />);
+      const wrapper = mountWithQueryClient(Form, props);
       const evt = { target: { name: 'amount', value: '-1' } };
       const amountField = wrapper.find('.fieldGroup').at(1);
       amountField.find('input').simulate('change', evt);
@@ -237,7 +248,7 @@ describe('Form', () => {
     });
 
     it('Should allow to send 0 LSK amount', () => {
-      const wrapper = mount(<Form {...props} />);
+      const wrapper = mountWithQueryClient(Form, props);
       const receipientEvt = { target: { name: 'recipient', value: 'lsks6uckwnap7s72ov3edddwgxab5e89t6uy8gjt6' } };
       wrapper.find('input.recipient').simulate('change', receipientEvt);
       const evt = { target: { name: 'amount', value: '0' } };
@@ -253,7 +264,7 @@ describe('Form', () => {
 
   describe('Dropdown fields', () => {
     it('Should pre-populate the from and to dropdown to the current application', () => {
-      const wrapper = mount(<Form {...props} />);
+      const wrapper = mountWithQueryClient(Form, props);
       const fromChainDropdown = wrapper.find('div[data-testid="selected-menu-item"]').at(0);
       const toChainDropdown = wrapper.find('div[data-testid="selected-menu-item"]').at(1);
 
@@ -269,7 +280,7 @@ describe('Form', () => {
           token: mockAppTokens[1].tokenID,
         },
       };
-      const wrapper = mount(<Form {...props} />);
+      const wrapper = mountWithQueryClient(Form, props);
 
       const fromChainDropdown = wrapper.find('div[data-testid="selected-menu-item"]').at(0);
       const toChainDropdown = wrapper.find('div[data-testid="selected-menu-item"]').at(1);
@@ -282,7 +293,7 @@ describe('Form', () => {
 
   describe('Reference field', () => {
     it('Should show error feedback over limit of characters', () => {
-      const wrapper = mount(<Form {...props} />);
+      const wrapper = mountWithQueryClient(Form, props);
       wrapper.find('.add-message-button').at(0).simulate('click');
 
       let referenceField = wrapper.find('.reference').at(0);
@@ -311,7 +322,7 @@ describe('Form', () => {
         mockSetMessage,
       ]);
 
-      const wrapper = mount(<Form {...props} />);
+      const wrapper = mountWithQueryClient(Form, props);
       wrapper.find('.reference button').at(0).simulate('click');
       expect(mockSetMessage).toHaveBeenCalled();
     });
