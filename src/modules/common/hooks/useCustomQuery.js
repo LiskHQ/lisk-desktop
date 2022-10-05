@@ -25,7 +25,7 @@ import { getNetworkName } from 'src/modules/network/utils/getNetwork';
 // eslint-disable-next-line import/prefer-default-export
 export const useCustomQuery = ({
   keys,
-  config,
+  config = {},
   options = {},
   client = defaultClient
 }) => {
@@ -35,7 +35,7 @@ export const useCustomQuery = ({
 
   const axiosConfig = {
     ...config,
-    params: { ...(config?.params ?? {}), network: networkName }
+    params: { ...config.params, network: networkName }
   }
 
   return useQuery(

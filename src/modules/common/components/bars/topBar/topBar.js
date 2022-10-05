@@ -61,7 +61,7 @@ const TopBar = ({ t, history, noOfVotes, location }) => {
         <LightDarkToggle />
         <DiscreteModeToggle />
         {location.pathname !== routes.register.path && (
-          <Network t={t} />
+          <Network />
         )}
       </div>
     </div>
