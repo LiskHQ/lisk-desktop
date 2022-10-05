@@ -22,40 +22,32 @@
 
   & .noPadding {
     padding: 0 0 var(--horizontal-padding-l) 0;
+
+    & > div {
+      display: flex;
+    }
+
+    & span {
+      text-align: center !important;
+    }
   }
 
-  & .walletInfo {
-    color: var(--color-ink-blue);
-    border: var(--balance-border);
-    box-shadow: var(--balance-shadow);
-    border-radius: 6px;
-    padding: var(--vertical-padding-l) var(--horizontal-padding-l);
-    position: relative;
-    background-image: url('../../../../../../setup/react/assets/images/waves_pattern.svg');
-    background-color: var(--color-balance-bg);
+  & header {
+    display: flex !important;
+    justify-content: center !important;
+    align-items: center !important;
 
-    & .balanceTitle {
-      font-size: var(--font-size-small-secondary);
-      margin: 0 0 5px 0;
+    & > h1 {
+      font-size: var(--font-size-h3) !important;
+      font-weight: var(--font-weight-very-bold) !important;
     }
+  }
 
-    & .balanceDetails {
-      display: flex;
-      flex: 1;
-      font-family: var(--heading-font);
-      font-weight: var(--font-weight-bold);
-
-      & .lskValue {
-        font-size: var(--font-size-h6);
-      }
-
-      & .fiatValue {
-        color: var(--color-fait-value);
-        opacity: 0.8;
-        position: absolute;
-        right: var(--vertical-padding-l);
-      }
-    }
+  & .accountInfo {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
   }
 
   & button.confirmButton {

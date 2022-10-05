@@ -1,10 +1,8 @@
-import React, { useEffect, useState } from 'react';
-import { useSelector } from 'react-redux';
-import {
-  selectSearchParamValue,
-  removeSearchParamsFromUrl,
-} from 'src/utils/searchParams';
-import { tokenMap } from '@token/fungible/consts/tokens';
+import React, { useMemo, useState } from 'react';
+import { useTranslation } from 'react-i18next';
+import { selectSearchParamValue, removeSearchParamsFromUrl } from 'src/utils/searchParams';
+// import { tokenMap } from '@token/fungible/consts/tokens';
+import { useCurrentAccount } from 'src/modules/account/hooks';
 import { toRawLsk, fromRawLsk } from '@token/fungible/utils/lsk';
 import Dialog from 'src/theme/dialog/dialog';
 import Box from 'src/theme/box';
@@ -13,50 +11,93 @@ import BoxFooter from 'src/theme/box/footer';
 import BoxHeader from 'src/theme/box/header';
 import BoxInfoText from 'src/theme/box/infoText';
 import AmountField from 'src/modules/common/components/amountField';
-import TokenAmount from '@token/fungible/components/tokenAmount';
-import Converter from 'src/modules/common/components/converter';
+import WalletVisual from 'src/modules/wallet/components/walletVisual';
+// import TokenAmount from '@token/fungible/components/tokenAmount';
+// import Converter from 'src/modules/common/components/converter';
 import WarnPunishedDelegate from '@dpos/validator/components/WarnPunishedDelegate';
+import { useBlocks } from 'src/modules/block/hooks/queries/useBlocks';
 import { PrimaryButton, WarningButton } from 'src/theme/buttons';
 import useVoteAmountField from '../../hooks/useVoteAmountField';
-import getMaxAmount from '../../utils/getMaxAmount';
+// import getMaxAmount from '../../utils/getMaxAmount';
 import styles from './editVote.css';
+import { useSentVotes } from '../../hooks/queries';
+import { NUMBER_OF_BLOCKS_PER_DAY } from '../../consts';
 
 const getTitles = (t) => ({
   edit: {
     title: t('Edit vote'),
     description: t(
-      'Increase or decrease your vote amount, or remove your vote from this delegate. Your updated vote will be added to the voting queue.',
+      'Increase or decrease your vote amount, or remove your vote from this delegate. Your updated vote will be added to the voting queue.'
     ),
   },
   add: {
-    title: t('Add vote'),
+    title: t('Add to voting queue'),
     description: t(
-      'Insert a vote amount for this delegate. Your new vote will be added to the voting queue.',
+      'Input your vote amount. This value shows how much trust you have in this delegate. '
     ),
   },
 });
 
 // eslint-disable-next-line max-statements
-const EditVote = ({
-  history, t, currentHeight, wallet, network, voting, voteEdited,
-}) => {
-  const [address, start, end] = selectSearchParamValue(history.location.search, ['address', 'start', 'end']);
-  const existingVote = useSelector((state) => state.voting[address || wallet.summary.address]);
+const EditVote = ({ history, voteEdited }) => {
+  const { t } = useTranslation();
+  const [
+    {
+      metadata: { address: currentAddress },
+    },
+  ] = useCurrentAccount();
+
+  const [address, start, end] = selectSearchParamValue(history.location.search, [
+    'address',
+    'start',
+    'end',
+  ]);
+
+  const { data: blocks } = useBlocks({ config: { params: { limit: 1 } } });
+  const currentHeight = useMemo(() => blocks?.data?.[0]?.height, [blocks]);
+
+  const { data: sentVotes, isLoading: sentVotesLoading } = useSentVotes({
+    config: { params: { address: currentAddress } },
+  });
+
+  const hasSentVoteToDelegate = useMemo(() => {
+    const votes = sentVotes?.data?.votes;
+    if (!votes) return false;
+
+    return votes.some(({ delegateAddress }) => delegateAddress === address);
+  }, [sentVotes]);
+
+  const totalVoteAmount = useMemo(() => {
+    if (!hasSentVoteToDelegate && !sentVotesLoading) return 0;
+
+    const votes = sentVotes?.data?.votes;
+
+    if (votes) {
+      return votes.reduce(
+        (total, { delegateAddress, amount }) =>
+          delegateAddress === address ? total + amount : total,
+        0
+      );
+    }
+
+    return 0;
+  }, [sentVotes]);
+
   const [voteAmount, setVoteAmount] = useVoteAmountField(
-    existingVote ? fromRawLsk(existingVote.unconfirmed) : '',
+    hasSentVoteToDelegate ? fromRawLsk(totalVoteAmount) : ''
   );
-  const mode = existingVote ? 'edit' : 'add';
-  const [maxAmount, setMaxAmount] = useState(0);
-  useEffect(() => {
-    getMaxAmount(wallet, network, voting, address || wallet.summary.address).then(
-      setMaxAmount,
-    );
-  }, [wallet, voting]);
+
+  const mode = hasSentVoteToDelegate ? 'edit' : 'add';
+  const [maxAmount /* setMaxAmount */] = useState(0);
+
+  // useEffect(() => {
+  //   getMaxAmount(wallet, network, voting, address || wallet.summary.address).then(setMaxAmount);
+  // }, [wallet, voting]);
 
   const confirm = () => {
     voteEdited([
       {
-        address: address || wallet.summary.address,
+        address: address || currentAddress,
         amount: toRawLsk(voteAmount.value),
       },
     ]);
@@ -69,7 +110,7 @@ const EditVote = ({
   const removeVote = () => {
     voteEdited([
       {
-        address: address || wallet.summary.address,
+        address: address || currentAddress,
         amount: 0,
       },
     ]);
@@ -77,11 +118,7 @@ const EditVote = ({
     removeSearchParamsFromUrl(history, ['modal']);
   };
 
-  // 6: blocks per minute, 60: minutes, 24: hours
-  const numOfBlockPerDay = 24 * 60 * 6;
-  const daysLeft = Math.ceil(
-    (parseInt(end, 10) - currentHeight) / numOfBlockPerDay,
-  );
+  const daysLeft = Math.ceil((parseInt(end, 10) - currentHeight) / NUMBER_OF_BLOCKS_PER_DAY);
 
   return (
     <Dialog hasClose className={styles.wrapper}>
@@ -93,20 +130,9 @@ const EditVote = ({
           <BoxInfoText>
             <span>{titles.description}</span>
           </BoxInfoText>
-          <BoxInfoText className={styles.walletInfo}>
-            <p className={styles.balanceTitle}>
-              {t('Available balance for voting')}
-            </p>
-            <div className={styles.balanceDetails}>
-              <span className={styles.lskValue}>
-                <TokenAmount val={maxAmount} token={tokenMap.LSK.key} />
-              </span>
-              <Converter
-                className={styles.fiatValue}
-                value={fromRawLsk(maxAmount)}
-                error=""
-              />
-            </div>
+          <BoxInfoText className={styles.accountInfo}>
+            <WalletVisual size={40} address={address || currentAddress} />
+            <p>{}</p>
           </BoxInfoText>
           {daysLeft >= 1 && start !== undefined && (
             <>
@@ -123,10 +149,8 @@ const EditVote = ({
               label={t('Vote amount (LSK)')}
               labelClassname={`${styles.fieldLabel}`}
               placeholder={t('Insert vote amount')}
-              useMaxLabel={t('Use maximum amount')}
-              useMaxWarning={t(
-                'Caution! You are about to send the majority of your balance',
-              )}
+              // useMaxLabel={t('Use maximum amount')}
+              // useMaxWarning={t('Caution! You are about to send the majority of your balance')}
               name="vote"
             />
           </label>
