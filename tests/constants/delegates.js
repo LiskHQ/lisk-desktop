@@ -14,7 +14,7 @@ const delegate = index => ({
       end: 500 + index,
     },
   ],
-  consecutiveMissedBlocks: index < 15 ? index : 0,
+  consecutiveMissedBlocks: index < 15 ? index + 1 : 0,
 });
 
 const delegates = Array(30).fill(1).map((item, index) => delegate(index));

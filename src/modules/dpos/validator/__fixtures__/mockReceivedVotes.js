@@ -1,9 +1,9 @@
 /* eslint-disable  max-lines, import/prefer-default-export */
 
 const generateVote = (index) => ({
-  delegateAddress: `lsk24cd35u4jdq8sz${index}ptrn47dsxwrnazyhhkg5eu`,
+  delegateAddress: `lsktzb4j7e3knk4mkxckdr3y69gtu2nwmsb3hjbkg`,
   amount: `1000${index}`,
-  name: 'liskhq',
+  name: `liskhq-${index}`,
 });
 
 const data = {
