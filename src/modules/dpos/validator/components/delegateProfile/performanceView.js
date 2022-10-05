@@ -123,8 +123,8 @@ const getDelegateComponent = (status) => {
 const PerformanceView = ({ data }) => {
   const { t } = useTranslation();
   const theme = useTheme();
-  const status = data.status;
-  const DelegateComponent = getDelegateComponent(status);
+  const status = data.status || '';
+  const DelegateComponent = status.length ? getDelegateComponent(status) : () => null;
 
   return (
     <Box

@@ -154,7 +154,7 @@
     "lodash.throttle": "4.1.1",
     "lottie-web": "5.5.5",
     "moment": "2.23.0",
-    "msw": "0.44.2",
+    "msw": "0.47.4",
     "node-abi": "3.8.0",
     "node-hid": "2.1.1",
     "numeral": "git+https://github.com/LiskHQ/Numeral-js.git",
