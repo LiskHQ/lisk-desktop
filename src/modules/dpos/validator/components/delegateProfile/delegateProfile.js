@@ -54,7 +54,7 @@ const DelegateProfile = ({ history }) => {
     const daysLeft = Math.ceil((end - currentHeight) / numOfBlockPerDay);
 
     if (
-      delegate &&
+      delegate.address &&
       address !== currentAddress && // this ensures we are checking against a delegate account that is not the current user
       address &&
       (isBanned || pomHeights?.length) &&

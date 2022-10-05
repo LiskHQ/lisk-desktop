@@ -59,8 +59,8 @@ const DetailsView = ({ data }) => {
           <div className={`${grid.col} ${styles.item}`}>
             <div className={`${styles.title} ${theme}`}>{t('Last block forged')}</div>
             <div className={styles.value}>
-              {lastBlockForged ? (
-                <DateTimeFromTimestamp fulltime className="date" time={lastBlockForged} />
+              {lastBlockForged.timestamp ? (
+                <DateTimeFromTimestamp fulltime className="date" time={lastBlockForged.timestamp} />
               ) : (
                 '-'
               )}
