@@ -71,7 +71,7 @@ describe('Delegate Profile', () => {
         `${numeral(fromRawLsk(mockDelegates.data[0].voteWeight)).format('0,0.[0000000000000]')} LSK`
       )
     ).toBeTruthy();
-    expect(screen.getByText(`30 Sep 2019, 03:25:30 PM`)).toBeTruthy();
+    expect(screen.getByText(`30 Sep 2019, 02:25:30 PM`)).toBeTruthy();
 
     expect(screen.getByText('Rank')).toBeTruthy();
     expect(screen.getByTestId('addressFilter')).toBeTruthy();
@@ -164,5 +164,70 @@ describe('Delegate Profile', () => {
         'The delegate is permanently banned from generating blocks due to repeated protocol violations or missing too many blocks.'
       )
     ).toBeTruthy();
+  });
+
+  it('Should render the vote delegate button', () => {
+    useDelegates.mockReturnValue({
+      data: {
+        ...mockDelegates,
+        data: mockDelegates.data.map((data) => ({ ...data, status: 'banned' })),
+      },
+    });
+    useSentVotes.mockReturnValue({ data: {} });
+
+    wrapper.rerender(
+      <MemoryRouter>
+        <DelegateProfile {...props} />
+      </MemoryRouter>
+    );
+
+    expect(screen.getByText('Vote delegate')).toBeTruthy();
+  });
+
+  it('Should render the vote delegate button', () => {
+    useDelegates.mockReturnValue({
+      data: {
+        ...mockDelegates,
+        data: mockDelegates.data.map((data) => ({ ...data, status: 'banned' })),
+      },
+    });
+    useSentVotes.mockReturnValue({ data: {} });
+
+    wrapper.rerender(
+      <MemoryRouter>
+        <DelegateProfile {...props} />
+      </MemoryRouter>
+    );
+
+    expect(screen.getByText('Vote delegate')).toBeTruthy();
+  });
+
+  it('Should render the Edit vote button', () => {
+    useDelegates.mockReturnValue({
+      data: {
+        ...mockDelegates,
+        data: mockDelegates.data.map((data) => ({ ...data, status: 'banned' })),
+      },
+    });
+    useSentVotes.mockReturnValue({
+      data: {
+        ...mockReceivedVotes,
+        data: {
+          ...mockReceivedVotes.data,
+          votes: mockReceivedVotes.data.votes.map((vote) => ({
+            ...vote,
+            delegateAddress: mockedCurrentAccount.metadata.address,
+          })),
+        },
+      },
+    });
+
+    wrapper.rerender(
+      <MemoryRouter>
+        <DelegateProfile {...props} />
+      </MemoryRouter>
+    );
+
+    expect(screen.getByText('Edit vote')).toBeTruthy();
   });
 });

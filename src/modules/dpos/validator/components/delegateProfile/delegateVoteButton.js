@@ -19,7 +19,7 @@ function DelegateVoteButton({ currentAddress, address, isBanned }) {
 
   return hasSentVoteToDelegate ? (
     <DialogLink>
-      <SecondaryButton disabled={sentVotesLoading || isBanned}>{t('Edit Vote')}</SecondaryButton>
+      <SecondaryButton disabled={sentVotesLoading || isBanned}>{t('Edit vote')}</SecondaryButton>
     </DialogLink>
   ) : (
     <DialogLink>

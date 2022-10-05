@@ -48,4 +48,18 @@ describe('Delegate votes view', () => {
 
     expect(mockApplyFilters).toHaveBeenCalledWith({ search: 'test' });
   });
+
+  it('Should not render search input', () => {
+    useFilter.mockReturnValue({
+      filters: { adress: props.address },
+      applyFilters: mockApplyFilters,
+      clearFilters: mockClearFilters,
+    });
+    useReceivedVotes.mockReturnValue({ data: {} });
+
+    render(<DelegateVotesView {...props} />);
+
+    expect(screen.queryByTestId('addressFilter')).toBeFalsy();
+    expect(screen.getByText('(...)')).toBeTruthy();
+  });
 });
