@@ -1,4 +1,5 @@
 /* istanbul ignore file */
+import { useSelector } from 'react-redux';
 import { useInfiniteQuery } from '@tanstack/react-query';
 import {
   METHOD,
@@ -6,6 +7,7 @@ import {
 import defaultClient from 'src/utils/api/client';
 import { APPLICATION } from 'src/const/queries';
 import { useCurrentApplication } from '@blockchainApplication/manage/hooks';
+import { getNetworkName } from 'src/modules/network/utils/getNetwork';
 
 /**
  * Creates a custom hook for inifinite queries
@@ -29,6 +31,9 @@ export const useCustomInfiniteQuery = ({
   client = defaultClient
 }) => {
   const [{ chainID }] = useCurrentApplication();
+  const network = useSelector(state => state.network);
+  const networkName = getNetworkName(network)
+
   return useInfiniteQuery(
     [chainID, config, APPLICATION, METHOD, ...keys],
     async ({ pageParam }) => client[METHOD]({
@@ -36,6 +41,7 @@ export const useCustomInfiniteQuery = ({
       params: {
         ...(config.params || {}),
         ...pageParam,
+        network: networkName
       },
     }),
     {
