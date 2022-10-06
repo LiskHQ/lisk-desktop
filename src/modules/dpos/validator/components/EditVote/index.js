@@ -1,9 +1,14 @@
-import React, { useMemo, useState } from 'react';
+/* eslint-disable complexity */
+import React, { /* useEffect, */ useMemo, useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import { selectSearchParamValue, removeSearchParamsFromUrl } from 'src/utils/searchParams';
-// import { tokenMap } from '@token/fungible/consts/tokens';
+import {
+  selectSearchParamValue,
+  removeSearchParamsFromUrl,
+  removeThenAppendSearchParamsToUrl,
+} from 'src/utils/searchParams';
 import { useCurrentAccount } from 'src/modules/account/hooks';
-import { toRawLsk, fromRawLsk } from '@token/fungible/utils/lsk';
+import { toRawLsk } from '@token/fungible/utils/lsk';
+import { useTokensBalance } from 'src/modules/token/fungible/hooks/queries';
 import Dialog from 'src/theme/dialog/dialog';
 import Box from 'src/theme/box';
 import BoxContent from 'src/theme/box/content';
@@ -12,11 +17,10 @@ import BoxHeader from 'src/theme/box/header';
 import BoxInfoText from 'src/theme/box/infoText';
 import AmountField from 'src/modules/common/components/amountField';
 import WalletVisual from 'src/modules/wallet/components/walletVisual';
-// import TokenAmount from '@token/fungible/components/tokenAmount';
-// import Converter from 'src/modules/common/components/converter';
+import TokenAmount from '@token/fungible/components/tokenAmount';
 import WarnPunishedDelegate from '@dpos/validator/components/WarnPunishedDelegate';
 import { useBlocks } from 'src/modules/block/hooks/queries/useBlocks';
-import { PrimaryButton, WarningButton } from 'src/theme/buttons';
+import { PrimaryButton, SecondaryButton, WarningButton } from 'src/theme/buttons';
 import useVoteAmountField from '../../hooks/useVoteAmountField';
 // import getMaxAmount from '../../utils/getMaxAmount';
 import styles from './editVote.css';
@@ -46,11 +50,14 @@ const EditVote = ({ history, voteEdited }) => {
       metadata: { address: currentAddress },
     },
   ] = useCurrentAccount();
+  const [isForm, setIsForm] = useState(true);
+  const dposTokenId = 1234565; // this is just a place holder pending when service confirms where this can be gotten from.
 
   const [address] = selectSearchParamValue(history.location.search, ['address']);
+  const delegateAddress = address || currentAddress;
 
   const { data: delegates, isLoading: isLoadingDelegates } = useDelegates({
-    config: { params: { address: address || currentAddress } },
+    config: { params: { address: delegateAddress } },
   });
 
   const delegate = useMemo(() => delegates?.data?.[0] || {}, [isLoadingDelegates]);
@@ -59,9 +66,12 @@ const EditVote = ({ history, voteEdited }) => {
   const { data: blocks } = useBlocks({ config: { params: { limit: 1 } } });
   const currentHeight = useMemo(() => blocks?.data?.[0]?.height, [blocks]);
 
-  const { data: sentVotes, isLoading: sentVotesLoading } = useSentVotes({
+  const { data: sentVotes } = useSentVotes({
     config: { params: { address: currentAddress } },
   });
+
+  const { data: tokens } = useTokensBalance({ config: { params: { tokenID: dposTokenId } } });
+  const token = useMemo(() => tokens?.data?.[0] || {}, [tokens]);
 
   const [start = delegatePomHeight.start, end = delegatePomHeight.end] = selectSearchParamValue(
     history.location.search,
@@ -72,55 +82,46 @@ const EditVote = ({ history, voteEdited }) => {
     const votes = sentVotes?.data?.votes;
     if (!votes) return false;
 
-    return votes.some(({ delegateAddress }) => delegateAddress === (address || currentAddress));
+    return votes.some(({ delegateAddress: dAddress }) => dAddress === delegateAddress);
   }, [sentVotes]);
 
-  const totalVoteAmount = useMemo(() => {
-    if (!hasSentVoteToDelegate && !sentVotesLoading) return 0;
-
-    const votes = sentVotes?.data?.votes;
-
-    if (votes) {
-      return votes.reduce(
-        (total, { delegateAddress, amount }) =>
-          delegateAddress === address ? total + amount : total,
-        0
-      );
-    }
-
-    return 0;
-  }, [sentVotes]);
-
-  const [voteAmount, setVoteAmount] = useVoteAmountField(
-    hasSentVoteToDelegate ? fromRawLsk(totalVoteAmount) : ''
-  );
+  const [voteAmount, setVoteAmount] = useVoteAmountField(0);
 
   const mode = hasSentVoteToDelegate ? 'edit' : 'add';
-  const [maxAmount /* setMaxAmount */] = useState(0);
+  const titles = getTitles(t)[mode];
+  const [maxAmount] = useState(0);
 
   // useEffect(() => {
-  //   getMaxAmount(wallet, network, voting, address || wallet.summary.address).then(setMaxAmount);
-  // }, [wallet, voting]);
+  //   getMaxAmount(wallet, network, voting, delegateAddress).then(setMaxAmount);
+  // }, [delegate, address]);
 
-  const confirm = () => {
+  const handleConfirm = () => {
+    if (!isForm) {
+      removeThenAppendSearchParamsToUrl(history, { modal: 'votingQueue' }, ['modal']);
+      return;
+    }
+
     voteEdited([
       {
-        address: address || currentAddress,
+        address: delegateAddress,
         amount: toRawLsk(voteAmount.value),
         name: delegate.name,
       },
     ]);
 
-    removeSearchParamsFromUrl(history, ['modal']);
+    setIsForm(false);
   };
 
-  const titles = getTitles(t)[mode];
+  const handleContinueVoting = () => {
+    setVoteAmount(0);
+    setIsForm(true);
+  };
 
   const removeVote = () => {
     voteEdited([
       {
         name: delegate.name,
-        address: address || currentAddress,
+        address: delegateAddress,
         amount: 0,
       },
     ]);
@@ -131,54 +132,72 @@ const EditVote = ({ history, voteEdited }) => {
   const daysLeft = Math.ceil((parseInt(end, 10) - currentHeight) / NUMBER_OF_BLOCKS_PER_DAY);
 
   return (
-    <Dialog hasClose className={styles.wrapper}>
+    <Dialog hasClose className={`${styles.wrapper} ${!isForm ? styles.confirmWrapper : ''}`}>
       <Box>
         <BoxHeader>
-          <h1>{titles.title}</h1>
+          <h1>{isForm ? titles.title : t('Vote added')}</h1>
         </BoxHeader>
         <BoxContent className={styles.noPadding}>
           <BoxInfoText>
-            <span>{titles.description}</span>
+            <span>
+              {isForm ? titles.description : t('Your vote has been added to your voting queue')}
+            </span>
           </BoxInfoText>
-          <BoxInfoText className={styles.accountInfo}>
-            <WalletVisual size={40} address={address || currentAddress} />
-            <p>{delegate.name}</p>
-            <p>{delegate.address}</p>
-          </BoxInfoText>
-          <label className={styles.fieldGroup}>
-            <p className={styles.availableBalance}>
-              {t('Available Bal:')} <span>9000</span>
-            </p>
-            <AmountField
-              amount={voteAmount}
-              onChange={setVoteAmount}
-              maxAmount={{ value: maxAmount }}
-              displayConverter
-              label={t('Vote amount (LSK)')}
-              labelClassname={`${styles.fieldLabel}`}
-              placeholder={t('Insert vote amount')}
-              name="vote"
-            />
-          </label>
-          {daysLeft >= 1 && start !== undefined && (
+          {isForm && (
             <>
-              <WarnPunishedDelegate pomHeight={{ start, end }} vote />
-              <span className={styles.space} />
+              <BoxInfoText className={styles.accountInfo}>
+                <WalletVisual size={40} address={delegateAddress} />
+                <p>{delegate.name}</p>
+                <p>{delegate.address}</p>
+              </BoxInfoText>
+              <label className={styles.fieldGroup}>
+                <p className={styles.availableBalance}>
+                  {t('Available Bal: ')}
+                  <span>
+                    <TokenAmount token={token.symbol} val={token.availableBalance} />
+                  </span>
+                </p>
+                <AmountField
+                  amount={voteAmount}
+                  onChange={setVoteAmount}
+                  maxAmount={{ value: maxAmount }}
+                  displayConverter
+                  label={t('Vote amount ({{symbol}})', { symbol: token.symbol })}
+                  labelClassname={`${styles.fieldLabel}`}
+                  placeholder={t('Insert vote amount')}
+                  name="vote"
+                />
+              </label>
+              {daysLeft >= 1 && start !== undefined && (
+                <>
+                  <WarnPunishedDelegate pomHeight={{ start, end }} vote />
+                  <span className={styles.space} />
+                </>
+              )}
             </>
           )}
         </BoxContent>
-        <BoxFooter direction="horizontal">
+        <BoxFooter direction="vertical">
           {mode === 'edit' && (
             <WarningButton className="remove-vote" onClick={removeVote}>
               {t('Remove vote')}
             </WarningButton>
           )}
+          {!isForm && (
+            <SecondaryButton
+              className={`${styles.confirmButton}`}
+              onClick={handleContinueVoting}
+              disabled={voteAmount.error}
+            >
+              {t('Continue voting')}
+            </SecondaryButton>
+          )}
           <PrimaryButton
             className={`${styles.confirmButton} confirm`}
-            onClick={confirm}
+            onClick={handleConfirm}
             disabled={voteAmount.error}
           >
-            {t('Confirm')}
+            {t(isForm ? 'Confirm' : 'Go to the voting queue')}
           </PrimaryButton>
         </BoxFooter>
       </Box>

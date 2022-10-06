@@ -84,7 +84,7 @@ describe('actions: voting', () => {
         address: 'dummy',
         amount: 1e10,
       }];
-      await voteEdited(data)(dispatch, getState);
+      await voteEdited(data)(dispatch);
       expect(accountApi.getAccount).toHaveBeenCalled();
     });
 
@@ -94,7 +94,7 @@ describe('actions: voting', () => {
         amount: 1e10,
         username: 'genesis',
       }];
-      await voteEdited(data)(dispatch, getState);
+      await voteEdited(data)(dispatch);
       expect(accountApi.getAccount).not.toHaveBeenCalled();
     });
   });
