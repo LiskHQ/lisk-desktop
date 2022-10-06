@@ -59,13 +59,17 @@ describe('RegisterDelegateForm', () => {
       useDelegateKey.mockReturnValue([empty, setKey]);
       const wrapper = mountWithQueryClient(RegisterDelegateForm, props);
 
-      wrapper.find('input.select-name-input')
+      wrapper
+        .find('input.select-name-input')
         .simulate('change', { target: { value: 'mydelegate' } });
-      wrapper.find('input.generator-publicKey-input')
+      wrapper
+        .find('input.generator-publicKey-input')
         .simulate('change', { target: { value: genKey.value, name: 'generatorPublicKey' } });
-      wrapper.find('input.bls-key-input')
+      wrapper
+        .find('input.bls-key-input')
         .simulate('change', { target: { value: blsKey.value, name: 'blsPublicKey' } });
-      wrapper.find('input.pop-input')
+      wrapper
+        .find('input.pop-input')
         .simulate('change', { target: { value: pop.value, name: 'proofOfPossession' } });
       expect(setName).toHaveBeenCalledTimes(1);
       expect(setKey).toHaveBeenCalledWith(genKey.value);
@@ -141,6 +145,7 @@ describe('RegisterDelegateForm', () => {
     const rawTx = {
       fees: {
         Transaction: '0 LSK',
+        Initialisation: '0 LSK',
       },
       rawTx: {
         fee: 0,
