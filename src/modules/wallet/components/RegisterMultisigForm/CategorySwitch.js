@@ -2,7 +2,7 @@ import React from 'react';
 import { useTranslation } from 'react-i18next';
 import styles from './styles.css';
 
-const CategorySwitch = ({ changeCategory, index }) => {
+const CategorySwitch = ({ changeCategory, isMandatory, index }) => {
   const { t } = useTranslation();
   return (
     <div className={styles.categoryWrapper} onChange={changeCategory}>
@@ -11,7 +11,7 @@ const CategorySwitch = ({ changeCategory, index }) => {
         id={`mandatory-${index}`}
         name={`member-category-${index}`}
         value="mandatory"
-        defaultChecked
+        defaultChecked={isMandatory}
       />
       <label
         htmlFor={`mandatory-${index}`}
@@ -24,6 +24,7 @@ const CategorySwitch = ({ changeCategory, index }) => {
         id={`optional-${index}`}
         name={`member-category-${index}`}
         value="optional"
+        defaultChecked={!isMandatory}
       />
       <label
         htmlFor={`optional-${index}`}

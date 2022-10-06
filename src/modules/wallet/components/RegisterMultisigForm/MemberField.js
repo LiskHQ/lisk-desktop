@@ -38,7 +38,7 @@ const MemberField = ({
           placeholder={t('Public Key')}
           size="m"
         />
-        <CategorySwitch changeCategory={changeCategory} index={index} />
+        <CategorySwitch changeCategory={changeCategory} isMandatory={isMandatory} index={index} />
       </div>
       {showDeleteIcon && (
         <span className={`${styles.deleteIcon} delete-icon`} onClick={deleteMember}>

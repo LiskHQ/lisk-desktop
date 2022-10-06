@@ -415,6 +415,7 @@
   "Provide a signature for a transaction which belongs to a multisignature account.": "Provide a signature for a transaction which belongs to a multisignature account.",
   "Provided amount is higher than your current balance.": "Provided amount is higher than your current balance.",
   "Provided amount will result in a wallet with less than the minimum balance.": "Provided amount will result in a wallet with less than the minimum balance.",
+  "Public Key": "Public Key",
   "Public key": "Public key",
   "Quit": "Quit",
   "Rank": "Rank",

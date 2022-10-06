@@ -4,7 +4,7 @@ import wallets from '@tests/constants/wallets';
 import MemberField from './MemberField';
 
 const props = {
-  t: str => str,
+  t: (str) => str,
   index: 1,
   publicKey: wallets.genesis.summary.publicKey,
   isMandatory: true,
@@ -16,12 +16,14 @@ const props = {
 describe('MemberField', () => {
   it('displays member category as mandatory by default', () => {
     const wrapper = mount(<MemberField {...props} />);
-    expect(wrapper.find('.mandatory-toggle').last()).toHaveText('Mandatory');
+    expect(wrapper.find('.mandatory-toggle').first()).toHaveText('Mandatory');
   });
 
   it('changes member category to optional', () => {
     const wrapper = mount(<MemberField {...props} />);
-    wrapper.find('.select-optional').simulate('click');
+    wrapper
+      .find('.select-optional')
+      .simulate('change', { target: { checked: true, value: 'optional' } });
     const expectedObj = { index: props.index, publicKey: props.publicKey, isMandatory: false };
     expect(props.onChangeMember).toHaveBeenCalledWith(expectedObj);
   });
@@ -32,7 +34,9 @@ describe('MemberField', () => {
       isMandatory: false,
     };
     const wrapper = mount(<MemberField {...updatedProps} />);
-    wrapper.find('.option.select-mandatory').simulate('click');
+    wrapper
+      .find('.select-mandatory')
+      .simulate('change', { target: { checked: true, value: 'mandatory' } });
     const expectedObj = { index: props.index, publicKey: props.publicKey, isMandatory: true };
     expect(props.onChangeMember).toHaveBeenCalledWith(expectedObj);
   });
