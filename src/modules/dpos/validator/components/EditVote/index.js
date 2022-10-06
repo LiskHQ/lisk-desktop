@@ -47,17 +47,14 @@ const EditVote = ({ history, voteEdited }) => {
     },
   ] = useCurrentAccount();
 
-  const [address, start, end] = selectSearchParamValue(history.location.search, [
-    'address',
-    'start',
-    'end',
-  ]);
+  const [address] = selectSearchParamValue(history.location.search, ['address']);
 
   const { data: delegates, isLoading: isLoadingDelegates } = useDelegates({
     config: { params: { address: address || currentAddress } },
   });
 
   const delegate = useMemo(() => delegates?.data?.[0] || {}, [isLoadingDelegates]);
+  const delegatePomHeight = useMemo(() => delegate.pomHeights?.[0] || {}, [delegate]);
 
   const { data: blocks } = useBlocks({ config: { params: { limit: 1 } } });
   const currentHeight = useMemo(() => blocks?.data?.[0]?.height, [blocks]);
@@ -66,11 +63,16 @@ const EditVote = ({ history, voteEdited }) => {
     config: { params: { address: currentAddress } },
   });
 
+  const [start = delegatePomHeight.start, end = delegatePomHeight.end] = selectSearchParamValue(
+    history.location.search,
+    ['start', 'end']
+  );
+
   const hasSentVoteToDelegate = useMemo(() => {
     const votes = sentVotes?.data?.votes;
     if (!votes) return false;
 
-    return votes.some(({ delegateAddress }) => delegateAddress === address);
+    return votes.some(({ delegateAddress }) => delegateAddress === (address || currentAddress));
   }, [sentVotes]);
 
   const totalVoteAmount = useMemo(() => {
@@ -105,6 +107,7 @@ const EditVote = ({ history, voteEdited }) => {
       {
         address: address || currentAddress,
         amount: toRawLsk(voteAmount.value),
+        name: delegate.name,
       },
     ]);
 
@@ -116,6 +119,7 @@ const EditVote = ({ history, voteEdited }) => {
   const removeVote = () => {
     voteEdited([
       {
+        name: delegate.name,
         address: address || currentAddress,
         amount: 0,
       },
@@ -141,13 +145,10 @@ const EditVote = ({ history, voteEdited }) => {
             <p>{delegate.name}</p>
             <p>{delegate.address}</p>
           </BoxInfoText>
-          {daysLeft >= 1 && start !== undefined && (
-            <>
-              <WarnPunishedDelegate pomHeight={{ start, end }} vote />
-              <span className={styles.space} />
-            </>
-          )}
           <label className={styles.fieldGroup}>
+            <p className={styles.availableBalance}>
+              {t('Available Bal:')} <span>9000</span>
+            </p>
             <AmountField
               amount={voteAmount}
               onChange={setVoteAmount}
@@ -156,10 +157,15 @@ const EditVote = ({ history, voteEdited }) => {
               label={t('Vote amount (LSK)')}
               labelClassname={`${styles.fieldLabel}`}
               placeholder={t('Insert vote amount')}
-              useMaxLabel={t('Use maximum amount')}
               name="vote"
             />
           </label>
+          {daysLeft >= 1 && start !== undefined && (
+            <>
+              <WarnPunishedDelegate pomHeight={{ start, end }} vote />
+              <span className={styles.space} />
+            </>
+          )}
         </BoxContent>
         <BoxFooter direction="horizontal">
           {mode === 'edit' && (

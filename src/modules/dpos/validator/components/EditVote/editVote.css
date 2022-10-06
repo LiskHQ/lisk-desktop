@@ -27,6 +27,10 @@
       display: flex;
     }
 
+    & > label ~ div {
+      @mixin contentSmall;
+    }
+
     & span {
       text-align: center !important;
     }
@@ -72,4 +76,23 @@
 
 .space {
   margin: 10px;
+}
+
+.fieldGroup {
+  position: relative;
+
+  & > .availableBalance {
+    @mixin contentSmall normal;
+
+    position: absolute;
+    right: 5px;
+    top: -5px;
+    color: var(--color-slate-gray);
+
+    & > span {
+      @mixin contentSmall semi-bold;
+
+      color: var(--color-ultramarine-blue);
+    }
+  }
 }
