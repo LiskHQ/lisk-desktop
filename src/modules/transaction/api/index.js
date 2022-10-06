@@ -265,7 +265,7 @@ export const getTransactionFee = async ({
   const schema = network.networks.LSK.moduleCommandSchemas[moduleCommand];
   const maxCommandFee = MODULE_COMMANDS_MAP[moduleCommand].maxFee;
   const transactionObject = desktopTxToElementsTx(rawTransaction, moduleCommand, schema);
-  let numberOfEmptySignatures;
+  let numberOfEmptySignatures = 0;
 
   if (moduleCommand === MODULE_COMMANDS_NAME_MAP.registerMultisignature) {
     const { optionalKeys, mandatoryKeys } = transaction.params;

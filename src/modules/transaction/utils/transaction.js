@@ -1,5 +1,6 @@
 /* eslint-disable max-lines */
 import { transactions, cryptography, codec } from '@liskhq/lisk-client';
+import { constants } from '@liskhq/lisk-cryptography';
 import { to } from 'await-to-js';
 import { MODULE_COMMANDS_NAME_MAP } from 'src/modules/transaction/configuration/moduleCommand';
 import { DEFAULT_NUMBER_OF_SIGNATURES } from '@transaction/configuration/transactions';
@@ -18,6 +19,50 @@ import { signTransactionByHW } from './hwManager';
 const {
   transfer, voteDelegate, registerDelegate, unlock, reclaim, registerMultisignature,
 } = MODULE_COMMANDS_NAME_MAP;
+
+// @todo import the following 4 values from lisk-elements (#4497)
+const ED25519_PUBLIC_KEY_LENGTH = 32;
+export const MESSAGE_TAG_MULTISIG_REG = 'LSK_RMSG_';
+const multisigRegMsgSchema = {
+	$id: '/auth/command/regMultisigMsg',
+	type: 'object',
+	required: ['address', 'nonce', 'numberOfSignatures', 'mandatoryKeys', 'optionalKeys'],
+	properties: {
+		address: {
+			dataType: 'bytes',
+			fieldNumber: 1,
+			minLength: constants.BINARY_ADDRESS_LENGTH,
+			maxLength: constants.BINARY_ADDRESS_LENGTH,
+		},
+		nonce: {
+			dataType: 'uint64',
+			fieldNumber: 2,
+		},
+		numberOfSignatures: {
+			dataType: 'uint32',
+			fieldNumber: 3,
+		},
+		mandatoryKeys: {
+			type: 'array',
+			items: {
+				dataType: 'bytes',
+				minLength: ED25519_PUBLIC_KEY_LENGTH,
+				maxLength: ED25519_PUBLIC_KEY_LENGTH,
+			},
+			fieldNumber: 4,
+		},
+		optionalKeys: {
+			type: 'array',
+			items: {
+				dataType: 'bytes',
+				minLength: ED25519_PUBLIC_KEY_LENGTH,
+				maxLength: ED25519_PUBLIC_KEY_LENGTH,
+			},
+			fieldNumber: 5,
+		},
+	},
+};
+const memberPrivateKey = Buffer.from('9cddd7cecd93d254b830bceeafe799066a671c2ec3e91813df441d9b7863fdbb86801e49a659c05d72d005fa8bdcb10ebb9654193815b337fe02cbe0b3defab3', 'hex');
 
 const EMPTY_BUFFER = Buffer.alloc(0);
 export const convertStringToBinary = value => Buffer.from(value, 'hex');
@@ -484,23 +529,23 @@ const signMultisigUsingPrivateKey = (
 const signUsingPrivateKey = (schema, chainID, transaction, moduleCommand, privateKey) => {
   const isMultisigReg = moduleCommand
     === MODULE_COMMANDS_NAME_MAP.registerMultisignature
-  // @todo we need to fix the index calculation
+  const chainIDBuffer = Buffer.from(chainID, 'hex');
+  // @todo we need to fix the index calculation (#4497)
   if (isMultisigReg) {
-    const data = codec.codec.encode(schema, transaction.params);
-    const memberSignature = cryptography.ed.signData('LSK_RMSG_', Buffer.from(chainID, 'hex'), data, Buffer.from('9cddd7cecd93d254b830bceeafe799066a671c2ec3e91813df441d9b7863fdbb86801e49a659c05d72d005fa8bdcb10ebb9654193815b337fe02cbe0b3defab3', 'hex'))
-    // const isValid = cryptography.ed.verifyData(
-    //   'LSK_RMSG_',
-    //   Buffer.from(chainID, 'hex'),
-    //   data,
-    //   memberSignature,
-    //   transaction.params.mandatoryKeys[0],
-    // );
+    const message = {
+      ...transaction.params,
+      address: cryptography.address.getAddressFromPublicKey(transaction.senderPublicKey),
+      nonce: transaction.nonce,
+    };
+    delete message.signatures;
+    const data = codec.codec.encode(multisigRegMsgSchema, message);
+    const memberSignature = cryptography.ed.signData(MESSAGE_TAG_MULTISIG_REG, chainIDBuffer, data, memberPrivateKey)
+    // @todo use correct index once SDK exposes the sort endpoint (#4497)
     transaction.params.signatures[0] = memberSignature;
-    
   }
   const res = transactions.signTransactionWithPrivateKey(
     transaction,
-    Buffer.from(chainID, 'hex'),
+    chainIDBuffer,
     Buffer.from(privateKey, 'hex'),
     schema,
   );
