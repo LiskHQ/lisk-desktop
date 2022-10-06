@@ -1,7 +1,7 @@
 import React from 'react';
 import { renderHook } from '@testing-library/react-hooks';
-import { useOutsideClick } from './useOutsideClick';
 import { fireEvent } from '@testing-library/dom';
+import { useOutsideClick } from './useOutsideClick';
 
 describe('useOutsideClick hook', () => {
 
@@ -30,6 +30,18 @@ describe('useOutsideClick hook', () => {
     fireEvent.mouseDown(document.getElementsByTagName('div')[0])
 
     expect(callback).toHaveBeenCalled();
+  })
+  
+  it('does not call the callback when no ref is provided', async () => {
+    const callback = jest.fn();
+    const div = document.createElement("div")
+    document.body.append(div)
+    renderHook(
+      () => useOutsideClick(null, callback)
+    );
+    fireEvent.mouseDown(document.getElementsByTagName('div')[0])
+
+    expect(callback).not.toHaveBeenCalled();
   })
 
 });
