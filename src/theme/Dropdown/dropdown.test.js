@@ -1,7 +1,7 @@
 import React from 'react';
+import { render } from '@testing-library/react';
 import { mount } from 'enzyme';
 import Dropdown from './dropdown';
-import { render } from '@testing-library/react';
 
 describe('Dropdow', () => {
   let wrapper;
