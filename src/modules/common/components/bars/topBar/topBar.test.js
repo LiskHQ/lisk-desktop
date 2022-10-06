@@ -2,7 +2,6 @@ import React from 'react';
 import routes from 'src/routes/routes';
 import DialogHolder from 'src/theme/dialog/holder';
 import { mountWithRouter } from 'src/utils/testHelpers';
-import accounts from '@tests/constants/wallets';
 import mockSavedAccounts from '@tests/fixtures/accounts';
 import { useCurrentAccount } from 'src/modules/account/hooks';
 import TopBar from './topBar';
