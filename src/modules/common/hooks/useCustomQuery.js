@@ -1,3 +1,4 @@
+import { useSelector } from 'react-redux';
 import { useQuery } from '@tanstack/react-query';
 import {
   METHOD,
@@ -5,6 +6,7 @@ import {
 import defaultClient from 'src/utils/api/client';
 import { APPLICATION } from 'src/const/queries';
 import { useCurrentApplication } from '@blockchainApplication/manage/hooks';
+import { getNetworkName } from 'src/modules/network/utils/getNetwork';
 
 /**
  * Creates a custom hook for inifinite queries
@@ -23,14 +25,22 @@ import { useCurrentApplication } from '@blockchainApplication/manage/hooks';
 // eslint-disable-next-line import/prefer-default-export
 export const useCustomQuery = ({
   keys,
-  config,
+  config = {},
   options = {},
   client = defaultClient
 }) => {
   const [{ chainID }] = useCurrentApplication();
+  const network = useSelector(state => state.network);
+  const networkName = getNetworkName(network)
+
+  const axiosConfig = {
+    ...config,
+    params: { ...config.params, network: networkName }
+  }
+
   return useQuery(
-    [chainID, config, APPLICATION, METHOD, ...keys],
-    async () => client[METHOD](config),
+    [chainID, axiosConfig, APPLICATION, METHOD, ...keys],
+    async () => client[METHOD](axiosConfig),
     options,
   );
 };
