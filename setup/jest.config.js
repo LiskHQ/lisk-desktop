@@ -307,7 +307,6 @@ module.exports = {
     'src/modules/transaction/hooks/useCreateTransaction.js',
     'src/modules/common/hooks/useOutsideClick.js',
     'src/modules/common/hooks/useCustomQuery.js',
-    'src/theme/Dropdown/dropdown.js',
     'src/modules/transaction/components/TransactionDetails', // @Todo: would resolve this when all transation implementations are finallized
   ],
   coverageThreshold: {
