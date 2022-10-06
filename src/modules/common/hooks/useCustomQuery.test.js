@@ -7,26 +7,6 @@ import { useCustomQuery } from './useCustomQuery';
 
 jest.useRealTimers();
 
-
-const mockState = {
-  account: {
-    list: [],
-  },
-  blockChainApplications: {
-    current: {},
-  },
-  network: {
-    name: 'testnet'
-  }
-};
-
-const mockDispatch = jest.fn();
-jest.mock('react-redux', () => ({
-  useSelector: jest.fn().mockImplementation((fn) => fn(mockState)),
-  useDispatch: () => mockDispatch,
-}));
-
-
 describe('useCustomQuery hook', () => {
   const config = {
     baseURL: 'http://127.0.0.1',
