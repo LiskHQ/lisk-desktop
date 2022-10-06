@@ -1,6 +1,7 @@
 import React from 'react';
 import { mount } from 'enzyme';
 import Dropdown from './dropdown';
+import { render } from '@testing-library/react';
 
 describe('Dropdow', () => {
   let wrapper;
@@ -14,6 +15,16 @@ describe('Dropdow', () => {
     expect(wrapper.find('.dropdown')).not.toHaveClassName('show');
   });
 
+  it('should render title if passed', () => {
+    const container = render(<Dropdown title="title" ><DummyChild /></Dropdown>);
+    expect(container.getByText('title')).toBeTruthy();
+  })
+  
+  it('should render arrow if showArrow is true', () => {
+    const container = mount(<Dropdown showArrow ><DummyChild /></Dropdown>);
+    expect(container.find('.dropdown-arrow')).toBeTruthy();
+  })
+  
   it('Should open with passed children props', () => {
     const options = ['Option 1', 'Option 2', 'Option 3'];
     wrapper.setProps({
