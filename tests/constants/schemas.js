@@ -14,7 +14,7 @@ const moduleCommandSchemas = {
     title: 'Transfer transaction asset',
     type: 'object',
   },
-  'auth:registerMultisignatureGroup': {
+  'auth:registerMultisignature': {
     $id: 'lisk/keys/register',
     type: 'object',
     required: [

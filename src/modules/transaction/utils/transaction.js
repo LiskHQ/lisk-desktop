@@ -16,7 +16,7 @@ import { splitModuleAndCommand, joinModuleAndCommand } from './moduleCommand';
 import { signTransactionByHW } from './hwManager';
 
 const {
-  transfer, voteDelegate, registerDelegate, unlock, reclaim, registerMultisignatureGroup,
+  transfer, voteDelegate, registerDelegate, unlock, reclaim, registerMultisignature,
 } = MODULE_COMMANDS_NAME_MAP;
 
 const EMPTY_BUFFER = Buffer.alloc(0);
@@ -47,6 +47,7 @@ const getDesktopTxAsset = (elementsParams, moduleCommand) => {
         data: elementsParams.data,
         amount: convertBigIntToString(elementsParams.amount),
         recipient: { address: getBase32AddressFromAddress(elementsParams.recipientAddress) },
+        token: { tokenID: elementsParams.tokenID },
       };
     }
 
@@ -84,11 +85,12 @@ const getDesktopTxAsset = (elementsParams, moduleCommand) => {
       };
     }
 
-    case registerMultisignatureGroup: {
+    case registerMultisignature: {
       return {
         numberOfSignatures: elementsParams.numberOfSignatures,
         mandatoryKeys: elementsParams.mandatoryKeys.map(convertBinaryToString),
         optionalKeys: elementsParams.optionalKeys.map(convertBinaryToString),
+        signatures: elementsParams.signatures.map(convertBinaryToString),
       };
     }
 
@@ -106,9 +108,7 @@ const getElementsTxParams = (desktopParams, moduleCommand) => {
         recipientAddress: binaryAddress,
         amount: desktopParams.amount,
         data: desktopParams.data,
-        // TODO: desktopParams.token.tokenID was returning invalid value
-        // We need remove the below value once we fix the desktopParams.token.tokenID 
-        tokenID: '0000000000000000',
+        tokenID: desktopParams.token.tokenID,
       };
     }
 
@@ -137,11 +137,12 @@ const getElementsTxParams = (desktopParams, moduleCommand) => {
       };
     }
 
-    case registerMultisignatureGroup: {
+    case registerMultisignature: {
       return {
         numberOfSignatures: desktopParams.numberOfSignatures,
         mandatoryKeys: desktopParams.mandatoryKeys,
         optionalKeys: desktopParams.optionalKeys,
+        signatures: desktopParams.signatures,
       };
     }
 
@@ -157,6 +158,7 @@ const getElementsParamsFromJSON = (JSONParams, moduleCommand) => {
         recipientAddress: convertStringToBinary(JSONParams.recipientAddress),
         amount: BigInt(convertBigIntToString(JSONParams.amount)),
         data: JSONParams.data,
+        tokenID: JSONParams.tokenID,
       };
 
     case voteDelegate: {
@@ -183,11 +185,12 @@ const getElementsParamsFromJSON = (JSONParams, moduleCommand) => {
       };
     }
 
-    case registerMultisignatureGroup: {
+    case registerMultisignature: {
       return {
         numberOfSignatures: Number(JSONParams.numberOfSignatures),
         mandatoryKeys: JSONParams.mandatoryKeys.map(convertStringToBinary),
         optionalKeys: JSONParams.optionalKeys.map(convertStringToBinary),
+        signatures: JSONParams.signatures.map(convertStringToBinary),
       };
     }
 
@@ -437,7 +440,7 @@ export const computeTransactionId = ({ transaction, schema }) => {
 const signMultisigUsingPrivateKey = (
   schema, chainID, transaction, moduleCommand, wallet, privateKey,
 ) => {
-  const isMultisigReg = moduleCommand === registerMultisignatureGroup;
+  const isMultisigReg = moduleCommand === registerMultisignature;
   const keys = isMultisigReg
     ? transaction.asset
     : wallet.keys;
@@ -478,13 +481,30 @@ const signMultisigUsingPrivateKey = (
   return signedTransaction;
 };
 
-const signUsingPrivateKey = (schema, chainID, transaction, privateKey) => {
+const signUsingPrivateKey = (schema, chainID, transaction, moduleCommand, privateKey) => {
+  const isMultisigReg = moduleCommand
+    === MODULE_COMMANDS_NAME_MAP.registerMultisignature
+  // @todo we need to fix the index calculation
+  if (isMultisigReg) {
+    const data = codec.codec.encode(schema, transaction.params);
+    const memberSignature = cryptography.ed.signData('LSK_RMSG_', Buffer.from(chainID, 'hex'), data, Buffer.from('9cddd7cecd93d254b830bceeafe799066a671c2ec3e91813df441d9b7863fdbb86801e49a659c05d72d005fa8bdcb10ebb9654193815b337fe02cbe0b3defab3', 'hex'))
+    // const isValid = cryptography.ed.verifyData(
+    //   'LSK_RMSG_',
+    //   Buffer.from(chainID, 'hex'),
+    //   data,
+    //   memberSignature,
+    //   transaction.params.mandatoryKeys[0],
+    // );
+    transaction.params.signatures[0] = memberSignature;
+    
+  }
   const res = transactions.signTransactionWithPrivateKey(
     transaction,
     Buffer.from(chainID, 'hex'),
     Buffer.from(privateKey, 'hex'),
     schema,
   );
+  
   return res;
 };
 
@@ -493,7 +513,7 @@ const signUsingHW = async (
   schema, chainID, moduleCommand, transaction, wallet,
 ) => {
   const isMultisigReg = moduleCommand
-    === MODULE_COMMANDS_NAME_MAP.registerMultisignatureGroup
+    === MODULE_COMMANDS_NAME_MAP.registerMultisignature
   const transactionBytes = transactions.getSigningBytes(transaction, schema);
   const [error, signedTransaction] = await to(signTransactionByHW(
     wallet,
@@ -529,9 +549,6 @@ export const sign = async (
   wallet, schema, chainID, transaction,
   moduleCommand, privateKey,
 ) => {
-  const isMultisigReg = moduleCommand
-    === MODULE_COMMANDS_NAME_MAP.registerMultisignatureGroup
-
   // @todo rawTransaction is changed
   if (!isEmpty(wallet.hwInfo)) {
     const signedTx = await signUsingHW(
@@ -539,13 +556,13 @@ export const sign = async (
     );
     return signedTx;
   }
-  if (wallet.summary.isMultisignature || isMultisigReg) {
+  if (wallet.summary.isMultisignature) {
     return signMultisigUsingPrivateKey(
       schema, chainID, transaction, moduleCommand, wallet, privateKey,
     );
   }
 
-  return signUsingPrivateKey(schema, chainID, transaction, privateKey);
+  return signUsingPrivateKey(schema, chainID, transaction, moduleCommand, privateKey);
 };
 
 /**
@@ -574,7 +591,7 @@ const signMultisigTransaction = async (
    * Define keys.
    * Since the sender is different, the keys are defined based on that
    */
-  const isMultisigReg = transaction.moduleCommand === registerMultisignatureGroup;
+  const isMultisigReg = transaction.moduleCommand === registerMultisignature;
   const schema = network.networks.LSK.moduleCommandSchemas[transaction.moduleCommand];
 
   const { mandatoryKeys, optionalKeys } = getKeys({
@@ -620,12 +637,12 @@ const signMultisigTransaction = async (
  * @param {object} transaction - Transaction object which should include the signatures property.
  * @returns {number} the number of signatures required
  */
-const getNumberOfSignatures = ({ numberOfSignatures, isMultisignature }, transaction) => {
-  if (transaction?.moduleCommand === registerMultisignatureGroup) {
-    return transaction.params.optionalKeys.length + transaction.params.mandatoryKeys.length + 1;
-  }
-  if (isMultisignature) {
-    return numberOfSignatures;
+const getNumberOfSignatures = (account, transaction) => {
+  // if (transaction?.moduleCommand === registerMultisignature) {
+  //   return transaction.params.optionalKeys.length + transaction.params.mandatoryKeys.length + 1;
+  // }
+  if (account?.summary?.isMultisignature) {
+    return account.keys.numberOfSignatures;
   }
   return DEFAULT_NUMBER_OF_SIGNATURES;
 };

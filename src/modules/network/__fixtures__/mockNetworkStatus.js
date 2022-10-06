@@ -20,7 +20,7 @@ export const mockNetworkStatus = {
     moduleCommands: [
       { id: '00000002:00000000', name: 'token:transfer' },
       { id: '00000002:00000000', name: 'token:crossChaintransfer' },
-      { id: '0000000c:00000000', name: 'auth:registerMultisignatureGroup' },
+      { id: '0000000c:00000000', name: 'auth:registerMultisignature' },
       { id: '0000000d:00000000', name: 'dpos:registerDelegate' },
       { id: '0000000d:00000003', name: 'dpos:reportDelegateMisbehavior' },
       { id: '0000000d:00000002', name: 'dpos:unlockToken' },

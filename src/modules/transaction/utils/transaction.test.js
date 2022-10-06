@@ -24,7 +24,7 @@ const address = 'lskdxc4ta5j43jp9ro3f8zqbxta9fn6jwzjucw7yt';
 jest.spyOn(cryptography.address, 'getLisk32AddressFromPublicKey').mockReturnValue(address);
 
 const {
-  transfer, voteDelegate, registerMultisignatureGroup, registerDelegate, reclaim, unlock,
+  transfer, voteDelegate, registerMultisignature, registerDelegate, reclaim, unlock,
 } = MODULE_COMMANDS_NAME_MAP;
 
 // TODO: All of these tests need to be rewritten to adopt to new transaction schema https://github.com/LiskHQ/lisk-sdk/blob/7e71617d281649a6942434f729a815870aac2394/elements/lisk-transactions/src/schema.ts#L15
@@ -227,18 +227,18 @@ describe('API: LSK Transactions', () => {
       });
     });
 
-    it('creates a transaction object for registerMultisignatureGroup transaction', () => {
+    it('creates a transaction object for registerMultisignature transaction', () => {
       const tx = {
         ...baseDesktopTx,
-        moduleCommand: registerMultisignatureGroup,
+        moduleCommand: registerMultisignature,
         params: {
           numberOfSignatures: 2,
           mandatoryKeys: [accounts.genesis.summary.publicKey, accounts.delegate.summary.publicKey],
           optionalKeys: [accounts.delegate_candidate.summary.publicKey],
         },
       };
-      const txObj = desktopTxToElementsTx(tx, registerMultisignatureGroup);
-      const [module, command] = splitModuleAndCommand(registerMultisignatureGroup);
+      const txObj = desktopTxToElementsTx(tx, registerMultisignature);
+      const [module, command] = splitModuleAndCommand(registerMultisignature);
       expect(txObj).toEqual({
         ...baseElementsTx,
         module,
@@ -395,8 +395,8 @@ describe('API: LSK Transactions', () => {
       });
     });
 
-    it('should transform a registerMultisignatureGroup transaction', () => {
-      const [module, command] = splitModuleAndCommand(registerMultisignatureGroup);
+    it('should transform a registerMultisignature transaction', () => {
+      const [module, command] = splitModuleAndCommand(registerMultisignature);
       const mandatoryKeys = [
         accounts.genesis.summary.publicKey,
         accounts.delegate.summary.publicKey,
@@ -418,7 +418,7 @@ describe('API: LSK Transactions', () => {
 
       expect(elementTxToDesktopTx(tx)).toEqual({
         ...baseDesktopTx,
-        moduleCommand: registerMultisignatureGroup,
+        moduleCommand: registerMultisignature,
         id: '',
         params: {
           numberOfSignatures: 2,

@@ -30,7 +30,7 @@ const TxSummarizer = ({
   hasCancel,
 }) => {
   const fee = !(wallet.summary.isMultisignature
-    || rawTx.moduleCommand === MODULE_COMMANDS_NAME_MAP.registerMultisignatureGroup
+    || rawTx.moduleCommand === MODULE_COMMANDS_NAME_MAP.registerMultisignature
   ) ? rawTx.fee : 0;
   const tooltip = {
     title: t('Transaction fee'),

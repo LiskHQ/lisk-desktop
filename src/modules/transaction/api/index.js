@@ -267,7 +267,7 @@ export const getTransactionFee = async ({
   const transactionObject = desktopTxToElementsTx(rawTransaction, moduleCommand, schema);
   let numberOfEmptySignatures;
 
-  if (moduleCommand === MODULE_COMMANDS_NAME_MAP.registerMultisignatureGroup) {
+  if (moduleCommand === MODULE_COMMANDS_NAME_MAP.registerMultisignature) {
     const { optionalKeys, mandatoryKeys } = transaction.params;
     numberOfSignatures = optionalKeys.length + mandatoryKeys.length + 1;
   } else if (wallet?.summary?.isMultisignature) {

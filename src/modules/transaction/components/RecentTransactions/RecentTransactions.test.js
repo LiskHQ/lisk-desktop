@@ -45,7 +45,7 @@ const LiskTransactions = {
       amount: '0.0009',
       token: 'LSK',
       type: 2,
-      moduleCommand: 'auth:registerMultisignatureGroup',
+      moduleCommand: 'auth:registerMultisignature',
       sender: {
         address: 'lsks6uckwnap7s72ov3edddwgxab5e89t6uy8gjt6',
       },

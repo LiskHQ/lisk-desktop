@@ -19,7 +19,7 @@ import {
 } from './index';
 
 const {
-  transfer, voteDelegate, registerDelegate, registerMultisignatureGroup, unlock, reclaim,
+  transfer, voteDelegate, registerDelegate, registerMultisignature, unlock, reclaim,
 } = MODULE_COMMANDS_NAME_MAP;
 const { network } = getState();
 
@@ -302,9 +302,9 @@ describe('API: LSK Transactions', () => {
       expect(Number(result.value)).toBeGreaterThan(0);
     });
 
-    it('should calculate fee of registerMultisignatureGroup tx', async () => {
+    it('should calculate fee of registerMultisignature tx', async () => {
       const regMultisigTx = {
-        moduleCommand: registerMultisignatureGroup,
+        moduleCommand: registerMultisignature,
         params: {
           numberOfSignatures: 2,
           mandatoryKeys: [accounts.genesis.summary.publicKey, accounts.delegate.summary.publicKey],

@@ -103,7 +103,7 @@ describe('API: LSK Network', () => {
           minRemainingBalance: '5000000',
           moduleAssets: [
             { id: 'token:transfer', name: 'token:transfer' },
-            { id: 'auth:registerMultisignatureGroup', name: 'keys:registerMultisignatureGroup' },
+            { id: 'auth:registerMultisignature', name: 'keys:registerMultisignature' },
             { id: 'dpos:registerDelegate', name: 'dpos:registerDelegate' },
             { id: 'dpos:voteDelegate', name: 'dpos:voteDelegate' },
             { id: 'dpos:unlock', name: 'dpos:unlockToken' },

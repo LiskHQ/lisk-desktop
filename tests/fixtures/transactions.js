@@ -49,7 +49,7 @@ const getState = () => ({
               },
             },
           },
-          'auth:registerMultisignatureGroup': {
+          'auth:registerMultisignature': {
             $id: 'lisk/keys/register',
             type: 'object',
             required: ['numberOfSignatures', 'optionalKeys', 'mandatoryKeys'],

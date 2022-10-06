@@ -14,7 +14,7 @@ export default (props) => {
     case MODULE_COMMANDS_NAME_MAP.transfer: return <Send {...props} />;
     case MODULE_COMMANDS_NAME_MAP.voteDelegate: return <VoteDelegate {...props} />;
     case MODULE_COMMANDS_NAME_MAP.unlock: return <UnlockBalance {...props} />;
-    case MODULE_COMMANDS_NAME_MAP.registerMultisignatureGroup:
+    case MODULE_COMMANDS_NAME_MAP.registerMultisignature:
       return <RegisterMultisignatureGroup {...props} />;
     default:
       return null;

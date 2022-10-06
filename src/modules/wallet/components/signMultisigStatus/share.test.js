@@ -21,7 +21,7 @@ describe('Sign Multisignature Tx Status component', () => {
     nonce: '19n',
     fee: '207000n',
     module: 'auth',
-    command: 'registerMultisignatureGroup',
+    command: 'registerMultisignature',
     params: {
       optionalKeys: accounts.multiSig.keys.optionalKeys,
       mandatoryKeys: accounts.multiSig.keys.mandatoryKeys,

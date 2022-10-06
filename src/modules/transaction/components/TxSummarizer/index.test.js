@@ -120,7 +120,7 @@ describe('TxSummarizer', () => {
       ...props,
       rawTx: {
         ...props.rawTx,
-        moduleCommand: MODULE_COMMANDS_NAME_MAP.registerMultisignatureGroup,
+        moduleCommand: MODULE_COMMANDS_NAME_MAP.registerMultisignature,
         params: {
           mandatoryKeys: [wallets.genesis.summary.publicKey],
           optionalKeys: [wallets.delegate.summary.publicKey, wallets.multiSig.summary.publicKey],

@@ -57,8 +57,8 @@ export default [
   },
   {
     id: 'ecf56cf27f113893f325f147813bda0f8d5077ea59e8871f668289ccb8f40fa6',
-    moduleCommand: 'auth:registerMultisignatureGroup',
-    moduleAssetName: 'keys:registerMultisignatureGroup',
+    moduleCommand: 'auth:registerMultisignature',
+    moduleAssetName: 'keys:registerMultisignature',
     fee: '414000',
     height: 315,
     nonce: '0',
