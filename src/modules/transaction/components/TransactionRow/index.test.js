@@ -50,7 +50,7 @@ const transfer = {
   },
 };
 
-describe('Transaction Row', () => {
+describe.skip('Transaction Row', () => {
   const t = (str) => str;
   const avatarSize = 40;
   const activeToken = 'LSK';
