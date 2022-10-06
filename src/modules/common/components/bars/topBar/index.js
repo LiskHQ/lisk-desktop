@@ -1,6 +1,5 @@
 // istanbul ignore file
 import { connect } from 'react-redux';
-import { withRouter } from 'react-router';
 import { withTranslation } from 'react-i18next';
 import { containsTransactionType } from '@transaction/utils/transaction';
 import { MODULE_COMMANDS_NAME_MAP } from 'src/modules/transaction/configuration/moduleCommand';
@@ -16,8 +15,7 @@ const mapStateToProps = state => ({
       .length,
 });
 
-export default withRouter(
+export default
   connect(mapStateToProps)(
     withTranslation()(TopBar),
-  ),
-);
+  )

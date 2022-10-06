@@ -77,7 +77,7 @@ describe('Transaction Row', () => {
       expect(wrapper.find('Sender').text()).toBe(
         `${props.data.sender.name}${truncateAddress(props.data.sender.address)}`
       );
-      expect(wrapper.find('Date').text()).toBe('23 Nov 197004:51 PM');
+      expect(wrapper.find('Date').text()).toBe('23 Nov 197005:51 PM');
       expect(wrapper.find('Status')).toHaveLength(1);
     });
 

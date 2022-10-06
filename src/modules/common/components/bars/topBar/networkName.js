@@ -34,7 +34,7 @@ const Network = () => {
       <section className={styles.wrapper} onClick={() => setShowDropdown(true)}>
         <span className={`${styles.status} ${statusColor}`} />
         <div className={styles.message}>
-          <span>{activeNetworkName}</span>
+          <span className="network-name">{t(activeNetworkName)}</span>
           <Icon name="dropdownArrowIcon" />
         </div>
       </section>

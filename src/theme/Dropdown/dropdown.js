@@ -1,16 +1,16 @@
 import React, { useRef } from 'react';
 import PropTypes from 'prop-types';
-import { useOutsideClick } from 'src/modules/common/hooks';
+import { useOutsideClick } from 'src/modules/common/hooks/useOutsideClick';
 import { flattenArray } from 'src/utils/helpers';
 import styles from './dropdown.css';
 import Separator from './separator';
 
 const Dropdown = ({
-  showDropdown, className, title, showArrow, active, children, align, closeDropdown,
+  showDropdown, className, title, showArrow, active, children, align, closeDropdown = () => {},
 }) => {
-  const isSelectionList = children && Array.isArray(children);
   const dropdownRef = useRef()
   useOutsideClick(dropdownRef, closeDropdown)
+  const isSelectionList = children && Array.isArray(children);
 
   return (
     <div
