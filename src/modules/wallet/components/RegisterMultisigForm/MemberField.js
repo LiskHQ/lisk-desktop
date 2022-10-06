@@ -1,9 +1,9 @@
-import React, { useState } from 'react';
+import React from 'react';
 
 import Icon from 'src/theme/Icon';
 import { Input } from 'src/theme';
-import Tabs from 'src/theme/tabs';
 
+import CategorySwitch from './CategorySwitch';
 import styles from './styles.css';
 
 const MemberField = ({
@@ -15,31 +15,11 @@ const MemberField = ({
   onChangeMember,
   onDeleteMember,
 }) => {
-  const [mandatoryFlag, setMandatoryFlag] = useState('mandatory');
-
-  const changeCategory = (flag) => {
-    onChangeMember({ index, publicKey, isMandatory: flag === t('Mandatory') });
-  };
-  const categoryTabs = {
-    tabs: [
-      {
-        value: 'mandatory',
-        name: t('Mandatory'),
-        className: `mandatory select-mandatory ${mandatoryFlag === 'mandatory' ? styles.active : ''}`,
-      },
-      {
-        value: 'optional',
-        name: t('Optional'),
-        className: `optional select-optional ${mandatoryFlag === 'optional' ? styles.active : ''}`,
-      },
-    ],
-    active: mandatoryFlag,
-    onClick: ({ value }) => {
-      setMandatoryFlag(value);
-      changeCategory(mandatoryFlag);
-    },
-    className: `${styles.memberCategory} mandatory-toggle`,
-    wrapperClassName: styles.categoryWrapper,
+  const changeCategory = (e) => {
+    const {
+      target: { value: flag },
+    } = e;
+    onChangeMember({ index, publicKey, isMandatory: flag === 'mandatory' });
   };
 
   const changeIdentifier = (e) => {
@@ -55,10 +35,10 @@ const MemberField = ({
         <Input
           className={`${styles.inputWithSwitcher} msign-pk-input`}
           onChange={changeIdentifier}
-          placeholder={t('Public key')}
+          placeholder={t('Public Key')}
           size="m"
         />
-        <Tabs {...categoryTabs} />
+        <CategorySwitch changeCategory={changeCategory} index={index} />
       </div>
       {showDeleteIcon && (
         <span className={`${styles.deleteIcon} delete-icon`} onClick={deleteMember}>

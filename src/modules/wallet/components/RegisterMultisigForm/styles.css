@@ -82,19 +82,6 @@
   }
 }
 
-.memberCategory {
-  position: relative;
-  display: inline-block;
-  padding: 4px 8px;
-  font-size: 12px !important;
-  line-height: 20px !important;
-  color: var(--color-slate-gray) !important;
-
-  &.active {
-    color: var(--color-maastricht-blue) !important;
-  }
-}
-
 .inputWithSwitcher {
   position: relative;
   display: inline-block;
@@ -111,6 +98,34 @@
   margin: 2px 8px;
   padding: 4px;
   border-radius: 16px;
+  display: flex;
+  list-style: none;
+
+  & > input {
+    position: absolute;
+    visibility: hidden;
+  }
+
+  & input:checked + label {
+    color: var(--color-maastricht-blue) !important;
+    background: var(--color-active-tab);
+  }
+}
+
+.memberCategory {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  padding: 4px 8px;
+  color: var(--color-slate-gray) !important;
+  cursor: pointer;
+  border-radius: 18px;
+  border: solid 1px var(--tab-border-color);
+  font-size: 12px !important;
+  font-weight: var(--font-weight-semi-bold);
+  line-height: 20px !important;
+  letter-spacing: 0.2px;
 }
 
 .deleteIcon {
