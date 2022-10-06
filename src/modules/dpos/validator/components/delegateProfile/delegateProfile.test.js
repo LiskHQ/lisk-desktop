@@ -71,7 +71,7 @@ describe('Delegate Profile', () => {
         `${numeral(fromRawLsk(mockDelegates.data[0].voteWeight)).format('0,0.[0000000000000]')} LSK`
       )
     ).toBeTruthy();
-    expect(screen.getByText('30 Sep 2019, 03:25:30 PM')).toBeTruthy();
+    expect(screen.getByTestId('date-timestamp')).toBeTruthy();
 
     expect(screen.getByText('Rank')).toBeTruthy();
     expect(screen.getByTestId('addressFilter')).toBeTruthy();
