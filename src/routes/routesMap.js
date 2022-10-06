@@ -49,6 +49,7 @@ import ApplicationManagementList from '@blockchainApplication/manage/components/
 import SelectNode from '@blockchainApplication/manage/components/SelectNode';
 import RemoveApplicationFlow from '@blockchainApplication/manage/components/RemoveApplicationFlow';
 import AllTokens from '@wallet/components/AllTokens';
+import DelegateProfile from 'src/modules/dpos/validator/components/delegateProfile/delegateProfile';
 
 export default {
   wallet: AccountDetails,
@@ -64,6 +65,7 @@ export default {
   wallets: MonitorWallets,
   network: MonitorNetwork,
   delegates: DelegatesMonitor,
+  delegateProfile: DelegateProfile,
   delegatePerformance: DelegatesPerformanceModal,
   reclaim: ReclaimBalance,
   dashboard: Dashboard,
