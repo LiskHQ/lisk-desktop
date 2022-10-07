@@ -52,7 +52,7 @@ const useTransactionFeeCalculation = ({
         network,
         transaction,
         selectedPriority,
-        numberOfSignatures: getNumberOfSignatures(wallet, transaction),
+        numberOfSignatures: getNumberOfSignatures(wallet),
       });
     }
   }, [
