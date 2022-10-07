@@ -22,15 +22,18 @@ describe('Summary', () => {
           recipient: { address: wallets.genesis.summary.address },
           amount: 112300000,
           data: 'test',
+          token: mockAppTokens[0],
         },
         moduleCommand: 'token:transfer',
+        sendingChain: mockBlockchainApplications[0],
+        recipientChain: mockBlockchainApplications[1],
       },
       t: i18n.t,
       selectedPriority: { title: 'Normal', value: 1 },
       fees: {
         Transaction: '1 LSK',
         CCM: '1 LSK',
-        initiation: '1 LSK',
+        Initialisation: '1 LSK',
       },
       transactionData: {
         sendingChain: mockBlockchainApplications[0],
@@ -67,20 +70,23 @@ describe('Summary', () => {
 
   it('should show props.fields.recipient.title if it is present', () => {
     const title = 'Custom title';
-    wrapper = mount(<Summary {...{
-      ...props,
-      rawTx: {
-        ...props.rawTx,
-        params: {
-          ...props.rawTx.params,
-          recipient: {
-            ...props.rawTx.params.recipient,
-            title,
+    wrapper = mount(
+      <Summary
+        {...{
+          ...props,
+          rawTx: {
+            ...props.rawTx,
+            params: {
+              ...props.rawTx.params,
+              recipient: {
+                ...props.rawTx.params.recipient,
+                title,
+              },
+            },
           },
-        },
-      },
-    }}
-    />);
+        }}
+      />
+    );
     expect(wrapper.find('.recipient-value')).toIncludeText(props.rawTx.params.recipient.address);
     expect(wrapper.find('.recipient-value')).toIncludeText(title);
   });
