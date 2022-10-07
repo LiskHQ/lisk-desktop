@@ -70,14 +70,10 @@ const TxComposer = ({
 
   const confirmTxn = () => {
     onConfirm(
-      {
-        ...rawTx,
-        fee: toRawLsk(status.fee.value),
-        recipientChain,
-        sendingChain,
-        composedFees,
-      },
-      selectedPriority
+      { ...rawTx, fee: toRawLsk(status.fee.value) },
+      transactionData,
+      selectedPriority,
+      composedFees
     );
   };
 
