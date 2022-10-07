@@ -305,7 +305,9 @@ const desktopTxToElementsTx = (tx, moduleCommand, schema) => {
   // TODO: Ideally the parameter conversion from JSON to JS Object and vice versa can now be handled with code directly
   // This below code is a patch, if we can construct the params JSON properly from each form then we can remove getElementsTxParams
   // and directly use codec.codec.fromJSON to convert JSON to JS Object and codec.codec.toJSON to get JSON from JS Object
-  transaction.params = codec.codec.fromJSON(schema, getElementsTxParams(params, moduleCommand));
+  if (schema) {
+    transaction.params = codec.codec.fromJSON(schema, getElementsTxParams(params, moduleCommand));
+  }
   return transaction;
 };
 
