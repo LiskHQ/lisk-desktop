@@ -40,7 +40,7 @@ const DelegateRow = ({
   return (
     <Link
       className={`${className} delegate-row ${styles.container} ${activeStyle} ${delegateStyles.tableRow}`}
-      to={`${routes.explorer.path}?address=${data.address}`}
+      to={`${routes.delegateProfile.path}?address=${data.address}`}
     >
       <DelegateRowContext.Provider
         value={{

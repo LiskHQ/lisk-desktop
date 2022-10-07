@@ -1,4 +1,5 @@
-import React from 'react';
+import React, { useMemo } from 'react';
+import { useTranslation } from 'react-i18next';
 import grid from 'flexboxgrid/dist/flexboxgrid.css';
 import { useTheme } from '@theme/Theme';
 import { tokenMap } from '@token/fungible/consts/tokens';
@@ -6,15 +7,21 @@ import Box from '@theme/box';
 import BoxContent from '@theme/box/content';
 import BoxHeader from '@theme/box/header';
 import Icon from '@theme/Icon';
+import { useBlocks } from 'src/modules/block/hooks/queries/useBlocks';
 import DateTimeFromTimestamp from 'src/modules/common/components/timestamp';
 import TokenAmount from '@token/fungible/components/tokenAmount';
-import { getStatus } from './performanceView';
 import styles from './delegateProfile.css';
 
-const DetailsView = ({ t, data, lastBlockForged }) => {
+const DetailsView = ({ data }) => {
   const theme = useTheme();
+  const { t } = useTranslation();
   const { rank } = data;
-  const status = getStatus(data);
+  const status = data.status || '';
+
+  const { data: blocks } = useBlocks({
+    config: { params: { height: data.lastGeneratedHeight } },
+  });
+  const lastBlockForged = useMemo(() => blocks?.data?.[0] || {}, [blocks]);
 
   return (
     <Box
@@ -35,38 +42,25 @@ const DetailsView = ({ t, data, lastBlockForged }) => {
           <Icon name="clockActive" className={styles.icon} />
           <div className={`${grid.col} ${styles.item}`}>
             <div className={`${styles.title} ${theme}`}>{t('Status')}</div>
-            <div className={`${styles.value} ${styles.capitalized}`}>
-              {status.toLowerCase()}
-            </div>
+            <div className={`${styles.value} ${styles.capitalized}`}>{status.toLowerCase()}</div>
           </div>
         </div>
         <div className={`${grid.row} ${styles.itemContainer}`}>
           <Icon name="weight" className={styles.icon} />
           <div className={`${grid.col} ${styles.item}`}>
-            <div className={`${styles.title} ${theme}`}>
-              {t('Delegate weight')}
-            </div>
+            <div className={`${styles.title} ${theme}`}>{t('Delegate weight')}</div>
             <div className={styles.value}>
-              <TokenAmount
-                val={data.totalVotesReceived}
-                token={tokenMap.LSK.key}
-              />
+              <TokenAmount val={data.totalVotesReceived} token={tokenMap.LSK.key} />
             </div>
           </div>
         </div>
         <div className={`${grid.row} ${styles.itemContainer}`}>
           <Icon name="calendar" className={styles.icon} />
           <div className={`${grid.col} ${styles.item}`}>
-            <div className={`${styles.title} ${theme}`}>
-              {t('Last block forged')}
-            </div>
+            <div className={`${styles.title} ${theme}`}>{t('Last block forged')}</div>
             <div className={styles.value}>
-              {lastBlockForged ? (
-                <DateTimeFromTimestamp
-                  fulltime
-                  className="date"
-                  time={lastBlockForged}
-                />
+              {lastBlockForged.timestamp ? (
+                <DateTimeFromTimestamp fulltime className="date" time={lastBlockForged.timestamp} />
               ) : (
                 '-'
               )}
