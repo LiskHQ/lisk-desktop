@@ -1,5 +1,5 @@
 /* eslint-disable complexity */
-import React, { /* useEffect, */ useMemo, useState } from 'react';
+import React, { useEffect, useMemo, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import {
   selectSearchParamValue,
@@ -20,9 +20,10 @@ import WalletVisual from 'src/modules/wallet/components/walletVisual';
 import TokenAmount from '@token/fungible/components/tokenAmount';
 import WarnPunishedDelegate from '@dpos/validator/components/WarnPunishedDelegate';
 import { useBlocks } from 'src/modules/block/hooks/queries/useBlocks';
+import { useAuth } from 'src/modules/auth/hooks/queries';
 import { PrimaryButton, SecondaryButton, WarningButton } from 'src/theme/buttons';
 import useVoteAmountField from '../../hooks/useVoteAmountField';
-// import getMaxAmount from '../../utils/getMaxAmount';
+import getMaxAmount from '../../utils/getMaxAmount';
 import styles from './editVote.css';
 import { useDelegates, useSentVotes } from '../../hooks/queries';
 import { NUMBER_OF_BLOCKS_PER_DAY } from '../../consts';
@@ -42,16 +43,19 @@ const getTitles = (t) => ({
   },
 });
 
+// @Todo this is just a place holder pending when service confirms where this can be gotten from.
+const dposTokenId = '0'.repeat(16);
+
 // eslint-disable-next-line max-statements
-const EditVote = ({ history, voteEdited }) => {
+const EditVote = ({ history, voteEdited, network, voting }) => {
   const { t } = useTranslation();
   const [
     {
       metadata: { address: currentAddress },
     },
   ] = useCurrentAccount();
+  const [maxAmount, setMaxAmount] = useState(0);
   const [isForm, setIsForm] = useState(true);
-  const dposTokenId = 1234565; // this is just a place holder pending when service confirms where this can be gotten from.
 
   const [address] = selectSearchParamValue(history.location.search, ['address']);
   const delegateAddress = address || currentAddress;
@@ -73,6 +77,10 @@ const EditVote = ({ history, voteEdited }) => {
   const { data: tokens } = useTokensBalance({ config: { params: { tokenID: dposTokenId } } });
   const token = useMemo(() => tokens?.data?.[0] || {}, [tokens]);
 
+  const { data: authData } = useAuth({ config: { params: { address: delegateAddress } } });
+  const auth = useMemo(() => ({ ...authData?.data, ...authData?.meta }), [authData]);
+  const { nonce, publicKey, numberOfSignatures, optionalKeys, mandatoryKeys } = auth;
+
   const [start = delegatePomHeight.start, end = delegatePomHeight.end] = selectSearchParamValue(
     history.location.search,
     ['start', 'end']
@@ -86,21 +94,28 @@ const EditVote = ({ history, voteEdited }) => {
   }, [sentVotes]);
 
   const [voteAmount, setVoteAmount] = useVoteAmountField(0);
-
   const mode = hasSentVoteToDelegate ? 'edit' : 'add';
   const titles = getTitles(t)[mode];
-  const [maxAmount] = useState(0);
 
-  // useEffect(() => {
-  //   getMaxAmount(wallet, network, voting, delegateAddress).then(setMaxAmount);
-  // }, [delegate, address]);
+  useEffect(() => {
+    getMaxAmount({
+      balance: token.availableBalance,
+      nonce,
+      publicKey,
+      voting,
+      address,
+      network,
+      numberOfSignatures,
+      mandatoryKeys,
+      optionalKeys,
+    }).then(setMaxAmount);
+  }, [token, auth, network, voting]);
 
   const handleConfirm = () => {
     if (!isForm) {
       removeThenAppendSearchParamsToUrl(history, { modal: 'votingQueue' }, ['modal']);
       return;
     }
-
     voteEdited([
       {
         address: delegateAddress,
@@ -109,7 +124,10 @@ const EditVote = ({ history, voteEdited }) => {
       },
     ]);
 
-    setIsForm(false);
+    if (mode === 'add') setIsForm(false);
+    if (mode === 'edit') {
+      removeThenAppendSearchParamsToUrl(history, { modal: 'votingQueue' }, ['modal']);
+    }
   };
 
   const handleContinueVoting = () => {
@@ -125,38 +143,52 @@ const EditVote = ({ history, voteEdited }) => {
         amount: 0,
       },
     ]);
-
     removeSearchParamsFromUrl(history, ['modal']);
   };
 
   const daysLeft = Math.ceil((parseInt(end, 10) - currentHeight) / NUMBER_OF_BLOCKS_PER_DAY);
+  const subTitles = {
+    edit: t('After changing your vote amount, it will be added to the voting queue.'),
+    add: titles.description,
+  };
+  const headerTitles = {
+    edit: t('Edit Vote'),
+    add: titles.title,
+  };
 
   return (
-    <Dialog hasClose className={`${styles.wrapper} ${!isForm ? styles.confirmWrapper : ''}`}>
+    <Dialog
+      hasClose
+      className={`${styles.wrapper} ${!isForm || mode === 'edit' ? styles.confirmWrapper : ''}`}
+    >
       <Box>
         <BoxHeader>
-          <h1>{isForm ? titles.title : t('Vote added')}</h1>
+          <h1>{!isForm ? t('Vote added') : headerTitles[mode]}</h1>
         </BoxHeader>
         <BoxContent className={styles.noPadding}>
           <BoxInfoText>
             <span>
-              {isForm ? titles.description : t('Your vote has been added to your voting queue')}
+              {!isForm ? t('Your vote has been added to your voting queue') : subTitles[mode]}
             </span>
           </BoxInfoText>
-          {isForm && (
+          {(isForm || mode === 'edit') && (
             <>
-              <BoxInfoText className={styles.accountInfo}>
-                <WalletVisual size={40} address={delegateAddress} />
-                <p>{delegate.name}</p>
-                <p>{delegate.address}</p>
-              </BoxInfoText>
+              {mode === 'add' && (
+                <BoxInfoText className={styles.accountInfo}>
+                  <WalletVisual size={40} address={delegateAddress} />
+                  <p>{delegate.name}</p>
+                  <p>{delegate.address}</p>
+                </BoxInfoText>
+              )}
               <label className={styles.fieldGroup}>
-                <p className={styles.availableBalance}>
-                  {t('Available Bal: ')}
-                  <span>
-                    <TokenAmount token={token.symbol} val={token.availableBalance} />
-                  </span>
-                </p>
+                {mode === 'add' && (
+                  <p className={styles.availableBalance}>
+                    {t('Available Bal: ')}
+                    <span>
+                      <TokenAmount token={token.symbol} val={token.availableBalance} />
+                    </span>
+                  </p>
+                )}
                 <AmountField
                   amount={voteAmount}
                   onChange={setVoteAmount}
@@ -177,7 +209,7 @@ const EditVote = ({ history, voteEdited }) => {
             </>
           )}
         </BoxContent>
-        <BoxFooter direction="vertical">
+        <BoxFooter direction={mode === 'edit' ? 'horizontal' : 'vertical'}>
           {mode === 'edit' && (
             <WarningButton className="remove-vote" onClick={removeVote}>
               {t('Remove vote')}

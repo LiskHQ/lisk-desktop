@@ -648,12 +648,12 @@ const signMultisigTransaction = async (
  * @param {object} transaction - Transaction object which should include the signatures property.
  * @returns {number} the number of signatures required
  */
-const getNumberOfSignatures = (account, transaction) => {
+const getNumberOfSignatures = ({ numberOfSignatures, isMultisignature }, transaction) => {
   if (transaction?.moduleCommand === registerMultisignatureGroup) {
     return transaction.params.optionalKeys.length + transaction.params.mandatoryKeys.length + 1;
   }
-  if (account?.summary?.isMultisignature) {
-    return account.keys.numberOfSignatures;
+  if (isMultisignature) {
+    return numberOfSignatures;
   }
   return DEFAULT_NUMBER_OF_SIGNATURES;
 };
