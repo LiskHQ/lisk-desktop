@@ -146,10 +146,6 @@ describe('RegisterDelegateForm', () => {
       message: '',
     };
     const rawTx = {
-      fees: {
-        Transaction: '0 LSK',
-        Initialisation: '0 LSK',
-      },
       rawTx: {
         fee: 0,
         moduleCommand: 'dpos:registerDelegate',
@@ -158,14 +154,17 @@ describe('RegisterDelegateForm', () => {
           blsKey: blsKey.value,
           generatorKey: genKey.value,
           proofOfPossession: pop.value,
-          username: validName.value,
+          name: validName.value,
+        },
+        composedFees: {
+          Transaction: '0 LSK',
+          Initialisation: '0 LSK',
         },
         sender: {
           publicKey: wallets.genesis.summary.publicKey,
         },
       },
       selectedPriority: { title: 'Normal', selectedIndex: 0, value: 0 },
-      trnxData: undefined,
     };
 
     it('accept a valid form', () => {
