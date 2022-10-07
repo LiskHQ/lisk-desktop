@@ -67,7 +67,7 @@ describe('TxComposer', () => {
         params: {
           username: 'test_username',
           generatorKey: genKey,
-          blsKey: blsKey,
+          blsKey,
           proofOfPossession: pop,
         },
       },

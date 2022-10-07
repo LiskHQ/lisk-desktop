@@ -161,7 +161,7 @@ describe('API: LSK Transactions', () => {
         params: {
           username: 'username',
           generatorKey: genKey,
-          blsKey: blsKey,
+          blsKey,
           proofOfPossession: pop,
         },
       };

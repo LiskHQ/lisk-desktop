@@ -17,7 +17,7 @@ import { getFeeStatus } from '../../utils/helpers';
 // eslint-disable-next-line max-statements
 const TxComposer = ({
   children,
-  transaction,
+  transaction = {},
   onComposed,
   onConfirm,
   className,
@@ -58,7 +58,7 @@ const TxComposer = ({
 
 
   const minRequiredBalance = getMinRequiredBalance(transaction, status.fee);
-  const { recipientChain, sendingChain } = transaction || {};
+  const { recipientChain, sendingChain } = transaction;
 
   const composedFees = {
     Transaction: getFeeStatus({ fee: status.fee, token, customFee }),

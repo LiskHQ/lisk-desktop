@@ -25,8 +25,6 @@ const RegisterDelegateSummary = ({
     onClick: () => { prevStep({ rawTx }); },
   };
 
-  console.log('RegisterDelegateSummary 1', rawTx);
-
   return (
     <TransactionSummary
       title={t('Delegate registration Summary')}
