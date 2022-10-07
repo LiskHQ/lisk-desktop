@@ -9,6 +9,7 @@ import Box from 'src/theme/box';
 import BoxFooter from 'src/theme/box/footer';
 import TransactionPriority from '@transaction/components/TransactionPriority';
 import { toRawLsk } from '@token/fungible/utils/lsk';
+import { useDeprecatedAccount } from '@account/hooks/useDeprecatedAccount';
 import { PrimaryButton } from 'src/theme/buttons';
 import Feedback, { getMinRequiredBalance } from './Feedback';
 import { getFeeStatus } from '../../utils/helpers';
@@ -25,6 +26,7 @@ const TxComposer = ({
 }) => {
   const { t } = useTranslation();
   useSchemas();
+  useDeprecatedAccount();
   const wallet = useSelector(selectActiveTokenAccount);
   const token = useSelector(selectActiveToken);
   const [customFee, setCustomFee] = useState();
@@ -35,7 +37,6 @@ const TxComposer = ({
     prioritiesLoadError,
     loadingPriorities,
   ] = useTransactionPriority();
-
   const rawTx = {
     sender: { publicKey: wallet.summary?.publicKey },
     nonce: wallet.sequence?.nonce,
@@ -55,6 +56,7 @@ const TxComposer = ({
       onComposed(status, { ...rawTx, fee: toRawLsk(status.fee.value) });
     }
   }, [selectedPriority, transaction.asset]);
+
 
   const minRequiredBalance = getMinRequiredBalance(transaction, status.fee);
   const { recipientChain, sendingChain } = transactionData || {};

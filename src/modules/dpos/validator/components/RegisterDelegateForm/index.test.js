@@ -7,6 +7,12 @@ import RegisterDelegateForm from '.';
 
 jest.mock('../../hooks/useDelegateName', () => jest.fn());
 jest.mock('../../hooks/useDelegateKey', () => jest.fn());
+jest.mock('@account/hooks/useDeprecatedAccount', () => ({
+  useDeprecatedAccount: jest.fn().mockReturnValue({
+    isSuccess: true,
+    isLoading: false
+  }),
+}));
 
 const genKey = {
   value: keys.genKey,
