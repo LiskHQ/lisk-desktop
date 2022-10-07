@@ -68,6 +68,19 @@ const TxComposer = ({
     composedFees.CCM = getFeeStatus({ fee: status.fee, token, customFee });
   }
 
+  const confirmTxn = () => {
+    onConfirm(
+      {
+        ...rawTx,
+        fee: toRawLsk(status.fee.value),
+        recipientChain,
+        sendingChain,
+        composedFees,
+      },
+      selectedPriority
+    );
+  };
+
   return (
     <Box className={className}>
       {children}
@@ -93,14 +106,7 @@ const TxComposer = ({
       <BoxFooter>
         <PrimaryButton
           className="confirm-btn"
-          onClick={() =>
-            onConfirm(
-              { ...rawTx, fee: toRawLsk(status.fee.value) },
-              transactionData,
-              selectedPriority,
-              composedFees
-            )
-          }
+          onClick={confirmTxn}
           disabled={!transaction.isValid || minRequiredBalance > wallet.token?.balance}
         >
           {buttonTitle ?? t('Continue')}
