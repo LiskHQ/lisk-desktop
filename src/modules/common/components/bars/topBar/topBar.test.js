@@ -2,10 +2,33 @@ import React from 'react';
 import routes from 'src/routes/routes';
 import DialogHolder from 'src/theme/dialog/holder';
 import { mountWithRouter } from 'src/utils/testHelpers';
-import accounts from '@tests/constants/wallets';
 import mockSavedAccounts from '@tests/fixtures/accounts';
 import { useCurrentAccount } from 'src/modules/account/hooks';
 import TopBar from './topBar';
+
+const mockState = {
+  account: {
+    list: [],
+  },
+  blockChainApplications: {
+    current: {},
+  },
+  network: {
+    status: { online: true },
+    name: 'Custom Node',
+  },
+  settings: {
+    network: { name: 'Custom Nodee', address: 'hhtp://localhost:4000' },
+  },
+};
+
+const mockDispatch = jest.fn();
+jest.mock('react-redux', () => ({
+  ...jest.requireActual('react-redux'),
+  useSelector: jest.fn().mockImplementation((fn) => fn(mockState)),
+  useDispatch: () => mockDispatch,
+}));
+
 
 const mockInputNode = {
   focus: jest.fn(),
@@ -37,21 +60,8 @@ jest.mock('@account/hooks/useCurrentAccount.js');
 useCurrentAccount.mockImplementation(() => [mockCurrentAccount]);
 
 describe('TopBar', () => {
-  const account = {
-    passphrase: accounts.genesis.passphrase,
-    expireTime: Date.now() + 60000,
-    address: '12345L',
-    info: {
-      LSK: {
-        address: '12345L',
-        balance: 120,
-      },
-    },
-  };
 
   const props = {
-    account,
-    showDelegate: false,
     t: (val) => val,
     logOut: jest.fn(),
     location: { pathname: routes.dashboard.path, search: '' },
@@ -59,26 +69,6 @@ describe('TopBar', () => {
       location: { pathname: routes.dashboard.path, search: '' },
       replace: () => {},
       push: jest.fn(),
-    },
-    transactions: [],
-    token: {
-      active: 'LSK',
-      list: {
-        LSK: true,
-      },
-    },
-    network: {
-      status: { online: true },
-      name: 'Custom Node',
-      networks: {
-        LSK: {
-          nodeUrl: 'hhtp://localhost:4000',
-          nethash: '198f2b61a8eb95fbeed58b8216780b68f697f26b849acf00c8c93bb9b24f783d',
-        },
-      },
-    },
-    settings: {
-      network: { name: 'Custom Nodee', address: 'hhtp://localhost:4000' },
     },
     settingsUpdated: jest.fn(),
     networkSet: jest.fn(),

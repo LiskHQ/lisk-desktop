@@ -34,7 +34,16 @@ describe('useCustomQuery hook', () => {
         offset: 0,
       },
     };
-
     expect(result.current.data).toEqual(expectedResponse);
   });
+
+  it('fetch not fail if config not passed', async () => {
+    const { result, waitFor } = renderHook(
+      () => useCustomQuery({ keys }), { wrapper },
+    );
+
+    await waitFor(() => result.current.isFetching);
+    expect(!result.current.data).toBeTruthy();
+  });
+
 });
