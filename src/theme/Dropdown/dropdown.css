@@ -120,6 +120,11 @@
   }
 }
 
+.title {
+  padding: 5px 20px;
+  font-weight: var(--font-weight-semi-bold);
+}
+
 .dropdownContent {
   display: flex;
   flex-direction: column;

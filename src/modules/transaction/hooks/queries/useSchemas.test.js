@@ -11,6 +11,9 @@ const mockState = {
   },
   blockChainApplications: {
     current: {},
+  },
+  network: {
+    name: 'testnet'
   }
 };
 

@@ -16,6 +16,11 @@ const initialState = {
  */
 const network = (state = initialState, action) => {
   switch (action.type) {
+    case actionTypes.networkSelected:
+      return {
+        ...state,
+        name: action.data.name
+      }
     case actionTypes.networkConfigSet:
       return {
         ...state,

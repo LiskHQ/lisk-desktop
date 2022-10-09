@@ -20,22 +20,22 @@ const placeholderMember = {
 const getInitialMembersState = (prevState) => {
   if (prevState.rawTx) {
     return [
-      ...prevState.rawTx.params.mandatoryKeys.map(item => ({ isMandatory: true, publicKey: item })),
-      ...prevState.rawTx.params.optionalKeys.map(item => ({ isMandatory: false, publicKey: item })),
+      ...prevState.rawTx.params.mandatoryKeys.map((item) => ({
+        isMandatory: true,
+        publicKey: item,
+      })),
+      ...prevState.rawTx.params.optionalKeys.map((item) => ({
+        isMandatory: false,
+        publicKey: item,
+      })),
     ];
   }
 
   return [];
 };
-const getInitialSignaturesState = (prevState) =>
-  prevState.numberOfSignatures ?? 2;
+const getInitialSignaturesState = (prevState) => prevState.numberOfSignatures ?? 2;
 
-export const validateState = ({
-  mandatoryKeys,
-  optionalKeys,
-  numberOfSignatures,
-  t,
-}) => {
+export const validateState = ({ mandatoryKeys, optionalKeys, numberOfSignatures, t }) => {
   const messages = validators
     .map((scenario) => {
       if (scenario.pattern(mandatoryKeys, optionalKeys, numberOfSignatures)) {
@@ -45,7 +45,7 @@ export const validateState = ({
     })
     .filter((item) => !!item);
 
-  const hasError = mandatoryKeys.length + optionalKeys.length > 0
+  const hasError = mandatoryKeys.length + optionalKeys.length > 0;
   return {
     error: hasError ? messages.length : -1,
     messages,
@@ -53,14 +53,12 @@ export const validateState = ({
 };
 
 // eslint-disable-next-line max-statements
-const Form = ({
-  nextStep, prevState = {},
-}) => {
+const Form = ({ nextStep, prevState = {} }) => {
   const { t } = useTranslation();
   const [numberOfSignatures, setNumberOfSignatures] = useState(() =>
-    getInitialSignaturesState(prevState));
-  const [members, setMembers] = useState(() =>
-    getInitialMembersState(prevState));
+    getInitialSignaturesState(prevState)
+  );
+  const [members, setMembers] = useState(() => getInitialMembersState(prevState));
 
   const [mandatoryKeys, optionalKeys] = useMemo(() => {
     const mandatory = members
@@ -84,11 +82,7 @@ const Form = ({
 
   const changeMember = ({ index, publicKey, isMandatory }) => {
     const newMember = { publicKey, isMandatory };
-    const newMembers = [
-      ...members.slice(0, index),
-      newMember,
-      ...members.slice(index + 1),
-    ];
+    const newMembers = [...members.slice(0, index), newMember, ...members.slice(index + 1)];
     setMembers(newMembers);
   };
 
@@ -96,10 +90,7 @@ const Form = ({
     if (members.length === 1) {
       changeMember({ index, publicKey: '', isMandatory: false });
     } else {
-      const newMembers = [
-        ...members.slice(0, index),
-        ...members.slice(index + 1),
-      ];
+      const newMembers = [...members.slice(0, index), ...members.slice(index + 1)];
       setMembers(newMembers);
     }
   };
@@ -129,7 +120,7 @@ const Form = ({
         numberOfSignatures,
         t,
       }),
-    [mandatoryKeys, optionalKeys, numberOfSignatures],
+    [mandatoryKeys, optionalKeys, numberOfSignatures]
   );
 
   const transaction = {
@@ -148,6 +139,7 @@ const Form = ({
       <TxComposer
         transaction={transaction}
         onConfirm={onConfirm}
+        buttonTitle={t('Go to confirmation')}
       >
         <>
           <BoxHeader className={styles.header}>
@@ -156,9 +148,7 @@ const Form = ({
           <BoxContent className={styles.container}>
             <ProgressBar current={1} />
             <div>
-              <span className={styles.numberOfSignaturesHeading}>
-                {t('Required signatures')}
-              </span>
+              <span className={styles.numberOfSignaturesHeading}>{t('Required signatures')}</span>
               <Input
                 className={`${styles.numberOfSignaturesInput} multisignature-editor-input`}
                 value={numberOfSignatures}
@@ -167,9 +157,7 @@ const Form = ({
                 name="required-signatures"
               />
             </div>
-            <div
-              className={`${styles.membersControls} multisignature-members-controls`}
-            >
+            <div className={`${styles.membersControls} multisignature-members-controls`}>
               <span>{t('Members')}</span>
               <TertiaryButton
                 size="s"
@@ -177,9 +165,7 @@ const Form = ({
                 onClick={addMemberField}
                 className="add-new-members"
               >
-                +
-                {' '}
-                {t('Add')}
+                + {t('Add')}
               </TertiaryButton>
             </div>
             <div className={styles.contentScrollable}>

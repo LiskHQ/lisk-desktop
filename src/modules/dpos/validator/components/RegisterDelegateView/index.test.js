@@ -3,6 +3,12 @@ import { mountWithRouterAndQueryClient } from 'src/utils/testHelpers';
 import { getTransactionBaseFees, getTransactionFee } from '@transaction/api';
 import RegisterDelegate from './index';
 
+jest.mock('@account/hooks/useDeprecatedAccount', () => ({
+  useDeprecatedAccount: jest.fn().mockReturnValue({
+    isSuccess: true,
+    isLoading: false
+  }),
+}));
 jest.mock('lodash.debounce');
 jest.mock('@transaction/api');
 
