@@ -35,7 +35,7 @@ const getMaxAmount = async ({
   const isMultisignature = !optionalKeys.length && !mandatoryKeys.length;
 
   const maxVoteAmount =
-    Math.floor((balance - totalUnconfirmedVotes + currentVote - MIN_ACCOUNT_BALANCE) / 1e9) * 1e9;
+    Math.floor((balance - (totalUnconfirmedVotes + currentVote + MIN_ACCOUNT_BALANCE)) / 1e9) * 1e9;
 
   const transaction = {
     fee: 1e6,
