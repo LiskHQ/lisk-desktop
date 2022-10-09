@@ -9,6 +9,14 @@ import flushPromises from '@tests/unit-test-utils/flushPromises';
 import VoteRow from './VoteRow';
 import Form from './VoteForm';
 
+
+jest.mock('@account/hooks/useDeprecatedAccount', () => ({
+  useDeprecatedAccount: jest.fn().mockReturnValue({
+    isSuccess: true,
+    isLoading: false
+  }),
+}));
+
 const addresses = [
   'lskdwsyfmcko6mcd357446yatromr9vzgu7eb8y99',
   'lskyau2yy4993jkbd7kxcsfsrarac8macbbs8saad',

@@ -23,7 +23,7 @@ export const ACCOUNT_MENU = [
     label: 'Add new account',
   },
   {
-    component: 'registerDelegate',
+    component: 'multiSignature',
     icon: 'multiSignatureOutline',
     label: 'Upgrade to multisignature',
   },

@@ -1,10 +1,8 @@
 import React from 'react';
 import styles from './tabs.css';
 
-const Tabs = ({
-  tabs, active, onClick, className, isActive,
-}) => (
-  <ul className={styles.wrapper}>
+const Tabs = ({ tabs, active, onClick, className, isActive, wrapperClassName }) => (
+  <ul className={`${styles.wrapper} ${wrapperClassName ?? ''}`}>
     {tabs.map((filter, i) => (
       <li
         key={i}
@@ -12,7 +10,7 @@ const Tabs = ({
           'tab',
           className,
           filter.className,
-          ((active === filter.value) || isActive(filter.value)) ? `${styles.active} active` : '',
+          active === filter.value || isActive(filter.value) ? `${styles.active} active` : '',
         ].join(' ')}
         onClick={() => onClick(filter)}
       >
