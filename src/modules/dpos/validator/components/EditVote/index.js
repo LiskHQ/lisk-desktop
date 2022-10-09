@@ -79,7 +79,7 @@ const EditVote = ({ history, voteEdited, network, voting }) => {
 
   const { data: authData } = useAuth({ config: { params: { address: delegateAddress } } });
   const auth = useMemo(() => ({ ...authData?.data, ...authData?.meta }), [authData]);
-  const { nonce, publicKey, numberOfSignatures, optionalKeys, mandatoryKeys } = auth;
+  const { nonce, publicKey, numberOfSignatures, optionalKeys = [], mandatoryKeys = [] } = auth;
 
   const [start = delegatePomHeight.start, end = delegatePomHeight.end] = selectSearchParamValue(
     history.location.search,
@@ -118,7 +118,7 @@ const EditVote = ({ history, voteEdited, network, voting }) => {
     }
     voteEdited([
       {
-        address: delegateAddress,
+        address: delegate.address,
         amount: toRawLsk(voteAmount.value),
         name: delegate.name,
       },
@@ -139,7 +139,7 @@ const EditVote = ({ history, voteEdited, network, voting }) => {
     voteEdited([
       {
         name: delegate.name,
-        address: delegateAddress,
+        address: delegate.address,
         amount: 0,
       },
     ]);
@@ -175,7 +175,7 @@ const EditVote = ({ history, voteEdited, network, voting }) => {
             <>
               {mode === 'add' && (
                 <BoxInfoText className={styles.accountInfo}>
-                  <WalletVisual size={40} address={delegateAddress} />
+                  <WalletVisual size={40} address={delegate.address} />
                   <p>{delegate.name}</p>
                   <p>{delegate.address}</p>
                 </BoxInfoText>
@@ -183,7 +183,7 @@ const EditVote = ({ history, voteEdited, network, voting }) => {
               <label className={styles.fieldGroup}>
                 {mode === 'add' && (
                   <p className={styles.availableBalance}>
-                    {t('Available Bal: ')}
+                    <span>{t('Available Bal: ')}</span>
                     <span>
                       <TokenAmount token={token.symbol} val={token.availableBalance} />
                     </span>

@@ -99,7 +99,7 @@
     top: -5px;
     color: var(--color-slate-gray);
 
-    & > span {
+    & > span:last-child {
       @mixin contentSmall semi-bold;
 
       color: var(--color-ultramarine-blue);
