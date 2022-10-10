@@ -5,26 +5,18 @@ import useBlockchainApplicationExplore  from './useBlockchainApplicationExplore'
 
 jest.useRealTimers();
 
+const expectedResponse = mockBlockchainApp.data.map(app => ({ ...app, isPinned: false }))
+
 describe('useBlockchainApplicationExplore hook', () => {
-  const limit = 15;
-  const config = { params: { limit } };
 
   it('fetching data correctly', async () => {
     const { result, waitFor } = renderHook(
-      () => useBlockchainApplicationExplore({ config }),
+      () => useBlockchainApplicationExplore(),
       { wrapper },
     );
     expect(result.current.isLoading).toBeTruthy();
     await waitFor(() => result.current.isFetched);
     expect(result.current.isSuccess).toBeTruthy();
-    const expectedResponse = {
-      data: mockBlockchainApp.data.slice(0, limit),
-      meta: {
-        ...mockBlockchainApp.meta,
-        count: 2,
-        offset: 0,
-      },
-    };
     expect(result.current.data).toEqual(expectedResponse);
   });
 
@@ -32,21 +24,13 @@ describe('useBlockchainApplicationExplore hook', () => {
     const { result, waitFor } = renderHook(() => useBlockchainApplicationExplore(), { wrapper });
     await waitFor(() => result.current.isFetched);
     expect(result.current.isSuccess).toBeTruthy();
-    const expectedResponse = {
-      data: mockBlockchainApp.data,
-      meta: {
-        ...mockBlockchainApp.meta,
-        count: mockBlockchainApp.data.length,
-        offset: 0,
-      },
-    };
 
     expect(result.current.data).toEqual(expectedResponse);
   });
 
-  it.skip('should fetch next set of data correctly', async () => {
+  it('should fetch next set of data correctly', async () => {
     const { result, waitFor } = renderHook(
-      () => useBlockchainApplicationExplore({ config }),
+      () => useBlockchainApplicationExplore(),
       { wrapper },
     );
     await waitFor(() => result.current.isFetched);
@@ -55,14 +39,6 @@ describe('useBlockchainApplicationExplore hook', () => {
     });
     await waitFor(() => result.current.isFetching);
     await waitFor(() => !result.current.isFetching);
-    const expectedResponse = {
-      data: mockBlockchainApp.data.slice(0, limit * 2),
-      meta: {
-        ...mockBlockchainApp.meta,
-        count: limit,
-        offset: limit,
-      },
-    };
     expect(result.current.data).toEqual(expectedResponse);
     expect(result.current.hasNextPage).toBeFalsy();
     act(() => {
