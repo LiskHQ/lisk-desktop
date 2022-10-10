@@ -36,18 +36,19 @@ describe('TxSummarizer', () => {
           recipient: { address: wallets.genesis.summary.address },
           amount: 100000000,
           data: 'test',
+          token: mockAppTokens[0],
         },
-      },
-      selectedPriority: { title: 'Normal', value: 1 },
-      fees: {
-        Transaction: '1 LSK',
-        CCM: '1 LSK',
-        initiation: '1 LSK',
-      },
-      transactionData: {
+        composedFees: {
+          Transaction: '1 LSK',
+          CCM: '1 LSK',
+          Initialisation: '1 LSK',
+        },
         sendingChain: mockBlockchainApplications[0],
         recipientChain: mockBlockchainApplications[1],
         token: mockAppTokens[0],
+      },
+      selectedPriority: { title: 'Normal', value: 1 },
+      transactionData: {
         recipient: { value: 'lskyrwej7xuxeo39ptuyff5b524dsmnmuyvcaxkag' },
         amount: 10,
         data: 'test message',

@@ -36,9 +36,6 @@ describe('Summary', () => {
         Initialisation: '1 LSK',
       },
       transactionData: {
-        sendingChain: mockBlockchainApplications[0],
-        recipientChain: mockBlockchainApplications[1],
-        token: mockAppTokens[0],
         recipient: { value: 'lskyrwej7xuxeo39ptuyff5b524dsmnmuyvcaxkag' },
         amount: 10,
         data: 'test message',
