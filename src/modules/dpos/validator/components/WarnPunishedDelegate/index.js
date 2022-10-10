@@ -19,11 +19,11 @@ const Warning = ({ vote, ...props }) => {
   const { pomHeight } = props;
   const { t } = useTranslation();
 
-  const { data: blocks } = useBlocks();
+const { data: blocks } = useBlocks();
   const { data: blocksAtHeight } = useBlocks({ config: { params: { height: pomHeight.start } } });
 
-  const blockTimestamp = useMemo(() => blocks?.data?.[0]?.timestamp || {}, [blocksAtHeight]);
-  const currentHeight = useMemo(() => blocks?.data?.[0]?.height || {}, [blocks]);
+  const blockTimestamp = useMemo(() => blocks?.data?.[0]?.timestamp || null, [blocksAtHeight]);
+  const currentHeight = useMemo(() => blocks?.data?.[0]?.height || null, [blocks]);
 
   const { daysLeft, punishmentStartDate } = getPunishmentDetails(
     blockTimestamp,

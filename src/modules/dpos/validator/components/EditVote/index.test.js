@@ -1,5 +1,5 @@
 import React from 'react';
-import { fireEvent, screen, waitFor } from '@testing-library/dom';
+import { fireEvent, screen, waitFor } from '@testing-library/react';
 import { MemoryRouter } from 'react-router';
 import { fromRawLsk, toRawLsk } from '@token/fungible/utils/lsk';
 import numeral from 'numeral';
