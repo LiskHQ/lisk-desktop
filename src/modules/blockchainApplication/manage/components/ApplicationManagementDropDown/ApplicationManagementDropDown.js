@@ -14,8 +14,6 @@ const ApplicationManagementList = ({ history }) => {
   const [currentApplication] = useCurrentApplication();
   const { applications } = useApplicationManagement();
 
-  console.log('applications', applications);
-
   const { t } = useTranslation();
 
   const handleAddApplication = useCallback(() => {

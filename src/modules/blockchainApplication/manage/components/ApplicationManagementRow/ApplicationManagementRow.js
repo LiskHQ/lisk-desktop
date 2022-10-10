@@ -96,7 +96,7 @@ const ApplicationManagementRow = ({
   const handleSetCurrentApplication = useCallback(() => {
     // Check apis here
     if (!isTerminated) {
-      if (application.apis.length > 1) {
+      if (application.serviceURLs.length > 1) {
         // redirect to select node
         addSearchParamsToUrl(history, { modal: 'selectNode', chainId: application.chainID });
       } else {
