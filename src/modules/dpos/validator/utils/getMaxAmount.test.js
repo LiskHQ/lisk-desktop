@@ -69,19 +69,32 @@ jest.mock('@dpos/validator/store/actions/voting', () => ({
 
 describe('getMaxAmount', () => {
   it('Returns 10n LSK if: balance >= (10n LSK + fee + dust)', async () => {
-    const result = await getMaxAmount(account, network, voting, accounts.genesis.summary.address);
-    expect(result).toBe(1e10);
+    const result = await getMaxAmount({
+      balance: account.summary.balance,
+      nonce: account.sequence?.nonce,
+      publicKey: account.summary.publicKey,
+      address: account.summary.address,
+      voting: voting.voting,
+      network,
+      numberOfSignatures: 0,
+      mandatoryKeys: [],
+      optionalKeys: [],
+    });
+    expect(result).toBe(0.8e10);
   });
 
   it('Returns (n-1) * 10 LSK if: 10n LSK < balance < (10n LSK + fee + dust)', async () => {
-    const acc = {
-      ...accounts.genesis,
-      summary: {
-        ...accounts.genesis.summary,
-        balance: 1e10,
-      },
-    };
-    const result = await getMaxAmount(acc, network, voting, accounts.genesis.summary.address);
-    expect(result).toBe(9e9);
+    const result = await getMaxAmount({
+      balance: 1e10,
+      nonce: account.sequence?.nonce,
+      publicKey: account.summary.publicKey,
+      address: account.summary.address,
+      voting: voting.voting,
+      network,
+      numberOfSignatures: 0,
+      mandatoryKeys: [],
+      optionalKeys: [],
+    });
+    expect(result).toBe(0.7e10);
   });
 });

@@ -1,205 +1,188 @@
-import { act } from 'react-dom/test-utils';
-import { mountWithRouterAndStore } from 'src/utils/testHelpers';
+import React from 'react';
+import { fireEvent, screen, waitFor } from '@testing-library/react';
+import { MemoryRouter } from 'react-router';
+import { fromRawLsk, toRawLsk } from '@token/fungible/utils/lsk';
+import numeral from 'numeral';
+import { renderWithRouter } from 'src/utils/testHelpers';
+import mockSavedAccounts from '@tests/fixtures/accounts';
+import { mockBlocks } from '@block/__fixtures__';
+import { useAuth } from '@auth/hooks/queries';
+import { useTokensBalance } from '@token/fungible/hooks/queries';
+import { mockDelegates, mockSentVotes } from '@dpos/validator/__fixtures__';
+import { useBlocks } from 'src/modules/block/hooks/queries/useBlocks';
+import { mockTokensBalance } from 'src/modules/token/fungible/__fixtures__';
+import { mockAuth } from 'src/modules/auth/__fixtures__';
 import EditVote from './index';
+import { useDelegates, useSentVotes } from '../../hooks/queries';
 
 jest.mock('@transaction/api', () => ({
   getTransactionFee: jest.fn().mockImplementation(() => Promise.resolve({ value: '0.046' })),
 }));
 
+const mockedCurrentAccount = mockSavedAccounts[0];
+jest.mock('@account/hooks', () => ({
+  useCurrentAccount: jest.fn(() => [mockedCurrentAccount, jest.fn()]),
+}));
+
+jest.mock('@block/hooks/queries/useBlocks');
+jest.mock('../../hooks/queries');
+jest.mock('@token/fungible/hooks/queries');
+jest.mock('@auth/hooks/queries');
+
 describe('EditVote', () => {
-  const genesis = 'lskdxc4ta5j43jp9ro3f8zqbxta9fn6jwzjucw7yt';
-  const delegate = 'lskehj8am9afxdz8arztqajy52acnoubkzvmo9cjy';
-  const defaultProps = {
-    currentHeight: 0,
-    wallet: {
-      passphrase: 'test',
-      info: {
-        LSK: { summary: { address: genesis, balance: 10004674000 } },
-      },
-      summary: {
-        address: 'lskdxc4ta5j43jp9ro3f8zqbxta9fn6jwzjucw7yt',
-      },
-    },
-    network: {
-      name: 'testnet',
-      networks: {
-        LSK: {
-          serviceUrl: 'https://service.lisk.com',
+  let wrapper;
+  const props = {
+    history: { location: { search: `?address=${mockDelegates.data[0].address}` }, push: jest.fn() },
+    voteEdited: jest.fn(),
+    network: {},
+    voting: {},
+  };
+
+  beforeEach(() => {
+    jest.clearAllMocks();
+
+    useDelegates.mockReturnValue({ data: mockDelegates });
+    useBlocks.mockReturnValue({ data: mockBlocks });
+    useSentVotes.mockReturnValue({ data: mockSentVotes });
+    useAuth.mockReturnValue({ data: mockAuth });
+    useTokensBalance.mockReturnValue({ data: mockTokensBalance, isLoading: false });
+    wrapper = renderWithRouter(EditVote, props);
+  });
+
+  it('should properly render add vote form', () => {
+    const delegate = mockDelegates.data[0];
+    const token = mockTokensBalance.data[0];
+
+    expect(screen.getByText('Add to voting queue')).toBeTruthy();
+    expect(screen.getByText(delegate.address)).toBeTruthy();
+    expect(screen.getByText(delegate.name)).toBeTruthy();
+    expect(screen.getByTestId(`wallet-visual-${delegate.address}`)).toBeTruthy();
+    expect(screen.getByText('Available Bal:')).toBeTruthy();
+    expect(
+      screen.getByText(
+        `${numeral(fromRawLsk(token.availableBalance)).format('0,0.[0000000000000]')} ${
+          token.symbol
+        }`
+      )
+    ).toBeTruthy();
+    expect(
+      screen.getByText(
+        'Input your vote amount. This value shows how much trust you have in this delegate.'
+      )
+    ).toBeTruthy();
+    expect(screen.getByText('~0.00 USD')).toBeTruthy();
+    expect(screen.getByText('Vote amount ({{symbol}})')).toBeTruthy();
+  });
+
+  it('should add vote to the votes queue', async () => {
+    const delegate = mockDelegates.data[0];
+    const votingField = screen.getByTestId('vote');
+
+    fireEvent.change(votingField, { target: { value: 20 } });
+    fireEvent.click(screen.getByText('Confirm'));
+
+    await waitFor(() => {
+      expect(props.voteEdited).toHaveBeenCalledWith([
+        {
+          address: delegate.address,
+          name: delegate.name,
+          amount: toRawLsk(20),
+        },
+      ]);
+    });
+  });
+
+  it('should render the confirmation modal and go back to the voting form', () => {
+    const delegate = mockDelegates.data[0];
+    const token = mockTokensBalance.data[0];
+
+    fireEvent.click(screen.getByText('Confirm'));
+    expect(screen.getByText('Vote added')).toBeTruthy();
+    expect(screen.getByText('Your vote has been added to your voting queue')).toBeTruthy();
+
+    fireEvent.click(screen.getByText('Continue voting'));
+    expect(screen.getByText('Add to voting queue')).toBeTruthy();
+    expect(screen.getByText(delegate.address)).toBeTruthy();
+    expect(screen.getByText(delegate.name)).toBeTruthy();
+    expect(screen.getByTestId(`wallet-visual-${delegate.address}`)).toBeTruthy();
+    expect(screen.getByText('Available Bal:')).toBeTruthy();
+    expect(
+      screen.getByText(
+        `${numeral(fromRawLsk(token.availableBalance)).format('0,0.[0000000000000]')} ${
+          token.symbol
+        }`
+      )
+    ).toBeTruthy();
+    expect(
+      screen.getByText(
+        'Input your vote amount. This value shows how much trust you have in this delegate.'
+      )
+    ).toBeTruthy();
+    expect(screen.getByText('~0.00 USD')).toBeTruthy();
+    expect(screen.getByText('Vote amount ({{symbol}})')).toBeTruthy();
+  });
+
+  it('should render the confirmation modal and proceed to the voting queue', () => {
+    fireEvent.click(screen.getByText('Confirm'));
+    fireEvent.click(screen.getByText('Go to the voting queue'));
+
+    expect(props.history.push).toHaveBeenCalled();
+  });
+
+  it('should render the edit vote modal', async () => {
+    const delegate = mockDelegates.data[0];
+
+    useSentVotes.mockReturnValue({
+      data: {
+        ...mockSentVotes,
+        data: {
+          ...mockSentVotes.data,
+          votes: mockSentVotes.data.votes.map((vote, index) =>
+            index === 0 ? { ...vote, delegateAddress: delegate.address } : vote
+          ),
         },
       },
-    },
-    voting: {
-      delegates: [],
-      votes: {},
-    },
-    voteEdited: jest.fn(),
-  };
-  const propsWithoutSearch = {
-    ...defaultProps,
-    t: str => str,
-    history: {
-      push: jest.fn(),
-      location: {
-        search: '',
-      },
-    },
-  };
-  const propsWithSearch = {
-    ...defaultProps,
-    t: str => str,
-    history: {
-      push: jest.fn(),
-      location: {
-        search: `?address=${delegate}&modal=editVote`,
-      },
-    },
-  };
-  const noVote = {};
-  const withVotes = {
-    [genesis]: { confirmed: 1e9, unconfirmed: 1e9 },
-    [delegate]: { confirmed: 1e9, unconfirmed: 1e9 },
-  };
-  const state = {
-    wallet: defaultProps.wallet,
-    token: {
-      active: 'LSK',
-    },
-  };
-  it('Should render as addVote when we have not voted to this account yet', () => {
-    const wrapper = mountWithRouterAndStore(
-      EditVote, propsWithoutSearch, {}, { ...state, voting: noVote },
-    );
-    expect(wrapper.html()).toContain('Add vote');
-    expect(wrapper.find('.confirm').exists()).toBeTruthy();
-    expect(wrapper.find('.remove-vote').exists()).not.toBeTruthy();
-  });
-
-  it('Should render as addVote when we have not voted to this account yet', () => {
-    const wrapper = mountWithRouterAndStore(
-      EditVote, propsWithoutSearch, {}, { ...state, voting: withVotes },
-    );
-    expect(wrapper.html()).toContain('Edit vote');
-    expect(wrapper.find('.remove-vote').exists()).toBeTruthy();
-  });
-
-  it('should dispatch remove vote for host if not called with address search param', () => {
-    const wrapper = mountWithRouterAndStore(
-      EditVote, propsWithoutSearch, {}, { ...state, voting: withVotes },
-    );
-    wrapper.find('.remove-vote').at(0).simulate('click');
-    expect(defaultProps.voteEdited).toHaveBeenCalledWith([{
-      address: genesis,
-      amount: 0,
-    }]);
-  });
-
-  it('should dispatch remove vote for host if called with address search param', () => {
-    const wrapper = mountWithRouterAndStore(
-      EditVote, propsWithSearch, {}, { ...state, voting: withVotes },
-    );
-    wrapper.find('.remove-vote').at(0).simulate('click');
-    expect(defaultProps.voteEdited).toHaveBeenCalledWith([{
-      address: delegate,
-      amount: 0,
-    }]);
-  });
-
-  it('should dispatch add vote for host if not called with address search param', () => {
-    const wrapper = mountWithRouterAndStore(
-      EditVote, propsWithoutSearch, {}, { ...state, voting: withVotes },
-    );
-    wrapper.find('input[name="vote"]').at(0).simulate('change', {
-      target: {
-        value: 20,
-        name: 'vote',
-      },
     });
-    wrapper.find('.confirm').at(0).simulate('click');
-    expect(defaultProps.voteEdited).toHaveBeenCalledWith([{
-      address: genesis,
-      amount: 2e9,
-    }]);
-  });
 
-  it('should display error if called with amount that will cause insufficient balance after voting', () => {
-    const withUpdatedVotes = {
-      ...withVotes,
-      [genesis]: { confirmed: 0, unconfirmed: 0 },
-      [delegate]: { confirmed: 0, unconfirmed: 0 },
-    };
-    const wrapper = mountWithRouterAndStore(
-      EditVote, propsWithoutSearch, {}, { ...state, voting: withUpdatedVotes },
+    wrapper.rerender(
+      <MemoryRouter initialEntries={['/']}>
+        <EditVote {...props} />
+      </MemoryRouter>
     );
-    let amountField = wrapper.find('input[name="vote"]').at(0);
-    amountField.simulate('change', {
-      target: {
-        value: 100,
-        name: 'vote',
-      },
+
+    expect(screen.getByText('Edit Vote')).toBeTruthy();
+    expect(
+      screen.getByText('After changing your vote amount, it will be added to the voting queue.')
+    ).toBeTruthy();
+    expect(screen.getByText('Vote amount ({{symbol}})')).toBeTruthy();
+
+    const votingField = screen.getByTestId('vote');
+
+    fireEvent.change(votingField, { target: { value: 20 } });
+    fireEvent.click(screen.getByText('Confirm'));
+
+    await waitFor(() => {
+      expect(props.voteEdited).toHaveBeenCalledWith([
+        {
+          address: delegate.address,
+          name: delegate.name,
+          amount: toRawLsk(20),
+        },
+      ]);
     });
-    wrapper.update();
-    act(() => { jest.advanceTimersByTime(300); });
-    wrapper.update();
-    amountField = wrapper.find('input[name="vote"]').at(0);
 
-    expect(amountField.find('.error')).toHaveClassName('error');
-    expect(wrapper.find('.amount Feedback')).toHaveText('Provided amount will result in a wallet with less than the minimum balance.');
-  });
+    expect(props.history.push).toHaveBeenCalled();
 
-  it('should display error when voting if called with amount greater than balance and locked votes for delegate', () => {
-    const wrapper = mountWithRouterAndStore(
-      EditVote, propsWithoutSearch, {}, { ...state, voting: withVotes },
-    );
-    let amountField = wrapper.find('input[name="vote"]').at(0);
-    amountField.simulate('change', {
-      target: {
-        value: 210,
-        name: 'vote',
-      },
+    fireEvent.click(screen.getByText('Remove vote'));
+
+    await waitFor(() => {
+      expect(props.voteEdited).toHaveBeenCalledWith([
+        {
+          address: delegate.address,
+          name: delegate.name,
+          amount: 0,
+        },
+      ]);
     });
-    wrapper.update();
-    act(() => { jest.advanceTimersByTime(300); });
-    wrapper.update();
-    amountField = wrapper.find('input[name="vote"]').at(0);
-
-    expect(amountField.find('.error')).toHaveClassName('error');
-    expect(wrapper.find('.amount Feedback')).toHaveText('The provided amount is higher than available voting balance.');
-  });
-
-  it('should display error when voting if called with amount that is zero or negative', () => {
-    const wrapper = mountWithRouterAndStore(
-      EditVote, propsWithoutSearch, {}, { ...state, voting: withVotes },
-    );
-    let amountField = wrapper.find('input[name="vote"]').at(0);
-    amountField.simulate('change', {
-      target: {
-        value: '-0',
-        name: 'vote',
-      },
-    });
-    wrapper.update();
-    act(() => { jest.advanceTimersByTime(300); });
-    wrapper.update();
-    amountField = wrapper.find('input[name="vote"]').at(0);
-
-    expect(amountField.find('.error')).toHaveClassName('error');
-    expect(wrapper.find('.amount Feedback')).toHaveText('Vote amount can\'t be zero or negative.');
-  });
-
-  it('should dispatch remove vote for host if called with address search param', () => {
-    const wrapper = mountWithRouterAndStore(
-      EditVote, propsWithSearch, {}, { ...state, voting: withVotes },
-    );
-    wrapper.find('input[name="vote"]').at(0).simulate('change', {
-      target: {
-        value: 20,
-        name: 'vote',
-      },
-    });
-    wrapper.find('.confirm').at(0).simulate('click');
-    expect(defaultProps.voteEdited).toHaveBeenCalledWith([{
-      address: delegate,
-      amount: 2e9,
-    }]);
   });
 });
