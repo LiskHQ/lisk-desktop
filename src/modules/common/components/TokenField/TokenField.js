@@ -15,10 +15,9 @@ export const TokenField = ({ styles, onChange, value, tokens }) => {
       </label>
       {value.availableBalance && (
         <span className={styles.balance}>
-          {t('Balance')}:&nbsp;&nbsp;
+          {t('Balance')}:&nbsp;
           <span>
-            <TokenAmount val={value.availableBalance} />
-            {` ${value.symbol}`}
+            <TokenAmount val={value.availableBalance} token={value.symbol} />
           </span>
         </span>
       )}
@@ -27,7 +26,7 @@ export const TokenField = ({ styles, onChange, value, tokens }) => {
         onChange={onChange}
         select={(selectedValue, option) => selectedValue?.name === option.name}
       >
-        {tokens.map((tokenValue) => (
+        {tokens?.map((tokenValue) => (
           <MenuItem
             className={TokenStyle.chainOptionWrapper}
             value={tokenValue}

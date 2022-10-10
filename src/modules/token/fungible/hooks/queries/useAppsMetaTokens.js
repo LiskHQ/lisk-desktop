@@ -1,10 +1,12 @@
 /* istanbul ignore file */
+import { useSelector } from 'react-redux';
 import { BLOCKCHAIN_APPS_META_TOKENS } from 'src/const/queries';
 import {
   LIMIT as limit,
   API_VERSION,
 } from 'src/const/config';
 import { useCustomInfiniteQuery } from 'src/modules/common/hooks';
+import { getNetworkName } from '@network/utils/getNetwork';
 
 /**
  * Creates a custom hook for supported tokens query
@@ -19,13 +21,16 @@ import { useCustomInfiniteQuery } from 'src/modules/common/hooks';
  */
 // eslint-disable-next-line import/prefer-default-export
 export const useAppsMetaTokens = ({ config: customConfig = {}, options } = {}) => {
+  const selectedNetwork = useSelector(state => state.network);
+  const network = getNetworkName(selectedNetwork)
   const config = {
     url: `/api/${API_VERSION}/blockchain/apps/meta/tokens`,
     method: 'get',
     event: 'get.blockchain.apps.meta.tokens',
     ...customConfig,
-    params: { limit, ...(customConfig?.params || {}) },
+    params: { limit, network, ...(customConfig?.params || {}) },
   };
+
   return useCustomInfiniteQuery({
     keys: [BLOCKCHAIN_APPS_META_TOKENS],
     config,

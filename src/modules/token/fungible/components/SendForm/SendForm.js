@@ -2,8 +2,7 @@ import React, { useCallback, useMemo, useState } from 'react';
 import Piwik from 'src/utils/piwik';
 import { MODULE_COMMANDS_NAME_MAP } from 'src/modules/transaction/configuration/moduleCommand';
 import AmountField from 'src/modules/common/components/amountField';
-import { TokenSelector } from 'src/modules/common/components/TokenSelector';
-import { mockAppTokens } from '@tests/fixtures/token';
+import { TokenField } from 'src/modules/common/components/TokenField';
 import Icon from 'src/theme/Icon';
 import { toRawLsk, fromRawLsk } from '@token/fungible/utils/lsk';
 import BoxContent from 'src/theme/box/content';
@@ -23,7 +22,6 @@ import useRecipientField from '../../hooks/useRecipientField';
 import styles from './form.css';
 import MessageField from '../MessageField';
 
-const defaultToken = mockAppTokens[0];
 const getInitialData = (rawTx, initialValue) => rawTx?.params.data || initialValue || '';
 const getInitialAmount = (rawTx, initialValue) =>
   Number(rawTx?.params.amount) ? fromRawLsk(rawTx?.params.amount) : initialValue || '';
@@ -50,7 +48,7 @@ const getInitialToken = (
   const initalToken = initalTokenId
     ? tokens.find(({ tokenID }) => tokenID === initalTokenId)
     : null;
-  return transactionData?.token || initalToken || defaultToken;
+  return transactionData?.token || initalToken;
 };
 
 // eslint-disable-next-line max-statements
@@ -176,10 +174,10 @@ const SendForm = (props) => {
                 isLoading
               />
             </div>
-            <TokenSelector
+            <TokenField
               styles={styles}
               value={token}
-              tokens={token}
+              tokens={tokens}
               onChange={setToken}
             />
             <AmountField

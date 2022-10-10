@@ -1,10 +1,10 @@
+import { useSelector } from 'react-redux';
 import { BLOCKCHAIN_APPS_META } from 'src/const/queries';
 import {
   LIMIT as limit,
   API_VERSION,
 } from 'src/const/config';
 import { useCustomInfiniteQuery } from 'src/modules/common/hooks';
-import { useSelector } from 'react-redux';
 import { getNetworkName } from '@network/utils/getNetwork';
 
 /**

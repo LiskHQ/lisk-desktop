@@ -4,13 +4,12 @@ import {Client} from 'src/utils/api/client';
 // eslint-disable-next-line import/prefer-default-export
 export const useTokensBalanceSupportedFrom = (application) => {
   const client = useRef(new Client())
-  if(application?.serviceURLs?.length) {
-    client.current.create(application.serviceURLs[0])
+  if(application?.apis?.length) {
+    client.current.create(application.apis[0])
   }
 
   const { data: { data: myTokens = [] } = {}, isSuccess: isTokensSuccess } = useTokensBalance();
-  const { data: { data: { supportedTokens = [] } = {} } = {}, isSuccess: isSupportedSuccess } =
-    useTokensSupported({client: client.current});
+  const { data: { data: { supportedTokens = [] } = {} } = {}, isSuccess: isSupportedSuccess } = useTokensSupported({client: client.current});
   const isSuccess = isTokensSuccess && isSupportedSuccess
   const tokens = useMemo(
     () =>{
@@ -23,6 +22,5 @@ export const useTokensBalanceSupportedFrom = (application) => {
     },
     [isTokensSuccess, isSupportedSuccess]
   );
-  console.log('tokens', tokens, isSuccess, isTokensSuccess, isSupportedSuccess)
   return isSuccess ? tokens : [];
 };
