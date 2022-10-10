@@ -45,7 +45,6 @@ import BlockchainApplications from '@blockchainApplication/explore/manager/Block
 import BlockchainApplicationDetails from '@blockchainApplication/explore/components/BlockchainApplicationDetails';
 import AddApplicationList from '@blockchainApplication/manage/components/AddApplicationList';
 import AddApplicationSuccess from '@blockchainApplication/manage/components/AddApplicationSuccess';
-import ApplicationManagementList from '@blockchainApplication/manage/components/ApplicationManagementList';
 import SelectNode from '@blockchainApplication/manage/components/SelectNode';
 import RemoveApplicationFlow from '@blockchainApplication/manage/components/RemoveApplicationFlow';
 import AllTokens from '@wallet/components/AllTokens';
@@ -102,7 +101,6 @@ export default {
   blockChainApplicationDetails: BlockchainApplicationDetails,
   addApplicationList: AddApplicationList,
   addApplicationSuccess: AddApplicationSuccess,
-  manageApplications: ApplicationManagementList,
   removeApplicationFlow: RemoveApplicationFlow,
   allTokens: AllTokens,
 };

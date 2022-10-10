@@ -1,7 +1,7 @@
 import { renderHook, act } from '@testing-library/react-hooks';
 import { mockBlockchainApp } from '@blockchainApplication/explore/__fixtures__/mockBlockchainApp';
 import { queryWrapper as wrapper } from 'src/utils/test/queryWrapper';
-import { useBlockchainApplicationExplore } from './useBlockchainApplicationExplore';
+import useBlockchainApplicationExplore  from './useBlockchainApplicationExplore';
 
 jest.useRealTimers();
 

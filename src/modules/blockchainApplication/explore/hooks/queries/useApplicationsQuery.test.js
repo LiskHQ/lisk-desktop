@@ -5,7 +5,7 @@ import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { Provider } from 'react-redux';
 
 import { mockBlockchainApp } from '../../__fixtures__';
-import { useApplicationsQuery } from './useApplicationsQuery';
+import useApplicationsQuery from './useApplicationsQuery';
 
 const mockState = {
   blockchainApplications: {

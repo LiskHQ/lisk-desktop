@@ -26,7 +26,7 @@ const BlockchainApplicationList = ({
   const canLoadMore = useMemo(() =>
     (applications.meta
       ? applications.data.length < applications.meta.total : false), [applications], 
-      [applications.data]);
+      [applications.data], [applications]);
 
   const handleLoadMore = () => {
     applications.fetchNextPage();
