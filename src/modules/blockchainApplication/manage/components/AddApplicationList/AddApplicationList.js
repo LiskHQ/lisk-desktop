@@ -24,13 +24,13 @@ const AddApplicationList = ({
 
   const dataList = applications.data ?? []
   const canLoadMore = applications.meta
-    ? applications.data?.length < applications.meta?.total
+    ? applications.data?.length < applications.meta.total
     : false;
 
   const handleLoadMore = () => {
     const params = {
       ...filters,
-      offset: applications.meta?.count + applications.meta?.offset,
+      offset: applications.meta?.count + applications.meta.offset,
     };
     fetchNextPage(params)
   };
