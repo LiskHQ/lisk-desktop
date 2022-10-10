@@ -29,6 +29,7 @@ export const useCustomInfiniteQuery = ({
   client = defaultClient
 }) => {
   const [{ chainID }] = useCurrentApplication();
+
   return useInfiniteQuery(
     [chainID, config, APPLICATION, METHOD, ...keys],
     async ({ pageParam }) => client[METHOD]({

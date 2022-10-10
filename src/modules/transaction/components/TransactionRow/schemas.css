@@ -14,7 +14,7 @@
 
   &.full,
   &.general {
-    grid-template-areas: "sender recipient date amount fee status";
+    grid-template-areas: "id sender height type date status";
 
     & > * {
       height: 100%;
@@ -28,8 +28,8 @@
     }
 
     & > *:nth-child(1) {
-      flex-basis: 17%;
-      max-width: 17%;
+      flex-basis: 25%;
+      max-width: 25%;
     }
 
     & > *:nth-child(2) {
@@ -44,18 +44,18 @@
     }
 
     & > *:nth-child(5) {
-      flex-basis: 16.66666667%;
-      max-width: 16.66666667%;
+      flex-basis: 8.33333333%;
+      max-width: 8.33333333%;
     }
 
     & > *:nth-child(6) {
-      flex-basis: 6.33333333%;
-      max-width: 6.33333333%;
+      flex-basis: 8.33333333%;
+      max-width: 8.33333333%;
       padding-right: 5px;
     }
 
     & > *:last-child {
-      justify-content: flex-end;
+      justify-content: center;
     }
 
     @media (--medium-viewport) {
@@ -71,7 +71,7 @@
   }
 
   &.hosted {
-    grid-template-areas: "counterpart date fee assets amount";
+    grid-template-areas: "id height type date status";
 
     & > * {
       height: 100%;
@@ -82,16 +82,24 @@
     }
 
     & > *:nth-child(1) {
+      flex-basis: 25%;
+      max-width: 25%;
+    }
+
+    & > *:nth-child(3) {
       flex-basis: 33.33333%;
       max-width: 33.33333%;
     }
 
     & > *:nth-child(2),
-    & > *:nth-child(3),
-    & > *:nth-child(4),
-    & > *:nth-child(5) {
+    & > *:nth-child(4) {
       flex-basis: 16.66666667%;
       max-width: 16.66666667%;
+    }
+
+    & > *:nth-child(5) {
+      flex-basis: 8.33333333%;
+      max-width: 8.33333333%;
     }
 
     & > *:first-child {
@@ -127,7 +135,11 @@
   }
 
   &.vote {
-    grid-template-areas: "sender date assets";
+    grid-template-areas: "sender date height assets";
+
+    &::before {
+      left: 0px !important;
+    }
 
     & > * {
       height: 100%;
@@ -137,6 +149,17 @@
       flex: 0 0 auto;
       flex-basis: 33.3333333%;
       max-width: 33.3333333%;
+    }
+
+    & > *:nth-child(2),
+    & > *:nth-child(3) {
+      height: 100%;
+      display: flex;
+      justify-content: flex-start;
+      align-items: center;
+      flex: 0 0 auto;
+      flex-basis: 16.66666666667%;
+      max-width: 16.66666666667%;
     }
 
     & > *:last-child {

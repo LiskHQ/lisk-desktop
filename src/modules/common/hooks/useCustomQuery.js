@@ -23,11 +23,12 @@ import { useCurrentApplication } from '@blockchainApplication/manage/hooks';
 // eslint-disable-next-line import/prefer-default-export
 export const useCustomQuery = ({
   keys,
-  config,
+  config = {},
   options = {},
   client = defaultClient
 }) => {
   const [{ chainID }] = useCurrentApplication();
+
   return useQuery(
     [chainID, config, APPLICATION, METHOD, ...keys],
     async () => client[METHOD](config),

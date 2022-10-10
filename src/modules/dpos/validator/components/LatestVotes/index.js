@@ -1,31 +1,51 @@
-import React from 'react';
+import React, { useMemo } from 'react';
 import { useTranslation } from 'react-i18next';
-import Table from 'src/theme/table';
+import { QueryTable } from 'src/theme/QueryTable';
+import { useTransactions } from 'src/modules/transaction/hooks/queries';
+import { MODULE_COMMANDS_NAME_MAP } from 'src/modules/transaction/configuration/moduleCommand';
 import TransactionRow from '@transaction/components/TransactionRow';
 import header from './tableHeader';
+import { useDelegates } from '../../hooks/queries';
 
-const LatestVotes = ({ votes, delegates }) => {
+const LatestVotes = ({ filters }) => {
   const { t } = useTranslation();
-  const canLoadMore = votes.meta ? votes.data.length < votes.meta.total : false;
+  const { data: delegates } = useDelegates();
+  const queryConfig = useMemo(() => ({
+    config: {
+      params: {
+        ...filters,
+        moduleCommandID: MODULE_COMMANDS_NAME_MAP.voteDelegate,
+        sort: 'timestamp:desc',
+      },
+    },
+  }), [filters]);
 
-  const handleLoadMore = () => {
-    votes.loadData({ offset: votes.meta.count + votes.meta.offset });
-  };
+  const votedDelegates = useMemo(() => {
+    if (!delegates || !delegates.data) return {};
+
+    const responseMap = delegates.data.reduce((acc, delegate) => {
+      acc[delegate.address] = delegate;
+      return acc;
+    }, {});
+    return responseMap;
+  }, [delegates]);
 
   return (
-    <Table
-      data={votes.data}
-      isLoading={votes.isLoading}
+    <QueryTable
+      showHeader
+      queryHook={useTransactions}
+      queryConfig={queryConfig.current}
       row={TransactionRow}
+      header={header(t)}
+      emptyState={{
+        message: t('No latest votes'),
+      }}
       additionalRowProps={{
         t,
-        delegates: delegates.data,
-        layout: 'vote',
+        delegates: votedDelegates,
         activeToken: 'LSK',
+        layout: 'vote',
       }}
-      header={header(t)}
-      loadData={handleLoadMore}
-      canLoadMore={canLoadMore}
     />
   );
 };

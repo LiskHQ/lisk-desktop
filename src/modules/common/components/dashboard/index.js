@@ -2,7 +2,6 @@
 import { connect } from 'react-redux';
 import { withTranslation } from 'react-i18next';
 
-import { selectActiveTokenAccount } from 'src/redux/selectors';
 import { removeDuplicateTransactions } from '@transaction/utils';
 import Dashboard from './dashboard';
 
@@ -12,7 +11,6 @@ const mapStateToProps = state => ({
     state.transactions.confirmed,
   ),
   pendingTransactions: state.transactions.pending,
-  wallet: selectActiveTokenAccount(state),
   loading: state.loading.length > 0,
   settings: state.settings,
 });

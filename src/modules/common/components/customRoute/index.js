@@ -20,7 +20,7 @@ const CustomRoute = ({ path, exact, isPrivate, forbiddenTokens, component, t, hi
   const token = useSelector((state) => state.token);
   const isNetworkSet = useSelector(checkNetwork);
   const [currentAccount] = useCurrentAccount();
-  const isAuthenticated = Object.keys(currentAccount).length > 0;
+  const isAuthenticated = !!currentAccount?.metadata?.address
   const { search = '' } = history.location;
   const { accounts } = useAccounts();
 

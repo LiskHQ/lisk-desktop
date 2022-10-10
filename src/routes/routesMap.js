@@ -18,7 +18,7 @@ import SignMessage from '@message/manager/signMessageManager';
 import TermsOfUse from 'src/modules/common/components/TermsOfUse';
 import Explorer from '@wallet/manager/explorerManager';
 import AccountDetails from '@account/components/AccountDetails';
-import TransactionDetailsModal from '@transaction/manager/transactionDetailViewManager';
+import TransactionDetails from '@transaction/manager/transactionDetailViewManager';
 import VerifyMessage from '@message/manager/verifyMessageManager';
 import Request from '@wallet/components/request';
 import UnlockBalanceView from '@dpos/validator/components/UnlockBalanceView';
@@ -48,6 +48,8 @@ import AddApplicationSuccess from '@blockchainApplication/manage/components/AddA
 import ApplicationManagementList from '@blockchainApplication/manage/components/ApplicationManagementList';
 import SelectNode from '@blockchainApplication/manage/components/SelectNode';
 import RemoveApplicationFlow from '@blockchainApplication/manage/components/RemoveApplicationFlow';
+import AllTokens from '@wallet/components/AllTokens';
+import DelegateProfile from 'src/modules/dpos/validator/components/delegateProfile/delegateProfile';
 
 export default {
   wallet: AccountDetails,
@@ -63,6 +65,7 @@ export default {
   wallets: MonitorWallets,
   network: MonitorNetwork,
   delegates: DelegatesMonitor,
+  delegateProfile: DelegateProfile,
   delegatePerformance: DelegatesPerformanceModal,
   reclaim: ReclaimBalance,
   dashboard: Dashboard,
@@ -74,7 +77,7 @@ export default {
   verifyMessage: VerifyMessage,
   registerDelegate: RegisterDelegate,
   search: SearchBar,
-  transactionDetails: TransactionDetailsModal,
+  transactionDetails: TransactionDetails,
   newRelease: NewReleaseDialog,
   request: Request,
   lockedBalance: UnlockBalanceView,
@@ -101,4 +104,5 @@ export default {
   addApplicationSuccess: AddApplicationSuccess,
   manageApplications: ApplicationManagementList,
   removeApplicationFlow: RemoveApplicationFlow,
+  allTokens: AllTokens,
 };

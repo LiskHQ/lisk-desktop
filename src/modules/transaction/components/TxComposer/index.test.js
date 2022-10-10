@@ -1,10 +1,18 @@
-import React from 'react';
-import { mount } from 'enzyme';
 import { MODULE_COMMANDS_NAME_MAP } from 'src/modules/transaction/configuration/moduleCommand';
 import accounts from '@tests/constants/wallets';
-import { mountWithProps } from 'src/utils/testHelpers';
+import {
+  mountWithQueryClient,
+  mountWithQueryAndProps,
+} from 'src/utils/testHelpers';
 import { genKey, blsKey, pop } from '@tests/constants/keys';
 import TxComposer from './index';
+
+jest.mock('@account/hooks/useDeprecatedAccount', () => ({
+  useDeprecatedAccount: jest.fn().mockReturnValue({
+    isSuccess: true,
+    isLoading: false
+  }),
+}));
 
 describe('TxComposer', () => {
   const transaction = {
@@ -27,7 +35,7 @@ describe('TxComposer', () => {
   };
 
   it('should render TxComposer correctly for a valid tx', () => {
-    const wrapper = mount(<TxComposer {...props} />);
+    const wrapper = mountWithQueryClient(TxComposer, props);
     expect(wrapper.find('TransactionPriority')).toExist();
     expect(wrapper.find('Feedback').html()).toEqual(null);
     expect(wrapper.find('.confirm-btn')).toExist();
@@ -43,13 +51,13 @@ describe('TxComposer', () => {
         feedback: ['Test error feedback'],
       },
     };
-    const wrapper = mount(<TxComposer {...newProps} />);
+    const wrapper = mountWithQueryClient(TxComposer, newProps);
     expect(wrapper.find('TransactionPriority')).toExist();
     expect(wrapper.find('Feedback').text()).toEqual('Test error feedback');
     expect(wrapper.find('.confirm-btn').at(0).props().disabled).toEqual(true);
   });
 
-  it('should render TxComposer correctly if the balance is not sufficient', () => {
+  it('should render TxComposer correctly if the balance is insufficient', () => {
     const newProps = {
       ...props,
       transaction: {
@@ -67,7 +75,7 @@ describe('TxComposer', () => {
     const state = {
       wallet: { info: { LSK: accounts.empty_wallet } },
     };
-    const wrapper = mountWithProps(TxComposer, newProps, state);
+    const wrapper = mountWithQueryAndProps(TxComposer, newProps, state);
     expect(wrapper.find('TransactionPriority')).toExist();
     expect(wrapper.find('Feedback').text()).toEqual('The minimum required balance for this action is {{minRequiredBalance}} {{token}}');
     expect(wrapper.find('.confirm-btn').at(0).props().disabled).toEqual(true);

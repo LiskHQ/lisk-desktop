@@ -1,6 +1,7 @@
-/* eslint-disable max-lines */
+/* eslint-disable max-lines, max-statements */
 // istanbul ignore file
 import React, { useState } from 'react';
+import { useTranslation } from 'react-i18next';
 import moment from 'moment';
 import { fromRawLsk } from '@token/fungible/utils/lsk';
 import { kFormatter } from 'src/utils/helpers';
@@ -15,9 +16,9 @@ import BoxHeader from '@theme/box/header';
 import BoxContent from '@theme/box/content';
 import { DoughnutChart, BarChart } from 'src/modules/common/components/charts';
 import Tooltip from '@theme/Tooltip';
-import GuideTooltip, {
-  GuideTooltipItem,
-} from 'src/modules/common/components/charts/guideTooltip';
+import GuideTooltip, { GuideTooltipItem } from 'src/modules/common/components/charts/guideTooltip';
+import { useTransactionStatistics } from '../../hooks/queries';
+import { normalizeTransactionsStatisticsParams, normalizeNumberRange } from '../../utils';
 import styles from './Overview.css';
 
 const moduleCommands = Object.values(MODULE_COMMANDS_NAME_MAP);
@@ -103,27 +104,6 @@ const tabs = (t = (str) => str) => [
   },
 ];
 
-const normalizeNumberRange = (distributions) => {
-  const values = {
-    '0.001_0.01': '0 - 10 LSK',
-    '0.01_0.1': '0 - 10 LSK',
-    '0.1_1': '0 - 10 LSK',
-    '1_10': '0 - 10 LSK',
-    '10_100': '11 - 100 LSK',
-    '100_1000': '101 - 1000 LSK',
-    '1000_10000': '1001 - 10,000 LSK',
-    '10000_100000': '10,001 - 100,000 LSK',
-    '100000_1000000': '100,001 - 1,000,000 LSK',
-    '1000000_10000000': '1,000,001 - 10,000,000 LSK',
-    '10000000_100000000': '10,000,001 - 100,000,000 LSK',
-    '100000000_1000000000': '100,000,001 - 1,000,000,000 LSK',
-  };
-  return Object.keys(distributions).reduce((acc, item) => {
-    acc[values[item]] = (acc[values[item]] || 0) + distributions[item];
-    return acc;
-  }, {});
-};
-
 const formatDates = (date, period) => {
   if (period === 'week') {
     return moment(date).format('ddd');
@@ -135,42 +115,51 @@ const formatDates = (date, period) => {
 };
 
 const formatDistributionByValues = (distributions) =>
-  moduleCommands.map((id) =>
-    (distributions[id] ? parseInt(distributions[id], 10) : 0));
+  moduleCommands.map((id) => (distributions[id] ? parseInt(distributions[id], 10) : 0));
 
-const Overview = ({ t, txStats }) => {
+const Overview = () => {
+  const { t } = useTranslation();
+  const [params, setParams] = useState({ limit: 7, interval: 'day' });
   const [activeTab, setActiveTab] = useState('week');
   const colorPalette = getColorPalette(useTheme());
-  const distributionByType = formatDistributionByValues(
-    txStats.data.distributionByType,
-  );
-  const distributionByAmount = normalizeNumberRange(
-    txStats.data.distributionByAmount,
-  );
-  const { txCountList, txVolumeList, txDateList } = txStats.data.timeline.reduce(
-    (acc, item) => ({
-      txCountList: [...acc.txCountList, item.transactionCount],
-      txDateList: [
-        ...acc.txDateList,
-        formatDates(item.date, activeTab).slice(0, 2),
-      ],
-      txVolumeList: [...acc.txVolumeList, fromRawLsk(item.volume)],
-    }),
-    {
-      txCountList: [],
-      txDateList: [],
-      txVolumeList: [],
-    },
-  );
+  // Fallback token for transaction statistics // @TODO: Add selector for active token when available in service
+  const tokenID = '0000000000000000';
+  const { data: txStatsData } = useTransactionStatistics({ config: { params } });
+  const txStats = txStatsData?.data ?? {
+    distributionByType: {},
+    distributionByAmount: {},
+    timeline: {},
+  };
+  const distributionByType = formatDistributionByValues(txStats.distributionByType);
+  const distributionByAmount = normalizeNumberRange(txStats.distributionByAmount?.[tokenID] ?? {});
+  const { txCountList, txVolumeList, txDateList } = Object.keys(txStats.timeline).length
+    ? txStats.timeline[tokenID].reduce(
+        (acc, item) => ({
+          txCountList: [...acc.txCountList, item.transactionCount],
+          txDateList: [...acc.txDateList, formatDates(item.date, activeTab).slice(0, 2)],
+          txVolumeList: [...acc.txVolumeList, fromRawLsk(item.volume)],
+        }),
+        {
+          txCountList: [],
+          txDateList: [],
+          txVolumeList: [],
+        }
+      )
+    : {
+        txCountList: [],
+        txVolumeList: [],
+        txDateList: [],
+      };
 
   const changeTab = (tab) => {
     setActiveTab(tab.value);
-    txStats.loadData({ period: tab.value });
+    setParams(normalizeTransactionsStatisticsParams(tab.value));
   };
 
   const distributionChartData = {
     labels: listOfLabels.map((item) =>
-      item.replace('Register multisignature group', 'Regsiter multisig.')),
+      item.replace('Register multisignature group', 'Regsiter multisig.')
+    ),
     datasets: [
       {
         data: distributionByType,
@@ -200,7 +189,7 @@ const Overview = ({ t, txStats }) => {
       </BoxHeader>
       <BoxContent className={styles.content}>
         <div className={`${styles.column} ${styles.pie}`}>
-          <h2 className={styles.title}>{t('Transaction types')}</h2>
+          <h2 className={styles.title}>{t('Distribution of transaction types')}</h2>
           <div className={styles.graph}>
             <div>
               <GuideTooltip>
@@ -208,10 +197,7 @@ const Overview = ({ t, txStats }) => {
                   <GuideTooltipItem
                     key={`transaction-GuideTooltip${i}`}
                     color={colorPalette[i]}
-                    label={label.replace(
-                      'Register multisignature group',
-                      'Register multisig.',
-                    )}
+                    label={label.replace('Register multisignature group', 'Register multisig.')}
                   />
                 ))}
               </GuideTooltip>
@@ -268,28 +254,18 @@ const Overview = ({ t, txStats }) => {
         </div>
         <div className={`${styles.column} ${styles.bar}`}>
           <div className={styles.top}>
-            <h2 className={styles.title}>
-              {t('Transaction volume / number (LSK)')}
-            </h2>
+            <h2 className={styles.title}>{t('Number of transactions / Volume (LSK)')}</h2>
             <aside className={styles.legends}>
               <h5 className={`${styles.legend} ${styles.volume}`}>
                 <span>{t('Volume')}</span>
                 <Tooltip className={styles.tooltip} position="left">
-                  <p>
-                    {t(
-                      'The aggregated LSK volume transferred over the selected time period.',
-                    )}
-                  </p>
+                  <p>{t('The aggregated LSK volume transferred over the selected time period.')}</p>
                 </Tooltip>
               </h5>
               <h5 className={`${styles.legend} ${styles.number}`}>
                 <span>{t('Number')}</span>
                 <Tooltip className={styles.tooltip} position="left">
-                  <p>
-                    {t(
-                      'The number of transactions submitted over the selected time period.',
-                    )}
-                  </p>
+                  <p>{t('The number of transactions submitted over the selected time period.')}</p>
                 </Tooltip>
               </h5>
             </aside>

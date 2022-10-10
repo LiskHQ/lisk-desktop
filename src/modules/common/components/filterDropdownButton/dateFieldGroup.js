@@ -145,11 +145,13 @@ class DateFieldGroup extends React.Component {
           <DateField
             showRightDropdown={showRightDropdown}
             name="dateFrom"
+            data-testid="dateFrom"
             {...dateFieldProps}
           />
           <span className={styles.separator} />
           <DateField
             showRightDropdown={showRightDropdown}
+            data-testid="dateTo"
             name="dateTo"
             {...dateFieldProps}
           />

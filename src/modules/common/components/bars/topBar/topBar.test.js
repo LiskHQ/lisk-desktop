@@ -2,8 +2,33 @@ import React from 'react';
 import routes from 'src/routes/routes';
 import DialogHolder from 'src/theme/dialog/holder';
 import { mountWithRouter } from 'src/utils/testHelpers';
-import accounts from '@tests/constants/wallets';
+import mockSavedAccounts from '@tests/fixtures/accounts';
+import { useCurrentAccount } from 'src/modules/account/hooks';
 import TopBar from './topBar';
+
+const mockState = {
+  account: {
+    list: [],
+  },
+  blockChainApplications: {
+    current: {},
+  },
+  network: {
+    status: { online: true },
+    name: 'Custom Node',
+  },
+  settings: {
+    network: { name: 'Custom Nodee', address: 'hhtp://localhost:4000' },
+  },
+};
+
+const mockDispatch = jest.fn();
+jest.mock('react-redux', () => ({
+  ...jest.requireActual('react-redux'),
+  useSelector: jest.fn().mockImplementation((fn) => fn(mockState)),
+  useDispatch: () => mockDispatch,
+}));
+
 
 const mockInputNode = {
   focus: jest.fn(),
@@ -19,7 +44,7 @@ jest.mock(
           <div className="mockSearchResult" onClick={onSearchClick} />
         </div>
       );
-    },
+    }
 );
 
 jest.mock(
@@ -27,25 +52,16 @@ jest.mock(
   () =>
     function () {
       return <div />;
-    },
+    }
 );
 
+const mockCurrentAccount = mockSavedAccounts[0];
+jest.mock('@account/hooks/useCurrentAccount.js');
+useCurrentAccount.mockImplementation(() => [mockCurrentAccount]);
+
 describe('TopBar', () => {
-  const account = {
-    passphrase: accounts.genesis.passphrase,
-    expireTime: Date.now() + 60000,
-    address: '12345L',
-    info: {
-      LSK: {
-        address: '12345L',
-        balance: 120,
-      },
-    },
-  };
 
   const props = {
-    account,
-    showDelegate: false,
     t: (val) => val,
     logOut: jest.fn(),
     location: { pathname: routes.dashboard.path, search: '' },
@@ -53,27 +69,6 @@ describe('TopBar', () => {
       location: { pathname: routes.dashboard.path, search: '' },
       replace: () => {},
       push: jest.fn(),
-    },
-    transactions: [],
-    token: {
-      active: 'LSK',
-      list: {
-        LSK: true,
-      },
-    },
-    network: {
-      status: { online: true },
-      name: 'Custom Node',
-      networks: {
-        LSK: {
-          nodeUrl: 'hhtp://localhost:4000',
-          nethash:
-            '198f2b61a8eb95fbeed58b8216780b68f697f26b849acf00c8c93bb9b24f783d',
-        },
-      },
-    },
-    settings: {
-      network: { name: 'Custom Nodee', address: 'hhtp://localhost:4000' },
     },
     settingsUpdated: jest.fn(),
     networkSet: jest.fn(),
@@ -95,6 +90,32 @@ describe('TopBar', () => {
       pathname: routes.wallet.path,
     });
     expect(wrapper).not.toContainMatchingElement('.signIn');
+  });
+
+  it('renders <AccountManagementDropdown /> component if current account exists', () => {
+    const wrapper = mountWithRouter(TopBar, props, {
+      pathname: routes.wallet.path,
+    });
+    expect(wrapper).toContainMatchingElement('.account-management-dropdown');
+  });
+
+  it('renders <AccountManagementDropdown /> component if current account exists and updates background on click', () => {
+    const wrapper = mountWithRouter(TopBar, props, {
+      pathname: routes.wallet.path,
+    });
+    expect(wrapper).toContainMatchingElement('.account-management-dropdown');
+    wrapper.find('.account-management-dropdown').at(0).simulate('click');
+    expect(wrapper.find('.user-menu-section').hasClass(/menuOpen/)).toBe(true);
+    wrapper.find('.account-management-dropdown').at(0).simulate('click');
+    expect(wrapper.find('.user-menu-section').hasClass(/menuOpen/)).toBe(false);
+  });
+
+  it('does not render <AccountManagementDropdown /> component if current account does not exist', () => {
+    useCurrentAccount.mockImplementation(() => [{}]);
+    const wrapper = mountWithRouter(TopBar, props, {
+      pathname: routes.wallet.path,
+    });
+    expect(wrapper).not.toContainMatchingElement('.account-management-dropdown');
   });
 
   it('renders sign in component when user is logout', () => {
@@ -124,7 +145,7 @@ describe('TopBar', () => {
           location: { pathname: routes.block.path, search: '?id=1L' },
         },
       },
-      { pathname: routes.block.path },
+      { pathname: routes.block.path }
     );
     expect(wrapper).toContainMatchingElement('img.search-icon');
     expect(wrapper).toContainMatchingElement('span.searchedValue');
@@ -140,7 +161,7 @@ describe('TopBar', () => {
           location: { pathname: routes.explorer.path, search: '?address=1L' },
         },
       },
-      { pathname: routes.explorer.path },
+      { pathname: routes.explorer.path }
     );
     expect(wrapper).toContainMatchingElement('img.search-icon');
     expect(wrapper).toContainMatchingElement('span.searchedValue');
@@ -160,7 +181,7 @@ describe('TopBar', () => {
           },
         },
       },
-      { pathname: routes.explorer.path },
+      { pathname: routes.explorer.path }
     );
     expect(wrapper).toContainMatchingElement('img.search-icon');
     expect(wrapper).not.toContainMatchingElement('span.searchedValue');

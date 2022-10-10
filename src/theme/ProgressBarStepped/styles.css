@@ -36,8 +36,8 @@
 
 .active {
   border-color: var(--color-progress-bar);
-  background-color: var(--color-progress-bar);
-  color: var(--color-white-smoke);
+  background-color: var(--color-white-smoke);
+  color: var(--color-progress-bar);
 }
 
 .solid {
@@ -68,7 +68,7 @@
 }
 
 .activeLabel {
-  color: var(--color-ink-blue);
+  color: var(--color-ink-blue) !important;
 
   &.dark {
     color: var(--color-progress-bar);

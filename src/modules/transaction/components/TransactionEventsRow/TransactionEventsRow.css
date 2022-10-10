@@ -10,7 +10,8 @@
   }
 
   & > .eventAction {
-    padding: 0px;
+    padding: 8px;
+    text-transform: capitalize;
   }
 
   &::before {
@@ -57,11 +58,44 @@
 
   & > button {
     display: flex;
+    margin: 0px;
+    padding: 0px !important;
+    max-width: 40px;
+    min-width: 40px;
   }
 }
 
 .eventHash {
   padding: 0px 16px 0px 5px;
+
+  & > span {
+    width: 100%;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+}
+
+.blockHeight {
+  padding: 0px 16px 0px 5px;
+
+  & > a {
+    width: 100%;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    text-decoration: none;
+  }
+}
+
+.transactionID {
+  padding: 0px 16px 0px 5px;
+
+  & > a {
+    width: 100%;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    text-decoration: none;
+    color: var(--color-ultramarine-blue);
+  }
 }
 
 .rowWrapper {

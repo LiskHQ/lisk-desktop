@@ -14,11 +14,16 @@ const ApplicationManagementList = ({ history }) => {
   }, []);
 
   return (
-    <TertiaryButton className={`application-management-dropdown ${styles.wrapper}`} onClick={handleShowApplications}>
-      <img src={chainLogo} />
-      <span>{currentApplication?.name}</span>
-      <Icon name="dropdownArrowIcon" />
-    </TertiaryButton>
+    <div className={styles.container}>
+      <TertiaryButton
+        className={`application-management-dropdown ${styles.wrapper}`}
+        onClick={handleShowApplications}
+      >
+        <img src={chainLogo} />
+        <span>{currentApplication?.name}</span>
+        <Icon name="dropdownArrowIcon" />
+      </TertiaryButton>
+    </div>
   );
 };
 export default ApplicationManagementList;

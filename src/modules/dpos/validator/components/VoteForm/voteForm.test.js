@@ -3,11 +3,19 @@ import { act } from 'react-dom/test-utils';
 import { shallow } from 'enzyme';
 import Table from '@theme/table';
 import { MIN_ACCOUNT_BALANCE } from '@transaction/configuration/transactions';
-import { mountWithRouter } from 'src/utils/testHelpers';
+import { mountWithRouterAndQueryClient } from 'src/utils/testHelpers';
 import accounts from '@tests/constants/wallets';
 import flushPromises from '@tests/unit-test-utils/flushPromises';
 import VoteRow from './VoteRow';
 import Form from './VoteForm';
+
+
+jest.mock('@account/hooks/useDeprecatedAccount', () => ({
+  useDeprecatedAccount: jest.fn().mockReturnValue({
+    isSuccess: true,
+    isLoading: false
+  }),
+}));
 
 const addresses = [
   'lskdwsyfmcko6mcd357446yatromr9vzgu7eb8y99',
@@ -97,7 +105,7 @@ describe('VoteForm', () => {
   });
 
   it('Shows an error if trying to vote more than your balance', async () => {
-    const wrapper = mountWithRouter(Form, { ...props, votes: expensiveVotes });
+    const wrapper = mountWithRouterAndQueryClient(Form, { ...props, votes: expensiveVotes });
     await flushPromises();
     act(() => { wrapper.update(); });
     expect(wrapper.find('.available-votes-num').text()).toBe('10/');
@@ -106,7 +114,7 @@ describe('VoteForm', () => {
 
   it('Shows an error if trying to vote with amounts leading to insufficient balance', async () => {
     props.account.token.balance = `${parseInt(accounts.genesis.token.balance, 10) + (MIN_ACCOUNT_BALANCE * 0.8)}`;
-    const wrapper = mountWithRouter(Form, { ...props, votes: minimumBalanceVotes });
+    const wrapper = mountWithRouterAndQueryClient(Form, { ...props, votes: minimumBalanceVotes });
     await flushPromises();
     act(() => { wrapper.update(); });
     expect(wrapper.find('.available-votes-num').text()).toBe('10/');

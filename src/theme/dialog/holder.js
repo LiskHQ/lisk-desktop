@@ -1,6 +1,4 @@
-import React, {
-  useState, useRef, useMemo,
-} from 'react';
+import React, { useState, useRef, useMemo } from 'react';
 import { useSelector } from 'react-redux';
 import { withRouter } from 'react-router';
 
@@ -17,10 +15,10 @@ const DialogHolder = ({ history }) => {
     const { modal = '' } = parseSearchParams(history.location.search);
     return routesMap[modal] ? modal : undefined;
   }, [history.location.search]);
-  const [currentAccount] = useCurrentAccount()
+  const [currentAccount] = useCurrentAccount();
   const isAuthenticated = Object.keys(currentAccount).length > 0;
   const activeToken = useSelector(selectActiveToken);
-  const networkIsSet = useSelector(state => !!state.network.name);
+  const networkIsSet = useSelector((state) => !!state.network.name);
 
   const backdropRef = useRef();
   const [dismissed, setDismissed] = useState(false);
@@ -66,15 +64,17 @@ const DialogHolder = ({ history }) => {
     }
   };
 
-  return ModalComponent && (
-    <div
-      ref={backdropRef}
-      className={`${styles.mask} ${dismissed ? styles.hide : styles.show}`}
-      onAnimationEnd={onAnimationEnd}
-      onClick={onBackDropClick}
-    >
-      <ModalComponent />
-    </div>
+  return (
+    ModalComponent && (
+      <div
+        ref={backdropRef}
+        className={`${styles.mask} ${dismissed ? styles.hide : styles.show}`}
+        onAnimationEnd={onAnimationEnd}
+        onClick={onBackDropClick}
+      >
+        <ModalComponent />
+      </div>
+    )
   );
 };
 

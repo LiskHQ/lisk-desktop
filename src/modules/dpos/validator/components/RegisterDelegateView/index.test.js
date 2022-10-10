@@ -1,8 +1,14 @@
 import debounce from 'lodash.debounce';
-import { mountWithRouter } from 'src/utils/testHelpers';
+import { mountWithRouterAndQueryClient } from 'src/utils/testHelpers';
 import { getTransactionBaseFees, getTransactionFee } from '@transaction/api';
 import RegisterDelegate from './index';
 
+jest.mock('@account/hooks/useDeprecatedAccount', () => ({
+  useDeprecatedAccount: jest.fn().mockReturnValue({
+    isSuccess: true,
+    isLoading: false
+  }),
+}));
 jest.mock('lodash.debounce');
 jest.mock('@transaction/api');
 
@@ -56,7 +62,7 @@ describe('RegisterDelegate', () => {
   });
 
   it('renders properly SelectName component', () => {
-    const wrapper = mountWithRouter(RegisterDelegate, props);
+    const wrapper = mountWithRouterAndQueryClient(RegisterDelegate, props);
     expect(wrapper).toContainMatchingElement('.select-name-container');
     expect(wrapper).toContainMatchingElement('.select-name-input');
     expect(wrapper).toContainMatchingElement('.feedback');

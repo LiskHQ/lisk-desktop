@@ -58,23 +58,18 @@ export const baseTransactionSchema = {
 
 export const getCommandParamsSchema = (module, command, schema) => {
   const moduleCommand = module.concat(':', command);
-  const commandSchema = schema.find(meta => meta.moduleCommandName === moduleCommand);
+  const commandSchema = schema.find((meta) => meta.moduleCommand === moduleCommand);
   if (!(commandSchema && commandSchema.schema)) {
-    throw new Error(
-      `Module: ${module} Command: ${command} is not registered.`,
-    );
+    throw new Error(`Module: ${module} Command: ${command} is not registered.`);
   }
 
   return commandSchema.schema;
 };
 
-export const decodeBaseTransaction = encodedTransaction =>
+export const decodeBaseTransaction = (encodedTransaction) =>
   codec.decode(baseTransactionSchema, encodedTransaction);
 
-export const decodeTransaction = (
-  encodedTransaction,
-  paramsSchema,
-) => {
+export const decodeTransaction = (encodedTransaction, paramsSchema) => {
   const transaction = decodeBaseTransaction(encodedTransaction);
   const params = paramsSchema ? codec.decode(paramsSchema, transaction.params) : {};
   const id = utils.hash(encodedTransaction);
@@ -85,10 +80,7 @@ export const decodeTransaction = (
   };
 };
 
-export const encodeTransaction = (
-  transaction,
-  paramsSchema,
-) => {
+export const encodeTransaction = (transaction, paramsSchema) => {
   let encodedParams;
   if (!Buffer.isBuffer(transaction.params)) {
     encodedParams = paramsSchema ? codec.encode(paramsSchema, transaction.params) : Buffer.alloc(0);
@@ -104,19 +96,14 @@ export const encodeTransaction = (
   return decodedTransaction;
 };
 
-export const fromTransactionJSON = (
-  transaction,
-  paramsSchema,
-) => {
+export const fromTransactionJSON = (transaction, paramsSchema) => {
   const tx = codec.fromJSON(baseTransactionSchema, {
     ...transaction,
     params: '',
   });
   let params;
   if (typeof transaction.params === 'string') {
-    params = paramsSchema
-      ? codec.decode(paramsSchema, Buffer.from(transaction.params, 'hex'))
-      : {};
+    params = paramsSchema ? codec.decode(paramsSchema, Buffer.from(transaction.params, 'hex')) : {};
   } else {
     params = paramsSchema ? codec.fromJSON(paramsSchema, transaction.params) : {};
   }
@@ -128,10 +115,7 @@ export const fromTransactionJSON = (
   };
 };
 
-export const toTransactionJSON = (
-  transaction,
-  paramsSchema,
-) => {
+export const toTransactionJSON = (transaction, paramsSchema) => {
   if (Buffer.isBuffer(transaction.params)) {
     return {
       ...codec.toJSON(baseTransactionSchema, transaction),
@@ -144,9 +128,7 @@ export const toTransactionJSON = (
       ...transaction,
       params: Buffer.alloc(0),
     }),
-    params: paramsSchema
-      ? codec.toJSON(paramsSchema, transaction.params)
-      : {},
+    params: paramsSchema ? codec.toJSON(paramsSchema, transaction.params) : {},
     id: transaction.id && transaction.id.toString('hex'),
   };
 };

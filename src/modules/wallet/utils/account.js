@@ -145,6 +145,18 @@ export const truncateAddress = (address, size) => {
 };
 
 /**
+ * Returns a shorter version of a given transactionID
+ * by replacing characters by ellipsis except for
+ * the first 10 and last 5.
+ * @param {String} id transactionID
+ * @returns {String} Truncated transactionID
+ */
+export const truncateTransactionID = (id) => {
+  if (!id) return id;
+  return id.replace(/^(\w{10})\w+(\w{5})$/g, '$1...$2');
+};
+
+/**
  * calculates the balance locked in votes
  *
  * @param {Object} votes - Votes dictionary, values must include vote.confirmed

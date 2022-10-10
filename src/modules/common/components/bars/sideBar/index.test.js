@@ -1,18 +1,25 @@
 import { useSelector } from 'react-redux';
 import routes from 'src/routes/routes';
+import { useCurrentAccount } from '@account/hooks';
+import mockSavedAccounts from '@tests/fixtures/accounts';
 import { mountWithRouter } from 'src/utils/testHelpers';
 import SideBar from './index';
+
+const mockCurrentAccount = mockSavedAccounts[0];
 
 jest.mock('react-redux', () => ({
   ...jest.requireActual('react-redux'),
   useSelector: jest.fn(),
 }));
 
+jest.mock('@account/hooks/useCurrentAccount.js');
+
 describe('SideBar', () => {
   let mockAppState;
 
   beforeEach(() => {
-    useSelector.mockImplementation(callback => callback(mockAppState));
+    useCurrentAccount.mockReturnValue([mockCurrentAccount]);
+    useSelector.mockImplementation((callback) => callback(mockAppState));
   });
 
   afterEach(() => {
@@ -25,7 +32,7 @@ describe('SideBar', () => {
     location: {
       pathname: routes.dashboard.path,
     },
-    t: val => val,
+    t: (val) => val,
   };
 
   beforeEach(() => {
@@ -56,7 +63,7 @@ describe('SideBar', () => {
   describe('renders 8 menu items', () => {
     it('without labels if sideBarExpanded is false', () => {
       expect(wrapper).toContainMatchingElements(8, 'a');
-      wrapper.find('a').forEach(link => expect(link).not.toContain(/\w*/));
+      wrapper.find('a').forEach((link) => expect(link).not.toContain(/\w*/));
     });
 
     it('without labels if sideBarExpanded is true', () => {
@@ -78,6 +85,8 @@ describe('SideBar', () => {
   });
 
   it('renders 8 menu items but only Wallet is disabled when user is logged out', () => {
+    useCurrentAccount.mockReturnValue([{}]);
+    wrapper = mountWithRouter(SideBar, myProps);
     expect(wrapper).toContainMatchingElements(8, 'a');
     expect(wrapper).toContainExactlyOneMatchingElement('a.disabled');
     expect(wrapper.find('a').at(0)).not.toHaveClassName('disabled');
@@ -90,16 +99,13 @@ describe('SideBar', () => {
   });
 
   it('renders 8 disabled menu items on Initialization screen', () => {
-    wrapper = mountWithRouter(
-      SideBar,
-      {
-        ...myProps,
-        isUserLogout: false,
-        location: {
-          pathname: routes.reclaim.path,
-        },
+    wrapper = mountWithRouter(SideBar, {
+      ...myProps,
+      isUserLogout: false,
+      location: {
+        pathname: routes.reclaim.path,
       },
-    );
+    });
     expect(wrapper).toContainMatchingElements(8, 'a');
     expect(wrapper.find('a').at(0)).toHaveClassName('disabled');
     expect(wrapper.find('a').at(1)).toHaveClassName('disabled');

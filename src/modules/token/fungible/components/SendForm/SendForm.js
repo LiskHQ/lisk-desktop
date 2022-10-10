@@ -2,7 +2,7 @@ import React, { useCallback, useMemo, useState } from 'react';
 import Piwik from 'src/utils/piwik';
 import { MODULE_COMMANDS_NAME_MAP } from 'src/modules/transaction/configuration/moduleCommand';
 import AmountField from 'src/modules/common/components/amountField';
-import { TokenField } from 'src/modules/common/components/TokenField';
+import { TokenSelector } from 'src/modules/common/components/TokenSelector';
 import { mockAppTokens } from '@tests/fixtures/token';
 import Icon from 'src/theme/Icon';
 import { toRawLsk, fromRawLsk } from '@token/fungible/utils/lsk';
@@ -41,7 +41,12 @@ const getInitialRecipientChain = (
 
   return transactionData?.recipientChain || initalRecipientChain || currentApplication;
 };
-const getInitialToken = (transactionData, initalTokenId, tokens) => {
+const getInitialToken = (
+  transactionData,
+  initalTokenId,
+  tokens
+) => {
+
   const initalToken = initalTokenId
     ? tokens.find(({ tokenID }) => tokenID === initalTokenId)
     : null;
@@ -51,11 +56,14 @@ const getInitialToken = (transactionData, initalTokenId, tokens) => {
 // eslint-disable-next-line max-statements
 const SendForm = (props) => {
   const { account = {}, prevState, t, bookmarks, nextStep } = props;
-
   const [currentApplication] = useCurrentApplication();
+  const [sendingChain, setSendingChain] = useState(
+    prevState?.transactionData?.sendingChain || currentApplication
+  );
+  const tokens = useTokensBalanceSupportedFrom(sendingChain)
   const { applications } = useApplicationManagement();
   const [token, setToken] = useState(
-    getInitialToken(prevState?.transactionData, props.initialValue?.token)
+    getInitialToken(prevState?.transactionData, props.initialValue?.token, tokens)
   );
   const [recipientChain, setRecipientChain] = useState(
     getInitialRecipientChain(
@@ -66,10 +74,6 @@ const SendForm = (props) => {
     )
   );
   const { data: recipientApplication, isSuccess: isRecipientAppSuccess } = useBlockchainApplicationMeta();
-  const [sendingChain, setSendingChain] = useState(
-    prevState?.transactionData?.sendingChain || currentApplication
-  );
-  const tokens = useTokensBalanceSupportedFrom(sendingChain)
   const [maxAmount, setMaxAmount] = useState({ value: 0, error: false });
 
   const [reference, setReference] = useMessageField(
@@ -172,7 +176,12 @@ const SendForm = (props) => {
                 isLoading
               />
             </div>
-            <TokenField styles={styles} value={token} onChange={setToken} tokens={tokens} />
+            <TokenSelector
+              styles={styles}
+              value={token}
+              tokens={token}
+              onChange={setToken}
+            />
             <AmountField
               amount={amount}
               onChange={setAmountField}

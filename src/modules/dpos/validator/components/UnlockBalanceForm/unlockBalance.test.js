@@ -1,7 +1,7 @@
 import { act } from 'react-dom/test-utils';
 import networks from '@network/configuration/networks';
 import { tokenMap } from '@token/fungible/consts/tokens';
-import { mountWithProps } from 'src/utils/testHelpers';
+import { mountWithQueryAndProps } from 'src/utils/testHelpers';
 import * as hwManager from '@transaction/utils/hwManager';
 import { createGenericTx } from '@transaction/api';
 import useTransactionPriority from '@transaction/hooks/useTransactionPriority';
@@ -10,6 +10,13 @@ import wallets from '@tests/constants/wallets';
 import flushPromises from '@tests/unit-test-utils/flushPromises';
 import UnlockBalanceForm from './index';
 
+
+jest.mock('@account/hooks/useDeprecatedAccount', () => ({
+  useDeprecatedAccount: jest.fn().mockReturnValue({
+    isSuccess: true,
+    isLoading: false
+  }),
+}));
 jest.mock('@transaction/hooks/useTransactionPriority');
 jest.mock('@transaction/hooks/useTransactionFeeCalculation');
 jest.mock('@transaction/api');
@@ -120,7 +127,7 @@ describe('Unlock LSK modal', () => {
   };
 
   beforeEach(() => {
-    wrapper = mountWithProps(UnlockBalanceForm, props, store);
+    wrapper = mountWithQueryAndProps(UnlockBalanceForm, props, store);
     hwManager.signTransactionByHW.mockResolvedValue({});
   });
 
@@ -171,7 +178,7 @@ describe('Unlock LSK modal', () => {
         },
       },
     };
-    wrapper = mountWithProps(UnlockBalanceForm, props, newStore);
+    wrapper = mountWithQueryAndProps(UnlockBalanceForm, props, newStore);
     wrapper.find('.confirm-btn button').simulate('click');
     expect(props.nextStep).not.toBeCalled();
   });

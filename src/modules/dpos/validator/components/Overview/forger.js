@@ -13,7 +13,7 @@ const Forger = ({ forger }) => (
         address={forger.address}
         className={styles.walletVisual}
       />
-      <span>{forger.username}</span>
+      <span>{forger.name}</span>
     </Link>
   </div>
 );

@@ -43,7 +43,7 @@ const getAmountFeedbackAndError = (value, balance, minValue, inputValue) => {
 // eslint-disable-next-line max-statements
 const useVoteAmountField = (initialValue) => {
   const { i18n } = useTranslation();
-  const balance = useSelector(selectAccountBalance);
+  const balance = useSelector(selectAccountBalance); // @todo account has multiple balance now
   const host = useSelector(selectLSKAddress);
   const searchDetails = window.location.href.replace(/.*[?]/, '');
   const address = selectSearchParamValue(`?${searchDetails}`, 'address');
