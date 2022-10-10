@@ -12,15 +12,17 @@ export function useApplicationManagement() {
   const [currentApplication, setCurrentApplication] = useCurrentApplication();
   const { checkPinByChainId, pins } = usePinBlockchainApplication();
   const applicationsObject = useSelector(selectApplications);
+
+  // TODO: Applications list not updating after adding new application
   const applications = useMemo(
     () => {
       const appsList = Object.values(applicationsObject);
-      return [...defaultApps, ...appsList].map((app) => ({
+      return appsList.map((app) => ({
         ...app,
         isPinned: checkPinByChainId(app.chainID),
       })).sort((a) => (a.isPinned ? -1 : 1));
     },
-    [applicationsObject, defaultApps, pins],
+    [applicationsObject, pins],
   );
 
   const setApplication = useCallback(

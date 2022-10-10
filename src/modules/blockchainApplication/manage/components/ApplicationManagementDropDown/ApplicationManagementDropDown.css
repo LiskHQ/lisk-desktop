@@ -3,6 +3,29 @@
   align-items: center;
 }
 
+.dropdown {
+  width: 300px;
+  margin-right: 20px;
+}
+
+.content {
+  padding: 10px;
+}
+
+.addApplicationBtn {
+  width: 100%;
+  color: var(--color-ultramarine-blue);
+  border-radius: 10px;
+  margin-top: 16px;
+  display: flex;
+  opacity: 1;
+
+  & > img {
+    width: 16px;
+    margin-right: 8px;
+  }
+}
+
 .wrapper {
   display: flex;
   flex-direction: row;

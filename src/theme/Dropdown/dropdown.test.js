@@ -33,7 +33,7 @@ describe('Dropdow', () => {
     expect(closeDropdown).toHaveBeenCalled();
   })
 
-  it('Should open with passed children props', () => {
+  it('should open with passed children props', () => {
     const options = ['Option 1', 'Option 2', 'Option 3'];
     wrapper.setProps({
       showDropdown: true,
@@ -43,7 +43,7 @@ describe('Dropdow', () => {
     expect(wrapper.find('.dropdown-content')).toContainMatchingElements(3, 'span');
   });
 
-  it('Should render 2 options with separator between', () => {
+  it('should render 2 options with separator between', () => {
     wrapper.setProps({
       showDropdown: true,
       children: [
@@ -56,4 +56,14 @@ describe('Dropdow', () => {
     expect(wrapper).toContainMatchingElements(2, '.option');
     expect(wrapper).toContainExactlyOneMatchingElement('span.separator');
   });
+
+  it('should manage itself when item is passed', () => {
+    const closeDropdown = jest.fn()
+    const documentWrapper = ({ children }) => <div> <div>outside</div> {children}</div>
+    const container = render(<Dropdown item={() => <div>open</div>} closeDropdown={closeDropdown} ><DummyChild /></Dropdown>, { wrapper: documentWrapper });
+    fireEvent.mouseDown(container.getByText('open'))
+    expect(container.getByTestId('dropdown-popup')).toBeVisible();
+    fireEvent.mouseDown(container.getByText('outside'))
+    expect(closeDropdown).toHaveBeenCalled();
+  })
 });

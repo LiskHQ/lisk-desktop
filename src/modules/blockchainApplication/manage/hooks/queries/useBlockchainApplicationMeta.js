@@ -1,9 +1,9 @@
 import { BLOCKCHAIN_APPS_META } from 'src/const/queries';
 import {
-  LIMIT as limit,
   API_VERSION,
 } from 'src/const/config';
-import { useCustomInfiniteQuery } from 'src/modules/common/hooks';
+import { useCustomQuery } from 'src/modules/common/hooks';
+import { API_BASE_URL } from 'src/utils/api/constants';
 
 /**
  * Creates a custom hook for blockchain applications meta queries
@@ -18,13 +18,15 @@ import { useCustomInfiniteQuery } from 'src/modules/common/hooks';
 // eslint-disable-next-line import/prefer-default-export
 export const useBlockchainApplicationMeta = ({ config: customConfig = {}, options } = { }) => {
   const config = {
+    baseURL: API_BASE_URL,
     url: `/api/${API_VERSION}/blockchain/apps/meta`,
     method: 'get',
     event: 'get.blockchain.apps.meta',
     ...customConfig,
-    params: { limit, ...(customConfig?.params || {}) },
+    params: { ...(customConfig?.params || {}) },
   };
-  return useCustomInfiniteQuery({
+
+  return useCustomQuery({
     keys: [BLOCKCHAIN_APPS_META],
     config,
     options,
