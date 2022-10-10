@@ -30,7 +30,7 @@ const AddApplicationList = ({
   const handleLoadMore = () => {
     const params = {
       ...filters,
-      offset: applications.meta?.count + applications.meta.offset,
+      offset: applications.meta.count + applications.meta.offset,
     };
     fetchNextPage(params)
   };
