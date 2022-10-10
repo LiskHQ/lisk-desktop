@@ -17,13 +17,13 @@ function DelegateVoteButton({ currentAddress, address, isBanned }) {
     return sentVotes.data.votes.some(({ delegateAddress }) => delegateAddress === address);
   }, [sentVotes]);
 
-  return hasSentVoteToDelegate ? (
-    <DialogLink>
-      <SecondaryButton disabled={sentVotesLoading || isBanned}>{t('Edit vote')}</SecondaryButton>
-    </DialogLink>
-  ) : (
-    <DialogLink>
-      <PrimaryButton disabled={sentVotesLoading || isBanned}>{t('Vote delegate')}</PrimaryButton>
+  return (
+    <DialogLink component="editVote">
+      {hasSentVoteToDelegate ? (
+        <SecondaryButton disabled={sentVotesLoading || isBanned}>{t('Edit vote')}</SecondaryButton>
+      ) : (
+        <PrimaryButton disabled={sentVotesLoading || isBanned}>{t('Vote delegate')}</PrimaryButton>
+      )}
     </DialogLink>
   );
 }

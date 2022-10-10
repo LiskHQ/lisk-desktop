@@ -1,5 +1,5 @@
 import { renderHook } from '@testing-library/react-hooks';
-import { waitFor } from '@testing-library/dom';
+import { waitFor } from '@testing-library/react';
 import { useFilter } from '.';
 
 describe('useFilter hook', () => {

@@ -79,22 +79,28 @@ describe('actions: voting', () => {
 
   describe('voteEdited', () => {
     it('should create an action to add data to toggle the vote status for any given delegate', async () => {
-      accountApi.getAccount.mockResolvedValue({ data: wallets.genesis });
-      const data = [{
-        address: 'dummy',
-        amount: 1e10,
-      }];
-      await voteEdited(data)(dispatch, getState);
-      expect(accountApi.getAccount).toHaveBeenCalled();
+      const data = [
+        {
+          address: 'dummy',
+          amount: 1e10,
+        },
+      ];
+      await voteEdited(data)(dispatch);
+      expect(dispatch).toHaveBeenCalledWith({
+        type: actionTypes.voteEdited,
+        data,
+      });
     });
 
     it('creates an action to add data to toggle the vote status for any given delegate, without calling getAccount', async () => {
-      const data = [{
-        address: 'dummy',
-        amount: 1e10,
-        username: 'genesis',
-      }];
-      await voteEdited(data)(dispatch, getState);
+      const data = [
+        {
+          address: 'dummy',
+          amount: 1e10,
+          username: 'genesis',
+        },
+      ];
+      await voteEdited(data)(dispatch);
       expect(accountApi.getAccount).not.toHaveBeenCalled();
     });
   });
@@ -103,10 +109,12 @@ describe('actions: voting', () => {
     it('should call create transactions', async () => {
       const tx = { data: sampleVotes[0] };
       transactionApi.createGenericTx.mockResolvedValue(tx);
-      const data = [{
-        address: 'dummy',
-        amount: 1e10,
-      }];
+      const data = [
+        {
+          address: 'dummy',
+          amount: 1e10,
+        },
+      ];
 
       await votesSubmitted(data)(dispatch, getState);
       expect(transactionApi.createGenericTx).toHaveBeenCalled();
@@ -124,10 +132,12 @@ describe('actions: voting', () => {
     it('should call create transactions', async () => {
       const tx = { data: sampleVotes[0] };
       loginTypes.passphrase.code = 1;
-      const data = [{
-        address: 'dummy',
-        amount: 1e10,
-      }];
+      const data = [
+        {
+          address: 'dummy',
+          amount: 1e10,
+        },
+      ];
 
       await votesSubmitted(data)(dispatch, getState);
       expect(transactionApi.createGenericTx).toHaveBeenCalled();
@@ -144,10 +154,12 @@ describe('actions: voting', () => {
     it('dispatches a transactionSignError action if an error occurs', async () => {
       const error = new Error('Error message.');
       transactionApi.createGenericTx.mockRejectedValue(error);
-      const data = [{
-        address: 'dummy',
-        amount: 1e10,
-      }];
+      const data = [
+        {
+          address: 'dummy',
+          amount: 1e10,
+        },
+      ];
 
       await votesSubmitted(data)(dispatch, getState);
       expect(transactionApi.createGenericTx).toHaveBeenCalled();
@@ -181,7 +193,9 @@ describe('actions: voting', () => {
 
   describe('votesRetrieved', () => {
     it('should call getVotes and dispatch vote results', async () => {
-      const votes = [{ address: 'lskdwsyfmcko6mcd357446yatromr9vzgu7eb8y99', username: 'genesis', amount: 1e8 }];
+      const votes = [
+        { address: 'lskdwsyfmcko6mcd357446yatromr9vzgu7eb8y99', username: 'genesis', amount: 1e8 },
+      ];
       const expectedAction = {
         type: actionTypes.votesRetrieved,
         data: votes,
@@ -213,10 +227,12 @@ describe('actions: voting', () => {
 
     it('should dispatch transactionCreatedSuccess', async () => {
       const tx = { id: 1 };
-      transactionApi.createGenericTx.mockImplementation(() =>
-        new Promise((resolve) => {
-          resolve(tx);
-        }));
+      transactionApi.createGenericTx.mockImplementation(
+        () =>
+          new Promise((resolve) => {
+            resolve(tx);
+          })
+      );
       await balanceUnlocked(params)(dispatch, getState);
       expect(transactionApi.createGenericTx).toHaveBeenCalledWith({
         network: state.network,
@@ -231,10 +247,12 @@ describe('actions: voting', () => {
 
     it('should dispatch transactionSignError', async () => {
       const error = { message: 'TestError' };
-      transactionApi.createGenericTx.mockImplementation(() =>
-        new Promise((_, reject) => {
-          reject(error);
-        }));
+      transactionApi.createGenericTx.mockImplementation(
+        () =>
+          new Promise((_, reject) => {
+            reject(error);
+          })
+      );
       await balanceUnlocked(params)(dispatch, getState);
       expect(dispatch).toHaveBeenCalledWith({
         type: txActionTypes.transactionSignError,

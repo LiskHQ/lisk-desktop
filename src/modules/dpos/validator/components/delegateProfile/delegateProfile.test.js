@@ -1,7 +1,7 @@
 import React from 'react';
 import numeral from 'numeral';
 import { MemoryRouter } from 'react-router';
-import { screen } from '@testing-library/dom';
+import { screen } from '@testing-library/react';
 import { renderWithRouter } from 'src/utils/testHelpers';
 import mockSavedAccounts from '@tests/fixtures/accounts';
 import { mockBlocks } from '@block/__fixtures__';

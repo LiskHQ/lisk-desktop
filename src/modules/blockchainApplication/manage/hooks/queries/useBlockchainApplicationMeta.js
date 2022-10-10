@@ -4,6 +4,8 @@ import {
 } from 'src/const/config';
 import { useCustomQuery } from 'src/modules/common/hooks';
 import { API_BASE_URL } from 'src/utils/api/constants';
+import { useSelector } from 'react-redux';
+import { getNetworkName } from '@network/utils/getNetwork';
 
 /**
  * Creates a custom hook for blockchain applications meta queries
@@ -17,13 +19,16 @@ import { API_BASE_URL } from 'src/utils/api/constants';
  */
 // eslint-disable-next-line import/prefer-default-export
 export const useBlockchainApplicationMeta = ({ config: customConfig = {}, options } = { }) => {
+
+  const selectedNetwork = useSelector(state => state.network);
+  const network = getNetworkName(selectedNetwork)
   const config = {
     baseURL: API_BASE_URL,
     url: `/api/${API_VERSION}/blockchain/apps/meta`,
     method: 'get',
     event: 'get.blockchain.apps.meta',
     ...customConfig,
-    params: { ...(customConfig?.params || {}) },
+    params: { ...(customConfig?.params || {}), network },
   };
 
   return useCustomQuery({

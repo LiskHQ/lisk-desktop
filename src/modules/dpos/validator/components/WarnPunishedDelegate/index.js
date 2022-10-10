@@ -1,47 +1,42 @@
-import React, { useEffect } from 'react';
-import { compose } from 'redux';
+import React, { useMemo } from 'react';
 import { withRouter } from 'react-router-dom';
-import { connect } from 'react-redux';
 import moment from 'moment';
-import { getBlock } from '@block/utils';
-import withData from 'src/utils/withData';
-import { withTranslation } from 'react-i18next';
+import { NUMBER_OF_BLOCKS_PER_DAY } from '@dpos/validator/consts/delegates';
+import { useBlocks } from 'src/modules/block/hooks/queries/useBlocks';
+import { useTranslation } from 'react-i18next';
 import VoteWarning from './VoteWarning';
 import WarnPunishedDelegate from './WarnPunishedDelegate';
-
-const mapStateToProps = (state) => ({
-  currentHeight: state.blocks.latestBlocks.length ? state.blocks.latestBlocks[0].height : 0,
-});
 
 const getPunishmentDetails = (punishedTimestamp, pomHeight, currentHeight) => {
   const startDate = new Date(punishedTimestamp * 1000);
   const punishmentStartDate = moment(startDate).format('MM.DD.YYYY');
-  // 6: blocks per minute, 60: minutes, 24: hours
-  const numOfBlockPerDay = 24 * 60 * 6;
-  const daysLeft = Math.ceil((pomHeight.end - currentHeight) / numOfBlockPerDay);
+  const daysLeft = Math.ceil((pomHeight.end - currentHeight) / NUMBER_OF_BLOCKS_PER_DAY);
+
   return { daysLeft, punishmentStartDate };
 };
 
 const Warning = ({ vote, ...props }) => {
-  useEffect(() => {
-    if (props.pomHeight.start) {
-      props.block.loadData();
-    }
-  }, [props.pomHeight.start]);
+  const { pomHeight } = props;
+  const { t } = useTranslation();
+
+const { data: blocks } = useBlocks();
+  const { data: blocksAtHeight } = useBlocks({ config: { params: { height: pomHeight.start } } });
+
+  const blockTimestamp = useMemo(() => blocks?.data?.[0]?.timestamp || null, [blocksAtHeight]);
+  const currentHeight = useMemo(() => blocks?.data?.[0]?.height || null, [blocks]);
 
   const { daysLeft, punishmentStartDate } = getPunishmentDetails(
-    props.block.data.timestamp,
+    blockTimestamp,
     props.pomHeight,
-    props.currentHeight,
+    currentHeight
   );
 
-  if (vote) {
-    return <EditVoteWarning daysLeft={daysLeft} {...props} />;
-  }
+  if (vote) return <EditVoteWarning daysLeft={daysLeft} t={t} {...props} />;
 
   return (
     <DelegateProfileWarning
       daysLeft={daysLeft}
+      t={t}
       punishmentStartDate={punishmentStartDate}
       {...props}
     />
@@ -49,31 +44,11 @@ const Warning = ({ vote, ...props }) => {
 };
 
 export const DelegateProfileWarning = ({ daysLeft, punishmentStartDate, ...props }) => (
-  <WarnPunishedDelegate
-    daysLeft={daysLeft}
-    punishmentStartDate={punishmentStartDate}
-    {...props}
-  />
+  <WarnPunishedDelegate daysLeft={daysLeft} punishmentStartDate={punishmentStartDate} {...props} />
 );
 
 export const EditVoteWarning = ({ daysLeft, ...props }) => (
   <VoteWarning {...props} daysLeft={daysLeft} />
 );
 
-const apis = {
-  block: {
-    apiUtil: (network, params) => getBlock({ network, params }),
-    getApiParams: (_, ownProps) => ({
-      height: ownProps.pomHeight.start,
-    }),
-    transformResponse: response => (response.data && response.data[0]),
-    autoLoad: false,
-  },
-};
-
-export default compose(
-  withRouter,
-  connect(mapStateToProps),
-  withData(apis),
-  withTranslation(),
-)(Warning);
+export default withRouter(Warning);

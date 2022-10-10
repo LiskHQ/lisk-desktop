@@ -7,6 +7,13 @@ import {
 import { genKey, blsKey, pop } from '@tests/constants/keys';
 import TxComposer from './index';
 
+jest.mock('@account/hooks/useDeprecatedAccount', () => ({
+  useDeprecatedAccount: jest.fn().mockReturnValue({
+    isSuccess: true,
+    isLoading: false
+  }),
+}));
+
 describe('TxComposer', () => {
   const transaction = {
     moduleCommand: MODULE_COMMANDS_NAME_MAP.transfer,

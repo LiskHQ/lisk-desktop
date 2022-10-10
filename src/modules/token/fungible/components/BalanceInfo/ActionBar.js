@@ -23,7 +23,7 @@ const ActionBar = ({
   isBanned,
   pomStart,
 }) => {
-  const hostBalance = useSelector(selectAccountBalance);
+  const hostBalance = useSelector(selectAccountBalance) // @todo account has multiple balance now;
   const disableButtons = hostBalance === 0;
   const vote = useSelector((state) => state.voting[address]);
   const lskAddress = useSelector(selectLSKAddress);
