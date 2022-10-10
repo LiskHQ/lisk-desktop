@@ -7,15 +7,11 @@ import { useTranslation } from 'react-i18next';
 import VoteWarning from './VoteWarning';
 import WarnPunishedDelegate from './WarnPunishedDelegate';
 
-// const mapStateToProps = (state) => ({
-//   currentHeight: state.blocks.latestBlocks.length ? state.blocks.latestBlocks[0].height : 0,
-// });
-
 const getPunishmentDetails = (punishedTimestamp, pomHeight, currentHeight) => {
   const startDate = new Date(punishedTimestamp * 1000);
   const punishmentStartDate = moment(startDate).format('MM.DD.YYYY');
-  console.log('...', (pomHeight.end - currentHeight), currentHeight, pomHeight.end)
   const daysLeft = Math.ceil((pomHeight.end - currentHeight) / NUMBER_OF_BLOCKS_PER_DAY);
+
   return { daysLeft, punishmentStartDate };
 };
 
@@ -34,7 +30,6 @@ const Warning = ({ vote, ...props }) => {
     props.pomHeight,
     currentHeight
   );
-  console.log('days left -', daysLeft);
 
   if (vote) return <EditVoteWarning daysLeft={daysLeft} t={t} {...props} />;
 

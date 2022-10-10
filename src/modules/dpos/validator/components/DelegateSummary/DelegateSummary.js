@@ -37,6 +37,7 @@ const DelegateSummary = ({ delegate, status, weight }) => {
         </div>
       </BoxHeader>
       <BoxContent>
+        {/* @Todo: the value of roundLength should be dynamically integrated from the useDposConstnats query hook which would be addressed in issue #4502 */}
         <p>{t('This delegate is among the first 101 delegates in delegate weight ranking.')}</p>
         <div className={styles.summaryDetails}>
           <div>

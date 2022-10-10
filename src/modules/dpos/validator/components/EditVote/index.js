@@ -43,7 +43,7 @@ const getTitles = (t) => ({
   },
 });
 
-// @Todo this is just a place holder pending when service confirms where this can be gotten from.
+// @Todo this is just a place holder pending when dpos constants are integrated by useDposContants hook
 const dposTokenId = '0'.repeat(16);
 
 // eslint-disable-next-line max-statements
@@ -58,7 +58,7 @@ const EditVote = ({ history, voteEdited, network, voting }) => {
   const [isForm, setIsForm] = useState(true);
 
   const [address] = selectSearchParamValue(history.location.search, ['address']);
-  const delegateAddress = address || currentAddress;
+  const delegateAddress = address || currentAddress; // this holds the address of either other delegates or the user's address
 
   const { data: delegates, isLoading: isLoadingDelegates } = useDelegates({
     config: { params: { address: delegateAddress } },

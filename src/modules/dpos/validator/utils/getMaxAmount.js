@@ -59,17 +59,20 @@ const getMaxAmount = async ({
     {
       network,
       transaction,
+      /* @Todo: the token symbol should be dynamically integrated from the useDposConstnats query hook which would be addressed in issue #4502 */
       token: 'LSK',
       wallet: {
         summary: { isMultisignature },
         keys: { members: [...optionalKeys, ...mandatoryKeys] },
       },
+      /* @Todo: this needs to be refactored in the feature but for now it works */
       selectedPriority: { title: 'Normal', value: 0, selectedIndex: 0 }, // Always set to LOW
       numberOfSignatures: getNumberOfSignatures(
         { numberOfSignatures, isMultisignature },
         transaction
       ),
     },
+    /* @Todo: the token symbol should be dynamically integrated from the useDposConstnats query hook which would be addressed in issue #4502 */
     'LSK'
   );
 
