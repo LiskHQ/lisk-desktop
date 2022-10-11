@@ -62,7 +62,6 @@ const multisigRegMsgSchema = {
 		},
 	},
 };
-const memberPrivateKey = Buffer.from('9cddd7cecd93d254b830bceeafe799066a671c2ec3e91813df441d9b7863fdbb86801e49a659c05d72d005fa8bdcb10ebb9654193815b337fe02cbe0b3defab3', 'hex');
 
 const EMPTY_BUFFER = Buffer.alloc(0);
 export const convertStringToBinary = value => Buffer.from(value, 'hex');
@@ -319,7 +318,7 @@ const convertTxJSONToBinary = (tx) => {
     fee: BigInt(convertBigIntToString(tx.fee)),
     nonce: BigInt(convertBigIntToString(tx.nonce)),
     signatures: tx.signatures.map(convertStringToBinary),
-    id: convertStringToBinary(tx.id),
+    id: tx.id ? convertStringToBinary(tx.id) : EMPTY_BUFFER,
   };
 
   transaction.params = getElementsParamsFromJSON(tx.params, joinModuleAndCommand(tx));
@@ -375,9 +374,9 @@ const containsTransactionType = (txs = [], type) =>
  * @param {Object} params - Params received from withFilters HOC
  * @returns {Object} - Parameters consumable by transaction API method
  */
-const normalizeTransactionParams = params => Object.keys(params)
+const normalizeTransactionParams = params =>
   // eslint-disable-next-line complexity
-  .reduce((acc, item) => {
+  Object.keys(params).reduce((acc, item) => {
     switch (item) {
       case 'dateFrom':
         if (params[item]) {
@@ -485,15 +484,16 @@ export const computeTransactionId = ({ transaction, schema }) => {
 };
 
 const signMultisigUsingPrivateKey = (
-  schema, chainID, transaction, moduleCommand, wallet, privateKey,
+  schema, chainID, transaction, moduleCommand, wallet, privateKey, senderAccount,
 ) => {
-  const isMultisigReg = moduleCommand === registerMultisignature;
-  const keys = isMultisigReg
-    ? transaction.asset
-    : wallet.keys;
-  /**
-   * Use Lisk Element to Sign with Private Key
-   */
+  // since we sign multisignature registration as a normal tx, we can set this to false.
+  // const isGroupRegistration = moduleCommand === registerMultisignature;
+  const keys = getKeys({
+    senderAccount,
+    transaction,
+    isGroupRegistration: false,
+  });
+
   const signedTransaction = transactions.signMultiSignatureTransactionWithPrivateKey(
     transaction,
     Buffer.from(chainID, 'hex'),
@@ -503,63 +503,83 @@ const signMultisigUsingPrivateKey = (
       mandatoryKeys: keys.mandatoryKeys.map(convertStringToBinary),
     },
     schema,
-    isMultisigReg,
+    false, // @todo if you want to send tokens, and you are the group and a member, is this True? (#4506)
   );
-
-  /**
-   * Check if the tx is multisigReg
-   */
-  const members = [
-    ...transaction.asset.mandatoryKeys.sort(),
-    ...transaction.asset.optionalKeys.sort(),
-  ];
-  const senderIndex = members.indexOf(wallet.summary.publicKey);
-  const isSender = transaction.senderPublicKey === wallet.summary.publicKey;
-
-  if (isMultisigReg && isSender && senderIndex > -1) {
-    const signatures = Array.from(Array(members.length + 1).keys()).map((index) => {
-      if (signedTransaction.signatures[index]) return signedTransaction.signatures[index];
-      if (index === senderIndex + 1) return signedTransaction.signatures[0];
-      return Buffer.from('');
-    });
-    signedTransaction.signatures = signatures;
-  }
 
   return signedTransaction;
 };
 
-const signUsingPrivateKey = (schema, chainID, transaction, moduleCommand, privateKey) => {
-  const isMultisigReg = moduleCommand
+const signMultisigRegParams = (chainIDBuffer, transaction, privateKeyBuffer) => {
+  const message = {
+    mandatoryKeys: transaction.params.mandatoryKeys,
+    optionalKeys: transaction.params.optionalKeys,
+    numberOfSignatures: transaction.params.numberOfSignatures,
+    address: cryptography.address.getAddressFromPublicKey(transaction.senderPublicKey),
+    nonce: transaction.nonce,
+  };
+
+  const data = codec.codec.encode(multisigRegMsgSchema, message);
+  return cryptography.ed.signData(
+    MESSAGE_TAG_MULTISIG_REG,
+    chainIDBuffer,
+    data,
+    privateKeyBuffer,
+  );
+};
+
+// eslint-disable-next-line max-statements
+const signUsingPrivateKey = (wallet, schema, chainID, transaction, moduleCommand, privateKey) => {
+  const isGroupRegistration = moduleCommand
     === MODULE_COMMANDS_NAME_MAP.registerMultisignature
   const chainIDBuffer = Buffer.from(chainID, 'hex');
-  // @todo we need to fix the index calculation (#4497)
-  if (isMultisigReg) {
-    const message = {
-      ...transaction.params,
-      address: cryptography.address.getAddressFromPublicKey(transaction.senderPublicKey),
-      nonce: transaction.nonce,
-    };
-    delete message.signatures;
-    const data = codec.codec.encode(multisigRegMsgSchema, message);
-    const memberSignature = cryptography.ed.signData(MESSAGE_TAG_MULTISIG_REG, chainIDBuffer, data, memberPrivateKey)
+  const privateKeyBuffer = Buffer.from(privateKey, 'hex');
+  const members = [
+    ...transaction.params.mandatoryKeys.sort((publicKeyA, publicKeyB) => publicKeyA.compare(publicKeyB)),
+    ...transaction.params.optionalKeys.sort((publicKeyA, publicKeyB) => publicKeyA.compare(publicKeyB)),
+  ];
+  const publicKeyBuffer = Buffer.from(wallet.summary.publicKey, 'hex');
+  const senderIndex = members.findIndex(item => Buffer.compare(item, publicKeyBuffer));
+  // Sign the params if tx is a group registration and the current account is a member
+  if (isGroupRegistration && senderIndex > -1) {
+    const memberSignature = signMultisigRegParams(chainIDBuffer, transaction, privateKeyBuffer);
     // @todo use correct index once SDK exposes the sort endpoint (#4497)
-    transaction.params.signatures[0] = memberSignature;
+    const signatures = Array.from(Array(members.length).keys()).map((index) => {
+      if (index === senderIndex) {
+        return memberSignature;
+      }
+      if (!transaction.params.signatures[index] || !transaction.params.signatures[index].length) {
+        return Buffer.alloc(64);
+      }
+      return transaction.params.signatures[index];
+    });
+    transaction.params.signatures = signatures;
   }
-  const res = transactions.signTransactionWithPrivateKey(
-    transaction,
-    chainIDBuffer,
-    Buffer.from(privateKey, 'hex'),
-    schema,
-  );
-  
-  return res;
+
+  // Sign the tx only if is sender of tx
+
+  const isSender = Buffer.compare(transaction.senderPublicKey, publicKeyBuffer) === 0;
+  if (isSender) {
+    let res;
+    try {
+      res = transactions.signTransactionWithPrivateKey(
+        transaction,
+        chainIDBuffer,
+        privateKeyBuffer,
+        schema,
+      );
+      return res;
+    } catch (e) {
+      return e;
+    }
+  }
+  return transaction;
 };
 
 // eslint-disable-next-line max-statements
 const signUsingHW = async (
   schema, chainID, moduleCommand, transaction, wallet,
 ) => {
-  const isMultisigReg = moduleCommand
+  const isGroupRegistration = moduleCommand
     === MODULE_COMMANDS_NAME_MAP.registerMultisignature
   const transactionBytes = transactions.getSigningBytes(transaction, schema);
   const [error, signedTransaction] = await to(signTransactionByHW(
@@ -579,7 +599,7 @@ const signUsingHW = async (
   const senderIndex = members.indexOf(wallet.summary.publicKey);
   const isSender = transaction.senderPublicKey === wallet.summary.publicKey;
 
-  if (isMultisigReg && isSender && senderIndex > -1) {
+  if (isGroupRegistration && isSender && senderIndex > -1) {
     const signatures = Array.from(Array(members.length + 1).keys()).map((index) => {
       if (signedTransaction.signatures[index]) return signedTransaction.signatures[index];
       if (index === senderIndex + 1) return signedTransaction.signatures[0];
@@ -594,22 +614,22 @@ const signUsingHW = async (
 
 export const sign = async (
   wallet, schema, chainID, transaction,
-  moduleCommand, privateKey,
+  moduleCommand, privateKey, senderAccount,
 ) => {
-  // @todo rawTransaction is changed
   if (!isEmpty(wallet.hwInfo)) {
     const signedTx = await signUsingHW(
       schema, chainID, moduleCommand, transaction, wallet,
     );
     return signedTx;
   }
-  if (wallet.summary.isMultisignature) {
+
+  if (senderAccount?.summary.isMultisignature) {
     return signMultisigUsingPrivateKey(
-      schema, chainID, transaction, moduleCommand, wallet, privateKey,
+      schema, chainID, transaction, moduleCommand, wallet, privateKey, senderAccount,
     );
   }
 
-  return signUsingPrivateKey(schema, chainID, transaction, moduleCommand, privateKey);
+  return signUsingPrivateKey(wallet, schema, chainID, transaction, moduleCommand, privateKey);
 };
 
 /**
@@ -630,19 +650,18 @@ const signMultisigTransaction = async (
   senderAccount,
   transaction,
   txStatus,
-  network,
-  privateKey,
+  schema,
   chainID,
+  privateKey,
 ) => {
   /**
    * Define keys.
    * Since the sender is different, the keys are defined based on that
    */
-  const isMultisigReg = transaction.moduleCommand === registerMultisignature;
-  const schema = network.networks.LSK.moduleCommandSchemas[transaction.moduleCommand];
+  const isGroupRegistration = transaction.moduleCommand === registerMultisignature;
 
   const { mandatoryKeys, optionalKeys } = getKeys({
-    senderAccount: senderAccount.data, transaction, isMultisigReg,
+    senderAccount: senderAccount.data, transaction, isGroupRegistration,
   });
   const keys = {
     mandatoryKeys: mandatoryKeys.map(key => Buffer.from(key, 'hex')),
@@ -651,22 +670,23 @@ const signMultisigTransaction = async (
 
   /**
    * To do so, we have to flatten, then create txObject
+   * @todo remove moduleCommand from the arguments of desktopTxToElementsTx (#4506)
    */
-  const transactionObject = desktopTxToElementsTx(transaction, transaction.moduleCommand);
+  const transactionObject = desktopTxToElementsTx(transaction, transaction.moduleCommand, schema);
 
   /**
    * remove excess optional signatures
    */
   if (txStatus === signatureCollectionStatus.occupiedByOptionals) {
     transactionObject.signatures = removeExcessSignatures(
-      transactionObject.signatures, keys.mandatoryKeys.length, isMultisigReg,
+      transactionObject.signatures, keys.mandatoryKeys.length, isGroupRegistration,
     );
   }
 
   try {
     const result = await sign(
       wallet, schema, chainID, transactionObject,
-      transaction.moduleCommand, privateKey,
+      transaction.moduleCommand, privateKey, senderAccount,
     );
     return [result];
   } catch (e) {
@@ -685,6 +705,11 @@ const signMultisigTransaction = async (
  * @returns {number} the number of signatures required
  */
 const getNumberOfSignatures = (account) => {
+  // @todo Since we don't sign registerMultisignature using signMultisigUsingPrivateKey anymore,
+  // do we still need this check? (#4506)
+  // if (transaction?.moduleCommand === registerMultisignature) {
+  //   return transaction.params.optionalKeys.length + transaction.params.mandatoryKeys.length + 1;
+  // }
   if (account?.summary?.isMultisignature) {
     return account.keys.numberOfSignatures;
   }

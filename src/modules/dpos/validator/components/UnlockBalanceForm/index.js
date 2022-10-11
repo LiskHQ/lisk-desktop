@@ -38,9 +38,6 @@ const UnlockBalanceForm = ({
     isValid: unlockableBalance > 0,
   };
 
-  console.log('unlockableBalance', unlockableBalance);
-  console.log('transaction', transaction);
-
   return (
     <section className={styles.wrapper}>
       <TxComposer
