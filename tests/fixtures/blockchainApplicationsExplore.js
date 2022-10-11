@@ -1,6 +1,6 @@
 const blockchainApplicationsExplore = [
   {
-    name: 'Test app',
+    chainName: 'Test app',
     chainID: 'aq02qkbb35u4jdq8szo3pnsq',
     state: 'active',
     apis: [{ rest: 'https://service.testappone.com', rpc: 'wss://service.testappone.com' }],
@@ -10,7 +10,7 @@ const blockchainApplicationsExplore = [
     depositedLsk: 50000000,
   },
   {
-    name: 'Test app 2',
+    chainName: 'Test app 2',
     chainID: 'ij239sksf5u4jdq8szo3pnsq',
     state: 'active',
     apis: [

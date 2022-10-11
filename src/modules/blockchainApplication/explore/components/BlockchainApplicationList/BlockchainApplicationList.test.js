@@ -26,7 +26,7 @@ describe('BlockchainApplicationList', () => {
     applications: {
       data: mockBlockchainApplications,
       isLoading: true,
-      loadData: jest.fn(),
+      fetchNextPage: jest.fn(),
       error: false,
     },
   };
@@ -78,9 +78,7 @@ describe('BlockchainApplicationList', () => {
 
     wrapper = renderWithRouter(BlockchainApplicationList, props);
     fireEvent.click(screen.getByText('Load more'));
-    expect(props.applications.loadData).toHaveBeenCalledWith(expect.objectContaining({
-      offset: props.applications.meta.count + props.applications.meta.offset,
-    }));
+    expect(props.applications.fetchNextPage).toHaveBeenCalled();
   });
 
   it('should not have any pinned application', () => {

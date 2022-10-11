@@ -1,9 +1,12 @@
 import moment from 'moment';
 import { fireEvent, screen } from '@testing-library/react';
 import mockBlockchainApplications from '@tests/fixtures/blockchainApplicationsExplore';
-import { renderWithRouter } from 'src/utils/testHelpers';
+import { renderWithRouterAndQueryClient } from 'src/utils/testHelpers';
 import { useApplicationManagement, usePinBlockchainApplication } from '@blockchainApplication/manage/hooks';
+import { useBlockchainApplicationMeta } from 'src/modules/blockchainApplication/manage/hooks/queries/useBlockchainApplicationMeta';
+import useApplicationsQuery from '../../hooks/queries/useApplicationsQuery';
 import BlockchainApplicationDetails from './index';
+import { mockBlockchainApp } from '../../__fixtures__';
 
 const mockedPins = ['1111'];
 const mockTogglePin = jest.fn();
@@ -11,6 +14,20 @@ const mockSetApplication = jest.fn();
 
 jest.mock('@blockchainApplication/manage/hooks/usePinBlockchainApplication');
 jest.mock('@blockchainApplication/manage/hooks/useApplicationManagement');
+jest.mock('@blockchainApplication/manage/hooks/queries/useBlockchainApplicationMeta');
+jest.mock('../../hooks/queries/useApplicationsQuery');
+
+useBlockchainApplicationMeta.mockReturnValue({
+  data: {
+    data: mockBlockchainApplications
+  }
+})
+
+useApplicationsQuery.mockReturnValue({
+  data: {
+    data: mockBlockchainApp.data
+  }
+})
 
 usePinBlockchainApplication.mockReturnValue({
   togglePin: mockTogglePin,
@@ -27,25 +44,21 @@ describe('BlockchainApplicationDetails', () => {
     location: {
       search: 'chainId=test-chain-id',
     },
-    application: {
-      data: mockBlockchainApplications[0],
-      isLoading: true,
-      loadData: jest.fn(),
-      error: false,
-    },
   };
 
   beforeEach(() => {
     jest.clearAllMocks();
-    renderWithRouter(BlockchainApplicationDetails, props);
+    renderWithRouterAndQueryClient(BlockchainApplicationDetails, props);
   });
 
   it('should display properly', () => {
     const {
-      name, state, lastCertificateHeight, lastUpdated,
+      chainName,
     } = mockBlockchainApplications[0];
 
-    expect(screen.getByText(name)).toBeTruthy();
+    const { state, lastCertificateHeight, lastUpdated } = mockBlockchainApp.data[0]
+
+    expect(screen.getByText(chainName)).toBeTruthy();
     expect(screen.getByText(state)).toBeTruthy();
     expect(screen.getByText(lastCertificateHeight)).toBeTruthy();
     expect(screen.getByText(moment(lastUpdated).format('DD MMM YYYY'))).toBeTruthy();
@@ -75,7 +88,7 @@ describe('BlockchainApplicationDetails', () => {
       },
     );
 
-    renderWithRouter(BlockchainApplicationDetails, props);
+    renderWithRouterAndQueryClient(BlockchainApplicationDetails, props);
     expect(screen.getByAltText('unpinnedIcon')).toBeTruthy();
   });
 
@@ -87,9 +100,9 @@ describe('BlockchainApplicationDetails', () => {
         search: 'chainId=test-chain-id&mode=addApplication',
       },
     };
-    renderWithRouter(BlockchainApplicationDetails, updatedProps);
+    renderWithRouterAndQueryClient(BlockchainApplicationDetails, updatedProps);
     expect(screen.getByTestId('add-application-button')).toBeTruthy();
     fireEvent.click(screen.getByTestId('add-application-button'));
-    expect(mockSetApplication).toHaveBeenCalledWith(props.application.data);
+    expect(mockSetApplication).toHaveBeenCalledWith(mockBlockchainApplications[0]);
   });
 });
