@@ -1,6 +1,7 @@
 import { useMemo, useRef } from 'react';
 import { useTokensBalance, useTokensSupported } from '@token/fungible/hooks/queries';
 import {Client} from 'src/utils/api/client';
+
 // eslint-disable-next-line import/prefer-default-export
 export const useTokensBalanceSupportedFrom = (application) => {
   const client = useRef(new Client())

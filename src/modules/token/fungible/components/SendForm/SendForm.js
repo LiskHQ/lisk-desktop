@@ -17,7 +17,8 @@ import { useBlockchainApplicationMeta } from '@blockchainApplication/manage/hook
 import TxComposer from '@transaction/components/TxComposer';
 import BookmarkAutoSuggest from './bookmarkAutoSuggest';
 import useAmountField from '../../hooks/useAmountField';
-import { useMessageField, useTokensBalanceSupportedFrom } from '../../hooks';
+import useMessageField from '../../hooks/useMessageField';
+import { useTokensBalanceSupportedFrom } from '../../hooks';
 import useRecipientField from '../../hooks/useRecipientField';
 import styles from './form.css';
 import MessageField from '../MessageField';
@@ -48,7 +49,7 @@ const getInitialToken = (
   const initalToken = initalTokenId
     ? tokens.find(({ tokenID }) => tokenID === initalTokenId)
     : null;
-  return transactionData?.token || initalToken;
+  return transactionData?.token || initalToken || tokens[0];
 };
 
 // eslint-disable-next-line max-statements

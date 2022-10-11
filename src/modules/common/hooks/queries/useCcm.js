@@ -27,7 +27,7 @@ import { useCustomInfiniteQuery } from '../useCustomInfiniteQuery';
  * @returns the query object
  */
 // eslint-disable-next-line import/prefer-default-export
-export const useCcm = ({ config: customConfig = {}, options } = { }) => {
+export const useCcm = ({ config: customConfig = {}, options } = { }) => { // deprecated by service
   const config = {
     url: `/api/${API_VERSION}/ccm`,
     method: 'get',
