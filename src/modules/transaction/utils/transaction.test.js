@@ -281,7 +281,7 @@ describe('API: LSK Transactions', () => {
           amount: '100000000',
           recipient: { address: accounts.delegate.summary.address },
           data: '',
-          token: mockAppTokens[0],
+          token: { tokenID: mockAppTokens[0].tokenID },
         },
       });
     });

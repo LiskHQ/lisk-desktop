@@ -16,7 +16,6 @@ describe('actions: legacy', () => {
   describe('balanceReclaimed', () => {
     const state = {
       wallet: {
-        passphrase: wallets.non_migrated.passphrase,
         info: {
           LSK: wallets.non_migrated,
         },
@@ -38,7 +37,11 @@ describe('actions: legacy', () => {
       sender: { publicKey: wallets.non_migrated.summary.publicKey },
       params: { amount: wallets.non_migrated.legacy.amount },
       fee: 100000,
+      module: 'legacy',
+      command: 'reclaim',
+      moduleCommand: 'legacy:reclaim',
     };
+    const privateKey = '0x0';
 
     it('should dispatch transactionCreatedSuccess', async () => {
       const tx = { id: 1 };
@@ -46,12 +49,18 @@ describe('actions: legacy', () => {
         new Promise((resolve) => {
           resolve(tx);
         }));
-      await balanceReclaimed(transactionObject)(dispatch, getState);
+      await balanceReclaimed(transactionObject, privateKey)(dispatch, getState);
 
       expect(createGenericTx).toHaveBeenCalledWith({
-        network: state.network,
-        wallet: state.wallet.info.LSK,
         transactionObject,
+        wallet: {
+          ...state.wallet.info.LSK,
+          hwInfo: undefined,
+          loginType: undefined,
+        },
+        schema: state.network.networks.LSK.moduleCommandSchemas[transactionObject.moduleCommand],
+        chainID: state.network.networks.LSK.chainID,
+        privateKey,
       });
       expect(dispatch).toHaveBeenCalledWith({
         type: actionTypes.transactionCreatedSuccess,

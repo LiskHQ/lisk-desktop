@@ -214,18 +214,20 @@ describe('actions: voting', () => {
     const activeTokenWallet = {
       hwInfo: undefined,
       loginType: 0,
-      passphrase: undefined,
       ...state.wallet.info.LSK,
     };
-    const params = {
-      moduleCommand: 'dpos:unlock',
+    const transactionObject = {
+      module: 'dpos',
+      command: 'unlock',
       sender: { publicKey: wallets.genesis.summary.publicKey },
       nonce: wallets.genesis.sequence.nonce,
       fee: '10000000',
       params: {
         unlockObjects: [],
       },
+      moduleCommand: 'dpos:unlock',
     };
+    const privateKey = '0x0';
 
     it('should dispatch transactionCreatedSuccess', async () => {
       const tx = { id: 1 };
@@ -235,11 +237,13 @@ describe('actions: voting', () => {
             resolve(tx);
           })
       );
-      await balanceUnlocked(params)(dispatch, getState);
+      await balanceUnlocked(transactionObject, privateKey)(dispatch, getState);
       expect(transactionApi.createGenericTx).toHaveBeenCalledWith({
-        network: state.network,
         wallet: activeTokenWallet,
-        transactionObject: params,
+        schema: state.network.networks.LSK.moduleCommandSchemas[transactionObject.moduleCommand],
+        chainID: state.network.networks.LSK.chainID,
+        transactionObject,
+        privateKey
       });
       expect(dispatch).toHaveBeenCalledWith({
         type: txActionTypes.transactionCreatedSuccess,
@@ -255,7 +259,7 @@ describe('actions: voting', () => {
             reject(error);
           })
       );
-      await balanceUnlocked(params)(dispatch, getState);
+      await balanceUnlocked(transactionObject, privateKey)(dispatch, getState);
       expect(dispatch).toHaveBeenCalledWith({
         type: txActionTypes.transactionSignError,
         data: error,
