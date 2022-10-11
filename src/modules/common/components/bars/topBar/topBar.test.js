@@ -12,6 +12,7 @@ const mockState = {
   },
   blockChainApplications: {
     current: {},
+    applications: {},
   },
   network: {
     status: { online: true },
