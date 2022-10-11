@@ -24,7 +24,8 @@ describe('Multisignature Status component', () => {
     fee: '207000n',
   };
 
-  it('passes correct props to TxBroadcaster when partial signed transaction', () => {
+  // @todo reinstate by #4506
+  it.skip('passes correct props to TxBroadcaster when partial signed transaction', () => {
     const propsWithSignedTx = {
       ...props,
       account: accounts.multiSig,
