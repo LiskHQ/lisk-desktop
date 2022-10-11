@@ -21,6 +21,7 @@ const Summary = ({
   activeToken,
   network,
 }) => {
+  // @todo Fix isMember calculation (#4506)
   const isMember = useMemo(() => {
     if (senderAccount.data.keys) {
       return showSignButton(senderAccount.data, account, transaction);
@@ -28,6 +29,7 @@ const Summary = ({
     return null;
   }, [senderAccount.data]);
 
+  // @todo Fix signatureStatus calculation (#4506)
   const signatureStatus = useMemo(() => {
     if (senderAccount.data.keys) {
       return getTransactionSignatureStatus(senderAccount.data, transaction);
