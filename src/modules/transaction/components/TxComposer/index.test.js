@@ -21,6 +21,7 @@ describe('TxComposer', () => {
       recipient: { address: accounts.genesis.summary.address },
       amount: 100000,
       data: 'test-data',
+      token: { tokenID: '00000000' },
     },
     isValid: true,
     feedback: [],
