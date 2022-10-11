@@ -10,7 +10,7 @@ const moduleCommandSchemas = {
         dataType: 'string', fieldNumber: 3, maxLength: 64, minLength: 0,
       },
       tokenID: {
-        dataType: 'Buffer', fieldNumber: 4, maxLength: 8, minLength: 8,
+        dataType: 'bytes', fieldNumber: 4, maxLength: 8, minLength: 8,
       },
     },
     required: ['amount', 'recipientAddress', 'data', 'tokenID'],

@@ -156,7 +156,12 @@ describe('Unlock LSK modal', () => {
     wrapper.find('.confirm-btn').at(0).simulate('click');
     act(() => { wrapper.update(); });
     await flushPromises();
-    expect(props.nextStep).toBeCalledWith({ rawTx });
+    expect(props.nextStep).toBeCalledWith({
+      rawTx,
+      selectedPriority: {
+        selectedIndex: 1,
+      }
+    });
   });
 
   it('calls nextStep when clicked on confirm', async () => {

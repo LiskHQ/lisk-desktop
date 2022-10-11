@@ -2,6 +2,7 @@
 /* istanbul ignore file */
 import { cryptography } from '@liskhq/lisk-client';
 import { extractKeyPair, extractAddressFromPublicKey } from 'src/modules/wallet/utils/account';
+import { defaultDerivationPath } from 'src/utils/explicitBipKeyDerivation';
 
 const { encrypt } = cryptography;
 
@@ -15,7 +16,7 @@ export const encryptAccount = async ({
   const options = {
     passphrase: recoveryPhrase,
     enableCustomDerivationPath,
-    derivationPath: enableCustomDerivationPath ? derivationPath : '',
+    derivationPath: enableCustomDerivationPath ? derivationPath : defaultDerivationPath,
   };
 
   try {

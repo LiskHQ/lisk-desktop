@@ -9,6 +9,7 @@ import {
 import accounts from '@tests/constants/wallets';
 import { genKey, blsKey, pop } from '@tests/constants/keys';
 import moduleCommandSchemas from '@tests/constants/schemas';
+import { mockAppTokens } from '@tests/fixtures/token';
 import {
   getTxAmount,
   elementTxToDesktopTx,
@@ -107,7 +108,7 @@ describe('API: LSK Transactions', () => {
           recipient: { address: accounts.delegate.summary.address },
           amount: 100000000,
           data: 'test',
-          token: { tokenID: '00000000' }
+          token: mockAppTokens[0],
         },
       };
       const txObj = desktopTxToElementsTx(tx, transfer, moduleCommandSchemas['token:transfer']);
@@ -120,7 +121,7 @@ describe('API: LSK Transactions', () => {
           recipientAddress: expect.arrayContaining([]),
           amount: BigInt(100000000),
           data: 'test',
-          tokenID: Buffer.from('00000000'),
+          tokenID: Buffer.from(mockAppTokens[0].tokenID, 'hex'),
         },
       });
     });
@@ -268,7 +269,7 @@ describe('API: LSK Transactions', () => {
           amount: BigInt(100000000),
           recipientAddress: getAddressFromBase32Address(accounts.delegate.summary.address),
           data: '',
-          tokenID: '00000000',
+          tokenID: mockAppTokens[0].tokenID,
         },
       };
 
@@ -280,7 +281,7 @@ describe('API: LSK Transactions', () => {
           amount: '100000000',
           recipient: { address: accounts.delegate.summary.address },
           data: '',
-          token: { tokenID: '00000000' },
+          token: mockAppTokens[0],
         },
       });
     });
@@ -479,7 +480,7 @@ describe('API: LSK Transactions', () => {
         amount: BigInt(10000),
         recipientAddress: getBase32AddressFromAddress(accounts.delegate.summary.address),
         data: '',
-        tokenID: '00000000',
+        tokenID: mockAppTokens[0].tokenID,
       },
     };
     it('should return the transaction as JSON', () => {
@@ -495,7 +496,7 @@ describe('API: LSK Transactions', () => {
             amount: '10000n',
             recipientAddress: expect.stringContaining('lsk'),
             data: '',
-            tokenID: '00000000',
+            tokenID: mockAppTokens[0].tokenID,
           },
         });
     });

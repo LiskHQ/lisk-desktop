@@ -123,7 +123,7 @@ describe('API: LSK Network', () => {
       setApiResponseData(expectedResponse, http);
       await expect(getNetworkStatus({ network })).resolves.toEqual(expectedResponse);
       expect(http).toHaveBeenCalledWith(expect.objectContaining({
-        path: '/api/v2/network/status',
+        path: '/api/v3/network/status',
       }));
     });
 

@@ -241,7 +241,7 @@ describe('API: LSK Transactions', () => {
           amount: '100000000',
           data: 'to test the instance',
           recipient: { address: 'lskz5kf62627u2n8kzqa8jpycee64pgxzutcrbzhz' },
-          token: { tokenID: mockAppTokens[0].tokenID, },
+          token: mockAppTokens[0],
         },
         moduleCommand: transfer,
       };
@@ -330,7 +330,7 @@ describe('API: LSK Transactions', () => {
           amount: '100000',
           data: 'to test the instance',
           recipient: { address: 'lskz5kf62627u2n8kzqa8jpycee64pgxzutcrbzhz' },
-          token: { tokenID: mockAppTokens[0].tokenID, },
+          token: mockAppTokens[0],
         },
       };
       const result = await getTransactionFee({

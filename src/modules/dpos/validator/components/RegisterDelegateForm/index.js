@@ -31,17 +31,17 @@ const RegisterDelegateForm = ({
   const [generatorKey, setGenKey] = useDelegateKey(
     'generatorKey',
     t('Please enter a valid generator key value'),
-    prevState?.rawTx?.params.generatorKey ?? '60f945b2cdda4513186ae0f3ea0a2d991eee07226a2db18cf40230a2156c6165',
+    prevState?.rawTx?.params.generatorKey,
   );
   const [blsKey, setBlsKey] = useDelegateKey(
     'blsKey',
     t('Please enter a valid bls key value'),
-    prevState?.rawTx?.params.blsKey ?? '8dd92c54da6392083928e3491932b8d9fedf078dcd4dd7c7289d55529846b04f9c71b49034fd0833bc21ba09bcdbe1e6',
+    prevState?.rawTx?.params.blsKey,
   );
   const [proofOfPossession, setPop] = useDelegateKey(
     'proofOfPossession',
     t('Please enter a valid proof of possession value'),
-    prevState?.rawTx?.params.proofOfPossession ?? '86f1150b27d371612eb5c10f1c02de32a0cb70b761ebdf02e0eb0d098dd6ecf35d90454a37571704a979d54e3126dc4504deefb5440a3306a6f8db74c61061fca74de0c1c1c43e12d54a28190051285d9d651776c660e4a5927bbf2df37f104f',
+    prevState?.rawTx?.params.proofOfPossession,
   );
 
   const onConfirm = (rawTx, selectedPriority, fees) => {

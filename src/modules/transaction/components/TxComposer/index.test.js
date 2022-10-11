@@ -66,7 +66,7 @@ describe('TxComposer', () => {
         feedback: [],
         moduleCommand: MODULE_COMMANDS_NAME_MAP.registerDelegate,
         params: {
-          username: 'test_username',
+          name: 'test_username',
           generatorKey: genKey,
           blsKey,
           proofOfPossession: pop,
