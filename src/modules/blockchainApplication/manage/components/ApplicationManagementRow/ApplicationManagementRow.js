@@ -119,7 +119,7 @@ const ApplicationManagementRow = ({
           </div>
         )}
         <img className={styles.chainLogo} src={application.logo.png} />
-        <span>{application.chainName}</span>
+        <span>{application.chainName || application.name}</span>
       </div>
       <div className={styles.rightWrapper} align="right">
         <RightRowComponent
