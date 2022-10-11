@@ -22,11 +22,9 @@ describe('useTransactionFeeCalculation', () => {
   };
 
   it('should return calculated fees', async () => {
-    const {
-      result, waitForValueToChange,
-    } = renderHook(() => useTransactionFeeCalculation(props));
+    const { result, waitFor } = renderHook(() => useTransactionFeeCalculation(props));
 
-    await waitForValueToChange(() => result.current.maxAmount.value);
+    await waitFor(() => result.current.isFetched);
 
     expect(Number(result.current.fee.value)).toBeGreaterThan(0);
     expect(Number(result.current.minFee.value)).toBeGreaterThan(0);
@@ -34,11 +32,8 @@ describe('useTransactionFeeCalculation', () => {
   });
 
   it('should return calculated fees for multisignature transactions', async () => {
-    const {
-      result, waitForValueToChange,
-    } = renderHook(() => useTransactionFeeCalculation(props));
-
-    await waitForValueToChange(() => result.current.maxAmount.value);
+    const { result, waitFor } = renderHook(() => useTransactionFeeCalculation(props));
+    await waitFor(() => result.current.isFetched);
 
     expect(Number(result.current.fee.value)).toBeGreaterThan(0);
     expect(Number(result.current.minFee.value)).toBeGreaterThan(0);
