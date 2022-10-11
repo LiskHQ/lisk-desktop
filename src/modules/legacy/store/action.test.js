@@ -1,5 +1,6 @@
 import { createGenericTx } from '@transaction/api';
 import wallets from '@tests/constants/wallets';
+import moduleCommandSchemas from '@tests/constants/schemas';
 import actionTypes from '@transaction/store/actionTypes';
 import { balanceReclaimed } from './action';
 
@@ -21,7 +22,16 @@ describe('actions: legacy', () => {
         },
       },
       token: { active: 'LSK' },
-      network: {},
+      network: {
+        networks: {
+          LSK: {
+            serviceUrl: 'http://localhost:4000',
+            nethash:
+              '198f2b61a8eb95fbeed58b8216780b68f697f26b849acf00c8c93bb9b24f783d',
+            moduleCommandSchemas,
+          },
+        }
+      },
     };
     const getState = () => state;
     const transactionObject = {

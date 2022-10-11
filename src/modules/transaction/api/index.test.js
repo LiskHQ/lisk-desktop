@@ -10,6 +10,7 @@ import * as delegates from '@dpos/validator/api';
 import http from 'src/utils/api/http';
 import accounts from '@tests/constants/wallets';
 import { genKey, blsKey, pop } from '@tests/constants/keys';
+import { mockAppTokens } from '@tests/fixtures/token';
 import {
   getTransaction,
   getTransactions,
@@ -240,6 +241,7 @@ describe('API: LSK Transactions', () => {
           amount: '100000000',
           data: 'to test the instance',
           recipient: { address: 'lskz5kf62627u2n8kzqa8jpycee64pgxzutcrbzhz' },
+          token: { tokenID: mockAppTokens[0].tokenID, },
         },
         moduleCommand: transfer,
       };
@@ -328,6 +330,7 @@ describe('API: LSK Transactions', () => {
           amount: '100000',
           data: 'to test the instance',
           recipient: { address: 'lskz5kf62627u2n8kzqa8jpycee64pgxzutcrbzhz' },
+          token: { tokenID: mockAppTokens[0].tokenID, },
         },
       };
       const result = await getTransactionFee({

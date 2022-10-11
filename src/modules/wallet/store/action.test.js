@@ -1,6 +1,7 @@
 import * as accountApi from '@wallet/utils/api';
 import { createGenericTx } from '@transaction/api';
 import wallets from '@tests/constants/wallets';
+import moduleCommandSchemas from '@tests/constants/schemas';
 import * as networkActions from '@network/store/action';
 import txActionTypes from '@transaction/store/actionTypes';
 import loginTypes from 'src/modules/auth/const/loginTypes';
@@ -48,6 +49,7 @@ describe('actions: account', () => {
               serviceUrl: 'http://localhost:4000',
               nethash:
                 '198f2b61a8eb95fbeed58b8216780b68f697f26b849acf00c8c93bb9b24f783d',
+              moduleCommandSchemas,
             },
           },
         },
@@ -128,7 +130,17 @@ describe('actions: account', () => {
           LSK: wallets.multiSig_candidate,
         },
       },
-      network: {},
+      network: {
+        name: 'Mainnet',
+        networks: {
+          LSK: {
+            serviceUrl: 'http://localhost:4000',
+            nethash:
+              '198f2b61a8eb95fbeed58b8216780b68f697f26b849acf00c8c93bb9b24f783d',
+            moduleCommandSchemas,
+          },
+        },
+      },
       token: {
         active: 'LSK',
       },

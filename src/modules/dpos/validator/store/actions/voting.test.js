@@ -5,6 +5,7 @@ import * as accountApi from '@wallet/utils/api';
 import * as hwManager from '@transaction/utils/hwManager';
 import sampleVotes from '@tests/constants/votes';
 import wallets from '@tests/constants/wallets';
+import moduleCommandSchemas from '@tests/constants/schemas';
 import txActionTypes from '@transaction/store/actionTypes';
 import * as delegateApi from '../../api';
 import actionTypes from './actionTypes';
@@ -44,10 +45,11 @@ describe('actions: voting', () => {
       ],
     },
     network: {
-      name: networks.mainnet.name,
+      name: networks.mainnet.label,
       networks: {
         LSK: {
           serviceUrl: 'http://example.api',
+          moduleCommandSchemas,
         },
       },
     },
