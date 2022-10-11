@@ -538,7 +538,7 @@ const signUsingPrivateKey = (wallet, schema, chainID, transaction, moduleCommand
     ...transaction.params.optionalKeys.sort((publicKeyA, publicKeyB) => publicKeyA.compare(publicKeyB)),
   ];
   const publicKeyBuffer = Buffer.from(wallet.summary.publicKey, 'hex');
-  const senderIndex = members.findIndex(item => Buffer.compare(item, publicKeyBuffer));
+  const senderIndex = members.findIndex(item => Buffer.compare(item, publicKeyBuffer) === 0);
   // Sign the params if tx is a group registration and the current account is a member
   if (isGroupRegistration && senderIndex > -1) {
     const memberSignature = signMultisigRegParams(chainIDBuffer, transaction, privateKeyBuffer);
