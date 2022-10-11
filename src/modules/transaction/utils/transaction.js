@@ -484,7 +484,7 @@ export const computeTransactionId = ({ transaction, schema }) => {
 };
 
 const signMultisigUsingPrivateKey = (
-  schema, chainID, transaction, moduleCommand, wallet, privateKey, senderAccount,
+  schema, chainID, transaction, privateKey, senderAccount,
 ) => {
   // since we sign multisignature registration as a normal tx, we can set this to false.
   // const isGroupRegistration = moduleCommand === registerMultisignature;
@@ -625,7 +625,7 @@ export const sign = async (
 
   if (senderAccount?.summary.isMultisignature) {
     return signMultisigUsingPrivateKey(
-      schema, chainID, transaction, moduleCommand, wallet, privateKey, senderAccount,
+      schema, chainID, transaction, privateKey, senderAccount,
     );
   }
 
