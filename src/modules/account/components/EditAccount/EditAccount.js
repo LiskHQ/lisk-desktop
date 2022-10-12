@@ -3,7 +3,7 @@ import { withRouter } from 'react-router';
 import routes from 'src/routes/routes';
 import EnterPasswordForm from '@auth/components/EnterPasswordForm';
 import SetPasswordSuccess from '@auth/components/SetPasswordSuccess';
-import MultiStep from 'src/modules/common/components/OldMultiStep';
+import MultiStep from '@common/components/OldMultiStep';
 import EditAccountForm from './EditAccountForm';
 import { useAccounts, useCurrentAccount } from '../../hooks';
 import styles from './EditAccountForm.css';
