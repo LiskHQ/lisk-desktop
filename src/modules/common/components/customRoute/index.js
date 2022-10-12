@@ -37,7 +37,7 @@ const CustomRoute = ({ path, exact, isPrivate, forbiddenTokens, component, t, hi
   if (isPrivate && !isAuthenticated) {
     return (
       <Redirect
-        to={`${routes.login.path}?referrer=${path.replace(/\/(send|vote)/, '')}&${search.replace(
+        to={`${routes.manageAccounts.path}?referrer=${path.replace(/\/(send|vote)/, '')}&${search.replace(
           /^\?/,
           ''
         )}`}
@@ -48,7 +48,9 @@ const CustomRoute = ({ path, exact, isPrivate, forbiddenTokens, component, t, hi
   if (
     wallet.summary?.isMigrated === false &&
     history.location.pathname !== routes.reclaim.path &&
-    history.location.pathname !== routes.login.path &&
+    history.location.pathname !== routes.manageAccounts.path &&
+    history.location.pathname !== routes.addAccountOptions.path &&
+    history.location.pathname !== routes.addAccountByFile.path &&
     !!wallet.summary
   ) {
     return <Redirect to={`${routes.reclaim.path}`} />;
@@ -58,9 +60,9 @@ const CustomRoute = ({ path, exact, isPrivate, forbiddenTokens, component, t, hi
     <main className={`${isPrivate ? offlineStyle.disableWhenOffline : ''} offlineWrapper`}>
       <ErrorBoundary errorMessage={t('An error occurred while rendering this page')}>
         <Route
-          path={isNetworkSet ? path : routes.login.path}
+          path={isNetworkSet ? path : routes.manageAccounts.path}
           exact={exact}
-          key={isNetworkSet ? path : routes.login.path}
+          key={isNetworkSet ? path : routes.manageAccounts.path}
           component={isNetworkSet ? component : Login}
         />
       </ErrorBoundary>

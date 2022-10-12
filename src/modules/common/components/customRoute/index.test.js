@@ -68,7 +68,7 @@ describe('CustomRoute', () => {
     mount(
       <MemoryRouter initialEntries={['/private/test']}>
         <div>
-          <Route path={routes.login.path} component={Public} />
+          <Route path={routes.manageAccounts.path} component={Public} />
           <Route path={routes.reclaim.path} component={ReclaimBalance} />
           <CustomRoute
             {...props}

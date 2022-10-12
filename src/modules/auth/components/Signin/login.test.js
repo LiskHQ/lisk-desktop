@@ -56,7 +56,7 @@ describe('Login', () => {
   };
 
   const match = {
-    url: routes.login.path,
+    url: routes.manageAccounts.path,
   };
 
   const { passphrase } = accounts.genesis;
