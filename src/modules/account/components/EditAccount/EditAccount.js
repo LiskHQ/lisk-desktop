@@ -1,31 +1,28 @@
-import React, { useRef } from 'react';
+import React from 'react';
 import { withRouter } from 'react-router';
+import { useTranslation } from 'react-i18next';
 import routes from 'src/routes/routes';
-import EnterPasswordForm from '@auth/components/EnterPasswordForm';
 import SetPasswordSuccess from '@auth/components/SetPasswordSuccess';
 import MultiStep from '@common/components/OldMultiStep';
 import EditAccountForm from './EditAccountForm';
-import { useAccounts, useCurrentAccount } from '../../hooks';
+import { useCurrentAccount } from '../../hooks';
 import styles from './EditAccountForm.css';
 
 const EditAccount = ({ history }) => {
-  const [currentAccount, setCurrentAccount] = useCurrentAccount();
-  const { setAccount } = useAccounts();
-  const multiStepRef = useRef(null);
-
-  const onEnterPasswordSuccess = ({ encryptedAccount }) => {
-    setAccount(encryptedAccount);
-    setCurrentAccount(encryptedAccount);
-    multiStepRef.current.next();
-  };
+  const { t } = useTranslation();
+  const [currentAccount] = useCurrentAccount();
 
   return (
-    <MultiStep key="edit-account-name" className={styles.container} ref={multiStepRef}>
+    <MultiStep key="edit-account-name" className={styles.container}>
       <EditAccountForm onBack={history.goBack} />
-      <EnterPasswordForm onEnterPasswordSuccess={onEnterPasswordSuccess} />
       <SetPasswordSuccess
         encryptedPhrase={currentAccount}
-        onClose={() => history.push(routes.dashboard.path)}
+        headerText={t('Edit name successful')}
+        contentText={t('You can now download encrypted secret recovery phrase to this effect.')}
+        buttonText={t('Go to wallet')}
+        onClose={() => {
+          history.push(routes.wallet.path);
+        }}
       />
     </MultiStep>
   );

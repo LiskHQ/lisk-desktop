@@ -3,6 +3,7 @@
   width: 100%;
   padding: 8px 0;
   justify-content: center;
+  align-items: center;
 
   & > p {
     @mixin contentLarge bold;

@@ -1,4 +1,5 @@
 import React from 'react';
+import { useDispatch } from 'react-redux';
 import { useTranslation } from 'react-i18next';
 import { useForm } from 'react-hook-form';
 import * as yup from 'yup';
@@ -10,6 +11,7 @@ import Box from 'src/theme/box';
 import BoxContent from 'src/theme/box/content';
 import { Input } from 'src/theme';
 import { PrimaryButton } from 'src/theme/buttons';
+import { updateCurrentAccount, updateAccount } from '../../store/action';
 import styles from './EditAccountForm.css';
 
 const editAccountFormSchema = yup
@@ -27,6 +29,7 @@ const editAccountFormSchema = yup
   .required();
 
 const EditAccountForm = ({ nextStep }) => {
+  const dispatch = useDispatch();
   const { t } = useTranslation();
   const {
     register,
@@ -38,11 +41,12 @@ const EditAccountForm = ({ nextStep }) => {
   const [currentAccount] = useCurrentAccount();
 
   const onSubmit = async ({ accountName }) => {
+    dispatch(
+      updateAccount({ encryptedAccount: currentAccount, accountDetail: { name: accountName } })
+    );
+    dispatch(updateCurrentAccount({ name: accountName }));
     nextStep({
-      encryptedAccount: {
-        ...currentAccount,
-        metadata: { ...currentAccount.metadata, name: accountName },
-      },
+      accountName,
     });
   };
 
