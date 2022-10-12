@@ -7,7 +7,7 @@ import {
   removeThenAppendSearchParamsToUrl,
 } from 'src/utils/searchParams';
 import { useCurrentAccount } from 'src/modules/account/hooks';
-import { toRawLsk } from '@token/fungible/utils/lsk';
+import { fromRawLsk, toRawLsk } from '@token/fungible/utils/lsk';
 import { useTokensBalance } from 'src/modules/token/fungible/hooks/queries';
 import Dialog from 'src/theme/dialog/dialog';
 import Box from 'src/theme/box';
@@ -86,15 +86,19 @@ const EditVote = ({ history, voteEdited, network, voting }) => {
     ['start', 'end']
   );
 
-  const hasSentVoteToDelegate = useMemo(() => {
+  const voteSentVoteToDelegate = useMemo(() => {
     const votes = sentVotes?.data?.votes;
     if (!votes) return false;
 
-    return votes.some(({ delegateAddress: dAddress }) => dAddress === delegateAddress);
+    return votes.find(({ delegateAddress: dAddress }) => dAddress === delegateAddress);
   }, [sentVotes]);
 
-  const [voteAmount, setVoteAmount] = useVoteAmountField(0);
-  const mode = hasSentVoteToDelegate ? 'edit' : 'add';
+  const [voteAmount, setVoteAmount] = useVoteAmountField(
+    fromRawLsk(voting[delegateAddress]?.unconfirmed) ||
+      fromRawLsk(voteSentVoteToDelegate?.amount) ||
+      0
+  );
+  const mode = voteSentVoteToDelegate ? 'edit' : 'add';
   const titles = getTitles(t)[mode];
 
   useEffect(() => {
@@ -118,7 +122,7 @@ const EditVote = ({ history, voteEdited, network, voting }) => {
     }
     voteEdited([
       {
-        address: delegate.address,
+        address: delegateAddress,
         amount: toRawLsk(voteAmount.value),
         name: delegate.name,
       },
@@ -139,7 +143,7 @@ const EditVote = ({ history, voteEdited, network, voting }) => {
     voteEdited([
       {
         name: delegate.name,
-        address: delegate.address,
+        address: delegateAddress,
         amount: 0,
       },
     ]);

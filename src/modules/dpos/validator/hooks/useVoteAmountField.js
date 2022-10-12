@@ -22,7 +22,7 @@ let loaderTimeout = null;
  */
 const getAmountFeedbackAndError = (value, balance, minValue, inputValue) => {
   const { message: feedback } = validateAmountFormat({
-    value,
+    value: +value,
     token: tokenMap.LSK.key,
     funds: parseInt(balance, 10),
     checklist: ['NEGATIVE_VOTE', 'ZERO', 'VOTE_10X', 'INSUFFICIENT_VOTE_FUNDS', 'MIN_BALANCE', 'FORMAT'],
@@ -62,7 +62,7 @@ const useVoteAmountField = (initialValue) => {
   });
 
   useEffect(() => {
-    if (!amountField.value && initialValue) {
+    if (!(+amountField.value) && initialValue) {
       setAmountField({
         value: initialValue,
         isLoading: false,

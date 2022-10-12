@@ -3,10 +3,12 @@ import http from 'src/utils/api/http';
 import { HTTP_PREFIX } from 'src/const/httpCodes';
 import ws, { subscribe, unsubscribe } from 'src/utils/api/ws';
 import { extractAddressFromPublicKey } from '@wallet/utils/account';
+import client from 'src/utils/api/client';
+import { API_VERSION } from 'src/const/config';
 
 export const httpPaths = {
   delegates: `${HTTP_PREFIX}/accounts`,
-  votesSent: `${HTTP_PREFIX}/votes_sent`,
+  votesSent: `/api/${API_VERSION}/dpos/votes/sent`,
   votesReceived: `${HTTP_PREFIX}/votes_received`,
   forgers: `${HTTP_PREFIX}/forgers`,
 };
@@ -37,40 +39,40 @@ const getDelegateProps = ({ address, publicKey, username }) => {
  * @param {Object} data.network - Network setting from Redux store
  * @returns {Promise} http call
  */
-export const getDelegate = ({
-  params = {}, network, baseUrl,
-}) => http({
-  path: httpPaths.delegates,
-  params: { ...getDelegateProps(params), isDelegate: true },
-  network,
-  baseUrl,
-});
+export const getDelegate = ({ params = {}, network, baseUrl }) =>
+  http({
+    path: httpPaths.delegates,
+    params: { ...getDelegateProps(params), isDelegate: true },
+    network,
+    baseUrl,
+  });
 
 const txFilters = {
-  limit: { key: 'limit', test: num => (typeof num === 'number') },
-  offset: { key: 'offset', test: num => (typeof num === 'number' && num > 0) },
-  search: { key: 'search', test: str => (typeof str === 'string' && str.length > 0) },
-  status: { key: 'status', test: str => (typeof str === 'string' && str.length > 0) },
-  aggregate: { key: 'aggregate', test: value => typeof value === 'boolean' },
+  limit: { key: 'limit', test: (num) => typeof num === 'number' },
+  offset: { key: 'offset', test: (num) => typeof num === 'number' && num > 0 },
+  search: { key: 'search', test: (str) => typeof str === 'string' && str.length > 0 },
+  status: { key: 'status', test: (str) => typeof str === 'string' && str.length > 0 },
+  aggregate: { key: 'aggregate', test: (value) => typeof value === 'boolean' },
   sort: {
     key: 'sort',
-    test: str => [
-      'rank:asc',
-      'rank:desc',
-      'productivity:asc',
-      'productivity:desc',
-      'missedBlocks:asc',
-      'missedBlocks:desc',
-    ].includes(str),
+    test: (str) =>
+      [
+        'rank:asc',
+        'rank:desc',
+        'productivity:asc',
+        'productivity:desc',
+        'missedBlocks:asc',
+        'missedBlocks:desc',
+      ].includes(str),
   },
 };
 
 const getRequests = (values) => {
-  const paramList = values.find(item => Array.isArray(item.list) && item.list.length);
+  const paramList = values.find((item) => Array.isArray(item.list) && item.list.length);
   if (paramList) {
     return paramList.list
-      .filter(item => regex[paramList.name].test(item))
-      .map(item => ({
+      .filter((item) => regex[paramList.name].test(item))
+      .map((item) => ({
         method: wsMethods.delegates,
         params: { [paramList.name]: item, isDelegate: true },
       }));
@@ -94,11 +96,7 @@ const getRequests = (values) => {
  * @param {Object} data.network - Network setting from Redux store
  * @returns {Promise} http call or websocket call
  */
-export const getDelegates = ({
-  network,
-  params = {},
-  baseUrl,
-}) => {
+export const getDelegates = ({ network, params = {}, baseUrl }) => {
   // Use websocket to retrieve accounts with a given array of addresses
   const requests = getRequests([
     { name: 'address', list: params.addressList },
@@ -140,16 +138,21 @@ export const getDelegates = ({
  * @param {Object} data.network - Network setting from Redux store
  * @returns {Promise} http call
  */
-export const getVotes = ({
-  network,
-  params = {},
-  baseUrl,
-}) => http({
-  path: httpPaths.votesSent,
-  params: getDelegateProps({ address: params.address, publicKey: params.publicKey }),
-  network,
-  baseUrl,
-});
+export const getVotes = ({ params = {} }) =>
+  client.rest({
+    url: httpPaths.votesSent,
+    method: 'get',
+    params: getDelegateProps({ address: params.address, publicKey: params.publicKey }),
+    event: 'get.dpos.votes.sent',
+  });
+
+// http({
+//   baseUrl: ''
+//   path: httpPaths.votesSent,
+//   params: getDelegateProps({ address: params.address, publicKey: params.publicKey }),
+//   network,
+//   baseUrl,
+// });
 
 /**
  * Retrieves list of votes given for a given delegate.
@@ -165,11 +168,7 @@ export const getVotes = ({
  * @param {Object} data.network - Network setting from Redux store
  * @returns {Promise} http call
  */
-export const getVoters = ({
-  network,
-  params = {},
-  baseUrl,
-}) => {
+export const getVoters = ({ network, params = {}, baseUrl }) => {
   const pagination = {};
   Object.keys(params).forEach((key) => {
     if (txFilters[key] && txFilters[key].test(params[key])) {
@@ -203,16 +202,13 @@ export const getVoters = ({
  * @param {Object} data.network - Network setting from Redux store
  * @returns {Promise} http call
  */
-export const getForgers = ({
-  network,
-  params = {},
-  baseUrl,
-}) => http({
-  path: httpPaths.forgers,
-  params,
-  network,
-  baseUrl,
-});
+export const getForgers = ({ network, params = {}, baseUrl }) =>
+  http({
+    path: httpPaths.forgers,
+    params,
+    network,
+    baseUrl,
+  });
 
 /**
  * Connects to block change event via websocket and set function to be called when it fires
@@ -225,9 +221,7 @@ export const getForgers = ({
 export const forgersSubscribe = (network, callback, onDisconnect, onReconnect) => {
   const node = network?.networks?.LSK?.serviceUrl;
   if (node) {
-    subscribe(
-      `${node}/blockchain`, wsMethods.forgersRound, callback, onDisconnect, onReconnect,
-    );
+    subscribe(`${node}/blockchain`, wsMethods.forgersRound, callback, onDisconnect, onReconnect);
   }
 };
 

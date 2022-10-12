@@ -3,6 +3,7 @@ import { useDispatch } from 'react-redux';
 
 import { tokenMap } from '@token/fungible/consts/tokens';
 import { voteEdited } from 'src/redux/actions';
+import { removeThenAppendSearchParamsToUrl } from 'src/utils/searchParams';
 import { fromRawLsk, toRawLsk } from '@token/fungible/utils/lsk';
 import { truncateAddress } from '@wallet/utils/account';
 import WalletVisual from '@wallet/components/walletVisual';
@@ -14,22 +15,20 @@ import AmountField from 'src/modules/common/components/amountField';
 import useVoteAmountField from '../../hooks/useVoteAmountField';
 import styles from './voteForm.css';
 
-const ComponentState = Object.freeze({ editing: 1, notEditing: 2 });
+const componentState = Object.freeze({ editing: 1, notEditing: 2 });
 const token = tokenMap.LSK.key;
 
 const VoteRow = ({
   t = (s) => s,
-  data: {
-    address, username, confirmed, unconfirmed,
-  },
+  data: { address, username, confirmed, unconfirmed },
+  index,
+  history,
 }) => {
   const [state, setState] = useState(
-    unconfirmed === '' ? ComponentState.editing : ComponentState.notEditing,
+    unconfirmed === '' ? componentState.editing : componentState.notEditing
   );
   const dispatch = useDispatch();
-  const [voteAmount, setVoteAmount] = useVoteAmountField(
-    fromRawLsk(unconfirmed),
-  );
+  const [voteAmount, setVoteAmount] = useVoteAmountField(fromRawLsk(unconfirmed));
   const truncatedAddress = truncateAddress(address);
 
   const handleFormSubmission = (e) => {
@@ -40,9 +39,9 @@ const VoteRow = ({
           address,
           amount: toRawLsk(voteAmount.value),
         },
-      ]),
+      ])
     );
-    setState(ComponentState.notEditing);
+    setState(componentState.notEditing);
   };
 
   const discard = () => {
@@ -52,21 +51,22 @@ const VoteRow = ({
           address,
           amount: confirmed,
         },
-      ]),
+      ])
     );
   };
 
   const changeToEditingMode = () => {
-    setState(ComponentState.editing);
+    removeThenAppendSearchParamsToUrl(history, { modal: 'editVote', address }, ['modal, address']);
   };
 
   const changeToNotEditingMode = () => {
-    setState(ComponentState.notEditing);
+    setState(componentState.notEditing);
   };
 
   return (
     <Box className={styles.voteItemContainer}>
       <div className={`${styles.infoColumn} ${styles.delegateInfoContainer}`}>
+        <span className={styles.voteIndex}>{index + 1}.</span>
         <WalletVisual address={address} />
         <div className={styles.delegateInfo}>
           <span className={styles.delegateUsername}>{username || ''}</span>
@@ -76,14 +76,12 @@ const VoteRow = ({
       <span className={`${styles.oldAmountColumn} ${styles.centerContent}`}>
         {confirmed ? <TokenAmount val={confirmed} token={token} /> : '-'}
       </span>
-      {state === ComponentState.notEditing ? (
+      {state === componentState.notEditing ? (
         <>
           <span className={`${styles.newAmountColumn} ${styles.centerContent}`}>
             {unconfirmed ? <TokenAmount val={unconfirmed} token={token} /> : '-'}
           </span>
-          <div
-            className={`${styles.editIconsContainer} ${styles.centerContent}`}
-          >
+          <div className={`${styles.editIconsContainer} ${styles.centerContent}`}>
             <span onClick={changeToEditingMode}>
               <Icon name="edit" className={styles.editIcon} />
             </span>
@@ -113,11 +111,7 @@ const VoteRow = ({
             >
               {t('Cancel')}
             </SecondaryButton>
-            <TertiaryButton
-              size="s"
-              className={styles.formButtons}
-              onClick={handleFormSubmission}
-            >
+            <TertiaryButton size="s" className={styles.formButtons} onClick={handleFormSubmission}>
               {t('Save')}
             </TertiaryButton>
           </div>
