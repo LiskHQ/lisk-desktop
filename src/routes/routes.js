@@ -175,10 +175,6 @@ export const modals = {
     isPrivate: true,
     forbiddenTokens: [],
   },
-  search: {
-    isPrivate: false,
-    forbiddenTokens: [],
-  },
   newRelease: {
     isPrivate: false,
     forbiddenTokens: [],

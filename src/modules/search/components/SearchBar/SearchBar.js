@@ -1,5 +1,8 @@
-import React from 'react';
+/* eslint-disable complexity */
+/* eslint-disable max-statements */
+import React, { useRef, useState } from 'react';
 import { withRouter } from 'react-router-dom';
+import { useTranslation } from 'react-i18next';
 import { keyCodes } from 'src/utils/keyCodes';
 import { addSearchParamsToUrl } from 'src/utils/searchParams';
 import routes from 'src/routes/routes';
@@ -9,102 +12,81 @@ import Delegates from '@wallet/components/searchBarWallets/delegates';
 import Blocks from '@block/components/BlockResultList';
 import Transactions from '../../../transaction/components/TransactionResultList';
 import styles from './SearchBar.css';
+import { useDebounce } from '../../hooks/useDebounce';
 
-class SearchBar extends React.Component {
-  constructor() {
-    super();
+const SearchBar = ({ history }) => {
+  const [searchTextValue, setSearchTextValue] = useState('');
+  const [rowItemIndex, setRowIndex] = useState('');
+  const searchBarRef = useRef();
 
-    this.state = {
-      searchTextValue: '',
-      rowItemIndex: 0,
-    };
+  const debouncedSearchTerm = useDebounce(searchTextValue, 500)
 
-    this.onChangeSearchTextValue = this.onChangeSearchTextValue.bind(this);
-    this.onSelectAccount = this.onSelectedRow.bind(this, 'explorer');
-    this.onSelectDelegateAccount = this.onSelectedRow.bind(this, 'delegate-account');
-    this.onSelectTransaction = this.onSelectedRow.bind(this, 'transactions');
-    this.onSelectBlock = this.onSelectedRow.bind(this, 'block');
-    this.onHandleKeyPress = this.onHandleKeyPress.bind(this);
-    this.updateRowItemIndex = this.updateRowItemIndex.bind(this);
+  console.log('debouncedSearchTerm', debouncedSearchTerm);
+
+  const { t } = useTranslation();
+
+  const suggestions = { data: { addresses: [], delegates: [], transactions: [], blocks: [] }, isLoading: false };
+
+  const {
+    data: {
+      addresses, delegates, transactions, blocks,
+    }, isLoading } = suggestions;
+
+  const onChangeSearchTextValue = ({ target: { value } }) => {
+    setSearchTextValue(value);
   }
 
-  onChangeSearchTextValue({ target: { value: searchTextValue } }) {
-    const { suggestions, activeToken } = this.props;
-
-    this.setState({ searchTextValue, rowItemIndex: 0 });
-    if (searchTextValue.length > 2) {
-      clearTimeout(this.timeout);
-      this.timeout = setTimeout(() => {
-        suggestions.loadData({
-          query: this.state.searchTextValue,
-          token: activeToken,
-        });
-        this.timeout = null;
-      }, 500);
-    } else {
-      suggestions.clearData();
-    }
+  const clearSearch = () => {
+    setSearchTextValue('');
   }
 
-  clearSearch() {
-    this.setState({ searchTextValue: '' });
-    this.props.suggestions.clearData();
-  }
-
-  onSelectedRow(type, value) {
+  const onSelectedRow = (type, value) => {
     if (type === 'transactions') {
-      addSearchParamsToUrl(this.props.history, { modal: 'transactionDetails', transactionId: value });
+      addSearchParamsToUrl(history, { modal: 'transactionDetails', transactionId: value });
     } else if (type === 'delegate-account') {
-      this.props.history.push(`${routes.explorer.path}?${routes.explorer.searchParam}=${value}&tab=delegateProfile`);
+      history.push(`${routes.explorer.path}?${routes.explorer.searchParam}=${value}&tab=delegateProfile`);
     } else {
-      this.props.history.push(`${routes[type].path}?${routes[type].searchParam}=${value}`);
+      history.push(`${routes[type].path}?${routes[type].searchParam}=${value}`);
     }
-    this.clearSearch();
+    clearSearch();
   }
 
-  onKeyPressDownOrUp(action, totalRows) {
-    const { rowItemIndex } = this.state;
-
+  const onKeyPressDownOrUp = (action, totalRows) => {
     if (action === keyCodes.arrowDown && rowItemIndex < totalRows - 1) {
-      this.setState({ rowItemIndex: rowItemIndex + 1 });
+      setRowIndex(rowItemIndex + 1)
     }
 
     if (action === keyCodes.arrowUp && rowItemIndex > 0) {
-      this.setState({ rowItemIndex: rowItemIndex - 1 });
+      setRowIndex(rowItemIndex - 1)
     }
   }
 
-  onKeyPress() {
-    const {
-      suggestions: {
-        data: {
-          addresses, delegates, transactions, blocks,
-        },
-      },
-    } = this.props;
-    const { rowItemIndex } = this.state;
+  const onSelectAccount = (type) => onSelectedRow(type, 'explorer')
+  const onSelectDelegateAccount = (type) => onSelectedRow(type, 'delegate-account')
+  const onSelectTransaction = (type) => onSelectedRow(type, 'transactions')
+  const onSelectBlock = (type) => onSelectedRow(type, 'block')
 
-    if (addresses.length) this.onSelectAccount(addresses[rowItemIndex].address);
-    if (delegates.length) this.onSelectDelegateAccount(delegates[rowItemIndex].summary?.address);
-    if (transactions.length) this.onSelectTransaction(transactions[rowItemIndex].id);
-    if (blocks.length) this.onSelectTransaction(blocks[rowItemIndex].id);
+  const onKeyPress = () => {
+    if (addresses.length) { onSelectAccount(addresses[rowItemIndex].address); }
+    if (delegates.length) { onSelectDelegateAccount(delegates[rowItemIndex].summary?.address); }
+    if (transactions.length) { onSelectTransaction(transactions[rowItemIndex].id); }
+    if (blocks.length) { onSelectBlock(blocks[rowItemIndex].id); }
   }
 
-  onHandleKeyPress(e) {
-    const { suggestions } = this.props;
-    const suggestionsLength = suggestions.data.addresses.length
-      || suggestions.data.delegates.length
-      || suggestions.data.transactions.length;
+  const onHandleKeyPress = (e) => {
+    const suggestionsLength = addresses.length
+      || delegates.length
+      || transactions.length;
 
     // istanbul ignore else
     if (suggestionsLength >= 1) {
       switch (e.keyCode) {
         case keyCodes.arrowDown:
         case keyCodes.arrowUp:
-          this.onKeyPressDownOrUp(e.keyCode, suggestionsLength);
+          onKeyPressDownOrUp(e.keyCode, suggestionsLength);
           break;
         case keyCodes.enter:
-          this.onKeyPress();
+          onKeyPress();
           break;
         // istanbul ignore next
         default:
@@ -113,101 +95,96 @@ class SearchBar extends React.Component {
     }
   }
 
-  updateRowItemIndex({ target }) {
-    const rowItemIndex = +target.dataset.index;
-    this.setState({ rowItemIndex });
+  const updateRowItemIndex = ({ target }) => {
+    const newIndex = +target.dataset.index;
+    setRowIndex(newIndex)
   }
 
-  // eslint-disable-next-line complexity
-  render() {
-    const { searchTextValue, rowItemIndex } = this.state;
-    const {
-      t, suggestions, setSearchBarRef, activeToken,
-    } = this.props;
-    const isSearchTextError = searchTextValue.length && searchTextValue.length < 3;
-    const isEmptyResults = !suggestions.isLoading && !suggestions.data.addresses.length
-      && !suggestions.data.delegates.length
-      && !suggestions.data.transactions.length
-      && !suggestions.data.blocks.length
-      && searchTextValue.length
-      && !isSearchTextError;
+  const isSearchTextError = searchTextValue.length && searchTextValue.length < 3;
+  const isEmptyResults = !isLoading && !addresses.length
+    && !delegates.length
+    && !transactions.length
+    && !blocks.length
+    && searchTextValue.length
+    && !isSearchTextError;
 
-    let feedback = isSearchTextError ? t('A bit more. Make sure to type at least 3 characters.') : null;
-    feedback = isEmptyResults ? t('Nothing has been found. Make sure to double check the ID you typed.') : feedback;
+  let feedback = isSearchTextError ? t('A bit more. Make sure to type at least 3 characters.') : null;
+  feedback = isEmptyResults ? t('Nothing has been found. Make sure to double check the ID you typed.') : feedback;
 
-    return (
+  return (
+    <div>
       <div className={`${styles.wrapper} search-bar`}>
         <Input
           icon="searchActive"
           size="l"
           data-name="searchInput"
-          setRef={setSearchBarRef}
+          setRef={searchBarRef}
           autoComplete="off"
-          onChange={this.onChangeSearchTextValue}
+          onChange={onChangeSearchTextValue}
           name="searchText"
           value={searchTextValue}
           placeholder={t('Search within the network...')}
           className={`${styles.input} search-input`}
           iconClassName={styles.icon}
-          onKeyDown={this.onHandleKeyPress}
-          isLoading={suggestions.isLoading || this.timeout}
+          onKeyDown={onHandleKeyPress}
+          isLoading={suggestions.isLoading}
         />
-        { feedback ? <span className={`${styles.searchFeedback} search-bar-feedback`}>{feedback}</span> : null }
-        {
-          suggestions.data.addresses.length
-            ? (
-              <Wallet
-                wallets={suggestions.data.addresses}
-                onSelectedRow={this.onSelectAccount}
-                rowItemIndex={rowItemIndex}
-                updateRowItemIndex={this.updateRowItemIndex}
-                t={t}
-              />
-            )
-            : null
-        }
-        {
-          suggestions.data.delegates.length
-            ? (
-              <Delegates
-                searchTextValue={searchTextValue}
-                delegates={suggestions.data.delegates}
-                onSelectedRow={this.onSelectDelegateAccount}
-                rowItemIndex={rowItemIndex}
-                updateRowItemIndex={this.updateRowItemIndex}
-                t={t}
-              />
-            )
-            : null
-        }
-        {
-          suggestions.data.transactions.length
-            ? (
-              <Transactions
-                transactions={suggestions.data.transactions}
-                onSelectedRow={this.onSelectTransaction}
-                rowItemIndex={rowItemIndex}
-                updateRowItemIndex={this.updateRowItemIndex}
-                t={t}
-                activeToken={activeToken}
-              />
-            )
-            : null
-        }
-        {
-          suggestions.data.blocks.length
-            ? (
-              <Blocks
-                blocks={suggestions.data.blocks}
-                onSelectedRow={this.onSelectBlock}
-                t={t}
-              />
-            )
-            : null
-        }
       </div>
-    );
-  }
+      {feedback ? <span className={`${styles.searchFeedback} search-bar-feedback`}>{feedback}</span> : null}
+      {
+        suggestions.data.addresses.length
+          ? (
+            <Wallet
+              wallets={suggestions.data.addresses}
+              onSelectedRow={onSelectAccount}
+              rowItemIndex={rowItemIndex}
+              updateRowItemIndex={updateRowItemIndex}
+              t={t}
+            />
+          )
+          : null
+      }
+      {
+        suggestions.data.delegates.length
+          ? (
+            <Delegates
+              searchTextValue={searchTextValue}
+              delegates={suggestions.data.delegates}
+              onSelectedRow={onSelectDelegateAccount}
+              rowItemIndex={rowItemIndex}
+              updateRowItemIndex={updateRowItemIndex}
+              t={t}
+            />
+          )
+          : null
+      }
+      {
+        suggestions.data.transactions.length
+          ? (
+            <Transactions
+              transactions={suggestions.data.transactions}
+              onSelectedRow={onSelectTransaction}
+              rowItemIndex={rowItemIndex}
+              updateRowItemIndex={updateRowItemIndex}
+              t={t}
+              activeToken="LSK"
+            />
+          )
+          : null
+      }
+      {
+        suggestions.data.blocks.length
+          ? (
+            <Blocks
+              blocks={suggestions.data.blocks}
+              onSelectedRow={onSelectBlock}
+              t={t}
+            />
+          )
+          : null
+      }
+    </div>
+  );
 }
 
 export default withRouter(SearchBar);
