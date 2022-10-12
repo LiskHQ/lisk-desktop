@@ -17,6 +17,20 @@ import styles from './styles.css';
 
 const reader = new FileReader();
 
+const getTxObject = (value, moduleCommandSchemas) => {
+  const moduleCommand = joinModuleAndCommand({
+    module: value.module,
+    command: value.command,
+  });
+  const transactionObject = convertTxJSONToBinary(value, moduleCommand);
+  const isValid = validateTransaction(transactionObject, moduleCommandSchemas[moduleCommand]);
+
+  return {
+    transactionObject,
+    isValid,
+  };
+};
+
 const Form = ({ t, nextStep, network }) => {
   const [transaction, setTransaction] = useState();
   const [binaryTx, setBinaryTx] = useState();
@@ -33,20 +47,13 @@ const Form = ({ t, nextStep, network }) => {
     }
   };
 
-  // eslint-disable-next-line max-statements
   const validateAndSetTransaction = (value) => {
+    setError(undefined);
     try {
       setTransaction(value);
-      const moduleCommand = joinModuleAndCommand({
-        module: value.module,
-        command: value.command,
-      });
-
-      const schema = network.networks.LSK.moduleCommandSchemas[moduleCommand];
-      const transactionObject = convertTxJSONToBinary(value, moduleCommand);
+      const { transactionObject, isValid } = getTxObject(value, network.networks.LSK.moduleCommandSchemas);
       setBinaryTx(transactionObject);
-      const err = validateTransaction(transactionObject, schema);
-      setError(err ? 'Unknown transaction' : undefined);
+      setError(isValid ? 'Unknown transaction' : undefined);
     } catch (e) {
       setTransaction(undefined);
       setError('Invalid transaction');
