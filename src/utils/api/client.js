@@ -2,6 +2,8 @@
 import io from 'socket.io-client';
 import axios from 'axios';
 import { METHOD } from 'src/const/config';
+import qs from 'qs';
+import { removeKeysWithoutValue } from '../removeKeysWithoutValue';
 
 export class Client {
   constructor(option) {
@@ -12,6 +14,7 @@ export class Client {
 
   axiosConfig = {
     timeout: 10000,
+    paramsSerializer: (params) => qs.stringify(removeKeysWithoutValue(params)),
   };
 
   socket = null;
@@ -26,9 +29,10 @@ export class Client {
         reject(new Error('socket not connected'));
         return;
       }
-      this.socketRPC.emit(
+      const customParams = params && removeKeysWithoutValue(params )
+      this.socket.emit(
         'request',
-        { method: event, params: params || data || {} },
+        { method: event, params: customParams || data || {} },
         (response) => {
           if (Object.keys(response).length && response.error) {
             return reject(response);
