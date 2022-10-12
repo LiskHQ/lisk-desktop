@@ -35,7 +35,7 @@ const EditAccountForm = ({ nextStep }) => {
     register,
     watch,
     handleSubmit,
-    formState: { errors },
+    formState: { errors, isDirty },
   } = useForm({ resolver: yupResolver(editAccountFormSchema) });
   const formValues = watch();
   const [currentAccount] = useCurrentAccount();
@@ -60,6 +60,7 @@ const EditAccountForm = ({ nextStep }) => {
           <form onSubmit={handleSubmit(onSubmit)}>
             <Input
               defaultValue={currentAccount.metadata.name ?? ''}
+              value={formValues.accountName}
               size="s"
               label={t('Account name')}
               placeholder={t('Enter name')}
@@ -67,11 +68,7 @@ const EditAccountForm = ({ nextStep }) => {
               status={errors.accountName ? 'error' : undefined}
               {...register('accountName')}
             />
-            <PrimaryButton
-              className={styles.button}
-              disabled={!formValues.accountName}
-              type="submit"
-            >
+            <PrimaryButton className={styles.button} disabled={!isDirty} type="submit">
               {t('Done')}
             </PrimaryButton>
           </form>
