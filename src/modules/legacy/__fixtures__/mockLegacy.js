@@ -6,6 +6,6 @@ export const mockLegacy = {
   },
   data: {
     legacyAddress: '15075513162459295358L',
-    balance: '100000000',
+    balance: '0',
   },
 };

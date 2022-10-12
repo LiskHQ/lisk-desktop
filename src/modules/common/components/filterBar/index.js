@@ -17,6 +17,7 @@ const FilterButton = ({ filter, clearFilter, formatters }) => {
         {label?.toString()}
       </p>
       <span
+        data-testid={`${filter.key}-filter`}
         className={`${styles.clearBtn} clear-filter`}
         onClick={() => clearFilter(filter.key)}
       />

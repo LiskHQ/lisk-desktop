@@ -1,5 +1,5 @@
 import walletActionTypes from '@wallet/store/actionTypes';
-import { MODULE_COMMANDS_NAME_ID_MAP } from '@transaction/configuration/moduleAssets';
+import { MODULE_COMMANDS_NAME_MAP } from 'src/modules/transaction/configuration/moduleCommand';
 import transactionActionTypes from '@transaction/store/actionTypes';
 import { votesRetrieved } from '../actions/voting';
 
@@ -14,7 +14,7 @@ const getRecentTransactionOfType = (transactionsList, type) => (
 const votePlaced = (store, action) => {
   const voteTransaction = getRecentTransactionOfType(
     action.data.confirmed,
-    MODULE_COMMANDS_NAME_ID_MAP.voteDelegate,
+    MODULE_COMMANDS_NAME_MAP.voteDelegate,
   );
 
   if (voteTransaction) {

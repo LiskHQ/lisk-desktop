@@ -11,28 +11,16 @@ import offlineStyle from 'src/modules/common/components/offlineWrapper/offlineWr
 import ErrorBoundary from './errorBoundary';
 
 const checkNetwork = (state) =>
-  !!state.network.name
-  && !!(
-    state.network.networks
-    && state.network.networks.LSK
-    && state.network.networks.LSK.serviceUrl
-  );
+  !!state.network.name &&
+  !!(state.network.networks && state.network.networks.LSK && state.network.networks.LSK.serviceUrl);
 
 // eslint-disable-next-line max-statements
-const CustomRoute = ({
-  path,
-  exact,
-  isPrivate,
-  forbiddenTokens,
-  component,
-  t,
-  history,
-}) => {
-  const wallet = useSelector(state => selectActiveTokenAccount(state));
-  const token = useSelector(state => state.token);
+const CustomRoute = ({ path, exact, isPrivate, forbiddenTokens, component, t, history }) => {
+  const wallet = useSelector((state) => selectActiveTokenAccount(state));
+  const token = useSelector((state) => state.token);
   const isNetworkSet = useSelector(checkNetwork);
-  const [account] = useCurrentAccount();
-  const isAuthenticated = Object.keys(account).length > 0 || !!wallet.summary;
+  const [currentAccount] = useCurrentAccount();
+  const isAuthenticated = !!currentAccount?.metadata?.address
   const { search = '' } = history.location;
   const { accounts } = useAccounts();
 
@@ -49,32 +37,26 @@ const CustomRoute = ({
   if (isPrivate && !isAuthenticated) {
     return (
       <Redirect
-        to={`${routes.login.path}?referrer=${path.replace(
-          /\/(send|vote)/,
-          '',
-        )}&${search.replace(/^\?/, '')}`}
+        to={`${routes.login.path}?referrer=${path.replace(/\/(send|vote)/, '')}&${search.replace(
+          /^\?/,
+          ''
+        )}`}
       />
     );
   }
 
   if (
-    wallet.summary?.isMigrated === false
-    && history.location.pathname !== routes.reclaim.path
-    && history.location.pathname !== routes.login.path
-    && !!wallet.summary
+    wallet.summary?.isMigrated === false &&
+    history.location.pathname !== routes.reclaim.path &&
+    history.location.pathname !== routes.login.path &&
+    !!wallet.summary
   ) {
     return <Redirect to={`${routes.reclaim.path}`} />;
   }
 
   return (
-    <main
-      className={`${
-        isPrivate ? offlineStyle.disableWhenOffline : ''
-      } offlineWrapper`}
-    >
-      <ErrorBoundary
-        errorMessage={t('An error occurred while rendering this page')}
-      >
+    <main className={`${isPrivate ? offlineStyle.disableWhenOffline : ''} offlineWrapper`}>
+      <ErrorBoundary errorMessage={t('An error occurred while rendering this page')}>
         <Route
           path={isNetworkSet ? path : routes.login.path}
           exact={exact}

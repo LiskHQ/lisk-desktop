@@ -13,7 +13,7 @@ const LiskTransactions = {
       amount: '0.001',
       token: 'LSK',
       type: 0,
-      moduleCommandID: '2:0',
+      moduleCommand: 'token:transfer',
       sender: {
         address: 'lsks6uckwnap7s72ov3edddwgxab5e89t6uy8gjt6',
       },
@@ -29,7 +29,7 @@ const LiskTransactions = {
       amount: '0.008',
       token: 'LSK',
       type: 1,
-      moduleCommandID: '5:0',
+      moduleCommand: 'dpos:registerDelegate',
       sender: {
         address: 'lsks6uckwnap7s72ov3edddwgxab5e89t6uy8gjt6',
       },
@@ -45,7 +45,7 @@ const LiskTransactions = {
       amount: '0.0009',
       token: 'LSK',
       type: 2,
-      moduleCommandID: '4:0',
+      moduleCommand: 'auth:registerMultisignature',
       sender: {
         address: 'lsks6uckwnap7s72ov3edddwgxab5e89t6uy8gjt6',
       },
@@ -61,7 +61,7 @@ const LiskTransactions = {
       amount: '25',
       token: 'LSK',
       type: 3,
-      moduleCommandID: '5:1',
+      moduleCommand: 'dpos:voteDelegate',
       sender: {
         address: 'lsks6uckwnap7s72ov3edddwgxab5e89t6uy8gjt6',
       },

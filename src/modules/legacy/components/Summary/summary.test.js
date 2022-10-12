@@ -51,11 +51,6 @@ describe('Reclaim balance Summary', () => {
     network,
     balanceReclaimed: jest.fn(),
     selectedPriority: { title: 'Normal', value: 1 },
-    fees: {
-      Transaction: '0.001 LSK',
-      CCM: '1 LSK',
-      initiation: '1 LSK',
-    },
   };
 
   it('should render summary component', () => {
@@ -89,10 +84,14 @@ describe('Reclaim balance Summary', () => {
           amount: accounts.non_migrated.legacy.balance,
         },
         fee: 100000,
-        moduleCommandID: '1000:0',
+        moduleCommand: 'legacy:reclaim',
         nonce: accounts.non_migrated.sequence.nonce,
         sender: {
           PublicKey: accounts.non_migrated.summary.publicKey,
+        },
+        composedFees: {
+          Transaction: 100000,
+          initiation: 5000000,
         },
       },
       actionFunction: props.balanceReclaimed,
@@ -115,10 +114,14 @@ describe('Reclaim balance Summary', () => {
           amount: accounts.non_migrated.legacy.balance,
         },
         fee: 100000,
-        moduleCommandID: '1000:0',
+        moduleCommand: 'legacy:reclaim',
         nonce: accounts.non_migrated.sequence.nonce,
         sender: {
           PublicKey: accounts.non_migrated.summary.publicKey,
+        },
+        composedFees: {
+          Transaction: 100000,
+          initiation: 5000000,
         },
       },
     });

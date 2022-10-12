@@ -1,1 +1,1 @@
-export * from './useUserInfo';
+export * from './useAuth';

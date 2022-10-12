@@ -3,43 +3,49 @@ import { useSelector } from 'react-redux';
 import { useTranslation } from 'react-i18next';
 import useTransactionFeeCalculation from '@transaction/hooks/useTransactionFeeCalculation';
 import useTransactionPriority from '@transaction/hooks/useTransactionPriority';
-import {
-  selectActiveToken,
-  selectActiveTokenAccount,
-} from 'src/redux/selectors';
+import { selectActiveToken, selectActiveTokenAccount } from 'src/redux/selectors';
+import { useSchemas } from '@transaction/hooks/queries/useSchemas';
 import Box from 'src/theme/box';
 import BoxFooter from 'src/theme/box/footer';
 import TransactionPriority from '@transaction/components/TransactionPriority';
 import { toRawLsk } from '@token/fungible/utils/lsk';
+import { useDeprecatedAccount } from '@account/hooks/useDeprecatedAccount';
 import { PrimaryButton } from 'src/theme/buttons';
 import Feedback, { getMinRequiredBalance } from './Feedback';
 import { getFeeStatus } from '../../utils/helpers';
 
 // eslint-disable-next-line max-statements
 const TxComposer = ({
-  children, transaction, onComposed, onConfirm, className, buttonTitle, transactionData,
+  children,
+  transaction = {},
+  onComposed,
+  onConfirm,
+  className,
+  buttonTitle,
 }) => {
   const { t } = useTranslation();
-  const network = useSelector(state => state.network);
+  useSchemas();
+  useDeprecatedAccount();
   const wallet = useSelector(selectActiveTokenAccount);
   const token = useSelector(selectActiveToken);
   const [customFee, setCustomFee] = useState();
   const [
-    selectedPriority, selectTransactionPriority,
-    priorityOptions, prioritiesLoadError, loadingPriorities,
+    selectedPriority,
+    selectTransactionPriority,
+    priorityOptions,
+    prioritiesLoadError,
+    loadingPriorities,
   ] = useTransactionPriority();
-
   const rawTx = {
     sender: { publicKey: wallet.summary?.publicKey },
     nonce: wallet.sequence?.nonce,
-    moduleCommandID: transaction.moduleCommandID,
+    moduleCommand: transaction.moduleCommand,
     params: transaction.params,
   };
   const status = useTransactionFeeCalculation({
-    network,
-    selectedPriority,
     token,
     wallet,
+    selectedPriority,
     priorityOptions,
     transaction: rawTx,
   });
@@ -50,16 +56,25 @@ const TxComposer = ({
     }
   }, [selectedPriority, transaction.asset]);
 
+
   const minRequiredBalance = getMinRequiredBalance(transaction, status.fee);
-  const { recipientChain, sendingChain } = transactionData || {};
+  const { recipientChain, sendingChain } = transaction;
 
   const composedFees = {
     Transaction: getFeeStatus({ fee: status.fee, token, customFee }),
+    Initialisation: getFeeStatus({ fee: status.fee, token, customFee }),
   };
 
-  if (sendingChain && recipientChain && (sendingChain.chainID !== recipientChain.chainID)) {
+  if (sendingChain && recipientChain && sendingChain.chainID !== recipientChain.chainID) {
     composedFees.CCM = getFeeStatus({ fee: status.fee, token, customFee });
-    composedFees.Initiation = getFeeStatus({ fee: status.fee, token, customFee });
+  }
+
+  rawTx.composedFees = composedFees;
+  rawTx.fee = toRawLsk(status.fee.value);
+  rawTx.composedFees = composedFees;
+  if (recipientChain && sendingChain) {
+    rawTx.recipientChain = recipientChain;
+    rawTx.sendingChain = sendingChain;
   }
 
   return (
@@ -70,7 +85,7 @@ const TxComposer = ({
         fee={status.fee}
         minFee={Number(status.minFee.value)}
         customFee={customFee ? customFee.value : undefined}
-        moduleCommandID={transaction.moduleCommandID}
+        moduleCommand={transaction.moduleCommand}
         setCustomFee={setCustomFee}
         priorityOptions={priorityOptions}
         selectedPriority={selectedPriority.selectedIndex}
@@ -88,16 +103,12 @@ const TxComposer = ({
         <PrimaryButton
           className="confirm-btn"
           onClick={() => onConfirm(
-            { ...rawTx, fee: toRawLsk(status.fee.value) },
-            transactionData,
+            rawTx,
             selectedPriority,
-            composedFees,
           )}
           disabled={!transaction.isValid || minRequiredBalance > wallet.token?.balance}
         >
-          {
-            buttonTitle ?? t('Continue')
-          }
+          {buttonTitle ?? t('Continue')}
         </PrimaryButton>
       </BoxFooter>
     </Box>

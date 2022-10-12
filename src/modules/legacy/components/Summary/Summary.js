@@ -1,6 +1,6 @@
 import React from 'react';
 import { tokenMap } from '@token/fungible/consts/tokens';
-import { MODULE_COMMANDS_NAME_ID_MAP } from '@transaction/configuration/moduleAssets';
+import { MODULE_COMMANDS_NAME_MAP } from '@transaction/configuration/moduleCommand';
 import useTransactionFeeCalculation from '@transaction/hooks/useTransactionFeeCalculation';
 import useTransactionPriority from '@transaction/hooks/useTransactionPriority';
 import TransactionSummary from '@transaction/manager/transactionSummary';
@@ -8,7 +8,7 @@ import { toRawLsk } from '@token/fungible/utils/lsk';
 import styles from './summary.css';
 
 const transaction = {
-  moduleCommandID: MODULE_COMMANDS_NAME_ID_MAP.reclaimLSK,
+  moduleCommand: MODULE_COMMANDS_NAME_MAP.reclaim,
   params: {},
 };
 
@@ -40,6 +40,10 @@ const Summary = ({
   const rawTx = {
     ...transaction,
     fee: toRawLsk(minFee.value),
+    composedFees: {
+      Transaction: toRawLsk(minFee.value),
+      initiation: toRawLsk('0.05'),
+    },
   };
 
   const onSubmit = () => {
@@ -75,7 +79,7 @@ const Summary = ({
 Summary.whyDidYouRender = true;
 
 // istanbul ignore next
-const areEqual = (prevProps, nextProps) => (
+const areEqual = (prevProps, nextProps) => ( // @todo account has multiple balance now
   prevProps.wallet.summary.balance === nextProps.wallet.summary.balance
 );
 

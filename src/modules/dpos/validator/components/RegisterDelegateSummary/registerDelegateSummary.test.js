@@ -11,7 +11,7 @@ describe('Delegate Registration Summary', () => {
       params: {
         username: 'mydelegate',
       },
-      moduleCommandID: '5:0',
+      moduleCommand: 'dpos:registerDelegate',
     },
     account: accounts.genesis,
     prevStep: jest.fn(),

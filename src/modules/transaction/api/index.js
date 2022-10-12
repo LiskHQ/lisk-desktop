@@ -6,10 +6,9 @@ import {
 } from '@transaction/configuration/transactions';
 import {
   MODULE_COMMANDS_MAP,
-  BASE_FEES,
-  MODULE_COMMANDS_NAME_ID_MAP,
-} from '@transaction/configuration/moduleAssets';
-import { joinModuleAndCommandIds } from '@transaction/utils/moduleAssets';
+  MODULE_COMMANDS_NAME_MAP,
+} from 'src/modules/transaction/configuration/moduleCommand';
+import { joinModuleAndCommand } from 'src/modules/transaction/utils/moduleCommand';
 import { fromRawLsk } from '@token/fungible/utils/lsk';
 import { validateAddress } from 'src/utils/validators';
 import http from 'src/utils/api/http';
@@ -25,7 +24,7 @@ const patchTransactionResponse = response => {
   const data = response.data.map(trx => ({
     ...trx,
     params: { ...trx.asset },
-    moduleCommandID: trx.moduleAssetId,
+    moduleCommand: trx.moduleAssetId,
     moduleCommandName: trx.moduleAssetName,
   }));
 
@@ -64,7 +63,7 @@ const filters = {
   amount: { key: 'amount', test: str => /^(\d+)?:(\d+)?$/.test(str) },
   limit: { key: 'limit', test: num => parseInt(num, 10) > 0 },
   offset: { key: 'offset', test: num => parseInt(num, 10) >= 0 },
-  moduleCommandID: { key: 'moduleCommandID', test: str => /\d:\d/.test(str) },
+  moduleCommand: { key: 'moduleCommand', test: str => /\d:\d/.test(str) },
   height: { key: 'height', test: num => parseInt(num, 10) > 0 },
   blockId: { key: 'blockId', test: str => typeof str === 'string' },
   sort: {
@@ -88,7 +87,7 @@ const filters = {
  * @param {String} data.params.dateTo Unix timestamp, the end time of txs
  * @param {String} data.params.amountFrom The minimum value of txs
  * @param {String} data.params.amountTo The maximum value of txs
- * @param {String} data.params.moduleCommandID The moduleCommandID. 2:0, 5:1, etc
+ * @param {String} data.params.moduleCommand The moduleCommand. 2:0, 5:1, etc
  * @param {Number} data.params.offset Used for pagination
  * @param {Number} data.params.limit Used for pagination
  * @param {String} data.params.sort an option of 'amount:asc',
@@ -135,7 +134,7 @@ export const getRegisteredDelegates = async ({ network }) => {
   });
   const txs = await getTransactions({
     network,
-    params: { moduleCommandID: '5:0', limit: 100 },
+    params: { moduleCommand: 'dpos:registerDelegate', limit: 100 },
   });
 
   if (delegates.error || txs.error) {
@@ -215,7 +214,7 @@ export const getSchemas = ({ baseUrl }) => http({
   baseUrl,
 }).then((response) =>
   response.data.reduce((acc, data) => {
-    // TODO: Need to change this to commandID
+    // TODO: Need to change this to command
     acc[data.moduleAssetId] = data.schema;
     return acc;
   }, {}));
@@ -260,23 +259,26 @@ export const getTransactionFee = async ({
   const feePerByte = selectedPriority.value;
 
   const {
-    moduleCommandID, ...rawTransaction
+    moduleCommand, ...rawTransaction
   } = transaction;
 
-  const schema = network.networks.LSK.moduleCommandSchemas[moduleCommandID];
-  const maxAssetFee = MODULE_COMMANDS_MAP[moduleCommandID].maxFee;
-  const transactionObject = desktopTxToElementsTx(rawTransaction, moduleCommandID);
-  let numberOfEmptySignatures;
+  const schema = network.networks.LSK.moduleCommandSchemas[moduleCommand];
+  const maxCommandFee = MODULE_COMMANDS_MAP[moduleCommand].maxFee;
+  const transactionObject = desktopTxToElementsTx(rawTransaction, moduleCommand, schema);
+  let numberOfEmptySignatures = 0;
 
-  if (moduleCommandID === MODULE_COMMANDS_NAME_ID_MAP.registerMultisignatureGroup) {
+  if (moduleCommand === MODULE_COMMANDS_NAME_MAP.registerMultisignature) {
     const { optionalKeys, mandatoryKeys } = transaction.params;
     numberOfSignatures = optionalKeys.length + mandatoryKeys.length + 1;
   } else if (wallet?.summary?.isMultisignature) {
     numberOfEmptySignatures = wallet.keys.members.length - numberOfSignatures;
   }
 
+  // Call API to get network specific base fees
+  const baseFees = [];
+
   const minFee = transactions.computeMinFee(transactionObject, schema, {
-    baseFees: BASE_FEES,
+    baseFees,
     numberOfSignatures,
     numberOfEmptySignatures,
   });
@@ -288,7 +290,7 @@ export const getTransactionFee = async ({
   const size = transactions.getBytes(transactionObject, schema).length;
 
   const calculatedFee = Number(minFee) + size * feePerByte + tieBreaker;
-  const cappedFee = Math.min(calculatedFee, maxAssetFee);
+  const cappedFee = Math.min(calculatedFee, maxCommandFee);
   const feeInLsk = fromRawLsk(cappedFee.toString());
   const roundedValue = Number(feeInLsk).toFixed(7).toString();
 
@@ -307,7 +309,7 @@ export const getTransactionFee = async ({
  * creates a new transaction
  *
  * @param {Object} transaction The transaction information
- * @param {String} transaction.moduleCommandID The combination of module Id and asset Id.
+ * @param {String} transaction.moduleCommand The combination of module Id and asset Id.
  * @param {Object} transaction.network Network config from the redux store
  * @param {Object} transaction.keys keys of the multisig account
  * @param {Object} transaction.transactionObject Details of the transaction, including passphrase
@@ -315,32 +317,19 @@ export const getTransactionFee = async ({
  * @returns {Promise} promise that resolves to a transaction or
  * rejects with an error
  */
-// eslint-disable-next-line max-statements
 export const createGenericTx = async ({
-  network,
+  schema,
+  chainID,
   wallet,
   transactionObject,
   privateKey,
-  publicKey,
 }) => {
-  const {
-    summary: { publicKey: reduxPublicKey, isMultisignature, privateKey: reduxPrivateKey },
-    keys,
-  } = wallet;
-  const networkIdentifier = Buffer.from(network.networks.LSK.networkIdentifier, 'hex');
-
-  const { moduleCommandID, ...rawTransaction } = transactionObject;
-  const transaction = desktopTxToElementsTx(rawTransaction, moduleCommandID);
-
-  const schema = network.networks.LSK.moduleCommandSchemas[moduleCommandID];
-
-  const isMultiSignatureRegistration = moduleCommandID
-    === MODULE_COMMANDS_NAME_ID_MAP.registerMultisignatureGroup;
+  const { moduleCommand, ...rawTransaction } = transactionObject;
+  const transaction = desktopTxToElementsTx(rawTransaction, moduleCommand, schema);
 
   const result = await sign(
-    wallet, schema, transaction, network, networkIdentifier,
-    isMultisignature, isMultiSignatureRegistration, keys, publicKey ?? reduxPublicKey,
-    moduleCommandID, rawTransaction, privateKey ?? reduxPrivateKey,
+    wallet, schema, chainID, transaction,
+    moduleCommand, privateKey,
   );
 
   return result;
@@ -356,11 +345,11 @@ export const createGenericTx = async ({
  * @returns {Promise} promise that resolves to a transaction or rejects with an error
  */
 export const broadcast = async ({ transaction, serviceUrl, network }) => {
-  const moduleCommandID = joinModuleAndCommandIds({
-    moduleID: transaction.moduleID,
-    commandID: transaction.commandID,
+  const moduleCommand = joinModuleAndCommand({
+    module: transaction.module,
+    command: transaction.command,
   });
-  const schema = network.networks.LSK.moduleCommandSchemas[moduleCommandID];
+  const schema = network.networks.LSK.moduleCommandSchemas[moduleCommand];
   const binary = transactions.getBytes(transaction, schema);
   const payload = binary.toString('hex');
   const body = JSON.stringify({ transaction: payload });
@@ -368,7 +357,7 @@ export const broadcast = async ({ transaction, serviceUrl, network }) => {
   const response = await http({
     method: 'POST',
     baseUrl: serviceUrl,
-    path: '/api/v2/transactions',
+    path: '/api/v3/transactions',
     body,
   });
 

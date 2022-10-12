@@ -21,6 +21,7 @@ const Summary = ({
   activeToken,
   network,
 }) => {
+  // @todo Fix isMember calculation (#4506)
   const isMember = useMemo(() => {
     if (senderAccount.data.keys) {
       return showSignButton(senderAccount.data, account, transaction);
@@ -28,6 +29,7 @@ const Summary = ({
     return null;
   }, [senderAccount.data]);
 
+  // @todo Fix signatureStatus calculation (#4506)
   const signatureStatus = useMemo(() => {
     if (senderAccount.data.keys) {
       return getTransactionSignatureStatus(senderAccount.data, transaction);
@@ -58,7 +60,7 @@ const Summary = ({
   if (isEmpty(senderAccount.data)) {
     return <div />;
   }
-  const Layout = LayoutSchema[`${transaction.moduleCommandID}-preview`] || LayoutSchema.default;
+  const Layout = LayoutSchema[`${transaction.moduleCommand}-preview`] || LayoutSchema.default;
 
   return (
     <Box className={styles.boxContainer}>

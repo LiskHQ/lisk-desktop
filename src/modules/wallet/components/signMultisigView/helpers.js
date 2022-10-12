@@ -1,6 +1,6 @@
-import { MODULE_COMMANDS_NAME_ID_MAP } from '@transaction/configuration/moduleAssets';
+import { MODULE_COMMANDS_NAME_MAP } from 'src/modules/transaction/configuration/moduleCommand';
 import { signatureCollectionStatus } from '@transaction/configuration/txStatus';
-import { joinModuleAndCommandIds } from '@transaction/utils/moduleAssets';
+import { joinModuleAndCommand } from 'src/modules/transaction/utils/moduleCommand';
 import { getKeys } from '@wallet/utils/account';
 
 const getNumbersOfSignaturesRequired = ({ keys, isGroupRegistration }) => {
@@ -28,9 +28,9 @@ export const findNonEmptySignatureIndices = (signatures) => {
 
 // eslint-disable-next-line max-statements
 export const getTransactionSignatureStatus = (senderAccount, transaction) => {
-  const moduleCommandID = transaction.moduleCommandID || joinModuleAndCommandIds(transaction);
-  const isGroupRegistration = moduleCommandID
-    === MODULE_COMMANDS_NAME_ID_MAP.registerMultisignatureGroup;
+  const moduleCommand = transaction.moduleCommand || joinModuleAndCommand(transaction);
+  const isGroupRegistration = moduleCommand
+    === MODULE_COMMANDS_NAME_MAP.registerMultisignature;
   const keys = getKeys({
     senderAccount, transaction, isGroupRegistration,
   });
@@ -60,8 +60,8 @@ export const getTransactionSignatureStatus = (senderAccount, transaction) => {
 
 // eslint-disable-next-line max-statements
 export const showSignButton = (senderAccount, account, transaction) => {
-  const isGroupRegistration = transaction.moduleCommandID
-    === MODULE_COMMANDS_NAME_ID_MAP.registerMultisignatureGroup;
+  const isGroupRegistration = transaction.moduleCommand
+    === MODULE_COMMANDS_NAME_MAP.registerMultisignature;
 
   let mandatoryKeys = [];
   let optionalKeys = [];

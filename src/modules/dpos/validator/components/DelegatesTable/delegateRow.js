@@ -1,6 +1,6 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-
+import { useTranslation } from 'react-i18next';
 import { useDispatch } from 'react-redux';
 import routes from 'src/routes/routes';
 import { addedToWatchList, removedFromWatchList } from 'src/redux/actions';
@@ -11,12 +11,11 @@ import styles from './schemas.css';
 import LayoutSchema from './layoutSchema';
 
 const DelegateRow = ({
-  data, className, t, activeTab, watchList, setActiveTab, blocks,
+  data, className, activeTab, watchList, setActiveTab,
 }) => {
-  const formattedForgingTime = getForgingTime(
-    data.nextForgingTime || blocks.forgers[blocks.indexBook[data.address]]?.nextForgingTime,
-  );
   const dispatch = useDispatch();
+  const { t } = useTranslation();
+  const formattedForgingTime = getForgingTime(data.nextForgingTime);
 
   const isWatched = watchList.find(address => address === data.address);
 
@@ -41,7 +40,7 @@ const DelegateRow = ({
   return (
     <Link
       className={`${className} delegate-row ${styles.container} ${activeStyle} ${delegateStyles.tableRow}`}
-      to={`${routes.explorer.path}?address=${data.address}`}
+      to={`${routes.delegateProfile.path}?address=${data.address}`}
     >
       <DelegateRowContext.Provider
         value={{

@@ -14,7 +14,7 @@ const block = (index) => ({
   version: 1,
   timestamp: 1569853530,
   generatorAddress: '731774066839038986L',
-  generatorPublicKey:
+  generatorKey:
   '88260051bbe6634431f8a2f3ac66680d1ee9ef1087222e6823d9b4d81170edc7',
   generatorUsername: names[index % (names.length - 1)],
   generator: {

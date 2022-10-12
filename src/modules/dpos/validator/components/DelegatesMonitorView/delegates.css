@@ -54,6 +54,11 @@
 .tabSelector {
   margin-bottom: 15px !important;
   padding-bottom: 15px !important;
+
+  & img {
+    margin-top: 5px;
+    margin-left: -5px;
+  }
 }
 
 .votesColumnTitle {
@@ -107,6 +112,11 @@
     & > .delegateColumn {
       display: flex;
 
+      & > .summaryTooltip {
+        align-self: flex-start;
+        z-index: 100000;
+      }
+
       & > .eyeIconTooltip {
         align-self: center;
 
@@ -134,6 +144,15 @@
 
       & .tooltipContainer {
         left: -25px;
+      }
+
+      & .summaryTooltipContainer {
+        left: -36px !important;
+        top: -25px !important;
+        background-color: transparent;
+        border: none;
+        box-shadow: unset;
+        backdrop-filter: unset;
       }
     }
   }
@@ -263,4 +282,40 @@ header {
   &:hover {
     color: var(--color-maastricht-blue);
   }
+}
+
+.delegatePageWrapper {
+  width: 100%;
+
+  & > div:first-child {
+    width: 100%;
+    margin-left: 0px !important;
+  }
+
+  & h3 {
+    color: var(--color-content-light);
+  }
+
+  & > div:first-child > div:first-child {
+    display: flex;
+    flex-direction: row;
+    column-gap: 24px;
+    align-items: center;
+  }
+
+  & > div:first-child > div:last-child {
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    padding-right: 0px !important;
+  }
+
+  & > div:first-child > div:first-child > h3 {
+    font-weight: var(--font-weight-very-bold);
+  }
+}
+
+.filterDelegates {
+  border-radius: 30px;
+  min-width: 250px !important;
 }

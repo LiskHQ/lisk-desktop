@@ -40,7 +40,7 @@ const MultiSignatureButton = ({ t, component, isMultisignature }) => (
         <Icon
           name={
             isMultisignature
-              ? 'registerMultisignatureGroup'
+              ? 'registerMultisignature'
               : 'multiSignatureOutline'
           }
           className={styles.multisigIcon}

@@ -9,7 +9,6 @@ const Summary = ({
   nextStep,
   token,
   rawTx,
-  transactionData,
   selectedPriority,
   fees,
   t,
@@ -20,7 +19,6 @@ const Summary = ({
     onClick: () => {
       nextStep({
         rawTx,
-        transactionData,
         selectedPriority,
         actionFunction: tokensTransferred,
       });
@@ -30,7 +28,7 @@ const Summary = ({
     label: t('Go back'),
     onClick: () => {
       resetTransactionResult();
-      prevStep({ rawTx, transactionData });
+      prevStep({ rawTx });
     },
   };
 
@@ -40,7 +38,6 @@ const Summary = ({
       confirmButton={onConfirmAction}
       cancelButton={onCancelAction}
       rawTx={rawTx}
-      transactionData={transactionData}
       selectedPriority={selectedPriority}
       fees={fees}
     />

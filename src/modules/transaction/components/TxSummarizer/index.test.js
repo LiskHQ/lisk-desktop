@@ -1,7 +1,7 @@
 import React from 'react';
 import { cryptography } from '@liskhq/lisk-client';
 import { mount } from 'enzyme';
-import { MODULE_COMMANDS_NAME_ID_MAP } from '@transaction/configuration/moduleAssets';
+import { MODULE_COMMANDS_NAME_MAP } from 'src/modules/transaction/configuration/moduleCommand';
 import mockBlockchainApplications from '@tests/fixtures/blockchainApplicationsManage';
 import { mockAppTokens } from '@tests/fixtures/token';
 import wallets from '@tests/constants/wallets';
@@ -27,7 +27,7 @@ describe('TxSummarizer', () => {
       },
       t: key => key,
       rawTx: {
-        moduleCommandID: MODULE_COMMANDS_NAME_ID_MAP.transfer,
+        moduleCommand: MODULE_COMMANDS_NAME_MAP.transfer,
         sender: { publicKey: wallets.genesis.summary.publicKey },
         fee: 2000000,
         nonce: 0,
@@ -36,18 +36,19 @@ describe('TxSummarizer', () => {
           recipient: { address: wallets.genesis.summary.address },
           amount: 100000000,
           data: 'test',
+          token: mockAppTokens[0],
         },
-      },
-      selectedPriority: { title: 'Normal', value: 1 },
-      fees: {
-        Transaction: '1 LSK',
-        CCM: '1 LSK',
-        initiation: '1 LSK',
-      },
-      transactionData: {
+        composedFees: {
+          Transaction: '1 LSK',
+          CCM: '1 LSK',
+          Initialisation: '1 LSK',
+        },
         sendingChain: mockBlockchainApplications[0],
         recipientChain: mockBlockchainApplications[1],
         token: mockAppTokens[0],
+      },
+      selectedPriority: { title: 'Normal', value: 1 },
+      transactionData: {
         recipient: { value: 'lskyrwej7xuxeo39ptuyff5b524dsmnmuyvcaxkag' },
         amount: 10,
         data: 'test message',
@@ -120,7 +121,7 @@ describe('TxSummarizer', () => {
       ...props,
       rawTx: {
         ...props.rawTx,
-        moduleCommandID: MODULE_COMMANDS_NAME_ID_MAP.registerMultisignatureGroup,
+        moduleCommand: MODULE_COMMANDS_NAME_MAP.registerMultisignature,
         params: {
           mandatoryKeys: [wallets.genesis.summary.publicKey],
           optionalKeys: [wallets.delegate.summary.publicKey, wallets.multiSig.summary.publicKey],

@@ -1,5 +1,5 @@
 import React from 'react';
-import { getModuleCommandSenderLabel } from '@transaction/utils/moduleAssets';
+import { getModuleCommandSenderLabel } from 'src/modules/transaction/utils/moduleCommand';
 import { getDelegateName } from '@transaction/utils';
 import WalletInfo from '../WalletInfo';
 import TransactionDetailsContext from '../../context/transactionDetailsContext';
@@ -10,7 +10,7 @@ const Sender = () => {
     TransactionDetailsContext,
   );
   const delegateName = getDelegateName(transaction, activeToken);
-  const senderLabel = getModuleCommandSenderLabel()[transaction.moduleCommandID];
+  const senderLabel = getModuleCommandSenderLabel()[transaction.moduleCommand];
 
   return (
     <WalletInfo

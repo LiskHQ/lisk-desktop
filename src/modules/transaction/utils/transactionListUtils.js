@@ -1,12 +1,12 @@
-import { MODULE_COMMANDS_MAP } from '@transaction/configuration/moduleAssets';
+import { MODULE_COMMANDS_MAP } from 'src/modules/transaction/configuration/moduleCommand';
 
 const getTxConfig = (t, transactions) => {
   const { params, fee } = transactions[0];
 
   return {
-    icon: transactions[0].moduleCommandID === '2:0' ? undefined : MODULE_COMMANDS_MAP['2:0'].icon,
-    subTitle: transactions[0].moduleCommandID === '2:0' ? t('Amount') : t('Fee'),
-    value: transactions[0].moduleCommandID === '2:0' ? params.amount : fee,
+    icon: transactions[0].moduleCommand === 'token:transfer' ? undefined : MODULE_COMMANDS_MAP['token:transfer'].icon,
+    subTitle: transactions[0].moduleCommand === 'token:transfer' ? t('Amount') : t('Fee'),
+    value: transactions[0].moduleCommand === 'token:transfer' ? params.amount : fee,
   };
 };
 

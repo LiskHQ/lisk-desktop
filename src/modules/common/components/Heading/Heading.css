@@ -1,0 +1,36 @@
+.wrapper {
+  width: 100%;
+  padding: 5px 0px;
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  font-weight: var(--font-weight-very-bold);
+  font-size: var(--font-size-h3);
+  font-family: var(--content-font);
+  color: var(--color-content-light);
+
+  & > .rightSection {
+    flex: 1;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: flex-end;
+  }
+
+  & > button:first-child {
+    padding: 3px 0px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: fit-content;
+    max-width: fit-content;
+    min-width: fit-content;
+    margin-right: 25px;
+
+    & > img {
+      width: 26px;
+      height: 26px;
+    }
+  }
+}

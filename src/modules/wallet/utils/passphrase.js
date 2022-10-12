@@ -11,7 +11,7 @@ const mnemonic = require('bitcore-mnemonic');
  * @param {Number|String} value
  * @returns {Array} - Array of 16 'value's
  */
-export const emptyByte = (value) => Array.apply(null, Array(16)).map(item => value); //eslint-disable-line
+export const emptyByte = (value) => Array.apply(null, Array(16)).map((item) => value); //eslint-disable-line
 
 /**
  * fills the left side of str with a given padding string to meet the required length
@@ -57,21 +57,20 @@ const init = (rand = Math.random()) => {
  *
  * @returns {number[]} The input array whose member is pos is set
  */
-export const generateSeed = ({
-  byte, seed, percentage, step,
-} = init(), rand = Math.random()) => {
-  const available = byte.map((bit, idx) => (!bit ? idx : null)).filter(idx => (idx !== null));
-  const seedIndex = (available.length > 0)
-    ? available[Math.floor(rand * available.length)]
-    : Math.floor(rand * byte.length);
+export const generateSeed = ({ byte, seed, percentage, step } = init(), rand = Math.random()) => {
+  const available = byte.map((bit, idx) => (!bit ? idx : null)).filter((idx) => idx !== null);
+  const seedIndex =
+    available.length > 0
+      ? available[Math.floor(rand * available.length)]
+      : Math.floor(rand * byte.length);
 
   const content = leftPadd(crypto.randomBytes(1)[0].toString(16), '0', 2);
 
   return {
-    seed: seed.map((item, idx) => ((idx === seedIndex) ? content : item)),
-    byte: available.length > 0 ? byte.map((item, idx) =>
-      ((idx === seedIndex) ? 1 : item)) : emptyByte(0),
-    percentage: (percentage + step),
+    seed: seed.map((item, idx) => (idx === seedIndex ? content : item)),
+    byte:
+      available.length > 0 ? byte.map((item, idx) => (idx === seedIndex ? 1 : item)) : emptyByte(0),
+    percentage: percentage + step,
     step,
   };
 };
@@ -82,8 +81,10 @@ export const generateSeed = ({
  * @param {string[]} seed - An array of 16 hex numbers in string format
  * @returns {string} The generated passphrase
  */
-// eslint-disable-next-line no-buffer-constructor
-export const generatePassphraseFromSeed = ({ seed }) => (new mnemonic(new Buffer(seed.join(''), 'hex'))).toString();
+export const generatePassphraseFromSeed = ({ seed }) =>
+  // @TODO eslint-plugin-node
+  // eslint-disable-next-line no-buffer-constructor
+  new mnemonic(new Buffer(seed.join(''), 'hex')).toString();
 
 /**
  * Generates a random passphrase using browser crypto api
@@ -94,16 +95,18 @@ export const generatePassphrase = () => {
   // istanbul ignore next
   const crypotObj = window.crypto || window.msCrypto;
   return generatePassphraseFromSeed({
-    seed: [...crypotObj.getRandomValues(new Uint16Array(16))].map(x => (`00${(x % 256).toString(16)}`).slice(-2)),
+    seed: [...crypotObj.getRandomValues(new Uint16Array(16))].map((x) =>
+      `00${(x % 256).toString(16)}`.slice(-2)
+    ),
   });
 };
 
 /**
-   * Checks if passphrase is valid using mnemonic
-   *
-   * @param {string} passphrase
-   * @returns {bool} isValidPassphrase
-   */
+ * Checks if passphrase is valid using mnemonic
+ *
+ * @param {string} passphrase
+ * @returns {bool} isValidPassphrase
+ */
 export const isValidPassphrase = (passphrase) => {
   const normalizedValue = passphrase.replace(/ +/g, ' ').trim();
   let isValid;
@@ -125,12 +128,15 @@ export const getPassphraseValidationErrors = (passphrase) => {
     return isNotInDictionary;
   });
 
-  const filteredPassphrase = passphrase.filter(word => !!word);
+  const filteredPassphrase = passphrase.filter((word) => !!word);
 
   let validationError = i18next.t('Passphrase is not valid');
 
   if (filteredPassphrase.length < 12) {
-    validationError = i18next.t('Passphrase should have 12 words, entered passphrase has {{length}}', { length: filteredPassphrase.length });
+    validationError = i18next.t(
+      'Passphrase should have 12 words, entered passphrase has {{length}}',
+      { length: filteredPassphrase.length }
+    );
   }
 
   if (invalidWords.length > 0) {

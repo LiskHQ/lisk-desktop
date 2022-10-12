@@ -98,7 +98,9 @@ ${signature}
   });
 
   it('should allow to verify a invalid message with the textarea view', () => {
-    wrapper.find('.signedMessage textarea').simulate('change', { target: { value: signedMessage.substring(10), name: 'signedMessage' } });
+    wrapper.find('.signedMessage textarea').simulate('change', {
+      target: { value: signedMessage.substring(10), name: 'signedMessage' },
+    });
 
     wrapper.find('.continue button').simulate('click');
     expect(wrapper.find('h1')).toIncludeText('The signature is incorrect');

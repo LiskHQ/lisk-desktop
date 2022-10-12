@@ -1,8 +1,8 @@
 import { useQuery } from '@tanstack/react-query';
 import {
   METHOD,
-  API_METHOD,
 } from 'src/const/config';
+import defaultClient from 'src/utils/api/client';
 import { APPLICATION } from 'src/const/queries';
 import { useCurrentApplication } from '@blockchainApplication/manage/hooks';
 
@@ -23,13 +23,20 @@ import { useCurrentApplication } from '@blockchainApplication/manage/hooks';
 // eslint-disable-next-line import/prefer-default-export
 export const useCustomQuery = ({
   keys,
-  config,
+  config = {},
   options = {},
+  client = defaultClient
 }) => {
   const [{ chainID }] = useCurrentApplication();
+
+  const axiosConfig = {
+    ...config,
+    params: { ...config.params }
+  }
+
   return useQuery(
-    [chainID, config, APPLICATION, METHOD, ...keys],
-    async () => API_METHOD[METHOD](config),
+    [chainID, axiosConfig, APPLICATION, METHOD, ...keys],
+    async () => client[METHOD](axiosConfig),
     options,
   );
 };

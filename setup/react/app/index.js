@@ -17,11 +17,12 @@ import OfflineWrapper from 'src/modules/common/components/offlineWrapper';
 import NavigationBars from 'src/modules/common/components/bars';
 import ThemeContext from 'src/theme/themeProvider';
 import routes from 'src/routes/routes';
+import { MOCK_SERVICE_WORKER } from 'src/const/config';
 import MainRouter from './MainRouter';
 import './variables.css';
 import styles from './app.css';
 
-if (process.env.REACT_APP_MSW) {
+if (MOCK_SERVICE_WORKER) {
   const { worker } = require('src/service/mock/runtime');
   worker.start({ onUnhandledRequest: 'bypass' });
 }
@@ -29,7 +30,7 @@ if (process.env.REACT_APP_MSW) {
 const App = ({ history }) => {
   const dispatch = useDispatch();
   const [loaded, setLoaded] = useState(false);
-  const theme = useSelector(state => (state.settings.darkMode ? 'dark' : 'light'));
+  const theme = useSelector((state) => (state.settings.darkMode ? 'dark' : 'light'));
 
   useIpc(history);
 
