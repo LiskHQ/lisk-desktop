@@ -103,11 +103,11 @@ pipeline {
 									docker exec --user root lisk-service_core_1 chown lisk:lisk -R /home/lisk/lisk-service/export/data
 
 									# wait for service to be up and running
-									set -e; while ! curl --silent --fail http://127.0.0.1:9901/api/v2/blocks >/dev/null; do echo waiting; sleep 10; done; set +e
-									curl --verbose http://127.0.0.1:9901/api/v2/blocks
-									set -e; while ! curl --silent --fail http://127.0.0.1:9901/api/v2/network/status >/dev/null; do echo waiting; sleep 10; done; set +e
-									curl --verbose http://127.0.0.1:9901/api/v2/network/status
-									curl --verbose http://127.0.0.1:9901/api/v2/blocks
+									set -e; while ! curl --silent --fail http://127.0.0.1:9901/api/v3/blocks >/dev/null; do echo waiting; sleep 10; done; set +e
+									curl --verbose http://127.0.0.1:9901/api/v3/blocks
+									set -e; while ! curl --silent --fail http://127.0.0.1:9901/api/v3/network/status >/dev/null; do echo waiting; sleep 10; done; set +e
+									curl --verbose http://127.0.0.1:9901/api/v3/network/status
+									curl --verbose http://127.0.0.1:9901/api/v3/blocks
 
 									CYPRESS_baseUrl=https://jenkins.lisk.com/test/${JOB_NAME%/*}/$BRANCH_NAME/#/ \
 									CYPRESS_serviceUrl=http://127.0.0.1:9901 \

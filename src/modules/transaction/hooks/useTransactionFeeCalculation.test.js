@@ -1,10 +1,10 @@
 import { renderHook } from '@testing-library/react-hooks';
 import wallets from '@tests/constants/wallets';
+import { mockAppTokens } from '@tests/fixtures/token';
 import useTransactionFeeCalculation from './useTransactionFeeCalculation';
 
 describe('useTransactionFeeCalculation', () => {
   const props = {
-    token: 'LSK',
     wallet: wallets.genesis,
     selectedPriority: { value: 1, selectedIndex: 0 },
     transaction: {
@@ -16,6 +16,7 @@ describe('useTransactionFeeCalculation', () => {
         recipient: { address: wallets.genesis.summary.address },
         amount: '100000000',
         data: 'test',
+        token: { tokenID: mockAppTokens[0].tokenID },
       },
     },
     priorityOptions: [{ value: 1, selectedIndex: 0 }],

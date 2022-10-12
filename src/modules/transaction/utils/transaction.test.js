@@ -121,7 +121,7 @@ describe('API: LSK Transactions', () => {
           recipientAddress: expect.arrayContaining([]),
           amount: BigInt(100000000),
           data: 'test',
-          tokenID: Buffer.from(mockAppTokens[0].tokenID, 'hex'),
+          tokenID: expect.arrayContaining([]),
         },
       });
     });
@@ -177,9 +177,9 @@ describe('API: LSK Transactions', () => {
         command,
         params: {
           name: 'username',
-          generatorKey: convertStringToBinary(genKey),
-          blsKey: convertStringToBinary(blsKey),
-          proofOfPossession: convertStringToBinary(pop),
+          generatorKey: expect.arrayContaining([]),
+          blsKey: expect.arrayContaining([]),
+          proofOfPossession: expect.arrayContaining([]),
         },
       });
     });

@@ -24,43 +24,43 @@ const {
 const ED25519_PUBLIC_KEY_LENGTH = 32;
 export const MESSAGE_TAG_MULTISIG_REG = 'LSK_RMSG_';
 const multisigRegMsgSchema = {
-	$id: '/auth/command/regMultisigMsg',
-	type: 'object',
-	required: ['address', 'nonce', 'numberOfSignatures', 'mandatoryKeys', 'optionalKeys'],
-	properties: {
-		address: {
-			dataType: 'bytes',
-			fieldNumber: 1,
-			minLength: constants.BINARY_ADDRESS_LENGTH,
-			maxLength: constants.BINARY_ADDRESS_LENGTH,
-		},
-		nonce: {
-			dataType: 'uint64',
-			fieldNumber: 2,
-		},
-		numberOfSignatures: {
-			dataType: 'uint32',
-			fieldNumber: 3,
-		},
-		mandatoryKeys: {
-			type: 'array',
-			items: {
-				dataType: 'bytes',
-				minLength: ED25519_PUBLIC_KEY_LENGTH,
-				maxLength: ED25519_PUBLIC_KEY_LENGTH,
-			},
-			fieldNumber: 4,
-		},
-		optionalKeys: {
-			type: 'array',
-			items: {
-				dataType: 'bytes',
-				minLength: ED25519_PUBLIC_KEY_LENGTH,
-				maxLength: ED25519_PUBLIC_KEY_LENGTH,
-			},
-			fieldNumber: 5,
-		},
-	},
+  $id: '/auth/command/regMultisigMsg',
+  type: 'object',
+  required: ['address', 'nonce', 'numberOfSignatures', 'mandatoryKeys', 'optionalKeys'],
+  properties: {
+    address: {
+      dataType: 'bytes',
+      fieldNumber: 1,
+      minLength: constants.BINARY_ADDRESS_LENGTH,
+      maxLength: constants.BINARY_ADDRESS_LENGTH,
+    },
+    nonce: {
+      dataType: 'uint64',
+      fieldNumber: 2,
+    },
+    numberOfSignatures: {
+      dataType: 'uint32',
+      fieldNumber: 3,
+    },
+    mandatoryKeys: {
+      type: 'array',
+      items: {
+        dataType: 'bytes',
+        minLength: ED25519_PUBLIC_KEY_LENGTH,
+        maxLength: ED25519_PUBLIC_KEY_LENGTH,
+      },
+      fieldNumber: 4,
+    },
+    optionalKeys: {
+      type: 'array',
+      items: {
+        dataType: 'bytes',
+        minLength: ED25519_PUBLIC_KEY_LENGTH,
+        maxLength: ED25519_PUBLIC_KEY_LENGTH,
+      },
+      fieldNumber: 5,
+    },
+  },
 };
 
 const EMPTY_BUFFER = Buffer.alloc(0);
@@ -480,7 +480,7 @@ export const removeExcessSignatures = (signatures, mandatoryKeysNo, hasSenderSig
  */
 export const computeTransactionId = ({ transaction, schema }) => {
   const transactionBytes = transactions.getBytes(transaction, schema);
-  return  cryptography.utils.hash(transactionBytes);
+  return cryptography.utils.hash(transactionBytes);
 };
 
 const signMultisigUsingPrivateKey = (
