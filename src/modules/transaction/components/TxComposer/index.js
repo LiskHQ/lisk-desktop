@@ -24,6 +24,8 @@ const TxComposer = ({
   buttonTitle,
 }) => {
   const { t } = useTranslation();
+  // @todo Once the transactions are refactored and working, we should
+  // use the schema returned by this hook instead of reading from the Redux store.
   useSchemas();
   useDeprecatedAccount();
   const wallet = useSelector(selectActiveTokenAccount);

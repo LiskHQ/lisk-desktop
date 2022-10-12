@@ -10,6 +10,7 @@ import BoxContent from 'src/theme/box/content';
 import BoxFooter from 'src/theme/box/footer';
 import UploadJSONInput from 'src/modules/common/components/uploadJSONInput';
 import { PrimaryButton } from 'src/theme/buttons';
+import { useSchemas } from '@transaction/hooks/queries/useSchemas';
 import { validateTransaction } from '@liskhq/lisk-transactions';
 import ProgressBar from '../signMultisigView/progressBar';
 import styles from './styles.css';
@@ -20,6 +21,9 @@ const Form = ({ t, nextStep, network }) => {
   const [transaction, setTransaction] = useState();
   const [binaryTx, setBinaryTx] = useState();
   const [error, setError] = useState();
+  // @todo Once the transactions are refactored and working, we should
+  // use the schema returned by this hook instead of reading from the Redux store.
+  useSchemas();
 
   const onReview = () => {
     try {

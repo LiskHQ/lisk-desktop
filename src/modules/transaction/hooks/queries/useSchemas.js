@@ -33,6 +33,8 @@ export const useSchemas = ({ config: customConfig = {}, options } = { }) => {
     options,
   });
 
+  // @todo This hook should accept the moduleCommand and return the relevant schema
+  // We should remove the action dispatch logic.
   useEffect(() => {
     if (schemas.data) {
       dispatch({
