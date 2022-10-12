@@ -110,6 +110,7 @@ class SelectAccount extends React.Component {
       },
     });
 
+    // @todo adopt with add account
     login({
       publicKey: account.summary.publicKey,
       hwInfo: {
