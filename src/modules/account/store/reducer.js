@@ -49,7 +49,7 @@ export const list = (state = {}, { type, encryptedAccount, accountDetail, addres
         [encryptedAccount?.metadata?.address]: {
           ...encryptedAccount,
           metadata: {
-            ...encryptedAccount.metadata,
+            ...encryptedAccount?.metadata,
             ...accountDetail,
           },
         },
