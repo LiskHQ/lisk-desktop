@@ -41,7 +41,7 @@ const Form = ({ t, nextStep, network }) => {
       const schema = network.networks.LSK.moduleCommandSchemas[moduleCommand];
       const transactionObject = convertTxJSONToBinary(value, moduleCommand);
       setBinaryTx(transactionObject);
-      const err = validateTransaction(schema, transactionObject);
+      const err = validateTransaction(transactionObject, schema);
       setError(err ? 'Unknown transaction' : undefined);
     } catch (e) {
       setTransaction(undefined);

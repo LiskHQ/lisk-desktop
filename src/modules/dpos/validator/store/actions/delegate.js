@@ -8,7 +8,6 @@ import transactionActionTypes from '@transaction/store/actionTypes';
 export const delegateRegistered = (
   transactionObject,
   privateKey,
-  publicKey,
 ) => async (dispatch, getState) => {
   const state = getState();
   const activeWallet = selectActiveTokenAccount(state);
@@ -16,11 +15,11 @@ export const delegateRegistered = (
   // Create the transaction
   //
   const [error, tx] = await to(createGenericTx({
-    network: state.network,
-    wallet: activeWallet,
     transactionObject,
+    wallet: activeWallet,
+    schema: state.network.networks.LSK.moduleCommandSchemas[transactionObject.moduleCommand],
+    chainID: state.network.networks.LSK.chainID,
     privateKey,
-    publicKey,
   }));
 
   //

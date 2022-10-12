@@ -8,6 +8,8 @@ import {
 } from '@wallet/utils/account';
 import accounts from '@tests/constants/wallets';
 import { genKey, blsKey, pop } from '@tests/constants/keys';
+import moduleCommandSchemas from '@tests/constants/schemas';
+import { mockAppTokens } from '@tests/fixtures/token';
 import {
   getTxAmount,
   elementTxToDesktopTx,
@@ -24,7 +26,7 @@ const address = 'lskdxc4ta5j43jp9ro3f8zqbxta9fn6jwzjucw7yt';
 jest.spyOn(cryptography.address, 'getLisk32AddressFromPublicKey').mockReturnValue(address);
 
 const {
-  transfer, voteDelegate, registerMultisignatureGroup, registerDelegate, reclaim, unlock,
+  transfer, voteDelegate, registerMultisignature, registerDelegate, reclaim, unlock,
 } = MODULE_COMMANDS_NAME_MAP;
 
 // TODO: All of these tests need to be rewritten to adopt to new transaction schema https://github.com/LiskHQ/lisk-sdk/blob/7e71617d281649a6942434f729a815870aac2394/elements/lisk-transactions/src/schema.ts#L15
@@ -106,9 +108,10 @@ describe('API: LSK Transactions', () => {
           recipient: { address: accounts.delegate.summary.address },
           amount: 100000000,
           data: 'test',
+          token: mockAppTokens[0],
         },
       };
-      const txObj = desktopTxToElementsTx(tx, transfer);
+      const txObj = desktopTxToElementsTx(tx, transfer, moduleCommandSchemas['token:transfer']);
       const [module, command] = splitModuleAndCommand(transfer);
       expect(txObj).toEqual({
         ...baseElementsTx,
@@ -118,6 +121,7 @@ describe('API: LSK Transactions', () => {
           recipientAddress: expect.arrayContaining([]),
           amount: BigInt(100000000),
           data: 'test',
+          tokenID: expect.arrayContaining([]),
         },
       });
     });
@@ -139,7 +143,7 @@ describe('API: LSK Transactions', () => {
           ],
         },
       };
-      const txObj = desktopTxToElementsTx(tx, voteDelegate);
+      const txObj = desktopTxToElementsTx(tx, voteDelegate, moduleCommandSchemas['dpos:voteDelegate']);
       const [module, command] = splitModuleAndCommand(voteDelegate);
       expect(txObj).toEqual({
         ...baseElementsTx,
@@ -159,23 +163,23 @@ describe('API: LSK Transactions', () => {
         ...baseDesktopTx,
         moduleCommand: registerDelegate,
         params: {
-          username: 'username',
-          generatorPublicKey: genKey,
-          blsPublicKey: blsKey,
+          name: 'username',
+          generatorKey: genKey,
+          blsKey,
           proofOfPossession: pop,
         },
       };
-      const txObj = desktopTxToElementsTx(tx, registerDelegate);
+      const txObj = desktopTxToElementsTx(tx, registerDelegate, moduleCommandSchemas['dpos:registerDelegate']);
       const [module, command] = splitModuleAndCommand(registerDelegate);
       expect(txObj).toEqual({
         ...baseElementsTx,
         module,
         command,
         params: {
-          username: 'username',
-          generatorPublicKey: convertStringToBinary(genKey),
-          blsPublicKey: convertStringToBinary(blsKey),
-          proofOfPossession: convertStringToBinary(pop),
+          name: 'username',
+          generatorKey: expect.arrayContaining([]),
+          blsKey: expect.arrayContaining([]),
+          proofOfPossession: expect.arrayContaining([]),
         },
       });
     });
@@ -188,7 +192,7 @@ describe('API: LSK Transactions', () => {
           amount: '10000000',
         },
       };
-      const txObj = desktopTxToElementsTx(tx, reclaim);
+      const txObj = desktopTxToElementsTx(tx, reclaim, moduleCommandSchemas['legacy:reclaim']);
       const [module, command] = splitModuleAndCommand(reclaim);
       expect(txObj).toEqual({
         ...baseElementsTx,
@@ -212,7 +216,7 @@ describe('API: LSK Transactions', () => {
           unlockObjects,
         },
       };
-      const txObj = desktopTxToElementsTx(tx, unlock);
+      const txObj = desktopTxToElementsTx(tx, unlock, moduleCommandSchemas['dpos:unlock']);
       const [module, command] = splitModuleAndCommand(unlock);
       expect(txObj).toEqual({
         ...baseElementsTx,
@@ -227,18 +231,19 @@ describe('API: LSK Transactions', () => {
       });
     });
 
-    it('creates a transaction object for registerMultisignatureGroup transaction', () => {
+    it('creates a transaction object for registerMultisignature transaction', () => {
       const tx = {
         ...baseDesktopTx,
-        moduleCommand: registerMultisignatureGroup,
+        moduleCommand: registerMultisignature,
         params: {
           numberOfSignatures: 2,
           mandatoryKeys: [accounts.genesis.summary.publicKey, accounts.delegate.summary.publicKey],
           optionalKeys: [accounts.delegate_candidate.summary.publicKey],
+          signatures: [],
         },
       };
-      const txObj = desktopTxToElementsTx(tx, registerMultisignatureGroup);
-      const [module, command] = splitModuleAndCommand(registerMultisignatureGroup);
+      const txObj = desktopTxToElementsTx(tx, registerMultisignature, moduleCommandSchemas['auth:registerMultisignature']);
+      const [module, command] = splitModuleAndCommand(registerMultisignature);
       expect(txObj).toEqual({
         ...baseElementsTx,
         module,
@@ -247,6 +252,7 @@ describe('API: LSK Transactions', () => {
           numberOfSignatures: 2,
           mandatoryKeys: tx.params.mandatoryKeys.map(() => expect.arrayContaining([])),
           optionalKeys: tx.params.optionalKeys.map(() => expect.arrayContaining([])),
+          signatures: [],
         },
       });
     });
@@ -263,6 +269,7 @@ describe('API: LSK Transactions', () => {
           amount: BigInt(100000000),
           recipientAddress: getAddressFromBase32Address(accounts.delegate.summary.address),
           data: '',
+          tokenID: mockAppTokens[0].tokenID,
         },
       };
 
@@ -274,6 +281,7 @@ describe('API: LSK Transactions', () => {
           amount: '100000000',
           recipient: { address: accounts.delegate.summary.address },
           data: '',
+          token: { tokenID: mockAppTokens[0].tokenID },
         },
       });
     });
@@ -285,9 +293,9 @@ describe('API: LSK Transactions', () => {
         module,
         command,
         params: {
-          username: 'super_delegate',
-          generatorPublicKey: convertStringToBinary(genKey),
-          blsPublicKey: convertStringToBinary(blsKey),
+          name: 'super_delegate',
+          generatorKey: convertStringToBinary(genKey),
+          blsKey: convertStringToBinary(blsKey),
           proofOfPossession: convertStringToBinary(pop),
         },
       };
@@ -297,9 +305,9 @@ describe('API: LSK Transactions', () => {
         moduleCommand: registerDelegate,
         id: '',
         params: {
-          username: 'super_delegate',
-          generatorPublicKey: genKey,
-          blsPublicKey: blsKey,
+          name: 'super_delegate',
+          generatorKey: genKey,
+          blsKey,
           proofOfPossession: pop,
         },
       });
@@ -395,8 +403,8 @@ describe('API: LSK Transactions', () => {
       });
     });
 
-    it('should transform a registerMultisignatureGroup transaction', () => {
-      const [module, command] = splitModuleAndCommand(registerMultisignatureGroup);
+    it('should transform a registerMultisignature transaction', () => {
+      const [module, command] = splitModuleAndCommand(registerMultisignature);
       const mandatoryKeys = [
         accounts.genesis.summary.publicKey,
         accounts.delegate.summary.publicKey,
@@ -413,12 +421,13 @@ describe('API: LSK Transactions', () => {
           numberOfSignatures: 2,
           mandatoryKeys,
           optionalKeys,
+          signatures: [],
         },
       };
 
       expect(elementTxToDesktopTx(tx)).toEqual({
         ...baseDesktopTx,
-        moduleCommand: registerMultisignatureGroup,
+        moduleCommand: registerMultisignature,
         id: '',
         params: {
           numberOfSignatures: 2,
@@ -429,6 +438,7 @@ describe('API: LSK Transactions', () => {
           optionalKeys: [
             accounts.delegate_candidate.summary.publicKey,
           ],
+          signatures: [],
         },
       });
     });
@@ -470,6 +480,7 @@ describe('API: LSK Transactions', () => {
         amount: BigInt(10000),
         recipientAddress: getBase32AddressFromAddress(accounts.delegate.summary.address),
         data: '',
+        tokenID: mockAppTokens[0].tokenID,
       },
     };
     it('should return the transaction as JSON', () => {
@@ -485,6 +496,7 @@ describe('API: LSK Transactions', () => {
             amount: '10000n',
             recipientAddress: expect.stringContaining('lsk'),
             data: '',
+            tokenID: mockAppTokens[0].tokenID,
           },
         });
     });

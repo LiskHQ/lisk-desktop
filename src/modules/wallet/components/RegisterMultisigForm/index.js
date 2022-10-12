@@ -124,13 +124,14 @@ const Form = ({ nextStep, prevState = {} }) => {
   );
 
   const transaction = {
-    moduleCommand: MODULE_COMMANDS_NAME_MAP.registerMultisignatureGroup,
+    moduleCommand: MODULE_COMMANDS_NAME_MAP.registerMultisignature,
     isValid: feedback.error === 0,
     feedback: feedback.messages,
     params: {
       mandatoryKeys,
       optionalKeys,
       numberOfSignatures,
+      signatures: [],
     },
   };
 

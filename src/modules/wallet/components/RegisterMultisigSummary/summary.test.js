@@ -39,7 +39,7 @@ describe('Multisignature Summary component', () => {
     multisigGroupRegistered: jest.fn(),
     rawTx: {
       fee: 2000000,
-      moduleCommand: MODULE_COMMANDS_NAME_MAP.registerMultisignatureGroup,
+      moduleCommand: MODULE_COMMANDS_NAME_MAP.registerMultisignature,
       params: {
         account: accounts.genesis,
         members,

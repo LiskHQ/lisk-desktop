@@ -30,7 +30,7 @@ export const findNonEmptySignatureIndices = (signatures) => {
 export const getTransactionSignatureStatus = (senderAccount, transaction) => {
   const moduleCommand = transaction.moduleCommand || joinModuleAndCommand(transaction);
   const isGroupRegistration = moduleCommand
-    === MODULE_COMMANDS_NAME_MAP.registerMultisignatureGroup;
+    === MODULE_COMMANDS_NAME_MAP.registerMultisignature;
   const keys = getKeys({
     senderAccount, transaction, isGroupRegistration,
   });
@@ -61,7 +61,7 @@ export const getTransactionSignatureStatus = (senderAccount, transaction) => {
 // eslint-disable-next-line max-statements
 export const showSignButton = (senderAccount, account, transaction) => {
   const isGroupRegistration = transaction.moduleCommand
-    === MODULE_COMMANDS_NAME_MAP.registerMultisignatureGroup;
+    === MODULE_COMMANDS_NAME_MAP.registerMultisignature;
 
   let mandatoryKeys = [];
   let optionalKeys = [];

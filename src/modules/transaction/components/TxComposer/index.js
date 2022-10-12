@@ -17,12 +17,11 @@ import { getFeeStatus } from '../../utils/helpers';
 // eslint-disable-next-line max-statements
 const TxComposer = ({
   children,
-  transaction,
+  transaction = {},
   onComposed,
   onConfirm,
   className,
   buttonTitle,
-  transactionData,
 }) => {
   const { t } = useTranslation();
   useSchemas();
@@ -59,7 +58,7 @@ const TxComposer = ({
 
 
   const minRequiredBalance = getMinRequiredBalance(transaction, status.fee);
-  const { recipientChain, sendingChain } = transactionData || {};
+  const { recipientChain, sendingChain } = transaction;
 
   const composedFees = {
     Transaction: getFeeStatus({ fee: status.fee, token, customFee }),
@@ -70,14 +69,13 @@ const TxComposer = ({
     composedFees.CCM = getFeeStatus({ fee: status.fee, token, customFee });
   }
 
-  const confirmTxn = () => {
-    onConfirm(
-      { ...rawTx, fee: toRawLsk(status.fee.value) },
-      transactionData,
-      selectedPriority,
-      composedFees
-    );
-  };
+  rawTx.composedFees = composedFees;
+  rawTx.fee = toRawLsk(status.fee.value);
+  rawTx.composedFees = composedFees;
+  if (recipientChain && sendingChain) {
+    rawTx.recipientChain = recipientChain;
+    rawTx.sendingChain = sendingChain;
+  }
 
   return (
     <Box className={className}>
@@ -104,7 +102,10 @@ const TxComposer = ({
       <BoxFooter>
         <PrimaryButton
           className="confirm-btn"
-          onClick={confirmTxn}
+          onClick={() => onConfirm(
+            rawTx,
+            selectedPriority,
+          )}
           disabled={!transaction.isValid || minRequiredBalance > wallet.token?.balance}
         >
           {buttonTitle ?? t('Continue')}

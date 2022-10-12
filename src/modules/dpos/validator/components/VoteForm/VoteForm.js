@@ -160,7 +160,7 @@ const VoteForm = ({
     t,
   );
 
-  const onConfirm = (rawTx, trnxData, selectedPriority, fees) => {
+  const onConfirm = (rawTx, selectedPriority, fees) => {
     nextStep({
       rawTx,
       added,
@@ -169,7 +169,6 @@ const VoteForm = ({
       selfUnvote,
       selectedPriority,
       fees,
-      transactionData: trnxData,
     });
   };
 

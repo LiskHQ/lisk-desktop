@@ -9,7 +9,7 @@ const SignedAndRemainingMembersList = ({ t }) => {
   const { transaction, wallet } = React.useContext(TransactionDetailsContext);
 
   const isMultisignatureGroupRegistration = transaction.moduleCommand
-    === MODULE_COMMANDS_NAME_MAP.registerMultisignatureGroup;
+    === MODULE_COMMANDS_NAME_MAP.registerMultisignature;
 
   const keys = isMultisignatureGroupRegistration
     ? {

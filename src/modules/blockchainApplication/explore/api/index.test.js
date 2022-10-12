@@ -26,7 +26,7 @@ describe('get blockchain application statistics', () => {
     });
 
     expect(http).toHaveBeenCalledWith({
-      path: '/api/v2/blockchain/apps/statistics',
+      path: '/api/v3/blockchain/apps/statistics',
       params: { },
       network,
       baseUrl,
