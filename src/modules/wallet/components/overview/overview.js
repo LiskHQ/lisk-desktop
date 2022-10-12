@@ -116,7 +116,7 @@ const Overview = ({ isWalletRoute, history }) => {
         <WalletVisualWithAddress
           copy
           size={50}
-          address={account?.meta?.address}
+          address={address}
           accountName={account?.meta?.name}
           detailsClassName={styles.accountSummary}
           truncate={false}
