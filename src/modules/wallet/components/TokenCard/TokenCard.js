@@ -22,7 +22,7 @@ const TokenCard = ({ lockedBalance, availableBalance, symbol, url, address }) =>
           <Converter value={fromRawLsk(availableBalance)} />
         </p>
       )}
-      {lockedBalance !== '0' && (
+      {!lockedBalance ? null : (
         <DialogLink data-testid="locked-balance" component="lockedBalance" data={{ address }} className={styles.lockedBalance}>
           <Icon name="lock" /> <TokenAmount val={lockedBalance} token={symbol} />
         </DialogLink>
