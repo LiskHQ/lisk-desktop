@@ -87,8 +87,9 @@ pipeline {
 									echo $! >lisk-core.pid
 
 									# wait for core to be up and running
-									set -e; while ! curl --silent --fail http://127.0.0.1:4000/api/node/info >/dev/null; do echo waiting; sleep 10; done; set +e
-									curl --verbose http://127.0.0.1:4000/api/node/info
+									# TODO: We no longer have Lisk Core HTTP plugin, for Lisk Core readiness we need different method
+									# set -e; while ! curl --silent --fail http://127.0.0.1:4000/api/node/info >/dev/null; do echo waiting; sleep 10; done; set +e
+									# curl --verbose http://127.0.0.1:4000/api/node/info
 
 									# lisk-service
 									cp -f lisk-service/docker/example.env lisk-service/.env
