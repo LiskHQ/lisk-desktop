@@ -87,7 +87,8 @@ pipeline {
 									echo $! >lisk-core.pid
 
 									# wait for core to be up and running
-									# TODO: We no longer have Lisk Core HTTP plugin, for Lisk Core readiness we need different method
+									# TODO: Remove comments and fix Lisk core endpoint integration (we have to use ./bin/run endpoint invoke system_getNodeInfo --pretty)
+									# https://github.com/LiskHQ/lisk-desktop/issues/4509
 									# set -e; while ! curl --silent --fail http://127.0.0.1:4000/api/node/info >/dev/null; do echo waiting; sleep 10; done; set +e
 									# curl --verbose http://127.0.0.1:4000/api/node/info
 
@@ -104,11 +105,13 @@ pipeline {
 									docker exec --user root lisk-service_core_1 chown lisk:lisk -R /home/lisk/lisk-service/export/data
 
 									# wait for service to be up and running
-									set -e; while ! curl --silent --fail http://127.0.0.1:9901/api/v3/blocks >/dev/null; do echo waiting; sleep 10; done; set +e
-									curl --verbose http://127.0.0.1:9901/api/v3/blocks
-									set -e; while ! curl --silent --fail http://127.0.0.1:9901/api/v3/network/status >/dev/null; do echo waiting; sleep 10; done; set +e
-									curl --verbose http://127.0.0.1:9901/api/v3/network/status
-									curl --verbose http://127.0.0.1:9901/api/v3/blocks
+									# TODO: Remove comments and fix Lisk Service endpoint integration
+									# https://github.com/LiskHQ/lisk-desktop/issues/4509
+									# set -e; while ! curl --silent --fail http://127.0.0.1:9901/api/v3/blocks >/dev/null; do echo waiting; sleep 10; done; set +e
+									# curl --verbose http://127.0.0.1:9901/api/v3/blocks
+									# set -e; while ! curl --silent --fail http://127.0.0.1:9901/api/v3/network/status >/dev/null; do echo waiting; sleep 10; done; set +e
+									# curl --verbose http://127.0.0.1:9901/api/v3/network/status
+									# curl --verbose http://127.0.0.1:9901/api/v3/blocks
 
 									CYPRESS_baseUrl=https://jenkins.lisk.com/test/${JOB_NAME%/*}/$BRANCH_NAME/#/ \
 									CYPRESS_serviceUrl=http://127.0.0.1:9901 \
