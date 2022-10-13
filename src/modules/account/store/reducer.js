@@ -6,12 +6,20 @@ import actionTypes from './actionTypes';
 /**
  *
  * @param {Object} state
- * @param {type: String, encryptedAccount: Object} action
+ * @param {type: String, encryptedAccount: Object, accountDetail: String} action
  */
-export const current = (state = {}, { type, encryptedAccount }) => {
+export const current = (state = {}, { type, encryptedAccount, accountDetail }) => {
   switch (type) {
     case actionTypes.setCurrentAccount:
       return encryptedAccount;
+    case actionTypes.updateCurrentAccount:
+      return {
+        ...state,
+        metadata: {
+          ...state.metadata,
+          ...accountDetail,
+        },
+      };
     default:
       return state;
   }
@@ -20,9 +28,9 @@ export const current = (state = {}, { type, encryptedAccount }) => {
 /**
  *
  * @param {Object} state
- * @param {type: String, encryptedAccount: Object, address: string} action
+ * @param {type: String, encryptedAccount: Object, accountDetail: String, address: string} action
  */
-export const list = (state = {}, { type, encryptedAccount, address }) => {
+export const list = (state = {}, { type, encryptedAccount, accountDetail, address }) => {
   switch (type) {
     case actionTypes.addAccount:
       if (!encryptedAccount?.metadata?.address) {
@@ -31,6 +39,20 @@ export const list = (state = {}, { type, encryptedAccount, address }) => {
       return {
         ...state,
         [encryptedAccount?.metadata?.address]: encryptedAccount,
+      };
+    case actionTypes.updateAccount:
+      if (!encryptedAccount?.metadata?.address) {
+        return state;
+      }
+      return {
+        ...state,
+        [encryptedAccount?.metadata?.address]: {
+          ...encryptedAccount,
+          metadata: {
+            ...encryptedAccount?.metadata,
+            ...accountDetail,
+          },
+        },
       };
     case actionTypes.deleteAccount:
       delete state[address];
