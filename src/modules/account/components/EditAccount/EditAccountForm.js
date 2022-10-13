@@ -21,7 +21,7 @@ const editAccountFormSchema = yup
       .required()
       .matches(
         regex.accountName,
-        'Can be alpha numeric with either !,@,$,&,_,. as special characters'
+        'Can be alphanumeric with either !,@,$,&,_,. as special characters'
       )
       .max(20, "Character length can't be more than 20")
       .min(3, "Character length can't be less than 3"),
@@ -59,7 +59,7 @@ const EditAccountForm = ({ nextStep }) => {
         <BoxContent className={styles.content}>
           <form onSubmit={handleSubmit(onSubmit)}>
             <Input
-              defaultValue={currentAccount.metadata.name ?? ''}
+              defaultValue={currentAccount.metadata.name}
               value={formValues.accountName}
               size="s"
               label={t('Account name')}
