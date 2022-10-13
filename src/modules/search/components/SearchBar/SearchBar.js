@@ -13,6 +13,7 @@ import Blocks from '@block/components/BlockResultList';
 import Transactions from '../../../transaction/components/TransactionResultList';
 import styles from './SearchBar.css';
 import { useDebounce } from '../../hooks/useDebounce';
+import { useSearch } from '../../hooks/useSearch';
 
 const SearchBar = ({ history }) => {
   const [searchTextValue, setSearchTextValue] = useState('');
@@ -20,17 +21,10 @@ const SearchBar = ({ history }) => {
   const searchBarRef = useRef();
 
   const debouncedSearchTerm = useDebounce(searchTextValue, 500)
-
-  console.log('debouncedSearchTerm', debouncedSearchTerm);
+  const {
+    addresses, delegates, transactions, blocks, isLoading } = useSearch(debouncedSearchTerm);
 
   const { t } = useTranslation();
-
-  const suggestions = { data: { addresses: [], delegates: [], transactions: [], blocks: [] }, isLoading: false };
-
-  const {
-    data: {
-      addresses, delegates, transactions, blocks,
-    }, isLoading } = suggestions;
 
   const onChangeSearchTextValue = ({ target: { value } }) => {
     setSearchTextValue(value);
@@ -61,10 +55,10 @@ const SearchBar = ({ history }) => {
     }
   }
 
-  const onSelectAccount = (type) => onSelectedRow(type, 'explorer')
-  const onSelectDelegateAccount = (type) => onSelectedRow(type, 'delegate-account')
-  const onSelectTransaction = (type) => onSelectedRow(type, 'transactions')
-  const onSelectBlock = (type) => onSelectedRow(type, 'block')
+  const onSelectAccount = (value) => onSelectedRow('explorer', value)
+  const onSelectDelegateAccount = (value) => onSelectedRow('delegate-account', value)
+  const onSelectTransaction = (value) => onSelectedRow('transactions', value)
+  const onSelectBlock = (value) => onSelectedRow('block', value)
 
   const onKeyPress = () => {
     if (addresses.length) { onSelectAccount(addresses[rowItemIndex].address); }
@@ -127,15 +121,15 @@ const SearchBar = ({ history }) => {
           className={`${styles.input} search-input`}
           iconClassName={styles.icon}
           onKeyDown={onHandleKeyPress}
-          isLoading={suggestions.isLoading}
+          isLoading={isLoading}
         />
       </div>
       {feedback ? <span className={`${styles.searchFeedback} search-bar-feedback`}>{feedback}</span> : null}
       {
-        suggestions.data.addresses.length
+        addresses.length
           ? (
             <Wallet
-              wallets={suggestions.data.addresses}
+              wallets={addresses}
               onSelectedRow={onSelectAccount}
               rowItemIndex={rowItemIndex}
               updateRowItemIndex={updateRowItemIndex}
@@ -145,11 +139,11 @@ const SearchBar = ({ history }) => {
           : null
       }
       {
-        suggestions.data.delegates.length
+        delegates.length
           ? (
             <Delegates
               searchTextValue={searchTextValue}
-              delegates={suggestions.data.delegates}
+              delegates={delegates}
               onSelectedRow={onSelectDelegateAccount}
               rowItemIndex={rowItemIndex}
               updateRowItemIndex={updateRowItemIndex}
@@ -159,10 +153,10 @@ const SearchBar = ({ history }) => {
           : null
       }
       {
-        suggestions.data.transactions.length
+        transactions.length
           ? (
             <Transactions
-              transactions={suggestions.data.transactions}
+              transactions={transactions}
               onSelectedRow={onSelectTransaction}
               rowItemIndex={rowItemIndex}
               updateRowItemIndex={updateRowItemIndex}
@@ -173,10 +167,10 @@ const SearchBar = ({ history }) => {
           : null
       }
       {
-        suggestions.data.blocks.length
+        blocks.length
           ? (
             <Blocks
-              blocks={suggestions.data.blocks}
+              blocks={blocks}
               onSelectedRow={onSelectBlock}
               t={t}
             />
