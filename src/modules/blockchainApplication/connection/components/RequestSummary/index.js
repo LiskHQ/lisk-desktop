@@ -7,7 +7,7 @@ import { rejectLiskRequest } from '@libs/wcm/utils/requestHandlers';
 import { SIGNING_METHODS } from '@libs/wcm/constants/permissions';
 import { EVENTS } from '@libs/wcm/constants/lifeCycle';
 import { elementTxToDesktopTx, convertTxJSONToBinary } from '@transaction/utils/transaction';
-import { joinModuleAndCommandIds } from '@transaction/utils/moduleAssets';
+import { joinModuleAndCommand } from '@transaction/utils/moduleCommand';
 import { Link } from 'react-router-dom';
 import Icon from 'src/theme/Icon';
 import useSession from '@libs/wcm/hooks/useSession';
@@ -29,7 +29,7 @@ const RequestSummary = ({ nextStep }) => {
 
   const approveHandler = () => {
     const tx = request.params.request.params.rawTx;
-    const moduleCommandID = joinModuleAndCommandIds({
+    const moduleCommandID = joinModuleAndCommand({
       moduleID: tx.moduleID,
       commandID: tx.commandID,
     });
