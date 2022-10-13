@@ -69,12 +69,14 @@ const VoteRow = ({
         <span className={styles.voteIndex}>{index + 1}.</span>
         <WalletVisual address={address} disabled={!unconfirmed} />
         <div className={styles.delegateInfo}>
-          <span className={styles.delegateUsername}>{username || ''}</span>
+          <span className={`${styles.delegateUsername} ${!unconfirmed ? styles.disabled : ''}`}>
+            {username || ''}
+          </span>
           <span className={styles.delegateAddress}>{truncatedAddress}</span>
         </div>
       </div>
       <span className={`${styles.oldAmountColumn} ${styles.centerContent}`}>
-        {!!confirmed &&<TokenAmount val={confirmed} token={token} />}
+        {!!confirmed && <TokenAmount val={confirmed} token={token} />}
       </span>
       {state === componentState.notEditing ? (
         <>

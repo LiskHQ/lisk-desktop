@@ -96,7 +96,7 @@
   flex-direction: row;
   align-items: center;
   margin-left: 16px;
-  width: calc(50% - 23px);
+  width: calc(50% - 16px);
 }
 
 .delegateInfo {
@@ -268,6 +268,10 @@
 
 .delegateUsername {
   @mixin delegateName;
+
+  &.disabled {
+    color: var(--color-blue-gray) !important;
+  }
 }
 
 .delegateAddress {

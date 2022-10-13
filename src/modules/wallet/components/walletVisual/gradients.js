@@ -1130,8 +1130,10 @@ export const gradientSchemes = gradSpecs.map((spec) => ({
   secondary: spec.secondary.map(addUrl),
 }));
 
-const grayScaleColor = (color) => {
-  const grayColor = Math.floor(color.match(/\w{2}/g).reduce((total, item) => total + parseInt(item, 16), 0) / 3);
+const getGrayScaleColor = (color) => {
+  const grayColor = Math.floor(
+    color.match(/\w{2}/g).reduce((total, item) => total + parseInt(item, 16), 0) / 3
+  );
   return `#${grayColor.toString(16).repeat(3)}`;
 };
 
@@ -1139,9 +1141,13 @@ export const Gradients = ({ scheme, disabled }) => (
   <defs>
     {[...scheme.primary, ...scheme.secondary].map((spec) => (
       <linearGradient id={spec.id} key={spec.id} gradientTransform={`rotate(${spec.rotate})`}>
-        {console.log(spec.colors[0],grayScaleColor(spec.colors[0]))}
+        {console.log(spec.colors[0], getGrayScaleColor(spec.colors[0]))}
         {spec.colors.map((color, i) => (
-          <stop stopColor={disabled ? grayScaleColor(color) :color} offset={`${i * (100 / (spec.colors.length - 1))}%`} key={i} />
+          <stop
+            stopColor={disabled ? getGrayScaleColor(color) : color}
+            offset={`${i * (100 / (spec.colors.length - 1))}%`}
+            key={i}
+          />
         ))}
       </linearGradient>
     ))}
