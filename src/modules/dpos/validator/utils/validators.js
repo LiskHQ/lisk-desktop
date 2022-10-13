@@ -3,8 +3,8 @@ import { regex } from 'src/const/regex';
 
 /**
  * Validates give values with the criteria of
- * 1. generatorPublicKey or
- * 2. blsPublicKey or
+ * 1. generatorKey or
+ * 2. blsKey or
  * 3. proofOfPossession
  *
  * @param {any} key - The name of the delegate key

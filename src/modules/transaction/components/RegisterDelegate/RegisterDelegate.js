@@ -20,11 +20,11 @@ const RegisterDelegate = ({ account, transaction, t }) => (
     </div>
     <div className={`${styles.dataRow} generator-key`}>
       <label>{t('Generator key')}</label>
-      <span>{transaction.params.generatorPublicKey}</span>
+      <span>{transaction.params.generatorKey}</span>
     </div>
     <div className={`${styles.dataRow} bls-public-key`}>
       <label>{t('BLS key')}</label>
-      <span>{transaction.params.blsPublicKey}</span>
+      <span>{transaction.params.blsKey}</span>
     </div>
     <div className={`${styles.dataRow} pop`}>
       <label>{t('BLS Proof of possession')}</label>

@@ -87,7 +87,7 @@ export const mockCommandParametersSchemas = {
     },
     {
       moduleCommandID: '0000000c:00000000',
-      moduleCommand: 'auth:registerMultisignatureGroup',
+      moduleCommand: 'auth:registerMultisignature',
       schema: {
         $id: '/auth/command/regMultisig',
         type: 'object',

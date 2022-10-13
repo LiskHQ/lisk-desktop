@@ -24,8 +24,12 @@ const UnlockBalanceForm = ({
   const [unlockObjects, lockedInVotes, unlockableBalance] = useUnlockableCalculator();
   const wallet = useSelector(selectActiveTokenAccount);
 
-  const onConfirm = async (rawTx) => {
-    nextStep({ rawTx });
+  const onConfirm = async (rawTx, selectedPriority, fees) => {
+    nextStep({
+      selectedPriority,
+      rawTx,
+      fees,
+    });
   };
 
   const transaction = {

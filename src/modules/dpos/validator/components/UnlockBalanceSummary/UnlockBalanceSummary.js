@@ -5,6 +5,7 @@ import styles from './unlockBalanceSummary.css';
 
 const UnlockBalanceSummary = ({
   balanceUnlocked,
+  selectedPriority,
   rawTx,
   prevStep,
   nextStep,
@@ -32,6 +33,7 @@ const UnlockBalanceSummary = ({
       cancelButton={onCancelAction}
       fee={!wallet.summary.isMultisignature && rawTx.fee}
       classNames={`${styles.box} ${styles.summaryContainer}`}
+      selectedPriority={selectedPriority}
       rawTx={rawTx}
     />
   );

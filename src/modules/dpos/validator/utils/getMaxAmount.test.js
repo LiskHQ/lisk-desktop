@@ -19,8 +19,8 @@ const network = {
             name: 'token:transfer',
           },
           {
-            id: 'auth:registerMultisignatureGroup',
-            name: 'keys:registerMultisignatureGroup',
+            id: 'auth:registerMultisignature',
+            name: 'keys:registerMultisignature',
           },
           {
             id: 'dpos:registerDelegate',

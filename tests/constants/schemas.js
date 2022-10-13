@@ -9,18 +9,22 @@ const moduleCommandSchemas = {
       data: {
         dataType: 'string', fieldNumber: 3, maxLength: 64, minLength: 0,
       },
+      tokenID: {
+        dataType: 'bytes', fieldNumber: 4, maxLength: 8, minLength: 8,
+      },
     },
-    required: ['amount', 'recipientAddress', 'data'],
+    required: ['amount', 'recipientAddress', 'data', 'tokenID'],
     title: 'Transfer transaction asset',
     type: 'object',
   },
-  'auth:registerMultisignatureGroup': {
+  'auth:registerMultisignature': {
     $id: 'lisk/keys/register',
     type: 'object',
     required: [
       'numberOfSignatures',
       'optionalKeys',
       'mandatoryKeys',
+      'signatures',
     ],
     properties: {
       numberOfSignatures: {
@@ -51,21 +55,48 @@ const moduleCommandSchemas = {
         minItems: 0,
         maxItems: 64,
       },
+      signatures: {
+        type: 'array',
+        items: {
+          dataType: 'bytes',
+          minLength: 64,
+          maxLength: 64,
+        },
+        fieldNumber: 4,
+      },
     },
   },
   'dpos:registerDelegate': {
     $id: 'lisk/dpos/register',
     type: 'object',
     required: [
-      'username',
+      'name', 'generatorKey', 'blsKey', 'proofOfPossession',
     ],
     properties: {
-      username: {
+      name: {
         dataType: 'string',
         fieldNumber: 1,
         minLength: 1,
-        maxLength: 20,
+        maxLength: 20
       },
+      generatorKey: {
+        dataType: 'bytes',
+        fieldNumber: 2,
+        minLength: 32,
+        maxLength: 32
+      },
+      blsKey: {
+        dataType: 'bytes',
+        fieldNumber: 3,
+        minLength: 48,
+        maxLength: 48
+      },
+      proofOfPossession: {
+        dataType: 'bytes',
+        fieldNumber: 4,
+        minLength: 96,
+        maxLength: 96
+      }
     },
   },
   'dpos:voteDelegate': {
