@@ -13,20 +13,20 @@ function DownloadJSON({ encryptedPhrase, fileName }) {
   };
 
   return (
-    <div className={styles.downloadLisk}>
-      <Icon name="fileOutline" />
-      <p className="option-value">{`${fileName}.json`}</p>
-      <TertiaryButton
-        className={styles.downloadBtn}
-        size="xs"
-        onClick={onDownload}
-      >
-        <span className={styles.buttonContent}>
-          {t('Download')}
-          <Icon name="downloadBlue" />
-        </span>
-      </TertiaryButton>
-    </div>
+    <>
+      <div className={styles.downloadLisk}>
+        <Icon name="fileOutline" />
+        <p className="option-value">{`${fileName}.json`}</p>
+      </div>
+      <div className={styles.downloadButton}>
+        <TertiaryButton className={styles.downloadBtn} size="xs" onClick={onDownload}>
+          <span className={styles.buttonContent}>
+            {t('Download')}
+            <Icon name="downloadBlue" />
+          </span>
+        </TertiaryButton>
+      </div>
+    </>
   );
 }
 
