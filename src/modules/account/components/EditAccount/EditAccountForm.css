@@ -23,7 +23,7 @@
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  padding: 10px 20px;
+  padding: 16px 20px;
   box-sizing: border-box;
   background-color: var(--color-white);
   border-radius: 16px;
