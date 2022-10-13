@@ -143,16 +143,7 @@ export const getVotes = ({ params = {} }) =>
     url: httpPaths.votesSent,
     method: 'get',
     params: getDelegateProps({ address: params.address, publicKey: params.publicKey }),
-    event: 'get.dpos.votes.sent',
   });
-
-// http({
-//   baseUrl: ''
-//   path: httpPaths.votesSent,
-//   params: getDelegateProps({ address: params.address, publicKey: params.publicKey }),
-//   network,
-//   baseUrl,
-// });
 
 /**
  * Retrieves list of votes given for a given delegate.

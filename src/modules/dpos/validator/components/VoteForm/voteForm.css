@@ -96,6 +96,7 @@
   flex-direction: row;
   align-items: center;
   margin-left: 16px;
+  width: calc(50% - 23px);
 }
 
 .delegateInfo {

@@ -67,19 +67,19 @@ const VoteRow = ({
     <Box className={styles.voteItemContainer}>
       <div className={`${styles.infoColumn} ${styles.delegateInfoContainer}`}>
         <span className={styles.voteIndex}>{index + 1}.</span>
-        <WalletVisual address={address} />
+        <WalletVisual address={address} disabled={!unconfirmed} />
         <div className={styles.delegateInfo}>
           <span className={styles.delegateUsername}>{username || ''}</span>
           <span className={styles.delegateAddress}>{truncatedAddress}</span>
         </div>
       </div>
       <span className={`${styles.oldAmountColumn} ${styles.centerContent}`}>
-        {confirmed ? <TokenAmount val={confirmed} token={token} /> : '-'}
+        {!!confirmed &&<TokenAmount val={confirmed} token={token} />}
       </span>
       {state === componentState.notEditing ? (
         <>
           <span className={`${styles.newAmountColumn} ${styles.centerContent}`}>
-            {unconfirmed ? <TokenAmount val={unconfirmed} token={token} /> : '-'}
+            {!!unconfirmed && <TokenAmount val={unconfirmed} token={token} />}
           </span>
           <div className={`${styles.editIconsContainer} ${styles.centerContent}`}>
             <span onClick={changeToEditingMode}>

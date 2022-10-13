@@ -47,7 +47,7 @@ const getTitles = (t) => ({
 const dposTokenId = '0'.repeat(16);
 
 // eslint-disable-next-line max-statements
-const EditVote = ({ history, voteEdited, network, voting }) => {
+const EditVote = ({ history, voteEdited, network, voting, votesRetrieved }) => {
   const { t } = useTranslation();
   const [
     {
@@ -94,9 +94,7 @@ const EditVote = ({ history, voteEdited, network, voting }) => {
   }, [sentVotes]);
 
   const [voteAmount, setVoteAmount] = useVoteAmountField(
-    fromRawLsk(voting[delegateAddress]?.unconfirmed) ||
-      fromRawLsk(voteSentVoteToDelegate?.amount) ||
-      0
+    fromRawLsk(voting[delegateAddress]?.unconfirmed || voteSentVoteToDelegate?.amount || 0)
   );
   const mode = voteSentVoteToDelegate ? 'edit' : 'add';
   const titles = getTitles(t)[mode];
@@ -114,6 +112,10 @@ const EditVote = ({ history, voteEdited, network, voting }) => {
       optionalKeys,
     }).then(setMaxAmount);
   }, [token, auth, network, voting]);
+
+  useEffect(() => {
+    votesRetrieved()
+  }, []);
 
   const handleConfirm = () => {
     if (!isForm) {
@@ -179,9 +181,9 @@ const EditVote = ({ history, voteEdited, network, voting }) => {
             <>
               {mode === 'add' && (
                 <BoxInfoText className={styles.accountInfo}>
-                  <WalletVisual size={40} address={delegate.address} />
+                  <WalletVisual size={40} address={delegateAddress} />
                   <p>{delegate.name}</p>
-                  <p>{delegate.address}</p>
+                  <p>{delegateAddress}</p>
                 </BoxInfoText>
               )}
               <label className={styles.fieldGroup}>

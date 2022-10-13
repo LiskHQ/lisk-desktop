@@ -37,7 +37,7 @@ const getVoteStats = (votes, account) => {
       } else if (confirmed && !unconfirmed) {
         // removed vote
         stats.removed[address] = { confirmed, username };
-        if (address === account.summary.address) {
+        if (address === account.summary?.address) {
           stats.selfUnvote = { confirmed, username };
         }
       } else if (confirmed !== unconfirmed) {

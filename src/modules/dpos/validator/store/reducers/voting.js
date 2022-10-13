@@ -10,16 +10,21 @@ const voting = (state = {}, action) => {
   switch (action.type) {
     case actionTypes.votesRetrieved: {
       if (action.data.account.votesUsed) {
-        return action.data.votes.reduce((votesDict, { delegateAddress, amount, name }) => {
-          votesDict[delegateAddress] = {
+        const voteMapInState = state;
+
+        action.data.votes.forEach(({ delegateAddress, amount, name }) => {
+          voteMapInState[delegateAddress] = {
             confirmed: +amount,
             unconfirmed: +state[delegateAddress]?.unconfirmed || +amount,
             username: name,
           };
 
-          return votesDict;
-        }, {});
+          return voteMapInState;
+        });
+
+        return voteMapInState;
       }
+
       return {};
     }
     case actionTypes.voteEdited:

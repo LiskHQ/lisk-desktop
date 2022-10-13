@@ -207,7 +207,7 @@ class WalletVisual extends React.Component {
         replaceUrlByHashOnScheme.bind(null, this.uniqueSvgUrlHash),
       ),
     };
-
+    console.log("...>>>", gradientsSchemesUrlsHashed);
     const shapes = [
       getBackgroundCircle(newSize, gradientsSchemesUrlsHashed.primary[0]),
       getShape(addressHashChunks[1], newSize, gradientsSchemesUrlsHashed.primary[1], 1),
@@ -239,7 +239,7 @@ class WalletVisual extends React.Component {
     return (
       <div data-testid={`wallet-visual-${this.props.address}`} style={{ height: size, width: size }} className={`${styles.wrapper} ${className}`}>
         <svg height={size} width={size} className={styles.walletVisual}>
-          <Gradients scheme={gradientsSchemesUrlsHashed} />
+          <Gradients scheme={gradientsSchemesUrlsHashed} disabled={this.props.disabled} />
           {shapes.map((shape, i) => (
             <shape.component {...shape.props} key={i} />
           ))}
