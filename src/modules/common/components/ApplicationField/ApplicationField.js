@@ -20,9 +20,9 @@ export const ApplicationField = ({ styles, onChange, value,
         select={(selectedValue, option) => selectedValue?.chainID === option.chainID}
       >
         {applications.map((chain) => (
-          <MenuItem className={styles.chainOptionWrapper} value={chain} key={chain.chainID}>
+          <MenuItem className={styles.chainOptionWrapper} value={chain} key={chain?.chainID}>
             <img className={styles.chainLogo} src={chain?.logo?.png || chainLogo} />
-            <span>{chain.chainName}</span>
+            <span>{chain?.chainName}</span>
           </MenuItem>
         ))}
       </MenuSelect>

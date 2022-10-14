@@ -237,7 +237,7 @@ class WalletVisual extends React.Component {
     const [shapes, gradientsSchemesUrlsHashed] = this.computeShapesAndGradients(size);
 
     return (
-      <div style={{ height: size, width: size }} className={`${styles.wrapper} ${className}`}>
+      <div data-testid={`wallet-visual-${this.props.address}`} style={{ height: size, width: size }} className={`${styles.wrapper} ${className}`}>
         <svg height={size} width={size} className={styles.walletVisual}>
           <Gradients scheme={gradientsSchemesUrlsHashed} />
           {shapes.map((shape, i) => (

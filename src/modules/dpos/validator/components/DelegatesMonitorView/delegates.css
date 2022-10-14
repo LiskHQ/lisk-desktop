@@ -292,6 +292,10 @@ header {
     margin-left: 0px !important;
   }
 
+  & h3 {
+    color: var(--color-content-light);
+  }
+
   & > div:first-child > div:first-child {
     display: flex;
     flex-direction: row;

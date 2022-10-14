@@ -18,7 +18,7 @@ describe('get blockchain application detail', () => {
     });
 
     expect(http).toHaveBeenCalledWith({
-      path: '/api/v2/blockchain/apps',
+      path: '/api/v3/blockchain/apps',
       params: { chainId: sampleId },
       network,
       baseUrl,
@@ -33,7 +33,7 @@ describe('get blockchain application detail', () => {
     });
 
     expect(http).toHaveBeenCalledWith({
-      path: '/api/v2/blockchain/apps',
+      path: '/api/v3/blockchain/apps',
       params: {},
       network,
       baseUrl,
@@ -48,7 +48,7 @@ describe('get blockchain application detail', () => {
     });
 
     expect(http).toHaveBeenCalledWith({
-      path: '/api/v2/blockchain/apps/meta',
+      path: '/api/v3/blockchain/apps/meta',
       params: {},
       network,
       baseUrl,

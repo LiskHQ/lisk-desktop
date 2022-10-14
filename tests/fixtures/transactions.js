@@ -22,134 +22,209 @@ const getState = () => ({
         networkIdentifier: '198f2b61a8eb95fbeed58b8216780b68f697f26b849acf00c8c93bb9b24f783d',
         moduleCommandSchemas: {
           'token:transfer': {
-            $id: 'lisk/transfer-asset',
-            title: 'Transfer transaction asset',
-            type: 'object',
+            $id: "/lisk/transferParams",
+            title: "Transfer transaction params",
+            type: "object",
             required: [
-              'amount',
-              'recipientAddress',
-              'data',
+              "tokenID",
+              "amount",
+              "recipientAddress",
+              "data"
             ],
             properties: {
-              amount: {
-                dataType: 'uint64',
+              tokenID: {
+                dataType: "bytes",
                 fieldNumber: 1,
+                minLength: 8,
+                maxLength: 8
+              },
+              amount: {
+                dataType: "uint64",
+                fieldNumber: 2
               },
               recipientAddress: {
-                dataType: 'bytes',
-                fieldNumber: 2,
-                minLength: 20,
-                maxLength: 20,
+                dataType: "bytes",
+                fieldNumber: 3,
+                format: "lisk32"
               },
               data: {
-                dataType: 'string',
-                fieldNumber: 3,
+                dataType: "string",
+                fieldNumber: 4,
                 minLength: 0,
-                maxLength: 64,
-              },
-            },
+                maxLength: 64
+              }
+            }
           },
-          'auth:registerMultisignatureGroup': {
-            $id: 'lisk/keys/register',
-            type: 'object',
-            required: ['numberOfSignatures', 'optionalKeys', 'mandatoryKeys'],
+          'auth:registerMultisignature': {
+            $id: "/auth/command/regMultisig",
+            type: "object",
             properties: {
               numberOfSignatures: {
-                dataType: 'uint32', fieldNumber: 1, minimum: 1, maximum: 64,
+                dataType: "uint32",
+                fieldNumber: 1,
+                minimum: 1,
+                maximum: 64
               },
               mandatoryKeys: {
-                type: 'array',
+                type: "array",
                 items: {
-                  dataType: 'bytes', minLength: 32, maxLength: 32,
+                  dataType: "bytes",
+                  minLength: 32,
+                  maxLength: 32
                 },
                 fieldNumber: 2,
                 minItems: 0,
-                maxItems: 64,
+                maxItems: 64
               },
               optionalKeys: {
-                type: 'array',
-                items: { dataType: 'bytes', minLength: 32, maxLength: 32 },
+                type: "array",
+                items: {
+                  dataType: "bytes",
+                  minLength: 32,
+                  maxLength: 32
+                },
                 fieldNumber: 3,
                 minItems: 0,
-                maxItems: 64,
+                maxItems: 64
               },
+              signatures: {
+                type: "array",
+                items: {
+                  dataType: "bytes",
+                  minLength: 64,
+                  maxLength: 64
+                },
+                fieldNumber: 4
+              }
             },
+            required: [
+              "numberOfSignatures",
+              "mandatoryKeys",
+              "optionalKeys",
+              "signatures"
+            ]
           },
           'dpos:registerDelegate': {
-            $id: 'lisk/dpos/register',
-            type: 'object',
+            $id: "/dpos/command/registerDelegateParams",
+            type: "object",
+            required: [
+              "name",
+              "generatorKey",
+              "blsKey",
+              "proofOfPossession"
+            ],
             properties: {
-              username: {
-                dataType: 'string', fieldNumber: 1, minLength: 1, maxLength: 20,
+              name: {
+                dataType: "string",
+                fieldNumber: 1,
+                minLength: 1,
+                maxLength: 20
               },
-            },
-            required: ['username'],
+              generatorKey: {
+                dataType: "bytes",
+                fieldNumber: 2,
+                minLength: 32,
+                maxLength: 32
+              },
+              blsKey: {
+                dataType: "bytes",
+                fieldNumber: 3,
+                minLength: 48,
+                maxLength: 48
+              },
+              proofOfPossession: {
+                dataType: "bytes",
+                fieldNumber: 4,
+                minLength: 96,
+                maxLength: 96
+              }
+            }
           },
           'dpos:voteDelegate': {
-            $id: 'lisk/dpos/vote',
-            type: 'object',
+            $id: "/dpos/command/voteDelegateParams",
+            type: "object",
             required: [
-              'votes',
+              "votes"
             ],
             properties: {
               votes: {
-                type: 'array',
+                type: "array",
+                fieldNumber: 1,
                 minItems: 1,
                 maxItems: 20,
                 items: {
-                  type: 'object',
+                  type: "object",
                   required: [
-                    'delegateAddress',
-                    'amount',
+                    "delegateAddress",
+                    "amount"
                   ],
                   properties: {
                     delegateAddress: {
-                      dataType: 'bytes',
+                      dataType: "bytes",
                       fieldNumber: 1,
-                      minLength: 20,
-                      maxLength: 20,
+                      format: "lisk32"
                     },
                     amount: {
-                      dataType: 'sint64',
-                      fieldNumber: 2,
-                    },
-                  },
-                },
-                fieldNumber: 1,
-              },
-            },
+                      dataType: "sint64",
+                      fieldNumber: 2
+                    }
+                  }
+                }
+              }
+            }
           },
           'dpos:unlock': {
-            $id: 'lisk/dpos/unlock',
-            type: 'object',
-            required: ['unlockObjects'],
+            $id: "lisk/dpos/unlock",
+            type: "object",
+            required: [
+              "unlockObjects"
+            ],
             properties: {
               unlockObjects: {
                 fieldNumber: 1,
                 maxItems: 20,
                 minItems: 1,
-                type: 'array',
+                type: "array",
                 items: {
                   properties: {
-                    amount: { dataType: 'uint64', fieldNumber: 2 },
-                    delegateAddress: {
-                      dataType: 'bytes', fieldNumber: 1, minLength: 20, maxLength: 20,
+                    amount: {
+                      dataType: "uint64",
+                      fieldNumber: 2
                     },
-                    unvoteHeight: { dataType: 'uint32', fieldNumber: 3 },
+                    delegateAddress: {
+                      dataType: "bytes",
+                      fieldNumber: 1,
+                      minLength: 20,
+                      maxLength: 20
+                    },
+                    unvoteHeight: {
+                      dataType: "uint32",
+                      fieldNumber: 3
+                    }
                   },
-                  required: ['delegateAddress', 'amount', 'unvoteHeight'],
-                  type: 'object',
-                },
-              },
-            },
+                  required: [
+                    "delegateAddress",
+                    "amount",
+                    "unvoteHeight"
+                  ],
+                  type: "object"
+                }
+              }
+            }
           },
           'legacy:reclaim': {
-            $id: 'lisk/legacyAccount/reclaim',
-            properties: { amount: { dataType: 'uint64', fieldNumber: 1 } },
-            required: ['amount'],
-            title: 'Reclaim transaction asset',
-            type: 'object',
-          },
+            $id: "lisk/legacy/reclaim",
+            type: "object",
+            required: [
+              "amount"
+            ],
+            properties: {
+              amount: {
+                dataType: "uint64",
+                fieldNumber: 1
+              }
+            }
+          }
         },
       },
     },

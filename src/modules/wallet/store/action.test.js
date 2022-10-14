@@ -1,6 +1,7 @@
 import * as accountApi from '@wallet/utils/api';
 import { createGenericTx } from '@transaction/api';
 import wallets from '@tests/constants/wallets';
+import moduleCommandSchemas from '@tests/constants/schemas';
 import * as networkActions from '@network/store/action';
 import txActionTypes from '@transaction/store/actionTypes';
 import loginTypes from 'src/modules/auth/const/loginTypes';
@@ -48,6 +49,7 @@ describe('actions: account', () => {
               serviceUrl: 'http://localhost:4000',
               nethash:
                 '198f2b61a8eb95fbeed58b8216780b68f697f26b849acf00c8c93bb9b24f783d',
+              moduleCommandSchemas,
             },
           },
         },
@@ -123,12 +125,22 @@ describe('actions: account', () => {
     const state = {
       wallet: {
         loginType: loginTypes.passphrase.code,
-        passphrase: wallets.multiSig_candidate.passphrase,
+        // passphrase: wallets.multiSig_candidate.passphrase,
         info: {
           LSK: wallets.multiSig_candidate,
         },
       },
-      network: {},
+      network: {
+        name: 'Mainnet',
+        networks: {
+          LSK: {
+            serviceUrl: 'http://localhost:4000',
+            nethash:
+              '198f2b61a8eb95fbeed58b8216780b68f697f26b849acf00c8c93bb9b24f783d',
+            moduleCommandSchemas,
+          },
+        },
+      },
       token: {
         active: 'LSK',
       },
@@ -142,26 +154,39 @@ describe('actions: account', () => {
       numberOfSignatures: 2,
     };
 
+    const transactionObject = {
+      fee: 10000000,
+      module: 'auth',
+      command: 'registerMultisignature',
+      sender: {
+        publicKey: '1',
+      },
+      params: {
+        mandatoryKeys: ['1'],
+        optionalKeys: ['2', '3'],
+        numberOfSignatures: 2,
+        signatures: [],
+      }
+    };
+    const privateKey = '0x0';
+
     it('should dispatch transactionCreatedSuccess', async () => {
       const tx = { id: 1 };
       createGenericTx.mockImplementation(() =>
         new Promise((resolve) => {
           resolve(tx);
         }));
-      await multisigGroupRegistered(params)(dispatch, getState);
+      await multisigGroupRegistered(transactionObject, privateKey)(dispatch, getState);
       expect(createGenericTx).toHaveBeenCalledWith({
-        network: state.network,
+        transactionObject,
         wallet: {
           ...state.wallet.info.LSK,
           hwInfo: state.hwInfo,
           loginType: state.wallet.loginType,
         },
-        transactionObject: {
-          fee: 10000000,
-          mandatoryKeys: params.mandatoryKeys,
-          optionalKeys: params.optionalKeys,
-          numberOfSignatures: params.numberOfSignatures,
-        },
+        schema: state.network.networks.LSK.moduleCommandSchemas[transactionObject.moduleCommand],
+        chainID: state.network.networks.LSK.chainID,
+        privateKey,
       });
       expect(dispatch).toHaveBeenCalledWith({
         type: txActionTypes.transactionCreatedSuccess,

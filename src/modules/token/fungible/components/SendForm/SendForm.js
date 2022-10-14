@@ -45,7 +45,6 @@ const getInitialToken = (
   initalTokenId,
   tokens
 ) => {
-
   const initalToken = initalTokenId
     ? tokens.find(({ tokenID }) => tokenID === initalTokenId)
     : null;
@@ -92,9 +91,8 @@ const SendForm = (props) => {
     setMaxAmount(status.maxAmount);
   }, []);
 
-  const onConfirm = useCallback((rawTx, trnxData, selectedPriority, fees) => {
+  const onConfirm = useCallback((rawTx, selectedPriority, fees) => {
     nextStep({
-      transactionData: trnxData,
       selectedPriority,
       rawTx,
       fees,
@@ -129,16 +127,10 @@ const SendForm = (props) => {
         address: recipient.value,
         title: recipient.title,
       },
+      token,
     },
-  };
-
-  const formData = {
     sendingChain,
     recipientChain,
-    token,
-    recipient,
-    amount: toRawLsk(amount.value),
-    data: reference.value,
   };
 
   return (
@@ -147,7 +139,6 @@ const SendForm = (props) => {
         onComposed={onComposed}
         onConfirm={onConfirm}
         transaction={transaction}
-        transactionData={formData}
         buttonTitle={t('Go to confirmation')}
       >
         <>

@@ -29,7 +29,7 @@ import networks from '../../../src/modules/network/configuration/networks';
 
 before(() => {
   // Check if lisk core is running
-  cy.request(`${networks.customNode.serviceUrl}/api/v2/network/status`).then(resp => expect(resp.status).to.eq(200));
+  cy.request(`${networks.customNode.serviceUrl}/api/v3/network/status`).then(resp => expect(resp.status).to.eq(200));
 });
 
 beforeEach(() => {

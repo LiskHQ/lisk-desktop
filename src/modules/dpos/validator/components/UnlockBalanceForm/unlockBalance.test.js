@@ -124,6 +124,10 @@ describe('Unlock LSK modal', () => {
     sender: {
       publicKey: '0fe9a3f1a21b5530f27f87a414b549e79a940bf24fdf2b2f05e7f22aeeecc86a',
     },
+    composedFees: {
+      Transaction: '0.1 LSK',
+      Initialisation: '0.1 LSK',
+    },
   };
 
   beforeEach(() => {
@@ -152,7 +156,12 @@ describe('Unlock LSK modal', () => {
     wrapper.find('.confirm-btn').at(0).simulate('click');
     act(() => { wrapper.update(); });
     await flushPromises();
-    expect(props.nextStep).toBeCalledWith({ rawTx });
+    expect(props.nextStep).toBeCalledWith({
+      rawTx,
+      selectedPriority: {
+        selectedIndex: 1,
+      }
+    });
   });
 
   it('calls nextStep when clicked on confirm', async () => {

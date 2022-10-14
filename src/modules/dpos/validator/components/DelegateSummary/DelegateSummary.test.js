@@ -1,5 +1,7 @@
 import React from 'react';
-import { screen, render } from '@testing-library/react';
+import { renderWithRouter } from 'src/utils/testHelpers';
+import { screen } from '@testing-library/react';
+import { MemoryRouter } from 'react-router';
 import { mockDelegates } from '../../__fixtures__';
 import DelegateSummary from './DelegateSummary';
 
@@ -21,13 +23,17 @@ describe('DelegateSummary', () => {
 
   beforeEach(() => {
     jest.clearAllMocks();
-    wrapper = render(<DelegateSummary {...props} />);
+    wrapper = renderWithRouter(DelegateSummary, props);
   });
 
   it('should display properly', () => {
-    expect(screen.getByText('This delegate is among the first 101 delegates in delegate weight ranking.')).toBeTruthy();
+    expect(
+      screen.getByText('This delegate is among the first 101 delegates in delegate weight ranking.')
+    ).toBeTruthy();
     expect(screen.getByText('CMB :')).toBeTruthy();
-    expect(screen.getByTestId('cmb').innerHTML).toEqual(props.delegate.consecutiveMissedBlocks.toString());
+    expect(screen.getByTestId('cmb').innerHTML).toEqual(
+      props.delegate.consecutiveMissedBlocks.toString()
+    );
     expect(screen.getByText(props.weight)).toBeTruthy();
     expect(screen.getByText('Last forged :')).toBeTruthy();
     expect(screen.getByText('22 Aug 2022')).toBeTruthy();
@@ -37,7 +43,11 @@ describe('DelegateSummary', () => {
 
   it('disables vote button if delegate is banned', () => {
     props.status = { className: 'banned', value: 'Banned' };
-    wrapper.rerender(<DelegateSummary {...props} />);
+    wrapper.rerender(
+      <MemoryRouter>
+        <DelegateSummary {...props} />
+      </MemoryRouter>
+    );
     expect(screen.getByText('Vote')).toHaveAttribute('disabled');
   });
 });

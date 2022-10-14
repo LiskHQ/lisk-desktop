@@ -32,7 +32,7 @@ describe('get usable tokens', () => {
     });
 
     expect(http).toHaveBeenCalledWith({
-      path: '/api/v2/blockchain/apps/meta/tokens',
+      path: '/api/v3/blockchain/apps/meta/tokens',
       params: { },
       network,
       baseUrl,

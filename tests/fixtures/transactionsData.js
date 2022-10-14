@@ -57,8 +57,8 @@ export default [
   },
   {
     id: 'ecf56cf27f113893f325f147813bda0f8d5077ea59e8871f668289ccb8f40fa6',
-    moduleCommand: 'auth:registerMultisignatureGroup',
-    moduleAssetName: 'keys:registerMultisignatureGroup',
+    moduleCommand: 'auth:registerMultisignature',
+    moduleAssetName: 'keys:registerMultisignature',
     fee: '414000',
     height: 315,
     nonce: '0',
@@ -145,7 +145,7 @@ export default [
         height: 15329877,
         previousBlockID: 'e1cf8688c454ac350c941c47d54466d22c226c1d028f58d821afc2761cac5330',
         transactionRoot: 'e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855',
-        generatorPublicKey: '8100bb532f85183cbf6e99f9fcc5893f45536fbc9dbf7a80cfe1c1e165203ec7',
+        generatorKey: '8100bb532f85183cbf6e99f9fcc5893f45536fbc9dbf7a80cfe1c1e165203ec7',
         reward: '25000000',
         params: {
           maxHeightPreviouslyForged: 15329877,
@@ -160,7 +160,7 @@ export default [
         height: 15329877,
         previousBlockID: 'e1cf8688c454ac350c941c47d54466d22c226c1d028f58d821afc2761cac5330',
         transactionRoot: 'e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855',
-        generatorPublicKey: '8100bb532f85183cbf6e99f9fcc5893f45536fbc9dbf7a80cfe1c1e165203ec7',
+        generatorKey: '8100bb532f85183cbf6e99f9fcc5893f45536fbc9dbf7a80cfe1c1e165203ec7',
         reward: '25000000',
         params: {
           maxHeightPreviouslyForged: 15329877,
