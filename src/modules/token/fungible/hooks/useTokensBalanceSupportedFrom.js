@@ -3,7 +3,7 @@ import { useTokensBalance, useTokensSupported } from '@token/fungible/hooks/quer
 import {Client} from 'src/utils/api/client';
 
 // eslint-disable-next-line import/prefer-default-export
-export const useTokensBalanceSupportedFrom = (application) => {
+export const useApplicationSupportedTokens = (application) => {
   const client = useRef(new Client())
   if(application?.apis?.length) {
     client.current.create(application.apis[0])

@@ -3,7 +3,6 @@ import MenuSelect, {
   MenuItem
 } from 'src/modules/wallet/components/MenuSelect';
 import chainLogo from '@setup/react/assets/images/LISK.png';
-// import Skeleton from 'src/modules/common/components/skeleton';
 
 // eslint-disable-next-line import/prefer-default-export
 export const ApplicationField = ({ styles, onChange, value,
