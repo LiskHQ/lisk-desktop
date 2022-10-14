@@ -3,7 +3,7 @@ const blockchainApplicationsManage = [
     name: 'Lisk',
     chainID: 'aq02qkbb35u4jdq8szo3pnsq',
     state: 'active',
-    apis: [{ rest: 'http://104.248.241.229:9901', rpc: 'ws://104.248.241.229:9901/rpc-v3' }],
+    apis: [{ rest: 'http://165.22.29.229:9901', rpc: 'ws://165.22.29.229:9901/rpc-v3' }],
     address: 'lsk24cd35u49jd8szo3pnsqe5dsxwrnazyqqqg5eu',
     lastUpdated: 123456789,
     lastCertificateHeight: 9000,
@@ -64,12 +64,9 @@ const blockchainApplicationsManage = [
   },
 ];
 
-export const applicationsMap = blockchainApplicationsManage.reduce(
-  (obj, val) => {
-    obj[val.chainID] = val;
-    return obj;
-  },
-  {},
-);
+export const applicationsMap = blockchainApplicationsManage.reduce((obj, val) => {
+  obj[val.chainID] = val;
+  return obj;
+}, {});
 
 export default blockchainApplicationsManage;
