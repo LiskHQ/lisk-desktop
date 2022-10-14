@@ -207,7 +207,7 @@ class WalletVisual extends React.Component {
         replaceUrlByHashOnScheme.bind(null, this.uniqueSvgUrlHash),
       ),
     };
-    console.log("...>>>", gradientsSchemesUrlsHashed);
+
     const shapes = [
       getBackgroundCircle(newSize, gradientsSchemesUrlsHashed.primary[0]),
       getShape(addressHashChunks[1], newSize, gradientsSchemesUrlsHashed.primary[1], 1),

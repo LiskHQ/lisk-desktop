@@ -1141,7 +1141,6 @@ export const Gradients = ({ scheme, disabled }) => (
   <defs>
     {[...scheme.primary, ...scheme.secondary].map((spec) => (
       <linearGradient id={spec.id} key={spec.id} gradientTransform={`rotate(${spec.rotate})`}>
-        {console.log(spec.colors[0], getGrayScaleColor(spec.colors[0]))}
         {spec.colors.map((color, i) => (
           <stop
             stopColor={disabled ? getGrayScaleColor(color) : color}

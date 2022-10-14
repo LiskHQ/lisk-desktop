@@ -2,7 +2,6 @@ import React from 'react';
 import Box from 'src/theme/box';
 import TxBroadcaster from '@transaction/components/TxBroadcaster';
 import { getTransactionStatus } from '@transaction/configuration/statusConfig';
-import ToggleIcon from '../ToggleIcon';
 import statusMessages from './statusMessages';
 import styles from './styles.css';
 
@@ -18,9 +17,6 @@ const Status = ({
 
   return (
     <Box className={styles.container}>
-      <header className={styles.header}>
-        <ToggleIcon />
-      </header>
       <TxBroadcaster
         title={template.title}
         illustration="vote"

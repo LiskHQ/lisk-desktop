@@ -70,6 +70,8 @@ const VoteSummary = ({
   return (
     <Dialog hasClose className={`${styles.wrapper}`}>
       <TransactionSummary
+        noFeeStatus
+        hasCancel
         confirmButton={onConfirmAction}
         cancelButton={onCancelAction}
         classNames={styles.container}

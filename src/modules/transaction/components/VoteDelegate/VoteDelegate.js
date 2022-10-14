@@ -25,7 +25,7 @@ const InfoColumn = ({ title, children, className }) => (
   </div>
 );
 
-const VoteDelegate = ({ t, account, summaryInfo }) => {
+const VoteDelegate = ({ t, account, summaryInfo, fees }) => {
   const addedLength = Object.keys(summaryInfo.added).length;
   const editedLength = Object.keys(summaryInfo.edited).length;
   const removedLength = Object.keys(summaryInfo.removed).length;
@@ -39,6 +39,11 @@ const VoteDelegate = ({ t, account, summaryInfo }) => {
       <div className={styles.infoContainer}>
         <InfoColumn title={t('Total votes after confirmation')} className="total-votes">
           {`${sentVotes + addedLength - removedLength}/10`}
+        </InfoColumn>
+      </div>
+      <div className={styles.txFeeContainer}>
+        <InfoColumn title={t('Transaction Fees')} className="total-votes">
+          {fees.Transaction}
         </InfoColumn>
       </div>
     </>
