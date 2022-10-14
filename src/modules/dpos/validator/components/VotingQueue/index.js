@@ -1,5 +1,5 @@
 /* istanbul ignore file */
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 
 import TxSignatureCollector from '@transaction/components/TxSignatureCollector';
 import { removeSearchParamsFromUrl } from 'src/utils/searchParams';
@@ -10,6 +10,8 @@ import Status from '../VoteStatus';
 import styles from './styles.css';
 
 const VotingQueue = ({ history, processLaunchProtocol }) => {
+  const [{ step}, setMultiStepState] = useState({});
+
   const closeModal = () => {
     removeSearchParamsFromUrl(history, ['modal'], true);
   };
@@ -25,7 +27,8 @@ const VotingQueue = ({ history, processLaunchProtocol }) => {
     <MultiStep
       key="voting-queue"
       finalCallback={closeModal}
-      className={styles.modal}
+      className={step?.current === 3 ? styles.confirmModal :styles.modal}
+      onChange={setMultiStepState}
     >
       <Form />
       <Summary />

@@ -1,29 +1,27 @@
 import React from 'react';
-import Box from 'src/theme/box';
 import TxBroadcaster from '@transaction/components/TxBroadcaster';
 import { getTransactionStatus } from '@transaction/configuration/statusConfig';
 import statusMessages from './statusMessages';
 import styles from './styles.css';
+import VoteSuccessfulModal from './VoteSuccessfulModal';
 
-const Status = ({
-  account, transactions, statusInfo, t,
-}) => {
-  const status = getTransactionStatus(
-    account,
-    transactions,
-    account?.summary.isMultisignature,
-  );
+const Status = ({ account, transactions, statusInfo, t }) => {
+  const status = getTransactionStatus(account, transactions, account?.summary.isMultisignature);
   const template = statusMessages(t, statusInfo)[status.code];
 
   return (
-    <Box className={styles.container}>
-      <TxBroadcaster
-        title={template.title}
-        illustration="vote"
-        status={status}
-        message={template.message}
-      />
-    </Box>
+    <div className={styles.container}>
+      {status.code === 'BROADCAST_SUCCESS' ? (
+        <VoteSuccessfulModal />
+      ) : (
+        <TxBroadcaster
+          title={template.title}
+          illustration="vote"
+          status={status}
+          message={template.message}
+        />
+      )}
+    </div>
   );
 };
 

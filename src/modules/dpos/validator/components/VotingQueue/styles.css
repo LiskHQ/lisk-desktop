@@ -8,6 +8,12 @@
   border-radius: var(--border-radius-box);
 }
 
+.confirmModal {
+  width: 371px;
+  background: var(--color-white);
+  border-radius: var(--border-radius-box);
+}
+
 .toggleIcon {
   padding-left: 14px;
   box-sizing: border-box;
