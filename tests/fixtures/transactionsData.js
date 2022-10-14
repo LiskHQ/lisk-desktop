@@ -1,7 +1,7 @@
 export default [
   {
     id: '6dc372dfcbfd2b1782d4d1964a35908f71e3878c69b5bbe28e5c69973671c8ee',
-    moduleCommandID: '2:0',
+    moduleCommand: 'token:transfer',
     moduleAssetName: 'token:transfer',
     fee: '143000',
     height: 414,
@@ -30,7 +30,7 @@ export default [
   },
   {
     id: '827028a55e5a28f96437bf87531c61255b737ceb3407989dfd41985ed6d5453b',
-    moduleCommandID: '5:0',
+    moduleCommand: 'dpos:registerDelegate',
     moduleAssetName: 'dpos:registerDelegate',
     fee: '1000268000',
     height: 329,
@@ -57,8 +57,8 @@ export default [
   },
   {
     id: 'ecf56cf27f113893f325f147813bda0f8d5077ea59e8871f668289ccb8f40fa6',
-    moduleCommandID: '4:0',
-    moduleAssetName: 'keys:registerMultisignatureGroup',
+    moduleCommand: 'auth:registerMultisignature',
+    moduleAssetName: 'keys:registerMultisignature',
     fee: '414000',
     height: 315,
     nonce: '0',
@@ -92,7 +92,7 @@ export default [
   },
   {
     id: 'a1c5521f466ae5476d3908cc8d562444d45adf4ac3af57e77f1f9359999ab9ca',
-    moduleCommandID: '5:1',
+    moduleCommand: 'dpos:voteDelegate',
     moduleAssetName: 'dpos:voteDelegate',
     fee: '144000',
     height: 454,
@@ -121,7 +121,7 @@ export default [
   },
   {
     id: '1f1aa24b49859d825cc5ace36b5554a1ee65556852b0c1f5c043853c697a2651',
-    moduleCommandID: '5:3',
+    moduleCommand: 'dpos:reportDelegateMisbehavior',
     moduleAssetName: 'dpos:reportDelegateMisbehavior',
     fee: '10000000',
     height: 15334905,
@@ -145,7 +145,7 @@ export default [
         height: 15329877,
         previousBlockID: 'e1cf8688c454ac350c941c47d54466d22c226c1d028f58d821afc2761cac5330',
         transactionRoot: 'e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855',
-        generatorPublicKey: '8100bb532f85183cbf6e99f9fcc5893f45536fbc9dbf7a80cfe1c1e165203ec7',
+        generatorKey: '8100bb532f85183cbf6e99f9fcc5893f45536fbc9dbf7a80cfe1c1e165203ec7',
         reward: '25000000',
         params: {
           maxHeightPreviouslyForged: 15329877,
@@ -160,7 +160,7 @@ export default [
         height: 15329877,
         previousBlockID: 'e1cf8688c454ac350c941c47d54466d22c226c1d028f58d821afc2761cac5330',
         transactionRoot: 'e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855',
-        generatorPublicKey: '8100bb532f85183cbf6e99f9fcc5893f45536fbc9dbf7a80cfe1c1e165203ec7',
+        generatorKey: '8100bb532f85183cbf6e99f9fcc5893f45536fbc9dbf7a80cfe1c1e165203ec7',
         reward: '25000000',
         params: {
           maxHeightPreviouslyForged: 15329877,

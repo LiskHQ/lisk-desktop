@@ -18,8 +18,8 @@ const Summary = (props) => {
       t={t}
       account={account}
       transactions={transactions}
-      votesSubmitted={(params) => {
-        dispatch(votesSubmitted(params));
+      votesSubmitted={(...params) => {
+        dispatch(votesSubmitted(...params));
       }}
     />
   );

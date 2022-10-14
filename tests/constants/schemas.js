@@ -1,5 +1,5 @@
 const moduleCommandSchemas = {
-  '2:0': {
+  'token:transfer': {
     $id: 'lisk/transfer-asset',
     properties: {
       amount: { dataType: 'uint64', fieldNumber: 1 },
@@ -9,18 +9,22 @@ const moduleCommandSchemas = {
       data: {
         dataType: 'string', fieldNumber: 3, maxLength: 64, minLength: 0,
       },
+      tokenID: {
+        dataType: 'bytes', fieldNumber: 4, maxLength: 8, minLength: 8,
+      },
     },
-    required: ['amount', 'recipientAddress', 'data'],
+    required: ['amount', 'recipientAddress', 'data', 'tokenID'],
     title: 'Transfer transaction asset',
     type: 'object',
   },
-  '4:0': {
+  'auth:registerMultisignature': {
     $id: 'lisk/keys/register',
     type: 'object',
     required: [
       'numberOfSignatures',
       'optionalKeys',
       'mandatoryKeys',
+      'signatures',
     ],
     properties: {
       numberOfSignatures: {
@@ -51,24 +55,51 @@ const moduleCommandSchemas = {
         minItems: 0,
         maxItems: 64,
       },
-    },
-  },
-  '5:0': {
-    $id: 'lisk/dpos/register',
-    type: 'object',
-    required: [
-      'username',
-    ],
-    properties: {
-      username: {
-        dataType: 'string',
-        fieldNumber: 1,
-        minLength: 1,
-        maxLength: 20,
+      signatures: {
+        type: 'array',
+        items: {
+          dataType: 'bytes',
+          minLength: 64,
+          maxLength: 64,
+        },
+        fieldNumber: 4,
       },
     },
   },
-  '5:1': {
+  'dpos:registerDelegate': {
+    $id: 'lisk/dpos/register',
+    type: 'object',
+    required: [
+      'name', 'generatorKey', 'blsKey', 'proofOfPossession',
+    ],
+    properties: {
+      name: {
+        dataType: 'string',
+        fieldNumber: 1,
+        minLength: 1,
+        maxLength: 20
+      },
+      generatorKey: {
+        dataType: 'bytes',
+        fieldNumber: 2,
+        minLength: 32,
+        maxLength: 32
+      },
+      blsKey: {
+        dataType: 'bytes',
+        fieldNumber: 3,
+        minLength: 48,
+        maxLength: 48
+      },
+      proofOfPossession: {
+        dataType: 'bytes',
+        fieldNumber: 4,
+        minLength: 96,
+        maxLength: 96
+      }
+    },
+  },
+  'dpos:voteDelegate': {
     $id: 'lisk/dpos/vote',
     type: 'object',
     required: [
@@ -102,7 +133,7 @@ const moduleCommandSchemas = {
       },
     },
   },
-  '5:2': {
+  'dpos:unlock': {
     $id: 'lisk/dpos/unlock',
     type: 'object',
     required: [
@@ -141,7 +172,7 @@ const moduleCommandSchemas = {
       },
     },
   },
-  '1000:0': {
+  'legacy:reclaim': {
     $id: 'lisk/legacyAccount/reclaim',
     title: 'Reclaim transaction asset',
     type: 'object',

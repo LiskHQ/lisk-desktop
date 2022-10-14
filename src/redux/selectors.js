@@ -11,12 +11,11 @@ const selectActiveTokenAccount = (state) => {
   }
   return {
     ...state.wallet.info[state.token.active],
-    passphrase: state.wallet.passphrase,
     hwInfo: state.hwInfo,
     loginType: state.wallet.loginType,
   };
 };
-const selectAccountBalance = state => (
+const selectAccountBalance = state => ( // @todo account has multiple balance now
   state.wallet.info ? state.wallet.info[state.token.active].summary.balance : undefined);
 const selectBookmarks = state => state.bookmarks[state.token.active];
 const selectBookmark = (state, address) =>

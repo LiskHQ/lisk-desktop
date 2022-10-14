@@ -46,6 +46,7 @@
   display: flex;
   flex-flow: row wrap;
   justify-content: flex-end;
+  align-items: center;
 
   & .container {
     @mixin contentNormal;
@@ -74,7 +75,8 @@
   & .more {
     @mixin contentSmall;
 
-    margin-bottom: calc(-1 * var(--vertical-padding-m));
+    height: 100%;
+    padding: 10px;
   }
 }
 
@@ -85,4 +87,48 @@
 .walletVisualWithAddress span {
   font-weight: var(--font-weight-semi-bold);
   font-size: var(--font-size-h6);
+}
+
+.delegateDetails {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+
+  & > div {
+    display: flex;
+    flex-direction: column;
+
+    &:last-child {
+      margin-left: 8px;
+    }
+
+    & > .delegateName {
+      @mixin headingSmall;
+
+      margin-top: 0;
+      margin-bottom: 10px;
+      color: var(--color-maastricht-blue);
+      font-family: var(--content-font);
+
+      & > span {
+        @mixin contentNormal;
+
+        margin-left: 10px;
+        color: black;
+      }
+    }
+
+    & > .delegateAddress {
+      @mixin contentNormal;
+
+      margin: 0;
+      color: var(--color-slate-gray);
+    }
+  }
+}
+
+.dateTime {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
 }

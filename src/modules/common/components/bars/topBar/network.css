@@ -18,8 +18,8 @@
     margin-left: 8px;
 
     /* Network name */
-    & > div {
-      margin-left: 5px;
+    & > span {
+      margin-right: 5px;
       font-weight: var(--font-weight-very-bold);
       text-transform: capitalize;
       display: inline-block;
@@ -33,6 +33,25 @@
       text-transform: lowercase;
     }
   }
+}
+
+.dropdown {
+  width: 200px;
+  margin-right: 20px;
+}
+
+.networkItem {
+  text-transform: capitalize;
+  outline: none;
+  border: none;
+  display: flex;
+  flex: 1;
+  flex-direction: row;
+  justify-content: space-between;
+}
+
+.title {
+  font-weight: var(--font-weight-very-bold);
 }
 
 .status {

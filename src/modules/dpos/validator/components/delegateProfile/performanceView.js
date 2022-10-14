@@ -1,5 +1,6 @@
 import React from 'react';
 import { NavLink } from 'react-router-dom';
+import { useTranslation } from 'react-i18next';
 import grid from 'flexboxgrid/dist/flexboxgrid.css';
 
 import { DEFAULT_STANDBY_THRESHOLD } from '@dpos/validator/consts';
@@ -37,9 +38,7 @@ const Item = ({ icon, title, children }) => {
   );
 };
 
-const FullItem = ({
-  icon, title, children, theme,
-}) => (
+const FullItem = ({ icon, title, children, theme }) => (
   <BoxContent className={`${styles.full} performance`}>
     <div className={styles.content}>
       <div className={`${styles.title} ${theme}`}>{title}</div>
@@ -53,9 +52,7 @@ const FullItem = ({
 
 const ActiveDelegate = ({ theme, t }) => (
   <div className={`${styles.delegateDescription} ${theme}`}>
-    <p>
-      {t('This delegate is among the first 101 delegates by delegate weight.')}
-    </p>
+    <p>{t('This delegate is among the first 101 delegates by delegate weight.')}</p>
 
     <p>{t('Active delegates are select to generate blocks every round.')}</p>
   </div>
@@ -69,7 +66,7 @@ const StandByDelegate = ({ theme, t }) => (
     </p>
     <p>
       {t(
-        'Standby delegates can be chosen at random for one of two slots per round for generating a block.',
+        'Standby delegates can be chosen at random for one of two slots per round for generating a block.'
       )}
     </p>
   </div>
@@ -79,7 +76,7 @@ const IneligibleDelegate = ({ theme, t }) => (
   <div className={`${styles.delegateDescription} ${theme}`}>
     <p>
       {t(
-        'The delegate weight is below 1,000 LSK meaning that the delegate is not eligible to forge.',
+        'The delegate weight is below 1,000 LSK meaning that the delegate is not eligible to forge.'
       )}
     </p>
   </div>
@@ -89,14 +86,10 @@ const PunishedDelegate = ({ theme, t }) => (
   <div className={`${styles.delegateDescription} ${theme}`}>
     <p>
       {t(
-        'The delegate is temporarily punished and their delegate weight is set to 0 due to a misbehavior.',
+        'The delegate is temporarily punished and their delegate weight is set to 0 due to a misbehavior.'
       )}
     </p>
-    <DialogLink
-      className={grid.row}
-      component="delegatePerformance"
-      data={{ status: 'punished' }}
-    >
+    <DialogLink className={grid.row} component="delegatePerformance" data={{ status: 'punished' }}>
       <div className={`${styles.details} ${grid.col} ${grid['col-md-12']}`}>
         <p>Details &gt;</p>
       </div>
@@ -108,7 +101,7 @@ const BannedDelegate = ({ theme, t }) => (
   <div className={`${styles.delegateDescription} ${theme}`}>
     <p>
       {t(
-        'The delegate is permanently banned from generating blocks due to repeated protocol violations or missing too many blocks.',
+        'The delegate is permanently banned from generating blocks due to repeated protocol violations or missing too many blocks.'
       )}
     </p>
   </div>
@@ -127,10 +120,11 @@ const getDelegateComponent = (status) => {
   return components[status];
 };
 
-const PerformanceView = ({ t, data }) => {
+const PerformanceView = ({ data }) => {
+  const { t } = useTranslation();
   const theme = useTheme();
-  const status = getStatus(data);
-  const DelegateComponent = getDelegateComponent(status);
+  const status = data.status || '';
+  const DelegateComponent = status.length ? getDelegateComponent(status) : () => null;
 
   return (
     <Box
@@ -140,56 +134,39 @@ const PerformanceView = ({ t, data }) => {
         <h1 className={styles.heading}>{t('Performance')}</h1>
       </BoxHeader>
       <Box className={`${grid.row} ${styles.content}`}>
-        <Box
-          className={`${grid.col} ${grid['col-xs-4']} ${grid['col-md-4']} ${styles.column}`}
-        >
-          <FullItem
-            theme={theme}
-            title={t('Status')}
-            icon={getDelegateIcon(status)}
-          >
+        <Box className={`${grid.col} ${grid['col-xs-4']} ${grid['col-md-4']} ${styles.column}`}>
+          <FullItem theme={theme} title={t('Status')} icon={getDelegateIcon(status)}>
             <div className={styles.performanceValue}>{capitalize(status)}</div>
             <DelegateComponent theme={theme} t={t} />
           </FullItem>
         </Box>
-        <Box
-          className={`${grid.col} ${grid['col-xs-4']} ${grid['col-md-4']} ${styles.column}`}
-        >
+        <Box className={`${grid.col} ${grid['col-xs-4']} ${grid['col-md-4']} ${styles.column}`}>
           <Item title={t('Last forged block')} icon="productivity">
-            {data.lastForgedHeight ? (
+            {data.lastGeneratedHeight ? (
               <NavLink
-                to={`${routes.block.path}?height=${data.lastForgedHeight}`}
+                to={`${routes.block.path}?height=${data.lastGeneratedHeight}`}
                 className={styles.performanceValue}
-                id={data.lastForgedHeight}
+                id={data.lastGeneratedHeight}
                 exact
               >
-                {data.lastForgedHeight}
+                {data.lastGeneratedHeight}
               </NavLink>
             ) : (
               <span className={styles.performanceValue}>-</span>
             )}
           </Item>
           <Item title={t('Forged blocks')} icon="forgedBlocks">
-            <div className={styles.performanceValue}>
-              {data.producedBlocks ?? '-'}
-            </div>
+            <div className={styles.performanceValue}>{data.producedBlocks ?? '-'}</div>
           </Item>
         </Box>
-        <Box
-          className={`${grid.col} ${grid['col-xs-4']} ${grid['col-md-4']} ${styles.column}`}
-        >
+        <Box className={`${grid.col} ${grid['col-xs-4']} ${grid['col-md-4']} ${styles.column}`}>
           <Item title={t('Rewards (LSK)')} icon="reward">
             <div>
               <TokenAmount val={data.rewards || 0} />
             </div>
           </Item>
-          <Item
-            title={t('Consecutive missed blocks')}
-            icon="consecutiveMissedBlocks"
-          >
-            <div className={styles.performanceValue}>
-              {data.consecutiveMissedBlocks}
-            </div>
+          <Item title={t('Consecutive missed blocks')} icon="consecutiveMissedBlocks">
+            <div className={styles.performanceValue}>{data.consecutiveMissedBlocks}</div>
           </Item>
         </Box>
       </Box>

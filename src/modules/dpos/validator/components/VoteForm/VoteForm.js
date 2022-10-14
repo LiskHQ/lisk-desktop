@@ -1,5 +1,5 @@
 import React, { useMemo, useState } from 'react';
-import { MODULE_COMMANDS_NAME_ID_MAP } from '@transaction/configuration/moduleAssets';
+import { MODULE_COMMANDS_NAME_MAP } from 'src/modules/transaction/configuration/moduleCommand';
 import { MIN_ACCOUNT_BALANCE } from '@transaction/configuration/transactions';
 import { toRawLsk } from '@token/fungible/utils/lsk';
 import { normalizeVotesForTx } from '@transaction/utils';
@@ -160,7 +160,7 @@ const VoteForm = ({
     t,
   );
 
-  const onConfirm = (rawTx, trnxData, selectedPriority, fees) => {
+  const onConfirm = (rawTx, selectedPriority, fees) => {
     nextStep({
       rawTx,
       added,
@@ -169,7 +169,6 @@ const VoteForm = ({
       selfUnvote,
       selectedPriority,
       fees,
-      transactionData: trnxData,
     });
   };
 
@@ -179,7 +178,7 @@ const VoteForm = ({
 
   const showEmptyState = !changedVotes.length || isVotingTxPending;
   const transaction = {
-    moduleCommandID: MODULE_COMMANDS_NAME_ID_MAP.voteDelegate,
+    moduleCommand: MODULE_COMMANDS_NAME_MAP.voteDelegate,
     isValid: !feedback.error && Object.keys(changedVotes).length > 0 && !isVotingTxPending,
     params: {
       votes: normalizedVotes,

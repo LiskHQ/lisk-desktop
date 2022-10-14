@@ -5,7 +5,7 @@ export default {
     forbiddenTokens: [],
   },
   addAccountBySecretRecovery: {
-    path: '/account/add/secrete-recovery',
+    path: '/account/add/secret-recovery',
     isPrivate: false,
     forbiddenTokens: [],
     exact: true,
@@ -37,6 +37,12 @@ export default {
   },
   delegates: {
     path: '/delegates',
+    exact: true,
+    isPrivate: false,
+    forbiddenTokens: [],
+  },
+  delegateProfile: {
+    path: '/delegates/profile',
     exact: true,
     isPrivate: false,
     forbiddenTokens: [],
@@ -107,6 +113,7 @@ export default {
   transactions: {
     path: '/transactions',
     isPrivate: false,
+    exact: true,
     forbiddenTokens: [],
   },
   wallets: {
@@ -117,11 +124,23 @@ export default {
   wallet: {
     path: '/wallet',
     isPrivate: true,
-    exact: false,
+    exact: true,
     forbiddenTokens: [],
   },
   blockchainApplications: {
     path: '/applications',
+    isPrivate: false,
+    forbiddenTokens: [],
+  },
+  transactionDetails: {
+    path: '/transactions/details',
+    exact: true,
+    isPrivate: false,
+    forbiddenTokens: [],
+  },
+  allTokens: {
+    path: '/wallet/tokens/all',
+    exact: true,
     isPrivate: false,
     forbiddenTokens: [],
   },
@@ -134,6 +153,10 @@ export const modals = {
   },
   bookmarks: {
     isPrivate: false,
+    forbiddenTokens: [],
+  },
+  editAccount: {
+    isPrivate: true,
     forbiddenTokens: [],
   },
   send: {
@@ -157,10 +180,6 @@ export const modals = {
     forbiddenTokens: [],
   },
   search: {
-    isPrivate: false,
-    forbiddenTokens: [],
-  },
-  transactionDetails: {
     isPrivate: false,
     forbiddenTokens: [],
   },

@@ -2,6 +2,12 @@
 import React from 'react';
 import RecentTransactions from '@transaction/components/RecentTransactions';
 import WalletDetails from '@token/fungible/manager/walletDetails';
+import { useAccounts, useCurrentAccount } from '@account/hooks';
+import AccountCreationTips from '@account/components/AccountCreationTips';
+import { ManageAccountsContent } from '@account/components/ManageAccounts';
+import Box from 'src/theme/box';
+import BoxHeader from 'src/theme/box/header';
+import { isEmpty } from 'src/utils/helpers';
 import Onboarding from '../onboarding/onboarding';
 import NewsFeed from '../newsFeed';
 import styles from './dashboard.css';
@@ -37,8 +43,9 @@ const getOnboardingSlides = (t) => [
   },
 ];
 
-const Dashboard = ({ wallet, t }) => {
-  const isLoggedIn = !!wallet?.summary?.address;
+const Dashboard = ({ t, history }) => {
+  const { accounts } = useAccounts();
+  const [ currentAccount ] = useCurrentAccount();
   const OnboardingBannerName = 'dashboardOnboarding';
 
   return (
@@ -52,15 +59,35 @@ const Dashboard = ({ wallet, t }) => {
         <div className={`${styles.main}`}>
           <div className={styles.subContainer}>
             {
-              isLoggedIn
-                ? <WalletDetails className={styles.marginFix} isWalletRoute={false} />
-                : null
+              !isEmpty(currentAccount) && (
+                <>
+                  <WalletDetails className={styles.marginFix} isWalletRoute={false} />
+                  <RecentTransactions
+                    isLoggedIn
+                    className={styles.marginFix}
+                  />
+                </>
+              )
             }
-
-            <RecentTransactions
-              className={styles.marginFix}
-              isLoggedIn={isLoggedIn}
-            />
+            {
+              isEmpty(currentAccount) && accounts.length === 0 && <AccountCreationTips />
+            }
+            {
+              isEmpty(currentAccount) && accounts.length > 0
+                && (
+                  <Box className={styles.wrapper}>
+                    <BoxHeader>
+                      <h1>{t('Manage accounts')}</h1>
+                    </BoxHeader>
+                    <ManageAccountsContent
+                      truncate
+                      isRemoveAvailable
+                      history={history}
+                      className={styles.manageAccounts}
+                    />
+                  </Box>
+                )
+            }
           </div>
 
           <div className={`${styles.community} community-feed`}>

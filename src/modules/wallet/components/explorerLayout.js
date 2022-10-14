@@ -1,62 +1,52 @@
 /* istanbul ignore file */
-import React, { useEffect } from 'react';
-import { useSelector } from 'react-redux';
-import { isEmpty } from 'src/utils/helpers';
-import { selectActiveToken, selectSettings } from 'src/redux/selectors';
+import React, { useState } from 'react';
+import { useTranslation } from 'react-i18next';
+import Box from 'src/theme/box';
+import BoxTabs from 'src/theme/tabs';
+import BoxHeader from 'src/theme/box/header';
+import BoxContent from 'src/theme/box/content';
 import { selectSearchParamValue } from 'src/utils/searchParams';
-import TabsContainer from '@theme/tabs/tabsContainer/tabsContainer';
 import Transactions from '@transaction/components/Explorer';
-import DelegateTab from '@dpos/validator/components/delegateProfile';
+import TransactionEvents from '@transaction/components/TransactionEvents';
 import Overview from './overview/overviewManager';
-import VotesTab from './votes';
 
-const ExplorerLayout = ({ t, account, history }) => {
-  const activeToken = useSelector(selectActiveToken);
-  const { discreetMode } = useSelector(selectSettings);
+const ExplorerLayout = ({ history }) => {
+  const { t } = useTranslation();
   const address = selectSearchParamValue(history.location.search, 'address');
+  const [activeTab, setActiveTab] = useState('transactions');
 
-  useEffect(() => {
-    account.loadData();
-  }, [address]);
-
-  if (!account || !account.data || isEmpty(account.data)) {
-    return <div />;
-  }
-
-  const isDelegate = account.data.summary?.isDelegate;
+  const tabs = {
+    tabs: [
+      {
+        value: 'transactions',
+        name: t('Transactions'),
+        className: 'transactions',
+      },
+      {
+        value: 'events',
+        name: t('Events'),
+        className: 'events',
+      },
+    ],
+    active: activeTab,
+    onClick: ({ value }) => setActiveTab(value),
+  };
 
   return (
     <section>
-      <Overview
-        isWalletRoute={false}
-        activeToken={activeToken}
-        discreetMode={discreetMode}
-        account={account.data}
-      />
-      <TabsContainer name="main-tabs">
-        <Transactions
-          pending={[]}
-          activeToken={activeToken}
-          discreetMode={discreetMode}
-          name={t('Transactions')}
-          id="transactions"
-          address={address}
-        />
-        <VotesTab
-          history={history}
-          address={address}
-          name={t('Voting')}
-          id="voting"
-        />
-        {!isDelegate ? null : (
-          <DelegateTab
-            tabClassName="delegate-statistics"
-            name={t('Delegate profile')}
-            id="delegateProfile"
-            account={account.data}
-          />
-        )}
-      </TabsContainer>
+      <Overview />
+      <Box>
+        <BoxHeader>
+          <BoxTabs {...tabs} />
+        </BoxHeader>
+        <BoxContent>
+          {activeTab === 'transactions' ? (
+            <Transactions pending={[]} address={address} />
+          ) : (
+            <TransactionEvents address={address} />
+          )}
+        </BoxContent>
+      </Box>
     </section>
   );
 };

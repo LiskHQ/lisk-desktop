@@ -4,9 +4,18 @@ import { keyCodes } from 'src/utils/keyCodes';
 import { Input } from 'src/theme';
 import styles from './AutoSuggest.css';
 
-const AutoSuggest = ({ // eslint-disable-line max-statements
-  items, selectedItem, matchProps, onSelectItem, onChange,
-  onChangeDelayed, placeholder, renderItem, renderIcon, className,
+// eslint-disable-next-line max-statements
+const AutoSuggest = ({
+  items,
+  selectedItem,
+  matchProps,
+  onSelectItem,
+  onChange,
+  onChangeDelayed,
+  placeholder,
+  renderItem,
+  renderIcon,
+  className,
 }) => {
   const [dropdownIndex, setDropdownIndex] = useState(0);
   const [isLoading, setIsLoading] = useState(false);
@@ -20,8 +29,8 @@ const AutoSuggest = ({ // eslint-disable-line max-statements
     }
 
     return items.filter((item) =>
-      matchProps.find((prop) =>
-        item[prop].toLowerCase().includes(selectedItem.value.toLowerCase())));
+      matchProps.find((prop) => item[prop].toLowerCase().includes(selectedItem.value.toLowerCase()))
+    );
   }, [selectedItem, items]);
 
   const resetListIndex = () => {
@@ -50,10 +59,11 @@ const AutoSuggest = ({ // eslint-disable-line max-statements
 
       // istanbul ignore else
       if (action === 'up' && dropdownIndexVal > 0) {
-        listContainerRef.current.scrollTop = listContainerRef.current.scrollTop > 0
-                && (dropdownIndexVal - 1) * rowHeight < listContainerRef.current.scrollTop
-          ? listContainerRef.current.scrollTop - rowHeight
-          : listContainerRef.current.scrollTop;
+        listContainerRef.current.scrollTop =
+          listContainerRef.current.scrollTop > 0 &&
+          (dropdownIndexVal - 1) * rowHeight < listContainerRef.current.scrollTop
+            ? listContainerRef.current.scrollTop - rowHeight
+            : listContainerRef.current.scrollTop;
         dropdownIndexVal -= 1;
       }
       return dropdownIndexVal;
@@ -82,7 +92,7 @@ const AutoSuggest = ({ // eslint-disable-line max-statements
         case keyCodes.enter:
           onKeyPressEnter();
           break;
-          // istanbul ignore next
+        // istanbul ignore next
         default:
           break;
       }
@@ -115,10 +125,7 @@ const AutoSuggest = ({ // eslint-disable-line max-statements
   };
 
   const isOnError = () => {
-    if (
-      (!items.length && selectedItem.error)
-            || (!isFocused && selectedItem.error)
-    ) return true;
+    if ((!items.length && selectedItem.error) || (!isFocused && selectedItem.error)) return true;
     return !!(items.length && !filterList.length && selectedItem.error);
   };
 
@@ -127,13 +134,9 @@ const AutoSuggest = ({ // eslint-disable-line max-statements
       <span className={`${styles.inputWrapper} ${className}`}>
         <Input
           autoComplete="off"
-          className={`${styles.input} ${
-            isOnError() ? 'error' : ''
-          } ${className} bookmark`}
+          className={`${styles.input} ${isOnError() ? 'error' : ''} ${className} bookmark`}
           name={className}
-          value={
-                selectedItem.selected ? selectedItem.title : selectedItem.value
-            }
+          value={selectedItem.selected ? selectedItem.title : selectedItem.value}
           placeholder={placeholder}
           onKeyDown={onHandleKeyPress}
           onChange={onChangeEv}
@@ -144,10 +147,7 @@ const AutoSuggest = ({ // eslint-disable-line max-statements
           onBlur={onBlur}
           onFocus={onFocus}
         />
-        <ul
-          className={`${styles.suggestionList} bookmark-list`}
-          ref={listContainerRef}
-        >
+        <ul className={`${styles.suggestionList} bookmark-list`} ref={listContainerRef}>
           {filterList.map((item, index) => (
             <li
               key={index}
@@ -179,7 +179,7 @@ AutoSuggest.propTypes = {
 };
 
 AutoSuggest.defaultProps = {
-  renderItem: item => item,
+  renderItem: (item) => item,
   renderIcon: () => null,
   onChangeDelayed: () => null,
   className: '',

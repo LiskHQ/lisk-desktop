@@ -19,7 +19,7 @@ describe('Status', () => {
   };
 
   const signedTransaction = {
-    id: '1000:0',
+    id: 'legacy:reclaim',
     senderPublicKey: accounts.non_migrated.summary.publicKey,
     signatures: [accounts.non_migrated.summary.publicKey],
     nonce: '19n',

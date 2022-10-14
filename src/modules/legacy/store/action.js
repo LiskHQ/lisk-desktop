@@ -7,7 +7,6 @@ import { selectActiveTokenAccount } from 'src/redux/selectors';
 export const balanceReclaimed = (
   transactionObject,
   privateKey,
-  publicKey,
 ) => async (dispatch, getState) => {
   //
   // Collect data
@@ -20,11 +19,11 @@ export const balanceReclaimed = (
   //
   const [error, tx] = await to(
     createGenericTx({
-      network: state.network,
-      wallet: activeWallet,
       transactionObject,
+      wallet: activeWallet,
+      schema: state.network.networks.LSK.moduleCommandSchemas[transactionObject.moduleCommand],
+      chainID: state.network.networks.LSK.chainID,
       privateKey,
-      publicKey,
     }),
   );
 

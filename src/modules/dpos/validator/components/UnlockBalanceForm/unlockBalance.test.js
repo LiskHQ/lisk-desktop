@@ -1,7 +1,7 @@
 import { act } from 'react-dom/test-utils';
 import networks from '@network/configuration/networks';
 import { tokenMap } from '@token/fungible/consts/tokens';
-import { mountWithProps } from 'src/utils/testHelpers';
+import { mountWithQueryAndProps } from 'src/utils/testHelpers';
 import * as hwManager from '@transaction/utils/hwManager';
 import { createGenericTx } from '@transaction/api';
 import useTransactionPriority from '@transaction/hooks/useTransactionPriority';
@@ -10,6 +10,13 @@ import wallets from '@tests/constants/wallets';
 import flushPromises from '@tests/unit-test-utils/flushPromises';
 import UnlockBalanceForm from './index';
 
+
+jest.mock('@account/hooks/useDeprecatedAccount', () => ({
+  useDeprecatedAccount: jest.fn().mockReturnValue({
+    isSuccess: true,
+    isLoading: false
+  }),
+}));
 jest.mock('@transaction/hooks/useTransactionPriority');
 jest.mock('@transaction/hooks/useTransactionFeeCalculation');
 jest.mock('@transaction/api');
@@ -112,15 +119,19 @@ describe('Unlock LSK modal', () => {
       ],
     },
     fee: 10000000,
-    moduleCommandID: '5:2',
+    moduleCommand: 'dpos:unlock',
     nonce: '178',
     sender: {
       publicKey: '0fe9a3f1a21b5530f27f87a414b549e79a940bf24fdf2b2f05e7f22aeeecc86a',
     },
+    composedFees: {
+      Transaction: '0.1 LSK',
+      Initialisation: '0.1 LSK',
+    },
   };
 
   beforeEach(() => {
-    wrapper = mountWithProps(UnlockBalanceForm, props, store);
+    wrapper = mountWithQueryAndProps(UnlockBalanceForm, props, store);
     hwManager.signTransactionByHW.mockResolvedValue({});
   });
 
@@ -145,7 +156,12 @@ describe('Unlock LSK modal', () => {
     wrapper.find('.confirm-btn').at(0).simulate('click');
     act(() => { wrapper.update(); });
     await flushPromises();
-    expect(props.nextStep).toBeCalledWith({ rawTx });
+    expect(props.nextStep).toBeCalledWith({
+      rawTx,
+      selectedPriority: {
+        selectedIndex: 1,
+      }
+    });
   });
 
   it('calls nextStep when clicked on confirm', async () => {
@@ -171,7 +187,7 @@ describe('Unlock LSK modal', () => {
         },
       },
     };
-    wrapper = mountWithProps(UnlockBalanceForm, props, newStore);
+    wrapper = mountWithQueryAndProps(UnlockBalanceForm, props, newStore);
     wrapper.find('.confirm-btn button').simulate('click');
     expect(props.nextStep).not.toBeCalled();
   });

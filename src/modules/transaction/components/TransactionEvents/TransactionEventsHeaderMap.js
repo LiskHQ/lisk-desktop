@@ -1,24 +1,37 @@
 import grid from 'flexboxgrid/dist/flexboxgrid.css';
 
-export default (t) => ([
+const walletEventHeaderMap = (t) => [
   {
-    title: t('Index'),
-    classList: grid['col-xs-1'],
+    title: t('Block height'),
+    classList: grid['col-xs-2'],
   },
   {
-    title: t('ID'),
-    classList: grid['col-xs-6'],
+    title: t('Transaction ID'),
+    classList: grid['col-xs-4'],
   },
   {
     title: t('Module'),
     classList: grid['col-xs-3'],
   },
   {
-    title: t('Type ID'),
-    classList: grid['col-xs-1'],
+    title: t('Name'),
+    classList: grid['col-xs-2'],
+  },
+];
+
+const defaultEventHeaderMap = (t) => [
+  {
+    title: t('Index'),
+    classList: grid['col-xs-4'],
   },
   {
-    title: '',
-    classList: `${grid['col-xs-1']} ${grid['col-md-1']}`,
+    title: t('Module'),
+    classList: grid['col-xs-4'],
   },
-]);
+  {
+    title: t('Name'),
+    classList: grid['col-xs-3'],
+  },
+];
+
+export default (t, isWallet) => (isWallet ? walletEventHeaderMap(t) : defaultEventHeaderMap(t));

@@ -24,7 +24,7 @@ Then(/^Send form fields are prefilled$/, function () {
 Then(/^I mock api \/transactions$/, function () {
   cy.intercept({
     method: 'POST',
-    url: 'http://127.0.0.1:9901/api/v2/transactions',
+    url: 'http://127.0.0.1:9901/api/v3/transactions',
   }, {
     statusCode: 409,
     body: { message: errorMessage },
@@ -34,7 +34,7 @@ Then(/^I mock api \/transactions$/, function () {
 Given(/^I mock api \/transactions$/, function () {
   cy.intercept({
     method: 'POST',
-    url: 'http://localhost:9901/api/v2/transactions',
+    url: 'http://localhost:9901/api/v3/transactions',
   }, {
     statusCode: 409,
     body: { message: errorMessage },

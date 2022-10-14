@@ -1,7 +1,9 @@
 import actionTypes from './actionTypes';
 
-const addNewTransactions = (array1, array2) => array1.filter(array1Value =>
-  array2.filter(array2Value => array2Value.id === array1Value.id).length === 0);
+const addNewTransactions = (array1, array2) =>
+  array1.filter(
+    (array1Value) => array2.filter((array2Value) => array2Value.id === array1Value.id).length === 0
+  );
 
 /**
  * Initial State
@@ -23,7 +25,10 @@ const initialState = {
   txSignatureError: null,
   txBroadcastError: null,
 };
-const transactions = (state = initialState, action) => { // eslint-disable-line complexity
+// @TODO needs care and attention
+// eslint-disable-next-line complexity
+const transactions = (state = initialState, action) => {
+  // eslint-disable-line complexity
   switch (action.type) {
     // Used for cleaning the state, specially when the account signs out
     case actionTypes.emptyTransactionsData:
@@ -41,14 +46,10 @@ const transactions = (state = initialState, action) => { // eslint-disable-line 
     // Stores the latest txs at the top of the list
     // and older txs at the bottom.
     case actionTypes.transactionsRetrieved: {
-      const confirmed = action.data.offset === 0
-        ? [
-          ...addNewTransactions(action.data.confirmed, state.confirmed),
-          ...state.confirmed,
-        ] : [
-          ...state.confirmed,
-          ...addNewTransactions(action.data.confirmed, state.confirmed),
-        ];
+      const confirmed =
+        action.data.offset === 0
+          ? [...addNewTransactions(action.data.confirmed, state.confirmed), ...state.confirmed]
+          : [...state.confirmed, ...addNewTransactions(action.data.confirmed, state.confirmed)];
       return {
         ...state,
         confirmed,

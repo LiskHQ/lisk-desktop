@@ -1,0 +1,7 @@
+**/dist
+**/node_modules
+**/coverage
+.storybook
+**/app/build
+**/app/build-testnet
+*.css

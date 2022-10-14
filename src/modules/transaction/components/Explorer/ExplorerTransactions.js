@@ -1,121 +1,77 @@
-import React, { useEffect } from 'react';
+import React from 'react';
+import { useTranslation } from 'react-i18next';
 import { useSelector } from 'react-redux';
 import { selectCurrentBlockHeight } from 'src/redux/selectors';
 import Box from 'src/theme/box';
 import BoxHeader from 'src/theme/box/header';
 import BoxContent from 'src/theme/box/content';
-import Table from 'src/theme/table';
+import { QueryTable } from 'src/theme/QueryTable';
+import { useFilter, useSort } from 'src/modules/common/hooks';
 import FilterBar from 'src/modules/common/components/filterBar';
 import TransactionRow from '../TransactionRow';
 import styles from './ExplorerTransactions.css';
 import header from './ExplorerTransactionsHeaderMap';
 import FilterDropdown from '../FilterDropdown';
+import { useTransactions } from '../../hooks/queries';
 
-const Transactions = ({
-  pending,
-  transactions,
-  activeToken,
-  filters,
-  applyFilters,
-  changeSort,
-  sort,
-  clearFilter,
-  clearAllFilters,
-  t,
-  votedDelegates,
-  address,
-  confirmedLength,
-}) => {
+const Transactions = ({ activeToken, address }) => {
+  const { t } = useTranslation();
   const currentBlockHeight = useSelector(selectCurrentBlockHeight);
-  useEffect(() => {
-    // This will automatically load the new data too.
-    clearAllFilters();
-  }, [activeToken]);
+  const { sort, toggleSort } = useSort({ defaultSort: 'timestamp:desc' });
+  const { filters, clearFilters, applyFilters } = useFilter({
+    dateFrom: '',
+    dateTo: '',
+    amountFrom: '',
+    amountTo: '',
+  });
 
-  useEffect(() => {
-    const addressList = transactions.data.data
-      && transactions.data.data.reduce((acc, data) => {
-        if (data.title === 'vote') {
-          const votesList = data.params.votes || [];
-          const dataAddresses = votesList.map((vote) => vote.delegateAddress);
-          return acc.concat(dataAddresses);
-        }
-        return acc;
-      }, []);
-    if (addressList.length > 0) {
-      votedDelegates.loadData({ addressList });
-    }
-  }, [transactions.data.data]);
-
-  useEffect(() => {
-    transactions.loadData();
-  }, [pending.length, confirmedLength, address]);
-
-  /* istanbul ignore next */
-  const handleLoadMore = () => {
-    transactions.loadData({
-      offset: transactions.data.meta.count + transactions.data.meta.offset,
-      sort,
-      ...filters,
-    });
-  };
-
-  const canLoadMore = transactions.data.meta
-    ? transactions.data.meta.total
-      > transactions.data.meta.count + transactions.data.meta.offset
-    : false;
+  const params = { ...filters, ...(sort && { sort }) };
 
   const formatters = {
     dateFrom: (value) => `${t('From')}: ${value}`,
     dateTo: (value) => `${t('To')}: ${value}`,
-    amountFrom: (value) => `> ${value} ${activeToken}`,
-    amountTo: (value) => `< ${value} ${activeToken}`,
+    amountFrom: (value) => `> ${value}`,
+    amountTo: (value) => `< ${value}`,
   };
 
   return (
-    <Box
-      main
-      isLoading={transactions.isLoading}
-      className={`${styles.wrapper} transactions-box`}
-    >
+    <Box main className={`${styles.wrapper} transactions-box`}>
       <BoxHeader>
-        <FilterDropdown
-          filters={filters}
-          applyFilters={(f) => applyFilters({ ...f, address })}
-        />
+        <FilterDropdown filters={filters} applyFilters={(f) => applyFilters({ ...f, address })} />
       </BoxHeader>
       <FilterBar
         {...{
-          clearFilter,
-          clearAllFilters,
+          clearFilter: (key) => clearFilters([key]),
+          clearAllFilters: () => clearFilters(),
           filters,
           formatters,
           t,
         }}
       />
       <BoxContent className={`${styles.content} transaction-results`}>
-        <Table
-          data={pending.concat(transactions.data.data)}
-          isLoading={transactions.isLoading}
+        <QueryTable
+          showHeader
+          button={{
+            className: 'load-latest',
+            label: t('New transactions'),
+          }}
+          queryHook={useTransactions}
+          queryConfig={{ config: { params } }}
           row={TransactionRow}
-          loadData={handleLoadMore}
           additionalRowProps={{
-            activeToken,
-            host: address,
-            delegates: votedDelegates.data,
             currentBlockHeight,
+            activeToken,
             layout: 'hosted',
-            avatarSize: 40,
+            isWallet: true,
+            address,
           }}
-          header={header(t, activeToken, changeSort)}
+          header={header(t, activeToken, toggleSort)}
+          headerClassName={styles.tableHeader}
           currentSort={sort}
-          canLoadMore={canLoadMore}
-          error={
-            transactions.error.code !== 404 ? transactions.error : undefined
-          }
           emptyState={{
-            message: t('This account does not have any transactions.'),
+            message: t('There are no transactions for this account.'),
           }}
+          scrollToSelector=".transactions-box"
         />
       </BoxContent>
     </Box>

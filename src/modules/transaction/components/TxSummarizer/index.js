@@ -1,5 +1,5 @@
 import React from 'react';
-import { MODULE_COMMANDS_NAME_ID_MAP } from '@transaction/configuration/moduleAssets';
+import { MODULE_COMMANDS_NAME_MAP } from 'src/modules/transaction/configuration/moduleCommand';
 import Box from 'src/theme/box';
 import BoxHeader from 'src/theme/box/header';
 import { TertiaryButton } from 'src/theme/buttons';
@@ -26,14 +26,11 @@ const TxSummarizer = ({
   footerClassName,
   rawTx,
   summaryInfo,
-  transaction,
-  transactionData,
   selectedPriority,
-  fees,
   hasCancel,
 }) => {
   const fee = !(wallet.summary.isMultisignature
-    || rawTx.moduleCommandID === MODULE_COMMANDS_NAME_ID_MAP.registerMultisignatureGroup
+    || rawTx.moduleCommand === MODULE_COMMANDS_NAME_MAP.registerMultisignature
   ) ? rawTx.fee : 0;
   const tooltip = {
     title: t('Transaction fee'),
@@ -63,8 +60,6 @@ const TxSummarizer = ({
         ) : null}
         {children}
         <TransactionInfo
-          transaction={transaction}
-          transactionData={transactionData}
           token={token}
           summaryInfo={summaryInfo}
           rawTx={rawTx}
@@ -98,7 +93,7 @@ const TxSummarizer = ({
                     <p className={styles.tooltipText}>{tooltip.children}</p>
                   </Tooltip>
                 </label>
-                <FeeSummarizer fees={fees} />
+                <FeeSummarizer fees={rawTx.composedFees} />
               </div>
             </div>
           </section>

@@ -4,6 +4,10 @@
   background: var(--color-white);
   z-index: 2;
   border-bottom: 2px solid var(--color-mystic);
+
+  & ~ a:first-of-type::before {
+    display: none !important;
+  }
 }
 
 .sortingColumn {
@@ -35,6 +39,7 @@
 
 .content {
   padding: 0 !important;
+  margin-bottom: 20px;
 }
 
 .tooltipOffset {

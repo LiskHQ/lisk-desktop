@@ -42,7 +42,7 @@ describe('API: Market', () => {
       http.mockImplementation(() => Promise.resolve(expectedResponse));
       await expect(market.getNews({ params })).resolves.toEqual(expectedResponse);
       expect(http).toHaveBeenCalledWith({
-        path: '/api/v2/newsfeed',
+        path: '/api/v3/newsfeed',
         params,
       });
     });

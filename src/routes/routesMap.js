@@ -18,7 +18,7 @@ import SignMessage from '@message/manager/signMessageManager';
 import TermsOfUse from 'src/modules/common/components/TermsOfUse';
 import Explorer from '@wallet/manager/explorerManager';
 import AccountDetails from '@account/components/AccountDetails';
-import TransactionDetailsModal from '@transaction/manager/transactionDetailViewManager';
+import TransactionDetails from '@transaction/manager/transactionDetailViewManager';
 import VerifyMessage from '@message/manager/verifyMessageManager';
 import Request from '@wallet/components/request';
 import UnlockBalanceView from '@dpos/validator/components/UnlockBalanceView';
@@ -38,6 +38,7 @@ import AddAccountBySecretRecovery from '@account/components/AddAccountBySecretRe
 import AddAccountByFile from '@account/components/AddAccountByFile';
 import AddAccountForm from '@account/components/AddAccountForm';
 import SwitchAccount from '@account/components/SwitchAccount';
+import EditAccount from '@account/components/EditAccount';
 import BackupRecoveryPhraseFlow from '@account/components/BackupRecoveryPhraseFlow';
 import RemoveCurrentAccountFlow from '@account/components/RemoveCurrentAccountFlow';
 import RemoveSelectedAccountFlow from '@account/components/RemoveSelectedAccountFlow';
@@ -53,10 +54,13 @@ import SessionManager from '@blockchainApplication/connection/components/Session
 import ConnectionSummary from 'src/modules/blockchainApplication/connection/components/ConnectionSummary';
 import RequestView from '@blockchainApplication/connection/components/RequestView';
 import ConnectionSuccess from 'src/modules/blockchainApplication/connection/components/ConnectionSuccess';
+import AllTokens from '@wallet/components/AllTokens';
+import DelegateProfile from 'src/modules/dpos/validator/components/delegateProfile/delegateProfile';
 
 export default {
   wallet: AccountDetails,
   addAccount: Login,
+  editAccount: EditAccount,
   explorer: Explorer,
   hwWallet: HwWalletLogin,
   register: Register,
@@ -68,6 +72,7 @@ export default {
   wallets: MonitorWallets,
   network: MonitorNetwork,
   delegates: DelegatesMonitor,
+  delegateProfile: DelegateProfile,
   delegatePerformance: DelegatesPerformanceModal,
   reclaim: ReclaimBalance,
   dashboard: Dashboard,
@@ -79,7 +84,7 @@ export default {
   verifyMessage: VerifyMessage,
   registerDelegate: RegisterDelegate,
   search: SearchBar,
-  transactionDetails: TransactionDetailsModal,
+  transactionDetails: TransactionDetails,
   newRelease: NewReleaseDialog,
   request: Request,
   lockedBalance: UnlockBalanceView,
@@ -106,6 +111,7 @@ export default {
   addApplicationSuccess: AddApplicationSuccess,
   manageApplications: ApplicationManagementList,
   removeApplicationFlow: RemoveApplicationFlow,
+  allTokens: AllTokens,
   connectionProposal: ConnectionProposal,
   sessionManager: SessionManager,
   requestView: RequestView,

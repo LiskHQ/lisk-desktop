@@ -24,6 +24,7 @@ module.exports = {
     '^.+\\.css$': 'identity-obj-proxy',
     '^src(.*)$': resolve(__dirname, '../src/$1'),
     '^@scripts(.*)$': resolve(__dirname, '../scripts/$1'),
+    '^swiper/css$': resolve(__dirname, '../node_modules/swiper/swiper-bundle.js'),
     '^@setup(.*)$': resolve(__dirname, '../setup/$1'),
     '^@tests(.*)$': resolve(__dirname, '../tests/$1'),
     '^@fixtures(.*)$': resolve(__dirname, '../tests/fixtures/$1'),
@@ -33,12 +34,12 @@ module.exports = {
     '^@block(.*)$': resolve(__dirname, '../src/modules/block/$1'),
     '^@bookmark(.*)$': resolve(__dirname, '../src/modules/bookmark/$1'),
     '^@search(.*)$': resolve(__dirname, '../src/modules/search/$1'),
-    '^@common(.*)$': resolve(__dirname, '../packages/common/$1'),
+    '^@common(.*)$': resolve(__dirname, '../src/modules/common/$1'),
     '^@legacy(.*)$': resolve(__dirname, '../src/modules/legacy/$1'),
     '^@message(.*)$': resolve(__dirname, '../src/modules/message/$1'),
     '^@dpos(.*)$': resolve(__dirname, '../src/modules/dpos/$1'),
     '^@network(.*)$': resolve(__dirname, '../src/modules/network/$1'),
-    '^@settings(.*)$': resolve(__dirname, '../packages/settings/$1'),
+    '^@settings(.*)$': resolve(__dirname, '../src/modules/settings/$1'),
     '^@token(.*)$': resolve(__dirname, '../src/modules/token/$1'),
     '^@auth(.*)$': resolve(__dirname, '../src/modules/auth/$1'),
     '^@wallet/(.*)$': resolve(__dirname, '../src/modules/wallet/$1'),
@@ -106,7 +107,6 @@ module.exports = {
     'src/theme/dialog/link.js',
     'src/modules/settings/components/networkSelector/networkSelector.js',
     'src/modules/common/components/customRoute/index.js',
-    'src/modules/common/components/bars/topBar/topBar.js',
     'src/modules/common/components/bars/sideBar/index.js',
     'src/modules/common/components/bars/topBar/navigationButtons.js',
     'src/modules/update/detail/info/newReleaseDialog/index.js',
@@ -304,6 +304,8 @@ module.exports = {
     'src/modules/wallet/components/multiSignature/index.js',
     'src/modules/account/hooks/useCurrentAccount.js',
     'src/modules/transaction/store/actions.js',
+    'src/modules/transaction/hooks/useCreateTransaction.js',
+    'src/modules/transaction/components/TransactionDetails', // @Todo: would resolve this when all transation implementations are finallized
   ],
   coverageThreshold: {
     // global: {
@@ -333,23 +335,23 @@ module.exports = {
     '^.+\\.js$': 'babel-jest',
     '^.+\\.svg|png|jpg|jpeg$': '<rootDir>/tests/__mocks__/imageTransform.js',
   },
+  transformIgnorePatterns: ['node_modules/(?!(swiper|ssr-window|dom7)/)'],
   testURL: 'http://localhost',
   globals: {
     PRODUCTION: true,
     TEST: true,
     VERSION: '',
   },
-  coverageReporters: process.env.ON_JENKINS
-    ? ['text', 'lcov', 'cobertura']
-    : ['html', 'json'],
+  coverageReporters: process.env.ON_JENKINS ? ['text', 'lcov', 'cobertura'] : ['html', 'json'],
   reporters: [
     'default',
-    [
-      'jest-junit',
-      { suiteName: 'jest tests', outputDirectory: '<rootDir>/coverage/jest' },
-    ],
+    ['jest-junit', { suiteName: 'jest tests', outputDirectory: '<rootDir>/coverage/jest' }],
   ],
-  setupFilesAfterEnv: ['./setup/config/setupJestAfterEnv', './node_modules/@testing-library/jest-dom/extend-expect', './node_modules/jest-enzyme/lib/index.js'],
+  setupFilesAfterEnv: [
+    './setup/config/setupJestAfterEnv',
+    './node_modules/@testing-library/jest-dom/extend-expect',
+    './node_modules/jest-enzyme/lib/index.js',
+  ],
   testEnvironment: 'enzyme',
   watchPlugins: [
     ['jest-watch-toggle-config', { setting: 'verbose' }],

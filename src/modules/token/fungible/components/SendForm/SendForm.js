@@ -2,9 +2,9 @@ import React, {
   useCallback, useMemo, useState,
 } from 'react';
 import Piwik from 'src/utils/piwik';
-import { MODULE_COMMANDS_NAME_ID_MAP } from '@transaction/configuration/moduleAssets';
+import { MODULE_COMMANDS_NAME_MAP } from 'src/modules/transaction/configuration/moduleCommand';
 import AmountField from 'src/modules/common/components/amountField';
-import TokenAmount from '@token/fungible/components/tokenAmount';
+import { TokenSelector } from 'src/modules/common/components/TokenSelector';
 import { mockAppTokens } from '@tests/fixtures/token';
 import Icon from 'src/theme/Icon';
 import { toRawLsk, fromRawLsk } from '@token/fungible/utils/lsk';
@@ -40,13 +40,13 @@ const getInitialRecipientChain = (
 };
 const getInitialToken = (
   transactionData,
-  initalTokenId,
-  tokens,
+  initialTokenId,
 ) => {
-  const initalToken = initalTokenId
-    ? tokens.find(({ tokenID }) => tokenID === initalTokenId)
+  // @Todo: this should be refactored to use actual api data when the query hook has been integrated
+  const initialToken = initialTokenId
+    ? mockAppTokens.find(({ tokenID }) => tokenID === initialTokenId)
     : null;
-  return transactionData?.token || initalToken || defaultToken;
+  return transactionData?.token || initialToken || defaultToken;
 };
 
 // eslint-disable-next-line max-statements
@@ -65,7 +65,6 @@ const SendForm = (props) => {
     getInitialToken(
       prevState?.transactionData,
       props.initialValue?.token,
-      mockAppTokens,
     ),
   );
   const [recipientChain, setRecipientChain] = useState(
@@ -101,9 +100,8 @@ const SendForm = (props) => {
     setMaxAmount(status.maxAmount);
   }, []);
 
-  const onConfirm = useCallback((rawTx, trnxData, selectedPriority, fees) => {
+  const onConfirm = useCallback((rawTx, selectedPriority, fees) => {
     nextStep({
-      transactionData: trnxData,
       selectedPriority,
       rawTx,
       fees,
@@ -135,7 +133,7 @@ const SendForm = (props) => {
 
   const transaction = {
     isValid,
-    moduleCommandID: MODULE_COMMANDS_NAME_ID_MAP.transfer,
+    moduleCommand: MODULE_COMMANDS_NAME_MAP.transfer,
     params: {
       amount: toRawLsk(amount.value),
       data: reference.value,
@@ -143,16 +141,10 @@ const SendForm = (props) => {
         address: recipient.value,
         title: recipient.title,
       },
+      token,
     },
-  };
-
-  const formData = {
     sendingChain,
     recipientChain,
-    token,
-    recipient,
-    amount: toRawLsk(amount.value),
-    data: reference.value,
   };
 
   return (
@@ -161,7 +153,6 @@ const SendForm = (props) => {
         onComposed={onComposed}
         onConfirm={onConfirm}
         transaction={transaction}
-        transactionData={formData}
         buttonTitle={t('Go to confirmation')}
       >
         <>
@@ -216,34 +207,12 @@ const SendForm = (props) => {
                 </MenuSelect>
               </div>
             </div>
-            <div className={`${styles.fieldGroup} token`}>
-              <label className={`${styles.fieldLabel}`}>
-                <span>{t('Token')}</span>
-              </label>
-              <span className={styles.balance}>
-                Balance:&nbsp;&nbsp;
-                <span>
-                  <TokenAmount val={amount} />
-                  {token.symbol}
-                </span>
-              </span>
-              <MenuSelect
-                value={token}
-                onChange={(value) => setToken(value)}
-                select={(selectedValue, option) => selectedValue?.name === option.name}
-              >
-                {mockAppTokens.map((tokenValue) => (
-                  <MenuItem
-                    className={styles.chainOptionWrapper}
-                    value={tokenValue}
-                    key={tokenValue.name}
-                  >
-                    <img className={styles.chainLogo} src={chainLogo} />
-                    <span>{tokenValue.name}</span>
-                  </MenuItem>
-                ))}
-              </MenuSelect>
-            </div>
+            <TokenSelector
+              styles={styles}
+              value={token}
+              tokens={mockAppTokens}
+              onChange={setToken}
+            />
             <AmountField
               amount={amount}
               onChange={setAmountField}

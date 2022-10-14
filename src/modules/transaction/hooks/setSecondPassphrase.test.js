@@ -4,37 +4,55 @@ import accounts from '@tests/constants/wallets';
 import setSecondPassphrase from './setSecondPassphrase';
 
 jest.mock('src/redux/selectors');
+jest.useRealTimers();
 
-// const mockSelector = jest.fn();
 useSelector.mockReturnValue(accounts.secondPass);
 describe('setSecondPassphrase', () => {
-  it('Should return second passphrase with no error message', () => {
-    const result = renderHook(() => setSecondPassphrase());
-    const [state, setState] = result.result.current;
+  it('Should return second passphrase with no error message', async () => {
+    const { result, waitFor } = renderHook(() => setSecondPassphrase());
+    const [state, setState] = result.current;
     expect(state.error).toBe(-1);
     act(() => {
       setState(accounts.secondPass.secondPass);
     });
-    expect(result.result.current[0].error).toBe(0);
+    await waitFor(() => result.current[0].error);
+    await waitFor(() => result.current[0].error);
+    expect(result.current[0].error).toBe(0);
   });
 
-  it('Should return second passphrase with relevant error message', () => {
-    const result = renderHook(() => setSecondPassphrase());
-    const [state, setState] = result.result.current;
+  it('Should return second passphrase with relevant error message', async () => {
+    const { result, waitFor } = renderHook(() => setSecondPassphrase());
+    const [state, setState] = result.current;
     expect(state.error).toBe(-1);
     act(() => {
       setState(accounts.genesis.passphrase);
     });
-    expect(result.result.current[0].error).toBe(1);
+    await waitFor(() => result.current[0].error);
+    await waitFor(() => result.current[0].error);
+    expect(result.current[0].error).toBe(1);
   });
 
-  it('Should return second passphrase with an external error message, if provided', () => {
-    const result = renderHook(() => setSecondPassphrase());
-    const [state, setState] = result.result.current;
+  it('Should return second passphrase with an external error message, if provided', async () => {
+    const { result, waitFor } = renderHook(() => setSecondPassphrase());
+    const [state, setState] = result.current;
     expect(state.error).toBe(-1);
     act(() => {
       setState('wrong_pass', 'The pass is invalid');
     });
-    expect(result.result.current[0].error).toBe(1);
+    await waitFor(() => result.current[0].error);
+    await waitFor(() => result.current[0].error);
+    expect(result.current[0].error).toBe(1);
+  });
+
+  it('Should return error when second passphrase is empty', async () => {
+    const { result, waitFor } = renderHook(() => setSecondPassphrase());
+    const [state, setState] = result.current;
+    expect(state.error).toBe(-1);
+    act(() => {
+      setState('', 'The pass is invalid');
+    });
+    await waitFor(() => result.current[0].error);
+    await waitFor(() => result.current[0].error);
+    expect(result.current[0].error).toBe(-1);
   });
 });

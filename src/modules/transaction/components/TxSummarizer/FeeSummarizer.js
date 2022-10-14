@@ -1,7 +1,6 @@
 import React, { useMemo } from 'react';
 import styles from './txSummarizer.css';
 
-// eslint-disable-next-line max-statements
 const FeeSummarizer = ({
   fees,
 }) => {

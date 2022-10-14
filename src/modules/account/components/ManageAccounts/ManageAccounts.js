@@ -12,10 +12,12 @@ import { useAccounts, useCurrentAccount } from '../../hooks';
 import styles from './ManageAccounts.css';
 import AccountRow from '../AccountRow';
 
-const ManageAccountsContent = ({
+export const ManageAccountsContent = ({
   isRemoveAvailable,
   title: customTitle,
   history,
+  className,
+  truncate,
 }) => {
   const { t } = useTranslation();
   const { accounts } = useAccounts();
@@ -35,7 +37,7 @@ const ManageAccountsContent = ({
   }, []);
 
   return (
-    <div className={styles.wrapper}>
+    <div className={`${styles.wrapper} ${className}`}>
       <div className={styles.headerWrapper}>
         <h1 data-testid="manage-title">{showRemove ? t('Choose account') : title}</h1>
       </div>
@@ -48,6 +50,7 @@ const ManageAccountsContent = ({
               onSelect={onSelectAccount}
               showRemove={showRemove}
               onRemove={removeAccount}
+              truncate={truncate}
             />
           ))
         }

@@ -16,7 +16,7 @@ export default function useSort({ defaultSort, data = [] } = {}) {
   }, [data, sort]);
 
   const toggleSort = useCallback((param) => {
-    const [prevSortParam, prevSortOrder] = sort.split(':');
+    const [prevSortParam, prevSortOrder] = sort?.split?.(':') || [];
 
     if (prevSortParam === param) {
       setSort(`${param}:${prevSortOrder === 'desc' ? 'asc' : 'desc'}`);
