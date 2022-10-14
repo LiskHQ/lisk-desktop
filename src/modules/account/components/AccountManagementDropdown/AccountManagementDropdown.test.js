@@ -17,7 +17,7 @@ describe('AccountManagementDropdown', () => {
       onMenuClick: mockOnMenuClick,
     };
     renderWithRouter(AccountManagementDropdown, props);
-    expect(screen.getByText('my lisk account')).toBeInTheDocument();
+    expect(screen.getByText(mockCurrentAccount.metadata.name)).toBeInTheDocument();
     expect(
       screen.getByText(truncateAddress(mockCurrentAccount.metadata.address))
     ).toBeInTheDocument();
