@@ -38,7 +38,7 @@ const getTitles = (t) => ({
   add: {
     title: t('Add to voting queue'),
     description: t(
-      'Input your vote amount. This value shows how much trust you have in this delegate. '
+      'Insert a vote amount for this delegate. Your new vote will be added to the voting queue.'
     ),
   },
 });
@@ -91,12 +91,12 @@ const EditVote = ({ history, voteEdited, network, voting, votesRetrieved }) => {
     if (!votes) return false;
 
     return votes.find(({ delegateAddress: dAddress }) => dAddress === delegateAddress);
-  }, [sentVotes]);
+  }, [sentVotes, delegateAddress]);
 
   const [voteAmount, setVoteAmount] = useVoteAmountField(
     fromRawLsk(voting[delegateAddress]?.unconfirmed || voteSentVoteToDelegate?.amount || 0)
   );
-  const mode = voteSentVoteToDelegate ? 'edit' : 'add';
+  const mode = voteSentVoteToDelegate || voting[delegateAddress] ? 'edit' : 'add';
   const titles = getTitles(t)[mode];
 
   useEffect(() => {
@@ -114,7 +114,7 @@ const EditVote = ({ history, voteEdited, network, voting, votesRetrieved }) => {
   }, [token, auth, network, voting]);
 
   useEffect(() => {
-    votesRetrieved()
+    votesRetrieved();
   }, []);
 
   const handleConfirm = () => {
@@ -129,7 +129,7 @@ const EditVote = ({ history, voteEdited, network, voting, votesRetrieved }) => {
         name: delegate.name,
       },
     ]);
-
+    console.log('---- here', mode)
     if (mode === 'add') setIsForm(false);
     if (mode === 'edit') {
       removeThenAppendSearchParamsToUrl(history, { modal: 'votingQueue' }, ['modal']);
@@ -162,6 +162,8 @@ const EditVote = ({ history, voteEdited, network, voting, votesRetrieved }) => {
     add: titles.title,
   };
 
+  console.log('---', address, voteSentVoteToDelegate)
+
   return (
     <Dialog
       hasClose
@@ -179,22 +181,19 @@ const EditVote = ({ history, voteEdited, network, voting, votesRetrieved }) => {
           </BoxInfoText>
           {(isForm || mode === 'edit') && (
             <>
-              {mode === 'add' && (
-                <BoxInfoText className={styles.accountInfo}>
-                  <WalletVisual size={40} address={delegateAddress} />
-                  <p>{delegate.name}</p>
-                  <p>{delegateAddress}</p>
-                </BoxInfoText>
-              )}
+              <BoxInfoText className={styles.accountInfo}>
+                <WalletVisual size={40} address={delegateAddress} />
+                <p>{delegate.name}</p>
+                <p>{delegateAddress}</p>
+              </BoxInfoText>
               <label className={styles.fieldGroup}>
-                {mode === 'add' && (
-                  <p className={styles.availableBalance}>
-                    <span>{t('Available Bal: ')}</span>
-                    <span>
-                      <TokenAmount token={token.symbol} val={token.availableBalance} />
-                    </span>
-                  </p>
-                )}
+                <p className={styles.availableBalance}>
+                  <span>{t('Available Bal: ')}</span>
+                  <span>
+                    <TokenAmount token={token.symbol} val={token.availableBalance} />
+                  </span>
+                </p>
+
                 <AmountField
                   amount={voteAmount}
                   onChange={setVoteAmount}

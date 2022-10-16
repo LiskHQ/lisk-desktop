@@ -253,7 +253,7 @@
   "Index": "Index",
   "Input transaction data": "Input transaction data",
   "Input view": "Input view",
-  "Input your vote amount. This value shows how much trust you have in this delegate. ": "Input your vote amount. This value shows how much trust you have in this delegate. ",
+  "Insert a vote amount for this delegate. Your new vote will be added to the voting queue.": "Insert a vote amount for this delegate. Your new vote will be added to the voting queue.",
   "Insert address or bookmark name": "Insert address or bookmark name",
   "Insert entire signed message": "Insert entire signed message",
   "Insert label": "Insert label",

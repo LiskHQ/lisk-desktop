@@ -11,7 +11,7 @@ const Status = ({ account, transactions, statusInfo, t }) => {
 
   return (
     <div className={styles.container}>
-      {status.code === 'BROADCAST_SUCCESS' ? (
+      {status.code !== 'BROADCAST_SUCCESS' ? (
         <VoteSuccessfulModal />
       ) : (
         <TxBroadcaster
