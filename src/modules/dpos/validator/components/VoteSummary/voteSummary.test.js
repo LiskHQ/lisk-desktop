@@ -1,6 +1,16 @@
 import { mountWithRouter } from 'src/utils/testHelpers';
+import { useAuth } from '@auth/hooks/queries';
+import { mockAuth } from 'src/modules/auth/__fixtures__';
 import accounts from '@tests/constants/wallets';
+import mockSavedAccounts from '@tests/fixtures/accounts';
 import Summary from './VoteSummary';
+
+const mockedCurrentAccount = mockSavedAccounts[0];
+
+jest.mock('@auth/hooks/queries');
+jest.mock('@account/hooks', () => ({
+  useCurrentAccount: jest.fn(() => [mockedCurrentAccount, jest.fn()]),
+}));
 
 const added = {
   lskdwsyfmcko6mcd357446yatromr9vzgu7eb8y11: {
@@ -85,7 +95,7 @@ const rawTx = {
 const transaction = { id: 1 };
 
 const props = {
-  t: s => s,
+  t: (s) => s,
   account: accounts.genesis,
   votesSubmitted: jest.fn(),
   nextStep: jest.fn(),
@@ -107,18 +117,19 @@ beforeEach(() => {
 });
 
 describe('VotingQueue.Summary', () => {
+  useAuth.mockReturnValue({ data: mockAuth });
+
   it('renders properly', () => {
     const wrapper = mountWithRouter(Summary, props);
 
     expect(wrapper).toContainMatchingElement('VoteStats');
-    expect(wrapper).toContainMatchingElement('.fee-value-transaction');
-    expect(wrapper).toContainMatchingElement('.total-votes');
-    expect(wrapper).toContainMatchingElement('.confirm-button');
+    expect(wrapper).toContainMatchingElement('.vote-fees');
   });
 
   it('renders properly when only new votes are present', () => {
     const wrapper = mountWithRouter(Summary, {
-      ...props, added,
+      ...props,
+      added,
     });
 
     expect(wrapper).toContainMatchingElements(4, '.vote-item-address');
@@ -126,7 +137,8 @@ describe('VotingQueue.Summary', () => {
 
   it('renders properly when only removed votes are present', () => {
     const wrapper = mountWithRouter(Summary, {
-      ...props, removed,
+      ...props,
+      removed,
     });
 
     expect(wrapper).toContainMatchingElements(4, '.vote-item-address');
@@ -134,7 +146,8 @@ describe('VotingQueue.Summary', () => {
 
   it('renders properly when only edited votes are present', () => {
     const wrapper = mountWithRouter(Summary, {
-      ...props, edited,
+      ...props,
+      edited,
     });
 
     expect(wrapper).toContainMatchingElements(4, '.vote-item-address');
@@ -142,7 +155,10 @@ describe('VotingQueue.Summary', () => {
 
   it('renders properly when a mixture of votes is present', () => {
     const wrapper = mountWithRouter(Summary, {
-      ...props, edited, removed, added,
+      ...props,
+      edited,
+      removed,
+      added,
     });
 
     expect(wrapper).toContainMatchingElements(12, '.vote-item-address');

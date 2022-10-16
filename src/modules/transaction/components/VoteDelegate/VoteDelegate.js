@@ -42,7 +42,7 @@ const VoteDelegate = ({ t, account, summaryInfo, fees }) => {
         </InfoColumn>
       </div>
       <div className={styles.txFeeContainer}>
-        <InfoColumn title={t('Transaction Fees')} className="total-votes">
+        <InfoColumn title={t('Transaction Fees')} className="vote-fees">
           {fees.Transaction}
         </InfoColumn>
       </div>

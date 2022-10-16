@@ -81,7 +81,7 @@ describe('VoteForm', () => {
   it('Render only the changed votes', async () => {
     const wrapper = shallow(<Form {...props} votes={mixedVotes} />);
     const table = wrapper.find(Table);
-    expect(table.props()).toEqual({
+    expect(table.props()).toEqual( expect.objectContaining({
       data: [
         {
           address: 'lskyau2yy4993jkbd7kxcsfsrarac8macbbs8saad',
@@ -93,7 +93,7 @@ describe('VoteForm', () => {
       row: VoteRow,
       iterationKey: 'address',
       canLoadMore: false,
-    });
+    }));
     expect(wrapper.find('.available-votes-num').text()).toBe('8/');
   });
 
