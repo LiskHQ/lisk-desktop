@@ -143,7 +143,7 @@ const VoteForm = ({ t, votes, account, isVotingTxPending, nextStep, history }) =
     t
   );
 
-  const onConfirm = (rawTx, trnxData, selectedPriority, fees) => {
+  const onConfirm = (rawTx, selectedPriority, fees) => {
     nextStep({
       rawTx,
       added,
@@ -152,7 +152,6 @@ const VoteForm = ({ t, votes, account, isVotingTxPending, nextStep, history }) =
       selfUnvote,
       selectedPriority,
       fees,
-      transactionData: trnxData,
     });
   };
 

@@ -29,18 +29,15 @@ const Members = ({ members, t }) => (
 );
 
 const TransactionInfo = ({
-  isMultisignature, t, rawTx, account, date, token, summaryInfo, transaction, transactionData, fees,
+  isMultisignature, t, rawTx, account, date, token, summaryInfo,
 }) => (
   <>
     <CustomTransactionInfo
       t={t}
-      trnx={transaction}
       transaction={rawTx}
       account={account}
       token={token}
       summaryInfo={summaryInfo}
-      transactionData={transactionData}
-      fees={fees}
     />
     {isMultisignature && (
       <>

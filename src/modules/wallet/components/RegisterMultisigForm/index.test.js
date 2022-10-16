@@ -12,7 +12,7 @@ jest.mock('@transaction/api');
 jest.mock('@account/hooks/useDeprecatedAccount', () => ({
   useDeprecatedAccount: jest.fn().mockReturnValue({
     isSuccess: true,
-    isLoading: false
+    isLoading: false,
   }),
 }));
 
@@ -245,6 +245,7 @@ describe('validateState', () => {
     const error = 'Maximum number of members is {{MAX_MULTI_SIG_MEMBERS}}.';
     expect(validateState(params).messages).toContain(error);
   });
+
   it('should return error if there are duplicate public keys', () => {
     const pbk = wallets.genesis.summary.publicKey;
     const params = {

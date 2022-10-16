@@ -25,7 +25,7 @@ export const getPrices = ({ network }) => http({
 export const getNews = ({
   params = {}, network,
 }) => http({
-  path: '/api/v2/newsfeed',
+  path: '/api/v3/newsfeed',
   params,
   network,
 });

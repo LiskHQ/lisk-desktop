@@ -1,17 +1,28 @@
 .downloadLisk {
   display: flex;
   width: 100%;
-  padding: 8px 0;
+  margin-top: 10px;
+  padding: 8px 0 0;
   justify-content: center;
+  align-items: center;
 
   & > p {
     @mixin contentLarge bold;
 
     color: var(--color-maastricht-blue);
-    margin: 20px;
+    margin: 10px 20px;
     text-align: left;
     word-spacing: 8px;
   }
+}
+
+.downloadButton {
+  display: flex;
+  width: 100%;
+  padding: 0;
+  margin-bottom: 30px;
+  justify-content: center;
+  align-items: center;
 }
 
 .buttonContent {

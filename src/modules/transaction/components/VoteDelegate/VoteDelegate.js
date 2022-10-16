@@ -25,7 +25,7 @@ const InfoColumn = ({ title, children, className }) => (
   </div>
 );
 
-const VoteDelegate = ({ t, account, summaryInfo, fees }) => {
+const VoteDelegate = ({ t, account, summaryInfo, transaction }) => {
   const addedLength = Object.keys(summaryInfo.added).length;
   const editedLength = Object.keys(summaryInfo.edited).length;
   const removedLength = Object.keys(summaryInfo.removed).length;
@@ -43,7 +43,7 @@ const VoteDelegate = ({ t, account, summaryInfo, fees }) => {
       </div>
       <div className={styles.txFeeContainer}>
         <InfoColumn title={t('Transaction Fees')} className="vote-fees">
-          {fees.Transaction}
+          {transaction.composedFees.Transaction}
         </InfoColumn>
       </div>
     </>

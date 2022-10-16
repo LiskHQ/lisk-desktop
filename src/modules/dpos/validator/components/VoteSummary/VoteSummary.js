@@ -40,9 +40,7 @@ const VoteSummary = ({
   nextStep,
   rawTx,
   votesSubmitted,
-  transactionData,
   selectedPriority,
-  fees,
 }) => {
   const { locked, unlockable } = getResultProps({ added, removed, edited });
 
@@ -77,9 +75,7 @@ const VoteSummary = ({
         classNames={styles.container}
         summaryInfo={{ added, edited, removed }}
         rawTx={rawTx}
-        transactionData={transactionData}
         selectedPriority={selectedPriority}
-        fees={fees}
       >
         <div className={styles.headerContainer}>
           <header>{t('Voting Summary')}</header>

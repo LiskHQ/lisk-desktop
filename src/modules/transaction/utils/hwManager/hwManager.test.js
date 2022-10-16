@@ -1,5 +1,5 @@
 import * as communication from '@libs/hwManager/communication';
-import accounts from '@tests/constants/wallets';
+// import accounts from '@tests/constants/wallets';
 import { signTransactionByHW } from '.';
 
 jest.mock('@libs/hwManager/communication', () => ({
@@ -35,10 +35,10 @@ describe.skip('signTransactionByHW', () => {
       signatures: [],
     };
 
-    const keys = {
-      mandatoryKeys: [Buffer.from(account.summary.publicKey, 'hex'), Buffer.from(accounts.genesis.summary.publicKey, 'hex')],
-      optionalKeys: [],
-    };
+    // const keys = {
+    //   mandatoryKeys: [Buffer.from(account.summary.publicKey, 'hex'), Buffer.from(accounts.genesis.summary.publicKey, 'hex')],
+    //   optionalKeys: [],
+    // };
 
     const networkIdentifier = Buffer.from('15f0dacc1060e91818224a94286b13aa04279c640bd5d6f193182031d133df7c', 'hex');
     const transactionBytes = Buffer.from('15f0dacc1060e91818224a94286b13aa04279c640bd5d6f193182031d133df7c', 'hex');
@@ -48,7 +48,7 @@ describe.skip('signTransactionByHW', () => {
       networkIdentifier,
       transactionObject,
       transactionBytes,
-      keys,
+      // keys,
     );
 
     expect(signedTransaction.signatures[0]).toEqual(signature);

@@ -2,7 +2,6 @@
 import { MODULE_COMMANDS_NAME_MAP } from 'src/modules/transaction/configuration/moduleCommand';
 import {
   getTxAmount,
-  convertStringToBinary,
   convertBinaryToString,
 } from '@transaction/utils/transaction';
 import { getState } from '@fixtures/transactions';
@@ -10,6 +9,7 @@ import * as delegates from '@dpos/validator/api';
 import http from 'src/utils/api/http';
 import accounts from '@tests/constants/wallets';
 import { genKey, blsKey, pop } from '@tests/constants/keys';
+import { mockAppTokens } from '@tests/fixtures/token';
 import {
   getTransaction,
   getTransactions,
@@ -19,7 +19,7 @@ import {
 } from './index';
 
 const {
-  transfer, voteDelegate, registerDelegate, registerMultisignatureGroup, unlock, reclaim,
+  transfer, voteDelegate, registerDelegate, registerMultisignature, unlock, reclaim,
 } = MODULE_COMMANDS_NAME_MAP;
 const { network } = getState();
 
@@ -50,7 +50,7 @@ describe('API: LSK Transactions', () => {
       });
 
       expect(http).toHaveBeenCalledWith({
-        path: '/api/v2/transactions',
+        path: '/api/v3/transactions',
         params: { id: sampleId },
         network,
         baseUrl,
@@ -69,7 +69,7 @@ describe('API: LSK Transactions', () => {
       });
 
       expect(http).toHaveBeenCalledWith({
-        path: '/api/v2/transactions',
+        path: '/api/v3/transactions',
         params: { blockId: sampleId },
         network,
         baseUrl: undefined,
@@ -88,7 +88,7 @@ describe('API: LSK Transactions', () => {
 
       expect(http).toHaveBeenCalledWith({
         network,
-        path: '/api/v2/transactions',
+        path: '/api/v3/transactions',
         baseUrl: undefined,
         params: {
           timestamp: '1607446547094:1607446547094',
@@ -114,7 +114,7 @@ describe('API: LSK Transactions', () => {
 
       expect(http).toHaveBeenCalledWith({
         network,
-        path: '/api/v2/transactions',
+        path: '/api/v3/transactions',
         baseUrl: undefined,
         params: {
         },
@@ -168,7 +168,7 @@ describe('API: LSK Transactions', () => {
       });
 
       expect(http).toHaveBeenCalledWith({
-        path: '/api/v2/transactions/statistics/day',
+        path: '/api/v3/transactions/statistics/day',
         params: { limit: 7 },
         network,
       });
@@ -240,6 +240,7 @@ describe('API: LSK Transactions', () => {
           amount: '100000000',
           data: 'to test the instance',
           recipient: { address: 'lskz5kf62627u2n8kzqa8jpycee64pgxzutcrbzhz' },
+          token: mockAppTokens[0],
         },
         moduleCommand: transfer,
       };
@@ -271,10 +272,10 @@ describe('API: LSK Transactions', () => {
       const registerDelegateTx = {
         moduleCommand: registerDelegate,
         params: {
-          username: 'some_username',
-          generatorPublicKey: convertStringToBinary(genKey),
-          blsPublicKey: convertStringToBinary(blsKey),
-          proofOfPossession: convertStringToBinary(pop),
+          name: 'some_username',
+          generatorKey: genKey,
+          blsKey,
+          proofOfPossession: pop,
         },
       };
 
@@ -302,13 +303,14 @@ describe('API: LSK Transactions', () => {
       expect(Number(result.value)).toBeGreaterThan(0);
     });
 
-    it('should calculate fee of registerMultisignatureGroup tx', async () => {
+    it('should calculate fee of registerMultisignature tx', async () => {
       const regMultisigTx = {
-        moduleCommand: registerMultisignatureGroup,
+        moduleCommand: registerMultisignature,
         params: {
           numberOfSignatures: 2,
           mandatoryKeys: [accounts.genesis.summary.publicKey, accounts.delegate.summary.publicKey],
           optionalKeys: [accounts.delegate_candidate.summary.publicKey],
+          signatures: [],
         },
       };
       const result = await getTransactionFee({
@@ -328,6 +330,7 @@ describe('API: LSK Transactions', () => {
           amount: '100000',
           data: 'to test the instance',
           recipient: { address: 'lskz5kf62627u2n8kzqa8jpycee64pgxzutcrbzhz' },
+          token: mockAppTokens[0],
         },
       };
       const result = await getTransactionFee({
@@ -365,8 +368,8 @@ describe('API: LSK Transactions', () => {
         moduleCommand: registerDelegate,
         params: {
           username: 'user_name',
-          generatorPublicKey: convertBinaryToString(genKey),
-          blsPublicKey: convertBinaryToString(blsKey),
+          generatorKey: convertBinaryToString(genKey),
+          blsKey: convertBinaryToString(blsKey),
           proofOfPossession: convertBinaryToString(pop),
         },
       };
@@ -413,7 +416,7 @@ describe('API: LSK Transactions', () => {
       });
 
       expect(http).toHaveBeenCalledWith({
-        path: '/api/v2/transactions/schemas',
+        path: '/api/v3/transactions/schemas',
         baseUrl,
       });
     });

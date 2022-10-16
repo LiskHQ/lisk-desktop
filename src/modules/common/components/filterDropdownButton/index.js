@@ -22,7 +22,7 @@ const filterComponents = {
 };
 
 const blackListTypes = [
-  'auth:registerMultisignatureGroup',
+  'auth:registerMultisignature',
   'dpos:registerDelegate',
   'dpos:voteDelegate',
   'dpos:reportDelegateMisbehavior',

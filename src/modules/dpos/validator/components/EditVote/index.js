@@ -129,7 +129,7 @@ const EditVote = ({ history, voteEdited, network, voting, votesRetrieved }) => {
         name: delegate.name,
       },
     ]);
-    console.log('---- here', mode)
+
     if (mode === 'add') setIsForm(false);
     if (mode === 'edit') {
       removeThenAppendSearchParamsToUrl(history, { modal: 'votingQueue' }, ['modal']);
@@ -179,7 +179,7 @@ const EditVote = ({ history, voteEdited, network, voting, votesRetrieved }) => {
               {!isForm ? t('Your vote has been added to your voting queue') : subTitles[mode]}
             </span>
           </BoxInfoText>
-          {(isForm || mode === 'edit') && (
+          {(isForm) && (
             <>
               <BoxInfoText className={styles.accountInfo}>
                 <WalletVisual size={40} address={delegateAddress} />
@@ -214,8 +214,8 @@ const EditVote = ({ history, voteEdited, network, voting, votesRetrieved }) => {
             </>
           )}
         </BoxContent>
-        <BoxFooter direction={mode === 'edit' ? 'horizontal' : 'vertical'}>
-          {mode === 'edit' && (
+        <BoxFooter direction={mode === 'edit' && isForm ? 'horizontal' : 'vertical'}>
+          {mode === 'edit' && isForm && (
             <WarningButton className="remove-vote" onClick={removeVote}>
               {t('Remove vote')}
             </WarningButton>

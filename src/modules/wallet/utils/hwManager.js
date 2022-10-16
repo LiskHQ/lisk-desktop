@@ -65,20 +65,19 @@ const isKeyMatch = (aPublicKey, signerPublicKey) => (Buffer.isBuffer(aPublicKey)
 /* eslint-disable max-statements, complexity */
 const updateTransactionSignatures = (
   account,
-  transactionObject,
+  transaction,
   signature,
-  keys,
 ) => {
-  const isMultiSignatureRegistration = transactionObject.module === 4;
+  const isMultisigReg = transaction.module === 4; // @todo fix this
   const signerPublicKey = Buffer.from(account.summary.publicKey, 'hex');
-  const isSender = Buffer.isBuffer(transactionObject.senderPublicKey)
-    && signerPublicKey.equals(transactionObject.senderPublicKey);
-  const { mandatoryKeys, optionalKeys } = keys;
+  const isSender = Buffer.isBuffer(transaction.senderPublicKey)
+    && signerPublicKey.equals(transaction.senderPublicKey);
+  const { mandatoryKeys, optionalKeys } = {}; // @todo get this keys from sender account
   if (
     mandatoryKeys.length + optionalKeys.length === 0
-    || (isSender && isMultiSignatureRegistration)
+    || (isSender && isMultisigReg)
   ) {
-    transactionObject.signatures[0] = signature;
+    transaction.signatures[0] = signature;
   }
 
   if (mandatoryKeys.length + optionalKeys.length > 0) {
@@ -88,24 +87,24 @@ const updateTransactionSignatures = (
     const optionalKeyIndex = optionalKeys.findIndex(
       aPublicKey => isKeyMatch(aPublicKey, signerPublicKey),
     );
-    const signatureOffset = isMultiSignatureRegistration ? 1 : 0;
+    const signatureOffset = isMultisigReg ? 1 : 0;
     if (mandatoryKeyIndex !== -1) {
-      transactionObject.signatures[mandatoryKeyIndex + signatureOffset] = signature;
+      transaction.signatures[mandatoryKeyIndex + signatureOffset] = signature;
     }
     if (optionalKeyIndex !== -1) {
       const index = mandatoryKeys.length + optionalKeyIndex + signatureOffset;
-      transactionObject.signatures[index] = signature;
+      transaction.signatures[index] = signature;
     }
     const numberOfSignatures = signatureOffset + mandatoryKeys.length + optionalKeys.length;
     for (let i = 0; i < numberOfSignatures; i += 1) {
-      if (Array.isArray(transactionObject.signatures)
-        && transactionObject.signatures[i] === undefined) {
-        transactionObject.signatures[i] = Buffer.alloc(0);
+      if (Array.isArray(transaction.signatures)
+        && transaction.signatures[i] === undefined) {
+        transaction.signatures[i] = Buffer.alloc(0);
       }
     }
   }
 
-  return transactionObject;
+  return transaction;
 };
 /* eslint-disable max-statements */
 

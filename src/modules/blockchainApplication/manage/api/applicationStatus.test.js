@@ -26,7 +26,7 @@ describe('applicationStatus', () => {
   it('makes a call to get network status', () => {
     getApplicationStatus({ baseUrl, network });
     expect(http).toHaveBeenCalledTimes(1);
-    expect(http).toHaveBeenCalledWith({ baseUrl, network, path: '/api/v2/application/status' });
+    expect(http).toHaveBeenCalledWith({ baseUrl, network, path: '/api/v3/application/status' });
   });
 });
 
@@ -38,7 +38,7 @@ describe('application config', () => {
     await expect(
       getApplicationStatus({ baseUrl: serviceUrl, network: serviceUrl }),
     ).resolves.toEqual(expectedResponse);
-    expect(http).toHaveBeenCalledWith({ baseUrl: serviceUrl, network: serviceUrl, path: '/api/v2/application/status' });
+    expect(http).toHaveBeenCalledWith({ baseUrl: serviceUrl, network: serviceUrl, path: '/api/v3/application/status' });
   });
 
   it('throws an error if API fails', () => {

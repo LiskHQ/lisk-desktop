@@ -16,7 +16,7 @@ describe('API: LSK Account', () => {
     },
   };
   const baseUrl = 'http://custom-basse-url.com/';
-  const path = '/api/v2/accounts';
+  const path = '/api/v3/accounts';
 
   beforeEach(() => jest.clearAllMocks());
 

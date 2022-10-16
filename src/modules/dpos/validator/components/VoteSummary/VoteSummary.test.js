@@ -90,6 +90,11 @@ const rawTx = {
       },
     ],
   },
+  composedFees: {
+    transaction: '1 LSK',
+    CCM: '1 LSK',
+    initiation: '1 LSK',
+  },
 };
 
 const transaction = { id: 1 };
@@ -99,16 +104,10 @@ const props = {
   account: accounts.genesis,
   votesSubmitted: jest.fn(),
   nextStep: jest.fn(),
-  fee: 1000000000,
   transactions: { txSignatureError: null, signedTransaction: transaction },
   normalizedVotes: { lsk123: {} },
   rawTx,
   selectedPriority: { title: 'Normal', value: 1 },
-  fees: {
-    transaction: '1 LSK',
-    CCM: '1 LSK',
-    initiation: '1 LSK',
-  },
 };
 
 beforeEach(() => {

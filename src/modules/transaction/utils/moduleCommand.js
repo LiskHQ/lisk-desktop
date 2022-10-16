@@ -9,7 +9,7 @@ const getModuleCommandSenderLabel = (t = str => str) => ({
   [MODULE_COMMANDS_NAME_MAP.unlock]: t('Sender'),
   [MODULE_COMMANDS_NAME_MAP.voteDelegate]: t('Voter'),
   [MODULE_COMMANDS_NAME_MAP.registerDelegate]: t('Account username'),
-  [MODULE_COMMANDS_NAME_MAP.registerMultisignatureGroup]: t('Registrant'),
+  [MODULE_COMMANDS_NAME_MAP.registerMultisignature]: t('Registrant'),
   [MODULE_COMMANDS_NAME_MAP.reportDelegateMisbehavior]: t('Reporter'),
 });
 
@@ -19,7 +19,7 @@ const getModuleCommandTitle = (t = str => str) => ({
   [MODULE_COMMANDS_NAME_MAP.unlock]: t('Unlock'),
   [MODULE_COMMANDS_NAME_MAP.voteDelegate]: t('Vote'),
   [MODULE_COMMANDS_NAME_MAP.registerDelegate]: t('Register delegate'),
-  [MODULE_COMMANDS_NAME_MAP.registerMultisignatureGroup]: t('Register multisignature group'),
+  [MODULE_COMMANDS_NAME_MAP.registerMultisignature]: t('Register multisignature group'),
   [MODULE_COMMANDS_NAME_MAP.reportDelegateMisbehavior]: t('Report delegate misbehaviour'),
 });
 
