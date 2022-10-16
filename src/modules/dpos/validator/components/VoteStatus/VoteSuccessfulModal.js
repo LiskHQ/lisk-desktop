@@ -1,4 +1,5 @@
-import React, { useCallback } from 'react';
+import React, { useCallback, useMemo } from 'react';
+import TokenAmount from 'src/modules/token/fungible/components/tokenAmount';
 import { useTranslation } from 'react-i18next';
 import { withRouter } from 'react-router';
 import Box from 'src/theme/box';
@@ -9,8 +10,9 @@ import BoxFooter from 'src/theme/box/footer';
 import Illustration from 'src/modules/common/components/illustration';
 import styles from './styles.css';
 
-function VoteSuccessfulModal({ history }) {
+function VoteSuccessfulModal({ history, statusInfo, dposToken }) {
   const { t } = useTranslation();
+  const totalLockedBalance = useMemo(() => statusInfo.locked - statusInfo.unlockable, [statusInfo]);
 
   const handleBackToDelegate = useCallback(() => {
     history.push('/delegates');
@@ -22,7 +24,10 @@ function VoteSuccessfulModal({ history }) {
       <BoxContent>
         <Illustration className={styles.illustartion} name="votingSuccess" />
         <h4>Vote(s) has been submitted</h4>
-        <p>1,436 LSK will be locked for voting.</p>
+        <p>
+          <TokenAmount val={Math.abs(totalLockedBalance)} token={dposToken.symbol} />{' '}
+          {totalLockedBalance > 0 ? 'will be locked for voting.' : 'will be unlocked.'}
+        </p>
       </BoxContent>
       <BoxFooter>
         <PrimaryButton onClick={handleBackToDelegate}>{t('Back to delegates')}</PrimaryButton>

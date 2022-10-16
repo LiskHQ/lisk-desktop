@@ -85,7 +85,7 @@ const getVoteStats = (votes, account) => {
  * @returns {Object} The feedback object including error status and messages
  */
 // eslint-disable-next-line max-statements
-const validateVotes = (votes, balance, fee, resultingNumOfVotes, t) => {
+const validateVotes = (votes, balance, fee, resultingNumOfVotes, t, dposToken) => {
   const messages = [];
   const areVotesInValid = Object.values(votes).some(
     (vote) => vote.unconfirmed === '' || vote.unconfirmed === undefined
@@ -111,19 +111,19 @@ const validateVotes = (votes, balance, fee, resultingNumOfVotes, t) => {
     }, 0);
 
   if (addedVoteAmount + toRawLsk(fee) > balance) {
-    messages.push(t("You don't have enough LSK in your account."));
+    messages.push(t(`You don't have enough ${dposToken.symbol} in your account.`));
   }
 
   if (balance - addedVoteAmount < MIN_ACCOUNT_BALANCE && balance - addedVoteAmount) {
     messages.push(
-      'The vote amounts are too high. You should keep 0.05 LSK available in your account.'
+      `The vote amounts are too high. You should keep 0.05 ${dposToken.symbol} available in your account.`
     );
   }
 
   return { messages, error: !!messages.length };
 };
 
-const VoteForm = ({ t, votes, account, isVotingTxPending, nextStep, history }) => {
+const VoteForm = ({ t, votes, account, isVotingTxPending, nextStep, history, dposToken }) => {
   const [fee, setFee] = useState(0);
   const changedVotes = Object.keys(votes)
     .filter((address) => votes[address].unconfirmed !== votes[address].confirmed)
@@ -140,7 +140,8 @@ const VoteForm = ({ t, votes, account, isVotingTxPending, nextStep, history }) =
     Number(account.token?.balance),
     fee,
     resultingNumOfVotes,
-    t
+    t,
+    dposToken,
   );
 
   const onConfirm = (rawTx, selectedPriority, fees) => {

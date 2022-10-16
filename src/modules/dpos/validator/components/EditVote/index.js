@@ -162,8 +162,6 @@ const EditVote = ({ history, voteEdited, network, voting, votesRetrieved }) => {
     add: titles.title,
   };
 
-  console.log('---', address, voteSentVoteToDelegate)
-
   return (
     <Dialog
       hasClose
