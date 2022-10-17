@@ -117,7 +117,7 @@ export const useDeprecatedAccount = () => {
     data: unlocks,
     isLoading: isUnlocksLoading,
     isSuccess: isUnlocksSuccess,
-  } = useUnlocks({ config: { params: { address, limit: Infinity } } });
+  } = useUnlocks({ config: { params: { address, limit: 100 } } });
   useEffect(() => {
     if (!isUnlocksSuccess) {
       return;
