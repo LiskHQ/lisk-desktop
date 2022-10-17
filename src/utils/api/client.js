@@ -1,6 +1,7 @@
 /* istanbul ignore file */
 import io from 'socket.io-client';
 import axios from 'axios';
+import { METHOD } from 'src/const/config';
 
 export class Client {
   socket = null;
@@ -26,6 +27,8 @@ export class Client {
     });
 
   rest = (config) => this.http?.request({ ...this.http.defaults, ...config });
+
+  call = ({ transformResult = async (data) => data, ...args }) => this[METHOD](args).then(transformResult);
 
   create({ rpc, rest }) {
     this.socket = io(rpc, { transports: ['websocket'] });

@@ -1,9 +1,5 @@
 import { useQuery } from '@tanstack/react-query';
-import {
-  METHOD,
-} from 'src/const/config';
 import defaultClient from 'src/utils/api/client';
-import { APPLICATION } from 'src/const/queries';
 import { useCurrentApplication } from '@blockchainApplication/manage/hooks';
 
 /**
@@ -30,8 +26,8 @@ export const useCustomQuery = ({
   const [{ chainID }] = useCurrentApplication();
 
   return useQuery(
-    [...keys, chainID, config, APPLICATION, METHOD],
-    async () => client[METHOD](config),
+    [...keys, chainID, config],
+    async () => client.call(config),
     options,
   );
 };
