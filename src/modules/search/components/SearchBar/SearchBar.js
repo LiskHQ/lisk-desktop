@@ -22,7 +22,8 @@ const SearchBar = ({ history }) => {
 
   const debouncedSearchTerm = useDebounce(searchTextValue, 500)
   const {
-    addresses, delegates, transactions, blocks, isLoading } = useSearch(debouncedSearchTerm);
+    addresses, delegates, transactions, blocks, isLoading 
+  } = useSearch(debouncedSearchTerm);
 
   const { t } = useTranslation();
 
