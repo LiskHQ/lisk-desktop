@@ -80,7 +80,7 @@ const SendForm = (props) => {
   const [amount, setAmountField] = useAmountField(
     getInitialAmount(props.prevState?.rawTx, props.initialValue?.amount),
     account.summary?.balance,
-    token.symbol
+    token?.symbol
   );
   const [recipient, setRecipientField] = useRecipientField(
     getInitialRecipient(props.prevState?.rawTx, props.initialValue?.recipient)
@@ -132,7 +132,7 @@ const SendForm = (props) => {
     sendingChain,
     recipientChain,
   };
-
+    console.log('tokens')
   return (
     <section className={styles.wrapper}>
       <TxComposer

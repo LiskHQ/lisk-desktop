@@ -13,11 +13,11 @@ export const TokenField = ({ styles, onChange, value, tokens }) => {
       <label className={`${styles.fieldLabel}`}>
         <span>{t('Token')}</span>
       </label>
-      {value.availableBalance && (
+      {value?.availableBalance && (
         <span className={styles.balance}>
           {t('Balance')}:&nbsp;
           <span>
-            <TokenAmount val={value.availableBalance} token={value.symbol} />
+            <TokenAmount val={value?.availableBalance} token={value?.symbol} />
           </span>
         </span>
       )}
