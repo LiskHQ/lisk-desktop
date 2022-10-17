@@ -4,7 +4,16 @@ import { mount } from 'enzyme';
 import * as hwManager from '@transaction/utils/hwManager';
 import { MODULE_COMMANDS_NAME_MAP } from 'src/modules/transaction/configuration/moduleCommand';
 import accounts from '@tests/constants/wallets';
+import { mockAuth } from 'src/modules/auth/__fixtures__';
+import { useAuth } from 'src/modules/auth/hooks/queries';
+import mockSavedAccounts from '@tests/fixtures/accounts';
 import Summary from './Summary';
+
+const mockedCurrentAccount = mockSavedAccounts[0];
+jest.mock('@auth/hooks/queries');
+jest.mock('@account/hooks', () => ({
+  useCurrentAccount: jest.fn(() => [mockedCurrentAccount, jest.fn()]),
+}));
 
 const mockTransaction = {
   fee: BigInt(10000),
@@ -25,15 +34,15 @@ jest.mock('@transaction/utils/hwManager');
 jest.spyOn(cryptography.address, 'getLisk32AddressFromPublicKey').mockReturnValue(address);
 
 describe('Multisignature Summary component', () => {
-  const members = [accounts.genesis, accounts.delegate].map(item => ({
+  const members = [accounts.genesis, accounts.delegate].map((item) => ({
     address: item.summary.address,
     isMandatory: true,
   }));
-  const mandatoryKeys = [accounts.genesis, accounts.delegate].map(item => item.summary.publicKey);
+  const mandatoryKeys = [accounts.genesis, accounts.delegate].map((item) => item.summary.publicKey);
 
   let wrapper;
   const props = {
-    t: v => v,
+    t: (v) => v,
     prevStep: jest.fn(),
     nextStep: jest.fn(),
     multisigGroupRegistered: jest.fn(),
@@ -48,7 +57,9 @@ describe('Multisignature Summary component', () => {
         optionalKeys: [],
         network: {
           networks: {
-            LSK: { networkIdentifier: '01e47ba4e3e57981642150f4b45f64c2160c10bac9434339888210a4fa5df097' },
+            LSK: {
+              networkIdentifier: '01e47ba4e3e57981642150f4b45f64c2160c10bac9434339888210a4fa5df097',
+            },
           },
           name: 'customNode',
         },
@@ -60,6 +71,8 @@ describe('Multisignature Summary component', () => {
     wrapper = mount(<Summary {...props} />);
     hwManager.signTransactionByHW.mockResolvedValue({});
   });
+
+  useAuth.mockReturnValue({ data: mockAuth });
 
   it('Should call props.nextStep', async () => {
     wrapper.find('.confirm-button').at(0).simulate('click');

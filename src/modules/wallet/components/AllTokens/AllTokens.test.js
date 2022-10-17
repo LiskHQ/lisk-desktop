@@ -62,7 +62,6 @@ describe('AllTokens', () => {
       expect(screen.getByText(fromRawLsk(lockedBalance))).toBeTruthy();
       expect(screen.queryByText(fromRawLsk(availableBalance))).toBeTruthy();
       expect(screen.queryByText(fromRawLsk(+availableBalance + lockedBalance))).toBeTruthy();
-
       expect(
         screen
           .getAllByTestId('fiat-balance')
