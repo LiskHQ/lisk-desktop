@@ -20,8 +20,7 @@ import { useCustomInfiniteQuery } from 'src/modules/common/hooks';
 // eslint-disable-next-line import/prefer-default-export
 export const useTokensSupported = ({ config: customConfig = {}, options, client } = {}) => {
   const config = {
-    url: `/api/${API_VERSION}/tokens/supported
-`,
+    url: `/api/${API_VERSION}/tokens/supported`,
     method: 'get',
     event: 'get.tokens.supported',
     ...customConfig,

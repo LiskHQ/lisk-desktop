@@ -18,7 +18,7 @@ import TxComposer from '@transaction/components/TxComposer';
 import BookmarkAutoSuggest from './bookmarkAutoSuggest';
 import useAmountField from '../../hooks/useAmountField';
 import useMessageField from '../../hooks/useMessageField';
-import { useApplicationSupportedTokens } from '../../hooks';
+import { useTransferableTokens } from '../../hooks';
 import useRecipientField from '../../hooks/useRecipientField';
 import styles from './form.css';
 import MessageField from '../MessageField';
@@ -58,7 +58,7 @@ const SendForm = (props) => {
   const [sendingChain, setSendingChain] = useState(
     prevState?.transactionData?.sendingChain || currentApplication
   );
-  const tokens = useApplicationSupportedTokens(sendingChain)
+  const tokens = useTransferableTokens(sendingChain)
   const { applications } = useApplicationManagement();
   const [token, setToken] = useState(
     getInitialToken(prevState?.transactionData, props.initialValue?.token, tokens)
