@@ -3,7 +3,6 @@ import { createGenericTx } from '@transaction/api';
 import actionTypes from '@transaction/store/actionTypes';
 import { selectActiveTokenAccount } from 'src/redux/selectors';
 
-// eslint-disable-next-line import/prefer-default-export
 export const balanceReclaimed = (
   transactionObject,
   privateKey,

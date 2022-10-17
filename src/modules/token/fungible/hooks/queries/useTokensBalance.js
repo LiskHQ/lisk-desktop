@@ -20,7 +20,7 @@ import { tokenTransformResult } from '@token/fungible/utils/tokenTransformResult
  *
  * @returns the query object
  */
-// eslint-disable-next-line import/prefer-default-export
+
 export const useTokensBalance = ({
   config: customConfig = {},
   options,

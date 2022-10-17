@@ -17,7 +17,7 @@ import { useCurrentApplication } from '@blockchainApplication/manage/hooks';
  *
  * @returns the query object
  */
-// eslint-disable-next-line import/prefer-default-export
+
 export const useCustomInfiniteQuery = ({
   keys,
   config,

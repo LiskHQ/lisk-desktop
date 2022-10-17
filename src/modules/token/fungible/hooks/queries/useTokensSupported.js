@@ -20,7 +20,7 @@ import { useAppsMetaTokensConfig } from '@token/fungible/hooks/queries/useAppsMe
  *
  * @returns the query object
  */
-// eslint-disable-next-line import/prefer-default-export
+
 export const useTokensSupported = ({ config: customConfig = {}, options, client = defaultClient } = {}) => {
   const createMetaConfig = useAppsMetaTokensConfig();
   const transformResult = tokenTransformResult({createMetaConfig, client});

@@ -5,7 +5,6 @@ import MenuSelect, { MenuItem } from 'src/modules/wallet/components/MenuSelect';
 import chainLogo from '@setup/react/assets/images/LISK.png';
 import TokenStyle from './TokenField.css';
 
-// eslint-disable-next-line import/prefer-default-export
 export const TokenField = ({ styles, onChange, value, tokens }) => {
   const { t } = useTranslation();
   return (

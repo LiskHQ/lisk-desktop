@@ -3,7 +3,6 @@ import Table from '../table';
 import { LoadNewButton } from './LoadNewButton';
 import styles from '../table/stickyHeader/stickyHeader.css';
 
-// eslint-disable-next-line import/prefer-default-export
 export const QueryTable = ({
   queryHook,
   queryConfig,

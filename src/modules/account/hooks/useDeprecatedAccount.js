@@ -7,7 +7,7 @@ import { useDispatch } from 'react-redux';
 import authActionTypes from '@auth/store/actionTypes';
 import { useCurrentAccount } from './useCurrentAccount';
 
-// eslint-disable-next-line import/prefer-default-export,max-statements
+// eslint-disable-next-line max-statements
 export const useDeprecatedAccount = () => {
   const [currentAccount] = useCurrentAccount();
   const dispatch = useDispatch();

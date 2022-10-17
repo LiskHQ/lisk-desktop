@@ -13,7 +13,7 @@ import { createGenericTx } from '@transaction/api/index';
  * @param {Number} data.fee - In raw format, used for updating the TX List.
  * @param {Number} data.reference - Data field for LSK transactions
  */
-// eslint-disable-next-line import/prefer-default-export
+
 export const tokensTransferred = (
   transactionObject,
   privateKey,

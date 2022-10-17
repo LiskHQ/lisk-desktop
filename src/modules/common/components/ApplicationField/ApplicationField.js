@@ -4,7 +4,6 @@ import MenuSelect, {
 } from 'src/modules/wallet/components/MenuSelect';
 import chainLogo from '@setup/react/assets/images/LISK.png';
 
-// eslint-disable-next-line import/prefer-default-export
 export const ApplicationField = ({ styles, onChange, value,
   applications,
   label,

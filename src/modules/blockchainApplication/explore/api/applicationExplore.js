@@ -39,7 +39,6 @@ export const getApplication = ({
  * @returns {Promise} Blockchain application details API call
  */
 
-// eslint-disable-next-line import/prefer-default-export
 export const getApplications = ({
   params, network, baseUrl,
 }) => http({

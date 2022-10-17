@@ -17,7 +17,7 @@ import { getNetworkName } from '@network/utils/getNetwork';
  *
  * @returns the query object
  */
-// eslint-disable-next-line import/prefer-default-export
+
 export const useBlockchainApplicationMeta = ({ config: customConfig = {}, options } = { }) => {
 
   const selectedNetwork = useSelector(state => state.network);
