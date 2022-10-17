@@ -30,7 +30,7 @@ export const useCustomQuery = ({
   const [{ chainID }] = useCurrentApplication();
 
   return useQuery(
-    [chainID, config, APPLICATION, METHOD, ...keys],
+    [...keys, chainID, config, APPLICATION, METHOD],
     async () => client[METHOD](config),
     options,
   );
