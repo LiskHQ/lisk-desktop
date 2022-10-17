@@ -2,12 +2,12 @@
 import React from 'react';
 import { useSelector } from 'react-redux';
 import { Redirect, Route } from 'react-router-dom';
-import { selectActiveTokenAccount } from 'src/redux/selectors';
 import { useAccounts, useCurrentAccount } from '@account/hooks';
 import Piwik from 'src/utils/piwik';
 import routes from 'src/routes/routes';
 import Login from '@auth/components/Signin';
 import offlineStyle from 'src/modules/common/components/offlineWrapper/offlineWrapper.css';
+import { useCheckLegacyAccount } from '../../hooks';
 import ErrorBoundary from './errorBoundary';
 
 const checkNetwork = (state) =>
@@ -16,11 +16,11 @@ const checkNetwork = (state) =>
 
 // eslint-disable-next-line max-statements
 const CustomRoute = ({ path, exact, isPrivate, forbiddenTokens, component, t, history }) => {
-  const wallet = useSelector((state) => selectActiveTokenAccount(state));
   const token = useSelector((state) => state.token);
   const isNetworkSet = useSelector(checkNetwork);
   const [currentAccount] = useCurrentAccount();
-  const isAuthenticated = !!currentAccount?.metadata?.address
+  const isAuthenticated = !!currentAccount?.metadata?.address;
+  const { isMigrated } = useCheckLegacyAccount(currentAccount.metadata.pubkey);
   const { search = '' } = history.location;
   const { accounts } = useAccounts();
 
@@ -37,21 +37,23 @@ const CustomRoute = ({ path, exact, isPrivate, forbiddenTokens, component, t, hi
   if (isPrivate && !isAuthenticated) {
     return (
       <Redirect
-        to={`${routes.manageAccounts.path}?referrer=${path.replace(/\/(send|vote)/, '')}&${search.replace(
-          /^\?/,
+        to={`${routes.manageAccounts.path}?referrer=${path.replace(
+          /\/(send|vote)/,
           ''
-        )}`}
+        )}&${search.replace(/^\?/, '')}`}
       />
     );
   }
 
   if (
-    wallet.summary?.isMigrated === false &&
+    isMigrated === false &&
     history.location.pathname !== routes.reclaim.path &&
     history.location.pathname !== routes.manageAccounts.path &&
     history.location.pathname !== routes.addAccountOptions.path &&
     history.location.pathname !== routes.addAccountByFile.path &&
-    !!wallet.summary
+    history.location.pathname !== routes.addAccountBySecretRecovery.path &&
+    history.location.pathname !== routes.removeSelectedAccount.path &&
+    isAuthenticated
   ) {
     return <Redirect to={`${routes.reclaim.path}`} />;
   }
