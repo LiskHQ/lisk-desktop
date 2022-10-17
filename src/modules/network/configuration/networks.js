@@ -14,7 +14,8 @@ const networks = {
   },
   [networkKeys.testNet]: {
     label: 'Testnet',
-    serviceUrl: 'https://testnet-service.lisk.com',
+    // @Todo: this should be reverted when stable test service depoyment has been done
+    serviceUrl: 'http://165.22.29.229:9901',// 'https://testnet-service.lisk.com',
   },
   [networkKeys.customNode]: {
     label: 'Custom Service Node',

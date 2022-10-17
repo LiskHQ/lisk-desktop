@@ -91,7 +91,7 @@ const EditVote = ({ history, voteEdited, network, voting, votesRetrieved }) => {
     if (!votes) return false;
 
     return votes.find(({ delegateAddress: dAddress }) => dAddress === delegateAddress);
-  }, [sentVotes, delegateAddress]);
+  }, [sentVotes, delegateAddress, voting]);
 
   const [voteAmount, setVoteAmount] = useVoteAmountField(
     fromRawLsk(voting[delegateAddress]?.unconfirmed || voteSentVoteToDelegate?.amount || 0)
@@ -177,7 +177,7 @@ const EditVote = ({ history, voteEdited, network, voting, votesRetrieved }) => {
               {!isForm ? t('Your vote has been added to your voting queue') : subTitles[mode]}
             </span>
           </BoxInfoText>
-          {(isForm) && (
+          {isForm && (
             <>
               <BoxInfoText className={styles.accountInfo}>
                 <WalletVisual size={40} address={delegateAddress} />

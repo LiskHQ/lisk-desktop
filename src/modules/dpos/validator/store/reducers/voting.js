@@ -7,11 +7,12 @@ import actionTypes from '../actions/actionTypes';
  * @param {Object} action
  */
 const voting = (state = {}, action) => {
+  const clonedState = {...state};
+
   switch (action.type) {
     case actionTypes.votesRetrieved: {
       if (action.data.account.votesUsed) {
         const voteMapInState = state;
-
         action.data.votes.forEach(({ delegateAddress, amount, name }) => {
           voteMapInState[delegateAddress] = {
             confirmed: +amount,
@@ -25,7 +26,7 @@ const voting = (state = {}, action) => {
         return voteMapInState;
       }
 
-      return {};
+      return state;
     }
     case actionTypes.voteEdited:
       return {
@@ -96,6 +97,12 @@ const voting = (state = {}, action) => {
         return votesDict;
       }, {});
 
+    /**
+     * This action is used to discard a vote from the voting queue
+     */
+    case actionTypes.voteDiscarded:
+      delete clonedState[action.data.address]
+      return clonedState
     /**
      * Resets the vote dictionary after the user signs out.
      */

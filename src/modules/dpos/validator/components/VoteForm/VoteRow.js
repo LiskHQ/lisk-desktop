@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { useDispatch } from 'react-redux';
 
 import { tokenMap } from '@token/fungible/consts/tokens';
-import { voteEdited } from 'src/redux/actions';
+import { voteEdited, voteDiscarded } from 'src/redux/actions';
 import { removeThenAppendSearchParamsToUrl } from 'src/utils/searchParams';
 import { fromRawLsk, toRawLsk } from '@token/fungible/utils/lsk';
 import { truncateAddress } from '@wallet/utils/account';
@@ -45,14 +45,7 @@ const VoteRow = ({
   };
 
   const discard = () => {
-    dispatch(
-      voteEdited([
-        {
-          address,
-          amount: confirmed,
-        },
-      ])
-    );
+    dispatch(voteDiscarded({ address }));
   };
 
   const changeToEditingMode = () => {
