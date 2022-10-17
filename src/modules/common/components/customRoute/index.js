@@ -20,7 +20,7 @@ const CustomRoute = ({ path, exact, isPrivate, forbiddenTokens, component, t, hi
   const isNetworkSet = useSelector(checkNetwork);
   const [currentAccount] = useCurrentAccount();
   const isAuthenticated = !!currentAccount?.metadata?.address;
-  const { isMigrated } = useCheckLegacyAccount(currentAccount.metadata.pubkey);
+  const { isMigrated } = useCheckLegacyAccount(currentAccount?.metadata?.pubkey);
   const { search = '' } = history.location;
   const { accounts } = useAccounts();
 
