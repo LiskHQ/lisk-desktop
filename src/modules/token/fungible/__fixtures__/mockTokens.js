@@ -1,4 +1,4 @@
-import { tokensBalance, tokensSupported, tokensTopLskBalance } from '@tests/constants/tokens';
+import { tokensBalance, tokensSupported, tokensTopLskBalance } from '@token/fungible/__fixtures__/tokens';
 
 export const mockTokensBalance = {
   data: tokensBalance,
