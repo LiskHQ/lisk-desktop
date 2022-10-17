@@ -4,7 +4,10 @@ import {
   LIMIT as limit,
   API_VERSION,
 } from 'src/const/config';
+import defaultClient from 'src/utils/api/client';
 import { useCustomInfiniteQuery } from 'src/modules/common/hooks';
+import { tokenTransformResult } from '@token/fungible/utils/tokenTransformResult';
+import { useAppsMetaTokensConfig } from '@token/fungible/hooks/queries/useAppsMetaTokens';
 
 /**
  * Creates a custom hook for supported tokens query
@@ -18,14 +21,18 @@ import { useCustomInfiniteQuery } from 'src/modules/common/hooks';
  * @returns the query object
  */
 // eslint-disable-next-line import/prefer-default-export
-export const useTokensSupported = ({ config: customConfig = {}, options, client } = {}) => {
+export const useTokensSupported = ({ config: customConfig = {}, options, client = defaultClient } = {}) => {
+  const createMetaConfig = useAppsMetaTokensConfig();
+  const transformResult = tokenTransformResult({createMetaConfig, client});
   const config = {
     url: `/api/${API_VERSION}/tokens/supported`,
     method: 'get',
-    event: 'get.tokens.supported',
+    transformResult,
     ...customConfig,
+    event: 'get.tokens.supported',
     params: { limit, ...(customConfig?.params || {}) },
   };
+
   return useCustomInfiniteQuery({
     keys: [TOKENS_SUPPORTED],
     config,

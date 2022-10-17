@@ -132,7 +132,6 @@ const SendForm = (props) => {
     sendingChain,
     recipientChain,
   };
-    console.log('tokens')
   return (
     <section className={styles.wrapper}>
       <TxComposer
