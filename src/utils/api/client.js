@@ -45,8 +45,8 @@ export class Client {
 
   create({ rpc, rest }) {
     if (rpc) {
-      this.socket = io(rpc, { transports: ['websocket'], path: 'blockchain' });
-      this.socketRPC = io(rpc, { transports: ['websocket'], path: 'rpc-v3' });
+      this.socket = io(rpc, { transports: ['websocket'], path: '/blockchain' });
+      this.socketRPC = io(rpc, { transports: ['websocket'], path: '/rpc-v3' });
     }
     if (rest) {
       const request = axios.create({
