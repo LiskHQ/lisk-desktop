@@ -6,9 +6,9 @@ import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import mockSavedAccounts from '@tests/fixtures/accounts';
 import routes from 'src/routes/routes';
 import ReclaimBalance from '@legacy/manager/reclaimBalance';
+import { useCheckLegacyAccount } from '@legacy/hooks/queries';
 import wallets from '@tests/constants/wallets';
 import blockchainApplicationsManage from '@tests/fixtures/blockchainApplicationsManage';
-import { useCheckLegacyAccount } from '../../hooks';
 import CustomRoute from './index';
 
 const Public = () => <h1>Public</h1>;
@@ -27,7 +27,7 @@ jest.mock('@account/hooks', () => ({
   })),
   useCurrentAccount: jest.fn(() => [mockSavedAccounts[0], mockSetAccount]),
 }));
-jest.mock('../../hooks');
+jest.mock('@legacy/hooks/queries');
 
 describe('CustomRoute', () => {
   const mockAppState = {

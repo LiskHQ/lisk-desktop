@@ -7,7 +7,7 @@ import Piwik from 'src/utils/piwik';
 import routes from 'src/routes/routes';
 import Login from '@auth/components/Signin';
 import offlineStyle from 'src/modules/common/components/offlineWrapper/offlineWrapper.css';
-import { useCheckLegacyAccount } from '../../hooks';
+import { useCheckLegacyAccount } from '@legacy/hooks/queries';
 import ErrorBoundary from './errorBoundary';
 
 const checkNetwork = (state) =>

@@ -3,7 +3,7 @@ const blockchainApplicationsManage = [
     name: 'Lisk',
     chainID: 'aq02qkbb35u4jdq8szo3pnsq',
     state: 'active',
-    apis: [{ rest: 'http://165.22.29.229:9901', rpc: 'ws://165.22.29.229:9901/rpc-v3' }],
+    apis: [{ rest: 'http://165.227.246.146:9901', rpc: 'ws://165.227.246.146:9901/rpc-v3' }],
     address: 'lsk24cd35u49jd8szo3pnsqe5dsxwrnazyqqqg5eu',
     lastUpdated: 123456789,
     lastCertificateHeight: 9000,
