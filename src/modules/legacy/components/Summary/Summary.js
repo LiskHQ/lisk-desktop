@@ -12,22 +12,12 @@ const transaction = {
   params: {},
 };
 
-const Summary = ({
-  balanceReclaimed,
-  nextStep,
-  prevStep,
-  wallet,
-  network,
-  t,
-  fees,
-}) => {
+const Summary = ({ balanceReclaimed, nextStep, prevStep, wallet, network, t, fees }) => {
   transaction.nonce = wallet.sequence.nonce;
   transaction.sender = { PublicKey: wallet.summary.publicKey };
   transaction.params.amount = wallet.legacy.balance;
 
-  const [
-    selectedPriority,, priorityOptions,
-  ] = useTransactionPriority();
+  const [selectedPriority, , priorityOptions] = useTransactionPriority();
   const { minFee } = useTransactionFeeCalculation({
     network,
     selectedPriority,
@@ -42,7 +32,7 @@ const Summary = ({
     fee: toRawLsk(minFee.value),
     composedFees: {
       Transaction: toRawLsk(minFee.value),
-      initiation: toRawLsk('0.05'),
+      Initialisation: toRawLsk('0.05'),
     },
   };
 
@@ -60,12 +50,15 @@ const Summary = ({
 
   const onCancelAction = {
     label: t('Go back'),
-    onClick: () => { prevStep({ rawTx }); },
+    onClick: () => {
+      prevStep({ rawTx });
+    },
   };
 
   return (
     <TransactionSummary
       hasCancel
+      title={t('Transaction Summary')}
       className={styles.container}
       confirmButton={onConfirmAction}
       cancelButton={onCancelAction}
@@ -79,8 +72,9 @@ const Summary = ({
 Summary.whyDidYouRender = true;
 
 // istanbul ignore next
-const areEqual = (prevProps, nextProps) => ( // @todo account has multiple balance now
-  prevProps.wallet.summary.balance === nextProps.wallet.summary.balance
-);
+const areEqual = (
+  prevProps,
+  nextProps // @todo account has multiple balance now
+) => prevProps.wallet.summary.balance === nextProps.wallet.summary.balance;
 
 export default React.memo(Summary, areEqual);

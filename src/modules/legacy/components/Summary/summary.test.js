@@ -1,8 +1,6 @@
 import { act } from 'react-dom/test-utils';
 import { mountWithProps } from 'src/utils/testHelpers';
-import {
-  getTransactionBaseFees,
-} from '@transaction/api';
+import { getTransactionBaseFees } from '@transaction/api';
 import { tokenMap } from '@token/fungible/consts/tokens';
 import useTransactionFeeCalculation from '@transaction/hooks/useTransactionFeeCalculation';
 import { truncateAddress } from '@wallet/utils/account';
@@ -45,7 +43,7 @@ describe('Reclaim balance Summary', () => {
   const props = {
     nextStep: jest.fn(),
     prevStep: jest.fn(),
-    t: key => key,
+    t: (key) => key,
     wallet: wallet.info.LSK,
     token,
     network,
@@ -75,7 +73,9 @@ describe('Reclaim balance Summary', () => {
 
     // Act
     await flushPromises();
-    act(() => { wrapper.update(); });
+    act(() => {
+      wrapper.update();
+    });
 
     // Assert
     expect(props.nextStep).toBeCalledWith({
@@ -91,7 +91,7 @@ describe('Reclaim balance Summary', () => {
         },
         composedFees: {
           Transaction: 100000,
-          initiation: 5000000,
+          Initialisation: 5000000,
         },
       },
       actionFunction: props.balanceReclaimed,
@@ -101,11 +101,13 @@ describe('Reclaim balance Summary', () => {
   it('should navigate to previous page when cancel button is clicked', async () => {
     // Arrange
     const wrapper = mountWithProps(Summary, props, state);
-    wrapper.find('button.cancel-button').simulate('click');
+    wrapper.find('button.cancel-button').at(1).simulate('click');
 
     // Act
     await flushPromises();
-    act(() => { wrapper.update(); });
+    act(() => {
+      wrapper.update();
+    });
 
     // Assert
     expect(props.prevStep).toBeCalledWith({
@@ -121,7 +123,7 @@ describe('Reclaim balance Summary', () => {
         },
         composedFees: {
           Transaction: 100000,
-          initiation: 5000000,
+          Initialisation: 5000000,
         },
       },
     });
