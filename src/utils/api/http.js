@@ -20,8 +20,7 @@ const http = ({
     // @todo remove the optional chain
     
     const url = new URL(baseUrl ? `${baseUrl}${path}`
-    // @Todo: this should be reverted when stable test service depoyment has been done
-      : `${network?.networks?.LSK?.serviceUrl ?? 'http://165.22.29.229:9901'}${path}`);
+    : `${network?.networks?.LSK?.serviceUrl ?? 'https://testnet-service.lisk.com'}${path}`);
     url.search = new URLSearchParams(params).toString();
 
     return fetch(url.toString(), {
