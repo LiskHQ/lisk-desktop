@@ -4,7 +4,6 @@ import { LIMIT as limit, API_VERSION } from 'src/const/config';
 import { useCustomInfiniteQuery } from 'src/modules/common/hooks';
 import { useCurrentAccount } from '@account/hooks';
 import { useAppsMetaTokensConfig } from '@token/fungible/hooks/queries/useAppsMetaTokens';
-import defaultClient from 'src/utils/api/client';
 import { tokenTransformResult } from '@token/fungible/utils/tokenTransformResult';
 
 /**
@@ -24,12 +23,12 @@ import { tokenTransformResult } from '@token/fungible/utils/tokenTransformResult
 export const useTokensBalance = ({
   config: customConfig = {},
   options,
-  client = defaultClient,
+  client,
 } = {}) => {
   const [currentAccount] = useCurrentAccount();
   const { address } = currentAccount.metadata;
   const createMetaConfig = useAppsMetaTokensConfig();
-  const transformResult = tokenTransformResult({createMetaConfig, client});
+  const transformResult = tokenTransformResult({createMetaConfig});
 
   const config = {
     url: `/api/${API_VERSION}/tokens`,

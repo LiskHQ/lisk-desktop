@@ -6,6 +6,7 @@ import {
 } from 'src/const/config';
 import { useCustomInfiniteQuery } from 'src/modules/common/hooks';
 import { getNetworkName } from '@network/utils/getNetwork';
+import { clientMetaData } from 'src/utils/api/client';
 
 /**
  * Creates a custom hook for blockchain applications meta queries
@@ -18,20 +19,21 @@ import { getNetworkName } from '@network/utils/getNetwork';
  * @returns the query object
  */
 
-export const useBlockchainApplicationMeta = ({ config: customConfig = {}, options } = { }) => {
-
+export const useBlockchainApplicationMeta = ({ config: customConfig = {}, options, client = clientMetaData } = { }) => {
   const selectedNetwork = useSelector(state => state.network);
   const network = getNetworkName(selectedNetwork)
   const config = {
     url: `/api/${API_VERSION}/blockchain/apps/meta`,
     method: 'get',
-    event: 'get.blockchain.apps.meta',
     ...customConfig,
+    event: 'get.blockchain.apps.meta',
     params: { limit, ...(customConfig?.params || {}), network },
   };
+
   return useCustomInfiniteQuery({
     keys: [BLOCKCHAIN_APPS_META],
     config,
+    client,
     options,
   });
 };

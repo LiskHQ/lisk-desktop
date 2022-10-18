@@ -1,10 +1,12 @@
-export const tokenTransformResult = ({createMetaConfig, client}) => async (res) => {
+import { clientMetaData } from 'src/utils/api/client';
+
+export const tokenTransformResult = ({createMetaConfig}) => async (res) => {
   const tokenIDs = res?.data?.map(({ tokenID }) => tokenID).join(',');
   if (!tokenIDs) {
     return res;
   }
   const metaConfig = createMetaConfig({ params: { tokenID: tokenIDs, limit: 100 } });
-  const metaRes = await client.call(metaConfig);
+  const metaRes = await clientMetaData.call(metaConfig);
   return {
     ...res,
     data: res?.data?.map((token) => {

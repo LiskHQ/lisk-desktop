@@ -4,7 +4,6 @@ import {
   LIMIT as limit,
   API_VERSION,
 } from 'src/const/config';
-import defaultClient from 'src/utils/api/client';
 import { useCustomInfiniteQuery } from 'src/modules/common/hooks';
 import { tokenTransformResult } from '@token/fungible/utils/tokenTransformResult';
 import { useAppsMetaTokensConfig } from '@token/fungible/hooks/queries/useAppsMetaTokens';
@@ -21,9 +20,9 @@ import { useAppsMetaTokensConfig } from '@token/fungible/hooks/queries/useAppsMe
  * @returns the query object
  */
 
-export const useTokensSupported = ({ config: customConfig = {}, options, client = defaultClient } = {}) => {
+export const useTokensSupported = ({ config: customConfig = {}, options, client } = {}) => {
   const createMetaConfig = useAppsMetaTokensConfig();
-  const transformResult = tokenTransformResult({createMetaConfig, client});
+  const transformResult = tokenTransformResult({createMetaConfig});
   const config = {
     url: `/api/${API_VERSION}/tokens/supported`,
     method: 'get',
