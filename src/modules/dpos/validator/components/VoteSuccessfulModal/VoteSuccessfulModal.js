@@ -1,6 +1,7 @@
 import React, { useCallback } from 'react';
 import { useTranslation } from 'react-i18next';
 import Box from 'src/theme/box';
+import routes from 'src/routes/routes';
 import BoxHeader from 'src/theme/box/header';
 import { PrimaryButton } from 'src/theme/buttons';
 import BoxContent from 'src/theme/box/content';
@@ -12,15 +13,15 @@ function VoteSuccessfulModal({ history, statusMessage }) {
   const { t } = useTranslation();
 
   const handleBackToDelegate = useCallback(() => {
-    history.push('/delegates');
+    history.push(routes.delegates.path);
   }, [history]);
 
   return (
     <Box className={styles.successContainer}>
-      <BoxHeader>Voting confirmation</BoxHeader>
+      <BoxHeader>{t('Voting confirmation')}</BoxHeader>
       <BoxContent>
         <Illustration className={styles.illustartion} name="votingSuccess" />
-        <h4>Vote(s) has been submitted</h4>
+        <h4>{t('Vote(s) has been submitted')}</h4>
         <p>
           {statusMessage.message}
         </p>

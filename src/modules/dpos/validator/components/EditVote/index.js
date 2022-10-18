@@ -43,7 +43,7 @@ const getTitles = (t) => ({
   },
 });
 
-// @Todo this is just a place holder pending when dpos constants are integrated by useDposContants hook
+  // @Todo this is just a place holder pending when dpos constants are integrated by this issue #4502
 const dposTokenId = '0'.repeat(16);
 
 // eslint-disable-next-line max-statements
@@ -93,7 +93,7 @@ const EditVote = ({ history, voteEdited, network, voting, votesRetrieved }) => {
     return votes.find(({ delegateAddress: dAddress }) => dAddress === delegateAddress);
   }, [sentVotes, delegateAddress, voting]);
 
-  const [voteAmount, setVoteAmount] = useVoteAmountField(
+  const [voteAmount, setVoteAmount, isGettingDposToken] = useVoteAmountField(
     fromRawLsk(voting[delegateAddress]?.unconfirmed || voteSentVoteToDelegate?.amount || 0)
   );
   const mode = voteSentVoteToDelegate || voting[delegateAddress] ? 'edit' : 'add';
@@ -136,11 +136,8 @@ const EditVote = ({ history, voteEdited, network, voting, votesRetrieved }) => {
     }
   };
 
-  const handleContinueVoting = () => {
-    setVoteAmount(0);
-    setIsForm(true);
-  };
-
+  const handleContinueVoting = () => setIsForm(true);
+  
   const removeVote = () => {
     voteEdited([
       {
@@ -186,7 +183,7 @@ const EditVote = ({ history, voteEdited, network, voting, votesRetrieved }) => {
               </BoxInfoText>
               <label className={styles.fieldGroup}>
                 <p className={styles.availableBalance}>
-                  <span>{t('Available Bal: ')}</span>
+                  <span>{t('Available balance: ')}</span>
                   <span>
                     <TokenAmount token={token.symbol} val={token.availableBalance} />
                   </span>
@@ -230,7 +227,7 @@ const EditVote = ({ history, voteEdited, network, voting, votesRetrieved }) => {
           <PrimaryButton
             className={`${styles.confirmButton} confirm`}
             onClick={handleConfirm}
-            disabled={voteAmount.error}
+            disabled={voteAmount.error || isGettingDposToken}
           >
             {t(isForm ? 'Confirm' : 'Go to the voting queue')}
           </PrimaryButton>

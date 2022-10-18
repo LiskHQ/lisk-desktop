@@ -189,9 +189,7 @@ describe('API: LSK Delegates', () => {
         ],
       });
       delegate.getDelegates({
-        baseUrl,
-        network,
-        params: { limit: 10, offset: 2 },
+        baseUrl, network, params: { limit: 10, offset: 2 },
       });
       expect(http).toHaveBeenCalledWith({
         baseUrl,

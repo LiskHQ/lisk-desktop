@@ -4,11 +4,10 @@ import { HTTP_PREFIX } from 'src/const/httpCodes';
 import ws, { subscribe, unsubscribe } from 'src/utils/api/ws';
 import { extractAddressFromPublicKey } from '@wallet/utils/account';
 import client from 'src/utils/api/client';
-import { API_VERSION } from 'src/const/config';
 
 export const httpPaths = {
   delegates: `${HTTP_PREFIX}/accounts`,
-  votesSent: `/api/${API_VERSION}/dpos/votes/sent`,
+  votesSent: `${HTTP_PREFIX}/dpos/votes/sent`,
   votesReceived: `${HTTP_PREFIX}/votes_received`,
   forgers: `${HTTP_PREFIX}/forgers`,
 };
@@ -141,7 +140,6 @@ export const getDelegates = ({ network, params = {}, baseUrl }) => {
 export const getVotes = ({ params = {} }) =>
   client.rest({
     url: httpPaths.votesSent,
-    method: 'get',
     params: getDelegateProps({ address: params.address, publicKey: params.publicKey }),
   });
 

@@ -7,9 +7,11 @@ import { MIN_ACCOUNT_BALANCE } from '@transaction/configuration/transactions';
 import { mountWithRouterAndQueryClient } from 'src/utils/testHelpers';
 import accounts from '@tests/constants/wallets';
 import flushPromises from '@tests/unit-test-utils/flushPromises';
+import { useTokensBalance } from '@token/fungible/hooks/queries';
 import VoteRow from './VoteRow';
 import Form from './VoteForm';
 
+jest.mock('@token/fungible/hooks/queries');
 jest.mock('@account/hooks/useDeprecatedAccount', () => ({
   useDeprecatedAccount: jest.fn().mockReturnValue({
     isSuccess: true,
@@ -82,6 +84,8 @@ describe('VoteForm', () => {
     // Reset balance
     props.account.token.balance = accounts.genesis.token.balance;
   });
+
+  useTokensBalance.mockReturnValue({ data: mockTokensBalance, isLoading: false });
 
   it('Render only the changed votes', async () => {
     const wrapper = shallow(<Form {...props} votes={mixedVotes} />);

@@ -1,6 +1,7 @@
 import React from 'react';
 import TxBroadcaster from '@transaction/components/TxBroadcaster';
 import { getTransactionStatus } from '@transaction/configuration/statusConfig';
+import { txStatusTypes } from 'src/modules/transaction/configuration/txStatus';
 import statusMessages from './statusMessages';
 import styles from './styles.css';
 import VoteSuccessfulModal from '../VoteSuccessfulModal';
@@ -11,7 +12,7 @@ const Status = ({ account, transactions, statusInfo, t, dposToken }) => {
 
   return (
     <div className={styles.container}>
-      {status.code === 'BROADCAST_SUCCESS' ? (
+      {status.code === txStatusTypes.broadcastSuccess ? (
         <VoteSuccessfulModal statusMessage={template} dposToken={dposToken} />
       ) : (
         <TxBroadcaster

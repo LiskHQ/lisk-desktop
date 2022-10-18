@@ -4,10 +4,9 @@
   align-items: center;
 
   & header {
-    @mixin headingNormal very-bold;
+    @mixin voteStatusHeading;
 
     justify-content: center !important;
-    font-size: var(--font-size-h3);
     padding-bottom: 4px !important;
   }
 
@@ -27,7 +26,6 @@
     & .illustartion ~ h4 {
       @mixin contentLargest semi-bold;
 
-      font-size: var(--font-size-h6);
       margin-top: 14px;
     }
 

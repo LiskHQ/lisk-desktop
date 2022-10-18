@@ -71,7 +71,7 @@ describe('EditVote', () => {
     expect(screen.getByText(address)).toBeTruthy();
     expect(screen.getByText(delegate.name)).toBeTruthy();
     expect(screen.getByTestId(`wallet-visual-${address}`)).toBeTruthy();
-    expect(screen.getByText('Available Bal:')).toBeTruthy();
+    expect(screen.getByText('Available Balance:')).toBeTruthy();
     expect(
       screen.getByText(
         `${numeral(fromRawLsk(token.availableBalance)).format('0,0.[0000000000000]')} ${
@@ -132,7 +132,7 @@ describe('EditVote', () => {
     expect(screen.getByText(address)).toBeTruthy();
     expect(screen.getByText(delegate.name)).toBeTruthy();
     expect(screen.getByTestId(`wallet-visual-${address}`)).toBeTruthy();
-    expect(screen.getByText('Available Bal:')).toBeTruthy();
+    expect(screen.getByText('Available Balance:')).toBeTruthy();
     expect(
       screen.getByText(
         `${numeral(fromRawLsk(token.availableBalance)).format('0,0.[0000000000000]')} ${

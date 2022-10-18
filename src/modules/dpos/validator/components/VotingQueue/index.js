@@ -13,7 +13,7 @@ import styles from './styles.css';
 const VotingQueue = ({ history, processLaunchProtocol }) => {
   const [{ step }, setMultiStepState] = useState({});
 
-// @Todo this is just a place holder pending when dpos constants are integrated by useDposContants hook
+// @Todo this is just a place holder pending when dpos constants are integrated by this issue #4502
 const dposTokenId = '0'.repeat(16);
 
 const { data: tokens } = useTokensBalance({ config: { params: { tokenID: dposTokenId } } });
