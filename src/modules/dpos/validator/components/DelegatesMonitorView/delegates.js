@@ -1,5 +1,7 @@
 /* istanbul ignore file */
 import React, { useRef, useState } from 'react';
+import routes from 'src/routes/routes';
+import { Link } from 'react-router-dom';
 import grid from 'flexboxgrid/dist/flexboxgrid.css';
 import { useTranslation } from 'react-i18next';
 import { Input } from 'src/theme';
@@ -12,7 +14,7 @@ import DialogLink from 'src/theme/dialog/link';
 import { useCurrentAccount } from 'src/modules/account/hooks';
 import Icon from 'src/theme/Icon';
 import { ROUND_LENGTH } from '@dpos/validator/consts';
-import { PrimaryButton } from 'src/theme/buttons';
+import { PrimaryButton, SecondaryButton } from 'src/theme/buttons';
 import { useBlocks } from 'src/modules/block/hooks/queries/useBlocks';
 import DelegatesOverview from '../Overview/delegatesOverview';
 import ForgingDetails from '../Overview/forgingDetails';
@@ -119,6 +121,9 @@ const DelegatesMonitor = ({ watchList, registrations }) => {
             <BoxTabs {...pageTabs} />
           </div>
           <div className={grid['col-md-4']}>
+            <Link to={routes.sentVotes.path}>
+              <SecondaryButton>Votes</SecondaryButton>
+            </Link>
             <DialogLink component="registerDelegate">
               <PrimaryButton disabled={!address}>Register delegate</PrimaryButton>
             </DialogLink>

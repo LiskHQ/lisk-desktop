@@ -144,6 +144,12 @@ export default {
     isPrivate: false,
     forbiddenTokens: [],
   },
+  sentVotes: {
+    path: '/delegates/profile/votes',
+    exact: true,
+    isPrivate: false,
+    forbiddenTokens: [],
+  },
 };
 
 export const modals = {

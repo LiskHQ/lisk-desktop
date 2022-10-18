@@ -308,6 +308,7 @@ header {
     align-items: center;
     justify-content: flex-end;
     padding-right: 0px !important;
+    column-gap: 24px;
   }
 
   & > div:first-child > div:first-child > h3 {
