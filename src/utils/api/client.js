@@ -43,7 +43,7 @@ export class Client {
   call = ({ transformResult = async (data) => data, ...args }) =>
     this[METHOD](args).then(transformResult);
 
-  create({ rpc, rest }) {
+  create({ rpc, rest } = {}) {
     if (rpc) {
       this.socket = io(rpc, { transports: ['websocket'], path: '/blockchain' });
       this.socketRPC = io(rpc, { transports: ['websocket'], path: '/rpc-v3' });

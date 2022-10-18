@@ -58,7 +58,7 @@ const SendForm = (props) => {
   const [sendingChain, setSendingChain] = useState(
     prevState?.transactionData?.sendingChain || currentApplication
   );
-  const tokens = useTransferableTokens(sendingChain)
+  const { data: tokens } = useTransferableTokens(sendingChain)
   const { applications } = useApplicationManagement();
   const [token, setToken] = useState(
     getInitialToken(prevState?.transactionData, props.initialValue?.token, tokens)

@@ -1,6 +1,6 @@
 import { API_VERSION } from 'src/const/config';
-import { tokenTransformResult } from './tokenTransformResult';
 import { clientMetaData } from 'src/utils/api/client';
+import { tokenTransformResult } from './tokenTransformResult';
 
 describe('tokenTransformResult', () => {
   const createMetaConfig = (config) => config;
