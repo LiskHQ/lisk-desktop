@@ -31,7 +31,7 @@ jest.mock('src/modules/common/hooks');
 describe('AllTokens', () => {
   const history = { location: { search: '' } };
 
-  useTokensBalance.mockReturnValue({ data: mockTokensBalance, isLoading: false });
+  useTokensBalance.mockReturnValue({ data: mockTokensBalance, isLoading: false, isSuccess: true });
   useAuth.mockReturnValue({ data: mockAuth });
   useDelegates.mockReturnValue({ data: mockDelegates });
   useBlocks.mockReturnValue({ data: mockBlocks });

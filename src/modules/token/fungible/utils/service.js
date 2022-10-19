@@ -12,7 +12,7 @@ const tickerReducer = (acc, key) => ({
   },
 });
 
-// eslint-disable-next-line import/prefer-default-export
+
 export const pricesRetrieved = () => (dispatch, getState) => {
   const { network } = getState();
   const activeToken = tokenMap.LSK.key;

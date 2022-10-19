@@ -3,7 +3,7 @@ import {
   API_VERSION,
 } from 'src/const/config';
 import { NEWSFEED } from 'src/const/queries';
-import { useCustomInfiniteQuery } from '../useCustomInfiniteQuery';
+import { useCustomInfiniteQuery } from '@common/hooks';
 
 /**
  * Creates a custom hook for news feed queries
@@ -18,7 +18,7 @@ import { useCustomInfiniteQuery } from '../useCustomInfiniteQuery';
  *
  * @returns the query object
  */
-// eslint-disable-next-line import/prefer-default-export
+
 export const useNewsFeed = ({ config: customConfig = {}, options } = { }) => {
   const config = {
     url: `/api/${API_VERSION}/newsfeed`,

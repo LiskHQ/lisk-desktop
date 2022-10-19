@@ -81,7 +81,7 @@ const getTransactionOrBlock = async ({ network, params, baseUrl }) => {
  * @param {String} data.baseUrl - custom BaseUrl used for fetching archived data
  * @returns {Promise}
  */
-// eslint-disable-next-line import/prefer-default-export
+
 export const search = ({ network, params, baseUrl }) => {
   if (validateAddress(params.query) === 0) {
     return getAccount({
