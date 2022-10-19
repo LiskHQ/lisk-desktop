@@ -5,14 +5,18 @@ import Tooltip from 'src/theme/Tooltip';
 import { PrimaryButton } from 'src/theme/buttons';
 import DialogLink from 'src/theme/dialog/link';
 import { fromRawLsk } from '@token/fungible/utils/lsk';
+import { useDeprecatedAccount } from '@account/hooks';
+import { useSchemas } from '@transaction/hooks/queries/useSchemas';
 import { selectActiveTokenAccount } from 'src/redux/selectors';
 import { dustThreshold } from '@wallet/configuration/constants';
 import MigrationDetails from '../MigrationDetails';
 import styles from './reclaim.css';
 
 const AccountsComparison = ({ t }) => {
+  useDeprecatedAccount();
+  useSchemas();
   const wallet = useSelector(selectActiveTokenAccount);
-  const hasEnoughBalance = Number(wallet.token?.balance) >= dustThreshold;
+  const hasEnoughBalance = Number(wallet.token?.[0].availableBalance) >= dustThreshold;
 
   return (
     <div className={`${styles.container} ${styles.reclaim}`}>

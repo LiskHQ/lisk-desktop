@@ -47,7 +47,7 @@ const MigrationDetails = ({ wallet, showBalance }) => {
         {showBalance && (
           <p>
             <span>{`${t('Wallet balance')}: `}</span>
-            <TokenAmount val={Number(wallet.token?.balance)} token={token} />
+            <TokenAmount val={Number(wallet.token?.[0].availableBalance)} token={token} />
           </p>
         )}
       </div>

@@ -1,13 +1,14 @@
 /* istanbul ignore file */
 import { useEffect, useState } from 'react';
+import { useDispatch } from 'react-redux';
 import { useDelegates, useSentVotes, useUnlocks } from '@dpos/validator/hooks/queries';
 import { useAuth } from '@auth/hooks/queries';
 import { useLegacy } from '@legacy/hooks/queries';
-import { useDispatch } from 'react-redux';
+import { useTokensBalance } from '@token/fungible/hooks/queries';
 import authActionTypes from '@auth/store/actionTypes';
 import { useCurrentAccount } from './useCurrentAccount';
 
-// eslint-disable-next-line import/prefer-default-export,max-statements
+// eslint-disable-next-line import/prefer-default-export, max-statements, complexity
 export const useDeprecatedAccount = () => {
   const [currentAccount] = useCurrentAccount();
   const dispatch = useDispatch();
@@ -151,8 +152,27 @@ export const useDeprecatedAccount = () => {
         isMigrated: legacy?.data?.balance === '0',
         legacyAddress: legacy?.data?.legacyAddress,
       },
+      legacy: {
+        address: legacy?.data?.legacyAddress,
+        balance: legacy?.data?.balance,
+      },
     }));
   }, [legacy, isLegacySuccess]);
+
+  const {
+    data: token,
+    isLoading: isTokenLoading,
+    isSuccess: isTokenSuccess,
+  } = useTokensBalance({ config: { params: { address } } });
+  useEffect(() => {
+    if (!isTokenSuccess) {
+      return;
+    }
+    setAccount((state) => ({
+      ...state,
+      token: token?.data,
+    }));
+  }, [token, isTokenSuccess]);
 
   useEffect(() => {
     dispatch({
@@ -167,12 +187,14 @@ export const useDeprecatedAccount = () => {
       isDelegatesLoading ||
       isUnlocksLoading ||
       isSentVotesLoading ||
-      isLegacyLoading,
+      isLegacyLoading ||
+      isTokenLoading,
     isSuccess:
       isAuthSuccess &&
       isDelegatesSuccess &&
       isUnlocksSuccess &&
       isSentVotesSuccess &&
-      isLegacySuccess,
+      isLegacySuccess &&
+      isTokenSuccess,
   };
 };
