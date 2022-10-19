@@ -42,13 +42,13 @@ const getInitialRecipientChain = (
 };
 const getInitialToken = (
   transactionData,
-  initalTokenId,
+  initialTokenId,
   tokens,
 ) => {
-  const initalToken = initalTokenId
-    ? tokens.find(({ tokenID }) => tokenID === initalTokenId)
+  const initialToken = initialTokenId
+    ? tokens.find(({ tokenID }) => tokenID === initialTokenId)
     : null;
-  return transactionData?.token || initalToken || tokens[0];
+  return transactionData?.token || initialToken || tokens[0];
 };
 
 // eslint-disable-next-line max-statements
