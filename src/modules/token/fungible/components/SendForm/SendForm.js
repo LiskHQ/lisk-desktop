@@ -2,7 +2,7 @@ import React, { useCallback, useMemo, useState } from 'react';
 import Piwik from 'src/utils/piwik';
 import { MODULE_COMMANDS_NAME_MAP } from 'src/modules/transaction/configuration/moduleCommand';
 import AmountField from 'src/modules/common/components/amountField';
-import { TokenField } from 'src/modules/common/components/TokenField';
+import TokenAmount from '@token/fungible/components/tokenAmount';
 import Icon from 'src/theme/Icon';
 import { toRawLsk, fromRawLsk } from '@token/fungible/utils/lsk';
 import BoxContent from 'src/theme/box/content';
@@ -10,11 +10,11 @@ import BoxHeader from 'src/theme/box/header';
 import { maxMessageLength } from 'src/modules/transaction/configuration/transactions';
 import {
   useCurrentApplication,
-  useApplicationManagement,
 } from 'src/modules/blockchainApplication/manage/hooks';
-import { ApplicationField } from 'src/modules/common/components/ApplicationField';
+import MenuSelect, { MenuItem } from 'src/modules/wallet/components/MenuSelect';
 import { useBlockchainApplicationMeta } from '@blockchainApplication/manage/hooks/queries/useBlockchainApplicationMeta';
 import TxComposer from '@transaction/components/TxComposer';
+import chainLogo from '@setup/react/assets/images/LISK.png';
 import BookmarkAutoSuggest from './bookmarkAutoSuggest';
 import useAmountField from '../../hooks/useAmountField';
 import useMessageField from '../../hooks/useMessageField';
@@ -32,7 +32,7 @@ const getInitialRecipientChain = (
   transactionData,
   initialChainId,
   currentApplication,
-  applications
+  applications,
 ) => {
   const initalRecipientChain = initialChainId
     ? applications.find(({ chainID }) => chainID === initialChainId)
@@ -43,7 +43,7 @@ const getInitialRecipientChain = (
 const getInitialToken = (
   transactionData,
   initalTokenId,
-  tokens
+  tokens,
 ) => {
   const initalToken = initalTokenId
     ? tokens.find(({ tokenID }) => tokenID === initalTokenId)
@@ -59,7 +59,7 @@ const SendForm = (props) => {
     prevState?.transactionData?.sendingChain || currentApplication
   );
   const { data: tokens } = useTransferableTokens(sendingChain)
-  const { applications } = useApplicationManagement();
+  const { data: {data: applications = []} = {} } = useBlockchainApplicationMeta();
   const [token, setToken] = useState(
     getInitialToken(prevState?.transactionData, props.initialValue?.token, tokens)
   );
@@ -71,7 +71,7 @@ const SendForm = (props) => {
       applications
     )
   );
-  const { data: recipientApplication, isSuccess: isRecipientAppSuccess } = useBlockchainApplicationMeta();
+
   const [maxAmount, setMaxAmount] = useState({ value: 0, error: false });
 
   const [reference, setReference] = useMessageField(
@@ -146,31 +146,80 @@ const SendForm = (props) => {
           </BoxHeader>
           <BoxContent className={styles.formSection}>
             <div className={`${styles.ApplilcationFieldWrapper}`}>
-              <ApplicationField
-                styles={styles}
-                label={t('From Application')}
-                value={sendingChain}
-                applications={isRecipientAppSuccess ? recipientApplication.data : []}
-                onChange={setSendingChain}
-              />
+              <div>
+                <label className={`${styles.fieldLabel} sending-application`}>
+                  <span>{t('From Application')}</span>
+                </label>
+                <MenuSelect
+                  value={sendingChain}
+                  onChange={(value) => setSendingChain(value)}
+                  select={(selectedValue, option) => selectedValue?.chainID === option.chainID}
+                >
+                  {applications.map((application) => (
+                    <MenuItem
+                      className={styles.chainOptionWrapper}
+                      value={application}
+                      key={application.chainID}
+                    >
+                      <img className={styles.chainLogo} src={application.logo?.png || chainLogo} />
+                      <span>{application.chainName}</span>
+                    </MenuItem>
+                  ))}
+                </MenuSelect>
+              </div>
               <div>
                 <Icon name="transferArrow" />
               </div>
-              <ApplicationField
-                styles={styles}
-                label={t('To Application')}
-                value={recipientChain}
-                applications={isRecipientAppSuccess ? recipientApplication.data : []}
-                onChange={setRecipientChain}
-                isLoading
-              />
+              <div>
+                <label className={`${styles.fieldLabel} recipient-application`}>
+                  <span>{t('To Application')}</span>
+                </label>
+                <MenuSelect
+                  value={recipientChain}
+                  onChange={(value) => setRecipientChain(value)}
+                  select={(selectedValue, option) => selectedValue?.chainID === option.chainID}
+                >
+                  {applications.map((application) => (
+                    <MenuItem
+                      className={styles.chainOptionWrapper}
+                      value={application}
+                      key={application.chainID}
+                    >
+                      <img className={styles.chainLogo} src={chainLogo} />
+                      <span>{application.chainName}</span>
+                    </MenuItem>
+                  ))}
+                </MenuSelect>
+              </div>
             </div>
-            <TokenField
-              styles={styles}
-              value={token}
-              tokens={tokens}
-              onChange={setToken}
-            />
+            <div className={`${styles.fieldGroup} token`}>
+              <label className={`${styles.fieldLabel}`}>
+                <span>{t('Token')}</span>
+              </label>
+              <span className={styles.balance}>
+                Balance:&nbsp;&nbsp;
+                <span>
+                  <TokenAmount val={amount} />
+                  {token?.symbol}
+                </span>
+              </span>
+              <MenuSelect
+                value={token}
+                onChange={(value) => setToken(value)}
+                select={(selectedValue, option) => selectedValue?.name === option.name}
+              >
+                {tokens.map((tokenValue) => (
+                  <MenuItem
+                    className={styles.chainOptionWrapper}
+                    value={tokenValue}
+                    key={tokenValue.name}
+                  >
+                    <img className={styles.chainLogo} src={chainLogo} />
+                    <span>{tokenValue.name}</span>
+                  </MenuItem>
+                ))}
+              </MenuSelect>
+            </div>
             <AmountField
               amount={amount}
               onChange={setAmountField}
