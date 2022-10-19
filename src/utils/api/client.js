@@ -1,7 +1,7 @@
 /* istanbul ignore file */
 import io from 'socket.io-client';
 import axios from 'axios';
-import { META_BASE_URL, METHOD } from 'src/const/config';
+import { METHOD } from 'src/const/config';
 
 export class Client {
   constructor(option) {
@@ -40,8 +40,7 @@ export class Client {
 
   rest = (config) => this.http?.request({ ...this.http.defaults, ...config });
 
-  call = ({ transformResult = async (data) => data, ...args }) =>
-    this[METHOD](args).then(transformResult);
+  call = ({ transformResult = async (data) => data, ...args }) => this[METHOD](args).then(transformResult);
 
   create({ rpc, rest } = {}) {
     if (rpc) {
@@ -59,5 +58,4 @@ export class Client {
   }
 }
 
-export const clientMetaData = new Client({ rest: META_BASE_URL });
 export default new Client();

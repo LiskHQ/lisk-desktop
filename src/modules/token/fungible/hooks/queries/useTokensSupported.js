@@ -5,8 +5,9 @@ import {
   API_VERSION,
 } from 'src/const/config';
 import { useCustomInfiniteQuery } from 'src/modules/common/hooks';
-import { tokenTransformResult } from '@token/fungible/utils/tokenTransformResult';
+import { addTokensMetaData } from '@token/fungible/utils/addTokensMetaData';
 import { useAppsMetaTokensConfig } from '@token/fungible/hooks/queries/useAppsMetaTokens';
+import defaultClient from 'src/utils/api/client';
 
 /**
  * Creates a custom hook for supported tokens query
@@ -20,11 +21,21 @@ import { useAppsMetaTokensConfig } from '@token/fungible/hooks/queries/useAppsMe
  * @returns the query object
  */
 
-export const useTokensSupported = ({ config: customConfig = {}, options, client } = {}) => {
+export const useTokensSupported = ({ config: customConfig = {}, options, client = defaultClient, } = {}) => {
   const createMetaConfig = useAppsMetaTokensConfig();
-  const transformResult = tokenTransformResult({createMetaConfig});
+  const transformToken = addTokensMetaData({createMetaConfig, client});
+  const transformResult = async (res) => {
+    const tokens = await transformToken(res.data.supportedTokens)
+    return {
+      ...res,
+      data: {
+        ...res.data,
+        supportedTokens: tokens
+      }
+    }
+  }
   const config = {
-    url: `/api/${API_VERSION}/tokens/supported`,
+    url: `/api/${API_VERSION}/tokens/summary`,
     method: 'get',
     transformResult,
     ...customConfig,

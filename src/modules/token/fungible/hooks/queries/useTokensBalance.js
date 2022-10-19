@@ -4,7 +4,8 @@ import { LIMIT as limit, API_VERSION } from 'src/const/config';
 import { useCustomInfiniteQuery } from 'src/modules/common/hooks';
 import { useCurrentAccount } from '@account/hooks';
 import { useAppsMetaTokensConfig } from '@token/fungible/hooks/queries/useAppsMetaTokens';
-import { tokenTransformResult } from '@token/fungible/utils/tokenTransformResult';
+import { addTokensMetaData } from '@token/fungible/utils/addTokensMetaData';
+import defaultClient from 'src/utils/api/client';
 
 /**
  * Creates a custom hook for Token balance list queries
@@ -23,12 +24,19 @@ import { tokenTransformResult } from '@token/fungible/utils/tokenTransformResult
 export const useTokensBalance = ({
   config: customConfig = {},
   options,
-  client,
+  client = defaultClient,
 } = {}) => {
   const [currentAccount] = useCurrentAccount();
   const { address } = currentAccount.metadata;
   const createMetaConfig = useAppsMetaTokensConfig();
-  const transformResult = tokenTransformResult({createMetaConfig});
+  const transformToken = addTokensMetaData({createMetaConfig, client});
+  const transformResult = async (res) => {
+    const tokens = await transformToken(res.data)
+    return {
+      ...res,
+      data: tokens
+    }
+  }
 
   const config = {
     url: `/api/${API_VERSION}/tokens`,

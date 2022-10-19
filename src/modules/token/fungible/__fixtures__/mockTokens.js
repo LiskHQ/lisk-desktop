@@ -1,4 +1,8 @@
-import { tokensBalance, tokensSupported, tokensTopLskBalance } from '@token/fungible/__fixtures__/tokens';
+import {
+  tokensBalance,
+  tokensSupported,
+  tokensTopLskBalance,
+} from '@token/fungible/__fixtures__/tokens';
 
 export const mockTokensBalance = {
   data: tokensBalance,
@@ -19,9 +23,10 @@ export const mockTokensTopLskBalance = {
     total: 30,
   },
 };
-
 export const mockTokensSupported = {
-  data: tokensSupported,
+  data: {
+    supportedTokens: tokensSupported,
+  },
   meta: {
     count: 3,
     offset: 0,

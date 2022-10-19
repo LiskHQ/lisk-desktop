@@ -5,7 +5,7 @@ import { LIMIT as limit, API_VERSION } from 'src/const/config';
 import { useCustomInfiniteQuery } from 'src/modules/common/hooks';
 import { getNetworkName } from '@network/utils/getNetwork';
 import { useCurrentApplication } from '@blockchainApplication/manage/hooks';
-import { clientMetaData } from 'src/utils/api/client';
+import  defaultClient from 'src/utils/api/client';
 
 /**
  * Creates a custom hook for supported tokens query
@@ -27,11 +27,11 @@ export const useAppsMetaTokensConfig = () => {
     method: 'get',
     event: 'get.blockchain.apps.meta.tokens',
     ...customConfig,
-    params: { limit, network, chainID, ...(customConfig?.params || {}) },
+    params: { limit, network: 'devnet' || network, chainID, ...(customConfig?.params || {}) },
   });
 };
 
-export const useAppsMetaTokens = ({ config: customConfig = {}, options, client = clientMetaData } = {}) => {
+export const useAppsMetaTokens = ({ config: customConfig = {}, options, client = defaultClient } = {}) => {
   const config = useAppsMetaTokensConfig()(customConfig);
   return useCustomInfiniteQuery({
     keys: [BLOCKCHAIN_APPS_META_TOKENS],
