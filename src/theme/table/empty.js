@@ -4,7 +4,7 @@ import Illustration from 'src/modules/common/components/illustration';
 import styles from '../box/emptyState.css';
 
 const Empty = ({ isListEmpty, isLoading, data, error, className }) => {
-  if (isLoading || (error && error?.response?.status !== 404) || !isListEmpty) return null;
+  if (isLoading || (error && error.response?.status !== 404) || !isListEmpty) return null;
   if (isReactComponent(data)) {
     const Element = data;
     return <Element />;
