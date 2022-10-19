@@ -1,29 +1,30 @@
 import React from 'react';
 import grid from 'flexboxgrid/dist/flexboxgrid.css';
 import Icon from 'src/theme/Icon';
+import { TertiaryButton } from 'src/theme/buttons';
+import WalletVisualWithAddress from '@wallet/components/walletVisualWithAddress';
 import DialogLink from 'src/theme/dialog/link';
 import styles from './SentVotesRow.css';
-import chainImage from '../../../../../../setup/react/assets/images/LISK.png';
 
-export const Token = ({ tokenSymbol, chainName, chainLogo = chainImage }) => (
+export const DelegateWalletVisual = ({ address, username }) => (
   <div className={`${styles.token} ${grid['col-xs-3']}`}>
-    <img alt={tokenSymbol} src={chainLogo} />
-    <div>
-      <p>{tokenSymbol}</p>
-      <span>{chainName}</span>
-    </div>
+    <WalletVisualWithAddress address={address} accountName={username} />
   </div>
 );
 
 export const Balance = ({ amount, ...rest }) => (
-  <p className={`${grid['col-xs-2']} ${styles.balance}`} {...rest}>{amount}</p>
+  <p className={`${grid['col-xs-2']} ${styles.balance}`} {...rest}>
+    {amount}
+  </p>
 );
 
-export const LockedBalance = ({ amount, address }) => (
-  <div className={`${styles.lockedBalance} ${grid['col-xs-3']}`}>
-    <p className={styles.balance}>{amount}</p>
-    <DialogLink component="lockedBalance"  data={{ address }} >
-      <Icon name="arrowRightInactive" />
+export const Actions = ({ address }) => (
+  <div className={`${styles.action} ${grid['col-xs-3']}`}>
+    <DialogLink component="lockedBalance" data={{ address }}>
+      <Icon name="deleteIcon" />
     </DialogLink>
+    <TertiaryButton>
+      <Icon name="edit" />
+    </TertiaryButton>
   </div>
 );

@@ -14,7 +14,7 @@
   & > div {
     display: flex;
     flex-direction: row;
-    justify-content: flex-start;
+    justify-content: flex-end;
     align-items: center;
     color: var(--color-content-light);
     font-size: var(--paragraph-font-size-s);
@@ -26,12 +26,25 @@
   }
 }
 
-.lockedBalance {
+.action {
   display: flex;
   flex-direction: row;
   align-items: center;
-  justify-content: space-between;
+  justify-content: flex-end;
+  column-gap: 10px;
   width: 100%;
+
+  & > button {
+    padding: 0px !important;
+    min-width: 48px !important;
+    max-width: 48px !important;
+  }
+  
+  & > button {
+    padding: 0px !important;
+    width: 48px;
+    height: 48px;
+  }
 
   & > p:first-child {
     flex: 1;

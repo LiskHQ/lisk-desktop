@@ -1,7 +1,6 @@
 import React, { useMemo } from 'react';
 import { useTranslation } from 'react-i18next';
 import Heading from 'src/modules/common/components/Heading';
-import { useTokensBalance } from 'src/modules/token/fungible/hooks/queries';
 
 import DialogLink from 'src/theme/dialog/link';
 import Box from 'src/theme/box';
@@ -15,23 +14,30 @@ import { useCurrentAccount } from '@account/hooks';
 import styles from './SentVotes.css';
 import header from './tableHeaderMap';
 import SentVotesRow from '../SentVoteRow';
+import { useSentVotes } from '../../hooks/queries';
 
 const SentVotes = ({ history }) => {
+  const { t } = useTranslation();
   const searchAddress = selectSearchParamValue(history.location.search, 'address');
   const [
     {
       metadata: { address: currentAddress },
     },
   ] = useCurrentAccount();
-  const { t } = useTranslation();
   const address = useMemo(() => searchAddress || currentAddress, [searchAddress, currentAddress]);
+  const queryParam = { config: { params: { address } } };
+
+  const { data } = useSentVotes(queryParam);
+  const votingAvailable = useMemo(() => 10 - data?.meta?.total || 0, [address]);
 
   return (
     <Box className={styles.wrapper}>
       <BoxHeader>
         <Heading title={t('Votes')}>
           <div className={styles.rightHeaderSection}>
-            <div className={styles.votesCountBadge}><span>7</span>/10 votes available in your account</div>
+            <div className={styles.votesCountBadge}>
+              <span>{votingAvailable}</span>/10 votes available in your account
+            </div>
             <div className={styles.actionButtons}>
               <DialogLink component="send">
                 <PrimaryButton>{t('Available to unlock')}</PrimaryButton>
@@ -43,12 +49,12 @@ const SentVotes = ({ history }) => {
       <BoxContent>
         <QueryTable
           showHeader
-          queryHook={useTokensBalance}
-          queryConfig={{ config: { params: { address } } }}
+          queryHook={useSentVotes}
+          transformResponse={(resp) => resp?.votes || []}
+          queryConfig={queryParam}
           row={SentVotesRow}
           header={header(t)}
           headerClassName={styles.tableHeader}
-          additionalRowProps={{ address }}
         />
       </BoxContent>
     </Box>
