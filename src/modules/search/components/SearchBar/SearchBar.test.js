@@ -1,6 +1,8 @@
+import React from 'react'
 import { act } from 'react-dom/test-utils'
 import { keyCodes } from 'src/utils/keyCodes';
-import { mountWithQueryClient } from 'src/utils/testHelpers';
+import { mountWithQueryClient, renderWithQueryClient } from 'src/utils/testHelpers';
+import { fireEvent, render } from '@testing-library/react';
 import { useSearch } from 'src/modules/search/hooks/useSearch'
 import SearchBar from './SearchBar';
 
@@ -65,7 +67,7 @@ describe('SearchBar', () => {
   });
 
   it('should redirect to a different page if user do a click on selected row for transaction', () => {
-    useSearch.mockReturnValueOnce({
+    useSearch.mockReturnValue({
       addresses: [],
       delegates: [],
       transactions: [
@@ -90,8 +92,8 @@ describe('SearchBar', () => {
     expect(props.history.push).toBeCalled();
   });
 
-  it('should uses keyboard navigation to select search result', () => {
-    useSearch.mockReturnValueOnce({
+  it('should uses keyboard navigation to select search result for delegates', () => {
+    useSearch.mockReturnValue({
       addresses: [],
       delegates: [
         {
@@ -114,15 +116,90 @@ describe('SearchBar', () => {
       isLoading: false
     })
 
-    const wrapper = mountWithQueryClient(SearchBar, props)
+    const wrapper = render(<SearchBar {...props}/>)
 
     act(() => {
-      wrapper.find('.search-input input').at(0).simulate('change', { target: { value: 'genesis' } });
+      fireEvent.change(wrapper.getByTestId('searchText'), { target: { value: 'genesis' } })
+      jest.runAllTimers();
     })
 
-    wrapper.find('.search-input input').simulate('keyDown', { keyCode: keyCodes.arrowDown });
-    wrapper.find('.search-input input').simulate('keyDown', { keyCode: keyCodes.arrowUp });
-    wrapper.find('.search-input input').simulate('keyDown', { keyCode: keyCodes.enter });
+    fireEvent.keyUp(wrapper.getByTestId('searchText'), { keyCode: keyCodes.arrowDown })
+    fireEvent.keyDown(wrapper.getByTestId('searchText'), { keyCode: keyCodes.arrowUp })
+    fireEvent.keyDown(wrapper.getByTestId('searchText'), { keyCode: keyCodes.enter })
+    expect(props.history.push).toBeCalledWith("/delegates/profile?address=123456L");
+  });
+  
+  it('should uses keyboard navigation to select search result for address', () => {
+    useSearch.mockReturnValue({
+      addresses: [{ address: '123456L', name: 'lisker' }],
+      delegates: [],
+      transactions: [],
+      blocks: [],
+      isLoading: false
+    })
+
+    const wrapper = render(<SearchBar {...props}/>)
+
+    act(() => {
+      fireEvent.change(wrapper.getByTestId('searchText'), { target: { value: '123456L' } })
+      jest.runAllTimers();
+    })
+
+    fireEvent.keyUp(wrapper.getByTestId('searchText'), { keyCode: keyCodes.arrowDown })
+    fireEvent.keyDown(wrapper.getByTestId('searchText'), { keyCode: keyCodes.arrowUp })
+    fireEvent.keyDown(wrapper.getByTestId('searchText'), { keyCode: keyCodes.enter })
+    expect(props.history.push).toBeCalledWith("/explorer?address=123456L");
+  });
+
+  it('should uses keyboard navigation to select search result for transactions', () => {
+    useSearch.mockReturnValue({
+      addresses: [],
+      delegates: [],
+      transactions: [
+        {
+          params: {
+            data: 'testing',
+          },
+          id: '123456123234234',
+          moduleCommand: 'token:transfer',
+        },
+      ],
+      blocks: [],
+      isLoading: false
+    })
+
+    const wrapper = render(<SearchBar {...props}/>)
+
+    act(() => {
+      fireEvent.change(wrapper.getByTestId('searchText'), { target: { value: '123456123234234' } })
+      jest.runAllTimers();
+    })
+
+    fireEvent.keyUp(wrapper.getByTestId('searchText'), { keyCode: keyCodes.arrowDown })
+    fireEvent.keyDown(wrapper.getByTestId('searchText'), { keyCode: keyCodes.arrowUp })
+    fireEvent.keyDown(wrapper.getByTestId('searchText'), { keyCode: keyCodes.enter })
+    expect(props.history.push).toBeCalled();
+  });
+  
+  it('should uses keyboard navigation to select search result for blocks', () => {
+    useSearch.mockReturnValue({
+      addresses: [],
+      delegates: [],
+      transactions: [],
+      blocks: [{ id: '3144423' }],
+      isLoading: false
+    })
+
+    const wrapper = render(<SearchBar {...props}/>)
+
+    act(() => {
+      fireEvent.change(wrapper.getByTestId('searchText'), { target: { value: '60008' } })
+      jest.runAllTimers();
+    })
+
+    fireEvent.keyUp(wrapper.getByTestId('searchText'), { keyCode: keyCodes.arrowDown })
+    fireEvent.keyDown(wrapper.getByTestId('searchText'), { keyCode: keyCodes.arrowUp })
+    fireEvent.keyDown(wrapper.getByTestId('searchText'), { keyCode: keyCodes.enter })
     expect(props.history.push).toBeCalled();
   });
 
@@ -139,7 +216,7 @@ describe('SearchBar', () => {
       wrapper.find('.search-input input').at(0).simulate('change', { target: { value: '123456L' } });
     })
     wrapper.find('.account-row').at(0).simulate('click');
-    expect(props.history.push).toBeCalled();
+    expect(props.history.push).toBeCalledWith("/explorer?address=123456L");
   });
 
   it('should redirect to a delegate page if user do a click on selected row for delegates', () => {
@@ -173,7 +250,7 @@ describe('SearchBar', () => {
     })
 
     wrapper.find('.delegates-row').at(0).simulate('click');
-    expect(props.history.push).toBeCalledWith("/explorer?address=123456L");
+    expect(props.history.push).toBeCalledWith("/delegates/profile?address=123456L");
   });
   
   it('should redirect to a blocks page if user do a click on selected block', () => {
