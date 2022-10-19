@@ -38,7 +38,7 @@ const SearchBar = ({ history }) => {
     if (type === 'transactions') {
       addSearchParamsToUrl(history, { modal: 'transactionDetails', transactionId: value });
     } else if (type === 'delegate-account') {
-      history.push(`${routes.explorer.path}?${routes.explorer.searchParam}=${value}&tab=delegateProfile`);
+      history.push(`${routes.delegateProfile.path}?${routes.explorer.searchParam}=${value}`);
     } else {
       history.push(`${routes[type].path}?${routes[type].searchParam}=${value}`);
     }
