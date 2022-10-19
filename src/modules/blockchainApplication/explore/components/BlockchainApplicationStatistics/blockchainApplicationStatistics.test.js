@@ -1,26 +1,19 @@
-import React from 'react';
-import { mount } from 'enzyme';
+import { screen } from '@testing-library/react';
+import { renderWithQueryClient } from 'src/utils/testHelpers';
+import { mockBlockchainAppStatistics } from '../../__fixtures__/mockBlockchainAppStatistics';
 import BlockchainApplicationStatistics from './index';
 
+jest.mock('../../hooks/queries/useBlockchainApplicationStatistics', () => ({
+  useBlockchainApplicationStatistics: jest.fn(() => ({ data: mockBlockchainAppStatistics })),
+}));
+
 describe('BlockchainApplicationStatistics', () => {
-  const props = {
-    statistics: {
-      data: {
-        registered: 101,
-        active: 53,
-        terminated: 9,
-        totalSupplyLSK: '5000000',
-        stakedLSK: '3000000',
-      },
-    },
-  };
+  it('should render properly', () => {
+    renderWithQueryClient(BlockchainApplicationStatistics);
 
-  it('should properly', () => {
-    const wrapper = mount(<BlockchainApplicationStatistics {...props} />);
-
-    expect(wrapper.find('.statsInfoTitle').at(0)).toHaveText('Total Supply');
-    expect(wrapper.find('.statsInfoTitle').at(1)).toHaveText('Staked');
-    expect(wrapper.find('TokenAmount').at(0)).toHaveText('5,000,000 LSK');
-    expect(wrapper.find('TokenAmount').at(1)).toHaveText('3,000,000 LSK');
+    expect(screen.getByText('Total Supply')).toBeInTheDocument();
+    expect(screen.getByText('Staked')).toBeInTheDocument();
+    expect(screen.getByText('5,000,000 LSK')).toBeInTheDocument();
+    expect(screen.getByText('3,000,000 LSK')).toBeInTheDocument();
   });
 });
