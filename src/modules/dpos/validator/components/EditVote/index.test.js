@@ -84,7 +84,6 @@ describe('EditVote', () => {
         'Insert a vote amount for this delegate. Your new vote will be added to the voting queue.'
       )
     ).toBeTruthy();
-    expect(screen.getByText('~10.00 USD')).toBeTruthy();
     expect(screen.getByText('Vote amount ({{symbol}})')).toBeTruthy();
   });
 
@@ -145,7 +144,6 @@ describe('EditVote', () => {
         'Insert a vote amount for this delegate. Your new vote will be added to the voting queue.'
       )
     ).toBeTruthy();
-    expect(screen.getByText('~0.00 USD')).toBeTruthy();
     expect(screen.getByText('Vote amount ({{symbol}})')).toBeTruthy();
   });
 
