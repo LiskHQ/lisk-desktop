@@ -1,6 +1,4 @@
-/* eslint-disable complexity */
-/* eslint-disable max-statements */
-/* eslint-disable import/prefer-default-export */
+/* eslint-disable complexity, max-statements, import/prefer-default-export */
 import { API_VERSION } from "src/const/config";
 import { regex } from "src/const/regex";
 import { useCustomQuery } from "src/modules/common/hooks"
@@ -49,7 +47,7 @@ export const useSearch = (search = '') => {
   })
   const transactions = transactionsSearch.data?.data ?? []
 
-  const blochHeightSearch = useCustomQuery({
+  const blockHeightSearch = useCustomQuery({
     keys: ['address-key'],
     config: {
       ...config,
@@ -59,9 +57,9 @@ export const useSearch = (search = '') => {
     }, options: { enabled: isBlockHeight }
   })
 
-  const blocks = blochHeightSearch.data?.data ?? []
+  const blocks = blockHeightSearch.data?.data ?? []
 
-  const isLoading = delegateSearch.isLoading || transactionsSearch.isLoading || addressSearch.isLoading || blochHeightSearch.isLoading
+  const isLoading = delegateSearch.isLoading || transactionsSearch.isLoading || addressSearch.isLoading || blockHeightSearch.isLoading
 
   return { addresses, delegates, transactions, blocks, isLoading }
 }

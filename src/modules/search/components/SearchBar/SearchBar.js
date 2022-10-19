@@ -1,5 +1,4 @@
-/* eslint-disable complexity */
-/* eslint-disable max-statements */
+/* eslint-disable complexity, max-statements */
 import React, { useRef, useState } from 'react';
 import { withRouter } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
@@ -17,7 +16,7 @@ import { useSearch } from '../../hooks/useSearch';
 
 const SearchBar = ({ history }) => {
   const [searchTextValue, setSearchTextValue] = useState('');
-  const [rowItemIndex, setRowIndex] = useState('');
+  const [rowItemIndex, setRowIndex] = useState(0);
   const searchBarRef = useRef();
 
   const debouncedSearchTerm = useDebounce(searchTextValue, 500)
@@ -63,7 +62,7 @@ const SearchBar = ({ history }) => {
 
   const onKeyPress = () => {
     if (addresses.length) { onSelectAccount(addresses[rowItemIndex].address); }
-    if (delegates.length) { onSelectDelegateAccount(delegates[rowItemIndex].summary?.address); }
+    if (delegates.length) { onSelectDelegateAccount(delegates[rowItemIndex]?.address); }
     if (transactions.length) { onSelectTransaction(transactions[rowItemIndex].id); }
     if (blocks.length) { onSelectBlock(blocks[rowItemIndex].id); }
   }
