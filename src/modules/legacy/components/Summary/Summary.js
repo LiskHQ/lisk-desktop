@@ -40,6 +40,10 @@ const Summary = ({
   const rawTx = {
     ...transaction,
     fee: toRawLsk(minFee.value),
+    composedFees: {
+      Transaction: toRawLsk(minFee.value),
+      initiation: toRawLsk('0.05'),
+    },
   };
 
   const onSubmit = () => {

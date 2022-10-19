@@ -149,7 +149,7 @@ export class Transaction {
       numberOfEmptySignatures: 0,
     };
 
-    if (this.transaction.module === 'auth' && this.transaction.command === 'registerMultisignatureGroup') {
+    if (this.transaction.module === 'auth' && this.transaction.command === 'registerMultisignature') {
       const { optionalKeys, mandatoryKeys } = this.transaction.params;
 
       computeMinFeeOptions.numberOfEmptySignatures = optionalKeys?.length

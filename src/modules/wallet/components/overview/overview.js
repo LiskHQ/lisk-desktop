@@ -86,7 +86,7 @@ const Overview = ({ isWalletRoute, history }) => {
   const renderTokenCard = useCallback(
     ({ chainUrl = chainLogo, symbol, availableBalance, lockedBalances }) => {
       const totalLockedBalance = useMemo(
-        () => lockedBalances.reduce((total, { amount }) => +amount + total, 0),
+        () => lockedBalances?.reduce((total, { amount }) => +amount + total, 0) ?? 0,
         [lockedBalances]
       );
 

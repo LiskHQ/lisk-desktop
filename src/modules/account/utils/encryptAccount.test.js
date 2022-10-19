@@ -47,6 +47,7 @@ jest.spyOn(cryptography.encrypt, 'decryptMessageWithPassword').mockResolvedValue
 jest.spyOn(cryptography.encrypt, 'encryptMessageWithPassword').mockResolvedValue(encryptedPassphrase);
 jest.spyOn(cryptography.address, 'getLisk32AddressFromPublicKey').mockReturnValue(address);
 jest.spyOn(passphrase.Mnemonic, 'validateMnemonic').mockReturnValue(true);
+jest.spyOn(cryptography.ed, 'getKeyPairFromPhraseAndPath').mockResolvedValue(defaultKeys.privateKey);
 
 describe('encryptAccount', () => {
   const password = 'samplePassword@1';
@@ -79,7 +80,7 @@ describe('encryptAccount', () => {
       encryptedPassphrase: { ...mockAccount.encryptedPassphrase },
       metadata: {
         name,
-        pubkey: 'd68bdceba71d9a80856de174c713bab65585697ecbc89d845b8f2f8b54fe8d45',
+        pubkey: '0792fecbbecf6e7370f7a7b217a9d159f380d3ecd0f2760d7a55dd3e27e97184',
         path: customDerivationPath,
         address: 'lskr4npg3esse6duo56u2war7umuo8embs4cwrkaf',
         creationTime: expect.any(String),

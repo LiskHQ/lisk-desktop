@@ -8,7 +8,7 @@ import {
 import styles from './layoutSchema.css';
 
 const {
-  transfer, voteDelegate, unlock, registerDelegate, registerMultisignatureGroup,
+  transfer, voteDelegate, unlock, registerDelegate, registerMultisignature,
   reportDelegateMisbehavior, reclaim,
 } = MODULE_COMMANDS_NAME_MAP;
 
@@ -42,11 +42,11 @@ export const LayoutSchema = {
     components: [...previewBaseComponents, ...restComponents],
     className: styles.registerDelegatePreview,
   },
-  [registerMultisignatureGroup]: {
+  [registerMultisignature]: {
     components: [...baseComponents, ...timeComponents, Members, NumberOfSignatures, PrettyJson],
     className: styles.multiSigLayout,
   },
-  [`${registerMultisignatureGroup}-preview`]: {
+  [`${registerMultisignature}-preview`]: {
     components: [...previewBaseComponents, Members, NumberOfSignatures, ...restComponents],
     className: styles.multiSigRegisterPreview,
   },

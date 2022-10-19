@@ -14,7 +14,7 @@ export const subscribeConnections = {};
 const ws = ({
   baseUrl, requests,
 }) => new Promise((resolve, reject) => {
-  const uri = `${baseUrl.replace('http', 'ws')}/rpc-v2`;
+  const uri = `${baseUrl.replace('http', 'ws')}/rpc-v3`;
   const socket = io(
     uri,
     {

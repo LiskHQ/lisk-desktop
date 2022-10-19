@@ -1,4 +1,3 @@
-/* eslint-disable max-lines */
 import actionTypes from './actionTypes';
 
 /**
@@ -7,15 +6,25 @@ import actionTypes from './actionTypes';
  *
  * @returns {Object} - Action object
  */
-// eslint-disable-next-line import/prefer-default-export
 export const setCurrentAccount = (encryptedAccount) => ({
   type: actionTypes.setCurrentAccount,
   encryptedAccount,
 });
 
+export const updateCurrentAccount = (accountDetail) => ({
+  type: actionTypes.updateCurrentAccount,
+  accountDetail,
+});
+
 export const addAccount = (encryptedAccount) => ({
   type: actionTypes.addAccount,
   encryptedAccount,
+});
+
+export const updateAccount = ({ encryptedAccount, accountDetail }) => ({
+  type: actionTypes.updateAccount,
+  encryptedAccount,
+  accountDetail,
 });
 
 export const deleteAccount = (address) => ({

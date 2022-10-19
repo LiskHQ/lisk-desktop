@@ -9,7 +9,7 @@ import { createGenericTx } from '@transaction/api/index';
  * Calls transactionAPI.create for create the tx object that will broadcast
  * @param {Object} data
  * @param {String} data.recipientAddress
- * @param {Number} data.amount - In raw format (satoshi, beddows)
+ * @param {Number} data.amount - In raw format (beddows)
  * @param {Number} data.fee - In raw format, used for updating the TX List.
  * @param {Number} data.reference - Data field for LSK transactions
  */
@@ -17,7 +17,6 @@ import { createGenericTx } from '@transaction/api/index';
 export const tokensTransferred = (
   transactionObject,
   privateKey,
-  publicKey,
 ) => async (dispatch, getState) => {
   const state = getState();
   const wallet = selectActiveTokenAccount(state);
@@ -26,9 +25,9 @@ export const tokensTransferred = (
     createGenericTx({
       transactionObject,
       wallet,
-      network: state.network,
+      schema: state.network.networks.LSK.moduleCommandSchemas[transactionObject.moduleCommand],
+      chainID: state.network.networks.LSK.chainID,
       privateKey,
-      publicKey,
     }),
   );
 

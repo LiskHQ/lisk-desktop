@@ -1,7 +1,7 @@
 // eslint-disable-next-line import/prefer-default-export
 export const mockAppTokens = [
   {
-    tokenID: '2ba563cf98003d',
+    tokenID: '0000000000000000',
     name: 'Lisk',
     symbol: 'LSK',
   },

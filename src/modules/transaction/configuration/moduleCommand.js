@@ -1,6 +1,6 @@
 const moduleCommandNameMap = {
   transfer: 'token:transfer',
-  registerMultisignatureGroup: 'auth:registerMultisignatureGroup',
+  registerMultisignature: 'auth:registerMultisignature',
   registerDelegate: 'dpos:registerDelegate',
   voteDelegate: 'dpos:voteDelegate',
   unlock: 'dpos:unlock',
@@ -29,7 +29,7 @@ const moduleCommandMap = {
     maxFee: 1e7,
     icon: 'reportDelegateMisbehavior',
   },
-  [moduleCommandNameMap.registerMultisignatureGroup]: {
+  [moduleCommandNameMap.registerMultisignature]: {
     maxFee: 5e8,
     icon: 'multisignatureTransaction',
   },

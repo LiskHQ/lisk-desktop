@@ -171,7 +171,7 @@ import deleteRedIcon from '@setup/react/assets/images/icons/delete-red-icon.svg'
 import arrowRightTailed from '@setup/react/assets/images/icons/arrow-right-tailed.svg';
 import download from '@setup/react/assets/images/icons/download.svg';
 import downloadBlue from '@setup/react/assets/images/icons/download-blue.svg';
-import registerMultisignatureGroup from '@setup/react/assets/images/icons/multisignature.svg';
+import registerMultisignature from '@setup/react/assets/images/icons/multisignature.svg';
 import multisignatureTransaction from '@setup/react/assets/images/icons/multisignatureTransaction.svg';
 import multisignatureTransactionDark from '@setup/react/assets/images/icons/multisignatureTransaction-dark.svg';
 import multiSignatureOutline from '@setup/react/assets/images/icons/multisignature-outline.svg';
@@ -343,7 +343,7 @@ export const icons = {
   iconEmptyRecentTransactionsDark,
   bookmarksIconEmptyStateDark,
   multiSignatureOutline,
-  registerMultisignatureGroup,
+  registerMultisignature,
   missedBlocks,
   missedBlocksDark,
   newsFeedBlog,

@@ -37,6 +37,8 @@ export const CopyFooter = ({
   );
 };
 
+// @todo Since now the sender should sign the last, we should update
+// the conditions in which we display this button. (#4506)
 export const CopyAndSendFooter = ({
   t,
   onSend,

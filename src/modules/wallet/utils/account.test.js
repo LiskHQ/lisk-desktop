@@ -21,7 +21,7 @@ const {
 const customDerivationPath = "m/44'/134'/1'";
 
 jest.spyOn(cryptography.address, 'getLisk32AddressFromPublicKey').mockReturnValue(address);
-jest.spyOn(cryptography.ed, 'getKeyPairFromPhraseAndPath');
+jest.spyOn(cryptography.ed, 'getKeyPairFromPhraseAndPath').mockResolvedValue(Buffer.from(privateKey));;
 
 describe('Utils: Account', () => {
   describe('extractPublicKey', () => {

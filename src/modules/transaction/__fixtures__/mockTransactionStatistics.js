@@ -19,7 +19,7 @@ const data = {
   },
   distributionByType: {
     'token:transfer': 15,
-    'auth:registerMultisignatureGroup': 2,
+    'auth:registerMultisignature': 2,
     'dpos:registerDelegate': 5,
     'dpos:voteDelegate': 9,
     'dpos:unlock': 4,

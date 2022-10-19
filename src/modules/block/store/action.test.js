@@ -51,7 +51,7 @@ describe('action: blocks', () => {
         version: 2,
         timestamp: 1633345430,
         generatorAddress: 'lskgtrrftvoxhtknhamjab5wenfauk32z9pzk79uj',
-        generatorPublicKey:
+        generatorKey:
           '974bcc5ad09e80f48a81a1425eddfe4af3f332264a9b418196cb2c11e73f61f8',
         generatorUsername: 'grumlin',
         transactionRoot:

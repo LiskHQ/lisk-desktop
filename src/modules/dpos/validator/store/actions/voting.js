@@ -58,20 +58,21 @@ export const voteEdited = (data) => async (dispatch) => dispatch({
  * @param {object} data.votes
  * @param {promise} API call response
  */
-export const votesSubmitted =
-  (transactionObject, privateKey, publicKey) => async (dispatch, getState) => {
+export const votesSubmitted = (
+  transactionObject,
+  privateKey,
+) =>
+  async (dispatch, getState) => {
     const state = getState();
     const activeWallet = selectActiveTokenAccount(state);
 
-    const [error, tx] = await to(
-      createGenericTx({
-        network: state.network,
-        wallet: activeWallet,
-        transactionObject,
-        privateKey,
-        publicKey,
-      })
-    );
+    const [error, tx] = await to(createGenericTx({
+      transactionObject,
+      wallet: activeWallet,
+      schema: state.network.networks.LSK.moduleCommandSchemas[transactionObject.moduleCommand],
+      chainID: state.network.networks.LSK.chainID,
+      privateKey,
+    }));
 
     if (error) {
       dispatch({
@@ -117,26 +118,28 @@ export const votesRetrieved = () => async (dispatch, getState) => {
  * @param {string} data.selectedFee
  * @returns {promise}
  */
-export const balanceUnlocked =
-  (transactionObject, privateKey, publicKey) => async (dispatch, getState) => {
-    //
-    // Collect data
-    //
-    const state = getState();
-    const activeWallet = selectActiveTokenAccount(state);
+export const balanceUnlocked = (
+  transactionObject,
+  privateKey,
+) => async (dispatch, getState) => {
+  //
+  // Collect data
+  //
+  const state = getState();
+  const activeWallet = selectActiveTokenAccount(state);
 
-    //
-    // Create the transaction
-    //
-    const [error, tx] = await to(
-      createGenericTx({
-        network: state.network,
-        wallet: activeWallet,
-        transactionObject,
-        privateKey,
-        publicKey,
-      })
-    );
+  //
+  // Create the transaction
+  //
+  const [error, tx] = await to(
+    createGenericTx({
+      transactionObject,
+      wallet: activeWallet,
+      schema: state.network.networks.LSK.moduleCommandSchemas[transactionObject.moduleCommand],
+      chainID: state.network.networks.LSK.chainID,
+      privateKey,
+    }),
+  );
 
     //
     // Dispatch corresponding action

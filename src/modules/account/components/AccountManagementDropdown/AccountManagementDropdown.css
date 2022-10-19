@@ -39,9 +39,9 @@
 .dropDownMenu {
   border: 0;
   min-width: 180px !important;
-  width: 237px !important;
+  width: 247px !important;
   top: calc(100% + 13px) !important;
-  margin-left: -30px;
+  margin-left: -48px;
   background-color: var(--color-menu-black);
   border-radius: var(--border-radius-standard);
 
