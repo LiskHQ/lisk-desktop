@@ -36,7 +36,7 @@ export const useSearch = (search = '') => {
   const delegates = delegateSearch.data?.data ?? []
 
   const transactionsSearch = useCustomQuery({
-    keys: ['address-key'],
+    keys: ['transactions-key'],
     config: {
       ...config,
       url: `/api/${API_VERSION}/transactions`,
@@ -47,7 +47,7 @@ export const useSearch = (search = '') => {
   const transactions = transactionsSearch.data?.data ?? []
 
   const blockHeightSearch = useCustomQuery({
-    keys: ['address-key'],
+    keys: ['block-key'],
     config: {
       ...config,
       url: `/api/${API_VERSION}/blocks`,
