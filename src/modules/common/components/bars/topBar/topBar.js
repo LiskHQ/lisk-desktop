@@ -9,8 +9,8 @@ import VoteQueueToggle from 'src/modules/common/components/bars/topBar/voteQueue
 import DiscreteModeToggle from 'src/modules/settings/components/discreteModeToggle';
 import LightDarkToggle from 'src/modules/settings/components/lightDarkModeToggle';
 import SideBarToggle from 'src/modules/settings/components/sideBarToggle';
-import Search from '@search/components/Search';
 import ApplicationManagementDropDown from '@blockchainApplication/manage/components/ApplicationManagementDropDown';
+import SearchBar from 'src/modules/search/manager/searchBarManager';
 import { useCurrentAccount } from '@account/hooks';
 import { isEmpty } from 'src/utils/helpers';
 import styles from './topBar.css';
@@ -56,7 +56,7 @@ const TopBar = ({ history, noOfVotes, location }) => {
           <p>{t('Bookmarks')}</p>
         </Tooltip>
         <VoteQueueToggle t={t} noOfVotes={noOfVotes} disabled={disabled} />
-        <Search t={t} history={history} disabled={disabled} />
+        <SearchBar />
       </div>
       <div className={styles.group}>
         <ApplicationManagementDropDown />

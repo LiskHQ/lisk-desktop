@@ -5,6 +5,7 @@
   height: auto;
   box-sizing: border-box;
   display: flex;
+  overflow: scroll;
   flex-direction: column;
   justify-content: center;
   align-items: flex-start;
