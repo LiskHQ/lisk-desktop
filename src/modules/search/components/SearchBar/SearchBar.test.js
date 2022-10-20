@@ -1,7 +1,7 @@
 import React from 'react'
 import { act } from 'react-dom/test-utils'
 import { keyCodes } from 'src/utils/keyCodes';
-import { mountWithQueryClient, renderWithQueryClient } from 'src/utils/testHelpers';
+import { mountWithQueryClient } from 'src/utils/testHelpers';
 import { fireEvent, render } from '@testing-library/react';
 import { useSearch } from 'src/modules/search/hooks/useSearch'
 import SearchBar from './SearchBar';
