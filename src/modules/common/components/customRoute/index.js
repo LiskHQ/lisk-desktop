@@ -21,7 +21,6 @@ const CustomRoute = ({ path, exact, isPrivate, forbiddenTokens, component, t, hi
   const [currentAccount] = useCurrentAccount();
   const isAuthenticated = !!currentAccount?.metadata?.address;
   const { isMigrated } = useCheckLegacyAccount(currentAccount?.metadata?.pubkey);
-  const { search = '' } = history.location;
   const { accounts } = useAccounts();
 
   Piwik.tracking(history, token);
@@ -37,10 +36,7 @@ const CustomRoute = ({ path, exact, isPrivate, forbiddenTokens, component, t, hi
   if (isPrivate && !isAuthenticated) {
     return (
       <Redirect
-        to={`${routes.manageAccounts.path}?referrer=${path.replace(
-          /\/(send|vote)/,
-          ''
-        )}&${search.replace(/^\?/, '')}`}
+        to={{pathname: `${routes.manageAccounts.path}`, search: ''}}
       />
     );
   }

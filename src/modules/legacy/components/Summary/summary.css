@@ -1,7 +1,7 @@
 .container {
   & > header {
-    padding-left: calc(var(--horizontal-padding-l) / 2) !important;
-    padding-right: calc(var(--horizontal-padding-l) / 2) !important;
+    padding-left: var(--horizontal-padding-s) !important;
+    padding-right: var(--horizontal-padding-s) !important;
   }
 
   & > footer {
