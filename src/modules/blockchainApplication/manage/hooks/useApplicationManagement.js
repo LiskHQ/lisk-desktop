@@ -6,7 +6,6 @@ import { selectApplications } from '../store/selectors';
 import { useCurrentApplication } from './useCurrentApplication';
 import { usePinBlockchainApplication } from './usePinBlockchainApplication';
 
-// eslint-disable-next-line import/prefer-default-export
 export function useApplicationManagement() {
   const dispatch = useDispatch();
   const [currentApplication, setCurrentApplication] = useCurrentApplication();

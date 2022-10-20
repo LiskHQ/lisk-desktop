@@ -51,7 +51,7 @@ const useVoteAmountField = (initialValue) => {
   const token = useMemo(() => tokens?.data?.[0] || {}, [tokens]);
 
   const { i18n } = useTranslation();
-  const balance = 100000000000// Number(token.availableBalance || 0);
+  const balance = Number(token.availableBalance || 0);
   const host = useSelector(selectLSKAddress);
   const searchDetails = window.location.href.replace(/.*[?]/, '');
   const address = selectSearchParamValue(`?${searchDetails}`, 'address');

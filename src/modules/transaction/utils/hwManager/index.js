@@ -25,5 +25,4 @@ const signTransactionByHW = async (
   }
 };
 
-// eslint-disable-next-line import/prefer-default-export
 export { signTransactionByHW };

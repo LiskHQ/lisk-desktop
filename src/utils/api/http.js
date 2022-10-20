@@ -20,7 +20,7 @@ const http = ({
     // @todo remove the optional chain
     
     const url = new URL(baseUrl ? `${baseUrl}${path}`
-    : `${network?.networks?.LSK?.serviceUrl ?? 'https://testnet-service.lisk.com'}${path}`);
+      : `${network?.networks?.LSK?.serviceUrl ?? `https://testnet-service.lisk.com`}${path}`);
     url.search = new URLSearchParams(params).toString();
 
     return fetch(url.toString(), {
