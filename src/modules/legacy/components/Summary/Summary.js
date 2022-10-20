@@ -5,6 +5,7 @@ import useTransactionFeeCalculation from '@transaction/hooks/useTransactionFeeCa
 import useTransactionPriority from '@transaction/hooks/useTransactionPriority';
 import TransactionSummary from '@transaction/manager/transactionSummary';
 import { toRawLsk } from '@token/fungible/utils/lsk';
+import { getFeeStatus } from '@transaction/utils/helpers';
 import styles from './summary.css';
 
 const transaction = {
@@ -12,14 +13,13 @@ const transaction = {
   params: {},
 };
 
-const Summary = ({ balanceReclaimed, nextStep, prevStep, wallet, network, t, fees }) => {
+const Summary = ({ balanceReclaimed, nextStep, prevStep, wallet, t, fees }) => {
   transaction.nonce = wallet.sequence.nonce;
-  transaction.sender = { PublicKey: wallet.summary.publicKey };
+  transaction.sender = { publicKey: wallet.summary.publicKey };
   transaction.params.amount = wallet.legacy.balance;
 
   const [selectedPriority, , priorityOptions] = useTransactionPriority();
   const { minFee } = useTransactionFeeCalculation({
-    network,
     selectedPriority,
     token: tokenMap.LSK.key,
     wallet,
@@ -31,8 +31,8 @@ const Summary = ({ balanceReclaimed, nextStep, prevStep, wallet, network, t, fee
     ...transaction,
     fee: toRawLsk(minFee.value),
     composedFees: {
-      Transaction: toRawLsk(minFee.value),
-      Initialisation: toRawLsk('0.05'),
+      Transaction: getFeeStatus({ fee: minFee, token: tokenMap.LSK.key }),
+      Initialisation: getFeeStatus({ fee: { value: 0.05 }, token: tokenMap.LSK.key }),
     },
   };
 
@@ -58,6 +58,7 @@ const Summary = ({ balanceReclaimed, nextStep, prevStep, wallet, network, t, fee
   return (
     <TransactionSummary
       hasCancel
+      hasNoTopCancelButton
       title={t('Transaction Summary')}
       className={styles.container}
       confirmButton={onConfirmAction}

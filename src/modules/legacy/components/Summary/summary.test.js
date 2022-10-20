@@ -87,11 +87,11 @@ describe('Reclaim balance Summary', () => {
         moduleCommand: 'legacy:reclaim',
         nonce: accounts.non_migrated.sequence.nonce,
         sender: {
-          PublicKey: accounts.non_migrated.summary.publicKey,
+          publicKey: accounts.non_migrated.summary.publicKey,
         },
         composedFees: {
-          Transaction: 100000,
-          Initialisation: 5000000,
+          Transaction: '0.001 LSK',
+          Initialisation: '0.05 LSK',
         },
       },
       actionFunction: props.balanceReclaimed,
@@ -101,7 +101,7 @@ describe('Reclaim balance Summary', () => {
   it('should navigate to previous page when cancel button is clicked', async () => {
     // Arrange
     const wrapper = mountWithProps(Summary, props, state);
-    wrapper.find('button.cancel-button').at(1).simulate('click');
+    wrapper.find('button.cancel-button').simulate('click');
 
     // Act
     await flushPromises();
@@ -119,11 +119,11 @@ describe('Reclaim balance Summary', () => {
         moduleCommand: 'legacy:reclaim',
         nonce: accounts.non_migrated.sequence.nonce,
         sender: {
-          PublicKey: accounts.non_migrated.summary.publicKey,
+          publicKey: accounts.non_migrated.summary.publicKey,
         },
         composedFees: {
-          Transaction: 100000,
-          Initialisation: 5000000,
+          Transaction: '0.001 LSK',
+          Initialisation: '0.05 LSK',
         },
       },
     });

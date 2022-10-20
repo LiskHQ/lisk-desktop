@@ -21,13 +21,14 @@ const TxSummarizer = ({
   wallet,
   t,
   secondPassphraseStored,
-  classNames,
+  className,
   token,
   footerClassName,
   rawTx,
   summaryInfo,
   selectedPriority,
   hasCancel,
+  hasNoTopCancelButton,
 }) => {
   const fee = !(wallet.summary.isMultisignature
     || rawTx.moduleCommand === MODULE_COMMANDS_NAME_MAP.registerMultisignature
@@ -41,12 +42,12 @@ const TxSummarizer = ({
   };
 
   return (
-    <Box width="medium" className={`${styles.wrapper} ${classNames} summary`}>
+    <Box width="medium" className={`${styles.wrapper} ${className} summary`}>
       {title && (
         <BoxHeader className={`${styles.header} summary-header`}>
-          <TertiaryButton className="cancel-button" onClick={cancelButton.onClick}>
+          {!hasNoTopCancelButton ? (<TertiaryButton className="cancel-button" onClick={cancelButton.onClick}>
             <Icon name="arrowLeftTailed" />
-          </TertiaryButton>
+          </TertiaryButton>) : null}
             &nbsp;&nbsp;&nbsp;
           <h2>{title}</h2>
         </BoxHeader>
