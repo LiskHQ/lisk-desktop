@@ -21,7 +21,7 @@ const SearchBar = ({ history }) => {
 
   const debouncedSearchTerm = useDebounce(searchTextValue, 500)
   const {
-    addresses, delegates, transactions, blocks, isLoading 
+    addresses, delegates, transactions, blocks, isLoading
   } = useSearch(debouncedSearchTerm);
 
   const { t } = useTranslation();
@@ -72,7 +72,6 @@ const SearchBar = ({ history }) => {
       || delegates.length
       || transactions.length;
 
-    // istanbul ignore else
     if (suggestionsLength >= 1) {
       switch (e.keyCode) {
         case keyCodes.arrowDown:
@@ -82,7 +81,6 @@ const SearchBar = ({ history }) => {
         case keyCodes.enter:
           onKeyPress();
           break;
-        // istanbul ignore next
         default:
           break;
       }
@@ -124,58 +122,54 @@ const SearchBar = ({ history }) => {
           isLoading={isLoading}
         />
       </div>
-      {feedback ? <span className={`${styles.searchFeedback} search-bar-feedback`}>{feedback}</span> : null}
+      {feedback && <span className={`${styles.searchFeedback} search-bar-feedback`}>{feedback}</span>}
       {
-        addresses.length
-          ? (
-            <Wallet
-              wallets={addresses}
-              onSelectedRow={onSelectAccount}
-              rowItemIndex={rowItemIndex}
-              updateRowItemIndex={updateRowItemIndex}
-              t={t}
-            />
-          )
-          : null
+        !!addresses.length
+        && (
+          <Wallet
+            wallets={addresses}
+            onSelectedRow={onSelectAccount}
+            rowItemIndex={rowItemIndex}
+            updateRowItemIndex={updateRowItemIndex}
+            t={t}
+          />
+        )
       }
       {
-        delegates.length
-          ? (
-            <Delegates
-              searchTextValue={searchTextValue}
-              delegates={delegates}
-              onSelectedRow={onSelectDelegateAccount}
-              rowItemIndex={rowItemIndex}
-              updateRowItemIndex={updateRowItemIndex}
-              t={t}
-            />
-          )
-          : null
+        !!delegates.length
+        && (
+          <Delegates
+            searchTextValue={searchTextValue}
+            delegates={delegates}
+            onSelectedRow={onSelectDelegateAccount}
+            rowItemIndex={rowItemIndex}
+            updateRowItemIndex={updateRowItemIndex}
+            t={t}
+          />
+        )
       }
       {
-        transactions.length
-          ? (
-            <Transactions
-              transactions={transactions}
-              onSelectedRow={onSelectTransaction}
-              rowItemIndex={rowItemIndex}
-              updateRowItemIndex={updateRowItemIndex}
-              t={t}
-              activeToken="LSK"
-            />
-          )
-          : null
+        !!transactions.length
+        && (
+          <Transactions
+            transactions={transactions}
+            onSelectedRow={onSelectTransaction}
+            rowItemIndex={rowItemIndex}
+            updateRowItemIndex={updateRowItemIndex}
+            t={t}
+            activeToken="LSK"
+          />
+        )
       }
       {
-        blocks.length
-          ? (
-            <Blocks
-              blocks={blocks}
-              onSelectedRow={onSelectBlock}
-              t={t}
-            />
-          )
-          : null
+        !!blocks.length
+        && (
+          <Blocks
+            blocks={blocks}
+            onSelectedRow={onSelectBlock}
+            t={t}
+          />
+        )
       }
     </div>
   );

@@ -1,4 +1,5 @@
 /* eslint-disable complexity, max-statements, import/prefer-default-export */
+import { useMemo } from "react";
 import { API_VERSION } from "src/const/config";
 import { regex } from "src/const/regex";
 import { useCustomQuery } from "src/modules/common/hooks"
@@ -22,7 +23,7 @@ export const useSearch = (search = '') => {
       params: { address: search }
     }, options: { enabled: isAddress }
   })
-  const addresses = addressSearch.data?.data ?? [];
+  const addresses = useMemo(() =>  addressSearch.data?.data ?? [], [addressSearch.data?.data])
 
   const delegateSearch = useCustomQuery({
     keys: ['search-key'],
@@ -33,7 +34,7 @@ export const useSearch = (search = '') => {
       params: { search }
     }, options: { enabled: search.length >= 3 && !isAddress && !isTxId && !isBlockHeight }
   })
-  const delegates = delegateSearch.data?.data ?? []
+  const delegates = useMemo(() =>  delegateSearch.data?.data ?? [], [delegateSearch.data?.data])
 
   const transactionsSearch = useCustomQuery({
     keys: ['transactions-key'],
@@ -44,7 +45,7 @@ export const useSearch = (search = '') => {
       params: { transactionID: search }
     }, options: { enabled: isTxId }
   })
-  const transactions = transactionsSearch.data?.data ?? []
+  const transactions = useMemo(() =>  transactionsSearch.data?.data ?? [], [transactionsSearch.data?.data])
 
   const blockHeightSearch = useCustomQuery({
     keys: ['block-key'],
@@ -56,7 +57,7 @@ export const useSearch = (search = '') => {
     }, options: { enabled: isBlockHeight }
   })
 
-  const blocks = blockHeightSearch.data?.data ?? []
+  const blocks = useMemo(() =>  blockHeightSearch.data?.data ?? [], [blockHeightSearch.data?.data])
 
   const isLoading = delegateSearch.isLoading || transactionsSearch.isLoading || addressSearch.isLoading || blockHeightSearch.isLoading
 

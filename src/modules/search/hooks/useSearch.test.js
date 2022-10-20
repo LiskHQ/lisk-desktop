@@ -25,13 +25,15 @@ describe('useSearch hook', () => {
       expect(result.current.delegates.length).toEqual(0)
 
     })
-    // Search value with length less than three
+  });
+  
+  it('should not call api for search value less than 3', () => {
     act(() => {
       const { result, waitFor } = renderHook(() => useSearch('hi'), { wrapper });
       waitFor(() => !result.current.isLoading);
       expect(result.current.delegates.length).toEqual(0)
     })
-  });
+  })
 
   it('should call fetch delegates api for valid search', () => {
     act(() => {
