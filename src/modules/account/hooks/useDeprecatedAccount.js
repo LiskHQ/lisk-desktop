@@ -152,10 +152,10 @@ export const useDeprecatedAccount = () => {
         isMigrated: legacy?.data?.balance === '0',
         legacyAddress: legacy?.data?.legacyAddress,
       },
-      legacy: {
-        address: legacy?.data?.legacyAddress,
-        balance: legacy?.data?.balance,
-      },
+      ...(legacy?.data && {legacy: {
+        address: legacy.data.legacyAddress,
+        balance: legacy.data.balance,
+      }}),
     }));
   }, [legacy, isLegacySuccess]);
 

@@ -1,4 +1,5 @@
 import React from 'react';
+import { withRouter } from 'react-router';
 import { tokenMap } from '@token/fungible/consts/tokens';
 import { MODULE_COMMANDS_NAME_MAP } from '@transaction/configuration/moduleCommand';
 import useTransactionFeeCalculation from '@transaction/hooks/useTransactionFeeCalculation';
@@ -13,7 +14,7 @@ const transaction = {
   params: {},
 };
 
-const Summary = ({ balanceReclaimed, nextStep, prevStep, wallet, t, fees }) => {
+const Summary = ({ history, balanceReclaimed, nextStep, wallet, t, fees }) => {
   transaction.nonce = wallet.sequence.nonce;
   transaction.sender = { publicKey: wallet.summary.publicKey };
   transaction.params.amount = wallet.legacy.balance;
@@ -51,7 +52,7 @@ const Summary = ({ balanceReclaimed, nextStep, prevStep, wallet, t, fees }) => {
   const onCancelAction = {
     label: t('Go back'),
     onClick: () => {
-      prevStep({ rawTx });
+      history.goBack()
     },
   };
 
@@ -78,4 +79,4 @@ const areEqual = (
   nextProps // @todo account has multiple balance now
 ) => prevProps.wallet.summary.balance === nextProps.wallet.summary.balance;
 
-export default React.memo(Summary, areEqual);
+export default withRouter(React.memo(Summary, areEqual));
