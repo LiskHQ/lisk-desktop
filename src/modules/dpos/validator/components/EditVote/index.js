@@ -17,6 +17,7 @@ import BoxHeader from 'src/theme/box/header';
 import BoxInfoText from 'src/theme/box/infoText';
 import AmountField from 'src/modules/common/components/amountField';
 import WalletVisual from 'src/modules/wallet/components/walletVisual';
+import routes from 'src/routes/routes';
 import TokenAmount from '@token/fungible/components/tokenAmount';
 import WarnPunishedDelegate from '@dpos/validator/components/WarnPunishedDelegate';
 import { useBlocks } from 'src/modules/block/hooks/queries/useBlocks';
@@ -43,7 +44,7 @@ const getTitles = (t) => ({
   },
 });
 
-  // @Todo this is just a place holder pending when dpos constants are integrated by this issue #4502
+// @Todo this is just a place holder pending when dpos constants are integrated by this issue #4502
 const dposTokenId = '0'.repeat(16);
 
 // eslint-disable-next-line max-statements
@@ -130,14 +131,11 @@ const EditVote = ({ history, voteEdited, network, voting, votesRetrieved }) => {
       },
     ]);
 
-    if (mode === 'add') setIsForm(false);
-    if (mode === 'edit') {
-      removeThenAppendSearchParamsToUrl(history, { modal: 'votingQueue' }, ['modal']);
-    }
+    setIsForm(false);
   };
 
-  const handleContinueVoting = () => setIsForm(true);
-  
+  const handleContinueVoting = () => history.push(routes.delegates.path);
+
   const removeVote = () => {
     voteEdited([
       {

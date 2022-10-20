@@ -64,7 +64,7 @@ const getVoteStats = (votes, account) => {
   const numOfRemovedVotes = Object.keys(votesStats.removed).length;
 
   const resultingNumOfVotes = numOfAddededVotes + numOfEditedVotes + numOfUntouchedVotes;
-  const availableVotes = VOTE_LIMIT - (numOfEditedVotes + numOfUntouchedVotes + numOfRemovedVotes);
+  const availableVotes = VOTE_LIMIT - (numOfEditedVotes + numOfUntouchedVotes + numOfRemovedVotes + numOfAddededVotes);
 
   return {
     ...votesStats,
