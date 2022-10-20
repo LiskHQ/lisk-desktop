@@ -8,13 +8,15 @@ const Summary = ({
   prevStep,
   nextStep,
   multisigGroupRegistered,
-  rawTx,
+  formProps,
+  transactionJSON,
 }) => {
   const onConfirmAction = {
     label: t('Sign'),
     onClick: () => {
       nextStep({
-        rawTx,
+        formProps,
+        transactionJSON,
         actionFunction: multisigGroupRegistered,
       });
     },
@@ -22,7 +24,7 @@ const Summary = ({
 
   const onCancelAction = {
     label: t('Go back'),
-    onClick: () => { prevStep({ rawTx }); },
+    onClick: () => { prevStep({ formProps, transactionJSON }); },
   };
 
   return (
@@ -32,7 +34,8 @@ const Summary = ({
         className={styles.container}
         confirmButton={onConfirmAction}
         cancelButton={onCancelAction}
-        rawTx={rawTx}
+        formProps={formProps}
+        transactionJSON={transactionJSON}
       >
         <div className={styles.header}>
           <h1>{t('Register multisignature account')}</h1>

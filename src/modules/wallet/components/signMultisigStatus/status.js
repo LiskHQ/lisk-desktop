@@ -14,7 +14,7 @@ const Status = ({ sender, transactions, t }) => {
   const status = getTransactionStatus(
     sender.data,
     transactions,
-    sender.data?.summary.publicKey,
+    sender.data?.keys.numberOfSignatures > 0,
   );
 
   const template = statusMessages(t)[status.code];

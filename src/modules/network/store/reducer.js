@@ -52,7 +52,10 @@ const network = (state = initialState, action) => {
           ...state.networks,
           LSK: {
             ...state.networks.LSK,
-            moduleCommandSchemas: action.data.reduce((acc, item) => {
+            schemas: {
+              ...action.data,
+            },
+            moduleCommandSchemas: action.data.commands.reduce((acc, item) => {
               acc[item.moduleCommand] = item.schema;
               return acc;
             }, {}),

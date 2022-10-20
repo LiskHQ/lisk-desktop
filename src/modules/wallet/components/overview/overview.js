@@ -55,9 +55,9 @@ const Overview = ({ isWalletRoute, history }) => {
 
   const isBanned = delegate.isBanned;
   const pomHeights = delegate.pomHeights;
-  const { end } = pomHeights ? pomHeights[pomHeights.length - 1] : 0;
+  // const { end } = pomHeights ? pomHeights[pomHeights.length - 1] : 0;
 
-  const daysLeft = Math.ceil((end - currentHeight) / numOfBlockPerDay);
+  const daysLeft = Math.ceil((1000 - currentHeight) / numOfBlockPerDay);
   const wallet = useSelector(selectActiveTokenAccount);
   const { data: tokens, isLoading, error } = useTokensBalance();
   const host = wallet.summary?.address ?? '';

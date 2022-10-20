@@ -11,9 +11,11 @@ import { showSignButton, getTransactionSignatureStatus } from '../signMultisigVi
 import { ActionBar, Feedback } from './footer';
 import styles from './styles.css';
 
+// eslint-disable-next-line max-statements
 const Summary = ({
   t,
-  transaction,
+  transactionJSON,
+  formProps,
   account,
   nextStep,
   history,
@@ -24,7 +26,7 @@ const Summary = ({
   // @todo Fix isMember calculation (#4506)
   const isMember = useMemo(() => {
     if (senderAccount.data.keys) {
-      return showSignButton(senderAccount.data, account, transaction);
+      return showSignButton(senderAccount.data, account, transactionJSON);
     }
     return null;
   }, [senderAccount.data]);
@@ -32,14 +34,15 @@ const Summary = ({
   // @todo Fix signatureStatus calculation (#4506)
   const signatureStatus = useMemo(() => {
     if (senderAccount.data.keys) {
-      return getTransactionSignatureStatus(senderAccount.data, transaction);
+      return getTransactionSignatureStatus(senderAccount.data, transactionJSON);
     }
     return null;
   }, [senderAccount.data]);
 
   const onClick = () => {
     nextStep({
-      rawTx: transaction,
+      formProps,
+      transactionJSON,
       sender: senderAccount,
       signatureStatus,
     });
@@ -60,8 +63,7 @@ const Summary = ({
   if (isEmpty(senderAccount.data)) {
     return <div />;
   }
-  const Layout = LayoutSchema[`${transaction.moduleCommand}-preview`] || LayoutSchema.default;
-
+  const Layout = LayoutSchema[`${formProps.moduleCommand}-preview`] || LayoutSchema.default;
   return (
     <Box className={styles.boxContainer}>
       <header>
@@ -77,7 +79,7 @@ const Summary = ({
         <Box className={`${styles.container} ${styles.txDetails}`}>
           <BoxContent className={`${layoutSchemaStyles.mainContent} ${Layout.className}`}>
             <TransactionDetailsContext.Provider value={{
-              activeToken, network, wallet: senderAccount.data, transaction,
+              activeToken, network, wallet: senderAccount.data, transaction: transactionJSON,
             }}
             >
               {Layout.components.map((Component, index) => (

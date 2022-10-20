@@ -5,15 +5,17 @@ import { multisigTransactionSigned } from 'src/redux/actions';
 import { getAccount } from '@wallet/utils/api';
 import withData from 'src/utils/withData';
 import { withRouter } from 'react-router';
-import { selectActiveToken } from 'src/redux/selectors';
+import { selectActiveToken, selectActiveTokenAccount } from 'src/redux/selectors';
+import { extractAddressFromPublicKey } from '../../utils/account';
+
 import Summary from './summary';
 
 const apis = {
   senderAccount: {
-    apiUtil: (network, { token, publicKey }) =>
-      getAccount({ network, params: { publicKey } }, token),
+    apiUtil: (network, { token, address }) =>
+      getAccount({ network, params: { address } }, token),
     getApiParams: (state, ownProps) => ({
-      publicKey: ownProps.transaction.sender.publicKey,
+      address: extractAddressFromPublicKey(ownProps.transactionJSON.senderPublicKey),
       network: state.network,
     }),
     autoload: true,
@@ -21,11 +23,7 @@ const apis = {
 };
 
 const mapStateToProps = state => ({
-  account: {
-    ...state.wallet.info.LSK,
-    passphrase: state.passphrase,
-    hwInfo: state.hwInfo,
-  },
+  account: selectActiveTokenAccount(state),
   network: state.network,
   activeToken: selectActiveToken(state),
   networkIdentifier: state.network.networks.LSK.networkIdentifier,

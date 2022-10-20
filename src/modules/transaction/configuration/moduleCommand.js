@@ -1,5 +1,6 @@
 const moduleCommandNameMap = {
   transfer: 'token:transfer',
+  crossChainTransfer: 'token:crossChaintransfer',
   registerMultisignature: 'auth:registerMultisignature',
   registerDelegate: 'dpos:registerDelegate',
   voteDelegate: 'dpos:voteDelegate',
@@ -10,6 +11,10 @@ const moduleCommandNameMap = {
 
 const moduleCommandMap = {
   [moduleCommandNameMap.transfer]: {
+    maxFee: 1e7,
+    icon: 'txDefault',
+  },
+  [moduleCommandNameMap.crossChainTransfer]: {
     maxFee: 1e7,
     icon: 'txDefault',
   },

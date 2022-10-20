@@ -1,6 +1,8 @@
-import http from 'src/utils/api/http';
-import { httpPaths } from '@block/config';
 import getBlockProps from '@block/utils/getBlockProps';
+import defaultClient from 'src/utils/api/client';
+import {
+  METHOD,
+} from 'src/const/config';
 
 /**
  * Retrieves block details.
@@ -15,15 +17,12 @@ import getBlockProps from '@block/utils/getBlockProps';
  * @returns {Promise} http call
  */
 const getBlock = ({
-  params = {}, network, baseUrl,
+  params = {},
 }) => {
   try {
     const blockProps = getBlockProps(params);
-    return http({
-      path: httpPaths.block,
-      params: blockProps,
-      network,
-      baseUrl,
+    return defaultClient[METHOD]({
+      params: blockProps
     });
   } catch (e) {
     return Promise.reject(e);

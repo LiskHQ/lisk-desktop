@@ -5,7 +5,7 @@ import styles from './send.css';
 import chainLogo from '../../../../../setup/react/assets/images/LISK.png';
 
 const Send = ({
-  transaction = {}, t,
+  formProps = {}, transactionJSON, t,
 }) => (
   <>
     <section className={styles.msignRow}>
@@ -15,14 +15,14 @@ const Send = ({
             <label>{t('From Application')}</label>
             <div className={styles.chainWrapper}>
               <img className={styles.chainLogo} src={chainLogo} />
-              <span>{transaction.sendingChain.name}</span>
+              <span>{formProps.fields.sendingChain.name}</span>
             </div>
           </div>
           <div>
             <label>{t('To Application')}</label>
             <div className={styles.chainWrapper}>
               <img className={styles.chainLogo} src={chainLogo} />
-              <span>{transaction.recipientChain.name}</span>
+              <span>{formProps.fields.recipientChain.name}</span>
             </div>
           </div>
         </div>
@@ -33,8 +33,8 @@ const Send = ({
         <label>{t('Amount')}</label>
         <span className={`${styles.valueText} amount-summary`}>
           <TokenAmount
-            val={transaction.params.amount}
-            token={transaction.params.token.symbol}
+            val={transactionJSON.params.amount}
+            token={formProps.fields.token.symbol}
           />
         </span>
       </div>
@@ -42,13 +42,13 @@ const Send = ({
     <section>
       <label>{t('Recipient Address')}</label>
       <label className="recipient-value">
-        <WalletVisual address={transaction.params.recipient.address} size={40} />
+        <WalletVisual address={transactionJSON.params.recipientAddress} size={40} />
         <div className={styles.recipientDetail}>
           <span className={`${styles.information} recipient-confirm`}>
-            <b>{transaction.params.recipient.title}</b>
+            <b>{formProps.fields.recipient.title}</b>
           </span>
           <span className={styles.secondText}>
-            {transaction.params.recipient.address}
+            {transactionJSON.params.recipientAddress}
           </span>
         </div>
       </label>
@@ -56,7 +56,7 @@ const Send = ({
     <section>
       <label>{t('Message')}</label>
       <span className={`${styles.valueText} message-value`}>
-        {transaction.params.data || '-'}
+        {transactionJSON.params.data || '-'}
       </span>
     </section>
   </>

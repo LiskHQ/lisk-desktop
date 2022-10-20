@@ -1,5 +1,5 @@
 import * as accountApi from '@wallet/utils/api';
-import { createGenericTx } from '@transaction/api';
+import { signTransaction } from '@transaction/api';
 import wallets from '@tests/constants/wallets';
 import moduleCommandSchemas from '@tests/constants/schemas';
 import * as networkActions from '@network/store/action';
@@ -172,12 +172,12 @@ describe('actions: account', () => {
 
     it('should dispatch transactionCreatedSuccess', async () => {
       const tx = { id: 1 };
-      createGenericTx.mockImplementation(() =>
+      signTransaction.mockImplementation(() =>
         new Promise((resolve) => {
           resolve(tx);
         }));
       await multisigGroupRegistered(transactionObject, privateKey)(dispatch, getState);
-      expect(createGenericTx).toHaveBeenCalledWith({
+      expect(signTransaction).toHaveBeenCalledWith({
         transactionObject,
         wallet: {
           ...state.wallet.info.LSK,
@@ -196,7 +196,7 @@ describe('actions: account', () => {
 
     it('should dispatch transactionSignError', async () => {
       const error = { message: 'TestError' };
-      createGenericTx.mockImplementation(() =>
+      signTransaction.mockImplementation(() =>
         new Promise((_, reject) => {
           reject(error);
         }));

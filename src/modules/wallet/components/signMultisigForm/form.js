@@ -1,15 +1,16 @@
 /* eslint-disable complexity */
 import React, { useState, useEffect } from 'react';
 import {
-  elementTxToDesktopTx,
-  convertTxJSONToBinary,
-} from '@transaction/utils/transaction';
+  fromTransactionJSON,
+  toTransactionJSON,
+} from '@transaction/utils/encoding';
 import { joinModuleAndCommand } from 'src/modules/transaction/utils/moduleCommand';
 import Box from 'src/theme/box';
 import BoxContent from 'src/theme/box/content';
 import BoxFooter from 'src/theme/box/footer';
 import UploadJSONInput from 'src/modules/common/components/uploadJSONInput';
 import { PrimaryButton } from 'src/theme/buttons';
+import { useDeprecatedAccount } from 'src/modules/account/hooks';
 import { useSchemas } from '@transaction/hooks/queries/useSchemas';
 import { validateTransaction } from '@liskhq/lisk-transactions';
 import ProgressBar from '../signMultisigView/progressBar';
@@ -17,13 +18,19 @@ import styles from './styles.css';
 
 const reader = new FileReader();
 
-const getTxObject = (value, moduleCommandSchemas) => {
+const getParamsSchema = (transaction, schemas) => {
   const moduleCommand = joinModuleAndCommand({
-    module: value.module,
-    command: value.command,
+    module: transaction.module,
+    command: transaction.command,
   });
-  const transactionObject = convertTxJSONToBinary(value, moduleCommand);
-  const isValid = validateTransaction(transactionObject, moduleCommandSchemas[moduleCommand]);
+
+  return schemas[moduleCommand];
+}
+
+const getTransactionObject = (transaction, moduleCommandSchemas) => {
+  const paramsSchema = getParamsSchema(transaction, moduleCommandSchemas);
+  const transactionObject = fromTransactionJSON(transaction, paramsSchema);
+  const isValid = validateTransaction(transactionObject, paramsSchema);
 
   return {
     transactionObject,
@@ -33,15 +40,19 @@ const getTxObject = (value, moduleCommandSchemas) => {
 
 const Form = ({ t, nextStep, network }) => {
   const [transaction, setTransaction] = useState();
-  const [binaryTx, setBinaryTx] = useState();
+  const [transactionObject, setTransactionObject] = useState();
   const [error, setError] = useState();
   // @todo Once the transactions are refactored and working, we should
   // use the schema returned by this hook instead of reading from the Redux store.
   useSchemas();
+  useDeprecatedAccount();
 
   const onReview = () => {
     try {
-      nextStep({ transaction: elementTxToDesktopTx(binaryTx) });
+      const paramsSchema = getParamsSchema(transaction, network.networks.LSK.moduleCommandSchemas);
+      const moduleCommand = joinModuleAndCommand(transaction);
+      const formProps = { moduleCommand };
+      nextStep({ formProps, transactionJSON: toTransactionJSON(transactionObject, paramsSchema) });
     } catch (e) {
       nextStep({ error: e });
     }
@@ -51,9 +62,10 @@ const Form = ({ t, nextStep, network }) => {
     setError(undefined);
     try {
       setTransaction(value);
-      const { transactionObject, isValid } = getTxObject(value, network.networks.LSK.moduleCommandSchemas);
-      setBinaryTx(transactionObject);
-      setError(isValid ? 'Unknown transaction' : undefined);
+      const result = getTransactionObject(value, network.networks.LSK.moduleCommandSchemas);
+      setTransactionObject(result.transactionObject);
+      // TODO: Need to handle the validator error and show to end user
+      setError(result.isValid ? 'Unknown transaction' : undefined);
     } catch (e) {
       setTransaction(undefined);
       setError('Invalid transaction');

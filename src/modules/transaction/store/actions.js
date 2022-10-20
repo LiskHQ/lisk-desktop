@@ -9,10 +9,13 @@ import { loadingStarted, loadingFinished } from 'src/modules/common/store/action
 import actionTypes from './actionTypes';
 import { getTransactions, broadcast } from '../api';
 import {
+  joinModuleAndCommand,
   signMultisigTransaction,
-  elementTxToDesktopTx,
-  desktopTxToElementsTx,
 } from '../utils';
+import {
+  fromTransactionJSON,
+  toTransactionJSON,
+} from '../utils/encoding';
 
 /**
  * Action trigger when user logout from the application
@@ -92,6 +95,7 @@ export const resetTransactionResult = () => ({
  * @param {object} data
  * @param {string} data.secondPass
  */
+// eslint-disable-next-line max-statements
 export const transactionDoubleSigned = () => async (dispatch, getState) => {
   const state = getState();
   const { transactions, network } = state;
@@ -100,15 +104,16 @@ export const transactionDoubleSigned = () => async (dispatch, getState) => {
     enableCustomDerivationPath: false,
   });
   const activeWallet = selectActiveTokenAccount(state);
-
+  const schemas = network.networks.LSK.moduleCommandSchemas[transactions.moduleCommand];
+  const transaction = toTransactionJSON(transactions.signedTransaction, schemas[transactions.moduleCommand]);
   const [signedTx, err] = await signMultisigTransaction(
     activeWallet,
     {
       data: activeWallet, // SenderAccount is the same of the double-signer
     },
-    elementTxToDesktopTx(transactions.signedTransaction),
+    transaction,
     signatureCollectionStatus.partiallySigned,
-    network.networks.LSK.moduleCommandSchemas[transactions.moduleCommand],
+    schemas[transactions.moduleCommand],
     network.networks.LSK.chainID,
     keyPair.privateKey,
   );
@@ -159,10 +164,12 @@ export const transactionBroadcasted = transaction =>
         data: transaction,
       });
 
-      const transformedTransaction = elementTxToDesktopTx(transaction);
+      const moduleCommand = joinModuleAndCommand(transaction);
+      const paramsSchema = network.networks.LSK.moduleCommandSchemas[moduleCommand];
+      const transactionJSON = toTransactionJSON(transaction, paramsSchema);
 
-      if (transformedTransaction.sender.address === wallet.info.LSK.summary.address) {
-        dispatch(pendingTransactionAdded({ ...transformedTransaction, isPending: true }));
+      if (transactionJSON.senderPublicKey === wallet.info.LSK.summary.publicKey) {
+        dispatch(pendingTransactionAdded({ ...transactionJSON, isPending: true }));
       }
 
       dispatch(timerReset());
@@ -179,18 +186,22 @@ export const transactionBroadcasted = transaction =>
  * @param {object} data.sender.data - Sender account info in Lisk API schema
  */
 export const multisigTransactionSigned = ({
-  rawTx, sender, privateKey,
+  formProps,
+  transactionJSON,
+  sender,
+  privateKey,
 }) => async (dispatch, getState) => {
   const state = getState();
   const activeWallet = selectActiveTokenAccount(state);
-  const txStatus = getTransactionSignatureStatus(sender.data, rawTx);
+  const txStatus = getTransactionSignatureStatus(sender.data, transactionJSON);
 
+  console.log('getTransactionSignatureStatus', txStatus);
   const [tx, error] = await signMultisigTransaction(
     activeWallet,
     sender,
-    rawTx,
+    transactionJSON,
     txStatus,
-    state.network.networks.LSK.moduleCommandSchemas[rawTx.moduleCommand],
+    state.network.networks.LSK.moduleCommandSchemas[formProps.moduleCommand],
     state.network.networks.LSK.chainID,
     privateKey,
   );
@@ -216,13 +227,13 @@ export const multisigTransactionSigned = ({
  * @param {object} data
  * @param {object} data.rawTransaction Transaction config required by Lisk Element
  */
-export const signatureSkipped = ({ rawTx }) => (dispatch, getState) => {
+export const signatureSkipped = ({ formProps, transactionJSON }) => (dispatch, getState) => {
   const { network } = getState();
-  const schema = network.networks.LSK.moduleCommandSchemas[rawTx.moduleCommand]
-  const binaryTx = desktopTxToElementsTx(rawTx, rawTx.moduleCommand, schema);
+  const schema = network.networks.LSK.moduleCommandSchemas[formProps.moduleCommand]
+  const transactionObject = fromTransactionJSON(transactionJSON, schema);
 
   dispatch({
     type: actionTypes.signatureSkipped,
-    data: binaryTx,
+    data: transactionObject,
   });
 };

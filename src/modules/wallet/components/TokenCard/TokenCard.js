@@ -10,7 +10,7 @@ const liskSymbol = 'LSK';
 
 const TokenCard = ({ lockedBalance, availableBalance, symbol, url, address }) => (
   <div data-testid="token-card" className={styles.wrapper}>
-    <div className={!lockedBalance || symbol.toUpperCase() !== liskSymbol ? styles.vCenter : ''}>
+    <div className={!lockedBalance || symbol && symbol.toUpperCase() !== liskSymbol ? styles.vCenter : ''}>
       <img alt={symbol} className={styles.tokenLogo} src={url} />
     </div>
     <div>

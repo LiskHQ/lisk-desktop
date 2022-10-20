@@ -29,12 +29,13 @@ const Members = ({ members, t }) => (
 );
 
 const TransactionInfo = ({
-  isMultisignature, t, rawTx, account, date, token, summaryInfo,
+  isMultisignature, t, formProps, transactionJSON, account, date, token, summaryInfo,
 }) => (
   <>
     <CustomTransactionInfo
       t={t}
-      transaction={rawTx}
+      formProps={formProps}
+      transactionJSON={transactionJSON}
       account={account}
       token={token}
       summaryInfo={summaryInfo}
@@ -52,7 +53,7 @@ const TransactionInfo = ({
             <label>{t('Transaction fee')}</label>
             <label className="fee">
               <TokenAmount
-                val={rawTx.fee}
+                val={transactionJSON.fee}
                 token={token}
               />
             </label>
@@ -68,7 +69,7 @@ const TransactionInfo = ({
           <div className={styles.col}>
             <label>{t('Nonce')}</label>
             <label>
-              {Number(rawTx.nonce)}
+              {Number(transactionJSON.nonce)}
             </label>
           </div>
         </section>

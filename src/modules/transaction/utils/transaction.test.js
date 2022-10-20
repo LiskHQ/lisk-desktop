@@ -14,13 +14,13 @@ import {
   getTxAmount,
   elementTxToDesktopTx,
   containsTransactionType,
-  desktopTxToElementsTx,
   transactionToJSON,
   removeExcessSignatures,
   convertStringToBinary,
   normalizeTransactionsStatisticsParams,
   normalizeNumberRange,
 } from './transaction';
+import { fromTransactionJSON } from './encoding';
 
 const address = 'lskdxc4ta5j43jp9ro3f8zqbxta9fn6jwzjucw7yt';
 jest.spyOn(cryptography.address, 'getLisk32AddressFromPublicKey').mockReturnValue(address);
@@ -99,7 +99,7 @@ describe('API: LSK Transactions', () => {
     });
   });
 
-  describe('desktopTxToElementsTx', () => {
+  describe('fromTransactionJSON', () => {
     it('creates a transaction object for transfer transaction', () => {
       const tx = {
         ...baseDesktopTx,
@@ -111,7 +111,7 @@ describe('API: LSK Transactions', () => {
           token: mockAppTokens[0],
         },
       };
-      const txObj = desktopTxToElementsTx(tx, transfer, moduleCommandSchemas['token:transfer']);
+      const txObj = fromTransactionJSON(tx, moduleCommandSchemas['token:transfer']);
       const [module, command] = splitModuleAndCommand(transfer);
       expect(txObj).toEqual({
         ...baseElementsTx,
@@ -143,7 +143,7 @@ describe('API: LSK Transactions', () => {
           ],
         },
       };
-      const txObj = desktopTxToElementsTx(tx, voteDelegate, moduleCommandSchemas['dpos:voteDelegate']);
+      const txObj = fromTransactionJSON(tx, moduleCommandSchemas['dpos:voteDelegate']);
       const [module, command] = splitModuleAndCommand(voteDelegate);
       expect(txObj).toEqual({
         ...baseElementsTx,
@@ -169,7 +169,7 @@ describe('API: LSK Transactions', () => {
           proofOfPossession: pop,
         },
       };
-      const txObj = desktopTxToElementsTx(tx, registerDelegate, moduleCommandSchemas['dpos:registerDelegate']);
+      const txObj = fromTransactionJSON(tx, moduleCommandSchemas['dpos:registerDelegate']);
       const [module, command] = splitModuleAndCommand(registerDelegate);
       expect(txObj).toEqual({
         ...baseElementsTx,
@@ -192,7 +192,7 @@ describe('API: LSK Transactions', () => {
           amount: '10000000',
         },
       };
-      const txObj = desktopTxToElementsTx(tx, reclaim, moduleCommandSchemas['legacy:reclaim']);
+      const txObj = fromTransactionJSON(tx, moduleCommandSchemas['legacy:reclaim']);
       const [module, command] = splitModuleAndCommand(reclaim);
       expect(txObj).toEqual({
         ...baseElementsTx,
@@ -216,7 +216,7 @@ describe('API: LSK Transactions', () => {
           unlockObjects,
         },
       };
-      const txObj = desktopTxToElementsTx(tx, unlock, moduleCommandSchemas['dpos:unlock']);
+      const txObj = fromTransactionJSON(tx, moduleCommandSchemas['dpos:unlock']);
       const [module, command] = splitModuleAndCommand(unlock);
       expect(txObj).toEqual({
         ...baseElementsTx,
@@ -242,7 +242,7 @@ describe('API: LSK Transactions', () => {
           signatures: [],
         },
       };
-      const txObj = desktopTxToElementsTx(tx, registerMultisignature, moduleCommandSchemas['auth:registerMultisignature']);
+      const txObj = fromTransactionJSON(tx, moduleCommandSchemas['auth:registerMultisignature']);
       const [module, command] = splitModuleAndCommand(registerMultisignature);
       expect(txObj).toEqual({
         ...baseElementsTx,

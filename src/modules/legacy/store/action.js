@@ -1,10 +1,11 @@
 import { to } from 'await-to-js';
-import { createGenericTx } from '@transaction/api';
+import { signTransaction } from '@transaction/api';
 import actionTypes from '@transaction/store/actionTypes';
 import { selectActiveTokenAccount } from 'src/redux/selectors';
 
 export const balanceReclaimed = (
-  transactionObject,
+  formProps,
+  transactionJSON,
   privateKey,
 ) => async (dispatch, getState) => {
   //
@@ -17,10 +18,10 @@ export const balanceReclaimed = (
   // Create the transaction
   //
   const [error, tx] = await to(
-    createGenericTx({
-      transactionObject,
+    signTransaction({
+      transactionJSON,
       wallet: activeWallet,
-      schema: state.network.networks.LSK.moduleCommandSchemas[transactionObject.moduleCommand],
+      schema: state.network.networks.LSK.moduleCommandSchemas[formProps.moduleCommand],
       chainID: state.network.networks.LSK.chainID,
       privateKey,
     }),

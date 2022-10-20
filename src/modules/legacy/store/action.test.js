@@ -1,4 +1,4 @@
-import { createGenericTx } from '@transaction/api';
+import { signTransaction } from '@transaction/api';
 import wallets from '@tests/constants/wallets';
 import moduleCommandSchemas from '@tests/constants/schemas';
 import actionTypes from '@transaction/store/actionTypes';
@@ -45,13 +45,13 @@ describe('actions: legacy', () => {
 
     it('should dispatch transactionCreatedSuccess', async () => {
       const tx = { id: 1 };
-      createGenericTx.mockImplementation(() =>
+      signTransaction.mockImplementation(() =>
         new Promise((resolve) => {
           resolve(tx);
         }));
       await balanceReclaimed(transactionObject, privateKey)(dispatch, getState);
 
-      expect(createGenericTx).toHaveBeenCalledWith({
+      expect(signTransaction).toHaveBeenCalledWith({
         transactionObject,
         wallet: {
           ...state.wallet.info.LSK,
@@ -70,7 +70,7 @@ describe('actions: legacy', () => {
 
     it('should dispatch transactionSignError', async () => {
       const error = { message: 'TestError' };
-      createGenericTx.mockImplementation(() =>
+      signTransaction.mockImplementation(() =>
         new Promise((_, reject) => {
           reject(error);
         }));

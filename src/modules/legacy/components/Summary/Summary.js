@@ -1,3 +1,4 @@
+/* eslint-disable max-statements */
 import React from 'react';
 import { withRouter } from 'react-router';
 import { tokenMap } from '@token/fungible/consts/tokens';
@@ -7,39 +8,49 @@ import useTransactionPriority from '@transaction/hooks/useTransactionPriority';
 import TransactionSummary from '@transaction/manager/transactionSummary';
 import { toRawLsk } from '@token/fungible/utils/lsk';
 import { getFeeStatus } from '@transaction/utils/helpers';
+import { splitModuleAndCommand } from 'src/modules/transaction/utils';
 import styles from './summary.css';
 
-const transaction = {
-  moduleCommand: MODULE_COMMANDS_NAME_MAP.reclaim,
-  params: {},
-};
-
 const Summary = ({ history, balanceReclaimed, nextStep, wallet, t, fees }) => {
-  transaction.nonce = wallet.sequence.nonce;
-  transaction.sender = { publicKey: wallet.summary.publicKey };
-  transaction.params.amount = wallet.legacy.balance;
 
-  const [selectedPriority, , priorityOptions] = useTransactionPriority();
+  const formProps = {
+    moduleCommand: MODULE_COMMANDS_NAME_MAP.reclaim,
+  };
+
+  const commandParams = {
+    amount: wallet.legacy.balance,
+  };
+
+  const [
+    selectedPriority, , priorityOptions,
+  ] = useTransactionPriority();
+  const [module, command] = splitModuleAndCommand(formProps.moduleCommand);
+  const transactionJSON = {
+    module,
+    command,
+    nonce: wallet.sequence?.nonce,
+    fee: 0,
+    senderPublicKey: wallet.summary?.publicKey,
+    params: commandParams,
+    signatures: [],
+  };
   const { minFee } = useTransactionFeeCalculation({
     selectedPriority,
     token: tokenMap.LSK.key,
     wallet,
     priorityOptions,
-    transaction,
+    transactionJSON,
   });
-
-  const rawTx = {
-    ...transaction,
-    fee: toRawLsk(minFee.value),
-    composedFees: {
-      Transaction: getFeeStatus({ fee: minFee, token: tokenMap.LSK.key }),
-      Initialisation: getFeeStatus({ fee: { value: 0.05 }, token: tokenMap.LSK.key }),
-    },
+  transactionJSON.fee = toRawLsk(minFee.value);
+  formProps.composedFees = {
+    Transaction: getFeeStatus({ fee: minFee, token: tokenMap.LSK.key }),
+    Initialisation: getFeeStatus({ fee: { value: 0.05 }, token: tokenMap.LSK.key }),
   };
 
   const onSubmit = () => {
     nextStep({
-      rawTx,
+      formProps,
+      transactionJSON,
       actionFunction: balanceReclaimed,
     });
   };
@@ -64,7 +75,8 @@ const Summary = ({ history, balanceReclaimed, nextStep, wallet, t, fees }) => {
       className={styles.container}
       confirmButton={onConfirmAction}
       cancelButton={onCancelAction}
-      rawTx={rawTx}
+      formProps={formProps}
+      transactionJSON={transactionJSON}
       selectedPriority={selectedPriority}
       fees={fees}
     />

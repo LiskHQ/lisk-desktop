@@ -3,7 +3,7 @@ import networks from '@network/configuration/networks';
 import { tokenMap } from '@token/fungible/consts/tokens';
 import { mountWithQueryAndProps } from 'src/utils/testHelpers';
 import * as hwManager from '@transaction/utils/hwManager';
-import { createGenericTx } from '@transaction/api';
+import { signTransaction } from '@transaction/api';
 import useTransactionPriority from '@transaction/hooks/useTransactionPriority';
 import useTransactionFeeCalculation from '@transaction/hooks/useTransactionFeeCalculation';
 import wallets from '@tests/constants/wallets';
@@ -147,7 +147,7 @@ describe('Unlock LSK modal', () => {
 
   it('fires balanceUnlocked action with selected fee', async () => {
     const tx = { id: 1 };
-    createGenericTx.mockImplementation(() =>
+    signTransaction.mockImplementation(() =>
       new Promise((resolve) => {
         resolve(tx);
       }));

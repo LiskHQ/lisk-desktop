@@ -8,8 +8,8 @@ import client from 'src/utils/api/client';
 export const httpPaths = {
   delegates: `${HTTP_PREFIX}/accounts`,
   votesSent: `${HTTP_PREFIX}/dpos/votes/sent`,
-  votesReceived: `${HTTP_PREFIX}/votes_received`,
-  forgers: `${HTTP_PREFIX}/forgers`,
+  votesReceived: `${HTTP_PREFIX}/dpos/votes/received`,
+  forgers: `${HTTP_PREFIX}/generators`,
 };
 
 export const wsMethods = {

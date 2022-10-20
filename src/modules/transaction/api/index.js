@@ -15,9 +15,11 @@ import http from 'src/utils/api/http';
 import { getDelegates } from '@dpos/validator/api';
 import { httpPaths } from '../configuration';
 import {
-  desktopTxToElementsTx,
   sign,
 } from '../utils';
+import {
+  fromTransactionJSON,
+} from '../utils/encoding';
 
 // TODO: Remove this patch once API is integrated
 const patchTransactionResponse = response => {
@@ -250,25 +252,21 @@ export const getTransactionBaseFees = network =>
  */
 // eslint-disable-next-line max-statements
 export const getTransactionFee = async ({
-  transaction,
+  transactionJSON,
   selectedPriority,
   wallet,
   numberOfSignatures = DEFAULT_NUMBER_OF_SIGNATURES,
   network,
 }) => {
   const feePerByte = selectedPriority.value;
-
-  const {
-    moduleCommand, ...rawTransaction
-  } = transaction;
-
-  const schema = network.networks.LSK.moduleCommandSchemas[moduleCommand];
+  const moduleCommand = joinModuleAndCommand(transactionJSON);
+  const paramsSchema = network.networks.LSK.moduleCommandSchemas[moduleCommand];
   const maxCommandFee = MODULE_COMMANDS_MAP[moduleCommand].maxFee;
-  const transactionObject = desktopTxToElementsTx(rawTransaction, moduleCommand, schema);
+  const transactionObject = fromTransactionJSON(transactionJSON, paramsSchema);
   let numberOfEmptySignatures = 0;
 
-  if (moduleCommand === MODULE_COMMANDS_NAME_MAP.registerMultisignature) {
-    const { optionalKeys, mandatoryKeys } = transaction.params;
+  if (transactionJSON.moduleCommand === MODULE_COMMANDS_NAME_MAP.registerMultisignature) {
+    const { optionalKeys, mandatoryKeys } = transactionJSON.params;
     numberOfSignatures = optionalKeys.length + mandatoryKeys.length + 1;
   } else if (wallet?.summary?.isMultisignature) {
     numberOfEmptySignatures = wallet.keys.members.length - numberOfSignatures;
@@ -277,7 +275,7 @@ export const getTransactionFee = async ({
   // Call API to get network specific base fees
   const baseFees = [];
 
-  const minFee = transactions.computeMinFee(transactionObject, schema, {
+  const minFee = transactions.computeMinFee(transactionObject, paramsSchema, {
     baseFees,
     numberOfSignatures,
     numberOfEmptySignatures,
@@ -287,14 +285,14 @@ export const getTransactionFee = async ({
   const tieBreaker = selectedPriority.selectedIndex === 0
     ? 0 : (MIN_FEE_PER_BYTE * feePerByte * Math.random());
 
-  const size = transactions.getBytes(transactionObject, schema).length;
+  const size = transactions.getBytes(transactionObject, paramsSchema).length;
 
   const calculatedFee = Number(minFee) + size * feePerByte + tieBreaker;
   const cappedFee = Math.min(calculatedFee, maxCommandFee);
   const feeInLsk = fromRawLsk(cappedFee.toString());
   const roundedValue = Number(feeInLsk).toFixed(7).toString();
 
-  const feedback = transaction.amount === ''
+  const feedback = transactionJSON.amount === ''
     ? '-'
     : `${(roundedValue ? '' : 'Invalid amount')}`;
 
@@ -317,19 +315,21 @@ export const getTransactionFee = async ({
  * @returns {Promise} promise that resolves to a transaction or
  * rejects with an error
  */
-export const createGenericTx = async ({
+export const signTransaction = async ({
   schema,
   chainID,
   wallet,
-  transactionObject,
+  transactionJSON,
   privateKey,
 }) => {
-  const { moduleCommand, ...rawTransaction } = transactionObject;
-  const transaction = desktopTxToElementsTx(rawTransaction, moduleCommand, schema);
+  const transaction = fromTransactionJSON(transactionJSON, schema);
 
   const result = await sign(
-    wallet, schema, chainID, transaction,
-    moduleCommand, privateKey,
+    wallet,
+    schema,
+    chainID,
+    transaction,
+    privateKey,
   );
 
   return result;

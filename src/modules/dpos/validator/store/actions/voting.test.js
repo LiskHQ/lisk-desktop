@@ -114,7 +114,7 @@ describe('actions: voting', () => {
   describe('votesSubmitted', () => {
     it('should call create transactions', async () => {
       const tx = { data: sampleVotes[0] };
-      transactionApi.createGenericTx.mockResolvedValue(tx);
+      transactionApi.signTransaction.mockResolvedValue(tx);
       const data = [
         {
           address: 'dummy',
@@ -123,7 +123,7 @@ describe('actions: voting', () => {
       ];
 
       await votesSubmitted(data)(dispatch, getState);
-      expect(transactionApi.createGenericTx).toHaveBeenCalled();
+      expect(transactionApi.signTransaction).toHaveBeenCalled();
       expect(hwManager.signTransactionByHW).not.toHaveBeenCalled();
       expect(dispatch).toHaveBeenCalledTimes(3);
       expect(dispatch).toHaveBeenCalledWith({
@@ -146,7 +146,7 @@ describe('actions: voting', () => {
       ];
 
       await votesSubmitted(data)(dispatch, getState);
-      expect(transactionApi.createGenericTx).toHaveBeenCalled();
+      expect(transactionApi.signTransaction).toHaveBeenCalled();
       expect(dispatch).toHaveBeenCalledTimes(3);
       expect(dispatch).toHaveBeenCalledWith({
         type: actionTypes.votesSubmitted,
@@ -159,7 +159,7 @@ describe('actions: voting', () => {
 
     it('dispatches a transactionSignError action if an error occurs', async () => {
       const error = new Error('Error message.');
-      transactionApi.createGenericTx.mockRejectedValue(error);
+      transactionApi.signTransaction.mockRejectedValue(error);
       const data = [
         {
           address: 'dummy',
@@ -168,7 +168,7 @@ describe('actions: voting', () => {
       ];
 
       await votesSubmitted(data)(dispatch, getState);
-      expect(transactionApi.createGenericTx).toHaveBeenCalled();
+      expect(transactionApi.signTransaction).toHaveBeenCalled();
       expect(dispatch).toHaveBeenCalledTimes(1);
       expect(dispatch).toHaveBeenCalledWith({
         type: txActionTypes.transactionSignError,
@@ -235,14 +235,14 @@ describe('actions: voting', () => {
 
     it('should dispatch transactionCreatedSuccess', async () => {
       const tx = { id: 1 };
-      transactionApi.createGenericTx.mockImplementation(
+      transactionApi.signTransaction.mockImplementation(
         () =>
           new Promise((resolve) => {
             resolve(tx);
           })
       );
       await balanceUnlocked(transactionObject, privateKey)(dispatch, getState);
-      expect(transactionApi.createGenericTx).toHaveBeenCalledWith({
+      expect(transactionApi.signTransaction).toHaveBeenCalledWith({
         wallet: activeTokenWallet,
         schema: state.network.networks.LSK.moduleCommandSchemas[transactionObject.moduleCommand],
         chainID: state.network.networks.LSK.chainID,
@@ -257,7 +257,7 @@ describe('actions: voting', () => {
 
     it('should dispatch transactionSignError', async () => {
       const error = { message: 'TestError' };
-      transactionApi.createGenericTx.mockImplementation(
+      transactionApi.signTransaction.mockImplementation(
         () =>
           new Promise((_, reject) => {
             reject(error);

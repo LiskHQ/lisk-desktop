@@ -22,9 +22,9 @@ import actionTypes from '@network/store/actionTypes';
 export const useSchemas = ({ config: customConfig = {}, options } = { }) => {
   const dispatch = useDispatch();
   const config = {
-    url: `/api/${API_VERSION}/commands/parameters/schemas`,
+    url: `/api/${API_VERSION}/schemas`,
     method: 'get',
-    event: 'get.commands.parameters.schemas',
+    event: 'get.schemas',
     ...customConfig,
   };
   const schemas = useCustomQuery({

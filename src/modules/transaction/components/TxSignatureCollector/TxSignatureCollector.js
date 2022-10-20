@@ -12,14 +12,18 @@ import EnterPasswordForm from 'src/modules/auth/components/EnterPasswordForm';
 import { getDeviceType } from '@wallet/utils/hwManager';
 import { useCurrentAccount } from '@account/hooks';
 import styles from './txSignatureCollector.css';
+import { joinModuleAndCommand } from '../../utils';
+import { MODULE_COMMANDS_NAME_MAP } from '../../configuration/moduleCommand';
 
+// eslint-disable-next-line max-statements
 const TxSignatureCollector = ({
   t,
   transactions,
   account,
   actionFunction,
   multisigTransactionSigned,
-  rawTx,
+  formProps,
+  transactionJSON,
   nextStep,
   prevStep,
   statusInfo,
@@ -33,28 +37,30 @@ const TxSignatureCollector = ({
   const deviceType = getDeviceType(account.hwInfo?.deviceModel);
   const dispatch = useDispatch();
   const [currentAccount] = useCurrentAccount();
+  const isTransactionAuthor = transactionJSON.senderPublicKey === currentAccount.metadata.pubkey;
+  const isAuthorAccountMultisignature = account.info.LSK.summary.isMultisignature;
+  // const isSignerAccountMultisignature = sender.data?.keys.numberOfSignatures > 0;
+  const moduleCommand = joinModuleAndCommand(transactionJSON);
+  const isRegisterMultisignature = moduleCommand === MODULE_COMMANDS_NAME_MAP.registerMultisignature;
 
   const txVerification = (privateKey = undefined, publicKey = undefined) => {
+    /**
+     * Non-multisignature account
+     *  - Transaction signature
+     *  - Transaction parameter signatures (multisignature registration)
+     * Multisignature account
+     *  - Signature from author and participants
+     */
+
+
     /**
      * All multisignature transactions get signed using a unique action
      * Therefore there's no need to pass the action function, instead the
      * sender account is required.
+     * CHECK IF SENDER ACCOUNT IS A MULTISIG
      */
-    if (sender) {
-      if (
-        signatureStatus === signatureCollectionStatus.fullySigned
-        || signatureStatus === signatureCollectionStatus.overSigned
-      ) {
-        // Skip the current member as all the required signature are collected
-        signatureSkipped({ rawTx });
-      } else {
-        multisigTransactionSigned({
-          rawTx,
-          sender,
-          privateKey,
-        });
-      }
-    } else {
+    // Transaction authored from sender account and current account is a non multisignature account
+    if (isTransactionAuthor && !isAuthorAccountMultisignature && !isRegisterMultisignature) {
       /**
        * The action function must be wrapped in dispatch
        * and passed via the tx Summary screen.
@@ -62,16 +68,35 @@ const TxSignatureCollector = ({
        * HW pending screen. For ordinary login we don't display
        * the illustration.
        */
-      actionFunction(
+      return actionFunction(
         {
-          ...rawTx,
+          ...formProps,
           selectedPriority,
           fees,
         },
+        transactionJSON,
         privateKey,
         publicKey,
       );
     }
+
+    console.log(signatureStatus, signatureSkipped, signatureCollectionStatus, isRegisterMultisignature)
+    return multisigTransactionSigned({
+      formProps,
+      transactionJSON,
+      sender,
+      privateKey,
+    });
+
+    // Transaction authored from other account and current account is a non multisignature account
+    // if (transactionJSON.senderPublicKey !== currentAccount.metadata.pubkey && !account.info.LSK.summary.isMultisignature) {
+    //   // Skip the current member as all the required signature are collected
+    //   return signatureSkipped({ formProps, transactionJSON, });
+    // }
+
+    // if (signatureStatus === signatureCollectionStatus.fullySigned || signatureStatus === signatureCollectionStatus.overSigned) {
+
+    // }
   };
 
   const onEnterPasswordSuccess = ({ privateKey }) => {
@@ -100,12 +125,12 @@ const TxSignatureCollector = ({
       if (!transactions.txSignatureError && hasSecondPass && !isDoubleSigned) {
         transactionDoubleSigned();
       } else if (!hasSecondPass || isDoubleSigned) {
-        nextStep({ rawTx, statusInfo, sender });
+        nextStep({ formProps, transactionJSON, statusInfo, sender });
       }
     }
 
     if (transactions.txSignatureError) {
-      nextStep({ rawTx, statusInfo, sender });
+      nextStep({ formProps, transactionJSON, statusInfo, sender });
     }
   }, [transactions.signedTransaction, transactions.txSignatureError]);
 

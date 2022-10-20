@@ -7,8 +7,8 @@ import { isEmpty } from 'src/utils/helpers';
 import { extractAddressFromPublicKey, extractPublicKey } from '@wallet/utils/account';
 
 const httpPaths = {
-  account: `${HTTP_PREFIX}/accounts`,
-  accounts: `${HTTP_PREFIX}/accounts`,
+  account: `${HTTP_PREFIX}/auth`,
+  accounts: `${HTTP_PREFIX}/auth`,
 };
 
 const wsMethods = {
@@ -75,12 +75,8 @@ export const getAccount = async ({
       params: normParams,
     });
 
-    if (response.data[0]) {
-      const account = { ...response.data[0] };
-      if (params.publicKey) {
-        account.summary.publicKey = params.publicKey;
-        account.summary.privateKey = params.privateKey;
-      }
+    if (response.data) {
+      const account = { keys: { ...response.data } };
       return account;
     }
   } catch (e) {

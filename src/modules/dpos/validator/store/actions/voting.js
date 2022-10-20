@@ -1,7 +1,7 @@
 import to from 'await-to-js';
 // import { tokenMap } from '@token/fungible/consts/tokens';
 import { selectActiveTokenAccount } from 'src/redux/selectors';
-import { createGenericTx } from '@transaction/api';
+import { signTransaction } from '@transaction/api';
 import { timerReset } from '@auth/store/action';
 import txActionTypes from '@transaction/store/actionTypes';
 import { getVotes } from '../../api';
@@ -69,15 +69,15 @@ export const voteEdited = (data) => async (dispatch) =>
  * @param {object} data.votes
  * @param {promise} API call response
  */
-export const votesSubmitted = (transactionObject, privateKey) => async (dispatch, getState) => {
+export const votesSubmitted = (formProps, transactionJSON, privateKey) => async (dispatch, getState) => {
   const state = getState();
   const activeWallet = selectActiveTokenAccount(state);
 
   const [error, tx] = await to(
     createGenericTx({
-      transactionObject,
+      transactionJSON,
       wallet: activeWallet,
-      schema: state.network.networks.LSK.moduleCommandSchemas[transactionObject.moduleCommand],
+      schema: state.network.networks.LSK.moduleCommandSchemas[formProps.moduleCommand],
       chainID: state.network.networks.LSK.chainID,
       privateKey,
     })
@@ -128,7 +128,11 @@ export const votesRetrieved = () => async (dispatch, getState) => {
  * @param {string} data.selectedFee
  * @returns {promise}
  */
-export const balanceUnlocked = (transactionObject, privateKey) => async (dispatch, getState) => {
+export const balanceUnlocked = (
+  formProps,
+  transactionJSON,
+  privateKey,
+) => async (dispatch, getState) => {
   //
   // Collect data
   //
@@ -139,10 +143,10 @@ export const balanceUnlocked = (transactionObject, privateKey) => async (dispatc
   // Create the transaction
   //
   const [error, tx] = await to(
-    createGenericTx({
-      transactionObject,
+    signTransaction({
+      transactionJSON,
       wallet: activeWallet,
-      schema: state.network.networks.LSK.moduleCommandSchemas[transactionObject.moduleCommand],
+      schema: state.network.networks.LSK.moduleCommandSchemas[formProps.moduleCommand],
       chainID: state.network.networks.LSK.chainID,
       privateKey,
     })

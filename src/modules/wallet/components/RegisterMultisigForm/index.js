@@ -100,8 +100,8 @@ const Form = ({ nextStep, prevState = {} }) => {
     setNumberOfSignatures(value);
   };
 
-  const onConfirm = (rawTx) => {
-    nextStep({ rawTx });
+  const onConfirm = (formProps, transactionJSON) => {
+    nextStep({ formProps, transactionJSON });
   };
 
   useEffect(() => {
@@ -123,22 +123,23 @@ const Form = ({ nextStep, prevState = {} }) => {
     [mandatoryKeys, optionalKeys, numberOfSignatures]
   );
 
-  const transaction = {
+  const multisignatureFormProps = {
     moduleCommand: MODULE_COMMANDS_NAME_MAP.registerMultisignature,
     isValid: feedback.error === 0,
     feedback: feedback.messages,
-    params: {
-      mandatoryKeys,
-      optionalKeys,
-      numberOfSignatures,
-      signatures: [],
-    },
+  };
+  const commandParams = {
+    mandatoryKeys,
+    optionalKeys,
+    numberOfSignatures,
+    signatures: [],
   };
 
   return (
     <section className={styles.wrapper}>
       <TxComposer
-        transaction={transaction}
+        formProps={multisignatureFormProps}
+        commandParams={commandParams}
         onConfirm={onConfirm}
         buttonTitle={t('Go to confirmation')}
       >

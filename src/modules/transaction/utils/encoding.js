@@ -96,21 +96,22 @@ export const encodeTransaction = (transaction, paramsSchema) => {
   return decodedTransaction;
 };
 
-export const fromTransactionJSON = (transaction, paramsSchema) => {
+export const fromTransactionJSON = (transactionJSON, paramsSchema) => {
   const tx = codec.fromJSON(baseTransactionSchema, {
-    ...transaction,
+    ...transactionJSON,
     params: '',
   });
+
   let params;
-  if (typeof transaction.params === 'string') {
-    params = paramsSchema ? codec.decode(paramsSchema, Buffer.from(transaction.params, 'hex')) : {};
+  if (typeof transactionJSON.params === 'string') {
+    params = paramsSchema ? codec.decode(paramsSchema, Buffer.from(transactionJSON.params, 'hex')) : {};
   } else {
-    params = paramsSchema ? codec.fromJSON(paramsSchema, transaction.params) : {};
+    params = paramsSchema ? codec.fromJSON(paramsSchema, transactionJSON.params) : {};
   }
 
   return {
     ...tx,
-    id: transaction.id ? Buffer.from(transaction.id, 'hex') : Buffer.alloc(0),
+    id: transactionJSON.id ? Buffer.from(transactionJSON.id, 'hex') : Buffer.alloc(0),
     params,
   };
 };

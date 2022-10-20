@@ -8,17 +8,19 @@ const Summary = ({
   prevStep,
   nextStep,
   token,
-  rawTx,
+  formProps,
+  transactionJSON,
   selectedPriority,
   fees,
   t,
 }) => {
-  const amount = fromRawLsk(rawTx.params.amount);
+  const amount = fromRawLsk(transactionJSON.params.amount);
   const onConfirmAction = {
     label: t('Send {{amount}} {{token}}', { amount, token }),
     onClick: () => {
       nextStep({
-        rawTx,
+        formProps,
+        transactionJSON,
         selectedPriority,
         actionFunction: tokensTransferred,
       });
@@ -28,7 +30,7 @@ const Summary = ({
     label: t('Go back'),
     onClick: () => {
       resetTransactionResult();
-      prevStep({ rawTx });
+      prevStep({ formProps });
     },
   };
 
@@ -37,7 +39,8 @@ const Summary = ({
       title={t('Transaction Summary')}
       confirmButton={onConfirmAction}
       cancelButton={onCancelAction}
-      rawTx={rawTx}
+      formProps={formProps}
+      transactionJSON={transactionJSON}
       selectedPriority={selectedPriority}
       fees={fees}
     />

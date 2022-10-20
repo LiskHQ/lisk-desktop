@@ -5,12 +5,13 @@ import { getTxAmount } from '@transaction/utils/transaction';
 import { MODULE_COMMANDS_NAME_MAP } from 'src/modules/transaction/configuration/moduleCommand';
 import DateTimeFromTimestamp from 'src/modules/common/components/timestamp';
 import WalletVisual from '@wallet/components/walletVisual';
+import { joinModuleAndCommand } from '@transaction/utils/moduleCommand';
 import Icon from 'src/theme/Icon';
 import Tooltip from 'src/theme/Tooltip';
 import { ROUND_LENGTH } from '@dpos/validator/consts';
 import TokenAmount from '@token/fungible/components/tokenAmount';
 import WalletVisualWithAddress from '@wallet/components/walletVisualWithAddress';
-import { truncateAddress, truncateTransactionID } from '@wallet/utils/account';
+import { truncateAddress, truncateTransactionID, extractAddressFromPublicKey } from '@wallet/utils/account';
 import Spinner from 'src/theme/Spinner';
 import routes from 'src/routes/routes';
 import { getModuleCommandTitle } from '@transaction/utils';
@@ -86,11 +87,13 @@ export const Recipient = () => {
 
 export const Counterpart = () => {
   const { data, host, avatarSize } = useContext(TransactionRowContext);
-
+  const moduleCommand = joinModuleAndCommand(data.module, data.command);
+  const address = extractAddressFromPublicKey(data.senderPublicKey);
+  
   // Show tx icon
   if (data.moduleCommand !== MODULE_COMMANDS_NAME_MAP.transfer && host) {
     return (
-      <TransactionTypeFigure moduleCommand={data.moduleCommand} address={data.sender.address} />
+      <TransactionTypeFigure moduleCommand={moduleCommand} address={address} />
     );
   }
   // Show recipient

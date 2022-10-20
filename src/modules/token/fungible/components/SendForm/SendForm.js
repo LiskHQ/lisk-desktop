@@ -91,10 +91,11 @@ const SendForm = (props) => {
     setMaxAmount(status.maxAmount);
   }, []);
 
-  const onConfirm = useCallback((rawTx, selectedPriority, fees) => {
+  const onConfirm = useCallback((formProps, transactionJSON, selectedPriority, fees) => {
     nextStep({
       selectedPriority,
-      rawTx,
+      formProps,
+      transactionJSON,
       fees,
     });
   }, []);
@@ -117,27 +118,40 @@ const SendForm = (props) => {
     [amount, recipient, reference, recipientChain, sendingChain]
   );
 
-  const transaction = {
+  const sendFormProps = {
     isValid,
     moduleCommand: MODULE_COMMANDS_NAME_MAP.transfer,
-    params: {
-      amount: toRawLsk(amount.value),
-      data: reference.value,
-      recipient: {
-        address: recipient.value,
-        title: recipient.title,
-      },
+    fields: {
+      sendingChain,
+      recipientChain,
       token,
+      recipient,
     },
-    sendingChain,
-    recipientChain,
   };
+
+  let commandParams = {
+    tokenID: token.tokenID,
+    amount: toRawLsk(amount.value),
+    recipientAddress: recipient.value,
+    data: reference.value,
+  };
+
+  if (sendingChain.chainID !== recipientChain.chainID) {
+    commandParams = {
+      ...commandParams,
+      receivingChainID: recipientChain.chainID,
+      // TODO: Replace the message fee constant from service endpoint
+      messageFee: 50000000
+    };
+  }
+
   return (
     <section className={styles.wrapper}>
       <TxComposer
         onComposed={onComposed}
         onConfirm={onConfirm}
-        transaction={transaction}
+        formProps={sendFormProps}
+        commandParams={commandParams}
         buttonTitle={t('Go to confirmation')}
       >
         <>
