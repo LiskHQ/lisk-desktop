@@ -63,7 +63,7 @@ describe('Reclaim balance screen', () => {
     useSelector.mockImplementation(
       jest.fn(() => ({
         ...mockNonMigrated,
-        token: [{ name: 'Lisk', symbol: 'LSK', availableBalance: 0 }],
+        token: [{ name: 'Lisk', symbol: 'LSK', availableBalance: '0' }],
       }))
     );
 
@@ -83,4 +83,17 @@ describe('Reclaim balance screen', () => {
       'rel=noopener noreferrer'
     );
   });
+
+  it('should have the first step checked if balance is above dust threshold', () => {
+    useSelector.mockImplementation(
+      jest.fn(() => ({
+        ...mockNonMigrated,
+        token: [{ name: 'Lisk', symbol: 'LSK', availableBalance: '100000000' }],
+      }))
+    );
+
+    const wrapper = mountWithRouterAndQueryClient(Reclaim, props, {});
+    expect(wrapper.find('li.step').at(0)).toHaveClassName('.check')
+    expect(wrapper.find('li.step').at(1)).toHaveClassName('.green')
+  })
 });
