@@ -1,7 +1,7 @@
 const blockchainApplicationsExplore = [
   {
     name: 'Test app',
-    chainID: 'aq02qkbb35u4jdq8szo3pnsq',
+    chainID: '00000001',
     state: 'active',
     apis: [{ rest: 'https://service.testappone.com', rpc: 'wss://service.testappone.com' }],
     address: 'lsk24cd35u4jdq8szo3pnsqe5dsxwrnazyqqqg5eu',

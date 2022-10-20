@@ -1,6 +1,5 @@
 import { useEffect } from 'react';
 
-// eslint-disable-next-line import/prefer-default-export
 export const useOutsideClick = (ref, callback) => {
   useEffect(() => {
     function handleClickOutside(event) {
@@ -14,6 +13,6 @@ export const useOutsideClick = (ref, callback) => {
     return () => {
       document.removeEventListener("mousedown", handleClickOutside);
     };
-    
+
   }, [ref]);
 }

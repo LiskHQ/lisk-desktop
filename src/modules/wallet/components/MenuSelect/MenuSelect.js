@@ -29,7 +29,7 @@ function MenuSelect({
     };
   }, []);
 
-  const selectedIndex = useMemo(() => children.reduce(
+  const selectedIndex = useMemo(() => (children ?? []).reduce(
     (selected, { props }, index) => (
       (select?.(selectedValue, props.value) || props.value === selectedValue)
         ? index

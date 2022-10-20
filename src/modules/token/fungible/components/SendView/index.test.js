@@ -1,5 +1,5 @@
 import { getTransactionBaseFees, getTransactionFee } from '@transaction/api';
-import { mockTokensBalance } from '@token/fungible/__fixtures__/mockTokens';
+import { mockTokensBalance, mockTokensSupported } from '@token/fungible/__fixtures__/mockTokens';
 import { mountWithRouterAndQueryClient } from 'src/utils/testHelpers';
 import mockManagedApplications from '@tests/fixtures/blockchainApplicationsManage';
 import mockSavedAccounts from '@tests/fixtures/accounts';
@@ -10,7 +10,7 @@ import {
 import { useCurrentAccount } from '@account/hooks';
 import wallets from '@tests/constants/wallets';
 import Send from './index';
-import { useTokensBalance } from '../../hooks/queries';
+import { useTokensBalance, useTokensSupported } from '../../hooks/queries';
 
 const mockSetCurrentApplication = jest.fn();
 const mockSetApplication = jest.fn();
@@ -30,7 +30,8 @@ useApplicationManagement.mockReturnValue({
 
 useCurrentAccount.mockReturnValue([mockSavedAccounts[0], mockSetAccount]);
 useCurrentApplication.mockReturnValue([mockCurrentApplication, mockSetCurrentApplication]);
-useTokensBalance.mockReturnValue({ data: mockTokensBalance, isLoading: false });
+useTokensBalance.mockReturnValue({ data: mockTokensBalance, isLoading: false,  isSuccess: true });
+useTokensSupported.mockReturnValue({ data: mockTokensSupported, isLoading: false, isSuccess: true });
 
 getTransactionBaseFees.mockResolvedValue({
   Low: 0,

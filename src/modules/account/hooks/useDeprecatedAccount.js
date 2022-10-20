@@ -8,7 +8,7 @@ import { useTokensBalance } from '@token/fungible/hooks/queries';
 import authActionTypes from '@auth/store/actionTypes';
 import { useCurrentAccount } from './useCurrentAccount';
 
-// eslint-disable-next-line import/prefer-default-export, max-statements, complexity
+// eslint-disable-next-line max-statements, complexity
 export const useDeprecatedAccount = () => {
   const [currentAccount] = useCurrentAccount();
   const dispatch = useDispatch();
@@ -118,7 +118,7 @@ export const useDeprecatedAccount = () => {
     data: unlocks,
     isLoading: isUnlocksLoading,
     isSuccess: isUnlocksSuccess,
-  } = useUnlocks({ config: { params: { address, limit: Infinity } } });
+  } = useUnlocks({ config: { params: { address, limit: 100 } } });
   useEffect(() => {
     if (!isUnlocksSuccess) {
       return;

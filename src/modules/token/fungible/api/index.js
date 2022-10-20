@@ -17,7 +17,6 @@ const httpPaths = {
  * @returns {Promise} Token list API call
  */
 
-// eslint-disable-next-line import/prefer-default-export
 export const getTokens = ({
   params, network, baseUrl,
 }) => http({
