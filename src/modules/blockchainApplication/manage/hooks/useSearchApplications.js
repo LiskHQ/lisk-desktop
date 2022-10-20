@@ -5,7 +5,6 @@ import { addHttp } from 'src/utils/login';
 import mockApplicationsExplore from '@tests/fixtures/blockchainApplicationsExplore';
 import { validateAppNode } from '../utils';
 
-// eslint-disable-next-line import/prefer-default-export
 export const useSearchApplications = () => {
   const [URL, setURL] = useState({
     isURL: false,

@@ -1,10 +1,11 @@
+import { useSelector } from 'react-redux';
 import { BLOCKCHAIN_APPS_META } from 'src/const/queries';
 import {
   API_VERSION,
 } from 'src/const/config';
-import { useCustomQuery } from 'src/modules/common/hooks';
 import { API_BASE_URL } from 'src/utils/api/constants';
-import { useSelector } from 'react-redux';
+import defaultClient from 'src/utils/api/client';
+import { useCustomInfiniteQuery } from 'src/modules/common/hooks';
 import { getNetworkName } from '@network/utils/getNetwork';
 
 /**
@@ -17,23 +18,23 @@ import { getNetworkName } from '@network/utils/getNetwork';
  *
  * @returns the query object
  */
-// eslint-disable-next-line import/prefer-default-export
-export const useBlockchainApplicationMeta = ({ config: customConfig = {}, options } = { }) => {
 
+export const useBlockchainApplicationMeta = ({ config: customConfig = {}, options, client = defaultClient, limit } = { }) => {
   const selectedNetwork = useSelector(state => state.network);
   const network = getNetworkName(selectedNetwork)
   const config = {
     baseURL: API_BASE_URL,
     url: `/api/${API_VERSION}/blockchain/apps/meta`,
     method: 'get',
-    event: 'get.blockchain.apps.meta',
     ...customConfig,
-    params: { ...(customConfig?.params || {}), network },
+    event: 'get.blockchain.apps.meta',
+    params: { limit, ...(customConfig?.params || {}), network },
   };
 
-  return useCustomQuery({
+  return useCustomInfiniteQuery({
     keys: [BLOCKCHAIN_APPS_META],
     config,
+    client,
     options,
   });
 };

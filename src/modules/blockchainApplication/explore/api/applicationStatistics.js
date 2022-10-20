@@ -14,7 +14,7 @@ const httpPaths = {
  *
  * @returns {Promise}
  */
-// eslint-disable-next-line import/prefer-default-export
+
 export const getStatistics = ({
   network,
   params = {},

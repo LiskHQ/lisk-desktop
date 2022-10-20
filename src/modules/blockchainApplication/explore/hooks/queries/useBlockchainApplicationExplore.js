@@ -1,13 +1,13 @@
 import { useMemo } from 'react';
 import { usePinBlockchainApplication } from 'src/modules/blockchainApplication/manage/hooks';
-import useApplicationsQuery from './useApplicationsQuery';
+import useApplications from './useApplications';
 
 /**
  * Hook that handle all the logic related to blockchain applications explorer.
  * @returns {Object} Available blockchain applications array.
  */
 export default function useBlockchainApplicationExplore() {
-  const applicationsQuery = useApplicationsQuery();
+  const applicationsQuery = useApplications();
 
   const { pins, checkPinByChainId } = usePinBlockchainApplication();
 

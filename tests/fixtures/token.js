@@ -1,4 +1,3 @@
-// eslint-disable-next-line import/prefer-default-export
 export const mockAppTokens = [
   {
     tokenID: '0000000000000000',

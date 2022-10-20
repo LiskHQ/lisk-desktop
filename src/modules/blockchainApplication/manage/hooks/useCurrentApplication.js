@@ -6,7 +6,6 @@ import { selectCurrentApplication } from '../store/selectors';
 import { setCurrentApplication } from '../store/action';
 import { useCurrentNode } from './useCurrentNode';
 
-// eslint-disable-next-line import/prefer-default-export
 export function useCurrentApplication() {
   const dispatch = useDispatch();
   const currentApplication = useSelector(selectCurrentApplication);

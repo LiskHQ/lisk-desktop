@@ -3,7 +3,6 @@ import { useSelector, useDispatch } from 'react-redux';
 import { selectCurrentNode } from '../store/selectors';
 import { setApplicationNode } from '../store/action';
 
-// eslint-disable-next-line import/prefer-default-export
 export const useCurrentNode = () => {
   const dispatch = useDispatch();
   const currentNode = useSelector(selectCurrentNode);

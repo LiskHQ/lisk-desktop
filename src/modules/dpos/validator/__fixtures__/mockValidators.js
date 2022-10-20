@@ -1,4 +1,3 @@
-// eslint-disable-next-line import/prefer-default-export
 export const mockValidators = {
   data: {
     generatorKey: '4f3034d6704e8a38098083695822a3da',

@@ -1,4 +1,3 @@
-// eslint-disable-next-line import/prefer-default-export
 export const mockNetworkStatus = {
   data: {
     version: '4.0.0-alpha.0',

@@ -4,7 +4,6 @@ import { createGenericTx } from '@transaction/api';
 import { selectActiveTokenAccount } from 'src/redux/selectors';
 import transactionActionTypes from '@transaction/store/actionTypes';
 
-// eslint-disable-next-line import/prefer-default-export
 export const delegateRegistered = (
   transactionObject,
   privateKey,

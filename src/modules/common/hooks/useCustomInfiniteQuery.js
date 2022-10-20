@@ -1,10 +1,6 @@
 /* istanbul ignore file */
 import { useInfiniteQuery } from '@tanstack/react-query';
-import {
-  METHOD,
-} from 'src/const/config';
 import defaultClient from 'src/utils/api/client';
-import { APPLICATION } from 'src/const/queries';
 import { useCurrentApplication } from '@blockchainApplication/manage/hooks';
 
 /**
@@ -21,7 +17,7 @@ import { useCurrentApplication } from '@blockchainApplication/manage/hooks';
  *
  * @returns the query object
  */
-// eslint-disable-next-line import/prefer-default-export
+
 export const useCustomInfiniteQuery = ({
   keys,
   config,
@@ -31,8 +27,8 @@ export const useCustomInfiniteQuery = ({
   const [{ chainID }] = useCurrentApplication();
 
   return useInfiniteQuery(
-    [chainID, config, APPLICATION, METHOD, ...keys],
-    async ({ pageParam }) => client[METHOD]({
+    [...keys, chainID, config],
+    async ({ pageParam }) => client.call({
       ...config,
       params: {
         ...(config.params || {}),

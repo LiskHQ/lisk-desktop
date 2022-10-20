@@ -1,7 +1,7 @@
 const blockchainApplicationsManage = [
   {
     name: 'Lisk',
-    chainID: 'aq02qkbb35u4jdq8szo3pnsq',
+    chainID: '00000001',
     state: 'active',
     serviceURLs: [{ rest: 'http://104.248.241.229:9901', rpc: 'ws://104.248.241.229:9901/rpc-v3' }],
     address: 'lsk24cd35u49jd8szo3pnsqe5dsxwrnazyqqqg5eu',

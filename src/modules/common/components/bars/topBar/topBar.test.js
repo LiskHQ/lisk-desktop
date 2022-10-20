@@ -1,7 +1,7 @@
 import React from 'react';
 import routes from 'src/routes/routes';
 import DialogHolder from 'src/theme/dialog/holder';
-import { mountWithRouter } from 'src/utils/testHelpers';
+import { mountWithRouterAndQueryClient } from 'src/utils/testHelpers';
 import mockSavedAccounts from '@tests/fixtures/accounts';
 import { useCurrentAccount } from 'src/modules/account/hooks';
 import TopBar from './topBar';
@@ -68,7 +68,7 @@ describe('TopBar', () => {
     location: { pathname: routes.dashboard.path, search: '' },
     history: {
       location: { pathname: routes.dashboard.path, search: '' },
-      replace: () => {},
+      replace: () => { },
       push: jest.fn(),
     },
     settingsUpdated: jest.fn(),
@@ -80,28 +80,28 @@ describe('TopBar', () => {
   });
 
   it('renders <TopBar /> component', () => {
-    const wrapper = mountWithRouter(TopBar, props, {
+    const wrapper = mountWithRouterAndQueryClient(TopBar, props, {
       pathname: routes.wallet.path,
     });
     expect(wrapper).toContainMatchingElement('.top-bar');
   });
 
   it('renders <TopBar /> component with user log in', () => {
-    const wrapper = mountWithRouter(TopBar, props, {
+    const wrapper = mountWithRouterAndQueryClient(TopBar, props, {
       pathname: routes.wallet.path,
     });
     expect(wrapper).not.toContainMatchingElement('.signIn');
   });
 
   it('renders <AccountManagementDropdown /> component if current account exists', () => {
-    const wrapper = mountWithRouter(TopBar, props, {
+    const wrapper = mountWithRouterAndQueryClient(TopBar, props, {
       pathname: routes.wallet.path,
     });
     expect(wrapper).toContainMatchingElement('.account-management-dropdown');
   });
 
   it('renders <AccountManagementDropdown /> component if current account exists and updates background on click', () => {
-    const wrapper = mountWithRouter(TopBar, props, {
+    const wrapper = mountWithRouterAndQueryClient(TopBar, props, {
       pathname: routes.wallet.path,
     });
     expect(wrapper).toContainMatchingElement('.account-management-dropdown');
@@ -113,7 +113,7 @@ describe('TopBar', () => {
 
   it('does not render <AccountManagementDropdown /> component if current account does not exist', () => {
     useCurrentAccount.mockImplementation(() => [{}]);
-    const wrapper = mountWithRouter(TopBar, props, {
+    const wrapper = mountWithRouterAndQueryClient(TopBar, props, {
       pathname: routes.wallet.path,
     });
     expect(wrapper).not.toContainMatchingElement('.account-management-dropdown');
@@ -124,82 +124,16 @@ describe('TopBar', () => {
       ...props,
       account: {},
     };
-    mountWithRouter(TopBar, logoutProps, {
+    mountWithRouterAndQueryClient(TopBar, logoutProps, {
       pathname: routes.wallet.path,
     });
   });
 
   it('renders the search component when user do click in the search icon', () => {
-    const wrapper = mountWithRouter(TopBar, props, {
+    const wrapper = mountWithRouterAndQueryClient(TopBar, props, {
       pathname: routes.wallet.path,
     });
-    expect(wrapper).toContainMatchingElement('img.search-icon');
     expect(wrapper.find('div.searchDropdown')).not.toHaveClassName('show');
   });
 
-  it('renders searched value in the search container when the url contains a relevant search param', () => {
-    const wrapper = mountWithRouter(
-      TopBar,
-      {
-        ...props,
-        history: {
-          location: { pathname: routes.block.path, search: '?id=1L' },
-        },
-      },
-      { pathname: routes.block.path }
-    );
-    expect(wrapper).toContainMatchingElement('img.search-icon');
-    expect(wrapper).toContainMatchingElement('span.searchedValue');
-    expect(wrapper.find('div.searchDropdown')).not.toHaveClassName('show');
-  });
-
-  it('renders searched value in the search container with WalletVisual when the url contains an account address', () => {
-    const wrapper = mountWithRouter(
-      TopBar,
-      {
-        ...props,
-        history: {
-          location: { pathname: routes.explorer.path, search: '?address=1L' },
-        },
-      },
-      { pathname: routes.explorer.path }
-    );
-    expect(wrapper).toContainMatchingElement('img.search-icon');
-    expect(wrapper).toContainMatchingElement('span.searchedValue');
-    expect(wrapper).toContainMatchingElement('WalletVisual');
-    expect(wrapper.find('div.searchDropdown')).not.toHaveClassName('show');
-  });
-
-  it('does not render searched value in the search container when the url contains an irrelevant search param ', () => {
-    const wrapper = mountWithRouter(
-      TopBar,
-      {
-        ...props,
-        history: {
-          location: {
-            pathname: routes.explorer.path,
-            search: '?somerandomparam=1L',
-          },
-        },
-      },
-      { pathname: routes.explorer.path }
-    );
-    expect(wrapper).toContainMatchingElement('img.search-icon');
-    expect(wrapper).not.toContainMatchingElement('span.searchedValue');
-    expect(wrapper).not.toContainMatchingElement('WalletVisual');
-    expect(wrapper.find('div.searchDropdown')).not.toHaveClassName('show');
-  });
-
-  it('Should not navigate on Initialization screen', () => {
-    const wrapper = mountWithRouter(TopBar, {
-      ...props,
-      history: {
-        ...props.history,
-        location: { pathname: routes.reclaim.path },
-      },
-    });
-    wrapper.find('.bookmark-list-toggle').first().simulate('click');
-    wrapper.find('.search-toggle').first().simulate('click');
-    expect(props.history.push).not.toHaveBeenCalled();
-  });
 });

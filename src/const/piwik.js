@@ -1,4 +1,3 @@
-// eslint-disable-next-line import/prefer-default-export
 export const piwikOptions = {
   URL: 'https://matomo.lisk.com',
   SITE_ID: 1,
