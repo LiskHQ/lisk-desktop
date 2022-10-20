@@ -110,8 +110,7 @@ describe('VoteForm', () => {
 
   it('Shows an error if trying to vote for more than 10 delegates', () => {
     const wrapper = shallow(<Form {...props} votes={elevenVotes} />);
-    // const wrapper = mountWithRouter(Form, { ...props, votes: elevenVotes });
-    expect(wrapper.find('.available-votes-num').text()).toBe('2/');
+    expect(wrapper.find('.available-votes-num').text()).toBe('-1/');
     expect(wrapper.find('.feedback').text()).toBe(
       'These votes in addition to your current votes will add up to 11, exceeding the account limit of 10.'
     );
@@ -123,7 +122,7 @@ describe('VoteForm', () => {
     act(() => {
       wrapper.update();
     });
-    expect(wrapper.find('.available-votes-num').text()).toBe('10/');
+    expect(wrapper.find('.available-votes-num').text()).toBe('8/');
     expect(wrapper.find('.feedback').text()).toBe(
       'The minimum required balance for this action is {{minRequiredBalance}} {{token}}'
     );
@@ -138,7 +137,7 @@ describe('VoteForm', () => {
     act(() => {
       wrapper.update();
     });
-    expect(wrapper.find('.available-votes-num').text()).toBe('10/');
+    expect(wrapper.find('.available-votes-num').text()).toBe('8/');
     expect(wrapper.find('.feedback').at(0).text()).toBe(
       'The vote amounts are too high. You should keep 0.05 LSK available in your account.'
     );
