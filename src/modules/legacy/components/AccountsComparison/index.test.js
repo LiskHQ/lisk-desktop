@@ -4,7 +4,7 @@ import { mountWithRouterAndQueryClient } from 'src/utils/testHelpers';
 import { addSearchParamsToUrl } from 'src/utils/searchParams';
 import wallets from '@tests/constants/wallets';
 import mockSavedAccounts from '@tests/fixtures/accounts';
-import { tokensBalance as mockTokens } from '@tests/constants/tokens';
+import { tokensBalance as mockTokens } from '@token/fungible/__fixtures__';
 import Reclaim from './index';
 import styles from './reclaim.css';
 
