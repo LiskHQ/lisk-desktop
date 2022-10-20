@@ -11,10 +11,10 @@
     border-top: 1px var(--color-platinum) solid;
   }
 
-  & > div {
+  & > div:first-child {
     display: flex;
     flex-direction: row;
-    justify-content: flex-end;
+    justify-content: flex-start;
     align-items: center;
     color: var(--color-content-light);
     font-size: var(--paragraph-font-size-s);
@@ -31,19 +31,25 @@
   flex-direction: row;
   align-items: center;
   justify-content: flex-end;
-  column-gap: 10px;
+  column-gap: 14px;
   width: 100%;
 
   & > button {
-    padding: 0px !important;
-    min-width: 48px !important;
-    max-width: 48px !important;
+    max-width: 30px;
+    min-width: 30px;
   }
-  
+
+  & > div,
   & > button {
     padding: 0px !important;
-    width: 48px;
-    height: 48px;
+    width: 30px;
+    height: 30px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+    border: none;
+    background-color: transparent;
   }
 
   & > p:first-child {
@@ -55,7 +61,7 @@
   }
 
   & img {
-    width: 10px;
+    width: 20px;
   }
 
   & > p ~ div {
@@ -66,7 +72,7 @@
   }
 }
 
-.token {
+.addressWrapper {
   padding: 20px 22px 20px 0px;
   display: flex;
   flex-direction: row;
@@ -74,26 +80,16 @@
   color: var(--color-content-light);
   align-items: center;
 
-  & > img:first-child {
-    width: 40px;
-    height: 40px;
-    border-radius: 50%;
+  & p {
+    @mixin delegateName;
+
+    margin: 0px;
   }
 
-  & > img:first-child ~ div {
-    flex: 1;
+  & p ~ span {
+    @mixin contentLarge;
 
-    & > p {
-      @mixin headingSmall;
-
-      margin: 0px;
-    }
-
-    & > p ~ span {
-      @mixin contentSmall;
-
-      color: var(--color-slate-gray);
-    }
+    color: var(--color-slate-gray);
   }
 }
 

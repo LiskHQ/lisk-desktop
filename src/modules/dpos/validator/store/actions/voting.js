@@ -43,7 +43,8 @@ export const votesConfirmed = () => ({
  * @param {String} data.voteAmount - (New) vote amount in Beddows
  * @returns {Object} Pure action object
  */
-export const voteEdited = (data) => async (dispatch) => dispatch({
+export const voteEdited = (data) => async (dispatch) =>
+  dispatch({
     type: actionTypes.voteEdited,
     data,
   });
@@ -58,36 +59,34 @@ export const voteEdited = (data) => async (dispatch) => dispatch({
  * @param {object} data.votes
  * @param {promise} API call response
  */
-export const votesSubmitted = (
-  transactionObject,
-  privateKey,
-) =>
-  async (dispatch, getState) => {
-    const state = getState();
-    const activeWallet = selectActiveTokenAccount(state);
+export const votesSubmitted = (transactionObject, privateKey) => async (dispatch, getState) => {
+  const state = getState();
+  const activeWallet = selectActiveTokenAccount(state);
 
-    const [error, tx] = await to(createGenericTx({
+  const [error, tx] = await to(
+    createGenericTx({
       transactionObject,
       wallet: activeWallet,
       schema: state.network.networks.LSK.moduleCommandSchemas[transactionObject.moduleCommand],
       chainID: state.network.networks.LSK.chainID,
       privateKey,
-    }));
+    })
+  );
 
-    if (error) {
-      dispatch({
-        type: txActionTypes.transactionSignError,
-        data: error,
-      });
-    } else {
-      dispatch({ type: actionTypes.votesSubmitted });
-      dispatch(timerReset());
-      dispatch({
-        type: txActionTypes.transactionCreatedSuccess,
-        data: tx,
-      });
-    }
-  };
+  if (error) {
+    dispatch({
+      type: txActionTypes.transactionSignError,
+      data: error,
+    });
+  } else {
+    dispatch({ type: actionTypes.votesSubmitted });
+    dispatch(timerReset());
+    dispatch({
+      type: txActionTypes.transactionCreatedSuccess,
+      data: tx,
+    });
+  }
+};
 
 /**
  * Fetches the list of votes of the host wallet.
@@ -118,10 +117,7 @@ export const votesRetrieved = () => async (dispatch, getState) => {
  * @param {string} data.selectedFee
  * @returns {promise}
  */
-export const balanceUnlocked = (
-  transactionObject,
-  privateKey,
-) => async (dispatch, getState) => {
+export const balanceUnlocked = (transactionObject, privateKey) => async (dispatch, getState) => {
   //
   // Collect data
   //
@@ -138,21 +134,21 @@ export const balanceUnlocked = (
       schema: state.network.networks.LSK.moduleCommandSchemas[transactionObject.moduleCommand],
       chainID: state.network.networks.LSK.chainID,
       privateKey,
-    }),
+    })
   );
 
-    //
-    // Dispatch corresponding action
-    //
-    if (!error) {
-      dispatch({
-        type: txActionTypes.transactionCreatedSuccess,
-        data: tx,
-      });
-    } else {
-      dispatch({
-        type: txActionTypes.transactionSignError,
-        data: error,
-      });
-    }
-  };
+  //
+  // Dispatch corresponding action
+  //
+  if (!error) {
+    dispatch({
+      type: txActionTypes.transactionCreatedSuccess,
+      data: tx,
+    });
+  } else {
+    dispatch({
+      type: txActionTypes.transactionSignError,
+      data: error,
+    });
+  }
+};

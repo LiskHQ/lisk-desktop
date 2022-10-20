@@ -64,6 +64,12 @@
   border-radius: 10px;
   background-color: var(--color-votes-available);
   color: var(--color-slate-gray);
+  display: flex;
+
+  & > img {
+    width: 17px;
+    margin-right: 12px;
+  }
 
   & > span {
     color: var(--color-content-light);

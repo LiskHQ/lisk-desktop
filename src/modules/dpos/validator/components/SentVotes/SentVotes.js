@@ -10,10 +10,10 @@ import { QueryTable } from 'src/theme/QueryTable';
 import BoxHeader from 'src/theme/box/header';
 import { selectSearchParamValue } from 'src/utils/searchParams';
 import { useCurrentAccount } from '@account/hooks';
-// import Icon from 'src/theme/Icon';
+import Icon from 'src/theme/Icon';
 import styles from './SentVotes.css';
 import header from './tableHeaderMap';
-import SentVotesRow from '../SentVoteRow';
+import SentVotesRow from '../SentVotesRow';
 import { useSentVotes } from '../../hooks/queries';
 
 const SentVotes = ({ history }) => {
@@ -36,10 +36,11 @@ const SentVotes = ({ history }) => {
         <Heading title={t('Votes')}>
           <div className={styles.rightHeaderSection}>
             <div className={styles.votesCountBadge}>
-              <span>{votingAvailable}</span>/10 votes available in your account
+              <Icon name="votingQueueActive" /> <span>{votingAvailable}</span>
+              {t('/10 votes available in your account')}
             </div>
             <div className={styles.actionButtons}>
-              <DialogLink component="send">
+              <DialogLink component="lockedBalance">
                 <PrimaryButton>{t('Available to unlock')}</PrimaryButton>
               </DialogLink>
             </div>

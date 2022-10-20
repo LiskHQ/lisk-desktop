@@ -16,7 +16,7 @@ import { useCurrentAccount } from '@account/hooks';
 import Icon from 'src/theme/Icon';
 import styles from './AllTokens.css';
 import header from './tableHeaderMap';
-import TokenRow from '../SentVoteRow';
+import TokenRow from '../SentVotesRow';
 
 const AllTokens = ({ history }) => {
   const searchAddress = selectSearchParamValue(history.location.search, 'address');

@@ -3,7 +3,7 @@ import { fromRawLsk } from 'src/modules/token/fungible/utils/lsk';
 import styles from './SentVotesRow.css';
 import { DelegateWalletVisual, Balance, Actions } from './components';
 
-const SentVoteRow = ({ data: delegate }) => {
+const SentVoteRow = ({ data: delegate, voteEdited }) => {
   const {
     delegateAddress,
     amount,
@@ -17,7 +17,7 @@ const SentVoteRow = ({ data: delegate }) => {
         <Balance amount={fromRawLsk(amount)} />
         <Balance amount={fromRawLsk(amount)} />
         <Balance amount={fromRawLsk(amount)} />
-        <Actions address={delegateAddress} />
+        <Actions address={delegateAddress} voteEdited={voteEdited} />
       </div>
     </div>
   );
