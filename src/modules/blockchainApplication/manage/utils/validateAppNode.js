@@ -1,6 +1,5 @@
 import { getApplicationConfig } from '../api';
 
-// eslint-disable-next-line import/prefer-default-export
 export const validateAppNode = async (serviceUrl) => {
   try {
     const response = await getApplicationConfig({ serviceUrl });

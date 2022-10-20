@@ -14,7 +14,7 @@ import { useCustomQuery } from 'src/modules/common/hooks/useCustomQuery';
  *
  * @returns the query object
  */
-// eslint-disable-next-line import/prefer-default-export
+
 export const useNetworkStatistics = ({ config: customConfig = {}, options } = { }) => {
   const config = {
     url: `/api/${API_VERSION}/network/statistics`,

@@ -1,6 +1,6 @@
 export const tokensBalance = [
   {
-    tokenID: '2ba563cf98003d',
+    tokenID: '0000000100000000',
     name: 'Lisk',
     symbol: 'LSK',
     availableBalance: '5000000',
@@ -63,7 +63,7 @@ export const tokensBalance = [
 
 export const tokensSupported = [
   {
-    tokenID: '2ba563cf98003d',
+    tokenID: '0000000100000000',
   },
   {
     tokenID: '6fd163bd15997d',

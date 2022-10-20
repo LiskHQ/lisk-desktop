@@ -30,7 +30,13 @@ if (!PRODUCTION) {
   const whyDidYouRender = require('@welldone-software/why-did-you-render');
   whyDidYouRender(React);
 }
-const queryClient = new QueryClient();
+const queryClient = new QueryClient({
+  defaultOptions: {
+    queries: {
+      refetchOnWindowFocus: false,
+    },
+  },
+});
 const rootElement = document.getElementById('app');
 
 const renderWithRouter = Component => (

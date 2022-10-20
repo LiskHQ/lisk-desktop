@@ -5,7 +5,6 @@ import { useCustomQuery } from "src/modules/common/hooks"
 import { validateAddress } from "src/utils/validators";
 
 export const useSearch = (search = '') => {
-
   const config = {
     method: 'get',
   };
