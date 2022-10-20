@@ -1,9 +1,4 @@
 export default {
-  // addAccount: {
-  //   path: '/add-account',
-  //   isPrivate: false,
-  //   forbiddenTokens: [],
-  // },
   addAccountBySecretRecovery: {
     path: '/account/add/secret-recovery',
     isPrivate: false,

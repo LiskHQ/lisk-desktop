@@ -34,9 +34,13 @@ const CustomRoute = ({ path, exact, isPrivate, forbiddenTokens, component, t, hi
   }
 
   if (isPrivate && !isAuthenticated) {
+    // @todo: Fix in #4537
     return (
       <Redirect
-        to={{pathname: `${routes.manageAccounts.path}`, search: ''}}
+        to={`${routes.login.path}?referrer=${path.replace(/\/(send|vote)/, '')}&${search.replace(
+          /^\?/,
+          ''
+        )}`}
       />
     );
   }
