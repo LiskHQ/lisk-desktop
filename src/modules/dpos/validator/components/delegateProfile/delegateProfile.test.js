@@ -53,7 +53,7 @@ describe('Delegate Profile', () => {
     );
 
     expect(screen.getByText('My delegate profile')).toBeTruthy();
-    expect(screen.getByText('Edit vote')).toBeTruthy();
+    expect(screen.getByText('Vote delegate')).toBeTruthy();
     expect(screen.getByText('Details')).toBeTruthy();
     expect(screen.getByText('Performance')).toBeTruthy();
     expect(screen.getByText('Voters')).toBeTruthy();
