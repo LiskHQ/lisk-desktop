@@ -1,7 +1,6 @@
 import React, { useMemo } from 'react';
 import { useTranslation } from 'react-i18next';
 import Heading from 'src/modules/common/components/Heading';
-
 import DialogLink from 'src/theme/dialog/link';
 import Box from 'src/theme/box';
 import { PrimaryButton } from 'src/theme/buttons';
@@ -20,7 +19,6 @@ import { useSentVotes } from '../../hooks/queries';
 // @Todo this is just a place holder pending when dpos constants are integrated by useDposContants hook
 const dposTokenId = '0'.repeat(16);
 
-// eslint-disable-next-line max-statements
 const SentVotes = ({ history }) => {
   const { t } = useTranslation();
   const searchAddress = selectSearchParamValue(history.location.search, 'address');
@@ -29,10 +27,9 @@ const SentVotes = ({ history }) => {
       metadata: { address: currentAddress },
     },
   ] = useCurrentAccount();
+
   const address = useMemo(() => searchAddress || currentAddress, [searchAddress, currentAddress]);
   const queryParam = { config: { params: { address } } };
-
-
   const { data: tokens } = useTokensBalance({ config: { params: { tokenID: dposTokenId } } });
   const dposToken = useMemo(() => tokens?.data?.[0] || {}, [tokens]);
 
@@ -45,8 +42,8 @@ const SentVotes = ({ history }) => {
         <Heading title={t('Votes')}>
           <div className={styles.rightHeaderSection}>
             <div className={styles.votesCountBadge}>
-              <Icon name="votingQueueActive" /> <span>{votingAvailable}</span>
-              {t('/10 votes available in your account')}
+              <Icon name="votingQueueActive" /><span>{votingAvailable}</span>
+              /10 {t('votes available in your account')}
             </div>
             <div className={styles.actionButtons}>
               <DialogLink component="lockedBalance">

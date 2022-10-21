@@ -17,7 +17,6 @@ jest.mock('@account/hooks', () => ({
 }));
 
 jest.mock('@token/fungible/hooks/queries');
-jest.mock('@account/hooks');
 jest.mock('src/modules/common/hooks');
 jest.mock('../../hooks/queries');
 
