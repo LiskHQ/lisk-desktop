@@ -7,20 +7,26 @@ import actionTypes from '../actions/actionTypes';
  * @param {Object} action
  */
 const voting = (state = {}, action) => {
+  const clonedState = {...state};
+
   switch (action.type) {
     case actionTypes.votesRetrieved: {
       if (action.data.account.votesUsed) {
-        return action.data.votes
-          .reduce((votesDict, delegate) => {
-            votesDict[delegate.address] = {
-              confirmed: Number(delegate.amount),
-              unconfirmed: Number(delegate.amount),
-              username: delegate.username,
-            };
-            return votesDict;
-          }, {});
+        const voteMapInState = state;
+        action.data.votes.forEach(({ delegateAddress, amount, name }) => {
+          voteMapInState[delegateAddress] = {
+            confirmed: +amount,
+            unconfirmed: +state[delegateAddress]?.unconfirmed || +amount,
+            username: name,
+          };
+
+          return voteMapInState;
+        });
+
+        return voteMapInState;
       }
-      return {};
+
+      return state;
     }
     case actionTypes.voteEdited:
       return {
@@ -34,11 +40,9 @@ const voting = (state = {}, action) => {
           else if (state[vote.address]) unconfirmed = state[vote.address].unconfirmed;
 
           mergedVotes[vote.address] = {
-            confirmed: state[vote.address]
-              ? state[vote.address].confirmed : 0,
             unconfirmed,
-            username: state[vote.address] && state[vote.address].username
-              ? state[vote.address].username : vote.username,
+            confirmed: state[vote.address] ? state[vote.address].confirmed : 0,
+            username: state[vote.address]?.username || vote.username,
           };
           return mergedVotes;
         }, {}),
@@ -50,7 +54,7 @@ const voting = (state = {}, action) => {
      */
     case actionTypes.votesCleared:
       return Object.keys(state)
-        .filter(address => state[address].confirmed)
+        .filter((address) => state[address].confirmed)
         .reduce((votesDict, address) => {
           votesDict[address] = {
             confirmed: state[address].confirmed,
@@ -67,7 +71,7 @@ const voting = (state = {}, action) => {
      */
     case actionTypes.votesConfirmed:
       return Object.keys(state)
-        .filter(address => state[address].unconfirmed)
+        .filter((address) => state[address].unconfirmed)
         .reduce((votesDict, address) => {
           votesDict[address] = {
             ...state[address],
@@ -83,10 +87,8 @@ const voting = (state = {}, action) => {
      */
     case actionTypes.votesSubmitted:
       return Object.keys(state).reduce((votesDict, address) => {
-        const {
-          confirmed, unconfirmed, pending,
-        } = state[address];
-        const nextPendingStatus = pending || (confirmed !== unconfirmed);
+        const { confirmed, unconfirmed, pending } = state[address];
+        const nextPendingStatus = pending || confirmed !== unconfirmed;
 
         votesDict[address] = {
           ...state[address],
@@ -95,6 +97,12 @@ const voting = (state = {}, action) => {
         return votesDict;
       }, {});
 
+    /**
+     * This action is used to discard a vote from the voting queue
+     */
+    case actionTypes.voteDiscarded:
+      delete clonedState[action.data.address]
+      return clonedState
     /**
      * Resets the vote dictionary after the user signs out.
      */

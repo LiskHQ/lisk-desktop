@@ -7,7 +7,16 @@ import { truncateAddress } from '@wallet/utils/account';
 import * as hwManager from '@transaction/utils/hwManager';
 import accounts from '@tests/constants/wallets';
 import flushPromises from '@tests/unit-test-utils/flushPromises';
+import { mockAuth } from 'src/modules/auth/__fixtures__';
+import { useAuth } from 'src/modules/auth/hooks/queries';
+import mockSavedAccounts from '@tests/fixtures/accounts';
 import Summary from '.';
+
+const mockedCurrentAccount = mockSavedAccounts[0];
+jest.mock('@auth/hooks/queries');
+jest.mock('@account/hooks', () => ({
+  useCurrentAccount: jest.fn(() => [mockedCurrentAccount, jest.fn()]),
+}));
 
 jest.mock('@transaction/hooks/useTransactionFeeCalculation');
 jest.mock('@transaction/api');
@@ -52,6 +61,8 @@ describe('Reclaim balance Summary', () => {
     balanceReclaimed: jest.fn(),
     selectedPriority: { title: 'Normal', value: 1 },
   };
+
+  useAuth.mockReturnValue({ data: mockAuth });
 
   it('should render summary component', () => {
     // Arrange
