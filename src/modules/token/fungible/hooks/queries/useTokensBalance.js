@@ -3,6 +3,9 @@ import { TOKENS_BALANCE } from 'src/const/queries';
 import { LIMIT as limit, API_VERSION } from 'src/const/config';
 import { useCustomInfiniteQuery } from 'src/modules/common/hooks';
 import { useCurrentAccount } from '@account/hooks';
+import { useAppsMetaTokensConfig } from '@token/fungible/hooks/queries/useAppsMetaTokens';
+import { addTokensMetaData } from '@token/fungible/utils/addTokensMetaData';
+import defaultClient from 'src/utils/api/client';
 
 /**
  * Creates a custom hook for Token balance list queries
@@ -17,17 +20,33 @@ import { useCurrentAccount } from '@account/hooks';
  *
  * @returns the query object
  */
-// eslint-disable-next-line import/prefer-default-export
-export const useTokensBalance = ({ config: customConfig = {}, options, client } = {}) => {
+
+export const useTokensBalance = ({
+  config: customConfig = {},
+  options,
+  client = defaultClient,
+} = {}) => {
   const [currentAccount] = useCurrentAccount();
   const { address } = currentAccount.metadata;
+  const createMetaConfig = useAppsMetaTokensConfig();
+  const transformToken = addTokensMetaData({createMetaConfig, client});
+  const transformResult = async (res) => {
+    const tokens = await transformToken(res.data)
+    return {
+      ...res,
+      data: tokens
+    }
+  }
+
   const config = {
     url: `/api/${API_VERSION}/tokens`,
     method: 'get',
     event: 'get.tokens',
+    transformResult,
     ...customConfig,
     params: { limit, address, ...(customConfig?.params || {}) },
   };
+
   return useCustomInfiniteQuery({
     keys: [TOKENS_BALANCE],
     config,

@@ -28,40 +28,29 @@ describe('SearchBarWallets', () => {
     const newProps = { ...props };
     newProps.wallets = [
       {
-        summary: {
-          address: 'lskdwsyfmcko6mcd357446yatromr9vzgu7eb8y99',
-          balance: '120',
-          isDelegate: true,
-        },
-        dpos: {
-          delegate: {
-            rank: 34,
-            username: 'genesis_51',
-          },
-        },
+        address: 'lskdwsyfmcko6mcd357446yatromr9vzgu7eb8y99',
+        balance: '120',
+        isDelegate: true,
+        name: 'genesis_51',
+        rank: 34,
       },
     ];
     wrapper = mount(<SearchBarWallets {...newProps} />);
     expect(wrapper).toContainMatchingElement('.accounts');
     expect(wrapper).toContainMatchingElement('.accounts-header');
     expect(wrapper).toContainMatchingElement('.account-content');
-    expect(wrapper).toContainMatchingElement('.tag');
   });
 
   it('should render properly with accounts data', () => {
     const newProps = { ...props };
     newProps.wallets = [
       {
-        summary: {
-          address: 'lskdwsyfmcko6mcd357446yatromr9vzgu7eb8y99',
-          balance: '120',
-        },
+        address: 'lskdwsyfmcko6mcd357446yatromr9vzgu7eb8y99',
+        balance: '120',
       },
       {
-        summary: {
-          address: 'lskyau2yy4993jkbd7kxcsfsrarac8macbbs8saad',
-          balance: '110',
-        },
+        address: 'lskyau2yy4993jkbd7kxcsfsrarac8macbbs8saad',
+        balance: '110',
       },
     ];
     wrapper = mount(<SearchBarWallets {...newProps} />);
@@ -76,10 +65,8 @@ describe('SearchBarWallets', () => {
     const newProps = { ...props };
     newProps.wallets = [
       {
-        summary: {
-          address: 'lskdwsyfmcko6mcd357446yatromr9vzgu7eb8y99',
-          balance: '120',
-        },
+        address: 'lskdwsyfmcko6mcd357446yatromr9vzgu7eb8y99',
+        balance: '120',
       },
     ];
     wrapper = mount(<SearchBarWallets {...newProps} />);

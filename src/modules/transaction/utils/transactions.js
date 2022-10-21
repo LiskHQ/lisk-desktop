@@ -15,7 +15,6 @@ import {
   fromTransactionJSON,
 } from './encoding';
 
-// eslint-disable-next-line import/prefer-default-export
 export class Transaction {
   _paramsSchema = null;
 

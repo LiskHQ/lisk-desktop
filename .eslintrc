@@ -52,6 +52,7 @@
   },
   "rules": {
     "arrow-parens": "off",
+    "import/prefer-default-export": "off",
     "react/jsx-props-no-spreading": "off",
     "jsx-a11y/control-has-associated-label": "off",
     "import/no-cycle": "off",

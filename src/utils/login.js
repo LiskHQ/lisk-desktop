@@ -24,7 +24,7 @@ export const addHttp = (url) => {
   }
   return url;
 };
-// eslint-disable-next-line import/prefer-default-export
+
 export const validateUrl = (value) => {
   let url;
   let addressValidity = '';

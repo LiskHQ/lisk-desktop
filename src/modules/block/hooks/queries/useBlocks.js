@@ -25,7 +25,7 @@ import client from 'src/utils/api/client';
  *
  * @returns the query object
  */
-// eslint-disable-next-line import/prefer-default-export
+
 export const useBlocks = ({ config: customConfig = {}, options } = { }) => {
   const queryClient = useQueryClient();
   const [hasUpdate, setHasUpdate] = useState(false);

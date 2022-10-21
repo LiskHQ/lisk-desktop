@@ -3,7 +3,6 @@ import { PrimaryButton } from 'src/theme/buttons';
 import Icon from 'src/theme/Icon';
 import styles from './styles.css';
 
-// eslint-disable-next-line import/prefer-default-export
 export const LoadNewButton = ({
   handleClick,
   buttonClassName,

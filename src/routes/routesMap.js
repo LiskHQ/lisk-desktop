@@ -26,7 +26,6 @@ import EditVote from '@dpos/validator/manager/editVoteManager';
 import VotingQueue from '@dpos/validator/manager/votingQueueManager';
 import DeviceDisconnect from 'src/modules/common/components/deviceDisconnectDialog';
 import NewReleaseDialog from '@update/detail/info/newReleaseDialog';
-import SearchBar from '@search/components/SearchBar';
 import ReclaimBalance from '@legacy/manager/reclaimBalance';
 import ReclaimBalanceModal from '@legacy/manager/reclaimBalanceModal';
 import RegisterMultisig from '@wallet/manager/registerMultisigManager';
@@ -79,7 +78,6 @@ export default {
   signMessage: SignMessage,
   verifyMessage: VerifyMessage,
   registerDelegate: RegisterDelegate,
-  search: SearchBar,
   transactionDetails: TransactionDetails,
   newRelease: NewReleaseDialog,
   request: Request,
