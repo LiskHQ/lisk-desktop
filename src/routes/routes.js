@@ -1,9 +1,4 @@
 export default {
-  addAccount: {
-    path: '/add-account',
-    isPrivate: false,
-    forbiddenTokens: [],
-  },
   addAccountBySecretRecovery: {
     path: '/account/add/secret-recovery',
     isPrivate: false,
@@ -59,13 +54,13 @@ export default {
     isPrivate: false,
     forbiddenTokens: [],
   },
-  login: {
-    path: '/login',
-    isPrivate: false,
-    isSigninFlow: true,
-    exact: true,
-    forbiddenTokens: [],
-  },
+  // login: {
+  //   path: '/login',
+  //   isPrivate: false,
+  //   isSigninFlow: true,
+  //   exact: true,
+  //   forbiddenTokens: [],
+  // },
   backupRecoveryPhraseFlow: {
     path: '/account/backup-recovery-phrase',
     isPrivate: true,

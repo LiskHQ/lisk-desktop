@@ -64,12 +64,9 @@ const blockchainApplicationsManage = [
   },
 ];
 
-export const applicationsMap = blockchainApplicationsManage.reduce(
-  (obj, val) => {
-    obj[val.chainID] = val;
-    return obj;
-  },
-  {},
-);
+export const applicationsMap = blockchainApplicationsManage.reduce((obj, val) => {
+  obj[val.chainID] = val;
+  return obj;
+}, {});
 
 export default blockchainApplicationsManage;

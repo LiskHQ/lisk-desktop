@@ -17,7 +17,7 @@ export const ACCOUNT_MENU = [
     label: 'Backup account',
   },
   {
-    path: routes.addAccount.path,
+    path: routes.addAccountOptions.path,
     icon: 'plus',
     label: 'Add new account',
   },

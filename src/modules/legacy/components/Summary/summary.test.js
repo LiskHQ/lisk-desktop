@@ -1,5 +1,5 @@
 import { act } from 'react-dom/test-utils';
-import { mountWithProps } from 'src/utils/testHelpers';
+import { mountWithCustomRouterAndStore } from 'src/utils/testHelpers';
 import { getTransactionBaseFees } from '@transaction/api';
 import { tokenMap } from '@token/fungible/consts/tokens';
 import useTransactionFeeCalculation from '@transaction/hooks/useTransactionFeeCalculation';
@@ -51,7 +51,9 @@ describe('Reclaim balance Summary', () => {
   };
   const props = {
     nextStep: jest.fn(),
-    prevStep: jest.fn(),
+    history: {
+      goBack: jest.fn(),
+    },
     t: (key) => key,
     wallet: wallet.info.LSK,
     token,
@@ -64,7 +66,7 @@ describe('Reclaim balance Summary', () => {
 
   it('should render summary component', () => {
     // Arrange
-    const wrapper = mountWithProps(Summary, props, state);
+    const wrapper = mountWithCustomRouterAndStore(Summary, props, state);
 
     // Act
     const html = wrapper.html();
@@ -79,7 +81,7 @@ describe('Reclaim balance Summary', () => {
 
   it('should navigate to next page when continue button is clicked', async () => {
     // Arrange
-    const wrapper = mountWithProps(Summary, props, state);
+    const wrapper = mountWithCustomRouterAndStore(Summary, props, state);
     wrapper.find('button.confirm-button').simulate('click');
 
     // Act
@@ -98,11 +100,11 @@ describe('Reclaim balance Summary', () => {
         moduleCommand: 'legacy:reclaim',
         nonce: accounts.non_migrated.sequence.nonce,
         sender: {
-          PublicKey: accounts.non_migrated.summary.publicKey,
+          publicKey: accounts.non_migrated.summary.publicKey,
         },
         composedFees: {
-          Transaction: 100000,
-          initiation: 5000000,
+          Transaction: '0.001 LSK',
+          Initialisation: '0.05 LSK',
         },
       },
       actionFunction: props.balanceReclaimed,
@@ -111,7 +113,7 @@ describe('Reclaim balance Summary', () => {
 
   it('should navigate to previous page when cancel button is clicked', async () => {
     // Arrange
-    const wrapper = mountWithProps(Summary, props, state);
+    const wrapper = mountWithCustomRouterAndStore(Summary, props, state);
     wrapper.find('button.cancel-button').simulate('click');
 
     // Act
@@ -121,22 +123,6 @@ describe('Reclaim balance Summary', () => {
     });
 
     // Assert
-    expect(props.prevStep).toBeCalledWith({
-      rawTx: {
-        params: {
-          amount: accounts.non_migrated.legacy.balance,
-        },
-        fee: 100000,
-        moduleCommand: 'legacy:reclaim',
-        nonce: accounts.non_migrated.sequence.nonce,
-        sender: {
-          PublicKey: accounts.non_migrated.summary.publicKey,
-        },
-        composedFees: {
-          Transaction: 100000,
-          initiation: 5000000,
-        },
-      },
-    });
+    expect(props.history.goBack).toBeCalledTimes(1);
   });
 });
