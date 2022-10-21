@@ -29,7 +29,7 @@ class Loading extends React.Component {
         </p>
         <LoadingIcon />
         <p>{t('Looking for a device...')}</p>
-        <Link to={routes.login.path}>
+        <Link to={routes.manageAccounts.path}>
           <TertiaryButton>{t('Go back')}</TertiaryButton>
         </Link>
       </div>

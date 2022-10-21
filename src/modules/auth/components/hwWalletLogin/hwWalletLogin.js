@@ -32,7 +32,7 @@ const HardwareWalletLogin = ({
   }, []);
 
   const goBack = () => {
-    history.push(routes.login.path);
+    history.push(routes.manageAccounts.path);
   };
 
   return (

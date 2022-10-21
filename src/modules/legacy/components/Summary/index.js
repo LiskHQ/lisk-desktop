@@ -8,7 +8,6 @@ import Summary from './Summary';
 
 const mapStateToProps = state => ({
   wallet: selectActiveTokenAccount(state),
-  network: state.network,
 });
 
 const dispatchToProps = {

@@ -64,6 +64,26 @@ export const mountWithCustomRouter = (Component, props) =>
   );
 
 /**
+ * Mounts components that are wrapped in WithRouter and store with custom router
+ *
+ * @param {Class|Function} Component - A React component to be tested
+ * @param {Object} props - Set of props to be passed to the component
+ * @param {?Object} store - A fake redux store object
+ *
+ * @returns {Object} Mounted component
+ */
+  export const mountWithCustomRouterAndStore = (Component, props, store) =>
+  mount(
+    <Provider store={configureStore()(store)}>
+      <Router
+        history={props.history ? { ...defaultHistoryProps, ...props.history } : defaultHistoryProps}
+      >
+        <Component {...props} />
+      </Router>
+    </Provider>
+  );
+
+/**
  * Mounts components that are wrapped in WithRouter
  *
  * @param {Class|Function} Component - A React component to be tested
