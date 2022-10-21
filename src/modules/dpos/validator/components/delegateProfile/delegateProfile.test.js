@@ -39,6 +39,19 @@ describe('Delegate Profile', () => {
   useReceivedVotes.mockReturnValue({ data: mockReceivedVotes });
 
   it('Should render active delegate profile details', () => {
+    useSentVotes.mockReturnValue({
+      data: {
+        ...mockSentVotes,
+        data: { ...mockReceivedVotes.data, votes: mockReceivedVotes.data.votes.slice(5, 7) },
+      },
+    });
+
+    wrapper.rerender(
+      <MemoryRouter initialEntries={['/']}>
+        <DelegateProfile {...props} />
+      </MemoryRouter>
+    );
+
     expect(screen.getByText('My delegate profile')).toBeTruthy();
     expect(screen.getByText('Vote delegate')).toBeTruthy();
     expect(screen.getByText('Details')).toBeTruthy();

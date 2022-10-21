@@ -45,8 +45,8 @@ describe('Reducer: voting(state, action)', () => { // eslint-disable-line max-st
             votesUsed: 2,
           },
           votes: [
-            { address: delegate1.address, username: delegate1.username, amount: 1e10 },
-            { address: delegate2.address, username: delegate2.username, amount: 2e10 },
+            { delegateAddress: delegate1.address, username: delegate1.username, amount: 1e10 },
+            { delegateAddress: delegate2.address, username: delegate2.username, amount: 2e10 },
           ],
         },
       };
