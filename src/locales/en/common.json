@@ -524,6 +524,7 @@
   "Send Tokens": "Send Tokens",
   "Send a reclaim transaction": "Send a reclaim transaction",
   "Send and request tokens": "Send and request tokens",
+  "Send to initiator": "Send to initiator",
   "Send using second passphrase right away": "Send using second passphrase right away",
   "Send {{amount}} {{token}}": "Send {{amount}} {{token}}",
   "Send {{token}}": "Send {{token}}",
