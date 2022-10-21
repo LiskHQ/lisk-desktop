@@ -4,6 +4,9 @@ import TxBroadcaster from '@transaction/components/TxBroadcaster';
 import accounts from '@tests/constants/wallets';
 import Status from './status';
 
+jest.mock('@libs/wcm/hooks/useSession', () => ({
+  respond: jest.fn(),
+}));
 describe('Multisignature Status component', () => {
   const props = {
     t: v => v,
@@ -72,7 +75,7 @@ describe('Multisignature Status component', () => {
       illustration: 'registerMultisignature',
       status: { code: 'SIGNATURE_SUCCESS' },
       title: 'Submitting the transaction',
-      message: 'Your transaction is being submitted to the blockchain.',
+      message: 'Your transaction is signed successfully.',
       className: 'content',
     });
   });
