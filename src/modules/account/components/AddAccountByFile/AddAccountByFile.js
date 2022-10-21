@@ -18,7 +18,7 @@ const AddAccountByPassFile = ({ history, login }) => {
     setAccount(encryptedAccount);
     setCurrentAccount(encryptedAccount);
     multiStepRef.current.next();
-    login(recoveryPhrase); // Todo: this login method is depricated
+    login(recoveryPhrase); // @todo this login method is deprecated
   };
 
   return (
