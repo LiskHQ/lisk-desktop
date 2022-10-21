@@ -8,14 +8,14 @@ import authActionTypes from '@auth/store/actionTypes';
 import { useCurrentAccount } from './useCurrentAccount';
 
 // eslint-disable-next-line import/prefer-default-export,max-statements
-export const useDeprecatedAccount = () => {
+export const useDeprecatedAccount = (accountInfo) => {
   const [currentAccount] = useCurrentAccount();
   const dispatch = useDispatch();
-  const { pubkey, address } = currentAccount.metadata;
+  const { pubkey, address } = accountInfo ?? currentAccount.metadata;
   const [account, setAccount] = useState({
     summary: {
       address,
-      publicKey: '',
+      publicKey: pubkey,
       legacyAddress: '',
       // balance: @todo account has multiple balance now
       username: '',
@@ -69,7 +69,8 @@ export const useDeprecatedAccount = () => {
       ...state,
       summary: {
         ...state.summary,
-        publicKey: auth?.meta?.publicKey || pubkey,
+        address,
+        publicKey: pubkey,
         username: auth?.meta?.name || '',
         isMultisignature: auth?.data?.numberOfSignatures > 1,
       },
