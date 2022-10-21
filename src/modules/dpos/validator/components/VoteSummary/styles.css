@@ -16,7 +16,8 @@
 .headerContainer {
   display: flex;
   justify-content: space-between;
-  margin: 20px 0px;
+  margin: 24px 0px;
+  width: 98%;
 
   & header {
     @mixin headingNormal;

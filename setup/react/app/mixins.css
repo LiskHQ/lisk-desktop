@@ -99,3 +99,19 @@
   font-weight: 300;
   line-height: 22px;
 }
+
+@define-mixin voteStatusHeading $weight:  {
+  font-family: var(--heading-font);
+  font-size: var(--font-size-h3);
+  font-weight: var(--font-weight-$(weight));
+  letter-spacing: 0;
+  line-height: 25px;
+}
+
+@define-mixin voteStatusSubHeading $weight: semi-bold {
+  font-family: var(--content-font);
+  font-size: var(--font-size-h6);
+  font-weight: var(--font-weight-$(weight));
+  letter-spacing: 0;
+  line-height: 21px;
+}

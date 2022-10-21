@@ -7,7 +7,7 @@ import {
   removeThenAppendSearchParamsToUrl,
 } from 'src/utils/searchParams';
 import { useCurrentAccount } from 'src/modules/account/hooks';
-import { toRawLsk } from '@token/fungible/utils/lsk';
+import { fromRawLsk, toRawLsk } from '@token/fungible/utils/lsk';
 import { useTokensBalance } from 'src/modules/token/fungible/hooks/queries';
 import Dialog from 'src/theme/dialog/dialog';
 import Box from 'src/theme/box';
@@ -17,6 +17,7 @@ import BoxHeader from 'src/theme/box/header';
 import BoxInfoText from 'src/theme/box/infoText';
 import AmountField from 'src/modules/common/components/amountField';
 import WalletVisual from 'src/modules/wallet/components/walletVisual';
+import routes from 'src/routes/routes';
 import TokenAmount from '@token/fungible/components/tokenAmount';
 import WarnPunishedDelegate from '@dpos/validator/components/WarnPunishedDelegate';
 import { useBlocks } from 'src/modules/block/hooks/queries/useBlocks';
@@ -38,16 +39,16 @@ const getTitles = (t) => ({
   add: {
     title: t('Add to voting queue'),
     description: t(
-      'Input your vote amount. This value shows how much trust you have in this delegate. '
+      'Insert a vote amount for this delegate. Your new vote will be added to the voting queue.'
     ),
   },
 });
 
-// @Todo this is just a place holder pending when dpos constants are integrated by useDposContants hook
+// @Todo this is just a place holder pending when dpos constants are integrated by this issue #4502
 const dposTokenId = '0'.repeat(16);
 
 // eslint-disable-next-line max-statements
-const EditVote = ({ history, voteEdited, network, voting }) => {
+const EditVote = ({ history, voteEdited, network, voting, votesRetrieved }) => {
   const { t } = useTranslation();
   const [
     {
@@ -86,15 +87,17 @@ const EditVote = ({ history, voteEdited, network, voting }) => {
     ['start', 'end']
   );
 
-  const hasSentVoteToDelegate = useMemo(() => {
+  const voteSentVoteToDelegate = useMemo(() => {
     const votes = sentVotes?.data?.votes;
     if (!votes) return false;
 
-    return votes.some(({ delegateAddress: dAddress }) => dAddress === delegateAddress);
-  }, [sentVotes]);
-  
-  const [voteAmount, setVoteAmount] = useVoteAmountField(0);
-  const mode = hasSentVoteToDelegate ? 'edit' : 'add';
+    return votes.find(({ delegateAddress: dAddress }) => dAddress === delegateAddress);
+  }, [sentVotes, delegateAddress, voting]);
+
+  const [voteAmount, setVoteAmount, isGettingDposToken] = useVoteAmountField(
+    fromRawLsk(voting[delegateAddress]?.unconfirmed || voteSentVoteToDelegate?.amount || 0)
+  );
+  const mode = voteSentVoteToDelegate || voting[delegateAddress] ? 'edit' : 'add';
   const titles = getTitles(t)[mode];
 
   useEffect(() => {
@@ -111,6 +114,10 @@ const EditVote = ({ history, voteEdited, network, voting }) => {
     }).then(setMaxAmount);
   }, [token, auth, network, voting]);
 
+  useEffect(() => {
+    votesRetrieved();
+  }, []);
+
   const handleConfirm = () => {
     if (!isForm) {
       removeThenAppendSearchParamsToUrl(history, { modal: 'votingQueue' }, ['modal']);
@@ -118,28 +125,22 @@ const EditVote = ({ history, voteEdited, network, voting }) => {
     }
     voteEdited([
       {
-        address: delegate.address,
+        address: delegateAddress,
         amount: toRawLsk(voteAmount.value),
         name: delegate.name,
       },
     ]);
 
-    if (mode === 'add') setIsForm(false);
-    if (mode === 'edit') {
-      removeThenAppendSearchParamsToUrl(history, { modal: 'votingQueue' }, ['modal']);
-    }
+    setIsForm(false);
   };
 
-  const handleContinueVoting = () => {
-    setVoteAmount(0);
-    setIsForm(true);
-  };
+  const handleContinueVoting = () => history.push(routes.delegates.path);
 
   const removeVote = () => {
     voteEdited([
       {
         name: delegate.name,
-        address: delegate.address,
+        address: delegateAddress,
         amount: 0,
       },
     ]);
@@ -171,24 +172,21 @@ const EditVote = ({ history, voteEdited, network, voting }) => {
               {!isForm ? t('Your vote has been added to your voting queue') : subTitles[mode]}
             </span>
           </BoxInfoText>
-          {(isForm || mode === 'edit') && (
+          {isForm && (
             <>
-              {mode === 'add' && (
-                <BoxInfoText className={styles.accountInfo}>
-                  <WalletVisual size={40} address={delegate.address} />
-                  <p>{delegate.name}</p>
-                  <p>{delegate.address}</p>
-                </BoxInfoText>
-              )}
+              <BoxInfoText className={styles.accountInfo}>
+                <WalletVisual size={40} address={delegateAddress} />
+                <p>{delegate.name}</p>
+                <p>{delegateAddress}</p>
+              </BoxInfoText>
               <label className={styles.fieldGroup}>
-                {mode === 'add' && (
-                  <p className={styles.availableBalance}>
-                    <span>{t('Available Bal: ')}</span>
-                    <span>
-                      <TokenAmount token={token.symbol} val={token.availableBalance} />
-                    </span>
-                  </p>
-                )}
+                <p className={styles.availableBalance}>
+                  <span>{t('Available balance: ')}</span>
+                  <span>
+                    <TokenAmount token={token.symbol} val={token.availableBalance} />
+                  </span>
+                </p>
+
                 <AmountField
                   amount={voteAmount}
                   onChange={setVoteAmount}
@@ -209,8 +207,8 @@ const EditVote = ({ history, voteEdited, network, voting }) => {
             </>
           )}
         </BoxContent>
-        <BoxFooter direction={mode === 'edit' ? 'horizontal' : 'vertical'}>
-          {mode === 'edit' && (
+        <BoxFooter direction={mode === 'edit' && isForm ? 'horizontal' : 'vertical'}>
+          {mode === 'edit' && isForm && (
             <WarningButton className="remove-vote" onClick={removeVote}>
               {t('Remove vote')}
             </WarningButton>
@@ -227,7 +225,7 @@ const EditVote = ({ history, voteEdited, network, voting }) => {
           <PrimaryButton
             className={`${styles.confirmButton} confirm`}
             onClick={handleConfirm}
-            disabled={voteAmount.error}
+            disabled={voteAmount.error || isGettingDposToken}
           >
             {t(isForm ? 'Confirm' : 'Go to the voting queue')}
           </PrimaryButton>

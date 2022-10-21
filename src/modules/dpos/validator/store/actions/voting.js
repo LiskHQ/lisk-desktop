@@ -1,5 +1,5 @@
 import to from 'await-to-js';
-import { tokenMap } from '@token/fungible/consts/tokens';
+// import { tokenMap } from '@token/fungible/consts/tokens';
 import { selectActiveTokenAccount } from 'src/redux/selectors';
 import { createGenericTx } from '@transaction/api';
 import { timerReset } from '@auth/store/action';
@@ -29,6 +29,16 @@ export const votesCleared = () => ({
  */
 export const votesConfirmed = () => ({
   type: actionTypes.votesConfirmed,
+});
+
+/**
+ * To be dispatched when a vote is to be removed form the voting queue
+ *
+ * @returns {Object} Pure action object
+ */
+export const voteDiscarded = (data) => ({
+  type: actionTypes.voteDiscarded,
+  data,
 });
 
 /**
@@ -92,8 +102,9 @@ export const votesSubmitted = (transactionObject, privateKey) => async (dispatch
  * Fetches the list of votes of the host wallet.
  */
 export const votesRetrieved = () => async (dispatch, getState) => {
-  const { wallet, network } = getState();
-  const address = wallet.info[tokenMap.LSK.key].summary.address;
+  const { network, account } = getState();
+  const address = account.current?.metadata?.address;
+
   try {
     const votes = await getVotes({ network, params: { address } });
     dispatch({

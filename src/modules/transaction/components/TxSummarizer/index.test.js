@@ -5,7 +5,16 @@ import { MODULE_COMMANDS_NAME_MAP } from 'src/modules/transaction/configuration/
 import mockBlockchainApplications from '@tests/fixtures/blockchainApplicationsManage';
 import { mockAppTokens } from '@tests/fixtures/token';
 import wallets from '@tests/constants/wallets';
+import { mockAuth } from 'src/modules/auth/__fixtures__';
+import { useAuth } from 'src/modules/auth/hooks/queries';
+import mockSavedAccounts from '@tests/fixtures/accounts';
 import TxSummarizer from '.';
+
+const mockedCurrentAccount = mockSavedAccounts[0];
+jest.mock('@auth/hooks/queries');
+jest.mock('@account/hooks', () => ({
+  useCurrentAccount: jest.fn(() => [mockedCurrentAccount, jest.fn()]),
+}));
 
 describe('TxSummarizer', () => {
   let props;
@@ -25,7 +34,7 @@ describe('TxSummarizer', () => {
         label: 'Cancel',
         onClick: jest.fn(),
       },
-      t: key => key,
+      t: (key) => key,
       rawTx: {
         moduleCommand: MODULE_COMMANDS_NAME_MAP.transfer,
         sender: { publicKey: wallets.genesis.summary.publicKey },
@@ -55,6 +64,7 @@ describe('TxSummarizer', () => {
       },
     };
   });
+  useAuth.mockReturnValue({ data: mockAuth });
 
   it('should render title', () => {
     const wrapper = mount(<TxSummarizer {...props} />);
@@ -87,7 +97,7 @@ describe('TxSummarizer', () => {
     const wrapper = mount(
       <TxSummarizer {...props}>
         <span className="child-span" />
-      </TxSummarizer>,
+      </TxSummarizer>
     );
     expect(wrapper.find('.child-span')).toExist();
   });
