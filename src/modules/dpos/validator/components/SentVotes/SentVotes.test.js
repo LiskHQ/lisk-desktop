@@ -54,14 +54,14 @@ describe('SentVotes', () => {
 
   it('should not display voting and token', async () => {
     useSentVotes.mockReturnValue({});
-    useTokensBalance.mockReturnValue({ isLoading: false });
-    
+    useTokensBalance.mockReturnValue({});
+
+    renderWithRouter(SentVotes, props);
+
     mockSentVotes.data.votes.forEach(({ delegateAddress, amount, name }, index) => {
       expect(screen.queryAllByText(name)[index]).toBeFalsy();
       expect(screen.queryByText(truncateAddress(delegateAddress))).toBeFalsy();
-      expect(
-        screen.queryAllByText(`${fromRawLsk(amount)}`)[0]
-      ).toBeFalsy();
+      expect(screen.queryAllByText(`${fromRawLsk(amount)}`)[0]).toBeFalsy();
       expect(screen.queryAllByAltText('deleteIcon')[index]).toBeFalsy();
       expect(screen.queryAllByAltText('edit')[index]).toBeFalsy();
     });
