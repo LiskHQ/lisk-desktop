@@ -38,10 +38,21 @@
   & .button {
     width: var(--footer-button-width);
     margin: 10px 0 20px;
+
+    & > .buttonContent {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    & img {
+      filter: brightness(100);
+      margin-right: 10px;
+    }
   }
 
   & > img {
-    width: 210px;
+    width: 140px;
     margin-top: var(--horizontal-padding-l);
   }
 }

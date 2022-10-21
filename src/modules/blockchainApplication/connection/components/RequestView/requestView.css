@@ -1,9 +1,5 @@
 .dialogWrapper {
   border: none;
-
-  & > span {
-    color: white !important;
-  }
 }
 
 .wrapper {
