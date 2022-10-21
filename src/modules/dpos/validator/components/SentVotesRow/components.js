@@ -11,9 +11,9 @@ export const DelegateWalletVisual = ({ address, name }) => (
   </div>
 );
 
-export const Balance = ({ amount, ...rest }) => (
+export const Balance = ({ value, ...rest }) => (
   <p className={`${grid['col-xs-2']} ${styles.balance}`} {...rest}>
-    {amount}
+    {value}
   </p>
 );
 

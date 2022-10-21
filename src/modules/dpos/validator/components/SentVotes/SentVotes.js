@@ -11,11 +11,16 @@ import BoxHeader from 'src/theme/box/header';
 import { selectSearchParamValue } from 'src/utils/searchParams';
 import { useCurrentAccount } from '@account/hooks';
 import Icon from 'src/theme/Icon';
+import { useTokensBalance } from '@token/fungible/hooks/queries';
 import styles from './SentVotes.css';
 import header from './tableHeaderMap';
 import SentVotesRow from '../SentVotesRow';
 import { useSentVotes } from '../../hooks/queries';
 
+// @Todo this is just a place holder pending when dpos constants are integrated by useDposContants hook
+const dposTokenId = '0'.repeat(16);
+
+// eslint-disable-next-line max-statements
 const SentVotes = ({ history }) => {
   const { t } = useTranslation();
   const searchAddress = selectSearchParamValue(history.location.search, 'address');
@@ -26,6 +31,10 @@ const SentVotes = ({ history }) => {
   ] = useCurrentAccount();
   const address = useMemo(() => searchAddress || currentAddress, [searchAddress, currentAddress]);
   const queryParam = { config: { params: { address } } };
+
+
+  const { data: tokens } = useTokensBalance({ config: { params: { tokenID: dposTokenId } } });
+  const dposToken = useMemo(() => tokens?.data?.[0] || {}, [tokens]);
 
   const { data } = useSentVotes(queryParam);
   const votingAvailable = useMemo(() => 10 - data?.meta?.total || 0, [address]);
@@ -55,6 +64,9 @@ const SentVotes = ({ history }) => {
           queryConfig={queryParam}
           row={SentVotesRow}
           header={header(t)}
+          additionalRowProps={{
+            dposToken,
+          }}
           headerClassName={styles.tableHeader}
         />
       </BoxContent>
