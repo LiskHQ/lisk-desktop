@@ -92,7 +92,7 @@ const EditVote = ({ history, voteEdited, network, voting }) => {
 
     return votes.some(({ delegateAddress: dAddress }) => dAddress === delegateAddress);
   }, [sentVotes]);
-
+  
   const [voteAmount, setVoteAmount] = useVoteAmountField(0);
   const mode = hasSentVoteToDelegate ? 'edit' : 'add';
   const titles = getTitles(t)[mode];
