@@ -19,7 +19,7 @@ const SentVoteRow = ({ data: delegate, voteEdited, dposToken }) => {
         <Balance value={rank} />
         <Balance value={<TokenAmount val={voteWeight} token={dposToken.symbol}/>} />
         <Balance value={<TokenAmount val={amount} token={dposToken.symbol}/>} />
-        <Actions address={delegateAddress} voteEdited={voteEdited} />
+        <Actions address={delegateAddress} name={name} voteEdited={voteEdited} />
       </div>
     </div>
   );
