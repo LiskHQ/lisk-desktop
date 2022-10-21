@@ -4,6 +4,7 @@ import { signatureCollectionStatus } from '@transaction/configuration/txStatus';
 import { TertiaryButton } from 'src/theme/buttons';
 import Icon from 'src/theme/Icon';
 import { secondPassphraseRemoved } from '@auth/store/action';
+import { extractAddressFromPublicKey } from '@wallet/utils/account';
 import Box from 'src/theme/box';
 import Illustration from 'src/modules/common/components/illustration';
 import BoxContent from 'src/theme/box/content';
@@ -32,7 +33,10 @@ const TxSignatureCollector = ({
 }) => {
   const deviceType = getDeviceType(account.hwInfo?.deviceModel);
   const dispatch = useDispatch();
-  const [currentAccount] = useCurrentAccount();
+  const [currentAccount] = useCurrentAccount({
+    pubKey: rawTx.sender.publicKey,
+    address: extractAddressFromPublicKey(rawTx.sender.publicKey),
+  });
 
   const txVerification = (privateKey = undefined, publicKey = undefined) => {
     /**
