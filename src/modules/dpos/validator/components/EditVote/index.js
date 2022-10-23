@@ -209,7 +209,10 @@ const EditVote = ({ history, voteEdited, network, voting, votesRetrieved }) => {
         </BoxContent>
         <BoxFooter direction={mode === 'edit' && isForm ? 'horizontal' : 'vertical'}>
           {mode === 'edit' && isForm && (
-            <WarningButton className="remove-vote" onClick={removeVote}>
+            <WarningButton
+              className={`${styles.removeVoteButton} remove-vote`}
+              onClick={removeVote}
+            >
               {t('Remove vote')}
             </WarningButton>
           )}

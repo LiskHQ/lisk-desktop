@@ -1,3 +1,4 @@
+/* eslint-disable complexity */
 /* istanbul ignore file */
 import React, { useRef, useState } from 'react';
 import routes from 'src/routes/routes';
@@ -121,10 +122,10 @@ const DelegatesMonitor = ({ watchList, registrations }) => {
             <BoxTabs {...pageTabs} />
           </div>
           <div className={grid['col-md-4']}>
-            <Link to={routes.sentVotes.path}>
-              <SecondaryButton>Votes</SecondaryButton>
+            <Link to={address ? routes.sentVotes.path : '#'}>
+              <SecondaryButton disabled={!address}>Votes</SecondaryButton>
             </Link>
-            <DialogLink component="registerDelegate">
+            <DialogLink component={address || 'registerDelegate'}>
               <PrimaryButton disabled={!address}>Register delegate</PrimaryButton>
             </DialogLink>
           </div>

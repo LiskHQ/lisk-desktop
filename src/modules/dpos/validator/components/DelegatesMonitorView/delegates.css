@@ -211,6 +211,8 @@ header {
 
 .roundStateHeader {
   padding-left: 0;
+  justify-content: center !important;
+  text-align: center;
 }
 
 .delegateStatus {
