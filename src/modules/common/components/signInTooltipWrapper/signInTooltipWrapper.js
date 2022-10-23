@@ -17,7 +17,7 @@ const SignInTooltipWrapper = ({
         content={React.cloneElement(children, { className: `${children.props.className} ${styles.child} disabled` })}
         title={t('Please sign in')}
         footer={(
-          <Link to={`${routes.login.path}?referrer=${pathname}${encodeURIComponent(search)}`}>
+          <Link to={`${routes.manageAccounts.path}?referrer=${pathname}${encodeURIComponent(search)}`}>
             {t('Sign in')}
           </Link>
 )}

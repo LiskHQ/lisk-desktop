@@ -44,6 +44,6 @@ describe('TermsOfUse', () => {
       settings: { areTermsOfUseAccepted: true },
     });
     wrapper.update();
-    expect(props.history.push).to.have.been.calledWith(`${routes.login.path}`);
+    expect(props.history.push).to.have.been.calledWith(`${routes.manageAccounts.path}`);
   });
 });

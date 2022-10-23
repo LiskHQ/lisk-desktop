@@ -18,7 +18,7 @@ const AccountCreated = ({ t }) => (
     <div className={`${registerStyles.buttonsHolder} ${grid.row}`}>
       <Link
         className={`${registerStyles.button} login-button`}
-        to={routes.login.path}
+        to={routes.manageAccounts.path}
       >
         <PrimaryButton className={registerStyles.continueBtn}>
           {t('Continue to Add account')}
