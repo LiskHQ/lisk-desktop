@@ -179,7 +179,7 @@ export const renderWithQueryClient = (Component, props) => {
  *
  * @returns {Object} Rendered component
  */
-export const renderWithRouterAndQueryClient = (Component, props) => {
+export const renderWithRouterAndQueryClient = (Component, props = {}) => {
   const queryClient = new QueryClient();
 
   return render(
@@ -189,6 +189,26 @@ export const renderWithRouterAndQueryClient = (Component, props) => {
       >
         <Component {...props} />
       </Router>
+    </QueryClientProvider>
+  );
+};
+
+/**
+ * Rerenders components that are wrapped in QueryClientProvider and Router
+ *
+ * @param {Class|Function} Component - A React component to be rerendered
+ * @param {Object} props - Set of props to be passed to the component
+ *
+ * @returns {Object} Rerendered component
+ */
+export const rerenderWithRouterAndQueryClient = (Component, props = {}) => {
+  const queryClient = new QueryClient();
+
+  return render(
+    <QueryClientProvider client={queryClient}>
+      <MemoryRouter initialEntries={[props?.history ?? defaultHistoryProps]}>
+        <Component {...props} />
+      </MemoryRouter>
     </QueryClientProvider>
   );
 };

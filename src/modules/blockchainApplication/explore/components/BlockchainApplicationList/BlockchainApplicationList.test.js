@@ -1,9 +1,9 @@
-import React from 'react';
-import { Router } from 'react-router';
 import { fireEvent, screen } from '@testing-library/react';
-import { QueryClientProvider, QueryClient } from '@tanstack/react-query';
 import { usePinBlockchainApplication } from '@blockchainApplication/manage/hooks/usePinBlockchainApplication';
-import { renderWithRouterAndQueryClient } from 'src/utils/testHelpers';
+import {
+  renderWithRouterAndQueryClient,
+  rerenderWithRouterAndQueryClient,
+} from 'src/utils/testHelpers';
 import { useBlockchainApplicationExplore } from '../../hooks/queries/useBlockchainApplicationExplore';
 import { mockBlockchainApp } from '../../__fixtures__';
 import BlockchainApplicationList from './BlockchainApplicationList';
@@ -11,6 +11,7 @@ import BlockchainApplicationList from './BlockchainApplicationList';
 const mockTogglePin = jest.fn();
 const mockedPins = [mockBlockchainApp.data[0].chainID];
 const mockApplyFilters = jest.fn();
+const mockFetchNextPage = jest.fn();
 
 jest.useFakeTimers();
 jest.mock('@blockchainApplication/manage/hooks/usePinBlockchainApplication');
@@ -18,7 +19,6 @@ jest.mock('../../hooks/queries/useBlockchainApplicationExplore');
 jest.mock('@common/hooks', () => ({
   ...jest.requireActual('@common/hooks'),
   useFilter: jest.fn(() => ({
-    // filters: {},
     applyFilters: mockApplyFilters,
   })),
 }));
@@ -34,19 +34,13 @@ useBlockchainApplicationExplore.mockReturnValue({
   error: undefined,
   isLoading: false,
   isFetching: false,
+  hasNextPage: true,
+  fetchNextPage: mockFetchNextPage,
 });
 
 describe('BlockchainApplicationList', () => {
-  let wrapper;
-  const props = {
-    history: {
-      listen: () => {},
-      location: { pathname: '' },
-    },
-  };
-
   beforeEach(() => {
-    wrapper = renderWithRouterAndQueryClient(BlockchainApplicationList, props);
+    renderWithRouterAndQueryClient(BlockchainApplicationList);
   });
 
   it('should display properly', () => {
@@ -59,7 +53,7 @@ describe('BlockchainApplicationList', () => {
 
   it('should display the right number of applications', () => {
     const blockchainAppRow = screen.getAllByTestId('applications-row');
-    expect(blockchainAppRow).toHaveLength(mockBlockchainApp.length);
+    expect(blockchainAppRow).toHaveLength(mockBlockchainApp.data.length);
   });
 
   it('should apply search filter', () => {
@@ -83,20 +77,8 @@ describe('BlockchainApplicationList', () => {
   });
 
   it('should invoke the load more action', () => {
-    props.applications.isLoading = false;
-    props.applications.meta = {
-      total: mockBlockchainApp.length + 1,
-      count: mockBlockchainApp.length,
-      offset: 0,
-    };
-
-    wrapper = renderWithRouterAndQueryClient(BlockchainApplicationList, props);
     fireEvent.click(screen.getByText('Load more'));
-    expect(props.applications.loadData).toHaveBeenCalledWith(
-      expect.objectContaining({
-        offset: props.applications.meta.count + props.applications.meta.offset,
-      })
-    );
+    expect(mockFetchNextPage).toHaveBeenCalledTimes(1);
   });
 
   it('should not have any pinned application', () => {
@@ -105,16 +87,8 @@ describe('BlockchainApplicationList', () => {
       pins: [],
       checkPinByChainId: jest.fn().mockReturnValue(false),
     });
+    rerenderWithRouterAndQueryClient(BlockchainApplicationList);
 
-    const queryClient = new QueryClient();
-    wrapper.rerender(
-      <QueryClientProvider client={queryClient}>
-        <Router history={props.history}>
-          <BlockchainApplicationList {...props} />
-        </Router>
-      </QueryClientProvider>
-    );
-
-    expect(screen.getAllByAltText('unpinnedIcon')).toHaveLength(mockBlockchainApp.length);
+    expect(screen.getAllByAltText('unpinnedIcon')).toHaveLength(mockBlockchainApp.data.length);
   });
 });
