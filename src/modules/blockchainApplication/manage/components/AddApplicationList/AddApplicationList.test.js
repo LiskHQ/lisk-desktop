@@ -1,7 +1,7 @@
 import { screen, fireEvent } from '@testing-library/react';
 import { renderWithRouterAndQueryClient } from 'src/utils/testHelpers';
 import { mockBlockchainApp } from 'src/modules/blockchainApplication/explore/__fixtures__';
-import useApplicationsQuery from 'src/modules/blockchainApplication/explore/hooks/queries/useApplicationsQuery';
+import useApplications from 'src/modules/blockchainApplication/explore/hooks/queries/useApplications';
 import AddApplicationList from './AddApplicationList';
 
 const props = {
@@ -11,9 +11,9 @@ const props = {
 
 const mockFetchNextPage = jest.fn()
 
-jest.mock('src/modules/blockchainApplication/explore/hooks/queries/useApplicationsQuery');
+jest.mock('src/modules/blockchainApplication/explore/hooks/queries/useApplications');
 
-useApplicationsQuery.mockReturnValue({
+useApplications.mockReturnValue({
   data: {
     data: mockBlockchainApp.data,
     meta: {

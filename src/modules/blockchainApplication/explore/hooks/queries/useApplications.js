@@ -11,7 +11,7 @@ import { LIMIT, API_URL, API_BASE_URL } from 'src/utils/api/constants';
  * @returns - The query state of the API call. Includes the data
  * (applications), loading state, error state, and more.
  */
-export default function useApplicationsQuery(chainID, { config: customConfig = {}, options = {} } = {}) {
+export default function useApplications(chainID, { config: customConfig = {}, options = {} } = {}) {
   const config = {
     baseURL: API_BASE_URL,
     url: `${API_URL}/blockchain/apps`,

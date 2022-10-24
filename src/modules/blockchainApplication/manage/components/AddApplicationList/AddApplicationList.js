@@ -5,7 +5,7 @@ import Box from '@theme/box';
 import BoxHeader from '@theme/box/header';
 import BoxContent from '@theme/box/content';
 import Table from '@theme/table';
-import useApplicationsQuery from 'src/modules/blockchainApplication/explore/hooks/queries/useApplicationsQuery';
+import useApplications from 'src/modules/blockchainApplication/explore/hooks/queries/useApplications';
 import { useSearchApplications } from '../../hooks/useSearchApplications';
 import AddApplicationSearch from '../AddApplicationSearch/AddApplicationSearch';
 import AddApplicationRow from '../AddApplicationRow/AddApplicationRow';
@@ -20,7 +20,7 @@ const AddApplicationList = ({
     data,
     ...searchResponse
   } = useSearchApplications();
-  const { data: applications = {}, isLoading, error, fetchNextPage } = useApplicationsQuery()
+  const { data: applications = {}, isLoading, error, fetchNextPage } = useApplications()
 
   const dataList = applications.data ?? []
   const canLoadMore = applications.meta

@@ -5,7 +5,7 @@ import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { Provider } from 'react-redux';
 
 import { mockBlockchainApp } from '../../__fixtures__';
-import useApplicationsQuery from './useApplicationsQuery';
+import useApplications from './useApplications';
 
 const mockState = {
   blockchainApplications: {
@@ -21,7 +21,7 @@ const ReduxProvider = ({ children, reduxStore }) => (
   <Provider store={reduxStore}>{children}</Provider>
 );
 
-describe('useApplicationsQuery hook', () => {
+describe('useApplications hook', () => {
   it('should fetch data correctly', async () => {
     const store = mockStore(mockState);
     const wrapper = ({ children }) => (
@@ -29,7 +29,7 @@ describe('useApplicationsQuery hook', () => {
         <ReduxProvider reduxStore={store}>{children}</ReduxProvider>
       </QueryClientProvider>
     );
-    const { result, waitFor } = renderHook(() => useApplicationsQuery(), { wrapper });
+    const { result, waitFor } = renderHook(() => useApplications(), { wrapper });
 
     await waitFor(() => result.current.isFetched);
 

@@ -4,7 +4,7 @@ import mockBlockchainApplications from '@tests/fixtures/blockchainApplicationsEx
 import { renderWithRouterAndQueryClient } from 'src/utils/testHelpers';
 import { useApplicationManagement, usePinBlockchainApplication } from '@blockchainApplication/manage/hooks';
 import { useBlockchainApplicationMeta } from 'src/modules/blockchainApplication/manage/hooks/queries/useBlockchainApplicationMeta';
-import useApplicationsQuery from '../../hooks/queries/useApplicationsQuery';
+import useApplications from '../../hooks/queries/useApplications';
 import BlockchainApplicationDetails from './index';
 import { mockBlockchainApp } from '../../__fixtures__';
 
@@ -15,7 +15,7 @@ const mockSetApplication = jest.fn();
 jest.mock('@blockchainApplication/manage/hooks/usePinBlockchainApplication');
 jest.mock('@blockchainApplication/manage/hooks/useApplicationManagement');
 jest.mock('@blockchainApplication/manage/hooks/queries/useBlockchainApplicationMeta');
-jest.mock('../../hooks/queries/useApplicationsQuery');
+jest.mock('../../hooks/queries/useApplications');
 
 useBlockchainApplicationMeta.mockReturnValue({
   data: {
@@ -23,7 +23,7 @@ useBlockchainApplicationMeta.mockReturnValue({
   }
 })
 
-useApplicationsQuery.mockReturnValue({
+useApplications.mockReturnValue({
   data: {
     data: mockBlockchainApp.data
   }

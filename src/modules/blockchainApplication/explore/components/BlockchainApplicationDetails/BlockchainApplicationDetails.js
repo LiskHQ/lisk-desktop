@@ -15,7 +15,7 @@ import { useApplicationManagement } from 'src/modules/blockchainApplication/mana
 import { usePinBlockchainApplication } from '@blockchainApplication/manage/hooks/usePinBlockchainApplication';
 import defaultBackgroundImage from '../../../../../../setup/react/assets/images/default-chain-background.png';
 import styles from './BlockchainApplicationDetails.css';
-import useApplicationsQuery from '../../hooks/queries/useApplicationsQuery';
+import useApplications from '../../hooks/queries/useApplications';
 
 const deposit = 5e10;
 const serviceUrl = 'https://lisk.com/';
@@ -31,7 +31,7 @@ const BlockchainApplicationDetails = ({ history, location }) => {
 
   // TODO: Replace chainID here with chainID from location.search
   const application = useBlockchainApplicationMeta({ config: { params: { chainID: '00000001' } } })
-  const applicationQuery = useApplicationsQuery('00000001')
+  const applicationQuery = useApplications('00000001')
 
   
   const applicationData = application.data?.data?.[0] ?? {};
