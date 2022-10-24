@@ -74,7 +74,7 @@ export const votesSubmitted = (formProps, transactionJSON, privateKey) => async 
   const activeWallet = selectActiveTokenAccount(state);
 
   const [error, tx] = await to(
-    createGenericTx({
+    signTransaction({
       transactionJSON,
       wallet: activeWallet,
       schema: state.network.networks.LSK.moduleCommandSchemas[formProps.moduleCommand],
