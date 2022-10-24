@@ -12,24 +12,30 @@ import Tooltip from 'src/theme/Tooltip';
 import { parseSearchParams, removeThenAppendSearchParamsToUrl } from 'src/utils/searchParams';
 import { useApplicationManagement } from 'src/modules/blockchainApplication/manage/hooks';
 import { usePinBlockchainApplication } from '@blockchainApplication/manage/hooks/usePinBlockchainApplication';
+import { useBlockchainApplicationExplore } from '../../hooks/queries/useBlockchainApplicationExplore';
+import { useBlockchainApplicationMeta } from '../../../manage/hooks/queries/useBlockchainApplicationMeta';
 import defaultBackgroundImage from '../../../../../../setup/react/assets/images/default-chain-background.png';
 import liskLogo from '../../../../../../setup/react/assets/images/LISK.png';
 import styles from './BlockchainApplicationDetails.css';
 
 const deposit = 5e10;
-const serviceUrl = 'https://lisk.com/';
 const backgroundImage = null;
-const chainLogo = null;
 
 // eslint-disable-next-line max-statements
-const BlockchainApplicationDetails = ({ history, location, application }) => {
+const BlockchainApplicationDetails = ({ history, location }) => {
   const { t } = useTranslation();
   const chainId = parseSearchParams(location.search).chainId;
   const mode = parseSearchParams(location.search).mode;
+  const { data: onChainData } = useBlockchainApplicationExplore({
+    config: { params: { chainID: chainId } },
+  });
+  const { data: offChainData } = useBlockchainApplicationMeta({
+    config: { params: { chainID: chainId } },
+  });
+  const aggregatedApplicationData = { ...onChainData?.data[0], ...offChainData?.data[0] };
   const { checkPinByChainId, togglePin } = usePinBlockchainApplication();
-  const {
-    name, state, lastCertificateHeight, lastUpdated,
-  } = application.data;
+  const { name, state, lastCertificateHeight, lastUpdated, logo, projectPage } =
+    aggregatedApplicationData;
   const { setApplication } = useApplicationManagement();
 
   const isPinned = checkPinByChainId(chainId);
@@ -37,8 +43,12 @@ const BlockchainApplicationDetails = ({ history, location, application }) => {
     togglePin(chainId);
   };
   const addNewApplication = () => {
-    setApplication(application.data);
-    removeThenAppendSearchParamsToUrl(history, { modal: 'addApplicationSuccess', chainId: application.data.chainID }, ['modal', 'chainId', 'mode']);
+    setApplication(aggregatedApplicationData);
+    removeThenAppendSearchParamsToUrl(
+      history,
+      { modal: 'addApplicationSuccess', chainId: aggregatedApplicationData.chainID },
+      ['modal', 'chainId', 'mode']
+    );
   };
 
   const footerDetails = [
@@ -71,7 +81,7 @@ const BlockchainApplicationDetails = ({ history, location, application }) => {
     <Dialog hasClose hasBack className={`${styles.dialogWrapper} ${grid.row} ${grid['center-xs']}`}>
       <div className={styles.wrapper}>
         <div className={styles.avatarContainer}>
-          <img src={chainLogo || liskLogo} />
+          <img src={logo?.svg || liskLogo} />
           <img src={backgroundImage || defaultBackgroundImage} />
         </div>
         <Box className={styles.detailsWrapper}>
@@ -82,24 +92,16 @@ const BlockchainApplicationDetails = ({ history, location, application }) => {
             </TertiaryButton>
           </div>
           <div className={styles.addressRow}>
-            <a
-              className={`${styles.appLink}`}
-              target="_blank"
-                // eslint-disable-next-line
-                // TODO: this is just a placeholder link pending when its part of the response payload from service
-              href={serviceUrl}
-            >
+            <a className={`${styles.appLink}`} target="_blank" href={projectPage}>
               <Icon name="chainLinkIcon" className={styles.hwWalletIcon} />
-              {t(serviceUrl)}
+              {t(projectPage)}
             </a>
           </div>
           <div className={styles.balanceRow}>
             <span>{t('Deposited:')}</span>
             {/* TODO: this is a placeholder value pending when its part of service response */}
             <span>
-              <TokenAmount val={deposit} />
-              {' '}
-              LSK
+              <TokenAmount val={deposit} /> LSK
             </span>
           </div>
           <Box className={styles.footerDetailsRow}>
@@ -107,24 +109,20 @@ const BlockchainApplicationDetails = ({ history, location, application }) => {
               <ValueAndLabel
                 key={index}
                 className={styles.detail}
-                label={(
+                label={
                   <span className={styles.headerText}>
                     <>
                       {header.text || header}
                       {header.toolTipText && (
-                      <Tooltip position="right">
-                        <p>
-                          {header.toolTipText}
-                        </p>
-                      </Tooltip>
+                        <Tooltip position="right">
+                          <p>{header.toolTipText}</p>
+                        </Tooltip>
                       )}
                     </>
                   </span>
-                  )}
+                }
               >
-                <span className={className}>
-                  {content}
-                </span>
+                <span className={className}>{content}</span>
               </ValueAndLabel>
             ))}
           </Box>

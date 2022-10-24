@@ -1,8 +1,15 @@
 import moment from 'moment';
 import { fireEvent, screen } from '@testing-library/react';
-import mockBlockchainApplications from '@tests/fixtures/blockchainApplicationsExplore';
-import { renderWithRouter } from 'src/utils/testHelpers';
-import { useApplicationManagement, usePinBlockchainApplication } from '@blockchainApplication/manage/hooks';
+import {
+  renderWithRouterAndQueryClient,
+  rerenderWithRouterAndQueryClient,
+} from 'src/utils/testHelpers';
+import {
+  useApplicationManagement,
+  usePinBlockchainApplication,
+} from '@blockchainApplication/manage/hooks';
+import { mockBlockchainApp } from '../../__fixtures__';
+import { mockBlockchainAppMeta } from '../../../manage/__fixtures__';
 import BlockchainApplicationDetails from './index';
 
 const mockedPins = ['1111'];
@@ -11,6 +18,20 @@ const mockSetApplication = jest.fn();
 
 jest.mock('@blockchainApplication/manage/hooks/usePinBlockchainApplication');
 jest.mock('@blockchainApplication/manage/hooks/useApplicationManagement');
+jest.mock('../../hooks/queries/useBlockchainApplicationExplore', () => ({
+  useBlockchainApplicationExplore: jest.fn(() => ({
+    data: { data: mockBlockchainApp.data },
+    isLoading: false,
+    error: undefined,
+  })),
+}));
+jest.mock('../../../manage/hooks/queries/useBlockchainApplicationMeta', () => ({
+  useBlockchainApplicationMeta: jest.fn(() => ({
+    data: { data: mockBlockchainAppMeta.data },
+    isLoading: false,
+    error: undefined,
+  })),
+}));
 
 usePinBlockchainApplication.mockReturnValue({
   togglePin: mockTogglePin,
@@ -21,30 +42,25 @@ usePinBlockchainApplication.mockReturnValue({
 useApplicationManagement.mockReturnValue({
   setApplication: mockSetApplication,
 });
+const aggregatedApplicationData = {
+  ...mockBlockchainApp.data[0],
+  ...mockBlockchainAppMeta.data[0],
+};
 
 describe('BlockchainApplicationDetails', () => {
   const props = {
     location: {
       search: 'chainId=test-chain-id',
     },
-    application: {
-      data: mockBlockchainApplications[0],
-      isLoading: true,
-      loadData: jest.fn(),
-      error: false,
-    },
   };
 
   beforeEach(() => {
     jest.clearAllMocks();
-    renderWithRouter(BlockchainApplicationDetails, props);
+    renderWithRouterAndQueryClient(BlockchainApplicationDetails, props);
   });
 
   it('should display properly', () => {
-    const {
-      name, state, lastCertificateHeight, lastUpdated,
-    } = mockBlockchainApplications[0];
-
+    const { name, state, lastCertificateHeight, lastUpdated } = mockBlockchainApp.data[0];
     expect(screen.getByText(name)).toBeTruthy();
     expect(screen.getByText(state)).toBeTruthy();
     expect(screen.getByText(lastCertificateHeight)).toBeTruthy();
@@ -67,15 +83,13 @@ describe('BlockchainApplicationDetails', () => {
   });
 
   it('should show application as unpinned', () => {
-    usePinBlockchainApplication.mockReturnValue(
-      {
-        togglePin: mockTogglePin,
-        pins: mockedPins,
-        checkPinByChainId: jest.fn().mockReturnValue(false),
-      },
-    );
+    usePinBlockchainApplication.mockReturnValue({
+      togglePin: mockTogglePin,
+      pins: mockedPins,
+      checkPinByChainId: jest.fn().mockReturnValue(false),
+    });
 
-    renderWithRouter(BlockchainApplicationDetails, props);
+    rerenderWithRouterAndQueryClient(BlockchainApplicationDetails, props);
     expect(screen.getByAltText('unpinnedIcon')).toBeTruthy();
   });
 
@@ -87,9 +101,9 @@ describe('BlockchainApplicationDetails', () => {
         search: 'chainId=test-chain-id&mode=addApplication',
       },
     };
-    renderWithRouter(BlockchainApplicationDetails, updatedProps);
+    rerenderWithRouterAndQueryClient(BlockchainApplicationDetails, updatedProps);
     expect(screen.getByTestId('add-application-button')).toBeTruthy();
     fireEvent.click(screen.getByTestId('add-application-button'));
-    expect(mockSetApplication).toHaveBeenCalledWith(props.application.data);
+    expect(mockSetApplication).toHaveBeenCalledWith(aggregatedApplicationData);
   });
 });
