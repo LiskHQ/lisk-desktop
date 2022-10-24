@@ -40,6 +40,6 @@ describe('SelectNode', () => {
     expect(mockSetCurrentApplication).toHaveBeenCalledTimes(1);
     expect(mockSetCurrentApplication).toHaveBeenCalledWith(selectedApplication);
     expect(mockSetCurrentNode).toHaveBeenCalledTimes(1);
-    expect(mockSetCurrentNode).toHaveBeenCalledWith(mockBlockChainApplications[4].apis[0]);
+    expect(mockSetCurrentNode).toHaveBeenCalledWith(mockBlockChainApplications[4].serviceURLs[0]);
   });
 });

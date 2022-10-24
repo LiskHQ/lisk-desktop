@@ -22,7 +22,7 @@ describe('Application Explorer selector', () => {
     expect(selectCurrentApplication(state)).toEqual(mockApplications[0]);
   });
   it('Should return current application node if setApplicationNode action type is triggered', async () => {
-    const state = { blockChainApplications: { node: mockApplications[0].apis[0].rest } };
-    expect(selectCurrentNode(state)).toEqual(mockApplications[0].apis[0].rest);
+    const state = { blockChainApplications: { node: mockApplications[0].serviceURLs[0].rest } };
+    expect(selectCurrentNode(state)).toEqual(mockApplications[0].serviceURLs[0].rest);
   });
 });

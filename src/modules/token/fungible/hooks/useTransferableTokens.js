@@ -4,7 +4,7 @@ import { Client } from 'src/utils/api/client';
 
 export const useTransferableTokens = (application) => {
   const client = useRef(new Client());
-  client.current.create(application?.apis[0]);
+  client.current.create(application?.serviceURLs[0]);
 
   const {
     data: { data: myTokens = [] } = {},

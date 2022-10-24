@@ -1,6 +1,8 @@
 export const networkKeys = {
   mainNet: 'mainnet',
-  testNet: 'testnet',
+  alphanet: 'alphanet',
+  betanet: 'betanet',
+  devNet: 'devnet',
   customNode: 'customNode',
 };
 

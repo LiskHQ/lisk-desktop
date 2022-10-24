@@ -14,7 +14,7 @@ import styles from './SelectNode.css';
 const NodeComponent = ({ node, selectAppNode }) => (
   <div className={grid['col-xs-6']} onClick={() => selectAppNode(node)} data-testid="application-node-row">
     <div className={`${styles.node} select-node-row`}>
-      {node.rest}
+      {node.http}
       <Icon name="arrowRightActive" color="red" />
     </div>
   </div>
@@ -49,7 +49,7 @@ const SelectNode = ({ history, location }) => {
         <BoxContent className={styles.contentWrapper}>
           <div className={`${styles.content} application-content`}>{t('Choose application URL')}</div>
           <div className={grid.row}>
-            {application.apis.map((node) => (
+            {application.serviceURLs.map((node) => (
               <NodeComponent node={node} key={node.rpc} selectAppNode={selectAppNode} />
             ))}
           </div>

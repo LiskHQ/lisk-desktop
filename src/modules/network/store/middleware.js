@@ -13,7 +13,8 @@ const readStoredNetwork = ({ dispatch, getState }) => {
   const config = network?.name && network?.address
     ? network
     : {
-      name: networkKeys.mainNet,
+      // TODO: Revert to mainnet;
+      name: networkKeys.devNet,
       address: network?.networks?.mainnet?.serviceUrl,
     };
   dispatch(networkSelected(config));
