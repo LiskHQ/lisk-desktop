@@ -21,7 +21,7 @@
     color: var(--color-maastricht-blue);
 
     & > span {
-      @mixin contentLargest semi-bold;
+      @mixin contentLarge semi-bold;
     }
   }
 }

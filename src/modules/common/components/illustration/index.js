@@ -48,7 +48,7 @@ import registerMultisignatureSuccess from '@setup/react/assets/images/illustrati
 import registerMultisignatureSuccessDark from '@setup/react/assets/images/illustrations/multisignature-success-dark.svg';
 import registerMultisignatureError from '@setup/react/assets/images/illustrations/multisignature-error.svg';
 import registerMultisignatureErrorDark from '@setup/react/assets/images/illustrations/multisignature-error-dark.svg';
-import reclaimBalanceIntro from '@setup/react/assets/images/illustrations/reclaim-balance-intro.svg';
+import reclaimTokensIntro from '@setup/react/assets/images/illustrations/reclaim-tokens-intro.svg';
 import trezorHwRejection from '@setup/react/assets/images/illustrations/hw-rejection-trezor.svg';
 import trezorHwRejectionDark from '@setup/react/assets/images/illustrations/hw-rejection-trezor-dark.svg';
 import ledgerNanoHwRejection from '@setup/react/assets/images/illustrations/hw-rejection-ledger-nano.svg';
@@ -99,7 +99,7 @@ export const illustrations = {
   registerMultisignatureSuccessDark,
   registerMultisignatureError,
   registerMultisignatureErrorDark,
-  reclaimBalanceIntro,
+  reclaimTokensIntro,
   transactionPending,
   transactionPendingDark,
   multisignaturePartialSuccess,
@@ -113,7 +113,8 @@ export const illustrations = {
 
 const Illustration = ({ name, className, noTheme }) => {
   const theme = useTheme();
-  const themed = theme === 'dark' && !noTheme && illustrations[`${name}Dark`] ? `${name}Dark` : name;
+  const themed =
+    theme === 'dark' && !noTheme && illustrations[`${name}Dark`] ? `${name}Dark` : name;
   return <img src={illustrations[themed]} className={className} />;
 };
 

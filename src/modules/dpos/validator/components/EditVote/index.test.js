@@ -31,11 +31,13 @@ jest.mock('@auth/hooks/queries');
 
 describe('EditVote', () => {
   let wrapper;
+  const delegateAddress = 'lskjq7jh2k7q332wgkz3bxogb8bj5zc3fcnb9ya53';
   const props = {
-    history: { location: { search: `?address=${mockDelegates.data[0].address}` }, push: jest.fn() },
+    history: { location: { search: `?address=${delegateAddress}` }, push: jest.fn() },
     voteEdited: jest.fn(),
     network: {},
     voting: {},
+    votesRetrieved: jest.fn(),
   };
 
   beforeEach(() => {
@@ -52,12 +54,25 @@ describe('EditVote', () => {
   it('should properly render add vote form', () => {
     const delegate = mockDelegates.data[0];
     const token = mockTokensBalance.data[0];
+    const address = 'lsk6wrjbs66uo9eoqr4t86afvd4yym6ovj4afunvh';
+
+    wrapper.rerender(
+      <MemoryRouter initialEntries={['/']}>
+        <EditVote
+          {...props}
+          history={{
+            ...props.history,
+            location: { search: `?address=${address}` },
+          }}
+        />
+      </MemoryRouter>
+    );
 
     expect(screen.getByText('Add to voting queue')).toBeTruthy();
-    expect(screen.getByText(delegate.address)).toBeTruthy();
+    expect(screen.getByText(address)).toBeTruthy();
     expect(screen.getByText(delegate.name)).toBeTruthy();
-    expect(screen.getByTestId(`wallet-visual-${delegate.address}`)).toBeTruthy();
-    expect(screen.getByText('Available Bal:')).toBeTruthy();
+    expect(screen.getByTestId(`wallet-visual-${address}`)).toBeTruthy();
+    expect(screen.getByText('Available balance:')).toBeTruthy();
     expect(
       screen.getByText(
         `${numeral(fromRawLsk(token.availableBalance)).format('0,0.[0000000000000]')} ${
@@ -67,10 +82,9 @@ describe('EditVote', () => {
     ).toBeTruthy();
     expect(
       screen.getByText(
-        'Input your vote amount. This value shows how much trust you have in this delegate.'
+        'Insert a vote amount for this delegate. Your new vote will be added to the voting queue.'
       )
     ).toBeTruthy();
-    expect(screen.getByText('~0.00 USD')).toBeTruthy();
     expect(screen.getByText('Vote amount ({{symbol}})')).toBeTruthy();
   });
 
@@ -84,7 +98,7 @@ describe('EditVote', () => {
     await waitFor(() => {
       expect(props.voteEdited).toHaveBeenCalledWith([
         {
-          address: delegate.address,
+          address: delegateAddress,
           name: delegate.name,
           amount: toRawLsk(20),
         },
@@ -93,38 +107,48 @@ describe('EditVote', () => {
   });
 
   it('should render the confirmation modal and go back to the voting form', () => {
-    const delegate = mockDelegates.data[0];
-    const token = mockTokensBalance.data[0];
+    const address = 'lsk6wrjbs66uo9eoqr4t86afvd4yym6ovj4afunvh';
+
+    wrapper.rerender(
+      <MemoryRouter initialEntries={['/']}>
+        <EditVote
+          {...props}
+          history={{
+            ...props.history,
+            location: { search: `?address=${address}` },
+          }}
+        />
+      </MemoryRouter>
+    );
 
     fireEvent.click(screen.getByText('Confirm'));
     expect(screen.getByText('Vote added')).toBeTruthy();
     expect(screen.getByText('Your vote has been added to your voting queue')).toBeTruthy();
 
     fireEvent.click(screen.getByText('Continue voting'));
-    expect(screen.getByText('Add to voting queue')).toBeTruthy();
-    expect(screen.getByText(delegate.address)).toBeTruthy();
-    expect(screen.getByText(delegate.name)).toBeTruthy();
-    expect(screen.getByTestId(`wallet-visual-${delegate.address}`)).toBeTruthy();
-    expect(screen.getByText('Available Bal:')).toBeTruthy();
-    expect(
-      screen.getByText(
-        `${numeral(fromRawLsk(token.availableBalance)).format('0,0.[0000000000000]')} ${
-          token.symbol
-        }`
-      )
-    ).toBeTruthy();
-    expect(
-      screen.getByText(
-        'Input your vote amount. This value shows how much trust you have in this delegate.'
-      )
-    ).toBeTruthy();
-    expect(screen.getByText('~0.00 USD')).toBeTruthy();
-    expect(screen.getByText('Vote amount ({{symbol}})')).toBeTruthy();
+    expect(props.history.push).toHaveBeenCalled();
   });
 
-  it('should render the confirmation modal and proceed to the voting queue', () => {
+  it('should render the confirmation modal and proceed to the voting queue', async () => {
+    const address = 'lsk6wrjbs66uo9eoqr4t86afvd4yym6ovj4afunvh';
+
+    wrapper.rerender(
+      <MemoryRouter initialEntries={['/']}>
+        <EditVote
+          {...props}
+          history={{
+            ...props.history,
+            location: { search: `?address=${address}` },
+          }}
+        />
+      </MemoryRouter>
+    );
+
     fireEvent.click(screen.getByText('Confirm'));
-    fireEvent.click(screen.getByText('Go to the voting queue'));
+
+    await waitFor(() => {
+      fireEvent.click(screen.getByText('Go to the voting queue'));
+    });
 
     expect(props.history.push).toHaveBeenCalled();
   });
@@ -138,7 +162,7 @@ describe('EditVote', () => {
         data: {
           ...mockSentVotes.data,
           votes: mockSentVotes.data.votes.map((vote, index) =>
-            index === 0 ? { ...vote, delegateAddress: delegate.address } : vote
+            index === 0 ? { ...vote, delegateAddress } : vote
           ),
         },
       },
@@ -164,25 +188,17 @@ describe('EditVote', () => {
     await waitFor(() => {
       expect(props.voteEdited).toHaveBeenCalledWith([
         {
-          address: delegate.address,
+          address: delegateAddress,
           name: delegate.name,
           amount: toRawLsk(20),
         },
       ]);
     });
 
+    expect(screen.getByText('Vote added')).toBeTruthy();
+    expect(screen.getByText('Your vote has been added to your voting queue')).toBeTruthy();
+
+    fireEvent.click(screen.getByText('Continue voting'));
     expect(props.history.push).toHaveBeenCalled();
-
-    fireEvent.click(screen.getByText('Remove vote'));
-
-    await waitFor(() => {
-      expect(props.voteEdited).toHaveBeenCalledWith([
-        {
-          address: delegate.address,
-          name: delegate.name,
-          amount: 0,
-        },
-      ]);
-    });
   });
 });

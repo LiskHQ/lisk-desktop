@@ -1,13 +1,14 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useMemo, useState } from 'react';
 import { useSelector } from 'react-redux';
 import { useTranslation } from 'react-i18next';
 
 import { validateAmountFormat } from 'src/utils/validators';
 import { fromRawLsk } from '@token/fungible/utils/lsk';
 import { selectSearchParamValue } from 'src/utils/searchParams';
-import { selectAccountBalance, selectLSKAddress } from 'src/redux/selectors';
+import { selectLSKAddress } from 'src/redux/selectors';
 import { regex } from 'src/const/regex';
 import { tokenMap } from '@token/fungible/consts/tokens';
+import { useTokensBalance } from 'src/modules/token/fungible/hooks/queries';
 
 let loaderTimeout = null;
 
@@ -22,7 +23,7 @@ let loaderTimeout = null;
  */
 const getAmountFeedbackAndError = (value, balance, minValue, inputValue) => {
   const { message: feedback } = validateAmountFormat({
-    value,
+    value: +value,
     token: tokenMap.LSK.key,
     funds: parseInt(balance, 10),
     checklist: ['NEGATIVE_VOTE', 'ZERO', 'VOTE_10X', 'INSUFFICIENT_VOTE_FUNDS', 'MIN_BALANCE', 'FORMAT'],
@@ -42,8 +43,15 @@ const getAmountFeedbackAndError = (value, balance, minValue, inputValue) => {
  */
 // eslint-disable-next-line max-statements
 const useVoteAmountField = (initialValue) => {
+  // @Todo this is just a place holder pending when dpos constants are integrated by this issue #4502
+  const dposTokenId = '0'.repeat(16);
+
+  // Since we know the dposTokenId we need to get the token's object
+  const { data: tokens, isLoading: isGettingDposToken } = useTokensBalance({ config: { params: { tokenID: dposTokenId } } });
+  const token = useMemo(() => tokens?.data?.[0] || {}, [tokens]);
+
   const { i18n } = useTranslation();
-  const balance = useSelector(selectAccountBalance); // @todo account has multiple balance now
+  const balance = Number(token.availableBalance || 0);
   const host = useSelector(selectLSKAddress);
   const searchDetails = window.location.href.replace(/.*[?]/, '');
   const address = selectSearchParamValue(`?${searchDetails}`, 'address');
@@ -62,7 +70,7 @@ const useVoteAmountField = (initialValue) => {
   });
 
   useEffect(() => {
-    if (!amountField.value && initialValue) {
+    if (!(+amountField.value) && initialValue) {
       setAmountField({
         value: initialValue,
         isLoading: false,
@@ -70,7 +78,7 @@ const useVoteAmountField = (initialValue) => {
         feedback: '',
       });
     }
-  }, [initialValue]);
+  }, [initialValue, token]);
 
   const onAmountInputChange = ({ value }) => {
     const { leadingPoint } = regex.amount[i18n.language];
@@ -97,7 +105,7 @@ const useVoteAmountField = (initialValue) => {
     }, 300);
   };
 
-  return [amountField, onAmountInputChange];
+  return [amountField, onAmountInputChange, isGettingDposToken];
 };
 
 export default useVoteAmountField;

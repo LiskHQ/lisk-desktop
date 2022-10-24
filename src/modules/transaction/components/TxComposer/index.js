@@ -56,7 +56,6 @@ const TxComposer = ({
     }
   }, [selectedPriority, transaction.asset]);
 
-
   const minRequiredBalance = getMinRequiredBalance(transaction, status.fee);
   const { recipientChain, sendingChain } = transaction;
 
@@ -71,7 +70,6 @@ const TxComposer = ({
 
   rawTx.composedFees = composedFees;
   rawTx.fee = toRawLsk(status.fee.value);
-  rawTx.composedFees = composedFees;
   if (recipientChain && sendingChain) {
     rawTx.recipientChain = recipientChain;
     rawTx.sendingChain = sendingChain;
@@ -102,10 +100,7 @@ const TxComposer = ({
       <BoxFooter>
         <PrimaryButton
           className="confirm-btn"
-          onClick={() => onConfirm(
-            rawTx,
-            selectedPriority,
-          )}
+          onClick={() => onConfirm(rawTx, selectedPriority)}
           disabled={!transaction.isValid || minRequiredBalance > wallet.token?.balance}
         >
           {buttonTitle ?? t('Continue')}

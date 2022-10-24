@@ -7,6 +7,7 @@ import sampleVotes from '@tests/constants/votes';
 import wallets from '@tests/constants/wallets';
 import moduleCommandSchemas from '@tests/constants/schemas';
 import txActionTypes from '@transaction/store/actionTypes';
+import mockSavedAccounts from '@tests/fixtures/accounts';
 import * as delegateApi from '../../api';
 import actionTypes from './actionTypes';
 import {
@@ -52,6 +53,9 @@ describe('actions: voting', () => {
           moduleCommandSchemas,
         },
       },
+    },
+    account: {
+      current: mockSavedAccounts[0],
     },
     wallet: {
       loginType: 0,
@@ -243,7 +247,7 @@ describe('actions: voting', () => {
         schema: state.network.networks.LSK.moduleCommandSchemas[transactionObject.moduleCommand],
         chainID: state.network.networks.LSK.chainID,
         transactionObject,
-        privateKey
+        privateKey,
       });
       expect(dispatch).toHaveBeenCalledWith({
         type: txActionTypes.transactionCreatedSuccess,

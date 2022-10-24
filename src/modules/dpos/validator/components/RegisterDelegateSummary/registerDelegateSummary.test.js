@@ -2,7 +2,16 @@ import React from 'react';
 import { mount } from 'enzyme';
 import { mountWithRouterAndStore } from 'src/utils/testHelpers';
 import accounts from '@tests/constants/wallets';
+import { useAuth } from '@auth/hooks/queries';
+import { mockAuth } from 'src/modules/auth/__fixtures__';
+import mockSavedAccounts from '@tests/fixtures/accounts';
 import Summary from './RegisterDelegateSummary';
+
+const mockedCurrentAccount = mockSavedAccounts[0];
+jest.mock('@auth/hooks/queries');
+jest.mock('@account/hooks', () => ({
+  useCurrentAccount: jest.fn(() => [mockedCurrentAccount, jest.fn()]),
+}));
 
 describe('Delegate Registration Summary', () => {
   const props = {
@@ -16,12 +25,14 @@ describe('Delegate Registration Summary', () => {
     account: accounts.genesis,
     prevStep: jest.fn(),
     nextStep: jest.fn(),
-    t: key => key,
+    t: (key) => key,
   };
 
   afterEach(() => {
     props.nextStep.mockRestore();
   });
+
+  useAuth.mockReturnValue({ data: mockAuth });
 
   it('renders properly Summary component', () => {
     const wrapper = mount(<Summary {...props} />);
@@ -40,9 +51,7 @@ describe('Delegate Registration Summary', () => {
   });
 
   it('submit user data when click in confirm button', () => {
-    const wrapper = mountWithRouterAndStore(
-      Summary, props, {}, {},
-    );
+    const wrapper = mountWithRouterAndStore(Summary, props, {}, {});
     expect(props.nextStep).not.toBeCalled();
     wrapper.find('button.confirm-button').simulate('click');
     expect(props.nextStep).toBeCalledWith({

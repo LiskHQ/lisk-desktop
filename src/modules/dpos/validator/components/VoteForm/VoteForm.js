@@ -1,12 +1,13 @@
+/* eslint-disable max-statements */
 import React, { useMemo, useState } from 'react';
 import { MODULE_COMMANDS_NAME_MAP } from 'src/modules/transaction/configuration/moduleCommand';
 import { MIN_ACCOUNT_BALANCE } from '@transaction/configuration/transactions';
 import { toRawLsk } from '@token/fungible/utils/lsk';
 import { normalizeVotesForTx } from '@transaction/utils';
 import BoxContent from '@theme/box/content';
+import Dialog from 'src/theme/dialog/dialog';
 import TxComposer from '@transaction/components/TxComposer';
 import Table from '@theme/table';
-import ToggleIcon from '../ToggleIcon';
 import { VOTE_LIMIT } from '../../consts';
 import VoteRow from './VoteRow';
 import EmptyState from './EmptyState';
@@ -21,42 +22,41 @@ import styles from './voteForm.css';
  * @returns {Object} - stats object
  */
 const getVoteStats = (votes, account) => {
-  const votesStats = Object.keys(votes)
-    .reduce(
-      // eslint-disable-next-line max-statements
-      (stats, address) => {
-        const { confirmed, unconfirmed, username } = votes[address];
+  const votesStats = Object.keys(votes).reduce(
+    // eslint-disable-next-line max-statements
+    (stats, address) => {
+      const { confirmed, unconfirmed, username } = votes[address];
 
-        if (confirmed === 0 && unconfirmed === 0) {
-          return stats;
-        }
-
-        if (!confirmed && unconfirmed) {
-          // new vote
-          stats.added[address] = { unconfirmed, username };
-        } else if (confirmed && !unconfirmed) {
-          // removed vote
-          stats.removed[address] = { confirmed, username };
-          if (address === account.summary.address) {
-            stats.selfUnvote = { confirmed, username };
-          }
-        } else if (confirmed !== unconfirmed) {
-          // edited vote
-          stats.edited[address] = { unconfirmed, confirmed, username };
-        } else {
-          // untouched
-          stats.untouched[address] = { unconfirmed, confirmed, username };
-        }
+      if (confirmed === 0 && unconfirmed === 0) {
         return stats;
-      },
-      {
-        added: {},
-        edited: {},
-        removed: {},
-        untouched: {},
-        selfUnvote: {},
-      },
-    );
+      }
+
+      if (!confirmed && unconfirmed) {
+        // new vote
+        stats.added[address] = { unconfirmed, username };
+      } else if (confirmed && !unconfirmed) {
+        // removed vote
+        stats.removed[address] = { confirmed, username };
+        if (address === account.summary?.address) {
+          stats.selfUnvote = { confirmed, username };
+        }
+      } else if (confirmed !== unconfirmed) {
+        // edited vote
+        stats.edited[address] = { unconfirmed, confirmed, username };
+      } else {
+        // untouched
+        stats.untouched[address] = { unconfirmed, confirmed, username };
+      }
+      return stats;
+    },
+    {
+      added: {},
+      edited: {},
+      removed: {},
+      untouched: {},
+      selfUnvote: {},
+    }
+  );
 
   const numOfAddededVotes = Object.keys(votesStats.added).length;
   const numOfEditedVotes = Object.keys(votesStats.edited).length;
@@ -64,7 +64,7 @@ const getVoteStats = (votes, account) => {
   const numOfRemovedVotes = Object.keys(votesStats.removed).length;
 
   const resultingNumOfVotes = numOfAddededVotes + numOfEditedVotes + numOfUntouchedVotes;
-  const availableVotes = VOTE_LIMIT - (numOfEditedVotes + numOfUntouchedVotes + numOfRemovedVotes);
+  const availableVotes = VOTE_LIMIT - (numOfEditedVotes + numOfUntouchedVotes + numOfRemovedVotes + numOfAddededVotes);
 
   return {
     ...votesStats,
@@ -85,23 +85,21 @@ const getVoteStats = (votes, account) => {
  * @returns {Object} The feedback object including error status and messages
  */
 // eslint-disable-next-line max-statements
-const validateVotes = (votes, balance, fee, resultingNumOfVotes, t) => {
+const validateVotes = (votes, balance, fee, resultingNumOfVotes, t, dposToken) => {
   const messages = [];
   const areVotesInValid = Object.values(votes).some(
-    (vote) => vote.unconfirmed === '' || vote.unconfirmed === undefined,
+    (vote) => vote.unconfirmed === '' || vote.unconfirmed === undefined
   );
 
   if (areVotesInValid) {
-    messages.push(
-      t('Please enter vote amounts for the delegates you wish to vote for'),
-    );
+    messages.push(t('Please enter vote amounts for the delegates you wish to vote for'));
   }
 
   if (resultingNumOfVotes > VOTE_LIMIT) {
     messages.push(
       t(
-        `These votes in addition to your current votes will add up to ${resultingNumOfVotes}, exceeding the account limit of ${VOTE_LIMIT}.`,
-      ),
+        `These votes in addition to your current votes will add up to ${resultingNumOfVotes}, exceeding the account limit of ${VOTE_LIMIT}.`
+      )
     );
   }
 
@@ -113,44 +111,29 @@ const validateVotes = (votes, balance, fee, resultingNumOfVotes, t) => {
     }, 0);
 
   if (addedVoteAmount + toRawLsk(fee) > balance) {
-    messages.push(t("You don't have enough LSK in your account."));
+    messages.push(t(`You don't have enough ${dposToken.symbol} in your account.`));
   }
 
-  if (
-    balance - addedVoteAmount < MIN_ACCOUNT_BALANCE
-    && balance - addedVoteAmount
-  ) {
+  if (balance - addedVoteAmount < MIN_ACCOUNT_BALANCE && balance - addedVoteAmount) {
     messages.push(
-      'The vote amounts are too high. You should keep 0.05 LSK available in your account.',
+      `The vote amounts are too high. You should keep 0.05 ${dposToken.symbol} available in your account.`
     );
   }
 
   return { messages, error: !!messages.length };
 };
 
-const VoteForm = ({
-  t,
-  votes,
-  account,
-  isVotingTxPending,
-  nextStep,
-}) => {
+const VoteForm = ({ t, votes, account, isVotingTxPending, nextStep, history, dposToken }) => {
   const [fee, setFee] = useState(0);
   const changedVotes = Object.keys(votes)
-    .filter(
-      (address) => votes[address].unconfirmed !== votes[address].confirmed,
-    )
+    .filter((address) => votes[address].unconfirmed !== votes[address].confirmed)
     .map((address) => ({ address, ...votes[address] }));
 
   const normalizedVotes = useMemo(() => normalizeVotesForTx(votes), [votes]);
-  const {
-    added,
-    edited,
-    removed,
-    selfUnvote,
-    availableVotes,
-    resultingNumOfVotes,
-  } = useMemo(() => getVoteStats(votes, account), [votes, account]);
+  const { added, edited, removed, selfUnvote, availableVotes, resultingNumOfVotes } = useMemo(
+    () => getVoteStats(votes, account),
+    [votes, account]
+  );
 
   const feedback = validateVotes(
     votes,
@@ -158,6 +141,7 @@ const VoteForm = ({
     fee,
     resultingNumOfVotes,
     t,
+    dposToken,
   );
 
   const onConfirm = (rawTx, selectedPriority, fees) => {
@@ -186,14 +170,9 @@ const VoteForm = ({
   };
 
   return (
-    <section className={styles.wrapper}>
-      <TxComposer
-        onComposed={onComposed}
-        onConfirm={onConfirm}
-        transaction={transaction}
-      >
+    <Dialog hasClose className={`${styles.wrapper}`}>
+      <TxComposer onComposed={onComposed} onConfirm={onConfirm} transaction={transaction}>
         <>
-          <ToggleIcon isNotHeader className={styles.toggle} />
           {showEmptyState ? (
             <EmptyState t={t} />
           ) : (
@@ -212,11 +191,16 @@ const VoteForm = ({
                 </header>
                 <div className={styles.contentScrollable}>
                   <Table
+                    showHeader
                     data={changedVotes}
                     header={header(t)}
                     row={VoteRow}
                     iterationKey="address"
                     canLoadMore={false}
+                    additionalRowProps={{
+                      history,
+                    }}
+                    headerClassName={styles.tableHeader}
                   />
                 </div>
               </BoxContent>
@@ -229,7 +213,7 @@ const VoteForm = ({
           )}
         </>
       </TxComposer>
-    </section>
+    </Dialog>
   );
 };
 

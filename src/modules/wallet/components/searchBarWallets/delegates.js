@@ -18,10 +18,10 @@ const Delegates = ({
           key={index}
           data-index={index}
           className={`${styles.accountRow} ${rowItemIndex === index ? styles.active : ''} delegates-row`}
-          onClick={() => onSelectedRow(delegate.summary.address)}
+          onClick={() => onSelectedRow(delegate.address)}
           onMouseEnter={updateRowItemIndex}
         >
-          <WalletVisual address={delegate.summary.address} />
+          <WalletVisual address={delegate.address} />
           <div className={styles.walletInformation}>
             <div>
               <span className={`${styles.delegateName} delegate-name`}>
@@ -29,20 +29,20 @@ const Delegates = ({
                   highlightClassName={styles.highlight}
                   searchWords={[searchTextValue]}
                   autoEscape
-                  textToHighlight={delegate.dpos.delegate.username}
+                  textToHighlight={delegate.name}
                 />
               </span>
             </div>
             <span className={`${styles.accountSubtitle} hideOnLargeViewPort`}>
-              {truncateAddress(delegate.summary.address)}
+              {truncateAddress(delegate.address)}
             </span>
             <span className={`${styles.accountSubtitle} showOnLargeViewPort`}>
-              {delegate.summary.address}
+              {delegate.address}
             </span>
           </div>
           <span className={styles.accountBalance}>
             <span className={styles.tag}>
-              {t('Delegate #{{rank}}', { rank: delegate.dpos.delegate.rank })}
+              {t('Delegate #{{rank}}', { rank: delegate.rank })}
             </span>
           </span>
         </div>

@@ -89,7 +89,7 @@ class ChooseAvatar extends React.Component {
         <div className={`${registerStyles.buttonsHolder} ${styles.buttons}`}>
           <Link
             className={`${registerStyles.button} ${registerStyles.backButton}`}
-            to={routes.login.path}
+            to={routes.manageAccounts.path}
           >
             <TertiaryButton>{t('Go back')}</TertiaryButton>
           </Link>

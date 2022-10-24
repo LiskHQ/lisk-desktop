@@ -6,7 +6,7 @@ import styles from './walletsAndDeletegates.css';
 const Wallets = ({
   wallets, onSelectedRow, t, rowItemIndex, updateRowItemIndex,
 }) => {
-  const isDelegate = wallets.some(wallet => wallet.summary?.isDelegate);
+  const isDelegate = wallets.some(wallet => wallet.isDelegate);
 
   return (
     <div className={`${styles.wrapper} accounts`}>
@@ -20,10 +20,10 @@ const Wallets = ({
             key={index}
             data-index={index}
             className={`${styles.accountRow} ${rowItemIndex === index ? styles.active : ''} account-row`}
-            onClick={() => onSelectedRow(wallet.summary?.address)}
+            onClick={() => onSelectedRow(wallet.address)}
             onMouseEnter={updateRowItemIndex}
           >
-            <WalletVisual address={wallet.summary?.address} />
+            <WalletVisual address={wallet.address} />
             <div className={styles.walletInformation}>
               {
                 isDelegate
@@ -31,20 +31,20 @@ const Wallets = ({
                     <>
                       <div>
                         <span className={`${styles.accountTitle} account-title`}>
-                          {wallet.dpos.delegate.username}
+                          {wallet.name}
                         </span>
                       </div>
                       <span className={`${styles.accountSubtitle} hideOnLargeViewPort`}>
-                        {truncateAddress(wallet.summary?.address)}
+                        {truncateAddress(wallet.address)}
                       </span>
                       <span className={`${styles.accountSubtitle} showOnLargeViewPort`}>
-                        {wallet.summary?.address}
+                        {wallet.address}
                       </span>
                     </>
                   )
                   : (
                     <span className={`${styles.accountTitle} account-title`}>
-                      {wallet.summary?.address}
+                      {wallet.address}
                     </span>
                   )
               }
@@ -54,8 +54,8 @@ const Wallets = ({
                 ? (
                   <span className={`${styles.tag} tag`}>
                     {
-                      wallet.dpos
-                        ? t('Delegate #{{rank}}', { rank: wallet.dpos.delegate.rank })
+                      wallet.rank
+                        ? t('Delegate #{{rank}}', { rank: wallet.rank })
                         : '-'
                     }
                   </span>

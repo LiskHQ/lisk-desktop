@@ -1,6 +1,16 @@
 import { mountWithRouter } from 'src/utils/testHelpers';
+import { useAuth } from '@auth/hooks/queries';
+import { mockAuth } from 'src/modules/auth/__fixtures__';
 import accounts from '@tests/constants/wallets';
+import mockSavedAccounts from '@tests/fixtures/accounts';
 import Summary from './VoteSummary';
+
+const mockedCurrentAccount = mockSavedAccounts[0];
+
+jest.mock('@auth/hooks/queries');
+jest.mock('@account/hooks', () => ({
+  useCurrentAccount: jest.fn(() => [mockedCurrentAccount, jest.fn()]),
+}));
 
 const added = {
   lskdwsyfmcko6mcd357446yatromr9vzgu7eb8y11: {
@@ -106,13 +116,13 @@ beforeEach(() => {
 });
 
 describe('VotingQueue.Summary', () => {
+  useAuth.mockReturnValue({ data: mockAuth });
+
   it('renders properly', () => {
     const wrapper = mountWithRouter(Summary, props);
 
     expect(wrapper).toContainMatchingElement('VoteStats');
-    expect(wrapper).toContainMatchingElement('.fee-value-transaction');
-    expect(wrapper).toContainMatchingElement('.total-votes');
-    expect(wrapper).toContainMatchingElement('.confirm-button');
+    expect(wrapper).toContainMatchingElement('.vote-fees');
   });
 
   it('renders properly when only new votes are present', () => {

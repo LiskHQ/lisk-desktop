@@ -26,7 +26,6 @@ import EditVote from '@dpos/validator/manager/editVoteManager';
 import VotingQueue from '@dpos/validator/manager/votingQueueManager';
 import DeviceDisconnect from 'src/modules/common/components/deviceDisconnectDialog';
 import NewReleaseDialog from '@update/detail/info/newReleaseDialog';
-import SearchBar from '@search/components/SearchBar';
 import ReclaimBalance from '@legacy/manager/reclaimBalance';
 import ReclaimBalanceModal from '@legacy/manager/reclaimBalanceModal';
 import RegisterMultisig from '@wallet/manager/registerMultisigManager';
@@ -51,6 +50,7 @@ import SelectNode from '@blockchainApplication/manage/components/SelectNode';
 import RemoveApplicationFlow from '@blockchainApplication/manage/components/RemoveApplicationFlow';
 import AllTokens from '@wallet/components/AllTokens';
 import DelegateProfile from 'src/modules/dpos/validator/components/delegateProfile/delegateProfile';
+import SentVotes from 'src/modules/dpos/validator/components/SentVotes';
 
 export default {
   wallet: AccountDetails,
@@ -78,7 +78,6 @@ export default {
   signMessage: SignMessage,
   verifyMessage: VerifyMessage,
   registerDelegate: RegisterDelegate,
-  search: SearchBar,
   transactionDetails: TransactionDetails,
   newRelease: NewReleaseDialog,
   request: Request,
@@ -107,4 +106,5 @@ export default {
   manageApplications: ApplicationManagementList,
   removeApplicationFlow: RemoveApplicationFlow,
   allTokens: AllTokens,
+  sentVotes: SentVotes,
 };
