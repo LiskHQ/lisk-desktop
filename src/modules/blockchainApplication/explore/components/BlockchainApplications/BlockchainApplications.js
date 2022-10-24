@@ -5,7 +5,7 @@ import BlockchainApplicationList from '@blockchainApplication/explore/components
 import BlockchainApplicationStatistics from '../BlockchainApplicationStatistics';
 import styles from './BlockchainApplications.css';
 
-const BlockchainApplications = ({ applications, applyFilters, filters }) => {
+const BlockchainApplications = () => {
   const { t } = useTranslation();
   return (
     <div className={styles.wrapper}>
@@ -21,11 +21,7 @@ const BlockchainApplications = ({ applications, applyFilters, filters }) => {
       />
       <div className={styles.contentWrapper}>
         <div className={styles.content}>
-          <BlockchainApplicationList
-            applyFilters={applyFilters}
-            filters={filters}
-            applications={applications}
-          />
+          <BlockchainApplicationList />
         </div>
         <div className={styles.sideBar}>
           <BlockchainApplicationStatistics />

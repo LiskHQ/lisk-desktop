@@ -42,7 +42,7 @@ import EditAccount from '@account/components/EditAccount';
 import BackupRecoveryPhraseFlow from '@account/components/BackupRecoveryPhraseFlow';
 import RemoveCurrentAccountFlow from '@account/components/RemoveCurrentAccountFlow';
 import RemoveSelectedAccountFlow from '@account/components/RemoveSelectedAccountFlow';
-import BlockchainApplications from '@blockchainApplication/explore/manager/BlockchainApplications';
+import BlockchainApplications from '@blockchainApplication/explore/components/BlockchainApplications/BlockchainApplications';
 import BlockchainApplicationDetails from '@blockchainApplication/explore/components/BlockchainApplicationDetails';
 import AddApplicationList from '@blockchainApplication/manage/components/AddApplicationList';
 import AddApplicationSuccess from '@blockchainApplication/manage/components/AddApplicationSuccess';
