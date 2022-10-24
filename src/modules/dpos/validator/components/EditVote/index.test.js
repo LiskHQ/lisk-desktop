@@ -31,8 +31,9 @@ jest.mock('@auth/hooks/queries');
 
 describe('EditVote', () => {
   let wrapper;
+  const delegateAddress = 'lskjq7jh2k7q332wgkz3bxogb8bj5zc3fcnb9ya53';
   const props = {
-    history: { location: { search: `?address=${mockDelegates.data[0].address}` }, push: jest.fn() },
+    history: { location: { search: `?address=${delegateAddress}` }, push: jest.fn() },
     voteEdited: jest.fn(),
     network: {},
     voting: {},
@@ -97,7 +98,7 @@ describe('EditVote', () => {
     await waitFor(() => {
       expect(props.voteEdited).toHaveBeenCalledWith([
         {
-          address: delegate.address,
+          address: delegateAddress,
           name: delegate.name,
           amount: toRawLsk(20),
         },
@@ -144,7 +145,10 @@ describe('EditVote', () => {
     );
 
     fireEvent.click(screen.getByText('Confirm'));
-    fireEvent.click(screen.getByText('Go to the voting queue'));
+
+    await waitFor(() => {
+      fireEvent.click(screen.getByText('Go to the voting queue'));
+    });
 
     expect(props.history.push).toHaveBeenCalled();
   });
@@ -158,7 +162,7 @@ describe('EditVote', () => {
         data: {
           ...mockSentVotes.data,
           votes: mockSentVotes.data.votes.map((vote, index) =>
-            index === 0 ? { ...vote, delegateAddress: delegate.address } : vote
+            index === 0 ? { ...vote, delegateAddress } : vote
           ),
         },
       },
@@ -184,7 +188,7 @@ describe('EditVote', () => {
     await waitFor(() => {
       expect(props.voteEdited).toHaveBeenCalledWith([
         {
-          address: delegate.address,
+          address: delegateAddress,
           name: delegate.name,
           amount: toRawLsk(20),
         },

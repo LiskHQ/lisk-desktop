@@ -50,6 +50,7 @@ import SelectNode from '@blockchainApplication/manage/components/SelectNode';
 import RemoveApplicationFlow from '@blockchainApplication/manage/components/RemoveApplicationFlow';
 import AllTokens from '@wallet/components/AllTokens';
 import DelegateProfile from 'src/modules/dpos/validator/components/delegateProfile/delegateProfile';
+import SentVotes from 'src/modules/dpos/validator/components/SentVotes';
 
 export default {
   wallet: AccountDetails,
@@ -105,4 +106,5 @@ export default {
   manageApplications: ApplicationManagementList,
   removeApplicationFlow: RemoveApplicationFlow,
   allTokens: AllTokens,
+  sentVotes: SentVotes,
 };

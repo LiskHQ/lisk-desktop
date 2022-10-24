@@ -215,7 +215,7 @@ describe('Delegate Profile', () => {
     expect(screen.getByText('Vote delegate')).toBeTruthy();
   });
 
-  it('Should render the Edit vote button', () => {
+  it('Should render the vote delegate button', () => {
     useDelegates.mockReturnValue({
       data: {
         ...mockDelegates,
@@ -229,7 +229,7 @@ describe('Delegate Profile', () => {
           ...mockReceivedVotes.data,
           votes: mockReceivedVotes.data.votes.map((vote) => ({
             ...vote,
-            delegateAddress: mockedCurrentAccount.metadata.address,
+            delegateAddress: 'lskjq7jh2k7q332wgkz3bxogb8bj5zc3fcnb9ya53',
           })),
         },
       },
@@ -241,6 +241,6 @@ describe('Delegate Profile', () => {
       </MemoryRouter>
     );
 
-    expect(screen.getByText('Edit vote')).toBeTruthy();
+    expect(screen.getByText('Vote delegate')).toBeTruthy();
   });
 });
