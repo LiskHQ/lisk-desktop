@@ -1,4 +1,4 @@
-import React, { useCallback, useEffect, useRef, useState } from 'react';
+import React, { useCallback, useRef, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import grid from 'flexboxgrid/dist/flexboxgrid.css';
 import BoxHeader from '@theme/box/header';
@@ -15,14 +15,9 @@ import styles from './BlockchainApplicationList.css';
 
 const BlockchainApplicationList = () => {
   const [searchValue, setSearchValue] = useState('');
-  const [params, setParams] = useState({});
   const { filters, applyFilters } = useFilter();
   const debounceTimeout = useRef(null);
   const { t } = useTranslation();
-
-  useEffect(() => {
-    setParams(filters);
-  }, [filters]);
 
   const onSearchApplication = useCallback(
     ({ target }) => {
@@ -63,7 +58,7 @@ const BlockchainApplicationList = () => {
         <QueryTable
           showHeader
           queryHook={useBlockchainApplicationExplore}
-          queryConfig={{ config: { params } }}
+          queryConfig={{ config: { params: filters } }}
           row={BlockchainApplicationRow}
           header={header(t)}
           headerClassName={styles.tableHeader}

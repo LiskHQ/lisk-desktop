@@ -16,9 +16,9 @@ const mockFetchNextPage = jest.fn();
 jest.useFakeTimers();
 jest.mock('@blockchainApplication/manage/hooks/usePinBlockchainApplication');
 jest.mock('../../hooks/queries/useBlockchainApplicationExplore');
-jest.mock('@common/hooks', () => ({
-  ...jest.requireActual('@common/hooks'),
-  useFilter: jest.fn(() => ({
+jest.mock('@common/hooks/useFilter', () => ({
+  __esModule: true,
+  default: jest.fn(() => ({
     applyFilters: mockApplyFilters,
   })),
 }));
