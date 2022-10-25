@@ -89,7 +89,7 @@ describe('TransactionEvents', () => {
   it('should display empty state text', async () => {
     useTransactionEvents.mockReturnValue({
       isLoading: true,
-      error: undefined,
+      error: { response: { status: 404 } },
       hasNextPage: false,
       isFetching: false,
       fetchNextPage: mockFetchNextPage,

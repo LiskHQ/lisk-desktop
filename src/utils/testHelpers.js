@@ -199,20 +199,39 @@ export const renderWithQueryClient = (Component, props) => {
  *
  * @returns {Object} Rendered component
  */
-export const renderWithRouterAndQueryClient = (Component, props) => {
+export const renderWithRouterAndQueryClient = (Component, props = {}) => {
   const queryClient = new QueryClient();
 
   return render(
-    <Router
-      history={props.history ? { ...defaultHistoryProps, ...props.history } : defaultHistoryProps}
-    >
-      <QueryClientProvider client={queryClient}>
+    <QueryClientProvider client={queryClient}>
+      <Router
+        history={props.history ? { ...defaultHistoryProps, ...props.history } : defaultHistoryProps}
+      >
         <Component {...props} />
-      </QueryClientProvider>
-    </Router>
+      </Router>
+    </QueryClientProvider>
   );
 };
 
+/**
+ * Rerenders components that are wrapped in QueryClientProvider and Router
+ *
+ * @param {Class|Function} Component - A React component to be rerendered
+ * @param {Object} props - Set of props to be passed to the component
+ *
+ * @returns {Object} Rerendered component
+ */
+export const rerenderWithRouterAndQueryClient = (Component, props = {}) => {
+  const queryClient = new QueryClient();
+
+  return render(
+    <QueryClientProvider client={queryClient}>
+      <MemoryRouter initialEntries={[props?.history ?? defaultHistoryProps]}>
+        <Component {...props} />
+      </MemoryRouter>
+    </QueryClientProvider>
+  );
+};
 
 /**
  * Mounts components that require to access Redux store and QueryClient
@@ -223,7 +242,7 @@ export const renderWithRouterAndQueryClient = (Component, props) => {
  *
  * @returns {Object} Mounted component
  */
- export const mountWithQueryAndProps = (Component, props, store) => {
+export const mountWithQueryAndProps = (Component, props, store) => {
   const queryClient = new QueryClient();
 
   return mount(
@@ -233,4 +252,4 @@ export const renderWithRouterAndQueryClient = (Component, props) => {
       </QueryClientProvider>
     </Provider>
   );
- }
+};
