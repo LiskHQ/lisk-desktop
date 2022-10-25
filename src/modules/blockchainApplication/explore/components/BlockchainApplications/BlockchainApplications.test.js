@@ -15,9 +15,9 @@ jest.useFakeTimers();
 jest.mock('../../../manage/hooks/usePinBlockchainApplication');
 jest.mock('../../hooks/queries/useBlockchainApplicationExplore');
 jest.mock('../../hooks/queries/useBlockchainApplicationStatistics');
-jest.mock('@common/hooks', () => ({
-  ...jest.requireActual('@common/hooks'),
-  useFilter: jest.fn(() => ({
+jest.mock('@common/hooks/useFilter', () => ({
+  __esModule: true,
+  default: jest.fn(() => ({
     applyFilters: mockApplyFilters,
   })),
 }));
