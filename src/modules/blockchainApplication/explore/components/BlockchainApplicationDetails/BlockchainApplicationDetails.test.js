@@ -59,6 +59,7 @@ describe('BlockchainApplicationDetails', () => {
     renderWithRouterAndQueryClient(BlockchainApplicationDetails, props);
   });
 
+  // @todo: Loading and error tests will be handled in #4539
   it('should display properly', () => {
     const { name, state, lastCertificateHeight, lastUpdated } = mockBlockchainApp.data[0];
     expect(screen.getByText(name)).toBeTruthy();

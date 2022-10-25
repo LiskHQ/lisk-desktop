@@ -26,6 +26,7 @@ const BlockchainApplicationDetails = ({ history, location }) => {
   const { t } = useTranslation();
   const chainId = parseSearchParams(location.search).chainId;
   const mode = parseSearchParams(location.search).mode;
+  // @todo: Loading and error states will be handled in #4539
   const { data: onChainData } = useBlockchainApplicationExplore({
     config: { params: { chainID: chainId } },
   });
