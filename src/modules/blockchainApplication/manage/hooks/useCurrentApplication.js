@@ -17,7 +17,7 @@ export function useCurrentApplication() {
       dispatch(setCurrentApplication(application));
       /* istanbul ignore next */
       client.create(application.serviceURLs[0]);
-      setCurrentNode(application?.serviceURLs[0]);
+      setCurrentNode(application.serviceURLs[0]);
     },
     [],
   );

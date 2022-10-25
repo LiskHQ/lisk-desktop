@@ -53,7 +53,7 @@ const App = ({ history }) => {
 
   useEffect(() => {
     if (!isLoading && data) {
-      data.data?.map(dat => setApplication(dat))
+      data.data.map(dat => setApplication(dat))
       setCurrentApplication(data.data[0])
     }
 
