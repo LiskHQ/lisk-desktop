@@ -13,7 +13,8 @@ import { useBlocks } from 'src/modules/block/hooks/queries/useBlocks';
 import { mockTokensBalance } from 'src/modules/token/fungible/__fixtures__';
 import { mockAuth } from 'src/modules/auth/__fixtures__';
 import EditVote from './index';
-import { useDelegates, useSentVotes } from '../../hooks/queries';
+import { useDelegates, useSentVotes, useDposConstants } from '../../hooks/queries';
+import { mockDposConstants } from '../../__fixtures__/mockDposConstants';
 
 jest.mock('@transaction/api', () => ({
   getTransactionFee: jest.fn().mockImplementation(() => Promise.resolve({ value: '0.046' })),
@@ -31,8 +32,9 @@ jest.mock('@auth/hooks/queries');
 
 describe('EditVote', () => {
   let wrapper;
+  const delegateAddress = 'lskjq7jh2k7q332wgkz3bxogb8bj5zc3fcnb9ya53';
   const props = {
-    history: { location: { search: `?address=${mockDelegates.data[0].address}` }, push: jest.fn() },
+    history: { location: { search: `?address=${delegateAddress}` }, push: jest.fn() },
     voteEdited: jest.fn(),
     network: {},
     voting: {},
@@ -46,7 +48,9 @@ describe('EditVote', () => {
     useBlocks.mockReturnValue({ data: mockBlocks });
     useSentVotes.mockReturnValue({ data: mockSentVotes });
     useAuth.mockReturnValue({ data: mockAuth });
+    useDposConstants.mockReturnValue({ data: mockDposConstants });
     useTokensBalance.mockReturnValue({ data: mockTokensBalance, isLoading: false });
+
     wrapper = renderWithRouter(EditVote, props);
   });
 
@@ -97,7 +101,7 @@ describe('EditVote', () => {
     await waitFor(() => {
       expect(props.voteEdited).toHaveBeenCalledWith([
         {
-          address: delegate.address,
+          address: delegateAddress,
           name: delegate.name,
           amount: toRawLsk(20),
         },
@@ -144,7 +148,10 @@ describe('EditVote', () => {
     );
 
     fireEvent.click(screen.getByText('Confirm'));
-    fireEvent.click(screen.getByText('Go to the voting queue'));
+
+    await waitFor(() => {
+      fireEvent.click(screen.getByText('Go to the voting queue'));
+    });
 
     expect(props.history.push).toHaveBeenCalled();
   });
@@ -158,7 +165,7 @@ describe('EditVote', () => {
         data: {
           ...mockSentVotes.data,
           votes: mockSentVotes.data.votes.map((vote, index) =>
-            index === 0 ? { ...vote, delegateAddress: delegate.address } : vote
+            index === 0 ? { ...vote, delegateAddress } : vote
           ),
         },
       },
@@ -184,7 +191,7 @@ describe('EditVote', () => {
     await waitFor(() => {
       expect(props.voteEdited).toHaveBeenCalledWith([
         {
-          address: delegate.address,
+          address: delegateAddress,
           name: delegate.name,
           amount: toRawLsk(20),
         },

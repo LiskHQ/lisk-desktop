@@ -98,7 +98,7 @@ const Table = ({
       data={emptyState}
       error={error}
       isLoading={isFetching}
-      isListEmpty={data.length === 0 && !error}
+      isListEmpty={data.length === 0}
       className={styles.emptyState}
     />
     <Error data={error} isLoading={isLoading} />
@@ -109,11 +109,7 @@ const Table = ({
       canLoadMore={canLoadMore}
       error={error}
     />
-    <TableLoadingState
-      header={header}
-      isFetching={isFetching}
-      count={data.length === 0 ? 5 : 1}
-    />
+    <TableLoadingState header={header} isFetching={isFetching} count={data.length === 0 ? 5 : 1} />
   </>
 );
 
