@@ -15,7 +15,7 @@ const readStoredNetwork = ({ dispatch, getState }) => {
     : {
       // TODO: Revert to mainnet;
       name: networkKeys.devNet,
-      address: network?.networks?.mainnet?.serviceUrl,
+      address: network?.networks?.devNet?.serviceUrl,
     };
   dispatch(networkSelected(config));
   dispatch(networkStatusUpdated({ online: true }));

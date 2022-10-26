@@ -3,6 +3,7 @@ export const networkKeys = {
   alphanet: 'alphanet',
   betanet: 'betanet',
   devNet: 'devnet',
+  testnet: 'testnet',
   customNode: 'customNode',
 };
 
@@ -12,6 +13,18 @@ export const initialSupply = 10000000000000000;
 const networks = {
   [networkKeys.mainNet]: {
     label: 'Mainnet',
+    serviceUrl: 'http://165.227.246.146:9901',
+  },
+  [networkKeys.alphanet]: {
+    label: 'Alphanet',
+    serviceUrl: 'http://165.227.246.146:9901',
+  },
+  [networkKeys.betanet]: {
+    label: 'Betanet',
+    serviceUrl: 'http://165.227.246.146:9901',
+  },
+  [networkKeys.devNet]: {
+    label: 'Devnet',
     serviceUrl: 'http://165.227.246.146:9901',
   },
   [networkKeys.testNet]: {
