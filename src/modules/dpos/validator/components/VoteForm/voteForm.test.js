@@ -14,7 +14,7 @@ import { useDposConstants } from '../../hooks/queries';
 import { mockDposConstants } from '../../__fixtures__/mockDposConstants';
 
 jest.mock('@token/fungible/hooks/queries');
-jest.mock('../../hooks/queries');
+jest.mock('../../hooks/queries/useDposConstants');
 jest.mock('@account/hooks/useDeprecatedAccount', () => ({
   useDeprecatedAccount: jest.fn().mockReturnValue({
     isSuccess: true,
