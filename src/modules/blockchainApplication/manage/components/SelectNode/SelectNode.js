@@ -43,7 +43,7 @@ const SelectNode = ({ history, location }) => {
             <img src={chainLogo || liskLogo} />
           </span>
           <span>
-            {application.name}
+            {application.chainName}
           </span>
         </BoxHeader>
         <BoxContent className={styles.contentWrapper}>

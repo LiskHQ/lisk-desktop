@@ -312,8 +312,8 @@ describe('Form', () => {
       const toChainDropdown = wrapper.find('div[data-testid="selected-menu-item"]').at(1);
 
 
-      expect(fromChainDropdown.text()).toBe(mockCurrentApplication.name);
-      expect(toChainDropdown.text()).toBe(mockCurrentApplication.name);
+      expect(fromChainDropdown.text()).toBe(mockCurrentApplication.chainName);
+      expect(toChainDropdown.text()).toBe(mockCurrentApplication.chainName);
     });
 
     it('Should pre-populate the the dropdown fields', () => {
@@ -329,7 +329,7 @@ describe('Form', () => {
       const fromChainDropdown = wrapper.find('div[data-testid="selected-menu-item"]').at(0);
       const toChainDropdown = wrapper.find('div[data-testid="selected-menu-item"]').at(1);
       const tokenDropdown = wrapper.find('div[data-testid="selected-menu-item"]').at(2);
-      expect(fromChainDropdown.text()).toBe(mockCurrentApplication.name);
+      expect(fromChainDropdown.text()).toBe(mockCurrentApplication.chainName);
       expect(toChainDropdown.text()).toBe(mockManagedApplications[0].name);
       expect(tokenDropdown.text()).toBe(mockAppTokens[0].name);
     });
