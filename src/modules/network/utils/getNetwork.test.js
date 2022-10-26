@@ -8,6 +8,9 @@ describe('Utils: getNetwork', () => {
   describe('getNetworksList', () => {
     const response = [
       { label: 'Mainnet', name: 'mainnet' },
+      { label: 'Alphanet', name: 'alphanet' },
+      { label: 'Betanet', name: 'betanet' },
+      { label: 'Devnet', name: 'devnet' },
       { label: 'Testnet', name: 'testnet' },
       { label: 'Custom Service Node', name: 'customNode' },
     ];
@@ -18,9 +21,9 @@ describe('Utils: getNetwork', () => {
   });
 
   describe('getNetworkName', () => {
-    it('should return mainnet if network config does not have name set', () => {
+    it('should return alphanet if network config does not have name set', () => {
       const network = {};
-      expect(getNetworkName(network)).toEqual('mainnet');
+      expect(getNetworkName(network)).toEqual('alphanet');
     });
 
     it('should return customNode', () => {

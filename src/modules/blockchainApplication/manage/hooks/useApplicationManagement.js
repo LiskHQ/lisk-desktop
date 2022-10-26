@@ -10,6 +10,7 @@ export function useApplicationManagement() {
   const dispatch = useDispatch();
   const [currentApplication, setCurrentApplication] = useCurrentApplication();
   const {data: defaultApplications} = useBlockchainApplicationMeta()
+
   const { checkPinByChainId, pins } = usePinBlockchainApplication();
   const applicationsObject = useSelector(selectApplications);
   const applications = useMemo(
