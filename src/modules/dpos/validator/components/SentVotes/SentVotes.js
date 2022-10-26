@@ -29,6 +29,7 @@ const SentVotes = ({ history }) => {
   const address = useMemo(() => searchAddress || currentAddress, [searchAddress, currentAddress]);
   const queryParam = { config: { params: { address } } };
 
+  // @TODO: we need to change the caching time from 5mins to something larger since this is a constant that doesn't frequently change
   const { data: dposConstants, isLoading: isGettingDposConstants } = useDposConstants();
 
   const { data: tokens } = useTokensBalance({
