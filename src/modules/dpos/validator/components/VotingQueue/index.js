@@ -9,15 +9,18 @@ import Form from '../VoteForm';
 import Summary from '../VoteSummary';
 import Status from '../VoteStatus';
 import styles from './styles.css';
+import { useDposConstants } from '../../hooks/queries';
 
 const VotingQueue = ({ history, processLaunchProtocol }) => {
   const [{ step }, setMultiStepState] = useState({});
 
-// @Todo this is just a place holder pending when dpos constants are integrated by this issue #4502
-const dposTokenId = '0'.repeat(16);
+  const { data: dposConstants, isLoading: isGettingDposConstants } = useDposConstants();
 
-const { data: tokens } = useTokensBalance({ config: { params: { tokenID: dposTokenId } } });
-const token = useMemo(() => tokens?.data?.[0] || {}, [tokens]);
+  const { data: tokens } = useTokensBalance({
+    config: { params: { tokenID: dposConstants?.tokenIDDPoS } },
+    options: { enabled: !isGettingDposConstants },
+  });
+  const token = useMemo(() => tokens?.data?.[0] || {}, [tokens]);
 
   const closeModal = () => {
     removeSearchParamsFromUrl(history, ['modal'], true);
@@ -34,7 +37,7 @@ const token = useMemo(() => tokens?.data?.[0] || {}, [tokens]);
     <MultiStep
       key="voting-queue"
       finalCallback={closeModal}
-      className={step?.current === 3 ? styles.confirmModal :styles.modal}
+      className={step?.current === 3 ? styles.confirmModal : styles.modal}
       onChange={setMultiStepState}
     >
       <Form dposToken={token} />

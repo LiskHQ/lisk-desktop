@@ -9,6 +9,7 @@ import { selectLSKAddress } from 'src/redux/selectors';
 import { regex } from 'src/const/regex';
 import { tokenMap } from '@token/fungible/consts/tokens';
 import { useTokensBalance } from 'src/modules/token/fungible/hooks/queries';
+import { useDposConstants } from './queries';
 
 let loaderTimeout = null;
 
@@ -26,7 +27,14 @@ const getAmountFeedbackAndError = (value, balance, minValue, inputValue) => {
     value: +value,
     token: tokenMap.LSK.key,
     funds: parseInt(balance, 10),
-    checklist: ['NEGATIVE_VOTE', 'ZERO', 'VOTE_10X', 'INSUFFICIENT_VOTE_FUNDS', 'MIN_BALANCE', 'FORMAT'],
+    checklist: [
+      'NEGATIVE_VOTE',
+      'ZERO',
+      'VOTE_10X',
+      'INSUFFICIENT_VOTE_FUNDS',
+      'MIN_BALANCE',
+      'FORMAT',
+    ],
     minValue,
     inputValue,
   });
@@ -43,11 +51,13 @@ const getAmountFeedbackAndError = (value, balance, minValue, inputValue) => {
  */
 // eslint-disable-next-line max-statements
 const useVoteAmountField = (initialValue) => {
-  // @Todo this is just a place holder pending when dpos constants are integrated by this issue #4502
-  const dposTokenId = '0'.repeat(16);
+  const { data: dposConstants, isLoading: isGettingDposConstants } = useDposConstants();
 
   // Since we know the dposTokenId we need to get the token's object
-  const { data: tokens, isLoading: isGettingDposToken } = useTokensBalance({ config: { params: { tokenID: dposTokenId } } });
+  const { data: tokens, isLoading: isGettingDposToken } = useTokensBalance({
+    config: { params: { tokenID: dposConstants?.tokenIDDPoS } },
+    options: { enabled: !isGettingDposConstants },
+  });
   const token = useMemo(() => tokens?.data?.[0] || {}, [tokens]);
 
   const { i18n } = useTranslation();
@@ -55,12 +65,12 @@ const useVoteAmountField = (initialValue) => {
   const host = useSelector(selectLSKAddress);
   const searchDetails = window.location.href.replace(/.*[?]/, '');
   const address = selectSearchParamValue(`?${searchDetails}`, 'address');
-  const voting = useSelector(state => state.voting);
+  const voting = useSelector((state) => state.voting);
   const existingVote = voting[address || host];
   const totalUnconfirmedVotes = Object.values(voting)
-    .filter(vote => vote.confirmed < vote.unconfirmed)
-    .map(vote => vote.unconfirmed - vote.confirmed)
-    .reduce((total, amount) => (total + amount), 0);
+    .filter((vote) => vote.confirmed < vote.unconfirmed)
+    .map((vote) => vote.unconfirmed - vote.confirmed)
+    .reduce((total, amount) => total + amount, 0);
   const previouslyConfirmedVotes = existingVote ? existingVote.confirmed : 0;
   const [amountField, setAmountField] = useState({
     value: initialValue,
@@ -70,7 +80,7 @@ const useVoteAmountField = (initialValue) => {
   });
 
   useEffect(() => {
-    if (!(+amountField.value) && initialValue) {
+    if (!+amountField.value && initialValue) {
       setAmountField({
         value: initialValue,
         isLoading: false,
@@ -94,7 +104,7 @@ const useVoteAmountField = (initialValue) => {
       value - fromRawLsk(previouslyConfirmedVotes - totalUnconfirmedVotes),
       balance,
       -1 * fromRawLsk(previouslyConfirmedVotes),
-      value,
+      value
     );
     loaderTimeout = setTimeout(() => {
       setAmountField({

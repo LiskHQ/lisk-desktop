@@ -26,7 +26,7 @@ import { PrimaryButton, SecondaryButton, WarningButton } from 'src/theme/buttons
 import useVoteAmountField from '../../hooks/useVoteAmountField';
 import getMaxAmount from '../../utils/getMaxAmount';
 import styles from './editVote.css';
-import { useDelegates, useSentVotes } from '../../hooks/queries';
+import { useDelegates, useDposConstants, useSentVotes } from '../../hooks/queries';
 import { NUMBER_OF_BLOCKS_PER_DAY } from '../../consts';
 
 const getTitles = (t) => ({
@@ -43,9 +43,6 @@ const getTitles = (t) => ({
     ),
   },
 });
-
-// @Todo this is just a place holder pending when dpos constants are integrated by this issue #4502
-const dposTokenId = '0'.repeat(16);
 
 // eslint-disable-next-line max-statements
 const EditVote = ({ history, voteEdited, network, voting, votesRetrieved }) => {
@@ -75,7 +72,12 @@ const EditVote = ({ history, voteEdited, network, voting, votesRetrieved }) => {
     config: { params: { address: currentAddress } },
   });
 
-  const { data: tokens } = useTokensBalance({ config: { params: { tokenID: dposTokenId } } });
+  const { data: dposConstants, isLoading: isGettingDposConstants } = useDposConstants();
+
+  const { data: tokens } = useTokensBalance({
+    config: { params: { tokenID: dposConstants?.tokenIDDPoS } },
+    options: { enabled: !isGettingDposConstants },
+  });
   const token = useMemo(() => tokens?.data?.[0] || {}, [tokens]);
 
   const { data: authData } = useAuth({ config: { params: { address: delegateAddress } } });
