@@ -45,9 +45,9 @@ describe('ApplicationManangementRow', () => {
   });
 
   it('should display correctly', () => {
-    const { name } = props.application;
+    const { chainName } = props.application;
 
-    expect(screen.getByText(name)).toBeTruthy();
+    expect(screen.getByText(chainName)).toBeTruthy();
   });
 
   it('should invoke toggle pin callback', () => {
@@ -101,7 +101,7 @@ describe('ApplicationManangementRow', () => {
   });
 
   it('should toggle applciation as current application for a non terminated application', () => {
-    fireEvent.click(screen.getByText(props.application.name));
+    fireEvent.click(screen.getByText(props.application.chainName));
     expect(mockSetApplication).toHaveBeenCalledWith(expect.objectContaining(props.application));
   });
 
@@ -119,7 +119,7 @@ describe('ApplicationManangementRow', () => {
       </MemoryRouter>,
     );
 
-    fireEvent.click(screen.getByText(props.application.name));
+    fireEvent.click(screen.getByText(props.application.chainName));
     expect(mockSetApplication).not.toHaveBeenCalled();
   });
 
