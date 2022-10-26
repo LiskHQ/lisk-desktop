@@ -38,10 +38,10 @@ const CustomRoute = ({ path, exact, isPrivate, forbiddenTokens, component, t, hi
     // @todo: Fix in #4537
     return (
       <Redirect
-        to={`${routes.login.path}?referrer=${path.replace(/\/(send|vote)/, '')}&${search.replace(
-          /^\?/,
+        to={`${routes.manageAccounts.path}?referrer=${path.replace(
+          /\/(send|vote)/,
           ''
-        )}`}
+        )}&${search.replace(/^\?/, '')}`}
       />
     );
   }

@@ -7,13 +7,11 @@ export const mockBlockchainAppMeta = {
       title: '',
       description: '',
       networkType: 'mainnet',
-      isDefault: true,
       genesisURL: 'https://downloads.lisk.com/lisk/mainnet/genesis_block.json.tar.gz',
       projectPage: 'https://lisk.com',
-      appPage: '',
       logo: {
-        png: 'https://downloads.lisk.com/lisk/images/logo.png',
-        svg: 'https://downloads.lisk.com/lisk/images/logo.svg',
+        png: 'https://lisk-qa.ams3.digitaloceanspaces.com/Artboard%201%20copy%2019.png',
+        svg: 'https://lisk-qa.ams3.digitaloceanspaces.com/Logo-20.svg',
       },
       backgroundColor: '#0981D1',
       serviceURLs: [
