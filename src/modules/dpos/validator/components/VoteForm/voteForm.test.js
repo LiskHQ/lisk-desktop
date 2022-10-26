@@ -10,8 +10,11 @@ import flushPromises from '@tests/unit-test-utils/flushPromises';
 import { useTokensBalance } from '@token/fungible/hooks/queries';
 import VoteRow from './VoteRow';
 import Form from './VoteForm';
+import { useDposConstants } from '../../hooks/queries';
+import { mockDposConstants } from '../../__fixtures__/mockDposConstants';
 
 jest.mock('@token/fungible/hooks/queries');
+jest.mock('../../hooks/queries');
 jest.mock('@account/hooks/useDeprecatedAccount', () => ({
   useDeprecatedAccount: jest.fn().mockReturnValue({
     isSuccess: true,
@@ -86,6 +89,7 @@ describe('VoteForm', () => {
   });
 
   useTokensBalance.mockReturnValue({ data: mockTokensBalance, isLoading: false });
+  useDposConstants.mockReturnValue({ data: mockDposConstants });
 
   it('Render only the changed votes', async () => {
     const wrapper = shallow(<Form {...props} votes={mixedVotes} />);

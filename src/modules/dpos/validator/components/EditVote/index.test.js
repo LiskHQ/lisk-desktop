@@ -13,7 +13,8 @@ import { useBlocks } from 'src/modules/block/hooks/queries/useBlocks';
 import { mockTokensBalance } from 'src/modules/token/fungible/__fixtures__';
 import { mockAuth } from 'src/modules/auth/__fixtures__';
 import EditVote from './index';
-import { useDelegates, useSentVotes } from '../../hooks/queries';
+import { useDelegates, useSentVotes, useDposConstants } from '../../hooks/queries';
+import { mockDposConstants } from '../../__fixtures__/mockDposConstants';
 
 jest.mock('@transaction/api', () => ({
   getTransactionFee: jest.fn().mockImplementation(() => Promise.resolve({ value: '0.046' })),
@@ -47,7 +48,9 @@ describe('EditVote', () => {
     useBlocks.mockReturnValue({ data: mockBlocks });
     useSentVotes.mockReturnValue({ data: mockSentVotes });
     useAuth.mockReturnValue({ data: mockAuth });
+    useDposConstants.mockReturnValue({ data: mockDposConstants });
     useTokensBalance.mockReturnValue({ data: mockTokensBalance, isLoading: false });
+
     wrapper = renderWithRouter(EditVote, props);
   });
 
