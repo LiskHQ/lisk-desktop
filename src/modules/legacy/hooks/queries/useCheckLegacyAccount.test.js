@@ -15,6 +15,14 @@ describe('useCheckLegacyAccount hook', () => {
     expect(result.current.isMigrated).toBe(true);
   });
 
+  it('returns isMigrated as true if data is unavailable', () => {
+    useLegacy.mockImplementation(() => ({}));
+    const { result } = renderHook(() =>
+      useCheckLegacyAccount(mockSavedAccounts[0].metadata.pubkey)
+    );
+    expect(result.current.isMigrated).toBe(true);
+  });
+
   it('returns isMigrated as false if legacy balance is greater than 0', () => {
     const updatedMockLegacyAccount = {
       ...mockLegacy,

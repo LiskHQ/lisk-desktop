@@ -106,3 +106,7 @@
     }
   }
 }
+
+.removeVoteButton {
+  border-style: solid;
+}
