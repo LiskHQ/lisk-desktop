@@ -330,7 +330,7 @@ describe('Form', () => {
       const toChainDropdown = wrapper.find('div[data-testid="selected-menu-item"]').at(1);
       const tokenDropdown = wrapper.find('div[data-testid="selected-menu-item"]').at(2);
       expect(fromChainDropdown.text()).toBe(mockCurrentApplication.chainName);
-      expect(toChainDropdown.text()).toBe(mockManagedApplications[0].name);
+      expect(toChainDropdown.text()).toBe(mockManagedApplications[0].chainName);
       expect(tokenDropdown.text()).toBe(mockAppTokens[0].name);
     });
   });
