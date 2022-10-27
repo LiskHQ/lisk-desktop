@@ -28,7 +28,7 @@ const AddApplicationRow = ({
       component="blockChainApplicationDetails"
       data={{ chainId: data.chainID, mode: 'addApplication' }}
     >
-      <ChainName title={data.name} logo={liskLogo} />
+      <ChainName title={data.chainName} logo={liskLogo} />
       <DepositAmount amount={data.depositedLsk} />
     </DialogLink>
   </div>
