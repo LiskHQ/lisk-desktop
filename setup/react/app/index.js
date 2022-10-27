@@ -56,7 +56,6 @@ const App = ({ history }) => {
       data.data.map(dat => setApplication(dat))
       setCurrentApplication(data.data[0])
     }
-
   }, [isLoading, data])
 
   const routesList = Object.keys(routes);
