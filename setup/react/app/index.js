@@ -36,7 +36,7 @@ const App = ({ history }) => {
   const dispatch = useDispatch();
   const [loaded, setLoaded] = useState(false);
   const theme = useSelector((state) => (state.settings.darkMode ? 'dark' : 'light'));
-  const { data, isLoading } = useBlockchainApplicationMeta();
+  const { data: chainMetaData, isLoading } = useBlockchainApplicationMeta();
   const { setApplication } = useApplicationManagement();
   const [, setCurrentApplication] = useCurrentApplication();
 
@@ -52,11 +52,11 @@ const App = ({ history }) => {
   }, []);
 
   useEffect(() => {
-    if (!isLoading && data) {
-      data.data.map(dat => setApplication(dat))
-      setCurrentApplication(data.data[0])
+    if (!isLoading && chainMetaData) {
+      chainMetaData.data.map(data => setApplication(data))
+      setCurrentApplication(chainMetaData.data[0])
     }
-  }, [isLoading, data])
+  }, [isLoading, chainMetaData])
 
   const routesList = Object.keys(routes);
   const routeObj = Object.values(routes).find((r) => r.path === history.location.pathname) || {};
