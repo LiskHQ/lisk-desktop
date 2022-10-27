@@ -44,10 +44,10 @@ describe('BlockchainApplicationDetails', () => {
 
   it('should display properly', () => {
     const {
-      name, address, state, lastCertificateHeight, lastUpdated,
+      chainName, address, state, lastCertificateHeight, lastUpdated,
     } = mockBlockchainApplications[0];
 
-    expect(screen.getByText(name)).toBeTruthy();
+    expect(screen.getByText(chainName)).toBeTruthy();
     expect(screen.getByText(address)).toBeTruthy();
     expect(screen.getByText(state)).toBeTruthy();
     expect(screen.getByText(lastCertificateHeight)).toBeTruthy();
