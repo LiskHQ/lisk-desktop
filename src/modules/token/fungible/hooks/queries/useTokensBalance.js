@@ -27,7 +27,7 @@ export const useTokensBalance = ({
   client = defaultClient,
 } = {}) => {
   const [currentAccount] = useCurrentAccount();
-  const { address } = currentAccount.metadata;
+  const { address } = customConfig.params?.address || currentAccount.metadata || {};
   const createMetaConfig = useAppsMetaTokensConfig();
   const transformToken = addTokensMetaData({createMetaConfig, client});
   const transformResult = async (res) => {

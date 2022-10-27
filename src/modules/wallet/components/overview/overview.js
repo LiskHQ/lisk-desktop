@@ -39,11 +39,7 @@ const removeWarningMessage = () => {
 const Overview = ({ isWalletRoute, history }) => {
   const searchAddress = selectSearchParamValue(history.location.search, 'address');
   const { t } = useTranslation();
-  const [
-    {
-      metadata: { address: currentAddress },
-    },
-  ] = useCurrentAccount();
+  const [{ metadata: { address: currentAddress } = {} }] = useCurrentAccount();
 
   const address = useMemo(() => searchAddress || currentAddress, [searchAddress, currentAddress]);
   const { data: delegates } = useDelegates({ config: { params: { address } } });
@@ -55,11 +51,11 @@ const Overview = ({ isWalletRoute, history }) => {
 
   const isBanned = delegate.isBanned;
   const pomHeights = delegate.pomHeights;
-  const { end } = pomHeights ? pomHeights[pomHeights.length - 1] : 0;
+  const { end } = pomHeights && pomHeights.length ? pomHeights[pomHeights.length - 1] : {};
 
   const daysLeft = Math.ceil((end - currentHeight) / numOfBlockPerDay);
   const wallet = useSelector(selectActiveTokenAccount);
-  const { data: tokens, isLoading, error } = useTokensBalance();
+  const { data: tokens, isLoading, error } = useTokensBalance({ config: { params: { address } } });
   const host = wallet.summary?.address ?? '';
 
   const showWarning = () => {
@@ -95,7 +91,7 @@ const Overview = ({ isWalletRoute, history }) => {
           availableBalance={availableBalance}
           lockedBalance={totalLockedBalance}
           address={address}
-          symbol={symbol}
+          symbol={symbol || ''}
           url={chainUrl}
         />
       );
