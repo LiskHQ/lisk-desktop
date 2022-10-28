@@ -14,7 +14,7 @@ const props = {
 };
 
 const mockExternalApplication = {
-  name: 'External test app',
+  chainName: 'External test app',
   chainID: 'ij239sksf5u4jdq8szo3nfmt',
   state: 'active',
   address: 'lsk24cd35u4jdq8ssd03nfmte5dsxwrnazyqqqg5eu',

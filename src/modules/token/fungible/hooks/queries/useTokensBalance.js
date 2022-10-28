@@ -27,16 +27,16 @@ export const useTokensBalance = ({
   client = defaultClient,
 } = {}) => {
   const [currentAccount] = useCurrentAccount();
-  const { address } = currentAccount.metadata;
+  const { address } = customConfig.params?.address || currentAccount.metadata || {};
   const createMetaConfig = useAppsMetaTokensConfig();
-  const transformToken = addTokensMetaData({createMetaConfig, client});
+  const transformToken = addTokensMetaData({ createMetaConfig, client });
   const transformResult = async (res) => {
-    const tokens = await transformToken(res.data)
+    const tokens = await transformToken(res.data);
     return {
       ...res,
-      data: tokens
-    }
-  }
+      data: tokens,
+    };
+  };
 
   const config = {
     url: `/api/${API_VERSION}/tokens`,
@@ -44,7 +44,7 @@ export const useTokensBalance = ({
     event: 'get.tokens',
     transformResult,
     ...customConfig,
-    params: { limit, address, ...(customConfig?.params || {}) },
+    params: { limit, address, ...(customConfig.params || {}) },
   };
 
   return useCustomInfiniteQuery({

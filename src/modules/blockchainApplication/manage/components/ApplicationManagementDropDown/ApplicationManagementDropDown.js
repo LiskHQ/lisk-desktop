@@ -20,7 +20,7 @@ const ApplicationManagementList = ({ history }) => {
         onClick={handleShowApplications}
       >
         <img src={chainLogo} />
-        <span>{currentApplication?.name}</span>
+        <span>{currentApplication?.chainName}</span>
         <Icon name="dropdownArrowIcon" />
       </TertiaryButton>
     </div>
