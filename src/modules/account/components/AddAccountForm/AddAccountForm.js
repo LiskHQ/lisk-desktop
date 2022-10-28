@@ -58,7 +58,7 @@ const AddAccountForm = ({ settings, onAddAccount }) => {
                 keyPress={handleKeyPress}
               />
             </fieldset>
-            <RecoveryPhrase t={t} />
+            <RecoveryPhrase />
             <DiscreetModeToggle className={styles.discreetMode} />
           </div>
           <div className={`${styles.buttonsHolder}`}>
