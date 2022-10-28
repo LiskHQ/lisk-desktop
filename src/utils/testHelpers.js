@@ -72,7 +72,7 @@ export const mountWithCustomRouter = (Component, props) =>
  *
  * @returns {Object} Mounted component
  */
-  export const mountWithCustomRouterAndStore = (Component, props, store) =>
+export const mountWithCustomRouterAndStore = (Component, props, store) =>
   mount(
     <Provider store={configureStore()(store)}>
       <Router
@@ -253,3 +253,19 @@ export const mountWithQueryAndProps = (Component, props, store) => {
     </Provider>
   );
 };
+
+/**
+ * render's components that requires access Redux store
+ *
+ * @param {Class|Function} Component - A React component to be tested
+ * @param {Object} props - Set of props to be passed to the component
+ * @param {Object} store - A fake Redux store object
+ *
+ * @returns {Object} Mounted component
+ */
+export const renderWithStore = (Component, props, store) =>
+  render(
+    <Provider store={configureStore()(store)}>
+      <Component {...props} />
+    </Provider>
+  );

@@ -16,9 +16,7 @@ const CustomDerivationPath = () => {
     dispatch(settingsUpdated({ customDerivationPath: e.target.value }));
   };
 
-  if (!enableCustomDerivationPath) {
-    return null;
-  }
+  if (!enableCustomDerivationPath) return null;
 
   return (
     <fieldset>
@@ -26,6 +24,7 @@ const CustomDerivationPath = () => {
       <Input
         className={`${styles.derivationPathInput} custom-derivation-path-input`}
         size="l"
+        name="custom-derivation-path"
         onChange={onPathInputChange}
         value={customDerivationPath || defaultDerivationPath}
       />
