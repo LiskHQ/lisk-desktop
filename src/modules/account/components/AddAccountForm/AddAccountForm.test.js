@@ -1,8 +1,8 @@
 import React from 'react';
 import { createEvent, fireEvent, screen } from '@testing-library/react';
 import { renderWithStore } from 'src/utils/testHelpers';
-import AddAccountForm from '.';
 import { defaultDerivationPath } from 'src/utils/explicitBipKeyDerivation';
+import AddAccountForm from '.';
 
 jest.mock('react-i18next');
 
@@ -85,16 +85,14 @@ describe('Generals', () => {
     expect(screen.queryByText('Select Network')).toBeTruthy();
   });
 
-
   it('should render the custom derivation path field with no default value', () => {
     jest.clearAllMocks();
     accountFormInstance = renderWithStore(AddAccountForm, props, {
-      settings: { enableCustomDerivationPath: true, },
+      settings: { enableCustomDerivationPath: true },
     });
 
     expect(accountFormInstance.getByDisplayValue(defaultDerivationPath)).toBeTruthy();
   });
-
 
   it('should render the custom derivation path field with default value', () => {
     accountFormInstance = renderWithStore(AddAccountForm, props, {
