@@ -48,8 +48,8 @@ describe('ApplicationManagementList', () => {
   it('should display properly', () => {
     expect(screen.getByText('Applications')).toBeTruthy();
     expect(screen.getByText('Add application')).toBeTruthy();
-    mockManagedApplications.forEach(({ name }) => {
-      expect(screen.getByText(name)).toBeTruthy();
+    mockManagedApplications.forEach(({ chainName }) => {
+      expect(screen.getByText(chainName)).toBeTruthy();
     });
   });
 
