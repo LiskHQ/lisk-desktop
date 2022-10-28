@@ -1,9 +1,6 @@
 /* istanbul ignore file */
 import { TOKENS_SUPPORTED } from 'src/const/queries';
-import {
-  LIMIT as limit,
-  API_VERSION,
-} from 'src/const/config';
+import { LIMIT as limit, API_VERSION } from 'src/const/config';
 import { useCustomInfiniteQuery } from 'src/modules/common/hooks';
 import { addTokensMetaData } from '@token/fungible/utils/addTokensMetaData';
 import { useAppsMetaTokensConfig } from '@token/fungible/hooks/queries/useAppsMetaTokens';
@@ -21,19 +18,25 @@ import defaultClient from 'src/utils/api/client';
  * @returns the query object
  */
 
-export const useTokensSupported = ({ config: customConfig = {}, options, client = defaultClient, } = {}) => {
+export const useTokensSupported = ({
+  config: customConfig = {},
+  options,
+  client = defaultClient,
+} = {}) => {
   const createMetaConfig = useAppsMetaTokensConfig();
-  const transformToken = addTokensMetaData({createMetaConfig, client});
+  const transformToken = addTokensMetaData({ createMetaConfig, client });
   const transformResult = async (res) => {
-    const tokens = await transformToken(res.data.supportedTokens)
+    console.log({ res });
+    const tokens = await transformToken(res.data);
+    console.log({ tokens });
     return {
       ...res,
       data: {
         ...res.data,
-        supportedTokens: tokens
-      }
-    }
-  }
+        supportedTokens: tokens,
+      },
+    };
+  };
   const config = {
     url: `/api/${API_VERSION}/tokens/summary`,
     method: 'get',
@@ -47,6 +50,6 @@ export const useTokensSupported = ({ config: customConfig = {}, options, client 
     keys: [TOKENS_SUPPORTED],
     config,
     options,
-    client
+    client,
   });
 };

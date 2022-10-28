@@ -4,7 +4,7 @@ import { Client } from 'src/utils/api/client';
 
 export const useTransferableTokens = (application) => {
   const client = useRef(new Client());
-  client.current.create(application?.serviceURLs[0]);
+  client.current.create(application?.serviceURLs?.[0]);
 
   const {
     data: { data: myTokens = [] } = {},
@@ -13,6 +13,8 @@ export const useTransferableTokens = (application) => {
   } = useTokensBalance();
   const {
     data: { data: { supportedTokens } = {} } = {},
+    // data: { data: supportedTokens = [] } = {},
+    // data: { data: allSupportedTokens = [] } = {},
     isSuccess: isSupportedSuccess,
     isLoading: isSupportLoading,
   } = useTokensSupported({ client: client.current });
@@ -25,6 +27,7 @@ export const useTransferableTokens = (application) => {
       : myTokens.filter((token) =>
           supportedTokens?.find((supportedToken) => supportedToken.tokenID === token.tokenID)
         );
+    console.log({ tokens, myTokens, supportedTokens /* allSupportedTokens */ });
     return {
       isLoading,
       isSuccess,

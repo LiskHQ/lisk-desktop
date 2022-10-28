@@ -12,7 +12,7 @@ export const tokensBalance = [
     ],
   },
   {
-    tokenID: '6fd163bd15997d',
+    tokenID: '0000000200000000',
     name: 'Colecti',
     symbol: 'COL',
     availableBalance: '70000000',
@@ -24,7 +24,7 @@ export const tokensBalance = [
     ],
   },
   {
-    tokenID: '7cc242cd46228a',
+    tokenID: '0000000300000000',
     name: 'Enevti',
     symbol: 'EVT',
     availableBalance: '15000000',
@@ -36,7 +36,7 @@ export const tokensBalance = [
     ],
   },
   {
-    tokenID: '4ed385ae59332e',
+    tokenID: '0000000400000000',
     name: 'DoEdu',
     symbol: 'DEU',
     availableBalance: '43000000',
@@ -48,7 +48,7 @@ export const tokensBalance = [
     ],
   },
   {
-    tokenID: '0bf709ba38550d',
+    tokenID: '0000000500000000',
     name: 'Kalipo',
     symbol: 'KAL',
     availableBalance: '27000000',
@@ -66,16 +66,16 @@ export const tokensSupported = [
     tokenID: '0000000100000000',
   },
   {
-    tokenID: '6fd163bd15997d',
+    tokenID: '0000000200000000',
   },
   {
-    tokenID: '7cc242cd46228a',
+    tokenID: '0000000300000000',
   },
   {
-    tokenID: '4ed385ae59332e',
+    tokenID: '0000000400000000',
   },
   {
-    tokenID: '0bf709ba38550d',
+    tokenID: '0000000500000000',
   },
 ];
 

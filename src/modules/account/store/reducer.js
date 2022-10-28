@@ -67,8 +67,8 @@ export const list = (state = {}, { type, encryptedAccount, accountDetail, addres
 const persistConfig = {
   key: 'account',
   storage,
-  whitelist: ['list'], // only navigation will be persisted
-  blacklist: ['current'],
+  whitelist: ['list', 'current'], // only navigation will be persisted
+  blacklist: [],
 };
 
 const accountReducer = combineReducers({ current, list });

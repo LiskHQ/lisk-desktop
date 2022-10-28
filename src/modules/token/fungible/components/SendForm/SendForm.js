@@ -1,17 +1,16 @@
 import React, { useCallback, useMemo, useState } from 'react';
 import Piwik from 'src/utils/piwik';
-import { MODULE_COMMANDS_NAME_MAP } from 'src/modules/transaction/configuration/moduleCommand';
-import AmountField from 'src/modules/common/components/amountField';
+import { MODULE_COMMANDS_NAME_MAP } from '@transaction/configuration/moduleCommand';
+import AmountField from '@common/components/amountField';
 import TokenAmount from '@token/fungible/components/tokenAmount';
-import Icon from 'src/theme/Icon';
+import Icon from '@theme/Icon';
 import { toRawLsk, fromRawLsk } from '@token/fungible/utils/lsk';
-import BoxContent from 'src/theme/box/content';
-import BoxHeader from 'src/theme/box/header';
-import { maxMessageLength } from 'src/modules/transaction/configuration/transactions';
-import {
-  useCurrentApplication,
-} from 'src/modules/blockchainApplication/manage/hooks';
-import MenuSelect, { MenuItem } from 'src/modules/wallet/components/MenuSelect';
+import BoxContent from '@theme/box/content';
+import BoxHeader from '@theme/box/header';
+import { maxMessageLength } from '@transaction/configuration/transactions';
+import { useCurrentApplication } from '@blockchainApplication/manage/hooks';
+import MenuSelect, { MenuItem } from '@wallet/components/MenuSelect';
+import { useBlockchainApplicationExplore } from '@blockchainApplication/explore/hooks/queries/useBlockchainApplicationExplore';
 import { useBlockchainApplicationMeta } from '@blockchainApplication/manage/hooks/queries/useBlockchainApplicationMeta';
 import TxComposer from '@transaction/components/TxComposer';
 import chainLogo from '@setup/react/assets/images/LISK.png';
@@ -32,7 +31,7 @@ const getInitialRecipientChain = (
   transactionData,
   initialChainId,
   currentApplication,
-  applications,
+  applications
 ) => {
   const initalRecipientChain = initialChainId
     ? applications.find(({ chainID }) => chainID === initialChainId)
@@ -40,11 +39,7 @@ const getInitialRecipientChain = (
 
   return transactionData?.recipientChain || initalRecipientChain || currentApplication;
 };
-const getInitialToken = (
-  transactionData,
-  initialTokenId,
-  tokens,
-) => {
+const getInitialToken = (transactionData, initialTokenId, tokens) => {
   const initialToken = initialTokenId
     ? tokens.find(({ tokenID }) => tokenID === initialTokenId)
     : null;
@@ -55,11 +50,23 @@ const getInitialToken = (
 const SendForm = (props) => {
   const { account = {}, prevState, t, bookmarks, nextStep } = props;
   const [currentApplication] = useCurrentApplication();
+  console.log({ currentApplication });
   const [sendingChain, setSendingChain] = useState(
     prevState?.transactionData?.sendingChain || currentApplication
   );
-  const { data: tokens } = useTransferableTokens(sendingChain)
-  const { data: {data: applications = []} = {} } = useBlockchainApplicationMeta();
+  console.log({ sendingChain });
+  const { data: tokens } = useTransferableTokens(sendingChain);
+  const {
+    data: { data: activeApps = [] } = {},
+    isLoading: isLoadingActiveApps,
+    error: errorGettingActiveApps,
+  } = useBlockchainApplicationExplore({ config: { params: { state: 'Active' } } });
+  const activeAppsList = activeApps.map((app) => app.chainID).join();
+  const { data: { data: applications = [] } = {} } = useBlockchainApplicationMeta({
+    config: { params: { chainID: activeAppsList } },
+    options: { enabled: !isLoadingActiveApps && !errorGettingActiveApps },
+  });
+  console.log({ activeAppsList, applications });
   const [token, setToken] = useState(
     getInitialToken(prevState?.transactionData, props.initialValue?.token, tokens)
   );
@@ -82,6 +89,7 @@ const SendForm = (props) => {
     account.summary?.balance,
     token?.symbol
   );
+  const [balance, setBalance] = useState(amount.value);
   const [recipient, setRecipientField] = useRecipientField(
     getInitialRecipient(props.prevState?.rawTx, props.initialValue?.recipient)
   );
@@ -185,7 +193,7 @@ const SendForm = (props) => {
                       value={application}
                       key={application.chainID}
                     >
-                      <img className={styles.chainLogo} src={chainLogo} />
+                      <img className={styles.chainLogo} src={application?.logo.png} />
                       <span>{application.chainName}</span>
                     </MenuItem>
                   ))}
@@ -199,14 +207,17 @@ const SendForm = (props) => {
               <span className={styles.balance}>
                 Balance:&nbsp;&nbsp;
                 <span>
-                  <TokenAmount val={amount} />
+                  <TokenAmount val={balance} />
                   {token?.symbol}
                 </span>
               </span>
               <MenuSelect
                 value={token}
                 onChange={(value) => setToken(value)}
-                select={(selectedValue, option) => selectedValue?.name === option.name}
+                select={(selectedValue, option) => {
+                  setBalance(selectedValue?.availableBalance);
+                  return selectedValue?.name === option.name;
+                }}
               >
                 {tokens.map((tokenValue) => (
                   <MenuItem
@@ -226,7 +237,7 @@ const SendForm = (props) => {
               maxAmount={maxAmount}
               displayConverter
               label={t('Amount')}
-              placeHolder={t('Insert transaction amount')}
+              placeholder={t('Insert transaction amount')}
               name="amount"
             />
             <div className={`${styles.fieldGroup} ${styles.recipientFieldWrapper}`}>

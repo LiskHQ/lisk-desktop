@@ -16,7 +16,7 @@ export const mockBlockchainApp = {
       lastUpdated: 123456789,
     },
     {
-      name: 'Test app 2',
+      name: 'Colecti',
       chainID: '00000002',
       state: 'active',
       address: 'lsk24cd35u4jdq8szo3pnsqe5dsxwrnazyqqqg5eu',
