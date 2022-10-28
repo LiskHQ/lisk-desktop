@@ -7,7 +7,7 @@ import { Input } from 'src/theme';
 import { defaultDerivationPath } from 'src/utils/explicitBipKeyDerivation';
 import styles from '../Signin/login.css';
 
-const RecoveryPhrase = () => {
+const CustomDerivationPath = () => {
   const { enableCustomDerivationPath, customDerivationPath } = useSelector(selectSettings);
   const dispatch = useDispatch();
   const { t } = useTranslation();
@@ -33,4 +33,4 @@ const RecoveryPhrase = () => {
   );
 };
 
-export default React.memo(RecoveryPhrase);
+export default React.memo(CustomDerivationPath);

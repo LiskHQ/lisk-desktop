@@ -4,7 +4,7 @@ import { useTranslation } from 'react-i18next';
 import grid from 'flexboxgrid/dist/flexboxgrid.css';
 import { Link } from 'react-router-dom';
 import routes from 'src/routes/routes';
-import RecoveryPhrase from '@auth/components/RecoveryPhrase';
+import CustomDerivationPath from 'src/modules/auth/components/CustomDerivationPath';
 import { PrimaryButton } from 'src/theme/buttons';
 import PassphraseInput from 'src/modules/wallet/components/PassphraseInput/PassphraseInput';
 import DiscreetModeToggle from 'src/modules/settings/components/discreetModeToggle';
@@ -58,7 +58,7 @@ const AddAccountForm = ({ settings, onAddAccount }) => {
                 keyPress={handleKeyPress}
               />
             </fieldset>
-            <RecoveryPhrase />
+            <CustomDerivationPath />
             <DiscreetModeToggle className={styles.discreetMode} />
           </div>
           <div className={`${styles.buttonsHolder}`}>
