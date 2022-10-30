@@ -1,4 +1,5 @@
 import { EVENTS } from '@libs/wcm/constants/lifeCycle';
+import moduleCommandSchemas from '@tests/constants/schemas';
 
 // eslint-disable-next-line import/prefer-default-export
 export const context = {
@@ -10,20 +11,8 @@ export const context = {
         request: {
           method: 'sign_transaction',
           params: {
-            rawTx: {
-              moduleID: 2,
-              commandID: 0,
-              senderPublicKey: '6b40b2c68d52b1532d0374a078974798cff0b59d0a409a8d574378fe2c69daef',
-              nonce: '52n',
-              fee: '213000n',
-              signatures: [],
-              params: {
-                recipientAddress: 'b778fc95b9f07407e6409d73c8af1919d9035002',
-                amount: '910000n',
-                data: '',
-              },
-              id: 'fd22e283b9901ab1b3f812b1f1c62b08325b1b43aef365d7895eeb58597b6614',
-            },
+            payload: '0a05746f6b656e12087472616e7366657218012080c2d72f2a20cf434a889d6c7a064e8de61bb01759a76f585e5ff45a78ba8126ca332601f53532290a0800000000000000001080a094a58d1d1a14e2121783af583a9a77955259e868bcc871d00d7d2200',
+            schema: moduleCommandSchemas['token:transfer'],
           },
         },
       },

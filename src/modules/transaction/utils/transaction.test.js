@@ -222,12 +222,6 @@ describe('API: LSK Transactions', () => {
         ...baseElementsTx,
         module,
         command,
-        params: {
-          unlockObjects: tx.params.unlockObjects.map(item => ({
-            amount: BigInt(item.amount),
-            delegateAddress: expect.arrayContaining([]),
-          })),
-        },
       });
     });
 
