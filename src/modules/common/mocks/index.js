@@ -78,7 +78,7 @@ export const ccm = rest.get(
 );
 
 export const commandParametersSchemas = rest.get(
-  `*/api/${API_VERSION}/commands/parameters/schemas`,
+  `*/api/${API_VERSION}/schemas`,
   async (_, res, ctx) => {
     const response = mockCommandParametersSchemas;
     return res(ctx.json(response));

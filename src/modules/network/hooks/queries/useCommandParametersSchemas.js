@@ -18,9 +18,9 @@ import { useCustomQuery } from 'src/modules/common/hooks';
 // eslint-disable-next-line import/prefer-default-export
 export const useCommandParametersSchemas = ({ config: customConfig = {}, options } = {}) => {
   const config = {
-    url: `/api/${API_VERSION}/commands/parameters/schemas`,
+    url: `/api/${API_VERSION}/schemas`,
     method: 'get',
-    event: 'get.commands.parameters.schemas',
+    event: 'get.schemas',
     ...customConfig,
     params: { ...customConfig.params },
   };

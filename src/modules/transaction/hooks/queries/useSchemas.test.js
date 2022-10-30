@@ -36,7 +36,7 @@ describe('useSchemas hook', () => {
     await waitFor(() => result.current.isFetched);
     expect(mockDispatch).toHaveBeenCalledWith({
       type: actionTypes.schemasRetrieved,
-      data: result.current.data.data,
+      data: result.current.data.data.commands,
     });
   });
 });
