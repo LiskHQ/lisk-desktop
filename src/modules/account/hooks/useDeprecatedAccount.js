@@ -17,13 +17,14 @@ export const useDeprecatedAccount = (accountInfo) => {
       address,
       publicKey: pubkey,
       legacyAddress: '',
-      // balance: @todo account has multiple balance now
+      // @todo Replace mock balance value once we have the balance in the account store 
       balance: '10000000000000',
       username: '',
       isMigrated: true,
       isDelegate: false,
       isMultisignature: false,
     },
+    // @todo same here.
     token: {
       balance: '10000000000000',
       tokenID: '00000000',
