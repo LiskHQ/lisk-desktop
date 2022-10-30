@@ -26,7 +26,7 @@ const EnterPasswordForm = ({ onEnterPasswordSuccess, title, encryptedAccount }) 
   const [currentAccount] = useCurrentAccount();
   const [feedbackError, setFeedbackError] = useState('');
   const requestedAccount = getAccountByAddress(activeAccount.summary.address);
-  const account = useMemo(() => requestedAccount || encryptedAccount || currentAccount, [currentAccount]);
+  const account = useMemo(() => encryptedAccount || requestedAccount || currentAccount, [currentAccount]);
   const formValues = watch();
 
   const onSubmit = async ({ password }) => {

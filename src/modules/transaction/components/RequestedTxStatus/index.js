@@ -4,14 +4,12 @@ import copyToClipboard from 'copy-to-clipboard';
 import Icon from 'src/theme/Icon';
 import { PrimaryButton, SecondaryButton } from 'src/theme/buttons';
 import Illustration from 'src/modules/common/components/illustration';
-import routes from 'src/routes/routes';
 import { txStatusTypes } from '@transaction/configuration/txStatus';
 import { getErrorReportMailto } from 'src/utils/helpers';
 import useSession from '@libs/wcm/hooks/useSession';
-import { transactionToJSON } from '@transaction/utils';
 import ConnectionContext from '@libs/wcm/context/connectionContext';
 import { EVENTS } from '@libs/wcm/constants/lifeCycle';
-import { encodeTransaction } from '../../utils/encoding';
+import { encodeTransaction, toTransactionJSON } from '../../utils/encoding';
 import getIllustration from '../TxBroadcaster/illustrationsMap';
 import styles from './RequestedTxStatus.css';
 
@@ -58,7 +56,6 @@ const RequestedTxStatus = ({
   t,
   status,
   className,
-  history,
   resetTransactionResult,
   account,
   network,
@@ -71,17 +68,13 @@ const RequestedTxStatus = ({
     const event = events.find(e => e.name === EVENTS.SESSION_REQUEST);
     const { schema } = event.meta.params.request.params
     // prepare to copy
-    copyToClipboard(transactionToJSON(transactions.signedTransaction));
+    copyToClipboard(toTransactionJSON(transactions.signedTransaction, schema));
     setCopied(true);
     // encode tx
     const binary = encodeTransaction(transactions.signedTransaction, schema);
     const payload = binary.toString('hex');
     // send to initiator using wcm hooks
     respond({ payload });
-  };
-
-  const goToWallet = () => {
-    history.push(routes.wallet.path);
   };
 
   useEffect(() => resetTransactionResult, []);
@@ -94,21 +87,14 @@ const RequestedTxStatus = ({
           'signMultisignature',
           account.hwInfo,
         )}
+        data-testid="illustration"
       />
       <h6 className="result-box-header">{title}</h6>
       <p className="transaction-status body-message">{message}</p>
 
       <div className={styles.primaryActions}>
-        {status.code === txStatusTypes.broadcastSuccess ? (
-          <PrimaryButton
-            className={`${styles.backToWallet} back-to-wallet-button`}
-            onClick={goToWallet}
-          >
-            {t('Back to wallet')}
-          </PrimaryButton>
-        ) : null}
         {
-          status.code === txStatusTypes.broadcastError
+          status.code === txStatusTypes.signatureError
           ? (
             <ErrorActions
               message={message}
