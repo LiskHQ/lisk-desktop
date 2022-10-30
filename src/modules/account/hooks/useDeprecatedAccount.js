@@ -18,10 +18,15 @@ export const useDeprecatedAccount = (accountInfo) => {
       publicKey: pubkey,
       legacyAddress: '',
       // balance: @todo account has multiple balance now
+      balance: '10000000000000',
       username: '',
       isMigrated: true,
       isDelegate: false,
       isMultisignature: false,
+    },
+    token: {
+      balance: '10000000000000',
+      tokenID: '00000000',
     },
     sequence: {
       nonce: '0',
