@@ -61,22 +61,34 @@ export const tokensBalance = [
   },
 ];
 
-export const tokensSupported = [
+export const escrowedAmounts = [
   {
+    escrowChainID: '00000001',
     tokenID: '0000000100000000',
+    amount: '50000000',
+    name: 'Lisk',
+    symbol: 'LSK',
   },
-  {
-    tokenID: '0000000200000000',
-  },
-  {
-    tokenID: '0000000300000000',
-  },
-  {
-    tokenID: '0000000400000000',
-  },
-  {
-    tokenID: '0000000500000000',
-  },
+];
+
+export const tokensSupported = {
+  isSupportAllToken: false,
+  exactTokenIDs: [
+    '0000000100000000',
+    '0000000200000000',
+    '0000000300000000',
+    '0000000400000000',
+    '0000000500000000',
+  ],
+  patternTokenIDs: ['00000020******'],
+};
+
+export const totalSupply = [
+  { tokenID: '00000001', amount: '100000000000', name: 'Lisk', symbol: 'LSK' },
+  { tokenID: '00000002', amount: '70000000', name: 'Colecti', symbol: 'COL' },
+  { tokenID: '00000003', amount: '15000000', name: 'Enevti', symbol: 'EVT' },
+  { tokenID: '00000004', amount: '43000000', name: 'DoEdu', symbol: 'DEU' },
+  { tokenID: '00000005', amount: '27000000', name: 'Kalipo', symbol: 'KAL' },
 ];
 
 export const tokensTopLskBalance = [

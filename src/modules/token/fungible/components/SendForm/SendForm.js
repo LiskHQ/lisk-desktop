@@ -33,11 +33,11 @@ const getInitialRecipientChain = (
   currentApplication,
   applications
 ) => {
-  const initalRecipientChain = initialChainId
+  const initialRecipientChain = initialChainId
     ? applications.find(({ chainID }) => chainID === initialChainId)
     : null;
 
-  return transactionData?.recipientChain || initalRecipientChain || currentApplication;
+  return transactionData?.recipientChain || initialRecipientChain || currentApplication;
 };
 const getInitialToken = (transactionData, initialTokenId, tokens) => {
   const initialToken = initialTokenId
@@ -50,12 +50,9 @@ const getInitialToken = (transactionData, initialTokenId, tokens) => {
 const SendForm = (props) => {
   const { account = {}, prevState, t, bookmarks, nextStep } = props;
   const [currentApplication] = useCurrentApplication();
-  console.log({ currentApplication });
   const [sendingChain, setSendingChain] = useState(
     prevState?.transactionData?.sendingChain || currentApplication
   );
-  console.log({ sendingChain });
-  const { data: tokens } = useTransferableTokens(sendingChain);
   const {
     data: { data: activeApps = [] } = {},
     isLoading: isLoadingActiveApps,
@@ -66,10 +63,6 @@ const SendForm = (props) => {
     config: { params: { chainID: activeAppsList } },
     options: { enabled: !isLoadingActiveApps && !errorGettingActiveApps },
   });
-  console.log({ activeAppsList, applications });
-  const [token, setToken] = useState(
-    getInitialToken(prevState?.transactionData, props.initialValue?.token, tokens)
-  );
   const [recipientChain, setRecipientChain] = useState(
     getInitialRecipientChain(
       prevState?.transactionData,
@@ -77,6 +70,10 @@ const SendForm = (props) => {
       currentApplication,
       applications
     )
+  );
+  const { data: tokens } = useTransferableTokens(recipientChain);
+  const [token, setToken] = useState(
+    getInitialToken(prevState?.transactionData, props.initialValue?.token, tokens)
   );
 
   const [maxAmount, setMaxAmount] = useState({ value: 0, error: false });
@@ -169,7 +166,11 @@ const SendForm = (props) => {
                       value={application}
                       key={application.chainID}
                     >
-                      <img className={styles.chainLogo} src={application.logo?.png || chainLogo} />
+                      <img
+                        className={styles.chainLogo}
+                        src={application.logo?.png || chainLogo}
+                        alt="From application logo"
+                      />
                       <span>{application.chainName}</span>
                     </MenuItem>
                   ))}
@@ -193,7 +194,11 @@ const SendForm = (props) => {
                       value={application}
                       key={application.chainID}
                     >
-                      <img className={styles.chainLogo} src={application?.logo.png} />
+                      <img
+                        className={styles.chainLogo}
+                        src={application?.logo.png}
+                        alt="To application logo"
+                      />
                       <span>{application.chainName}</span>
                     </MenuItem>
                   ))}
@@ -225,7 +230,7 @@ const SendForm = (props) => {
                     value={tokenValue}
                     key={tokenValue.name}
                   >
-                    <img className={styles.chainLogo} src={chainLogo} />
+                    <img className={styles.chainLogo} src={chainLogo} alt="Token logo" />
                     <span>{tokenValue.name}</span>
                   </MenuItem>
                 ))}
