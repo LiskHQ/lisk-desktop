@@ -22,6 +22,7 @@ import { getNetworkName } from '@network/utils/getNetwork';
 export const useBlockchainApplicationMeta = ({ config: customConfig = {}, options, client = defaultClient } = { }) => {
   const selectedNetwork = useSelector(state => state.network);
   const network = getNetworkName(selectedNetwork)
+
   const config = {
     url: `/api/${API_VERSION}/blockchain/apps/meta`,
     method: 'get',

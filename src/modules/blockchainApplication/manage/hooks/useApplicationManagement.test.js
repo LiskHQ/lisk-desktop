@@ -1,8 +1,15 @@
 import { renderHook, act } from '@testing-library/react-hooks';
 import mockApplications, { applicationsMap } from '@tests/fixtures/blockchainApplicationsManage';
 import flushPromises from '@tests/unit-test-utils/flushPromises';
+import { queryWrapper as wrapper } from 'src/utils/test/queryWrapper';
 import actionTypes from '../store/actionTypes';
 import { useApplicationManagement } from './useApplicationManagement';
+
+jest.mock('./queries/useBlockchainApplicationMeta', () => ({
+  useBlockchainApplicationMeta: jest.fn(() => ({
+    data: { data: mockApplications },
+  })),
+}));
 
 const mockDispatch = jest.fn();
 const mockState = {
@@ -28,7 +35,8 @@ describe('useApplicationManagement hook', () => {
   beforeEach(() => {
     mockDispatch.mockClear();
   });
-  const { result } = renderHook(() => useApplicationManagement());
+
+  const { result } = renderHook(() => useApplicationManagement(), { wrapper });
 
   it('setApplication should dispatch an action', () => {
     const { setApplication } = result.current;

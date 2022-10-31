@@ -8,7 +8,8 @@ import { truncateAddress } from '@wallet/utils/account';
 import { renderWithRouter } from 'src/utils/testHelpers';
 import SentVotes from './SentVotes';
 import tableHeaderMap from './tableHeaderMap';
-import { useSentVotes } from '../../hooks/queries';
+import { useSentVotes, useDposConstants } from '../../hooks/queries';
+import { mockDposConstants } from '../../__fixtures__/mockDposConstants';
 
 const mockedCurrentAccount = mockSavedAccounts[0];
 
@@ -27,6 +28,7 @@ describe('SentVotes', () => {
 
   useTokensBalance.mockReturnValue({ data: mockTokensBalance, isLoading: false });
   useSentVotes.mockReturnValue({ data: mockSentVotes });
+  useDposConstants.mockReturnValue({ data: mockDposConstants });
 
   it('should display properly', async () => {
     renderWithRouter(SentVotes, props);

@@ -1,6 +1,9 @@
 export const networkKeys = {
   mainNet: 'mainnet',
-  testNet: 'testnet',
+  alphanet: 'alphanet',
+  betanet: 'betanet',
+  devNet: 'devnet',
+  testnet: 'testnet',
   customNode: 'customNode',
 };
 
@@ -12,7 +15,19 @@ const networks = {
     label: 'Mainnet',
     serviceUrl: 'http://165.227.246.146:9901',
   },
-  [networkKeys.testNet]: {
+  [networkKeys.alphanet]: {
+    label: 'Alphanet',
+    serviceUrl: 'http://165.227.246.146:9901',
+  },
+  [networkKeys.betanet]: {
+    label: 'Betanet',
+    serviceUrl: 'http://165.227.246.146:9901',
+  },
+  [networkKeys.devNet]: {
+    label: 'Devnet',
+    serviceUrl: 'http://165.227.246.146:9901',
+  },
+  [networkKeys.testnet]: {
     label: 'Testnet',
     // @Todo: this should be reverted when stable test service depoyment has been done
     serviceUrl: 'http://165.227.246.146:9901', // 'https://testnet-service.lisk.com',
