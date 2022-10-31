@@ -3,7 +3,7 @@ export const tokensBalance = [
     tokenID: '0000000100000000',
     name: 'Lisk',
     symbol: 'LSK',
-    availableBalance: '5000000',
+    availableBalance: '1000000000',
     lockedBalances: [
       {
         moduleID: '5',

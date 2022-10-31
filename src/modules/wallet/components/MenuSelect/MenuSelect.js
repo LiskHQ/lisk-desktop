@@ -45,16 +45,18 @@ function MenuSelect({ value, children, onChange, className, select, disabled }) 
       {showDropdown && <div onClick={() => setShowDropdown(false)} className={styles.overlay} />}
       <div onClick={handleOnClick} className={`${styles.wrapper} ${className}`}>
         <div data-testid="selected-menu-item">{children[selectedIndex]}</div>
-        <Icon name="dropdownFieldIcon" />
+        {!disabled ? <Icon name="dropdownFieldIcon" /> : null}
       </div>
       <DropdownContext.Provider value={{ onChange: handleOnChange, selectedValue }}>
-        <Dropdown
-          showArrow={!disabled}
-          className={styles.optionListWrapper}
-          showDropdown={!disabled ? showDropdown : false}
-        >
-          {children}
-        </Dropdown>
+        {!disabled ? (
+          <Dropdown
+            showArrow={!disabled}
+            className={styles.optionListWrapper}
+            showDropdown={!disabled ? showDropdown : false}
+          >
+            {children}
+          </Dropdown>
+        ) : null}
       </DropdownContext.Provider>
     </>
   );

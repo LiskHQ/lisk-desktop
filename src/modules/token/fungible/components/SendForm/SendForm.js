@@ -132,7 +132,7 @@ const SendForm = (props) => {
         address: recipient.value,
         title: recipient.title,
       },
-      token,
+      token: recipientChain,
     },
     sendingChain,
     recipientChain,
@@ -159,6 +159,7 @@ const SendForm = (props) => {
                   value={sendingChain}
                   onChange={(value) => setSendingChain(value)}
                   select={(selectedValue, option) => selectedValue?.chainID === option.chainID}
+                  disabled
                 >
                   {applications.map((application) => (
                     <MenuItem
