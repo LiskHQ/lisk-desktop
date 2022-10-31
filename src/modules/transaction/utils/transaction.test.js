@@ -2,17 +2,13 @@
 import { cryptography } from '@liskhq/lisk-client';
 import { MODULE_COMMANDS_NAME_MAP } from 'src/modules/transaction/configuration/moduleCommand';
 import { splitModuleAndCommand } from 'src/modules/transaction/utils/moduleCommand';
-import {
-  getAddressFromBase32Address,
-  getBase32AddressFromAddress,
-} from '@wallet/utils/account';
+import { getBase32AddressFromAddress } from '@wallet/utils/account';
 import accounts from '@tests/constants/wallets';
 import { genKey, blsKey, pop } from '@tests/constants/keys';
 import moduleCommandSchemas from '@tests/constants/schemas';
 import { mockAppTokens } from '@tests/fixtures/token';
 import {
   getTxAmount,
-  elementTxToDesktopTx,
   containsTransactionType,
   transactionToJSON,
   removeExcessSignatures,
@@ -25,9 +21,8 @@ import { fromTransactionJSON } from './encoding';
 const address = 'lskdxc4ta5j43jp9ro3f8zqbxta9fn6jwzjucw7yt';
 jest.spyOn(cryptography.address, 'getLisk32AddressFromPublicKey').mockReturnValue(address);
 
-const {
-  transfer, voteDelegate, registerMultisignature, registerDelegate, reclaim, unlock,
-} = MODULE_COMMANDS_NAME_MAP;
+const { transfer, voteDelegate, registerMultisignature, registerDelegate, reclaim, unlock } =
+  MODULE_COMMANDS_NAME_MAP;
 
 // TODO: All of these tests need to be rewritten to adopt to new transaction schema https://github.com/LiskHQ/lisk-sdk/blob/7e71617d281649a6942434f729a815870aac2394/elements/lisk-transactions/src/schema.ts#L15
 // We need to avoid lot of back and forth convertion from JSON and JS object
@@ -150,7 +145,7 @@ describe('API: LSK Transactions', () => {
         module,
         command,
         params: {
-          votes: tx.params.votes.map(item => ({
+          votes: tx.params.votes.map((item) => ({
             amount: BigInt(item.amount),
             delegateAddress: expect.arrayContaining([]),
           })),
@@ -223,7 +218,7 @@ describe('API: LSK Transactions', () => {
         module,
         command,
         params: {
-          unlockObjects: tx.params.unlockObjects.map(item => ({
+          unlockObjects: tx.params.unlockObjects.map((item) => ({
             amount: BigInt(item.amount),
             delegateAddress: expect.arrayContaining([]),
           })),
@@ -258,191 +253,191 @@ describe('API: LSK Transactions', () => {
     });
   });
 
-  describe('elementTxToDesktopTx', () => {
-    it('should a transfer transaction with type signature of lisk service', () => {
-      const [module, command] = splitModuleAndCommand(transfer);
-      const tx = {
-        ...baseElementsTx,
-        module,
-        command,
-        params: {
-          amount: BigInt(100000000),
-          recipientAddress: getAddressFromBase32Address(accounts.delegate.summary.address),
-          data: '',
-          tokenID: mockAppTokens[0].tokenID,
-        },
-      };
+  // describe('elementTxToDesktopTx', () => {
+  //   it('should a transfer transaction with type signature of lisk service', () => {
+  //     const [module, command] = splitModuleAndCommand(transfer);
+  //     const tx = {
+  //       ...baseElementsTx,
+  //       module,
+  //       command,
+  //       params: {
+  //         amount: BigInt(100000000),
+  //         recipientAddress: getAddressFromBase32Address(accounts.delegate.summary.address),
+  //         data: '',
+  //         tokenID: mockAppTokens[0].tokenID,
+  //       },
+  //     };
 
-      expect(elementTxToDesktopTx(tx)).toEqual({
-        ...baseDesktopTx,
-        moduleCommand: transfer,
-        id: '',
-        params: {
-          amount: '100000000',
-          recipient: { address: accounts.delegate.summary.address },
-          data: '',
-          token: { tokenID: mockAppTokens[0].tokenID },
-        },
-      });
-    });
+  //     expect(elementTxToDesktopTx(tx)).toEqual({
+  //       ...baseDesktopTx,
+  //       moduleCommand: transfer,
+  //       id: '',
+  //       params: {
+  //         amount: '100000000',
+  //         recipient: { address: accounts.delegate.summary.address },
+  //         data: '',
+  //         token: { tokenID: mockAppTokens[0].tokenID },
+  //       },
+  //     });
+  //   });
 
-    it('should a register delegate transaction with type signature of lisk service', () => {
-      const [module, command] = splitModuleAndCommand(registerDelegate);
-      const tx = {
-        ...baseElementsTx,
-        module,
-        command,
-        params: {
-          name: 'super_delegate',
-          generatorKey: convertStringToBinary(genKey),
-          blsKey: convertStringToBinary(blsKey),
-          proofOfPossession: convertStringToBinary(pop),
-        },
-      };
+  //   it('should a register delegate transaction with type signature of lisk service', () => {
+  //     const [module, command] = splitModuleAndCommand(registerDelegate);
+  //     const tx = {
+  //       ...baseElementsTx,
+  //       module,
+  //       command,
+  //       params: {
+  //         name: 'super_delegate',
+  //         generatorKey: convertStringToBinary(genKey),
+  //         blsKey: convertStringToBinary(blsKey),
+  //         proofOfPossession: convertStringToBinary(pop),
+  //       },
+  //     };
 
-      expect(elementTxToDesktopTx(tx)).toEqual({
-        ...baseDesktopTx,
-        moduleCommand: registerDelegate,
-        id: '',
-        params: {
-          name: 'super_delegate',
-          generatorKey: genKey,
-          blsKey,
-          proofOfPossession: pop,
-        },
-      });
-    });
+  //     expect(elementTxToDesktopTx(tx)).toEqual({
+  //       ...baseDesktopTx,
+  //       moduleCommand: registerDelegate,
+  //       id: '',
+  //       params: {
+  //         name: 'super_delegate',
+  //         generatorKey: genKey,
+  //         blsKey,
+  //         proofOfPossession: pop,
+  //       },
+  //     });
+  //   });
 
-    it('should a vote delegate transaction with type signature of lisk service', () => {
-      const [module, command] = splitModuleAndCommand(voteDelegate);
-      const tx = {
-        ...baseElementsTx,
-        module,
-        command,
-        params: {
-          votes: [
-            {
-              amount: BigInt('100'),
-              delegateAddress: getAddressFromBase32Address(accounts.delegate.summary.address),
-            },
-          ],
-        },
-      };
+  //   it('should a vote delegate transaction with type signature of lisk service', () => {
+  //     const [module, command] = splitModuleAndCommand(voteDelegate);
+  //     const tx = {
+  //       ...baseElementsTx,
+  //       module,
+  //       command,
+  //       params: {
+  //         votes: [
+  //           {
+  //             amount: BigInt('100'),
+  //             delegateAddress: getAddressFromBase32Address(accounts.delegate.summary.address),
+  //           },
+  //         ],
+  //       },
+  //     };
 
-      expect(elementTxToDesktopTx(tx)).toEqual({
-        ...baseDesktopTx,
-        moduleCommand: voteDelegate,
-        id: '',
-        params: {
-          votes: [
-            {
-              amount: '100',
-              delegateAddress: accounts.delegate.summary.address,
-            },
-          ],
-        },
-      });
-    });
+  //     expect(elementTxToDesktopTx(tx)).toEqual({
+  //       ...baseDesktopTx,
+  //       moduleCommand: voteDelegate,
+  //       id: '',
+  //       params: {
+  //         votes: [
+  //           {
+  //             amount: '100',
+  //             delegateAddress: accounts.delegate.summary.address,
+  //           },
+  //         ],
+  //       },
+  //     });
+  //   });
 
-    it('should transform a reclaimLSK transaction', () => {
-      const [module, command] = splitModuleAndCommand(reclaim);
-      const tx = {
-        ...baseElementsTx,
-        module,
-        command,
-        params: {
-          amount: BigInt(100),
-        },
-      };
+  //   it('should transform a reclaimLSK transaction', () => {
+  //     const [module, command] = splitModuleAndCommand(reclaim);
+  //     const tx = {
+  //       ...baseElementsTx,
+  //       module,
+  //       command,
+  //       params: {
+  //         amount: BigInt(100),
+  //       },
+  //     };
 
-      expect(elementTxToDesktopTx(tx)).toEqual({
-        ...baseDesktopTx,
-        moduleCommand: reclaim,
-        id: '',
-        params: {
-          amount: '100',
-        },
-      });
-    });
+  //     expect(elementTxToDesktopTx(tx)).toEqual({
+  //       ...baseDesktopTx,
+  //       moduleCommand: reclaim,
+  //       id: '',
+  //       params: {
+  //         amount: '100',
+  //       },
+  //     });
+  //   });
 
-    it('should transform a unlockToken transaction', () => {
-      const [module, command] = splitModuleAndCommand(unlock);
-      const unlockObjects = [
-        {
-          delegateAddress:
-            getAddressFromBase32Address(accounts.delegate.summary.address),
-          amount: BigInt('10000000'),
-          unvoteHeight: 1000000,
-        },
-        {
-          delegateAddress:
-            getAddressFromBase32Address(accounts.send_all_wallet.summary.address),
-          amount: BigInt('-10000000'),
-          unvoteHeight: 1000000,
-        },
-      ];
+  //   it('should transform a unlockToken transaction', () => {
+  //     const [module, command] = splitModuleAndCommand(unlock);
+  //     const unlockObjects = [
+  //       {
+  //         delegateAddress:
+  //           getAddressFromBase32Address(accounts.delegate.summary.address),
+  //         amount: BigInt('10000000'),
+  //         unvoteHeight: 1000000,
+  //       },
+  //       {
+  //         delegateAddress:
+  //           getAddressFromBase32Address(accounts.send_all_wallet.summary.address),
+  //         amount: BigInt('-10000000'),
+  //         unvoteHeight: 1000000,
+  //       },
+  //     ];
 
-      const tx = {
-        ...baseElementsTx,
-        module,
-        command,
-        params: { unlockObjects },
-      };
+  //     const tx = {
+  //       ...baseElementsTx,
+  //       module,
+  //       command,
+  //       params: { unlockObjects },
+  //     };
 
-      expect(elementTxToDesktopTx(tx)).toEqual({
-        ...baseDesktopTx,
-        moduleCommand: unlock,
-        id: '',
-        params: {
-          unlockObjects: tx.params.unlockObjects.map(item => ({
-            amount: String(item.amount),
-            delegateAddress: getBase32AddressFromAddress(item.delegateAddress),
-            unvoteHeight: item.unvoteHeight,
-          })),
-        },
-      });
-    });
+  //     expect(elementTxToDesktopTx(tx)).toEqual({
+  //       ...baseDesktopTx,
+  //       moduleCommand: unlock,
+  //       id: '',
+  //       params: {
+  //         unlockObjects: tx.params.unlockObjects.map(item => ({
+  //           amount: String(item.amount),
+  //           delegateAddress: getBase32AddressFromAddress(item.delegateAddress),
+  //           unvoteHeight: item.unvoteHeight,
+  //         })),
+  //       },
+  //     });
+  //   });
 
-    it('should transform a registerMultisignature transaction', () => {
-      const [module, command] = splitModuleAndCommand(registerMultisignature);
-      const mandatoryKeys = [
-        accounts.genesis.summary.publicKey,
-        accounts.delegate.summary.publicKey,
-      ].map(key => convertStringToBinary(key));
-      const optionalKeys = [
-        accounts.delegate_candidate.summary.publicKey,
-      ].map(key => convertStringToBinary(key));
+  //   it('should transform a registerMultisignature transaction', () => {
+  //     const [module, command] = splitModuleAndCommand(registerMultisignature);
+  //     const mandatoryKeys = [
+  //       accounts.genesis.summary.publicKey,
+  //       accounts.delegate.summary.publicKey,
+  //     ].map(key => convertStringToBinary(key));
+  //     const optionalKeys = [
+  //       accounts.delegate_candidate.summary.publicKey,
+  //     ].map(key => convertStringToBinary(key));
 
-      const tx = {
-        ...baseElementsTx,
-        module,
-        command,
-        params: {
-          numberOfSignatures: 2,
-          mandatoryKeys,
-          optionalKeys,
-          signatures: [],
-        },
-      };
+  //     const tx = {
+  //       ...baseElementsTx,
+  //       module,
+  //       command,
+  //       params: {
+  //         numberOfSignatures: 2,
+  //         mandatoryKeys,
+  //         optionalKeys,
+  //         signatures: [],
+  //       },
+  //     };
 
-      expect(elementTxToDesktopTx(tx)).toEqual({
-        ...baseDesktopTx,
-        moduleCommand: registerMultisignature,
-        id: '',
-        params: {
-          numberOfSignatures: 2,
-          mandatoryKeys: [
-            accounts.genesis.summary.publicKey,
-            accounts.delegate.summary.publicKey,
-          ],
-          optionalKeys: [
-            accounts.delegate_candidate.summary.publicKey,
-          ],
-          signatures: [],
-        },
-      });
-    });
-  });
+  //     expect(elementTxToDesktopTx(tx)).toEqual({
+  //       ...baseDesktopTx,
+  //       moduleCommand: registerMultisignature,
+  //       id: '',
+  //       params: {
+  //         numberOfSignatures: 2,
+  //         mandatoryKeys: [
+  //           accounts.genesis.summary.publicKey,
+  //           accounts.delegate.summary.publicKey,
+  //         ],
+  //         optionalKeys: [
+  //           accounts.delegate_candidate.summary.publicKey,
+  //         ],
+  //         signatures: [],
+  //       },
+  //     });
+  //   });
+  // });
 
   describe('containsTransactionType', () => {
     it('should return true', () => {
@@ -465,7 +460,9 @@ describe('API: LSK Transactions', () => {
   describe('transactionToJSON', () => {
     beforeEach(() => {
       // eslint-disable-next-line no-extend-native
-      BigInt.prototype.toJSON = function () { return `${this.toString()}n`; };
+      BigInt.prototype.toJSON = function () {
+        return `${this.toString()}n`;
+      };
     });
 
     afterEach(() => {
@@ -484,21 +481,20 @@ describe('API: LSK Transactions', () => {
       },
     };
     it('should return the transaction as JSON', () => {
-      expect(JSON.parse(transactionToJSON(transaction)))
-        .toEqual({
-          senderPublicKey: accounts.genesis.summary.publicKey,
-          nonce: '1n',
-          fee: '1000000n',
-          signatures: [],
-          module: 2,
-          command: 0,
-          params: {
-            amount: '10000n',
-            recipientAddress: expect.stringContaining('lsk'),
-            data: '',
-            tokenID: mockAppTokens[0].tokenID,
-          },
-        });
+      expect(JSON.parse(transactionToJSON(transaction))).toEqual({
+        senderPublicKey: accounts.genesis.summary.publicKey,
+        nonce: '1n',
+        fee: '1000000n',
+        signatures: [],
+        module: 2,
+        command: 0,
+        params: {
+          amount: '10000n',
+          recipientAddress: expect.stringContaining('lsk'),
+          data: '',
+          tokenID: mockAppTokens[0].tokenID,
+        },
+      });
     });
   });
 
@@ -510,9 +506,9 @@ describe('API: LSK Transactions', () => {
       const hasSenderSignature = true;
       const signatures = [nonEmpty, nonEmpty, empty, nonEmpty];
       const expectSignatures = [nonEmpty, nonEmpty, empty, empty];
-      expect(
-        removeExcessSignatures(signatures, mandatoryKeysNo, hasSenderSignature),
-      ).toEqual(expectSignatures);
+      expect(removeExcessSignatures(signatures, mandatoryKeysNo, hasSenderSignature)).toEqual(
+        expectSignatures
+      );
     });
   });
 
@@ -530,24 +526,24 @@ describe('API: LSK Transactions', () => {
   describe('normalizeNumberRange', () => {
     it('returns distribution data by amount', () => {
       const distributionData = {
-        "1_10": 1705,
-        "10_100": 371,
-        "100_1000": 287,
-        "1000_10000": 180,
-        "10000_100000": 53,
-        "100000_1000000": 5,
-        "0.1_1": 2258,
-        "0.01_0.1": 697,
-        "0.001_0.01": 306
-      }
+        '1_10': 1705,
+        '10_100': 371,
+        '100_1000': 287,
+        '1000_10000': 180,
+        '10000_100000': 53,
+        '100000_1000000': 5,
+        '0.1_1': 2258,
+        '0.01_0.1': 697,
+        '0.001_0.01': 306,
+      };
       const expectedResult = {
-        "0 - 10 LSK": 4966,
-        "11 - 100 LSK": 371,
-        "101 - 1000 LSK": 287,
-        "1001 - 10,000 LSK": 180,
-        "10,001 - 100,000 LSK": 53,
-        "100,001 - 1,000,000 LSK": 5
-      }
+        '0 - 10 LSK': 4966,
+        '11 - 100 LSK': 371,
+        '101 - 1000 LSK': 287,
+        '1001 - 10,000 LSK': 180,
+        '10,001 - 100,000 LSK': 53,
+        '100,001 - 1,000,000 LSK': 5,
+      };
       expect(normalizeNumberRange(distributionData)).toEqual(expectedResult);
     });
   });

@@ -5,9 +5,7 @@ import { to } from 'await-to-js';
 import { MODULE_COMMANDS_NAME_MAP } from 'src/modules/transaction/configuration/moduleCommand';
 import { DEFAULT_NUMBER_OF_SIGNATURES } from '@transaction/configuration/transactions';
 import { signatureCollectionStatus } from '@transaction/configuration/txStatus';
-import {
-  getKeys,
-} from '@wallet/utils/account';
+import { getKeys } from '@wallet/utils/account';
 import { transformStringDateToUnixTimestamp } from 'src/utils/dateTime';
 import { toRawLsk } from '@token/fungible/utils/lsk';
 import { isEmpty } from 'src/utils/helpers';
@@ -15,13 +13,8 @@ import { signTransactionByHW } from './hwManager';
 import { fromTransactionJSON } from './encoding';
 import { joinModuleAndCommand } from './moduleCommand';
 
-const {
-  transfer,
-  voteDelegate,
-  unlock,
-  reclaim,
-  registerMultisignature,
-} = MODULE_COMMANDS_NAME_MAP;
+const { transfer, voteDelegate, unlock, reclaim, registerMultisignature } =
+  MODULE_COMMANDS_NAME_MAP;
 
 // @todo import the following 4 values from lisk-elements (#4497)
 const ED25519_PUBLIC_KEY_LENGTH = 32;
@@ -66,21 +59,22 @@ const multisigRegMsgSchema = {
   },
 };
 
-export const convertStringToBinary = value => Buffer.from(value, 'hex');
-export const convertBinaryToString = value => {
+export const convertStringToBinary = (value) => Buffer.from(value, 'hex');
+export const convertBinaryToString = (value) => {
   if (value instanceof Uint8Array) {
     return Buffer.from(value).toString('hex');
   }
   return value.toString('hex');
 };
 
-const isBufferArray = (arr) => arr.every(element => {
-  if (element instanceof Uint8Array) {
-    return Buffer.isBuffer(Buffer.from(element));
-  }
+const isBufferArray = (arr) =>
+  arr.every((element) => {
+    if (element instanceof Uint8Array) {
+      return Buffer.isBuffer(Buffer.from(element));
+    }
 
-  return Buffer.isBuffer(element);
-});
+    return Buffer.isBuffer(element);
+  });
 
 const convertBuffersToHex = (value) => {
   let result = value;
@@ -99,7 +93,7 @@ const convertObjectToHex = (data) => {
   for (const key in data) {
     const value = data[key];
     if (key === 'votes' || key === 'unlockObjects') {
-      obj[key] = value.map(item => convertObjectToHex(item));
+      obj[key] = value.map((item) => convertObjectToHex(item));
     } else if (typeof value === 'object' && !Buffer.isBuffer(value) && !Array.isArray(value)) {
       obj[key] = convertObjectToHex(value);
     } else {
@@ -114,8 +108,7 @@ const transactionToJSON = (transaction) => {
   return JSON.stringify(obj);
 };
 
-const containsTransactionType = (txs = [], type) =>
-  txs.some(tx => tx.moduleCommand === type);
+const containsTransactionType = (txs = [], type) => txs.some((tx) => tx.moduleCommand === type);
 
 /**
  * Adapts transaction filter params to match transactions API method
@@ -123,23 +116,27 @@ const containsTransactionType = (txs = [], type) =>
  * @param {Object} params - Params received from withFilters HOC
  * @returns {Object} - Parameters consumable by transaction API method
  */
-const normalizeTransactionParams = params =>
+const normalizeTransactionParams = (params) =>
   // eslint-disable-next-line complexity
   Object.keys(params).reduce((acc, item) => {
     switch (item) {
       case 'dateFrom':
         if (params[item]) {
           if (!acc.timestamp) acc.timestamp = ':';
-          acc.timestamp = acc.timestamp
-            .replace(/(\d+)?:/, `${transformStringDateToUnixTimestamp(params[item])}:`);
+          acc.timestamp = acc.timestamp.replace(
+            /(\d+)?:/,
+            `${transformStringDateToUnixTimestamp(params[item])}:`
+          );
         }
         break;
       case 'dateTo':
         if (params[item]) {
           if (!acc.timestamp) acc.timestamp = ':';
           // We add 86400 so the range is inclusive
-          acc.timestamp = acc.timestamp
-            .replace(/:(\d+)?/, `:${transformStringDateToUnixTimestamp(params[item]) + 86400}`);
+          acc.timestamp = acc.timestamp.replace(
+            /:(\d+)?/,
+            `:${transformStringDateToUnixTimestamp(params[item]) + 86400}`
+          );
         }
         break;
       case 'amountFrom':
@@ -168,18 +165,19 @@ const normalizeTransactionParams = params =>
  * @returns {String} Amount in Beddows/Satoshi
  */
 const getTxAmount = ({ module, command, params }) => {
-  const moduleCommand = joinModuleAndCommand(module, command);
+  const moduleCommand = joinModuleAndCommand({ module, command });
   if (moduleCommand === transfer || moduleCommand === reclaim) {
     return params.amount;
   }
 
   if (moduleCommand === unlock) {
-    return params.unlockObjects.reduce((sum, unlockObject) =>
-      sum + parseInt(unlockObject.amount, 10), 0);
+    return params.unlockObjects.reduce(
+      (sum, unlockObject) => sum + parseInt(unlockObject.amount, 10),
+      0
+    );
   }
   if (moduleCommand === voteDelegate) {
-    return params.votes.reduce((sum, vote) =>
-      sum + Number(vote.amount), 0);
+    return params.votes.reduce((sum, vote) => sum + Number(vote.amount), 0);
   }
 
   return undefined;
@@ -233,9 +231,7 @@ export const computeTransactionId = ({ transaction, schema }) => {
   return cryptography.utils.hash(transactionBytes);
 };
 
-const signMultisigUsingPrivateKey = (
-  schema, chainID, transaction, privateKey, senderAccount,
-) => {
+const signMultisigUsingPrivateKey = (schema, chainID, transaction, privateKey, senderAccount) => {
   // since we sign multisignature registration as a normal tx, we can set this to false.
   // const isGroupRegistration = moduleCommand === registerMultisignature;
   const keys = getKeys({
@@ -253,7 +249,7 @@ const signMultisigUsingPrivateKey = (
       mandatoryKeys: keys.mandatoryKeys.map(convertStringToBinary),
     },
     schema,
-    false, // @todo if you want to send tokens, and you are the group and a member, is this True? (#4506)
+    false // @todo if you want to send tokens, and you are the group and a member, is this True? (#4506)
   );
 
   return signedTransaction;
@@ -269,28 +265,27 @@ const signMultisigRegParams = (chainIDBuffer, transaction, privateKeyBuffer) => 
   };
 
   const data = codec.codec.encode(multisigRegMsgSchema, message);
-  return cryptography.ed.signData(
-    MESSAGE_TAG_MULTISIG_REG,
-    chainIDBuffer,
-    data,
-    privateKeyBuffer,
-  );
+  return cryptography.ed.signData(MESSAGE_TAG_MULTISIG_REG, chainIDBuffer, data, privateKeyBuffer);
 };
 
 // eslint-disable-next-line max-statements
 const signUsingPrivateKey = (wallet, schema, chainID, transaction, privateKey) => {
   const moduleCommand = joinModuleAndCommand(transaction);
-  const isGroupRegistration = moduleCommand === registerMultisignature
+  const isGroupRegistration = moduleCommand === registerMultisignature;
   const chainIDBuffer = Buffer.from(chainID, 'hex');
   const privateKeyBuffer = Buffer.from(privateKey, 'hex');
   const publicKeyBuffer = Buffer.from(wallet.summary.publicKey, 'hex');
   // Sign the params if tx is a group registration and the current account is a member
   if (isGroupRegistration) {
     const members = [
-      ...transaction.params.mandatoryKeys.sort((publicKeyA, publicKeyB) => publicKeyA.compare(publicKeyB)),
-      ...transaction.params.optionalKeys.sort((publicKeyA, publicKeyB) => publicKeyA.compare(publicKeyB)),
+      ...transaction.params.mandatoryKeys.sort((publicKeyA, publicKeyB) =>
+        publicKeyA.compare(publicKeyB)
+      ),
+      ...transaction.params.optionalKeys.sort((publicKeyA, publicKeyB) =>
+        publicKeyA.compare(publicKeyB)
+      ),
     ];
-    const senderIndex = members.findIndex(item => Buffer.compare(item, publicKeyBuffer) === 0);
+    const senderIndex = members.findIndex((item) => Buffer.compare(item, publicKeyBuffer) === 0);
     if (senderIndex > -1) {
       const memberSignature = signMultisigRegParams(chainIDBuffer, transaction, privateKeyBuffer);
       // @todo use correct index once SDK exposes the sort endpoint (#4497)
@@ -319,7 +314,7 @@ const signUsingPrivateKey = (wallet, schema, chainID, transaction, privateKey) =
         transaction,
         chainIDBuffer,
         privateKeyBuffer,
-        schema,
+        schema
       );
       console.log('signature', res.signatures[0]);
       return res;
@@ -331,18 +326,12 @@ const signUsingPrivateKey = (wallet, schema, chainID, transaction, privateKey) =
 };
 
 // eslint-disable-next-line max-statements
-const signUsingHW = async (
-  schema, chainID, moduleCommand, transaction, wallet,
-) => {
-  const isGroupRegistration = moduleCommand
-    === registerMultisignature
+const signUsingHW = async (schema, chainID, moduleCommand, transaction, wallet) => {
+  const isGroupRegistration = moduleCommand === registerMultisignature;
   const transactionBytes = transactions.getSigningBytes(transaction, schema);
-  const [error, signedTransaction] = await to(signTransactionByHW(
-    wallet,
-    chainID,
-    transaction,
-    transactionBytes,
-  ));
+  const [error, signedTransaction] = await to(
+    signTransactionByHW(wallet, chainID, transaction, transactionBytes)
+  );
   if (error) {
     throw error;
   }
@@ -367,26 +356,15 @@ const signUsingHW = async (
   return { ...signedTransaction, id };
 };
 
-export const sign = async (
-  wallet,
-  schema,
-  chainID,
-  transaction,
-  privateKey,
-  senderAccount,
-) => {
+export const sign = async (wallet, schema, chainID, transaction, privateKey, senderAccount) => {
   if (!isEmpty(wallet.hwInfo)) {
     const moduleCommand = joinModuleAndCommand(transaction);
-    const signedTx = await signUsingHW(
-      schema, chainID, moduleCommand, transaction, wallet,
-    );
+    const signedTx = await signUsingHW(schema, chainID, moduleCommand, transaction, wallet);
     return signedTx;
   }
 
   if (senderAccount?.data.keys.numberOfSignatures > 0) {
-    return signMultisigUsingPrivateKey(
-      schema, chainID, transaction, privateKey, senderAccount,
-    );
+    return signMultisigUsingPrivateKey(schema, chainID, transaction, privateKey, senderAccount);
   }
 
   console.log('signUsingPrivateKey', transaction);
@@ -413,7 +391,7 @@ const signMultisigTransaction = async (
   txStatus,
   schema,
   chainID,
-  privateKey,
+  privateKey
 ) => {
   /**
    * Define keys.
@@ -428,8 +406,8 @@ const signMultisigTransaction = async (
     isRegisterMultisignature,
   });
   const keys = {
-    mandatoryKeys: mandatoryKeys.map(key => Buffer.from(key, 'hex')),
-    optionalKeys: optionalKeys.map(key => Buffer.from(key, 'hex')),
+    mandatoryKeys: mandatoryKeys.map((key) => Buffer.from(key, 'hex')),
+    optionalKeys: optionalKeys.map((key) => Buffer.from(key, 'hex')),
   };
 
   const transaction = fromTransactionJSON(transactionJSON, schema);
@@ -441,19 +419,12 @@ const signMultisigTransaction = async (
     transaction.signatures = removeExcessSignatures(
       transaction.signatures,
       keys.mandatoryKeys.length,
-      isRegisterMultisignature,
+      isRegisterMultisignature
     );
   }
 
   try {
-    const result = await sign(
-      wallet,
-      schema,
-      chainID,
-      transaction,
-      privateKey,
-      senderAccount,
-    );
+    const result = await sign(wallet, schema, chainID, transaction, privateKey, senderAccount);
     return [result];
   } catch (e) {
     return [null, e];
@@ -492,7 +463,7 @@ const normalizeTransactionsStatisticsParams = (period) => {
     week: { interval: 'day', limit: 7 },
     month: { interval: 'month', limit: 6 },
     year: { interval: 'month', limit: 12 },
-  }
+  };
   return paramsConfig[period];
 };
 
