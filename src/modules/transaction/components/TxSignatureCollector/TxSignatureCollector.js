@@ -1,9 +1,7 @@
 import React, { useEffect } from 'react';
-import { useDispatch } from 'react-redux';
 import { signatureCollectionStatus } from '@transaction/configuration/txStatus';
 import { TertiaryButton } from 'src/theme/buttons';
 import Icon from 'src/theme/Icon';
-import { secondPassphraseRemoved } from '@auth/store/action';
 import Box from 'src/theme/box';
 import Illustration from 'src/modules/common/components/illustration';
 import BoxContent from 'src/theme/box/content';
@@ -24,22 +22,25 @@ const TxSignatureCollector = ({
   prevStep,
   statusInfo,
   sender,
-  transactionDoubleSigned,
   signatureStatus,
   signatureSkipped,
   fees,
   selectedPriority,
 }) => {
   const deviceType = getDeviceType(account.hwInfo?.deviceModel);
-  const dispatch = useDispatch();
   const [currentAccount] = useCurrentAccount();
 
   const txVerification = (privateKey = undefined, publicKey = undefined) => {
+    // console.log('actionFunction');
     /**
      * All multisignature transactions get signed using a unique action
      * Therefore there's no need to pass the action function, instead the
      * sender account is required.
+     * 
+     * @todo add test coverage for the multisigTransactionSigned action when the signature
+     * collection process is refactored #4506 
      */
+    // istanbul ignore next
     if (sender) {
       if (
         signatureStatus === signatureCollectionStatus.fullySigned
@@ -75,6 +76,7 @@ const TxSignatureCollector = ({
   };
 
   const onEnterPasswordSuccess = ({ privateKey }) => {
+    // console.log('onEnterPasswordSuccess');
     const { pubkey } = currentAccount.metadata;
     txVerification(privateKey, pubkey);
   };
@@ -83,28 +85,10 @@ const TxSignatureCollector = ({
     if (deviceType) {
       txVerification();
     }
-    return () => {
-      // Ensure second passphrase is removed to prevent automatically signing future transactions
-      if (account?.secondPassphrase) {
-        dispatch(secondPassphraseRemoved());
-      }
-    };
   }, []);
 
   useEffect(() => {
-    if (!isEmpty(transactions.signedTransaction)) {
-      const hasSecondPass = !!account.secondPassphrase;
-      const isDoubleSigned = !transactions.signedTransaction.signatures.some(
-        (sig) => sig.length === 0,
-      );
-      if (!transactions.txSignatureError && hasSecondPass && !isDoubleSigned) {
-        transactionDoubleSigned();
-      } else if (!hasSecondPass || isDoubleSigned) {
-        nextStep({ rawTx, statusInfo, sender });
-      }
-    }
-
-    if (transactions.txSignatureError) {
+    if (!isEmpty(transactions.signedTransaction) || transactions.txSignatureError) {
       nextStep({ rawTx, statusInfo, sender });
     }
   }, [transactions.signedTransaction, transactions.txSignatureError]);

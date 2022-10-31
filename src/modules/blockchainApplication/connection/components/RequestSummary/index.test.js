@@ -1,10 +1,12 @@
 import React from 'react';
+import { cryptography } from '@liskhq/lisk-client';
 import {
   render,
   screen,
   fireEvent,
 } from '@testing-library/react';
 import useSession from '@libs/wcm/hooks/useSession';
+import mockSavedAccounts from '@tests/fixtures/accounts';
 import { EVENTS } from '@libs/wcm/constants/lifeCycle';
 import { rejectLiskRequest } from '@libs/wcm/utils/requestHandlers';
 import ConnectionContext from '@libs/wcm/context/connectionContext';
@@ -12,11 +14,13 @@ import { context as defaultContext } from '../../__fixtures__/requestSummary';
 import RequestSummary from './index';
 
 const nextStep = jest.fn();
+const address = mockSavedAccounts[0].metadata.address;
 
 jest.mock('@libs/wcm/hooks/useSession');
-jest.mock('@account/hooks', () => ({
+jest.mock('@account/hooks/useAccounts', () => ({
   useAccounts: jest.fn().mockImplementation(() => ({
-    accounts: [{ metadata: { address: 'lskdxc4ta5j43jp9ro3f8zqbxta9fn6jwzjucw7yt' } }],
+    accounts: [mockSavedAccounts],
+    getAccountByAddress: jest.fn(() => mockSavedAccounts[0]),
   })),
 }));
 jest.mock('@transaction/utils/transaction', () => ({
@@ -39,6 +43,13 @@ jest.mock('@libs/wcm/utils/connectionCreator', () => ({
   },
 }));
 jest.mock('@transaction/api');
+jest.mock('@account/hooks/useDeprecatedAccount', () => ({
+  useDeprecatedAccount: jest.fn(),
+}));
+jest.mock('@transaction/hooks/queries/useSchemas', () => ({
+  useSchemas: jest.fn(),
+}));
+jest.spyOn(cryptography.address, 'getLisk32AddressFromPublicKey').mockReturnValue(address);
 
 const setup = (context) => {
   const Component = () => (

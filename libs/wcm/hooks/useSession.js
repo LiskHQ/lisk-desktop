@@ -1,4 +1,5 @@
 import { useContext, useEffect, useCallback } from 'react';
+import { formatJsonRpcResult } from '@json-rpc-tools/utils'
 import { client } from '@libs/wcm/utils/connectionCreator';
 import ConnectionContext from '../context/connectionContext';
 import { onApprove, onReject } from '../utils/sessionHandlers';
@@ -33,6 +34,16 @@ const useSession = () => {
     }
   }, []);
 
+  const respond = useCallback(async ({ payload }) => {
+    const requestEvent = events.find(e => e.name === EVENTS.SESSION_REQUEST);
+    const topic = requestEvent.meta.topic;
+    const response = formatJsonRpcResult(requestEvent.meta.id, payload);
+    await client.respond({
+      topic,
+      response
+    })
+  }, []);
+
   useEffect(() => {
     if (client?.session && !session.loaded) {
       const lastKeyIndex = client.session.keys.length - 1;
@@ -46,6 +57,7 @@ const useSession = () => {
   return {
     reject,
     approve,
+    respond,
     session,
     setSession,
   };

@@ -8,8 +8,7 @@ jest.mock('@walletconnect/sign-client', () => ({
 describe('connectionCreator', () => {
   it('createSignClient function should call SignClient.init with right params', async () => {
     process.env = {
-      PROJECT_ID: '2be454834309cb634d1472f88154ec8a',
-      RELAY_URL: 'wss://relay.walletconnect.com',
+      PROJECT_ID: '8f2a5ab63f54b27471714e81d1a49da3',
     };
     expect(client).toEqual(undefined);
     const res = await createSignClient();

@@ -1,147 +1,160 @@
 import React from 'react';
-import { mount } from 'enzyme';
-import { secondPassphraseRemoved } from '@auth/store/action';
+import { cryptography } from '@liskhq/lisk-client';
+import { screen, render, fireEvent, waitFor } from '@testing-library/react';
+import mockSavedAccounts from '@tests/fixtures/accounts';
 import accounts from '@tests/constants/wallets';
-import { mockAccount as mockCurrentAccount } from '@account/utils';
-import flushPromises from '@tests/unit-test-utils/flushPromises';
-import { act } from 'react-dom/test-utils';
 import TxSignatureCollector from './TxSignatureCollector';
 
+const mockCurrentAccount = mockSavedAccounts[0];
+const address = mockSavedAccounts[0].metadata.address;
 const mockSetCurrentAccount = jest.fn();
+jest.mock('@account/utils/encryptAccount', () => ({
+  decryptAccount: jest.fn().mockResolvedValue({
+    result: {
+      recoveryPhrase: 'peanut hundred pen hawk invite exclude brain chunk gadget wait wrong ready',
+      privateKey: 'ae7522b1fd7a24886b1396b392368fe6c9b2e0e40cf86ecf193e46babe3cbe8a0fe9a3f1a21b5530f27f87a414b549e79a940bf24fdf2b2f05e7f22aeeecc86a',
+    }
+  }),
+}));
 jest.mock('@auth/store/action', () => ({
   secondPassphraseRemoved: jest.fn(),
 }));
 jest.mock('@account/hooks', () => ({
-  useCurrentAccount: jest.fn(() => ([mockCurrentAccount, mockSetCurrentAccount])),
+  useCurrentAccount: jest.fn(() => ([mockSavedAccounts[0], mockSetCurrentAccount])),
+  useAccounts: jest.fn(() => ({
+    getAccountByAddress: jest.fn().mockReturnValue(mockSavedAccounts[0]),
+  })),
 }));
+jest.spyOn(cryptography.address, 'getLisk32AddressFromPublicKey').mockReturnValue(address);
 
 describe('TxSignatureCollector', () => {
+  const t = (str, words) => {
+    if (!words) {
+      return str;
+    }
+
+    return Object.keys(words).reduce((result, word) => {
+      const re = new RegExp(`{{${word}}}`, 'g');
+      return result.replace(re, words[word]);
+    }, str);
+  };
   const props = {
-    t: key => key,
+    t,
     transactions: {
       txBroadcastError: null,
       txSignatureError: null,
-      signedTransaction: { },
+      signedTransaction: {},
     },
     account: accounts.genesis,
     actionFunction: jest.fn(),
     multisigTransactionSigned: jest.fn(),
-    rawTx: {},
+    rawTx: {
+      sender: {
+        publicKey: accounts.genesis.summary.publicKey,
+      },
+      module: 'token',
+      command: 'transfer',
+      fee: '1000000',
+      nonce: '1',
+      params: {
+        recipient: accounts.delegate.summary.address,
+        amount: '100000000',
+        data: '',
+        tokenID: '0000000000000000',
+      },
+    },
     nextStep: jest.fn(),
     statusInfo: {},
-    sender: { data: accounts.genesis },
+    // sender: { data: accounts.genesis },
     transactionDoubleSigned: jest.fn(),
   };
 
-  it.skip('should call multisigTransactionSigned', async () => {
-    const wrapper = mount(<TxSignatureCollector {...props} />);
-    wrapper.find('input').simulate('change', { target: { value: 'pass' } });
-    wrapper.find('form').simulate('submit');
-    await flushPromises();
-    act(() => { wrapper.update(); });
-    expect(props.multisigTransactionSigned).toHaveBeenCalledWith({
-      rawTx: props.rawTx,
-      sender: props.sender,
-      privateKey: 'private-key-mock',
-      publicKey: mockCurrentAccount.metadata.pubkey,
+  beforeEach(() => {
+    jest.clearAllMocks();
+  });
+
+  it('should render password input fit not used with HW', () => {
+    render(<TxSignatureCollector {...props} />);
+    expect(screen.getByText('Enter your password')).toBeInTheDocument();
+    expect(screen.getByText('Please provide your device password to sign a transaction.')).toBeInTheDocument();
+    expect(screen.getByText(mockCurrentAccount.metadata.name)).toBeInTheDocument();
+    expect(screen.getByText(mockCurrentAccount.metadata.address)).toBeInTheDocument();
+    expect(screen.getByText('Continue')).toBeInTheDocument();
+  });
+
+  it('should HW pending view if connected to one', () => {
+    const hwInfo = {
+      deviceId: '123',
+      deviceModel: 'Ledger Nano S',
+    };
+    const hwProps = {
+      ...props,
+      account: {
+        ...props.account,
+        hwInfo,
+      }
+    }
+    render(<TxSignatureCollector {...hwProps} />);
+    expect(
+      screen.getByText(
+        `Please confirm the transaction on your ${hwInfo.deviceModel}`,
+      ),
+    ).toBeInTheDocument();
+  });
+
+  it('should call actionFunction if connected to HW', () => {
+    const hwInfo = {
+      deviceId: '123',
+      deviceModel: 'Ledger Nano S',
+    };
+    const hwProps = {
+      ...props,
+      account: {
+        ...props.account,
+        hwInfo,
+      }
+    }
+    render(<TxSignatureCollector {...hwProps} />);
+    expect(props.actionFunction).toHaveBeenCalled();
+  });
+
+  it('should not call action function automatically is not connected to HW', () => {
+    render(<TxSignatureCollector {...props} />);
+    expect(props.actionFunction).not.toHaveBeenCalled();
+  });
+
+  it('should call action function on continue button click', async () => {
+    render(<TxSignatureCollector {...props} />);
+    fireEvent.change(screen.getByPlaceholderText('Enter password'), {
+      target: { value: 'DeykUBjUn7uZHYv!' },
+    });
+    fireEvent.click(screen.getByText('Continue'));
+    await waitFor(() => {
+      expect(props.actionFunction).toHaveBeenCalled();
     });
   });
 
-  it.skip('should call actionFunction', async () => {
-    const wrapper = mount(<TxSignatureCollector {...props} sender={undefined} />);
-    wrapper.find('input').simulate('change', { target: { value: 'pass' } });
-    wrapper.find('form').simulate('submit');
-    await flushPromises();
-    act(() => { wrapper.update(); });
-    const privateKey = 'private-key-mock';
-    const publicKey = mockCurrentAccount.metadata.pubkey;
-    expect(props.actionFunction).toHaveBeenCalledWith({}, privateKey, publicKey);
-  });
-
-  it('should call nextStep with props', () => {
-    const wrapper = mount(<TxSignatureCollector {...props} />);
-
-    wrapper.setProps({
+  it('should call nextStep if transactions.txSignatureError is not null', () => {
+    const errorProps = {
+      ...props,
       transactions: {
         ...props.transactions,
-        signedTransaction: { signatures: [accounts.genesis.summary.publicKey] },
+        txSignatureError: 'error',
       },
-    });
-    wrapper.update();
-    expect(props.nextStep).toHaveBeenCalledWith({
-      rawTx: props.rawTx,
-      statusInfo: props.statusInfo,
-      sender: props.sender,
-    });
+    };
+    render(<TxSignatureCollector {...errorProps} />);
+    expect(props.nextStep).toHaveBeenCalled();
+  });
 
-    wrapper.setProps({
+  it('should call nextStep if transactions.signedTransaction is not an empty object', () => {
+    const signedTransactionProps = {
+      ...props,
       transactions: {
         ...props.transactions,
-        txSignatureError: { },
+        signedTransaction: { id: '123' },
       },
-    });
-    wrapper.update();
-    expect(props.nextStep).toHaveBeenCalledWith({
-      rawTx: props.rawTx,
-      statusInfo: props.statusInfo,
-      sender: props.sender,
-    });
-  });
-
-  it('should call transactionDoubleSigned with props', () => {
-    const wrapper = mount(
-      <TxSignatureCollector
-        {...props}
-        account={{
-          ...props.account,
-          secondPassphrase: accounts.delegate.passphrase,
-        }}
-      />,
-    );
-
-    wrapper.setProps({
-      transactions: {
-        ...props.transactions,
-        signedTransaction: { signatures: [accounts.genesis.summary.publicKey, ''] },
-      },
-    });
-    wrapper.update();
-    expect(props.transactionDoubleSigned).toHaveBeenCalled();
-  });
-
-  it('should render enter password form when it is not a hardware wallet', () => {
-    const wrapper = mount(<TxSignatureCollector {...props} />);
-    expect(wrapper.find('h1')).toHaveText('Enter your password');
-    expect(wrapper.find('input')).toExist();
-    expect(wrapper.find('.continue-btn')).toExist();
-  });
-
-  it('should render properly when account is hardware wallet', () => {
-    const wrapper = mount(
-      <TxSignatureCollector
-        {...props}
-        account={{
-          ...accounts.genesis,
-          hwInfo: { deviceModel: 'ledgerNano' },
-        }}
-      />,
-    );
-    expect(wrapper.find('.hwConfirmation')).toExist();
-    expect(wrapper.find('h5')).toHaveText('Please confirm the transaction on your {{deviceModel}}');
-  });
-
-  it('should unmount and remove stored second passphrase if it exists', () => {
-    const wrapper = mount(
-      <TxSignatureCollector
-        {...props}
-        account={{
-          ...accounts.genesis,
-          secondPassphrase: 'pen hawk chunk better gadget flat picture wait exclude zero hung broom',
-        }}
-      />,
-    );
-    wrapper.unmount();
-    expect(secondPassphraseRemoved).toBeCalledTimes(1);
-    expect(wrapper).not.toExist();
+    };
+    render(<TxSignatureCollector {...signedTransactionProps} />);
+    expect(props.nextStep).toHaveBeenCalled();
   });
 });

@@ -5,6 +5,7 @@ import {
 import mockSavedAccounts from '@tests/fixtures/accounts';
 import * as reactRedux from 'react-redux';
 import { renderWithRouter } from 'src/utils/testHelpers';
+import wallets from '@tests/constants/wallets';
 import AddAccountByFile from './AddAccountByFile';
 
 const props = {
@@ -26,7 +27,7 @@ jest.mock('@account/hooks', () => ({
   )),
 }));
 
-reactRedux.useSelector = jest.fn().mockReturnValue(mockSavedAccounts[0]);
+reactRedux.useSelector = jest.fn().mockReturnValue(wallets.genesis);
 jest.spyOn(cryptography.encrypt, 'decryptMessageWithPassword').mockResolvedValue(JSON.stringify({
   recoveryPhrase,
 }));

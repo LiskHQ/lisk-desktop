@@ -22,6 +22,9 @@ jest.mock('@blockchainApplication/manage/hooks/useCurrentApplication');
 jest.mock('@account/hooks/useCurrentAccount');
 jest.mock('@transaction/api');
 jest.mock('@token/fungible/hooks/queries');
+jest.mock('@libs/wcm/hooks/useSession', () => ({
+  respond: jest.fn(),
+}));
 
 useApplicationManagement.mockReturnValue({
   setApplication: mockSetApplication,

@@ -23,7 +23,7 @@ describe('Select Account Row', () => {
       truncate: true,
     };
     const container = render(<AccountRow {...truncationProps} />);
-    expect(container.getByText('lsk74a...4oj6e')).toBeTruthy();
+    expect(container.getByText('lsk3ay...xfh4d')).toBeTruthy();
   });
 
   it('Should  list', async () => {

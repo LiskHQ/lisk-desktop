@@ -7,6 +7,10 @@ const props = {
   statusInfo: { locked: 200, unlockable: 100, selfUnvote: undefined },
 };
 
+jest.mock('@libs/wcm/hooks/useSession', () => ({
+  respond: jest.fn(),
+}));
+
 describe('VotingQueue.Result', () => {
   it('renders properly', () => {
     const wrapper = mountWithRouter(Result, props);
