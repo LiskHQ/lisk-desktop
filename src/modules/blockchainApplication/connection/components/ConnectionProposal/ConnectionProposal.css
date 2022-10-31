@@ -1,3 +1,5 @@
+@import '../../../../../../setup/react/app/mixins.css';
+
 .wrapper {
   width: 400px;
   text-align: center;
@@ -19,7 +21,21 @@
   }
 
   & .input {
-    margin: 5px 0 30px;
+    margin: 5px 0 0;
+  }
+
+  & .feedback {
+    @mixin contentSmall;
+
+    height: 30px;
+    display: block;
+    text-align: left;
+    color: var(--color-red);
+    padding: 5px;
+    box-sizing: border-box;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
   }
 
   & button {

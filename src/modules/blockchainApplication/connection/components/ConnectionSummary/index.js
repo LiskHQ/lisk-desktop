@@ -21,12 +21,26 @@ const ConnectionSummary = ({ history }) => {
   const { approve, reject } = useSession();
 
   const connectHandler = async () => {
-    const status = await approve(addresses);
-    addSearchParamsToUrl(history, { modal: 'connectionSuccess', status });
+    const result = await approve(addresses);
+    addSearchParamsToUrl(
+      history,
+      {
+        modal: 'connectionSuccess',
+        status: result.status,
+        name: result.data?.params.proposer.metadata.name ?? '',
+      },
+    );
   };
 
-  const rejectHandler = () => {
-    reject();
+  const rejectHandler = async () => {
+    const result = await reject();
+    addSearchParamsToUrl(
+      history,
+      {
+        modal: 'connectionSuccess',
+        status: result.status,
+        name: result.data?.params.proposer.metadata.name ?? '',
+      });
   };
 
   // istanbul ignore next

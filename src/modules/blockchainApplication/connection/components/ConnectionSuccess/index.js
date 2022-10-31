@@ -1,34 +1,37 @@
-import React, { useEffect, useContext } from 'react';
+import React, { useEffect, useRef } from 'react';
 import { useTranslation } from 'react-i18next';
-import ConnectionContext from '@libs/wcm/context/connectionContext';
-import { EVENTS } from '@libs/wcm/constants/lifeCycle';
+import { PAIRING_PROPOSAL_STATUS } from '@libs/wcm/constants/lifeCycle';
 import { withRouter } from 'react-router';
 import Box from 'src/theme/box';
 import Dialog from '@theme/dialog/dialog';
-import { removeSearchParamsFromUrl } from 'src/utils/searchParams';
+import { removeSearchParamsFromUrl, parseSearchParams } from 'src/utils/searchParams';
 import liskLogo from '../../../../../../setup/react/assets/images/LISK.png';
 import styles from './connectionSuccess.css';
 
 const SessionSuccess = ({ history }) => {
   const { t } = useTranslation();
-  const { events } = useContext(ConnectionContext);
+  const timeout = useRef();
+  const { status, name = 'web app' } = parseSearchParams(history.location.search);
+  const messages = {
+    [PAIRING_PROPOSAL_STATUS.APPROVAL_SUCCESS]: t('Successfully paired with {{name}}', { name }),
+    [PAIRING_PROPOSAL_STATUS.APPROVAL_FAILURE]: t('Failed to pair with {{name}}', { name }),
+    [PAIRING_PROPOSAL_STATUS.REJECTION_SUCCESS]: t('Rejected the pairing request from {{name}}', { name }),
+    [PAIRING_PROPOSAL_STATUS.REJECTION_FAILURE]: t('An error occurred while rejecting the pairing request from {{name}}', { name }),
+    default: t('An error occurred while responding to {{name}}', { name }),
+  }
 
   const redirectToHome = () => {
-    setTimeout(() => {
-      removeSearchParamsFromUrl(history, ['modal']);
-    }, 1000);
+    clearTimeout(timeout.current);
+    timeout.current = setTimeout(() => {
+      removeSearchParamsFromUrl(history, ['modal', 'status', 'name']);
+    }, 3000);
   };
 
   useEffect(() => {
     redirectToHome();
+
+    return () => clearTimeout(timeout.current);
   }, []);
-
-  if (!events.length || events[events.length - 1].name !== EVENTS.SESSION_PROPOSAL) {
-    return <div>{t('Events are not ready yet.')}</div>;
-  }
-
-  const { proposer } = events[events.length - 1].meta.params;
-  const hasError = history.location.search.indexOf('ERROR') > -1;
 
   return (
     <Dialog className={styles.wrapper}>
@@ -37,14 +40,10 @@ const SessionSuccess = ({ history }) => {
           <figure>
             <img src={liskLogo} />
           </figure>
-          <h3>{proposer.metadata.name}</h3>
+          <h3>{name}</h3>
         </div>
         <div>
-          {
-            hasError
-              ? <h6 className={styles.error}>{t('Connection failed!')}</h6>
-              : <h6>{t('Connection successful!')}</h6>
-          }
+          <h6>{messages[PAIRING_PROPOSAL_STATUS[status] ?? 'default']}</h6>
           <span>{t('Redirecting to dashboard...')}</span>
         </div>
       </Box>
