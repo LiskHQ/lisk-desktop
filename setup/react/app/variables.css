@@ -186,13 +186,14 @@ or "warn/action" ineastd of "red/green"
   --color-athens-white: rgba(247, 249, 251, 1);
   --color-application-manage-hover-color: var(--color-athens-white);
   --color-node-border: var(--color-athens-white);
-  --color-ultramarine-blue-blurred: #4070f41a;
+  --color-ultramarine-blue-blurred: #4070f40d;
   --color-menu-black: #030815;
   --color-tx-pending-status-text: var(--color-ink-blue);
   --color-tx-pending-status-bg: var(--color-active-tab);
   --color-tx-fail-status-text: var(--color-red);
   --color-tx-fail-status-bg: var(--color-red-transparent);
   --color-token-card-shadow: #eaeaea5c;
+  --color-votes-available: #4070f41a;
 
   /*************************
         Box

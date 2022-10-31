@@ -31,7 +31,7 @@ const BlockchainApplicationDetails = ({
   // const { deleteApplicationByChainId } = useApplicationManagement();
   const { checkPinByChainId, togglePin } = usePinBlockchainApplication();
   const {
-    name, state, address, lastCertificateHeight, lastUpdated,
+    chainName, state, address, lastCertificateHeight, lastUpdated,
   } = application.data;
 
   const isPinned = checkPinByChainId(chainId);
@@ -84,7 +84,7 @@ const BlockchainApplicationDetails = ({
         </Box>
         <Box className={styles.detailsWrapper}>
           <div className={styles.chainNameWrapper}>
-            <span className="chain-name-text">{name}</span>
+            <span className="chain-name-text">{chainName}</span>
             <TertiaryButton onClick={toggleApplicationPin}>
               <Icon data-testid="pin-button" name={isPinned ? 'pinnedIcon' : 'unpinnedIcon'} />
             </TertiaryButton>

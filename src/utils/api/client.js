@@ -42,15 +42,15 @@ export class Client {
 
   call = ({ transformResult = async (data) => data, ...args }) => this[METHOD](args).then(transformResult);
 
-  create({ rpc, rest } = {}) {
-    if (rpc) {
-      this.socket = io(rpc, { transports: ['websocket'], path: '/blockchain' });
-      this.socketRPC = io(rpc, { transports: ['websocket'], path: '/rpc-v3' });
+  create({ ws, http } = {}) {
+    if (ws) {
+      this.socket = io(ws, { transports: ['websocket'], path: '/blockchain' });
+      this.socketRPC = io(ws, { transports: ['websocket'], path: '/rpc-v3' });
     }
-    if (rest) {
+    if (http) {
       const request = axios.create({
         ...this.axiosConfig,
-        baseURL: rest,
+        baseURL: http,
       });
       request.interceptors.response.use((res) => res.data);
       this.http = request;

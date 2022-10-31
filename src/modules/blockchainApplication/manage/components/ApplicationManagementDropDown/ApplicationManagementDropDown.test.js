@@ -29,12 +29,12 @@ describe('ApplicationManagementDropDown', () => {
   });
 
   it('should display properly', () => {
-    expect(screen.getByText(mockCurrentApplication.name)).toBeTruthy();
+    expect(screen.getByText(mockCurrentApplication.chainName)).toBeTruthy();
     expect(screen.queryByAltText('dropdownArrowIcon')).toBeTruthy();
   });
 
   it('should show the manage application list popup', () => {
-    fireEvent.click(screen.getByText(mockCurrentApplication.name));
+    fireEvent.click(screen.getByText(mockCurrentApplication.chainName));
     expect(addSearchParamsToUrl).toHaveBeenCalledWith(props.history, { modal: 'manageApplications' });
   });
 });

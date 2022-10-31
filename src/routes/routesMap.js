@@ -41,7 +41,7 @@ import EditAccount from '@account/components/EditAccount';
 import BackupRecoveryPhraseFlow from '@account/components/BackupRecoveryPhraseFlow';
 import RemoveCurrentAccountFlow from '@account/components/RemoveCurrentAccountFlow';
 import RemoveSelectedAccountFlow from '@account/components/RemoveSelectedAccountFlow';
-import BlockchainApplications from '@blockchainApplication/explore/manager/BlockchainApplications';
+import BlockchainApplications from '@blockchainApplication/explore/components/BlockchainApplications/BlockchainApplications';
 import BlockchainApplicationDetails from '@blockchainApplication/explore/components/BlockchainApplicationDetails';
 import AddApplicationList from '@blockchainApplication/manage/components/AddApplicationList';
 import AddApplicationSuccess from '@blockchainApplication/manage/components/AddApplicationSuccess';
@@ -50,6 +50,7 @@ import SelectNode from '@blockchainApplication/manage/components/SelectNode';
 import RemoveApplicationFlow from '@blockchainApplication/manage/components/RemoveApplicationFlow';
 import AllTokens from '@wallet/components/AllTokens';
 import DelegateProfile from 'src/modules/dpos/validator/components/delegateProfile/delegateProfile';
+import SentVotes from 'src/modules/dpos/validator/components/SentVotes';
 
 export default {
   wallet: AccountDetails,
@@ -105,4 +106,5 @@ export default {
   manageApplications: ApplicationManagementList,
   removeApplicationFlow: RemoveApplicationFlow,
   allTokens: AllTokens,
+  sentVotes: SentVotes,
 };

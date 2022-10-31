@@ -6,7 +6,7 @@ import { usePeers } from '../../hooks/queries';
 
 jest.mock('react-i18next', () => ({
   ...jest.requireActual('react-i18next'),
-  useTranslation: jest.fn().mockReturnValue({ t: jest.fn().mockImplementation(key => key) }),
+  useTranslation: jest.fn().mockReturnValue({ t: jest.fn().mockImplementation((key) => key) }),
 }));
 
 jest.mock('../../hooks/queries');
@@ -33,7 +33,7 @@ describe('Network Monitor: Peers', () => {
     isFetching: true,
   };
 
-  it('renders the empty state if no peers passed', async () => {
+  it('renders null instead of the empty state if no peers passed and there are no errors', async () => {
     usePeers.mockReturnValue(emptyPeers);
 
     const wrapper = mount(<Peers />);
