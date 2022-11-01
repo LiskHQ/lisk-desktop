@@ -53,7 +53,7 @@ import ConnectionProposal from 'src/modules/blockchainApplication/connection/com
 import SessionManager from '@blockchainApplication/connection/components/SessionManager';
 import ConnectionSummary from 'src/modules/blockchainApplication/connection/components/ConnectionSummary';
 import RequestView from '@blockchainApplication/connection/components/RequestView';
-import ConnectionSuccess from 'src/modules/blockchainApplication/connection/components/ConnectionSuccess';
+import ConnectionStatus from 'src/modules/blockchainApplication/connection/components/ConnectionStatus';
 import AllTokens from '@wallet/components/AllTokens';
 import DelegateProfile from 'src/modules/dpos/validator/components/delegateProfile/delegateProfile';
 
@@ -116,5 +116,5 @@ export default {
   sessionManager: SessionManager,
   requestView: RequestView,
   connectionSummary: ConnectionSummary,
-  connectionSuccess: ConnectionSuccess,
+  connectionStatus: ConnectionStatus,
 };

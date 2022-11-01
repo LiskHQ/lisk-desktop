@@ -1,29 +1,32 @@
 import React, { useEffect, useRef } from 'react';
 import { useTranslation } from 'react-i18next';
-import { PAIRING_PROPOSAL_STATUS } from '@libs/wcm/constants/lifeCycle';
-import { withRouter } from 'react-router';
+import { ACTIONS, STATUS } from '@libs/wcm/constants/lifeCycle';
 import Box from 'src/theme/box';
 import Dialog from '@theme/dialog/dialog';
 import { removeSearchParamsFromUrl, parseSearchParams } from 'src/utils/searchParams';
 import liskLogo from '../../../../../../setup/react/assets/images/LISK.png';
-import styles from './connectionSuccess.css';
+import styles from './ConnectionStatus.css';
 
-const SessionSuccess = ({ history }) => {
+const ConnectionStatus = ({ history }) => {
   const { t } = useTranslation();
   const timeout = useRef();
-  const { status, name = 'web app' } = parseSearchParams(history.location.search);
+  const { status, action, name = 'web app' } = parseSearchParams(history.location.search);
   const messages = {
-    [PAIRING_PROPOSAL_STATUS.APPROVAL_SUCCESS]: t('Successfully paired with {{name}}', { name }),
-    [PAIRING_PROPOSAL_STATUS.APPROVAL_FAILURE]: t('Failed to pair with {{name}}', { name }),
-    [PAIRING_PROPOSAL_STATUS.REJECTION_SUCCESS]: t('Rejected the pairing request from {{name}}', { name }),
-    [PAIRING_PROPOSAL_STATUS.REJECTION_FAILURE]: t('An error occurred while rejecting the pairing request from {{name}}', { name }),
+    [ACTIONS.APPROVE]: {
+      [STATUS.SUCCESS]: t('Successfully paired with {{name}}', { name }),
+      [STATUS.FAILURE]: t('Failed to pair with {{name}}', { name }),
+    },
+    [ACTIONS.REJECT]: {
+      [STATUS.SUCCESS]: t('Rejected the pairing request from {{name}}', { name }),
+      [STATUS.FAILURE]: t('An error occurred while rejecting the pairing request from {{name}}', { name }),
+    },
     default: t('An error occurred while responding to {{name}}', { name }),
   }
 
   const redirectToHome = () => {
     clearTimeout(timeout.current);
     timeout.current = setTimeout(() => {
-      removeSearchParamsFromUrl(history, ['modal', 'status', 'name']);
+      removeSearchParamsFromUrl(history, ['modal', 'status', 'name', 'action']);
     }, 3000);
   };
 
@@ -43,7 +46,7 @@ const SessionSuccess = ({ history }) => {
           <h3>{name}</h3>
         </div>
         <div>
-          <h6>{messages[PAIRING_PROPOSAL_STATUS[status] ?? 'default']}</h6>
+          <h6>{messages[action]?.[status] ?? messages.default}</h6>
           <span>{t('Redirecting to dashboard...')}</span>
         </div>
       </Box>
@@ -51,4 +54,4 @@ const SessionSuccess = ({ history }) => {
   );
 };
 
-export default withRouter(SessionSuccess);
+export default ConnectionStatus;
