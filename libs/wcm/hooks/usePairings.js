@@ -2,21 +2,30 @@ import { useEffect, useContext, useCallback } from 'react';
 import { getSdkError } from '@walletconnect/utils';
 import { client } from '../utils/connectionCreator';
 import ConnectionContext from '../context/connectionContext';
-import { ERROR_CASES } from '../constants/lifeCycle';
+import { ERROR_CASES, STATUS } from '../constants/lifeCycle';
 
 const usePairings = () => {
   const { pairings, setPairings } = useContext(ConnectionContext);
 
   /**
-   * Sets the pairing URI as an aknowledgement to the client.
+   * Sets the pairing URI as an acknowledgement to the client.
    * Once the handshake is completed, the client will be able to
    * Request a pairing.
    *
    * @param {string} uri - The URI received from the web app.
    */
-  const setUri = useCallback((uri) => {
-    if (client?.pair && uri) {
-      client.pair({ uri });
+  const setUri = useCallback(async (uri) => {
+    try {
+      const data = await client.pair({ uri });
+      return {
+        status: STATUS.SUCCESS,
+        data,
+      };
+    } catch (e) {
+      return {
+        status: STATUS.FAILURE,
+        message: e.message,
+      };
     }
   }, []);
 
@@ -37,7 +46,20 @@ const usePairings = () => {
    */
   const disconnect = useCallback(async (topic) => {
     removePairing(topic);
-    await client.disconnect({ topic, reason: getSdkError(ERROR_CASES.USER_DISCONNECTED) });
+    try {
+      await client.disconnect({
+        topic,
+        reason: getSdkError(ERROR_CASES.USER_DISCONNECTED),
+      });
+      return {
+        status: STATUS.SUCCESS,
+      };
+    } catch (e) {
+      return {
+        status: STATUS.FAILURE,
+        message: e.message,
+      };
+    }
   }, []);
 
   /**

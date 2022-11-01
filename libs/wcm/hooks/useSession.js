@@ -4,33 +4,50 @@ import { client } from '@libs/wcm/utils/connectionCreator';
 import ConnectionContext from '../context/connectionContext';
 import { onApprove, onReject } from '../utils/sessionHandlers';
 import usePairings from './usePairings';
-import { EVENTS, PAIRING_PROPOSAL_STATUS } from '../constants/lifeCycle';
+import { EVENTS, STATUS } from '../constants/lifeCycle';
 
 const useSession = () => {
-  const { events, session, setSession } = useContext(ConnectionContext);
+  const { events, removeEvent, session, setSession } = useContext(ConnectionContext);
   const { refreshPairings } = usePairings();
 
   const approve = useCallback(async (selectedAccounts) => {
-    let status = PAIRING_PROPOSAL_STATUS.FAILED;
     const proposalEvents = events.find(e => e.name === EVENTS.SESSION_PROPOSAL);
-    if (proposalEvents) {
-      setSession({
+    try {
+      await setSession({
         ...session,
         request: false,
         data: proposalEvents.meta,
       });
-      status = await onApprove(proposalEvents.meta, selectedAccounts);
+      const status = await onApprove(proposalEvents.meta, selectedAccounts);
       refreshPairings();
+      removeEvent(proposalEvents);
+      return {
+        status,
+        data: proposalEvents.meta
+      };
+    } catch (e) {
+      return {
+        status: STATUS.FAILURE,
+        message: e.message,
+      };
     }
-
-    return status;
   }, []);
 
   const reject = useCallback(async () => {
     const proposalEvents = events.find(e => e.name === EVENTS.SESSION_PROPOSAL);
-    if (proposalEvents) {
+    try {
       setSession({ ...session, request: false });
       await onReject(proposalEvents.meta);
+      removeEvent(proposalEvents);
+      return {
+        status: STATUS.SUCCESS,
+        data: proposalEvents.meta
+      };
+    } catch (e) {
+      return {
+        status: STATUS.FAILURE,
+        message: e.message,
+      };
     }
   }, []);
 
@@ -38,10 +55,22 @@ const useSession = () => {
     const requestEvent = events.find(e => e.name === EVENTS.SESSION_REQUEST);
     const topic = requestEvent.meta.topic;
     const response = formatJsonRpcResult(requestEvent.meta.id, payload);
-    await client.respond({
-      topic,
-      response
-    })
+
+    try {
+      const data = await client.respond({
+        topic,
+        response
+      });
+      return {
+        status: STATUS.SUCCESS,
+        data,
+      };
+    } catch (e) {
+      return {
+        status: STATUS.FAILURE,
+        message: e.message,
+      };
+    }
   }, []);
 
   useEffect(() => {
