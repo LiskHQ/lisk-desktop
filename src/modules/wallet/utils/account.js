@@ -284,7 +284,7 @@ export const getKeys = ({ senderAccount, transaction, isRegisterMultisignature }
     return transaction.params;
   }
 
-  return senderAccount.keys;
+  return senderAccount;
 };
 
 export const validate2ndPass = async (account, passphrase, error) => {

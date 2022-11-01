@@ -11,7 +11,7 @@ import BoxContent from 'src/theme/box/content';
 import { PrimaryButton } from 'src/theme/buttons';
 import styles from './EnterPasswordForm.css';
 
-const EnterPasswordForm = ({ onEnterPasswordSuccess, title, encryptedAccount }) => {
+const EnterPasswordForm = ({ onEnterPasswordSuccess, title, encryptedAccount, isDisabled }) => {
   const { t } = useTranslation();
   const {
     register,
@@ -65,7 +65,7 @@ const EnterPasswordForm = ({ onEnterPasswordSuccess, title, encryptedAccount }) 
           />
           <PrimaryButton
             type="submit"
-            disabled={!formValues.password}
+            disabled={isDisabled || !formValues.password}
             className={`${styles.button} continue-btn`}
           >
             {t('Continue')}

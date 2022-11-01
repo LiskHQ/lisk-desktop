@@ -193,9 +193,8 @@ export const multisigTransactionSigned = ({
 }) => async (dispatch, getState) => {
   const state = getState();
   const activeWallet = selectActiveTokenAccount(state);
-  const txStatus = getTransactionSignatureStatus(sender.data, transactionJSON);
+  const txStatus = getTransactionSignatureStatus(sender, transactionJSON);
 
-  console.log('getTransactionSignatureStatus', txStatus);
   const [tx, error] = await signMultisigTransaction(
     activeWallet,
     sender,

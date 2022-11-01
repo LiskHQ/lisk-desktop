@@ -9,6 +9,7 @@ import Illustration from 'src/modules/common/components/illustration';
 import BoxContent from 'src/theme/box/content';
 import { isEmpty } from 'src/utils/helpers';
 import EnterPasswordForm from 'src/modules/auth/components/EnterPasswordForm';
+import { useAuth } from '@auth/hooks/queries';
 import { getDeviceType } from '@wallet/utils/hwManager';
 import { useCurrentAccount } from '@account/hooks';
 import styles from './txSignatureCollector.css';
@@ -19,7 +20,6 @@ import { MODULE_COMMANDS_NAME_MAP } from '../../configuration/moduleCommand';
 const TxSignatureCollector = ({
   t,
   transactions,
-  account,
   actionFunction,
   multisigTransactionSigned,
   formProps,
@@ -27,21 +27,28 @@ const TxSignatureCollector = ({
   nextStep,
   prevStep,
   statusInfo,
-  sender,
+  // sender,
   transactionDoubleSigned,
   // signatureStatus,
   // signatureSkipped,
   fees,
   selectedPriority,
 }) => {
+  const [{ metadata: { address, pubkey } = {} }] = useCurrentAccount();
+  const { data: account, isLoading: isGettingAuthData } = useAuth({
+    config: { params: { address } },
+  });
+
   const deviceType = getDeviceType(account.hwInfo?.deviceModel);
   const dispatch = useDispatch();
-  const [currentAccount] = useCurrentAccount();
-  const isTransactionAuthor = transactionJSON.senderPublicKey === currentAccount.metadata.pubkey;
-  const isAuthorAccountMultisignature = account.info.LSK.summary.isMultisignature;
+  const isTransactionAuthor = transactionJSON.senderPublicKey === address?.metadata?.pubkey;
+  const isAuthorAccountMultisignature =
+    [...account?.data?.mandatoryKeys, ...account?.data?.optionalKeys].length > 0; // account.info.LSK.summary.isMultisignature;
   // const isSignerAccountMultisignature = sender.data?.keys.numberOfSignatures > 0;
   const moduleCommand = joinModuleAndCommand(transactionJSON);
-  const isRegisterMultisignature = moduleCommand === MODULE_COMMANDS_NAME_MAP.registerMultisignature;
+  const isRegisterMultisignature =
+    moduleCommand === MODULE_COMMANDS_NAME_MAP.registerMultisignature;
+  const sender = useCurrentAccount();
 
   const txVerification = (privateKey = undefined, publicKey = undefined) => {
     /**
@@ -51,7 +58,6 @@ const TxSignatureCollector = ({
      * Multisignature account
      *  - Signature from author and participants
      */
-
 
     /**
      * All multisignature transactions get signed using a unique action
@@ -76,15 +82,15 @@ const TxSignatureCollector = ({
         },
         transactionJSON,
         privateKey,
-        publicKey,
+        publicKey
       );
     }
 
     return multisigTransactionSigned({
       formProps,
       transactionJSON,
-      sender,
       privateKey,
+      sender: { ...account.data },
     });
 
     // Transaction authored from other account and current account is a non multisignature account
@@ -98,10 +104,7 @@ const TxSignatureCollector = ({
     // }
   };
 
-  const onEnterPasswordSuccess = ({ privateKey }) => {
-    const { pubkey } = currentAccount.metadata;
-    txVerification(privateKey, pubkey);
-  };
+  const onEnterPasswordSuccess = ({ privateKey }) => txVerification(privateKey, pubkey);
 
   useEffect(() => {
     if (deviceType) {
@@ -119,7 +122,7 @@ const TxSignatureCollector = ({
     if (!isEmpty(transactions.signedTransaction)) {
       const hasSecondPass = !!account.secondPassphrase;
       const isDoubleSigned = !transactions.signedTransaction.signatures.some(
-        (sig) => sig.length === 0,
+        (sig) => sig.length === 0
       );
       if (!transactions.txSignatureError && hasSecondPass && !isDoubleSigned) {
         transactionDoubleSigned();
@@ -142,6 +145,7 @@ const TxSignatureCollector = ({
         <EnterPasswordForm
           title="Please provide your device password to sign a transaction."
           onEnterPasswordSuccess={onEnterPasswordSuccess}
+          isDisabled={isGettingAuthData}
         />
       </div>
     );

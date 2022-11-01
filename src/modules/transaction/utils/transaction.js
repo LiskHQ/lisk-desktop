@@ -239,7 +239,7 @@ const signMultisigUsingPrivateKey = (schema, chainID, transaction, privateKey, s
     transaction,
     isRegisterMultisignature: false,
   });
-
+  console.log('>>> options keys', keys);
   const signedTransaction = transactions.signMultiSignatureTransactionWithPrivateKey(
     transaction,
     Buffer.from(chainID, 'hex'),
@@ -285,6 +285,7 @@ const signUsingPrivateKey = (wallet, schema, chainID, transaction, privateKey) =
         publicKeyA.compare(publicKeyB)
       ),
     ];
+    console.log('>>>>>', members);
     const senderIndex = members.findIndex((item) => Buffer.compare(item, publicKeyBuffer) === 0);
     if (senderIndex > -1) {
       const memberSignature = signMultisigRegParams(chainIDBuffer, transaction, privateKeyBuffer);
@@ -363,7 +364,8 @@ export const sign = async (wallet, schema, chainID, transaction, privateKey, sen
     return signedTx;
   }
 
-  if (senderAccount?.data.keys.numberOfSignatures > 0) {
+  console.log('multi signature', senderAccount);
+  if (senderAccount.mandatoryKeys?.length + senderAccount.optionalKeys?.length > 0) {
     return signMultisigUsingPrivateKey(schema, chainID, transaction, privateKey, senderAccount);
   }
 
@@ -400,14 +402,9 @@ const signMultisigTransaction = async (
   const moduleCommand = joinModuleAndCommand(transactionJSON);
   const isRegisterMultisignature = moduleCommand === registerMultisignature;
 
-  const { mandatoryKeys, optionalKeys } = getKeys({
-    senderAccount: senderAccount.data,
-    transaction: transactionJSON,
-    isRegisterMultisignature,
-  });
   const keys = {
-    mandatoryKeys: mandatoryKeys.map((key) => Buffer.from(key, 'hex')),
-    optionalKeys: optionalKeys.map((key) => Buffer.from(key, 'hex')),
+    mandatoryKeys: senderAccount.mandatoryKeys.map((key) => Buffer.from(key, 'hex')),
+    optionalKeys: senderAccount.optionalKeys.map((key) => Buffer.from(key, 'hex')),
   };
 
   const transaction = fromTransactionJSON(transactionJSON, schema);

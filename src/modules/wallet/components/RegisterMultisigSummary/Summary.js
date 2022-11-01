@@ -18,6 +18,7 @@ const Summary = ({
         formProps,
         transactionJSON,
         actionFunction: multisigGroupRegistered,
+        sender: {}
       });
     },
   };
