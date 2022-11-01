@@ -15,60 +15,54 @@ import LockedBalanceLink from '@token/fungible/components/BalanceInfo/LockedBala
 import styles from './WalletDetails.css';
 
 const WalletDetails = ({
-  t, wallet, token, className, isWalletRoute,
-}) => {
-  const tokens = Object.entries(wallet.info || {}).filter(
-    ([key, info]) => token.list[key] && info,
-  );
-
-  return (
-    <Box className={`${styles.box} ${className}`}>
-      <BoxHeader>
-        <h1>{t('Wallet details')}</h1>
-      </BoxHeader>
-      <BoxContent className={`${styles.container} coin-container`}>
-        {tokens.map(([acctToken, info]) => (
-          <BoxRow
-            key={`${info.address}-${acctToken}`}
-            className={`${styles.row} coin-row`}
+  t, tokens, className, isWalletRoute,
+}) => <Box className={`${styles.box} ${className}`}>
+    <BoxHeader>
+      <h1>{t('Wallet details')}</h1>
+    </BoxHeader>
+    <BoxContent className={`${styles.container} coin-container`}>
+      {tokens?.map((token) => (
+        <BoxRow
+          key={`${token.tokenID}`}
+          className={`${styles.row} coin-row`}
+        >
+          <Link
+            to={routes.wallet.path}
+            className={styles.link}
           >
-            <Link
-              to={routes.wallet.path}
-              className={styles.link}
-            >
-              <Icon name="lskIcon" />
-              <div className={styles.details}>
-                <span>
-                  {t('{{acctToken}} balance', { token: tokenMap[acctToken].label })}
-                </span>
-                <div className={styles.valuesRow}>
-                  <DiscreetMode>
-                    <div className={`${styles.cryptoValue} balance-value`}>
-                      <div><TokenAmount val={info.summary?.balance} token={acctToken} /></div>
-                      <div>
-                        <Converter
-                          className={styles.fiatValue}
-                          value={fromRawLsk(info.summary?.balance)}
-                          error=""
-                        />
-                      </div>
+            <Icon name="lskIcon" />
+            <div className={styles.details}>
+              <span>
+                {t('{{acctToken}} balance', { token: tokenMap.LSK.label })}
+              </span>
+              <div className={styles.valuesRow}>
+                <DiscreetMode>
+                  <div className={`${styles.cryptoValue} balance-value`}>
+                    <div><TokenAmount val={token.availableBalance} token={tokenMap.LSK.label} /></div>
+                    <div>
+                      <Converter
+                        className={styles.fiatValue}
+                        value={fromRawLsk(token.availableBalance)}
+                        error=""
+                      />
                     </div>
-                    <LockedBalanceLink
-                      activeToken={acctToken}
-                      isWalletRoute={isWalletRoute}
-                      style={styles.lockedBalance}
-                      icon="lockedBalance"
-                      account={wallet.info.LSK}
-                    />
-                  </DiscreetMode>
-                </div>
+                  </div>
+                  <LockedBalanceLink
+                    activeToken={tokenMap.LSK.label}
+                    isWalletRoute={isWalletRoute}
+                    style={styles.lockedBalance}
+                    icon="lockedBalance"
+                    // TODO: Fix locked balance details
+                    account={{}}
+                  />
+                </DiscreetMode>
               </div>
-            </Link>
-          </BoxRow>
-        ))}
-      </BoxContent>
-    </Box>
-  );
-};
+            </div>
+          </Link>
+        </BoxRow>
+      ))}
+    </BoxContent>
+  </Box>
+
 
 export default WalletDetails;
