@@ -7,42 +7,44 @@ import { useDispatch } from 'react-redux';
 import authActionTypes from '@auth/store/actionTypes';
 import { useCurrentAccount } from './useCurrentAccount';
 
-// eslint-disable-next-line import/prefer-default-export,max-statements
+const defaultAccount = {
+  summary: {
+    address: '',
+    publicKey: '',
+    legacyAddress: '',
+    // @todo Replace mock balance value once we have the balance in the account store 
+    balance: '10000000000000',
+    username: '',
+    isMigrated: true,
+    isDelegate: false,
+    isMultisignature: false,
+  },
+  // @todo same here.
+  token: {
+    balance: '10000000000000',
+    tokenID: '00000000',
+  },
+  sequence: {
+    nonce: '0',
+  },
+  keys: {
+    numberOfSignatures: 0,
+    mandatoryKeys: [],
+    optionalKeys: [],
+  },
+  dpos: {
+    delegate: {},
+    sentVotes: [],
+    unlocking: [],
+  },
+};
+
+// eslint-disable-next-line import/prefer-default-export, complexity, max-statements
 export const useDeprecatedAccount = (accountInfo) => {
   const [currentAccount] = useCurrentAccount();
   const dispatch = useDispatch();
-  const { pubkey, address } = accountInfo ?? currentAccount.metadata;
-  const [account, setAccount] = useState({
-    summary: {
-      address,
-      publicKey: pubkey,
-      legacyAddress: '',
-      // @todo Replace mock balance value once we have the balance in the account store 
-      balance: '10000000000000',
-      username: '',
-      isMigrated: true,
-      isDelegate: false,
-      isMultisignature: false,
-    },
-    // @todo same here.
-    token: {
-      balance: '10000000000000',
-      tokenID: '00000000',
-    },
-    sequence: {
-      nonce: '0',
-    },
-    keys: {
-      numberOfSignatures: 0,
-      mandatoryKeys: [],
-      optionalKeys: [],
-    },
-    dpos: {
-      delegate: {},
-      sentVotes: [],
-      unlocking: [],
-    },
-  });
+  const { pubkey, address } = accountInfo || currentAccount.metadata || {};
+  const [account, setAccount] = useState(defaultAccount);
 
   const {
     data: sentVotes,
