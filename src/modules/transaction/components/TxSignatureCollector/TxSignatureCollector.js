@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react';
 import { useDispatch } from 'react-redux';
-import { signatureCollectionStatus } from '@transaction/configuration/txStatus';
+// import { signatureCollectionStatus } from '@transaction/configuration/txStatus';
 import { TertiaryButton } from 'src/theme/buttons';
 import Icon from 'src/theme/Icon';
 import { secondPassphraseRemoved } from '@auth/store/action';
@@ -29,8 +29,8 @@ const TxSignatureCollector = ({
   statusInfo,
   sender,
   transactionDoubleSigned,
-  signatureStatus,
-  signatureSkipped,
+  // signatureStatus,
+  // signatureSkipped,
   fees,
   selectedPriority,
 }) => {
@@ -80,7 +80,6 @@ const TxSignatureCollector = ({
       );
     }
 
-    console.log(signatureStatus, signatureSkipped, signatureCollectionStatus, isRegisterMultisignature)
     return multisigTransactionSigned({
       formProps,
       transactionJSON,

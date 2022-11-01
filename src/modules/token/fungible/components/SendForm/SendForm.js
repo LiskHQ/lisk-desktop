@@ -213,7 +213,7 @@ const SendForm = (props) => {
               <span className={styles.balance}>
                 Balance:&nbsp;&nbsp;
                 <span>
-                  <TokenAmount val={amount} />
+                  <TokenAmount val={token?.availableBalance} />
                   {token?.symbol}
                 </span>
               </span>

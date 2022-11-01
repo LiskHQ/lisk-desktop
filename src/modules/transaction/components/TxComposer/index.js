@@ -103,18 +103,14 @@ const TxComposer = ({
         composedFees={composedFees}
       />
       <Feedback
-        balance={wallet.token?.balance}
+        balance={formProps.fields?.token?.availableBalance}
         feedback={formProps.feedback}
         minRequiredBalance={minRequiredBalance}
       />
       <BoxFooter>
         <PrimaryButton
           className="confirm-btn"
-          onClick={() => onConfirm(
-            formProps,
-            transactionJSON,
-            selectedPriority,
-          )}
+          onClick={() => onConfirm(formProps, transactionJSON, selectedPriority)}
           disabled={!formProps.isValid || minRequiredBalance > wallet.token?.balance}
         >
           {buttonTitle ?? t('Continue')}
