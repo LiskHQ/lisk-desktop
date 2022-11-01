@@ -33,7 +33,7 @@ export const useTransferableTokens = (application) => {
             return myTokens.filter((token) => chainID === token.tokenID.slice(0, 8));
           })
           .flatMap((res) => res);
-    const supportedAppTokens = [...patternTokensSupported, ...exactTokensSupported];
+    const supportedAppTokens = [...(patternTokensSupported || []), ...exactTokensSupported];
     const tokens = isSupportAllToken ? myTokens : Array.from(new Set(supportedAppTokens));
     return {
       isLoading,

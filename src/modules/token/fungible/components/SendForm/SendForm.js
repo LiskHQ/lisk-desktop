@@ -197,7 +197,7 @@ const SendForm = (props) => {
                     >
                       <img
                         className={styles.chainLogo}
-                        src={application?.logo.png}
+                        src={application.logo?.png}
                         alt="To application logo"
                       />
                       <span>{application.chainName}</span>

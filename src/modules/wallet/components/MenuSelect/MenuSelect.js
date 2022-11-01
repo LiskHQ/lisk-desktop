@@ -52,7 +52,7 @@ function MenuSelect({ value, children, onChange, className, select, disabled }) 
           <Dropdown
             showArrow={!disabled}
             className={styles.optionListWrapper}
-            showDropdown={!disabled ? showDropdown : false}
+            showDropdown={showDropdown}
           >
             {children}
           </Dropdown>
