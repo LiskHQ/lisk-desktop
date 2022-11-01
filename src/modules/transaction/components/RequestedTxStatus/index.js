@@ -68,7 +68,7 @@ const RequestedTxStatus = ({
     const event = events.find(e => e.name === EVENTS.SESSION_REQUEST);
     const { schema } = event.meta.params.request.params
     // prepare to copy
-    copyToClipboard(toTransactionJSON(transactions.signedTransaction, schema));
+    copyToClipboard(JSON.stringify(toTransactionJSON(transactions.signedTransaction, schema)));
     setCopied(true);
     // encode tx
     const binary = encodeTransaction(transactions.signedTransaction, schema);

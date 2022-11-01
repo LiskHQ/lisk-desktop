@@ -13,12 +13,15 @@ import styles from './ConnectionProposal.css';
 
 const ConnectionProposal = ({ history }) => {
   const [value, setValue] = useState('');
+  const [status, setStatus] = useState({});
   const { events } = useContext(ConnectionContext);
   const { setUri } = usePairings();
   const { t } = useTranslation();
 
-  const clickHandler = () => {
-    setUri(value);
+  const clickHandler = async () => {
+    setStatus({ ...status, isPending: true });
+    const result = await setUri(value);
+    setStatus(result);
   };
 
   useEffect(() => {
@@ -44,9 +47,12 @@ const ConnectionProposal = ({ history }) => {
               className={styles.input}
               placeholder={t('Enter WalletConnect URI')}
             />
+            <span className={styles.feedback}>
+              {status.message ?? ''}
+            </span>
             <PrimaryButton
               onClick={clickHandler}
-              disabled={value.length === 0}
+              disabled={value.length === 0 || status.isPending}
             >
               {t('Start pairing')}
             </PrimaryButton>

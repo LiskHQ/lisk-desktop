@@ -5,7 +5,7 @@ import grid from 'flexboxgrid/dist/flexboxgrid.css';
 import { withRouter } from 'react-router';
 import ValueAndLabel from 'src/modules/transaction/components/TransactionDetails/valueAndLabel';
 import { PrimaryButton, SecondaryButton } from 'src/theme/buttons';
-import { EVENTS } from '@libs/wcm/constants/lifeCycle';
+import { EVENTS, ACTIONS } from '@libs/wcm/constants/lifeCycle';
 import { addSearchParamsToUrl } from 'src/utils/searchParams';
 import ConnectionContext from '@libs/wcm/context/connectionContext';
 import useSession from '@libs/wcm/hooks/useSession';
@@ -25,7 +25,8 @@ const ConnectionSummary = ({ history }) => {
     addSearchParamsToUrl(
       history,
       {
-        modal: 'connectionSuccess',
+        modal: 'connectionStatus',
+        action: ACTIONS.APPROVE,
         status: result.status,
         name: result.data?.params.proposer.metadata.name ?? '',
       },
@@ -38,8 +39,9 @@ const ConnectionSummary = ({ history }) => {
       history,
       {
         modal: 'connectionSuccess',
+        action: ACTIONS.REJECT,
         status: result.status,
-        name: result.data?.params.proposer.metadata.name ?? '',
+        name: result.data?.params?.proposer.metadata.name ?? '',
       });
   };
 

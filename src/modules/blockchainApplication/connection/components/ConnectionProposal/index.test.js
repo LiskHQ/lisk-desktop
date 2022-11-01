@@ -38,7 +38,10 @@ const setup = (value) => {
 };
 
 describe('ConnectionProposal', () => {
-  const setUri = jest.fn();
+  const setUri = jest.fn(() => ({
+    status: 'SUCCESS',
+    data: {},
+  }));
   usePairings.mockReturnValue({
     setUri,
   });

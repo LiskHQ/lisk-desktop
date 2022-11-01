@@ -30,6 +30,26 @@ jest.mock('@libs/wcm/utils/connectionCreator', () => ({
   },
 }));
 
+const proposal = {
+  params: {
+    proposer: {
+      metadata: {
+        name: 'Proposer name',
+        url: 'http://example.com',
+        icons: ['http://example.com/icon.png'],
+      },
+    },
+    requiredNamespaces: {
+      lisk: {
+        chains: ['lsk:1'],
+        events: ['sign_transaction'],
+        methods: ['receive_token'],
+      },
+    },
+    pairingTopic: '0x123',
+  },
+};
+
 const setup = (context) => {
   const Component = () => (
     <ConnectionContext.Provider value={context}>
@@ -41,30 +61,17 @@ const setup = (context) => {
 };
 
 describe('ConnectionSummary', () => {
-  const approve = jest.fn();
-  const reject = jest.fn();
+  const approve = jest.fn(() => ({
+    status: 'SUCCESS',
+    data: proposal,
+  }))
+  const reject = jest.fn(() => ({
+    status: 'SUCCESS',
+    data: proposal,
+  }))
   usePairings.mockReturnValue({ setUri: jest.fn() });
   useSession.mockReturnValue({ approve, reject });
 
-  const proposal = {
-    params: {
-      proposer: {
-        metadata: {
-          name: 'Proposer name',
-          url: 'http://example.com',
-          icons: ['http://example.com/icon.png'],
-        },
-      },
-      requiredNamespaces: {
-        lisk: {
-          chains: ['lsk:1'],
-          events: ['sign_transaction'],
-          methods: ['receive_token'],
-        },
-      },
-      pairingTopic: '0x123',
-    },
-  };
   const context = {
     events: [{ name: EVENTS.SESSION_PROPOSAL, meta: proposal }],
   };
@@ -145,6 +152,22 @@ describe('ConnectionSummary', () => {
 
   it('Reject the connection if the reject button is clicked', () => {
     const wrapper = setup(context);
+    wrapper.find('button').at(0).simulate('click');
+    expect(reject).toHaveBeenCalled();
+  });
+
+  it('Proceeds to the status screen if event doesn\'t meet the criteria', () => {
+    const wongProposal = {
+      ...proposal,
+    }
+    delete wongProposal.params.proposer.metadata.name;
+    const newContext = {
+      events: [{
+        name: EVENTS.SESSION_PROPOSAL,
+        meta: wongProposal,
+      }],
+    };
+    const wrapper = setup(newContext);
     wrapper.find('button').at(0).simulate('click');
     expect(reject).toHaveBeenCalled();
   });
