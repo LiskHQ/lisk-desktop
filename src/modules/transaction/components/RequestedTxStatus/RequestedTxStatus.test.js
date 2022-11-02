@@ -67,7 +67,7 @@ describe('TransactionResult RequestedTxStatus', () => {
 
     fireEvent.click(screen.getByText('Copy and send to the application'));
     expect(copyToClipboard).toHaveBeenCalledWith(
-      toTransactionJSON(props.transactions.signedTransaction, context.events[0].meta.params.request.params.schema)
+      JSON.stringify(toTransactionJSON(props.transactions.signedTransaction, context.events[0].meta.params.request.params.schema))
     );
   });
 

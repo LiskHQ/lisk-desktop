@@ -5,7 +5,7 @@ import grid from 'flexboxgrid/dist/flexboxgrid.css';
 import { withRouter } from 'react-router';
 import ValueAndLabel from 'src/modules/transaction/components/TransactionDetails/valueAndLabel';
 import { PrimaryButton, SecondaryButton } from 'src/theme/buttons';
-import { EVENTS } from '@libs/wcm/constants/lifeCycle';
+import { EVENTS, ACTIONS } from '@libs/wcm/constants/lifeCycle';
 import { addSearchParamsToUrl } from 'src/utils/searchParams';
 import ConnectionContext from '@libs/wcm/context/connectionContext';
 import useSession from '@libs/wcm/hooks/useSession';
@@ -21,12 +21,28 @@ const ConnectionSummary = ({ history }) => {
   const { approve, reject } = useSession();
 
   const connectHandler = async () => {
-    const status = await approve(addresses);
-    addSearchParamsToUrl(history, { modal: 'connectionSuccess', status });
+    const result = await approve(addresses);
+    addSearchParamsToUrl(
+      history,
+      {
+        modal: 'connectionStatus',
+        action: ACTIONS.APPROVE,
+        status: result.status,
+        name: result.data?.params.proposer.metadata.name ?? '',
+      },
+    );
   };
 
-  const rejectHandler = () => {
-    reject();
+  const rejectHandler = async () => {
+    const result = await reject();
+    addSearchParamsToUrl(
+      history,
+      {
+        modal: 'connectionSuccess',
+        action: ACTIONS.REJECT,
+        status: result.status,
+        name: result.data?.params?.proposer.metadata.name ?? '',
+      });
   };
 
   // istanbul ignore next

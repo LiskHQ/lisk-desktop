@@ -279,7 +279,7 @@ export const modals = {
     isPrivate: false,
     forbiddenTokens: [],
   },
-  connectionSuccess: {
+  connectionStatus: {
     isPrivate: false,
     forbiddenTokens: [],
   },

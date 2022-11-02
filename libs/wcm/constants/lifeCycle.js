@@ -1,6 +1,11 @@
-export const PAIRING_PROPOSAL_STATUS = {
-  ERROR: 'ERROR',
+export const STATUS = {
   SUCCESS: 'SUCCESS',
+  FAILURE: 'FAILURE',
+};
+
+export const ACTIONS = {
+  APPROVE: 'APPROVE',
+  REJECT: 'REJECT',
 };
 
 export const EVENTS = {

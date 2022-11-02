@@ -1,5 +1,6 @@
 import React from 'react';
 import { renderHook } from '@testing-library/react-hooks';
+import flushPromises from '@tests/unit-test-utils/flushPromises';
 import wallets from '@tests/constants/wallets';
 import { client } from '@libs/wcm/utils/connectionCreator';
 import { EVENTS } from '../constants/lifeCycle';
@@ -37,8 +38,8 @@ jest.mock('@libs/wcm/utils/connectionCreator', () => ({
 }));
 
 jest.mock('../utils/sessionHandlers', () => ({
-  onApprove: jest.fn().mockReturnValue({ status: 'success' }),
-  onReject: jest.fn(),
+  onApprove: jest.fn(() => ({ status: 'SUCCESS' })),
+  onReject: jest.fn(() => ({ status: 'SUCCESS' })),
 }));
 
 describe('useSession', () => {
@@ -51,19 +52,18 @@ describe('useSession', () => {
     expect(client.session.get).toHaveBeenCalledWith(session.id);
   });
 
-  it('Should call sessionHandlers.onApprove with correct params if approve is called', () => {
+  it('Should call sessionHandlers.onApprove with correct params if approve is called', async () => {
     const { result } = renderHook(() => useSession());
     const { approve } = result.current;
-    approve(selectedAccounts);
-
+    await approve(selectedAccounts);
     expect(sessionHandlers.onApprove).toHaveBeenCalledWith(session, selectedAccounts);
   });
 
-  it('Should call onReject with correct params', () => {
+  it('Should call onReject with correct params', async () => {
     const { result } = renderHook(() => useSession());
     const { reject } = result.current;
-    reject();
-
+    await reject();
+    await flushPromises();
     expect(sessionHandlers.onReject).toHaveBeenCalledWith(session);
   });
 });
