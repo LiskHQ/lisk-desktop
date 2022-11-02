@@ -1,5 +1,4 @@
 import { renderHook } from '@testing-library/react-hooks';
-import { API_VERSION, LIMIT } from 'src/const/config';
 import * as useCurrentApplication from 'src/modules/blockchainApplication/manage/hooks/useCurrentApplication';
 import { queryWrapper } from 'src/utils/test/queryWrapper';
 
