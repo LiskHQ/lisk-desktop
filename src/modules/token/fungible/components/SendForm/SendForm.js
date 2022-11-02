@@ -132,7 +132,7 @@ const SendForm = (props) => {
         address: recipient.value,
         title: recipient.title,
       },
-      token: recipientChain,
+      token: token ?? { tokenID: '' },
     },
     sendingChain,
     recipientChain,
@@ -211,7 +211,7 @@ const SendForm = (props) => {
                 <span>{t('Token')}</span>
               </label>
               <span className={styles.balance}>
-                Balance:&nbsp;&nbsp;
+                {!!token?.availableBalance && <span>Balance:&nbsp;&nbsp;</span>}
                 <span>
                   <TokenAmount val={balance} />
                   {token?.symbol}
