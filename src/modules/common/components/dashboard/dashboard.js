@@ -8,7 +8,7 @@ import { ManageAccountsContent } from '@account/components/ManageAccounts';
 import Box from 'src/theme/box';
 import BoxHeader from 'src/theme/box/header';
 import { isEmpty } from 'src/utils/helpers';
-import { useTokensQuery } from 'src/modules/token/fungible/hooks/queries/useTokensQuery';
+import { useTokensBalance } from 'src/modules/token/fungible/hooks/queries';
 import Onboarding from '../onboarding/onboarding';
 import NewsFeed from '../newsFeed';
 import styles from './dashboard.css';
@@ -48,7 +48,7 @@ const Dashboard = ({ t, history }) => {
   const { accounts } = useAccounts();
   const [currentAccount] = useCurrentAccount();
   const OnboardingBannerName = 'dashboardOnboarding';
-  const wallets = useTokensQuery({
+  const tokens = useTokensBalance({
     config: {
       params: { limit: 2 },
     },
@@ -67,7 +67,7 @@ const Dashboard = ({ t, history }) => {
             {
               !isEmpty(currentAccount) && (
                 <>
-                  <WalletDetails className={styles.marginFix} isWalletRoute={false} tokens={wallets.data?.data} />
+                  <WalletDetails className={styles.marginFix} isWalletRoute={false} tokens={tokens.data?.data} />
                   <RecentTransactions
                     isLoggedIn
                     className={styles.marginFix}
