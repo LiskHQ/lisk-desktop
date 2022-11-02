@@ -103,6 +103,12 @@
   flex-flow: row nowrap;
   justify-content: center;
   align-items: center;
+
+  & button {
+    display: flex;
+    flex-direction: row;
+    flex: 1;
+  }
 }
 
 .secondaryActions {

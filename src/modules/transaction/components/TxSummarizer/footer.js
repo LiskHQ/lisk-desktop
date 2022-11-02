@@ -1,5 +1,5 @@
 // istanbul ignore file
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useMemo, useState } from 'react';
 import {
   PrimaryButton,
   SecondaryButton,
@@ -8,6 +8,8 @@ import {
 import useSecondPassphrase from '@transaction/hooks/setSecondPassphrase';
 import PassphraseInput from '@wallet/components/PassphraseInput/PassphraseInput';
 import BoxFooter from 'src/theme/box/footer';
+import { useAuth } from 'src/modules/auth/hooks/queries';
+import { useCurrentAccount } from 'src/modules/account/hooks';
 import styles from './txSummarizer.css';
 
 const Actions = ({
@@ -84,10 +86,18 @@ const Footer = ({
   secondPassphraseStored,
   account,
 }) => {
-  const isMultisignature = !!account.keys?.numberOfSignatures;
-  const hasSecondPass = account.keys?.numberOfSignatures === 2
-    && account.keys.mandatoryKeys.length === 2
-    && account.keys.optionalKeys.length === 0
+  const [
+    {
+      metadata: { address },
+    },
+  ] = useCurrentAccount(); 
+  const { data: authData } = useAuth({ config: { params: { address } } });
+  const {numberOfSignatures, mandatoryKeys, optionalKeys } = useMemo(() => ({ ...authData?.data, ...authData?.meta }), [authData]);
+  
+  const isMultisignature = !!numberOfSignatures;
+  const hasSecondPass = numberOfSignatures === 2
+    && mandatoryKeys.length === 2
+    && optionalKeys.length === 0
     && !account.hwInfo;
   const [inputStatus, setInputStatus] = useState(
     hasSecondPass ? 'hidden' : 'notRequired',

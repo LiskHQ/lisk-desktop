@@ -4,8 +4,17 @@ import { tokenMap } from '@token/fungible/consts/tokens';
 import mockBlockchainApplications from '@tests/fixtures/blockchainApplicationsManage';
 import { mockAppTokens } from '@tests/fixtures/token';
 import i18n from 'src/utils/i18n/i18n';
+import { mockAuth } from 'src/modules/auth/__fixtures__';
+import { useAuth } from 'src/modules/auth/hooks/queries';
 import wallets from '@tests/constants/wallets';
+import mockSavedAccounts from '@tests/fixtures/accounts';
 import Summary from './Summary';
+
+const mockedCurrentAccount = mockSavedAccounts[0];
+jest.mock('@auth/hooks/queries');
+jest.mock('@account/hooks', () => ({
+  useCurrentAccount: jest.fn(() => [mockedCurrentAccount, jest.fn()]),
+}));
 
 describe('Summary', () => {
   let wrapper;
@@ -43,6 +52,7 @@ describe('Summary', () => {
     };
     wrapper = mount(<Summary {...props} />);
   });
+  useAuth.mockReturnValue({ data: mockAuth });
 
   it('should render properly', () => {
     expect(wrapper).toContainMatchingElement('.summary');

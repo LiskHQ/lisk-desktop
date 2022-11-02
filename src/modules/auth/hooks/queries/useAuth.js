@@ -15,7 +15,7 @@ import { useCustomQuery } from 'src/modules/common/hooks';
  *
  * @returns the query object
  */
-// eslint-disable-next-line import/prefer-default-export
+
 export const useAuth = ({ config: customConfig = {}, options } = { }) => {
   const config = {
     url: `/api/${API_VERSION}/auth`,

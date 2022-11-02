@@ -1,9 +1,4 @@
 export default {
-  addAccount: {
-    path: '/add-account',
-    isPrivate: false,
-    forbiddenTokens: [],
-  },
   addAccountBySecretRecovery: {
     path: '/account/add/secret-recovery',
     isPrivate: false,
@@ -47,6 +42,12 @@ export default {
     isPrivate: false,
     forbiddenTokens: [],
   },
+  delegateProfile: {
+    path: '/delegates/profile',
+    exact: true,
+    isPrivate: false,
+    forbiddenTokens: [],
+  },
   explorer: {
     path: '/explorer',
     searchParam: 'address',
@@ -59,13 +60,13 @@ export default {
     isPrivate: false,
     forbiddenTokens: [],
   },
-  login: {
-    path: '/login',
-    isPrivate: false,
-    isSigninFlow: true,
-    exact: true,
-    forbiddenTokens: [],
-  },
+  // login: {
+  //   path: '/login',
+  //   isPrivate: false,
+  //   isSigninFlow: true,
+  //   exact: true,
+  //   forbiddenTokens: [],
+  // },
   backupRecoveryPhraseFlow: {
     path: '/account/backup-recovery-phrase',
     isPrivate: true,
@@ -144,6 +145,24 @@ export default {
     isPrivate: false,
     forbiddenTokens: [],
   },
+  sentVotes: {
+    path: '/delegates/profile/votes',
+    exact: true,
+    isPrivate: false,
+    forbiddenTokens: [],
+  },
+  transactionDetails: {
+    path: '/transactions/details',
+    exact: true,
+    isPrivate: false,
+    forbiddenTokens: [],
+  },
+  allTokens: {
+    path: '/wallet/tokens/all',
+    exact: true,
+    isPrivate: false,
+    forbiddenTokens: [],
+  },
 };
 
 export const modals = {
@@ -153,6 +172,10 @@ export const modals = {
   },
   bookmarks: {
     isPrivate: false,
+    forbiddenTokens: [],
+  },
+  editAccount: {
+    isPrivate: true,
     forbiddenTokens: [],
   },
   editAccount: {
@@ -177,10 +200,6 @@ export const modals = {
   },
   registerDelegate: {
     isPrivate: true,
-    forbiddenTokens: [],
-  },
-  search: {
-    isPrivate: false,
     forbiddenTokens: [],
   },
   newRelease: {

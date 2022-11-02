@@ -27,7 +27,7 @@ const NavigationButtons = ({ history }) => {
       setPageIndex(pageIndex + 1);
     }
 
-    if (history.location.pathname === routes.login.path) {
+    if (history.location.pathname === routes.manageAccounts.path) {
       resetNavigation();
     }
   }, [history.location]);

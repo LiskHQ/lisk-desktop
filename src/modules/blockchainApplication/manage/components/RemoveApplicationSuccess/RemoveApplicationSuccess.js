@@ -16,7 +16,7 @@ const RemoveApplicationSuccess = ({ history, sharedData: { application } }) => {
         <p>
           {t('You can always add')}
           {' '}
-          <a href="#">{application.data.name}</a>
+          <a href="#">{application.data.chainName}</a>
           {' '}
           {t('again to your application list.')}
         </p>

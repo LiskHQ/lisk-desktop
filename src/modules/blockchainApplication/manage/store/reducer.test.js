@@ -70,9 +70,9 @@ describe('BlockchainApplication reducer', () => {
     it('Should return application node if setApplicationNode action type is triggered', async () => {
       const actionData = {
         type: actionTypes.setApplicationNode,
-        nodeInfo: mockApplicationsManage[0].apis[0],
+        nodeInfo: mockApplicationsManage[0].serviceURLs[0],
       };
-      expect(node({}, actionData)).toEqual(mockApplicationsManage[0].apis[0]);
+      expect(node({}, actionData)).toEqual(mockApplicationsManage[0].serviceURLs[0]);
     });
   });
 });

@@ -50,7 +50,7 @@ const DelegateProfile = ({ history }) => {
 
   useEffect(() => {
     const pomHeights = delegate.pomHeights;
-    const { end } = pomHeights ? pomHeights[pomHeights.length - 1] : 0;
+    const { end } = pomHeights?.length ? pomHeights[pomHeights.length - 1] : 0;
     const daysLeft = Math.ceil((end - currentHeight) / numOfBlockPerDay);
 
     if (

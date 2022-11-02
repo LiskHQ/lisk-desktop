@@ -1,79 +1,67 @@
-import React, {
-  useCallback, useMemo, useRef, useState,
-} from 'react';
+import React, { useCallback, useRef, useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import Box from 'src/theme/box';
-import BoxContent from 'src/theme/box/content';
-import Table from 'src/theme/table';
+import grid from 'flexboxgrid/dist/flexboxgrid.css';
+import BoxHeader from '@theme/box/header';
+import Box from '@theme/box';
+import BoxContent from '@theme/box/content';
+import { QueryTable } from '@theme/QueryTable';
 import { Input } from 'src/theme';
 import Icon from 'src/theme/Icon';
+import { useFilter } from '@common/hooks';
+import { useBlockchainApplicationExplore } from '../../hooks/queries/useBlockchainApplicationExplore';
 import BlockchainApplicationRow from '../BlockchainApplicationRow';
 import header from './BlockchainApplicationListHeaderMap';
 import styles from './BlockchainApplicationList.css';
-import { BLOCKCHAIN_APPLICATION_LIST_LIMIT } from '../../const/constants';
 
-const BlockchainApplicationList = ({
-  applications,
-  applyFilters,
-  filters,
-}) => {
+const BlockchainApplicationList = () => {
   const [searchValue, setSearchValue] = useState('');
+  const { filters, applyFilters } = useFilter();
   const debounceTimeout = useRef(null);
   const { t } = useTranslation();
 
-  const canLoadMore = useMemo(() =>
-    (applications.meta
-      ? applications.data.length < applications.meta.total : false), [applications]);
+  const onSearchApplication = useCallback(
+    ({ target }) => {
+      const value = target.value;
+      setSearchValue(value);
+      clearTimeout(debounceTimeout.current);
 
-  const handleLoadMore = () => {
-    const params = {
-      ...filters,
-      offset: applications.meta.count + applications.meta.offset,
-    };
-    applications.loadData(params);
-  };
-
-  const onSearchApplication = useCallback(({ target }) => {
-    const value = target.value;
-    setSearchValue(value);
-    clearTimeout(debounceTimeout.current);
-
-    debounceTimeout.current = setTimeout(() => {
-      applyFilters({
-        ...filters,
-        search: value,
-        offset: 0,
-        limit: BLOCKCHAIN_APPLICATION_LIST_LIMIT,
-      });
-    }, 500);
-  }, [searchValue]);
+      debounceTimeout.current = setTimeout(() => {
+        applyFilters({
+          ...filters,
+          search: value,
+          offset: 0,
+        });
+      }, 500);
+    },
+    [searchValue]
+  );
 
   return (
-    <Box main isLoading={applications.isLoading} className="chain-application-box">
-      <div className={styles.searchInputWrapper}>
-        <div className={styles.filterHolder}>
-          <Input
-            icon={<Icon className={styles.searchIcon} name="searchActive" />}
-            className={styles.chainSearch}
-            name="application-filter"
-            value={searchValue}
-            placeholder={t('Search application')}
-            onChange={onSearchApplication}
-            size="m"
-          />
+    <Box main className="chain-application-box">
+      <BoxHeader className={styles.boxHeader}>
+        <div className={grid['col-xs-6']}>{t('Applications')}</div>
+        <div align="right" className={grid['col-xs-6']}>
+          <div className={styles.filterHolder}>
+            <Input
+              icon={<Icon className={styles.searchIcon} name="searchActive" />}
+              className={styles.chainSearch}
+              name="application-filter"
+              value={searchValue}
+              placeholder={t('Search application')}
+              onChange={onSearchApplication}
+              size="m"
+            />
+          </div>
         </div>
-      </div>
+      </BoxHeader>
       <BoxContent className={`${styles.content} chain-application-result`}>
-        <Table
+        <QueryTable
           showHeader
-          data={applications.data}
-          isLoading={applications.isLoading}
+          queryHook={useBlockchainApplicationExplore}
+          queryConfig={{ config: { params: filters } }}
           row={BlockchainApplicationRow}
-          loadData={handleLoadMore}
           header={header(t)}
           headerClassName={styles.tableHeader}
-          canLoadMore={canLoadMore}
-          error={applications.error}
           additionalRowProps={{ t }}
           emptyState={{
             message: t('There are no blockchain applications.'),

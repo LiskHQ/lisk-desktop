@@ -1,5 +1,5 @@
 import to from 'await-to-js';
-import { tokenMap } from '@token/fungible/consts/tokens';
+// import { tokenMap } from '@token/fungible/consts/tokens';
 import { selectActiveTokenAccount } from 'src/redux/selectors';
 import { createGenericTx } from '@transaction/api';
 import { timerReset } from '@auth/store/action';
@@ -29,6 +29,16 @@ export const votesCleared = () => ({
  */
 export const votesConfirmed = () => ({
   type: actionTypes.votesConfirmed,
+});
+
+/**
+ * To be dispatched when a vote is to be removed form the voting queue
+ *
+ * @returns {Object} Pure action object
+ */
+export const voteDiscarded = (data) => ({
+  type: actionTypes.voteDiscarded,
+  data,
 });
 
 /**
@@ -74,42 +84,43 @@ export const votesSubmitted = (
       privateKey,
     }));
 
-    if (error) {
-      dispatch({
-        type: txActionTypes.transactionSignError,
-        data: error,
-      });
-    } else {
-      dispatch({ type: actionTypes.votesSubmitted });
-      dispatch(timerReset());
-      dispatch({
-        type: txActionTypes.transactionCreatedSuccess,
-        data: tx,
-      });
-    }
-  };
+  if (error) {
+    dispatch({
+      type: txActionTypes.transactionSignError,
+      data: error,
+    });
+  } else {
+    dispatch({ type: actionTypes.votesSubmitted });
+    dispatch(timerReset());
+    dispatch({
+      type: txActionTypes.transactionCreatedSuccess,
+      data: tx,
+    });
+  }
+};
 
 /**
  * Fetches the list of votes of the host wallet.
  */
-export const votesRetrieved = () => async (dispatch, getState) => {
-  const { wallet, network } = getState();
-  const address = wallet.info[tokenMap.LSK.key].summary.address;
-  try {
-    const votes = await getVotes({ network, params: { address } });
-    dispatch({
-      type: actionTypes.votesRetrieved,
-      data: votes.data,
-    });
-  } catch (exp) {
-    dispatch({
-      type: actionTypes.votesRetrieved,
-      data: {
-        account: {},
-      },
-    });
-  }
-};
+export const votesRetrieved = () =>
+  async (dispatch, getState) => {
+    const { network, account } = getState();
+    const address = account.current?.metadata?.address;
+    try {
+      const votes = await getVotes({ network, params: { address } });
+      dispatch({
+        type: actionTypes.votesRetrieved,
+        data: votes.data,
+      });
+    } catch (exp) {
+      dispatch({
+        type: actionTypes.votesRetrieved,
+        data: {
+          account: {},
+        },
+      });
+    }
+  };
 
 /**
  * Submits unlock balance transactions
@@ -118,10 +129,7 @@ export const votesRetrieved = () => async (dispatch, getState) => {
  * @param {string} data.selectedFee
  * @returns {promise}
  */
-export const balanceUnlocked = (
-  transactionObject,
-  privateKey,
-) => async (dispatch, getState) => {
+export const balanceUnlocked = (transactionObject, privateKey) => async (dispatch, getState) => {
   //
   // Collect data
   //
@@ -138,7 +146,7 @@ export const balanceUnlocked = (
       schema: state.network.networks.LSK.moduleCommandSchemas[transactionObject.moduleCommand],
       chainID: state.network.networks.LSK.chainID,
       privateKey,
-    }),
+    })
   );
 
     //

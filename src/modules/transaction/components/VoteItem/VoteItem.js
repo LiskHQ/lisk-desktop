@@ -20,29 +20,33 @@ const token = tokenMap.LSK.key;
  * @param {String} title text to use instead of the address e.g. delegate username
  * @param {Boolean} truncate text to use instead of the address e.g. delegate username
  */
-const VoteDetails = ({
-  vote, address, title, truncate,
-}) => {
+const VoteDetails = ({ vote, address, title, truncate }) => {
   const accountPath = routes.explorer.path;
   return (
     <span className={styles.container}>
-      <Link
-        to={`${accountPath}?address=${address}`}
-      >
+      <Link to={`${accountPath}?address=${address}`}>
         <span className={`${styles.primaryText} vote-item-address`}>
           {title ?? (truncate ? truncateAddress(address) : address)}
         </span>
       </Link>
       <span className={`${styles.value} vote-item-value`}>
-        {vote.confirmed && vote.unconfirmed
-          ? (
-            <>
+        {vote.confirmed && vote.unconfirmed ? (
+          <>
+            <span className={styles.confirmed}>
               <TokenAmount val={vote.confirmed} token={token} />
-              <span className={styles.arrowIcon}>➞</span>
+            </span>
+            <span className={styles.arrowIcon} />
+            <span className={styles.unconfirmed}>
               <TokenAmount val={vote.unconfirmed} token={token} />
-            </>
-          )
-          : <TokenAmount val={Object.values(vote)[0]} token={token} />}
+            </span>
+          </>
+        ) : (
+          <span
+            className={Number(vote.confirmed) && !Number(vote.unconfirmed) ? styles.confirmed : ''}
+          >
+            <TokenAmount val={Object.values(vote)[0]} token={token} />
+          </span>
+        )}
       </span>
     </span>
   );

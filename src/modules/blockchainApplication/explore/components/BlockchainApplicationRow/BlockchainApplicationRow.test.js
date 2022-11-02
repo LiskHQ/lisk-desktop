@@ -34,10 +34,10 @@ describe('BlockchainApplicationRow', () => {
 
   it('should display correctly', () => {
     const {
-      name, state, chainID,
+      chainName, state, chainID,
     } = mockBlockchainApplications[0];
 
-    expect(screen.getByText(name)).toBeTruthy();
+    expect(screen.getByText(chainName)).toBeTruthy();
     expect(screen.getByText(chainID)).toBeTruthy();
     expect(screen.getByText(state)).toBeTruthy();
     expect(screen.getByText('0.5 LSK')).toBeTruthy();

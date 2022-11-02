@@ -20,7 +20,7 @@ import { useCurrentApplication } from '@blockchainApplication/manage/hooks';
  *
  * @returns the query object
  */
-// eslint-disable-next-line import/prefer-default-export
+
 export const useCustomQuery = ({
   keys,
   config = {},
@@ -29,14 +29,9 @@ export const useCustomQuery = ({
 }) => {
   const [{ chainID }] = useCurrentApplication();
 
-  const axiosConfig = {
-    ...config,
-    params: { ...config.params }
-  }
-
   return useQuery(
-    [chainID, axiosConfig, APPLICATION, METHOD, ...keys],
-    async () => client[METHOD](axiosConfig),
+    [...keys, chainID, config],
+    async () => client.call(config),
     options,
   );
 };

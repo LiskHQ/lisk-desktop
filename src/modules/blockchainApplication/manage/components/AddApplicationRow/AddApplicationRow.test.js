@@ -4,7 +4,7 @@ import AddApplicationRow from './AddApplicationRow';
 
 const props = {
   data: {
-    name: 'Sample app',
+    chainName: 'Sample app',
     depositedLsk: 50000000,
   },
 };

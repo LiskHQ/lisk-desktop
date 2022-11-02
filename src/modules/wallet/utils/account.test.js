@@ -21,7 +21,7 @@ const {
 const customDerivationPath = "m/44'/134'/1'";
 
 jest.spyOn(cryptography.address, 'getLisk32AddressFromPublicKey').mockReturnValue(address);
-jest.spyOn(cryptography.ed, 'getPrivateKeyFromPhraseAndPath').mockResolvedValue(Buffer.from(privateKey));;
+jest.spyOn(cryptography.ed, 'getKeyPairFromPhraseAndPath').mockResolvedValue(Buffer.from(privateKey));;
 
 describe('Utils: Account', () => {
   describe('extractPublicKey', () => {
@@ -32,7 +32,7 @@ describe('Utils: Account', () => {
 
     it('should call getCustomDerivationKeyPair', async () => {
       await extractPublicKey(passphrase, true, customDerivationPath);
-      expect(cryptography.ed.getPrivateKeyFromPhraseAndPath).toHaveBeenCalledWith(passphrase, customDerivationPath);
+      expect(cryptography.ed.getKeyPairFromPhraseAndPath).toHaveBeenCalledWith(passphrase, customDerivationPath);
     });
   });
 
@@ -44,7 +44,7 @@ describe('Utils: Account', () => {
 
     it('should call getCustomDerivationKeyPair', async () => {
       await extractPrivateKey(passphrase, true, customDerivationPath);
-      expect(cryptography.ed.getPrivateKeyFromPhraseAndPath).toHaveBeenCalledWith(passphrase, customDerivationPath);
+      expect(cryptography.ed.getKeyPairFromPhraseAndPath).toHaveBeenCalledWith(passphrase, customDerivationPath);
     });
   });
 

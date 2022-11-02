@@ -22,6 +22,13 @@ import actionTypes from '@network/store/actionTypes';
 export const useSchemas = ({ config: customConfig = {}, options } = { }) => {
   const dispatch = useDispatch();
   const config = {
+    //@TODO witch one is correct?
+    // url: `/api/${API_VERSION}/commands/parameters/schemas`,
+    // method: 'get',
+    // event: 'get.commands.parameters.schemas',
+    url: `/api/${API_VERSION}/schemas`,
+    method: 'get',
+    event: 'get.schemas',
     url: `/api/${API_VERSION}/schemas`,
     method: 'get',
     event: 'get.schemas',
@@ -37,6 +44,7 @@ export const useSchemas = ({ config: customConfig = {}, options } = { }) => {
     if (schemas.data) {
       dispatch({
         type: actionTypes.schemasRetrieved,
+        // data: schemas.data.data,
         data: schemas.data.data.commands,
       });
     }

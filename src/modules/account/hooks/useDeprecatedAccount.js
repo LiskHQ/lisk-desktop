@@ -4,6 +4,7 @@ import { useDelegates, useSentVotes, useUnlocks } from '@dpos/validator/hooks/qu
 import { useAuth } from '@auth/hooks/queries';
 import { useLegacy } from '@legacy/hooks/queries';
 import { useDispatch } from 'react-redux';
+import { useTokensBalance } from '@token/fungible/hooks/queries';
 import authActionTypes from '@auth/store/actionTypes';
 import { useCurrentAccount } from './useCurrentAccount';
 
@@ -12,7 +13,7 @@ const defaultAccount = {
     address: '',
     publicKey: '',
     legacyAddress: '',
-    // @todo Replace mock balance value once we have the balance in the account store 
+    // @todo Replace mock balance value once we have the balance in the account store
     balance: '10000000000000',
     username: '',
     isMigrated: true,
@@ -78,7 +79,7 @@ export const useDeprecatedAccount = (accountInfo) => {
       summary: {
         ...state.summary,
         address,
-        publicKey: pubkey,
+        publicKey: auth?.meta?.publicKey || pubkey,
         username: auth?.meta?.name || '',
         isMultisignature: auth?.data?.numberOfSignatures > 1,
       },
@@ -126,7 +127,7 @@ export const useDeprecatedAccount = (accountInfo) => {
     data: unlocks,
     isLoading: isUnlocksLoading,
     isSuccess: isUnlocksSuccess,
-  } = useUnlocks({ config: { params: { address, limit: Infinity } } });
+  } = useUnlocks({ config: { params: { address, limit: 100 } } });
   useEffect(() => {
     if (!isUnlocksSuccess) {
       return;
@@ -160,8 +161,27 @@ export const useDeprecatedAccount = (accountInfo) => {
         isMigrated: legacy?.data?.balance === '0',
         legacyAddress: legacy?.data?.legacyAddress,
       },
+      ...(legacy?.data && {legacy: {
+          address: legacy.data.legacyAddress,
+          balance: legacy.data.balance,
+        }}),
     }));
   }, [legacy, isLegacySuccess]);
+
+  const {
+    data: token,
+    isLoading: isTokenLoading,
+    isSuccess: isTokenSuccess,
+  } = useTokensBalance({ config: { params: { address } } });
+  useEffect(() => {
+    if (!isTokenSuccess) {
+      return;
+    }
+    setAccount((state) => ({
+      ...state,
+      token: token?.data,
+    }));
+  }, [token, isTokenSuccess]);
 
   useEffect(() => {
     dispatch({
@@ -176,12 +196,14 @@ export const useDeprecatedAccount = (accountInfo) => {
       isDelegatesLoading ||
       isUnlocksLoading ||
       isSentVotesLoading ||
-      isLegacyLoading,
+      isLegacyLoading ||
+      isTokenLoading,
     isSuccess:
       isAuthSuccess &&
       isDelegatesSuccess &&
       isUnlocksSuccess &&
       isSentVotesSuccess &&
-      isLegacySuccess,
+      isLegacySuccess &&
+      isTokenSuccess,
   };
 };

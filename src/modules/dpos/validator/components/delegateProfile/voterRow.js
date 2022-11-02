@@ -10,7 +10,7 @@ const VoterRow = ({ data = {} }) => {
   return (
     <Link
       className={styles.voteRow}
-      to={`account?address=${delegateAddress}`}
+      to={`/explorer?address=${delegateAddress}`}
     >
       <WalletVisual
         className={styles.walletVisual}

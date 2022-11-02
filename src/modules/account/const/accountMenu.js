@@ -1,6 +1,5 @@
 import routes from 'src/routes/routes';
 
-// eslint-disable-next-line import/prefer-default-export
 export const ACCOUNT_MENU = [
   {
     component: 'editAccount',
@@ -18,7 +17,7 @@ export const ACCOUNT_MENU = [
     label: 'Backup account',
   },
   {
-    path: routes.addAccount.path,
+    path: routes.addAccountOptions.path,
     icon: 'plus',
     label: 'Add new account',
   },

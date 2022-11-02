@@ -43,7 +43,8 @@
     "analyze:bundles": "webpack  --config ./setup/config/webpack.config.analyze",
     "copy:files": "cpx \"./setup/react/{index.html,assets/**/*}\" ./app/build/",
     "clean:build": "rm -rf app/build",
-    "clean:dist": "rm -rf dist"
+    "clean:dist": "rm -rf dist",
+    "postinstall": "patch-package"
   },
   "build": {
     "asar": true,
@@ -267,6 +268,7 @@
     "jest-watch-typeahead": "0.4.0",
     "mini-css-extract-plugin": "1.3.9",
     "npm-run-all": "4.1.5",
+    "patch-package": "6.5.0",
     "postcss-for": "=2.1.1",
     "postcss-functions": "3.0.0",
     "postcss-loader": "3.0.0",
@@ -274,6 +276,7 @@
     "postcss-nesting": "7.0.0",
     "postcss-partial-import": "=4.1.0",
     "postcss-preset-env": "6.7.0",
+    "postinstall": "0.8.0",
     "prettier": "2.7.1",
     "prettier-eslint": "15.0.1",
     "pretty-quick": "3.1.3",
