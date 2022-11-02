@@ -27,12 +27,12 @@ const EnterPasswordForm = ({ onEnterPasswordSuccess, title, encryptedAccount, is
     const { error, result } = await decryptAccount(
       account.encryptedPassphrase, password,
     );
-
+      console.log('----->>>>', error, password, account.encryptedPassphrase)
     if (error) {
       const errorMessage = t('Unable to decrypt account. Please check your password');
       return setFeedbackError(errorMessage);
     }
-
+    console.log('----->>>>')
     return onEnterPasswordSuccess({
       recoveryPhrase: result.recoveryPhrase,
       encryptedAccount: account,

@@ -287,6 +287,7 @@ const signUsingPrivateKey = (wallet, schema, chainID, transaction, privateKey) =
     ];
     console.log('>>>>>', members);
     const senderIndex = members.findIndex((item) => Buffer.compare(item, publicKeyBuffer) === 0);
+    console.log('--->', senderIndex);
     if (senderIndex > -1) {
       const memberSignature = signMultisigRegParams(chainIDBuffer, transaction, privateKeyBuffer);
       // @todo use correct index once SDK exposes the sort endpoint (#4497)

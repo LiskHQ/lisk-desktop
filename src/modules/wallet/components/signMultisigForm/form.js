@@ -1,9 +1,6 @@
 /* eslint-disable complexity */
 import React, { useState, useEffect } from 'react';
-import {
-  fromTransactionJSON,
-  toTransactionJSON,
-} from '@transaction/utils/encoding';
+import { fromTransactionJSON, toTransactionJSON } from '@transaction/utils/encoding';
 import { joinModuleAndCommand } from 'src/modules/transaction/utils/moduleCommand';
 import Box from 'src/theme/box';
 import BoxContent from 'src/theme/box/content';
@@ -25,7 +22,7 @@ const getParamsSchema = (transaction, schemas) => {
   });
 
   return schemas[moduleCommand];
-}
+};
 
 const getTransactionObject = (transaction, moduleCommandSchemas) => {
   const paramsSchema = getParamsSchema(transaction, moduleCommandSchemas);
@@ -60,6 +57,7 @@ const Form = ({ t, nextStep, network }) => {
 
   const validateAndSetTransaction = (value) => {
     setError(undefined);
+    console.log('>>> value: ', value);
     try {
       setTransaction(value);
       const result = getTransactionObject(value, network.networks.LSK.moduleCommandSchemas);
@@ -69,6 +67,7 @@ const Form = ({ t, nextStep, network }) => {
     } catch (e) {
       setTransaction(undefined);
       setError('Invalid transaction');
+      console.log('--->>', e);
     }
   };
 
@@ -84,9 +83,7 @@ const Form = ({ t, nextStep, network }) => {
         <header>
           <h1>{t('Sign multisignature transaction')}</h1>
           <p>
-            {t(
-              'Provide a signature for a transaction which belongs to a multisignature account.',
-            )}
+            {t('Provide a signature for a transaction which belongs to a multisignature account.')}
           </p>
         </header>
         <BoxContent>

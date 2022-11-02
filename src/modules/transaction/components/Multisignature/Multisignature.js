@@ -12,10 +12,7 @@ import getIllustration from '../TxBroadcaster/illustrationsMap';
 import styles from './Multisignature.css';
 
 export const PartiallySignedActions = ({ onDownload, t }) => (
-  <PrimaryButton
-    className={`${styles.download} download-button`}
-    onClick={onDownload}
-  >
+  <PrimaryButton className={`${styles.download} download-button`} onClick={onDownload}>
     <span className={styles.buttonContent}>
       <Icon name="download" />
       {t('Download')}
@@ -34,18 +31,13 @@ export const FullySignedActions = ({ t, onDownload, onSend }) => (
         {t('Download')}
       </span>
     </SecondaryButton>
-    <PrimaryButton
-      className={`${styles.download} send-button`}
-      onClick={onSend}
-    >
+    <PrimaryButton className={`${styles.download} send-button`} onClick={onSend}>
       <span className={styles.buttonContent}>{t('Send')}</span>
     </PrimaryButton>
   </>
 );
 
-const ErrorActions = ({
-  t, status, message, network,
-}) => (
+const ErrorActions = ({ t, status, message, network }) => (
   <a
     className="report-error-link"
     href={getErrorReportMailto({
@@ -84,9 +76,9 @@ const Multisignature = ({
   };
 
   const onDownload = () => {
-    const transaction = JSON.parse(
-      transactionToJSON(transactions.signedTransaction),
-    );
+    console.log('>>>>>>>', transactions.signedTransaction);
+    const transaction = JSON.parse(transactionToJSON(transactions.signedTransaction));
+    console.log('....', transaction);
     downloadJSON(transaction, `tx-${transaction.id}`);
   };
 
@@ -99,16 +91,10 @@ const Multisignature = ({
   };
 
   useEffect(() => resetTransactionResult, []);
-
+  console.log('status --====>> ', transactions, status, account);
   return (
     <div className={`${styles.wrapper} ${className}`}>
-      <Illustration
-        name={getIllustration(
-          status.code,
-          'signMultisignature',
-          account.hwInfo,
-        )}
-      />
+      <Illustration name={getIllustration(status.code, 'signMultisignature', account.hwInfo)} />
       <h6 className="result-box-header">{title}</h6>
       <p className="transaction-status body-message">{message}</p>
 
@@ -122,25 +108,17 @@ const Multisignature = ({
           </PrimaryButton>
         ) : null}
         {status.code === txStatusTypes.broadcastError ? (
-          <ErrorActions
-            message={message}
-            network={network}
-            status={status}
-            t={t}
-          />
+          <ErrorActions message={message} network={network} status={status} t={t} />
         ) : null}
-        {status.code !== txStatusTypes.broadcastSuccess
-        && status.code !== txStatusTypes.broadcastError ? (
-          <SecondaryButton
-            className={`${styles.copy} copy-button`}
-            onClick={onCopy}
-          >
+        {status.code !== txStatusTypes.broadcastSuccess &&
+        status.code !== txStatusTypes.broadcastError ? (
+          <SecondaryButton className={`${styles.copy} copy-button`} onClick={onCopy}>
             <span className={styles.buttonContent}>
               <Icon name={copied ? 'checkmark' : 'copy'} />
               {t(copied ? 'Copied' : 'Copy')}
             </span>
           </SecondaryButton>
-          ) : null}
+        ) : null}
         {status.code === txStatusTypes.multisigSignatureSuccess ? (
           <FullySignedActions onDownload={onDownload} t={t} onSend={onSend} />
         ) : null}

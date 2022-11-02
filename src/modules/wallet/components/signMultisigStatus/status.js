@@ -11,10 +11,12 @@ import ProgressBar from '../signMultisigView/progressBar';
 import styles from './styles.css';
 
 const Status = ({ sender, transactions, t }) => {
+  const isMultiSignature = transactions.signedTransaction.params?.numberOfSignatures > 0
+
   const status = getTransactionStatus(
     sender.data,
     transactions,
-    sender.data?.keys.numberOfSignatures > 0,
+    isMultiSignature,
   );
 
   const template = statusMessages(t)[status.code];

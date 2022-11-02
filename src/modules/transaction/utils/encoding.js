@@ -97,14 +97,21 @@ export const encodeTransaction = (transaction, paramsSchema) => {
 };
 
 export const fromTransactionJSON = (transactionJSON, paramsSchema) => {
+  console.log(">>>>>>", transactionJSON)
   const tx = codec.fromJSON(baseTransactionSchema, {
     ...transactionJSON,
     params: '',
+    nonce: transactionJSON.nonce.replace(/n$/, ''), // eslint-disable-next-line radix
+    fee: transactionJSON.fee.toString().replace(/n$/, ''), // eslint-disable-next-line radix
   });
+
+  console.log('---- tx: ', tx);
 
   let params;
   if (typeof transactionJSON.params === 'string') {
-    params = paramsSchema ? codec.decode(paramsSchema, Buffer.from(transactionJSON.params, 'hex')) : {};
+    params = paramsSchema
+      ? codec.decode(paramsSchema, Buffer.from(transactionJSON.params, 'hex'))
+      : {};
   } else {
     params = paramsSchema ? codec.fromJSON(paramsSchema, transactionJSON.params) : {};
   }
