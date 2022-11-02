@@ -15,7 +15,6 @@ jest
   ]);
 
 describe('useQueryKeys hook', () => {
-
   it('fetch data correctly', async () => {
     const { result } = renderHook(() => useQueryKeys(['DUMMY_KEY']), {
       wrapper: queryWrapper,
