@@ -11,7 +11,6 @@ import accounts from '@tests/constants/wallets';
 import { genKey, blsKey, pop } from '@tests/constants/keys';
 import { mockAppTokens } from '@tests/fixtures/token';
 import {
-  getTransaction,
   getTransactions,
   getTransactionStats,
   getSchemas,
@@ -37,26 +36,6 @@ describe('API: LSK Transactions', () => {
   const baseUrl = 'http://custom-basse-url.com/';
   const sampleId = 'sample_id';
 
-  describe('getTransaction', () => {
-    beforeEach(() => {
-      jest.clearAllMocks();
-    });
-
-    it('Should call http with given params', () => {
-      getTransaction({
-        network,
-        baseUrl,
-        params: { id: sampleId },
-      });
-
-      expect(http).toHaveBeenCalledWith({
-        path: '/api/v3/transactions',
-        params: { id: sampleId },
-        network,
-        baseUrl,
-      });
-    });
-  });
 
   describe('getTransactions', () => {
     beforeEach(() => {

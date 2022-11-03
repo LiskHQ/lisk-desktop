@@ -45,6 +45,9 @@ export const NotSignedIn = withTranslation()(({ t }) => (
 ));
 
 const RecentTransactions = ({ className, t, transactions }) => {
+  if(!transactions?.data) {
+    return null // @TODO should fetch transaction data with react-query #4534
+  }
   const account = useSelector(selectActiveTokenAccount);
   const [isLoaded, setLoaded] = useState(!!transactions.data.length);
   const token = useSelector(state => state.token);
