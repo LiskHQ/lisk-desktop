@@ -9,49 +9,6 @@ jest.mock('src/utils/api/http');
 jest.mock('src/utils/api/ws');
 
 describe('Block api module', () => {
-  describe('getBlock', () => {
-    beforeEach(() => {
-      http.mockClear();
-    });
-
-    it('should return block data', async () => {
-      const expectedResponse = { data: {} };
-      const params = { blockId: 1 };
-      http.mockImplementation(() => Promise.resolve(expectedResponse));
-      await expect(getBlock({ params })).resolves.toEqual(expectedResponse);
-      expect(http).toHaveBeenCalledWith({
-        path: httpPaths.block,
-        params,
-      });
-    });
-
-    it('should handle parameters correctly', async () => {
-      getBlock({ params: { blockId: 1, height: 5000 } });
-      expect(http).toHaveBeenCalledWith({
-        path: httpPaths.block,
-        params: { blockId: 1 },
-      });
-      getBlock({ params: { height: 5000 } });
-      expect(http).toHaveBeenCalledWith({
-        path: httpPaths.block,
-        params: { height: 5000 },
-      });
-    });
-
-    it('should return promise rejection when no parameters are sup', async () => {
-      await expect(
-        getBlock({ params: { } }),
-      ).rejects.toEqual(Error('No parameters supplied'));
-    });
-
-    it('should throw when api fails', async () => {
-      const expectedResponse = new Error('API call could not be completed');
-      const params = { blockId: 1 };
-      http.mockImplementation(() => Promise.reject(new Error(expectedResponse.message)));
-      await expect(getBlock({ params })).rejects.toEqual(expectedResponse);
-    });
-  });
-
   describe('getBlocks', () => {
     beforeEach(() => {
       http.mockClear();
