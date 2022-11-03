@@ -3,7 +3,7 @@ export const tokensBalance = [
     tokenID: '0000000100000000',
     name: 'Lisk',
     symbol: 'LSK',
-    availableBalance: '5000000',
+    availableBalance: '1000000000',
     lockedBalances: [
       {
         moduleID: '5',
@@ -12,7 +12,7 @@ export const tokensBalance = [
     ],
   },
   {
-    tokenID: '6fd163bd15997d',
+    tokenID: '0000000200000000',
     name: 'Colecti',
     symbol: 'COL',
     availableBalance: '70000000',
@@ -24,7 +24,7 @@ export const tokensBalance = [
     ],
   },
   {
-    tokenID: '7cc242cd46228a',
+    tokenID: '0000000300000000',
     name: 'Enevti',
     symbol: 'EVT',
     availableBalance: '15000000',
@@ -36,7 +36,7 @@ export const tokensBalance = [
     ],
   },
   {
-    tokenID: '4ed385ae59332e',
+    tokenID: '0000000400000000',
     name: 'DoEdu',
     symbol: 'DEU',
     availableBalance: '43000000',
@@ -48,7 +48,7 @@ export const tokensBalance = [
     ],
   },
   {
-    tokenID: '0bf709ba38550d',
+    tokenID: '0000000500000000',
     name: 'Kalipo',
     symbol: 'KAL',
     availableBalance: '27000000',
@@ -61,22 +61,34 @@ export const tokensBalance = [
   },
 ];
 
-export const tokensSupported = [
+export const escrowedAmounts = [
   {
+    escrowChainID: '00000001',
     tokenID: '0000000100000000',
+    amount: '50000000',
+    name: 'Lisk',
+    symbol: 'LSK',
   },
-  {
-    tokenID: '6fd163bd15997d',
-  },
-  {
-    tokenID: '7cc242cd46228a',
-  },
-  {
-    tokenID: '4ed385ae59332e',
-  },
-  {
-    tokenID: '0bf709ba38550d',
-  },
+];
+
+export const tokensSupported = {
+  isSupportAllToken: false,
+  exactTokenIDs: [
+    '0000000100000000',
+    '0000000200000000',
+    '0000000300000000',
+    '0000000400000000',
+    '0000000500000000',
+  ],
+  patternTokenIDs: ['00000020******'],
+};
+
+export const totalSupply = [
+  { tokenID: '00000001', amount: '100000000000', name: 'Lisk', symbol: 'LSK' },
+  { tokenID: '00000002', amount: '70000000', name: 'Colecti', symbol: 'COL' },
+  { tokenID: '00000003', amount: '15000000', name: 'Enevti', symbol: 'EVT' },
+  { tokenID: '00000004', amount: '43000000', name: 'DoEdu', symbol: 'DEU' },
+  { tokenID: '00000005', amount: '27000000', name: 'Kalipo', symbol: 'KAL' },
 ];
 
 export const tokensTopLskBalance = [
