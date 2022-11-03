@@ -27,7 +27,6 @@ const TxSignatureCollector = ({
   nextStep,
   prevStep,
   statusInfo,
-  // sender,
   transactionDoubleSigned,
   // signatureStatus,
   // signatureSkipped,
@@ -85,7 +84,7 @@ const TxSignatureCollector = ({
         publicKey
       );
     }
-    console.log('i am here ooooo ---> ')
+  
     return multisigTransactionSigned({
       formProps,
       transactionJSON,
@@ -117,7 +116,7 @@ const TxSignatureCollector = ({
       }
     };
   }, []);
-  console.log('>>>>', transactions);
+
   useEffect(() => {
     if (!isEmpty(transactions.signedTransaction)) {
       const hasSecondPass = !!account.secondPassphrase;
@@ -127,7 +126,6 @@ const TxSignatureCollector = ({
       if (!transactions.txSignatureError && hasSecondPass && !isDoubleSigned) {
         transactionDoubleSigned();
       } else if (!hasSecondPass || isDoubleSigned) {
-        console.log('STATUS INFO: ', statusInfo)
         nextStep({ formProps, transactionJSON, statusInfo, sender });
       }
     }

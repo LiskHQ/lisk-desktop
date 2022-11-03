@@ -275,6 +275,7 @@ const signUsingPrivateKey = (wallet, schema, chainID, transaction, privateKey) =
   const chainIDBuffer = Buffer.from(chainID, 'hex');
   const privateKeyBuffer = Buffer.from(privateKey, 'hex');
   const publicKeyBuffer = Buffer.from(wallet.summary.publicKey, 'hex');
+
   // Sign the params if tx is a group registration and the current account is a member
   if (isGroupRegistration) {
     const members = [
@@ -285,16 +286,15 @@ const signUsingPrivateKey = (wallet, schema, chainID, transaction, privateKey) =
         publicKeyA.compare(publicKeyB)
       ),
     ];
-    console.log('>>>>>', members);
+
     const senderIndex = members.findIndex((item) => Buffer.compare(item, publicKeyBuffer) === 0);
-    console.log('--->', senderIndex);
+
     if (senderIndex > -1) {
       const memberSignature = signMultisigRegParams(chainIDBuffer, transaction, privateKeyBuffer);
       // @todo use correct index once SDK exposes the sort endpoint (#4497)
-      const signatures = Array.from(Array(members.length).keys()).map((index) => {
-        if (index === senderIndex) {
-          return memberSignature;
-        }
+      const signatures = [...Array(members.length).keys()].map((index) => {
+        if (index === senderIndex) return memberSignature;
+
         if (!transaction.params.signatures[index] || !transaction.params.signatures[index].length) {
           return Buffer.alloc(64);
         }
@@ -305,19 +305,19 @@ const signUsingPrivateKey = (wallet, schema, chainID, transaction, privateKey) =
   }
 
   // Sign the tx only if is sender of tx
-
   const isSender = Buffer.compare(transaction.senderPublicKey, publicKeyBuffer) === 0;
+
   console.log('isSender', isSender, transaction.senderPublicKey, publicKeyBuffer);
+
   if (isSender) {
-    let res;
     try {
-      console.log('signature', transaction.signatures[0]);
-      res = transactions.signTransactionWithPrivateKey(
+      const res = transactions.signTransactionWithPrivateKey(
         transaction,
         chainIDBuffer,
         privateKeyBuffer,
         schema
       );
+      
       console.log('signature', res.signatures[0]);
       return res;
     } catch (e) {
