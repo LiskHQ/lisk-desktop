@@ -103,10 +103,10 @@ const Summary = ({
         </Box>
       </BoxContent>
 
-      {(isMember &&
+      {((isMember &&
         signatureStatus !== signatureCollectionStatus.fullySigned &&
         signatureStatus !== signatureCollectionStatus.occupiedByOptionals) ||
-        (canSenderSignTx && <ActionBar t={t} history={history} nextButton={nextButton} />)}
+        canSenderSignTx) && <ActionBar t={t} history={history} nextButton={nextButton} />}
 
       {showFeedback ? (
         <Feedback t={t} isMember={isMember || canSenderSignTx} signatureStatus={signatureStatus} />
