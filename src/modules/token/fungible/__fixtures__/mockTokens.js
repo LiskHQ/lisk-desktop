@@ -1,7 +1,9 @@
 import {
+  escrowedAmounts,
   tokensBalance,
   tokensSupported,
   tokensTopLskBalance,
+  totalSupply,
 } from '@token/fungible/__fixtures__/tokens';
 
 export const mockTokensBalance = {
@@ -25,7 +27,9 @@ export const mockTokensTopLskBalance = {
 };
 export const mockTokensSupported = {
   data: {
+    escrowedAmounts,
     supportedTokens: tokensSupported,
+    totalSupply,
   },
   meta: {
     count: 3,
@@ -60,6 +64,48 @@ export const mockAppsTokens = {
       logo: {
         png: 'https://downloads.lisk.com/lisk/images/tokens/lsk.png',
         svg: 'https://downloads.lisk.com/lisk/images/tokens/lsk.svg',
+      },
+    },
+    {
+      chainID: '00000002',
+      chainName: 'Colecti',
+      tokenID: '0000000200000000',
+      tokenName: 'Colecti',
+      networkType: 'mainnet',
+      description: 'Base token for the Colecti ecosystem',
+      denomUnits: [
+        {
+          denom: 'colecti',
+          decimals: 8,
+        },
+      ],
+      baseDenom: 'cols',
+      displayDenom: 'colecti',
+      symbol: 'COL',
+      logo: {
+        png: 'https://colecti.com/wp-content/uploads/2022/09/Beeldmerk-rond.png',
+        svg: 'https://colecti.com/wp-content/uploads/2022/09/Beeldmerk-rond.svg',
+      },
+    },
+    {
+      chainID: '00000003',
+      chainName: 'Enevti',
+      tokenID: '0000000200000000',
+      tokenName: 'Enevti',
+      networkType: 'mainnet',
+      description: 'Base token for the Enevti ecosystem',
+      denomUnits: [
+        {
+          denom: 'enevti',
+          decimals: 8,
+        },
+      ],
+      baseDenom: 'enevti',
+      displayDenom: 'enevti',
+      symbol: 'EVT',
+      logo: {
+        png: 'https://drive.google.com/uc?id=1-TN72tUDpo8HtF1X167Tyc13r9V8gVJs',
+        svg: 'https://drive.google.com/uc?id=1-TN72tUDpo8HtF1X167Tyc13r9V8gVJs',
       },
     },
   ],
