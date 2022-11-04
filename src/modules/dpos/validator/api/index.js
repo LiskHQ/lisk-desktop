@@ -1,9 +1,8 @@
 import { regex } from 'src/const/regex';
-import http from 'src/utils/api/http';
+import client from 'src/utils/api/client';
 import { HTTP_PREFIX } from 'src/const/httpCodes';
 import ws, { subscribe, unsubscribe } from 'src/utils/api/ws';
 import { extractAddressFromPublicKey } from '@wallet/utils/account';
-import client from 'src/utils/api/client';
 
 export const httpPaths = {
   delegates: `${HTTP_PREFIX}/accounts`,
@@ -39,7 +38,7 @@ const getDelegateProps = ({ address, publicKey, username }) => {
  * @returns {Promise} http call
  */
 export const getDelegate = ({ params = {}, network, baseUrl }) =>
-  http({
+  client.rest({
     path: httpPaths.delegates,
     params: { ...getDelegateProps(params), isDelegate: true },
     network,
@@ -117,8 +116,8 @@ export const getDelegates = ({ network, params = {}, baseUrl }) => {
     }
   });
 
-  return http({
-    path: httpPaths.delegates,
+  return client.rest({
+    url: httpPaths.delegates,
     params: normParams,
     network,
     baseUrl,
@@ -169,8 +168,8 @@ export const getVoters = ({ network, params = {}, baseUrl }) => {
     publicKey: params.publicKey,
   });
 
-  return http({
-    path: httpPaths.votesReceived,
+  return client.rest({
+    url: httpPaths.votesReceived,
     params: {
       ...account,
       ...pagination,
@@ -192,8 +191,8 @@ export const getVoters = ({ network, params = {}, baseUrl }) => {
  * @returns {Promise} http call
  */
 export const getForgers = ({ network, params = {}, baseUrl }) =>
-  http({
-    path: httpPaths.forgers,
+  client.rest({
+    url: httpPaths.forgers,
     params,
     network,
     baseUrl,
