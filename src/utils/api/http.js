@@ -1,3 +1,4 @@
+import client from 'src/utils/api/client';
 /**
  * Makes HTTP api call
  *
@@ -13,36 +14,32 @@
  */
 
 const http = ({
-  baseUrl, path, params, method = 'GET', network, ...restOptions
+  baseUrl: baseURL, path: url, params, method = 'GET', network, ...restOptions
   // eslint-disable-next-line consistent-return
 }) => {
   try {
-    // @todo remove the optional chain
-    
-    const url = new URL(baseUrl ? `${baseUrl}${path}`
-    : `${network?.networks?.LSK?.serviceUrl ?? `https://testnet-service.lisk.com`}${path}`);
-
-    url.search = new URLSearchParams(params).toString();
-
-
-    return fetch(url.toString(), {
+    // @todo remove http function after removing the usage
+    const transformResult =  async (response) => {
+      if (!response.ok) {
+        const { message } = await response.json();
+        const error = Error(response.statusText);
+        error.code = response.status;
+        error.message = message;
+        throw error;
+      }
+      return response.json();
+    };
+    const config = {
+      baseURL,
+      url,
       method,
-      headers: {
-        Accept: 'application/json',
-        'Content-Type': 'application/json',
-      },
+      params,
+      transformResult,
       ...restOptions,
-    })
-      .then(async (response) => {
-        if (!response.ok) {
-          const { message } = await response.json();
-          const error = Error(response.statusText);
-          error.code = response.status;
-          error.message = message;
-          throw error;
-        }
-        return response.json();
-      });
+    };
+
+    return client.call(config)
+
   } catch (e) {
     // eslint-disable-next-line no-console
     console.error(e);
