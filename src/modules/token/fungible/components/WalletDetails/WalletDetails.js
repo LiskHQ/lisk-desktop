@@ -33,7 +33,7 @@ const WalletDetails = ({
             <Icon name="lskIcon" />
             <div className={styles.details}>
               <span>
-                {t('{{acctToken}} balance', { token: tokenMap.LSK.label })}
+                {t('{{acctToken}} balance', { acctToken: tokenMap.LSK.label })}
               </span>
               <div className={styles.valuesRow}>
                 <DiscreetMode>
