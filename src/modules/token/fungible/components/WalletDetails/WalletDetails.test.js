@@ -6,20 +6,7 @@ describe('WalletDetails', () => {
   let wrapper;
 
   const props = {
-    wallet: {
-      info: {
-        LSK: {
-          balance: '100',
-          token: 'LSK',
-        },
-      },
-    },
-    token: {
-      active: 'LSK',
-      list: {
-        LSK: true,
-      },
-    },
+    tokens: [{ availableBalance: '99999800000000', tokenID: "0000000000000000" }],
     t: key => key,
   };
 
