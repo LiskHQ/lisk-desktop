@@ -39,7 +39,7 @@ const getDelegateProps = ({ address, publicKey, username }) => {
  */
 export const getDelegate = ({ params = {}, network, baseUrl }) =>
   client.rest({
-    path: httpPaths.delegates,
+    url: httpPaths.delegates,
     params: { ...getDelegateProps(params), isDelegate: true },
     network,
     baseUrl,
