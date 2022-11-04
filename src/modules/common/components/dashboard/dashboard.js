@@ -8,6 +8,7 @@ import { ManageAccountsContent } from '@account/components/ManageAccounts';
 import Box from 'src/theme/box';
 import BoxHeader from 'src/theme/box/header';
 import { isEmpty } from 'src/utils/helpers';
+import { useTokensBalance } from 'src/modules/token/fungible/hooks/queries';
 import Onboarding from '../onboarding/onboarding';
 import NewsFeed from '../newsFeed';
 import styles from './dashboard.css';
@@ -45,8 +46,13 @@ const getOnboardingSlides = (t) => [
 
 const Dashboard = ({ t, history }) => {
   const { accounts } = useAccounts();
-  const [ currentAccount ] = useCurrentAccount();
+  const [currentAccount] = useCurrentAccount();
   const OnboardingBannerName = 'dashboardOnboarding';
+  const tokens = useTokensBalance({
+    config: {
+      params: { limit: 2 },
+    },
+  })
 
   return (
     <>
@@ -61,7 +67,7 @@ const Dashboard = ({ t, history }) => {
             {
               !isEmpty(currentAccount) && (
                 <>
-                  <WalletDetails className={styles.marginFix} isWalletRoute={false} />
+                  <WalletDetails className={styles.marginFix} isWalletRoute={false} tokens={tokens.data?.data} />
                   <RecentTransactions
                     isLoggedIn
                     className={styles.marginFix}
@@ -74,19 +80,19 @@ const Dashboard = ({ t, history }) => {
             }
             {
               isEmpty(currentAccount) && accounts.length > 0
-                && (
-                  <Box className={styles.wrapper}>
-                    <BoxHeader>
-                      <h1>{t('Manage accounts')}</h1>
-                    </BoxHeader>
-                    <ManageAccountsContent
-                      truncate
-                      isRemoveAvailable
-                      history={history}
-                      className={styles.manageAccounts}
-                    />
-                  </Box>
-                )
+              && (
+                <Box className={styles.wrapper}>
+                  <BoxHeader>
+                    <h1>{t('Manage accounts')}</h1>
+                  </BoxHeader>
+                  <ManageAccountsContent
+                    truncate
+                    isRemoveAvailable
+                    history={history}
+                    className={styles.manageAccounts}
+                  />
+                </Box>
+              )
             }
           </div>
 
