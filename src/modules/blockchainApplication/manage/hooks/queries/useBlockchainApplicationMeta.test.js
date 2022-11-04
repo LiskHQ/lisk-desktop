@@ -10,10 +10,9 @@ describe('useBlockchainApplicationMeta hook', () => {
   const config = { params: { limit } };
 
   it('fetching data correctly', async () => {
-    const { result, waitFor } = renderHook(
-      () => useBlockchainApplicationMeta({ config }),
-      { wrapper },
-    );
+    const { result, waitFor } = renderHook(() => useBlockchainApplicationMeta({ config }), {
+      wrapper,
+    });
     expect(result.current.isLoading).toBeTruthy();
     await waitFor(() => result.current.isFetched);
     expect(result.current.isSuccess).toBeTruthy();
@@ -21,7 +20,7 @@ describe('useBlockchainApplicationMeta hook', () => {
       data: mockBlockchainAppMeta.data.slice(0, limit),
       meta: {
         ...mockBlockchainAppMeta.meta,
-        count: 1,
+        count: 3,
         offset: 0,
       },
     };
@@ -39,10 +38,9 @@ describe('useBlockchainApplicationMeta hook', () => {
   });
 
   it.skip('should fetch next set of data correctly', async () => {
-    const { result, waitFor } = renderHook(
-      () => useBlockchainApplicationMeta({ config }),
-      { wrapper },
-    );
+    const { result, waitFor } = renderHook(() => useBlockchainApplicationMeta({ config }), {
+      wrapper,
+    });
     await waitFor(() => result.current.isFetched);
     act(() => {
       result.current.fetchNextPage();

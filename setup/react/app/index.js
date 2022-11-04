@@ -23,12 +23,16 @@ import routesMap from 'src/routes/routesMap';
 import routes from 'src/routes/routes';
 import { MOCK_SERVICE_WORKER } from 'src/const/config';
 import { useBlockchainApplicationMeta } from 'src/modules/blockchainApplication/manage/hooks/queries/useBlockchainApplicationMeta';
-import { useApplicationManagement, useCurrentApplication } from 'src/modules/blockchainApplication/manage/hooks';
+import {
+  useApplicationManagement,
+  useCurrentApplication,
+} from 'src/modules/blockchainApplication/manage/hooks';
 import './variables.css';
 import styles from './app.css';
 
 if (MOCK_SERVICE_WORKER) {
   const { worker } = require('src/service/mock/runtime');
+
   worker.start({ onUnhandledRequest: 'bypass' });
 }
 
@@ -48,15 +52,15 @@ const App = ({ history }) => {
     dispatch(settingsRetrieved());
     dispatch(watchListRetrieved());
     // Initialize client on first render to get default application
-    client.create({ http: 'http://165.227.246.146:9901' })
+    client.create({ http: 'http://165.227.246.146:9901', ws: 'ws://165.227.246.146:9901/rpc-v3' });
   }, []);
 
   useEffect(() => {
     if (!isLoading && chainMetaData) {
-      chainMetaData.data.map(data => setApplication(data))
-      setCurrentApplication(chainMetaData.data[0])
+      chainMetaData.data.map((data) => setApplication(data));
+      setCurrentApplication(chainMetaData.data[0]);
     }
-  }, [isLoading, chainMetaData])
+  }, [isLoading, chainMetaData]);
 
   const routesList = Object.keys(routes);
   const routeObj = Object.values(routes).find((r) => r.path === history.location.pathname) || {};
