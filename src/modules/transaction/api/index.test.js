@@ -13,7 +13,6 @@ import { mockAppTokens } from '@tests/fixtures/token';
 import {
   getTransactions,
   getTransactionStats,
-  getSchemas,
   getTransactionFee, getRegisteredDelegates,
 } from './index';
 
@@ -383,21 +382,5 @@ describe('API: LSK Transactions', () => {
     });
   });
 
-  describe('getSchemas', () => {
-    beforeEach(() => {
-      jest.clearAllMocks();
-    });
 
-    it('Should call http with given params', () => {
-      getSchemas({
-        network,
-        baseUrl,
-      });
-
-      expect(http).toHaveBeenCalledWith({
-        path: '/api/v3/transactions/schemas',
-        baseUrl,
-      });
-    });
-  });
 });

@@ -200,26 +200,6 @@ export const getTransactionStats = ({ network, params: { period } }) => {
 };
 
 /**
- * Retrieves transaction schemas.
- *
- * @param {Object} data
- * @param {String?} data.baseUrl - Lisk Service API url to override the
- * existing ServiceUrl on the network param. We may use this to retrieve
- * the details of an archived transaction.
- * @param {Object} data.network - Network setting from Redux store
- * @returns {Promise} http call
- */
-export const getSchemas = ({ baseUrl }) => http({
-  path: httpPaths.schemas,
-  baseUrl,
-}).then((response) =>
-  response.data.reduce((acc, data) => {
-    // TODO: Need to change this to command
-    acc[data.moduleAssetId] = data.schema;
-    return acc;
-  }, {}));
-
-/**
  * Returns a dictionary of base fees for low, medium and high processing speeds
  * @returns {Promise<{Low: number, Medium: number, High: number}>} with low,
  * medium and high priority fee options
