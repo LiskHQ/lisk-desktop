@@ -33,12 +33,12 @@ const WalletDetails = ({
             <Icon name="lskIcon" />
             <div className={styles.details}>
               <span>
-                {t('{{acctToken}} balance', { acctToken: tokenMap.LSK.label })}
+                {t('{{acctToken}} balance', { acctToken: tokenMap.LSK.key })}
               </span>
               <div className={styles.valuesRow}>
                 <DiscreetMode>
                   <div className={`${styles.cryptoValue} balance-value`}>
-                    <div><TokenAmount val={token.availableBalance} token={tokenMap.LSK.label} /></div>
+                    <div><TokenAmount val={token.availableBalance} token={tokenMap.LSK.key} /></div>
                     <div>
                       <Converter
                         className={styles.fiatValue}
@@ -48,7 +48,7 @@ const WalletDetails = ({
                     </div>
                   </div>
                   <LockedBalanceLink
-                    activeToken={tokenMap.LSK.label}
+                    activeToken={tokenMap.LSK.key}
                     isWalletRoute={isWalletRoute}
                     style={styles.lockedBalance}
                     icon="lockedBalance"
