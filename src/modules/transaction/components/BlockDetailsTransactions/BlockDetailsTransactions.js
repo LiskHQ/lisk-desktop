@@ -6,17 +6,19 @@ import {
 } from 'src/redux/selectors';
 import Box from 'src/theme/box';
 import BoxContent from 'src/theme/box/content';
+import { useTranslation } from 'react-i18next';
 import Table from 'src/theme/table';
 import { useTransactions } from '../../hooks/queries';
 import TransactionRow from '../TransactionRow';
 import header from './BlockDetailsTransactionHeaderMap';
 import styles from './BlockDetailsTransactions.css';
 
+
 const BlockDetailsTransactions = ({
   blockId,
   height,
-  t,
 }) => {
+  const {t} = useTranslation()
   const currentBlockHeight = useSelector(selectCurrentBlockHeight);
   const activeToken = useSelector(selectActiveToken);
   const {
@@ -58,4 +60,4 @@ const BlockDetailsTransactions = ({
   );
 };
 
-export default BlockDetailsTransactions;
+export default  BlockDetailsTransactions;
