@@ -38,7 +38,7 @@ const http = ({
       ...restOptions,
     };
 
-    return client.call(config)
+    return client.rest(config)
 
   } catch (e) {
     // eslint-disable-next-line no-console
