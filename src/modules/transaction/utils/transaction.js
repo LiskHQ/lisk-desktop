@@ -5,6 +5,7 @@ import { to } from 'await-to-js';
 import { MODULE_COMMANDS_NAME_MAP } from 'src/modules/transaction/configuration/moduleCommand';
 import { DEFAULT_NUMBER_OF_SIGNATURES } from '@transaction/configuration/transactions';
 import { signatureCollectionStatus } from '@transaction/configuration/txStatus';
+import { getTransactionSignatureStatus } from '@wallet/components/signMultisigView/helpers';
 import { getKeys } from '@wallet/utils/account';
 import { transformStringDateToUnixTimestamp } from 'src/utils/dateTime';
 import { toRawLsk } from '@token/fungible/utils/lsk';
@@ -275,6 +276,7 @@ const signUsingPrivateKey = (wallet, schema, chainID, transaction, privateKey) =
   const chainIDBuffer = Buffer.from(chainID, 'hex');
   const privateKeyBuffer = Buffer.from(privateKey, 'hex');
   const publicKeyBuffer = Buffer.from(wallet.summary.publicKey, 'hex');
+  const { mandatoryKeys, optionalKeys, numberOfSignatures } = transaction.params;
 
   // Sign the params if tx is a group registration and the current account is a member
   if (isGroupRegistration) {
@@ -306,10 +308,21 @@ const signUsingPrivateKey = (wallet, schema, chainID, transaction, privateKey) =
 
   // Sign the tx only if is sender of tx
   const isSender = Buffer.compare(transaction.senderPublicKey, publicKeyBuffer) === 0;
+  const multiSigStatus = getTransactionSignatureStatus(
+    {
+      mandatoryKeys,
+      optionalKeys,
+      numberOfSignatures,
+    },
+    transaction
+  );
 
-  console.log('isSender', isSender, transaction.senderPublicKey, publicKeyBuffer);
+  console.log('isSender', isSender, transaction.senderPublicKey, publicKeyBuffer, transaction, multiSigStatus);
 
-  if (isSender) {
+  if (
+    (isSender && isGroupRegistration && multiSigStatus === signatureCollectionStatus.fullySigned) ||
+    (isSender && !isGroupRegistration)
+  ) {
     try {
       const res = transactions.signTransactionWithPrivateKey(
         transaction,
@@ -317,7 +330,7 @@ const signUsingPrivateKey = (wallet, schema, chainID, transaction, privateKey) =
         privateKeyBuffer,
         schema
       );
-      
+
       console.log('signature', res.signatures[0]);
       return res;
     } catch (e) {

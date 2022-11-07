@@ -1,5 +1,4 @@
-/* eslint-disable complexity */
-import React, { useMemo } from 'react';
+import React from 'react';
 import { isEmpty } from 'src/utils/helpers';
 import { useCurrentAccount } from 'src/modules/account/hooks';
 import { signatureCollectionStatus } from '@transaction/configuration/txStatus';
@@ -9,11 +8,11 @@ import { LayoutSchema } from '@transaction/components/TransactionDetails/layoutS
 import TransactionDetailsContext from '@transaction/context/transactionDetailsContext';
 import layoutSchemaStyles from '@transaction/components/TransactionDetails/layoutSchema.css';
 import ProgressBar from '../signMultisigView/progressBar';
-import { showSignButton, getTransactionSignatureStatus } from '../signMultisigView/helpers';
 import { ActionBar, Feedback } from './footer';
 import styles from './styles.css';
+import { useMultiSignatureStatus } from '../../hooks/useMultiSignatureStatus';
 
-// eslint-disable-next-line max-statements
+// eslint-disable-next-line complexity
 const Summary = ({
   t,
   transactionJSON,
@@ -27,30 +26,12 @@ const Summary = ({
 }) => {
   const [currentAccount] = useCurrentAccount();
 
-  // @todo Fix isMember calculation (#4506)
-  const isMember = useMemo(() => {
-    if (senderAccount.data.keys) {
-      return showSignButton(senderAccount.data, account, transactionJSON);
-    }
-    return null;
-  }, [senderAccount.data, currentAccount]);
-
-  // @todo Fix signatureStatus calculation (#4506)
-  const signatureStatus = useMemo(() => {
-    if (senderAccount.data.keys) {
-      return getTransactionSignatureStatus(senderAccount.data, transactionJSON);
-    }
-    return null;
-  }, [senderAccount.data]);
-
-  const canSenderSignTx = useMemo(() => {
-    if (transactionJSON)
-      return (
-        transactionJSON.senderPublicKey === currentAccount.metadata.pubkey &&
-        signatureStatus === signatureCollectionStatus.fullySigned
-      );
-    return null;
-  }, [transactionJSON, currentAccount, signatureStatus]);
+  const { isMember, signatureStatus, canSenderSignTx } = useMultiSignatureStatus({
+    transactionJSON,
+    account,
+    currentAccount,
+    senderAccount: senderAccount.data,
+  });
 
   const onClick = () => {
     nextStep({

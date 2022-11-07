@@ -60,7 +60,7 @@ export const getTransactionSignatureStatus = (senderAccount, transaction) => {
   });
 
   const alreadySigned = getNonEmptySignatures(transaction, isRegisterMultisignature).length;
-  const registrationExtra = isRegisterMultisignature ? 1 : 0;
+  const registrationExtra = isRegisterMultisignature ? 0 : 0;
   const mandatorySigs = keys.mandatoryKeys.length + registrationExtra;
   const nonEmptyMandatorySigs = getNonEmptySignatures(
     transaction,

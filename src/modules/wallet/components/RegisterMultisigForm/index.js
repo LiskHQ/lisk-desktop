@@ -6,6 +6,8 @@ import { TertiaryButton } from 'src/theme/buttons';
 import { Input } from 'src/theme';
 import { MODULE_COMMANDS_NAME_MAP } from 'src/modules/transaction/configuration/moduleCommand';
 import TxComposer from '@transaction/components/TxComposer';
+import { useCurrentApplication } from '@blockchainApplication/manage/hooks';
+import { useTokensBalance } from 'src/modules/token/fungible/hooks/queries';
 import ProgressBar from '../RegisterMultisigView/ProgressBar';
 import { MAX_MULTI_SIG_MEMBERS } from '../../configuration/constants';
 import MemberField from './MemberField';
@@ -59,6 +61,10 @@ const Form = ({ nextStep, prevState = {} }) => {
     getInitialSignaturesState(prevState)
   );
   const [members, setMembers] = useState(() => getInitialMembersState(prevState));
+
+  const [currentApplication] = useCurrentApplication();
+  const { data: tokens } = useTokensBalance(currentApplication)
+  const defaultToken = useMemo(() => tokens?.data?.[0] || {}, [tokens]);
 
   const [mandatoryKeys, optionalKeys] = useMemo(() => {
     const mandatory = members
@@ -127,6 +133,9 @@ const Form = ({ nextStep, prevState = {} }) => {
     moduleCommand: MODULE_COMMANDS_NAME_MAP.registerMultisignature,
     isValid: feedback.error === 0,
     feedback: feedback.messages,
+    fields: {
+      token: defaultToken,
+    },
   };
   const commandParams = {
     mandatoryKeys,
