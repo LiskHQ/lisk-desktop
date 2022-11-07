@@ -1,1 +1,1 @@
-export { default } from '../../manager/blockDetailsTransactionManger';
+export { default } from './BlockDetailsTransactions';
