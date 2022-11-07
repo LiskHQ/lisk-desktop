@@ -14,15 +14,21 @@ import client from 'src/utils/api/client';
  */
 
 const http = ({
-  baseUrl: baseURL, path: url, params, method = 'GET', network, ...restOptions
+  baseUrl: baseURL,
+  path: url,
+  params,
+  method = 'GET',
+  network,
+  ...restOptions
   // eslint-disable-next-line consistent-return
 }) => {
   try {
     // @todo remove http function after removing the usage
-    const transformResult =  async (response) => {
+    /* istanbul ignore next */
+    const transformResult = async (response) => {
       if (!response.ok) {
         const { message } = await response.json();
-        const error = Error(response.statusText);
+        const error = new Error(response.statusText);
         error.code = response.status;
         error.message = message;
         throw error;
@@ -38,8 +44,7 @@ const http = ({
       ...restOptions,
     };
 
-    return client.rest(config)
-
+    return client.rest(config);
   } catch (e) {
     // eslint-disable-next-line no-console
     console.error(e);
