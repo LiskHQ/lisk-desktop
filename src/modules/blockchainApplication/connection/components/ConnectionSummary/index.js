@@ -54,7 +54,7 @@ const ConnectionSummary = ({ history }) => {
   const application = {
     data: {
       name: proposer.metadata.name,
-      serviceUrl: proposer.metadata.url.replace(/\/$/, ''),
+      projectPage: proposer.metadata.url.replace(/\/$/, ''),
       icon: proposer.metadata.icons[0],
       address: `Chain ID: ${requiredNamespaces.lisk.chains[0].replace('lisk:', '')}`,
     },

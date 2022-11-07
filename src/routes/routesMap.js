@@ -48,14 +48,14 @@ import AddApplicationSuccess from '@blockchainApplication/manage/components/AddA
 import ApplicationManagementList from '@blockchainApplication/manage/components/ApplicationManagementList';
 import SelectNode from '@blockchainApplication/manage/components/SelectNode';
 import RemoveApplicationFlow from '@blockchainApplication/manage/components/RemoveApplicationFlow';
+import AllTokens from '@wallet/components/AllTokens';
+import DelegateProfile from 'src/modules/dpos/validator/components/delegateProfile/delegateProfile';
+import SentVotes from 'src/modules/dpos/validator/components/SentVotes';
 import ConnectionProposal from 'src/modules/blockchainApplication/connection/components/ConnectionProposal';
 import SessionManager from '@blockchainApplication/connection/components/SessionManager';
 import ConnectionSummary from 'src/modules/blockchainApplication/connection/components/ConnectionSummary';
 import RequestView from '@blockchainApplication/connection/components/RequestView';
 import ConnectionStatus from 'src/modules/blockchainApplication/connection/components/ConnectionStatus';
-import SentVotes from 'src/modules/dpos/validator/components/SentVotes';
-import AllTokens from '@wallet/components/AllTokens';
-import DelegateProfile from 'src/modules/dpos/validator/components/delegateProfile/delegateProfile';
 
 export default {
   wallet: AccountDetails,
@@ -111,10 +111,10 @@ export default {
   manageApplications: ApplicationManagementList,
   removeApplicationFlow: RemoveApplicationFlow,
   allTokens: AllTokens,
+  sentVotes: SentVotes,
   connectionProposal: ConnectionProposal,
   sessionManager: SessionManager,
   requestView: RequestView,
   connectionSummary: ConnectionSummary,
   connectionStatus: ConnectionStatus,
-  sentVotes: SentVotes,
 };

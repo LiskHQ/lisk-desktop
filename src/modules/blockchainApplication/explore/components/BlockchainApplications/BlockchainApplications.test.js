@@ -6,7 +6,6 @@ import { useBlockchainApplicationStatistics } from '../../hooks/queries/useBlock
 import { mockBlockchainApp, mockBlockchainAppStatistics } from '../../__fixtures__';
 import BlockchainApplications from './BlockchainApplications';
 
-<<<<<<< HEAD
 jest.mock('@walletconnect/utils', () => ({
   getSdkError: jest.fn(str => str),
 }));
@@ -19,8 +18,6 @@ jest.mock('@libs/wcm/utils/connectionCreator', () => ({
 
 jest.useFakeTimers();
 jest.mock('@blockchainApplication/manage/hooks/usePinBlockchainApplication');
-=======
->>>>>>> feature/4034-change-sdk-api
 const mockTogglePin = jest.fn();
 const mockedPins = [mockBlockchainApp.data[0].chainID];
 const mockApplyFilters = jest.fn();

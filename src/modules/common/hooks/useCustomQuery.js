@@ -1,9 +1,5 @@
 import { useQuery } from '@tanstack/react-query';
-import {
-  METHOD,
-} from 'src/const/config';
 import defaultClient from 'src/utils/api/client';
-import { APPLICATION } from 'src/const/queries';
 import { useCurrentApplication } from '@blockchainApplication/manage/hooks';
 
 /**

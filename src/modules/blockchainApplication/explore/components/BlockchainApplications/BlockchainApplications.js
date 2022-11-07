@@ -7,7 +7,12 @@ import BlockchainApplicationStatistics from '../BlockchainApplicationStatistics'
 import styles from './BlockchainApplications.css';
 import SessionManager from '../../../connection/components/SessionManager';
 
-const BlockchainApplications = () => {
+const BlockchainApplications = ({
+  applications,
+  statistics,
+  applyFilters,
+  filters,
+}) => {
   const { t } = useTranslation();
   return (
     <div className={styles.wrapper}>
@@ -23,7 +28,6 @@ const BlockchainApplications = () => {
       />
       <div className={styles.contentWrapper}>
         <div className={styles.content}>
-<<<<<<< HEAD
           <TabsContainer
             name="main-tabs"
             activeTab="blockchainApplications"
@@ -40,12 +44,9 @@ const BlockchainApplications = () => {
               id="SessionManager"
             />
           </TabsContainer>
-=======
-          <BlockchainApplicationList />
->>>>>>> feature/4034-change-sdk-api
         </div>
         <div className={styles.sideBar}>
-          <BlockchainApplicationStatistics />
+          <BlockchainApplicationStatistics statistics={statistics} />
         </div>
       </div>
     </div>

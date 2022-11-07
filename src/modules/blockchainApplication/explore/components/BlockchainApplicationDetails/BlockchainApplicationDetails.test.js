@@ -61,14 +61,7 @@ describe('BlockchainApplicationDetails', () => {
 
   // @todo: Loading and error tests will be handled in #4539
   it('should display properly', () => {
-<<<<<<< HEAD
-    const {
-      name, state, lastCertificateHeight, lastUpdated,
-    } = mockBlockchainApplications[0];
-
-=======
     const { name, state, lastCertificateHeight, lastUpdated } = mockBlockchainApp.data[0];
->>>>>>> feature/4034-change-sdk-api
     expect(screen.getByText(name)).toBeTruthy();
     expect(screen.getByText(state)).toBeTruthy();
     expect(screen.getByText(lastCertificateHeight)).toBeTruthy();

@@ -268,6 +268,7 @@ module.exports = {
     'src/modules/common/components/charts/utils/balanceChart.js',
     'src/modules/wallet/components/searchBarWallets/passphraseRenderer/index.js',
     'src/modules/wallet/store/middlewares/hwManager.js',
+    'src/modules/dpos/validator/components/delegateProfile/delegateVoteButton.js',
     'src/modules/dpos/validator/store/middlewares/voting.js',
     'src/modules/transaction/store/transactionPriorityReducer.js',
     'src/modules/dpos/validator/store/actions/delegate.js',

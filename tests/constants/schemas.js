@@ -1,120 +1,66 @@
 /* eslint-disable max-lines */
 
 const moduleCommandSchemas = {
-  'token:transfer': {
-    $id: 'lisk/transfer-asset',
+  "auth:registerMultisignature": {
+    $id: "/auth/command/regMultisig",
+    type: "object",
     properties: {
-      amount: { dataType: 'uint64', fieldNumber: 1 },
-      recipientAddress: {
-        dataType: 'bytes', fieldNumber: 2, maxLength: 20, minLength: 20,
+      numberOfSignatures: {
+        dataType: "uint32",
+        fieldNumber: 1,
+        minimum: 1,
+        maximum: 64,
       },
-      data: {
-        dataType: 'string', fieldNumber: 3, maxLength: 64, minLength: 0,
-      },
-      tokenID: {
-        dataType: 'bytes', fieldNumber: 4, maxLength: 8, minLength: 8,
-      },
-    },
-    required: ['amount', 'recipientAddress', 'data', 'tokenID'],
-    title: 'Transfer transaction asset',
-    type: 'object',
-  },
-  'auth:registerMultisignature': {
-    $id: 'lisk/keys/register',
-    type: 'object',
-    required: [
-      'numberOfSignatures',
-      'optionalKeys',
-      'mandatoryKeys',
-      'signatures',
-    ],
-    "auth:registerMultisignature": {
-      $id: "/auth/command/regMultisig",
-      type: "object",
-      properties: {
-        numberOfSignatures: {
-          dataType: "uint32",
-          fieldNumber: 1,
-          minimum: 1,
-          maximum: 64,
-        },
-        mandatoryKeys: {
-          type: "array",
-          items: {
-            dataType: "bytes",
-            minLength: 32,
-            maxLength: 32,
-          },
-          fieldNumber: 2,
-          minItems: 0,
-          maxItems: 64,
-        },
-        optionalKeys: {
-          type: "array",
-          items: {
-            dataType: "bytes",
-            minLength: 32,
-            maxLength: 32,
-          },
-          fieldNumber: 3,
-          minItems: 0,
-          maxItems: 64,
-        },
-        signatures: {
-          type: 'array',
-          items: {
-            dataType: 'bytes',
-            minLength: 64,
-            maxLength: 64,
-          },
-          fieldNumber: 4,
-        },
-      },
-    },
-    'dpos:registerDelegate': {
-      $id: 'lisk/dpos/register',
-      type: 'object',
-      required: [
-        'name', 'generatorKey', 'blsKey', 'proofOfPossession',
-      ],
-    },
-    "dpos:registerDelegate": {
-      $id: "/dpos/command/registerDelegateParams",
-      type: "object",
-      required: ["name", "generatorKey", "blsKey", "proofOfPossession"],
-      properties: {
-        name: {
-          dataType: 'string',
-          fieldNumber: 1,
-          minLength: 1,
-          maxLength: 20
-        },
-        generatorKey: {
-          dataType: 'bytes',
-          fieldNumber: 2,
+      mandatoryKeys: {
+        type: "array",
+        items: {
+          dataType: "bytes",
           minLength: 32,
-          maxLength: 32
+          maxLength: 32,
         },
-        blsKey: {
-          dataType: 'bytes',
-          fieldNumber: 3,
-          minLength: 48,
-          maxLength: 48
+        fieldNumber: 2,
+        minItems: 0,
+        maxItems: 64,
+      },
+      optionalKeys: {
+        type: "array",
+        items: {
+          dataType: "bytes",
+          minLength: 32,
+          maxLength: 32,
         },
-        proofOfPossession: {
-          dataType: 'bytes',
-          fieldNumber: 4,
-          minLength: 96,
-          maxLength: 96
-        }
+        fieldNumber: 3,
+        minItems: 0,
+        maxItems: 64,
+      },
+      signatures: {
+        type: "array",
+        items: {
+          dataType: "bytes",
+          minLength: 64,
+          maxLength: 64,
+        },
+        fieldNumber: 4,
       },
     },
-    'dpos:voteDelegate': {
-      $id: 'lisk/dpos/vote',
-      type: 'object',
-      required: [
-        'votes',
-      ],
+    required: [
+      "numberOfSignatures",
+      "mandatoryKeys",
+      "optionalKeys",
+      "signatures",
+    ],
+  },
+  "dpos:registerDelegate": {
+    $id: "/dpos/command/registerDelegateParams",
+    type: "object",
+    required: ["name", "generatorKey", "blsKey", "proofOfPossession"],
+    properties: {
+      name: {
+        dataType: "string",
+        fieldNumber: 1,
+        minLength: 1,
+        maxLength: 20,
+      },
       generatorKey: {
         dataType: "bytes",
         fieldNumber: 2,
@@ -281,6 +227,80 @@ const moduleCommandSchemas = {
         minLength: 32,
         maxLength: 32,
         fieldNumber: 3,
+      },
+    },
+  },
+  "token:transfer": {
+    $id: "/lisk/transferParams",
+    title: "Transfer transaction params",
+    type: "object",
+    required: ["tokenID", "amount", "recipientAddress", "data"],
+    properties: {
+      tokenID: {
+        dataType: "bytes",
+        fieldNumber: 1,
+        minLength: 8,
+        maxLength: 8,
+      },
+      amount: {
+        dataType: "uint64",
+        fieldNumber: 2,
+      },
+      recipientAddress: {
+        dataType: "bytes",
+        fieldNumber: 3,
+        format: "lisk32",
+      },
+      data: {
+        dataType: "string",
+        fieldNumber: 4,
+        minLength: 0,
+        maxLength: 64,
+      },
+    },
+  },
+  "token:crossChaintransfer": {
+    $id: "/lisk/ccTransferParams",
+    type: "object",
+    required: [
+      "tokenID",
+      "amount",
+      "receivingChainID",
+      "recipientAddress",
+      "data",
+      "messageFee",
+    ],
+    properties: {
+      tokenID: {
+        dataType: "bytes",
+        fieldNumber: 1,
+        minLength: 8,
+        maxLength: 8,
+      },
+      amount: {
+        dataType: "uint64",
+        fieldNumber: 2,
+      },
+      receivingChainID: {
+        dataType: "bytes",
+        fieldNumber: 3,
+        minLength: 4,
+        maxLength: 4,
+      },
+      recipientAddress: {
+        dataType: "bytes",
+        fieldNumber: 4,
+        format: "lisk32",
+      },
+      data: {
+        dataType: "string",
+        fieldNumber: 5,
+        minLength: 0,
+        maxLength: 64,
+      },
+      messageFee: {
+        dataType: "uint64",
+        fieldNumber: 6,
       },
     },
   },

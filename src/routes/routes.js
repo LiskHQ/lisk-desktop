@@ -42,12 +42,6 @@ export default {
     isPrivate: false,
     forbiddenTokens: [],
   },
-  delegateProfile: {
-    path: '/delegates/profile',
-    exact: true,
-    isPrivate: false,
-    forbiddenTokens: [],
-  },
   explorer: {
     path: '/explorer',
     searchParam: 'address',
@@ -151,18 +145,6 @@ export default {
     isPrivate: false,
     forbiddenTokens: [],
   },
-  transactionDetails: {
-    path: '/transactions/details',
-    exact: true,
-    isPrivate: false,
-    forbiddenTokens: [],
-  },
-  allTokens: {
-    path: '/wallet/tokens/all',
-    exact: true,
-    isPrivate: false,
-    forbiddenTokens: [],
-  },
 };
 
 export const modals = {
@@ -172,10 +154,6 @@ export const modals = {
   },
   bookmarks: {
     isPrivate: false,
-    forbiddenTokens: [],
-  },
-  editAccount: {
-    isPrivate: true,
     forbiddenTokens: [],
   },
   editAccount: {
@@ -290,11 +268,11 @@ export const modals = {
     isPrivate: false,
     forbiddenTokens: [],
   },
-  requestView: {
+  connectionSummary: {
     isPrivate: false,
     forbiddenTokens: [],
   },
-  connectionSummary: {
+  RequestView: {
     isPrivate: false,
     forbiddenTokens: [],
   },

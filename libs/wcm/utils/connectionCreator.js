@@ -7,7 +7,7 @@ export let client;
 
 export async function createSignClient() {
   const [, res] = await to(SignClient.init({
-    projectId: process.env.PROJECT_ID,
+    projectId: process.env.PROJECT_ID ?? '8f2a5ab63f54b27471714e81d1a49da3',
     metadata: {
       name: pkg.name,
       description: pkg.description,

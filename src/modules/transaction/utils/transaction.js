@@ -120,7 +120,7 @@ const getDesktopTxAsset = (elementsParams, moduleCommand) => {
 
     case unlock: {
       return {
-        unlockObjects: elementsParams.unlockObjects.map((unlockObject) => ({
+        unlockObjects: elementsParams.unlockObjects.map(unlockObject => ({
           delegateAddress: getBase32AddressFromAddress(unlockObject.delegateAddress),
           amount: convertBigIntToString(unlockObject.amount),
           unvoteHeight: unlockObject.unvoteHeight,
@@ -215,7 +215,7 @@ const getElementsParamsFromJSON = (JSONParams, moduleCommand) => {
 
     case unlock: {
       return {
-        unlockObjects: JSONParams.unlockObjects.map((unlockObject) => ({
+        unlockObjects: JSONParams.unlockObjects.map(unlockObject => ({
           amount: BigInt(convertBigIntToString(unlockObject.amount)),
           delegateAddress: convertStringToBinary(unlockObject.delegateAddress),
           unvoteHeight: unlockObject.unvoteHeight,

@@ -10,7 +10,7 @@ import styles from './blockchainAppDetailsHeader.css';
 const BlockchainAppDetailsWrapper = ({ application, chainAction }) => {
   const { t } = useTranslation();
   const {
-    name, address, serviceUrl, icon, bg,
+    name, address, projectPage, icon, bg,
   } = application.data;
 
   return (
@@ -47,10 +47,10 @@ const BlockchainAppDetailsWrapper = ({ application, chainAction }) => {
             target="_blank"
               // eslint-disable-next-line
               // TODO: this is just a place holder link pending when its part of the response payload from service
-            to={serviceUrl}
+            to={projectPage}
           >
             <Icon name="chainLinkIcon" className={styles.hwWalletIcon} />
-            {t(serviceUrl)}
+            {t(projectPage)}
           </Link>
         </div>
       </Box>

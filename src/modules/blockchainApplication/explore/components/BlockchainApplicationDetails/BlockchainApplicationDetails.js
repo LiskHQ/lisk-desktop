@@ -14,21 +14,14 @@ import Tooltip from 'src/theme/Tooltip';
 import { parseSearchParams, removeThenAppendSearchParamsToUrl } from 'src/utils/searchParams';
 import { useApplicationManagement } from 'src/modules/blockchainApplication/manage/hooks';
 import { usePinBlockchainApplication } from '@blockchainApplication/manage/hooks/usePinBlockchainApplication';
-<<<<<<< HEAD
 import styles from './BlockchainApplicationDetails.css';
-=======
 import { useBlockchainApplicationExplore } from '../../hooks/queries/useBlockchainApplicationExplore';
 import { useBlockchainApplicationMeta } from '../../../manage/hooks/queries/useBlockchainApplicationMeta';
->>>>>>> feature/4034-change-sdk-api
 import defaultBackgroundImage from '../../../../../../setup/react/assets/images/default-chain-background.png';
 import liskLogo from '../../../../../../setup/react/assets/images/LISK.png';
 import BlockchainAppDetailsHeader from '../BlockchainAppDetailsHeader';
 
 const deposit = 5e10;
-<<<<<<< HEAD
-=======
-const backgroundImage = null;
->>>>>>> feature/4034-change-sdk-api
 
 // eslint-disable-next-line max-statements
 const BlockchainApplicationDetails = ({ history, location }) => {
@@ -45,14 +38,8 @@ const BlockchainApplicationDetails = ({ history, location }) => {
   });
   const aggregatedApplicationData = { ...onChainData?.data[0], ...offChainData?.data[0] };
   const { checkPinByChainId, togglePin } = usePinBlockchainApplication();
-<<<<<<< HEAD
-  const {
-    state, lastCertificateHeight, lastUpdated,
-  } = application.data;
-=======
-  const { name, state, lastCertificateHeight, lastUpdated, logo, projectPage } =
+  const { state, lastCertificateHeight, lastUpdated } =
     aggregatedApplicationData;
->>>>>>> feature/4034-change-sdk-api
   const { setApplication } = useApplicationManagement();
 
   const isPinned = checkPinByChainId(chainId);
@@ -96,8 +83,7 @@ const BlockchainApplicationDetails = ({ history, location }) => {
 
   const app = {
     data: {
-      ...application.data,
-      serviceUrl: 'https://lisk.com/',
+      ...aggregatedApplicationData,
       icon: liskLogo,
       bg: defaultBackgroundImage,
     },
@@ -106,7 +92,6 @@ const BlockchainApplicationDetails = ({ history, location }) => {
   return (
     <Dialog hasClose hasBack className={`${styles.dialogWrapper} ${grid.row} ${grid['center-xs']}`}>
       <div className={styles.wrapper}>
-<<<<<<< HEAD
         <BlockchainAppDetailsHeader
           application={app}
           chainAction={(
@@ -150,66 +135,6 @@ const BlockchainApplicationDetails = ({ history, location }) => {
               </span>
             </ValueAndLabel>
           ))}
-=======
-        <div className={styles.avatarContainer}>
-          <img src={logo?.svg || liskLogo} />
-          <img src={backgroundImage || defaultBackgroundImage} />
-        </div>
-        <Box className={styles.detailsWrapper}>
-          <div className={styles.chainNameWrapper}>
-            <span className="chain-name-text">{name}</span>
-            <TertiaryButton className="chain-details-pin-button" onClick={toggleApplicationPin}>
-              <Icon data-testid="pin-button" name={isPinned ? 'pinnedIcon' : 'unpinnedIcon'} />
-            </TertiaryButton>
-          </div>
-          <div className={styles.addressRow}>
-            <a className={`${styles.appLink}`} target="_blank" href={projectPage}>
-              <Icon name="chainLinkIcon" className={styles.hwWalletIcon} />
-              {t(projectPage)}
-            </a>
-          </div>
-          <div className={styles.balanceRow}>
-            <span>{t('Deposited:')}</span>
-            {/* TODO: this is a placeholder value pending when its part of service response */}
-            <span>
-              <TokenAmount val={deposit} /> LSK
-            </span>
-          </div>
-          <Box className={styles.footerDetailsRow}>
-            {footerDetails.map(({ header, content, className }, index) => (
-              <ValueAndLabel
-                key={index}
-                className={styles.detail}
-                label={
-                  <span className={styles.headerText}>
-                    <>
-                      {header.text || header}
-                      {header.toolTipText && (
-                        <Tooltip position="right">
-                          <p>{header.toolTipText}</p>
-                        </Tooltip>
-                      )}
-                    </>
-                  </span>
-                }
-              >
-                <span className={className}>{content}</span>
-              </ValueAndLabel>
-            ))}
-          </Box>
-          {mode === 'addApplication' ? (
-            <Box className={styles.footerButton}>
-              <PrimaryButton
-                size="l"
-                className={`${styles.addButton} add-application-button`}
-                data-testid="add-application-button"
-                onClick={addNewApplication}
-              >
-                {t('Add application to my list')}
-              </PrimaryButton>
-            </Box>
-          ) : null}
->>>>>>> feature/4034-change-sdk-api
         </Box>
         {mode === 'addApplication' ? (
           <Box className={styles.footerButton}>

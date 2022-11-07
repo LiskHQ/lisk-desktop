@@ -32,6 +32,7 @@ if (MOCK_SERVICE_WORKER) {
   worker.start({ onUnhandledRequest: 'bypass' });
 }
 
+// eslint-disable-next-line max-statements
 const App = ({ history }) => {
   const dispatch = useDispatch();
   const [loaded, setLoaded] = useState(false);
@@ -48,7 +49,7 @@ const App = ({ history }) => {
     dispatch(settingsRetrieved());
     dispatch(watchListRetrieved());
     // Initialize client on first render to get default application
-    client.create({ http: 'http://165.227.246.146:9901' }) //@todo we shouldnt create client with hardoced address
+    client.create({ http: 'http://165.227.246.146:9901' }) // @todo we shouldn't create client with hardcoded address
   }, []);
 
   useEffect(() => {
@@ -62,49 +63,49 @@ const App = ({ history }) => {
   const routeObj = Object.values(routes).find((r) => r.path === history.location.pathname) || {};
   return (
     <ConnectionProvider>
-    <ThemeContext.Provider value={theme}>
-      <OfflineWrapper>
-        <DialogHolder history={history} />
-        <ToastContainer
-          position="bottom-right"
-          hideProgressBar
-          draggable
-          newestOnTop
-          closeButton={false}
-          className={styles.toastContainer}
-          toastClassName={styles.toastBody}
-          bodyClassName={styles.toastText}
-        />
-        <NavigationBars
-          isSignInFlow={routeObj.isSigninFlow}
-          location={history.location}
-          history={history}
-        />
-        <main className={`${styles.bodyWrapper} ${loaded ? styles.loaded : ''}`}>
-          <section className="scrollContainer">
-            <FlashMessageHolder />
-            <div className={`${styles.mainContent} ${styles.mainBox}`}>
-              <Switch>
-                {routesList.map((route) => (
-                  <CustomRoute
-                    key={routes[route].path}
-                    route={routes[route]}
-                    path={routes[route].path}
-                    exact={routes[route].exact}
-                    isPrivate={routes[route].isPrivate}
-                    forbiddenTokens={routes[route].forbiddenTokens}
-                    component={routesMap[route]}
-                    history={history}
-                  />
-                ))}
-                <Route path="*" component={NotFound} />
-              </Switch>
-            </div>
-          </section>
-        </main>
-      </OfflineWrapper>
-    </ThemeContext.Provider>
-      <ConnectionProvider>
+      <ThemeContext.Provider value={theme}>
+        <OfflineWrapper>
+          <DialogHolder history={history} />
+          <ToastContainer
+            position="bottom-right"
+            hideProgressBar
+            draggable
+            newestOnTop
+            closeButton={false}
+            className={styles.toastContainer}
+            toastClassName={styles.toastBody}
+            bodyClassName={styles.toastText}
+          />
+          <NavigationBars
+            isSignInFlow={routeObj.isSigninFlow}
+            location={history.location}
+            history={history}
+          />
+          <main className={`${styles.bodyWrapper} ${loaded ? styles.loaded : ''}`}>
+            <section className="scrollContainer">
+              <FlashMessageHolder />
+              <div className={`${styles.mainContent} ${styles.mainBox}`}>
+                <Switch>
+                  {routesList.map((route) => (
+                    <CustomRoute
+                      key={routes[route].path}
+                      route={routes[route]}
+                      path={routes[route].path}
+                      exact={routes[route].exact}
+                      isPrivate={routes[route].isPrivate}
+                      forbiddenTokens={routes[route].forbiddenTokens}
+                      component={routesMap[route]}
+                      history={history}
+                    />
+                  ))}
+                  <Route path="*" component={NotFound} />
+                </Switch>
+              </div>
+            </section>
+          </main>
+        </OfflineWrapper>
+      </ThemeContext.Provider>
+    </ConnectionProvider>
   );
 };
 
