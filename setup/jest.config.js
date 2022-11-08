@@ -150,8 +150,6 @@ module.exports = {
     'src/modules/common/components/bars/topBar/tokenSelector.js',
     'src/modules/block/store/middleware.js',
     'src/modules/network/utils/getNetwork.js',
-    'src/modules/block/utils/getBlockProps.js',
-    'src/modules/block/utils/api/getBlock.js',
     'src/modules/block/utils/api/getBlocks.js',
     'src/modules/transaction/api/index.js',
     'src/modules/transaction/utils/transaction.js',
