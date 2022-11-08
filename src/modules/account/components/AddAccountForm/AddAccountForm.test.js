@@ -1,10 +1,7 @@
 import React from 'react';
-import {
-  createEvent,
-  fireEvent,
-  render,
-  screen,
-} from '@testing-library/react';
+import { createEvent, fireEvent, screen } from '@testing-library/react';
+import { renderWithStore } from 'src/utils/testHelpers';
+import { defaultDerivationPath } from 'src/utils/explicitBipKeyDerivation';
 import AddAccountForm from '.';
 
 jest.mock('react-i18next');
@@ -18,13 +15,17 @@ let accountFormInstance = null;
 
 beforeEach(() => {
   props.onAddAccount.mockReset();
-  accountFormInstance = render(<AddAccountForm {...props} />);
+  accountFormInstance = renderWithStore(AddAccountForm, props, {
+    settings: {},
+  });
 });
 
 describe('Generals', () => {
   it('should render successfully', () => {
     expect(screen.getByText('Add account')).toBeTruthy();
-    expect(screen.getByText('Enter your secret recovery phrase to manage your account.')).toBeTruthy();
+    expect(
+      screen.getByText('Enter your secret recovery phrase to manage your account.')
+    ).toBeTruthy();
     expect(screen.getByText('Continue')).toBeTruthy();
     expect(screen.getByText('Go Back')).toBeTruthy();
 
@@ -37,7 +38,8 @@ describe('Generals', () => {
 
     const pasteEvent = createEvent.paste(inputField, {
       clipboardData: {
-        getData: () => 'below record evolve eye youth post control consider spice swamp hidden easily',
+        getData: () =>
+          'below record evolve eye youth post control consider spice swamp hidden easily',
       },
     });
 
@@ -51,7 +53,8 @@ describe('Generals', () => {
 
     const pasteEvent = createEvent.paste(inputField, {
       clipboardData: {
-        getData: () => 'below record evolve eye youth post control consider spice swamp hidden easily',
+        getData: () =>
+          'below record evolve eye youth post control consider spice swamp hidden easily',
       },
     });
 
@@ -65,7 +68,8 @@ describe('Generals', () => {
 
     const pasteEvent = createEvent.paste(inputField, {
       clipboardData: {
-        getData: () => 'below rord evolve eye youth post control consider spice swamp hidden easily',
+        getData: () =>
+          'below rord evolve eye youth post control consider spice swamp hidden easily',
       },
     });
 
@@ -79,5 +83,21 @@ describe('Generals', () => {
 
     accountFormInstance.rerender(<AddAccountForm {...props} />);
     expect(screen.queryByText('Select Network')).toBeTruthy();
+  });
+
+  it('should render the custom derivation path field with no default value', () => {
+    jest.clearAllMocks();
+    accountFormInstance = renderWithStore(AddAccountForm, props, {
+      settings: { enableCustomDerivationPath: true },
+    });
+
+    expect(accountFormInstance.getByDisplayValue(defaultDerivationPath)).toBeTruthy();
+  });
+
+  it('should render the custom derivation path field with default value', () => {
+    accountFormInstance = renderWithStore(AddAccountForm, props, {
+      settings: { enableCustomDerivationPath: true, customDerivationPath: `m/0/2'` },
+    });
+    expect(screen.getByDisplayValue(`m/0/2'`)).toBeTruthy();
   });
 });

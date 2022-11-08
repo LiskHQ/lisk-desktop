@@ -1,4 +1,3 @@
-// eslint-disable-next-line import/prefer-default-export
 export const mockCommandParametersSchemas = {
   data: [
     {
@@ -234,7 +233,7 @@ export const mockCommandParametersSchemas = {
     },
     {
       moduleCommandID: '00008000:00000000',
-      moduleCommand: 'legacy:reclaimLSK',
+      moduleCommand: 'legacy:reclaim',
       schema: {
         $id: 'lisk/legacy/reclaim',
         type: 'object',

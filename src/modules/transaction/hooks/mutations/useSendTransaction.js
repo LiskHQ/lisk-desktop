@@ -13,7 +13,7 @@ import { METHOD, API_VERSION, API_METHOD } from 'src/const/config';
  *
  * @returns the query object
  */
-// eslint-disable-next-line import/prefer-default-export
+
 export const useSendTransaction = ({ config: customConfig = {}, options } = {}) =>
   useMutation(async (data) => {
     const config = {

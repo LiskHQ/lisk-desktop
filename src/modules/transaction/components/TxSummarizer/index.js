@@ -21,13 +21,17 @@ const TxSummarizer = ({
   wallet,
   t,
   secondPassphraseStored,
-  classNames,
+  className,
   token,
   footerClassName,
   rawTx,
   summaryInfo,
   selectedPriority,
   hasCancel,
+  hasNoTopCancelButton,
+  noFeeStatus,
+  confirmButtonText,
+  cancelButtonText,
 }) => {
   const fee = !(wallet.summary.isMultisignature
     || rawTx.moduleCommand === MODULE_COMMANDS_NAME_MAP.registerMultisignature
@@ -36,18 +40,20 @@ const TxSummarizer = ({
     title: t('Transaction fee'),
     children: t(
       'Transaction fees are required for every transaction to be accepted and forged by the {{network}} network. When the network is busy, transactions with a higher fee are confirmed sooner.',
-      { network: tokenMap[token].label },
+      { network: tokenMap[token].label }
     ),
   };
 
   return (
-    <Box width="medium" className={`${styles.wrapper} ${classNames} summary`}>
+    <Box width="medium" className={`${styles.wrapper} ${className} summary`}>
       {title && (
         <BoxHeader className={`${styles.header} summary-header`}>
-          <TertiaryButton className="cancel-button" onClick={cancelButton.onClick}>
-            <Icon name="arrowLeftTailed" />
-          </TertiaryButton>
-            &nbsp;&nbsp;&nbsp;
+          {!hasNoTopCancelButton ? (
+            <TertiaryButton className="cancel-button" onClick={cancelButton.onClick}>
+              <Icon name="arrowLeftTailed" />
+            </TertiaryButton>
+          ) : null}
+          &nbsp;&nbsp;&nbsp;
           <h2>{title}</h2>
         </BoxHeader>
       )}
@@ -66,17 +72,13 @@ const TxSummarizer = ({
           account={wallet}
           isMultisignature={wallet.summary.isMultisignature}
         />
-        {fee ? (
+        {!noFeeStatus && !!fee && (
           <section>
             <div className={styles.feesWrapper}>
               <div>
                 <label>
                   {t('Priority')}
-                  <Tooltip
-                    title={tooltip.title}
-                    footer={tooltip.footer}
-                    position="right"
-                  >
+                  <Tooltip title={tooltip.title} footer={tooltip.footer} position="right">
                     <p className={styles.tooltipText}>{tooltip.children}</p>
                   </Tooltip>
                 </label>
@@ -85,11 +87,7 @@ const TxSummarizer = ({
               <div>
                 <label>
                   {t('Fees')}
-                  <Tooltip
-                    title={tooltip.title}
-                    footer={tooltip.footer}
-                    position="top"
-                  >
+                  <Tooltip title={tooltip.title} footer={tooltip.footer} position="top">
                     <p className={styles.tooltipText}>{tooltip.children}</p>
                   </Tooltip>
                 </label>
@@ -97,7 +95,7 @@ const TxSummarizer = ({
               </div>
             </div>
           </section>
-        ) : null}
+        )}
       </BoxContent>
       <Footer
         cancelButton={hasCancel && cancelButton}
@@ -105,6 +103,8 @@ const TxSummarizer = ({
         footerClassName={footerClassName}
         account={wallet}
         secondPassphraseStored={secondPassphraseStored}
+        confirmButtonText={confirmButtonText}
+        cancelButtonText={cancelButtonText}
         t={t}
       />
     </Box>

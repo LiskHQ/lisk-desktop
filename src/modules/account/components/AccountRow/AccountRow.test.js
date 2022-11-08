@@ -1,6 +1,7 @@
 import React from 'react';
 import { render } from '@testing-library/react';
 import mockSavedAccounts from '@tests/fixtures/accounts';
+import { truncateAddress } from '@wallet/utils/account';
 import AccountRow from './AccountRow';
 
 jest.mock('react-i18next');
@@ -23,7 +24,7 @@ describe('Select Account Row', () => {
       truncate: true,
     };
     const container = render(<AccountRow {...truncationProps} />);
-    expect(container.getByText('lsk3ay...xfh4d')).toBeTruthy();
+    expect(container.getByText(truncateAddress(mockSavedAccounts[0].metadata.address))).toBeTruthy();
   });
 
   it('Should  list', async () => {

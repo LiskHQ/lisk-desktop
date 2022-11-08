@@ -1,8 +1,17 @@
 import React from 'react';
 import { mount } from 'enzyme';
 import wallets from '@tests/constants/wallets';
+import mockSavedAccounts from '@tests/fixtures/accounts';
+import { useAuth } from '@auth/hooks/queries';
+import { mockAuth } from 'src/modules/auth/__fixtures__';
 import { MODULE_COMMANDS_NAME_MAP } from 'src/modules/transaction/configuration/moduleCommand';
 import Summary from './UnlockBalanceSummary';
+
+const mockedCurrentAccount = mockSavedAccounts[0];
+jest.mock('@account/hooks', () => ({
+  useCurrentAccount: jest.fn(() => [mockedCurrentAccount, jest.fn()]),
+}));
+jest.mock('@auth/hooks/queries');
 
 describe('Locked balance Summary', () => {
   const props = {
@@ -17,13 +26,15 @@ describe('Locked balance Summary', () => {
     },
     nextStep: jest.fn(),
     prevStep: jest.fn(),
-    t: key => key,
+    t: (key) => key,
     wallet: wallets.genesis,
   };
 
   afterEach(() => {
     props.nextStep.mockRestore();
   });
+
+  useAuth.mockReturnValue({ data: mockAuth });
 
   it('renders properly Summary component', () => {
     const wrapper = mount(<Summary {...props} />);

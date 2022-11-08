@@ -1,28 +1,34 @@
 import React, { useMemo } from 'react';
 import { useTranslation } from 'react-i18next';
 import DialogLink from 'src/theme/dialog/link';
+import { selectVoting } from 'src/redux/selectors';
+import { useSelector } from 'react-redux';
 
 import { PrimaryButton, SecondaryButton } from 'src/theme/buttons';
 import { useSentVotes } from '../../hooks/queries';
 
-function DelegateVoteButton({ currentAddress, address, isBanned }) {
+function DelegateVoteButton({ address, isBanned, currentAddress }) {
   const { t } = useTranslation();
+  const voting = useSelector((state) => selectVoting(state));
   const { data: sentVotes, isLoading: sentVotesLoading } = useSentVotes({
-    config: { params: { address: currentAddress } },
+    config: { params: { address } },
   });
 
-  const hasSentVoteToDelegate = useMemo(() => {
-    if (!sentVotes?.data) return false;
+  const voteSentVoteToDelegate = useMemo(() => {
+    const votes = sentVotes?.data?.votes;
+    if (!votes) return false;
 
-    return sentVotes.data.votes.some(({ delegateAddress }) => delegateAddress === address);
-  }, [sentVotes]);
+    return votes.find(({ delegateAddress: dAddress }) => dAddress === address);
+  }, [sentVotes, address, voting]);
+
+  const isEdit = voteSentVoteToDelegate || voting[address];
 
   return (
     <DialogLink component="editVote">
-      {hasSentVoteToDelegate ? (
-        <SecondaryButton disabled={sentVotesLoading || isBanned}>{t('Edit vote')}</SecondaryButton>
+      {isEdit ? (
+        <SecondaryButton disabled={sentVotesLoading || isBanned || !currentAddress}>{t('Edit vote')}</SecondaryButton>
       ) : (
-        <PrimaryButton disabled={sentVotesLoading || isBanned}>{t('Vote delegate')}</PrimaryButton>
+        <PrimaryButton disabled={sentVotesLoading || isBanned || !currentAddress}>{t('Vote delegate')}</PrimaryButton>
       )}
     </DialogLink>
   );

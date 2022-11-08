@@ -1,15 +1,22 @@
 import { act } from 'react-dom/test-utils';
-import { mountWithProps } from 'src/utils/testHelpers';
-import {
-  getTransactionBaseFees,
-} from '@transaction/api';
+import { mountWithCustomRouterAndStore } from 'src/utils/testHelpers';
+import { getTransactionBaseFees } from '@transaction/api';
 import { tokenMap } from '@token/fungible/consts/tokens';
 import useTransactionFeeCalculation from '@transaction/hooks/useTransactionFeeCalculation';
 import { truncateAddress } from '@wallet/utils/account';
 import * as hwManager from '@transaction/utils/hwManager';
 import accounts from '@tests/constants/wallets';
 import flushPromises from '@tests/unit-test-utils/flushPromises';
+import { mockAuth } from 'src/modules/auth/__fixtures__';
+import { useAuth } from 'src/modules/auth/hooks/queries';
+import mockSavedAccounts from '@tests/fixtures/accounts';
 import Summary from '.';
+
+const mockedCurrentAccount = mockSavedAccounts[0];
+jest.mock('@auth/hooks/queries');
+jest.mock('@account/hooks', () => ({
+  useCurrentAccount: jest.fn(() => [mockedCurrentAccount, jest.fn()]),
+}));
 
 jest.mock('@transaction/hooks/useTransactionFeeCalculation');
 jest.mock('@transaction/api');
@@ -44,8 +51,10 @@ describe('Reclaim balance Summary', () => {
   };
   const props = {
     nextStep: jest.fn(),
-    prevStep: jest.fn(),
-    t: key => key,
+    history: {
+      goBack: jest.fn(),
+    },
+    t: (key) => key,
     wallet: wallet.info.LSK,
     token,
     network,
@@ -53,9 +62,11 @@ describe('Reclaim balance Summary', () => {
     selectedPriority: { title: 'Normal', value: 1 },
   };
 
+  useAuth.mockReturnValue({ data: mockAuth });
+
   it('should render summary component', () => {
     // Arrange
-    const wrapper = mountWithProps(Summary, props, state);
+    const wrapper = mountWithCustomRouterAndStore(Summary, props, state);
 
     // Act
     const html = wrapper.html();
@@ -70,12 +81,14 @@ describe('Reclaim balance Summary', () => {
 
   it('should navigate to next page when continue button is clicked', async () => {
     // Arrange
-    const wrapper = mountWithProps(Summary, props, state);
+    const wrapper = mountWithCustomRouterAndStore(Summary, props, state);
     wrapper.find('button.confirm-button').simulate('click');
 
     // Act
     await flushPromises();
-    act(() => { wrapper.update(); });
+    act(() => {
+      wrapper.update();
+    });
 
     // Assert
     expect(props.nextStep).toBeCalledWith({
@@ -87,11 +100,11 @@ describe('Reclaim balance Summary', () => {
         moduleCommand: 'legacy:reclaim',
         nonce: accounts.non_migrated.sequence.nonce,
         sender: {
-          PublicKey: accounts.non_migrated.summary.publicKey,
+          publicKey: accounts.non_migrated.summary.publicKey,
         },
         composedFees: {
-          Transaction: 100000,
-          initiation: 5000000,
+          Transaction: '0.001 LSK',
+          Initialisation: '0.05 LSK',
         },
       },
       actionFunction: props.balanceReclaimed,
@@ -100,30 +113,16 @@ describe('Reclaim balance Summary', () => {
 
   it('should navigate to previous page when cancel button is clicked', async () => {
     // Arrange
-    const wrapper = mountWithProps(Summary, props, state);
+    const wrapper = mountWithCustomRouterAndStore(Summary, props, state);
     wrapper.find('button.cancel-button').simulate('click');
 
     // Act
     await flushPromises();
-    act(() => { wrapper.update(); });
+    act(() => {
+      wrapper.update();
+    });
 
     // Assert
-    expect(props.prevStep).toBeCalledWith({
-      rawTx: {
-        params: {
-          amount: accounts.non_migrated.legacy.balance,
-        },
-        fee: 100000,
-        moduleCommand: 'legacy:reclaim',
-        nonce: accounts.non_migrated.sequence.nonce,
-        sender: {
-          PublicKey: accounts.non_migrated.summary.publicKey,
-        },
-        composedFees: {
-          Transaction: 100000,
-          initiation: 5000000,
-        },
-      },
-    });
+    expect(props.history.goBack).toBeCalledTimes(1);
   });
 });

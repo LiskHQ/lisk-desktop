@@ -14,7 +14,7 @@ import { useCustomQuery } from 'src/modules/common/hooks';
  *
  * @returns the query object
  */
-// eslint-disable-next-line import/prefer-default-export
+
 export const useBlockchainApplicationStatistics = ({
   config: customConfig = {},
   options,

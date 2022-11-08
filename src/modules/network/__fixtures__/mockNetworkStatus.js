@@ -1,8 +1,8 @@
-// eslint-disable-next-line import/prefer-default-export
 export const mockNetworkStatus = {
   data: {
     version: '4.0.0-alpha.0',
     networkVersion: '1.0',
+    chainID: '04000000',
     networkIdentifier: '1212931cc3e3d52f0632a668341d3da38063d6e055afc43ceb4b108b11592ef4',
     lastBlockID: '8b920dfc41cf60ec9b5ef7a31bbd4edc4ac20260e2645b0d8bfead4142d0b11f',
     height: 411,
@@ -26,7 +26,7 @@ export const mockNetworkStatus = {
       { id: '0000000d:00000002', name: 'dpos:unlockToken' },
       { id: '0000000d:00000004', name: 'dpos:updateGeneratorKey' },
       { id: '0000000d:00000001', name: 'dpos:voteDelegate' },
-      { id: '00008000:00000000', name: 'legacy:reclaimLSK' },
+      { id: '00008000:00000000', name: 'legacy:reclaim' },
       { id: '00008000:00000001', name: 'legacy:registerkeys' },
     ],
     network: {

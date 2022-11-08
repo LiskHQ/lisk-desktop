@@ -1,4 +1,3 @@
-// eslint-disable-next-line import/prefer-default-export
 export const regex = {
   address: /^lsk[a-z0-9]{0,38}$/,
   legacyAddress: /^[1-9]\d{0,19}L$/,

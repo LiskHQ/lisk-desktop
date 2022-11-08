@@ -3,11 +3,15 @@
 .modal {
   width: 45%;
   min-width: 638px;
+  max-width: 690px;
   background: var(--color-white);
   border-radius: var(--border-radius-box);
-  position: absolute;
-  top: 0;
-  left: 216px;
+}
+
+.confirmModal {
+  width: 371px;
+  background: var(--color-white);
+  border-radius: var(--border-radius-box);
 }
 
 .toggleIcon {

@@ -1,9 +1,4 @@
 export default {
-  addAccount: {
-    path: '/add-account',
-    isPrivate: false,
-    forbiddenTokens: [],
-  },
   addAccountBySecretRecovery: {
     path: '/account/add/secret-recovery',
     isPrivate: false,
@@ -59,13 +54,13 @@ export default {
     isPrivate: false,
     forbiddenTokens: [],
   },
-  login: {
-    path: '/login',
-    isPrivate: false,
-    isSigninFlow: true,
-    exact: true,
-    forbiddenTokens: [],
-  },
+  // login: {
+  //   path: '/login',
+  //   isPrivate: false,
+  //   isSigninFlow: true,
+  //   exact: true,
+  //   forbiddenTokens: [],
+  // },
   backupRecoveryPhraseFlow: {
     path: '/account/backup-recovery-phrase',
     isPrivate: true,
@@ -144,6 +139,12 @@ export default {
     isPrivate: false,
     forbiddenTokens: [],
   },
+  sentVotes: {
+    path: '/delegates/profile/votes',
+    exact: true,
+    isPrivate: false,
+    forbiddenTokens: [],
+  },
 };
 
 export const modals = {
@@ -177,10 +178,6 @@ export const modals = {
   },
   registerDelegate: {
     isPrivate: true,
-    forbiddenTokens: [],
-  },
-  search: {
-    isPrivate: false,
     forbiddenTokens: [],
   },
   newRelease: {
@@ -271,11 +268,11 @@ export const modals = {
     isPrivate: false,
     forbiddenTokens: [],
   },
-  requestView: {
+  connectionSummary: {
     isPrivate: false,
     forbiddenTokens: [],
   },
-  connectionSummary: {
+  RequestView: {
     isPrivate: false,
     forbiddenTokens: [],
   },

@@ -15,6 +15,8 @@ import { parseSearchParams, removeThenAppendSearchParamsToUrl } from 'src/utils/
 import { useApplicationManagement } from 'src/modules/blockchainApplication/manage/hooks';
 import { usePinBlockchainApplication } from '@blockchainApplication/manage/hooks/usePinBlockchainApplication';
 import styles from './BlockchainApplicationDetails.css';
+import { useBlockchainApplicationExplore } from '../../hooks/queries/useBlockchainApplicationExplore';
+import { useBlockchainApplicationMeta } from '../../../manage/hooks/queries/useBlockchainApplicationMeta';
 import defaultBackgroundImage from '../../../../../../setup/react/assets/images/default-chain-background.png';
 import liskLogo from '../../../../../../setup/react/assets/images/LISK.png';
 import BlockchainAppDetailsHeader from '../BlockchainAppDetailsHeader';
@@ -22,15 +24,22 @@ import BlockchainAppDetailsHeader from '../BlockchainAppDetailsHeader';
 const deposit = 5e10;
 
 // eslint-disable-next-line max-statements
-const BlockchainApplicationDetails = ({ history, location, application }) => {
+const BlockchainApplicationDetails = ({ history, location }) => {
   const { t } = useTranslation();
   const active = useSelector(selectActiveToken);
   const chainId = parseSearchParams(location.search).chainId;
   const mode = parseSearchParams(location.search).mode;
+  // @todo: Loading and error states will be handled in #4539
+  const { data: onChainData } = useBlockchainApplicationExplore({
+    config: { params: { chainID: chainId } },
+  });
+  const { data: offChainData } = useBlockchainApplicationMeta({
+    config: { params: { chainID: chainId } },
+  });
+  const aggregatedApplicationData = { ...onChainData?.data[0], ...offChainData?.data[0] };
   const { checkPinByChainId, togglePin } = usePinBlockchainApplication();
-  const {
-    state, lastCertificateHeight, lastUpdated,
-  } = application.data;
+  const { state, lastCertificateHeight, lastUpdated } =
+    aggregatedApplicationData;
   const { setApplication } = useApplicationManagement();
 
   const isPinned = checkPinByChainId(chainId);
@@ -38,8 +47,12 @@ const BlockchainApplicationDetails = ({ history, location, application }) => {
     togglePin(chainId);
   };
   const addNewApplication = () => {
-    setApplication(application.data);
-    removeThenAppendSearchParamsToUrl(history, { modal: 'addApplicationSuccess', chainId: application.data.chainID }, ['modal', 'chainId', 'mode']);
+    setApplication(aggregatedApplicationData);
+    removeThenAppendSearchParamsToUrl(
+      history,
+      { modal: 'addApplicationSuccess', chainId: aggregatedApplicationData.chainID },
+      ['modal', 'chainId', 'mode']
+    );
   };
 
   const footerDetails = [
@@ -70,8 +83,7 @@ const BlockchainApplicationDetails = ({ history, location, application }) => {
 
   const app = {
     data: {
-      ...application.data,
-      serviceUrl: 'https://lisk.com/',
+      ...aggregatedApplicationData,
       icon: liskLogo,
       bg: defaultBackgroundImage,
     },

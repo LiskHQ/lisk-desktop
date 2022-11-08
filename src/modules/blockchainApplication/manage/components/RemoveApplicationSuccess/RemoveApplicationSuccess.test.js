@@ -17,11 +17,11 @@ describe('BlockchainApplicationDetails', () => {
 
   it('should display properly', () => {
     const {
-      name,
+      chainName,
     } = props.sharedData.application.data;
 
     expect(screen.getByText('Application has now been removed')).toBeTruthy();
-    expect(screen.getByText(name)).toBeTruthy();
+    expect(screen.getByText(chainName)).toBeTruthy();
   });
 
   it('should navigate to the dashboard', () => {

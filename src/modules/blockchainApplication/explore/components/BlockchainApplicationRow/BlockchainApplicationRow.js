@@ -68,7 +68,7 @@ const BlockchainApplicationRow = ({
         data={{ chainId: application.chainID }}
       >
         <Pin isPinned={application.isPinned} onTogglePin={handleTogglePin} />
-        <ChainName title={application.name} logo={liskLogo} />
+        <ChainName title={application.chainName} logo={liskLogo} />
         <ChainId id={application.chainID} />
         <ChainStatus status={application.state} t={t} />
         <DepositAmount amount={application.depositedLsk} />

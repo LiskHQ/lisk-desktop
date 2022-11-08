@@ -38,6 +38,7 @@ const List = ({
       {data.map((item, index) => (
         <Row
           key={getUniqueKey(item, index, iterationKey)}
+          index={index}
           data={item}
           className={styles.row}
           {...additionalRowProps}

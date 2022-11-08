@@ -4,7 +4,7 @@ import { useAuth } from '@auth/hooks/queries';
 import { useCurrentAccount } from '@account/hooks';
 import { Transaction } from '../utils/transactions';
 
-// eslint-disable-next-line import/prefer-default-export
+
 export const useCreateTransaction = ({
   module = null,
   command = null,

@@ -2,7 +2,6 @@ import { rest } from 'msw';
 import { API_VERSION, LIMIT } from 'src/const/config';
 import { mockBlockchainAppMeta } from '@blockchainApplication/manage/__fixtures__';
 
-// eslint-disable-next-line import/prefer-default-export
 export const blockchainApp = rest.get(
   `*/api/${API_VERSION}/blockchain/apps/meta`,
   async (req, res, ctx) => {

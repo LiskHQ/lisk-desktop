@@ -66,7 +66,7 @@ class SelectDevice extends React.Component {
           ))}
         </div>
 
-        <Link to={routes.login.path}>
+        <Link to={routes.manageAccounts.path}>
           <TertiaryButton>{t('Go back')}</TertiaryButton>
         </Link>
       </div>
