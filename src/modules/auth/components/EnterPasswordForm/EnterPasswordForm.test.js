@@ -14,10 +14,12 @@ jest.mock('@account/hooks', () => ({
   useCurrentAccount: jest.fn(() => (
     [mockedCurrentAccount, jest.fn()]
   )),
+  useAccounts: jest.fn(() => ({
+    getAccountByAddress: jest.fn(() => mockedCurrentAccount),
+  })),
 }));
 
 describe('EnterPasswordForm', () => {
-  let wrapper;
   const props = {
     onEnterPasswordSuccess: jest.fn(),
     nextStep: jest.fn(),
@@ -26,15 +28,33 @@ describe('EnterPasswordForm', () => {
 
   beforeEach(() => {
     jest.clearAllMocks();
-    wrapper = render(<EnterPasswordForm {...props} />);
   });
 
   it('should display properly', () => {
+    render(<EnterPasswordForm {...props} />);
     expect(screen.queryByText(mockedCurrentAccount.metadata.name));
     expect(screen.queryByText(mockedCurrentAccount.metadata.address));
   });
 
+  it('should render with any given encryptedAccount', async () => {
+    const encryptedAccount = {
+      ...mockedCurrentAccount,
+      metadata: {
+        ...mockedCurrentAccount.metadata,
+        name: 'New account',
+      }
+    };
+    const newProps = {
+      ...props,
+      encryptedAccount,
+    };
+    render(<EnterPasswordForm {...newProps} />);
+    expect(screen.queryByText('New account'));
+    expect(screen.queryByText(mockedCurrentAccount.metadata.address));
+  });
+
   it('should call onEnterPasswordSuccess when onSubmit click', async () => {
+    const wrapper = render(<EnterPasswordForm {...props} />);
     const privateKey = 'privateKey';
     decryptAccount.mockImplementation(() => (
       {
@@ -65,6 +85,7 @@ describe('EnterPasswordForm', () => {
   });
 
   it('should display error', async () => {
+    const wrapper = render(<EnterPasswordForm {...props} />);
     const error = 'Unable to decrypt account. Please check your password';
     decryptAccount.mockImplementation(() => (
       {

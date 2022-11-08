@@ -1,0 +1,103 @@
+@import '../../../../../../setup/react/app/mixins.css';
+
+.dialogWrapper {
+  border: none;
+  flex-flow: column nowrap;
+
+  & > span {
+    color: white !important;
+  }
+}
+
+.wrapper {
+  width: 100%;
+  box-sizing: border-box;
+  padding: 24px;
+  overflow-y: scroll;
+
+  & .section {
+    border-top: solid 1px var(--color-platinum);
+    padding: 24px 0;
+  }
+
+  & .twoColumn {
+    display: flex;
+    flex-flow: row wrap;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+
+    & > * {
+      flex-basis: 50%;
+    }
+  }
+
+  & .label {
+    font-weight: 400;
+    font-size: 14px;
+    line-height: 16.1px;
+    color: var(--color-slate-gray);
+  }
+
+  & .labeledValue {
+    & > span:first-child {
+      font-weight: 400;
+      font-size: 14px;
+      line-height: 16.1px;
+      color: var(--color-slate-gray);
+    }
+  }
+
+  & .accountSelector {
+    width: 100%;
+
+    & .accountsList {
+      margin-top: 24px;
+    }
+
+    & .accountWrapper {
+      display: flex;
+      flex-flow: row nowrap;
+      row-gap: 10px;
+      align-items: center;
+      cursor: pointer;
+
+      & > .checkbox {
+        padding: 0 15px 0 0;
+      }
+
+      & > div {
+        pointer-events: none;
+      }
+    }
+  }
+
+  & .permissions {
+    text-align: left;
+
+    & > span {
+      margin-bottom: 10px;
+      display: inline-block;
+    }
+
+    & .items {
+      width: 100%;
+
+      & > * {
+        width: 100%;
+        display: inline-block;
+      }
+    }
+  }
+
+  & footer.section {
+    display: flex;
+    flex-flow: row nowrap;
+    align-items: center;
+    justify-content: space-between;
+
+    & button {
+      flex-basis: calc(50% - 10px);
+    }
+  }
+}

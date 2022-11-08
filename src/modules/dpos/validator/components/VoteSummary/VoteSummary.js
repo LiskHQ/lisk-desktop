@@ -78,7 +78,9 @@ const VoteSummary = ({
         selectedPriority={selectedPriority}
       >
         <div className={styles.headerContainer}>
-          <header>{t('Voting Summary')}</header>
+          <header>
+            {t('Voting Summary')}
+          </header>
           <VoteStats
             t={t}
             heading={t('Voting Summary')}

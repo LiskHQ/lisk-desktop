@@ -11,6 +11,9 @@ jest.mock('@account/hooks/useDeprecatedAccount', () => ({
 }));
 jest.mock('lodash.debounce');
 jest.mock('@transaction/api');
+jest.mock('@libs/wcm/hooks/useSession', () => ({
+  respond: jest.fn(),
+}));
 
 getTransactionBaseFees.mockResolvedValue({
   Low: 0,

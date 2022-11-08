@@ -111,11 +111,16 @@ export const illustrations = {
   addApplicationSuccess,
 };
 
-const Illustration = ({ name, className, noTheme }) => {
+const Illustration = ({ name, className, noTheme, ...props }) => {
   const theme = useTheme();
-  const themed =
-    theme === 'dark' && !noTheme && illustrations[`${name}Dark`] ? `${name}Dark` : name;
-  return <img src={illustrations[themed]} className={className} />;
+  const themed = theme === 'dark' && !noTheme && illustrations[`${name}Dark`] ? `${name}Dark` : name;
+  return (
+    <img
+      src={illustrations[themed]}
+      className={className}
+      {...props}
+    />
+  );
 };
 
 Illustration.propTypes = {

@@ -27,7 +27,7 @@ const AddAccountBySecretRecovery = ({ history, login }) => {
   };
 
   const onPasswordSetComplete = () => {
-    login(recoveryPhrase); // Todo this login method is deprecated
+    login(recoveryPhrase); // @todo this login method is deprecated
     history.push(routes.dashboard.path);
   };
 

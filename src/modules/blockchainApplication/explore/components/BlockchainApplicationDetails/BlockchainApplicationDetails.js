@@ -1,29 +1,32 @@
 import React from 'react';
 import { useTranslation } from 'react-i18next';
 import moment from 'moment';
+import Dialog from '@theme/dialog/dialog';
 import Box from 'src/theme/box';
+import { useSelector } from 'react-redux';
+import { selectActiveToken } from 'src/redux/selectors';
 import TokenAmount from '@token/fungible/components/tokenAmount';
 import ValueAndLabel from 'src/modules/transaction/components/TransactionDetails/valueAndLabel';
 import { PrimaryButton, TertiaryButton } from 'src/theme/buttons';
 import grid from 'flexboxgrid/dist/flexboxgrid.css';
-import Dialog from '@theme/dialog/dialog';
 import Icon from 'src/theme/Icon';
 import Tooltip from 'src/theme/Tooltip';
 import { parseSearchParams, removeThenAppendSearchParamsToUrl } from 'src/utils/searchParams';
 import { useApplicationManagement } from 'src/modules/blockchainApplication/manage/hooks';
 import { usePinBlockchainApplication } from '@blockchainApplication/manage/hooks/usePinBlockchainApplication';
+import styles from './BlockchainApplicationDetails.css';
 import { useBlockchainApplicationExplore } from '../../hooks/queries/useBlockchainApplicationExplore';
 import { useBlockchainApplicationMeta } from '../../../manage/hooks/queries/useBlockchainApplicationMeta';
 import defaultBackgroundImage from '../../../../../../setup/react/assets/images/default-chain-background.png';
 import liskLogo from '../../../../../../setup/react/assets/images/LISK.png';
-import styles from './BlockchainApplicationDetails.css';
+import BlockchainAppDetailsHeader from '../BlockchainAppDetailsHeader';
 
 const deposit = 5e10;
-const backgroundImage = null;
 
 // eslint-disable-next-line max-statements
 const BlockchainApplicationDetails = ({ history, location }) => {
   const { t } = useTranslation();
+  const active = useSelector(selectActiveToken);
   const chainId = parseSearchParams(location.search).chainId;
   const mode = parseSearchParams(location.search).mode;
   // @todo: Loading and error states will be handled in #4539
@@ -35,7 +38,7 @@ const BlockchainApplicationDetails = ({ history, location }) => {
   });
   const aggregatedApplicationData = { ...onChainData?.data[0], ...offChainData?.data[0] };
   const { checkPinByChainId, togglePin } = usePinBlockchainApplication();
-  const { name, state, lastCertificateHeight, lastUpdated, logo, projectPage } =
+  const { state, lastCertificateHeight, lastUpdated } =
     aggregatedApplicationData;
   const { setApplication } = useApplicationManagement();
 
@@ -78,68 +81,73 @@ const BlockchainApplicationDetails = ({ history, location }) => {
     },
   ];
 
+  const app = {
+    data: {
+      ...aggregatedApplicationData,
+      icon: liskLogo,
+      bg: defaultBackgroundImage,
+    },
+  };
+
   return (
     <Dialog hasClose hasBack className={`${styles.dialogWrapper} ${grid.row} ${grid['center-xs']}`}>
       <div className={styles.wrapper}>
-        <div className={styles.avatarContainer}>
-          <img src={logo?.svg || liskLogo} />
-          <img src={backgroundImage || defaultBackgroundImage} />
-        </div>
-        <Box className={styles.detailsWrapper}>
-          <div className={styles.chainNameWrapper}>
-            <span className="chain-name-text">{name}</span>
+        <BlockchainAppDetailsHeader
+          application={app}
+          chainAction={(
             <TertiaryButton className="chain-details-pin-button" onClick={toggleApplicationPin}>
               <Icon data-testid="pin-button" name={isPinned ? 'pinnedIcon' : 'unpinnedIcon'} />
             </TertiaryButton>
-          </div>
-          <div className={styles.addressRow}>
-            <a className={`${styles.appLink}`} target="_blank" href={projectPage}>
-              <Icon name="chainLinkIcon" className={styles.hwWalletIcon} />
-              {t(projectPage)}
-            </a>
-          </div>
-          <div className={styles.balanceRow}>
-            <span>{t('Deposited:')}</span>
-            {/* TODO: this is a placeholder value pending when its part of service response */}
-            <span>
-              <TokenAmount val={deposit} /> LSK
+          )}
+        />
+        <div className={styles.balanceRow}>
+          <ValueAndLabel
+            label={t('Deposited:')}
+            direction="horizontal"
+          >
+            <span className={styles.value}>
+              <TokenAmount val={deposit} token={active} />
             </span>
-          </div>
-          <Box className={styles.footerDetailsRow}>
-            {footerDetails.map(({ header, content, className }, index) => (
-              <ValueAndLabel
-                key={index}
-                className={styles.detail}
-                label={
-                  <span className={styles.headerText}>
-                    <>
-                      {header.text || header}
-                      {header.toolTipText && (
-                        <Tooltip position="right">
-                          <p>{header.toolTipText}</p>
-                        </Tooltip>
-                      )}
-                    </>
-                  </span>
-                }
-              >
-                <span className={className}>{content}</span>
-              </ValueAndLabel>
-            ))}
-          </Box>
-          {mode === 'addApplication' ? (
-            <Box className={styles.footerButton}>
-              <PrimaryButton
-                size="l"
-                className={`${styles.addButton} add-application-button`}
-                data-testid="add-application-button"
-                onClick={addNewApplication}
-              >
-                {t('Add application to my list')}
-              </PrimaryButton>
-            </Box>
-          ) : null}
+          </ValueAndLabel>
+        </div>
+        <Box className={styles.footerDetailsRow}>
+          {footerDetails.map(({ header, content, className }, index) => (
+            <ValueAndLabel
+              key={index}
+              className={styles.detail}
+              label={(
+                <span className={styles.headerText}>
+                  <>
+                    {header.text || header}
+                    {header.toolTipText && (
+                      <Tooltip position="right">
+                        <p>
+                          {header.toolTipText}
+                        </p>
+                      </Tooltip>
+                    )}
+                  </>
+                </span>
+              )}
+            >
+              <span className={className}>
+                {content}
+              </span>
+            </ValueAndLabel>
+          ))}
         </Box>
+        {mode === 'addApplication' ? (
+          <Box className={styles.footerButton}>
+            <PrimaryButton
+              size="l"
+              className={`${styles.addButton} add-application-button`}
+              data-testid="add-application-button"
+              onClick={addNewApplication}
+            >
+              {t('Add application to my list')}
+            </PrimaryButton>
+          </Box>
+        ) : null}
       </div>
     </Dialog>
   );
