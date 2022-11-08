@@ -4,7 +4,7 @@ import { Client } from 'src/utils/api/client';
 
 export const useTransferableTokens = (application) => {
   const client = useRef(new Client());
-  client.current.create(application?.serviceURLs[0]);
+  client.current.create(application?.serviceURLs?.[0]);
 
   const {
     data: { data: myTokens = [] } = {},
@@ -19,16 +19,26 @@ export const useTransferableTokens = (application) => {
   return useMemo(() => {
     const isSuccess = isTokensSuccess && isSupportedSuccess;
     const isLoading = isTokenLoading || isSupportLoading;
-    const isSupportAllToken = supportedTokens?.length === 0;
-    const tokens = isSupportAllToken
-      ? myTokens
+    const isSupportAllToken = supportedTokens?.isSupportAllToken;
+    const exactTokensSupported = !isSuccess
+      ? []
       : myTokens.filter((token) =>
-          supportedTokens?.find((supportedToken) => supportedToken.tokenID === token.tokenID)
+          supportedTokens?.exactTokenIDs.find((tokenID) => tokenID === token.tokenID)
         );
+    const patternTokensSupported = !isSuccess
+      ? []
+      : supportedTokens?.patternTokenIDs
+          .map((pattern) => {
+            const chainID = pattern.slice(0, 8);
+            return myTokens.filter((token) => chainID === token.tokenID.slice(0, 8));
+          })
+          .flatMap((res) => res);
+    const supportedAppTokens = [...(patternTokensSupported || []), ...exactTokensSupported];
+    const tokens = isSupportAllToken ? myTokens : Array.from(new Set(supportedAppTokens));
     return {
       isLoading,
       isSuccess,
       data: isSuccess ? tokens : [],
     };
-  }, [isTokensSuccess, isSupportedSuccess, isTokenLoading, isSupportLoading]);
+  }, [isTokensSuccess, isSupportedSuccess, isTokenLoading, isSupportLoading, application]);
 };

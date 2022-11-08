@@ -18,7 +18,11 @@ const mockCurrentAccount = mockSavedAccounts[0];
 
 describe('useTransferableTokens hook', () => {
   jest.spyOn(accountHooks, 'useCurrentAccount').mockReturnValue([mockCurrentAccount]);
-  const mockAllTokens = [{ tokenID: '1' }, { tokenID: '2' }, { tokenID: '3' }];
+  const mockAllTokens = [
+    { tokenID: '0000000100000000' },
+    { tokenID: '0000000200000000' },
+    { tokenID: '0000000300000000' },
+  ];
   it('data should be an array', async () => {
     const mockResponse = { data: undefined, isLoading: true, isSuccess: false };
     jest.spyOn(queries, 'useTokensBalance').mockReturnValue(mockResponse);
@@ -63,7 +67,19 @@ describe('useTransferableTokens hook', () => {
 
   it('should return all supported token if supported token is empty array', async () => {
     const mockTokensBalance = { data: { data: mockAllTokens }, isLoading: false, isSuccess: true };
-    const mockTokensSupported = { data: { data: { supportedTokens: [] } }, isLoading: false, isSuccess: true };
+    const mockTokensSupported = {
+      data: {
+        data: {
+          supportedTokens: {
+            isSupportAllToken: true,
+            exactTokenIDs: [],
+            patternTokenIDs: [],
+          },
+        },
+      },
+      isLoading: false,
+      isSuccess: true,
+    };
     jest.spyOn(queries, 'useTokensBalance').mockReturnValue(mockTokensBalance);
     jest.spyOn(queries, 'useTokensSupported').mockReturnValue(mockTokensSupported);
     const { result } = renderHook(() => useTransferableTokens(), { wrapper });
@@ -72,10 +88,18 @@ describe('useTransferableTokens hook', () => {
   });
 
   it('should return filter supported token', async () => {
-    const mockSupportedToken = mockAllTokens.slice(1, 2);
+    const mockSupportedToken = [mockAllTokens[0], mockAllTokens[2]];
     const mockTokensBalance = { data: { data: mockAllTokens }, isLoading: false, isSuccess: true };
     const mockTokensSupported = {
-      data: { data: {supportedTokens: mockSupportedToken} },
+      data: {
+        data: {
+          supportedTokens: {
+            isSupportAllToken: false,
+            exactTokenIDs: ['0000000100000000', '0000000300000000'],
+            patternTokenIDs: ['00000020******'],
+          },
+        },
+      },
       isLoading: false,
       isSuccess: true,
     };
