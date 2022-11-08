@@ -1,0 +1,27 @@
+.wrapper {
+  width: 400px;
+  text-align: center;
+  padding: 0 0 24px 0;
+
+  & h3 {
+    font-weight: 700;
+    line-height: 32px;
+    margin: 0;
+  }
+
+  & h6 {
+    line-height: 18px;
+    color: var(--color-ultramarine-blue);
+    margin: var(--vertical-padding-m) auto;
+
+    &.error {
+      color: var(--color-red);
+    }
+  }
+
+  & span {
+    font-weight: 400;
+    font-size: 16px;
+    line-height: 20px;
+  }
+}

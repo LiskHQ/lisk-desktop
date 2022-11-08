@@ -4,6 +4,9 @@ import TxBroadcaster from '@transaction/components/TxBroadcaster';
 import accounts from '@tests/constants/wallets';
 import Status from './status';
 
+jest.mock('@libs/wcm/hooks/useSession', () => ({
+  respond: jest.fn(),
+}));
 describe('Sign Multisignature Tx Status component', () => {
   const props = {
     t: (str, dict) => (dict ? str.replace('{{errorMessage}}', dict.errorMessage) : str),

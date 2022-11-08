@@ -6,6 +6,16 @@ import DialogHolder from 'src/theme/dialog/holder';
 import FlashMessageHolder from 'src/theme/flashMessage/holder';
 import analyticsUtil from './analytics';
 
+jest.mock('@walletconnect/utils', () => ({
+  getSdkError: jest.fn(str => str),
+}));
+jest.mock('@libs/wcm/utils/connectionCreator', () => ({
+  createSignClient: jest.fn(() => Promise.resolve()),
+  client: {
+    pair: jest.fn(),
+  },
+}));
+
 describe.skip('Analytics Util', () => {
   let props;
 

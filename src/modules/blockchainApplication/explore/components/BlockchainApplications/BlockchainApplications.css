@@ -19,6 +19,7 @@
 
 .content {
   flex: 1;
+  padding-top: 20px;
 }
 
 .sideBar {

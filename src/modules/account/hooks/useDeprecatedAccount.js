@@ -1,43 +1,51 @@
 /* istanbul ignore file */
 import { useEffect, useState } from 'react';
-import { useDispatch } from 'react-redux';
 import { useDelegates, useSentVotes, useUnlocks } from '@dpos/validator/hooks/queries';
 import { useAuth } from '@auth/hooks/queries';
 import { useLegacy } from '@legacy/hooks/queries';
+import { useDispatch } from 'react-redux';
 import { useTokensBalance } from '@token/fungible/hooks/queries';
 import authActionTypes from '@auth/store/actionTypes';
 import { useCurrentAccount } from './useCurrentAccount';
 
-// eslint-disable-next-line max-statements, complexity
-export const useDeprecatedAccount = () => {
+const defaultAccount = {
+  summary: {
+    address: '',
+    publicKey: '',
+    legacyAddress: '',
+    // @todo Replace mock balance value once we have the balance in the account store
+    balance: '10000000000000',
+    username: '',
+    isMigrated: true,
+    isDelegate: false,
+    isMultisignature: false,
+  },
+  // @todo same here.
+  token: {
+    balance: '10000000000000',
+    tokenID: '00000000',
+  },
+  sequence: {
+    nonce: '0',
+  },
+  keys: {
+    numberOfSignatures: 0,
+    mandatoryKeys: [],
+    optionalKeys: [],
+  },
+  dpos: {
+    delegate: {},
+    sentVotes: [],
+    unlocking: [],
+  },
+};
+
+// eslint-disable-next-line import/prefer-default-export, complexity, max-statements
+export const useDeprecatedAccount = (accountInfo) => {
   const [currentAccount] = useCurrentAccount();
   const dispatch = useDispatch();
-  const { pubkey, address } = currentAccount.metadata;
-  const [account, setAccount] = useState({
-    summary: {
-      address,
-      publicKey: '',
-      legacyAddress: '',
-      // balance: @todo account has multiple balance now
-      username: '',
-      isMigrated: true,
-      isDelegate: false,
-      isMultisignature: false,
-    },
-    sequence: {
-      nonce: '0',
-    },
-    keys: {
-      numberOfSignatures: 0,
-      mandatoryKeys: [],
-      optionalKeys: [],
-    },
-    dpos: {
-      delegate: {},
-      sentVotes: [],
-      unlocking: [],
-    },
-  });
+  const { pubkey, address } = accountInfo || currentAccount.metadata || {};
+  const [account, setAccount] = useState(defaultAccount);
 
   const {
     data: sentVotes,
@@ -70,6 +78,7 @@ export const useDeprecatedAccount = () => {
       ...state,
       summary: {
         ...state.summary,
+        address,
         publicKey: auth?.meta?.publicKey || pubkey,
         username: auth?.meta?.name || '',
         isMultisignature: auth?.data?.numberOfSignatures > 1,
@@ -153,9 +162,9 @@ export const useDeprecatedAccount = () => {
         legacyAddress: legacy?.data?.legacyAddress,
       },
       ...(legacy?.data && {legacy: {
-        address: legacy.data.legacyAddress,
-        balance: legacy.data.balance,
-      }}),
+          address: legacy.data.legacyAddress,
+          balance: legacy.data.balance,
+        }}),
     }));
   }, [legacy, isLegacySuccess]);
 

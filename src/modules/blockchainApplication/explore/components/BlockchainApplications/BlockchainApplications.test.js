@@ -6,6 +6,18 @@ import { useBlockchainApplicationStatistics } from '../../hooks/queries/useBlock
 import { mockBlockchainApp, mockBlockchainAppStatistics } from '../../__fixtures__';
 import BlockchainApplications from './BlockchainApplications';
 
+jest.mock('@walletconnect/utils', () => ({
+  getSdkError: jest.fn(str => str),
+}));
+jest.mock('@libs/wcm/utils/connectionCreator', () => ({
+  createSignClient: jest.fn(() => Promise.resolve()),
+  client: {
+    pair: jest.fn(),
+  },
+}));
+
+jest.useFakeTimers();
+jest.mock('@blockchainApplication/manage/hooks/usePinBlockchainApplication');
 const mockTogglePin = jest.fn();
 const mockedPins = [mockBlockchainApp.data[0].chainID];
 const mockApplyFilters = jest.fn();
@@ -53,11 +65,12 @@ describe('BlockchainApplications', () => {
   });
 
   it('should display properly', () => {
-    expect(screen.getByText('Name')).toBeTruthy();
+    expect(screen.queryAllByText('name')).toBeTruthy();
     expect(screen.getByText('Chain ID')).toBeTruthy();
     expect(screen.getByText('Status')).toBeTruthy();
     expect(screen.getByText('LSK deposited')).toBeTruthy();
-    expect(screen.getByText('Applications')).toBeTruthy();
+    expect(screen.getByText('All applications')).toBeTruthy();
+    expect(screen.getByText('Connections')).toBeTruthy();
 
     expect(screen.getByText('Total Supply')).toBeTruthy();
     expect(screen.getByText('Staked')).toBeTruthy();

@@ -1,0 +1,18 @@
+.dialogWrapper {
+  border: none;
+}
+
+.wrapper {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  background: transparent;
+  width: 100%;
+  height: auto;
+
+  & > div > header {
+    padding-left: var(--horizontal-padding-l) !important;
+    padding-right: var(--horizontal-padding-l) !important;
+  }
+}
