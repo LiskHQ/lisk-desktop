@@ -203,8 +203,7 @@ export const multisigTransactionSigned = ({
     state.network.networks.LSK.moduleCommandSchemas[formProps.moduleCommand],
     state.network.networks.LSK.chainID,
     privateKey,
-  );
-
+  );  
   if (!error) {
     dispatch({
       type: actionTypes.transactionDoubleSigned,

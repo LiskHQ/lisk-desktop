@@ -28,26 +28,23 @@ const TxSignatureCollector = ({
   prevStep,
   statusInfo,
   transactionDoubleSigned,
-  // signatureStatus,
-  // signatureSkipped,
   fees,
   selectedPriority,
 }) => {
-  const [{ metadata: { address, pubkey } = {} }] = useCurrentAccount();
+  const [sender] = useCurrentAccount();
   const { data: account, isLoading: isGettingAuthData } = useAuth({
-    config: { params: { address } },
+    config: { params: { address: sender.metadata.address } },
   });
 
   const deviceType = getDeviceType(account.hwInfo?.deviceModel);
   const dispatch = useDispatch();
-  const isTransactionAuthor = transactionJSON.senderPublicKey === address?.metadata?.pubkey;
+  const isTransactionAuthor = transactionJSON.senderPublicKey === sender.metadata.pubkey;
   const isAuthorAccountMultisignature =
     [...account?.data?.mandatoryKeys, ...account?.data?.optionalKeys].length > 0; // account.info.LSK.summary.isMultisignature;
   // const isSignerAccountMultisignature = sender.data?.keys.numberOfSignatures > 0;
   const moduleCommand = joinModuleAndCommand(transactionJSON);
   const isRegisterMultisignature =
     moduleCommand === MODULE_COMMANDS_NAME_MAP.registerMultisignature;
-  const sender = useCurrentAccount();
 
   const txVerification = (privateKey = undefined, publicKey = undefined) => {
     /**
@@ -84,7 +81,7 @@ const TxSignatureCollector = ({
         publicKey
       );
     }
-  
+
     return multisigTransactionSigned({
       formProps,
       transactionJSON,
@@ -103,7 +100,8 @@ const TxSignatureCollector = ({
     // }
   };
 
-  const onEnterPasswordSuccess = ({ privateKey }) => txVerification(privateKey, pubkey);
+  const onEnterPasswordSuccess = ({ privateKey }) =>
+    txVerification(privateKey, sender.metadata.pubkey);
 
   useEffect(() => {
     if (deviceType) {

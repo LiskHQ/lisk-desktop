@@ -24,12 +24,19 @@
 }
 
 .container {
+  width: 100% !important;
+  overflow-y: auto !important;
+
   & > .header {
     & > h1 {
       @mixin headingNormal bold;
 
       margin: 0;
     }
+  }
+
+  & > div:first-child {
+    padding: 0px !important;
   }
 
   & .infoContainer {

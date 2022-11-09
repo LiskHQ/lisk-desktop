@@ -1,5 +1,8 @@
-import React from 'react';
+import React, { useEffect } from 'react';
+import { useCurrentAccount } from '@account/hooks';
+import { useAuth } from '@auth/hooks/queries';
 import TransactionSummary from '@transaction/manager/transactionSummary';
+import { isEmpty } from 'src/utils/helpers';
 import ProgressBar from '../RegisterMultisigView/ProgressBar';
 import styles from './styles.css';
 
@@ -7,26 +10,39 @@ const Summary = ({
   t,
   prevStep,
   nextStep,
-  multisigGroupRegistered,
+  transactions,
   formProps,
   transactionJSON,
+  multisigTransactionSigned,
 }) => {
+  const [sender] = useCurrentAccount();
+  const { data: account } = useAuth({
+    config: { params: { address: sender.metadata.address } },
+  });
+
   const onConfirmAction = {
     label: t('Sign'),
     onClick: () => {
-      nextStep({
+      multisigTransactionSigned({
         formProps,
         transactionJSON,
-        actionFunction: multisigGroupRegistered,
-        sender: {}
+        sender: { ...account.data },
       });
     },
   };
 
   const onCancelAction = {
     label: t('Go back'),
-    onClick: () => { prevStep({ formProps, transactionJSON }); },
+    onClick: () => {
+      prevStep({ formProps, transactionJSON });
+    },
   };
+
+  useEffect(() => {
+    if (!isEmpty(transactions.signedTransaction)) {
+      nextStep({ formProps, transactionJSON, sender });
+    }
+  }, [transactions.signedTransaction, transactions.txSignatureError]);
 
   return (
     <section className={styles.wrapper}>

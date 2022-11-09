@@ -76,9 +76,7 @@ const Multisignature = ({
   };
 
   const onDownload = () => {
-    console.log('>>>>>>>', transactions.signedTransaction);
     const transaction = JSON.parse(transactionToJSON(transactions.signedTransaction));
-    console.log('....', transaction);
     downloadJSON(transaction, `tx-${transaction.id}`);
   };
 
@@ -91,7 +89,6 @@ const Multisignature = ({
   };
 
   useEffect(() => resetTransactionResult, []);
-  console.log('status --====>> ', transactions, status, account);
   return (
     <div className={`${styles.wrapper} ${className}`}>
       <Illustration name={getIllustration(status.code, 'signMultisignature', account.hwInfo)} />

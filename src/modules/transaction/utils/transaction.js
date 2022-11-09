@@ -274,9 +274,8 @@ const signUsingPrivateKey = (wallet, schema, chainID, transaction, privateKey) =
   const moduleCommand = joinModuleAndCommand(transaction);
   const isGroupRegistration = moduleCommand === registerMultisignature;
   const chainIDBuffer = Buffer.from(chainID, 'hex');
-  const privateKeyBuffer = Buffer.from(privateKey, 'hex');
+  const privateKeyBuffer = privateKey ? Buffer.from(privateKey, 'hex') : Buffer.alloc(0);
   const publicKeyBuffer = Buffer.from(wallet.summary.publicKey, 'hex');
-  const { mandatoryKeys, optionalKeys, numberOfSignatures } = transaction.params;
 
   // Sign the params if tx is a group registration and the current account is a member
   if (isGroupRegistration) {
@@ -306,7 +305,9 @@ const signUsingPrivateKey = (wallet, schema, chainID, transaction, privateKey) =
     }
   }
 
-  // Sign the tx only if is sender of tx
+  // Sign the tx only if the account is the initator of the tx
+
+  const { mandatoryKeys, optionalKeys, numberOfSignatures } = wallet.keys;
   const isSender = Buffer.compare(transaction.senderPublicKey, publicKeyBuffer) === 0;
   const multiSigStatus = getTransactionSignatureStatus(
     {
@@ -316,9 +317,7 @@ const signUsingPrivateKey = (wallet, schema, chainID, transaction, privateKey) =
     },
     transaction
   );
-
-  console.log('isSender', isSender, transaction.senderPublicKey, publicKeyBuffer, transaction, multiSigStatus);
-
+  console.log('here >>>>> :::', multiSigStatus, isSender, isGroupRegistration, wallet.keys);
   if (
     (isSender && isGroupRegistration && multiSigStatus === signatureCollectionStatus.fullySigned) ||
     (isSender && !isGroupRegistration)
@@ -331,7 +330,6 @@ const signUsingPrivateKey = (wallet, schema, chainID, transaction, privateKey) =
         schema
       );
 
-      console.log('signature', res.signatures[0]);
       return res;
     } catch (e) {
       return e;

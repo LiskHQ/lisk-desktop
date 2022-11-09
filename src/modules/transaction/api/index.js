@@ -264,12 +264,12 @@ export const getTransactionFee = async ({
   const maxCommandFee = MODULE_COMMANDS_MAP[moduleCommand].maxFee;
   const transactionObject = fromTransactionJSON(transactionJSON, paramsSchema);
   let numberOfEmptySignatures = 0;
-
+  
   if (transactionJSON.moduleCommand === MODULE_COMMANDS_NAME_MAP.registerMultisignature) {
     const { optionalKeys, mandatoryKeys } = transactionJSON.params;
     numberOfSignatures = optionalKeys.length + mandatoryKeys.length + 1;
   } else if (wallet?.summary?.isMultisignature) {
-    numberOfEmptySignatures = wallet.keys.members.length - numberOfSignatures;
+    numberOfEmptySignatures = wallet.keys.mandatoryKeys.length + wallet.keys.optionalKeys.length - numberOfSignatures;
   }
 
   // Call API to get network specific base fees
