@@ -90,7 +90,7 @@ const getDesktopTxAsset = (elementsParams, moduleCommand) => {
         data: elementsParams.data,
         amount: convertBigIntToString(elementsParams.amount),
         recipient: { address: getBase32AddressFromAddress(elementsParams.recipientAddress) },
-        token: { tokenID: elementsParams.tokenID },
+        token: { tokenID: convertBinaryToString(elementsParams.tokenID) },
       };
     }
 
@@ -120,7 +120,7 @@ const getDesktopTxAsset = (elementsParams, moduleCommand) => {
 
     case unlock: {
       return {
-        unlockObjects: elementsParams.unlockObjects.map((unlockObject) => ({
+        unlockObjects: elementsParams.unlockObjects.map(unlockObject => ({
           delegateAddress: getBase32AddressFromAddress(unlockObject.delegateAddress),
           amount: convertBigIntToString(unlockObject.amount),
           unvoteHeight: unlockObject.unvoteHeight,
@@ -215,7 +215,7 @@ const getElementsParamsFromJSON = (JSONParams, moduleCommand) => {
 
     case unlock: {
       return {
-        unlockObjects: JSONParams.unlockObjects.map((unlockObject) => ({
+        unlockObjects: JSONParams.unlockObjects.map(unlockObject => ({
           amount: BigInt(convertBigIntToString(unlockObject.amount)),
           delegateAddress: convertStringToBinary(unlockObject.delegateAddress),
           unvoteHeight: unlockObject.unvoteHeight,
@@ -511,7 +511,7 @@ const signMultisigUsingPrivateKey = (schema, chainID, transaction, privateKey, s
       mandatoryKeys: keys.mandatoryKeys.map(convertStringToBinary),
     },
     schema,
-    false // @todo if you want to send tokens, and you are the group and a member, is this True? (#4506)
+    false, // isMultiSignatureRegistration @todo if you want to send tokens, and you are the group and a member, is this True? (#4506)
   );
 
   return signedTransaction;

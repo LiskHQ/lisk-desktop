@@ -1,8 +1,9 @@
 /* eslint-disable complexity */
 import React, { useEffect, useState } from 'react';
 import { txStatusTypes } from '@transaction/configuration/txStatus';
-import Regular from '../Regular';
-import Multisignature from '../Multisignature';
+import RegularTxStatus from '../Regular';
+import MultisignatureTxStatus from '../Multisignature';
+import RequestedTxStatus from '../RequestedTxStatus';
 
 const TxBroadcaster = (props) => {
   const [txType, setTxType] = useState('pending');
@@ -16,7 +17,9 @@ const TxBroadcaster = (props) => {
         || props.account.summary.isMultisignature
         || props.account.summary.publicKey !== props.transactions.signedTransaction.senderPublicKey.toString('hex')
       );
-    if (isMultisig) {
+    if (props.location.search?.includes('request')) {
+      setTxType('requested');
+    } else if (isMultisig) {
       setTxType('isMultisig');
     } else {
       setTxType('regular');
@@ -27,12 +30,16 @@ const TxBroadcaster = (props) => {
    * 1. Regular accounts
    * 2. 2nd passphrase accounts
    */
+   if (txType === 'requested') {
+    return (<RequestedTxStatus {...props} />);
+  }
+
   if (txType === 'regular') {
-    return (<Regular {...props} />);
+    return (<RegularTxStatus {...props} />);
   }
 
   if (txType === 'isMultisig') {
-    return (<Multisignature {...props} />);
+    return (<MultisignatureTxStatus {...props} />);
   }
   return <div />;
 };

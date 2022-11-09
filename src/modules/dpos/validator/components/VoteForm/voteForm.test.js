@@ -22,6 +22,14 @@ jest.mock('@account/hooks/useDeprecatedAccount', () => ({
   }),
 }));
 
+
+jest.mock('@account/hooks/useDeprecatedAccount', () => ({
+  useDeprecatedAccount: jest.fn().mockReturnValue({
+    isSuccess: true,
+    isLoading: false
+  }),
+}));
+
 const addresses = [
   'lskdwsyfmcko6mcd357446yatromr9vzgu7eb8y99',
   'lskyau2yy4993jkbd7kxcsfsrarac8macbbs8saad',

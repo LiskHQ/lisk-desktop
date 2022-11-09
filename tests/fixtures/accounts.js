@@ -1,33 +1,5 @@
-const savedAccounts = [
-  {
-    encryptedPassphrase: {
-      kdf: 'argon2id',
-      kdfparams: {
-        parallelism: 4,
-        iterations: 1,
-        memory: 2048,
-        salt: '30fc0301d36fcdc7bd8204e19a0043fc',
-      },
-      cipher: 'aes-256-gcm',
-      cipherparams: {
-        iv: '281d21872c2d303e59850ce4',
-        tag: '2458479edf6aea5c748021ae296e467d',
-      },
-      ciphertext:
-        '44fdb2b132d353a5c65f04e5e3afdd531f63abc45444ffd4cdbc7dedc45f899bf5b7478947d57319ea8c620e13480def8a518cc05e46bdddc8ef7c8cfc21a3bd',
-    },
-    metadata: {
-      name: 'my_lisk_account',
-      description: 'ed25519 key pair',
-      pubkey: 'c6bae83af23540096ac58d5121b00f33be6f02f05df785766725acdd5d48be9d',
-      path: "m/44'/134'/0'",
-      address: 'lsk74ar23k2zk3mpsnryxbxf5yf9ystudqmj4oj6e',
-      creationTime: '',
-      derivedFromUUID: 'fa3e4ceb-10dc-41ad-810e-17bf51ed93aa',
-    },
-    uuid: 'ef52c117-d7cc-4246-bc9d-4dd506bef82f',
-    version: 1,
-  },
-];
+// Password is "DeykUBjUn7uZHYv!"
+const accountsJSON = "{\"encryptedPassphrase\":{\"ciphertext\":\"23c6b342d2b6ae9eab90ddc3cbabdbbacd724a4cb63bc03815aaeff8e0845feece055db7cc6b0e2209cdfdf084915f1bbbb357b103fb2c75247c2ebb44878b253afd1bf963431c371792f8be894f8ac92cd7aa8966bb1e06d2cbc20b85d49300af7bdb92c42d4713f9dbe2c11500bb87cae58fb76cf7ea4c4e77a38fc2273d388521d4990fd264da8e67ec76e8e7e1cef6cac0d4c2dc796dfda835d9f2d59260d1c011a1078bef5f351d2713b064f334be0de4e9d211d5d00d6bc64bba9b78458b24ba0f1a86bdfa7cdd8f30aa66d5b883db4fb8c861e41a7ccf22ad5f34ce9e3fb0ed76c6c694ff40ec1a26b1ed5da92474\",\"mac\":\"67cd117009729ec7659d2635f25c975fd2d12a6c7c577e092e30d8af9e0e1568\",\"kdf\":\"argon2id\",\"kdfparams\":{\"parallelism\":4,\"iterations\":1,\"memorySize\":2024,\"salt\":\"624fb8a44ec39042651f4218140889e2\"},\"cipher\":\"aes-256-gcm\",\"cipherparams\":{\"iv\":\"d0c88372f4e34d40492b5ced\",\"tag\":\"1a283c8a52548c8b82b63509912cf978\"},\"version\":\"1\"},\"metadata\":{\"name\":\"aaaaaa\",\"pubkey\":\"cf434a889d6c7a064e8de61bb01759a76f585e5ff45a78ba8126ca332601f535\",\"path\":\"m/44'/134'/0'\",\"address\":\"lsk3ay4z7wqjczbo5ogcqxgxx23xyacxmycwxfh4d\",\"creationTime\":\"2022-10-04T13:35:32.773Z\"},\"version\":1}";
+const savedAccounts = [JSON.parse(accountsJSON)];
 
 export default savedAccounts;

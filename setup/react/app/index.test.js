@@ -11,6 +11,16 @@ import AccountDetails from '@account/components/AccountDetails';
 import i18n from 'src/utils/i18n/i18n'; // initialized i18next instance
 import App from '.';
 
+jest.mock('@walletconnect/utils', () => ({
+  getSdkError: jest.fn(str => str),
+}));
+jest.mock('@libs/wcm/utils/connectionCreator', () => ({
+  createSignClient: jest.fn(() => Promise.resolve()),
+  client: {
+    pair: jest.fn(),
+  },
+}));
+
 const fakeStore = configureStore();
 
 const addRouter = Component => (props, path) =>

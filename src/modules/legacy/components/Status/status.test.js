@@ -4,6 +4,9 @@ import TxBroadcaster from '@transaction/components/TxBroadcaster';
 import accounts from '@tests/constants/wallets';
 import Status from './Status';
 
+jest.mock('@libs/wcm/hooks/useSession', () => ({
+  respond: jest.fn(),
+}));
 describe('Status', () => {
   const props = {
     t: v => v,

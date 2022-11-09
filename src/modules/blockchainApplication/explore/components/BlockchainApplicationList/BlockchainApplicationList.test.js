@@ -48,7 +48,6 @@ describe('BlockchainApplicationList', () => {
     expect(screen.getByText('Chain ID')).toBeTruthy();
     expect(screen.getByText('Status')).toBeTruthy();
     expect(screen.getByText('LSK deposited')).toBeTruthy();
-    expect(screen.getByText('Applications')).toBeTruthy();
   });
 
   it('should display the right number of applications', () => {

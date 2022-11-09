@@ -3,6 +3,10 @@ import { shallow } from 'enzyme';
 import accounts from '@tests/constants/wallets';
 import Status from './Status';
 
+jest.mock('@libs/wcm/hooks/useSession', () => ({
+  respond: jest.fn(),
+}));
+
 describe('Delegate Registration Status', () => {
   const props = {
     account: accounts.genesis,

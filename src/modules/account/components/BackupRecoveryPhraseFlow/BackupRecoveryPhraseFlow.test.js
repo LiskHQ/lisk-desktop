@@ -2,12 +2,16 @@ import { fireEvent, screen, waitFor } from '@testing-library/react';
 import * as reactRedux from 'react-redux';
 import { renderWithRouter } from 'src/utils/testHelpers';
 import mockSavedAccounts from '@tests/fixtures/accounts';
+import wallets from '@tests/constants/wallets';
 import BackupRecoveryPhraseFlow from './BackupRecoveryPhraseFlow';
 
 const recoveryPhrase = 'target cancel solution recipe vague faint bomb convince pink vendor fresh patrol';
 
-jest.mock('../../hooks/useAccounts', () => ({
-  useAccounts: jest.fn().mockReturnValue([mockSavedAccounts]),
+jest.mock('@account/hooks/useAccounts', () => ({
+  useAccounts: jest.fn(() => ({
+    accounts: [mockSavedAccounts],
+    getAccountByAddress: jest.fn().mockReturnValue(mockSavedAccounts[0]),
+  })),
 }));
 
 jest.mock('@account/utils/encryptAccount', () => ({
@@ -20,7 +24,7 @@ jest.mock('@account/utils/encryptAccount', () => ({
   }),
 }));
 
-reactRedux.useSelector = jest.fn().mockReturnValue(mockSavedAccounts[0]);
+reactRedux.useSelector = jest.fn().mockReturnValue(wallets.genesis);
 
 const props = {
   history: { push: jest.fn() },

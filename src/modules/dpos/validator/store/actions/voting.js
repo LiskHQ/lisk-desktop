@@ -53,8 +53,7 @@ export const voteDiscarded = (data) => ({
  * @param {String} data.voteAmount - (New) vote amount in Beddows
  * @returns {Object} Pure action object
  */
-export const voteEdited = (data) => async (dispatch) =>
-  dispatch({
+export const voteEdited = (data) => async (dispatch) => dispatch({
     type: actionTypes.voteEdited,
     data,
   });
@@ -69,19 +68,21 @@ export const voteEdited = (data) => async (dispatch) =>
  * @param {object} data.votes
  * @param {promise} API call response
  */
-export const votesSubmitted = (transactionObject, privateKey) => async (dispatch, getState) => {
-  const state = getState();
-  const activeWallet = selectActiveTokenAccount(state);
+export const votesSubmitted = (
+  transactionObject,
+  privateKey,
+) =>
+  async (dispatch, getState) => {
+    const state = getState();
+    const activeWallet = selectActiveTokenAccount(state);
 
-  const [error, tx] = await to(
-    createGenericTx({
+    const [error, tx] = await to(createGenericTx({
       transactionObject,
       wallet: activeWallet,
       schema: state.network.networks.LSK.moduleCommandSchemas[transactionObject.moduleCommand],
       chainID: state.network.networks.LSK.chainID,
       privateKey,
-    })
-  );
+    }));
 
   if (error) {
     dispatch({
@@ -101,25 +102,25 @@ export const votesSubmitted = (transactionObject, privateKey) => async (dispatch
 /**
  * Fetches the list of votes of the host wallet.
  */
-export const votesRetrieved = () => async (dispatch, getState) => {
-  const { network, account } = getState();
-  const address = account.current?.metadata?.address;
-
-  try {
-    const votes = await getVotes({ network, params: { address } });
-    dispatch({
-      type: actionTypes.votesRetrieved,
-      data: votes.data,
-    });
-  } catch (exp) {
-    dispatch({
-      type: actionTypes.votesRetrieved,
-      data: {
-        account: {},
-      },
-    });
-  }
-};
+export const votesRetrieved = () =>
+  async (dispatch, getState) => {
+    const { network, account } = getState();
+    const address = account.current?.metadata?.address;
+    try {
+      const votes = await getVotes({ network, params: { address } });
+      dispatch({
+        type: actionTypes.votesRetrieved,
+        data: votes.data,
+      });
+    } catch (exp) {
+      dispatch({
+        type: actionTypes.votesRetrieved,
+        data: {
+          account: {},
+        },
+      });
+    }
+  };
 
 /**
  * Submits unlock balance transactions
@@ -148,18 +149,18 @@ export const balanceUnlocked = (transactionObject, privateKey) => async (dispatc
     })
   );
 
-  //
-  // Dispatch corresponding action
-  //
-  if (!error) {
-    dispatch({
-      type: txActionTypes.transactionCreatedSuccess,
-      data: tx,
-    });
-  } else {
-    dispatch({
-      type: txActionTypes.transactionSignError,
-      data: error,
-    });
-  }
-};
+    //
+    // Dispatch corresponding action
+    //
+    if (!error) {
+      dispatch({
+        type: txActionTypes.transactionCreatedSuccess,
+        data: tx,
+      });
+    } else {
+      dispatch({
+        type: txActionTypes.transactionSignError,
+        data: error,
+      });
+    }
+  };

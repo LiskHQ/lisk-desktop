@@ -20,7 +20,7 @@ const deposit = 5e10;
 const serviceUrl = 'https://lisk.com/';
 const chainLogo = null;
 
-const BlockchainApplicationDetails = ({
+const RemoveApplicationDetails = ({
   location, application, onCancel, nextStep,
 }) => {
   const { t } = useTranslation();
@@ -171,4 +171,4 @@ const BlockchainApplicationDetails = ({
   );
 };
 
-export default BlockchainApplicationDetails;
+export default RemoveApplicationDetails;

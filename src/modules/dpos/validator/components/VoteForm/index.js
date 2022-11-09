@@ -12,7 +12,7 @@ const mapStateToProps = (state) => ({
   votes: state.voting,
   isVotingTxPending: containsTransactionType(
     state.transactions.pending,
-    MODULE_COMMANDS_NAME_MAP.voteDelegate
+    MODULE_COMMANDS_NAME_MAP.voteDelegate,
   ),
 });
 

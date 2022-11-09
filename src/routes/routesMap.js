@@ -51,6 +51,11 @@ import RemoveApplicationFlow from '@blockchainApplication/manage/components/Remo
 import AllTokens from '@wallet/components/AllTokens';
 import DelegateProfile from 'src/modules/dpos/validator/components/delegateProfile/delegateProfile';
 import SentVotes from 'src/modules/dpos/validator/components/SentVotes';
+import ConnectionProposal from 'src/modules/blockchainApplication/connection/components/ConnectionProposal';
+import SessionManager from '@blockchainApplication/connection/components/SessionManager';
+import ConnectionSummary from 'src/modules/blockchainApplication/connection/components/ConnectionSummary';
+import RequestView from '@blockchainApplication/connection/components/RequestView';
+import ConnectionStatus from 'src/modules/blockchainApplication/connection/components/ConnectionStatus';
 
 export default {
   wallet: AccountDetails,
@@ -107,4 +112,9 @@ export default {
   removeApplicationFlow: RemoveApplicationFlow,
   allTokens: AllTokens,
   sentVotes: SentVotes,
+  connectionProposal: ConnectionProposal,
+  sessionManager: SessionManager,
+  requestView: RequestView,
+  connectionSummary: ConnectionSummary,
+  connectionStatus: ConnectionStatus,
 };

@@ -28,7 +28,12 @@ jest.mock('react-redux', () => ({
   useSelector: jest.fn().mockImplementation((fn) => fn(mockState)),
   useDispatch: () => mockDispatch,
 }));
-
+jest.mock('@walletconnect/sign-client', () => ({
+  init: jest.fn().mockResolvedValue(Promise.resolve({ mock: true })),
+}));
+jest.mock('@walletconnect/utils', () => ({
+  getSdkError: jest.fn(str => str),
+}));
 
 const mockInputNode = {
   focus: jest.fn(),
