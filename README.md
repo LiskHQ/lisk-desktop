@@ -30,7 +30,9 @@ If you have licensed copies of `Basier Circle` and `Gilroy`, you can add them to
 
 ### Setup environment
 
-The development environment currently depends on [Node.js version 16 (lts/gallium)](https://nodejs.org/download/release/latest-v16.x/). The below instructions assume [nvm](https://github.com/nvm-sh/nvm) is being used to manage Node.js versions.
+The development environment currently depends on:
+- [Node.js version 16 (lts/gallium)](https://nodejs.org/download/release/latest-v16.x/). The below instructions assume [nvm](https://github.com/nvm-sh/nvm) is being used to manage Node.js versions.
+- [Python version 2.7.18 is required](https://www.python.org/downloads/release/python-2718/) is being used on encrypt/decrypt by the [lisk-sdk](https://github.com/LiskHQ/lisk-sdk/tree/development/sdk#dependencies).
 
 *Note*:
 For *Windows* users, make sure to set the correct [msvs_version](https://www.npmjs.com/package/node-gyp#on-windows) config for installing and packing the Lisk Desktop application.
@@ -38,7 +40,7 @@ For *Windows* users, make sure to set the correct [msvs_version](https://www.npm
 ```
 git clone https://github.com/LiskHQ/lisk-desktop.git
 cd lisk-desktop
-nvm install lts/erbium
+nvm use
 npm ci
 npm run dev
 ```
