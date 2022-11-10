@@ -1,20 +1,17 @@
-import { getFromStorage } from 'src/utils/localJSONStorage';
 import actionTypes from './actionTypes';
-import { initialState } from './reducer';
 
 /**
  * An action to dispatch settingsRetrieved
  *
  */
 export const settingsRetrieved = () => (dispatch) => {
-  getFromStorage('settings', initialState, (data) => {
-    // For cases where token is still stored with settings data,
-    // Remove token from retrieved data before storing
-    delete data.token;
-    dispatch({
-      type: actionTypes.settingsRetrieved,
-      data,
-    });
+  // This action has been removed from the reducer and
+  // empty object was sent as data for the time being because
+  // some actions in the network middleware depend on this action.
+  // As such, refactoring them completely is needed before removing this action
+  dispatch({
+    type: actionTypes.settingsRetrieved,
+    data: {},
   });
 };
 
@@ -22,7 +19,7 @@ export const settingsRetrieved = () => (dispatch) => {
  * An action to dispatch settingsUpdated
  *
  */
-export const settingsUpdated = data => ({
+export const settingsUpdated = (data) => ({
   type: actionTypes.settingsUpdated,
   data,
 });
