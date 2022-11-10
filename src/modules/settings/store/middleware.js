@@ -1,7 +1,5 @@
-import { setInStorage } from 'src/utils/localJSONStorage';
 import { pricesRetrieved, settingsUpdated } from 'src/redux/actions';
 import networkActionTypes from '@network/store/actionTypes';
-import actionTypes from './actionTypes';
 
 const settings = (store) => (next) => (action) => {
   next(action);
@@ -16,10 +14,6 @@ const settings = (store) => (next) => (action) => {
           },
         })
       );
-      break;
-    case actionTypes.settingsUpdated:
-      setInStorage('token', store.getState().token);
-      setInStorage('settings', store.getState().settings);
       break;
     default:
       break;

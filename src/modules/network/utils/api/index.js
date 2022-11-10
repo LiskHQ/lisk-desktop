@@ -17,11 +17,10 @@ const httpPaths = {
  * @returns {Promise}
  */
 export const getNetworkStatus = ({
-  baseUrl, network,
+  baseUrl,
 }) => http({
   baseUrl,
   path: httpPaths.networkStatus,
-  network,
 });
 
 const getServiceUrl = ({ name, address = 'http://165.227.246.146:9901' }) => {
