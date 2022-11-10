@@ -1,4 +1,3 @@
-import { getFromStorage } from 'src/utils/localJSONStorage';
 import actionTypes from './actionTypes';
 import {
   settingsReset,
@@ -43,22 +42,17 @@ describe('actions: setting', () => {
 
   describe('settingsRetrieved', () => {
     it('should create an action to retrieve settings', () => {
-      const initialState = { autoLog: true };
+      // Arrange
+      const expectedAction = {
+        data: {},
+        type: actionTypes.settingsRetrieved,
+      };
 
-      window.localStorage.getItem = jest.fn(() => JSON.stringify(settings));
-      getFromStorage('settings', initialState, async (data) => {
-        // Arrange
-        const expectedAction = {
-          data,
-          type: actionTypes.settingsRetrieved,
-        };
+      // Act
+      settingsRetrieved()(dispatch);
 
-        // Act
-        settingsRetrieved()(dispatch);
-
-        // Assert
-        expect(dispatch).toHaveBeenCalledWith(expectedAction);
-      });
+      // Assert
+      expect(dispatch).toHaveBeenCalledWith(expectedAction);
     });
   });
 });
