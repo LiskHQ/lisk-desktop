@@ -21,7 +21,6 @@ export const tokensTransferred = (
 ) => async (dispatch, getState) => {
   const state = getState();
   const wallet = selectActiveTokenAccount(state);
-
   const [error, tx] = await to(
     signTransaction({
       transactionJSON,

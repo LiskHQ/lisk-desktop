@@ -10,26 +10,23 @@ const SignedAndRemainingMembersList = ({ t }) => {
   const { transaction, wallet } = React.useContext(TransactionDetailsContext);
 
   const moduleCommand = joinModuleAndCommand(transaction);
-  const isMultisignatureRegistration = moduleCommand
-    === MODULE_COMMANDS_NAME_MAP.registerMultisignature;
+  const isMultisignatureRegistration =
+    moduleCommand === MODULE_COMMANDS_NAME_MAP.registerMultisignature;
 
   const keys = isMultisignatureRegistration
     ? {
-      optionalKeys: transaction.params.optionalKeys,
-      mandatoryKeys: transaction.params.mandatoryKeys,
-      numberOfSignatures: transaction.params.numberOfSignatures,
-    }
+        optionalKeys: transaction.params.optionalKeys,
+        mandatoryKeys: transaction.params.mandatoryKeys,
+        numberOfSignatures: transaction.params.numberOfSignatures,
+      }
     : wallet.keys;
 
   const { signed, remaining } = useMemo(
-    () =>
-      calculateRemainingAndSignedMembers(
-        keys,
-        transaction,
-        isMultisignatureRegistration,
-      ),
-    [wallet],
+    () => calculateRemainingAndSignedMembers(keys, transaction, isMultisignatureRegistration),
+    [wallet]
   );
+
+  console.log('---> ', signed, remaining, wallet, transaction);
 
   const required = isMultisignatureRegistration
     ? keys.optionalKeys.length + keys.mandatoryKeys.length

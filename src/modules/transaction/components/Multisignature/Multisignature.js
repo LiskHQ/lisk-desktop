@@ -1,12 +1,13 @@
 import React, { useState, useEffect } from 'react';
 import { PrimaryButton, SecondaryButton } from 'src/theme/buttons';
+import { codec } from '@liskhq/lisk-client';
 import Illustration from 'src/modules/common/components/illustration';
 import routes from 'src/routes/routes';
 import { txStatusTypes } from '@transaction/configuration/txStatus';
 import { getErrorReportMailto } from 'src/utils/helpers';
 
 import copyToClipboard from 'copy-to-clipboard';
-import { transactionToJSON, downloadJSON } from '@transaction/utils';
+import { transactionToJSON, downloadJSON, joinModuleAndCommand } from '@transaction/utils';
 import Icon from 'src/theme/Icon';
 import getIllustration from '../TxBroadcaster/illustrationsMap';
 import styles from './Multisignature.css';
@@ -71,7 +72,16 @@ const Multisignature = ({
   const [copied, setCopied] = useState(false);
 
   const onCopy = () => {
-    copyToClipboard(transactionToJSON(transactions.signedTransaction));
+    const schema =
+      network.moduleCommandSchemas[joinModuleAndCommand(transactions.signedTransaction)];
+    const jsonParams = codec.codec.toJSON(schema, transactions.signedTransaction.params);
+
+    copyToClipboard(
+      JSON.stringify({
+        ...JSON.parse(transactionToJSON(transactions.signedTransaction)),
+        params: jsonParams,
+      })
+    );
     setCopied(true);
   };
 
@@ -89,6 +99,7 @@ const Multisignature = ({
   };
 
   useEffect(() => resetTransactionResult, []);
+
   return (
     <div className={`${styles.wrapper} ${className}`}>
       <Illustration name={getIllustration(status.code, 'signMultisignature', account.hwInfo)} />

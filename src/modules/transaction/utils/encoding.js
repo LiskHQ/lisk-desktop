@@ -97,15 +97,12 @@ export const encodeTransaction = (transaction, paramsSchema) => {
 };
 
 export const fromTransactionJSON = (transactionJSON, paramsSchema) => {
-  console.log(">>>>>>", transactionJSON)
   const tx = codec.fromJSON(baseTransactionSchema, {
     ...transactionJSON,
     params: '',
-    nonce: transactionJSON.nonce.replace(/n$/, ''), // eslint-disable-next-line radix
-    fee: transactionJSON.fee.toString().replace(/n$/, ''), // eslint-disable-next-line radix
+    nonce: transactionJSON.nonce.replace(/n$/, ''),
+    fee: transactionJSON.fee.toString().replace(/n$/, ''),
   });
-
-  console.log('---- tx: ', tx);
 
   let params;
   if (typeof transactionJSON.params === 'string') {
@@ -113,7 +110,7 @@ export const fromTransactionJSON = (transactionJSON, paramsSchema) => {
       ? codec.decode(paramsSchema, Buffer.from(transactionJSON.params, 'hex'))
       : {};
   } else {
-    params = paramsSchema ? codec.fromJSON(paramsSchema, transactionJSON.params) : {};
+    params = paramsSchema ? codec.fromJSON(paramsSchema, {...transactionJSON.params, amount: transactionJSON.params.amount.toString().replace(/n$/, '')}) : {};
   }
 
   return {

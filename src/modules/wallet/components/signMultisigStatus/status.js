@@ -1,32 +1,31 @@
-import React, { useMemo } from 'react';
+import React from 'react';
 import Box from 'src/theme/box';
 import BoxContent from 'src/theme/box/content';
-import { useAuth } from 'src/modules/auth/hooks/queries';
 import TxBroadcaster from '@transaction/components/TxBroadcaster';
 import { useCurrentAccount } from '@account/hooks';
 import { statusMessages, getTransactionStatus } from '@transaction/configuration/statusConfig';
+import useTxInitatorAccount from '@transaction/hooks/useTxInitiatorAccount';
 
 import ProgressBar from '../signMultisigView/progressBar';
 import styles from './styles.css';
 import { useMultiSignatureStatus } from '../../hooks/useMultiSignatureStatus';
 
-const Status = ({ sender, transactions, t, transactionJSON }) => {
+// eslint-disable-next-line max-statements
+const Status = ({ transactions, t, transactionJSON }) => {
   const isMultiSignature = transactions.signedTransaction.params?.numberOfSignatures > 0;
   const [currentAccount] = useCurrentAccount();
 
-  const { data, isLoading: isGettingAuthData } = useAuth({
-    config: { params: { address: currentAccount.metadata.address } },
+  // This is to replace previous withData implementations.
+  const { txInitatorAccount } = useTxInitatorAccount({
+    transactionJSON,
   });
 
-  const { mandatoryKeys, optionalKeys, numberOfSignatures, publickKey } = useMemo(
-    () => ({ ...data?.data, ...data?.meta }),
-    [isGettingAuthData]
-  );
+  const { mandatoryKeys, optionalKeys, numberOfSignatures, publickKey } = txInitatorAccount;
 
   const { canSenderSignTx } = useMultiSignatureStatus({
-    senderAccount: sender.data,
     transactionJSON,
     currentAccount,
+    senderAccount: txInitatorAccount,
     account: {
       mandatoryKeys,
       optionalKeys,
@@ -37,7 +36,13 @@ const Status = ({ sender, transactions, t, transactionJSON }) => {
     },
   });
 
-  const status = getTransactionStatus(sender.data, transactions, isMultiSignature, canSenderSignTx);
+  const status = getTransactionStatus(
+    txInitatorAccount,
+    transactions,
+    isMultiSignature,
+    canSenderSignTx
+  );
+  console.log('STATUS >>> ', status);
   const template = statusMessages(t)[status.code];
 
   return (

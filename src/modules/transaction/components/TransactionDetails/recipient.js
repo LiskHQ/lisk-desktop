@@ -13,7 +13,7 @@ const Recipient = ({ t }) => {
       className={`${styles.value} ${styles.recipient}`}
       token={activeToken}
       network={network}
-      address={transaction.params.recipient.address}
+      address={transaction.params.recipientAddress}
       addressClass="receiver-address"
       label={t('Recipient')}
     />

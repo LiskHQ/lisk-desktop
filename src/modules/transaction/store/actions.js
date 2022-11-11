@@ -190,6 +190,7 @@ export const multisigTransactionSigned = ({
   transactionJSON,
   sender,
   privateKey,
+  txInitatorAccount,
 }) => async (dispatch, getState) => {
   const state = getState();
   const activeWallet = selectActiveTokenAccount(state);
@@ -203,7 +204,9 @@ export const multisigTransactionSigned = ({
     state.network.networks.LSK.moduleCommandSchemas[formProps.moduleCommand],
     state.network.networks.LSK.chainID,
     privateKey,
-  );  
+    txInitatorAccount, // this is the intitor of the transaction wanting to be signed
+  ); 
+
   if (!error) {
     dispatch({
       type: actionTypes.transactionDoubleSigned,

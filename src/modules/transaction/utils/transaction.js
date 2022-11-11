@@ -240,7 +240,7 @@ const signMultisigUsingPrivateKey = (schema, chainID, transaction, privateKey, s
     transaction,
     isRegisterMultisignature: false,
   });
-  console.log('>>> options keys', keys);
+
   const signedTransaction = transactions.signMultiSignatureTransactionWithPrivateKey(
     transaction,
     Buffer.from(chainID, 'hex'),
@@ -252,7 +252,7 @@ const signMultisigUsingPrivateKey = (schema, chainID, transaction, privateKey, s
     schema,
     false // @todo if you want to send tokens, and you are the group and a member, is this True? (#4506)
   );
-
+  console.log('SIGNED MULTI SIG TX: ', signedTransaction);
   return signedTransaction;
 };
 
@@ -405,7 +405,8 @@ const signMultisigTransaction = async (
   txStatus,
   schema,
   chainID,
-  privateKey
+  privateKey,
+  txInitatorAccount
 ) => {
   /**
    * Define keys.
@@ -418,7 +419,6 @@ const signMultisigTransaction = async (
     mandatoryKeys: senderAccount.mandatoryKeys.map((key) => Buffer.from(key, 'hex')),
     optionalKeys: senderAccount.optionalKeys.map((key) => Buffer.from(key, 'hex')),
   };
-
   const transaction = fromTransactionJSON(transactionJSON, schema);
 
   /**
@@ -433,7 +433,14 @@ const signMultisigTransaction = async (
   }
 
   try {
-    const result = await sign(wallet, schema, chainID, transaction, privateKey, senderAccount);
+    const result = await sign(
+      wallet,
+      schema,
+      chainID,
+      transaction,
+      privateKey,
+      isRegisterMultisignature ? senderAccount : txInitatorAccount
+    );
     return [result];
   } catch (e) {
     return [null, e];
@@ -451,7 +458,7 @@ const signMultisigTransaction = async (
  * @returns {number} the number of signatures required
  */
 const getNumberOfSignatures = (account, transaction) => {
-  if (account?.summary?.isMultisignature) {
+  if (account?.keys?.numberOfSignatures > 0) {
     return account.keys.numberOfSignatures;
   }
   const moduleCommand = joinModuleAndCommand(transaction);

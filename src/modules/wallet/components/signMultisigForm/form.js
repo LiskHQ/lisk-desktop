@@ -57,7 +57,7 @@ const Form = ({ t, nextStep, network }) => {
 
   const validateAndSetTransaction = (value) => {
     setError(undefined);
-    console.log('>>> value: ', value);
+  
     try {
       setTransaction(value);
       const result = getTransactionObject(value, network.networks.LSK.moduleCommandSchemas);
@@ -67,7 +67,7 @@ const Form = ({ t, nextStep, network }) => {
     } catch (e) {
       setTransaction(undefined);
       setError('Invalid transaction');
-      console.log('--->>', e);
+      console.log("MULTI SIG ERROR: ", e)
     }
   };
 

@@ -58,10 +58,10 @@ export const getTransactionSignatureStatus = (senderAccount, transaction) => {
   const required = getNumbersOfSignaturesRequired({
     keys, transaction, isRegisterMultisignature,
   });
-
+  console.log("KEYS:",  keys, keys.mandatoryKeys)
   const alreadySigned = getNonEmptySignatures(transaction, isRegisterMultisignature).length;
   const registrationExtra = isRegisterMultisignature ? 0 : 0;
-  const mandatorySigs = keys.mandatoryKeys.length + registrationExtra;
+  const mandatorySigs = keys.mandatoryKeys?.length + registrationExtra;
   const nonEmptyMandatorySigs = getNonEmptySignatures(
     transaction,
     isRegisterMultisignature

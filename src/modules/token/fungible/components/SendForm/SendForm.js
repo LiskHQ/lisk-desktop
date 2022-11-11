@@ -128,7 +128,7 @@ const SendForm = (props) => {
       recipient,
     },
   };
-
+  console.log(">>>> recipient", recipient);
   let commandParams = {
     tokenID: token?.tokenID,
     amount: toRawLsk(amount.value),

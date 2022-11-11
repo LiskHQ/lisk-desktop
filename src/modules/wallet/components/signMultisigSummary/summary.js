@@ -1,7 +1,9 @@
-import React from 'react';
+/* eslint-disable max-statements */
+import React, { useMemo } from 'react';
 import { isEmpty } from 'src/utils/helpers';
 import { useCurrentAccount } from 'src/modules/account/hooks';
 import { signatureCollectionStatus } from '@transaction/configuration/txStatus';
+import { useAuth } from 'src/modules/auth/hooks/queries';
 import BoxContent from 'src/theme/box/content';
 import Box from 'src/theme/box';
 import { LayoutSchema } from '@transaction/components/TransactionDetails/layoutSchema';
@@ -11,6 +13,7 @@ import ProgressBar from '../signMultisigView/progressBar';
 import { ActionBar, Feedback } from './footer';
 import styles from './styles.css';
 import { useMultiSignatureStatus } from '../../hooks/useMultiSignatureStatus';
+import { extractAddressFromPublicKey } from '../../utils/account';
 
 // eslint-disable-next-line complexity
 const Summary = ({
@@ -20,17 +23,33 @@ const Summary = ({
   account,
   nextStep,
   history,
-  senderAccount,
   activeToken,
   network,
 }) => {
   const [currentAccount] = useCurrentAccount();
+  const senderAddress = extractAddressFromPublicKey(transactionJSON.senderPublicKey);
 
+  // This is to replace previous withData implementations.
+  const { data, isLoading: isLoadingAuthData } = useAuth({
+    config: { params: { address: senderAddress } },
+  });
+
+  const senderAccount = useMemo(
+    () => ({
+      ...(data?.data || {}),
+      keys: {
+        ...(data?.data || { mandatoryKeys: [], optionalKeys: [] }),
+      },
+    }),
+    [isLoadingAuthData]
+  );
+
+  console.log('---> sender account: ', senderAccount, transactionJSON);
   const { isMember, signatureStatus, canSenderSignTx } = useMultiSignatureStatus({
     transactionJSON,
     account,
     currentAccount,
-    senderAccount: senderAccount.data,
+    senderAccount,
   });
 
   const onClick = () => {
@@ -52,7 +71,7 @@ const Summary = ({
     (signatureStatus === signatureCollectionStatus.fullySigned && !canSenderSignTx) ||
     (signatureStatus === signatureCollectionStatus.occupiedByOptionals && !canSenderSignTx);
 
-  if (isEmpty(senderAccount.data)) {
+  if (isEmpty(senderAccount)) {
     return <div />;
   }
   const Layout = LayoutSchema[`${formProps.moduleCommand}-preview`] || LayoutSchema.default;
@@ -72,7 +91,7 @@ const Summary = ({
               value={{
                 activeToken,
                 network,
-                wallet: senderAccount.data,
+                wallet: senderAccount,
                 transaction: transactionJSON,
               }}
             >

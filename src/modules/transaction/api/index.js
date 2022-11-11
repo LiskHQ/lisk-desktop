@@ -323,7 +323,7 @@ export const signTransaction = async ({
   privateKey,
 }) => {
   const transaction = fromTransactionJSON(transactionJSON, schema);
-
+  console.log("=====>>> TX: ", transaction, schema);
   const result = await sign(
     wallet,
     schema,

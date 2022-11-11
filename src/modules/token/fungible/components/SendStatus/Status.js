@@ -42,6 +42,7 @@ const TransactionStatus = ({
   token,
   transactionJSON,
   t,
+  formProps,
 }) => {
   useEffect(() => {
     if (
@@ -75,6 +76,7 @@ const TransactionStatus = ({
         illustration="default"
         message={template.message}
         status={status}
+        formProps={formProps}
       >
         {showBookmark ? (
           <div className={`${styles.bookmarkBtn} bookmark-container`}>

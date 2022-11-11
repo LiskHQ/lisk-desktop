@@ -15,6 +15,7 @@ import { useCurrentAccount } from '@account/hooks';
 import styles from './txSignatureCollector.css';
 import { joinModuleAndCommand } from '../../utils';
 import { MODULE_COMMANDS_NAME_MAP } from '../../configuration/moduleCommand';
+import useTxInitatorAccount from '../../hooks/useTxInitiatorAccount';
 
 // eslint-disable-next-line max-statements
 const TxSignatureCollector = ({
@@ -32,8 +33,15 @@ const TxSignatureCollector = ({
   selectedPriority,
 }) => {
   const [sender] = useCurrentAccount();
+
+  // here, we want to get the auth account details of the user presently wanting to sign the transaction
   const { data: account, isLoading: isGettingAuthData } = useAuth({
     config: { params: { address: sender.metadata.address } },
+  });
+
+  // here, we want to get the auth account details of the account that initated the transaction.
+  const { isLoading: isGettingTxInitatorAccount, txInitatorAccount } = useTxInitatorAccount({
+    transactionJSON,
   });
 
   const deviceType = getDeviceType(account.hwInfo?.deviceModel);
@@ -86,7 +94,8 @@ const TxSignatureCollector = ({
       formProps,
       transactionJSON,
       privateKey,
-      sender: { ...account.data },
+      txInitatorAccount,
+      sender: { ...account.data }, // this is the account of the present user wanting to sign the transaction
     });
 
     // Transaction authored from other account and current account is a non multisignature account
@@ -142,7 +151,7 @@ const TxSignatureCollector = ({
         <EnterPasswordForm
           title="Please provide your device password to sign a transaction."
           onEnterPasswordSuccess={onEnterPasswordSuccess}
-          isDisabled={isGettingAuthData}
+          isDisabled={isGettingAuthData || isGettingTxInitatorAccount}
         />
       </div>
     );
