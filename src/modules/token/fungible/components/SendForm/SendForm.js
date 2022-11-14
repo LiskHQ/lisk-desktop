@@ -8,9 +8,7 @@ import { toRawLsk, fromRawLsk } from '@token/fungible/utils/lsk';
 import BoxContent from 'src/theme/box/content';
 import BoxHeader from 'src/theme/box/header';
 import { maxMessageLength } from 'src/modules/transaction/configuration/transactions';
-import {
-  useCurrentApplication,
-} from 'src/modules/blockchainApplication/manage/hooks';
+import { useCurrentApplication } from 'src/modules/blockchainApplication/manage/hooks';
 import MenuSelect, { MenuItem } from 'src/modules/wallet/components/MenuSelect';
 import { useBlockchainApplicationMeta } from '@blockchainApplication/manage/hooks/queries/useBlockchainApplicationMeta';
 import TxComposer from '@transaction/components/TxComposer';
@@ -32,7 +30,7 @@ const getInitialRecipientChain = (
   transactionData,
   initialChainId,
   currentApplication,
-  applications,
+  applications
 ) => {
   const initalRecipientChain = initialChainId
     ? applications.find(({ chainID }) => chainID === initialChainId)
@@ -40,11 +38,7 @@ const getInitialRecipientChain = (
 
   return transactionData?.recipientChain || initalRecipientChain || currentApplication;
 };
-const getInitialToken = (
-  transactionData,
-  initialTokenId,
-  tokens,
-) => {
+const getInitialToken = (transactionData, initialTokenId, tokens) => {
   const initialToken = initialTokenId
     ? tokens.find(({ tokenID }) => tokenID === initialTokenId)
     : null;
@@ -58,8 +52,8 @@ const SendForm = (props) => {
   const [sendingChain, setSendingChain] = useState(
     prevState?.transactionData?.sendingChain || currentApplication
   );
-  const { data: tokens } = useTransferableTokens(sendingChain)
-  const { data: {data: applications = []} = {} } = useBlockchainApplicationMeta();
+  const { data: tokens } = useTransferableTokens(sendingChain);
+  const { data: { data: applications = [] } = {} } = useBlockchainApplicationMeta();
   const [token, setToken] = useState(
     getInitialToken(prevState?.transactionData, props.initialValue?.token, tokens)
   );
@@ -128,7 +122,7 @@ const SendForm = (props) => {
       recipient,
     },
   };
-  console.log(">>>> recipient", recipient);
+
   let commandParams = {
     tokenID: token?.tokenID,
     amount: toRawLsk(amount.value),
@@ -141,7 +135,7 @@ const SendForm = (props) => {
       ...commandParams,
       receivingChainID: recipientChain.chainID,
       // TODO: Replace the message fee constant from service endpoint
-      messageFee: 50000000
+      messageFee: 50000000,
     };
   }
 

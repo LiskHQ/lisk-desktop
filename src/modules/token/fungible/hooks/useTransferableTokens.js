@@ -20,7 +20,7 @@ export const useTransferableTokens = (application) => {
     const isSuccess = isTokensSuccess && isSupportedSuccess;
     const isLoading = isTokenLoading || isSupportLoading;
     const isSupportAllToken = supportedTokens?.length === 0;
-    const tokens = isSupportAllToken || true
+    const tokens = isSupportAllToken
       ? myTokens
       : myTokens.filter((token) =>
           supportedTokens?.find((supportedToken) => supportedToken.tokenID === token.tokenID)
@@ -28,7 +28,7 @@ export const useTransferableTokens = (application) => {
     return {
       isLoading,
       isSuccess,
-      data: isSuccess || true ? tokens : [],
+      data: isSuccess ? tokens : [],
     };
   }, [isTokensSuccess, isSupportedSuccess, isTokenLoading, isSupportLoading]);
 };

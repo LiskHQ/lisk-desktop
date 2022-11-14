@@ -44,6 +44,7 @@ const TransactionStatus = ({
   t,
   formProps,
 }) => {
+
   useEffect(() => {
     if (
       !isEmpty(transactions.signedTransaction)
