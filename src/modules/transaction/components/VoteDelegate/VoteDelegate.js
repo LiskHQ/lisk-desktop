@@ -43,7 +43,7 @@ const VoteDelegate = ({ t, account, summaryInfo, transaction }) => {
       </div>
       <div className={styles.txFeeContainer}>
         <InfoColumn title={t('Transaction Fees')} className="vote-fees">
-          {transaction.composedFees.Transaction}
+          {transaction?.composedFees.Transaction}
         </InfoColumn>
       </div>
     </>

@@ -9,7 +9,7 @@ const Members = ({ members, t }) => (
   <section>
     <label>{t('Members')}</label>
     <div className={styles.membersContainer}>
-      {members.map((member, i) => (
+      {members?.map((member, i) => (
         <div
           className={styles.memberInfo}
           key={i + 1}
