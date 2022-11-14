@@ -580,7 +580,6 @@ const signUsingPrivateKey = (wallet, schema, chainID, transaction, moduleCommand
       return e;
     }
   }
-  console.log('transaction', transaction);
   return transaction;
 };
 

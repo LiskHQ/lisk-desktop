@@ -24,6 +24,9 @@ const mockedCurrentAccount = mockSavedAccounts[0];
 jest.mock('@account/hooks', () => ({
   useCurrentAccount: jest.fn(() => [mockedCurrentAccount, jest.fn()]),
 }));
+jest.mock('@transaction/hooks/queries/useSchemas', () => ({
+  useSchemas: jest.fn(),
+}));
 
 jest.mock('@block/hooks/queries/useBlocks');
 jest.mock('../../hooks/queries');
