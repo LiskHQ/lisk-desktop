@@ -312,13 +312,12 @@ export const broadcast = async ({ transaction, serviceUrl, network }) => {
   const schema = network.networks.LSK.moduleCommandSchemas[moduleCommand];
   const binary = transactions.getBytes(transaction, schema);
   const payload = binary.toString('hex');
-  const body = JSON.stringify({ transaction: payload });
 
   const response = await http({
     method: 'POST',
     baseUrl: serviceUrl,
     path: '/api/v3/transactions',
-    body,
+    data: { transaction: payload },
   });
 
   return response;
