@@ -170,7 +170,7 @@ const Form = ({ nextStep, prevState = {} }) => {
               </TertiaryButton>
             </div>
             <div className={styles.contentScrollable}>
-              {members.map((member, i) => (
+              {members?.map((member, i) => (
                 <MemberField
                   key={i}
                   t={t}
