@@ -535,30 +535,32 @@ const signUsingPrivateKey = (wallet, schema, chainID, transaction, moduleCommand
   const isGroupRegistration = moduleCommand === MODULE_COMMANDS_NAME_MAP.registerMultisignature;
   const chainIDBuffer = Buffer.from(chainID, 'hex');
   const privateKeyBuffer = Buffer.from(privateKey, 'hex');
-  const members = [
-    ...transaction.params.mandatoryKeys.sort((publicKeyA, publicKeyB) =>
-      publicKeyA.compare(publicKeyB)
-    ),
-    ...transaction.params.optionalKeys.sort((publicKeyA, publicKeyB) =>
-      publicKeyA.compare(publicKeyB)
-    ),
-  ];
   const publicKeyBuffer = Buffer.from(wallet.summary.publicKey, 'hex');
-  const senderIndex = members.findIndex((item) => Buffer.compare(item, publicKeyBuffer) === 0);
   // Sign the params if tx is a group registration and the current account is a member
-  if (isGroupRegistration && senderIndex > -1) {
-    const memberSignature = signMultisigRegParams(chainIDBuffer, transaction, privateKeyBuffer);
-    // @todo use correct index once SDK exposes the sort endpoint (#4497)
-    const signatures = Array.from(Array(members.length).keys()).map((index) => {
-      if (index === senderIndex) {
-        return memberSignature;
-      }
-      if (!transaction.params.signatures[index] || !transaction.params.signatures[index].length) {
-        return Buffer.alloc(64);
-      }
-      return transaction.params.signatures[index];
-    });
-    transaction.params.signatures = signatures;
+  if (isGroupRegistration) {
+    const members = [
+      ...transaction.params.mandatoryKeys.sort((publicKeyA, publicKeyB) =>
+        publicKeyA.compare(publicKeyB)
+      ),
+      ...transaction.params.optionalKeys.sort((publicKeyA, publicKeyB) =>
+        publicKeyA.compare(publicKeyB)
+      ),
+    ];
+    const senderIndex = members.findIndex((item) => Buffer.compare(item, publicKeyBuffer) === 0);
+    if (senderIndex > -1) {
+      const memberSignature = signMultisigRegParams(chainIDBuffer, transaction, privateKeyBuffer);
+      // @todo use correct index once SDK exposes the sort endpoint (#4497)
+      const signatures = Array.from(Array(members.length).keys()).map((index) => {
+        if (index === senderIndex) {
+          return memberSignature;
+        }
+        if (!transaction.params.signatures[index] || !transaction.params.signatures[index].length) {
+          return Buffer.alloc(64);
+        }
+        return transaction.params.signatures[index];
+      });
+      transaction.params.signatures = signatures;
+    }
   }
 
   // Sign the tx only if is sender of tx
