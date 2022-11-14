@@ -317,7 +317,7 @@ const signUsingPrivateKey = (wallet, schema, chainID, transaction, privateKey) =
     },
     transaction
   );
-  console.log('here >>>>> :::', multiSigStatus, isSender, isGroupRegistration, wallet.keys);
+
   if (
     (isSender && isGroupRegistration && multiSigStatus === signatureCollectionStatus.fullySigned) ||
     (isSender && !isGroupRegistration)

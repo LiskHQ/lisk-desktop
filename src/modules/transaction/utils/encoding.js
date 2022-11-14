@@ -15,6 +15,7 @@
 
 import { codec } from '@liskhq/lisk-codec';
 import { utils } from '@liskhq/lisk-cryptography';
+import { trimBigintString } from './helpers';
 
 // TODO: Use from service endpoint/elements
 export const baseTransactionSchema = {
@@ -97,11 +98,11 @@ export const encodeTransaction = (transaction, paramsSchema) => {
 };
 
 export const fromTransactionJSON = (transactionJSON, paramsSchema) => {
+  transactionJSON = trimBigintString(transactionJSON);
+
   const tx = codec.fromJSON(baseTransactionSchema, {
     ...transactionJSON,
     params: '',
-    nonce: transactionJSON.nonce.replace(/n$/, ''),
-    fee: transactionJSON.fee.toString().replace(/n$/, ''),
   });
 
   let params;
@@ -110,7 +111,7 @@ export const fromTransactionJSON = (transactionJSON, paramsSchema) => {
       ? codec.decode(paramsSchema, Buffer.from(transactionJSON.params, 'hex'))
       : {};
   } else {
-    params = paramsSchema ? codec.fromJSON(paramsSchema, {...transactionJSON.params, amount: transactionJSON.params.amount.toString().replace(/n$/, '')}) : {};
+    params = paramsSchema ? codec.fromJSON(paramsSchema, transactionJSON.params) : {};
   }
 
   return {

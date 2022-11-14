@@ -67,7 +67,6 @@ const Form = ({ t, nextStep, network }) => {
     } catch (e) {
       setTransaction(undefined);
       setError('Invalid transaction');
-      console.log("MULTI SIG ERROR: ", e)
     }
   };
 

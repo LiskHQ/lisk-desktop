@@ -26,8 +26,6 @@ const SignedAndRemainingMembersList = ({ t }) => {
     [wallet]
   );
 
-  console.log('---> ', signed, remaining, wallet, transaction);
-
   const required = isMultisignatureRegistration
     ? keys.optionalKeys.length + keys.mandatoryKeys.length
     : keys.numberOfSignatures;
