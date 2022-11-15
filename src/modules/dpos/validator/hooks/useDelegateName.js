@@ -1,16 +1,17 @@
 import { useState, useRef, useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
 import { regex } from 'src/const/regex';
+import { DELEGATE_NAME_LENGTH } from '../consts';
 import { useDelegates } from './queries';
 
 const validate = (query, t) => {
   if (query.length === 0) {
     return t('Username can not be empty.');
   }
-  if (query.length < 3) {
+  if (query.length < DELEGATE_NAME_LENGTH.Minimum) {
     return t('Username is too short.');
   }
-  if (query.length > 20) {
+  if (query.length > DELEGATE_NAME_LENGTH.Maximum) {
     return t('Username is too long.');
   }
   const hasInvalidChars = query.replace(regex.delegateSpecialChars, '');
@@ -32,17 +33,21 @@ const useDelegateName = (value) => {
   const [params, setParams] = useState({});
   const { data, isLoading, error } = useDelegates({
     config: { params },
-    options: { enabled: name.value?.length >= 3, retry: false },
+    options: { enabled: name.value?.length >= DELEGATE_NAME_LENGTH.Minimum, retry: false },
   });
 
   const checkUsername = async () => {
-    if (name.value.length >= 3 && name.value.length <= 20 && isLoading) {
+    if (
+      name.value.length >= DELEGATE_NAME_LENGTH.Minimum &&
+      name.value.length <= DELEGATE_NAME_LENGTH.Maximum &&
+      isLoading
+    ) {
       setName({
         ...name,
         loading: true,
       });
     }
-    if (name.value.length >= 3 && !isLoading) {
+    if (name.value.length >= DELEGATE_NAME_LENGTH.Minimum && !isLoading) {
       if (error) {
         setName({
           ...name,
@@ -66,7 +71,7 @@ const useDelegateName = (value) => {
     if (!formatError) {
       timeout.current = setTimeout(() => {
         setParams({ name: name.value });
-      }, 500);
+      }, 1000);
     } else {
       setName({
         ...name,
