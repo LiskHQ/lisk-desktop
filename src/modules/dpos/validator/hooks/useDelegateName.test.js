@@ -52,10 +52,6 @@ describe('useDelegateName', () => {
   });
 
   it('should mark as error if the value is not unique', async () => {
-    // delegateAPI.getDelegate.mockResolvedValue({
-    //   data: [{}],
-    //   meta: {},
-    // });
     useDelegates.mockReturnValue({
       loading: false,
       data: {},
