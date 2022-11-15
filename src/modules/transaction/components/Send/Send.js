@@ -47,7 +47,7 @@ const Send = ({
           <span className={`${styles.information} recipient-confirm`}>
             <b>{formProps.fields.recipient.title}</b>
           </span>
-          <span className={styles.secondText}>
+          <span className={`${styles.secondText} recipient-address`}>
             {transactionJSON.params.recipientAddress}
           </span>
         </div>

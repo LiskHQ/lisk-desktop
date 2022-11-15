@@ -12,6 +12,11 @@
   width: fit-content !important;
 }
 
+.swiperWrapper {
+  margin-left: unset;
+  margin-right: unset;
+}
+
 .navButtonWrapper {
   width: 150px;
   height: 100%;

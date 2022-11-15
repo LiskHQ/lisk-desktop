@@ -324,10 +324,6 @@ const signUsingPrivateKey = (wallet, schema, chainID, transaction, privateKey) =
     (isSender && !isGroupRegistration)
   ) {
     try {
-      console.log("tx to sign::::", transaction,
-      chainIDBuffer,
-      privateKeyBuffer,
-      schema)
       const res = transactions.signTransactionWithPrivateKey(
         transaction,
         chainIDBuffer,
@@ -337,7 +333,6 @@ const signUsingPrivateKey = (wallet, schema, chainID, transaction, privateKey) =
 
       return res;
     } catch (e) {
-      console.log(">>>> error signing:::", e)
       return e;
     }
   }

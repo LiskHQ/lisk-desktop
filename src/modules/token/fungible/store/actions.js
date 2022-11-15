@@ -18,6 +18,10 @@ export const tokensTransferred = (
   formProps,
   transactionJSON,
   privateKey,
+  _,
+  senderAccount,
+  moduleCommandSchemas
+
 ) => async (dispatch, getState) => {
   const state = getState();
   const wallet = selectActiveTokenAccount(state);
@@ -25,9 +29,10 @@ export const tokensTransferred = (
     signTransaction({
       transactionJSON,
       wallet,
-      schema: state.network.networks.LSK.moduleCommandSchemas[formProps.moduleCommand],
+      schema: moduleCommandSchemas[formProps.moduleCommand],
       chainID: state.network.networks.LSK.chainID,
       privateKey,
+      senderAccount,
     }),
   );
 
