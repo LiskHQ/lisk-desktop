@@ -150,8 +150,6 @@ export const transactionBroadcasted = (transaction, moduleCommandSchemas) =>
       { transaction, serviceUrl, moduleCommandSchemas },
     ));
 
-    console.log('bordcasting tx:::',serviceUrl,transaction, error )
-
     if (error) {
       dispatch({
         type: actionTypes.broadcastedTransactionError,
@@ -167,7 +165,7 @@ export const transactionBroadcasted = (transaction, moduleCommandSchemas) =>
       });
 
       const moduleCommand = joinModuleAndCommand(transaction);
-      const paramsSchema = network.networks.LSK.moduleCommandSchemas[moduleCommand];
+      const paramsSchema = moduleCommandSchemas[moduleCommand];
       const transactionJSON = toTransactionJSON(transaction, paramsSchema);
 
       if (transactionJSON.senderPublicKey === wallet.info.LSK.summary.publicKey) {

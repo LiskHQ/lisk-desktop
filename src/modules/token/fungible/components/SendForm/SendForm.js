@@ -57,7 +57,7 @@ const SendForm = (props) => {
     data: { data: activeApps = [] } = {},
     isLoading: isLoadingActiveApps,
     error: errorGettingActiveApps,
-  } = useBlockchainApplicationExplore({ config: { params: { state: 'Active' } } });
+  } = useBlockchainApplicationExplore({ config: { params: { state: 'active' } } });
   const activeAppsList = activeApps.map((app) => app.chainID).join();
   const { data: { data: applications = [] } = {} } = useBlockchainApplicationMeta({
     config: { params: { chainID: activeAppsList } },

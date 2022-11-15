@@ -56,7 +56,6 @@ const TxSignatureCollector = ({
   const isRegisterMultisignature =
     moduleCommand === MODULE_COMMANDS_NAME_MAP.registerMultisignature;
   const txVerification = (privateKey = undefined, publicKey = undefined) => {
-    // console.log('actionFunction');
     /**
      * Non-multisignature account
      *  - Transaction signature
@@ -88,7 +87,9 @@ const TxSignatureCollector = ({
         },
         transactionJSON,
         privateKey,
-        publicKey
+        publicKey,
+        txInitatorAccount,
+        moduleCommandSchemas
       );
     }
 

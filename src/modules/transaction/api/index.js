@@ -284,7 +284,6 @@ export const signTransaction = async ({
   senderAccount,
 }) => {
   const transaction = fromTransactionJSON(transactionJSON, schema);
-  console.log("SCHEMA", schema)
   const result = await sign(
     wallet,
     schema,

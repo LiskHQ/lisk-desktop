@@ -6,6 +6,7 @@ import RegularTxStatus from '../Regular';
 import MultisignatureTxStatus from '../Multisignature';
 import RequestedTxStatus from '../RequestedTxStatus';
 
+// eslint-disable-next-line max-statements
 const TxBroadcaster = (props) => {
   const [txType, setTxType] = useState('pending');
   const { moduleCommandSchemas } = useCommandSchema();

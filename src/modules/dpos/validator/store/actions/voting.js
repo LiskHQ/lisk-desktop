@@ -71,16 +71,10 @@ export const voteEdited = (data) => async (dispatch) =>
  * @param {promise} API call response
  */
 export const votesSubmitted =
-  (formProps, transactionJSON, privateKey, moduleCommandSchemas, senderAccount) =>
+  (formProps, transactionJSON, privateKey,_, senderAccount, moduleCommandSchemas) =>
   async (dispatch, getState) => {
     const state = getState();
     const activeWallet = selectActiveTokenAccount(state);
-    console.log(
-      'there was vote error:: ',
-      joinModuleAndCommand(transactionJSON),
-      moduleCommandSchemas,
-      moduleCommandSchemas[joinModuleAndCommand(transactionJSON)]
-    );
     const [error, tx] = await to(
       signTransaction({
         transactionJSON,

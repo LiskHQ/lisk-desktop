@@ -48,7 +48,7 @@ const Regular = ({
   const goToWallet = () => {
     history.push(routes.wallet.path);
   };
-  console.log('status::::', status);
+
   return (
     <div className={`${styles.wrapper} ${className}`}>
       {typeof illustration === 'string' ? (

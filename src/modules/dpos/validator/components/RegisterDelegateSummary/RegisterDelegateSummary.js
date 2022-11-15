@@ -24,7 +24,9 @@ const RegisterDelegateSummary = ({
   };
   const onCancelAction = {
     label: t('Go back'),
-    onClick: () => { prevStep({ formProps, transactionJSON, }); },
+    onClick: () => {
+      prevStep({ formProps, transactionJSON });
+    },
   };
 
   return (
