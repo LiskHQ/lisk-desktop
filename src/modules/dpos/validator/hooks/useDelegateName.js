@@ -36,10 +36,12 @@ const useDelegateName = (value) => {
   });
 
   const checkUsername = async () => {
-    setName({
-      ...name,
-      loading: true,
-    });
+    if (name.value.length >= 3 && name.value.length <= 20 && isLoading) {
+      setName({
+        ...name,
+        loading: true,
+      });
+    }
     if (name.value.length >= 3 && !isLoading) {
       if (error) {
         setName({
