@@ -2,7 +2,6 @@ import to from 'await-to-js';
 // import { tokenMap } from '@token/fungible/consts/tokens';
 import { selectActiveTokenAccount } from 'src/redux/selectors';
 import { signTransaction } from '@transaction/api';
-import { timerReset } from '@auth/store/action';
 import txActionTypes from '@transaction/store/actionTypes';
 import { joinModuleAndCommand } from '@transaction/utils';
 import { getVotes } from '../../api';
@@ -92,7 +91,6 @@ export const votesSubmitted =
       });
     } else {
       dispatch({ type: actionTypes.votesSubmitted });
-      dispatch(timerReset());
       dispatch({
         type: txActionTypes.transactionCreatedSuccess,
         data: tx,

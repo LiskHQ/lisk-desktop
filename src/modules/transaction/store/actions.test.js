@@ -253,17 +253,12 @@ describe.skip('actions: transactions', () => {
         type: actionTypes.broadcastedTransactionSuccess,
         data: sampleTransaction,
       };
-      const lastExpectedAction = {
-        type: walletActionTypes.timerReset,
-        data: new Date(),
-      };
 
       // Act
       await transactionBroadcasted(sampleTransaction)(dispatch, getState);
 
       // Assert
       expect(dispatch).toHaveBeenCalledWith(expectedAction);
-      expect(dispatch).toHaveBeenLastCalledWith(lastExpectedAction);
     });
 
     it('should dispatch broadcastedTransactionError action when broadcast has an error', async () => {
@@ -301,7 +296,6 @@ describe.skip('actions: transactions', () => {
       //   type: actionTypes.pendingTransactionAdded,
       //   data: { ...transformedAccountTransaction, isPending: true },
       // };
-      const expectedAction3 = { data: expect.anything(), type: walletActionTypes.timerReset };
 
       // Act
       await transactionBroadcasted(sampleTransaction)(dispatch, getState);
@@ -309,8 +303,6 @@ describe.skip('actions: transactions', () => {
       // Assert
       expect(httpApi).toHaveBeenCalled();
       expect(dispatch).toHaveBeenNthCalledWith(1, expectedAction1);
-      // expect(dispatch).toHaveBeenNthCalledWith(2, expectedAction2);
-      expect(dispatch).toHaveBeenNthCalledWith(3, expectedAction3);
     });
   });
 
