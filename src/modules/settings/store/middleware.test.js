@@ -1,6 +1,5 @@
 import { pricesRetrieved, settingsUpdated } from 'src/redux/actions';
 import networkActionTypes from '@network/store/actionTypes';
-import * as storageUtils from 'src/utils/localJSONStorage';
 import actionTypes from './actionTypes';
 import settingsMiddleware from './middleware';
 
@@ -64,15 +63,6 @@ describe('Middleware: Settings', () => {
 
       settingsMiddleware(store)(next)(action);
       expect(pricesRetrieved).not.toBeCalled();
-    });
-
-    it('should call setInStorage', () => {
-      const action = {
-        type: actionTypes.settingsUpdated,
-      };
-
-      settingsMiddleware(store)(next)(action);
-      expect(storageUtils.setInStorage).toHaveBeenCalledWith('token', token);
     });
   });
 });

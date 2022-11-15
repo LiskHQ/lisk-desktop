@@ -13,6 +13,8 @@ import { useCurrentAccount } from '@account/hooks';
 import { mockAppTokens } from '@tests/fixtures/token';
 import mockSavedAccounts from '@tests/fixtures/accounts';
 import { mockTokensBalance, mockTokensSupported } from '@token/fungible/__fixtures__/mockTokens';
+import { useBlockchainApplicationExplore } from '@blockchainApplication/explore/hooks/queries/useBlockchainApplicationExplore';
+import { mockBlockchainApp } from '@blockchainApplication/explore/__fixtures__';
 import { useBlockchainApplicationMeta } from '@blockchainApplication/manage/hooks/queries/useBlockchainApplicationMeta';
 import { mockBlockchainAppMeta } from '@blockchainApplication/manage/__fixtures__';
 import useMessageField from '../../hooks/useMessageField';
@@ -29,6 +31,7 @@ jest.mock('@blockchainApplication/manage/hooks/useCurrentApplication');
 jest.mock('@account/hooks/useCurrentAccount');
 jest.mock('@token/fungible/hooks/queries');
 jest.mock('@blockchainApplication/manage/hooks/queries/useBlockchainApplicationMeta');
+jest.mock('@blockchainApplication/explore/hooks/queries/useBlockchainApplicationExplore');
 
 jest.mock('@transaction/hooks/useTransactionFeeCalculation', () =>
   jest.fn().mockReturnValue({
@@ -56,6 +59,7 @@ describe('Form', () => {
   useCurrentApplication.mockReturnValue([mockCurrentApplication, mockSetCurrentApplication]);
 
   useCurrentAccount.mockReturnValue([mockSavedAccounts[0], mockSetAccount]);
+  useBlockchainApplicationExplore.mockReturnValue({ data: mockBlockchainApp, isSuccess: true });
   useBlockchainApplicationMeta.mockReturnValue({ data: mockBlockchainAppMeta, isSuccess: true });
 
   beforeEach(() => {
@@ -310,7 +314,6 @@ describe('Form', () => {
       const wrapper = mountWithQueryClient(Form, props);
       const fromChainDropdown = wrapper.find('div[data-testid="selected-menu-item"]').at(0);
       const toChainDropdown = wrapper.find('div[data-testid="selected-menu-item"]').at(1);
-
 
       expect(fromChainDropdown.text()).toBe(mockCurrentApplication.chainName);
       expect(toChainDropdown.text()).toBe(mockCurrentApplication.chainName);

@@ -68,12 +68,12 @@ const Multisignature = ({
   transactionBroadcasted,
   account,
   network,
+  moduleCommandSchemas,
 }) => {
   const [copied, setCopied] = useState(false);
 
   const onCopy = () => {
-    const schema =
-      network.moduleCommandSchemas[joinModuleAndCommand(transactions.signedTransaction)];
+    const schema = moduleCommandSchemas[joinModuleAndCommand(transactions.signedTransaction)];
     const jsonParams = codec.codec.toJSON(schema, transactions.signedTransaction.params);
 
     copyToClipboard(
@@ -91,7 +91,7 @@ const Multisignature = ({
   };
 
   const onSend = () => {
-    transactionBroadcasted(transactions.signedTransaction);
+    transactionBroadcasted(transactions.signedTransaction, moduleCommandSchemas);
   };
 
   const goToWallet = () => {

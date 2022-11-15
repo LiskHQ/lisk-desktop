@@ -2,6 +2,7 @@ import React, { useEffect } from 'react';
 import { useCurrentAccount } from '@account/hooks';
 import { useAuth } from '@auth/hooks/queries';
 import TransactionSummary from '@transaction/manager/transactionSummary';
+import { useCommandSchema } from '@network/hooks';
 import { isEmpty } from 'src/utils/helpers';
 import ProgressBar from '../RegisterMultisigView/ProgressBar';
 import styles from './styles.css';
@@ -19,6 +20,7 @@ const Summary = ({
   const { data: account } = useAuth({
     config: { params: { address: sender.metadata.address } },
   });
+  const { moduleCommandSchemas } = useCommandSchema();
 
   const onConfirmAction = {
     label: t('Sign'),
@@ -26,6 +28,7 @@ const Summary = ({
       multisigTransactionSigned({
         formProps,
         transactionJSON,
+        moduleCommandSchemas,
         sender: { ...account.data },
       });
     },

@@ -1,16 +1,19 @@
 import React, { useMemo, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useForm } from 'react-hook-form';
+import { useSelector } from 'react-redux';
 
 import WalletVisual from '@wallet/components/walletVisual';
 import { decryptAccount } from '@account/utils/encryptAccount';
-import { useCurrentAccount } from '@account/hooks';
+import { selectActiveTokenAccount } from 'src/redux/selectors';
+import { useAccounts, useCurrentAccount } from '@account/hooks';
 import { Input } from 'src/theme';
 import Box from 'src/theme/box';
 import BoxContent from 'src/theme/box/content';
 import { PrimaryButton } from 'src/theme/buttons';
 import styles from './EnterPasswordForm.css';
 
+// eslint-disable-next-line max-statements
 const EnterPasswordForm = ({ onEnterPasswordSuccess, title, encryptedAccount, isDisabled }) => {
   const { t } = useTranslation();
   const {
@@ -18,21 +21,24 @@ const EnterPasswordForm = ({ onEnterPasswordSuccess, title, encryptedAccount, is
     watch,
     handleSubmit,
   } = useForm();
+  const activeAccount = useSelector(selectActiveTokenAccount);
+  const { getAccountByAddress } = useAccounts();
   const [currentAccount] = useCurrentAccount();
   const [feedbackError, setFeedbackError] = useState('');
-  const account = useMemo(() => encryptedAccount || currentAccount, [currentAccount]);
+  const requestedAccount = getAccountByAddress(activeAccount.summary.address);
+  const account = useMemo(() => encryptedAccount || requestedAccount || currentAccount, [currentAccount]);
   const formValues = watch();
 
   const onSubmit = async ({ password }) => {
     const { error, result } = await decryptAccount(
       account.encryptedPassphrase, password,
     );
-      console.log('----->>>>', error, password, account.encryptedPassphrase)
+
     if (error) {
       const errorMessage = t('Unable to decrypt account. Please check your password');
       return setFeedbackError(errorMessage);
     }
-    console.log('----->>>>')
+    
     return onEnterPasswordSuccess({
       recoveryPhrase: result.recoveryPhrase,
       encryptedAccount: account,

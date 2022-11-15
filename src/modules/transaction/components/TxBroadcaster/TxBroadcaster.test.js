@@ -6,6 +6,10 @@ import TxBroadcaster from './TxBroadcaster';
 import Regular from '../Regular';
 import Multisignature from '../Multisignature';
 
+jest.mock('@libs/wcm/hooks/useSession', () => ({
+  respond: jest.fn(),
+}));
+
 describe('TxBroadcaster', () => {
   const props = {
     transactions: {
@@ -25,6 +29,9 @@ describe('TxBroadcaster', () => {
     },
     t: t => t,
     illustration: 'default',
+    location: {
+      search: '',
+    },
   };
 
   it('should render Regular component with props', () => {

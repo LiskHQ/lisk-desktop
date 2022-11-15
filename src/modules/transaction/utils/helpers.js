@@ -33,6 +33,8 @@ export const getFeeStatus = ({ fee, token, customFee }) => {
   return !fee.error ? `${formatAmountBasedOnLocale({ value: fee.value })} ${token}` : fee.feedback;
 };
 
+export const getSpaceSeparated = (str) => str.replace(/([A-Z])/g, ' $1');
+
 export default getTxDirectionConfig;
 
 export const trimBigintString = (data) => {
@@ -43,13 +45,14 @@ export const trimBigintString = (data) => {
     const value = data[key];
     const isObject = typeof value === 'object' && !Array.isArray(value);
     const isArray = Array.isArray(value);
-    const isBigIntString = typeof value === 'string' && parseInt(value, 10);
+    const intValue = parseInt(value, 10);
+    const isBigIntString = typeof value === 'string' && (intValue || intValue === 0);
 
     result[key] = value;
 
     if (isObject || isArray) {
       result[key] = trimBigintString(value);
-    } else if (isBigIntString) {
+    } else if (isBigIntString || isBigIntString === 0) {
       result[key] = result[key].replace(/n$/, '');
     }
   });

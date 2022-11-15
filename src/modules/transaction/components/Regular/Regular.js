@@ -32,13 +32,14 @@ const Regular = ({
   className,
   resetTransactionResult,
   transactionBroadcasted,
+  moduleCommandSchemas
 }) => {
   useEffect(() => {
     if (
       !isEmpty(transactions.signedTransaction)
       && !transactions.txSignatureError
     ) {
-      transactionBroadcasted(transactions.signedTransaction);
+      transactionBroadcasted(transactions.signedTransaction, moduleCommandSchemas);
     }
 
     return resetTransactionResult;
@@ -47,7 +48,7 @@ const Regular = ({
   const goToWallet = () => {
     history.push(routes.wallet.path);
   };
-
+  console.log('status::::', status);
   return (
     <div className={`${styles.wrapper} ${className}`}>
       {typeof illustration === 'string' ? (

@@ -36,26 +36,6 @@ const patchTransactionResponse = response => {
   };
 };
 
-/**
- * Retrieves the details of a single transaction
- *
- * @param {Object} data
- * @param {String} data.params
- * @param {String} data.params.id - Id of the transaction
- * @param {String?} data.baseUrl - Lisk Service API url to override the
- * existing ServiceUrl on the network param. We may use this to retrieve
- * the details of an archived transaction.
- * @param {Object} data.network - Network setting from Redux store
- * @returns {Promise} Transaction details API call
- */
-export const getTransaction = ({
-  params, network, baseUrl,
-}) => http({
-  path: httpPaths.transaction,
-  params,
-  network,
-  baseUrl,
-}).then(patchTransactionResponse);
 
 const filters = {
   address: { key: 'address', test: address => !validateAddress(address) },
@@ -202,26 +182,6 @@ export const getTransactionStats = ({ network, params: { period } }) => {
 };
 
 /**
- * Retrieves transaction schemas.
- *
- * @param {Object} data
- * @param {String?} data.baseUrl - Lisk Service API url to override the
- * existing ServiceUrl on the network param. We may use this to retrieve
- * the details of an archived transaction.
- * @param {Object} data.network - Network setting from Redux store
- * @returns {Promise} http call
- */
-export const getSchemas = ({ baseUrl }) => http({
-  path: httpPaths.schemas,
-  baseUrl,
-}).then((response) =>
-  response.data.reduce((acc, data) => {
-    // TODO: Need to change this to command
-    acc[data.moduleAssetId] = data.schema;
-    return acc;
-  }, {}));
-
-/**
  * Returns a dictionary of base fees for low, medium and high processing speeds
  * @returns {Promise<{Low: number, Medium: number, High: number}>} with low,
  * medium and high priority fee options
@@ -256,11 +216,11 @@ export const getTransactionFee = async ({
   selectedPriority,
   wallet,
   numberOfSignatures = DEFAULT_NUMBER_OF_SIGNATURES,
-  network,
+  moduleCommandSchemas,
 }) => {
   const feePerByte = selectedPriority.value;
   const moduleCommand = joinModuleAndCommand(transactionJSON);
-  const paramsSchema = network.networks.LSK.moduleCommandSchemas[moduleCommand];
+  const paramsSchema = moduleCommandSchemas[moduleCommand];
   const maxCommandFee = MODULE_COMMANDS_MAP[moduleCommand].maxFee;
   const transactionObject = fromTransactionJSON(transactionJSON, paramsSchema);
   let numberOfEmptySignatures = 0;
@@ -321,15 +281,17 @@ export const signTransaction = async ({
   wallet,
   transactionJSON,
   privateKey,
+  senderAccount,
 }) => {
   const transaction = fromTransactionJSON(transactionJSON, schema);
-  console.log("=====>>> TX: ", transaction, schema);
+  console.log("SCHEMA", schema)
   const result = await sign(
     wallet,
     schema,
     chainID,
     transaction,
     privateKey,
+    senderAccount
   );
 
   return result;
@@ -344,21 +306,20 @@ export const signTransaction = async ({
  * @param {string} network.address - the node address e.g. https://service.lisk.com
  * @returns {Promise} promise that resolves to a transaction or rejects with an error
  */
-export const broadcast = async ({ transaction, serviceUrl, network }) => {
+export const broadcast = async ({ transaction, serviceUrl, moduleCommandSchemas }) => {
   const moduleCommand = joinModuleAndCommand({
     module: transaction.module,
     command: transaction.command,
   });
-  const schema = network.networks.LSK.moduleCommandSchemas[moduleCommand];
+  const schema = moduleCommandSchemas[moduleCommand];
   const binary = transactions.getBytes(transaction, schema);
   const payload = binary.toString('hex');
-  const body = JSON.stringify({ transaction: payload });
 
   const response = await http({
     method: 'POST',
     baseUrl: serviceUrl,
     path: '/api/v3/transactions',
-    body,
+    data: { transaction: payload },
   });
 
   return response;

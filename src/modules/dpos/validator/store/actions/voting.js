@@ -4,6 +4,7 @@ import { selectActiveTokenAccount } from 'src/redux/selectors';
 import { signTransaction } from '@transaction/api';
 import { timerReset } from '@auth/store/action';
 import txActionTypes from '@transaction/store/actionTypes';
+import { joinModuleAndCommand } from '@transaction/utils';
 import { getVotes } from '../../api';
 import actionTypes from './actionTypes';
 
@@ -69,34 +70,41 @@ export const voteEdited = (data) => async (dispatch) =>
  * @param {object} data.votes
  * @param {promise} API call response
  */
-export const votesSubmitted = (formProps, transactionJSON, privateKey) => async (dispatch, getState) => {
-  const state = getState();
-  const activeWallet = selectActiveTokenAccount(state);
-
-  const [error, tx] = await to(
-    signTransaction({
-      transactionJSON,
-      wallet: activeWallet,
-      schema: state.network.networks.LSK.moduleCommandSchemas[formProps.moduleCommand],
-      chainID: state.network.networks.LSK.chainID,
-      privateKey,
-    })
-  );
-
-  if (error) {
-    dispatch({
-      type: txActionTypes.transactionSignError,
-      data: error,
-    });
-  } else {
-    dispatch({ type: actionTypes.votesSubmitted });
-    dispatch(timerReset());
-    dispatch({
-      type: txActionTypes.transactionCreatedSuccess,
-      data: tx,
-    });
-  }
-};
+export const votesSubmitted =
+  (formProps, transactionJSON, privateKey, moduleCommandSchemas, senderAccount) =>
+  async (dispatch, getState) => {
+    const state = getState();
+    const activeWallet = selectActiveTokenAccount(state);
+    console.log(
+      'there was vote error:: ',
+      joinModuleAndCommand(transactionJSON),
+      moduleCommandSchemas,
+      moduleCommandSchemas[joinModuleAndCommand(transactionJSON)]
+    );
+    const [error, tx] = await to(
+      signTransaction({
+        transactionJSON,
+        wallet: activeWallet,
+        schema: moduleCommandSchemas[joinModuleAndCommand(transactionJSON)],
+        chainID: state.network.networks.LSK.chainID,
+        privateKey,
+        senderAccount,
+      })
+    );
+    if (error) {
+      dispatch({
+        type: txActionTypes.transactionSignError,
+        data: error,
+      });
+    } else {
+      dispatch({ type: actionTypes.votesSubmitted });
+      dispatch(timerReset());
+      dispatch({
+        type: txActionTypes.transactionCreatedSuccess,
+        data: tx,
+      });
+    }
+  };
 
 /**
  * Fetches the list of votes of the host wallet.
@@ -104,7 +112,6 @@ export const votesSubmitted = (formProps, transactionJSON, privateKey) => async 
 export const votesRetrieved = () => async (dispatch, getState) => {
   const { network, account } = getState();
   const address = account.current?.metadata?.address;
-
   try {
     const votes = await getVotes({ network, params: { address } });
     dispatch({
@@ -128,42 +135,39 @@ export const votesRetrieved = () => async (dispatch, getState) => {
  * @param {string} data.selectedFee
  * @returns {promise}
  */
-export const balanceUnlocked = (
-  formProps,
-  transactionJSON,
-  privateKey,
-) => async (dispatch, getState) => {
-  //
-  // Collect data
-  //
-  const state = getState();
-  const activeWallet = selectActiveTokenAccount(state);
+export const balanceUnlocked =
+  (formProps, transactionJSON, privateKey) => async (dispatch, getState) => {
+    //
+    // Collect data
+    //
+    const state = getState();
+    const activeWallet = selectActiveTokenAccount(state);
 
-  //
-  // Create the transaction
-  //
-  const [error, tx] = await to(
-    signTransaction({
-      transactionJSON,
-      wallet: activeWallet,
-      schema: state.network.networks.LSK.moduleCommandSchemas[formProps.moduleCommand],
-      chainID: state.network.networks.LSK.chainID,
-      privateKey,
-    })
-  );
+    //
+    // Create the transaction
+    //
+    const [error, tx] = await to(
+      signTransaction({
+        transactionJSON,
+        wallet: activeWallet,
+        schema: state.network.networks.LSK.moduleCommandSchemas[formProps.moduleCommand],
+        chainID: state.network.networks.LSK.chainID,
+        privateKey,
+      })
+    );
 
-  //
-  // Dispatch corresponding action
-  //
-  if (!error) {
-    dispatch({
-      type: txActionTypes.transactionCreatedSuccess,
-      data: tx,
-    });
-  } else {
-    dispatch({
-      type: txActionTypes.transactionSignError,
-      data: error,
-    });
-  }
-};
+    //
+    // Dispatch corresponding action
+    //
+    if (!error) {
+      dispatch({
+        type: txActionTypes.transactionCreatedSuccess,
+        data: tx,
+      });
+    } else {
+      dispatch({
+        type: txActionTypes.transactionSignError,
+        data: error,
+      });
+    }
+  };

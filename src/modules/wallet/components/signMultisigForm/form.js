@@ -1,7 +1,8 @@
 /* eslint-disable complexity */
 import React, { useState, useEffect } from 'react';
 import { fromTransactionJSON, toTransactionJSON } from '@transaction/utils/encoding';
-import { joinModuleAndCommand } from 'src/modules/transaction/utils/moduleCommand';
+import { joinModuleAndCommand } from '@transaction/utils/moduleCommand';
+import { useCommandSchema } from '@network/hooks';
 import Box from 'src/theme/box';
 import BoxContent from 'src/theme/box/content';
 import BoxFooter from 'src/theme/box/footer';
@@ -35,10 +36,11 @@ const getTransactionObject = (transaction, moduleCommandSchemas) => {
   };
 };
 
-const Form = ({ t, nextStep, network }) => {
+const Form = ({ t, nextStep }) => {
   const [transaction, setTransaction] = useState();
   const [transactionObject, setTransactionObject] = useState();
   const [error, setError] = useState();
+  const { moduleCommandSchemas } = useCommandSchema();
   // @todo Once the transactions are refactored and working, we should
   // use the schema returned by this hook instead of reading from the Redux store.
   useSchemas();
@@ -46,7 +48,7 @@ const Form = ({ t, nextStep, network }) => {
 
   const onReview = () => {
     try {
-      const paramsSchema = getParamsSchema(transaction, network.networks.LSK.moduleCommandSchemas);
+      const paramsSchema = getParamsSchema(transaction, moduleCommandSchemas);
       const moduleCommand = joinModuleAndCommand(transaction);
       const formProps = { moduleCommand };
       nextStep({ formProps, transactionJSON: toTransactionJSON(transactionObject, paramsSchema) });
@@ -57,10 +59,10 @@ const Form = ({ t, nextStep, network }) => {
 
   const validateAndSetTransaction = (value) => {
     setError(undefined);
-  
+
     try {
       setTransaction(value);
-      const result = getTransactionObject(value, network.networks.LSK.moduleCommandSchemas);
+      const result = getTransactionObject(value, moduleCommandSchemas);
       setTransactionObject(result.transactionObject);
       // TODO: Need to handle the validator error and show to end user
       setError(result.isValid ? 'Unknown transaction' : undefined);

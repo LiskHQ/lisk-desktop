@@ -1,5 +1,6 @@
 import { useSelector } from 'react-redux';
 import { useEffect, useReducer } from 'react';
+import { useCommandSchema } from '@network/hooks';
 import { getTransactionFee } from '../api';
 import { getNumberOfSignatures } from '../utils/transaction';
 import { actionTypes, reducer, getInitialState } from '../store/transactionPriorityReducer';
@@ -24,6 +25,7 @@ const useTransactionFeeCalculation = ({
 }) => {
   const network = useSelector(state => state.network);
   const [state, dispatch] = useReducer(reducer, wallet, getInitialState);
+  const { moduleCommandSchemas } = useCommandSchema();
 
   const calculateTransactionFees = async (params) => {
     const fee = await getTransactionFee(params);
@@ -49,11 +51,11 @@ const useTransactionFeeCalculation = ({
 
   useEffect(() => {
     // istanbul ignore else
-    if (network.networks.LSK.moduleCommandSchemas) {
+    if (moduleCommandSchemas) {
       calculateTransactionFees({
         token,
         wallet,
-        network,
+        moduleCommandSchemas,
         transactionJSON,
         selectedPriority,
         numberOfSignatures: getNumberOfSignatures(wallet, transactionJSON),

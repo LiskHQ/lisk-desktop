@@ -1,7 +1,6 @@
 /* istanbul ignore file */
 import { compose } from 'redux';
 import { withRouter } from 'react-router-dom';
-// import { getApplication } from '@blockchainApplication/explore/api';
 import mockManagedApplications from '@tests/fixtures/blockchainApplicationsManage';
 import withData from 'src/utils/withData';
 import { parseSearchParams } from 'src/utils/searchParams';

@@ -2,8 +2,9 @@ import React, { useEffect } from 'react';
 import { useDispatch } from 'react-redux';
 // import { signatureCollectionStatus } from '@transaction/configuration/txStatus';
 import { TertiaryButton } from 'src/theme/buttons';
-import Icon from 'src/theme/Icon';
 import { secondPassphraseRemoved } from '@auth/store/action';
+import { useCommandSchema } from '@network/hooks';
+import Icon from 'src/theme/Icon';
 import Box from 'src/theme/box';
 import Illustration from 'src/modules/common/components/illustration';
 import BoxContent from 'src/theme/box/content';
@@ -33,6 +34,7 @@ const TxSignatureCollector = ({
   selectedPriority,
 }) => {
   const [sender] = useCurrentAccount();
+  const { moduleCommandSchemas } = useCommandSchema();
 
   // here, we want to get the auth account details of the user presently wanting to sign the transaction
   const { data: account, isLoading: isGettingAuthData } = useAuth({
@@ -44,7 +46,7 @@ const TxSignatureCollector = ({
     transactionJSON,
   });
 
-  const deviceType = getDeviceType(account.hwInfo?.deviceModel);
+  const deviceType = getDeviceType(account?.hwInfo?.deviceModel);
   const dispatch = useDispatch();
   const isTransactionAuthor = transactionJSON.senderPublicKey === sender.metadata.pubkey;
   const isAuthorAccountMultisignature =
@@ -53,8 +55,8 @@ const TxSignatureCollector = ({
   const moduleCommand = joinModuleAndCommand(transactionJSON);
   const isRegisterMultisignature =
     moduleCommand === MODULE_COMMANDS_NAME_MAP.registerMultisignature;
-
   const txVerification = (privateKey = undefined, publicKey = undefined) => {
+    // console.log('actionFunction');
     /**
      * Non-multisignature account
      *  - Transaction signature
@@ -95,6 +97,7 @@ const TxSignatureCollector = ({
       transactionJSON,
       privateKey,
       txInitatorAccount,
+      moduleCommandSchemas,
       sender: { ...account.data }, // this is the account of the present user wanting to sign the transaction
     });
 

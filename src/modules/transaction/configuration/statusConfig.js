@@ -18,7 +18,7 @@ export const statusMessages = (t) => ({
   },
   [txStatusTypes.signatureSuccess]: {
     title: t('Submitting the transaction'),
-    message: t('Your transaction is being submitted to the blockchain.'),
+    message: t('Your transaction is signed successfully.'),
   },
   [txStatusTypes.multisigBroadcastSuccess]: {
     title: t('Transaction submitted'),

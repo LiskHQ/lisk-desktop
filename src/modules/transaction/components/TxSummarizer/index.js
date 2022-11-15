@@ -34,9 +34,13 @@ const TxSummarizer = ({
   confirmButtonText,
   cancelButtonText,
 }) => {
-  const fee = !(wallet.summary.isMultisignature
-    || formProps.moduleCommand === MODULE_COMMANDS_NAME_MAP.registerMultisignature
-  ) ? transactionJSON.fee : 0;
+  const fee = !(
+    wallet.summary.isMultisignature ||
+    formProps.moduleCommand === MODULE_COMMANDS_NAME_MAP.registerMultisignature
+  )
+    ? transactionJSON.fee
+    : 0;
+
   const tooltip = {
     title: t('Transaction fee'),
     children: t(

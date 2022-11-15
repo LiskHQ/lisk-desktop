@@ -19,7 +19,7 @@ import actionTypes from '@network/store/actionTypes';
  *
  * @returns the query object
  */
-export const useSchemas = ({ config: customConfig = {}, options } = { }) => {
+ export const useSchemas = ({ config: customConfig = {}, options } = { }) => {
   const dispatch = useDispatch();
   const config = {
     url: `/api/${API_VERSION}/schemas`,
@@ -39,7 +39,7 @@ export const useSchemas = ({ config: customConfig = {}, options } = { }) => {
     if (schemas.data) {
       dispatch({
         type: actionTypes.schemasRetrieved,
-        data: schemas.data.data,
+        data: schemas.data.data.commands,
       });
     }
   }, [schemas.data]);

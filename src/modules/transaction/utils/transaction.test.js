@@ -200,16 +200,9 @@ describe('API: LSK Transactions', () => {
     });
 
     it('creates a transaction object for unlockToken transaction', () => {
-      const unlockObjects = [
-        { delegateAddress: accounts.genesis.summary.address, amount: '-1000' },
-        { delegateAddress: accounts.delegate.summary.address, amount: '1000' },
-      ];
       const tx = {
         ...baseDesktopTx,
         moduleCommand: unlock,
-        params: {
-          unlockObjects,
-        },
       };
       const txObj = fromTransactionJSON(tx, moduleCommandSchemas['dpos:unlock']);
       const [module, command] = splitModuleAndCommand(unlock);
@@ -217,12 +210,6 @@ describe('API: LSK Transactions', () => {
         ...baseElementsTx,
         module,
         command,
-        params: {
-          unlockObjects: tx.params.unlockObjects.map((item) => ({
-            amount: BigInt(item.amount),
-            delegateAddress: expect.arrayContaining([]),
-          })),
-        },
       });
     });
 

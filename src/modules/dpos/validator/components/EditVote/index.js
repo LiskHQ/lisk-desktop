@@ -6,9 +6,9 @@ import {
   removeSearchParamsFromUrl,
   removeThenAppendSearchParamsToUrl,
 } from 'src/utils/searchParams';
-import { useCurrentAccount } from 'src/modules/account/hooks';
+import { useCurrentAccount } from '@account/hooks';
 import { fromRawLsk, toRawLsk } from '@token/fungible/utils/lsk';
-import { useTokensBalance } from 'src/modules/token/fungible/hooks/queries';
+import { useTokensBalance } from '@token/fungible/hooks/queries';
 import Dialog from 'src/theme/dialog/dialog';
 import Box from 'src/theme/box';
 import BoxContent from 'src/theme/box/content';
@@ -16,12 +16,13 @@ import BoxFooter from 'src/theme/box/footer';
 import BoxHeader from 'src/theme/box/header';
 import BoxInfoText from 'src/theme/box/infoText';
 import AmountField from 'src/modules/common/components/amountField';
-import WalletVisual from 'src/modules/wallet/components/walletVisual';
+import { useSchemas } from '@transaction/hooks/queries/useSchemas';
+import WalletVisual from '@wallet/components/walletVisual';
 import routes from 'src/routes/routes';
 import TokenAmount from '@token/fungible/components/tokenAmount';
 import WarnPunishedDelegate from '@dpos/validator/components/WarnPunishedDelegate';
-import { useBlocks } from 'src/modules/block/hooks/queries/useBlocks';
-import { useAuth } from 'src/modules/auth/hooks/queries';
+import { useBlocks } from '@block/hooks/queries/useBlocks';
+import { useAuth } from '@auth/hooks/queries';
 import { PrimaryButton, SecondaryButton, WarningButton } from 'src/theme/buttons';
 import useVoteAmountField from '../../hooks/useVoteAmountField';
 import getMaxAmount from '../../utils/getMaxAmount';
@@ -47,6 +48,7 @@ const getTitles = (t) => ({
 // eslint-disable-next-line max-statements
 const EditVote = ({ history, voteEdited, network, voting, votesRetrieved }) => {
   const { t } = useTranslation();
+  useSchemas();
   const [
     {
       metadata: { address: currentAddress },

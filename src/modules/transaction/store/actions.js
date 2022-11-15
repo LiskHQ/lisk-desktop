@@ -139,7 +139,7 @@ export const transactionDoubleSigned = () => async (dispatch, getState) => {
  * @param {Number} transaction.fee - In raw format, used for updating the TX List.
  * @param {Number} transaction.reference - Data field for LSK transactions
  */
-export const transactionBroadcasted = transaction =>
+export const transactionBroadcasted = (transaction, moduleCommandSchemas) =>
   // eslint-disable-next-line max-statements
   async (dispatch, getState) => {
     const { network, token, wallet } = getState();
@@ -147,8 +147,10 @@ export const transactionBroadcasted = transaction =>
     const serviceUrl = network.networks[activeToken].serviceUrl;
 
     const [error] = await to(broadcast(
-      { transaction, serviceUrl, network },
+      { transaction, serviceUrl, moduleCommandSchemas },
     ));
+
+    console.log('bordcasting tx:::',serviceUrl,transaction, error )
 
     if (error) {
       dispatch({
@@ -191,6 +193,7 @@ export const multisigTransactionSigned = ({
   sender,
   privateKey,
   txInitatorAccount,
+  moduleCommandSchemas,
 }) => async (dispatch, getState) => {
   const state = getState();
   const activeWallet = selectActiveTokenAccount(state);
@@ -201,7 +204,7 @@ export const multisigTransactionSigned = ({
     sender,
     transactionJSON,
     txStatus,
-    state.network.networks.LSK.moduleCommandSchemas[formProps.moduleCommand],
+    moduleCommandSchemas[formProps.moduleCommand],
     state.network.networks.LSK.chainID,
     privateKey,
     txInitatorAccount, // this is the intitor of the transaction wanting to be signed

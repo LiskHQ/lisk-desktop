@@ -260,4 +260,24 @@ export const modals = {
     isPrivate: false,
     forbiddenTokens: [],
   },
+  connectionProposal: {
+    isPrivate: false,
+    forbiddenTokens: [],
+  },
+  sessionManager: {
+    isPrivate: false,
+    forbiddenTokens: [],
+  },
+  connectionSummary: {
+    isPrivate: false,
+    forbiddenTokens: [],
+  },
+  RequestView: {
+    isPrivate: false,
+    forbiddenTokens: [],
+  },
+  connectionStatus: {
+    isPrivate: false,
+    forbiddenTokens: [],
+  },
 };

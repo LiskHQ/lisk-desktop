@@ -1,22 +1,28 @@
 /* eslint-disable complexity */
 import React, { useEffect, useState } from 'react';
 import { txStatusTypes } from '@transaction/configuration/txStatus';
-import Regular from '../Regular';
-import Multisignature from '../Multisignature';
+import { useCommandSchema } from '@network/hooks';
+import RegularTxStatus from '../Regular';
+import MultisignatureTxStatus from '../Multisignature';
+import RequestedTxStatus from '../RequestedTxStatus';
 
 const TxBroadcaster = (props) => {
   const [txType, setTxType] = useState('pending');
+  const { moduleCommandSchemas } = useCommandSchema();
 
   useEffect(() => {
-    const isMultisig = !props.transactions.txSignatureError
-      && props.status.code !== txStatusTypes.broadcastSuccess
-      && (
-        props.transactions.signedTransaction.signatures.length > 1
-        || props.status.code === txStatusTypes.multisigSignaturePartialSuccess
-        || props.account.summary.isMultisignature
-        || props.account.summary.publicKey !== props.transactions.signedTransaction.senderPublicKey.toString('hex')
-      );
-    if (isMultisig) {
+    const isMultisig =
+      !props.transactions.txSignatureError &&
+      props.status.code !== txStatusTypes.broadcastSuccess &&
+      (props.transactions.signedTransaction.signatures.length > 1 ||
+        props.status.code === txStatusTypes.multisigSignaturePartialSuccess ||
+        props.status.code === txStatusTypes.multisigSignatureSuccess ||
+        props.account.summary.isMultisignature ||
+        props.account.summary.publicKey !==
+          props.transactions.signedTransaction.senderPublicKey.toString('hex'));
+    if (props.location.search?.includes('request')) {
+      setTxType('requested');
+    } else if (isMultisig) {
       setTxType('isMultisig');
     } else {
       setTxType('regular');
@@ -27,12 +33,17 @@ const TxBroadcaster = (props) => {
    * 1. Regular accounts
    * 2. 2nd passphrase accounts
    */
+
+  if (txType === 'requested') {
+    return <RequestedTxStatus moduleCommandSchemas={moduleCommandSchemas} {...props} />;
+  }
+
   if (txType === 'regular') {
-    return (<Regular {...props} />);
+    return <RegularTxStatus moduleCommandSchemas={moduleCommandSchemas} {...props} />;
   }
 
   if (txType === 'isMultisig') {
-    return (<Multisignature {...props} />);
+    return <MultisignatureTxStatus moduleCommandSchemas={moduleCommandSchemas} {...props} />;
   }
   return <div />;
 };

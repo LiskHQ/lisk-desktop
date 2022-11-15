@@ -19,7 +19,6 @@ const Status = ({ transactions, t, transactionJSON }) => {
   const { txInitatorAccount } = useTxInitatorAccount({
     transactionJSON,
   });
-
   const { mandatoryKeys, optionalKeys, numberOfSignatures, publickKey } = txInitatorAccount;
 
   const { canSenderSignTx } = useMultiSignatureStatus({
@@ -44,7 +43,7 @@ const Status = ({ transactions, t, transactionJSON }) => {
   );
 
   const template = statusMessages(t)[status.code];
-
+  console.log('TX STATU: ', status);
   return (
     <section>
       <Box className={styles.boxContainer}>

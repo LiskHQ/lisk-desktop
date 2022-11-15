@@ -1,7 +1,7 @@
 import React from 'react';
 import Icon from 'src/theme/Icon';
-import WalletVisual from '@wallet/components/walletVisual';
 import { truncateAddress } from '@wallet/utils/account';
+import WalletVisual from '@wallet/components/walletVisual';
 import styles from './AccountRow.css';
 
 function AccountRow({
