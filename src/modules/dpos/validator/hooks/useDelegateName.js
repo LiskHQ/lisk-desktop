@@ -1,14 +1,13 @@
 import { useState, useRef, useEffect } from 'react';
-import { useSelector } from 'react-redux';
 import { useTranslation } from 'react-i18next';
-import { getDelegate } from '@dpos/validator/api';
 import { regex } from 'src/const/regex';
+import { useDelegates } from './queries';
 
 const validate = (query, t) => {
   if (query.length === 0) {
     return t('Username can not be empty.');
   }
-  if (query.length < 2) {
+  if (query.length < 3) {
     return t('Username is too short.');
   }
   if (query.length > 20) {
@@ -30,39 +29,42 @@ const useDelegateName = (value) => {
   });
   const timeout = useRef();
   const { t } = useTranslation();
-  const network = useSelector(state => state.network);
+  const [params, setParams] = useState({});
+  const { data, isLoading, error } = useDelegates({
+    config: { params },
+    options: { enabled: name.value?.length >= 3, retry: false },
+  });
 
-  const checkUsername = () => {
-    clearTimeout(timeout.current);
-
-    timeout.current = setTimeout(() => {
-      setName({
-        ...name,
-        loading: true,
-      });
-      getDelegate({ network, params: { username: name.value } })
-        .then(() => {
-          setName({
-            ...name,
-            loading: false,
-            error: true,
-            message: t('"{{username}}" is already taken.', { username: name.value }),
-          });
-        })
-        .catch(() => {
-          setName({
-            ...name,
-            error: false,
-            loading: false,
-          });
+  const checkUsername = async () => {
+    setName({
+      ...name,
+      loading: true,
+    });
+    if (name.value.length >= 3 && !isLoading) {
+      if (error) {
+        setName({
+          ...name,
+          error: false,
+          loading: false,
         });
-    }, 1000);
+      } else {
+        setName({
+          ...name,
+          loading: false,
+          error: true,
+          message: t('"{{username}}" is already taken.', { username: name.value }),
+        });
+      }
+    }
   };
 
   useEffect(() => {
+    clearTimeout(timeout.current);
     const formatError = validate(name.value, t);
     if (!formatError) {
-      checkUsername();
+      timeout.current = setTimeout(() => {
+        setParams({ name: name.value });
+      }, 500);
     } else {
       setName({
         ...name,
@@ -71,6 +73,10 @@ const useDelegateName = (value) => {
       });
     }
   }, [name.value]);
+
+  useEffect(() => {
+    checkUsername();
+  }, [data, isLoading, error]);
 
   return [name, setName];
 };
