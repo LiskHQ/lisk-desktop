@@ -2,12 +2,16 @@ import React from 'react';
 import { mount } from 'enzyme';
 import copyToClipboard from 'copy-to-clipboard';
 import * as txUtils from '@transaction/utils/transaction';
+import { codec } from '@liskhq/lisk-client';
 import routes from 'src/routes/routes';
 import { txStatusTypes } from '@transaction/configuration/txStatus';
 import accounts from '@tests/constants/wallets';
 import Multisignature, { FullySignedActions, PartiallySignedActions } from '.';
+import { MODULE_COMMANDS_NAME_MAP } from '../../configuration/moduleCommand';
 
 jest.mock('copy-to-clipboard');
+
+jest.spyOn(codec.codec, 'toJSON').mockReturnValue({});
 
 describe('TransactionResult Multisignature', () => {
   const props = {
@@ -18,11 +22,14 @@ describe('TransactionResult Multisignature', () => {
         id: 1,
         senderPublicKey: accounts.multiSig.summary.publicKey,
         signatures: [accounts.multiSig.summary.publicKey, ''],
+        module: 'token',
+        command: 'transfer',
+        params: {},
       },
     },
     title: 'Test title',
     message: 'lorem ipsum',
-    t: t => t,
+    t: (t) => t,
     status: {
       code: txStatusTypes.signatureSuccess,
     },
@@ -31,6 +38,7 @@ describe('TransactionResult Multisignature', () => {
     transactionBroadcasted: jest.fn(),
     resetTransactionResult: jest.fn(),
     account: accounts.multiSig,
+    moduleCommandSchemas: { [MODULE_COMMANDS_NAME_MAP.transfer]: 'test schema' },
   };
 
   it('should render properly', () => {
@@ -47,7 +55,7 @@ describe('TransactionResult Multisignature', () => {
         status={{
           code: txStatusTypes.broadcastSuccess,
         }}
-      />,
+      />
     );
     wrapper.find('.back-to-wallet-button').at(0).simulate('click');
     expect(props.history.push).toHaveBeenCalledWith(routes.wallet.path);
@@ -61,7 +69,7 @@ describe('TransactionResult Multisignature', () => {
         status={{
           code: txStatusTypes.multisigSignaturePartialSuccess,
         }}
-      />,
+      />
     );
     expect(wrapper.find(FullySignedActions)).not.toExist();
     expect(wrapper.find(PartiallySignedActions)).toExist();
@@ -70,7 +78,7 @@ describe('TransactionResult Multisignature', () => {
     expect(downloadJSONSpy).toHaveBeenCalledWith(props.transactions.signedTransaction, 'tx-1');
     wrapper.find('.copy-button').at(0).simulate('click');
     expect(copyToClipboard).toHaveBeenCalledWith(
-      JSON.stringify(props.transactions.signedTransaction),
+      JSON.stringify(props.transactions.signedTransaction)
     );
   });
 
@@ -81,11 +89,14 @@ describe('TransactionResult Multisignature', () => {
         status={{
           code: txStatusTypes.multisigSignatureSuccess,
         }}
-      />,
+      />
     );
     expect(wrapper.find(FullySignedActions)).toExist();
     expect(wrapper.find(PartiallySignedActions)).not.toExist();
     wrapper.find('.send-button').at(0).simulate('click');
-    expect(props.transactionBroadcasted).toHaveBeenCalledWith(props.transactions.signedTransaction);
+    expect(props.transactionBroadcasted).toHaveBeenCalledWith(
+      props.transactions.signedTransaction,
+      props.moduleCommandSchemas
+    );
   });
 });
