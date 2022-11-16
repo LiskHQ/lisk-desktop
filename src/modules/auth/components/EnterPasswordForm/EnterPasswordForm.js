@@ -63,6 +63,7 @@ const EnterPasswordForm = ({ onEnterPasswordSuccess, title, encryptedAccount, is
         <p className={styles.accountAddress}>{account?.metadata?.address}</p>
         <form onSubmit={handleSubmit(onSubmit)}>
           <Input
+            className="password-input"
             secureTextEntry
             size="s"
             placeholder={t('Enter password')}
