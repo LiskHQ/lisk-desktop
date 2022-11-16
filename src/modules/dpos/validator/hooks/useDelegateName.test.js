@@ -41,10 +41,7 @@ describe('useDelegateName', () => {
     expect(name.message).toBe('Username is too short.');
 
     act(() => {
-      setName({
-        ...name,
-        value: '',
-      });
+      setName('');
     });
     [name, setName] = result.current;
     expect(name.error).toBe(true);
@@ -54,7 +51,7 @@ describe('useDelegateName', () => {
   it('should mark as error if the value is not unique', async () => {
     useDelegates.mockReturnValue({
       loading: false,
-      data: {},
+      data: { data: {} },
     });
     const { result } = renderHook(() => useDelegateName('test_1'), { wrapper });
     jest.advanceTimersByTime(1001);
@@ -64,10 +61,7 @@ describe('useDelegateName', () => {
     expect(name.message).toBe('"{{username}}" is already taken.');
 
     act(() => {
-      setName({
-        ...name,
-        value: 'test_2',
-      });
+      setName('test_2');
     });
     jest.advanceTimersByTime(1001);
     await flushPromises();
@@ -90,10 +84,7 @@ describe('useDelegateName', () => {
     expect(name.message).toBe('');
 
     act(() => {
-      setName({
-        ...name,
-        value: 'test_2',
-      });
+      setName('test_2');
     });
     jest.advanceTimersByTime(1001);
     await flushPromises();

@@ -1,91 +1,60 @@
-import { useState, useRef, useEffect } from 'react';
+import { useState, useCallback, useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
+import debounce from 'lodash.debounce';
 import { regex } from 'src/const/regex';
 import { DELEGATE_NAME_LENGTH } from '../consts';
 import { useDelegates } from './queries';
 
-const validate = (query, t) => {
-  if (query.length === 0) {
+// eslint-disable-next-line max-statements
+const getErrorMessage = (name, data, t) => {
+  if (name.length === 0) {
     return t('Username can not be empty.');
   }
-  if (query.length < DELEGATE_NAME_LENGTH.Minimum) {
+  if (name.length < DELEGATE_NAME_LENGTH.Minimum) {
     return t('Username is too short.');
   }
-  if (query.length > DELEGATE_NAME_LENGTH.Maximum) {
+  if (name.length > DELEGATE_NAME_LENGTH.Maximum) {
     return t('Username is too long.');
   }
-  const hasInvalidChars = query.replace(regex.delegateSpecialChars, '');
+  const hasInvalidChars = name.replace(regex.delegateSpecialChars, '');
   if (hasInvalidChars) {
     return t(`Invalid character ${hasInvalidChars.trim()}`);
+  }
+  if (data?.data) {
+    return t('"{{username}}" is already taken.', { username: name });
   }
   return '';
 };
 
 const useDelegateName = (value) => {
-  const [name, setName] = useState({
-    value: value ?? '',
-    loading: false,
-    error: false,
-    message: '',
-  });
-  const timeout = useRef();
+  const [name, setName] = useState(value ?? '');
+  const [nameDebounced, setNameDebounced] = useState(value ?? '');
   const { t } = useTranslation();
-  const [params, setParams] = useState({});
-  const { data, isLoading, error } = useDelegates({
-    config: { params },
-    options: { enabled: name.value?.length >= DELEGATE_NAME_LENGTH.Minimum, retry: false },
+
+  const { data, isLoading } = useDelegates({
+    config: { params: { name: nameDebounced } },
+    options: { enabled: nameDebounced?.length >= DELEGATE_NAME_LENGTH.Minimum, retry: false },
   });
 
-  const checkUsername = async () => {
-    if (
-      name.value.length >= DELEGATE_NAME_LENGTH.Minimum &&
-      name.value.length <= DELEGATE_NAME_LENGTH.Maximum &&
-      isLoading
-    ) {
-      setName({
-        ...name,
-        loading: true,
-      });
-    }
-    if (name.value.length >= DELEGATE_NAME_LENGTH.Minimum && !isLoading) {
-      if (error) {
-        setName({
-          ...name,
-          error: false,
-          loading: false,
-        });
-      } else {
-        setName({
-          ...name,
-          loading: false,
-          error: true,
-          message: t('"{{username}}" is already taken.', { username: name.value }),
-        });
-      }
-    }
-  };
+  const errorMessage = getErrorMessage(name, data, t);
+
+  const setNameDebounce = useCallback(debounce(setNameDebounced, 1000), []);
 
   useEffect(() => {
-    clearTimeout(timeout.current);
-    const formatError = validate(name.value, t);
-    if (!formatError) {
-      timeout.current = setTimeout(() => {
-        setParams({ name: name.value });
-      }, 1000);
-    } else {
-      setName({
-        ...name,
-        error: true,
-        message: formatError,
-      });
+    if (!getErrorMessage(name, null, t)) {
+      setNameDebounce(name);
     }
-  }, [name.value]);
+  }, [name]);
 
-  useEffect(() => {
-    checkUsername();
-  }, [data, isLoading, error]);
-
-  return [name, setName];
+  return [
+    {
+      value: name,
+      loading: isLoading,
+      error: !!errorMessage,
+      message: errorMessage,
+    },
+    setName,
+  ];
 };
 
 export default useDelegateName;
