@@ -87,7 +87,7 @@ export const Recipient = () => {
 
 export const Counterpart = () => {
   const { data, host, avatarSize } = useContext(TransactionRowContext);
-  const moduleCommand = joinModuleAndCommand(data.module, data.command);
+  const moduleCommand = joinModuleAndCommand(data);
   const address = extractAddressFromPublicKey(data.senderPublicKey);
   
   // Show tx icon
