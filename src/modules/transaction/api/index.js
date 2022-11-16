@@ -14,16 +14,12 @@ import { validateAddress } from 'src/utils/validators';
 import http from 'src/utils/api/http';
 import { getDelegates } from '@dpos/validator/api';
 import { httpPaths } from '../configuration';
-import {
-  sign,
-} from '../utils';
-import {
-  fromTransactionJSON,
-} from '../utils/encoding';
+import { sign } from '../utils';
+import { fromTransactionJSON } from '../utils/encoding';
 
 // TODO: Remove this patch once API is integrated
-const patchTransactionResponse = response => {
-  const data = response.data.map(trx => ({
+const patchTransactionResponse = (response) => {
+  const data = response.data.map((trx) => ({
     ...trx,
     params: { ...trx.asset },
     moduleCommand: trx.moduleAssetId,
@@ -36,21 +32,28 @@ const patchTransactionResponse = response => {
   };
 };
 
-
 const filters = {
-  address: { key: 'address', test: address => !validateAddress(address) },
-  senderAddress: { key: 'senderAddress', test: address => !validateAddress(address) },
-  recipientAddress: { key: 'recipientAddress', test: address => !validateAddress(address) },
-  timestamp: { key: 'timestamp', test: str => /^(\d+)?:(\d+)?$/.test(str) },
-  amount: { key: 'amount', test: str => /^(\d+)?:(\d+)?$/.test(str) },
-  limit: { key: 'limit', test: num => parseInt(num, 10) > 0 },
-  offset: { key: 'offset', test: num => parseInt(num, 10) >= 0 },
-  moduleCommand: { key: 'moduleCommand', test: str => /\d:\d/.test(str) },
-  height: { key: 'height', test: num => parseInt(num, 10) > 0 },
-  blockId: { key: 'blockId', test: str => typeof str === 'string' },
+  address: { key: 'address', test: (address) => !validateAddress(address) },
+  senderAddress: { key: 'senderAddress', test: (address) => !validateAddress(address) },
+  recipientAddress: { key: 'recipientAddress', test: (address) => !validateAddress(address) },
+  timestamp: { key: 'timestamp', test: (str) => /^(\d+)?:(\d+)?$/.test(str) },
+  amount: { key: 'amount', test: (str) => /^(\d+)?:(\d+)?$/.test(str) },
+  limit: { key: 'limit', test: (num) => parseInt(num, 10) > 0 },
+  offset: { key: 'offset', test: (num) => parseInt(num, 10) >= 0 },
+  moduleCommand: { key: 'moduleCommand', test: (str) => /\d:\d/.test(str) },
+  height: { key: 'height', test: (num) => parseInt(num, 10) > 0 },
+  blockId: { key: 'blockId', test: (str) => typeof str === 'string' },
   sort: {
     key: 'sort',
-    test: str => ['amount:asc', 'amount:desc', 'fee:asc', 'fee:desc', 'timestamp:asc', 'timestamp:desc'].includes(str),
+    test: (str) =>
+      [
+        'amount:asc',
+        'amount:desc',
+        'fee:asc',
+        'fee:desc',
+        'timestamp:asc',
+        'timestamp:desc',
+      ].includes(str),
   },
 };
 
@@ -78,11 +81,7 @@ const filters = {
  * If passed, all other parameter will be ignored.
  * @returns {Promise} Transactions list API call
  */
-export const getTransactions = ({
-  network,
-  params,
-  baseUrl,
-}) => {
+export const getTransactions = ({ network, params, baseUrl }) => {
   const normParams = {};
   // Validate params and fix keys
   Object.keys(params).forEach((key) => {
@@ -130,7 +129,7 @@ export const getRegisteredDelegates = async ({ network }) => {
 
   // create monthly number of registration as a dictionary
   const monthStats = txs.data
-    .map(tx => tx.block.timestamp)
+    .map((tx) => tx.block.timestamp)
     .reduce((acc, timestamp) => {
       const date = getDate(timestamp);
       acc[date] = typeof acc[date] === 'number' ? acc[date] + 1 : 1;
@@ -140,16 +139,19 @@ export const getRegisteredDelegates = async ({ network }) => {
   // Create a sorted array of monthly accumulated number of registrations
   const res = Object.keys(monthStats)
     .sort((a, b) => -1 * (b - 1))
-    .reduce((acc, month) => {
-      if (acc[0][0] === month) {
-        acc.unshift([null, acc[0][1] - monthStats[month]]);
-      } else if (acc[0][0] === null) {
-        acc[0][0] = month;
-        acc.unshift([null, acc[0][1] - monthStats[month]]);
-      }
+    .reduce(
+      (acc, month) => {
+        if (acc[0][0] === month) {
+          acc.unshift([null, acc[0][1] - monthStats[month]]);
+        } else if (acc[0][0] === null) {
+          acc[0][0] = month;
+          acc.unshift([null, acc[0][1] - monthStats[month]]);
+        }
 
-      return acc;
-    }, [[getDate(txs.data[0].block.timestamp), delegates.meta.total]]);
+        return acc;
+      },
+      [[getDate(txs.data[0].block.timestamp), delegates.meta.total]]
+    );
 
   // Add the date of one month before the last tx
   res[0][0] = getDate(txs.data[txs.data.length - 1].block.timestamp - 2670000);
@@ -186,21 +188,20 @@ export const getTransactionStats = ({ network, params: { period } }) => {
  * @returns {Promise<{Low: number, Medium: number, High: number}>} with low,
  * medium and high priority fee options
  */
-export const getTransactionBaseFees = network =>
+export const getTransactionBaseFees = (network) =>
   http({
     path: httpPaths.fees,
     searchParams: {},
     network,
-  })
-    .then((response) => {
-      const { feeEstimatePerByte } = response.data;
+  }).then((response) => {
+    const { feeEstimatePerByte } = response.data;
 
-      return {
-        Low: feeEstimatePerByte.low,
-        Medium: feeEstimatePerByte.medium,
-        High: feeEstimatePerByte.high,
-      };
-    });
+    return {
+      Low: feeEstimatePerByte.low,
+      Medium: feeEstimatePerByte.medium,
+      High: feeEstimatePerByte.high,
+    };
+  });
 
 /**
  * Returns the actual tx fee based on given tx details
@@ -224,12 +225,13 @@ export const getTransactionFee = async ({
   const maxCommandFee = MODULE_COMMANDS_MAP[moduleCommand].maxFee;
   const transactionObject = fromTransactionJSON(transactionJSON, paramsSchema);
   let numberOfEmptySignatures = 0;
-  
+
   if (transactionJSON.moduleCommand === MODULE_COMMANDS_NAME_MAP.registerMultisignature) {
     const { optionalKeys, mandatoryKeys } = transactionJSON.params;
     numberOfSignatures = optionalKeys.length + mandatoryKeys.length + 1;
   } else if (wallet?.summary?.isMultisignature) {
-    numberOfEmptySignatures = wallet.keys.mandatoryKeys.length + wallet.keys.optionalKeys.length - numberOfSignatures;
+    numberOfEmptySignatures =
+      wallet.keys.mandatoryKeys.length + wallet.keys.optionalKeys.length - numberOfSignatures;
   }
 
   // Call API to get network specific base fees
@@ -242,9 +244,9 @@ export const getTransactionFee = async ({
   });
 
   // tie breaker is only meant for medium and high processing speeds
-  const tieBreaker = selectedPriority.selectedIndex === 0
-    ? 0 : (MIN_FEE_PER_BYTE * feePerByte * Math.random());
-
+  const tieBreaker =
+    selectedPriority.selectedIndex === 0 ? 0 : MIN_FEE_PER_BYTE * feePerByte * Math.random();
+  console.log('>>> parfam', transactionObject, paramsSchema);
   const size = transactions.getBytes(transactionObject, paramsSchema).length;
 
   const calculatedFee = Number(minFee) + size * feePerByte + tieBreaker;
@@ -252,9 +254,7 @@ export const getTransactionFee = async ({
   const feeInLsk = fromRawLsk(cappedFee.toString());
   const roundedValue = Number(feeInLsk).toFixed(7).toString();
 
-  const feedback = transactionJSON.amount === ''
-    ? '-'
-    : `${(roundedValue ? '' : 'Invalid amount')}`;
+  const feedback = transactionJSON.amount === '' ? '-' : `${roundedValue ? '' : 'Invalid amount'}`;
 
   return {
     value: roundedValue,
@@ -284,14 +284,7 @@ export const signTransaction = async ({
   senderAccount,
 }) => {
   const transaction = fromTransactionJSON(transactionJSON, schema);
-  const result = await sign(
-    wallet,
-    schema,
-    chainID,
-    transaction,
-    privateKey,
-    senderAccount
-  );
+  const result = await sign(wallet, schema, chainID, transaction, privateKey, senderAccount);
 
   return result;
 };
