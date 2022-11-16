@@ -52,7 +52,7 @@ export const trimBigintString = (data) => {
 
     if (isObject || isArray) {
       result[key] = trimBigintString(value);
-    } else if (isBigIntString || isBigIntString === 0) {
+    } else if (isBigIntString) {
       result[key] = result[key].replace(/n$/, '');
     }
   });

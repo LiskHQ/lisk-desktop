@@ -50,7 +50,7 @@ const TxSignatureCollector = ({
   const dispatch = useDispatch();
   const isTransactionAuthor = transactionJSON.senderPublicKey === sender.metadata.pubkey;
   const isAuthorAccountMultisignature =
-    [...account?.data?.mandatoryKeys, ...account?.data?.optionalKeys].length > 0; // account.info.LSK.summary.isMultisignature;
+    [...(account?.data?.mandatoryKeys || []), ...(account?.data?.optionalKeys || [])].length > 0; // account.info.LSK.summary.isMultisignature;
   // const isSignerAccountMultisignature = sender.data?.keys.numberOfSignatures > 0;
   const moduleCommand = joinModuleAndCommand(transactionJSON);
   const isRegisterMultisignature =

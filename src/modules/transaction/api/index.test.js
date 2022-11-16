@@ -15,7 +15,7 @@ import {
   getRegisteredDelegates,
 } from './index';
 
-const { transfer, voteDelegate, registerDelegate, registerMultisignature, unlock, reclaim } =
+const { transfer, voteDelegate, unlock } =
   MODULE_COMMANDS_NAME_MAP;
 const { network } = getState();
 
@@ -238,7 +238,7 @@ describe('API: LSK Transactions', () => {
       expect(Number(result.value)).toBeGreaterThan(0);
     });
 
-    it.only('should calculate fee of vote tx', async () => {
+    it('should calculate fee of vote tx', async () => {
       const voteTx = {
         module: 'dpos',
         command: 'voteDelegate',
