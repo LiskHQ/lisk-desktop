@@ -5,8 +5,9 @@ import { splitModuleAndCommand } from 'src/modules/transaction/utils/moduleComma
 import { getBase32AddressFromAddress } from '@wallet/utils/account';
 import accounts from '@tests/constants/wallets';
 import { genKey, blsKey, pop } from '@tests/constants/keys';
-import moduleCommandSchemas from '@tests/constants/schemas';
+// import moduleCommandSchemas from '@tests/constants/schemas';
 import { mockAppTokens } from '@tests/fixtures/token';
+import { mockCommandParametersSchemas } from 'src/modules/common/__fixtures__';
 import {
   getTxAmount,
   containsTransactionType,
@@ -31,10 +32,7 @@ const { transfer, voteDelegate, registerMultisignature, registerDelegate, reclai
 
 describe('API: LSK Transactions', () => {
   const baseDesktopTx = {
-    sender: {
-      publicKey: accounts.genesis.summary.publicKey,
-      address: accounts.genesis.summary.address,
-    },
+    senderPublicKey: accounts.genesis.summary.publicKey,
     nonce: accounts.genesis.sequence.nonce,
     fee: '1000000',
     signatures: [],
@@ -45,10 +43,16 @@ describe('API: LSK Transactions', () => {
     fee: BigInt(1000000),
     signatures: [],
   };
+
+  const moduleCommandSchemas = mockCommandParametersSchemas.data.reduce(
+    (result, { moduleCommand, schema }) => ({ ...result, [moduleCommand]: schema }),
+    {}
+  );
   describe('getTxAmount', () => {
     it('should return amount of transfer in Beddows', () => {
       const tx = {
-        moduleCommand: transfer,
+        module: 'token',
+        command: 'transfer',
         params: { amount: 100000000 },
       };
 
@@ -58,7 +62,8 @@ describe('API: LSK Transactions', () => {
     it('should return amount of votes in Beddows', () => {
       const tx = {
         title: voteDelegate,
-        moduleCommand: voteDelegate,
+        module: 'dpos',
+        command: 'voteDelegate',
         params: {
           votes: [
             {
@@ -77,7 +82,8 @@ describe('API: LSK Transactions', () => {
     it('should return amount of unlock in Beddows', () => {
       const tx = {
         title: unlock,
-        moduleCommand: unlock,
+        module: 'dpos',
+        command: 'unlock',
         params: {
           unlockObjects: [
             {
@@ -98,12 +104,13 @@ describe('API: LSK Transactions', () => {
     it('creates a transaction object for transfer transaction', () => {
       const tx = {
         ...baseDesktopTx,
-        moduleCommand: transfer,
+        module: 'token',
+        command: 'transfer',
         params: {
-          recipient: { address: accounts.delegate.summary.address },
+          recipientAddress: accounts.delegate.summary.address,
           amount: 100000000,
           data: 'test',
-          token: mockAppTokens[0],
+          tokenID: '00000000',
         },
       };
       const txObj = fromTransactionJSON(tx, moduleCommandSchemas['token:transfer']);
@@ -112,8 +119,9 @@ describe('API: LSK Transactions', () => {
         ...baseElementsTx,
         module,
         command,
+        id: Buffer.alloc(0),
         params: {
-          recipientAddress: expect.arrayContaining([]),
+          recipientAddress: Buffer.alloc(0),
           amount: BigInt(100000000),
           data: 'test',
           tokenID: expect.arrayContaining([]),
@@ -124,7 +132,8 @@ describe('API: LSK Transactions', () => {
     it('creates a transaction object for vote transaction', () => {
       const tx = {
         ...baseDesktopTx,
-        moduleCommand: voteDelegate,
+        module: 'dpos',
+        command: 'voteDelegate',
         params: {
           votes: [
             {
@@ -144,6 +153,7 @@ describe('API: LSK Transactions', () => {
         ...baseElementsTx,
         module,
         command,
+        id: Buffer.alloc(0),
         params: {
           votes: tx.params.votes.map((item) => ({
             amount: BigInt(item.amount),
@@ -156,7 +166,8 @@ describe('API: LSK Transactions', () => {
     it('creates a transaction object for delegate registration transaction', () => {
       const tx = {
         ...baseDesktopTx,
-        moduleCommand: registerDelegate,
+        module: 'dpos',
+        command: 'registerDelegate',
         params: {
           name: 'username',
           generatorKey: genKey,
@@ -168,6 +179,7 @@ describe('API: LSK Transactions', () => {
       const [module, command] = splitModuleAndCommand(registerDelegate);
       expect(txObj).toEqual({
         ...baseElementsTx,
+        id: Buffer.alloc(0),
         module,
         command,
         params: {
@@ -182,7 +194,8 @@ describe('API: LSK Transactions', () => {
     it('creates a transaction object for reclaimLSK transaction', () => {
       const tx = {
         ...baseDesktopTx,
-        moduleCommand: reclaim,
+        module: 'legacy',
+        command: 'reclaim',
         params: {
           amount: '10000000',
         },
@@ -191,6 +204,7 @@ describe('API: LSK Transactions', () => {
       const [module, command] = splitModuleAndCommand(reclaim);
       expect(txObj).toEqual({
         ...baseElementsTx,
+        id: Buffer.alloc(0),
         module,
         command,
         params: {
@@ -202,21 +216,25 @@ describe('API: LSK Transactions', () => {
     it('creates a transaction object for unlockToken transaction', () => {
       const tx = {
         ...baseDesktopTx,
-        moduleCommand: unlock,
+        module: 'dpos',
+        command: 'unlock',
       };
       const txObj = fromTransactionJSON(tx, moduleCommandSchemas['dpos:unlock']);
       const [module, command] = splitModuleAndCommand(unlock);
       expect(txObj).toEqual({
         ...baseElementsTx,
+        id: Buffer.alloc(0),
         module,
         command,
+        params: {},
       });
     });
 
     it('creates a transaction object for registerMultisignature transaction', () => {
       const tx = {
         ...baseDesktopTx,
-        moduleCommand: registerMultisignature,
+        module: 'auth',
+        command: 'registerMultisignature',
         params: {
           numberOfSignatures: 2,
           mandatoryKeys: [accounts.genesis.summary.publicKey, accounts.delegate.summary.publicKey],
@@ -230,6 +248,7 @@ describe('API: LSK Transactions', () => {
         ...baseElementsTx,
         module,
         command,
+        id: Buffer.alloc(0),
         params: {
           numberOfSignatures: 2,
           mandatoryKeys: tx.params.mandatoryKeys.map(() => expect.arrayContaining([])),

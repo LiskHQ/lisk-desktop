@@ -99,7 +99,6 @@ export const encodeTransaction = (transaction, paramsSchema) => {
 
 export const fromTransactionJSON = (transactionJSON, paramsSchema) => {
   transactionJSON = trimBigintString(transactionJSON);
-
   const tx = codec.fromJSON(baseTransactionSchema, {
     ...transactionJSON,
     params: '',
