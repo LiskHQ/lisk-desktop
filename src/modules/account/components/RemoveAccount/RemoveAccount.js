@@ -3,7 +3,7 @@ import React, {
 } from 'react';
 import { withRouter } from 'react-router';
 
-import RemoveConfirmation from '@account/components/RemoveConfirmation/RemoveConfirmation';
+import RemoveConfirmation from '@account/components/RemoveConfirmation';
 import RemoveSuccess from '@account/components/RemoveSuccess/RemoveSuccess';
 import routes from 'src/routes/routes';
 import MultiStep from 'src/modules/common/components/MultiStep';
