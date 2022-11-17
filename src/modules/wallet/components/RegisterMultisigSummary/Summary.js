@@ -51,6 +51,7 @@ const Summary = ({
     <section className={styles.wrapper}>
       <TransactionSummary
         hasCancel
+        noFeeStatus
         className={styles.container}
         confirmButton={onConfirmAction}
         cancelButton={onCancelAction}
