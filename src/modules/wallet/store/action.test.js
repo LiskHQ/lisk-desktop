@@ -20,9 +20,7 @@ jest.mock('@wallet/utils/api', () => ({
 jest.mock('@network/store/action', () => ({
   networkStatusUpdated: jest.fn(),
 }));
-jest.mock('@transaction/api', () => ({
-  createGenericTx: jest.fn().mockImplementation(() => Promise.resolve()),
-}));
+jest.mock('@transaction/api');
 
 describe('actions: account', () => {
   const dispatch = jest.fn();
@@ -154,7 +152,7 @@ describe('actions: account', () => {
       numberOfSignatures: 2,
     };
 
-    const transactionObject = {
+    const transactionJSON = {
       fee: 10000000,
       module: 'auth',
       command: 'registerMultisignature',
@@ -176,15 +174,15 @@ describe('actions: account', () => {
         new Promise((resolve) => {
           resolve(tx);
         }));
-      await multisigGroupRegistered(transactionObject, privateKey)(dispatch, getState);
+      await multisigGroupRegistered({}, transactionJSON, privateKey)(dispatch, getState);
       expect(signTransaction).toHaveBeenCalledWith({
-        transactionObject,
+        transactionJSON,
         wallet: {
           ...state.wallet.info.LSK,
           hwInfo: state.hwInfo,
           loginType: state.wallet.loginType,
         },
-        schema: state.network.networks.LSK.moduleCommandSchemas[transactionObject.moduleCommand],
+        schema: state.network.networks.LSK.moduleCommandSchemas[transactionJSON.moduleCommand],
         chainID: state.network.networks.LSK.chainID,
         privateKey,
       });
