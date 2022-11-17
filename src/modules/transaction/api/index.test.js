@@ -15,8 +15,7 @@ import {
   getRegisteredDelegates,
 } from './index';
 
-const { transfer, voteDelegate, unlock } =
-  MODULE_COMMANDS_NAME_MAP;
+const { voteDelegate, unlock } = MODULE_COMMANDS_NAME_MAP;
 const { network } = getState();
 
 jest.mock('src/utils/api/http', () =>
@@ -161,7 +160,8 @@ describe('API: LSK Transactions', () => {
   describe('getTxAmount', () => {
     it('should return amount of transfer in Beddows', () => {
       const tx = {
-        moduleCommand: transfer,
+        module: 'token',
+        command: 'transfer',
         params: { amount: 100000000 },
       };
 
@@ -171,7 +171,8 @@ describe('API: LSK Transactions', () => {
     it('should return amount of votes in Beddows', () => {
       const tx = {
         title: voteDelegate,
-        moduleCommand: voteDelegate,
+        module: 'dpos',
+        command: 'voteDelegate',
         params: {
           votes: [
             {
@@ -190,7 +191,8 @@ describe('API: LSK Transactions', () => {
     it('should return amount of unlock in Beddows', () => {
       const tx = {
         title: unlock,
-        moduleCommand: unlock,
+        module: 'dpos',
+        command: 'unlock',
         params: {
           unlockObjects: [
             {
@@ -211,7 +213,8 @@ describe('API: LSK Transactions', () => {
     const baseTx = {
       nonce: '6',
       senderPublicKey: 'c094ebee7ec0c50ebee32918655e089f6e1a604b83bcaa760293c61e0f18ab6f',
-      module: '',
+      signatures: [],
+      fee: '0',
     };
     const selectedPriority = {
       value: 0,
@@ -220,14 +223,14 @@ describe('API: LSK Transactions', () => {
 
     it('should return fee in Beddows', async () => {
       const transferTx = {
+        module: 'dpos',
+        command: 'voteDelegate',
         params: {
-          amount: '100000000',
-          data: 'to test the instance',
-          recipient: { address: 'lskz5kf62627u2n8kzqa8jpycee64pgxzutcrbzhz' },
-          token: mockAppTokens[0],
+          votes: [
+            { delegateAddress: accounts.genesis.summary.address, amount: '100000000' },
+            { delegateAddress: accounts.delegate.summary.address, amount: '-100000000' },
+          ],
         },
-        module: 'token',
-        command: 'transfer',
       };
       const result = await getTransactionFee({
         transactionJSON: { ...baseTx, ...transferTx },
@@ -327,17 +330,16 @@ describe('API: LSK Transactions', () => {
         module: 'token',
         command: 'transfer',
         params: {
-          amount: '100000',
+          amount: 100000,
           data: 'to test the instance',
-          recipient: { address: 'lskz5kf62627u2n8kzqa8jpycee64pgxzutcrbzhz' },
-          token: mockAppTokens[0],
+          recipientAddress: 'lskz5kf62627u2n8kzqa8jpycee64pgxzutcrbzhz',
+          tokenID: '00000000',
         },
       };
       const result = await getTransactionFee({
         transactionJSON: { ...baseTx, ...multisigTransferTx },
         selectedPriority,
-        numberOfSignatures: 3,
-        network,
+        numberOfSignatures: 10,
         moduleCommandSchemas,
       });
 
@@ -359,7 +361,6 @@ describe('API: LSK Transactions', () => {
         transactionJSON: { ...baseTx, ...multisigVoteTx },
         selectedPriority,
         numberOfSignatures: 10,
-        network,
         moduleCommandSchemas,
       });
 

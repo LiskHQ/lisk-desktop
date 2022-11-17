@@ -39,7 +39,7 @@ const removeWarningMessage = () => {
 const Overview = ({ isWalletRoute, history }) => {
   const searchAddress = selectSearchParamValue(history.location.search, 'address');
   const { t } = useTranslation();
-  const [{ metadata: { address: currentAddress } = {} }] = useCurrentAccount();
+  const [{ metadata: { address: currentAddress, name } = {} }] = useCurrentAccount();
 
   const address = useMemo(() => searchAddress || currentAddress, [searchAddress, currentAddress]);
   const { data: delegates } = useDelegates({ config: { params: { address } } });
@@ -113,7 +113,7 @@ const Overview = ({ isWalletRoute, history }) => {
           copy
           size={50}
           address={account?.meta?.address}
-          accountName={account?.meta?.name}
+          accountName={account?.meta?.name || name}
           detailsClassName={styles.accountSummary}
           truncate={false}
         />

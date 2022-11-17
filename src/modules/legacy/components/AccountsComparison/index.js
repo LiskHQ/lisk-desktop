@@ -16,7 +16,7 @@ const AccountsComparison = ({ t }) => {
   useDeprecatedAccount();
   useSchemas();
   const wallet = useSelector(selectActiveTokenAccount);
-  const hasEnoughBalance = Number(wallet.token?.[0].availableBalance) >= dustThreshold;
+  const hasEnoughBalance = Number(wallet.token?.[0]?.availableBalance) >= dustThreshold;
 
   return (
     <div className={`${styles.container} ${styles.reclaim}`}>

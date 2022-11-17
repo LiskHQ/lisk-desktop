@@ -47,7 +47,4 @@ const moduleCommandMap = {
 const MODULE_COMMANDS_NAME_MAP = Object.freeze(moduleCommandNameMap);
 const MODULE_COMMANDS_MAP = Object.freeze(moduleCommandMap);
 
-export {
-  MODULE_COMMANDS_MAP,
-  MODULE_COMMANDS_NAME_MAP,
-};
+export { MODULE_COMMANDS_MAP, MODULE_COMMANDS_NAME_MAP };

@@ -236,7 +236,6 @@ export const getTransactionFee = async ({
 
   // Call API to get network specific base fees
   const baseFees = [];
-
   const minFee = transactions.computeMinFee(transactionObject, paramsSchema, {
     baseFees,
     numberOfSignatures,
@@ -246,7 +245,6 @@ export const getTransactionFee = async ({
   // tie breaker is only meant for medium and high processing speeds
   const tieBreaker =
     selectedPriority.selectedIndex === 0 ? 0 : MIN_FEE_PER_BYTE * feePerByte * Math.random();
-  console.log('>>> parfam', transactionObject, paramsSchema);
   const size = transactions.getBytes(transactionObject, paramsSchema).length;
 
   const calculatedFee = Number(minFee) + size * feePerByte + tieBreaker;
