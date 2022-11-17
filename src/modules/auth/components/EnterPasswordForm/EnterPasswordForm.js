@@ -72,7 +72,7 @@ const EnterPasswordForm = ({ onEnterPasswordSuccess, title, encryptedAccount }) 
                 feedback={apiError?.message}
                 error={!!apiError}
                 {...register('password', {
-                  onChange: () => clearErrors(API_ERROR_NAME),
+                  onChange: () => apiError && clearErrors(API_ERROR_NAME),
                 })}
             />
             <PrimaryButton
