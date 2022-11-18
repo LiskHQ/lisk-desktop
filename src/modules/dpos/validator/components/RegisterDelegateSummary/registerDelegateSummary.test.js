@@ -6,6 +6,7 @@ import { useAuth } from '@auth/hooks/queries';
 import { mockAuth } from 'src/modules/auth/__fixtures__';
 import mockSavedAccounts from '@tests/fixtures/accounts';
 import Summary from './RegisterDelegateSummary';
+import wallets from '@tests/constants/wallets';
 
 const mockedCurrentAccount = mockSavedAccounts[0];
 jest.mock('@auth/hooks/queries');
@@ -16,11 +17,25 @@ jest.mock('@account/hooks', () => ({
 describe('Delegate Registration Summary', () => {
   const props = {
     delegateRegistered: jest.fn(),
-    rawTx: {
+    formProps: {
+      composedFees: {
+        Initialisation: '0 LSK',
+        Transaction: '0 LSK',
+      },
+      isValid: true,
+      moduleCommand: 'dpos:registerDelegate',
+    },
+    selectedPriority: { title: 'Normal', selectedIndex: 0, value: 0 },
+    transactionJSON: {
+      fee: '0',
+      nonce: '1',
+      signatures: [],
+      senderPublicKey: wallets.genesis.summary.publicKey,
+      module: 'dpos',
+      command: 'registerDelegate',
       params: {
         username: 'mydelegate',
       },
-      moduleCommand: 'dpos:registerDelegate',
     },
     account: accounts.genesis,
     prevStep: jest.fn(),
@@ -56,7 +71,8 @@ describe('Delegate Registration Summary', () => {
     wrapper.find('button.confirm-button').simulate('click');
     expect(props.nextStep).toBeCalledWith({
       actionFunction: props.delegateRegistered,
-      rawTx: props.rawTx,
+      formProps: props.formProps,
+      transactionJSON: props.transactionJSON,
     });
   });
 });
