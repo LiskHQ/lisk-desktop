@@ -6,7 +6,6 @@ import * as delegates from '@dpos/validator/api';
 import http from 'src/utils/api/http';
 import accounts from '@tests/constants/wallets';
 import { genKey, blsKey, pop } from '@tests/constants/keys';
-import { mockAppTokens } from '@tests/fixtures/token';
 import { mockCommandParametersSchemas } from 'src/modules/common/__fixtures__';
 import {
   getTransactions,
