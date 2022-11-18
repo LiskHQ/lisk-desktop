@@ -4,7 +4,6 @@ import wallets from '@tests/constants/wallets';
 import mockSavedAccounts from '@tests/fixtures/accounts';
 import { useAuth } from '@auth/hooks/queries';
 import { mockAuth } from 'src/modules/auth/__fixtures__';
-import { MODULE_COMMANDS_NAME_MAP } from 'src/modules/transaction/configuration/moduleCommand';
 import Summary from './UnlockBalanceSummary';
 
 const mockedCurrentAccount = mockSavedAccounts[0];

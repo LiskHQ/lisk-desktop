@@ -1,44 +1,47 @@
 import { renderHook, act } from '@testing-library/react-hooks';
 import flushPromises from '@tests/unit-test-utils/flushPromises';
+import { queryWrapper as wrapper } from 'src/utils/test/queryWrapper';
 import * as delegateAPI from '@dpos/validator/api';
+import { useDelegates } from './queries';
 import useDelegateName from './useDelegateName';
 
-jest.mock('@dpos/validator/api', () => ({
+jest.mock('../api', () => ({
   getDelegate: jest.fn(),
 }));
+jest.mock('./queries/useDelegates');
 
 describe('useDelegateName', () => {
   it('Initial values must be empty', () => {
-    const { result } = renderHook(
-      () => useDelegateName(),
-    );
+    useDelegates.mockReturnValue({
+      loading: false,
+    });
+    const { result } = renderHook(() => useDelegateName(), { wrapper });
     const [name] = result.current;
 
     expect(name.value).toBe('');
   });
 
   it('should account for the initial values', () => {
-    const { result } = renderHook(
-      () => useDelegateName('some_name'),
-    );
+    useDelegates.mockReturnValue({
+      loading: false,
+    });
+    const { result } = renderHook(() => useDelegateName('some_name'), { wrapper });
     const [name] = result.current;
 
     expect(name.value).toBe('some_name');
   });
 
   it('should mark as error if the value is empty or too short', () => {
-    const { result } = renderHook(
-      () => useDelegateName('s'),
-    );
+    useDelegates.mockReturnValue({
+      loading: false,
+    });
+    const { result } = renderHook(() => useDelegateName('s'), { wrapper });
     let [name, setName] = result.current;
     expect(name.error).toBe(true);
     expect(name.message).toBe('Username is too short.');
 
     act(() => {
-      setName({
-        ...name,
-        value: '',
-      });
+      setName('');
     });
     [name, setName] = result.current;
     expect(name.error).toBe(true);
@@ -46,13 +49,11 @@ describe('useDelegateName', () => {
   });
 
   it('should mark as error if the value is not unique', async () => {
-    delegateAPI.getDelegate.mockResolvedValue({
-      data: [{}],
-      meta: {},
+    useDelegates.mockReturnValue({
+      loading: false,
+      data: { data: {} },
     });
-    const { result } = renderHook(
-      () => useDelegateName('test_1'),
-    );
+    const { result } = renderHook(() => useDelegateName('test_1'), { wrapper });
     jest.advanceTimersByTime(1001);
     await flushPromises();
     let [name, setName] = result.current;
@@ -60,10 +61,7 @@ describe('useDelegateName', () => {
     expect(name.message).toBe('"{{username}}" is already taken.');
 
     act(() => {
-      setName({
-        ...name,
-        value: 'test_2',
-      });
+      setName('test_2');
     });
     jest.advanceTimersByTime(1001);
     await flushPromises();
@@ -74,9 +72,11 @@ describe('useDelegateName', () => {
 
   it('should return no errors if the value is unique', async () => {
     delegateAPI.getDelegate.mockRejectedValue({ message: 'Data not found.' });
-    const { result } = renderHook(
-      () => useDelegateName('test_1'),
-    );
+    useDelegates.mockReturnValue({
+      loading: false,
+      error: {},
+    });
+    const { result } = renderHook(() => useDelegateName('test_1'), { wrapper });
     jest.advanceTimersByTime(1001);
     await flushPromises();
     let [name, setName] = result.current;
@@ -84,10 +84,7 @@ describe('useDelegateName', () => {
     expect(name.message).toBe('');
 
     act(() => {
-      setName({
-        ...name,
-        value: 'test_2',
-      });
+      setName('test_2');
     });
     jest.advanceTimersByTime(1001);
     await flushPromises();
