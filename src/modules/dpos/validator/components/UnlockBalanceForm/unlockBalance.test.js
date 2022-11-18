@@ -10,11 +10,10 @@ import wallets from '@tests/constants/wallets';
 import flushPromises from '@tests/unit-test-utils/flushPromises';
 import UnlockBalanceForm from './index';
 
-
 jest.mock('@account/hooks/useDeprecatedAccount', () => ({
   useDeprecatedAccount: jest.fn().mockReturnValue({
     isSuccess: true,
-    isLoading: false
+    isLoading: false,
   }),
 }));
 jest.mock('@transaction/hooks/useTransactionPriority');
@@ -27,18 +26,16 @@ jest.mock('@transaction/utils/hwManager');
 
 describe('Unlock LSK modal', () => {
   let wrapper;
-  useTransactionPriority.mockImplementation(() => (
+  useTransactionPriority.mockImplementation(() => [
+    { selectedIndex: 1 },
+    () => {},
     [
-      { selectedIndex: 1 },
-      () => { },
-      [
-        { title: 'Low', value: 0.001 },
-        { title: 'Medium', value: 0.005 },
-        { title: 'High', value: 0.01 },
-        { title: 'Custom', value: undefined },
-      ],
-    ]
-  ));
+      { title: 'Low', value: 0.001 },
+      { title: 'Medium', value: 0.005 },
+      { title: 'High', value: 0.01 },
+      { title: 'Custom', value: undefined },
+    ],
+  ]);
   useTransactionFeeCalculation.mockImplementation(() => ({
     fee: { value: '0.1' },
     maxAmount: 0.1,
@@ -59,9 +56,21 @@ describe('Unlock LSK modal', () => {
     { amount: '2000000000', delegateAddress: 'lskdwsyfmcko6mcd357446yatromr9vzgu7eb8y11' },
   ];
   const initUnlocking = [
-    { amount: '1000000000', height: { start: 4900, end: 5900 }, delegateAddress: 'lskdwsyfmcko6mcd357446yatromr9vzgu7eb8y11' },
-    { amount: '3000000000', height: { start: 100, end: 200 }, delegateAddress: 'lskdwsyfmcko6mcd357446yatromr9vzgu7eb8y11' },
-    { amount: '1000000000', height: { start: 3000, end: 4000 }, delegateAddress: 'lskdwsyfmcko6mcd357446yatromr9vzgu7eb8y13' },
+    {
+      amount: '1000000000',
+      height: { start: 4900, end: 5900 },
+      delegateAddress: 'lskdwsyfmcko6mcd357446yatromr9vzgu7eb8y11',
+    },
+    {
+      amount: '3000000000',
+      height: { start: 100, end: 200 },
+      delegateAddress: 'lskdwsyfmcko6mcd357446yatromr9vzgu7eb8y11',
+    },
+    {
+      amount: '1000000000',
+      height: { start: 3000, end: 4000 },
+      delegateAddress: 'lskdwsyfmcko6mcd357446yatromr9vzgu7eb8y13',
+    },
   ];
 
   const store = {
@@ -78,8 +87,7 @@ describe('Unlock LSK modal', () => {
         },
       },
     },
-    settings: {
-    },
+    settings: {},
     token: {
       active: tokenMap.LSK.key,
       list: { LSK: true },
@@ -102,8 +110,11 @@ describe('Unlock LSK modal', () => {
       txSignatureError: null,
     },
   };
-
-  const rawTx = {
+  const transactionJSON = {
+    fee: 10000000,
+    module: 'dpos',
+    command: 'unlock',
+    nonce: '178',
     params: {
       unlockObjects: [
         {
@@ -118,16 +129,8 @@ describe('Unlock LSK modal', () => {
         },
       ],
     },
-    fee: 10000000,
-    moduleCommand: 'dpos:unlock',
-    nonce: '178',
-    sender: {
-      publicKey: '0fe9a3f1a21b5530f27f87a414b549e79a940bf24fdf2b2f05e7f22aeeecc86a',
-    },
-    composedFees: {
-      Transaction: '0.1 LSK',
-      Initialisation: '0.1 LSK',
-    },
+    signatures: [],
+    senderPublicKey: wallets.genesis.summary.publicKey,
   };
 
   beforeEach(() => {
@@ -147,27 +150,50 @@ describe('Unlock LSK modal', () => {
 
   it('fires balanceUnlocked action with selected fee', async () => {
     const tx = { id: 1 };
-    signTransaction.mockImplementation(() =>
-      new Promise((resolve) => {
-        resolve(tx);
-      }));
+    signTransaction.mockImplementation(
+      () =>
+        new Promise((resolve) => {
+          resolve(tx);
+        })
+    );
 
     // Act
     wrapper.find('.confirm-btn').at(0).simulate('click');
-    act(() => { wrapper.update(); });
+    act(() => {
+      wrapper.update();
+    });
     await flushPromises();
     expect(props.nextStep).toBeCalledWith({
-      rawTx,
-      selectedPriority: {
-        selectedIndex: 1,
-      }
+      transactionJSON,
+      formProps: {
+        composedFees: {
+          Transaction: '0.1 LSK',
+          Initialisation: '0.1 LSK',
+        },
+        isValid: true,
+        moduleCommand: 'dpos:unlock',
+      },
+      fees: undefined,
+      selectedPriority: { selectedIndex: 1 },
     });
   });
 
   it('calls nextStep when clicked on confirm', async () => {
     wrapper.find('.confirm-btn button').simulate('click');
     expect(props.nextStep).toBeCalledWith(
-      expect.objectContaining({ rawTx }),
+      expect.objectContaining({
+        transactionJSON,
+        formProps: {
+          composedFees: {
+            Transaction: '0.1 LSK',
+            Initialisation: '0.1 LSK',
+          },
+          isValid: true,
+          moduleCommand: 'dpos:unlock',
+        },
+        fees: undefined,
+        selectedPriority: { selectedIndex: 1 },
+      })
     );
   });
 
