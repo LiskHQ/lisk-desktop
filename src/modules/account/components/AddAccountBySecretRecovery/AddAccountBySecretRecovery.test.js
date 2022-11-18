@@ -3,8 +3,8 @@ import {
 } from '@testing-library/react';
 import mockSavedAccounts from '@tests/fixtures/accounts';
 import * as reactRedux from 'react-redux';
-import { renderWithRouter } from 'src/utils/testHelpers';
-import AddAccountByPassPhrase from './AddAccountBySecretRecovery';
+import { renderWithCustomRouter } from 'src/utils/testHelpers';
+import AddAccountBySecretRecovery from './AddAccountBySecretRecovery';
 
 const recoveryPhrase = 'target cancel solution recipe vague faint bomb convince pink vendor fresh patrol';
 const accountPassword = 'Password1$';
@@ -35,7 +35,7 @@ const props = {
 };
 
 beforeEach(() => {
-  renderWithRouter(AddAccountByPassPhrase, props);
+  renderWithCustomRouter(AddAccountBySecretRecovery, props);
 });
 
 describe('Add account by secret recovery phrase flow', () => {
@@ -73,7 +73,7 @@ describe('Add account by secret recovery phrase flow', () => {
 
       fireEvent.click(screen.getByText('Continue to Dashboard'));
 
-      expect(props.login).toBeCalled();
+      expect(props.history.push).toBeCalled();
     });
   });
 });

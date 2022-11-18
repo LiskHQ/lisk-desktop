@@ -4,7 +4,7 @@ import {
 } from '@testing-library/react';
 import mockSavedAccounts from '@tests/fixtures/accounts';
 import * as reactRedux from 'react-redux';
-import { renderWithRouter } from 'src/utils/testHelpers';
+import { renderWithCustomRouter } from 'src/utils/testHelpers';
 import wallets from '@tests/constants/wallets';
 import AddAccountByFile from './AddAccountByFile';
 
@@ -33,7 +33,7 @@ jest.spyOn(cryptography.encrypt, 'decryptMessageWithPassword').mockResolvedValue
 }));
 
 beforeEach(() => {
-  renderWithRouter(AddAccountByFile, props);
+  renderWithCustomRouter(AddAccountByFile, props);
 });
 
 describe('Add account by file flow', () => {
@@ -64,7 +64,7 @@ describe('Add account by file flow', () => {
     await waitFor(() => {
       expect(screen.getByText('Perfect! You\'re all set')).toBeTruthy();
       fireEvent.click(screen.getByText('Continue to Dashboard'));
-      expect(props.login).toBeCalled();
+      expect(props.history.push).toBeCalled();
     });
   });
 });

@@ -33,7 +33,7 @@ describe('actions: legacy', () => {
       },
     };
     const getState = () => state;
-    const transactionObject = {
+    const transactionJSON = {
       sender: { publicKey: wallets.non_migrated.summary.publicKey },
       params: { amount: wallets.non_migrated.legacy.amount },
       fee: 100000,
@@ -49,16 +49,16 @@ describe('actions: legacy', () => {
         new Promise((resolve) => {
           resolve(tx);
         }));
-      await balanceReclaimed(transactionObject, privateKey)(dispatch, getState);
+      await balanceReclaimed(transactionJSON, privateKey)(dispatch, getState);
 
       expect(signTransaction).toHaveBeenCalledWith({
-        transactionObject,
+        transactionJSON,
         wallet: {
           ...state.wallet.info.LSK,
           hwInfo: undefined,
           loginType: undefined,
         },
-        schema: state.network.networks.LSK.moduleCommandSchemas[transactionObject.moduleCommand],
+        schema: state.network.networks.LSK.moduleCommandSchemas[transactionJSON.moduleCommand],
         chainID: state.network.networks.LSK.chainID,
         privateKey,
       });
@@ -74,7 +74,7 @@ describe('actions: legacy', () => {
         new Promise((_, reject) => {
           reject(error);
         }));
-      await balanceReclaimed(transactionObject)(dispatch, getState);
+      await balanceReclaimed(transactionJSON)(dispatch, getState);
       expect(dispatch).toHaveBeenCalledWith({
         type: actionTypes.transactionSignError,
         data: error,
