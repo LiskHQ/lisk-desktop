@@ -253,7 +253,7 @@ const signMultisigUsingPrivateKey = (schema, chainID, transaction, privateKey, s
     schema,
     false // @todo if you want to send tokens, and you are the group and a member, is this True? (#4506)
   );
-  console.log('SIGNED MULTI SIG TX: ', signedTransaction);
+
   return signedTransaction;
 };
 
@@ -324,10 +324,6 @@ const signUsingPrivateKey = (wallet, schema, chainID, transaction, privateKey) =
     (isSender && !isGroupRegistration)
   ) {
     try {
-      console.log("---->>", transaction,
-      chainIDBuffer,
-      privateKeyBuffer,
-      schema)
       const res = transactions.signTransactionWithPrivateKey(
         transaction,
         chainIDBuffer,
@@ -381,12 +377,10 @@ export const sign = async (wallet, schema, chainID, transaction, privateKey, sen
     return signedTx;
   }
 
-  console.log('multi signature', senderAccount);
   if (senderAccount.mandatoryKeys?.length + senderAccount.optionalKeys?.length > 0) {
     return signMultisigUsingPrivateKey(schema, chainID, transaction, privateKey, senderAccount);
   }
 
-  console.log('signUsingPrivateKey', transaction);
   return signUsingPrivateKey(wallet, schema, chainID, transaction, privateKey);
 };
 
