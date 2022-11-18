@@ -90,8 +90,8 @@ export const showSignButton = (senderAccount, account, transaction) => {
     mandatoryKeys = transaction.params.mandatoryKeys;
     optionalKeys = transaction.params.optionalKeys;
   } else {
-    mandatoryKeys = senderAccount.keys.mandatoryKeys;
-    optionalKeys = senderAccount.keys.optionalKeys;
+    mandatoryKeys = senderAccount.keys?.mandatoryKeys || [];
+    optionalKeys = senderAccount.keys?.optionalKeys || [];
   }
 
   return mandatoryKeys.includes(account.summary.publicKey)
