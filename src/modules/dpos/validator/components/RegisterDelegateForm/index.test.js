@@ -10,7 +10,7 @@ jest.mock('../../hooks/useDelegateKey', () => jest.fn());
 jest.mock('@account/hooks/useDeprecatedAccount', () => ({
   useDeprecatedAccount: jest.fn().mockReturnValue({
     isSuccess: true,
-    isLoading: false
+    isLoading: false,
   }),
 }));
 
@@ -68,11 +68,14 @@ describe('RegisterDelegateForm', () => {
       wrapper
         .find('input.select-name-input')
         .simulate('change', { target: { value: 'mydelegate' } });
-      wrapper.find('input.generator-publicKey-input')
+      wrapper
+        .find('input.generator-publicKey-input')
         .simulate('change', { target: { value: genKey.value, name: 'generatorKey' } });
-      wrapper.find('input.bls-key-input')
+      wrapper
+        .find('input.bls-key-input')
         .simulate('change', { target: { value: blsKey.value, name: 'blsKey' } });
-      wrapper.find('input.pop-input')
+      wrapper
+        .find('input.pop-input')
         .simulate('change', { target: { value: pop.value, name: 'proofOfPossession' } });
       expect(setName).toHaveBeenCalledTimes(1);
       expect(setKey).toHaveBeenCalledWith(genKey.value);
@@ -146,9 +149,10 @@ describe('RegisterDelegateForm', () => {
       message: '',
     };
     const rawTx = {
-      rawTx: {
+      transactionJSON: {
         fee: 0,
-        moduleCommand: 'dpos:registerDelegate',
+        module: 'dpos',
+        command: 'registerDelegate',
         nonce: '1',
         params: {
           blsKey: blsKey.value,
@@ -156,14 +160,18 @@ describe('RegisterDelegateForm', () => {
           proofOfPossession: pop.value,
           name: validName.value,
         },
-        composedFees: {
-          Transaction: '0 LSK',
-          Initialisation: '0 LSK',
-        },
-        sender: {
-          publicKey: wallets.genesis.summary.publicKey,
-        },
+        signatures: [],
+        senderPublicKey: wallets.genesis.summary.publicKey,
       },
+      formProps: {
+        composedFees: {
+          Initialisation: '0 LSK',
+          Transaction: '0 LSK',
+        },
+        isValid: true,
+        moduleCommand: 'dpos:registerDelegate',
+      },
+      fees: undefined,
       selectedPriority: { title: 'Normal', selectedIndex: 0, value: 0 },
     };
 
