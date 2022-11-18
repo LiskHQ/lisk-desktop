@@ -235,7 +235,7 @@ const isSigned = signature => signature && signature !== Buffer.alloc(64).toStri
 
 export const calculateRemainingAndSignedMembers = (
   keys = { optionalKeys: [], mandatoryKeys: [] },
-  transaction = [],
+  transaction = {},
   isMultisignatureRegistration = false,
 ) => {
   const signatures = isMultisignatureRegistration
