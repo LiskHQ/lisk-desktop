@@ -17,12 +17,25 @@ describe('Locked balance Summary', () => {
   const props = {
     currentBlockHeight: 10000000,
     balanceUnlocked: jest.fn(),
-    rawTx: {
+    formProps: {
+      composedFees: {
+        Initialisation: '0 LSK',
+        Transaction: '0 LSK',
+      },
+      isValid: true,
+      moduleCommand: 'dpos:unlock',
+    },
+    selectedPriority: { title: 'Normal', selectedIndex: 0, value: 0 },
+    transactionJSON: {
+      fee: '0',
+      nonce: '1',
+      signatures: [],
+      senderPublicKey: wallets.genesis.summary.publicKey,
+      module: 'dpos',
+      command: 'unlock',
       params: {
         unlockObjects: [],
       },
-      isValid: true,
-      moduleCommand: MODULE_COMMANDS_NAME_MAP.unlock,
     },
     nextStep: jest.fn(),
     prevStep: jest.fn(),
@@ -57,7 +70,8 @@ describe('Locked balance Summary', () => {
     wrapper.find('button.confirm-button').simulate('click');
     expect(props.nextStep).toBeCalledWith({
       actionFunction: props.balanceUnlocked,
-      rawTx: props.rawTx,
+      formProps: props.formProps,
+      transactionJSON: props.transactionJSON,
     });
   });
 });
