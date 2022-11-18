@@ -12,7 +12,6 @@ import { useMultiSignatureStatus } from '../../hooks/useMultiSignatureStatus';
 
 // eslint-disable-next-line max-statements
 const Status = ({ transactions, t, transactionJSON }) => {
-  const isMultiSignature = transactions.signedTransaction.params?.numberOfSignatures > 0;
   const [currentAccount] = useCurrentAccount();
 
   // This is to replace previous withData implementations.
@@ -20,6 +19,7 @@ const Status = ({ transactions, t, transactionJSON }) => {
     transactionJSON,
   });
   const { mandatoryKeys, optionalKeys, numberOfSignatures, publickKey } = txInitatorAccount;
+  const isMultiSignature = transactions.signedTransaction.params?.numberOfSignatures > 0 || numberOfSignatures > 1;
 
   const { canSenderSignTx } = useMultiSignatureStatus({
     transactionJSON,

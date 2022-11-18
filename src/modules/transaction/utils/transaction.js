@@ -324,6 +324,10 @@ const signUsingPrivateKey = (wallet, schema, chainID, transaction, privateKey) =
     (isSender && !isGroupRegistration)
   ) {
     try {
+      console.log("---->>", transaction,
+      chainIDBuffer,
+      privateKeyBuffer,
+      schema)
       const res = transactions.signTransactionWithPrivateKey(
         transaction,
         chainIDBuffer,

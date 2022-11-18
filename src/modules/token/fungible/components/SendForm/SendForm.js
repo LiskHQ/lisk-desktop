@@ -134,6 +134,12 @@ const SendForm = (props) => {
       },
       token: token ?? { tokenID: '' },
     },
+    fields: {
+      sendingChain,
+      recipientChain,
+      token,
+      recipient,
+    },
   };
 
   let commandParams = {
@@ -141,6 +147,8 @@ const SendForm = (props) => {
     amount: toRawLsk(amount.value),
     recipientAddress: recipient.value,
     data: reference.value,
+    accountInitializationFee: 5000000, // TODO: Replace the initalization fee constant from service endpoint
+    // ...(!+account?.sequence?.nonce && { accountInitializationFee: 5000000  }),
   };
 
   if (sendingChain.chainID !== recipientChain.chainID) {

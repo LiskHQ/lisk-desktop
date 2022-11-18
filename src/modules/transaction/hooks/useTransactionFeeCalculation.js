@@ -1,4 +1,3 @@
-import { useSelector } from 'react-redux';
 import { useEffect, useReducer } from 'react';
 import { useCommandSchema } from '@network/hooks';
 import { getTransactionFee } from '../api';
@@ -23,7 +22,6 @@ const useTransactionFeeCalculation = ({
   transactionJSON,
   priorityOptions,
 }) => {
-  const network = useSelector(state => state.network);
   const [state, dispatch] = useReducer(reducer, wallet, getInitialState);
   const { moduleCommandSchemas } = useCommandSchema();
 
@@ -64,8 +62,7 @@ const useTransactionFeeCalculation = ({
   }, [
     transactionJSON.params,
     selectedPriority.selectedIndex,
-    selectedPriority.value,
-    network,
+    selectedPriority.value
   ]);
 
   return state;

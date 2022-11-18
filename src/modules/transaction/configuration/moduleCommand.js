@@ -6,7 +6,7 @@ const moduleCommandNameMap = {
   voteDelegate: 'dpos:voteDelegate',
   unlock: 'dpos:unlock',
   reportDelegateMisbehavior: 'dpos:reportDelegateMisbehavior',
-  reclaim: 'legacy:reclaim',
+  reclaim: 'legacy:reclaimLSK',
 };
 
 const moduleCommandMap = {

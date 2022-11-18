@@ -222,6 +222,7 @@ export const getTransactionFee = async ({
   const feePerByte = selectedPriority.value;
   const moduleCommand = joinModuleAndCommand(transactionJSON);
   const paramsSchema = moduleCommandSchemas[moduleCommand];
+
   const maxCommandFee = MODULE_COMMANDS_MAP[moduleCommand].maxFee;
   const transactionObject = fromTransactionJSON(transactionJSON, paramsSchema);
   let numberOfEmptySignatures = 0;

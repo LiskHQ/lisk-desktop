@@ -87,7 +87,10 @@ export const getTransactionStatus = (account, transactions, isMultisignature, ca
 
     if (
       nonEmptySignatures < numberOfSignatures ||
-      (isMultisignature && nonEmptySignatures === numberOfSignatures && !canSenderSignTx)
+      (isMultisignature &&
+        nonEmptySignatures === numberOfSignatures &&
+        !canSenderSignTx &&
+        moduleCommand === txStatusTypes.registerMultisignature)
     ) {
       return { code: txStatusTypes.multisigSignaturePartialSuccess };
     }
