@@ -43,7 +43,6 @@ const Status = ({ transactions, t, transactionJSON }) => {
   );
 
   const template = statusMessages(t)[status.code];
-  console.log('TX STATU: ', status);
   return (
     <section>
       <Box className={styles.boxContainer}>

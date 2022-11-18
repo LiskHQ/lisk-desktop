@@ -2,11 +2,15 @@ import React from 'react';
 import { shallow } from 'enzyme';
 import TxBroadcaster from '@transaction/components/TxBroadcaster';
 import accounts from '@tests/constants/wallets';
+import { mockAuth } from '@auth/__fixtures__';
+import useTxInitatorAccount from '@transaction/hooks/useTxInitiatorAccount';
 import Status from './status';
 
 jest.mock('@libs/wcm/hooks/useSession', () => ({
   respond: jest.fn(),
 }));
+jest.mock('@transaction/hooks/useTxInitiatorAccount');
+
 describe('Sign Multisignature Tx Status component', () => {
   const props = {
     t: (str, dict) => (dict ? str.replace('{{errorMessage}}', dict.errorMessage) : str),
@@ -15,6 +19,20 @@ describe('Sign Multisignature Tx Status component', () => {
       txBroadcastError: null,
       txSignatureError: null,
       signedTransaction: {},
+    },
+    transactionJSON: {
+      senderPublicKey: accounts.multiSig.summary.publicKey,
+      signatures: [accounts.multiSig.summary.publicKey],
+      nonce: '19',
+      fee: '207000',
+      module: 'auth',
+      command: 'registerMultisignature',
+      params: {
+        optionalKeys: accounts.multiSig.keys.optionalKeys,
+        mandatoryKeys: accounts.multiSig.keys.mandatoryKeys,
+        numberOfSignatures: accounts.multiSig.keys.numberOfSignatures,
+        signatures: []
+      },
     },
   };
 
@@ -29,8 +47,14 @@ describe('Sign Multisignature Tx Status component', () => {
       optionalKeys: accounts.multiSig.keys.optionalKeys,
       mandatoryKeys: accounts.multiSig.keys.mandatoryKeys,
       numberOfSignatures: accounts.multiSig.keys.numberOfSignatures,
+      signatures: []
     },
   };
+
+  useTxInitatorAccount.mockReturnValue({
+    txInitatorAccount: { ...mockAuth.data, ...mockAuth.meta, keys: { ...mockAuth.data } },
+    isLoading: false,
+  });
 
   // @todo reinstate by #4506.
   it.skip('passes correct props to TxBroadcaster when transaction sign failed', () => {
@@ -59,7 +83,7 @@ describe('Sign Multisignature Tx Status component', () => {
       transactions: {
         txBroadcastError: null,
         txSignatureError: null,
-        signedTransaction: { },
+        signedTransaction: {},
       },
     };
 
@@ -78,7 +102,7 @@ describe('Sign Multisignature Tx Status component', () => {
       transactions: {
         txBroadcastError: { message: 'error:test' },
         txSignatureError: null,
-        signedTransaction: { },
+        signedTransaction: {},
       },
     };
 
@@ -137,7 +161,8 @@ describe('Sign Multisignature Tx Status component', () => {
       illustration: 'signMultisignature',
       status: { code: 'MULTISIG_SIGNATURE_SUCCESS' },
       title: 'The transaction is now fully signed',
-      message: 'Now you can send it to the blockchain. You may also copy or download it, if you wish to send the transaction using another device later.',
+      message:
+        'Now you can send it to the blockchain. You may also copy or download it, if you wish to send the transaction using another device later.',
       className: 'content',
     });
   });
