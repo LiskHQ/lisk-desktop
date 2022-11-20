@@ -287,7 +287,7 @@ describe('API: LSK Transactions', () => {
     it('should calculate fee of reclaim tx', async () => {
       const reclaimTx = {
         module: 'legacy',
-        command: 'reclaim',
+        command: 'reclaimLSK',
         params: {
           amount: '4454300000',
         },

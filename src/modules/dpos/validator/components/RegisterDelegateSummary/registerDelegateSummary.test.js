@@ -6,7 +6,6 @@ import { useAuth } from '@auth/hooks/queries';
 import { mockAuth } from 'src/modules/auth/__fixtures__';
 import mockSavedAccounts from '@tests/fixtures/accounts';
 import Summary from './RegisterDelegateSummary';
-import wallets from '@tests/constants/wallets';
 
 const mockedCurrentAccount = mockSavedAccounts[0];
 jest.mock('@auth/hooks/queries');
@@ -30,7 +29,7 @@ describe('Delegate Registration Summary', () => {
       fee: '0',
       nonce: '1',
       signatures: [],
-      senderPublicKey: wallets.genesis.summary.publicKey,
+      senderPublicKey: accounts.genesis.summary.publicKey,
       module: 'dpos',
       command: 'registerDelegate',
       params: {

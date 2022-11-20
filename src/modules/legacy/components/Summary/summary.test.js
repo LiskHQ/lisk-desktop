@@ -93,20 +93,20 @@ describe('Reclaim balance Summary', () => {
     // Assert
     expect(props.nextStep).toBeCalledWith({
       formProps: {
-        moduleCommand: 'legacy:reclaim',
+        moduleCommand: 'legacy:reclaimLSK',
         composedFees: {
-          Transaction: '0.001 LSK',
+          Transaction: '0.00132 LSK',
           Initialisation: '0.05 LSK',
         },
       },
       transactionJSON: {
         module: 'legacy',
-        command: 'reclaim',
+        command: 'reclaimLSK',
         params: {
           amount: accounts.non_migrated.legacy.balance,
         },
         senderPublicKey: accounts.non_migrated.summary.publicKey,
-        fee: 100000,
+        fee: 132000,
         nonce: accounts.non_migrated.sequence.nonce,
         signatures: [],
       },
