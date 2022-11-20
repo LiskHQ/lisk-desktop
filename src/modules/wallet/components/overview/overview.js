@@ -51,7 +51,6 @@ const Overview = ({ isWalletRoute, history }) => {
 
   const isBanned = delegate.isBanned;
   const pomHeights = delegate.pomHeights;
-  // const { end } = pomHeights?.length ? pomHeights[pomHeights.length - 1] : {};
 
   const daysLeft = Math.ceil((1000 - currentHeight) / numOfBlockPerDay);
   const wallet = useSelector(selectActiveTokenAccount);

@@ -1,7 +1,6 @@
 /* istanbul ignore file */
 import { connect } from 'react-redux';
 import { selectActiveTokenAccount } from 'src/redux/selectors';
-
 import { transactionBroadcasted, resetTransactionResult } from 'src/redux/actions';
 import Status from './Status';
 

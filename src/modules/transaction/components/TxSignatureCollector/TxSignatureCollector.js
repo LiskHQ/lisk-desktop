@@ -1,6 +1,5 @@
 import React, { useEffect } from 'react';
 import { useDispatch } from 'react-redux';
-// import { signatureCollectionStatus } from '@transaction/configuration/txStatus';
 import { TertiaryButton } from 'src/theme/buttons';
 import { secondPassphraseRemoved } from '@auth/store/action';
 import { useCommandSchema } from '@network/hooks';
@@ -16,7 +15,7 @@ import { useCurrentAccount } from '@account/hooks';
 import styles from './txSignatureCollector.css';
 import { joinModuleAndCommand } from '../../utils';
 import { MODULE_COMMANDS_NAME_MAP } from '../../configuration/moduleCommand';
-import useTxInitatorAccount from '../../hooks/useTxInitiatorAccount';
+import useTxInitiatorAccount from '../../hooks/useTxInitiatorAccount';
 
 // eslint-disable-next-line max-statements
 const TxSignatureCollector = ({
@@ -42,7 +41,7 @@ const TxSignatureCollector = ({
   });
 
   // here, we want to get the auth account details of the account that initated the transaction.
-  const { isLoading: isGettingTxInitatorAccount, txInitatorAccount } = useTxInitatorAccount({
+  const { isLoading: isGettingTxInitiatorAccount, txInitiatorAccount } = useTxInitiatorAccount({
     transactionJSON,
   });
 
@@ -88,7 +87,7 @@ const TxSignatureCollector = ({
         transactionJSON,
         privateKey,
         publicKey,
-        txInitatorAccount,
+        txInitiatorAccount,
         moduleCommandSchemas
       );
     }
@@ -97,7 +96,7 @@ const TxSignatureCollector = ({
       formProps,
       transactionJSON,
       privateKey,
-      txInitatorAccount,
+      txInitiatorAccount,
       moduleCommandSchemas,
       sender: { ...account.data }, // this is the account of the present user wanting to sign the transaction
     });
@@ -155,7 +154,7 @@ const TxSignatureCollector = ({
         <EnterPasswordForm
           title="Please provide your device password to sign a transaction."
           onEnterPasswordSuccess={onEnterPasswordSuccess}
-          isDisabled={isGettingAuthData || isGettingTxInitatorAccount}
+          isDisabled={isGettingAuthData || isGettingTxInitiatorAccount}
         />
       </div>
     );

@@ -49,13 +49,11 @@ const App = ({ history }) => {
 
   useEffect(() => {
     setLoaded(true);
-    // Initialize client on first render to get default application
-    client.create({ http: 'http://165.227.246.146:9901', ws: 'ws://165.227.246.146:9901/rpc-v3' });
     dispatch(bookmarksRetrieved());
     dispatch(settingsRetrieved());
     dispatch(watchListRetrieved());
     // Initialize client on first render to get default application
-    client.create({ http: 'http://165.227.246.146:9901', ws: 'http://165.227.246.146:9901' });
+    client.create({ http: 'http://165.227.246.146:9901', ws: 'ws://165.227.246.146:9901/rpc-v3' });
   }, []);
 
   useEffect(() => {

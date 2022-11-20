@@ -8,7 +8,7 @@ import { mockCommandParametersSchemas } from 'src/modules/common/__fixtures__';
 import { useAuth } from '@auth/hooks/queries/useAuth';
 import { mockAuth } from '@auth/__fixtures__';
 import TxSignatureCollector from './TxSignatureCollector';
-import useTxInitatorAccount from '../../hooks/useTxInitiatorAccount';
+import useTxInitiatorAccount from '../../hooks/useTxInitiatorAccount';
 
 const mockCurrentAccount = mockSavedAccounts[0];
 const address = mockSavedAccounts[0].metadata.address;
@@ -83,8 +83,8 @@ describe('TxSignatureCollector', () => {
     )
   );
   useAuth.mockReturnValue({ data: mockAuth, isLoading: false });
-  useTxInitatorAccount.mockReturnValue({
-    txInitatorAccount: { ...mockAuth.data, ...mockAuth.meta, keys: { ...mockAuth.data } },
+  useTxInitiatorAccount.mockReturnValue({
+    txInitiatorAccount: { ...mockAuth.data, ...mockAuth.meta, keys: { ...mockAuth.data } },
     isLoading: false,
   });
 

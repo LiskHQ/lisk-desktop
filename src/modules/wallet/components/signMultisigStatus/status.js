@@ -4,7 +4,7 @@ import BoxContent from 'src/theme/box/content';
 import TxBroadcaster from '@transaction/components/TxBroadcaster';
 import { useCurrentAccount } from '@account/hooks';
 import { statusMessages, getTransactionStatus } from '@transaction/configuration/statusConfig';
-import useTxInitatorAccount from '@transaction/hooks/useTxInitiatorAccount';
+import useTxInitiatorAccount from '@transaction/hooks/useTxInitiatorAccount';
 
 import ProgressBar from '../signMultisigView/progressBar';
 import styles from './styles.css';
@@ -15,16 +15,17 @@ const Status = ({ transactions, t, transactionJSON }) => {
   const [currentAccount] = useCurrentAccount();
 
   // This is to replace previous withData implementations.
-  const { txInitatorAccount } = useTxInitatorAccount({
+  const { txInitiatorAccount } = useTxInitiatorAccount({
     transactionJSON,
   });
-  const { mandatoryKeys, optionalKeys, numberOfSignatures, publickKey } = txInitatorAccount;
-  const isMultiSignature = transactions.signedTransaction.params?.numberOfSignatures > 0 || numberOfSignatures > 1;
+  const { mandatoryKeys, optionalKeys, numberOfSignatures, publickKey } = txInitiatorAccount;
+  const isMultiSignature =
+    transactions.signedTransaction.params?.numberOfSignatures > 0 || numberOfSignatures > 1;
 
   const { canSenderSignTx } = useMultiSignatureStatus({
     transactionJSON,
     currentAccount,
-    senderAccount: txInitatorAccount,
+    senderAccount: txInitiatorAccount,
     account: {
       mandatoryKeys,
       optionalKeys,
@@ -36,7 +37,7 @@ const Status = ({ transactions, t, transactionJSON }) => {
   });
 
   const status = getTransactionStatus(
-    txInitatorAccount,
+    txInitiatorAccount,
     transactions,
     isMultiSignature,
     canSenderSignTx

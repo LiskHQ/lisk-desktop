@@ -3,7 +3,7 @@ import { shallow } from 'enzyme';
 import TxBroadcaster from '@transaction/components/TxBroadcaster';
 import accounts from '@tests/constants/wallets';
 import { mockAuth } from '@auth/__fixtures__';
-import useTxInitatorAccount from '@transaction/hooks/useTxInitiatorAccount';
+import useTxInitiatorAccount from '@transaction/hooks/useTxInitiatorAccount';
 import Status from './status';
 
 jest.mock('@libs/wcm/hooks/useSession', () => ({
@@ -51,8 +51,8 @@ describe('Sign Multisignature Tx Status component', () => {
     },
   };
 
-  useTxInitatorAccount.mockReturnValue({
-    txInitatorAccount: { ...mockAuth.data, ...mockAuth.meta, keys: { ...mockAuth.data } },
+  useTxInitiatorAccount.mockReturnValue({
+    txInitiatorAccount: { ...mockAuth.data, ...mockAuth.meta, keys: { ...mockAuth.data } },
     isLoading: false,
   });
 

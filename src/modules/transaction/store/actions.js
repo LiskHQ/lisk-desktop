@@ -190,7 +190,7 @@ export const multisigTransactionSigned = ({
   transactionJSON,
   sender,
   privateKey,
-  txInitatorAccount,
+  txInitiatorAccount,
   moduleCommandSchemas,
 }) => async (dispatch, getState) => {
   const state = getState();
@@ -205,7 +205,7 @@ export const multisigTransactionSigned = ({
     moduleCommandSchemas[formProps.moduleCommand],
     state.network.networks.LSK.chainID,
     privateKey,
-    txInitatorAccount, // this is the intitor of the transaction wanting to be signed
+    txInitiatorAccount, // this is the intitor of the transaction wanting to be signed
   ); 
 
   if (!error) {

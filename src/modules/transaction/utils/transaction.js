@@ -405,7 +405,7 @@ const signMultisigTransaction = async (
   schema,
   chainID,
   privateKey,
-  txInitatorAccount
+  txInitiatorAccount
 ) => {
   /**
    * Define keys.
@@ -438,7 +438,7 @@ const signMultisigTransaction = async (
       chainID,
       transaction,
       privateKey,
-      isRegisterMultisignature ? senderAccount : txInitatorAccount
+      isRegisterMultisignature ? senderAccount : txInitiatorAccount
     );
     return [result];
   } catch (e) {

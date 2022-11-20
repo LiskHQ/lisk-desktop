@@ -2,14 +2,14 @@ import { useMemo } from 'react';
 import { useAuth } from 'src/modules/auth/hooks/queries';
 import { extractAddressFromPublicKey } from 'src/modules/wallet/utils/account';
 
-const useTxInitatorAccount = ({ transactionJSON }) => {
-  const txInitatorAddress = extractAddressFromPublicKey(transactionJSON.senderPublicKey);
+const useTxInitiatorAccount = ({ transactionJSON }) => {
+  const txInitiatorAddress = extractAddressFromPublicKey(transactionJSON.senderPublicKey);
 
   const { data, isLoading } = useAuth({
-    config: { params: { address: txInitatorAddress } },
+    config: { params: { address: txInitiatorAddress } },
   });
 
-  const txInitatorAccount = useMemo(
+  const txInitiatorAccount = useMemo(
     () => ({
       ...(data?.data || {}),
       ...(data?.meta || {}),
@@ -20,7 +20,7 @@ const useTxInitatorAccount = ({ transactionJSON }) => {
     [isLoading]
   );
 
-  return { txInitatorAccount, isLoading };
+  return { txInitiatorAccount, isLoading };
 };
 
-export default useTxInitatorAccount;
+export default useTxInitiatorAccount;

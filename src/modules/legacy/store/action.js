@@ -4,7 +4,7 @@ import actionTypes from '@transaction/store/actionTypes';
 import { selectActiveTokenAccount } from 'src/redux/selectors';
 
 export const balanceReclaimed =
-  (formProps, transactionJSON, privateKey, _, txInitatorAccount, moduleCommandSchemas) =>
+  (formProps, transactionJSON, privateKey, _, txInitiatorAccount, moduleCommandSchemas) =>
   async (dispatch, getState) => {
     //
     // Collect data
@@ -22,7 +22,7 @@ export const balanceReclaimed =
         wallet: activeWallet,
         schema: moduleCommandSchemas[formProps.moduleCommand],
         chainID: state.network.networks.LSK.chainID,
-        senderAccount: txInitatorAccount,
+        senderAccount: txInitiatorAccount,
       })
     );
 

@@ -3,7 +3,6 @@ import { isEmpty } from 'src/utils/helpers';
 import { txStatusTypes } from '@transaction/configuration/txStatus';
 import { transactionToJSON, getNumberOfSignatures, joinModuleAndCommand } from '../utils';
 import { MODULE_COMMANDS_NAME_MAP } from './moduleCommand';
-// import { getMultiSignatureStatus } from 'src/modules/wallet/utils/multiSignatureStatus';
 
 export const statusMessages = (t) => ({
   [txStatusTypes.multisigSignaturePartialSuccess]: {

@@ -1,3 +1,4 @@
+/* eslint-disable complexity */
 /* eslint-disable max-statements */
 import React from 'react';
 import { isEmpty } from 'src/utils/helpers';
@@ -6,7 +7,7 @@ import { signatureCollectionStatus } from '@transaction/configuration/txStatus';
 import BoxContent from 'src/theme/box/content';
 import Box from 'src/theme/box';
 import { LayoutSchema } from '@transaction/components/TransactionDetails/layoutSchema';
-import useTxInitatorAccount from '@transaction/hooks/useTxInitiatorAccount';
+import useTxInitiatorAccount from '@transaction/hooks/useTxInitiatorAccount';
 import TransactionDetailsContext from '@transaction/context/transactionDetailsContext';
 import layoutSchemaStyles from '@transaction/components/TransactionDetails/layoutSchema.css';
 import ProgressBar from '../signMultisigView/progressBar';
@@ -14,7 +15,7 @@ import { ActionBar, Feedback } from './footer';
 import styles from './styles.css';
 import { useMultiSignatureStatus } from '../../hooks/useMultiSignatureStatus';
 
-// eslint-disable-next-line complexity
+
 const Summary = ({
   t,
   transactionJSON,
@@ -28,7 +29,7 @@ const Summary = ({
   const [currentAccount] = useCurrentAccount();
 
   // This is to replace previous withData implementations.
-  const { txInitatorAccount: senderAccount } = useTxInitatorAccount({
+  const { txInitiatorAccount: senderAccount } = useTxInitiatorAccount({
     transactionJSON,
   });
 

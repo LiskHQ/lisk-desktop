@@ -4,7 +4,7 @@ import { mount } from 'enzyme';
 import { removeSearchParamsFromUrl } from 'src/utils/searchParams';
 import wallets from '@tests/constants/wallets';
 import { mockAuth } from '@auth/__fixtures__';
-import useTxInitatorAccount from '@transaction/hooks/useTxInitiatorAccount';
+import useTxInitiatorAccount from '@transaction/hooks/useTxInitiatorAccount';
 import mockBlockchainApplications from '@tests/fixtures/blockchainApplicationsManage';
 import { MODULE_COMMANDS_NAME_MAP } from 'src/modules/transaction/configuration/moduleCommand';
 import blockchainApplicationsExplore from '@tests/fixtures/blockchainApplicationsExplore';
@@ -76,8 +76,8 @@ describe('Sign Multisignature Tx Review component', () => {
     wrapper = mount(<Summary {...props} />);
   });
 
-  useTxInitatorAccount.mockReturnValue({
-    txInitatorAccount: {
+  useTxInitiatorAccount.mockReturnValue({
+    txInitiatorAccount: {
       ...mockAuth.data,
       ...mockAuth.meta,
       keys: {
@@ -152,8 +152,8 @@ describe('Sign Multisignature Tx Review component', () => {
   });
 
   it('Should render properly when senderAccount is empty', () => {
-    useTxInitatorAccount.mockReturnValue({
-      txInitatorAccount: {},
+    useTxInitiatorAccount.mockReturnValue({
+      txInitiatorAccount: {},
     });
     wrapper = mount(<Summary {...props} />);
     const html = wrapper.html();
