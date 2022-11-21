@@ -30,7 +30,7 @@ const { transfer, voteDelegate, registerMultisignature, registerDelegate, reclai
 // For consistency we will adopt these changes similar to https://github.com/LiskHQ/lisk-sdk/blob/development/elements/lisk-api-client/src/transaction.ts
 // We will address of these problem in issue https://github.com/LiskHQ/lisk-desktop/issues/4400
 
-describe('API: LSK Transactions', () => {
+describe.skip('API: LSK Transactions', () => {
   const baseDesktopTx = {
     senderPublicKey: accounts.genesis.summary.publicKey,
     nonce: accounts.genesis.sequence.nonce,

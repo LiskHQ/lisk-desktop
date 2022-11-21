@@ -16,12 +16,11 @@ const httpPaths = {
  *
  * @returns {Promise}
  */
-export const getNetworkStatus = ({
-  baseUrl,
-}) => http({
-  baseUrl,
-  path: httpPaths.networkStatus,
-});
+export const getNetworkStatus = ({ baseUrl }) =>
+  http({
+    baseUrl,
+    path: httpPaths.networkStatus,
+  });
 
 const getServiceUrl = ({ name, address = 'http://165.227.246.146:9901' }) => {
   if ([networkKeys.mainNet, networkKeys.testNet].includes(name)) {
@@ -41,7 +40,7 @@ const getServiceUrl = ({ name, address = 'http://165.227.246.146:9901' }) => {
 export const getNetworkConfig = ({ name, address }) => {
   const serviceUrl = getServiceUrl({ name, address });
   return getNetworkStatus({ baseUrl: serviceUrl })
-    .then(response => ({
+    .then((response) => ({
       ...response.data,
       serviceUrl,
     }))
@@ -60,22 +59,21 @@ export const getNetworkConfig = ({ name, address }) => {
  *
  * @returns {Promise}
  */
-export const getNetworkStatistics = ({
-  network,
-}) => http({
-  path: httpPaths.networkStatistics,
-  network,
-});
+export const getNetworkStatistics = ({ network }) =>
+  http({
+    path: httpPaths.networkStatistics,
+    network,
+  });
 
 const peerFilters = {
-  version: { key: 'version', test: str => (typeof str === 'string') },
-  state: { key: 'state', test: str => (typeof str === 'string') },
-  height: { key: 'height', test: num => (typeof num === 'number' && num > 0) },
-  limit: { key: 'limit', test: num => (typeof num === 'number') },
-  offset: { key: 'offset', test: num => (typeof num === 'number' && num > 0) },
+  version: { key: 'version', test: (str) => typeof str === 'string' },
+  state: { key: 'state', test: (str) => typeof str === 'string' },
+  height: { key: 'height', test: (num) => typeof num === 'number' && num > 0 },
+  limit: { key: 'limit', test: (num) => typeof num === 'number' },
+  offset: { key: 'offset', test: (num) => typeof num === 'number' && num > 0 },
   sort: {
     key: 'sort',
-    test: str => ['height:asc', 'height:desc', 'version:asc', 'version:desc'].includes(str),
+    test: (str) => ['height:asc', 'height:desc', 'version:asc', 'version:desc'].includes(str),
   },
 };
 
@@ -96,10 +94,7 @@ const peerFilters = {
  *
  * @returns {Promise}
  */
-export const getPeers = ({
-  network,
-  params,
-}) => {
+export const getPeers = ({ network, params }) => {
   const normParams = {};
   Object.keys(params).forEach((key) => {
     if (peerFilters[key].test(params[key])) {
