@@ -70,7 +70,7 @@ const AccountDetails = ({ history }) => {
         </BoxHeader>
         <BoxContent>
           {activeTab === 'transactions' ? (
-            <Transactions pending={[]} address={currentAddress} />
+            <Transactions address={currentAddress} />
           ) : (
             <TransactionEvents isWallet hasFilter address={currentAddress} />
           )}
