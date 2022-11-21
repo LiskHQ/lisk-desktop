@@ -59,11 +59,10 @@ export const list = (state = {}, { type, encryptedAccount, accountDetail, addres
           },
         },
       };
-    case actionTypes.deleteAccount:
-      delete state[address];
-      return {
-        ...state,
-      };
+    case actionTypes.deleteAccount: {
+      const { [address]: toRemove, ...updatedState } = state;
+      return updatedState;
+    }
     default:
       return state;
   }
