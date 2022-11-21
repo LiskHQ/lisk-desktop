@@ -13,7 +13,7 @@ import {
   toTransactionJSON,
 } from './encoding';
 
-describe('Transaction', () => {
+describe.skip('Transaction', () => {
   let tokenTransfer = new Transaction();
   const recoveryPhrase = 'target cancel solution recipe vague faint bomb convince pink vendor fresh patrol';
   const { privateKey, publicKey } = legacy.getKeys(recoveryPhrase);
