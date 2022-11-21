@@ -1,13 +1,11 @@
-import { to } from 'await-to-js';
 import { DEFAULT_LIMIT } from 'src/utils/monitor';
 import { signatureCollectionStatus } from '@transaction/configuration/txStatus';
 import { extractKeyPair } from '@wallet/utils/account';
 import { getTransactionSignatureStatus } from '@wallet/components/signMultisigView/helpers';
 import { selectActiveTokenAccount } from 'src/redux/selectors';
-import { timerReset } from '@auth/store/action';
 import { loadingStarted, loadingFinished } from 'src/modules/common/store/actions';
 import actionTypes from './actionTypes';
-import { getTransactions, broadcast } from '../api';
+import { getTransactions, broadcast, dryRun } from '../api';
 import {
   joinModuleAndCommand,
   signMultisigTransaction,
@@ -142,38 +140,42 @@ export const transactionDoubleSigned = () => async (dispatch, getState) => {
 export const transactionBroadcasted = (transaction, moduleCommandSchemas) =>
   // eslint-disable-next-line max-statements
   async (dispatch, getState) => {
-    const { network, token, wallet } = getState();
+    const { network, token } = getState();
     const activeToken = token.active;
     const serviceUrl = network.networks[activeToken].serviceUrl;
+    let broadcastResult;
+    // @todo dry run before broadcast
+    const dryRunResult =  await dryRun({ transaction, serviceUrl, network });
 
-    const [error] = await to(broadcast(
-      { transaction, serviceUrl, moduleCommandSchemas },
-    ));
+    if (dryRunResult.data?.success === true) {
+      broadcastResult = await broadcast(
+        { transaction, serviceUrl, moduleCommandSchemas },
+      );
 
-    if (error) {
-      dispatch({
-        type: actionTypes.broadcastedTransactionError,
-        data: {
-          error,
-          transaction,
-        },
-      });
-    } else {
-      dispatch({
-        type: actionTypes.broadcastedTransactionSuccess,
-        data: transaction,
-      });
-
-      const moduleCommand = joinModuleAndCommand(transaction);
-      const paramsSchema = moduleCommandSchemas[moduleCommand];
-      const transactionJSON = toTransactionJSON(transaction, paramsSchema);
-
-      if (transactionJSON.senderPublicKey === wallet.info.LSK.summary.publicKey) {
+      if(!broadcastResult.data?.error) {
+        const moduleCommand = joinModuleAndCommand(transaction);
+        const paramsSchema = moduleCommandSchemas[moduleCommand];
+        const transactionJSON = toTransactionJSON(transaction, paramsSchema);
+        dispatch({
+          type: actionTypes.broadcastedTransactionSuccess,
+          data: transaction,
+        });
         dispatch(pendingTransactionAdded({ ...transactionJSON, isPending: true }));
-      }
 
-      dispatch(timerReset());
+        return true;
+      }
     }
+
+    // @todo Remove the third fallback error message when the Core API errors are implemented
+    dispatch({
+      type: actionTypes.broadcastedTransactionError,
+      data: {
+        error: dryRunResult.data?.message ?? broadcastResult?.error ?? 'An error occurred while broadcasting the transaction',
+        transaction,
+      },
+    });
+
+    return false;
   };
 
 /**
