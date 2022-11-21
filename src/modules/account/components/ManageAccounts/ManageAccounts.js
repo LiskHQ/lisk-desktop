@@ -51,8 +51,7 @@ export const ManageAccountsContent = ({
             key={account.metadata.address}
             account={account}
             onSelect={onSelectAccount}
-            showRemove={showRemove}
-            onRemove={removeAccount}
+            onRemove={showRemove && removeAccount}
             truncate={truncate}
           />
         ))}
