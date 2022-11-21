@@ -27,7 +27,7 @@ export const ACCOUNT_MENU = [
     label: 'Upgrade to multisignature',
   },
   {
-    component: 'removeCurrentAccountFlow',
+    component: 'removeSelectedAccount',
     icon: 'removeRed',
     label: 'Remove account',
   },

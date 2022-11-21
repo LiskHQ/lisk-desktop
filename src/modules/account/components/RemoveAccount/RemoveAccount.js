@@ -1,6 +1,4 @@
-import React, {
-  useRef, useCallback, useState, useEffect,
-} from 'react';
+import React, { useRef } from 'react';
 import { withRouter } from 'react-router';
 
 import RemoveConfirmation from '@account/components/RemoveConfirmation';
@@ -12,29 +10,16 @@ import BoxContent from 'src/theme/box/content';
 import { useAccounts } from '../../hooks';
 import styles from './RemoveAccount.css';
 
-const RemoveAccount = ({ address, history }) => {
-  const { deleteAccountByAddress, getAccountByAddress } = useAccounts();
-  const [account, setAccount] = useState(null);
+const RemoveAccount = ({ account, history }) => {
+  const { deleteAccountByAddress } = useAccounts();
   const multiStepRef = useRef(null);
 
-  useEffect(() => {
-    const acc = getAccountByAddress(address);
-    setAccount(acc);
-  }, [address]);
-
-  const removeAccount = useCallback(
-    (removeAddress) => {
-      // istanbul ignore next
-      if (removeAddress) {
-        deleteAccountByAddress(removeAddress);
-      }
-    },
-    [deleteAccountByAddress],
-  );
-
   const onRemoveAccount = () => {
-    removeAccount(address);
-    multiStepRef.current.next();
+    const removeAddress = account?.metadata?.address;
+    if (account?.metadata?.address) {
+      deleteAccountByAddress(removeAddress);
+      multiStepRef.current.next();
+    }
   };
 
   const onComplete = () => {
@@ -44,10 +29,7 @@ const RemoveAccount = ({ address, history }) => {
   return (
     <Box className={styles.container}>
       <BoxContent className={styles.content}>
-        <MultiStep
-          navStyles={{ multiStepWrapper: styles.wrapper }}
-          ref={multiStepRef}
-        >
+        <MultiStep ref={multiStepRef}>
           <RemoveConfirmation account={account} onRemoveAccount={onRemoveAccount} />
           <RemoveSuccess onComplete={onComplete} />
         </MultiStep>
