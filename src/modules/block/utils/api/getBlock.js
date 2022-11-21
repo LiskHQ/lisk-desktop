@@ -1,8 +1,5 @@
-import getBlockProps from '@block/utils/getBlockProps';
 import defaultClient from 'src/utils/api/client';
-import {
-  METHOD,
-} from 'src/const/config';
+import { METHOD } from 'src/const/config';
 
 /**
  * Retrieves block details.
@@ -16,14 +13,9 @@ import {
  * @param {Object} data.network - Network setting from Redux store
  * @returns {Promise} http call
  */
-const getBlock = ({
-  params = {},
-}) => {
+const getBlock = ({ params = {} }) => {
   try {
-    const blockProps = getBlockProps(params);
-    return defaultClient[METHOD]({
-      params: blockProps
-    });
+    return defaultClient[METHOD]({ params });
   } catch (e) {
     return Promise.reject(e);
   }

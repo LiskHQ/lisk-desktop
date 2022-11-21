@@ -3,8 +3,8 @@ import { mount } from 'enzyme';
 import { mountWithRouterAndStore } from 'src/utils/testHelpers';
 import accounts from '@tests/constants/wallets';
 import { useAuth } from '@auth/hooks/queries';
-import { mockAuth } from 'src/modules/auth/__fixtures__';
 import mockSavedAccounts from '@tests/fixtures/accounts';
+import { mockAuth } from 'src/modules/auth/__fixtures__';
 import Summary from './RegisterDelegateSummary';
 
 const mockedCurrentAccount = mockSavedAccounts[0];
