@@ -1,5 +1,5 @@
-const { useMemo } = require('react');
-const { useCommandParametersSchemas } = require('./queries');
+import { useMemo } from 'react';
+import { useCommandParametersSchemas } from './queries';
 
 export const useCommandSchema = () => {
   const { data, isLoading } = useCommandParametersSchemas();
@@ -13,7 +13,7 @@ export const useCommandSchema = () => {
       (result, { moduleCommand, schema }) => ({ ...result, [moduleCommand]: schema }),
       {}
     );
-  }, [isLoading]);
+  }, [data]);
 
   return { isLoading, moduleCommandSchemas };
 };
