@@ -11,9 +11,7 @@ jest
 
 describe('useTxInitiatorAccount', () => {
   const transactionJSON = {
-    senderPublicKey: 'c094ebee7ec0c50ebee32918655e089f6e1a604b83bcaa760293c61e0f18ab6f'.toString(
-      'hex'
-    ),
+    senderPublicKey: 'c094ebee7ec0c50ebee32918655e089f6e1a604b83bcaa760293c61e0f18ab6f',
   };
 
   it('should return command schemas', async () => {
