@@ -51,7 +51,7 @@ describe('useDelegateName', () => {
   it('should mark as error if the value is not unique', async () => {
     useDelegates.mockReturnValue({
       loading: false,
-      data: { data: {} },
+      data: { data: [{}] },
     });
     const { result } = renderHook(() => useDelegateName('test_1'), { wrapper });
     jest.advanceTimersByTime(1001);
