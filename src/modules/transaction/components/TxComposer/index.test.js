@@ -11,6 +11,8 @@ jest.mock('@account/hooks/useDeprecatedAccount', () => ({
   }),
 }));
 
+jest.useFakeTimers();
+
 describe('TxComposer', () => {
   const transaction = {
     moduleCommand: MODULE_COMMANDS_NAME_MAP.transfer,

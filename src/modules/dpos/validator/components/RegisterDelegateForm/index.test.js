@@ -35,6 +35,8 @@ const empty = {
   message: 'Can not be empty',
 };
 
+jest.useFakeTimers();
+
 describe('RegisterDelegateForm', () => {
   const props = {
     prevState: {},
