@@ -129,19 +129,20 @@ const TxSignatureCollector = ({
     </div>
   );
   // }
-
-  // return (
-  //   <Box width="medium" className={`${styles.wrapper} hwConfirmation`}>
-  //     <BoxContent className={styles.content}>
-  //       <Illustration name={deviceType} />
-  //       <h5>
-  //         {t('Please confirm the transaction on your {{deviceModel}}', {
-  //           deviceModel: account.hwInfo.deviceModel,
-  //         })}
-  //       </h5>
-  //     </BoxContent>
-  //   </Box>
-  // );
+  /**
+   * return (
+    <Box width="medium" className={`${styles.wrapper} hwConfirmation`}>
+      <BoxContent className={styles.content}>
+        <Illustration name={deviceType} />
+        <h5>
+          {t('Please confirm the transaction on your {{deviceModel}}', {
+            deviceModel: account.hwInfo.deviceModel,
+          })}
+        </h5>
+      </BoxContent>
+    </Box>
+  );
+   */
 };
 
 export default TxSignatureCollector;
