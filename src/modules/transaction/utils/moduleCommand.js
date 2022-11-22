@@ -11,13 +11,14 @@ const getModuleCommandSenderLabel = (t = str => str) => ({
 });
 
 const getModuleCommandTitle = (t = str => str) => ({
-  [MODULE_COMMANDS_NAME_MAP.transfer]: t('Send'),
+  [MODULE_COMMANDS_NAME_MAP.transfer]: t('Transfer'),
   [MODULE_COMMANDS_NAME_MAP.reclaim]: t('Reclaim'),
   [MODULE_COMMANDS_NAME_MAP.unlock]: t('Unlock'),
   [MODULE_COMMANDS_NAME_MAP.voteDelegate]: t('Vote'),
   [MODULE_COMMANDS_NAME_MAP.registerDelegate]: t('Register delegate'),
   [MODULE_COMMANDS_NAME_MAP.registerMultisignature]: t('Register multisignature'),
   [MODULE_COMMANDS_NAME_MAP.reportDelegateMisbehavior]: t('Report delegate misbehaviour'),
+  [MODULE_COMMANDS_NAME_MAP.crossChainTransfer]: t('Cross chain transfer'),
 });
 
 const splitModuleAndCommand = (moduleCommand) => moduleCommand.split(':');

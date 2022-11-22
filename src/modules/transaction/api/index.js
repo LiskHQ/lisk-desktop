@@ -17,21 +17,6 @@ import { httpPaths } from '../configuration';
 import { sign } from '../utils';
 import { fromTransactionJSON } from '../utils/encoding';
 
-// TODO: Remove this patch once API is integrated
-const patchTransactionResponse = (response) => {
-  const data = response.data.map((trx) => ({
-    ...trx,
-    params: { ...trx.asset },
-    moduleCommand: trx.moduleAssetId,
-    moduleCommandName: trx.moduleAssetName,
-  }));
-
-  return {
-    ...response,
-    data,
-  };
-};
-
 const filters = {
   address: { key: 'address', test: (address) => !validateAddress(address) },
   senderAddress: { key: 'senderAddress', test: (address) => !validateAddress(address) },
@@ -98,7 +83,7 @@ export const getTransactions = ({ network, params, baseUrl }) => {
     path: httpPaths.transactions,
     params: normParams,
     baseUrl,
-  }).then(patchTransactionResponse);
+  });
 };
 
 /**
