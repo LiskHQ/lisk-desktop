@@ -1,10 +1,13 @@
 import { mountWithQueryClient } from 'src/utils/testHelpers';
+import { useCommandSchema } from '@network/hooks/useCommandsSchema';
 import wallets from '@tests/constants/wallets';
 import * as keys from '@tests/constants/keys';
+import { mockCommandParametersSchemas } from 'src/modules/common/__fixtures__';
 import useDelegateName from '../../hooks/useDelegateName';
 import useDelegateKey from '../../hooks/useDelegateKey';
 import RegisterDelegateForm from '.';
 
+jest.mock('@network/hooks/useCommandsSchema');
 jest.mock('../../hooks/useDelegateName', () => jest.fn());
 jest.mock('../../hooks/useDelegateKey', () => jest.fn());
 jest.mock('@account/hooks/useDeprecatedAccount', () => ({
@@ -45,6 +48,13 @@ describe('RegisterDelegateForm', () => {
 
   const setName = jest.fn();
   const setKey = jest.fn();
+
+  useCommandSchema.mockReturnValue(
+    mockCommandParametersSchemas.data.reduce(
+      (result, { moduleCommand, schema }) => ({ ...result, [moduleCommand]: schema }),
+      {}
+    )
+  );
 
   afterEach(() => {
     jest.clearAllMocks();
