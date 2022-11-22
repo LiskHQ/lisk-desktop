@@ -122,7 +122,7 @@ const Overview = () => {
   const [params, setParams] = useState({ limit: 7, interval: 'day' });
   const [activeTab, setActiveTab] = useState('week');
   const colorPalette = getColorPalette(useTheme());
-  // Fallback token for transaction statistics 
+  // Fallback token for transaction statistics
   // @TODO: Add selector for active token when available in service
   const tokenID = '0400000000000000';
   const { data: txStatsData } = useTransactionStatistics({ config: { params } });
@@ -133,24 +133,25 @@ const Overview = () => {
   };
   const distributionByType = formatDistributionByValues(txStats.distributionByType);
   const distributionByAmount = normalizeNumberRange(txStats.distributionByAmount?.[tokenID] ?? {});
-  const { txCountList, txVolumeList, txDateList } = Object.keys(txStats.timeline).length > 0
-    ? txStats.timeline[tokenID]?.reduce(
-        (acc, item) => ({
-          txCountList: [...acc.txCountList, item.transactionCount],
-          txDateList: [...acc.txDateList, formatDates(item.date, activeTab).slice(0, 2)],
-          txVolumeList: [...acc.txVolumeList, fromRawLsk(item.volume)],
-        }),
-        {
+  const { txCountList, txVolumeList, txDateList } =
+    Object.keys(txStats.timeline).length > 0 && txStats.timeline[tokenID]
+      ? txStats.timeline[tokenID].reduce(
+          (acc, item) => ({
+            txCountList: [...acc.txCountList, item.transactionCount],
+            txDateList: [...acc.txDateList, formatDates(item.date, activeTab).slice(0, 2)],
+            txVolumeList: [...acc.txVolumeList, fromRawLsk(item.volume)],
+          }),
+          {
+            txCountList: [],
+            txDateList: [],
+            txVolumeList: [],
+          }
+        )
+      : {
           txCountList: [],
-          txDateList: [],
           txVolumeList: [],
-        }
-      )
-    : {
-        txCountList: [],
-        txVolumeList: [],
-        txDateList: [],
-      };
+          txDateList: [],
+        };
 
   const changeTab = (tab) => {
     setActiveTab(tab.value);
