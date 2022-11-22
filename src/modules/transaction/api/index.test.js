@@ -421,7 +421,7 @@ describe('API: LSK Transactions', () => {
     });
   });
 
-  describe.only('dryRun', async () => {
+  describe('dryRun', async () => {
     const serviceUrl = 'http://localhost:4000';
     it('should return error if transaction is invalid', async () => {
       const transactionJSON = {
