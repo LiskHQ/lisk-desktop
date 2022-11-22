@@ -62,6 +62,8 @@ describe('TxComposer', () => {
         isValid: true,
         moduleCommand: MODULE_COMMANDS_NAME_MAP.transfer,
         fields: { token: { availableBalance: 100000000 } },
+        sendingChain: { chainID: '1' },
+        recipientChain: { chainID: '2' }
       },
     };
     const wrapper = mountWithQueryClient(TxComposer, newProps);
