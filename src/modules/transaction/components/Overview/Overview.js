@@ -133,7 +133,7 @@ const Overview = () => {
   };
   const distributionByType = formatDistributionByValues(txStats.distributionByType);
   const distributionByAmount = normalizeNumberRange(txStats.distributionByAmount?.[tokenID] ?? {});
-  const { txCountList, txVolumeList, txDateList } = Object.keys(txStats.timeline).length
+  const { txCountList, txVolumeList, txDateList } = Object.keys(txStats.timeline)?.length
     ? txStats.timeline[tokenID]?.reduce(
         (acc, item) => ({
           txCountList: [...acc.txCountList, item.transactionCount],
