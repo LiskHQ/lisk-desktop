@@ -178,4 +178,16 @@ describe('TxSignatureCollector', () => {
     render(<TxSignatureCollector {...signedTransactionProps} />);
     expect(props.nextStep).toHaveBeenCalled();
   });
+ 
+  it('should call multisigTransactionSigned if tx is a register multi-signature transaction', () => {
+    const signedTransactionProps = {
+      ...props,
+      transactions: {
+        ...props.transactions,
+        signedTransaction: { id: '123', signatures: [] },
+      },
+    };
+    render(<TxSignatureCollector {...signedTransactionProps} />);
+    expect(props.nextStep).toHaveBeenCalled();
+  });
 });

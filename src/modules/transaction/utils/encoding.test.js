@@ -1,7 +1,9 @@
 import * as keys from '@tests/constants/keys';
 import { codec } from '@liskhq/lisk-codec';
 import { mockCommandParametersSchemas } from 'src/modules/common/__fixtures__';
+import { utils } from '@liskhq/lisk-cryptography';
 import {
+  decodeTransaction,
   encodeTransaction,
   fromTransactionJSON,
   getCommandParamsSchema,
@@ -12,6 +14,7 @@ jest.spyOn(codec, 'decode');
 jest.spyOn(codec, 'toJSON');
 jest.spyOn(codec, 'decodeJSON');
 jest.spyOn(codec, 'encode');
+jest.spyOn(utils, 'hash');
 
 describe('encoding', () => {
   const moduleCommandSchemas = mockCommandParametersSchemas.data.reduce(
@@ -84,6 +87,56 @@ describe('encoding', () => {
       id: Buffer.alloc(0),
     });
   });
+  
+  it('should create tx from json when no paramSchema is provided', () => {
+    codec.decode.mockReturnValue('params-decoded');
+
+    const transactionJSON = {
+      fee: 0,
+      module: 'dpos',
+      command: 'registerDelegate',
+      nonce: '1',
+      params: '',
+      signatures: [],
+      senderPublicKey: '0x0',
+    };
+
+    expect(fromTransactionJSON(transactionJSON)).toEqual({
+      fee: 0n,
+      module: 'dpos',
+      command: 'registerDelegate',
+      nonce: 1n,
+      params: {},
+      signatures: [],
+      senderPublicKey: Buffer.alloc(0),
+      id: Buffer.alloc(0),
+    });
+  });
+
+  it('should create transaction whoose id is an empty buffer', () => {
+    codec.decode.mockReturnValue('params-decoded');
+
+    const transactionJSON = {
+      fee: 0,
+      module: 'dpos',
+      command: 'registerDelegate',
+      nonce: '1',
+      params: '',
+      signatures: [],
+      senderPublicKey: '0x0',
+    };
+
+    expect(fromTransactionJSON(transactionJSON)).toEqual({
+      fee: 0n,
+      module: 'dpos',
+      command: 'registerDelegate',
+      nonce: 1n,
+      params: {},
+      signatures: [],
+      senderPublicKey: Buffer.alloc(0),
+      id: Buffer.alloc(0),
+    });
+  });
 
   it('should create json from tx', () => {
     codec.toJSON.mockReturnValue({ key: 'test-value' });
@@ -122,5 +175,28 @@ describe('encoding', () => {
     };
 
     expect(encodeTransaction(transaction, moduleCommandSchemas)).toEqual({ key: 'test-encoded' });
+  });
+
+  it('should encode tx with an empty buffer when paramSchema is not provided', () => {
+    codec.encode.mockReturnValue({});
+
+    const transaction = {
+      id: '123456',
+    };
+
+    expect(encodeTransaction(transaction)).toEqual({});
+  });
+
+  it('should decode tx with an empty object when paramSchema is not provided', () => {
+    codec.decode.mockReturnValue({
+      nonce: '1n',
+    });
+    utils.hash.mockReturnValue(Buffer.from('test-id'));
+
+    expect(decodeTransaction(Buffer.alloc(0))).toEqual({
+      id: Buffer.from('test-id'),
+      params: {},
+      nonce: '1n',
+    });
   });
 });

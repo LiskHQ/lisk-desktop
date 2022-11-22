@@ -1,6 +1,8 @@
 import { MODULE_COMMANDS_NAME_MAP } from 'src/modules/transaction/configuration/moduleCommand';
 import accounts from '@tests/constants/wallets';
 import { mountWithQueryClient, mountWithQueryAndProps } from 'src/utils/testHelpers';
+import { useCommandSchema } from '@network/hooks/useCommandsSchema';
+import { mockCommandParametersSchemas } from 'src/modules/common/__fixtures__';
 import { genKey, blsKey, pop } from '@tests/constants/keys';
 import TxComposer from './index';
 
@@ -11,7 +13,7 @@ jest.mock('@account/hooks/useDeprecatedAccount', () => ({
   }),
 }));
 
-jest.useFakeTimers();
+jest.mock('@network/hooks/useCommandsSchema');
 
 describe('TxComposer', () => {
   const transaction = {
@@ -36,6 +38,13 @@ describe('TxComposer', () => {
       moduleCommand: MODULE_COMMANDS_NAME_MAP.transfer,
     },
   };
+
+  useCommandSchema.mockReturnValue(
+    mockCommandParametersSchemas.data.reduce(
+      (result, { moduleCommand, schema }) => ({ ...result, [moduleCommand]: schema }),
+      {}
+    )
+  );
 
   it('should render TxComposer correctly for a valid tx', () => {
     const newProps = {
