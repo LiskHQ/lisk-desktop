@@ -21,7 +21,7 @@ jest.mock('@network/hooks/useCommandsSchema');
 describe('TxComposer', () => {
   const transaction = {
     moduleCommand: MODULE_COMMANDS_NAME_MAP.transfer,
-    params: {
+  params: {
       recipient: { address: accounts.genesis.summary.address },
       amount: 100000,
       data: 'test-data',
