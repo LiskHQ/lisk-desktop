@@ -1,3 +1,4 @@
+/* istanbul ignore file */
 import {
   signTransaction,
   signMultiSignatureTransaction,
@@ -30,9 +31,9 @@ export class Transaction {
     senderPublicKey: null,
     params: {},
     signatures: [],
-  }
+  };
 
-  isLoading = true
+  isLoading = true;
 
   /**
    * Initialise transaction with required network and account information
@@ -51,7 +52,9 @@ export class Transaction {
     this.isLoading = false;
     this._networkStatus = networkStatus;
     this._auth = auth;
-    this.transaction.senderPublicKey = Buffer.isBuffer(pubkey) ? pubkey : Buffer.from(pubkey, 'hex');
+    this.transaction.senderPublicKey = Buffer.isBuffer(pubkey)
+      ? pubkey
+      : Buffer.from(pubkey, 'hex');
     this.transaction.module = module;
     this.transaction.command = command;
     this.transaction.params = {};
@@ -67,7 +70,9 @@ export class Transaction {
     }
 
     this._paramsSchema = getCommandParamsSchema(
-      this.transaction.module, this.transaction.command, commandParametersSchemas,
+      this.transaction.module,
+      this.transaction.command,
+      commandParametersSchemas
     );
 
     if (encodedTransaction) {
@@ -81,10 +86,7 @@ export class Transaction {
    * @param {object} params transaction parameters
    * @returns void
    */
-  update({
-    params = null,
-    nonce = null,
-  }) {
+  update({ params = null, nonce = null }) {
     if (params) {
       this.transaction.params = codec.fromJSON(this._paramsSchema, params);
     }
@@ -107,8 +109,8 @@ export class Transaction {
     const decodedTx = this.fromJSON(this.transaction);
     const { optionalKeys, mandatoryKeys } = this.transaction.params;
     const isMultiSignature = this._auth.numberOfSignatures > 0;
-    const isMultiSignatureRegistration = (optionalKeys?.length || mandatoryKeys?.length)
-      && options.includeSenderSignature;
+    const isMultiSignatureRegistration =
+      (optionalKeys?.length || mandatoryKeys?.length) && options.includeSenderSignature;
     this._validateTransaction();
 
     if (isMultiSignature || isMultiSignatureRegistration) {
@@ -117,11 +119,11 @@ export class Transaction {
         chainID,
         privateKey,
         {
-          mandatoryKeys: this._auth.mandatoryKeys.map(k => Buffer.from(k, 'hex')),
-          optionalKeys: this._auth.optionalKeys.map(k => Buffer.from(k, 'hex')),
+          mandatoryKeys: this._auth.mandatoryKeys.map((k) => Buffer.from(k, 'hex')),
+          optionalKeys: this._auth.optionalKeys.map((k) => Buffer.from(k, 'hex')),
         },
         this._paramsSchema,
-        options.includeSenderSignature,
+        options.includeSenderSignature
       );
 
       this.transaction = signedTx;
@@ -132,7 +134,7 @@ export class Transaction {
       decodedTx,
       Buffer.from(this._networkStatus.networkIdentifier, 'hex'),
       Buffer.from(privateKey, 'hex'),
-      this._paramsSchema,
+      this._paramsSchema
     );
     this.transaction = signedTx;
   }
@@ -148,19 +150,23 @@ export class Transaction {
       numberOfEmptySignatures: 0,
     };
 
-    if (this.transaction.module === 'auth' && this.transaction.command === 'registerMultisignature') {
+    if (
+      this.transaction.module === 'auth' &&
+      this.transaction.command === 'registerMultisignature'
+    ) {
       const { optionalKeys, mandatoryKeys } = this.transaction.params;
 
-      computeMinFeeOptions.numberOfEmptySignatures = optionalKeys?.length
-        + mandatoryKeys?.length
-        - this._auth.numberOfSignatures;
+      computeMinFeeOptions.numberOfEmptySignatures =
+        optionalKeys?.length + mandatoryKeys?.length - this._auth.numberOfSignatures;
     } else {
       const { optionalKeys, mandatoryKeys } = this._auth;
       computeMinFeeOptions.numberOfSignatures = optionalKeys?.length + mandatoryKeys?.length + 1;
     }
 
     this.transaction.fee = computeMinFee(
-      this.transaction, this._paramsSchema, computeMinFeeOptions,
+      this.transaction,
+      this._paramsSchema,
+      computeMinFeeOptions
     );
   }
 
@@ -191,10 +197,7 @@ export class Transaction {
    */
   toJSON() {
     this._validateTransaction(this.transaction);
-    return toTransactionJSON(
-      this.transaction,
-      this._paramsSchema,
-    );
+    return toTransactionJSON(this.transaction, this._paramsSchema);
   }
 
   /**

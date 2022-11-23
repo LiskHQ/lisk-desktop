@@ -1,16 +1,10 @@
 import React, { useEffect } from 'react';
-import { useDispatch } from 'react-redux';
 import { TertiaryButton } from 'src/theme/buttons';
-import { secondPassphraseRemoved } from '@auth/store/action';
 import { useCommandSchema } from '@network/hooks';
 import Icon from 'src/theme/Icon';
-import Box from 'src/theme/box';
-import Illustration from 'src/modules/common/components/illustration';
-import BoxContent from 'src/theme/box/content';
 import { isEmpty } from 'src/utils/helpers';
 import EnterPasswordForm from 'src/modules/auth/components/EnterPasswordForm';
 import { useAuth } from '@auth/hooks/queries';
-import { getDeviceType } from '@wallet/utils/hwManager';
 import { useCurrentAccount } from '@account/hooks';
 import styles from './txSignatureCollector.css';
 import { joinModuleAndCommand } from '../../utils';
@@ -19,7 +13,7 @@ import useTxInitiatorAccount from '../../hooks/useTxInitiatorAccount';
 
 // eslint-disable-next-line max-statements
 const TxSignatureCollector = ({
-  t,
+  // t,
   transactions,
   actionFunction,
   multisigTransactionSigned,
@@ -45,12 +39,9 @@ const TxSignatureCollector = ({
     transactionJSON,
   });
 
-  const deviceType = getDeviceType(account?.hwInfo?.deviceModel);
-  const dispatch = useDispatch();
   const isTransactionAuthor = transactionJSON.senderPublicKey === sender.metadata.pubkey;
   const isAuthorAccountMultisignature =
-    [...(account?.data?.mandatoryKeys || []), ...(account?.data?.optionalKeys || [])].length > 0; // account.info.LSK.summary.isMultisignature;
-  // const isSignerAccountMultisignature = sender.data?.keys.numberOfSignatures > 0;
+    [...(account?.data?.mandatoryKeys || []), ...(account?.data?.optionalKeys || [])].length > 0;
   const moduleCommand = joinModuleAndCommand(transactionJSON);
   const isRegisterMultisignature =
     moduleCommand === MODULE_COMMANDS_NAME_MAP.registerMultisignature;
@@ -100,44 +91,21 @@ const TxSignatureCollector = ({
       moduleCommandSchemas,
       sender: { ...account.data }, // this is the account of the present user wanting to sign the transaction
     });
-
-    // Transaction authored from other account and current account is a non multisignature account
-    // if (transactionJSON.senderPublicKey !== currentAccount.metadata.pubkey && !account.info.LSK.summary.isMultisignature) {
-    //   // Skip the current member as all the required signature are collected
-    //   return signatureSkipped({ formProps, transactionJSON, });
-    // }
-
-    // if (signatureStatus === signatureCollectionStatus.fullySigned || signatureStatus === signatureCollectionStatus.overSigned) {
-
-    // }
   };
 
   const onEnterPasswordSuccess = ({ privateKey }) =>
     txVerification(privateKey, sender.metadata.pubkey);
 
   useEffect(() => {
-    if (deviceType) {
-      txVerification();
-    }
-    return () => {
-      // Ensure second passphrase is removed to prevent automatically signing future transactions
-      if (account?.secondPassphrase) {
-        dispatch(secondPassphraseRemoved());
-      }
-    };
-  }, []);
-
-  useEffect(() => {
     if (!isEmpty(transactions.signedTransaction)) {
-      const hasSecondPass = !!account.secondPassphrase;
       const isDoubleSigned = !transactions.signedTransaction.signatures.some(
         (sig) => sig.length === 0
       );
-      if (!transactions.txSignatureError && hasSecondPass && !isDoubleSigned) {
+      if (!transactions.txSignatureError && !isDoubleSigned) {
         transactionDoubleSigned();
-      } else if (!hasSecondPass || isDoubleSigned) {
-        nextStep({ formProps, transactionJSON, statusInfo, sender });
+        return;
       }
+      nextStep({ formProps, transactionJSON, statusInfo, sender });
     }
 
     if (transactions.txSignatureError) {
@@ -145,22 +113,24 @@ const TxSignatureCollector = ({
     }
   }, [transactions.signedTransaction, transactions.txSignatureError]);
 
-  if (!deviceType) {
-    return (
-      <div className={styles.container}>
-        <TertiaryButton className={styles.backButton} onClick={prevStep}>
-          <Icon name="arrowLeftTailed" />
-        </TertiaryButton>
-        <EnterPasswordForm
-          title="Please provide your device password to sign a transaction."
-          onEnterPasswordSuccess={onEnterPasswordSuccess}
-          isDisabled={isGettingAuthData || isGettingTxInitiatorAccount}
-        />
-      </div>
-    );
-  }
+  // TODO: Resolve this issue during HW implementation
 
+  // if (!deviceType) {
   return (
+    <div className={styles.container}>
+      <TertiaryButton className={styles.backButton} onClick={prevStep}>
+        <Icon name="arrowLeftTailed" />
+      </TertiaryButton>
+      <EnterPasswordForm
+        title="Please provide your device password to sign a transaction."
+        onEnterPasswordSuccess={onEnterPasswordSuccess}
+        isDisabled={isGettingAuthData || isGettingTxInitiatorAccount}
+      />
+    </div>
+  );
+  // }
+  /**
+   * return (
     <Box width="medium" className={`${styles.wrapper} hwConfirmation`}>
       <BoxContent className={styles.content}>
         <Illustration name={deviceType} />
@@ -172,6 +142,7 @@ const TxSignatureCollector = ({
       </BoxContent>
     </Box>
   );
+   */
 };
 
 export default TxSignatureCollector;

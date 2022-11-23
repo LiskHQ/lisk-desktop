@@ -1,3 +1,4 @@
+/* istanbul ignore file */
 import defaultClient from 'src/utils/api/client';
 import { METHOD } from 'src/const/config';
 

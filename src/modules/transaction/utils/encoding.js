@@ -16,6 +16,7 @@
 import { codec } from '@liskhq/lisk-codec';
 import { utils } from '@liskhq/lisk-cryptography';
 import { trimBigintString } from './helpers';
+import { joinModuleAndCommand } from './moduleCommand';
 
 // TODO: Use from service endpoint/elements
 export const baseTransactionSchema = {
@@ -58,7 +59,7 @@ export const baseTransactionSchema = {
 };
 
 export const getCommandParamsSchema = (module, command, schema) => {
-  const moduleCommand = module.concat(':', command);
+  const moduleCommand = joinModuleAndCommand({ module, command });
   const commandSchema = schema.find((meta) => meta.moduleCommand === moduleCommand);
   if (!(commandSchema && commandSchema.schema)) {
     throw new Error(`Module: ${module} Command: ${command} is not registered.`);

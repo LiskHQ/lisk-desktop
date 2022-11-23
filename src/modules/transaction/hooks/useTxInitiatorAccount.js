@@ -1,6 +1,6 @@
 import { useMemo } from 'react';
-import { useAuth } from 'src/modules/auth/hooks/queries';
-import { extractAddressFromPublicKey } from 'src/modules/wallet/utils/account';
+import { useAuth } from '@auth/hooks/queries';
+import { extractAddressFromPublicKey } from '@wallet/utils/account';
 
 const useTxInitiatorAccount = ({ transactionJSON }) => {
   const txInitiatorAddress = extractAddressFromPublicKey(transactionJSON.senderPublicKey);

@@ -119,4 +119,18 @@ describe('Multisignature Summary component', () => {
     );
     expect(wrapper.find('.info-fee').at(0).text()).toContain('0.02 LSK');
   });
+
+  it('Should not call props.nextStep when signedTransaction is empty', () => {
+    jest.clearAllMocks();
+
+    const newProps = {
+      ...props,
+      transactions: {
+        ...props.transactions,
+        signedTransaction: {},
+      },
+    };
+    wrapper = mount(<Summary {...newProps} />);
+    expect(props.nextStep).not.toHaveBeenCalledWith();
+  });
 });

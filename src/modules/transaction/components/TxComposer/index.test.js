@@ -1,8 +1,13 @@
 import { MODULE_COMMANDS_NAME_MAP } from 'src/modules/transaction/configuration/moduleCommand';
-import accounts from '@tests/constants/wallets';
+import { useCommandSchema } from '@network/hooks/useCommandsSchema';
 import { mountWithQueryClient, mountWithQueryAndProps } from 'src/utils/testHelpers';
+import { mockCommandParametersSchemas } from 'src/modules/common/__fixtures__';
+import accounts from '@tests/constants/wallets';
 import { genKey, blsKey, pop } from '@tests/constants/keys';
 import TxComposer from './index';
+
+
+jest.mock('@network/hooks/useCommandsSchema');
 
 jest.mock('@account/hooks/useDeprecatedAccount', () => ({
   useDeprecatedAccount: jest.fn().mockReturnValue({
@@ -11,10 +16,12 @@ jest.mock('@account/hooks/useDeprecatedAccount', () => ({
   }),
 }));
 
+jest.mock('@network/hooks/useCommandsSchema');
+
 describe('TxComposer', () => {
   const transaction = {
     moduleCommand: MODULE_COMMANDS_NAME_MAP.transfer,
-    params: {
+  params: {
       recipient: { address: accounts.genesis.summary.address },
       amount: 100000,
       data: 'test-data',
@@ -34,6 +41,19 @@ describe('TxComposer', () => {
       moduleCommand: MODULE_COMMANDS_NAME_MAP.transfer,
     },
   };
+  useCommandSchema.mockReturnValue(
+    mockCommandParametersSchemas.data.reduce(
+      (result, { moduleCommand, schema }) => ({ ...result, [moduleCommand]: schema }),
+      {}
+    )
+  );
+
+  useCommandSchema.mockReturnValue(
+    mockCommandParametersSchemas.data.reduce(
+      (result, { moduleCommand, schema }) => ({ ...result, [moduleCommand]: schema }),
+      {}
+    )
+  );
 
   it('should render TxComposer correctly for a valid tx', () => {
     const newProps = {
@@ -42,6 +62,8 @@ describe('TxComposer', () => {
         isValid: true,
         moduleCommand: MODULE_COMMANDS_NAME_MAP.transfer,
         fields: { token: { availableBalance: 100000000 } },
+        sendingChain: { chainID: '1' },
+        recipientChain: { chainID: '2' }
       },
     };
     const wrapper = mountWithQueryClient(TxComposer, newProps);
