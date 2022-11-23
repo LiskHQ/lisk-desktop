@@ -19,7 +19,7 @@ jest.mock('@account/hooks', () => ({
   )),
 }));
 
-describe('Remove account ', () => {
+describe('Remove account', () => {
   let props;
 
   beforeEach(() => {

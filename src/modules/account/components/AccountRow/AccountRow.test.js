@@ -6,9 +6,11 @@ import AccountRow from './AccountRow';
 
 jest.mock('react-i18next');
 
+const mockOnRemove = jest.fn();
+
 const props = {
   account: mockSavedAccounts[0],
-  onRemove: jest.fn(),
+  onRemove: mockOnRemove,
 };
 
 describe('Select Account Row', () => {
@@ -29,7 +31,7 @@ describe('Select Account Row', () => {
 
   it('Should show delete button', async () => {
     const container = render(<AccountRow {...props} />);
-    container.rerender(<AccountRow {...props} onRemove={jest.fn()} />);
+    container.rerender(<AccountRow {...props} onRemove={mockOnRemove} />);
     expect(container.queryByTestId(`${mockSavedAccounts[0].metadata.address}-delete`)).toBeTruthy();
   });
 });
