@@ -8,6 +8,8 @@ import { mountWithRouterAndQueryClient } from 'src/utils/testHelpers';
 import accounts from '@tests/constants/wallets';
 import flushPromises from '@tests/unit-test-utils/flushPromises';
 import { useTokensBalance } from '@token/fungible/hooks/queries';
+import { useCommandSchema } from '@network/hooks/useCommandsSchema';
+import { mockCommandParametersSchemas } from 'src/modules/common/__fixtures__';
 import VoteRow from './VoteRow';
 import Form from './VoteForm';
 import { useDposConstants } from '../../hooks/queries';
@@ -22,13 +24,13 @@ jest.mock('@account/hooks/useDeprecatedAccount', () => ({
   }),
 }));
 
-
 jest.mock('@account/hooks/useDeprecatedAccount', () => ({
   useDeprecatedAccount: jest.fn().mockReturnValue({
     isSuccess: true,
-    isLoading: false
+    isLoading: false,
   }),
 }));
+jest.mock('@network/hooks/useCommandsSchema');
 
 const addresses = [
   'lskdwsyfmcko6mcd357446yatromr9vzgu7eb8y99',
@@ -98,6 +100,12 @@ describe('VoteForm', () => {
 
   useTokensBalance.mockReturnValue({ data: mockTokensBalance, isLoading: false });
   useDposConstants.mockReturnValue({ data: mockDposConstants });
+  useCommandSchema.mockReturnValue(
+    mockCommandParametersSchemas.data.reduce(
+      (result, { moduleCommand, schema }) => ({ ...result, [moduleCommand]: schema }),
+      {}
+    )
+  );
 
   it('Render only the changed votes', async () => {
     const wrapper = shallow(<Form {...props} votes={mixedVotes} />);

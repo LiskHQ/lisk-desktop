@@ -34,8 +34,6 @@ const networks = {
   },
   [networkKeys.customNode]: {
     label: 'Custom Service Node',
-
-    // a default value, to keep the object signature consistent
     serviceUrl: 'http://localhost:9901',
   },
 };

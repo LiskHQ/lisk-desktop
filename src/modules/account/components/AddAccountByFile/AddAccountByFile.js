@@ -9,16 +9,15 @@ import MultiStep from 'src/modules/common/components/OldMultiStep';
 import styles from './AddAccountByFile.css';
 import { useAccounts, useCurrentAccount } from '../../hooks';
 
-const AddAccountByPassFile = ({ history, login }) => {
+const AddAccountByPassFile = ({ history }) => {
   const [currentAccount, setCurrentAccount] = useCurrentAccount();
   const { setAccount } = useAccounts();
   const multiStepRef = useRef(null);
 
-  const onEnterPasswordSuccess = ({ recoveryPhrase, encryptedAccount }) => {
+  const onEnterPasswordSuccess = ({ encryptedAccount }) => {
     setAccount(encryptedAccount);
     setCurrentAccount(encryptedAccount);
     multiStepRef.current.next();
-    login(recoveryPhrase); // Todo: this login method is depricated
   };
 
   return (

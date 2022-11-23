@@ -1,7 +1,9 @@
 import React from 'react';
 import { mount } from 'enzyme';
 import { txStatusTypes } from '@transaction/configuration/txStatus';
+import { useCommandSchema } from '@network/hooks/useCommandsSchema';
 import accounts from '@tests/constants/wallets';
+import { mockCommandParametersSchemas } from 'src/modules/common/__fixtures__';
 import TxBroadcaster from './TxBroadcaster';
 import Regular from '../Regular';
 import Multisignature from '../Multisignature';
@@ -9,6 +11,7 @@ import Multisignature from '../Multisignature';
 jest.mock('@libs/wcm/hooks/useSession', () => ({
   respond: jest.fn(),
 }));
+jest.mock('@network/hooks/useCommandsSchema');
 
 describe('TxBroadcaster', () => {
   const props = {
@@ -27,12 +30,19 @@ describe('TxBroadcaster', () => {
     status: {
       code: txStatusTypes.signatureSuccess,
     },
-    t: t => t,
+    t: (t) => t,
     illustration: 'default',
     location: {
       search: '',
     },
   };
+
+  useCommandSchema.mockReturnValue(
+    mockCommandParametersSchemas.data.reduce(
+      (result, { moduleCommand, schema }) => ({ ...result, [moduleCommand]: schema }),
+      {}
+    )
+  );
 
   it('should render Regular component with props', () => {
     const wrapper = mount(<TxBroadcaster {...props} />);

@@ -3,7 +3,7 @@
 import { to } from 'await-to-js';
 import { selectActiveTokenAccount } from 'src/redux/selectors';
 import actionTypes from '@transaction/store/actionTypes';
-import { createGenericTx } from '@transaction/api/index';
+import { signTransaction } from '@transaction/api/index';
 
 /**
  * Calls transactionAPI.create for create the tx object that will broadcast
@@ -15,19 +15,24 @@ import { createGenericTx } from '@transaction/api/index';
  */
 
 export const tokensTransferred = (
-  transactionObject,
+  formProps,
+  transactionJSON,
   privateKey,
+  _,
+  senderAccount,
+  moduleCommandSchemas
+
 ) => async (dispatch, getState) => {
   const state = getState();
   const wallet = selectActiveTokenAccount(state);
-
   const [error, tx] = await to(
-    createGenericTx({
-      transactionObject,
+    signTransaction({
+      transactionJSON,
       wallet,
-      schema: state.network.networks.LSK.moduleCommandSchemas[transactionObject.moduleCommand],
+      schema: moduleCommandSchemas[formProps.moduleCommand],
       chainID: state.network.networks.LSK.chainID,
       privateKey,
+      senderAccount,
     }),
   );
 

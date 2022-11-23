@@ -9,11 +9,8 @@ const Members = ({ members, t }) => (
   <section>
     <label>{t('Members')}</label>
     <div className={styles.membersContainer}>
-      {members?.map((member, i) => (
-        <div
-          className={styles.memberInfo}
-          key={i + 1}
-        >
+      {members.map((member, i) => (
+        <div className={styles.memberInfo} key={i + 1}>
           <WalletVisual address={member.address} />
           <div className={styles.memberDetails}>
             <p className={styles.memberTitle}>
@@ -29,12 +26,20 @@ const Members = ({ members, t }) => (
 );
 
 const TransactionInfo = ({
-  isMultisignature, t, rawTx, account, date, token, summaryInfo,
+  isMultisignature,
+  t,
+  formProps,
+  transactionJSON,
+  account,
+  date,
+  token,
+  summaryInfo,
 }) => (
   <>
     <CustomTransactionInfo
       t={t}
-      transaction={rawTx}
+      formProps={formProps}
+      transactionJSON={transactionJSON}
       account={account}
       token={token}
       summaryInfo={summaryInfo}
@@ -44,35 +49,26 @@ const TransactionInfo = ({
         <section className={styles.msignRow}>
           <div className={styles.col}>
             <label>{t('Required signatures')}</label>
-            <label>
-              {account.keys.numberOfSignatures}
-            </label>
+            <label>{account.keys.numberOfSignatures}</label>
           </div>
           <div className={styles.col}>
             <label>{t('Transaction fee')}</label>
             <label className="fee">
-              <TokenAmount
-                val={rawTx.fee}
-                token={token}
-              />
+              <TokenAmount val={transactionJSON.fee} token={token} />
             </label>
           </div>
         </section>
         <section className={styles.msignRow}>
           <div className={styles.col}>
             <label>{t('Date')}</label>
-            <label>
-              {date || '-'}
-            </label>
+            <label>{date || '-'}</label>
           </div>
           <div className={styles.col}>
             <label>{t('Nonce')}</label>
-            <label>
-              {Number(rawTx.nonce)}
-            </label>
+            <label>{Number(transactionJSON.nonce)}</label>
           </div>
         </section>
-        <Members t={t} members={account.keys.members} />
+        <Members t={t} members={[...account.keys.mandatoryKeys, ...account.keys.optionalKeys]} />
       </>
     )}
   </>

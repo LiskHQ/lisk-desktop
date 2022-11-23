@@ -57,7 +57,7 @@ const SendForm = (props) => {
     data: { data: activeApps = [] } = {},
     isLoading: isLoadingActiveApps,
     error: errorGettingActiveApps,
-  } = useBlockchainApplicationExplore({ config: { params: { state: 'Active' } } });
+  } = useBlockchainApplicationExplore({ config: { params: { state: 'active' } } });
   const activeAppsList = activeApps.map((app) => app.chainID).join();
   const { data: { data: applications = [] } = {} } = useBlockchainApplicationMeta({
     config: { params: { chainID: activeAppsList } },
@@ -86,7 +86,6 @@ const SendForm = (props) => {
     account.summary?.balance,
     token?.symbol
   );
-  const [balance, setBalance] = useState(amount.value);
   const [recipient, setRecipientField] = useRecipientField(
     getInitialRecipient(props.prevState?.rawTx, props.initialValue?.recipient)
   );
@@ -96,10 +95,11 @@ const SendForm = (props) => {
     setMaxAmount(status.maxAmount);
   }, []);
 
-  const onConfirm = useCallback((rawTx, selectedPriority, fees) => {
+  const onConfirm = useCallback((formProps, transactionJSON, selectedPriority, fees) => {
     nextStep({
       selectedPriority,
-      rawTx,
+      formProps,
+      transactionJSON,
       fees,
     });
   }, []);
@@ -122,7 +122,7 @@ const SendForm = (props) => {
     [amount, recipient, reference, recipientChain, sendingChain]
   );
 
-  const transaction = {
+  const sendFormProps = {
     isValid,
     moduleCommand: MODULE_COMMANDS_NAME_MAP.transfer,
     params: {
@@ -134,15 +134,39 @@ const SendForm = (props) => {
       },
       token: token ?? { tokenID: '' },
     },
-    sendingChain,
-    recipientChain,
+    fields: {
+      sendingChain,
+      recipientChain,
+      token,
+      recipient,
+    },
   };
+
+  let commandParams = {
+    tokenID: token?.tokenID,
+    amount: toRawLsk(amount.value),
+    recipientAddress: recipient.value,
+    data: reference.value,
+    accountInitializationFee: 5000000, // TODO: Replace the initalization fee constant from service endpoint
+    // ...(!+account?.sequence?.nonce && { accountInitializationFee: 5000000  }),
+  };
+
+  if (sendingChain.chainID !== recipientChain.chainID) {
+    commandParams = {
+      ...commandParams,
+      receivingChainID: recipientChain.chainID,
+      // TODO: Replace the message fee constant from service endpoint
+      messageFee: 50000000,
+    };
+  }
+
   return (
     <section className={styles.wrapper}>
       <TxComposer
         onComposed={onComposed}
         onConfirm={onConfirm}
-        transaction={transaction}
+        formProps={sendFormProps}
+        commandParams={commandParams}
         buttonTitle={t('Go to confirmation')}
       >
         <>
@@ -213,17 +237,14 @@ const SendForm = (props) => {
               <span className={styles.balance}>
                 {!!token?.availableBalance && <span>Balance:&nbsp;&nbsp;</span>}
                 <span>
-                  <TokenAmount val={balance} />
+                  <TokenAmount val={token?.availableBalance} />
                   {token?.symbol}
                 </span>
               </span>
               <MenuSelect
                 value={token}
                 onChange={(value) => setToken(value)}
-                select={(selectedValue, option) => {
-                  setBalance(selectedValue?.availableBalance);
-                  return selectedValue?.name === option.name;
-                }}
+                select={(selectedValue, option) => selectedValue?.name === option.name}
               >
                 {tokens.map((tokenValue) => (
                   <MenuItem

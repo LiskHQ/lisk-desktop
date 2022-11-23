@@ -1,21 +1,19 @@
 import React, { useState, useEffect } from 'react';
 import { PrimaryButton, SecondaryButton } from 'src/theme/buttons';
+import { codec } from '@liskhq/lisk-client';
 import Illustration from 'src/modules/common/components/illustration';
 import routes from 'src/routes/routes';
 import { txStatusTypes } from '@transaction/configuration/txStatus';
 import { getErrorReportMailto } from 'src/utils/helpers';
 
 import copyToClipboard from 'copy-to-clipboard';
-import { transactionToJSON, downloadJSON } from '@transaction/utils';
+import { transactionToJSON, downloadJSON, joinModuleAndCommand } from '@transaction/utils';
 import Icon from 'src/theme/Icon';
 import getIllustration from '../TxBroadcaster/illustrationsMap';
 import styles from './Multisignature.css';
 
 export const PartiallySignedActions = ({ onDownload, t }) => (
-  <PrimaryButton
-    className={`${styles.download} download-button`}
-    onClick={onDownload}
-  >
+  <PrimaryButton className={`${styles.download} download-button`} onClick={onDownload}>
     <span className={styles.buttonContent}>
       <Icon name="download" />
       {t('Download')}
@@ -34,18 +32,13 @@ export const FullySignedActions = ({ t, onDownload, onSend }) => (
         {t('Download')}
       </span>
     </SecondaryButton>
-    <PrimaryButton
-      className={`${styles.download} send-button`}
-      onClick={onSend}
-    >
+    <PrimaryButton className={`${styles.download} send-button`} onClick={onSend}>
       <span className={styles.buttonContent}>{t('Send')}</span>
     </PrimaryButton>
   </>
 );
 
-const ErrorActions = ({
-  t, status, message, network,
-}) => (
+const ErrorActions = ({ t, status, message, network }) => (
   <a
     className="report-error-link"
     href={getErrorReportMailto({
@@ -75,23 +68,30 @@ const Multisignature = ({
   transactionBroadcasted,
   account,
   network,
+  moduleCommandSchemas,
 }) => {
   const [copied, setCopied] = useState(false);
 
   const onCopy = () => {
-    copyToClipboard(transactionToJSON(transactions.signedTransaction));
+    const schema = moduleCommandSchemas[joinModuleAndCommand(transactions.signedTransaction)];
+    const jsonParams = codec.codec.toJSON(schema, transactions.signedTransaction.params);
+
+    copyToClipboard(
+      JSON.stringify({
+        ...JSON.parse(transactionToJSON(transactions.signedTransaction)),
+        params: jsonParams,
+      })
+    );
     setCopied(true);
   };
 
   const onDownload = () => {
-    const transaction = JSON.parse(
-      transactionToJSON(transactions.signedTransaction),
-    );
+    const transaction = JSON.parse(transactionToJSON(transactions.signedTransaction));
     downloadJSON(transaction, `tx-${transaction.id}`);
   };
 
   const onSend = () => {
-    transactionBroadcasted(transactions.signedTransaction);
+    transactionBroadcasted(transactions.signedTransaction, moduleCommandSchemas);
   };
 
   const goToWallet = () => {
@@ -102,13 +102,7 @@ const Multisignature = ({
 
   return (
     <div className={`${styles.wrapper} ${className}`}>
-      <Illustration
-        name={getIllustration(
-          status.code,
-          'signMultisignature',
-          account.hwInfo,
-        )}
-      />
+      <Illustration name={getIllustration(status.code, 'signMultisignature', account.hwInfo)} />
       <h6 className="result-box-header">{title}</h6>
       <p className="transaction-status body-message">{message}</p>
 
@@ -122,25 +116,17 @@ const Multisignature = ({
           </PrimaryButton>
         ) : null}
         {status.code === txStatusTypes.broadcastError ? (
-          <ErrorActions
-            message={message}
-            network={network}
-            status={status}
-            t={t}
-          />
+          <ErrorActions message={message} network={network} status={status} t={t} />
         ) : null}
-        {status.code !== txStatusTypes.broadcastSuccess
-        && status.code !== txStatusTypes.broadcastError ? (
-          <SecondaryButton
-            className={`${styles.copy} copy-button`}
-            onClick={onCopy}
-          >
+        {status.code !== txStatusTypes.broadcastSuccess &&
+        status.code !== txStatusTypes.broadcastError ? (
+          <SecondaryButton className={`${styles.copy} copy-button`} onClick={onCopy}>
             <span className={styles.buttonContent}>
               <Icon name={copied ? 'checkmark' : 'copy'} />
               {t(copied ? 'Copied' : 'Copy')}
             </span>
           </SecondaryButton>
-          ) : null}
+        ) : null}
         {status.code === txStatusTypes.multisigSignatureSuccess ? (
           <FullySignedActions onDownload={onDownload} t={t} onSend={onSend} />
         ) : null}

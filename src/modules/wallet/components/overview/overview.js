@@ -39,7 +39,7 @@ const removeWarningMessage = () => {
 const Overview = ({ isWalletRoute, history }) => {
   const searchAddress = selectSearchParamValue(history.location.search, 'address');
   const { t } = useTranslation();
-  const [{ metadata: { address: currentAddress } = {} }] = useCurrentAccount();
+  const [{ metadata: { address: currentAddress, name } = {} }] = useCurrentAccount();
 
   const address = useMemo(() => searchAddress || currentAddress, [searchAddress, currentAddress]);
   const { data: delegates } = useDelegates({ config: { params: { address } } });
@@ -51,9 +51,8 @@ const Overview = ({ isWalletRoute, history }) => {
 
   const isBanned = delegate.isBanned;
   const pomHeights = delegate.pomHeights;
-  const { end } = pomHeights?.length ? pomHeights[pomHeights.length - 1] : {};
 
-  const daysLeft = Math.ceil((end - currentHeight) / numOfBlockPerDay);
+  const daysLeft = Math.ceil((1000 - currentHeight) / numOfBlockPerDay);
   const wallet = useSelector(selectActiveTokenAccount);
   const { data: tokens, isLoading, error } = useTokensBalance({ config: { params: { address } } });
   const host = wallet.summary?.address ?? '';
@@ -113,7 +112,7 @@ const Overview = ({ isWalletRoute, history }) => {
           copy
           size={50}
           address={account?.meta?.address}
-          accountName={account?.meta?.name}
+          accountName={account?.meta?.name || name}
           detailsClassName={styles.accountSummary}
           truncate={false}
         />

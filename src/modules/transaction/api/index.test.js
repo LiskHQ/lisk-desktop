@@ -1,31 +1,31 @@
 /* eslint-disable max-lines */
 import { MODULE_COMMANDS_NAME_MAP } from 'src/modules/transaction/configuration/moduleCommand';
-import {
-  getTxAmount,
-  convertBinaryToString,
-} from '@transaction/utils/transaction';
+import { getTxAmount, convertBinaryToString } from '@transaction/utils/transaction';
 import { getState } from '@fixtures/transactions';
 import * as delegates from '@dpos/validator/api';
 import http from 'src/utils/api/http';
 import accounts from '@tests/constants/wallets';
+import { fromTransactionJSON } from '@transaction/utils/encoding';
 import { genKey, blsKey, pop } from '@tests/constants/keys';
-import { mockAppTokens } from '@tests/fixtures/token';
+import { mockCommandParametersSchemas } from 'src/modules/common/__fixtures__';
 import {
   getTransactions,
   getTransactionStats,
-  getTransactionFee, getRegisteredDelegates,
+  getTransactionFee,
+  getRegisteredDelegates,
+  dryRun,
 } from './index';
 
-const {
-  transfer, voteDelegate, registerDelegate, registerMultisignature, unlock, reclaim,
-} = MODULE_COMMANDS_NAME_MAP;
+const { voteDelegate, unlock } = MODULE_COMMANDS_NAME_MAP;
 const { network } = getState();
 
 jest.mock('src/utils/api/http', () =>
-  jest.fn().mockImplementation(() => Promise.resolve({ data: [{ type: 0 }] })));
+  jest.fn().mockImplementation(() => Promise.resolve({ data: [{ type: 0 }] }))
+);
 
 jest.mock('src/utils/api/ws', () =>
-  jest.fn().mockImplementation(() => Promise.resolve({ data: [{ type: 0 }] })));
+  jest.fn().mockImplementation(() => Promise.resolve({ data: [{ type: 0 }] }))
+);
 
 jest.mock('@dpos/validator/api', () => ({
   getDelegates: jest.fn(),
@@ -33,6 +33,16 @@ jest.mock('@dpos/validator/api', () => ({
 
 describe('API: LSK Transactions', () => {
   const sampleId = 'sample_id';
+  const moduleCommandSchemas = mockCommandParametersSchemas.data.reduce(
+    (result, { moduleCommand, schema }) => ({ ...result, [moduleCommand]: schema }),
+    {}
+  );
+  const baseTx = {
+    nonce: '6',
+    senderPublicKey: 'c094ebee7ec0c50ebee32918655e089f6e1a604b83bcaa760293c61e0f18ab6f',
+    signatures: [],
+    fee: '0',
+  };
 
   describe('getTransactions', () => {
     beforeEach(() => {
@@ -41,7 +51,8 @@ describe('API: LSK Transactions', () => {
 
     it('should call http with block id', async () => {
       await getTransactions({
-        network, params: { blockId: sampleId },
+        network,
+        params: { blockId: sampleId },
       });
 
       expect(http).toHaveBeenCalledWith({
@@ -92,8 +103,7 @@ describe('API: LSK Transactions', () => {
         network,
         path: '/api/v3/transactions',
         baseUrl: undefined,
-        params: {
-        },
+        params: {},
       });
     });
   });
@@ -108,15 +118,14 @@ describe('API: LSK Transactions', () => {
       http.mockRejectedValue(Error('Error fetching data.'));
 
       // call and anticipate failure
-      await expect(getRegisteredDelegates({ network }))
-        .rejects
-        .toThrow('Error fetching data.');
+      await expect(getRegisteredDelegates({ network })).rejects.toThrow('Error fetching data.');
     });
 
     it('should return correct stats of registered delegates', async () => {
       // create sample delegate registration transactions
-      const txs = [7, 6, 6, 6, 5, 5, 5, 4, 4, 4]
-        .map(d => ({ block: { timestamp: (new Date(`2020-${d}-1`)).getTime() / 1000 } }));
+      const txs = [7, 6, 6, 6, 5, 5, 5, 4, 4, 4].map((d) => ({
+        block: { timestamp: new Date(`2020-${d}-1`).getTime() / 1000 },
+      }));
 
       // mock internals
       delegates.getDelegates.mockResolvedValue({
@@ -131,7 +140,11 @@ describe('API: LSK Transactions', () => {
       // Call and expect right values
       const response = await getRegisteredDelegates({ network });
       expect(response).toEqual([
-        ['2020-3', 90], ['2020-4', 93], ['2020-5', 96], ['2020-6', 99], ['2020-7', 100],
+        ['2020-3', 90],
+        ['2020-4', 93],
+        ['2020-5', 96],
+        ['2020-6', 99],
+        ['2020-7', 100],
       ]);
     });
   });
@@ -154,7 +167,8 @@ describe('API: LSK Transactions', () => {
   describe('getTxAmount', () => {
     it('should return amount of transfer in Beddows', () => {
       const tx = {
-        moduleCommand: transfer,
+        module: 'token',
+        command: 'transfer',
         params: { amount: 100000000 },
       };
 
@@ -164,7 +178,8 @@ describe('API: LSK Transactions', () => {
     it('should return amount of votes in Beddows', () => {
       const tx = {
         title: voteDelegate,
-        moduleCommand: voteDelegate,
+        module: 'dpos',
+        command: 'voteDelegate',
         params: {
           votes: [
             {
@@ -183,7 +198,8 @@ describe('API: LSK Transactions', () => {
     it('should return amount of unlock in Beddows', () => {
       const tx = {
         title: unlock,
-        moduleCommand: unlock,
+        module: 'dpos',
+        command: 'unlock',
         params: {
           unlockObjects: [
             {
@@ -201,52 +217,58 @@ describe('API: LSK Transactions', () => {
   });
 
   describe('getTransactionFee', () => {
-    const baseTx = {
-      nonce: '6',
-      sender: { publicKey: 'c094ebee7ec0c50ebee32918655e089f6e1a604b83bcaa760293c61e0f18ab6f' },
-    };
     const selectedPriority = {
       value: 0,
       title: 'LOW',
     };
 
     it('should return fee in Beddows', async () => {
-      const transferTx = {
+      const voteTx = {
+        module: 'dpos',
+        command: 'voteDelegate',
         params: {
-          amount: '100000000',
-          data: 'to test the instance',
-          recipient: { address: 'lskz5kf62627u2n8kzqa8jpycee64pgxzutcrbzhz' },
-          token: mockAppTokens[0],
+          votes: [
+            { delegateAddress: accounts.genesis.summary.address, amount: '100000000' },
+            { delegateAddress: accounts.delegate.summary.address, amount: '-100000000' },
+          ],
         },
-        moduleCommand: transfer,
       };
       const result = await getTransactionFee({
-        transaction: { ...baseTx, ...transferTx },
+        transactionJSON: { ...baseTx, ...voteTx },
         selectedPriority,
         network,
+        moduleCommandSchemas,
       });
       expect(Number(result.value)).toBeGreaterThan(0);
     });
 
     it('should calculate fee of vote tx', async () => {
       const voteTx = {
-        moduleCommand: voteDelegate,
+        module: 'dpos',
+        command: 'voteDelegate',
         params: {
-          votes: [],
+          votes: [
+            {
+              delegateAddress: 'lskz5kf62627u2n8kzqa8jpycee64pgxzutcrbzhz',
+              amount: 10,
+            },
+          ],
         },
       };
 
       const result = await getTransactionFee({
-        transaction: { ...baseTx, ...voteTx },
+        transactionJSON: { ...baseTx, ...voteTx },
         selectedPriority,
         network,
+        moduleCommandSchemas,
       });
       expect(Number(result.value)).toBeGreaterThan(0);
     });
 
     it('should calculate fee of register delegate tx', async () => {
       const registerDelegateTx = {
-        moduleCommand: registerDelegate,
+        module: 'dpos',
+        command: 'registerDelegate',
         params: {
           name: 'some_username',
           generatorKey: genKey,
@@ -256,24 +278,27 @@ describe('API: LSK Transactions', () => {
       };
 
       const result = await getTransactionFee({
-        transaction: { ...baseTx, ...registerDelegateTx },
+        transactionJSON: { ...baseTx, ...registerDelegateTx },
         selectedPriority,
         network,
+        moduleCommandSchemas,
       });
       expect(Number(result.value)).toBeGreaterThan(0);
     });
 
     it('should calculate fee of reclaim tx', async () => {
       const reclaimTx = {
-        moduleCommand: reclaim,
+        module: 'legacy',
+        command: 'reclaimLSK',
         params: {
           amount: '4454300000',
         },
       };
       const result = await getTransactionFee({
-        transaction: { ...baseTx, ...reclaimTx },
+        transactionJSON: { ...baseTx, ...reclaimTx },
         selectedPriority,
         network,
+        moduleCommandSchemas,
       });
 
       expect(Number(result.value)).toBeGreaterThan(0);
@@ -281,7 +306,8 @@ describe('API: LSK Transactions', () => {
 
     it('should calculate fee of registerMultisignature tx', async () => {
       const regMultisigTx = {
-        moduleCommand: registerMultisignature,
+        module: 'auth',
+        command: 'registerMultisignature',
         params: {
           numberOfSignatures: 2,
           mandatoryKeys: [accounts.genesis.summary.publicKey, accounts.delegate.summary.publicKey],
@@ -290,10 +316,11 @@ describe('API: LSK Transactions', () => {
         },
       };
       const result = await getTransactionFee({
-        transaction: { ...baseTx, ...regMultisigTx },
+        transactionJSON: { ...baseTx, ...regMultisigTx },
         selectedPriority,
         numberOfSignatures: 2,
         network,
+        moduleCommandSchemas,
       });
 
       expect(Number(result.value)).toBeGreaterThan(0);
@@ -301,19 +328,20 @@ describe('API: LSK Transactions', () => {
 
     it('should calculate fee of multisignature token transfer tx', async () => {
       const multisigTransferTx = {
-        moduleCommand: transfer,
+        module: 'token',
+        command: 'transfer',
         params: {
-          amount: '100000',
+          amount: 100000,
           data: 'to test the instance',
-          recipient: { address: 'lskz5kf62627u2n8kzqa8jpycee64pgxzutcrbzhz' },
-          token: mockAppTokens[0],
+          recipientAddress: 'lskz5kf62627u2n8kzqa8jpycee64pgxzutcrbzhz',
+          tokenID: '00000000',
         },
       };
       const result = await getTransactionFee({
-        transaction: { ...baseTx, ...multisigTransferTx },
+        transactionJSON: { ...baseTx, ...multisigTransferTx },
         selectedPriority,
-        numberOfSignatures: 3,
-        network,
+        numberOfSignatures: 10,
+        moduleCommandSchemas,
       });
 
       expect(Number(result.value)).toBeGreaterThan(0);
@@ -321,7 +349,8 @@ describe('API: LSK Transactions', () => {
 
     it('should calculate fee of multisignature voteDelegate tx', async () => {
       const multisigVoteTx = {
-        moduleCommand: voteDelegate,
+        module: 'dpos',
+        command: 'voteDelegate',
         params: {
           votes: [
             { delegateAddress: accounts.genesis.summary.address, amount: '100000000' },
@@ -330,10 +359,10 @@ describe('API: LSK Transactions', () => {
         },
       };
       const result = await getTransactionFee({
-        transaction: { ...baseTx, ...multisigVoteTx },
+        transactionJSON: { ...baseTx, ...multisigVoteTx },
         selectedPriority,
         numberOfSignatures: 10,
-        network,
+        moduleCommandSchemas,
       });
 
       expect(Number(result.value)).toBeGreaterThan(0);
@@ -341,7 +370,8 @@ describe('API: LSK Transactions', () => {
 
     it('should calculate fee of multisignature registerDelegate tx', async () => {
       const multisigRegisterDelegateTx = {
-        moduleCommand: registerDelegate,
+        module: 'dpos',
+        command: 'registerDelegate',
         params: {
           username: 'user_name',
           generatorKey: convertBinaryToString(genKey),
@@ -350,35 +380,75 @@ describe('API: LSK Transactions', () => {
         },
       };
       const result = await getTransactionFee({
-        transaction: { ...baseTx, ...multisigRegisterDelegateTx },
+        transactionJSON: { ...baseTx, ...multisigRegisterDelegateTx },
         selectedPriority,
         numberOfSignatures: 64,
         network,
+        moduleCommandSchemas,
       });
 
       expect(Number(result.value)).toBeGreaterThan(0);
     });
 
-    it('should calculate fee of multisignature unlock tx', async () => {
+    it.skip('should calculate fee of multisignature unlock tx', async () => {
       const multisigUnlockTx = {
-        moduleCommand: unlock,
+        module: 'dpos',
+        command: 'unlock',
         params: {
           unlockObjects: [
-            { delegateAddress: accounts.genesis.summary.address, amount: '-10000000', unvoteHeight: 1500 },
-            { delegateAddress: accounts.delegate_candidate.summary.address, amount: '-340000000', unvoteHeight: 1500 },
+            {
+              delegateAddress: accounts.genesis.summary.address,
+              amount: '-10000000',
+              unvoteHeight: 1500,
+            },
+            {
+              delegateAddress: accounts.delegate_candidate.summary.address,
+              amount: '-340000000',
+              unvoteHeight: 1500,
+            },
           ],
         },
       };
       const result = await getTransactionFee({
-        transaction: { ...baseTx, ...multisigUnlockTx },
+        transactionJSON: { ...baseTx, ...multisigUnlockTx },
         selectedPriority,
         numberOfSignatures: 4,
         network,
+        moduleCommandSchemas,
       });
 
       expect(Number(result.value)).toBeGreaterThan(0);
     });
   });
 
+  describe('dryRun', async () => {
+    const serviceUrl = 'http://localhost:4000';
+    it('should return error if transaction is invalid', async () => {
+      const transactionJSON = {
+        ...baseTx,
+        module: 'token',
+        command: 'transfer',
+        params: {
+          amount: 100000000,
+          recipientAddress: 'lsk3ay4z7wqjczbo5ogcqxgxx23xyacxmycwxfh4d',
+          data: ''
+        }
+      };
+      const transaction = fromTransactionJSON(transactionJSON, network.networks.LSK.moduleCommandSchemas['token:transfer']);
+      await dryRun({
+        transaction,
+        serviceUrl,
+        network,
+      });
 
+      expect(http).toHaveBeenCalledWith({
+        baseUrl: serviceUrl,
+        method: 'POST',
+        path: '/api/v3/transactions/dryrun',
+        data: {
+          transaction: '0a05746f6b656e12087472616e73666572180620002a20c094ebee7ec0c50ebee32918655e089f6e1a604b83bcaa760293c61e0f18ab6f321d1080c2d72f1a144662903af5e0c0662d9f1d43f087080c723096232200',
+        },
+      });
+    });
+  });
 });

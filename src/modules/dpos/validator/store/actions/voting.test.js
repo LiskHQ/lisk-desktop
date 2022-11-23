@@ -5,9 +5,9 @@ import * as accountApi from '@wallet/utils/api';
 import * as hwManager from '@transaction/utils/hwManager';
 import sampleVotes from '@tests/constants/votes';
 import wallets from '@tests/constants/wallets';
-import moduleCommandSchemas from '@tests/constants/schemas';
 import txActionTypes from '@transaction/store/actionTypes';
 import mockSavedAccounts from '@tests/fixtures/accounts';
+import { mockCommandParametersSchemas } from 'src/modules/common/__fixtures__';
 import * as delegateApi from '../../api';
 import actionTypes from './actionTypes';
 import {
@@ -19,10 +19,7 @@ import {
   balanceUnlocked,
 } from './voting';
 
-jest.mock('@transaction/api', () => ({
-  createGenericTx: jest.fn(),
-  computeTransactionId: jest.fn(),
-}));
+jest.mock('@transaction/api');
 
 jest.mock('../../api', () => ({
   getVotes: jest.fn(),
@@ -37,6 +34,11 @@ jest.mock('@transaction/utils/hwManager', () => ({
 }));
 
 describe('actions: voting', () => {
+  const moduleCommandSchemas = mockCommandParametersSchemas.data.reduce(
+    (result, { moduleCommand, schema }) => ({ ...result, [moduleCommand]: schema }),
+    {}
+  );
+
   const getState = () => ({
     blocks: {
       latestBlocks: [
@@ -77,6 +79,25 @@ describe('actions: voting', () => {
     },
   });
 
+  const privateKey = '0x0';
+
+  const transactionJSON = {
+    module: 'dpos',
+    command: 'voteDelegate',
+    nonce: '6',
+    senderPublicKey: 'c094ebee7ec0c50ebee32918655e089f6e1a604b83bcaa760293c61e0f18ab6f',
+    signatures: [],
+    fee: '0',
+    params: {
+      votes: [
+        {
+          delegateAddress: 'lskz5kf62627u2n8kzqa8jpycee64pgxzutcrbzhz',
+          amount: 1e10,
+        },
+      ],
+    },
+  };
+
   const dispatch = jest.fn();
 
   beforeEach(() => {
@@ -87,7 +108,7 @@ describe('actions: voting', () => {
     it('should create an action to add data to toggle the vote status for any given delegate', async () => {
       const data = [
         {
-          address: 'dummy',
+          delegateAddress: 'dummy',
           amount: 1e10,
         },
       ];
@@ -114,18 +135,29 @@ describe('actions: voting', () => {
   describe('votesSubmitted', () => {
     it('should call create transactions', async () => {
       const tx = { data: sampleVotes[0] };
-      transactionApi.createGenericTx.mockResolvedValue(tx);
+      transactionApi.signTransaction.mockResolvedValue(tx);
       const data = [
         {
           address: 'dummy',
           amount: 1e10,
         },
       ];
+      const senderAccount = {
+        mandatoryKeys: [],
+        optionalKeys: [],
+      };
 
-      await votesSubmitted(data)(dispatch, getState);
-      expect(transactionApi.createGenericTx).toHaveBeenCalled();
+      await votesSubmitted(
+        data,
+        transactionJSON,
+        privateKey,
+        '',
+        senderAccount,
+        moduleCommandSchemas
+      )(dispatch, getState);
+      expect(transactionApi.signTransaction).toHaveBeenCalled();
       expect(hwManager.signTransactionByHW).not.toHaveBeenCalled();
-      expect(dispatch).toHaveBeenCalledTimes(3);
+      expect(dispatch).toHaveBeenCalledTimes(2);
       expect(dispatch).toHaveBeenCalledWith({
         type: actionTypes.votesSubmitted,
       });
@@ -144,10 +176,22 @@ describe('actions: voting', () => {
           amount: 1e10,
         },
       ];
+      const senderAccount = {
+        mandatoryKeys: [],
+        optionalKeys: [],
+      };
 
-      await votesSubmitted(data)(dispatch, getState);
-      expect(transactionApi.createGenericTx).toHaveBeenCalled();
-      expect(dispatch).toHaveBeenCalledTimes(3);
+      await votesSubmitted(
+        data,
+        transactionJSON,
+        privateKey,
+        '',
+        senderAccount,
+        moduleCommandSchemas
+      )(dispatch, getState);
+
+      expect(transactionApi.signTransaction).toHaveBeenCalled();
+      expect(dispatch).toHaveBeenCalledTimes(2);
       expect(dispatch).toHaveBeenCalledWith({
         type: actionTypes.votesSubmitted,
       });
@@ -159,16 +203,28 @@ describe('actions: voting', () => {
 
     it('dispatches a transactionSignError action if an error occurs', async () => {
       const error = new Error('Error message.');
-      transactionApi.createGenericTx.mockRejectedValue(error);
+      transactionApi.signTransaction.mockRejectedValue(error);
       const data = [
         {
           address: 'dummy',
           amount: 1e10,
         },
       ];
+      const senderAccount = {
+        mandatoryKeys: [],
+        optionalKeys: [],
+      };
 
-      await votesSubmitted(data)(dispatch, getState);
-      expect(transactionApi.createGenericTx).toHaveBeenCalled();
+      await votesSubmitted(
+        data,
+        transactionJSON,
+        privateKey,
+        '',
+        senderAccount,
+        moduleCommandSchemas
+      )(dispatch, getState);
+
+      expect(transactionApi.signTransaction).toHaveBeenCalled();
       expect(dispatch).toHaveBeenCalledTimes(1);
       expect(dispatch).toHaveBeenCalledWith({
         type: txActionTypes.transactionSignError,
@@ -231,22 +287,25 @@ describe('actions: voting', () => {
       },
       moduleCommand: 'dpos:unlock',
     };
-    const privateKey = '0x0';
 
     it('should dispatch transactionCreatedSuccess', async () => {
       const tx = { id: 1 };
-      transactionApi.createGenericTx.mockImplementation(
+      transactionApi.signTransaction.mockImplementation(
         () =>
           new Promise((resolve) => {
             resolve(tx);
           })
       );
-      await balanceUnlocked(transactionObject, privateKey)(dispatch, getState);
-      expect(transactionApi.createGenericTx).toHaveBeenCalledWith({
+      await balanceUnlocked(
+        { moduleCommand: 'dpos:unlock' },
+        transactionObject,
+        privateKey
+      )(dispatch, getState);
+      expect(transactionApi.signTransaction).toHaveBeenCalledWith({
         wallet: activeTokenWallet,
         schema: state.network.networks.LSK.moduleCommandSchemas[transactionObject.moduleCommand],
         chainID: state.network.networks.LSK.chainID,
-        transactionObject,
+        transactionJSON: transactionObject,
         privateKey,
       });
       expect(dispatch).toHaveBeenCalledWith({
@@ -257,7 +316,7 @@ describe('actions: voting', () => {
 
     it('should dispatch transactionSignError', async () => {
       const error = { message: 'TestError' };
-      transactionApi.createGenericTx.mockImplementation(
+      transactionApi.signTransaction.mockImplementation(
         () =>
           new Promise((_, reject) => {
             reject(error);

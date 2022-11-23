@@ -38,7 +38,8 @@ const VoteSummary = ({
   selfUnvote = {},
   prevStep,
   nextStep,
-  rawTx,
+  formProps,
+  transactionJSON,
   votesSubmitted,
   selectedPriority,
 }) => {
@@ -46,7 +47,8 @@ const VoteSummary = ({
 
   const onConfirm = () => {
     nextStep({
-      rawTx,
+      formProps,
+      transactionJSON,
       actionFunction: votesSubmitted,
       statusInfo: {
         locked,
@@ -74,7 +76,8 @@ const VoteSummary = ({
         cancelButton={onCancelAction}
         classNames={styles.container}
         summaryInfo={{ added, edited, removed }}
-        rawTx={rawTx}
+        formProps={formProps}
+        transactionJSON={transactionJSON}
         selectedPriority={selectedPriority}
       >
         <div className={styles.headerContainer}>

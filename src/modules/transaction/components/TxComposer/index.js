@@ -13,17 +13,21 @@ import { useDeprecatedAccount } from '@account/hooks/useDeprecatedAccount';
 import { PrimaryButton } from 'src/theme/buttons';
 import Feedback, { getMinRequiredBalance } from './Feedback';
 import { getFeeStatus } from '../../utils/helpers';
+import { splitModuleAndCommand } from '../../utils';
 
 // eslint-disable-next-line max-statements
 const TxComposer = ({
   children,
-  transaction = {},
   onComposed,
   onConfirm,
   className,
   buttonTitle,
+  formProps = {},
+  commandParams = {},
 }) => {
   const { t } = useTranslation();
+  // @todo Once the transactions are refactored and working, we should
+  // use the schema returned by this hook instead of reading from the Redux store.
   useSchemas();
   useDeprecatedAccount();
   const wallet = useSelector(selectActiveTokenAccount);
@@ -36,29 +40,33 @@ const TxComposer = ({
     prioritiesLoadError,
     loadingPriorities,
   ] = useTransactionPriority();
-  const rawTx = {
-    sender: { publicKey: wallet.summary?.publicKey },
+  const [module, command] = splitModuleAndCommand(formProps.moduleCommand);
+  const transactionJSON = {
+    module,
+    command,
     nonce: wallet.sequence?.nonce,
-    moduleCommand: transaction.moduleCommand,
-    params: transaction.params,
+    fee: 0,
+    senderPublicKey: wallet.summary?.publicKey,
+    params: commandParams,
+    signatures: [],
   };
+
   const status = useTransactionFeeCalculation({
     token,
     wallet,
     selectedPriority,
     priorityOptions,
-    transaction: rawTx,
+    transactionJSON,
   });
 
   useEffect(() => {
     if (typeof onComposed === 'function') {
-      onComposed(status, { ...rawTx, fee: toRawLsk(status.fee.value) });
+      onComposed(status, formProps, { ...transactionJSON, fee: toRawLsk(status.fee.value) });
     }
-  }, [selectedPriority, transaction.asset]);
+  }, [selectedPriority, transactionJSON.params]);
 
-
-  const minRequiredBalance = getMinRequiredBalance(transaction, status.fee);
-  const { recipientChain, sendingChain } = transaction;
+  const minRequiredBalance = getMinRequiredBalance(transactionJSON, status.fee);
+  const { recipientChain, sendingChain } = formProps;
 
   const composedFees = {
     Transaction: getFeeStatus({ fee: status.fee, token, customFee }),
@@ -69,12 +77,12 @@ const TxComposer = ({
     composedFees.CCM = getFeeStatus({ fee: status.fee, token, customFee });
   }
 
-  rawTx.composedFees = composedFees;
-  rawTx.fee = toRawLsk(status.fee.value);
-  rawTx.composedFees = composedFees;
+  formProps.composedFees = composedFees;
+  transactionJSON.fee = toRawLsk(status.fee.value);
+
   if (recipientChain && sendingChain) {
-    rawTx.recipientChain = recipientChain;
-    rawTx.sendingChain = sendingChain;
+    formProps.recipientChain = recipientChain;
+    formProps.sendingChain = sendingChain;
   }
 
   return (
@@ -85,7 +93,7 @@ const TxComposer = ({
         fee={status.fee}
         minFee={Number(status.minFee.value)}
         customFee={customFee ? customFee.value : undefined}
-        moduleCommand={transaction.moduleCommand}
+        moduleCommand={formProps.moduleCommand}
         setCustomFee={setCustomFee}
         priorityOptions={priorityOptions}
         selectedPriority={selectedPriority.selectedIndex}
@@ -95,18 +103,15 @@ const TxComposer = ({
         composedFees={composedFees}
       />
       <Feedback
-        balance={wallet.token?.balance}
-        feedback={transaction.feedback}
+        balance={formProps.fields?.token?.availableBalance}
+        feedback={formProps.feedback}
         minRequiredBalance={minRequiredBalance}
       />
       <BoxFooter>
         <PrimaryButton
           className="confirm-btn"
-          onClick={() => onConfirm(
-            rawTx,
-            selectedPriority,
-          )}
-          disabled={!transaction.isValid || minRequiredBalance > wallet.token?.balance}
+          onClick={() => onConfirm(formProps, transactionJSON, selectedPriority)}
+          disabled={!formProps.isValid || minRequiredBalance > wallet.token?.balance}
         >
           {buttonTitle ?? t('Continue')}
         </PrimaryButton>

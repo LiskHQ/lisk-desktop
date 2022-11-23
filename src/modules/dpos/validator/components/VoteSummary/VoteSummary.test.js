@@ -69,15 +69,13 @@ const edited = {
   },
 };
 
-const rawTx = {
-  sender: {
-    publicKey: accounts.genesis.summary.publicKey,
-    address: accounts.genesis.summary.address,
-  },
+const transactionJSON = {
+  senderPublickKey: accounts.genesis.summary.publicKey,
   nonce: accounts.genesis.sequence.nonce,
   fee: '1000000',
   signatures: [],
-  moduleCommand: 'dpos:voteDelegate',
+  module: 'dpos',
+  command: 'voteDelegate',
   params: {
     votes: [
       {
@@ -90,24 +88,28 @@ const rawTx = {
       },
     ],
   },
-  composedFees: {
-    transaction: '1 LSK',
-    CCM: '1 LSK',
-    initiation: '1 LSK',
-  },
 };
 
 const transaction = { id: 1 };
 
 const props = {
+  transactionJSON,
   t: (s) => s,
   account: accounts.genesis,
   votesSubmitted: jest.fn(),
   nextStep: jest.fn(),
   transactions: { txSignatureError: null, signedTransaction: transaction },
   normalizedVotes: { lsk123: {} },
-  rawTx,
   selectedPriority: { title: 'Normal', value: 1 },
+  formProps: {
+    isValid: true,
+    moduleCommand: 'dpos:voteDelegate',
+    composedFees: {
+      transaction: '1 LSK',
+      CCM: '1 LSK',
+      initiation: '1 LSK',
+    },
+  },
 };
 
 beforeEach(() => {
@@ -168,7 +170,8 @@ describe('VotingQueue.Summary', () => {
     wrapper.find('button.confirm-button').simulate('click');
 
     expect(props.nextStep).toHaveBeenCalledWith({
-      rawTx,
+      transactionJSON,
+      formProps: props.formProps,
       actionFunction: props.votesSubmitted,
       statusInfo: {
         locked: 0,
@@ -189,7 +192,8 @@ describe('VotingQueue.Summary', () => {
     wrapper.find('button.confirm-button').simulate('click');
     expect(props.nextStep).toHaveBeenCalledTimes(1);
     expect(props.nextStep).toHaveBeenCalledWith({
-      rawTx,
+      transactionJSON,
+      formProps: props.formProps,
       actionFunction: props.votesSubmitted,
       statusInfo: {
         locked: 100,

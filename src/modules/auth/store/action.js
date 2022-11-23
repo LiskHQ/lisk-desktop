@@ -1,15 +1,6 @@
 /* eslint-disable max-lines */
 import actionTypes from './actionTypes';
 
-/**
- * Fires an action to reset the account automatic sign out timer
- * @param {Date} date - Current date
- */
-export const timerReset = () => ({
-  type: actionTypes.timerReset,
-  data: new Date(),
-});
-
 /** export const accountLoading = () => ({
   type: actionTypes.accountLoading,
 }); */

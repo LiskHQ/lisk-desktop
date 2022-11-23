@@ -20,7 +20,7 @@ const getErrorMessage = (name, data, t) => {
   if (hasInvalidChars) {
     return t(`Invalid character ${hasInvalidChars.trim()}`);
   }
-  if (data?.data) {
+  if (data?.data.length) {
     return t('"{{username}}" is already taken.', { username: name });
   }
   return '';

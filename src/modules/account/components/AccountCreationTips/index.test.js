@@ -21,7 +21,7 @@ describe('AccountCreationTips', () => {
   it('navigates to correct routes', () => {
     render(<AccountCreationTips />);
     const links = screen.queryAllByRole('link');
-    expect(links.at(0).href).toBe(`http://localhost${routes.register.path}`);
-    expect(links.at(1).href).toBe(`http://localhost${routes.addAccountOptions.path}`);
+    expect(links[0].href).toBe(`http://localhost${routes.register.path}`);
+    expect(links[1].href).toBe(`http://localhost${routes.addAccountOptions.path}`);
   });
 });

@@ -68,7 +68,7 @@ const getMaxAmount = async ({
       /* @Todo: this needs to be refactored in the feature but for now it works */
       selectedPriority: { title: 'Normal', value: 0, selectedIndex: 0 }, // Always set to LOW
       numberOfSignatures: getNumberOfSignatures(
-        { numberOfSignatures, isMultisignature },
+        { keys: { numberOfSignatures }, summary: { isMultisignature } },
         transaction
       ),
     },
