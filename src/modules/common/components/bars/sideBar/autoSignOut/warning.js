@@ -2,9 +2,7 @@
 import React, { useState } from 'react';
 import Countdown from 'react-countdown';
 import { toast } from 'react-toastify';
-import { useDispatch } from 'react-redux';
 import { withTranslation } from 'react-i18next';
-import { timerReset } from '@auth/store/action';
 import { timeOutWarningId } from 'src/utils/toasts';
 import account from '@wallet/configuration/constants';
 import styles from './autoSignOut.css';
@@ -12,12 +10,9 @@ import styles from './autoSignOut.css';
 const TimeOutToast = ({
   t, upDateCount, completed, expireTime,
 }) => {
-  const dispatch = useDispatch();
-
   const onResetTime = () => {
     if (new Date().getTime() < new Date(expireTime).getTime()) {
       upDateCount();
-      dispatch(timerReset());
     }
   };
 

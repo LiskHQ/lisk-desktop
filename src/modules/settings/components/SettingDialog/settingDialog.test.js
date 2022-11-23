@@ -28,7 +28,6 @@ describe('Setting', () => {
   const props = {
     transactions: { pending: [] },
     account: { token: 'LSK', passphrase: 'sample_passphrase' },
-    timerReset: jest.fn(),
     settingsUpdated: jest.fn(),
     settings,
     t,
@@ -65,7 +64,6 @@ describe('Setting', () => {
 
   //   it('should change autolog setting when clicking on checkbox', () => {
   //     wrapper.find('.autoLog input').at(0).simulate('change', { target: { name: 'autoLog' } });
-  //     expect(props.timerReset).toBeCalled();
   //   });
 
   //   it('should change discreet mode setting when clicking on checkbox', () => {
@@ -112,7 +110,6 @@ describe('Setting', () => {
 
   //     wrapper.find('.autoLog input').at(0).simulate('change', { target: { name: 'autoLog' } });
 
-  //     expect(props.timerReset).toBeCalled();
   //   });
   // });
 });

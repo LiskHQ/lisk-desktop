@@ -157,7 +157,7 @@ describe('actions: voting', () => {
       )(dispatch, getState);
       expect(transactionApi.signTransaction).toHaveBeenCalled();
       expect(hwManager.signTransactionByHW).not.toHaveBeenCalled();
-      expect(dispatch).toHaveBeenCalledTimes(3);
+      expect(dispatch).toHaveBeenCalledTimes(2);
       expect(dispatch).toHaveBeenCalledWith({
         type: actionTypes.votesSubmitted,
       });
@@ -191,7 +191,7 @@ describe('actions: voting', () => {
       )(dispatch, getState);
 
       expect(transactionApi.signTransaction).toHaveBeenCalled();
-      expect(dispatch).toHaveBeenCalledTimes(3);
+      expect(dispatch).toHaveBeenCalledTimes(2);
       expect(dispatch).toHaveBeenCalledWith({
         type: actionTypes.votesSubmitted,
       });

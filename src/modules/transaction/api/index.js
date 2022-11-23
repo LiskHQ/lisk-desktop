@@ -291,12 +291,27 @@ export const broadcast = async ({ transaction, serviceUrl, moduleCommandSchemas 
   const binary = transactions.getBytes(transaction, schema);
   const payload = binary.toString('hex');
 
-  const response = await http({
+  return http({
     method: 'POST',
     baseUrl: serviceUrl,
-    path: '/api/v3/transactions',
+    path: httpPaths.transactions,
     data: { transaction: payload },
   });
+};
 
-  return response;
+export const dryRun = ({ transaction, serviceUrl, network }) => {
+  const moduleCommand = joinModuleAndCommand({
+    module: transaction.module,
+    command: transaction.command,
+  });
+  const schema = network.networks.LSK.moduleCommandSchemas[moduleCommand];
+  const binary = transactions.getBytes(transaction, schema);
+  const payload = binary.toString('hex');
+
+  return http({
+    method: 'POST',
+    baseUrl: serviceUrl,
+    path: httpPaths.dryRun,
+    data: { transaction: payload },
+  });
 };

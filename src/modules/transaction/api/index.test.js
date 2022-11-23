@@ -5,6 +5,7 @@ import { getState } from '@fixtures/transactions';
 import * as delegates from '@dpos/validator/api';
 import http from 'src/utils/api/http';
 import accounts from '@tests/constants/wallets';
+import { fromTransactionJSON } from '@transaction/utils/encoding';
 import { genKey, blsKey, pop } from '@tests/constants/keys';
 import { mockCommandParametersSchemas } from 'src/modules/common/__fixtures__';
 import {
@@ -12,6 +13,7 @@ import {
   getTransactionStats,
   getTransactionFee,
   getRegisteredDelegates,
+  dryRun,
 } from './index';
 
 const { voteDelegate, unlock } = MODULE_COMMANDS_NAME_MAP;
@@ -35,6 +37,12 @@ describe('API: LSK Transactions', () => {
     (result, { moduleCommand, schema }) => ({ ...result, [moduleCommand]: schema }),
     {}
   );
+  const baseTx = {
+    nonce: '6',
+    senderPublicKey: 'c094ebee7ec0c50ebee32918655e089f6e1a604b83bcaa760293c61e0f18ab6f',
+    signatures: [],
+    fee: '0',
+  };
 
   describe('getTransactions', () => {
     beforeEach(() => {
@@ -209,19 +217,13 @@ describe('API: LSK Transactions', () => {
   });
 
   describe('getTransactionFee', () => {
-    const baseTx = {
-      nonce: '6',
-      senderPublicKey: 'c094ebee7ec0c50ebee32918655e089f6e1a604b83bcaa760293c61e0f18ab6f',
-      signatures: [],
-      fee: '0',
-    };
     const selectedPriority = {
       value: 0,
       title: 'LOW',
     };
 
     it('should return fee in Beddows', async () => {
-      const transferTx = {
+      const voteTx = {
         module: 'dpos',
         command: 'voteDelegate',
         params: {
@@ -232,7 +234,7 @@ describe('API: LSK Transactions', () => {
         },
       };
       const result = await getTransactionFee({
-        transactionJSON: { ...baseTx, ...transferTx },
+        transactionJSON: { ...baseTx, ...voteTx },
         selectedPriority,
         network,
         moduleCommandSchemas,
@@ -416,6 +418,37 @@ describe('API: LSK Transactions', () => {
       });
 
       expect(Number(result.value)).toBeGreaterThan(0);
+    });
+  });
+
+  describe('dryRun', async () => {
+    const serviceUrl = 'http://localhost:4000';
+    it('should return error if transaction is invalid', async () => {
+      const transactionJSON = {
+        ...baseTx,
+        module: 'token',
+        command: 'transfer',
+        params: {
+          amount: 100000000,
+          recipientAddress: 'lsk3ay4z7wqjczbo5ogcqxgxx23xyacxmycwxfh4d',
+          data: ''
+        }
+      };
+      const transaction = fromTransactionJSON(transactionJSON, network.networks.LSK.moduleCommandSchemas['token:transfer']);
+      await dryRun({
+        transaction,
+        serviceUrl,
+        network,
+      });
+
+      expect(http).toHaveBeenCalledWith({
+        baseUrl: serviceUrl,
+        method: 'POST',
+        path: '/api/v3/transactions/dryrun',
+        data: {
+          transaction: '0a05746f6b656e12087472616e73666572180620002a20c094ebee7ec0c50ebee32918655e089f6e1a604b83bcaa760293c61e0f18ab6f321d1080c2d72f1a144662903af5e0c0662d9f1d43f087080c723096232200',
+        },
+      });
     });
   });
 });
