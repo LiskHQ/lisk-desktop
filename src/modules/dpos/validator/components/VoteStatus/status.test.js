@@ -1,4 +1,6 @@
 import { mountWithRouter } from 'src/utils/testHelpers';
+import { useCommandSchema } from '@network/hooks/useCommandsSchema';
+import { mockCommandParametersSchemas } from 'src/modules/common/__fixtures__';
 import Result from './Status';
 
 const props = {
@@ -10,8 +12,16 @@ const props = {
 jest.mock('@libs/wcm/hooks/useSession', () => ({
   respond: jest.fn(),
 }));
+jest.mock('@network/hooks/useCommandsSchema');
 
 describe('VotingQueue.Result', () => {
+  useCommandSchema.mockReturnValue(
+    mockCommandParametersSchemas.data.reduce(
+      (result, { moduleCommand, schema }) => ({ ...result, [moduleCommand]: schema }),
+      {}
+    )
+  );
+
   it('renders properly', () => {
     const wrapper = mountWithRouter(Result, props);
 

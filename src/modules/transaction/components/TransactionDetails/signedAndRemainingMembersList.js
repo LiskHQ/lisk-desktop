@@ -4,32 +4,29 @@ import { SignedAndRemainingMembers } from '@wallet/components/multisignatureMemb
 import { calculateRemainingAndSignedMembers } from '@wallet/utils/account';
 import TransactionDetailsContext from '../../context/transactionDetailsContext';
 import styles from './styles.css';
+import { joinModuleAndCommand } from '../../utils';
 
 const SignedAndRemainingMembersList = ({ t }) => {
   const { transaction, wallet } = React.useContext(TransactionDetailsContext);
 
-  const isMultisignatureGroupRegistration = transaction.moduleCommand
-    === MODULE_COMMANDS_NAME_MAP.registerMultisignature;
+  const moduleCommand = joinModuleAndCommand(transaction);
+  const isMultisignatureRegistration =
+    moduleCommand === MODULE_COMMANDS_NAME_MAP.registerMultisignature;
 
-  const keys = isMultisignatureGroupRegistration
+  const keys = isMultisignatureRegistration
     ? {
-      optionalKeys: transaction.params.optionalKeys,
-      mandatoryKeys: transaction.params.mandatoryKeys,
-      numberOfSignatures: transaction.params.numberOfSignatures,
-    }
+        optionalKeys: transaction.params.optionalKeys,
+        mandatoryKeys: transaction.params.mandatoryKeys,
+        numberOfSignatures: transaction.params.numberOfSignatures,
+      }
     : wallet.keys;
 
   const { signed, remaining } = useMemo(
-    () =>
-      calculateRemainingAndSignedMembers(
-        keys,
-        transaction.signatures,
-        isMultisignatureGroupRegistration,
-      ),
-    [wallet],
+    () => calculateRemainingAndSignedMembers(keys, transaction, isMultisignatureRegistration),
+    [wallet]
   );
 
-  const required = isMultisignatureGroupRegistration
+  const required = isMultisignatureRegistration
     ? keys.optionalKeys.length + keys.mandatoryKeys.length
     : keys.numberOfSignatures;
 

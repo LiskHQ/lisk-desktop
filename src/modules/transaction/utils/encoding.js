@@ -15,6 +15,8 @@
 
 import { codec } from '@liskhq/lisk-codec';
 import { utils } from '@liskhq/lisk-cryptography';
+import { trimBigintString } from './helpers';
+import { joinModuleAndCommand } from './moduleCommand';
 
 // TODO: Use from service endpoint/elements
 export const baseTransactionSchema = {
@@ -57,7 +59,7 @@ export const baseTransactionSchema = {
 };
 
 export const getCommandParamsSchema = (module, command, schema) => {
-  const moduleCommand = module.concat(':', command);
+  const moduleCommand = joinModuleAndCommand({ module, command });
   const commandSchema = schema.find((meta) => meta.moduleCommand === moduleCommand);
   if (!(commandSchema && commandSchema.schema)) {
     throw new Error(`Module: ${module} Command: ${command} is not registered.`);
@@ -96,21 +98,25 @@ export const encodeTransaction = (transaction, paramsSchema) => {
   return decodedTransaction;
 };
 
-export const fromTransactionJSON = (transaction, paramsSchema) => {
+export const fromTransactionJSON = (transactionJSON, paramsSchema) => {
+  transactionJSON = trimBigintString(transactionJSON);
   const tx = codec.fromJSON(baseTransactionSchema, {
-    ...transaction,
+    ...transactionJSON,
     params: '',
   });
+
   let params;
-  if (typeof transaction.params === 'string') {
-    params = paramsSchema ? codec.decode(paramsSchema, Buffer.from(transaction.params, 'hex')) : {};
+  if (typeof transactionJSON.params === 'string') {
+    params = paramsSchema
+      ? codec.decode(paramsSchema, Buffer.from(transactionJSON.params, 'hex'))
+      : {};
   } else {
-    params = paramsSchema ? codec.fromJSON(paramsSchema, transaction.params) : {};
+    params = paramsSchema ? codec.fromJSON(paramsSchema, transactionJSON.params) : {};
   }
 
   return {
     ...tx,
-    id: transaction.id ? Buffer.from(transaction.id, 'hex') : Buffer.alloc(0),
+    id: transactionJSON.id ? Buffer.from(transactionJSON.id, 'hex') : Buffer.alloc(0),
     params,
   };
 };

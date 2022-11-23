@@ -1,18 +1,19 @@
-import { to } from 'await-to-js';
 import { DEFAULT_LIMIT } from 'src/utils/monitor';
 import { signatureCollectionStatus } from '@transaction/configuration/txStatus';
 import { extractKeyPair } from '@wallet/utils/account';
 import { getTransactionSignatureStatus } from '@wallet/components/signMultisigView/helpers';
 import { selectActiveTokenAccount } from 'src/redux/selectors';
-import { timerReset } from '@auth/store/action';
 import { loadingStarted, loadingFinished } from 'src/modules/common/store/actions';
 import actionTypes from './actionTypes';
-import { getTransactions, broadcast } from '../api';
+import { getTransactions, broadcast, dryRun } from '../api';
 import {
+  joinModuleAndCommand,
   signMultisigTransaction,
-  elementTxToDesktopTx,
-  desktopTxToElementsTx,
 } from '../utils';
+import {
+  fromTransactionJSON,
+  toTransactionJSON,
+} from '../utils/encoding';
 
 /**
  * Action trigger when user logout from the application
@@ -92,6 +93,7 @@ export const resetTransactionResult = () => ({
  * @param {object} data
  * @param {string} data.secondPass
  */
+// eslint-disable-next-line max-statements
 export const transactionDoubleSigned = () => async (dispatch, getState) => {
   const state = getState();
   const { transactions, network } = state;
@@ -100,15 +102,16 @@ export const transactionDoubleSigned = () => async (dispatch, getState) => {
     enableCustomDerivationPath: false,
   });
   const activeWallet = selectActiveTokenAccount(state);
-
+  const schemas = network.networks.LSK.moduleCommandSchemas[transactions.moduleCommand];
+  const transaction = toTransactionJSON(transactions.signedTransaction, schemas[transactions.moduleCommand]);
   const [signedTx, err] = await signMultisigTransaction(
     activeWallet,
     {
       data: activeWallet, // SenderAccount is the same of the double-signer
     },
-    elementTxToDesktopTx(transactions.signedTransaction),
+    transaction,
     signatureCollectionStatus.partiallySigned,
-    network.networks.LSK.moduleCommandSchemas[transactions.moduleCommand],
+    schemas[transactions.moduleCommand],
     network.networks.LSK.chainID,
     keyPair.privateKey,
   );
@@ -134,39 +137,45 @@ export const transactionDoubleSigned = () => async (dispatch, getState) => {
  * @param {Number} transaction.fee - In raw format, used for updating the TX List.
  * @param {Number} transaction.reference - Data field for LSK transactions
  */
-export const transactionBroadcasted = transaction =>
+export const transactionBroadcasted = (transaction, moduleCommandSchemas) =>
   // eslint-disable-next-line max-statements
   async (dispatch, getState) => {
-    const { network, token, wallet } = getState();
+    const { network, token } = getState();
     const activeToken = token.active;
     const serviceUrl = network.networks[activeToken].serviceUrl;
+    let broadcastResult;
+    // @todo dry run before broadcast
+    const dryRunResult =  await dryRun({ transaction, serviceUrl, network });
 
-    const [error] = await to(broadcast(
-      { transaction, serviceUrl, network },
-    ));
+    if (dryRunResult.data?.success === true) {
+      broadcastResult = await broadcast(
+        { transaction, serviceUrl, moduleCommandSchemas },
+      );
 
-    if (error) {
-      dispatch({
-        type: actionTypes.broadcastedTransactionError,
-        data: {
-          error,
-          transaction,
-        },
-      });
-    } else {
-      dispatch({
-        type: actionTypes.broadcastedTransactionSuccess,
-        data: transaction,
-      });
+      if(!broadcastResult.data?.error) {
+        const moduleCommand = joinModuleAndCommand(transaction);
+        const paramsSchema = moduleCommandSchemas[moduleCommand];
+        const transactionJSON = toTransactionJSON(transaction, paramsSchema);
+        dispatch({
+          type: actionTypes.broadcastedTransactionSuccess,
+          data: transaction,
+        });
+        dispatch(pendingTransactionAdded({ ...transactionJSON, isPending: true }));
 
-      const transformedTransaction = elementTxToDesktopTx(transaction);
-
-      if (transformedTransaction.sender.address === wallet.info.LSK.summary.address) {
-        dispatch(pendingTransactionAdded({ ...transformedTransaction, isPending: true }));
+        return true;
       }
-
-      dispatch(timerReset());
     }
+
+    // @todo Remove the third fallback error message when the Core API errors are implemented
+    dispatch({
+      type: actionTypes.broadcastedTransactionError,
+      data: {
+        error: dryRunResult.data?.message ?? broadcastResult?.error ?? 'An error occurred while broadcasting the transaction',
+        transaction,
+      },
+    });
+
+    return false;
   };
 
 /**
@@ -179,21 +188,27 @@ export const transactionBroadcasted = transaction =>
  * @param {object} data.sender.data - Sender account info in Lisk API schema
  */
 export const multisigTransactionSigned = ({
-  rawTx, sender, privateKey,
+  formProps,
+  transactionJSON,
+  sender,
+  privateKey,
+  txInitiatorAccount,
+  moduleCommandSchemas,
 }) => async (dispatch, getState) => {
   const state = getState();
   const activeWallet = selectActiveTokenAccount(state);
-  const txStatus = getTransactionSignatureStatus(sender.data, rawTx);
+  const txStatus = getTransactionSignatureStatus(sender, transactionJSON);
 
   const [tx, error] = await signMultisigTransaction(
     activeWallet,
     sender,
-    rawTx,
+    transactionJSON,
     txStatus,
-    state.network.networks.LSK.moduleCommandSchemas[rawTx.moduleCommand],
+    moduleCommandSchemas[formProps.moduleCommand],
     state.network.networks.LSK.chainID,
     privateKey,
-  );
+    txInitiatorAccount, // this is the intitor of the transaction wanting to be signed
+  ); 
 
   if (!error) {
     dispatch({
@@ -216,13 +231,13 @@ export const multisigTransactionSigned = ({
  * @param {object} data
  * @param {object} data.rawTransaction Transaction config required by Lisk Element
  */
-export const signatureSkipped = ({ rawTx }) => (dispatch, getState) => {
+export const signatureSkipped = ({ formProps, transactionJSON }) => (dispatch, getState) => {
   const { network } = getState();
-  const schema = network.networks.LSK.moduleCommandSchemas[rawTx.moduleCommand]
-  const binaryTx = desktopTxToElementsTx(rawTx, rawTx.moduleCommand, schema);
+  const schema = network.networks.LSK.moduleCommandSchemas[formProps.moduleCommand]
+  const transactionObject = fromTransactionJSON(transactionJSON, schema);
 
   dispatch({
     type: actionTypes.signatureSkipped,
-    data: binaryTx,
+    data: transactionObject,
   });
 };

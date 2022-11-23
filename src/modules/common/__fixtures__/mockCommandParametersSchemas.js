@@ -233,9 +233,9 @@ export const mockCommandParametersSchemas = {
     },
     {
       moduleCommandID: '00008000:00000000',
-      moduleCommand: 'legacy:reclaim',
+      moduleCommand: 'legacy:reclaimLSK',
       schema: {
-        $id: 'lisk/legacy/reclaim',
+        $id: 'lisk/legacy/reclaimLSK',
         type: 'object',
         required: ['amount'],
         properties: {

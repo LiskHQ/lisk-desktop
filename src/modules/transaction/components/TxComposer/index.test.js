@@ -1,23 +1,27 @@
 import { MODULE_COMMANDS_NAME_MAP } from 'src/modules/transaction/configuration/moduleCommand';
+import { useCommandSchema } from '@network/hooks/useCommandsSchema';
+import { mountWithQueryClient, mountWithQueryAndProps } from 'src/utils/testHelpers';
+import { mockCommandParametersSchemas } from 'src/modules/common/__fixtures__';
 import accounts from '@tests/constants/wallets';
-import {
-  mountWithQueryClient,
-  mountWithQueryAndProps,
-} from 'src/utils/testHelpers';
 import { genKey, blsKey, pop } from '@tests/constants/keys';
 import TxComposer from './index';
+
+
+jest.mock('@network/hooks/useCommandsSchema');
 
 jest.mock('@account/hooks/useDeprecatedAccount', () => ({
   useDeprecatedAccount: jest.fn().mockReturnValue({
     isSuccess: true,
-    isLoading: false
+    isLoading: false,
   }),
 }));
+
+jest.mock('@network/hooks/useCommandsSchema');
 
 describe('TxComposer', () => {
   const transaction = {
     moduleCommand: MODULE_COMMANDS_NAME_MAP.transfer,
-    params: {
+  params: {
       recipient: { address: accounts.genesis.summary.address },
       amount: 100000,
       data: 'test-data',
@@ -33,10 +37,36 @@ describe('TxComposer', () => {
     onConfirm: jest.fn(),
     className: 'test-class-name',
     buttonTitle: 'test-button-title',
+    formProps: {
+      moduleCommand: MODULE_COMMANDS_NAME_MAP.transfer,
+    },
   };
+  useCommandSchema.mockReturnValue(
+    mockCommandParametersSchemas.data.reduce(
+      (result, { moduleCommand, schema }) => ({ ...result, [moduleCommand]: schema }),
+      {}
+    )
+  );
+
+  useCommandSchema.mockReturnValue(
+    mockCommandParametersSchemas.data.reduce(
+      (result, { moduleCommand, schema }) => ({ ...result, [moduleCommand]: schema }),
+      {}
+    )
+  );
 
   it('should render TxComposer correctly for a valid tx', () => {
-    const wrapper = mountWithQueryClient(TxComposer, props);
+    const newProps = {
+      ...props,
+      formProps: {
+        isValid: true,
+        moduleCommand: MODULE_COMMANDS_NAME_MAP.transfer,
+        fields: { token: { availableBalance: 100000000 } },
+        sendingChain: { chainID: '1' },
+        recipientChain: { chainID: '2' }
+      },
+    };
+    const wrapper = mountWithQueryClient(TxComposer, newProps);
     expect(wrapper.find('TransactionPriority')).toExist();
     expect(wrapper.find('Feedback').html()).toEqual(null);
     expect(wrapper.find('.confirm-btn')).toExist();
@@ -46,9 +76,10 @@ describe('TxComposer', () => {
   it('should render TxComposer correctly for an invalid tx', () => {
     const newProps = {
       ...props,
-      transaction: {
-        ...props.transaction,
+      formProps: {
         isValid: false,
+        moduleCommand: MODULE_COMMANDS_NAME_MAP.transfer,
+        fields: { token: { availableBalance: 1000000000000000 } },
         feedback: ['Test error feedback'],
       },
     };
@@ -78,7 +109,9 @@ describe('TxComposer', () => {
     };
     const wrapper = mountWithQueryAndProps(TxComposer, newProps, state);
     expect(wrapper.find('TransactionPriority')).toExist();
-    expect(wrapper.find('Feedback').text()).toEqual('The minimum required balance for this action is {{minRequiredBalance}} {{token}}');
+    expect(wrapper.find('Feedback').text()).toEqual(
+      'The minimum required balance for this action is {{minRequiredBalance}} {{token}}'
+    );
     expect(wrapper.find('.confirm-btn').at(0).props().disabled).toEqual(true);
   });
 });

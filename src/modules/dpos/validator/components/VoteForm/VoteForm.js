@@ -144,9 +144,10 @@ const VoteForm = ({ t, votes, account, isVotingTxPending, nextStep, history, dpo
     dposToken,
   );
 
-  const onConfirm = (rawTx, selectedPriority, fees) => {
+  const onConfirm = (formProps, transactionJSON, selectedPriority, fees) => {
     nextStep({
-      rawTx,
+      formProps,
+      transactionJSON,
       added,
       edited,
       removed,
@@ -161,17 +162,22 @@ const VoteForm = ({ t, votes, account, isVotingTxPending, nextStep, history, dpo
   };
 
   const showEmptyState = !changedVotes.length || isVotingTxPending;
-  const transaction = {
+  const voteFormProps = {
     moduleCommand: MODULE_COMMANDS_NAME_MAP.voteDelegate,
     isValid: !feedback.error && Object.keys(changedVotes).length > 0 && !isVotingTxPending,
-    params: {
-      votes: normalizedVotes,
-    },
   };
+  const commandParams = {
+    votes: normalizedVotes,
+  }
 
   return (
     <Dialog hasClose className={`${styles.wrapper}`}>
-      <TxComposer onComposed={onComposed} onConfirm={onConfirm} transaction={transaction}>
+      <TxComposer
+        onComposed={onComposed}
+        onConfirm={onConfirm}
+        formProps={voteFormProps}
+        commandParams={commandParams}
+      >
         <>
           {showEmptyState ? (
             <EmptyState t={t} />

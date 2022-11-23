@@ -10,7 +10,7 @@ import { useCurrentAccount, useAccounts } from '@account/hooks';
 import AddAccountForm from '../AddAccountForm';
 import styles from './AddAccountBySecretRecovery.css';
 
-const AddAccountBySecretRecovery = ({ history, login }) => {
+const AddAccountBySecretRecovery = ({ history }) => {
   const multiStepRef = useRef(null);
   const [recoveryPhrase, setRecoveryPhrase] = useState(null);
   const [currentAccount, setCurrentAccount] = useCurrentAccount();
@@ -27,7 +27,6 @@ const AddAccountBySecretRecovery = ({ history, login }) => {
   };
 
   const onPasswordSetComplete = () => {
-    login(recoveryPhrase); // @todo this login method is deprecated
     history.push(routes.dashboard.path);
   };
 

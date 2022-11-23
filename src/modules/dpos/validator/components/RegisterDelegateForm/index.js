@@ -39,10 +39,11 @@ const RegisterDelegateForm = ({ nextStep, prevState }) => {
     prevState?.rawTx?.params.proofOfPossession
   );
 
-  const onConfirm = (rawTx, selectedPriority, fees) => {
+  const onConfirm = (formProps, transactionJSON, selectedPriority, fees) => {
     nextStep({
       selectedPriority,
-      rawTx,
+      formProps,
+      transactionJSON,
       fees,
     });
   };
@@ -51,20 +52,24 @@ const RegisterDelegateForm = ({ nextStep, prevState }) => {
     setName(value);
   };
 
-  const transaction = {
-    moduleCommand: MODULE_COMMANDS_NAME_MAP.registerDelegate,
-    params: {
-      name: name.value,
-      blsKey: blsKey.value,
-      generatorKey: generatorKey.value,
-      proofOfPossession: proofOfPossession.value,
-    },
+  const registerDelegateFormProps = {
     isValid: isFormValid(name, generatorKey, blsKey, proofOfPossession),
+    moduleCommand: MODULE_COMMANDS_NAME_MAP.registerDelegate,
+  };
+  const commandParams = {
+    name: name.value,
+    blsKey: blsKey.value,
+    generatorKey: generatorKey.value,
+    proofOfPossession: proofOfPossession.value,
   };
 
   return (
     <section className={styles.wrapper}>
-      <TxComposer onConfirm={onConfirm} transaction={transaction}>
+      <TxComposer
+        onConfirm={onConfirm}
+        formProps={registerDelegateFormProps}
+        commandParams={commandParams}
+      >
         <>
           <BoxHeader className={styles.header}>
             <h2>{t('Register delegate')}</h2>

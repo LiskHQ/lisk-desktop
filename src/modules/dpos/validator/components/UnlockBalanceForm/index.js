@@ -24,25 +24,29 @@ const UnlockBalanceForm = ({
   const [unlockObjects, lockedInVotes, unlockableBalance] = useUnlockableCalculator();
   const wallet = useSelector(selectActiveTokenAccount);
 
-  const onConfirm = async (rawTx, selectedPriority, fees) => {
+  const onConfirm = async (formProps, transactionJSON, selectedPriority, fees) => {
     nextStep({
       selectedPriority,
-      rawTx,
+      formProps,
+      transactionJSON,
       fees,
     });
   };
 
-  const transaction = {
+  const unlockBalanceFormProps = {
     moduleCommand: MODULE_COMMANDS_NAME_MAP.unlock,
-    params: { unlockObjects },
     isValid: unlockableBalance > 0,
+  };
+  const commandParams = {
+    unlockObjects
   };
 
   return (
     <section className={styles.wrapper}>
       <TxComposer
         onConfirm={onConfirm}
-        transaction={transaction}
+        formProps={unlockBalanceFormProps}
+        commandParams={commandParams}
         buttonTitle={getUnlockButtonTitle(unlockableBalance, activeToken, t)}
       >
         <>

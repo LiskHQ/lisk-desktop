@@ -5,7 +5,6 @@ const actionTypes = {
   accountUpdated: 'ACCOUNT_UPDATED',
   secondPassphraseStored: 'SECOND_PASSPHRASE_STORED',
   secondPassphraseRemoved: 'SECOND_PASSPHRASE_REMOVED',
-  timerReset: 'TIMER_RESET',
 };
 
 export default actionTypes;

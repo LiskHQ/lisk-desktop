@@ -1,8 +1,5 @@
 import { MODULE_COMMANDS_NAME_MAP } from 'src/modules/transaction/configuration/moduleCommand';
 
-// TODO: Fix the mapping based on new id changes
-// We will address these problem in issue https://github.com/LiskHQ/lisk-desktop/issues/4400
-
 const getModuleCommandSenderLabel = (t = str => str) => ({
   [MODULE_COMMANDS_NAME_MAP.transfer]: t('Sender'),
   [MODULE_COMMANDS_NAME_MAP.reclaim]: t('Sender'),
@@ -14,13 +11,14 @@ const getModuleCommandSenderLabel = (t = str => str) => ({
 });
 
 const getModuleCommandTitle = (t = str => str) => ({
-  [MODULE_COMMANDS_NAME_MAP.transfer]: t('Send'),
+  [MODULE_COMMANDS_NAME_MAP.transfer]: t('Transfer'),
   [MODULE_COMMANDS_NAME_MAP.reclaim]: t('Reclaim'),
   [MODULE_COMMANDS_NAME_MAP.unlock]: t('Unlock'),
   [MODULE_COMMANDS_NAME_MAP.voteDelegate]: t('Vote'),
   [MODULE_COMMANDS_NAME_MAP.registerDelegate]: t('Register delegate'),
-  [MODULE_COMMANDS_NAME_MAP.registerMultisignature]: t('Register multisignature group'),
+  [MODULE_COMMANDS_NAME_MAP.registerMultisignature]: t('Register multisignature'),
   [MODULE_COMMANDS_NAME_MAP.reportDelegateMisbehavior]: t('Report delegate misbehaviour'),
+  [MODULE_COMMANDS_NAME_MAP.crossChainTransfer]: t('Cross chain transfer'),
 });
 
 const splitModuleAndCommand = (moduleCommand) => moduleCommand.split(':');

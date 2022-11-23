@@ -6,6 +6,8 @@ import { TertiaryButton } from 'src/theme/buttons';
 import { Input } from 'src/theme';
 import { MODULE_COMMANDS_NAME_MAP } from 'src/modules/transaction/configuration/moduleCommand';
 import TxComposer from '@transaction/components/TxComposer';
+import { useCurrentApplication } from '@blockchainApplication/manage/hooks';
+import { useTokensBalance } from 'src/modules/token/fungible/hooks/queries';
 import ProgressBar from '../RegisterMultisigView/ProgressBar';
 import { MAX_MULTI_SIG_MEMBERS } from '../../configuration/constants';
 import MemberField from './MemberField';
@@ -60,6 +62,10 @@ const Form = ({ nextStep, prevState = {} }) => {
   );
   const [members, setMembers] = useState(() => getInitialMembersState(prevState));
 
+  const [currentApplication] = useCurrentApplication();
+  const { data: tokens } = useTokensBalance(currentApplication)
+  const defaultToken = useMemo(() => tokens?.data?.[0] || {}, [tokens]);
+
   const [mandatoryKeys, optionalKeys] = useMemo(() => {
     const mandatory = members
       .filter((member) => member.isMandatory && member.publicKey)
@@ -100,8 +106,8 @@ const Form = ({ nextStep, prevState = {} }) => {
     setNumberOfSignatures(value);
   };
 
-  const onConfirm = (rawTx) => {
-    nextStep({ rawTx });
+  const onConfirm = (formProps, transactionJSON) => {
+    nextStep({ formProps, transactionJSON });
   };
 
   useEffect(() => {
@@ -123,22 +129,26 @@ const Form = ({ nextStep, prevState = {} }) => {
     [mandatoryKeys, optionalKeys, numberOfSignatures]
   );
 
-  const transaction = {
+  const multisignatureFormProps = {
     moduleCommand: MODULE_COMMANDS_NAME_MAP.registerMultisignature,
     isValid: feedback.error === 0,
     feedback: feedback.messages,
-    params: {
-      mandatoryKeys,
-      optionalKeys,
-      numberOfSignatures,
-      signatures: [],
+    fields: {
+      token: defaultToken,
     },
+  };
+  const commandParams = {
+    mandatoryKeys,
+    optionalKeys,
+    numberOfSignatures,
+    signatures: [],
   };
 
   return (
     <section className={styles.wrapper}>
       <TxComposer
-        transaction={transaction}
+        formProps={multisignatureFormProps}
+        commandParams={commandParams}
         onConfirm={onConfirm}
         buttonTitle={t('Go to confirmation')}
       >

@@ -4,7 +4,8 @@ import styles from './registerDelegateSummary.css';
 
 const RegisterDelegateSummary = ({
   delegateRegistered,
-  rawTx,
+  formProps,
+  transactionJSON,
   prevStep,
   nextStep,
   t,
@@ -15,14 +16,17 @@ const RegisterDelegateSummary = ({
     label: t('Register delegate'),
     onClick: () => {
       nextStep({
-        rawTx,
+        formProps,
+        transactionJSON,
         actionFunction: delegateRegistered,
       });
     },
   };
   const onCancelAction = {
     label: t('Go back'),
-    onClick: () => { prevStep({ rawTx }); },
+    onClick: () => {
+      prevStep({ formProps, transactionJSON });
+    },
   };
 
   return (
@@ -31,7 +35,8 @@ const RegisterDelegateSummary = ({
       confirmButton={onConfirmAction}
       cancelButton={onCancelAction}
       classNames={`${styles.box} ${styles.summaryContainer}`}
-      rawTx={rawTx}
+      formProps={formProps}
+      transactionJSON={transactionJSON}
       selectedPriority={selectedPriority}
       fees={fees}
     />

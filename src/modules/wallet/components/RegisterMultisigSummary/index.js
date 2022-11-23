@@ -2,17 +2,18 @@
 import { compose } from 'redux';
 import { connect } from 'react-redux';
 import { withTranslation } from 'react-i18next';
-import { multisigGroupRegistered } from '@wallet/store/action';
+import { multisigTransactionSigned } from 'src/redux/actions';
 import { selectActiveTokenAccount } from 'src/redux/selectors';
 
 import Summary from './Summary';
 
 const mapStateToProps = state => ({
   account: selectActiveTokenAccount(state),
+  transactions: state.transactions,
 });
 
 const mapDispatchToProps = {
-  multisigGroupRegistered,
+  multisigTransactionSigned,
 };
 
 export default compose(

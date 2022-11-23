@@ -16,11 +16,15 @@ export default (t, activeToken, changeSort) => ([
   },
   {
     title: t('Type'),
-    classList: grid['col-xs-4'],
+    classList: grid['col-xs-3'],
   },
   {
     title: t('Date'),
     classList: `${grid['col-xs-2']} ${grid['col-md-2']}`,
+  },
+  {
+    title: t('Fee'),
+    classList: `${grid['col-xs-1']} ${grid['col-md-1']}`,
   },
   {
     title: t('Status'),

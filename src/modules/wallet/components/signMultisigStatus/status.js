@@ -2,32 +2,55 @@ import React from 'react';
 import Box from 'src/theme/box';
 import BoxContent from 'src/theme/box/content';
 import TxBroadcaster from '@transaction/components/TxBroadcaster';
-import {
-  statusMessages,
-  getTransactionStatus,
-} from '@transaction/configuration/statusConfig';
+import { useCurrentAccount } from '@account/hooks';
+import { statusMessages, getTransactionStatus } from '@transaction/configuration/statusConfig';
+import useTxInitiatorAccount from '@transaction/hooks/useTxInitiatorAccount';
 
 import ProgressBar from '../signMultisigView/progressBar';
 import styles from './styles.css';
+import { useMultiSignatureStatus } from '../../hooks/useMultiSignatureStatus';
 
-const Status = ({ sender, transactions, t }) => {
+// eslint-disable-next-line max-statements
+const Status = ({ transactions, t, transactionJSON }) => {
+  const [currentAccount] = useCurrentAccount();
+
+  // This is to replace previous withData implementations.
+  const { txInitiatorAccount } = useTxInitiatorAccount({
+    transactionJSON,
+  });
+  const { mandatoryKeys, optionalKeys, numberOfSignatures, publickKey } = txInitiatorAccount;
+  const isMultiSignature =
+    transactions.signedTransaction.params?.numberOfSignatures > 0 || numberOfSignatures > 1;
+
+  const { canSenderSignTx } = useMultiSignatureStatus({
+    transactionJSON,
+    currentAccount,
+    senderAccount: txInitiatorAccount,
+    account: {
+      mandatoryKeys,
+      optionalKeys,
+      numberOfSignatures,
+      summary: {
+        publickKey,
+      },
+    },
+  });
+
   const status = getTransactionStatus(
-    sender.data,
+    txInitiatorAccount,
     transactions,
-    sender.data?.summary.publicKey,
+    isMultiSignature,
+    canSenderSignTx
   );
 
   const template = statusMessages(t)[status.code];
-
   return (
     <section>
       <Box className={styles.boxContainer}>
         <header>
           <h1>{t('Sign multisignature transaction')}</h1>
           <p>
-            {t(
-              'Provide a signature for a transaction which belongs to a multisignature account.',
-            )}
+            {t('Provide a signature for a transaction which belongs to a multisignature account.')}
           </p>
         </header>
         <BoxContent>

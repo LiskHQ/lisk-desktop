@@ -123,6 +123,8 @@ export const useDeprecatedAccount = (accountInfo) => {
     }));
   }, [delegates, isDelegatesSuccess]);
 
+  // TODO: For any given account maximum possible votes, unlocks is 10
+  // Cross check other query params limit as well
   const {
     data: unlocks,
     isLoading: isUnlocksLoading,

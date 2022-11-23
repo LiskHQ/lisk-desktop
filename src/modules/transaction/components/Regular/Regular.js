@@ -32,13 +32,14 @@ const Regular = ({
   className,
   resetTransactionResult,
   transactionBroadcasted,
+  moduleCommandSchemas
 }) => {
   useEffect(() => {
     if (
       !isEmpty(transactions.signedTransaction)
       && !transactions.txSignatureError
     ) {
-      transactionBroadcasted(transactions.signedTransaction);
+      transactionBroadcasted(transactions.signedTransaction, moduleCommandSchemas);
     }
 
     return resetTransactionResult;

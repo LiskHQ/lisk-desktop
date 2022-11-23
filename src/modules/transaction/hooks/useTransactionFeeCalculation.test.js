@@ -3,7 +3,7 @@ import wallets from '@tests/constants/wallets';
 import { mockAppTokens } from '@tests/fixtures/token';
 import useTransactionFeeCalculation from './useTransactionFeeCalculation';
 
-describe('useTransactionFeeCalculation', () => {
+describe.skip('useTransactionFeeCalculation', () => {
   const props = {
     wallet: wallets.genesis,
     selectedPriority: { value: 1, selectedIndex: 0 },

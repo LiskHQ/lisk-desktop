@@ -1,15 +1,20 @@
 const moduleCommandNameMap = {
   transfer: 'token:transfer',
+  crossChainTransfer: 'token:crossChaintransfer',
   registerMultisignature: 'auth:registerMultisignature',
   registerDelegate: 'dpos:registerDelegate',
   voteDelegate: 'dpos:voteDelegate',
   unlock: 'dpos:unlock',
   reportDelegateMisbehavior: 'dpos:reportDelegateMisbehavior',
-  reclaim: 'legacy:reclaim',
+  reclaim: 'legacy:reclaimLSK',
 };
 
 const moduleCommandMap = {
   [moduleCommandNameMap.transfer]: {
+    maxFee: 1e7,
+    icon: 'txDefault',
+  },
+  [moduleCommandNameMap.crossChainTransfer]: {
     maxFee: 1e7,
     icon: 'txDefault',
   },
@@ -42,7 +47,4 @@ const moduleCommandMap = {
 const MODULE_COMMANDS_NAME_MAP = Object.freeze(moduleCommandNameMap);
 const MODULE_COMMANDS_MAP = Object.freeze(moduleCommandMap);
 
-export {
-  MODULE_COMMANDS_MAP,
-  MODULE_COMMANDS_NAME_MAP,
-};
+export { MODULE_COMMANDS_MAP, MODULE_COMMANDS_NAME_MAP };

@@ -16,7 +16,7 @@ import styles from './EnterPasswordForm.css';
 const API_ERROR_NAME = 'API_ERROR_NAME';
 
 // eslint-disable-next-line max-statements
-const EnterPasswordForm = ({ onEnterPasswordSuccess, title, encryptedAccount }) => {
+const EnterPasswordForm = ({ onEnterPasswordSuccess, title, encryptedAccount, isDisabled }) => {
   const { t } = useTranslation();
   const {
     register,
@@ -32,8 +32,8 @@ const EnterPasswordForm = ({ onEnterPasswordSuccess, title, encryptedAccount }) 
   const [currentAccount] = useCurrentAccount();
   const requestedAccount = getAccountByAddress(activeAccount.summary.address);
   const account = useMemo(
-      () => encryptedAccount || requestedAccount || currentAccount,
-      [currentAccount]
+    () => encryptedAccount || requestedAccount || currentAccount,
+    [currentAccount]
   );
   const formValues = watch();
 
@@ -55,36 +55,36 @@ const EnterPasswordForm = ({ onEnterPasswordSuccess, title, encryptedAccount }) 
   };
 
   return (
-      <Box className={styles.container}>
-        <BoxContent className={styles.content}>
-          <h1>{t('Enter your password')}</h1>
-          <p className={styles.subheader}>
-            {t(title || 'Please provide your device password to backup the recovery phrase.')}
-          </p>
-          <WalletVisual className={styles.avatar} address={account?.metadata?.address} />
-          {account?.metadata?.name && <p className={styles.accountName}>{account?.metadata?.name}</p>}
-          <p className={styles.accountAddress}>{account?.metadata?.address}</p>
-          <form onSubmit={handleSubmit(onSubmit)}>
-            <Input
-                secureTextEntry
-                size="s"
-                placeholder={t('Enter password')}
-                feedback={apiError?.message}
-                error={!!apiError}
-                {...register('password', {
-                  onChange: () => apiError && clearErrors(API_ERROR_NAME),
-                })}
-            />
-            <PrimaryButton
-                type="submit"
-                disabled={!formValues.password}
-                className={`${styles.button} continue-btn`}
-            >
-              {t('Continue')}
-            </PrimaryButton>
-          </form>
-        </BoxContent>
-      </Box>
+    <Box className={styles.container}>
+      <BoxContent className={styles.content}>
+        <h1>{t('Enter your password')}</h1>
+        <p className={styles.subheader}>
+          {t(title || 'Please provide your device password to backup the recovery phrase.')}
+        </p>
+        <WalletVisual className={styles.avatar} address={account?.metadata?.address} />
+        {account?.metadata?.name && <p className={styles.accountName}>{account?.metadata?.name}</p>}
+        <p className={styles.accountAddress}>{account?.metadata?.address}</p>
+        <form onSubmit={handleSubmit(onSubmit)}>
+          <Input
+            secureTextEntry
+            size="s"
+            placeholder={t('Enter password')}
+            feedback={apiError?.message}
+            error={!!apiError}
+            {...register('password', {
+              onChange: () => apiError && clearErrors(API_ERROR_NAME),
+            })}
+          />
+          <PrimaryButton
+            type="submit"
+            disabled={isDisabled || !formValues.password}
+            className={`${styles.button} continue-btn`}
+          >
+            {t('Continue')}
+          </PrimaryButton>
+        </form>
+      </BoxContent>
+    </Box>
   );
 };
 

@@ -9,10 +9,11 @@ import RegisterMultisignatureGroup from '../RegisterMultisignatureGroup';
 import GenericTxParams from '../GenericTxParams';
 
 export default (props) => {
-  switch (props.transaction.moduleCommand) {
+  switch (props.formProps.moduleCommand) {
     case MODULE_COMMANDS_NAME_MAP.reclaim: return <Reclaim {...props} />;
     case MODULE_COMMANDS_NAME_MAP.registerDelegate: return <RegisterDelegate {...props} />;
-    case MODULE_COMMANDS_NAME_MAP.transfer: return <Send {...props} />;
+    case MODULE_COMMANDS_NAME_MAP.transfer:
+    case MODULE_COMMANDS_NAME_MAP.crossChainTransfer: return <Send {...props} />;
     case MODULE_COMMANDS_NAME_MAP.voteDelegate: return <VoteDelegate {...props} />;
     case MODULE_COMMANDS_NAME_MAP.unlock: return <UnlockBalance {...props} />;
     case MODULE_COMMANDS_NAME_MAP.registerMultisignature:

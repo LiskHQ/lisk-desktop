@@ -211,8 +211,8 @@ export const getUnlockableUnlockObjects = (unlocking = [], currentBlockHeight = 
 export const calculateUnlockableBalance = (unlocking = [], currentBlockHeight = 0) =>
   unlocking.reduce(
     (sum, vote) =>
-      (isBlockHeightReached(vote.height.end, currentBlockHeight)
-        ? sum + parseInt(vote.amount, 10) : sum),
+    (isBlockHeightReached(vote.height.end, currentBlockHeight)
+      ? sum + parseInt(vote.amount, 10) : sum),
     0,
   );
 
@@ -226,29 +226,30 @@ export const calculateUnlockableBalance = (unlocking = [], currentBlockHeight = 
 export const calculateBalanceUnlockableInTheFuture = (unlocking = [], currentBlockHeight = 0) =>
   unlocking.reduce(
     (sum, vote) =>
-      (!isBlockHeightReached(vote.height.end, currentBlockHeight)
-        ? sum + parseInt(vote.amount, 10) : sum),
+    (!isBlockHeightReached(vote.height.end, currentBlockHeight)
+      ? sum + parseInt(vote.amount, 10) : sum),
     0,
   );
 
+const isSigned = signature => signature && signature !== Buffer.alloc(64).toString('hex');
+
 export const calculateRemainingAndSignedMembers = (
   keys = { optionalKeys: [], mandatoryKeys: [] },
-  signaturesInTransaction = [],
-  ignoreFirstSignature = false,
+  transaction = {},
+  isMultisignatureRegistration = false,
 ) => {
-  const signatures = ignoreFirstSignature
-    ? signaturesInTransaction.slice(1) : signaturesInTransaction;
+  const signatures = isMultisignatureRegistration
+    ? transaction.params.signatures : transaction.signatures;
   const { mandatoryKeys, optionalKeys } = keys;
   const signed = [];
   const remaining = [];
 
   mandatoryKeys.forEach((key, index) => {
-    const hasSigned = Boolean(signatures[index]);
     const value = {
       publicKey: key, mandatory: true, address: extractAddressFromPublicKey(key),
     };
 
-    if (hasSigned) {
+    if (isSigned(signatures[index])) {
       signed.push(value);
     } else {
       remaining.push(value);
@@ -256,12 +257,11 @@ export const calculateRemainingAndSignedMembers = (
   });
 
   optionalKeys.forEach((key, index) => {
-    const hasSigned = Boolean(signatures[index + mandatoryKeys.length]);
     const value = {
       publicKey: key, mandatory: false, address: extractAddressFromPublicKey(key),
     };
 
-    if (hasSigned) {
+    if (isSigned(signatures[index + mandatoryKeys.length])) {
       signed.push(value);
     } else {
       remaining.push(value);
@@ -276,15 +276,15 @@ export const calculateRemainingAndSignedMembers = (
  * @param {object} data
  * @param {object} data.senderAccount - Account info
  * @param {object} data.transaction - Transaction details
- * @param {boolean} data.isGroupRegistration - tx moduleAsset check
+ * @param {boolean} data.isRegisterMultisignature - tx moduleAsset check
  * @returns {object} - Keys, including number and list of mandatory and optional keys
  */
-export const getKeys = ({ senderAccount, transaction, isGroupRegistration }) => {
-  if (isGroupRegistration) {
+export const getKeys = ({ senderAccount, transaction, isRegisterMultisignature }) => {
+  if (isRegisterMultisignature) {
     return transaction.params;
   }
 
-  return senderAccount.keys;
+  return senderAccount;
 };
 
 export const validate2ndPass = async (account, passphrase, error) => {

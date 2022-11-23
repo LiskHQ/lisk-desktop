@@ -27,6 +27,7 @@ const AccountCreationTips = () => {
           <div className={styles.actions}>
             <Link
               to={routes.register.path}
+              data-testId='link'
             >
               <PrimaryButton>
                 {t('Create account')}
@@ -34,6 +35,7 @@ const AccountCreationTips = () => {
             </Link>
             <Link
               to={routes.addAccountOptions.path}
+              data-testId='link'
             >
               <SecondaryButton>
                 {t('Add account')}

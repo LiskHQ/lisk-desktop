@@ -1,11 +1,12 @@
 import React from 'react';
 import { useSelector } from 'react-redux';
+import { cryptography } from '@liskhq/lisk-client';
+import accounts from '@tests/constants/wallets';
 import { mountWithProps, mountWithRouter, mountWithRouterAndStore } from 'src/utils/testHelpers';
 import RecentTransactions, { NoTransactions, NotSignedIn } from './RecentTransactions';
 
-const t = str => str;
+const t = (str) => str;
 const transactionError = { error: { code: 404 } };
-
 const LiskTransactions = {
   data: [
     {
@@ -14,13 +15,10 @@ const LiskTransactions = {
       token: 'LSK',
       type: 0,
       moduleCommand: 'token:transfer',
-      sender: {
-        address: 'lsks6uckwnap7s72ov3edddwgxab5e89t6uy8gjt6',
-      },
+      senderPublicKey: accounts.genesis.summary.publicKey,
+      sender: {address: 'lsks6uckwnap7s72ov3edddwgxab5e89t6uy8gjt6'},
       params: {
-        recipient: {
-          address: 'lsks6uckwnap7s72ov3edddwgxab5e89t6uy8gjt6',
-        },
+        recipient: 'lsks6uckwnap7s72ov3edddwgxab5e89t6uy8gjt6',
         votes: [],
       },
     },
@@ -30,13 +28,10 @@ const LiskTransactions = {
       token: 'LSK',
       type: 1,
       moduleCommand: 'dpos:registerDelegate',
-      sender: {
-        address: 'lsks6uckwnap7s72ov3edddwgxab5e89t6uy8gjt6',
-      },
+      senderPublicKey: accounts.genesis.summary.publicKey,
+      sender: {address: 'lsks6uckwnap7s72ov3edddwgxab5e89t6uy8gjt6'},
       params: {
-        recipient: {
-          address: 'lsks6uckwnap7s72ov3edddwgxab5e89t6uy8gjt6',
-        },
+        recipientAddress: 'lsks6uckwnap7s72ov3edddwgxab5e89t6uy8gjt6',
         votes: [],
       },
     },
@@ -46,13 +41,10 @@ const LiskTransactions = {
       token: 'LSK',
       type: 2,
       moduleCommand: 'auth:registerMultisignature',
-      sender: {
-        address: 'lsks6uckwnap7s72ov3edddwgxab5e89t6uy8gjt6',
-      },
+      sender: {address: 'lskehj8am9afxdz8arztqajy52acnoubkzvmo9cjy'},
+      senderPublicKey: accounts.genesis.summary.publicKey,
       params: {
-        recipient: {
-          address: 'lskehj8am9afxdz8arztqajy52acnoubkzvmo9cjy',
-        },
+        recipientAddress: 'lskehj8am9afxdz8arztqajy52acnoubkzvmo9cjy',
         votes: [],
       },
     },
@@ -62,13 +54,10 @@ const LiskTransactions = {
       token: 'LSK',
       type: 3,
       moduleCommand: 'dpos:voteDelegate',
-      sender: {
-        address: 'lsks6uckwnap7s72ov3edddwgxab5e89t6uy8gjt6',
-      },
+      senderPublicKey: accounts.genesis.summary.publicKey,
+      sender: {address: 'lskehj8am9afxdz8arztqajy52acnoubkzvmo9cjy'},
       params: {
-        recipient: {
-          address: 'lskgonvfdxt3m6mm7jaeojrj5fnxx7vwmkxq72v79',
-        },
+        recipientAddress: 'lskehj8am9afxdz8arztqajy52acnoubkzvmo9cjy',
         votes: [],
       },
     },
@@ -129,6 +118,9 @@ const mockUseContext = (mockData = {}) => {
     ...mockData,
   }));
 };
+jest
+  .spyOn(cryptography.address, 'getLisk32AddressFromPublicKey')
+  .mockReturnValue('lsks6uckwnap7s72ov3edddwgxab5e89t6uy8gjt6');
 
 useSelector.mockReturnValue({ ...LiskState.account, ...LiskState.settings });
 
@@ -145,17 +137,13 @@ describe('Recent Transactions', () => {
       RecentTransactions,
       { t, transactions: LiskTransactions },
       {},
-      LiskState,
+      LiskState
     );
     expect(wrapper.find('TransactionRow')).toHaveLength(LiskTransactions.data.length);
   });
 
   it('Should render Recent Transactions with empty state', () => {
-    const wrapper = mountWithProps(
-      RecentTransactions,
-      { t, transactions: noTx },
-      LiskState,
-    );
+    const wrapper = mountWithProps(RecentTransactions, { t, transactions: noTx }, LiskState);
     expect(wrapper).not.toContainMatchingElement('TransactionRow');
     expect(wrapper).toContainMatchingElement(NoTransactions);
   });
@@ -170,7 +158,7 @@ describe('Recent Transactions', () => {
     const wrapper = mountWithRouter(
       RecentTransactions,
       { t, transactions: noTx },
-      NotSignedInState,
+      NotSignedInState
     );
     expect(wrapper).not.toContainMatchingElement('.transactions-row');
     expect(wrapper).toContainMatchingElement(NotSignedIn);

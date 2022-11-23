@@ -14,7 +14,7 @@ const TokenRow = ({ data: token, address }) => {
   } = token;
 
   const totalLockedBalance = useMemo(
-    () => lockedBalances.reduce((total, { amount }) => +amount + total, 0),
+    () => lockedBalances && lockedBalances.reduce((total, { amount }) => +amount + total, 0),
     [lockedBalances]
   );
 

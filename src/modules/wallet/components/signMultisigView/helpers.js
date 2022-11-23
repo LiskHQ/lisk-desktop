@@ -3,16 +3,20 @@ import { signatureCollectionStatus } from '@transaction/configuration/txStatus';
 import { joinModuleAndCommand } from 'src/modules/transaction/utils/moduleCommand';
 import { getKeys } from '@wallet/utils/account';
 
-const getNumbersOfSignaturesRequired = ({ keys, isGroupRegistration }) => {
-  if (isGroupRegistration) {
-    // +1 to account for double sender signature
-    return keys.mandatoryKeys.length + keys.optionalKeys.length + 1;
+const getNumbersOfSignaturesRequired = ({ keys, isRegisterMultisignature }) => {
+  if (isRegisterMultisignature) {
+    return keys.mandatoryKeys.length + keys.optionalKeys.length;
   }
   return keys.numberOfSignatures;
 };
 
-const getNonEmptySignatures = (signatures) =>
-  signatures.filter(signature => signature !== null && signature.length);
+const getNonEmptySignatures = (transaction, isRegisterMultisignature) => {
+  if (isRegisterMultisignature) {
+    return transaction.params.signatures.filter(signature => signature !== null && signature.length);
+  }
+  return transaction.signatures.filter(signature => signature !== null && signature.length);
+}
+
 
 export const findNonEmptySignatureIndices = (signatures) => {
   const indices = [];
@@ -26,24 +30,40 @@ export const findNonEmptySignatureIndices = (signatures) => {
   return indices;
 };
 
-// eslint-disable-next-line max-statements
+// eslint-disable-next-line max-statements, complexity
 export const getTransactionSignatureStatus = (senderAccount, transaction) => {
-  const moduleCommand = transaction.moduleCommand || joinModuleAndCommand(transaction);
-  const isGroupRegistration = moduleCommand
+  const moduleCommand = joinModuleAndCommand(transaction);
+  const isRegisterMultisignature = moduleCommand
     === MODULE_COMMANDS_NAME_MAP.registerMultisignature;
+
+  if (isRegisterMultisignature) {
+    const { params: { mandatoryKeys, optionalKeys } } = transaction;
+    const numberOfSignatures = mandatoryKeys.length + optionalKeys.length;
+    const paramsSignature = transaction.params.signatures.filter(
+      s => s !== Buffer.alloc(64).toString('hex')
+    );
+
+    if (paramsSignature.length !== numberOfSignatures) {
+      return signatureCollectionStatus.partiallySigned
+    }
+
+    if (paramsSignature.length === numberOfSignatures && transaction.signatures.length > 0) {
+      return signatureCollectionStatus.fullySigned
+    }
+  }
   const keys = getKeys({
-    senderAccount, transaction, isGroupRegistration,
+    senderAccount, transaction, isRegisterMultisignature,
   });
 
   const required = getNumbersOfSignaturesRequired({
-    keys, transaction, isGroupRegistration,
+    keys, transaction, isRegisterMultisignature,
   });
-
-  const alreadySigned = getNonEmptySignatures(transaction.signatures).length;
-  const registrationExtra = isGroupRegistration ? 1 : 0;
-  const mandatorySigs = keys.mandatoryKeys.length + registrationExtra;
+  const alreadySigned = getNonEmptySignatures(transaction, isRegisterMultisignature).length;
+  const registrationExtra = 0;
+  const mandatorySigs = keys.mandatoryKeys?.length + registrationExtra;
   const nonEmptyMandatorySigs = getNonEmptySignatures(
-    transaction.signatures.slice(0, mandatorySigs),
+    transaction,
+    isRegisterMultisignature
   ).length;
 
   if (required > alreadySigned) {
@@ -60,18 +80,18 @@ export const getTransactionSignatureStatus = (senderAccount, transaction) => {
 
 // eslint-disable-next-line max-statements
 export const showSignButton = (senderAccount, account, transaction) => {
-  const isGroupRegistration = transaction.moduleCommand
+  const isRegisterMultisignature = joinModuleAndCommand(transaction)
     === MODULE_COMMANDS_NAME_MAP.registerMultisignature;
 
   let mandatoryKeys = [];
   let optionalKeys = [];
 
-  if (isGroupRegistration) {
+  if (isRegisterMultisignature) {
     mandatoryKeys = transaction.params.mandatoryKeys;
     optionalKeys = transaction.params.optionalKeys;
   } else {
-    mandatoryKeys = senderAccount.keys.mandatoryKeys;
-    optionalKeys = senderAccount.keys.optionalKeys;
+    mandatoryKeys = senderAccount.keys?.mandatoryKeys || [];
+    optionalKeys = senderAccount.keys?.optionalKeys || [];
   }
 
   return mandatoryKeys.includes(account.summary.publicKey)
