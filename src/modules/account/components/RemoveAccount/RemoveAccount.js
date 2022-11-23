@@ -16,10 +16,8 @@ const RemoveAccount = ({ account, history }) => {
 
   const onRemoveAccount = () => {
     const removeAddress = account?.metadata?.address;
-    if (account?.metadata?.address) {
-      deleteAccountByAddress(removeAddress);
-      multiStepRef.current.next();
-    }
+    deleteAccountByAddress(removeAddress);
+    multiStepRef.current.next();
   };
 
   const onComplete = () => {
