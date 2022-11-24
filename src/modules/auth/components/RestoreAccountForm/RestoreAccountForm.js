@@ -27,7 +27,7 @@ const RestoreAccountForm = ({ onBack, nextStep }) => {
       setValue(json);
       setError(undefined);
     } else {
-      setError(t('Please upload a file with a ciphertext key'));
+      setError(t('You have uploaded an incorrect file'));
     }
   };
 
