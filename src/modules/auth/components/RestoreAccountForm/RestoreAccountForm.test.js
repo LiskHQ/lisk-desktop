@@ -27,14 +27,15 @@ describe('Restore account form component', () => {
   });
 
   it('should call onSubmit when onContinue is clicked', () => {
-    const JSONObject = {};
+    const JSONObject = { encryptedPassphrase: { ciphertext: 'text' } };
     const clipboardData = {
       getData: () => JSON.stringify(JSONObject),
     };
 
     wrapper.find('.tx-sign-input').first().simulate('paste', { clipboardData });
     wrapper.find('button').first().simulate('click');
-    expect(props.nextStep).toBeCalledWith(expect.objectContaining(JSONObject));
+    const toExpect = { encryptedAccount: { ...JSONObject } };
+    expect(props.nextStep).toBeCalledWith(expect.objectContaining(toExpect));
   });
 
   it('should display an error message if no file was uploaded', () => {

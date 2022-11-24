@@ -23,8 +23,12 @@ const RestoreAccountForm = ({ onBack, nextStep }) => {
   };
 
   const handleJsonInputChange = (json) => {
-    setValue(json);
-    setError(undefined);
+    if (json?.encryptedPassphrase?.ciphertext) {
+      setValue(json);
+      setError(undefined);
+    } else {
+      setError(t('Please upload a file with a ciphertext key'));
+    }
   };
 
   return (
