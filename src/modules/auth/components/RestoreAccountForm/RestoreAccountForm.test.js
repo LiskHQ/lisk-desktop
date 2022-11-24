@@ -41,4 +41,13 @@ describe('Restore account form component', () => {
     wrapper.find('button').first().simulate('click');
     expect(wrapper.findWhere((node) => node.text() === 'Upload file is required')).toBeTruthy();
   });
+
+  it('should show feedback error text when pasting invalid JSON', async () => {
+    const invalidJson = '{"result":true, "count":42';
+    const clipboardData = {
+      getData: () => invalidJson,
+    };
+    wrapper.find('.tx-sign-input').first().simulate('paste', { clipboardData });
+    expect(wrapper.find('.feedback').text()).toBeTruthy();
+  });
 });

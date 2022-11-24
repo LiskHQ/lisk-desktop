@@ -9,6 +9,7 @@ describe('Upload JSON input component', () => {
     value: null,
     error: '',
     onChange: jest.fn(),
+    onError: jest.fn(),
   };
 
   it('renders properly', () => {
@@ -52,6 +53,18 @@ describe('Upload JSON input component', () => {
 
     inputField.simulate('paste', { clipboardData });
     expect(props.onChange).toBeCalledWith(expect.objectContaining(JSONObject));
+  });
+
+  it('should call onError if pasting invalid json', async () => {
+    const wrapper = mount(<UploadJSONInput {...props} />);
+    const inputField = wrapper.find('.tx-sign-input').first();
+    const invalidJson = '{"result":true, "count":42';
+    const clipboardData = {
+      getData: () => invalidJson,
+    };
+
+    inputField.simulate('paste', { clipboardData });
+    expect(props.onError).toHaveBeenCalled();
   });
 
   it('should display the value if it is an initially fed', () => {
