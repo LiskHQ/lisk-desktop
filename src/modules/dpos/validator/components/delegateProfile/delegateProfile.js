@@ -2,9 +2,10 @@ import React, { useEffect, useMemo } from 'react';
 import grid from 'flexboxgrid/dist/flexboxgrid.css';
 import { useTranslation } from 'react-i18next';
 import { selectSearchParamValue } from 'src/utils/searchParams';
-import { useCurrentAccount } from 'src/modules/account/hooks';
-import WalletVisualWithAddress from 'src/modules/wallet/components/walletVisualWithAddress';
-import { useBlocks } from 'src/modules/block/hooks/queries/useBlocks';
+import { useCurrentAccount } from '@account/hooks';
+import WalletVisualWithAddress from '@wallet/components/walletVisualWithAddress';
+import { useBlocks } from '@block/hooks/queries/useBlocks';
+import { useLatestBlock } from '@block/hooks/queries/useLatestBlock';
 import Heading from 'src/modules/common/components/Heading';
 import { toast } from 'react-toastify';
 import FlashMessageHolder from 'src/theme/flashMessage/holder';
@@ -44,8 +45,7 @@ const DelegateProfile = ({ history }) => {
     config: { params: { generatorAddress: address } },
   });
 
-  const { data: blocks } = useBlocks({ config: { params: { limit: 1 } } });
-  const currentHeight = useMemo(() => blocks?.data?.[0]?.height, [blocks]);
+  const { data: { height: currentHeight } } = useLatestBlock();
   const isBanned = delegate.isBanned;
 
   useEffect(() => {
@@ -71,7 +71,7 @@ const DelegateProfile = ({ history }) => {
     } else {
       removeWarningMessage();
     }
-  }, [address, delegate, blocks]);
+  }, [address, delegate, currentHeight]);
 
   if (!delegate.address && !isLoadingDelegates) {
     toast.info("This user isn't a delegate");

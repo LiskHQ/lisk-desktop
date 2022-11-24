@@ -18,6 +18,7 @@ import { truncateAddress } from '@wallet/utils/account';
 import WalletVisual from '@wallet/components/walletVisual';
 import TransactionEvents from '@transaction/components/TransactionEvents';
 import { useBlocks } from '../../hooks/queries/useBlocks';
+import { useLatestBlock } from '../../hooks/queries/useLatestBlock';
 import styles from './blockDetails.css';
 
 const Generator = ({ generatorAddress, generatorUsername }) => {
@@ -119,8 +120,9 @@ const Rows = ({ data, t, currentHeight }) => {
 };
 
 const BlockDetails = ({
-  currentHeight, height, id,
+  height, id,
 }) => {
+  const { data: { height: currentHeight } } = useLatestBlock();
   const { t } = useTranslation();
   const { data: blocks, error, isLoading } = useBlocks({
     config: {

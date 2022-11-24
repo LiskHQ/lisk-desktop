@@ -6,8 +6,8 @@ import { Link } from 'react-router-dom';
 import {
   selectActiveToken,
   selectActiveTokenAccount,
-  selectCurrentBlockHeight,
 } from 'src/redux/selectors';
+import { useLatestBlock } from '@block/hooks/queries/useLatestBlock';
 import routes from 'src/routes/routes';
 import { SecondaryButton } from 'src/theme/buttons';
 import Box from 'src/theme/box';
@@ -51,7 +51,7 @@ const RecentTransactions = ({ className, t, transactions }) => {
   const account = useSelector(selectActiveTokenAccount);
   const [isLoaded, setLoaded] = useState(!!transactions.data.length);
   const token = useSelector(state => state.token);
-  const currentBlockHeight = useSelector(selectCurrentBlockHeight);
+  const { data: { height: currentBlockHeight } } = useLatestBlock();
   const activeToken = token.active;
   const host = account.summary?.address;
 

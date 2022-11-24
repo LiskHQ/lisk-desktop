@@ -1,7 +1,7 @@
 import { act } from 'react-dom/test-utils';
 import React from 'react';
 import { mount } from 'enzyme';
-import LoadLatestButton from './loadLatestButton';
+import LoadLatestButton from '.';
 
 describe('LoadLatestButton', () => {
   const props = {
