@@ -139,9 +139,23 @@ describe('TxSignatureCollector', () => {
     expect(props.actionFunction).toHaveBeenCalled();
   });
 
-  it('should not call action function automatically is not connected to HW', () => {
-    render(<TxSignatureCollector {...props} />);
-    expect(props.actionFunction).not.toHaveBeenCalled();
+  it('should not call action function automatically is not connected to HW', async () => {
+    const formProps = {
+      ...props,
+      transactionJSON: {
+        ...props.transactionJSON,
+        module: 'auth',
+        command: 'registerMultisignature',
+      }
+    }
+    render(<TxSignatureCollector {...formProps} />);
+    fireEvent.change(screen.getByPlaceholderText('Enter password'), {
+      target: { value: 'DeykUBjUn7uZHYv!' },
+    });
+    await waitFor(() => {
+      fireEvent.click(screen.getByText('Continue'));
+      expect(props.actionFunction).not.toHaveBeenCalled();
+    });
   });
 
   it('should call action function on continue button click', async () => {
@@ -177,5 +191,18 @@ describe('TxSignatureCollector', () => {
     };
     render(<TxSignatureCollector {...signedTransactionProps} />);
     expect(props.nextStep).toHaveBeenCalled();
+  });
+
+  it('should call transactionDoubleSigned', () => {
+    const signedTransactionProps = {
+      ...props,
+      transactions: {
+        ...props.transactions,
+        txSignatureError: null,
+        signedTransaction: { id: '123', signatures: ['', 'sig2'] },
+      },
+    };
+    render(<TxSignatureCollector {...signedTransactionProps} />);
+    expect(props.nextStep).not.toHaveBeenCalled();
   });
 });

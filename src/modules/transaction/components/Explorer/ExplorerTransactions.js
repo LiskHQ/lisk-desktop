@@ -36,7 +36,7 @@ const Transactions = ({ activeToken, address }) => {
   return (
     <Box main className={`${styles.wrapper} transactions-box`}>
       <BoxHeader>
-        <FilterDropdown filters={filters} applyFilters={(f) => applyFilters({ ...f, address })} />
+        <FilterDropdown filters={filters} applyFilters={applyFilters} />
       </BoxHeader>
       <FilterBar
         {...{
@@ -55,7 +55,7 @@ const Transactions = ({ activeToken, address }) => {
             label: t('New transactions'),
           }}
           queryHook={useTransactions}
-          queryConfig={{ config: { params } }}
+          queryConfig={{ config: { params: { ...params, address } } }}
           row={TransactionRow}
           additionalRowProps={{
             currentBlockHeight,

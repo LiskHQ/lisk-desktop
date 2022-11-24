@@ -15,7 +15,7 @@ import {
 import styles from './schemas.css';
 
 const hosted = [ID, Height, Type, Date, Fee, Status];
-const full = [ID, Sender, Height, Type, Date, Fee, Status];
+const full = [ID, Sender, Height, Type, Date, Status];
 const minimal = [Counterpart, Amount];
 const vote = [DelegateDetails, Date, Round, Params];
 
