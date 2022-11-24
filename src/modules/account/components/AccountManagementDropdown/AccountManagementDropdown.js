@@ -1,16 +1,12 @@
 import React from 'react';
-import { useTranslation } from 'react-i18next';
-import { Link } from 'react-router-dom';
 import DropdownButton from 'src/theme/DropdownButton';
 import { TertiaryButton } from 'src/theme/buttons';
 import Icon from 'src/theme/Icon';
-import DialogLink from 'src/theme/dialog/link';
-import { ACCOUNT_MENU } from '@account/const';
 import { truncateAddress } from '@wallet/utils/account';
+import AccountMenuListing from '@account/components/AccountMenuListing/AccountMenuListing';
 import styles from './AccountManagementDropdown.css';
 
 const AccountManagementDropdown = ({ currentAccount, onMenuClick }) => {
-  const { t } = useTranslation();
   const { name, address } = currentAccount.metadata;
 
   return (
@@ -31,23 +27,7 @@ const AccountManagementDropdown = ({ currentAccount, onMenuClick }) => {
       size="m"
       trackDropdownState={onMenuClick}
     >
-      <ul className={styles.dropDownMenuList}>
-        {ACCOUNT_MENU.map(({ path, icon, label, component }) => (
-          <li key={label}>
-            {component ? (
-              <DialogLink component={component}>
-                <Icon name={icon} />
-                {t(label)}
-              </DialogLink>
-            ) : (
-              <Link to={path}>
-                <Icon name={icon} />
-                {t(label)}
-              </Link>
-            )}
-          </li>
-        ))}
-      </ul>
+      <AccountMenuListing className={styles.dropDownMenuList} />
     </DropdownButton>
   );
 };

@@ -39,7 +39,6 @@ import AddAccountForm from '@account/components/AddAccountForm';
 import SwitchAccount from '@account/components/SwitchAccount';
 import EditAccount from '@account/components/EditAccount';
 import BackupRecoveryPhraseFlow from '@account/components/BackupRecoveryPhraseFlow';
-import RemoveCurrentAccountFlow from '@account/components/RemoveCurrentAccountFlow';
 import RemoveSelectedAccountFlow from '@account/components/RemoveSelectedAccountFlow';
 import BlockchainApplications from '@blockchainApplication/explore/components/BlockchainApplications/BlockchainApplications';
 import BlockchainApplicationDetails from '@blockchainApplication/explore/components/BlockchainApplicationDetails';
@@ -101,7 +100,6 @@ export default {
   switchAccount: SwitchAccount,
   selectNode: SelectNode,
   backupRecoveryPhraseFlow: BackupRecoveryPhraseFlow,
-  removeCurrentAccountFlow: RemoveCurrentAccountFlow,
   removeSelectedAccount: RemoveSelectedAccountFlow,
   addAccountByFile: AddAccountByFile,
   blockchainApplications: BlockchainApplications,

@@ -53,7 +53,6 @@ const CustomRoute = ({ path, exact, isPrivate, forbiddenTokens, component, t, hi
     history.location.pathname !== routes.addAccountOptions.path &&
     history.location.pathname !== routes.addAccountByFile.path &&
     history.location.pathname !== routes.addAccountBySecretRecovery.path &&
-    history.location.pathname !== routes.removeSelectedAccount.path &&
     isAuthenticated
   ) {
     return <Redirect to={`${routes.reclaim.path}`} />;

@@ -58,10 +58,9 @@
   & > li {
     @mixin contentLargest;
 
-    padding: 10px 16px;
-
     & > a {
       display: flex;
+      padding: 10px 16px;
       color: var(--color-periwinkle-blue);
       font-weight: var(--font-weight-normal);
       font-size: 14px;
@@ -74,6 +73,7 @@
 
     & > div {
       display: flex;
+      padding: 10px 16px;
       color: var(--color-periwinkle-blue);
       font-weight: var(--font-weight-normal);
 
