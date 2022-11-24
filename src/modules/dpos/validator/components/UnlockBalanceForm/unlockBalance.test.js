@@ -49,7 +49,6 @@ describe('Unlock LSK modal', () => {
     nextStep,
   };
 
-  const currentBlockHeight = 5000;
   const initVotes = [
     { amount: '500000000000', delegateAddress: 'lskdwsyfmcko6mcd357446yatromr9vzgu7eb8y11' },
     { amount: '3000000000', delegateAddress: 'lskdwsyfmcko6mcd357446yatromr9vzgu7eb8y13' },
@@ -91,9 +90,6 @@ describe('Unlock LSK modal', () => {
     token: {
       active: tokenMap.LSK.key,
       list: { LSK: true },
-    },
-    blocks: {
-      latestBlocks: [{ height: currentBlockHeight }],
     },
     network: {
       name: networks.customNode.name,

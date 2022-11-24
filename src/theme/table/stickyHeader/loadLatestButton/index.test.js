@@ -8,9 +8,6 @@ describe('LoadLatestButton', () => {
     onClick: jest.fn(),
     entity: 'block',
     children: 'Test load button',
-    latestBlocks: [
-      { height: 11111111 },
-    ],
   };
 
   it('renders accept transaction and block for entity and render empty by default', () => {
@@ -26,11 +23,6 @@ describe('LoadLatestButton', () => {
   it('shows button when there is a new block', () => {
     const wrapper = mount(<LoadLatestButton {...props} />);
     expect(wrapper).toBeEmptyRender();
-    wrapper.setProps({
-      latestBlocks: [
-        { height: 11111114 },
-      ],
-    });
     act(() => {
       wrapper.update();
     });

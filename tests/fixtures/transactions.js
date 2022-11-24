@@ -240,11 +240,6 @@ const getState = () => ({
       LSK: true,
     },
   },
-  blocks: {
-    latestBlocks: [{
-      timestamp: 123123123,
-    }],
-  },
 });
 
 const transformedAccountTransaction = {
