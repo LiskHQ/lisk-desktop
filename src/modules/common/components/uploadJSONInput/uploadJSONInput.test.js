@@ -88,4 +88,22 @@ describe('Upload JSON input component', () => {
     expect(inputNode.files[0].name).toBe(fileName);
     expect(inputNode.files.length).toBe(1);
   });
+
+  it('should call onError if the uploaded file contains invalid json', async () => {
+    jest.spyOn(global, 'FileReader').mockImplementation(function () {
+      this.readAsText = jest.fn();
+    });
+
+    render(<UploadJSONInput {...props} />);
+
+    const invalidJson = '{"result":true, "count":42';
+    const file = new File([invalidJson], 'file.json', { type: 'test/json' });
+    const inputNode = screen.getByRole('button');
+    fireEvent.change(inputNode, { target: { files: [file] } });
+
+    const reader = FileReader.mock.instances[0];
+    reader.onload({ target: { result: invalidJson } });
+
+    expect(props.onError).toHaveBeenCalled();
+  });
 });
