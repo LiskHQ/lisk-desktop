@@ -24,7 +24,7 @@ describe('Remove account', () => {
 
   beforeEach(() => {
     props = {
-      address: mockSavedAccounts[0].metadata.address,
+      account: mockSavedAccounts[0],
       history: {
         push: jest.fn(),
       },
