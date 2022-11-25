@@ -111,26 +111,31 @@ describe('Unlock LSK modal', () => {
     },
   };
   const transactionJSON = {
-    fee: 10000000,
     module: 'dpos',
     command: 'unlock',
     nonce: '178',
+    fee: 10000000,
+    senderPublicKey: '0fe9a3f1a21b5530f27f87a414b549e79a940bf24fdf2b2f05e7f22aeeecc86a',
     params: {
       unlockObjects: [
         {
-          amount: '3000000000',
           delegateAddress: 'lskdwsyfmcko6mcd357446yatromr9vzgu7eb8y11',
+          amount: '1000000000',
+          unvoteHeight: 4900,
+        },
+        {
+          delegateAddress: 'lskdwsyfmcko6mcd357446yatromr9vzgu7eb8y11',
+          amount: '3000000000',
           unvoteHeight: 100,
         },
         {
-          amount: '1000000000',
           delegateAddress: 'lskdwsyfmcko6mcd357446yatromr9vzgu7eb8y13',
+          amount: '1000000000',
           unvoteHeight: 3000,
         },
       ],
     },
     signatures: [],
-    senderPublicKey: wallets.genesis.summary.publicKey,
   };
 
   beforeEach(() => {
@@ -164,33 +169,7 @@ describe('Unlock LSK modal', () => {
     });
     await flushPromises();
     expect(props.nextStep).toBeCalledWith({
-      transactionJSON: {
-        module: 'dpos',
-        command: 'unlock',
-        nonce: '178',
-        fee: 10000000,
-        senderPublicKey: '0fe9a3f1a21b5530f27f87a414b549e79a940bf24fdf2b2f05e7f22aeeecc86a',
-        params: {
-          unlockObjects: [
-            {
-              delegateAddress: 'lskdwsyfmcko6mcd357446yatromr9vzgu7eb8y11',
-              amount: '1000000000',
-              unvoteHeight: 4900,
-            },
-            {
-              delegateAddress: 'lskdwsyfmcko6mcd357446yatromr9vzgu7eb8y11',
-              amount: '3000000000',
-              unvoteHeight: 100,
-            },
-            {
-              delegateAddress: 'lskdwsyfmcko6mcd357446yatromr9vzgu7eb8y13',
-              amount: '1000000000',
-              unvoteHeight: 3000,
-            },
-          ],
-        },
-        signatures: [],
-      },
+      transactionJSON,
       formProps: {
         composedFees: {
           Transaction: '0.1 LSK',
@@ -208,33 +187,7 @@ describe('Unlock LSK modal', () => {
     wrapper.find('.confirm-btn button').simulate('click');
     expect(props.nextStep).toBeCalledWith(
       expect.objectContaining({
-        transactionJSON: {
-          module: 'dpos',
-          command: 'unlock',
-          nonce: '178',
-          fee: 10000000,
-          senderPublicKey: '0fe9a3f1a21b5530f27f87a414b549e79a940bf24fdf2b2f05e7f22aeeecc86a',
-          params: {
-            unlockObjects: [
-              {
-                delegateAddress: 'lskdwsyfmcko6mcd357446yatromr9vzgu7eb8y11',
-                amount: '1000000000',
-                unvoteHeight: 4900,
-              },
-              {
-                delegateAddress: 'lskdwsyfmcko6mcd357446yatromr9vzgu7eb8y11',
-                amount: '3000000000',
-                unvoteHeight: 100,
-              },
-              {
-                delegateAddress: 'lskdwsyfmcko6mcd357446yatromr9vzgu7eb8y13',
-                amount: '1000000000',
-                unvoteHeight: 3000,
-              },
-            ],
-          },
-          signatures: [],
-        },
+        transactionJSON,
         formProps: {
           composedFees: {
             Transaction: '0.1 LSK',
