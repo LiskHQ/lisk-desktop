@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 import PropTypes from 'prop-types';
 
 import { useLatestBlock } from '@block/hooks/queries/useLatestBlock';
@@ -22,15 +22,14 @@ const LoadLatestButton = ({
   entity,
 }) => {
   const { data: currentBlock } = useLatestBlock();
-  const [updateHeight, setUpdateHeight] = useState(currentBlock.height.height);
-
+  const [updateHeight, setUpdateHeight] = React.useState(currentBlock.height);
   const handleClick = () => {
     setUpdateHeight(currentBlock.height);
     onClick();
   };
-
+  
   return shouldShow[entity]
-    && shouldShow[entity](updateHeight, currentBlock.height) ? (
+    && shouldShow[entity](updateHeight, currentBlock) ? (
       <PrimaryButton
         onClick={handleClick}
         className={`${styles.button} ${buttonClassName || ''} load-latest`}
