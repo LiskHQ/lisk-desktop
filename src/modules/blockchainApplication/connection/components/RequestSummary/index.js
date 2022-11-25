@@ -139,7 +139,6 @@ const RequestSummary = ({ nextStep }) => {
               account={{ metadata: { name: senderAccount?.name, address: senderAccount?.address } }}
               truncate
               onSelect={() => {}}
-              showRemove={false}
             />
           </ValueAndLabel>
         </div>

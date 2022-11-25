@@ -66,11 +66,6 @@ export default {
     isPrivate: true,
     forbiddenTokens: [],
   },
-  removeSelectedAccount: {
-    path: '/account/remove-account',
-    isPrivate: false,
-    forbiddenTokens: [],
-  },
   manageAccounts: {
     path: '/',
     isPrivate: false,
@@ -236,8 +231,8 @@ export const modals = {
     isPrivate: false,
     forbiddenTokens: [],
   },
-  removeCurrentAccountFlow: {
-    isPrivate: true,
+  removeSelectedAccount: {
+    isPrivate: false,
     forbiddenTokens: [],
   },
   blockChainApplicationDetails: {

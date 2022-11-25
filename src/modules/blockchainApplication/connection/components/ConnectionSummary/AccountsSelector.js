@@ -59,7 +59,6 @@ const AccountsSelector = ({ setAddresses, addresses }) => {
                 account={account}
                 truncate
                 onSelect={() => {}}
-                showRemove={false}
               />
             </label>
           ))
