@@ -9,7 +9,7 @@ import { mockBlocks } from '@block/__fixtures__';
 import { useAuth } from '@auth/hooks/queries';
 import { useTokensBalance } from '@token/fungible/hooks/queries';
 import { mockDelegates, mockSentVotes } from '@dpos/validator/__fixtures__';
-import { useBlocks } from 'src/modules/block/hooks/queries/useBlocks';
+import { useLatestBlock } from 'src/modules/block/hooks/queries/useLatestBlock';
 import { mockTokensBalance } from 'src/modules/token/fungible/__fixtures__';
 import { mockAuth } from 'src/modules/auth/__fixtures__';
 import EditVote from './index';
@@ -28,7 +28,7 @@ jest.mock('@transaction/hooks/queries/useSchemas', () => ({
   useSchemas: jest.fn(),
 }));
 
-jest.mock('@block/hooks/queries/useBlocks');
+jest.mock('@block/hooks/queries/useLatestBlock');
 jest.mock('../../hooks/queries');
 jest.mock('@token/fungible/hooks/queries');
 jest.mock('@auth/hooks/queries');
@@ -48,7 +48,7 @@ describe('EditVote', () => {
     jest.clearAllMocks();
 
     useDelegates.mockReturnValue({ data: mockDelegates });
-    useBlocks.mockReturnValue({ data: mockBlocks });
+    useLatestBlock.mockReturnValue({ data: mockBlocks });
     useSentVotes.mockReturnValue({ data: mockSentVotes });
     useAuth.mockReturnValue({ data: mockAuth });
     useDposConstants.mockReturnValue({ data: mockDposConstants });

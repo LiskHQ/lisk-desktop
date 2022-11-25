@@ -6,7 +6,8 @@ import { renderWithRouter } from 'src/utils/testHelpers';
 import mockSavedAccounts from '@tests/fixtures/accounts';
 import { mockBlocks } from '@block/__fixtures__';
 import { mockDelegates, mockReceivedVotes, mockSentVotes } from '@dpos/validator/__fixtures__';
-import { useBlocks } from 'src/modules/block/hooks/queries/useBlocks';
+import { useBlocks } from '@block/hooks/queries/useBlocks';
+import { useLatestBlock } from '@block/hooks/queries/useLatestBlock';
 import { fromRawLsk } from 'src/modules/token/fungible/utils/lsk';
 import DelegateProfile from './delegateProfile';
 import { useDelegates, useReceivedVotes, useSentVotes } from '../../hooks/queries';
@@ -17,6 +18,7 @@ jest.mock('@account/hooks', () => ({
 }));
 
 jest.mock('@block/hooks/queries/useBlocks');
+jest.mock('@block/hooks/queries/useLatestBlock');
 jest.mock('../../hooks/queries');
 
 describe('Delegate Profile', () => {
@@ -35,6 +37,7 @@ describe('Delegate Profile', () => {
 
   useDelegates.mockReturnValue({ data: mockDelegates });
   useBlocks.mockReturnValue({ data: mockBlocks });
+  useLatestBlock.mockReturnValue({ data: mockBlocks.data[0] });
   useSentVotes.mockReturnValue({ data: mockSentVotes });
   useReceivedVotes.mockReturnValue({ data: mockReceivedVotes });
 
