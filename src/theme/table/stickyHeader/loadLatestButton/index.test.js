@@ -1,7 +1,11 @@
 import { act } from 'react-dom/test-utils';
 import React from 'react';
 import { mount } from 'enzyme';
+import { mockBlocks } from '@block/__fixtures__';
+import { useLatestBlock } from '@block/hooks/queries/useLatestBlock';
 import LoadLatestButton from '.';
+
+jest.mock('@block/hooks/queries/useLatestBlock');
 
 describe('LoadLatestButton', () => {
   const props = {
@@ -9,6 +13,8 @@ describe('LoadLatestButton', () => {
     entity: 'block',
     children: 'Test load button',
   };
+
+  useLatestBlock.mockReturnValue({ data: mockBlocks.data[0] });
 
   it('renders accept transaction and block for entity and render empty by default', () => {
     const blockProps = { ...props, entity: 'block' };
