@@ -1,5 +1,6 @@
 import React from 'react';
 import { mount } from 'enzyme';
+import { act } from 'react-dom/test-utils';
 import RestoreAccountForm from '.';
 
 describe('Restore account form component', () => {
@@ -49,6 +50,22 @@ describe('Restore account form component', () => {
       getData: () => invalidJson,
     };
     wrapper.find('.tx-sign-input').first().simulate('paste', { clipboardData });
+    expect(wrapper.find('.feedback').text()).toBeTruthy();
+  });
+
+  it('should show feedback erro text when uploading incorrect JSON file', async () => {
+    jest.spyOn(global, 'FileReader').mockImplementation(function () {
+      this.readAsText = jest.fn();
+    });
+    const inputField = wrapper.find('UploadJSONInput').find('[role="button"]');
+    const invalidJson = '{"encryptedPassphrase": {"notCipher": "something"}}';
+    const file = new File([invalidJson], 'file.json', { type: 'test/json' });
+
+    act(() => {
+      inputField.simulate('change', { target: { files: [file] } });
+      const reader = FileReader.mock.instances[0];
+      reader.onload({ target: { result: invalidJson } });
+    });
     expect(wrapper.find('.feedback').text()).toBeTruthy();
   });
 });
