@@ -40,5 +40,9 @@
     border: none;
     background-color: transparent;
     width: 40px;
+
+    &:hover {
+      cursor: pointer;
+    }
   }
 }

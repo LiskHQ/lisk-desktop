@@ -6,9 +6,9 @@ import actionTypes from './actionTypes';
 /**
  *
  * @param {Object} state
- * @param {type: String, encryptedAccount: Object, accountDetail: String} action
+ * @param {type: String, encryptedAccount: Object, accountDetail: String, address: String} action
  */
-export const current = (state = {}, { type, encryptedAccount, accountDetail }) => {
+export const current = (state = {}, { type, encryptedAccount, accountDetail, address }) => {
   switch (type) {
     case actionTypes.setCurrentAccount:
       return encryptedAccount;
@@ -20,6 +20,11 @@ export const current = (state = {}, { type, encryptedAccount, accountDetail }) =
           ...accountDetail,
         },
       };
+    case actionTypes.deleteAccount: {
+      const isCurrentAccount = state.metadata?.address === address;
+
+      return isCurrentAccount ? {} : state;
+    }
     default:
       return state;
   }
@@ -54,11 +59,10 @@ export const list = (state = {}, { type, encryptedAccount, accountDetail, addres
           },
         },
       };
-    case actionTypes.deleteAccount:
-      delete state[address];
-      return {
-        ...state,
-      };
+    case actionTypes.deleteAccount: {
+      const { [address]: toRemove, ...updatedState } = state;
+      return updatedState;
+    }
     default:
       return state;
   }

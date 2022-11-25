@@ -52,7 +52,7 @@ describe('Auth reducer', () => {
   it('Should return default state if updateAccount action type is triggered with invalid address', async () => {
     const actionData = {
       type: actionTypes.updateAccount,
-      encryptedAccount: mockSavedAccounts[1],
+      encryptedAccount: mockSavedAccounts[2],
       accountDetail: { name: 'testName' },
     };
     const defaultState = mockSavedAccounts[0];
@@ -68,5 +68,18 @@ describe('Auth reducer', () => {
       [mockSavedAccounts[0].metadata.address]: mockSavedAccounts[0],
     };
     expect(list(defaultState, actionData)).toEqual({});
+    expect(current(mockSavedAccounts[0], actionData)).toEqual({});
+  });
+
+  it('Should not remove current account when deleting not current account', async () => {
+    const actionData = {
+      type: actionTypes.deleteAccount,
+      address: mockSavedAccounts[1].metadata.address,
+    };
+    const defaultState = {
+      [mockSavedAccounts[1].metadata.address]: mockSavedAccounts[1],
+    };
+    expect(list(defaultState, actionData)).toEqual({});
+    expect(current(mockSavedAccounts[0], actionData)).toEqual(mockSavedAccounts[0]);
   });
 });

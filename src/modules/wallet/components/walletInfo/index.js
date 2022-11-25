@@ -1,13 +1,11 @@
 import React, { useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import { Link } from 'react-router-dom';
-import DialogLink from 'src/theme/dialog/link';
 import Box from 'src/theme/box';
 import BoxContent from 'src/theme/box/content';
 import Icon from 'src/theme/Icon';
 import DropdownButton from 'src/theme/DropdownButton';
-import { ACCOUNT_MENU } from '@account/const';
 import { TertiaryButton } from 'src/theme/buttons';
+import AccountMenuListing from '@account/components/AccountMenuListing/AccountMenuListing';
 import styles from './walletInfo.css';
 import WalletVisual from '../walletVisual';
 import Identity from './identity';
@@ -39,33 +37,11 @@ const WalletInfo = ({
             buttonLabel={<Icon className="button-icon" name="verticalDots" />}
             size="m"
           >
-            <ul className={styles.dropDownMenuList}>
-              {ACCOUNT_MENU.map(({
-                path, icon, label, component,
-              }) => (
-                <li key={label}>
-                  {component ? (
-                    <DialogLink component={component}>
-                      <Icon name={icon} />
-                      {t(label)}
-                    </DialogLink>
-                  ) : (
-                    <Link to={path}>
-                      <Icon name={icon} />
-                      {t(label)}
-                    </Link>
-                  )}
-                </li>
-              ))}
-            </ul>
+            <AccountMenuListing className={styles.dropDownMenuList} />
           </DropdownButton>
         </div>
 
-        <div
-          className={`${styles.info} ${
-            showFullAddress ? styles.showFullAddress : ''
-          }`}
-        >
+        <div className={`${styles.info} ${showFullAddress ? styles.showFullAddress : ''}`}>
           <WalletVisual address={address} size={40} />
           {address ? (
             <Identity
