@@ -1,6 +1,6 @@
 /* istanbul ignore file */
 import { TOKENS_SUPPORTED } from 'src/const/queries';
-import { LIMIT as limit, API_VERSION } from 'src/const/config';
+import { API_VERSION } from 'src/const/config';
 import { useCustomInfiniteQuery } from 'src/modules/common/hooks';
 import defaultClient from 'src/utils/api/client';
 
@@ -23,7 +23,7 @@ export const useTokensSupported = ({
     method: 'get',
     ...customConfig,
     event: 'get.tokens.supported',
-    params: { limit, ...(customConfig?.params || {}) },
+    params: { ...(customConfig?.params || {}) },
   };
 
   return useCustomInfiniteQuery({
