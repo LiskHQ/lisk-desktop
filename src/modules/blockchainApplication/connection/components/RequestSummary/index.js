@@ -8,8 +8,8 @@ import { extractAddressFromPublicKey } from '@wallet/utils/account';
 import { rejectLiskRequest } from '@libs/wcm/utils/requestHandlers';
 import { SIGNING_METHODS } from '@libs/wcm/constants/permissions';
 import { EVENTS } from '@libs/wcm/constants/lifeCycle';
-import { elementTxToDesktopTx } from '@transaction/utils/transaction';
-import { decodeTransaction } from '@transaction/utils/encoding';
+// import { elementTxToDesktopTx } from '@transaction/utils/transaction';
+import { decodeTransaction, toTransactionJSON } from '@transaction/utils/encoding';
 import { fromRawLsk } from '@token/fungible/utils/lsk';
 import { joinModuleAndCommand } from '@transaction/utils/moduleCommand';
 import { Link } from 'react-router-dom';
@@ -48,7 +48,8 @@ const RequestSummary = ({ nextStep }) => {
       moduleID: transaction.module,
       commandID: transaction.command,
     });
-    const rawTx = elementTxToDesktopTx(transaction, moduleCommand);
+    const rawTx = toTransactionJSON(transaction, moduleCommand);
+    // const rawTx = elementTxToDesktopTx(transaction, moduleCommand);
     nextStep({
       rawTx: {
         ...rawTx,
