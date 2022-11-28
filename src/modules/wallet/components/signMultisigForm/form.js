@@ -1,5 +1,5 @@
 /* eslint-disable complexity */
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import { fromTransactionJSON, toTransactionJSON } from '@transaction/utils/encoding';
 import { joinModuleAndCommand } from '@transaction/utils/moduleCommand';
 import { useCommandSchema } from '@network/hooks';
@@ -13,8 +13,6 @@ import { useSchemas } from '@transaction/hooks/queries/useSchemas';
 import { validateTransaction } from '@liskhq/lisk-transactions';
 import ProgressBar from '../signMultisigView/progressBar';
 import styles from './styles.css';
-
-const reader = new FileReader();
 
 const getParamsSchema = (transaction, schemas) => {
   const moduleCommand = joinModuleAndCommand({
@@ -36,6 +34,7 @@ const getTransactionObject = (transaction, moduleCommandSchemas) => {
   };
 };
 
+// eslint-disable-next-line max-statements
 const Form = ({ t, nextStep }) => {
   const [transaction, setTransaction] = useState();
   const [transactionObject, setTransactionObject] = useState();
@@ -72,11 +71,9 @@ const Form = ({ t, nextStep }) => {
     }
   };
 
-  useEffect(() => {
-    reader.onload = ({ target }) => {
-      validateAndSetTransaction(target.result);
-    };
-  }, []);
+  const handleJsonInputError = (inputError) => {
+    setError(inputError.message);
+  };
 
   return (
     <section>
@@ -95,6 +92,7 @@ const Form = ({ t, nextStep }) => {
             onChange={validateAndSetTransaction}
             value={transaction}
             error={error}
+            onError={handleJsonInputError}
           />
         </BoxContent>
         <BoxFooter className={styles.footer}>

@@ -32,6 +32,10 @@
     color: var(--color-ultramarine-blue);
   }
 
+  & .mgr30 {
+    margin-right: 46px;
+  }
+
   &.l {
     & .input {
       @mixin contentLargest;
