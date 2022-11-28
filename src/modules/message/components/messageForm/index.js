@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-
+import { useTranslation } from 'react-i18next';
 import { parseSearchParams } from 'src/utils/searchParams';
 import Piwik from 'src/utils/piwik';
 import { AutoResizeTextarea } from 'src/theme';
@@ -9,12 +9,14 @@ import Tooltip from 'src/theme/Tooltip';
 import BoxContent from 'src/theme/box/content';
 import BoxFooter from 'src/theme/box/footer';
 import BoxInfoText from 'src/theme/box/infoText';
+import { useCurrentApplication } from '@blockchainApplication/manage/hooks';
 import styles from './messageForm.css';
 
-const Form = ({
-  nextStep, t, history, onNext, prevState,
-}) => {
+const Form = ({ nextStep, history, onNext, prevState, signMessage }) => {
   const [message, setMessage] = useState(prevState?.message || '');
+  const [{ chainID = "04000000"  }] = useCurrentApplication();
+  const { t } = useTranslation();
+
   useEffect(() => {
     const params = parseSearchParams(history.location.search);
     if (typeof params.message === 'string' && params.message.length) {
@@ -28,9 +30,14 @@ const Form = ({
 
   const onClick = () => {
     Piwik.trackingEvent('SignMessageInput', 'button', 'Next step');
-    nextStep({ message });
+    nextStep({
+      message,
+      actionFunction: (formProps, _, privateKey, publicKey) =>
+        signMessage({ message, nextStep, prevState, privateKey, publicKey, chainID  }),
+    });
     onNext?.();
   };
+
   return (
     <Box>
       <BoxContent className={styles.noPadding}>
@@ -39,7 +46,7 @@ const Form = ({
           <Tooltip className={styles.tooltip} position="bottom">
             <p>
               {t(
-                'To verify the integrity of a signed message use the "Verify message" tool in the sidebar.',
+                'To verify the integrity of a signed message use the "Verify message" tool in the sidebar.'
               )}
             </p>
           </Tooltip>
