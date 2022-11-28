@@ -30,7 +30,7 @@ const EnterPasswordForm = ({ onEnterPasswordSuccess, title, encryptedAccount, is
   const activeAccount = useSelector(selectActiveTokenAccount);
   const { getAccountByAddress } = useAccounts();
   const [currentAccount] = useCurrentAccount();
-  const requestedAccount = getAccountByAddress(activeAccount.summary.address);
+  const requestedAccount = getAccountByAddress(activeAccount.summary?.address);
   const account = useMemo(
     () => encryptedAccount || requestedAccount || currentAccount,
     [currentAccount]
