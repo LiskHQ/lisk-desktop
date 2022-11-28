@@ -1,8 +1,7 @@
 import { LATEST_BLOCKS } from 'src/const/queries';
-import {
-  API_VERSION,
-} from 'src/const/config';
+import { API_VERSION } from 'src/const/config';
 import { useCustomQuery } from 'src/modules/common/hooks';
+import { useBlocks } from './useBlocks';
 
 /**
  * Creates a custom hook to get the latest block
@@ -11,20 +10,11 @@ import { useCustomQuery } from 'src/modules/common/hooks';
  */
 // eslint-disable-next-line import/prefer-default-export
 export const useLatestBlock = () => {
-  const config = {
-    url: `/api/${API_VERSION}/blocks`,
-    method: 'get',
-    event: 'get.blocks',
-    params: {
-      limit: 1,
-    },
-  };
-  const response = useCustomQuery({
-    keys: [LATEST_BLOCKS],
-    config,
+  const response = useBlocks({
+    params: { limit: 1 },
     options: {
       staleTime: 1000,
-    }
+    },
   });
 
   return {
@@ -32,4 +22,3 @@ export const useLatestBlock = () => {
     data: response.data?.data[0] ?? { height: 0, timestamp: 0 },
   };
 };
-

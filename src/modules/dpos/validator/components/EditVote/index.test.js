@@ -48,7 +48,7 @@ describe('EditVote', () => {
     jest.clearAllMocks();
 
     useDelegates.mockReturnValue({ data: mockDelegates });
-    useLatestBlock.mockReturnValue({ data: mockBlocks });
+    useLatestBlock.mockReturnValue({ data: mockBlocks.data[0] });
     useSentVotes.mockReturnValue({ data: mockSentVotes });
     useAuth.mockReturnValue({ data: mockAuth });
     useDposConstants.mockReturnValue({ data: mockDposConstants });

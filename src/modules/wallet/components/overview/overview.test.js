@@ -3,7 +3,6 @@ import { MemoryRouter } from 'react-router';
 import { render, screen } from '@testing-library/react';
 import mockSavedAccounts from '@tests/fixtures/accounts';
 import { useTokensBalance } from '@token/fungible/hooks/queries';
-import { useBlocks } from '@block/hooks/queries/useBlocks';
 import { useDelegates } from '@dpos/validator/hooks/queries';
 import { useAuth } from '@auth/hooks/queries';
 import { fromRawLsk } from '@token/fungible/utils/lsk';
@@ -24,7 +23,6 @@ jest.mock('@account/hooks', () => ({
 
 jest.mock('@token/fungible/hooks/queries');
 jest.mock('@account/hooks');
-jest.mock('@block/hooks/queries/useBlocks');
 jest.mock('@dpos/validator/hooks/queries');
 jest.mock('@auth/hooks/queries');
 jest.mock('@block/hooks/queries/useLatestBlock');
@@ -44,7 +42,6 @@ describe('Overview', () => {
     });
     useAuth.mockReturnValue({ data: mockAuth });
     useDelegates.mockReturnValue({ data: mockDelegates });
-    useBlocks.mockReturnValue({ data: mockBlocks });
     useLatestBlock.mockReturnValue({ data: mockBlocks.data[0] });
 
     render(

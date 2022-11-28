@@ -3,9 +3,7 @@ import { useSelector } from 'react-redux';
 import { cryptography } from '@liskhq/lisk-client';
 import accounts from '@tests/constants/wallets';
 import { mockBlocks } from '@block/__fixtures__';
-
 import { useLatestBlock } from '@block/hooks/queries/useLatestBlock';
-
 import { mountWithProps, mountWithRouter, mountWithRouterAndStore } from 'src/utils/testHelpers';
 import RecentTransactions, { NoTransactions, NotSignedIn } from './RecentTransactions';
 
