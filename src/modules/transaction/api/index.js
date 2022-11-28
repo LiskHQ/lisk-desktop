@@ -217,7 +217,6 @@ export const getTransactionFee = async ({
 
   // Call API to get network specific base fees
   const baseFees = [];
-  // get min fee from endpoint
   const minFee = transactions.computeMinFee(
     {
       ...transactionObject,
