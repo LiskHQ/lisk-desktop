@@ -1,28 +1,40 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import { useTranslation } from 'react-i18next';
 import Feedback from 'src/theme/feedback/feedback';
 import styles from './uploadJSONInput.css';
 
-const reader = new FileReader();
-
 const UploadJSONInput = ({
   value,
   onChange,
+  onError,
   error,
-  label, prefixLabel,
+  label,
+  prefixLabel,
   placeholderText,
 }) => {
-  const onInputChange = ({ target }) => reader.readAsText(target.files[0]);
-  const onPaste = (event) =>
-    onChange(JSON.parse(event.clipboardData.getData('text')));
-
   const { t } = useTranslation();
 
-  useEffect(() => {
-    reader.onload = ({ target }) => {
-      onChange(JSON.parse(target.result));
+  const onParse = (text) => {
+    try {
+      onChange(JSON.parse(text));
+    } catch (e) {
+      onError(e);
+    }
+  };
+
+  const onInputChange = ({ target }) => {
+    const file = target.files[0];
+
+    const reader = new FileReader();
+    reader.onload = (event) => {
+      onParse(event.target.result);
     };
-  }, [onChange]);
+    reader.readAsText(file);
+  };
+
+  const onPaste = (event) => {
+    onParse(event.clipboardData.getData('text'));
+  };
 
   return (
     <div>
@@ -66,6 +78,7 @@ UploadJSONInput.defaultProps = {
   value: null,
   error: '',
   onChange: () => null,
+  onError: () => null,
 };
 
 export default UploadJSONInput;
