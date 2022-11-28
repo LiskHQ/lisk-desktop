@@ -1,6 +1,3 @@
-import { LATEST_BLOCKS } from 'src/const/queries';
-import { API_VERSION } from 'src/const/config';
-import { useCustomQuery } from 'src/modules/common/hooks';
 import { useBlocks } from './useBlocks';
 
 /**
