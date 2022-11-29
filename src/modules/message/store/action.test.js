@@ -29,7 +29,7 @@ describe('balanceReclaimed', () => {
   it('should dispatch transactionCreatedSuccess', async () => {
     signMessageWithPrivateKey.mockReturnValue(defaultPrintedMessage);
 
-    await signMessage({ nextStep, privateKey, message })(dispatch, getState);
+    await signMessage({ nextStep, privateKey, message })();
 
     expect(signMessageWithPrivateKey).toHaveBeenCalledWith({
       message,
