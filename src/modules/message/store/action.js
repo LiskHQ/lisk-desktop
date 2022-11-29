@@ -1,14 +1,12 @@
-import { signUsingPrivateKey } from 'src/modules/wallet/utils/signMessage';
+import { signMessageWithPrivateKey } from '../utils/signMessageWithPrivateKey';
 
 export const signMessage =
-  ({ nextStep, message, publicKey, privateKey, chainID }) =>
+  ({ nextStep, message, privateKey }) =>
   async () => {
-    nextStep({
-      signature: signUsingPrivateKey({
-        message,
-        chainID,
-        account: { summary: { publicKey, privateKey } },
-      }),
+    const signature = signMessageWithPrivateKey({
       message,
+      privateKey,
     });
+
+    nextStep({ signature, message });
   };

@@ -9,12 +9,10 @@ import Tooltip from 'src/theme/Tooltip';
 import BoxContent from 'src/theme/box/content';
 import BoxFooter from 'src/theme/box/footer';
 import BoxInfoText from 'src/theme/box/infoText';
-import { useCurrentApplication } from '@blockchainApplication/manage/hooks';
 import styles from './messageForm.css';
 
 const Form = ({ nextStep, history, onNext, prevState, signMessage }) => {
   const [message, setMessage] = useState(prevState?.message || '');
-  const [{ chainID = "04000000"  }] = useCurrentApplication();
   const { t } = useTranslation();
 
   useEffect(() => {
@@ -32,8 +30,8 @@ const Form = ({ nextStep, history, onNext, prevState, signMessage }) => {
     Piwik.trackingEvent('SignMessageInput', 'button', 'Next step');
     nextStep({
       message,
-      actionFunction: (formProps, _, privateKey, publicKey) =>
-        signMessage({ message, nextStep, prevState, privateKey, publicKey, chainID  }),
+      actionFunction: (formProps, _, privateKey) =>
+        signMessage({ message, nextStep, privateKey  }),
     });
     onNext?.();
   };

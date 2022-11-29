@@ -8,14 +8,9 @@ import { signMessageByHW } from './hwManager';
  * @param {Object} signData.account - Account of the signed in user
  * @return {string} a signed value of the message
  */
-export const signUsingPrivateKey = ({ message, account, chainID}) => {
+export const signUsingPrivateKey = ({ message, account }) => {
   const msgBytes = cryptography.ed.digestMessage(message);
-  const signature = cryptography.ed.signDataWithPrivateKey(
-    'MESSAGE',
-    Buffer.from(chainID, 'hex'),
-    msgBytes,
-    Buffer.from(account.summary.privateKey, 'hex')
-  );
+  const signature = cryptography.ed.signDataWithPrivateKey(msgBytes, Buffer.from(account.summary.privateKey, 'hex'));
   const result = cryptography.ed.printSignedMessage({
     message,
     signature,
