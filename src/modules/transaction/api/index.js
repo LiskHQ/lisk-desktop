@@ -223,7 +223,7 @@ export const getTransactionFee = async ({
       params: {
         ...transactionObject.params,
         ...(numberOfSignatures &&
-          !transactionObject.params.signatures.length && {
+          !transactionObject.params.signatures?.length && {
             signatures: new Array(numberOfSignatures).fill(0).map(() => Buffer.alloc(64)),
           }),
       },
