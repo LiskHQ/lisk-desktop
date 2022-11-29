@@ -2,6 +2,7 @@ import React from 'react';
 import { MemoryRouter } from 'react-router';
 import { render, screen } from '@testing-library/react';
 import mockSavedAccounts from '@tests/fixtures/accounts';
+import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { useTokensBalance } from '@token/fungible/hooks/queries';
 import { useDelegates } from '@dpos/validator/hooks/queries';
 import { useAuth } from '@auth/hooks/queries';
@@ -44,10 +45,12 @@ describe('Overview', () => {
     useDelegates.mockReturnValue({ data: mockDelegates });
     useLatestBlock.mockReturnValue({ data: mockBlocks.data[0] });
 
+    const queryClient = new QueryClient();
     render(
       <MemoryRouter>
         <FlashMessageHolder />
-        <Overview {...props} />
+        <QueryClientProvider client={queryClient}>
+        <Overview {...props} /></QueryClientProvider>
       </MemoryRouter>
     );
 
