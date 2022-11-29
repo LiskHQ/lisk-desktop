@@ -8,7 +8,7 @@ import { useBlocks } from './useBlocks';
 // eslint-disable-next-line import/prefer-default-export
 export const useLatestBlock = () => {
   const response = useBlocks({
-    params: { limit: 1 },
+    config: { params: { limit: 1 } },
     options: {
       staleTime: 1000,
     },
@@ -16,6 +16,6 @@ export const useLatestBlock = () => {
 
   return {
     ...response,
-    data: response.data?.data[0] ?? { height: 0, timestamp: 0 },
+    data: response.data?.data?.[0] ?? { height: 0, timestamp: 0 },
   };
 };

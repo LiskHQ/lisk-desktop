@@ -8,7 +8,7 @@ jest.useRealTimers();
 describe('useLatestBlock hook', () => {
   it('fetching data correctly', async () => {
     const { result, waitFor } = renderHook(() => useLatestBlock(), { wrapper });
-    expect(result.current.isLoading).toBeTruthy();
+    expect(result.current.isFetching).toBeTruthy();
     await waitFor(() => result.current.isFetched);
     expect(result.current.isSuccess).toBeTruthy();
     expect(result.current.data).toEqual(mockBlocks.data[0]);

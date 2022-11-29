@@ -2,7 +2,6 @@ import React from 'react';
 import { MemoryRouter } from 'react-router';
 import { render, screen } from '@testing-library/react';
 import mockSavedAccounts from '@tests/fixtures/accounts';
-import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { useTokensBalance } from '@token/fungible/hooks/queries';
 import { useDelegates } from '@dpos/validator/hooks/queries';
 import { useAuth } from '@auth/hooks/queries';
@@ -13,6 +12,7 @@ import { mockDelegates } from '@dpos/validator/__fixtures__';
 import { mockAuth } from '@auth/__fixtures__/mockAuth';
 import { mockTokensBalance } from '@token/fungible/__fixtures__/mockTokens';
 import { useLatestBlock } from '@block/hooks/queries/useLatestBlock';
+import { useBlocks } from '@block/hooks/queries/useBlocks';
 import FlashMessageHolder from 'src/theme/flashMessage/holder';
 import Overview from './overview';
 
@@ -26,6 +26,7 @@ jest.mock('@token/fungible/hooks/queries');
 jest.mock('@account/hooks');
 jest.mock('@dpos/validator/hooks/queries');
 jest.mock('@auth/hooks/queries');
+jest.mock('@block/hooks/queries/useBlocks');
 jest.mock('@block/hooks/queries/useLatestBlock');
 
 describe('Overview', () => {
@@ -43,14 +44,13 @@ describe('Overview', () => {
     });
     useAuth.mockReturnValue({ data: mockAuth });
     useDelegates.mockReturnValue({ data: mockDelegates });
+    useBlocks.mockReturnValue({ data: mockBlocks });
     useLatestBlock.mockReturnValue({ data: mockBlocks.data[0] });
 
-    const queryClient = new QueryClient();
     render(
       <MemoryRouter>
         <FlashMessageHolder />
-        <QueryClientProvider client={queryClient}>
-        <Overview {...props} /></QueryClientProvider>
+        <Overview {...props} />
       </MemoryRouter>
     );
 
