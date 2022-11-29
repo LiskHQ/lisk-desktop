@@ -1,15 +1,11 @@
-import * as signMessageUtil from '../utils/signMessageWithPrivateKey';
+import { cryptography } from '@liskhq/lisk-client';
 import { signMessage } from './action';
 
-jest.spyOn(signMessageUtil, 'signMessageWithPrivateKey');
+jest.spyOn(cryptography.ed, 'signAndPrintMessage');
 
 describe('balanceReclaimed', () => {
-  const dispatch = jest.fn();
   const message = 'test-message';
   const nextStep = jest.fn();
-  const state = {};
-  const getState = () => state;
-  const { signMessageWithPrivateKey } = signMessageUtil;
   const privateKey =
     '314852d7afb0d4c283692fef8a2cb40e30c7a5df2ed79994178c10ac168d6d977ef45cd525e95b7a86244bbd4eb4550914ad06301013958f4dd64d32ef7bc588';
   const publicKey = '7ef45cd525e95b7a86244bbd4eb4550914ad06301013958f4dd64d32ef7bc588';
@@ -27,14 +23,11 @@ describe('balanceReclaimed', () => {
     `.trim();
 
   it('should dispatch transactionCreatedSuccess', async () => {
-    signMessageWithPrivateKey.mockReturnValue(defaultPrintedMessage);
+    cryptography.ed.signAndPrintMessage.mockReturnValue(defaultPrintedMessage);
 
     await signMessage({ nextStep, privateKey, message })();
 
-    expect(signMessageWithPrivateKey).toHaveBeenCalledWith({
-      message,
-      privateKey,
-    });
+    expect(cryptography.ed.signAndPrintMessage).toHaveBeenCalledWith(message, Buffer.from(privateKey, 'hex'));
     expect(nextStep).toHaveBeenCalledWith({
       signature: defaultPrintedMessage,
       message,
