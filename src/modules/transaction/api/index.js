@@ -222,7 +222,10 @@ export const getTransactionFee = async ({
       ...transactionObject,
       params: {
         ...transactionObject.params,
-        signatures: new Array(numberOfSignatures).fill(0).map(() => Buffer.alloc(64)),
+        ...(numberOfSignatures &&
+          !transactionObject.params.signatures.length && {
+            signatures: new Array(numberOfSignatures).fill(0).map(() => Buffer.alloc(64)),
+          }),
       },
     },
     paramsSchema,
