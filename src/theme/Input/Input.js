@@ -18,7 +18,7 @@ const updateStatus = ({
   if (isLoading) {
     status = 'pending';
   }
-  if (!value || readOnly) {
+  if ((!value || readOnly) && status !== 'error') {
     status = undefined;
   }
   if (error) {
