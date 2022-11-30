@@ -3,6 +3,8 @@ import { shallow } from 'enzyme';
 import { useSelector } from 'react-redux';
 import { mountWithRouterAndQueryClient } from 'src/utils/testHelpers';
 import { DEFAULT_LIMIT } from 'src/utils/monitor';
+import { mockBlocks } from '@block/__fixtures__';
+import { useLatestBlock } from '@block/hooks/queries/useLatestBlock';
 import { mockTransactions } from '../../__fixtures__';
 import { useTransactions } from '../../hooks/queries';
 import TransactionMonitorList from './TransactionMonitorList';
@@ -27,6 +29,7 @@ jest.mock('src/modules/common/hooks', () => ({
   })),
 }));
 jest.mock('../../hooks/queries');
+jest.mock('@block/hooks/queries/useLatestBlock');
 
 afterEach(() => {
   useSelector.mockClear();
@@ -76,6 +79,8 @@ describe('Transactions monitor page', () => {
     hasUpdate: true,
     addUpdate: mockAddUpdate,
   };
+
+  useLatestBlock.mockReturnValue({ data: mockBlocks.data[0] });
 
   it('should render transactions list', () => {
     let wrapper = shallow(<TransactionMonitorList {...props} />);

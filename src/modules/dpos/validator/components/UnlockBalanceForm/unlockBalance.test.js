@@ -3,6 +3,8 @@ import networks from '@network/configuration/networks';
 import { tokenMap } from '@token/fungible/consts/tokens';
 import { mountWithQueryAndProps } from 'src/utils/testHelpers';
 import * as hwManager from '@transaction/utils/hwManager';
+import { useLatestBlock } from '@block/hooks/queries/useLatestBlock';
+import { mockBlocks } from '@block/__fixtures__';
 import { signTransaction } from '@transaction/api';
 import useTransactionPriority from '@transaction/hooks/useTransactionPriority';
 import useTransactionFeeCalculation from '@transaction/hooks/useTransactionFeeCalculation';
@@ -17,6 +19,7 @@ jest.mock('@account/hooks/useDeprecatedAccount', () => ({
   }),
 }));
 jest.mock('@transaction/hooks/useTransactionPriority');
+jest.mock('@block/hooks/queries/useLatestBlock');
 jest.mock('@transaction/hooks/useTransactionFeeCalculation');
 jest.mock('@transaction/api');
 jest.mock('@dpos/validator/store/actions/voting', () => ({
@@ -41,6 +44,7 @@ describe('Unlock LSK modal', () => {
     maxAmount: 0.1,
     minFee: 0.001,
   }));
+  useLatestBlock.mockReturnValue({ data: mockBlocks.data[0] });
 
   const nextStep = jest.fn();
 
@@ -49,7 +53,6 @@ describe('Unlock LSK modal', () => {
     nextStep,
   };
 
-  const currentBlockHeight = 5000;
   const initVotes = [
     { amount: '500000000000', delegateAddress: 'lskdwsyfmcko6mcd357446yatromr9vzgu7eb8y11' },
     { amount: '3000000000', delegateAddress: 'lskdwsyfmcko6mcd357446yatromr9vzgu7eb8y13' },
@@ -92,9 +95,6 @@ describe('Unlock LSK modal', () => {
       active: tokenMap.LSK.key,
       list: { LSK: true },
     },
-    blocks: {
-      latestBlocks: [{ height: currentBlockHeight }],
-    },
     network: {
       name: networks.customNode.name,
       networks: {
@@ -111,26 +111,31 @@ describe('Unlock LSK modal', () => {
     },
   };
   const transactionJSON = {
-    fee: 10000000,
     module: 'dpos',
     command: 'unlock',
     nonce: '178',
+    fee: 10000000,
+    senderPublicKey: '0fe9a3f1a21b5530f27f87a414b549e79a940bf24fdf2b2f05e7f22aeeecc86a',
     params: {
       unlockObjects: [
         {
-          amount: '3000000000',
           delegateAddress: 'lskdwsyfmcko6mcd357446yatromr9vzgu7eb8y11',
+          amount: '1000000000',
+          unvoteHeight: 4900,
+        },
+        {
+          delegateAddress: 'lskdwsyfmcko6mcd357446yatromr9vzgu7eb8y11',
+          amount: '3000000000',
           unvoteHeight: 100,
         },
         {
-          amount: '1000000000',
           delegateAddress: 'lskdwsyfmcko6mcd357446yatromr9vzgu7eb8y13',
+          amount: '1000000000',
           unvoteHeight: 3000,
         },
       ],
     },
     signatures: [],
-    senderPublicKey: wallets.genesis.summary.publicKey,
   };
 
   beforeEach(() => {
