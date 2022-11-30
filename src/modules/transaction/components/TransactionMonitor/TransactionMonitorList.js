@@ -9,7 +9,8 @@ import FilterBar from 'src/modules/common/components/filterBar';
 import FilterDropdownButton from 'src/modules/common/components/filterDropdownButton';
 import Box from 'src/theme/box';
 import BoxContent from 'src/theme/box/content';
-import { selectCurrentBlockHeight, selectActiveToken } from 'src/redux/selectors';
+import { selectActiveToken } from 'src/redux/selectors';
+import { useLatestBlock } from '@block/hooks/queries/useLatestBlock';
 import { useTransactions } from '../../hooks/queries';
 import TransactionRow from '../TransactionRow';
 import header from './TransactionHeaderMap';
@@ -59,7 +60,7 @@ const Transactions = () => {
   const fields = getFields(t);
   const [innerFields, setInnerFields] = useState(fields);
   const [params, setParams] = useState();
-  const currentBlockHeight = useSelector(selectCurrentBlockHeight);
+  const { data: { height: currentBlockHeight } } = useLatestBlock();
   const activeToken = useSelector(selectActiveToken);
   const { sort, toggleSort } = useSort();
   const { filters, applyFilters, clearFilters } = useFilter({});
