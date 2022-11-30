@@ -40,13 +40,6 @@ describe('actions: voting', () => {
   );
 
   const getState = () => ({
-    blocks: {
-      latestBlocks: [
-        { height: 123123124, numberOfTransactions: 2 },
-        { height: 123123126, numberOfTransactions: 5 },
-        { height: 123123127, numberOfTransactions: 6 },
-      ],
-    },
     network: {
       name: networks.mainnet.label,
       networks: {

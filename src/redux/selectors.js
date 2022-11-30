@@ -25,7 +25,6 @@ const selectNetwork = state => state.network;
 const selectServiceUrl = state => state.network.networks?.LSK?.serviceUrl;
 const selectNetworkIdentifier = state => state.network.networks?.LSK?.networkIdentifier;
 const selectNetworkName = state => state.network.name;
-const selectCurrentBlockHeight = state => state.blocks.latestBlocks[0]?.height || 0;
 const selectActiveTokenNetwork = state => state.network.networks[state.token.active];
 const selectVoting = state => state.voting;
 
@@ -44,7 +43,6 @@ export {
   selectActiveTokenAccount,
   selectAccountBalance,
   selectServiceUrl,
-  selectCurrentBlockHeight,
   selectNetworkIdentifier,
   selectNetworkName,
   selectActiveTokenNetwork,

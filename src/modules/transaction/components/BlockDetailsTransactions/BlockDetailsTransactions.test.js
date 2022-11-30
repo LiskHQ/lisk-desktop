@@ -1,6 +1,8 @@
 import { mountWithRouter } from 'src/utils/testHelpers';
 import mockManagedApplications from '@tests/fixtures/blockchainApplicationsManage';
 import { useCurrentApplication } from 'src/modules/blockchainApplication/manage/hooks';
+import { mockBlocks } from '@block/__fixtures__';
+import { useLatestBlock } from '@block/hooks/queries/useLatestBlock';
 import BlockDetails from './BlockDetailsTransactions';
 import { useTransactions } from '../../hooks/queries';
 import { mockTransactions } from '../../__fixtures__';
@@ -8,11 +10,10 @@ import { mockTransactions } from '../../__fixtures__';
 const mockSetApplication = jest.fn();
 jest.mock('@blockchainApplication/manage/hooks/useCurrentApplication');
 jest.mock('../../hooks/queries');
+jest.mock('@block/hooks/queries/useLatestBlock');
 
-useCurrentApplication.mockReturnValue([
-  mockManagedApplications[1],
-  mockSetApplication,
-]);
+useLatestBlock.mockReturnValue({ data: mockBlocks.data[0] });
+useCurrentApplication.mockReturnValue([mockManagedApplications[1], mockSetApplication]);
 
 describe('BlockDetails page', () => {
   let wrapper;
