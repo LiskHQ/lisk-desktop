@@ -46,11 +46,6 @@ export default {
     delegates: [],
     votes: {},
   },
-  blocks: {
-    latestBlocks: [],
-    awaitingForgers: [],
-    forgingTimes: {},
-  },
   appUpdates: {},
   transactions: {
     signedTransaction: {},

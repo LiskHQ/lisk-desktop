@@ -1,4 +1,4 @@
-import React, { useMemo } from 'react';
+import React from 'react';
 import { useTranslation } from 'react-i18next';
 import grid from 'flexboxgrid/dist/flexboxgrid.css';
 import { useTheme } from '@theme/Theme';
@@ -7,7 +7,7 @@ import Box from '@theme/box';
 import BoxContent from '@theme/box/content';
 import BoxHeader from '@theme/box/header';
 import Icon from '@theme/Icon';
-import { useBlocks } from 'src/modules/block/hooks/queries/useBlocks';
+import { useLatestBlock } from '@block/hooks/queries/useLatestBlock';
 import DateTimeFromTimestamp from 'src/modules/common/components/timestamp';
 import TokenAmount from '@token/fungible/components/tokenAmount';
 import styles from './delegateProfile.css';
@@ -17,11 +17,7 @@ const DetailsView = ({ data }) => {
   const { t } = useTranslation();
   const { rank } = data;
   const status = data.status || '';
-
-  const { data: blocks } = useBlocks({
-    config: { params: { height: data.lastGeneratedHeight } },
-  });
-  const lastBlockForged = useMemo(() => blocks?.data?.[0] || {}, [blocks]);
+  const { data: { timestamp: latestBlockTimestamp } } = useLatestBlock();
 
   return (
     <Box
@@ -59,8 +55,8 @@ const DetailsView = ({ data }) => {
           <div className={`${grid.col} ${styles.item}`}>
             <div className={`${styles.title} ${theme}`}>{t('Last block forged')}</div>
             <div className={styles.value}>
-              {lastBlockForged.timestamp ? (
-                <DateTimeFromTimestamp fulltime className="date" time={lastBlockForged.timestamp} />
+              {latestBlockTimestamp ? (
+                <DateTimeFromTimestamp fulltime className="date" time={latestBlockTimestamp} />
               ) : (
                 '-'
               )}

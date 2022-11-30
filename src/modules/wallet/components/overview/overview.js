@@ -4,16 +4,16 @@ import { useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import grid from 'flexboxgrid/dist/flexboxgrid.css';
-import { useTokensBalance } from 'src/modules/token/fungible/hooks/queries';
-import TokenCard from 'src/modules/wallet/components/TokenCard';
-import TokenCarousel from 'src/modules/wallet/components/TokenCarousel/TokenCarousel';
+import { useTokensBalance } from '@token/fungible/hooks/queries';
+import TokenCard from '@wallet/components/TokenCard';
+import TokenCarousel from '@wallet/components/TokenCarousel/TokenCarousel';
 import { selectActiveTokenAccount } from 'src/redux/selectors';
 import FlashMessageHolder from '@theme/flashMessage/holder';
 import WarnPunishedDelegate from '@dpos/validator/components/WarnPunishedDelegate';
 import WalletVisualWithAddress from '@wallet/components/walletVisualWithAddress';
 import DialogLink from 'src/theme/dialog/link';
 import { useCurrentAccount } from '@account/hooks';
-import { useBlocks } from '@block/hooks/queries/useBlocks';
+import { useLatestBlock } from '@block/hooks/queries/useLatestBlock';
 import { SecondaryButton, PrimaryButton } from '@theme/buttons';
 import { useDelegates } from '@dpos/validator/hooks/queries';
 import { selectSearchParamValue } from 'src/utils/searchParams';
@@ -44,10 +44,9 @@ const Overview = ({ isWalletRoute, history }) => {
   const address = useMemo(() => searchAddress || currentAddress, [searchAddress, currentAddress]);
   const { data: delegates } = useDelegates({ config: { params: { address } } });
   const { data: account } = useAuth({ config: { params: { address } } });
-  const { data: blocks } = useBlocks();
 
   const delegate = useMemo(() => delegates?.data?.[0] || {}, [delegates]);
-  const currentHeight = useMemo(() => blocks?.data?.[0]?.height, [blocks]);
+  const { data: { height: currentHeight } } = useLatestBlock();
 
   const isBanned = delegate.isBanned;
   const pomHeights = delegate.pomHeights;

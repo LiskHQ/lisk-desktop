@@ -56,6 +56,7 @@ function PasswordTypeToggler({ onClick, isPasswordVisible, hasNotification }) {
   );
 }
 
+// eslint-disable-next-line complexity
 const Input = forwardRef(({
   className,
   setRef,
@@ -111,7 +112,7 @@ const Input = forwardRef(({
         {statusIconNameMap[status] && (
           <Icon
             name={statusIconNameMap[status]}
-            className={`${styles.status}`}
+            className={`${styles.status} ${secureTextEntry && styles.mgr30}`}
           />
         )}
 
