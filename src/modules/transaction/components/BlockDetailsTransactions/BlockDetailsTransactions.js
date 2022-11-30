@@ -1,9 +1,9 @@
 import React from 'react';
 import { useSelector } from 'react-redux';
 import {
-  selectCurrentBlockHeight,
   selectActiveToken,
 } from 'src/redux/selectors';
+import { useLatestBlock } from '@block/hooks/queries/useLatestBlock';
 import Box from 'src/theme/box';
 import BoxContent from 'src/theme/box/content';
 import { useTranslation } from 'react-i18next';
@@ -19,7 +19,7 @@ const BlockDetailsTransactions = ({
   height,
 }) => {
   const {t} = useTranslation()
-  const currentBlockHeight = useSelector(selectCurrentBlockHeight);
+  const { data: { height: currentBlockHeight } }= useLatestBlock();
   const activeToken = useSelector(selectActiveToken);
   const {
     data: transactions, isLoading, isFetching, error,

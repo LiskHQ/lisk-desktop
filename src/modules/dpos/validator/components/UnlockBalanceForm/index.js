@@ -1,14 +1,14 @@
 import React from 'react';
 import { useSelector } from 'react-redux';
 import { useTranslation } from 'react-i18next';
-import { MODULE_COMMANDS_NAME_MAP } from 'src/modules/transaction/configuration/moduleCommand';
+import { MODULE_COMMANDS_NAME_MAP } from '@transaction/configuration/moduleCommand';
 import {
-  selectCurrentBlockHeight,
   selectActiveTokenAccount,
   selectActiveToken,
 } from 'src/redux/selectors';
 import BoxContent from 'src/theme/box/content';
 import BoxHeader from 'src/theme/box/header';
+import { useLatestBlock } from '@block/hooks/queries/useLatestBlock';
 import TxComposer from '@transaction/components/TxComposer';
 import getUnlockButtonTitle from '../../utils/getUnlockButtonTitle';
 import useUnlockableCalculator from '../../hooks/useUnlockableCalculator';
@@ -20,7 +20,7 @@ const UnlockBalanceForm = ({
 }) => {
   const { t } = useTranslation();
   const activeToken = useSelector(selectActiveToken);
-  const currentBlockHeight = useSelector(selectCurrentBlockHeight);
+  const { data: latestBlock } = useLatestBlock();
   const [unlockObjects, lockedInVotes, unlockableBalance] = useUnlockableCalculator();
   const wallet = useSelector(selectActiveTokenAccount);
 
@@ -62,7 +62,7 @@ const UnlockBalanceForm = ({
             <BalanceTable
               lockedInVotes={lockedInVotes}
               unlockableBalance={unlockableBalance}
-              currentBlockHeight={currentBlockHeight}
+              currentBlockHeight={latestBlock.data?.height ?? 0}
               account={wallet}
             />
           </BoxContent>

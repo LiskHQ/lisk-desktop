@@ -1,6 +1,5 @@
 import React, { useEffect } from 'react';
-import { useSelector } from 'react-redux';
-import { selectCurrentBlockHeight } from 'src/redux/selectors';
+import { useLatestBlock } from '@block/hooks/queries/useLatestBlock';
 import Box from 'src/theme/box';
 import BoxHeader from 'src/theme/box/header';
 import BoxContent from 'src/theme/box/content';
@@ -26,7 +25,7 @@ const Transactions = ({
   address,
   confirmedLength,
 }) => {
-  const currentBlockHeight = useSelector(selectCurrentBlockHeight);
+  const { data: { height: currentBlockHeight } }= useLatestBlock();
   useEffect(() => {
     // This will automatically load the new data too.
     clearAllFilters();

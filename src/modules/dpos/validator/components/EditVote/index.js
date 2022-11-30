@@ -21,7 +21,7 @@ import WalletVisual from '@wallet/components/walletVisual';
 import routes from 'src/routes/routes';
 import TokenAmount from '@token/fungible/components/tokenAmount';
 import WarnPunishedDelegate from '@dpos/validator/components/WarnPunishedDelegate';
-import { useBlocks } from '@block/hooks/queries/useBlocks';
+import { useLatestBlock } from '@block/hooks/queries/useLatestBlock';
 import { useAuth } from '@auth/hooks/queries';
 import { PrimaryButton, SecondaryButton, WarningButton } from 'src/theme/buttons';
 import useVoteAmountField from '../../hooks/useVoteAmountField';
@@ -66,9 +66,7 @@ const EditVote = ({ history, voteEdited, network, voting, votesRetrieved }) => {
 
   const delegate = useMemo(() => delegates?.data?.[0] || {}, [isLoadingDelegates]);
   const delegatePomHeight = useMemo(() => delegate.pomHeights?.[0] || {}, [delegate]);
-
-  const { data: blocks } = useBlocks({ config: { params: { limit: 1 } } });
-  const currentHeight = useMemo(() => blocks?.data?.[0]?.height, [blocks]);
+  const { data: { height: currentHeight } } = useLatestBlock();
 
   const { data: sentVotes } = useSentVotes({
     config: { params: { address: currentAddress } },

@@ -1,9 +1,8 @@
 import {
-  accountDataUpdated, transactionsRetrieved,
+  accountDataUpdated,
 } from 'src/redux/actions';
 
 import commonActionTypes from 'src/modules/common/store/actionTypes';
-import blockActionTypes from '@block/store/actionTypes';
 import settingsActionTypes from 'src/modules/settings/store/actionTypes';
 import * as transactionApi from '@transaction/api';
 import { getAutoLogInData } from 'src/utils/login';
@@ -75,16 +74,6 @@ const transactions = [
   },
 ];
 
-const block = {
-  numberOfTransactions: 2,
-  id: '513008230952104224',
-};
-
-const newBlockCreated = {
-  type: blockActionTypes.newBlockCreated,
-  data: { block },
-};
-
 const network = {
   status: { online: true },
   name: 'Custom Node',
@@ -141,8 +130,6 @@ describe('Account middleware', () => {
   let store;
 
   window.Notification = () => { };
-  const windowNotificationSpy = jest.spyOn(window, 'Notification');
-
   beforeEach(() => {
     transactionApi.getTransactions.mockResolvedValue({
       data: transactions,
@@ -157,77 +144,6 @@ describe('Account middleware', () => {
     jest.resetAllMocks();
   });
 
-  describe('Basic behavior', () => {
-    it('should pass the action to next middleware', async () => {
-      middleware(store)(next)(newBlockCreated);
-      expect(next).toHaveBeenCalledWith(newBlockCreated);
-    });
-    it('should not pass the action to next middleware', () => {
-      const actionNewBlockCreatedAction = {
-        type: blockActionTypes.newBlockCreated,
-        data: {
-          block: {
-            numberOfTransactions: 0,
-            id: '513008230952104224',
-          },
-        },
-      };
-      middleware(store)(next)(actionNewBlockCreatedAction);
-      expect(next).toHaveBeenCalledWith(actionNewBlockCreatedAction);
-    });
-  });
-
-  describe('on newBlockCreated', () => {
-    it('should call account API methods', async () => {
-      middleware(store)(next)(newBlockCreated);
-      jest.runOnlyPendingTimers();
-      await expect(next).toHaveBeenCalled();
-    });
-
-    it('should call account LSK API methods when LSK is the active token', async () => {
-      transactionApi.getTransactions.mockResolvedValue({
-        data: transactions,
-      });
-      // Act
-      await middleware(store)(next)(newBlockCreated);
-      // Assert
-      expect(transactionApi.getTransactions).toHaveBeenCalledWith({
-        network: expect.anything(), params: expect.anything(),
-      });
-      expect(accountDataUpdated).toHaveBeenCalled();
-      expect(transactionsRetrieved).toHaveBeenCalledWith({
-        address: expect.anything(),
-        filters: undefined,
-      });
-    });
-
-    it('should not dispatch when getTransactions returns invalid transaction', async () => {
-      // Arrange
-      transactionApi.getTransactions.mockResolvedValue({
-        data: [undefined],
-      });
-
-      // Act
-      await middleware(store)(next)(newBlockCreated);
-
-      // Assert
-      expect(accountDataUpdated).toHaveBeenCalledTimes(0);
-      expect(transactionsRetrieved).toHaveBeenCalledTimes(0);
-    });
-
-    it.skip('should show Notification on incoming transaction', () => {
-      middleware(store)(next)(newBlockCreated);
-      expect(windowNotificationSpy).nthCalledWith(
-        1,
-        '10 LSK Received',
-        {
-          body:
-            'Your account just received 10 LSK with message Message',
-        },
-      );
-    });
-  });
-
   describe('on storeCreated', () => {
     it.skip('should do nothing if autologin data is NOT found in localStorage', () => {
       middleware(store)(next)(storeCreatedAction);
@@ -236,7 +152,7 @@ describe('Account middleware', () => {
   });
 
   describe('on accountSettingsUpdated', () => {
-    it('Account Setting Update Sucessful', () => {
+    it('Account Setting Update Successful', () => {
       const state = store.getState();
       store.getState = () => ({
         ...state,
@@ -255,7 +171,7 @@ describe('Account middleware', () => {
       expect(store.dispatch).toHaveBeenCalled();
       expect(accountDataUpdated).toHaveBeenCalledWith('enabled');
     });
-    it('Account Setting Update Unsucessful', () => {
+    it('Account Setting Update not successful', () => {
       const accountSettingsUpdatedAction = {
         type: settingsActionTypes.settingsUpdated,
         data: { token: '' },
@@ -266,7 +182,7 @@ describe('Account middleware', () => {
   });
 
   describe('on accountSettingsRetrieved', () => {
-    it('Account Setting Retrieve Sucessful', async () => {
+    it('Account Setting Retrieve Successful', async () => {
       const accountSettingsRetrievedAction = {
         type: settingsActionTypes.settingsRetrieved,
         data: { token: 'LSK' },
@@ -282,7 +198,7 @@ describe('Account middleware', () => {
       await middleware(store)(next)(accountSettingsRetrievedAction);
       expect(next).toHaveBeenCalledWith(accountSettingsRetrievedAction);
     });
-    it('Account Setting Retrieve Sucessful without statistics', async () => {
+    it('Account Setting Retrieve Successful without statistics', async () => {
       const state = store.getState();
       store.getState = () => ({
         ...state,
