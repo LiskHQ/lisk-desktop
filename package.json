@@ -247,6 +247,7 @@
     "hard-source-webpack-plugin": "0.13.1",
     "html-webpack-plugin": "5.2.0",
     "history": "=4.7.2",
+    "headers-polyfill": "3.0.10",
     "husky": "8.0.1",
     "i18next-scanner": "3.0.0",
     "identity-obj-proxy": "3.0.0",
