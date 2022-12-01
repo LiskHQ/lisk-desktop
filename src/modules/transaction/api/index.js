@@ -200,7 +200,6 @@ export const getTransactionBaseFees = (network) =>
 export const getTransactionFee = async ({
   transactionJSON,
   selectedPriority,
-  wallet,
   numberOfSignatures = DEFAULT_NUMBER_OF_SIGNATURES,
   moduleCommandSchemas,
 }) => {
@@ -210,23 +209,30 @@ export const getTransactionFee = async ({
 
   const maxCommandFee = MODULE_COMMANDS_MAP[moduleCommand].maxFee;
   const transactionObject = fromTransactionJSON(transactionJSON, paramsSchema);
-  let numberOfEmptySignatures = 0;
 
   if (transactionJSON.moduleCommand === MODULE_COMMANDS_NAME_MAP.registerMultisignature) {
     const { optionalKeys, mandatoryKeys } = transactionJSON.params;
-    numberOfSignatures = optionalKeys.length + mandatoryKeys.length + 1;
-  } else if (wallet?.summary?.isMultisignature) {
-    numberOfEmptySignatures =
-      wallet.keys.mandatoryKeys.length + wallet.keys.optionalKeys.length - numberOfSignatures;
+    numberOfSignatures = optionalKeys.length + mandatoryKeys.length;
   }
 
   // Call API to get network specific base fees
   const baseFees = [];
-  const minFee = transactions.computeMinFee(transactionObject, paramsSchema, {
-    baseFees,
-    numberOfSignatures,
-    numberOfEmptySignatures,
-  });
+  const minFee = transactions.computeMinFee(
+    {
+      ...transactionObject,
+      params: {
+        ...transactionObject.params,
+        ...(numberOfSignatures &&
+          !transactionObject.params.signatures?.length && {
+            signatures: new Array(numberOfSignatures).fill(0).map(() => Buffer.alloc(64)),
+          }),
+      },
+    },
+    paramsSchema,
+    {
+      baseFees,
+    }
+  );
 
   // tie breaker is only meant for medium and high processing speeds
   const tieBreaker =

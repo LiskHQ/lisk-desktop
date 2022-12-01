@@ -2,6 +2,8 @@ import React from 'react';
 import { useSelector } from 'react-redux';
 import { cryptography } from '@liskhq/lisk-client';
 import accounts from '@tests/constants/wallets';
+import { mockBlocks } from '@block/__fixtures__';
+import { useLatestBlock } from '@block/hooks/queries/useLatestBlock';
 import { mountWithProps, mountWithRouter, mountWithRouterAndStore } from 'src/utils/testHelpers';
 import RecentTransactions, { NoTransactions, NotSignedIn } from './RecentTransactions';
 
@@ -16,7 +18,7 @@ const LiskTransactions = {
       type: 0,
       moduleCommand: 'token:transfer',
       senderPublicKey: accounts.genesis.summary.publicKey,
-      sender: {address: 'lsks6uckwnap7s72ov3edddwgxab5e89t6uy8gjt6'},
+      sender: { address: 'lsks6uckwnap7s72ov3edddwgxab5e89t6uy8gjt6' },
       params: {
         recipient: 'lsks6uckwnap7s72ov3edddwgxab5e89t6uy8gjt6',
         votes: [],
@@ -29,7 +31,7 @@ const LiskTransactions = {
       type: 1,
       moduleCommand: 'dpos:registerDelegate',
       senderPublicKey: accounts.genesis.summary.publicKey,
-      sender: {address: 'lsks6uckwnap7s72ov3edddwgxab5e89t6uy8gjt6'},
+      sender: { address: 'lsks6uckwnap7s72ov3edddwgxab5e89t6uy8gjt6' },
       params: {
         recipientAddress: 'lsks6uckwnap7s72ov3edddwgxab5e89t6uy8gjt6',
         votes: [],
@@ -41,7 +43,7 @@ const LiskTransactions = {
       token: 'LSK',
       type: 2,
       moduleCommand: 'auth:registerMultisignature',
-      sender: {address: 'lskehj8am9afxdz8arztqajy52acnoubkzvmo9cjy'},
+      sender: { address: 'lskehj8am9afxdz8arztqajy52acnoubkzvmo9cjy' },
       senderPublicKey: accounts.genesis.summary.publicKey,
       params: {
         recipientAddress: 'lskehj8am9afxdz8arztqajy52acnoubkzvmo9cjy',
@@ -55,7 +57,7 @@ const LiskTransactions = {
       type: 3,
       moduleCommand: 'dpos:voteDelegate',
       senderPublicKey: accounts.genesis.summary.publicKey,
-      sender: {address: 'lskehj8am9afxdz8arztqajy52acnoubkzvmo9cjy'},
+      sender: { address: 'lskehj8am9afxdz8arztqajy52acnoubkzvmo9cjy' },
       params: {
         recipientAddress: 'lskehj8am9afxdz8arztqajy52acnoubkzvmo9cjy',
         votes: [],
@@ -118,11 +120,13 @@ const mockUseContext = (mockData = {}) => {
     ...mockData,
   }));
 };
+jest.mock('@block/hooks/queries/useLatestBlock');
 jest
   .spyOn(cryptography.address, 'getLisk32AddressFromPublicKey')
   .mockReturnValue('lsks6uckwnap7s72ov3edddwgxab5e89t6uy8gjt6');
 
 useSelector.mockReturnValue({ ...LiskState.account, ...LiskState.settings });
+useLatestBlock.mockReturnValue({ data: mockBlocks.data[0] });
 
 describe('Recent Transactions', () => {
   it('Should render Recent Transactions properly with LSK active token', () => {

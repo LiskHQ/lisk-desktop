@@ -1,5 +1,4 @@
 export * from '@wallet/store/action';
-export * from '@block/store/action';
 export * from '@bookmark/store/action';
 export * from '@network/store/action';
 export * from 'src/modules/settings/store/actions';

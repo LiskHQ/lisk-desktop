@@ -1,20 +1,24 @@
-import { act } from 'react-dom/test-utils';
 import React from 'react';
 import { mount } from 'enzyme';
-import LoadLatestButton from './loadLatestButton';
+import { mockBlocks } from '@block/__fixtures__';
+import { useLatestBlock } from '@block/hooks/queries/useLatestBlock';
+import LoadLatestButton from '.';
+
+jest.mock('@block/hooks/queries/useLatestBlock');
+jest.spyOn(React, 'useState');
 
 describe('LoadLatestButton', () => {
   const props = {
     onClick: jest.fn(),
     entity: 'block',
     children: 'Test load button',
-    latestBlocks: [
-      { height: 11111111 },
-    ],
   };
+
+  useLatestBlock.mockReturnValue({ data: mockBlocks.data[0] });
 
   it('renders accept transaction and block for entity and render empty by default', () => {
     const blockProps = { ...props, entity: 'block' };
+    React.useState.mockImplementation((data) => [data, jest.fn()]);
     let wrapper = mount(<LoadLatestButton {...blockProps} />);
     expect(wrapper).toBeEmptyRender();
 
@@ -24,24 +28,13 @@ describe('LoadLatestButton', () => {
   });
 
   it('shows button when there is a new block', () => {
+    React.useState.mockReturnValue([mockBlocks.data[0].height - 10, jest.fn()]);
     const wrapper = mount(<LoadLatestButton {...props} />);
-    expect(wrapper).toBeEmptyRender();
-    wrapper.setProps({
-      latestBlocks: [
-        { height: 11111114 },
-      ],
-    });
-    act(() => {
-      wrapper.update();
-    });
+
     expect(wrapper).toContainExactlyOneMatchingElement('button');
     expect(wrapper).toHaveText(props.children);
 
     wrapper.find('button').at(0).simulate('click');
     expect(props.onClick).toHaveBeenCalledWith();
-    act(() => {
-      wrapper.update();
-    });
-    expect(wrapper).toBeEmptyRender();
   });
 });

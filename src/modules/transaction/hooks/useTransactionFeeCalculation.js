@@ -38,7 +38,7 @@ const useTransactionFeeCalculation = ({
 
     const maxAmountFee = await getTransactionFee({
       ...params,
-      transaction: { ...params.transaction, amount: wallet.token?.balance },
+      transactionJSON: { ...params.transactionJSON, amount: wallet.token?.balance },
     });
 
     dispatch({
@@ -59,11 +59,7 @@ const useTransactionFeeCalculation = ({
         numberOfSignatures: getNumberOfSignatures(wallet, transactionJSON),
       });
     }
-  }, [
-    transactionJSON.params,
-    selectedPriority.selectedIndex,
-    selectedPriority.value
-  ]);
+  }, [transactionJSON.params, selectedPriority.selectedIndex, selectedPriority.value]);
 
   return state;
 };

@@ -1,7 +1,6 @@
 import React from 'react';
 import { useTranslation } from 'react-i18next';
-import { useSelector } from 'react-redux';
-import { selectCurrentBlockHeight } from 'src/redux/selectors';
+import { useLatestBlock } from '@block/hooks/queries/useLatestBlock';
 import Box from 'src/theme/box';
 import BoxHeader from 'src/theme/box/header';
 import BoxContent from 'src/theme/box/content';
@@ -16,7 +15,7 @@ import { useTransactions } from '../../hooks/queries';
 
 const Transactions = ({ activeToken, address }) => {
   const { t } = useTranslation();
-  const currentBlockHeight = useSelector(selectCurrentBlockHeight);
+  const { data: { height: currentBlockHeight } } = useLatestBlock();
   const { sort, toggleSort } = useSort({ defaultSort: 'timestamp:desc' });
   const { filters, clearFilters, applyFilters } = useFilter({
     dateFrom: '',

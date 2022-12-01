@@ -1,19 +1,18 @@
 import React from 'react';
-import { useSelector } from 'react-redux';
-import { selectCurrentBlockHeight } from 'src/redux/selectors';
 import { tokenMap } from '@token/fungible/consts/tokens';
+import { useLatestBlock } from '@block/hooks/queries/useLatestBlock';
 import Tooltip from 'src/theme/Tooltip';
 import TransactionDetailsContext from '../../context/transactionDetailsContext';
 import ValueAndLabel from './valueAndLabel';
 import styles from './styles.css';
 
 const Confirmations = ({ t }) => {
-  const currentBlockHeight = useSelector(selectCurrentBlockHeight);
+  const { data: { height: currentHeight } }= useLatestBlock();
   const { activeToken, transaction } = React.useContext(
     TransactionDetailsContext,
   );
 
-  const confirmations = currentBlockHeight - transaction.height;
+  const confirmations = currentHeight - transaction.height;
 
   return (
     <ValueAndLabel

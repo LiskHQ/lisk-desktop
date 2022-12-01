@@ -148,7 +148,6 @@ module.exports = {
     'src/modules/search/api/index.js',
     'src/modules/settings/components/toggle.js',
     'src/modules/common/components/bars/topBar/tokenSelector.js',
-    'src/modules/block/store/middleware.js',
     'src/modules/network/utils/getNetwork.js',
     'src/modules/block/utils/api/getBlocks.js',
     'src/modules/transaction/api/index.js',
