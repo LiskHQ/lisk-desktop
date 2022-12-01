@@ -78,7 +78,7 @@ function SetPasswordForm({ onSubmit, recoveryPhrase }) {
             feedback={errors.password?.message}
             status={errors.password ? 'error' : undefined}
             label={
-              <span className="password-label-wrappe ">
+              <span className="password-label-wrapper">
                 Enter Password
                 <Tooltip position="right" title={t('Requirements')}>
                   <p>
