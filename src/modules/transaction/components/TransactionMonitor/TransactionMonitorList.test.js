@@ -43,7 +43,6 @@ describe('Transactions monitor page', () => {
     },
   };
   const transactions = mockTransactions.data;
-  const amountFrom = '1.3';
   const height = '1234';
 
   const successQueryObj = {
@@ -120,19 +119,6 @@ describe('Transactions monitor page', () => {
     useTransactions.mockReturnValue(errorQueryObj);
     const wrapper = mountWithRouterAndQueryClient(TransactionMonitorList, props);
     expect(wrapper).toIncludeText(error);
-  });
-
-  it('allows to load more transactions when filtered', () => {
-    useTransactions.mockReturnValue(successQueryObj);
-    const wrapper = mountWithRouterAndQueryClient(TransactionMonitorList, props);
-
-    wrapper.find('button.filter').simulate('click');
-    wrapper
-      .find('input.amountFromInput')
-      .simulate('change', { target: { value: amountFrom, name: 'amountFrom' } });
-    wrapper.find('form.filter-container').simulate('submit');
-    wrapper.find('button.load-more').simulate('click');
-    expect(mockFetchNextPage).toHaveBeenCalledTimes(1);
   });
 
   it('allows to filter transactions by more filters', () => {

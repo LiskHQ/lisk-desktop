@@ -7,6 +7,7 @@ import BoxContent from 'src/theme/box/content';
 import { QueryTable } from 'src/theme/QueryTable';
 import { useFilter, useSort } from 'src/modules/common/hooks';
 import FilterBar from 'src/modules/common/components/filterBar';
+import { normalizeTransactionParams } from '@transaction/utils';
 import TransactionRow from '../TransactionRow';
 import styles from './ExplorerTransactions.css';
 import header from './ExplorerTransactionsHeaderMap';
@@ -17,14 +18,9 @@ const Transactions = ({ activeToken, address }) => {
   const { t } = useTranslation();
   const { data: { height: currentBlockHeight } } = useLatestBlock();
   const { sort, toggleSort } = useSort({ defaultSort: 'timestamp:desc' });
-  const { filters, clearFilters, applyFilters } = useFilter({
-    dateFrom: '',
-    dateTo: '',
-    amountFrom: '',
-    amountTo: '',
-  });
+  const { filters, clearFilters, applyFilters } = useFilter({});
 
-  const params = { ...filters, ...(sort && { sort }) };
+  const params = normalizeTransactionParams({ ...filters, ...(sort && { sort }) });
 
   const formatters = {
     dateFrom: (value) => `${t('From')}: ${value}`,
