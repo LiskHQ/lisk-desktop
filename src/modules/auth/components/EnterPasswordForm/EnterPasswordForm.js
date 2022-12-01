@@ -26,7 +26,7 @@ const EnterPasswordForm = ({ onEnterPasswordSuccess, title, encryptedAccount, is
   const apiError = errors[API_ERROR_NAME];
   const { getAccountByAddress } = useAccounts();
   const [currentAccount] = useCurrentAccount();
-  const requestedAccount = getAccountByAddress(currentAccount.metadata.address);
+  const requestedAccount = getAccountByAddress(currentAccount?.metadata?.address);
   const account = useMemo(
     () => encryptedAccount || requestedAccount || currentAccount,
     [currentAccount]
