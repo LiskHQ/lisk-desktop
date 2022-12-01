@@ -18,7 +18,7 @@ const updateStatus = ({
   if (isLoading) {
     status = 'pending';
   }
-  if (!value || readOnly) {
+  if ((!value || readOnly) && status !== 'error') {
     status = undefined;
   }
   if (error) {
@@ -150,7 +150,10 @@ Input.propTypes = {
   type: PropTypes.oneOf(['text', 'textarea', 'password']),
   feedback: PropTypes.string,
   dark: PropTypes.bool,
-  label: PropTypes.string,
+  label: PropTypes.oneOfType([
+    PropTypes.string,
+    PropTypes.node
+  ]),
   onChange: PropTypes.func,
   isMasked: PropTypes.bool,
 };
