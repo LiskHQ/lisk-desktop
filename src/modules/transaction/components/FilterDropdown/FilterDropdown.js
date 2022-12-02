@@ -9,11 +9,6 @@ const FilterDropdown = ({ t, filters, applyFilters }) => {
       name: 'date',
       type: 'date-range',
     },
-    {
-      label: t('Amount range'),
-      name: 'amount',
-      type: 'number-range',
-    },
   ];
 
   const props = { fields, filters, applyFilters };

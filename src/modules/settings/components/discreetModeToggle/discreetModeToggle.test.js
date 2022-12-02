@@ -18,9 +18,9 @@ describe('DiscreetModeToggle Component', () => {
 
   it('Should render properly with className and disabled discreet Mode', () => {
     wrapper = setup(props);
-    expect(wrapper).toContainMatchingElements(1, 'div');
+    expect(wrapper).toContainMatchingElements(1, 'label');
     expect(wrapper).toContainMatchingElements(1, 'span');
-    expect(wrapper.find('div')).toHaveClassName('toggle');
+    expect(wrapper.find('label')).toHaveClassName('toggle');
     expect(wrapper.find('span')).toHaveText('Enable discreet mode when signed in (optional)');
     wrapper.find('.discreetMode').simulate('change', true);
     expect(props.settingsUpdated).toBeCalledWith({ discreetMode: true });
@@ -30,9 +30,9 @@ describe('DiscreetModeToggle Component', () => {
   it('Should render properly with className and enabled discreet Mode', () => {
     const newProps = { ...props, iconPosition: 'right', isDiscreetMode: true };
     wrapper = setup(newProps);
-    expect(wrapper).toContainMatchingElements(1, 'div');
+    expect(wrapper).toContainMatchingElements(1, 'label');
     expect(wrapper).toContainMatchingElements(1, 'span');
-    expect(wrapper.find('div')).toHaveClassName('toggle');
+    expect(wrapper.find('label')).toHaveClassName('toggle');
     expect(wrapper.find('span')).toHaveText('Enable discreet mode when signed in (optional)');
     wrapper.find('.discreetMode').simulate('change', true);
     expect(props.settingsUpdated).toBeCalledWith({ discreetMode: false });

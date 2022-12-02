@@ -1,6 +1,6 @@
 import React, { useEffect, useRef, useState } from 'react';
 import CopyToClipboard from 'react-copy-to-clipboard';
-
+import { useTranslation } from 'react-i18next';
 import BoxContent from 'src/theme/box/content';
 import BoxFooter from 'src/theme/box/footer';
 import Illustration from 'src/modules/common/components/illustration';
@@ -55,8 +55,9 @@ const Success = ({
 );
 
 const SignedMessage = ({
-  t, prevStep, signature, error, account, onPrev,
+ prevStep, signature, error, account, onPrev,
 }) => {
+  const { t } = useTranslation();
   const [copied, setCopied] = useState(false);
   const ref = useRef();
 
