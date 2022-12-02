@@ -11,6 +11,8 @@ import { joinModuleAndCommand } from '../../utils';
 import { MODULE_COMMANDS_NAME_MAP } from '../../configuration/moduleCommand';
 import useTxInitiatorAccount from '../../hooks/useTxInitiatorAccount';
 
+const isModuleCommandValid = (moduleCommand) => /^\w+:\w+$/g.test(moduleCommand);
+
 // eslint-disable-next-line max-statements
 const TxSignatureCollector = ({
   // t,
@@ -61,7 +63,11 @@ const TxSignatureCollector = ({
      * CHECK IF SENDER ACCOUNT IS A MULTISIG
      */
     // Transaction authored from sender account and current account is a non multisignature account
-    if (isTransactionAuthor && !isAuthorAccountMultisignature && !isRegisterMultisignature) {
+    if (
+      isTransactionAuthor &&
+      !(isAuthorAccountMultisignature && isModuleCommandValid(moduleCommand)) &&
+      !isRegisterMultisignature
+    ) {
       /**
        * The action function must be wrapped in dispatch
        * and passed via the tx Summary screen.

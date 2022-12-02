@@ -104,7 +104,7 @@ describe('Multisignature Summary component', () => {
       formProps,
       transactionJSON,
       sender: { ...mockedCurrentAccount },
-    });
+    }, 2);
   });
 
   it('Should call props.prevStep', () => {

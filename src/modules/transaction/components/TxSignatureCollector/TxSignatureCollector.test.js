@@ -72,7 +72,6 @@ describe('TxSignatureCollector', () => {
     },
     nextStep: jest.fn(),
     statusInfo: {},
-    // sender: { data: accounts.genesis },
     transactionDoubleSigned: jest.fn(),
   };
 
@@ -158,6 +157,28 @@ describe('TxSignatureCollector', () => {
     });
   });
 
+  it('should call action function on continue button click', async () => {
+    render(<TxSignatureCollector {...props} />);
+    fireEvent.change(screen.getByPlaceholderText('Enter password'), {
+      target: { value: 'DeykUBjUn7uZHYv!' },
+    });
+    await waitFor(() => {
+      fireEvent.click(screen.getByText('Continue'));
+      expect(props.actionFunction).toHaveBeenCalled();
+    });
+  });
+  
+  it('should call action function if no keys', async () => {
+    useAuth.mockReturnValue({ isLoading: false });
+    render(<TxSignatureCollector {...props} />);
+    fireEvent.change(screen.getByPlaceholderText('Enter password'), {
+      target: { value: 'DeykUBjUn7uZHYv!' },
+    });
+    await waitFor(() => {
+      fireEvent.click(screen.getByText('Continue'));
+      expect(props.actionFunction).toHaveBeenCalled();
+    });
+  });
   it('should call action function on continue button click', async () => {
     render(<TxSignatureCollector {...props} />);
     fireEvent.change(screen.getByPlaceholderText('Enter password'), {
