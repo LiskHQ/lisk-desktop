@@ -1,21 +1,25 @@
+import React from 'react';
 import { useQueryClient } from '@tanstack/react-query';
+import { toast } from 'react-toastify';
 import client from 'src/utils/api/client';
 import { TRANSACTIONS } from 'src/const/queries';
-import { MODULE_COMMANDS_NAME_MAP } from 'src/modules/transaction/configuration/moduleCommand';
+import { MODULE_COMMANDS_NAME_MAP } from '@transaction/configuration/moduleCommand';
+import { fromRawLsk } from '@token/fungible/utils/lsk';
 import i18n from 'src/utils/i18n/i18n';
-import { useCurrentAccount } from 'src/modules/account/hooks';
+import { useCurrentAccount } from '@account/hooks';
+import { useTransactions } from '@transaction/hooks/queries';
 
 const filterIncomingTransactions = (transactions, account) =>
   transactions.filter(
     (transaction) =>
       transaction &&
       transaction.moduleCommand === MODULE_COMMANDS_NAME_MAP.transfer &&
-      transaction.params.recipient?.address === account.summary?.address
+      transaction.params.recipientAddress === account.metadata.address
   );
 
 const showNotificationsForIncomingTransactions = (transactions, account, token) => {
   filterIncomingTransactions(transactions, account).forEach((transaction) => {
-    const amount = transaction.params.amount;
+    const amount = fromRawLsk(transaction.params.amount);
     if (amount > 0) {
       const message = transaction.params.data
         ? i18n.t('with message {{message}}', { message: transaction.params.data })
@@ -28,6 +32,12 @@ const showNotificationsForIncomingTransactions = (transactions, account, token) 
           message,
         }),
       });
+      toast.info(
+        i18n.t('You just received {{amount}} {{token}}', {
+          amount,
+          token,
+        })
+      );
     }
   });
 };
@@ -35,17 +45,38 @@ const showNotificationsForIncomingTransactions = (transactions, account, token) 
 const TransactionSocketWrapper = () => {
   const queryClient = useQueryClient();
   const [currentAccount] = useCurrentAccount();
-  client.socket.on('new.transactions', () => {
-    const cachedTx = queryClient.getQueryData(TRANSACTIONS, '04000000', {
-      event: 'get.transactions',
-      method: 'get',
-      params: { limit: 20 },
-      url: '/api/v3/transactions',
-    });
-    queryClient.invalidateQueries(TRANSACTIONS);
+  // Call useTransactions to initialize the cache
+  useTransactions();
+  client.socket.on('new.transactions', async () => {
+    const oldTxns = queryClient.getQueryData([
+      TRANSACTIONS,
+      '04000000',
+      {
+        event: 'update.transactions',
+        method: 'get',
+        params: { limit: 20 },
+        url: '/api/v3/transactions',
+      },
+    ]).pages[0].data;
+    await queryClient.invalidateQueries(TRANSACTIONS);
     // Get latest txs from cache
-    showNotificationsForIncomingTransactions(cachedTx, currentAccount);
+    const newTxns = queryClient.getQueryData([
+      TRANSACTIONS,
+      '04000000',
+      {
+        event: 'update.transactions',
+        method: 'get',
+        params: { limit: 20 },
+        url: '/api/v3/transactions',
+      },
+    ]).pages[0].data;
+    const latestTxns = newTxns.filter((tx) => tx.block.height > oldTxns[0].block.height);
+    // token is temporarily hardcoded pending handling of token meta data
+    // like tokenID and baseDenom
+    showNotificationsForIncomingTransactions(latestTxns, currentAccount, 'LSK');
   });
+
+  return <div />;
 };
 
 export default TransactionSocketWrapper;

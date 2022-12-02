@@ -19,6 +19,7 @@ import OfflineWrapper from 'src/modules/common/components/offlineWrapper';
 import CustomRoute from 'src/modules/common/components/customRoute';
 import NavigationBars from 'src/modules/common/components/bars';
 import ThemeContext from 'src/theme/themeProvider';
+import TransactionSocketWrapper from '@common/components/TransactionSocketWrapper';
 import routesMap from 'src/routes/routesMap';
 import routes from 'src/routes/routes';
 import { MOCK_SERVICE_WORKER } from 'src/const/config';
@@ -107,6 +108,7 @@ const App = ({ history }) => {
                   ))}
                   <Route path="*" component={NotFound} />
                 </Switch>
+                {loaded && !!chainMetaData ? <TransactionSocketWrapper /> : null}
               </div>
             </section>
           </main>
