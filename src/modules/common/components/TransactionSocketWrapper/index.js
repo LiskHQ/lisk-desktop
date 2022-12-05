@@ -65,7 +65,7 @@ const TransactionSocketWrapper = () => {
     // Get latest txs from cache
     const newTxns = queryClient.getQueryData([
       TRANSACTIONS,
-      '04000000',
+      chainID,
       {
         event: 'update.transactions',
         method: 'get',
