@@ -5,6 +5,7 @@ import Box from 'src/theme/box';
 import BoxHeader from 'src/theme/box/header';
 import BoxContent from 'src/theme/box/content';
 import { QueryTable } from 'src/theme/QueryTable';
+import StickyHeader from 'src/theme/table/stickyHeader';
 import { useFilter, useSort } from 'src/modules/common/hooks';
 import FilterBar from 'src/modules/common/components/filterBar';
 import { normalizeTransactionParams } from '@transaction/utils';
@@ -16,7 +17,9 @@ import { useTransactions } from '../../hooks/queries';
 
 const Transactions = ({ activeToken, address }) => {
   const { t } = useTranslation();
-  const { data: { height: currentBlockHeight } } = useLatestBlock();
+  const {
+    data: { height: currentBlockHeight },
+  } = useLatestBlock();
   const { sort, toggleSort } = useSort({ defaultSort: 'timestamp:desc' });
   const { filters, clearFilters, applyFilters } = useFilter({});
 
@@ -32,7 +35,7 @@ const Transactions = ({ activeToken, address }) => {
   return (
     <Box main className={`${styles.wrapper} transactions-box`}>
       <BoxHeader>
-        <FilterDropdown filters={filters} applyFilters={applyFilters} />
+        <StickyHeader filters={<FilterDropdown filters={filters} applyFilters={applyFilters} />} />
       </BoxHeader>
       <FilterBar
         {...{
@@ -47,7 +50,6 @@ const Transactions = ({ activeToken, address }) => {
         <QueryTable
           showHeader
           button={{
-            className: 'load-latest',
             label: t('New transactions'),
           }}
           queryHook={useTransactions}

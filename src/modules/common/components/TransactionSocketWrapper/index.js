@@ -55,39 +55,20 @@ const TransactionSocketWrapper = () => {
   useEffect(() => () => client.socket.off('new.transactions'));
 
   client.socket.on('new.transactions', async (latestTxns) => {
-    console.log({ transactionQueryKeys });
     await queryClient.invalidateQueries(AUTH);
-    queryClient.setQueryData(transactionQueryKeys, (oldData) => {
-      console.log({ oldData, latestTxns });
-      console.log({
-        mergedData: {
-          ...oldData,
-          pages: [
-            {
-              data: [...latestTxns.data, ...oldData.pages[0].data],
-              meta: {
-                ...oldData.pages[0].meta,
-                count: oldData.pages[0].meta.count + latestTxns.meta.count,
-                total: oldData.pages[0].meta.total + latestTxns.meta.total,
-              },
-            },
-          ],
-        },
-      });
-      return {
-        ...oldData,
-        pages: [
-          {
-            data: [...latestTxns.data, ...oldData.pages[0].data],
-            meta: {
-              ...oldData.pages[0].meta,
-              count: oldData.pages[0].meta.count + latestTxns.meta.count,
-              total: oldData.pages[0].meta.total + latestTxns.meta.total,
-            },
+    queryClient.setQueryData(transactionQueryKeys, (oldData) => ({
+      ...oldData,
+      pages: [
+        {
+          data: [...latestTxns.data, ...oldData.pages[0].data],
+          meta: {
+            ...oldData.pages[0].meta,
+            count: oldData.pages[0].meta.count + latestTxns.meta.count,
+            total: oldData.pages[0].meta.total + latestTxns.meta.total,
           },
-        ],
-      };
-    });
+        },
+      ],
+    }));
     // token is temporarily hardcoded pending handling of token meta data
     // like tokenID and baseDenom
     showNotificationsForIncomingTransactions(latestTxns.data, currentAccount, 'LSK');
