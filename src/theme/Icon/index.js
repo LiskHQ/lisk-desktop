@@ -6,10 +6,12 @@ import academy from '@setup/react/assets/images/icons/academy.svg';
 import academyActive from '@setup/react/assets/images/icons/academy-active.svg';
 import alertIcon from '@setup/react/assets/images/icons/icon-alert.svg';
 import approved from '@setup/react/assets/images/icons/approved.svg';
+import arrowLeft from '@setup/react/assets/images/icons/arrow-left.svg';
 import arrowLeftActive from '@setup/react/assets/images/icons/arrow-left-active.svg';
 import arrowLeftInactive from '@setup/react/assets/images/icons/arrow-left-inactive.svg';
 import arrowLeftTailed from '@setup/react/assets/images/icons/arrow-left-tailed.svg';
 import arrowLeftTailedDark from '@setup/react/assets/images/icons/arrow-left-tailed-dark.svg';
+import arrowRight from '@setup/react/assets/images/icons/arrow-right.svg';
 import arrowRightActive from '@setup/react/assets/images/icons/arrow-right-active.svg';
 import arrowRightInactive from '@setup/react/assets/images/icons/arrow-right-inactive.svg';
 import arrowRightWithStroke from '@setup/react/assets/images/icons/arrow-right-with-stroke.svg';
@@ -238,10 +240,12 @@ export const icons = {
   alertIcon,
   approved,
   arrowRightTailed,
+  arrowLeft,
   arrowLeftActive,
   arrowLeftInactive,
   arrowLeftTailed,
   arrowLeftTailedDark,
+  arrowRight,
   arrowRightActive,
   arrowRightInactive,
   arrowUpCircle,

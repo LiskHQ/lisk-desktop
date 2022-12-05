@@ -10,8 +10,6 @@
   height: 100%;
   background-color: var(--color-side-bar);
   z-index: var(--normal-index);
-  overflow-y: auto;
-  overflow-x: hidden;
 }
 
 .container {
@@ -21,6 +19,8 @@
   box-sizing: border-box;
   display: flex;
   flex-flow: column nowrap;
+  overflow-y: auto;
+  overflow-x: hidden;
 }
 
 .menuGroup {
@@ -68,11 +68,14 @@
   box-sizing: border-box;
   cursor: pointer;
   height: var(--item-size);
-  width: 100%;
   overflow: hidden;
   backface-visibility: hidden;
   transform: translateZ(0);
-  padding: 0 5px;
+  margin: 4px 5px 0 5px;
+
+  &:first-child {
+    margin: 0 5px 0 5px;
+  }
 
   & .holder {
     position: absolute;
@@ -111,7 +114,8 @@
 }
 
 .selected {
-  background: var(--color-strong-ink-blue);
+  background: var(--color-ultramarine-blue);
+  border-radius: 10px;
 
   & img {
     filter: brightness(100);
