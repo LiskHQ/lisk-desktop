@@ -19,7 +19,6 @@
   display: flex;
   align-items: center;
   border-right: 1px solid var(--color-very-light-gray-20);
-  border-bottom: 1px solid var(--color-very-light-gray-20);
 
   &.menuOpen {
     background-color: var(--color-menu-black);
