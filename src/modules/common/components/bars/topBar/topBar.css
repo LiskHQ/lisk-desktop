@@ -18,18 +18,21 @@
 .section {
   display: flex;
   align-items: center;
-  border-right: 1px solid var(--color-periwinkle-blue);
-  padding-right: 7px;
+  border-right: 1px solid var(--color-very-light-gray-20);
+  border-bottom: 1px solid var(--color-very-light-gray-20);
 
   &.menuOpen {
     background-color: var(--color-menu-black);
   }
 }
 
+.ml24 {
+  margin-left: 24px;
+}
+
 .logo {
-  width: 35px;
-  height: 100%;
-  padding: 0 6px 0 12px;
+  height: 24px;
+  padding: 0 22px 0 12px;
   box-sizing: content-box;
   filter: brightness(100);
 }

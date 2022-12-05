@@ -9,6 +9,7 @@
   align-items: center;
   padding-right: 22px;
   white-space: nowrap;
+  cursor: pointer;
 
   /* Message */
   & > .message {

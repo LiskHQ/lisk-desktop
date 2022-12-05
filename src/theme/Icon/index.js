@@ -53,6 +53,7 @@ import liskChat from '@setup/react/assets/images/icons/lisk-chat.svg';
 import liskLogo from '@setup/react/assets/images/lisk-logo-v2.svg';
 import liskLogoDark from '@setup/react/assets/images/lisk-logo-dark.svg';
 import liskLogoWhite from '@setup/react/assets/images/lisk-logo-white-v2.svg';
+import liskLogoWhiteNormalized from '@setup/react/assets/images/lisk-logo-white-v2-normalized.svg';
 import logout from '@setup/react/assets/images/icons/logout.svg';
 import logoutActive from '@setup/react/assets/images/icons/logout-active.svg';
 import lskIcon from '@setup/react/assets/images/icons/icon-lsk.svg';
@@ -65,6 +66,7 @@ import okIcon from '@setup/react/assets/images/icons/icon-checkmark.svg';
 import outgoing from '@setup/react/assets/images/icons/outgoing.svg';
 import pending from '@setup/react/assets/images/icons/pending.svg';
 import searchActive from '@setup/react/assets/images/icons/search-active.svg';
+import searchSlim from '@setup/react/assets/images/icons/search-slim.svg';
 import search from '@setup/react/assets/images/icons/search.svg';
 import searchInput from '@setup/react/assets/images/icons/search-input.svg';
 import settings from '@setup/react/assets/images/icons/settings.svg';
@@ -284,6 +286,7 @@ export const icons = {
   liskChat,
   liskLogo,
   liskLogoWhite,
+  liskLogoWhiteNormalized,
   logout,
   logoutActive,
   lskIcon,
@@ -293,6 +296,7 @@ export const icons = {
   outgoing,
   pending,
   searchActive,
+  searchSlim,
   search,
   settings,
   settingsActive,
