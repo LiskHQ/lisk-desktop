@@ -55,7 +55,7 @@ export const validateState = ({ mandatoryKeys, optionalKeys, numberOfSignatures,
 };
 
 // eslint-disable-next-line max-statements
-const Form = ({ nextStep, prevState = {} }) => {
+const Form = ({ nextStep, prevState = {}, onNext }) => {
   const { t } = useTranslation();
   const [numberOfSignatures, setNumberOfSignatures] = useState(() =>
     getInitialSignaturesState(prevState)
@@ -63,7 +63,7 @@ const Form = ({ nextStep, prevState = {} }) => {
   const [members, setMembers] = useState(() => getInitialMembersState(prevState));
 
   const [currentApplication] = useCurrentApplication();
-  const { data: tokens } = useTokensBalance(currentApplication)
+  const { data: tokens } = useTokensBalance(currentApplication);
   const defaultToken = useMemo(() => tokens?.data?.[0] || {}, [tokens]);
 
   const [mandatoryKeys, optionalKeys] = useMemo(() => {
@@ -107,6 +107,7 @@ const Form = ({ nextStep, prevState = {} }) => {
   };
 
   const onConfirm = (formProps, transactionJSON) => {
+    onNext?.(transactionJSON);
     nextStep({ formProps, transactionJSON });
   };
 

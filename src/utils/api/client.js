@@ -2,7 +2,7 @@
 import io from 'socket.io-client';
 import axios from 'axios';
 import { METHOD } from 'src/const/config';
-import qs from 'qs';
+import qs from 'querystring-es3';
 import { removeKeysWithoutValue } from '../removeKeysWithoutValue';
 
 export class Client {

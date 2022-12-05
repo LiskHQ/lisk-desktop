@@ -40,13 +40,12 @@ export const getTransactionSignatureStatus = (senderAccount, transaction) => {
     const { params: { mandatoryKeys, optionalKeys } } = transaction;
     const numberOfSignatures = mandatoryKeys.length + optionalKeys.length;
     const paramsSignature = transaction.params.signatures.filter(
-      s => s !== Buffer.alloc(64).toString('hex')
+      s => s.toString('hex') !== Buffer.alloc(64).toString('hex')
     );
 
     if (paramsSignature.length !== numberOfSignatures) {
       return signatureCollectionStatus.partiallySigned
     }
-
     if (paramsSignature.length === numberOfSignatures && transaction.signatures.length > 0) {
       return signatureCollectionStatus.fullySigned
     }

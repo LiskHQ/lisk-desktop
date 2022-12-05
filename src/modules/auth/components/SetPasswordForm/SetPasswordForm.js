@@ -38,13 +38,12 @@ function SetPasswordForm({ onSubmit, recoveryPhrase }) {
     resolver: yupResolver(setPasswordFormSchema),
   });
   const formValues = watch();
-  const {
-    password, cPassword, accountName, hasAgreed,
-  } = formValues;
+  const { password, cPassword, hasAgreed } = formValues;
 
-  const isButtonDisabled = useMemo(() =>
-    !password?.length || !cPassword?.length || !hasAgreed,
-  [formValues.password, formValues.cPassword, formValues.hasAgreed]);
+  const isButtonDisabled = useMemo(
+    () => !password?.length || !cPassword?.length || !hasAgreed,
+    [formValues.password, formValues.cPassword, formValues.hasAgreed]
+  );
 
   const onFormSubmit = async (values) => {
     const { error, result } = await encryptAccount({
@@ -66,7 +65,9 @@ function SetPasswordForm({ onSubmit, recoveryPhrase }) {
       <div className={`${styles.titleHolder} ${grid['col-xs-12']}`}>
         <h1>{t('Set up device password')}</h1>
         <p>
-          {t('This password is used to encrypt your secret recovery phrase, which will be used for managing your account.')}
+          {t(
+            'This password is used to encrypt your secret recovery phrase, which will be used for managing your account.'
+          )}
         </p>
       </div>
       <form onSubmit={handleSubmit(onFormSubmit)}>
@@ -76,23 +77,18 @@ function SetPasswordForm({ onSubmit, recoveryPhrase }) {
             secureTextEntry
             feedback={errors.password?.message}
             status={errors.password ? 'error' : undefined}
-            defaultValues=""
-            value={password}
-            label={(
+            label={
               <span className="password-label-wrapper">
                 Enter Password
-                <Tooltip
-                  position="right"
-                  title={t('Requirements')}
-                >
+                <Tooltip position="right" title={t('Requirements')}>
                   <p>
-                    {
-                      t('Password should be a combination of uppercase and lowercase alpha numeric characters with length more than 8')
-                    }
+                    {t(
+                      'Password should be a combination of uppercase and lowercase alpha numeric characters with length more than 8'
+                    )}
                   </p>
                 </Tooltip>
               </span>
-            )}
+            }
             {...register('password')}
           />
         </div>
@@ -103,8 +99,6 @@ function SetPasswordForm({ onSubmit, recoveryPhrase }) {
             feedback={errors.cPassword?.message}
             status={errors.cPassword ? 'error' : undefined}
             label="Confirm your Password"
-            defaultValues=""
-            value={cPassword}
             {...register('cPassword')}
           />
         </div>
@@ -114,24 +108,15 @@ function SetPasswordForm({ onSubmit, recoveryPhrase }) {
             feedback={errors.accountName?.message}
             status={errors.accountName ? 'error' : undefined}
             label="Account name (Optional)"
-            defaultValues=""
-            value={accountName}
             {...register('accountName')}
           />
         </div>
-        <div className={`${styles.checkBoxWrapper}`}>
-          <CheckBox
-            className={`${styles.checkbox}`}
-            {...register('hasAgreed')}
-          />
+        <label className={`${styles.checkBoxWrapper}`}>
+          <CheckBox className={`${styles.checkbox}`} {...register('hasAgreed')} />
           <span>{t('I agree to store my encrypted secret recovery phrase on this device.')}</span>
-        </div>
+        </label>
         <div className={[styles.fieldWrapper, styles.submitWrapper]}>
-          <PrimaryButton
-            type="submit"
-            style={{ width: '100%' }}
-            disabled={isButtonDisabled}
-          >
+          <PrimaryButton type="submit" style={{ width: '100%' }} disabled={isButtonDisabled}>
             {t('Save Account')}
           </PrimaryButton>
         </div>
