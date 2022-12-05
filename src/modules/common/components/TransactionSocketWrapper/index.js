@@ -7,6 +7,7 @@ import { MODULE_COMMANDS_NAME_MAP } from '@transaction/configuration/moduleComma
 import { fromRawLsk } from '@token/fungible/utils/lsk';
 import i18n from 'src/utils/i18n/i18n';
 import { useCurrentAccount } from '@account/hooks';
+import { useCurrentApplication } from '@blockchainApplication/manage/hooks';
 import { useTransactions } from '@transaction/hooks/queries';
 
 const filterIncomingTransactions = (transactions, account) =>
@@ -45,12 +46,13 @@ const showNotificationsForIncomingTransactions = (transactions, account, token) 
 const TransactionSocketWrapper = () => {
   const queryClient = useQueryClient();
   const [currentAccount] = useCurrentAccount();
+  const [{ chainID }] = useCurrentApplication();
   // Call useTransactions to initialize the cache
   useTransactions();
   client.socket.on('new.transactions', async () => {
     const oldTxns = queryClient.getQueryData([
       TRANSACTIONS,
-      '04000000',
+      chainID,
       {
         event: 'update.transactions',
         method: 'get',
