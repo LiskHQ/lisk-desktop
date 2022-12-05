@@ -5,6 +5,16 @@ import { LIMIT as limit, API_VERSION } from 'src/const/config';
 import { useCustomInfiniteQuery } from 'src/modules/common/hooks';
 import client from 'src/utils/api/client';
 
+export const useTransactionsConfig =
+  () =>
+  (customConfig = {}) => ({
+    url: `/api/${API_VERSION}/transactions`,
+    method: 'get',
+    event: 'update.transactions',
+    ...customConfig,
+    params: { limit, ...(customConfig?.params || {}) },
+  });
+
 /**
  * Creates a custom hook for transaction list query
  *
@@ -41,13 +51,7 @@ import client from 'src/utils/api/client';
 export const useTransactions = ({ config: customConfig = {}, options } = {}) => {
   const [hasUpdate, setHasUpdate] = useState(false);
   const queryClient = useQueryClient();
-  const config = {
-    url: `/api/${API_VERSION}/transactions`,
-    method: 'get',
-    event: 'update.transactions',
-    ...customConfig,
-    params: { limit, ...(customConfig?.params || {}) },
-  };
+  const config = useTransactionsConfig()(customConfig);
 
   /* istanbul ignore next */
   client.socket.on('new.transactions', () => {
@@ -59,6 +63,7 @@ export const useTransactions = ({ config: customConfig = {}, options } = {}) => 
     setHasUpdate(true);
   });
 
+  /* istanbul ignore next */
   const invalidateData = useCallback(async () => {
     setHasUpdate(false);
     await queryClient.invalidateQueries(TRANSACTIONS);
