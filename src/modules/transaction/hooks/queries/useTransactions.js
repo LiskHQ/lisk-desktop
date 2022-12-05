@@ -1,6 +1,9 @@
+import { useState, useCallback } from 'react';
+import { useQueryClient } from '@tanstack/react-query';
 import { TRANSACTIONS } from 'src/const/queries';
 import { LIMIT as limit, API_VERSION } from 'src/const/config';
 import { useCustomInfiniteQuery } from 'src/modules/common/hooks';
+import client from 'src/utils/api/client';
 
 /**
  * Creates a custom hook for transaction list query
@@ -36,6 +39,8 @@ import { useCustomInfiniteQuery } from 'src/modules/common/hooks';
  */
 
 export const useTransactions = ({ config: customConfig = {}, options } = {}) => {
+  const [hasUpdate, setHasUpdate] = useState(false);
+  const queryClient = useQueryClient();
   const config = {
     url: `/api/${API_VERSION}/transactions`,
     method: 'get',
@@ -43,9 +48,31 @@ export const useTransactions = ({ config: customConfig = {}, options } = {}) => 
     ...customConfig,
     params: { limit, ...(customConfig?.params || {}) },
   };
-  return useCustomInfiniteQuery({
+
+  /* istanbul ignore next */
+  client.socket.on('new.transactions', () => {
+    setHasUpdate(true);
+  });
+
+  /* istanbul ignore next */
+  client.socket.on('delete.transactions', () => {
+    setHasUpdate(true);
+  });
+
+  const invalidateData = useCallback(async () => {
+    setHasUpdate(false);
+    await queryClient.invalidateQueries(TRANSACTIONS);
+  }, [queryClient, setHasUpdate]);
+
+  const response = useCustomInfiniteQuery({
     keys: [TRANSACTIONS],
     config,
     options,
   });
+
+  return {
+    ...response,
+    hasUpdate,
+    addUpdate: invalidateData,
+  };
 };

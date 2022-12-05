@@ -2,7 +2,7 @@ import React from 'react';
 import { useQueryClient } from '@tanstack/react-query';
 import { toast } from 'react-toastify';
 import client from 'src/utils/api/client';
-import { TRANSACTIONS } from 'src/const/queries';
+import { TRANSACTIONS, AUTH } from 'src/const/queries';
 import { MODULE_COMMANDS_NAME_MAP } from '@transaction/configuration/moduleCommand';
 import { fromRawLsk } from '@token/fungible/utils/lsk';
 import i18n from 'src/utils/i18n/i18n';
@@ -59,6 +59,7 @@ const TransactionSocketWrapper = () => {
       },
     ]).pages[0].data;
     await queryClient.invalidateQueries(TRANSACTIONS);
+    await queryClient.invalidateQueries(AUTH);
     // Get latest txs from cache
     const newTxns = queryClient.getQueryData([
       TRANSACTIONS,
