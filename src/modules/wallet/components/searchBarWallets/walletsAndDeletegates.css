@@ -13,7 +13,7 @@
   background: var(--color-white);
   border-radius: 0 0 var(--border-radius-box) var(--border-radius-box);
   border-top: solid 1px var(--color-mystic);
-  margin-top: -10px;
+  margin-top: -8px;
 }
 
 .header {

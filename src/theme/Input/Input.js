@@ -102,7 +102,7 @@ const Input = forwardRef(({
           && (typeof icon === 'string' ? (
             <Icon name={icon} className={`${styles.icon} ${iconClassName}`} />
           ) : (
-            <span className={styles.icon}>{icon}</span>
+            <span className={`${styles.icon} ${iconClassName}`}>{icon}</span>
           ))}
         {status === 'pending' && (
           <Spinner

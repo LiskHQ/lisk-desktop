@@ -141,6 +141,7 @@ or "warn/action" ineastd of "red/green"
   --color-dark-gray: #868ba1;
   --color-light-gray: #e6e6e6;
   --color-very-light-gray: #dfe6f2;
+  --color-very-light-gray-20: rgba(223, 230, 242, 0.2);
   --color-extra-light-gray: #dbe1ee;
   --color-content-grayblue: #7383a7;
   --color-background-wrapper: var(--color-mystic);
@@ -168,6 +169,7 @@ or "warn/action" ineastd of "red/green"
   --color-side-bar: var(--color-maastricht-blue);
   --color-search-container: #1d2b52;
   --color-periwinkle-blue: #c5cfe4;
+  --color-periwinkle-blue--manatee-gray: var(--color-periwinkle-blue);
   --color-vote-item-bg: var(--color-silver);
   --color-yellow-transparent: rgba(247, 227, 109, 0.3);
   --color-red-transparent: rgba(255, 69, 87, 0.1);
@@ -276,6 +278,7 @@ or "warn/action" ineastd of "red/green"
   --color-top-bar: #232325;
   --color-side-bar: #1c1c1e;
   --tab-border-color: #4070f4;
+  --color-periwinkle-blue--manatee-gray: var(--color-manatee-gray);
   --color-search-container: var(--color-body-bg);
   --color-vote-item-bg: var(--color-mystic);
   --color-tooltip-bg: rgb(35, 35, 37, 0.7);

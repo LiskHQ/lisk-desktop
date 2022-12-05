@@ -1,0 +1,5 @@
+@import '../../../../../setup/react/app/mixins.css';
+
+.IconSearch {
+  stroke: var(--color-periwinkle-blue--manatee-gray);
+}
