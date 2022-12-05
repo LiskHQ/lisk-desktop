@@ -1,5 +1,7 @@
 import React from 'react';
-import { getModuleCommandTitle } from '@transaction/utils/moduleAssets';
+import { getModuleCommandTitle, joinModuleAndCommand } from '@transaction/utils/moduleCommand';
+import { extractAddressFromPublicKey } from '@wallet/utils/account';
+
 import TransactionDetailsContext from '../../context/transactionDetailsContext';
 import TransactionTypeFigure from '../TransactionTypeFigure';
 import styles from './styles.css';
@@ -7,15 +9,17 @@ import styles from './styles.css';
 const Illustration = () => {
   const params = React.useContext(TransactionDetailsContext);
   const {
-    transaction: { sender, moduleCommandID },
+    transaction: { senderPublicKey, module, command },
   } = params;
-  const title = getModuleCommandTitle()[moduleCommandID];
+  const moduleCommand = joinModuleAndCommand(module, command);
+  const title = getModuleCommandTitle()[moduleCommand];
+  const address = extractAddressFromPublicKey(senderPublicKey);
 
   return (
     <div className={styles.illustration}>
       <TransactionTypeFigure
-        address={sender.address}
-        moduleCommandID={moduleCommandID}
+        address={address}
+        moduleCommand={moduleCommand}
         iconOnly
       />
       <h2 className="tx-header">{title}</h2>

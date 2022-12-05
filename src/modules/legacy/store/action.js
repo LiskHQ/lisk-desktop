@@ -1,45 +1,43 @@
 import { to } from 'await-to-js';
-import { createGenericTx } from '@transaction/api';
+import { signTransaction } from '@transaction/api';
 import actionTypes from '@transaction/store/actionTypes';
 import { selectActiveTokenAccount } from 'src/redux/selectors';
 
-// eslint-disable-next-line import/prefer-default-export
-export const balanceReclaimed = (
-  transactionObject,
-  privateKey,
-  publicKey,
-) => async (dispatch, getState) => {
-  //
-  // Collect data
-  //
-  const state = getState();
-  const activeWallet = selectActiveTokenAccount(state);
+export const balanceReclaimed =
+  (formProps, transactionJSON, privateKey, _, txInitiatorAccount, moduleCommandSchemas) =>
+  async (dispatch, getState) => {
+    //
+    // Collect data
+    //
+    const state = getState();
+    const activeWallet = selectActiveTokenAccount(state);
 
-  //
-  // Create the transaction
-  //
-  const [error, tx] = await to(
-    createGenericTx({
-      network: state.network,
-      wallet: activeWallet,
-      transactionObject,
-      privateKey,
-      publicKey,
-    }),
-  );
+    //
+    // Create the transaction
+    //
+    const [error, tx] = await to(
+      signTransaction({
+        privateKey,
+        transactionJSON,
+        wallet: activeWallet,
+        schema: moduleCommandSchemas[formProps.moduleCommand],
+        chainID: state.network.networks.LSK.chainID,
+        senderAccount: txInitiatorAccount,
+      })
+    );
 
-  //
-  // Dispatch corresponding action
-  //
-  if (!error) {
-    dispatch({
-      type: actionTypes.transactionCreatedSuccess,
-      data: tx,
-    });
-  } else {
-    dispatch({
-      type: actionTypes.transactionSignError,
-      data: error,
-    });
-  }
-};
+    //
+    // Dispatch corresponding action
+    //
+    if (!error) {
+      dispatch({
+        type: actionTypes.transactionCreatedSuccess,
+        data: tx,
+      });
+    } else {
+      dispatch({
+        type: actionTypes.transactionSignError,
+        data: error,
+      });
+    }
+  };

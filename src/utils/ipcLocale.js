@@ -1,5 +1,7 @@
 export default {
-  init: (i18n) => { // eslint-disable-line max-statements
+  // @TODO
+  // eslint-disable-next-line max-statements
+  init: (i18n) => {
     const { ipc } = window;
     let localeInit = false;
 

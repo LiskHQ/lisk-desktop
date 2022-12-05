@@ -9,18 +9,14 @@ describe('Table', () => {
       data: [],
       canLoadMore: false,
       isLoading: true,
+      isFetching: true,
       row: () => <div />,
       header: [],
     };
-    it('should render a loader if data is loading with default template', () => {
-      const wrapper = mount(<Table {...props} />);
-      expect(wrapper.find('Loading')).toHaveLength(1);
-    });
 
-    it('should render a loader if data is loading with default template', () => {
-      props.loadingState = () => <div>custom_loading</div>;
+    it('should render a loader if data is loading', () => {
       const wrapper = mount(<Table {...props} />);
-      expect(wrapper).toHaveText('custom_loading');
+      expect(wrapper.find('.skeletonRowWrapper').at(0)).toBeTruthy();
     });
   });
 
@@ -31,23 +27,30 @@ describe('Table', () => {
       isLoading: false,
       row: () => <div />,
       header: [],
-      error: { message: 'Data not found' },
+      error: { message: 'Data not found', response: { status: 404 } },
     };
+
     it('should render an empty template if data is empty with default template', () => {
       const wrapper = mount(<Table {...props} />);
       expect(wrapper.find('Empty')).toHaveLength(1);
     });
+
     it('should render an empty template if data is empty with custom config', () => {
       const emptyState = {
         message: 'custom_message',
         illustration: 'emptyBookmarksList',
       };
-      const wrapper = mount(<Table {...props} emptyState={emptyState} />);
+      const wrapper = mount(
+        <Table {...props} error={{ response: { status: 404 } }} emptyState={emptyState} />
+      );
       expect(wrapper).toHaveText('custom_message');
     });
+
     it('should render an empty template if data is empty with custom template', () => {
       const emptyState = () => <div>custom_empty_template</div>;
-      const wrapper = mount(<Table {...props} emptyState={emptyState} />);
+      const wrapper = mount(
+        <Table {...props} emptyState={emptyState} error={{ response: { status: 404 } }} />
+      );
       expect(wrapper).toHaveText('custom_empty_template');
     });
   });
@@ -55,14 +58,18 @@ describe('Table', () => {
   describe('List', () => {
     const Row = ({ data }) => <div>{data.address}</div>;
     const props = {
-      data: Object.keys(accounts).filter(key => key !== 'any account').map(key => accounts[key]),
+      data: Object.keys(accounts)
+        .filter((key) => key !== 'any account')
+        .map((key) => accounts[key]),
       canLoadMore: false,
       isLoading: false,
       row: Row,
-      header: [{
-        title: 'Header Item',
-        classList: 'header-item',
-      }],
+      header: [
+        {
+          title: 'Header Item',
+          classList: 'header-item',
+        },
+      ],
     };
 
     it('should render the data array in rows and use index for iteration key by default', () => {
@@ -71,7 +78,7 @@ describe('Table', () => {
     });
 
     it('should render accept function to define iteration key', () => {
-      const iterationKey = jest.fn().mockImplementation(data => data.address);
+      const iterationKey = jest.fn().mockImplementation((data) => data.address);
       mount(<Table {...props} iterationKey={iterationKey} />);
       expect(iterationKey.mock.calls.length).toBe(props.data.length);
     });

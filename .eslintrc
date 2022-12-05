@@ -1,33 +1,21 @@
 {
   "parser": "babel-eslint",
-  "extends": [
-    "airbnb",
-    "plugin:react/recommended"
-  ],
-  "plugins": [
-    "import",
-    "babel",
-    "jest"
-  ],
+  "extends": ["airbnb", "plugin:react/recommended", "prettier"],
+  "plugins": ["import", "babel", "jest", "prettier"],
   "globals": {
-    "describe": true,
-    "it": true,
-    "beforeEach": true,
-    "afterEach": true,
     "ipc": true,
-    "jest": true,
-    "expect": true,
     "PRODUCTION": true
   },
   "env": {
     "es2020": true,
     "browser": true,
-    "node": true
+    "node": true,
+    "jest": true
   },
   "settings": {
-    "import/resolver" : {
-      "alias" : {
-        "map" : [
+    "import/resolver": {
+      "alias": {
+        "map": [
           ["src", "./src/"],
           ["@fixtures", "./tests/fixtures/"],
           ["@scripts", "./scripts/"],
@@ -37,10 +25,10 @@
           ["@block", "./src/modules/block/"],
           ["@search", "./src/modules/search/"],
           ["@bookmark", "./src/modules/bookmark/"],
-          ["@common", "./packages/common/"],
+          ["@common", "./src/modules/common/"],
           ["@dpos", "./src/modules/dpos/"],
           ["@network", "./src/modules/network/"],
-          ["@settings", "./packages/settings/"],
+          ["@settings", "./src/modules/settings/"],
           ["@token", "./src/modules/token/"],
           ["@transaction", "./src/modules/transaction"],
           ["@blockchainApplication", "./src/modules/blockchainApplication"],
@@ -64,6 +52,7 @@
   },
   "rules": {
     "arrow-parens": "off",
+    "import/prefer-default-export": "off",
     "react/jsx-props-no-spreading": "off",
     "jsx-a11y/control-has-associated-label": "off",
     "import/no-cycle": "off",
@@ -105,9 +94,12 @@
     "prefer-object-spread": 2,
     "func-names": "off",
     "global-require": "off",
-    "new-cap": ["error", {
-      "newIsCapExceptions": ["mnemonic"]
-    }],
+    "new-cap": [
+      "error",
+      {
+        "newIsCapExceptions": ["mnemonic"]
+      }
+    ],
 
     "react/prop-types": "off",
     "no-plusplus": "off",
@@ -123,10 +115,7 @@
   },
   "overrides": [
     {
-      "files": [
-        "*.test.js",
-        "*.spec.js"
-      ],
+      "files": ["*.test.js", "*.spec.js"],
       "rules": {
         "max-depth": ["error", 2],
         "max-nested-callbacks": ["error", 4],

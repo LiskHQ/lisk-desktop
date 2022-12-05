@@ -1,9 +1,8 @@
 import routes from 'src/routes/routes';
 
-// eslint-disable-next-line import/prefer-default-export
 export const ACCOUNT_MENU = [
   {
-    path: routes.login.editAccountName,
+    component: 'editAccount',
     icon: 'edit',
     label: 'Edit name',
   },
@@ -18,8 +17,18 @@ export const ACCOUNT_MENU = [
     label: 'Backup account',
   },
   {
-    component: 'removeCurrentAccountFlow',
-    icon: 'remove',
+    path: routes.addAccountOptions.path,
+    icon: 'plus',
+    label: 'Add new account',
+  },
+  {
+    component: 'multiSignature',
+    icon: 'multiSignatureOutline',
+    label: 'Upgrade to multisignature',
+  },
+  {
+    component: 'removeSelectedAccount',
+    icon: 'removeRed',
     label: 'Remove account',
   },
 ];

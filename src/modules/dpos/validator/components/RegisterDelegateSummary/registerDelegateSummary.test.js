@@ -2,26 +2,51 @@ import React from 'react';
 import { mount } from 'enzyme';
 import { mountWithRouterAndStore } from 'src/utils/testHelpers';
 import accounts from '@tests/constants/wallets';
+import { useAuth } from '@auth/hooks/queries';
+import mockSavedAccounts from '@tests/fixtures/accounts';
+import { mockAuth } from 'src/modules/auth/__fixtures__';
 import Summary from './RegisterDelegateSummary';
+
+const mockedCurrentAccount = mockSavedAccounts[0];
+jest.mock('@auth/hooks/queries');
+jest.mock('@account/hooks', () => ({
+  useCurrentAccount: jest.fn(() => [mockedCurrentAccount, jest.fn()]),
+}));
 
 describe('Delegate Registration Summary', () => {
   const props = {
     delegateRegistered: jest.fn(),
-    rawTx: {
+    formProps: {
+      composedFees: {
+        Initialisation: '0 LSK',
+        Transaction: '0 LSK',
+      },
+      isValid: true,
+      moduleCommand: 'dpos:registerDelegate',
+    },
+    selectedPriority: { title: 'Normal', selectedIndex: 0, value: 0 },
+    transactionJSON: {
+      fee: '0',
+      nonce: '1',
+      signatures: [],
+      senderPublicKey: accounts.genesis.summary.publicKey,
+      module: 'dpos',
+      command: 'registerDelegate',
       params: {
         username: 'mydelegate',
       },
-      moduleCommandID: '5:0',
     },
     account: accounts.genesis,
     prevStep: jest.fn(),
     nextStep: jest.fn(),
-    t: key => key,
+    t: (key) => key,
   };
 
   afterEach(() => {
     props.nextStep.mockRestore();
   });
+
+  useAuth.mockReturnValue({ data: mockAuth });
 
   it('renders properly Summary component', () => {
     const wrapper = mount(<Summary {...props} />);
@@ -40,14 +65,13 @@ describe('Delegate Registration Summary', () => {
   });
 
   it('submit user data when click in confirm button', () => {
-    const wrapper = mountWithRouterAndStore(
-      Summary, props, {}, {},
-    );
+    const wrapper = mountWithRouterAndStore(Summary, props, {}, {});
     expect(props.nextStep).not.toBeCalled();
     wrapper.find('button.confirm-button').simulate('click');
     expect(props.nextStep).toBeCalledWith({
       actionFunction: props.delegateRegistered,
-      rawTx: props.rawTx,
+      formProps: props.formProps,
+      transactionJSON: props.transactionJSON,
     });
   });
 });

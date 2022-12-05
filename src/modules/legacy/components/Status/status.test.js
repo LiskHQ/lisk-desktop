@@ -4,6 +4,9 @@ import TxBroadcaster from '@transaction/components/TxBroadcaster';
 import accounts from '@tests/constants/wallets';
 import Status from './Status';
 
+jest.mock('@libs/wcm/hooks/useSession', () => ({
+  respond: jest.fn(),
+}));
 describe('Status', () => {
   const props = {
     t: v => v,
@@ -19,7 +22,7 @@ describe('Status', () => {
   };
 
   const signedTransaction = {
-    id: '1000:0',
+    id: 'legacy:reclaim',
     senderPublicKey: accounts.non_migrated.summary.publicKey,
     signatures: [accounts.non_migrated.summary.publicKey],
     nonce: '19n',

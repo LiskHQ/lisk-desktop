@@ -4,18 +4,21 @@ import { withRouter } from 'react-router';
 
 import Box from 'src/theme/box';
 import grid from 'flexboxgrid/dist/flexboxgrid.css';
-import Dialog from '@theme/dialog/dialog';
+import Dialog from 'src/theme/dialog/dialog';
 import { OutlineButton } from 'src/theme/buttons';
 import Icon from 'src/theme/Icon';
 import routes from 'src/routes/routes';
+import { addSearchParamsToUrl } from 'src/utils/searchParams';
 import { useAccounts, useCurrentAccount } from '../../hooks';
 import styles from './ManageAccounts.css';
 import AccountRow from '../AccountRow';
 
-const ManageAccountsContent = ({
+export const ManageAccountsContent = ({
   isRemoveAvailable,
   title: customTitle,
   history,
+  className,
+  truncate,
 }) => {
   const { t } = useTranslation();
   const { accounts } = useAccounts();
@@ -27,7 +30,10 @@ const ManageAccountsContent = ({
     history.push(routes.addAccountOptions.path);
   }, []);
   const removeAccount = useCallback((account) => {
-    history.push(`${routes.removeSelectedAccount.path}?address=${account?.metadata?.address}`);
+    addSearchParamsToUrl(history, {
+      modal: 'removeSelectedAccount',
+      address: account?.metadata?.address,
+    });
   }, []);
   const onSelectAccount = useCallback((account) => {
     setAccount(account);
@@ -35,24 +41,22 @@ const ManageAccountsContent = ({
   }, []);
 
   return (
-    <div className={styles.wrapper}>
+    <div className={`${styles.wrapper} ${className}`}>
       <div className={styles.headerWrapper}>
         <h1 data-testid="manage-title">{showRemove ? t('Choose account') : title}</h1>
       </div>
       <Box className={styles.accountListWrapper}>
-        {
-          accounts.map((account) => (
-            <AccountRow
-              key={account.metadata.address}
-              account={account}
-              onSelect={onSelectAccount}
-              showRemove={showRemove}
-              onRemove={removeAccount}
-            />
-          ))
-        }
+        {accounts.map((account) => (
+          <AccountRow
+            key={account.metadata.address}
+            account={account}
+            onSelect={onSelectAccount}
+            onRemove={showRemove && removeAccount}
+            truncate={truncate}
+          />
+        ))}
       </Box>
-      { showRemove ? (
+      {showRemove ? (
         <OutlineButton
           className={`${styles.button} ${styles.addAccountBtn}`}
           onClick={() => setShowRemove(false)}

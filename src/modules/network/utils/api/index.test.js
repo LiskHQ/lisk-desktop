@@ -37,7 +37,7 @@ describe('API: LSK Network', () => {
       await expect(getPeers({ network, params: { version: '3.0' } })).resolves.toEqual(expectedResponse);
       expect(http).toHaveBeenCalledWith({
         baseUrl: undefined,
-        path: '/api/v2/peers',
+        path: '/api/v3/peers',
         params: { version: '3.0' },
         network,
       });
@@ -74,7 +74,7 @@ describe('API: LSK Network', () => {
       setApiResponseData(expectedResponse, http);
       await expect(getNetworkStatistics({ network })).resolves.toEqual(expectedResponse);
       expect(http).toHaveBeenCalledWith({
-        path: '/api/v2/network/statistics',
+        path: '/api/v3/network/statistics',
         network,
       });
     });
@@ -102,13 +102,13 @@ describe('API: LSK Network', () => {
           maxPayloadLength: 15360,
           minRemainingBalance: '5000000',
           moduleAssets: [
-            { id: '2:0', name: 'token:transfer' },
-            { id: '4:0', name: 'keys:registerMultisignatureGroup' },
-            { id: '5:0', name: 'dpos:registerDelegate' },
-            { id: '5:1', name: 'dpos:voteDelegate' },
-            { id: '5:2', name: 'dpos:unlockToken' },
-            { id: '5:3', name: 'dpos:reportDelegateMisbehavior' },
-            { id: '1000:0', name: 'legacyAccount:reclaimLSK' },
+            { id: 'token:transfer', name: 'token:transfer' },
+            { id: 'auth:registerMultisignature', name: 'keys:registerMultisignature' },
+            { id: 'dpos:registerDelegate', name: 'dpos:registerDelegate' },
+            { id: 'dpos:voteDelegate', name: 'dpos:voteDelegate' },
+            { id: 'dpos:unlock', name: 'dpos:unlockToken' },
+            { id: 'dpos:reportDelegateMisbehavior', name: 'dpos:reportDelegateMisbehavior' },
+            { id: 'legacy:reclaim', name: 'legacyAccount:reclaimLSK' },
           ],
           milestone: ['500000000', '400000000', '300000000', '200000000', '100000000'],
           rewards: {
@@ -123,7 +123,7 @@ describe('API: LSK Network', () => {
       setApiResponseData(expectedResponse, http);
       await expect(getNetworkStatus({ network })).resolves.toEqual(expectedResponse);
       expect(http).toHaveBeenCalledWith(expect.objectContaining({
-        path: '/api/v2/network/status',
+        path: '/api/v3/network/status',
       }));
     });
 

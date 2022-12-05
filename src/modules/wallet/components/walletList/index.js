@@ -1,31 +1,23 @@
-import React from 'react';
+import React, { useState } from 'react';
+import { useTranslation } from 'react-i18next';
 
-import Table from 'src/theme/table';
-import { DEFAULT_LIMIT } from 'src/utils/monitor';
+import { QueryTable } from '@theme/QueryTable';
+import { useTokensTopLskBalance } from '@token/fungible/hooks/queries';
 import WalletRow from '../row';
 import header from './tableHeader';
 
-const WalletTable = ({ wallets, networkStatus, t }) => {
-  /* istanbul ignore next */
-  const handleLoadMore = () => {
-    wallets.loadData({ offset: wallets.meta.count + wallets.meta.offset });
-  };
-  const supply = networkStatus.data.supply;
-  const canLoadMore = wallets.meta
-    ? wallets.meta.count === DEFAULT_LIMIT
-    : false;
+const WalletTable = () => {
+  const [params, setParams] = useState({ sort: 'balance:desc' });
+  const { t } = useTranslation();
 
   return (
-    <Table
+    <QueryTable
       showHeader
-      data={wallets.data}
-      isLoading={wallets.isLoading}
+      queryHook={useTokensTopLskBalance}
+      queryConfig={{ config: { params } }}
+      setParams={setParams}
       row={WalletRow}
-      loadData={handleLoadMore}
       header={header(t)}
-      additionalRowProps={{ supply }}
-      error={wallets.error}
-      canLoadMore={canLoadMore}
     />
   );
 };

@@ -2,34 +2,74 @@ import React, { useContext } from 'react';
 import { Link } from 'react-router-dom';
 
 import { getTxAmount } from '@transaction/utils/transaction';
-import { MODULE_COMMANDS_NAME_ID_MAP } from '@transaction/configuration/moduleAssets';
+import { MODULE_COMMANDS_NAME_MAP } from 'src/modules/transaction/configuration/moduleCommand';
 import DateTimeFromTimestamp from 'src/modules/common/components/timestamp';
+import WalletVisual from '@wallet/components/walletVisual';
+import { joinModuleAndCommand } from '@transaction/utils/moduleCommand';
 import Icon from 'src/theme/Icon';
 import Tooltip from 'src/theme/Tooltip';
+import { ROUND_LENGTH } from '@dpos/validator/consts';
 import TokenAmount from '@token/fungible/components/tokenAmount';
 import WalletVisualWithAddress from '@wallet/components/walletVisualWithAddress';
-import { truncateAddress } from '@wallet/utils/account';
+import { truncateAddress, truncateTransactionID, extractAddressFromPublicKey } from '@wallet/utils/account';
 import Spinner from 'src/theme/Spinner';
 import routes from 'src/routes/routes';
 import { getModuleCommandTitle } from '@transaction/utils';
+import { getDelegateDetailsClass } from '@dpos/validator/components/DelegatesTable/tableHeader';
 import styles from './row.css';
 import TransactionRowContext from '../../context/transactionRowContext';
 import TransactionTypeFigure from '../TransactionTypeFigure';
 import TransactionAmount from '../TransactionAmount';
 
-export const Sender = () => {
-  const { data, avatarSize } = useContext(TransactionRowContext);
+export const ID = ({ address, isWallet }) => {
+  const { data } = useContext(TransactionRowContext);
   return (
-    <WalletVisualWithAddress
-      className="transaction-row-sender"
-      address={data.sender.address}
-      transactionSubject="sender"
-      moduleCommandID={data.moduleCommandID}
-      showBookmarkedAddress
-      size={avatarSize}
-    />
+    <span className={styles.txId}>
+      {isWallet && (
+        <Icon
+          name={data.sender.address === address ? 'sentTransactionIcon' : 'receivedTransactionIcon'}
+        />
+      )}
+      {truncateTransactionID(data.id)}
+    </span>
   );
 };
+
+export const Height = () => {
+  const { data } = useContext(TransactionRowContext);
+  return <span>{data.block.height}</span>;
+};
+
+export const Round = () => {
+  const { data } = useContext(TransactionRowContext);
+  return <span>{Math.ceil(data.block.height / ROUND_LENGTH)}</span>;
+};
+
+export const Type = () => {
+  const { data } = useContext(TransactionRowContext);
+  const formatTransactionType = (txType) => txType.replace(':', ' ');
+  return <span className={styles.type}>{formatTransactionType(data.moduleCommand)}</span>;
+};
+
+export const DelegateDetails = () => {
+  const { data, activeTab } = useContext(TransactionRowContext);
+
+  return (
+    <span className={getDelegateDetailsClass(activeTab)}>
+      <div className={styles.delegateColumn}>
+        <div className={`${styles.delegateDetails}`}>
+          <WalletVisual address={data.sender.address} />
+          <div>
+            <p className={styles.delegateName}>{data.sender.name}</p>
+            <p className={styles.delegateAddress}>{truncateAddress(data.sender.address)}</p>
+          </div>
+        </div>
+      </div>
+    </span>
+  );
+};
+
+export const Sender = () => <DelegateDetails />;
 
 export const Recipient = () => {
   const { data, avatarSize } = useContext(TransactionRowContext);
@@ -38,7 +78,7 @@ export const Recipient = () => {
       className="transaction-row-recipient"
       address={data.params.recipient?.address}
       transactionSubject="recipient"
-      moduleCommandID={data.moduleCommandID}
+      moduleCommand={data.moduleCommand}
       showBookmarkedAddress
       size={avatarSize}
     />
@@ -47,14 +87,13 @@ export const Recipient = () => {
 
 export const Counterpart = () => {
   const { data, host, avatarSize } = useContext(TransactionRowContext);
-
+  const moduleCommand = joinModuleAndCommand(data);
+  const address = extractAddressFromPublicKey(data.senderPublicKey);
+  
   // Show tx icon
-  if (data.moduleCommandID !== MODULE_COMMANDS_NAME_ID_MAP.transfer && host) {
+  if (data.moduleCommand !== MODULE_COMMANDS_NAME_MAP.transfer && host) {
     return (
-      <TransactionTypeFigure
-        moduleCommandID={data.moduleCommandID}
-        address={data.sender.address}
-      />
+      <TransactionTypeFigure moduleCommand={moduleCommand} address={address} />
     );
   }
   // Show recipient
@@ -64,7 +103,7 @@ export const Counterpart = () => {
         className="transaction-row-recipient"
         address={data.params.recipient?.address}
         transactionSubject="recipient"
-        moduleCommandID={data.moduleCommandID}
+        moduleCommand={data.moduleCommand}
         showBookmarkedAddress
         size={avatarSize}
       />
@@ -76,7 +115,7 @@ export const Counterpart = () => {
       className="transaction-row-sender"
       address={data.sender.address}
       transactionSubject="sender"
-      moduleCommandID={data.moduleCommandID}
+      moduleCommand={data.moduleCommand}
       showBookmarkedAddress
       size={avatarSize}
     />
@@ -87,23 +126,19 @@ export const Date = ({ t }) => {
   const { data } = useContext(TransactionRowContext);
 
   if (data.isPending || !data.block.timestamp) {
-    return (
-      <Spinner
-        completed={!data.isPending || data.block?.timestamp}
-        label={t('Pending...')}
-      />
-    );
+    return <Spinner completed={!data.isPending || data.block?.timestamp} label={t('Pending...')} />;
   }
 
   return (
-    <DateTimeFromTimestamp time={data.block.timestamp} />
+    <div className={styles.dateTime}>
+      <DateTimeFromTimestamp time={data.block.timestamp} />
+      <DateTimeFromTimestamp onlyTime time={data.block.timestamp} />
+    </div>
   );
 };
 
 export const Amount = () => {
-  const {
-    data, layout, activeToken, host,
-  } = useContext(TransactionRowContext);
+  const { data, layout, activeToken, host } = useContext(TransactionRowContext);
 
   if (layout !== 'full') {
     return (
@@ -113,7 +148,7 @@ export const Amount = () => {
           token={activeToken}
           showRounded
           recipient={data.params.recipient?.address}
-          moduleCommandID={data.moduleCommandID}
+          moduleCommand={data.moduleCommand}
           amount={getTxAmount(data)}
         />
       </span>
@@ -141,7 +176,7 @@ export const Fee = ({ t }) => {
         content={<TokenAmount val={data.fee} token={activeToken} />}
         size="s"
       >
-        <p>{getModuleCommandTitle(t)[data.moduleCommandID]}</p>
+        <p>{getModuleCommandTitle(t)[data.moduleCommand]}</p>
       </Tooltip>
     </span>
   );
@@ -150,9 +185,7 @@ export const Fee = ({ t }) => {
 export const Status = ({ t }) => {
   const { data, currentBlockHeight } = useContext(TransactionRowContext);
   const roundSize = 103;
-  const height = currentBlockHeight
-    ? currentBlockHeight - data.block.height
-    : 0;
+  const height = currentBlockHeight ? currentBlockHeight - data.block.height : 0;
 
   return (
     <span>
@@ -171,14 +204,10 @@ export const Status = ({ t }) => {
 
 const generateVotes = (params, delegates, token, t) => {
   const voteElements = params.votes.slice(0, 1).map((vote) => (
-    <span
-      className={`${styles.container} vote-item-address`}
-      key={`vote-${vote.delegateAddress}`}
-    >
+    <span className={`${styles.container} vote-item-address`} key={`vote-${vote.delegateAddress}`}>
       <Link to={`${routes.wallet.path}?address=${vote.delegateAddress}`}>
         <span className={styles.primaryText}>
-          {delegates[vote.delegateAddress]?.dpos.delegate.username
-            ?? truncateAddress(vote.delegateAddress)}
+          {delegates[vote.delegateAddress]?.name ?? truncateAddress(vote.delegateAddress)}
         </span>
       </Link>
       <span className={`${styles.value} vote-item-value`}>
@@ -191,11 +220,7 @@ const generateVotes = (params, delegates, token, t) => {
     <div className={styles.voteDetails}>
       {voteElements}
       {params.votes.length > 1 && (
-        <span className={styles.more}>
-          {`${params.votes.length - 1} ${t(
-            'more',
-          )}...`}
-        </span>
+        <span className={styles.more}>{`${params.votes.length - 1} ${t('more')}...`}</span>
       )}
     </div>
   );
@@ -203,10 +228,10 @@ const generateVotes = (params, delegates, token, t) => {
 
 export const Params = ({ t }) => {
   const { data, delegates = [], activeToken } = useContext(TransactionRowContext);
-  const { voteDelegate, registerDelegate, transfer } = MODULE_COMMANDS_NAME_ID_MAP;
+  const { voteDelegate, registerDelegate, transfer } = MODULE_COMMANDS_NAME_MAP;
 
   const getDetails = () => {
-    switch (data.moduleCommandID) {
+    switch (data.moduleCommand) {
       case registerDelegate:
         return data.params.delegate?.username;
       case voteDelegate:

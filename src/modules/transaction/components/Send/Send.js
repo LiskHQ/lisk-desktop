@@ -1,42 +1,63 @@
 import React from 'react';
 import WalletVisual from '@wallet/components/walletVisual';
 import TokenAmount from '@token/fungible/components/tokenAmount';
-import styles from '../TransactionInfo/TransactionInfo.css';
+import styles from './send.css';
+import chainLogo from '../../../../../setup/react/assets/images/LISK.png';
 
 const Send = ({
-  transaction = {}, t, token,
+  formProps = {}, transactionJSON, t,
 }) => (
   <>
-    <section>
-      <label>{t('Recipient')}</label>
-      <label className="recipient-value">
-        <WalletVisual address={transaction.params.recipient} size={25} />
-        <label className={`${styles.information} recipient-confirm`}>
-          {transaction.params.recipient.title || transaction.params.recipient.address}
-        </label>
-        { transaction.params.recipient.title ? (
-          <span className={styles.secondText}>
-            {transaction.params.recipient.address}
-          </span>
-        ) : null }
-      </label>
+    <section className={styles.msignRow}>
+      <div className={styles.col}>
+        <div className={styles.fromToChainWrapper}>
+          <div>
+            <label>{t('From Application')}</label>
+            <div className={styles.chainWrapper}>
+              <img className={styles.chainLogo} src={chainLogo} />
+              <span>{formProps.fields.sendingChain.name}</span>
+            </div>
+          </div>
+          <div>
+            <label>{t('To Application')}</label>
+            <div className={styles.chainWrapper}>
+              <img className={styles.chainLogo} src={chainLogo} />
+              <span>{formProps.fields.recipientChain.name}</span>
+            </div>
+          </div>
+        </div>
+      </div>
     </section>
     <section className={styles.msignRow}>
       <div className={styles.col}>
         <label>{t('Amount')}</label>
-        <label className="amount-summary">
+        <span className={`${styles.valueText} amount-summary`}>
           <TokenAmount
-            val={transaction.params.amount}
-            token={token}
+            val={transactionJSON.params.amount}
+            token={formProps.fields.token.symbol}
           />
-        </label>
+        </span>
       </div>
     </section>
     <section>
-      <label>{t('Message')}</label>
-      <label className="message-value">
-        {transaction.params.data || '-'}
+      <label>{t('Recipient Address')}</label>
+      <label className="recipient-value">
+        <WalletVisual address={transactionJSON.params.recipientAddress} size={40} />
+        <div className={styles.recipientDetail}>
+          <span className={`${styles.information} recipient-confirm`}>
+            <b>{formProps.fields.recipient.title}</b>
+          </span>
+          <span className={`${styles.secondText} recipient-address`}>
+            {transactionJSON.params.recipientAddress}
+          </span>
+        </div>
       </label>
+    </section>
+    <section>
+      <label>{t('Message')}</label>
+      <span className={`${styles.valueText} message-value`}>
+        {transactionJSON.params.data || '-'}
+      </span>
     </section>
   </>
 );

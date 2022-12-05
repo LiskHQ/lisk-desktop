@@ -2,12 +2,35 @@ import React from 'react';
 import { act } from 'react-dom/test-utils';
 import { shallow } from 'enzyme';
 import Table from '@theme/table';
+import { mockTokensBalance } from 'src/modules/token/fungible/__fixtures__';
 import { MIN_ACCOUNT_BALANCE } from '@transaction/configuration/transactions';
-import { mountWithRouter } from 'src/utils/testHelpers';
+import { mountWithRouterAndQueryClient } from 'src/utils/testHelpers';
 import accounts from '@tests/constants/wallets';
 import flushPromises from '@tests/unit-test-utils/flushPromises';
+import { useTokensBalance } from '@token/fungible/hooks/queries';
+import { useCommandSchema } from '@network/hooks/useCommandsSchema';
+import { mockCommandParametersSchemas } from 'src/modules/common/__fixtures__';
 import VoteRow from './VoteRow';
 import Form from './VoteForm';
+import { useDposConstants } from '../../hooks/queries';
+import { mockDposConstants } from '../../__fixtures__/mockDposConstants';
+
+jest.mock('@token/fungible/hooks/queries');
+jest.mock('../../hooks/queries/useDposConstants');
+jest.mock('@account/hooks/useDeprecatedAccount', () => ({
+  useDeprecatedAccount: jest.fn().mockReturnValue({
+    isSuccess: true,
+    isLoading: false,
+  }),
+}));
+
+jest.mock('@account/hooks/useDeprecatedAccount', () => ({
+  useDeprecatedAccount: jest.fn().mockReturnValue({
+    isSuccess: true,
+    isLoading: false,
+  }),
+}));
+jest.mock('@network/hooks/useCommandsSchema');
 
 const addresses = [
   'lskdwsyfmcko6mcd357446yatromr9vzgu7eb8y99',
@@ -27,9 +50,10 @@ const addresses = [
 
 describe('VoteForm', () => {
   const props = {
-    t: str => str,
+    t: (str) => str,
     account: accounts.genesis,
     nextStep: jest.fn(),
+    dposToken: mockTokensBalance.data[0],
   };
 
   const mixedVotes = {
@@ -49,19 +73,23 @@ describe('VoteForm', () => {
 
   const expensiveVotes = {
     [addresses[0]]: {
-      confirmed: 0, unconfirmed: Math.floor(parseInt(accounts.genesis.token.balance, 10) / 2),
+      confirmed: 0,
+      unconfirmed: Math.floor(parseInt(accounts.genesis.token.balance, 10) / 2),
     },
     [addresses[1]]: {
-      confirmed: 0, unconfirmed: Math.floor(parseInt(accounts.genesis.token.balance, 10) / 2),
+      confirmed: 0,
+      unconfirmed: Math.floor(parseInt(accounts.genesis.token.balance, 10) / 2),
     },
   };
 
   const minimumBalanceVotes = {
     [addresses[0]]: {
-      confirmed: 0, unconfirmed: Math.floor(parseInt(accounts.genesis.token.balance, 10) * 0.6),
+      confirmed: 0,
+      unconfirmed: Math.floor(parseInt(accounts.genesis.token.balance, 10) * 0.6),
     },
     [addresses[1]]: {
-      confirmed: 0, unconfirmed: Math.floor(parseInt(accounts.genesis.token.balance, 10) * 0.4),
+      confirmed: 0,
+      unconfirmed: Math.floor(parseInt(accounts.genesis.token.balance, 10) * 0.4),
     },
   };
 
@@ -70,46 +98,68 @@ describe('VoteForm', () => {
     props.account.token.balance = accounts.genesis.token.balance;
   });
 
+  useTokensBalance.mockReturnValue({ data: mockTokensBalance, isLoading: false });
+  useDposConstants.mockReturnValue({ data: mockDposConstants });
+  useCommandSchema.mockReturnValue(
+    mockCommandParametersSchemas.data.reduce(
+      (result, { moduleCommand, schema }) => ({ ...result, [moduleCommand]: schema }),
+      {}
+    )
+  );
+
   it('Render only the changed votes', async () => {
     const wrapper = shallow(<Form {...props} votes={mixedVotes} />);
     const table = wrapper.find(Table);
-    expect(table.props()).toEqual({
-      data: [
-        {
-          address: 'lskyau2yy4993jkbd7kxcsfsrarac8macbbs8saad',
-          confirmed: 10000000000,
-          unconfirmed: 20000000000,
-        },
-      ],
-      header: expect.any(Object),
-      row: VoteRow,
-      iterationKey: 'address',
-      canLoadMore: false,
-    });
+    expect(table.props()).toEqual(
+      expect.objectContaining({
+        data: [
+          {
+            address: 'lskyau2yy4993jkbd7kxcsfsrarac8macbbs8saad',
+            confirmed: 10000000000,
+            unconfirmed: 20000000000,
+          },
+        ],
+        header: expect.any(Object),
+        row: VoteRow,
+        iterationKey: 'address',
+        canLoadMore: false,
+      })
+    );
     expect(wrapper.find('.available-votes-num').text()).toBe('8/');
   });
 
   it('Shows an error if trying to vote for more than 10 delegates', () => {
     const wrapper = shallow(<Form {...props} votes={elevenVotes} />);
-    // const wrapper = mountWithRouter(Form, { ...props, votes: elevenVotes });
-    expect(wrapper.find('.available-votes-num').text()).toBe('2/');
-    expect(wrapper.find('.feedback').text()).toBe('These votes in addition to your current votes will add up to 11, exceeding the account limit of 10.');
+    expect(wrapper.find('.available-votes-num').text()).toBe('-1/');
+    expect(wrapper.find('.feedback').text()).toBe(
+      'These votes in addition to your current votes will add up to 11, exceeding the account limit of 10.'
+    );
   });
 
   it('Shows an error if trying to vote more than your balance', async () => {
-    const wrapper = mountWithRouter(Form, { ...props, votes: expensiveVotes });
+    const wrapper = mountWithRouterAndQueryClient(Form, { ...props, votes: expensiveVotes });
     await flushPromises();
-    act(() => { wrapper.update(); });
-    expect(wrapper.find('.available-votes-num').text()).toBe('10/');
-    expect(wrapper.find('.feedback').text()).toBe('The minimum required balance for this action is {{minRequiredBalance}} {{token}}');
+    act(() => {
+      wrapper.update();
+    });
+    expect(wrapper.find('.available-votes-num').text()).toBe('8/');
+    expect(wrapper.find('.feedback').text()).toBe(
+      'The minimum required balance for this action is {{minRequiredBalance}} {{token}}'
+    );
   });
 
   it('Shows an error if trying to vote with amounts leading to insufficient balance', async () => {
-    props.account.token.balance = `${parseInt(accounts.genesis.token.balance, 10) + (MIN_ACCOUNT_BALANCE * 0.8)}`;
-    const wrapper = mountWithRouter(Form, { ...props, votes: minimumBalanceVotes });
+    props.account.token.balance = `${
+      parseInt(accounts.genesis.token.balance, 10) + MIN_ACCOUNT_BALANCE * 0.8
+    }`;
+    const wrapper = mountWithRouterAndQueryClient(Form, { ...props, votes: minimumBalanceVotes });
     await flushPromises();
-    act(() => { wrapper.update(); });
-    expect(wrapper.find('.available-votes-num').text()).toBe('10/');
-    expect(wrapper.find('.feedback').at(0).text()).toBe('The vote amounts are too high. You should keep 0.05 LSK available in your account.');
+    act(() => {
+      wrapper.update();
+    });
+    expect(wrapper.find('.available-votes-num').text()).toBe('8/');
+    expect(wrapper.find('.feedback').at(0).text()).toBe(
+      'The vote amounts are too high. You should keep 0.05 LSK available in your account.'
+    );
   });
 });

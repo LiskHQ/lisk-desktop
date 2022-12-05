@@ -15,7 +15,7 @@ import PassphraseInput from 'src/modules/wallet/components/PassphraseInput/Passp
 import Icon from 'src/theme/Icon';
 import DiscreetModeToggle from 'src/modules/settings/components/discreetModeToggle';
 import NetworkSelector from 'src/modules/settings/components/networkSelector';
-import RecoveryPhrase from '../RecoveryPhrase';
+import CustomDerivationPath from '../CustomDerivationPath';
 import styles from './login.css';
 
 const RegisterTitle = ({ t }) => (
@@ -43,7 +43,7 @@ const redirectToReferrer = (history) => {
 };
 
 const Login = ({
-  t, settings, network, history, account, login,
+  t, settings, network, history, account,
 }) => {
   const [passphrase, setPass] = useState({ value: '', isValid: false });
   const canHWSignIn = true;
@@ -58,9 +58,6 @@ const Login = ({
   const onFormSubmit = (e) => {
     e.preventDefault();
     Piwik.trackingEvent('Login', 'button', 'Login submission');
-    if (passphrase.value && passphrase.isValid) {
-      login({ passphrase: passphrase.value });
-    }
   };
 
   const handleKeyPress = (e) => {
@@ -108,7 +105,7 @@ const Login = ({
                   keyPress={handleKeyPress}
                 />
               </fieldset>
-              <RecoveryPhrase t={t} />
+              <CustomDerivationPath t={t} />
               <DiscreetModeToggle className={styles.discreetMode} />
             </div>
             <div className={`${styles.buttonsHolder}`}>

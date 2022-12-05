@@ -4,21 +4,35 @@ import { connect } from 'react-redux';
 import { compose } from 'redux';
 import PropTypes from 'prop-types';
 
-import { MODULE_COMMANDS_NAME_ID_MAP, MODULE_COMMANDS_MAP } from '@transaction/configuration/moduleAssets';
+import {
+  MODULE_COMMANDS_NAME_MAP,
+  MODULE_COMMANDS_MAP,
+} from 'src/modules/transaction/configuration/moduleCommand';
 import { truncateAddress } from '@wallet/utils/account';
-import { getModuleCommandTitle } from '@transaction/utils/moduleAssets';
+import { getModuleCommandTitle } from 'src/modules/transaction/utils/moduleCommand';
 import Icon from 'src/theme/Icon';
+import CopyToClipboard from 'src/modules/common/components/copyToClipboard';
 import WalletVisual from '../walletVisual';
 import styles from './walletVisualWithAddress.css';
 
 const WalletVisualWithAddress = ({
-  bookmarks, showBookmarkedAddress, token, address,
-  transactionSubject, moduleCommandID, size, truncate, className,
+  bookmarks,
+  showBookmarkedAddress,
+  token,
+  address,
+  accountName,
+  transactionSubject,
+  moduleCommand,
+  size,
+  truncate,
+  className,
+  detailsClassName,
+  copy,
 }) => {
   const getTransformedAddress = (addressValue) => {
     if (showBookmarkedAddress) {
       const bookmarkedAddress = bookmarks[token.active].find(
-        element => element.address === addressValue,
+        (element) => element.address === addressValue
       );
       if (bookmarkedAddress) return bookmarkedAddress.title;
     }
@@ -26,30 +40,40 @@ const WalletVisualWithAddress = ({
     return addressValue;
   };
 
-  const title = getModuleCommandTitle()[moduleCommandID];
+  const title = getModuleCommandTitle()[moduleCommand];
   const transformedAddress = getTransformedAddress(address);
-  const truncatedAddress = (truncate === 'small' || truncate === 'medium')
-    ? truncateAddress(transformedAddress, truncate)
-    : truncateAddress(transformedAddress);
-
+  const truncatedAddress =
+    truncate === 'small' || truncate === 'medium'
+      ? truncateAddress(transformedAddress, truncate)
+      : truncateAddress(transformedAddress);
+  
   return (
     <div className={`${styles.address} ${className}`}>
-      {moduleCommandID !== MODULE_COMMANDS_NAME_ID_MAP.transfer && transactionSubject === 'recipient' ? (
+      {moduleCommand !== MODULE_COMMANDS_NAME_MAP.transfer && transactionSubject === 'recipient' ? (
         <>
           <Icon
             className={styles.txIcon}
-            name={MODULE_COMMANDS_MAP[moduleCommandID]?.icon ?? 'txDefault'}
+            name={MODULE_COMMANDS_MAP[moduleCommand]?.icon ?? 'txDefault'}
           />
-          <span className={styles.addressValue}>
-            {title}
-          </span>
+          <span className={styles.addressValue}>{title}</span>
         </>
       ) : (
         <>
           <WalletVisual address={address} size={size} />
-          <span className={`${styles.addressValue}`}>
-            {truncate ? truncatedAddress : transformedAddress}
-          </span>
+          <div className={`${styles.detailsWrapper} ${detailsClassName || ''}`}>
+            {accountName && <p className="accountName">{accountName}</p>}
+            <span className={`${styles.address} accountAddress`}>
+              {truncate ? truncatedAddress : transformedAddress}
+              {copy ? (
+                <CopyToClipboard
+                  value={address}
+                  type="icon"
+                  copyClassName={styles.copyIcon}
+                  className={styles.copyIcon}
+                />
+              ) : null}
+            </span>
+          </div>
         </>
       )}
     </div>
@@ -63,7 +87,7 @@ WalletVisualWithAddress.propTypes = {
   size: PropTypes.number,
   token: PropTypes.shape().isRequired,
   transactionSubject: PropTypes.string,
-  moduleCommandID: PropTypes.string,
+  moduleCommand: PropTypes.string,
 };
 
 WalletVisualWithAddress.defaultProps = {
@@ -74,12 +98,9 @@ WalletVisualWithAddress.defaultProps = {
   truncate: true,
 };
 
-const mapStateToProps = state => ({
+const mapStateToProps = (state) => ({
   bookmarks: state.bookmarks,
   token: state.token,
 });
 
-export default compose(
-  connect(mapStateToProps),
-  withTranslation(),
-)(WalletVisualWithAddress);
+export default compose(connect(mapStateToProps), withTranslation())(WalletVisualWithAddress);

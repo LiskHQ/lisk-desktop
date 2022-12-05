@@ -6,6 +6,4 @@ export default function loginUI(passphrase) {
     const passphraseWordsArray = passphrase.split(' ');
     cy.wrap($el).type(passphraseWordsArray[index]);
   });
-  cy.get(ss.loginBtn).should('be.enabled');
-  cy.get(ss.loginBtn).click();
 }

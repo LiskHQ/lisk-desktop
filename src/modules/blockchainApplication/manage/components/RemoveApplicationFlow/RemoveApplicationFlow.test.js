@@ -3,8 +3,7 @@ import { act } from 'react-dom/test-utils';
 import { fireEvent, screen } from '@testing-library/react';
 import mockManagedApplications from '@tests/fixtures/blockchainApplicationsManage';
 import { renderWithRouter } from 'src/utils/testHelpers';
-import { usePinBlockchainApplication } from '@blockchainApplication/manage/hooks/usePinBlockchainApplication';
-import useApplicationManagement from '@blockchainApplication/manage/hooks/useApplicationManagement';
+import { usePinBlockchainApplication, useApplicationManagement } from '@blockchainApplication/manage/hooks';
 import { removeSearchParamsFromUrl, parseSearchParams } from 'src/utils/searchParams';
 import RemoveApplicationFlow from '.';
 
@@ -43,10 +42,10 @@ describe('BlockchainApplicationFlow', () => {
 
   it('should display properly', () => {
     const {
-      name, address, state, lastCertificateHeight, lastUpdated,
+      chainName, address, state, lastCertificateHeight, lastUpdated,
     } = mockManagedApplications[0];
 
-    expect(screen.getByText(name)).toBeTruthy();
+    expect(screen.getByText(chainName)).toBeTruthy();
     expect(screen.getByText(address)).toBeTruthy();
     expect(screen.getByText(state)).toBeTruthy();
     expect(screen.getByText(lastCertificateHeight)).toBeTruthy();
@@ -70,13 +69,13 @@ describe('BlockchainApplicationFlow', () => {
 
   it('should move the the success page when application is deleted', () => {
     const {
-      name,
+      chainName,
     } = mockManagedApplications[0];
 
     act(() => {
       fireEvent.click(screen.getByText('Remove application now'));
     });
     expect(screen.getByText('Application has now been removed')).toBeTruthy();
-    expect(screen.getByText(name)).toBeTruthy();
+    expect(screen.getByText(chainName)).toBeTruthy();
   });
 });

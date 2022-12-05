@@ -8,6 +8,9 @@ import flushPromises from '@tests/unit-test-utils/flushPromises';
 import { mountWithRouterAndStore } from 'src/utils/testHelpers';
 import Status from './Status';
 
+jest.mock('@libs/wcm/hooks/useSession', () => ({
+  respond: jest.fn(),
+}));
 describe('unlock transaction Status', () => {
   const props = {
     t: (key) => key,
@@ -21,16 +24,26 @@ describe('unlock transaction Status', () => {
     transactions: {
       txBroadcastError: null,
       txSignatureError: null,
-      signedTransaction: { signatures: ['123'] },
+      signedTransaction: { signatures: ['123'], params: {} },
     },
     bookmarks: {
       LSK: [],
     },
     token: 'LSK',
+    transactionJSON: {
+      nonce: '19n',
+      module: 'token',
+      command: 'transfer',
+      params: {
+        recipientAddress: accounts.delegate.summary.address,
+      },
+      id: 'test_id',
+      signatures: [accounts.genesis.summary.publicKey],
+    },
   };
 
   const signedTransaction = {
-    id: '2:0',
+    id: 'token:transfer',
     sender: { publicKey: accounts.genesis.summary.publicKey },
     signatures: [accounts.genesis.summary.publicKey],
     nonce: '19n',
@@ -52,7 +65,7 @@ describe('unlock transaction Status', () => {
       illustration: 'default',
       status: { code: 'SIGNATURE_SUCCESS' },
       title: 'Submitting the transaction',
-      message: 'Your transaction is being submitted to the blockchain.',
+      message: 'Your transaction is signed successfully.',
     });
     expect(wrapper.find(DialogLink).props()).toMatchObject({
       component: 'addBookmark',
@@ -82,8 +95,7 @@ describe('unlock transaction Status', () => {
         message: JSON.stringify({ message: 'error:test' }),
       },
       title: 'Transaction failed',
-      message:
-        'An error occurred while signing your transaction. Please try again.',
+      message: 'An error occurred while signing your transaction. Please try again.',
     });
   });
 
@@ -111,8 +123,7 @@ describe('unlock transaction Status', () => {
         message: JSON.stringify({ message: 'error:test' }),
       },
       title: 'Transaction failed',
-      message:
-        'An error occurred while sending your transaction to the network. Please try again.',
+      message: 'An error occurred while sending your transaction to the network. Please try again.',
     });
   });
 
@@ -191,7 +202,7 @@ describe('unlock transaction Status', () => {
           txSignatureError: null,
           signedTransaction: { signatures: ['123'] },
         },
-      },
+      }
     );
     await flushPromises();
     act(() => {

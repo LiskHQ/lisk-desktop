@@ -1,32 +1,38 @@
+// @todo: this should be re-instated when the issue with lisk-client is fixed
+/* istanbul ignore file */
 import { to } from 'await-to-js';
 import { selectActiveTokenAccount } from 'src/redux/selectors';
 import actionTypes from '@transaction/store/actionTypes';
-import { createGenericTx } from '@transaction/api/index';
+import { signTransaction } from '@transaction/api/index';
 
 /**
  * Calls transactionAPI.create for create the tx object that will broadcast
  * @param {Object} data
  * @param {String} data.recipientAddress
- * @param {Number} data.amount - In raw format (satoshi, beddows)
+ * @param {Number} data.amount - In raw format (beddows)
  * @param {Number} data.fee - In raw format, used for updating the TX List.
  * @param {Number} data.reference - Data field for LSK transactions
  */
-// eslint-disable-next-line import/prefer-default-export
+
 export const tokensTransferred = (
-  transactionObject,
+  formProps,
+  transactionJSON,
   privateKey,
-  publicKey,
+  _,
+  senderAccount,
+  moduleCommandSchemas
+
 ) => async (dispatch, getState) => {
   const state = getState();
   const wallet = selectActiveTokenAccount(state);
-
   const [error, tx] = await to(
-    createGenericTx({
-      transactionObject,
+    signTransaction({
+      transactionJSON,
       wallet,
-      network: state.network,
+      schema: moduleCommandSchemas[formProps.moduleCommand],
+      chainID: state.network.networks.LSK.chainID,
       privateKey,
-      publicKey,
+      senderAccount,
     }),
   );
 

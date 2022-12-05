@@ -1,32 +1,38 @@
-import React, { useState } from 'react';
-
+import React, { useCallback, useState } from 'react';
+import { useCurrentAccount } from '@account/hooks';
 import Box from 'src/theme/box';
 import BoxHeader from 'src/theme/box/header';
 import MultiStep from 'src/modules/common/components/OldMultiStep';
 import Dialog from 'src/theme/dialog/dialog';
+import TxSignatureCollector from '@transaction/components/TxSignatureCollector';
 import MessageForm from '../messageForm';
 import SignedMessage from '../signedMessage';
-import SignatureCollector from '../signatureCollector';
 import styles from './signMessageView.css';
 
-const signMessageView = ({ account, t, history }) => {
-  const [isNext, setIsNext] = useState(true);
+const signMessageView = ({ account, t, history, signMessage }) => {
+  const [multiStepPosition, setMultiStepPosition] = useState(0);
+  const [
+    {
+      metadata: { pubkey },
+    },
+  ] = useCurrentAccount();
+
+  const onMultiStepChange = useCallback(({ step: { current } }) => {
+    setMultiStepPosition(current);
+  }, []);
 
   return (
     <Dialog hasClose className={styles.wrapper}>
       <Box>
-        <BoxHeader>
-          <h1>{t('Sign message')}</h1>
-        </BoxHeader>
-        <MultiStep>
-          <MessageForm t={t} history={history} onNext={() => setIsNext(true)} />
-          <SignatureCollector t={t} isNext={isNext} account={account} />
-          <SignedMessage
-            t={t}
-            history={history}
-            account={account}
-            onPrev={() => setIsNext(false)}
-          />
+        {multiStepPosition !== 1 && (
+          <BoxHeader>
+            <h1>{t('Sign message')}</h1>
+          </BoxHeader>
+        )}
+        <MultiStep onChange={onMultiStepChange}>
+          <MessageForm history={history} signMessage={signMessage} />
+          <TxSignatureCollector transactionJSON={{ senderPublicKey: pubkey, params: {} }} />
+          <SignedMessage history={history} account={account} />
         </MultiStep>
       </Box>
     </Dialog>

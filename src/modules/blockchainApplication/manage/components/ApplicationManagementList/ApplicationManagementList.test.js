@@ -1,11 +1,13 @@
 import { fireEvent, screen } from '@testing-library/react';
 import mockManagedApplications from '@tests/fixtures/blockchainApplicationsManage';
-import { usePinBlockchainApplication } from '@blockchainApplication/manage/hooks/usePinBlockchainApplication';
-import useApplicationManagement from '@blockchainApplication/manage/hooks/useApplicationManagement';
+import {
+  usePinBlockchainApplication,
+  useApplicationManagement,
+  useCurrentApplication,
+} from '@blockchainApplication/manage/hooks';
 import { renderWithRouter } from 'src/utils/testHelpers';
 import { addSearchParamsToUrl } from 'src/utils/searchParams';
 import ApplicationManagementList from './ApplicationManagementList';
-import { useCurrentApplication } from '../../hooks/useCurrentApplication';
 
 jest.mock('@blockchainApplication/manage/hooks/usePinBlockchainApplication');
 jest.mock('@blockchainApplication/manage/hooks/useCurrentApplication');
@@ -46,8 +48,8 @@ describe('ApplicationManagementList', () => {
   it('should display properly', () => {
     expect(screen.getByText('Applications')).toBeTruthy();
     expect(screen.getByText('Add application')).toBeTruthy();
-    mockManagedApplications.forEach(({ name }) => {
-      expect(screen.getByText(name)).toBeTruthy();
+    mockManagedApplications.forEach(({ chainName }) => {
+      expect(screen.getByText(chainName)).toBeTruthy();
     });
   });
 

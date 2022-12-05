@@ -1,0 +1,41 @@
+.skeletonWrapper {
+  width: 100%;
+  background-color: var(--color-very-light-gray);
+  animation: skeletonLoaderAnimation 2s linear;
+  animation-iteration-count: infinite;
+
+  &.circle {
+    border-radius: 50%;
+  }
+
+  &.rect {
+    border-radius: 100px;
+  }
+
+  &.walletWithAddress {
+    height: 40px !important;
+    width: 40px !important;
+    border-radius: 50%;
+    margin-right: 10px;
+
+    & ~ div {
+      width: 40% !important;
+      height: 15px !important;
+      border-radius: 40px;
+    }
+  }
+}
+
+@keyframes skeletonLoaderAnimation {
+  0% {
+    opacity: 100%;
+  }
+
+  50% {
+    opacity: 20%;
+  }
+
+  100% {
+    opacity: 100%;
+  }
+}

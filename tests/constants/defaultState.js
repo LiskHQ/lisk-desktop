@@ -1,4 +1,5 @@
 import wallets from './wallets';
+import savedAccounts from '../fixtures/accounts';
 import moduleCommandSchemas from './schemas';
 
 export default {
@@ -45,11 +46,6 @@ export default {
     delegates: [],
     votes: {},
   },
-  blocks: {
-    latestBlocks: [],
-    awaitingForgers: [],
-    forgingTimes: {},
-  },
   appUpdates: {},
   transactions: {
     signedTransaction: {},
@@ -57,8 +53,8 @@ export default {
     txBroadcastError: null,
   },
   account: {
-    current: {},
-    list: {},
+    current: savedAccounts[0],
+    list: savedAccounts,
   },
   blockChainApplications: {
     pins: [],

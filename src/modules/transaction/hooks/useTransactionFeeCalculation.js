@@ -1,5 +1,5 @@
-import { useSelector } from 'react-redux';
 import { useEffect, useReducer } from 'react';
+import { useCommandSchema } from '@network/hooks';
 import { getTransactionFee } from '../api';
 import { getNumberOfSignatures } from '../utils/transaction';
 import { actionTypes, reducer, getInitialState } from '../store/transactionPriorityReducer';
@@ -16,10 +16,14 @@ import { actionTypes, reducer, getInitialState } from '../store/transactionPrior
  * @returns {object}
  */
 const useTransactionFeeCalculation = ({
-  token, wallet, selectedPriority, transaction, priorityOptions,
+  token,
+  wallet,
+  selectedPriority,
+  transactionJSON,
+  priorityOptions,
 }) => {
-  const network = useSelector(state => state.network);
   const [state, dispatch] = useReducer(reducer, wallet, getInitialState);
+  const { moduleCommandSchemas } = useCommandSchema();
 
   const calculateTransactionFees = async (params) => {
     const fee = await getTransactionFee(params);
@@ -34,7 +38,7 @@ const useTransactionFeeCalculation = ({
 
     const maxAmountFee = await getTransactionFee({
       ...params,
-      transaction: { ...params.transaction, amount: wallet.token?.balance },
+      transactionJSON: { ...params.transactionJSON, amount: wallet.token?.balance },
     });
 
     dispatch({
@@ -44,19 +48,18 @@ const useTransactionFeeCalculation = ({
   };
 
   useEffect(() => {
-    calculateTransactionFees({
-      token,
-      wallet,
-      network,
-      transaction,
-      selectedPriority,
-      numberOfSignatures: getNumberOfSignatures(wallet, transaction),
-    });
-  }, [
-    transaction.params,
-    selectedPriority.selectedIndex,
-    selectedPriority.value,
-  ]);
+    // istanbul ignore else
+    if (moduleCommandSchemas) {
+      calculateTransactionFees({
+        token,
+        wallet,
+        moduleCommandSchemas,
+        transactionJSON,
+        selectedPriority,
+        numberOfSignatures: getNumberOfSignatures(wallet, transactionJSON),
+      });
+    }
+  }, [transactionJSON.params, selectedPriority.selectedIndex, selectedPriority.value]);
 
   return state;
 };

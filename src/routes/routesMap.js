@@ -1,13 +1,13 @@
 import AddBookmark from '@bookmark/manager/AddBookmarkManager';
 import BlockDetails from '@block/manager/blockDetailsManager';
-import Blocks from '@block/manager/blocksManager';
+import Blocks from '@block/components/blocks';
 import Bookmarks from '@bookmark/manager/BookmarkListManager';
 import Dashboard from 'src/modules/common/components/dashboard';
 import DelegatesMonitor from '@dpos/validator/components/DelegatesMonitorView';
 import DelegatesPerformanceModal from '@dpos/validator/components/delegatePerformanceModal';
 import HwWalletLogin from '@auth/components/hwWalletLogin';
 import Login from '@auth/components/Signin';
-import MonitorWallets from '@account/manager/AccountsManager';
+import MonitorWallets from '@account/components/Accounts';
 import MonitorNetwork from '@network/manager/networkManager';
 import MonitorTransactions from '@transaction/components/Transactions';
 import Register from '@auth/manager/SignupManager';
@@ -18,7 +18,7 @@ import SignMessage from '@message/manager/signMessageManager';
 import TermsOfUse from 'src/modules/common/components/TermsOfUse';
 import Explorer from '@wallet/manager/explorerManager';
 import AccountDetails from '@account/components/AccountDetails';
-import TransactionDetailsModal from '@transaction/manager/transactionDetailViewManager';
+import TransactionDetails from '@transaction/manager/transactionDetailViewManager';
 import VerifyMessage from '@message/manager/verifyMessageManager';
 import Request from '@wallet/components/request';
 import UnlockBalanceView from '@dpos/validator/components/UnlockBalanceView';
@@ -26,7 +26,6 @@ import EditVote from '@dpos/validator/manager/editVoteManager';
 import VotingQueue from '@dpos/validator/manager/votingQueueManager';
 import DeviceDisconnect from 'src/modules/common/components/deviceDisconnectDialog';
 import NewReleaseDialog from '@update/detail/info/newReleaseDialog';
-import SearchBar from '@search/components/SearchBar';
 import ReclaimBalance from '@legacy/manager/reclaimBalance';
 import ReclaimBalanceModal from '@legacy/manager/reclaimBalanceModal';
 import RegisterMultisig from '@wallet/manager/registerMultisigManager';
@@ -38,20 +37,29 @@ import AddAccountBySecretRecovery from '@account/components/AddAccountBySecretRe
 import AddAccountByFile from '@account/components/AddAccountByFile';
 import AddAccountForm from '@account/components/AddAccountForm';
 import SwitchAccount from '@account/components/SwitchAccount';
+import EditAccount from '@account/components/EditAccount';
 import BackupRecoveryPhraseFlow from '@account/components/BackupRecoveryPhraseFlow';
-import RemoveCurrentAccountFlow from '@account/components/RemoveCurrentAccountFlow';
 import RemoveSelectedAccountFlow from '@account/components/RemoveSelectedAccountFlow';
-import BlockchainApplications from '@blockchainApplication/explore/manager/BlockchainApplications';
+import BlockchainApplications from '@blockchainApplication/explore/components/BlockchainApplications/BlockchainApplications';
 import BlockchainApplicationDetails from '@blockchainApplication/explore/components/BlockchainApplicationDetails';
 import AddApplicationList from '@blockchainApplication/manage/components/AddApplicationList';
 import AddApplicationSuccess from '@blockchainApplication/manage/components/AddApplicationSuccess';
 import ApplicationManagementList from '@blockchainApplication/manage/components/ApplicationManagementList';
 import SelectNode from '@blockchainApplication/manage/components/SelectNode';
 import RemoveApplicationFlow from '@blockchainApplication/manage/components/RemoveApplicationFlow';
+import AllTokens from '@wallet/components/AllTokens';
+import DelegateProfile from 'src/modules/dpos/validator/components/delegateProfile/delegateProfile';
+import SentVotes from 'src/modules/dpos/validator/components/SentVotes';
+import ConnectionProposal from 'src/modules/blockchainApplication/connection/components/ConnectionProposal';
+import SessionManager from '@blockchainApplication/connection/components/SessionManager';
+import ConnectionSummary from 'src/modules/blockchainApplication/connection/components/ConnectionSummary';
+import RequestView from '@blockchainApplication/connection/components/RequestView';
+import ConnectionStatus from 'src/modules/blockchainApplication/connection/components/ConnectionStatus';
 
 export default {
   wallet: AccountDetails,
   addAccount: Login,
+  editAccount: EditAccount,
   explorer: Explorer,
   hwWallet: HwWalletLogin,
   register: Register,
@@ -63,6 +71,7 @@ export default {
   wallets: MonitorWallets,
   network: MonitorNetwork,
   delegates: DelegatesMonitor,
+  delegateProfile: DelegateProfile,
   delegatePerformance: DelegatesPerformanceModal,
   reclaim: ReclaimBalance,
   dashboard: Dashboard,
@@ -73,8 +82,7 @@ export default {
   signMessage: SignMessage,
   verifyMessage: VerifyMessage,
   registerDelegate: RegisterDelegate,
-  search: SearchBar,
-  transactionDetails: TransactionDetailsModal,
+  transactionDetails: TransactionDetails,
   newRelease: NewReleaseDialog,
   request: Request,
   lockedBalance: UnlockBalanceView,
@@ -92,7 +100,6 @@ export default {
   switchAccount: SwitchAccount,
   selectNode: SelectNode,
   backupRecoveryPhraseFlow: BackupRecoveryPhraseFlow,
-  removeCurrentAccountFlow: RemoveCurrentAccountFlow,
   removeSelectedAccount: RemoveSelectedAccountFlow,
   addAccountByFile: AddAccountByFile,
   blockchainApplications: BlockchainApplications,
@@ -101,4 +108,11 @@ export default {
   addApplicationSuccess: AddApplicationSuccess,
   manageApplications: ApplicationManagementList,
   removeApplicationFlow: RemoveApplicationFlow,
+  allTokens: AllTokens,
+  sentVotes: SentVotes,
+  connectionProposal: ConnectionProposal,
+  sessionManager: SessionManager,
+  requestView: RequestView,
+  connectionSummary: ConnectionSummary,
+  connectionStatus: ConnectionStatus,
 };

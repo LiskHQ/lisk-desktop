@@ -41,14 +41,29 @@
 
 .infoContainer {
   display: flex;
-  padding-top: 20px;
-  border-top: 1px solid var(--color-platinum);
 
   & .infoColumn {
     display: flex;
     flex-direction: column;
     flex: 1;
-    padding-bottom: 10px;
+    padding-bottom: 16px;
+  }
+}
+
+.txFeeContainer {
+  display: flex;
+  border-top: 1px solid var(--color-very-light-gray);
+  padding-top: 16px;
+
+  & .infoColumn {
+    display: flex;
+    flex-direction: column;
+    flex: 1;
+    padding-bottom: 16px;
+  }
+
+  & .infoValue {
+    font-weight: var(--font-weight-semi-bold);
   }
 }
 
@@ -59,7 +74,7 @@
 }
 
 .infoTitle {
-  @mixin contentNormal bold;
+  @mixin contentNormal normal;
 
   margin-bottom: 10px;
   color: var(--color-maastricht-blue);
@@ -75,7 +90,10 @@
 .voteItems {
   display: flex;
   flex-wrap: wrap;
-  margin-bottom: 10px;
+  margin-bottom: 24px;
+  margin-top: 9px;
+  padding-bottom: 16px;
+  border-bottom: 1px solid var(--color-very-light-gray);
 }
 
 .voteItem {
@@ -110,12 +128,14 @@
       text-overflow: ellipsis;
       overflow: hidden;
       white-space: nowrap;
+      font-weight: var(--font-weight-normal) !important;
+      font-size: 14px !important;
     }
 
     & > label:first-child {
       font-family: var(--content-font);
-      font-size: 13px;
-      font-weight: var(--font-weight-bold);
+      font-size: 14px !important;
+      font-weight: var(--font-weight-normal);
       letter-spacing: 0.2px;
       line-height: 20px;
       margin-bottom: 10px;
@@ -162,5 +182,62 @@
       margin: 0;
       color: var(--color-slate-gray);
     }
+  }
+}
+
+.fromToChainWrapper {
+  width: 100%;
+  display: flex;
+  flex-direction: 'row';
+  align-items: center;
+
+  & > div {
+    width: 100%;
+  }
+}
+
+.chainWrapper {
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  margin-top: 5px;
+  flex-direction: row;
+  padding-top: 10px;
+  width: 50%;
+
+  & > img {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+  }
+
+  & > img ~ span {
+    height: fit-content;
+    font-size: 16px;
+    font-weight: 500;
+    padding-left: 8px;
+    white-space: nowrap;
+    max-width: 228px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    color: var(--color-maastricht-blue);
+  }
+
+  &:first-of-type {
+    justify-content: flex-start;
+  }
+}
+
+.valueText {
+  font-weight: var(--font-weight-bold) !important;
+}
+
+.recipientDetail {
+  display: flex;
+  flex-direction: column;
+
+  & > span:first-child {
+    padding-bottom: 5px;
+    margin-left: 10px;
   }
 }

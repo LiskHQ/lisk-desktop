@@ -1,35 +1,32 @@
 import React, { useMemo } from 'react';
-import { MODULE_COMMANDS_NAME_ID_MAP } from '@transaction/configuration/moduleAssets';
+import { MODULE_COMMANDS_NAME_MAP } from 'src/modules/transaction/configuration/moduleCommand';
 import { SignedAndRemainingMembers } from '@wallet/components/multisignatureMembers';
 import { calculateRemainingAndSignedMembers } from '@wallet/utils/account';
 import TransactionDetailsContext from '../../context/transactionDetailsContext';
 import styles from './styles.css';
+import { joinModuleAndCommand } from '../../utils';
 
 const SignedAndRemainingMembersList = ({ t }) => {
   const { transaction, wallet } = React.useContext(TransactionDetailsContext);
 
-  const isMultisignatureGroupRegistration = transaction.moduleCommandID
-    === MODULE_COMMANDS_NAME_ID_MAP.registerMultisignatureGroup;
+  const moduleCommand = joinModuleAndCommand(transaction);
+  const isMultisignatureRegistration =
+    moduleCommand === MODULE_COMMANDS_NAME_MAP.registerMultisignature;
 
-  const keys = isMultisignatureGroupRegistration
+  const keys = isMultisignatureRegistration
     ? {
-      optionalKeys: transaction.params.optionalKeys,
-      mandatoryKeys: transaction.params.mandatoryKeys,
-      numberOfSignatures: transaction.params.numberOfSignatures,
-    }
+        optionalKeys: transaction.params.optionalKeys,
+        mandatoryKeys: transaction.params.mandatoryKeys,
+        numberOfSignatures: transaction.params.numberOfSignatures,
+      }
     : wallet.keys;
 
   const { signed, remaining } = useMemo(
-    () =>
-      calculateRemainingAndSignedMembers(
-        keys,
-        transaction.signatures,
-        isMultisignatureGroupRegistration,
-      ),
-    [wallet],
+    () => calculateRemainingAndSignedMembers(keys, transaction, isMultisignatureRegistration),
+    [wallet]
   );
 
-  const required = isMultisignatureGroupRegistration
+  const required = isMultisignatureRegistration
     ? keys.optionalKeys.length + keys.mandatoryKeys.length
     : keys.numberOfSignatures;
 

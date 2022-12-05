@@ -1,5 +1,6 @@
 import React from 'react';
 import moment from 'moment';
+import { useTranslation } from 'react-i18next';
 import { tokenMap } from '@token/fungible/consts/tokens';
 import { SecondaryButton } from 'src/theme/buttons';
 import i18n from 'src/utils/i18n/i18n';
@@ -16,6 +17,7 @@ const FilterButton = ({ filter, clearFilter, formatters }) => {
         {label?.toString()}
       </p>
       <span
+        data-testid={`${filter.key}-filter`}
         className={`${styles.clearBtn} clear-filter`}
         onClick={() => clearFilter(filter.key)}
       />
@@ -24,7 +26,6 @@ const FilterButton = ({ filter, clearFilter, formatters }) => {
 };
 
 const FilterBar = ({
-  t,
   clearFilter,
   clearAllFilters,
   filters,
@@ -32,6 +33,7 @@ const FilterBar = ({
   formatters,
 }) => {
   moment.locale(i18n.language);
+  const { t } = useTranslation();
   const nonEmptyFilters = Object.keys(filters).reduce((acc, key) => {
     const value = filters[key];
     if (key !== 'tab' && value !== '' && value !== undefined) {

@@ -3,7 +3,7 @@ import { subscribeToDeviceConnected, subscribeToDeviceDisconnected } from '@wall
 import { addSearchParamsToUrl } from 'src/utils/searchParams';
 import accounts from '@tests/constants/wallets';
 import actionTypes from 'src/modules/common/store/actionTypes';
-import authActionTypes from '@auth/store/actionTypes';
+// import authActionTypes from '@auth/store/actionTypes';
 import hwManagerMiddleware from './hwManager';
 
 jest.mock('@wallet/utils/hwManager', () => ({
@@ -20,7 +20,7 @@ describe('Middleware: hwManager', () => {
   const store = {
     dispatch: jest.fn(),
     getState: () => ({
-      settings: { token: { active: 'LSK' } },
+      settings: {},
       token: {
         active: 'LSK',
       },
@@ -57,7 +57,7 @@ describe('Middleware: hwManager', () => {
     expect(toast.success).toBeCalledWith('testHW connected');
 
     expect(subscribeToDeviceDisconnected).toBeCalledWith(expect.any(Function));
-    expect(store.dispatch).toBeCalledWith({ type: authActionTypes.accountLoggedOut });
+    // expect(store.dispatch).toBeCalledWith({ type: authActionTypes.accountLoggedOut });
     expect(toast.error).toBeCalledWith('testHW disconnected');
     expect(addSearchParamsToUrl).toBeCalledWith(expect.any(Object), { modal: 'deviceDisconnectDialog', model: 'testHW' });
   });

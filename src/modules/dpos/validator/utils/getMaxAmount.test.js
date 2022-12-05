@@ -15,31 +15,31 @@ const network = {
         networkIdentifier: '15f0dacc1060e91818224a94286b13aa04279c640bd5d6f193182031d133df7c',
         moduleAssets: [
           {
-            id: '2:0',
+            id: 'token:transfer',
             name: 'token:transfer',
           },
           {
-            id: '4:0',
-            name: 'keys:registerMultisignatureGroup',
+            id: 'auth:registerMultisignature',
+            name: 'keys:registerMultisignature',
           },
           {
-            id: '5:0',
+            id: 'dpos:registerDelegate',
             name: 'dpos:registerDelegate',
           },
           {
-            id: '5:1',
+            id: 'dpos:voteDelegate',
             name: 'dpos:voteDelegate',
           },
           {
-            id: '5:2',
+            id: 'dpos:unlock',
             name: 'dpos:unlockToken',
           },
           {
-            id: '5:3',
+            id: 'dpos:reportDelegateMisbehavior',
             name: 'dpos:reportDelegateMisbehavior',
           },
           {
-            id: '1000:0',
+            id: 'legacy:reclaim',
             name: 'legacyAccount:reclaimLSK',
           },
         ],
@@ -69,19 +69,32 @@ jest.mock('@dpos/validator/store/actions/voting', () => ({
 
 describe('getMaxAmount', () => {
   it('Returns 10n LSK if: balance >= (10n LSK + fee + dust)', async () => {
-    const result = await getMaxAmount(account, network, voting, accounts.genesis.summary.address);
-    expect(result).toBe(1e10);
+    const result = await getMaxAmount({
+      balance: account.summary.balance,
+      nonce: account.sequence?.nonce,
+      publicKey: account.summary.publicKey,
+      address: account.summary.address,
+      voting: voting.voting,
+      network,
+      numberOfSignatures: 0,
+      mandatoryKeys: [],
+      optionalKeys: [],
+    });
+    expect(result).toBe(0.8e10);
   });
 
   it('Returns (n-1) * 10 LSK if: 10n LSK < balance < (10n LSK + fee + dust)', async () => {
-    const acc = {
-      ...accounts.genesis,
-      summary: {
-        ...accounts.genesis.summary,
-        balance: 1e10,
-      },
-    };
-    const result = await getMaxAmount(acc, network, voting, accounts.genesis.summary.address);
-    expect(result).toBe(9e9);
+    const result = await getMaxAmount({
+      balance: 1e10,
+      nonce: account.sequence?.nonce,
+      publicKey: account.summary.publicKey,
+      address: account.summary.address,
+      voting: voting.voting,
+      network,
+      numberOfSignatures: 0,
+      mandatoryKeys: [],
+      optionalKeys: [],
+    });
+    expect(result).toBe(0.7e10);
   });
 });

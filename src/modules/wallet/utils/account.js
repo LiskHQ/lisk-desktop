@@ -1,7 +1,6 @@
-/* eslint-disable max-lines */
+/* eslint-disable max-lines, max-len */
 import { passphrase as LiskPassphrase, cryptography } from '@liskhq/lisk-client';
 import { regex } from 'src/const/regex';
-import { getCustomDerivationKeyPair } from 'src/utils/explicitBipKeyDerivation';
 
 /**
  * Extracts Lisk PrivateKey/PublicKey pair from a given valid Mnemonic passphrase
@@ -11,19 +10,21 @@ import { getCustomDerivationKeyPair } from 'src/utils/explicitBipKeyDerivation';
  * @param {String} derivationPath - custom derivation path for HW
  * @returns {object} - Extracted publicKey for a given valid passphrase
  */
-export const extractKeyPair = ({
+export const extractKeyPair = async ({
   passphrase, enableCustomDerivationPath = false, derivationPath,
 }) => {
   if (enableCustomDerivationPath) {
-    const keyPair = getCustomDerivationKeyPair(passphrase, derivationPath);
+    const privateKey = await cryptography.ed.getPrivateKeyFromPhraseAndPath(passphrase, derivationPath);
+    const publicKey = cryptography.ed.getPublicKeyFromPrivateKey(privateKey).toString('hex');
     return {
-      ...keyPair,
+      publicKey,
+      privateKey: privateKey.toString('hex'),
       isValid: true,
     };
   }
 
   if (LiskPassphrase.Mnemonic.validateMnemonic(passphrase)) {
-    const keyPair = cryptography.ed.getKeys(passphrase);
+    const keyPair = cryptography.legacy.getKeys(passphrase);
     return {
       publicKey: keyPair.publicKey.toString('hex'),
       privateKey: keyPair.privateKey.toString('hex'),
@@ -41,10 +42,10 @@ export const extractKeyPair = ({
  * @param {String} derivationPath - custom derivation path for HW
  * @returns {String?} - Extracted publicKey for a given valid passphrase
  */
-export const extractPublicKey = (
+export const extractPublicKey = async (
   passphrase, enableCustomDerivationPath = false, derivationPath,
 ) => {
-  const keyPair = extractKeyPair({ passphrase, enableCustomDerivationPath, derivationPath });
+  const keyPair = await extractKeyPair({ passphrase, enableCustomDerivationPath, derivationPath });
 
   if (keyPair.isValid) {
     return keyPair.publicKey;
@@ -61,11 +62,10 @@ export const extractPublicKey = (
  * @param {String} derivationPath - custom derivation path for HW
  * @returns {String?} - Extracted PrivateKey for a given valid passphrase
  */
-export const extractPrivateKey = (
+export const extractPrivateKey = async (
   passphrase, enableCustomDerivationPath = false, derivationPath,
 ) => {
-  const keyPair = extractKeyPair({ passphrase, enableCustomDerivationPath, derivationPath });
-
+  const keyPair = await extractKeyPair({ passphrase, enableCustomDerivationPath, derivationPath });
   if (keyPair.isValid) {
     return keyPair.privateKey;
   }
@@ -79,15 +79,14 @@ export const extractPrivateKey = (
  * @param {String} data PublicKey in Hex
  * @returns {String} - address derived from the given publicKey
  */
-export const extractAddressFromPublicKey = (data) => {
-  if (regex.publicKey.test(data)) {
-    const binaryPublicKey = Buffer.from(data, 'hex');
-    return cryptography.address.getLisk32AddressFromPublicKey(binaryPublicKey).toString('hex');
+export const extractAddressFromPublicKey = (publicKey) => {
+  if (regex.publicKey.test(publicKey)) {
+    return cryptography.address.getLisk32AddressFromPublicKey(Buffer.from(publicKey, 'hex')).toString('hex');
   }
-  if (Buffer.isBuffer(data)) {
-    return cryptography.address.getLisk32AddressFromPublicKey(data);
+  if (Buffer.isBuffer(publicKey)) {
+    return cryptography.address.getLisk32AddressFromPublicKey(publicKey);
   }
-  throw Error(`Unable to convert publicKey ${data} to address`);
+  throw Error(`Unable to convert publicKey ${publicKey} to address`);
 };
 
 /**
@@ -98,7 +97,8 @@ export const extractAddressFromPublicKey = (data) => {
  */
 export const extractAddressFromPassphrase = (data) => {
   if (LiskPassphrase.Mnemonic.validateMnemonic(data)) {
-    return cryptography.address.getLisk32AddressFromPassphrase(data).toString('hex');
+    const { publicKey } = cryptography.legacy.getKeys(data);
+    return cryptography.address.getLisk32AddressFromPublicKey(publicKey).toString('hex');
   }
   throw Error('Invalid passphrase');
 };
@@ -142,6 +142,18 @@ export const truncateAddress = (address, size) => {
   const selectedSize = truncateOptions.includes(size) ? size : truncateOptions[0];
   if (!address) return address;
   return address.replace(regex.truncate[selectedSize], '$1...$3');
+};
+
+/**
+ * Returns a shorter version of a given transactionID
+ * by replacing characters by ellipsis except for
+ * the first 10 and last 5.
+ * @param {String} id transactionID
+ * @returns {String} Truncated transactionID
+ */
+export const truncateTransactionID = (id) => {
+  if (!id) return id;
+  return id.replace(/^(\w{10})\w+(\w{5})$/g, '$1...$2');
 };
 
 /**
@@ -199,8 +211,8 @@ export const getUnlockableUnlockObjects = (unlocking = [], currentBlockHeight = 
 export const calculateUnlockableBalance = (unlocking = [], currentBlockHeight = 0) =>
   unlocking.reduce(
     (sum, vote) =>
-      (isBlockHeightReached(vote.height.end, currentBlockHeight)
-        ? sum + parseInt(vote.amount, 10) : sum),
+    (isBlockHeightReached(vote.height.end, currentBlockHeight)
+      ? sum + parseInt(vote.amount, 10) : sum),
     0,
   );
 
@@ -214,29 +226,30 @@ export const calculateUnlockableBalance = (unlocking = [], currentBlockHeight = 
 export const calculateBalanceUnlockableInTheFuture = (unlocking = [], currentBlockHeight = 0) =>
   unlocking.reduce(
     (sum, vote) =>
-      (!isBlockHeightReached(vote.height.end, currentBlockHeight)
-        ? sum + parseInt(vote.amount, 10) : sum),
+    (!isBlockHeightReached(vote.height.end, currentBlockHeight)
+      ? sum + parseInt(vote.amount, 10) : sum),
     0,
   );
 
+const isSigned = signature => signature && signature !== Buffer.alloc(64).toString('hex');
+
 export const calculateRemainingAndSignedMembers = (
   keys = { optionalKeys: [], mandatoryKeys: [] },
-  signaturesInTransaction = [],
-  ignoreFirstSignature = false,
+  transaction = {},
+  isMultisignatureRegistration = false,
 ) => {
-  const signatures = ignoreFirstSignature
-    ? signaturesInTransaction.slice(1) : signaturesInTransaction;
+  const signatures = isMultisignatureRegistration
+    ? transaction.params.signatures : transaction.signatures;
   const { mandatoryKeys, optionalKeys } = keys;
   const signed = [];
   const remaining = [];
 
   mandatoryKeys.forEach((key, index) => {
-    const hasSigned = Boolean(signatures[index]);
     const value = {
       publicKey: key, mandatory: true, address: extractAddressFromPublicKey(key),
     };
 
-    if (hasSigned) {
+    if (isSigned(signatures[index])) {
       signed.push(value);
     } else {
       remaining.push(value);
@@ -244,12 +257,11 @@ export const calculateRemainingAndSignedMembers = (
   });
 
   optionalKeys.forEach((key, index) => {
-    const hasSigned = Boolean(signatures[index + mandatoryKeys.length]);
     const value = {
       publicKey: key, mandatory: false, address: extractAddressFromPublicKey(key),
     };
 
-    if (hasSigned) {
+    if (isSigned(signatures[index + mandatoryKeys.length])) {
       signed.push(value);
     } else {
       remaining.push(value);
@@ -264,13 +276,30 @@ export const calculateRemainingAndSignedMembers = (
  * @param {object} data
  * @param {object} data.senderAccount - Account info
  * @param {object} data.transaction - Transaction details
- * @param {boolean} data.isGroupRegistration - tx moduleAsset check
+ * @param {boolean} data.isRegisterMultisignature - tx moduleAsset check
  * @returns {object} - Keys, including number and list of mandatory and optional keys
  */
-export const getKeys = ({ senderAccount, transaction, isGroupRegistration }) => {
-  if (isGroupRegistration) {
+export const getKeys = ({ senderAccount, transaction, isRegisterMultisignature }) => {
+  if (isRegisterMultisignature) {
     return transaction.params;
   }
 
-  return senderAccount.keys;
+  return senderAccount;
+};
+
+export const validate2ndPass = async (account, passphrase, error) => {
+  const messages = [];
+  if (error) {
+    messages.push(messages);
+    return messages;
+  }
+
+  const secondPublicKey = account.keys.mandatoryKeys
+    .filter(item => item !== account.summary.publicKey);
+  const publicKey = await extractPublicKey(passphrase);
+  // compare them
+  if (!secondPublicKey.length || publicKey !== secondPublicKey[0]) {
+    messages.push('This passphrase does not belong to your account.');
+  }
+  return messages;
 };

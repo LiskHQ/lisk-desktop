@@ -1,15 +1,10 @@
 import React from 'react';
 import { mount } from 'enzyme';
-import { timerReset } from '@auth/store/action';
 import account from '@wallet/configuration/constants';
 import Warning from './warning';
 
 jest.mock('react-toastify', () => ({
   toast: (component) => (component),
-}));
-
-jest.mock('@auth/store/action', () => ({
-  timerReset: jest.fn(),
 }));
 
 describe('Warning', () => {
@@ -37,6 +32,5 @@ describe('Warning', () => {
     wrapper.update();
     expect(wrapper).not.toBeEmptyRender();
     wrapper.find('.reset-time-button').simulate('click');
-    expect(timerReset).toHaveBeenCalled();
   });
 });

@@ -1,11 +1,14 @@
-import React, { useEffect, useState } from 'react';
-import { useSelector } from 'react-redux';
+/* eslint-disable complexity */
+import React, { useEffect, useMemo, useState } from 'react';
+import { useTranslation } from 'react-i18next';
 import {
   selectSearchParamValue,
   removeSearchParamsFromUrl,
+  removeThenAppendSearchParamsToUrl,
 } from 'src/utils/searchParams';
-import { tokenMap } from '@token/fungible/consts/tokens';
-import { toRawLsk, fromRawLsk } from '@token/fungible/utils/lsk';
+import { useCurrentAccount } from '@account/hooks';
+import { fromRawLsk, toRawLsk } from '@token/fungible/utils/lsk';
+import { useTokensBalance } from '@token/fungible/hooks/queries';
 import Dialog from 'src/theme/dialog/dialog';
 import Box from 'src/theme/box';
 import BoxContent from 'src/theme/box/content';
@@ -13,136 +16,224 @@ import BoxFooter from 'src/theme/box/footer';
 import BoxHeader from 'src/theme/box/header';
 import BoxInfoText from 'src/theme/box/infoText';
 import AmountField from 'src/modules/common/components/amountField';
+import { useSchemas } from '@transaction/hooks/queries/useSchemas';
+import WalletVisual from '@wallet/components/walletVisual';
+import routes from 'src/routes/routes';
 import TokenAmount from '@token/fungible/components/tokenAmount';
-import Converter from 'src/modules/common/components/converter';
 import WarnPunishedDelegate from '@dpos/validator/components/WarnPunishedDelegate';
-import { PrimaryButton, WarningButton } from 'src/theme/buttons';
+import { useLatestBlock } from '@block/hooks/queries/useLatestBlock';
+import { useAuth } from '@auth/hooks/queries';
+import { PrimaryButton, SecondaryButton, WarningButton } from 'src/theme/buttons';
 import useVoteAmountField from '../../hooks/useVoteAmountField';
 import getMaxAmount from '../../utils/getMaxAmount';
 import styles from './editVote.css';
+import { useDelegates, useDposConstants, useSentVotes } from '../../hooks/queries';
+import { NUMBER_OF_BLOCKS_PER_DAY } from '../../consts';
 
 const getTitles = (t) => ({
   edit: {
     title: t('Edit vote'),
     description: t(
-      'Increase or decrease your vote amount, or remove your vote from this delegate. Your updated vote will be added to the voting queue.',
+      'Increase or decrease your vote amount, or remove your vote from this delegate. Your updated vote will be added to the voting queue.'
     ),
   },
   add: {
-    title: t('Add vote'),
+    title: t('Add to voting queue'),
     description: t(
-      'Insert a vote amount for this delegate. Your new vote will be added to the voting queue.',
+      'Insert a vote amount for this delegate. Your new vote will be added to the voting queue.'
     ),
   },
 });
 
 // eslint-disable-next-line max-statements
-const EditVote = ({
-  history, t, currentHeight, wallet, network, voting, voteEdited,
-}) => {
-  const [address, start, end] = selectSearchParamValue(history.location.search, ['address', 'start', 'end']);
-  const existingVote = useSelector((state) => state.voting[address || wallet.summary.address]);
-  const [voteAmount, setVoteAmount] = useVoteAmountField(
-    existingVote ? fromRawLsk(existingVote.unconfirmed) : '',
-  );
-  const mode = existingVote ? 'edit' : 'add';
+const EditVote = ({ history, voteEdited, network, voting, votesRetrieved }) => {
+  const { t } = useTranslation();
+  useSchemas();
+  const [
+    {
+      metadata: { address: currentAddress },
+    },
+  ] = useCurrentAccount();
   const [maxAmount, setMaxAmount] = useState(0);
-  useEffect(() => {
-    getMaxAmount(wallet, network, voting, address || wallet.summary.address).then(
-      setMaxAmount,
-    );
-  }, [wallet, voting]);
+  const [isForm, setIsForm] = useState(true);
 
-  const confirm = () => {
+  const [address] = selectSearchParamValue(history.location.search, ['address']);
+  const delegateAddress = address || currentAddress; // this holds the address of either other delegates or the user's address
+
+  const { data: delegates, isLoading: isLoadingDelegates } = useDelegates({
+    config: { params: { address: delegateAddress } },
+  });
+
+  const delegate = useMemo(() => delegates?.data?.[0] || {}, [isLoadingDelegates]);
+  const delegatePomHeight = useMemo(() => delegate.pomHeights?.[0] || {}, [delegate]);
+  const { data: { height: currentHeight } } = useLatestBlock();
+
+  const { data: sentVotes } = useSentVotes({
+    config: { params: { address: currentAddress } },
+  });
+
+  // @TODO: we need to change the caching time from 5mins to something larger since this is a constant that doesn't frequently change
+  const { data: dposConstants, isLoading: isGettingDposConstants } = useDposConstants();
+
+  const { data: tokens } = useTokensBalance({
+    config: { params: { tokenID: dposConstants?.tokenIDDPoS } },
+    options: { enabled: !isGettingDposConstants },
+  });
+  const token = useMemo(() => tokens?.data?.[0] || {}, [tokens]);
+
+  const { data: authData } = useAuth({ config: { params: { address: delegateAddress } } });
+  const auth = useMemo(() => ({ ...authData?.data, ...authData?.meta }), [authData]);
+  const { nonce, publicKey, numberOfSignatures, optionalKeys = [], mandatoryKeys = [] } = auth;
+
+  const [start = delegatePomHeight.start, end = delegatePomHeight.end] = selectSearchParamValue(
+    history.location.search,
+    ['start', 'end']
+  );
+
+  const voteSentVoteToDelegate = useMemo(() => {
+    const votes = sentVotes?.data?.votes;
+    if (!votes) return false;
+
+    return votes.find(({ delegateAddress: dAddress }) => dAddress === delegateAddress);
+  }, [sentVotes, delegateAddress, voting]);
+
+  const [voteAmount, setVoteAmount, isGettingDposToken] = useVoteAmountField(
+    fromRawLsk(voting[delegateAddress]?.unconfirmed || voteSentVoteToDelegate?.amount || 0)
+  );
+  const mode = voteSentVoteToDelegate || voting[delegateAddress] ? 'edit' : 'add';
+  const titles = getTitles(t)[mode];
+
+  useEffect(() => {
+    getMaxAmount({
+      balance: token.availableBalance,
+      nonce,
+      publicKey,
+      voting,
+      address,
+      network,
+      numberOfSignatures,
+      mandatoryKeys,
+      optionalKeys,
+    }).then(setMaxAmount);
+  }, [token, auth, network, voting]);
+
+  useEffect(() => {
+    votesRetrieved();
+  }, []);
+
+  const handleConfirm = () => {
+    if (!isForm) {
+      removeThenAppendSearchParamsToUrl(history, { modal: 'votingQueue' }, ['modal']);
+      return;
+    }
     voteEdited([
       {
-        address: address || wallet.summary.address,
+        address: delegateAddress,
         amount: toRawLsk(voteAmount.value),
+        name: delegate.name,
       },
     ]);
 
-    removeSearchParamsFromUrl(history, ['modal']);
+    setIsForm(false);
   };
 
-  const titles = getTitles(t)[mode];
+  const handleContinueVoting = () => history.push(routes.delegates.path);
 
   const removeVote = () => {
     voteEdited([
       {
-        address: address || wallet.summary.address,
+        name: delegate.name,
+        address: delegateAddress,
         amount: 0,
       },
     ]);
-
     removeSearchParamsFromUrl(history, ['modal']);
   };
 
-  // 6: blocks per minute, 60: minutes, 24: hours
-  const numOfBlockPerDay = 24 * 60 * 6;
-  const daysLeft = Math.ceil(
-    (parseInt(end, 10) - currentHeight) / numOfBlockPerDay,
-  );
+  const daysLeft = Math.ceil((parseInt(end, 10) - currentHeight) / NUMBER_OF_BLOCKS_PER_DAY);
+  const subTitles = {
+    edit: t('After changing your vote amount, it will be added to the voting queue.'),
+    add: titles.description,
+  };
+  const headerTitles = {
+    edit: t('Edit Vote'),
+    add: titles.title,
+  };
 
   return (
-    <Dialog hasClose className={styles.wrapper}>
+    <Dialog
+      hasClose
+      className={`${styles.wrapper} ${!isForm || mode === 'edit' ? styles.confirmWrapper : ''}`}
+    >
       <Box>
         <BoxHeader>
-          <h1>{titles.title}</h1>
+          <h1>{!isForm ? t('Vote added') : headerTitles[mode]}</h1>
         </BoxHeader>
         <BoxContent className={styles.noPadding}>
           <BoxInfoText>
-            <span>{titles.description}</span>
+            <span>
+              {!isForm ? t('Your vote has been added to your voting queue') : subTitles[mode]}
+            </span>
           </BoxInfoText>
-          <BoxInfoText className={styles.walletInfo}>
-            <p className={styles.balanceTitle}>
-              {t('Available balance for voting')}
-            </p>
-            <div className={styles.balanceDetails}>
-              <span className={styles.lskValue}>
-                <TokenAmount val={maxAmount} token={tokenMap.LSK.key} />
-              </span>
-              <Converter
-                className={styles.fiatValue}
-                value={fromRawLsk(maxAmount)}
-                error=""
-              />
-            </div>
-          </BoxInfoText>
-          {daysLeft >= 1 && start !== undefined && (
+          {isForm && (
             <>
-              <WarnPunishedDelegate pomHeight={{ start, end }} vote />
-              <span className={styles.space} />
+              <BoxInfoText className={styles.accountInfo}>
+                <WalletVisual size={40} address={delegateAddress} />
+                <p>{delegate.name}</p>
+                <p>{delegateAddress}</p>
+              </BoxInfoText>
+              <label className={styles.fieldGroup}>
+                <p className={styles.availableBalance}>
+                  <span>{t('Available balance: ')}</span>
+                  <span>
+                    <TokenAmount token={token.symbol} val={token.availableBalance} />
+                  </span>
+                </p>
+
+                <AmountField
+                  amount={voteAmount}
+                  onChange={setVoteAmount}
+                  maxAmount={{ value: maxAmount }}
+                  displayConverter
+                  label={t('Vote amount ({{symbol}})', { symbol: token.symbol })}
+                  labelClassname={`${styles.fieldLabel}`}
+                  placeholder={t('Insert vote amount')}
+                  name="vote"
+                />
+              </label>
+              {daysLeft >= 1 && start !== undefined && (
+                <>
+                  <WarnPunishedDelegate pomHeight={{ start, end }} vote />
+                  <span className={styles.space} />
+                </>
+              )}
             </>
           )}
-          <label className={styles.fieldGroup}>
-            <AmountField
-              amount={voteAmount}
-              onChange={setVoteAmount}
-              maxAmount={{ value: maxAmount }}
-              displayConverter
-              label={t('Vote amount (LSK)')}
-              labelClassname={`${styles.fieldLabel}`}
-              placeholder={t('Insert vote amount')}
-              useMaxLabel={t('Use maximum amount')}
-              useMaxWarning={t(
-                'Caution! You are about to send the majority of your balance',
-              )}
-              name="vote"
-            />
-          </label>
         </BoxContent>
-        <BoxFooter direction="horizontal">
-          {mode === 'edit' && (
-            <WarningButton className="remove-vote" onClick={removeVote}>
+        <BoxFooter direction={mode === 'edit' && isForm ? 'horizontal' : 'vertical'}>
+          {mode === 'edit' && isForm && (
+            <WarningButton
+              className={`${styles.removeVoteButton} remove-vote`}
+              onClick={removeVote}
+            >
               {t('Remove vote')}
             </WarningButton>
           )}
+          {!isForm && (
+            <SecondaryButton
+              className={`${styles.confirmButton}`}
+              onClick={handleContinueVoting}
+              disabled={voteAmount.error}
+            >
+              {t('Continue voting')}
+            </SecondaryButton>
+          )}
           <PrimaryButton
             className={`${styles.confirmButton} confirm`}
-            onClick={confirm}
-            disabled={voteAmount.error}
+            onClick={handleConfirm}
+            disabled={voteAmount.error || isGettingDposToken}
           >
-            {t('Confirm')}
+            {t(isForm ? 'Confirm' : 'Go to the voting queue')}
           </PrimaryButton>
         </BoxFooter>
       </Box>

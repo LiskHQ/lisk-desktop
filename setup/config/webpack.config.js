@@ -1,5 +1,7 @@
 const webpack = require('webpack');
 const { resolve } = require('path');
+const { SERVICE_WORKER_BUILD_PATH } = require('msw/config/constants');
+const CopyPlugin = require('copy-webpack-plugin');
 
 const config = {
   mode: 'development',
@@ -16,14 +18,14 @@ const config = {
       '@block': resolve('./src/modules/block'),
       '@bookmark': resolve('./src/modules/bookmark'),
       '@search': resolve('./src/modules/search'),
-      '@common': resolve('./packages/common'),
+      '@common': resolve('./src/modules/common'),
       '@legacy': resolve('./src/modules/legacy'),
       '@message': resolve('./src/modules/message'),
       '@auth': resolve('./src/modules/auth'),
       '@wallet': resolve('./src/modules/wallet'),
       '@dpos': resolve('./src/modules/dpos'),
       '@network': resolve('./src/modules/network'),
-      '@settings': resolve('./packages/settings'),
+      '@settings': resolve('./src/modules/settings'),
       '@token': resolve('./src/modules/token'),
       '@transaction': resolve('./src/modules/transaction'),
       '@update': resolve('./src/modules/update'),
@@ -41,6 +43,7 @@ const config = {
       crypto: require.resolve('crypto-browserify'),
       stream: require.resolve('stream-browserify'),
       path: require.resolve('path-browserify'),
+      querystring: require.resolve("querystring-es3")
     },
   },
   externals: {
@@ -61,12 +64,14 @@ const config = {
         options: {
           presets: [
             [
-              '@babel/preset-env', {
+              '@babel/preset-env',
+              {
                 modules: false,
                 targets: {
                   browsers: ['last 2 versions', 'safari >= 7'],
                 },
-              }],
+              },
+            ],
             '@babel/preset-react',
           ],
           plugins: [
@@ -110,6 +115,9 @@ const config = {
   plugins: [
     new webpack.EnvironmentPlugin({
       NACL_FAST: 'disable',
+    }),
+    new CopyPlugin({
+      patterns: [{ from: SERVICE_WORKER_BUILD_PATH }],
     }),
   ],
 };

@@ -16,45 +16,66 @@
 }
 
 .wrapper {
-  max-width: 460px;
+  max-width: 477px;
   width: calc(100% - var(--horizontal-margin));
   padding: 0 var(--horizontal-padding-l);
 
-  & .noPadding {
-    padding: 0 0 var(--horizontal-padding-l) 0;
+  &.confirmWrapper {
+    max-width: 371px !important;
   }
 
-  & .walletInfo {
-    color: var(--color-ink-blue);
-    border: var(--balance-border);
-    box-shadow: var(--balance-shadow);
-    border-radius: 6px;
-    padding: var(--vertical-padding-l) var(--horizontal-padding-l);
-    position: relative;
-    background-image: url('../../../../../../setup/react/assets/images/waves_pattern.svg');
-    background-color: var(--color-balance-bg);
+  & footer {
+    margin: 0px !important;
+    width: 100% !important;
+    row-gap: 16px;
+  }
 
-    & .balanceTitle {
-      font-size: var(--font-size-small-secondary);
-      margin: 0 0 5px 0;
+  & .noPadding {
+    padding: 0 0 var(--horizontal-padding-l) 0;
+
+    & > div {
+      display: flex;
     }
 
-    & .balanceDetails {
-      display: flex;
-      flex: 1;
-      font-family: var(--heading-font);
-      font-weight: var(--font-weight-bold);
+    & > label ~ div {
+      @mixin contentSmall;
+    }
 
-      & .lskValue {
-        font-size: var(--font-size-h6);
-      }
+    & span {
+      text-align: center !important;
+    }
+  }
 
-      & .fiatValue {
-        color: var(--color-fait-value);
-        opacity: 0.8;
-        position: absolute;
-        right: var(--vertical-padding-l);
-      }
+  & header {
+    display: flex !important;
+    justify-content: center !important;
+    align-items: center !important;
+
+    & > h1 {
+      font-size: var(--font-size-h3) !important;
+      font-weight: var(--font-weight-very-bold) !important;
+    }
+  }
+
+  & .accountInfo {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 0px !important;
+
+    & > p:nth-child(2) {
+      @mixin contentLargest bold;
+
+      margin: 8px 0px;
+      color: var(--color-content-light);
+    }
+
+    & > p:nth-child(2) ~ p {
+      @mixin contentNormal;
+
+      margin-top: -3px;
+      color: var(--color-blue-gray) !important;
     }
   }
 
@@ -65,4 +86,27 @@
 
 .space {
   margin: 10px;
+}
+
+.fieldGroup {
+  position: relative;
+
+  & > .availableBalance {
+    @mixin contentSmall normal;
+
+    position: absolute;
+    right: 5px;
+    top: -5px;
+    color: var(--color-slate-gray);
+
+    & > span:last-child {
+      @mixin contentSmall semi-bold;
+
+      color: var(--color-ultramarine-blue);
+    }
+  }
+}
+
+.removeVoteButton {
+  border-style: solid;
 }

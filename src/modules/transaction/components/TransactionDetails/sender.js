@@ -1,6 +1,7 @@
 import React from 'react';
-import { getModuleCommandSenderLabel } from '@transaction/utils/moduleAssets';
+import { getModuleCommandSenderLabel } from '@transaction/utils/moduleCommand';
 import { getDelegateName } from '@transaction/utils';
+import { extractAddressFromPublicKey } from '@wallet/utils/account';
 import WalletInfo from '../WalletInfo';
 import TransactionDetailsContext from '../../context/transactionDetailsContext';
 import styles from './styles.css';
@@ -10,7 +11,8 @@ const Sender = () => {
     TransactionDetailsContext,
   );
   const delegateName = getDelegateName(transaction, activeToken);
-  const senderLabel = getModuleCommandSenderLabel()[transaction.moduleCommandID];
+  const senderLabel = getModuleCommandSenderLabel()[transaction.moduleCommand];
+  const address = extractAddressFromPublicKey(transaction.senderPublicKey);
 
   return (
     <WalletInfo
@@ -18,7 +20,7 @@ const Sender = () => {
       name={delegateName}
       token={activeToken}
       network={network}
-      address={transaction.sender.address}
+      address={address}
       addressClass="sender-address"
       label={senderLabel}
     />

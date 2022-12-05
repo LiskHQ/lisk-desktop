@@ -1,4 +1,6 @@
+import { persistReducer } from 'redux-persist';
 import { deepMergeObj } from 'src/utils/helpers';
+import { storage } from 'src/redux/store';
 import actionTypes from './actionTypes';
 
 export const channels = {
@@ -11,13 +13,13 @@ export const channels = {
 
 // load setting data from localStorage if it exists and merge with initial state
 export const initialState = {
-  autoLog: true,
   showNetwork: false,
   channels,
   hardwareAccounts: {},
   isRequestHowItWorksDisable: false,
   statistics: false,
   areTermsOfUseAccepted: false,
+  darkMode: false,
   discreetMode: false,
   sideBarExpanded: true,
   enableCustomDerivationPath: false,
@@ -31,19 +33,20 @@ export const initialState = {
  */
 const settings = (state = initialState, action) => {
   switch (action.type) {
-    case actionTypes.settingsRetrieved: {
-      return action.data;
-    }
     case actionTypes.settingsUpdated:
       return deepMergeObj(state, action.data);
     case actionTypes.settingsReset:
       return {
         ...state,
-        autoLog: true,
       };
     default:
       return state;
   }
 };
 
-export default settings;
+const persistConfig = {
+  key: 'settings',
+  storage,
+};
+
+export default persistReducer(persistConfig, settings);

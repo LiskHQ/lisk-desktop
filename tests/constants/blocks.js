@@ -8,15 +8,20 @@ const names = [
   'menfei',
 ];
 
-const block = (index, numberOfBlocks) => ({
+const block = (index) => ({
   id: `35998991827805762${index}`,
   height: 10322980 + index,
   version: 1,
   timestamp: 1569853530,
   generatorAddress: '731774066839038986L',
-  generatorPublicKey:
-    '88260051bbe6634431f8a2f3ac66680d1ee9ef1087222e6823d9b4d81170edc7',
+  generatorKey:
+  '88260051bbe6634431f8a2f3ac66680d1ee9ef1087222e6823d9b4d81170edc7',
   generatorUsername: names[index % (names.length - 1)],
+  generator: {
+    address: '731774066839038986L',
+    publicKey: '88260051bbe6634431f8a2f3ac66680d1ee9ef1087222e6823d9b4d81170edc7',
+    name: names[index % (names.length - 1)],
+  },
   payloadLength: 0,
   payloadHash:
     'e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855',
@@ -28,9 +33,10 @@ const block = (index, numberOfBlocks) => ({
   totalAmount: index === 0 ? '0' : `${index}0000000`,
   totalFee: index === 0 ? '0' : `${index}000000`,
   reward: '300000000',
-  totalForged: `${numberOfBlocks + index}0000000`,
+  totalForged: `${index + 4}0000000`,
+  totalBurnt: `${index + 4}0000000`,
 });
 
-const blocks = Array(30).fill(1).map((item, index) => block(index));
+const blocks = Array(30).fill(1).map((_, index) => block(index));
 
 export default blocks;

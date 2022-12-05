@@ -1,158 +1,273 @@
+import React from 'react'
+import { act } from 'react-dom/test-utils'
 import { keyCodes } from 'src/utils/keyCodes';
-import { mountWithRouter } from 'src/utils/testHelpers';
+import { mountWithQueryClient } from 'src/utils/testHelpers';
+import { fireEvent, render } from '@testing-library/react';
+import { useSearch } from 'src/modules/search/hooks/useSearch'
 import SearchBar from './SearchBar';
 
-describe('SearchBar', () => {
-  let wrapper;
 
+jest.mock('src/modules/search/hooks/useSearch', () => ({
+  useSearch: jest.fn().mockReturnValue({
+    addresses: [],
+    delegates: [],
+    transactions: [],
+    blocks: [],
+    isLoading: false
+  })
+}))
+
+describe('SearchBar', () => {
   const props = {
-    t: v => v,
     history: {
       push: jest.fn(),
       location: { search: '' },
     },
-    suggestions: {
-      data: {
-        addresses: [],
-        transactions: [],
-        delegates: [],
-        blocks: [],
-      },
-      loadData: jest.fn(),
-      clearData: jest.fn(),
-    },
-    setSearchBarRef: jest.fn(),
   };
 
-  beforeEach(() => {
-    wrapper = mountWithRouter(SearchBar, props);
-  });
-
   it('should render properly SearchBar', () => {
+    const wrapper = mountWithQueryClient(SearchBar, props);
     expect(wrapper).toContainMatchingElement('.search-bar');
     expect(wrapper).toContainMatchingElement('.search-input');
     expect(wrapper).not.toContainMatchingElement('.loading');
   });
 
-  it('should render accounts data properly based on user data input', () => {
-    wrapper.find('.search-input input').at(0).simulate('change', { target: { value: '123456L' } });
-    jest.advanceTimersByTime(500);
-    wrapper.update();
-    expect(props.suggestions.loadData).toBeCalled();
-
-    wrapper.find('.search-input input').at(0).simulate('change', { target: { value: '12' } });
-    jest.advanceTimersByTime(500);
-    wrapper.update();
-    expect(props.suggestions.clearData).toBeCalled();
+  it('should render empty results when search length is less than 3', () => {
+    useSearch.mockReturnValueOnce({
+      addresses: [],
+      delegates: [],
+      transactions: [],
+      blocks: [],
+      isLoading: false
+    })
+    const wrapper = mountWithQueryClient(SearchBar, props)
+    act(() => {
+      wrapper.find('.search-input input').at(0).simulate('change', { target: { value: 'HI' } });
+      wrapper.update();
+      jest.runAllTimers();
+    })
+    expect(wrapper).not.toContainMatchingElement('.accounts')
   });
 
-  it('should redirect to a different page if user do a click on selected row for address', () => {
-    wrapper.find('.search-input input').at(0).simulate('change', { target: { value: '123456L' } });
-    jest.advanceTimersByTime(500);
-    wrapper.update();
-    expect(props.suggestions.loadData).toBeCalled();
-
-    const newProps = {
-      ...props,
-      suggestions: {
-        ...props.suggestions,
-        data: {
-          ...props.suggestions.data,
-          addresses: [
-            {
-              summary: {
-                address: '123456L',
-                title: 'John',
-                balance: '120',
-              },
-            },
-          ],
-        },
-      },
-    };
-    wrapper = mountWithRouter(SearchBar, newProps);
-    wrapper.find('.account-row').at(0).simulate('click');
-    expect(props.history.push).toBeCalled();
-    expect(props.suggestions.clearData).toBeCalled();
+  it('should render accounts data properly based on user data input', () => {
+    useSearch.mockReturnValueOnce({
+      addresses: [{ address: '123456L', name: 'lisker' }],
+      delegates: [],
+      transactions: [],
+      blocks: [],
+      isLoading: false
+    })
+    const wrapper = mountWithQueryClient(SearchBar, props)
+    act(() => {
+      wrapper.find('.search-input input').at(0).simulate('change', { target: { value: '123456L' } });
+      wrapper.update();
+      jest.runAllTimers();
+    })
+    expect(wrapper).toContainMatchingElement('.accounts')
   });
 
   it('should redirect to a different page if user do a click on selected row for transaction', () => {
-    wrapper.find('.search-input input').at(0).simulate('change', { target: { value: '123456123234234' } });
-    jest.advanceTimersByTime(500);
-    wrapper.update();
-    expect(props.suggestions.loadData).toBeCalled();
-
-    const newProps = {
-      ...props,
-      suggestions: {
-        ...props.suggestions,
-        data: {
-          ...props.suggestions.data,
-          transactions: [
-            {
-              params: {
-                data: 'testing',
-              },
-              id: '123456123234234',
-              moduleCommandID: '2:0',
-            },
-          ],
+    useSearch.mockReturnValue({
+      addresses: [],
+      delegates: [],
+      transactions: [
+        {
+          params: {
+            data: 'testing',
+          },
+          id: '123456123234234',
+          moduleCommand: 'token:transfer',
         },
-      },
-    };
-    wrapper = mountWithRouter(SearchBar, newProps);
+      ],
+      blocks: [],
+      isLoading: false
+    })
+    const wrapper = mountWithQueryClient(SearchBar, props)
+
+    act(() => {
+      wrapper.find('.search-input input').at(0).simulate('change', { target: { value: '123456123234234' } });
+    })
+
     wrapper.find('.search-transaction-row').at(0).simulate('click');
     expect(props.history.push).toBeCalled();
-    expect(props.suggestions.clearData).toBeCalled();
+  });
+
+  it('should uses keyboard navigation to select search result for delegates', () => {
+    useSearch.mockReturnValue({
+      addresses: [],
+      delegates: [
+        {
+          address: '123456L',
+          username: 'genesis_10',
+          rank: 34,
+          rewards: 23423,
+          vote: 123,
+        },
+        {
+          address: '123457L',
+          username: 'genesis_101',
+          rank: 26,
+          rewards: 23421,
+          vote: 127,
+        },
+      ],
+      transactions: [],
+      blocks: [],
+      isLoading: false
+    })
+
+    const wrapper = render(<SearchBar {...props}/>)
+
+    act(() => {
+      fireEvent.change(wrapper.getByTestId('searchText'), { target: { value: 'genesis' } })
+      jest.runAllTimers();
+    })
+
+    fireEvent.keyUp(wrapper.getByTestId('searchText'), { keyCode: keyCodes.arrowDown })
+    fireEvent.keyDown(wrapper.getByTestId('searchText'), { keyCode: keyCodes.arrowUp })
+    fireEvent.keyDown(wrapper.getByTestId('searchText'), { keyCode: keyCodes.enter })
+    expect(props.history.push).toBeCalledWith("/delegates/profile?address=123456L");
+  });
+  
+  it('should uses keyboard navigation to select search result for address', () => {
+    useSearch.mockReturnValue({
+      addresses: [{ address: '123456L', name: 'lisker' }],
+      delegates: [],
+      transactions: [],
+      blocks: [],
+      isLoading: false
+    })
+
+    const wrapper = render(<SearchBar {...props}/>)
+
+    act(() => {
+      fireEvent.change(wrapper.getByTestId('searchText'), { target: { value: '123456L' } })
+      jest.runAllTimers();
+    })
+
+    fireEvent.keyUp(wrapper.getByTestId('searchText'), { keyCode: keyCodes.arrowDown })
+    fireEvent.keyDown(wrapper.getByTestId('searchText'), { keyCode: keyCodes.arrowUp })
+    fireEvent.keyDown(wrapper.getByTestId('searchText'), { keyCode: keyCodes.enter })
+    expect(props.history.push).toBeCalledWith("/explorer?address=123456L");
+  });
+
+  it('should uses keyboard navigation to select search result for transactions', () => {
+    useSearch.mockReturnValue({
+      addresses: [],
+      delegates: [],
+      transactions: [
+        {
+          params: {
+            data: 'testing',
+          },
+          id: '123456123234234',
+          moduleCommand: 'token:transfer',
+        },
+      ],
+      blocks: [],
+      isLoading: false
+    })
+
+    const wrapper = render(<SearchBar {...props}/>)
+
+    act(() => {
+      fireEvent.change(wrapper.getByTestId('searchText'), { target: { value: '123456123234234' } })
+      jest.runAllTimers();
+    })
+
+    fireEvent.keyUp(wrapper.getByTestId('searchText'), { keyCode: keyCodes.arrowDown })
+    fireEvent.keyDown(wrapper.getByTestId('searchText'), { keyCode: keyCodes.arrowUp })
+    fireEvent.keyDown(wrapper.getByTestId('searchText'), { keyCode: keyCodes.enter })
+    expect(props.history.push).toBeCalled();
+  });
+  
+  it('should uses keyboard navigation to select search result for blocks', () => {
+    useSearch.mockReturnValue({
+      addresses: [],
+      delegates: [],
+      transactions: [],
+      blocks: [{ id: '3144423' }],
+      isLoading: false
+    })
+
+    const wrapper = render(<SearchBar {...props}/>)
+
+    act(() => {
+      fireEvent.change(wrapper.getByTestId('searchText'), { target: { value: '60008' } })
+      jest.runAllTimers();
+    })
+
+    fireEvent.keyUp(wrapper.getByTestId('searchText'), { keyCode: keyCodes.arrowDown })
+    fireEvent.keyDown(wrapper.getByTestId('searchText'), { keyCode: keyCodes.arrowUp })
+    fireEvent.keyDown(wrapper.getByTestId('searchText'), { keyCode: keyCodes.enter })
+    expect(props.history.push).toBeCalled();
+  });
+
+  it('should redirect to a different page if user do a click on selected row for address', () => {
+    useSearch.mockReturnValueOnce({
+      addresses: [{ address: '123456L', name: 'lisker' }],
+      delegates: [],
+      transactions: [],
+      blocks: [],
+      isLoading: false
+    })
+    const wrapper = mountWithQueryClient(SearchBar, props)
+    act(() => {
+      wrapper.find('.search-input input').at(0).simulate('change', { target: { value: '123456L' } });
+    })
+    wrapper.find('.account-row').at(0).simulate('click');
+    expect(props.history.push).toBeCalledWith("/explorer?address=123456L");
   });
 
   it('should redirect to a delegate page if user do a click on selected row for delegates', () => {
-    wrapper.find('.search-input input').at(0).simulate('change', { target: { value: 'genesis' } });
-    jest.advanceTimersByTime(500);
-    wrapper.update();
-    expect(props.suggestions.loadData).toBeCalled();
-    const newProps = {
-      ...props,
-      suggestions: {
-        ...props.suggestions,
-        data: {
-          ...props.suggestions.data,
-          delegates: [
-            {
-              summary: {
-                address: '123456L',
-              },
-              dpos: {
-                delegate: {
-                  username: 'genesis_10',
-                  rank: 34,
-                  rewards: 23423,
-                  vote: 123,
-                },
-              },
-            },
-            {
-              summary: {
-                address: '123457L',
-              },
-              dpos: {
-                delegate: {
-                  username: 'genesis_101',
-                  rank: 26,
-                  rewards: 23421,
-                  vote: 127,
-                },
-              },
-            },
-          ],
+    useSearch.mockReturnValueOnce({
+      addresses: [],
+      delegates: [
+        {
+          address: '123456L',
+          username: 'genesis_10',
+          rank: 34,
+          rewards: 23423,
+          vote: 123,
         },
-      },
-    };
-    wrapper = mountWithRouter(SearchBar, newProps);
+        {
+          address: '123457L',
+          username: 'genesis_101',
+          rank: 26,
+          rewards: 23421,
+          vote: 127,
+        },
+      ],
+      transactions: [],
+      blocks: [],
+      isLoading: false
+    })
 
-    wrapper.find('.search-input input').simulate('keyDown', { keyCode: keyCodes.arrowDown });
-    wrapper.find('.search-input input').simulate('keyDown', { keyCode: keyCodes.arrowUp });
-    wrapper.find('.search-input input').simulate('keyDown', { keyCode: keyCodes.enter });
-    expect(props.suggestions.clearData).toBeCalled();
+    const wrapper = mountWithQueryClient(SearchBar, props)
+
+    act(() => {
+      wrapper.find('.search-input input').at(0).simulate('change', { target: { value: 'genesis' } });
+    })
+
+    wrapper.find('.delegates-row').at(0).simulate('click');
+    expect(props.history.push).toBeCalledWith("/delegates/profile?address=123456L");
+  });
+  
+  it('should redirect to a blocks page if user do a click on selected block', () => {
+    useSearch.mockReturnValueOnce({
+      addresses: [],
+      delegates: [],
+      transactions: [],
+      blocks: [{ id: '3144423' }],
+      isLoading: false
+    })
+
+    const wrapper = mountWithQueryClient(SearchBar, props)
+
+    act(() => {
+      wrapper.find('.search-input input').at(0).simulate('change', { target: { value: '600078' } });
+    })
+    wrapper.find('.search-block-row').at(0).simulate('click');
+    expect(props.history.push).toBeCalledWith('/block?id=3144423');
   });
 });

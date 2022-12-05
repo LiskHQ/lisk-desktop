@@ -15,11 +15,6 @@
     font-size: 18px;
     letter-spacing: 0;
     line-height: 25px;
+    margin-bottom: 0;
   }
-}
-
-.loadButton {
-  position: absolute;
-  top: 0;
-  z-index: 4;
 }

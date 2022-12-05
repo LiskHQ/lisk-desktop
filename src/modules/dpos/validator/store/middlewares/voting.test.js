@@ -1,5 +1,4 @@
 import walletActionTypes from '@wallet/store/actionTypes';
-import dposActionTypes from '../actions/actionTypes';
 import middleware from './voting';
 
 describe('voting middleware', () => {
@@ -16,41 +15,6 @@ describe('voting middleware', () => {
     middleware(store)(next)(givenAction);
     expect(next).toHaveBeenCalledWith(givenAction);
     expect(store.dispatch).not.toHaveBeenCalled();
-  });
-
-  describe('on accountLoggedOut action', () => {
-    const givenAction = {
-      type: walletActionTypes.accountLoggedOut,
-    };
-    const expectedAction = {
-      type: dposActionTypes.votesReset,
-    };
-    const next = jest.fn();
-    const store = {
-      getState: jest.fn(),
-      dispatch: jest.fn(),
-    };
-    it('should dispatch votesRetrieved with empty array', () => {
-      middleware(store)(next)(givenAction);
-      expect(next).toHaveBeenCalledWith(givenAction);
-      expect(store.dispatch).toHaveBeenCalledWith(expectedAction);
-    });
-  });
-
-  describe('on accountLoggedIn action', () => {
-    const givenAction = {
-      type: walletActionTypes.accountLoggedIn,
-    };
-    const next = jest.fn();
-    const store = {
-      getState: jest.fn(),
-      dispatch: jest.fn(),
-    };
-    it('should dispatch votesRetrieved with empty array', () => {
-      middleware(store)(next)(givenAction);
-      expect(next).toHaveBeenCalledWith(givenAction);
-      expect(store.dispatch).toHaveBeenCalled();
-    });
   });
 
   describe('on accountUpdated action', () => {

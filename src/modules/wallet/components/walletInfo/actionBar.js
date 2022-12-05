@@ -40,7 +40,7 @@ const MultiSignatureButton = ({ t, component, isMultisignature }) => (
         <Icon
           name={
             isMultisignature
-              ? 'registerMultisignatureGroup'
+              ? 'registerMultisignature'
               : 'multiSignatureOutline'
           }
           className={styles.multisigIcon}
@@ -146,7 +146,7 @@ const ActionBar = ({
             size="maxContent"
             content={(
               <DialogLink component="request">
-                <Icon name="qrCodeActive" className={styles.qrCodeIcon} />
+                <Icon name="qrCodeActive" className={`${styles.qrCodeIcon} request-token-button`} />
               </DialogLink>
             )}
           >

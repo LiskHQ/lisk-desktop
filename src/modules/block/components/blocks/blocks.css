@@ -2,8 +2,12 @@
   position: sticky;
   top: 70px;
   background: var(--color-white);
-  z-index: 2;
+  z-index: 3;
   border-bottom: 1px solid var(--color-mystic);
+
+  & > div:last-child {
+    justify-content: flex-end;
+  }
 }
 
 .content {
@@ -32,8 +36,9 @@
 
   & > span:last-child {
     padding-left: 0px;
-    padding-right: 0px;
+    padding-right: 8px;
     text-overflow: initial;
     white-space: unset;
+    text-align: right;
   }
 }

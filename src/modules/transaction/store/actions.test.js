@@ -1,10 +1,10 @@
+import { cryptography } from '@liskhq/lisk-client';
 import httpApi from 'src/utils/api/http';
 import * as transactionUtils from '@transaction/utils/transaction';
 import { getState } from '@tests/fixtures/transactions';
 import { sampleTransaction } from '@tests/constants/transactions';
 import accounts from '@tests/constants/wallets';
 import commonActionTypes from 'src/modules/common/store/actionTypes';
-import walletActionTypes from '@wallet/store/actionTypes';
 import { getAddressFromBase32Address } from '@wallet/utils/account';
 import actionTypes from './actionTypes';
 import {
@@ -18,8 +18,15 @@ import {
   signatureSkipped,
 } from './actions';
 
+const address = 'lskdxc4ta5j43jp9ro3f8zqbxta9fn6jwzjucw7yt';
+jest.spyOn(cryptography.address, 'getLisk32AddressFromPublicKey').mockReturnValue(address);
 jest.mock('@dpos/validator/api');
 jest.mock('src/utils/api/http');
+
+// TODO: All of these tests need to be rewritten to adopt to new transaction schema https://github.com/LiskHQ/lisk-sdk/blob/7e71617d281649a6942434f729a815870aac2394/elements/lisk-transactions/src/schema.ts#L15
+// We need to avoid lot of back and forth convertion from JSON and JS object
+// For consistency we will adopt these changes similar to https://github.com/LiskHQ/lisk-sdk/blob/development/elements/lisk-api-client/src/transaction.ts
+// We will address of these problem in issue https://github.com/LiskHQ/lisk-desktop/issues/4400
 
 describe.skip('actions: transactions', () => {
   beforeEach(() => {
@@ -141,7 +148,7 @@ describe.skip('actions: transactions', () => {
     it('should create an action to add pending transaction', () => {
       // Arrange
       const data = {
-        moduleCommandID: '1938573839:g45krEIjwK',
+        moduleCommand: '1938573839:g45krEIjwK',
         id: '4emF3me9YJSbcIuOp',
         fee: '1032519n',
         nonce: '2n',
@@ -184,8 +191,8 @@ describe.skip('actions: transactions', () => {
       token,
       transactions: {
         signedTransaction: {
-          moduleID: 2,
-          commandID: 0,
+          module: 2,
+          command: 0,
           senderPublicKey: Buffer.from(accounts.genesis.summary.publicKey, 'hex'),
           nonce: BigInt(49),
           fee: BigInt(209000),
@@ -245,17 +252,12 @@ describe.skip('actions: transactions', () => {
         type: actionTypes.broadcastedTransactionSuccess,
         data: sampleTransaction,
       };
-      const lastExpectedAction = {
-        type: walletActionTypes.timerReset,
-        data: new Date(),
-      };
 
       // Act
       await transactionBroadcasted(sampleTransaction)(dispatch, getState);
 
       // Assert
       expect(dispatch).toHaveBeenCalledWith(expectedAction);
-      expect(dispatch).toHaveBeenLastCalledWith(lastExpectedAction);
     });
 
     it('should dispatch broadcastedTransactionError action when broadcast has an error', async () => {
@@ -293,7 +295,6 @@ describe.skip('actions: transactions', () => {
       //   type: actionTypes.pendingTransactionAdded,
       //   data: { ...transformedAccountTransaction, isPending: true },
       // };
-      const expectedAction3 = { data: expect.anything(), type: walletActionTypes.timerReset };
 
       // Act
       await transactionBroadcasted(sampleTransaction)(dispatch, getState);
@@ -301,8 +302,6 @@ describe.skip('actions: transactions', () => {
       // Assert
       expect(httpApi).toHaveBeenCalled();
       expect(dispatch).toHaveBeenNthCalledWith(1, expectedAction1);
-      // expect(dispatch).toHaveBeenNthCalledWith(2, expectedAction2);
-      expect(dispatch).toHaveBeenNthCalledWith(3, expectedAction3);
     });
   });
 
@@ -366,7 +365,7 @@ describe.skip('actions: transactions', () => {
     const props = {
       rawTx: {
         id: '9dc584c07c9d7ed77d54b6f8f43b8341c50e108cbcf582ceb3513388fe4ba84c',
-        moduleCommandID: '2:0',
+        moduleCommand: 'token:transfer',
         fee: '10000000',
         nonce: 0,
         sender: { publicKey: '00f046aea2782180c51f7271249a0c107e6b6295c6b3c31e43c1a3ed644dcdeb' },

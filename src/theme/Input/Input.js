@@ -18,7 +18,7 @@ const updateStatus = ({
   if (isLoading) {
     status = 'pending';
   }
-  if (!value || readOnly) {
+  if ((!value || readOnly) && status !== 'error') {
     status = undefined;
   }
   if (error) {
@@ -56,6 +56,7 @@ function PasswordTypeToggler({ onClick, isPasswordVisible, hasNotification }) {
   );
 }
 
+// eslint-disable-next-line complexity
 const Input = forwardRef(({
   className,
   setRef,
@@ -111,7 +112,7 @@ const Input = forwardRef(({
         {statusIconNameMap[status] && (
           <Icon
             name={statusIconNameMap[status]}
-            className={`${styles.status}`}
+            className={`${styles.status} ${secureTextEntry && styles.mgr30}`}
           />
         )}
 
@@ -149,7 +150,10 @@ Input.propTypes = {
   type: PropTypes.oneOf(['text', 'textarea', 'password']),
   feedback: PropTypes.string,
   dark: PropTypes.bool,
-  label: PropTypes.string,
+  label: PropTypes.oneOfType([
+    PropTypes.string,
+    PropTypes.node
+  ]),
   onChange: PropTypes.func,
   isMasked: PropTypes.bool,
 };

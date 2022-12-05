@@ -4,6 +4,7 @@ import routes from 'src/routes/routes';
 import { txStatusTypes } from '@transaction/configuration/txStatus';
 import accounts from '@tests/constants/wallets';
 import Regular from '.';
+import { MODULE_COMMANDS_NAME_MAP } from '../../configuration/moduleCommand';
 
 describe('TransactionResult Regular', () => {
   const props = {
@@ -23,7 +24,7 @@ describe('TransactionResult Regular', () => {
     account: accounts.genesis,
     title: 'Test title',
     message: 'lorem ipsum',
-    t: t => t,
+    t: (t) => t,
     status: {
       code: txStatusTypes.signatureSuccess,
     },
@@ -33,6 +34,7 @@ describe('TransactionResult Regular', () => {
     className: 'test-class',
     transactionBroadcasted: jest.fn(),
     resetTransactionResult: jest.fn(),
+    moduleCommandSchemas: { [MODULE_COMMANDS_NAME_MAP.transfer]: 'test schema' },
   };
 
   it('should render properly and call props.transactionBroadcasted', () => {
@@ -41,7 +43,10 @@ describe('TransactionResult Regular', () => {
     expect(wrapper.find('.result-box-header')).toHaveText(props.title);
     expect(wrapper.find('.body-message')).toHaveText(props.message);
     expect(wrapper.find('.child-component')).toExist();
-    expect(props.transactionBroadcasted).toHaveBeenCalledWith(props.transactions.signedTransaction);
+    expect(props.transactionBroadcasted).toHaveBeenCalledWith(
+      props.transactions.signedTransaction,
+      props.moduleCommandSchemas
+    );
   });
 
   it('should render properly when error', () => {
@@ -52,7 +57,7 @@ describe('TransactionResult Regular', () => {
           code: txStatusTypes.signatureError,
           message: 'test error',
         }}
-      />,
+      />
     );
     expect(wrapper.find('.test-class')).toExist();
     expect(wrapper.find('.result-box-header')).toHaveText(props.title);
@@ -60,7 +65,7 @@ describe('TransactionResult Regular', () => {
     expect(wrapper.find('.report-error-link')).toHaveText('Report the error via email');
     expect(wrapper.find('.report-error-link')).toHaveProp(
       'href',
-      'mailto:desktopdev@lisk.com?&subject=User Reported Error - Lisk - &body=%0A%20%20%20%20%0AImportant%20metadata%20for%20the%20team%2C%20please%20do%20not%20edit%3A%0A%20%20%20%20%0D%0A%20%20%20%20Lisk%20Core%20Version%3A%205.0.1%2C%20NetworkIdentifier%3A%20networkIdentifier1%2C%20ServiceURL%3A%20http%3A%2F%2Ftestnet.io%0A%20%20%20%20%0D%0A%20%20%20%20Error%20Message%3A%20lorem%20ipsum%0A%20%20%20%20%0D%0A%20%20%20%20Transaction%3A%20test%20error%0A%20%20',
+      'mailto:desktopdev@lisk.com?&subject=User Reported Error - Lisk - &body=%0A%20%20%20%20%0AImportant%20metadata%20for%20the%20team%2C%20please%20do%20not%20edit%3A%0A%20%20%20%20%0D%0A%20%20%20%20Lisk%20Core%20Version%3A%205.0.1%2C%20NetworkIdentifier%3A%20networkIdentifier1%2C%20ServiceURL%3A%20http%3A%2F%2Ftestnet.io%0A%20%20%20%20%0D%0A%20%20%20%20Error%20Message%3A%20lorem%20ipsum%0A%20%20%20%20%0D%0A%20%20%20%20Transaction%3A%20test%20error%0A%20%20'
     );
   });
 
@@ -71,7 +76,7 @@ describe('TransactionResult Regular', () => {
         status={{
           code: txStatusTypes.broadcastSuccess,
         }}
-      />,
+      />
     );
     wrapper.find('.back-to-wallet-button').at(0).simulate('click');
     expect(props.history.push).toHaveBeenCalledWith(routes.wallet.path);

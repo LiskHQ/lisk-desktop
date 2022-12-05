@@ -5,6 +5,8 @@
   flex-flow: row wrap;
 
   & .dataRow {
+    --content-font: 'gilroy';
+
     height: 100px;
     border-bottom: 1px solid var(--color-platinum);
     padding-bottom: 20px;
@@ -14,7 +16,14 @@
 
     & > span {
       white-space: nowrap;
+      font-size: var(--font-size-h6);
       width: 100%;
+    }
+
+    & > label {
+      font-family: var(--content-font);
+      font-size: var(--font-size-h6);
+      font-weight: var(--font-weight-bold);
     }
   }
 
@@ -33,4 +42,8 @@
 
 h1 {
   color: var(--color-maastricht-blue);
+}
+
+.wrapper {
+  margin-bottom: 25px;
 }

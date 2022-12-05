@@ -3,6 +3,9 @@ import { shallow } from 'enzyme';
 import accounts from '@tests/constants/wallets';
 import Status from './UnlockBalanceStatus';
 
+jest.mock('@libs/wcm/hooks/useSession', () => ({
+  respond: jest.fn(),
+}));
 describe('unlock transaction Status', () => {
   const props = {
     t: key => key,
@@ -15,7 +18,7 @@ describe('unlock transaction Status', () => {
   };
 
   const signedTransaction = {
-    id: '5:2',
+    id: 'dpos:unlock',
     senderPublicKey: accounts.genesis.summary.publicKey,
     signatures: [accounts.genesis.summary.publicKey],
     nonce: '19n',
@@ -37,7 +40,7 @@ describe('unlock transaction Status', () => {
       illustration: 'default',
       status: { code: 'SIGNATURE_SUCCESS' },
       title: 'Submitting the transaction',
-      message: 'Your transaction is being submitted to the blockchain.',
+      message: 'Your transaction is signed successfully.',
       className: 'content',
     });
   });

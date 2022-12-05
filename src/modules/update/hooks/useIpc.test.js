@@ -1,10 +1,21 @@
 import { renderHook, act } from '@testing-library/react-hooks';
 import { mountWithRouter } from 'src/utils/testHelpers';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { appUpdateAvailable } from 'src/redux/actions';
 import FlashMessageHolder from 'src/theme/flashMessage/holder';
 import DialogHolder from 'src/theme/dialog/holder';
+import mockSavedAccounts from '@tests/fixtures/accounts';
 import useIpc from './useIpc';
+
+jest.mock('@walletconnect/utils', () => ({
+  getSdkError: jest.fn(str => str),
+}));
+jest.mock('@libs/wcm/utils/connectionCreator', () => ({
+  createSignClient: jest.fn(() => Promise.resolve()),
+  client: {
+    pair: jest.fn(),
+  },
+}));
 
 jest.mock('src/redux/selectors');
 
@@ -16,6 +27,11 @@ const mockHistory = {
 const mockDispatch = jest.fn();
 useDispatch.mockReturnValue(mockDispatch);
 
+jest.mock('react-redux', () => ({
+  ...jest.requireActual('react-redux'),
+  useSelector: jest.fn(),
+}));
+
 describe('useIpc', () => {
   const callbacks = {};
   const ipc = {
@@ -26,12 +42,30 @@ describe('useIpc', () => {
   };
   const version = '1.20.1';
   const releaseNotes = '<h4>dummy text</h4><h3>Fixed bugs</h3>';
+  const mockAppState = {
+    account: {
+      current: mockSavedAccounts[0],
+    },
+    token: {
+      active: 'LSK',
+    },
+    wallet: {
+      info: {
+        LSK: 'some data',
+      },
+    },
+    network: {
+      name: 'testnet',
+      serviceUrl: 'someUrl',
+    },
+  };
 
   beforeEach(() => {
     ipc.send.mockClear();
     mockHistory.push.mockClear();
     mockDispatch.mockClear();
     window.ipc = ipc;
+    useSelector.mockImplementation((callback) => callback(mockAppState));
   });
 
   afterEach(() => {
@@ -71,7 +105,7 @@ describe('useIpc', () => {
         version,
         remindMeLater: expect.any(Function),
         updateNow: expect.any(Function),
-      }),
+      })
     );
   });
 

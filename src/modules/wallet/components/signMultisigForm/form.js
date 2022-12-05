@@ -1,59 +1,79 @@
 /* eslint-disable complexity */
-import React, { useState, useEffect } from 'react';
-import {
-  elementTxToDesktopTx,
-  convertTxJSONToBinary,
-} from '@transaction/utils/transaction';
-import { joinModuleAndCommandIds } from '@transaction/utils/moduleAssets';
+import React, { useState } from 'react';
+import { fromTransactionJSON, toTransactionJSON } from '@transaction/utils/encoding';
+import { joinModuleAndCommand } from '@transaction/utils/moduleCommand';
+import { useCommandSchema } from '@network/hooks';
 import Box from 'src/theme/box';
 import BoxContent from 'src/theme/box/content';
 import BoxFooter from 'src/theme/box/footer';
 import UploadJSONInput from 'src/modules/common/components/uploadJSONInput';
 import { PrimaryButton } from 'src/theme/buttons';
+import { useDeprecatedAccount } from 'src/modules/account/hooks';
+import { useSchemas } from '@transaction/hooks/queries/useSchemas';
 import { validateTransaction } from '@liskhq/lisk-transactions';
 import ProgressBar from '../signMultisigView/progressBar';
 import styles from './styles.css';
 
-const reader = new FileReader();
+const getParamsSchema = (transaction, schemas) => {
+  const moduleCommand = joinModuleAndCommand({
+    module: transaction.module,
+    command: transaction.command,
+  });
 
-const Form = ({ t, nextStep, network }) => {
+  return schemas[moduleCommand];
+};
+
+const getTransactionObject = (transaction, moduleCommandSchemas) => {
+  const paramsSchema = getParamsSchema(transaction, moduleCommandSchemas);
+  const transactionObject = fromTransactionJSON(transaction, paramsSchema);
+  const isValid = validateTransaction(transactionObject, paramsSchema);
+
+  return {
+    transactionObject,
+    isValid,
+  };
+};
+
+// eslint-disable-next-line max-statements
+const Form = ({ t, nextStep }) => {
   const [transaction, setTransaction] = useState();
-  const [binaryTx, setBinaryTx] = useState();
+  const [transactionObject, setTransactionObject] = useState();
   const [error, setError] = useState();
+  const { moduleCommandSchemas } = useCommandSchema();
+  // @todo Once the transactions are refactored and working, we should
+  // use the schema returned by this hook instead of reading from the Redux store.
+  useSchemas();
+  useDeprecatedAccount();
 
   const onReview = () => {
     try {
-      nextStep({ transaction: elementTxToDesktopTx(binaryTx) });
+      const paramsSchema = getParamsSchema(transaction, moduleCommandSchemas);
+      const moduleCommand = joinModuleAndCommand(transaction);
+      const formProps = { moduleCommand };
+      nextStep({ formProps, transactionJSON: toTransactionJSON(transactionObject, paramsSchema) });
     } catch (e) {
       nextStep({ error: e });
     }
   };
 
-  // eslint-disable-next-line max-statements
   const validateAndSetTransaction = (value) => {
+    setError(undefined);
+
     try {
       setTransaction(value);
-      const moduleCommandID = joinModuleAndCommandIds({
-        moduleID: value.moduleID,
-        commandID: value.commandID,
-      });
-
-      const schema = network.networks.LSK.moduleCommandSchemas[moduleCommandID];
-      const transactionObject = convertTxJSONToBinary(value, moduleCommandID);
-      setBinaryTx(transactionObject);
-      const err = validateTransaction(schema, transactionObject);
-      setError(err ? 'Unknown transaction' : undefined);
+      const result = getTransactionObject(value, moduleCommandSchemas);
+      setTransactionObject(result.transactionObject);
+      // TODO: Need to handle the validator error and show to end user
+      setError(result.isValid ? 'Unknown transaction' : undefined);
     } catch (e) {
       setTransaction(undefined);
       setError('Invalid transaction');
     }
   };
 
-  useEffect(() => {
-    reader.onload = ({ target }) => {
-      validateAndSetTransaction(target.result);
-    };
-  }, []);
+  const handleJsonInputError = (inputError) => {
+    setError(inputError.message);
+  };
 
   return (
     <section>
@@ -61,9 +81,7 @@ const Form = ({ t, nextStep, network }) => {
         <header>
           <h1>{t('Sign multisignature transaction')}</h1>
           <p>
-            {t(
-              'Provide a signature for a transaction which belongs to a multisignature account.',
-            )}
+            {t('Provide a signature for a transaction which belongs to a multisignature account.')}
           </p>
         </header>
         <BoxContent>
@@ -74,6 +92,7 @@ const Form = ({ t, nextStep, network }) => {
             onChange={validateAndSetTransaction}
             value={transaction}
             error={error}
+            onError={handleJsonInputError}
           />
         </BoxContent>
         <BoxFooter className={styles.footer}>

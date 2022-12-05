@@ -19,6 +19,13 @@
   }
 }
 
+.searchInputWrapper {
+  max-width: 300px;
+  position: absolute;
+  right: 0;
+  top: -55px;
+}
+
 .searchIcon {
   width: 20px;
   height: 20px;

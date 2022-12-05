@@ -14,12 +14,9 @@ const MigrationDetails = ({ wallet, showBalance }) => {
   return (
     <div className={styles.accountContainer}>
       <div>
-        <h5>{t('Old account')}</h5>
+        <h5>{t('Old wallet address')}</h5>
         <div className={styles.addressContainer}>
-          <WalletVisualWithAddress
-            address={wallet.legacy?.address}
-            truncate={false}
-          />
+          <WalletVisualWithAddress address={wallet.legacy?.address} truncate={false} />
           <CopyToClipboard
             type="icon"
             value={wallet.legacy?.address}
@@ -28,7 +25,7 @@ const MigrationDetails = ({ wallet, showBalance }) => {
         </div>
         {showBalance && (
           <p>
-            <span>{`${t('Balance')}: `}</span>
+            <span>{`${t('Wallet balance')}: `}</span>
             <TokenAmount val={Number(wallet.legacy?.balance)} token={token} />
           </p>
         )}
@@ -38,12 +35,9 @@ const MigrationDetails = ({ wallet, showBalance }) => {
         className={`${styles.arrow} ${!showBalance && styles.noBalance}`}
       />
       <div>
-        <h5>{t('New account')}</h5>
+        <h5>{t('New wallet address')}</h5>
         <div className={styles.addressContainer}>
-          <WalletVisualWithAddress
-            address={wallet.summary?.address}
-            truncate="medium"
-          />
+          <WalletVisualWithAddress address={wallet.summary?.address} truncate="medium" />
           <CopyToClipboard
             type="icon"
             value={wallet.summary?.address}
@@ -52,8 +46,8 @@ const MigrationDetails = ({ wallet, showBalance }) => {
         </div>
         {showBalance && (
           <p>
-            <span>{`${t('Balance')}: `}</span>
-            <TokenAmount val={Number(wallet.token?.balance)} token={token} />
+            <span>{`${t('Wallet balance')}: `}</span>
+            <TokenAmount val={Number(wallet.token?.[0]?.availableBalance)} token={token} />
           </p>
         )}
       </div>

@@ -1,0 +1,40 @@
+.wrapper {
+  position: relative;
+
+  & .content {
+    padding: 0;
+  }
+}
+
+.sessionRow {
+  display: flex;
+  flex-flow: row nowrap;
+  align-items: center;
+}
+
+.addButtonWrapper {
+  max-width: 300px;
+  position: absolute;
+  right: 0;
+  top: -60px;
+
+  & .buttonContent {
+    display: flex;
+    flex-flow: row nowrap;
+    align-items: center;
+
+    & img {
+      filter: brightness(100);
+      margin-right: 10px;
+    }
+  }
+}
+
+.tableHeader {
+  & > *:last-child {
+    & > span {
+      width: 100%;
+      padding: 0 28px;
+    }
+  }
+}

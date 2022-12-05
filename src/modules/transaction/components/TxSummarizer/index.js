@@ -1,15 +1,17 @@
 import React from 'react';
-import TokenAmount from '@token/fungible/components/tokenAmount';
-import { MODULE_COMMANDS_NAME_ID_MAP } from '@transaction/configuration/moduleAssets';
+import { MODULE_COMMANDS_NAME_MAP } from 'src/modules/transaction/configuration/moduleCommand';
 import Box from 'src/theme/box';
 import BoxHeader from 'src/theme/box/header';
+import { TertiaryButton } from 'src/theme/buttons';
 import BoxContent from 'src/theme/box/content';
 import Illustration from 'src/modules/common/components/illustration';
 import Tooltip from 'src/theme/Tooltip';
 import { tokenMap } from '@token/fungible/consts/tokens';
+import Icon from 'src/theme/Icon';
 import TransactionInfo from '../TransactionInfo';
 import Footer from './footer';
 import styles from './txSummarizer.css';
+import FeeSummarizer from './FeeSummarizer';
 
 const TxSummarizer = ({
   title,
@@ -19,27 +21,44 @@ const TxSummarizer = ({
   wallet,
   t,
   secondPassphraseStored,
-  classNames,
+  className,
   token,
   footerClassName,
-  rawTx,
+  formProps,
+  transactionJSON,
   summaryInfo,
+  selectedPriority,
+  hasCancel,
+  hasNoTopCancelButton,
+  noFeeStatus,
+  confirmButtonText,
+  cancelButtonText,
 }) => {
-  const fee = !(wallet.summary.isMultisignature
-    || rawTx.moduleCommandID === MODULE_COMMANDS_NAME_ID_MAP.registerMultisignatureGroup
-  ) ? rawTx.fee : 0;
+  const fee = !(
+    wallet.summary.isMultisignature ||
+    formProps.moduleCommand === MODULE_COMMANDS_NAME_MAP.registerMultisignature
+  )
+    ? transactionJSON.fee
+    : 0;
+
   const tooltip = {
     title: t('Transaction fee'),
     children: t(
       'Transaction fees are required for every transaction to be accepted and forged by the {{network}} network. When the network is busy, transactions with a higher fee are confirmed sooner.',
-      { network: tokenMap[token].label },
+      { network: tokenMap[token].label }
     ),
   };
 
   return (
-    <Box width="medium" className={`${styles.wrapper} ${classNames} summary`}>
+    <Box width="medium" className={`${styles.wrapper} ${className} summary`}>
       {title && (
-        <BoxHeader className="summary-header">
+        <BoxHeader className={`${styles.header} summary-header`}>
+          {!hasNoTopCancelButton ? (
+            <TertiaryButton className="cancel-button" onClick={cancelButton.onClick}>
+              <Icon name="arrowLeftTailed" />
+            </TertiaryButton>
+          ) : null}
+          &nbsp;&nbsp;&nbsp;
           <h2>{title}</h2>
         </BoxHeader>
       )}
@@ -54,34 +73,44 @@ const TxSummarizer = ({
         <TransactionInfo
           token={token}
           summaryInfo={summaryInfo}
-          rawTx={rawTx}
+          formProps={formProps}
+          transactionJSON={transactionJSON}
           account={wallet}
           isMultisignature={wallet.summary.isMultisignature}
         />
-        {fee ? (
-          <section className="regular-tx-fee">
-            <label>
-              {t('Transaction fee')}
-              <Tooltip
-                title={tooltip.title}
-                footer={tooltip.footer}
-                position="right"
-              >
-                <p className={styles.tooltipText}>{tooltip.children}</p>
-              </Tooltip>
-            </label>
-            <label className={`${styles.feeValue} fee-value`}>
-              <TokenAmount val={fee} token={token} />
-            </label>
+        {!noFeeStatus && !!fee && (
+          <section>
+            <div className={styles.feesWrapper}>
+              <div>
+                <label>
+                  {t('Priority')}
+                  <Tooltip title={tooltip.title} footer={tooltip.footer} position="right">
+                    <p className={styles.tooltipText}>{tooltip.children}</p>
+                  </Tooltip>
+                </label>
+                <div>{selectedPriority.title}</div>
+              </div>
+              <div>
+                <label>
+                  {t('Fees')}
+                  <Tooltip title={tooltip.title} footer={tooltip.footer} position="top">
+                    <p className={styles.tooltipText}>{tooltip.children}</p>
+                  </Tooltip>
+                </label>
+                <FeeSummarizer fees={formProps.composedFees} />
+              </div>
+            </div>
           </section>
-        ) : null}
+        )}
       </BoxContent>
       <Footer
+        cancelButton={hasCancel && cancelButton}
         confirmButton={confirmButton}
-        cancelButton={cancelButton}
         footerClassName={footerClassName}
         account={wallet}
         secondPassphraseStored={secondPassphraseStored}
+        confirmButtonText={confirmButtonText}
+        cancelButtonText={cancelButtonText}
         t={t}
       />
     </Box>

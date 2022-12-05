@@ -5,12 +5,13 @@ import { useTranslation } from 'react-i18next';
 import {
   networkSelected, customNetworkRemoved, customNetworkStored,
 } from 'src/redux/actions';
+import { selectSettings } from 'src/redux/selectors';
 import CustomNode from './customNode';
 
 const CustomNodeHOC = (props) => {
   const dispatch = useDispatch();
   const { t } = useTranslation();
-  const settings = useSelector(state => state.settings);
+  const settings = useSelector(selectSettings);
 
   return (
     <CustomNode

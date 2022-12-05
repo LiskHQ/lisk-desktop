@@ -1,15 +1,13 @@
 import React from 'react';
 import Icon from 'src/theme/Icon';
+import { truncateAddress } from '@wallet/utils/account';
 import WalletVisual from '@wallet/components/walletVisual';
 import styles from './AccountRow.css';
 
-function AccountRow({
-  account,
-  onSelect,
-  onRemove,
-  showRemove,
-}) {
-  const { metadata: { name, address } } = account;
+function AccountRow({ account, onSelect, onRemove, truncate }) {
+  const {
+    metadata: { name, address },
+  } = account;
 
   return (
     <div
@@ -20,14 +18,10 @@ function AccountRow({
     >
       <WalletVisual address={address} size={40} />
       <div className={styles.addressWrapper}>
-        <b className={`${styles.addressValue}`}>
-          {name}
-        </b>
-        <p className={`${styles.addressValue}`}>
-          {address}
-        </p>
+        <b className={`${styles.addressValue}`}>{name}</b>
+        <p className={`${styles.addressValue}`}>{truncate ? truncateAddress(address) : address}</p>
       </div>
-      {showRemove && (
+      {onRemove && (
         <button
           data-testid={`${address}-delete`}
           onClick={(event) => {

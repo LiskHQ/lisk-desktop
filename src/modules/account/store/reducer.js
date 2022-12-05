@@ -6,12 +6,25 @@ import actionTypes from './actionTypes';
 /**
  *
  * @param {Object} state
- * @param {type: String, encryptedAccount: Object} action
+ * @param {type: String, encryptedAccount: Object, accountDetail: String, address: String} action
  */
-export const current = (state = {}, { type, encryptedAccount }) => {
+export const current = (state = {}, { type, encryptedAccount, accountDetail, address }) => {
   switch (type) {
     case actionTypes.setCurrentAccount:
       return encryptedAccount;
+    case actionTypes.updateCurrentAccount:
+      return {
+        ...state,
+        metadata: {
+          ...state.metadata,
+          ...accountDetail,
+        },
+      };
+    case actionTypes.deleteAccount: {
+      const isCurrentAccount = state.metadata?.address === address;
+
+      return isCurrentAccount ? {} : state;
+    }
     default:
       return state;
   }
@@ -20,9 +33,9 @@ export const current = (state = {}, { type, encryptedAccount }) => {
 /**
  *
  * @param {Object} state
- * @param {type: String, encryptedAccount: Object, address: string} action
+ * @param {type: String, encryptedAccount: Object, accountDetail: String, address: string} action
  */
-export const list = (state = {}, { type, encryptedAccount, address }) => {
+export const list = (state = {}, { type, encryptedAccount, accountDetail, address }) => {
   switch (type) {
     case actionTypes.addAccount:
       if (!encryptedAccount?.metadata?.address) {
@@ -32,11 +45,24 @@ export const list = (state = {}, { type, encryptedAccount, address }) => {
         ...state,
         [encryptedAccount?.metadata?.address]: encryptedAccount,
       };
-    case actionTypes.deleteAccount:
-      delete state[address];
+    case actionTypes.updateAccount:
+      if (!encryptedAccount?.metadata?.address) {
+        return state;
+      }
       return {
         ...state,
+        [encryptedAccount?.metadata?.address]: {
+          ...encryptedAccount,
+          metadata: {
+            ...encryptedAccount?.metadata,
+            ...accountDetail,
+          },
+        },
       };
+    case actionTypes.deleteAccount: {
+      const { [address]: toRemove, ...updatedState } = state;
+      return updatedState;
+    }
     default:
       return state;
   }
@@ -45,8 +71,8 @@ export const list = (state = {}, { type, encryptedAccount, address }) => {
 const persistConfig = {
   key: 'account',
   storage,
-  whitelist: ['list'], // only navigation will be persisted
-  blacklist: ['current'],
+  whitelist: ['list', 'current'], // only navigation will be persisted
+  blacklist: [],
 };
 
 const accountReducer = combineReducers({ current, list });

@@ -3,8 +3,8 @@ import { mount } from 'enzyme';
 import accounts from '@tests/constants/wallets';
 import WalletVisual from './index';
 
-describe.skip('WalletVisual', () => {
-  it('should create account visual of an address', () => {
+describe('WalletVisual', () => {
+  it.skip('should create account visual of an address', () => {
     const wrapper = mount(<WalletVisual address="lsks6uckwnap7s72ov3edddwgxab5e89t6uy8gjt6" />);
 
     // should render an svg element
@@ -44,12 +44,22 @@ describe.skip('WalletVisual', () => {
   });
 
   it('should be able to create account visual that contains a rectangle', () => {
-    const wrapper = mount(<WalletVisual address={accounts.delegate.address} />);
-    expect(wrapper.find('rect').getDOMNode().getAttribute('x')).toEqual('11');
-    expect(wrapper.find('rect').getDOMNode().getAttribute('y')).toEqual('9');
-    expect(wrapper.find('rect').getDOMNode().getAttribute('height')).toEqual('16.56');
-    expect(wrapper.find('rect').getDOMNode().getAttribute('width')).toEqual('16.56');
-    expect(/url\(#loriot-3-\d{13}-\w{5}\)/
+    const wrapper = mount(<WalletVisual address={accounts.genesis.summary.address} />);
+    expect(wrapper.find('rect').getDOMNode().getAttribute('x')).toEqual('10');
+    expect(wrapper.find('rect').getDOMNode().getAttribute('y')).toEqual('10');
+    expect(wrapper.find('rect').getDOMNode().getAttribute('height')).toEqual('80');
+    expect(wrapper.find('rect').getDOMNode().getAttribute('width')).toEqual('80');
+    expect(/url\(#schiaparelli-\w{2}-\d{13}-\w{5}\)/
+      .test(wrapper.find('rect').getDOMNode().getAttribute('fill'))).toEqual(true);
+  });
+  
+  it('should be able to render in disabled mode', () => {
+    const wrapper = mount(<WalletVisual address={accounts.genesis.summary.address} disabled />);
+    expect(wrapper.find('rect').getDOMNode().getAttribute('x')).toEqual('10');
+    expect(wrapper.find('rect').getDOMNode().getAttribute('y')).toEqual('10');
+    expect(wrapper.find('rect').getDOMNode().getAttribute('height')).toEqual('80');
+    expect(wrapper.find('rect').getDOMNode().getAttribute('width')).toEqual('80');
+    expect(/url\(#schiaparelli-\w{2}-\d{13}-\w{5}\)/
       .test(wrapper.find('rect').getDOMNode().getAttribute('fill'))).toEqual(true);
   });
 });

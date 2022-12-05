@@ -1,21 +1,27 @@
-import React from 'react';
+import React, { useRef } from 'react';
 import PropTypes from 'prop-types';
+import { useOutsideClick } from 'src/modules/common/hooks/useOutsideClick';
 import { flattenArray } from 'src/utils/helpers';
 import styles from './dropdown.css';
 import Separator from './separator';
 
 const Dropdown = ({
-  showDropdown, className, showArrow, active, children, align,
+  showDropdown, className, title, showArrow, active, children, align, closeDropdown = () => {},
 }) => {
+  const dropdownRef = useRef()
+  useOutsideClick(dropdownRef, closeDropdown)
   const isSelectionList = children && Array.isArray(children);
 
   return (
-    <div className={[
-      styles.dropdown,
-      showDropdown ? styles.show : '',
-      className,
-      styles[align],
-    ].join(' ')}
+    <div
+      ref={dropdownRef}
+      className={[
+        styles.dropdown,
+        showDropdown ? styles.show : '',
+        className,
+        styles[align],
+      ].join(' ')}
+      data-testid="dropdown-popup"
     >
       {
         showArrow && (
@@ -27,6 +33,7 @@ const Dropdown = ({
         )
       }
       <div className={`${styles.dropdownContent} dropdown-content ${isSelectionList ? 'options' : ''}`}>
+        {title && <div className={styles.title}>{title}</div>}
         {
           isSelectionList ? flattenArray(children).map((child, key) => (
             child.type === Separator

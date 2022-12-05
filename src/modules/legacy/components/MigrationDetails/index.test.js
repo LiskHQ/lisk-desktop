@@ -6,7 +6,10 @@ import MigrationDetails from './index';
 
 describe('MigrationDetails component', () => {
   const props = {
-    wallet: wallets.empty_wallet,
+    wallet: {
+      ...wallets.empty_wallet,
+      token: [{ name: 'Lisk', symbol: 'LSK', availableBalance: 0 }],
+    },
     showBalance: true,
   };
 

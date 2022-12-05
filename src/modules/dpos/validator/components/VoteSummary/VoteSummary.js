@@ -1,6 +1,6 @@
 import React from 'react';
+import Dialog from 'src/theme/dialog/dialog';
 import TransactionSummary from '@transaction/manager/transactionSummary';
-import ToggleIcon from '../ToggleIcon';
 import VoteStats from '../VoteStats';
 
 import styles from './styles.css';
@@ -31,19 +31,29 @@ const getResultProps = ({ added, removed, edited }) => {
 };
 
 const VoteSummary = ({
-  t, removed = {}, edited = {}, added = {}, selfUnvote = {},
-  prevStep, nextStep, rawTx, votesSubmitted,
+  t,
+  removed = {},
+  edited = {},
+  added = {},
+  selfUnvote = {},
+  prevStep,
+  nextStep,
+  formProps,
+  transactionJSON,
+  votesSubmitted,
+  selectedPriority,
 }) => {
-  const {
-    locked, unlockable,
-  } = getResultProps({ added, removed, edited });
+  const { locked, unlockable } = getResultProps({ added, removed, edited });
 
   const onConfirm = () => {
     nextStep({
-      rawTx,
+      formProps,
+      transactionJSON,
       actionFunction: votesSubmitted,
       statusInfo: {
-        locked, unlockable, selfUnvote,
+        locked,
+        unlockable,
+        selfUnvote,
       },
     });
   };
@@ -58,27 +68,32 @@ const VoteSummary = ({
   };
 
   return (
-    <TransactionSummary
-      confirmButton={onConfirmAction}
-      cancelButton={onCancelAction}
-      classNames={styles.container}
-      summaryInfo={{ added, edited, removed }}
-      rawTx={rawTx}
-    >
-      <ToggleIcon isNotHeader />
-      <div className={styles.headerContainer}>
-        <header>
-          {t('Voting Summary')}
-        </header>
-        <VoteStats
-          t={t}
-          heading={t('Voting Summary')}
-          added={Object.keys(added).length}
-          edited={Object.keys(edited).length}
-          removed={Object.keys(removed).length}
-        />
-      </div>
-    </TransactionSummary>
+    <Dialog hasClose className={`${styles.wrapper}`}>
+      <TransactionSummary
+        noFeeStatus
+        hasCancel
+        confirmButton={onConfirmAction}
+        cancelButton={onCancelAction}
+        classNames={styles.container}
+        summaryInfo={{ added, edited, removed }}
+        formProps={formProps}
+        transactionJSON={transactionJSON}
+        selectedPriority={selectedPriority}
+      >
+        <div className={styles.headerContainer}>
+          <header>
+            {t('Voting Summary')}
+          </header>
+          <VoteStats
+            t={t}
+            heading={t('Voting Summary')}
+            added={Object.keys(added).length}
+            edited={Object.keys(edited).length}
+            removed={Object.keys(removed).length}
+          />
+        </div>
+      </TransactionSummary>
+    </Dialog>
   );
 };
 

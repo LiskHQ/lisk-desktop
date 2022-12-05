@@ -141,7 +141,7 @@ const AmountField = ({
           status={amount.error ? 'error' : 'ok'}
           feedback={amount.feedback}
         />
-        {displayConverter && (
+        {displayConverter && !!amount.value && (
           <Converter
             className={styles.converter}
             value={amount.value}

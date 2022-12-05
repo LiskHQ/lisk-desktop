@@ -7,8 +7,8 @@ import { isEmpty } from 'src/utils/helpers';
 import { extractAddressFromPublicKey, extractPublicKey } from '@wallet/utils/account';
 
 const httpPaths = {
-  account: `${HTTP_PREFIX}/accounts`,
-  accounts: `${HTTP_PREFIX}/accounts`,
+  account: `${HTTP_PREFIX}/auth`,
+  accounts: `${HTTP_PREFIX}/auth`,
 };
 
 const wsMethods = {
@@ -28,7 +28,7 @@ const wsMethods = {
  *
  * @returns {Object} Params containing either address or username
  */
-const getAccountParams = (params) => {
+const getAccountParams = async (params) => {
   if (!params || isEmpty(params)) return {};
   const {
     username,
@@ -41,7 +41,7 @@ const getAccountParams = (params) => {
   if (publicKey) return { publicKey };
   if (address) return { address };
   if (passphrase) {
-    return { publicKey: extractPublicKey(passphrase) };
+    return { publicKey: await extractPublicKey(passphrase) };
   }
 
   return {};
@@ -65,7 +65,7 @@ const getAccountParams = (params) => {
 export const getAccount = async ({
   network, params, baseUrl,
 }) => {
-  const normParams = getAccountParams(params);
+  const normParams = await getAccountParams(params);
 
   try {
     const response = await http({
@@ -75,12 +75,8 @@ export const getAccount = async ({
       params: normParams,
     });
 
-    if (response.data[0]) {
-      const account = { ...response.data[0] };
-      if (params.publicKey) {
-        account.summary.publicKey = params.publicKey;
-        account.summary.privateKey = params.privateKey;
-      }
+    if (response.data) {
+      const account = { keys: { ...response.data } };
       return account;
     }
   } catch (e) {

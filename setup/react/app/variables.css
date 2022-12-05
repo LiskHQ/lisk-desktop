@@ -66,12 +66,13 @@ or "warn/action" ineastd of "red/green"
   /*************************
         Sizes
   *************************/
-  --border-radius-standard: 6px;
+  --border-radius-standard: 10px;
   --border-radius-box: 16px;
-  --header-height: 50px;
+  --header-height: 60px;
   --header-logo-size: 56px;
   --search-box-width-l: 597px;
   --footer-button-width: 400px;
+  --dashboard-aside-width: 420px;
   --main-box-width: 1318px;
   --medium-box-width: 755px;
   --dialog-box-width: var(--medium-box-width);
@@ -152,6 +153,7 @@ or "warn/action" ineastd of "red/green"
   --color-rows-hover: var(--color-white-smoke);
   --color-highlight-checkboxes: rgba(64, 112, 244, 0.08);
   --color-onboarding-bg: var(--color-maastricht-blue);
+  --color-token-card-bg: var(--color-white);
   --color-strong-white: var(--color-white);
   --color-flash-message: rgba(64, 112, 244, 0.15);
   --color-flash-message-border: rgba(64, 112, 244, 0.3);
@@ -184,6 +186,14 @@ or "warn/action" ineastd of "red/green"
   --color-athens-white: rgba(247, 249, 251, 1);
   --color-application-manage-hover-color: var(--color-athens-white);
   --color-node-border: var(--color-athens-white);
+  --color-ultramarine-blue-blurred: #4070f40d;
+  --color-menu-black: #030815;
+  --color-tx-pending-status-text: var(--color-ink-blue);
+  --color-tx-pending-status-bg: var(--color-active-tab);
+  --color-tx-fail-status-text: var(--color-red);
+  --color-tx-fail-status-bg: var(--color-red-transparent);
+  --color-token-card-shadow: #eaeaea5c;
+  --color-votes-available: #4070f41a;
 
   /*************************
         Box
@@ -197,6 +207,7 @@ or "warn/action" ineastd of "red/green"
   --box-shadow-graph-selector: 0 1px 5px 0 rgba(30, 25, 77, 0.06);
   --box-shadow-top: 0 -2px 8px 0 rgba(72, 77, 97, 0.1);
   --box-shadow-dialog: 0 2px 4px 0 rgba(12, 21, 46, 0.24);
+  --box-shadow-popover: 0px 4px 15px rgba(25, 40, 82, 0.15);
 
   /*************************
         Animation
@@ -249,6 +260,7 @@ or "warn/action" ineastd of "red/green"
   --color-mystic: #4d4d50;
   --color-body-bg: #000;
   --color-onboarding-bg: #1c1c1e;
+  --color-token-card-bg: var(--color-onboarding-bg);
   --color-rows-hover: #1c1c1e;
   --overlay-color: rgba(28, 28, 30, 0.8);
   --color-content-light: #fff;
@@ -276,4 +288,9 @@ or "warn/action" ineastd of "red/green"
   --color-button-outline-color: #4c4c4c;
   --color-application-manage-hover-color: var(--color-dialog-bg);
   --color-node-border: var(--color-platinum);
+  --color-tx-pending-status-text: var(--color-ultramarine-blue);
+  --color-tx-pending-status-bg: var(--color-cloud-burst);
+  --color-tx-fail-status-text: var(--color-red);
+  --color-tx-fail-status-bg: var(--color-red-semitransparent);
+  --color-token-card-shadow: transparent;
 }

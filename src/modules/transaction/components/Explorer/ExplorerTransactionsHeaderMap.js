@@ -3,11 +3,11 @@ import styles from './ExplorerTransactions.css';
 
 export default (t, activeToken, changeSort) => ([
   {
-    title: t('Transaction'),
-    classList: `${grid['col-xs-4']} ${styles.transactionTitle}`,
+    title: t('ID'),
+    classList: `${grid['col-xs-3']} ${styles.transactionTitle}`,
   },
   {
-    title: t('Date'),
+    title: t('Height'),
     classList: grid['col-xs-2'],
     sort: {
       fn: changeSort,
@@ -15,15 +15,19 @@ export default (t, activeToken, changeSort) => ([
     },
   },
   {
-    title: t('Transaction fee'),
-    classList: grid['col-xs-2'],
+    title: t('Type'),
+    classList: grid['col-xs-3'],
   },
   {
-    title: t('Details'),
+    title: t('Date'),
     classList: `${grid['col-xs-2']} ${grid['col-md-2']}`,
   },
   {
-    title: t('Amount'),
-    classList: grid['col-xs-2'],
+    title: t('Fee'),
+    classList: `${grid['col-xs-1']} ${grid['col-md-1']}`,
+  },
+  {
+    title: t('Status'),
+    classList: grid['col-xs-1'],
   },
 ]);

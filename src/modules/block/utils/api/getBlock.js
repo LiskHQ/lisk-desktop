@@ -1,6 +1,6 @@
-import http from 'src/utils/api/http';
-import { httpPaths } from '@block/config';
-import getBlockProps from '@block/utils/getBlockProps';
+/* istanbul ignore file */
+import defaultClient from 'src/utils/api/client';
+import { METHOD } from 'src/const/config';
 
 /**
  * Retrieves block details.
@@ -14,17 +14,9 @@ import getBlockProps from '@block/utils/getBlockProps';
  * @param {Object} data.network - Network setting from Redux store
  * @returns {Promise} http call
  */
-const getBlock = ({
-  params = {}, network, baseUrl,
-}) => {
+const getBlock = ({ params = {} }) => {
   try {
-    const blockProps = getBlockProps(params);
-    return http({
-      path: httpPaths.block,
-      params: blockProps,
-      network,
-      baseUrl,
-    });
+    return defaultClient[METHOD]({ params });
   } catch (e) {
     return Promise.reject(e);
   }

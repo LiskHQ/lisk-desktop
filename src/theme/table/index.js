@@ -1,9 +1,9 @@
 import React from 'react';
-import Loading from './loading';
 import Empty from './empty';
 import Error from './error';
 import List from './list';
 import LoadMoreButton from './loadMoreButton';
+import TableLoadingState from './TableLoadingState';
 import styles from './table.css';
 
 /**
@@ -41,9 +41,9 @@ import styles from './table.css';
  * rendering rounds to a minimum.
  * @param {String} currentSort
  * one of the properties of each item in the data array or null.
- * @param {Function} loadingState
+ * @param {Function} skeletonRow
  * A valid react component to be shown when the table is loading data
- * @param {Boolean} isLoading
+ * @param {Boolean} isFetching
  * Determines if the data is being loaded or not. the other states are error and success.
  * @param {Function|Object} emptyState
  * You can pass a valid react component, or simply an object with message and illustration name:
@@ -69,53 +69,48 @@ const Table = ({
   loadData,
   header,
   headerClassName,
+  subHeader,
   row,
   currentSort,
-  loadingState,
-  isLoading,
+  isLoading, // @todo drop this at some point
   emptyState,
   iterationKey,
   canLoadMore,
   error,
   additionalRowProps,
   showHeader,
-}) => {
-  const Row = row;
-  return (
-    <>
-      <List
-        showHeader={showHeader}
-        data={data}
-        header={header}
-        headerClassName={headerClassName}
-        currentSort={currentSort}
-        iterationKey={iterationKey}
-        Row={Row}
-        error={error}
-        additionalRowProps={additionalRowProps || {}}
-      />
-      <Loading
-        Element={loadingState}
-        headerInfo={header}
-        isLoading={isLoading}
-      />
-      <Empty
-        data={emptyState}
-        error={error}
-        isLoading={isLoading}
-        isListEmpty={data.length === 0}
-        className={styles.emptyState}
-      />
-      <Error data={error} isLoading={isLoading} />
-      <LoadMoreButton
-        onClick={loadData}
-        isLoading={isLoading}
-        dataLength={data.length}
-        canLoadMore={canLoadMore}
-        error={error}
-      />
-    </>
-  );
-};
+  isFetching,
+}) => (
+  <>
+    <List
+      showHeader={showHeader}
+      data={data}
+      header={header}
+      headerClassName={headerClassName}
+      subHeader={subHeader}
+      currentSort={currentSort}
+      iterationKey={iterationKey}
+      Row={row}
+      error={error}
+      additionalRowProps={additionalRowProps || {}}
+    />
+    <Empty
+      data={emptyState}
+      error={error}
+      isLoading={isFetching}
+      isListEmpty={data.length === 0}
+      className={styles.emptyState}
+    />
+    <Error data={error} isLoading={isLoading} />
+    <LoadMoreButton
+      onClick={loadData}
+      isFetching={isFetching}
+      dataLength={data.length}
+      canLoadMore={canLoadMore}
+      error={error}
+    />
+    <TableLoadingState header={header} isFetching={isFetching} count={data.length === 0 ? 5 : 1} />
+  </>
+);
 
 export default Table;

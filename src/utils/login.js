@@ -24,7 +24,7 @@ export const addHttp = (url) => {
   }
   return url;
 };
-// eslint-disable-next-line import/prefer-default-export
+
 export const validateUrl = (value) => {
   let url;
   let addressValidity = '';
@@ -43,7 +43,3 @@ export const validateUrl = (value) => {
 export const getAutoLogInData = /* istanbul ignore next */ () => ({
   [settingConstants.keys.loginKey]: localStorage.getItem(settingConstants.keys.loginKey),
 });
-
-// Ignore coverage because this is only development feature
-export const shouldAutoLogIn = /* istanbul ignore next */ autoLogin =>
-  !!autoLogin[settingConstants.keys.loginKey] && autoLogin[settingConstants.keys.loginKey] !== '';

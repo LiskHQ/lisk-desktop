@@ -130,6 +130,8 @@ import signOut from '@setup/react/assets/images/icons/signOut.svg';
 import plus from '@setup/react/assets/images/icons/plus.svg';
 import plusActive from '@setup/react/assets/images/icons/plusActive.svg';
 import remove from '@setup/react/assets/images/icons/remove.svg';
+import removeBlueIcon from '@setup/react/assets/images/icons/remove-blue.svg';
+import removeRed from '@setup/react/assets/images/icons/remove-red.svg';
 import totalBlocks from '@setup/react/assets/images/icons/total-blocks.svg';
 import totalBlocksDark from '@setup/react/assets/images/icons/total-blocks-dark.svg';
 import blocksForged from '@setup/react/assets/images/icons/blocks-forged.svg';
@@ -169,7 +171,7 @@ import deleteRedIcon from '@setup/react/assets/images/icons/delete-red-icon.svg'
 import arrowRightTailed from '@setup/react/assets/images/icons/arrow-right-tailed.svg';
 import download from '@setup/react/assets/images/icons/download.svg';
 import downloadBlue from '@setup/react/assets/images/icons/download-blue.svg';
-import registerMultisignatureGroup from '@setup/react/assets/images/icons/multisignature.svg';
+import registerMultisignature from '@setup/react/assets/images/icons/multisignature.svg';
 import multisignatureTransaction from '@setup/react/assets/images/icons/multisignatureTransaction.svg';
 import multisignatureTransactionDark from '@setup/react/assets/images/icons/multisignatureTransaction-dark.svg';
 import multiSignatureOutline from '@setup/react/assets/images/icons/multisignature-outline.svg';
@@ -223,6 +225,10 @@ import cautionFilledIcon from '@setup/react/assets/images/icons/caution-icon-fil
 import cautionFilledIconDark from '@setup/react/assets/images/icons/caution-icon-filled-dark.svg';
 import applicationsIcon from '@setup/react/assets/images/icons/applications-outline.svg';
 import applicationsIconActive from '@setup/react/assets/images/icons/applications-filled.svg';
+import dropdownFieldIcon from '@setup/react/assets/images/icons/drop-down-field-icon.svg';
+import transferArrow from '@setup/react/assets/images/icons/transfer-arrow.svg';
+import receivedTransactionIcon from '@setup/react/assets/images/icons/received_transaction_icon.svg';
+import sentTransactionIcon from '@setup/react/assets/images/icons/sent_transaction_icon.svg';
 
 export const icons = {
   academy,
@@ -337,7 +343,7 @@ export const icons = {
   iconEmptyRecentTransactionsDark,
   bookmarksIconEmptyStateDark,
   multiSignatureOutline,
-  registerMultisignatureGroup,
+  registerMultisignature,
   missedBlocks,
   missedBlocksDark,
   newsFeedBlog,
@@ -446,11 +452,18 @@ export const icons = {
   plusBlueIcon,
   cautionFilledIcon,
   cautionFilledIconDark,
+  dropdownFieldIcon,
+  removeBlueIcon,
+  removeRed,
+  transferArrow,
+  receivedTransactionIcon,
+  sentTransactionIcon,
 };
 
 const Icon = ({ name, noTheme, ...props }) => {
   const theme = useTheme();
-  const src = theme === 'dark' && !noTheme && icons[`${name}Dark`] ? icons[`${name}Dark`] : icons[name];
+  const src =
+    theme === 'dark' && !noTheme && icons[`${name}Dark`] ? icons[`${name}Dark`] : icons[name];
   return <img src={src} alt={name} {...props} />;
 };
 

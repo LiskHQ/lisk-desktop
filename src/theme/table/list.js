@@ -16,6 +16,7 @@ const List = ({
   data,
   header,
   headerClassName,
+  subHeader,
   currentSort,
   iterationKey,
   Row,
@@ -31,11 +32,13 @@ const List = ({
           data={header}
           currentSort={currentSort}
           headerClassName={headerClassName}
+          subHeader={subHeader}
         />
       ) : null}
       {data.map((item, index) => (
         <Row
           key={getUniqueKey(item, index, iterationKey)}
+          index={index}
           data={item}
           className={styles.row}
           {...additionalRowProps}

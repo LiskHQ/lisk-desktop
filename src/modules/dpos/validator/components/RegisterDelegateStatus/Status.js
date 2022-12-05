@@ -7,7 +7,7 @@ import styles from './status.css';
 const RegisterDelegateStatus = ({ transactions, account, t }) => {
   const status = getTransactionStatus(account, transactions, account.summary.isMultisignature);
   const template = statusMessages(t)[status.code];
-
+  
   return (
     <div className={`${styles.wrapper} status-container`}>
       <TxBroadcaster
@@ -21,9 +21,4 @@ const RegisterDelegateStatus = ({ transactions, account, t }) => {
   );
 };
 
-const areEqual = (prev, next) => (
-  !next.account.dpos.delegate
-  || prev.account.dpos.delegate.username === next.account.dpos.delegate.username
-);
-
-export default React.memo(RegisterDelegateStatus, areEqual);
+export default RegisterDelegateStatus;

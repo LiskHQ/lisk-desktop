@@ -2,8 +2,7 @@ import moment from 'moment';
 import { fireEvent, screen } from '@testing-library/react';
 import mockBlockchainApplications from '@tests/fixtures/blockchainApplicationsExplore';
 import { renderWithRouter } from 'src/utils/testHelpers';
-import { usePinBlockchainApplication } from '@blockchainApplication/manage/hooks/usePinBlockchainApplication';
-import useApplicationManagement from '@blockchainApplication/manage/hooks/useApplicationManagement';
+import { usePinBlockchainApplication, useApplicationManagement } from '@blockchainApplication/manage/hooks';
 import RemoveApplicationDetails from '.';
 
 const mockedPins = ['1111'];
@@ -45,10 +44,10 @@ describe('BlockchainApplicationDetails', () => {
 
   it('should display properly', () => {
     const {
-      name, address, state, lastCertificateHeight, lastUpdated,
+      chainName, address, state, lastCertificateHeight, lastUpdated,
     } = mockBlockchainApplications[0];
 
-    expect(screen.getByText(name)).toBeTruthy();
+    expect(screen.getByText(chainName)).toBeTruthy();
     expect(screen.getByText(address)).toBeTruthy();
     expect(screen.getByText(state)).toBeTruthy();
     expect(screen.getByText(lastCertificateHeight)).toBeTruthy();

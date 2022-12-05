@@ -6,25 +6,23 @@ import { signTransaction } from '@libs/hwManager/communication';
  */
 const signTransactionByHW = async (
   wallet,
-  networkIdentifier,
-  transactionObject,
+  chainID,
+  transaction,
   transactionBytes,
-  keys,
 ) => {
   const data = {
     deviceId: wallet.hwInfo.deviceId,
     index: wallet.hwInfo.derivationIndex,
-    networkIdentifier,
+    chainID,
     transactionBytes,
   };
 
   try {
     const signature = await signTransaction(data);
-    return updateTransactionSignatures(wallet, transactionObject, signature, keys);
+    return updateTransactionSignatures(wallet, transaction, signature);
   } catch (error) {
     throw new Error(error);
   }
 };
 
-// eslint-disable-next-line import/prefer-default-export
 export { signTransactionByHW };

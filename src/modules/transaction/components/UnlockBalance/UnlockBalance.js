@@ -4,7 +4,7 @@ import TokenAmount from '@token/fungible/components/tokenAmount';
 import { tokenMap } from '@token/fungible/consts/tokens';
 import styles from './UnlockBalance.css';
 
-const UnlockBalance = ({ account, t, transaction = {} }) => (
+const UnlockBalance = ({ account, t, transactionJSON = {} }) => (
   <>
     <section className={styles.sender}>
       <label>{t('Sender')}</label>
@@ -20,7 +20,7 @@ const UnlockBalance = ({ account, t, transaction = {} }) => (
         <label>{t('Amount to unlock')}</label>
         <label className="amount-label">
           <TokenAmount
-            val={transaction.params.unlockObjects.reduce(
+            val={transactionJSON.params.unlockObjects.reduce(
               (total, { amount }) => total + Number(amount), 0,
             )}
             token={tokenMap.LSK.key}

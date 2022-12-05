@@ -1,6 +1,7 @@
 import * as accountApi from '@wallet/utils/api';
-import { createGenericTx } from '@transaction/api';
+import { signTransaction } from '@transaction/api';
 import wallets from '@tests/constants/wallets';
+import moduleCommandSchemas from '@tests/constants/schemas';
 import * as networkActions from '@network/store/action';
 import txActionTypes from '@transaction/store/actionTypes';
 import loginTypes from 'src/modules/auth/const/loginTypes';
@@ -19,9 +20,7 @@ jest.mock('@wallet/utils/api', () => ({
 jest.mock('@network/store/action', () => ({
   networkStatusUpdated: jest.fn(),
 }));
-jest.mock('@transaction/api', () => ({
-  createGenericTx: jest.fn().mockImplementation(() => Promise.resolve()),
-}));
+jest.mock('@transaction/api');
 
 describe('actions: account', () => {
   const dispatch = jest.fn();
@@ -48,6 +47,7 @@ describe('actions: account', () => {
               serviceUrl: 'http://localhost:4000',
               nethash:
                 '198f2b61a8eb95fbeed58b8216780b68f697f26b849acf00c8c93bb9b24f783d',
+              moduleCommandSchemas,
             },
           },
         },
@@ -123,12 +123,22 @@ describe('actions: account', () => {
     const state = {
       wallet: {
         loginType: loginTypes.passphrase.code,
-        passphrase: wallets.multiSig_candidate.passphrase,
+        // passphrase: wallets.multiSig_candidate.passphrase,
         info: {
           LSK: wallets.multiSig_candidate,
         },
       },
-      network: {},
+      network: {
+        name: 'Mainnet',
+        networks: {
+          LSK: {
+            serviceUrl: 'http://localhost:4000',
+            nethash:
+              '198f2b61a8eb95fbeed58b8216780b68f697f26b849acf00c8c93bb9b24f783d',
+            moduleCommandSchemas,
+          },
+        },
+      },
       token: {
         active: 'LSK',
       },
@@ -142,26 +152,39 @@ describe('actions: account', () => {
       numberOfSignatures: 2,
     };
 
+    const transactionJSON = {
+      fee: 10000000,
+      module: 'auth',
+      command: 'registerMultisignature',
+      sender: {
+        publicKey: '1',
+      },
+      params: {
+        mandatoryKeys: ['1'],
+        optionalKeys: ['2', '3'],
+        numberOfSignatures: 2,
+        signatures: [],
+      }
+    };
+    const privateKey = '0x0';
+
     it('should dispatch transactionCreatedSuccess', async () => {
       const tx = { id: 1 };
-      createGenericTx.mockImplementation(() =>
+      signTransaction.mockImplementation(() =>
         new Promise((resolve) => {
           resolve(tx);
         }));
-      await multisigGroupRegistered(params)(dispatch, getState);
-      expect(createGenericTx).toHaveBeenCalledWith({
-        network: state.network,
+      await multisigGroupRegistered({}, transactionJSON, privateKey)(dispatch, getState);
+      expect(signTransaction).toHaveBeenCalledWith({
+        transactionJSON,
         wallet: {
           ...state.wallet.info.LSK,
           hwInfo: state.hwInfo,
           loginType: state.wallet.loginType,
         },
-        transactionObject: {
-          fee: 10000000,
-          mandatoryKeys: params.mandatoryKeys,
-          optionalKeys: params.optionalKeys,
-          numberOfSignatures: params.numberOfSignatures,
-        },
+        schema: state.network.networks.LSK.moduleCommandSchemas[transactionJSON.moduleCommand],
+        chainID: state.network.networks.LSK.chainID,
+        privateKey,
       });
       expect(dispatch).toHaveBeenCalledWith({
         type: txActionTypes.transactionCreatedSuccess,
@@ -171,7 +194,7 @@ describe('actions: account', () => {
 
     it('should dispatch transactionSignError', async () => {
       const error = { message: 'TestError' };
-      createGenericTx.mockImplementation(() =>
+      signTransaction.mockImplementation(() =>
         new Promise((_, reject) => {
           reject(error);
         }));

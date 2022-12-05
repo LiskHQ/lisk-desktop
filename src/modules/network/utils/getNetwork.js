@@ -1,15 +1,16 @@
-import i18next from 'i18next';
+import { useTranslation } from 'react-i18next';
 import networks, { networkKeys } from '@network/configuration/networks';
 
-export const getNetworksList = () =>
-  Object.values(networkKeys)
-    .map(name => ({
-      label: i18next.t(networks[name].label),
-      name,
-    }));
+export const getNetworksList = () => {
+  const { t } = useTranslation();
+  return Object.values(networkKeys).map((name) => ({
+    label: t(networks[name].label),
+    name,
+  }));
+};
 
 // Return mainnet as back off network name when cache/local storage does not exists
-export const getNetworkName = network => network.name || networkKeys.mainNet;
+export const getNetworkName = (network = {}) => network?.name || networkKeys.alphanet;
 
 /**
  * Returns human readable error messages
@@ -18,8 +19,11 @@ export const getNetworkName = network => network.name || networkKeys.mainNet;
  * @param {String} error.message - The error message received from network API call
  * @returns {String} - The human readable error message.
  */
-export const getConnectionErrorMessage = error => (
-  error && error.message
-    ? i18next.t(`Unable to connect to the node, Error: ${error.message}`)
-    : i18next.t('Unable to connect to the node, no response from the server.')
-);
+export const getConnectionErrorMessage = (error) => {
+  const { t } = useTranslation();
+  return error && error.message
+    ? t(`Unable to connect to the node, Error: ${error.message}`)
+    : t('Unable to connect to the node, no response from the server.');
+
+}
+

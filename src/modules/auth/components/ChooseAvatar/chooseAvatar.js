@@ -1,3 +1,5 @@
+// @todo: this should be re-instated when the issue with lisk-client is fixed
+/* istanbul ignore file */
 import React from 'react';
 import { withTranslation } from 'react-i18next';
 import { Link } from 'react-router-dom';
@@ -87,7 +89,7 @@ class ChooseAvatar extends React.Component {
         <div className={`${registerStyles.buttonsHolder} ${styles.buttons}`}>
           <Link
             className={`${registerStyles.button} ${registerStyles.backButton}`}
-            to={routes.login.path}
+            to={routes.manageAccounts.path}
           >
             <TertiaryButton>{t('Go back')}</TertiaryButton>
           </Link>

@@ -1,0 +1,124 @@
+@import '../../../../../setup/react/app/mixins.css';
+
+.container {
+  display: flex;
+
+  & > div:first-child {
+    padding: 20px 22px 20px 0px;
+    color: var(--color-ultramarine-blue);
+    font-weight: var(--font-weight-semi-bold);
+  }
+
+  & > .eventAction {
+    padding: 8px;
+    text-transform: capitalize;
+  }
+
+  &::before {
+    content: '';
+    min-width: 100%;
+    position: absolute;
+    height: 1px;
+    border-top: 1px var(--color-platinum) solid;
+  }
+
+  & > div {
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-start;
+    align-items: center;
+    color: var(--color-content-light);
+    font-size: var(--paragraph-font-size-s);
+    font-weight: var(--font-weight-normal);
+  }
+
+  &:hover .pinWrapper {
+    display: block;
+  }
+}
+
+.toggleButton {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  align-items: flex-end;
+  color: var(--color-ink-blue);
+  font-size: 14px;
+  font-weight: 600;
+
+  & img {
+    width: 10px;
+    transition: all 250ms linear;
+  }
+
+  & img.collapsed {
+    transform: rotate(90deg);
+    transition: all 250ms linear;
+  }
+
+  & > button {
+    display: flex;
+    margin: 0px;
+    padding: 0px !important;
+    max-width: 40px;
+    min-width: 40px;
+  }
+}
+
+.eventHash {
+  padding: 0px 16px 0px 5px;
+
+  & > span {
+    width: 100%;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+}
+
+.blockHeight {
+  padding: 0px 16px 0px 5px;
+
+  & > a {
+    width: 100%;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    text-decoration: none;
+  }
+}
+
+.transactionID {
+  padding: 0px 16px 0px 5px;
+
+  & > a {
+    width: 100%;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    text-decoration: none;
+    color: var(--color-ultramarine-blue);
+  }
+}
+
+.rowWrapper {
+  width: 100%;
+}
+
+.jsonContainer {
+  width: 100%;
+  position: relative;
+  border-radius: 5px;
+  background-color: var(--color-ghost-white);
+  margin-bottom: 29px;
+  padding: 12px 8px;
+  box-sizing: border-box;
+  font-size: var(--paragraph-font-size-s);
+  overflow: hidden auto;
+  transition: height 250ms linear, margin-bottom 250ms linear, padding-top 250ms linear, padding-bottom 250ms linear;
+  max-height: 150px;
+
+  &.shrink {
+    height: 0px;
+    padding: 0px;
+    margin-bottom: 0px;
+    transition: height 250ms linear, margin-bottom 250ms linear, padding-top 250ms linear, padding-bottom 250ms linear, padding-left 1000ms linear;
+  }
+}

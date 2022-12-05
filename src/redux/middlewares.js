@@ -2,7 +2,6 @@ import thunk from 'redux-thunk';
 
 import account from '@wallet/store/middlewares/middleware';
 import auth from '@auth/store/middleware';
-import block from '@block/store/middleware';
 import settings from 'src/modules/settings/store/middleware';
 import bookmarks from '@bookmark/store/middleware';
 import network from '@network/store/middleware';
@@ -19,7 +18,6 @@ export default [
   loading,
   network,
   settings,
-  block,
   voting,
   watchList,
   thunk,

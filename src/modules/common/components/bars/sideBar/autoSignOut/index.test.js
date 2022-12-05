@@ -10,7 +10,6 @@ describe('AutoSignOut', () => {
     expireTime,
     onCountdownComplete: jest.fn(),
     history: {},
-    resetTimer: jest.fn(),
     t: v => v,
   };
   let wrapper;

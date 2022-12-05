@@ -24,6 +24,8 @@
 }
 
 .content {
+  padding: 24px !important;
+
   & section {
     width: 100%;
     padding: 16px 0;
@@ -46,6 +48,8 @@
         @mixin contentNormal bold;
 
         margin-bottom: 10px;
+        font-size: 14px;
+        font-weight: var(--font-weight-normal);
       }
     }
 
@@ -99,6 +103,12 @@
   flex-flow: row nowrap;
   justify-content: center;
   align-items: center;
+
+  & button {
+    display: flex;
+    flex-direction: row;
+    flex: 1;
+  }
 }
 
 .secondaryActions {
@@ -120,4 +130,78 @@
   padding: 0 20px;
   box-sizing: border-box;
   margin-bottom: var(--vertical-padding-l);
+}
+
+.confirmButton {
+  min-width: 360px !important;
+}
+
+.header {
+  display: flex;
+  justify-content: flex-start !important;
+
+  & > button {
+    min-width: 20px !important;
+    display: flex !important;
+    padding: 0px !important;
+  }
+
+  & > img {
+    width: 20px;
+  }
+
+  & > h2 {
+    font-size: 20px !important;
+  }
+}
+
+.feesListWrapper {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  row-gap: 8px;
+
+  & > .feeRow {
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+  }
+
+  & > .feeRow span:first-child {
+    font-size: 14px;
+    font-weight: 400;
+    color: var(--color-slate-gray);
+  }
+
+  & > .feeRow span:first-child ~ span {
+    font-size: 16px !important;
+    font-weight: 500 !important;
+    color: var(--color-content-light) !important;
+  }
+}
+
+.feesWrapper {
+  width: 100%;
+  display: flex;
+  flex-direction: row;
+
+  & label {
+    color: var(--color-content-light) !important;
+  }
+
+  & > div {
+    width: 50%;
+    color: var(--color-zodiac-blue);
+  }
+
+  & > div:first-child > label ~ div {
+    margin-top: 8px;
+    font-weight: var(--font-weight-bold);
+    color: var(--color-content-light) !important;
+  }
+
+  & > div:nth-child(2) > label ~ div {
+    margin-top: 16px;
+  }
 }

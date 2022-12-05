@@ -1,14 +1,14 @@
 import React from 'react';
 import { useSelector } from 'react-redux';
 import { useTranslation } from 'react-i18next';
-import { MODULE_COMMANDS_NAME_ID_MAP } from '@transaction/configuration/moduleAssets';
+import { MODULE_COMMANDS_NAME_MAP } from '@transaction/configuration/moduleCommand';
 import {
-  selectCurrentBlockHeight,
   selectActiveTokenAccount,
   selectActiveToken,
 } from 'src/redux/selectors';
 import BoxContent from 'src/theme/box/content';
 import BoxHeader from 'src/theme/box/header';
+import { useLatestBlock } from '@block/hooks/queries/useLatestBlock';
 import TxComposer from '@transaction/components/TxComposer';
 import getUnlockButtonTitle from '../../utils/getUnlockButtonTitle';
 import useUnlockableCalculator from '../../hooks/useUnlockableCalculator';
@@ -20,25 +20,33 @@ const UnlockBalanceForm = ({
 }) => {
   const { t } = useTranslation();
   const activeToken = useSelector(selectActiveToken);
-  const currentBlockHeight = useSelector(selectCurrentBlockHeight);
+  const { data: latestBlock } = useLatestBlock();
   const [unlockObjects, lockedInVotes, unlockableBalance] = useUnlockableCalculator();
   const wallet = useSelector(selectActiveTokenAccount);
 
-  const onConfirm = async (rawTx) => {
-    nextStep({ rawTx });
+  const onConfirm = async (formProps, transactionJSON, selectedPriority, fees) => {
+    nextStep({
+      selectedPriority,
+      formProps,
+      transactionJSON,
+      fees,
+    });
   };
 
-  const transaction = {
-    moduleCommandID: MODULE_COMMANDS_NAME_ID_MAP.unlockToken,
-    params: { unlockObjects },
+  const unlockBalanceFormProps = {
+    moduleCommand: MODULE_COMMANDS_NAME_MAP.unlock,
     isValid: unlockableBalance > 0,
+  };
+  const commandParams = {
+    unlockObjects
   };
 
   return (
     <section className={styles.wrapper}>
       <TxComposer
         onConfirm={onConfirm}
-        transaction={transaction}
+        formProps={unlockBalanceFormProps}
+        commandParams={commandParams}
         buttonTitle={getUnlockButtonTitle(unlockableBalance, activeToken, t)}
       >
         <>
@@ -54,7 +62,7 @@ const UnlockBalanceForm = ({
             <BalanceTable
               lockedInVotes={lockedInVotes}
               unlockableBalance={unlockableBalance}
-              currentBlockHeight={currentBlockHeight}
+              currentBlockHeight={latestBlock.data?.height ?? 0}
               account={wallet}
             />
           </BoxContent>

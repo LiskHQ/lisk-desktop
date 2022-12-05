@@ -1,15 +1,22 @@
 import { act } from 'react-dom/test-utils';
-import { mountWithProps } from 'src/utils/testHelpers';
-import {
-  getTransactionBaseFees,
-} from '@transaction/api';
+import { mountWithCustomRouterAndStore } from 'src/utils/testHelpers';
+import { getTransactionBaseFees } from '@transaction/api';
 import { tokenMap } from '@token/fungible/consts/tokens';
 import useTransactionFeeCalculation from '@transaction/hooks/useTransactionFeeCalculation';
 import { truncateAddress } from '@wallet/utils/account';
 import * as hwManager from '@transaction/utils/hwManager';
 import accounts from '@tests/constants/wallets';
 import flushPromises from '@tests/unit-test-utils/flushPromises';
+import { mockAuth } from 'src/modules/auth/__fixtures__';
+import { useAuth } from 'src/modules/auth/hooks/queries';
+import mockSavedAccounts from '@tests/fixtures/accounts';
 import Summary from '.';
+
+const mockedCurrentAccount = mockSavedAccounts[0];
+jest.mock('@auth/hooks/queries');
+jest.mock('@account/hooks', () => ({
+  useCurrentAccount: jest.fn(() => [mockedCurrentAccount, jest.fn()]),
+}));
 
 jest.mock('@transaction/hooks/useTransactionFeeCalculation');
 jest.mock('@transaction/api');
@@ -44,17 +51,22 @@ describe('Reclaim balance Summary', () => {
   };
   const props = {
     nextStep: jest.fn(),
-    prevStep: jest.fn(),
-    t: key => key,
+    history: {
+      goBack: jest.fn(),
+    },
+    t: (key) => key,
     wallet: wallet.info.LSK,
     token,
     network,
     balanceReclaimed: jest.fn(),
+    selectedPriority: { title: 'Normal', value: 1 },
   };
+
+  useAuth.mockReturnValue({ data: mockAuth });
 
   it('should render summary component', () => {
     // Arrange
-    const wrapper = mountWithProps(Summary, props, state);
+    const wrapper = mountWithCustomRouterAndStore(Summary, props, state);
 
     // Act
     const html = wrapper.html();
@@ -63,31 +75,40 @@ describe('Reclaim balance Summary', () => {
     expect(html).toContain(accounts.non_migrated.legacy.address);
     expect(html).toContain(truncateAddress(accounts.non_migrated.summary.address, 'medium'));
     expect(html).toContain('136 LSK');
-    expect(html).toContain('0.001 LSK');
+    expect(wrapper).toContainMatchingElement('.fee-value-Transaction');
     expect(html).toContain('confirm-button');
   });
 
   it('should navigate to next page when continue button is clicked', async () => {
     // Arrange
-    const wrapper = mountWithProps(Summary, props, state);
+    const wrapper = mountWithCustomRouterAndStore(Summary, props, state);
     wrapper.find('button.confirm-button').simulate('click');
 
     // Act
     await flushPromises();
-    act(() => { wrapper.update(); });
+    act(() => {
+      wrapper.update();
+    });
 
     // Assert
     expect(props.nextStep).toBeCalledWith({
-      rawTx: {
+      formProps: {
+        moduleCommand: 'legacy:reclaimLSK',
+        composedFees: {
+          Transaction: '0.00132 LSK',
+          Initialisation: '0.05 LSK',
+        },
+      },
+      transactionJSON: {
+        module: 'legacy',
+        command: 'reclaimLSK',
         params: {
           amount: accounts.non_migrated.legacy.balance,
         },
-        fee: 100000,
-        moduleCommandID: '1000:0',
+        senderPublicKey: accounts.non_migrated.summary.publicKey,
+        fee: 132000,
         nonce: accounts.non_migrated.sequence.nonce,
-        sender: {
-          PublicKey: accounts.non_migrated.summary.publicKey,
-        },
+        signatures: [],
       },
       actionFunction: props.balanceReclaimed,
     });
@@ -95,26 +116,16 @@ describe('Reclaim balance Summary', () => {
 
   it('should navigate to previous page when cancel button is clicked', async () => {
     // Arrange
-    const wrapper = mountWithProps(Summary, props, state);
+    const wrapper = mountWithCustomRouterAndStore(Summary, props, state);
     wrapper.find('button.cancel-button').simulate('click');
 
     // Act
     await flushPromises();
-    act(() => { wrapper.update(); });
+    act(() => {
+      wrapper.update();
+    });
 
     // Assert
-    expect(props.prevStep).toBeCalledWith({
-      rawTx: {
-        params: {
-          amount: accounts.non_migrated.legacy.balance,
-        },
-        fee: 100000,
-        moduleCommandID: '1000:0',
-        nonce: accounts.non_migrated.sequence.nonce,
-        sender: {
-          PublicKey: accounts.non_migrated.summary.publicKey,
-        },
-      },
-    });
+    expect(props.history.goBack).toBeCalledTimes(1);
   });
 });

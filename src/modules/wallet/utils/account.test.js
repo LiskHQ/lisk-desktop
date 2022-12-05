@@ -1,4 +1,5 @@
-import { getCustomDerivationKeyPair } from 'src/utils/explicitBipKeyDerivation';
+/* eslint-disable max-len */
+import { cryptography } from '@liskhq/lisk-client';
 import accounts from '@tests/constants/wallets';
 import {
   extractPublicKey,
@@ -12,36 +13,42 @@ import {
 } from './account';
 
 const passphrase = accounts.genesis.passphrase;
-const {
-  address,
-  privateKey,
-  publicKey,
-} = accounts.genesis.summary;
+const { address, privateKey, publicKey } = accounts.genesis.summary;
+const customDerivationPath = "m/44'/134'/1'";
 
-jest.mock('src/utils/explicitBipKeyDerivation', () => ({
-  getCustomDerivationKeyPair: jest.fn(),
-}));
+jest.spyOn(cryptography.address, 'getLisk32AddressFromPublicKey').mockReturnValue(address);
+jest
+  .spyOn(cryptography.ed, 'getPrivateKeyFromPhraseAndPath')
+  .mockResolvedValue(Buffer.from(privateKey));
 
-describe.skip('Utils: Account', () => {
+describe('Utils: Account', () => {
   describe('extractPublicKey', () => {
-    it('should return a hex string from any given string', () => {
-      expect(extractPublicKey(passphrase)).toEqual(publicKey);
+    it('should return a hex string from any given string', async () => {
+      const key = await extractPublicKey(passphrase);
+      await expect(key).toEqual(publicKey);
     });
 
-    it('should call getCustomDerivationKeyPair', () => {
-      extractPublicKey(passphrase, true, '1/2');
-      expect(getCustomDerivationKeyPair).toHaveBeenCalledWith(passphrase, '1/2');
+    it('should call getCustomDerivationKeyPair', async () => {
+      await extractPublicKey(passphrase, true, customDerivationPath);
+      expect(cryptography.ed.getPrivateKeyFromPhraseAndPath).toHaveBeenCalledWith(
+        passphrase,
+        customDerivationPath
+      );
     });
   });
 
   describe('extractPrivateKey', () => {
-    it('should return a hex string from any given string', () => {
-      expect(extractPrivateKey(passphrase)).toEqual(privateKey);
+    it('should return a hex string from any given string', async () => {
+      const key = await extractPrivateKey(passphrase);
+      expect(key).toEqual(privateKey);
     });
 
-    it('should call getCustomDerivationKeyPair', () => {
-      extractPrivateKey(passphrase, true, '1/2');
-      expect(getCustomDerivationKeyPair).toHaveBeenCalledWith(passphrase, '1/2');
+    it('should call getCustomDerivationKeyPair', async () => {
+      await extractPrivateKey(passphrase, true, customDerivationPath);
+      expect(cryptography.ed.getPrivateKeyFromPhraseAndPath).toHaveBeenCalledWith(
+        passphrase,
+        customDerivationPath
+      );
     });
   });
 
@@ -65,32 +72,46 @@ describe.skip('Utils: Account', () => {
   describe('unlocking util functions', () => {
     it('should get correct available balance', () => {
       let unlocking = [
-        { amount: '1000000000', height: { start: 4900, end: 5900 }, delegateAddress: 'lskdwsyfmcko6mcd357446yatromr9vzgu7eb8y11' },
-        { amount: '3000000000', height: { start: 100, end: 200 }, delegateAddress: 'lskdwsyfmcko6mcd357446yatromr9vzgu7eb8y11' },
-        { amount: '1000000000', height: { start: 3000, end: 4000 }, delegateAddress: 'lskdwsyfmcko6mcd357446yatromr9vzgu7eb8y13' },
+        {
+          amount: '1000000000',
+          height: { start: 4900, end: 5900 },
+          delegateAddress: 'lskdwsyfmcko6mcd357446yatromr9vzgu7eb8y11',
+        },
+        {
+          amount: '3000000000',
+          height: { start: 100, end: 200 },
+          delegateAddress: 'lskdwsyfmcko6mcd357446yatromr9vzgu7eb8y11',
+        },
+        {
+          amount: '1000000000',
+          height: { start: 3000, end: 4000 },
+          delegateAddress: 'lskdwsyfmcko6mcd357446yatromr9vzgu7eb8y13',
+        },
       ];
       const delegateAddress = '80L';
       const currentBlockHeight = 5000;
 
-      expect(
-        calculateUnlockableBalance(unlocking, currentBlockHeight),
-      ).toEqual(4000000000);
+      expect(calculateUnlockableBalance(unlocking, currentBlockHeight)).toEqual(4000000000);
 
       unlocking = [
-        { amount: '1000000000', height: { start: 4900, end: 5900 }, delegateAddress: 'lskdwsyfmcko6mcd357446yatromr9vzgu7eb8y11' },
+        {
+          amount: '1000000000',
+          height: { start: 4900, end: 5900 },
+          delegateAddress: 'lskdwsyfmcko6mcd357446yatromr9vzgu7eb8y11',
+        },
         { amount: '3000000000', height: { start: 2500, end: 5500 }, delegateAddress },
-        { amount: '1000000000', height: { start: 3000, end: 5500 }, delegateAddress: 'lskdwsyfmcko6mcd357446yatromr9vzgu7eb8y13' },
+        {
+          amount: '1000000000',
+          height: { start: 3000, end: 5500 },
+          delegateAddress: 'lskdwsyfmcko6mcd357446yatromr9vzgu7eb8y13',
+        },
       ];
-      expect(
-        calculateUnlockableBalance(unlocking, currentBlockHeight),
-      ).toEqual(0);
+      expect(calculateUnlockableBalance(unlocking, currentBlockHeight)).toEqual(0);
     });
 
     it('should return 0 when unlocking is undefined', () => {
       const currentBlockHeight = 5000;
-      expect(
-        calculateUnlockableBalance(undefined, currentBlockHeight),
-      ).toEqual(0);
+      expect(calculateUnlockableBalance(undefined, currentBlockHeight)).toEqual(0);
     });
 
     describe('calculateBalanceLockedInVotes', () => {
@@ -112,15 +133,31 @@ describe.skip('Utils: Account', () => {
     describe('getAvailableUnlockingTransactions', () => {
       it('should get correct available balance', () => {
         const unlocking = [
-          { amount: '1000000000', height: { start: 5000, end: 6000 }, delegateAddress: 'lskdwsyfmcko6mcd357446yatromr9vzgu7eb8y11' },
-          { amount: '3000000000', height: { start: 100, end: 2000 }, delegateAddress: 'lskdwsyfmcko6mcd357446yatromr9vzgu7eb8y11' },
-          { amount: '1000000000', height: { start: 3100, end: 41000 }, delegateAddress: 'lskdwsyfmcko6mcd357446yatromr9vzgu7eb8y13' },
+          {
+            amount: '1000000000',
+            height: { start: 5000, end: 6000 },
+            delegateAddress: 'lskdwsyfmcko6mcd357446yatromr9vzgu7eb8y11',
+          },
+          {
+            amount: '3000000000',
+            height: { start: 100, end: 2000 },
+            delegateAddress: 'lskdwsyfmcko6mcd357446yatromr9vzgu7eb8y11',
+          },
+          {
+            amount: '1000000000',
+            height: { start: 3100, end: 41000 },
+            delegateAddress: 'lskdwsyfmcko6mcd357446yatromr9vzgu7eb8y13',
+          },
         ];
         const currentBlockHeight = 5000;
 
-        expect(
-          getUnlockableUnlockObjects(unlocking, currentBlockHeight),
-        ).toEqual([{ amount: '3000000000', unvoteHeight: 100, delegateAddress: 'lskdwsyfmcko6mcd357446yatromr9vzgu7eb8y11' }]);
+        expect(getUnlockableUnlockObjects(unlocking, currentBlockHeight)).toEqual([
+          {
+            amount: '3000000000',
+            unvoteHeight: 100,
+            delegateAddress: 'lskdwsyfmcko6mcd357446yatromr9vzgu7eb8y11',
+          },
+        ]);
       });
 
       it('should return 0 when unlocking is undefined', () => {
@@ -133,48 +170,56 @@ describe.skip('Utils: Account', () => {
   describe('calculateRemainingAndSignedMembers', () => {
     it('should return signed and remaining members', () => {
       const keys = {
-        mandatoryKeys: ['c5e64031407c3ca8d526bf7404f7c78ab60ea0792e90393a73b3b06a8c8841d4',
-          'a1fa251b368939ed2aa8c620e955cb4537c06a351fa50e928ec21e89372e7494'],
-        optionalKeys: ['35c6b25520fc868b56c83fed6e1c89bb350fb7994a5da0bcea7a4f621f948c7f',
+        mandatoryKeys: [
+          'c5e64031407c3ca8d526bf7404f7c78ab60ea0792e90393a73b3b06a8c8841d4',
+          'a1fa251b368939ed2aa8c620e955cb4537c06a351fa50e928ec21e89372e7494',
+        ],
+        optionalKeys: [
+          '35c6b25520fc868b56c83fed6e1c89bb350fb7994a5da0bcea7a4f621f948c7f',
           '0fe9a3f1a21b5530f27f87a414b549e79a940bf24fdf2b2f05e7f22aeeecc86a',
-          '86499879448d1b0215d59cbf078836e3d7d9d2782d56a2274a568761bff36f19'],
+          '86499879448d1b0215d59cbf078836e3d7d9d2782d56a2274a568761bff36f19',
+        ],
       };
 
-      const signatures = [];
-      const result = calculateRemainingAndSignedMembers(keys, signatures);
+      const result = calculateRemainingAndSignedMembers(keys, {
+        signatures: [],
+      });
       expect(result).toMatchSnapshot();
     });
 
     it('should return signed and remaining members', () => {
       const keys = {
-        mandatoryKeys: ['c5e64031407c3ca8d526bf7404f7c78ab60ea0792e90393a73b3b06a8c8841d4',
-          'a1fa251b368939ed2aa8c620e955cb4537c06a351fa50e928ec21e89372e7494'],
-        optionalKeys: ['35c6b25520fc868b56c83fed6e1c89bb350fb7994a5da0bcea7a4f621f948c7f',
+        mandatoryKeys: [
+          'c5e64031407c3ca8d526bf7404f7c78ab60ea0792e90393a73b3b06a8c8841d4',
+          'a1fa251b368939ed2aa8c620e955cb4537c06a351fa50e928ec21e89372e7494',
+        ],
+        optionalKeys: [
+          '35c6b25520fc868b56c83fed6e1c89bb350fb7994a5da0bcea7a4f621f948c7f',
           '0fe9a3f1a21b5530f27f87a414b549e79a940bf24fdf2b2f05e7f22aeeecc86a',
-          '86499879448d1b0215d59cbf078836e3d7d9d2782d56a2274a568761bff36f19'],
+          '86499879448d1b0215d59cbf078836e3d7d9d2782d56a2274a568761bff36f19',
+        ],
       };
 
-      const signatures = ['haha'];
-      const result = calculateRemainingAndSignedMembers(keys, signatures);
+      const signatures = ['signature'];
+      const result = calculateRemainingAndSignedMembers(keys, { signatures });
       expect(result).toMatchSnapshot();
     });
 
     it('should return signed and remaining members', () => {
       const keys = {
-        mandatoryKeys: ['c5e64031407c3ca8d526bf7404f7c78ab60ea0792e90393a73b3b06a8c8841d4',
-          'a1fa251b368939ed2aa8c620e955cb4537c06a351fa50e928ec21e89372e7494'],
-        optionalKeys: ['35c6b25520fc868b56c83fed6e1c89bb350fb7994a5da0bcea7a4f621f948c7f',
+        mandatoryKeys: [
+          'c5e64031407c3ca8d526bf7404f7c78ab60ea0792e90393a73b3b06a8c8841d4',
+          'a1fa251b368939ed2aa8c620e955cb4537c06a351fa50e928ec21e89372e7494',
+        ],
+        optionalKeys: [
+          '35c6b25520fc868b56c83fed6e1c89bb350fb7994a5da0bcea7a4f621f948c7f',
           '0fe9a3f1a21b5530f27f87a414b549e79a940bf24fdf2b2f05e7f22aeeecc86a',
-          '86499879448d1b0215d59cbf078836e3d7d9d2782d56a2274a568761bff36f19'],
+          '86499879448d1b0215d59cbf078836e3d7d9d2782d56a2274a568761bff36f19',
+        ],
       };
 
-      const signatures = [
-        'sender_signature',
-        'haha',
-        '',
-        'does not matter',
-      ];
-      const result = calculateRemainingAndSignedMembers(keys, signatures, true);
+      const signatures = ['sender_signature', 'signature', '', 'does not matter'];
+      const result = calculateRemainingAndSignedMembers(keys, { params: { signatures } }, true);
       expect(result).toMatchSnapshot();
     });
   });

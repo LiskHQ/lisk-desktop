@@ -1,49 +1,58 @@
-import React from 'react';
+/* eslint-disable max-statements */
+import React, { useMemo } from 'react';
+import { withRouter } from 'react-router';
 import { tokenMap } from '@token/fungible/consts/tokens';
-import { MODULE_COMMANDS_NAME_ID_MAP } from '@transaction/configuration/moduleAssets';
-import useTransactionFeeCalculation from '@transaction/hooks/useTransactionFeeCalculation';
+import { MODULE_COMMANDS_NAME_MAP } from '@transaction/configuration/moduleCommand';
+// import useTransactionFeeCalculation from '@transaction/hooks/useTransactionFeeCalculation';
 import useTransactionPriority from '@transaction/hooks/useTransactionPriority';
 import TransactionSummary from '@transaction/manager/transactionSummary';
-import { toRawLsk } from '@token/fungible/utils/lsk';
+// import { toRawLsk } from '@token/fungible/utils/lsk';
+import { getFeeStatus } from '@transaction/utils/helpers';
+import { splitModuleAndCommand } from 'src/modules/transaction/utils';
 import styles from './summary.css';
 
-const transaction = {
-  moduleCommandID: MODULE_COMMANDS_NAME_ID_MAP.reclaimLSK,
-  params: {},
-};
+const Summary = ({ history, balanceReclaimed, nextStep, wallet, t, fees }) => {
+  const formProps = {
+    moduleCommand: MODULE_COMMANDS_NAME_MAP.reclaim,
+  };
 
-const Summary = ({
-  balanceReclaimed,
-  nextStep,
-  prevStep,
-  wallet,
-  network,
-  t,
-}) => {
-  transaction.nonce = wallet.sequence.nonce;
-  transaction.sender = { PublicKey: wallet.summary.publicKey };
-  transaction.params.amount = wallet.legacy.balance;
+  const commandParams = {
+    amount: wallet.legacy?.balance,
+  };
 
-  const [
-    selectedPriority,, priorityOptions,
-  ] = useTransactionPriority();
-  const { minFee } = useTransactionFeeCalculation({
-    network,
-    selectedPriority,
-    token: tokenMap.LSK.key,
-    wallet,
-    priorityOptions,
-    transaction,
-  });
+  const [selectedPriority /* priorityOptions */, ,] = useTransactionPriority();
+  const [module, command] = splitModuleAndCommand(formProps.moduleCommand);
+  const transactionJSON = useMemo(
+    () => ({
+      module,
+      command,
+      fee: 132000, // @TODO: fee value should be gotten from service
+      signatures: [],
+      nonce: wallet.sequence?.nonce,
+      senderPublicKey: wallet.summary?.publicKey,
+      params: commandParams,
+    }),
+    [wallet.legacy?.balance, module, command, wallet.sequence?.nonce, wallet.summary?.publicKey]
+  );
+  // const { minFee } = useTransactionFeeCalculation({
+  //   selectedPriority,
+  //   token: tokenMap.LSK.key,
+  //   wallet,
+  //   priorityOptions,
+  //   transactionJSON,
+  // });
 
-  const rawTx = {
-    ...transaction,
-    fee: toRawLsk(minFee.value),
+  // transactionJSON.fee = toRawLsk(minFee.value); // @TODO: this should be reinstated when fee value is to be gotten from service
+  formProps.composedFees = {
+    Transaction: getFeeStatus({ fee: { value: 0.00132 }, token: tokenMap.LSK.key }),
+    // Transaction: getFeeStatus({ fee: minFee, token: tokenMap.LSK.key }), // @TODO: this should be reinstated when fee value is to be gotten from service
+    Initialisation: getFeeStatus({ fee: { value: 0.05 }, token: tokenMap.LSK.key }),
   };
 
   const onSubmit = () => {
     nextStep({
-      rawTx,
+      formProps,
+      transactionJSON,
       actionFunction: balanceReclaimed,
     });
   };
@@ -55,15 +64,23 @@ const Summary = ({
 
   const onCancelAction = {
     label: t('Go back'),
-    onClick: () => { prevStep({ rawTx }); },
+    onClick: () => {
+      history.goBack();
+    },
   };
 
   return (
     <TransactionSummary
+      hasCancel
+      hasNoTopCancelButton
+      title={t('Transaction Summary')}
       className={styles.container}
       confirmButton={onConfirmAction}
       cancelButton={onCancelAction}
-      rawTx={rawTx}
+      formProps={formProps}
+      transactionJSON={transactionJSON}
+      selectedPriority={selectedPriority}
+      fees={fees}
     />
   );
 };
@@ -71,8 +88,9 @@ const Summary = ({
 Summary.whyDidYouRender = true;
 
 // istanbul ignore next
-const areEqual = (prevProps, nextProps) => (
-  prevProps.wallet.summary.balance === nextProps.wallet.summary.balance
-);
+const areEqual = (
+  prevProps,
+  nextProps // @todo account has multiple balance now
+) => prevProps.wallet.summary.balance === nextProps.wallet.summary.balance;
 
-export default React.memo(Summary, areEqual);
+export default withRouter(React.memo(Summary, areEqual));

@@ -1,3 +1,4 @@
+/* istanbul ignore file */
 import React from 'react';
 import { Link } from 'react-router-dom';
 
@@ -12,7 +13,7 @@ const Forger = ({ forger }) => (
         address={forger.address}
         className={styles.walletVisual}
       />
-      <span>{forger.username}</span>
+      <span>{forger.name}</span>
     </Link>
   </div>
 );

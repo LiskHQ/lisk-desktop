@@ -6,3 +6,70 @@
   padding: 0 var(--horizontal-padding-l);
   box-sizing: border-box;
 }
+
+.wrapper {
+  --content-font: 'gilroy';
+
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+}
+
+.heading {
+  margin: 24px 0px -19px 0px;
+  font-weight: var(--font-weight-very-bold);
+  font-size: var(--font-size-h3);
+  font-family: var(--content-font);
+}
+
+.body {
+  width: 100%;
+  height: calc(100% - 80px);
+  display: flex;
+  flex-direction: row;
+  column-gap: 20px;
+  margin-bottom: -42px;
+
+  & > div {
+    width: 50% !important;
+    padding: 0px;
+    height: 100%;
+    overflow: unset;
+    display: flex !important;
+  }
+
+  & > div > header ~ div {
+    overflow: auto;
+    padding-top: 5px !important;
+    height: 100%;
+  }
+
+  & > div > header {
+    padding-top: 35px !important;
+
+    & > h1 {
+      font-size: 20px !important;
+      font-family: var(--content-font) !important;
+    }
+  }
+
+  & > div > header ~ div::-webkit-scrollbar {
+    display: none;
+  }
+}
+
+.jsonContainer {
+  width: 100%;
+  position: relative;
+  border-radius: 5px;
+  background-color: var(--color-ghost-white);
+  margin-bottom: 29px;
+  padding: 12px 8px;
+  box-sizing: border-box;
+  font-size: var(--paragraph-font-size-s);
+
+  &.shrink {
+    display: none;
+  }
+}

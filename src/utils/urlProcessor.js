@@ -4,7 +4,7 @@ import { regex } from 'src/const/regex';
 import { validateAddress } from 'src/utils/validators';
 import { voteEdited } from '@dpos/validator/store/actions/voting';
 
-const isUsernameValid = username => regex.delegateName.test(username);
+const isUsernameValid = username => regex.name.test(username);
 
 /**
  * Returns an empty array if the given list is not an array

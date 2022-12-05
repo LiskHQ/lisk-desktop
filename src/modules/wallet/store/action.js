@@ -1,6 +1,6 @@
 /* eslint-disable max-lines */
 import { to } from 'await-to-js';
-import { createGenericTx } from '@transaction/api';
+import { signTransaction } from '@transaction/api';
 import { getAccount } from '@wallet/utils/api';
 import { selectActiveTokenAccount } from 'src/redux/selectors';
 import { networkStatusUpdated } from '@network/store/action';
@@ -70,9 +70,9 @@ export const accountDataUpdated = tokensTypes =>
   };
 
 export const multisigGroupRegistered = (
-  transactionObject,
+  formProps,
+  transactionJSON,
   privateKey,
-  publicKey,
 ) => async (dispatch, getState) => {
   //
   // Collect data
@@ -84,12 +84,12 @@ export const multisigGroupRegistered = (
   // Create the transaction
   //
   const [error, tx] = await to(
-    createGenericTx({
-      network: state.network,
+    signTransaction({
+      transactionJSON,
       wallet: activeWallet,
-      transactionObject,
+      schema: state.network.networks.LSK.moduleCommandSchemas[formProps.moduleCommand],
+      chainID: state.network.networks.LSK.chainID,
       privateKey,
-      publicKey,
     }),
   );
 

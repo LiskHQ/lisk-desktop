@@ -1,12 +1,22 @@
 /* eslint-disable complexity */
-import React, { useState, useEffect } from 'react';
-
+/* istanbul ignore file */
+import React, { useRef, useState } from 'react';
+import routes from 'src/routes/routes';
+import { Link } from 'react-router-dom';
+import grid from 'flexboxgrid/dist/flexboxgrid.css';
+import { useTranslation } from 'react-i18next';
 import { Input } from 'src/theme';
 import Box from 'src/theme/box';
 import BoxHeader from 'src/theme/box/header';
 import BoxContent from 'src/theme/box/content';
 import BoxTabs from 'src/theme/tabs';
+import useFilter from 'src/modules/common/hooks/useFilter';
+import DialogLink from 'src/theme/dialog/link';
+import { useCurrentAccount } from 'src/modules/account/hooks';
+import Icon from 'src/theme/Icon';
 import { ROUND_LENGTH } from '@dpos/validator/consts';
+import { PrimaryButton, SecondaryButton } from 'src/theme/buttons';
+import { useBlocks } from 'src/modules/block/hooks/queries/useBlocks';
 import DelegatesOverview from '../Overview/delegatesOverview';
 import ForgingDetails from '../Overview/forgingDetails';
 import DelegatesTable from '../DelegatesTable';
@@ -14,69 +24,28 @@ import LatestVotes from '../LatestVotes';
 import styles from './delegates.css';
 
 // eslint-disable-next-line max-statements
-const DelegatesMonitor = ({
-  votedDelegates,
-  sanctionedDelegates,
-  watchedDelegates,
-  watchList,
-  delegatesCount,
-  registrations,
-  transactionsCount,
-  standByDelegates,
-  networkStatus,
-  applyFilters,
-  filters,
-  blocks,
-  votes,
-  t,
-}) => {
+const DelegatesMonitor = ({ watchList, registrations }) => {
+  const { t } = useTranslation();
+  const timeout = useRef();
+  const { filters, setFilter } = useFilter({});
+  const [activeDetailTab, setActiveDetailTab] = useState('overview');
   const [activeTab, setActiveTab] = useState('active');
-  const { total, forgers, latestBlocks } = blocks;
-  const delegatesWithForgingTimes = { data: forgers };
-  const forgedInRound = latestBlocks.length
-    ? latestBlocks[0].height % ROUND_LENGTH
-    : 0;
+  const [search, setSearch] = useState('');
+  const { data: blocksData } = useBlocks({ config: { params: { limit: 100 } } });
+  const [currentAccount] = useCurrentAccount();
 
-  useEffect(() => {
-    const addressList = votes.data
-      && votes.data.reduce((acc, data) => {
-        const votesList = data.params.votes || [];
-        const dataAddresses = votesList.map((vote) => vote.delegateAddress);
-        return acc.concat(dataAddresses);
-      }, []);
-    if (addressList.length > 0) {
-      votedDelegates.loadData({ addressList });
-    }
-  }, [votes.data]);
-
-  useEffect(() => {
-    if (watchList.length) {
-      watchedDelegates.loadData({ addressList: watchList });
-    }
-  }, [watchList.length]);
+  const total = blocksData?.meta?.total ?? 0;
+  const blocks = blocksData?.data ?? [];
+  const forgedInRound = blocks.length ? blocks[0].height % ROUND_LENGTH : 0;
+  const { address } = currentAccount.metadata || {};
 
   const handleFilter = ({ target: { value } }) => {
-    let api;
-    switch (activeTab) {
-      case 'sanctioned':
-        api = 'sanctionedDelegates';
-        break;
-      case 'watched':
-        api = 'watchedDelegates';
-        break;
-      default:
-        api = 'standByDelegates';
-        break;
-    }
-    applyFilters(
-      {
-        ...filters,
-        search: value,
-        offset: 0,
-        limit: 100,
-      },
-      api,
-    );
+    setSearch(value);
+    clearTimeout(timeout.current);
+
+    timeout.current = setTimeout(() => {
+      setFilter('search', value);
+    }, 500);
   };
 
   const tabs = {
@@ -106,6 +75,23 @@ const DelegatesMonitor = ({
     onClick: ({ value }) => setActiveTab(value),
   };
 
+  const pageTabs = {
+    tabs: [
+      {
+        value: 'overview',
+        name: t('Overview'),
+        className: 'overview',
+      },
+      {
+        value: 'forging-details',
+        name: t('Forging details'),
+        className: 'forging-details',
+      },
+    ],
+    active: activeDetailTab,
+    onClick: ({ value }) => setActiveDetailTab(value),
+  };
+
   if (watchList.length) {
     tabs.tabs.push({
       value: 'watched',
@@ -115,53 +101,56 @@ const DelegatesMonitor = ({
   }
 
   const commonProps = {
-    blocks, filters, watchList, activeTab,
-  };
-
-  const watchedFilters = {
-    search: filters.search || '',
-    address: watchList,
+    blocks,
+    activeTab,
+    setActiveTab,
+    filters,
   };
 
   const displayTab = (tab) => {
-    if (tab === 'active') return <DelegatesTable {...commonProps} delegates={delegatesWithForgingTimes} />;
-    if (tab === 'standby') return <DelegatesTable {...commonProps} delegates={standByDelegates} hasLoadMore />;
-    if (tab === 'sanctioned') return <DelegatesTable {...commonProps} delegates={sanctionedDelegates} hasLoadMore />;
-    if (tab === 'watched') return <DelegatesTable {...commonProps} delegates={watchedDelegates} filters={watchedFilters} setActiveTab={setActiveTab} />;
-    if (tab === 'votes') return <LatestVotes votes={votes} delegates={votedDelegates} />;
-    return null;
+    if (tab === 'votes') return <LatestVotes filters={filters} />;
+
+    return <DelegatesTable {...commonProps} />;
   };
 
   return (
-    <div>
-      <DelegatesOverview
-        delegatesCount={delegatesCount}
-        transactionsCount={transactionsCount}
-        registrations={registrations}
-        t={t}
-        totalBlocks={total}
-        supply={networkStatus.data.supply}
-      />
-      <ForgingDetails
-        t={t}
-        forgers={forgers}
-        forgedInRound={forgedInRound}
-        startTime={latestBlocks[forgedInRound]?.timestamp}
-      />
-      <Box main isLoading={standByDelegates.isLoading || votes.isLoading}>
+    <Box>
+      <BoxHeader className={`${styles.delegatePageWrapper}`}>
+        <div className={grid.row}>
+          <div className={grid['col-md-8']}>
+            <h3>{t('Delegates')}</h3>
+            <BoxTabs {...pageTabs} />
+          </div>
+          <div className={grid['col-md-4']}>
+            <Link to={address ? routes.sentVotes.path : '#'}>
+              <SecondaryButton disabled={!address}>Votes</SecondaryButton>
+            </Link>
+            <DialogLink component="registerDelegate">
+              <PrimaryButton>Register delegate</PrimaryButton>
+            </DialogLink>
+          </div>
+        </div>
+      </BoxHeader>
+      {activeDetailTab === 'overview' ? (
+        <DelegatesOverview registrations={registrations} t={t} totalBlocks={total} />
+      ) : (
+        <ForgingDetails
+          t={t}
+          forgedInRound={forgedInRound}
+          startTime={blocks[forgedInRound]?.timestamp}
+        />
+      )}
+      <Box main>
         <BoxHeader className={`${styles.tabSelector} delegates-table`}>
-          {tabs.tabs.length === 1 ? (
-            <h2>{tabs.tabs[0].name}</h2>
-          ) : (
-            <BoxTabs {...tabs} />
-          )}
+          {tabs.tabs.length === 1 ? <h2>{tabs.tabs[0].name}</h2> : <BoxTabs {...tabs} />}
           <span className={activeTab === 'votes' ? 'hidden' : ''}>
             <Input
+              icon={<Icon className={styles.searchIcon} name="searchActive" />}
               onChange={handleFilter}
-              value={filters.search}
-              className="filter-by-name"
+              value={search}
+              className={`${styles.filterDelegates} filter-by-name`}
               size="m"
-              placeholder={t('Filter by name...')}
+              placeholder={t('Search by name')}
             />
           </span>
         </BoxHeader>
@@ -169,7 +158,7 @@ const DelegatesMonitor = ({
           {displayTab(activeTab)}
         </BoxContent>
       </Box>
-    </div>
+    </Box>
   );
 };
 

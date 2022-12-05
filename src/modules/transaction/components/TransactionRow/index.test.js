@@ -2,6 +2,7 @@ import { mountWithRouter } from 'src/utils/testHelpers';
 import accounts from '@tests/constants/wallets';
 import { truncateAddress } from '@wallet/utils/account';
 import Row from '.';
+import { mockTransactions } from '../../__fixtures__';
 
 const txBase = {
   sender: { address: accounts.genesis.summary.address },
@@ -17,27 +18,29 @@ const txBase = {
   id: 'ad0e0acbe8a3ece3087c8362149ca39c470e565d268df32e57de5d3fe2e1ea5c',
 };
 
-const vote = {
-  moduleCommandID: '5:1',
-  params: {
-    votes: [
-      {
-        amount: '2000000000',
-        delegateAddress: accounts.delegate.summary.address,
-      },
-    ],
-  },
-};
-const registerDelegate = {
-  moduleCommandID: '5:0',
-  params: {
-    delegate: {
-      username: 'sample_username',
-    },
-  },
-};
+// @TODO: this would be re-instated when work is done in re-instating
+//  the transctions/delegate domain
+// const vote = {
+//   moduleCommandID: '5:1',
+//   params: {
+//     votes: [
+//       {
+//         amount: '2000000000',
+//         delegateAddress: accounts.delegate.summary.address,
+//       },
+//     ],
+//   },
+// };
+// const registerDelegate = {
+//   moduleCommandID: '5:0',
+//   params: {
+//     delegate: {
+//       username: 'sample_username',
+//     },
+//   },
+// };
 const transfer = {
-  moduleCommandID: '2:0',
+  moduleCommand: 'token:transfer',
   params: {
     recipient: {
       address: accounts.multiSig.summary.address,
@@ -48,7 +51,7 @@ const transfer = {
 };
 
 describe('Transaction Row', () => {
-  const t = str => str;
+  const t = (str) => str;
   const avatarSize = 40;
   const activeToken = 'LSK';
   const currentBlockHeight = 14000000;
@@ -66,22 +69,16 @@ describe('Transaction Row', () => {
     it('Should render in full layout mode', () => {
       const props = {
         ...baseProps,
-        data: {
-          ...txBase,
-          ...transfer,
-        },
+        data: mockTransactions.data[0],
         layout: 'full',
       };
-      const wrapper = mountWithRouter(
-        Row,
-        props,
-        {},
+      const wrapper = mountWithRouter(Row, props, {});
+      expect(wrapper.find('Height').text()).toBe('8350681');
+      expect(wrapper.find('Sender').text()).toBe(
+        `${props.data.sender.name}${truncateAddress(props.data.sender.address)}`
       );
-      expect(wrapper.find('Amount').text()).toBe('- 100 LSK');
-      expect(wrapper.find('Sender').text()).toBe(truncateAddress(accounts.genesis.summary.address));
-      expect(wrapper.find('Recipient').text()).toBe(truncateAddress(accounts.multiSig.summary.address));
-      // We don't show the details in full mode
-      expect(wrapper.find('Params')).toHaveLength(0);
+      expect(wrapper.find('Date').text()).toBe('23 Nov 197004:51 PM');
+      expect(wrapper.find('Status')).toHaveLength(1);
     });
 
     it('Should render in hosted layout mode', () => {
@@ -93,106 +90,103 @@ describe('Transaction Row', () => {
         },
         layout: 'hosted',
       };
-      const wrapper = mountWithRouter(
-        Row,
-        props,
-        {},
-      );
-      expect(wrapper.find('Amount').text()).toBe('- 100 LSK');
-      expect(wrapper.find('Counterpart').text()).toBe(truncateAddress(accounts.multiSig.summary.address));
+      const wrapper = mountWithRouter(Row, props, {});
       expect(wrapper.find('Sender')).toHaveLength(0);
-      expect(wrapper.find('Recipient')).toHaveLength(0);
-      expect(wrapper.find('Params').text()).toBe('sample message');
     });
   });
 
-  describe('Vote', () => {
-    it('Should render in full layout mode', () => {
-      const props = {
-        ...baseProps,
-        data: {
-          ...txBase,
-          ...vote,
-        },
-        layout: 'full',
-      };
-      const wrapper = mountWithRouter(
-        Row,
-        props,
-        {},
-      );
-      expect(wrapper.find('Amount').text()).toBe('-');
-      expect(wrapper.find('Sender').text()).toBe(truncateAddress(accounts.genesis.summary.address));
-      expect(wrapper.find('Recipient').text()).toBe('Vote');
-      // We don't show the details in full mode
-      expect(wrapper.find('Params')).toHaveLength(0);
-    });
+  // @TODO: this would be re-instated when work is done in re-instating
+  //  the transctions/delegate domain
+  // describe('Vote', () => {
+  //   it('Should render in full layout mode', () => {
+  //     const props = {
+  //       ...baseProps,
+  //       data: {
+  //         ...txBase,
+  //         ...vote,
+  //       },
+  //       layout: 'full',
+  //     };
+  //     const wrapper = mountWithRouter(
+  //       Row,
+  //       props,
+  //       {},
+  //     );
+  //     expect(wrapper.find('Amount').text()).toBe('-');
+  //     expect(wrapper.find('Sender').
+  //       text()).toBe(truncateAddress(accounts.genesis.summary.address));
+  //     expect(wrapper.find('Recipient').text()).toBe('Vote');
+  //     // We don't show the details in full mode
+  //     expect(wrapper.find('Params')).toHaveLength(0);
+  //   });
 
-    it('Should render in hosted layout mode', () => {
-      const props = {
-        ...baseProps,
-        data: {
-          ...txBase,
-          ...vote,
-        },
-        layout: 'hosted',
-      };
-      const wrapper = mountWithRouter(
-        Row,
-        props,
-        {},
-      );
-      expect(wrapper.find('Amount').text()).toBe('-');
-      expect(wrapper.find('Counterpart').text()).toBe('Vote');
-      expect(wrapper.find('Sender')).toHaveLength(0);
-      expect(wrapper.find('Recipient')).toHaveLength(0);
-      expect(wrapper.find('Params').text()).toBe(
-        `${truncateAddress(accounts.delegate.summary.address)}20 LSK`,
-      );
-    });
-  });
+  //   it('Should render in hosted layout mode', () => {
+  //     const props = {
+  //       ...baseProps,
+  //       data: {
+  //         ...txBase,
+  //         ...vote,
+  //       },
+  //       layout: 'hosted',
+  //     };
+  //     const wrapper = mountWithRouter(
+  //       Row,
+  //       props,
+  //       {},
+  //     );
+  //     expect(wrapper.find('Amount').text()).toBe('-');
+  //     expect(wrapper.find('Counterpart').text()).toBe('Vote');
+  //     expect(wrapper.find('Sender')).toHaveLength(0);
+  //     expect(wrapper.find('Recipient')).toHaveLength(0);
+  //     expect(wrapper.find('Params').text()).toBe(
+  //       `${truncateAddress(accounts.delegate.summary.address)}20 LSK`,
+  //     );
+  //   });
+  // });
 
-  describe('Register delegate', () => {
-    it('Should render in full layout mode', () => {
-      const props = {
-        ...baseProps,
-        data: {
-          ...txBase,
-          ...registerDelegate,
-        },
-        layout: 'full',
-      };
-      const wrapper = mountWithRouter(
-        Row,
-        props,
-        {},
-      );
-      expect(wrapper.find('Amount').text()).toBe('-');
-      expect(wrapper.find('Sender').text()).toBe(truncateAddress(accounts.genesis.summary.address));
-      expect(wrapper.find('Recipient').text()).toBe('Register delegate');
-      // We don't show the details in full mode
-      expect(wrapper.find('Params')).toHaveLength(0);
-    });
+  // @TODO: this would be re-instated when work is done in re-instating the transction domain
+  // describe('Register delegate', () => {
+  //   it('Should render in full layout mode', () => {
+  //     const props = {
+  //       ...baseProps,
+  //       data: {
+  //         ...txBase,
+  //         ...registerDelegate,
+  //       },
+  //       layout: 'full',
+  //     };
+  //     const wrapper = mountWithRouter(
+  //       Row,
+  //       props,
+  //       {},
+  //     );
+  //     expect(wrapper.find('Amount').text()).toBe('-');
+  //     expect(wrapper.find('Sender').text())
+  //     .toBe(truncateAddress(accounts.genesis.summary.address));
+  //     expect(wrapper.find('Recipient').text()).toBe('Register delegate');
+  //     // We don't show the details in full mode
+  //     expect(wrapper.find('Params')).toHaveLength(0);
+  //   });
 
-    it('Should render in hosted layout mode', () => {
-      const props = {
-        ...baseProps,
-        data: {
-          ...txBase,
-          ...registerDelegate,
-        },
-        layout: 'hosted',
-      };
-      const wrapper = mountWithRouter(
-        Row,
-        props,
-        {},
-      );
-      expect(wrapper.find('Amount').text()).toBe('-');
-      expect(wrapper.find('Counterpart').text()).toBe('Register delegate');
-      expect(wrapper.find('Sender')).toHaveLength(0);
-      expect(wrapper.find('Recipient')).toHaveLength(0);
-      expect(wrapper.find('Params').text()).toBe('sample_username');
-    });
-  });
+  //   it('Should render in hosted layout mode', () => {
+  //     const props = {
+  //       ...baseProps,
+  //       data: {
+  //         ...txBase,
+  //         ...registerDelegate,
+  //       },
+  //       layout: 'hosted',
+  //     };
+  //     const wrapper = mountWithRouter(
+  //       Row,
+  //       props,
+  //       {},
+  //     );
+  //     expect(wrapper.find('Amount').text()).toBe('-');
+  //     expect(wrapper.find('Counterpart').text()).toBe('Register delegate');
+  //     expect(wrapper.find('Sender')).toHaveLength(0);
+  //     expect(wrapper.find('Recipient')).toHaveLength(0);
+  //     expect(wrapper.find('Params').text()).toBe('sample_username');
+  //   });
+  // });
 });

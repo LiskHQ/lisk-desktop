@@ -14,7 +14,6 @@
   align-items: center;
   color: var(--color-maastricht-blue);
   display: flex;
-  margin-bottom: 8px;
 }
 
 .loadingWrapper {
@@ -41,31 +40,29 @@
   & > .col {
     display: flex;
     flex-direction: column;
-    flex-basis: 50%;
-    justify-content: space-between;
     height: 74px;
-
-    & > .fieldLabel {
-      margin-bottom: 14px;
-    }
+    width: 50%;
+    row-gap: 8px;
 
     & > .prioritySelector {
       display: flex;
       flex-direction: row;
       margin-bottom: 4px;
+      border-radius: 40px;
+      width: fit-content;
+      max-width: 85%;
+      border: solid 1px var(--color-ultramarine-blue-blurred);
 
       & > .priorityTitle {
         background-color: var(--color-white);
         color: var(--color-tx-priority-btn-default);
         font-family: var(--content-font);
-        font-size: 14px;
+        font-size: 16px;
         line-height: 18px;
-        border: 1px solid var(--color-tx-priority-btn-default);
         border-radius: 18px;
-        margin-right: 5px;
-        padding: 5px 0;
+        padding: 7px 11px;
         outline: none;
-        width: 90px;
+        border: none;
 
         &:disabled {
           opacity: 0;
@@ -73,26 +70,26 @@
         }
 
         &.priorityTitleSelected {
-          border-color: var(--color-tx-priority-btn-bg);
-          background-color: var(--color-tx-priority-btn-bg);
-          color: var(--color-constant-white);
+          font-weight: 500;
+          background-color: var(--color-ultramarine-blue-blurred);
+          color: var(--color-ultramarine-blue);
         }
       }
     }
 
     &.fee {
-      text-align: right;
+      text-align: left;
+      height: unset !important;
 
       & .fieldLabel {
         display: inline-block;
       }
 
       & .value {
-        color: var(--color-maastricht-blue);
+        color: var(--color-content-light) !important;
         font-family: var(--content-font);
         font-weight: normal;
         font-size: var(--font-size-h6);
-        margin-bottom: 10px;
         display: inline-block;
 
         & > img {
@@ -100,5 +97,31 @@
         }
       }
     }
+  }
+}
+
+.feesListWrapper {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  row-gap: 8px;
+
+  & > .feeRow {
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+  }
+
+  & > .feeRow span:first-child {
+    font-size: 14px;
+    font-weight: 400;
+    color: var(--color-slate-gray);
+  }
+
+  & > .feeRow span:first-child ~ span {
+    font-size: 16px !important;
+    font-weight: 500 !important;
+    color: var(--color-zodiac-blue) !important;
   }
 }

@@ -18,19 +18,31 @@ const RestoreAccountForm = ({ onBack, nextStep }) => {
     }
   };
 
+  const handleJsonInputError = (inputError) => {
+    setError(inputError.message);
+  };
+
+  const handleJsonInputChange = (json) => {
+    if (json?.encryptedPassphrase?.ciphertext) {
+      setValue(json);
+      setError(undefined);
+    } else {
+      setError(t('You have uploaded an incorrect file'));
+    }
+  };
+
   return (
     <>
       <div className={styles.titleHolder}>
-        <h1>
-          {t('Add account')}
-        </h1>
+        <h1>{t('Add account')}</h1>
         <p>{t('Restore your encrypted secret recovery phrase.')}</p>
       </div>
       <div className={styles.fullWidth}>
         <UploadJSONInput
           label={t('Restore from JSON file')}
           placeholderText={t('Please drag and drop the JSON file from your device.')}
-          onChange={setValue}
+          onChange={handleJsonInputChange}
+          onError={handleJsonInputError}
           value={value}
           error={error}
         />
@@ -43,11 +55,7 @@ const RestoreAccountForm = ({ onBack, nextStep }) => {
           >
             {t('Continue')}
           </PrimaryButton>
-          <TertiaryButton
-            className="confirmButton"
-            size="l"
-            onClick={onBack}
-          >
+          <TertiaryButton className="confirmButton" size="l" onClick={onBack}>
             {t('Go back')}
           </TertiaryButton>
         </div>

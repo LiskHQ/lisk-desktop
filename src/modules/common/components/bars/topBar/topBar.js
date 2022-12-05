@@ -1,45 +1,48 @@
-import React from 'react';
-import { Link } from 'react-router-dom';
+import React, { useState } from 'react';
+import { useTranslation } from 'react-i18next';
 import routes from 'src/routes/routes';
-import { isEmpty } from 'src/utils/helpers';
 import Icon from 'src/theme/Icon';
+import AccountManagementDropdown from '@account/components/AccountManagementDropdown';
 import DialogLink from 'src/theme/dialog/link';
-import { PrimaryButton } from 'src/theme/buttons';
 import Tooltip from 'src/theme/Tooltip';
 import VoteQueueToggle from 'src/modules/common/components/bars/topBar/voteQueueToggle';
 import DiscreteModeToggle from 'src/modules/settings/components/discreteModeToggle';
 import LightDarkToggle from 'src/modules/settings/components/lightDarkModeToggle';
 import SideBarToggle from 'src/modules/settings/components/sideBarToggle';
-import Search from '@search/components/Search';
 import ApplicationManagementDropDown from '@blockchainApplication/manage/components/ApplicationManagementDropDown';
+import SearchBar from 'src/modules/search/manager/searchBarManager';
+import { useCurrentAccount } from '@account/hooks';
+import { isEmpty } from 'src/utils/helpers';
 import styles from './topBar.css';
 import Network from './networkName';
 import NavigationButtons from './navigationButtons';
-import SignOut from './signOut';
 
-const TopBar = ({
-  t,
-  account,
-  history,
-  network,
-  token,
-  noOfVotes,
-  location,
-}) => {
-  const isUserLogout = isEmpty(account) || account.afterLogout;
+const TopBar = ({ history, noOfVotes, location }) => {
   const disabled = location.pathname === routes.reclaim.path;
+  const [currentAccount] = useCurrentAccount();
+  const [menuOpen, setMenuOpen] = useState(false);
+  const { t } = useTranslation()
+
+  const onMenuClick = (menuOpenStatus) => {
+    setMenuOpen(menuOpenStatus);
+  };
 
   return (
     <div className={`${styles.wrapper} top-bar`}>
       <div className={styles.group}>
-        <Icon name="liskLogo" className={`${styles.logo} topbar-logo`} />
-        <NavigationButtons history={history} account={account} />
+        <div className={`${styles.section} ${menuOpen ? styles.menuOpen : ''} user-menu-section`}>
+          <Icon name="liskLogo" className={`${styles.logo} topbar-logo`} />
+          {!isEmpty(currentAccount) ? (
+            <AccountManagementDropdown currentAccount={currentAccount} onMenuClick={onMenuClick} />
+          ) : null}
+        </div>
+        <NavigationButtons history={history} />
         <SideBarToggle />
         <Tooltip
           className={styles.tooltipWrapper}
           size="maxContent"
           position="bottom"
-          content={(
+          content={
             <DialogLink
               component="bookmarks"
               className={`${styles.toggle} bookmark-list-toggle ${
@@ -48,31 +51,20 @@ const TopBar = ({
             >
               <Icon name="bookmark" className={styles.bookmarksIcon} />
             </DialogLink>
-          )}
+          }
         >
           <p>{t('Bookmarks')}</p>
         </Tooltip>
-        <VoteQueueToggle
-          t={t}
-          noOfVotes={noOfVotes}
-          isUserLogout={isUserLogout}
-          disabled={disabled}
-        />
-        <Search t={t} history={history} disabled={disabled} />
+        <VoteQueueToggle t={t} noOfVotes={noOfVotes} disabled={disabled} />
+        <SearchBar />
       </div>
       <div className={styles.group}>
         <ApplicationManagementDropDown />
         <LightDarkToggle />
-        {!isUserLogout && <DiscreteModeToggle />}
+        <DiscreteModeToggle />
         {location.pathname !== routes.register.path && (
-          <Network token={token.active} network={network} t={t} />
+          <Network />
         )}
-        {isUserLogout && history.location.pathname !== routes.login.path ? (
-          <Link to={routes.login.path} className={styles.signIn}>
-            <PrimaryButton size="s">Sign in</PrimaryButton>
-          </Link>
-        ) : null}
-        {!isUserLogout && <SignOut t={t} history={history} />}
       </div>
     </div>
   );

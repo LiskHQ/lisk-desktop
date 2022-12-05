@@ -1,22 +1,26 @@
-import React from 'react';
-import { mount } from 'enzyme';
-import blocks from '@tests/constants/blocks';
+import { mountWithQueryClient } from 'src/utils/testHelpers';
+import { mockBlocks } from '@block/__fixtures__';
+import { useBlocks } from '../../hooks/queries/useBlocks';
 import BlocksOverview from './blocksOverview';
 
-describe('Blocks Overview', () => {
-  const props = {
-    t: (key, values = {}) => key.replace('{{num}}', values.num),
-    blocks: {
-      isLoading: true,
-      data: blocks,
-      loadData: jest.fn(),
-      clearData: jest.fn(),
-      urlSearchParams: {},
+jest.mock('react-i18next', () => ({
+  useTranslation: jest.fn(() => ({
+    t: (str, values = {}) => {
+      if (!values) return str;
+      return Object.keys(values).reduce((acc, curr) =>
+        acc.replace(`{{${curr}}}`, values[curr]), str);
     },
-  };
+  })),
+}));
+jest.mock('../../hooks/queries/useBlocks', () => ({
+  useBlocks: jest.fn(() => ({
+    data: mockBlocks,
+  })),
+}));
 
-  it('calls loadData when changing tab', () => {
-    const wrapper = mount(<BlocksOverview {...props} />);
+describe('Blocks Overview', () => {
+  it('calls loadData when changing tab', async () => {
+    const wrapper = mountWithQueryClient(BlocksOverview);
     expect(wrapper.find('.box-tabs .tab').at(0)).toIncludeText(
       'Last 10 blocks',
     );
@@ -27,10 +31,10 @@ describe('Blocks Overview', () => {
       'Last 100 blocks',
     );
     wrapper.find('.box-tabs ul li').at(1).simulate('click');
-    expect(props.blocks.loadData).toBeCalledWith({ limit: 50 });
+    expect(useBlocks).toBeCalledWith({ config: { params: { limit: 50 } } });
     wrapper.find('.box-tabs ul li').at(2).simulate('click');
-    expect(props.blocks.loadData).toBeCalledWith({ limit: 100 });
+    expect(useBlocks).toBeCalledWith({ config: { params: { limit: 100 } } });
     wrapper.find('.box-tabs ul li').at(0).simulate('click');
-    expect(props.blocks.loadData).toBeCalledWith({ limit: 10 });
+    expect(useBlocks).toBeCalledWith({ config: { params: { limit: 10 } } });
   });
 });

@@ -1,2 +1,3 @@
-// eslint-disable-next-line import/prefer-default-export
-export const DEFAULT_LIMIT = 20;
+import { LIMIT } from 'src/const/config';
+
+export const DEFAULT_LIMIT = LIMIT; // deprecated

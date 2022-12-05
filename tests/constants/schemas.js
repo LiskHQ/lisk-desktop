@@ -1,38 +1,20 @@
+/* eslint-disable max-lines */
+
 const moduleCommandSchemas = {
-  '2:0': {
-    $id: 'lisk/transfer-asset',
-    properties: {
-      amount: { dataType: 'uint64', fieldNumber: 1 },
-      recipientAddress: {
-        dataType: 'bytes', fieldNumber: 2, maxLength: 20, minLength: 20,
-      },
-      data: {
-        dataType: 'string', fieldNumber: 3, maxLength: 64, minLength: 0,
-      },
-    },
-    required: ['amount', 'recipientAddress', 'data'],
-    title: 'Transfer transaction asset',
-    type: 'object',
-  },
-  '4:0': {
-    $id: 'lisk/keys/register',
-    type: 'object',
-    required: [
-      'numberOfSignatures',
-      'optionalKeys',
-      'mandatoryKeys',
-    ],
+  "auth:registerMultisignature": {
+    $id: "/auth/command/regMultisig",
+    type: "object",
     properties: {
       numberOfSignatures: {
-        dataType: 'uint32',
+        dataType: "uint32",
         fieldNumber: 1,
         minimum: 1,
         maximum: 64,
       },
       mandatoryKeys: {
-        type: 'array',
+        type: "array",
         items: {
-          dataType: 'bytes',
+          dataType: "bytes",
           minLength: 32,
           maxLength: 32,
         },
@@ -41,9 +23,9 @@ const moduleCommandSchemas = {
         maxItems: 64,
       },
       optionalKeys: {
-        type: 'array',
+        type: "array",
         items: {
-          dataType: 'bytes',
+          dataType: "bytes",
           minLength: 32,
           maxLength: 32,
         },
@@ -51,107 +33,274 @@ const moduleCommandSchemas = {
         minItems: 0,
         maxItems: 64,
       },
+      signatures: {
+        type: "array",
+        items: {
+          dataType: "bytes",
+          minLength: 64,
+          maxLength: 64,
+        },
+        fieldNumber: 4,
+      },
     },
-  },
-  '5:0': {
-    $id: 'lisk/dpos/register',
-    type: 'object',
     required: [
-      'username',
+      "numberOfSignatures",
+      "mandatoryKeys",
+      "optionalKeys",
+      "signatures",
     ],
+  },
+  "dpos:registerDelegate": {
+    $id: "/dpos/command/registerDelegateParams",
+    type: "object",
+    required: ["name", "generatorKey", "blsKey", "proofOfPossession"],
     properties: {
-      username: {
-        dataType: 'string',
+      name: {
+        dataType: "string",
         fieldNumber: 1,
         minLength: 1,
         maxLength: 20,
       },
+      generatorKey: {
+        dataType: "bytes",
+        fieldNumber: 2,
+        minLength: 32,
+        maxLength: 32,
+      },
+      blsKey: {
+        dataType: "bytes",
+        fieldNumber: 3,
+        minLength: 48,
+        maxLength: 48,
+      },
+      proofOfPossession: {
+        dataType: "bytes",
+        fieldNumber: 4,
+        minLength: 96,
+        maxLength: 96,
+      },
     },
   },
-  '5:1': {
-    $id: 'lisk/dpos/vote',
-    type: 'object',
-    required: [
-      'votes',
-    ],
+  "dpos:reportDelegateMisbehavior": {
+    $id: "/dpos/command/reportDelegateMisbehaviorParams",
+    type: "object",
+    required: ["header1", "header2"],
+    properties: {
+      header1: {
+        dataType: "bytes",
+        fieldNumber: 1,
+      },
+      header2: {
+        dataType: "bytes",
+        fieldNumber: 2,
+      },
+    },
+  },
+  "dpos:updateGeneratorKey": {
+    $id: "/dpos/command/updateGeneratorKeyParams",
+    type: "object",
+    required: ["generatorKey"],
+    properties: {
+      generatorKey: {
+        dataType: "bytes",
+        fieldNumber: 1,
+        minLength: 32,
+        maxLength: 32,
+      },
+    },
+  },
+  "dpos:voteDelegate": {
+    $id: "/dpos/command/voteDelegateParams",
+    type: "object",
+    required: ["votes"],
     properties: {
       votes: {
-        type: 'array',
+        type: "array",
+        fieldNumber: 1,
         minItems: 1,
         maxItems: 20,
         items: {
-          type: 'object',
-          required: [
-            'delegateAddress',
-            'amount',
-          ],
+          type: "object",
+          required: ["delegateAddress", "amount"],
           properties: {
             delegateAddress: {
-              dataType: 'bytes',
+              dataType: "bytes",
               fieldNumber: 1,
-              minLength: 20,
-              maxLength: 20,
+              format: "lisk32",
             },
             amount: {
-              dataType: 'sint64',
+              dataType: "sint64",
               fieldNumber: 2,
             },
           },
         },
-        fieldNumber: 1,
       },
     },
   },
-  '5:2': {
-    $id: 'lisk/dpos/unlock',
-    type: 'object',
+  "interoperability:mainchainRegistration": {
+    $id: "/modules/interoperability/sidechain/mainchainRegistration",
+    type: "object",
     required: [
-      'unlockObjects',
+      "ownChainID",
+      "ownName",
+      "mainchainValidators",
+      "signature",
+      "aggregationBits",
     ],
     properties: {
-      unlockObjects: {
-        type: 'array',
-        minItems: 1,
-        maxItems: 20,
+      ownChainID: {
+        dataType: "bytes",
+        fieldNumber: 1,
+        minLength: 4,
+        maxLength: 4,
+      },
+      ownName: {
+        dataType: "string",
+        fieldNumber: 2,
+        minLength: 1,
+        maxLength: 40,
+      },
+      mainchainValidators: {
+        type: "array",
+        fieldNumber: 3,
         items: {
-          type: 'object',
-          required: [
-            'delegateAddress',
-            'amount',
-            'unvoteHeight',
-          ],
+          type: "object",
+          required: ["blsKey", "bftWeight"],
           properties: {
-            delegateAddress: {
-              dataType: 'bytes',
+            blsKey: {
+              dataType: "bytes",
               fieldNumber: 1,
-              minLength: 20,
-              maxLength: 20,
+              minLength: 48,
+              maxLength: 48,
             },
-            amount: {
-              dataType: 'uint64',
+            bftWeight: {
+              dataType: "uint64",
               fieldNumber: 2,
-            },
-            unvoteHeight: {
-              dataType: 'uint32',
-              fieldNumber: 3,
             },
           },
         },
-        fieldNumber: 1,
+        minItems: 101,
+        maxItems: 101,
+      },
+      signature: {
+        dataType: "bytes",
+        fieldNumber: 4,
+        minItems: 96,
+        maxItems: 96,
+      },
+      aggregationBits: {
+        dataType: "bytes",
+        fieldNumber: 5,
       },
     },
   },
-  '1000:0': {
-    $id: 'lisk/legacyAccount/reclaim',
-    title: 'Reclaim transaction asset',
-    type: 'object',
-    required: [
-      'amount',
-    ],
+  "legacy:reclaim": {
+    $id: "lisk/legacy/reclaim",
+    type: "object",
+    required: ["amount"],
     properties: {
       amount: {
-        dataType: 'uint64',
+        dataType: "uint64",
         fieldNumber: 1,
+      },
+    },
+  },
+  "legacy:registerKeys": {
+    $id: "lisk/legacy/registerKeys",
+    type: "object",
+    required: ["blsKey", "proofOfPossession", "generatorKey"],
+    properties: {
+      blsKey: {
+        dataType: "bytes",
+        minLength: 48,
+        maxLength: 48,
+        fieldNumber: 1,
+      },
+      proofOfPossession: {
+        dataType: "bytes",
+        minLength: 96,
+        maxLength: 96,
+        fieldNumber: 2,
+      },
+      generatorKey: {
+        dataType: "bytes",
+        minLength: 32,
+        maxLength: 32,
+        fieldNumber: 3,
+      },
+    },
+  },
+  "token:transfer": {
+    $id: "/lisk/transferParams",
+    title: "Transfer transaction params",
+    type: "object",
+    required: ["tokenID", "amount", "recipientAddress", "data"],
+    properties: {
+      tokenID: {
+        dataType: "bytes",
+        fieldNumber: 1,
+        minLength: 8,
+        maxLength: 8,
+      },
+      amount: {
+        dataType: "uint64",
+        fieldNumber: 2,
+      },
+      recipientAddress: {
+        dataType: "bytes",
+        fieldNumber: 3,
+        format: "lisk32",
+      },
+      data: {
+        dataType: "string",
+        fieldNumber: 4,
+        minLength: 0,
+        maxLength: 64,
+      },
+    },
+  },
+  "token:crossChaintransfer": {
+    $id: "/lisk/ccTransferParams",
+    type: "object",
+    required: [
+      "tokenID",
+      "amount",
+      "receivingChainID",
+      "recipientAddress",
+      "data",
+      "messageFee",
+    ],
+    properties: {
+      tokenID: {
+        dataType: "bytes",
+        fieldNumber: 1,
+        minLength: 8,
+        maxLength: 8,
+      },
+      amount: {
+        dataType: "uint64",
+        fieldNumber: 2,
+      },
+      receivingChainID: {
+        dataType: "bytes",
+        fieldNumber: 3,
+        minLength: 4,
+        maxLength: 4,
+      },
+      recipientAddress: {
+        dataType: "bytes",
+        fieldNumber: 4,
+        format: "lisk32",
+      },
+      data: {
+        dataType: "string",
+        fieldNumber: 5,
+        minLength: 0,
+        maxLength: 64,
+      },
+      messageFee: {
+        dataType: "uint64",
+        fieldNumber: 6,
       },
     },
   },

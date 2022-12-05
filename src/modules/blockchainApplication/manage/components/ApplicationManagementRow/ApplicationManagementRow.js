@@ -5,7 +5,6 @@ import { addSearchParamsToUrl } from 'src/utils/searchParams';
 import Tooltip from 'src/theme/Tooltip';
 import Icon from 'src/theme/Icon';
 import styles from './ApplicationManagementRow.css';
-import chainLogo from '../../../../../../setup/react/assets/images/LISK.png';
 import { usePinBlockchainApplication } from '../../hooks/usePinBlockchainApplication';
 import { useCurrentApplication } from '../../hooks/useCurrentApplication';
 
@@ -97,7 +96,7 @@ const ApplicationManagementRow = ({
   const handleSetCurrentApplication = useCallback(() => {
     // Check apis here
     if (!isTerminated) {
-      if (application.apis.length > 1) {
+      if (application.serviceURLs.length > 1) {
         // redirect to select node
         addSearchParamsToUrl(history, { modal: 'selectNode', chainId: application.chainID });
       } else {
@@ -119,8 +118,8 @@ const ApplicationManagementRow = ({
             </TertiaryButton>
           </div>
         )}
-        <img className={styles.chainLogo} src={chainLogo} />
-        <span>{application.name}</span>
+        <img className={styles.chainLogo} src={application.logo.png} />
+        <span>{application.chainName}</span>
       </div>
       <div className={styles.rightWrapper} align="right">
         <RightRowComponent
