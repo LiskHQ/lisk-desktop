@@ -24,11 +24,6 @@ const getFields = (t) => [
     type: 'date-range',
   },
   {
-    label: t('Amount range'),
-    name: 'amount',
-    type: 'number-range',
-  },
-  {
     label: t('Sender'),
     placeholder: t('Address or public key'),
     name: 'senderAddress',

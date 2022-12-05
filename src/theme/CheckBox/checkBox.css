@@ -1,4 +1,6 @@
 .checkbox {
+  --border-radius: 4px;
+
   display: inline-block;
   width: 15px;
   height: 15px;
@@ -12,7 +14,7 @@
 
   & span {
     color: var(--color-ultramarine-blue);
-    border-radius: var(--border-radius-standard);
+    border-radius: var(--border-radius);
     display: block;
     width: 15px;
     height: 15px;
@@ -26,7 +28,7 @@
 
     &.accent {
       border: 1px solid var(--color-ultramarine-blue);
-      border-radius: calc(var(--border-radius-standard) + 1px);
+      border-radius: calc(var(--border-radius) + 1px);
       box-shadow: 0 0 5px 0 var(--color-ultramarine-blue);
       line-height: 15px !important;
     }

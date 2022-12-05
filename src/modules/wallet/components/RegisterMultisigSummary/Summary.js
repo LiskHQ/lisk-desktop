@@ -1,9 +1,10 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useMemo } from 'react';
+import { isEmpty } from 'src/utils/helpers';
 import { useCurrentAccount } from '@account/hooks';
 import { useAuth } from '@auth/hooks/queries';
 import TransactionSummary from '@transaction/manager/transactionSummary';
+import useTxInitiatorAccount from '@transaction/hooks/useTxInitiatorAccount';
 import { useCommandSchema } from '@network/hooks';
-import { isEmpty } from 'src/utils/helpers';
 import ProgressBar from '../RegisterMultisigView/ProgressBar';
 import styles from './styles.css';
 
@@ -11,28 +12,55 @@ const Summary = ({
   t,
   prevStep,
   nextStep,
-  transactions,
   formProps,
   transactionJSON,
+  transactions,
   multisigTransactionSigned,
 }) => {
   const [sender] = useCurrentAccount();
+  const { txInitiatorAccount } = useTxInitiatorAccount({
+    transactionJSON,
+  });
   const { data: account } = useAuth({
     config: { params: { address: sender.metadata.address } },
   });
   const { moduleCommandSchemas } = useCommandSchema();
+  const isSenderMember = useMemo(
+    () =>
+      [...transactionJSON.params.mandatoryKeys, ...transactionJSON.params.optionalKeys].includes(
+        sender.metadata.pubkey
+      ),
+    [transactionJSON]
+  );
 
-  const onConfirmAction = {
-    label: t('Sign'),
-    onClick: () => {
-      multisigTransactionSigned({
-        formProps,
-        transactionJSON,
-        moduleCommandSchemas,
-        sender: { ...account.data },
-      });
-    },
-  };
+  const onConfirmAction = useMemo(
+    () => ({
+      label: t('Sign'),
+      onClick: () => {
+        const actionFunction = (form, _, privateKey) =>
+          multisigTransactionSigned({
+            formProps,
+            transactionJSON,
+            privateKey,
+            moduleCommandSchemas,
+            txInitiatorAccount,
+            sender: { ...account.data },
+          });
+
+        if (!isSenderMember) {
+          actionFunction();
+        } else {
+          nextStep({
+            formProps,
+            transactionJSON,
+            sender,
+            actionFunction,
+          });
+        }
+      },
+    }),
+    [isSenderMember, formProps, transactionJSON, moduleCommandSchemas, account]
+  );
 
   const onCancelAction = {
     label: t('Go back'),
@@ -42,8 +70,8 @@ const Summary = ({
   };
 
   useEffect(() => {
-    if (!isEmpty(transactions.signedTransaction)) {
-      nextStep({ formProps, transactionJSON, sender });
+    if (!isEmpty(transactions.signedTransaction) && !isSenderMember) {
+      nextStep({ formProps, transactionJSON, sender }, 2);
     }
   }, [transactions.signedTransaction, transactions.txSignatureError]);
 

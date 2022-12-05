@@ -1,11 +1,8 @@
 import React, { useMemo } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useForm } from 'react-hook-form';
-import { useSelector } from 'react-redux';
-
 import WalletVisual from '@wallet/components/walletVisual';
 import { decryptAccount } from '@account/utils/encryptAccount';
-import { selectActiveTokenAccount } from 'src/redux/selectors';
 import { useAccounts, useCurrentAccount } from '@account/hooks';
 import { Input } from 'src/theme';
 import Box from 'src/theme/box';
@@ -27,10 +24,9 @@ const EnterPasswordForm = ({ onEnterPasswordSuccess, title, encryptedAccount, is
     formState: { errors },
   } = useForm();
   const apiError = errors[API_ERROR_NAME];
-  const activeAccount = useSelector(selectActiveTokenAccount);
   const { getAccountByAddress } = useAccounts();
   const [currentAccount] = useCurrentAccount();
-  const requestedAccount = getAccountByAddress(activeAccount.summary?.address);
+  const requestedAccount = getAccountByAddress(currentAccount?.metadata?.address);
   const account = useMemo(
     () => encryptedAccount || requestedAccount || currentAccount,
     [currentAccount]
