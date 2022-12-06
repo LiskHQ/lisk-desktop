@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react';
 import withData from 'src/utils/withData';
-import { getDelegates } from '@dpos/validator/api';
+import { getDelegates } from '@pos/validator/api';
 import TransactionDetailsContext from '../../context/transactionDetailsContext';
 import styles from './styles.css';
 import VoteItem from '../VoteItem';
@@ -11,7 +11,7 @@ export const VotesPure = ({ t, votedDelegates }) => {
 
   useEffect(() => {
     if (transaction.params) {
-      const addressList = votes.map(item => item.delegateAddress);
+      const addressList = votes.map((item) => item.delegateAddress);
       votedDelegates.loadData({ addressList });
     }
   }, []);
@@ -19,19 +19,17 @@ export const VotesPure = ({ t, votedDelegates }) => {
   return (
     <div className={`${styles.voteValue} ${styles.votes}`}>
       <div className={styles.detailsWrapper}>
-        <span className={styles.label}>
-          {`${t('Votes')} (${votes.length})`}
-        </span>
+        <span className={styles.label}>{`${t('Votes')} (${votes.length})`}</span>
         <div className={`${styles.votesContainer} ${styles.added} tx-added-votes`}>
-          {votes.map(vote => (
+          {votes.map((vote) => (
             <VoteItem
               key={`vote-${vote.delegateAddress}`}
               vote={{ confirmed: vote.amount }}
               address={vote.delegateAddress}
               truncate
               title={
-                votedDelegates.data[vote.delegateAddress]
-                && votedDelegates.data[vote.delegateAddress].dpos?.delegate?.username
+                votedDelegates.data[vote.delegateAddress] &&
+                votedDelegates.data[vote.delegateAddress].dpos?.delegate?.username
               }
             />
           ))}

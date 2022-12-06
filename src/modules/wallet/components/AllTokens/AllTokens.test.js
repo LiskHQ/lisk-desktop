@@ -2,13 +2,13 @@ import { fireEvent, screen, waitFor } from '@testing-library/react';
 import mockSavedAccounts from '@tests/fixtures/accounts';
 import { useTokensBalance } from '@token/fungible/hooks/queries';
 import { useBlocks } from '@block/hooks/queries/useBlocks';
-import { useDelegates } from '@dpos/validator/hooks/queries';
+import { useDelegates } from '@pos/validator/hooks/queries';
 import { useAuth } from '@auth/hooks/queries';
 import { fromRawLsk } from '@token/fungible/utils/lsk';
 import { useFilter } from 'src/modules/common/hooks';
 
 import { mockBlocks } from '@block/__fixtures__';
-import { mockDelegates } from '@dpos/validator/__fixtures__';
+import { mockDelegates } from '@pos/validator/__fixtures__';
 import { mockAuth } from '@auth/__fixtures__/mockAuth';
 import { mockTokensBalance } from '@token/fungible/__fixtures__/mockTokens';
 import { renderWithRouter } from 'src/utils/testHelpers';
@@ -24,7 +24,7 @@ jest.mock('@account/hooks', () => ({
 jest.mock('@token/fungible/hooks/queries');
 jest.mock('@account/hooks');
 jest.mock('@block/hooks/queries/useBlocks');
-jest.mock('@dpos/validator/hooks/queries');
+jest.mock('@pos/validator/hooks/queries');
 jest.mock('@auth/hooks/queries');
 jest.mock('src/modules/common/hooks');
 

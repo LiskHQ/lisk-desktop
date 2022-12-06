@@ -12,7 +12,7 @@ import { joinModuleAndCommand } from 'src/modules/transaction/utils/moduleComman
 import { fromRawLsk } from '@token/fungible/utils/lsk';
 import { validateAddress } from 'src/utils/validators';
 import http from 'src/utils/api/http';
-import { getDelegates } from '@dpos/validator/api';
+import { getDelegates } from '@pos/validator/api';
 import { httpPaths } from '../configuration';
 import { sign } from '../utils';
 import { fromTransactionJSON } from '../utils/encoding';

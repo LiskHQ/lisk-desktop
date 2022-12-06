@@ -9,13 +9,13 @@ import TokenCard from '@wallet/components/TokenCard';
 import TokenCarousel from '@wallet/components/TokenCarousel/TokenCarousel';
 import { selectActiveTokenAccount } from 'src/redux/selectors';
 import FlashMessageHolder from '@theme/flashMessage/holder';
-import WarnPunishedDelegate from '@dpos/validator/components/WarnPunishedDelegate';
+import WarnPunishedDelegate from '@pos/validator/components/WarnPunishedDelegate';
 import WalletVisualWithAddress from '@wallet/components/walletVisualWithAddress';
 import DialogLink from 'src/theme/dialog/link';
 import { useCurrentAccount } from '@account/hooks';
 import { useLatestBlock } from '@block/hooks/queries/useLatestBlock';
 import { SecondaryButton, PrimaryButton } from '@theme/buttons';
-import { useDelegates } from '@dpos/validator/hooks/queries';
+import { useDelegates } from '@pos/validator/hooks/queries';
 import { selectSearchParamValue } from 'src/utils/searchParams';
 import { useAuth } from '@auth/hooks/queries';
 import styles from './overview.css';
@@ -46,7 +46,9 @@ const Overview = ({ isWalletRoute, history }) => {
   const { data: account } = useAuth({ config: { params: { address } } });
 
   const delegate = useMemo(() => delegates?.data?.[0] || {}, [delegates]);
-  const { data: { height: currentHeight } } = useLatestBlock();
+  const {
+    data: { height: currentHeight },
+  } = useLatestBlock();
 
   const isBanned = delegate.isBanned;
   const pomHeights = delegate.pomHeights;

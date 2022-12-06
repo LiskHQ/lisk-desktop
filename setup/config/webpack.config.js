@@ -23,7 +23,7 @@ const config = {
       '@message': resolve('./src/modules/message'),
       '@auth': resolve('./src/modules/auth'),
       '@wallet': resolve('./src/modules/wallet'),
-      '@dpos': resolve('./src/modules/dpos'),
+      '@pos': resolve('./src/modules/pos'),
       '@network': resolve('./src/modules/network'),
       '@settings': resolve('./src/modules/settings'),
       '@token': resolve('./src/modules/token'),
@@ -43,7 +43,7 @@ const config = {
       crypto: require.resolve('crypto-browserify'),
       stream: require.resolve('stream-browserify'),
       path: require.resolve('path-browserify'),
-      querystring: require.resolve("querystring-es3")
+      querystring: require.resolve('querystring-es3'),
     },
   },
   externals: {
