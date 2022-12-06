@@ -1,5 +1,5 @@
 import React from 'react';
-import {render, screen} from '@testing-library/react';
+import {render, screen, fireEvent} from '@testing-library/react';
 import useSettings from '@settings/hooks/useSettings';
 import settingConstants from '@settings/const/settingConstants';
 import SidebarToggle from './SidebarToggle';
@@ -21,7 +21,9 @@ describe('SidebarToggle Component', () => {
   it('Should render correctly when sidebar is not expanded', () => {
     useSettings.mockReturnValue({ [sideBarExpanded]: true, toggleSetting: mockToggleSetting });
     render(<SidebarToggle />);
+    fireEvent.click(screen.getByTestId('Icon'));
     expect(screen.getByText('Collapse sidebar')).toBeTruthy();
     expect(screen.getByAltText('arrowLeft')).toBeTruthy();
+    expect(mockToggleSetting).toHaveBeenCalledTimes(1);
   });
 });
