@@ -25,6 +25,7 @@ function SidebarToggle() {
           className={classNames(styles.SidebarToggleImg, isExpanded && styles.isExpanded)}
           name={isExpanded ? 'arrowLeft' : 'arrowRight'}
           onClick={toggle}
+          data-testid="Icon"
         />
       }
     >
