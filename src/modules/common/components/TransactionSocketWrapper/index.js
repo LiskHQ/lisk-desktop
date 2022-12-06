@@ -3,20 +3,12 @@ import { useQueryClient } from '@tanstack/react-query';
 import { toast } from 'react-toastify';
 import client from 'src/utils/api/client';
 import { TRANSACTIONS, AUTH } from 'src/const/queries';
-import { MODULE_COMMANDS_NAME_MAP } from '@transaction/configuration/moduleCommand';
+import { filterIncomingTransactions } from '@transaction/utils/helpers';
 import { fromRawLsk } from '@token/fungible/utils/lsk';
 import i18n from 'src/utils/i18n/i18n';
 import { useCurrentAccount } from '@account/hooks';
 import { useCurrentApplication } from '@blockchainApplication/manage/hooks';
 import { useTransactions, useTransactionsConfig } from '@transaction/hooks/queries';
-
-const filterIncomingTransactions = (transactions, account) =>
-  transactions.filter(
-    (transaction) =>
-      transaction &&
-      transaction.moduleCommand === MODULE_COMMANDS_NAME_MAP.transfer &&
-      transaction.params.recipientAddress === account.metadata.address
-  );
 
 const showNotificationsForIncomingTransactions = (transactions, account, token) => {
   filterIncomingTransactions(transactions, account).forEach((transaction) => {
@@ -25,6 +17,7 @@ const showNotificationsForIncomingTransactions = (transactions, account, token) 
       const message = transaction.params.data
         ? i18n.t('with message {{message}}', { message: transaction.params.data })
         : '';
+      // @TODO: To be fixed in #4652
       // eslint-disable-next-line no-new
       new Notification(i18n.t('{{amount}} {{token}} Received', { amount, token }), {
         body: i18n.t('Your account just received {{amount}} {{token}} {{message}}', {
@@ -34,9 +27,10 @@ const showNotificationsForIncomingTransactions = (transactions, account, token) 
         }),
       });
       toast.info(
-        i18n.t('You just received {{amount}} {{token}}', {
+        i18n.t('Your account just received {{amount}} {{token}} {{message}}', {
           amount,
           token,
+          message,
         })
       );
     }
@@ -69,7 +63,7 @@ const TransactionSocketWrapper = () => {
         },
       ],
     }));
-    // token is temporarily hardcoded pending handling of token meta data
+    // @TODO: token is temporarily hardcoded pending handling of token meta data
     // like tokenID and baseDenom
     showNotificationsForIncomingTransactions(latestTxns.data, currentAccount, 'LSK');
     client.socket.off('new.transactions');

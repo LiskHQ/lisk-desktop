@@ -59,3 +59,11 @@ export const trimBigintString = (data) => {
 
   return result;
 };
+
+export const filterIncomingTransactions = (transactions, account) =>
+  transactions.filter(
+    (transaction) =>
+      transaction &&
+      transaction.moduleCommand === MODULE_COMMANDS_NAME_MAP.transfer &&
+      transaction.params.recipientAddress === account.metadata.address
+  );
