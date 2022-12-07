@@ -1,11 +1,11 @@
-export const filterDelegates = (delegates, filters) => ({
-  ...delegates,
+export const filterValidators = (validators, filters) => ({
+  ...validators,
   data:
     filters.search || filters.address
-      ? delegates.data.filter(
-        (delegate) =>
-          delegate.username.includes(filters.search)
-          && (!filters.address || filters.address.includes(delegate.address)),
-      )
-      : delegates.data,
+      ? validators.data.filter(
+          (validator) =>
+            validator.username.includes(filters.search) &&
+            (!filters.address || filters.address.includes(validator.address))
+        )
+      : validators.data,
 });

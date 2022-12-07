@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { delegateKeyValidator } from '../utils/validators';
+import { validatorKeyValidator } from '../utils/validators';
 
 const useDelegateKeys = (keyName, message, initialValue) => {
   const [key, setKey] = useState({
@@ -9,7 +9,7 @@ const useDelegateKeys = (keyName, message, initialValue) => {
   });
 
   const setValue = (value) => {
-    const isValid = delegateKeyValidator(keyName, value);
+    const isValid = validatorKeyValidator(keyName, value);
     setKey({
       value,
       error: !isValid,

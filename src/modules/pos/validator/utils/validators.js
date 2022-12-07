@@ -11,7 +11,7 @@ import { regex } from 'src/const/regex';
  * @param {any} value - A value to be validated
  * @returns {boolean} true if valid.
  */
-export const delegateKeyValidator = (key, value) => {
+export const validatorKeyValidator = (key, value) => {
   if (typeof value !== 'string' || !regex[key]) {
     return false;
   }

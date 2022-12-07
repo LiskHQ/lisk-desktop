@@ -1,6 +1,6 @@
-import { filterDelegates } from './filterDelegates';
+import { filterValidators } from './filterValidators';
 
-const delegates = {
+const validators = {
   data: [
     {
       address: 'lskdwsyfmcko6mcd357446yatromr9vzgu7eb8y11',
@@ -21,8 +21,8 @@ const delegates = {
   ],
 };
 
-describe('filterDelegates', () => {
-  it('properly filters delegates based on username', () => {
+describe('filterValidators', () => {
+  it('properly filters validators based on username', () => {
     const filters = {
       search: 'lisk',
     };
@@ -38,9 +38,9 @@ describe('filterDelegates', () => {
         },
       ],
     };
-    expect(filterDelegates(delegates, filters)).toEqual(expectedResult);
+    expect(filterValidators(validators, filters)).toEqual(expectedResult);
   });
-  it('properly filters delegates based on username and address', () => {
+  it('properly filters validators based on username and address', () => {
     const expectedResult = {
       data: [
         {
@@ -53,10 +53,10 @@ describe('filterDelegates', () => {
       search: 'lisk',
       address: 'lskdwsyfmcko6mcd357446yatromr9vzgu7eb8y74',
     };
-    expect(filterDelegates(delegates, filters)).toEqual(expectedResult);
+    expect(filterValidators(validators, filters)).toEqual(expectedResult);
   });
   it('return all data if filter not provided', () => {
     const filters = {};
-    expect(filterDelegates(delegates, filters)).toEqual(delegates);
+    expect(filterValidators(validators, filters)).toEqual(validators);
   });
 });

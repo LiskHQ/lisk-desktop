@@ -5,19 +5,19 @@ import ws, { subscribe, unsubscribe } from 'src/utils/api/ws';
 import { extractAddressFromPublicKey } from '@wallet/utils/account';
 
 export const httpPaths = {
-  delegates: `${HTTP_PREFIX}/accounts`,
+  validators: `${HTTP_PREFIX}/accounts`,
   votesSent: `${HTTP_PREFIX}/dpos/votes/sent`,
   votesReceived: `${HTTP_PREFIX}/dpos/votes/received`,
   forgers: `${HTTP_PREFIX}/generators`,
 };
 
 export const wsMethods = {
-  delegates: 'get.accounts',
+  validators: 'get.accounts',
   forgers: 'get.delegates.next_forgers',
   forgersRound: 'update.round',
 };
 
-const getDelegateProps = ({ address, publicKey, username }) => {
+const getValidatorProps = ({ address, publicKey, username }) => {
   if (username) return { username };
   if (address) return { address };
   if (publicKey) return { address: extractAddressFromPublicKey(publicKey) };
@@ -25,22 +25,22 @@ const getDelegateProps = ({ address, publicKey, username }) => {
 };
 
 /**
- * Retrieves data of a given delegate.
+ * Retrieves data of a given validator.
  *
  * @param {Object} data
- * @param {String?} data.params.address - Delegate address
- * @param {String?} data.params.publicKey - Delegate public key
- * @param {String?} data.params.username - Delegate username
+ * @param {String?} data.params.address - Validator address
+ * @param {String?} data.params.publicKey - Validator public key
+ * @param {String?} data.params.username - Validator username
  * @param {String?} data.baseUrl - Lisk Service API url to override the
  * existing ServiceUrl on the network param. We may use this to retrieve
  * the details of an archived transaction.
  * @param {Object} data.network - Network setting from Redux store
  * @returns {Promise} http call
  */
-export const getDelegate = ({ params = {}, network, baseUrl }) =>
+export const getValidator = ({ params = {}, network, baseUrl }) =>
   client.rest({
-    url: httpPaths.delegates,
-    params: { ...getDelegateProps(params), isDelegate: true },
+    url: httpPaths.validators,
+    params: { ...getValidatorProps(params), isDelegate: true },
     network,
     baseUrl,
   });
@@ -71,7 +71,7 @@ const getRequests = (values) => {
     return paramList.list
       .filter((item) => regex[paramList.name].test(item))
       .map((item) => ({
-        method: wsMethods.delegates,
+        method: wsMethods.validators,
         params: { [paramList.name]: item, isDelegate: true },
       }));
   }
@@ -79,12 +79,12 @@ const getRequests = (values) => {
 };
 
 /**
- * Retrieves data of a list of delegates.
+ * Retrieves data of a list of validators.
  *
  * @param {Object} data
- * @param {String?} data.params.addressList - Delegates address list
- * @param {String?} data.params.publicKeyList - Delegates public key list
- * @param {String?} data.params.usernameList - Delegates username list
+ * @param {String?} data.params.addressList - Validators' address list
+ * @param {String?} data.params.publicKeyList - Validators' public key list
+ * @param {String?} data.params.usernameList - Validators' username list
  * @param {String?} data.params.search - A string to search for usernames
  * @param {Number?} data.params.offset - Index of the first result
  * @param {Number?} data.params.limit - Maximum number of results
@@ -94,7 +94,7 @@ const getRequests = (values) => {
  * @param {Object} data.network - Network setting from Redux store
  * @returns {Promise} http call or websocket call
  */
-export const getDelegates = ({ network, params = {}, baseUrl }) => {
+export const getValidators = ({ network, params = {}, baseUrl }) => {
   // Use websocket to retrieve accounts with a given array of addresses
   const requests = getRequests([
     { name: 'address', list: params.addressList },
@@ -117,7 +117,7 @@ export const getDelegates = ({ network, params = {}, baseUrl }) => {
   });
 
   return client.rest({
-    url: httpPaths.delegates,
+    url: httpPaths.validators,
     params: normParams,
     network,
     baseUrl,
@@ -139,15 +139,15 @@ export const getDelegates = ({ network, params = {}, baseUrl }) => {
 export const getVotes = ({ params = {} }) =>
   client.rest({
     url: httpPaths.votesSent,
-    params: getDelegateProps({ address: params.address, publicKey: params.publicKey }),
+    params: getValidatorProps({ address: params.address, publicKey: params.publicKey }),
   });
 
 /**
- * Retrieves list of votes given for a given delegate.
+ * Retrieves list of votes given for a given validator.
  *
  * @param {Object} data
- * @param {String?} data.params.address - Delegate address
- * @param {String?} data.params.publicKey - Delegate public key
+ * @param {String?} data.params.address - Validator address
+ * @param {String?} data.params.publicKey - Validator public key
  * @param {Number?} data.params.offset - Index of the first result
  * @param {Number?} data.params.limit - Maximum number of results
  * @param {String?} data.baseUrl - Lisk Service API url to override the
@@ -163,7 +163,7 @@ export const getVoters = ({ network, params = {}, baseUrl }) => {
       pagination[txFilters[key].key] = params[key];
     }
   });
-  const account = getDelegateProps({
+  const account = getValidatorProps({
     address: params.address,
     publicKey: params.publicKey,
   });
@@ -180,7 +180,7 @@ export const getVoters = ({ network, params = {}, baseUrl }) => {
 };
 
 /**
- * Retrieves list of active delegates.
+ * Retrieves list of active validators.
  *
  * @param {Number?} data.params.offset - Index of the first result
  * @param {Number?} data.params.limit - Maximum number of results
