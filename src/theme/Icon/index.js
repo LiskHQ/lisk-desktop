@@ -6,10 +6,12 @@ import academy from '@setup/react/assets/images/icons/academy.svg';
 import academyActive from '@setup/react/assets/images/icons/academy-active.svg';
 import alertIcon from '@setup/react/assets/images/icons/icon-alert.svg';
 import approved from '@setup/react/assets/images/icons/approved.svg';
+import arrowLeft from '@setup/react/assets/images/icons/arrow-left.svg';
 import arrowLeftActive from '@setup/react/assets/images/icons/arrow-left-active.svg';
 import arrowLeftInactive from '@setup/react/assets/images/icons/arrow-left-inactive.svg';
 import arrowLeftTailed from '@setup/react/assets/images/icons/arrow-left-tailed.svg';
 import arrowLeftTailedDark from '@setup/react/assets/images/icons/arrow-left-tailed-dark.svg';
+import arrowRight from '@setup/react/assets/images/icons/arrow-right.svg';
 import arrowRightActive from '@setup/react/assets/images/icons/arrow-right-active.svg';
 import arrowRightInactive from '@setup/react/assets/images/icons/arrow-right-inactive.svg';
 import arrowRightWithStroke from '@setup/react/assets/images/icons/arrow-right-with-stroke.svg';
@@ -53,6 +55,7 @@ import liskChat from '@setup/react/assets/images/icons/lisk-chat.svg';
 import liskLogo from '@setup/react/assets/images/lisk-logo-v2.svg';
 import liskLogoDark from '@setup/react/assets/images/lisk-logo-dark.svg';
 import liskLogoWhite from '@setup/react/assets/images/lisk-logo-white-v2.svg';
+import liskLogoWhiteNormalized from '@setup/react/assets/images/lisk-logo-white-v2-normalized.svg';
 import logout from '@setup/react/assets/images/icons/logout.svg';
 import logoutActive from '@setup/react/assets/images/icons/logout-active.svg';
 import lskIcon from '@setup/react/assets/images/icons/icon-lsk.svg';
@@ -65,6 +68,7 @@ import okIcon from '@setup/react/assets/images/icons/icon-checkmark.svg';
 import outgoing from '@setup/react/assets/images/icons/outgoing.svg';
 import pending from '@setup/react/assets/images/icons/pending.svg';
 import searchActive from '@setup/react/assets/images/icons/search-active.svg';
+import searchSlim from '@setup/react/assets/images/icons/search-slim.svg';
 import search from '@setup/react/assets/images/icons/search.svg';
 import searchInput from '@setup/react/assets/images/icons/search-input.svg';
 import settings from '@setup/react/assets/images/icons/settings.svg';
@@ -236,10 +240,12 @@ export const icons = {
   alertIcon,
   approved,
   arrowRightTailed,
+  arrowLeft,
   arrowLeftActive,
   arrowLeftInactive,
   arrowLeftTailed,
   arrowLeftTailedDark,
+  arrowRight,
   arrowRightActive,
   arrowRightInactive,
   arrowUpCircle,
@@ -284,6 +290,7 @@ export const icons = {
   liskChat,
   liskLogo,
   liskLogoWhite,
+  liskLogoWhiteNormalized,
   logout,
   logoutActive,
   lskIcon,
@@ -293,6 +300,7 @@ export const icons = {
   outgoing,
   pending,
   searchActive,
+  searchSlim,
   search,
   settings,
   settingsActive,

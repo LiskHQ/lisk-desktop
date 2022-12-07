@@ -123,6 +123,7 @@
 .title {
   padding: 5px 20px;
   font-weight: var(--font-weight-semi-bold);
+  color: var(--color-black);
 }
 
 .dropdownContent {
