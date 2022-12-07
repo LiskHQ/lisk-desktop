@@ -102,7 +102,7 @@ const TxSignatureCollector = ({
 
   useEffect(() => {
     if (!isEmpty(transactions.signedTransaction)) {
-      // @TODO: this should be re-instated when double signing has been resolved
+      // @TODO: more investigation needs to be done to know if this is needed
       // const isDoubleSigned = !transactions.signedTransaction.signatures.some(
       //   (sig) => sig.length === 0
       // );
