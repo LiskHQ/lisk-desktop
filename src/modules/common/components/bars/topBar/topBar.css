@@ -1,7 +1,7 @@
 @import '../../../../../../setup/react/app/mixins.css';
 
 .wrapper {
-  background: var(--color-top-bar);
+  background: var(--color-zodiac-blue--satin-deep-black);
   display: flex;
   height: var(--header-height);
   justify-content: space-between;

@@ -165,8 +165,9 @@ or "warn/action" ineastd of "red/green"
   --color-active-tab: rgba(64, 112, 244, 0.1);
   --tab-border-color: transparent;
   --color-strong-ink-blue: var(--color-ink-blue);
-  --color-top-bar: #101c3d;
-  --color-side-bar: var(--color-maastricht-blue);
+  --color-satin-deep-black: #1c1c1e;
+  --color-zodiac-blue: #0c152e;
+  --color-zodiac-blue--satin-deep-black: var(--color-zodiac-blue);
   --color-search-container: #1d2b52;
   --color-periwinkle-blue: #c5cfe4;
   --color-periwinkle-blue--manatee-gray: var(--color-periwinkle-blue);
@@ -275,9 +276,8 @@ or "warn/action" ineastd of "red/green"
   --color-shadow-word-option: var(--color-strong-white);
   --color-request-textarea: #2e2e30;
   --color-strong-ink-blue: #254898;
-  --color-top-bar: #232325;
-  --color-side-bar: #1c1c1e;
   --tab-border-color: #4070f4;
+  --color-zodiac-blue--satin-deep-black: var(--color-satin-deep-black);
   --color-periwinkle-blue--manatee-gray: var(--color-manatee-gray);
   --color-search-container: var(--color-body-bg);
   --color-vote-item-bg: var(--color-mystic);
@@ -286,7 +286,6 @@ or "warn/action" ineastd of "red/green"
   --color-tx-priority-btn-bg: #254798;
   --color-tx-priority-btn-default: #86868b;
   --color-progress-bar: var(--color-jade-green);
-  --color-zodiac-blue: #0c152e;
   --color-background-dropdown: var(--color-body-bg);
   --color-button-outline-color: #4c4c4c;
   --color-application-manage-hover-color: var(--color-dialog-bg);

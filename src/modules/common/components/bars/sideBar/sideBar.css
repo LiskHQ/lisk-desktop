@@ -8,7 +8,7 @@
   position: fixed;
   width: auto;
   height: 100%;
-  background-color: var(--color-side-bar);
+  background-color: var(--color-zodiac-blue--satin-deep-black);
   z-index: var(--normal-index);
 }
 

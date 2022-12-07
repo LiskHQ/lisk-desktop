@@ -15,7 +15,7 @@
   & > .message {
     @mixin contentNormal semi-bold;
 
-    color: var(--color-blue-gray);
+    color: var(--color-constant-white);
     margin-left: 8px;
 
     /* Network name */
