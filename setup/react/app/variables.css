@@ -197,6 +197,7 @@ or "warn/action" ineastd of "red/green"
   --color-tx-fail-status-bg: var(--color-red-transparent);
   --color-token-card-shadow: #eaeaea5c;
   --color-votes-available: #4070f41a;
+  --color-search-bar-background: #2e3855;
 
   /*************************
         Box
@@ -288,6 +289,7 @@ or "warn/action" ineastd of "red/green"
   --color-progress-bar: var(--color-jade-green);
   --color-background-dropdown: var(--color-body-bg);
   --color-button-outline-color: #4c4c4c;
+  --color-search-bar-background: #3e3e40;
   --color-application-manage-hover-color: var(--color-dialog-bg);
   --color-node-border: var(--color-platinum);
   --color-tx-pending-status-text: var(--color-ultramarine-blue);
