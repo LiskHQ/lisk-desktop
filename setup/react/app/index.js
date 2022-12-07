@@ -108,7 +108,7 @@ const App = ({ history }) => {
                   ))}
                   <Route path="*" component={NotFound} />
                 </Switch>
-                {loaded && !!chainMetaData ? <TransactionSocketWrapper /> : null}
+                {loaded && !!chainMetaData && <TransactionSocketWrapper />}
               </div>
             </section>
           </main>
