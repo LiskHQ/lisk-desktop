@@ -412,7 +412,6 @@ const signMultisigTransaction = async (
    */
   const moduleCommand = joinModuleAndCommand(transactionJSON);
   const isRegisterMultisignature = moduleCommand === registerMultisignature;
-  console.log('---> ', senderAccount, senderAccount.mandatoryKeys);
   const keys = {
     mandatoryKeys: senderAccount.mandatoryKeys.map((key) => Buffer.from(key, 'hex')),
     optionalKeys: senderAccount.optionalKeys.map((key) => Buffer.from(key, 'hex')),

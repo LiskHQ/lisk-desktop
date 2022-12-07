@@ -211,8 +211,6 @@ export const multisigTransactionSigned = ({
     txInitiatorAccount, // this is the intitor of the transaction wanting to be signed
   ); 
 
-  console.log("---", error, tx)
-
   if (!error) {
     dispatch({
       type: actionTypes.transactionDoubleSigned,
