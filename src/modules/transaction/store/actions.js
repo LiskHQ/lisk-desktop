@@ -94,7 +94,7 @@ export const resetTransactionResult = () => ({
  * @param {string} data.secondPass
  */
 // eslint-disable-next-line max-statements
-export const transactionDoubleSigned = () => async (dispatch, getState) => {
+export const transactionDoubleSigned = (moduleCommandSchemas) => async (dispatch, getState) => {
   const state = getState();
   const { transactions, network } = state;
   const keyPair = await extractKeyPair({
@@ -102,16 +102,17 @@ export const transactionDoubleSigned = () => async (dispatch, getState) => {
     enableCustomDerivationPath: false,
   });
   const activeWallet = selectActiveTokenAccount(state);
-  const schemas = network.networks.LSK.moduleCommandSchemas[transactions.moduleCommand];
-  const transaction = toTransactionJSON(transactions.signedTransaction, schemas[transactions.moduleCommand]);
+  const transaction = toTransactionJSON(transactions.signedTransaction, moduleCommandSchemas[transactions.moduleCommand]);
   const [signedTx, err] = await signMultisigTransaction(
     activeWallet,
+    // SenderAccount is the same of the double-signer
     {
-      data: activeWallet, // SenderAccount is the same of the double-signer
+      ...activeWallet.keys,
+      ...activeWallet.keys,
     },
     transaction,
     signatureCollectionStatus.partiallySigned,
-    schemas[transactions.moduleCommand],
+    moduleCommandSchemas[transactions.moduleCommand],
     network.networks.LSK.chainID,
     keyPair.privateKey,
   );
@@ -209,6 +210,8 @@ export const multisigTransactionSigned = ({
     privateKey,
     txInitiatorAccount, // this is the intitor of the transaction wanting to be signed
   ); 
+
+  console.log("---", error, tx)
 
   if (!error) {
     dispatch({

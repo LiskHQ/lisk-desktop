@@ -15,7 +15,6 @@ const isModuleCommandValid = (moduleCommand) => /^\w+:\w+$/g.test(moduleCommand)
 
 // eslint-disable-next-line max-statements
 const TxSignatureCollector = ({
-  // t,
   transactions,
   actionFunction,
   multisigTransactionSigned,
@@ -24,7 +23,6 @@ const TxSignatureCollector = ({
   nextStep,
   prevStep,
   statusInfo,
-  transactionDoubleSigned,
   fees,
   selectedPriority,
 }) => {
@@ -104,14 +102,16 @@ const TxSignatureCollector = ({
 
   useEffect(() => {
     if (!isEmpty(transactions.signedTransaction)) {
-      const isDoubleSigned = !transactions.signedTransaction.signatures.some(
-        (sig) => sig.length === 0
-      );
-      if (!transactions.txSignatureError && !isDoubleSigned) {
-        transactionDoubleSigned();
-        return;
-      }
+      // @TODO: this should be re-instated when double signing has been resolved
+      // const isDoubleSigned = !transactions.signedTransaction.signatures.some(
+      //   (sig) => sig.length === 0
+      // );
+      // if (!transactions.txSignatureError && isDoubleSigned) {
+      //   transactionDoubleSigned(moduleCommandSchemas);
+      //   return;
+      // }
       nextStep({ formProps, transactionJSON, statusInfo, sender });
+      return;
     }
 
     if (transactions.txSignatureError) {
