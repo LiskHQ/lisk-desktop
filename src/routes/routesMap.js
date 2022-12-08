@@ -72,7 +72,7 @@ export default {
   network: MonitorNetwork,
   delegates: DelegatesMonitor,
   delegateProfile: DelegateProfile,
-  delegatePerformance: DelegatesPerformanceModal,
+  validatorPerformance: DelegatesPerformanceModal,
   reclaim: ReclaimBalance,
   dashboard: Dashboard,
   addBookmark: AddBookmark,

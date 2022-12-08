@@ -215,7 +215,7 @@ export const modals = {
     isPrivate: true,
     forbiddenTokens: [],
   },
-  delegatePerformance: {
+  validatorPerformance: {
     isPrivate: false,
     forbiddenTokens: [],
   },

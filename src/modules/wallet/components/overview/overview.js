@@ -9,7 +9,7 @@ import TokenCard from '@wallet/components/TokenCard';
 import TokenCarousel from '@wallet/components/TokenCarousel/TokenCarousel';
 import { selectActiveTokenAccount } from 'src/redux/selectors';
 import FlashMessageHolder from '@theme/flashMessage/holder';
-import WarnPunishedDelegate from '@pos/validator/components/WarnPunishedDelegate';
+import WarnPunishedValidator from '@pos/validator/components/WarnPunishedValidator';
 import WalletVisualWithAddress from '@wallet/components/walletVisualWithAddress';
 import DialogLink from 'src/theme/dialog/link';
 import { useCurrentAccount } from '@account/hooks';
@@ -27,13 +27,13 @@ const numOfBlockPerDay = 24 * 60 * 6;
 
 const addWarningMessage = ({ isBanned, pomHeight, readMore }) => {
   FlashMessageHolder.addMessage(
-    <WarnPunishedDelegate isBanned={isBanned} pomHeight={pomHeight} readMore={readMore} />,
-    'WarnPunishedDelegate'
+    <WarnPunishedValidator isBanned={isBanned} pomHeight={pomHeight} readMore={readMore} />,
+    'WarnPunishedValidator'
   );
 };
 
 const removeWarningMessage = () => {
-  FlashMessageHolder.deleteMessage('WarnPunishedDelegate');
+  FlashMessageHolder.deleteMessage('WarnPunishedValidator');
 };
 
 const Overview = ({ isWalletRoute, history }) => {

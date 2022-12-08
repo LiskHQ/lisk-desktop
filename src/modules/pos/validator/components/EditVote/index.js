@@ -20,7 +20,7 @@ import { useSchemas } from '@transaction/hooks/queries/useSchemas';
 import WalletVisual from '@wallet/components/walletVisual';
 import routes from 'src/routes/routes';
 import TokenAmount from '@token/fungible/components/tokenAmount';
-import WarnPunishedDelegate from '@pos/validator/components/WarnPunishedDelegate';
+import WarnPunishedValidator from '@pos/validator/components/WarnPunishedValidator';
 import { useLatestBlock } from '@block/hooks/queries/useLatestBlock';
 import { useAuth } from '@auth/hooks/queries';
 import { PrimaryButton, SecondaryButton, WarningButton } from 'src/theme/buttons';
@@ -205,7 +205,7 @@ const EditVote = ({ history, voteEdited, network, voting, votesRetrieved }) => {
               </label>
               {daysLeft >= 1 && start !== undefined && (
                 <>
-                  <WarnPunishedDelegate pomHeight={{ start, end }} vote />
+                  <WarnPunishedValidator pomHeight={{ start, end }} vote />
                   <span className={styles.space} />
                 </>
               )}

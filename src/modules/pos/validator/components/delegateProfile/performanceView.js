@@ -89,7 +89,7 @@ const PunishedDelegate = ({ theme, t }) => (
         'The delegate is temporarily punished and their delegate weight is set to 0 due to a misbehavior.'
       )}
     </p>
-    <DialogLink className={grid.row} component="delegatePerformance" data={{ status: 'punished' }}>
+    <DialogLink className={grid.row} component="validatorPerformance" data={{ status: 'punished' }}>
       <div className={`${styles.details} ${grid.col} ${grid['col-md-12']}`}>
         <p>Details &gt;</p>
       </div>

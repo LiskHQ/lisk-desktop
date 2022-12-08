@@ -1,11 +1,11 @@
 /* istanbul ignore file */
 import { compose } from 'redux';
 import { withRouter } from 'react-router-dom';
+import { withTranslation } from 'react-i18next';
 import { getDelegate } from '@pos/validator/api';
 import withData from 'src/utils/withData';
 import { parseSearchParams } from 'src/utils/searchParams';
-import { withTranslation } from 'react-i18next';
-import DelegatePerformance from './delegatePerformance';
+import ValidatorPerformance from './validatorPerformance';
 
 const apis = {
   delegate: {
@@ -19,4 +19,4 @@ const apis = {
   },
 };
 
-export default compose(withRouter, withData(apis), withTranslation())(DelegatePerformance);
+export default compose(withRouter, withData(apis), withTranslation())(ValidatorPerformance);

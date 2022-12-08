@@ -7,9 +7,9 @@ import { SecondaryButton } from 'src/theme/buttons';
 import FlashMessage from 'src/theme/flashMessage/flashMessage';
 import FlashMessageHolder from 'src/theme/flashMessage/holder';
 import Icon from 'src/theme/Icon';
-import styles from './WarnPunishedDelegate.css';
+import styles from './WarnPunishedValidator.css';
 
-const WarnPunishedDelegate = ({
+const WarnPunishedValidator = ({
   t,
   isBanned,
   history,
@@ -22,24 +22,19 @@ const WarnPunishedDelegate = ({
 
   useEffect(() => {
     if (history.location.pathname !== routes.delegateProfile.path) {
-      FlashMessageHolder.deleteMessage('WarnPunishedDelegate');
+      FlashMessageHolder.deleteMessage('WarnPunishedValidator');
     }
   }, [history.location.pathname]);
 
   const message = isBanned
-    ? t('This delegate has been permanently banned')
+    ? t('This validator has been permanently banned')
     : t(
-      'Caution! This delegate was punished on {{punishmentStartDate}}. There is approximately {{daysLeft}} days remaining before the punishment ends.',
-      { punishmentStartDate, daysLeft },
-    );
+        'Caution! This validator was punished on {{punishmentStartDate}}. There is approximately {{daysLeft}} days remaining before the punishment ends.',
+        { punishmentStartDate, daysLeft }
+      );
 
   return (
-    <FlashMessage
-      shouldShow
-      hasCloseAction={false}
-      {...props}
-      className={styles.flashContainer}
-    >
+    <FlashMessage shouldShow hasCloseAction={false} {...props} className={styles.flashContainer}>
       <FlashMessage.Content>
         <div className={`${styles.container} ${theme === 'dark' ? theme : ''}`}>
           <Icon name="warningYellow" />
@@ -59,8 +54,8 @@ const WarnPunishedDelegate = ({
   );
 };
 
-WarnPunishedDelegate.propTypes = {
+WarnPunishedValidator.propTypes = {
   readMore: PropTypes.func.isRequired,
 };
 
-export default withTranslation()(WarnPunishedDelegate);
+export default withTranslation()(WarnPunishedValidator);

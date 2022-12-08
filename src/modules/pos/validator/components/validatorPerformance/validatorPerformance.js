@@ -5,11 +5,11 @@ import BoxHeader from '@theme/box/header';
 import BoxContent from '@theme/box/content';
 import NotFound from 'src/modules/common/components/NotFound';
 import { isEmpty } from 'src/utils/helpers';
-import delegatePerformanceDetails from './delegatePerformanceDetails';
+import validatorPerformanceDetails from './validatorPerformanceDetails';
 import styles from './styles.css';
 
 // eslint-disable-next-line max-statements
-const DelegatePerformance = ({ delegate: { error, isLoading, data } } = {}) => {
+const ValidatorPerformance = ({ delegate: { error, isLoading, data } } = {}) => {
   if (!error && isEmpty(data)) {
     return <div />;
   }
@@ -37,40 +37,28 @@ const DelegatePerformance = ({ delegate: { error, isLoading, data } } = {}) => {
         <Box className={grid.row}>
           <Box className={`${grid['col-md-12']} ${grid['col-xs-12']}`}>
             <p className={styles.description}>
-              {delegatePerformanceDetails(
-                pomHeights,
-                status,
-                consecutiveMissedBlocks,
-              )}
+              {validatorPerformanceDetails(pomHeights, status, consecutiveMissedBlocks)}
             </p>
           </Box>
         </Box>
         <Box className={`${grid.row} ${styles.performanceContainer}`}>
-          <Box
-            className={`${grid['col-md-6']} ${grid['col-xs-12']} ${styles.start}`}
-          >
+          <Box className={`${grid['col-md-6']} ${grid['col-xs-12']} ${styles.start}`}>
             <p className={styles.header}>Punishment starts</p>
           </Box>
-          <Box
-            className={`${grid['col-md-6']} ${grid['col-xs-12']} ${styles.end}`}
-          >
+          <Box className={`${grid['col-md-6']} ${grid['col-xs-12']} ${styles.end}`}>
             <p className={styles.header}>Punishment ends</p>
           </Box>
         </Box>
-        {pomHeights
-          && pomHeights.map((height, index) => (
+        {pomHeights &&
+          pomHeights.map((height, index) => (
             <Box
               className={`${grid.row} ${styles.performanceContainer}`}
               key={`${height.start}-${index}`}
             >
-              <Box
-                className={`${grid['col-md-6']} ${grid['col-xs-12']} ${styles.start}`}
-              >
+              <Box className={`${grid['col-md-6']} ${grid['col-xs-12']} ${styles.start}`}>
                 <p className={styles.details}>{height.start}</p>
               </Box>
-              <Box
-                className={`${grid['col-md-6']} ${grid['col-xs-12']} ${styles.end}`}
-              >
+              <Box className={`${grid['col-md-6']} ${grid['col-xs-12']} ${styles.end}`}>
                 <p className={styles.details}>{height.end}</p>
               </Box>
             </Box>
@@ -80,4 +68,4 @@ const DelegatePerformance = ({ delegate: { error, isLoading, data } } = {}) => {
   );
 };
 
-export default DelegatePerformance;
+export default ValidatorPerformance;

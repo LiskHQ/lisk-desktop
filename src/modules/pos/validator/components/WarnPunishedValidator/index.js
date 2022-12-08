@@ -6,7 +6,7 @@ import { useBlocks } from '@block/hooks/queries/useBlocks';
 import { useLatestBlock } from '@block/hooks/queries/useLatestBlock';
 import { useTranslation } from 'react-i18next';
 import VoteWarning from './VoteWarning';
-import WarnPunishedDelegate from './WarnPunishedDelegate';
+import WarnPunishedValidator from './WarnPunishedValidator';
 
 const getPunishmentDetails = (punishedTimestamp, pomHeight, currentHeight) => {
   const startDate = new Date(punishedTimestamp * 1000);
@@ -34,7 +34,7 @@ const Warning = ({ vote, ...props }) => {
   if (vote) return <EditVoteWarning daysLeft={daysLeft} t={t} {...props} />;
 
   return (
-    <DelegateProfileWarning
+    <ValidatorProfileWarning
       daysLeft={daysLeft}
       t={t}
       punishmentStartDate={punishmentStartDate}
@@ -43,8 +43,8 @@ const Warning = ({ vote, ...props }) => {
   );
 };
 
-export const DelegateProfileWarning = ({ daysLeft, punishmentStartDate, ...props }) => (
-  <WarnPunishedDelegate daysLeft={daysLeft} punishmentStartDate={punishmentStartDate} {...props} />
+export const ValidatorProfileWarning = ({ daysLeft, punishmentStartDate, ...props }) => (
+  <WarnPunishedValidator daysLeft={daysLeft} punishmentStartDate={punishmentStartDate} {...props} />
 );
 
 export const EditVoteWarning = ({ daysLeft, ...props }) => (

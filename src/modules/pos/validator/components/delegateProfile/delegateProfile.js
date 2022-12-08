@@ -16,18 +16,18 @@ import PerformanceView from './performanceView';
 import DelegateVotesView from './delegateVotesView';
 import { useValidators } from '../../hooks/queries';
 import DelegateVoteButton from './delegateVoteButton';
-import WarnPunishedDelegate from '../WarnPunishedDelegate';
+import WarnPunishedValidator from '../WarnPunishedValidator';
 
 const numOfBlockPerDay = 24 * 60 * 6;
 const addWarningMessage = ({ isBanned, pomHeight, readMore }) => {
   FlashMessageHolder.addMessage(
-    <WarnPunishedDelegate isBanned={isBanned} pomHeight={pomHeight} readMore={readMore} />,
-    'WarnPunishedDelegate'
+    <WarnPunishedValidator isBanned={isBanned} pomHeight={pomHeight} readMore={readMore} />,
+    'WarnPunishedValidator'
   );
 };
 
 const removeWarningMessage = () => {
-  FlashMessageHolder.deleteMessage('WarnPunishedDelegate');
+  FlashMessageHolder.deleteMessage('WarnPunishedValidator');
 };
 
 // eslint-disable-next-line max-statements

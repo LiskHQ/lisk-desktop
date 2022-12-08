@@ -185,7 +185,7 @@
       }
 
       & > *:not(.title):not(.highlighIcon) {
-        @mixin delegatePerformanceValueFont;
+        @mixin validatorPerformanceValueFont;
 
         color: var(--color-maastricht-blue);
       }
@@ -292,7 +292,7 @@
       }
 
       & > *:not(.title):not(.delegateDescription):not(.highlighIcon) {
-        @mixin delegatePerformanceValueFont;
+        @mixin validatorPerformanceValueFont;
 
         color: var(--color-maastricht-blue);
       }
