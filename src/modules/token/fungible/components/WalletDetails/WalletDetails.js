@@ -21,8 +21,8 @@ const WalletDetails = ({ t, tokens, className, isWalletRoute, isLoading }) => (
       <h1>{t('Wallet details')}</h1>
     </BoxHeader>
     <BoxContent className={`${styles.container} coin-container`}>
-      {!isLoading && tokens ? (
-        tokens?.map((token) => (
+      {!isLoading && tokens?.map ? (
+        tokens.map((token) => (
           <BoxRow key={`${token.tokenID}`} className={`${styles.row} coin-row`}>
             <Link to={routes.wallet.path} className={styles.link}>
               <Icon name="lskIcon" />
