@@ -1,11 +1,9 @@
 import React from 'react';
 import i18next from 'i18next';
 import { mount } from 'enzyme';
-import { useDispatch } from 'react-redux';
 import { mountWithRouterAndStore } from 'src/utils/testHelpers';
 import routes from 'src/routes/routes';
 import { defaultDerivationPath } from 'src/utils/explicitBipKeyDerivation';
-import { settingsUpdated } from 'src/redux/actions';
 import accounts from '@tests/constants/wallets';
 import Login from './login';
 
