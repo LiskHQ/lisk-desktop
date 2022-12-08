@@ -9,7 +9,7 @@ import { renderWithRouter } from 'src/utils/testHelpers';
 import SentVotes from './SentVotes';
 import tableHeaderMap from './tableHeaderMap';
 import { useSentVotes, usePosConstants } from '../../hooks/queries';
-import { mockPosConstants } from '../../__fixtures__/mockDposConstants';
+import { mockPosConstants } from '../../__fixtures__/mockPosConstants';
 
 const mockedCurrentAccount = mockSavedAccounts[0];
 

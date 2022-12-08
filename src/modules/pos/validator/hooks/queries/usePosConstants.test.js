@@ -1,6 +1,6 @@
 import { renderHook } from '@testing-library/react-hooks';
 import { queryWrapper as wrapper } from 'src/utils/test/queryWrapper';
-import { mockPosConstants } from '../../__fixtures__/mockDposConstants';
+import { mockPosConstants } from '../../__fixtures__/mockPosConstants';
 import { usePosConstants } from './usePosConstants';
 
 jest.useRealTimers();

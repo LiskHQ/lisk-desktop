@@ -1,2 +1,2 @@
-export * from './delegates';
+export * from './validators';
 export * from './vote';

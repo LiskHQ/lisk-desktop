@@ -13,7 +13,7 @@ import { mockCommandParametersSchemas } from 'src/modules/common/__fixtures__';
 import VoteRow from './VoteRow';
 import Form from './VoteForm';
 import { usePosConstants } from '../../hooks/queries';
-import { mockPosConstants } from '../../__fixtures__/mockDposConstants';
+import { mockPosConstants } from '../../__fixtures__/mockPosConstants';
 
 jest.mock('@token/fungible/hooks/queries');
 jest.mock('../../hooks/queries/usePosConstants');

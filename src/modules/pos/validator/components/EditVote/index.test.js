@@ -14,7 +14,7 @@ import { mockTokensBalance } from 'src/modules/token/fungible/__fixtures__';
 import { mockAuth } from 'src/modules/auth/__fixtures__';
 import EditVote from './index';
 import { useValidators, useSentVotes, usePosConstants } from '../../hooks/queries';
-import { mockPosConstants } from '../../__fixtures__/mockDposConstants';
+import { mockPosConstants } from '../../__fixtures__/mockPosConstants';
 
 jest.mock('@transaction/api', () => ({
   getTransactionFee: jest.fn().mockImplementation(() => Promise.resolve({ value: '0.046' })),
