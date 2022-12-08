@@ -36,7 +36,6 @@ const WalletDetails = ({
                 {t('{{acctToken}} balance', { acctToken: tokenMap.LSK.key })}
               </span>
               <div className={styles.valuesRow}>
-                <DiscreetMode>
                   <div className={`${styles.cryptoValue} balance-value`}>
                     <div><TokenAmount val={token.availableBalance} token={tokenMap.LSK.key} /></div>
                     <div>
@@ -55,7 +54,6 @@ const WalletDetails = ({
                     // TODO: Fix locked balance details
                     account={{}}
                   />
-                </DiscreetMode>
               </div>
             </div>
           </Link>
