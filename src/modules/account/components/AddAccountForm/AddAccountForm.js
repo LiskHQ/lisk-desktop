@@ -56,6 +56,11 @@ const AddAccountFormContainer = ({
     if (e.charCode === 13) onFormSubmit(e);
   };
 
+  const passphraseArray = useMemo(
+    () => passphrase.value?.replace(/\W+/g, ' ')?.split(/\s/),
+    [passphrase.value],
+  );
+
   return (
     <div className={`${styles.addAccount}`}>
       <div className={`${styles.wrapper} ${grid['col-xs-12']}`}>
@@ -74,10 +79,11 @@ const AddAccountFormContainer = ({
             <fieldset>
               <label>{t('Secret recovery phrase')}</label>
               <PassphraseInput
-                inputsLength={12}
+                inputsLength={passphraseArray?.length > 12 ? 24 : 12}
                 maxInputsLength={24}
                 onFill={setPassphrase}
                 keyPress={handleKeyPress}
+                values={passphraseArray}
               />
             </fieldset>
             {children}
