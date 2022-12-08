@@ -55,7 +55,7 @@ describe('AllTokens', () => {
       expect(screen.getByText(title)).toBeTruthy();
     });
 
-    mockTokensBalance.data.forEach(({ name, symbol, availableBalance, lockedBalances }, index) => {
+    mockTokensBalance.data.forEach(({ name, symbol, availableBalance, lockedBalances }) => {
       const lockedBalance = lockedBalances.reduce((total, { amount }) => +amount + total, 0);
 
       expect(screen.getByText(name)).toBeTruthy();
