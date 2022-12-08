@@ -4,6 +4,7 @@ import { TertiaryButton } from 'src/theme/buttons';
 import Icon from 'src/theme/Icon';
 import { truncateAddress } from '@wallet/utils/account';
 import AccountMenuListing from '@account/components/AccountMenuListing/AccountMenuListing';
+import WalletVisual from '@wallet/components/walletVisual';
 import styles from './AccountManagementDropdown.css';
 
 const AccountManagementDropdown = ({ currentAccount, onMenuClick }) => {
@@ -17,6 +18,7 @@ const AccountManagementDropdown = ({ currentAccount, onMenuClick }) => {
       buttonClassName={`account-management-dropdown ${styles.dropdownButton}`}
       buttonLabel={
         <div className={styles.accountWrapper}>
+          <WalletVisual address={address} size={32} />
           <div className={styles.account}>
             <span className={styles.name}>{name}</span>
             <span className={styles.address}>{truncateAddress(address)}</span>
