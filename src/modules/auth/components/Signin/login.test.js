@@ -158,33 +158,5 @@ describe('Login', () => {
         wrapper.find('.custom-derivation-path-input').exists(),
       ).toBeFalsy();
     });
-
-    it('Should display custom derivation path and dispatch settings updated action', () => {
-      const mockDispatch = jest.fn();
-      useDispatch.mockReturnValue(mockDispatch);
-      wrapper = mountWithRouterAndStore(
-        Login,
-        props,
-        {},
-        {
-          settings: {
-            enableCustomDerivationPath: true,
-            customDerivationPath: defaultDerivationPath,
-          },
-        },
-      );
-
-      expect(
-        wrapper.find('.custom-derivation-path-input').at(1).props().value,
-      ).toBe(defaultDerivationPath);
-      wrapper
-        .find('.custom-derivation-path-input')
-        .at(1)
-        .simulate('change', { target: { value: "m/44'/134'/1'" } });
-      wrapper.update();
-      expect(mockDispatch).toHaveBeenCalledWith(
-        settingsUpdated({ customDerivationPath: "m/44'/134'/1'" }),
-      );
-    });
   });
 });
