@@ -9,12 +9,13 @@ import { Input } from 'src/theme';
 import Wallet from '@wallet/components/searchBarWallets';
 import Delegates from '@wallet/components/searchBarWallets/delegates';
 import Blocks from '@block/components/BlockResultList';
+import IconSearch from "@search/components/IconSearch/IconSearch";
 import Transactions from '../../../transaction/components/TransactionResultList';
 import styles from './SearchBar.css';
 import { useDebounce } from '../../hooks/useDebounce';
 import { useSearch } from '../../hooks/useSearch';
 
-const SearchBar = ({ history }) => {
+const SearchBar = ({ className, history }) => {
   const [searchTextValue, setSearchTextValue] = useState('');
   const [rowItemIndex, setRowIndex] = useState(0);
   const searchBarRef = useRef();
@@ -104,11 +105,13 @@ const SearchBar = ({ history }) => {
   feedback = isEmptyResults ? t('Nothing has been found. Make sure to double check the ID you typed.') : feedback;
 
   return (
-    <div>
+    <div className={className}>
       <div className={`${styles.wrapper} search-bar`}>
         <Input
-          icon="searchActive"
-          size="l"
+          className="search-input"
+          iconClassName={styles.icon}
+          icon={<IconSearch />}
+          size="s"
           data-name="searchInput"
           setRef={searchBarRef}
           autoComplete="off"
@@ -116,8 +119,6 @@ const SearchBar = ({ history }) => {
           name="searchText"
           value={searchTextValue}
           placeholder={t('Search within the network...')}
-          className={`${styles.input} search-input`}
-          iconClassName={styles.icon}
           onKeyDown={onHandleKeyPress}
           isLoading={isLoading}
         />
