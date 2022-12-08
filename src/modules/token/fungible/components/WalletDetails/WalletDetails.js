@@ -10,7 +10,6 @@ import Icon from 'src/theme/Icon';
 import Converter from 'src/modules/common/components/converter';
 import { fromRawLsk } from '@token/fungible/utils/lsk';
 import TokenAmount from '@token/fungible/components/tokenAmount';
-import DiscreetMode from 'src/modules/common/components/discreetMode';
 import LockedBalanceLink from '@token/fungible/components/BalanceInfo/LockedBalanceLink';
 import styles from './WalletDetails.css';
 
