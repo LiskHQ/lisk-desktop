@@ -18,12 +18,19 @@ const TokenCard = ({ lockedBalance, availableBalance, symbol, url, address }) =>
         <TokenAmount val={availableBalance} token={symbol} />
       </p>
       {symbol === 'LSK' && (
-        <p data-testid="fiat-balance" className={styles.fiatBalance}>
-          <Converter value={fromRawLsk(availableBalance)} />
-        </p>
+        <Converter
+          data-testid="fiat-balance"
+          className={styles.fiatBalance}
+          value={fromRawLsk(availableBalance)}
+        />
       )}
       {!lockedBalance ? null : (
-        <DialogLink data-testid="locked-balance" component="lockedBalance" data={{ address }} className={styles.lockedBalance}>
+        <DialogLink
+          data-testid="locked-balance"
+          component="lockedBalance"
+          data={{ address }}
+          className={styles.lockedBalance}
+        >
           <Icon name="lock" /> <TokenAmount val={lockedBalance} token={symbol} />
         </DialogLink>
       )}
