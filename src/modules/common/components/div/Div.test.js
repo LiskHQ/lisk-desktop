@@ -5,6 +5,6 @@ import Div from './Div';
 describe('WalletDetails', () => {
   it('Should render children', () => {
     render(<Div><p>test</p></Div>);
-    expect(screen.getByText(test)).toBeTruthy();
+    expect(screen.getByText('test')).toBeTruthy();
   });
 });

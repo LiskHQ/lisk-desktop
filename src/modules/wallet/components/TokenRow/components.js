@@ -16,8 +16,8 @@ export const Token = ({ tokenSymbol, chainName, chainLogo = chainImage }) => (
   </div>
 );
 
-export const Balance = ({ amount, Wrapper = DiscreetMode, ...rest }) => (
-  <Wrapper className={`${grid['col-xs-2']} ${styles.balance}`} {...rest}>
+export const Balance = ({ amount, Wrapper = DiscreetMode }) => (
+  <Wrapper className={`${grid['col-xs-2']} ${styles.balance}`}>
     {amount}
   </Wrapper>
 );
