@@ -87,9 +87,8 @@ describe('Generals', () => {
 
   it('should render the custom derivation path field with no default value', () => {
     jest.clearAllMocks();
-    accountFormInstance = renderWithStore(AddAccountForm, props, {
-      settings: { enableCustomDerivationPath: true },
-    });
+    props.settings.enableCustomDerivationPath = true;
+    accountFormInstance.rerender(<AddAccountForm {...props} />);
 
     expect(accountFormInstance.getByDisplayValue(defaultDerivationPath)).toBeTruthy();
   });
