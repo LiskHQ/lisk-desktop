@@ -2,16 +2,16 @@ import { renderHook, act } from '@testing-library/react-hooks';
 import { mockDelegates } from '@pos/validator/__fixtures__';
 import { queryWrapper as wrapper } from 'src/utils/test/queryWrapper';
 import { LIMIT as defaultLimit } from 'src/const/config';
-import { useDelegates } from '.';
+import { useValidators } from '.';
 
 jest.useRealTimers();
 
-describe('useDelegates hook', () => {
+describe('useValidators hook', () => {
   const limit = 15;
   const config = { params: { limit } };
 
   it('fetching data correctly', async () => {
-    const { result, waitFor } = renderHook(() => useDelegates({ config }), { wrapper });
+    const { result, waitFor } = renderHook(() => useValidators({ config }), { wrapper });
     expect(result.current.isLoading).toBeTruthy();
     await waitFor(() => result.current.isFetched);
     expect(result.current.isSuccess).toBeTruthy();
@@ -27,7 +27,7 @@ describe('useDelegates hook', () => {
   });
 
   it('fetches data without params correctly', async () => {
-    const { result, waitFor } = renderHook(() => useDelegates(), { wrapper });
+    const { result, waitFor } = renderHook(() => useValidators(), { wrapper });
     await waitFor(() => result.current.isFetched);
     expect(result.current.isSuccess).toBeTruthy();
     const expectedResponse = {
@@ -43,7 +43,7 @@ describe('useDelegates hook', () => {
   });
 
   it('should fetch next set of data correctly', async () => {
-    const { result, waitFor } = renderHook(() => useDelegates({ config }), { wrapper });
+    const { result, waitFor } = renderHook(() => useValidators({ config }), { wrapper });
     await waitFor(() => result.current.isFetched);
     act(() => {
       result.current.fetchNextPage();
@@ -67,7 +67,7 @@ describe('useDelegates hook', () => {
   });
 
   it.skip('fetches data without params correctly', async () => {
-    const { result, waitFor } = renderHook(() => useDelegates({ config }), { wrapper });
+    const { result, waitFor } = renderHook(() => useValidators({ config }), { wrapper });
     await waitFor(() => result.current.isFetched);
     expect(result.current.isSuccess).toBeTruthy();
     const expectedResponse = {

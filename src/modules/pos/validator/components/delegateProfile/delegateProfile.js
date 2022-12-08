@@ -14,7 +14,7 @@ import styles from './delegateProfile.css';
 import DetailsView from './detailsView';
 import PerformanceView from './performanceView';
 import DelegateVotesView from './delegateVotesView';
-import { useDelegates } from '../../hooks/queries';
+import { useValidators } from '../../hooks/queries';
 import DelegateVoteButton from './delegateVoteButton';
 import WarnPunishedDelegate from '../WarnPunishedDelegate';
 
@@ -36,7 +36,7 @@ const DelegateProfile = ({ history }) => {
   const [{ metadata: { address: currentAddress } = {} }] = useCurrentAccount();
   const address = selectSearchParamValue(history.location.search, 'address') || currentAddress;
 
-  const { data: delegates, isLoading: isLoadingDelegates } = useDelegates({
+  const { data: delegates, isLoading: isLoadingDelegates } = useValidators({
     config: { params: { address } },
   });
   const delegate = useMemo(() => delegates?.data?.[0] || {}, [delegates]);
@@ -45,7 +45,9 @@ const DelegateProfile = ({ history }) => {
     config: { params: { generatorAddress: address } },
   });
 
-  const { data: { height: currentHeight } } = useLatestBlock();
+  const {
+    data: { height: currentHeight },
+  } = useLatestBlock();
   const isBanned = delegate.isBanned;
 
   useEffect(() => {

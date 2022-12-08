@@ -9,17 +9,17 @@ import Form from '../VoteForm';
 import Summary from '../VoteSummary';
 import Status from '../VoteStatus';
 import styles from './styles.css';
-import { useDposConstants } from '../../hooks/queries';
+import { usePosConstants } from '../../hooks/queries';
 
 const VotingQueue = ({ history, processLaunchProtocol }) => {
   const [{ step }, setMultiStepState] = useState({});
 
   // @TODO: we need to change the caching time from 5mins to something larger since this is a constant that doesn't frequently change
-  const { data: dposConstants, isLoading: isGettingDposConstants } = useDposConstants();
+  const { data: posConstants, isLoading: isGettingPosConstants } = usePosConstants();
 
   const { data: tokens } = useTokensBalance({
-    config: { params: { tokenID: dposConstants?.tokenIDDPoS } },
-    options: { enabled: !isGettingDposConstants },
+    config: { params: { tokenID: posConstants?.tokenIDDPoS } },
+    options: { enabled: !isGettingPosConstants },
   });
   const token = useMemo(() => tokens?.data?.[0] || {}, [tokens]);
 

@@ -2,7 +2,7 @@ import { fireEvent, screen, waitFor } from '@testing-library/react';
 import mockSavedAccounts from '@tests/fixtures/accounts';
 import { useTokensBalance } from '@token/fungible/hooks/queries';
 import { useBlocks } from '@block/hooks/queries/useBlocks';
-import { useDelegates } from '@pos/validator/hooks/queries';
+import { useValidators } from '@pos/validator/hooks/queries';
 import { useAuth } from '@auth/hooks/queries';
 import { fromRawLsk } from '@token/fungible/utils/lsk';
 import { useFilter } from 'src/modules/common/hooks';
@@ -33,7 +33,7 @@ describe('AllTokens', () => {
 
   useTokensBalance.mockReturnValue({ data: mockTokensBalance, isLoading: false, isSuccess: true });
   useAuth.mockReturnValue({ data: mockAuth });
-  useDelegates.mockReturnValue({ data: mockDelegates });
+  useValidators.mockReturnValue({ data: mockDelegates });
   useBlocks.mockReturnValue({ data: mockBlocks });
 
   it('should display properly', async () => {

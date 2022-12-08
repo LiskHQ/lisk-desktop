@@ -1,4 +1,4 @@
-export const mockDposConstants = {
+export const mockPosConstants = {
   data: {
     factorSelfVotes: 10,
     maxLengthName: 20,

@@ -1,7 +1,7 @@
 import { mountWithRouter } from 'src/utils/testHelpers';
 import { mockTransactions } from 'src/modules/transaction/__fixtures__';
 import { useTransactions } from 'src/modules/transaction/hooks/queries';
-import { useDelegates } from '../../hooks/queries';
+import { useValidators } from '../../hooks/queries';
 import LatestVotes from './index';
 import { mockDelegates } from '../../__fixtures__';
 
@@ -16,7 +16,7 @@ describe('Latest votes', () => {
   };
 
   it('displays initial table of votes', () => {
-    useDelegates.mockReturnValue({
+    useValidators.mockReturnValue({
       data: mockDelegates,
       isFetching: false,
       fetchNextPage: mockFetchNextDelegates,
@@ -33,7 +33,7 @@ describe('Latest votes', () => {
   });
 
   it('can load more votes if possible', () => {
-    useDelegates.mockReturnValue({
+    useValidators.mockReturnValue({
       data: mockDelegates,
       isFetching: false,
       fetchNextPage: mockFetchNextDelegates,
@@ -53,7 +53,7 @@ describe('Latest votes', () => {
   });
 
   it('can not load more votes if meta property is unavailable', () => {
-    useDelegates.mockReturnValue({
+    useValidators.mockReturnValue({
       isFetching: false,
       fetchNextPage: mockFetchNextDelegates,
       hasNextPage: false,

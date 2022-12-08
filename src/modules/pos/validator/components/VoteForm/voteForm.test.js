@@ -12,11 +12,11 @@ import { useCommandSchema } from '@network/hooks/useCommandsSchema';
 import { mockCommandParametersSchemas } from 'src/modules/common/__fixtures__';
 import VoteRow from './VoteRow';
 import Form from './VoteForm';
-import { useDposConstants } from '../../hooks/queries';
-import { mockDposConstants } from '../../__fixtures__/mockDposConstants';
+import { usePosConstants } from '../../hooks/queries';
+import { mockPosConstants } from '../../__fixtures__/mockDposConstants';
 
 jest.mock('@token/fungible/hooks/queries');
-jest.mock('../../hooks/queries/useDposConstants');
+jest.mock('../../hooks/queries/usePosConstants');
 jest.mock('@account/hooks/useDeprecatedAccount', () => ({
   useDeprecatedAccount: jest.fn().mockReturnValue({
     isSuccess: true,
@@ -99,7 +99,7 @@ describe('VoteForm', () => {
   });
 
   useTokensBalance.mockReturnValue({ data: mockTokensBalance, isLoading: false });
-  useDposConstants.mockReturnValue({ data: mockDposConstants });
+  usePosConstants.mockReturnValue({ data: mockPosConstants });
   useCommandSchema.mockReturnValue(
     mockCommandParametersSchemas.data.reduce(
       (result, { moduleCommand, schema }) => ({ ...result, [moduleCommand]: schema }),

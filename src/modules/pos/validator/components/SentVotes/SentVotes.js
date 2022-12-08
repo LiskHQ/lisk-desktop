@@ -14,7 +14,7 @@ import { useTokensBalance } from '@token/fungible/hooks/queries';
 import styles from './SentVotes.css';
 import header from './tableHeaderMap';
 import SentVotesRow from '../SentVotesRow';
-import { useDposConstants, useSentVotes } from '../../hooks/queries';
+import { usePosConstants, useSentVotes } from '../../hooks/queries';
 
 // eslint-disable-next-line max-statements
 const SentVotes = ({ history }) => {
@@ -30,11 +30,11 @@ const SentVotes = ({ history }) => {
   const queryParam = { config: { params: { address } } };
 
   // @TODO: we need to change the caching time from 5mins to something larger since this is a constant that doesn't frequently change
-  const { data: dposConstants, isLoading: isGettingDposConstants } = useDposConstants();
+  const { data: posConstants, isLoading: isGettingPosConstants } = usePosConstants();
 
   const { data: tokens } = useTokensBalance({
-    config: { params: { tokenID: dposConstants?.tokenIDDPoS } },
-    options: { enabled: !isGettingDposConstants },
+    config: { params: { tokenID: posConstants?.tokenIDDPoS } },
+    options: { enabled: !isGettingPosConstants },
   });
   const dposToken = useMemo(() => tokens?.data?.[0] || {}, [tokens]);
 

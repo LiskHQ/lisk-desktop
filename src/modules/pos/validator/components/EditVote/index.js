@@ -27,7 +27,7 @@ import { PrimaryButton, SecondaryButton, WarningButton } from 'src/theme/buttons
 import useVoteAmountField from '../../hooks/useVoteAmountField';
 import getMaxAmount from '../../utils/getMaxAmount';
 import styles from './editVote.css';
-import { useDelegates, useDposConstants, useSentVotes } from '../../hooks/queries';
+import { useValidators, usePosConstants, useSentVotes } from '../../hooks/queries';
 import { NUMBER_OF_BLOCKS_PER_DAY } from '../../consts';
 
 const getTitles = (t) => ({
@@ -60,7 +60,7 @@ const EditVote = ({ history, voteEdited, network, voting, votesRetrieved }) => {
   const [address] = selectSearchParamValue(history.location.search, ['address']);
   const delegateAddress = address || currentAddress; // this holds the address of either other delegates or the user's address
 
-  const { data: delegates, isLoading: isLoadingDelegates } = useDelegates({
+  const { data: delegates, isLoading: isLoadingDelegates } = useValidators({
     config: { params: { address: delegateAddress } },
   });
 
@@ -75,11 +75,11 @@ const EditVote = ({ history, voteEdited, network, voting, votesRetrieved }) => {
   });
 
   // @TODO: we need to change the caching time from 5mins to something larger since this is a constant that doesn't frequently change
-  const { data: dposConstants, isLoading: isGettingDposConstants } = useDposConstants();
+  const { data: posConstants, isLoading: isGettingPosConstants } = usePosConstants();
 
   const { data: tokens } = useTokensBalance({
-    config: { params: { tokenID: dposConstants?.tokenIDDPoS } },
-    options: { enabled: !isGettingDposConstants },
+    config: { params: { tokenID: posConstants?.tokenIDDPoS } },
+    options: { enabled: !isGettingPosConstants },
   });
   const token = useMemo(() => tokens?.data?.[0] || {}, [tokens]);
 

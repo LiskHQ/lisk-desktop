@@ -3,7 +3,7 @@ import { useTranslation } from 'react-i18next';
 import debounce from 'lodash.debounce';
 import { regex } from 'src/const/regex';
 import { DELEGATE_NAME_LENGTH } from '../consts';
-import { useDelegates } from './queries';
+import { useValidators } from './queries';
 
 // eslint-disable-next-line max-statements
 const getErrorMessage = (name, data, t) => {
@@ -31,7 +31,7 @@ const useValidatorName = (value) => {
   const [nameDebounced, setNameDebounced] = useState(value ?? '');
   const { t } = useTranslation();
 
-  const { data, isLoading } = useDelegates({
+  const { data, isLoading } = useValidators({
     config: { params: { name: nameDebounced } },
     options: { enabled: nameDebounced?.length >= DELEGATE_NAME_LENGTH.Minimum, retry: false },
   });

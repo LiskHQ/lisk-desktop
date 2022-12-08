@@ -10,7 +10,7 @@ import { useBlocks } from '@block/hooks/queries/useBlocks';
 import { useLatestBlock } from '@block/hooks/queries/useLatestBlock';
 import { fromRawLsk } from 'src/modules/token/fungible/utils/lsk';
 import DelegateProfile from './delegateProfile';
-import { useDelegates, useReceivedVotes, useSentVotes } from '../../hooks/queries';
+import { useValidators, useReceivedVotes, useSentVotes } from '../../hooks/queries';
 
 const mockedCurrentAccount = mockSavedAccounts[0];
 jest.mock('@account/hooks', () => ({
@@ -35,7 +35,7 @@ describe('Delegate Profile', () => {
     wrapper = renderWithRouter(DelegateProfile, props);
   });
 
-  useDelegates.mockReturnValue({ data: mockDelegates });
+  useValidators.mockReturnValue({ data: mockDelegates });
   useBlocks.mockReturnValue({ data: mockBlocks });
   useLatestBlock.mockReturnValue({ data: mockBlocks.data[0] });
   useSentVotes.mockReturnValue({ data: mockSentVotes });
@@ -97,7 +97,7 @@ describe('Delegate Profile', () => {
   });
 
   it('Should render ineligible delegate profile details', () => {
-    useDelegates.mockReturnValue({
+    useValidators.mockReturnValue({
       data: {
         ...mockDelegates,
         data: mockDelegates.data.map((data) => ({ ...data, status: 'ineligible' })),
@@ -117,7 +117,7 @@ describe('Delegate Profile', () => {
   });
 
   it('Should render stanby delegate profile details', () => {
-    useDelegates.mockReturnValue({
+    useValidators.mockReturnValue({
       data: {
         ...mockDelegates,
         data: mockDelegates.data.map((data) => ({ ...data, status: 'standby' })),
@@ -142,7 +142,7 @@ describe('Delegate Profile', () => {
   });
 
   it('Should render punished delegate profile details', () => {
-    useDelegates.mockReturnValue({
+    useValidators.mockReturnValue({
       data: {
         ...mockDelegates,
         data: mockDelegates.data.map((data) => ({ ...data, status: 'punished' })),
@@ -163,7 +163,7 @@ describe('Delegate Profile', () => {
   });
 
   it('Should render banned delegate profile details', () => {
-    useDelegates.mockReturnValue({
+    useValidators.mockReturnValue({
       data: {
         ...mockDelegates,
         data: mockDelegates.data.map((data) => ({ ...data, status: 'banned' })),
@@ -183,7 +183,7 @@ describe('Delegate Profile', () => {
   });
 
   it('Should render the vote delegate button', () => {
-    useDelegates.mockReturnValue({
+    useValidators.mockReturnValue({
       data: {
         ...mockDelegates,
         data: mockDelegates.data.map((data) => ({ ...data, status: 'banned' })),
@@ -201,7 +201,7 @@ describe('Delegate Profile', () => {
   });
 
   it('Should render the vote delegate button', () => {
-    useDelegates.mockReturnValue({
+    useValidators.mockReturnValue({
       data: {
         ...mockDelegates,
         data: mockDelegates.data.map((data) => ({ ...data, status: 'banned' })),
@@ -219,7 +219,7 @@ describe('Delegate Profile', () => {
   });
 
   it('Should render the vote delegate button', () => {
-    useDelegates.mockReturnValue({
+    useValidators.mockReturnValue({
       data: {
         ...mockDelegates,
         data: mockDelegates.data.map((data) => ({ ...data, status: 'banned' })),

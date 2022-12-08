@@ -59,7 +59,7 @@ const getMaxAmount = async ({
     {
       network,
       transaction,
-      /* @Todo: the token symbol should be dynamically integrated from the useDposConstnats query hook which would be addressed in issue #4502 */
+      /* @Todo: the token symbol should be dynamically integrated from the usePosConstants query hook which would be addressed in issue #4502 */
       token: 'LSK',
       wallet: {
         summary: { isMultisignature },
@@ -72,7 +72,7 @@ const getMaxAmount = async ({
         transaction
       ),
     },
-    /* @Todo: the token symbol should be dynamically integrated from the useDposConstnats query hook which would be addressed in issue #4502 */
+    /* @Todo: the token symbol should be dynamically integrated from the usePosConstants query hook which would be addressed in issue #4502 */
     'LSK'
   );
 

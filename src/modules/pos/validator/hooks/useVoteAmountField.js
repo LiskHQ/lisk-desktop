@@ -9,7 +9,7 @@ import { selectLSKAddress } from 'src/redux/selectors';
 import { regex } from 'src/const/regex';
 import { tokenMap } from '@token/fungible/consts/tokens';
 import { useTokensBalance } from 'src/modules/token/fungible/hooks/queries';
-import { useDposConstants } from './queries';
+import { usePosConstants } from './queries';
 
 let loaderTimeout = null;
 
@@ -52,12 +52,12 @@ const getAmountFeedbackAndError = (value, balance, minValue, inputValue) => {
 // eslint-disable-next-line max-statements
 const useVoteAmountField = (initialValue) => {
   // @TODO: we need to change the caching time from 5mins to something larger since this is a constant that doesn't frequently change
-  const { data: dposConstants, isLoading: isGettingDposConstants } = useDposConstants();
+  const { data: posConstants, isLoading: isGettingPosConstants } = usePosConstants();
 
   // Since we know the dposTokenId we need to get the token's object
   const { data: tokens, isLoading: isGettingDposToken } = useTokensBalance({
-    config: { params: { tokenID: dposConstants?.tokenIDDPoS } },
-    options: { enabled: !isGettingDposConstants },
+    config: { params: { tokenID: posConstants?.tokenIDDPoS } },
+    options: { enabled: !isGettingPosConstants },
   });
   const token = useMemo(() => tokens?.data?.[0] || {}, [tokens]);
 

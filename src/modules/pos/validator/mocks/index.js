@@ -9,7 +9,7 @@ import {
   mockGenerator,
 } from '@pos/validator/__fixtures__';
 import composeMockList from 'src/modules/common/utils/composeMockList';
-import { mockDposConstants } from '../__fixtures__/mockDposConstants';
+import { mockPosConstants } from '../__fixtures__/mockDposConstants';
 
 export const delegates = rest.get(`*/api/${API_VERSION}/dpos/delegates`, async (req, res, ctx) =>
   composeMockList({
@@ -92,7 +92,6 @@ export const generators = rest.get(`*/api/${API_VERSION}/generators`, async (req
   return res(ctx.delay(20), ctx.json(response));
 });
 
-export const dposConstants = rest.get(
-  `*/api/${API_VERSION}/dpos/constants`,
-  async (req, res, ctx) => res(ctx.delay(20), ctx.json(mockDposConstants))
+export const posConstants = rest.get(`*/api/${API_VERSION}/dpos/constants`, async (_, res, ctx) =>
+  res(ctx.delay(20), ctx.json(mockPosConstants))
 );

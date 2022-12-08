@@ -29,15 +29,13 @@ const DelegateSummary = ({ delegate, status, weight }) => {
           </div>
           <div>
             <DialogLink component="editVote">
-              <PrimaryButton disabled={status.className === 'banned'}>
-                {t('Vote')}
-              </PrimaryButton>
+              <PrimaryButton disabled={status.className === 'banned'}>{t('Vote')}</PrimaryButton>
             </DialogLink>
           </div>
         </div>
       </BoxHeader>
       <BoxContent>
-        {/* @Todo: the value of roundLength should be dynamically integrated from the useDposConstnats query hook which would be addressed in issue #4502 */}
+        {/* @Todo: the value of roundLength should be dynamically integrated from the usePosConstants query hook which would be addressed in issue #4502 */}
         <p>{t('This delegate is among the first 101 delegates in delegate weight ranking.')}</p>
         <div className={styles.summaryDetails}>
           <div>

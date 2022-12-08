@@ -15,7 +15,7 @@ import DialogLink from 'src/theme/dialog/link';
 import { useCurrentAccount } from '@account/hooks';
 import { useLatestBlock } from '@block/hooks/queries/useLatestBlock';
 import { SecondaryButton, PrimaryButton } from '@theme/buttons';
-import { useDelegates } from '@pos/validator/hooks/queries';
+import { useValidators } from '@pos/validator/hooks/queries';
 import { selectSearchParamValue } from 'src/utils/searchParams';
 import { useAuth } from '@auth/hooks/queries';
 import styles from './overview.css';
@@ -42,7 +42,7 @@ const Overview = ({ isWalletRoute, history }) => {
   const [{ metadata: { address: currentAddress, name } = {} }] = useCurrentAccount();
 
   const address = useMemo(() => searchAddress || currentAddress, [searchAddress, currentAddress]);
-  const { data: delegates } = useDelegates({ config: { params: { address } } });
+  const { data: delegates } = useValidators({ config: { params: { address } } });
   const { data: account } = useAuth({ config: { params: { address } } });
 
   const delegate = useMemo(() => delegates?.data?.[0] || {}, [delegates]);

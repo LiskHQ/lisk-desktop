@@ -3,7 +3,7 @@ import { MemoryRouter } from 'react-router';
 import { render, screen } from '@testing-library/react';
 import mockSavedAccounts from '@tests/fixtures/accounts';
 import { useTokensBalance } from '@token/fungible/hooks/queries';
-import { useDelegates } from '@pos/validator/hooks/queries';
+import { useValidators } from '@pos/validator/hooks/queries';
 import { useAuth } from '@auth/hooks/queries';
 import { fromRawLsk } from '@token/fungible/utils/lsk';
 
@@ -43,7 +43,7 @@ describe('Overview', () => {
       isSuccess: true,
     });
     useAuth.mockReturnValue({ data: mockAuth });
-    useDelegates.mockReturnValue({ data: mockDelegates });
+    useValidators.mockReturnValue({ data: mockDelegates });
     useBlocks.mockReturnValue({ data: mockBlocks });
     useLatestBlock.mockReturnValue({ data: mockBlocks.data[0] });
 

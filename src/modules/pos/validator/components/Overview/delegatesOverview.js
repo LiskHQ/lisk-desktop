@@ -9,7 +9,7 @@ import BoxEmptyState from 'src/theme/box/emptyState';
 import { useTransactions } from 'src/modules/transaction/hooks/queries';
 import { DoughnutChart, LineChart } from 'src/modules/common/components/charts';
 import GuideTooltip, { GuideTooltipItem } from 'src/modules/common/components/charts/guideTooltip';
-import { useDelegates } from '../../hooks/queries';
+import { useValidators } from '../../hooks/queries';
 import NumericInfo from './numericInfo';
 import styles from './overview.css';
 
@@ -18,7 +18,7 @@ const getAmountOfDelegatesLabels = (registrations) => registrations.data.map((it
 
 const Overview = ({ registrations, totalBlocks, t }) => {
   const colorPalette = getColorPalette(useTheme());
-  const { data: delegates } = useDelegates({ config: { params: { limit: 1 } } });
+  const { data: delegates } = useValidators({ config: { params: { limit: 1 } } });
   const { data: transactions } = useTransactions({ config: { params: { limit: 1 } } });
   const delegatesCount = delegates?.meta.total ?? 0;
   const transactionsCount = transactions?.meta.total ?? 0;

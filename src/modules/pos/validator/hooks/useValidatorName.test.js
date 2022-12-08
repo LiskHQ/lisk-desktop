@@ -2,17 +2,17 @@ import { renderHook, act } from '@testing-library/react-hooks';
 import flushPromises from '@tests/unit-test-utils/flushPromises';
 import { queryWrapper as wrapper } from 'src/utils/test/queryWrapper';
 import * as delegateAPI from '@pos/validator/api';
-import { useDelegates } from './queries';
+import { useValidators } from './queries';
 import useValidatorName from './useValidatorName';
 
 jest.mock('../api', () => ({
   getDelegate: jest.fn(),
 }));
-jest.mock('./queries/useDelegates');
+jest.mock('./queries/useValidators');
 
 describe('useValidatorName', () => {
   it('Initial values must be empty', () => {
-    useDelegates.mockReturnValue({
+    useValidators.mockReturnValue({
       loading: false,
     });
     const { result } = renderHook(() => useValidatorName(), { wrapper });
@@ -22,7 +22,7 @@ describe('useValidatorName', () => {
   });
 
   it('should account for the initial values', () => {
-    useDelegates.mockReturnValue({
+    useValidators.mockReturnValue({
       loading: false,
     });
     const { result } = renderHook(() => useValidatorName('some_name'), { wrapper });
@@ -32,7 +32,7 @@ describe('useValidatorName', () => {
   });
 
   it('should mark as error if the value is empty or too short', () => {
-    useDelegates.mockReturnValue({
+    useValidators.mockReturnValue({
       loading: false,
     });
     const { result } = renderHook(() => useValidatorName('s'), { wrapper });
@@ -49,7 +49,7 @@ describe('useValidatorName', () => {
   });
 
   it('should mark as error if the value is not unique', async () => {
-    useDelegates.mockReturnValue({
+    useValidators.mockReturnValue({
       loading: false,
       data: { data: [{}] },
     });
@@ -72,7 +72,7 @@ describe('useValidatorName', () => {
 
   it('should return no errors if the value is unique', async () => {
     delegateAPI.getDelegate.mockRejectedValue({ message: 'Data not found.' });
-    useDelegates.mockReturnValue({
+    useValidators.mockReturnValue({
       loading: false,
       error: {},
     });

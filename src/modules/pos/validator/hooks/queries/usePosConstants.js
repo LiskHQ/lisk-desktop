@@ -1,4 +1,4 @@
-import { DPOS_CONSTANTS } from 'src/const/queries';
+import { POS_CONSTANTS } from 'src/const/queries';
 import { API_VERSION } from 'src/const/config';
 import { useCustomQuery } from 'src/modules/common/hooks';
 
@@ -14,7 +14,7 @@ import { useCustomQuery } from 'src/modules/common/hooks';
  * @returns the query object
  */
 
-export const useDposConstants = ({ config: customConfig = {}, options } = {}) => {
+export const usePosConstants = ({ config: customConfig = {}, options } = {}) => {
   const config = {
     url: `/api/${API_VERSION}/dpos/constants`,
     method: 'get',
@@ -23,7 +23,7 @@ export const useDposConstants = ({ config: customConfig = {}, options } = {}) =>
   };
 
   return useCustomQuery({
-    keys: [DPOS_CONSTANTS],
+    keys: [POS_CONSTANTS],
     config,
     options,
   });
