@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { validatorKeyValidator } from '../utils/validators';
 
-const useDelegateKeys = (keyName, message, initialValue) => {
+const useValidatorKeys = (keyName, message, initialValue) => {
   const [key, setKey] = useState({
     value: initialValue ?? '',
     error: false,
@@ -20,4 +20,4 @@ const useDelegateKeys = (keyName, message, initialValue) => {
   return [key, setValue];
 };
 
-export default useDelegateKeys;
+export default useValidatorKeys;

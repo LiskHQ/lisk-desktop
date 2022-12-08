@@ -125,7 +125,7 @@ const DelegatesMonitor = ({ watchList, registrations }) => {
             <Link to={address ? routes.sentVotes.path : '#'}>
               <SecondaryButton disabled={!address}>Votes</SecondaryButton>
             </Link>
-            <DialogLink component="registerDelegate">
+            <DialogLink component="registerValidator">
               <PrimaryButton>Register delegate</PrimaryButton>
             </DialogLink>
           </div>

@@ -1,20 +1,18 @@
 import { renderHook, act } from '@testing-library/react-hooks';
 import * as keys from '@tests/constants/keys';
-import useDelegateKey from './useDelegateKey';
+import useValidatorKey from './useValidatorKey';
 
-describe('useDelegateKey', () => {
+describe('useValidatorKey', () => {
   it('Initial values must be empty', () => {
-    const { result } = renderHook(
-      () => useDelegateKey('blsKey', 'test message'),
-    );
+    const { result } = renderHook(() => useValidatorKey('blsKey', 'test message'));
     const [genKey] = result.current;
 
     expect(genKey.value).toBe('');
   });
 
   it('It should account for initial params', () => {
-    const { result } = renderHook(
-      () => useDelegateKey('proofOfPossession', 'test message', keys.pop),
+    const { result } = renderHook(() =>
+      useValidatorKey('proofOfPossession', 'test message', keys.pop)
     );
     const [key] = result.current;
 
@@ -22,9 +20,7 @@ describe('useDelegateKey', () => {
   });
 
   it('Should set valid values with no errors', () => {
-    const { result } = renderHook(
-      () => useDelegateKey('generatorKey', 'test message'),
-    );
+    const { result } = renderHook(() => useValidatorKey('generatorKey', 'test message'));
     const [, setKey] = result.current;
     act(() => {
       setKey(keys.genKey);
@@ -35,9 +31,7 @@ describe('useDelegateKey', () => {
   });
 
   it('should show generatorKey error if the value is not a valid', () => {
-    const { result } = renderHook(
-      () => useDelegateKey('generatorKey', 'test message'),
-    );
+    const { result } = renderHook(() => useValidatorKey('generatorKey', 'test message'));
     const [, setKey] = result.current;
     act(() => {
       setKey('generatorKey', 'wrong_value');
@@ -48,9 +42,7 @@ describe('useDelegateKey', () => {
   });
 
   it('should show blsKey error if the value is not a valid', () => {
-    const { result } = renderHook(
-      () => useDelegateKey('blsKey', 'test message'),
-    );
+    const { result } = renderHook(() => useValidatorKey('blsKey', 'test message'));
     const [, setKey] = result.current;
     act(() => {
       setKey('blsKey', 'wrong_value');
@@ -61,9 +53,7 @@ describe('useDelegateKey', () => {
   });
 
   it('should show proofOfPossession error if the value is not a valid', () => {
-    const { result } = renderHook(
-      () => useDelegateKey('proofOfPossession', 'test message'),
-    );
+    const { result } = renderHook(() => useValidatorKey('proofOfPossession', 'test message'));
     const [, setKey] = result.current;
     act(() => {
       setKey('proofOfPossession', 'wrong_value');

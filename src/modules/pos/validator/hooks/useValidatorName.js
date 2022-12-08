@@ -26,7 +26,7 @@ const getErrorMessage = (name, data, t) => {
   return '';
 };
 
-const useDelegateName = (value) => {
+const useValidatorName = (value) => {
   const [name, setName] = useState(value ?? '');
   const [nameDebounced, setNameDebounced] = useState(value ?? '');
   const { t } = useTranslation();
@@ -57,4 +57,4 @@ const useDelegateName = (value) => {
   ];
 };
 
-export default useDelegateName;
+export default useValidatorName;

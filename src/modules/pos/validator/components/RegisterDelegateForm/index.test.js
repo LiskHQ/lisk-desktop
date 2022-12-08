@@ -3,13 +3,13 @@ import { useCommandSchema } from '@network/hooks/useCommandsSchema';
 import wallets from '@tests/constants/wallets';
 import * as keys from '@tests/constants/keys';
 import { mockCommandParametersSchemas } from 'src/modules/common/__fixtures__';
-import useDelegateName from '../../hooks/useDelegateName';
-import useDelegateKey from '../../hooks/useDelegateKey';
+import useValidatorName from '../../hooks/useValidatorName';
+import useValidatorKey from '../../hooks/useValidatorKey';
 import RegisterDelegateForm from '.';
 
 jest.mock('@network/hooks/useCommandsSchema');
-jest.mock('../../hooks/useDelegateName', () => jest.fn());
-jest.mock('../../hooks/useDelegateKey', () => jest.fn());
+jest.mock('../../hooks/useValidatorName', () => jest.fn());
+jest.mock('../../hooks/useValidatorKey', () => jest.fn());
 jest.mock('@account/hooks/useDeprecatedAccount', () => ({
   useDeprecatedAccount: jest.fn().mockReturnValue({
     isSuccess: true,
@@ -62,8 +62,8 @@ describe('RegisterDelegateForm', () => {
 
   describe('Renders correctly', () => {
     it('renders properly RegisterDelegateForm component', () => {
-      useDelegateName.mockReturnValue([empty, setName]);
-      useDelegateKey.mockReturnValue([empty, setKey]);
+      useValidatorName.mockReturnValue([empty, setName]);
+      useValidatorKey.mockReturnValue([empty, setKey]);
       const wrapper = mountWithQueryClient(RegisterDelegateForm, props);
       expect(wrapper).toContainMatchingElement('.select-name-container');
       expect(wrapper).toContainMatchingElement('.select-name-input');
@@ -73,8 +73,8 @@ describe('RegisterDelegateForm', () => {
     });
 
     it('type a valid and unused username', async () => {
-      useDelegateName.mockReturnValue([empty, setName]);
-      useDelegateKey.mockReturnValue([empty, setKey]);
+      useValidatorName.mockReturnValue([empty, setName]);
+      useValidatorKey.mockReturnValue([empty, setKey]);
       const wrapper = mountWithQueryClient(RegisterDelegateForm, props);
 
       wrapper
@@ -114,40 +114,40 @@ describe('RegisterDelegateForm', () => {
     };
 
     it('Display delegate name input errors', () => {
-      useDelegateKey.mockReturnValueOnce([genKey, setKey]);
-      useDelegateKey.mockReturnValueOnce([blsKey, setKey]);
-      useDelegateKey.mockReturnValueOnce([pop, setKey]);
-      useDelegateName.mockReturnValue([wrongName, setName]); // invalid
+      useValidatorKey.mockReturnValueOnce([genKey, setKey]);
+      useValidatorKey.mockReturnValueOnce([blsKey, setKey]);
+      useValidatorKey.mockReturnValueOnce([pop, setKey]);
+      useValidatorName.mockReturnValue([wrongName, setName]); // invalid
       const wrapper = mountWithQueryClient(RegisterDelegateForm, props);
       expect(wrapper.find('button.confirm-btn')).toBeDisabled();
       expect(wrapper.find('.feedback').at(0)).toHaveText('Too short');
     });
 
     it('Display generator key input error', () => {
-      useDelegateKey.mockReturnValueOnce([wrongKey, setKey]);
-      useDelegateKey.mockReturnValueOnce([blsKey, setKey]);
-      useDelegateKey.mockReturnValueOnce([pop, setKey]);
-      useDelegateName.mockReturnValue([validName, setName]); // valid
+      useValidatorKey.mockReturnValueOnce([wrongKey, setKey]);
+      useValidatorKey.mockReturnValueOnce([blsKey, setKey]);
+      useValidatorKey.mockReturnValueOnce([pop, setKey]);
+      useValidatorName.mockReturnValue([validName, setName]); // valid
       const wrapper = mountWithQueryClient(RegisterDelegateForm, props);
       expect(wrapper.find('button.confirm-btn')).toBeDisabled();
       expect(wrapper.find('.feedback').at(1)).toHaveText('Invalid hex value');
     });
 
     it('Display bls key input error', () => {
-      useDelegateKey.mockReturnValueOnce([genKey, setKey]);
-      useDelegateKey.mockReturnValueOnce([wrongKey, setKey]);
-      useDelegateKey.mockReturnValueOnce([pop, setKey]);
-      useDelegateName.mockReturnValue([validName, setName]); // valid
+      useValidatorKey.mockReturnValueOnce([genKey, setKey]);
+      useValidatorKey.mockReturnValueOnce([wrongKey, setKey]);
+      useValidatorKey.mockReturnValueOnce([pop, setKey]);
+      useValidatorName.mockReturnValue([validName, setName]); // valid
       const wrapper = mountWithQueryClient(RegisterDelegateForm, props);
       expect(wrapper.find('button.confirm-btn')).toBeDisabled();
       expect(wrapper.find('.feedback').at(2)).toHaveText('Invalid hex value');
     });
 
     it('Display pop key input error', () => {
-      useDelegateKey.mockReturnValueOnce([genKey, setKey]);
-      useDelegateKey.mockReturnValueOnce([blsKey, setKey]);
-      useDelegateKey.mockReturnValueOnce([wrongKey, setKey]);
-      useDelegateName.mockReturnValue([validName, setName]); // valid
+      useValidatorKey.mockReturnValueOnce([genKey, setKey]);
+      useValidatorKey.mockReturnValueOnce([blsKey, setKey]);
+      useValidatorKey.mockReturnValueOnce([wrongKey, setKey]);
+      useValidatorName.mockReturnValue([validName, setName]); // valid
       const wrapper = mountWithQueryClient(RegisterDelegateForm, props);
       expect(wrapper.find('button.confirm-btn')).toBeDisabled();
       expect(wrapper.find('.feedback').at(3)).toHaveText('Invalid hex value');
@@ -188,10 +188,10 @@ describe('RegisterDelegateForm', () => {
     };
 
     it('accept a valid form', () => {
-      useDelegateKey.mockReturnValueOnce([genKey, setKey]);
-      useDelegateKey.mockReturnValueOnce([blsKey, setKey]);
-      useDelegateKey.mockReturnValueOnce([pop, setKey]);
-      useDelegateName.mockReturnValue([validName, setName]); // valid
+      useValidatorKey.mockReturnValueOnce([genKey, setKey]);
+      useValidatorKey.mockReturnValueOnce([blsKey, setKey]);
+      useValidatorKey.mockReturnValueOnce([pop, setKey]);
+      useValidatorName.mockReturnValue([validName, setName]); // valid
       const wrapper = mountWithQueryClient(RegisterDelegateForm, props);
       wrapper.find('button.confirm-btn').simulate('click');
       expect(props.nextStep).toHaveBeenCalledWith(rawTx);

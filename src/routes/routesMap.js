@@ -11,7 +11,7 @@ import MonitorWallets from '@account/components/Accounts';
 import MonitorNetwork from '@network/manager/networkManager';
 import MonitorTransactions from '@transaction/components/Transactions';
 import Register from '@auth/manager/SignupManager';
-import RegisterDelegate from '@pos/validator/manager/registerDelegateManager';
+import RegisterValidator from '@pos/validator/manager/registerValidatorManager';
 import Send from '@token/fungible/components/SendView';
 import Settings from 'src/modules/settings/manager/SettingsManager';
 import SignMessage from '@message/manager/signMessageManager';
@@ -81,7 +81,7 @@ export default {
   settings: Settings,
   signMessage: SignMessage,
   verifyMessage: VerifyMessage,
-  registerDelegate: RegisterDelegate,
+  registerValidator: RegisterValidator,
   transactionDetails: TransactionDetails,
   newRelease: NewReleaseDialog,
   request: Request,

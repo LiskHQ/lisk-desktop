@@ -3,19 +3,19 @@ import flushPromises from '@tests/unit-test-utils/flushPromises';
 import { queryWrapper as wrapper } from 'src/utils/test/queryWrapper';
 import * as delegateAPI from '@pos/validator/api';
 import { useDelegates } from './queries';
-import useDelegateName from './useDelegateName';
+import useValidatorName from './useValidatorName';
 
 jest.mock('../api', () => ({
   getDelegate: jest.fn(),
 }));
 jest.mock('./queries/useDelegates');
 
-describe('useDelegateName', () => {
+describe('useValidatorName', () => {
   it('Initial values must be empty', () => {
     useDelegates.mockReturnValue({
       loading: false,
     });
-    const { result } = renderHook(() => useDelegateName(), { wrapper });
+    const { result } = renderHook(() => useValidatorName(), { wrapper });
     const [name] = result.current;
 
     expect(name.value).toBe('');
@@ -25,7 +25,7 @@ describe('useDelegateName', () => {
     useDelegates.mockReturnValue({
       loading: false,
     });
-    const { result } = renderHook(() => useDelegateName('some_name'), { wrapper });
+    const { result } = renderHook(() => useValidatorName('some_name'), { wrapper });
     const [name] = result.current;
 
     expect(name.value).toBe('some_name');
@@ -35,7 +35,7 @@ describe('useDelegateName', () => {
     useDelegates.mockReturnValue({
       loading: false,
     });
-    const { result } = renderHook(() => useDelegateName('s'), { wrapper });
+    const { result } = renderHook(() => useValidatorName('s'), { wrapper });
     let [name, setName] = result.current;
     expect(name.error).toBe(true);
     expect(name.message).toBe('Username is too short.');
@@ -53,7 +53,7 @@ describe('useDelegateName', () => {
       loading: false,
       data: { data: [{}] },
     });
-    const { result } = renderHook(() => useDelegateName('test_1'), { wrapper });
+    const { result } = renderHook(() => useValidatorName('test_1'), { wrapper });
     jest.advanceTimersByTime(1001);
     await flushPromises();
     let [name, setName] = result.current;
@@ -76,7 +76,7 @@ describe('useDelegateName', () => {
       loading: false,
       error: {},
     });
-    const { result } = renderHook(() => useDelegateName('test_1'), { wrapper });
+    const { result } = renderHook(() => useValidatorName('test_1'), { wrapper });
     jest.advanceTimersByTime(1001);
     await flushPromises();
     let [name, setName] = result.current;

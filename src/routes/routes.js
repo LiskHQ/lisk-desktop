@@ -171,7 +171,7 @@ export const modals = {
     isPrivate: false,
     forbiddenTokens: [],
   },
-  registerDelegate: {
+  registerValidator: {
     isPrivate: true,
     forbiddenTokens: [],
   },

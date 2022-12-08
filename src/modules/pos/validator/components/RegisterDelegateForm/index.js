@@ -5,8 +5,8 @@ import BoxHeader from 'src/theme/box/header';
 import BoxContent from 'src/theme/box/content';
 import { Input } from 'src/theme';
 import TxComposer from '@transaction/components/TxComposer';
-import useDelegateName from '../../hooks/useDelegateName';
-import useDelegateKey from '../../hooks/useDelegateKey';
+import useValidatorName from '../../hooks/useValidatorName';
+import useValidatorKey from '../../hooks/useValidatorKey';
 import InputLabel from './InputLabel';
 import styles from './form.css';
 
@@ -22,18 +22,18 @@ const getTooltips = (field, t) => {
 
 const RegisterDelegateForm = ({ nextStep, prevState }) => {
   const { t } = useTranslation();
-  const [name, setName] = useDelegateName(prevState?.rawTx?.params.name);
-  const [generatorKey, setGenKey] = useDelegateKey(
+  const [name, setName] = useValidatorName(prevState?.rawTx?.params.name);
+  const [generatorKey, setGenKey] = useValidatorKey(
     'generatorKey',
     t('Please enter a valid generator key value'),
     prevState?.rawTx?.params.generatorKey
   );
-  const [blsKey, setBlsKey] = useDelegateKey(
+  const [blsKey, setBlsKey] = useValidatorKey(
     'blsKey',
     t('Please enter a valid bls key value'),
     prevState?.rawTx?.params.blsKey
   );
-  const [proofOfPossession, setPop] = useDelegateKey(
+  const [proofOfPossession, setPop] = useValidatorKey(
     'proofOfPossession',
     t('Please enter a valid proof of possession value'),
     prevState?.rawTx?.params.proofOfPossession
