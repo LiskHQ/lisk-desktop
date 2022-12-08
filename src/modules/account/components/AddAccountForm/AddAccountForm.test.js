@@ -93,11 +93,4 @@ describe('Generals', () => {
 
     expect(accountFormInstance.getByDisplayValue(defaultDerivationPath)).toBeTruthy();
   });
-
-  it('should render the custom derivation path field with default value', () => {
-    accountFormInstance = renderWithStore(AddAccountForm, props, {
-      settings: { enableCustomDerivationPath: true, customDerivationPath: `m/0/2'` },
-    });
-    expect(screen.getByDisplayValue(`m/0/2'`)).toBeTruthy();
-  });
 });
