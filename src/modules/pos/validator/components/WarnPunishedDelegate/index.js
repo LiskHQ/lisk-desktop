@@ -1,7 +1,7 @@
 import React from 'react';
 import { withRouter } from 'react-router-dom';
 import moment from 'moment';
-import { NUMBER_OF_BLOCKS_PER_DAY } from '@pos/validator/consts/delegates';
+import { NUMBER_OF_BLOCKS_PER_DAY } from '@pos/validator/consts/validators';
 import { useBlocks } from '@block/hooks/queries/useBlocks';
 import { useLatestBlock } from '@block/hooks/queries/useLatestBlock';
 import { useTranslation } from 'react-i18next';

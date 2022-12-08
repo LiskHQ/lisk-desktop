@@ -2,7 +2,7 @@ import { useState, useCallback, useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
 import debounce from 'lodash.debounce';
 import { regex } from 'src/const/regex';
-import { DELEGATE_NAME_LENGTH } from '../consts';
+import { VALIDATOR_NAME_LENGTH } from '../consts';
 import { useValidators } from './queries';
 
 // eslint-disable-next-line max-statements
@@ -10,10 +10,10 @@ const getErrorMessage = (name, data, t) => {
   if (name.length === 0) {
     return t('Username can not be empty.');
   }
-  if (name.length < DELEGATE_NAME_LENGTH.Minimum) {
+  if (name.length < VALIDATOR_NAME_LENGTH.Minimum) {
     return t('Username is too short.');
   }
-  if (name.length > DELEGATE_NAME_LENGTH.Maximum) {
+  if (name.length > VALIDATOR_NAME_LENGTH.Maximum) {
     return t('Username is too long.');
   }
   const hasInvalidChars = name.replace(regex.delegateSpecialChars, '');
@@ -33,7 +33,7 @@ const useValidatorName = (value) => {
 
   const { data, isLoading } = useValidators({
     config: { params: { name: nameDebounced } },
-    options: { enabled: nameDebounced?.length >= DELEGATE_NAME_LENGTH.Minimum, retry: false },
+    options: { enabled: nameDebounced?.length >= VALIDATOR_NAME_LENGTH.Minimum, retry: false },
   });
 
   const errorMessage = getErrorMessage(name, data, t);

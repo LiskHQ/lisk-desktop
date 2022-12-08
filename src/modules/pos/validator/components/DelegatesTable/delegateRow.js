@@ -5,19 +5,17 @@ import { useDispatch } from 'react-redux';
 import routes from 'src/routes/routes';
 import { addedToWatchList, removedFromWatchList } from 'src/redux/actions';
 import getForgingTime from '../../utils/getForgingTime';
-import DelegateRowContext from '../../context/delegateRowContext';
+import ValidatorRowContext from '../../context/validatorRowContext';
 import delegateStyles from '../DelegatesMonitorView/delegates.css';
 import styles from './schemas.css';
 import LayoutSchema from './layoutSchema';
 
-const DelegateRow = ({
-  data, className, activeTab, watchList, setActiveTab,
-}) => {
+const DelegateRow = ({ data, className, activeTab, watchList, setActiveTab }) => {
   const dispatch = useDispatch();
   const { t } = useTranslation();
   const formattedForgingTime = getForgingTime(data.nextForgingTime);
 
-  const isWatched = watchList.find(address => address === data.address);
+  const isWatched = watchList.find((address) => address === data.address);
 
   const removeFromWatchList = (e) => {
     e.preventDefault();
@@ -42,7 +40,7 @@ const DelegateRow = ({
       className={`${className} delegate-row ${styles.container} ${activeStyle} ${delegateStyles.tableRow}`}
       to={`${routes.delegateProfile.path}?address=${data.address}`}
     >
-      <DelegateRowContext.Provider
+      <ValidatorRowContext.Provider
         value={{
           data,
           activeTab,
@@ -56,7 +54,7 @@ const DelegateRow = ({
         {Layout.components.map((Component, index) => (
           <Component key={index} t={t} />
         ))}
-      </DelegateRowContext.Provider>
+      </ValidatorRowContext.Provider>
     </Link>
   );
 };

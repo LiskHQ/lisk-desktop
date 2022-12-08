@@ -9,7 +9,7 @@ import Tooltip from 'src/theme/Tooltip';
 import Icon from 'src/theme/Icon';
 import { useTheme } from 'src/theme/Theme';
 import { DEFAULT_STANDBY_THRESHOLD } from '@pos/validator/consts';
-import DelegateRowContext from '../../context/delegateRowContext';
+import ValidatorRowContext from '../../context/validatorRowContext';
 import styles from '../DelegatesMonitorView/delegates.css';
 import {
   getDelegateDetailsClass,
@@ -53,7 +53,7 @@ const getDelegateStatus = (key, grossVotesReceived) => {
 };
 
 export const DelegateRank = () => {
-  const { data, activeTab } = useContext(DelegateRowContext);
+  const { data, activeTab } = useContext(ValidatorRowContext);
   return (
     <span className={getDelegateRankClass(activeTab)}>
       <span>#{data.rank}</span>
@@ -65,7 +65,7 @@ export const DelegateWeight = () => {
   const {
     data: { voteWeight },
     activeTab,
-  } = useContext(DelegateRowContext);
+  } = useContext(ValidatorRowContext);
   const formatted = formatAmountBasedOnLocale({
     value: fromRawLsk(voteWeight),
     format: '0a',
@@ -86,7 +86,7 @@ export const DelegateDetails = () => {
     addToWatchList,
     removeFromWatchList,
     t,
-  } = useContext(DelegateRowContext);
+  } = useContext(ValidatorRowContext);
   const theme = useTheme();
   const { status, totalVotesReceived, voteWeight } = data;
   const showEyeIcon =
@@ -160,7 +160,7 @@ export const RoundState = () => {
     activeTab,
     time,
     t,
-  } = useContext(DelegateRowContext);
+  } = useContext(ValidatorRowContext);
   if (state === undefined) {
     return (
       <span
@@ -205,7 +205,7 @@ export const DelegateStatus = () => {
   const {
     activeTab,
     data: { status, totalVotesReceived },
-  } = useContext(DelegateRowContext);
+  } = useContext(ValidatorRowContext);
   const theme = useTheme();
   const [key, val] = getDelegateStatus(status, totalVotesReceived);
 
@@ -221,7 +221,7 @@ export const ForgingTime = () => {
     activeTab,
     data: { state },
     time,
-  } = useContext(DelegateRowContext);
+  } = useContext(ValidatorRowContext);
   return (
     <span className={getForgingTimeClass(activeTab)}>{state === 'missedBlock' ? '-' : time}</span>
   );
