@@ -1,5 +1,5 @@
 /* eslint-disable max-lines */
-import React, { useState } from 'react';
+import React, { useMemo, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import grid from 'flexboxgrid/dist/flexboxgrid.css';
 import { Link } from 'react-router-dom';
@@ -9,10 +9,11 @@ import { PrimaryButton } from 'src/theme/buttons';
 import PassphraseInput from 'src/modules/wallet/components/PassphraseInput/PassphraseInput';
 import DiscreetModeToggle from 'src/modules/settings/components/discreetModeToggle';
 import NetworkSelector from 'src/modules/settings/components/networkSelector';
+import { getDerivationPathErrorMessage } from '@wallet/utils/account';
+import { defaultDerivationPath } from 'src/utils/explicitBipKeyDerivation';
 import styles from './AddAccountForm.css';
 
 const AddAccountForm = ({ settings, onAddAccount }) => {
-  const { t } = useTranslation();
   const [passphrase, setPass] = useState({ value: '', isValid: false });
 
   const setPassphrase = (value, error) => {
@@ -22,11 +23,32 @@ const AddAccountForm = ({ settings, onAddAccount }) => {
     });
   };
 
+  if (settings.enableCustomDerivationPath) {
+    return (
+      <AddAccountFormWithDerivationPath
+        {...{ settings, onAddAccount, setPassphrase, passphrase }}
+      />
+    );
+  }
+  return <AddAccountFormContainer {...{ settings, onAddAccount, setPassphrase, passphrase }} />;
+};
+
+const AddAccountFormContainer = ({
+  settings,
+  passphrase,
+  setPassphrase,
+  onAddAccount,
+  isSubmitDisabled,
+  derivationPath,
+  children,
+}) => {
+  const { t } = useTranslation();
+
   const onFormSubmit = (e) => {
     e.preventDefault();
     // istanbul ignore else
-    if (passphrase.value && passphrase.isValid) {
-      onAddAccount(passphrase);
+    if ((passphrase.value && passphrase.isValid) || isSubmitDisabled) {
+      onAddAccount(passphrase, derivationPath);
     }
   };
 
@@ -58,14 +80,14 @@ const AddAccountForm = ({ settings, onAddAccount }) => {
                 keyPress={handleKeyPress}
               />
             </fieldset>
-            <CustomDerivationPath />
+            {children}
             <DiscreetModeToggle className={styles.discreetMode} />
           </div>
           <div className={`${styles.buttonsHolder}`}>
             <PrimaryButton
               className={`${styles.button} login-button`}
               type="submit"
-              disabled={!passphrase.isValid}
+              disabled={!passphrase.isValid || isSubmitDisabled}
             >
               {t('Continue')}
             </PrimaryButton>
@@ -79,6 +101,32 @@ const AddAccountForm = ({ settings, onAddAccount }) => {
         </form>
       </div>
     </div>
+  );
+};
+
+const AddAccountFormWithDerivationPath = (props) => {
+  const [derivationPath, setDerivationPath] = useState(defaultDerivationPath);
+  const derivationPathErrorMessage = useMemo(
+    () => getDerivationPathErrorMessage(derivationPath),
+    [derivationPath]
+  );
+
+  const onDerivationPathChange = (value) => {
+    setDerivationPath(value);
+  };
+
+  return (
+    <AddAccountFormContainer
+      {...props}
+      derivationPathErrorMessage={derivationPathErrorMessage}
+      derivationPath={derivationPath}
+    >
+      <CustomDerivationPath
+        onChange={onDerivationPathChange}
+        value={derivationPath}
+        errorMessage={derivationPathErrorMessage}
+      />
+    </AddAccountFormContainer>
   );
 };
 
