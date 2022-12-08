@@ -42,7 +42,7 @@ const Status = ({ transactions, t, transactionJSON }) => {
     isMultiSignature,
     canSenderSignTx
   );
-
+  console.log(')))) ::', status);
   const template = statusMessages(t)[status.code];
   return (
     <section>

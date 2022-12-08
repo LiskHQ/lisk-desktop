@@ -99,7 +99,7 @@ const Multisignature = ({
   };
 
   useEffect(() => resetTransactionResult, []);
-
+  console.log(">>>>", status);
   return (
     <div className={`${styles.wrapper} ${className}`}>
       <Illustration name={getIllustration(status.code, 'signMultisignature', account.hwInfo)} />
