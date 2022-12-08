@@ -28,8 +28,8 @@
     }
 
     & > *:nth-child(1) {
-      flex-basis: 25%;
-      max-width: 25%;
+      flex-basis: 16.66666667%;
+      max-width: 16.66666667%;
     }
 
     & > *:nth-child(2) {
@@ -44,8 +44,8 @@
     }
 
     & > *:nth-child(5) {
-      flex-basis: 8.33333333%;
-      max-width: 8.33333333%;
+      flex-basis: 16.66666667%;
+      max-width: 16.66666667%;
     }
 
     & > *:nth-child(6) {
@@ -55,7 +55,7 @@
     }
 
     & > *:last-child {
-      justify-content: center;
+      justify-content: flex-start;
     }
 
     @media (--medium-viewport) {

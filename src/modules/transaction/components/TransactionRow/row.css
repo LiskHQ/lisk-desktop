@@ -17,6 +17,11 @@
 .type {
   font-weight: bold;
   text-transform: capitalize;
+  white-space: nowrap;
+  overflow: hidden;
+  width: 300px;
+  text-overflow: ellipsis;
+  display: block !important;
 }
 
 .amount {
