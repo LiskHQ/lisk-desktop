@@ -11,8 +11,9 @@ const CustomDerivationPath = ({ onChange, value, errorMessage }) => {
 
   return (
     <fieldset>
-      <label>{t('Custom derivation path')}</label>
+      <label htmlFor="custom-derivation-path-input">{t('Custom derivation path')}</label>
       <Input
+        id="custom-derivation-path-input"
         size="m"
         name="custom-derivation-path"
         onChange={onPathInputChange}
