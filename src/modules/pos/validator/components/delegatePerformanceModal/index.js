@@ -1,7 +1,7 @@
 import React from 'react';
 import grid from 'flexboxgrid/dist/flexboxgrid.css';
 import Dialog from '@theme/dialog/dialog';
-import ValidatorPerformance from '../validatorPerformance';
+import ValidatorPerformance from '../ValidatorPerformance';
 import styles from './styles.css';
 
 const DelegatePerformanceModal = (props) => (

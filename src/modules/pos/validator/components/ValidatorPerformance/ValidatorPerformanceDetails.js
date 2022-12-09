@@ -1,4 +1,4 @@
-const validatorPerformanceDetails = (pomHeights, status, consecutiveMissedBlocks = 0) => {
+const ValidatorPerformanceDetails = (pomHeights, status, consecutiveMissedBlocks = 0) => {
   if (!pomHeights) return 'Punishment information unavailable.';
   if (status === 'punished') {
     // Since this can only be accessed if the delegate has been punished at least once
@@ -21,4 +21,4 @@ const validatorPerformanceDetails = (pomHeights, status, consecutiveMissedBlocks
   return `The delegate is banned because of not forging blocks for 1 month and missing ${consecutiveMissedBlocks} consecutive blocks`;
 };
 
-export default validatorPerformanceDetails;
+export default ValidatorPerformanceDetails;

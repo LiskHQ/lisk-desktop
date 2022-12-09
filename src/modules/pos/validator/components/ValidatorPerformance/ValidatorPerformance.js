@@ -5,7 +5,7 @@ import BoxHeader from '@theme/box/header';
 import BoxContent from '@theme/box/content';
 import NotFound from 'src/modules/common/components/NotFound';
 import { isEmpty } from 'src/utils/helpers';
-import validatorPerformanceDetails from './validatorPerformanceDetails';
+import validatorPerformanceDetails from './ValidatorPerformanceDetails';
 import styles from './styles.css';
 
 // eslint-disable-next-line max-statements

@@ -5,7 +5,7 @@ import { withTranslation } from 'react-i18next';
 import { getDelegate } from '@pos/validator/api';
 import withData from 'src/utils/withData';
 import { parseSearchParams } from 'src/utils/searchParams';
-import ValidatorPerformance from './validatorPerformance';
+import ValidatorPerformance from './ValidatorPerformance';
 
 const apis = {
   delegate: {
