@@ -106,7 +106,7 @@ describe('AddAccountForm', () => {
     expect(props.onAddAccount).not.toBeCalled();
   });
 
-  it('should trigger addd account if derivation path and passphrase is correct', () => {
+  it('should trigger add account if derivation path and passphrase is correct', () => {
     props.settings.enableCustomDerivationPath = true;
     accountFormInstance.rerender(<AddAccountForm {...props} />);
 
