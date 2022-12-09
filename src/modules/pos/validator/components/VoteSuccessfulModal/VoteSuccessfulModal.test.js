@@ -23,7 +23,7 @@ describe('VoteSuccessfulModal', () => {
     fireEvent.click(screen.getByText('Back to delegates'));
 
     await waitFor(() => {
-      expect(props.history.push).toHaveBeenCalledWith('/delegates');
+      expect(props.history.push).toHaveBeenCalledWith('/validators');
     });
   });
 });

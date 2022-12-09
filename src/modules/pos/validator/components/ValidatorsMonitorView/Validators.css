@@ -1,6 +1,6 @@
 @import '../../../../../../setup/react/app/mixins.css';
 
-.delegateDetails {
+.validatorDetails {
   display: flex;
   flex-direction: row;
   align-items: center;
@@ -13,7 +13,7 @@
       margin-left: 8px;
     }
 
-    & > .delegateName {
+    & > .validatorName {
       @mixin headingSmall;
 
       margin-top: 0;
@@ -29,7 +29,7 @@
       }
     }
 
-    & > .delegateAddress {
+    & > .validatorAddress {
       @mixin contentNormal;
 
       margin: 0;
@@ -38,7 +38,7 @@
   }
 }
 
-.delegateWeight {
+.validatorWeight {
   padding-left: 0;
   padding-right: 0;
 
@@ -88,7 +88,7 @@
     }
   }
 
-  & .delegatesList {
+  & .validatorsList {
     display: flex;
     word-break: break-word;
     flex-wrap: wrap;
@@ -109,7 +109,7 @@
     overflow: inherit;
     display: block;
 
-    & > .delegateColumn {
+    & > .validatorColumn {
       display: flex;
 
       & > .summaryTooltip {
@@ -127,7 +127,7 @@
           height: 28px;
           margin-right: 8px;
 
-          &.watchedDelegate {
+          &.watchedValidator {
             & > img {
               visibility: visible !important;
               opacity: 1 !important;
@@ -167,7 +167,7 @@
   }
 
   &:hover {
-    & > span > .delegateColumn > .eyeIconTooltip > .eyeIcon > img {
+    & > span > .validatorColumn > .eyeIconTooltip > .eyeIcon > img {
       visibility: visible;
       opacity: 1;
     }
@@ -204,7 +204,7 @@
 }
 
 header {
-  & .delegateHeader {
+  & .validatorHeader {
     padding-left: 45px;
   }
 }
@@ -215,7 +215,7 @@ header {
   text-align: center;
 }
 
-.delegateStatus {
+.validatorStatus {
   @mixin contentSmall semi-bold;
 
   padding: 8px 10px;
@@ -286,7 +286,7 @@ header {
   }
 }
 
-.delegatePageWrapper {
+.validatorPageWrapper {
   width: 100%;
 
   & > div:first-child {
@@ -318,7 +318,7 @@ header {
   }
 }
 
-.filterDelegates {
+.filterValidators {
   border-radius: 30px;
   min-width: 250px !important;
 }

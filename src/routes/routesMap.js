@@ -3,7 +3,7 @@ import BlockDetails from '@block/manager/blockDetailsManager';
 import Blocks from '@block/components/blocks';
 import Bookmarks from '@bookmark/manager/BookmarkListManager';
 import Dashboard from 'src/modules/common/components/dashboard';
-import DelegatesMonitor from '@pos/validator/components/DelegatesMonitorView';
+import ValidatorsMonitor from '@pos/validator/components/ValidatorsMonitorView';
 import ValidatorPerformanceModal from '@pos/validator/components/ValidatorPerformanceModal';
 import HwWalletLogin from '@auth/components/hwWalletLogin';
 import Login from '@auth/components/Signin';
@@ -70,7 +70,7 @@ export default {
   block: BlockDetails,
   wallets: MonitorWallets,
   network: MonitorNetwork,
-  delegates: DelegatesMonitor,
+  validators: ValidatorsMonitor,
   validatorProfile: ValidatorProfile,
   validatorPerformance: ValidatorPerformanceModal,
   reclaim: ReclaimBalance,

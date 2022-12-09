@@ -13,7 +13,7 @@ function VoteSuccessfulModal({ history, statusMessage }) {
   const { t } = useTranslation();
 
   const handleBackToDelegate = useCallback(() => {
-    history.push(routes.delegates.path);
+    history.push(routes.validators.path);
   }, [history]);
 
   return (
@@ -22,9 +22,7 @@ function VoteSuccessfulModal({ history, statusMessage }) {
       <BoxContent>
         <Illustration className={styles.illustartion} name="votingSuccess" />
         <h4>{t('Vote(s) has been submitted')}</h4>
-        <p>
-          {statusMessage.message}
-        </p>
+        <p>{statusMessage.message}</p>
       </BoxContent>
       <BoxFooter>
         <PrimaryButton onClick={handleBackToDelegate}>{t('Back to delegates')}</PrimaryButton>

@@ -1,10 +1,10 @@
 /* eslint-disable complexity */
 /* istanbul ignore file */
 import React, { useRef, useState } from 'react';
-import routes from 'src/routes/routes';
 import { Link } from 'react-router-dom';
 import grid from 'flexboxgrid/dist/flexboxgrid.css';
 import { useTranslation } from 'react-i18next';
+import routes from 'src/routes/routes';
 import { Input } from 'src/theme';
 import Box from 'src/theme/box';
 import BoxHeader from 'src/theme/box/header';
@@ -21,10 +21,10 @@ import DelegatesOverview from '../Overview/delegatesOverview';
 import ForgingDetails from '../Overview/forgingDetails';
 import DelegatesTable from '../DelegatesTable';
 import LatestVotes from '../LatestVotes';
-import styles from './delegates.css';
+import styles from './Validators.css';
 
 // eslint-disable-next-line max-statements
-const DelegatesMonitor = ({ watchList, registrations }) => {
+const ValidatorsMonitor = ({ watchList, registrations }) => {
   const { t } = useTranslation();
   const timeout = useRef();
   const { filters, setFilter } = useFilter({});
@@ -115,10 +115,10 @@ const DelegatesMonitor = ({ watchList, registrations }) => {
 
   return (
     <Box>
-      <BoxHeader className={`${styles.delegatePageWrapper}`}>
+      <BoxHeader className={`${styles.validatorPageWrapper}`}>
         <div className={grid.row}>
           <div className={grid['col-md-8']}>
-            <h3>{t('Delegates')}</h3>
+            <h3>{t('Validators')}</h3>
             <BoxTabs {...pageTabs} />
           </div>
           <div className={grid['col-md-4']}>
@@ -126,7 +126,7 @@ const DelegatesMonitor = ({ watchList, registrations }) => {
               <SecondaryButton disabled={!address}>Votes</SecondaryButton>
             </Link>
             <DialogLink component="registerValidator">
-              <PrimaryButton>Register delegate</PrimaryButton>
+              <PrimaryButton>Register validator</PrimaryButton>
             </DialogLink>
           </div>
         </div>
@@ -141,20 +141,20 @@ const DelegatesMonitor = ({ watchList, registrations }) => {
         />
       )}
       <Box main>
-        <BoxHeader className={`${styles.tabSelector} delegates-table`}>
+        <BoxHeader className={`${styles.tabSelector} validators-table`}>
           {tabs.tabs.length === 1 ? <h2>{tabs.tabs[0].name}</h2> : <BoxTabs {...tabs} />}
           <span className={activeTab === 'votes' ? 'hidden' : ''}>
             <Input
               icon={<Icon className={styles.searchIcon} name="searchActive" />}
               onChange={handleFilter}
               value={search}
-              className={`${styles.filterDelegates} filter-by-name`}
+              className={`${styles.filterValidators} filter-by-name`}
               size="m"
               placeholder={t('Search by name')}
             />
           </span>
         </BoxHeader>
-        <BoxContent className={`${styles.content} delegate-box`}>
+        <BoxContent className={`${styles.content} validator-box`}>
           {displayTab(activeTab)}
         </BoxContent>
       </Box>
@@ -162,4 +162,4 @@ const DelegatesMonitor = ({ watchList, registrations }) => {
   );
 };
 
-export default DelegatesMonitor;
+export default ValidatorsMonitor;

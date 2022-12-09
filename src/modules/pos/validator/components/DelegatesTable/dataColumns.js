@@ -10,7 +10,7 @@ import Icon from 'src/theme/Icon';
 import { useTheme } from 'src/theme/Theme';
 import { DEFAULT_STANDBY_THRESHOLD } from '@pos/validator/consts';
 import ValidatorRowContext from '../../context/validatorRowContext';
-import styles from '../DelegatesMonitorView/delegates.css';
+import styles from '../ValidatorsMonitorView/Validators.css';
 import {
   getDelegateDetailsClass,
   getStatusClass,

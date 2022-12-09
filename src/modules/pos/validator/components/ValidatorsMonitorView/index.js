@@ -4,23 +4,22 @@ import { withRouter } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { getRegisteredDelegates } from '@transaction/api';
 import withData from 'src/utils/withData';
-import Delegates from './delegates';
+import Validators from './Validators';
 
 const mapStateToProps = (state) => ({
   watchList: state.watchList,
 });
 
-const ComposedDelegates = compose(
+const ComposedValidators = compose(
   withRouter,
   connect(mapStateToProps),
   withData({
     registrations: {
-      apiUtil: (network) =>
-        getRegisteredDelegates({ network }),
+      apiUtil: (network) => getRegisteredDelegates({ network }),
       defaultData: [],
       autoload: true,
     },
-  }),
-)(Delegates);
+  })
+)(Validators);
 
-export default ComposedDelegates;
+export default ComposedValidators;

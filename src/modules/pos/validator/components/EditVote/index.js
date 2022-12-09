@@ -139,7 +139,7 @@ const EditVote = ({ history, voteEdited, network, voting, votesRetrieved }) => {
     setIsForm(false);
   };
 
-  const handleContinueVoting = () => history.push(routes.delegates.path);
+  const handleContinueVoting = () => history.push(routes.validators.path);
 
   const removeVote = () => {
     voteEdited([

@@ -5,9 +5,9 @@ import { mountWithRouter } from 'src/utils/testHelpers';
 import fakeStore from '@tests/unit-test-utils/fakeStore';
 import delegatesList from '@tests/constants/delegates';
 import accounts from '@tests/constants/wallets';
-import Delegates from './delegates';
+import Validators from './Validators';
 
-const activeDelegates = delegatesList.map(item => ({ ...item }));
+const activeDelegates = delegatesList.map((item) => ({ ...item }));
 activeDelegates.push({
   username: 'additional',
   vote: '0',
@@ -22,17 +22,18 @@ activeDelegates.push({
   delegateWeight: 0,
 });
 
-describe('Delegates monitor page', () => {
+describe('Validators monitor page', () => {
   let props;
   let wrapper;
 
   const store = fakeStore();
 
-  const setup = properties => mount(
-    <Provider store={store}>
-      <Delegates {...properties} />
-    </Provider>,
-  );
+  const setup = (properties) =>
+    mount(
+      <Provider store={store}>
+        <Validators {...properties} />
+      </Provider>
+    );
 
   const switchTab = (tab) => {
     wrapper.find(`.tab.${tab}`).simulate('click');
@@ -101,7 +102,7 @@ describe('Delegates monitor page', () => {
 
   beforeEach(() => {
     props = {
-      t: key => key,
+      t: (key) => key,
       blocks,
       standByDelegates: {
         isLoading: true,
@@ -155,19 +156,28 @@ describe('Delegates monitor page', () => {
       },
       votes: {
         isLoading: false,
-        data: [{
-          params: { votes: [{ delegateAddress: 'lskdwsyfmcko6mcd357446yatromr9vzgu7eb8y11', amount: '100000000' }] },
-          block: {
-            height: 164187423,
-            id: '1f48b9f4dae3a027b73685810016edadfff45175955b6ea3b24951597a99b498',
-            timestamp: 1653519360,
+        data: [
+          {
+            params: {
+              votes: [
+                {
+                  delegateAddress: 'lskdwsyfmcko6mcd357446yatromr9vzgu7eb8y11',
+                  amount: '100000000',
+                },
+              ],
+            },
+            block: {
+              height: 164187423,
+              id: '1f48b9f4dae3a027b73685810016edadfff45175955b6ea3b24951597a99b498',
+              timestamp: 1653519360,
+            },
+            sender: {
+              address: 'lskd6yo4kkzrbjadh3tx6kz2qt5o3vy5zdnuwycmw',
+              publicKey: 'ea62fbdd5731a748a63b593db2c22129462f47db0f066d4ed3fc70957a456ebc',
+              username: 'test_del',
+            },
           },
-          sender: {
-            address: 'lskd6yo4kkzrbjadh3tx6kz2qt5o3vy5zdnuwycmw',
-            publicKey: 'ea62fbdd5731a748a63b593db2c22129462f47db0f066d4ed3fc70957a456ebc',
-            username: 'test_del',
-          },
-        }],
+        ],
         loadData: jest.fn(),
         clearData: jest.fn(),
         urlSearchParams: {},
@@ -182,7 +192,7 @@ describe('Delegates monitor page', () => {
       filters: {
         tab: 'active',
       },
-      applyFilters: jest.fn(filters => wrapper.setProps({ filters })),
+      applyFilters: jest.fn((filters) => wrapper.setProps({ filters })),
       networkStatus: {
         data: {
           supply: 13963011200000000,
@@ -196,7 +206,7 @@ describe('Delegates monitor page', () => {
     expect(wrapper.find('BoxHeader.delegates-table')).toIncludeText('Inside round');
   });
 
-  it.skip('allows to switch to standby delegates', () => {
+  it.skip('allows to switch to standby validators', () => {
     wrapper = setup(props);
     switchTab('standby');
     expect(wrapper.find('.tab.standby')).toHaveClassName('active');
@@ -207,13 +217,15 @@ describe('Delegates monitor page', () => {
     expect(wrapper.find('a.delegate-row')).toHaveLength(blocks.forgers.length);
   });
 
-  it.skip('properly sorts delegates by their status', () => {
+  it.skip('properly sorts validators by their status', () => {
     initSanctionedProps();
     wrapper = setup(props);
     switchTab('sanctioned');
 
     const sortByBtn = wrapper.find('span.sort-by');
-    const statuses = wrapper.find('a.delegate-row > span:first-child ~ span ~ span > span').map(ele => ele.text());
+    const statuses = wrapper
+      .find('a.delegate-row > span:first-child ~ span ~ span > span')
+      .map((ele) => ele.text());
     statuses.forEach((status, index) => {
       expect(status).equal(index === 1 ? 'Punished' : 'Banned');
     });
@@ -230,7 +242,7 @@ describe('Delegates monitor page', () => {
     });
   });
 
-  it.skip('displays watched delegates once the watch list is populated', () => {
+  it.skip('displays watched validators once the watch list is populated', () => {
     wrapper = setup(props);
     const updatedProps = { ...props, watchList: ['lsktaa9xuys6hztyaryvx6msu279mpkn9sz6w5or2'] };
     wrapper = setup(updatedProps);
@@ -243,7 +255,7 @@ describe('Delegates monitor page', () => {
   });
 
   it.skip('displays latest votes component if active tab is votes', () => {
-    wrapper = mountWithRouter(Delegates, props);
+    wrapper = mountWithRouter(Validators, props);
     wrapper.find('.tab.votes').simulate('click');
     expect(wrapper.find('.transaction-row-wrapper')).toExist();
   });
@@ -259,16 +271,28 @@ describe('Delegates monitor page', () => {
     const updatedProps = { ...props, watchList: ['lsktaa9xuys6hztyaryvx6msu279mpkn9sz6w5or2'] };
 
     switchTab('sanctioned');
-    wrapper.find('.filter-by-name').last().simulate('change', { target: { value: 'lisk' } });
+    wrapper
+      .find('.filter-by-name')
+      .last()
+      .simulate('change', { target: { value: 'lisk' } });
     expect(props.applyFilters).toHaveBeenCalledWith(expectedArgs, 'sanctionedDelegates');
 
     wrapper = setup(updatedProps);
     switchTab('watched');
-    wrapper.find('.filter-by-name').last().simulate('change', { target: { value: 'li' } });
-    expect(props.applyFilters).toHaveBeenCalledWith({ ...expectedArgs, search: 'li' }, 'watchedDelegates');
+    wrapper
+      .find('.filter-by-name')
+      .last()
+      .simulate('change', { target: { value: 'li' } });
+    expect(props.applyFilters).toHaveBeenCalledWith(
+      { ...expectedArgs, search: 'li' },
+      'watchedDelegates'
+    );
 
     switchTab('standby');
-    wrapper.find('.filter-by-name').last().simulate('change', { target: { value: 'lisk' } });
+    wrapper
+      .find('.filter-by-name')
+      .last()
+      .simulate('change', { target: { value: 'lisk' } });
     expect(props.applyFilters).toHaveBeenCalledWith(expectedArgs, 'standByDelegates');
   });
 });

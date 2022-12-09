@@ -30,8 +30,8 @@ export default {
     forbiddenTokens: [],
     exact: true,
   },
-  delegates: {
-    path: '/delegates',
+  validators: {
+    path: '/validators',
     exact: true,
     isPrivate: false,
     forbiddenTokens: [],

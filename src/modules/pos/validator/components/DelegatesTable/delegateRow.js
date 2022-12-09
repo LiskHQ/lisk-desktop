@@ -6,7 +6,7 @@ import routes from 'src/routes/routes';
 import { addedToWatchList, removedFromWatchList } from 'src/redux/actions';
 import getForgingTime from '../../utils/getForgingTime';
 import ValidatorRowContext from '../../context/validatorRowContext';
-import delegateStyles from '../DelegatesMonitorView/delegates.css';
+import delegateStyles from '../ValidatorsMonitorView/Validators.css';
 import styles from './schemas.css';
 import LayoutSchema from './layoutSchema';
 
