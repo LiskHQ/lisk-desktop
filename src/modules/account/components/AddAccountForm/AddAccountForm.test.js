@@ -20,7 +20,7 @@ beforeEach(() => {
   });
 });
 
-describe('Generals', () => {
+describe('AddAccountForm', () => {
   it('should render successfully', () => {
     expect(screen.getByText('Add account')).toBeTruthy();
     expect(
@@ -85,15 +85,13 @@ describe('Generals', () => {
     expect(screen.queryByText('Select Network')).toBeTruthy();
   });
 
-  it('Should call onAddAccount with passphrase and derivation path', () => {
+  it('should not trigger addd account if derivation path has an error', () => {
     props.settings.enableCustomDerivationPath = true;
     accountFormInstance.rerender(<AddAccountForm {...props} />);
 
     const input = screen.getByLabelText('Custom derivation path');
-    fireEvent.change(input, { target: { value: 'hello' } });
+    fireEvent.change(input, { target: { value: 'incorrectPath' } });
 
-    const passphrase =
-      'below record evolve eye youth post control consider spice swamp hidden easily';
     const passphraseInput1 = screen.getByTestId('recovery-1');
     const pasteEvent = createEvent.paste(passphraseInput1, {
       clipboardData: {
@@ -105,7 +103,30 @@ describe('Generals', () => {
 
     fireEvent.click(screen.getByText('Continue'));
 
-    expect(props.onAddAccount).toHaveBeenCalledWith({ value: passphrase, isValid: true }, 'hello');
+    expect(props.onAddAccount).not.toBeCalled();
+  });
+
+  it('should trigger addd account if derivation path and passphrase is correct', () => {
+    props.settings.enableCustomDerivationPath = true;
+    accountFormInstance.rerender(<AddAccountForm {...props} />);
+
+    const input = screen.getByLabelText('Custom derivation path');
+    const correctDerivationPath = "m/44'/134'/0'";
+    fireEvent.change(input, { target: { value: correctDerivationPath } });
+
+    const passphrase = 'below record evolve eye youth post control consider spice swamp hidden easily';
+    const passphraseInput1 = screen.getByTestId('recovery-1');
+    const pasteEvent = createEvent.paste(passphraseInput1, {
+      clipboardData: {
+        getData: () =>
+          passphrase,
+      },
+    });
+    fireEvent(passphraseInput1, pasteEvent);
+
+    fireEvent.click(screen.getByText('Continue'));
+
+    expect(props.onAddAccount).toHaveBeenCalledWith({ value: passphrase, isValid: true }, correctDerivationPath);
   });
 
   it('should render the custom derivation path field with no default value', () => {

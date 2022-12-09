@@ -23,14 +23,12 @@ const AddAccountForm = ({ settings, onAddAccount }) => {
     });
   };
 
+  const props = { settings, onAddAccount, setPassphrase, passphrase };
+
   if (settings.enableCustomDerivationPath) {
-    return (
-      <AddAccountFormWithDerivationPath
-        {...{ settings, onAddAccount, setPassphrase, passphrase }}
-      />
-    );
+    return <AddAccountFormWithDerivationPath {...props} />;
   }
-  return <AddAccountFormContainer {...{ settings, onAddAccount, setPassphrase, passphrase }} />;
+  return <AddAccountFormContainer {...props} />;
 };
 
 const AddAccountFormContainer = ({
@@ -58,7 +56,7 @@ const AddAccountFormContainer = ({
 
   const passphraseArray = useMemo(
     () => passphrase.value?.replace(/\W+/g, ' ')?.split(/\s/),
-    [passphrase.value],
+    [passphrase.value]
   );
 
   return (
@@ -124,7 +122,7 @@ const AddAccountFormWithDerivationPath = (props) => {
   return (
     <AddAccountFormContainer
       {...props}
-      derivationPathErrorMessage={derivationPathErrorMessage}
+      isSubmitDisabled={!!derivationPathErrorMessage}
       derivationPath={derivationPath}
     >
       <CustomDerivationPath
