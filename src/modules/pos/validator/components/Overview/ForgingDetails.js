@@ -11,9 +11,9 @@ import Icon from 'src/theme/Icon';
 import { useTheme } from 'src/theme/Theme';
 import { getColorPalette } from 'src/modules/common/components/charts/chartOptions';
 import { useForgersGenerator } from '../../hooks/queries/useForgersGenerator';
-import NumericInfo from './numericInfo';
-import Forger from './forger';
-import styles from './overview.css';
+import NumericInfo from './NumericInfo';
+import Forger from './Forger';
+import styles from './Overview.css';
 
 const FORGERS_TO_SHOW = 6;
 
@@ -43,12 +43,12 @@ const getPassedMinutes = (startTime) => {
 const ForgingDetails = ({ t, forgedInRound, startTime }) => {
   const theme = useTheme();
   const colorPalette = getColorPalette(theme);
-  const delegatesForgedLabels = [t('Forged blocks'), t('Awaiting slot'), t('Missed blocks')];
+  const validatorsForgedLabels = [t('Forged blocks'), t('Awaiting slot'), t('Missed blocks')];
   const { data: forgersData } = useForgersGenerator({ config: { params: { limit: 103 } } });
   const forgers = forgersData?.data ?? [];
 
   const doughnutChartData = {
-    labels: delegatesForgedLabels,
+    labels: validatorsForgedLabels,
     datasets: [
       {
         label: 'status',
@@ -78,7 +78,7 @@ const ForgingDetails = ({ t, forgedInRound, startTime }) => {
         <div className={styles.column}>
           {forgers.length ? (
             <div className={styles.chartBox}>
-              <h2 className={styles.title}>{t('Delegate Forging Status')}</h2>
+              <h2 className={styles.title}>{t('Validator Forging Status')}</h2>
               <div className={`${styles.chart} showOnLargeViewPort`}>
                 <DoughnutChart
                   data={doughnutChartData}
@@ -101,7 +101,7 @@ const ForgingDetails = ({ t, forgedInRound, startTime }) => {
               </div>
               <div className="hideOnLargeViewPort">
                 <GuideTooltip>
-                  {delegatesForgedLabels.map((label, i) => (
+                  {validatorsForgedLabels.map((label, i) => (
                     <GuideTooltipItem key={label} color={colorPalette[i]} label={label} />
                   ))}
                 </GuideTooltip>
@@ -109,7 +109,7 @@ const ForgingDetails = ({ t, forgedInRound, startTime }) => {
             </div>
           ) : (
             <BoxEmptyState>
-              <p>{t('No delegates information')}</p>
+              <p>{t('No validators information')}</p>
             </BoxEmptyState>
           )}
         </div>

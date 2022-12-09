@@ -4,7 +4,7 @@ import { Link } from 'react-router-dom';
 
 import routes from 'src/routes/routes';
 import WalletVisual from '@wallet/components/walletVisual';
-import styles from './overview.css';
+import styles from './Overview.css';
 
 const Forger = ({ forger }) => (
   <div className={`${styles.forger} forger-item`}>

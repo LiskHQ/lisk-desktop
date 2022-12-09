@@ -10,24 +10,24 @@ import { useTransactions } from 'src/modules/transaction/hooks/queries';
 import { DoughnutChart, LineChart } from 'src/modules/common/components/charts';
 import GuideTooltip, { GuideTooltipItem } from 'src/modules/common/components/charts/guideTooltip';
 import { useValidators } from '../../hooks/queries';
-import NumericInfo from './numericInfo';
-import styles from './overview.css';
+import NumericInfo from './NumericInfo';
+import styles from './Overview.css';
 
-const getAmountOfDelegatesInTime = (registrations) => registrations.data.map((item) => item[1]);
-const getAmountOfDelegatesLabels = (registrations) => registrations.data.map((item) => item[0]);
+const getAmountOfValidatorsInTime = (registrations) => registrations.data.map((item) => item[1]);
+const getAmountOfValidatorsLabels = (registrations) => registrations.data.map((item) => item[0]);
 
 const Overview = ({ registrations, totalBlocks, t }) => {
   const colorPalette = getColorPalette(useTheme());
-  const { data: delegates } = useValidators({ config: { params: { limit: 1 } } });
+  const { data: validators } = useValidators({ config: { params: { limit: 1 } } });
   const { data: transactions } = useTransactions({ config: { params: { limit: 1 } } });
-  const delegatesCount = delegates?.meta.total ?? 0;
+  const validatorsCount = validators?.meta.total ?? 0;
   const transactionsCount = transactions?.meta.total ?? 0;
   const doughnutChartData = {
-    labels: [t('Standby delegates'), t('Active delegates')],
+    labels: [t('Standby validators'), t('Active validators')],
     datasets: [
       {
-        label: 'delegates',
-        data: [Math.max(0, delegatesCount - ROUND_LENGTH), ROUND_LENGTH],
+        label: 'validators',
+        data: [Math.max(0, validatorsCount - ROUND_LENGTH), ROUND_LENGTH],
       },
     ],
   };
@@ -49,7 +49,7 @@ const Overview = ({ registrations, totalBlocks, t }) => {
     <Box className={styles.wrapper}>
       <BoxContent className={styles.content}>
         <div className={styles.column}>
-          {typeof delegatesCount === 'number' ? (
+          {typeof validatorsCount === 'number' ? (
             <>
               <div className={styles.chartBox}>
                 <h2 className={styles.title}>{t('Total')}</h2>
@@ -77,15 +77,15 @@ const Overview = ({ registrations, totalBlocks, t }) => {
                 </div>
                 <div className="hideOnLargeViewPort">
                   <GuideTooltip>
-                    <GuideTooltipItem color={colorPalette[0]} label={t('Standby delegates')} />
-                    <GuideTooltipItem color={colorPalette[1]} label={t('Active delegates')} />
+                    <GuideTooltipItem color={colorPalette[0]} label={t('Standby validators')} />
+                    <GuideTooltipItem color={colorPalette[1]} label={t('Active validators')} />
                   </GuideTooltip>
                 </div>
               </div>
             </>
           ) : (
             <BoxEmptyState>
-              <p>{t('No delegates information')}</p>
+              <p>{t('No validators information')}</p>
             </BoxEmptyState>
           )}
         </div>
@@ -107,14 +107,14 @@ const Overview = ({ registrations, totalBlocks, t }) => {
         <div className={styles.column}>
           {registrations.data.length ? (
             <div className={styles.chartBox}>
-              <h2 className={styles.title}>{t('Registered delegates')}</h2>
+              <h2 className={styles.title}>{t('Registered validators')}</h2>
               <div className={styles.chart}>
                 <LineChart
                   data={{
-                    labels: getAmountOfDelegatesLabels(registrations),
+                    labels: getAmountOfValidatorsLabels(registrations),
                     datasets: [
                       {
-                        data: getAmountOfDelegatesInTime(registrations),
+                        data: getAmountOfValidatorsInTime(registrations),
                         pointStyle: 'line',
                       },
                     ],
@@ -125,7 +125,7 @@ const Overview = ({ registrations, totalBlocks, t }) => {
             </div>
           ) : (
             <BoxEmptyState>
-              <p>{t('No delegates information')}</p>
+              <p>{t('No validators information')}</p>
             </BoxEmptyState>
           )}
         </div>

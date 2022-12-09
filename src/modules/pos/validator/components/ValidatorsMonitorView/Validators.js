@@ -17,8 +17,8 @@ import Icon from 'src/theme/Icon';
 import { ROUND_LENGTH } from '@pos/validator/consts';
 import { PrimaryButton, SecondaryButton } from 'src/theme/buttons';
 import { useBlocks } from 'src/modules/block/hooks/queries/useBlocks';
-import DelegatesOverview from '../Overview/delegatesOverview';
-import ForgingDetails from '../Overview/forgingDetails';
+import ValidatorsOverview from '../Overview/ValidatorsOverview';
+import ForgingDetails from '../Overview/ForgingDetails';
 import ValidatorsTable from '../ValidatorsTable';
 import LatestVotes from '../LatestVotes';
 import styles from './Validators.css';
@@ -132,7 +132,7 @@ const ValidatorsMonitor = ({ watchList, registrations }) => {
         </div>
       </BoxHeader>
       {activeDetailTab === 'overview' ? (
-        <DelegatesOverview registrations={registrations} t={t} totalBlocks={total} />
+        <ValidatorsOverview registrations={registrations} t={t} totalBlocks={total} />
       ) : (
         <ForgingDetails
           t={t}
