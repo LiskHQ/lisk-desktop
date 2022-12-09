@@ -12,13 +12,13 @@ import { DEFAULT_STANDBY_THRESHOLD } from '@pos/validator/consts';
 import ValidatorRowContext from '../../context/validatorRowContext';
 import styles from '../ValidatorsMonitorView/Validators.css';
 import {
-  getDelegateDetailsClass,
+  getValidatorDetailsClass,
   getStatusClass,
-  getDelegateWeightClass,
+  getValidatorWeightClass,
   getRoundStateClass,
   getForgingTimeClass,
-  getDelegateRankClass,
-} from './tableHeader';
+  getValidatorRankClass,
+} from './TableHeader';
 import DelegateSummary from '../DelegateSummary/DelegateSummary';
 
 const roundStates = {
@@ -33,7 +33,7 @@ const icons = {
   missedBlock: 'delegateMissed',
 };
 
-const delegateStatus = {
+const validatorStatus = {
   active: 'Active',
   standby: 'Standby',
   banned: 'Banned',
@@ -41,27 +41,27 @@ const delegateStatus = {
   ineligible: 'Ineligible',
 };
 
-const getDelegateStatus = (key, grossVotesReceived) => {
+const getValidatorStatus = (key, grossVotesReceived) => {
   if (key === 'banned' || key === 'punished' || key === 'active') {
-    return [key, delegateStatus[key]];
+    return [key, validatorStatus[key]];
   }
   if (grossVotesReceived < DEFAULT_STANDBY_THRESHOLD) {
-    return ['ineligible', delegateStatus.ineligible];
+    return ['ineligible', validatorStatus.ineligible];
   }
 
-  return [key, delegateStatus[key]];
+  return [key, validatorStatus[key]];
 };
 
-export const DelegateRank = () => {
+export const ValidatorRank = () => {
   const { data, activeTab } = useContext(ValidatorRowContext);
   return (
-    <span className={getDelegateRankClass(activeTab)}>
+    <span className={getValidatorRankClass(activeTab)}>
       <span>#{data.rank}</span>
     </span>
   );
 };
 
-export const DelegateWeight = () => {
+export const ValidatorWeight = () => {
   const {
     data: { voteWeight },
     activeTab,
@@ -72,13 +72,13 @@ export const DelegateWeight = () => {
   });
 
   return (
-    <span className={getDelegateWeightClass(activeTab)}>
+    <span className={getValidatorWeightClass(activeTab)}>
       <span>{formatted}</span>
     </span>
   );
 };
 
-export const DelegateDetails = () => {
+export const ValidatorDetails = () => {
   const {
     data,
     activeTab,
@@ -94,15 +94,15 @@ export const DelegateDetails = () => {
     activeTab === 'standby' ||
     activeTab === 'sanctioned' ||
     activeTab === 'watched';
-  const [key, val] = getDelegateStatus(status, totalVotesReceived);
+  const [key, val] = getValidatorStatus(status, totalVotesReceived);
   const formattedVoteWeight = formatAmountBasedOnLocale({
     value: fromRawLsk(voteWeight),
     format: '0a',
   });
 
   return (
-    <span className={getDelegateDetailsClass(activeTab)}>
-      <div className={styles.delegateColumn}>
+    <span className={getValidatorDetailsClass(activeTab)}>
+      <div className={styles.validatorColumn}>
         <Tooltip
           tooltipClassName={styles.tooltipContainer}
           className={styles.eyeIconTooltip}
@@ -113,7 +113,7 @@ export const DelegateDetails = () => {
             <span
               className={`
                 ${styles.eyeIcon} ${!showEyeIcon ? 'hidden' : ''} ${
-                watched && showEyeIcon ? styles.watchedDelegate : ''
+                watched && showEyeIcon ? styles.watchedValidator : ''
               } watch-icon
               `}
               onClick={watched ? removeFromWatchList : addToWatchList}
@@ -126,7 +126,7 @@ export const DelegateDetails = () => {
             {watched ? t('Remove from watched') : t('Add to watched')}
           </p>
         </Tooltip>
-        <div className={`${styles.delegateDetails}`}>
+        <div className={`${styles.validatorDetails}`}>
           <Tooltip
             noArrow
             tooltipClassName={styles.summaryTooltipContainer}
@@ -140,13 +140,13 @@ export const DelegateDetails = () => {
               weight={formattedVoteWeight}
               status={{
                 value: val,
-                className: `${styles.delegateStatus} ${styles[key]} ${styles[theme]}`,
+                className: `${styles.validatorStatus} ${styles[key]} ${styles[theme]}`,
               }}
             />
           </Tooltip>
           <div>
-            <p className={styles.delegateName}>{data.name}</p>
-            <p className={styles.delegateAddress}>{truncateAddress(data.address)}</p>
+            <p className={styles.validatorName}>{data.name}</p>
+            <p className={styles.validatorAddress}>{truncateAddress(data.address)}</p>
           </div>
         </div>
       </div>
@@ -194,24 +194,24 @@ export const RoundState = () => {
           content={<Icon className={styles.statusIcon} name="delegateWarning" />}
           footer={<p>{time}</p>}
         >
-          <p>{t('This delegate will be punished in upcoming rounds')}</p>
+          <p>{t('This validator will be punished in upcoming rounds')}</p>
         </Tooltip>
       )}
     </span>
   );
 };
 
-export const DelegateStatus = () => {
+export const ValidatorStatus = () => {
   const {
     activeTab,
     data: { status, totalVotesReceived },
   } = useContext(ValidatorRowContext);
   const theme = useTheme();
-  const [key, val] = getDelegateStatus(status, totalVotesReceived);
+  const [key, val] = getValidatorStatus(status, totalVotesReceived);
 
   return (
     <span className={getStatusClass(activeTab)}>
-      <span className={`${styles.delegateStatus} ${styles[key]} ${styles[theme]}`}>{val}</span>
+      <span className={`${styles.validatorStatus} ${styles[key]} ${styles[theme]}`}>{val}</span>
     </span>
   );
 };

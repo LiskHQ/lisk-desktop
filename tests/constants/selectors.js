@@ -149,7 +149,7 @@ const ss = {
   accountInitializationBtn: '.account-init-button',
   sidebarMenuDelegatesBtn: '#delegates',
   confirmBtn: '.confirm',
-  delegateRow: '.delegate-row',
+  validatorRow: '.validator-row',
   delegateList: '.delegate-list',
   delegateRank: '.delegate-rank',
   delegateName: '.delegate-name',

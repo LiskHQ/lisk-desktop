@@ -1,16 +1,16 @@
 import {
-  DelegateWeight,
-  DelegateDetails,
+  ValidatorWeight,
+  ValidatorDetails,
   RoundState,
-  DelegateStatus,
+  ValidatorStatus,
   ForgingTime,
-  DelegateRank,
-} from './dataColumns';
-import styles from './schemas.css';
+  ValidatorRank,
+} from './DataColumns';
+import styles from './Schemas.css';
 
-const minimal = [DelegateDetails, DelegateStatus];
-const hosted = [DelegateDetails, DelegateWeight];
-const full = [DelegateDetails, DelegateWeight, DelegateRank, ForgingTime, RoundState];
+const minimal = [ValidatorDetails, ValidatorStatus];
+const hosted = [ValidatorDetails, ValidatorWeight];
+const full = [ValidatorDetails, ValidatorWeight, ValidatorRank, ForgingTime, RoundState];
 
 const LayoutSchema = {
   active: {
@@ -18,7 +18,7 @@ const LayoutSchema = {
     className: styles.fullLayout,
   },
   standby: {
-    components: [...hosted, DelegateRank, DelegateStatus],
+    components: [...hosted, ValidatorRank, ValidatorStatus],
     className: styles.standbyLayout,
   },
   sanctioned: {
@@ -26,7 +26,7 @@ const LayoutSchema = {
     className: styles.sanctionedLayout,
   },
   watched: {
-    components: [...full, DelegateStatus],
+    components: [...full, ValidatorStatus],
     className: styles.watchedLayout,
   },
   default: {

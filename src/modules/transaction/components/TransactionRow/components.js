@@ -19,7 +19,7 @@ import {
 import Spinner from 'src/theme/Spinner';
 import routes from 'src/routes/routes';
 import { getModuleCommandTitle } from '@transaction/utils';
-import { getDelegateDetailsClass } from '@pos/validator/components/DelegatesTable/tableHeader';
+import { getValidatorDetailsClass } from '@pos/validator/components/ValidatorsTable/TableHeader';
 import styles from './row.css';
 import TransactionRowContext from '../../context/transactionRowContext';
 import TransactionTypeFigure from '../TransactionTypeFigure';
@@ -59,7 +59,7 @@ export const DelegateDetails = () => {
   const { data, activeTab } = useContext(TransactionRowContext);
 
   return (
-    <span className={getDelegateDetailsClass(activeTab)}>
+    <span className={getValidatorDetailsClass(activeTab)}>
       <div className={styles.delegateColumn}>
         <div className={`${styles.delegateDetails}`}>
           <WalletVisual address={data.sender.address} />

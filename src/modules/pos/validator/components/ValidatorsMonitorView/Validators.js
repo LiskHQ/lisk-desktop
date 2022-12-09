@@ -19,7 +19,7 @@ import { PrimaryButton, SecondaryButton } from 'src/theme/buttons';
 import { useBlocks } from 'src/modules/block/hooks/queries/useBlocks';
 import DelegatesOverview from '../Overview/delegatesOverview';
 import ForgingDetails from '../Overview/forgingDetails';
-import DelegatesTable from '../DelegatesTable';
+import ValidatorsTable from '../ValidatorsTable';
 import LatestVotes from '../LatestVotes';
 import styles from './Validators.css';
 
@@ -110,7 +110,7 @@ const ValidatorsMonitor = ({ watchList, registrations }) => {
   const displayTab = (tab) => {
     if (tab === 'votes') return <LatestVotes filters={filters} />;
 
-    return <DelegatesTable {...commonProps} />;
+    return <ValidatorsTable {...commonProps} />;
   };
 
   return (

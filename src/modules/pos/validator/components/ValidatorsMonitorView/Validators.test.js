@@ -214,7 +214,7 @@ describe('Validators monitor page', () => {
 
   it.skip('renders the forging status', () => {
     wrapper = setup(props);
-    expect(wrapper.find('a.delegate-row')).toHaveLength(blocks.forgers.length);
+    expect(wrapper.find('a.validator-row')).toHaveLength(blocks.forgers.length);
   });
 
   it.skip('properly sorts validators by their status', () => {
@@ -224,7 +224,7 @@ describe('Validators monitor page', () => {
 
     const sortByBtn = wrapper.find('span.sort-by');
     const statuses = wrapper
-      .find('a.delegate-row > span:first-child ~ span ~ span > span')
+      .find('a.validator-row > span:first-child ~ span ~ span > span')
       .map((ele) => ele.text());
     statuses.forEach((status, index) => {
       expect(status).equal(index === 1 ? 'Punished' : 'Banned');

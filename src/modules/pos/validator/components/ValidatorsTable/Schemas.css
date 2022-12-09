@@ -11,7 +11,7 @@
 
   &.full,
   &.general {
-    grid-template-areas: "delegatedetails delegateweight delegaterank forgingtime roundstate";
+    grid-template-areas: "validatordetails validatorweight validatorrank forgingtime roundstate";
 
     & > * {
       height: 100%;
@@ -63,7 +63,7 @@
   }
 
   &.standby {
-    grid-template-areas: "delegatedetails delegateweight delegaterank delegatestatus";
+    grid-template-areas: "validatordetails validatorweight validatorrank validatorstatus";
 
     & > * {
       height: 100%;
@@ -103,7 +103,7 @@
   }
 
   &.sanctioned {
-    grid-template-areas: "delegatedetails delegatestatus";
+    grid-template-areas: "validatordetails validatorstatus";
 
     & > * {
       height: 100%;
@@ -126,7 +126,7 @@
   }
 
   &.watched {
-    grid-template-areas: "delegatedetails delegateweight delegaterank forgingtime roundstate delegatestatus";
+    grid-template-areas: "validatordetails validatorweight validatorrank forgingtime roundstate validatorstatus";
 
     & > * {
       height: 100%;

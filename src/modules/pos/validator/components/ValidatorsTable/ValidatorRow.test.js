@@ -2,7 +2,7 @@ import React from 'react';
 import { MemoryRouter } from 'react-router';
 import { mountWithContext } from '@tests/unit-test-utils/mountHelpers';
 import { addedToWatchList, removedFromWatchList } from 'src/redux/actions';
-import DelegateRow from './delegateRow';
+import ValidatorRow from './ValidatorRow';
 
 jest.mock('src/redux/actions');
 
@@ -34,11 +34,11 @@ const props = {
   },
 };
 
-describe('DelegateRow', () => {
-  it('adds delegates to watch list when watch icon is clicked', () => {
+describe('ValidatorRow', () => {
+  it('adds validators to watch list when watch icon is clicked', () => {
     wrapper = mountWithContext(
       <MemoryRouter>
-        <DelegateRow {...props} />
+        <ValidatorRow {...props} />
       </MemoryRouter>,
       { storeState: {} }
     );
@@ -54,7 +54,7 @@ describe('DelegateRow', () => {
     };
     wrapper = mountWithContext(
       <MemoryRouter>
-        <DelegateRow {...updatedProps} />
+        <ValidatorRow {...updatedProps} />
       </MemoryRouter>,
       { storeState: {} }
     );
@@ -66,7 +66,7 @@ describe('DelegateRow', () => {
     const updatedProps = { ...props, activeTab: 'invalidTab' };
     wrapper = mountWithContext(
       <MemoryRouter>
-        <DelegateRow {...updatedProps} />
+        <ValidatorRow {...updatedProps} />
       </MemoryRouter>,
       { storeState: {} }
     );

@@ -1,16 +1,16 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import { useTranslation } from 'react-i18next';
 import { useDispatch } from 'react-redux';
+import { useTranslation } from 'react-i18next';
 import routes from 'src/routes/routes';
 import { addedToWatchList, removedFromWatchList } from 'src/redux/actions';
 import getForgingTime from '../../utils/getForgingTime';
 import ValidatorRowContext from '../../context/validatorRowContext';
-import delegateStyles from '../ValidatorsMonitorView/Validators.css';
-import styles from './schemas.css';
-import LayoutSchema from './layoutSchema';
+import validatorStyles from '../ValidatorsMonitorView/Validators.css';
+import styles from './Schemas.css';
+import LayoutSchema from './LayoutSchema';
 
-const DelegateRow = ({ data, className, activeTab, watchList, setActiveTab }) => {
+const ValidatorRow = ({ data, className, activeTab, watchList, setActiveTab }) => {
   const dispatch = useDispatch();
   const { t } = useTranslation();
   const formattedForgingTime = getForgingTime(data.nextForgingTime);
@@ -37,7 +37,7 @@ const DelegateRow = ({ data, className, activeTab, watchList, setActiveTab }) =>
 
   return (
     <Link
-      className={`${className} delegate-row ${styles.container} ${activeStyle} ${delegateStyles.tableRow}`}
+      className={`${className} validator-row ${styles.container} ${activeStyle} ${validatorStyles.tableRow}`}
       to={`${routes.validatorProfile.path}?address=${data.address}`}
     >
       <ValidatorRowContext.Provider
@@ -59,4 +59,4 @@ const DelegateRow = ({ data, className, activeTab, watchList, setActiveTab }) =>
   );
 };
 
-export default React.memo(DelegateRow);
+export default React.memo(ValidatorRow);

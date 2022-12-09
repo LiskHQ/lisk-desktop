@@ -6,11 +6,11 @@ import { QueryTable } from 'src/theme/QueryTable';
 import { useSort } from 'src/modules/common/hooks';
 import { useValidators } from '../../hooks/queries';
 import { useForgersGenerator } from '../../hooks/queries/useForgersGenerator';
-import DelegateRow from './delegateRow';
-import header from './tableHeader';
+import ValidatorRow from './ValidatorRow';
+import header from './TableHeader';
 import { ROUND_LENGTH } from '../../consts';
 
-const DelegatesTable = ({ setActiveTab, activeTab, blocks, filters }) => {
+const ValidatorsTable = ({ setActiveTab, activeTab, blocks, filters }) => {
   const { t } = useTranslation();
   const watchList = useSelector((state) => state.watchList);
   const queryHook = activeTab === 'active' ? useForgersGenerator : useValidators;
@@ -38,11 +38,11 @@ const DelegatesTable = ({ setActiveTab, activeTab, blocks, filters }) => {
       showHeader
       queryHook={queryHook}
       queryConfig={queryConfig}
-      row={DelegateRow}
+      row={ValidatorRow}
       header={header(activeTab, toggleSort, t)}
       currentSort={sort}
       emptyState={{
-        message: t('No {{activeTab}} delegates found.', { activeTab }),
+        message: t('No {{activeTab}} validators found.', { activeTab }),
       }}
       additionalRowProps={{
         t,
@@ -55,4 +55,4 @@ const DelegatesTable = ({ setActiveTab, activeTab, blocks, filters }) => {
   );
 };
 
-export default DelegatesTable;
+export default ValidatorsTable;

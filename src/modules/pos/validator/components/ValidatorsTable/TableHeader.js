@@ -1,5 +1,4 @@
 /* istanbul ignore file */
-/* eslint-disable no-nested-ternary */
 import grid from 'flexboxgrid/dist/flexboxgrid.css';
 import styles from '../ValidatorsMonitorView/Validators.css';
 
@@ -17,7 +16,7 @@ export const getStatusClass = (activeTab) => {
   }
 };
 
-export const getDelegateWeightClass = (activeTab) => {
+export const getValidatorWeightClass = (activeTab) => {
   switch (activeTab) {
     case 'sanctioned':
       return 'hidden';
@@ -28,7 +27,7 @@ export const getDelegateWeightClass = (activeTab) => {
   }
 };
 
-export const getDelegateRankClass = (activeTab) => {
+export const getValidatorRankClass = (activeTab) => {
   switch (activeTab) {
     case 'active':
     case 'watched':
@@ -62,12 +61,12 @@ export const getForgingTimeClass = (activeTab) => {
   }
 };
 
-export const getDelegateDetailsClass = (activeTab) => {
+export const getValidatorDetailsClass = (activeTab) => {
   switch (activeTab) {
     case 'watched':
-      return `${grid['col-xs-4']} ${styles.delegateHeader}`;
+      return `${grid['col-xs-4']} ${styles.validatorHeader}`;
     default:
-      return `${grid['col-xs-5']} ${styles.delegateHeader}`;
+      return `${grid['col-xs-5']} ${styles.validatorHeader}`;
   }
 };
 
@@ -75,11 +74,11 @@ export const getDelegateDetailsClass = (activeTab) => {
 export default (activeTab, changeSort, t) => [
   {
     title: t('Validator'),
-    classList: getDelegateDetailsClass(activeTab),
+    classList: getValidatorDetailsClass(activeTab),
   },
   {
     title: t('Validator weight'),
-    classList: getDelegateWeightClass(activeTab),
+    classList: getValidatorWeightClass(activeTab),
     tooltip: {
       title: t('Validator weight'),
       message: t('The total amount of votes received for a validator.'),
@@ -88,7 +87,7 @@ export default (activeTab, changeSort, t) => [
   },
   {
     title: t('Rank'),
-    classList: getDelegateRankClass(activeTab),
+    classList: getValidatorRankClass(activeTab),
   },
   {
     title: t('Forging time'),
