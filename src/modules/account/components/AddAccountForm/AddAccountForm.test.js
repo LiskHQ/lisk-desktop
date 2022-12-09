@@ -85,7 +85,7 @@ describe('AddAccountForm', () => {
     expect(screen.queryByText('Select Network')).toBeTruthy();
   });
 
-  it('should not trigger addd account if derivation path has an error', () => {
+  it('should have disabled button if derivation path has an error', () => {
     props.settings.enableCustomDerivationPath = true;
     accountFormInstance.rerender(<AddAccountForm {...props} />);
 
@@ -101,9 +101,7 @@ describe('AddAccountForm', () => {
     });
     fireEvent(passphraseInput1, pasteEvent);
 
-    fireEvent.click(screen.getByText('Continue'));
-
-    expect(props.onAddAccount).not.toBeCalled();
+    expect(screen.getByText('Continue')).toHaveAttribute('disabled');
   });
 
   it('should trigger add account if derivation path and passphrase is correct', () => {

@@ -45,7 +45,7 @@ const AddAccountFormContainer = ({
   const onFormSubmit = (e) => {
     e.preventDefault();
     // istanbul ignore else
-    if ((passphrase.value && passphrase.isValid) || isSubmitDisabled) {
+    if (passphrase.value && passphrase.isValid) {
       onAddAccount(passphrase, derivationPath);
     }
   };
