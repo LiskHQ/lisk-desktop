@@ -4,7 +4,7 @@ import Blocks from '@block/components/blocks';
 import Bookmarks from '@bookmark/manager/BookmarkListManager';
 import Dashboard from 'src/modules/common/components/dashboard';
 import DelegatesMonitor from '@pos/validator/components/DelegatesMonitorView';
-import DelegatesPerformanceModal from '@pos/validator/components/delegatePerformanceModal';
+import ValidatorPerformanceModal from '@pos/validator/components/ValidatorPerformanceModal';
 import HwWalletLogin from '@auth/components/hwWalletLogin';
 import Login from '@auth/components/Signin';
 import MonitorWallets from '@account/components/Accounts';
@@ -72,7 +72,7 @@ export default {
   network: MonitorNetwork,
   delegates: DelegatesMonitor,
   delegateProfile: DelegateProfile,
-  validatorPerformance: DelegatesPerformanceModal,
+  validatorPerformance: ValidatorPerformanceModal,
   reclaim: ReclaimBalance,
   dashboard: Dashboard,
   addBookmark: AddBookmark,

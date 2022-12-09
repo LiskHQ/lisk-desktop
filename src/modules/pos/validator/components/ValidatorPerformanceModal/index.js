@@ -4,10 +4,10 @@ import Dialog from '@theme/dialog/dialog';
 import ValidatorPerformance from '../ValidatorPerformance';
 import styles from './styles.css';
 
-const DelegatePerformanceModal = (props) => (
+const ValidatorPerformanceModal = (props) => (
   <Dialog hasClose className={`${grid.row} ${grid['center-xs']} ${styles.wrapper}`}>
     <ValidatorPerformance {...props} />
   </Dialog>
 );
 
-export default DelegatePerformanceModal;
+export default ValidatorPerformanceModal;
