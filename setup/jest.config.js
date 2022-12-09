@@ -272,8 +272,6 @@ module.exports = {
     'app/src/main.js',
     'src/modules/account/hooks/useDecryptionAccount.js',
     'src/redux/selectors.js',
-    'src/redux/selectors.js',
-    'src/redux/selectors.js',
     'src/utils/api/ws.js',
     'src/utils/api/market/index.js',
     'src/modules/auth/components/hwWalletLogin/selectAccount/accountCard.js',
