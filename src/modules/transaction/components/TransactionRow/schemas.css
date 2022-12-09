@@ -59,12 +59,12 @@
     }
 
     @media (--medium-viewport) {
-      & > *:nth-child(4) {
+      & > *:nth-child(5) {
         flex-basis: 25%;
         max-width: 25%;
       }
 
-      & > *:nth-child(5) {
+      & > *:nth-child(3) {
         display: none;
       }
     }
