@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { useSelector } from 'react-redux';
 import { withTranslation } from 'react-i18next';
 import { NavLink } from 'react-router-dom';
@@ -7,6 +7,7 @@ import routes, { modals } from 'src/routes/routes';
 import Icon from 'src/theme/Icon';
 import { selectActiveToken } from 'src/redux/selectors';
 import DialogLink from 'src/theme/dialog/link';
+import SidebarToggle from '@settings/components/SidebarToggle';
 import styles from './sideBar.css';
 import menuLinks from './menuLinks';
 
@@ -58,6 +59,7 @@ const MenuLink = ({ data, isUserLogout, pathname, sideBarExpanded }) => {
 };
 
 const SideBar = ({ t, location }) => {
+  const [showSidebarToggle, setShowSidebarToggle] = useState(false);
   const items = menuLinks(t);
   const token = useSelector(selectActiveToken);
   const [currentAccount] = useCurrentAccount();
@@ -65,7 +67,12 @@ const SideBar = ({ t, location }) => {
   const sideBarExpanded = useSelector((state) => state.settings.sideBarExpanded);
 
   return (
-    <nav className={`${styles.wrapper} ${sideBarExpanded ? 'expanded' : ''}`}>
+    <nav
+      className={`${styles.wrapper} ${sideBarExpanded ? 'expanded' : ''}`}
+      onMouseEnter={() => setShowSidebarToggle(true)}
+      onMouseLeave={() => setShowSidebarToggle(false)}
+    >
+      {showSidebarToggle && <SidebarToggle />}
       <div className={`${styles.container} menu-items`}>
         {items.map((group, i) => (
           <div className={styles.menuGroup} key={`group-${i}`}>

@@ -10,7 +10,7 @@
 
 :root [data-theme="dark"] {
   --color-fait-value: #8c8c8f;
-  --color-balance-bg: var(--color-side-bar);
+  --color-balance-bg: var(--color-zodiac-blue--satin-deep-black);
   --balance-border: none;
   --balance-shadow: none;
 }
