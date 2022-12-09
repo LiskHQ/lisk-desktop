@@ -214,7 +214,8 @@ describe('TxSignatureCollector', () => {
     expect(props.nextStep).toHaveBeenCalled();
   });
 
-  it('should call transactionDoubleSigned', () => {
+    // @TODO: should be re-instated if double tx signing is reinstated
+  it.skip('should call transactionDoubleSigned', () => {
     const signedTransactionProps = {
       ...props,
       transactions: {
