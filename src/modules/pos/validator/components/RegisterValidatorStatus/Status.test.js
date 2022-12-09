@@ -7,7 +7,7 @@ jest.mock('@libs/wcm/hooks/useSession', () => ({
   respond: jest.fn(),
 }));
 
-describe('Delegate Registration Status', () => {
+describe('Validator Registration Status', () => {
   const props = {
     account: accounts.genesis,
     transactions: {

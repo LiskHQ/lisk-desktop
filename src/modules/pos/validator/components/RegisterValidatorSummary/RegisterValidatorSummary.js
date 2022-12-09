@@ -1,8 +1,8 @@
 import React from 'react';
 import TransactionSummary from '@transaction/manager/transactionSummary';
-import styles from './registerDelegateSummary.css';
+import styles from './RegisterValidatorSummary.css';
 
-const RegisterDelegateSummary = ({
+const RegisterValidatorSummary = ({
   delegateRegistered,
   formProps,
   transactionJSON,
@@ -13,7 +13,7 @@ const RegisterDelegateSummary = ({
   fees,
 }) => {
   const onConfirmAction = {
-    label: t('Register delegate'),
+    label: t('Register validator'),
     onClick: () => {
       nextStep({
         formProps,
@@ -31,7 +31,7 @@ const RegisterDelegateSummary = ({
 
   return (
     <TransactionSummary
-      title={t('Delegate registration Summary')}
+      title={t('Validator registration Summary')}
       confirmButton={onConfirmAction}
       cancelButton={onCancelAction}
       classNames={`${styles.box} ${styles.summaryContainer}`}
@@ -43,4 +43,4 @@ const RegisterDelegateSummary = ({
   );
 };
 
-export default RegisterDelegateSummary;
+export default RegisterValidatorSummary;

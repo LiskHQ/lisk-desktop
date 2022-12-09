@@ -2,12 +2,12 @@
 import { statusMessages } from '@transaction/configuration/statusConfig';
 import { txStatusTypes } from '@transaction/configuration/txStatus';
 
-const registerDelegatesMessages = t => ({
+const registerValidatorsMessages = t => ({
   ...statusMessages(t),
   [txStatusTypes.broadcastSuccess]: {
-    title: t('Delegate registration succeeded'),
-    message: t('View your delegate profile in the wallet page.'),
+    title: t('Validator registration succeeded'),
+    message: t('View your validator profile in the wallet page.'),
   },
 });
 
-export default registerDelegatesMessages;
+export default registerValidatorsMessages;

@@ -2,9 +2,9 @@ import React from 'react';
 import MultiStep from 'src/modules/common/components/OldMultiStep';
 import TxSignatureCollector from '@transaction/components/TxSignatureCollector';
 import Dialog from 'src/theme/dialog/dialog';
-import Form from '../RegisterDelegateForm';
-import Summary from '../RegisterDelegateSummary';
-import Status from '../RegisterDelegateStatus';
+import Form from '../RegisterValidatorForm';
+import Summary from '../RegisterValidatorSummary';
+import Status from '../RegisterValidatorStatus';
 import styles from './registerDelegate.css';
 
 const RegisterDelegate = ({ history, t }) => (

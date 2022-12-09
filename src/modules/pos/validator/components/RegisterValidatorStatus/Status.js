@@ -2,9 +2,9 @@ import React from 'react';
 import TxBroadcaster from '@transaction/components/TxBroadcaster';
 import { getTransactionStatus } from '@transaction/configuration/statusConfig';
 import statusMessages from './statusMessages';
-import styles from './status.css';
+import styles from './Status.css';
 
-const RegisterDelegateStatus = ({ transactions, account, t }) => {
+const RegisterValidatorStatus = ({ transactions, account, t }) => {
   const status = getTransactionStatus(account, transactions, account.summary.isMultisignature);
   const template = statusMessages(t)[status.code];
   
@@ -21,4 +21,4 @@ const RegisterDelegateStatus = ({ transactions, account, t }) => {
   );
 };
 
-export default RegisterDelegateStatus;
+export default RegisterValidatorStatus;

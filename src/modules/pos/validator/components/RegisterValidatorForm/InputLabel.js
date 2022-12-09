@@ -1,6 +1,6 @@
 import React from 'react';
 import Tooltip from 'src/theme/Tooltip';
-import styles from './form.css';
+import styles from './Form.css';
 
 const InputLabel = ({ title, tooltip }) => (
   <label className={styles.label}>

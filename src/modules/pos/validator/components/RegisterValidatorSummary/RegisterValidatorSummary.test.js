@@ -5,7 +5,7 @@ import accounts from '@tests/constants/wallets';
 import { useAuth } from '@auth/hooks/queries';
 import mockSavedAccounts from '@tests/fixtures/accounts';
 import { mockAuth } from 'src/modules/auth/__fixtures__';
-import Summary from './RegisterDelegateSummary';
+import Summary from './RegisterValidatorSummary';
 
 const mockedCurrentAccount = mockSavedAccounts[0];
 jest.mock('@auth/hooks/queries');
@@ -13,7 +13,7 @@ jest.mock('@account/hooks', () => ({
   useCurrentAccount: jest.fn(() => [mockedCurrentAccount, jest.fn()]),
 }));
 
-describe('Delegate Registration Summary', () => {
+describe('Validator Registration Summary', () => {
   const props = {
     delegateRegistered: jest.fn(),
     formProps: {

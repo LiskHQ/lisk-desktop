@@ -8,7 +8,7 @@ import TxComposer from '@transaction/components/TxComposer';
 import useValidatorName from '../../hooks/useValidatorName';
 import useValidatorKey from '../../hooks/useValidatorKey';
 import InputLabel from './InputLabel';
-import styles from './form.css';
+import styles from './Form.css';
 
 const isFormValid = (name, generatorKey, blsKey, proofOfPossession) =>
   !name.error && !name.loading && !generatorKey.error && !blsKey.error && !proofOfPossession.error;
@@ -20,7 +20,7 @@ const getTooltips = (field, t) => {
   return t('Run lisk keys:generate and copy the value of {{field}}', { field });
 };
 
-const RegisterDelegateForm = ({ nextStep, prevState }) => {
+const RegisterValidatorForm = ({ nextStep, prevState }) => {
   const { t } = useTranslation();
   const [name, setName] = useValidatorName(prevState?.rawTx?.params.name);
   const [generatorKey, setGenKey] = useValidatorKey(
@@ -52,7 +52,7 @@ const RegisterDelegateForm = ({ nextStep, prevState }) => {
     setName(value);
   };
 
-  const registerDelegateFormProps = {
+  const registerValidatorFormProps = {
     isValid: isFormValid(name, generatorKey, blsKey, proofOfPossession),
     moduleCommand: MODULE_COMMANDS_NAME_MAP.registerDelegate,
   };
@@ -67,21 +67,21 @@ const RegisterDelegateForm = ({ nextStep, prevState }) => {
     <section className={styles.wrapper}>
       <TxComposer
         onConfirm={onConfirm}
-        formProps={registerDelegateFormProps}
+        formProps={registerValidatorFormProps}
         commandParams={commandParams}
       >
         <>
           <BoxHeader className={styles.header}>
-            <h2>{t('Register delegate')}</h2>
+            <h2>{t('Register validator')}</h2>
           </BoxHeader>
           <BoxContent className={`${styles.container} select-name-container`}>
             <InputLabel title={t('Your name')} tooltip={getTooltips('name', t)} />
             <div className={styles.inputContainer}>
               <Input
-                data-name="delegate-username"
+                data-name="validator-username"
                 autoComplete="off"
                 onChange={onChangeUsername}
-                name="delegate-username"
+                name="validator-username"
                 value={name.value}
                 placeholder={t('e.g. peter_pan')}
                 className={`${styles.input} select-name-input`}
@@ -149,4 +149,4 @@ const RegisterDelegateForm = ({ nextStep, prevState }) => {
   );
 };
 
-export default RegisterDelegateForm;
+export default RegisterValidatorForm;

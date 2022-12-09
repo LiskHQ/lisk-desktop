@@ -5,7 +5,7 @@ import * as keys from '@tests/constants/keys';
 import { mockCommandParametersSchemas } from 'src/modules/common/__fixtures__';
 import useValidatorName from '../../hooks/useValidatorName';
 import useValidatorKey from '../../hooks/useValidatorKey';
-import RegisterDelegateForm from '.';
+import RegisterValidatorForm from '.';
 
 jest.mock('@network/hooks/useCommandsSchema');
 jest.mock('../../hooks/useValidatorName', () => jest.fn());
@@ -40,7 +40,7 @@ const empty = {
 
 jest.useFakeTimers();
 
-describe('RegisterDelegateForm', () => {
+describe('RegisterValidatorForm', () => {
   const props = {
     prevState: {},
     nextStep: jest.fn(),
@@ -61,10 +61,10 @@ describe('RegisterDelegateForm', () => {
   });
 
   describe('Renders correctly', () => {
-    it('renders properly RegisterDelegateForm component', () => {
+    it('renders properly RegisterValidatorForm component', () => {
       useValidatorName.mockReturnValue([empty, setName]);
       useValidatorKey.mockReturnValue([empty, setKey]);
-      const wrapper = mountWithQueryClient(RegisterDelegateForm, props);
+      const wrapper = mountWithQueryClient(RegisterValidatorForm, props);
       expect(wrapper).toContainMatchingElement('.select-name-container');
       expect(wrapper).toContainMatchingElement('.select-name-input');
       expect(wrapper).toContainMatchingElement('.feedback');
@@ -75,11 +75,11 @@ describe('RegisterDelegateForm', () => {
     it('type a valid and unused username', async () => {
       useValidatorName.mockReturnValue([empty, setName]);
       useValidatorKey.mockReturnValue([empty, setKey]);
-      const wrapper = mountWithQueryClient(RegisterDelegateForm, props);
+      const wrapper = mountWithQueryClient(RegisterValidatorForm, props);
 
       wrapper
         .find('input.select-name-input')
-        .simulate('change', { target: { value: 'mydelegate' } });
+        .simulate('change', { target: { value: 'myvalidator' } });
       wrapper
         .find('input.generator-publicKey-input')
         .simulate('change', { target: { value: genKey.value, name: 'generatorKey' } });
@@ -113,12 +113,12 @@ describe('RegisterDelegateForm', () => {
       message: 'Invalid hex value',
     };
 
-    it('Display delegate name input errors', () => {
+    it('Display validator name input errors', () => {
       useValidatorKey.mockReturnValueOnce([genKey, setKey]);
       useValidatorKey.mockReturnValueOnce([blsKey, setKey]);
       useValidatorKey.mockReturnValueOnce([pop, setKey]);
       useValidatorName.mockReturnValue([wrongName, setName]); // invalid
-      const wrapper = mountWithQueryClient(RegisterDelegateForm, props);
+      const wrapper = mountWithQueryClient(RegisterValidatorForm, props);
       expect(wrapper.find('button.confirm-btn')).toBeDisabled();
       expect(wrapper.find('.feedback').at(0)).toHaveText('Too short');
     });
@@ -128,7 +128,7 @@ describe('RegisterDelegateForm', () => {
       useValidatorKey.mockReturnValueOnce([blsKey, setKey]);
       useValidatorKey.mockReturnValueOnce([pop, setKey]);
       useValidatorName.mockReturnValue([validName, setName]); // valid
-      const wrapper = mountWithQueryClient(RegisterDelegateForm, props);
+      const wrapper = mountWithQueryClient(RegisterValidatorForm, props);
       expect(wrapper.find('button.confirm-btn')).toBeDisabled();
       expect(wrapper.find('.feedback').at(1)).toHaveText('Invalid hex value');
     });
@@ -138,7 +138,7 @@ describe('RegisterDelegateForm', () => {
       useValidatorKey.mockReturnValueOnce([wrongKey, setKey]);
       useValidatorKey.mockReturnValueOnce([pop, setKey]);
       useValidatorName.mockReturnValue([validName, setName]); // valid
-      const wrapper = mountWithQueryClient(RegisterDelegateForm, props);
+      const wrapper = mountWithQueryClient(RegisterValidatorForm, props);
       expect(wrapper.find('button.confirm-btn')).toBeDisabled();
       expect(wrapper.find('.feedback').at(2)).toHaveText('Invalid hex value');
     });
@@ -148,7 +148,7 @@ describe('RegisterDelegateForm', () => {
       useValidatorKey.mockReturnValueOnce([blsKey, setKey]);
       useValidatorKey.mockReturnValueOnce([wrongKey, setKey]);
       useValidatorName.mockReturnValue([validName, setName]); // valid
-      const wrapper = mountWithQueryClient(RegisterDelegateForm, props);
+      const wrapper = mountWithQueryClient(RegisterValidatorForm, props);
       expect(wrapper.find('button.confirm-btn')).toBeDisabled();
       expect(wrapper.find('.feedback').at(3)).toHaveText('Invalid hex value');
     });
@@ -192,7 +192,7 @@ describe('RegisterDelegateForm', () => {
       useValidatorKey.mockReturnValueOnce([blsKey, setKey]);
       useValidatorKey.mockReturnValueOnce([pop, setKey]);
       useValidatorName.mockReturnValue([validName, setName]); // valid
-      const wrapper = mountWithQueryClient(RegisterDelegateForm, props);
+      const wrapper = mountWithQueryClient(RegisterValidatorForm, props);
       wrapper.find('button.confirm-btn').simulate('click');
       expect(props.nextStep).toHaveBeenCalledWith(rawTx);
     });
