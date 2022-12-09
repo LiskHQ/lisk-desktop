@@ -88,7 +88,6 @@ class MultiStep extends React.Component {
     };
 
     extraProps.prevState = { ...step.data[step.current + 1] };
-
     return (
       <div className={className}>
         <MultiStepNav
