@@ -21,7 +21,7 @@ const WarnPunishedValidator = ({
   const theme = useTheme();
 
   useEffect(() => {
-    if (history.location.pathname !== routes.delegateProfile.path) {
+    if (history.location.pathname !== routes.validatorProfile.path) {
       FlashMessageHolder.deleteMessage('WarnPunishedValidator');
     }
   }, [history.location.pathname]);

@@ -72,17 +72,17 @@ export const getDelegateDetailsClass = (activeTab) => {
 };
 
 // eslint-disable-next-line complexity
-export default (activeTab, changeSort, t) => ([
+export default (activeTab, changeSort, t) => [
   {
-    title: t('Delegate'),
+    title: t('Validator'),
     classList: getDelegateDetailsClass(activeTab),
   },
   {
-    title: t('Delegate weight'),
+    title: t('Validator weight'),
     classList: getDelegateWeightClass(activeTab),
     tooltip: {
-      title: t('Delegate weight'),
-      message: t('The total amount of votes received for a delegate.'),
+      title: t('Validator weight'),
+      message: t('The total amount of votes received for a validator.'),
       position: 'top',
     },
   },
@@ -110,4 +110,4 @@ export default (activeTab, changeSort, t) => ([
       key: activeTab === 'sanctioned' ? 'sanctionedStatus' : 'status',
     },
   },
-]);
+];

@@ -36,7 +36,7 @@ const DelegateSummary = ({ delegate, status, weight }) => {
       </BoxHeader>
       <BoxContent>
         {/* @Todo: the value of roundLength should be dynamically integrated from the usePosConstants query hook which would be addressed in issue #4502 */}
-        <p>{t('This delegate is among the first 101 delegates in delegate weight ranking.')}</p>
+        <p>{t('This validator is among the first 101 validators in validator weight ranking.')}</p>
         <div className={styles.summaryDetails}>
           <div>
             <span>

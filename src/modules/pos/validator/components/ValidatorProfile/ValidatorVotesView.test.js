@@ -1,7 +1,7 @@
 import React from 'react';
 import { fireEvent, render, screen } from '@testing-library/react';
 import { useFilter } from 'src/modules/common/hooks';
-import DelegateVotesView from './delegateVotesView';
+import ValidatorVotesView from './ValidatorVotesView';
 import { useReceivedVotes } from '../../hooks/queries';
 import { mockReceivedVotes } from '../../__fixtures__';
 
@@ -11,7 +11,7 @@ const mockClearFilters = jest.fn();
 jest.mock('../../hooks/queries');
 jest.mock('src/modules/common/hooks');
 
-describe('Delegate votes view', () => {
+describe('Validator votes view', () => {
   useReceivedVotes.mockReturnValue({ data: mockReceivedVotes });
 
   const props = {
@@ -25,7 +25,7 @@ describe('Delegate votes view', () => {
   });
 
   it('Should render a list of voters', () => {
-    render(<DelegateVotesView {...props} />);
+    render(<ValidatorVotesView {...props} />);
 
     expect(screen.getByText('Voters')).toBeTruthy();
     mockReceivedVotes.data.votes.forEach(({ name }) => {
@@ -40,7 +40,7 @@ describe('Delegate votes view', () => {
       clearFilters: mockClearFilters,
     });
 
-    render(<DelegateVotesView {...props} />);
+    render(<ValidatorVotesView {...props} />);
 
     const searchField = screen.getByTestId('addressFilter');
     fireEvent.change(searchField, { target: { value: 'test' } });
@@ -57,7 +57,7 @@ describe('Delegate votes view', () => {
     });
     useReceivedVotes.mockReturnValue({ data: {} });
 
-    render(<DelegateVotesView {...props} />);
+    render(<ValidatorVotesView {...props} />);
 
     expect(screen.queryByTestId('addressFilter')).toBeFalsy();
     expect(screen.getByText('(...)')).toBeTruthy();

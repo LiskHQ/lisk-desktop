@@ -13,7 +13,7 @@ import BoxContent from '@theme/box/content';
 import TokenAmount from '@token/fungible/components/tokenAmount';
 import DialogLink from '@theme/dialog/link';
 import Icon from '@theme/Icon';
-import styles from './delegateProfile.css';
+import styles from './ValidatorProfile.css';
 
 export const getStatus = (data) => {
   if (data.voteWeight >= DEFAULT_STANDBY_THRESHOLD) {
@@ -50,43 +50,43 @@ const FullItem = ({ icon, title, children, theme }) => (
   </BoxContent>
 );
 
-const ActiveDelegate = ({ theme, t }) => (
-  <div className={`${styles.delegateDescription} ${theme}`}>
-    <p>{t('This delegate is among the first 101 delegates by delegate weight.')}</p>
+const ActiveValidator = ({ theme, t }) => (
+  <div className={`${styles.validatorDescription} ${theme}`}>
+    <p>{t('This validator is among the first 101 validators by validator weight.')}</p>
 
-    <p>{t('Active delegates are select to generate blocks every round.')}</p>
+    <p>{t('Active validators are select to generate blocks every round.')}</p>
   </div>
 );
 
-const StandByDelegate = ({ theme, t }) => (
-  <div className={`${styles.delegateDescription} ${theme}`}>
+const StandByValidator = ({ theme, t }) => (
+  <div className={`${styles.validatorDescription} ${theme}`}>
     <p>
-      {t(`The delegate has at least 1,000 LSK delegate weight, but is not among the
-      top 101 by delegate weight.`)}
+      {t(`The validator has at least 1,000 LSK validator weight, but is not among the
+      top 101 by validator weight.`)}
     </p>
     <p>
       {t(
-        'Standby delegates can be chosen at random for one of two slots per round for generating a block.'
+        'Standby validators can be chosen at random for one of two slots per round for generating a block.'
       )}
     </p>
   </div>
 );
 
-const IneligibleDelegate = ({ theme, t }) => (
-  <div className={`${styles.delegateDescription} ${theme}`}>
+const IneligibleValidator = ({ theme, t }) => (
+  <div className={`${styles.validatorDescription} ${theme}`}>
     <p>
       {t(
-        'The delegate weight is below 1,000 LSK meaning that the delegate is not eligible to forge.'
+        'The validator weight is below 1,000 LSK meaning that the validator is not eligible to forge.'
       )}
     </p>
   </div>
 );
 
-const PunishedDelegate = ({ theme, t }) => (
-  <div className={`${styles.delegateDescription} ${theme}`}>
+const PunishedValidator = ({ theme, t }) => (
+  <div className={`${styles.validatorDescription} ${theme}`}>
     <p>
       {t(
-        'The delegate is temporarily punished and their delegate weight is set to 0 due to a misbehavior.'
+        'The validator is temporarily punished and their validator weight is set to 0 due to a misbehavior.'
       )}
     </p>
     <DialogLink className={grid.row} component="validatorPerformance" data={{ status: 'punished' }}>
@@ -97,25 +97,25 @@ const PunishedDelegate = ({ theme, t }) => (
   </div>
 );
 
-const BannedDelegate = ({ theme, t }) => (
-  <div className={`${styles.delegateDescription} ${theme}`}>
+const BannedValidator = ({ theme, t }) => (
+  <div className={`${styles.validatorDescription} ${theme}`}>
     <p>
       {t(
-        'The delegate is permanently banned from generating blocks due to repeated protocol violations or missing too many blocks.'
+        'The validator is permanently banned from generating blocks due to repeated protocol violations or missing too many blocks.'
       )}
     </p>
   </div>
 );
 
-const getDelegateIcon = (status) => `delegate${capitalize(status)}`;
+const getValidatorIcon = (status) => `delegate${capitalize(status)}`;
 
-const getDelegateComponent = (status) => {
+const getValidatorComponent = (status) => {
   const components = {
-    active: ActiveDelegate,
-    standby: StandByDelegate,
-    ineligible: IneligibleDelegate,
-    punished: PunishedDelegate,
-    banned: BannedDelegate,
+    active: ActiveValidator,
+    standby: StandByValidator,
+    ineligible: IneligibleValidator,
+    punished: PunishedValidator,
+    banned: BannedValidator,
   };
   return components[status];
 };
@@ -124,7 +124,7 @@ const PerformanceView = ({ data }) => {
   const { t } = useTranslation();
   const theme = useTheme();
   const status = data.status || '';
-  const DelegateComponent = status.length ? getDelegateComponent(status) : () => null;
+  const ValidatorComponent = status.length ? getValidatorComponent(status) : () => null;
 
   return (
     <Box
@@ -135,9 +135,9 @@ const PerformanceView = ({ data }) => {
       </BoxHeader>
       <Box className={`${grid.row} ${styles.content}`}>
         <Box className={`${grid.col} ${grid['col-xs-4']} ${grid['col-md-4']} ${styles.column}`}>
-          <FullItem theme={theme} title={t('Status')} icon={getDelegateIcon(status)}>
+          <FullItem theme={theme} title={t('Status')} icon={getValidatorIcon(status)}>
             <div className={styles.performanceValue}>{capitalize(status)}</div>
-            <DelegateComponent theme={theme} t={t} />
+            <ValidatorComponent theme={theme} t={t} />
           </FullItem>
         </Box>
         <Box className={`${grid.col} ${grid['col-xs-4']} ${grid['col-md-4']} ${styles.column}`}>

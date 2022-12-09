@@ -10,14 +10,16 @@ import Icon from '@theme/Icon';
 import { useLatestBlock } from '@block/hooks/queries/useLatestBlock';
 import DateTimeFromTimestamp from 'src/modules/common/components/timestamp';
 import TokenAmount from '@token/fungible/components/tokenAmount';
-import styles from './delegateProfile.css';
+import styles from './ValidatorProfile.css';
 
 const DetailsView = ({ data }) => {
   const theme = useTheme();
   const { t } = useTranslation();
   const { rank } = data;
   const status = data.status || '';
-  const { data: { timestamp: latestBlockTimestamp } } = useLatestBlock();
+  const {
+    data: { timestamp: latestBlockTimestamp },
+  } = useLatestBlock();
 
   return (
     <Box
@@ -44,7 +46,7 @@ const DetailsView = ({ data }) => {
         <div className={`${grid.row} ${styles.itemContainer}`}>
           <Icon name="weight" className={styles.icon} />
           <div className={`${grid.col} ${styles.item}`}>
-            <div className={`${styles.title} ${theme}`}>{t('Delegate weight')}</div>
+            <div className={`${styles.title} ${theme}`}>{t('Validator weight')}</div>
             <div className={styles.value}>
               <TokenAmount val={data.totalVotesReceived} token={tokenMap.LSK.key} />
             </div>

@@ -36,8 +36,8 @@ export default {
     isPrivate: false,
     forbiddenTokens: [],
   },
-  delegateProfile: {
-    path: '/delegates/profile',
+  validatorProfile: {
+    path: '/validators/profile',
     exact: true,
     isPrivate: false,
     forbiddenTokens: [],

@@ -1,5 +1,4 @@
 import { withRouter } from 'react-router';
-import DelegateProfile from './delegateProfile';
+import ValidatorProfile from './ValidatorProfile';
 
-
-export default withRouter(DelegateProfile);
+export default withRouter(ValidatorProfile);

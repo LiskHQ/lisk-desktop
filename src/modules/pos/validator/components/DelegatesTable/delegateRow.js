@@ -38,7 +38,7 @@ const DelegateRow = ({ data, className, activeTab, watchList, setActiveTab }) =>
   return (
     <Link
       className={`${className} delegate-row ${styles.container} ${activeStyle} ${delegateStyles.tableRow}`}
-      to={`${routes.delegateProfile.path}?address=${data.address}`}
+      to={`${routes.validatorProfile.path}?address=${data.address}`}
     >
       <ValidatorRowContext.Provider
         value={{

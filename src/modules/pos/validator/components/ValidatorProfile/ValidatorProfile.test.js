@@ -9,7 +9,7 @@ import { mockDelegates, mockReceivedVotes, mockSentVotes } from '@pos/validator/
 import { useBlocks } from '@block/hooks/queries/useBlocks';
 import { useLatestBlock } from '@block/hooks/queries/useLatestBlock';
 import { fromRawLsk } from 'src/modules/token/fungible/utils/lsk';
-import DelegateProfile from './delegateProfile';
+import ValidatorProfile from './ValidatorProfile';
 import { useValidators, useReceivedVotes, useSentVotes } from '../../hooks/queries';
 
 const mockedCurrentAccount = mockSavedAccounts[0];
@@ -21,7 +21,7 @@ jest.mock('@block/hooks/queries/useBlocks');
 jest.mock('@block/hooks/queries/useLatestBlock');
 jest.mock('../../hooks/queries');
 
-describe('Delegate Profile', () => {
+describe('Validator Profile', () => {
   let wrapper;
 
   const props = {
@@ -32,7 +32,7 @@ describe('Delegate Profile', () => {
   };
 
   beforeEach(() => {
-    wrapper = renderWithRouter(DelegateProfile, props);
+    wrapper = renderWithRouter(ValidatorProfile, props);
   });
 
   useValidators.mockReturnValue({ data: mockDelegates });
@@ -41,7 +41,7 @@ describe('Delegate Profile', () => {
   useSentVotes.mockReturnValue({ data: mockSentVotes });
   useReceivedVotes.mockReturnValue({ data: mockReceivedVotes });
 
-  it('Should render active delegate profile details', () => {
+  it('Should render active validator profile details', () => {
     useSentVotes.mockReturnValue({
       data: {
         ...mockSentVotes,
@@ -51,19 +51,19 @@ describe('Delegate Profile', () => {
 
     wrapper.rerender(
       <MemoryRouter initialEntries={['/']}>
-        <DelegateProfile {...props} />
+        <ValidatorProfile {...props} />
       </MemoryRouter>
     );
 
-    expect(screen.getByText('My delegate profile')).toBeTruthy();
-    expect(screen.getByText('Vote delegate')).toBeTruthy();
+    expect(screen.getByText('My validator profile')).toBeTruthy();
+    expect(screen.getByText('Vote validator')).toBeTruthy();
     expect(screen.getByText('Details')).toBeTruthy();
     expect(screen.getByText('Performance')).toBeTruthy();
     expect(screen.getByText('Voters')).toBeTruthy();
 
     expect(screen.getByText('Rank')).toBeTruthy();
     expect(screen.getAllByText('Status')).toHaveLength(2);
-    expect(screen.getByText('Delegate weight')).toBeTruthy();
+    expect(screen.getByText('Validator weight')).toBeTruthy();
     expect(screen.getByText('Last block forged')).toBeTruthy();
 
     expect(screen.getByText('Last forged block')).toBeTruthy();
@@ -72,10 +72,10 @@ describe('Delegate Profile', () => {
     expect(screen.getByText('Consecutive missed blocks')).toBeTruthy();
 
     expect(
-      screen.getByText('This delegate is among the first 101 delegates by delegate weight.')
+      screen.getByText('This validator is among the first 101 validators by validator weight.')
     ).toBeTruthy();
     expect(
-      screen.getByText('Active delegates are select to generate blocks every round.')
+      screen.getByText('Active validators are select to generate blocks every round.')
     ).toBeTruthy();
 
     expect(screen.getByText(mockBlocks.meta.total)).toBeTruthy();
@@ -96,7 +96,7 @@ describe('Delegate Profile', () => {
     });
   });
 
-  it('Should render ineligible delegate profile details', () => {
+  it('Should render ineligible validator profile details', () => {
     useValidators.mockReturnValue({
       data: {
         ...mockDelegates,
@@ -105,18 +105,18 @@ describe('Delegate Profile', () => {
     });
     wrapper.rerender(
       <MemoryRouter>
-        <DelegateProfile {...props} />
+        <ValidatorProfile {...props} />
       </MemoryRouter>
     );
 
     expect(
       screen.getByText(
-        'The delegate weight is below 1,000 LSK meaning that the delegate is not eligible to forge.'
+        'The validator weight is below 1,000 LSK meaning that the validator is not eligible to forge.'
       )
     ).toBeTruthy();
   });
 
-  it('Should render stanby delegate profile details', () => {
+  it('Should render standby validator profile details', () => {
     useValidators.mockReturnValue({
       data: {
         ...mockDelegates,
@@ -125,23 +125,23 @@ describe('Delegate Profile', () => {
     });
     wrapper.rerender(
       <MemoryRouter>
-        <DelegateProfile {...props} />
+        <ValidatorProfile {...props} />
       </MemoryRouter>
     );
 
     expect(
       screen.getByText(
-        'The delegate has at least 1,000 LSK delegate weight, but is not among the top 101 by delegate weight.'
+        'The validator has at least 1,000 LSK validator weight, but is not among the top 101 by validator weight.'
       )
     ).toBeTruthy();
     expect(
       screen.getByText(
-        'Standby delegates can be chosen at random for one of two slots per round for generating a block.'
+        'Standby validators can be chosen at random for one of two slots per round for generating a block.'
       )
     ).toBeTruthy();
   });
 
-  it('Should render punished delegate profile details', () => {
+  it('Should render punished validator profile details', () => {
     useValidators.mockReturnValue({
       data: {
         ...mockDelegates,
@@ -150,19 +150,19 @@ describe('Delegate Profile', () => {
     });
     wrapper.rerender(
       <MemoryRouter>
-        <DelegateProfile {...props} />
+        <ValidatorProfile {...props} />
       </MemoryRouter>
     );
 
     expect(
       screen.getByText(
-        'The delegate is temporarily punished and their delegate weight is set to 0 due to a misbehavior.'
+        'The validator is temporarily punished and their validator weight is set to 0 due to a misbehavior.'
       )
     ).toBeTruthy();
     expect(screen.getByText('Details >')).toBeTruthy();
   });
 
-  it('Should render banned delegate profile details', () => {
+  it('Should render banned validator profile details', () => {
     useValidators.mockReturnValue({
       data: {
         ...mockDelegates,
@@ -171,18 +171,18 @@ describe('Delegate Profile', () => {
     });
     wrapper.rerender(
       <MemoryRouter>
-        <DelegateProfile {...props} />
+        <ValidatorProfile {...props} />
       </MemoryRouter>
     );
 
     expect(
       screen.getByText(
-        'The delegate is permanently banned from generating blocks due to repeated protocol violations or missing too many blocks.'
+        'The validator is permanently banned from generating blocks due to repeated protocol violations or missing too many blocks.'
       )
     ).toBeTruthy();
   });
 
-  it('Should render the vote delegate button', () => {
+  it('Should render the vote validator button', () => {
     useValidators.mockReturnValue({
       data: {
         ...mockDelegates,
@@ -193,14 +193,14 @@ describe('Delegate Profile', () => {
 
     wrapper.rerender(
       <MemoryRouter>
-        <DelegateProfile {...props} />
+        <ValidatorProfile {...props} />
       </MemoryRouter>
     );
 
-    expect(screen.getByText('Vote delegate')).toBeTruthy();
+    expect(screen.getByText('Vote validator')).toBeTruthy();
   });
 
-  it('Should render the vote delegate button', () => {
+  it('Should render the vote validator button', () => {
     useValidators.mockReturnValue({
       data: {
         ...mockDelegates,
@@ -211,14 +211,14 @@ describe('Delegate Profile', () => {
 
     wrapper.rerender(
       <MemoryRouter>
-        <DelegateProfile {...props} />
+        <ValidatorProfile {...props} />
       </MemoryRouter>
     );
 
-    expect(screen.getByText('Vote delegate')).toBeTruthy();
+    expect(screen.getByText('Vote validator')).toBeTruthy();
   });
 
-  it('Should render the vote delegate button', () => {
+  it('Should render the vote validator button', () => {
     useValidators.mockReturnValue({
       data: {
         ...mockDelegates,
@@ -240,10 +240,10 @@ describe('Delegate Profile', () => {
 
     wrapper.rerender(
       <MemoryRouter>
-        <DelegateProfile {...props} />
+        <ValidatorProfile {...props} />
       </MemoryRouter>
     );
 
-    expect(screen.getByText('Vote delegate')).toBeTruthy();
+    expect(screen.getByText('Vote validator')).toBeTruthy();
   });
 });

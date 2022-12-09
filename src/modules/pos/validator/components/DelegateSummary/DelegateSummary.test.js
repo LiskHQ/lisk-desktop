@@ -28,7 +28,9 @@ describe('DelegateSummary', () => {
 
   it('should display properly', () => {
     expect(
-      screen.getByText('This delegate is among the first 101 delegates in delegate weight ranking.')
+      screen.getByText(
+        'This validator is among the first 101 validators in validator weight ranking.'
+      )
     ).toBeTruthy();
     expect(screen.getByText('CMB :')).toBeTruthy();
     expect(screen.getByTestId('cmb').innerHTML).toEqual(

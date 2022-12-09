@@ -10,12 +10,12 @@ import Heading from 'src/modules/common/components/Heading';
 import { toast } from 'react-toastify';
 import FlashMessageHolder from 'src/theme/flashMessage/holder';
 import Box from '@theme/box';
-import styles from './delegateProfile.css';
-import DetailsView from './detailsView';
-import PerformanceView from './performanceView';
-import DelegateVotesView from './delegateVotesView';
+import styles from './ValidatorProfile.css';
+import DetailsView from './DetailsView';
+import PerformanceView from './PerformanceView';
+import ValidatorVotesView from './ValidatorVotesView';
 import { useValidators } from '../../hooks/queries';
-import DelegateVoteButton from './delegateVoteButton';
+import ValidatorVoteButton from './ValidatorVoteButton';
 import WarnPunishedValidator from '../WarnPunishedValidator';
 
 const numOfBlockPerDay = 24 * 60 * 6;
@@ -31,15 +31,15 @@ const removeWarningMessage = () => {
 };
 
 // eslint-disable-next-line max-statements
-const DelegateProfile = ({ history }) => {
+const ValidatorProfile = ({ history }) => {
   const { t } = useTranslation();
   const [{ metadata: { address: currentAddress } = {} }] = useCurrentAccount();
   const address = selectSearchParamValue(history.location.search, 'address') || currentAddress;
 
-  const { data: delegates, isLoading: isLoadingDelegates } = useValidators({
+  const { data: validators, isLoading: isLoadingValidators } = useValidators({
     config: { params: { address } },
   });
-  const delegate = useMemo(() => delegates?.data?.[0] || {}, [delegates]);
+  const validator = useMemo(() => validators?.data?.[0] || {}, [validators]);
 
   const { data: forgedBlocks } = useBlocks({
     config: { params: { generatorAddress: address } },
@@ -48,16 +48,16 @@ const DelegateProfile = ({ history }) => {
   const {
     data: { height: currentHeight },
   } = useLatestBlock();
-  const isBanned = delegate.isBanned;
+  const isBanned = validator.isBanned;
 
   useEffect(() => {
-    const pomHeights = delegate.pomHeights;
+    const pomHeights = validator.pomHeights;
     const { end } = pomHeights?.length ? pomHeights[pomHeights.length - 1] : 0;
     const daysLeft = Math.ceil((end - currentHeight) / numOfBlockPerDay);
 
     if (
-      delegate.address &&
-      address !== currentAddress && // this ensures we are checking against a delegate account that is not the current user
+      validator.address &&
+      address !== currentAddress && // this ensures we are checking against a validator account that is not the current user
       address &&
       (isBanned || pomHeights?.length) &&
       (isBanned || daysLeft >= 1)
@@ -73,10 +73,10 @@ const DelegateProfile = ({ history }) => {
     } else {
       removeWarningMessage();
     }
-  }, [address, delegate, currentHeight]);
+  }, [address, validator, currentHeight]);
 
-  if (!delegate.address && !isLoadingDelegates) {
-    toast.info("This user isn't a delegate");
+  if (!validator.address && !isLoadingValidators) {
+    toast.info("This user isn't a validator");
     history.goBack();
   }
 
@@ -87,13 +87,13 @@ const DelegateProfile = ({ history }) => {
         className={styles.header}
         title={
           address === currentAddress ? (
-            t('My delegate profile')
+            t('My validator profile')
           ) : (
             <WalletVisualWithAddress
               copy
               size={50}
               address={address}
-              accountName={delegate.name}
+              accountName={validator.name}
               detailsClassName={styles.accountSummary}
               truncate={false}
             />
@@ -102,7 +102,7 @@ const DelegateProfile = ({ history }) => {
       >
         <div className={styles.rightHeaderSection}>
           <div className={styles.actionButtons}>
-            <DelegateVoteButton
+            <ValidatorVoteButton
               currentAddress={currentAddress}
               address={address}
               isBanned={isBanned}
@@ -111,15 +111,15 @@ const DelegateProfile = ({ history }) => {
         </div>
       </Heading>
       <Box
-        isLoading={isLoadingDelegates}
+        isLoading={isLoadingValidators}
         className={`${grid.row} ${styles.statsContainer} stats-container`}
       >
-        <DetailsView data={delegate} />
-        <PerformanceView data={{ ...delegate, producedBlocks: forgedBlocks?.meta?.total }} />
+        <DetailsView data={validator} />
+        <PerformanceView data={{ ...validator, producedBlocks: forgedBlocks?.meta?.total }} />
       </Box>
-      <DelegateVotesView address={address} />
+      <ValidatorVotesView address={address} />
     </section>
   );
 };
 
-export default DelegateProfile;
+export default ValidatorProfile;

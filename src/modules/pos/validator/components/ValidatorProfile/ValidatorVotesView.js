@@ -8,12 +8,12 @@ import BoxHeader from '@theme/box/header';
 import { Input } from 'src/theme';
 import { QueryTable } from 'src/theme/QueryTable';
 import { useFilter } from 'src/modules/common/hooks';
-import VoterRow from './voterRow';
-import tableHeader from './votersTableHeader';
-import styles from './delegateProfile.css';
+import VoterRow from './VoterRow';
+import tableHeader from './VotersTableHeader';
+import styles from './ValidatorProfile.css';
 import { useReceivedVotes } from '../../hooks/queries';
 
-const DelegateVotesView = ({ address }) => {
+const ValidatorVotesView = ({ address }) => {
   const { t } = useTranslation();
   const [searchInput, setSearchInput] = useState('');
   const { filters, applyFilters } = useFilter({ address });
@@ -83,4 +83,4 @@ const DelegateVotesView = ({ address }) => {
   );
 };
 
-export default DelegateVotesView;
+export default ValidatorVotesView;

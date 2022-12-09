@@ -261,7 +261,7 @@
         }
       }
 
-      & .delegateDescription {
+      & .validatorDescription {
         & p {
           font-size: var(--font-size-small-secondary);
         }
@@ -291,7 +291,7 @@
         }
       }
 
-      & > *:not(.title):not(.delegateDescription):not(.highlighIcon) {
+      & > *:not(.title):not(.validatorDescription):not(.highlighIcon) {
         @mixin validatorPerformanceValueFont;
 
         color: var(--color-maastricht-blue);

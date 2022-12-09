@@ -48,7 +48,7 @@ import ApplicationManagementList from '@blockchainApplication/manage/components/
 import SelectNode from '@blockchainApplication/manage/components/SelectNode';
 import RemoveApplicationFlow from '@blockchainApplication/manage/components/RemoveApplicationFlow';
 import AllTokens from '@wallet/components/AllTokens';
-import DelegateProfile from 'src/modules/pos/validator/components/delegateProfile/delegateProfile';
+import ValidatorProfile from 'src/modules/pos/validator/components/ValidatorProfile/ValidatorProfile';
 import SentVotes from 'src/modules/pos/validator/components/SentVotes';
 import ConnectionProposal from 'src/modules/blockchainApplication/connection/components/ConnectionProposal';
 import SessionManager from '@blockchainApplication/connection/components/SessionManager';
@@ -71,7 +71,7 @@ export default {
   wallets: MonitorWallets,
   network: MonitorNetwork,
   delegates: DelegatesMonitor,
-  delegateProfile: DelegateProfile,
+  validatorProfile: ValidatorProfile,
   validatorPerformance: ValidatorPerformanceModal,
   reclaim: ReclaimBalance,
   dashboard: Dashboard,
