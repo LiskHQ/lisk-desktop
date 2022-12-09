@@ -85,8 +85,30 @@ describe('Generals', () => {
     expect(screen.queryByText('Select Network')).toBeTruthy();
   });
 
+  it('Should call onAddAccount with passphrase and derivation path', () => {
+    props.settings.enableCustomDerivationPath = true;
+    accountFormInstance.rerender(<AddAccountForm {...props} />);
+
+    const input = screen.getByLabelText('Custom derivation path');
+    fireEvent.change(input, { target: { value: 'hello' } });
+
+    const passphrase =
+      'below record evolve eye youth post control consider spice swamp hidden easily';
+    const passphraseInput1 = screen.getByTestId('recovery-1');
+    const pasteEvent = createEvent.paste(passphraseInput1, {
+      clipboardData: {
+        getData: () =>
+          'below record evolve eye youth post control consider spice swamp hidden easily',
+      },
+    });
+    fireEvent(passphraseInput1, pasteEvent);
+
+    fireEvent.click(screen.getByText('Continue'));
+
+    expect(props.onAddAccount).toHaveBeenCalledWith({ value: passphrase, isValid: true }, 'hello');
+  });
+
   it('should render the custom derivation path field with no default value', () => {
-    jest.clearAllMocks();
     props.settings.enableCustomDerivationPath = true;
     accountFormInstance.rerender(<AddAccountForm {...props} />);
 
