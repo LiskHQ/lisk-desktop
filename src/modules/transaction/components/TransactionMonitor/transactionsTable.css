@@ -1,6 +1,6 @@
 .tableHeader {
   position: sticky;
-  top: 70px;
+  top: 85px;
   background: var(--color-white);
   z-index: 2;
   border-bottom: 2px solid var(--color-mystic);
