@@ -18,7 +18,7 @@ describe('TokenRow', () => {
     expect(screen.queryByText(`${fromRawLsk(lockedBalance)} ${symbol.toUpperCase()}`));
     expect(screen.queryByText(`${fromRawLsk(availableBalance)}`));
     expect(screen.queryByText(`${fromRawLsk(+availableBalance + lockedBalance)}`));
-    expect(screen.queryByTestId('fiat-balance').innerHTML.match(/~10\.00/g)).toBeTruthy();
+    expect( screen.getByText(/~10\.00/g)).toBeTruthy();
     expect(screen.getByAltText(symbol)).toBeTruthy();
     expect(screen.getByAltText('arrowRightInactive')).toBeTruthy();
   });
