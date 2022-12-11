@@ -20,6 +20,11 @@ usePinBlockchainApplication.mockReturnValue({
   checkPinByChainId: jest.fn().mockReturnValue(true),
 });
 
+jest.mock('src/utils/searchParams', () => ({
+  selectSearchParamValue: jest.fn(),
+  addSearchParamsToUrl: jest.fn(),
+}));
+
 describe('BlockchainApplicationRow', () => {
   let wrapper;
   const props = {
