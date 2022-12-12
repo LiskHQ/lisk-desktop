@@ -19,8 +19,8 @@ import OfflineWrapper from 'src/modules/common/components/offlineWrapper';
 import CustomRoute from 'src/modules/common/components/customRoute';
 import NavigationBars from 'src/modules/common/components/bars';
 import ThemeContext from 'src/theme/themeProvider';
-import TransactionSocketWrapper from '@common/components/TransactionSocketWrapper';
 import routesMap from 'src/routes/routesMap';
+import { useTransactionUpdate } from '@transaction/hooks';
 import routes from 'src/routes/routes';
 import { MOCK_SERVICE_WORKER } from 'src/const/config';
 import { useBlockchainApplicationMeta } from 'src/modules/blockchainApplication/manage/hooks/queries/useBlockchainApplicationMeta';
@@ -69,6 +69,7 @@ const App = ({ history }) => {
 
   const routesList = Object.keys(routes);
   const routeObj = Object.values(routes).find((r) => r.path === history.location.pathname) || {};
+  useTransactionUpdate()
   return (
     <ConnectionProvider>
       <ThemeContext.Provider value={theme}>
@@ -108,7 +109,7 @@ const App = ({ history }) => {
                   ))}
                   <Route path="*" component={NotFound} />
                 </Switch>
-                {loaded && !!chainMetaData && <TransactionSocketWrapper />}
+                {/* {loaded && !!chainMetaData && <TransactionSocketWrapper />} */}
               </div>
             </section>
           </main>
