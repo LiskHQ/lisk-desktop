@@ -16,7 +16,7 @@ const getErrorMessage = (name, data, t) => {
   if (name.length > VALIDATOR_NAME_LENGTH.Maximum) {
     return t('Username is too long.');
   }
-  const hasInvalidChars = name.replace(regex.delegateSpecialChars, '');
+  const hasInvalidChars = name.replace(regex.validatorSpecialChars, '');
   if (hasInvalidChars) {
     return t(`Invalid character ${hasInvalidChars.trim()}`);
   }
