@@ -2,7 +2,7 @@ import styles from './voteForm.css';
 
 const header = (t) => [
   {
-    title: t('Delegate'),
+    title: t('Validator'),
     classList: styles.infoColumn,
   },
   {

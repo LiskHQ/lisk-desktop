@@ -14,7 +14,7 @@ const ValidatorPerformanceDetails = (pomHeights, status, consecutiveMissedBlocks
     const timesLeft = 5 - pomHeights.length;
     const textCount = textConversion[timesLeft];
 
-    return `The delegate was punished ${pomHeights.length} time${
+    return `The validator was punished ${pomHeights.length} time${
       pomHeights.length !== 1 ? 's' : ''
     }. ${textCount} more punishments will cause the permanent ban of the delegate.`;
   }

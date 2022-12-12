@@ -19,7 +19,7 @@ import {
   getForgingTimeClass,
   getValidatorRankClass,
 } from './TableHeader';
-import DelegateSummary from '../DelegateSummary/DelegateSummary';
+import ValidatorSummary from '../ValidatorSummary/ValidatorSummary';
 
 const roundStates = {
   forging: 'Forging',
@@ -135,7 +135,7 @@ export const ValidatorDetails = () => {
             size="maxContent"
             content={<WalletVisual address={data.address} />}
           >
-            <DelegateSummary
+            <ValidatorSummary
               delegate={data}
               weight={formattedVoteWeight}
               status={{

@@ -37,7 +37,7 @@ const Votes = ({
     votes.loadData({ address });
   }, [address]);
 
-  // Fetch delegate profiles to define rank, productivity and delegate weight
+  // Fetch validator profiles to define rank, productivity and validator weight
   useEffect(() => {
     const addressList = votes.data.map((item) => item.address);
     if (isEmpty(accounts.data) && addressList.length) {
@@ -57,7 +57,7 @@ const Votes = ({
   return (
     <Box main isLoading={areLoading} className={`${styles.wrapper}`}>
       <BoxHeader>
-        <h1>{t('Voted delegates')}</h1>
+        <h1>{t('Voted validators')}</h1>
         <div className={`${styles.filterHolder}`}>
           <Input
             className="search"

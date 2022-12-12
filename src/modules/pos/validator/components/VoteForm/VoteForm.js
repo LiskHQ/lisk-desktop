@@ -92,7 +92,7 @@ const validateVotes = (votes, balance, fee, resultingNumOfVotes, t, dposToken) =
   );
 
   if (areVotesInValid) {
-    messages.push(t('Please enter vote amounts for the delegates you wish to vote for'));
+    messages.push(t('Please enter vote amounts for the validators you wish to vote for'));
   }
 
   if (resultingNumOfVotes > VOTE_LIMIT) {

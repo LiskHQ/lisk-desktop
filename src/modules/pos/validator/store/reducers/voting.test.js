@@ -61,7 +61,7 @@ describe('Reducer: voting(state, action)', () => { // eslint-disable-line max-st
   });
 
   describe('votesEdited', () => {
-    it('should add delegate with voteAmount if does not exist among votes', () => {
+    it('should add validator with voteAmount if does not exist among votes', () => {
       const action = {
         type: actionTypes.voteEdited,
         data: [{
@@ -80,7 +80,7 @@ describe('Reducer: voting(state, action)', () => { // eslint-disable-line max-st
       expect(changedState).toEqual(expectedState);
     });
 
-    it('should change voteAmount if delegates exist among votes', () => {
+    it('should change voteAmount if validators exist among votes', () => {
       const action = {
         type: actionTypes.voteEdited,
         data: [{
@@ -137,7 +137,7 @@ describe('Reducer: voting(state, action)', () => { // eslint-disable-line max-st
       expect(changedState).toEqual(expectedState);
     });
 
-    it('should remove unvoted delegates', () => {
+    it('should remove unvoted validators', () => {
       const action = {
         type: actionTypes.votesConfirmed,
       };

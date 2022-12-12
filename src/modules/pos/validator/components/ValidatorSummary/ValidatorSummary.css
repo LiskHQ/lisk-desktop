@@ -9,7 +9,7 @@
   position: absolute;
   background-color: var(--color-white);
 
-  & .delegateDetails {
+  & .validatorDetails {
     display: flex;
     flex-direction: row;
     align-items: center;
@@ -29,7 +29,7 @@
         right: 0px;
       }
 
-      & > .delegateName {
+      & > .validatorName {
         @mixin headingSmall;
 
         margin-top: 0;
@@ -55,7 +55,7 @@
         }
       }
 
-      & > .delegateAddress {
+      & > .validatorAddress {
         @mixin contentNormal;
 
         margin: 0;

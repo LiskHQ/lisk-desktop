@@ -25,7 +25,7 @@ function VoteSuccessfulModal({ history, statusMessage }) {
         <p>{statusMessage.message}</p>
       </BoxContent>
       <BoxFooter>
-        <PrimaryButton onClick={handleBackToDelegate}>{t('Back to delegates')}</PrimaryButton>
+        <PrimaryButton onClick={handleBackToDelegate}>{t('Back to validators')}</PrimaryButton>
       </BoxFooter>
     </Box>
   );

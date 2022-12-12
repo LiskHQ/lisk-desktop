@@ -1,9 +1,9 @@
 import React from 'react';
+import { MemoryRouter } from 'react-router';
 import { renderWithRouter } from 'src/utils/testHelpers';
 import { screen } from '@testing-library/react';
-import { MemoryRouter } from 'react-router';
 import { mockDelegates } from '../../__fixtures__';
-import DelegateSummary from './DelegateSummary';
+import ValidatorSummary from './ValidatorSummary';
 
 jest.mock('react-i18next', () => ({
   ...jest.requireActual('react-i18next'),
@@ -12,7 +12,7 @@ jest.mock('react-i18next', () => ({
   }),
 }));
 
-describe('DelegateSummary', () => {
+describe('ValidatorSummary', () => {
   let wrapper;
   const props = {
     delegate: { ...mockDelegates.data[0], nextForgingTime: 1661165000 },
@@ -23,7 +23,7 @@ describe('DelegateSummary', () => {
 
   beforeEach(() => {
     jest.clearAllMocks();
-    wrapper = renderWithRouter(DelegateSummary, props);
+    wrapper = renderWithRouter(ValidatorSummary, props);
   });
 
   it('should display properly', () => {
@@ -43,11 +43,11 @@ describe('DelegateSummary', () => {
     expect(screen.getByAltText('weightDark')).toBeTruthy();
   });
 
-  it('disables vote button if delegate is banned', () => {
+  it('disables vote button if validator is banned', () => {
     props.status = { className: 'banned', value: 'Banned' };
     wrapper.rerender(
       <MemoryRouter>
-        <DelegateSummary {...props} />
+        <ValidatorSummary {...props} />
       </MemoryRouter>
     );
     expect(screen.getByText('Vote')).toHaveAttribute('disabled');

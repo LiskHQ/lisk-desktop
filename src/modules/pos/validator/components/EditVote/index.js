@@ -34,13 +34,13 @@ const getTitles = (t) => ({
   edit: {
     title: t('Edit vote'),
     description: t(
-      'Increase or decrease your vote amount, or remove your vote from this delegate. Your updated vote will be added to the voting queue.'
+      'Increase or decrease your vote amount, or remove your vote from this validator. Your updated vote will be added to the voting queue.'
     ),
   },
   add: {
     title: t('Add to voting queue'),
     description: t(
-      'Insert a vote amount for this delegate. Your new vote will be added to the voting queue.'
+      'Insert a vote amount for this validator. Your new vote will be added to the voting queue.'
     ),
   },
 });
@@ -58,7 +58,7 @@ const EditVote = ({ history, voteEdited, network, voting, votesRetrieved }) => {
   const [isForm, setIsForm] = useState(true);
 
   const [address] = selectSearchParamValue(history.location.search, ['address']);
-  const delegateAddress = address || currentAddress; // this holds the address of either other delegates or the user's address
+  const delegateAddress = address || currentAddress; // this holds the address of either other validators or the user's address
 
   const { data: delegates, isLoading: isLoadingDelegates } = useValidators({
     config: { params: { address: delegateAddress } },

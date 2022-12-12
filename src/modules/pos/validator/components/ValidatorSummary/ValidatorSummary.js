@@ -9,23 +9,23 @@ import DateTimeFromTimestamp from 'src/modules/common/components/timestamp';
 import WalletVisual from 'src/modules/wallet/components/walletVisual';
 import { PrimaryButton } from 'src/theme/buttons';
 import DialogLink from 'src/theme/dialog/link';
-import styles from './DelegateSummary.css';
+import styles from './ValidatorSummary.css';
 
-const DelegateSummary = ({ delegate, status, weight }) => {
+const ValidatorSummary = ({ delegate, status, weight }) => {
   const { address, name, rank, consecutiveMissedBlocks, nextForgingTime } = delegate;
   const { t } = useTranslation();
 
   return (
     <Box className={styles.wrapper}>
       <BoxHeader>
-        <div className={`${styles.delegateDetails}`}>
+        <div className={`${styles.validatorDetails}`}>
           <WalletVisual address={address} size={44} />
           <div>
-            <p className={styles.delegateName}>
+            <p className={styles.validatorName}>
               <span>{name}</span>
               <span className={status.className}>{status.value}</span>
             </p>
-            <p className={styles.delegateAddress}>{truncateAddress(address)}</p>
+            <p className={styles.validatorAddress}>{truncateAddress(address)}</p>
           </div>
           <div>
             <DialogLink component="editVote">
@@ -66,4 +66,4 @@ const DelegateSummary = ({ delegate, status, weight }) => {
   );
 };
 
-export default DelegateSummary;
+export default ValidatorSummary;

@@ -2,7 +2,7 @@ import grid from 'flexboxgrid/dist/flexboxgrid.css';
 
 export default (t) => [
   {
-    title: t('Delegate'),
+    title: t('Validator'),
     classList: `${grid['col-xs-3']}`,
   },
   {
@@ -10,7 +10,7 @@ export default (t) => [
     classList: `${grid['col-xs-2']}`,
   },
   {
-    title: t('Delegate weight'),
+    title: t('Validator weight'),
     classList: `${grid['col-xs-2']}`,
   },
   {
