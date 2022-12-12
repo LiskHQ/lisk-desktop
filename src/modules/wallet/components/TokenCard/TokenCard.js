@@ -14,9 +14,7 @@ const TokenCard = ({ lockedBalance, availableBalance, symbol, url, address }) =>
       <img alt={symbol} className={styles.tokenLogo} src={url} />
     </div>
     <div>
-      <p>
-        <TokenAmount val={availableBalance} token={symbol} />
-      </p>
+      <TokenAmount className={styles.tokenAmount} val={availableBalance} token={symbol} />
       {symbol === 'LSK' && (
         <Converter
           data-testid="fiat-balance"
