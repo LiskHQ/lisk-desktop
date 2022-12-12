@@ -7,7 +7,7 @@ import { addSearchParamsToUrl } from 'src/utils/searchParams';
 import routes from 'src/routes/routes';
 import { Input } from 'src/theme';
 import Wallet from '@wallet/components/searchBarWallets';
-import Delegates from '@wallet/components/searchBarWallets/delegates';
+import Validators from 'src/modules/wallet/components/searchBarWallets/validators';
 import Blocks from '@block/components/BlockResultList';
 import IconSearch from "@search/components/IconSearch/IconSearch";
 import Transactions from '../../../transaction/components/TransactionResultList';
@@ -146,7 +146,7 @@ const SearchBar = ({ className, history }) => {
         />
       )}
       {!!delegates.length && (
-        <Delegates
+        <Validators
           searchTextValue={searchTextValue}
           delegates={delegates}
           onSelectedRow={onSelectDelegateAccount}

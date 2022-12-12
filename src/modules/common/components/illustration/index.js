@@ -56,7 +56,7 @@ import ledgerNanoHwRejectionDark from '@setup/react/assets/images/illustrations/
 import addApplicationSuccess from '@setup/react/assets/images/illustrations/add-application-success.svg';
 
 export const illustrations = {
-  welcomeLiskDelegates: welcomeLiskValidators,
+  welcomeLiskValidators,
   yourVoiceMatters,
   getRewarded,
   expandYourKnowledge,

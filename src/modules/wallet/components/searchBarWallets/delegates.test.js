@@ -1,8 +1,8 @@
 import React from 'react';
 import { mount } from 'enzyme';
-import Delegates from './delegates';
+import Validators from './validators';
 
-describe('Delegates', () => {
+describe('Validators', () => {
   let wrapper;
 
   const props = {
@@ -14,7 +14,7 @@ describe('Delegates', () => {
   };
 
   beforeEach(() => {
-    wrapper = mount(<Delegates {...props} />);
+    wrapper = mount(<Validators {...props} />);
   });
 
   it('should render properly empty accounts', () => {
@@ -54,7 +54,7 @@ describe('Delegates', () => {
         },
       },
     ];
-    wrapper = mount(<Delegates {...newProps} />);
+    wrapper = mount(<Validators {...newProps} />);
 
     expect(wrapper).toContainMatchingElement('.delegates');
     expect(wrapper).toContainMatchingElement('.delegates-header');
@@ -79,7 +79,7 @@ describe('Delegates', () => {
         },
       },
     ];
-    wrapper = mount(<Delegates {...newProps} />);
+    wrapper = mount(<Validators {...newProps} />);
 
     wrapper.find('.delegates-row').at(0).simulate('click');
     expect(props.onSelectedRow).toBeCalled();

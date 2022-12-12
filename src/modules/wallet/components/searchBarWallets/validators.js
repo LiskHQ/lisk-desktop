@@ -4,7 +4,7 @@ import WalletVisual from '@wallet/components/walletVisual';
 import { truncateAddress } from '@wallet/utils/account';
 import styles from './walletsAndDeletegates.css';
 
-const Delegates = ({
+const Validators = ({
   delegates, onSelectedRow, t, rowItemIndex, updateRowItemIndex, searchTextValue,
 }) => (
   <div className={`${styles.wrapper} delegates`}>
@@ -52,4 +52,4 @@ const Delegates = ({
   </div>
 );
 
-export default Delegates;
+export default Validators;

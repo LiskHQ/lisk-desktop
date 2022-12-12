@@ -69,7 +69,7 @@ const ActionBar = ({
           )}
           {!username && lskAddress === address && (
             <DialogLink
-              className={styles.registerDelegate}
+              className={styles.registerValidator}
               component="registerValidator"
             >
               <TertiaryButton

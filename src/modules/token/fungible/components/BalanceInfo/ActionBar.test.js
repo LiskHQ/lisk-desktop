@@ -74,7 +74,7 @@ describe('Reclaim balance screen', () => {
   it('Should display add/edit vote correctly', () => {
     let wrapper = mountWithRouterAndStore(
       ActionBar,
-      { ...props, username: 'delegate' },
+      { ...props, username: 'validator' },
       {},
       { ...state, wallet: { info: { LSK: balanceAccount } } },
     );
@@ -88,7 +88,7 @@ describe('Reclaim balance screen', () => {
 
     wrapper = mountWithRouterAndStore(
       ActionBar,
-      { ...props, username: 'delegate' },
+      { ...props, username: 'validator' },
       {},
       {
         ...state,

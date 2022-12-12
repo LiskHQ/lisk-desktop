@@ -23,7 +23,7 @@ const OnboardingDemo = () => (
         slides={getOnboardingSlides()}
         finalCallback={finalCallback}
         ctaLabel="Start voting"
-        name="delegateOnboarding"
+        name="validatorOnboarding"
       />
     </DemoRenderer>
   </div>
