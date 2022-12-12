@@ -59,7 +59,7 @@ describe('TransactionDetailsView', () => {
       expect(mockFetchEventNextPage).toHaveBeenCalled();
     });
 
-    expect(screen.getByText(`Transaction ${transaction.id}`)).toBeTruthy();
+    expect(screen.getByText(`Transaction details`)).toBeTruthy();
     expect(screen.getByText('Details')).toBeTruthy();
     expect(screen.getByText('Events')).toBeTruthy();
   });

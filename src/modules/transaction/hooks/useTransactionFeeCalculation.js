@@ -1,4 +1,5 @@
-import { useEffect, useReducer } from 'react';
+import { useEffect, useMemo, useReducer } from 'react';
+import { useAuth } from '@auth/hooks/queries';
 import { useCommandSchema } from '@network/hooks';
 import { getTransactionFee } from '../api';
 import { getNumberOfSignatures } from '../utils/transaction';
@@ -24,20 +25,28 @@ const useTransactionFeeCalculation = ({
 }) => {
   const [state, dispatch] = useReducer(reducer, wallet, getInitialState);
   const { moduleCommandSchemas } = useCommandSchema();
+  const { data: account } = useAuth({ config: { params: { address: wallet?.summary?.address } } });
+  const senderAccount = useMemo(() => account?.data || {}, [account]);
 
   const calculateTransactionFees = async (params) => {
-    const fee = await getTransactionFee(params);
+    // @TODO: we need to find out why fee and minFee have the same implementations
+    const fee = await getTransactionFee({
+      ...params,
+      senderAccount,
+      selectedPriority: priorityOptions[0],
+    });
     dispatch({ type: actionTypes.setFee, payload: { response: fee, wallet, token } });
 
     const minFee = await getTransactionFee({
       ...params,
+      senderAccount,
       selectedPriority: priorityOptions[0],
     });
-
     dispatch({ type: actionTypes.setMinFee, payload: { response: minFee, wallet, token } });
 
     const maxAmountFee = await getTransactionFee({
       ...params,
+      senderAccount,
       transactionJSON: { ...params.transactionJSON, amount: wallet.token?.balance },
     });
 
@@ -59,7 +68,12 @@ const useTransactionFeeCalculation = ({
         numberOfSignatures: getNumberOfSignatures(wallet, transactionJSON),
       });
     }
-  }, [transactionJSON.params, selectedPriority.selectedIndex, selectedPriority.value]);
+  }, [
+    transactionJSON.params,
+    selectedPriority.selectedIndex,
+    selectedPriority.value,
+    senderAccount,
+  ]);
 
   return state;
 };

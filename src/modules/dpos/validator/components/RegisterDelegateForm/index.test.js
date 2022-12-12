@@ -3,9 +3,17 @@ import { useCommandSchema } from '@network/hooks/useCommandsSchema';
 import wallets from '@tests/constants/wallets';
 import * as keys from '@tests/constants/keys';
 import { mockCommandParametersSchemas } from 'src/modules/common/__fixtures__';
+import { useTokensBalance } from '@token/fungible/hooks/queries';
+import { mockTokensBalance } from 'src/modules/token/fungible/__fixtures__';
+import { useDposConstants } from '../../hooks/queries';
+import { mockDposConstants } from '../../__fixtures__/mockDposConstants';
+
 import useDelegateName from '../../hooks/useDelegateName';
 import useDelegateKey from '../../hooks/useDelegateKey';
 import RegisterDelegateForm from '.';
+
+jest.mock('../../hooks/queries');
+jest.mock('@token/fungible/hooks/queries');
 
 jest.mock('@network/hooks/useCommandsSchema');
 jest.mock('../../hooks/useDelegateName', () => jest.fn());
@@ -49,6 +57,8 @@ describe('RegisterDelegateForm', () => {
   const setName = jest.fn();
   const setKey = jest.fn();
 
+  useDposConstants.mockReturnValue({ data: mockDposConstants });
+  useTokensBalance.mockReturnValue({ data: mockTokensBalance, isLoading: false });
   useCommandSchema.mockReturnValue(
     mockCommandParametersSchemas.data.reduce(
       (result, { moduleCommand, schema }) => ({ ...result, [moduleCommand]: schema }),
@@ -179,6 +189,9 @@ describe('RegisterDelegateForm', () => {
         composedFees: {
           Initialisation: '0 LSK',
           Transaction: '0 LSK',
+        },
+        fields: {
+          token: mockTokensBalance.data[0],
         },
         isValid: true,
         moduleCommand: 'dpos:registerDelegate',

@@ -9,12 +9,13 @@
   align-items: center;
   padding-right: 22px;
   white-space: nowrap;
+  cursor: pointer;
 
   /* Message */
   & > .message {
     @mixin contentNormal semi-bold;
 
-    color: var(--color-blue-gray);
+    color: var(--color-constant-white);
     margin-left: 8px;
 
     /* Network name */

@@ -1,0 +1,39 @@
+@import '../../../../../setup/react/app/mixins.css';
+
+.SidebarToggle {
+  position: absolute;
+  z-index: var(--normal-index);
+  top: 51%;
+  right: -24px;
+  animation: fadeIn 0.2s ease-in;
+  animation-fill-mode: forwards;
+  opacity: 0;
+
+  &.isExpanded {
+    right: 0;
+  }
+}
+
+.SidebarToggleImg {
+  height: 12px;
+  display: flex;
+  padding: 10px 8px;
+  background-color: var(--color-strong-ink-blue);
+  margin-right: 0;
+  cursor: pointer;
+  border-radius: 0 16px 16px 0;
+
+  &.isExpanded {
+    border-radius: 16px 0 0 16px;
+  }
+}
+
+@keyframes fadeIn {
+  0% {
+    opacity: 0;
+  }
+
+  100% {
+    opacity: 1;
+  }
+}

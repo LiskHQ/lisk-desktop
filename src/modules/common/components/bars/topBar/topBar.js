@@ -8,20 +8,18 @@ import Tooltip from 'src/theme/Tooltip';
 import VoteQueueToggle from 'src/modules/common/components/bars/topBar/voteQueueToggle';
 import DiscreteModeToggle from 'src/modules/settings/components/discreteModeToggle';
 import LightDarkToggle from 'src/modules/settings/components/lightDarkModeToggle';
-import SideBarToggle from 'src/modules/settings/components/sideBarToggle';
 import ApplicationManagementDropDown from '@blockchainApplication/manage/components/ApplicationManagementDropDown';
 import SearchBar from 'src/modules/search/manager/searchBarManager';
 import { useCurrentAccount } from '@account/hooks';
 import { isEmpty } from 'src/utils/helpers';
 import styles from './topBar.css';
 import Network from './networkName';
-import NavigationButtons from './navigationButtons';
 
-const TopBar = ({ history, noOfVotes, location }) => {
+const TopBar = ({ noOfVotes, location }) => {
   const disabled = location.pathname === routes.reclaim.path;
   const [currentAccount] = useCurrentAccount();
   const [menuOpen, setMenuOpen] = useState(false);
-  const { t } = useTranslation()
+  const { t } = useTranslation();
 
   const onMenuClick = (menuOpenStatus) => {
     setMenuOpen(menuOpenStatus);
@@ -31,13 +29,14 @@ const TopBar = ({ history, noOfVotes, location }) => {
     <div className={`${styles.wrapper} top-bar`}>
       <div className={styles.group}>
         <div className={`${styles.section} ${menuOpen ? styles.menuOpen : ''} user-menu-section`}>
-          <Icon name="liskLogo" className={`${styles.logo} topbar-logo`} />
+          <Icon name="liskLogoWhiteNormalized" className={`${styles.logo} topbar-logo`} />
           {!isEmpty(currentAccount) ? (
             <AccountManagementDropdown currentAccount={currentAccount} onMenuClick={onMenuClick} />
           ) : null}
         </div>
-        <NavigationButtons history={history} />
-        <SideBarToggle />
+        <SearchBar className={styles.ml24} />
+      </div>
+      <div className={styles.group}>
         <Tooltip
           className={styles.tooltipWrapper}
           size="maxContent"
@@ -55,16 +54,11 @@ const TopBar = ({ history, noOfVotes, location }) => {
         >
           <p>{t('Bookmarks')}</p>
         </Tooltip>
-        <VoteQueueToggle t={t} noOfVotes={noOfVotes} disabled={disabled} />
-        <SearchBar />
-      </div>
-      <div className={styles.group}>
-        <ApplicationManagementDropDown />
         <LightDarkToggle />
+        <VoteQueueToggle t={t} noOfVotes={noOfVotes} disabled={disabled} />
         <DiscreteModeToggle />
-        {location.pathname !== routes.register.path && (
-          <Network />
-        )}
+        <ApplicationManagementDropDown />
+        {location.pathname !== routes.register.path && <Network />}
       </div>
     </div>
   );
