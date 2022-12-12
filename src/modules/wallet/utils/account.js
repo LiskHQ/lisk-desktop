@@ -307,7 +307,7 @@ export const validate2ndPass = async (account, passphrase, error) => {
 
 /**
  * Validate a derivation path
- * TODO: Replace this function when @liskhq (lisk-sdk) exposes the one they use
+ * TODO: Replace this function when @liskhq (lisk-sdk) exposes the one they use: Issue #7877 https://github.com/LiskHQ/lisk-sdk/issues/7877
  * @param {string} derivationPath
  * @returns {string} - Error message
  */
