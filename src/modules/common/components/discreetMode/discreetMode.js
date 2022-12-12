@@ -2,11 +2,18 @@ import React, { useMemo } from 'react';
 import PropTypes from 'prop-types';
 import routes from 'src/routes/routes';
 import { selectSearchParamValue } from 'src/utils/searchParams';
+import classNames from 'classnames';
 import styles from './discreetMode.css';
 
 const DiscreetMode = ({
-  children, location, isDiscreetMode, shouldEvaluateForOtherAccounts,
-  addresses, account, token,
+  className,
+  children,
+  location,
+  isDiscreetMode,
+  shouldEvaluateForOtherAccounts,
+  addresses,
+  account,
+  token,
 }) => {
   const isBlurHandledOnOtherWalletPage = useMemo(() => {
     const { search } = location;
@@ -32,7 +39,7 @@ const DiscreetMode = ({
 
   const discreetModeClass = shouldEnableDiscreetMode() ? styles.discreetMode : '';
   return (
-    <div className={discreetModeClass}>
+    <div className={classNames(discreetModeClass, className)}>
       {discreetModeClass.length ? <span className={styles.preformat} /> : ''}
       {children}
     </div>
@@ -46,6 +53,7 @@ DiscreetMode.defaultProps = {
 };
 
 DiscreetMode.propTypes = {
+  className: PropTypes.string,
   account: PropTypes.object.isRequired,
   addresses: PropTypes.array,
   isDiscreetMode: PropTypes.bool.isRequired,

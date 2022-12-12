@@ -15,9 +15,9 @@ describe('Converter', () => {
     priceTicker: { LSK: { USD: 123, EUR: 12 } },
   };
 
-  it('should render Converter component', () => {
+  it('should render Converter component 1', () => {
     wrapper = mount(<Converter {...props} />);
-    expect(wrapper.find('.wrapper').hasClass(props.className)).toBe(true);
+    expect(wrapper.find('.wrapper').first().hasClass(props.className)).toBe(true);
     expect(wrapper.find('.price').text()).toContain(props.priceTicker.LSK.EUR);
     expect(wrapper.find('.price').text()).toContain(props.currency);
   });
