@@ -10,7 +10,6 @@ import Icon from 'src/theme/Icon';
 import Converter from 'src/modules/common/components/converter';
 import { fromRawLsk } from '@token/fungible/utils/lsk';
 import TokenAmount from '@token/fungible/components/tokenAmount';
-import DiscreetMode from 'src/modules/common/components/discreetMode';
 import LockedBalanceLink from '@token/fungible/components/BalanceInfo/LockedBalanceLink';
 import styles from './WalletDetails.css';
 
@@ -36,7 +35,6 @@ const WalletDetails = ({
                 {t('{{acctToken}} balance', { acctToken: tokenMap.LSK.key })}
               </span>
               <div className={styles.valuesRow}>
-                <DiscreetMode>
                   <div className={`${styles.cryptoValue} balance-value`}>
                     <div><TokenAmount val={token.availableBalance} token={tokenMap.LSK.key} /></div>
                     <div>
@@ -55,7 +53,6 @@ const WalletDetails = ({
                     // TODO: Fix locked balance details
                     account={{}}
                   />
-                </DiscreetMode>
               </div>
             </div>
           </Link>

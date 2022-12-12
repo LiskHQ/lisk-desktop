@@ -10,6 +10,7 @@ import styles from './reclaim.css';
 
 jest.mock('src/utils/searchParams', () => ({
   addSearchParamsToUrl: jest.fn(),
+  selectSearchParamValue: jest.fn(),
 }));
 jest.mock('@account/hooks/useCurrentAccount', () => ({
   useCurrentAccount: jest.fn(() => [mockSavedAccounts[0]]),

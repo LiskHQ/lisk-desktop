@@ -55,20 +55,14 @@ describe('AllTokens', () => {
       expect(screen.getByText(title)).toBeTruthy();
     });
 
-    mockTokensBalance.data.forEach(({ name, symbol, availableBalance, lockedBalances }, index) => {
+    mockTokensBalance.data.forEach(({ name, symbol, availableBalance, lockedBalances }) => {
       const lockedBalance = lockedBalances.reduce((total, { amount }) => +amount + total, 0);
 
       expect(screen.getByText(name)).toBeTruthy();
       expect(screen.getByText(fromRawLsk(lockedBalance))).toBeTruthy();
       expect(screen.queryByText(fromRawLsk(availableBalance))).toBeTruthy();
       expect(screen.queryByText(fromRawLsk(+availableBalance + lockedBalance))).toBeTruthy();
-      expect(
-        screen
-          .getAllByTestId('fiat-balance')
-          [index].innerHTML.match(
-            new RegExp(`~${fromRawLsk(availableBalance)}`.replace('.', '\\.'))
-          )
-      ).toBeTruthy();
+      expect( screen.getByText(/~10\.00/g)).toBeTruthy();
       expect(screen.getByAltText(symbol)).toBeTruthy();
     });
   });
