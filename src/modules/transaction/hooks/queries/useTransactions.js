@@ -3,7 +3,7 @@ import { useQueryClient } from '@tanstack/react-query';
 import { TRANSACTIONS } from 'src/const/queries';
 import { LIMIT as limit, API_VERSION } from 'src/const/config';
 import { useCustomInfiniteQuery } from 'src/modules/common/hooks';
-import client from 'src/utils/api/client';
+// import client from 'src/utils/api/client';
 
 export const useTransactionsConfig =
   () =>
