@@ -8,7 +8,7 @@ const actionTypes = {
   watchListRetrieved: 'WATCHLIST_RETRIEVED',
   addedToWatchList: 'ADDED_TO_WATCHLIST',
   removedFromWatchList: 'REMOVED_FROM_WATCHLIST',
-  delegateRegistered: 'DELEGATE_REGISTERED',
+  validatorRegistered: 'VALIDATOR_REGISTERED',
   voteDiscarded: 'VOTE_DISCARDED',
 };
 

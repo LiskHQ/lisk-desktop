@@ -8,7 +8,7 @@ import { fromRawLsk } from '@token/fungible/utils/lsk';
 import { useFilter } from 'src/modules/common/hooks';
 
 import { mockBlocks } from '@block/__fixtures__';
-import { mockDelegates } from '@pos/validator/__fixtures__';
+import { mockValidators } from '@pos/validator/__fixtures__';
 import { mockAuth } from '@auth/__fixtures__/mockAuth';
 import { mockTokensBalance } from '@token/fungible/__fixtures__/mockTokens';
 import { renderWithRouter } from 'src/utils/testHelpers';
@@ -33,7 +33,7 @@ describe('AllTokens', () => {
 
   useTokensBalance.mockReturnValue({ data: mockTokensBalance, isLoading: false, isSuccess: true });
   useAuth.mockReturnValue({ data: mockAuth });
-  useValidators.mockReturnValue({ data: mockDelegates });
+  useValidators.mockReturnValue({ data: mockValidators });
   useBlocks.mockReturnValue({ data: mockBlocks });
 
   it('should display properly', async () => {

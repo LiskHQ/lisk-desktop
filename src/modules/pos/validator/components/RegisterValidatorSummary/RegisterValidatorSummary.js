@@ -3,7 +3,7 @@ import TransactionSummary from '@transaction/manager/transactionSummary';
 import styles from './RegisterValidatorSummary.css';
 
 const RegisterValidatorSummary = ({
-  delegateRegistered,
+  validatorRegistered,
   formProps,
   transactionJSON,
   prevStep,
@@ -18,7 +18,7 @@ const RegisterValidatorSummary = ({
       nextStep({
         formProps,
         transactionJSON,
-        actionFunction: delegateRegistered,
+        actionFunction: validatorRegistered,
       });
     },
   };

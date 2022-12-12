@@ -51,7 +51,7 @@ describe('RegisterDelegate', () => {
         get: jest.fn(),
       },
     },
-    delegateRegistered: jest.fn(),
+    validatorRegistered: jest.fn(),
     nextStep: jest.fn(),
     t: key => key,
     transactions: {

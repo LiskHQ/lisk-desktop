@@ -2,7 +2,7 @@ import React from 'react';
 import { MemoryRouter } from 'react-router';
 import { renderWithRouter } from 'src/utils/testHelpers';
 import { screen } from '@testing-library/react';
-import { mockDelegates } from '../../__fixtures__';
+import { mockValidators } from '../../__fixtures__';
 import ValidatorSummary from './ValidatorSummary';
 
 jest.mock('react-i18next', () => ({
@@ -15,7 +15,7 @@ jest.mock('react-i18next', () => ({
 describe('ValidatorSummary', () => {
   let wrapper;
   const props = {
-    delegate: { ...mockDelegates.data[0], nextForgingTime: 1661165000 },
+    delegate: { ...mockValidators.data[0], nextForgingTime: 1661165000 },
     status: { className: 'active', value: 'Active' },
     weight: '10k',
     lastForgeTime: 23293993234,

@@ -5,7 +5,7 @@ import { screen } from '@testing-library/react';
 import { renderWithRouter } from 'src/utils/testHelpers';
 import mockSavedAccounts from '@tests/fixtures/accounts';
 import { mockBlocks } from '@block/__fixtures__';
-import { mockDelegates, mockReceivedVotes, mockSentVotes } from '@pos/validator/__fixtures__';
+import { mockValidators, mockReceivedVotes, mockSentVotes } from '@pos/validator/__fixtures__';
 import { useBlocks } from '@block/hooks/queries/useBlocks';
 import { useLatestBlock } from '@block/hooks/queries/useLatestBlock';
 import { fromRawLsk } from 'src/modules/token/fungible/utils/lsk';
@@ -35,7 +35,7 @@ describe('Validator Profile', () => {
     wrapper = renderWithRouter(ValidatorProfile, props);
   });
 
-  useValidators.mockReturnValue({ data: mockDelegates });
+  useValidators.mockReturnValue({ data: mockValidators });
   useBlocks.mockReturnValue({ data: mockBlocks });
   useLatestBlock.mockReturnValue({ data: mockBlocks.data[0] });
   useSentVotes.mockReturnValue({ data: mockSentVotes });
@@ -79,12 +79,12 @@ describe('Validator Profile', () => {
     ).toBeTruthy();
 
     expect(screen.getByText(mockBlocks.meta.total)).toBeTruthy();
-    expect(screen.getByText(mockDelegates.data[0].lastGeneratedHeight)).toBeTruthy();
-    expect(screen.getByText(mockDelegates.data[0].consecutiveMissedBlocks)).toBeTruthy();
-    expect(screen.getByText(mockDelegates.data[0].rank)).toBeTruthy();
+    expect(screen.getByText(mockValidators.data[0].lastGeneratedHeight)).toBeTruthy();
+    expect(screen.getByText(mockValidators.data[0].consecutiveMissedBlocks)).toBeTruthy();
+    expect(screen.getByText(mockValidators.data[0].rank)).toBeTruthy();
     expect(
       screen.getByText(
-        `${numeral(fromRawLsk(mockDelegates.data[0].voteWeight)).format('0,0.[0000000000000]')} LSK`
+        `${numeral(fromRawLsk(mockValidators.data[0].voteWeight)).format('0,0.[0000000000000]')} LSK`
       )
     ).toBeTruthy();
     expect(screen.getByTestId('date-timestamp')).toBeTruthy();
@@ -99,8 +99,8 @@ describe('Validator Profile', () => {
   it('Should render ineligible validator profile details', () => {
     useValidators.mockReturnValue({
       data: {
-        ...mockDelegates,
-        data: mockDelegates.data.map((data) => ({ ...data, status: 'ineligible' })),
+        ...mockValidators,
+        data: mockValidators.data.map((data) => ({ ...data, status: 'ineligible' })),
       },
     });
     wrapper.rerender(
@@ -119,8 +119,8 @@ describe('Validator Profile', () => {
   it('Should render standby validator profile details', () => {
     useValidators.mockReturnValue({
       data: {
-        ...mockDelegates,
-        data: mockDelegates.data.map((data) => ({ ...data, status: 'standby' })),
+        ...mockValidators,
+        data: mockValidators.data.map((data) => ({ ...data, status: 'standby' })),
       },
     });
     wrapper.rerender(
@@ -144,8 +144,8 @@ describe('Validator Profile', () => {
   it('Should render punished validator profile details', () => {
     useValidators.mockReturnValue({
       data: {
-        ...mockDelegates,
-        data: mockDelegates.data.map((data) => ({ ...data, status: 'punished' })),
+        ...mockValidators,
+        data: mockValidators.data.map((data) => ({ ...data, status: 'punished' })),
       },
     });
     wrapper.rerender(
@@ -165,8 +165,8 @@ describe('Validator Profile', () => {
   it('Should render banned validator profile details', () => {
     useValidators.mockReturnValue({
       data: {
-        ...mockDelegates,
-        data: mockDelegates.data.map((data) => ({ ...data, status: 'banned' })),
+        ...mockValidators,
+        data: mockValidators.data.map((data) => ({ ...data, status: 'banned' })),
       },
     });
     wrapper.rerender(
@@ -185,8 +185,8 @@ describe('Validator Profile', () => {
   it('Should render the vote validator button', () => {
     useValidators.mockReturnValue({
       data: {
-        ...mockDelegates,
-        data: mockDelegates.data.map((data) => ({ ...data, status: 'banned' })),
+        ...mockValidators,
+        data: mockValidators.data.map((data) => ({ ...data, status: 'banned' })),
       },
     });
     useSentVotes.mockReturnValue({ data: {} });
@@ -203,8 +203,8 @@ describe('Validator Profile', () => {
   it('Should render the vote validator button', () => {
     useValidators.mockReturnValue({
       data: {
-        ...mockDelegates,
-        data: mockDelegates.data.map((data) => ({ ...data, status: 'banned' })),
+        ...mockValidators,
+        data: mockValidators.data.map((data) => ({ ...data, status: 'banned' })),
       },
     });
     useSentVotes.mockReturnValue({ data: {} });
@@ -221,8 +221,8 @@ describe('Validator Profile', () => {
   it('Should render the vote validator button', () => {
     useValidators.mockReturnValue({
       data: {
-        ...mockDelegates,
-        data: mockDelegates.data.map((data) => ({ ...data, status: 'banned' })),
+        ...mockValidators,
+        data: mockValidators.data.map((data) => ({ ...data, status: 'banned' })),
       },
     });
     useSentVotes.mockReturnValue({

@@ -15,7 +15,7 @@ jest.mock('@account/hooks', () => ({
 
 describe('Validator Registration Summary', () => {
   const props = {
-    delegateRegistered: jest.fn(),
+    validatorRegistered: jest.fn(),
     formProps: {
       composedFees: {
         Initialisation: '0 LSK',
@@ -69,7 +69,7 @@ describe('Validator Registration Summary', () => {
     expect(props.nextStep).not.toBeCalled();
     wrapper.find('button.confirm-button').simulate('click');
     expect(props.nextStep).toBeCalledWith({
-      actionFunction: props.delegateRegistered,
+      actionFunction: props.validatorRegistered,
       formProps: props.formProps,
       transactionJSON: props.transactionJSON,
     });

@@ -8,7 +8,7 @@ import { useAuth } from '@auth/hooks/queries';
 import { fromRawLsk } from '@token/fungible/utils/lsk';
 
 import { mockBlocks } from '@block/__fixtures__';
-import { mockDelegates } from '@pos/validator/__fixtures__';
+import { mockValidators } from '@pos/validator/__fixtures__';
 import { mockAuth } from '@auth/__fixtures__/mockAuth';
 import { mockTokensBalance } from '@token/fungible/__fixtures__/mockTokens';
 import { useLatestBlock } from '@block/hooks/queries/useLatestBlock';
@@ -43,7 +43,7 @@ describe('Overview', () => {
       isSuccess: true,
     });
     useAuth.mockReturnValue({ data: mockAuth });
-    useValidators.mockReturnValue({ data: mockDelegates });
+    useValidators.mockReturnValue({ data: mockValidators });
     useBlocks.mockReturnValue({ data: mockBlocks });
     useLatestBlock.mockReturnValue({ data: mockBlocks.data[0] });
 

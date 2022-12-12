@@ -8,7 +8,7 @@ import mockSavedAccounts from '@tests/fixtures/accounts';
 import { mockBlocks } from '@block/__fixtures__';
 import { useAuth } from '@auth/hooks/queries';
 import { useTokensBalance } from '@token/fungible/hooks/queries';
-import { mockDelegates, mockSentVotes } from '@pos/validator/__fixtures__';
+import { mockValidators, mockSentVotes } from '@pos/validator/__fixtures__';
 import { useLatestBlock } from 'src/modules/block/hooks/queries/useLatestBlock';
 import { mockTokensBalance } from 'src/modules/token/fungible/__fixtures__';
 import { mockAuth } from 'src/modules/auth/__fixtures__';
@@ -47,7 +47,7 @@ describe('EditVote', () => {
   beforeEach(() => {
     jest.clearAllMocks();
 
-    useValidators.mockReturnValue({ data: mockDelegates });
+    useValidators.mockReturnValue({ data: mockValidators });
     useLatestBlock.mockReturnValue({ data: mockBlocks.data[0] });
     useSentVotes.mockReturnValue({ data: mockSentVotes });
     useAuth.mockReturnValue({ data: mockAuth });
@@ -58,7 +58,7 @@ describe('EditVote', () => {
   });
 
   it('should properly render add vote form', () => {
-    const delegate = mockDelegates.data[0];
+    const delegate = mockValidators.data[0];
     const token = mockTokensBalance.data[0];
     const address = 'lsk6wrjbs66uo9eoqr4t86afvd4yym6ovj4afunvh';
 
@@ -95,7 +95,7 @@ describe('EditVote', () => {
   });
 
   it('should add vote to the votes queue', async () => {
-    const delegate = mockDelegates.data[0];
+    const delegate = mockValidators.data[0];
     const votingField = screen.getByTestId('vote');
 
     fireEvent.change(votingField, { target: { value: 20 } });
@@ -160,7 +160,7 @@ describe('EditVote', () => {
   });
 
   it('should render the edit vote modal', async () => {
-    const delegate = mockDelegates.data[0];
+    const delegate = mockValidators.data[0];
 
     useSentVotes.mockReturnValue({
       data: {

@@ -4,7 +4,7 @@ import { signTransaction } from '@transaction/api';
 import { selectActiveTokenAccount } from 'src/redux/selectors';
 import transactionActionTypes from '@transaction/store/actionTypes';
 
-export const delegateRegistered =
+export const validatorRegistered =
   (formProps, transactionJSON, privateKey, publicKey, senderAccount, moduleCommandSchemas) =>
   async (dispatch, getState) => {
     const state = getState();

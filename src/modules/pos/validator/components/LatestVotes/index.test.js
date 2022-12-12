@@ -3,7 +3,7 @@ import { mockTransactions } from 'src/modules/transaction/__fixtures__';
 import { useTransactions } from 'src/modules/transaction/hooks/queries';
 import { useValidators } from '../../hooks/queries';
 import LatestVotes from './index';
-import { mockDelegates } from '../../__fixtures__';
+import { mockValidators } from '../../__fixtures__';
 
 jest.mock('src/modules/transaction/hooks/queries');
 jest.mock('../../hooks/queries');
@@ -17,7 +17,7 @@ describe('Latest votes', () => {
 
   it('displays initial table of votes', () => {
     useValidators.mockReturnValue({
-      data: mockDelegates,
+      data: mockValidators,
       isFetching: false,
       fetchNextPage: mockFetchNextDelegates,
       hasNextPage: false,
@@ -34,7 +34,7 @@ describe('Latest votes', () => {
 
   it('can load more votes if possible', () => {
     useValidators.mockReturnValue({
-      data: mockDelegates,
+      data: mockValidators,
       isFetching: false,
       fetchNextPage: mockFetchNextDelegates,
       hasNextPage: false,

@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react';
 import withData from 'src/utils/withData';
-import { getDelegates } from '@pos/validator/api';
+import { getValidators } from '@pos/validator/api';
 import TransactionDetailsContext from '../../context/transactionDetailsContext';
 import styles from './styles.css';
 import VoteItem from '../VoteItem';
@@ -41,7 +41,7 @@ export const VotesPure = ({ t, votedDelegates }) => {
 
 export default withData({
   votedDelegates: {
-    apiUtil: ({ networks }, params) => getDelegates({ network: networks.LSK, params }),
+    apiUtil: ({ networks }, params) => getValidators({ network: networks.LSK, params }),
     defaultData: {},
     transformResponse: (response) => {
       const responseMap = response.data.reduce((acc, delegate) => {

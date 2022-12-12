@@ -1,5 +1,5 @@
 import { renderHook } from '@testing-library/react-hooks';
-import { mockValidators } from '@pos/validator/__fixtures__';
+import { mockForgers } from '@pos/validator/__fixtures__';
 import { queryWrapper as wrapper } from 'src/utils/test/queryWrapper';
 import { useForgersValidator } from './useForgersValidator';
 
@@ -11,6 +11,6 @@ describe('useForgersValidator hook', () => {
     expect(result.current.isLoading).toBeTruthy();
     await waitFor(() => result.current.isFetched);
     expect(result.current.isSuccess).toBeTruthy();
-    expect(result.current.data).toEqual(mockValidators);
+    expect(result.current.data).toEqual(mockForgers);
   });
 });

@@ -2,14 +2,14 @@
 import { compose } from 'redux';
 import { withRouter } from 'react-router-dom';
 import { withTranslation } from 'react-i18next';
-import { getDelegate } from '@pos/validator/api';
+import { getValidator } from '@pos/validator/api';
 import withData from 'src/utils/withData';
 import { parseSearchParams } from 'src/utils/searchParams';
 import ValidatorPerformance from './ValidatorPerformance';
 
 const apis = {
   delegate: {
-    apiUtil: (network, { address }) => getDelegate({ network, params: { address } }),
+    apiUtil: (network, { address }) => getValidator({ network, params: { address } }),
     getApiParams: (state, ownProps) => ({
       address: parseSearchParams(ownProps.location.search).address,
       network: state.network,

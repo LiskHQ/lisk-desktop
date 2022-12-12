@@ -1,5 +1,5 @@
 import { renderHook, act } from '@testing-library/react-hooks';
-import { mockDelegates } from '@pos/validator/__fixtures__';
+import { mockValidators } from '@pos/validator/__fixtures__';
 import { queryWrapper as wrapper } from 'src/utils/test/queryWrapper';
 import { LIMIT as defaultLimit } from 'src/const/config';
 import { useValidators } from '.';
@@ -16,9 +16,9 @@ describe('useValidators hook', () => {
     await waitFor(() => result.current.isFetched);
     expect(result.current.isSuccess).toBeTruthy();
     const expectedResponse = {
-      data: mockDelegates.data.slice(0, limit),
+      data: mockValidators.data.slice(0, limit),
       meta: {
-        ...mockDelegates.meta,
+        ...mockValidators.meta,
         count: limit,
         offset: 0,
       },
@@ -31,9 +31,9 @@ describe('useValidators hook', () => {
     await waitFor(() => result.current.isFetched);
     expect(result.current.isSuccess).toBeTruthy();
     const expectedResponse = {
-      data: mockDelegates.data.slice(0, defaultLimit),
+      data: mockValidators.data.slice(0, defaultLimit),
       meta: {
-        ...mockDelegates.meta,
+        ...mockValidators.meta,
         count: defaultLimit,
         offset: 0,
       },
@@ -51,7 +51,7 @@ describe('useValidators hook', () => {
     await waitFor(() => result.current.isFetching);
     await waitFor(() => !result.current.isFetching);
     const expectedResponse = {
-      data: mockDelegates.data.slice(0, limit * 2),
+      data: mockValidators.data.slice(0, limit * 2),
       meta: {
         count: limit,
         offset: limit,
@@ -71,9 +71,9 @@ describe('useValidators hook', () => {
     await waitFor(() => result.current.isFetched);
     expect(result.current.isSuccess).toBeTruthy();
     const expectedResponse = {
-      data: mockDelegates.data.slice(0, defaultLimit),
+      data: mockValidators.data.slice(0, defaultLimit),
       meta: {
-        ...mockDelegates.meta,
+        ...mockValidators.meta,
         count: defaultLimit,
         offset: 0,
       },

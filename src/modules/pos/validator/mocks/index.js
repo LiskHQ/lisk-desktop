@@ -1,11 +1,11 @@
 import { rest } from 'msw';
 import { API_VERSION, LIMIT } from 'src/const/config';
 import {
-  mockDelegates,
+  mockValidators,
   mockSentVotes,
   mockReceivedVotes,
   mockUnlocks,
-  mockValidators,
+  mockForgers,
   mockGenerator,
 } from '@pos/validator/__fixtures__';
 import composeMockList from 'src/modules/common/utils/composeMockList';
@@ -16,7 +16,7 @@ export const delegates = rest.get(`*/api/${API_VERSION}/dpos/delegates`, async (
     req,
     res,
     ctx,
-    mockData: mockDelegates,
+    mockData: mockValidators,
   })
 );
 
@@ -75,7 +75,7 @@ export const unlocks = rest.get(`*/api/${API_VERSION}/dpos/unlocks`, async (req,
 });
 
 export const validator = rest.get(`*/api/${API_VERSION}/validator`, async (req, res, ctx) =>
-  res(ctx.delay(20), ctx.json(mockValidators))
+  res(ctx.delay(20), ctx.json(mockForgers))
 );
 
 export const generators = rest.get(`*/api/${API_VERSION}/generators`, async (req, res, ctx) => {

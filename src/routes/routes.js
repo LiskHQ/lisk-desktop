@@ -135,7 +135,7 @@ export default {
     forbiddenTokens: [],
   },
   sentVotes: {
-    path: '/delegates/profile/votes',
+    path: '/validators/profile/votes',
     exact: true,
     isPrivate: false,
     forbiddenTokens: [],
