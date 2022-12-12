@@ -5,23 +5,23 @@ import { truncateAddress } from '@wallet/utils/account';
 import styles from './walletsAndDeletegates.css';
 
 const Validators = ({
-  delegates, onSelectedRow, t, rowItemIndex, updateRowItemIndex, searchTextValue,
+  delegates: validators, onSelectedRow, t, rowItemIndex, updateRowItemIndex, searchTextValue,
 }) => (
   <div className={`${styles.wrapper} delegates`}>
-    <header className={`${styles.header} delegates-header`}>
+    <header className={`${styles.header} validators-header`}>
       <label>{t('Account')}</label>
     </header>
-    <div className={`${styles.content} delegates-content`}>
+    <div className={`${styles.content} validators-content`}>
       {
-      delegates.map((delegate, index) => (
+      validators.map((validator, index) => (
         <div
           key={index}
           data-index={index}
           className={`${styles.accountRow} ${rowItemIndex === index ? styles.active : ''} delegates-row`}
-          onClick={() => onSelectedRow(delegate.address)}
+          onClick={() => onSelectedRow(validator.address)}
           onMouseEnter={updateRowItemIndex}
         >
-          <WalletVisual address={delegate.address} />
+          <WalletVisual address={validator.address} />
           <div className={styles.walletInformation}>
             <div>
               <span className={`${styles.delegateName} delegate-name`}>
@@ -29,20 +29,20 @@ const Validators = ({
                   highlightClassName={styles.highlight}
                   searchWords={[searchTextValue]}
                   autoEscape
-                  textToHighlight={delegate.name}
+                  textToHighlight={validator.name}
                 />
               </span>
             </div>
             <span className={`${styles.accountSubtitle} hideOnLargeViewPort`}>
-              {truncateAddress(delegate.address)}
+              {truncateAddress(validator.address)}
             </span>
             <span className={`${styles.accountSubtitle} showOnLargeViewPort`}>
-              {delegate.address}
+              {validator.address}
             </span>
           </div>
           <span className={styles.accountBalance}>
             <span className={styles.tag}>
-              {t('Validator #{{rank}}', { rank: delegate.rank })}
+              {t('Validator #{{rank}}', { rank: validator.rank })}
             </span>
           </span>
         </div>

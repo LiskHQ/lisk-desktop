@@ -126,7 +126,7 @@ const ValidatorsMonitor = ({ watchList, registrations }) => {
               <SecondaryButton disabled={!address}>Votes</SecondaryButton>
             </Link>
             <DialogLink component="registerValidator">
-              <PrimaryButton>Register validator</PrimaryButton>
+              <PrimaryButton className="register-validator">Register validator</PrimaryButton>
             </DialogLink>
           </div>
         </div>

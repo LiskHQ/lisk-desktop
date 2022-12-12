@@ -25,7 +25,7 @@ export const useSearch = (search = '') => {
   })
   const addresses = useMemo(() =>  addressSearch.data?.data ?? [], [addressSearch.data?.data])
 
-  const delegateSearch = useCustomQuery({
+  const validatorSearch = useCustomQuery({
     keys: ['search-key'],
     config: {
       ...config,
@@ -34,7 +34,7 @@ export const useSearch = (search = '') => {
       params: { search }
     }, options: { enabled: search.length >= 3 && !isAddress && !isTxId && !isBlockHeight }
   })
-  const delegates = useMemo(() =>  delegateSearch.data?.data ?? [], [delegateSearch.data?.data])
+  const validators = useMemo(() =>  validatorSearch.data?.data ?? [], [validatorSearch.data?.data])
 
   const transactionsSearch = useCustomQuery({
     keys: ['transactions-key'],
@@ -59,7 +59,7 @@ export const useSearch = (search = '') => {
 
   const blocks = useMemo(() =>  blockHeightSearch.data?.data ?? [], [blockHeightSearch.data?.data])
 
-  const isLoading = delegateSearch.isLoading || transactionsSearch.isLoading || addressSearch.isLoading || blockHeightSearch.isLoading
+  const isLoading = validatorSearch.isLoading || transactionsSearch.isLoading || addressSearch.isLoading || blockHeightSearch.isLoading
 
-  return { addresses, delegates, transactions, blocks, isLoading }
+  return { addresses, validators, transactions, blocks, isLoading }
 }

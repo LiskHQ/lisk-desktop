@@ -21,7 +21,7 @@ const SearchBar = ({ className, history }) => {
   const searchBarRef = useRef();
 
   const debouncedSearchTerm = useDebounce(searchTextValue, 500);
-  const { addresses, delegates, transactions, blocks, isLoading } = useSearch(debouncedSearchTerm);
+  const { addresses, validators, transactions, blocks, isLoading } = useSearch(debouncedSearchTerm);
 
   const { t } = useTranslation();
 
@@ -63,8 +63,8 @@ const SearchBar = ({ className, history }) => {
     if (addresses.length) {
       onSelectAccount(addresses[rowItemIndex].address);
     }
-    if (delegates.length) {
-      onSelectDelegateAccount(delegates[rowItemIndex]?.address);
+    if (validators.length) {
+      onSelectDelegateAccount(validators[rowItemIndex]?.address);
     }
     if (transactions.length) {
       onSelectTransaction(transactions[rowItemIndex].id);
@@ -75,7 +75,7 @@ const SearchBar = ({ className, history }) => {
   };
 
   const onHandleKeyPress = (e) => {
-    const suggestionsLength = addresses.length || delegates.length || transactions.length;
+    const suggestionsLength = addresses.length || validators.length || transactions.length;
 
     if (suggestionsLength >= 1) {
       switch (e.keyCode) {
@@ -101,7 +101,7 @@ const SearchBar = ({ className, history }) => {
   const isEmptyResults =
     !isLoading &&
     !addresses.length &&
-    !delegates.length &&
+    !validators.length &&
     !transactions.length &&
     !blocks.length &&
     searchTextValue.length &&
@@ -145,10 +145,10 @@ const SearchBar = ({ className, history }) => {
           t={t}
         />
       )}
-      {!!delegates.length && (
+      {!!validators.length && (
         <Validators
           searchTextValue={searchTextValue}
-          delegates={delegates}
+          validators={validators}
           onSelectedRow={onSelectDelegateAccount}
           rowItemIndex={rowItemIndex}
           updateRowItemIndex={updateRowItemIndex}

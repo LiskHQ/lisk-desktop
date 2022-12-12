@@ -3,7 +3,7 @@ import { mount } from 'enzyme';
 import { Provider } from 'react-redux';
 import { mountWithRouter } from 'src/utils/testHelpers';
 import fakeStore from '@tests/unit-test-utils/fakeStore';
-import delegatesList from '@tests/constants/delegates';
+import delegatesList from '@tests/constants/validators';
 import accounts from '@tests/constants/wallets';
 import Validators from './Validators';
 

@@ -1,4 +1,4 @@
-import validators from '@tests/constants/delegates';
+import validators from '@tests/constants/validators';
 /* eslint-disable  max-lines, import/prefer-default-export */
 export const mockValidators = {
   meta: {

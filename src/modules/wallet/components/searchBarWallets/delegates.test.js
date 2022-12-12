@@ -19,8 +19,8 @@ describe('Validators', () => {
 
   it('should render properly empty accounts', () => {
     expect(wrapper).toContainMatchingElement('.delegates');
-    expect(wrapper).toContainMatchingElement('.delegates-header');
-    expect(wrapper).toContainMatchingElement('.delegates-content');
+    expect(wrapper).toContainMatchingElement('.validators-header');
+    expect(wrapper).toContainMatchingElement('.validators-content');
     expect(wrapper).not.toContainMatchingElement('.delegates-row');
   });
 
@@ -57,8 +57,8 @@ describe('Validators', () => {
     wrapper = mount(<Validators {...newProps} />);
 
     expect(wrapper).toContainMatchingElement('.delegates');
-    expect(wrapper).toContainMatchingElement('.delegates-header');
-    expect(wrapper).toContainMatchingElement('.delegates-content');
+    expect(wrapper).toContainMatchingElement('.validators-header');
+    expect(wrapper).toContainMatchingElement('.validators-content');
     expect(wrapper).toContainMatchingElement('.delegates-row');
   });
 
