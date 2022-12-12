@@ -3,9 +3,16 @@ import { useCommandSchema } from '@network/hooks/useCommandsSchema';
 import wallets from '@tests/constants/wallets';
 import * as keys from '@tests/constants/keys';
 import { mockCommandParametersSchemas } from 'src/modules/common/__fixtures__';
+import { useTokensBalance } from '@token/fungible/hooks/queries';
+import { mockTokensBalance } from 'src/modules/token/fungible/__fixtures__';
+import { usePosConstants } from '../../hooks/queries';
+import { mockPosConstants } from '../../__fixtures__/mockPosConstants';
 import useValidatorName from '../../hooks/useValidatorName';
 import useValidatorKey from '../../hooks/useValidatorKey';
 import RegisterValidatorForm from '.';
+
+jest.mock('../../hooks/queries');
+jest.mock('@token/fungible/hooks/queries');
 
 jest.mock('@network/hooks/useCommandsSchema');
 jest.mock('../../hooks/useValidatorName', () => jest.fn());
@@ -49,6 +56,8 @@ describe('RegisterValidatorForm', () => {
   const setName = jest.fn();
   const setKey = jest.fn();
 
+  usePosConstants.mockReturnValue({ data: mockPosConstants });
+  useTokensBalance.mockReturnValue({ data: mockTokensBalance, isLoading: false });
   useCommandSchema.mockReturnValue(
     mockCommandParametersSchemas.data.reduce(
       (result, { moduleCommand, schema }) => ({ ...result, [moduleCommand]: schema }),
@@ -179,6 +188,9 @@ describe('RegisterValidatorForm', () => {
         composedFees: {
           Initialisation: '0 LSK',
           Transaction: '0 LSK',
+        },
+        fields: {
+          token: mockTokensBalance.data[0],
         },
         isValid: true,
         moduleCommand: 'dpos:registerDelegate',

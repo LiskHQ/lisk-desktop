@@ -1,14 +1,16 @@
-import React from 'react';
+import React, { useMemo } from 'react';
 import { useTranslation } from 'react-i18next';
 import { MODULE_COMMANDS_NAME_MAP } from 'src/modules/transaction/configuration/moduleCommand';
 import BoxHeader from 'src/theme/box/header';
 import BoxContent from 'src/theme/box/content';
 import { Input } from 'src/theme';
 import TxComposer from '@transaction/components/TxComposer';
+import { useTokensBalance } from '@token/fungible/hooks/queries';
 import useValidatorName from '../../hooks/useValidatorName';
 import useValidatorKey from '../../hooks/useValidatorKey';
 import InputLabel from './InputLabel';
 import styles from './Form.css';
+import { usePosConstants } from '../../hooks/queries';
 
 const isFormValid = (name, generatorKey, blsKey, proofOfPossession) =>
   !name.error && !name.loading && !generatorKey.error && !blsKey.error && !proofOfPossession.error;
@@ -20,6 +22,7 @@ const getTooltips = (field, t) => {
   return t('Run lisk keys:generate and copy the value of {{field}}', { field });
 };
 
+// eslint-disable-next-line max-statements
 const RegisterValidatorForm = ({ nextStep, prevState }) => {
   const { t } = useTranslation();
   const [name, setName] = useValidatorName(prevState?.rawTx?.params.name);
@@ -39,6 +42,13 @@ const RegisterValidatorForm = ({ nextStep, prevState }) => {
     prevState?.rawTx?.params.proofOfPossession
   );
 
+  const { data: posConstants, isLoading: isGettingPosConstants } = usePosConstants();
+  const { data: tokens } = useTokensBalance({
+    config: { params: { tokenID: posConstants?.tokenIDDPoS } },
+    options: { enabled: !isGettingPosConstants },
+  });
+  const token = useMemo(() => tokens?.data?.[0] || {}, [tokens]);
+
   const onConfirm = (formProps, transactionJSON, selectedPriority, fees) => {
     nextStep({
       selectedPriority,
@@ -55,6 +65,7 @@ const RegisterValidatorForm = ({ nextStep, prevState }) => {
   const registerValidatorFormProps = {
     isValid: isFormValid(name, generatorKey, blsKey, proofOfPossession),
     moduleCommand: MODULE_COMMANDS_NAME_MAP.registerDelegate,
+    fields: { token },
   };
   const commandParams = {
     name: name.value,

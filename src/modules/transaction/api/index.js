@@ -202,6 +202,7 @@ export const getTransactionFee = async ({
   selectedPriority,
   numberOfSignatures = DEFAULT_NUMBER_OF_SIGNATURES,
   moduleCommandSchemas,
+  senderAccount = { numberOfSignatures: 0, optionalKeys: [], mandatoryKeys: [] },
 }) => {
   const feePerByte = selectedPriority.value;
   const moduleCommand = joinModuleAndCommand(transactionJSON);
@@ -215,8 +216,11 @@ export const getTransactionFee = async ({
     numberOfSignatures = optionalKeys.length + mandatoryKeys.length;
   }
 
-  // Call API to get network specific base fees
-  const baseFees = [];
+  const allocateEmptySignaturesWithEmptyBuffer = (signatureCount) =>
+    new Array(signatureCount).fill(Buffer.alloc(64));
+
+  // @TODO: impelement transaction fee calculation based on domain fee constants
+  const { mandatoryKeys, optionalKeys } = senderAccount;
   const minFee = transactions.computeMinFee(
     {
       ...transactionObject,
@@ -224,14 +228,18 @@ export const getTransactionFee = async ({
         ...transactionObject.params,
         ...(numberOfSignatures &&
           !transactionObject.params.signatures?.length && {
-            signatures: new Array(numberOfSignatures).fill(0).map(() => Buffer.alloc(64)),
+            signatures: allocateEmptySignaturesWithEmptyBuffer(numberOfSignatures),
           }),
       },
     },
     paramsSchema,
-    {
-      baseFees,
-    }
+    senderAccount.numberOfSignatures
+      ? {
+          numberOfSignatures: senderAccount.numberOfSignatures,
+          numberOfEmptySignatures:
+            mandatoryKeys.length + optionalKeys.length - senderAccount.numberOfSignatures,
+        }
+      : {}
   );
 
   // tie breaker is only meant for medium and high processing speeds
@@ -243,7 +251,6 @@ export const getTransactionFee = async ({
   const cappedFee = Math.min(calculatedFee, maxCommandFee);
   const feeInLsk = fromRawLsk(cappedFee.toString());
   const roundedValue = Number(feeInLsk).toFixed(7).toString();
-
   const feedback = transactionJSON.amount === '' ? '-' : `${roundedValue ? '' : 'Invalid amount'}`;
 
   return {

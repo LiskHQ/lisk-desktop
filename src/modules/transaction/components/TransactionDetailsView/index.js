@@ -75,10 +75,13 @@ const TransactionDetails = ({ location }) => {
       {
         label: t('ID'),
         value: id,
+        canCopy: true,
       },
       {
         label: t('Block ID'),
         value: block.id,
+        canCopy: true,
+        redirectLink: `/block/?=id${block.id}`,
       },
       {
         label: t('Block status'),
@@ -101,7 +104,7 @@ const TransactionDetails = ({ location }) => {
 
   return (
     <div className={styles.wrapper}>
-      <Heading title={`Transaction ${transaction.id}`} className={styles.heading} />
+      <Heading title="Transaction details" className={styles.heading} />
       <div className={styles.body}>
         <Box isLoading={isLoading} className={styles.container}>
           <BoxHeader>

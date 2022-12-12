@@ -25,7 +25,7 @@ const AccountRow = ({ data, className }) => (
       />
     </span>
     <span className={`${grid['col-xs-3']} ${grid['col-md-3']}`}>
-      <TokenAmount val={data.balance} showInt token={tokenMap.LSK.key} />
+      <TokenAmount Wrapper={React.Fragment} val={data.balance} showInt token={tokenMap.LSK.key} />
     </span>
     <span className={`${grid['col-xs-5']} ${grid['col-md-3']}`}>
       {data.description ? `${data.owner} ${data.description}` : data.owner}
