@@ -9,7 +9,7 @@ import { useValidators } from '../../hooks/queries';
 
 const LatestVotes = ({ filters }) => {
   const { t } = useTranslation();
-  const { data: delegates } = useValidators();
+  const { data: validators } = useValidators();
   const queryConfig = useMemo(
     () => ({
       config: {
@@ -23,15 +23,15 @@ const LatestVotes = ({ filters }) => {
     [filters]
   );
 
-  const votedDelegates = useMemo(() => {
-    if (!delegates || !delegates.data) return {};
+  const votedValidators = useMemo(() => {
+    if (!validators || !validators.data) return {};
 
-    const responseMap = delegates.data.reduce((acc, delegate) => {
-      acc[delegate.address] = delegate;
+    const responseMap = validators.data.reduce((acc, validator) => {
+      acc[validator.address] = validator;
       return acc;
     }, {});
     return responseMap;
-  }, [delegates]);
+  }, [validators]);
 
   return (
     <QueryTable
@@ -45,7 +45,7 @@ const LatestVotes = ({ filters }) => {
       }}
       additionalRowProps={{
         t,
-        delegates: votedDelegates,
+        delegates: votedValidators,
         activeToken: 'LSK',
         layout: 'vote',
       }}

@@ -47,7 +47,7 @@ const menuLinks = (t) => [
       path: routes.wallets.path,
     },
     {
-      icon: 'delegatesMonitor',
+      icon: 'validatorsMonitor',
       id: 'validators',
       label: t('Validators'),
       path: routes.validators.path,

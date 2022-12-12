@@ -28,11 +28,11 @@ const moduleCommandMap = {
   },
   [moduleCommandNameMap.registerDelegate]: {
     maxFee: 25e8,
-    icon: 'registerDelegate',
+    icon: 'registerValidator',
   },
   [moduleCommandNameMap.reportDelegateMisbehavior]: {
     maxFee: 1e7,
-    icon: 'reportDelegateMisbehavior',
+    icon: 'reportValidatorMisbehavior',
   },
   [moduleCommandNameMap.registerMultisignature]: {
     maxFee: 5e8,

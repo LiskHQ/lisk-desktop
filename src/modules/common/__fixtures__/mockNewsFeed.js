@@ -133,15 +133,15 @@ export const mockNewsFeed = {
     url: 'https://lisk.com/blog/research/where-store-lsk-lisk-desktop-and-lisk-mobile-wallets',
   }, {
     author: 'Tony Morinello',
-    content: 'Choosing which delegates to vote for is a crucial component of Lisk\'s Delegated\nProof of Stake (DPoS) consensus',
+    content: 'Choosing which validators to vote for is a crucial component of Lisk\'s Delegated\nProof of Stake (DPoS) consensus',
     imageUrl: 'https://lisk.com/sites/default/files/styles/blog_main_image_xl_retina/public/images/2022-06/How-to-Find-Lisk-Delegates.png?itok=7E801hyZ',
     source: 'drupal_lisk_general',
     sourceId: '1238',
     timestamp: 1656006240,
     createdAt: 1656006240,
     modifiedAt: 1656006240,
-    title: 'How to Find Lisk Delegates?',
-    url: 'https://lisk.com/blog/research/how-find-lisk-delegates',
+    title: 'How to Find Lisk validators?',
+    url: 'https://lisk.com/blog/research/how-find-lisk-validators',
   }, {
     author: 'Lisk',
     content: 'Developers from around the world met in Berlin June 13th-15th to connect for\nBlockchain Day & the WeAreDevelopers World Conference.',

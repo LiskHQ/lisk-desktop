@@ -5,7 +5,7 @@ import WalletVisualWithAddress from '@wallet/components/walletVisualWithAddress'
 import DialogLink from 'src/theme/dialog/link';
 import styles from './SentVotesRow.css';
 
-export const DelegateWalletVisual = ({ address, name }) => (
+export const ValidatorWalletVisual = ({ address, name }) => (
   <div className={`${styles.addressWrapper} ${grid['col-xs-3']}`}>
     <WalletVisualWithAddress size={40} address={address} accountName={name} />
   </div>

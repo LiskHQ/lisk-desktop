@@ -28,9 +28,9 @@ const roundStates = {
 };
 
 const icons = {
-  forging: 'delegateForged',
-  awaitingSlot: 'delegateAwaiting',
-  missedBlock: 'delegateMissed',
+  forging: 'validatorForged',
+  awaitingSlot: 'validatorAwaiting',
+  missedBlock: 'validatorMissed',
 };
 
 const validatorStatus = {
