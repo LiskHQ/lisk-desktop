@@ -9,7 +9,7 @@ import TransactionEventsRow from './TokenCard';
 describe('TokenCard', () => {
   let wrapper;
 
-  it('should display properly', async () => {
+  it('should display properly ', async () => {
     const { availableBalance, symbol } = mockTokensBalance.data[0];
     const props = {
       lockedBalance: 20000,
@@ -21,7 +21,7 @@ describe('TokenCard', () => {
 
     expect(screen.queryAllByText(`${fromRawLsk(props.lockedBalance)} ${symbol.toUpperCase()}`));
     expect(screen.queryAllByText(`${fromRawLsk(availableBalance)} ${symbol.toUpperCase()}`));
-    expect(screen.queryByTestId('fiat-balance').innerHTML.match(/~10\.00/g)).toBeTruthy();
+    expect( screen.getByText(/~10\.00/g)).toBeTruthy();
     expect(screen.getByAltText(symbol)).toBeTruthy();
 
     wrapper.rerender(
@@ -30,7 +30,7 @@ describe('TokenCard', () => {
       </MemoryRouter>
     );
 
-    expect(screen.queryByTestId('fiat-balance')).toBeFalsy();
+    expect(wrapper.container.querySelector('.fiatBalance')).toBe(null);
     expect(screen.queryByTestId('locked-balance')).toBeFalsy();
   });
 });

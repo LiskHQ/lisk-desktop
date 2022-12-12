@@ -17,7 +17,6 @@ const TokenCard = ({ lockedBalance, availableBalance, symbol, url, address }) =>
       <TokenAmount className={styles.tokenAmount} val={availableBalance} token={symbol} />
       {symbol === 'LSK' && (
         <Converter
-          data-testid="fiat-balance"
           className={styles.fiatBalance}
           value={fromRawLsk(availableBalance)}
         />
