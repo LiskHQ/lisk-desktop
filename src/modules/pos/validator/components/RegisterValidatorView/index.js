@@ -5,9 +5,9 @@ import Dialog from 'src/theme/dialog/dialog';
 import Form from '../RegisterValidatorForm';
 import Summary from '../RegisterValidatorSummary';
 import Status from '../RegisterValidatorStatus';
-import styles from './registerDelegate.css';
+import styles from './registerValidator.css';
 
-const RegisterDelegate = ({ history, t }) => (
+const RegisterValidator = ({ history, t }) => (
   <Dialog hasClose>
     <MultiStep
       className={styles.multiStep}
@@ -22,4 +22,4 @@ const RegisterDelegate = ({ history, t }) => (
   </Dialog>
 );
 
-export default RegisterDelegate;
+export default RegisterValidator;

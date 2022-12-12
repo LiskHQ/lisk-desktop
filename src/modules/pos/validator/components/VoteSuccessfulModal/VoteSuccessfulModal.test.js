@@ -20,7 +20,7 @@ describe('VoteSuccessfulModal', () => {
     expect(screen.getByText('Vote(s) has been submitted')).toBeTruthy();
     expect(screen.getByText('test message')).toBeTruthy();
 
-    fireEvent.click(screen.getByText('Back to delegates'));
+    fireEvent.click(screen.getByText('Back to validators'));
 
     await waitFor(() => {
       expect(props.history.push).toHaveBeenCalledWith('/validators');

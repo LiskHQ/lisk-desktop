@@ -88,7 +88,7 @@ describe('EditVote', () => {
     ).toBeTruthy();
     expect(
       screen.getByText(
-        'Insert a vote amount for this delegate. Your new vote will be added to the voting queue.'
+        'Insert a vote amount for this validator. Your new vote will be added to the voting queue.'
       )
     ).toBeTruthy();
     expect(screen.getByText('Vote amount ({{symbol}})')).toBeTruthy();
