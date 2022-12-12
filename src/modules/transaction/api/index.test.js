@@ -2,7 +2,7 @@
 import { MODULE_COMMANDS_NAME_MAP } from 'src/modules/transaction/configuration/moduleCommand';
 import { getTxAmount, convertBinaryToString } from '@transaction/utils/transaction';
 import { getState } from '@fixtures/transactions';
-import * as validator from '@pos/validator/api';
+import * as validators from '@pos/validator/api';
 import http from 'src/utils/api/http';
 import accounts from '@tests/constants/wallets';
 import { fromTransactionJSON } from '@transaction/utils/encoding';
@@ -113,7 +113,7 @@ describe('API: LSK Transactions', () => {
       http.mockReset();
     });
 
-    it.only('should throw if any of the API endpoints throw', async () => {
+    it('should throw if any of the API endpoints throw', async () => {
       // Mock promise failure
       http.mockRejectedValue(Error('Error fetching data.'));
 
@@ -128,7 +128,7 @@ describe('API: LSK Transactions', () => {
       }));
 
       // mock internals
-      validator.getValidators.mockResolvedValue({
+      validators.getValidators.mockResolvedValue({
         data: {},
         meta: { total: 100 },
       });

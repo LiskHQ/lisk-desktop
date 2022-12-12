@@ -12,7 +12,7 @@ import { joinModuleAndCommand } from 'src/modules/transaction/utils/moduleComman
 import { fromRawLsk } from '@token/fungible/utils/lsk';
 import { validateAddress } from 'src/utils/validators';
 import http from 'src/utils/api/http';
-import { getValidator } from '@pos/validator/api';
+import { getValidators } from '@pos/validator/api';
 import { httpPaths } from '../configuration';
 import { sign } from '../utils';
 import { fromTransactionJSON } from '../utils/encoding';
@@ -94,7 +94,7 @@ export const getTransactions = ({ network, params, baseUrl }) => {
  * @returns {Promise} Registered delegates list API call
  */
 export const getRegisteredValidators = async ({ network }) => {
-  const delegates = await getValidator({
+  const delegates = await getValidators({
     network,
     params: { limit: 1 },
   });
