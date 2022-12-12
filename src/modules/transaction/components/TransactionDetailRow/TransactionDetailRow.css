@@ -57,6 +57,11 @@
     font-weight: var(--font-weight-semi-bold);
     font-size: var(--font-size-h6);
   }
+
+  & a {
+    color: var(--color-ultramarine-blue);
+    text-decoration: none;
+  }
 }
 
 .expandToggle {
@@ -150,4 +155,9 @@
     color: var(--color-tx-fail-status-text);
     background-color: var(--color-tx-fail-status-bg);
   }
+}
+
+.copyIcon {
+  margin-left: -17px;
+  width: 20px;
 }
