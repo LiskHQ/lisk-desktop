@@ -93,7 +93,7 @@ export const getTransactions = ({ network, params, baseUrl }) => {
  * @param {Object} Network - Network setting from Redux store
  * @returns {Promise} Registered delegates list API call
  */
-export const getRegisteredDelegates = async ({ network }) => {
+export const getRegisteredValidators = async ({ network }) => {
   const delegates = await getValidator({
     network,
     params: { limit: 1 },

@@ -2,7 +2,7 @@
 import { MODULE_COMMANDS_NAME_MAP } from 'src/modules/transaction/configuration/moduleCommand';
 import { getTxAmount, convertBinaryToString } from '@transaction/utils/transaction';
 import { getState } from '@fixtures/transactions';
-import * as delegates from '@pos/validator/api';
+import * as validator from '@pos/validator/api';
 import http from 'src/utils/api/http';
 import accounts from '@tests/constants/wallets';
 import { fromTransactionJSON } from '@transaction/utils/encoding';
@@ -12,7 +12,7 @@ import {
   getTransactions,
   getTransactionStats,
   getTransactionFee,
-  getRegisteredDelegates,
+  getRegisteredValidators,
   dryRun,
 } from './index';
 
@@ -28,7 +28,7 @@ jest.mock('src/utils/api/ws', () =>
 );
 
 jest.mock('@pos/validator/api', () => ({
-  getDelegates: jest.fn(),
+  getValidators: jest.fn(),
 }));
 
 describe('API: LSK Transactions', () => {
@@ -108,17 +108,17 @@ describe('API: LSK Transactions', () => {
     });
   });
 
-  describe('getRegisteredDelegates', () => {
+  describe('getRegisteredValidators', () => {
     beforeEach(() => {
       http.mockReset();
     });
 
-    it('should throw if any of the API endpoints throw', async () => {
+    it.only('should throw if any of the API endpoints throw', async () => {
       // Mock promise failure
       http.mockRejectedValue(Error('Error fetching data.'));
 
       // call and anticipate failure
-      await expect(getRegisteredDelegates({ network })).rejects.toThrow('Error fetching data.');
+      await expect(getRegisteredValidators({ network })).rejects.toThrow('Error fetching data.');
     });
 
     it('should return correct stats of registered delegates', async () => {
@@ -128,7 +128,7 @@ describe('API: LSK Transactions', () => {
       }));
 
       // mock internals
-      delegates.getDelegates.mockResolvedValue({
+      validator.getValidators.mockResolvedValue({
         data: {},
         meta: { total: 100 },
       });
@@ -138,7 +138,7 @@ describe('API: LSK Transactions', () => {
       });
 
       // Call and expect right values
-      const response = await getRegisteredDelegates({ network });
+      const response = await getRegisteredValidators({ network });
       expect(response).toEqual([
         ['2020-3', 90],
         ['2020-4', 93],

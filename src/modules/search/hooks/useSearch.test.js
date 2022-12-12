@@ -22,7 +22,7 @@ describe('useSearch hook', () => {
     act(() => {
       const { result, waitFor } = renderHook(() => useSearch(), { wrapper });
       waitFor(() => !result.current.isLoading);
-      expect(result.current.delegates.length).toEqual(0)
+      expect(result.current.validators.length).toEqual(0)
 
     })
   });
@@ -31,7 +31,7 @@ describe('useSearch hook', () => {
     act(() => {
       const { result, waitFor } = renderHook(() => useSearch('hi'), { wrapper });
       waitFor(() => !result.current.isLoading);
-      expect(result.current.delegates.length).toEqual(0)
+      expect(result.current.validators.length).toEqual(0)
     })
   })
 
@@ -39,7 +39,7 @@ describe('useSearch hook', () => {
     act(() => {
       const { result, waitFor } = renderHook(() => useSearch('genesis'), { wrapper });
       waitFor(() => !result.current.isLoading);
-      expect(result.current.delegates.length).toEqual(1);
+      expect(result.current.validators.length).toEqual(1);
       expect(useCustomQuery).toBeCalledWith(expect.objectContaining({
         config: expect.objectContaining({
           url: "/api/v3/dpos/delegates",

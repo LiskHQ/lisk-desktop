@@ -2,7 +2,7 @@
 import { compose } from 'redux';
 import { withRouter } from 'react-router-dom';
 import { connect } from 'react-redux';
-import { getRegisteredDelegates } from '@transaction/api';
+import { getRegisteredValidators } from '@transaction/api';
 import withData from 'src/utils/withData';
 import Validators from './Validators';
 
@@ -15,7 +15,7 @@ const ComposedValidators = compose(
   connect(mapStateToProps),
   withData({
     registrations: {
-      apiUtil: (network) => getRegisteredDelegates({ network }),
+      apiUtil: (network) => getRegisteredValidators({ network }),
       defaultData: [],
       autoload: true,
     },

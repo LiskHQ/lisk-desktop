@@ -5,7 +5,7 @@ import { truncateAddress } from '@wallet/utils/account';
 import styles from './walletsAndDeletegates.css';
 
 const Validators = ({
-  delegates: validators, onSelectedRow, t, rowItemIndex, updateRowItemIndex, searchTextValue,
+  validators, onSelectedRow, t, rowItemIndex, updateRowItemIndex, searchTextValue,
 }) => (
   <div className={`${styles.wrapper} delegates`}>
     <header className={`${styles.header} validators-header`}>
