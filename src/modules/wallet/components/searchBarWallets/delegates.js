@@ -42,7 +42,7 @@ const Delegates = ({
           </div>
           <span className={styles.accountBalance}>
             <span className={styles.tag}>
-              {t('Delegate #{{rank}}', { rank: delegate.rank })}
+              {t('Validator #{{rank}}', { rank: delegate.rank })}
             </span>
           </span>
         </div>

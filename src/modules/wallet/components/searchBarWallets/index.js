@@ -55,7 +55,7 @@ const Wallets = ({
                   <span className={`${styles.tag} tag`}>
                     {
                       wallet.rank
-                        ? t('Delegate #{{rank}}', { rank: wallet.rank })
+                        ? t('Validator #{{rank}}', { rank: wallet.rank })
                         : '-'
                     }
                   </span>

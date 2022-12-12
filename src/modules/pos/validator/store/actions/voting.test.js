@@ -8,7 +8,7 @@ import wallets from '@tests/constants/wallets';
 import txActionTypes from '@transaction/store/actionTypes';
 import mockSavedAccounts from '@tests/fixtures/accounts';
 import { mockCommandParametersSchemas } from 'src/modules/common/__fixtures__';
-import * as delegateApi from '../../api';
+import * as validatorApi from '../../api';
 import actionTypes from './actionTypes';
 import {
   voteEdited,
@@ -255,7 +255,7 @@ describe('actions: voting', () => {
         type: actionTypes.votesRetrieved,
         data: votes,
       };
-      delegateApi.getVotes.mockImplementation(() => Promise.resolve({ data: votes }));
+      validatorApi.getVotes.mockImplementation(() => Promise.resolve({ data: votes }));
       await votesRetrieved()(dispatch, getState);
 
       expect(dispatch).toHaveBeenCalledWith(expectedAction);
