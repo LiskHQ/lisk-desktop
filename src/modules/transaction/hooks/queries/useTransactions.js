@@ -54,19 +54,19 @@ export const useTransactions = ({ config: customConfig = {}, options } = {}) => 
   const config = useTransactionsConfig()(customConfig);
 
   /* istanbul ignore next */
-  client.socket.on('new.transactions', () => {
-    setHasUpdate(true);
-  });
+  // client.socket.on('new.transactions', () => {
+  //   setHasUpdate(true);
+  // });
 
-  /* istanbul ignore next */
-  client.socket.on('delete.transactions', () => {
-    setHasUpdate(true);
-  });
+  // /* istanbul ignore next */
+  // client.socket.on('delete.transactions', () => {
+  //   setHasUpdate(true);
+  // });
 
   /* istanbul ignore next */
   const invalidateData = useCallback(async () => {
     setHasUpdate(false);
-    await queryClient.invalidateQueries(TRANSACTIONS);
+    // await queryClient.invalidateQueries(TRANSACTIONS);
   }, [queryClient, setHasUpdate]);
 
   const response = useCustomInfiniteQuery({
