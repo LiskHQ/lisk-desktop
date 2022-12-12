@@ -4,7 +4,7 @@ import styles from './transactionsTable.css';
 export default (changeSort, t) => [
   {
     title: t('ID'),
-    classList: grid['col-xs-3'],
+    classList: grid['col-xs-2'],
     placeholder: 'walletWithAddress',
   },
   {
@@ -22,11 +22,11 @@ export default (changeSort, t) => [
   },
   {
     title: t('Type'),
-    classList: `${grid['col-xs-3']} ${grid['col-md-2']}`,
+    classList: `${grid['col-xs-2']} ${grid['col-md-2']}`,
   },
   {
     title: t('Date'),
-    classList: grid['col-md-1'],
+    classList: `${grid['col-md-2']} ${grid['col-xs-3']}`,
     sort: {
       fn: changeSort,
       key: 'timestamp',

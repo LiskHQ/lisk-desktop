@@ -9,6 +9,7 @@ import blockchainApplicationsExplore from '@tests/fixtures/blockchainApplication
 import Converter from 'src/modules/common/components/converter';
 import { useCurrentAccount } from 'src/modules/account/hooks';
 import i18n from 'src/utils/i18n/i18n';
+import Div from '@common/components/div/Div';
 import MessageField from '../../../token/fungible/components/MessageField';
 import MenuSelect, { MenuItem } from '../MenuSelect';
 import RequestWrapper from './requestWrapper';
@@ -24,12 +25,8 @@ const Account = () => {
     <div className={styles.accountWrapper}>
       <WalletVisual address={address} size={40} />
       <div>
-        <b className={`${styles.addressValue}`}>
-          {name}
-        </b>
-        <p className={`${styles.addressValue}`}>
-          {address}
-        </p>
+        <b className={`${styles.addressValue}`}>{name}</b>
+        <p className={`${styles.addressValue}`}>{address}</p>
       </div>
     </div>
   );
@@ -91,9 +88,10 @@ class Request extends React.Component {
   handleFieldChange({ target }) {
     const { t } = this.props;
     const byteCount = sizeOfString(target.value);
-    const error = target.name === 'amount'
-      ? validateAmountFormat({ value: target.value, locale: i18n.language }).message
-      : byteCount > maxMessageLength;
+    const error =
+      target.name === 'amount'
+        ? validateAmountFormat({ value: target.value, locale: i18n.language }).message
+        : byteCount > maxMessageLength;
     let feedback = '';
 
     if (target.name === 'amount') {
@@ -144,9 +142,7 @@ class Request extends React.Component {
     const { address } = this.props;
     return Object.keys(fields).reduce((link, fieldName) => {
       const field = fields[fieldName];
-      return field.value !== ''
-        ? `${link}&${fieldName}=${encodeURIComponent(field.value)}`
-        : link;
+      return field.value !== '' ? `${link}&${fieldName}=${encodeURIComponent(field.value)}` : link;
     }, `lisk://wallet/send?recipient=${address}`);
   }
 
@@ -182,15 +178,20 @@ class Request extends React.Component {
   // eslint-disable-next-line complexity
   render() {
     const { t } = this.props;
-    const {
-      fields,
-      shareLink,
-    } = this.state;
+    const { fields, shareLink } = this.state;
 
     return (
-      <RequestWrapper copyLabel={t('Copy link')} copyValue={shareLink} t={t} title={t('Request tokens')} className="request-wrapper">
+      <RequestWrapper
+        copyLabel={t('Copy link')}
+        copyValue={shareLink}
+        t={t}
+        title={t('Request tokens')}
+        className="request-wrapper"
+      >
         <span className={`${styles.label}`}>
-          {t('Use the sharing link to easily request any amount of tokens from Lisk Desktop or Lisk Mobile users.')}
+          {t(
+            'Use the sharing link to easily request any amount of tokens from Lisk Desktop or Lisk Mobile users.'
+          )}
         </span>
 
         <p>Account</p>
@@ -245,6 +246,7 @@ class Request extends React.Component {
               size="m"
             />
             <Converter
+              Wrapper={Div}
               className={styles.converter}
               value={fields.amount.value}
               error={fields.amount.error}
