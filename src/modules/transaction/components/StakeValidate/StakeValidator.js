@@ -25,7 +25,7 @@ const InfoColumn = ({ title, children, className }) => (
   </div>
 );
 
-const VoteDelegate = ({ t, account, summaryInfo, transaction }) => {
+const StakeValidator = ({ t, account, summaryInfo, transaction }) => {
   const addedLength = Object.keys(summaryInfo.added).length;
   const editedLength = Object.keys(summaryInfo.edited).length;
   const removedLength = Object.keys(summaryInfo.removed).length;
@@ -50,4 +50,4 @@ const VoteDelegate = ({ t, account, summaryInfo, transaction }) => {
   );
 };
 
-export default VoteDelegate;
+export default StakeValidator;
