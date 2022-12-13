@@ -263,7 +263,7 @@ describe('SearchBar', () => {
         .simulate('change', { target: { value: 'genesis' } });
     });
 
-    wrapper.find('.delegates-row').at(0).simulate('click');
+    wrapper.find('.validators-row').at(0).simulate('click');
     expect(props.history.push).toBeCalledWith('/validators/profile?address=123456L');
   });
 
