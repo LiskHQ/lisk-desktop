@@ -5,19 +5,25 @@ import { truncateAddress } from '@wallet/utils/account';
 import styles from './walletsAndDeletegates.css';
 
 const Validators = ({
-  validators, onSelectedRow, t, rowItemIndex, updateRowItemIndex, searchTextValue,
+  validators,
+  onSelectedRow,
+  t,
+  rowItemIndex,
+  updateRowItemIndex,
+  searchTextValue,
 }) => (
-  <div className={`${styles.wrapper} delegates`}>
+  <div className={`${styles.wrapper} validators`}>
     <header className={`${styles.header} validators-header`}>
       <label>{t('Account')}</label>
     </header>
     <div className={`${styles.content} validators-content`}>
-      {
-      validators.map((validator, index) => (
+      {validators.map((validator, index) => (
         <div
           key={index}
           data-index={index}
-          className={`${styles.accountRow} ${rowItemIndex === index ? styles.active : ''} delegates-row`}
+          className={`${styles.accountRow} ${
+            rowItemIndex === index ? styles.active : ''
+          } validators-row`}
           onClick={() => onSelectedRow(validator.address)}
           onMouseEnter={updateRowItemIndex}
         >
@@ -41,13 +47,10 @@ const Validators = ({
             </span>
           </div>
           <span className={styles.accountBalance}>
-            <span className={styles.tag}>
-              {t('Validator #{{rank}}', { rank: validator.rank })}
-            </span>
+            <span className={styles.tag}>{t('Validator #{{rank}}', { rank: validator.rank })}</span>
           </span>
         </div>
-      ))
-    }
+      ))}
     </div>
   </div>
 );

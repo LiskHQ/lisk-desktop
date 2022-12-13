@@ -6,8 +6,8 @@ describe('Validators', () => {
   let wrapper;
 
   const props = {
-    t: v => v,
-    delegates: [],
+    t: (v) => v,
+    validators: [],
     onSelectedRow: jest.fn(),
     rowItemIndex: 0,
     updateRowItemIndex: jest.fn(),
@@ -18,15 +18,15 @@ describe('Validators', () => {
   });
 
   it('should render properly empty accounts', () => {
-    expect(wrapper).toContainMatchingElement('.delegates');
+    expect(wrapper).toContainMatchingElement('.validators');
     expect(wrapper).toContainMatchingElement('.validators-header');
     expect(wrapper).toContainMatchingElement('.validators-content');
-    expect(wrapper).not.toContainMatchingElement('.delegates-row');
+    expect(wrapper).not.toContainMatchingElement('.validators-row');
   });
 
   it('should render properly with accounts data', () => {
     const newProps = { ...props };
-    newProps.delegates = [
+    newProps.validators = [
       {
         summary: {
           address: '123456L',
@@ -56,15 +56,15 @@ describe('Validators', () => {
     ];
     wrapper = mount(<Validators {...newProps} />);
 
-    expect(wrapper).toContainMatchingElement('.delegates');
+    expect(wrapper).toContainMatchingElement('.validators');
     expect(wrapper).toContainMatchingElement('.validators-header');
     expect(wrapper).toContainMatchingElement('.validators-content');
-    expect(wrapper).toContainMatchingElement('.delegates-row');
+    expect(wrapper).toContainMatchingElement('.validators-row');
   });
 
   it('should call onClick function on selected row', () => {
     const newProps = { ...props };
-    newProps.delegates = [
+    newProps.validators = [
       {
         summary: {
           address: '123456L',
@@ -81,7 +81,7 @@ describe('Validators', () => {
     ];
     wrapper = mount(<Validators {...newProps} />);
 
-    wrapper.find('.delegates-row').at(0).simulate('click');
+    wrapper.find('.validators-row').at(0).simulate('click');
     expect(props.onSelectedRow).toBeCalled();
   });
 });
