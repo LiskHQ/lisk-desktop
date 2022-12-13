@@ -6,6 +6,7 @@ describe('WalletDetails', () => {
   let wrapper;
 
   const props = {
+    isLoading: false,
     tokens: [{ availableBalance: '99999800000000', tokenID: "0000000000000000" }],
     t: key => key,
   };
@@ -15,7 +16,14 @@ describe('WalletDetails', () => {
   });
 
   it('Should render properly', () => {
+    expect(wrapper).toContainMatchingElement('.box');
     expect(wrapper).toContainMatchingElement('.coin-container');
-    expect(wrapper).toContainMatchingElements(1, 'section.coin-row');
+  });
+
+  it('Should show loading state when loading', () => {
+    wrapper.setProps({
+      isLoading: true,
+    });
+    expect(wrapper.find('.skeletonLoader')).toBeTruthy();
   });
 });
