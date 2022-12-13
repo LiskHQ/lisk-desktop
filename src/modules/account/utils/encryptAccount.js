@@ -5,6 +5,7 @@ import { defaultDerivationPath } from 'src/utils/explicitBipKeyDerivation';
 
 const { encrypt } = cryptography;
 
+// eslint-disable-next-line max-statements
 export const encryptAccount = async ({
   recoveryPhrase,
   password,
@@ -17,6 +18,7 @@ export const encryptAccount = async ({
     enableCustomDerivationPath,
     derivationPath: enableCustomDerivationPath ? derivationPath : defaultDerivationPath,
   };
+  console.log('encryptAccount', options);
 
   try {
     const { privateKey, publicKey, isValid } = await extractKeyPair(options);
