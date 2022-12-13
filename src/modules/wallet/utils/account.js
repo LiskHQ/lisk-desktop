@@ -307,20 +307,14 @@ export const validate2ndPass = async (account, passphrase, error) => {
 
 /**
  * Validate a derivation path
- * TODO: Replace this function when @liskhq (lisk-sdk) exposes the one they use: Issue #7877 https://github.com/LiskHQ/lisk-sdk/issues/7877
  * @param {string} derivationPath
- * @returns {string} - Error message
+ * @returns {string} - undefined/error
  */
 export const getDerivationPathErrorMessage = (derivationPath) => {
-  if ((!derivationPath)) {
-    return i18next.t('Invalid path format');
-  }
-
   try {
     cryptography.utils.parseKeyDerivationPath(derivationPath);
   } catch (error) {
     return i18next.t(error.message);
   }
-
   return undefined;
 };
