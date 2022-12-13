@@ -20,7 +20,7 @@ beforeEach(() => {
   });
 });
 
-describe('Generals', () => {
+describe('AddAccountForm', () => {
   it('should render successfully', () => {
     expect(screen.getByText('Add account')).toBeTruthy();
     expect(
@@ -85,19 +85,52 @@ describe('Generals', () => {
     expect(screen.queryByText('Select Network')).toBeTruthy();
   });
 
-  it('should render the custom derivation path field with no default value', () => {
-    jest.clearAllMocks();
-    accountFormInstance = renderWithStore(AddAccountForm, props, {
-      settings: { enableCustomDerivationPath: true },
-    });
+  it('should have disabled button if derivation path has an error', () => {
+    props.settings.enableCustomDerivationPath = true;
+    accountFormInstance.rerender(<AddAccountForm {...props} />);
 
-    expect(accountFormInstance.getByDisplayValue(defaultDerivationPath)).toBeTruthy();
+    const input = screen.getByLabelText('Custom derivation path');
+    fireEvent.change(input, { target: { value: 'incorrectPath' } });
+
+    const passphraseInput1 = screen.getByTestId('recovery-1');
+    const pasteEvent = createEvent.paste(passphraseInput1, {
+      clipboardData: {
+        getData: () =>
+          'below record evolve eye youth post control consider spice swamp hidden easily',
+      },
+    });
+    fireEvent(passphraseInput1, pasteEvent);
+
+    expect(screen.getByText('Continue')).toHaveAttribute('disabled');
   });
 
-  it('should render the custom derivation path field with default value', () => {
-    accountFormInstance = renderWithStore(AddAccountForm, props, {
-      settings: { enableCustomDerivationPath: true, customDerivationPath: `m/0/2'` },
+  it('should trigger add account if derivation path and passphrase is correct', () => {
+    props.settings.enableCustomDerivationPath = true;
+    accountFormInstance.rerender(<AddAccountForm {...props} />);
+
+    const input = screen.getByLabelText('Custom derivation path');
+    const correctDerivationPath = "m/44'/134'/0'";
+    fireEvent.change(input, { target: { value: correctDerivationPath } });
+
+    const passphrase = 'below record evolve eye youth post control consider spice swamp hidden easily';
+    const passphraseInput1 = screen.getByTestId('recovery-1');
+    const pasteEvent = createEvent.paste(passphraseInput1, {
+      clipboardData: {
+        getData: () =>
+          passphrase,
+      },
     });
-    expect(screen.getByDisplayValue(`m/0/2'`)).toBeTruthy();
+    fireEvent(passphraseInput1, pasteEvent);
+
+    fireEvent.click(screen.getByText('Continue'));
+
+    expect(props.onAddAccount).toHaveBeenCalledWith({ value: passphrase, isValid: true }, correctDerivationPath);
+  });
+
+  it('should render the custom derivation path field with no default value', () => {
+    props.settings.enableCustomDerivationPath = true;
+    accountFormInstance.rerender(<AddAccountForm {...props} />);
+
+    expect(accountFormInstance.getByDisplayValue(defaultDerivationPath)).toBeTruthy();
   });
 });

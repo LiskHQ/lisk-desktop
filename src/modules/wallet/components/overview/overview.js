@@ -132,7 +132,7 @@ const Overview = ({ isWalletRoute, history }) => {
           </div>
         </div>
       </div>
-      <div main className={styles.tokenCarouselWrapper}>
+      <div className={styles.tokenCarouselWrapper}>
         <div className={styles.contentWrapper}>
           <div className={`${styles.carouselHeader}`}>
             <div>{t('Tokens')}</div>

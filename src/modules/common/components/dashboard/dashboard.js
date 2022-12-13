@@ -67,7 +67,7 @@ const Dashboard = ({ t, history }) => {
             {
               !isEmpty(currentAccount) && (
                 <>
-                  <WalletDetails className={styles.marginFix} isWalletRoute={false} tokens={tokens.data?.data} />
+                  <WalletDetails className={styles.marginFix} isWalletRoute={false} isLoading={tokens.isLoading} tokens={tokens.data?.data} />
                   <RecentTransactions
                     isLoggedIn
                     className={styles.marginFix}

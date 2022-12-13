@@ -17,7 +17,7 @@ class passphraseInput extends React.Component {
     this.state = {
       showPassphrase: false,
       partialPassphraseError: [],
-      values: [],
+      values: props.values || [],
       focus: 0,
       validationError: '',
       passphraseIsInvalid: false,
