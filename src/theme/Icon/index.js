@@ -83,8 +83,8 @@ import transactionPending from '@setup/react/assets/images/icons/transaction-sta
 import transactionSuccess from '@setup/react/assets/images/icons/transaction-success.svg';
 import txDefault from '@setup/react/assets/images/icons/tx-default.svg';
 import txDefaultDark from '@setup/react/assets/images/icons/tx-default-dark.svg';
-import registerDelegate from '@setup/react/assets/images/icons/tx-delegate.svg';
-import registerDelegateDark from '@setup/react/assets/images/icons/tx-delegate-dark.svg';
+import registerValidator from '@setup/react/assets/images/icons/tx-delegate.svg';
+import registerValidatorDark from '@setup/react/assets/images/icons/tx-delegate-dark.svg';
 import vote from '@setup/react/assets/images/icons/tx-vote.svg';
 import voteDark from '@setup/react/assets/images/icons/tx-vote-dark.svg';
 import addedVotes from '@setup/react/assets/images/icons/added-votes.svg';
@@ -206,8 +206,8 @@ import warningYellow from '@setup/react/assets/images/icons/warning-yellow.svg';
 import linkIcon from '@setup/react/assets/images/icons/link-icon.svg';
 import refresh from '@setup/react/assets/images/icons/refresh.svg';
 import refreshActive from '@setup/react/assets/images/icons/refresh-active.svg';
-import reportDelegateMisbehavior from '@setup/react/assets/images/icons/reportDelegateMisbehavior.svg';
-import reportDelegateMisbehaviorDark from '@setup/react/assets/images/icons/reportDelegateMisbehavior-dark.svg';
+import reportValidatorMisbehavior from '@setup/react/assets/images/icons/reportDelegateMisbehavior.svg';
+import reportValidatorMisbehaviorDark from '@setup/react/assets/images/icons/reportDelegateMisbehavior-dark.svg';
 import downloadUpdateFinish from '@setup/react/assets/images/icons/download-update-finish.svg';
 import downloadUpdateProgress from '@setup/react/assets/images/icons/download-update-progress.svg';
 import whiteLinkIcon from '@setup/react/assets/images/icons/white-link-icon.svg';
@@ -316,8 +316,8 @@ export const icons = {
   transactionSuccess,
   txDefault,
   txDefaultDark,
-  registerDelegate,
-  registerDelegateDark,
+  registerValidator,
+  registerValidatorDark,
   vote,
   voteDark,
   user,
@@ -434,8 +434,8 @@ export const icons = {
   multisignatureTransactionDark,
   refresh,
   refreshActive,
-  reportDelegateMisbehavior,
-  reportDelegateMisbehaviorDark,
+  reportValidatorMisbehavior,
+  reportValidatorMisbehaviorDark,
   lockedBalance,
   lockedBalanceDark,
   downloadUpdateProgress,

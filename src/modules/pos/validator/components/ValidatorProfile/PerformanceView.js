@@ -107,7 +107,7 @@ const BannedValidator = ({ theme, t }) => (
   </div>
 );
 
-const getValidatorIcon = (status) => `delegate${capitalize(status)}`;
+const getValidatorIcon = (status) => `validator${capitalize(status) || 'Standby'}`;
 
 const getValidatorComponent = (status) => {
   const components = {
