@@ -37,7 +37,7 @@
 .dropDownMenu {
   border: 0;
   min-width: 180px !important;
-  width: 247px !important;
+  width: 284px !important;
   top: calc(100% + 13px) !important;
   margin-left: -48px;
   background-color: var(--color-menu-black);
