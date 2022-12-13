@@ -34,21 +34,16 @@
     }
   }
 
-  & > div:nth-child(2) > p {
-    margin: 0px;
+  & .tokenAmount {
     font-family: var(--content-font);
-    font-size: 14px;
+    font-size: 18px;
+    font-weight: 600;
+    color: var(--color-content-light);
+    margin-bottom: 3px;
+  }
 
-    &:first-of-type {
-      font-size: 18px;
-      font-weight: 600;
-      color: var(--color-content-light);
-      margin-bottom: 3px;
-    }
-
-    &.fiatBalance {
-      color: var(--color-blue-gray);
-    }
+  & .fiatBalance {
+    color: var(--color-blue-gray);
   }
 }
 
