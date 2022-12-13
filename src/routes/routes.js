@@ -30,14 +30,14 @@ export default {
     forbiddenTokens: [],
     exact: true,
   },
-  delegates: {
-    path: '/delegates',
+  validators: {
+    path: '/validators',
     exact: true,
     isPrivate: false,
     forbiddenTokens: [],
   },
-  delegateProfile: {
-    path: '/delegates/profile',
+  validatorProfile: {
+    path: '/validators/profile',
     exact: true,
     isPrivate: false,
     forbiddenTokens: [],
@@ -135,7 +135,7 @@ export default {
     forbiddenTokens: [],
   },
   sentVotes: {
-    path: '/delegates/profile/votes',
+    path: '/validators/profile/votes',
     exact: true,
     isPrivate: false,
     forbiddenTokens: [],
@@ -171,7 +171,7 @@ export const modals = {
     isPrivate: false,
     forbiddenTokens: [],
   },
-  registerDelegate: {
+  registerValidator: {
     isPrivate: true,
     forbiddenTokens: [],
   },
@@ -215,7 +215,7 @@ export const modals = {
     isPrivate: true,
     forbiddenTokens: [],
   },
-  delegatePerformance: {
+  validatorPerformance: {
     isPrivate: false,
     forbiddenTokens: [],
   },

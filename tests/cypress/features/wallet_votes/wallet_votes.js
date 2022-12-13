@@ -6,7 +6,7 @@ Then(/^I open votes tab$/, function () {
   cy.get(ss.votesTab).click();
 });
 
-Then(/^I see 30 delegates$/, function () {
+Then(/^I see 30 validators$/, function () {
   cy.get(ss.voteRow).should('have.length', 30);
 });
 
@@ -23,9 +23,9 @@ Then(/^I see no votes$/, function () {
 });
 
 Then(/^I filter votes$/, function () {
-  cy.get(ss.searchDelegateInput).click().type('genesis_17');
+  cy.get(ss.searchValidatorInput).click().type('genesis_17');
 });
 
-Then(/^I should see (\d+) delegates in table$/, function (number) {
+Then(/^I should see (\d+) validators in table$/, function (number) {
   cy.get(ss.voteRow).should('have.length', number);
 });

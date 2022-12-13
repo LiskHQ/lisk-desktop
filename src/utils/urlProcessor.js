@@ -2,9 +2,9 @@ import { parseSearchParams } from 'src/utils/searchParams';
 import { getAccounts } from '@wallet/utils/api';
 import { regex } from 'src/const/regex';
 import { validateAddress } from 'src/utils/validators';
-import { voteEdited } from '@dpos/validator/store/actions/voting';
+import { voteEdited } from '@pos/validator/store/actions/voting';
 
-const isUsernameValid = username => regex.name.test(username);
+const isUsernameValid = (username) => regex.name.test(username);
 
 /**
  * Returns an empty array if the given list is not an array
@@ -25,7 +25,7 @@ const normalizeUsernames = (usernames) => {
     return [];
   }
 
-  const areUsernamesValid = usernames.every(username => isUsernameValid(username));
+  const areUsernamesValid = usernames.every((username) => isUsernameValid(username));
 
   if (!areUsernamesValid) {
     return [];
@@ -57,18 +57,21 @@ const urlProcessor = (search, network) => {
   });
 };
 
-const setVotesByLaunchProtocol = search =>
-  async (dispatch, getState) => {
-    const { network } = getState();
-    const accounts = await urlProcessor(search, network);
+const setVotesByLaunchProtocol = (search) => async (dispatch, getState) => {
+  const { network } = getState();
+  const accounts = await urlProcessor(search, network);
 
-    return dispatch(
-      voteEdited(accounts.data
+  return dispatch(
+    voteEdited(
+      accounts.data
         .filter(({ summary }) => validateAddress(summary.address) === 0)
-        .map(
-          ({ summary, dpos }) => ({ address: summary.address, username: dpos.delegate.username, amount: '' }),
-        )),
-    );
-  };
+        .map(({ summary, dpos }) => ({
+          address: summary.address,
+          username: dpos.delegate.username,
+          amount: '',
+        }))
+    )
+  );
+};
 
 export default setVotesByLaunchProtocol;

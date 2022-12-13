@@ -3,15 +3,15 @@ import BlockDetails from '@block/manager/blockDetailsManager';
 import Blocks from '@block/components/blocks';
 import Bookmarks from '@bookmark/manager/BookmarkListManager';
 import Dashboard from 'src/modules/common/components/dashboard';
-import DelegatesMonitor from '@dpos/validator/components/DelegatesMonitorView';
-import DelegatesPerformanceModal from '@dpos/validator/components/delegatePerformanceModal';
+import ValidatorsMonitor from '@pos/validator/components/ValidatorsMonitorView';
+import ValidatorPerformanceModal from '@pos/validator/components/ValidatorPerformanceModal';
 import HwWalletLogin from '@auth/components/hwWalletLogin';
 import Login from '@auth/components/Signin';
 import MonitorWallets from '@account/components/Accounts';
 import MonitorNetwork from '@network/manager/networkManager';
 import MonitorTransactions from '@transaction/components/Transactions';
 import Register from '@auth/manager/SignupManager';
-import RegisterDelegate from '@dpos/validator/manager/registerDelegateManager';
+import RegisterValidator from '@pos/validator/manager/registerValidatorManager';
 import Send from '@token/fungible/components/SendView';
 import Settings from 'src/modules/settings/manager/SettingsManager';
 import SignMessage from '@message/manager/signMessageManager';
@@ -21,9 +21,9 @@ import AccountDetails from '@account/components/AccountDetails';
 import TransactionDetails from '@transaction/manager/transactionDetailViewManager';
 import VerifyMessage from '@message/manager/verifyMessageManager';
 import Request from '@wallet/components/request';
-import UnlockBalanceView from '@dpos/validator/components/UnlockBalanceView';
-import EditVote from '@dpos/validator/manager/editVoteManager';
-import VotingQueue from '@dpos/validator/manager/votingQueueManager';
+import UnlockBalanceView from '@pos/validator/components/UnlockBalanceView';
+import EditVote from '@pos/validator/manager/editVoteManager';
+import VotingQueue from '@pos/validator/manager/votingQueueManager';
 import DeviceDisconnect from 'src/modules/common/components/deviceDisconnectDialog';
 import NewReleaseDialog from '@update/detail/info/newReleaseDialog';
 import ReclaimBalance from '@legacy/manager/reclaimBalance';
@@ -48,8 +48,8 @@ import ApplicationManagementList from '@blockchainApplication/manage/components/
 import SelectNode from '@blockchainApplication/manage/components/SelectNode';
 import RemoveApplicationFlow from '@blockchainApplication/manage/components/RemoveApplicationFlow';
 import AllTokens from '@wallet/components/AllTokens';
-import DelegateProfile from 'src/modules/dpos/validator/components/delegateProfile/delegateProfile';
-import SentVotes from 'src/modules/dpos/validator/components/SentVotes';
+import ValidatorProfile from 'src/modules/pos/validator/components/ValidatorProfile/ValidatorProfile';
+import SentVotes from 'src/modules/pos/validator/components/SentVotes';
 import ConnectionProposal from 'src/modules/blockchainApplication/connection/components/ConnectionProposal';
 import SessionManager from '@blockchainApplication/connection/components/SessionManager';
 import ConnectionSummary from 'src/modules/blockchainApplication/connection/components/ConnectionSummary';
@@ -70,9 +70,9 @@ export default {
   block: BlockDetails,
   wallets: MonitorWallets,
   network: MonitorNetwork,
-  delegates: DelegatesMonitor,
-  delegateProfile: DelegateProfile,
-  delegatePerformance: DelegatesPerformanceModal,
+  validators: ValidatorsMonitor,
+  validatorProfile: ValidatorProfile,
+  validatorPerformance: ValidatorPerformanceModal,
   reclaim: ReclaimBalance,
   dashboard: Dashboard,
   addBookmark: AddBookmark,
@@ -81,7 +81,7 @@ export default {
   settings: Settings,
   signMessage: SignMessage,
   verifyMessage: VerifyMessage,
-  registerDelegate: RegisterDelegate,
+  registerValidator: RegisterValidator,
   transactionDetails: TransactionDetails,
   newRelease: NewReleaseDialog,
   request: Request,

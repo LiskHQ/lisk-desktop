@@ -84,7 +84,7 @@ describe('Add a new bookmark component', () => {
       });
     });
 
-    it('should not be possible to change delegate label', () => {
+    it('should not be possible to change validator label', () => {
       const accountAddress = accounts.delegate.summary.address;
       const accountUsername = accounts.delegate.dpos.delegate.username;
       wrapper.find('input[name="address"]').first().simulate('change', {

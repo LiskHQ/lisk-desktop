@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { useTheme } from 'src/theme/Theme';
-import welcomeLiskDelegates from '@setup/react/assets/images/illustrations/illustration-welcome-to-lisk-delegates-dark.svg';
+import welcomeLiskValidators from '@setup/react/assets/images/illustrations/illustration-welcome-to-lisk-delegates-dark.svg';
 import yourVoiceMatters from '@setup/react/assets/images/illustrations/illustration-your-voice-matters-dark.svg';
 import getRewarded from '@setup/react/assets/images/illustrations/illustration-get-rewarded-dark.svg';
 import expandYourKnowledge from '@setup/react/assets/images/illustrations/illustration-expand-your-knowledge-dark.svg';
@@ -56,7 +56,7 @@ import ledgerNanoHwRejectionDark from '@setup/react/assets/images/illustrations/
 import addApplicationSuccess from '@setup/react/assets/images/illustrations/add-application-success.svg';
 
 export const illustrations = {
-  welcomeLiskDelegates,
+  welcomeLiskValidators,
   yourVoiceMatters,
   getRewarded,
   expandYourKnowledge,

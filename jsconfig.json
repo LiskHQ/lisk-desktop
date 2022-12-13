@@ -15,7 +15,7 @@
       "@search/*": ["./src/modules/search/*"],
       "@common/*": ["./src/modules/common/*"],
       "@legacy/*": ["./src/modules/legacy/*"],
-      "@dpos/*": ["./src/modules/dpos/*"],
+      "@pos/*": ["./src/modules/pos/*"],
       "@network/*": ["./src/modules/network/*"],
       "@settings/*": ["./src/modules/settings/*"],
       "@token/*": ["./src/modules/token/*"],

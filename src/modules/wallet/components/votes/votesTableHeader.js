@@ -3,7 +3,7 @@ import styles from './votes.css';
 
 export default t => ([
   {
-    title: t('Delegate'),
+    title: t('Validator'),
     classList: grid['col-sm-5'],
   },
   {
@@ -11,11 +11,11 @@ export default t => ([
     classList: grid['col-sm-2'],
   },
   {
-    title: t('Delegate weight'),
+    title: t('Validator weight'),
     classList: grid['col-sm-2'],
     tooltip: {
-      title: t('Delegate weight'),
-      message: t('The total amount of votes received for a delegate.'),
+      title: t('Validator weight'),
+      message: t('The total amount of votes received for a validator.'),
       position: 'bottom',
     },
   },

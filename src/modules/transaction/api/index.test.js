@@ -2,7 +2,7 @@
 import { MODULE_COMMANDS_NAME_MAP } from 'src/modules/transaction/configuration/moduleCommand';
 import { getTxAmount, convertBinaryToString } from '@transaction/utils/transaction';
 import { getState } from '@fixtures/transactions';
-import * as delegates from '@dpos/validator/api';
+import * as validators from '@pos/validator/api';
 import http from 'src/utils/api/http';
 import accounts from '@tests/constants/wallets';
 import { fromTransactionJSON } from '@transaction/utils/encoding';
@@ -12,7 +12,7 @@ import {
   getTransactions,
   getTransactionStats,
   getTransactionFee,
-  getRegisteredDelegates,
+  getRegisteredValidators,
   dryRun,
 } from './index';
 
@@ -27,8 +27,8 @@ jest.mock('src/utils/api/ws', () =>
   jest.fn().mockImplementation(() => Promise.resolve({ data: [{ type: 0 }] }))
 );
 
-jest.mock('@dpos/validator/api', () => ({
-  getDelegates: jest.fn(),
+jest.mock('@pos/validator/api', () => ({
+  getValidators: jest.fn(),
 }));
 
 describe('API: LSK Transactions', () => {
@@ -108,7 +108,7 @@ describe('API: LSK Transactions', () => {
     });
   });
 
-  describe('getRegisteredDelegates', () => {
+  describe('getRegisteredValidators', () => {
     beforeEach(() => {
       http.mockReset();
     });
@@ -118,7 +118,7 @@ describe('API: LSK Transactions', () => {
       http.mockRejectedValue(Error('Error fetching data.'));
 
       // call and anticipate failure
-      await expect(getRegisteredDelegates({ network })).rejects.toThrow('Error fetching data.');
+      await expect(getRegisteredValidators({ network })).rejects.toThrow('Error fetching data.');
     });
 
     it('should return correct stats of registered delegates', async () => {
@@ -128,7 +128,7 @@ describe('API: LSK Transactions', () => {
       }));
 
       // mock internals
-      delegates.getDelegates.mockResolvedValue({
+      validators.getValidators.mockResolvedValue({
         data: {},
         meta: { total: 100 },
       });
@@ -138,7 +138,7 @@ describe('API: LSK Transactions', () => {
       });
 
       // Call and expect right values
-      const response = await getRegisteredDelegates({ network });
+      const response = await getRegisteredValidators({ network });
       expect(response).toEqual([
         ['2020-3', 90],
         ['2020-4', 93],
@@ -431,10 +431,13 @@ describe('API: LSK Transactions', () => {
         params: {
           amount: 100000000,
           recipientAddress: 'lsk3ay4z7wqjczbo5ogcqxgxx23xyacxmycwxfh4d',
-          data: ''
-        }
+          data: '',
+        },
       };
-      const transaction = fromTransactionJSON(transactionJSON, network.networks.LSK.moduleCommandSchemas['token:transfer']);
+      const transaction = fromTransactionJSON(
+        transactionJSON,
+        network.networks.LSK.moduleCommandSchemas['token:transfer']
+      );
       await dryRun({
         transaction,
         serviceUrl,
@@ -446,7 +449,8 @@ describe('API: LSK Transactions', () => {
         method: 'POST',
         path: '/api/v3/transactions/dryrun',
         data: {
-          transaction: '0a05746f6b656e12087472616e73666572180620002a20c094ebee7ec0c50ebee32918655e089f6e1a604b83bcaa760293c61e0f18ab6f321d1080c2d72f1a144662903af5e0c0662d9f1d43f087080c723096232200',
+          transaction:
+            '0a05746f6b656e12087472616e73666572180620002a20c094ebee7ec0c50ebee32918655e089f6e1a604b83bcaa760293c61e0f18ab6f321d1080c2d72f1a144662903af5e0c0662d9f1d43f087080c723096232200',
         },
       });
     });

@@ -200,7 +200,7 @@ const ConnectivityDonutChart = ({ t, connectionData, colorPalette }) => {
         labels: [t('Connected'), t('Disconnected')],
         datasets: [
           {
-            label: 'delegates',
+            label: 'validators',
             data: [
               connectionData.connectedPeers,
               connectionData.disconnectedPeers,

@@ -9,4 +9,4 @@ Feature: Wallet Votes
   #   Then I click on searchAccountRow
   #   Then I should be on Account page of dshjcrtyipnjbmycevil
   #   Given I open votes tab
-  #   Then I should see 2 delegates in table
+  #   Then I should see 2 validators in table

@@ -61,23 +61,23 @@ const ActionBar = ({
               >
                 <p>
                   {isBanned
-                    ? t('You cannot vote for this delegate')
-                    : t('Vote for delegate')}
+                    ? t('You cannot vote for this validator')
+                    : t('Vote for validator')}
                 </p>
               </Tooltip>
             </DialogLink>
           )}
           {!username && lskAddress === address && (
             <DialogLink
-              className={styles.registerDelegate}
-              component="registerDelegate"
+              className={styles.registerValidator}
+              component="registerValidator"
             >
               <TertiaryButton
-                className="register-delegate"
+                className="register-validator"
                 size="m"
                 disabled={disableButtons}
               >
-                {t('Register delegate')}
+                {t('Register validator')}
               </TertiaryButton>
             </DialogLink>
           )}

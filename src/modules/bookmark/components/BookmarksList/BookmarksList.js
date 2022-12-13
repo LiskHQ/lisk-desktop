@@ -236,7 +236,7 @@ export class BookmarksList extends React.Component {
                               position="bottom left"
                               size="maxContent"
                               indent
-                              content={<Icon name="delegateWarning" />}
+                              content={<Icon name="validatorWarning" />}
                             >
                               <span>
                                 {t('This is a legacy account and can not be used on this network.')}

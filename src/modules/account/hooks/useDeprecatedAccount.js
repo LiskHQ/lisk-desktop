@@ -1,6 +1,6 @@
 /* istanbul ignore file */
 import { useEffect, useState } from 'react';
-import { useDelegates, useSentVotes, useUnlocks } from '@dpos/validator/hooks/queries';
+import { useValidators, useSentVotes, useUnlocks } from '@pos/validator/hooks/queries';
 import { useAuth } from '@auth/hooks/queries';
 import { useLegacy } from '@legacy/hooks/queries';
 import { useDispatch } from 'react-redux';
@@ -98,7 +98,7 @@ export const useDeprecatedAccount = (accountInfo) => {
     data: delegates,
     isLoading: isDelegatesLoading,
     isSuccess: isDelegatesSuccess,
-  } = useDelegates({ config: { params: { address } } });
+  } = useValidators({ config: { params: { address } } });
   useEffect(() => {
     if (!isDelegatesSuccess) {
       return;
@@ -163,10 +163,12 @@ export const useDeprecatedAccount = (accountInfo) => {
         isMigrated: legacy?.data?.balance === '0',
         legacyAddress: legacy?.data?.legacyAddress,
       },
-      ...(legacy?.data && {legacy: {
+      ...(legacy?.data && {
+        legacy: {
           address: legacy.data.legacyAddress,
           balance: legacy.data.balance,
-        }}),
+        },
+      }),
     }));
   }, [legacy, isLegacySuccess]);
 

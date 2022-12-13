@@ -1,7 +1,7 @@
 /* eslint-disable */
 import { ss } from '../../../constants';
 
-const getDelegateNameFromRow = (ele) => ele.find('span:first-child > div > div:last-child > div:last-child > p:first-child').text();
+const getValidatorNameFromRow = (ele) => ele.find('span:first-child > div > div:last-child > div:last-child > p:first-child').text();
 
 Then(/(\w+) count should have value greater than (\d+)/, (displayElementClassName, displayContent) => {
   cy.get(`.${displayElementClassName} > p`).eq(0).then((ele) => {
@@ -50,26 +50,26 @@ Then(/^time (\w+) should be incremented by at least (\d+) seconds/, function (el
   });
 });
 
-Then(/^next forger list should have a maximum of (\d+) delegates/, (forgerCount) => {
+Then(/^next forger list should have a maximum of (\d+) validators/, (forgerCount) => {
   cy.get(ss.forgerItem).should('have.length.at.most', forgerCount);
 });
 
 Then(/^next forgers should match first members of the inside round list$/, () => {
-  cy.get(ss.delegateRow).eq(1).then((ele) => {
-    const delegateName = getDelegateNameFromRow(ele);
-    cy.get(ss.forgerItem).eq(0).contains(delegateName);
+  cy.get(ss.validatorRow).eq(1).then((ele) => {
+    const validatorName = getValidatorNameFromRow(ele);
+    cy.get(ss.forgerItem).eq(0).contains(validatorName);
   });
 });
 
-Then(/^first delegate should be forging$/, () => {
-  cy.get(ss.delegateRow).each((ele, index) => {
+Then(/^first validator should be forging$/, () => {
+  cy.get(ss.validatorRow).each((ele, index) => {
     if (index === 0) {
       expect(ele.find('span:last-child > div > div > main > p').text()).contain('Forging');
     }
   });
 });
 
-Then(/^delegates should be sorted in (\w+) order by forgingTime$/, (sortOrder) => {
+Then(/^validators should be sorted in (\w+) order by forgingTime$/, (sortOrder) => {
   let prevForgeTime = sortOrder === 'descending' ? Infinity : -Infinity;
   const parseToSeconds = (time) => {
     const minutes = time.match(/\d+(?=m)/g)?.[0] || 0;
@@ -77,7 +77,7 @@ Then(/^delegates should be sorted in (\w+) order by forgingTime$/, (sortOrder) =
     return 60 * +minutes + +seconds;
   };
 
-  cy.get(`${ss.delegateRow}`).each((ele) => {
+  cy.get(`${ss.validatorRow}`).each((ele) => {
     const forgeTime = parseToSeconds(ele.find('span:first-child ~ span ~ span ~ span').text());
 
     if (forgeTime) {
@@ -87,10 +87,10 @@ Then(/^delegates should be sorted in (\w+) order by forgingTime$/, (sortOrder) =
   });
 });
 
-Then(/^delegates should be sorted in (\w+) order by status$/, (sortOrder) => {
+Then(/^validators should be sorted in (\w+) order by status$/, (sortOrder) => {
   let prevStatus = sortOrder === 'descending' ? 'zzzzz' : '';
 
-  cy.get(`${ss.delegateRow}`).each((ele) => {
+  cy.get(`${ss.validatorRow}`).each((ele) => {
     const status = ele.find('span:first-child ~ span ~ span ~ span').text();
     expect(sortOrder === 'descending' ? prevStatus >= status : prevStatus <= status).eq(true);
     prevStatus = status;
@@ -98,28 +98,28 @@ Then(/^delegates should be sorted in (\w+) order by status$/, (sortOrder) => {
 });
 
 Then(/^filtered results should be displayed$/, () => {
-  cy.get(`${ss.delegateRow}`).should('have.length.within', 0, 103);
+  cy.get(`${ss.validatorRow}`).should('have.length.within', 0, 103);
 });
 
-When(/^I watch a delegate$/, function () {
-  cy.get(`${ss.delegateRow}`).eq(0).then((ele) => {
+When(/^I watch a validator$/, function () {
+  cy.get(`${ss.validatorRow}`).eq(0).then((ele) => {
     const watchToggleBtn = ele.find('span:first-child > div:first-child > div:first-child > span:first-child');
-    this.watchedDelegate = getDelegateNameFromRow(ele);
+    this.watchedValidator = getValidatorNameFromRow(ele);
     watchToggleBtn.trigger('click');
   });
 });
 
-When(/^I don't watch a delegate$/, () => {
-  cy.get(`${ss.delegateRow}`).eq(0).then((ele) => {
+When(/^I don't watch a validator$/, () => {
+  cy.get(`${ss.validatorRow}`).eq(0).then((ele) => {
     const watchToggleBtn = ele.find('span:first-child > div:first-child > div:first-child > span:first-child');
     watchToggleBtn.trigger('click');
   });
 });
 
-Then(/^delegate should be watched$/, function () {
-  cy.get(`${ss.delegateRow}`).each((ele) => {
-    const delegateName = getDelegateNameFromRow(ele);
-    if (delegateName === this.watchedDelegate) {
+Then(/^validator should be watched$/, function () {
+  cy.get(`${ss.validatorRow}`).each((ele) => {
+    const validatorName = getValidatorNameFromRow(ele);
+    if (validatorName === this.watchedValidator) {
       expect(ele.find('span:first-child > div:first-child > div:first-child > span:first-child ~ div > main')).contain('Remove from watched');
     }
   });

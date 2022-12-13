@@ -8,14 +8,18 @@ import WalletVisual from '@wallet/components/walletVisual';
 import { joinModuleAndCommand } from '@transaction/utils/moduleCommand';
 import Icon from 'src/theme/Icon';
 import Tooltip from 'src/theme/Tooltip';
-import { ROUND_LENGTH } from '@dpos/validator/consts';
+import { ROUND_LENGTH } from '@pos/validator/consts';
 import TokenAmount from '@token/fungible/components/tokenAmount';
 import WalletVisualWithAddress from '@wallet/components/walletVisualWithAddress';
-import { truncateAddress, truncateTransactionID, extractAddressFromPublicKey } from '@wallet/utils/account';
+import {
+  truncateAddress,
+  truncateTransactionID,
+  extractAddressFromPublicKey,
+} from '@wallet/utils/account';
 import Spinner from 'src/theme/Spinner';
 import routes from 'src/routes/routes';
 import { getModuleCommandTitle } from '@transaction/utils';
-import { getDelegateDetailsClass } from '@dpos/validator/components/DelegatesTable/tableHeader';
+import { getValidatorDetailsClass } from '@pos/validator/components/ValidatorsTable/TableHeader';
 import styles from './row.css';
 import TransactionRowContext from '../../context/transactionRowContext';
 import TransactionTypeFigure from '../TransactionTypeFigure';
@@ -55,7 +59,7 @@ export const DelegateDetails = () => {
   const { data, activeTab } = useContext(TransactionRowContext);
 
   return (
-    <span className={getDelegateDetailsClass(activeTab)}>
+    <span className={getValidatorDetailsClass(activeTab)}>
       <div className={styles.delegateColumn}>
         <div className={`${styles.delegateDetails}`}>
           <WalletVisual address={data.sender.address} />
@@ -89,12 +93,10 @@ export const Counterpart = () => {
   const { data, host, avatarSize } = useContext(TransactionRowContext);
   const moduleCommand = joinModuleAndCommand(data);
   const address = extractAddressFromPublicKey(data.senderPublicKey);
-  
+
   // Show tx icon
   if (data.moduleCommand !== MODULE_COMMANDS_NAME_MAP.transfer && host) {
-    return (
-      <TransactionTypeFigure moduleCommand={moduleCommand} address={address} />
-    );
+    return <TransactionTypeFigure moduleCommand={moduleCommand} address={address} />;
   }
   // Show recipient
   if (data.params.recipient?.address !== host) {
