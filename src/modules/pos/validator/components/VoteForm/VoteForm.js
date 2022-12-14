@@ -8,7 +8,7 @@ import BoxContent from '@theme/box/content';
 import Dialog from 'src/theme/dialog/dialog';
 import TxComposer from '@transaction/components/TxComposer';
 import Table from '@theme/table';
-import { VOTE_LIMIT } from '../../consts';
+import { STAKE_LIMIT } from '../../consts';
 import VoteRow from './VoteRow';
 import EmptyState from './EmptyState';
 import header from './tableHeader';
@@ -64,7 +64,7 @@ const getVoteStats = (votes, account) => {
   const numOfRemovedVotes = Object.keys(votesStats.removed).length;
 
   const resultingNumOfVotes = numOfAddededVotes + numOfEditedVotes + numOfUntouchedVotes;
-  const availableVotes = VOTE_LIMIT - (numOfEditedVotes + numOfUntouchedVotes + numOfRemovedVotes + numOfAddededVotes);
+  const availableVotes = STAKE_LIMIT - (numOfEditedVotes + numOfUntouchedVotes + numOfRemovedVotes + numOfAddededVotes);
 
   return {
     ...votesStats,
@@ -75,7 +75,7 @@ const getVoteStats = (votes, account) => {
 
 /**
  * Validates given votes against the following criteria:
- * - Number of votes must not exceed VOTE_LIMIT
+ * - Number of votes must not exceed STAKE_LIMIT
  * - Added vote amounts + fee must not exceed account balance
  * @param {Object} votes - Votes object from Redux store
  * @param {Number} balance - Account balance in Beddows
@@ -95,10 +95,10 @@ const validateVotes = (votes, balance, fee, resultingNumOfVotes, t, dposToken) =
     messages.push(t('Please enter vote amounts for the validators you wish to vote for'));
   }
 
-  if (resultingNumOfVotes > VOTE_LIMIT) {
+  if (resultingNumOfVotes > STAKE_LIMIT) {
     messages.push(
       t(
-        `These votes in addition to your current votes will add up to ${resultingNumOfVotes}, exceeding the account limit of ${VOTE_LIMIT}.`
+        `These votes in addition to your current votes will add up to ${resultingNumOfVotes}, exceeding the account limit of ${STAKE_LIMIT}.`
       )
     );
   }
@@ -189,8 +189,8 @@ const VoteForm = ({ t, votes, account, isVotingTxPending, nextStep, history, dpo
                   <div className={styles.votesAvailableCounter}>
                     <span className="available-votes-num">{`${availableVotes}/`}</span>
                     <span>
-                      {t('{{VOTE_LIMIT}} votes available for your account', {
-                        VOTE_LIMIT,
+                      {t('{{STAKE_LIMIT}} votes available for your account', {
+                        STAKE_LIMIT,
                       })}
                     </span>
                   </div>

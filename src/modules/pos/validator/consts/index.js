@@ -1,2 +1,2 @@
 export * from './validators';
-export * from './vote';
+export * from './stake';
