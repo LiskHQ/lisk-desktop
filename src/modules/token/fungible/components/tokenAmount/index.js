@@ -39,7 +39,7 @@ const TokenAmount = ({
   if (showInt) value = getInt(value);
   else if (showRounded) value = trim(value);
   return (
-    <Wrapper className={className}>
+    <Wrapper {...(className && { className })}>
       <FormattedNumber val={value} />
       {token && ` ${token}`}
     </Wrapper>

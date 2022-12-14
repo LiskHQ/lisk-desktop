@@ -100,7 +100,6 @@ describe('AddAccountForm', () => {
       },
     });
     fireEvent(passphraseInput1, pasteEvent);
-
     expect(screen.getByText('Continue')).toHaveAttribute('disabled');
   });
 
