@@ -35,7 +35,7 @@
     flex-flow: row nowrap;
   }
 
-  & .votesWrapper {
+  & .stakesWrapper {
     width: 100%;
 
     & > div:first-child {
@@ -43,7 +43,7 @@
     }
   }
 
-  & .votesContainer {
+  & .stakesContainer {
     display: grid !important;
     grid-template-columns: repeat(auto-fill, 25%);
     box-sizing: border-box;
@@ -91,7 +91,7 @@
       flex-flow: row wrap;
     }
 
-    & .votesContainer {
+    & .stakesContainer {
       grid-template-columns: repeat(auto-fill, 33.3%);
 
       & button {
@@ -380,7 +380,7 @@
   }
 }
 
-.totalVotes {
+.totalStakes {
   color: var(--color-slate-gray);
   padding-left: 5px;
 }

@@ -9,11 +9,11 @@ import { Input } from 'src/theme';
 import { QueryTable } from 'src/theme/QueryTable';
 import { useFilter } from 'src/modules/common/hooks';
 import StakerRow from './StakerRow';
-import tableHeader from './VotersTableHeader';
+import tableHeader from './StakersTableHeader';
 import styles from './ValidatorProfile.css';
 import { useReceivedVotes } from '../../hooks/queries';
 
-const ValidatorVotesView = ({ address }) => {
+const ValidatorStakesView = ({ address }) => {
   const { t } = useTranslation();
   const [searchInput, setSearchInput] = useState('');
   const { filters, applyFilters } = useFilter({ address });
@@ -38,16 +38,16 @@ const ValidatorVotesView = ({ address }) => {
   const voter = useMemo(() => voterData?.data || { votes: [] }, [voterData]);
 
   const emptyMessage = searchInput
-    ? t('This account does not have any voter for the given address.')
-    : t('This account does not have any voters.');
+    ? t('This account does not have any staker for the given address.')
+    : t('This account does not have any stakers.');
 
   return (
-    <div className={`${grid.row} ${styles.votesWrapper}`}>
+    <div className={`${grid.row} ${styles.stakesWrapper}`}>
       <Box className={`${grid.col} ${grid['col-xs-12']}`}>
         <BoxHeader>
           <h1>
-            <span>{t('Voters')}</span>
-            <span className={styles.totalVotes}>{`(${voterData?.meta?.total || '...'})`}</span>
+            <span>{t('Stakers')}</span>
+            <span className={styles.totalStakes}>{`(${voterData?.meta?.total || '...'})`}</span>
           </h1>
           {voter.votes.length > 0 && (
             <span>
@@ -63,7 +63,7 @@ const ValidatorVotesView = ({ address }) => {
           )}
         </BoxHeader>
         <BoxContent
-          className={`${grid.col} ${grid['col-xs-12']} ${styles.votesContainer} votes-container`}
+          className={`${grid.col} ${grid['col-xs-12']} ${styles.stakesContainer}`}
         >
           <QueryTable
             queryHook={useReceivedVotes}
@@ -83,4 +83,4 @@ const ValidatorVotesView = ({ address }) => {
   );
 };
 
-export default ValidatorVotesView;
+export default ValidatorStakesView;

@@ -59,7 +59,7 @@ describe('Validator Profile', () => {
     expect(screen.getByText('Stake validator')).toBeTruthy();
     expect(screen.getByText('Details')).toBeTruthy();
     expect(screen.getByText('Performance')).toBeTruthy();
-    expect(screen.getByText('Voters')).toBeTruthy();
+    expect(screen.getByText('Stakers')).toBeTruthy();
 
     expect(screen.getByText('Rank')).toBeTruthy();
     expect(screen.getAllByText('Status')).toHaveLength(2);
@@ -182,7 +182,7 @@ describe('Validator Profile', () => {
     ).toBeTruthy();
   });
 
-  it('Should render the vote validator button', () => {
+  it('Should render the stake validator button', () => {
     useValidators.mockReturnValue({
       data: {
         ...mockValidators,
@@ -200,7 +200,7 @@ describe('Validator Profile', () => {
     expect(screen.getByText('Stake validator')).toBeTruthy();
   });
 
-  it('Should render the vote validator button', () => {
+  it('Should render the stake validator button', () => {
     useValidators.mockReturnValue({
       data: {
         ...mockValidators,
@@ -218,7 +218,7 @@ describe('Validator Profile', () => {
     expect(screen.getByText('Stake validator')).toBeTruthy();
   });
 
-  it('Should render the vote validator button', () => {
+  it('Should render the stake validator button', () => {
     useValidators.mockReturnValue({
       data: {
         ...mockValidators,

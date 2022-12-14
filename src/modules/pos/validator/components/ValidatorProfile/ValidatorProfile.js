@@ -13,7 +13,7 @@ import Box from '@theme/box';
 import styles from './ValidatorProfile.css';
 import DetailsView from './DetailsView';
 import PerformanceView from './PerformanceView';
-import ValidatorVotesView from './ValidatorVotesView';
+import ValidatorStakesView from './ValidatorStakesView';
 import { useValidators } from '../../hooks/queries';
 import ValidatorStakeButton from './ValidatorStakeButton';
 import WarnPunishedValidator from '../WarnPunishedValidator';
@@ -117,7 +117,7 @@ const ValidatorProfile = ({ history }) => {
         <DetailsView data={validator} />
         <PerformanceView data={{ ...validator, producedBlocks: forgedBlocks?.meta?.total }} />
       </Box>
-      <ValidatorVotesView address={address} />
+      <ValidatorStakesView address={address} />
     </section>
   );
 };
