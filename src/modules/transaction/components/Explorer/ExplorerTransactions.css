@@ -55,54 +55,6 @@
   left: -8px;
 }
 
-.pending {
-  animation-delay: var(--animation-speed-slowest);
-  animation-duration: var(--animation-speed-slow);
-  animation-fill-mode: both;
-  animation-iteration-count: 1;
-  animation-name: appear;
-  animation-timing-function: linear;
-
-  & :global(.tx-avatar),
-  & :global(.tx-icon) {
-    animation-delay: calc(var(--animation-speed-slowest) + calc(var(--animation-speed-slow) / 1.5));
-    animation-duration: var(--animation-speed-standard);
-    animation-fill-mode: both;
-    animation-iteration-count: 1;
-    animation-name: showIcons;
-    animation-timing-function: linear;
-  }
-}
-
-.voteDetails {
-  width: 100%;
-  display: flex;
-  flex-flow: row wrap;
-
-  & .voteItem {
-    background: var(--color-mystic);
-    padding: 4px 6px;
-    border-radius: 3px;
-    flex: 1 0 0;
-    margin: 0 3px;
-
-    & .username {
-      color: var(--color-ink-blue);
-      padding-right: 10px;
-      font-weight: var(--font-weight-semi-bold);
-    }
-  }
-
-  & .more {
-    @mixin contentLarge semi-bold;
-
-    top: 8px;
-    position: relative;
-    color: var(--color-link-active);
-    flex: 1 100%;
-  }
-}
-
 .transactionReference {
   text-overflow: ellipsis;
   overflow: hidden;

@@ -5,10 +5,10 @@ import styles from '../TransactionInfo/TransactionInfo.css'; // @todo create ded
 const ItemList = ({ items, heading }) => (
   <div className={styles.contentItem}>
     <span className={styles.contentHeading}>{heading}</span>
-    <div className={styles.voteItems}>
+    <div className={styles.stakeItems}>
       {Object.keys(items).map((address) => (
         <StakeItem
-          key={`vote-item-${address}`}
+          key={`stake-item-${address}`}
           address={address}
           vote={items[address]}
           title={items[address].username}
@@ -29,20 +29,20 @@ const StakeValidator = ({ t, account, summaryInfo, transaction }) => {
   const addedLength = Object.keys(summaryInfo.added).length;
   const editedLength = Object.keys(summaryInfo.edited).length;
   const removedLength = Object.keys(summaryInfo.removed).length;
-  const sentVotes = account?.dpos?.sentVotes?.length ?? 0;
+  const sentStakes = account?.dpos?.sentVotes?.length ?? 0;
 
   return (
     <>
-      {addedLength ? <ItemList heading={t('Added votes')} items={summaryInfo.added} /> : null}
-      {editedLength ? <ItemList heading={t('Changed votes')} items={summaryInfo.edited} /> : null}
-      {removedLength ? <ItemList heading={t('Removed votes')} items={summaryInfo.removed} /> : null}
+      {addedLength ? <ItemList heading={t('Added stakes')} items={summaryInfo.added} /> : null}
+      {editedLength ? <ItemList heading={t('Changed stakes')} items={summaryInfo.edited} /> : null}
+      {removedLength ? <ItemList heading={t('Removed stakes')} items={summaryInfo.removed} /> : null}
       <div className={styles.infoContainer}>
-        <InfoColumn title={t('Total votes after confirmation')} className="total-votes">
-          {`${sentVotes + addedLength - removedLength}/10`}
+        <InfoColumn title={t('Total stakes after confirmation')}>
+          {`${sentStakes + addedLength - removedLength}/10`}
         </InfoColumn>
       </div>
       <div className={styles.txFeeContainer}>
-        <InfoColumn title={t('Transaction Fees')} className="vote-fees">
+        <InfoColumn title={t('Transaction Fees')} className="stake-fees">
           {transaction?.composedFees.Transaction}
         </InfoColumn>
       </div>

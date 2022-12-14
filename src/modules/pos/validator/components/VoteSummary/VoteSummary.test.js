@@ -124,7 +124,7 @@ describe('VotingQueue.Summary', () => {
     const wrapper = mountWithRouter(Summary, props);
 
     expect(wrapper).toContainMatchingElement('StakeStats');
-    expect(wrapper).toContainMatchingElement('.vote-fees');
+    expect(wrapper).toContainMatchingElement('.stake-fees');
   });
 
   it('renders properly when only new votes are present', () => {
