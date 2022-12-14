@@ -6,7 +6,7 @@ import DialogLink from 'src/theme/dialog/link';
 import Icon from 'src/theme/Icon';
 import styles from 'src/modules/common/components/bars/topBar/topBar.css';
 
-const VoteQueueToggle = ({
+const StakeQueueToggle = ({
   t, noOfVotes, disabled,
 }) => (
   <Tooltip
@@ -31,4 +31,4 @@ const VoteQueueToggle = ({
   </Tooltip>
 );
 
-export default VoteQueueToggle;
+export default StakeQueueToggle;

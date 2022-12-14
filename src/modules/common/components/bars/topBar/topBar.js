@@ -5,7 +5,7 @@ import Icon from 'src/theme/Icon';
 import AccountManagementDropdown from '@account/components/AccountManagementDropdown';
 import DialogLink from 'src/theme/dialog/link';
 import Tooltip from 'src/theme/Tooltip';
-import VoteQueueToggle from 'src/modules/common/components/bars/topBar/voteQueueToggle';
+import StakeQueueToggle from '@common/components/bars/topBar/stakeQueueToggle';
 import DiscreteModeToggle from 'src/modules/settings/components/discreteModeToggle';
 import LightDarkToggle from 'src/modules/settings/components/lightDarkModeToggle';
 import ApplicationManagementDropDown from '@blockchainApplication/manage/components/ApplicationManagementDropDown';
@@ -55,7 +55,7 @@ const TopBar = ({ noOfVotes, location }) => {
           <p>{t('Bookmarks')}</p>
         </Tooltip>
         <LightDarkToggle />
-        <VoteQueueToggle t={t} noOfVotes={noOfVotes} disabled={disabled} />
+        <StakeQueueToggle t={t} noOfVotes={noOfVotes} disabled={disabled} />
         <DiscreteModeToggle />
         <ApplicationManagementDropDown />
         {location.pathname !== routes.register.path && <Network />}
