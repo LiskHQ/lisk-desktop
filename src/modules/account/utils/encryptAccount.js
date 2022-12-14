@@ -18,7 +18,6 @@ export const encryptAccount = async ({
     enableCustomDerivationPath,
     derivationPath: enableCustomDerivationPath ? derivationPath : defaultDerivationPath,
   };
-  console.log('encryptAccount', options);
 
   try {
     const { privateKey, publicKey, isValid } = await extractKeyPair(options);
