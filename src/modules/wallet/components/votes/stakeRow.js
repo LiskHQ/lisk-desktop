@@ -64,7 +64,7 @@ const StakeRow = ({ data, onRowClick, accounts }) => {
           <div className={grid['col-sm-1']}>
             <DialogLink
               className={`${styles.editVoteLink} edit-stake`}
-              component="editVote"
+              component="editStake"
               data={{ address: data.address }}
             >
               <Icon name="edit" />

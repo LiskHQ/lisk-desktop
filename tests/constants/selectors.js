@@ -268,7 +268,7 @@ const ss = {
   votingQueueToggle: '.voting-queue-toggle',
   openUnlockBalanceDialog: '.open-unlock-balance-dialog',
   unlockAmountValue: '.unlock-amount-value',
-  removeVote: '.remove-vote',
+  removeStake: '.remove-stake',
   unlockingBalance: '.unlocking-balance',
   availableBalance: '.available-balance',
   addBookmarkIcon: '.add-bookmark-icon',

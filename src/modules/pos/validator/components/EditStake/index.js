@@ -26,27 +26,27 @@ import { useAuth } from '@auth/hooks/queries';
 import { PrimaryButton, SecondaryButton, WarningButton } from 'src/theme/buttons';
 import useVoteAmountField from '../../hooks/useVoteAmountField';
 import getMaxAmount from '../../utils/getMaxAmount';
-import styles from './editVote.css';
+import styles from './editStake.css';
 import { useValidators, usePosConstants, useSentVotes } from '../../hooks/queries';
 import { NUMBER_OF_BLOCKS_PER_DAY } from '../../consts';
 
 const getTitles = (t) => ({
   edit: {
-    title: t('Edit vote'),
+    title: t('Edit stake'),
     description: t(
-      'Increase or decrease your vote amount, or remove your vote from this validator. Your updated vote will be added to the voting queue.'
+      'Increase or decrease your stake amount, or remove your stake from this validator. Your updated stake will be added to the voting queue.'
     ),
   },
   add: {
     title: t('Add to voting queue'),
     description: t(
-      'Insert a vote amount for this validator. Your new vote will be added to the voting queue.'
+      'Insert a stake amount for this validator. Your new stake will be added to the voting queue.'
     ),
   },
 });
 
 // eslint-disable-next-line max-statements
-const EditVote = ({ history, voteEdited, network, voting, votesRetrieved }) => {
+const EditStake = ({ history, voteEdited, network, voting, votesRetrieved }) => {
   const { t } = useTranslation();
   useSchemas();
   const [
@@ -154,7 +154,7 @@ const EditVote = ({ history, voteEdited, network, voting, votesRetrieved }) => {
 
   const daysLeft = Math.ceil((parseInt(end, 10) - currentHeight) / NUMBER_OF_BLOCKS_PER_DAY);
   const subTitles = {
-    edit: t('After changing your vote amount, it will be added to the voting queue.'),
+    edit: t('After changing your stake amount, it will be added to the voting queue.'),
     add: titles.description,
   };
   const headerTitles = {
@@ -174,7 +174,7 @@ const EditVote = ({ history, voteEdited, network, voting, votesRetrieved }) => {
         <BoxContent className={styles.noPadding}>
           <BoxInfoText>
             <span>
-              {!isForm ? t('Your vote has been added to your voting queue') : subTitles[mode]}
+              {!isForm ? t('Your stake has been added to your voting queue') : subTitles[mode]}
             </span>
           </BoxInfoText>
           {isForm && (
@@ -199,8 +199,8 @@ const EditVote = ({ history, voteEdited, network, voting, votesRetrieved }) => {
                   displayConverter
                   label={t('Stake amount ({{symbol}})', { symbol: token.symbol })}
                   labelClassname={`${styles.fieldLabel}`}
-                  placeholder={t('Insert vote amount')}
-                  name="vote"
+                  placeholder={t('Insert stake amount')}
+                  name="stake"
                 />
               </label>
               {daysLeft >= 1 && start !== undefined && (
@@ -215,10 +215,10 @@ const EditVote = ({ history, voteEdited, network, voting, votesRetrieved }) => {
         <BoxFooter direction={mode === 'edit' && isForm ? 'horizontal' : 'vertical'}>
           {mode === 'edit' && isForm && (
             <WarningButton
-              className={`${styles.removeVoteButton} remove-vote`}
+              className={`${styles.removeStakeButton} remove-stake`}
               onClick={removeVote}
             >
-              {t('Remove vote')}
+              {t('Remove stake')}
             </WarningButton>
           )}
           {!isForm && (
@@ -243,4 +243,4 @@ const EditVote = ({ history, voteEdited, network, voting, votesRetrieved }) => {
   );
 };
 
-export default EditVote;
+export default EditStake;

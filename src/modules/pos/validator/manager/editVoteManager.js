@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 import { compose } from 'redux';
 import { voteEdited, votesRetrieved } from 'src/redux/actions';
 import { selectNetwork, selectVoting } from 'src/redux/selectors';
-import EditVote from '../components/EditVote';
+import EditVote from '../components/EditStake';
 
 const mapStateToProps = (state) => ({
   network: selectNetwork(state),

@@ -24,7 +24,7 @@ function ValidatorStakeButton({ address, isBanned, currentAddress }) {
   const isEdit = stakeSentVoteToValidator || voting[address];
 
   return (
-    <DialogLink component="editVote">
+    <DialogLink component="editStake">
       {isEdit ? (
         <SecondaryButton disabled={sentVotesLoading || isBanned || !currentAddress}>
           {t('Edit stake')}

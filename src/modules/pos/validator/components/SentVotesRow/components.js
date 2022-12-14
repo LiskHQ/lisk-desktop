@@ -30,7 +30,7 @@ export const Actions = ({ address, name, voteEdited }) => {
 
   return (
     <div className={`${styles.action} ${grid['col-xs-3']}`}>
-      <DialogLink component="editVote" data={{ address }}>
+      <DialogLink component="editStake" data={{ address }}>
         <Icon name="edit" />
       </DialogLink>
       <button

@@ -28,7 +28,7 @@ const ValidatorSummary = ({ delegate, status, weight }) => {
             <p className={styles.validatorAddress}>{truncateAddress(address)}</p>
           </div>
           <div>
-            <DialogLink component="editVote">
+            <DialogLink component="editStake">
               <PrimaryButton disabled={status.className === 'banned'}>{t('Stake')}</PrimaryButton>
             </DialogLink>
           </div>
