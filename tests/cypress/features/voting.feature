@@ -1,4 +1,4 @@
-Feature: Vote validator
+Feature: Stake validator
 
    # Background:
    #    Given I login as genesis on customNode
@@ -11,7 +11,7 @@ Feature: Vote validator
 
    # @todo: disabled until account management is updated
    # @basic
-   # Scenario: Down Vote for a validator when there are locked lsk
+   # Scenario: Down Stake for a validator when there are locked lsk
    #    And I click on openAddVoteDialog
    #    And I clear input amountInput
    #    And I fill 160 in amountInput field
@@ -24,7 +24,7 @@ Feature: Vote validator
    #    Then The latest transaction is vote
 
    # @basic
-   # Scenario: Up Vote for a validator when there are locked lsk
+   # Scenario: Up Stake for a validator when there are locked lsk
    #    And I click on openAddVoteDialog
    #    And I clear input amountInput
    #    And I fill 200 in amountInput field
@@ -37,7 +37,7 @@ Feature: Vote validator
    #    Then The latest transaction is vote
 
    # @basic
-   # Scenario: Remove Vote for a validator
+   # Scenario: Remove Stake for a validator
    #    When I click on openAddVoteDialog
    #    And I click on removeVote
    #    And I click on votingQueueToggle

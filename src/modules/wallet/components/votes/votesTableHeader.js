@@ -20,10 +20,10 @@ export default t => ([
     },
   },
   {
-    title: t('Vote amount'),
+    title: t('Stake amount'),
     classList: `${grid['col-sm-2']} ${styles.flexRightAlign}`,
     tooltip: {
-      title: t('Vote amount'),
+      title: t('Stake amount'),
       message: t('The total amount of votes received from this account.'),
       position: 'left',
     },

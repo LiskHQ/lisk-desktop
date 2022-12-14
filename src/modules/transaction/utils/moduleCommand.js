@@ -14,7 +14,7 @@ const getModuleCommandTitle = (t = str => str) => ({
   [MODULE_COMMANDS_NAME_MAP.transfer]: t('Transfer'),
   [MODULE_COMMANDS_NAME_MAP.reclaim]: t('Reclaim'),
   [MODULE_COMMANDS_NAME_MAP.unlock]: t('Unlock'),
-  [MODULE_COMMANDS_NAME_MAP.voteDelegate]: t('Vote'),
+  [MODULE_COMMANDS_NAME_MAP.voteDelegate]: t('Stake'),
   [MODULE_COMMANDS_NAME_MAP.registerDelegate]: t('Register validator'),
   [MODULE_COMMANDS_NAME_MAP.registerMultisignature]: t('Register multisignature'),
   [MODULE_COMMANDS_NAME_MAP.reportDelegateMisbehavior]: t('Report validator misbehaviour'),

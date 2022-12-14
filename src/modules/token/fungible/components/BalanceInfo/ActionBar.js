@@ -62,7 +62,7 @@ const ActionBar = ({
                 <p>
                   {isBanned
                     ? t('You cannot vote for this validator')
-                    : t('Vote for validator')}
+                    : t('Stake for validator')}
                 </p>
               </Tooltip>
             </DialogLink>

@@ -74,7 +74,7 @@ export const validateAmountFormat = ({
   const { maxFloating } = reg.amount[locale];
   const errors = {
     NEGATIVE_VOTE: {
-      message: i18n.t('Vote amount can\'t be zero or negative.'),
+      message: i18n.t('Stake amount can\'t be zero or negative.'),
       fn: () =>
         numeral(value).value() < minValue
         || numeral(inputValue).value() < 0

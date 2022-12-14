@@ -94,7 +94,7 @@ const VoteRow = ({
             amount={voteAmount}
             onChange={setVoteAmount}
             displayConverter={false}
-            placeHolder={t('Vote amount')}
+            placeHolder={t('Stake amount')}
             className={styles.editAmountInput}
             name="vote"
           />

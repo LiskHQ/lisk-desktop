@@ -56,7 +56,7 @@ describe('Validator Profile', () => {
     );
 
     expect(screen.getByText('My validator profile')).toBeTruthy();
-    expect(screen.getByText('Vote validator')).toBeTruthy();
+    expect(screen.getByText('Stake validator')).toBeTruthy();
     expect(screen.getByText('Details')).toBeTruthy();
     expect(screen.getByText('Performance')).toBeTruthy();
     expect(screen.getByText('Voters')).toBeTruthy();
@@ -197,7 +197,7 @@ describe('Validator Profile', () => {
       </MemoryRouter>
     );
 
-    expect(screen.getByText('Vote validator')).toBeTruthy();
+    expect(screen.getByText('Stake validator')).toBeTruthy();
   });
 
   it('Should render the vote validator button', () => {
@@ -215,7 +215,7 @@ describe('Validator Profile', () => {
       </MemoryRouter>
     );
 
-    expect(screen.getByText('Vote validator')).toBeTruthy();
+    expect(screen.getByText('Stake validator')).toBeTruthy();
   });
 
   it('Should render the vote validator button', () => {
@@ -244,6 +244,6 @@ describe('Validator Profile', () => {
       </MemoryRouter>
     );
 
-    expect(screen.getByText('Vote validator')).toBeTruthy();
+    expect(screen.getByText('Stake validator')).toBeTruthy();
   });
 });

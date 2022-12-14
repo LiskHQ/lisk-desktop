@@ -50,6 +50,6 @@ describe('ValidatorSummary', () => {
         <ValidatorSummary {...props} />
       </MemoryRouter>
     );
-    expect(screen.getByText('Vote')).toHaveAttribute('disabled');
+    expect(screen.getByText('Stake')).toHaveAttribute('disabled');
   });
 });

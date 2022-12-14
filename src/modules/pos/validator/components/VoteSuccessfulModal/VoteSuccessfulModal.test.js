@@ -17,7 +17,7 @@ describe('VoteSuccessfulModal', () => {
     renderWithRouter(TokenRow, props);
 
     expect(screen.getByText('Voting confirmation')).toBeTruthy();
-    expect(screen.getByText('Vote(s) has been submitted')).toBeTruthy();
+    expect(screen.getByText('Stake(s) has been submitted')).toBeTruthy();
     expect(screen.getByText('test message')).toBeTruthy();
 
     fireEvent.click(screen.getByText('Back to validators'));

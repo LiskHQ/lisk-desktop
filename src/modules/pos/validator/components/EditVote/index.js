@@ -158,7 +158,7 @@ const EditVote = ({ history, voteEdited, network, voting, votesRetrieved }) => {
     add: titles.description,
   };
   const headerTitles = {
-    edit: t('Edit Vote'),
+    edit: t('Edit Stake'),
     add: titles.title,
   };
 
@@ -169,7 +169,7 @@ const EditVote = ({ history, voteEdited, network, voting, votesRetrieved }) => {
     >
       <Box>
         <BoxHeader>
-          <h1>{!isForm ? t('Vote added') : headerTitles[mode]}</h1>
+          <h1>{!isForm ? t('Stake added') : headerTitles[mode]}</h1>
         </BoxHeader>
         <BoxContent className={styles.noPadding}>
           <BoxInfoText>
@@ -197,7 +197,7 @@ const EditVote = ({ history, voteEdited, network, voting, votesRetrieved }) => {
                   onChange={setVoteAmount}
                   maxAmount={{ value: maxAmount }}
                   displayConverter
-                  label={t('Vote amount ({{symbol}})', { symbol: token.symbol })}
+                  label={t('Stake amount ({{symbol}})', { symbol: token.symbol })}
                   labelClassname={`${styles.fieldLabel}`}
                   placeholder={t('Insert vote amount')}
                   name="vote"

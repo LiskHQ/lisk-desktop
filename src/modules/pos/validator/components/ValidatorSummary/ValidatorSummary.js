@@ -29,7 +29,7 @@ const ValidatorSummary = ({ delegate, status, weight }) => {
           </div>
           <div>
             <DialogLink component="editVote">
-              <PrimaryButton disabled={status.className === 'banned'}>{t('Vote')}</PrimaryButton>
+              <PrimaryButton disabled={status.className === 'banned'}>{t('Stake')}</PrimaryButton>
             </DialogLink>
           </div>
         </div>

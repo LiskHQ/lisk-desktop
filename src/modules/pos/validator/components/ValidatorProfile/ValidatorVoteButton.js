@@ -31,7 +31,7 @@ function ValidatorVoteButton({ address, isBanned, currentAddress }) {
         </SecondaryButton>
       ) : (
         <PrimaryButton disabled={sentVotesLoading || isBanned || !currentAddress}>
-          {t('Vote validator')}
+          {t('Stake validator')}
         </PrimaryButton>
       )}
     </DialogLink>

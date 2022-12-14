@@ -6,7 +6,7 @@ const header = (t) => [
     classList: styles.infoColumn,
   },
   {
-    title: t('Vote amount'),
+    title: t('Stake amount'),
     classList: styles.amountColumn,
   },
   {

@@ -21,7 +21,7 @@ function VoteSuccessfulModal({ history, statusMessage }) {
       <BoxHeader>{t('Voting confirmation')}</BoxHeader>
       <BoxContent>
         <Illustration className={styles.illustartion} name="votingSuccess" />
-        <h4>{t('Vote(s) has been submitted')}</h4>
+        <h4>{t('Stake(s) has been submitted')}</h4>
         <p>{statusMessage.message}</p>
       </BoxContent>
       <BoxFooter>

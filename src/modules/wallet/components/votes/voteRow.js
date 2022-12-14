@@ -43,7 +43,7 @@ const VoteRow = ({ data, onRowClick, accounts }) => {
           </span>
         </div>
 
-        {/* Vote amount */}
+        {/* Stake amount */}
         {account ? (
           <div className={`${grid['col-sm-2']} ${styles.flexRightAlign}`} onClick={onClick}>
             <span className={styles.votes}>

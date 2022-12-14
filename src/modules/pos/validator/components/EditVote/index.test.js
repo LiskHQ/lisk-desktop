@@ -91,7 +91,7 @@ describe('EditVote', () => {
         'Insert a vote amount for this validator. Your new vote will be added to the voting queue.'
       )
     ).toBeTruthy();
-    expect(screen.getByText('Vote amount ({{symbol}})')).toBeTruthy();
+    expect(screen.getByText('Stake amount ({{symbol}})')).toBeTruthy();
   });
 
   it('should add vote to the votes queue', async () => {
@@ -128,7 +128,7 @@ describe('EditVote', () => {
     );
 
     fireEvent.click(screen.getByText('Confirm'));
-    expect(screen.getByText('Vote added')).toBeTruthy();
+    expect(screen.getByText('Stake added')).toBeTruthy();
     expect(screen.getByText('Your vote has been added to your voting queue')).toBeTruthy();
 
     fireEvent.click(screen.getByText('Continue voting'));
@@ -180,11 +180,11 @@ describe('EditVote', () => {
       </MemoryRouter>
     );
 
-    expect(screen.getByText('Edit Vote')).toBeTruthy();
+    expect(screen.getByText('Edit Stake')).toBeTruthy();
     expect(
       screen.getByText('After changing your vote amount, it will be added to the voting queue.')
     ).toBeTruthy();
-    expect(screen.getByText('Vote amount ({{symbol}})')).toBeTruthy();
+    expect(screen.getByText('Stake amount ({{symbol}})')).toBeTruthy();
 
     const votingField = screen.getByTestId('vote');
 
@@ -201,7 +201,7 @@ describe('EditVote', () => {
       ]);
     });
 
-    expect(screen.getByText('Vote added')).toBeTruthy();
+    expect(screen.getByText('Stake added')).toBeTruthy();
     expect(screen.getByText('Your vote has been added to your voting queue')).toBeTruthy();
 
     fireEvent.click(screen.getByText('Continue voting'));
