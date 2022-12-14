@@ -46,7 +46,7 @@ describe('StakeRow Component', () => {
 
   it('should call onRowClick', () => {
     wrapper = mountWithRouter(StakeRow, props);
-    wrapper.find('.vote-row').childAt(0).simulate('click');
+    wrapper.find('.stake-row').childAt(0).simulate('click');
     expect(props.onRowClick).toHaveBeenCalledTimes(1);
   });
 });

@@ -15,7 +15,7 @@ export default t => ([
     classList: grid['col-sm-2'],
     tooltip: {
       title: t('Validator weight'),
-      message: t('The total amount of votes received for a validator.'),
+      message: t('The total amount of stakes received for a validator.'),
       position: 'bottom',
     },
   },
@@ -24,7 +24,7 @@ export default t => ([
     classList: `${grid['col-sm-2']} ${styles.flexRightAlign}`,
     tooltip: {
       title: t('Stake amount'),
-      message: t('The total amount of votes received from this account.'),
+      message: t('The total amount of stakes received from this account.'),
       position: 'left',
     },
   },

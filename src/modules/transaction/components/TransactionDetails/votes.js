@@ -20,7 +20,7 @@ export const VotesPure = ({ t, votedDelegates }) => {
     <div className={`${styles.voteValue} ${styles.votes}`}>
       <div className={styles.detailsWrapper}>
         <span className={styles.label}>{`${t('Votes')} (${votes.length})`}</span>
-        <div className={`${styles.votesContainer} ${styles.added} tx-added-votes`}>
+        <div className={`${styles.stakesContainer} ${styles.added} tx-added-stakes`}>
           {votes.map((vote) => (
             <StakeItem
               key={`vote-${vote.delegateAddress}`}

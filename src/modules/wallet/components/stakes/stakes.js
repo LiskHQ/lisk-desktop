@@ -12,9 +12,9 @@ import StakeRow from './stakeRow';
 import header from './stakesTableHeader';
 
 const getMessages = (t) => ({
-  all: t('This account doesn’t have any votes.'),
+  all: t('This account doesn’t have any stakes.'),
   filtered: t(
-    'This account doesn’t have any votes matching searched username.',
+    'This account doesn’t have any stakes matching searched username.',
   ),
 });
 
@@ -57,7 +57,7 @@ const Stakes = ({
   return (
     <Box main isLoading={areLoading} className={`${styles.wrapper}`}>
       <BoxHeader>
-        <h1>{t('Voted validators')}</h1>
+        <h1>{t('Staked validators')}</h1>
         <div className={`${styles.filterHolder}`}>
           <Input
             className="search"
@@ -70,7 +70,7 @@ const Stakes = ({
           />
         </div>
       </BoxHeader>
-      <BoxContent className={`${styles.results} votes-tab`}>
+      <BoxContent className={`${styles.results} stakes-tab`}>
         <Table
           data={filteredVotes}
           isLoading={areLoading}

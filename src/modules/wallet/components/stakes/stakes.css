@@ -48,12 +48,6 @@
   min-height: 600px;
   position: relative;
   padding: 0 !important;
-
-  & .votes {
-    @mixin contentNormal bold;
-
-    color: var(--color-ink-blue);
-  }
 }
 
 .row {

@@ -3,7 +3,7 @@ import routes from 'src/routes/routes';
 import accounts from '@tests/constants/wallets';
 import Stakes from './stakes';
 
-describe('Votes Tab Component', () => {
+describe('Stakes Tab Component', () => {
   let wrapper;
   const props = {
     votes: {
@@ -43,7 +43,7 @@ describe('Votes Tab Component', () => {
 
   it('Should render with empty state', () => {
     wrapper = setup(props);
-    expect(wrapper.find('.empty-state')).toIncludeText('This account doesn’t have any votes.');
+    expect(wrapper.find('.empty-state')).toIncludeText('This account doesn’t have any stakes.');
   });
 
   it('Should show loading state', () => {
@@ -72,7 +72,7 @@ describe('Votes Tab Component', () => {
       isDelegate: true,
     });
   });
-  it('should not call accounts.loadData if accounts.data and no sentVotes is empty', () => {
+  it('should not call accounts.loadData if accounts.data and no sentStakes is empty', () => {
     const loadData = jest.fn();
     wrapper = setup({
       ...props,
@@ -82,7 +82,7 @@ describe('Votes Tab Component', () => {
     expect(loadData).not.toHaveBeenCalled();
   });
 
-  it('Should render votes', () => {
+  it('Should render stakes', () => {
     const customProps = {
       ...props,
       votes,
@@ -97,12 +97,12 @@ describe('Votes Tab Component', () => {
       votes,
     };
     wrapper = setup(customProps);
-    wrapper.find('.vote-row > div').at(0).first().simulate('click');
+    wrapper.find('.stake-row > div').at(0).first().simulate('click');
     jest.advanceTimersByTime(300);
     expect(props.history.push).toBeCalledWith(`${routes.explorer.path}?address=lsk0`);
   });
 
-  it('Should filter votes per username and show error message if no results found', () => {
+  it('Should filter stakes per username and show error message if no results found', () => {
     const customProps = {
       ...props,
       votes,
@@ -110,7 +110,7 @@ describe('Votes Tab Component', () => {
     wrapper = setup(customProps);
     wrapper.find('.filterHolder input').simulate('change', { target: { value: 'user_1' } });
     jest.advanceTimersByTime(300);
-    expect(wrapper).toContainMatchingElements(1, '.vote-row');
+    expect(wrapper).toContainMatchingElements(1, '.stake-row');
     wrapper.find('.filterHolder input').simulate('change', { target: { value: 'not user name' } });
     jest.advanceTimersByTime(300);
     expect(wrapper).toContainMatchingElements(1, 'Empty');
