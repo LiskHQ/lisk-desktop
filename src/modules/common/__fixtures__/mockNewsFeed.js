@@ -133,7 +133,7 @@ export const mockNewsFeed = {
     url: 'https://lisk.com/blog/research/where-store-lsk-lisk-desktop-and-lisk-mobile-wallets',
   }, {
     author: 'Tony Morinello',
-    content: 'Choosing which validators to vote for is a crucial component of Lisk\'s Validatord\nProof of Stake (DPoS) consensus',
+    content: 'Choosing which validators to stake for is a crucial component of Lisk\'s Validatord\nProof of Stake (DPoS) consensus',
     imageUrl: 'https://lisk.com/sites/default/files/styles/blog_main_image_xl_retina/public/images/2022-06/How-to-Find-Lisk-Validators.png?itok=7E801hyZ',
     source: 'drupal_lisk_general',
     sourceId: '1238',
@@ -166,7 +166,7 @@ export const mockNewsFeed = {
     url: 'https://lisk.com/blog/research/validatord-proof-stake-consensus-lsk-token',
   }, {
     author: 'Tony Morinello',
-    content: 'LSK is the native utility token for the Lisk network. It is used to perform\nvarious actions on the Lisk blockchain. In order to send a transaction, vote for\na validator, or register a multi-signature wallet, you need to use your LSK in\norder to do so.',
+    content: 'LSK is the native utility token for the Lisk network. It is used to perform\nvarious actions on the Lisk blockchain. In order to send a transaction, stake for\na validator, or register a multi-signature wallet, you need to use your LSK in\norder to do so.',
     imageUrl: 'https://lisk.com/sites/default/files/styles/blog_main_image_xl_retina/public/images/2022-06/The-Role-of-LSK-Token-in-the-Lisk-Ecosystem.png?itok=GXUvdvlB',
     source: 'drupal_lisk_general',
     sourceId: '1229',

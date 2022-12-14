@@ -1,6 +1,6 @@
 /* eslint-disable  max-lines, import/prefer-default-export */
 
-const generateVote = [
+const generateStakes = [
   {
     delegateAddress: `lskgtrrftvoxhtknhamjab5wenfauk32z9pzk79uj`,
     amount: `1000000000`,
@@ -39,7 +39,7 @@ const generateVote = [
 ];
 
 const data = {
-  votes: generateVote,
+  votes: generateStakes,
   account: {
     address: 'lsk24cd35u4jdq8szo3pnsqe5dsxwrnazyqqqg5eu',
     publicKey: 'aq02qkbb35u4jdq8szo3pnsqe5dsxwrnazyqqqg5eu',
