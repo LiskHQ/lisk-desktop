@@ -13,7 +13,7 @@ import Icon from 'src/theme/Icon';
 import { useTokensBalance } from '@token/fungible/hooks/queries';
 import styles from './SentStakes.css';
 import header from './tableHeaderMap';
-import SentVotesRow from '../SentVotesRow';
+import SentStakesRow from '../SentStakesRow';
 import { usePosConstants, useSentVotes } from '../../hooks/queries';
 
 // eslint-disable-next-line max-statements
@@ -65,7 +65,7 @@ const SentStakes = ({ history }) => {
           queryHook={useSentVotes}
           transformResponse={(resp) => resp?.votes || []}
           queryConfig={queryParam}
-          row={SentVotesRow}
+          row={SentStakesRow}
           header={header(t)}
           additionalRowProps={{
             dposToken,

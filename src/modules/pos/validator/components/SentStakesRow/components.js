@@ -3,7 +3,7 @@ import grid from 'flexboxgrid/dist/flexboxgrid.css';
 import Icon from 'src/theme/Icon';
 import WalletVisualWithAddress from '@wallet/components/walletVisualWithAddress';
 import DialogLink from 'src/theme/dialog/link';
-import styles from './SentVotesRow.css';
+import styles from './SentStakesRow.css';
 
 export const ValidatorWalletVisual = ({ address, name }) => (
   <div className={`${styles.addressWrapper} ${grid['col-xs-3']}`}>

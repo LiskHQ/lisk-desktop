@@ -1,9 +1,9 @@
 import { connect } from 'react-redux';
 import { voteEdited } from 'src/redux/actions';
-import SentVotesRow from './SentVotesRow';
+import SentStakesRow from './SentStakesRow';
 
 const mapDispatchToProps = {
   voteEdited,
 };
 
-export default connect(null, mapDispatchToProps)(SentVotesRow);
+export default connect(null, mapDispatchToProps)(SentStakesRow);

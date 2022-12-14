@@ -1,6 +1,6 @@
 import React from 'react';
 import TokenAmount from '@token/fungible/components/tokenAmount';
-import styles from './SentVotesRow.css';
+import styles from './SentStakesRow.css';
 import { ValidatorWalletVisual, Balance, Actions } from './components';
 
 const SentVoteRow = ({ data: delegate, voteEdited, dposToken }) => {

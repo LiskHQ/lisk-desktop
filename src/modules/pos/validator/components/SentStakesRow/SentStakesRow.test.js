@@ -3,10 +3,10 @@ import { fireEvent, screen } from '@testing-library/react';
 import { fromRawLsk } from '@token/fungible/utils/lsk';
 import { mockTokensBalance } from '@token/fungible/__fixtures__/mockTokens';
 import { truncateAddress } from '@wallet/utils/account';
-import TokenRow from './SentVotesRow';
+import TokenRow from './SentStakesRow';
 import { mockSentStakes } from '../../__fixtures__';
 
-describe('SentVotesRow', () => {
+describe('SentStakesRow', () => {
   it('should display properly', async () => {
     const props = {
       data: mockSentStakes.data.votes[0],
