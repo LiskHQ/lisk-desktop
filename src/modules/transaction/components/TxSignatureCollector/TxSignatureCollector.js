@@ -2,6 +2,9 @@ import React, { useEffect } from 'react';
 import { TertiaryButton } from 'src/theme/buttons';
 import { useCommandSchema } from '@network/hooks';
 import Icon from 'src/theme/Icon';
+import Box from 'src/theme/box';
+import BoxContent from 'src/theme/box/content';
+import Illustration from 'src/modules/common/components/illustration';
 import { isEmpty } from 'src/utils/helpers';
 import EnterPasswordForm from 'src/modules/auth/components/EnterPasswordForm';
 import { useAuth } from '@auth/hooks/queries';
@@ -25,6 +28,7 @@ const TxSignatureCollector = ({
   statusInfo,
   fees,
   selectedPriority,
+  t,
 }) => {
   const [sender] = useCurrentAccount();
   const { moduleCommandSchemas } = useCommandSchema();
@@ -34,7 +38,7 @@ const TxSignatureCollector = ({
     config: { params: { address: sender.metadata.address } },
   });
 
-  // here, we want to get the auth account details of the account that initated the transaction.
+  // here, we want to get the auth account details of the account that initiated the transaction.
   const { isLoading: isGettingTxInitiatorAccount, txInitiatorAccount } = useTxInitiatorAccount({
     transactionJSON,
   });
@@ -117,38 +121,39 @@ const TxSignatureCollector = ({
     if (transactions.txSignatureError) {
       nextStep({ formProps, transactionJSON, statusInfo, sender });
     }
+
+    if (isEmpty(transactions.signedTransaction) && !transactions.txSignatureError && !sender.encryptedPassphrase) {
+      txVerification('', sender.metadata.pubkey);
+    }
   }, [transactions.signedTransaction, transactions.txSignatureError]);
 
-  // TODO: Resolve this issue during HW implementation
+  if (sender.encryptedPassphrase) {
+    return (
+      <div className={styles.container}>
+        <TertiaryButton className={styles.backButton} onClick={prevStep}>
+          <Icon name="arrowLeftTailed" />
+        </TertiaryButton>
+        <EnterPasswordForm
+          title="Please provide your device password to sign a transaction."
+          onEnterPasswordSuccess={onEnterPasswordSuccess}
+          isDisabled={isGettingAuthData || isGettingTxInitiatorAccount}
+        />
+      </div>
+    );
+  }
 
-  // if (!deviceType) {
   return (
-    <div className={styles.container}>
-      <TertiaryButton className={styles.backButton} onClick={prevStep}>
-        <Icon name="arrowLeftTailed" />
-      </TertiaryButton>
-      <EnterPasswordForm
-        title="Please provide your device password to sign a transaction."
-        onEnterPasswordSuccess={onEnterPasswordSuccess}
-        isDisabled={isGettingAuthData || isGettingTxInitiatorAccount}
-      />
-    </div>
-  );
-  // }
-  /**
-   * return (
     <Box width="medium" className={`${styles.wrapper} hwConfirmation`}>
       <BoxContent className={styles.content}>
-        <Illustration name={deviceType} />
+        <Illustration name={sender.metadata.hwInfo.deviceType} />
         <h5>
           {t('Please confirm the transaction on your {{deviceModel}}', {
-            deviceModel: account.hwInfo.deviceModel,
+            deviceModel: sender.metadata.hwInfo.deviceModel,
           })}
         </h5>
       </BoxContent>
     </Box>
   );
-   */
 };
 
 export default TxSignatureCollector;
