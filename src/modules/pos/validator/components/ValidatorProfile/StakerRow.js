@@ -4,15 +4,15 @@ import WalletVisual from '@wallet/components/walletVisual';
 import { truncateAddress } from '@wallet/utils/account';
 import styles from './ValidatorProfile.css';
 
-const VoterRow = ({ data = {} }) => {
+const StakerRow = ({ data = {} }) => {
   const { delegateAddress, name } = data;
 
   return (
-    <Link className={styles.voteRow} to={`/explorer?address=${delegateAddress}`}>
+    <Link className={styles.stakerRow} to={`/explorer?address=${delegateAddress}`}>
       <WalletVisual className={styles.walletVisual} address={delegateAddress} size={40} />
       <span className={styles.address}>{name || truncateAddress(delegateAddress)}</span>
     </Link>
   );
 };
 
-export default VoterRow;
+export default StakerRow;

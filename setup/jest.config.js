@@ -274,7 +274,7 @@ module.exports = {
     'src/modules/auth/components/hwWalletLogin/selectAccount/accountCard.js',
     'src/modules/auth/components/hwWalletLogin/selectAccount/selectAccount.js',
     'src/modules/pos/validator/components/ToggleIcon/index.js',
-    'src/modules/pos/validator/components/ValidatorProfile/VoterRow.js',
+    'src/modules/pos/validator/components/ValidatorProfile/StakerRow.js',
     'src/modules/auth/components/hwWalletLogin/hwWalletLogin.js',
     'src/modules/pos/validator/components/ValidatorProfile/PerformanceView.js',
     'src/modules/pos/validator/components/ValidatorProfile/DetailsView.js',

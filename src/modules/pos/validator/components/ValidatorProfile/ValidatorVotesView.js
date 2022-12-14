@@ -8,7 +8,7 @@ import BoxHeader from '@theme/box/header';
 import { Input } from 'src/theme';
 import { QueryTable } from 'src/theme/QueryTable';
 import { useFilter } from 'src/modules/common/hooks';
-import VoterRow from './VoterRow';
+import StakerRow from './StakerRow';
 import tableHeader from './VotersTableHeader';
 import styles from './ValidatorProfile.css';
 import { useReceivedVotes } from '../../hooks/queries';
@@ -71,7 +71,7 @@ const ValidatorVotesView = ({ address }) => {
             transformResponse={({ votes } = {}) => votes}
             iterationKey="address"
             emptyState={{ message: emptyMessage }}
-            row={VoterRow}
+            row={StakerRow}
             additionalRowProps={{
               t,
             }}
