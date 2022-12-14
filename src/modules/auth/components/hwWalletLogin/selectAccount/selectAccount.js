@@ -62,7 +62,7 @@ class SelectAccount extends React.Component {
     } else {
       const hwAccounts = accounts.map((account) => ({
         ...account,
-        name: this.getNameFromAccount(account.summary.address),
+        name: this.getNameFromAccount(account.address),
       }));
       this.setState({ hwAccounts });
     }
@@ -159,7 +159,7 @@ class SelectAccount extends React.Component {
               {hwAccounts
                 .filter((account) => {
                   if (hideEmptyAccounts) {
-                    return account.summary?.balance > 0;
+                    return account?.availableBalance > 0;
                   }
                   return true;
                 })

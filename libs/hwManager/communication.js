@@ -13,7 +13,7 @@ const IPC = window.ipc;
 const executeCommand = (action, payload) => (
   new Promise((resolve, reject) => {
     // Listening for response
-    IPC.once(`${action}.${RESPONSE}`, (event, response) => {
+    IPC.once(`${action}.${RESPONSE}`, (_event, response) => {
       if (response.success) return resolve(response.data);
       return reject(new Error(`${action} failed: ${response.error}`));
     });
