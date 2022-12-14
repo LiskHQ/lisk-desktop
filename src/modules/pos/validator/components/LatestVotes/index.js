@@ -15,7 +15,7 @@ const LatestVotes = ({ filters }) => {
       config: {
         params: {
           ...filters,
-          moduleCommandID: MODULE_COMMANDS_NAME_MAP.voteDelegate,
+          moduleCommand: MODULE_COMMANDS_NAME_MAP.voteDelegate,
           sort: 'timestamp:desc',
         },
       },
@@ -37,7 +37,7 @@ const LatestVotes = ({ filters }) => {
     <QueryTable
       showHeader
       queryHook={useTransactions}
-      queryConfig={queryConfig.current}
+      queryConfig={queryConfig}
       row={TransactionRow}
       header={header(t)}
       emptyState={{

@@ -1,5 +1,5 @@
 /* istanbul ignore file */
-import React, { useMemo } from 'react';
+import React, { useMemo, useCallback } from 'react';
 import { useSelector } from 'react-redux';
 import { useTranslation } from 'react-i18next';
 import { QueryTable } from 'src/theme/QueryTable';
@@ -16,7 +16,6 @@ const ValidatorsTable = ({ setActiveTab, activeTab, blocks, filters }) => {
   const queryHook = activeTab === 'active' ? useForgersGenerator : useValidators;
   const { sort, toggleSort } = useSort();
 
-  // eslint-disable-next-line max-statements
   const queryConfig = useMemo(
     () => ({
       config: {
@@ -29,8 +28,33 @@ const ValidatorsTable = ({ setActiveTab, activeTab, blocks, filters }) => {
           ...(activeTab === 'watched' && { addressList: watchList }),
         },
       },
+      options: {
+        refetchInterval: activeTab === 'active' ? 10000 : false,
+      },
     }),
     [activeTab, sort, filters]
+  );
+  const { data: validators } = useValidators({
+    config: { params: { limit: 103, status: 'active' } },
+    options: { enabled: activeTab === 'active' },
+  });
+
+  const mergeData = useCallback(
+    (generatorsData) => {
+      if (generatorsData && validators) {
+        const normalizedValidators = validators.data.reduce(
+          (acc, val) => ({ ...acc, [val.address]: val }),
+          {}
+        );
+        const tableData = generatorsData.map((gen) => ({
+          ...gen,
+          ...normalizedValidators[gen.address],
+        }));
+        return tableData;
+      }
+      return [];
+    },
+    [validators]
   );
 
   return (
@@ -38,6 +62,7 @@ const ValidatorsTable = ({ setActiveTab, activeTab, blocks, filters }) => {
       showHeader
       queryHook={queryHook}
       queryConfig={queryConfig}
+      transformResponse={(generatorData) => mergeData(generatorData)}
       row={ValidatorRow}
       header={header(activeTab, toggleSort, t)}
       currentSort={sort}
