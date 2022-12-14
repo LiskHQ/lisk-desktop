@@ -87,7 +87,7 @@ const StakeRow = ({
         </>
       ) : (
         <form
-          className={`${styles.editVoteForm} ${styles.centerContent}`}
+          className={`${styles.editStakeForm} ${styles.centerContent}`}
           onSubmit={handleFormSubmission}
         >
           <AmountField
