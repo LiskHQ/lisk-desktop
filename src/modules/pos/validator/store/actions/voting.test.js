@@ -98,7 +98,7 @@ describe('actions: voting', () => {
   });
 
   describe('voteEdited', () => {
-    it('should create an action to add data to toggle the vote status for any given delegate', async () => {
+    it('should create an action to add data to toggle the stake status for any given delegate', async () => {
       const data = [
         {
           delegateAddress: 'dummy',
@@ -112,7 +112,7 @@ describe('actions: voting', () => {
       });
     });
 
-    it('creates an action to add data to toggle the vote status for any given delegate, without calling getAccount', async () => {
+    it('creates an action to add data to toggle the stake status for any given delegate, without calling getAccount', async () => {
       const data = [
         {
           address: 'dummy',
@@ -227,7 +227,7 @@ describe('actions: voting', () => {
   });
 
   describe('votesConfirmed', () => {
-    it('should dispatch vote type without data', () => {
+    it('should dispatch stake type without data', () => {
       const expectedAction = {
         type: actionTypes.votesConfirmed,
       };
@@ -237,7 +237,7 @@ describe('actions: voting', () => {
   });
 
   describe('votesCleared', () => {
-    it('should dispatch vote type without data', () => {
+    it('should dispatch stake type without data', () => {
       const expectedAction = {
         type: actionTypes.votesCleared,
       };
@@ -247,7 +247,7 @@ describe('actions: voting', () => {
   });
 
   describe('votesRetrieved', () => {
-    it('should call getVotes and dispatch vote results', async () => {
+    it('should call getVotes and dispatch stake results', async () => {
       const votes = [
         { address: 'lskdwsyfmcko6mcd357446yatromr9vzgu7eb8y99', username: 'genesis', amount: 1e8 },
       ];

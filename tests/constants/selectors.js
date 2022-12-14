@@ -264,7 +264,7 @@ const ss = {
   closeDialog: '.dialog-close-button',
   bookmarkListToggle: '.bookmark-list-toggle',
   settingsMenu: '.settings-toggle',
-  openAddVoteDialog: '.open-add-vote-dialog',
+  openStakeVoteDialog: '.open-add-stake-dialog',
   votingQueueToggle: '.voting-queue-toggle',
   openUnlockBalanceDialog: '.open-unlock-balance-dialog',
   unlockAmountValue: '.unlock-amount-value',

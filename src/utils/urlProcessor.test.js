@@ -29,7 +29,7 @@ describe('setVotesByLaunchProtocol', () => {
     jest.clearAllMocks();
   });
 
-  it('Should dispatch voteEdited with empty array if no usernames in query params', async () => {
+  it('Should dispatch stakeEdited with empty array if no usernames in query params', async () => {
     accounts.getAccounts.mockImplementation(() => Promise.resolve([]));
     accounts.getAccount.mockImplementation({ data: mockAccounts.genesis });
     await setVotesByLaunchProtocol('?modal=VotingQueue')(dispatch, getState);
@@ -37,7 +37,7 @@ describe('setVotesByLaunchProtocol', () => {
     expect(dispatch).toHaveBeenCalled();
   });
 
-  it('Should dispatch voteEdited with a single username in the query params', async () => {
+  it('Should dispatch stakeEdited with a single username in the query params', async () => {
     const account = {
       summary: { address: 'lskdwsyfmcko6mcd357446yatromr9vzgu7eb8y99' },
       dpos: { delegate: { username: 'genesis_5' } },
@@ -57,7 +57,7 @@ describe('setVotesByLaunchProtocol', () => {
     expect(dispatch).toHaveBeenCalled();
   });
 
-  it('Should dispatch voteEdited with empty data if the username is invalid', async () => {
+  it('Should dispatch stakeEdited with empty data if the username is invalid', async () => {
     accounts.getAccounts.mockImplementation(() => Promise.resolve({ data: [] }));
     accounts.getAccount.mockImplementation(() => Promise.resolve({ data: [] }));
     await setVotesByLaunchProtocol('?modal=VotingQueue&unvotes=ad')(dispatch, getState);
@@ -66,7 +66,7 @@ describe('setVotesByLaunchProtocol', () => {
     expect(dispatch).toHaveBeenCalled();
   });
 
-  it('Should dispatch voteEdited with empty data if the usernames are invalid', async () => {
+  it('Should dispatch stakeEdited with empty data if the usernames are invalid', async () => {
     const account = {
       summary: { address: 'lskdwsyfmcko6mcd357446yatromr9vzgu7eb8y99' },
       dpos: { delegate: { username: 'genesis_5' } },
@@ -81,7 +81,7 @@ describe('setVotesByLaunchProtocol', () => {
     expect(dispatch).toHaveBeenCalled();
   });
 
-  it('Should dispatch voteEdited with an array of valid usernames in query params', async () => {
+  it('Should dispatch stakeEdited with an array of valid usernames in query params', async () => {
     const delegates = Object.values(mockAccounts)
       .filter(account => account.dpos.delegate.username && account.summary.address);
     const usernameList = delegates.map(account => account.dpos.delegate.username);

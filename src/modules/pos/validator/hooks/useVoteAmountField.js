@@ -30,7 +30,7 @@ const getAmountFeedbackAndError = (value, balance, minValue, inputValue) => {
     checklist: [
       'NEGATIVE_VOTE',
       'ZERO',
-      'VOTE_10X',
+      'STAKE_10X',
       'INSUFFICIENT_VOTE_FUNDS',
       'MIN_BALANCE',
       'FORMAT',

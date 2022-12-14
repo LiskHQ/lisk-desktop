@@ -59,7 +59,7 @@ describe.skip('API: LSK Transactions', () => {
       expect(getTxAmount(tx)).toEqual(tx.params.amount);
     });
 
-    it('should return amount of votes in Beddows', () => {
+    it('should return amount of stakes in Beddows', () => {
       const tx = {
         title: voteDelegate,
         module: 'dpos',
@@ -129,7 +129,7 @@ describe.skip('API: LSK Transactions', () => {
       });
     });
 
-    it('creates a transaction object for vote transaction', () => {
+    it('creates a transaction object for stake transaction', () => {
       const tx = {
         ...baseDesktopTx,
         module: 'dpos',

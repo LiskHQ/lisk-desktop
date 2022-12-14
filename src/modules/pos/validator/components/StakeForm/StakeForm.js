@@ -92,7 +92,7 @@ const validateStakes = (votes, balance, fee, resultingNumOfVotes, t, dposToken) 
   );
 
   if (areVotesInValid) {
-    messages.push(t('Please enter vote amounts for the validators you wish to vote for'));
+    messages.push(t('Please enter stake amounts for the validators you wish to stake for'));
   }
 
   if (resultingNumOfVotes > STAKE_LIMIT) {
@@ -116,7 +116,7 @@ const validateStakes = (votes, balance, fee, resultingNumOfVotes, t, dposToken) 
 
   if (balance - addedVoteAmount < MIN_ACCOUNT_BALANCE && balance - addedVoteAmount) {
     messages.push(
-      `The vote amounts are too high. You should keep 0.05 ${dposToken.symbol} available in your account.`
+      `The stake amounts are too high. You should keep 0.05 ${dposToken.symbol} available in your account.`
     );
   }
 

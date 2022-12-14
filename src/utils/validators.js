@@ -54,7 +54,7 @@ export const validateLSKPublicKey = (publicKey) => {
  * @param {string} [data.locale="en"] The locale for testing the format against
  * @param {string?} [data.funds] Maximum funds users are allowed to input
  * @param {Array?} [data.checklist] The list of errors to be tested. A choice of
- * ZERO, MAX_ACCURACY, FORMAT, VOTE_10X, INSUFFICIENT_FUNDS
+ * ZERO, MAX_ACCURACY, FORMAT, STAKE_10X, INSUFFICIENT_FUNDS
  * @param {string} [data.minValue] The minimum value which is the previously confirmed votes
  * @param {string} [data.inputValue] The user's input for votes
  * @returns {Object.<string, string|boolean>}
@@ -104,8 +104,8 @@ export const validateAmountFormat = ({
       message: i18n.t('Maximum floating point is 8.'),
       fn: () => maxFloating.test(value),
     },
-    VOTE_10X: {
-      message: i18n.t('You can only vote in multiplies of 10 LSK.'),
+    STAKE_10X: {
+      message: i18n.t('You can only stake in multiplies of 10 LSK.'),
       fn: () => value % 10 !== 0,
     },
     INSUFFICIENT_FUNDS: {

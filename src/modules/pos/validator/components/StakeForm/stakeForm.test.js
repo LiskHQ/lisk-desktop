@@ -128,7 +128,7 @@ describe('VoteForm', () => {
     expect(wrapper.find('.available-votes-num').text()).toBe('8/');
   });
 
-  it('Shows an error if trying to vote for more than 10 delegates', () => {
+  it('Shows an error if trying to stake for more than 10 delegates', () => {
     const wrapper = shallow(<Form {...props} votes={elevenVotes} />);
     expect(wrapper.find('.available-votes-num').text()).toBe('-1/');
     expect(wrapper.find('.feedback').text()).toBe(
@@ -136,7 +136,7 @@ describe('VoteForm', () => {
     );
   });
 
-  it('Shows an error if trying to vote more than your balance', async () => {
+  it('Shows an error if trying to stake more than your balance', async () => {
     const wrapper = mountWithRouterAndQueryClient(Form, { ...props, votes: expensiveVotes });
     await flushPromises();
     act(() => {
@@ -148,7 +148,7 @@ describe('VoteForm', () => {
     );
   });
 
-  it('Shows an error if trying to vote with amounts leading to insufficient balance', async () => {
+  it('Shows an error if trying to stake with amounts leading to insufficient balance', async () => {
     props.account.token.balance = `${
       parseInt(accounts.genesis.token.balance, 10) + MIN_ACCOUNT_BALANCE * 0.8
     }`;
@@ -159,7 +159,7 @@ describe('VoteForm', () => {
     });
     expect(wrapper.find('.available-votes-num').text()).toBe('8/');
     expect(wrapper.find('.feedback').at(0).text()).toBe(
-      'The vote amounts are too high. You should keep 0.05 LSK available in your account.'
+      'The stake amounts are too high. You should keep 0.05 LSK available in your account.'
     );
   });
 });

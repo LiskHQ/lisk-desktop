@@ -125,7 +125,7 @@ Then(/^validator should be watched$/, function () {
   });
 });
 
-Then(/^I should be on a vote transaction details modal$/, () => {
+Then(/^I should be on a stake transaction details modal$/, () => {
   cy.location().should((location) => {
     const hasAddress = /\?modal=transactionDetails&transactionId=a1c5521f466ae5476d3908cc8d562444d45adf4ac3af57e77f1f9359999ab9ca&token=LSK/.test(location.href);
     expect(hasAddress).true;

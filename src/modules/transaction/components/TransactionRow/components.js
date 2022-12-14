@@ -212,7 +212,7 @@ const generateVotes = (params, delegates, token, t) => {
           {delegates[vote.delegateAddress]?.name ?? truncateAddress(vote.delegateAddress)}
         </span>
       </Link>
-      <span className={`${styles.value} vote-item-value`}>
+      <span className={`${styles.value}`}>
         <TokenAmount val={vote.amount} token={token} />
       </span>
     </span>
