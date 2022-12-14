@@ -12,7 +12,7 @@ import { mockValidators, mockSentStakes } from '@pos/validator/__fixtures__';
 import { useLatestBlock } from 'src/modules/block/hooks/queries/useLatestBlock';
 import { mockTokensBalance } from 'src/modules/token/fungible/__fixtures__';
 import { mockAuth } from 'src/modules/auth/__fixtures__';
-import EditVote from './index';
+import EditStake from './index';
 import { useValidators, useSentVotes, usePosConstants } from '../../hooks/queries';
 import { mockPosConstants } from '../../__fixtures__/mockPosConstants';
 
@@ -33,7 +33,7 @@ jest.mock('../../hooks/queries');
 jest.mock('@token/fungible/hooks/queries');
 jest.mock('@auth/hooks/queries');
 
-describe('EditVote', () => {
+describe('EditStake', () => {
   let wrapper;
   const delegateAddress = 'lskjq7jh2k7q332wgkz3bxogb8bj5zc3fcnb9ya53';
   const props = {
@@ -54,7 +54,7 @@ describe('EditVote', () => {
     usePosConstants.mockReturnValue({ data: mockPosConstants });
     useTokensBalance.mockReturnValue({ data: mockTokensBalance, isLoading: false });
 
-    wrapper = renderWithRouter(EditVote, props);
+    wrapper = renderWithRouter(EditStake, props);
   });
 
   it('should properly render add vote form', () => {
@@ -64,7 +64,7 @@ describe('EditVote', () => {
 
     wrapper.rerender(
       <MemoryRouter initialEntries={['/']}>
-        <EditVote
+        <EditStake
           {...props}
           history={{
             ...props.history,
@@ -117,7 +117,7 @@ describe('EditVote', () => {
 
     wrapper.rerender(
       <MemoryRouter initialEntries={['/']}>
-        <EditVote
+        <EditStake
           {...props}
           history={{
             ...props.history,
@@ -140,7 +140,7 @@ describe('EditVote', () => {
 
     wrapper.rerender(
       <MemoryRouter initialEntries={['/']}>
-        <EditVote
+        <EditStake
           {...props}
           history={{
             ...props.history,
@@ -176,7 +176,7 @@ describe('EditVote', () => {
 
     wrapper.rerender(
       <MemoryRouter initialEntries={['/']}>
-        <EditVote {...props} />
+        <EditStake {...props} />
       </MemoryRouter>
     );
 

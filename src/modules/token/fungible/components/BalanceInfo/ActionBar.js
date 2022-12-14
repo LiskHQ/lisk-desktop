@@ -41,7 +41,7 @@ const ActionBar = ({
         <div className={styles.actionRow}>
           {username && (
             <DialogLink
-              component={!isBanned && 'editVote'}
+              component={!isBanned && 'editStake'}
               data={pomStart}
               className={`${styles.button} add-vote`}
             >

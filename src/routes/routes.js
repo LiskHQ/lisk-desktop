@@ -187,7 +187,7 @@ export const modals = {
     isPrivate: true,
     forbiddenTokens: [],
   },
-  editVote: {
+  editStake: {
     isPrivate: true,
     forbiddenTokens: [],
   },

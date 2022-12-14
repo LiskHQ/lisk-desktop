@@ -41,7 +41,7 @@ describe('StakeRow Component', () => {
 
   it('should render edit link', () => {
     wrapper = mountWithRouter(StakeRow, props);
-    expect(wrapper.find(DialogLink).html()).toContain('editVoteLink');
+    expect(wrapper.find(DialogLink).html()).toContain('editStakeLink');
   });
 
   it('should call onRowClick', () => {

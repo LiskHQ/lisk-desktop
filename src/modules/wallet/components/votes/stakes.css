@@ -59,7 +59,7 @@
 .row {
   cursor: pointer;
 
-  & .editVoteLink {
+  & .editStakeLink {
     padding: 5px 20px;
     opacity: 0;
     transition: all ease 200ms;
@@ -67,7 +67,7 @@
   }
 
   &:hover {
-    & .editVoteLink {
+    & .editStakeLink {
       opacity: 1;
     }
   }

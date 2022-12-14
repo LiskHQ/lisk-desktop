@@ -22,7 +22,7 @@ import TransactionDetails from '@transaction/manager/transactionDetailViewManage
 import VerifyMessage from '@message/manager/verifyMessageManager';
 import Request from '@wallet/components/request';
 import UnlockBalanceView from '@pos/validator/components/UnlockBalanceView';
-import EditVote from '@pos/validator/manager/editVoteManager';
+import editStakeManager from '@pos/validator/manager/editStakeManager';
 import VotingQueue from '@pos/validator/manager/votingQueueManager';
 import DeviceDisconnect from 'src/modules/common/components/deviceDisconnectDialog';
 import NewReleaseDialog from '@update/detail/info/newReleaseDialog';
@@ -86,7 +86,7 @@ export default {
   newRelease: NewReleaseDialog,
   request: Request,
   lockedBalance: UnlockBalanceView,
-  editVote: EditVote,
+  editStake: editStakeManager,
   votingQueue: VotingQueue,
   deviceDisconnectDialog: DeviceDisconnect,
   reclaimBalance: ReclaimBalanceModal,

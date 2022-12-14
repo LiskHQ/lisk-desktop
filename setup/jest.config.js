@@ -243,7 +243,7 @@ module.exports = {
     'src/modules/pos/validator/components/UnlockBalanceStatus/index.js',
     'src/modules/pos/validator/components/UnlockBalanceView/index.js',
     'src/modules/pos/validator/utils/getMaxAmount.js',
-    'src/modules/pos/validator/manager/editVoteManager.js',
+    'src/modules/pos/validator/manager/editStakeManager.js',
     'src/modules/legacy/components/reclaim/index.js',
     'src/modules/legacy/components/Status/index.js',
     'src/modules/legacy/manager/reclaimBalanceModal.js',

@@ -49,7 +49,7 @@ const StakeRow = ({
   };
 
   const changeToEditingMode = () => {
-    removeThenAppendSearchParamsToUrl(history, { modal: 'editVote', address }, ['modal, address']);
+    removeThenAppendSearchParamsToUrl(history, { modal: 'editStake', address }, ['modal, address']);
   };
 
   const changeToNotEditingMode = () => {
