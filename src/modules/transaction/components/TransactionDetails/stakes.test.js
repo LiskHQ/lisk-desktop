@@ -1,7 +1,7 @@
 import React from 'react';
 import { mount } from 'enzyme';
 import accounts from '@tests/constants/wallets';
-import { VotesPure } from './votes';
+import { StakesPure } from './stakes';
 
 jest.spyOn(React, 'useContext').mockImplementation(() => ({
   transaction: {
@@ -15,7 +15,7 @@ jest.spyOn(React, 'useContext').mockImplementation(() => ({
   },
 }));
 
-describe('Transaction Votes', () => {
+describe('Transaction stakes', () => {
   let wrapper;
   const props = {
     t: v => v,
@@ -25,13 +25,13 @@ describe('Transaction Votes', () => {
     },
   };
 
-  it('Should render with added and deleted Votes', () => {
-    wrapper = mount(<VotesPure {...props} />);
+  it('Should render with added and deleted Stakes', () => {
+    wrapper = mount(<StakesPure {...props} />);
     expect(wrapper).toContainMatchingElements(2, '.stake-item-address');
     expect(wrapper.find('.primaryText').at(0).text()).toEqual('lsk123');
-    expect(wrapper.find('.vote-item-value').at(0).text()).toEqual('10 LSK');
+    expect(wrapper.find('.stake-item-value').at(0).text()).toEqual('10 LSK');
     expect(wrapper.find('.primaryText').at(1).text()).toEqual('lsk987');
-    expect(wrapper.find('.vote-item-value').at(1).text()).toEqual('-20 LSK');
+    expect(wrapper.find('.stake-item-value').at(1).text()).toEqual('-20 LSK');
   });
 
   it('Should fetch and render delegate names', () => {
@@ -51,7 +51,7 @@ describe('Transaction Votes', () => {
         },
       },
     };
-    wrapper = mount(<VotesPure {...newProps} />);
+    wrapper = mount(<StakesPure {...newProps} />);
     expect(newProps.votedDelegates.loadData).toHaveBeenCalled();
     expect(wrapper.find('.primaryText').at(0).text()).toEqual('test');
     expect(wrapper.find('.primaryText').at(1).text()).toEqual('genesis_17');

@@ -5,7 +5,7 @@ import TransactionDetailsContext from '../../context/transactionDetailsContext';
 import styles from './styles.css';
 import StakeItem from '../StakeItem';
 
-export const VotesPure = ({ t, votedDelegates }) => {
+export const StakesPure = ({ t, votedDelegates }) => {
   const { transaction } = React.useContext(TransactionDetailsContext);
   const { votes } = transaction.params;
 
@@ -17,13 +17,13 @@ export const VotesPure = ({ t, votedDelegates }) => {
   }, []);
 
   return (
-    <div className={`${styles.voteValue} ${styles.votes}`}>
+    <div className={`${styles.stakeValue}`}>
       <div className={styles.detailsWrapper}>
-        <span className={styles.label}>{`${t('Votes')} (${votes.length})`}</span>
+        <span className={styles.label}>{`${t('Stakes')} (${votes.length})`}</span>
         <div className={`${styles.stakesContainer} ${styles.added} tx-added-stakes`}>
           {votes.map((vote) => (
             <StakeItem
-              key={`vote-${vote.delegateAddress}`}
+              key={`stake-${vote.delegateAddress}`}
               vote={{ confirmed: vote.amount }}
               address={vote.delegateAddress}
               truncate
@@ -52,4 +52,4 @@ export default withData({
       return responseMap;
     },
   },
-})(VotesPure);
+})(StakesPure);
