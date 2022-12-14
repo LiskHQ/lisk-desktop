@@ -260,7 +260,7 @@ module.exports = {
     'src/modules/common/components/charts/utils/balanceChart.js',
     'src/modules/wallet/components/searchBarWallets/passphraseRenderer/index.js',
     'src/modules/wallet/store/middlewares/hwManager.js',
-    'src/modules/pos/validator/components/ValidatorProfile/ValidatorVoteButton.js',
+    'src/modules/pos/validator/components/ValidatorProfile/ValidatorStakeButton.js',
     'src/modules/pos/validator/store/middlewares/voting.js',
     'src/modules/transaction/store/transactionPriorityReducer.js',
     'src/modules/pos/validator/store/actions/validator.js',
