@@ -4,7 +4,7 @@ const getModuleCommandSenderLabel = (t = str => str) => ({
   [MODULE_COMMANDS_NAME_MAP.transfer]: t('Sender'),
   [MODULE_COMMANDS_NAME_MAP.reclaim]: t('Sender'),
   [MODULE_COMMANDS_NAME_MAP.unlock]: t('Sender'),
-  [MODULE_COMMANDS_NAME_MAP.voteDelegate]: t('Voter'),
+  [MODULE_COMMANDS_NAME_MAP.voteDelegate]: t('Staker'),
   [MODULE_COMMANDS_NAME_MAP.registerDelegate]: t('Account username'),
   [MODULE_COMMANDS_NAME_MAP.registerMultisignature]: t('Registrant'),
   [MODULE_COMMANDS_NAME_MAP.reportDelegateMisbehavior]: t('Reporter'),
