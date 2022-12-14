@@ -1,5 +1,5 @@
 import React from 'react';
-import VoteItem from '../VoteItem';
+import StakeItem from '../StakeItem';
 import styles from '../TransactionInfo/TransactionInfo.css'; // @todo create dedicated css file for this component
 
 const ItemList = ({ items, heading }) => (
@@ -7,7 +7,7 @@ const ItemList = ({ items, heading }) => (
     <span className={styles.contentHeading}>{heading}</span>
     <div className={styles.voteItems}>
       {Object.keys(items).map((address) => (
-        <VoteItem
+        <StakeItem
           key={`vote-item-${address}`}
           address={address}
           vote={items[address]}

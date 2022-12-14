@@ -3,7 +3,7 @@ import withData from 'src/utils/withData';
 import { getValidators } from '@pos/validator/api';
 import TransactionDetailsContext from '../../context/transactionDetailsContext';
 import styles from './styles.css';
-import VoteItem from '../VoteItem';
+import StakeItem from '../StakeItem';
 
 export const VotesPure = ({ t, votedDelegates }) => {
   const { transaction } = React.useContext(TransactionDetailsContext);
@@ -22,7 +22,7 @@ export const VotesPure = ({ t, votedDelegates }) => {
         <span className={styles.label}>{`${t('Votes')} (${votes.length})`}</span>
         <div className={`${styles.votesContainer} ${styles.added} tx-added-votes`}>
           {votes.map((vote) => (
-            <VoteItem
+            <StakeItem
               key={`vote-${vote.delegateAddress}`}
               vote={{ confirmed: vote.amount }}
               address={vote.delegateAddress}

@@ -6,7 +6,7 @@ import routes from 'src/routes/routes';
 import { tokenMap } from '@token/fungible/consts/tokens';
 import TokenAmount from '@token/fungible/components/tokenAmount';
 
-import styles from './VoteItem.css';
+import styles from './StakeItem.css';
 
 const token = tokenMap.LSK.key;
 
@@ -20,12 +20,12 @@ const token = tokenMap.LSK.key;
  * @param {String} title text to use instead of the address e.g. delegate username
  * @param {Boolean} truncate text to use instead of the address e.g. delegate username
  */
-const VoteDetails = ({ vote, address, title, truncate }) => {
+const StakeItem = ({ vote, address, title, truncate }) => {
   const accountPath = routes.explorer.path;
   return (
     <span className={styles.container}>
       <Link to={`${accountPath}?address=${address}`}>
-        <span className={`${styles.primaryText} vote-item-address`}>
+        <span className={`${styles.primaryText} stake-item-address`}>
           {title ?? (truncate ? truncateAddress(address) : address)}
         </span>
       </Link>
@@ -52,4 +52,4 @@ const VoteDetails = ({ vote, address, title, truncate }) => {
   );
 };
 
-export default VoteDetails;
+export default StakeItem;
