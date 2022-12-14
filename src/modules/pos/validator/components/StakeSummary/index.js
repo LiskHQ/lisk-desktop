@@ -4,7 +4,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { useTranslation } from 'react-i18next';
 import { votesSubmitted } from 'src/redux/actions';
 import { selectActiveTokenAccount } from 'src/redux/selectors';
-import SummaryComponent from './VoteSummary';
+import StakeSummary from './StakeSummary';
 
 const Summary = (props) => {
   const { t } = useTranslation();
@@ -13,7 +13,7 @@ const Summary = (props) => {
   const account = useSelector(selectActiveTokenAccount);
 
   return (
-    <SummaryComponent
+    <StakeSummary
       {...props}
       t={t}
       account={account}

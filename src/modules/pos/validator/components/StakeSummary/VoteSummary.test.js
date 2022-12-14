@@ -3,7 +3,7 @@ import { useAuth } from '@auth/hooks/queries';
 import { mockAuth } from 'src/modules/auth/__fixtures__';
 import accounts from '@tests/constants/wallets';
 import mockSavedAccounts from '@tests/fixtures/accounts';
-import Summary from './VoteSummary';
+import Summary from './StakeSummary';
 
 const mockedCurrentAccount = mockSavedAccounts[0];
 
@@ -127,7 +127,7 @@ describe('VotingQueue.Summary', () => {
     expect(wrapper).toContainMatchingElement('.stake-fees');
   });
 
-  it('renders properly when only new votes are present', () => {
+  it('renders properly when only new stakes are present', () => {
     const wrapper = mountWithRouter(Summary, {
       ...props,
       added,
@@ -136,7 +136,7 @@ describe('VotingQueue.Summary', () => {
     expect(wrapper).toContainMatchingElements(4, '.stake-item-address');
   });
 
-  it('renders properly when only removed votes are present', () => {
+  it('renders properly when only removed stakes are present', () => {
     const wrapper = mountWithRouter(Summary, {
       ...props,
       removed,
@@ -145,7 +145,7 @@ describe('VotingQueue.Summary', () => {
     expect(wrapper).toContainMatchingElements(4, '.stake-item-address');
   });
 
-  it('renders properly when only edited votes are present', () => {
+  it('renders properly when only edited stakes are present', () => {
     const wrapper = mountWithRouter(Summary, {
       ...props,
       edited,
@@ -154,7 +154,7 @@ describe('VotingQueue.Summary', () => {
     expect(wrapper).toContainMatchingElements(4, '.stake-item-address');
   });
 
-  it('renders properly when a mixture of votes is present', () => {
+  it('renders properly when a mixture of stakes are present', () => {
     const wrapper = mountWithRouter(Summary, {
       ...props,
       edited,

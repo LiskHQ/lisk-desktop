@@ -4,7 +4,7 @@ import { getTransactionStatus } from '@transaction/configuration/statusConfig';
 import { txStatusTypes } from 'src/modules/transaction/configuration/txStatus';
 import statusMessages from './statusMessages';
 import styles from './styles.css';
-import VoteSuccessfulModal from '../StakeSuccessfulModal';
+import StakeSuccessfulModal from '../StakeSuccessfulModal';
 
 const Status = ({ account, transactions, statusInfo, t, dposToken }) => {
   const status = getTransactionStatus(account, transactions, account?.summary.isMultisignature);
@@ -13,7 +13,7 @@ const Status = ({ account, transactions, statusInfo, t, dposToken }) => {
   return (
     <div className={styles.container}>
       {status.code === txStatusTypes.broadcastSuccess ? (
-        <VoteSuccessfulModal statusMessage={template} dposToken={dposToken} />
+        <StakeSuccessfulModal statusMessage={template} dposToken={dposToken} />
       ) : (
         <TxBroadcaster
           title={template.title}

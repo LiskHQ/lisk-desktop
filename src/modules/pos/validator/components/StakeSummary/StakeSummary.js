@@ -30,7 +30,7 @@ const getResultProps = ({ added, removed, edited }) => {
   return { locked, unlockable };
 };
 
-const VoteSummary = ({
+const StakeSummary = ({
   t,
   removed = {},
   edited = {},
@@ -82,11 +82,11 @@ const VoteSummary = ({
       >
         <div className={styles.headerContainer}>
           <header>
-            {t('Voting Summary')}
+            {t('Staking Summary')}
           </header>
           <StakeStats
             t={t}
-            heading={t('Voting Summary')}
+            heading={t('Staking Summary')}
             added={Object.keys(added).length}
             edited={Object.keys(edited).length}
             removed={Object.keys(removed).length}
@@ -97,4 +97,4 @@ const VoteSummary = ({
   );
 };
 
-export default VoteSummary;
+export default StakeSummary;

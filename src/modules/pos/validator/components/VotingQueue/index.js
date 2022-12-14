@@ -6,7 +6,7 @@ import { useTokensBalance } from 'src/modules/token/fungible/hooks/queries';
 import { removeSearchParamsFromUrl } from 'src/utils/searchParams';
 import MultiStep from 'src/modules/common/components/OldMultiStep';
 import StakeForm from '../StakeForm';
-import Summary from '../VoteSummary';
+import StakeSummary from '../StakeSummary';
 import StakeStatus from '../StakeStatus';
 import styles from './styles.css';
 import { usePosConstants } from '../../hooks/queries';
@@ -42,7 +42,7 @@ const VotingQueue = ({ history, processLaunchProtocol }) => {
       onChange={setMultiStepState}
     >
       <StakeForm dposToken={token} />
-      <Summary />
+      <StakeSummary />
       <TxSignatureCollector />
       <StakeStatus dposToken={token} />
     </MultiStep>
