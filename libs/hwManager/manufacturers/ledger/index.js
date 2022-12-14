@@ -1,5 +1,6 @@
 /* istanbul ignore file */
 import { LedgerAccount, LiskApp } from '@zondax/ledger-lisk';
+import { transactions } from '@liskhq/lisk-client';
 
 import {
   ADD_DEVICE,
@@ -137,12 +138,13 @@ const signTransaction = async (transporter, { device, data }) => {
     transport = await transporter.open(device.path);
     const liskLedger = new LiskApp(transport);
     const ledgerAccount = getLedgerAccount(data.index);
-    console.log('ledgerAccount', ledgerAccount);
-    const txToBeSigned = Buffer.concat([Buffer.from(data.chainID), data.transactionBytes]);
-    console.log('txToBeSigned', txToBeSigned);
+    const txToBeSigned = Buffer.concat([
+      Buffer.from(transactions.TAG_TRANSACTION, 'hex'),
+      Buffer.from(data.chainID, 'hex'),
+      data.transactionBytes,
+    ]);
     // derivation path, tx message in buffer format
     const signature = await liskLedger.sign(ledgerAccount.derivePath(), txToBeSigned);
-    console.log('signature', signature);
     transport.close();
     return signature;
   } catch (error) {
