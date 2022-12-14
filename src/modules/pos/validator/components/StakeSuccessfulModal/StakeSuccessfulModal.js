@@ -7,9 +7,9 @@ import { PrimaryButton } from 'src/theme/buttons';
 import BoxContent from 'src/theme/box/content';
 import BoxFooter from 'src/theme/box/footer';
 import Illustration from 'src/modules/common/components/illustration';
-import styles from './VoteSuccessfulModal.css';
+import styles from './StakeSuccessfulModal.css';
 
-function VoteSuccessfulModal({ history, statusMessage }) {
+function StakeSuccessfulModal({ history, statusMessage }) {
   const { t } = useTranslation();
 
   const handleBackToDelegate = useCallback(() => {
@@ -18,7 +18,7 @@ function VoteSuccessfulModal({ history, statusMessage }) {
 
   return (
     <Box className={styles.successContainer}>
-      <BoxHeader>{t('Voting confirmation')}</BoxHeader>
+      <BoxHeader>{t('Staking confirmation')}</BoxHeader>
       <BoxContent>
         <Illustration className={styles.illustartion} name="votingSuccess" />
         <h4>{t('Stake(s) has been submitted')}</h4>
@@ -31,4 +31,4 @@ function VoteSuccessfulModal({ history, statusMessage }) {
   );
 }
 
-export default VoteSuccessfulModal;
+export default StakeSuccessfulModal;

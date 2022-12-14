@@ -1,9 +1,9 @@
 import { renderWithRouter } from 'src/utils/testHelpers';
 import { fireEvent, screen, waitFor } from '@testing-library/react';
 import { mockTokensBalance } from 'src/modules/token/fungible/__fixtures__';
-import TokenRow from './VoteSuccessfulModal';
+import TokenRow from './StakeSuccessfulModal';
 
-describe('VoteSuccessfulModal', () => {
+describe('StakeSuccessfulModal', () => {
   it('should display properly', async () => {
     const props = {
       history: {
@@ -16,7 +16,7 @@ describe('VoteSuccessfulModal', () => {
     };
     renderWithRouter(TokenRow, props);
 
-    expect(screen.getByText('Voting confirmation')).toBeTruthy();
+    expect(screen.getByText('Staking confirmation')).toBeTruthy();
     expect(screen.getByText('Stake(s) has been submitted')).toBeTruthy();
     expect(screen.getByText('test message')).toBeTruthy();
 
