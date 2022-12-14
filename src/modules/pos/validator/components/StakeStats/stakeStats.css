@@ -3,7 +3,7 @@
 .statsContainer {
   display: flex;
 
-  & .voteStats {
+  & .stakeStats {
     padding: 0 var(--horizontal-padding-m);
     display: flex;
     justify-content: center;

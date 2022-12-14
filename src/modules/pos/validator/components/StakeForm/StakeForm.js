@@ -15,17 +15,17 @@ import header from './tableHeader';
 import styles from './stakeForm.css';
 
 /**
- * Determines the number of votes that have been
+ * Determines the number of stakes that have been
  * added, removed or edited.
  *
- * @param {Object} votes - votes object retrieved from the Redux store
+ * @param {Object} stakes - stakes object retrieved from the Redux store
  * @returns {Object} - stats object
  */
-const getVoteStats = (votes, account) => {
-  const votesStats = Object.keys(votes).reduce(
+const getStakeStats = (stakes, account) => {
+  const stakesStats = Object.keys(stakes).reduce(
     // eslint-disable-next-line max-statements
     (stats, address) => {
-      const { confirmed, unconfirmed, username } = votes[address];
+      const { confirmed, unconfirmed, username } = stakes[address];
 
       if (confirmed === 0 && unconfirmed === 0) {
         return stats;
@@ -58,18 +58,18 @@ const getVoteStats = (votes, account) => {
     }
   );
 
-  const numOfAddededVotes = Object.keys(votesStats.added).length;
-  const numOfEditedVotes = Object.keys(votesStats.edited).length;
-  const numOfUntouchedVotes = Object.keys(votesStats.untouched).length;
-  const numOfRemovedVotes = Object.keys(votesStats.removed).length;
+  const numOfAddededStakes = Object.keys(stakesStats.added).length;
+  const numOfEditedStakes = Object.keys(stakesStats.edited).length;
+  const numOfUntouchedStakes = Object.keys(stakesStats.untouched).length;
+  const numOfRemovedStakes = Object.keys(stakesStats.removed).length;
 
-  const resultingNumOfVotes = numOfAddededVotes + numOfEditedVotes + numOfUntouchedVotes;
-  const availableVotes = STAKE_LIMIT - (numOfEditedVotes + numOfUntouchedVotes + numOfRemovedVotes + numOfAddededVotes);
+  const resultingNumOfStakes = numOfAddededStakes + numOfEditedStakes + numOfUntouchedStakes;
+  const availableStakes = STAKE_LIMIT - (numOfEditedStakes + numOfUntouchedStakes + numOfRemovedStakes + numOfAddededStakes);
 
   return {
-    ...votesStats,
-    resultingNumOfVotes,
-    availableVotes,
+    ...stakesStats,
+    resultingNumOfStakes,
+    availableStakes,
   };
 };
 
@@ -131,7 +131,7 @@ const StakeForm = ({ t, votes, account, isVotingTxPending, nextStep, history, dp
 
   const normalizedVotes = useMemo(() => normalizeVotesForTx(votes), [votes]);
   const { added, edited, removed, selfUnvote, availableVotes, resultingNumOfVotes } = useMemo(
-    () => getVoteStats(votes, account),
+    () => getStakeStats(votes, account),
     [votes, account]
   );
 

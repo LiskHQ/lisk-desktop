@@ -1,7 +1,7 @@
 import React from 'react';
 import Dialog from 'src/theme/dialog/dialog';
 import TransactionSummary from '@transaction/manager/transactionSummary';
-import VoteStats from '../VoteStats';
+import StakeStats from '../StakeStats';
 
 import styles from './styles.css';
 
@@ -84,7 +84,7 @@ const VoteSummary = ({
           <header>
             {t('Voting Summary')}
           </header>
-          <VoteStats
+          <StakeStats
             t={t}
             heading={t('Voting Summary')}
             added={Object.keys(added).length}

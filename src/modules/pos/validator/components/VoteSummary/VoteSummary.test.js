@@ -123,7 +123,7 @@ describe('VotingQueue.Summary', () => {
   it('renders properly', () => {
     const wrapper = mountWithRouter(Summary, props);
 
-    expect(wrapper).toContainMatchingElement('VoteStats');
+    expect(wrapper).toContainMatchingElement('StakeStats');
     expect(wrapper).toContainMatchingElement('.vote-fees');
   });
 
