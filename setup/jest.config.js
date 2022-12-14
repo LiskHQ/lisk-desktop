@@ -186,7 +186,7 @@ module.exports = {
     'src/modules/bookmark/components/BookmarksListModal/BookmarkListModal.js',
     'src/modules/transaction/components/BlockDetailsTransactions/BlockDetailsTransactions.js',
     'src/modules/search/utils/searchUtils.js',
-    'src/modules/transaction/components/TransactionDetails/votes.js',
+    'src/modules/transaction/components/TransactionDetails/stakes.js',
     'src/modules/transaction/components/TransactionDetails/confirmations.js',
     'src/modules/transaction/components/TransactionDetails/members.js',
     'src/modules/transaction/components/TransactionDetails/nonce.js',
