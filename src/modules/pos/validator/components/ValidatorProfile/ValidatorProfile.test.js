@@ -5,7 +5,7 @@ import { screen } from '@testing-library/react';
 import { renderWithRouter } from 'src/utils/testHelpers';
 import mockSavedAccounts from '@tests/fixtures/accounts';
 import { mockBlocks } from '@block/__fixtures__';
-import { mockValidators, mockReceivedVotes, mockSentVotes } from '@pos/validator/__fixtures__';
+import { mockValidators, mockReceivedVotes, mockSentStakes } from '@pos/validator/__fixtures__';
 import { useBlocks } from '@block/hooks/queries/useBlocks';
 import { useLatestBlock } from '@block/hooks/queries/useLatestBlock';
 import { fromRawLsk } from 'src/modules/token/fungible/utils/lsk';
@@ -38,13 +38,13 @@ describe('Validator Profile', () => {
   useValidators.mockReturnValue({ data: mockValidators });
   useBlocks.mockReturnValue({ data: mockBlocks });
   useLatestBlock.mockReturnValue({ data: mockBlocks.data[0] });
-  useSentVotes.mockReturnValue({ data: mockSentVotes });
+  useSentVotes.mockReturnValue({ data: mockSentStakes });
   useReceivedVotes.mockReturnValue({ data: mockReceivedVotes });
 
   it('Should render active validator profile details', () => {
     useSentVotes.mockReturnValue({
       data: {
-        ...mockSentVotes,
+        ...mockSentStakes,
         data: { ...mockReceivedVotes.data, votes: mockReceivedVotes.data.votes.slice(5, 7) },
       },
     });

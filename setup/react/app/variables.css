@@ -196,7 +196,7 @@ or "warn/action" ineastd of "red/green"
   --color-tx-fail-status-text: var(--color-red);
   --color-tx-fail-status-bg: var(--color-red-transparent);
   --color-token-card-shadow: #eaeaea5c;
-  --color-votes-available: #4070f41a;
+  --color-stakes-available: #4070f41a;
   --color-search-bar-background: #2e3855;
 
   /*************************

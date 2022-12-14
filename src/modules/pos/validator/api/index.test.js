@@ -3,7 +3,7 @@ import ws, { subscribe, unsubscribe } from 'src/utils/api/ws';
 import accounts from '@tests/constants/wallets';
 
 import * as validator from './index';
-import { mockSentVotes } from '../__fixtures__';
+import { mockSentStakes } from '../__fixtures__';
 
 jest.mock('src/utils/api/client');
 jest.mock('src/utils/api/ws');
@@ -222,8 +222,8 @@ describe('API: LSK Delegates', () => {
     it('should return votes list when address is passed', async () => {
       const params = { address };
       const expectedResponse = {
-        ...mockSentVotes,
-        meta: { ...mockSentVotes.meta, count: 20 },
+        ...mockSentStakes,
+        meta: { ...mockSentStakes.meta, count: 20 },
       };
       setApiResponseData(expectedResponse, client.rest);
       await expect(validator.getVotes({ params, network })).resolves.toEqual(expectedResponse);

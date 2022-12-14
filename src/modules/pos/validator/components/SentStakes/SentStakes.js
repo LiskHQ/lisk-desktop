@@ -11,13 +11,13 @@ import { selectSearchParamValue } from 'src/utils/searchParams';
 import { useCurrentAccount } from '@account/hooks';
 import Icon from 'src/theme/Icon';
 import { useTokensBalance } from '@token/fungible/hooks/queries';
-import styles from './SentVotes.css';
+import styles from './SentStakes.css';
 import header from './tableHeaderMap';
 import SentVotesRow from '../SentVotesRow';
 import { usePosConstants, useSentVotes } from '../../hooks/queries';
 
 // eslint-disable-next-line max-statements
-const SentVotes = ({ history }) => {
+const SentStakes = ({ history }) => {
   const { t } = useTranslation();
   const searchAddress = selectSearchParamValue(history.location.search, 'address');
   const [
@@ -39,17 +39,17 @@ const SentVotes = ({ history }) => {
   const dposToken = useMemo(() => tokens?.data?.[0] || {}, [tokens]);
 
   const { data } = useSentVotes(queryParam);
-  const votingAvailable = useMemo(() => 10 - data?.meta?.total || 0, [address]);
+  const stakingAvailable = useMemo(() => 10 - data?.meta?.total || 0, [address]);
 
   return (
     <Box className={styles.wrapper}>
       <BoxHeader>
-        <Heading title={t('Votes')}>
+        <Heading title={t('Stakes')}>
           <div className={styles.rightHeaderSection}>
-            <div className={styles.votesCountBadge}>
-              <Icon name="votingQueueActive" />
-              <span>{votingAvailable}</span>
-              /10 {t('votes available in your account')}
+            <div className={styles.stakesCountBadge}>
+              <Icon name="stakingQueueActive" />
+              <span>{stakingAvailable}</span>
+              /10 {t('stakes available in your account')}
             </div>
             <div className={styles.actionButtons}>
               <DialogLink component="lockedBalance">
@@ -77,4 +77,4 @@ const SentVotes = ({ history }) => {
   );
 };
 
-export default SentVotes;
+export default SentStakes;

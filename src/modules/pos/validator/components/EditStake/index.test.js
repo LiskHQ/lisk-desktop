@@ -8,7 +8,7 @@ import mockSavedAccounts from '@tests/fixtures/accounts';
 import { mockBlocks } from '@block/__fixtures__';
 import { useAuth } from '@auth/hooks/queries';
 import { useTokensBalance } from '@token/fungible/hooks/queries';
-import { mockValidators, mockSentVotes } from '@pos/validator/__fixtures__';
+import { mockValidators, mockSentStakes } from '@pos/validator/__fixtures__';
 import { useLatestBlock } from 'src/modules/block/hooks/queries/useLatestBlock';
 import { mockTokensBalance } from 'src/modules/token/fungible/__fixtures__';
 import { mockAuth } from 'src/modules/auth/__fixtures__';
@@ -49,7 +49,7 @@ describe('EditVote', () => {
 
     useValidators.mockReturnValue({ data: mockValidators });
     useLatestBlock.mockReturnValue({ data: mockBlocks.data[0] });
-    useSentVotes.mockReturnValue({ data: mockSentVotes });
+    useSentVotes.mockReturnValue({ data: mockSentStakes });
     useAuth.mockReturnValue({ data: mockAuth });
     usePosConstants.mockReturnValue({ data: mockPosConstants });
     useTokensBalance.mockReturnValue({ data: mockTokensBalance, isLoading: false });
@@ -164,10 +164,10 @@ describe('EditVote', () => {
 
     useSentVotes.mockReturnValue({
       data: {
-        ...mockSentVotes,
+        ...mockSentStakes,
         data: {
-          ...mockSentVotes.data,
-          votes: mockSentVotes.data.votes.map((vote, index) =>
+          ...mockSentStakes.data,
+          votes: mockSentStakes.data.votes.map((vote, index) =>
             index === 0 ? { ...vote, delegateAddress } : vote
           ),
         },

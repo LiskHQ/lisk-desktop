@@ -1,6 +1,6 @@
 /* istanbul ignore file */
 import { renderHook, act } from '@testing-library/react-hooks';
-import { mockSentVotes } from '@pos/validator/__fixtures__';
+import { mockSentStakes } from '@pos/validator/__fixtures__';
 import { queryWrapper as wrapper } from 'src/utils/test/queryWrapper';
 import { useSentVotes } from '.';
 
@@ -17,11 +17,11 @@ describe('useSentVotes hook', () => {
     expect(result.current.isSuccess).toBeTruthy();
     const expectedResponse = {
       data: {
-        ...mockSentVotes.data,
-        votes: mockSentVotes.data.votes?.slice(0, limit),
+        ...mockSentStakes.data,
+        votes: mockSentStakes.data.votes?.slice(0, limit),
       },
       meta: {
-        ...mockSentVotes.meta,
+        ...mockSentStakes.meta,
         count: limit,
         offset: 0,
       },
@@ -39,8 +39,8 @@ describe('useSentVotes hook', () => {
     await waitFor(() => !result.current.isFetching);
     const expectedResponse = {
       data: {
-        ...mockSentVotes.data,
-        votes: mockSentVotes.data.votes?.slice(0, limit * 2),
+        ...mockSentStakes.data,
+        votes: mockSentStakes.data.votes?.slice(0, limit * 2),
       },
       meta: {
         count: limit,

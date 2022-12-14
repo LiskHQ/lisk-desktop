@@ -48,7 +48,7 @@ const data = {
   },
 };
 
-export const mockSentVotes = {
+export const mockSentStakes = {
   data,
   meta: {
     count: 2,

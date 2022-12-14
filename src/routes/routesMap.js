@@ -49,7 +49,7 @@ import SelectNode from '@blockchainApplication/manage/components/SelectNode';
 import RemoveApplicationFlow from '@blockchainApplication/manage/components/RemoveApplicationFlow';
 import AllTokens from '@wallet/components/AllTokens';
 import ValidatorProfile from 'src/modules/pos/validator/components/ValidatorProfile/ValidatorProfile';
-import SentVotes from 'src/modules/pos/validator/components/SentVotes';
+import SenStakes from 'src/modules/pos/validator/components/SentStakes';
 import ConnectionProposal from 'src/modules/blockchainApplication/connection/components/ConnectionProposal';
 import SessionManager from '@blockchainApplication/connection/components/SessionManager';
 import ConnectionSummary from 'src/modules/blockchainApplication/connection/components/ConnectionSummary';
@@ -109,7 +109,7 @@ export default {
   manageApplications: ApplicationManagementList,
   removeApplicationFlow: RemoveApplicationFlow,
   allTokens: AllTokens,
-  sentVotes: SentVotes,
+  sentVotes: SenStakes,
   connectionProposal: ConnectionProposal,
   sessionManager: SessionManager,
   requestView: RequestView,
