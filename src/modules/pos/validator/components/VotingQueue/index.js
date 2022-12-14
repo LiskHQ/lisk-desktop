@@ -7,7 +7,7 @@ import { removeSearchParamsFromUrl } from 'src/utils/searchParams';
 import MultiStep from 'src/modules/common/components/OldMultiStep';
 import StakeForm from '../StakeForm';
 import Summary from '../VoteSummary';
-import Status from '../VoteStatus';
+import StakeStatus from '../StakeStatus';
 import styles from './styles.css';
 import { usePosConstants } from '../../hooks/queries';
 
@@ -44,7 +44,7 @@ const VotingQueue = ({ history, processLaunchProtocol }) => {
       <StakeForm dposToken={token} />
       <Summary />
       <TxSignatureCollector />
-      <Status dposToken={token} />
+      <StakeStatus dposToken={token} />
     </MultiStep>
   );
 };

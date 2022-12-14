@@ -16,7 +16,7 @@ const LiskAmountFormatted = ({ val }) => (
 const getSuccessMessage = (t, locked, unlockable, selfUnvote = { confirmed: 0 }) => {
   if (!locked && unlockable) {
     const regularUnlockable = unlockable - Number(selfUnvote.confirmed || 0);
-    const selfUnvoteUnlockable = selfUnvote.confirmed;
+    const selfUnStakeUnlockable = selfUnvote.confirmed;
 
     return (
       <>
@@ -28,10 +28,10 @@ const getSuccessMessage = (t, locked, unlockable, selfUnvote = { confirmed: 0 })
               <span>{t('will be available to unlock in {{unlockTime}}h.', { unlockTime })}</span>
             </>
           ) : null}
-        {selfUnvoteUnlockable > 0
+        {selfUnStakeUnlockable > 0
           ? (
             <>
-              <LiskAmountFormatted val={selfUnvoteUnlockable} />
+              <LiskAmountFormatted val={selfUnStakeUnlockable} />
               {' '}
               <span>{t('will be available to unlock in 1 month.')}</span>
             </>
@@ -64,12 +64,12 @@ const getSuccessMessage = (t, locked, unlockable, selfUnvote = { confirmed: 0 })
   return '';
 };
 
-const voteStatusMessages = (t, statusInfo) => ({
+const stakeStatusMessages = (t, statusInfo) => ({
   ...statusMessages(t),
   [txStatusTypes.broadcastSuccess]: {
-    title: t('Votes are submitted'),
+    title: t('Stakes are submitted'),
     message: getSuccessMessage(t, statusInfo.locked, statusInfo.unlockable, statusInfo.selfUnvote),
   },
 });
 
-export default voteStatusMessages;
+export default stakeStatusMessages;
