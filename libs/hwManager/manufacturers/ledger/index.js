@@ -137,9 +137,12 @@ const signTransaction = async (transporter, { device, data }) => {
     transport = await transporter.open(device.path);
     const liskLedger = new LiskApp(transport);
     const ledgerAccount = getLedgerAccount(data.index);
-    const txToBeSigned = Buffer.concat([data.networkIdentifier, data.transactionBytes]);
+    console.log('ledgerAccount', ledgerAccount);
+    const txToBeSigned = Buffer.concat([Buffer.from(data.chainID), data.transactionBytes]);
+    console.log('txToBeSigned', txToBeSigned);
     // derivation path, tx message in buffer format
-    const signature = await liskLedger.sign(ledgerAccount, txToBeSigned);
+    const signature = await liskLedger.sign(ledgerAccount.derivePath(), txToBeSigned);
+    console.log('signature', signature);
     transport.close();
     return signature;
   } catch (error) {

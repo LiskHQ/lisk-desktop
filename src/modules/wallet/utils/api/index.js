@@ -180,7 +180,6 @@ export const getUsedHWAccounts = async (publicKeyList) => {
 
   return Promise.all(requests);
 };
-console.log('getUsedHWAccounts',getUsedHWAccounts);
 
 /**
  * Retrieves the list of accounts with given params
