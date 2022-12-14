@@ -2,9 +2,9 @@ import { mountWithRouter } from 'src/utils/testHelpers';
 import Spinner from '@theme/Spinner';
 import DialogLink from '@theme/dialog/link';
 import accounts from '@tests/constants/wallets';
-import VoteRow from './voteRow';
+import StakeRow from './stakeRow';
 
-describe('VoteRow Component', () => {
+describe('StakeRow Component', () => {
   let wrapper;
   const props = {
     data: {
@@ -32,7 +32,7 @@ describe('VoteRow Component', () => {
   };
 
   it('should render spinner', () => {
-    wrapper = mountWithRouter(VoteRow, {
+    wrapper = mountWithRouter(StakeRow, {
       ...props,
       data: { ...props.data, pending: {} },
     });
@@ -40,12 +40,12 @@ describe('VoteRow Component', () => {
   });
 
   it('should render edit link', () => {
-    wrapper = mountWithRouter(VoteRow, props);
+    wrapper = mountWithRouter(StakeRow, props);
     expect(wrapper.find(DialogLink).html()).toContain('editVoteLink');
   });
 
   it('should call onRowClick', () => {
-    wrapper = mountWithRouter(VoteRow, props);
+    wrapper = mountWithRouter(StakeRow, props);
     wrapper.find('.vote-row').childAt(0).simulate('click');
     expect(props.onRowClick).toHaveBeenCalledTimes(1);
   });

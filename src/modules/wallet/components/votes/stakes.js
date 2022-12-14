@@ -7,9 +7,9 @@ import BoxHeader from '@theme/box/header';
 import BoxContent from '@theme/box/content';
 import { Input } from 'src/theme';
 import Table from '@theme/table';
-import styles from './votes.css';
-import VoteRow from './voteRow';
-import header from './votesTableHeader';
+import styles from './stakes.css';
+import StakeRow from './stakeRow';
+import header from './stakesTableHeader';
 
 const getMessages = (t) => ({
   all: t('This account doesn’t have any votes.'),
@@ -18,7 +18,7 @@ const getMessages = (t) => ({
   ),
 });
 
-const Votes = ({
+const Stakes = ({
   votes, accounts, address, t, history,
 }) => {
   const [filterValue, setFilterValue] = useState('');
@@ -78,7 +78,7 @@ const Votes = ({
           emptyState={{
             message: filterValue ? messages.filtered : messages.all,
           }}
-          row={VoteRow}
+          row={StakeRow}
           additionalRowProps={{
             onRowClick,
             accounts: accounts.data,
@@ -90,7 +90,7 @@ const Votes = ({
   );
 };
 
-Votes.propTypes = {
+Stakes.propTypes = {
   address: PropTypes.string,
   history: PropTypes.shape({
     push: PropTypes.func,
@@ -98,4 +98,4 @@ Votes.propTypes = {
   t: PropTypes.func.isRequired,
 };
 
-export default Votes;
+export default Stakes;

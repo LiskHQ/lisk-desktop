@@ -73,7 +73,7 @@ const ss = {
   walletTab: 'li[data-value="transactions"]',
   votesTab: 'div[name="main-tabs"] li:nth-child(2)',
   votedAddress: '.votes .voter-address',
-  voteRow: '.vote-row',
+  stakeRow: '.stake-row',
   accountAddress: '.account-address',
   showMoreVotesBtn: '.votes-tab .load-more',
   leftBlockAccountExplorer: '.explorer-account-left-block',

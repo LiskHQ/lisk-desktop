@@ -5,7 +5,7 @@ import { withTranslation } from 'react-i18next';
 import { getVotes } from '@pos/validator/api';
 import { getAccounts } from '@wallet/utils/api';
 import withData from 'src/utils/withData';
-import Votes from './votes';
+import Stakes from './stakes';
 
 const apis = {
   votes: {
@@ -31,4 +31,4 @@ const mapStateToProps = (state) => ({
   isDelegate: state.wallet?.info?.LSK?.summary.isDelegate,
 });
 
-export default compose(connect(mapStateToProps), withData(apis), withTranslation())(Votes);
+export default compose(connect(mapStateToProps), withData(apis), withTranslation())(Stakes);

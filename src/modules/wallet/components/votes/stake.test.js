@@ -1,7 +1,7 @@
 import { mountWithRouter } from 'src/utils/testHelpers';
 import routes from 'src/routes/routes';
 import accounts from '@tests/constants/wallets';
-import Votes from './votes';
+import Stakes from './stakes';
 
 describe('Votes Tab Component', () => {
   let wrapper;
@@ -39,7 +39,7 @@ describe('Votes Tab Component', () => {
     props.accounts.loadData.mockRestore();
   });
 
-  const setup = customProps => mountWithRouter(Votes, customProps);
+  const setup = customProps => mountWithRouter(Stakes, customProps);
 
   it('Should render with empty state', () => {
     wrapper = setup(props);
@@ -88,7 +88,7 @@ describe('Votes Tab Component', () => {
       votes,
     };
     wrapper = setup(customProps);
-    expect(wrapper).toContainMatchingElements(10, 'VoteRow');
+    expect(wrapper).toContainMatchingElements(10, 'StakeRow');
   });
 
   it('Should go to account page on clicking row', () => {

@@ -201,7 +201,7 @@ module.exports = {
     'src/modules/pos/validator/components/toggleIcon/index.js',
     'src/modules/common/components/amountField/index.js',
     'src/modules/pos/validator/hooks/useVoteAmountField.js',
-    'src/modules/pos/validator/components/StakeForm/VoteRow.js',
+    'src/modules/pos/validator/components/StakeForm/StakeRow.js',
     'src/modules/pos/validator/components/StakeForm/EmptyState.js',
     'src/modules/pos/validator/components/RegisterValidatorStatus/Status.js',
     'src/modules/pos/validator/components/UnlockBalanceForm/index.js',

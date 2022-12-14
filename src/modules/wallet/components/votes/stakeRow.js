@@ -8,21 +8,21 @@ import TokenAmount from '@token/fungible/components/tokenAmount';
 import DialogLink from '@theme/dialog/link';
 import Spinner from '@theme/Spinner';
 import Icon from '@theme/Icon';
-import styles from './votes.css';
+import styles from './stakes.css';
 
-const VoteRow = ({ data, onRowClick, accounts }) => {
+const StakeRow = ({ data, onRowClick, accounts }) => {
   const onClick = () => onRowClick(data.address);
   const account = accounts[data.address];
   const truncatedAddress = truncateAddress(data.address);
   return (
     <div className={`${grid.row} ${tableStyles.row} ${styles.row}`}>
-      <div className={`${grid['col-sm-12']} vote-row`}>
+      <div className={`${grid['col-sm-12']} stake-row`}>
         {/* Account visual */}
         <div className={grid['col-sm-5']} onClick={onClick}>
           <div className={`${styles.info}`}>
             <WalletVisual className={`${styles.avatar}`} address={truncatedAddress} size={40} />
             <div className={styles.walletInfo}>
-              <span className={`${styles.username} vote-username`}>{data.username}</span>
+              <span className={`${styles.username} stake-username`}>{data.username}</span>
               <span className={`${styles.address} showOnLargeViewPort`}>{truncatedAddress}</span>
             </div>
           </div>
@@ -46,12 +46,12 @@ const VoteRow = ({ data, onRowClick, accounts }) => {
         {/* Stake amount */}
         {account ? (
           <div className={`${grid['col-sm-2']} ${styles.flexRightAlign}`} onClick={onClick}>
-            <span className={styles.votes}>
+            <span className={styles.stakes}>
               <TokenAmount
                 val={data.amount}
                 token={tokenMap.LSK.key}
                 showInt
-                className={styles.voteAmount}
+                className={styles.stakeAmount}
               />
             </span>
           </div>
@@ -63,7 +63,7 @@ const VoteRow = ({ data, onRowClick, accounts }) => {
         ) : (
           <div className={grid['col-sm-1']}>
             <DialogLink
-              className={`${styles.editVoteLink} edit-vote`}
+              className={`${styles.editVoteLink} edit-stake`}
               component="editVote"
               data={{ address: data.address }}
             >
@@ -82,4 +82,4 @@ const areEqual = (prevProps, nextProps) =>
   prevProps.data.amount === nextProps.data.amount &&
   (!!prevProps.accounts[nextProps.data.address] || !nextProps.accounts[nextProps.data.address]);
 
-export default React.memo(VoteRow, areEqual);
+export default React.memo(StakeRow, areEqual);

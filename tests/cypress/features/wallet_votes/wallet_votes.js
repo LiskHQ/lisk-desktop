@@ -7,7 +7,7 @@ Then(/^I open votes tab$/, function () {
 });
 
 Then(/^I see 30 validators$/, function () {
-  cy.get(ss.voteRow).should('have.length', 30);
+  cy.get(ss.stakeRow).should('have.length', 30);
 });
 
 Then(/^I click show more$/, function () {
@@ -15,11 +15,11 @@ Then(/^I click show more$/, function () {
 });
 
 Then(/^I see more than 30 votes$/, function () {
-  cy.get(ss.voteRow).should('have.length.greaterThan', 30);
+  cy.get(ss.stakeRow).should('have.length.greaterThan', 30);
 });
 
 Then(/^I see no votes$/, function () {
-  cy.get(ss.voteRow).should('not.exist');
+  cy.get(ss.stakeRow).should('not.exist');
 });
 
 Then(/^I filter votes$/, function () {
@@ -27,5 +27,5 @@ Then(/^I filter votes$/, function () {
 });
 
 Then(/^I should see (\d+) validators in table$/, function (number) {
-  cy.get(ss.voteRow).should('have.length', number);
+  cy.get(ss.stakeRow).should('have.length', number);
 });
