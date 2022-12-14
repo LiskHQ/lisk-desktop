@@ -2,7 +2,7 @@ import React from 'react';
 
 import EmptyBoxState from '@theme/box/emptyState';
 import Illustration from 'src/modules/common/components/illustration';
-import styles from './voteForm.css';
+import styles from './stakeForm.css';
 
 const EmptyState = ({ t }) => (
   <EmptyBoxState className={styles.emptyState}>

@@ -1,4 +1,4 @@
-import styles from './voteForm.css';
+import styles from './stakeForm.css';
 
 const header = (t) => [
   {

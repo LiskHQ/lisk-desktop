@@ -10,8 +10,8 @@ import flushPromises from '@tests/unit-test-utils/flushPromises';
 import { useTokensBalance } from '@token/fungible/hooks/queries';
 import { useCommandSchema } from '@network/hooks/useCommandsSchema';
 import { mockCommandParametersSchemas } from 'src/modules/common/__fixtures__';
-import VoteRow from './VoteRow';
-import Form from './VoteForm';
+import StakeRow from './StakeRow';
+import Form from './StakeForm';
 import { usePosConstants } from '../../hooks/queries';
 import { mockPosConstants } from '../../__fixtures__/mockPosConstants';
 
@@ -120,7 +120,7 @@ describe('VoteForm', () => {
           },
         ],
         header: expect.any(Object),
-        row: VoteRow,
+        row: StakeRow,
         iterationKey: 'address',
         canLoadMore: false,
       })

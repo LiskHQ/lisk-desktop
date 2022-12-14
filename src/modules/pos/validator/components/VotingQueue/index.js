@@ -5,7 +5,7 @@ import TxSignatureCollector from '@transaction/components/TxSignatureCollector';
 import { useTokensBalance } from 'src/modules/token/fungible/hooks/queries';
 import { removeSearchParamsFromUrl } from 'src/utils/searchParams';
 import MultiStep from 'src/modules/common/components/OldMultiStep';
-import Form from '../VoteForm';
+import StakeForm from '../StakeForm';
 import Summary from '../VoteSummary';
 import Status from '../VoteStatus';
 import styles from './styles.css';
@@ -41,7 +41,7 @@ const VotingQueue = ({ history, processLaunchProtocol }) => {
       className={step?.current === 3 ? styles.confirmModal : styles.modal}
       onChange={setMultiStepState}
     >
-      <Form dposToken={token} />
+      <StakeForm dposToken={token} />
       <Summary />
       <TxSignatureCollector />
       <Status dposToken={token} />

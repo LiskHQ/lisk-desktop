@@ -5,7 +5,7 @@ import { withRouter } from 'react-router';
 import { containsTransactionType } from '@transaction/utils/transaction';
 import { selectActiveTokenAccount } from 'src/redux/selectors';
 import { MODULE_COMMANDS_NAME_MAP } from 'src/modules/transaction/configuration/moduleCommand';
-import VoteForm from './VoteForm';
+import StakeForm from './StakeForm';
 
 const mapStateToProps = (state) => ({
   account: selectActiveTokenAccount(state),
@@ -16,4 +16,4 @@ const mapStateToProps = (state) => ({
   ),
 });
 
-export default connect(mapStateToProps)(withTranslation()(withRouter(VoteForm)));
+export default connect(mapStateToProps)(withTranslation()(withRouter(StakeForm)));

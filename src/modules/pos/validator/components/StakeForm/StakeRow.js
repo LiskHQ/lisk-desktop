@@ -13,12 +13,12 @@ import Icon from '@theme/Icon';
 import TokenAmount from '@token/fungible/components/tokenAmount';
 import AmountField from 'src/modules/common/components/amountField';
 import useVoteAmountField from '../../hooks/useVoteAmountField';
-import styles from './voteForm.css';
+import styles from './stakeForm.css';
 
 const componentState = Object.freeze({ editing: 1, notEditing: 2 });
 const token = tokenMap.LSK.key;
 
-const VoteRow = ({
+const StakeRow = ({
   t = (s) => s,
   data: { address, username, confirmed, unconfirmed },
   index,
@@ -96,7 +96,7 @@ const VoteRow = ({
             displayConverter={false}
             placeHolder={t('Stake amount')}
             className={styles.editAmountInput}
-            name="vote"
+            name="stake"
           />
           <div className={styles.formButtonsContainer}>
             <SecondaryButton
@@ -116,4 +116,4 @@ const VoteRow = ({
   );
 };
 
-export default VoteRow;
+export default StakeRow;

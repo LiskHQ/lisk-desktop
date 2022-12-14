@@ -9,10 +9,10 @@ import Dialog from 'src/theme/dialog/dialog';
 import TxComposer from '@transaction/components/TxComposer';
 import Table from '@theme/table';
 import { STAKE_LIMIT } from '../../consts';
-import VoteRow from './VoteRow';
+import StakeRow from './StakeRow';
 import EmptyState from './EmptyState';
 import header from './tableHeader';
-import styles from './voteForm.css';
+import styles from './stakeForm.css';
 
 /**
  * Determines the number of votes that have been
@@ -32,16 +32,16 @@ const getVoteStats = (votes, account) => {
       }
 
       if (!confirmed && unconfirmed) {
-        // new vote
+        // new stake
         stats.added[address] = { unconfirmed, username };
       } else if (confirmed && !unconfirmed) {
-        // removed vote
+        // removed stake
         stats.removed[address] = { confirmed, username };
         if (address === account.summary?.address) {
           stats.selfUnvote = { confirmed, username };
         }
       } else if (confirmed !== unconfirmed) {
-        // edited vote
+        // edited stake
         stats.edited[address] = { unconfirmed, confirmed, username };
       } else {
         // untouched
@@ -85,7 +85,7 @@ const getVoteStats = (votes, account) => {
  * @returns {Object} The feedback object including error status and messages
  */
 // eslint-disable-next-line max-statements
-const validateVotes = (votes, balance, fee, resultingNumOfVotes, t, dposToken) => {
+const validateStakes = (votes, balance, fee, resultingNumOfVotes, t, dposToken) => {
   const messages = [];
   const areVotesInValid = Object.values(votes).some(
     (vote) => vote.unconfirmed === '' || vote.unconfirmed === undefined
@@ -123,7 +123,7 @@ const validateVotes = (votes, balance, fee, resultingNumOfVotes, t, dposToken) =
   return { messages, error: !!messages.length };
 };
 
-const VoteForm = ({ t, votes, account, isVotingTxPending, nextStep, history, dposToken }) => {
+const StakeForm = ({ t, votes, account, isVotingTxPending, nextStep, history, dposToken }) => {
   const [fee, setFee] = useState(0);
   const changedVotes = Object.keys(votes)
     .filter((address) => votes[address].unconfirmed !== votes[address].confirmed)
@@ -135,7 +135,7 @@ const VoteForm = ({ t, votes, account, isVotingTxPending, nextStep, history, dpo
     [votes, account]
   );
 
-  const feedback = validateVotes(
+  const feedback = validateStakes(
     votes,
     Number(account.token?.balance),
     fee,
@@ -200,7 +200,7 @@ const VoteForm = ({ t, votes, account, isVotingTxPending, nextStep, history, dpo
                     showHeader
                     data={changedVotes}
                     header={header(t)}
-                    row={VoteRow}
+                    row={StakeRow}
                     iterationKey="address"
                     canLoadMore={false}
                     additionalRowProps={{
@@ -223,4 +223,4 @@ const VoteForm = ({ t, votes, account, isVotingTxPending, nextStep, history, dpo
   );
 };
 
-export default VoteForm;
+export default StakeForm;
