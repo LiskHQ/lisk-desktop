@@ -29,7 +29,7 @@ const StakeItem = ({ vote, address, title, truncate }) => {
           {title ?? (truncate ? truncateAddress(address) : address)}
         </span>
       </Link>
-      <span className={`${styles.value}`}>
+      <span className={`${styles.value} stake-item-value`}>
         {vote.confirmed && vote.unconfirmed ? (
           <>
             <span className={styles.confirmed}>
