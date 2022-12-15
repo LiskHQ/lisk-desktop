@@ -18,7 +18,6 @@ export const encryptAccount = async ({
     enableCustomDerivationPath,
     derivationPath: enableCustomDerivationPath ? derivationPath : defaultDerivationPath,
   };
-  console.log('encryptAccount', options);
 
   try {
     const { privateKey, publicKey, isValid } = await extractKeyPair(options);
@@ -50,10 +49,7 @@ export const encryptAccount = async ({
 
 export const decryptAccount = async (encryptedPassphrase, password) => {
   try {
-    const plainText = await encrypt.decryptMessageWithPassword(
-      encryptedPassphrase,
-      password,
-    );
+    const plainText = await encrypt.decryptMessageWithPassword(encryptedPassphrase, password);
     return {
       error: null,
       result: JSON.parse(plainText),
