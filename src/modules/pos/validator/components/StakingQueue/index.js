@@ -36,7 +36,7 @@ const StakingQueue = ({ history, processLaunchProtocol }) => {
 
   return (
     <MultiStep
-      key="voting-queue"
+      key="staking-queue"
       finalCallback={closeModal}
       className={step?.current === 3 ? styles.confirmModal : styles.modal}
       onChange={setMultiStepState}
