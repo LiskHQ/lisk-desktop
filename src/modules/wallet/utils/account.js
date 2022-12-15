@@ -307,45 +307,14 @@ export const validate2ndPass = async (account, passphrase, error) => {
 
 /**
  * Validate a derivation path
- * TODO: Replace this function when @liskhq (lisk-sdk) exposes the one they use: Issue #7877 https://github.com/LiskHQ/lisk-sdk/issues/7877
  * @param {string} derivationPath
- * @returns {string} - Error message
+ * @returns {string} - undefined/error
  */
 export const getDerivationPathErrorMessage = (derivationPath) => {
-  if ((!derivationPath || !derivationPath.startsWith('m')) || !derivationPath.includes('/')) {
-    return i18next.t('Invalid path format');
-  }
-
   try {
-    const MAX_UINT32 = 4294967295;
-    const HARDENED_OFFSET = 0x80000000;
-
-    derivationPath
-      .split('/')
-      // slice first element which is `m`
-      .slice(1)
-      .map((segment) => {
-        if (!/^[0-9']+$/g.test(segment)) {
-          throw new Error('Invalid path format');
-        }
-
-        // if segment includes apostrophe add HARDENED_OFFSET
-        if (segment.includes(`'`)) {
-          if (parseInt(segment.slice(0, -1), 10) > MAX_UINT32 / 2) {
-            throw new Error('Invalid path format');
-          }
-          return parseInt(segment, 10) + HARDENED_OFFSET;
-        }
-
-        if (parseInt(segment, 10) > MAX_UINT32) {
-          throw new Error('Invalid path format');
-        }
-
-        return parseInt(segment, 10);
-      });
+    cryptography.utils.parseKeyDerivationPath(derivationPath);
   } catch (error) {
     return i18next.t(error.message);
   }
-
   return undefined;
 };

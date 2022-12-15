@@ -4,7 +4,7 @@ export const ACCOUNT_MENU = [
   {
     component: 'editAccount',
     icon: 'edit',
-    label: 'Edit name',
+    label: 'Edit account name',
   },
   {
     component: 'switchAccount',
@@ -24,7 +24,7 @@ export const ACCOUNT_MENU = [
   {
     component: 'multiSignature',
     icon: 'multiSignatureOutline',
-    label: 'Upgrade to multisignature',
+    label: 'Register multisignature account',
   },
   {
     component: 'removeSelectedAccount',

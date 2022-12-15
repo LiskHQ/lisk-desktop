@@ -25,13 +25,13 @@
   }
 }
 
-.ml24 {
-  margin-left: 24px;
+.searchBarProp {
+  margin-left: 10px;
 }
 
 .logo {
+  width: 60px;
   height: 24px;
-  padding: 0 22px 0 12px;
   box-sizing: content-box;
   filter: brightness(100);
 }
