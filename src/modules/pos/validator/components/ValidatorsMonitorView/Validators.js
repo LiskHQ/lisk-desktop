@@ -20,7 +20,7 @@ import { useBlocks } from 'src/modules/block/hooks/queries/useBlocks';
 import ValidatorsOverview from '../Overview/ValidatorsOverview';
 import ForgingDetails from '../Overview/ForgingDetails';
 import ValidatorsTable from '../ValidatorsTable';
-import LatestVotes from '../LatestVotes';
+import LatestStakes from '../LatestStakes';
 import styles from './Validators.css';
 
 // eslint-disable-next-line max-statements
@@ -108,7 +108,7 @@ const ValidatorsMonitor = ({ watchList, registrations }) => {
   };
 
   const displayTab = (tab) => {
-    if (tab === 'votes') return <LatestVotes filters={filters} />;
+    if (tab === 'votes') return <LatestStakes filters={filters} />;
 
     return <ValidatorsTable {...commonProps} />;
   };

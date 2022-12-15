@@ -2,7 +2,7 @@ import { mountWithRouter } from 'src/utils/testHelpers';
 import { mockTransactions } from 'src/modules/transaction/__fixtures__';
 import { useTransactions } from 'src/modules/transaction/hooks/queries';
 import { useValidators } from '../../hooks/queries';
-import LatestVotes from './index';
+import LatestStakes from './index';
 import { mockValidators } from '../../__fixtures__';
 
 jest.mock('src/modules/transaction/hooks/queries');
@@ -28,7 +28,7 @@ describe('Latest stakes', () => {
       fetchNextPage: mockFetchNextTransactions,
       hasNextPage: false,
     });
-    const wrapper = mountWithRouter(LatestVotes, props);
+    const wrapper = mountWithRouter(LatestStakes, props);
     expect(wrapper.find('.transactions-row').hostNodes()).toHaveLength(10);
   });
 
@@ -46,7 +46,7 @@ describe('Latest stakes', () => {
       hasNextPage: true,
     });
 
-    const wrapper = mountWithRouter(LatestVotes);
+    const wrapper = mountWithRouter(LatestStakes);
     expect(wrapper.find('.load-more')).toExist();
     wrapper.find('.load-more').first().simulate('click');
     expect(mockFetchNextTransactions).toHaveBeenCalledTimes(1);
@@ -63,7 +63,7 @@ describe('Latest stakes', () => {
       fetchNextPage: mockFetchNextTransactions,
     });
 
-    const wrapper = mountWithRouter(LatestVotes);
+    const wrapper = mountWithRouter(LatestStakes);
     expect(wrapper.find('.load-more')).not.toExist();
   });
 });

@@ -7,7 +7,7 @@ import TransactionRow from '@transaction/components/TransactionRow';
 import header from './tableHeader';
 import { useValidators } from '../../hooks/queries';
 
-const LatestVotes = ({ filters }) => {
+const LatestStakes = ({ filters }) => {
   const { t } = useTranslation();
   const { data: validators } = useValidators();
   const queryConfig = useMemo(
@@ -53,4 +53,4 @@ const LatestVotes = ({ filters }) => {
   );
 };
 
-export default LatestVotes;
+export default LatestStakes;
