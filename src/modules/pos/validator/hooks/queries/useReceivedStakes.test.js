@@ -2,7 +2,7 @@ import { renderHook, act } from '@testing-library/react-hooks';
 import { mockReceivedVotes } from '@pos/validator/__fixtures__';
 import { LIMIT as defaultLimit } from 'src/const/config';
 import { queryWrapper as wrapper } from 'src/utils/test/queryWrapper';
-import { useReceivedVotes } from './useReceivedVotes';
+import { useReceivedStakes } from './useReceivedStakes';
 
 jest.useRealTimers();
 
@@ -11,7 +11,7 @@ describe('useReceivedVotes hook', () => {
   const config = { params: { limit } };
 
   it('fetching data correctly', async () => {
-    const { result, waitFor } = renderHook(() => useReceivedVotes({ config }), { wrapper });
+    const { result, waitFor } = renderHook(() => useReceivedStakes({ config }), { wrapper });
     expect(result.current.isLoading).toBeTruthy();
     await waitFor(() => result.current.isFetched);
     expect(result.current.isSuccess).toBeTruthy();
@@ -30,7 +30,7 @@ describe('useReceivedVotes hook', () => {
   });
 
   it('fetches data without params correctly', async () => {
-    const { result, waitFor } = renderHook(() => useReceivedVotes(), { wrapper });
+    const { result, waitFor } = renderHook(() => useReceivedStakes(), { wrapper });
     expect(result.current.isLoading).toBeTruthy();
     await waitFor(() => result.current.isFetched);
     expect(result.current.isSuccess).toBeTruthy();
@@ -49,7 +49,7 @@ describe('useReceivedVotes hook', () => {
   });
 
   it('should fetch next set of data correctly', async () => {
-    const { result, waitFor } = renderHook(() => useReceivedVotes({ config }), { wrapper });
+    const { result, waitFor } = renderHook(() => useReceivedStakes({ config }), { wrapper });
     await waitFor(() => result.current.isFetched);
     act(() => {
       result.current.fetchNextPage();

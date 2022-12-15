@@ -2,7 +2,7 @@
 import { renderHook, act } from '@testing-library/react-hooks';
 import { mockSentStakes } from '@pos/validator/__fixtures__';
 import { queryWrapper as wrapper } from 'src/utils/test/queryWrapper';
-import { useSentVotes } from '.';
+import { useSentStakes } from '.';
 
 jest.useRealTimers();
 
@@ -11,7 +11,7 @@ describe('useSentVotes hook', () => {
   const config = { params: { limit } };
 
   it('fetching data correctly', async () => {
-    const { result, waitFor } = renderHook(() => useSentVotes({ config }), { wrapper });
+    const { result, waitFor } = renderHook(() => useSentStakes({ config }), { wrapper });
     expect(result.current.isLoading).toBeTruthy();
     await waitFor(() => result.current.isFetched);
     expect(result.current.isSuccess).toBeTruthy();
@@ -30,7 +30,7 @@ describe('useSentVotes hook', () => {
   });
 
   it('should fetch next set of data correctly', async () => {
-    const { result, waitFor } = renderHook(() => useSentVotes({ config }), { wrapper });
+    const { result, waitFor } = renderHook(() => useSentStakes({ config }), { wrapper });
     await waitFor(() => result.current.isFetched);
     act(() => {
       result.current.fetchNextPage();

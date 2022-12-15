@@ -13,7 +13,7 @@ import { useLatestBlock } from 'src/modules/block/hooks/queries/useLatestBlock';
 import { mockTokensBalance } from 'src/modules/token/fungible/__fixtures__';
 import { mockAuth } from 'src/modules/auth/__fixtures__';
 import EditStake from './index';
-import { useValidators, useSentVotes, usePosConstants } from '../../hooks/queries';
+import { useValidators, useSentStakes, usePosConstants } from '../../hooks/queries';
 import { mockPosConstants } from '../../__fixtures__/mockPosConstants';
 
 jest.mock('@transaction/api', () => ({
@@ -49,7 +49,7 @@ describe('EditStake', () => {
 
     useValidators.mockReturnValue({ data: mockValidators });
     useLatestBlock.mockReturnValue({ data: mockBlocks.data[0] });
-    useSentVotes.mockReturnValue({ data: mockSentStakes });
+    useSentStakes.mockReturnValue({ data: mockSentStakes });
     useAuth.mockReturnValue({ data: mockAuth });
     usePosConstants.mockReturnValue({ data: mockPosConstants });
     useTokensBalance.mockReturnValue({ data: mockTokensBalance, isLoading: false });
@@ -162,7 +162,7 @@ describe('EditStake', () => {
   it('should render the edit stake modal', async () => {
     const delegate = mockValidators.data[0];
 
-    useSentVotes.mockReturnValue({
+    useSentStakes.mockReturnValue({
       data: {
         ...mockSentStakes,
         data: {

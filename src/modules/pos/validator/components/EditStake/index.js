@@ -27,7 +27,7 @@ import { PrimaryButton, SecondaryButton, WarningButton } from 'src/theme/buttons
 import useVoteAmountField from '../../hooks/useVoteAmountField';
 import getMaxAmount from '../../utils/getMaxAmount';
 import styles from './editStake.css';
-import { useValidators, usePosConstants, useSentVotes } from '../../hooks/queries';
+import { useValidators, usePosConstants, useSentStakes } from '../../hooks/queries';
 import { NUMBER_OF_BLOCKS_PER_DAY } from '../../consts';
 
 const getTitles = (t) => ({
@@ -70,7 +70,7 @@ const EditStake = ({ history, stakeEdited, network, voting, stakesRetrieved }) =
     data: { height: currentHeight },
   } = useLatestBlock();
 
-  const { data: sentVotes } = useSentVotes({
+  const { data: sentVotes } = useSentStakes({
     config: { params: { address: currentAddress } },
   });
 

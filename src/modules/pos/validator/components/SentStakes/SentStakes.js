@@ -14,7 +14,7 @@ import { useTokensBalance } from '@token/fungible/hooks/queries';
 import styles from './SentStakes.css';
 import header from './tableHeaderMap';
 import SentStakesRow from '../SentStakesRow';
-import { usePosConstants, useSentVotes } from '../../hooks/queries';
+import { usePosConstants, useSentStakes } from '../../hooks/queries';
 
 // eslint-disable-next-line max-statements
 const SentStakes = ({ history }) => {
@@ -38,7 +38,7 @@ const SentStakes = ({ history }) => {
   });
   const dposToken = useMemo(() => tokens?.data?.[0] || {}, [tokens]);
 
-  const { data } = useSentVotes(queryParam);
+  const { data } = useSentStakes(queryParam);
   const stakingAvailable = useMemo(() => 10 - data?.meta?.total || 0, [address]);
 
   return (
@@ -62,7 +62,7 @@ const SentStakes = ({ history }) => {
       <BoxContent>
         <QueryTable
           showHeader
-          queryHook={useSentVotes}
+          queryHook={useSentStakes}
           transformResponse={(resp) => resp?.votes || []}
           queryConfig={queryParam}
           row={SentStakesRow}

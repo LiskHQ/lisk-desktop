@@ -8,7 +8,7 @@ import { truncateAddress } from '@wallet/utils/account';
 import { renderWithRouter } from 'src/utils/testHelpers';
 import SentStakes from './SentStakes';
 import tableHeaderMap from './tableHeaderMap';
-import { useSentVotes, usePosConstants } from '../../hooks/queries';
+import { useSentStakes, usePosConstants } from '../../hooks/queries';
 import { mockPosConstants } from '../../__fixtures__/mockPosConstants';
 
 const mockedCurrentAccount = mockSavedAccounts[0];
@@ -27,7 +27,7 @@ describe('SentStakes', () => {
   };
 
   useTokensBalance.mockReturnValue({ data: mockTokensBalance, isLoading: false });
-  useSentVotes.mockReturnValue({ data: mockSentStakes });
+  useSentStakes.mockReturnValue({ data: mockSentStakes });
   usePosConstants.mockReturnValue({ data: mockPosConstants });
 
   it('should display properly', async () => {
@@ -54,7 +54,7 @@ describe('SentStakes', () => {
   });
 
   it('should not display staking and token', async () => {
-    useSentVotes.mockReturnValue({});
+    useSentStakes.mockReturnValue({});
     useTokensBalance.mockReturnValue({});
 
     renderWithRouter(SentStakes, props);

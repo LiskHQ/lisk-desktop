@@ -10,7 +10,7 @@ import { useBlocks } from '@block/hooks/queries/useBlocks';
 import { useLatestBlock } from '@block/hooks/queries/useLatestBlock';
 import { fromRawLsk } from 'src/modules/token/fungible/utils/lsk';
 import ValidatorProfile from './ValidatorProfile';
-import { useValidators, useReceivedVotes, useSentVotes } from '../../hooks/queries';
+import { useValidators, useReceivedStakes, useSentStakes } from '../../hooks/queries';
 
 const mockedCurrentAccount = mockSavedAccounts[0];
 jest.mock('@account/hooks', () => ({
@@ -38,11 +38,11 @@ describe('Validator Profile', () => {
   useValidators.mockReturnValue({ data: mockValidators });
   useBlocks.mockReturnValue({ data: mockBlocks });
   useLatestBlock.mockReturnValue({ data: mockBlocks.data[0] });
-  useSentVotes.mockReturnValue({ data: mockSentStakes });
-  useReceivedVotes.mockReturnValue({ data: mockReceivedVotes });
+  useSentStakes.mockReturnValue({ data: mockSentStakes });
+  useReceivedStakes.mockReturnValue({ data: mockReceivedVotes });
 
   it('Should render active validator profile details', () => {
-    useSentVotes.mockReturnValue({
+    useSentStakes.mockReturnValue({
       data: {
         ...mockSentStakes,
         data: { ...mockReceivedVotes.data, votes: mockReceivedVotes.data.votes.slice(5, 7) },
@@ -189,7 +189,7 @@ describe('Validator Profile', () => {
         data: mockValidators.data.map((data) => ({ ...data, status: 'banned' })),
       },
     });
-    useSentVotes.mockReturnValue({ data: {} });
+    useSentStakes.mockReturnValue({ data: {} });
 
     wrapper.rerender(
       <MemoryRouter>
@@ -207,7 +207,7 @@ describe('Validator Profile', () => {
         data: mockValidators.data.map((data) => ({ ...data, status: 'banned' })),
       },
     });
-    useSentVotes.mockReturnValue({ data: {} });
+    useSentStakes.mockReturnValue({ data: {} });
 
     wrapper.rerender(
       <MemoryRouter>
@@ -225,7 +225,7 @@ describe('Validator Profile', () => {
         data: mockValidators.data.map((data) => ({ ...data, status: 'banned' })),
       },
     });
-    useSentVotes.mockReturnValue({
+    useSentStakes.mockReturnValue({
       data: {
         ...mockReceivedVotes,
         data: {

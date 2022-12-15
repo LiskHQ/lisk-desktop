@@ -1,5 +1,5 @@
 /* istanbul ignore file */
-import { STAKES_SENT } from 'src/const/queries';
+import { STAKES_RECEIVED } from 'src/const/queries';
 import {
   LIMIT as limit,
   API_VERSION,
@@ -7,7 +7,7 @@ import {
 import { useCustomInfiniteQuery } from 'src/modules/common/hooks';
 
 /**
- * Creates a custom hook for votes sent queries
+ * Creates a custom hook for votes received queries
  *
  * @param {object} configuration - the custom query configuration object
  * @param {object} configuration.config - the query config
@@ -21,11 +21,11 @@ import { useCustomInfiniteQuery } from 'src/modules/common/hooks';
  * @returns the query object
  */
 
-export const useSentVotes = ({ config: customConfig = {}, options } = { }) => {
+export const useReceivedStakes = ({ config: customConfig = {}, options } = { }) => {
   const config = {
-    url: `/api/${API_VERSION}/dpos/votes/sent`,
+    url: `/api/${API_VERSION}/dpos/votes/received`,
     method: 'get',
-    event: 'get.dpos.votes.sent',
+    event: 'get.dpos.votes.received',
     ...customConfig,
     params: { limit, ...(customConfig?.params || {}) },
   };
@@ -43,8 +43,9 @@ export const useSentVotes = ({ config: customConfig = {}, options } = { }) => {
       };
     }),
   };
+
   return useCustomInfiniteQuery({
-    keys: [STAKES_SENT],
+    keys: [STAKES_RECEIVED],
     options: customOptions,
     config,
   });

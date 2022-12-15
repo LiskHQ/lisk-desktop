@@ -5,12 +5,12 @@ import DialogLink from 'src/theme/dialog/link';
 import { selectVoting } from 'src/redux/selectors';
 
 import { PrimaryButton, SecondaryButton } from 'src/theme/buttons';
-import { useSentVotes } from '../../hooks/queries';
+import { useSentStakes } from '../../hooks/queries';
 
 function ValidatorStakeButton({ address, isBanned, currentAddress }) {
   const { t } = useTranslation();
   const voting = useSelector((state) => selectVoting(state));
-  const { data: sentVotes, isLoading: sentVotesLoading } = useSentVotes({
+  const { data: sentVotes, isLoading: sentVotesLoading } = useSentStakes({
     config: { params: { address } },
   });
 

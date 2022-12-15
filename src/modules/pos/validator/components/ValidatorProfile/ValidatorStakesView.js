@@ -11,7 +11,7 @@ import { useFilter } from 'src/modules/common/hooks';
 import StakerRow from './StakerRow';
 import tableHeader from './StakersTableHeader';
 import styles from './ValidatorProfile.css';
-import { useReceivedVotes } from '../../hooks/queries';
+import { useReceivedStakes } from '../../hooks/queries';
 
 const ValidatorStakesView = ({ address }) => {
   const { t } = useTranslation();
@@ -19,7 +19,7 @@ const ValidatorStakesView = ({ address }) => {
   const { filters, applyFilters } = useFilter({ address });
   const timeout = useRef();
 
-  const { data: voterData } = useReceivedVotes({
+  const { data: voterData } = useReceivedStakes({
     config: { params: filters },
   });
 
@@ -66,7 +66,7 @@ const ValidatorStakesView = ({ address }) => {
           className={`${grid.col} ${grid['col-xs-12']} ${styles.stakesContainer}`}
         >
           <QueryTable
-            queryHook={useReceivedVotes}
+            queryHook={useReceivedStakes}
             queryConfig={{ config: { params: filters } }}
             transformResponse={({ votes } = {}) => votes}
             iterationKey="address"
