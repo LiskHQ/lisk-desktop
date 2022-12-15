@@ -130,7 +130,7 @@ const StakeForm = ({ t, votes, account, isVotingTxPending, nextStep, history, dp
     .map((address) => ({ address, ...votes[address] }));
 
   const normalizedVotes = useMemo(() => normalizeStakesForTx(votes), [votes]);
-  const { added, edited, removed, selfUnvote, availableVotes, resultingNumOfVotes } = useMemo(
+  const { added, edited, removed, selfUnvote, availableStakes, resultingNumOfVotes } = useMemo(
     () => getStakeStats(votes, account),
     [votes, account]
   );
@@ -187,7 +187,7 @@ const StakeForm = ({ t, votes, account, isVotingTxPending, nextStep, history, dp
                 <header className={styles.headerContainer}>
                   <span className={styles.title}>{t('Staking queue')}</span>
                   <div className={styles.votesAvailableCounter}>
-                    <span className="available-stakes-num">{`${availableVotes}/`}</span>
+                    <span className="available-stakes-num">{`${availableStakes}/`}</span>
                     <span>
                       {t('{{STAKE_LIMIT}} stakes available for your account', {
                         STAKE_LIMIT,
