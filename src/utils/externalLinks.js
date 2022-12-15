@@ -4,7 +4,7 @@ const sendRegex = /^\/(wallet|wallet\/send|main\/transactions\/send)$/;
 const sendRedirect = '/wallet?modal=send';
 
 const voteRegex = /^\/(main\/voting\/vote|delegates\/vote|vote)$/;
-const voteRedirect = '/wallet?modal=VotingQueue';
+const voteRedirect = '/wallet?modal=StakingQueue';
 
 export const externalLinks = {
   init: () => {

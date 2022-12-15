@@ -4,7 +4,7 @@ import { withTranslation } from 'react-i18next';
 import { connect } from 'react-redux';
 import { compose } from 'redux';
 import { processLaunchProtocol } from 'src/redux/actions';
-import VotingQueue from '../components/VotingQueue';
+import StakingQueue from '../components/StakingQueue';
 
 const mapDispatchToProps = {
   processLaunchProtocol,
@@ -14,4 +14,4 @@ export default compose(
   withRouter,
   connect(null, mapDispatchToProps),
   withTranslation(),
-)(VotingQueue);
+)(StakingQueue);

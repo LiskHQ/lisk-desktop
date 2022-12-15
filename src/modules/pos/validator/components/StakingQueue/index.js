@@ -11,7 +11,7 @@ import StakeStatus from '../StakeStatus';
 import styles from './styles.css';
 import { usePosConstants } from '../../hooks/queries';
 
-const VotingQueue = ({ history, processLaunchProtocol }) => {
+const StakingQueue = ({ history, processLaunchProtocol }) => {
   const [{ step }, setMultiStepState] = useState({});
 
   // @TODO: we need to change the caching time from 5mins to something larger since this is a constant that doesn't frequently change
@@ -49,4 +49,4 @@ const VotingQueue = ({ history, processLaunchProtocol }) => {
   );
 };
 
-export default VotingQueue;
+export default StakingQueue;

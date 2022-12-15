@@ -265,7 +265,7 @@ const ss = {
   bookmarkListToggle: '.bookmark-list-toggle',
   settingsMenu: '.settings-toggle',
   openStakeVoteDialog: '.open-add-stake-dialog',
-  votingQueueToggle: '.voting-queue-toggle',
+  stakingQueueToggle: '.staking-queue-toggle',
   openUnlockBalanceDialog: '.open-unlock-balance-dialog',
   unlockAmountValue: '.unlock-amount-value',
   removeStake: '.remove-stake',

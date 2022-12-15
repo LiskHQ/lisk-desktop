@@ -125,7 +125,7 @@ const EditStake = ({ history, voteEdited, network, voting, votesRetrieved }) => 
 
   const handleConfirm = () => {
     if (!isForm) {
-      removeThenAppendSearchParamsToUrl(history, { modal: 'votingQueue' }, ['modal']);
+      removeThenAppendSearchParamsToUrl(history, { modal: 'stakingQueue' }, ['modal']);
       return;
     }
     voteEdited([

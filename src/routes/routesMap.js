@@ -23,7 +23,7 @@ import VerifyMessage from '@message/manager/verifyMessageManager';
 import Request from '@wallet/components/request';
 import UnlockBalanceView from '@pos/validator/components/UnlockBalanceView';
 import editStakeManager from '@pos/validator/manager/editStakeManager';
-import VotingQueue from '@pos/validator/manager/votingQueueManager';
+import StakingQueue from '@pos/validator/manager/stakingQueueManager';
 import DeviceDisconnect from 'src/modules/common/components/deviceDisconnectDialog';
 import NewReleaseDialog from '@update/detail/info/newReleaseDialog';
 import ReclaimBalance from '@legacy/manager/reclaimBalance';
@@ -87,7 +87,7 @@ export default {
   request: Request,
   lockedBalance: UnlockBalanceView,
   editStake: editStakeManager,
-  votingQueue: VotingQueue,
+  stakingQueue: StakingQueue,
   deviceDisconnectDialog: DeviceDisconnect,
   reclaimBalance: ReclaimBalanceModal,
   multiSignature: RegisterMultisig,

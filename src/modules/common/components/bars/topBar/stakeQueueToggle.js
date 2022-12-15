@@ -15,14 +15,14 @@ const StakeQueueToggle = ({
     position="bottom"
     content={(
       <DialogLink
-        component="votingQueue"
-        className={`${styles.toggle} voting-queue-toggle ${
+        component="stakingQueue"
+        className={`${styles.toggle} staking-queue-toggle ${
           disabled && `${styles.disabled} disabled`
         }`}
       >
-        <Icon name="votingQueueInactive" />
+        <Icon name="stakingQueueInactive" />
         {noOfVotes !== 0 && (
-          <span className={styles.votingQueueVoteCount}>{noOfVotes}</span>
+          <span className={styles.stakingQueueVoteCount}>{noOfVotes}</span>
         )}
       </DialogLink>
     )}

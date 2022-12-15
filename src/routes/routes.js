@@ -191,7 +191,7 @@ export const modals = {
     isPrivate: true,
     forbiddenTokens: [],
   },
-  votingQueue: {
+  stakingQueue: {
     isPrivate: true,
     forbiddenTokens: [],
   },

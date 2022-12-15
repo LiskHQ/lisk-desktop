@@ -117,7 +117,7 @@ beforeEach(() => {
   props.nextStep.mockClear();
 });
 
-describe('VotingQueue.Summary', () => {
+describe('StakingQueue.Summary', () => {
   useAuth.mockReturnValue({ data: mockAuth });
 
   it('renders properly', () => {

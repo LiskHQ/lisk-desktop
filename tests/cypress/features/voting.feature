@@ -16,7 +16,7 @@ Feature: Stake validator
    #    And I clear input amountInput
    #    And I fill 160 in amountInput field
    #    And I click on confirmBtn
-   #    And I click on votingQueueToggle
+   #    And I click on stakingQueueToggle
    #    And I click on txNextBtn
    #    And I click on confirmButton
    #    And I click on backToWalletButton
@@ -29,7 +29,7 @@ Feature: Stake validator
    #    And I clear input amountInput
    #    And I fill 200 in amountInput field
    #    And I click on confirmBtn
-   #    And I click on votingQueueToggle
+   #    And I click on stakingQueueToggle
    #    And I click on txNextBtn
    #    And I click on confirmButton
    #    And I click on backToWalletButton
@@ -40,7 +40,7 @@ Feature: Stake validator
    # Scenario: Remove Stake for a validator
    #    When I click on openAddVoteDialog
    #    And I click on removeVote
-   #    And I click on votingQueueToggle
+   #    And I click on stakingQueueToggle
    #    And I click on txNextBtn
    #    And I click on confirmButton
    #    And I click on backToWalletButton

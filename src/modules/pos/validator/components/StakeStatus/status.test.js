@@ -14,7 +14,7 @@ jest.mock('@libs/wcm/hooks/useSession', () => ({
 }));
 jest.mock('@network/hooks/useCommandsSchema');
 
-describe('VotingQueue.Result', () => {
+describe('StakingQueue.Result', () => {
   useCommandSchema.mockReturnValue(
     mockCommandParametersSchemas.data.reduce(
       (result, { moduleCommand, schema }) => ({ ...result, [moduleCommand]: schema }),

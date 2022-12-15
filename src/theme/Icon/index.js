@@ -168,7 +168,7 @@ import unlock from '@setup/react/assets/images/icons/unlock.svg';
 import loading from '@setup/react/assets/images/icons/loading.svg';
 import unlockToken from '@setup/react/assets/images/icons/tx-unlock.svg';
 import unlockTokenDark from '@setup/react/assets/images/icons/tx-unlock-dark.svg';
-import votingQueueInactive from '@setup/react/assets/images/icons/voting-queue-inactive.svg';
+import stakingQueueInactive from '@setup/react/assets/images/icons/voting-queue-inactive.svg';
 import stakingQueueActive from '@setup/react/assets/images/icons/voting-queue-active.svg';
 import deleteIcon from '@setup/react/assets/images/icons/delete.svg';
 import deleteRedIcon from '@setup/react/assets/images/icons/delete-red-icon.svg';
@@ -399,7 +399,7 @@ export const icons = {
   loading,
   unlockToken,
   unlockTokenDark,
-  votingQueueInactive,
+  stakingQueueInactive,
   stakingQueueActive,
   download,
   downloadBlue,
