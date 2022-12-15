@@ -83,7 +83,7 @@ describe('Reclaim balance screen', () => {
     expect(html).toContain('open-send-dialog');
     expect(html).not.toContain('register-validator');
     expect(html).toContain('open-add-stake-dialog');
-    expect(html).toContain('Add to Stakes');
+    expect(html).toContain('Add to stakes');
     expect(html).not.toContain('Edit stake');
 
     wrapper = mountWithRouterAndStore(
