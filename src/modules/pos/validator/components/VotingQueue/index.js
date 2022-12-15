@@ -30,7 +30,7 @@ const VotingQueue = ({ history, processLaunchProtocol }) => {
   useEffect(() => {
     processLaunchProtocol(history.location.search);
 
-    // remove the search params from the url after applying the values to the voting queue
+    // remove the search params from the url after applying the values to the staking queue
     removeSearchParamsFromUrl(history, ['votes', 'unvotes']);
   }, []);
 

@@ -98,7 +98,7 @@ const voting = (state = {}, action) => {
       }, {});
 
     /**
-     * This action is used to discard a vote from the voting queue
+     * This action is used to discard a vote from the staking queue
      */
     case actionTypes.voteDiscarded:
       delete clonedState[action.data.address]

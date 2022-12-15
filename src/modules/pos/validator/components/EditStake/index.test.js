@@ -74,7 +74,7 @@ describe('EditStake', () => {
       </MemoryRouter>
     );
 
-    expect(screen.getByText('Add to voting queue')).toBeTruthy();
+    expect(screen.getByText('Add to staking queue')).toBeTruthy();
     expect(screen.getByText(address)).toBeTruthy();
     expect(screen.getByText(delegate.name)).toBeTruthy();
     expect(screen.getByTestId(`wallet-visual-${address}`)).toBeTruthy();
@@ -88,7 +88,7 @@ describe('EditStake', () => {
     ).toBeTruthy();
     expect(
       screen.getByText(
-        'Insert a stake amount for this validator. Your new stake will be added to the voting queue.'
+        'Insert a stake amount for this validator. Your new stake will be added to the staking queue.'
       )
     ).toBeTruthy();
     expect(screen.getByText('Stake amount ({{symbol}})')).toBeTruthy();
@@ -131,11 +131,11 @@ describe('EditStake', () => {
     expect(screen.getByText('Stake added')).toBeTruthy();
     expect(screen.getByText('Your stake has been added to your staking queue')).toBeTruthy();
 
-    fireEvent.click(screen.getByText('Continue voting'));
+    fireEvent.click(screen.getByText('Continue staking'));
     expect(props.history.push).toHaveBeenCalled();
   });
 
-  it('should render the confirmation modal and proceed to the voting queue', async () => {
+  it('should render the confirmation modal and proceed to the staking queue', async () => {
     const address = 'lsk6wrjbs66uo9eoqr4t86afvd4yym6ovj4afunvh';
 
     wrapper.rerender(
@@ -153,7 +153,7 @@ describe('EditStake', () => {
     fireEvent.click(screen.getByText('Confirm'));
 
     await waitFor(() => {
-      fireEvent.click(screen.getByText('Go to the voting queue'));
+      fireEvent.click(screen.getByText('Go to the staking queue'));
     });
 
     expect(props.history.push).toHaveBeenCalled();
@@ -182,7 +182,7 @@ describe('EditStake', () => {
 
     expect(screen.getByText('Edit Stake')).toBeTruthy();
     expect(
-      screen.getByText('After changing your stake amount, it will be added to the voting queue.')
+      screen.getByText('After changing your stake amount, it will be added to the staking queue.')
     ).toBeTruthy();
     expect(screen.getByText('Stake amount ({{symbol}})')).toBeTruthy();
 
@@ -202,9 +202,9 @@ describe('EditStake', () => {
     });
 
     expect(screen.getByText('Stake added')).toBeTruthy();
-    expect(screen.getByText('Your stake has been added to your voting queue')).toBeTruthy();
+    expect(screen.getByText('Your stake has been added to your staking queue')).toBeTruthy();
 
-    fireEvent.click(screen.getByText('Continue voting'));
+    fireEvent.click(screen.getByText('Continue staking'));
     expect(props.history.push).toHaveBeenCalled();
   });
 });

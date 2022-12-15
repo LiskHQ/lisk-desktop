@@ -34,13 +34,13 @@ const getTitles = (t) => ({
   edit: {
     title: t('Edit stake'),
     description: t(
-      'Increase or decrease your stake amount, or remove your stake from this validator. Your updated stake will be added to the voting queue.'
+      'Increase or decrease your stake amount, or remove your stake from this validator. Your updated stake will be added to the staking queue.'
     ),
   },
   add: {
-    title: t('Add to voting queue'),
+    title: t('Add to staking queue'),
     description: t(
-      'Insert a stake amount for this validator. Your new stake will be added to the voting queue.'
+      'Insert a stake amount for this validator. Your new stake will be added to the staking queue.'
     ),
   },
 });
@@ -154,7 +154,7 @@ const EditStake = ({ history, voteEdited, network, voting, votesRetrieved }) => 
 
   const daysLeft = Math.ceil((parseInt(end, 10) - currentHeight) / NUMBER_OF_BLOCKS_PER_DAY);
   const subTitles = {
-    edit: t('After changing your stake amount, it will be added to the voting queue.'),
+    edit: t('After changing your stake amount, it will be added to the staking queue.'),
     add: titles.description,
   };
   const headerTitles = {
@@ -174,7 +174,7 @@ const EditStake = ({ history, voteEdited, network, voting, votesRetrieved }) => 
         <BoxContent className={styles.noPadding}>
           <BoxInfoText>
             <span>
-              {!isForm ? t('Your stake has been added to your voting queue') : subTitles[mode]}
+              {!isForm ? t('Your stake has been added to your staking queue') : subTitles[mode]}
             </span>
           </BoxInfoText>
           {isForm && (
@@ -227,7 +227,7 @@ const EditStake = ({ history, voteEdited, network, voting, votesRetrieved }) => 
               onClick={handleContinueVoting}
               disabled={voteAmount.error}
             >
-              {t('Continue voting')}
+              {t('Continue staking')}
             </SecondaryButton>
           )}
           <PrimaryButton
@@ -235,7 +235,7 @@ const EditStake = ({ history, voteEdited, network, voting, votesRetrieved }) => 
             onClick={handleConfirm}
             disabled={voteAmount.error || isGettingDposToken}
           >
-            {t(isForm ? 'Confirm' : 'Go to the voting queue')}
+            {t(isForm ? 'Confirm' : 'Go to the staking queue')}
           </PrimaryButton>
         </BoxFooter>
       </Box>

@@ -62,7 +62,7 @@ describe('externalLinks', () => {
     expect(history.replace).toHaveBeenCalledWith('/wallet?modal=send&recipient=1L&amount=100');
   });
 
-  it('opens voting queue modal', () => {
+  it('opens staking queue modal', () => {
     const callbacks = {};
     window.ipc = {
       on: (event, callback) => { callbacks[event] = callback; },

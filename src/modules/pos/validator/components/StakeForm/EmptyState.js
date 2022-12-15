@@ -7,7 +7,7 @@ import styles from './stakeForm.css';
 const EmptyState = ({ t }) => (
   <EmptyBoxState className={styles.emptyState}>
     <Illustration name="emptyWallet" />
-    <p>{t('No votes in queue.')}</p>
+    <p>{t('No stakes in queue.')}</p>
   </EmptyBoxState>
 );
 

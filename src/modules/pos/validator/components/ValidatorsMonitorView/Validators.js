@@ -67,7 +67,7 @@ const ValidatorsMonitor = ({ watchList, registrations }) => {
       },
       {
         value: 'votes',
-        name: t('Latest votes'),
+        name: t('Latest stakes'),
         className: 'votes',
       },
     ],
@@ -123,7 +123,7 @@ const ValidatorsMonitor = ({ watchList, registrations }) => {
           </div>
           <div className={grid['col-md-4']}>
             <Link to={address ? routes.sentVotes.path : '#'}>
-              <SecondaryButton disabled={!address}>Votes</SecondaryButton>
+              <SecondaryButton disabled={!address}>Stakes</SecondaryButton>
             </Link>
             <DialogLink component="registerValidator">
               <PrimaryButton className="register-validator">Register validator</PrimaryButton>

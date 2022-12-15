@@ -8,7 +8,7 @@ import { mockValidators } from '../../__fixtures__';
 jest.mock('src/modules/transaction/hooks/queries');
 jest.mock('../../hooks/queries');
 
-describe('Latest votes', () => {
+describe('Latest stakes', () => {
   const mockFetchNextDelegates = jest.fn();
   const mockFetchNextTransactions = jest.fn();
   const props = {

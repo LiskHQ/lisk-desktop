@@ -14,7 +14,7 @@ export default t => ([
     classList: grid['col-xs-2'],
   },
   {
-    title: t('Votes'),
+    title: t('Stakes'),
     classList: grid['col-xs-4'],
   },
 ]);

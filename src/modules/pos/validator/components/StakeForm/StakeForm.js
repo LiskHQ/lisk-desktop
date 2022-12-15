@@ -185,7 +185,7 @@ const StakeForm = ({ t, votes, account, isVotingTxPending, nextStep, history, dp
             <>
               <BoxContent className={styles.container}>
                 <header className={styles.headerContainer}>
-                  <span className={styles.title}>{t('Voting queue')}</span>
+                  <span className={styles.title}>{t('Staking queue')}</span>
                   <div className={styles.votesAvailableCounter}>
                     <span className="available-votes-num">{`${availableVotes}/`}</span>
                     <span>

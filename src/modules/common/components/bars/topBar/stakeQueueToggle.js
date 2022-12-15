@@ -27,7 +27,7 @@ const StakeQueueToggle = ({
       </DialogLink>
     )}
   >
-    <p>{t('Voting queue')}</p>
+    <p>{t('Staking queue')}</p>
   </Tooltip>
 );
 

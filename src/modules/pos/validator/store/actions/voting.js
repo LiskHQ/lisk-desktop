@@ -32,7 +32,7 @@ export const votesConfirmed = () => ({
 });
 
 /**
- * To be dispatched when a vote is to be removed form the voting queue
+ * To be dispatched when a vote is to be removed form the staking queue
  *
  * @returns {Object} Pure action object
  */
