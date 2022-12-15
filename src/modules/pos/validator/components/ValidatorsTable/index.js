@@ -39,20 +39,19 @@ const ValidatorsTable = ({ setActiveTab, activeTab, blocks, filters }) => {
     options: { enabled: activeTab === 'active' },
   });
 
-  const mergeData = useCallback(
+  const transformResponse = useCallback(
     (generatorsData) => {
-      if (generatorsData && validators) {
-        const normalizedValidators = validators.data.reduce(
-          (acc, val) => ({ ...acc, [val.address]: val }),
-          {}
-        );
-        const tableData = generatorsData.map((gen) => ({
-          ...gen,
-          ...normalizedValidators[gen.address],
-        }));
-        return tableData;
+      if (!generatorsData || !validators) {
+        return [];
       }
-      return [];
+      const normalizedValidators = validators.data.reduce(
+        (acc, val) => ({ ...acc, [val.address]: val }),
+        {}
+      );
+      return generatorsData.map((gen) => ({
+        ...gen,
+        ...normalizedValidators[gen.address],
+      }));
     },
     [validators]
   );
@@ -62,7 +61,7 @@ const ValidatorsTable = ({ setActiveTab, activeTab, blocks, filters }) => {
       showHeader
       queryHook={queryHook}
       queryConfig={queryConfig}
-      transformResponse={(generatorData) => mergeData(generatorData)}
+      transformResponse={transformResponse}
       row={ValidatorRow}
       header={header(activeTab, toggleSort, t)}
       currentSort={sort}
