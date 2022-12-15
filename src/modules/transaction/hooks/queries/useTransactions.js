@@ -1,9 +1,9 @@
-import { useState, useCallback } from 'react';
+import { useState, useCallback, useEffect } from 'react';
 import { useQueryClient } from '@tanstack/react-query';
 import { TRANSACTIONS } from 'src/const/queries';
 import { LIMIT as limit, API_VERSION } from 'src/const/config';
 import { useCustomInfiniteQuery } from 'src/modules/common/hooks';
-// import client from 'src/utils/api/client';
+import client from 'src/utils/api/client';
 
 export const useTransactionsConfig = (customConfig = {}) => ({
   url: `/api/${API_VERSION}/transactions`,
@@ -46,29 +46,35 @@ export const useTransactionsConfig = (customConfig = {}) => ({
  * @returns the query object
  */
 
-export const useTransactions = ({ config: customConfig = {}, options } = {}) => {
+export const useTransactions = ({ keys = [TRANSACTIONS], config: customConfig = {}, options, getUpdate } = {}) => {
   const [hasUpdate, setHasUpdate] = useState(false);
   const queryClient = useQueryClient();
   const config = useTransactionsConfig(customConfig);
 
-  /* istanbul ignore next */
-  // client.socket.on('new.transactions', () => {
-  //   setHasUpdate(true);
-  // });
+  const transactionUpdate = useCallback(() => {
+    setHasUpdate(true);
+  }, []);
 
-  // /* istanbul ignore next */
-  // client.socket.on('delete.transactions', () => {
-  //   setHasUpdate(true);
-  // });
+  useEffect(() => {
+    if (getUpdate) {
+      client.socket.on('new.transactions', transactionUpdate);
+      client.socket.on('delete.transactions', transactionUpdate);
+    }
+    return () => {
+      client.socket.off('new.transactions', transactionUpdate);
+      client.socket.off('new.transactions', transactionUpdate);
+    };
+  }, [getUpdate]);
 
   /* istanbul ignore next */
   const invalidateData = useCallback(async () => {
     setHasUpdate(false);
-    // await queryClient.invalidateQueries(TRANSACTIONS);
+    await queryClient.invalidateQueries(TRANSACTIONS);
+    // @todo invalid this transaction by specefic uniqe query with config
   }, [queryClient, setHasUpdate]);
 
   const response = useCustomInfiniteQuery({
-    keys: [TRANSACTIONS],
+    keys,
     config,
     options,
   });

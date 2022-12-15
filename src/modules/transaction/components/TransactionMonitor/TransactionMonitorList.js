@@ -137,7 +137,7 @@ const Transactions = () => {
           button={{
             label: t('New transactions'),
           }}
-          queryHook={useTransactions}
+          queryHook={({ ...options }) => useTransactions({ ...options, getUpdate: true })}
           queryConfig={{ config: { params } }}
           row={TransactionRow}
           additionalRowProps={{

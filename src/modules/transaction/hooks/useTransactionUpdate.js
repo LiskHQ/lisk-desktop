@@ -1,7 +1,7 @@
 import { useEffect } from 'react';
 import { useQueryClient } from '@tanstack/react-query';
 import client from 'src/utils/api/client';
-import { TRANSACTIONS, AUTH } from 'src/const/queries';
+import { MY_TRANSACTIONS, AUTH } from 'src/const/queries';
 import { useCurrentAccount } from '@account/hooks';
 import { useCurrentApplication } from '@blockchainApplication/manage/hooks';
 import { useTransactions, useTransactionsConfig } from '@transaction/hooks/queries';
@@ -12,12 +12,14 @@ export const useTransactionUpdate = () => {
   const [currentAccount] = useCurrentAccount();
   const [{ chainID }] = useCurrentApplication();
   const queryConfig = useTransactionsConfig();
-  const transactionQueryKeys = [TRANSACTIONS, chainID, queryConfig];
+  const transactionQueryKeys = [MY_TRANSACTIONS, chainID, queryConfig];
   // Call useTransactions to initialize the cache
   useTransactions();
 
   useEffect(() => {
     client.socket.on('new.transactions', async (latestTxns) => {
+      // @todo if the transaction is blong to me,
+      // need to check for transaction id is exsit for replace otherwise add the transaction to my transaction
       await queryClient.invalidateQueries(AUTH);
       queryClient.setQueryData(transactionQueryKeys, (oldData) => ({
         ...oldData,

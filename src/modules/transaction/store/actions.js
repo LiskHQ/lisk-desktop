@@ -165,6 +165,8 @@ export const transactionBroadcasted = (transaction, moduleCommandSchemas) =>
 
         return true;
       }
+      // @todo we need to push transaction pending query cash
+
     }
 
     // @todo Remove the third fallback error message when the Core API errors are implemented
@@ -209,7 +211,7 @@ export const multisigTransactionSigned = ({
     state.network.networks.LSK.chainID,
     privateKey,
     txInitiatorAccount, // this is the intitor of the transaction wanting to be signed
-  ); 
+  );
 
   if (!error) {
     dispatch({
