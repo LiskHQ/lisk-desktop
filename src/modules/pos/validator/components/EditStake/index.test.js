@@ -96,7 +96,7 @@ describe('EditStake', () => {
 
   it('should add stake to the stakes queue', async () => {
     const delegate = mockValidators.data[0];
-    const votingField = screen.getByTestId('vote');
+    const votingField = screen.getByTestId('stake');
 
     fireEvent.change(votingField, { target: { value: 20 } });
     fireEvent.click(screen.getByText('Confirm'));
@@ -186,7 +186,7 @@ describe('EditStake', () => {
     ).toBeTruthy();
     expect(screen.getByText('Stake amount ({{symbol}})')).toBeTruthy();
 
-    const votingField = screen.getByTestId('vote');
+    const votingField = screen.getByTestId('stake');
 
     fireEvent.change(votingField, { target: { value: 20 } });
     fireEvent.click(screen.getByText('Confirm'));

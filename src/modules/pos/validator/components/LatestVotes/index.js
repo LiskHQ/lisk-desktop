@@ -41,7 +41,7 @@ const LatestVotes = ({ filters }) => {
       row={TransactionRow}
       header={header(t)}
       emptyState={{
-        message: t('No latest votes'),
+        message: t('No latest stakes'),
       }}
       additionalRowProps={{
         t,

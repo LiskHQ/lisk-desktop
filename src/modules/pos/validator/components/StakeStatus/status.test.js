@@ -32,7 +32,7 @@ describe('VotingQueue.Result', () => {
     const wrapper = mountWithRouter(Result, { ...props, statusInfo: { locked: 200 } });
     const element = wrapper.find('StakeSuccessfulModal');
 
-    expect(element.text()).toContain('0.000002 LSK will be locked for voting.');
+    expect(element.text()).toContain('0.000002 LSK will be locked for staking.');
   });
 
   it('displays the unlocked message properly', () => {
@@ -52,7 +52,7 @@ describe('VotingQueue.Result', () => {
     const element = wrapper.find('StakeSuccessfulModal');
 
     expect(element.text()).toContain(
-      'You have now locked 0.000002 LSK for voting and may unlock 0.000003 LSK in {{unlockTime}} hours.'
+      'You have now locked 0.000002 LSK for staking and may unlock 0.000003 LSK in {{unlockTime}} hours.'
     );
   });
 

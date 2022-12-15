@@ -43,7 +43,7 @@ const getSuccessMessage = (t, locked, unlockable, selfUnvote = { confirmed: 0 })
       <>
         <LiskAmountFormatted val={locked} />
         {' '}
-        <span>{t('will be locked for voting.')}</span>
+        <span>{t('will be locked for staking.')}</span>
       </>
     );
   } if (locked && unlockable) {
@@ -53,7 +53,7 @@ const getSuccessMessage = (t, locked, unlockable, selfUnvote = { confirmed: 0 })
         {' '}
         <LiskAmountFormatted val={locked} />
         {' '}
-        <span>{t('for voting and may unlock')}</span>
+        <span>{t('for staking and may unlock')}</span>
         {' '}
         <LiskAmountFormatted val={unlockable} />
         {' '}

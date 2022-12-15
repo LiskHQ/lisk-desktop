@@ -81,7 +81,7 @@ export default (activeTab, changeSort, t) => [
     classList: getValidatorWeightClass(activeTab),
     tooltip: {
       title: t('Validator weight'),
-      message: t('The total amount of votes received for a validator.'),
+      message: t('The total amount of stakes received for a validator.'),
       position: 'top',
     },
   },
