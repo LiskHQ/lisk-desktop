@@ -168,7 +168,7 @@ module.exports = {
     'src/modules/block/map/blocksFiltersMap.js',
     'src/modules/block/utils/blockSubscribe.js',
     'src/modules/wallet/components/signMultisigView/helpers.js',
-    'src/modules/pos/validator/store/actions/voting.js',
+    'src/modules/pos/validator/store/actions/staking.js',
     'src/modules/transaction/components/transactionAddress/index.js',
     'src/modules/pos/validator/store/middlewares/voting.js',
     'src/modules/common/components/discreetMode/discreetMode.js',
