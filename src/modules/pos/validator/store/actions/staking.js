@@ -7,8 +7,8 @@ import { joinModuleAndCommand } from '@transaction/utils';
 import { getVotes } from '../../api';
 import actionTypes from './actionTypes';
 
-export const votesReset = () => ({
-  type: actionTypes.votesReset,
+export const stakesReset = () => ({
+  type: actionTypes.stakesReset,
 });
 
 /**
@@ -17,8 +17,8 @@ export const votesReset = () => ({
  *
  * @returns {Object} Pure action object
  */
-export const votesCleared = () => ({
-  type: actionTypes.votesCleared,
+export const stakesCleared = () => ({
+  type: actionTypes.stakesCleared,
 });
 
 /**
@@ -27,8 +27,8 @@ export const votesCleared = () => ({
  *
  * @returns {Object} Pure action object
  */
-export const votesConfirmed = () => ({
-  type: actionTypes.votesConfirmed,
+export const stakesConfirmed = () => ({
+  type: actionTypes.stakesConfirmed,
 });
 
 /**
@@ -36,8 +36,8 @@ export const votesConfirmed = () => ({
  *
  * @returns {Object} Pure action object
  */
-export const voteDiscarded = (data) => ({
-  type: actionTypes.voteDiscarded,
+export const stakeDiscarded = (data) => ({
+  type: actionTypes.stakeDiscarded,
   data,
 });
 
@@ -45,7 +45,7 @@ export const voteDiscarded = (data) => ({
  * Defines the new vote amount for a given delegate.
  * The reducer will add a new vote if if didn't exist before
  * Any vote whose vote amount changes to zero will be removed
- * when the vote transaction is confirmed (via votesConfirmed action)
+ * when the vote transaction is confirmed (via stakesConfirmed action)
  *
  * @param {Object} data
  * @param {String} data.address - Delegate address
@@ -53,9 +53,9 @@ export const voteDiscarded = (data) => ({
  * @param {String} data.voteAmount - (New) vote amount in Beddows
  * @returns {Object} Pure action object
  */
-export const voteEdited = (data) => async (dispatch) =>
+export const stakeEdited = (data) => async (dispatch) =>
   dispatch({
-    type: actionTypes.voteEdited,
+    type: actionTypes.stakeEdited,
     data,
   });
 
@@ -69,7 +69,7 @@ export const voteEdited = (data) => async (dispatch) =>
  * @param {object} data.votes
  * @param {promise} API call response
  */
-export const votesSubmitted =
+export const stakesSubmitted =
   (formProps, transactionJSON, privateKey,_, senderAccount, moduleCommandSchemas) =>
   async (dispatch, getState) => {
     const state = getState();
@@ -90,7 +90,7 @@ export const votesSubmitted =
         data: error,
       });
     } else {
-      dispatch({ type: actionTypes.votesSubmitted });
+      dispatch({ type: actionTypes.stakesSubmitted });
       dispatch({
         type: txActionTypes.transactionCreatedSuccess,
         data: tx,
@@ -101,18 +101,18 @@ export const votesSubmitted =
 /**
  * Fetches the list of votes of the host wallet.
  */
-export const votesRetrieved = () => async (dispatch, getState) => {
+export const stakesRetrieved = () => async (dispatch, getState) => {
   const { network, account } = getState();
   const address = account.current?.metadata?.address;
   try {
     const votes = await getVotes({ network, params: { address } });
     dispatch({
-      type: actionTypes.votesRetrieved,
+      type: actionTypes.stakesRetrieved,
       data: votes.data,
     });
   } catch (exp) {
     dispatch({
-      type: actionTypes.votesRetrieved,
+      type: actionTypes.stakesRetrieved,
       data: {
         account: {},
       },

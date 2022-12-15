@@ -1,7 +1,7 @@
 import walletActionTypes from '@wallet/store/actionTypes';
 import { MODULE_COMMANDS_NAME_MAP } from 'src/modules/transaction/configuration/moduleCommand';
 import transactionActionTypes from '@transaction/store/actionTypes';
-import { votesRetrieved } from '../actions/voting';
+import { stakesRetrieved } from '../actions/staking';
 
 const getRecentTransactionOfType = (transactionsList, type) => (
   transactionsList.filter(transaction => (
@@ -18,7 +18,7 @@ const votePlaced = (store, action) => {
   );
 
   if (voteTransaction) {
-    store.dispatch(votesRetrieved());
+    store.dispatch(stakesRetrieved());
   }
 };
 
@@ -26,7 +26,7 @@ const votingMiddleware = store => next => (action) => {
   next(action);
   switch (action.type) {
     case walletActionTypes.accountUpdated:
-      store.dispatch(votesRetrieved());
+      store.dispatch(stakesRetrieved());
       break;
     case transactionActionTypes.transactionsRetrieved:
       votePlaced(store, action);

@@ -1,9 +1,9 @@
 import { connect } from 'react-redux';
-import { voteEdited } from 'src/redux/actions';
+import { stakeEdited } from 'src/redux/actions';
 import SentStakesRow from './SentStakesRow';
 
 const mapDispatchToProps = {
-  voteEdited,
+  stakeEdited,
 };
 
 export default connect(null, mapDispatchToProps)(SentStakesRow);

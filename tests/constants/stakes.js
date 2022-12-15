@@ -15,7 +15,7 @@ export default [
   },
 ];
 
-const generateVotes = (index) => ({
+const generateStakes = (index) => ({
   params: { votes: [{ delegateAddress: `lskdwsyfmcko6mcd357446yatromr9vzgu7eb8y${index + 10}`, amount: `${index + 10}0000000` }] },
   block: {
     height: 16418742 + index,
@@ -30,4 +30,4 @@ const generateVotes = (index) => ({
   height: 16418742 + index,
 });
 
-export const votesList = Array(10).fill(1).map((_, idx) => generateVotes(idx));
+export const votesList = Array(10).fill(1).map((_, idx) => generateStakes(idx));

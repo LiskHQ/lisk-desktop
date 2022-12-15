@@ -46,7 +46,7 @@ const getTitles = (t) => ({
 });
 
 // eslint-disable-next-line max-statements
-const EditStake = ({ history, voteEdited, network, voting, votesRetrieved }) => {
+const EditStake = ({ history, stakeEdited, network, voting, stakesRetrieved }) => {
   const { t } = useTranslation();
   useSchemas();
   const [
@@ -120,7 +120,7 @@ const EditStake = ({ history, voteEdited, network, voting, votesRetrieved }) => 
   }, [token, auth, network, voting]);
 
   useEffect(() => {
-    votesRetrieved();
+    stakesRetrieved();
   }, []);
 
   const handleConfirm = () => {
@@ -128,7 +128,7 @@ const EditStake = ({ history, voteEdited, network, voting, votesRetrieved }) => 
       removeThenAppendSearchParamsToUrl(history, { modal: 'stakingQueue' }, ['modal']);
       return;
     }
-    voteEdited([
+    stakeEdited([
       {
         address: delegateAddress,
         amount: toRawLsk(voteAmount.value),
@@ -142,7 +142,7 @@ const EditStake = ({ history, voteEdited, network, voting, votesRetrieved }) => 
   const handleContinueVoting = () => history.push(routes.validators.path);
 
   const removeVote = () => {
-    voteEdited([
+    stakeEdited([
       {
         name: delegate.name,
         address: delegateAddress,

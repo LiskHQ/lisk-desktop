@@ -40,7 +40,7 @@ const StakeSummary = ({
   nextStep,
   formProps,
   transactionJSON,
-  votesSubmitted,
+  stakesSubmitted,
   selectedPriority,
 }) => {
   const { locked, unlockable } = getResultProps({ added, removed, edited });
@@ -49,7 +49,7 @@ const StakeSummary = ({
     nextStep({
       formProps,
       transactionJSON,
-      actionFunction: votesSubmitted,
+      actionFunction: stakesSubmitted,
       statusInfo: {
         locked,
         unlockable,

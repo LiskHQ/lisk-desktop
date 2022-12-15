@@ -96,7 +96,7 @@ const props = {
   transactionJSON,
   t: (s) => s,
   account: accounts.genesis,
-  votesSubmitted: jest.fn(),
+  stakesSubmitted: jest.fn(),
   nextStep: jest.fn(),
   transactions: { txSignatureError: null, signedTransaction: transaction },
   normalizedVotes: { lsk123: {} },
@@ -113,7 +113,7 @@ const props = {
 };
 
 beforeEach(() => {
-  props.votesSubmitted.mockClear();
+  props.stakesSubmitted.mockClear();
   props.nextStep.mockClear();
 });
 
@@ -172,7 +172,7 @@ describe('StakingQueue.Summary', () => {
     expect(props.nextStep).toHaveBeenCalledWith({
       transactionJSON,
       formProps: props.formProps,
-      actionFunction: props.votesSubmitted,
+      actionFunction: props.stakesSubmitted,
       statusInfo: {
         locked: 0,
         unlockable: 0,
@@ -194,7 +194,7 @@ describe('StakingQueue.Summary', () => {
     expect(props.nextStep).toHaveBeenCalledWith({
       transactionJSON,
       formProps: props.formProps,
-      actionFunction: props.votesSubmitted,
+      actionFunction: props.stakesSubmitted,
       statusInfo: {
         locked: 100,
         unlockable: 120,

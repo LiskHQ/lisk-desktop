@@ -38,10 +38,10 @@ describe('EditStake', () => {
   const delegateAddress = 'lskjq7jh2k7q332wgkz3bxogb8bj5zc3fcnb9ya53';
   const props = {
     history: { location: { search: `?address=${delegateAddress}` }, push: jest.fn() },
-    voteEdited: jest.fn(),
+    stakeEdited: jest.fn(),
     network: {},
     voting: {},
-    votesRetrieved: jest.fn(),
+    stakesRetrieved: jest.fn(),
   };
 
   beforeEach(() => {
@@ -102,7 +102,7 @@ describe('EditStake', () => {
     fireEvent.click(screen.getByText('Confirm'));
 
     await waitFor(() => {
-      expect(props.voteEdited).toHaveBeenCalledWith([
+      expect(props.stakeEdited).toHaveBeenCalledWith([
         {
           address: delegateAddress,
           name: delegate.name,
@@ -192,7 +192,7 @@ describe('EditStake', () => {
     fireEvent.click(screen.getByText('Confirm'));
 
     await waitFor(() => {
-      expect(props.voteEdited).toHaveBeenCalledWith([
+      expect(props.stakeEdited).toHaveBeenCalledWith([
         {
           address: delegateAddress,
           name: delegate.name,

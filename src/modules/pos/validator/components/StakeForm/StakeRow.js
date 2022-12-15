@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { useDispatch } from 'react-redux';
 
 import { tokenMap } from '@token/fungible/consts/tokens';
-import { voteEdited, voteDiscarded } from 'src/redux/actions';
+import { stakeEdited, stakeDiscarded } from 'src/redux/actions';
 import { removeThenAppendSearchParamsToUrl } from 'src/utils/searchParams';
 import { fromRawLsk, toRawLsk } from '@token/fungible/utils/lsk';
 import { truncateAddress } from '@wallet/utils/account';
@@ -34,7 +34,7 @@ const StakeRow = ({
   const handleFormSubmission = (e) => {
     e.preventDefault();
     dispatch(
-      voteEdited([
+      stakeEdited([
         {
           address,
           amount: toRawLsk(voteAmount.value),
@@ -45,7 +45,7 @@ const StakeRow = ({
   };
 
   const discard = () => {
-    dispatch(voteDiscarded({ address }));
+    dispatch(stakeDiscarded({ address }));
   };
 
   const changeToEditingMode = () => {

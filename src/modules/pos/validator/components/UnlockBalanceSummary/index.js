@@ -1,7 +1,7 @@
 /* istanbul ignore file */
 import { connect } from 'react-redux';
 import { withTranslation } from 'react-i18next';
-import { balanceUnlocked } from '@pos/validator/store/actions/voting';
+import { balanceUnlocked } from '@pos/validator/store/actions/staking';
 import { selectActiveTokenAccount } from 'src/redux/selectors';
 import Summary from './UnlockBalanceSummary';
 

@@ -10,7 +10,7 @@ describe('SentStakesRow', () => {
   it('should display properly', async () => {
     const props = {
       data: mockSentStakes.data.votes[0],
-      voteEdited: jest.fn(),
+      stakeEdited: jest.fn(),
       dposToken: mockTokensBalance.data[0],
     };
     renderWithRouter(TokenRow, props);
@@ -25,7 +25,7 @@ describe('SentStakesRow', () => {
 
     fireEvent.click(screen.getByAltText('deleteIcon'));
 
-    expect(props.voteEdited).toHaveBeenCalledWith([
+    expect(props.stakeEdited).toHaveBeenCalledWith([
       {
         name,
         address: delegateAddress,

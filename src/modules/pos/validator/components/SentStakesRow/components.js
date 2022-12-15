@@ -17,9 +17,9 @@ export const Balance = ({ value, ...rest }) => (
   </p>
 );
 
-export const Actions = ({ address, name, voteEdited }) => {
+export const Actions = ({ address, name, stakeEdited }) => {
   const handleRemoveVote = () => {
-    voteEdited([
+    stakeEdited([
       {
         name,
         address,

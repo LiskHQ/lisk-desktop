@@ -3,7 +3,7 @@ import TokenAmount from '@token/fungible/components/tokenAmount';
 import styles from './SentStakesRow.css';
 import { ValidatorWalletVisual, Balance, Actions } from './components';
 
-const SentVoteRow = ({ data: delegate, voteEdited, dposToken }) => {
+const SentStakeRow = ({ data: delegate, stakeEdited, dposToken }) => {
   const {
     delegateAddress,
     amount,
@@ -19,10 +19,10 @@ const SentVoteRow = ({ data: delegate, voteEdited, dposToken }) => {
         <Balance value={rank} />
         <Balance value={<TokenAmount val={voteWeight} token={dposToken.symbol}/>} />
         <Balance value={<TokenAmount val={amount} token={dposToken.symbol}/>} />
-        <Actions address={delegateAddress} name={name} voteEdited={voteEdited} />
+        <Actions address={delegateAddress} name={name} stakeEdited={stakeEdited} />
       </div>
     </div>
   );
 };
 
-export default SentVoteRow;
+export default SentStakeRow;

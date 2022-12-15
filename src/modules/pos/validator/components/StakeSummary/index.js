@@ -2,7 +2,7 @@
 import React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useTranslation } from 'react-i18next';
-import { votesSubmitted } from 'src/redux/actions';
+import { stakesSubmitted } from 'src/redux/actions';
 import { selectActiveTokenAccount } from 'src/redux/selectors';
 import StakeSummary from './StakeSummary';
 
@@ -18,8 +18,8 @@ const Summary = (props) => {
       t={t}
       account={account}
       transactions={transactions}
-      votesSubmitted={(...params) => {
-        dispatch(votesSubmitted(...params));
+      stakesSubmitted={(...params) => {
+        dispatch(stakesSubmitted(...params));
       }}
     />
   );

@@ -18,7 +18,7 @@ jest.mock('src/redux/actions', () => ({
   accountDataUpdated: jest.fn(),
   transactionsRetrieved: jest.fn(),
   settingsUpdated: jest.fn(),
-  votesRetrieved: jest.fn(),
+  stakesRetrieved: jest.fn(),
   networkSelected: jest.fn(),
   networkStatusUpdated: jest.fn(),
 }));

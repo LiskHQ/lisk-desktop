@@ -3,7 +3,7 @@ export * from '@bookmark/store/action';
 export * from '@network/store/action';
 export * from 'src/modules/settings/store/actions';
 export * from '@transaction/store/actions';
-export * from '@pos/validator/store/actions/voting';
+export * from '@pos/validator/store/actions/staking';
 export * from '@pos/validator/store/actions/watchList';
 export * from '@update/store/actions/appUpdates';
 export * from 'src/modules/common/store/actions';

@@ -64,7 +64,7 @@ jest.mock('@transaction/api', () => ({
 }));
 
 jest.mock('@pos/validator/store/actions/voting', () => ({
-  voteEdited: jest.fn(),
+  stakeEdited: jest.fn(),
 }));
 
 describe('getMaxAmount', () => {

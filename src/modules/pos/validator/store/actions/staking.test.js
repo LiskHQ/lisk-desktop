@@ -3,7 +3,7 @@ import networks from '@network/configuration/networks';
 import * as transactionApi from '@transaction/api';
 import * as accountApi from '@wallet/utils/api';
 import * as hwManager from '@transaction/utils/hwManager';
-import sampleVotes from '@tests/constants/stakes';
+import sampleStakes from '@tests/constants/stakes.js';
 import wallets from '@tests/constants/wallets';
 import txActionTypes from '@transaction/store/actionTypes';
 import mockSavedAccounts from '@tests/fixtures/accounts';
@@ -11,13 +11,13 @@ import { mockCommandParametersSchemas } from 'src/modules/common/__fixtures__';
 import * as validatorApi from '../../api';
 import actionTypes from './actionTypes';
 import {
-  voteEdited,
-  votesCleared,
-  votesSubmitted,
-  votesConfirmed,
-  votesRetrieved,
+  stakeEdited,
+  stakesCleared,
+  stakesSubmitted,
+  stakesConfirmed,
+  stakesRetrieved,
   balanceUnlocked,
-} from './voting';
+} from './staking';
 
 jest.mock('@transaction/api');
 
@@ -97,7 +97,7 @@ describe('actions: voting', () => {
     jest.clearAllMocks();
   });
 
-  describe('voteEdited', () => {
+  describe('stakeEdited', () => {
     it('should create an action to add data to toggle the stake status for any given delegate', async () => {
       const data = [
         {
@@ -105,9 +105,9 @@ describe('actions: voting', () => {
           amount: 1e10,
         },
       ];
-      await voteEdited(data)(dispatch);
+      await stakeEdited(data)(dispatch);
       expect(dispatch).toHaveBeenCalledWith({
-        type: actionTypes.voteEdited,
+        type: actionTypes.stakeEdited,
         data,
       });
     });
@@ -120,14 +120,14 @@ describe('actions: voting', () => {
           username: 'genesis',
         },
       ];
-      await voteEdited(data)(dispatch);
+      await stakeEdited(data)(dispatch);
       expect(accountApi.getAccount).not.toHaveBeenCalled();
     });
   });
 
-  describe('votesSubmitted', () => {
+  describe('stakesSubmitted', () => {
     it('should call create transactions', async () => {
-      const tx = { data: sampleVotes[0] };
+      const tx = { data: sampleStakes[0] };
       transactionApi.signTransaction.mockResolvedValue(tx);
       const data = [
         {
@@ -140,7 +140,7 @@ describe('actions: voting', () => {
         optionalKeys: [],
       };
 
-      await votesSubmitted(
+      await stakesSubmitted(
         data,
         transactionJSON,
         privateKey,
@@ -152,7 +152,7 @@ describe('actions: voting', () => {
       expect(hwManager.signTransactionByHW).not.toHaveBeenCalled();
       expect(dispatch).toHaveBeenCalledTimes(2);
       expect(dispatch).toHaveBeenCalledWith({
-        type: actionTypes.votesSubmitted,
+        type: actionTypes.stakesSubmitted,
       });
       expect(dispatch).toHaveBeenCalledWith({
         type: txActionTypes.transactionCreatedSuccess,
@@ -161,7 +161,7 @@ describe('actions: voting', () => {
     });
 
     it('should call create transactions', async () => {
-      const tx = { data: sampleVotes[0] };
+      const tx = { data: sampleStakes[0] };
       loginTypes.passphrase.code = 1;
       const data = [
         {
@@ -174,7 +174,7 @@ describe('actions: voting', () => {
         optionalKeys: [],
       };
 
-      await votesSubmitted(
+      await stakesSubmitted(
         data,
         transactionJSON,
         privateKey,
@@ -186,7 +186,7 @@ describe('actions: voting', () => {
       expect(transactionApi.signTransaction).toHaveBeenCalled();
       expect(dispatch).toHaveBeenCalledTimes(2);
       expect(dispatch).toHaveBeenCalledWith({
-        type: actionTypes.votesSubmitted,
+        type: actionTypes.stakesSubmitted,
       });
       expect(dispatch).toHaveBeenCalledWith({
         type: txActionTypes.transactionCreatedSuccess,
@@ -208,7 +208,7 @@ describe('actions: voting', () => {
         optionalKeys: [],
       };
 
-      await votesSubmitted(
+      await stakesSubmitted(
         data,
         transactionJSON,
         privateKey,
@@ -226,37 +226,37 @@ describe('actions: voting', () => {
     });
   });
 
-  describe('votesConfirmed', () => {
+  describe('stakesConfirmed', () => {
     it('should dispatch stake type without data', () => {
       const expectedAction = {
-        type: actionTypes.votesConfirmed,
+        type: actionTypes.stakesConfirmed,
       };
 
-      expect(votesConfirmed()).toEqual(expectedAction);
+      expect(stakesConfirmed()).toEqual(expectedAction);
     });
   });
 
-  describe('votesCleared', () => {
+  describe('stakesCleared', () => {
     it('should dispatch stake type without data', () => {
       const expectedAction = {
-        type: actionTypes.votesCleared,
+        type: actionTypes.stakesCleared,
       };
 
-      expect(votesCleared()).toEqual(expectedAction);
+      expect(stakesCleared()).toEqual(expectedAction);
     });
   });
 
-  describe('votesRetrieved', () => {
+  describe('stakesRetrieved', () => {
     it('should call getVotes and dispatch stake results', async () => {
       const votes = [
         { address: 'lskdwsyfmcko6mcd357446yatromr9vzgu7eb8y99', username: 'genesis', amount: 1e8 },
       ];
       const expectedAction = {
-        type: actionTypes.votesRetrieved,
+        type: actionTypes.stakesRetrieved,
         data: votes,
       };
       validatorApi.getVotes.mockImplementation(() => Promise.resolve({ data: votes }));
-      await votesRetrieved()(dispatch, getState);
+      await stakesRetrieved()(dispatch, getState);
 
       expect(dispatch).toHaveBeenCalledWith(expectedAction);
     });

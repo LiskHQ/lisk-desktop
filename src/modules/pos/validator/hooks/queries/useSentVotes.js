@@ -1,5 +1,5 @@
 /* istanbul ignore file */
-import { VOTES_SENT } from 'src/const/queries';
+import { STAKES_SENT } from 'src/const/queries';
 import {
   LIMIT as limit,
   API_VERSION,
@@ -44,7 +44,7 @@ export const useSentVotes = ({ config: customConfig = {}, options } = { }) => {
     }),
   };
   return useCustomInfiniteQuery({
-    keys: [VOTES_SENT],
+    keys: [STAKES_SENT],
     options: customOptions,
     config,
   });

@@ -26,7 +26,7 @@ describe('voting middleware', () => {
       getState: jest.fn(),
       dispatch: jest.fn(),
     };
-    it('should dispatch votesRetrieved with empty array', () => {
+    it('should dispatch stakesRetrieved with empty array', () => {
       middleware(store)(next)(givenAction);
       expect(next).toHaveBeenCalledWith(givenAction);
       expect(store.dispatch).toHaveBeenCalled();

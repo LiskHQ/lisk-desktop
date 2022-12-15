@@ -36,10 +36,10 @@ describe('Reducer: voting(state, action)', () => { // eslint-disable-line max-st
     expect(changedState).toEqual(cleanVotes);
   });
 
-  describe('votesRetrieved', () => {
+  describe('stakesRetrieved', () => {
     it('should store fetched votes of a given account', () => {
       const action = {
-        type: actionTypes.votesRetrieved,
+        type: actionTypes.stakesRetrieved,
         data: {
           account: {
             votesUsed: 2,
@@ -63,7 +63,7 @@ describe('Reducer: voting(state, action)', () => { // eslint-disable-line max-st
   describe('votesEdited', () => {
     it('should add validator with voteAmount if does not exist among votes', () => {
       const action = {
-        type: actionTypes.voteEdited,
+        type: actionTypes.stakeEdited,
         data: [{
           ...delegate1,
           amount: dirtyVotes[delegate1.address].unconfirmed,
@@ -82,7 +82,7 @@ describe('Reducer: voting(state, action)', () => { // eslint-disable-line max-st
 
     it('should change voteAmount if validators exist among votes', () => {
       const action = {
-        type: actionTypes.voteEdited,
+        type: actionTypes.stakeEdited,
         data: [{
           ...delegate1,
           amount: dirtyVotes[delegate1.address].unconfirmed,
@@ -103,10 +103,10 @@ describe('Reducer: voting(state, action)', () => { // eslint-disable-line max-st
     });
   });
 
-  describe('votesSubmitted', () => {
+  describe('stakesSubmitted', () => {
     it('should add pending flag to dirty votes', () => {
       const action = {
-        type: actionTypes.votesSubmitted,
+        type: actionTypes.stakesSubmitted,
       };
       const changedState = voting(dirtyVotes, action);
 
@@ -114,10 +114,10 @@ describe('Reducer: voting(state, action)', () => { // eslint-disable-line max-st
     });
   });
 
-  describe('votesConfirmed', () => {
+  describe('stakesConfirmed', () => {
     it('should remove pending flags and update confirmed values', () => {
       const action = {
-        type: actionTypes.votesConfirmed,
+        type: actionTypes.stakesConfirmed,
       };
       const expectedState = {
         [delegate1.address]: {
@@ -139,7 +139,7 @@ describe('Reducer: voting(state, action)', () => { // eslint-disable-line max-st
 
     it('should remove unvoted validators', () => {
       const action = {
-        type: actionTypes.votesConfirmed,
+        type: actionTypes.stakesConfirmed,
       };
       const initialState = {
         [delegate2.address]: { ...cleanVotes[delegate2.address], pending: false },
@@ -154,10 +154,10 @@ describe('Reducer: voting(state, action)', () => { // eslint-disable-line max-st
     });
   });
 
-  describe('votesCleared', () => {
+  describe('stakesCleared', () => {
     it('should revert votes to initial state', () => {
       const action = {
-        type: actionTypes.votesCleared,
+        type: actionTypes.stakesCleared,
       };
       const changedState = voting(dirtyVotes, action);
 
