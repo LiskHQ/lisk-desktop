@@ -13,7 +13,7 @@ import LayoutSchema from './LayoutSchema';
 const ValidatorRow = ({ data, className, activeTab, watchList, setActiveTab }) => {
   const dispatch = useDispatch();
   const { t } = useTranslation();
-  const formattedForgingTime = getForgingTime(data.nextForgingTime);
+  const formattedForgingTime = getForgingTime(data.nextAllocatedTime);
 
   const isWatched = watchList.find((address) => address === data.address);
 
