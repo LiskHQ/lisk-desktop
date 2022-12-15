@@ -125,12 +125,12 @@ describe('VoteForm', () => {
         canLoadMore: false,
       })
     );
-    expect(wrapper.find('.available-votes-num').text()).toBe('8/');
+    expect(wrapper.find('.available-stakes-num').text()).toBe('8/');
   });
 
   it('Shows an error if trying to stake for more than 10 delegates', () => {
     const wrapper = shallow(<Form {...props} votes={elevenVotes} />);
-    expect(wrapper.find('.available-votes-num').text()).toBe('-1/');
+    expect(wrapper.find('.available-stakes-num').text()).toBe('-1/');
     expect(wrapper.find('.feedback').text()).toBe(
       'These votes in addition to your current votes will add up to 11, exceeding the account limit of 10.'
     );
@@ -142,7 +142,7 @@ describe('VoteForm', () => {
     act(() => {
       wrapper.update();
     });
-    expect(wrapper.find('.available-votes-num').text()).toBe('8/');
+    expect(wrapper.find('.available-stakes-num').text()).toBe('8/');
     expect(wrapper.find('.feedback').text()).toBe(
       'The minimum required balance for this action is {{minRequiredBalance}} {{token}}'
     );
@@ -157,7 +157,7 @@ describe('VoteForm', () => {
     act(() => {
       wrapper.update();
     });
-    expect(wrapper.find('.available-votes-num').text()).toBe('8/');
+    expect(wrapper.find('.available-stakes-num').text()).toBe('8/');
     expect(wrapper.find('.feedback').at(0).text()).toBe(
       'The stake amounts are too high. You should keep 0.05 LSK available in your account.'
     );
