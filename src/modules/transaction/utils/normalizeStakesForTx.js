@@ -7,7 +7,7 @@
  * @param {Object} votes - votes object retrieved from the Redux store
  * @returns {Array} Array of votes as Lisk Element expects
  */
-const normalizeVotesForTx = votes =>
+const normalizeStakesForTx = votes =>
   Object.keys(votes)
     .filter(address => votes[address].confirmed !== votes[address].unconfirmed)
     .map(delegateAddress => ({
@@ -15,4 +15,4 @@ const normalizeVotesForTx = votes =>
       amount: (votes[delegateAddress].unconfirmed - votes[delegateAddress].confirmed).toString(),
     }));
 
-export default normalizeVotesForTx;
+export default normalizeStakesForTx;

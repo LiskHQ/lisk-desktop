@@ -3,7 +3,7 @@ import React, { useMemo, useState } from 'react';
 import { MODULE_COMMANDS_NAME_MAP } from 'src/modules/transaction/configuration/moduleCommand';
 import { MIN_ACCOUNT_BALANCE } from '@transaction/configuration/transactions';
 import { toRawLsk } from '@token/fungible/utils/lsk';
-import { normalizeVotesForTx } from '@transaction/utils';
+import { normalizeStakesForTx } from '@transaction/utils';
 import BoxContent from '@theme/box/content';
 import Dialog from 'src/theme/dialog/dialog';
 import TxComposer from '@transaction/components/TxComposer';
@@ -129,7 +129,7 @@ const StakeForm = ({ t, votes, account, isVotingTxPending, nextStep, history, dp
     .filter((address) => votes[address].unconfirmed !== votes[address].confirmed)
     .map((address) => ({ address, ...votes[address] }));
 
-  const normalizedVotes = useMemo(() => normalizeVotesForTx(votes), [votes]);
+  const normalizedVotes = useMemo(() => normalizeStakesForTx(votes), [votes]);
   const { added, edited, removed, selfUnvote, availableVotes, resultingNumOfVotes } = useMemo(
     () => getStakeStats(votes, account),
     [votes, account]
