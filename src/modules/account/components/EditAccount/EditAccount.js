@@ -17,7 +17,7 @@ const EditAccount = ({ history }) => {
       <EditAccountForm onBack={history.goBack} />
       <SetPasswordSuccess
         encryptedPhrase={currentAccount}
-        headerText={t('Edit name successful')}
+        headerText={t('Edit account name successful')}
         contentText={t('You can now download encrypted secret recovery phrase to this effect.')}
         buttonText={t('Go to wallet')}
         onClose={() => {
