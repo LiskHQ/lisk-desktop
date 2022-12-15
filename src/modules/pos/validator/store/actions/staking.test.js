@@ -3,7 +3,7 @@ import networks from '@network/configuration/networks';
 import * as transactionApi from '@transaction/api';
 import * as accountApi from '@wallet/utils/api';
 import * as hwManager from '@transaction/utils/hwManager';
-import sampleStakes from '@tests/constants/stakes.js';
+import sampleStakes from '@tests/constants/stakes';
 import wallets from '@tests/constants/wallets';
 import txActionTypes from '@transaction/store/actionTypes';
 import mockSavedAccounts from '@tests/fixtures/accounts';
