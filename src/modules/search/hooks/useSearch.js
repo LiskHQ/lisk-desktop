@@ -4,7 +4,7 @@ import { useTransactions } from '@transaction/hooks/queries';
 import { useDelegates } from '@dpos/validator/hooks/queries';
 import { useBlocks } from '@block/hooks/queries/useBlocks';
 
-// eslint-disable-next-line complexity
+// eslint-disable-next-line complexity,max-statements
 export const useSearch = (search = '') => {
   const isAddress = validateAddress(search) === 0;
   const isTxId = regex.transactionId.test(search);
@@ -32,16 +32,17 @@ export const useSearch = (search = '') => {
   });
 
   const isLoading =
-    delegates.isLoading ||
-    transactions.isLoading ||
-    addresses.isLoading ||
-    blocks.isLoading;
+    delegates.isLoading || transactions.isLoading || addresses.isLoading || blocks.isLoading;
+
+  const isFetched =
+    delegates.isFetched && transactions.isFetched && addresses.isFetched && blocks.isFetched;
 
   return {
     addresses: addresses.data?.data ?? [],
     delegates: delegates.data?.data ?? [],
     transactions: transactions.data?.data ?? [],
     blocks: blocks.data?.data ?? [],
-    isLoading
+    isLoading,
+    isFetched,
   };
 };

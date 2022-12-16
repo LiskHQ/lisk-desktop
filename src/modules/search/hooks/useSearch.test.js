@@ -1,95 +1,130 @@
-import { renderHook } from '@testing-library/react-hooks';
-import { act } from 'react-dom/test-utils';
-import { useCustomQuery } from 'src/modules/common/hooks';
+import { renderHook, act } from '@testing-library/react-hooks';
+import * as transactionsQueries from '@transaction/hooks/queries/useTransactions';
+import * as delegatesQueries from '@dpos/validator/hooks/queries/useDelegates';
+import * as blockQueries from '@block/hooks/queries/useBlocks';
 import { queryWrapper as wrapper } from 'src/utils/test/queryWrapper';
+import { useBlocks } from '@block/hooks/queries/useBlocks';
+import { useDelegates } from '@dpos/validator/hooks/queries';
+import { useTransactions } from '@transaction/hooks/queries';
+
 import { useSearch } from './useSearch';
 
-jest.mock('src/modules/common/hooks', () => ({
-  useCustomQuery: jest.fn().mockImplementation(({ options }) => {
-    if (!options.enabled) {
-      return {};
-    }
-    return {
-      data: { data: [{ id: '1' }] }
-    }
-  })
-}))
+jest.useRealTimers();
+jest.spyOn(blockQueries, 'useBlocks');
+jest.spyOn(transactionsQueries, 'useTransactions');
+jest.spyOn(delegatesQueries, 'useDelegates');
 
+const addressesOptions = (search) => ({
+  config: { params: { address: search } },
+  options: { enabled: true },
+});
+
+const delegatesOptions = (search) => ({
+  config: { params: { search } },
+  options: { enabled: true },
+});
+
+const transactionsOptions = (search) => ({
+  config: { params: { transactionID: search } },
+  options: { enabled: true },
+});
+
+const blocksOptions = (search) => ({
+  config: { params: { height: search } },
+  options: { enabled: true },
+});
+
+const SEARCH = {
+  EMPTY: '',
+  MIN_LENGTH: 'me',
+  VALIDATOR: 'genesis',
+  ADDRESS: 'lskqzpfr3uq8bm2jee5dkv4ns79uuswjzc9bbpezu',
+  TX:'2ada9e9d29788e0554bdc1dc183dfda30f89138752d2fe52f2061175d9b69506',
+  BLOCK: '670008'
+}
+
+const defaultOptions = {
+  options: { enabled: false },
+};
+
+afterEach(() => {
+  jest.clearAllMocks();
+});
 
 describe('useSearch hook', () => {
 
   it('should not call api for invalid search value', () => {
-    act(() => {
-      const { result, waitFor } = renderHook(() => useSearch(), { wrapper });
-      waitFor(() => !result.current.isLoading);
-      expect(result.current.delegates.length).toEqual(0)
-
-    })
+    renderHook(() => useSearch(SEARCH.EMPTY), { wrapper });
+    expect(useTransactions).toBeCalledWith(expect.objectContaining(defaultOptions));
+    expect(useBlocks).toBeCalledWith(expect.objectContaining(defaultOptions));
+    expect(useDelegates).toBeCalledWith(expect.objectContaining(defaultOptions));
   });
-  
+
   it('should not call api for search value less than 3', () => {
-    act(() => {
-      const { result, waitFor } = renderHook(() => useSearch('hi'), { wrapper });
-      waitFor(() => !result.current.isLoading);
-      expect(result.current.delegates.length).toEqual(0)
-    })
-  })
-
-  it('should call fetch delegates api for valid search', () => {
-    act(() => {
-      const { result, waitFor } = renderHook(() => useSearch('genesis'), { wrapper });
-      waitFor(() => !result.current.isLoading);
-      expect(result.current.delegates.length).toEqual(1);
-      expect(useCustomQuery).toBeCalledWith(expect.objectContaining({
-        config: expect.objectContaining({
-          url: "/api/v3/dpos/delegates",
-          event: 'get.delegates',
-        }),
-        options: { enabled: true }
-      }))
-    })
+    renderHook(() => useSearch(SEARCH.MIN_LENGTH), { wrapper });
+    expect(useTransactions).toBeCalledWith(expect.objectContaining(defaultOptions));
+    expect(useBlocks).toBeCalledWith(expect.objectContaining(defaultOptions));
+    expect(useDelegates).toBeCalledWith(expect.objectContaining(defaultOptions));
   });
 
-  it('should call fetch address api for valid search', () => {
-    act(() => {
-      const { result, waitFor } = renderHook(() => useSearch('lskqzpfr3uq8bm2jee5dkv4ns79uuswjzc9bbpezu'), { wrapper });
-      waitFor(() => !result.current.isLoading);
-      expect(useCustomQuery).toBeCalledWith(expect.objectContaining({
-        config: expect.objectContaining({
-          url: "/api/v3/dpos/delegates",
-          event: 'get.address',
-        }),
-        options: { enabled: true }
-      }))
-    })
+  it('should call fetch delegates api for valid search', async () => {
+    const search = SEARCH.VALIDATOR;
+    const { result } = renderHook(() => useSearch(search), { wrapper });
+    expect(result.current.isLoading).toBeTruthy();
+    expect(useTransactions).toBeCalledWith(expect.objectContaining(defaultOptions));
+    expect(useBlocks).toBeCalledWith(expect.objectContaining(defaultOptions));
+    expect(useDelegates).toBeCalledWith(expect.objectContaining(delegatesOptions(search)));
   });
-  
-  it('should call fetch transactions api for valid search', () => {
-    act(() => {
-      const { result, waitFor } = renderHook(() => useSearch('2ada9e9d29788e0554bdc1dc183dfda30f89138752d2fe52f2061175d9b69506'), { wrapper });
-      waitFor(() => !result.current.isLoading);
-      expect(useCustomQuery).toBeCalledWith(expect.objectContaining({
-        config: expect.objectContaining({
-          url: "/api/v3/transactions",
-          event: 'get.transaction',
-        }),
-        options: { enabled: true }
-      }))
-    })
+
+  it('should call fetch address api for valid search', async () => {
+    const search = SEARCH.ADDRESS;
+    renderHook(() => useSearch(search), { wrapper });
+    expect(useTransactions).toBeCalledWith(expect.objectContaining(defaultOptions));
+    expect(useBlocks).toBeCalledWith(expect.objectContaining(defaultOptions));
+    expect(useDelegates).toBeCalledWith(expect.objectContaining(addressesOptions(search)));
   });
- 
-  it('should call fetch blocks api for valid search', () => {
-    act(() => {
-      const { result, waitFor } = renderHook(() => useSearch('670008'), { wrapper });
-      waitFor(() => !result.current.isLoading);
-      expect(useCustomQuery).toBeCalledWith(expect.objectContaining({
-        config: expect.objectContaining({
-          url: "/api/v3/blocks",
-          event: 'get.block',
-        }),
-        options: { enabled: true }
-      }))
+
+  it('should call fetch transactions api for valid search', async () => {
+    const search = SEARCH.TX;
+    renderHook(() => useSearch(search), { wrapper });
+    expect(useTransactions).toBeCalledWith(expect.objectContaining(transactionsOptions(search)));
+    expect(useBlocks).toBeCalledWith(expect.objectContaining(defaultOptions));
+    expect(useDelegates).toBeCalledWith(expect.objectContaining(defaultOptions));
+  });
+
+  it('should call fetch blocks api for valid search', async () => {
+    const search = SEARCH.BLOCK;
+    renderHook(() => useSearch(search), { wrapper });
+    expect(useTransactions).toBeCalledWith(expect.objectContaining(defaultOptions));
+    expect(useBlocks).toBeCalledWith(expect.objectContaining(blocksOptions(search)));
+    expect(useDelegates).toBeCalledWith(expect.objectContaining(defaultOptions));
+  });
+
+  it('should return loading state', async () => {
+    const resultState = (loading) => ({
+      isLoading: loading,
+      isFetched: !loading
     })
+    const initState = false
+    useTransactions.mockReturnValue(resultState(initState))
+    useBlocks.mockReturnValue(resultState(initState))
+    useDelegates.mockReturnValue(resultState(initState))
+    const { result, rerender } = renderHook(() => useSearch(SEARCH.EMPTY), { wrapper });
+    await act(async ()  => {
+      await rerender(SEARCH.ADDRESS)
+    })
+    expect(result.current.isLoading).toBeFalsy();
+    expect(result.current.isFetched).toBeTruthy();
+
+    const loadingState = true
+    useTransactions.mockReturnValue(resultState(loadingState))
+    useBlocks.mockReturnValue(resultState(loadingState))
+    useDelegates.mockReturnValue(resultState(loadingState))
+    await act(async ()  => {
+      await rerender(SEARCH.ADDRESS)
+    })
+    expect(result.current.isLoading).toBeTruthy();
+    expect(result.current.isFetched).toBeFalsy();
   });
 
 });
