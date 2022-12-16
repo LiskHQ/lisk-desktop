@@ -52,7 +52,6 @@ export const useTransactionUpdate = (isLoading, currentApplication) => {
         });
       await queryClient.invalidateQueries({ queryKey: [AUTH] });
       await queryClient.invalidateQueries({ queryKey: [TOKENS_BALANCE] });
-      // const queries = queryClient.getQueryData(transactionQueryKeys)
       // @TODO: token is temporarily hardcoded pending handling of token meta data
       // like tokenID and baseDenom
       showNotificationsForIncomingTransactions(latestTxns.data, currentAccount, 'LSK');

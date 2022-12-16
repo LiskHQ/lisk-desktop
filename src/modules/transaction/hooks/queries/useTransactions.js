@@ -46,7 +46,12 @@ export const useTransactionsConfig = (customConfig = {}) => ({
  * @returns the query object
  */
 
-export const useTransactions = ({ keys = [TRANSACTIONS], config: customConfig = {}, options, getUpdate } = {}) => {
+export const useTransactions = ({
+  keys = [TRANSACTIONS],
+  config: customConfig = {},
+  options,
+  getUpdate,
+} = {}) => {
   const [hasUpdate, setHasUpdate] = useState(false);
   const queryClient = useQueryClient();
   const config = useTransactionsConfig(customConfig);
@@ -57,6 +62,7 @@ export const useTransactions = ({ keys = [TRANSACTIONS], config: customConfig = 
 
   useEffect(() => {
     if (getUpdate) {
+      /* istanbul ignore next */
       client.socket.on('new.transactions', transactionUpdate);
       client.socket.on('delete.transactions', transactionUpdate);
     }
