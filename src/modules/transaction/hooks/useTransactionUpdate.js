@@ -39,7 +39,7 @@ export const useTransactionUpdate = (isLoading, currentApplication) => {
             pages: [
               {
                 data: oldData?.pages[0].data
-                  ? [...latestTxns.data, ...oldData?.pages[0].data]
+                  ? [...latestTxns.data, ...oldData.pages[0].data]
                   : latestTxns.data,
                 meta: {
                   ...oldData?.pages[0].meta,
