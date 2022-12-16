@@ -29,7 +29,7 @@ export const useTransactionUpdate = (isLoading, currentApplication) => {
           const isSameSender = params.address === latestTxns.data[0].sender.address;
           const isMyAddress = isSameRecipient || isSameSender;
           const latestTxnDate = latestTxns.data[0].block.timestamp;
-          const isWithinDateRange = dateRangeCompare(params?.timestamp, latestTxnDate);
+          const isWithinDateRange = dateRangeCompare(params.timestamp, latestTxnDate);
           return isSameChain && isMyAddress && isWithinDateRange;
         })
         .forEach((query) => {
@@ -38,7 +38,9 @@ export const useTransactionUpdate = (isLoading, currentApplication) => {
             ...oldData,
             pages: [
               {
-                data: [...latestTxns.data, ...oldData?.pages[0].data],
+                data: oldData?.pages[0].data
+                  ? [...latestTxns.data, ...oldData?.pages[0].data]
+                  : latestTxns.data,
                 meta: {
                   ...oldData?.pages[0].meta,
                   count: oldData?.pages[0].meta.count + latestTxns.meta.count,
