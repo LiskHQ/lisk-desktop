@@ -56,7 +56,7 @@ export const useTransactionUpdate = (isLoading, currentApplication) => {
       showNotificationsForIncomingTransactions(latestTxns.data, currentAccount, 'LSK');
       client.socket.off('new.transactions');
     });
-  }, []);
+  }, [chainID, isLoading]);
 
   useEffect(() => {
     connect();
