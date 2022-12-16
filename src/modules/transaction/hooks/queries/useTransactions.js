@@ -5,6 +5,7 @@ import { LIMIT as limit, API_VERSION } from 'src/const/config';
 import { useCustomInfiniteQuery } from 'src/modules/common/hooks';
 import client from 'src/utils/api/client';
 
+/* istanbul ignore next */
 export const useTransactionsConfig = (customConfig = {}) => ({
   url: `/api/${API_VERSION}/transactions`,
   method: 'get',
@@ -56,6 +57,7 @@ export const useTransactions = ({
   const queryClient = useQueryClient();
   const config = useTransactionsConfig(customConfig);
 
+  /* istanbul ignore next */
   const transactionUpdate = useCallback(() => {
     setHasUpdate(true);
   }, []);
@@ -76,7 +78,7 @@ export const useTransactions = ({
   const invalidateData = useCallback(async () => {
     setHasUpdate(false);
     await queryClient.invalidateQueries(TRANSACTIONS);
-    // @todo invalid this transaction by specefic uniqe query with config
+    // @todo invalid this transaction by specific unique query with config
   }, [queryClient, setHasUpdate]);
 
   const response = useCustomInfiniteQuery({
