@@ -44,7 +44,7 @@ const App = ({ history }) => {
   const theme = useSelector((state) => (state.settings.darkMode ? 'dark' : 'light'));
   const { data: chainMetaData, isLoading } = useBlockchainApplicationMeta();
   const { setApplication } = useApplicationManagement();
-  const [, setCurrentApplication] = useCurrentApplication();
+  const [currentApplication, setCurrentApplication] = useCurrentApplication();
 
   useIpc(history);
 
@@ -69,7 +69,7 @@ const App = ({ history }) => {
 
   const routesList = Object.keys(routes);
   const routeObj = Object.values(routes).find((r) => r.path === history.location.pathname) || {};
-  useTransactionUpdate()
+  useTransactionUpdate(loaded, currentApplication);
   return (
     <ConnectionProvider>
       <ThemeContext.Provider value={theme}>

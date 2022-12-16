@@ -13,7 +13,7 @@ import TransactionRow from '../TransactionRow';
 import styles from './ExplorerTransactions.css';
 import header from './ExplorerTransactionsHeaderMap';
 import FilterDropdown from '../FilterDropdown';
-import { useTransactions } from '../../hooks/queries';
+import { useMyTransactions } from '../../hooks/queries';
 
 const Transactions = ({ activeToken, address }) => {
   const { t } = useTranslation();
@@ -52,7 +52,7 @@ const Transactions = ({ activeToken, address }) => {
           button={{
             label: t('New transactions'),
           }}
-          queryHook={useTransactions}
+          queryHook={useMyTransactions}
           queryConfig={{ config: { params: { ...params, address } } }}
           row={TransactionRow}
           additionalRowProps={{

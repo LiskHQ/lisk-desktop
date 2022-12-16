@@ -67,3 +67,21 @@ export const filterIncomingTransactions = (transactions, account) =>
       transaction.moduleCommand === MODULE_COMMANDS_NAME_MAP.transfer &&
       transaction.params.recipientAddress === account.metadata.address
   );
+
+export const dateRangeCompare = (filterDateRange, txDate) => {
+  const [fromDate, toDate] = filterDateRange ? filterDateRange.split(':') : ['', ''];
+  // TxDate valid when it's within the from date and to date if both exist
+  if (fromDate && toDate) {
+    return txDate > fromDate && txDate < toDate;
+  }
+  // TxDate valid when it's above the fromDate if fromDate exists
+  if (fromDate) {
+    return txDate > fromDate;
+  }
+  // TxDate valid when it's below the toDate if toDate exists
+  if (toDate) {
+    return txDate < toDate;
+  }
+  // TxDate valid when from date and to date both don't exist
+  return true;
+};

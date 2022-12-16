@@ -1,7 +1,7 @@
 import { MODULE_COMMANDS_NAME_MAP } from 'src/modules/transaction/configuration/moduleCommand';
 import wallets from '@tests/constants/wallets';
 import mockSavedAccounts from '@tests/fixtures/accounts';
-import getTxDirectionConfig, { filterIncomingTransactions } from './helpers';
+import getTxDirectionConfig, { filterIncomingTransactions, dateRangeCompare } from './helpers';
 
 describe('helpers', () => {
   describe('getTxDirectionConfig', () => {
@@ -84,6 +84,39 @@ describe('helpers', () => {
       ];
       const currAcct = mockSavedAccounts[0];
       expect(filterIncomingTransactions(txns, currAcct)).toEqual([txns[1]]);
+    });
+  });
+
+  describe('dateRangeCompare', () => {
+    const txDate = 1671187868;
+    // '1671181368:1671188268'
+    it('returns true if given date falls within from and to dates', () => {
+      const filterDateRange = '1671181368:1671188268';
+      expect(dateRangeCompare(filterDateRange, txDate)).toBe(true);
+    });
+    it('returns false if given date falls within from and to dates', () => {
+      const filterDateRange = '1671181368:1671187268';
+      expect(dateRangeCompare(filterDateRange, txDate)).toBe(false);
+    });
+    it('returns true if only from date is supplied and given date falls within from date', () => {
+      const filterDateRange = '1671181368:';
+      expect(dateRangeCompare(filterDateRange, txDate)).toBe(true);
+    });
+    it('returns false if only from date is supplied and given date falls below from date', () => {
+      const filterDateRange = '1671189532:';
+      expect(dateRangeCompare(filterDateRange, txDate)).toBe(false);
+    });
+    it('returns true if only to date is supplied and given date falls within to date', () => {
+      const filterDateRange = ':1671188315';
+      expect(dateRangeCompare(filterDateRange, txDate)).toBe(true);
+    });
+    it('returns false if only to date is supplied and given date falls above to date', () => {
+      const filterDateRange = ':1671186952';
+      expect(dateRangeCompare(filterDateRange, txDate)).toBe(false);
+    });
+    it('returns true if only to date and from date are not supplied', () => {
+      const filterDateRange = undefined;
+      expect(dateRangeCompare(filterDateRange, txDate)).toBe(true);
     });
   });
 });
