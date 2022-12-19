@@ -31,8 +31,8 @@ export const useDelegates = ({ config: customConfig = {}, options } = { }) => {
   };
 
   return useCustomInfiniteQuery({
+    keys: [DELEGATES],
     config,
     options,
-    keys: [DELEGATES],
   });
 };

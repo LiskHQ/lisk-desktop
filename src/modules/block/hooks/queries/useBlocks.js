@@ -38,12 +38,12 @@ export const useBlocks = ({ config: customConfig = {}, options } = { }) => {
   };
 
   /* istanbul ignore next */
-  client.socket.on('new.block', () => {
+  client.socket?.on('new.block', () => {
     setHasUpdate(true);
   });
 
   /* istanbul ignore next */
-  client.socket.on('delete.block', () => {
+  client.socket?.on('delete.block', () => {
     setHasUpdate(true);
   });
 
