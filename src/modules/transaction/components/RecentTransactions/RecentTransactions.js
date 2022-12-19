@@ -47,8 +47,9 @@ const RecentTransactions = ({ className, t }) => {
   const [currentAccount] = useCurrentAccount();
   const host = currentAccount?.metadata?.address;
   const { data: transactions } = useTransactions({ config: {
-    params: { limit: 5, address: host }
-  } });
+    params: { limit: 5, address: host },
+    options: { enabled: !!host }
+  }});
   const token = useSelector(state => state.token);
   const { data: { height: currentBlockHeight } } = useLatestBlock();
 
