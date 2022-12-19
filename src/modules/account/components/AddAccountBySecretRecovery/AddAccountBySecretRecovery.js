@@ -13,10 +13,12 @@ import styles from './AddAccountBySecretRecovery.css';
 const AddAccountBySecretRecovery = ({ history }) => {
   const multiStepRef = useRef(null);
   const [recoveryPhrase, setRecoveryPhrase] = useState(null);
+  const [customDerivationPath, setCustomDerivationPath] = useState();
   const [currentAccount, setCurrentAccount] = useCurrentAccount();
   const { setAccount } = useAccounts();
-  const onAddAccount = (recoveryPhraseData) => {
+  const onAddAccount = (recoveryPhraseData, derivationPath) => {
     setRecoveryPhrase(recoveryPhraseData);
+    setCustomDerivationPath(derivationPath);
     multiStepRef.current.next();
   };
 
@@ -37,7 +39,7 @@ const AddAccountBySecretRecovery = ({ history }) => {
         ref={multiStepRef}
       >
         <AddAccountForm onAddAccount={onAddAccount} />
-        <SetPasswordForm recoveryPhrase={recoveryPhrase} onSubmit={onSetPassword} />
+        <SetPasswordForm recoveryPhrase={recoveryPhrase} customDerivationPath={customDerivationPath} onSubmit={onSetPassword} />
         <SetPasswordSuccess
           encryptedPhrase={currentAccount}
           onClose={onPasswordSetComplete}

@@ -64,7 +64,7 @@
     }
 
     & .status {
-      top: calc(var(--height-m) / 2 + 4px);
+      top: calc(var(--height-m) / 2);
       right: var(--horizontal-padding-m);
     }
 

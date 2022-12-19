@@ -25,13 +25,21 @@ const getInt = (value) => value.replace(IntegerReg, '');
  * @param {String?} params.token An option of LSK or any other token
  * @param {Function? | ReactNode?} params.Wrapper A node wrapper. Default DiscreetMode.
  */
-const TokenAmount = ({ val, showRounded, showInt, token, convert = true, Wrapper = DiscreetMode }) => {
+const TokenAmount = ({
+  className,
+  val,
+  showRounded,
+  showInt,
+  token,
+  convert = true,
+  Wrapper = DiscreetMode,
+}) => {
   if (val === undefined) return <span />;
   let value = convert === false ? val : fromRawLsk(val);
   if (showInt) value = getInt(value);
   else if (showRounded) value = trim(value);
   return (
-    <Wrapper>
+    <Wrapper {...(className && { className })}>
       <FormattedNumber val={value} />
       {token && ` ${token}`}
     </Wrapper>

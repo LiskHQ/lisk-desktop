@@ -11,16 +11,16 @@ import Converter from 'src/modules/common/components/converter';
 import { fromRawLsk } from '@token/fungible/utils/lsk';
 import TokenAmount from '@token/fungible/components/tokenAmount';
 import LockedBalanceLink from '@token/fungible/components/BalanceInfo/LockedBalanceLink';
+import Skeleton from '@common/components/skeleton';
 import styles from './WalletDetails.css';
 
-const WalletDetails = ({
-  t, tokens, className, isWalletRoute,
-}) => <Box className={`${styles.box} ${className}`}>
+const WalletDetails = ({ t, tokens, className, isWalletRoute, isLoading }) => (
+  <Box className={`${styles.box} ${className}`}>
     <BoxHeader>
       <h1>{t('Wallet details')}</h1>
     </BoxHeader>
     <BoxContent className={`${styles.container} coin-container`}>
-      {tokens?.map((token) => (
+      {!isLoading && tokens?.map ? tokens?.map((token) => (
         <BoxRow
           key={`${token.tokenID}`}
           className={`${styles.row} coin-row`}
@@ -57,9 +57,11 @@ const WalletDetails = ({
             </div>
           </Link>
         </BoxRow>
-      ))}
+      )) : (
+        <Skeleton className={styles.skeletonLoader} height="96px" width="100%" />
+      )}
     </BoxContent>
   </Box>
-
+);
 
 export default WalletDetails;

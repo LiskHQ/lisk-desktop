@@ -1,6 +1,7 @@
 /* eslint-disable max-lines, max-len */
 import { passphrase as LiskPassphrase, cryptography } from '@liskhq/lisk-client';
 import { regex } from 'src/const/regex';
+import i18next from 'i18next';
 
 /**
  * Extracts Lisk PrivateKey/PublicKey pair from a given valid Mnemonic passphrase
@@ -302,4 +303,18 @@ export const validate2ndPass = async (account, passphrase, error) => {
     messages.push('This passphrase does not belong to your account.');
   }
   return messages;
+};
+
+/**
+ * Validate a derivation path
+ * @param {string} derivationPath
+ * @returns {string} - undefined/error
+ */
+export const getDerivationPathErrorMessage = (derivationPath) => {
+  try {
+    cryptography.utils.parseKeyDerivationPath(derivationPath);
+  } catch (error) {
+    return i18next.t(error.message);
+  }
+  return undefined;
 };
