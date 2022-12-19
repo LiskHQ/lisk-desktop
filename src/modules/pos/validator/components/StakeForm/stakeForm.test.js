@@ -132,7 +132,7 @@ describe('VoteForm', () => {
     const wrapper = shallow(<Form {...props} votes={elevenVotes} />);
     expect(wrapper.find('.available-stakes-num').text()).toBe('-1/');
     expect(wrapper.find('.feedback').text()).toBe(
-      'These votes in addition to your current votes will add up to 11, exceeding the account limit of 10.'
+      'These stakes in addition to your current stakes will add up to 11, exceeding the account limit of 10.'
     );
   });
 

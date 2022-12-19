@@ -19,6 +19,7 @@ import styles from './stakeForm.css';
  * added, removed or edited.
  *
  * @param {Object} stakes - stakes object retrieved from the Redux store
+ * @param {Object} account - account object
  * @returns {Object} - stats object
  */
 const getStakeStats = (stakes, account) => {
@@ -98,7 +99,7 @@ const validateStakes = (votes, balance, fee, resultingNumOfVotes, t, dposToken) 
   if (resultingNumOfVotes > STAKE_LIMIT) {
     messages.push(
       t(
-        `These votes in addition to your current votes will add up to ${resultingNumOfVotes}, exceeding the account limit of ${STAKE_LIMIT}.`
+        `These stakes in addition to your current stakes will add up to ${resultingNumOfVotes}, exceeding the account limit of ${STAKE_LIMIT}.`
       )
     );
   }
