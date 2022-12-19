@@ -39,9 +39,9 @@ const SEARCH = {
   MIN_LENGTH: 'me',
   VALIDATOR: 'genesis',
   ADDRESS: 'lskqzpfr3uq8bm2jee5dkv4ns79uuswjzc9bbpezu',
-  TX:'2ada9e9d29788e0554bdc1dc183dfda30f89138752d2fe52f2061175d9b69506',
-  BLOCK: '670008'
-}
+  TX: '2ada9e9d29788e0554bdc1dc183dfda30f89138752d2fe52f2061175d9b69506',
+  BLOCK: '670008',
+};
 
 const defaultOptions = {
   options: { enabled: false },
@@ -52,7 +52,6 @@ afterEach(() => {
 });
 
 describe('useSearch hook', () => {
-
   it('should not call api for invalid search value', () => {
     renderHook(() => useSearch(SEARCH.EMPTY), { wrapper });
     expect(useTransactions).toBeCalledWith(expect.objectContaining(defaultOptions));
@@ -103,28 +102,26 @@ describe('useSearch hook', () => {
   it('should return loading state', async () => {
     const resultState = (loading) => ({
       isLoading: loading,
-      isFetched: !loading
-    })
-    const initState = false
-    useTransactions.mockReturnValue(resultState(initState))
-    useBlocks.mockReturnValue(resultState(initState))
-    useDelegates.mockReturnValue(resultState(initState))
+      isFetched: !loading,
+    });
+    const initState = false;
+    useTransactions.mockReturnValue(resultState(initState));
+    useBlocks.mockReturnValue(resultState(initState));
+    useDelegates.mockReturnValue(resultState(initState));
     const { result, rerender } = renderHook(() => useSearch(SEARCH.EMPTY), { wrapper });
-    await act(async ()  => {
-      await rerender(SEARCH.ADDRESS)
-    })
+    await act(async () => {
+      await rerender(SEARCH.ADDRESS);
+    });
     expect(result.current.isLoading).toBeFalsy();
-    expect(result.current.isFetched).toBeTruthy();
 
-    const loadingState = true
-    useTransactions.mockReturnValue(resultState(loadingState))
-    useBlocks.mockReturnValue(resultState(loadingState))
-    useDelegates.mockReturnValue(resultState(loadingState))
-    await act(async ()  => {
-      await rerender(SEARCH.ADDRESS)
-    })
+    const loadingState = true;
+    useTransactions.mockReturnValue(resultState(loadingState));
+    useBlocks.mockReturnValue(resultState(loadingState));
+    useDelegates.mockReturnValue(resultState(loadingState));
+    await act(async () => {
+      await rerender(SEARCH.ADDRESS);
+    });
     expect(result.current.isLoading).toBeTruthy();
     expect(result.current.isFetched).toBeFalsy();
   });
-
 });
