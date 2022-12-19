@@ -165,7 +165,7 @@ export const transactionBroadcasted = (transaction, moduleCommandSchemas) =>
 
         return true;
       }
-      // @todo we need to push transaction pending query cash
+      // @todo we need to push pending transaction to the query cache
 
     }
 
