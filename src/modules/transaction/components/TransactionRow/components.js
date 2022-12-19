@@ -88,7 +88,7 @@ export const Recipient = () => {
 export const Counterpart = () => {
   const { data, host, avatarSize } = useContext(TransactionRowContext);
   const moduleCommand = joinModuleAndCommand(data);
-  const address = extractAddressFromPublicKey(data.senderPublicKey);
+  const address = extractAddressFromPublicKey(data.senderPublicKey || data.sender.publicKey);
   
   // Show tx icon
   if (data.moduleCommand !== MODULE_COMMANDS_NAME_MAP.transfer && host) {
@@ -101,7 +101,7 @@ export const Counterpart = () => {
     return (
       <WalletVisualWithAddress
         className="transaction-row-recipient"
-        address={data.params.recipient?.address}
+        address={data.meta.recipient?.address}
         transactionSubject="recipient"
         moduleCommand={data.moduleCommand}
         showBookmarkedAddress
@@ -147,7 +147,7 @@ export const Amount = () => {
           host={host}
           token={activeToken}
           showRounded
-          recipient={data.params.recipient?.address}
+          recipient={data.meta.recipient?.address}
           moduleCommand={data.moduleCommand}
           amount={getTxAmount(data)}
         />

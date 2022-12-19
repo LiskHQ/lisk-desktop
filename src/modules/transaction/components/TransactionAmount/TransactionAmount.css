@@ -6,6 +6,11 @@
   box-sizing: border-box;
   font-weight: var(--font-weight-bold);
 
+  & .amountValue {
+    display: flex;
+    flex-flow: row nowrap;
+  }
+
   & .unlock,
   & .receive {
     border-radius: var(--border-radius-standard);
