@@ -302,7 +302,6 @@ module.exports = {
     'src/modules/transaction/store/actions.js',
     'src/modules/transaction/hooks/useCreateTransaction.js',
     'src/modules/transaction/components/TransactionDetails', // @Todo: would resolve this when all transation implementations are finallized
-    'src/modules/common/components/TransactionSocketWrapper/index.js',
   ],
   coverageThreshold: {
     // global: {

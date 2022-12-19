@@ -66,10 +66,10 @@ const App = ({ history }) => {
       setCurrentApplication(chainMetaData.data[0]);
     }
   }, [isLoading, chainMetaData]);
+  useTransactionUpdate(loaded, currentApplication);
 
   const routesList = Object.keys(routes);
   const routeObj = Object.values(routes).find((r) => r.path === history.location.pathname) || {};
-  useTransactionUpdate(loaded, currentApplication);
   return (
     <ConnectionProvider>
       <ThemeContext.Provider value={theme}>
@@ -109,7 +109,6 @@ const App = ({ history }) => {
                   ))}
                   <Route path="*" component={NotFound} />
                 </Switch>
-                {/* {loaded && !!chainMetaData && <TransactionSocketWrapper />} */}
               </div>
             </section>
           </main>
