@@ -34,11 +34,15 @@ export const useSearch = (search = '') => {
   const isLoading =
     delegates.isLoading || transactions.isLoading || addresses.isLoading || blocks.isLoading;
 
+  const isFetched =
+  (isDelegate  && delegates.isFetched) || (isTxId  && transactions.isFetched) || (isAddress  && addresses.isFetched) || (isBlockHeight  && blocks.isFetched);
+
   return {
     addresses: addresses.data?.data ?? [],
     delegates: delegates.data?.data ?? [],
     transactions: transactions.data?.data ?? [],
     blocks: blocks.data?.data ?? [],
     isLoading,
+    isFetched,
   };
 };
