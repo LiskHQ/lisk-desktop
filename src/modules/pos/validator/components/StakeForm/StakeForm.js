@@ -81,12 +81,12 @@ const getStakeStats = (stakes, account) => {
  * @param {Object} votes - Votes object from Redux store
  * @param {Number} balance - Account balance in Beddows
  * @param {Number} fee - Tx fee in Beddows
- * @param {Number} resultingNumOfVotes - Number of used voted that will result after submitting tx
+ * @param {Number} resultingNumOfStakes - Number of used voted that will result after submitting tx
  * @param {Function} t - i18n translation function
  * @returns {Object} The feedback object including error status and messages
  */
 // eslint-disable-next-line max-statements
-const validateStakes = (votes, balance, fee, resultingNumOfVotes, t, dposToken) => {
+const validateStakes = (votes, balance, fee, resultingNumOfStakes, t, dposToken) => {
   const messages = [];
   const areVotesInValid = Object.values(votes).some(
     (vote) => vote.unconfirmed === '' || vote.unconfirmed === undefined
@@ -96,10 +96,10 @@ const validateStakes = (votes, balance, fee, resultingNumOfVotes, t, dposToken) 
     messages.push(t('Please enter stake amounts for the validators you wish to stake for'));
   }
 
-  if (resultingNumOfVotes > STAKE_LIMIT) {
+  if (resultingNumOfStakes > STAKE_LIMIT) {
     messages.push(
       t(
-        `These stakes in addition to your current stakes will add up to ${resultingNumOfVotes}, exceeding the account limit of ${STAKE_LIMIT}.`
+        `These stakes in addition to your current stakes will add up to ${resultingNumOfStakes}, exceeding the account limit of ${STAKE_LIMIT}.`
       )
     );
   }
@@ -131,7 +131,7 @@ const StakeForm = ({ t, votes, account, isVotingTxPending, nextStep, history, dp
     .map((address) => ({ address, ...votes[address] }));
 
   const normalizedVotes = useMemo(() => normalizeStakesForTx(votes), [votes]);
-  const { added, edited, removed, selfUnvote, availableStakes, resultingNumOfVotes } = useMemo(
+  const { added, edited, removed, selfUnvote, availableStakes, resultingNumOfStakes } = useMemo(
     () => getStakeStats(votes, account),
     [votes, account]
   );
@@ -140,7 +140,7 @@ const StakeForm = ({ t, votes, account, isVotingTxPending, nextStep, history, dp
     votes,
     Number(account.token?.balance),
     fee,
-    resultingNumOfVotes,
+    resultingNumOfStakes,
     t,
     dposToken,
   );
