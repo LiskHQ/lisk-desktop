@@ -120,7 +120,7 @@ module.exports = {
     'src/modules/wallet/components/multisignatureMembers/index.js',
     'src/modules/pos/validator/components/WarnPunishedValidator/WarnPunishedValidator.js',
     'src/modules/pos/validator/components/WarnPunishedValidator/index.js',
-    'src/modules/pos/validator/components/WarnPunishedValidator/VoteWarning.js',
+    'src/modules/pos/validator/components/WarnPunishedValidator/StakeWarning.js',
     'src/theme/tabs/tabsContainer/tabsContainer.js',
     'src/modules/common/components/copyToClipboard/index.js',
     'src/theme/tabs/switcher/index.js',
