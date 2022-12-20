@@ -15,8 +15,9 @@
       content: '';
       height: 1px;
       left: 20px;
-      position: absolute;
       right: 20px;
+      min-width: calc(100% - 40px);
+      position: absolute;
     }
 
     &::after {
@@ -31,8 +32,6 @@
     &:nth-child(2) {
       &::before {
         display: block;
-        left: 20px;
-        right: 20px;
       }
     }
 
