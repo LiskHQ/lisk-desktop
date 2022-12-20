@@ -8,7 +8,6 @@ import { useTransactions } from '@transaction/hooks/queries';
 import { useCurrentAccount } from '@account/hooks';
 import { useLatestBlock } from '@block/hooks/queries/useLatestBlock';
 import routes from 'src/routes/routes';
-import { SecondaryButton } from 'src/theme/buttons';
 import Box from 'src/theme/box';
 import BoxHeader from 'src/theme/box/header';
 import BoxContent from 'src/theme/box/content';
@@ -60,7 +59,7 @@ const RecentTransactions = ({ className, t }) => {
     >
       <BoxHeader>
         <h2 className={styles.title}>
-          {t('Recent {{value}} transactions', { value: token.active })}
+          {t('Recent transactions')}
         </h2>
       </BoxHeader>
       <BoxContent className={styles.content}>
@@ -84,7 +83,7 @@ const RecentTransactions = ({ className, t }) => {
         />
         <div className={styles.viewAll}>
           <Link to={routes.wallet.path} className="view-all">
-            <SecondaryButton size="s">{t('View all')}</SecondaryButton>
+            {t('View all')}
           </Link>
         </div>
       </BoxContent>

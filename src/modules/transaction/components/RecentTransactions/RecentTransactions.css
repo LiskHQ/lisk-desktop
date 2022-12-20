@@ -27,6 +27,14 @@
 
 .content {
   padding: 0 !important;
+
+  & a:first-child:hover {
+    border-radius: var(--border-radius-box) var(--border-radius-box) 0 0;
+
+    &::before {
+      display: none;
+    }
+  }
 }
 
 .viewAll {
