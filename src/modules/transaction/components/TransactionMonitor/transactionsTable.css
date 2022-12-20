@@ -1,12 +1,16 @@
 .tableHeader {
   position: sticky;
-  top: 70px;
+  top: 80px;
   background: var(--color-white);
-  z-index: 2;
+  z-index: 3;
   border-bottom: 2px solid var(--color-mystic);
 
   & ~ a:first-of-type::before {
     display: none !important;
+  }
+
+  & > div:last-child {
+    justify-content: flex-start;
   }
 }
 

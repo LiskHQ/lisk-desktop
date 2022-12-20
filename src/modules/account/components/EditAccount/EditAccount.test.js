@@ -24,7 +24,7 @@ describe('Edit Account', () => {
     await waitFor(() => {
       fireEvent.click(screen.getByText('Done'));
     });
-    expect(screen.getByText('Edit name successful')).toBeInTheDocument();
+    expect(screen.getByText('Edit account name successful')).toBeInTheDocument();
     expect(
       screen.getByText('You can now download encrypted secret recovery phrase to this effect.')
     ).toBeInTheDocument();

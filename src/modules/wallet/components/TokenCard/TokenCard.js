@@ -14,16 +14,20 @@ const TokenCard = ({ lockedBalance, availableBalance, symbol, url, address }) =>
       <img alt={symbol} className={styles.tokenLogo} src={url} />
     </div>
     <div>
-      <p>
-        <TokenAmount val={availableBalance} token={symbol} />
-      </p>
+      <TokenAmount className={styles.tokenAmount} val={availableBalance} token={symbol} />
       {symbol === 'LSK' && (
-        <p data-testid="fiat-balance" className={styles.fiatBalance}>
-          <Converter value={fromRawLsk(availableBalance)} />
-        </p>
+        <Converter
+          className={styles.fiatBalance}
+          value={fromRawLsk(availableBalance)}
+        />
       )}
       {!lockedBalance ? null : (
-        <DialogLink data-testid="locked-balance" component="lockedBalance" data={{ address }} className={styles.lockedBalance}>
+        <DialogLink
+          data-testid="locked-balance"
+          component="lockedBalance"
+          data={{ address }}
+          className={styles.lockedBalance}
+        >
           <Icon name="lock" /> <TokenAmount val={lockedBalance} token={symbol} />
         </DialogLink>
       )}

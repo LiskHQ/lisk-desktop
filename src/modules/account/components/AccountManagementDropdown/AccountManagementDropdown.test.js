@@ -23,11 +23,11 @@ describe('AccountManagementDropdown', () => {
     ).toBeInTheDocument();
     fireEvent.click(screen.getByAltText('dropdownArrowIcon'));
     expect(mockOnMenuClick).toHaveBeenCalledTimes(1);
-    expect(screen.getByText('Edit name')).toBeInTheDocument();
+    expect(screen.getByText('Edit account name')).toBeInTheDocument();
     expect(screen.getByText('Switch account')).toBeInTheDocument();
     expect(screen.getByText('Backup account')).toBeInTheDocument();
     expect(screen.getByText('Add new account')).toBeInTheDocument();
-    expect(screen.getByText('Upgrade to multisignature')).toBeInTheDocument();
+    expect(screen.getByText('Register multisignature account')).toBeInTheDocument();
     expect(screen.getByText('Remove account')).toBeInTheDocument();
   });
 });

@@ -15,4 +15,14 @@ describe('StickyHeader', () => {
     expect(wrapper.find('h1')).toHaveText('header title');
     expect(wrapper.find('.filters')).toExist();
   });
+
+  it('should render correctly if no title is passed', () => {
+    const noTitleProps = {
+      filters: <div className="filters" />,
+      scrollToSelector: '.test-class',
+    };
+    wrapper = mount(<StickyHeader {...noTitleProps} />);
+    expect(wrapper.find('h1')).not.toHaveText('header title');
+    expect(wrapper.find('.filters')).toExist();
+  });
 });

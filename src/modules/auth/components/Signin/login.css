@@ -123,11 +123,6 @@
   }
 }
 
-.derivationPathInput {
-  height: 40px !important;
-  margin-top: var(--vertical-padding-m);
-}
-
 .link {
   @mixin contentLarge bold;
 

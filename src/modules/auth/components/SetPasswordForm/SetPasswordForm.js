@@ -26,9 +26,9 @@ const setPasswordFormSchema = yup.object({
   hasAgreed: yup.boolean().required(),
 }).required();
 
-function SetPasswordForm({ onSubmit, recoveryPhrase }) {
+function SetPasswordForm({ onSubmit, recoveryPhrase, customDerivationPath }) {
   const { t } = useTranslation();
-  const { encryptAccount } = useEncryptAccount();
+  const { encryptAccount } = useEncryptAccount(customDerivationPath);
   const {
     register,
     handleSubmit,

@@ -12,10 +12,11 @@ import ApplicationManagementDropDown from '@blockchainApplication/manage/compone
 import SearchBar from 'src/modules/search/manager/searchBarManager';
 import { useCurrentAccount } from '@account/hooks';
 import { isEmpty } from 'src/utils/helpers';
+import NavigationButtons from '@common/components/bars/topBar/navigationButtons';
 import styles from './topBar.css';
 import Network from './networkName';
 
-const TopBar = ({ noOfVotes, location }) => {
+const TopBar = ({ noOfVotes, location, history }) => {
   const disabled = location.pathname === routes.reclaim.path;
   const [currentAccount] = useCurrentAccount();
   const [menuOpen, setMenuOpen] = useState(false);
@@ -34,7 +35,8 @@ const TopBar = ({ noOfVotes, location }) => {
             <AccountManagementDropdown currentAccount={currentAccount} onMenuClick={onMenuClick} />
           ) : null}
         </div>
-        <SearchBar className={styles.ml24} />
+        <NavigationButtons history={history} />
+        <SearchBar className={styles.searchBarProp} />
       </div>
       <div className={styles.group}>
         <Tooltip
