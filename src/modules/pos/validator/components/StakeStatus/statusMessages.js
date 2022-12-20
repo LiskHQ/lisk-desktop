@@ -16,7 +16,7 @@ const LiskAmountFormatted = ({ val }) => (
 const getSuccessMessage = (t, locked, unlockable, selfUnvote = { confirmed: 0 }) => {
   if (!locked && unlockable) {
     const regularUnlockable = unlockable - Number(selfUnvote.confirmed || 0);
-    const selfUnStakeUnlockable = selfUnvote.confirmed;
+    const selfUnstakeUnlockable = selfUnvote.confirmed;
 
     return (
       <>
@@ -28,10 +28,10 @@ const getSuccessMessage = (t, locked, unlockable, selfUnvote = { confirmed: 0 })
               <span>{t('will be available to unlock in {{unlockTime}}h.', { unlockTime })}</span>
             </>
           ) : null}
-        {selfUnStakeUnlockable > 0
+        {selfUnstakeUnlockable > 0
           ? (
             <>
-              <LiskAmountFormatted val={selfUnStakeUnlockable} />
+              <LiskAmountFormatted val={selfUnstakeUnlockable} />
               {' '}
               <span>{t('will be available to unlock in 1 month.')}</span>
             </>

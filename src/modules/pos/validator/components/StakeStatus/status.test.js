@@ -6,7 +6,7 @@ import Result from './Status';
 const props = {
   t: (s) => s,
   transactions: { txSignatureError: null, signedTransaction: {} },
-  statusInfo: { locked: 200, unlockable: 100, selfUnStake: undefined },
+  statusInfo: { locked: 200, unlockable: 100, selfUnstake: undefined },
 };
 
 jest.mock('@libs/wcm/hooks/useSession', () => ({
