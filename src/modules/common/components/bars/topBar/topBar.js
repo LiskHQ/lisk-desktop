@@ -16,7 +16,7 @@ import NavigationButtons from '@common/components/bars/topBar/navigationButtons'
 import styles from './topBar.css';
 import Network from './networkName';
 
-const TopBar = ({ noOfVotes, location, history }) => {
+const TopBar = ({ stakeCount, location, history }) => {
   const disabled = location.pathname === routes.reclaim.path;
   const [currentAccount] = useCurrentAccount();
   const [menuOpen, setMenuOpen] = useState(false);
@@ -57,7 +57,7 @@ const TopBar = ({ noOfVotes, location, history }) => {
           <p>{t('Bookmarks')}</p>
         </Tooltip>
         <LightDarkToggle />
-        <StakeQueueToggle t={t} noOfVotes={noOfVotes} disabled={disabled} />
+        <StakeQueueToggle t={t} stakeCount={stakeCount} disabled={disabled} />
         <DiscreteModeToggle />
         <ApplicationManagementDropDown />
         {location.pathname !== routes.register.path && <Network />}

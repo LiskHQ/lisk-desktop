@@ -6,7 +6,7 @@ import { MODULE_COMMANDS_NAME_MAP } from 'src/modules/transaction/configuration/
 import TopBar from './topBar';
 
 const mapStateToProps = state => ({
-  noOfVotes: containsTransactionType(
+  stakeCount: containsTransactionType(
     state.transactions.pending,
     MODULE_COMMANDS_NAME_MAP.voteDelegate,
   ) ? 0

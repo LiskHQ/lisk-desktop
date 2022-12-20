@@ -7,7 +7,7 @@ import Icon from 'src/theme/Icon';
 import styles from 'src/modules/common/components/bars/topBar/topBar.css';
 
 const StakeQueueToggle = ({
-  t, noOfVotes, disabled,
+  t, stakeCount, disabled,
 }) => (
   <Tooltip
     className={styles.tooltipWrapper}
@@ -21,8 +21,8 @@ const StakeQueueToggle = ({
         }`}
       >
         <Icon name="stakingQueueInactive" />
-        {noOfVotes !== 0 && (
-          <span className={styles.stakingQueueVoteCount}>{noOfVotes}</span>
+        {stakeCount !== 0 && (
+          <span className={styles.stakeCount}>{stakeCount}</span>
         )}
       </DialogLink>
     )}

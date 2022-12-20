@@ -108,7 +108,7 @@
   margin-right: 16px;
 }
 
-.stakingQueueVoteCount {
+.stakeCount {
   @mixin contentSmall;
 
   display: flex;
