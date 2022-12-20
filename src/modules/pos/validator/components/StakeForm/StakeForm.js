@@ -190,7 +190,7 @@ const StakeForm = ({ t, votes, account, isVotingTxPending, nextStep, history, dp
                   <div className={styles.votesAvailableCounter}>
                     <span className="available-stakes-num">{`${availableStakes}/`}</span>
                     <span>
-                      {t('{{STAKE_LIMIT}} stakes available for your account', {
+                      {t('{{STAKE_LIMIT}} staking slots available for your account', {
                         STAKE_LIMIT,
                       })}
                     </span>

@@ -49,7 +49,7 @@ const SentStakes = ({ history }) => {
             <div className={styles.stakesCountBadge}>
               <Icon name="stakingQueueActive" />
               <span>{stakingAvailable}</span>
-              /10 {t('stakes available in your account')}
+              /10 {t('staking slots available in your account')}
             </div>
             <div className={styles.actionButtons}>
               <DialogLink component="lockedBalance">

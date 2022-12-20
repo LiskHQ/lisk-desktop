@@ -34,7 +34,7 @@ describe('SentStakes', () => {
     renderWithRouter(SentStakes, props);
 
     expect(screen.getByText('Stakes')).toBeTruthy();
-    expect(screen.getByText('/10 stakes available in your account')).toBeTruthy();
+    expect(screen.getByText('/10 staking slots available in your account')).toBeTruthy();
     expect(screen.getByText(10 - mockSentStakes.meta.total)).toBeTruthy();
     expect(screen.getAllByAltText('stakingQueueActive')).toBeTruthy();
 
