@@ -133,7 +133,7 @@ export const mockNewsFeed = {
     url: 'https://lisk.com/blog/research/where-store-lsk-lisk-desktop-and-lisk-mobile-wallets',
   }, {
     author: 'Tony Morinello',
-    content: 'Choosing which validators to stake for is a crucial component of Lisk\'s Validatord\nProof of Stake (DPoS) consensus',
+    content: "A crucial component of Lisk's Proof of Stake (PoS) consensus is choosing reliable validators with whom you can stake your tokens.",
     imageUrl: 'https://lisk.com/sites/default/files/styles/blog_main_image_xl_retina/public/images/2022-06/How-to-Find-Lisk-Validators.png?itok=7E801hyZ',
     source: 'drupal_lisk_general',
     sourceId: '1238',

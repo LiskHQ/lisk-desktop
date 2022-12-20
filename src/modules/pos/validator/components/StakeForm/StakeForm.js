@@ -93,7 +93,7 @@ const validateStakes = (votes, balance, fee, resultingNumOfStakes, t, dposToken)
   );
 
   if (areVotesInValid) {
-    messages.push(t('Please enter stake amounts for the validators you wish to stake for'));
+    messages.push(t('Please enter the stake amounts for the validators you wish to stake for'));
   }
 
   if (resultingNumOfStakes > STAKE_LIMIT) {

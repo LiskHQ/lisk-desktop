@@ -113,7 +113,7 @@ export const validateAmountFormat = ({
       fn: () => funds < toRawLsk(numeral(value).value()),
     },
     INSUFFICIENT_VOTE_FUNDS: {
-      message: i18n.t('The provided amount is higher than available staking balance.'),
+      message: i18n.t('The provided amount is higher than your available staking balance.'),
       fn: () => funds < toRawLsk(numeral(value).value()),
     },
     MIN_BALANCE: {

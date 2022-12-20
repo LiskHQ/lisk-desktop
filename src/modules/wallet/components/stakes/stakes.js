@@ -14,7 +14,7 @@ import header from './stakesTableHeader';
 const getMessages = (t) => ({
   all: t('This account doesn’t have any stakes.'),
   filtered: t(
-    'This account doesn’t have any stakes matching searched username.',
+    'This account doesn’t have any stakes matching the searched username.',
   ),
 });
 

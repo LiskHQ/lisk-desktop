@@ -67,7 +67,7 @@ const getSuccessMessage = (t, locked, unlockable, selfUnvote = { confirmed: 0 })
 const stakeStatusMessages = (t, statusInfo) => ({
   ...statusMessages(t),
   [txStatusTypes.broadcastSuccess]: {
-    title: t('Stakes are submitted'),
+    title: t('Tokens are staked'),
     message: getSuccessMessage(t, statusInfo.locked, statusInfo.unlockable, statusInfo.selfUnvote),
   },
 });
