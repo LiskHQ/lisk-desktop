@@ -16,9 +16,9 @@ import { useCustomQuery } from 'src/modules/common/hooks';
 
 export const usePosConstants = ({ config: customConfig = {}, options } = {}) => {
   const config = {
-    url: `/api/${API_VERSION}/dpos/constants`,
+    url: `/api/${API_VERSION}/pos/constants`,
     method: 'get',
-    event: 'get.dpos.constants',
+    event: 'get.pos.constants',
     ...customConfig,
   };
 
