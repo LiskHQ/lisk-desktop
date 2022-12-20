@@ -13,9 +13,9 @@ import Box from '@theme/box';
 import styles from './ValidatorProfile.css';
 import DetailsView from './DetailsView';
 import PerformanceView from './PerformanceView';
-import ValidatorVotesView from './ValidatorVotesView';
+import ValidatorStakesView from './ValidatorStakesView';
 import { useValidators } from '../../hooks/queries';
-import ValidatorVoteButton from './ValidatorVoteButton';
+import ValidatorStakeButton from './ValidatorStakeButton';
 import WarnPunishedValidator from '../WarnPunishedValidator';
 
 const numOfBlockPerDay = 24 * 60 * 6;
@@ -102,7 +102,7 @@ const ValidatorProfile = ({ history }) => {
       >
         <div className={styles.rightHeaderSection}>
           <div className={styles.actionButtons}>
-            <ValidatorVoteButton
+            <ValidatorStakeButton
               currentAddress={currentAddress}
               address={address}
               isBanned={isBanned}
@@ -117,7 +117,7 @@ const ValidatorProfile = ({ history }) => {
         <DetailsView data={validator} />
         <PerformanceView data={{ ...validator, producedBlocks: forgedBlocks?.meta?.total }} />
       </Box>
-      <ValidatorVotesView address={address} />
+      <ValidatorStakesView address={address} />
     </section>
   );
 };

@@ -1,15 +1,15 @@
 const actionTypes = {
-  votesRetrieved: 'VOTES_RETRIEVED',
-  votesSubmitted: 'VOTES_SUBMITTED',
-  votesCleared: 'VOTES_CLEARED',
-  votesReset: 'VOTES_RESET',
-  votesConfirmed: 'VOTES_CONFIRMED',
-  voteEdited: 'VOTE_EDITED',
+  stakesRetrieved: 'STAKES_RETRIEVED',
+  stakesSubmitted: 'STAKES_SUBMITTED',
+  stakesCleared: 'STAKES_CLEARED',
+  stakesReset: 'STAKES_RESET',
+  stakesConfirmed: 'STAKES_CONFIRMED',
+  stakeEdited: 'VOTE_EDITED',
   watchListRetrieved: 'WATCHLIST_RETRIEVED',
   addedToWatchList: 'ADDED_TO_WATCHLIST',
   removedFromWatchList: 'REMOVED_FROM_WATCHLIST',
   validatorRegistered: 'VALIDATOR_REGISTERED',
-  voteDiscarded: 'VOTE_DISCARDED',
+  stakeDiscarded: 'VOTE_DISCARDED',
 };
 
 export default actionTypes;

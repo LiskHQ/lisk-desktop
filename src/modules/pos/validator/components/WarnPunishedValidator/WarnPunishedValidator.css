@@ -38,7 +38,7 @@
   }
 }
 
-.voteContainer {
+.stakeWarning {
   background-color: var(--color-warning-bg);
   border: solid 1px var(--color-warning-border);
   border-radius: 5px;

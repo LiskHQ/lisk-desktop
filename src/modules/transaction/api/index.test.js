@@ -242,7 +242,7 @@ describe('API: LSK Transactions', () => {
       expect(Number(result.value)).toBeGreaterThan(0);
     });
 
-    it('should calculate fee of vote tx', async () => {
+    it('should calculate fee of stake tx', async () => {
       const voteTx = {
         module: 'dpos',
         command: 'voteDelegate',

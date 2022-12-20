@@ -8,4 +8,4 @@ export { default as ss } from './selectors';
 export { default as settings } from './settings';
 export { default as transactions, sampleTransaction } from './transactions';
 export { default as urls } from './urls';
-export { default as votes } from './votes';
+export { default as votes } from './stakes';

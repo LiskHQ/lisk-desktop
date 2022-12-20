@@ -1,8 +1,8 @@
 /* istanbul ignore file */
 import { renderHook, act } from '@testing-library/react-hooks';
-import { mockSentVotes } from '@pos/validator/__fixtures__';
+import { mockSentStakes } from '@pos/validator/__fixtures__';
 import { queryWrapper as wrapper } from 'src/utils/test/queryWrapper';
-import { useSentVotes } from '.';
+import { useSentStakes } from '.';
 
 jest.useRealTimers();
 
@@ -11,17 +11,17 @@ describe('useSentVotes hook', () => {
   const config = { params: { limit } };
 
   it('fetching data correctly', async () => {
-    const { result, waitFor } = renderHook(() => useSentVotes({ config }), { wrapper });
+    const { result, waitFor } = renderHook(() => useSentStakes({ config }), { wrapper });
     expect(result.current.isLoading).toBeTruthy();
     await waitFor(() => result.current.isFetched);
     expect(result.current.isSuccess).toBeTruthy();
     const expectedResponse = {
       data: {
-        ...mockSentVotes.data,
-        votes: mockSentVotes.data.votes?.slice(0, limit),
+        ...mockSentStakes.data,
+        votes: mockSentStakes.data.votes?.slice(0, limit),
       },
       meta: {
-        ...mockSentVotes.meta,
+        ...mockSentStakes.meta,
         count: limit,
         offset: 0,
       },
@@ -30,7 +30,7 @@ describe('useSentVotes hook', () => {
   });
 
   it('should fetch next set of data correctly', async () => {
-    const { result, waitFor } = renderHook(() => useSentVotes({ config }), { wrapper });
+    const { result, waitFor } = renderHook(() => useSentStakes({ config }), { wrapper });
     await waitFor(() => result.current.isFetched);
     act(() => {
       result.current.fetchNextPage();
@@ -39,8 +39,8 @@ describe('useSentVotes hook', () => {
     await waitFor(() => !result.current.isFetching);
     const expectedResponse = {
       data: {
-        ...mockSentVotes.data,
-        votes: mockSentVotes.data.votes?.slice(0, limit * 2),
+        ...mockSentStakes.data,
+        votes: mockSentStakes.data.votes?.slice(0, limit * 2),
       },
       meta: {
         count: limit,

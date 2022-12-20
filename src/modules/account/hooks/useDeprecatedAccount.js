@@ -1,6 +1,6 @@
 /* istanbul ignore file */
 import { useEffect, useState } from 'react';
-import { useValidators, useSentVotes, useUnlocks } from '@pos/validator/hooks/queries';
+import { useValidators, useSentStakes, useUnlocks } from '@pos/validator/hooks/queries';
 import { useAuth } from '@auth/hooks/queries';
 import { useLegacy } from '@legacy/hooks/queries';
 import { useDispatch } from 'react-redux';
@@ -51,7 +51,7 @@ export const useDeprecatedAccount = (accountInfo) => {
     data: sentVotes,
     isLoading: isSentVotesLoading,
     isSuccess: isSentVotesSuccess,
-  } = useSentVotes({ config: { params: { address } } });
+  } = useSentStakes({ config: { params: { address } } });
   useEffect(() => {
     if (!isSentVotesSuccess) {
       return;

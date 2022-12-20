@@ -108,7 +108,7 @@
   margin-right: 16px;
 }
 
-.votingQueueVoteCount {
+.stakeCount {
   @mixin contentSmall;
 
   display: flex;
@@ -132,7 +132,7 @@
   }
 }
 
-.votingQueueIcon {
+.stakingQueueIcon {
   display: flex;
   justify-content: center;
 }

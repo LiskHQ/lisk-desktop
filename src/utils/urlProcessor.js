@@ -2,7 +2,7 @@ import { parseSearchParams } from 'src/utils/searchParams';
 import { getAccounts } from '@wallet/utils/api';
 import { regex } from 'src/const/regex';
 import { validateAddress } from 'src/utils/validators';
-import { voteEdited } from '@pos/validator/store/actions/voting';
+import { stakeEdited } from '@pos/validator/store/actions/staking';
 
 const isUsernameValid = (username) => regex.name.test(username);
 
@@ -62,7 +62,7 @@ const setVotesByLaunchProtocol = (search) => async (dispatch, getState) => {
   const accounts = await urlProcessor(search, network);
 
   return dispatch(
-    voteEdited(
+    stakeEdited(
       accounts.data
         .filter(({ summary }) => validateAddress(summary.address) === 0)
         .map(({ summary, dpos }) => ({

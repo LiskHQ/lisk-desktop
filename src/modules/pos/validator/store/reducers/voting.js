@@ -10,7 +10,7 @@ const voting = (state = {}, action) => {
   const clonedState = {...state};
 
   switch (action.type) {
-    case actionTypes.votesRetrieved: {
+    case actionTypes.stakesRetrieved: {
       if (action.data.account.votesUsed) {
         const voteMapInState = state;
         action.data.votes.forEach(({ delegateAddress, amount, name }) => {
@@ -28,13 +28,13 @@ const voting = (state = {}, action) => {
 
       return state;
     }
-    case actionTypes.voteEdited:
+    case actionTypes.stakeEdited:
       return {
         ...state,
         ...action.data.reduce((mergedVotes, vote) => {
           // When added new vote using launch protocol
           let unconfirmed = '';
-          // when added, removed or edited vote
+          // when added, removed, or edited vote
           if (vote.amount !== undefined) unconfirmed = vote.amount;
           // when the launch protocol includes an existing vote
           else if (state[vote.address]) unconfirmed = state[vote.address].unconfirmed;
@@ -52,7 +52,7 @@ const voting = (state = {}, action) => {
      * This action is used when user cancels voting. It sets 'unconfirmed' state
      * of each vote to match it's 'confirmed' state.
      */
-    case actionTypes.votesCleared:
+    case actionTypes.stakesCleared:
       return Object.keys(state)
         .filter((address) => state[address].confirmed)
         .reduce((votesDict, address) => {
@@ -69,7 +69,7 @@ const voting = (state = {}, action) => {
      * It removes the unvoted delegates, updates the confirmed vote amounts
      * and removes all pending flags
      */
-    case actionTypes.votesConfirmed:
+    case actionTypes.stakesConfirmed:
       return Object.keys(state)
         .filter((address) => state[address].unconfirmed)
         .reduce((votesDict, address) => {
@@ -85,7 +85,7 @@ const voting = (state = {}, action) => {
      * This action is used when voting is submitted. It sets 'pending' status
      * of all votes that have different 'confirmed' and 'unconfirmed' state
      */
-    case actionTypes.votesSubmitted:
+    case actionTypes.stakesSubmitted:
       return Object.keys(state).reduce((votesDict, address) => {
         const { confirmed, unconfirmed, pending } = state[address];
         const nextPendingStatus = pending || confirmed !== unconfirmed;
@@ -98,15 +98,15 @@ const voting = (state = {}, action) => {
       }, {});
 
     /**
-     * This action is used to discard a vote from the voting queue
+     * This action is used to discard a vote from the staking queue
      */
-    case actionTypes.voteDiscarded:
+    case actionTypes.stakeDiscarded:
       delete clonedState[action.data.address]
       return clonedState
     /**
      * Resets the vote dictionary after the user signs out.
      */
-    case actionTypes.votesReset:
+    case actionTypes.stakesReset:
       return {};
     default:
       return state;

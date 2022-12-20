@@ -97,7 +97,7 @@ describe('Transaction Row', () => {
 
   // @TODO: this would be re-instated when work is done in re-instating
   //  the transctions/delegate domain
-  // describe('Vote', () => {
+  // describe('Stake', () => {
   //   it('Should render in full layout mode', () => {
   //     const props = {
   //       ...baseProps,
@@ -115,7 +115,7 @@ describe('Transaction Row', () => {
   //     expect(wrapper.find('Amount').text()).toBe('-');
   //     expect(wrapper.find('Sender').
   //       text()).toBe(truncateAddress(accounts.genesis.summary.address));
-  //     expect(wrapper.find('Recipient').text()).toBe('Vote');
+  //     expect(wrapper.find('Recipient').text()).toBe('Stake');
   //     // We don't show the details in full mode
   //     expect(wrapper.find('Params')).toHaveLength(0);
   //   });
@@ -135,7 +135,7 @@ describe('Transaction Row', () => {
   //       {},
   //     );
   //     expect(wrapper.find('Amount').text()).toBe('-');
-  //     expect(wrapper.find('Counterpart').text()).toBe('Vote');
+  //     expect(wrapper.find('Counterpart').text()).toBe('Stake');
   //     expect(wrapper.find('Sender')).toHaveLength(0);
   //     expect(wrapper.find('Recipient')).toHaveLength(0);
   //     expect(wrapper.find('Params').text()).toBe(

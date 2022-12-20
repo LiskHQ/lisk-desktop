@@ -2,7 +2,7 @@ import { rest } from 'msw';
 import { API_VERSION, LIMIT } from 'src/const/config';
 import {
   mockValidators,
-  mockSentVotes,
+  mockSentStakes,
   mockReceivedVotes,
   mockUnlocks,
   mockForgers,
@@ -25,11 +25,11 @@ export const sentVotes = rest.get(`*/api/${API_VERSION}/dpos/votes/sent`, async 
   const offset = Number(req.url.searchParams.get('offset') || 0);
   const response = {
     data: {
-      ...mockSentVotes.data,
-      votes: mockSentVotes.data.votes.slice(offset, offset + limit),
+      ...mockSentStakes.data,
+      votes: mockSentStakes.data.votes.slice(offset, offset + limit),
     },
     meta: {
-      ...mockSentVotes.meta,
+      ...mockSentStakes.meta,
       count: limit,
       offset,
     },

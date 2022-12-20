@@ -29,7 +29,7 @@ const ActionBar = ({
   const lskAddress = useSelector(selectLSKAddress);
   const initialValue = isWalletRoute ? {} : { recipient: address };
 
-  const voteButtonTitle = vote ? t('Edit vote') : t('Add to votes');
+  const stakeButtonTitle = vote ? t('Edit stake') : t('Add to stakes');
 
   const sendTitle = isWalletRoute
     ? t('Send {{token}}', { token: activeToken })
@@ -41,9 +41,9 @@ const ActionBar = ({
         <div className={styles.actionRow}>
           {username && (
             <DialogLink
-              component={!isBanned && 'editVote'}
+              component={!isBanned && 'editStake'}
               data={pomStart}
-              className={`${styles.button} add-vote`}
+              className={`${styles.button}`}
             >
               <Tooltip
                 position="bottom"
@@ -52,17 +52,17 @@ const ActionBar = ({
                   <SecondaryButton
                     className={`${styles.voteButton} ${
                       isBanned && styles.disabled
-                    } ${!isBanned && 'open-add-vote-dialog'}`}
+                    } ${!isBanned && 'open-add-stake-dialog'}`}
                     size="m"
                   >
-                    {voteButtonTitle}
+                    {stakeButtonTitle}
                   </SecondaryButton>
                 )}
               >
                 <p>
                   {isBanned
-                    ? t('You cannot vote for this validator')
-                    : t('Vote for validator')}
+                    ? t('You cannot stake for this validator')
+                    : t('Stake for validator')}
                 </p>
               </Tooltip>
             </DialogLink>

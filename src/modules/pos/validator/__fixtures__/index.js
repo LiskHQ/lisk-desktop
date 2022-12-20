@@ -1,5 +1,5 @@
 export * from './mockValidators';
-export * from './mockSentVotes';
+export * from './mockSentStakes';
 export * from './mockReceivedVotes';
 export * from './mockUnlocks';
 export * from './mockForgers';

@@ -47,7 +47,7 @@ describe('Reclaim balance screen', () => {
 
     expect(html).toContain('open-send-dialog');
     expect(html).toContain('register-validator');
-    expect(html).not.toContain('open-add-vote-dialog');
+    expect(html).not.toContain('open-add-stake-dialog');
   });
 
   it('Should not display register validator button', () => {
@@ -61,17 +61,17 @@ describe('Reclaim balance screen', () => {
 
     expect(html).toContain('open-send-dialog');
     expect(html).not.toContain('register-validator');
-    expect(html).not.toContain('open-add-vote-dialog');
+    expect(html).not.toContain('open-add-stake-dialog');
 
     wrapper.setProps({ address: explorerAddress });
     html = wrapper.html();
 
     expect(html).toContain('open-send-dialog');
     expect(html).not.toContain('register-validator');
-    expect(html).not.toContain('open-add-vote-dialog');
+    expect(html).not.toContain('open-add-stake-dialog');
   });
 
-  it('Should display add/edit vote correctly', () => {
+  it('Should display add/edit stake correctly', () => {
     let wrapper = mountWithRouterAndStore(
       ActionBar,
       { ...props, username: 'validator' },
@@ -82,9 +82,9 @@ describe('Reclaim balance screen', () => {
 
     expect(html).toContain('open-send-dialog');
     expect(html).not.toContain('register-validator');
-    expect(html).toContain('open-add-vote-dialog');
-    expect(html).toContain('Add to votes');
-    expect(html).not.toContain('Edit vote');
+    expect(html).toContain('open-add-stake-dialog');
+    expect(html).toContain('Add to stakes');
+    expect(html).not.toContain('Edit stake');
 
     wrapper = mountWithRouterAndStore(
       ActionBar,
@@ -101,8 +101,8 @@ describe('Reclaim balance screen', () => {
     act(() => { wrapper.update(); });
     html = wrapper.html();
 
-    expect(html).toContain('Edit vote');
-    expect(html).not.toContain('Add to votes');
+    expect(html).toContain('Edit stake');
+    expect(html).not.toContain('Add to stakes');
   });
 
   it('Should disable buttons', () => {

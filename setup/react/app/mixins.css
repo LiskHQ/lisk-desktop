@@ -100,7 +100,7 @@
   line-height: 22px;
 }
 
-@define-mixin voteStatusHeading $weight:  {
+@define-mixin stakeStatusHeading $weight:  {
   font-family: var(--heading-font);
   font-size: var(--font-size-h3);
   font-weight: var(--font-weight-$(weight));

@@ -38,7 +38,7 @@ Feature: Transactions
   #   When I click on filterTransactionsBtn
   #   Then I should see filterDropdown
   #   When I click on moreLessSwitch
-  #   When I select Vote in transactionTypeFilter field
+  #   When I select Stake in transactionTypeFilter field
   #   And I click on applyFilters
   #   And I wait 2 seconds
   #   Then I should see 20 transactions in table

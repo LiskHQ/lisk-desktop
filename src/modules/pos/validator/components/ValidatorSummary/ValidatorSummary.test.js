@@ -43,13 +43,13 @@ describe('ValidatorSummary', () => {
     expect(screen.getByAltText('weightDark')).toBeTruthy();
   });
 
-  it('disables vote button if validator is banned', () => {
+  it('disables stake button if validator is banned', () => {
     props.status = { className: 'banned', value: 'Banned' };
     wrapper.rerender(
       <MemoryRouter>
         <ValidatorSummary {...props} />
       </MemoryRouter>
     );
-    expect(screen.getByText('Vote')).toHaveAttribute('disabled');
+    expect(screen.getByText('Stake')).toHaveAttribute('disabled');
   });
 });

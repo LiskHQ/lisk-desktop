@@ -2,7 +2,7 @@ import { MODULE_COMMANDS_NAME_MAP } from 'src/modules/transaction/configuration/
 
 import {
   TransactionId, Sender, Recipient, Message, Illustration,
-  Confirmations, TxDate, Amount, Fee, NumberOfSignatures, Votes,
+  Confirmations, TxDate, Amount, Fee, NumberOfSignatures, Stakes,
   BlockId, BlockHeight, Members, SignedAndRemainingMembersList, PrettyJson,
 } from 'src/modules/transaction/components/TransactionDetails';
 import styles from './layoutSchema.css';
@@ -27,12 +27,12 @@ export const LayoutSchema = {
     className: styles.transferPreview,
   },
   [voteDelegate]: {
-    components: [...baseComponents, ...timeComponents, Votes, PrettyJson],
-    className: styles.voteLayout,
+    components: [...baseComponents, ...timeComponents, Stakes, PrettyJson],
+    className: styles.stakeLayout,
   },
   [`${voteDelegate}-preview`]: {
-    components: [...previewBaseComponents, Votes, ...restComponents],
-    className: styles.votePreview,
+    components: [...previewBaseComponents, Stakes, ...restComponents],
+    className: styles.stakePreview,
   },
   [registerDelegate]: {
     components: [...baseComponents, ...timeComponents, PrettyJson],

@@ -56,7 +56,7 @@
   & .container {
     @mixin contentNormal;
 
-    background-color: var(--color-vote-item-bg);
+    background-color: var(--color-stake-item-bg);
     padding: 8px;
     border-radius: 3px;
     white-space: nowrap;

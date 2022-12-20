@@ -5,12 +5,12 @@ import { screen } from '@testing-library/react';
 import { renderWithRouter } from 'src/utils/testHelpers';
 import mockSavedAccounts from '@tests/fixtures/accounts';
 import { mockBlocks } from '@block/__fixtures__';
-import { mockValidators, mockReceivedVotes, mockSentVotes } from '@pos/validator/__fixtures__';
+import { mockValidators, mockReceivedVotes, mockSentStakes } from '@pos/validator/__fixtures__';
 import { useBlocks } from '@block/hooks/queries/useBlocks';
 import { useLatestBlock } from '@block/hooks/queries/useLatestBlock';
 import { fromRawLsk } from 'src/modules/token/fungible/utils/lsk';
 import ValidatorProfile from './ValidatorProfile';
-import { useValidators, useReceivedVotes, useSentVotes } from '../../hooks/queries';
+import { useValidators, useReceivedStakes, useSentStakes } from '../../hooks/queries';
 
 const mockedCurrentAccount = mockSavedAccounts[0];
 jest.mock('@account/hooks', () => ({
@@ -38,13 +38,13 @@ describe('Validator Profile', () => {
   useValidators.mockReturnValue({ data: mockValidators });
   useBlocks.mockReturnValue({ data: mockBlocks });
   useLatestBlock.mockReturnValue({ data: mockBlocks.data[0] });
-  useSentVotes.mockReturnValue({ data: mockSentVotes });
-  useReceivedVotes.mockReturnValue({ data: mockReceivedVotes });
+  useSentStakes.mockReturnValue({ data: mockSentStakes });
+  useReceivedStakes.mockReturnValue({ data: mockReceivedVotes });
 
   it('Should render active validator profile details', () => {
-    useSentVotes.mockReturnValue({
+    useSentStakes.mockReturnValue({
       data: {
-        ...mockSentVotes,
+        ...mockSentStakes,
         data: { ...mockReceivedVotes.data, votes: mockReceivedVotes.data.votes.slice(5, 7) },
       },
     });
@@ -56,10 +56,10 @@ describe('Validator Profile', () => {
     );
 
     expect(screen.getByText('My validator profile')).toBeTruthy();
-    expect(screen.getByText('Vote validator')).toBeTruthy();
+    expect(screen.getByText('Stake validator')).toBeTruthy();
     expect(screen.getByText('Details')).toBeTruthy();
     expect(screen.getByText('Performance')).toBeTruthy();
-    expect(screen.getByText('Voters')).toBeTruthy();
+    expect(screen.getByText('Stakers')).toBeTruthy();
 
     expect(screen.getByText('Rank')).toBeTruthy();
     expect(screen.getAllByText('Status')).toHaveLength(2);
@@ -182,14 +182,14 @@ describe('Validator Profile', () => {
     ).toBeTruthy();
   });
 
-  it('Should render the vote validator button', () => {
+  it('Should render the stake validator button', () => {
     useValidators.mockReturnValue({
       data: {
         ...mockValidators,
         data: mockValidators.data.map((data) => ({ ...data, status: 'banned' })),
       },
     });
-    useSentVotes.mockReturnValue({ data: {} });
+    useSentStakes.mockReturnValue({ data: {} });
 
     wrapper.rerender(
       <MemoryRouter>
@@ -197,17 +197,17 @@ describe('Validator Profile', () => {
       </MemoryRouter>
     );
 
-    expect(screen.getByText('Vote validator')).toBeTruthy();
+    expect(screen.getByText('Stake validator')).toBeTruthy();
   });
 
-  it('Should render the vote validator button', () => {
+  it('Should render the stake validator button', () => {
     useValidators.mockReturnValue({
       data: {
         ...mockValidators,
         data: mockValidators.data.map((data) => ({ ...data, status: 'banned' })),
       },
     });
-    useSentVotes.mockReturnValue({ data: {} });
+    useSentStakes.mockReturnValue({ data: {} });
 
     wrapper.rerender(
       <MemoryRouter>
@@ -215,17 +215,17 @@ describe('Validator Profile', () => {
       </MemoryRouter>
     );
 
-    expect(screen.getByText('Vote validator')).toBeTruthy();
+    expect(screen.getByText('Stake validator')).toBeTruthy();
   });
 
-  it('Should render the vote validator button', () => {
+  it('Should render the stake validator button', () => {
     useValidators.mockReturnValue({
       data: {
         ...mockValidators,
         data: mockValidators.data.map((data) => ({ ...data, status: 'banned' })),
       },
     });
-    useSentVotes.mockReturnValue({
+    useSentStakes.mockReturnValue({
       data: {
         ...mockReceivedVotes,
         data: {
@@ -244,6 +244,6 @@ describe('Validator Profile', () => {
       </MemoryRouter>
     );
 
-    expect(screen.getByText('Vote validator')).toBeTruthy();
+    expect(screen.getByText('Stake validator')).toBeTruthy();
   });
 });

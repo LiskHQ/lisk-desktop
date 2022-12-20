@@ -63,14 +63,14 @@
     "transactionAsset transactionAsset";
 }
 
-.voteLayout {
+.stakeLayout {
   grid-template-areas:
     "illustration illustration"
     "sender sender"
     "transactionId date"
     "blockId blockHeight"
     "fee confirmations"
-    "votes votes"
+    "stakes stakes"
     "transactionAsset transactionAsset";
 }
 
@@ -100,11 +100,11 @@
     "signedAndRemainingMembersList signedAndRemainingMembersList";
 }
 
-.votePreview {
+.stakePreview {
   grid-template-areas:
     "illustration illustration"
     "sender sender"
-    "votes votes"
+    "stakes stakes"
     "transactionId fee"
     "signedAndRemainingMembersList signedAndRemainingMembersList";
 }

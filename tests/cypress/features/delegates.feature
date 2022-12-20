@@ -101,7 +101,7 @@ Feature: validator
   #   Given Network is set to customNode
   #   And I am on validators page
   #   And I wait 5 seconds
-  #   When I click on latestVotesBtn
+  #   When I click on latestStakesBtn
   #   Then I should see 10 votes in table
   #   When I click on showMoreValidatorsBtn
   #   Then I should see 20 votes in table

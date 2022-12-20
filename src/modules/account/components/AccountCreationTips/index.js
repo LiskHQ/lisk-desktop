@@ -58,7 +58,7 @@ const AccountCreationTips = () => {
             <span className={styles.number}>02</span>
             <div className={styles.tip}>
               <h5>{t('Participate in blockchain governance')}</h5>
-              <span>{t('Vote for your trusted validator or become a validator to secure the blockchain.')}</span>
+              <span>{t('Stake for your trusted validator or become a validator to secure the blockchain.')}</span>
             </div>
           </li>
           <li>

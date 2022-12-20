@@ -22,8 +22,8 @@ import TransactionDetails from '@transaction/manager/transactionDetailViewManage
 import VerifyMessage from '@message/manager/verifyMessageManager';
 import Request from '@wallet/components/request';
 import UnlockBalanceView from '@pos/validator/components/UnlockBalanceView';
-import EditVote from '@pos/validator/manager/editVoteManager';
-import VotingQueue from '@pos/validator/manager/votingQueueManager';
+import editStakeManager from '@pos/validator/manager/editStakeManager';
+import StakingQueue from '@pos/validator/manager/stakingQueueManager';
 import DeviceDisconnect from 'src/modules/common/components/deviceDisconnectDialog';
 import NewReleaseDialog from '@update/detail/info/newReleaseDialog';
 import ReclaimBalance from '@legacy/manager/reclaimBalance';
@@ -49,7 +49,7 @@ import SelectNode from '@blockchainApplication/manage/components/SelectNode';
 import RemoveApplicationFlow from '@blockchainApplication/manage/components/RemoveApplicationFlow';
 import AllTokens from '@wallet/components/AllTokens';
 import ValidatorProfile from 'src/modules/pos/validator/components/ValidatorProfile/ValidatorProfile';
-import SentVotes from 'src/modules/pos/validator/components/SentVotes';
+import SenStakes from 'src/modules/pos/validator/components/SentStakes';
 import ConnectionProposal from 'src/modules/blockchainApplication/connection/components/ConnectionProposal';
 import SessionManager from '@blockchainApplication/connection/components/SessionManager';
 import ConnectionSummary from 'src/modules/blockchainApplication/connection/components/ConnectionSummary';
@@ -86,8 +86,8 @@ export default {
   newRelease: NewReleaseDialog,
   request: Request,
   lockedBalance: UnlockBalanceView,
-  editVote: EditVote,
-  votingQueue: VotingQueue,
+  editStake: editStakeManager,
+  stakingQueue: StakingQueue,
   deviceDisconnectDialog: DeviceDisconnect,
   reclaimBalance: ReclaimBalanceModal,
   multiSignature: RegisterMultisig,
@@ -109,7 +109,7 @@ export default {
   manageApplications: ApplicationManagementList,
   removeApplicationFlow: RemoveApplicationFlow,
   allTokens: AllTokens,
-  sentVotes: SentVotes,
+  sentVotes: SenStakes,
   connectionProposal: ConnectionProposal,
   sessionManager: SessionManager,
   requestView: RequestView,

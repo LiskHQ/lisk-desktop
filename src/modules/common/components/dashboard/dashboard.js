@@ -38,7 +38,7 @@ const getOnboardingSlides = (t) => [
   {
     title: t('Get Involved'),
     content: t(
-      'Community is key. Vote for validators, or register as one yourself. Feel like a feature is missing? Request it directly from the Lisk.',
+      'Community is key. Stake for validators, or register as one yourself. Feel like a feature is missing? Request it directly from the Lisk.',
     ),
     illustration: 'timeToContribute',
   },

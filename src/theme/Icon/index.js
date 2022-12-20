@@ -86,10 +86,6 @@ import txDefaultDark from '@setup/react/assets/images/icons/tx-default-dark.svg'
 import registerValidator from '@setup/react/assets/images/icons/tx-delegate.svg';
 import registerValidatorDark from '@setup/react/assets/images/icons/tx-delegate-dark.svg';
 import vote from '@setup/react/assets/images/icons/tx-vote.svg';
-import voteDark from '@setup/react/assets/images/icons/tx-vote-dark.svg';
-import addedVotes from '@setup/react/assets/images/icons/added-votes.svg';
-import removedVotes from '@setup/react/assets/images/icons/removed-votes.svg';
-import totalVotes from '@setup/react/assets/images/icons/total-votes.svg';
 import user from '@setup/react/assets/images/icons/user.svg';
 import userActive from '@setup/react/assets/images/icons/user-active.svg';
 import verifyMessageInputsView from '@setup/react/assets/images/icons/verify-message-inputs-view.svg';
@@ -168,8 +164,8 @@ import unlock from '@setup/react/assets/images/icons/unlock.svg';
 import loading from '@setup/react/assets/images/icons/loading.svg';
 import unlockToken from '@setup/react/assets/images/icons/tx-unlock.svg';
 import unlockTokenDark from '@setup/react/assets/images/icons/tx-unlock-dark.svg';
-import votingQueueInactive from '@setup/react/assets/images/icons/voting-queue-inactive.svg';
-import votingQueueActive from '@setup/react/assets/images/icons/voting-queue-active.svg';
+import stakingQueueInactive from '@setup/react/assets/images/icons/voting-queue-inactive.svg';
+import stakingQueueActive from '@setup/react/assets/images/icons/voting-queue-active.svg';
 import deleteIcon from '@setup/react/assets/images/icons/delete.svg';
 import deleteRedIcon from '@setup/react/assets/images/icons/delete-red-icon.svg';
 import arrowRightTailed from '@setup/react/assets/images/icons/arrow-right-tailed.svg';
@@ -319,7 +315,6 @@ export const icons = {
   registerValidator,
   registerValidatorDark,
   vote,
-  voteDark,
   user,
   userActive,
   verifyMessageInputsView,
@@ -333,9 +328,6 @@ export const icons = {
   warningIconBlue,
   warningRound,
   warningFolder,
-  addedVotes,
-  removedVotes,
-  totalVotes,
   qrCode,
   qrCodeActive,
   copyActive,
@@ -399,8 +391,8 @@ export const icons = {
   loading,
   unlockToken,
   unlockTokenDark,
-  votingQueueInactive,
-  votingQueueActive,
+  stakingQueueInactive,
+  stakingQueueActive,
   download,
   downloadBlue,
   upload,

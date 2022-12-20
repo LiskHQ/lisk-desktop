@@ -22,7 +22,7 @@ jest.mock('@transaction/hooks/useTransactionPriority');
 jest.mock('@block/hooks/queries/useLatestBlock');
 jest.mock('@transaction/hooks/useTransactionFeeCalculation');
 jest.mock('@transaction/api');
-jest.mock('@pos/validator/store/actions/voting', () => ({
+jest.mock('@pos/validator/store/actions/staking', () => ({
   balanceUnlocked: jest.fn(),
 }));
 jest.mock('@transaction/utils/hwManager');

@@ -1,0 +1,48 @@
+.successContainer {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+
+  & header {
+    @mixin stakeStatusHeading;
+
+    justify-content: center !important;
+    padding-bottom: 4px !important;
+  }
+
+  & .footer {
+    margin-top: 48px;
+  }
+
+  & > div:nth-child(2) {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    & .illustartion {
+      width: 90px;
+    }
+
+    & .illustartion ~ h4 {
+      @mixin contentLargest semi-bold;
+
+      margin-top: 14px;
+    }
+
+    & .illustartion ~ h4 ~ p {
+      @mixin contentLarge;
+
+      color: var(--color-slate-gray);
+      margin-top: -4px;
+      margin-bottom: 20px;
+      width: 63%;
+      text-align: center;
+    }
+  }
+
+  & > footer {
+    box-sizing: border-box;
+    width: 100% !important;
+    padding: 0px 24px;
+  }
+}

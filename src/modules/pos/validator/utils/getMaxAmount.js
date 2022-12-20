@@ -3,7 +3,7 @@ import { getNumberOfSignatures } from '@transaction/utils/transaction';
 import { MODULE_COMMANDS_NAME_MAP } from 'src/modules/transaction/configuration/moduleCommand';
 import { MIN_ACCOUNT_BALANCE, VOTE_AMOUNT_STEP } from '@transaction/configuration/transactions';
 import { toRawLsk } from '@token/fungible/utils/lsk';
-import { normalizeVotesForTx } from '@transaction/utils';
+import { normalizeStakesForTx } from '@transaction/utils';
 
 /**
  * Calculates the maximum vote amount possible. It
@@ -41,7 +41,7 @@ const getMaxAmount = async ({
     fee: 1e6,
     nonce,
     params: {
-      votes: normalizeVotesForTx({
+      votes: normalizeStakesForTx({
         ...voting,
         [address]: {
           confirmed: voting[address] ? voting[address].confirmed : 0,

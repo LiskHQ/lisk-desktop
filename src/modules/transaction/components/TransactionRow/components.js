@@ -204,15 +204,15 @@ export const Status = ({ t }) => {
   );
 };
 
-const generateVotes = (params, delegates, token, t) => {
+const generateStakes = (params, delegates, token, t) => {
   const voteElements = params.votes.slice(0, 1).map((vote) => (
-    <span className={`${styles.container} vote-item-address`} key={`vote-${vote.delegateAddress}`}>
+    <span className={`${styles.container} stake-item-address`} key={`vote-${vote.delegateAddress}`}>
       <Link to={`${routes.wallet.path}?address=${vote.delegateAddress}`}>
         <span className={styles.primaryText}>
           {delegates[vote.delegateAddress]?.name ?? truncateAddress(vote.delegateAddress)}
         </span>
       </Link>
-      <span className={`${styles.value} vote-item-value`}>
+      <span className={`${styles.value}`}>
         <TokenAmount val={vote.amount} token={token} />
       </span>
     </span>
@@ -237,7 +237,7 @@ export const Params = ({ t }) => {
       case registerDelegate:
         return data.params.delegate?.username;
       case voteDelegate:
-        return generateVotes(data.params, delegates, activeToken, t);
+        return generateStakes(data.params, delegates, activeToken, t);
       case transfer:
         return data.params.data;
       default:
