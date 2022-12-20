@@ -1,9 +1,5 @@
 @import '../../../../../setup/react/app/mixins.css';
 
-.box {
-  max-width: var(--footer-button-width);
-}
-
 .wrapper {
   width: 100%;
   height: 100%;
