@@ -1,17 +1,21 @@
 /* istanbul ignore file */
-import { useEffect, useCallback } from 'react';
+import { useEffect, useCallback, useRef } from 'react';
 import { useQueryClient } from '@tanstack/react-query';
 import client from 'src/utils/api/client';
 import { MY_TRANSACTIONS, AUTH, TOKENS_BALANCE } from 'src/const/queries';
 import { useCurrentAccount } from '@account/hooks';
 import { useTransactions } from '@transaction/hooks/queries';
+import { useCurrentApplication } from 'src/modules/blockchainApplication/manage/hooks';
 import { showNotificationsForIncomingTransactions } from '../utils';
 import { dateRangeCompare } from '../utils/helpers';
 
-export const useTransactionUpdate = (isLoading, currentApplication) => {
+export const useTransactionUpdate = (isLoading) => {
   const queryClient = useQueryClient();
   const [currentAccount] = useCurrentAccount();
+  const [currentApplication] = useCurrentApplication();
   const { chainID } = currentApplication;
+  const currentApplicationData = useRef(currentApplication);
+  currentApplicationData.current = chainID;
   useTransactions();
 
   const connect = useCallback(() => {
@@ -24,7 +28,7 @@ export const useTransactionUpdate = (isLoading, currentApplication) => {
       queries
         .filter((query) => {
           const { params } = query[0][2];
-          const isSameChain = query[0][1]?.length && query[0][1] === chainID;
+          const isSameChain = query[0][1]?.length && query[0][1] === currentApplicationData.current;
           const isSameRecipient = params.address === latestTxns.data[0].meta.recipient.address;
           const isSameSender = params.address === latestTxns.data[0].sender.address;
           const isMyAddress = isSameRecipient || isSameSender;

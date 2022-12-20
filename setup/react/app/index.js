@@ -44,7 +44,7 @@ const App = ({ history }) => {
   const theme = useSelector((state) => (state.settings.darkMode ? 'dark' : 'light'));
   const { data: chainMetaData, isLoading } = useBlockchainApplicationMeta();
   const { setApplication } = useApplicationManagement();
-  const [currentApplication, setCurrentApplication] = useCurrentApplication();
+  const [, setCurrentApplication] = useCurrentApplication();
 
   useIpc(history);
 
@@ -66,7 +66,7 @@ const App = ({ history }) => {
       setCurrentApplication(chainMetaData.data[0]);
     }
   }, [isLoading, chainMetaData]);
-  useTransactionUpdate(loaded, currentApplication);
+  useTransactionUpdate(loaded);
 
   const routesList = Object.keys(routes);
   const routeObj = Object.values(routes).find((r) => r.path === history.location.pathname) || {};
