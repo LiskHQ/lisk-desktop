@@ -1,10 +1,7 @@
-import { useCallback, useState } from 'react';
+import { useCallback, useState, useEffect } from 'react';
 import { useQueryClient } from '@tanstack/react-query';
 import { BLOCKS } from 'src/const/queries';
-import {
-  LIMIT as limit,
-  API_VERSION,
-} from 'src/const/config';
+import { LIMIT as limit, API_VERSION } from 'src/const/config';
 import { useCustomInfiniteQuery } from 'src/modules/common/hooks';
 import client from 'src/utils/api/client';
 
@@ -26,7 +23,7 @@ import client from 'src/utils/api/client';
  * @returns the query object
  */
 
-export const useBlocks = ({ config: customConfig = {}, options } = { }) => {
+export const useBlocks = ({ config: customConfig = {}, options } = {}) => {
   const queryClient = useQueryClient();
   const [hasUpdate, setHasUpdate] = useState(false);
   const config = {
@@ -37,18 +34,24 @@ export const useBlocks = ({ config: customConfig = {}, options } = { }) => {
     params: { limit, ...(customConfig?.params || {}) },
   };
 
-  /* istanbul ignore next */
-  client.socket?.on('new.block', () => {
-    setHasUpdate(true);
-  });
+  useEffect(() => {
+    /* istanbul ignore next */
+    client.socket?.on('new.block', () => {
+      setHasUpdate(true);
+    });
+
+    /* istanbul ignore next */
+    client.socket?.on('delete.block', () => {
+      setHasUpdate(true);
+    });
+    return () => {
+      client.socket.off('new.block');
+      client.socket.off('delete.block');
+    };
+  }, []);
 
   /* istanbul ignore next */
-  client.socket?.on('delete.block', () => {
-    setHasUpdate(true);
-  });
-
-  /* istanbul ignore next */
-  const invalidData = useCallback(async () => {
+  const invalidateData = useCallback(async () => {
     setHasUpdate(false);
     await queryClient.invalidateQueries(BLOCKS);
   }, [queryClient, setHasUpdate]);
@@ -68,6 +71,6 @@ export const useBlocks = ({ config: customConfig = {}, options } = { }) => {
   return {
     ...response,
     hasUpdate,
-    addUpdate: invalidData,
+    addUpdate: invalidateData,
   };
 };
