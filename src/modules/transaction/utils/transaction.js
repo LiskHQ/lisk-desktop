@@ -166,8 +166,10 @@ const normalizeTransactionParams = (params) =>
  * @param {Object} transaction The transaction object
  * @returns {String} Amount in Beddows/Satoshi
  */
-const getTxAmount = ({ module, command, params }) => {
-  const moduleCommand = joinModuleAndCommand({ module, command });
+const getTxAmount = ({ module, command, params, moduleCommand }) => {
+  if (!moduleCommand) {
+    moduleCommand = joinModuleAndCommand({ module, command });
+  }
   if (moduleCommand === transfer || moduleCommand === reclaim) {
     return params.amount;
   }
