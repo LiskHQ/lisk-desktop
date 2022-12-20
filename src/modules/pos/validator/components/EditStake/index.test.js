@@ -88,7 +88,7 @@ describe('EditStake', () => {
     ).toBeTruthy();
     expect(
       screen.getByText(
-        'Insert a stake amount for this validator. Your new stake will be added to the staking queue.'
+        'Insert an amount you wish to stake for this validator. Your new stake will then be added to the staking queue.'
       )
     ).toBeTruthy();
     expect(screen.getByText('Stake amount ({{symbol}})')).toBeTruthy();
