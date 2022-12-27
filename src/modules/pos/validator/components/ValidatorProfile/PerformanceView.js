@@ -16,7 +16,7 @@ import Icon from '@theme/Icon';
 import styles from './ValidatorProfile.css';
 
 export const getStatus = (data) => {
-  if (data.voteWeight >= DEFAULT_STANDBY_THRESHOLD) {
+  if (data.validatorWeight >= DEFAULT_STANDBY_THRESHOLD) {
     return 'standby';
   }
   return 'ineligible';
@@ -162,7 +162,7 @@ const PerformanceView = ({ data }) => {
         <Box className={`${grid.col} ${grid['col-xs-4']} ${grid['col-md-4']} ${styles.column}`}>
           <Item title={t('Rewards (LSK)')} icon="reward">
             <div>
-              <TokenAmount val={data.rewards || 0} />
+              <TokenAmount val={data.earnedRewards || 0} />
             </div>
           </Item>
           <Item title={t('Consecutive missed blocks')} icon="consecutiveMissedBlocks">

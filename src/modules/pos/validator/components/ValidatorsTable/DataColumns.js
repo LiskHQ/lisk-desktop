@@ -63,11 +63,11 @@ export const ValidatorRank = () => {
 
 export const ValidatorWeight = () => {
   const {
-    data: { voteWeight },
+    data: { validatorWeight },
     activeTab,
   } = useContext(ValidatorRowContext);
   const formatted = formatAmountBasedOnLocale({
-    value: fromRawLsk(voteWeight),
+    value: fromRawLsk(validatorWeight),
     format: '0a',
   });
 
@@ -88,15 +88,15 @@ export const ValidatorDetails = () => {
     t,
   } = useContext(ValidatorRowContext);
   const theme = useTheme();
-  const { status, totalVotesReceived, voteWeight } = data;
+  const { status, totalStakeReceived, validatorWeight } = data;
   const showEyeIcon =
     activeTab === 'active' ||
     activeTab === 'standby' ||
     activeTab === 'sanctioned' ||
     activeTab === 'watched';
-  const [key, val] = getValidatorStatus(status, totalVotesReceived);
+  const [key, val] = getValidatorStatus(status, totalStakeReceived);
   const formattedVoteWeight = formatAmountBasedOnLocale({
-    value: fromRawLsk(voteWeight),
+    value: fromRawLsk(validatorWeight),
     format: '0a',
   });
 
@@ -204,10 +204,10 @@ export const RoundState = () => {
 export const ValidatorStatus = () => {
   const {
     activeTab,
-    data: { status, totalVotesReceived },
+    data: { status, totalStakeReceived },
   } = useContext(ValidatorRowContext);
   const theme = useTheme();
-  const [key, val] = getValidatorStatus(status, totalVotesReceived);
+  const [key, val] = getValidatorStatus(status, totalStakeReceived);
 
   return (
     <span className={getStatusClass(activeTab)}>

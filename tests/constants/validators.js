@@ -1,8 +1,8 @@
 const delegate = index => ({
   name: `gr33ndrag0n_${index}`,
-  totalVotesReceived: `100600000000${index}`,
-  selfVotes: `10060000000${index}`,
-  voteWeight: `100600000${index}000`,
+  totalStakeReceived: `100600000000${index}`,
+  selfStake: `10060000000${index}`,
+  validatorWeight: `100600000${index}000`,
   address: 'lskhbxua8tpdckcewntcttfqfo4rbatampo2dgrno',
   lastGeneratedHeight: 27605 + index,
   status: 'active',
