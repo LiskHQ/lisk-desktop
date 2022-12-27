@@ -68,7 +68,7 @@ describe('RequestSummary', () => {
   it('Display the requesting app information', () => {
     setup(defaultContext);
     expect(screen.getByTestId('logo')).toHaveAttribute('src', 'http://example.com/icon.png');
-    expect(screen.getByText('Sign transaction')).toBeTruthy();
+    expect(screen.getByText('Signature request')).toBeTruthy();
     expect(screen.getByText('test app')).toBeTruthy();
     expect(screen.getByRole('link')).toHaveAttribute('href', 'http://example.com');
   });

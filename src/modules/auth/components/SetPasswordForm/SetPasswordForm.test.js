@@ -131,7 +131,7 @@ describe('Set Password Form validation should work', () => {
     });
   });
 
-  it('should display an error if confirm password is not the same as the passowrd', async () => {
+  it('should display an error if confirm password is not the same as the password', async () => {
     makeSubmitActive();
     fireEvent.change(password, { target: { value: 'Password1$' } });
     fireEvent.change(cPassword, { target: { value: 'Password1@' } });

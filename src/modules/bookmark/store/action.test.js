@@ -14,7 +14,7 @@ jest.mock('src/utils/localJSONStorage', () => ({
   getFromStorage: jest.fn(),
 }));
 
-describe('actions: boomarks', () => {
+describe('actions: bookmarks', () => {
   const data = {
     wallet: {
       address: wallets.genesis.summary.address,

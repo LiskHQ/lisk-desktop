@@ -69,7 +69,7 @@ const ConnectionSummary = ({ history }) => {
         <section className={styles.section}>
           <ValueAndLabel
             className={styles.labeledValue}
-            label={t('Select accounts(s) to use on this application')}
+            label={t('Account(s) to use on this application')}
           >
             <AccountsSelector
               setAddresses={setAddresses}
@@ -86,7 +86,7 @@ const ConnectionSummary = ({ history }) => {
           </ValueAndLabel>
         </section>
         <section className={`${styles.section} ${styles.permissions}`}>
-          <span className={styles.label}>{t('Permissions')}</span>
+          <span className={styles.label}>{t('Site permissions')}</span>
           <div className={styles.twoColumn}>
             <ValueAndLabel
               label={t('Methods')}
@@ -118,7 +118,7 @@ const ConnectionSummary = ({ history }) => {
           <SecondaryButton
             onClick={rejectHandler}
           >
-            {t('Reject')}
+            {t('Cancel')}
           </SecondaryButton>
           <PrimaryButton
             onClick={connectHandler}

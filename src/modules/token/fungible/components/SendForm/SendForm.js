@@ -177,7 +177,7 @@ const SendForm = (props) => {
             <div className={`${styles.ApplilcationFieldWrapper}`}>
               <div>
                 <label className={`${styles.fieldLabel} sending-application`}>
-                  <span>{t('From Application')}</span>
+                  <span>{t('From application')}</span>
                 </label>
                 <MenuSelect
                   value={sendingChain}
@@ -206,7 +206,7 @@ const SendForm = (props) => {
               </div>
               <div>
                 <label className={`${styles.fieldLabel} recipient-application`}>
-                  <span>{t('To Application')}</span>
+                  <span>{t('To application')}</span>
                 </label>
                 <MenuSelect
                   value={recipientChain}
@@ -268,7 +268,7 @@ const SendForm = (props) => {
               name="amount"
             />
             <div className={`${styles.fieldGroup} ${styles.recipientFieldWrapper}`}>
-              <span className={`${styles.fieldLabel}`}>{t('Recipient Address')}</span>
+              <span className={`${styles.fieldLabel}`}>{t('Recipient address')}</span>
               <BookmarkAutoSuggest
                 bookmarks={bookmarks.LSK.filter((item) => !item.disabled)}
                 recipient={recipient}

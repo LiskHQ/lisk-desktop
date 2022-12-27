@@ -55,7 +55,7 @@ ${signature}
     wrapper.find('.publicKey input').simulate('change', { target: { value: publicKey, name: 'publicKey' } });
     wrapper.find('.signature input').simulate('change', { target: { value: signature, name: 'signature' } });
     wrapper.find('.continue button').simulate('click');
-    expect(wrapper.find('h1')).toIncludeText('The signature is correct');
+    expect(wrapper.find('h1')).toIncludeText('Signature is correct');
   });
 
   it('should allow to go back and keep value of all inputs', () => {
@@ -64,7 +64,7 @@ ${signature}
     wrapper.find('.publicKey input').simulate('change', { target: { value: publicKey, name: 'publicKey' } });
     wrapper.find('.signature input').simulate('change', { target: { value: signature, name: 'signature' } });
     wrapper.find('.continue button').simulate('click');
-    expect(wrapper.find('h1')).toIncludeText('The signature is correct');
+    expect(wrapper.find('h1')).toIncludeText('Signature is correct');
   });
 
   it('should allow to verify invalid inputs', () => {
@@ -73,7 +73,7 @@ ${signature}
     wrapper.find('.publicKey input').simulate('change', { target: { value: publicKey, name: 'publicKey' } });
     wrapper.find('.signature input').simulate('change', { target: { value: signature.substr(2), name: 'signature' } });
     wrapper.find('.continue button').simulate('click');
-    expect(wrapper.find('h1')).toIncludeText('The signature is incorrect');
+    expect(wrapper.find('h1')).toIncludeText('Signature is incorrect');
   });
 
   it('should recognize invalid publicKey', () => {
@@ -94,7 +94,7 @@ ${signature}
     wrapper.find('.signedMessage textarea').simulate('change', { target: { value: signedMessage, name: 'signedMessage' } });
 
     wrapper.find('.continue button').simulate('click');
-    expect(wrapper.find('h1')).toIncludeText('The signature is correct');
+    expect(wrapper.find('h1')).toIncludeText('Signature is correct');
   });
 
   it('should allow to verify a invalid message with the textarea view', () => {
@@ -103,6 +103,6 @@ ${signature}
     });
 
     wrapper.find('.continue button').simulate('click');
-    expect(wrapper.find('h1')).toIncludeText('The signature is incorrect');
+    expect(wrapper.find('h1')).toIncludeText('Signature is incorrect');
   });
 });
