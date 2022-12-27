@@ -6,7 +6,7 @@ import { useReceivedStakes } from './useReceivedStakes';
 
 jest.useRealTimers();
 
-describe('useReceivedVotes hook', () => {
+describe('useReceivedStakes hook', () => {
   const limit = 15;
   const config = { params: { limit } };
 
