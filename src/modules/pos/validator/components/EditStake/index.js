@@ -9,6 +9,7 @@ import {
 import { useCurrentAccount } from '@account/hooks';
 import { fromRawLsk, toRawLsk } from '@token/fungible/utils/lsk';
 import { useTokensBalance } from '@token/fungible/hooks/queries';
+import { useCommandSchema } from '@network/hooks';
 import Dialog from 'src/theme/dialog/dialog';
 import Box from 'src/theme/box';
 import BoxContent from 'src/theme/box/content';
@@ -49,6 +50,7 @@ const getTitles = (t) => ({
 const EditStake = ({ history, stakeEdited, network, voting, stakesRetrieved }) => {
   const { t } = useTranslation();
   useSchemas();
+  const { moduleCommandSchemas } = useCommandSchema();
   const [
     {
       metadata: { address: currentAddress },
@@ -116,6 +118,7 @@ const EditStake = ({ history, stakeEdited, network, voting, stakesRetrieved }) =
       numberOfSignatures,
       mandatoryKeys,
       optionalKeys,
+      moduleCommandSchemas,
     }).then(setMaxAmount);
   }, [token, auth, network, voting]);
 
