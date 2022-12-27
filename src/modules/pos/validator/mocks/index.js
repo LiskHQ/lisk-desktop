@@ -3,7 +3,7 @@ import { API_VERSION, LIMIT } from 'src/const/config';
 import {
   mockValidators,
   mockSentStakes,
-  mockReceivedVotes,
+  mockReceivedStakes,
   mockUnlocks,
   mockForgers,
   mockGenerator,
@@ -44,11 +44,11 @@ export const receivedVotes = rest.get(
     const offset = Number(req.url.searchParams.get('offset') || 0);
     const response = {
       data: {
-        ...mockReceivedVotes.data,
-        votes: mockReceivedVotes.data.votes.slice(offset, offset + limit),
+        ...mockReceivedStakes.data,
+        votes: mockReceivedStakes.data.votes.slice(offset, offset + limit),
       },
       meta: {
-        ...mockReceivedVotes.meta,
+        ...mockReceivedStakes.meta,
         count: limit,
         offset,
       },

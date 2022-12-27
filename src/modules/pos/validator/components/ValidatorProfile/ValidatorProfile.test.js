@@ -5,7 +5,7 @@ import { screen } from '@testing-library/react';
 import { renderWithRouter } from 'src/utils/testHelpers';
 import mockSavedAccounts from '@tests/fixtures/accounts';
 import { mockBlocks } from '@block/__fixtures__';
-import { mockValidators, mockReceivedVotes, mockSentStakes } from '@pos/validator/__fixtures__';
+import { mockValidators, mockReceivedStakes, mockSentStakes } from '@pos/validator/__fixtures__';
 import { useBlocks } from '@block/hooks/queries/useBlocks';
 import { useLatestBlock } from '@block/hooks/queries/useLatestBlock';
 import { fromRawLsk } from 'src/modules/token/fungible/utils/lsk';
@@ -39,13 +39,13 @@ describe('Validator Profile', () => {
   useBlocks.mockReturnValue({ data: mockBlocks });
   useLatestBlock.mockReturnValue({ data: mockBlocks.data[0] });
   useSentStakes.mockReturnValue({ data: mockSentStakes });
-  useReceivedStakes.mockReturnValue({ data: mockReceivedVotes });
+  useReceivedStakes.mockReturnValue({ data: mockReceivedStakes });
 
   it('Should render active validator profile details', () => {
     useSentStakes.mockReturnValue({
       data: {
         ...mockSentStakes,
-        data: { ...mockReceivedVotes.data, votes: mockReceivedVotes.data.votes.slice(5, 7) },
+        data: { ...mockReceivedStakes.data, votes: mockReceivedStakes.data.votes.slice(5, 7) },
       },
     });
 
@@ -84,14 +84,16 @@ describe('Validator Profile', () => {
     expect(screen.getByText(mockValidators.data[0].rank)).toBeTruthy();
     expect(
       screen.getByText(
-        `${numeral(fromRawLsk(mockValidators.data[0].voteWeight)).format('0,0.[0000000000000]')} LSK`
+        `${numeral(fromRawLsk(mockValidators.data[0].voteWeight)).format(
+          '0,0.[0000000000000]'
+        )} LSK`
       )
     ).toBeTruthy();
     expect(screen.getByTestId('date-timestamp')).toBeTruthy();
 
     expect(screen.getByText('Rank')).toBeTruthy();
     expect(screen.getByTestId('addressFilter')).toBeTruthy();
-    mockReceivedVotes.data.votes.forEach(({ name }) => {
+    mockReceivedStakes.data.votes.forEach(({ name }) => {
       expect(screen.getByText(name)).toBeTruthy();
     });
   });
@@ -227,10 +229,10 @@ describe('Validator Profile', () => {
     });
     useSentStakes.mockReturnValue({
       data: {
-        ...mockReceivedVotes,
+        ...mockReceivedStakes,
         data: {
-          ...mockReceivedVotes.data,
-          votes: mockReceivedVotes.data.votes.map((vote) => ({
+          ...mockReceivedStakes.data,
+          votes: mockReceivedStakes.data.votes.map((vote) => ({
             ...vote,
             delegateAddress: 'lskjq7jh2k7q332wgkz3bxogb8bj5zc3fcnb9ya53',
           })),

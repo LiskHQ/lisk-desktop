@@ -7,7 +7,9 @@ const generateStakes = (index) => ({
 });
 
 const data = {
-  votes: Array(30).fill(1).map((_, idx) => generateStakes(idx)),
+  votes: Array(30)
+    .fill(1)
+    .map((_, idx) => generateStakes(idx)),
   account: {
     address: 'lsk24cd35u4jdq8szo3pnsqe5dsxwrnazyqqqg5eu',
     publicKey: 'aq02qkbb35u4jdq8szo3pnsqe5dsxwrnazyqqqg5eu',
@@ -15,7 +17,7 @@ const data = {
   },
 };
 
-export const mockReceivedVotes = {
+export const mockReceivedStakes = {
   data,
   meta: {
     count: 2,

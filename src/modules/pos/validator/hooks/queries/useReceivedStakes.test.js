@@ -1,5 +1,5 @@
 import { renderHook, act } from '@testing-library/react-hooks';
-import { mockReceivedVotes } from '@pos/validator/__fixtures__';
+import { mockReceivedStakes } from '@pos/validator/__fixtures__';
 import { LIMIT as defaultLimit } from 'src/const/config';
 import { queryWrapper as wrapper } from 'src/utils/test/queryWrapper';
 import { useReceivedStakes } from './useReceivedStakes';
@@ -17,11 +17,11 @@ describe('useReceivedVotes hook', () => {
     expect(result.current.isSuccess).toBeTruthy();
     const expectedResponse = {
       data: {
-        ...mockReceivedVotes.data,
-        votes: mockReceivedVotes.data.votes?.slice(0, limit),
+        ...mockReceivedStakes.data,
+        votes: mockReceivedStakes.data.votes?.slice(0, limit),
       },
       meta: {
-        ...mockReceivedVotes.meta,
+        ...mockReceivedStakes.meta,
         count: limit,
         offset: 0,
       },
@@ -36,11 +36,11 @@ describe('useReceivedVotes hook', () => {
     expect(result.current.isSuccess).toBeTruthy();
     const expectedResponse = {
       data: {
-        ...mockReceivedVotes.data,
-        votes: mockReceivedVotes.data.votes?.slice(0, defaultLimit),
+        ...mockReceivedStakes.data,
+        votes: mockReceivedStakes.data.votes?.slice(0, defaultLimit),
       },
       meta: {
-        ...mockReceivedVotes.meta,
+        ...mockReceivedStakes.meta,
         count: defaultLimit,
         offset: 0,
       },
@@ -58,8 +58,8 @@ describe('useReceivedVotes hook', () => {
     await waitFor(() => !result.current.isFetching);
     const expectedResponse = {
       data: {
-        ...mockReceivedVotes.data,
-        votes: mockReceivedVotes.data.votes?.slice(0, limit * 2),
+        ...mockReceivedStakes.data,
+        votes: mockReceivedStakes.data.votes?.slice(0, limit * 2),
       },
       meta: {
         count: limit,
