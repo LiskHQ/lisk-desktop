@@ -7,6 +7,7 @@ import {
   mockUnlocks,
   mockForgers,
   mockGenerator,
+  mockRewardsLocked,
 } from '@pos/validator/__fixtures__';
 import composeMockList from 'src/modules/common/utils/composeMockList';
 import { mockPosConstants } from '../__fixtures__/mockPosConstants';
@@ -95,3 +96,20 @@ export const generators = rest.get(`*/api/${API_VERSION}/generators`, async (req
 export const posConstants = rest.get(`*/api/${API_VERSION}/dpos/constants`, async (_, res, ctx) =>
   res(ctx.delay(20), ctx.json(mockPosConstants))
 );
+
+export const rewardsLocked = rest.get(`*/api/${API_VERSION}/pos/rewards/locked`, async (req, res, ctx) => {
+  const address = req.url.searchParams.get('address');
+  const publicKey = req.url.searchParams.get('publicKey');
+  const name = req.url.searchParams.get('name');
+  if (!address && !publicKey && !name) {
+    return res(
+      ctx.status(400),
+      ctx.json({
+        error: true,
+        message: "Require one of the following parameter combination(s): address; name; publicKey",
+      }),
+    )
+  }
+
+  return res(ctx.delay(20), ctx.json(mockRewardsLocked))
+});
