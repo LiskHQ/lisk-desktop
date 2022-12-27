@@ -5,3 +5,4 @@ export * from './useUnlocks';
 export * from './useForgersValidator';
 export * from './useRewardsLocked';
 export * from './usePosConstants';
+export * from './useRewardsClaimable';

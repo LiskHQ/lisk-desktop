@@ -1,4 +1,3 @@
-/* eslint-disable max-lines, import/prefer-default-export */
 export const mockRewardsLocked = {
   "data": [
     {
