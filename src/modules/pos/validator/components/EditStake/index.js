@@ -40,7 +40,7 @@ const getTitles = (t) => ({
   add: {
     title: t('Add to staking queue'),
     description: t(
-      'Insert a stake amount for this validator. Your new stake will be added to the staking queue.'
+      'Insert an amount you wish to stake for this validator. Your new stake will then be added to the staking queue.'
     ),
   },
 });

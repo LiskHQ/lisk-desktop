@@ -16,7 +16,7 @@ import styles from './stakeForm.css';
 
 /**
  * Determines the number of stakes that have been
- * added, removed or edited.
+ * added, removed, or edited.
  *
  * @param {Object} stakes - stakes object retrieved from the Redux store
  * @param {Object} account - account object
