@@ -15,10 +15,10 @@ describe('unlock transaction Status', () => {
   const props = {
     t: (key) => key,
     account: accounts.genesis,
-    recipientAccount: { data: accounts.delegate },
+    recipientAccount: { data: accounts.validator },
     rawTx: {
       params: {
-        recipient: { address: accounts.delegate.summary.address },
+        recipient: { address: accounts.validator.summary.address },
       },
     },
     transactions: {
@@ -35,7 +35,7 @@ describe('unlock transaction Status', () => {
       module: 'token',
       command: 'transfer',
       params: {
-        recipientAddress: accounts.delegate.summary.address,
+        recipientAddress: accounts.validator.summary.address,
       },
       id: 'test_id',
       signatures: [accounts.genesis.summary.publicKey],
@@ -168,7 +168,7 @@ describe('unlock transaction Status', () => {
     const propsWithBookmarks = {
       ...props,
       bookmarks: {
-        LSK: [{ address: accounts.delegate.summary.address }],
+        LSK: [{ address: accounts.validator.summary.address }],
       },
     };
 

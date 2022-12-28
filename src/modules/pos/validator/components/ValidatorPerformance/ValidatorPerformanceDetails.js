@@ -16,9 +16,9 @@ const ValidatorPerformanceDetails = (pomHeights, status, consecutiveMissedBlocks
 
     return `The validator was punished ${pomHeights.length} time${
       pomHeights.length !== 1 ? 's' : ''
-    }. ${textCount} more punishments will cause the permanent ban of the delegate.`;
+    }. ${textCount} more punishments will cause the permanent ban of the validator.`;
   }
-  return `The delegate is banned because of not forging blocks for 1 month and missing ${consecutiveMissedBlocks} consecutive blocks`;
+  return `The validator is banned because of not forging blocks for 1 month and missing ${consecutiveMissedBlocks} consecutive blocks`;
 };
 
 export default ValidatorPerformanceDetails;

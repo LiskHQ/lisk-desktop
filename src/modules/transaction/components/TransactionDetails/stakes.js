@@ -44,8 +44,8 @@ export default withData({
     apiUtil: ({ networks }, params) => getValidators({ network: networks.LSK, params }),
     defaultData: {},
     transformResponse: (response) => {
-      const responseMap = response.data.reduce((acc, delegate) => {
-        acc[delegate.summary?.address] = delegate;
+      const responseMap = response.data.reduce((acc, validator) => {
+        acc[validator.summary?.address] = validator;
         return acc;
       }, {});
 

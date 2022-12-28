@@ -229,7 +229,7 @@ describe('API: LSK Transactions', () => {
         params: {
           votes: [
             { delegateAddress: accounts.genesis.summary.address, amount: '100000000' },
-            { delegateAddress: accounts.delegate.summary.address, amount: '-100000000' },
+            { delegateAddress: accounts.validator.summary.address, amount: '-100000000' },
           ],
         },
       };
@@ -310,7 +310,7 @@ describe('API: LSK Transactions', () => {
         command: 'registerMultisignature',
         params: {
           numberOfSignatures: 2,
-          mandatoryKeys: [accounts.genesis.summary.publicKey, accounts.delegate.summary.publicKey],
+          mandatoryKeys: [accounts.genesis.summary.publicKey, accounts.validator.summary.publicKey],
           optionalKeys: [accounts.delegate_candidate.summary.publicKey],
           signatures: [],
         },
@@ -354,7 +354,7 @@ describe('API: LSK Transactions', () => {
         params: {
           votes: [
             { delegateAddress: accounts.genesis.summary.address, amount: '100000000' },
-            { delegateAddress: accounts.delegate.summary.address, amount: '-100000000' },
+            { delegateAddress: accounts.validator.summary.address, amount: '-100000000' },
           ],
         },
       };

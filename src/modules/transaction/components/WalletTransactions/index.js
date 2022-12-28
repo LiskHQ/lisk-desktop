@@ -37,8 +37,8 @@ export default compose(
       apiUtil: ({ networks }, params) => getDelegates({ network: networks.LSK, params }),
       defaultData: [],
       transformResponse: (response) =>
-        response.data.reduce((acc, delegate) => {
-          acc[delegate.address] = delegate;
+        response.data.reduce((acc, validator) => {
+          acc[validator.address] = validator;
           return acc;
         }, {}),
     },

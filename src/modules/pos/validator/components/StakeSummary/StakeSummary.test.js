@@ -84,7 +84,7 @@ const transactionJSON = {
       },
       {
         amount: '-100',
-        delegateAddress: accounts.delegate.summary.address,
+        delegateAddress: accounts.validator.summary.address,
       },
     ],
   },

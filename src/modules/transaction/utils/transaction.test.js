@@ -107,7 +107,7 @@ describe.skip('API: LSK Transactions', () => {
         module: 'token',
         command: 'transfer',
         params: {
-          recipientAddress: accounts.delegate.summary.address,
+          recipientAddress: accounts.validator.summary.address,
           amount: 100000000,
           data: 'test',
           tokenID: '00000000',
@@ -142,7 +142,7 @@ describe.skip('API: LSK Transactions', () => {
             },
             {
               amount: '-100',
-              delegateAddress: accounts.delegate.summary.address,
+              delegateAddress: accounts.validator.summary.address,
             },
           ],
         },
@@ -237,8 +237,8 @@ describe.skip('API: LSK Transactions', () => {
         command: 'registerMultisignature',
         params: {
           numberOfSignatures: 2,
-          mandatoryKeys: [accounts.genesis.summary.publicKey, accounts.delegate.summary.publicKey],
-          optionalKeys: [accounts.delegate_candidate.summary.publicKey],
+          mandatoryKeys: [accounts.genesis.summary.publicKey, accounts.validator.summary.publicKey],
+          optionalKeys: [accounts.validator_candidate.summary.publicKey],
           signatures: [],
         },
       };
@@ -268,7 +268,7 @@ describe.skip('API: LSK Transactions', () => {
   //       command,
   //       params: {
   //         amount: BigInt(100000000),
-  //         recipientAddress: getAddressFromBase32Address(accounts.delegate.summary.address),
+  //         recipientAddress: getAddressFromBase32Address(accounts.validator.summary.address),
   //         data: '',
   //         tokenID: mockAppTokens[0].tokenID,
   //       },
@@ -280,7 +280,7 @@ describe.skip('API: LSK Transactions', () => {
   //       id: '',
   //       params: {
   //         amount: '100000000',
-  //         recipient: { address: accounts.delegate.summary.address },
+  //         recipient: { address: accounts.validator.summary.address },
   //         data: '',
   //         token: { tokenID: mockAppTokens[0].tokenID },
   //       },
@@ -324,7 +324,7 @@ describe.skip('API: LSK Transactions', () => {
   //         votes: [
   //           {
   //             amount: BigInt('100'),
-  //             delegateAddress: getAddressFromBase32Address(accounts.delegate.summary.address),
+  //             delegateAddress: getAddressFromBase32Address(accounts.validator.summary.address),
   //           },
   //         ],
   //       },
@@ -338,7 +338,7 @@ describe.skip('API: LSK Transactions', () => {
   //         votes: [
   //           {
   //             amount: '100',
-  //             delegateAddress: accounts.delegate.summary.address,
+  //             delegateAddress: accounts.validator.summary.address,
   //           },
   //         ],
   //       },
@@ -371,7 +371,7 @@ describe.skip('API: LSK Transactions', () => {
   //     const unlockObjects = [
   //       {
   //         delegateAddress:
-  //           getAddressFromBase32Address(accounts.delegate.summary.address),
+  //           getAddressFromBase32Address(accounts.validator.summary.address),
   //         amount: BigInt('10000000'),
   //         unvoteHeight: 1000000,
   //       },
@@ -408,10 +408,10 @@ describe.skip('API: LSK Transactions', () => {
   //     const [module, command] = splitModuleAndCommand(registerMultisignature);
   //     const mandatoryKeys = [
   //       accounts.genesis.summary.publicKey,
-  //       accounts.delegate.summary.publicKey,
+  //       accounts.validator.summary.publicKey,
   //     ].map(key => convertStringToBinary(key));
   //     const optionalKeys = [
-  //       accounts.delegate_candidate.summary.publicKey,
+  //       accounts.validator_candidate.summary.publicKey,
   //     ].map(key => convertStringToBinary(key));
 
   //     const tx = {
@@ -434,10 +434,10 @@ describe.skip('API: LSK Transactions', () => {
   //         numberOfSignatures: 2,
   //         mandatoryKeys: [
   //           accounts.genesis.summary.publicKey,
-  //           accounts.delegate.summary.publicKey,
+  //           accounts.validator.summary.publicKey,
   //         ],
   //         optionalKeys: [
-  //           accounts.delegate_candidate.summary.publicKey,
+  //           accounts.validator_candidate.summary.publicKey,
   //         ],
   //         signatures: [],
   //       },
@@ -481,7 +481,7 @@ describe.skip('API: LSK Transactions', () => {
       command: 0,
       params: {
         amount: BigInt(10000),
-        recipientAddress: getBase32AddressFromAddress(accounts.delegate.summary.address),
+        recipientAddress: getBase32AddressFromAddress(accounts.validator.summary.address),
         data: '',
         tokenID: mockAppTokens[0].tokenID,
       },

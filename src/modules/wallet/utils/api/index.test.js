@@ -9,7 +9,7 @@ jest.mock('src/utils/api/http', () => jest.fn().mockReturnValue([]));
 jest.mock('src/utils/api/ws', () => jest.fn().mockReturnValue([]));
 jest
   .spyOn(cryptography.address, 'getLisk32AddressFromPublicKey')
-  .mockReturnValue(accounts.delegate.summary.address);
+  .mockReturnValue(accounts.validator.summary.address);
 
 describe('API: LSK Account', () => {
   const network = {

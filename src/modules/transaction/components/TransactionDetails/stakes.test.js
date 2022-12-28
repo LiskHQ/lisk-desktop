@@ -45,8 +45,8 @@ describe('Transaction stakes', () => {
             account: { address: accounts.delegate_candidate.address },
           },
           lsk987: {
-            ...accounts.delegate,
-            account: { address: accounts.delegate.address },
+            ...accounts.validator,
+            account: { address: accounts.validator.address },
           },
         },
       },

@@ -82,11 +82,11 @@ describe('setVotesByLaunchProtocol', () => {
   });
 
   it('Should dispatch stakeEdited with an array of valid usernames in query params', async () => {
-    const delegates = Object.values(mockAccounts)
-      .filter(account => account.dpos.delegate.username && account.summary.address);
-    const usernameList = delegates.map(account => account.dpos.delegate.username);
+    const validator = Object.values(mockAccounts)
+      .filter(account => account.pos.validator.username && account.summary.address);
+    const usernameList = validator.map(account => account.pos.validator.username);
     const url = `?modal=stakingQueue&unvotes=${usernameList.join(',')}`;
-    accounts.getAccounts.mockImplementation(() => Promise.resolve({ data: delegates }));
+    accounts.getAccounts.mockImplementation(() => Promise.resolve({ data: validator }));
 
     await setVotesByLaunchProtocol(url)(dispatch, getState);
     expect(accounts.getAccounts).toHaveBeenCalledWith({

@@ -64,7 +64,7 @@ describe('TxSignatureCollector', () => {
       fee: '1000000',
       nonce: '1',
       params: {
-        recipient: accounts.delegate.summary.address,
+        recipient: accounts.validator.summary.address,
         amount: '100000000',
         data: '',
         tokenID: '0000000000000000',

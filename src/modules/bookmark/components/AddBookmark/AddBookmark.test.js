@@ -85,8 +85,8 @@ describe('Add a new bookmark component', () => {
     });
 
     it('should not be possible to change validator label', () => {
-      const accountAddress = accounts.delegate.summary.address;
-      const accountUsername = accounts.delegate.dpos.delegate.username;
+      const accountAddress = accounts.validator.summary.address;
+      const accountUsername = accounts.validator.pos.validator.username;
       wrapper.find('input[name="address"]').first().simulate('change', {
         target: {
           value: accountAddress,
