@@ -1,9 +1,12 @@
 import { renderHook } from '@testing-library/react-hooks';
 import { queryWrapper as wrapper } from 'src/utils/test/queryWrapper';
 import { mockRewardsClaimable } from '@pos/validator/__fixtures__';
+import * as useCustomQuerySpy from '@common/hooks/useCustomQuery';
+import { useCustomQuery } from '@common/hooks';
 import { useRewardsClaimable } from './useRewardsClaimable';
 
 jest.useRealTimers();
+jest.spyOn(useCustomQuerySpy, 'useCustomQuery');
 
 describe('useRewardsClaimable hook', () => {
   const config = { params: { address:'lsktzb4j7e3knk4mkxckdr3y69gtu2nwmsb3hjbkg' } };
@@ -14,5 +17,10 @@ describe('useRewardsClaimable hook', () => {
     await waitFor(() => result.current.isFetched);
     expect(result.current.isSuccess).toBeTruthy();
     expect(result.current.data).toEqual(mockRewardsClaimable);
+  });
+
+  it('should call useCustomQuery with enabled false if required params are missing', async () => {
+    renderHook(() => useRewardsClaimable(), { wrapper });
+    expect(useCustomQuery).toBeCalledWith(expect.objectContaining({ options: { enabled: false } }));
   });
 });

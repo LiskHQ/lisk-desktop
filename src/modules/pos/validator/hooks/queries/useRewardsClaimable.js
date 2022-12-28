@@ -21,6 +21,8 @@ import { useCustomQuery } from 'src/modules/common/hooks';
  */
 
 export const useRewardsClaimable = ({ config: customConfig = {}, options } = { }) => {
+  const hasRequiredParams = customConfig.params?.address || customConfig.params?.name || customConfig.params?.publicKey;
+
   const config = {
     url: `/api/${API_VERSION}/pos/rewards/claimable`,
     method: 'get',
@@ -30,6 +32,9 @@ export const useRewardsClaimable = ({ config: customConfig = {}, options } = { }
   return useCustomQuery({
     keys: [POS_REWARDS_CLAIMABLE],
     config,
-    options,
+    options:   {
+      ...options,
+      enabled: !!hasRequiredParams,
+    },
   });
 };
