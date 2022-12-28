@@ -19,7 +19,7 @@ const UnlockingListItem = ({ unvote, t, currentBlockHeight }) => (
     </p>
     <p>
       <Icon name="loading" />
-      {`${t('will be available to unlock in')} ${getPendingTime(currentBlockHeight, unvote.height.end)}`}
+      {`${t('will be available to unlock in')} ${getPendingTime(currentBlockHeight, unvote.expectedUnlockableHeight)}`}
     </p>
   </li>
 );
@@ -27,11 +27,11 @@ const UnlockingListItem = ({ unvote, t, currentBlockHeight }) => (
 /**
  * displays a list of vote amounts that can be unlocked sometime in the future
  */
-const UnlockingList = ({ unlocking, currentBlockHeight, t }) => (
-  unlocking
-    .sort((unvoteA, unvoteB) => unvoteB.height.start - unvoteA.height.start)
+const UnlockingList = ({ pendingUnlocks, currentBlockHeight, t }) => (
+  pendingUnlocks
+    .sort((unvoteA, unvoteB) => unvoteB.unstakeHeight - unvoteA.unstakeHeight)
     .map((unvote, i) => {
-      if (isBlockHeightReached(unvote.height.end, currentBlockHeight)) {
+      if (isBlockHeightReached(unvote.expectedUnlockableHeight, currentBlockHeight)) {
         return null;
       }
       return (

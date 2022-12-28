@@ -14,9 +14,9 @@ const useUnlockableCalculator = () => {
   const { data: { height: currentHeight } } = useLatestBlock();
   const lockedInVotes = useSelector(state => calculateBalanceLockedInVotes(state.voting));
   const unlockableBalance = calculateUnlockableBalance(
-    wallet.dpos?.unlocking, currentHeight,
+    wallet.pos?.pendingUnlocks, currentHeight,
   );
-  const unlockObjects = getUnlockableUnlockObjects(wallet.dpos?.unlocking, currentHeight);
+  const unlockObjects = getUnlockableUnlockObjects(wallet.pos?.pendingUnlocks, currentHeight);
   return [unlockObjects, lockedInVotes, unlockableBalance];
 };
 

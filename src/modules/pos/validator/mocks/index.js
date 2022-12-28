@@ -59,13 +59,13 @@ export const receivedStakes = rest.get(
   }
 );
 
-export const unlocks = rest.get(`*/api/${API_VERSION}/dpos/unlocks`, async (req, res, ctx) => {
+export const unlocks = rest.get(`*/api/${API_VERSION}/pos/unlocks`, async (req, res, ctx) => {
   const limit = Number(req.url.searchParams.get('limit') || LIMIT);
   const offset = Number(req.url.searchParams.get('offset') || 0);
   const response = {
     data: {
       ...mockUnlocks.data,
-      unlocking: mockUnlocks.data.unlocking.slice(offset, offset + limit),
+      unlocking: mockUnlocks.data.pendingUnlocks.slice(offset, offset + limit),
     },
     meta: {
       ...mockUnlocks.meta,

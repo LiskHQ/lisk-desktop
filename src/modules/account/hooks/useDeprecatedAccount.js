@@ -136,13 +136,9 @@ export const useDeprecatedAccount = (accountInfo) => {
     }
     setAccount((state) => ({
       ...state,
-      dpos: {
-        ...state.dpos,
-        unlocking: (unlocks?.data?.unlocking || []).map((unlock) => ({
-          delegateAddress: unlock.delegateAddress,
-          amount: unlock.amount,
-          height: unlock.unvoteHeight,
-        })),
+      pos: {
+        ...state.pos,
+        pendingUnlocks: unlocks?.data?.pendingUnlocks ?? [],
       },
     }));
   }, [unlocks, isUnlocksSuccess]);
