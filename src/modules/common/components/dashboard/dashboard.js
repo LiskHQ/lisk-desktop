@@ -52,7 +52,7 @@ const Dashboard = ({ t, history }) => {
     config: {
       params: { limit: 2 },
     },
-  })
+  });
 
   return (
     <>
