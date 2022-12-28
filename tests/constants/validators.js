@@ -8,7 +8,8 @@ const delegate = index => ({
   status: 'active',
   isBanned: index < 15,
   rank: index,
-  pomHeights: [
+  pomHeights: [100 + index],
+  punishmentPeriods: [
     {
       start: 100 + index,
       end: 500 + index,
