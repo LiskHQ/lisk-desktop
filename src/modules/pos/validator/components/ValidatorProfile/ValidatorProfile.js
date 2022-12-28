@@ -51,20 +51,20 @@ const ValidatorProfile = ({ history }) => {
   const isBanned = validator.isBanned;
 
   useEffect(() => {
-    const pomHeights = validator.pomHeights;
-    const { end } = pomHeights?.length ? pomHeights[pomHeights.length - 1] : 0;
+    const punishmentPeriods = validator.punishmentPeriods;
+    const { end } = punishmentPeriods?.length ? punishmentPeriods[punishmentPeriods.length - 1] : 0;
     const daysLeft = Math.ceil((end - currentHeight) / numOfBlockPerDay);
 
     if (
       validator.address &&
       address !== currentAddress && // this ensures we are checking against a validator account that is not the current user
       address &&
-      (isBanned || pomHeights?.length) &&
+      (isBanned || punishmentPeriods?.length) &&
       (isBanned || daysLeft >= 1)
     ) {
       addWarningMessage({
         isBanned,
-        pomHeight: pomHeights ? pomHeights[pomHeights.length - 1] : 0,
+        pomHeight: punishmentPeriods ? punishmentPeriods[punishmentPeriods.length - 1] : 0,
         readMore: () => {
           const url = 'https://lisk.com/blog/development/lisk-voting-process';
           window.open(url, 'rel="noopener noreferrer"');

@@ -44,7 +44,7 @@ const RegisterValidatorForm = ({ nextStep, prevState }) => {
 
   const { data: posConstants, isLoading: isGettingPosConstants } = usePosConstants();
   const { data: tokens } = useTokensBalance({
-    config: { params: { tokenID: posConstants?.tokenIDDPoS } },
+    config: { params: { tokenID: posConstants?.posTokenID } },
     options: { enabled: !isGettingPosConstants },
   });
   const token = useMemo(() => tokens?.data?.[0] || {}, [tokens]);

@@ -4,8 +4,10 @@ import { cryptography } from '@liskhq/lisk-client';
 import accounts from '@tests/constants/wallets';
 import { mockBlocks } from '@block/__fixtures__';
 import { useLatestBlock } from '@block/hooks/queries/useLatestBlock';
+import { useCurrentAccount } from '@account/hooks';
 import { mountWithProps, mountWithRouter, mountWithRouterAndStore } from 'src/utils/testHelpers';
 import RecentTransactions, { NoTransactions, NotSignedIn } from './RecentTransactions';
+import { useTransactions } from '../../hooks/queries';
 
 const t = (str) => str;
 const transactionError = { error: { code: 404 } };
@@ -22,6 +24,11 @@ const LiskTransactions = {
       params: {
         recipient: 'lsks6uckwnap7s72ov3edddwgxab5e89t6uy8gjt6',
         votes: [],
+      },
+      meta: {
+        recipient: {
+          address: 'lsks6uckwnap7s72ov3edddwgxab5e89t6uy8gjt6',
+        },
       },
     },
     {
@@ -70,14 +77,6 @@ const LiskTransactions = {
   ...transactionError,
 };
 
-const noTx = {
-  data: [],
-  isLoading: false,
-  meta: { count: 0 },
-  loadData: jest.fn(),
-  ...transactionError,
-};
-
 const bookmarks = {
   LSK: [
     {
@@ -115,11 +114,14 @@ const NotSignedInState = {
   bookmarks,
 };
 
+
 const mockUseContext = (mockData = {}) => {
   jest.spyOn(React, 'useContext').mockImplementation(() => ({
     ...mockData,
   }));
 };
+jest.mock('@account/hooks');
+jest.mock('@transaction/hooks/queries');
 jest.mock('@block/hooks/queries/useLatestBlock');
 jest
   .spyOn(cryptography.address, 'getLisk32AddressFromPublicKey')
@@ -129,6 +131,10 @@ useSelector.mockReturnValue({ ...LiskState.account, ...LiskState.settings });
 useLatestBlock.mockReturnValue({ data: mockBlocks.data[0] });
 
 describe('Recent Transactions', () => {
+  afterEach(() => {
+    jest.clearAllMocks();
+  });
+
   it('Should render Recent Transactions properly with LSK active token', () => {
     mockUseContext({
       currentBlockHeight: 100000,
@@ -136,10 +142,23 @@ describe('Recent Transactions', () => {
       activeToken: 'LSK',
       avatarSize: 40,
     });
+    useCurrentAccount.mockReturnValue([
+      {
+        metadata: {
+          address: 'lskdxc4ta5j43jp9ro3f8zqbxta9fn6jwzjucw7yt',
+        },
+      }
+    ]);
+    useTransactions.mockReturnValue({
+      data: LiskTransactions,
+      isLoading: false,
+      hasNextPage: false,
+      isFetching: false,
+    });
 
     const wrapper = mountWithRouterAndStore(
       RecentTransactions,
-      { t, transactions: LiskTransactions },
+      { t },
       {},
       LiskState
     );
@@ -147,21 +166,35 @@ describe('Recent Transactions', () => {
   });
 
   it('Should render Recent Transactions with empty state', () => {
-    const wrapper = mountWithProps(RecentTransactions, { t, transactions: noTx }, LiskState);
+    useCurrentAccount.mockReturnValue([
+      {
+        metadata: {
+          address: 'lskdxc4ta5j43jp9ro3f8zqbxta9fn6jwzjucw7yt',
+        },
+      }
+    ]);
+    useTransactions.mockReturnValue({
+      data: { data: [] },
+      isLoading: false,
+      hasNextPage: false,
+      isFetching: false,
+    });
+    const wrapper = mountWithProps(RecentTransactions, { t }, LiskState);
     expect(wrapper).not.toContainMatchingElement('TransactionRow');
     expect(wrapper).toContainMatchingElement(NoTransactions);
   });
 
   it('Should render sign in message if the user is not signed in', () => {
-    useSelector.mockClear();
-    useSelector.mockReturnValue({
-      ...LiskState.account,
-      ...LiskState.settings,
-      passphrase: undefined,
+    useCurrentAccount.mockReturnValue([]);
+    useTransactions.mockReturnValue({
+      data: { data: [] },
+      isLoading: false,
+      hasNextPage: false,
+      isFetching: false,
     });
     const wrapper = mountWithRouter(
       RecentTransactions,
-      { t, transactions: noTx },
+      { t },
       NotSignedInState
     );
     expect(wrapper).not.toContainMatchingElement('.transactions-row');

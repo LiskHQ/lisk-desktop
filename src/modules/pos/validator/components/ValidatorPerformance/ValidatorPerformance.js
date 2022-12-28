@@ -20,7 +20,7 @@ const ValidatorPerformance = ({ delegate: { error, isLoading, data } } = {}) => 
 
   const {
     dpos: {
-      delegate: { pomHeights, status, consecutiveMissedBlocks },
+      delegate: { punishmentPeriods, status, consecutiveMissedBlocks },
     },
   } = data;
   const headerTitle = {
@@ -37,7 +37,7 @@ const ValidatorPerformance = ({ delegate: { error, isLoading, data } } = {}) => 
         <Box className={grid.row}>
           <Box className={`${grid['col-md-12']} ${grid['col-xs-12']}`}>
             <p className={styles.description}>
-              {validatorPerformanceDetails(pomHeights, status, consecutiveMissedBlocks)}
+              {validatorPerformanceDetails(punishmentPeriods, status, consecutiveMissedBlocks)}
             </p>
           </Box>
         </Box>
@@ -49,8 +49,8 @@ const ValidatorPerformance = ({ delegate: { error, isLoading, data } } = {}) => 
             <p className={styles.header}>Punishment ends</p>
           </Box>
         </Box>
-        {pomHeights &&
-          pomHeights.map((height, index) => (
+        {punishmentPeriods &&
+          punishmentPeriods.map((height, index) => (
             <Box
               className={`${grid.row} ${styles.performanceContainer}`}
               key={`${height.start}-${index}`}

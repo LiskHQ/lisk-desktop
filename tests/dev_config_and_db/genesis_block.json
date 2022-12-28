@@ -137,7 +137,7 @@
 							"consecutiveMissedBlocks": 0,
 							"lastForgedHeight": 250,
 							"isBanned": false,
-							"totalVotesReceived": "0"
+							"totalStakeReceived": "0"
 						},
 						"sentVotes": [],
 						"unlocking": []
@@ -163,7 +163,7 @@
 							"consecutiveMissedBlocks": 0,
 							"lastForgedHeight": 250,
 							"isBanned": false,
-							"totalVotesReceived": "0"
+							"totalStakeReceived": "0"
 						},
 						"sentVotes": [],
 						"unlocking": []
@@ -189,7 +189,7 @@
 							"consecutiveMissedBlocks": 0,
 							"lastForgedHeight": 250,
 							"isBanned": false,
-							"totalVotesReceived": "0"
+							"totalStakeReceived": "0"
 						},
 						"sentVotes": [],
 						"unlocking": []
@@ -215,7 +215,7 @@
 							"consecutiveMissedBlocks": 0,
 							"lastForgedHeight": 250,
 							"isBanned": false,
-							"totalVotesReceived": "0"
+							"totalStakeReceived": "0"
 						},
 						"sentVotes": [],
 						"unlocking": []
@@ -241,7 +241,7 @@
 							"consecutiveMissedBlocks": 0,
 							"lastForgedHeight": 250,
 							"isBanned": false,
-							"totalVotesReceived": "0"
+							"totalStakeReceived": "0"
 						},
 						"sentVotes": [],
 						"unlocking": []
@@ -267,7 +267,7 @@
 							"consecutiveMissedBlocks": 0,
 							"lastForgedHeight": 250,
 							"isBanned": false,
-							"totalVotesReceived": "0"
+							"totalStakeReceived": "0"
 						},
 						"sentVotes": [],
 						"unlocking": []
@@ -293,7 +293,7 @@
 							"consecutiveMissedBlocks": 0,
 							"lastForgedHeight": 250,
 							"isBanned": false,
-							"totalVotesReceived": "0"
+							"totalStakeReceived": "0"
 						},
 						"sentVotes": [],
 						"unlocking": []
@@ -319,7 +319,7 @@
 							"consecutiveMissedBlocks": 0,
 							"lastForgedHeight": 250,
 							"isBanned": false,
-							"totalVotesReceived": "0"
+							"totalStakeReceived": "0"
 						},
 						"sentVotes": [],
 						"unlocking": []
@@ -345,7 +345,7 @@
 							"consecutiveMissedBlocks": 0,
 							"lastForgedHeight": 250,
 							"isBanned": false,
-							"totalVotesReceived": "0"
+							"totalStakeReceived": "0"
 						},
 						"sentVotes": [],
 						"unlocking": []
@@ -371,7 +371,7 @@
 							"consecutiveMissedBlocks": 0,
 							"lastForgedHeight": 250,
 							"isBanned": false,
-							"totalVotesReceived": "0"
+							"totalStakeReceived": "0"
 						},
 						"sentVotes": [],
 						"unlocking": []
@@ -397,7 +397,7 @@
 							"consecutiveMissedBlocks": 0,
 							"lastForgedHeight": 250,
 							"isBanned": false,
-							"totalVotesReceived": "0"
+							"totalStakeReceived": "0"
 						},
 						"sentVotes": [],
 						"unlocking": []
@@ -423,7 +423,7 @@
 							"consecutiveMissedBlocks": 0,
 							"lastForgedHeight": 250,
 							"isBanned": false,
-							"totalVotesReceived": "0"
+							"totalStakeReceived": "0"
 						},
 						"sentVotes": [],
 						"unlocking": []
@@ -449,7 +449,7 @@
 							"consecutiveMissedBlocks": 0,
 							"lastForgedHeight": 250,
 							"isBanned": false,
-							"totalVotesReceived": "0"
+							"totalStakeReceived": "0"
 						},
 						"sentVotes": [],
 						"unlocking": []
@@ -475,7 +475,7 @@
 							"consecutiveMissedBlocks": 0,
 							"lastForgedHeight": 250,
 							"isBanned": false,
-							"totalVotesReceived": "0"
+							"totalStakeReceived": "0"
 						},
 						"sentVotes": [],
 						"unlocking": []
@@ -501,7 +501,7 @@
 							"consecutiveMissedBlocks": 0,
 							"lastForgedHeight": 250,
 							"isBanned": false,
-							"totalVotesReceived": "0"
+							"totalStakeReceived": "0"
 						},
 						"sentVotes": [],
 						"unlocking": []
@@ -527,7 +527,7 @@
 							"consecutiveMissedBlocks": 0,
 							"lastForgedHeight": 250,
 							"isBanned": false,
-							"totalVotesReceived": "0"
+							"totalStakeReceived": "0"
 						},
 						"sentVotes": [],
 						"unlocking": []
@@ -553,7 +553,7 @@
 							"consecutiveMissedBlocks": 0,
 							"lastForgedHeight": 250,
 							"isBanned": false,
-							"totalVotesReceived": "0"
+							"totalStakeReceived": "0"
 						},
 						"sentVotes": [],
 						"unlocking": []
@@ -579,7 +579,7 @@
 							"consecutiveMissedBlocks": 0,
 							"lastForgedHeight": 250,
 							"isBanned": false,
-							"totalVotesReceived": "0"
+							"totalStakeReceived": "0"
 						},
 						"sentVotes": [],
 						"unlocking": []
@@ -605,7 +605,7 @@
 							"consecutiveMissedBlocks": 0,
 							"lastForgedHeight": 250,
 							"isBanned": false,
-							"totalVotesReceived": "0"
+							"totalStakeReceived": "0"
 						},
 						"sentVotes": [],
 						"unlocking": []
@@ -631,7 +631,7 @@
 							"consecutiveMissedBlocks": 0,
 							"lastForgedHeight": 250,
 							"isBanned": false,
-							"totalVotesReceived": "0"
+							"totalStakeReceived": "0"
 						},
 						"sentVotes": [],
 						"unlocking": []
@@ -657,7 +657,7 @@
 							"consecutiveMissedBlocks": 0,
 							"lastForgedHeight": 250,
 							"isBanned": false,
-							"totalVotesReceived": "0"
+							"totalStakeReceived": "0"
 						},
 						"sentVotes": [],
 						"unlocking": []
@@ -683,7 +683,7 @@
 							"consecutiveMissedBlocks": 0,
 							"lastForgedHeight": 250,
 							"isBanned": false,
-							"totalVotesReceived": "0"
+							"totalStakeReceived": "0"
 						},
 						"sentVotes": [],
 						"unlocking": []
@@ -709,7 +709,7 @@
 							"consecutiveMissedBlocks": 0,
 							"lastForgedHeight": 250,
 							"isBanned": false,
-							"totalVotesReceived": "0"
+							"totalStakeReceived": "0"
 						},
 						"sentVotes": [],
 						"unlocking": []
@@ -735,7 +735,7 @@
 							"consecutiveMissedBlocks": 0,
 							"lastForgedHeight": 250,
 							"isBanned": false,
-							"totalVotesReceived": "0"
+							"totalStakeReceived": "0"
 						},
 						"sentVotes": [],
 						"unlocking": []
@@ -761,7 +761,7 @@
 							"consecutiveMissedBlocks": 0,
 							"lastForgedHeight": 250,
 							"isBanned": false,
-							"totalVotesReceived": "0"
+							"totalStakeReceived": "0"
 						},
 						"sentVotes": [],
 						"unlocking": []
@@ -787,7 +787,7 @@
 							"consecutiveMissedBlocks": 0,
 							"lastForgedHeight": 250,
 							"isBanned": false,
-							"totalVotesReceived": "0"
+							"totalStakeReceived": "0"
 						},
 						"sentVotes": [],
 						"unlocking": []
@@ -813,7 +813,7 @@
 							"consecutiveMissedBlocks": 0,
 							"lastForgedHeight": 250,
 							"isBanned": false,
-							"totalVotesReceived": "0"
+							"totalStakeReceived": "0"
 						},
 						"sentVotes": [],
 						"unlocking": []
@@ -839,7 +839,7 @@
 							"consecutiveMissedBlocks": 0,
 							"lastForgedHeight": 250,
 							"isBanned": false,
-							"totalVotesReceived": "0"
+							"totalStakeReceived": "0"
 						},
 						"sentVotes": [],
 						"unlocking": []
@@ -865,7 +865,7 @@
 							"consecutiveMissedBlocks": 0,
 							"lastForgedHeight": 250,
 							"isBanned": false,
-							"totalVotesReceived": "0"
+							"totalStakeReceived": "0"
 						},
 						"sentVotes": [],
 						"unlocking": []
@@ -891,7 +891,7 @@
 							"consecutiveMissedBlocks": 0,
 							"lastForgedHeight": 250,
 							"isBanned": false,
-							"totalVotesReceived": "0"
+							"totalStakeReceived": "0"
 						},
 						"sentVotes": [],
 						"unlocking": []
@@ -917,7 +917,7 @@
 							"consecutiveMissedBlocks": 0,
 							"lastForgedHeight": 250,
 							"isBanned": false,
-							"totalVotesReceived": "0"
+							"totalStakeReceived": "0"
 						},
 						"sentVotes": [],
 						"unlocking": []
@@ -943,7 +943,7 @@
 							"consecutiveMissedBlocks": 0,
 							"lastForgedHeight": 250,
 							"isBanned": false,
-							"totalVotesReceived": "0"
+							"totalStakeReceived": "0"
 						},
 						"sentVotes": [],
 						"unlocking": []
@@ -969,7 +969,7 @@
 							"consecutiveMissedBlocks": 0,
 							"lastForgedHeight": 250,
 							"isBanned": false,
-							"totalVotesReceived": "0"
+							"totalStakeReceived": "0"
 						},
 						"sentVotes": [],
 						"unlocking": []
@@ -995,7 +995,7 @@
 							"consecutiveMissedBlocks": 0,
 							"lastForgedHeight": 250,
 							"isBanned": false,
-							"totalVotesReceived": "0"
+							"totalStakeReceived": "0"
 						},
 						"sentVotes": [],
 						"unlocking": []
@@ -1021,7 +1021,7 @@
 							"consecutiveMissedBlocks": 0,
 							"lastForgedHeight": 250,
 							"isBanned": false,
-							"totalVotesReceived": "0"
+							"totalStakeReceived": "0"
 						},
 						"sentVotes": [],
 						"unlocking": []
@@ -1047,7 +1047,7 @@
 							"consecutiveMissedBlocks": 0,
 							"lastForgedHeight": 250,
 							"isBanned": false,
-							"totalVotesReceived": "0"
+							"totalStakeReceived": "0"
 						},
 						"sentVotes": [],
 						"unlocking": []
@@ -1073,7 +1073,7 @@
 							"consecutiveMissedBlocks": 0,
 							"lastForgedHeight": 250,
 							"isBanned": false,
-							"totalVotesReceived": "0"
+							"totalStakeReceived": "0"
 						},
 						"sentVotes": [],
 						"unlocking": []
@@ -1099,7 +1099,7 @@
 							"consecutiveMissedBlocks": 0,
 							"lastForgedHeight": 250,
 							"isBanned": false,
-							"totalVotesReceived": "0"
+							"totalStakeReceived": "0"
 						},
 						"sentVotes": [],
 						"unlocking": []
@@ -1125,7 +1125,7 @@
 							"consecutiveMissedBlocks": 0,
 							"lastForgedHeight": 250,
 							"isBanned": false,
-							"totalVotesReceived": "0"
+							"totalStakeReceived": "0"
 						},
 						"sentVotes": [],
 						"unlocking": []
@@ -1151,7 +1151,7 @@
 							"consecutiveMissedBlocks": 0,
 							"lastForgedHeight": 250,
 							"isBanned": false,
-							"totalVotesReceived": "0"
+							"totalStakeReceived": "0"
 						},
 						"sentVotes": [],
 						"unlocking": []
@@ -1177,7 +1177,7 @@
 							"consecutiveMissedBlocks": 0,
 							"lastForgedHeight": 250,
 							"isBanned": false,
-							"totalVotesReceived": "1000000000000"
+							"totalStakeReceived": "1000000000000"
 						},
 						"sentVotes": [
 							{
@@ -1208,7 +1208,7 @@
 							"consecutiveMissedBlocks": 0,
 							"lastForgedHeight": 250,
 							"isBanned": false,
-							"totalVotesReceived": "1000000000000"
+							"totalStakeReceived": "1000000000000"
 						},
 						"sentVotes": [
 							{
@@ -1239,7 +1239,7 @@
 							"consecutiveMissedBlocks": 0,
 							"lastForgedHeight": 250,
 							"isBanned": false,
-							"totalVotesReceived": "1000000000000"
+							"totalStakeReceived": "1000000000000"
 						},
 						"sentVotes": [
 							{
@@ -1270,7 +1270,7 @@
 							"consecutiveMissedBlocks": 0,
 							"lastForgedHeight": 250,
 							"isBanned": false,
-							"totalVotesReceived": "1000000000000"
+							"totalStakeReceived": "1000000000000"
 						},
 						"sentVotes": [
 							{
@@ -1301,7 +1301,7 @@
 							"consecutiveMissedBlocks": 0,
 							"lastForgedHeight": 250,
 							"isBanned": false,
-							"totalVotesReceived": "1000000000000"
+							"totalStakeReceived": "1000000000000"
 						},
 						"sentVotes": [
 							{
@@ -1332,7 +1332,7 @@
 							"consecutiveMissedBlocks": 0,
 							"lastForgedHeight": 250,
 							"isBanned": false,
-							"totalVotesReceived": "1000000000000"
+							"totalStakeReceived": "1000000000000"
 						},
 						"sentVotes": [
 							{
@@ -1363,7 +1363,7 @@
 							"consecutiveMissedBlocks": 0,
 							"lastForgedHeight": 250,
 							"isBanned": false,
-							"totalVotesReceived": "1000000000000"
+							"totalStakeReceived": "1000000000000"
 						},
 						"sentVotes": [
 							{
@@ -1394,7 +1394,7 @@
 							"consecutiveMissedBlocks": 0,
 							"lastForgedHeight": 250,
 							"isBanned": false,
-							"totalVotesReceived": "1000000000000"
+							"totalStakeReceived": "1000000000000"
 						},
 						"sentVotes": [
 							{
@@ -1425,7 +1425,7 @@
 							"consecutiveMissedBlocks": 0,
 							"lastForgedHeight": 250,
 							"isBanned": false,
-							"totalVotesReceived": "1000000000000"
+							"totalStakeReceived": "1000000000000"
 						},
 						"sentVotes": [
 							{
@@ -1456,7 +1456,7 @@
 							"consecutiveMissedBlocks": 0,
 							"lastForgedHeight": 250,
 							"isBanned": false,
-							"totalVotesReceived": "1000000000000"
+							"totalStakeReceived": "1000000000000"
 						},
 						"sentVotes": [
 							{
@@ -1487,7 +1487,7 @@
 							"consecutiveMissedBlocks": 0,
 							"lastForgedHeight": 250,
 							"isBanned": false,
-							"totalVotesReceived": "1000000000000"
+							"totalStakeReceived": "1000000000000"
 						},
 						"sentVotes": [
 							{
@@ -1518,7 +1518,7 @@
 							"consecutiveMissedBlocks": 0,
 							"lastForgedHeight": 250,
 							"isBanned": false,
-							"totalVotesReceived": "1000000000000"
+							"totalStakeReceived": "1000000000000"
 						},
 						"sentVotes": [
 							{
@@ -1549,7 +1549,7 @@
 							"consecutiveMissedBlocks": 0,
 							"lastForgedHeight": 250,
 							"isBanned": false,
-							"totalVotesReceived": "1000000000000"
+							"totalStakeReceived": "1000000000000"
 						},
 						"sentVotes": [
 							{
@@ -1580,7 +1580,7 @@
 							"consecutiveMissedBlocks": 0,
 							"lastForgedHeight": 250,
 							"isBanned": false,
-							"totalVotesReceived": "1000000000000"
+							"totalStakeReceived": "1000000000000"
 						},
 						"sentVotes": [
 							{
@@ -1611,7 +1611,7 @@
 							"consecutiveMissedBlocks": 0,
 							"lastForgedHeight": 250,
 							"isBanned": false,
-							"totalVotesReceived": "1000000000000"
+							"totalStakeReceived": "1000000000000"
 						},
 						"sentVotes": [
 							{
@@ -1642,7 +1642,7 @@
 							"consecutiveMissedBlocks": 0,
 							"lastForgedHeight": 250,
 							"isBanned": false,
-							"totalVotesReceived": "1000000000000"
+							"totalStakeReceived": "1000000000000"
 						},
 						"sentVotes": [
 							{
@@ -1673,7 +1673,7 @@
 							"consecutiveMissedBlocks": 0,
 							"lastForgedHeight": 250,
 							"isBanned": false,
-							"totalVotesReceived": "1000000000000"
+							"totalStakeReceived": "1000000000000"
 						},
 						"sentVotes": [
 							{
@@ -1704,7 +1704,7 @@
 							"consecutiveMissedBlocks": 0,
 							"lastForgedHeight": 250,
 							"isBanned": false,
-							"totalVotesReceived": "1000000000000"
+							"totalStakeReceived": "1000000000000"
 						},
 						"sentVotes": [
 							{
@@ -1735,7 +1735,7 @@
 							"consecutiveMissedBlocks": 0,
 							"lastForgedHeight": 250,
 							"isBanned": false,
-							"totalVotesReceived": "1000000000000"
+							"totalStakeReceived": "1000000000000"
 						},
 						"sentVotes": [
 							{
@@ -1766,7 +1766,7 @@
 							"consecutiveMissedBlocks": 0,
 							"lastForgedHeight": 250,
 							"isBanned": false,
-							"totalVotesReceived": "1000000000000"
+							"totalStakeReceived": "1000000000000"
 						},
 						"sentVotes": [
 							{
@@ -1797,7 +1797,7 @@
 							"consecutiveMissedBlocks": 0,
 							"lastForgedHeight": 250,
 							"isBanned": false,
-							"totalVotesReceived": "1000000000000"
+							"totalStakeReceived": "1000000000000"
 						},
 						"sentVotes": [
 							{
@@ -1828,7 +1828,7 @@
 							"consecutiveMissedBlocks": 0,
 							"lastForgedHeight": 250,
 							"isBanned": false,
-							"totalVotesReceived": "1000000000000"
+							"totalStakeReceived": "1000000000000"
 						},
 						"sentVotes": [
 							{
@@ -1859,7 +1859,7 @@
 							"consecutiveMissedBlocks": 0,
 							"lastForgedHeight": 250,
 							"isBanned": false,
-							"totalVotesReceived": "1000000000000"
+							"totalStakeReceived": "1000000000000"
 						},
 						"sentVotes": [
 							{
@@ -1890,7 +1890,7 @@
 							"consecutiveMissedBlocks": 0,
 							"lastForgedHeight": 250,
 							"isBanned": false,
-							"totalVotesReceived": "1000000000000"
+							"totalStakeReceived": "1000000000000"
 						},
 						"sentVotes": [
 							{
@@ -1921,7 +1921,7 @@
 							"consecutiveMissedBlocks": 0,
 							"lastForgedHeight": 250,
 							"isBanned": false,
-							"totalVotesReceived": "1000000000000"
+							"totalStakeReceived": "1000000000000"
 						},
 						"sentVotes": [
 							{
@@ -1952,7 +1952,7 @@
 							"consecutiveMissedBlocks": 0,
 							"lastForgedHeight": 250,
 							"isBanned": false,
-							"totalVotesReceived": "1000000000000"
+							"totalStakeReceived": "1000000000000"
 						},
 						"sentVotes": [
 							{
@@ -1983,7 +1983,7 @@
 							"consecutiveMissedBlocks": 0,
 							"lastForgedHeight": 250,
 							"isBanned": false,
-							"totalVotesReceived": "1000000000000"
+							"totalStakeReceived": "1000000000000"
 						},
 						"sentVotes": [
 							{
@@ -2014,7 +2014,7 @@
 							"consecutiveMissedBlocks": 0,
 							"lastForgedHeight": 250,
 							"isBanned": false,
-							"totalVotesReceived": "1000000000000"
+							"totalStakeReceived": "1000000000000"
 						},
 						"sentVotes": [
 							{
@@ -2045,7 +2045,7 @@
 							"consecutiveMissedBlocks": 0,
 							"lastForgedHeight": 250,
 							"isBanned": false,
-							"totalVotesReceived": "1000000000000"
+							"totalStakeReceived": "1000000000000"
 						},
 						"sentVotes": [
 							{
@@ -2076,7 +2076,7 @@
 							"consecutiveMissedBlocks": 0,
 							"lastForgedHeight": 250,
 							"isBanned": false,
-							"totalVotesReceived": "1000000000000"
+							"totalStakeReceived": "1000000000000"
 						},
 						"sentVotes": [
 							{
@@ -2107,7 +2107,7 @@
 							"consecutiveMissedBlocks": 0,
 							"lastForgedHeight": 250,
 							"isBanned": false,
-							"totalVotesReceived": "1000000000000"
+							"totalStakeReceived": "1000000000000"
 						},
 						"sentVotes": [
 							{
@@ -2138,7 +2138,7 @@
 							"consecutiveMissedBlocks": 0,
 							"lastForgedHeight": 250,
 							"isBanned": false,
-							"totalVotesReceived": "1000000000000"
+							"totalStakeReceived": "1000000000000"
 						},
 						"sentVotes": [
 							{
@@ -2169,7 +2169,7 @@
 							"consecutiveMissedBlocks": 0,
 							"lastForgedHeight": 250,
 							"isBanned": false,
-							"totalVotesReceived": "1000000000000"
+							"totalStakeReceived": "1000000000000"
 						},
 						"sentVotes": [
 							{
@@ -2200,7 +2200,7 @@
 							"consecutiveMissedBlocks": 0,
 							"lastForgedHeight": 250,
 							"isBanned": false,
-							"totalVotesReceived": "1000000000000"
+							"totalStakeReceived": "1000000000000"
 						},
 						"sentVotes": [
 							{
@@ -2231,7 +2231,7 @@
 							"consecutiveMissedBlocks": 0,
 							"lastForgedHeight": 250,
 							"isBanned": false,
-							"totalVotesReceived": "1000000000000"
+							"totalStakeReceived": "1000000000000"
 						},
 						"sentVotes": [
 							{
@@ -2262,7 +2262,7 @@
 							"consecutiveMissedBlocks": 0,
 							"lastForgedHeight": 250,
 							"isBanned": false,
-							"totalVotesReceived": "1000000000000"
+							"totalStakeReceived": "1000000000000"
 						},
 						"sentVotes": [
 							{
@@ -2293,7 +2293,7 @@
 							"consecutiveMissedBlocks": 0,
 							"lastForgedHeight": 250,
 							"isBanned": false,
-							"totalVotesReceived": "1000000000000"
+							"totalStakeReceived": "1000000000000"
 						},
 						"sentVotes": [
 							{
@@ -2324,7 +2324,7 @@
 							"consecutiveMissedBlocks": 0,
 							"lastForgedHeight": 250,
 							"isBanned": false,
-							"totalVotesReceived": "1000000000000"
+							"totalStakeReceived": "1000000000000"
 						},
 						"sentVotes": [
 							{
@@ -2355,7 +2355,7 @@
 							"consecutiveMissedBlocks": 0,
 							"lastForgedHeight": 250,
 							"isBanned": false,
-							"totalVotesReceived": "1000000000000"
+							"totalStakeReceived": "1000000000000"
 						},
 						"sentVotes": [
 							{
@@ -2386,7 +2386,7 @@
 							"consecutiveMissedBlocks": 0,
 							"lastForgedHeight": 250,
 							"isBanned": false,
-							"totalVotesReceived": "1000000000000"
+							"totalStakeReceived": "1000000000000"
 						},
 						"sentVotes": [
 							{
@@ -2417,7 +2417,7 @@
 							"consecutiveMissedBlocks": 0,
 							"lastForgedHeight": 250,
 							"isBanned": false,
-							"totalVotesReceived": "1000000000000"
+							"totalStakeReceived": "1000000000000"
 						},
 						"sentVotes": [
 							{
@@ -2448,7 +2448,7 @@
 							"consecutiveMissedBlocks": 0,
 							"lastForgedHeight": 250,
 							"isBanned": false,
-							"totalVotesReceived": "1000000000000"
+							"totalStakeReceived": "1000000000000"
 						},
 						"sentVotes": [
 							{
@@ -2479,7 +2479,7 @@
 							"consecutiveMissedBlocks": 0,
 							"lastForgedHeight": 250,
 							"isBanned": false,
-							"totalVotesReceived": "1000000000000"
+							"totalStakeReceived": "1000000000000"
 						},
 						"sentVotes": [
 							{
@@ -2510,7 +2510,7 @@
 							"consecutiveMissedBlocks": 0,
 							"lastForgedHeight": 250,
 							"isBanned": false,
-							"totalVotesReceived": "1000000000000"
+							"totalStakeReceived": "1000000000000"
 						},
 						"sentVotes": [
 							{
@@ -2541,7 +2541,7 @@
 							"consecutiveMissedBlocks": 0,
 							"lastForgedHeight": 250,
 							"isBanned": false,
-							"totalVotesReceived": "1000000000000"
+							"totalStakeReceived": "1000000000000"
 						},
 						"sentVotes": [
 							{
@@ -2572,7 +2572,7 @@
 							"consecutiveMissedBlocks": 0,
 							"lastForgedHeight": 250,
 							"isBanned": false,
-							"totalVotesReceived": "1000000000000"
+							"totalStakeReceived": "1000000000000"
 						},
 						"sentVotes": [
 							{
@@ -2603,7 +2603,7 @@
 							"consecutiveMissedBlocks": 0,
 							"lastForgedHeight": 250,
 							"isBanned": false,
-							"totalVotesReceived": "1000000000000"
+							"totalStakeReceived": "1000000000000"
 						},
 						"sentVotes": [
 							{
@@ -2634,7 +2634,7 @@
 							"consecutiveMissedBlocks": 0,
 							"lastForgedHeight": 250,
 							"isBanned": false,
-							"totalVotesReceived": "1000000000000"
+							"totalStakeReceived": "1000000000000"
 						},
 						"sentVotes": [
 							{
@@ -2665,7 +2665,7 @@
 							"consecutiveMissedBlocks": 0,
 							"lastForgedHeight": 250,
 							"isBanned": false,
-							"totalVotesReceived": "1000000000000"
+							"totalStakeReceived": "1000000000000"
 						},
 						"sentVotes": [
 							{
@@ -2696,7 +2696,7 @@
 							"consecutiveMissedBlocks": 0,
 							"lastForgedHeight": 250,
 							"isBanned": false,
-							"totalVotesReceived": "1000000000000"
+							"totalStakeReceived": "1000000000000"
 						},
 						"sentVotes": [
 							{
@@ -2727,7 +2727,7 @@
 							"consecutiveMissedBlocks": 0,
 							"lastForgedHeight": 250,
 							"isBanned": false,
-							"totalVotesReceived": "1000000000000"
+							"totalStakeReceived": "1000000000000"
 						},
 						"sentVotes": [
 							{
@@ -2758,7 +2758,7 @@
 							"consecutiveMissedBlocks": 0,
 							"lastForgedHeight": 250,
 							"isBanned": false,
-							"totalVotesReceived": "1000000000000"
+							"totalStakeReceived": "1000000000000"
 						},
 						"sentVotes": [
 							{
@@ -2789,7 +2789,7 @@
 							"consecutiveMissedBlocks": 0,
 							"lastForgedHeight": 250,
 							"isBanned": false,
-							"totalVotesReceived": "1000000000000"
+							"totalStakeReceived": "1000000000000"
 						},
 						"sentVotes": [
 							{
@@ -2820,7 +2820,7 @@
 							"consecutiveMissedBlocks": 0,
 							"lastForgedHeight": 250,
 							"isBanned": false,
-							"totalVotesReceived": "1000000000000"
+							"totalStakeReceived": "1000000000000"
 						},
 						"sentVotes": [
 							{
@@ -2851,7 +2851,7 @@
 							"consecutiveMissedBlocks": 0,
 							"lastForgedHeight": 250,
 							"isBanned": false,
-							"totalVotesReceived": "1000000000000"
+							"totalStakeReceived": "1000000000000"
 						},
 						"sentVotes": [
 							{
@@ -2882,7 +2882,7 @@
 							"consecutiveMissedBlocks": 0,
 							"lastForgedHeight": 250,
 							"isBanned": false,
-							"totalVotesReceived": "1000000000000"
+							"totalStakeReceived": "1000000000000"
 						},
 						"sentVotes": [
 							{
@@ -2913,7 +2913,7 @@
 							"consecutiveMissedBlocks": 0,
 							"lastForgedHeight": 250,
 							"isBanned": false,
-							"totalVotesReceived": "1000000000000"
+							"totalStakeReceived": "1000000000000"
 						},
 						"sentVotes": [
 							{
@@ -2944,7 +2944,7 @@
 							"consecutiveMissedBlocks": 0,
 							"lastForgedHeight": 250,
 							"isBanned": false,
-							"totalVotesReceived": "1000000000000"
+							"totalStakeReceived": "1000000000000"
 						},
 						"sentVotes": [
 							{
@@ -2975,7 +2975,7 @@
 							"consecutiveMissedBlocks": 0,
 							"lastForgedHeight": 250,
 							"isBanned": false,
-							"totalVotesReceived": "1000000000000"
+							"totalStakeReceived": "1000000000000"
 						},
 						"sentVotes": [
 							{
@@ -3006,7 +3006,7 @@
 							"consecutiveMissedBlocks": 0,
 							"lastForgedHeight": 250,
 							"isBanned": false,
-							"totalVotesReceived": "1000000000000"
+							"totalStakeReceived": "1000000000000"
 						},
 						"sentVotes": [
 							{
@@ -3037,7 +3037,7 @@
 							"consecutiveMissedBlocks": 0,
 							"lastForgedHeight": 250,
 							"isBanned": false,
-							"totalVotesReceived": "1000000000000"
+							"totalStakeReceived": "1000000000000"
 						},
 						"sentVotes": [
 							{
@@ -3068,7 +3068,7 @@
 							"consecutiveMissedBlocks": 0,
 							"lastForgedHeight": 250,
 							"isBanned": false,
-							"totalVotesReceived": "1000000000000"
+							"totalStakeReceived": "1000000000000"
 						},
 						"sentVotes": [
 							{
@@ -3099,7 +3099,7 @@
 							"consecutiveMissedBlocks": 0,
 							"lastForgedHeight": 250,
 							"isBanned": false,
-							"totalVotesReceived": "1000000000000"
+							"totalStakeReceived": "1000000000000"
 						},
 						"sentVotes": [
 							{
@@ -3130,7 +3130,7 @@
 							"consecutiveMissedBlocks": 0,
 							"lastForgedHeight": 250,
 							"isBanned": false,
-							"totalVotesReceived": "1000000000000"
+							"totalStakeReceived": "1000000000000"
 						},
 						"sentVotes": [
 							{
@@ -3161,7 +3161,7 @@
 							"consecutiveMissedBlocks": 0,
 							"lastForgedHeight": 250,
 							"isBanned": false,
-							"totalVotesReceived": "1000000000000"
+							"totalStakeReceived": "1000000000000"
 						},
 						"sentVotes": [
 							{
@@ -3192,7 +3192,7 @@
 							"consecutiveMissedBlocks": 0,
 							"lastForgedHeight": 250,
 							"isBanned": false,
-							"totalVotesReceived": "1000000000000"
+							"totalStakeReceived": "1000000000000"
 						},
 						"sentVotes": [
 							{
@@ -3223,7 +3223,7 @@
 							"consecutiveMissedBlocks": 0,
 							"lastForgedHeight": 250,
 							"isBanned": false,
-							"totalVotesReceived": "1000000000000"
+							"totalStakeReceived": "1000000000000"
 						},
 						"sentVotes": [
 							{
@@ -3254,7 +3254,7 @@
 							"consecutiveMissedBlocks": 0,
 							"lastForgedHeight": 250,
 							"isBanned": false,
-							"totalVotesReceived": "1000000000000"
+							"totalStakeReceived": "1000000000000"
 						},
 						"sentVotes": [
 							{
@@ -3285,7 +3285,7 @@
 							"consecutiveMissedBlocks": 0,
 							"lastForgedHeight": 250,
 							"isBanned": false,
-							"totalVotesReceived": "1000000000000"
+							"totalStakeReceived": "1000000000000"
 						},
 						"sentVotes": [
 							{
@@ -3316,7 +3316,7 @@
 							"consecutiveMissedBlocks": 0,
 							"lastForgedHeight": 250,
 							"isBanned": false,
-							"totalVotesReceived": "1000000000000"
+							"totalStakeReceived": "1000000000000"
 						},
 						"sentVotes": [
 							{
@@ -3347,7 +3347,7 @@
 							"consecutiveMissedBlocks": 0,
 							"lastForgedHeight": 250,
 							"isBanned": false,
-							"totalVotesReceived": "1000000000000"
+							"totalStakeReceived": "1000000000000"
 						},
 						"sentVotes": [
 							{
@@ -3378,7 +3378,7 @@
 							"consecutiveMissedBlocks": 0,
 							"lastForgedHeight": 250,
 							"isBanned": false,
-							"totalVotesReceived": "1000000000000"
+							"totalStakeReceived": "1000000000000"
 						},
 						"sentVotes": [
 							{
@@ -3409,7 +3409,7 @@
 							"consecutiveMissedBlocks": 0,
 							"lastForgedHeight": 250,
 							"isBanned": false,
-							"totalVotesReceived": "1000000000000"
+							"totalStakeReceived": "1000000000000"
 						},
 						"sentVotes": [
 							{
@@ -3440,7 +3440,7 @@
 							"consecutiveMissedBlocks": 0,
 							"lastForgedHeight": 250,
 							"isBanned": false,
-							"totalVotesReceived": "1000000000000"
+							"totalStakeReceived": "1000000000000"
 						},
 						"sentVotes": [
 							{
@@ -3471,7 +3471,7 @@
 							"consecutiveMissedBlocks": 0,
 							"lastForgedHeight": 250,
 							"isBanned": false,
-							"totalVotesReceived": "1000000000000"
+							"totalStakeReceived": "1000000000000"
 						},
 						"sentVotes": [
 							{
@@ -3502,7 +3502,7 @@
 							"consecutiveMissedBlocks": 0,
 							"lastForgedHeight": 250,
 							"isBanned": false,
-							"totalVotesReceived": "1000000000000"
+							"totalStakeReceived": "1000000000000"
 						},
 						"sentVotes": [
 							{
@@ -3533,7 +3533,7 @@
 							"consecutiveMissedBlocks": 0,
 							"lastForgedHeight": 250,
 							"isBanned": false,
-							"totalVotesReceived": "1000000000000"
+							"totalStakeReceived": "1000000000000"
 						},
 						"sentVotes": [
 							{
@@ -3564,7 +3564,7 @@
 							"consecutiveMissedBlocks": 0,
 							"lastForgedHeight": 250,
 							"isBanned": false,
-							"totalVotesReceived": "1000000000000"
+							"totalStakeReceived": "1000000000000"
 						},
 						"sentVotes": [
 							{
@@ -3595,7 +3595,7 @@
 							"consecutiveMissedBlocks": 0,
 							"lastForgedHeight": 250,
 							"isBanned": false,
-							"totalVotesReceived": "1000000000000"
+							"totalStakeReceived": "1000000000000"
 						},
 						"sentVotes": [
 							{
@@ -3626,7 +3626,7 @@
 							"consecutiveMissedBlocks": 0,
 							"lastForgedHeight": 250,
 							"isBanned": false,
-							"totalVotesReceived": "1000000000000"
+							"totalStakeReceived": "1000000000000"
 						},
 						"sentVotes": [
 							{
@@ -3657,7 +3657,7 @@
 							"consecutiveMissedBlocks": 0,
 							"lastForgedHeight": 250,
 							"isBanned": false,
-							"totalVotesReceived": "1000000000000"
+							"totalStakeReceived": "1000000000000"
 						},
 						"sentVotes": [
 							{
@@ -3688,7 +3688,7 @@
 							"consecutiveMissedBlocks": 0,
 							"lastForgedHeight": 250,
 							"isBanned": false,
-							"totalVotesReceived": "1000000000000"
+							"totalStakeReceived": "1000000000000"
 						},
 						"sentVotes": [
 							{
@@ -3719,7 +3719,7 @@
 							"consecutiveMissedBlocks": 0,
 							"lastForgedHeight": 250,
 							"isBanned": false,
-							"totalVotesReceived": "1000000000000"
+							"totalStakeReceived": "1000000000000"
 						},
 						"sentVotes": [
 							{
@@ -3750,7 +3750,7 @@
 							"consecutiveMissedBlocks": 0,
 							"lastForgedHeight": 250,
 							"isBanned": false,
-							"totalVotesReceived": "1000000000000"
+							"totalStakeReceived": "1000000000000"
 						},
 						"sentVotes": [
 							{
@@ -3781,7 +3781,7 @@
 							"consecutiveMissedBlocks": 0,
 							"lastForgedHeight": 250,
 							"isBanned": false,
-							"totalVotesReceived": "1000000000000"
+							"totalStakeReceived": "1000000000000"
 						},
 						"sentVotes": [
 							{
@@ -3812,7 +3812,7 @@
 							"consecutiveMissedBlocks": 0,
 							"lastForgedHeight": 250,
 							"isBanned": false,
-							"totalVotesReceived": "1000000000000"
+							"totalStakeReceived": "1000000000000"
 						},
 						"sentVotes": [
 							{
@@ -3843,7 +3843,7 @@
 							"consecutiveMissedBlocks": 0,
 							"lastForgedHeight": 250,
 							"isBanned": false,
-							"totalVotesReceived": "1000000000000"
+							"totalStakeReceived": "1000000000000"
 						},
 						"sentVotes": [
 							{
@@ -3874,7 +3874,7 @@
 							"consecutiveMissedBlocks": 0,
 							"lastForgedHeight": 250,
 							"isBanned": false,
-							"totalVotesReceived": "0"
+							"totalStakeReceived": "0"
 						},
 						"sentVotes": [],
 						"unlocking": []
@@ -3900,7 +3900,7 @@
 							"consecutiveMissedBlocks": 0,
 							"lastForgedHeight": 250,
 							"isBanned": false,
-							"totalVotesReceived": "1000000000000"
+							"totalStakeReceived": "1000000000000"
 						},
 						"sentVotes": [
 							{
@@ -3931,7 +3931,7 @@
 							"consecutiveMissedBlocks": 0,
 							"lastForgedHeight": 250,
 							"isBanned": false,
-							"totalVotesReceived": "1000000000000"
+							"totalStakeReceived": "1000000000000"
 						},
 						"sentVotes": [
 							{
@@ -3962,7 +3962,7 @@
 							"consecutiveMissedBlocks": 0,
 							"lastForgedHeight": 250,
 							"isBanned": false,
-							"totalVotesReceived": "1000000000000"
+							"totalStakeReceived": "1000000000000"
 						},
 						"sentVotes": [
 							{
@@ -3993,7 +3993,7 @@
 							"consecutiveMissedBlocks": 0,
 							"lastForgedHeight": 250,
 							"isBanned": false,
-							"totalVotesReceived": "1000000000000"
+							"totalStakeReceived": "1000000000000"
 						},
 						"sentVotes": [
 							{
@@ -4024,7 +4024,7 @@
 							"consecutiveMissedBlocks": 0,
 							"lastForgedHeight": 250,
 							"isBanned": false,
-							"totalVotesReceived": "1000000000000"
+							"totalStakeReceived": "1000000000000"
 						},
 						"sentVotes": [
 							{
@@ -4055,7 +4055,7 @@
 							"consecutiveMissedBlocks": 0,
 							"lastForgedHeight": 250,
 							"isBanned": false,
-							"totalVotesReceived": "1000000000000"
+							"totalStakeReceived": "1000000000000"
 						},
 						"sentVotes": [
 							{
@@ -4086,7 +4086,7 @@
 							"consecutiveMissedBlocks": 0,
 							"lastForgedHeight": 250,
 							"isBanned": false,
-							"totalVotesReceived": "1000000000000"
+							"totalStakeReceived": "1000000000000"
 						},
 						"sentVotes": [
 							{
@@ -4117,7 +4117,7 @@
 							"consecutiveMissedBlocks": 0,
 							"lastForgedHeight": 250,
 							"isBanned": false,
-							"totalVotesReceived": "1000000000000"
+							"totalStakeReceived": "1000000000000"
 						},
 						"sentVotes": [
 							{
@@ -4148,7 +4148,7 @@
 							"consecutiveMissedBlocks": 0,
 							"lastForgedHeight": 250,
 							"isBanned": false,
-							"totalVotesReceived": "1000000000000"
+							"totalStakeReceived": "1000000000000"
 						},
 						"sentVotes": [
 							{
@@ -4179,7 +4179,7 @@
 							"consecutiveMissedBlocks": 0,
 							"lastForgedHeight": 250,
 							"isBanned": false,
-							"totalVotesReceived": "1000000000000"
+							"totalStakeReceived": "1000000000000"
 						},
 						"sentVotes": [
 							{
@@ -4210,7 +4210,7 @@
 							"consecutiveMissedBlocks": 0,
 							"lastForgedHeight": 250,
 							"isBanned": false,
-							"totalVotesReceived": "1000000000000"
+							"totalStakeReceived": "1000000000000"
 						},
 						"sentVotes": [
 							{
@@ -4241,7 +4241,7 @@
 							"consecutiveMissedBlocks": 0,
 							"lastForgedHeight": 250,
 							"isBanned": false,
-							"totalVotesReceived": "1000000000000"
+							"totalStakeReceived": "1000000000000"
 						},
 						"sentVotes": [
 							{
@@ -4272,7 +4272,7 @@
 							"consecutiveMissedBlocks": 0,
 							"lastForgedHeight": 250,
 							"isBanned": false,
-							"totalVotesReceived": "1000000000000"
+							"totalStakeReceived": "1000000000000"
 						},
 						"sentVotes": [
 							{
@@ -4303,7 +4303,7 @@
 							"consecutiveMissedBlocks": 0,
 							"lastForgedHeight": 250,
 							"isBanned": false,
-							"totalVotesReceived": "1000000000000"
+							"totalStakeReceived": "1000000000000"
 						},
 						"sentVotes": [
 							{
@@ -4334,7 +4334,7 @@
 							"consecutiveMissedBlocks": 0,
 							"lastForgedHeight": 250,
 							"isBanned": false,
-							"totalVotesReceived": "1000000000000"
+							"totalStakeReceived": "1000000000000"
 						},
 						"sentVotes": [
 							{
@@ -4365,7 +4365,7 @@
 							"consecutiveMissedBlocks": 0,
 							"lastForgedHeight": 250,
 							"isBanned": false,
-							"totalVotesReceived": "1000000000000"
+							"totalStakeReceived": "1000000000000"
 						},
 						"sentVotes": [
 							{

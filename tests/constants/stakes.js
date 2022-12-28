@@ -4,7 +4,7 @@ export default [
     delegateAddress: '5059876081639179984L',
     delegate: {
       username: 'genesis_1',
-      totalVotesReceived: '1000000000000',
+      totalStakeReceived: '1000000000000',
       delegate: {
         isBanned: false,
         pomHeights: [478, 555],

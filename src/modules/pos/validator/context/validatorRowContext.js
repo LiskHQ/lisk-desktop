@@ -7,7 +7,7 @@ const ValidatorRowContext = createContext({
     state: 'forging',
     status: 'active',
     time: '',
-    totalVotesReceived: 0,
+    totalStakeReceived: 0,
   },
   activeTab: 'active',
   watched: '',
