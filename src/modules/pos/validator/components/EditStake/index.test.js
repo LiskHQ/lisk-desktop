@@ -1,12 +1,7 @@
-import React from 'react';
 import { fireEvent, screen, waitFor } from '@testing-library/react';
-import { MemoryRouter } from 'react-router';
 import { fromRawLsk, toRawLsk } from '@token/fungible/utils/lsk';
 import numeral from 'numeral';
-import {
-  renderWithRouterAndQueryClient,
-  rerenderWithRouterAndQueryClient,
-} from 'src/utils/testHelpers';
+import { renderWithRouterAndQueryClient } from 'src/utils/testHelpers';
 import mockSavedAccounts from '@tests/fixtures/accounts';
 import { mockBlocks } from '@block/__fixtures__';
 import { useAuth } from '@auth/hooks/queries';
@@ -18,7 +13,6 @@ import { mockAuth } from 'src/modules/auth/__fixtures__';
 import EditStake from './index';
 import { useValidators, useSentStakes, usePosConstants } from '../../hooks/queries';
 import { mockPosConstants } from '../../__fixtures__/mockPosConstants';
-import { useCommandSchema } from '@network/hooks';
 
 jest.mock('@transaction/api', () => ({
   getTransactionFee: jest.fn().mockImplementation(() => Promise.resolve({ value: '0.046' })),
@@ -43,7 +37,6 @@ jest.mock('@token/fungible/hooks/queries');
 jest.mock('@auth/hooks/queries');
 
 describe('EditStake', () => {
-  let wrapper;
   const delegateAddress = 'lskjq7jh2k7q332wgkz3bxogb8bj5zc3fcnb9ya53';
   const props = {
     history: { location: { search: `?address=${delegateAddress}` }, push: jest.fn() },
@@ -67,37 +60,36 @@ describe('EditStake', () => {
     useAuth.mockReturnValue({ data: mockAuth });
     usePosConstants.mockReturnValue({ data: mockPosConstants });
     useTokensBalance.mockReturnValue({ data: mockTokensBalance, isLoading: false });
-
-    wrapper = renderWithRouterAndQueryClient(EditStake, props);
   });
 
   it('should properly render add stake form', () => {
     const delegate = mockValidators.data[0];
     const token = mockTokensBalance.data[0];
 
-    rerenderWithRouterAndQueryClient(EditStake, updatedProps);
+    renderWithRouterAndQueryClient(EditStake, updatedProps);
 
-    expect(screen.getAllByText('Add to staking queue')).toBeTruthy();
-    expect(screen.getAllByText(address)).toBeTruthy();
-    expect(screen.getAllByText(delegate.name)).toBeTruthy();
+    expect(screen.getByText('Add to staking queue')).toBeTruthy();
+    expect(screen.getByText(address)).toBeTruthy();
+    expect(screen.getByText(delegate.name)).toBeTruthy();
     expect(screen.getByTestId(`wallet-visual-${address}`)).toBeTruthy();
-    expect(screen.getAllByText('Available balance:')).toBeTruthy();
+    expect(screen.getByText('Available balance:')).toBeTruthy();
     expect(
-      screen.getAllByText(
+      screen.getByText(
         `${numeral(fromRawLsk(token.availableBalance)).format('0,0.[0000000000000]')} ${
           token.symbol
         }`
       )
     ).toBeTruthy();
     expect(
-      screen.getAllByText(
+      screen.getByText(
         'Insert an amount you wish to stake for this validator. Your new stake will then be added to the staking queue.'
       )
     ).toBeTruthy();
-    expect(screen.getAllByText('Stake amount ({{symbol}})')).toBeTruthy();
+    expect(screen.getByText('Stake amount ({{symbol}})')).toBeTruthy();
   });
 
   it('should add stake to the stakes queue', async () => {
+    renderWithRouterAndQueryClient(EditStake, props);
     const delegate = mockValidators.data[0];
     const votingField = screen.getByTestId('stake');
 
@@ -116,7 +108,7 @@ describe('EditStake', () => {
   });
 
   it('should render the confirmation modal and go back to the voting form', () => {
-    rerenderWithRouterAndQueryClient(EditStake, updatedProps);
+    renderWithRouterAndQueryClient(EditStake, updatedProps);
 
     fireEvent.click(screen.getByText('Confirm'));
     expect(screen.getByText('Stake added')).toBeTruthy();
@@ -127,7 +119,7 @@ describe('EditStake', () => {
   });
 
   it('should render the confirmation modal and proceed to the staking queue', async () => {
-    rerenderWithRouterAndQueryClient(EditStake, updatedProps);
+    renderWithRouterAndQueryClient(EditStake, updatedProps);
 
     fireEvent.click(screen.getByText('Confirm'));
 
@@ -153,7 +145,7 @@ describe('EditStake', () => {
       },
     });
 
-    rerenderWithRouterAndQueryClient(EditStake, props);
+    renderWithRouterAndQueryClient(EditStake, props);
 
     expect(screen.getByText('Edit Stake')).toBeTruthy();
     expect(
