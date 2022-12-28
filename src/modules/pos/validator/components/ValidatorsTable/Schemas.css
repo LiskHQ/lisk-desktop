@@ -3,12 +3,6 @@
     grid-area: votes;
   }
 
-  &::before,
-  &::after {
-    width: calc(94% - 20px) !important;
-    left: 60px !important;
-  }
-
   &.full,
   &.general {
     grid-template-areas: "validatordetails validatorweight validatorrank forgingtime roundstate";

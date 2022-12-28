@@ -23,7 +23,6 @@ const TransactionTypeFigure = ({ moduleCommand, className = '', address, iconOnl
           <TransactionAddress
             address={address}
             bookmarks={{ LSK: [] }} // @todo why bookmarks are empty?
-            t={(str) => str} // @todo this is also a mock
             token={tokenMap.LSK.key} // @todo why this is hardcoded?
             moduleCommand={moduleCommand}
           />
