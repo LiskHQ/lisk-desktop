@@ -3,7 +3,10 @@ import { fireEvent, screen, waitFor } from '@testing-library/react';
 import { MemoryRouter } from 'react-router';
 import { fromRawLsk, toRawLsk } from '@token/fungible/utils/lsk';
 import numeral from 'numeral';
-import { renderWithRouter } from 'src/utils/testHelpers';
+import {
+  renderWithRouterAndQueryClient,
+  rerenderWithRouterAndQueryClient,
+} from 'src/utils/testHelpers';
 import mockSavedAccounts from '@tests/fixtures/accounts';
 import { mockBlocks } from '@block/__fixtures__';
 import { useAuth } from '@auth/hooks/queries';
@@ -15,6 +18,7 @@ import { mockAuth } from 'src/modules/auth/__fixtures__';
 import EditStake from './index';
 import { useValidators, useSentStakes, usePosConstants } from '../../hooks/queries';
 import { mockPosConstants } from '../../__fixtures__/mockPosConstants';
+import { useCommandSchema } from '@network/hooks';
 
 jest.mock('@transaction/api', () => ({
   getTransactionFee: jest.fn().mockImplementation(() => Promise.resolve({ value: '0.046' })),
@@ -26,6 +30,11 @@ jest.mock('@account/hooks', () => ({
 }));
 jest.mock('@transaction/hooks/queries/useSchemas', () => ({
   useSchemas: jest.fn(),
+}));
+jest.mock('@network/hooks', () => ({
+  useCommandSchema: jest.fn(() => ({
+    moduleCommandSchemas: {},
+  })),
 }));
 
 jest.mock('@block/hooks/queries/useLatestBlock');
@@ -43,6 +52,11 @@ describe('EditStake', () => {
     voting: {},
     stakesRetrieved: jest.fn(),
   };
+  const address = 'lsk6wrjbs66uo9eoqr4t86afvd4yym6ovj4afunvh';
+  const updatedProps = {
+    ...props,
+    history: { ...props.history, location: { search: `?address=${address}` } },
+  };
 
   beforeEach(() => {
     jest.clearAllMocks();
@@ -54,44 +68,33 @@ describe('EditStake', () => {
     usePosConstants.mockReturnValue({ data: mockPosConstants });
     useTokensBalance.mockReturnValue({ data: mockTokensBalance, isLoading: false });
 
-    wrapper = renderWithRouter(EditStake, props);
+    wrapper = renderWithRouterAndQueryClient(EditStake, props);
   });
 
   it('should properly render add stake form', () => {
     const delegate = mockValidators.data[0];
     const token = mockTokensBalance.data[0];
-    const address = 'lsk6wrjbs66uo9eoqr4t86afvd4yym6ovj4afunvh';
 
-    wrapper.rerender(
-      <MemoryRouter initialEntries={['/']}>
-        <EditStake
-          {...props}
-          history={{
-            ...props.history,
-            location: { search: `?address=${address}` },
-          }}
-        />
-      </MemoryRouter>
-    );
+    rerenderWithRouterAndQueryClient(EditStake, updatedProps);
 
-    expect(screen.getByText('Add to staking queue')).toBeTruthy();
-    expect(screen.getByText(address)).toBeTruthy();
-    expect(screen.getByText(delegate.name)).toBeTruthy();
+    expect(screen.getAllByText('Add to staking queue')).toBeTruthy();
+    expect(screen.getAllByText(address)).toBeTruthy();
+    expect(screen.getAllByText(delegate.name)).toBeTruthy();
     expect(screen.getByTestId(`wallet-visual-${address}`)).toBeTruthy();
-    expect(screen.getByText('Available balance:')).toBeTruthy();
+    expect(screen.getAllByText('Available balance:')).toBeTruthy();
     expect(
-      screen.getByText(
+      screen.getAllByText(
         `${numeral(fromRawLsk(token.availableBalance)).format('0,0.[0000000000000]')} ${
           token.symbol
         }`
       )
     ).toBeTruthy();
     expect(
-      screen.getByText(
+      screen.getAllByText(
         'Insert an amount you wish to stake for this validator. Your new stake will then be added to the staking queue.'
       )
     ).toBeTruthy();
-    expect(screen.getByText('Stake amount ({{symbol}})')).toBeTruthy();
+    expect(screen.getAllByText('Stake amount ({{symbol}})')).toBeTruthy();
   });
 
   it('should add stake to the stakes queue', async () => {
@@ -113,19 +116,7 @@ describe('EditStake', () => {
   });
 
   it('should render the confirmation modal and go back to the voting form', () => {
-    const address = 'lsk6wrjbs66uo9eoqr4t86afvd4yym6ovj4afunvh';
-
-    wrapper.rerender(
-      <MemoryRouter initialEntries={['/']}>
-        <EditStake
-          {...props}
-          history={{
-            ...props.history,
-            location: { search: `?address=${address}` },
-          }}
-        />
-      </MemoryRouter>
-    );
+    rerenderWithRouterAndQueryClient(EditStake, updatedProps);
 
     fireEvent.click(screen.getByText('Confirm'));
     expect(screen.getByText('Stake added')).toBeTruthy();
@@ -136,19 +127,7 @@ describe('EditStake', () => {
   });
 
   it('should render the confirmation modal and proceed to the staking queue', async () => {
-    const address = 'lsk6wrjbs66uo9eoqr4t86afvd4yym6ovj4afunvh';
-
-    wrapper.rerender(
-      <MemoryRouter initialEntries={['/']}>
-        <EditStake
-          {...props}
-          history={{
-            ...props.history,
-            location: { search: `?address=${address}` },
-          }}
-        />
-      </MemoryRouter>
-    );
+    rerenderWithRouterAndQueryClient(EditStake, updatedProps);
 
     fireEvent.click(screen.getByText('Confirm'));
 
@@ -174,11 +153,7 @@ describe('EditStake', () => {
       },
     });
 
-    wrapper.rerender(
-      <MemoryRouter initialEntries={['/']}>
-        <EditStake {...props} />
-      </MemoryRouter>
-    );
+    rerenderWithRouterAndQueryClient(EditStake, props);
 
     expect(screen.getByText('Edit Stake')).toBeTruthy();
     expect(
