@@ -92,6 +92,6 @@ export const generators = rest.get(`*/api/${API_VERSION}/generators`, async (req
   return res(ctx.delay(20), ctx.json(response));
 });
 
-export const posConstants = rest.get(`*/api/${API_VERSION}/dpos/constants`, async (_, res, ctx) =>
+export const posConstants = rest.get(`*/api/${API_VERSION}/pos/constants`, async (_, res, ctx) =>
   res(ctx.delay(20), ctx.json(mockPosConstants))
 );
