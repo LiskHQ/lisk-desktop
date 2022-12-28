@@ -28,8 +28,8 @@ export const useValidators = ({ config: customConfig = {}, options } = {}) => {
   };
 
   return useCustomInfiniteQuery({
+    keys: [VALIDATORS],
     config,
     options,
-    keys: [VALIDATORS],
   });
 };

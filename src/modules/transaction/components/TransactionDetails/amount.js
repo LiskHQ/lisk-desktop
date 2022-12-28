@@ -18,7 +18,7 @@ const Amount = ({ t }) => {
     <ValueAndLabel label={t('Amount of transaction')} className={styles.amount}>
       <DiscreetMode addresses={addresses} shouldEvaluateForOtherAccounts>
         <span className="tx-amount">
-          <TokenAmount val={getTxAmount(transaction)} /> {activeToken}
+          <TokenAmount val={getTxAmount(transaction)} token={activeToken} />
         </span>
       </DiscreetMode>
     </ValueAndLabel>
