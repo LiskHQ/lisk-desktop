@@ -197,7 +197,7 @@ const getState = () => ({
                       minLength: 20,
                       maxLength: 20
                     },
-                    unvoteHeight: {
+                    unstakeHeight: {
                       dataType: "uint32",
                       fieldNumber: 3
                     }
@@ -205,7 +205,7 @@ const getState = () => ({
                   required: [
                     "delegateAddress",
                     "amount",
-                    "unvoteHeight"
+                    "unstakeHeight"
                   ],
                   type: "object"
                 }

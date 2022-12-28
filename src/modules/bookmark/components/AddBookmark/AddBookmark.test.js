@@ -31,7 +31,7 @@ describe('Add a new bookmark component', () => {
     account: {
       data: {
         summary: {},
-        dpos: {},
+        pos: {},
       },
       loadData: jest.fn(),
     },
@@ -94,7 +94,7 @@ describe('Add a new bookmark component', () => {
         },
       });
       wrapper.setProps({
-        account: { ...props.account, data: accounts.delegate },
+        account: { ...props.account, data: accounts.validator },
         history: {
           push: jest.fn(),
           location: {

@@ -74,21 +74,24 @@ describe('Utils: Account', () => {
       let unlocking = [
         {
           amount: '1000000000',
-          height: { start: 4900, end: 5900 },
-          delegateAddress: 'lskdwsyfmcko6mcd357446yatromr9vzgu7eb8y11',
+          unstakeHeight: 4900,
+          expectedUnlockableHeight: 5900,
+          validatorAddress: 'lskdwsyfmcko6mcd357446yatromr9vzgu7eb8y11',
         },
         {
           amount: '3000000000',
-          height: { start: 100, end: 200 },
-          delegateAddress: 'lskdwsyfmcko6mcd357446yatromr9vzgu7eb8y11',
+          unstakeHeight: 100,
+          expectedUnlockableHeight: 200,
+          validatorAddress: 'lskdwsyfmcko6mcd357446yatromr9vzgu7eb8y11',
         },
         {
           amount: '1000000000',
-          height: { start: 3000, end: 4000 },
-          delegateAddress: 'lskdwsyfmcko6mcd357446yatromr9vzgu7eb8y13',
+          unstakeHeight: 3000,
+          expectedUnlockableHeight: 4000,
+          validatorAddress: 'lskdwsyfmcko6mcd357446yatromr9vzgu7eb8y13',
         },
       ];
-      const delegateAddress = '80L';
+      const validatorAddress = '80L';
       const currentBlockHeight = 5000;
 
       expect(calculateUnlockableBalance(unlocking, currentBlockHeight)).toEqual(4000000000);
@@ -96,14 +99,21 @@ describe('Utils: Account', () => {
       unlocking = [
         {
           amount: '1000000000',
-          height: { start: 4900, end: 5900 },
-          delegateAddress: 'lskdwsyfmcko6mcd357446yatromr9vzgu7eb8y11',
+          unstakeHeight: 4900,
+          expectedUnlockableHeight: 5900,
+          validatorAddress: 'lskdwsyfmcko6mcd357446yatromr9vzgu7eb8y11',
         },
-        { amount: '3000000000', height: { start: 2500, end: 5500 }, delegateAddress },
+        {
+          amount: '3000000000',
+          unstakeHeight: 2500,
+          expectedUnlockableHeight: 5500,
+          validatorAddress
+        },
         {
           amount: '1000000000',
-          height: { start: 3000, end: 5500 },
-          delegateAddress: 'lskdwsyfmcko6mcd357446yatromr9vzgu7eb8y13',
+          unstakeHeight: 3000,
+          expectedUnlockableHeight: 5500,
+          validatorAddress: 'lskdwsyfmcko6mcd357446yatromr9vzgu7eb8y13',
         },
       ];
       expect(calculateUnlockableBalance(unlocking, currentBlockHeight)).toEqual(0);
@@ -135,18 +145,21 @@ describe('Utils: Account', () => {
         const unlocking = [
           {
             amount: '1000000000',
-            height: { start: 5000, end: 6000 },
-            delegateAddress: 'lskdwsyfmcko6mcd357446yatromr9vzgu7eb8y11',
+            unstakeHeight: 5000,
+            expectedUnlockableHeight: 6000,
+            validatorAddress: 'lskdwsyfmcko6mcd357446yatromr9vzgu7eb8y11',
           },
           {
             amount: '3000000000',
-            height: { start: 100, end: 2000 },
-            delegateAddress: 'lskdwsyfmcko6mcd357446yatromr9vzgu7eb8y11',
+            unstakeHeight: 100,
+            expectedUnlockableHeight: 2000,
+            validatorAddress: 'lskdwsyfmcko6mcd357446yatromr9vzgu7eb8y11',
           },
           {
             amount: '1000000000',
-            height: { start: 3100, end: 41000 },
-            delegateAddress: 'lskdwsyfmcko6mcd357446yatromr9vzgu7eb8y13',
+            unstakeHeight: 3100,
+            expectedUnlockableHeight: 41000,
+            validatorAddress: 'lskdwsyfmcko6mcd357446yatromr9vzgu7eb8y13',
           },
         ];
         const currentBlockHeight = 5000;
@@ -154,8 +167,8 @@ describe('Utils: Account', () => {
         expect(getUnlockableUnlockObjects(unlocking, currentBlockHeight)).toEqual([
           {
             amount: '3000000000',
-            unvoteHeight: 100,
-            delegateAddress: 'lskdwsyfmcko6mcd357446yatromr9vzgu7eb8y11',
+            unstakeHeight: 100,
+            validatorAddress: 'lskdwsyfmcko6mcd357446yatromr9vzgu7eb8y11',
           },
         ]);
       });

@@ -110,11 +110,11 @@ describe('API: LSK Account', () => {
   describe('getAccount', () => {
     const {
       summary: { address, publicKey, privateKey },
-      dpos: {
-        delegate: { username },
+      pos: {
+        validator: { username },
       },
       passphrase,
-    } = accounts.delegate;
+    } = accounts.validator;
 
     it('should call http with right params, prioritizing 1. username', async () => {
       http.mockImplementation(() => Promise.resolve({ data: [{ summary: { publicKey } }] }));

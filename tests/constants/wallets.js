@@ -62,7 +62,7 @@ const wallets = {
       sentVotes: [],
     },
   },
-  delegate_candidate: {
+  validator_candidate: {
     passphrase: 'right cat soul renew under climb middle maid powder churn cram coconut',
     summary: {
       publicKey: '35c6b25520fc868b56c83fed6e1c89bb350fb7994a5da0bcea7a4f621f948c7f',
@@ -152,16 +152,6 @@ const wallets = {
     pos: {
       validator: {},
       sentVotes: [],
-    },
-  },
-  validator: {
-    address: '2433857930558702776L',
-    summary: {
-    },
-    token: { },
-    sequence: { },
-    pos: {
-      validator: { username: 'tembo' },
     },
   },
   non_migrated: {

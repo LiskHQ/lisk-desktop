@@ -65,7 +65,7 @@ export const unlocks = rest.get(`*/api/${API_VERSION}/pos/unlocks`, async (req, 
   const response = {
     data: {
       ...mockUnlocks.data,
-      unlocking: mockUnlocks.data.pendingUnlocks.slice(offset, offset + limit),
+      pendingUnlocks: mockUnlocks.data.pendingUnlocks.slice(offset, offset + limit),
     },
     meta: {
       ...mockUnlocks.meta,

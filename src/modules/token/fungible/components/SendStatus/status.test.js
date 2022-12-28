@@ -102,10 +102,10 @@ describe('unlock transaction Status', () => {
   it('passes correct props to TxBroadcaster when transaction broadcast fails', () => {
     const propsWithError = {
       ...props,
-      recipientAccount: { data: accounts.delegate_candidate },
+      recipientAccount: { data: accounts.validator_candidate },
       rawTx: {
         params: {
-          recipient: { address: accounts.delegate_candidate.summary.address },
+          recipient: { address: accounts.validator_candidate.summary.address },
         },
       },
       transactions: {
@@ -157,7 +157,7 @@ describe('unlock transaction Status', () => {
   it('should not show bookmark button if sent to self', () => {
     const propsToSelf = {
       ...props,
-      account: accounts.delegate,
+      account: accounts.validator,
     };
 
     const wrapper = shallow(<Status {...propsToSelf} />);
@@ -185,7 +185,7 @@ describe('unlock transaction Status', () => {
         signedTransaction: { signatures: ['123'] },
       },
       recipientAccount: {
-        data: accounts.delegate,
+        data: accounts.validator,
         loadData: jest.fn(),
       },
     };

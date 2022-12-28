@@ -373,13 +373,13 @@ describe.skip('API: LSK Transactions', () => {
   //         delegateAddress:
   //           getAddressFromBase32Address(accounts.validator.summary.address),
   //         amount: BigInt('10000000'),
-  //         unvoteHeight: 1000000,
+  //         unstakeHeight: 1000000,
   //       },
   //       {
   //         delegateAddress:
   //           getAddressFromBase32Address(accounts.send_all_wallet.summary.address),
   //         amount: BigInt('-10000000'),
-  //         unvoteHeight: 1000000,
+  //         unstakeHeight: 1000000,
   //       },
   //     ];
 
@@ -398,7 +398,7 @@ describe.skip('API: LSK Transactions', () => {
   //         unlockObjects: tx.params.unlockObjects.map(item => ({
   //           amount: String(item.amount),
   //           delegateAddress: getBase32AddressFromAddress(item.delegateAddress),
-  //           unvoteHeight: item.unvoteHeight,
+  //           unstakeHeight: item.unstakeHeight,
   //         })),
   //       },
   //     });

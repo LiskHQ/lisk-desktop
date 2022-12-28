@@ -98,7 +98,7 @@ const EditStake = ({ history, stakeEdited, network, voting, stakesRetrieved }) =
     const votes = sentVotes?.data?.votes;
     if (!votes) return false;
 
-    return votes.find(({ delegateAddress: dAddress }) => dAddress === validatorAddress);
+    return votes.find(({ validatorAddress: dAddress }) => dAddress === validatorAddress);
   }, [sentVotes, validatorAddress, voting]);
 
   const [voteAmount, setVoteAmount, isGettingDposToken] = useVoteAmountField(

@@ -12,11 +12,26 @@ describe('unlock transaction Status', () => {
 
   const account = {
     ...accounts.genesis,
-    dpos: {
-      unlocking: [
-        { amount: '1000000000', height: { start: 4900, end: 5900 }, delegateAddress: 'lskdwsyfmcko6mcd357446yatromr9vzgu7eb8y11' },
-        { amount: '3000000000', height: { start: 100, end: 10100 }, delegateAddress: 'lskdwsyfmcko6mcd357446yatromr9vzgu7eb8y11' },
-        { amount: '1000000000', height: { start: 3000, end: 4000 }, delegateAddress: 'lskdwsyfmcko6mcd357446yatromr9vzgu7eb8y13' },
+    pos: {
+      pendingUnlocks: [
+        {
+          amount: '1000000000',
+          unstakeHeight: 4900,
+          expectedUnlockableHeight: 5900,
+          validatorAddress: 'lskdwsyfmcko6mcd357446yatromr9vzgu7eb8y11'
+        },
+        {
+          amount: '3000000000',
+          unstakeHeight: 100,
+          expectedUnlockableHeight: 10100,
+          validatorAddress: 'lskdwsyfmcko6mcd357446yatromr9vzgu7eb8y11'
+        },
+        {
+          amount: '1000000000',
+          unstakeHeight: 3000,
+          expectedUnlockableHeight: 4000,
+          validatorAddress: 'lskdwsyfmcko6mcd357446yatromr9vzgu7eb8y13'
+        },
       ],
     },
     sequence: { nonce: '178' },
@@ -32,7 +47,7 @@ describe('unlock transaction Status', () => {
   const props = {
     t: key => key,
     lockedInVotes: calculateBalanceLockedInVotes(voting),
-    unlockableBalance: calculateUnlockableBalance(account.dpos.unlocking, currentBlockHeight),
+    unlockableBalance: calculateUnlockableBalance(account.pos.pendingUnlocks, currentBlockHeight),
     currentBlockHeight,
     account,
   };
@@ -48,11 +63,26 @@ describe('unlock transaction Status', () => {
   it('renders properly when contains selfStake', () => {
     const customAccount = {
       ...account,
-      dpos: {
-        unlocking: [
-          { amount: '1000000000', height: { start: 4900, end: 5900 }, delegateAddress: 'lskdwsyfmcko6mcd357446yatromr9vzgu7eb8y11' },
-          { amount: '3000000000', height: { start: 2500, end: 30500 }, delegateAddress: accounts.genesis.summary.address },
-          { amount: '3000000000', height: { start: 2900, end: 30900 }, delegateAddress: accounts.genesis.summary.address },
+      pos: {
+        pendingUnlocks: [
+          {
+            amount: '1000000000',
+            unstakeHeight: 4900,
+            expectedUnlockableHeight: 5900,
+            validatorAddress: 'lskdwsyfmcko6mcd357446yatromr9vzgu7eb8y11'
+          },
+          {
+            amount: '3000000000',
+            unstakeHeight: 2500,
+            expectedUnlockableHeight: 30500,
+            validatorAddress: accounts.genesis.summary.address
+          },
+          {
+            amount: '3000000000',
+            unstakeHeight: 2900,
+            expectedUnlockableHeight: 30900,
+            validatorAddress: accounts.genesis.summary.address
+          },
         ],
       },
     };
@@ -67,7 +97,7 @@ describe('unlock transaction Status', () => {
       account: customAccount,
       lockedInVotes: calculateBalanceLockedInVotes(customVoting),
       unlockableBalance: calculateUnlockableBalance(
-        customAccount.dpos.unlocking,
+        customAccount.pos.pendingUnlocks,
         currentBlockHeight,
       ),
       currentBlockHeight,

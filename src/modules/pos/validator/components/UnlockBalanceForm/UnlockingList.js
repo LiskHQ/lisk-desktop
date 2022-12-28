@@ -5,8 +5,8 @@ import { isBlockHeightReached } from '@wallet/utils/account';
 import Icon from 'src/theme/Icon';
 import TokenAmount from '@token/fungible/components/tokenAmount';
 
-const getPendingTime = (unvoteHeight, unlockHeight) => {
-  const awaitingBlocks = unlockHeight - unvoteHeight;
+const getPendingTime = (unstakeHeight, unlockHeight) => {
+  const awaitingBlocks = unlockHeight - unstakeHeight;
   const secondsToUnlockAllBalance = awaitingBlocks * 10;
   const momentSeconds = moment().second(secondsToUnlockAllBalance);
   return moment().to(momentSeconds, true);

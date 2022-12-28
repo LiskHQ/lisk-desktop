@@ -199,7 +199,7 @@ export const getUnlockableUnlockObjects = (unlocking = [], currentBlockHeight = 
     .map(vote => ({
       validatorAddress: vote.validatorAddress,
       amount: vote.amount,
-      unvoteHeight: Number(vote.unstakeHeight),
+      unstakeHeight: Number(vote.unstakeHeight),
     }));
 
 /**
