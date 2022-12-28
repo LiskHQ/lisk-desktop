@@ -9,7 +9,7 @@ const SentStakeRow = ({ data: delegate, stakeEdited, dposToken }) => {
     amount,
     name,
     rank,
-    voteWeight
+    validatorWeight
   } = delegate;
 
   return (
@@ -17,7 +17,7 @@ const SentStakeRow = ({ data: delegate, stakeEdited, dposToken }) => {
       <div className={`transaction-event-row ${styles.container}`}>
         <ValidatorWalletVisual name={name} address={delegateAddress} />
         <Balance value={rank} />
-        <Balance value={<TokenAmount val={voteWeight} token={dposToken.symbol}/>} />
+        <Balance value={<TokenAmount val={validatorWeight} token={dposToken.symbol}/>} />
         <Balance value={<TokenAmount val={amount} token={dposToken.symbol}/>} />
         <Actions address={delegateAddress} name={name} stakeEdited={stakeEdited} />
       </div>

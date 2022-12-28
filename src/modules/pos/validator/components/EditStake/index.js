@@ -65,7 +65,7 @@ const EditStake = ({ history, stakeEdited, network, voting, stakesRetrieved }) =
   });
 
   const delegate = useMemo(() => delegates?.data?.[0] || {}, [isLoadingDelegates]);
-  const delegatePomHeight = useMemo(() => delegate.pomHeights?.[0] || {}, [delegate]);
+  const delegatePomHeight = useMemo(() => delegate.punishmentPeriods?.[0] || {}, [delegate]);
   const {
     data: { height: currentHeight },
   } = useLatestBlock();

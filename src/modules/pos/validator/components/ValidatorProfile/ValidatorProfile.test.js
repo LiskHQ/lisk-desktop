@@ -84,7 +84,7 @@ describe('Validator Profile', () => {
     expect(screen.getByText(mockValidators.data[0].rank)).toBeTruthy();
     expect(
       screen.getByText(
-        `${numeral(fromRawLsk(mockValidators.data[0].voteWeight)).format('0,0.[0000000000000]')} LSK`
+        `${numeral(fromRawLsk(mockValidators.data[0].validatorWeight)).format('0,0.[0000000000000]')} LSK`
       )
     ).toBeTruthy();
     expect(screen.getByTestId('date-timestamp')).toBeTruthy();

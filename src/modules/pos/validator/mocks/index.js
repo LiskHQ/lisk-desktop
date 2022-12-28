@@ -13,7 +13,7 @@ import {
 import composeMockList from 'src/modules/common/utils/composeMockList';
 import { mockPosConstants } from '../__fixtures__/mockPosConstants';
 
-export const delegates = rest.get(`*/api/${API_VERSION}/dpos/delegates`, async (req, res, ctx) =>
+export const delegates = rest.get(`*/api/${API_VERSION}/pos/validators`, async (req, res, ctx) =>
   composeMockList({
     req,
     res,
