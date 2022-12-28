@@ -70,7 +70,7 @@ export const useTransactions = ({
     }
     return () => {
       client.socket.off('new.transactions', transactionUpdate);
-      client.socket.off('new.transactions', transactionUpdate);
+      client.socket.off('delete.transactions', transactionUpdate);
     };
   }, [getUpdate]);
 
