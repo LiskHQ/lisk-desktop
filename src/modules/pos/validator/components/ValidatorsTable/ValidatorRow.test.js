@@ -26,7 +26,7 @@ const props = {
         nextForgingTime: 1654135710,
         rank: 22,
         state: 'awaitingSlot',
-        totalVotesReceived: '10828000000000',
+        totalStakeReceived: '10828000000000',
         username: 'test_del_2',
       },
     ],

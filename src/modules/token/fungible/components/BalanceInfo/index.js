@@ -17,9 +17,9 @@ const BalanceInfo = ({
   const { address, balance = 0 } = account?.summary ?? {};
 
   const isBanned = account?.dpos?.delegate?.isBanned;
-  const pomHeights = account?.dpos?.delegate?.pomHeights;
+  const pomHeights = account?.dpos?.delegate?.punishmentPeriods;
   const pomStart = pomHeights?.length
-    ? { ...pomHeights[pomHeights.length - 1] }
+    ? pomHeights[pomHeights.length - 1]
     : {};
 
   return (

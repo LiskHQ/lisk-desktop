@@ -1,15 +1,13 @@
-import React, { useEffect, useState } from 'react';
+import React from 'react';
 import { withTranslation } from 'react-i18next';
 import { useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
 
-import {
-  selectActiveToken,
-  selectActiveTokenAccount,
-} from 'src/redux/selectors';
+import { selectActiveToken } from 'src/redux/selectors';
+import { useTransactions } from '@transaction/hooks/queries';
+import { useCurrentAccount } from '@account/hooks';
 import { useLatestBlock } from '@block/hooks/queries/useLatestBlock';
 import routes from 'src/routes/routes';
-import { SecondaryButton } from 'src/theme/buttons';
 import Box from 'src/theme/box';
 import BoxHeader from 'src/theme/box/header';
 import BoxContent from 'src/theme/box/content';
@@ -44,56 +42,48 @@ export const NotSignedIn = withTranslation()(({ t }) => (
   </BoxEmptyState>
 ));
 
-const RecentTransactions = ({ className, t, transactions }) => {
-  if(!transactions?.data) {
-    return null // @TODO should fetch transaction data with react-query #4534
-  }
-  const account = useSelector(selectActiveTokenAccount);
-  const [isLoaded, setLoaded] = useState(!!transactions.data.length);
+const RecentTransactions = ({ className, t }) => {
+  const [currentAccount] = useCurrentAccount();
+  const host = currentAccount?.metadata?.address;
+  const { data: transactions } = useTransactions({ config: {
+    params: { limit: 5, address: host },
+    options: { enabled: !!host }
+  }});
   const token = useSelector(state => state.token);
   const { data: { height: currentBlockHeight } } = useLatestBlock();
-  const activeToken = token.active;
-  const host = account.summary?.address;
-
-  useEffect(() => {
-    if (host && !isLoaded) {
-      setLoaded(true);
-      transactions.loadData();
-    }
-  }, [host]);
 
   return (
     <Box
-      isLoading={transactions.isLoading}
+      isLoading={transactions?.isLoading}
       className={`${styles.box} ${className}`}
     >
       <BoxHeader>
         <h2 className={styles.title}>
-          {t('Recent {{value}} transactions', { value: activeToken })}
+          {t('Recent transactions')}
         </h2>
       </BoxHeader>
       <BoxContent className={styles.content}>
         <Table
-          data={transactions.data}
-          isLoading={transactions.isLoading}
+          data={transactions?.data || []}
+          isLoading={transactions?.isLoading}
           row={TransactionRow}
           header={header(t)}
           error={
-            transactions.error.code !== 404 ? transactions.error : undefined
+            transactions?.error?.code !== 404 ? transactions?.error : undefined
           }
           canLoadMore={false}
           additionalRowProps={{
-            activeToken,
+            activeToken: token.active,
             host,
             currentBlockHeight,
             layout: 'minimal',
             avatarSize: 40,
           }}
-          emptyState={account.passphrase ? NoTransactions : NotSignedIn}
+          emptyState={host ? NoTransactions : NotSignedIn}
         />
         <div className={styles.viewAll}>
           <Link to={routes.wallet.path} className="view-all">
-            <SecondaryButton size="s">{t('View all')}</SecondaryButton>
+            {t('View all')}
           </Link>
         </div>
       </BoxContent>

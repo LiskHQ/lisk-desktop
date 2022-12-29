@@ -37,7 +37,7 @@ const StakeRow = ({ data, onRowClick, accounts }) => {
         <div className={`${grid['col-sm-2']} ${styles.flexLeftAlign}`} onClick={onClick}>
           <span>
             <TokenAmount
-              val={account?.dpos.delegate.totalVotesReceived ?? 0}
+              val={account?.dpos.delegate.totalStakeReceived ?? 0}
               token={tokenMap.LSK.key}
             />
           </span>

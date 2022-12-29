@@ -117,7 +117,7 @@ export const useDeprecatedAccount = (accountInfo) => {
           consecutiveMissedBlocks: delegate?.consecutiveMissedBlocks,
           lastForgedHeight: delegate?.lastGeneratedHeight,
           isBanned: delegate?.isBanned,
-          totalVotesReceived: delegate?.totalVotesReceived,
+          totalStakeReceived: delegate?.totalStakeReceived,
         },
       },
     }));

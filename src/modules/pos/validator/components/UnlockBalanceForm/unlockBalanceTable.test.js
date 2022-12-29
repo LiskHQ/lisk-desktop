@@ -45,7 +45,7 @@ describe('unlock transaction Status', () => {
     expect(wrapper.find('.unlocking-balance')).toHaveLength(2);
   });
 
-  it('renders properly when contains selfvotes', () => {
+  it('renders properly when contains selfStake', () => {
     const customAccount = {
       ...account,
       dpos: {

@@ -56,7 +56,7 @@ const useVoteAmountField = (initialValue) => {
 
   // Since we know the dposTokenId we need to get the token's object
   const { data: tokens, isLoading: isGettingDposToken } = useTokensBalance({
-    config: { params: { tokenID: posConstants?.tokenIDDPoS } },
+    config: { params: { tokenID: posConstants?.posTokenID } },
     options: { enabled: !isGettingPosConstants },
   });
   const token = useMemo(() => tokens?.data?.[0] || {}, [tokens]);

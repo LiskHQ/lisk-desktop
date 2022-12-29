@@ -29,12 +29,12 @@ export default {
       registrationHeight: false,
       lastForgedHeight: 16647708,
       isBanned: false,
-      voteWeight: '11250000000000',
-      totalVotesReceived: '11250000000000',
+      validatorWeight: '11250000000000',
+      totalStakeReceived: '11250000000000',
       producedBlocks: 2453,
       rank: 103,
       status: 'standby',
-      rewards: '244900000000',
+      earnedRewards: '244900000000',
     },
     sentVotes: [
       {

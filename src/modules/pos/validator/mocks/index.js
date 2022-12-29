@@ -11,7 +11,7 @@ import {
 import composeMockList from 'src/modules/common/utils/composeMockList';
 import { mockPosConstants } from '../__fixtures__/mockPosConstants';
 
-export const delegates = rest.get(`*/api/${API_VERSION}/dpos/delegates`, async (req, res, ctx) =>
+export const delegates = rest.get(`*/api/${API_VERSION}/pos/validators`, async (req, res, ctx) =>
   composeMockList({
     req,
     res,
@@ -92,6 +92,6 @@ export const generators = rest.get(`*/api/${API_VERSION}/generators`, async (req
   return res(ctx.delay(20), ctx.json(response));
 });
 
-export const posConstants = rest.get(`*/api/${API_VERSION}/dpos/constants`, async (_, res, ctx) =>
+export const posConstants = rest.get(`*/api/${API_VERSION}/pos/constants`, async (_, res, ctx) =>
   res(ctx.delay(20), ctx.json(mockPosConstants))
 );

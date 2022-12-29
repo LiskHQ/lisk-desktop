@@ -20,16 +20,16 @@ import { useCustomInfiniteQuery } from 'src/modules/common/hooks';
 
 export const useValidators = ({ config: customConfig = {}, options } = {}) => {
   const config = {
-    url: `/api/${API_VERSION}/dpos/delegates`,
+    url: `/api/${API_VERSION}/pos/validators`,
     method: 'get',
-    event: 'get.dpos.delegates',
+    event: 'get.pos.validators',
     ...customConfig,
     params: { limit, ...(customConfig?.params || {}) },
   };
 
   return useCustomInfiniteQuery({
+    keys: [VALIDATORS],
     config,
     options,
-    keys: [VALIDATORS],
   });
 };
