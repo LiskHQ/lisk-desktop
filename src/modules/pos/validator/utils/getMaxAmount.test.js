@@ -79,6 +79,7 @@ describe('getMaxAmount', () => {
       numberOfSignatures: 0,
       mandatoryKeys: [],
       optionalKeys: [],
+      moduleCommandSchemas: {},
     });
     expect(result).toBe(0.8e10);
   });
@@ -94,6 +95,7 @@ describe('getMaxAmount', () => {
       numberOfSignatures: 0,
       mandatoryKeys: [],
       optionalKeys: [],
+      moduleCommandSchemas: {},
     });
     expect(result).toBe(0.7e10);
   });

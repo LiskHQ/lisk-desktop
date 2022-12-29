@@ -3,7 +3,7 @@ import { API_VERSION, LIMIT } from 'src/const/config';
 import {
   mockValidators,
   mockSentStakes,
-  mockReceivedVotes,
+  mockReceivedStakes,
   mockUnlocks,
   mockForgers,
   mockGenerator,
@@ -22,7 +22,7 @@ export const delegates = rest.get(`*/api/${API_VERSION}/pos/validators`, async (
   })
 );
 
-export const sentVotes = rest.get(`*/api/${API_VERSION}/dpos/votes/sent`, async (req, res, ctx) => {
+export const sentStakes = rest.get(`*/api/${API_VERSION}/pos/stakes`, async (req, res, ctx) => {
   const limit = Number(req.url.searchParams.get('limit') || LIMIT);
   const offset = Number(req.url.searchParams.get('offset') || 0);
   const response = {
@@ -39,18 +39,18 @@ export const sentVotes = rest.get(`*/api/${API_VERSION}/dpos/votes/sent`, async 
   return res(ctx.delay(20), ctx.json(response));
 });
 
-export const receivedVotes = rest.get(
-  `*/api/${API_VERSION}/dpos/votes/received`,
+export const receivedStakes = rest.get(
+  `*/api/${API_VERSION}/pos/stakers`,
   async (req, res, ctx) => {
     const limit = Number(req.url.searchParams.get('limit') || LIMIT);
     const offset = Number(req.url.searchParams.get('offset') || 0);
     const response = {
       data: {
-        ...mockReceivedVotes.data,
-        votes: mockReceivedVotes.data.votes.slice(offset, offset + limit),
+        ...mockReceivedStakes.data,
+        votes: mockReceivedStakes.data.votes.slice(offset, offset + limit),
       },
       meta: {
-        ...mockReceivedVotes.meta,
+        ...mockReceivedStakes.meta,
         count: limit,
         offset,
       },

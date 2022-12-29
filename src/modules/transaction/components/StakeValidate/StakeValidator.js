@@ -25,7 +25,7 @@ const InfoColumn = ({ title, children, className }) => (
   </div>
 );
 
-const StakeValidator = ({ t, account, summaryInfo, transaction }) => {
+const StakeValidator = ({ t, account, summaryInfo, formProps }) => {
   const addedLength = Object.keys(summaryInfo.added).length;
   const editedLength = Object.keys(summaryInfo.edited).length;
   const removedLength = Object.keys(summaryInfo.removed).length;
@@ -35,7 +35,9 @@ const StakeValidator = ({ t, account, summaryInfo, transaction }) => {
     <>
       {addedLength ? <ItemList heading={t('Added stakes')} items={summaryInfo.added} /> : null}
       {editedLength ? <ItemList heading={t('Changed stakes')} items={summaryInfo.edited} /> : null}
-      {removedLength ? <ItemList heading={t('Removed stakes')} items={summaryInfo.removed} /> : null}
+      {removedLength ? (
+        <ItemList heading={t('Removed stakes')} items={summaryInfo.removed} />
+      ) : null}
       <div className={styles.infoContainer}>
         <InfoColumn title={t('Total stakes after confirmation')}>
           {`${sentStakes + addedLength - removedLength}/10`}
@@ -43,7 +45,7 @@ const StakeValidator = ({ t, account, summaryInfo, transaction }) => {
       </div>
       <div className={styles.txFeeContainer}>
         <InfoColumn title={t('Transaction Fees')} className="stake-fees">
-          {transaction?.composedFees.Transaction}
+          {formProps?.composedFees.Transaction}
         </InfoColumn>
       </div>
     </>

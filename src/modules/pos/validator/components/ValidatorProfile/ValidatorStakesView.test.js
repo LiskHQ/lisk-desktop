@@ -3,7 +3,7 @@ import { fireEvent, render, screen } from '@testing-library/react';
 import { useFilter } from 'src/modules/common/hooks';
 import ValidatorStakesView from './ValidatorStakesView';
 import { useReceivedStakes } from '../../hooks/queries';
-import { mockReceivedVotes } from '../../__fixtures__';
+import { mockReceivedStakes } from '../../__fixtures__';
 
 const mockApplyFilters = jest.fn();
 const mockClearFilters = jest.fn();
@@ -12,7 +12,7 @@ jest.mock('../../hooks/queries');
 jest.mock('src/modules/common/hooks');
 
 describe('Validator stakes view', () => {
-  useReceivedStakes.mockReturnValue({ data: mockReceivedVotes });
+  useReceivedStakes.mockReturnValue({ data: mockReceivedStakes });
 
   const props = {
     address: 'lskc7ofju4nvnshg6349otmcssme9q87wrpf8umws',
@@ -28,7 +28,7 @@ describe('Validator stakes view', () => {
     render(<ValidatorStakesView {...props} />);
 
     expect(screen.getByText('Stakers')).toBeTruthy();
-    mockReceivedVotes.data.votes.forEach(({ name }) => {
+    mockReceivedStakes.data.votes.forEach(({ name }) => {
       expect(screen.getByText(name)).toBeTruthy();
     });
   });

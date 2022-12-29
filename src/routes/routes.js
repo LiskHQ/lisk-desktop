@@ -134,8 +134,8 @@ export default {
     isPrivate: false,
     forbiddenTokens: [],
   },
-  sentVotes: {
-    path: '/validators/profile/votes',
+  sentStakes: {
+    path: '/validators/profile/stakes',
     exact: true,
     isPrivate: false,
     forbiddenTokens: [],
