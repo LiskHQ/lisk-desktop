@@ -7,9 +7,6 @@ import {
   mockUnlocks,
   mockForgers,
   mockGenerator,
-  mockRewardsLocked,
-  mockRewardsClaimable,
-  mockRewardsInflation,
 } from '@pos/validator/__fixtures__';
 import composeMockList from 'src/modules/common/utils/composeMockList';
 import { mockPosConstants } from '../__fixtures__/mockPosConstants';
@@ -98,9 +95,3 @@ export const generators = rest.get(`*/api/${API_VERSION}/generators`, async (req
 export const posConstants = rest.get(`*/api/${API_VERSION}/dpos/constants`, async (_, res, ctx) =>
   res(ctx.delay(20), ctx.json(mockPosConstants))
 );
-
-export const posRewardsLocked = rest.get(`*/api/${API_VERSION}/pos/rewards/locked`, async (req, res, ctx) => res(ctx.delay(20), ctx.json(mockRewardsLocked)));
-
-export const posRewardsClaimable = rest.get(`*/api/${API_VERSION}/pos/rewards/claimable`, async (req, res, ctx) => res(ctx.delay(20), ctx.json(mockRewardsClaimable)));
-
-export const posRewardsInflation = rest.get(`*/api/${API_VERSION}/pos/rewards/inflation`, async (req, res, ctx) => res(ctx.delay(20), ctx.json(mockRewardsInflation)));
