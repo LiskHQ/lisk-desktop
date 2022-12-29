@@ -21,8 +21,8 @@ export default function ValidityStatus({ inputs, history, t }) {
       />
       <h1>
         {isCorrect
-          ? t('The signature is correct')
-          : t('The signature is incorrect')}
+          ? t('Signature is correct')
+          : t('Signature is incorrect')}
       </h1>
       <BoxFooter direction="horizontal">
         <PrimaryButton onClick={closeModal} className="go-back">

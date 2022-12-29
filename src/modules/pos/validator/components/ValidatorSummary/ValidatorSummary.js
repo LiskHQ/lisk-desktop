@@ -35,8 +35,13 @@ const ValidatorSummary = ({ validator, status, weight }) => {
         </div>
       </BoxHeader>
       <BoxContent>
+<<<<<<< HEAD:src/modules/pos/validator/components/ValidatorSummary/ValidatorSummary.js
         {/* @Todo: the value of roundLength should be dynamically integrated from the usePosConstants query hook which would be addressed in issue #4502 */}
         <p>{t('This validator is among the first 101 validators in validator weight ranking.')}</p>
+=======
+        {/* @Todo: the value of roundLength should be dynamically integrated from the useDposConstants query hook which would be addressed in issue #4502 */}
+        <p>{t('This delegate is among the first 101 delegates in delegate weight ranking.')}</p>
+>>>>>>> 1abd63a72 (:memo: Update grammer and sentences (#4683)):src/modules/dpos/validator/components/DelegateSummary/DelegateSummary.js
         <div className={styles.summaryDetails}>
           <div>
             <span>

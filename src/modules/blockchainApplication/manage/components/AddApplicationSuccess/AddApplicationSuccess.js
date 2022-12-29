@@ -22,11 +22,11 @@ const AddApplicationSuccess = ({ history }) => {
         />
         <Box className={styles.textContent}>
           <div className={`${styles.header} add-application-success-header`}>{t('Perfect! Application has now been added')}</div>
-          <div className={styles.detail}>{t('You can see a list of your applications on the dashboard.')}</div>
+          <div className={styles.detail}>{t('You can see a list of your applications on the application dropdown.')}</div>
         </Box>
         <Box className={styles.footer}>
           <PrimaryButton onClick={onAddSuccess} className="add-application-success-button">
-            {t('Continue to Dashboard')}
+            {t('Continue to dashboard')}
           </PrimaryButton>
         </Box>
       </Box>

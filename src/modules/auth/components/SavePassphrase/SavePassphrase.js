@@ -6,11 +6,11 @@ import PassphraseBackup from '@auth/components/passphraseBackup';
 import registerStyles from '../Signup/register.css';
 
 const SavePassphrase = ({
-  t, passphrase, prevStep, nextStep,
+  t, passphrase, prevStep, nextStep, title,
 }) => (
   <>
     <div className={registerStyles.titleHolder}>
-      <h1>{t('Save your secret recovery phrase')}</h1>
+      <h1>{title || t('Save your secret recovery phrase')}</h1>
       <p>{t('Keep it safe as it is the only way to access your wallet.')}</p>
     </div>
     <div

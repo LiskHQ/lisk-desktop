@@ -35,7 +35,7 @@ describe('Chart Setting', () => {
       ],
     };
 
-    const dougjnutData = {
+    const doughnutData = {
       labels: ['0 < 1', '1 < 100', '100 < 1K', '> 1K'],
       datasets: [
         {
@@ -57,9 +57,9 @@ describe('Chart Setting', () => {
       expect(options).toEqual(barOptions);
     });
 
-    it('Data for DOUGGNUT chart', () => {
-      const options = doughnutChartData(dougjnutData);
-      const doughnutOptions = doughnutChartData(dougjnutData);
+    it('Data for DOUGHNUT chart', () => {
+      const options = doughnutChartData(doughnutData);
+      const doughnutOptions = doughnutChartData(doughnutData);
       expect(options).toEqual(doughnutOptions);
     });
   });
@@ -84,7 +84,7 @@ describe('Chart Setting', () => {
       expect(Object.keys(options)).toEqual(expectedKeys);
     });
 
-    it('Options for DOUGGNUT chart', () => {
+    it('Options for DOUGHNUT chart', () => {
       const options = doughnutChartOptions('light', extraOptions);
       const expectedKeys = Object.keys(merge(doughnutChartOptions(), baseOptions(), extraOptions));
       expect(Object.keys(options)).toEqual(expectedKeys);

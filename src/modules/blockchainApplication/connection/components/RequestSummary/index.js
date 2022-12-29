@@ -126,7 +126,7 @@ const RequestSummary = ({ nextStep }) => {
             label={t('Information')}
           >
             <span>
-              {t('{{name}} is requesting a signature from your Lisk wallet.', { name })}
+              {t('This transaction was initiated from another application for signature request.')}
             </span>
           </ValueAndLabel>
           <ValueAndLabel

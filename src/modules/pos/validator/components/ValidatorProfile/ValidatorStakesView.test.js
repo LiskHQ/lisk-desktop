@@ -19,7 +19,7 @@ describe('Validator stakes view', () => {
   };
 
   useFilter.mockReturnValue({
-    filters: { adress: props.address },
+    filters: { address: props.address },
     applyFilters: mockApplyFilters,
     clearFilters: mockClearFilters,
   });
@@ -35,7 +35,7 @@ describe('Validator stakes view', () => {
 
   it('Should filter stakers by search value', () => {
     useFilter.mockReturnValue({
-      filters: { adress: props.address },
+      filters: { address: props.address },
       applyFilters: mockApplyFilters,
       clearFilters: mockClearFilters,
     });
@@ -51,7 +51,7 @@ describe('Validator stakes view', () => {
 
   it('Should not render search input', () => {
     useFilter.mockReturnValue({
-      filters: { adress: props.address },
+      filters: { address: props.address },
       applyFilters: mockApplyFilters,
       clearFilters: mockClearFilters,
     });
