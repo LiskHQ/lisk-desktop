@@ -161,7 +161,7 @@ export const RoundState = () => {
         size="maxContent"
         content={<Icon className={styles.statusIcon} name={icons[state]} />}
       >
-        <p className={styles.statusToolip}>
+        <p className={styles.statusTooltip}>
           {roundStates[state]}
         </p>
       </Tooltip>

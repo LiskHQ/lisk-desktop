@@ -63,10 +63,10 @@ function SetPasswordForm({ onSubmit, recoveryPhrase, customDerivationPath }) {
   return (
     <div data-testid="setPasswordFormContainer" className={styles.container}>
       <div className={`${styles.titleHolder} ${grid['col-xs-12']}`}>
-        <h1>{t('Set up device password')}</h1>
+        <h1>{t('Set up your account password')}</h1>
         <p>
           {t(
-            'This password is used to encrypt your secret recovery phrase, which will be used for managing your account.'
+            'This password will be used for decrypting your account every time you initiate any transaction from your wallet, and also during backup or removal of an account from the wallet.'
           )}
         </p>
       </div>

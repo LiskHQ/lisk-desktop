@@ -53,9 +53,9 @@ const EnterPasswordForm = ({ onEnterPasswordSuccess, title, encryptedAccount, is
   return (
     <Box className={styles.container}>
       <BoxContent className={styles.content}>
-        <h1>{t('Enter your password')}</h1>
+        <h1>{t('Enter your account password')}</h1>
         <p className={styles.subheader}>
-          {t(title || 'Please provide your device password to backup the recovery phrase.')}
+          {title || t('Please enter your account password to backup the secret recovery phrase.')}
         </p>
         <WalletVisual className={styles.avatar} address={account?.metadata?.address} />
         {account?.metadata?.name && <p className={styles.accountName}>{account?.metadata?.name}</p>}

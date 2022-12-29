@@ -13,7 +13,7 @@ describe('AddApplicationSuccess', () => {
     renderWithRouter(AddApplicationSuccess, props);
 
     expect(screen.getByText('Perfect! Application has now been added')).toBeTruthy();
-    expect(screen.getByText('You can see a list of your applications on the dashboard.')).toBeTruthy();
+    expect(screen.getByText('You can see a list of your applications on the application dropdown.')).toBeTruthy();
   });
 
   it('should reroute to the dashboard on success', () => {

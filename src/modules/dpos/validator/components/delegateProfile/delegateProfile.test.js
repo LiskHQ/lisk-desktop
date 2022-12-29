@@ -116,7 +116,7 @@ describe('Delegate Profile', () => {
     ).toBeTruthy();
   });
 
-  it('Should render stanby delegate profile details', () => {
+  it('Should render standby delegate profile details', () => {
     useDelegates.mockReturnValue({
       data: {
         ...mockDelegates,

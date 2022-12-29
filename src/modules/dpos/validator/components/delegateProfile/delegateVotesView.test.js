@@ -19,7 +19,7 @@ describe('Delegate votes view', () => {
   };
 
   useFilter.mockReturnValue({
-    filters: { adress: props.address },
+    filters: { address: props.address },
     applyFilters: mockApplyFilters,
     clearFilters: mockClearFilters,
   });
@@ -35,7 +35,7 @@ describe('Delegate votes view', () => {
 
   it('Should filter voters by search value', () => {
     useFilter.mockReturnValue({
-      filters: { adress: props.address },
+      filters: { address: props.address },
       applyFilters: mockApplyFilters,
       clearFilters: mockClearFilters,
     });
@@ -51,7 +51,7 @@ describe('Delegate votes view', () => {
 
   it('Should not render search input', () => {
     useFilter.mockReturnValue({
-      filters: { adress: props.address },
+      filters: { address: props.address },
       applyFilters: mockApplyFilters,
       clearFilters: mockClearFilters,
     });

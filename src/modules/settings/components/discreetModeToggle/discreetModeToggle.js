@@ -13,7 +13,7 @@ const DiscreetModeToggle = ({ className, isDiscreetMode, settingsUpdated, t }) =
         settingsUpdated({ discreetMode: !isDiscreetMode });
       }}
     />
-    <span>{t('Enable discreet mode when signed in (optional)')}</span>
+    <span>{t('Enable discreet mode (optional)')}</span>
   </label>
 );
 

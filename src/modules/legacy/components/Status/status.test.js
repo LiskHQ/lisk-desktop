@@ -84,7 +84,7 @@ describe('Status', () => {
     expect(wrapper.find(TxBroadcaster).props()).toMatchObject({
       illustration: 'default',
       status: { code: 'BROADCAST_ERROR', message: JSON.stringify({ message: 'error:test' }) },
-      title: 'Transaction failed',
+      title: 'Reclaim LSK tokens failed',
       className: 'content',
     });
   });
@@ -104,7 +104,7 @@ describe('Status', () => {
     expect(wrapper.find(TxBroadcaster).props()).toMatchObject({
       illustration: 'default',
       status: { code: 'BROADCAST_SUCCESS' },
-      title: 'Balance reclaimed successfully',
+      title: 'Reclaimed LSK tokens',
       className: 'content',
     });
   });
