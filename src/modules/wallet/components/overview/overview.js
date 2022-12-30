@@ -42,16 +42,16 @@ const Overview = ({ isWalletRoute, history }) => {
   const [{ metadata: { address: currentAddress, name } = {} }] = useCurrentAccount();
 
   const address = useMemo(() => searchAddress || currentAddress, [searchAddress, currentAddress]);
-  const { data: delegates } = useValidators({ config: { params: { address } } });
+  const { data: validators } = useValidators({ config: { params: { address } } });
   const { data: account } = useAuth({ config: { params: { address } } });
 
-  const delegate = useMemo(() => delegates?.data?.[0] || {}, [delegates]);
+  const validator = useMemo(() => validators?.data?.[0] || {}, [validators]);
   const {
     data: { height: currentHeight },
   } = useLatestBlock();
 
-  const isBanned = delegate.isBanned;
-  const pomHeights = delegate.punishmentPeriods;
+  const isBanned = validator.isBanned;
+  const pomHeights = validator.punishmentPeriods;
 
   const daysLeft = Math.ceil((1000 - currentHeight) / numOfBlockPerDay);
   const wallet = useSelector(selectActiveTokenAccount);

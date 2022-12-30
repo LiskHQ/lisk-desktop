@@ -6,7 +6,7 @@ import actionTypes from './actionTypes';
 import bookmarks from './reducer';
 
 // eslint-disable-next-line camelcase
-const { genesis, delegate, empty_wallet } = wallets;
+const { genesis, validator, empty_wallet } = wallets;
 
 describe('Reducer: bookmarks(state, action)', () => {
   const wallet = {
@@ -15,9 +15,9 @@ describe('Reducer: bookmarks(state, action)', () => {
     publicKey: genesis.summary.publicKey,
   };
   const wallet2 = {
-    address: delegate.summary.address,
+    address: validator.summary.address,
     title: genesis.summary.address,
-    publicKey: delegate.summary.publicKey,
+    publicKey: validator.summary.publicKey,
   };
 
   it(`should return wallets with added wallet if action.type is ${actionTypes.bookmarkAdded}`, () => {
@@ -58,9 +58,9 @@ describe('Reducer: bookmarks(state, action)', () => {
 
   it(`should return wallets with updated wallet if action.type is ${actionTypes.bookmarkUpdated}`, () => {
     const updatedWallet = {
-      address: delegate.summary.address,
+      address: validator.summary.address,
       title: 'bob',
-      publicKey: delegate.summary.publicKey,
+      publicKey: validator.summary.publicKey,
     };
 
     const state = { LSK: [wallet, wallet2] };
@@ -74,9 +74,9 @@ describe('Reducer: bookmarks(state, action)', () => {
 
   it(`should return wallets with updated wallet and trimmed title if action.type is ${actionTypes.bookmarkUpdated}`, () => {
     const updatedWallet = {
-      address: delegate.summary.address,
+      address: validator.summary.address,
       title: 'bob',
-      publicKey: delegate.summary.publicKey,
+      publicKey: validator.summary.publicKey,
     };
 
     const state = { LSK: [wallet, wallet2] };

@@ -42,7 +42,7 @@ export const stakeDiscarded = (data) => ({
 });
 
 /**
- * Defines the new vote amount for a given delegate.
+ * Defines the new vote amount for a given validator.
  * The reducer will add a new vote if if didn't exist before
  * Any vote whose vote amount changes to zero will be removed
  * when the vote transaction is confirmed (via stakesConfirmed action)

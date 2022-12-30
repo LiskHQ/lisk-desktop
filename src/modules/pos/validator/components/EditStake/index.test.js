@@ -37,9 +37,9 @@ jest.mock('@token/fungible/hooks/queries');
 jest.mock('@auth/hooks/queries');
 
 describe('EditStake', () => {
-  const delegateAddress = 'lskjq7jh2k7q332wgkz3bxogb8bj5zc3fcnb9ya53';
+  const validatorAddress = 'lskjq7jh2k7q332wgkz3bxogb8bj5zc3fcnb9ya53';
   const props = {
-    history: { location: { search: `?address=${delegateAddress}` }, push: jest.fn() },
+    history: { location: { search: `?address=${validatorAddress}` }, push: jest.fn() },
     stakeEdited: jest.fn(),
     network: {},
     voting: {},
@@ -63,14 +63,14 @@ describe('EditStake', () => {
   });
 
   it('should properly render add stake form', () => {
-    const delegate = mockValidators.data[0];
+    const validator = mockValidators.data[0];
     const token = mockTokensBalance.data[0];
 
     renderWithRouterAndQueryClient(EditStake, updatedProps);
 
     expect(screen.getByText('Add to staking queue')).toBeTruthy();
     expect(screen.getByText(address)).toBeTruthy();
-    expect(screen.getByText(delegate.name)).toBeTruthy();
+    expect(screen.getByText(validator.name)).toBeTruthy();
     expect(screen.getByTestId(`wallet-visual-${address}`)).toBeTruthy();
     expect(screen.getByText('Available balance:')).toBeTruthy();
     expect(
@@ -90,7 +90,7 @@ describe('EditStake', () => {
 
   it('should add stake to the stakes queue', async () => {
     renderWithRouterAndQueryClient(EditStake, props);
-    const delegate = mockValidators.data[0];
+    const validator = mockValidators.data[0];
     const votingField = screen.getByTestId('stake');
 
     fireEvent.change(votingField, { target: { value: 20 } });
@@ -99,8 +99,8 @@ describe('EditStake', () => {
     await waitFor(() => {
       expect(props.stakeEdited).toHaveBeenCalledWith([
         {
-          address: delegateAddress,
-          name: delegate.name,
+          address: validatorAddress,
+          name: validator.name,
           amount: toRawLsk(20),
         },
       ]);
@@ -131,7 +131,7 @@ describe('EditStake', () => {
   });
 
   it('should render the edit stake modal', async () => {
-    const delegate = mockValidators.data[0];
+    const validator = mockValidators.data[0];
 
     useSentStakes.mockReturnValue({
       data: {
@@ -139,7 +139,7 @@ describe('EditStake', () => {
         data: {
           ...mockSentStakes.data,
           votes: mockSentStakes.data.votes.map((vote, index) =>
-            index === 0 ? { ...vote, delegateAddress } : vote
+            index === 0 ? { ...vote, validatorAddress } : vote
           ),
         },
       },
@@ -161,8 +161,8 @@ describe('EditStake', () => {
     await waitFor(() => {
       expect(props.stakeEdited).toHaveBeenCalledWith([
         {
-          address: delegateAddress,
-          name: delegate.name,
+          address: validatorAddress,
+          name: validator.name,
           amount: toRawLsk(20),
         },
       ]);

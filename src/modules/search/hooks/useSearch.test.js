@@ -19,7 +19,7 @@ const addressesOptions = (search) => ({
   options: { enabled: true },
 });
 
-const delegatesOptions = (search) => ({
+const validatorsOptions = (search) => ({
   config: { params: { search } },
   options: { enabled: true },
 });
@@ -66,13 +66,13 @@ describe('useSearch hook', () => {
     expect(useValidators).toBeCalledWith(expect.objectContaining(defaultOptions));
   });
 
-  it('should call fetch delegates api for valid search', async () => {
+  it('should call fetch validators api for valid search', async () => {
     const search = SEARCH.VALIDATOR;
     const { result } = renderHook(() => useSearch(search), { wrapper });
     expect(result.current.isLoading).toBeTruthy();
     expect(useTransactions).toBeCalledWith(expect.objectContaining(defaultOptions));
     expect(useBlocks).toBeCalledWith(expect.objectContaining(defaultOptions));
-    expect(useValidators).toBeCalledWith(expect.objectContaining(delegatesOptions(search)));
+    expect(useValidators).toBeCalledWith(expect.objectContaining(validatorsOptions(search)));
   });
 
   it('should call fetch address api for valid search', async () => {

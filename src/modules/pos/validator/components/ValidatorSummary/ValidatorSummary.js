@@ -11,8 +11,8 @@ import { PrimaryButton } from 'src/theme/buttons';
 import DialogLink from 'src/theme/dialog/link';
 import styles from './ValidatorSummary.css';
 
-const ValidatorSummary = ({ delegate, status, weight }) => {
-  const { address, name, rank, consecutiveMissedBlocks, nextForgingTime } = delegate;
+const ValidatorSummary = ({ validator, status, weight }) => {
+  const { address, name, rank, consecutiveMissedBlocks, nextForgingTime } = validator;
   const { t } = useTranslation();
 
   return (

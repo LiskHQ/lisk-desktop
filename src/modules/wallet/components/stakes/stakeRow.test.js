@@ -8,18 +8,18 @@ describe('StakeRow Component', () => {
   let wrapper;
   const props = {
     data: {
-      address: accounts.delegate.summary.address,
-      delegate: accounts.delegate,
+      address: accounts.validator.summary.address,
+      validator: accounts.validator,
     },
     onRowClick: jest.fn(),
     accounts: {
-      [accounts.delegate.summary.address]: {
+      [accounts.validator.summary.address]: {
         summary: {
-          address: accounts.delegate.summary.address,
+          address: accounts.validator.summary.address,
           balance: '99994688951000',
         },
-        dpos: {
-          delegate: {
+        pos: {
+          validator: {
             productivity: '0',
             rank: 0,
             rewards: '0',

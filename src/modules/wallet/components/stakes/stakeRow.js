@@ -30,14 +30,14 @@ const StakeRow = ({ data, onRowClick, accounts }) => {
 
         {/* Validator rank */}
         <div className={`${grid['col-sm-2']} ${styles.flexLeftAlign}`} onClick={onClick}>
-          <span>{account?.dpos.delegate.rank}</span>
+          <span>{account?.pos.validator.rank}</span>
         </div>
 
         {/* Validator weight */}
         <div className={`${grid['col-sm-2']} ${styles.flexLeftAlign}`} onClick={onClick}>
           <span>
             <TokenAmount
-              val={account?.dpos.delegate.totalStakeReceived ?? 0}
+              val={account?.pos.validator.totalStakeReceived ?? 0}
               token={tokenMap.LSK.key}
             />
           </span>

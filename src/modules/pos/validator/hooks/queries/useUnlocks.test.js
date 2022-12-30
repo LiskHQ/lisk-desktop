@@ -18,7 +18,7 @@ describe('useUnlocks hook', () => {
     const expectedResponse = {
       data: {
         ...mockUnlocks.data,
-        unlocking: mockUnlocks.data.unlocking?.slice(0, limit),
+        pendingUnlocks: mockUnlocks.data.pendingUnlocks?.slice(0, limit),
       },
       meta: {
         ...mockUnlocks.meta,
@@ -37,7 +37,7 @@ describe('useUnlocks hook', () => {
     const expectedResponse = {
       data: {
         ...mockUnlocks.data,
-        unlocking: mockUnlocks.data.unlocking?.slice(0, defaultLimit),
+        pendingUnlocks: mockUnlocks.data.pendingUnlocks?.slice(0, defaultLimit),
       },
       meta: {
         ...mockUnlocks.meta,
@@ -59,7 +59,7 @@ describe('useUnlocks hook', () => {
     const expectedResponse = {
       data: {
         ...mockUnlocks.data,
-        unlocking: mockUnlocks.data.unlocking?.slice(0, limit * 2),
+        pendingUnlocks: mockUnlocks.data.pendingUnlocks?.slice(0, limit * 2),
       },
       meta: {
         count: limit,

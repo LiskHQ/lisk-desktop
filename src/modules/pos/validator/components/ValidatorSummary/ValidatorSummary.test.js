@@ -15,7 +15,7 @@ jest.mock('react-i18next', () => ({
 describe('ValidatorSummary', () => {
   let wrapper;
   const props = {
-    delegate: { ...mockValidators.data[0], nextForgingTime: 1661165000 },
+    validator: { ...mockValidators.data[0], nextForgingTime: 1661165000 },
     status: { className: 'active', value: 'Active' },
     weight: '10k',
     lastForgeTime: 23293993234,
@@ -34,7 +34,7 @@ describe('ValidatorSummary', () => {
     ).toBeTruthy();
     expect(screen.getByText('CMB :')).toBeTruthy();
     expect(screen.getByTestId('cmb').innerHTML).toEqual(
-      props.delegate.consecutiveMissedBlocks.toString()
+      props.validator.consecutiveMissedBlocks.toString()
     );
     expect(screen.getByText(props.weight)).toBeTruthy();
     expect(screen.getByText('Last forged :')).toBeTruthy();

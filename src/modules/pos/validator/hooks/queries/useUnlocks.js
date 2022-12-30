@@ -24,9 +24,9 @@ import { useCustomInfiniteQuery } from 'src/modules/common/hooks';
 
 export const useUnlocks = ({ config: customConfig = {}, options } = { }) => {
   const config = {
-    url: `/api/${API_VERSION}/dpos/unlocks`,
+    url: `/api/${API_VERSION}/pos/unlocks`,
     method: 'get',
-    event: 'get.dpos.unlocks',
+    event: 'get.pos.unlocks',
     ...customConfig,
     params: { limit, ...(customConfig?.params || {}) },
   };
@@ -34,13 +34,13 @@ export const useUnlocks = ({ config: customConfig = {}, options } = { }) => {
     ...options,
     select: (data) => data.pages.reduce((prevPages, page) => {
       const newData = page?.data || {};
-      const newUnlocks = page?.data.unlocking || [];
+      const newUnlocks = page?.data.pendingUnlocks || [];
       return {
         ...page,
         data: {
           ...newData,
-          unlocking: prevPages.data
-            ? [...prevPages.data.unlocking, ...newUnlocks]
+          pendingUnlocks: prevPages.data
+            ? [...prevPages.data.pendingUnlocks, ...newUnlocks]
             : newUnlocks,
         },
       };

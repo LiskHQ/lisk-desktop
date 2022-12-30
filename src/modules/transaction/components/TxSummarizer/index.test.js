@@ -153,7 +153,7 @@ describe('TxSummarizer', () => {
         moduleCommand: MODULE_COMMANDS_NAME_MAP.registerMultisignature,
         params: {
           mandatoryKeys: [wallets.genesis.summary.publicKey],
-          optionalKeys: [wallets.delegate.summary.publicKey, wallets.multiSig.summary.publicKey],
+          optionalKeys: [wallets.validator.summary.publicKey, wallets.multiSig.summary.publicKey],
           numberOfSignatures: 2,
         },
       },

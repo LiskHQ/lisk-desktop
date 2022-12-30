@@ -29,7 +29,7 @@ export const StakesPure = ({ t, votedDelegates }) => {
               truncate
               title={
                 votedDelegates.data[vote.delegateAddress] &&
-                votedDelegates.data[vote.delegateAddress].dpos?.delegate?.username
+                votedDelegates.data[vote.delegateAddress].pos?.validator?.username
               }
             />
           ))}
@@ -43,13 +43,10 @@ export default withData({
   votedDelegates: {
     apiUtil: ({ networks }, params) => getValidators({ network: networks.LSK, params }),
     defaultData: {},
-    transformResponse: (response) => {
-      const responseMap = response.data.reduce((acc, delegate) => {
-        acc[delegate.summary?.address] = delegate;
+    transformResponse: (response) =>
+      response.data.reduce((acc, validator) => {
+        acc[validator.summary?.address] = validator;
         return acc;
-      }, {});
-
-      return responseMap;
-    },
+      }, {}),
   },
 })(StakesPure);

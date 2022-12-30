@@ -21,7 +21,7 @@ const wsMethods = {
  * publicKey and passphrase to address.
  *
  * @param {Object} params
- * @param {String?} params.username Valid delegate username
+ * @param {String?} params.username Valid validator username
  * @param {String?} params.address Valid Lisk Address
  * @param {String?} params.passphrase Valid Mnemonic passphrase
  * @param {String?} params.publicKey Valid Lisk PublicKey
@@ -54,7 +54,7 @@ const getAccountParams = async (params) => {
  * @param {Object} data.network The network config from the Redux store
  * @param {String?} data.baseUrl Custom API URL
  * @param {Object} data.params
- * @param {String?} data.params.username Valid delegate username
+ * @param {String?} data.params.username Valid validator username
  * @param {String?} data.params.address Valid Lisk Address
  * @param {String?} data.params.passphrase Valid Mnemonic passphrase
  * @param {String?} data.params.publicKey Valid Lisk PublicKey
@@ -146,7 +146,7 @@ const getRequests = (values, isDelegate) => {
  * @param {Object} data.network The network config from the Redux store
  * @param {String?} data.baseUrl Custom API URL
  * @param {Object} data.params
- * @param {String?} data.params.usernameList Valid delegate username
+ * @param {String?} data.params.usernameList Valid validator username
  * @param {String?} data.params.addressList Valid Lisk Address
  * @param {String?} data.params.publicKeyList Valid Lisk PublicKey
  * @param {String?} data.params.limit Used for pagination

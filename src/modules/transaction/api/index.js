@@ -94,7 +94,7 @@ export const getTransactions = ({ network, params, baseUrl }) => {
  * @returns {Promise} Registered delegates list API call
  */
 export const getRegisteredValidators = async ({ network }) => {
-  const delegates = await getValidators({
+  const validators = await getValidators({
     network,
     params: { limit: 1 },
   });
@@ -103,7 +103,7 @@ export const getRegisteredValidators = async ({ network }) => {
     params: { moduleCommand: 'dpos:registerDelegate', limit: 100 },
   });
 
-  if (delegates.error || txs.error) {
+  if (validators.error || txs.error) {
     return Error('Error fetching data.');
   }
 
@@ -135,7 +135,7 @@ export const getRegisteredValidators = async ({ network }) => {
 
         return acc;
       },
-      [[getDate(txs.data[0].block.timestamp), delegates.meta.total]]
+      [[getDate(txs.data[0].block.timestamp), validators.meta.total]]
     );
 
   // Add the date of one month before the last tx
@@ -219,7 +219,7 @@ export const getTransactionFee = async ({
   const allocateEmptySignaturesWithEmptyBuffer = (signatureCount) =>
     new Array(signatureCount).fill(Buffer.alloc(64));
 
-  // @TODO: impelement transaction fee calculation based on domain fee constants
+  // @TODO: implement transaction fee calculation based on domain fee constants
   const { mandatoryKeys, optionalKeys } = senderAccount;
   const minFee = transactions.computeMinFee(
     {

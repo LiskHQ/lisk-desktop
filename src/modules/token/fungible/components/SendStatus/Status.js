@@ -85,7 +85,7 @@ const TransactionStatus = ({
               component="addBookmark"
               data={{
                 formAddress: transactionJSON.params.recipientAddress,
-                label: recipientAccount.data.dpos?.delegate?.username ?? '',
+                label: recipientAccount.data.pos?.validator?.username ?? '',
                 isDelegate: !!recipientAccount.data.summary?.isDelegate,
               }}
             >
