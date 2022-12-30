@@ -195,11 +195,11 @@ export const isBlockHeightReached = (unlockHeight, currentBlockHeight) =>
  * @returns {Array} Array of LSK rows available to unlock
  */
 export const getUnlockableUnlockObjects = (unlocking = [], currentBlockHeight = 0) =>
-  unlocking.filter(vote => isBlockHeightReached(vote.height.end, currentBlockHeight))
+  unlocking.filter(vote => isBlockHeightReached(vote.expectedUnlockableHeight, currentBlockHeight))
     .map(vote => ({
-      delegateAddress: vote.delegateAddress,
+      validatorAddress: vote.validatorAddress,
       amount: vote.amount,
-      unvoteHeight: Number(vote.height.start),
+      unstakeHeight: Number(vote.unstakeHeight),
     }));
 
 /**
@@ -211,9 +211,9 @@ export const getUnlockableUnlockObjects = (unlocking = [], currentBlockHeight = 
  */
 export const calculateUnlockableBalance = (unlocking = [], currentBlockHeight = 0) =>
   unlocking.reduce(
-    (sum, vote) =>
-    (isBlockHeightReached(vote.height.end, currentBlockHeight)
-      ? sum + parseInt(vote.amount, 10) : sum),
+    (sum, unlockable) =>
+    (isBlockHeightReached(unlockable.expectedUnlockableHeight, currentBlockHeight)
+      ? sum + parseInt(unlockable.amount, 10) : sum),
     0,
   );
 
@@ -227,7 +227,7 @@ export const calculateUnlockableBalance = (unlocking = [], currentBlockHeight = 
 export const calculateBalanceUnlockableInTheFuture = (unlocking = [], currentBlockHeight = 0) =>
   unlocking.reduce(
     (sum, vote) =>
-    (!isBlockHeightReached(vote.height.end, currentBlockHeight)
+    (!isBlockHeightReached(vote.expectedUnlockableHeight, currentBlockHeight)
       ? sum + parseInt(vote.amount, 10) : sum),
     0,
   );

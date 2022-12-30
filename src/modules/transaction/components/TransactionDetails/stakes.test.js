@@ -41,12 +41,12 @@ describe('Transaction stakes', () => {
         ...props.votedDelegates,
         data: {
           lsk123: {
-            ...accounts.delegate_candidate,
-            account: { address: accounts.delegate_candidate.address },
+            ...accounts.validator_candidate,
+            account: { address: accounts.validator_candidate.address },
           },
           lsk987: {
-            ...accounts.delegate,
-            account: { address: accounts.delegate.address },
+            ...accounts.validator,
+            account: { address: accounts.validator.address },
           },
         },
       },

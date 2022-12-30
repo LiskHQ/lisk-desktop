@@ -116,7 +116,7 @@ describe('Multisignature editor component', () => {
     wrapper
       .find('input.msign-pk-input')
       .at(1)
-      .simulate('change', { target: { value: wallets.delegate.summary.publicKey } });
+      .simulate('change', { target: { value: wallets.validator.summary.publicKey } });
     act(() => {
       wrapper.update();
     });
@@ -132,7 +132,7 @@ describe('Multisignature editor component', () => {
           params: {
             numberOfSignatures: 2,
             optionalKeys: [wallets.genesis.summary.publicKey],
-            mandatoryKeys: [wallets.delegate.summary.publicKey, wallets.multiSig.summary.publicKey],
+            mandatoryKeys: [wallets.validator.summary.publicKey, wallets.multiSig.summary.publicKey],
           },
         },
       },

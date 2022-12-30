@@ -60,14 +60,14 @@ const EditStake = ({ history, stakeEdited, network, voting, stakesRetrieved }) =
   const [isForm, setIsForm] = useState(true);
 
   const [address] = selectSearchParamValue(history.location.search, ['address']);
-  const delegateAddress = address || currentAddress; // this holds the address of either other validators or the user's address
+  const validatorAddress = address || currentAddress; // this holds the address of either other validators or the user's address
 
-  const { data: delegates, isLoading: isLoadingDelegates } = useValidators({
-    config: { params: { address: delegateAddress } },
+  const { data: validators, isLoading: isLoadingValidators } = useValidators({
+    config: { params: { address: validatorAddress } },
   });
 
-  const delegate = useMemo(() => delegates?.data?.[0] || {}, [isLoadingDelegates]);
-  const delegatePomHeight = useMemo(() => delegate.punishmentPeriods?.[0] || {}, [delegate]);
+  const validator = useMemo(() => validators?.data?.[0] || {}, [isLoadingValidators]);
+  const validatorPomHeight = useMemo(() => validator.punishmentPeriods?.[0] || {}, [validator]);
   const {
     data: { height: currentHeight },
   } = useLatestBlock();
@@ -85,11 +85,11 @@ const EditStake = ({ history, stakeEdited, network, voting, stakesRetrieved }) =
   });
   const token = useMemo(() => tokens?.data?.[0] || {}, [tokens]);
 
-  const { data: authData } = useAuth({ config: { params: { address: delegateAddress } } });
+  const { data: authData } = useAuth({ config: { params: { address: validatorAddress } } });
   const auth = useMemo(() => ({ ...authData?.data, ...authData?.meta }), [authData]);
   const { nonce, publicKey, numberOfSignatures, optionalKeys = [], mandatoryKeys = [] } = auth;
 
-  const [start = delegatePomHeight.start, end = delegatePomHeight.end] = selectSearchParamValue(
+  const [start = validatorPomHeight.start, end = validatorPomHeight.end] = selectSearchParamValue(
     history.location.search,
     ['start', 'end']
   );
@@ -98,13 +98,13 @@ const EditStake = ({ history, stakeEdited, network, voting, stakesRetrieved }) =
     const votes = sentVotes?.data?.votes;
     if (!votes) return false;
 
-    return votes.find(({ delegateAddress: dAddress }) => dAddress === delegateAddress);
-  }, [sentVotes, delegateAddress, voting]);
+    return votes.find(({ validatorAddress: dAddress }) => dAddress === validatorAddress);
+  }, [sentVotes, validatorAddress, voting]);
 
   const [voteAmount, setVoteAmount, isGettingDposToken] = useVoteAmountField(
-    fromRawLsk(voting[delegateAddress]?.unconfirmed || voteSentVoteToDelegate?.amount || 0)
+    fromRawLsk(voting[validatorAddress]?.unconfirmed || voteSentVoteToDelegate?.amount || 0)
   );
-  const mode = voteSentVoteToDelegate || voting[delegateAddress] ? 'edit' : 'add';
+  const mode = voteSentVoteToDelegate || voting[validatorAddress] ? 'edit' : 'add';
   const titles = getTitles(t)[mode];
 
   useEffect(() => {
@@ -133,9 +133,9 @@ const EditStake = ({ history, stakeEdited, network, voting, stakesRetrieved }) =
     }
     stakeEdited([
       {
-        address: delegateAddress,
+        address: validatorAddress,
         amount: toRawLsk(voteAmount.value),
-        name: delegate.name,
+        name: validator.name,
       },
     ]);
 
@@ -147,8 +147,8 @@ const EditStake = ({ history, stakeEdited, network, voting, stakesRetrieved }) =
   const removeVote = () => {
     stakeEdited([
       {
-        name: delegate.name,
-        address: delegateAddress,
+        name: validator.name,
+        address: validatorAddress,
         amount: 0,
       },
     ]);
@@ -183,9 +183,9 @@ const EditStake = ({ history, stakeEdited, network, voting, stakesRetrieved }) =
           {isForm && (
             <>
               <BoxInfoText className={styles.accountInfo}>
-                <WalletVisual size={40} address={delegateAddress} />
-                <p>{delegate.name}</p>
-                <p>{delegateAddress}</p>
+                <WalletVisual size={40} address={validatorAddress} />
+                <p>{validator.name}</p>
+                <p>{validatorAddress}</p>
               </BoxInfoText>
               <label className={styles.fieldGroup}>
                 <p className={styles.availableBalance}>

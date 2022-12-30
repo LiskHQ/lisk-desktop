@@ -95,7 +95,7 @@ export const useDeprecatedAccount = (accountInfo) => {
   }, [auth, isAuthSuccess, pubkey]);
 
   const {
-    data: delegates,
+    data: validators,
     isLoading: isDelegatesLoading,
     isSuccess: isDelegatesSuccess,
   } = useValidators({ config: { params: { address } } });
@@ -103,25 +103,25 @@ export const useDeprecatedAccount = (accountInfo) => {
     if (!isDelegatesSuccess) {
       return;
     }
-    const delegate = delegates.data[0];
+    const validator = validators.data[0];
     setAccount((state) => ({
       ...state,
       summary: {
         ...state.summary,
-        isDelegate: !!delegate?.name,
+        isDelegate: !!validator?.name,
       },
-      dpos: {
-        ...state.dpos,
-        delegate: {
-          username: delegate?.name || '',
-          consecutiveMissedBlocks: delegate?.consecutiveMissedBlocks,
-          lastForgedHeight: delegate?.lastGeneratedHeight,
-          isBanned: delegate?.isBanned,
-          totalStakeReceived: delegate?.totalStakeReceived,
+      pos: {
+        ...state.pos,
+        validator: {
+          username: validator?.name || '',
+          consecutiveMissedBlocks: validator?.consecutiveMissedBlocks,
+          lastForgedHeight: validator?.lastGeneratedHeight,
+          isBanned: validator?.isBanned,
+          totalStakeReceived: validator?.totalStakeReceived,
         },
       },
     }));
-  }, [delegates, isDelegatesSuccess]);
+  }, [validators, isDelegatesSuccess]);
 
   // TODO: For any given account maximum possible votes, unlocks is 10
   // Cross check other query params limit as well
@@ -136,13 +136,9 @@ export const useDeprecatedAccount = (accountInfo) => {
     }
     setAccount((state) => ({
       ...state,
-      dpos: {
-        ...state.dpos,
-        unlocking: (unlocks?.data?.unlocking || []).map((unlock) => ({
-          delegateAddress: unlock.delegateAddress,
-          amount: unlock.amount,
-          height: unlock.unvoteHeight,
-        })),
+      pos: {
+        ...state.pos,
+        pendingUnlocks: unlocks?.data?.pendingUnlocks ?? [],
       },
     }));
   }, [unlocks, isUnlocksSuccess]);

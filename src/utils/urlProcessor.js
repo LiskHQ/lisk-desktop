@@ -65,9 +65,9 @@ const setVotesByLaunchProtocol = (search) => async (dispatch, getState) => {
     stakeEdited(
       accounts.data
         .filter(({ summary }) => validateAddress(summary.address) === 0)
-        .map(({ summary, dpos }) => ({
+        .map(({ summary, pos }) => ({
           address: summary.address,
-          username: dpos.delegate.username,
+          username: pos.validator.username,
           amount: '',
         }))
     )

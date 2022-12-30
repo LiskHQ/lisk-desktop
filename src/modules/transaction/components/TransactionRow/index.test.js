@@ -19,14 +19,14 @@ const txBase = {
 };
 
 // @TODO: this would be re-instated when work is done in re-instating
-//  the transctions/delegate domain
+//  the transctions/validator domain
 // const vote = {
 //   moduleCommandID: '5:1',
 //   params: {
 //     votes: [
 //       {
 //         amount: '2000000000',
-//         delegateAddress: accounts.delegate.summary.address,
+//         delegateAddress: accounts.validator.summary.address,
 //       },
 //     ],
 //   },
@@ -96,7 +96,7 @@ describe('Transaction Row', () => {
   });
 
   // @TODO: this would be re-instated when work is done in re-instating
-  //  the transctions/delegate domain
+  //  the transctions/validator domain
   // describe('Stake', () => {
   //   it('Should render in full layout mode', () => {
   //     const props = {
@@ -139,13 +139,13 @@ describe('Transaction Row', () => {
   //     expect(wrapper.find('Sender')).toHaveLength(0);
   //     expect(wrapper.find('Recipient')).toHaveLength(0);
   //     expect(wrapper.find('Params').text()).toBe(
-  //       `${truncateAddress(accounts.delegate.summary.address)}20 LSK`,
+  //       `${truncateAddress(accounts.validator.summary.address)}20 LSK`,
   //     );
   //   });
   // });
 
   // @TODO: this would be re-instated when work is done in re-instating the transction domain
-  // describe('Register delegate', () => {
+  // describe('Register validator', () => {
   //   it('Should render in full layout mode', () => {
   //     const props = {
   //       ...baseProps,
@@ -163,7 +163,7 @@ describe('Transaction Row', () => {
   //     expect(wrapper.find('Amount').text()).toBe('-');
   //     expect(wrapper.find('Sender').text())
   //     .toBe(truncateAddress(accounts.genesis.summary.address));
-  //     expect(wrapper.find('Recipient').text()).toBe('Register delegate');
+  //     expect(wrapper.find('Recipient').text()).toBe('Register validator');
   //     // We don't show the details in full mode
   //     expect(wrapper.find('Params')).toHaveLength(0);
   //   });
@@ -183,7 +183,7 @@ describe('Transaction Row', () => {
   //       {},
   //     );
   //     expect(wrapper.find('Amount').text()).toBe('-');
-  //     expect(wrapper.find('Counterpart').text()).toBe('Register delegate');
+  //     expect(wrapper.find('Counterpart').text()).toBe('Register validator');
   //     expect(wrapper.find('Sender')).toHaveLength(0);
   //     expect(wrapper.find('Recipient')).toHaveLength(0);
   //     expect(wrapper.find('Params').text()).toBe('sample_username');

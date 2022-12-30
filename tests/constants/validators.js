@@ -18,7 +18,7 @@ const delegate = index => ({
   consecutiveMissedBlocks: index < 15 ? index + 1 : 0,
 });
 
-const delegates = Array(30).fill(1).map((item, index) => delegate(index));
+const validators = Array(30).fill(1).map((item, index) => delegate(index));
 
 const generateDelegate = (index) => ({
   [`lskdwsyfmcko6mcd357446yatromr9vzgu7eb8y1${index}`]: {
@@ -32,4 +32,4 @@ const generateDelegate = (index) => ({
 export const delegateList = (delegateCount = 0) =>
   Array(delegateCount).fill(1).map((_, index) => generateDelegate(index));
 
-export default delegates;
+export default validators;

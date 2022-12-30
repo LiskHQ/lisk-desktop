@@ -72,7 +72,7 @@ const AddBookmark = ({
 
   useEffect(() => {
     if (account.data?.summary) {
-      const username = account.data.dpos?.delegate?.username ?? '';
+      const username = account.data.pos?.validator?.username ?? '';
       setFields([
         {
           value: account.data.summary.address,

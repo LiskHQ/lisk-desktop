@@ -14,7 +14,7 @@ const BalanceTable = ({
   account,
 }) => (
   <ul className={`${styles.amountStatusContainer} lock-balance-amount-container`}>
-    {(lockedInVotes !== 0 || account?.dpos?.unlocking?.length > 0 || unlockableBalance !== 0)
+    {(lockedInVotes !== 0 || account?.pos?.pendingUnlocks?.length > 0 || unlockableBalance !== 0)
       && (
       <li>
         <p className={styles.columnTitle}>{t('Amount')}</p>
@@ -33,10 +33,10 @@ const BalanceTable = ({
           </p>
         </li>
       )}
-    {account?.dpos?.unlocking?.length > 0
+    {account?.pos?.pendingUnlocks?.length > 0
       && (
       <UnlockingList
-        unlocking={account?.dpos?.unlocking}
+        pendingUnlocks={account?.pos?.pendingUnlocks}
         currentBlockHeight={currentBlockHeight}
         t={t}
       />

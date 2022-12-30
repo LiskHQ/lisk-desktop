@@ -54,25 +54,28 @@ describe('Unlock LSK modal', () => {
   };
 
   const initVotes = [
-    { amount: '500000000000', delegateAddress: 'lskdwsyfmcko6mcd357446yatromr9vzgu7eb8y11' },
-    { amount: '3000000000', delegateAddress: 'lskdwsyfmcko6mcd357446yatromr9vzgu7eb8y13' },
-    { amount: '2000000000', delegateAddress: 'lskdwsyfmcko6mcd357446yatromr9vzgu7eb8y11' },
+    { amount: '500000000000', validatorAddress: 'lskdwsyfmcko6mcd357446yatromr9vzgu7eb8y11' },
+    { amount: '3000000000', validatorAddress: 'lskdwsyfmcko6mcd357446yatromr9vzgu7eb8y13' },
+    { amount: '2000000000', validatorAddress: 'lskdwsyfmcko6mcd357446yatromr9vzgu7eb8y11' },
   ];
   const initUnlocking = [
     {
       amount: '1000000000',
-      height: { start: 4900, end: 5900 },
-      delegateAddress: 'lskdwsyfmcko6mcd357446yatromr9vzgu7eb8y11',
+      unstakeHeight: 4900,
+      expectedUnlockableHeight: 5900,
+      validatorAddress: 'lskdwsyfmcko6mcd357446yatromr9vzgu7eb8y11',
     },
     {
       amount: '3000000000',
-      height: { start: 100, end: 200 },
-      delegateAddress: 'lskdwsyfmcko6mcd357446yatromr9vzgu7eb8y11',
+      unstakeHeight: 100,
+      expectedUnlockableHeight: 200,
+      validatorAddress: 'lskdwsyfmcko6mcd357446yatromr9vzgu7eb8y11',
     },
     {
       amount: '1000000000',
-      height: { start: 3000, end: 4000 },
-      delegateAddress: 'lskdwsyfmcko6mcd357446yatromr9vzgu7eb8y13',
+      unstakeHeight: 3000,
+      expectedUnlockableHeight: 4000,
+      validatorAddress: 'lskdwsyfmcko6mcd357446yatromr9vzgu7eb8y13',
     },
   ];
 
@@ -82,8 +85,8 @@ describe('Unlock LSK modal', () => {
       info: {
         LSK: {
           ...wallets.genesis,
-          dpos: {
-            unlocking: initUnlocking,
+          pos: {
+            pendingUnlocks: initUnlocking,
             sentVotes: initVotes,
           },
           sequence: { nonce: '178' },
@@ -119,19 +122,19 @@ describe('Unlock LSK modal', () => {
     params: {
       unlockObjects: [
         {
-          delegateAddress: 'lskdwsyfmcko6mcd357446yatromr9vzgu7eb8y11',
+          validatorAddress: 'lskdwsyfmcko6mcd357446yatromr9vzgu7eb8y11',
           amount: '1000000000',
-          unvoteHeight: 4900,
+          unstakeHeight: 4900,
         },
         {
-          delegateAddress: 'lskdwsyfmcko6mcd357446yatromr9vzgu7eb8y11',
+          validatorAddress: 'lskdwsyfmcko6mcd357446yatromr9vzgu7eb8y11',
           amount: '3000000000',
-          unvoteHeight: 100,
+          unstakeHeight: 100,
         },
         {
-          delegateAddress: 'lskdwsyfmcko6mcd357446yatromr9vzgu7eb8y13',
+          validatorAddress: 'lskdwsyfmcko6mcd357446yatromr9vzgu7eb8y13',
           amount: '1000000000',
-          unvoteHeight: 3000,
+          unstakeHeight: 3000,
         },
       ],
     },
@@ -210,8 +213,8 @@ describe('Unlock LSK modal', () => {
             summary: wallets.genesis.summary,
             sequence: wallets.genesis.sequence,
             token: wallets.genesis.token,
-            dpos: {
-              unlocking: [],
+            pos: {
+              pendingUnlocks: [],
               sentVotes: [],
             },
           },

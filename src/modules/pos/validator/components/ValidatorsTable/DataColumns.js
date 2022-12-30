@@ -136,7 +136,7 @@ export const ValidatorDetails = () => {
             content={<WalletVisual address={data.address} />}
           >
             <ValidatorSummary
-              delegate={data}
+              validator={data}
               weight={formattedVoteWeight}
               status={{
                 value: val,

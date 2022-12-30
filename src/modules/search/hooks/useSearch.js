@@ -9,7 +9,7 @@ export const useSearch = (search = '') => {
   const isAddress = validateAddress(search) === 0;
   const isTxId = regex.transactionId.test(search);
   const isBlockHeight = regex.blockHeight.test(search);
-  const isDelegate = search.length >= 3 && !isAddress && !isTxId && !isBlockHeight;
+  const isValidator = search.length >= 3 && !isAddress && !isTxId && !isBlockHeight;
 
   const addresses = useValidators({
     config: { params: { address: search } },
@@ -18,7 +18,7 @@ export const useSearch = (search = '') => {
 
   const validators = useValidators({
     config: { params: { search } },
-    options: { enabled: isDelegate },
+    options: { enabled: isValidator },
   });
 
   const transactions = useTransactions({
@@ -35,7 +35,7 @@ export const useSearch = (search = '') => {
     validators.isLoading || transactions.isLoading || addresses.isLoading || blocks.isLoading;
 
   const isFetched =
-  (isDelegate  && validators.isFetched) || (isTxId  && transactions.isFetched) || (isAddress  && addresses.isFetched) || (isBlockHeight  && blocks.isFetched);
+  (isValidator  && validators.isFetched) || (isTxId  && transactions.isFetched) || (isAddress  && addresses.isFetched) || (isBlockHeight  && blocks.isFetched);
 
   return {
     addresses: addresses.data?.data ?? [],

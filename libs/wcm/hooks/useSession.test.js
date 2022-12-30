@@ -11,7 +11,7 @@ const setSession = jest.fn();
 const setPairings = jest.fn();
 const session = { id: '0x123' };
 const pairings = [];
-const selectedAccounts = [wallets.genesis.summary.address, wallets.delegate.summary.address];
+const selectedAccounts = [wallets.genesis.summary.address, wallets.validator.summary.address];
 
 jest.spyOn(React, 'useContext').mockImplementation(() => ({
   events: [{ name: EVENTS.SESSION_PROPOSAL, meta: { id: '0x123' } }],
