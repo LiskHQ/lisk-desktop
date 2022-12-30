@@ -122,7 +122,7 @@ const ValidatorsMonitor = ({ watchList, registrations }) => {
             <BoxTabs {...pageTabs} />
           </div>
           <div className={grid['col-md-4']}>
-            <Link to={address ? routes.sentVotes.path : '#'}>
+            <Link to={address ? routes.sentStakes.path : '#'}>
               <SecondaryButton disabled={!address}>Stakes</SecondaryButton>
             </Link>
             <DialogLink component="registerValidator">

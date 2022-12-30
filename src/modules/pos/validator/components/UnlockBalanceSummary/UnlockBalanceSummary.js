@@ -6,7 +6,7 @@ import styles from './unlockBalanceSummary.css';
 const UnlockBalanceSummary = ({
   balanceUnlocked,
   selectedPriority,
-  formProps, 
+  formProps,
   transactionJSON,
   prevStep,
   nextStep,
@@ -25,7 +25,9 @@ const UnlockBalanceSummary = ({
   };
   const onCancelAction = {
     label: t('Cancel'),
-    onClick: () => { prevStep(); },
+    onClick: () => {
+      prevStep();
+    },
   };
 
   return (
@@ -34,7 +36,7 @@ const UnlockBalanceSummary = ({
       confirmButton={onConfirmAction}
       cancelButton={onCancelAction}
       fee={!wallet.summary.isMultisignature && transactionJSON.fee}
-      classNames={`${styles.box} ${styles.summaryContainer}`}
+      className={`${styles.box} ${styles.summaryContainer}`}
       selectedPriority={selectedPriority}
       formProps={formProps}
       transactionJSON={transactionJSON}

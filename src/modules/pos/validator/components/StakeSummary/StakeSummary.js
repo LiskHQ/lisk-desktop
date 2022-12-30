@@ -74,16 +74,14 @@ const StakeSummary = ({
         hasCancel
         confirmButton={onConfirmAction}
         cancelButton={onCancelAction}
-        classNames={styles.container}
+        className={styles.container}
         summaryInfo={{ added, edited, removed }}
         formProps={formProps}
         transactionJSON={transactionJSON}
         selectedPriority={selectedPriority}
       >
         <div className={styles.headerContainer}>
-          <header>
-            {t('Staking Summary')}
-          </header>
+          <header>{t('Staking Summary')}</header>
           <StakeStats
             t={t}
             heading={t('Staking Summary')}

@@ -26,6 +26,7 @@ const getMaxAmount = async ({
   numberOfSignatures,
   mandatoryKeys,
   optionalKeys,
+  moduleCommandSchemas,
 }) => {
   const totalUnconfirmedVotes = Object.values(voting)
     .filter((vote) => vote.confirmed < vote.unconfirmed)
@@ -52,13 +53,14 @@ const getMaxAmount = async ({
     sender: {
       publicKey,
     },
-    moduleCommand: MODULE_COMMANDS_NAME_MAP.voteDelegate,
+    module: 'dpos',
+    command: MODULE_COMMANDS_NAME_MAP.voteDelegate,
   };
 
   const maxAmountFee = await getTransactionFee(
     {
       network,
-      transaction,
+      transactionJSON: transaction,
       /* @Todo: the token symbol should be dynamically integrated from the usePosConstants query hook which would be addressed in issue #4502 */
       token: 'LSK',
       wallet: {
@@ -71,6 +73,7 @@ const getMaxAmount = async ({
         { keys: { numberOfSignatures }, summary: { isMultisignature } },
         transaction
       ),
+      moduleCommandSchemas,
     },
     /* @Todo: the token symbol should be dynamically integrated from the usePosConstants query hook which would be addressed in issue #4502 */
     'LSK'

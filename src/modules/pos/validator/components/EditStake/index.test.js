@@ -1,9 +1,7 @@
-import React from 'react';
 import { fireEvent, screen, waitFor } from '@testing-library/react';
-import { MemoryRouter } from 'react-router';
 import { fromRawLsk, toRawLsk } from '@token/fungible/utils/lsk';
 import numeral from 'numeral';
-import { renderWithRouter } from 'src/utils/testHelpers';
+import { renderWithRouterAndQueryClient } from 'src/utils/testHelpers';
 import mockSavedAccounts from '@tests/fixtures/accounts';
 import { mockBlocks } from '@block/__fixtures__';
 import { useAuth } from '@auth/hooks/queries';
@@ -27,6 +25,11 @@ jest.mock('@account/hooks', () => ({
 jest.mock('@transaction/hooks/queries/useSchemas', () => ({
   useSchemas: jest.fn(),
 }));
+jest.mock('@network/hooks', () => ({
+  useCommandSchema: jest.fn(() => ({
+    moduleCommandSchemas: {},
+  })),
+}));
 
 jest.mock('@block/hooks/queries/useLatestBlock');
 jest.mock('../../hooks/queries');
@@ -34,7 +37,6 @@ jest.mock('@token/fungible/hooks/queries');
 jest.mock('@auth/hooks/queries');
 
 describe('EditStake', () => {
-  let wrapper;
   const delegateAddress = 'lskjq7jh2k7q332wgkz3bxogb8bj5zc3fcnb9ya53';
   const props = {
     history: { location: { search: `?address=${delegateAddress}` }, push: jest.fn() },
@@ -42,6 +44,11 @@ describe('EditStake', () => {
     network: {},
     voting: {},
     stakesRetrieved: jest.fn(),
+  };
+  const address = 'lsk6wrjbs66uo9eoqr4t86afvd4yym6ovj4afunvh';
+  const updatedProps = {
+    ...props,
+    history: { ...props.history, location: { search: `?address=${address}` } },
   };
 
   beforeEach(() => {
@@ -53,26 +60,13 @@ describe('EditStake', () => {
     useAuth.mockReturnValue({ data: mockAuth });
     usePosConstants.mockReturnValue({ data: mockPosConstants });
     useTokensBalance.mockReturnValue({ data: mockTokensBalance, isLoading: false });
-
-    wrapper = renderWithRouter(EditStake, props);
   });
 
   it('should properly render add stake form', () => {
     const delegate = mockValidators.data[0];
     const token = mockTokensBalance.data[0];
-    const address = 'lsk6wrjbs66uo9eoqr4t86afvd4yym6ovj4afunvh';
 
-    wrapper.rerender(
-      <MemoryRouter initialEntries={['/']}>
-        <EditStake
-          {...props}
-          history={{
-            ...props.history,
-            location: { search: `?address=${address}` },
-          }}
-        />
-      </MemoryRouter>
-    );
+    renderWithRouterAndQueryClient(EditStake, updatedProps);
 
     expect(screen.getByText('Add to staking queue')).toBeTruthy();
     expect(screen.getByText(address)).toBeTruthy();
@@ -95,6 +89,7 @@ describe('EditStake', () => {
   });
 
   it('should add stake to the stakes queue', async () => {
+    renderWithRouterAndQueryClient(EditStake, props);
     const delegate = mockValidators.data[0];
     const votingField = screen.getByTestId('stake');
 
@@ -113,19 +108,7 @@ describe('EditStake', () => {
   });
 
   it('should render the confirmation modal and go back to the voting form', () => {
-    const address = 'lsk6wrjbs66uo9eoqr4t86afvd4yym6ovj4afunvh';
-
-    wrapper.rerender(
-      <MemoryRouter initialEntries={['/']}>
-        <EditStake
-          {...props}
-          history={{
-            ...props.history,
-            location: { search: `?address=${address}` },
-          }}
-        />
-      </MemoryRouter>
-    );
+    renderWithRouterAndQueryClient(EditStake, updatedProps);
 
     fireEvent.click(screen.getByText('Confirm'));
     expect(screen.getByText('Stake added')).toBeTruthy();
@@ -136,19 +119,7 @@ describe('EditStake', () => {
   });
 
   it('should render the confirmation modal and proceed to the staking queue', async () => {
-    const address = 'lsk6wrjbs66uo9eoqr4t86afvd4yym6ovj4afunvh';
-
-    wrapper.rerender(
-      <MemoryRouter initialEntries={['/']}>
-        <EditStake
-          {...props}
-          history={{
-            ...props.history,
-            location: { search: `?address=${address}` },
-          }}
-        />
-      </MemoryRouter>
-    );
+    renderWithRouterAndQueryClient(EditStake, updatedProps);
 
     fireEvent.click(screen.getByText('Confirm'));
 
@@ -174,11 +145,7 @@ describe('EditStake', () => {
       },
     });
 
-    wrapper.rerender(
-      <MemoryRouter initialEntries={['/']}>
-        <EditStake {...props} />
-      </MemoryRouter>
-    );
+    renderWithRouterAndQueryClient(EditStake, props);
 
     expect(screen.getByText('Edit Stake')).toBeTruthy();
     expect(
