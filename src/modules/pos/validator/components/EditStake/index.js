@@ -62,11 +62,11 @@ const EditStake = ({ history, stakeEdited, network, voting, stakesRetrieved }) =
   const [address] = selectSearchParamValue(history.location.search, ['address']);
   const validatorAddress = address || currentAddress; // this holds the address of either other validators or the user's address
 
-  const { data: validators, isLoading: isLoadingDelegates } = useValidators({
+  const { data: validators, isLoading: isLoadingValidators } = useValidators({
     config: { params: { address: validatorAddress } },
   });
 
-  const validator = useMemo(() => validators?.data?.[0] || {}, [isLoadingDelegates]);
+  const validator = useMemo(() => validators?.data?.[0] || {}, [isLoadingValidators]);
   const validatorPomHeight = useMemo(() => validator.punishmentPeriods?.[0] || {}, [validator]);
   const {
     data: { height: currentHeight },
