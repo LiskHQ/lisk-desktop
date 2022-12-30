@@ -1,16 +1,16 @@
 import { renderHook } from '@testing-library/react-hooks';
 import { queryWrapper as wrapper } from 'src/utils/test/queryWrapper';
-import { mockRewardsInflation } from '@pos/validator/__fixtures__';
-import { useRewardsInflation } from './useRewardsInflation';
+import { mockRewardInflation } from '@reward/__fixtures__';
+import { useRewardInflation } from './useRewardInflation';
 
 jest.useRealTimers();
 
-describe('useRewardsInflation hook', () => {
+describe('useRewardInflation hook', () => {
   it('fetching data correctly', async () => {
-    const { result, waitFor } = renderHook(() => useRewardsInflation(), { wrapper });
+    const { result, waitFor } = renderHook(() => useRewardInflation(), { wrapper });
     expect(result.current.isLoading).toBeTruthy();
     await waitFor(() => result.current.isFetched);
     expect(result.current.isSuccess).toBeTruthy();
-    expect(result.current.data).toEqual(mockRewardsInflation);
+    expect(result.current.data).toEqual(mockRewardInflation);
   });
 });
