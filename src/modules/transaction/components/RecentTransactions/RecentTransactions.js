@@ -13,7 +13,7 @@ import BoxHeader from 'src/theme/box/header';
 import BoxContent from 'src/theme/box/content';
 import BoxEmptyState from 'src/theme/box/emptyState';
 import Icon from 'src/theme/Icon';
-import Table from 'src/theme/table';
+import { QueryTable } from '@theme/QueryTable';
 import TransactionRow from '../TransactionRow';
 import styles from './RecentTransactions.css';
 import header from './RecentTransactionsHeaderMap';
@@ -63,14 +63,14 @@ const RecentTransactions = ({ className, t }) => {
         </h2>
       </BoxHeader>
       <BoxContent className={styles.content}>
-        <Table
-          data={transactions?.data || []}
-          isLoading={transactions?.isLoading}
+        <QueryTable
+          queryHook={useTransactions}
+          queryConfig={{ config: {
+            params: { limit: 5, address: host },
+            options: { enabled: !!host }
+          }}}
           row={TransactionRow}
           header={header(t)}
-          error={
-            transactions?.error?.code !== 404 ? transactions?.error : undefined
-          }
           canLoadMore={false}
           additionalRowProps={{
             activeToken: token.active,
@@ -81,11 +81,15 @@ const RecentTransactions = ({ className, t }) => {
           }}
           emptyState={host ? NoTransactions : NotSignedIn}
         />
-        <div className={styles.viewAll}>
-          <Link to={routes.wallet.path} className="view-all">
-            {t('View all')}
-          </Link>
-        </div>
+        {
+          transactions?.data?.length > 0 && (
+            <div className={styles.viewAll}>
+              <Link to={routes.wallet.path} className="view-all">
+                {t('View all')}
+              </Link>
+            </div>
+          )
+        }
       </BoxContent>
     </Box>
   );
