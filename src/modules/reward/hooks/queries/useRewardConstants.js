@@ -25,6 +25,10 @@ export const useRewardConstants = ({ config: customConfig = {}, options } = { })
   return useCustomQuery({
     keys: [REWARD_CONSTANTS],
     config,
-    options,
+    options: {
+      cacheTime: Infinity,
+      staleTime: Infinity,
+      ...options,
+    },
   });
 };
