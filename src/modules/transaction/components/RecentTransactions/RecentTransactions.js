@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { withTranslation } from 'react-i18next';
 import { useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
@@ -44,17 +44,17 @@ export const NotSignedIn = withTranslation()(({ t }) => (
 
 const RecentTransactions = ({ className, t }) => {
   const [currentAccount] = useCurrentAccount();
-  const host = currentAccount?.metadata?.address;
-  const { data: transactions } = useTransactions({ config: {
-    params: { limit: 5, address: host },
-    options: { enabled: !!host }
-  }});
+  const [hasTxs, setHasTxs] = useState(false);
+  const currentAddress = currentAccount?.metadata?.address;
   const token = useSelector(state => state.token);
   const { data: { height: currentBlockHeight } } = useLatestBlock();
 
+  const onSuccess = (response) => {
+    setHasTxs(response?.data?.length > 0);
+  };
+
   return (
     <Box
-      isLoading={transactions?.isLoading}
       className={`${styles.box} ${className}`}
     >
       <BoxHeader>
@@ -65,24 +65,27 @@ const RecentTransactions = ({ className, t }) => {
       <BoxContent className={styles.content}>
         <QueryTable
           queryHook={useTransactions}
-          queryConfig={{ config: {
-            params: { limit: 5, address: host },
-            options: { enabled: !!host }
-          }}}
+          queryConfig={{
+            config: {
+              params: { limit: 5, address: currentAddress },
+              options: { enabled: !!currentAddress }
+            },
+          }}
           row={TransactionRow}
           header={header(t)}
           canLoadMore={false}
           additionalRowProps={{
             activeToken: token.active,
-            host,
+            host: currentAddress,
             currentBlockHeight,
             layout: 'minimal',
             avatarSize: 40,
           }}
-          emptyState={host ? NoTransactions : NotSignedIn}
+          emptyState={currentAddress ? NoTransactions : NotSignedIn}
+          onFetched={onSuccess}
         />
         {
-          transactions?.data?.length > 0 && (
+          hasTxs && (
             <div className={styles.viewAll}>
               <Link to={routes.wallet.path} className="view-all">
                 {t('View all')}
