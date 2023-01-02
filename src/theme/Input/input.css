@@ -47,6 +47,7 @@
     & .toggleBtn {
       top: calc(var(--height-l) / 2) !important;
       right: var(--horizontal-padding-m);
+      background-color: transparent;
     }
   }
 

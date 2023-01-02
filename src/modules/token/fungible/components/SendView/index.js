@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useCallback, useState } from 'react';
 import { withRouter } from 'react-router-dom';
 
 import routes from 'src/routes/routes';
@@ -12,22 +12,27 @@ import Status from '../SendStatus';
 import styles from './send.css';
 
 const Send = ({ history }) => {
-  // istanbul ignore next
+  const [isStepTxSignatureCollector, setIsStepTxSignatureCollector] = useState(false);
   const backToWallet = () => {
     history.push(routes.wallet.path);
   };
   const initialValue = parseSearchParams(history.location.search);
 
+  const onMultiStepChange = useCallback(({ step: { current } }) => {
+    setIsStepTxSignatureCollector([2, 3].includes(current));
+  }, []);
+
   return (
-    <Dialog hasClose>
+    <Dialog hasClose className={`${isStepTxSignatureCollector ? styles.sizeSm : ''}`}>
       <MultiStep
         key="send"
         finalCallback={backToWallet}
+        onChange={onMultiStepChange}
         className={styles.wrapper}
       >
         <Form initialValue={initialValue} />
         <Summary />
-        <TxSignatureCollector />
+        <TxSignatureCollector confirmText="Confirm and Sign" />
         <Status history={history} />
       </MultiStep>
     </Dialog>

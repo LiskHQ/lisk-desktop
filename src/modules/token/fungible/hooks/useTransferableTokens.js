@@ -4,7 +4,7 @@ import { Client } from 'src/utils/api/client';
 
 export const useTransferableTokens = (application) => {
   const client = useRef(new Client());
-  client.current.create(application?.serviceURLs?.[0]);
+  client.current.create(application?.serviceURLs?.[1]);
 
   const {
     data: { data: myTokens = [] } = {},
@@ -34,11 +34,11 @@ export const useTransferableTokens = (application) => {
           })
           .flatMap((res) => res);
     const supportedAppTokens = [...(patternTokensSupported || []), ...exactTokensSupported];
-    const tokens = isSupportAllToken ? myTokens : Array.from(new Set(supportedAppTokens));
+    const tokens = !isSupportAllToken ? myTokens : Array.from(new Set(supportedAppTokens));
     return {
       isLoading,
       isSuccess,
-      data: isSuccess ? tokens : [],
+      data: !isSuccess ? tokens : [],
     };
   }, [isTokensSuccess, isSupportedSuccess, isTokenLoading, isSupportLoading, application]);
 };

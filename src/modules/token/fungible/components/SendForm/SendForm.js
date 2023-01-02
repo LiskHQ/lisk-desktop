@@ -167,7 +167,7 @@ const SendForm = (props) => {
         onConfirm={onConfirm}
         formProps={sendFormProps}
         commandParams={commandParams}
-        buttonTitle={t('Go to confirmation')}
+        buttonTitle={t('Continue to summary')}
       >
         <>
           <BoxHeader className={styles.header}>

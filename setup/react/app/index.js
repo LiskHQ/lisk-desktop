@@ -52,8 +52,8 @@ const App = ({ history }) => {
     setLoaded(true);
     // Initialize client on first render to get default application
     client.create({
-      http: 'http://165.227.246.146:9901',
-      ws: 'ws://165.227.246.146:9901',
+      http: 'http://165.22.29.229:9901',
+      ws: 'ws://165.22.29.229:9901',
     });
     dispatch(bookmarksRetrieved());
     dispatch(settingsRetrieved());

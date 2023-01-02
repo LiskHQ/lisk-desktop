@@ -12,3 +12,38 @@
     padding-right: var(--horizontal-padding-l) !important;
   }
 }
+
+.sizeSm {
+  width: 50%;
+  max-width: 503px;
+  min-width: 350px;
+
+  & > div > div:nth-child(2) > div > div {
+    padding-left: 0px !important;
+    padding-right: 0px !important;
+    width: 100% !important;
+    max-width: unset;
+
+    & > h1 {
+      font-size: var(--font-size-h3);
+    }
+
+    & > p:first-of-type {
+      font-size: var(--font-size-h6);
+      padding: 0px 47px;
+      color: var(--color-slate-gray);
+    }
+
+    & input {
+      border-radius: var(--vertical-padding-xs);
+    }
+  }
+
+  & > div > div:nth-child(2) > div {
+    max-width: 410px !important;
+  }
+
+  & > div > div:nth-child(2) > button {
+    margin-top: 18px;
+  }
+}

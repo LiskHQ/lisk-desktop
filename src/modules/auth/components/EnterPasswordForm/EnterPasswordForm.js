@@ -13,7 +13,13 @@ import styles from './EnterPasswordForm.css';
 const API_ERROR_NAME = 'API_ERROR_NAME';
 
 // eslint-disable-next-line max-statements
-const EnterPasswordForm = ({ onEnterPasswordSuccess, title, encryptedAccount, isDisabled }) => {
+const EnterPasswordForm = ({
+  onEnterPasswordSuccess,
+  title,
+  encryptedAccount,
+  isDisabled,
+  confirmText,
+}) => {
   const { t } = useTranslation();
   const {
     register,
@@ -63,7 +69,7 @@ const EnterPasswordForm = ({ onEnterPasswordSuccess, title, encryptedAccount, is
         <form onSubmit={handleSubmit(onSubmit)}>
           <Input
             secureTextEntry
-            size="s"
+            size="l"
             placeholder={t('Enter password')}
             feedback={apiError?.message}
             error={!!apiError}
@@ -76,7 +82,7 @@ const EnterPasswordForm = ({ onEnterPasswordSuccess, title, encryptedAccount, is
             disabled={isDisabled || !formValues.password}
             className={`${styles.button} continue-btn`}
           >
-            {t('Continue')}
+            {t(confirmText || 'Continue')}
           </PrimaryButton>
         </form>
       </BoxContent>

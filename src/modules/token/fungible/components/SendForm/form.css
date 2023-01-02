@@ -123,15 +123,17 @@
   }
 
   & .balance {
+    display: flex;
     position: absolute;
     bottom: calc(50% - 26px);
     right: 50px;
     color: var(--color-content-light);
-  }
 
-  & .balance > span {
-    font-weight: 500;
-    color: var(--color-ultramarine-blue);
+    & > span {
+      font-weight: 500;
+      color: var(--color-ultramarine-blue);
+      display: flex;
+    }
   }
 }
 
