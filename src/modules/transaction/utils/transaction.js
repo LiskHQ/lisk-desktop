@@ -1,7 +1,6 @@
 /* eslint-disable complexity */
 /* eslint-disable max-lines */
 import { transactions, cryptography, codec } from '@liskhq/lisk-client';
-import { constants } from '@liskhq/lisk-cryptography';
 import { to } from 'await-to-js';
 import { MODULE_COMMANDS_NAME_MAP } from 'src/modules/transaction/configuration/moduleCommand';
 import { DEFAULT_NUMBER_OF_SIGNATURES } from '@transaction/configuration/transactions';
@@ -29,8 +28,8 @@ const multisigRegMsgSchema = {
     address: {
       dataType: 'bytes',
       fieldNumber: 1,
-      minLength: constants.BINARY_ADDRESS_LENGTH,
-      maxLength: constants.BINARY_ADDRESS_LENGTH,
+      minLength: cryptography.constants.BINARY_ADDRESS_LENGTH,
+      maxLength: cryptography.constants.BINARY_ADDRESS_LENGTH,
     },
     nonce: {
       dataType: 'uint64',
@@ -306,7 +305,7 @@ const signUsingPrivateKey = (wallet, schema, chainID, transaction, privateKey) =
     }
   }
 
-  // Sign the tx only if the account is the initator of the tx
+  // Sign the tx only if the account is the initiator of the tx
 
   const { mandatoryKeys, optionalKeys, numberOfSignatures } = wallet.keys;
   const isSender = Buffer.compare(transaction.senderPublicKey, publicKeyBuffer) === 0;
