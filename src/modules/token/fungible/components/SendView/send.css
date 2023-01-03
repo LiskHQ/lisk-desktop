@@ -16,11 +16,9 @@
 .sizeSm {
   width: 50%;
   max-width: 503px;
-  min-width: 350px;
+  min-width: 450px;
 
   & > div > div:nth-child(2) > div > div {
-    padding-left: 0px !important;
-    padding-right: 0px !important;
     width: 100% !important;
     max-width: unset;
 
@@ -40,10 +38,16 @@
   }
 
   & > div > div:nth-child(2) > div {
-    max-width: 410px !important;
+    max-width: unset !important;
+  }
+
+  & > div > div:nth-child(2) {
+    display: flex;
+    align-items: center;
   }
 
   & > div > div:nth-child(2) > button {
     margin-top: 18px;
+    z-index: 1;
   }
 }
