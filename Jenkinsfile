@@ -17,8 +17,7 @@ pipeline {
 			steps {
 				nvm(getNodejsVersion()) {
 					sh '''
-						rm package-lock.json
-						npm i --registry https://npm.lisk.com
+						npm ci --registry https://npm.lisk.com
 						'''
 				}
 			}
