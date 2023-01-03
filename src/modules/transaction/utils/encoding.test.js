@@ -1,7 +1,6 @@
 import * as keys from '@tests/constants/keys';
-import { codec } from '@liskhq/lisk-codec';
 import { mockCommandParametersSchemas } from 'src/modules/common/__fixtures__';
-import { cryptography } from '@liskhq/lisk-client';
+import { cryptography, codec } from '@liskhq/lisk-client';
 import {
   decodeTransaction,
   encodeTransaction,
@@ -10,10 +9,10 @@ import {
   toTransactionJSON,
 } from './encoding';
 
-jest.spyOn(codec, 'decode');
-jest.spyOn(codec, 'toJSON');
-jest.spyOn(codec, 'decodeJSON');
-jest.spyOn(codec, 'encode');
+jest.spyOn(codec.codec, 'decode');
+jest.spyOn(codec.codec, 'toJSON');
+jest.spyOn(codec.codec, 'decodeJSON');
+jest.spyOn(codec.codec, 'encode');
 jest.spyOn(cryptography.utils, 'hash');
 
 describe('encoding', () => {
@@ -64,7 +63,7 @@ describe('encoding', () => {
   });
 
   it('should create tx from json when params is a string', () => {
-    codec.decode.mockReturnValue('params-decoded');
+    codec.codec.decode.mockReturnValue('params-decoded');
 
     const transactionJSON = {
       fee: 0,
@@ -89,7 +88,7 @@ describe('encoding', () => {
   });
   
   it('should create tx from json when no paramSchema is provided', () => {
-    codec.decode.mockReturnValue('params-decoded');
+    codec.codec.decode.mockReturnValue('params-decoded');
 
     const transactionJSON = {
       fee: 0,
@@ -113,8 +112,8 @@ describe('encoding', () => {
     });
   });
 
-  it('should create transaction id with an empty buffer', () => {
-    codec.decode.mockReturnValue('params-decoded');
+  it('should create transaction whoose id is an empty buffer', () => {
+    codec.codec.decode.mockReturnValue('params-decoded');
 
     const transactionJSON = {
       fee: 0,
@@ -139,8 +138,8 @@ describe('encoding', () => {
   });
 
   it('should create json from tx', () => {
-    codec.toJSON.mockReturnValue({ key: 'test-value' });
-    codec.decodeJSON.mockReturnValue({ key: 'test-params' });
+    codec.codec.toJSON.mockReturnValue({ key: 'test-value' });
+    codec.codec.decodeJSON.mockReturnValue({ key: 'test-params' });
 
     const transaction = {
       fee: '0n',
@@ -161,7 +160,7 @@ describe('encoding', () => {
   });
 
   it('should encode tx', () => {
-    codec.encode.mockReturnValue({ key: 'test-encoded' });
+    codec.codec.encode.mockReturnValue({ key: 'test-encoded' });
 
     const transaction = {
       fee: '0n',
@@ -178,7 +177,7 @@ describe('encoding', () => {
   });
 
   it('should encode tx with an empty buffer when paramSchema is not provided', () => {
-    codec.encode.mockReturnValue({});
+    codec.codec.encode.mockReturnValue({});
 
     const transaction = {
       id: '123456',
@@ -188,7 +187,7 @@ describe('encoding', () => {
   });
 
   it('should decode tx with an empty object when paramSchema is not provided', () => {
-    codec.decode.mockReturnValue({
+    codec.codec.decode.mockReturnValue({
       nonce: '1n',
     });
     cryptography.utils.hash.mockReturnValue(Buffer.from('test-id'));
