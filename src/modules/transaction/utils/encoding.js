@@ -13,8 +13,7 @@
  *
  */
 
-import { codec } from '@liskhq/lisk-codec';
-import { utils } from '@liskhq/lisk-cryptography';
+import { codec, cryptography } from '@liskhq/lisk-client';
 import { trimBigintString } from './helpers';
 import { joinModuleAndCommand } from './moduleCommand';
 
@@ -69,12 +68,12 @@ export const getCommandParamsSchema = (module, command, schema) => {
 };
 
 export const decodeBaseTransaction = (encodedTransaction) =>
-  codec.decode(baseTransactionSchema, encodedTransaction);
+  codec.codec.decode(baseTransactionSchema, encodedTransaction);
 
 export const decodeTransaction = (encodedTransaction, paramsSchema) => {
   const transaction = decodeBaseTransaction(encodedTransaction);
-  const params = paramsSchema ? codec.decode(paramsSchema, transaction.params) : {};
-  const id = utils.hash(encodedTransaction);
+  const params = paramsSchema ? codec.codec.decode(paramsSchema, transaction.params) : {};
+  const id = cryptography.utils.hash(encodedTransaction);
   return {
     ...transaction,
     params,
@@ -85,12 +84,12 @@ export const decodeTransaction = (encodedTransaction, paramsSchema) => {
 export const encodeTransaction = (transaction, paramsSchema) => {
   let encodedParams;
   if (!Buffer.isBuffer(transaction.params)) {
-    encodedParams = paramsSchema ? codec.encode(paramsSchema, transaction.params) : Buffer.alloc(0);
+    encodedParams = paramsSchema ? codec.codec.encode(paramsSchema, transaction.params) : Buffer.alloc(0);
   } else {
     encodedParams = transaction.params;
   }
 
-  const decodedTransaction = codec.encode(baseTransactionSchema, {
+  const decodedTransaction = codec.codec.encode(baseTransactionSchema, {
     ...transaction,
     params: encodedParams,
   });
@@ -100,7 +99,7 @@ export const encodeTransaction = (transaction, paramsSchema) => {
 
 export const fromTransactionJSON = (transactionJSON, paramsSchema) => {
   transactionJSON = trimBigintString(transactionJSON);
-  const tx = codec.fromJSON(baseTransactionSchema, {
+  const tx = codec.codec.fromJSON(baseTransactionSchema, {
     ...transactionJSON,
     params: '',
   });
@@ -108,10 +107,10 @@ export const fromTransactionJSON = (transactionJSON, paramsSchema) => {
   let params;
   if (typeof transactionJSON.params === 'string') {
     params = paramsSchema
-      ? codec.decode(paramsSchema, Buffer.from(transactionJSON.params, 'hex'))
+      ? codec.codec.decode(paramsSchema, Buffer.from(transactionJSON.params, 'hex'))
       : {};
   } else {
-    params = paramsSchema ? codec.fromJSON(paramsSchema, transactionJSON.params) : {};
+    params = paramsSchema ? codec.codec.fromJSON(paramsSchema, transactionJSON.params) : {};
   }
 
   return {
@@ -124,17 +123,17 @@ export const fromTransactionJSON = (transactionJSON, paramsSchema) => {
 export const toTransactionJSON = (transaction, paramsSchema) => {
   if (Buffer.isBuffer(transaction.params)) {
     return {
-      ...codec.toJSON(baseTransactionSchema, transaction),
-      params: paramsSchema ? codec.decodeJSON(paramsSchema, transaction.params) : {},
+      ...codec.codec.toJSON(baseTransactionSchema, transaction),
+      params: paramsSchema ? codec.codec.decodeJSON(paramsSchema, transaction.params) : {},
       id: transaction.id.toString('hex'),
     };
   }
   return {
-    ...codec.toJSON(baseTransactionSchema, {
+    ...codec.codec.toJSON(baseTransactionSchema, {
       ...transaction,
       params: Buffer.alloc(0),
     }),
-    params: paramsSchema ? codec.toJSON(paramsSchema, transaction.params) : {},
+    params: paramsSchema ? codec.codec.toJSON(paramsSchema, transaction.params) : {},
     id: transaction.id && transaction.id.toString('hex'),
   };
 };
