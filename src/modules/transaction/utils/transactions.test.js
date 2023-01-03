@@ -1,4 +1,4 @@
-import { legacy } from '@liskhq/lisk-cryptography';
+import { cryptography } from '@liskhq/lisk-client';
 import { codec } from '@liskhq/lisk-codec';
 import { mockNetworkStatus } from '@network/__fixtures__';
 import { mockAuth } from '@auth/__fixtures__';
@@ -16,7 +16,7 @@ import {
 describe.skip('Transaction', () => {
   let tokenTransfer = new Transaction();
   const recoveryPhrase = 'target cancel solution recipe vague faint bomb convince pink vendor fresh patrol';
-  const { privateKey, publicKey } = legacy.getKeys(recoveryPhrase);
+  const { privateKey, publicKey } = cryptography.legacy.getKeys(recoveryPhrase);
   const pubkey = publicKey.toString('hex');
   const module = 'token';
   const command = 'transfer';
