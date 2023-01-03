@@ -21,12 +21,12 @@ const Actions = ({
 }) => (
   <div className={styles.primaryActions}>
     {cancelButton && (
-      <SecondaryButton className="cancel-button" onClick={cancelButton.onClick}>
+      <SecondaryButton className={`cancel-button ${cancelButton?.className || ''}`} onClick={cancelButton.onClick}>
         {cancelButton.label}
       </SecondaryButton>
     )}
     <PrimaryButton
-      className={`${!cancelButton ? styles.confirmButton : ''} confirm-button`}
+      className={`${!cancelButton ? styles.confirmButton : ''} ${confirmButton?.className || ''} confirm-button`}
       disabled={
         confirmButton.disabled
         || inputStatus === 'visible'

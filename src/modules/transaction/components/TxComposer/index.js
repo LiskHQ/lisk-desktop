@@ -110,7 +110,7 @@ const TxComposer = ({
       <BoxFooter>
         <PrimaryButton
           className="confirm-btn"
-          onClick={() => onConfirm(formProps, transactionJSON, selectedPriority)}
+          onClick={() => onConfirm(formProps, transactionJSON, selectedPriority, composedFees)}
           disabled={!formProps.isValid || minRequiredBalance > wallet.token?.balance}
         >
           {buttonTitle ?? t('Continue')}

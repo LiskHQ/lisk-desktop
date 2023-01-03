@@ -23,7 +23,7 @@ const Send = ({ history }) => {
   }, []);
 
   return (
-    <Dialog hasClose className={`${isStepTxSignatureCollector ? styles.sizeSm : ''}`}>
+    <Dialog hasClose size={isStepTxSignatureCollector && 'sm'}>
       <MultiStep
         key="send"
         finalCallback={backToWallet}

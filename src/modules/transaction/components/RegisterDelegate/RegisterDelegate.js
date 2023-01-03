@@ -18,13 +18,13 @@ const RegisterDelegate = ({ account, transactionJSON, t }) => (
         </div>
       </div>
     </div>
-    <div className={`${styles.dataRow} generator-key`}>
-      <label>{t('Generator key')}</label>
-      <span>{transactionJSON.params.generatorKey}</span>
-    </div>
     <div className={`${styles.dataRow} bls-public-key`}>
       <label>{t('BLS key')}</label>
       <span>{transactionJSON.params.blsKey}</span>
+    </div>
+    <div className={`${styles.dataRow} generator-key`}>
+      <label>{t('Generator public key')}</label>
+      <span>{transactionJSON.params.generatorKey}</span>
     </div>
     <div className={`${styles.dataRow} pop`}>
       <label>{t('BLS Proof of possession')}</label>

@@ -80,6 +80,7 @@ const RegisterValidatorForm = ({ nextStep, prevState }) => {
         onConfirm={onConfirm}
         formProps={registerValidatorFormProps}
         commandParams={commandParams}
+        buttonTitle="Go to confirmation"
       >
         <>
           <BoxHeader className={styles.header}>
