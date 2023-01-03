@@ -1,7 +1,7 @@
 import * as keys from '@tests/constants/keys';
 import { codec } from '@liskhq/lisk-codec';
 import { mockCommandParametersSchemas } from 'src/modules/common/__fixtures__';
-import { utils } from '@liskhq/lisk-cryptography';
+import { cryptography } from '@liskhq/lisk-client';
 import {
   decodeTransaction,
   encodeTransaction,
@@ -14,7 +14,7 @@ jest.spyOn(codec, 'decode');
 jest.spyOn(codec, 'toJSON');
 jest.spyOn(codec, 'decodeJSON');
 jest.spyOn(codec, 'encode');
-jest.spyOn(utils, 'hash');
+jest.spyOn(cryptography.utils, 'hash');
 
 describe('encoding', () => {
   const moduleCommandSchemas = mockCommandParametersSchemas.data.reduce(
@@ -113,7 +113,7 @@ describe('encoding', () => {
     });
   });
 
-  it('should create transaction whoose id is an empty buffer', () => {
+  it('should create transaction id with an empty buffer', () => {
     codec.decode.mockReturnValue('params-decoded');
 
     const transactionJSON = {
@@ -191,7 +191,7 @@ describe('encoding', () => {
     codec.decode.mockReturnValue({
       nonce: '1n',
     });
-    utils.hash.mockReturnValue(Buffer.from('test-id'));
+    cryptography.utils.hash.mockReturnValue(Buffer.from('test-id'));
 
     expect(decodeTransaction(Buffer.alloc(0))).toEqual({
       id: Buffer.from('test-id'),

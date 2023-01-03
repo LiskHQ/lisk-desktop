@@ -1,8 +1,8 @@
-import { POS_REWARDS_INFLATION } from 'src/const/queries';
+import { REWARD_INFLATION } from 'src/const/queries';
 import {
   API_VERSION,
 } from 'src/const/config';
-import { useCustomQuery } from 'src/modules/common/hooks';
+import { useCustomQuery } from '@common/hooks';
 
 /**
  * Creates a custom hook to fetch the current inflation rate in the total supply because of the token being rewarded (block generation)/ burnt (transaction minFee & extraFees).
@@ -14,16 +14,16 @@ import { useCustomQuery } from 'src/modules/common/hooks';
  * @returns the query object
  */
 
-export const useRewardsInflation = ({ config: customConfig = {}, options } = {}) => {
+export const useRewardInflation = ({ config: customConfig = {}, options } = {}) => {
   const config = {
-    url: `/api/${API_VERSION}/pos/rewards/inflation`,
+    url: `/api/${API_VERSION}/reward/inflation`,
     method: 'get',
-    event: 'get.pos.rewards.inflation',
+    event: 'get.reward.inflation',
     ...customConfig,
   };
 
   return useCustomQuery({
-    keys: [POS_REWARDS_INFLATION],
+    keys: [REWARD_INFLATION],
     config,
     options,
   });

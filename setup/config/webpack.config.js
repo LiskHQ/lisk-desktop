@@ -24,6 +24,7 @@ const config = {
       '@auth': resolve('./src/modules/auth'),
       '@wallet': resolve('./src/modules/wallet'),
       '@pos': resolve('./src/modules/pos'),
+      '@reward': resolve('./src/modules/reward'),
       '@network': resolve('./src/modules/network'),
       '@settings': resolve('./src/modules/settings'),
       '@token': resolve('./src/modules/token'),
