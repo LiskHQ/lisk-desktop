@@ -29,7 +29,7 @@ const multisigRegMsgSchema = {
       dataType: 'bytes',
       fieldNumber: 1,
       minLength: cryptography.constants.BINARY_ADDRESS_LENGTH,
-      maxLength:cryptography. constants.BINARY_ADDRESS_LENGTH,
+      maxLength: cryptography.constants.BINARY_ADDRESS_LENGTH,
     },
     nonce: {
       dataType: 'uint64',

@@ -145,15 +145,15 @@ export const transactionBroadcasted = (transaction, moduleCommandSchemas) =>
     const activeToken = token.active;
     const serviceUrl = network.networks[activeToken].serviceUrl;
     let broadcastResult;
-    // @todo dry run before broadcast
-    const dryRunResult =  await dryRun({ transaction, serviceUrl, network });
+    const dryRunResult = await dryRun({ transaction, serviceUrl, network });
 
-    if (dryRunResult.data?.success === true) {
+    // If the results is 1 then its successful
+    if (dryRunResult.data?.result === 1) {
       broadcastResult = await broadcast(
         { transaction, serviceUrl, moduleCommandSchemas },
       );
 
-      if(!broadcastResult.data?.error) {
+      if (!broadcastResult.data?.error) {
         const moduleCommand = joinModuleAndCommand(transaction);
         const paramsSchema = moduleCommandSchemas[moduleCommand];
         const transactionJSON = toTransactionJSON(transaction, paramsSchema);
@@ -169,14 +169,28 @@ export const transactionBroadcasted = (transaction, moduleCommandSchemas) =>
 
     }
 
-    // @todo Remove the third fallback error message when the Core API errors are implemented
-    dispatch({
-      type: actionTypes.broadcastedTransactionError,
-      data: {
-        error: dryRunResult.data?.message ?? broadcastResult?.error ?? 'An error occurred while broadcasting the transaction',
-        transaction,
-      },
-    });
+    // If the results is -1 then the transaction is failed during transaction verification
+    if (dryRunResult.data?.result === -1) {
+      dispatch({
+        type: actionTypes.broadcastedTransactionError,
+        data: {
+          error: dryRunResult.data?.errorMessage,
+          transaction,
+        },
+      });
+    }
+
+    if (dryRunResult.data?.result === 0) {
+      // @TODO: Prepare error message by parsing the events based on each transaction type
+      const temporaryError = dryRunResult.data?.events.map(e => e.name).join(', ')
+      dispatch({
+        type: actionTypes.broadcastedTransactionError,
+        data: {
+          error: temporaryError,
+          transaction,
+        },
+      });
+    }
 
     return false;
   };
@@ -210,7 +224,7 @@ export const multisigTransactionSigned = ({
     moduleCommandSchemas[formProps.moduleCommand],
     state.network.networks.LSK.chainID,
     privateKey,
-    txInitiatorAccount, // this is the intitor of the transaction wanting to be signed
+    txInitiatorAccount, // this is the initiator of the transaction wanting to be signed
   );
 
   if (!error) {
