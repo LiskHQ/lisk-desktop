@@ -9,6 +9,7 @@ export const QueryTable = ({
   button,
   scrollToSelector,
   transformResponse,
+  onFetched,
   ...props
 }) => {
   const {
@@ -42,7 +43,7 @@ export const QueryTable = ({
   ) : null;
 
   useEffect(() => {
-    if (isFetched && typeof props.onFetched === 'function') {
+    if (isFetched && typeof onFetched === 'function') {
       props.onFetched(response);
     }
   }, [isFetched]);
