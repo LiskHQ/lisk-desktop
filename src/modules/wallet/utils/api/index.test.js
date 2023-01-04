@@ -268,6 +268,7 @@ describe('API: LSK Account', () => {
             publicKey,
           },
         },
+        publicKey: '',
       });
     });
 
@@ -305,6 +306,7 @@ describe('API: LSK Account', () => {
             privateKey,
           },
         },
+        publicKey: '',
       });
     });
   });
