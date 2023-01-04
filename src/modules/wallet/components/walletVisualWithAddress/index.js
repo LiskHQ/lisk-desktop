@@ -7,10 +7,11 @@ import PropTypes from 'prop-types';
 import {
   MODULE_COMMANDS_NAME_MAP,
   MODULE_COMMANDS_MAP,
-} from 'src/modules/transaction/configuration/moduleCommand';
+} from '@transaction/configuration/moduleCommand';
 import { truncateAddress } from '@wallet/utils/account';
-import { getModuleCommandTitle } from 'src/modules/transaction/utils/moduleCommand';
+import { getModuleCommandTitle } from '@transaction/utils/moduleCommand';
 import Icon from 'src/theme/Icon';
+import DialogLink from 'src/theme/dialog/link';
 import CopyToClipboard from 'src/modules/common/components/copyToClipboard';
 import WalletVisual from '../walletVisual';
 import styles from './walletVisualWithAddress.css';
@@ -61,7 +62,14 @@ const WalletVisualWithAddress = ({
         <>
           <WalletVisual address={address} size={size} />
           <div className={`${styles.detailsWrapper} ${detailsClassName || ''}`}>
-            {accountName && <p className="accountName">{accountName}</p>}
+            {accountName && (
+              <div className={styles.accountName}>
+                <p className="accountName">{accountName}</p>
+                <DialogLink component="multisigAccountDetails">
+                  <Icon name="multisigKeys" />
+                </DialogLink>
+              </div>
+            )}
             <span className={`${styles.address} accountAddress`}>
               {truncate ? truncatedAddress : transformedAddress}
               {copy ? (
