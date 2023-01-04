@@ -76,7 +76,10 @@ export const getAccount = async ({
     });
 
     if (response.data) {
-      const account = { keys: { ...response.data } };
+      const account = {
+        keys: { ...response.data },
+        publicKey: response.meta.publicKey,
+      };
       return account;
     }
   } catch (e) {
