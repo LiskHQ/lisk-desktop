@@ -55,6 +55,7 @@
         vertical-align: middle;
         display: inline-block;
       }
+
       & .title {
         letter-spacing: 0.33px;
         color: var(--color-blue-gray);
@@ -105,7 +106,7 @@
     }
   }
 
-   & .members {
+  & .members {
     & > p {
       @mixin contentLargest semi-bold;
     }

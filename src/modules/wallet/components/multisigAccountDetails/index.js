@@ -56,7 +56,6 @@ const MultisigAccountDetails = ({ t, wallet, history }) => {
   );
 
   useEffect(() => {
-    
     wallet.loadData({ address });
   }, [network]);
 

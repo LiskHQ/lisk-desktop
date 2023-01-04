@@ -16,6 +16,50 @@ import CopyToClipboard from 'src/modules/common/components/copyToClipboard';
 import WalletVisual from '../walletVisual';
 import styles from './walletVisualWithAddress.css';
 
+const AccountName = ({
+  isMultisig, address, name,
+}) => (
+  <div className={styles.accountName}>
+    <p className="accountName">{name}</p>
+    {
+      isMultisig && (
+        <DialogLink component="multisigAccountDetails" data={{ address }}>
+          <Icon name="multisigKeys" />
+        </DialogLink>
+      )
+    }
+  </div>
+);
+
+const AccountAddress = ({
+  address,
+  truncate,
+  copy,
+  transformedAddress,
+  truncatedAddress,
+  name,
+  isMultisig,
+}) => (
+  <span className={`${styles.address} accountAddress`}>
+    {truncate ? truncatedAddress : transformedAddress}
+    {copy ? (
+      <CopyToClipboard
+        value={address}
+        type="icon"
+        copyClassName={styles.copyIcon}
+        className={styles.copyIcon}
+      />
+    ) : null}
+    {
+      isMultisig && !name && (
+        <DialogLink component="multisigAccountDetails" data={{ address }}>
+          <Icon name="multisigKeys" />
+        </DialogLink>
+      )
+    }
+  </span>
+);
+
 const WalletVisualWithAddress = ({
   bookmarks,
   showBookmarkedAddress,
@@ -29,6 +73,7 @@ const WalletVisualWithAddress = ({
   className,
   detailsClassName,
   copy,
+  isMultisig,
 }) => {
   const getTransformedAddress = (addressValue) => {
     if (showBookmarkedAddress) {
@@ -62,25 +107,20 @@ const WalletVisualWithAddress = ({
         <>
           <WalletVisual address={address} size={size} />
           <div className={`${styles.detailsWrapper} ${detailsClassName || ''}`}>
-            {accountName && (
-              <div className={styles.accountName}>
-                <p className="accountName">{accountName}</p>
-                <DialogLink component="multisigAccountDetails">
-                  <Icon name="multisigKeys" />
-                </DialogLink>
-              </div>
-            )}
-            <span className={`${styles.address} accountAddress`}>
-              {truncate ? truncatedAddress : transformedAddress}
-              {copy ? (
-                <CopyToClipboard
-                  value={address}
-                  type="icon"
-                  copyClassName={styles.copyIcon}
-                  className={styles.copyIcon}
-                />
-              ) : null}
-            </span>
+            <AccountName
+              name={accountName}
+              address={address}
+              isMultisig={isMultisig}
+            />
+            <AccountAddress
+              address={address}
+              truncate={truncate}
+              copy={copy}
+              transformedAddress={transformedAddress}
+              truncatedAddress={truncatedAddress}
+              name={accountName}
+              isMultisig={isMultisig}
+            />
           </div>
         </>
       )}
