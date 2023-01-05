@@ -16,7 +16,7 @@ const Reclaim = ({ account, t, transactionJSON }) => (
         token={tokenMap.LSK.key}
       />
     </section>
-    <section className={styles.section}>
+    <section className={`${styles.section} tx-fee-section`}>
       <label>{t('Transaction fee')}</label>
       <TokenAmount
         val={Number(transactionJSON.fee)}
