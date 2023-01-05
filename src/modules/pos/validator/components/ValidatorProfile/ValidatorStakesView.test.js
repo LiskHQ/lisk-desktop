@@ -28,7 +28,7 @@ describe('Validator stakes view', () => {
     render(<ValidatorStakesView {...props} />);
 
     expect(screen.getByText('Stakers')).toBeTruthy();
-    mockReceivedStakes.data.votes.forEach(({ name }) => {
+    mockReceivedStakes.data.stakers.forEach(({ name }) => {
       expect(screen.getByText(name)).toBeTruthy();
     });
   });
@@ -55,7 +55,7 @@ describe('Validator stakes view', () => {
       applyFilters: mockApplyFilters,
       clearFilters: mockClearFilters,
     });
-    useReceivedStakes.mockReturnValue({ data: {} });
+    useReceivedStakes.mockReturnValue({ data: { data: { stakers: [] } } });
 
     render(<ValidatorStakesView {...props} />);
 

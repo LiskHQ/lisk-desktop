@@ -45,7 +45,7 @@ describe('Validator Profile', () => {
     useSentStakes.mockReturnValue({
       data: {
         ...mockSentStakes,
-        data: { ...mockReceivedStakes.data, votes: mockReceivedStakes.data.votes.slice(5, 7) },
+        data: { ...mockReceivedStakes.data, votes: mockReceivedStakes.data.stakers.slice(5, 7) },
       },
     });
 
@@ -93,7 +93,7 @@ describe('Validator Profile', () => {
 
     expect(screen.getByText('Rank')).toBeTruthy();
     expect(screen.getByTestId('addressFilter')).toBeTruthy();
-    mockReceivedStakes.data.votes.forEach(({ name }) => {
+    mockReceivedStakes.data.stakers.forEach(({ name }) => {
       expect(screen.getByText(name)).toBeTruthy();
     });
   });
@@ -232,7 +232,7 @@ describe('Validator Profile', () => {
         ...mockReceivedStakes,
         data: {
           ...mockReceivedStakes.data,
-          votes: mockReceivedStakes.data.votes.map((vote) => ({
+          votes: mockReceivedStakes.data.stakers.map((vote) => ({
             ...vote,
             delegateAddress: 'lskjq7jh2k7q332wgkz3bxogb8bj5zc3fcnb9ya53',
           })),
