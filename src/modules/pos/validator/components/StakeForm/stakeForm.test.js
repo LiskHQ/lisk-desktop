@@ -143,8 +143,8 @@ describe('VoteForm', () => {
       wrapper.update();
     });
     expect(wrapper.find('.available-stakes-num').text()).toBe('8/');
-    expect(wrapper.find('.feedback').text()).toBe(
-      'The minimum required balance for this action is {{minRequiredBalance}} {{token}}'
+    expect(wrapper.find('.feedback').at(0).text()).toBe(
+      "You don't have enough LSK in your account."
     );
   });
 
@@ -159,7 +159,7 @@ describe('VoteForm', () => {
     });
     expect(wrapper.find('.available-stakes-num').text()).toBe('8/');
     expect(wrapper.find('.feedback').at(0).text()).toBe(
-      'The stake amounts are too high. You should keep 0.05 LSK available in your account.'
+      "You don't have enough LSK in your account."
     );
   });
 });
