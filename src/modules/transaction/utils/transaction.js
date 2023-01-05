@@ -307,7 +307,7 @@ const signUsingPrivateKey = (wallet, schema, chainID, transaction, privateKey) =
     }
   }
 
-  // Sign the tx only if the account is the initator of the tx
+  // Sign the tx only if the account is the initiator of the tx
 
   const { mandatoryKeys, optionalKeys, numberOfSignatures } = wallet.keys;
   const isSender = Buffer.compare(transaction.senderPublicKey, publicKeyBuffer) === 0;
