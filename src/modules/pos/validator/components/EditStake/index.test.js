@@ -138,7 +138,7 @@ describe('EditStake', () => {
         ...mockSentStakes,
         data: {
           ...mockSentStakes.data,
-          votes: mockSentStakes.data.votes.map((vote, index) =>
+          votes: mockSentStakes.data.stakes.map((vote, index) =>
             index === 0 ? { ...vote, validatorAddress } : vote
           ),
         },

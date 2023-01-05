@@ -2,6 +2,7 @@ import { act } from 'react-dom/test-utils';
 import { mountWithCustomRouterAndStore } from 'src/utils/testHelpers';
 import { getTransactionBaseFees } from '@transaction/api';
 import { tokenMap } from '@token/fungible/consts/tokens';
+import { mockTokensBalance } from '@token/fungible/__fixtures__';
 import useTransactionFeeCalculation from '@transaction/hooks/useTransactionFeeCalculation';
 import { truncateAddress } from '@wallet/utils/account';
 import * as hwManager from '@transaction/utils/hwManager';
@@ -14,7 +15,6 @@ import { useCommandSchema } from '@network/hooks';
 import { useTokensBalance } from '@token/fungible/hooks/queries';
 import { mockCommandParametersSchemas } from 'src/modules/common/__fixtures__';
 import Summary from '.';
-import { mockTokensBalance } from 'src/modules/token/fungible/__fixtures__';
 
 const mockedCurrentAccount = mockSavedAccounts[0];
 jest.mock('@auth/hooks/queries');
