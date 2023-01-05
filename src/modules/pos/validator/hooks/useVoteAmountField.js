@@ -51,7 +51,6 @@ const getAmountFeedbackAndError = (value, balance, minValue, inputValue) => {
  */
 // eslint-disable-next-line max-statements
 const useVoteAmountField = (initialValue) => {
-  // @TODO: we need to change the caching time from 5mins to something larger since this is a constant that doesn't frequently change
   const { data: posConstants, isLoading: isGettingPosConstants } = usePosConstants();
 
   // Since we know the dposTokenId we need to get the token's object

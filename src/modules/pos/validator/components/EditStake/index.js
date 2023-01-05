@@ -76,7 +76,6 @@ const EditStake = ({ history, stakeEdited, network, voting, stakesRetrieved }) =
     config: { params: { address: currentAddress } },
   });
 
-  // @TODO: we need to change the caching time from 5mins to something larger since this is a constant that doesn't frequently change
   const { data: posConstants, isLoading: isGettingPosConstants } = usePosConstants();
 
   const { data: tokens } = useTokensBalance({
