@@ -44,7 +44,7 @@ export const QueryTable = ({
 
   useEffect(() => {
     if (isFetched && typeof onFetched === 'function') {
-      onFetched?.(response);
+      onFetched(response);
     }
   }, [isFetched]);
 
