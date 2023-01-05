@@ -1,5 +1,4 @@
-import { cryptography } from '@liskhq/lisk-client';
-import { codec } from '@liskhq/lisk-codec';
+import { codec as liskCodec, cryptography } from '@liskhq/lisk-client';
 import { mockNetworkStatus } from '@network/__fixtures__';
 import { mockAuth } from '@auth/__fixtures__';
 import { mockCommandParametersSchemas } from '../../common/__fixtures__';
@@ -283,7 +282,7 @@ describe.skip('Transaction', () => {
         commandParametersSchemas: mockCommandParametersSchemas.data,
         encodedTransaction,
       });
-      const encodedParams = codec.encode(
+      const encodedParams = liskCodec.codec.encode(
         tokenTransfer._paramsSchema,
         tokenTransfer.transaction.params,
       );
@@ -324,7 +323,7 @@ describe.skip('Transaction', () => {
         commandParametersSchemas: mockCommandParametersSchemas.data,
         encodedTransaction,
       });
-      const encodedParams = codec.encode(
+      const encodedParams = liskCodec.codec.encode(
         tokenTransfer._paramsSchema,
         tokenTransfer.transaction.params,
       );

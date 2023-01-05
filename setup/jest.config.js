@@ -38,6 +38,7 @@ module.exports = {
     '^@legacy(.*)$': resolve(__dirname, '../src/modules/legacy/$1'),
     '^@message(.*)$': resolve(__dirname, '../src/modules/message/$1'),
     '^@pos(.*)$': resolve(__dirname, '../src/modules/pos/$1'),
+    '^@reward(.*)$': resolve(__dirname, '../src/modules/reward/$1'),
     '^@network(.*)$': resolve(__dirname, '../src/modules/network/$1'),
     '^@settings(.*)$': resolve(__dirname, '../src/modules/settings/$1'),
     '^@token(.*)$': resolve(__dirname, '../src/modules/token/$1'),

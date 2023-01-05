@@ -16,6 +16,7 @@
       "@common/*": ["./src/modules/common/*"],
       "@legacy/*": ["./src/modules/legacy/*"],
       "@pos/*": ["./src/modules/pos/*"],
+      "@reward/*": ["./src/modules/reward/*"],
       "@network/*": ["./src/modules/network/*"],
       "@settings/*": ["./src/modules/settings/*"],
       "@token/*": ["./src/modules/token/*"],

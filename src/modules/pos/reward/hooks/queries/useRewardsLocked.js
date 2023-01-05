@@ -2,7 +2,7 @@ import { POS_REWARDS_LOCKED } from 'src/const/queries';
 import {
   API_VERSION,
 } from 'src/const/config';
-import { useCustomQuery } from 'src/modules/common/hooks';
+import { useCustomQuery } from '@common/hooks';
 
 /**
  * Creates a custom hook to fetch claimable rewards by address
