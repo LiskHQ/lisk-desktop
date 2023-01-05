@@ -13,11 +13,10 @@
  *
  */
 
-import { codec as liskCodec, cryptography } from '@liskhq/lisk-client';
+import { codec, cryptography } from '@liskhq/lisk-client';
 import { trimBigintString } from './helpers';
 import { joinModuleAndCommand } from './moduleCommand';
 
-const { codec } = liskCodec;
 // TODO: Use from service endpoint/elements
 export const baseTransactionSchema = {
   $id: '/lisk/baseTransaction',

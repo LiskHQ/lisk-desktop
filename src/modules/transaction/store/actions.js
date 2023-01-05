@@ -147,7 +147,6 @@ export const transactionBroadcasted = (transaction, moduleCommandSchemas) =>
     let broadcastResult;
     const dryRunResult = await dryRun({ transaction, serviceUrl, network });
 
-    // If the results is 1 then its successful
     if (dryRunResult.data?.result === 1) {
       broadcastResult = await broadcast(
         { transaction, serviceUrl, moduleCommandSchemas },
@@ -166,10 +165,9 @@ export const transactionBroadcasted = (transaction, moduleCommandSchemas) =>
         return true;
       }
       // @todo we need to push pending transaction to the query cache
-
+      // https://github.com/LiskHQ/lisk-desktop/issues/4698 should handle this logic
     }
 
-    // If the results is -1 then the transaction is failed during transaction verification
     if (dryRunResult.data?.result === -1) {
       dispatch({
         type: actionTypes.broadcastedTransactionError,
@@ -182,6 +180,7 @@ export const transactionBroadcasted = (transaction, moduleCommandSchemas) =>
 
     if (dryRunResult.data?.result === 0) {
       // @TODO: Prepare error message by parsing the events based on each transaction type
+      // https://github.com/LiskHQ/lisk-desktop/issues/4698 should resolve all the dry run related logic along with feedback
       const temporaryError = dryRunResult.data?.events.map(e => e.name).join(', ')
       dispatch({
         type: actionTypes.broadcastedTransactionError,
