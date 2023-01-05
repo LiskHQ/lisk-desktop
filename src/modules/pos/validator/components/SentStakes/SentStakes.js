@@ -22,7 +22,6 @@ function useStakerAddress(searchParam) {
   return searchAddress || currentAccount?.metadata?.address;
 }
 
-// eslint-disable-next-line max-statements
 const SentStakes = ({ history }) => {
   const { t } = useTranslation();
   const stakerAddress = useStakerAddress(history.location.search);
