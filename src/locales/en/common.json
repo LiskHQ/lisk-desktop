@@ -117,6 +117,7 @@
   "Click to see the full address": "Click to see the full address",
   "Close": "Close",
   "Collapse sidebar": "Collapse sidebar",
+  "Commission (%)": "Commission (%)",
   "Community is key. Stake for validators, or register as one yourself. Feel like a feature is missing? Request it directly from the Lisk.": "Community is key. Stake for validators, or register as one yourself. Feel like a feature is missing? Request it directly from the Lisk.",
   "Configure account": "Configure account",
   "Confirm": "Confirm",
@@ -751,7 +752,6 @@
   "locked": "locked",
   "more": "more",
   "removed": "removed",
-  "staking slots available in your account": "staking slots available in your account",
   "to": "to",
   "transactionID": "transactionID",
   "value": "value",
@@ -772,5 +772,6 @@
   "{{num}} week": "{{num}} week",
   "{{num}} year": "{{num}} year",
   "{{passphraseName}} paper wallet": "{{passphraseName}} paper wallet",
+  "{{stake}} still available in your account": "{{stake}} still available in your account",
   "{{transactions}} transactions": "{{transactions}} transactions"
 }

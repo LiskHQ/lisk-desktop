@@ -9,48 +9,42 @@ import { QueryTable } from 'src/theme/QueryTable';
 import BoxHeader from 'src/theme/box/header';
 import { selectSearchParamValue } from 'src/utils/searchParams';
 import { useCurrentAccount } from '@account/hooks';
-import Icon from 'src/theme/Icon';
 import { useTokensBalance } from '@token/fungible/hooks/queries';
+import StakesCount from '@pos/validator/components/StakesCount';
 import styles from './SentStakes.css';
 import header from './tableHeaderMap';
 import SentStakesRow from '../SentStakesRow';
 import { usePosConstants, useSentStakes } from '../../hooks/queries';
 
+// TODO: From validators endpoint get validatorWeight and commission
+
+
+function useStakerAddress(searchParam) {
+  const searchAddress = selectSearchParamValue(searchParam, 'address');
+  const [currentAccount] = useCurrentAccount();
+  return searchAddress || currentAccount?.metadata?.address;
+}
+
 // eslint-disable-next-line max-statements
 const SentStakes = ({ history }) => {
   const { t } = useTranslation();
-  const searchAddress = selectSearchParamValue(history.location.search, 'address');
-  const [
-    {
-      metadata: { address: currentAddress },
-    },
-  ] = useCurrentAccount();
+  const stakerAddress = useStakerAddress(history.location.search);
+  const sentStakesQueryConfig = { config: { params: { address: stakerAddress} } };
 
-  const address = useMemo(() => searchAddress || currentAddress, [searchAddress, currentAddress]);
-  const queryParam = { config: { params: { address } } };
-
-  // @TODO: we need to change the caching time from 5mins to something larger since this is a constant that doesn't frequently change
   const { data: posConstants, isLoading: isGettingPosConstants } = usePosConstants();
 
   const { data: tokens } = useTokensBalance({
-    config: { params: { tokenID: posConstants?.posTokenID } },
+    config: { params: { tokenID: posConstants?.data?.posTokenID, address: stakerAddress } },
     options: { enabled: !isGettingPosConstants },
   });
-  const dposToken = useMemo(() => tokens?.data?.[0] || {}, [tokens]);
-
-  const { data } = useSentStakes(queryParam);
-  const stakingAvailable = useMemo(() => 10 - data?.meta?.total || 0, [address]);
+  const token = useMemo(() => tokens?.data?.[0] || {}, [tokens]);
 
   return (
     <Box className={styles.wrapper}>
       <BoxHeader>
         <Heading title={t('Stakes')}>
           <div className={styles.rightHeaderSection}>
-            <div className={styles.stakesCountBadge}>
-              <Icon name="stakingQueueActive" />
-              <span>{stakingAvailable}</span>
-              /10 {t('staking slots available in your account')}
-            </div>
+            <StakesCount className={styles.stakesCountProp} sentStakesQueryConfig={sentStakesQueryConfig} />
             <div className={styles.actionButtons}>
               <DialogLink component="lockedBalance">
                 <PrimaryButton>{t('Available to unlock')}</PrimaryButton>
@@ -63,12 +57,12 @@ const SentStakes = ({ history }) => {
         <QueryTable
           showHeader
           queryHook={useSentStakes}
-          transformResponse={(resp) => resp?.votes || []}
-          queryConfig={queryParam}
+          transformResponse={(resp) => resp?.stakes || []}
+          queryConfig={sentStakesQueryConfig}
           row={SentStakesRow}
           header={header(t)}
           additionalRowProps={{
-            dposToken,
+            token
           }}
           headerClassName={styles.tableHeader}
         />

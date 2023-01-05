@@ -11,10 +11,10 @@ export const ValidatorWalletVisual = ({ address, name }) => (
   </div>
 );
 
-export const Balance = ({ value, ...rest }) => (
-  <p className={`${grid['col-xs-2']} ${styles.balance}`} {...rest}>
+export const Balance = ({ colSpanXs = 2, value }) => (
+  <div className={`${grid[`col-xs-${colSpanXs}`]} ${styles.balance}`}>
     {value}
-  </p>
+  </div>
 );
 
 export const Actions = ({ address, name, stakeEdited }) => {
@@ -29,7 +29,7 @@ export const Actions = ({ address, name, stakeEdited }) => {
   };
 
   return (
-    <div className={`${styles.action} ${grid['col-xs-3']}`}>
+    <div className={`${styles.action} ${grid['col-xs-2']}`}>
       <DialogLink component="editStake" data={{ address }}>
         <Icon name="edit" />
       </DialogLink>

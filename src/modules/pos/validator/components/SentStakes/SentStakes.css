@@ -11,6 +11,12 @@
   }
 }
 
+.stakesCountProp {
+  padding: 8px 12px;
+  border-radius: 10px;
+  background-color: var(--color-stakes-available);
+}
+
 .searchIcon {
   margin-top: 8px;
   margin-left: -9px;
@@ -55,23 +61,4 @@
   top: -7px;
   background-color: var(--color-white);
   z-index: 1;
-}
-
-.stakesCountBadge {
-  @mixin contentLarge;
-
-  padding: 8px 12px;
-  border-radius: 10px;
-  background-color: var(--color-stakes-available);
-  color: var(--color-slate-gray);
-  display: flex;
-
-  & > img {
-    width: 17px;
-    margin-right: 12px;
-  }
-
-  & > span {
-    color: var(--color-content-light);
-  }
 }
