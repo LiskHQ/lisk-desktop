@@ -16,9 +16,6 @@ import header from './tableHeaderMap';
 import SentStakesRow from '../SentStakesRow';
 import { usePosConstants, useSentStakes } from '../../hooks/queries';
 
-// TODO: From validators endpoint get validatorWeight and commission
-
-
 function useStakerAddress(searchParam) {
   const searchAddress = selectSearchParamValue(searchParam, 'address');
   const [currentAccount] = useCurrentAccount();
