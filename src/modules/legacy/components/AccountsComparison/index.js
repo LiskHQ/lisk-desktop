@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useMemo } from 'react';
 import { withTranslation } from 'react-i18next';
 import { useSelector } from 'react-redux';
 import Tooltip from 'src/theme/Tooltip';
@@ -16,7 +16,12 @@ const AccountsComparison = ({ t }) => {
   useDeprecatedAccount();
   useSchemas();
   const wallet = useSelector(selectActiveTokenAccount);
+  const nonce = wallet.sequence?.nonce;
   const hasEnoughBalance = Number(wallet.token?.[0]?.availableBalance) >= dustThreshold;
+  const hasDepositedTokens = useMemo(
+    () => hasEnoughBalance && nonce >= 0,
+    [nonce, hasEnoughBalance]
+  );
 
   return (
     <div className={`${styles.container} ${styles.reclaim}`}>
@@ -43,41 +48,38 @@ const AccountsComparison = ({ t }) => {
           {t('All you need to do before your balance transfer can be complete:')}
         </h5>
         <ul className={styles.list}>
-          <li className={`${styles.step} ${hasEnoughBalance ? styles.check : styles.green}`}>
-            <div>
-              {t('Deposit at least {{amount}} LSK to your new account', {
-                amount: fromRawLsk(dustThreshold),
-              })}
-              <Tooltip position="right" size="m">
-                <>
-                  <p>
-                    {t(
-                      'Since you want to reclaim your LSK on the new blockchain, you need to pay the network fee from your new account.'
-                    )}
-                  </p>
-                  <br />
-                  <p>
-                    {t(
-                      'Hence your LSK in your old account can not be used to pay the fee. Read more'
-                    )}
-                  </p>
-                  <br />
-                  <p
-                    className={`${styles.link} link`}
-                    onClick={() => {
-                      window.open(
-                        'https://lisk.com/blog/development/actions-required-upcoming-mainnet-migration#MigrateanunitiliazedAccount',
-                        '_blank',
-                        'rel=noopener noreferrer'
-                      );
-                    }}
-                  >
-                    {t('Read more')}
-                  </p>
-                </>
-              </Tooltip>
-              <br />
-              {!hasEnoughBalance && (
+          {!hasDepositedTokens && (
+            <li className={`${styles.step} ${styles.green}`}>
+              <div>
+                {t('Deposit at least {{amount}} LSK to your new account', {
+                  amount: fromRawLsk(dustThreshold),
+                })}
+                <Tooltip position="right" size="m">
+                  <>
+                    <p>
+                      {t(
+                        'Since you want to reclaim your LSK on the new blockchain, you need to pay the network fee from your new account.'
+                      )}
+                    </p>
+                    <br />
+                    <p>{t('Hence your LSK in your old account can not be used to pay the fee.')}</p>
+                    <br />
+                    <p
+                      className={`${styles.link} link`}
+                      onClick={() => {
+                        window.open(
+                          'https://lisk.com/blog/development/actions-required-upcoming-mainnet-migration#MigrateanunitiliazedAccount',
+                          '_blank',
+                          'rel=noopener noreferrer'
+                        );
+                      }}
+                    >
+                      {t('Read more')}
+                    </p>
+                  </>
+                </Tooltip>
+                <br />
+                {/* {!hasEnoughBalance && ( */}
                 <>
                   <span>
                     {t('An initial one-time transfer fee will be deducted from the new account.')}
@@ -100,23 +102,24 @@ const AccountsComparison = ({ t }) => {
                     {t(' to deposit LSK.')}
                   </span>
                 </>
-              )}
-            </div>
-          </li>
-          <li className={`${styles.step} ${hasEnoughBalance && styles.green}`}>
+                {/* )} */}
+              </div>
+            </li>
+          )}
+          <li className={`${styles.step} ${hasDepositedTokens && styles.green}`}>
             <div>
               {t('Send a reclaim transaction')}
               <br />
               <span>
                 {t(
-                  'Once you have enough tokens on your new account you will be able to send a transaction.'
+                  'Now that you have enough tokens on your new account, please continue to send the reclaim transaction.'
                 )}
               </span>
             </div>
           </li>
         </ul>
       </section>
-      <DialogLink component="reclaimBalance">
+      <DialogLink component="reclaimBalance" data={{ tokenID: wallet.token?.[0]?.tokenID }}>
         <PrimaryButton className={styles.button} disabled={!hasEnoughBalance}>
           {t('Continue')}
         </PrimaryButton>

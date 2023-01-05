@@ -48,11 +48,14 @@ const CustomRoute = ({ path, exact, isPrivate, forbiddenTokens, component, t, hi
 
   if (
     isMigrated === false &&
-    history.location.pathname !== routes.reclaim.path &&
-    history.location.pathname !== routes.manageAccounts.path &&
-    history.location.pathname !== routes.addAccountOptions.path &&
-    history.location.pathname !== routes.addAccountByFile.path &&
-    history.location.pathname !== routes.addAccountBySecretRecovery.path &&
+    ![
+      routes.reclaim.path,
+      routes.backupRecoveryPhraseFlow.path,
+      routes.manageAccounts.path,
+      routes.addAccountOptions.path,
+      routes.addAccountByFile.path,
+      routes.addAccountBySecretRecovery.path,
+    ].includes(history.location.pathname) &&
     isAuthenticated
   ) {
     return <Redirect to={`${routes.reclaim.path}`} />;
