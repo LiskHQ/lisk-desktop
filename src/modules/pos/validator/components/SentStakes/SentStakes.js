@@ -63,7 +63,7 @@ const SentStakes = ({ history }) => {
         <QueryTable
           showHeader
           queryHook={useSentStakes}
-          transformResponse={(resp) => resp?.votes || []}
+          transformResponse={(resp) => resp?.stakes || []}
           queryConfig={queryParam}
           row={SentStakesRow}
           header={header(t)}

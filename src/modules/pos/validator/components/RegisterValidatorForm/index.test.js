@@ -171,7 +171,7 @@ describe('RegisterValidatorForm', () => {
     };
     const rawTx = {
       transactionJSON: {
-        fee: 0,
+        fee: '100000000',
         module: 'dpos',
         command: 'registerDelegate',
         nonce: '1',
@@ -195,7 +195,10 @@ describe('RegisterValidatorForm', () => {
         isValid: true,
         moduleCommand: 'dpos:registerDelegate',
       },
-      fees: undefined,
+      fees: {
+        Initialisation: '0 LSK',
+        Transaction: '0 LSK',
+      },
       selectedPriority: { title: 'Normal', selectedIndex: 0, value: 0 },
     };
 

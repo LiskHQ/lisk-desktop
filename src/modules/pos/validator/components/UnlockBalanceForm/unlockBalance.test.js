@@ -117,7 +117,7 @@ describe('Unlock LSK modal', () => {
     module: 'dpos',
     command: 'unlock',
     nonce: '178',
-    fee: 10000000,
+    fee: '100000000',
     senderPublicKey: '0fe9a3f1a21b5530f27f87a414b549e79a940bf24fdf2b2f05e7f22aeeecc86a',
     params: {
       unlockObjects: [
@@ -181,7 +181,10 @@ describe('Unlock LSK modal', () => {
         isValid: true,
         moduleCommand: 'dpos:unlock',
       },
-      fees: undefined,
+      fees: {
+        Initialisation: '0.1 LSK',
+        Transaction: '0.1 LSK',
+      },
       selectedPriority: { selectedIndex: 1 },
     });
   });
@@ -199,7 +202,10 @@ describe('Unlock LSK modal', () => {
           isValid: true,
           moduleCommand: 'dpos:unlock',
         },
-        fees: undefined,
+        fees: {
+          Initialisation: '0.1 LSK',
+          Transaction: '0.1 LSK',
+        },
         selectedPriority: { selectedIndex: 1 },
       })
     );
