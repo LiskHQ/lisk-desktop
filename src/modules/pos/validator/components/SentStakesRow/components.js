@@ -3,6 +3,7 @@ import grid from 'flexboxgrid/dist/flexboxgrid.css';
 import Icon from 'src/theme/Icon';
 import WalletVisualWithAddress from '@wallet/components/walletVisualWithAddress';
 import DialogLink from 'src/theme/dialog/link';
+import classNames from 'classnames';
 import styles from './SentStakesRow.css';
 
 export const ValidatorWalletVisual = ({ address, name }) => (
@@ -11,8 +12,8 @@ export const ValidatorWalletVisual = ({ address, name }) => (
   </div>
 );
 
-export const Balance = ({ colSpanXs = 2, value }) => (
-  <div className={`${grid[`col-xs-${colSpanXs}`]} ${styles.balance}`}>
+export const Balance = ({ className, colSpanXs = 2, value }) => (
+  <div className={classNames(className, grid[`col-xs-${colSpanXs}`], styles.balance)}>
     {value}
   </div>
 );

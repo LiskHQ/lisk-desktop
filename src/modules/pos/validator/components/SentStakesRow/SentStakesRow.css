@@ -83,7 +83,7 @@
   & p {
     @mixin delegateName;
 
-    margin: 0px;
+    margin: 0 0 8px 0;
   }
 
   & p ~ span {
@@ -94,18 +94,14 @@
 }
 
 .balance {
-  @mixin headingSmall;
-
   padding: 0px 10px 0px 10px;
   display: flex;
   align-items: center;
+  font-size: var(--paragraph-font-size-s);
   color: var(--color-content-light) !important;
 
-  & span {
-    @mixin headingSmall;
-
-    color: var(--color-content-light) !important;
-    font-size: var(--paragraph-font-size-l) !important;
+  &.amountCell {
+    font-size: var(--font-size-h6);
   }
 }
 
