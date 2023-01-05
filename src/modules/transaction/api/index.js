@@ -228,17 +228,17 @@ export const getTransactionFee = async ({
         ...transactionObject.params,
         ...(numberOfSignatures &&
           !transactionObject.params.signatures?.length && {
-            signatures: allocateEmptySignaturesWithEmptyBuffer(numberOfSignatures),
-          }),
+          signatures: allocateEmptySignaturesWithEmptyBuffer(numberOfSignatures),
+        }),
       },
     },
     paramsSchema,
     senderAccount.numberOfSignatures
       ? {
-          numberOfSignatures: senderAccount.numberOfSignatures,
-          numberOfEmptySignatures:
-            mandatoryKeys.length + optionalKeys.length - senderAccount.numberOfSignatures,
-        }
+        numberOfSignatures: senderAccount.numberOfSignatures,
+        numberOfEmptySignatures:
+          mandatoryKeys.length + optionalKeys.length - senderAccount.numberOfSignatures,
+      }
       : {}
   );
 
@@ -312,6 +312,20 @@ export const broadcast = async ({ transaction, serviceUrl, moduleCommandSchemas 
   });
 };
 
+/**
+ * Dry run a transaction to verify if the transaction is valid to be broadcasted to network
+ * @param {*} param0 
+ * @returns 
+ * {
+  result: enum {
+    INVALID = -1,
+    FAIL = 0,
+    OK = 1,
+   },
+   errorMessage?: string, 
+   events: EventJSON [],
+}
+ */
 export const dryRun = ({ transaction, serviceUrl, network }) => {
   const moduleCommand = joinModuleAndCommand({
     module: transaction.module,
