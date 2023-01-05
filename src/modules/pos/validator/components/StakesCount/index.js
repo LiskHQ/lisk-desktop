@@ -5,19 +5,19 @@ import { useTranslation } from 'react-i18next';
 import classNames from 'classnames';
 import styles from './StakesCount.css'
 
-const StakesCount = ({ className, sentStakesQueryConfig, hideIcon }) => {
+const StakesCount = ({ className, classNameAvailableStakes, address, hideIcon }) => {
   const { t } = useTranslation();
-  const { data: sentStakes } = useSentStakes(sentStakesQueryConfig);
+  const { data: sentStakes } = useSentStakes({ config: { params: { address } } });
   const { data: posConstants } = usePosConstants();
-  const stakingAvailable = (posConstants?.data?.maxNumberSentStakes - sentStakes?.meta?.count) || '0';
+  const availableStakes = (posConstants?.data?.maxNumberSentStakes - sentStakes?.meta?.count) || '0';
 
   return (
     <div className={classNames(styles.stakesCount, className)}>
       {
         !hideIcon && <Icon name="stakingQueueActive" />
       }
-      <span>{stakingAvailable}</span>
-      /10 {t('{{stake}} still available in your account', { stake: stakingAvailable > 1 ? 'stakes' : 'stake' })}
+      <span className={classNameAvailableStakes}>{availableStakes}</span>
+      /10 {t('{{stake}} still available in your account', { stake: availableStakes > 1 ? 'stakes' : 'stake' })}
     </div>
   )
 }

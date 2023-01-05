@@ -8,6 +8,7 @@ import BoxContent from '@theme/box/content';
 import Dialog from 'src/theme/dialog/dialog';
 import TxComposer from '@transaction/components/TxComposer';
 import Table from '@theme/table';
+import StakesCount from '@pos/validator/components/StakesCount';
 import { STAKE_LIMIT } from '../../consts';
 import StakeRow from './StakeRow';
 import EmptyState from './EmptyState';
@@ -65,7 +66,9 @@ const getStakeStats = (stakes, account) => {
   const numOfRemovedStakes = Object.keys(stakesStats.removed).length;
 
   const resultingNumOfStakes = numOfAddededStakes + numOfEditedStakes + numOfUntouchedStakes;
-  const availableStakes = STAKE_LIMIT - (numOfEditedStakes + numOfUntouchedStakes + numOfRemovedStakes + numOfAddededStakes);
+  const availableStakes =
+    STAKE_LIMIT -
+    (numOfEditedStakes + numOfUntouchedStakes + numOfRemovedStakes + numOfAddededStakes);
 
   return {
     ...stakesStats,
@@ -131,7 +134,7 @@ const StakeForm = ({ t, votes, account, isVotingTxPending, nextStep, history, dp
     .map((address) => ({ address, ...votes[address] }));
 
   const normalizedVotes = useMemo(() => normalizeStakesForTx(votes), [votes]);
-  const { added, edited, removed, selfUnvote, availableStakes, resultingNumOfStakes } = useMemo(
+  const { added, edited, removed, selfUnvote, resultingNumOfStakes } = useMemo(
     () => getStakeStats(votes, account),
     [votes, account]
   );
@@ -142,7 +145,7 @@ const StakeForm = ({ t, votes, account, isVotingTxPending, nextStep, history, dp
     fee,
     resultingNumOfStakes,
     t,
-    dposToken,
+    dposToken
   );
 
   const onConfirm = (formProps, transactionJSON, selectedPriority, fees) => {
@@ -169,7 +172,7 @@ const StakeForm = ({ t, votes, account, isVotingTxPending, nextStep, history, dp
   };
   const commandParams = {
     votes: normalizedVotes,
-  }
+  };
 
   return (
     <Dialog hasClose className={`${styles.wrapper}`}>
@@ -187,14 +190,12 @@ const StakeForm = ({ t, votes, account, isVotingTxPending, nextStep, history, dp
               <BoxContent className={styles.container}>
                 <header className={styles.headerContainer}>
                   <span className={styles.title}>{t('Staking queue')}</span>
-                  <div className={styles.votesAvailableCounter}>
-                    <span className="available-stakes-num">{`${availableStakes}/`}</span>
-                    <span>
-                      {t('{{STAKE_LIMIT}} staking slots available for your account', {
-                        STAKE_LIMIT,
-                      })}
-                    </span>
-                  </div>
+                  <StakesCount
+                    address={account.summary?.address}
+                    className={styles.votesAvailableCounter}
+                    classNameAvailableStakes="available-stakes-num"
+                    hideIcon
+                  />
                 </header>
                 <div className={styles.contentScrollable}>
                   <Table
