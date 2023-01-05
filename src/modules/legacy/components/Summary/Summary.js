@@ -26,7 +26,7 @@ const Summary = ({ history, balanceReclaimed, nextStep, wallet, t, fees }) => {
     () => ({
       module,
       command,
-      fee: 132000, // @TODO: fee value should be gotten from service
+      fee: 134000, // @TODO: fee value should be gotten from service
       signatures: [],
       nonce: wallet.sequence?.nonce,
       senderPublicKey: wallet.summary?.publicKey,
@@ -44,7 +44,7 @@ const Summary = ({ history, balanceReclaimed, nextStep, wallet, t, fees }) => {
 
   // transactionJSON.fee = toRawLsk(minFee.value); // @TODO: this should be reinstated when fee value is to be gotten from service
   formProps.composedFees = {
-    Transaction: getFeeStatus({ fee: { value: 0.00132 }, token: tokenMap.LSK.key }),
+    Transaction: getFeeStatus({ fee: { value: 0.00134 }, token: tokenMap.LSK.key }),
     // Transaction: getFeeStatus({ fee: minFee, token: tokenMap.LSK.key }), // @TODO: this should be reinstated when fee value is to be gotten from service
     Initialisation: getFeeStatus({ fee: { value: 0.05 }, token: tokenMap.LSK.key }),
   };
@@ -58,7 +58,8 @@ const Summary = ({ history, balanceReclaimed, nextStep, wallet, t, fees }) => {
   };
 
   const onConfirmAction = {
-    label: t('Continue'),
+    label: t('Confirm and send'),
+    className: styles.actionBtn,
     onClick: onSubmit,
   };
 
@@ -71,8 +72,7 @@ const Summary = ({ history, balanceReclaimed, nextStep, wallet, t, fees }) => {
 
   return (
     <TransactionSummary
-      hasCancel
-      hasNoTopCancelButton
+      noFeeStatus
       title={t('Transaction Summary')}
       className={styles.container}
       confirmButton={onConfirmAction}

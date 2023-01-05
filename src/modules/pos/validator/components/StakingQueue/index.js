@@ -38,7 +38,7 @@ const StakingQueue = ({ history, processLaunchProtocol }) => {
     // remove the search params from the url after applying the values to the staking queue
     removeSearchParamsFromUrl(history, ['votes', 'unvotes']);
   }, []);
-
+  console.log('---', step?.current)
   return (
     <MultiStep
       key="staking-queue"

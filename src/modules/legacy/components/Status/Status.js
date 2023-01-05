@@ -5,7 +5,7 @@ import statusMessages from './statusMessages';
 import styles from './status.css';
 
 const Status = ({
-  account, transactions, t,
+  account, transactions, t, prevStep
 }) => {
   const status = getTransactionStatus(account, transactions, account.summary.isMultisignature);
   const template = statusMessages(t)[status.code];
@@ -19,6 +19,7 @@ const Status = ({
         message={template.message}
         className={styles.content}
         noBackButton={!account.summary.isMigrated}
+        onRetry={prevStep}
       />
     </div>
   );

@@ -1,0 +1,8 @@
+@import '../../../../../setup/react/app/mixins.css';
+
+.section {
+  & > label:first-child {
+    font-size: var(--font-size-small-secondary) !important;
+    font-weight: var(--font-weight-semi-bold) !important;
+  }
+}

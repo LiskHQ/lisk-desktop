@@ -32,13 +32,11 @@ const Regular = ({
   className,
   resetTransactionResult,
   transactionBroadcasted,
-  moduleCommandSchemas
+  moduleCommandSchemas,
+  onRetry,
 }) => {
   useEffect(() => {
-    if (
-      !isEmpty(transactions.signedTransaction)
-      && !transactions.txSignatureError
-    ) {
+    if (!isEmpty(transactions.signedTransaction) && !transactions.txSignatureError) {
       transactionBroadcasted(transactions.signedTransaction, moduleCommandSchemas);
     }
 
@@ -52,26 +50,29 @@ const Regular = ({
   return (
     <div className={`${styles.wrapper} ${className}`}>
       {typeof illustration === 'string' ? (
-        <Illustration
-          name={getIllustration(status.code, illustration, account.hwInfo)}
-        />
+        <Illustration name={getIllustration(status.code, illustration, account.hwInfo)} />
       ) : (
         React.cloneElement(illustration)
       )}
       <h1 className="result-box-header">{title}</h1>
       <p className="transaction-status body-message">{message}</p>
       {children}
-      {successTypes.includes(status.code) && !noBackButton ? (
+      {successTypes.includes(status.code) && !noBackButton && (
         <PrimaryButton
           className={`${styles.backToWallet} back-to-wallet-button`}
           onClick={goToWallet}
         >
           {t('Back to wallet')}
         </PrimaryButton>
-      ) : null}
+      )}
       {errorTypes.includes(status.code) ? (
         <>
-          <p>{t('Does the problem still persist?')}</p>
+          {onRetry && (
+            <PrimaryButton className={`${styles.retryBtn}`} onClick={onRetry}>
+              {t('Try again')}
+            </PrimaryButton>
+          )}
+          <p>{t('Is the problem persisting?')}</p>
           <a
             className="report-error-link"
             href={getErrorReportMailto({

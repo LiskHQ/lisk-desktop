@@ -42,7 +42,6 @@
   width: 37px;
 
   &.noBalance {
-    padding-top: 30px;
     width: 30px;
   }
 }

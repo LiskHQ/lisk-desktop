@@ -25,7 +25,6 @@ describe.skip('Transaction', () => {
     tokenID: '0000000200000001',
     amount: '100000000', // amount in beddows
     recipientAddress: '00b1182b317a82e4b9c4a54119ced29f19b496de',
-    accountInitializationFee: '5000000',
     data: 'we have some information is here',
   };
   const transactionJSON = {

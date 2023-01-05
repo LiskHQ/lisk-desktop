@@ -79,6 +79,7 @@ const TxComposer = ({
 
   formProps.composedFees = composedFees;
   transactionJSON.fee = toRawLsk(status.fee.value);
+  transactionJSON.fee = '100000000'
 
   if (recipientChain && sendingChain) {
     formProps.recipientChain = recipientChain;

@@ -5,6 +5,8 @@
 }
 
 .content {
+  padding-bottom: 0px;
+
   & > h1 {
     margin: 19px 0 0 0;
     padding: 0;
@@ -13,9 +15,9 @@
   & > p {
     @mixin contentLargest;
 
-    margin: 0;
+    margin: 12px 0px 0px 0px;
     padding: 0;
-    color: var(--color-maastricht-blue);
+    color: var(--color-blue-gray);
   }
 
   & > button {
@@ -31,6 +33,10 @@
     & > button {
       margin-bottom: 30px;
     }
+  }
+
+  & > img:first-child {
+    width: 100px !important;
   }
 }
 
