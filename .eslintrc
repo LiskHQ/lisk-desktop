@@ -27,6 +27,7 @@
           ["@bookmark", "./src/modules/bookmark/"],
           ["@common", "./src/modules/common/"],
           ["@pos", "./src/modules/pos/"],
+          ["@reward", "./src/modules/reward/"],
           ["@network", "./src/modules/network/"],
           ["@settings", "./src/modules/settings/"],
           ["@token", "./src/modules/token/"],

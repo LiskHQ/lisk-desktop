@@ -10,7 +10,7 @@ import UploadJSONInput from 'src/modules/common/components/uploadJSONInput';
 import { PrimaryButton } from 'src/theme/buttons';
 import { useDeprecatedAccount } from 'src/modules/account/hooks';
 import { useSchemas } from '@transaction/hooks/queries/useSchemas';
-import { validateTransaction } from '@liskhq/lisk-transactions';
+import { transactions } from '@liskhq/lisk-client';
 import ProgressBar from '../signMultisigView/progressBar';
 import styles from './styles.css';
 
@@ -26,7 +26,7 @@ const getParamsSchema = (transaction, schemas) => {
 const getTransactionObject = (transaction, moduleCommandSchemas) => {
   const paramsSchema = getParamsSchema(transaction, moduleCommandSchemas);
   const transactionObject = fromTransactionJSON(transaction, paramsSchema);
-  const isValid = validateTransaction(transactionObject, paramsSchema);
+  const isValid = transactions.validateTransaction(transactionObject, paramsSchema);
 
   return {
     transactionObject,

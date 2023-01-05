@@ -29,7 +29,7 @@ const multisigRegMsgSchema = {
       dataType: 'bytes',
       fieldNumber: 1,
       minLength: cryptography.constants.BINARY_ADDRESS_LENGTH,
-      maxLength:cryptography. constants.BINARY_ADDRESS_LENGTH,
+      maxLength: cryptography.constants.BINARY_ADDRESS_LENGTH,
     },
     nonce: {
       dataType: 'uint64',
@@ -307,7 +307,7 @@ const signUsingPrivateKey = (wallet, schema, chainID, transaction, privateKey) =
     }
   }
 
-  // Sign the tx only if the account is the initator of the tx
+  // Sign the tx only if the account is the initiator of the tx
 
   const { mandatoryKeys, optionalKeys, numberOfSignatures } = wallet.keys;
   const isSender = Buffer.compare(transaction.senderPublicKey, publicKeyBuffer) === 0;
