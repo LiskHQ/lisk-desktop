@@ -18,7 +18,7 @@ describe('useReceivedStakes hook', () => {
     const expectedResponse = {
       data: {
         ...mockReceivedStakes.data,
-        votes: mockReceivedStakes.data.votes?.slice(0, limit),
+        votes: mockReceivedStakes.data.stakers?.slice(0, limit),
       },
       meta: {
         ...mockReceivedStakes.meta,
@@ -37,7 +37,7 @@ describe('useReceivedStakes hook', () => {
     const expectedResponse = {
       data: {
         ...mockReceivedStakes.data,
-        votes: mockReceivedStakes.data.votes?.slice(0, defaultLimit),
+        votes: mockReceivedStakes.data.stakers?.slice(0, defaultLimit),
       },
       meta: {
         ...mockReceivedStakes.meta,
@@ -59,7 +59,7 @@ describe('useReceivedStakes hook', () => {
     const expectedResponse = {
       data: {
         ...mockReceivedStakes.data,
-        votes: mockReceivedStakes.data.votes?.slice(0, limit * 2),
+        votes: mockReceivedStakes.data.stakers?.slice(0, limit * 2),
       },
       meta: {
         count: limit,

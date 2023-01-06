@@ -1,5 +1,5 @@
 import React from 'react';
-import { mount } from 'enzyme';
+import { mountWithQueryClient } from 'src/utils/testHelpers';
 import { txStatusTypes } from '@transaction/configuration/txStatus';
 import { useCommandSchema } from '@network/hooks/useCommandsSchema';
 import accounts from '@tests/constants/wallets';
@@ -45,7 +45,7 @@ describe('TxBroadcaster', () => {
   );
 
   it('should render Regular component with props', () => {
-    const wrapper = mount(<TxBroadcaster {...props} />);
+    const wrapper = mountWithQueryClient(TxBroadcaster, props);
     expect(wrapper.find(Regular)).toExist();
     expect(wrapper.find(Multisignature)).not.toExist();
   });
@@ -63,7 +63,7 @@ describe('TxBroadcaster', () => {
       },
       account: accounts.multiSig,
     };
-    const wrapper = mount(<TxBroadcaster {...customProps} />);
+    const wrapper = mountWithQueryClient(TxBroadcaster, customProps);
     expect(wrapper.find(Multisignature)).toExist();
     expect(wrapper.find(Regular)).not.toExist();
   });
