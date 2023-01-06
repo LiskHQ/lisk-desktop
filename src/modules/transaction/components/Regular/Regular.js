@@ -56,13 +56,15 @@ const Regular = ({
       )}
       <h1 className="result-box-header">{title}</h1>
       <p className="transaction-status body-message">{message}</p>
-      {children}
+      {typeof children === 'function'
+        ? children({ transactions, network, account, status, illustration })
+        : children}
       {successTypes.includes(status.code) && !noBackButton && (
         <PrimaryButton
           className={`${styles.backToWallet} back-to-wallet-button`}
           onClick={goToWallet}
         >
-          {t('Back to wallet')}
+          {t('Go to wallet')}
         </PrimaryButton>
       )}
       {errorTypes.includes(status.code) ? (
