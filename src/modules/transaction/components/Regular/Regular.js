@@ -1,12 +1,17 @@
 /* eslint-disable complexity */
 import React, { useEffect } from 'react';
+import { useQueryClient } from '@tanstack/react-query';
 import { getErrorReportMailto, isEmpty } from 'src/utils/helpers';
 import { TertiaryButton, PrimaryButton } from 'src/theme/buttons';
 import routes from 'src/routes/routes';
 import { txStatusTypes } from '@transaction/configuration/txStatus';
 import Illustration from 'src/modules/common/components/illustration';
+import { LEGACY } from 'src/const/queries';
+
 import getIllustration from '../TxBroadcaster/illustrationsMap';
 import styles from './Regular.css';
+import { joinModuleAndCommand } from '../../utils';
+import { MODULE_COMMANDS_NAME_MAP } from '../../configuration/moduleCommand';
 
 const errorTypes = [txStatusTypes.signatureError, txStatusTypes.broadcastError];
 
@@ -35,6 +40,8 @@ const Regular = ({
   moduleCommandSchemas,
   onRetry,
 }) => {
+  const queryClient = useQueryClient()
+
   useEffect(() => {
     if (!isEmpty(transactions.signedTransaction) && !transactions.txSignatureError) {
       transactionBroadcasted(transactions.signedTransaction, moduleCommandSchemas);
@@ -43,7 +50,11 @@ const Regular = ({
     return resetTransactionResult;
   }, []);
 
-  const goToWallet = () => {
+  const goToWallet = async () => {
+    // this is buggy at the moment
+    if (joinModuleAndCommand(transactions.signedTransaction) === MODULE_COMMANDS_NAME_MAP.reclaim) {
+      await queryClient.invalidateQueries({ queryKey: [LEGACY] });
+    }
     history.push(routes.wallet.path);
   };
 

@@ -3,7 +3,6 @@
   " is out. ": " is out. ",
   " to deposit LSK.": " to deposit LSK.",
   "\"{{username}}\" is already taken.": "\"{{username}}\" is already taken.",
-  "0.1 LSK was deposited on your account": "0.1 LSK was deposited on your account",
   "64 bytes left": "64 bytes left",
   "A bit more. Make sure to type at least 3 characters.": "A bit more. Make sure to type at least 3 characters.",
   "A great way to start is to top up your account with some {{value}}.": "A great way to start is to top up your account with some {{value}}.",
@@ -788,5 +787,6 @@
   "{{num}} week": "{{num}} week",
   "{{num}} year": "{{num}} year",
   "{{passphraseName}} paper wallet": "{{passphraseName}} paper wallet",
+  "{{reclaimedAmount}} LSK will be deposited in your account": "{{reclaimedAmount}} LSK will be deposited in your account",
   "{{transactions}} transactions": "{{transactions}} transactions"
 }

@@ -46,6 +46,12 @@ const CustomRoute = ({ path, exact, isPrivate, forbiddenTokens, component, t, hi
     );
   }
 
+  // Redirect back to actual path when an account is not reclaimable
+  if (isMigrated && path === routes.reclaim.path) {
+    history.goBack();
+    return <div/>
+  }
+
   if (
     isMigrated === false &&
     ![

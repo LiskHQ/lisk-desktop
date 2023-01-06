@@ -15,6 +15,7 @@ const successTypes = [
 const Status = ({ account, transactions, t, prevStep }) => {
   const status = getTransactionStatus(account, transactions, account.summary.isMultisignature);
   const template = statusMessages(t)[status.code];
+  const reclaimedAmount = transactions?.signedTransaction?.params?.amount;
 
   return (
     <div className={`${styles.wrapper} status-container`}>
@@ -28,17 +29,17 @@ const Status = ({ account, transactions, t, prevStep }) => {
       >
         {({ status: { code } }) =>
           successTypes.includes(code) && (
-            <secton className={styles.reclaimStatusSection}>
+            <section className={styles.reclaimStatusSection}>
               <ul>
                 <li className={`${styles.step} ${styles.check}`}>
-                  <span>{t('0.1 LSK was deposited on your account')}</span>
+                  <span>{t('{{reclaimedAmount}} LSK will be deposited in your account', { reclaimedAmount })}</span>
                 </li>
                 <li className={`${styles.step} ${styles.check}`}>
                   <span>{t('Reclaim transaction was sent')}</span>
                 </li>
               </ul>
               <p>{template.message}</p>
-            </secton>
+            </section>
           )
         }
       </TxBroadcaster>
