@@ -17,11 +17,8 @@ const AccountsComparison = ({ t }) => {
   useSchemas();
   const wallet = useSelector(selectActiveTokenAccount);
   const nonce = wallet.sequence?.nonce;
-  const hasEnoughBalance = Number(wallet.token?.[0]?.availableBalance) >= dustThreshold;
-  const hasDepositedTokens = useMemo(
-    () => hasEnoughBalance && nonce >= 0,
-    [nonce, hasEnoughBalance]
-  );
+  const hasEnoughBalance = +wallet.token?.[0]?.availableBalance >= dustThreshold;
+  const hasDepositedTokens = hasEnoughBalance && nonce >= 0;
 
   return (
     <div className={`${styles.container} ${styles.reclaim}`}>
