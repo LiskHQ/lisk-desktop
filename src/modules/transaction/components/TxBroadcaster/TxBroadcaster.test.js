@@ -1,4 +1,3 @@
-import React from 'react';
 import { mountWithQueryClient } from 'src/utils/testHelpers';
 import { txStatusTypes } from '@transaction/configuration/txStatus';
 import { useCommandSchema } from '@network/hooks/useCommandsSchema';
