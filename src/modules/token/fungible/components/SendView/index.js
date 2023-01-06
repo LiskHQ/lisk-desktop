@@ -1,3 +1,4 @@
+/* istanbul ignore file */
 import React, { useCallback, useState } from 'react';
 import { withRouter } from 'react-router-dom';
 

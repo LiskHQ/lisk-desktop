@@ -17,6 +17,8 @@ import { mockCommandParametersSchemas } from 'src/modules/common/__fixtures__';
 import Summary from '.';
 
 const mockedCurrentAccount = mockSavedAccounts[0];
+const mockTxFeeCalculationFn = jest.fn();
+
 jest.mock('@auth/hooks/queries');
 jest.mock('@account/hooks', () => ({
   useCurrentAccount: jest.fn(() => [mockedCurrentAccount, jest.fn()]),
@@ -137,5 +139,24 @@ describe('Reclaim balance Summary', () => {
 
     // Assert
     expect(props.history.goBack).toBeCalledTimes(1);
+  });
+
+  it('should not show fee if there is no token', async () => {
+    useTokensBalance.mockReturnValue({ data: {} });
+    useTransactionFeeCalculation.mockImplementation((params) => {
+      mockTxFeeCalculationFn(params);
+      return {
+        minFee: { value: 0.001 },
+      };
+    });
+    mountWithCustomRouterAndStore(Summary, props, state);
+
+    act(() => {
+      expect(mockTxFeeCalculationFn).toHaveBeenCalledWith(
+        expect.objectContaining({
+          token: {},
+        })
+      );
+    });
   });
 });

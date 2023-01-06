@@ -68,7 +68,7 @@ const ValidatorStakesView = ({ address }) => {
           <QueryTable
             queryHook={useReceivedStakes}
             queryConfig={{ config: { params: filters } }}
-            transformResponse={({ stakers: stakerResult } = {}) => stakerResult}
+            transformResponse={({ stakers: stakerResult } = {}) => stakerResult || []}
             iterationKey="address"
             emptyState={{ message: emptyMessage }}
             row={StakerRow}

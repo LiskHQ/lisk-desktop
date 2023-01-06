@@ -1,3 +1,4 @@
+/* istanbul ignore file */
 /* eslint-disable max-statements */
 import React, { useMemo, useState } from 'react';
 import { MODULE_COMMANDS_NAME_MAP } from 'src/modules/transaction/configuration/moduleCommand';

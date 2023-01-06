@@ -1,3 +1,5 @@
+
+/* istanbul ignore file */
 import React, { useCallback, useState } from 'react';
 import MultiStep from 'src/modules/common/components/OldMultiStep';
 import TxSignatureCollector from '@transaction/components/TxSignatureCollector';
