@@ -1,4 +1,4 @@
-import React, { useMemo } from 'react';
+import React from 'react';
 import { withTranslation } from 'react-i18next';
 import { useSelector } from 'react-redux';
 import Tooltip from 'src/theme/Tooltip';
