@@ -45,7 +45,7 @@ export const receivedStakes = rest.get(
     const response = {
       data: {
         ...mockReceivedStakes.data,
-        stakes: mockReceivedStakes.data.stakers.slice(offset, offset + limit),
+        stakers: mockReceivedStakes.data.stakers.slice(offset, offset + limit),
       },
       meta: {
         ...mockReceivedStakes.meta,

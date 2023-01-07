@@ -49,7 +49,7 @@ const useTransactionPriority = () => {
   }, [selectedPriority?.value, baseFees.Low, baseFees.Medium, baseFees.High]);
 
   return [
-    selectedPriority || priorityOptions[0],
+    selectedPriority,
     selectTransactionPriority,
     priorityOptions,
     prioritiesLoadError,
