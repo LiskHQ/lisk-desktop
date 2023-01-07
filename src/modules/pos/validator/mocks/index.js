@@ -26,7 +26,7 @@ export const sentStakes = rest.get(`*/api/${API_VERSION}/pos/stakes`, async (req
   const response = {
     data: {
       ...mockSentStakes.data,
-      votes: mockSentStakes.data.stakes.slice(offset, offset + limit),
+      stakes: mockSentStakes.data.stakes.slice(offset, offset + limit),
     },
     meta: {
       ...mockSentStakes.meta,
@@ -45,7 +45,7 @@ export const receivedStakes = rest.get(
     const response = {
       data: {
         ...mockReceivedStakes.data,
-        votes: mockReceivedStakes.data.stakers.slice(offset, offset + limit),
+        stakes: mockReceivedStakes.data.stakers.slice(offset, offset + limit),
       },
       meta: {
         ...mockReceivedStakes.meta,

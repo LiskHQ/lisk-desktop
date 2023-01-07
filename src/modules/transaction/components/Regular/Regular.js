@@ -57,7 +57,7 @@ const Regular = ({
     }
     history.push(routes.wallet.path);
   };
-
+  
   return (
     <div className={`${styles.wrapper} ${className}`}>
       {typeof illustration === 'string' ? (

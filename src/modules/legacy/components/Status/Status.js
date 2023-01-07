@@ -32,7 +32,11 @@ const Status = ({ account, transactions, t, prevStep }) => {
             <section className={styles.reclaimStatusSection}>
               <ul>
                 <li className={`${styles.step} ${styles.check}`}>
-                  <span>{t('{{reclaimedAmount}} LSK will be deposited in your account', { reclaimedAmount })}</span>
+                  <span>
+                    {t('{{reclaimedAmount}} LSK will be deposited in your account', {
+                      reclaimedAmount,
+                    })}
+                  </span>
                 </li>
                 <li className={`${styles.step} ${styles.check}`}>
                   <span>{t('Reclaim transaction was sent')}</span>
