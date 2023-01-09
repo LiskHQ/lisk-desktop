@@ -25,6 +25,10 @@ export const usePosConstants = ({ config: customConfig = {}, options } = {}) => 
   return useCustomQuery({
     keys: [POS_CONSTANTS],
     config,
-    options,
+    options: {
+      staleTime: Infinity,
+      cacheTime: Infinity,
+      ...options,
+    },
   });
 };

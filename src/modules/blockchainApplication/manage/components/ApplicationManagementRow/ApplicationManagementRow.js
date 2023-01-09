@@ -45,7 +45,7 @@ const RightRowComponent = ({
           content={(
             <TertiaryButton
               disabled
-              className={`remove-application-button ${styles.diabledDeleteBtn}`}
+              className={`remove-application-button ${styles.disabledDeleteBtn}`}
               onClick={handleDeleteApplication}
               size="m"
             >
@@ -107,7 +107,7 @@ const ApplicationManagementRow = ({
 
   return (
     <div
-      className={`managed-application-row ${styles.appItemWrapper} ${isCurrentApplication ? styles.activeAppBg : ''} ${isTerminated ? styles.termiated : ''}`}
+      className={`managed-application-row ${styles.appItemWrapper} ${isCurrentApplication ? styles.activeAppBg : ''} ${isTerminated ? styles.terminated : ''}`}
       onClick={handleSetCurrentApplication}
     >
       <div className={styles.leftWrapper}>

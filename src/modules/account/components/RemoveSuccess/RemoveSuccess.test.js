@@ -18,8 +18,8 @@ describe('Remove success component', () => {
   it('should render properly', async () => {
     expect(screen.getByText('Account was removed')).toBeTruthy();
     expect(screen.getByTestId('accountRemovedIcon')).toBeTruthy();
-    expect(screen.getByText('Continue to Manage Accounts')).toBeTruthy();
-    fireEvent.click(screen.getByText('Continue to Manage Accounts'));
+    expect(screen.getByText('Continue to manage accounts')).toBeTruthy();
+    fireEvent.click(screen.getByText('Continue to manage accounts'));
     await waitFor(() => {
       expect(props.onComplete).toBeCalled();
     });

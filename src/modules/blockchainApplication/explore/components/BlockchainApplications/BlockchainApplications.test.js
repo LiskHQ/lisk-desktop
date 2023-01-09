@@ -70,7 +70,7 @@ describe('BlockchainApplications', () => {
     expect(screen.getByText('Status')).toBeTruthy();
     expect(screen.getByText('LSK deposited')).toBeTruthy();
     expect(screen.getByText('All applications')).toBeTruthy();
-    expect(screen.getByText('Connections')).toBeTruthy();
+    expect(screen.getByText('Wallet connections')).toBeTruthy();
 
     expect(screen.getByText('Total Supply')).toBeTruthy();
     expect(screen.getByText('Staked')).toBeTruthy();

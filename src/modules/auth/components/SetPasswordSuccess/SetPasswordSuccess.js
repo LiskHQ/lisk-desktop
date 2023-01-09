@@ -33,7 +33,7 @@ function SetPasswordSuccess({
         </p>
         <DownloadJSON fileName={fileName} encryptedPhrase={encryptedPhrase} />
         <PrimaryButton className={styles.continueButton} onClick={onContinue}>
-          {buttonText || t('Continue to Dashboard')}
+          {buttonText || t('Continue to dashboard')}
         </PrimaryButton>
       </BoxContent>
     </Box>

@@ -14,12 +14,14 @@
   }
 
   & > label {
-    @mixin contentNormal bold;
+    @mixin contentNormal;
 
     margin-bottom: 10px;
+    color: var(--color-content-light);
   }
 
   & > span {
+    font-weight: var(--font-weight-semi-bold);
     display: block;
     width: 100%;
     word-break: break-all;

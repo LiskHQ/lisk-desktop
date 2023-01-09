@@ -13,12 +13,12 @@ import MenuSelect, { MenuItem } from '@wallet/components/MenuSelect';
 import { useBlockchainApplicationExplore } from '@blockchainApplication/explore/hooks/queries/useBlockchainApplicationExplore';
 import { useBlockchainApplicationMeta } from '@blockchainApplication/manage/hooks/queries/useBlockchainApplicationMeta';
 import TxComposer from '@transaction/components/TxComposer';
-import chainLogo from '@setup/react/assets/images/LISK.png';
 import BookmarkAutoSuggest from './bookmarkAutoSuggest';
 import useAmountField from '../../hooks/useAmountField';
 import useMessageField from '../../hooks/useMessageField';
 import { useTransferableTokens } from '../../hooks';
 import useRecipientField from '../../hooks/useRecipientField';
+import { getLogo } from '../../utils/service';
 import styles from './form.css';
 import MessageField from '../MessageField';
 
@@ -147,8 +147,6 @@ const SendForm = (props) => {
     amount: toRawLsk(amount.value),
     recipientAddress: recipient.value,
     data: reference.value,
-    accountInitializationFee: 5000000, // TODO: Replace the initalization fee constant from service endpoint
-    // ...(!+account?.sequence?.nonce && { accountInitializationFee: 5000000  }),
   };
 
   if (sendingChain.chainID !== recipientChain.chainID) {
@@ -167,7 +165,7 @@ const SendForm = (props) => {
         onConfirm={onConfirm}
         formProps={sendFormProps}
         commandParams={commandParams}
-        buttonTitle={t('Go to confirmation')}
+        buttonTitle={t('Continue to summary')}
       >
         <>
           <BoxHeader className={styles.header}>
@@ -177,7 +175,7 @@ const SendForm = (props) => {
             <div className={`${styles.ApplilcationFieldWrapper}`}>
               <div>
                 <label className={`${styles.fieldLabel} sending-application`}>
-                  <span>{t('From Application')}</span>
+                  <span>{t('From application')}</span>
                 </label>
                 <MenuSelect
                   value={sendingChain}
@@ -193,7 +191,7 @@ const SendForm = (props) => {
                     >
                       <img
                         className={styles.chainLogo}
-                        src={application.logo?.png || chainLogo}
+                        src={getLogo(application)}
                         alt="From application logo"
                       />
                       <span>{application.chainName}</span>
@@ -206,7 +204,7 @@ const SendForm = (props) => {
               </div>
               <div>
                 <label className={`${styles.fieldLabel} recipient-application`}>
-                  <span>{t('To Application')}</span>
+                  <span>{t('To application')}</span>
                 </label>
                 <MenuSelect
                   value={recipientChain}
@@ -221,7 +219,7 @@ const SendForm = (props) => {
                     >
                       <img
                         className={styles.chainLogo}
-                        src={application.logo?.png}
+                        src={getLogo(application)}
                         alt="To application logo"
                       />
                       <span>{application.chainName}</span>
@@ -252,8 +250,8 @@ const SendForm = (props) => {
                     value={tokenValue}
                     key={tokenValue.name}
                   >
-                    <img className={styles.chainLogo} src={chainLogo} alt="Token logo" />
-                    <span>{tokenValue.name}</span>
+                    <img className={styles.chainLogo} src={getLogo(tokenValue)} alt="Token logo" />
+                    <span>{tokenValue.tokenName}</span>
                   </MenuItem>
                 ))}
               </MenuSelect>
@@ -268,7 +266,7 @@ const SendForm = (props) => {
               name="amount"
             />
             <div className={`${styles.fieldGroup} ${styles.recipientFieldWrapper}`}>
-              <span className={`${styles.fieldLabel}`}>{t('Recipient Address')}</span>
+              <span className={`${styles.fieldLabel}`}>{t('Recipient address')}</span>
               <BookmarkAutoSuggest
                 bookmarks={bookmarks.LSK.filter((item) => !item.disabled)}
                 recipient={recipient}

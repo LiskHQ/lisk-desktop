@@ -24,7 +24,7 @@ export const SuccessActions = ({ onClick, t, copied }) => (
       {
         copied
           ? t('Copied')
-          : t('Copy and send to the application')
+          : t('Copy and return to application')
       }
     </span>
   </PrimaryButton>

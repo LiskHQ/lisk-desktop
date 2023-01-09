@@ -73,6 +73,7 @@ const useTransactionFeeCalculation = ({
     selectedPriority.selectedIndex,
     selectedPriority.value,
     senderAccount,
+    moduleCommandSchemas,
   ]);
 
   return state;

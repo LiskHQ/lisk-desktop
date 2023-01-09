@@ -11,6 +11,11 @@ import StakeStatus from '../StakeStatus';
 import styles from './styles.css';
 import { usePosConstants } from '../../hooks/queries';
 
+const stepClass = {
+  3: styles.confirm,
+  2: styles.signatureCollector,
+};
+
 const StakingQueue = ({ history, processLaunchProtocol }) => {
   const [{ step }, setMultiStepState] = useState({});
 
@@ -38,7 +43,7 @@ const StakingQueue = ({ history, processLaunchProtocol }) => {
     <MultiStep
       key="staking-queue"
       finalCallback={closeModal}
-      className={step?.current === 3 ? styles.confirmModal : styles.modal}
+      className={stepClass[step?.current] || styles.modal}
       onChange={setMultiStepState}
     >
       <StakeForm dposToken={token} />

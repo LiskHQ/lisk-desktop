@@ -13,7 +13,7 @@ function AccountRow({ account, onSelect, onRemove, truncate }) {
     <div
       key={address}
       data-testid={address}
-      className={styles.accountWraper}
+      className={styles.accountWrapper}
       onClick={() => onSelect(account)}
     >
       <WalletVisual address={address} size={40} />

@@ -4,7 +4,7 @@ import { renderWithRouter } from 'src/utils/testHelpers';
 import RemoveConfirmationScreen from './RemoveConfirmation';
 
 const recoveryPhrase = 'target cancel solution recipe vague faint bomb convince pink vendor fresh patrol';
-const message = 'This account will no longer be stored on this device. You can backup your secret recovery phrase before you remove it.';
+const message = 'This account will no longer be stored on this device. You can backup your secret recovery phrase before removing it.';
 const goBackFn = jest.fn();
 const props = {
   history: {
@@ -48,7 +48,7 @@ describe('RemoveConfirmationScreen', () => {
     fireEvent.click(screen.getByText('Cancel'));
   });
 
-  it('Should abort the removal when cancel with goback option', async () => {
+  it('Should abort the removal when cancel with go back option', async () => {
     const removeProps = {
       ...props,
       location: { hash: '' },
@@ -64,7 +64,7 @@ describe('RemoveConfirmationScreen', () => {
     expect(goBackFn).toHaveBeenCalled();
   });
 
-  it('Should successfully remove an accouunt', async () => {
+  it('Should successfully remove an account', async () => {
     expect(removeScreen.getByText('Remove Account?')).toBeTruthy();
     expect(
       removeScreen.getByText(message),

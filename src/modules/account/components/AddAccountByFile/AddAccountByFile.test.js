@@ -37,8 +37,8 @@ beforeEach(() => {
 });
 
 describe('Add account by file flow', () => {
-  it('Should successfull go though the flow', async () => {
-    expect(screen.getByText('Add account')).toBeTruthy();
+  it('Should successfully go though the flow', async () => {
+    expect(screen.getByText('Add your account')).toBeTruthy();
     expect(screen.getByText('Restore your encrypted secret recovery phrase.')).toBeTruthy();
     expect(screen.getByText('Continue')).toBeTruthy();
     expect(screen.getByText('Go back')).toBeTruthy();
@@ -53,8 +53,8 @@ describe('Add account by file flow', () => {
     fireEvent(inputField, pasteEvent);
     fireEvent.click(screen.getByText('Continue'));
 
-    expect(screen.getByText('Enter your password')).toBeTruthy();
-    expect(screen.getByText('Please provide your device password to backup the recovery phrase.')).toBeTruthy();
+    expect(screen.getByText('Enter your account password')).toBeTruthy();
+    expect(screen.getByText('Please enter your account password to backup the secret recovery phrase.')).toBeTruthy();
     expect(screen.getByText(mockSavedAccounts[0].metadata.name)).toBeTruthy();
     expect(screen.getByText(mockSavedAccounts[0].metadata.address)).toBeTruthy();
 
@@ -63,7 +63,7 @@ describe('Add account by file flow', () => {
     fireEvent.click(screen.getByText('Continue'));
     await waitFor(() => {
       expect(screen.getByText('Perfect! You\'re all set')).toBeTruthy();
-      fireEvent.click(screen.getByText('Continue to Dashboard'));
+      fireEvent.click(screen.getByText('Continue to dashboard'));
       expect(props.history.push).toBeCalled();
     });
   });

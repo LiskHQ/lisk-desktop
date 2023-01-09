@@ -40,7 +40,7 @@ beforeEach(() => {
 
 describe('Add account by secret recovery phrase flow', () => {
   it('Should successfully go though the flow', async () => {
-    expect(screen.getByText('Add account')).toBeTruthy();
+    expect(screen.getByText('Add your account')).toBeTruthy();
     expect(screen.getByText('Enter your secret recovery phrase to manage your account.')).toBeTruthy();
     expect(screen.getByText('Continue')).toBeTruthy();
     expect(screen.getByText('Go Back')).toBeTruthy();
@@ -71,7 +71,7 @@ describe('Add account by secret recovery phrase flow', () => {
       expect(screen.getByText('You can now download your encrypted secret recovery phrase and use it to add your account on other devices.')).toBeTruthy();
       expect(screen.getByText('Download')).toBeTruthy();
 
-      fireEvent.click(screen.getByText('Continue to Dashboard'));
+      fireEvent.click(screen.getByText('Continue to dashboard'));
 
       expect(props.history.push).toBeCalled();
     });

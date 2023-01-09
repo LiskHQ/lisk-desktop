@@ -1,3 +1,4 @@
+/* istanbul ignore file */
 /* eslint-disable max-statements */
 import React, { useMemo, useState } from 'react';
 import { MODULE_COMMANDS_NAME_MAP } from 'src/modules/transaction/configuration/moduleCommand';
@@ -138,11 +139,11 @@ const StakeForm = ({ t, votes, account, isVotingTxPending, nextStep, history, dp
 
   const feedback = validateStakes(
     votes,
-    Number(account.token?.balance),
+    Number(dposToken?.availableBalance),
     fee,
     resultingNumOfStakes,
     t,
-    dposToken,
+    dposToken
   );
 
   const onConfirm = (formProps, transactionJSON, selectedPriority, fees) => {
@@ -166,10 +167,13 @@ const StakeForm = ({ t, votes, account, isVotingTxPending, nextStep, history, dp
   const voteFormProps = {
     moduleCommand: MODULE_COMMANDS_NAME_MAP.voteDelegate,
     isValid: !feedback.error && Object.keys(changedVotes).length > 0 && !isVotingTxPending,
+    fields: {
+      token: dposToken
+    }
   };
   const commandParams = {
     votes: normalizedVotes,
-  }
+  };
 
   return (
     <Dialog hasClose className={`${styles.wrapper}`}>

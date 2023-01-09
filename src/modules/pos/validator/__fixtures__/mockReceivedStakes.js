@@ -7,7 +7,7 @@ const generateStakes = (index) => ({
 });
 
 const data = {
-  votes: Array(30)
+  stakers: Array(30)
     .fill(1)
     .map((_, idx) => generateStakes(idx)),
   account: {

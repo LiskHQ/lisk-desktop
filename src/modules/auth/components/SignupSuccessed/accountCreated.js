@@ -12,16 +12,19 @@ import styles from './accountCreated.css';
 const AccountCreated = ({ t }) => (
   <div className={styles.container}>
     <div className={`${registerStyles.titleHolder}`}>
-      <h1>{t('Great! You have an account now')}</h1>
+      <h1>{t('Great! Your account is now created')}</h1>
     </div>
     <Illustration className={styles.illustration} name="registrationSuccess" />
+    <p className={styles.subheader}>
+      {t('You can now add your account to Lisk Wallet by clicking on "Continue to dashboard", to be able to send and request tokens and much more.')}
+    </p>
     <div className={`${registerStyles.buttonsHolder} ${grid.row}`}>
       <Link
         className={`${registerStyles.button} login-button`}
         to={routes.manageAccounts.path}
       >
         <PrimaryButton className={registerStyles.continueBtn}>
-          {t('Continue to Add account')}
+          {t('Continue to dashboard')}
         </PrimaryButton>
       </Link>
     </div>

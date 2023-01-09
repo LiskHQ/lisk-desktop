@@ -21,7 +21,7 @@ Feature: Verify Message
   #   When I fill invalid_text in verifyMessageTextArea field
   #   And I click on continueBtn
   #   And I wait 2 seconds
-  #   Then I see this title: The signature is incorrect
+  #   Then I see this title: Signature is incorrect
 
   # @basic
   # Scenario: Verify the integrity of a signed message in input fields view
@@ -34,7 +34,7 @@ Feature: Verify Message
   #   When I fill 09392ac34e257b6cdb9bd4a73fc3901a073061c17b71ee4d4500fd600044eabd901b27584d59946f26a869a1e29ccdc87209272db545c02e43b4c083242ffc0d in verifySignatureInput field
   #   And I click on continueBtn
   #   And I wait 2 seconds
-  #   Then I see this title: The signature is correct
+  #   Then I see this title: Signature is correct
 
   # @basic
   # Scenario: Verify the integrity of a tampered message in input fields view
@@ -47,4 +47,4 @@ Feature: Verify Message
   #   When I fill 112233abcde in verifySignatureInput field
   #   And I click on continueBtn
   #   And I wait 2 seconds
-  #   Then I see this title: The signature is incorrect
+  #   Then I see this title: Signature is incorrect
