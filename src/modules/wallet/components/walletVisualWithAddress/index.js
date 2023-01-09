@@ -40,8 +40,10 @@ const AccountAddress = ({
   name,
   isMultisig,
 }) => (
-  <span className={`${styles.address} accountAddress`}>
-    {truncate ? truncatedAddress : transformedAddress}
+  <div className={`${styles.address} accountAddress`}>
+    <span>
+      {truncate ? truncatedAddress : transformedAddress}
+    </span>
     {copy ? (
       <CopyToClipboard
         value={address}
@@ -57,7 +59,7 @@ const AccountAddress = ({
         </DialogLink>
       )
     }
-  </span>
+  </div>
 );
 
 const WalletVisualWithAddress = ({

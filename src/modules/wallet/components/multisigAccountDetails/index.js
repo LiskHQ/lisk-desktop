@@ -8,14 +8,13 @@ import { extractAddressFromPublicKey, truncateAddress } from '@wallet/utils/acco
 import WalletVisual from '@wallet/components/walletVisual';
 import CopyToClipboard from 'src/modules/common/components/copyToClipboard';
 import Box from 'src/theme/box';
-// import BoxHeader from 'src/theme/box/header';
 import { useCurrentAccount } from '@account/hooks';
 import BoxContent from 'src/theme/box/content';
 import BoxInfoText from 'src/theme/box/infoText';
 import Dialog from 'src/theme/dialog/dialog';
 import Icon from 'src/theme/Icon';
 import Tooltip from 'src/theme/Tooltip';
-import defaultBackgroundImage from '../../../../../setup/react/assets/images/default-chain-background.png';
+import defaultBackgroundImage from '@setup/react/assets/images/default-chain-background.png';
 import Members from '../multisignatureMembers';
 
 import styles from './styles.css';
@@ -104,7 +103,7 @@ const MultisigAccountDetails = ({ t, wallet, history }) => {
             <div className={styles.column}>
               <p>
                 {t('Required signatures')}
-                <Tooltip position="top right" indent>
+                <Tooltip position="top left" indent>
                   <span>
                     {t(
                       'To provide a required signature, use the "Sign multisignature" tool in the sidebar."',

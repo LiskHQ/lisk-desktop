@@ -90,10 +90,12 @@
       @mixin contentLargest semi-bold;
 
       margin: 0;
+      color: var(--color-maastricht-blue);
     }
 
     & p {
       letter-spacing: 0.4px;
+      color: var(--color-maastricht-blue);
       margin: 0;
     }
 
