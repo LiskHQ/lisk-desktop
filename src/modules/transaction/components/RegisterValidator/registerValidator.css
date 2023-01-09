@@ -8,6 +8,11 @@
   padding: var(--vertical-padding-l) 0px;
   border-bottom: 1px solid var(--color-platinum);
 
+  &:first-of-type {
+    padding-top: 0 !important;
+    margin-top: -24px;
+  }
+
   &:last-of-type {
     border-bottom: none;
     padding-bottom: 0;

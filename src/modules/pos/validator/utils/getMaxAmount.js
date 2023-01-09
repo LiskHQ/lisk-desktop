@@ -3,24 +3,24 @@ import { getNumberOfSignatures } from '@transaction/utils/transaction';
 import { MODULE_COMMANDS_NAME_MAP } from 'src/modules/transaction/configuration/moduleCommand';
 import { MIN_ACCOUNT_BALANCE, VOTE_AMOUNT_STEP } from '@transaction/configuration/transactions';
 import { toRawLsk } from '@token/fungible/utils/lsk';
-import { normalizeStakesForTx } from '@transaction/utils';
+import { normalizeStakesForTx, splitModuleAndCommand } from '@transaction/utils';
 
 /**
  * Calculates the maximum vote amount possible. It
- * Takes the current votes, minimum account balance and
+ * Takes the current stakes, minimum account balance and
  * transaction fee into account.
  *
  * @param {object} account - Lisk account info from the Redux store
  * @param {object} network - Network info from the Redux store
  * @param {object} address - Raw transaction object @todo fix description
- * @param {object} voting - List of votes from the Redux store
+ * @param {object} staking - List of stakes from the Redux store
  * @returns {Number} - Maximum possible vote amount
  */
 const getMaxAmount = async ({
   balance,
   nonce,
   publicKey,
-  voting,
+  staking,
   address,
   network,
   numberOfSignatures,
@@ -28,33 +28,35 @@ const getMaxAmount = async ({
   optionalKeys,
   moduleCommandSchemas,
 }) => {
-  const totalUnconfirmedVotes = Object.values(voting)
-    .filter((vote) => vote.confirmed < vote.unconfirmed)
-    .map((vote) => vote.unconfirmed - vote.confirmed)
+  const totalUnconfirmedStakes = Object.values(staking)
+    .filter((stake) => stake.confirmed < stake.unconfirmed)
+    .map((stake) => stake.unconfirmed - stake.confirmed)
     .reduce((total, amount) => total + amount, 0);
-  const currentVote = voting[address] ? voting[address].confirmed : 0;
+  const currentStake = staking[address] ? staking[address].confirmed : 0;
   const isMultisignature = !optionalKeys.length && !mandatoryKeys.length;
 
-  const maxVoteAmount =
-    Math.floor((balance - (totalUnconfirmedVotes + currentVote + MIN_ACCOUNT_BALANCE)) / 1e9) * 1e9;
+  const maxStakeAmount =
+    Math.floor((balance - (totalUnconfirmedStakes + currentStake + MIN_ACCOUNT_BALANCE)) / 1e9) * 1e9;
 
+  // TODO: Refactor this logic, max amount can be calculated without constructing trx
+  const { module, command } = splitModuleAndCommand(MODULE_COMMANDS_NAME_MAP.stake);
   const transaction = {
     fee: 1e6,
     nonce,
     params: {
-      votes: normalizeStakesForTx({
-        ...voting,
+      stakes: normalizeStakesForTx({
+        ...staking,
         [address]: {
-          confirmed: voting[address] ? voting[address].confirmed : 0,
-          unconfirmed: maxVoteAmount,
+          confirmed: staking[address] ? staking[address].confirmed : 0,
+          unconfirmed: maxStakeAmount,
         },
       }),
     },
     sender: {
       publicKey,
     },
-    module: 'dpos',
-    command: MODULE_COMMANDS_NAME_MAP.voteDelegate,
+    module,
+    command,
   };
 
   const maxAmountFee = await getTransactionFee(
@@ -80,14 +82,14 @@ const getMaxAmount = async ({
   );
 
   // If the "sum of vote amounts + fee + dust" exceeds balance
-  // return 10 LSK less, since votes must be multiplications of 10 LSK.
+  // return 10 LSK less, since stakes must be multiplications of 10 LSK.
   if (
-    maxVoteAmount + toRawLsk(maxAmountFee.value) <=
-    balance - totalUnconfirmedVotes + currentVote - MIN_ACCOUNT_BALANCE
+    maxStakeAmount + toRawLsk(maxAmountFee.value) <=
+    balance - totalUnconfirmedStakes + currentStake - MIN_ACCOUNT_BALANCE
   ) {
-    return maxVoteAmount;
+    return maxStakeAmount;
   }
-  return maxVoteAmount - VOTE_AMOUNT_STEP;
+  return maxStakeAmount - VOTE_AMOUNT_STEP;
 };
 
 export default getMaxAmount;

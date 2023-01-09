@@ -1,5 +1,5 @@
 import actionTypes from '../actions/actionTypes';
-import voting from './voting';
+import voting from './staking';
 
 describe('Reducer: voting(state, action)', () => { // eslint-disable-line max-statements
   const delegate1 = {

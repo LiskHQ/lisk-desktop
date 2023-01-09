@@ -4,7 +4,7 @@ const actionTypes = {
   stakesCleared: 'STAKES_CLEARED',
   stakesReset: 'STAKES_RESET',
   stakesConfirmed: 'STAKES_CONFIRMED',
-  stakeEdited: 'VOTE_EDITED',
+  stakeEdited: 'STAKES_EDITED',
   watchListRetrieved: 'WATCHLIST_RETRIEVED',
   addedToWatchList: 'ADDED_TO_WATCHLIST',
   removedFromWatchList: 'REMOVED_FROM_WATCHLIST',

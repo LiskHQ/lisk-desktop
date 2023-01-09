@@ -5,7 +5,7 @@ import { ValidatorWalletVisual, Balance, Actions } from './components';
 
 const SentStakeRow = ({ data: delegate, stakeEdited, dposToken }) => {
   const {
-    delegateAddress,
+    address,
     amount,
     name,
     rank,
@@ -15,11 +15,11 @@ const SentStakeRow = ({ data: delegate, stakeEdited, dposToken }) => {
   return (
     <div data-testid="transaction-event-row-wrapper" className={styles.rowWrapper}>
       <div className={`transaction-event-row ${styles.container}`}>
-        <ValidatorWalletVisual name={name} address={delegateAddress} />
+        <ValidatorWalletVisual name={name} address={address} />
         <Balance value={rank} />
         <Balance value={<TokenAmount val={validatorWeight} token={dposToken.symbol}/>} />
         <Balance value={<TokenAmount val={amount} token={dposToken.symbol}/>} />
-        <Actions address={delegateAddress} name={name} stakeEdited={stakeEdited} />
+        <Actions address={address} name={name} stakeEdited={stakeEdited} />
       </div>
     </div>
   );

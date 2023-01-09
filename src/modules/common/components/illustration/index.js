@@ -54,6 +54,8 @@ import trezorHwRejectionDark from '@setup/react/assets/images/illustrations/hw-r
 import ledgerNanoHwRejection from '@setup/react/assets/images/illustrations/hw-rejection-ledger-nano.svg';
 import ledgerNanoHwRejectionDark from '@setup/react/assets/images/illustrations/hw-rejection-ledger-nano-dark.svg';
 import addApplicationSuccess from '@setup/react/assets/images/illustrations/add-application-success.svg';
+import validatorRegistrationSuccess from '@setup/react/assets/images/illustrations/validator-registration-success.svg';
+import validatorRegistrationError from '@setup/react/assets/images/illustrations/validator-registration-error.svg';
 
 export const illustrations = {
   welcomeLiskValidators,
@@ -109,6 +111,8 @@ export const illustrations = {
   ledgerNanoHwRejection,
   ledgerNanoHwRejectionDark,
   addApplicationSuccess,
+  validatorRegistrationSuccess,
+  validatorRegistrationError,
 };
 
 const Illustration = ({ name, className, noTheme, ...props }) => {

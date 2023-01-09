@@ -47,7 +47,7 @@ const ValidatorStakesView = ({ address }) => {
         <BoxHeader>
           <h1>
             <span>{t('Stakers')}</span>
-            <span className={styles.totalStakes}>{`(${stakerData?.meta?.total || '...'})`}</span>
+            <span className={styles.totalStakes}>{`(${stakerData?.meta?.total})`}</span>
           </h1>
           {stakers.length > 0 && (
             <span>

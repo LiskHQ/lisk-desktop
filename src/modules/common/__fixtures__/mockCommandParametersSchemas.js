@@ -213,9 +213,9 @@ export const mockCommandParametersSchemas = {
             maxItems: 20,
             items: {
               type: 'object',
-              required: ['delegateAddress', 'amount'],
+              required: ['validatorAddress', 'amount'],
               properties: {
-                delegateAddress: {
+                validatorAddress: {
                   dataType: 'bytes',
                   fieldNumber: 1,
                   minLength: 20,

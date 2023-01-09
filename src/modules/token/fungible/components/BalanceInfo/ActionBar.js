@@ -25,7 +25,7 @@ const ActionBar = ({
 }) => {
   const hostBalance = useSelector(selectAccountBalance) // @todo account has multiple balance now;
   const disableButtons = hostBalance === 0;
-  const vote = useSelector((state) => state.voting[address]);
+  const vote = useSelector((state) => state.staking[address]);
   const lskAddress = useSelector(selectLSKAddress);
   const initialValue = isWalletRoute ? {} : { recipient: address };
 

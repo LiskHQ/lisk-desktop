@@ -32,6 +32,10 @@ const illustrations = {
     [txStatusTypes.broadcastError]: 'transactionError',
     [txStatusTypes.hwRejected]: 'HwRejection',
   },
+  registerValidator: {
+    [txStatusTypes.broadcastSuccess]: 'validatorRegistrationSuccess',
+    [txStatusTypes.broadcastError]: 'validatorRegistrationSuccess',
+  }
 };
 
 const getIllustration = (status, type, hwInfo) => {

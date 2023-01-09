@@ -6,7 +6,7 @@ const registerValidatorsMessages = t => ({
   ...statusMessages(t),
   [txStatusTypes.broadcastSuccess]: {
     title: t('Validator registration succeeded'),
-    message: t('View your validator profile in the wallet page.'),
+    message: t('You will be notified when your transaction is confirmed.'),
   },
 });
 

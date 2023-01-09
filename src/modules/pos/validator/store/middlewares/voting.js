@@ -14,7 +14,7 @@ const getRecentTransactionOfType = (transactionsList, type) => (
 const votePlaced = (store, action) => {
   const voteTransaction = getRecentTransactionOfType(
     action.data.confirmed,
-    MODULE_COMMANDS_NAME_MAP.voteDelegate,
+    MODULE_COMMANDS_NAME_MAP.stake,
   );
 
   if (voteTransaction) {

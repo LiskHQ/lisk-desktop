@@ -7,11 +7,11 @@ import StakeItem from '../StakeItem';
 
 export const StakesPure = ({ t, votedDelegates }) => {
   const { transaction } = React.useContext(TransactionDetailsContext);
-  const { votes } = transaction.params;
+  const { stakes } = transaction.params;
 
   useEffect(() => {
     if (transaction.params) {
-      const addressList = votes.map((item) => item.delegateAddress);
+      const addressList = stakes.map((item) => item.validatorAddress);
       votedDelegates.loadData({ addressList });
     }
   }, []);
@@ -19,17 +19,17 @@ export const StakesPure = ({ t, votedDelegates }) => {
   return (
     <div className={`${styles.stakeValue}`}>
       <div className={styles.detailsWrapper}>
-        <span className={styles.label}>{`${t('Stakes')} (${votes.length})`}</span>
+        <span className={styles.label}>{`${t('Stakes')} (${stakes.length})`}</span>
         <div className={`${styles.stakesContainer} ${styles.added} tx-added-stakes`}>
-          {votes.map((vote) => (
+          {stakes.map((vote) => (
             <StakeItem
-              key={`stake-${vote.delegateAddress}`}
+              key={`stake-${vote.validatorAddress}`}
               vote={{ confirmed: vote.amount }}
-              address={vote.delegateAddress}
+              address={vote.validatorAddress}
               truncate
               title={
-                votedDelegates.data[vote.delegateAddress] &&
-                votedDelegates.data[vote.delegateAddress].pos?.validator?.username
+                votedDelegates.data[vote.validatorAddress] &&
+                votedDelegates.data[vote.validatorAddress].pos?.validator?.username
               }
             />
           ))}

@@ -156,7 +156,7 @@ module.exports = {
     'src/modules/common/components/filterDropdownButton/addressFilter.js',
     'src/modules/transaction/components/TransactionRow/index.js',
     'src/modules/transaction/manager/transactionSummary.js',
-    'src/modules/pos/validator/store/reducers/voting.js',
+    'src/modules/pos/validator/store/reducers/staking.js',
     'src/modules/transaction/components/TransactionResult/illustrationsMap.js',
     'src/modules/transaction/components/Regular/Regular.js',
     'src/utils/withFilters.js',
