@@ -24,7 +24,7 @@ const Summary = ({ history, balanceReclaimed, nextStep, wallet, t, fees }) => {
   const { data: tokens } = useTokensBalance({ config: { params: { tokenID } } });
   const token = useMemo(() => tokens?.data?.[0] || {}, [tokens]);
 
-  const [selectedPriority,, priorityOptions] = useTransactionPriority();
+  const [selectedPriority, , priorityOptions] = useTransactionPriority();
   const [module, command] = splitModuleAndCommand(formProps.moduleCommand);
   const transactionJSON = useMemo(
     () => ({
@@ -48,7 +48,8 @@ const Summary = ({ history, balanceReclaimed, nextStep, wallet, t, fees }) => {
     transactionJSON,
   });
 
-  const accountInitializationFee = 0.04; // @TODO: https://github.com/LiskHQ/lisk-sdk/blob/f732135e90cd2f1ba1fd46dad045041e289f8763/framework/src/modules/token/constants.ts#L35
+  // @TODO: This issue should be resolved with #4632
+  const accountInitializationFee = 0.04;
   transactionJSON.fee = toRawLsk(+minFee.value + accountInitializationFee);
 
   const onSubmit = () => {

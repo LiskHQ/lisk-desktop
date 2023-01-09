@@ -26,7 +26,7 @@
   & > p {
     @mixin contentLarge;
 
-    margin: 12px 0;
+    margin: 0;
     text-align: center;
 
     & > button {
@@ -45,13 +45,14 @@
   }
 
   & > img {
-    width: 210px;
+    width: 132px;
     margin-top: var(--horizontal-padding-l);
+    margin-bottom: 32px;
   }
 }
 
 .backToWallet {
-  margin-top: 30px;
+  margin-top: 32px;
   margin-bottom: 30px;
   width: 160px;
 }

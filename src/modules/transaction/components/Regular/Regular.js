@@ -75,7 +75,7 @@ const Regular = ({
           className={`${styles.backToWallet} back-to-wallet-button`}
           onClick={goToWallet}
         >
-          {t('Go to wallet')}
+          {t('Back to wallet')}
         </PrimaryButton>
       )}
       {errorTypes.includes(status.code) ? (

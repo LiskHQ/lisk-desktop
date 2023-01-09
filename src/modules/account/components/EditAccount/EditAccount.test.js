@@ -31,8 +31,8 @@ describe('Edit Account', () => {
     expect(
       screen.getByText(`encrypted_secret_recovery_phrase_${updatedAccountName}.json`)
     ).toBeInTheDocument();
-    expect(screen.getByText('Go to wallet')).toBeInTheDocument();
-    fireEvent.click(screen.getByText('Go to wallet'));
+    expect(screen.getByText('Back to wallet')).toBeInTheDocument();
+    fireEvent.click(screen.getByText('Back to wallet'));
     expect(props.history.push).toHaveBeenCalledTimes(1);
     expect(props.history.push).toHaveBeenCalledWith(routes.wallet.path);
   });

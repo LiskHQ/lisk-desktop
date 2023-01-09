@@ -17,8 +17,8 @@ const AccountsComparison = ({ t }) => {
   useSchemas();
   const wallet = useSelector(selectActiveTokenAccount);
   const nonce = wallet.sequence?.nonce;
-  const hasEnoughBalance = +wallet.token?.[0]?.availableBalance >= dustThreshold;
-  const hasDepositedTokens = hasEnoughBalance && nonce >= 0;
+  const hasEnoughBalance = Number(wallet.token?.[0]?.availableBalance) >= dustThreshold;
+  const hasAccountInitialized = hasEnoughBalance && Number(nonce) >= 0;
 
   return (
     <div className={`${styles.container} ${styles.reclaim}`}>
@@ -45,7 +45,7 @@ const AccountsComparison = ({ t }) => {
           {t('All you need to do before your balance transfer can be complete:')}
         </h5>
         <ul className={styles.list}>
-          <li className={`${styles.step} ${hasDepositedTokens ? styles.check : styles.green}`}>
+          <li className={`${styles.step} ${hasAccountInitialized ? styles.check : styles.green}`}>
             <div>
               {t('Deposit at least {{amount}} LSK to your new account', {
                 amount: fromRawLsk(dustThreshold),
@@ -99,7 +99,7 @@ const AccountsComparison = ({ t }) => {
               </>
             </div>
           </li>
-          <li className={`${styles.step} ${hasDepositedTokens ? styles.check : styles.green}`}>
+          <li className={`${styles.step} ${hasAccountInitialized ? styles.check : styles.green}`}>
             <div>
               {t('Send a reclaim transaction')}
               <br />
@@ -113,7 +113,7 @@ const AccountsComparison = ({ t }) => {
         </ul>
       </section>
       <DialogLink component="reclaimBalance" data={{ tokenID: wallet.token?.[0]?.tokenID }}>
-        <PrimaryButton className={styles.button} disabled={!hasDepositedTokens}>
+        <PrimaryButton className={styles.button} disabled={!hasAccountInitialized}>
           {t('Continue')}
         </PrimaryButton>
       </DialogLink>

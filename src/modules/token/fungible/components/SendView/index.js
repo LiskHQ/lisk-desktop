@@ -1,7 +1,7 @@
 /* istanbul ignore file */
 import React, { useCallback, useState } from 'react';
 import { withRouter } from 'react-router-dom';
-
+import { useTranslation } from 'react-i18next';
 import routes from 'src/routes/routes';
 import MultiStep from 'src/modules/common/components/OldMultiStep';
 import { parseSearchParams } from 'src/utils/searchParams';
@@ -18,7 +18,7 @@ const Send = ({ history }) => {
     history.push(routes.wallet.path);
   };
   const initialValue = parseSearchParams(history.location.search);
-
+  const { t } = useTranslation();
   const onMultiStepChange = useCallback(({ step: { current } }) => {
     setIsStepTxSignatureCollector([2, 3].includes(current));
   }, []);
@@ -33,7 +33,7 @@ const Send = ({ history }) => {
       >
         <Form initialValue={initialValue} />
         <Summary />
-        <TxSignatureCollector confirmText="Confirm and Sign" />
+        <TxSignatureCollector confirmText={t("Confirm and Sign")} />
         <Status history={history} />
       </MultiStep>
     </Dialog>

@@ -10,7 +10,7 @@ import Status from './Status';
 jest.mock('@libs/wcm/hooks/useSession', () => ({
   respond: jest.fn(),
 }));
-jest.mock('@network/hooks');
+jest.mock('@network/hooks/useCommandsSchema');
 
 describe('Status', () => {
   const props = {

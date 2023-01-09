@@ -26,7 +26,7 @@ jest.mock('@account/hooks', () => ({
 
 jest.mock('@transaction/hooks/useTransactionFeeCalculation');
 jest.mock('@transaction/api');
-jest.mock('@network/hooks');
+jest.mock('@network/hooks/useCommandsSchema');
 jest.mock('@transaction/utils/hwManager');
 jest.mock('@token/fungible/hooks/queries');
 
