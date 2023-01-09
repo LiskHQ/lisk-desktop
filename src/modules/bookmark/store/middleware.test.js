@@ -29,7 +29,7 @@ describe('Middleware: Bookmarks', () => {
       data: { account: { ...accounts.genesis, title: 'genesis' } },
     }, {
       type: actionTypes.bookmarkUpdated,
-      data: { account: { ...accounts.genesis, title: 'genesiss' } },
+      data: { account: { ...accounts.genesis, title: 'genesis' } },
     }, {
       type: actionTypes.bookmarkRemoved,
       data: { address: accounts.genesis.summary.address },

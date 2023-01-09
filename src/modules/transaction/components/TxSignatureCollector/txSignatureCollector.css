@@ -24,10 +24,36 @@
 .container {
   display: flex;
   justify-content: center;
+  align-items: center;
+
+  & > div > div {
+    width: 100% !important;
+    max-width: unset;
+
+    & > h1 {
+      font-size: var(--font-size-h3);
+    }
+
+    & > p:first-of-type {
+      font-size: var(--font-size-h6);
+      padding: 0px 47px;
+      color: var(--color-slate-gray);
+    }
+
+    & input {
+      border-radius: var(--vertical-padding-xs);
+    }
+  }
+
+  & > div {
+    max-width: unset !important;
+  }
 }
 
 .backButton {
   position: absolute;
   top: 10px;
   left: -8px;
+  z-index: 1;
+  margin-top: 18px;
 }

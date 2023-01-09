@@ -50,7 +50,7 @@ describe('TxSummarizer', () => {
         composedFees: { Transaction: '1 LSK', CCM: '1 LSK', Initialisation: '1 LSK' },
         fields: {
           sendingChain: mockBlockchainApplications[0],
-          recipientChain: blockchainApplicationsExplore[0],
+          recipientChain: { ...blockchainApplicationsExplore[0], logo: { png: '', svg: '' } },
           token: mockTokensBalance.data[0],
           recipient: {
             address: wallets.genesis.summary.address,

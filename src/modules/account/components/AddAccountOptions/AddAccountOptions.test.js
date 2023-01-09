@@ -30,10 +30,10 @@ beforeEach(() => {
 
 describe('Add Account Choice', () => {
   it('Should render the add account choice page', async () => {
-    expect(screen.getByText('Add account')).toBeTruthy();
-    expect(screen.getByText('Select the applicable mode.')).toBeTruthy();
+    expect(screen.getByText('Add your account')).toBeTruthy();
+    expect(screen.getByText('Choose an option to add your account to Lisk wallet.')).toBeTruthy();
     expect(screen.getByText('Don’t have a Lisk account yet?')).toBeTruthy();
-    expect(screen.getByText('Restore from file')).toBeTruthy();
+    expect(screen.getByText('Restore from backup')).toBeTruthy();
     expect(screen.getByText('Secret recovery phrase')).toBeTruthy();
   });
 
@@ -43,7 +43,7 @@ describe('Add Account Choice', () => {
   });
 
   it('should redirect to /account/add/add/by-file', async () => {
-    fireEvent.click(screen.getByText('Restore from file'));
+    fireEvent.click(screen.getByText('Restore from backup'));
     expect(props.history.push).toBeCalled();
   });
 });

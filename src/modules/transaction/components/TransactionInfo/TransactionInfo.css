@@ -87,7 +87,7 @@
   color: var(--color-maastricht-blue);
 }
 
-.voteItems {
+.stakeItems {
   display: flex;
   flex-wrap: wrap;
   margin-bottom: 24px;

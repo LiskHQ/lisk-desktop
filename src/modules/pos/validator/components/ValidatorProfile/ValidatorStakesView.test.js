@@ -19,7 +19,7 @@ describe('Validator stakes view', () => {
   };
 
   useFilter.mockReturnValue({
-    filters: { adress: props.address },
+    filters: { address: props.address },
     applyFilters: mockApplyFilters,
     clearFilters: mockClearFilters,
   });
@@ -28,14 +28,14 @@ describe('Validator stakes view', () => {
     render(<ValidatorStakesView {...props} />);
 
     expect(screen.getByText('Stakers')).toBeTruthy();
-    mockReceivedStakes.data.votes.forEach(({ name }) => {
+    mockReceivedStakes.data.stakers.forEach(({ name }) => {
       expect(screen.getByText(name)).toBeTruthy();
     });
   });
 
   it('Should filter stakers by search value', () => {
     useFilter.mockReturnValue({
-      filters: { adress: props.address },
+      filters: { address: props.address },
       applyFilters: mockApplyFilters,
       clearFilters: mockClearFilters,
     });
@@ -51,11 +51,11 @@ describe('Validator stakes view', () => {
 
   it('Should not render search input', () => {
     useFilter.mockReturnValue({
-      filters: { adress: props.address },
+      filters: { address: props.address },
       applyFilters: mockApplyFilters,
       clearFilters: mockClearFilters,
     });
-    useReceivedStakes.mockReturnValue({ data: {} });
+    useReceivedStakes.mockReturnValue({ data: { data: { } } });
 
     render(<ValidatorStakesView {...props} />);
 

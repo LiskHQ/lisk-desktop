@@ -19,7 +19,7 @@ const ValidatorStakesView = ({ address }) => {
   const { filters, applyFilters } = useFilter({ address });
   const timeout = useRef();
 
-  const { data: voterData } = useReceivedStakes({
+  const { data: stakerData } = useReceivedStakes({
     config: { params: filters },
   });
 
@@ -35,7 +35,7 @@ const ValidatorStakesView = ({ address }) => {
     [filters, searchInput]
   );
 
-  const voter = useMemo(() => voterData?.data || { votes: [] }, [voterData]);
+  const stakers = useMemo(() => stakerData?.data.stakers || { stakers: [] }, [stakerData]);
 
   const emptyMessage = searchInput
     ? t('This account does not have any staker for the given address.')
@@ -47,9 +47,9 @@ const ValidatorStakesView = ({ address }) => {
         <BoxHeader>
           <h1>
             <span>{t('Stakers')}</span>
-            <span className={styles.totalStakes}>{`(${voterData?.meta?.total || '...'})`}</span>
+            <span className={styles.totalStakes}>{`(${stakerData?.meta?.total || '...'})`}</span>
           </h1>
-          {voter.votes.length > 0 && (
+          {stakers.length > 0 && (
             <span>
               <Input
                 onChange={handleFilter}
@@ -68,7 +68,7 @@ const ValidatorStakesView = ({ address }) => {
           <QueryTable
             queryHook={useReceivedStakes}
             queryConfig={{ config: { params: filters } }}
-            transformResponse={({ votes } = {}) => votes}
+            transformResponse={({ stakers: stakerResult } = {}) => stakerResult || []}
             iterationKey="address"
             emptyState={{ message: emptyMessage }}
             row={StakerRow}

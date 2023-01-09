@@ -16,7 +16,7 @@
 .headerContainer {
   display: flex;
   justify-content: space-between;
-  margin: 24px 0px;
+  margin: 15px 0px 24px 0px;
   width: 98%;
 
   & header {

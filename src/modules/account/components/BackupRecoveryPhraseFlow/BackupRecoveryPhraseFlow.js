@@ -36,10 +36,10 @@ const BackupRecoveryPhraseFlow = ({ history }) => {
           <EnterPasswordForm
             onEnterPasswordSuccess={onEnterPasswordSuccess}
           />
-          <SavePassphrase passphrase={passphrase} />
+          <SavePassphrase passphrase={passphrase} title={t('Backup your secret recovery phrase')} />
           <ConfirmPassphrase passphrase={passphrase} />
           <SetPasswordSuccess
-            buttonText={t('Continue to Wallet')}
+            buttonText={t('Continue to wallet')}
             encryptedPhrase={account}
             onClose={onComplete}
           />

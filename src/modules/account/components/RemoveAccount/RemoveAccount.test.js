@@ -34,7 +34,7 @@ describe('Remove account', () => {
 
   it('Should successfully go though the flow', async () => {
     expect(screen.getByText('Remove Account?')).toBeTruthy();
-    expect(screen.getByText('This account will no longer be stored on this device. You can backup your secret recovery phrase before you remove it.')).toBeTruthy();
+    expect(screen.getByText('This account will no longer be stored on this device. You can backup your secret recovery phrase before removing it.')).toBeTruthy();
     expect(screen.getByText('encrypted_secret_recovery_phrase.json')).toBeTruthy();
     expect(screen.getByText('Download')).toBeTruthy();
     expect(screen.getByText('Cancel')).toBeTruthy();
@@ -45,9 +45,9 @@ describe('Remove account', () => {
     await waitFor(() => {
       expect(screen.getByText('Account was removed')).toBeTruthy();
       expect(screen.getByTestId('accountRemovedIcon')).toBeTruthy();
-      expect(screen.getByText('Continue to Manage Accounts')).toBeTruthy();
+      expect(screen.getByText('Continue to manage accounts')).toBeTruthy();
 
-      fireEvent.click(screen.getByText('Continue to Manage Accounts'));
+      fireEvent.click(screen.getByText('Continue to manage accounts'));
     });
   });
 

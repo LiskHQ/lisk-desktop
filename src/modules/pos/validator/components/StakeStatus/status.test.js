@@ -1,4 +1,4 @@
-import { mountWithRouter } from 'src/utils/testHelpers';
+import { mountWithRouter, mountWithRouterAndQueryClient } from 'src/utils/testHelpers';
 import { useCommandSchema } from '@network/hooks/useCommandsSchema';
 import { mockCommandParametersSchemas } from 'src/modules/common/__fixtures__';
 import Result from './Status';
@@ -29,14 +29,14 @@ describe('StakingQueue.Result', () => {
   });
 
   it('displays the locked message properly', () => {
-    const wrapper = mountWithRouter(Result, { ...props, statusInfo: { locked: 200 } });
+    const wrapper = mountWithRouterAndQueryClient(Result, { ...props, statusInfo: { locked: 200 } });
     const element = wrapper.find('StakeSuccessfulModal');
 
     expect(element.text()).toContain('0.000002 LSK will be locked for staking.');
   });
 
   it('displays the unlocked message properly', () => {
-    const wrapper = mountWithRouter(Result, { ...props, statusInfo: { unlockable: 300 } });
+    const wrapper = mountWithRouterAndQueryClient(Result, { ...props, statusInfo: { unlockable: 300 } });
     const element = wrapper.find('StakeSuccessfulModal');
 
     expect(element.text()).toContain(
@@ -45,7 +45,7 @@ describe('StakingQueue.Result', () => {
   });
 
   it('displays the combined message properly', () => {
-    const wrapper = mountWithRouter(Result, {
+    const wrapper = mountWithRouterAndQueryClient(Result, {
       ...props,
       statusInfo: { locked: 200, unlockable: 300 },
     });
@@ -57,7 +57,7 @@ describe('StakingQueue.Result', () => {
   });
 
   it('displays error modal', () => {
-    const wrapper = mountWithRouter(Result, {
+    const wrapper = mountWithRouterAndQueryClient(Result, {
       ...props,
       transactions: {
         txSignatureError: { message: 'error' },

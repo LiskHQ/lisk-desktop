@@ -2,7 +2,7 @@
 
 .summaryContainer {
   & > header {
-    padding-left: var(--horizontal-padding-l) !important;
+    padding-left: 20px !important;
     padding-right: var(--horizontal-padding-l) !important;
   }
 
@@ -21,4 +21,8 @@
     width: 100%;
     max-width: 391px;
   }
+}
+
+.actionBtn {
+  max-width: 360px;
 }

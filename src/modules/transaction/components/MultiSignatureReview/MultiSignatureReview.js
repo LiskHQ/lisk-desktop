@@ -72,7 +72,7 @@ const MultiSignatureReview = ({
       <InfoColumn title={t('Required signatures')} className="info-numberOfSignatures">
         {numberOfSignatures}
       </InfoColumn>
-      <InfoColumn title={t('Transaction fee')} className="info-fee">
+      <InfoColumn title={t('Fees')} className="info-fee">
         <TokenAmount val={fee} token={tokenMap.LSK.key} />
       </InfoColumn>
     </div>

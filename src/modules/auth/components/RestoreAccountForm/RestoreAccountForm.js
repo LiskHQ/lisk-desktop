@@ -34,7 +34,7 @@ const RestoreAccountForm = ({ onBack, nextStep }) => {
   return (
     <>
       <div className={styles.titleHolder}>
-        <h1>{t('Add account')}</h1>
+        <h1>{t('Add your account')}</h1>
         <p>{t('Restore your encrypted secret recovery phrase.')}</p>
       </div>
       <div className={styles.fullWidth}>

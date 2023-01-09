@@ -26,7 +26,7 @@ const signMessageView = ({ account, t, history, signMessage }) => {
       <Box>
         {multiStepPosition !== 1 && (
           <BoxHeader>
-            <h1>{t('Sign message')}</h1>
+            <h1>{multiStepPosition === 2 ? t('Signed message') : t('Sign message')}</h1>
           </BoxHeader>
         )}
         <MultiStep onChange={onMultiStepChange}>

@@ -18,7 +18,7 @@ describe('useSentStakes hook', () => {
     const expectedResponse = {
       data: {
         ...mockSentStakes.data,
-        votes: mockSentStakes.data.votes?.slice(0, limit),
+        stakes: mockSentStakes.data.stakes?.slice(0, limit),
       },
       meta: {
         ...mockSentStakes.meta,
@@ -26,6 +26,7 @@ describe('useSentStakes hook', () => {
         offset: 0,
       },
     };
+
     expect(result.current.data).toEqual(expectedResponse);
   });
 
@@ -40,7 +41,7 @@ describe('useSentStakes hook', () => {
     const expectedResponse = {
       data: {
         ...mockSentStakes.data,
-        votes: mockSentStakes.data.votes?.slice(0, limit * 2),
+        stakes: mockSentStakes.data.stakes?.slice(0, limit * 2),
       },
       meta: {
         count: limit,

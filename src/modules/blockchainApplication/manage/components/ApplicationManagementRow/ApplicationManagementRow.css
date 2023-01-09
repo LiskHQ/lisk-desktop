@@ -18,7 +18,7 @@
   user-select: none;
 }
 
-.appItemWrapper.termiated {
+.appItemWrapper.terminated {
   & > .leftWrapper {
     opacity: 0.4;
   }
@@ -38,7 +38,7 @@
 
 .appItemWrapper:hover .deleteBtn,
 .appItemWrapper:hover .deleteBtnTooltip,
-.appItemWrapper:hover .diabledDeleteBtn {
+.appItemWrapper:hover .disabledDeleteBtn {
   display: flex;
 }
 
@@ -71,7 +71,7 @@
 }
 
 .deleteBtn,
-.diabledDeleteBtn {
+.disabledDeleteBtn {
   min-width: 30px;
   display: none;
   width: fit-content;
@@ -82,7 +82,7 @@
   margin-right: -6px;
 }
 
-.diabledDeleteBtn {
+.disabledDeleteBtn {
   opacity: 0.4;
 }
 
