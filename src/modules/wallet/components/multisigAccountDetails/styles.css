@@ -1,5 +1,12 @@
 .container {
   border: 0;
+
+  & :global(.dialog-close-button) {
+    &::before,
+    &::after {
+      background-color: var(--color-strong-white);
+    }
+  }
 }
 
 .header {
