@@ -255,7 +255,7 @@ describe('actions: voting', () => {
         type: actionTypes.stakesRetrieved,
         data: votes,
       };
-      validatorApi.getVotes.mockImplementation(() => Promise.resolve({ data: votes }));
+      validatorApi.getStakes.mockImplementation(() => Promise.resolve({ data: votes }));
       await stakesRetrieved()(dispatch, getState);
 
       expect(dispatch).toHaveBeenCalledWith(expectedAction);

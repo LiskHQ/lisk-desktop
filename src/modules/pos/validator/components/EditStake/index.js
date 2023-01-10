@@ -30,6 +30,7 @@ import getMaxAmount from '../../utils/getMaxAmount';
 import styles from './editStake.css';
 import { useValidators, usePosConstants, useSentStakes } from '../../hooks/queries';
 import { NUMBER_OF_BLOCKS_PER_DAY } from '../../consts';
+import { extractValidatorCommission } from '../../utils';
 
 const getTitles = (t) => ({
   edit: {
@@ -133,6 +134,7 @@ const EditStake = ({ history, stakeEdited, network, voting, stakesRetrieved }) =
     }
     stakeEdited([
       {
+        validator,
         address: validatorAddress,
         amount: toRawLsk(voteAmount.value),
         name: validator.name,
@@ -147,6 +149,7 @@ const EditStake = ({ history, stakeEdited, network, voting, stakesRetrieved }) =
   const removeVote = () => {
     stakeEdited([
       {
+        validator,
         name: validator.name,
         address: validatorAddress,
         amount: 0,
@@ -186,6 +189,9 @@ const EditStake = ({ history, stakeEdited, network, voting, stakesRetrieved }) =
                 <WalletVisual size={40} address={validatorAddress} />
                 <p>{validator.name}</p>
                 <p>{validatorAddress}</p>
+                <p>
+                  Commission: <span>{extractValidatorCommission(validator.commission)}%</span>
+                </p>
               </BoxInfoText>
               <label className={styles.fieldGroup}>
                 <p className={styles.availableBalance}>

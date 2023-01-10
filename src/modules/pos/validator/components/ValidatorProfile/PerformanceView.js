@@ -141,7 +141,7 @@ const PerformanceView = ({ data }) => {
           </FullItem>
         </Box>
         <Box className={`${grid.col} ${grid['col-xs-4']} ${grid['col-md-4']} ${styles.column}`}>
-          <Item title={t('Last forged block')} icon="productivity">
+          <Item title={t('Last generated block height')} icon="productivity">
             {data.lastGeneratedHeight ? (
               <NavLink
                 to={`${routes.block.path}?height=${data.lastGeneratedHeight}`}
@@ -155,13 +155,24 @@ const PerformanceView = ({ data }) => {
               <span className={styles.performanceValue}>-</span>
             )}
           </Item>
-          <Item title={t('Forged blocks')} icon="forgedBlocks">
+          <Item title={t('Blocks generated')} icon="forgedBlocks">
             <div className={styles.performanceValue}>{data.producedBlocks ?? '-'}</div>
           </Item>
         </Box>
         <Box className={`${grid.col} ${grid['col-xs-4']} ${grid['col-md-4']} ${styles.column}`}>
-          <Item title={t('Rewards (LSK)')} icon="reward">
-            <div>
+          <Item
+            icon="reward"
+            title={
+              <div>
+                <span>{t('Rewards')}</span>
+                <a>
+                  See breakdown
+                  <Icon name="arrowBlueRight" />
+                </a>
+              </div>
+            }
+          >
+            <div className={styles.performanceValue}>
               <TokenAmount val={data.earnedRewards || 0} />
             </div>
           </Item>

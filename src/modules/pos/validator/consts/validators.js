@@ -6,3 +6,4 @@ export const VALIDATOR_NAME_LENGTH = {
   Minimum: 3,
   Maximum: 20,
 };
+export const VALIDATOR_COMMISSION_DIVISOR = 100;

@@ -4,7 +4,7 @@ import { selectActiveTokenAccount } from 'src/redux/selectors';
 import { signTransaction } from '@transaction/api';
 import txActionTypes from '@transaction/store/actionTypes';
 import { joinModuleAndCommand } from '@transaction/utils';
-import { getVotes } from '../../api';
+import { getStakes } from '../../api';
 import actionTypes from './actionTypes';
 
 export const stakesReset = () => ({
@@ -105,10 +105,10 @@ export const stakesRetrieved = () => async (dispatch, getState) => {
   const { network, account } = getState();
   const address = account.current?.metadata?.address;
   try {
-    const votes = await getVotes({ network, params: { address } });
+    const stakes = await getStakes({ network, params: { address } });
     dispatch({
       type: actionTypes.stakesRetrieved,
-      data: votes.data,
+      data: stakes.data,
     });
   } catch (exp) {
     dispatch({

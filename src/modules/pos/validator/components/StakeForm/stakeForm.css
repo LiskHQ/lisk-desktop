@@ -96,7 +96,7 @@
   flex-direction: row;
   align-items: center;
   margin-left: 16px;
-  width: calc(50% - 16px);
+  width: calc(44% - 16px);
 }
 
 .delegateInfo {
@@ -145,6 +145,10 @@
 
     margin-right: 8px;
     font-size: var(--font-size-h6);
+
+    &:last-of-type {
+      margin-left: 60px;
+    }
   }
 
   & img.editIcon {

@@ -2,14 +2,14 @@
 import { connect } from 'react-redux';
 import { compose } from 'redux';
 import { withTranslation } from 'react-i18next';
-import { getVotes } from '@pos/validator/api';
+import { getStakes } from '@pos/validator/api';
 import { getAccounts } from '@wallet/utils/api';
 import withData from 'src/utils/withData';
 import Stakes from './stakes';
 
 const apis = {
   votes: {
-    apiUtil: (network, params) => getVotes({ network, params }),
+    apiUtil: (network, params) => getStakes({ network, params }),
     defaultData: [],
     autoload: false,
     transformResponse: (response) => response.data?.votes ?? [],

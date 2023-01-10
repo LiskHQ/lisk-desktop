@@ -136,7 +136,7 @@ export const getValidators = ({ network, params = {}, baseUrl }) => {
  * @param {Object} data.network - Network setting from Redux store
  * @returns {Promise} http call
  */
-export const getVotes = ({ params = {} }) =>
+export const getStakes = ({ params = {} }) =>
   client.rest({
     url: httpPaths.votesSent,
     params: getValidatorProps({ address: params.address, publicKey: params.publicKey }),

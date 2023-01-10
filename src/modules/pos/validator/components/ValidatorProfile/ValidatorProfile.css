@@ -14,6 +14,7 @@
   & .content {
     flex-flow: row nowrap;
     margin-left: 0;
+    flex: 1;
 
     & a {
       text-decoration: none;
@@ -104,6 +105,7 @@
 .details {
   flex-shrink: 0;
   flex-grow: 1;
+  border-radius: 5px !important;
 
   & .itemContainer {
     border-bottom: 1px solid var(--color-platinum);
@@ -118,15 +120,37 @@
     &:first-child {
       padding-top: 0;
     }
+
+    & > button {
+      width: 20px;
+      max-width: 20px;
+      min-width: 20px;
+      height: 20px;
+      border-radius: 50%;
+    }
   }
 
   & .item {
     margin-left: 16px;
+    flex: 1;
 
     & .title {
       @mixin contentNormal;
 
       color: var(--color-slate-gray);
+      display: flex;
+      flex-direction: row;
+      justify-content: space-between;
+
+      & > button {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+
+        & > img {
+          width: 14px;
+        }
+      }
 
       &:global(.dark) {
         color: var(--color-manatee-gray);
@@ -154,9 +178,12 @@
   & .highlight {
     padding: 0;
     display: flex;
-    flex-direction: row;
+    flex-direction: column;
     margin-bottom: 20px;
     height: 156px;
+    border-radius: 5px !important;
+    flex: 1;
+    overflow: hidden;
 
     &:nth-child(2) {
       margin: 0;
@@ -171,6 +198,31 @@
 
       &.consecutiveMissedBlocks {
         flex-basis: 50%;
+      }
+
+      &.reward {
+        width: 100%;
+        box-sizing: border-box;
+        padding-right: 20px;
+
+        & > .title > div {
+          display: flex;
+          flex-direction: row;
+          justify-content: space-between;
+          flex-wrap: wrap;
+        }
+
+        & > .title > div a {
+          font-size: var(--button-font-size-s);
+          font-weight: var(--font-weight-normal);
+          display: flex;
+          align-items: center;
+          flex-direction: row;
+
+          & > img {
+            padding-left: 5px;
+          }
+        }
       }
 
       & .title {
@@ -197,19 +249,21 @@
       flex: 1;
       justify-content: flex-end;
       height: 120px;
-      width: 170px;
+
+      & > img {
+        width: 100%;
+      }
 
       &.productivity {
         height: 122px;
-        width: 206px;
-
-        & img {
-          width: 100%;
-        }
+        min-width: 158px;
+        bottom: -14px;
       }
 
       &.forgedBlocks {
         padding-right: 20px;
+        min-width: 140px;
+        bottom: -19px;
 
         & img {
           width: 100%;
@@ -221,12 +275,17 @@
         align-items: center;
         height: 156px;
         position: absolute;
+        min-width: 158px;
+        bottom: -10px;
       }
 
       &.reward {
         height: 108px;
-        width: 196px;
+        width: '100%';
         padding-right: 20px;
+        position: relative;
+        right: 15px;
+        bottom: -9px;
 
         & img {
           width: 100%;
@@ -240,6 +299,8 @@
     display: flex;
     flex-direction: column;
     height: 332px;
+    border-radius: 5px;
+    flex: 1;
 
     &:nth-child(2) {
       margin: 0;
@@ -304,7 +365,12 @@
       flex: 1;
       justify-content: flex-end;
       height: 120px;
-      width: 170px;
+      width: 210px;
+
+      & > img {
+        width: 100%;
+        margin-bottom: -45px;
+      }
 
       &.delegateActive {
         padding-right: 10px;
@@ -387,4 +453,13 @@
 
 .header {
   padding: 24px 0px;
+}
+
+.editBtn {
+  width: 24px;
+  height: 24px;
+  border-radius: 50%;
+  border: solid 1px var(--color-edit-button-border);
+  background-color: var(--color-edit-button-background);
+  cursor: pointer;
 }

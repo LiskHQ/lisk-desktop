@@ -43,6 +43,7 @@ const voting = (state = {}, action) => {
             unconfirmed,
             confirmed: state[vote.address] ? state[vote.address].confirmed : 0,
             username: state[vote.address]?.username || vote.username,
+            commission: state[vote.address]?.commision || action.data[0]?.validator?.commission,
           };
           return mergedVotes;
         }, {}),
@@ -60,6 +61,7 @@ const voting = (state = {}, action) => {
             confirmed: state[address].confirmed,
             unconfirmed: state[address].confirmed,
             username: state[address].username,
+            commission: state[address].commission,
           };
           return votesDict;
         }, {});
