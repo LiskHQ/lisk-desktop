@@ -1,39 +1,39 @@
 import actionTypes from '../actions/actionTypes';
-import voting from './staking';
+import staking from './staking';
 
-describe('Reducer: voting(state, action)', () => { // eslint-disable-line max-statements
-  const delegate1 = {
+describe('Reducer: staking(state, action)', () => { // eslint-disable-line max-statements
+  const validator1 = {
     address: '100001L',
   };
-  const delegate2 = {
+  const validator2 = {
     address: '100002L',
   };
-  const delegate3 = {
+  const validator3 = {
     address: '100003L',
   };
-  const cleanVotes = {
-    [delegate1.address]: { confirmed: 1e10, unconfirmed: 1e10, username: 'username_1' },
-    [delegate2.address]: { confirmed: 1e10, unconfirmed: 1e10, username: 'username_2' },
-    [delegate3.address]: { confirmed: 1e10, unconfirmed: 1e10, username: 'username_3' },
+  const cleanStakes = {
+    [validator1.address]: { confirmed: 1e10, unconfirmed: 1e10, name: 'username_1' },
+    [validator2.address]: { confirmed: 1e10, unconfirmed: 1e10, name: 'username_2' },
+    [validator3.address]: { confirmed: 1e10, unconfirmed: 1e10, name: 'username_3' },
   };
   const dirtyVotes = {
-    [delegate1.address]: { ...cleanVotes[delegate1.address], unconfirmed: 3e10 },
-    [delegate2.address]: { ...cleanVotes[delegate2.address], unconfirmed: 2e10 },
-    [delegate3.address]: cleanVotes[[delegate3.address]],
+    [validator1.address]: { ...cleanStakes[validator1.address], unconfirmed: 3e10 },
+    [validator2.address]: { ...cleanStakes[validator2.address], unconfirmed: 2e10 },
+    [validator3.address]: cleanStakes[[validator3.address]],
   };
   const pendingVotes = {
-    [delegate1.address]: { ...dirtyVotes[delegate1.address], pending: true },
-    [delegate2.address]: { ...dirtyVotes[delegate2.address], pending: true },
-    [delegate3.address]: { ...dirtyVotes[delegate3.address], pending: false },
+    [validator1.address]: { ...dirtyVotes[validator1.address], pending: true },
+    [validator2.address]: { ...dirtyVotes[validator2.address], pending: true },
+    [validator3.address]: { ...dirtyVotes[validator3.address], pending: false },
   };
 
   it('should return default state if action does not match', () => {
     const action = {
       type: '',
     };
-    const changedState = voting(cleanVotes, action);
+    const changedState = staking(cleanStakes, action);
 
-    expect(changedState).toEqual(cleanVotes);
+    expect(changedState).toEqual(cleanStakes);
   });
 
   describe('stakesRetrieved', () => {
@@ -44,60 +44,60 @@ describe('Reducer: voting(state, action)', () => { // eslint-disable-line max-st
           account: {
             votesUsed: 2,
           },
-          votes: [
-            { delegateAddress: delegate1.address, username: delegate1.username, amount: 1e10 },
-            { delegateAddress: delegate2.address, username: delegate2.username, amount: 2e10 },
+          stakes: [
+            { address: validator1.address, name: validator1.name, amount: 1e10 },
+            { address: validator2.address, name: validator2.name, amount: 2e10 },
           ],
         },
       };
       const expectedState = {
-        [delegate1.address]: { confirmed: 1e10, unconfirmed: 1e10 },
-        [delegate2.address]: { confirmed: 2e10, unconfirmed: 2e10 },
+        [validator1.address]: { confirmed: 1e10, unconfirmed: 1e10 },
+        [validator2.address]: { confirmed: 2e10, unconfirmed: 2e10 },
       };
-      const changedState = voting({}, action);
+      const changedState = staking({}, action);
 
       expect(changedState).toEqual(expectedState);
     });
   });
 
   describe('votesEdited', () => {
-    it('should add validator with voteAmount if does not exist among votes', () => {
+    it('should add validator with stake amount if does not exist among votes', () => {
       const action = {
         type: actionTypes.stakeEdited,
         data: [{
-          ...delegate1,
-          amount: dirtyVotes[delegate1.address].unconfirmed,
+          ...validator1,
+          amount: dirtyVotes[validator1.address].unconfirmed,
         }],
       };
       const expectedState = {
-        [delegate1.address]: {
+        [validator1.address]: {
           confirmed: 0,
-          unconfirmed: dirtyVotes[delegate1.address].unconfirmed,
+          unconfirmed: dirtyVotes[validator1.address].unconfirmed,
         },
       };
-      const changedState = voting({}, action);
+      const changedState = staking({}, action);
 
       expect(changedState).toEqual(expectedState);
     });
 
-    it('should change voteAmount if validators exist among votes', () => {
+    it('should change stake amount if validators exist among votes', () => {
       const action = {
         type: actionTypes.stakeEdited,
         data: [{
-          ...delegate1,
-          amount: dirtyVotes[delegate1.address].unconfirmed,
+          ...validator1,
+          amount: dirtyVotes[validator1.address].unconfirmed,
         }],
       };
       const expectedState = {
-        [delegate1.address]: {
-          confirmed: cleanVotes[delegate1.address].confirmed,
-          unconfirmed: dirtyVotes[delegate1.address].unconfirmed,
-          username: 'username_1',
+        [validator1.address]: {
+          confirmed: cleanStakes[validator1.address].confirmed,
+          unconfirmed: dirtyVotes[validator1.address].unconfirmed,
+          name: 'username_1',
         },
-        [delegate2.address]: cleanVotes[delegate2.address],
-        [delegate3.address]: cleanVotes[delegate3.address],
+        [validator2.address]: cleanStakes[validator2.address],
+        [validator3.address]: cleanStakes[validator3.address],
       };
-      const changedState = voting(cleanVotes, action);
+      const changedState = staking(cleanStakes, action);
 
       expect(changedState).toEqual(expectedState);
     });
@@ -108,7 +108,7 @@ describe('Reducer: voting(state, action)', () => { // eslint-disable-line max-st
       const action = {
         type: actionTypes.stakesSubmitted,
       };
-      const changedState = voting(dirtyVotes, action);
+      const changedState = staking(dirtyVotes, action);
 
       expect(changedState).toEqual(pendingVotes);
     });
@@ -120,35 +120,35 @@ describe('Reducer: voting(state, action)', () => { // eslint-disable-line max-st
         type: actionTypes.stakesConfirmed,
       };
       const expectedState = {
-        [delegate1.address]: {
-          ...dirtyVotes[delegate1.address],
+        [validator1.address]: {
+          ...dirtyVotes[validator1.address],
           pending: false,
-          confirmed: dirtyVotes[delegate1.address].unconfirmed,
+          confirmed: dirtyVotes[validator1.address].unconfirmed,
         },
-        [delegate2.address]: {
-          ...dirtyVotes[delegate2.address],
+        [validator2.address]: {
+          ...dirtyVotes[validator2.address],
           pending: false,
-          confirmed: dirtyVotes[delegate2.address].unconfirmed,
+          confirmed: dirtyVotes[validator2.address].unconfirmed,
         },
-        [delegate3.address]: { ...dirtyVotes[delegate3.address], pending: false },
+        [validator3.address]: { ...dirtyVotes[validator3.address], pending: false },
       };
-      const changedState = voting(pendingVotes, action);
+      const changedState = staking(pendingVotes, action);
 
       expect(changedState).toEqual(expectedState);
     });
 
-    it('should remove unvoted validators', () => {
+    it('should remove unstaked validators', () => {
       const action = {
         type: actionTypes.stakesConfirmed,
       };
       const initialState = {
-        [delegate2.address]: { ...cleanVotes[delegate2.address], pending: false },
-        [delegate3.address]: { ...cleanVotes[delegate3.address], unconfirmed: 0, pending: true },
+        [validator2.address]: { ...cleanStakes[validator2.address], pending: false },
+        [validator3.address]: { ...cleanStakes[validator3.address], unconfirmed: 0, pending: true },
       };
       const expectedState = {
-        [delegate2.address]: { ...cleanVotes[delegate2.address], pending: false },
+        [validator2.address]: { ...cleanStakes[validator2.address], pending: false },
       };
-      const changedState = voting(initialState, action);
+      const changedState = staking(initialState, action);
 
       expect(changedState).toEqual(expectedState);
     });
@@ -159,9 +159,9 @@ describe('Reducer: voting(state, action)', () => { // eslint-disable-line max-st
       const action = {
         type: actionTypes.stakesCleared,
       };
-      const changedState = voting(dirtyVotes, action);
+      const changedState = staking(dirtyVotes, action);
 
-      expect(changedState).toEqual(cleanVotes);
+      expect(changedState).toEqual(cleanStakes);
     });
   });
 });

@@ -6,7 +6,7 @@ import {
   joinModuleAndCommand,
 } from './moduleCommand';
 
-describe('Utils: moduleAssets', () => {
+describe('Utils: moduleCommand', () => {
   describe('getModuleCommandSenderLabel', () => {
     it('should return a dictionary of strings', () => {
       const t = jest.fn(str => str);
@@ -33,19 +33,19 @@ describe('Utils: moduleAssets', () => {
 
   describe('splitModuleAndCommand', () => {
     it('should split module and asset ids', () => {
-      const moduleCommand = 'dpos:voteDelegate';
+      const moduleCommand = 'pos:stake';
       const [module, command] = splitModuleAndCommand(moduleCommand);
 
-      expect(module).toEqual('dpos');
-      expect(command).toEqual('voteDelegate');
+      expect(module).toEqual('pos');
+      expect(command).toEqual('stake');
     });
   });
 
   describe('joinModuleAndCommand', () => {
     it('should join module and asset ids', () => {
-      const [module, command] = ['dpos', 'voteDelegate'];
+      const [module, command] = ['pos', 'stake'];
       const moduleCommand = joinModuleAndCommand({ module, command });
-      expect(moduleCommand).toEqual('dpos:voteDelegate');
+      expect(moduleCommand).toEqual('pos:stake');
     });
   });
 });

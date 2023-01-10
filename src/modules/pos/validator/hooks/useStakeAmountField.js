@@ -67,9 +67,9 @@ const useStakeAmountField = (initialValue) => {
   const host = useSelector(selectLSKAddress);
   const searchDetails = window.location.href.replace(/.*[?]/, '');
   const address = selectSearchParamValue(`?${searchDetails}`, 'address');
-  const voting = useSelector((state) => state.staking);
-  const existingStake = voting[address || host];
-  const totalUnconfirmedStake = Object.values(voting)
+  const staking = useSelector((state) => state.staking);
+  const existingStake = staking[address || host];
+  const totalUnconfirmedStake = Object.values(staking)
     .filter((stake) => stake.confirmed < stake.unconfirmed)
     .map((stake) => stake.unconfirmed - stake.confirmed)
     .reduce((total, amount) => total + amount, 0);

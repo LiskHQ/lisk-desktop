@@ -8,54 +8,12 @@ const account = {
     balance: 100.106e8,
   },
 };
-const network = {
-  network: {
-    networks: {
-      LSK: {
-        networkIdentifier: '15f0dacc1060e91818224a94286b13aa04279c640bd5d6f193182031d133df7c',
-        moduleAssets: [
-          {
-            id: 'token:transfer',
-            name: 'token:transfer',
-          },
-          {
-            id: 'auth:registerMultisignature',
-            name: 'keys:registerMultisignature',
-          },
-          {
-            id: 'dpos:registerDelegate',
-            name: 'dpos:registerDelegate',
-          },
-          {
-            id: 'dpos:voteDelegate',
-            name: 'dpos:voteDelegate',
-          },
-          {
-            id: 'dpos:unlock',
-            name: 'dpos:unlockToken',
-          },
-          {
-            id: 'dpos:reportDelegateMisbehavior',
-            name: 'dpos:reportDelegateMisbehavior',
-          },
-          {
-            id: 'legacy:reclaim',
-            name: 'legacyAccount:reclaimLSK',
-          },
-        ],
-        serviceUrl: 'https://testnet-service.lisk.com',
-      },
-    },
-    name: 'testnet',
-  },
-};
-const voting = {
-  voting: {
-    [accounts.genesis.summary.address]: {
-      confirmed: 20e8,
-      unconfirmed: 20e8,
-      username: 'genesis',
-    },
+
+const staking = {
+  [accounts.genesis.summary.address]: {
+    confirmed: 20e8,
+    unconfirmed: 20e8,
+    username: 'genesis',
   },
 };
 
@@ -74,8 +32,7 @@ describe('getMaxAmount', () => {
       nonce: account.sequence?.nonce,
       publicKey: account.summary.publicKey,
       address: account.summary.address,
-      voting: voting.voting,
-      network,
+      staking,
       numberOfSignatures: 0,
       mandatoryKeys: [],
       optionalKeys: [],
@@ -90,8 +47,7 @@ describe('getMaxAmount', () => {
       nonce: account.sequence?.nonce,
       publicKey: account.summary.publicKey,
       address: account.summary.address,
-      voting: voting.voting,
-      network,
+      staking,
       numberOfSignatures: 0,
       mandatoryKeys: [],
       optionalKeys: [],

@@ -9,9 +9,9 @@ const illustrations = {
     [txStatusTypes.signatureError]: 'transactionError',
     [txStatusTypes.hwRejected]: 'HwRejection',
   },
-  vote: {
-    [txStatusTypes.signatureSuccess]: 'votingSuccess',
-    [txStatusTypes.broadcastSuccess]: 'votingSuccess',
+  stake: {
+    [txStatusTypes.signatureSuccess]: 'stakingSuccess',
+    [txStatusTypes.broadcastSuccess]: 'stakingSuccess',
     [txStatusTypes.broadcastError]: 'transactionError',
     [txStatusTypes.signatureError]: 'transactionError',
     [txStatusTypes.hwRejected]: 'HwRejection',

@@ -139,6 +139,7 @@ export const useStakesRetrieved = address => {
           account: {},
         },
       });
+      return;
     }
     dispatch({
       type: actionTypes.stakesRetrieved,
