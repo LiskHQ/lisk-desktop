@@ -36,13 +36,13 @@ const getTitles = (t) => ({
   edit: {
     title: t('Edit stake'),
     description: t(
-      'Increase or decrease your stake amount, or remove your stake from this validator. Your updated stake will be added to the staking queue.'
+      'After changing your Stake amount, it will be added to the staking queue.'
     ),
   },
   add: {
     title: t('Add to staking queue'),
     description: t(
-      'Insert an amount you wish to stake for this validator. Your new stake will then be added to the staking queue.'
+      'Input your Stake amount. This value shows how much trust you have in this validator.'
     ),
   },
 });

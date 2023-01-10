@@ -35,8 +35,8 @@ const ConnectionProposal = ({ history }) => {
     <Dialog className={styles.wrapper} hasClose>
       <Box>
         <div className={styles.title}>
-          <h3>{t('Application pairing')}</h3>
-          <h6>{t('Input WalletConnect URI to pair with an application')}</h6>
+          <h3>{t('Connect wallet')}</h3>
+          <h6>{t('Paste WalletConnect URI to connect your application to Lisk Desktop.')}</h6>
         </div>
         <div>
           <div>
@@ -45,7 +45,7 @@ const ConnectionProposal = ({ history }) => {
               onChange={e => setValue(e.target.value)}
               value={value}
               className={styles.input}
-              placeholder={t('Enter WalletConnect URI')}
+              placeholder={t('Enter connection URI')}
             />
             <span className={styles.feedback}>
               {status.message ?? ''}

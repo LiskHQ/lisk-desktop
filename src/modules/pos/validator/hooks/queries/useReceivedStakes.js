@@ -31,12 +31,12 @@ export const useReceivedStakes = ({ config: customConfig = {}, options } = {}) =
     select: (data) =>
       data.pages.reduce((prevPages, page) => {
         const newData = page?.data || {};
-        const newVotes = page?.data.votes || [];
+        const newStakers = page?.data.stakers || [];
         return {
           ...page,
           data: {
             ...newData,
-            votes: prevPages.data ? [...prevPages.data.votes, ...newVotes] : newVotes,
+            stakers: prevPages.data ? [...prevPages.data.stakers, ...newStakers] : newStakers,
           },
         };
       }),

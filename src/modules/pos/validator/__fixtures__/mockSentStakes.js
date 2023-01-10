@@ -39,7 +39,7 @@ const generateStakes = [
 ];
 
 const data = {
-  votes: generateStakes,
+  stakes: generateStakes,
   account: {
     address: 'lsk24cd35u4jdq8szo3pnsqe5dsxwrnazyqqqg5eu',
     publicKey: 'aq02qkbb35u4jdq8szo3pnsqe5dsxwrnazyqqqg5eu',

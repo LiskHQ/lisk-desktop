@@ -1,5 +1,4 @@
-import React from 'react';
-import { mount } from 'enzyme';
+import { mountWithRouter } from 'src/utils/testHelpers';
 import WalletVisualWithAddress from '.';
 
 describe('WalletVisualWithAddress component', () => {
@@ -18,12 +17,12 @@ describe('WalletVisualWithAddress component', () => {
   };
 
   it('should show bookmarked name if address is bookmarked', () => {
-    const wrapper = mount(<WalletVisualWithAddress {...props} />);
+    const wrapper = mountWithRouter(WalletVisualWithAddress, props);
     expect(wrapper.find('.accountAddress').at(0)).toHaveText('BM');
   });
 
   it('should show account name', () => {
-    const wrapper = mount(<WalletVisualWithAddress {...props} accountName="test" />);
+    const wrapper = mountWithRouter(WalletVisualWithAddress, {...props, accountName: 'test' });
     expect(wrapper.find('.accountName').at(0)).toHaveText('test');
   });
 });

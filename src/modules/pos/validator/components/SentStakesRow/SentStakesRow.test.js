@@ -9,7 +9,7 @@ import { mockSentStakes } from '../../__fixtures__';
 describe('SentStakesRow', () => {
   it('should display properly', async () => {
     const props = {
-      data: mockSentStakes.data.votes[0],
+      data: mockSentStakes.data.stakes[0],
       stakeEdited: jest.fn(),
       dposToken: mockTokensBalance.data[0],
     };

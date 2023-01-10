@@ -1,4 +1,3 @@
-// import QRCode from 'qrcode.react';
 import React from 'react';
 import { TertiaryButton } from 'src/theme/buttons';
 import PassphraseRenderer from '@wallet/components/passphraseRenderer';

@@ -35,7 +35,7 @@ const SessionManager = ({ history }) => {
           <span className={styles.buttonContent}>
             <Icon name="plus" />
             <span>
-              {t('Bridge application')}
+              {t('Connect Wallet')}
             </span>
           </span>
         </PrimaryButton>

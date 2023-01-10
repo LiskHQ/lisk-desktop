@@ -85,7 +85,7 @@ describe('Reclaim balance screen', () => {
     );
   });
 
-  it('should have the first step checked if balance is above dust threshold', () => {
+  it('should not have the first step displayed if balance is above dust threshold', () => {
     useSelector.mockImplementation(
       jest.fn(() => ({
         ...mockNonMigrated,
@@ -94,7 +94,6 @@ describe('Reclaim balance screen', () => {
     );
 
     const wrapper = mountWithRouterAndQueryClient(Reclaim, props, {});
-    expect(wrapper.find('li.step').at(0)).toHaveClassName('.check')
-    expect(wrapper.find('li.step').at(1)).toHaveClassName('.green')
-  })
+    expect(wrapper.find('li.step').at(1)).toEqual({})
+  });
 });

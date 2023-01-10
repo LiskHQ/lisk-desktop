@@ -176,6 +176,8 @@ import registerMultisignature from '@setup/react/assets/images/icons/multisignat
 import multisignatureTransaction from '@setup/react/assets/images/icons/multisignatureTransaction.svg';
 import multisignatureTransactionDark from '@setup/react/assets/images/icons/multisignatureTransaction-dark.svg';
 import multiSignatureOutline from '@setup/react/assets/images/icons/multisignature-outline.svg';
+import multisigKeys from '@setup/react/assets/images/icons/keys-filled.svg';
+import multisigKeysDark from '@setup/react/assets/images/icons/keys-filled-dark.svg';
 import upload from '@setup/react/assets/images/icons/upload.svg';
 import validatorForged from '@setup/react/assets/images/icons/delegate-forged.svg';
 import validatorForgedDark from '@setup/react/assets/images/icons/delegate-forged-dark.svg';
@@ -464,6 +466,8 @@ export const icons = {
   commissionsIcon,
   editActiveIcon,
   arrowBlueRight,
+  multisigKeys,
+  multisigKeysDark,
 };
 
 const Icon = ({ name, noTheme, ...props }) => {

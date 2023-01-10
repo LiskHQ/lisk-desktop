@@ -20,7 +20,7 @@ const ConnectionStatus = ({ history }) => {
       [STATUS.SUCCESS]: t('Rejected the pairing request from {{name}}', { name }),
       [STATUS.FAILURE]: t('An error occurred while rejecting the pairing request from {{name}}', { name }),
     },
-    default: t('An error occurred while responding to {{name}}', { name }),
+    default: t('Encountered an error while connecting to {{name}} application.', { name }),
   }
 
   const redirectToHome = () => {
@@ -47,7 +47,7 @@ const ConnectionStatus = ({ history }) => {
         </div>
         <div>
           <h6>{messages[action]?.[status] ?? messages.default}</h6>
-          <span>{t('Redirecting to dashboard...')}</span>
+          <span>{t('Returning to application...')}</span>
         </div>
       </Box>
     </Dialog>

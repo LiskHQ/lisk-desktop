@@ -13,7 +13,7 @@ const setLocale = (locale) => {
 };
 
 /**
- * Returs if current Date is greater than min Date, based on amount passed on options
+ * Returns if current Date is greater than min Date, based on amount passed on options
  * @param {String|Date} current Value that should be validated
  * @param {String|Date} min Value to validate against
  * @param {Object} options Options to use when parsing date and amount to check.
@@ -29,7 +29,7 @@ export const canGoToPrevious = (current, min, options = {}) => {
 };
 
 /**
- * Returs if current Date is less than min Date, based on amount passed on options
+ * Returns if current Date is less than min Date, based on amount passed on options
  * @param {String|Date} current Value that should be validated
  * @param {String|Date} max Value to validate against
  * @param {Object} options Options to use when parsing date and amount to check.
@@ -45,7 +45,7 @@ export const canGoToNext = (current, max, options = {}) => {
 };
 
 /**
- * Returs true if date isn't between min and max, and should be disabled
+ * Returns true if date isn't between min and max, and should be disabled
  * @param {String|Date} date Date to check if should be disabled
  * @param {String|Date} min Date to check if greater than
  * @param {String|Date} max Date to check if less than

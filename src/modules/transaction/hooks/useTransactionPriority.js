@@ -1,13 +1,12 @@
 import { useState, useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useSelector } from 'react-redux';
-
 import { getTransactionBaseFees } from '../api';
 
 // eslint-disable-next-line max-statements
 const useTransactionPriority = () => {
   const { t } = useTranslation();
-  const network = useSelector(state => state.network);
+  const network = useSelector((state) => state.network);
   const [prioritiesLoadError, setPrioritiesLoadError] = useState(false);
   const [loading, setLoading] = useState(false);
   const [baseFees, setBaseFees] = useState({
@@ -47,7 +46,7 @@ const useTransactionPriority = () => {
       item: priorityOptions[selectedPriority.selectedIndex],
       index: selectedPriority.selectedIndex,
     });
-  }, [selectedPriority.value, baseFees.Low, baseFees.Medium, baseFees.High]);
+  }, [selectedPriority?.value, baseFees.Low, baseFees.Medium, baseFees.High]);
 
   return [
     selectedPriority,

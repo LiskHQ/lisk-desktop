@@ -1,7 +1,7 @@
 .container {
   & > header {
-    padding-left: var(--horizontal-padding-s) !important;
-    padding-right: var(--horizontal-padding-s) !important;
+    padding-left: var(--horizontal-padding-l) !important;
+    padding-right: var(--horizontal-padding-l) !important;
   }
 
   & > footer {
@@ -19,4 +19,8 @@
     width: 100%;
     max-width: 391px;
   }
+}
+
+.actionBtn {
+  max-width: 372px;
 }

@@ -6,14 +6,8 @@ import { selectActiveTokenAccount } from 'src/redux/selectors';
 import { loadingStarted, loadingFinished } from 'src/modules/common/store/actions';
 import actionTypes from './actionTypes';
 import { getTransactions, broadcast, dryRun } from '../api';
-import {
-  joinModuleAndCommand,
-  signMultisigTransaction,
-} from '../utils';
-import {
-  fromTransactionJSON,
-  toTransactionJSON,
-} from '../utils/encoding';
+import { joinModuleAndCommand, signMultisigTransaction } from '../utils';
+import { fromTransactionJSON, toTransactionJSON } from '../utils/encoding';
 
 /**
  * Action trigger when user logout from the application
@@ -28,7 +22,7 @@ export const emptyTransactionsData = () => ({ type: actionTypes.emptyTransaction
  * @param {Object} params - all params
  * @param {String} params.senderPublicKey - alphanumeric string
  */
-export const pendingTransactionAdded = data => ({
+export const pendingTransactionAdded = (data) => ({
   type: actionTypes.pendingTransactionAdded,
   data,
 });
@@ -44,44 +38,41 @@ export const pendingTransactionAdded = data => ({
  * @param {Object} params.filters - object with filters for the filer dropdown
  *   (e.g. minAmount, maxAmount, message, minDate, maxDate)
  */
-export const transactionsRetrieved = ({
-  address,
-  limit = DEFAULT_LIMIT,
-  offset = 0,
-  filters = {},
-}) => async (dispatch, getState) => {
-  dispatch(loadingStarted(actionTypes.transactionsRetrieved));
+export const transactionsRetrieved =
+  ({ address, limit = DEFAULT_LIMIT, offset = 0, filters = {} }) =>
+  async (dispatch, getState) => {
+    dispatch(loadingStarted(actionTypes.transactionsRetrieved));
 
-  const { network } = getState();
+    const { network } = getState();
 
-  const params = {
-    address,
-    ...filters,
-    limit,
-    offset,
+    const params = {
+      address,
+      ...filters,
+      limit,
+      offset,
+    };
+
+    try {
+      const { data, meta } = await getTransactions({ network, params });
+      dispatch({
+        type: actionTypes.transactionsRetrieved,
+        data: {
+          offset,
+          address,
+          filters,
+          confirmed: data,
+          count: meta.total,
+        },
+      });
+    } catch (error) {
+      dispatch({
+        type: actionTypes.transactionLoadFailed,
+        data: { error },
+      });
+    } finally {
+      dispatch(loadingFinished(actionTypes.transactionsRetrieved));
+    }
   };
-
-  try {
-    const { data, meta } = await getTransactions({ network, params });
-    dispatch({
-      type: actionTypes.transactionsRetrieved,
-      data: {
-        offset,
-        address,
-        filters,
-        confirmed: data,
-        count: meta.total,
-      },
-    });
-  } catch (error) {
-    dispatch({
-      type: actionTypes.transactionLoadFailed,
-      data: { error },
-    });
-  } finally {
-    dispatch(loadingFinished(actionTypes.transactionsRetrieved));
-  }
-};
 
 export const resetTransactionResult = () => ({
   type: actionTypes.resetTransactionResult,
@@ -102,7 +93,10 @@ export const transactionDoubleSigned = (moduleCommandSchemas) => async (dispatch
     enableCustomDerivationPath: false,
   });
   const activeWallet = selectActiveTokenAccount(state);
-  const transaction = toTransactionJSON(transactions.signedTransaction, moduleCommandSchemas[transactions.moduleCommand]);
+  const transaction = toTransactionJSON(
+    transactions.signedTransaction,
+    moduleCommandSchemas[transactions.moduleCommand]
+  );
   const [signedTx, err] = await signMultisigTransaction(
     activeWallet,
     // SenderAccount is the same of the double-signer
@@ -114,7 +108,7 @@ export const transactionDoubleSigned = (moduleCommandSchemas) => async (dispatch
     signatureCollectionStatus.partiallySigned,
     moduleCommandSchemas[transactions.moduleCommand],
     network.networks.LSK.chainID,
-    keyPair.privateKey,
+    keyPair.privateKey
   );
 
   if (!err) {
@@ -138,7 +132,8 @@ export const transactionDoubleSigned = (moduleCommandSchemas) => async (dispatch
  * @param {Number} transaction.fee - In raw format, used for updating the TX List.
  * @param {Number} transaction.reference - Data field for LSK transactions
  */
-export const transactionBroadcasted = (transaction, moduleCommandSchemas) =>
+export const transactionBroadcasted =
+  (transaction, moduleCommandSchemas) =>
   // eslint-disable-next-line max-statements
   async (dispatch, getState) => {
     const { network, token } = getState();
@@ -247,13 +242,15 @@ export const multisigTransactionSigned = ({
  * @param {object} data
  * @param {object} data.rawTransaction Transaction config required by Lisk Element
  */
-export const signatureSkipped = ({ formProps, transactionJSON }) => (dispatch, getState) => {
-  const { network } = getState();
-  const schema = network.networks.LSK.moduleCommandSchemas[formProps.moduleCommand]
-  const transactionObject = fromTransactionJSON(transactionJSON, schema);
+export const signatureSkipped =
+  ({ formProps, transactionJSON }) =>
+  (dispatch, getState) => {
+    const { network } = getState();
+    const schema = network.networks.LSK.moduleCommandSchemas[formProps.moduleCommand];
+    const transactionObject = fromTransactionJSON(transactionJSON, schema);
 
-  dispatch({
-    type: actionTypes.signatureSkipped,
-    data: transactionObject,
-  });
-};
+    dispatch({
+      type: actionTypes.signatureSkipped,
+      data: transactionObject,
+    });
+  };

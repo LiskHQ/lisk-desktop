@@ -16,8 +16,6 @@ jest.mock('@account/hooks/useDeprecatedAccount', () => ({
   }),
 }));
 
-jest.mock('@network/hooks/useCommandsSchema');
-
 describe('TxComposer', () => {
   const transaction = {
     moduleCommand: MODULE_COMMANDS_NAME_MAP.transfer,
@@ -41,12 +39,6 @@ describe('TxComposer', () => {
       moduleCommand: MODULE_COMMANDS_NAME_MAP.transfer,
     },
   };
-  useCommandSchema.mockReturnValue(
-    mockCommandParametersSchemas.data.reduce(
-      (result, { moduleCommand, schema }) => ({ ...result, [moduleCommand]: schema }),
-      {}
-    )
-  );
 
   useCommandSchema.mockReturnValue(
     mockCommandParametersSchemas.data.reduce(

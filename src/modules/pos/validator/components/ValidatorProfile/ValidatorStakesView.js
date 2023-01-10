@@ -35,7 +35,7 @@ const ValidatorStakesView = ({ address }) => {
     [filters, searchInput]
   );
 
-  const stakers = useMemo(() => stakerData?.data?.stakers || [], [stakerData]);
+  const stakers = useMemo(() => stakerData?.data.stakers || { stakers: [] }, [stakerData]);
 
   const emptyMessage = searchInput
     ? t('This account does not have any staker for the given address.')

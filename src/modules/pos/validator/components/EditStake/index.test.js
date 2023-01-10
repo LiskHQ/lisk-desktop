@@ -82,7 +82,7 @@ describe('EditStake', () => {
     ).toBeTruthy();
     expect(
       screen.getByText(
-        'Insert an amount you wish to stake for this validator. Your new stake will then be added to the staking queue.'
+        'Input your Stake amount. This value shows how much trust you have in this validator.'
       )
     ).toBeTruthy();
     expect(screen.getByText('Stake amount ({{symbol}})')).toBeTruthy();
@@ -138,7 +138,7 @@ describe('EditStake', () => {
         ...mockSentStakes,
         data: {
           ...mockSentStakes.data,
-          votes: mockSentStakes.data.votes.map((vote, index) =>
+          votes: mockSentStakes.data.stakes.map((vote, index) =>
             index === 0 ? { ...vote, validatorAddress } : vote
           ),
         },

@@ -2,6 +2,7 @@ import { act } from 'react-dom/test-utils';
 import { mountWithCustomRouterAndStore } from 'src/utils/testHelpers';
 import { getTransactionBaseFees } from '@transaction/api';
 import { tokenMap } from '@token/fungible/consts/tokens';
+import { mockTokensBalance } from '@token/fungible/__fixtures__';
 import useTransactionFeeCalculation from '@transaction/hooks/useTransactionFeeCalculation';
 import { truncateAddress } from '@wallet/utils/account';
 import * as hwManager from '@transaction/utils/hwManager';
@@ -10,9 +11,14 @@ import flushPromises from '@tests/unit-test-utils/flushPromises';
 import { mockAuth } from 'src/modules/auth/__fixtures__';
 import { useAuth } from 'src/modules/auth/hooks/queries';
 import mockSavedAccounts from '@tests/fixtures/accounts';
+import { useCommandSchema } from '@network/hooks';
+import { useTokensBalance } from '@token/fungible/hooks/queries';
+import { mockCommandParametersSchemas } from 'src/modules/common/__fixtures__';
 import Summary from '.';
 
 const mockedCurrentAccount = mockSavedAccounts[0];
+const mockTxFeeCalculationFn = jest.fn();
+
 jest.mock('@auth/hooks/queries');
 jest.mock('@account/hooks', () => ({
   useCurrentAccount: jest.fn(() => [mockedCurrentAccount, jest.fn()]),
@@ -20,7 +26,9 @@ jest.mock('@account/hooks', () => ({
 
 jest.mock('@transaction/hooks/useTransactionFeeCalculation');
 jest.mock('@transaction/api');
+jest.mock('@network/hooks/useCommandsSchema');
 jest.mock('@transaction/utils/hwManager');
+jest.mock('@token/fungible/hooks/queries');
 
 const transactionBaseFees = {
   Low: 156,
@@ -39,6 +47,13 @@ hwManager.signTransactionByHW.mockResolvedValue(response);
 useTransactionFeeCalculation.mockImplementation(() => ({
   minFee: { value: 0.001 },
 }));
+useCommandSchema.mockReturnValue(
+  mockCommandParametersSchemas.data.reduce(
+    (result, { moduleCommand, schema }) => ({ ...result, [moduleCommand]: schema }),
+    {}
+  )
+);
+useTokensBalance.mockReturnValue({ data: mockTokensBalance, isLoading: false });
 
 describe('Reclaim balance Summary', () => {
   const wallet = { info: { LSK: accounts.non_migrated } };
@@ -75,7 +90,7 @@ describe('Reclaim balance Summary', () => {
     expect(html).toContain(accounts.non_migrated.legacy.address);
     expect(html).toContain(truncateAddress(accounts.non_migrated.summary.address, 'medium'));
     expect(html).toContain('136 LSK');
-    expect(wrapper).toContainMatchingElement('.fee-value-Transaction');
+    expect(wrapper).toContainMatchingElement('.tx-fee-section');
     expect(html).toContain('confirm-button');
   });
 
@@ -94,10 +109,6 @@ describe('Reclaim balance Summary', () => {
     expect(props.nextStep).toBeCalledWith({
       formProps: {
         moduleCommand: 'legacy:reclaimLSK',
-        composedFees: {
-          Transaction: '0.00132 LSK',
-          Initialisation: '0.05 LSK',
-        },
       },
       transactionJSON: {
         module: 'legacy',
@@ -106,7 +117,8 @@ describe('Reclaim balance Summary', () => {
           amount: accounts.non_migrated.legacy.balance,
         },
         senderPublicKey: accounts.non_migrated.summary.publicKey,
-        fee: 132000,
+        fee: 4100000,
+        id: '',
         nonce: accounts.non_migrated.sequence.nonce,
         signatures: [],
       },
@@ -127,5 +139,24 @@ describe('Reclaim balance Summary', () => {
 
     // Assert
     expect(props.history.goBack).toBeCalledTimes(1);
+  });
+
+  it('should not show fee if there is no token', async () => {
+    useTokensBalance.mockReturnValue({ data: {} });
+    useTransactionFeeCalculation.mockImplementation((params) => {
+      mockTxFeeCalculationFn(params);
+      return {
+        minFee: { value: 0.001 },
+      };
+    });
+    mountWithCustomRouterAndStore(Summary, props, state);
+
+    act(() => {
+      expect(mockTxFeeCalculationFn).toHaveBeenCalledWith(
+        expect.objectContaining({
+          token: {},
+        })
+      );
+    });
   });
 });

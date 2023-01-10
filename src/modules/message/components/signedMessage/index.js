@@ -40,7 +40,7 @@ const Success = ({
         }}
         className={`${styles.button} go-back`}
       >
-        {t('Go back')}
+        {t('Back')}
       </SecondaryButton>
       <CopyToClipboard onCopy={copy} text={signature}>
         <PrimaryButton

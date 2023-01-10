@@ -32,12 +32,12 @@ export const useSentStakes = ({ config: customConfig = {}, options } = {}) => {
     select: (data) =>
       data.pages.reduce((prevPages, page) => {
         const newData = page?.data || {};
-        const newVotes = page?.data.votes || [];
+        const newStakes = page?.data.stakes || [];
         return {
           ...page,
           data: {
             ...newData,
-            votes: prevPages.data ? [...prevPages.data.votes, ...newVotes] : newVotes,
+            stakes: prevPages.data ? [...prevPages.data.stakes, ...newStakes] : newStakes,
           },
         };
       }),

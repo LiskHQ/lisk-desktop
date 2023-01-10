@@ -74,7 +74,7 @@ describe('Summary', () => {
         },
         fields: {
           sendingChain: mockBlockchainApplications[0],
-          recipientChain: blockchainApplicationsExplore[0],
+          recipientChain: { ...blockchainApplicationsExplore[0], logo: { png: '', svg: '' } },
           token: mockTokensBalance.data[0],
           recipient: {
             address: wallets.genesis.summary.address,
@@ -92,7 +92,7 @@ describe('Summary', () => {
     expect(wrapper).toContainMatchingElement('.summary-header');
     expect(wrapper).toContainMatchingElement('.summary-content');
     expect(wrapper).toContainMatchingElement('.summary-footer');
-    expect(wrapper.find('button.confirm-button')).toHaveText('Send 1.123 LSK');
+    expect(wrapper.find('button.confirm-button')).toHaveText('Send');
     expect(wrapper.find('.amount-summary')).toIncludeText('1.123 LSK');
   });
 

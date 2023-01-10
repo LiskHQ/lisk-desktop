@@ -25,7 +25,7 @@ const InfoColumn = ({ title, children, className }) => (
   </div>
 );
 
-const StakeValidator = ({ t, account, summaryInfo, formProps }) => {
+const StakeValidator = ({ t, account, summaryInfo }) => {
   const addedLength = Object.keys(summaryInfo.added).length;
   const editedLength = Object.keys(summaryInfo.edited).length;
   const removedLength = Object.keys(summaryInfo.removed).length;
@@ -43,11 +43,11 @@ const StakeValidator = ({ t, account, summaryInfo, formProps }) => {
           {`${sentStakes + addedLength - removedLength}/10`}
         </InfoColumn>
       </div>
-      <div className={styles.txFeeContainer}>
-        <InfoColumn title={t('Transaction Fees')} className="stake-fees">
-          {formProps?.composedFees.Transaction}
+      {/* <div className={styles.txFeeContainer}>
+        <InfoColumn title={t('Transaction Fees')} className="vote-fees">
+          {transaction?.composedFees.Transaction}
         </InfoColumn>
-      </div>
+      </div> */}
     </>
   );
 };
