@@ -104,11 +104,11 @@ describe('API: LSK Network', () => {
           moduleAssets: [
             { id: 'token:transfer', name: 'token:transfer' },
             { id: 'auth:registerMultisignature', name: 'keys:registerMultisignature' },
-            { id: 'dpos:registerDelegate', name: 'dpos:registerDelegate' },
-            { id: 'dpos:voteDelegate', name: 'dpos:voteDelegate' },
-            { id: 'dpos:unlock', name: 'dpos:unlockToken' },
-            { id: 'dpos:reportDelegateMisbehavior', name: 'dpos:reportDelegateMisbehavior' },
-            { id: 'legacy:reclaim', name: 'legacyAccount:reclaimLSK' },
+            { id: 'pos:registerValidator', name: 'pos:registerValidator' },
+            { id: 'pos:stake', name: 'pos:stake' },
+            { id: 'pos:unlock', name: 'pos:unlockToken' },
+            { id: 'pos:reportMisbehavior', name: 'pos:reportMisbehavior' },
+            { id: 'legacy:reclaimLSK', name: 'legacyAccount:reclaimLSK' },
           ],
           milestone: ['500000000', '400000000', '300000000', '200000000', '100000000'],
           rewards: {

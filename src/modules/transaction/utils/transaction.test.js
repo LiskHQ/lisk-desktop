@@ -147,7 +147,7 @@ describe.skip('API: LSK Transactions', () => {
           ],
         },
       };
-      const txObj = fromTransactionJSON(tx, moduleCommandSchemas['dpos:voteDelegate']);
+      const txObj = fromTransactionJSON(tx, moduleCommandSchemas['pos:stake']);
       const [module, command] = splitModuleAndCommand(voteDelegate);
       expect(txObj).toEqual({
         ...baseElementsTx,
@@ -175,7 +175,7 @@ describe.skip('API: LSK Transactions', () => {
           proofOfPossession: pop,
         },
       };
-      const txObj = fromTransactionJSON(tx, moduleCommandSchemas['dpos:registerDelegate']);
+      const txObj = fromTransactionJSON(tx, moduleCommandSchemas['pos:registerValidator']);
       const [module, command] = splitModuleAndCommand(registerDelegate);
       expect(txObj).toEqual({
         ...baseElementsTx,
@@ -200,7 +200,7 @@ describe.skip('API: LSK Transactions', () => {
           amount: '10000000',
         },
       };
-      const txObj = fromTransactionJSON(tx, moduleCommandSchemas['legacy:reclaim']);
+      const txObj = fromTransactionJSON(tx, moduleCommandSchemas['legacy:reclaimLSK']);
       const [module, command] = splitModuleAndCommand(reclaim);
       expect(txObj).toEqual({
         ...baseElementsTx,
@@ -219,7 +219,7 @@ describe.skip('API: LSK Transactions', () => {
         module: 'dpos',
         command: 'unlock',
       };
-      const txObj = fromTransactionJSON(tx, moduleCommandSchemas['dpos:unlock']);
+      const txObj = fromTransactionJSON(tx, moduleCommandSchemas['pos:unlock']);
       const [module, command] = splitModuleAndCommand(unlock);
       expect(txObj).toEqual({
         ...baseElementsTx,

@@ -42,9 +42,9 @@ export default {
       online: true,
     },
   },
-  voting: {
-    delegates: [],
-    votes: {},
+  staking: {
+    validators: [],
+    stakes: {},
   },
   appUpdates: {},
   transactions: {

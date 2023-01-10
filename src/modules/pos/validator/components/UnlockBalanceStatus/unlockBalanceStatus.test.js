@@ -18,7 +18,7 @@ describe('unlock transaction Status', () => {
   };
 
   const signedTransaction = {
-    id: 'dpos:unlock',
+    id: 'pos:unlock',
     senderPublicKey: accounts.genesis.summary.publicKey,
     signatures: [accounts.genesis.summary.publicKey],
     nonce: '19n',

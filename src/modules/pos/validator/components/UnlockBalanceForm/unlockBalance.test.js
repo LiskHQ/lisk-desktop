@@ -114,7 +114,7 @@ describe('Unlock LSK modal', () => {
     },
   };
   const transactionJSON = {
-    module: 'dpos',
+    module: 'pos',
     command: 'unlock',
     nonce: '178',
     fee: '100000000',
@@ -179,7 +179,7 @@ describe('Unlock LSK modal', () => {
           Initialisation: '0.1 LSK',
         },
         isValid: true,
-        moduleCommand: 'dpos:unlock',
+        moduleCommand: 'pos:unlock',
       },
       fees: {
         Initialisation: '0.1 LSK',
@@ -200,7 +200,7 @@ describe('Unlock LSK modal', () => {
             Initialisation: '0.1 LSK',
           },
           isValid: true,
-          moduleCommand: 'dpos:unlock',
+          moduleCommand: 'pos:unlock',
         },
         fees: {
           Initialisation: '0.1 LSK',

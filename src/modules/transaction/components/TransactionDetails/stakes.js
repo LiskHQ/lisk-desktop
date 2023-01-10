@@ -5,14 +5,14 @@ import TransactionDetailsContext from '../../context/transactionDetailsContext';
 import styles from './styles.css';
 import StakeItem from '../StakeItem';
 
-export const StakesPure = ({ t, votedDelegates }) => {
+export const StakesPure = ({ t, stakedValidator }) => {
   const { transaction } = React.useContext(TransactionDetailsContext);
   const { stakes } = transaction.params;
 
   useEffect(() => {
     if (transaction.params) {
-      const addressList = stakes.map((item) => item.validatorAddress);
-      votedDelegates.loadData({ addressList });
+      const addressList = stakes.map((item) => item.address);
+      stakedValidator.loadData({ addressList });
     }
   }, []);
 
@@ -21,15 +21,15 @@ export const StakesPure = ({ t, votedDelegates }) => {
       <div className={styles.detailsWrapper}>
         <span className={styles.label}>{`${t('Stakes')} (${stakes.length})`}</span>
         <div className={`${styles.stakesContainer} ${styles.added} tx-added-stakes`}>
-          {stakes.map((vote) => (
+          {stakes.map((stake) => (
             <StakeItem
-              key={`stake-${vote.validatorAddress}`}
-              vote={{ confirmed: vote.amount }}
-              address={vote.validatorAddress}
+              key={`stake-${stake.address}`}
+              vote={{ confirmed: stake.amount }}
+              address={stake.address}
               truncate
               title={
-                votedDelegates.data[vote.validatorAddress] &&
-                votedDelegates.data[vote.validatorAddress].pos?.validator?.username
+                stakedValidator.data[stake.address] &&
+                stakedValidator.data[stake.address].pos?.validator?.name
               }
             />
           ))}
@@ -40,7 +40,7 @@ export const StakesPure = ({ t, votedDelegates }) => {
 };
 
 export default withData({
-  votedDelegates: {
+  stakedValidator: {
     apiUtil: ({ networks }, params) => getValidators({ network: networks.LSK, params }),
     defaultData: {},
     transformResponse: (response) =>

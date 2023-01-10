@@ -9,24 +9,24 @@ import { useSentStakes } from '../../hooks/queries';
 
 function ValidatorStakeButton({ address, isBanned, currentAddress }) {
   const { t } = useTranslation();
-  const voting = useSelector((state) => selectStaking(state));
-  const { data: sentVotes, isLoading: sentVotesLoading } = useSentStakes({
+  const staking = useSelector((state) => selectStaking(state));
+  const { data: sentStakes, isLoading: sentStakesLoading } = useSentStakes({
     config: { params: { address } },
   });
 
-  const stakeSentVoteToValidator = useMemo(() => {
-    const votes = sentVotes?.data?.votes;
-    if (!votes) return false;
+  const validatorStake = useMemo(() => {
+    const stakes = sentStakes?.data?.stakes;
+    if (!stakes) return false;
 
-    return votes.find(({ validatorAddress: vAddress }) => vAddress === address);
-  }, [sentVotes, address, voting]);
+    return stakes.find(({ address: validatorAddress }) => validatorAddress === address);
+  }, [sentStakes, address, staking]);
 
-  const isEdit = stakeSentVoteToValidator || voting[address];
+  const isEdit = validatorStake || staking[address];
 
   return (
     <DialogLink component="editStake">
       {isEdit ? (
-        <SecondaryButton disabled={sentVotesLoading || isBanned || !currentAddress}>
+        <SecondaryButton disabled={sentStakesLoading || isBanned || !currentAddress}>
           {t('Edit stake')}
         </SecondaryButton>
       ) : (

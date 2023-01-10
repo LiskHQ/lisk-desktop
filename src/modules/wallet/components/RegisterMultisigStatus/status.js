@@ -15,7 +15,7 @@ const Status = ({ account, transactions, t }) => {
       </div>
       <ProgressBar current={4} />
       <TxBroadcaster
-        illustration="registerValidator"
+        illustration="registerMultisignature"
         status={status}
         message={template.message}
         title={template.title}

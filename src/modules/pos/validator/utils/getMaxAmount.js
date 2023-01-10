@@ -11,7 +11,6 @@ import { normalizeStakesForTx, splitModuleAndCommand } from '@transaction/utils'
  * transaction fee into account.
  *
  * @param {object} account - Lisk account info from the Redux store
- * @param {object} network - Network info from the Redux store
  * @param {object} address - Raw transaction object @todo fix description
  * @param {object} staking - List of stakes from the Redux store
  * @returns {Number} - Maximum possible vote amount
@@ -22,7 +21,6 @@ const getMaxAmount = async ({
   publicKey,
   staking,
   address,
-  network,
   numberOfSignatures,
   mandatoryKeys,
   optionalKeys,
@@ -61,14 +59,7 @@ const getMaxAmount = async ({
 
   const maxAmountFee = await getTransactionFee(
     {
-      network,
       transactionJSON: transaction,
-      /* @Todo: the token symbol should be dynamically integrated from the usePosConstants query hook which would be addressed in issue #4502 */
-      token: 'LSK',
-      wallet: {
-        summary: { isMultisignature },
-        keys: { members: [...optionalKeys, ...mandatoryKeys] },
-      },
       /* @Todo: this needs to be refactored in the feature but for now it works */
       selectedPriority: { title: 'Normal', value: 0, selectedIndex: 0 }, // Always set to LOW
       numberOfSignatures: getNumberOfSignatures(
@@ -76,9 +67,7 @@ const getMaxAmount = async ({
         transaction
       ),
       moduleCommandSchemas,
-    },
-    /* @Todo: the token symbol should be dynamically integrated from the usePosConstants query hook which would be addressed in issue #4502 */
-    'LSK'
+    }
   );
 
   // If the "sum of vote amounts + fee + dust" exceeds balance
