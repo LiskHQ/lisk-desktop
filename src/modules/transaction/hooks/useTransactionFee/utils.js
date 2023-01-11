@@ -1,4 +1,5 @@
 import { transactions } from '@liskhq/lisk-client';
+import { joinModuleAndCommand } from '@transaction/utils/moduleCommand';
 
 export const ZERO_FEE = BigInt(0);
 
@@ -33,4 +34,13 @@ export const computeFee = (transaction, paramsSchema, auth, priorities, isTxVali
   );
 
   return minFee + BigInt(selectedPriority.value * transactionSize) + extraFee;
-}
+};
+
+export const getParamsSchema = (transaction, schemas) => {
+  const moduleCommand = joinModuleAndCommand({
+    module: transaction.module,
+    command: transaction.command,
+  });
+
+  return schemas[moduleCommand];
+};
