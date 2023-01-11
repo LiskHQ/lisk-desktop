@@ -142,6 +142,24 @@ export const getStakes = ({ params = {} }) =>
     params: getValidatorProps({ address: params.address, publicKey: params.publicKey }),
   });
 
+// we need to refactor this function when service has made modifications to this endpoint
+/**
+ * Retrieves validators by address
+ *
+ * @param {Object} data
+ * @param {String?} data.params.addresses - account addresses
+ * @param {String?} data.baseUrl - Lisk Service API url to override the
+ * existing ServiceUrl on the network param. We may use this to retrieve
+ * the details of an archived transaction.
+ * @param {Object} data.network - Network setting from Redux store
+ * @returns {Promise} http call
+ */
+export const getValidatorList = ({ params = {} }) =>
+  client.rest({
+    url: httpPaths.validators,
+    params: { addresses: params.addresses.join(',') },
+  });
+
 /**
  * Retrieves list of votes given for a given validator.
  *

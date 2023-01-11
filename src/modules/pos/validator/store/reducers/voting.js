@@ -13,8 +13,9 @@ const voting = (state = {}, action) => {
     case actionTypes.stakesRetrieved: {
       if (action.data.account.votesUsed) {
         const voteMapInState = state;
-        action.data.votes.forEach(({ delegateAddress, amount, name }) => {
+        action.data.votes.forEach(({ delegateAddress, amount, name, commission }) => {
           voteMapInState[delegateAddress] = {
+            commission,
             confirmed: +amount,
             unconfirmed: +state[delegateAddress]?.unconfirmed || +amount,
             username: name,

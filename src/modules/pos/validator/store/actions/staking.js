@@ -4,7 +4,7 @@ import { selectActiveTokenAccount } from 'src/redux/selectors';
 import { signTransaction } from '@transaction/api';
 import txActionTypes from '@transaction/store/actionTypes';
 import { joinModuleAndCommand } from '@transaction/utils';
-import { getStakes } from '../../api';
+import { getStakes, getValidatorList } from '../../api';
 import actionTypes from './actionTypes';
 
 export const stakesReset = () => ({
@@ -70,7 +70,7 @@ export const stakeEdited = (data) => async (dispatch) =>
  * @param {promise} API call response
  */
 export const stakesSubmitted =
-  (formProps, transactionJSON, privateKey,_, senderAccount, moduleCommandSchemas) =>
+  (formProps, transactionJSON, privateKey, _, senderAccount, moduleCommandSchemas) =>
   async (dispatch, getState) => {
     const state = getState();
     const activeWallet = selectActiveTokenAccount(state);
@@ -105,10 +105,15 @@ export const stakesRetrieved = () => async (dispatch, getState) => {
   const { network, account } = getState();
   const address = account.current?.metadata?.address;
   try {
-    const stakes = await getStakes({ network, params: { address } });
+    const votes = await getStakes({ network, params: { address } });
+    const validators = await getValidatorList({
+      addresses: votes.data.map(({ delegateAddress }) => delegateAddress),
+    });
+    const mapValidatorToAddress = validators.reduce((result, validator) => ({...result, [validator.address]: validator}), {})
+
     dispatch({
       type: actionTypes.stakesRetrieved,
-      data: stakes.data,
+      data: votes.data.map((vote) => ({...vote, commission: mapValidatorToAddress[vote.delegateAddress]}) ),
     });
   } catch (exp) {
     dispatch({
