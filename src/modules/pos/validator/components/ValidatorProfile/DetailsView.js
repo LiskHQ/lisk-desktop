@@ -48,7 +48,7 @@ const DetailsView = ({ data }) => {
           <div className={`${grid.col} ${styles.item}`}>
             <div className={`${styles.title} ${theme}`}>{t('Validator weight')}</div>
             <div className={styles.value}>
-              <TokenAmount val={data.totalStakeReceived} token={tokenMap.LSK.key} />
+              <TokenAmount val={data.validatorWeight} token={tokenMap.LSK.key} />
             </div>
           </div>
         </div>
