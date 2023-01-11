@@ -51,12 +51,12 @@ const UnlockBalanceForm = ({
       >
         <>
           <BoxHeader className={styles.header}>
-            <h2>{t('Locked balance details')}</h2>
+            <h2>{t('Pending unlock details')}</h2>
           </BoxHeader>
           <BoxContent className={styles.container}>
             <p>
               {t(
-                'Below are the details of your locked balances and the unlock waiting periods. From here you can submit an unlock transaction when waiting periods are over.',
+                'Below are the details of your staked balances and rewards, as well as the unlock waiting periods. From here you can submit an unlock transaction when waiting periods are over.',
               )}
             </p>
             <BalanceTable
