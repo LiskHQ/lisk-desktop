@@ -59,10 +59,10 @@ const useStakeAmountField = (initialValue) => {
     config: { params: { tokenID: posConstants?.posTokenID } },
     options: { enabled: !isGettingPosConstants },
   });
-  const token = useMemo(() => tokens?.data?.[0] || {}, [tokens]);
+  const token = useMemo(() => tokens?.data?.[0], [tokens]);
 
   const { i18n } = useTranslation();
-  const balance = Number(token.availableBalance || 0);
+  const balance = Number(token?.availableBalance);
   // const balance = useSelector(selectAccountBalance); // @todo account has multiple balance now
   const host = useSelector(selectLSKAddress);
   const searchDetails = window.location.href.replace(/.*[?]/, '');

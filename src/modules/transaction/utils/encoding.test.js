@@ -27,7 +27,7 @@ describe('encoding', () => {
   });
 
   it('should throw and error', () => {
-    const schema = [{ moduleCommand: 'legacy:reclaimLSKLSK', schema: 'schema' }];
+    const schema = [{ moduleCommand: 'legacy:reclaimLSK', schema: 'schema' }];
 
     expect(() => {
       getCommandParamsSchema('token', 'transfer', schema);
