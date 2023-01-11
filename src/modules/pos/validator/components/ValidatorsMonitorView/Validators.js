@@ -1,6 +1,6 @@
 /* eslint-disable complexity */
 /* istanbul ignore file */
-import React, { useRef, useState } from 'react';
+import React, { useRef, useState, useMemo } from 'react';
 import { Link } from 'react-router-dom';
 import grid from 'flexboxgrid/dist/flexboxgrid.css';
 import { useTranslation } from 'react-i18next';
@@ -21,6 +21,7 @@ import ValidatorsOverview from '../Overview/ValidatorsOverview';
 import ForgingDetails from '../Overview/ForgingDetails';
 import ValidatorsTable from '../ValidatorsTable';
 import LatestStakes from '../LatestStakes';
+import { useValidators } from '../../hooks/queries';
 import styles from './Validators.css';
 
 // eslint-disable-next-line max-statements
@@ -38,6 +39,10 @@ const ValidatorsMonitor = ({ watchList, registrations }) => {
   const blocks = blocksData?.data ?? [];
   const forgedInRound = blocks.length ? blocks[0].height % ROUND_LENGTH : 0;
   const { address } = currentAccount.metadata || {};
+  const { data: validators, isLoading: isLoadingValidators } = useValidators({
+    config: { params: { address } },
+  });
+  const isValidator = useMemo(() => !(!validators?.data?.length && !isLoadingValidators), [validators]);
 
   const handleFilter = ({ target: { value } }) => {
     setSearch(value);
@@ -125,21 +130,28 @@ const ValidatorsMonitor = ({ watchList, registrations }) => {
             <Link to={address ? routes.sentStakes.path : '#'}>
               <SecondaryButton disabled={!address}>Stakes</SecondaryButton>
             </Link>
-            <DialogLink component="registerValidator">
-              <PrimaryButton className="register-validator">Register validator</PrimaryButton>
-            </DialogLink>
+            {isValidator ?
+              <Link to={`${routes.validatorProfile.path}?address=${address}`} >
+                <PrimaryButton className="register-validator">{t('My validator profile')}</PrimaryButton>
+              </Link>
+              : <DialogLink component="registerValidator">
+                <PrimaryButton className="register-validator">{t('Register validator')}</PrimaryButton>
+              </DialogLink>
+            }
           </div>
         </div>
       </BoxHeader>
-      {activeDetailTab === 'overview' ? (
-        <ValidatorsOverview registrations={registrations} t={t} totalBlocks={total} />
-      ) : (
-        <ForgingDetails
-          t={t}
-          forgedInRound={forgedInRound}
-          startTime={blocks[forgedInRound]?.timestamp}
-        />
-      )}
+      {
+        activeDetailTab === 'overview' ? (
+          <ValidatorsOverview registrations={registrations} t={t} totalBlocks={total} />
+        ) : (
+          <ForgingDetails
+            t={t}
+            forgedInRound={forgedInRound}
+            startTime={blocks[forgedInRound]?.timestamp}
+          />
+        )
+      }
       <Box main>
         <BoxHeader className={`${styles.tabSelector} validators-table`}>
           {tabs.tabs.length === 1 ? <h2>{tabs.tabs[0].name}</h2> : <BoxTabs {...tabs} />}
@@ -158,7 +170,7 @@ const ValidatorsMonitor = ({ watchList, registrations }) => {
           {displayTab(activeTab)}
         </BoxContent>
       </Box>
-    </Box>
+    </Box >
   );
 };
 

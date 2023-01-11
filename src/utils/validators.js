@@ -73,7 +73,7 @@ export const validateAmountFormat = ({
 }) => {
   const { maxFloating } = reg.amount[locale];
   const errors = {
-    NEGATIVE_VOTE: {
+    NEGATIVE_STAKE: {
       message: i18n.t('Stake amount can\'t be zero or negative.'),
       fn: () =>
         numeral(value).value() < minValue
@@ -112,7 +112,7 @@ export const validateAmountFormat = ({
       message: i18n.t('Provided amount is higher than your current balance.'),
       fn: () => funds < toRawLsk(numeral(value).value()),
     },
-    INSUFFICIENT_VOTE_FUNDS: {
+    INSUFFICIENT_STAKE_FUNDS: {
       message: i18n.t('The provided amount is higher than your available staking balance.'),
       fn: () => funds < toRawLsk(numeral(value).value()),
     },

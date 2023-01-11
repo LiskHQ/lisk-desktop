@@ -2,35 +2,35 @@ import React, { useMemo } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useSelector } from 'react-redux';
 import DialogLink from 'src/theme/dialog/link';
-import { selectVoting } from 'src/redux/selectors';
+import { selectStaking } from 'src/redux/selectors';
 
 import { PrimaryButton, SecondaryButton } from 'src/theme/buttons';
 import { useSentStakes } from '../../hooks/queries';
 
 function ValidatorStakeButton({ address, isBanned, currentAddress }) {
   const { t } = useTranslation();
-  const voting = useSelector((state) => selectVoting(state));
-  const { data: sentVotes, isLoading: sentVotesLoading } = useSentStakes({
+  const staking = useSelector((state) => selectStaking(state));
+  const { data: sentStakes, isLoading: sentStakesLoading } = useSentStakes({
     config: { params: { address } },
   });
 
-  const stakeSentVoteToValidator = useMemo(() => {
-    const votes = sentVotes?.data?.votes;
-    if (!votes) return false;
+  const validatorStake = useMemo(() => {
+    const stakes = sentStakes?.data?.stakes;
+    if (!stakes) return false;
 
-    return votes.find(({ delegateAddress: dAddress }) => dAddress === address);
-  }, [sentVotes, address, voting]);
+    return stakes.find(({ address: validatorAddress }) => validatorAddress === address);
+  }, [sentStakes, address, staking]);
 
-  const isEdit = stakeSentVoteToValidator || voting[address];
+  const isEdit = validatorStake || staking[address];
 
   return (
     <DialogLink component="editStake">
       {isEdit ? (
-        <SecondaryButton disabled={sentVotesLoading || isBanned || !currentAddress}>
+        <SecondaryButton disabled={sentStakesLoading || isBanned || !currentAddress}>
           {t('Edit stake')}
         </SecondaryButton>
       ) : (
-        <PrimaryButton disabled={sentVotesLoading || isBanned || !currentAddress}>
+        <PrimaryButton>
           {t('Stake validator')}
         </PrimaryButton>
       )}

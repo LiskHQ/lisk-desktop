@@ -79,7 +79,8 @@ const TxComposer = ({
 
   formProps.composedFees = composedFees;
   transactionJSON.fee = toRawLsk(status.fee.value);
-  transactionJSON.fee = '100000000'
+  // TODO: Temporary solution to process transaction, this will be resolved by #4632
+  transactionJSON.fee = transactionJSON.command === 'registerValidator' ? '1100000000' : '100000000';
 
   if (recipientChain && sendingChain) {
     formProps.recipientChain = recipientChain;

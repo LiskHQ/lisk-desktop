@@ -36,7 +36,7 @@ describe('unlock transaction Status', () => {
     },
     sequence: { nonce: '178' },
   };
-  const voting = {
+  const staking = {
     lskdwsyfmcko6mcd357446yatromr9vzgu7eb8y11: { confirmed: 500000000000 },
     lskdwsyfmcko6mcd357446yatromr9vzgu7eb8y12: { confirmed: 3000000000 },
     lskdwsyfmcko6mcd357446yatromr9vzgu7eb8y13: { confirmed: 2000000000 },
@@ -46,7 +46,7 @@ describe('unlock transaction Status', () => {
 
   const props = {
     t: key => key,
-    lockedInVotes: calculateBalanceLockedInVotes(voting),
+    lockedInVotes: calculateBalanceLockedInVotes(staking),
     unlockableBalance: calculateUnlockableBalance(account.pos.pendingUnlocks, currentBlockHeight),
     currentBlockHeight,
     account,
@@ -86,7 +86,7 @@ describe('unlock transaction Status', () => {
         ],
       },
     };
-    const customVoting = {
+    const customStaking = {
       lskdwsyfmcko6mcd357446yatromr9vzgu7eb8y11: { confirmed: 500000000000 },
       lskdwsyfmcko6mcd357446yatromr9vzgu7eb8y12: { confirmed: 2000000000 },
       [accounts.genesis.summary.address]: { confirmed: 9000000000000 },
@@ -95,7 +95,7 @@ describe('unlock transaction Status', () => {
     const customProps = {
       ...props,
       account: customAccount,
-      lockedInVotes: calculateBalanceLockedInVotes(customVoting),
+      lockedInVotes: calculateBalanceLockedInVotes(customStaking),
       unlockableBalance: calculateUnlockableBalance(
         customAccount.pos.pendingUnlocks,
         currentBlockHeight,

@@ -45,11 +45,13 @@
   }
 
   & .stakesContainer {
-    display: grid !important;
-    grid-template-columns: repeat(auto-fill, 25%);
+    display: flex !important;
+    flex-direction: row;
     box-sizing: border-box;
-    justify-content: center !important;
-    grid-gap: 30px 0px;
+    justify-content: flex-start !important;
+    row-gap: 30px;
+    column-gap: 52px;
+    flex-wrap: wrap;
 
     & > header {
       display: none;

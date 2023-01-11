@@ -103,7 +103,7 @@ const props = {
   selectedPriority: { title: 'Normal', value: 1 },
   formProps: {
     isValid: true,
-    moduleCommand: 'dpos:voteDelegate',
+    moduleCommand: 'pos:stake',
     composedFees: {
       transaction: '1 LSK',
       CCM: '1 LSK',

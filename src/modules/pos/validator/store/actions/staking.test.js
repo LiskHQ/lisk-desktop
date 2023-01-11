@@ -33,7 +33,7 @@ jest.mock('@transaction/utils/hwManager', () => ({
   signTransactionByHW: jest.fn(),
 }));
 
-describe('actions: voting', () => {
+describe('actions: staking', () => {
   const moduleCommandSchemas = mockCommandParametersSchemas.data.reduce(
     (result, { moduleCommand, schema }) => ({ ...result, [moduleCommand]: schema }),
     {}
@@ -278,7 +278,7 @@ describe('actions: voting', () => {
       params: {
         unlockObjects: [],
       },
-      moduleCommand: 'dpos:unlock',
+      moduleCommand: 'pos:unlock',
     };
 
     it('should dispatch transactionCreatedSuccess', async () => {
@@ -290,7 +290,7 @@ describe('actions: voting', () => {
           })
       );
       await balanceUnlocked(
-        { moduleCommand: 'dpos:unlock' },
+        { moduleCommand: 'pos:unlock' },
         transactionObject,
         privateKey
       )(dispatch, getState);

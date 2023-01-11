@@ -12,7 +12,7 @@ import { SecondaryButton, TertiaryButton } from '@theme/buttons';
 import Icon from '@theme/Icon';
 import TokenAmount from '@token/fungible/components/tokenAmount';
 import AmountField from 'src/modules/common/components/amountField';
-import useVoteAmountField from '../../hooks/useVoteAmountField';
+import useStakeAmountField from '../../hooks/useStakeAmountField';
 import styles from './stakeForm.css';
 import { extractValidatorCommission } from '../../utils';
 
@@ -29,7 +29,7 @@ const StakeRow = ({
     unconfirmed === '' ? componentState.editing : componentState.notEditing
   );
   const dispatch = useDispatch();
-  const [voteAmount, setVoteAmount] = useVoteAmountField(fromRawLsk(unconfirmed));
+  const [stakeAmount, setStakeAmount] = useStakeAmountField(fromRawLsk(unconfirmed));
   const truncatedAddress = truncateAddress(address);
 
   const handleFormSubmission = (e) => {
@@ -38,7 +38,7 @@ const StakeRow = ({
       stakeEdited([
         {
           address,
-          amount: toRawLsk(voteAmount.value),
+          amount: toRawLsk(stakeAmount.value),
         },
       ])
     );
@@ -66,7 +66,7 @@ const StakeRow = ({
           <span className={`${styles.delegateUsername} ${!unconfirmed ? styles.disabled : ''}`}>
             {username || ''}
           </span>
-          <span className={styles.delegateAddress}>{truncatedAddress}</span>
+          <span className={styles.validatorAddress}>{truncatedAddress}</span>
         </div>
       </div>
       <span className={`${styles.oldAmountColumn} ${styles.centerContent}`}>
@@ -95,8 +95,8 @@ const StakeRow = ({
           onSubmit={handleFormSubmission}
         >
           <AmountField
-            amount={voteAmount}
-            onChange={setVoteAmount}
+            amount={stakeAmount}
+            onChange={setStakeAmount}
             displayConverter={false}
             placeHolder={t('Stake amount')}
             className={styles.editAmountInput}

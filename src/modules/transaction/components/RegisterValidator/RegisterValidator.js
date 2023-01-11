@@ -1,11 +1,11 @@
 import React from 'react';
 import WalletVisual from '@wallet/components/walletVisual';
-import styles from './registerDelegate.css';
+import styles from './registerValidator.css';
 
-const RegisterDelegate = ({ account, transactionJSON, t }) => (
+const RegisterValidator = ({ account, transactionJSON, t }) => (
   <section>
     <div className={`${styles.dataRow} username`}>
-      <label className="username-label">{t('Your username')}</label>
+      <label className="username-label">{t('Validator name')}</label>
       <div className={styles.userInformation}>
         <WalletVisual
           className={styles.walletVisual}
@@ -27,10 +27,10 @@ const RegisterDelegate = ({ account, transactionJSON, t }) => (
       <span>{transactionJSON.params.generatorKey}</span>
     </div>
     <div className={`${styles.dataRow} pop`}>
-      <label>{t('BLS Proof of possession')}</label>
+      <label>{t('BLS proof of possession')}</label>
       <span>{transactionJSON.params.proofOfPossession}</span>
     </div>
   </section>
 );
 
-export default RegisterDelegate;
+export default RegisterValidator;

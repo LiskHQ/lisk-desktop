@@ -1,7 +1,7 @@
 import { fireEvent, screen, waitFor } from '@testing-library/react';
 import { fromRawLsk, toRawLsk } from '@token/fungible/utils/lsk';
 import numeral from 'numeral';
-import { renderWithRouterAndQueryClient } from 'src/utils/testHelpers';
+import { renderWithRouterAndQueryClient, renderWithRouterAndStore } from 'src/utils/testHelpers';
 import mockSavedAccounts from '@tests/fixtures/accounts';
 import { mockBlocks } from '@block/__fixtures__';
 import { useAuth } from '@auth/hooks/queries';
@@ -38,12 +38,23 @@ jest.mock('@auth/hooks/queries');
 
 describe('EditStake', () => {
   const validatorAddress = 'lskjq7jh2k7q332wgkz3bxogb8bj5zc3fcnb9ya53';
+  const stakingStoreValue = {
+    'lskn3kjdanry8v272fyqky8nx7nc358sedo8rzmw2': {
+      confirmed: 1000000000,
+      name: "genesis_66",
+      unconfirmed: 3000000000,
+    },
+    'lsknm4djcs98mpu87m9cjsawy7eqp8cpk4v7u8gdz': {
+      confirmed: 2000000000,
+      name: "genesis_8",
+      unconfirmed: 4000000000,
+    }
+  }
   const props = {
     history: { location: { search: `?address=${validatorAddress}` }, push: jest.fn() },
     stakeEdited: jest.fn(),
     network: {},
-    voting: {},
-    stakesRetrieved: jest.fn(),
+    staking: {},
   };
   const address = 'lsk6wrjbs66uo9eoqr4t86afvd4yym6ovj4afunvh';
   const updatedProps = {
@@ -56,7 +67,7 @@ describe('EditStake', () => {
 
     useValidators.mockReturnValue({ data: mockValidators });
     useLatestBlock.mockReturnValue({ data: mockBlocks.data[0] });
-    useSentStakes.mockReturnValue({ data: mockSentStakes });
+    useSentStakes.mockReturnValue({ data: mockSentStakes, isSuccess: true });
     useAuth.mockReturnValue({ data: mockAuth });
     usePosConstants.mockReturnValue({ data: mockPosConstants });
     useTokensBalance.mockReturnValue({ data: mockTokensBalance, isLoading: false });
@@ -66,7 +77,7 @@ describe('EditStake', () => {
     const validator = mockValidators.data[0];
     const token = mockTokensBalance.data[0];
 
-    renderWithRouterAndQueryClient(EditStake, updatedProps);
+    renderWithRouterAndStore(EditStake, updatedProps, { staking: stakingStoreValue, });
 
     expect(screen.getByText('Add to staking queue')).toBeTruthy();
     expect(screen.getByText(address)).toBeTruthy();
@@ -75,8 +86,7 @@ describe('EditStake', () => {
     expect(screen.getByText('Available balance:')).toBeTruthy();
     expect(
       screen.getByText(
-        `${numeral(fromRawLsk(token.availableBalance)).format('0,0.[0000000000000]')} ${
-          token.symbol
+        `${numeral(fromRawLsk(token.availableBalance)).format('0,0.[0000000000000]')} ${token.symbol
         }`
       )
     ).toBeTruthy();
@@ -91,9 +101,9 @@ describe('EditStake', () => {
   it('should add stake to the stakes queue', async () => {
     renderWithRouterAndQueryClient(EditStake, props);
     const validator = mockValidators.data[0];
-    const votingField = screen.getByTestId('stake');
+    const stakingField = screen.getByTestId('stake');
 
-    fireEvent.change(votingField, { target: { value: 20 } });
+    fireEvent.change(stakingField, { target: { value: 20 } });
     fireEvent.click(screen.getByText('Confirm'));
 
     await waitFor(() => {
@@ -107,7 +117,7 @@ describe('EditStake', () => {
     });
   });
 
-  it('should render the confirmation modal and go back to the voting form', () => {
+  it('should render the confirmation modal and go back to the staking form', () => {
     renderWithRouterAndQueryClient(EditStake, updatedProps);
 
     fireEvent.click(screen.getByText('Confirm'));
@@ -138,8 +148,8 @@ describe('EditStake', () => {
         ...mockSentStakes,
         data: {
           ...mockSentStakes.data,
-          votes: mockSentStakes.data.stakes.map((vote, index) =>
-            index === 0 ? { ...vote, validatorAddress } : vote
+          stakes: mockSentStakes.data.stakes.map((stake, index) =>
+            index === 0 ? { ...stake, address: validatorAddress } : stake
           ),
         },
       },
@@ -153,9 +163,9 @@ describe('EditStake', () => {
     ).toBeTruthy();
     expect(screen.getByText('Stake amount ({{symbol}})')).toBeTruthy();
 
-    const votingField = screen.getByTestId('stake');
+    const stakingField = screen.getByTestId('stake');
 
-    fireEvent.change(votingField, { target: { value: 20 } });
+    fireEvent.change(stakingField, { target: { value: 20 } });
     fireEvent.click(screen.getByText('Confirm'));
 
     await waitFor(() => {

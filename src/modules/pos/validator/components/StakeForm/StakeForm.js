@@ -40,7 +40,7 @@ const getStakeStats = (stakes, account) => {
         // removed stake
         stats.removed[address] = { confirmed, username };
         if (address === account.summary?.address) {
-          stats.selfUnvote = { confirmed, username };
+          stats.selfUnStake = { confirmed, username };
         }
       } else if (confirmed !== unconfirmed) {
         // edited stake
@@ -56,17 +56,17 @@ const getStakeStats = (stakes, account) => {
       edited: {},
       removed: {},
       untouched: {},
-      selfUnvote: {},
+      selfUnStake: {},
     }
   );
 
-  const numOfAddededStakes = Object.keys(stakesStats.added).length;
+  const numOfAddedStakes = Object.keys(stakesStats.added).length;
   const numOfEditedStakes = Object.keys(stakesStats.edited).length;
   const numOfUntouchedStakes = Object.keys(stakesStats.untouched).length;
   const numOfRemovedStakes = Object.keys(stakesStats.removed).length;
 
-  const resultingNumOfStakes = numOfAddededStakes + numOfEditedStakes + numOfUntouchedStakes;
-  const availableStakes = STAKE_LIMIT - (numOfEditedStakes + numOfUntouchedStakes + numOfRemovedStakes + numOfAddededStakes);
+  const resultingNumOfStakes = numOfAddedStakes + numOfEditedStakes + numOfUntouchedStakes;
+  const availableStakes = STAKE_LIMIT - (numOfEditedStakes + numOfUntouchedStakes + numOfRemovedStakes + numOfAddedStakes);
 
   return {
     ...stakesStats,
@@ -76,10 +76,10 @@ const getStakeStats = (stakes, account) => {
 };
 
 /**
- * Validates given votes against the following criteria:
- * - Number of votes must not exceed STAKE_LIMIT
+ * Validates given stakes against the following criteria:
+ * - Number of stakes must not exceed STAKE_LIMIT
  * - Added vote amounts + fee must not exceed account balance
- * @param {Object} votes - Votes object from Redux store
+ * @param {Object} Stakes - stakes object from Redux store
  * @param {Number} balance - Account balance in Beddows
  * @param {Number} fee - Tx fee in Beddows
  * @param {Number} resultingNumOfStakes - Number of used voted that will result after submitting tx
@@ -87,13 +87,13 @@ const getStakeStats = (stakes, account) => {
  * @returns {Object} The feedback object including error status and messages
  */
 // eslint-disable-next-line max-statements
-const validateStakes = (votes, balance, fee, resultingNumOfStakes, t, dposToken) => {
+const validateStakes = (stakes, balance, fee, resultingNumOfStakes, t, posToken) => {
   const messages = [];
-  const areVotesInValid = Object.values(votes).some(
-    (vote) => vote.unconfirmed === '' || vote.unconfirmed === undefined
+  const areStakesInValid = Object.values(stakes).some(
+    (stake) => stake.unconfirmed === '' || stake.unconfirmed === undefined
   );
 
-  if (areVotesInValid) {
+  if (areStakesInValid) {
     messages.push(t('Please enter the stake amounts for the validators you wish to stake for'));
   }
 
@@ -105,45 +105,45 @@ const validateStakes = (votes, balance, fee, resultingNumOfStakes, t, dposToken)
     );
   }
 
-  const addedVoteAmount = Object.values(votes)
-    .filter((vote) => vote.unconfirmed > vote.confirmed)
-    .reduce((sum, vote) => {
-      sum += vote.unconfirmed - vote.confirmed;
+  const addedStakeAmount = Object.values(stakes)
+    .filter((stake) => stake.unconfirmed > stake.confirmed)
+    .reduce((sum, stake) => {
+      sum += stake.unconfirmed - stake.confirmed;
       return sum;
     }, 0);
 
-  if (addedVoteAmount + toRawLsk(fee) > balance) {
-    messages.push(t(`You don't have enough ${dposToken.symbol} in your account.`));
+  if (addedStakeAmount + toRawLsk(fee) > balance) {
+    messages.push(t(`You don't have enough ${posToken.symbol} in your account.`));
   }
 
-  if (balance - addedVoteAmount < MIN_ACCOUNT_BALANCE && balance - addedVoteAmount) {
+  if (balance - addedStakeAmount < MIN_ACCOUNT_BALANCE && balance - addedStakeAmount) {
     messages.push(
-      `The stake amounts are too high. You should keep 0.05 ${dposToken.symbol} available in your account.`
+      `The stake amounts are too high. You should keep 0.05 ${posToken.symbol} available in your account.`
     );
   }
 
   return { messages, error: !!messages.length };
 };
 
-const StakeForm = ({ t, votes, account, isVotingTxPending, nextStep, history, dposToken }) => {
+const StakeForm = ({ t, stakes, account, isStakingTxPending, nextStep, history, posToken }) => {
   const [fee, setFee] = useState(0);
-  const changedVotes = Object.keys(votes)
-    .filter((address) => votes[address].unconfirmed !== votes[address].confirmed)
-    .map((address) => ({ address, ...votes[address] }));
+  const changedStakes = Object.keys(stakes)
+    .filter((address) => stakes[address].unconfirmed !== stakes[address].confirmed)
+    .map((address) => ({ address, ...stakes[address] }));
 
-  const normalizedVotes = useMemo(() => normalizeStakesForTx(votes), [votes]);
-  const { added, edited, removed, selfUnvote, availableStakes, resultingNumOfStakes } = useMemo(
-    () => getStakeStats(votes, account),
-    [votes, account]
+  const normalizedStakes = useMemo(() => normalizeStakesForTx(stakes), [stakes]);
+  const { added, edited, removed, selfUnStake, availableStakes, resultingNumOfStakes } = useMemo(
+    () => getStakeStats(stakes, account),
+    [stakes, account]
   );
 
   const feedback = validateStakes(
-    votes,
-    Number(dposToken?.availableBalance),
+    stakes,
+    Number(posToken?.availableBalance),
     fee,
     resultingNumOfStakes,
     t,
-    dposToken
+    posToken
   );
 
   const onConfirm = (formProps, transactionJSON, selectedPriority, fees) => {
@@ -153,7 +153,7 @@ const StakeForm = ({ t, votes, account, isVotingTxPending, nextStep, history, dp
       added,
       edited,
       removed,
-      selfUnvote,
+      selfUnStake,
       selectedPriority,
       fees,
     });
@@ -163,16 +163,16 @@ const StakeForm = ({ t, votes, account, isVotingTxPending, nextStep, history, dp
     setFee(rawTx.fee);
   };
 
-  const showEmptyState = !changedVotes.length || isVotingTxPending;
-  const voteFormProps = {
-    moduleCommand: MODULE_COMMANDS_NAME_MAP.voteDelegate,
-    isValid: !feedback.error && Object.keys(changedVotes).length > 0 && !isVotingTxPending,
+  const showEmptyState = !changedStakes.length || isStakingTxPending;
+  const stakeFormProps = {
+    moduleCommand: MODULE_COMMANDS_NAME_MAP.stake,
+    isValid: !feedback.error && Object.keys(changedStakes).length > 0 && !isStakingTxPending,
     fields: {
-      token: dposToken
+      token: posToken
     }
   };
   const commandParams = {
-    votes: normalizedVotes,
+    stakes: normalizedStakes,
   };
 
   return (
@@ -180,7 +180,7 @@ const StakeForm = ({ t, votes, account, isVotingTxPending, nextStep, history, dp
       <TxComposer
         onComposed={onComposed}
         onConfirm={onConfirm}
-        formProps={voteFormProps}
+        formProps={stakeFormProps}
         commandParams={commandParams}
       >
         <>
@@ -203,7 +203,7 @@ const StakeForm = ({ t, votes, account, isVotingTxPending, nextStep, history, dp
                 <div className={styles.contentScrollable}>
                   <Table
                     showHeader
-                    data={changedVotes}
+                    data={changedStakes}
                     header={header(t)}
                     row={StakeRow}
                     iterationKey="address"

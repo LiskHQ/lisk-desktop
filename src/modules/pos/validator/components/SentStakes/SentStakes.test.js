@@ -42,9 +42,9 @@ describe('SentStakes', () => {
       expect(screen.getByText(title)).toBeTruthy();
     });
 
-    mockSentStakes.data.stakes.forEach(({ delegateAddress, amount, name }, index) => {
+    mockSentStakes.data.stakes.forEach(({ address, amount, name }, index) => {
       expect(screen.getAllByText(name)[index]).toBeTruthy();
-      expect(screen.getByText(truncateAddress(delegateAddress))).toBeTruthy();
+      expect(screen.getByText(truncateAddress(address))).toBeTruthy();
       expect(
         screen.getAllByText(`${fromRawLsk(amount)} ${mockTokensBalance.data[0].symbol}`)[index]
       ).toBeTruthy();
@@ -59,9 +59,9 @@ describe('SentStakes', () => {
 
     renderWithRouter(SentStakes, props);
 
-    mockSentStakes.data.stakes.forEach(({ delegateAddress, amount, name }, index) => {
+    mockSentStakes.data.stakes.forEach(({ address, amount, name }, index) => {
       expect(screen.queryAllByText(name)[index]).toBeFalsy();
-      expect(screen.queryByText(truncateAddress(delegateAddress))).toBeFalsy();
+      expect(screen.queryByText(truncateAddress(address))).toBeFalsy();
       expect(screen.queryAllByText(`${fromRawLsk(amount)}`)[0]).toBeFalsy();
       expect(screen.queryAllByAltText('deleteIcon')[index]).toBeFalsy();
       expect(screen.queryAllByAltText('edit')[index]).toBeFalsy();

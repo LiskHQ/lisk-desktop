@@ -12,7 +12,7 @@ import { useLatestBlock } from '@block/hooks/queries/useLatestBlock';
 const useUnlockableCalculator = () => {
   const wallet = useSelector(selectActiveTokenAccount);
   const { data: { height: currentHeight } } = useLatestBlock();
-  const lockedInVotes = useSelector(state => calculateBalanceLockedInVotes(state.voting));
+  const lockedInVotes = useSelector(state => calculateBalanceLockedInVotes(state.staking));
   const unlockableBalance = calculateUnlockableBalance(
     wallet.pos?.pendingUnlocks, currentHeight,
   );

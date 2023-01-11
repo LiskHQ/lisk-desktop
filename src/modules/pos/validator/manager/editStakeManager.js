@@ -2,12 +2,12 @@ import { withRouter } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { compose } from 'redux';
 import { stakeEdited, stakesRetrieved } from 'src/redux/actions';
-import { selectNetwork, selectVoting } from 'src/redux/selectors';
+import { selectNetwork, selectStaking } from 'src/redux/selectors';
 import EditStake from '../components/EditStake';
 
 const mapStateToProps = (state) => ({
   network: selectNetwork(state),
-  voting: selectVoting(state),
+  staking: selectStaking(state),
 });
 
 const mapDispatchToProps = {

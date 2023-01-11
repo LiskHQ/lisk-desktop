@@ -11,7 +11,7 @@ const RegisterValidatorStatus = ({ transactions, account, t }) => {
   return (
     <div className={`${styles.wrapper} status-container`}>
       <TxBroadcaster
-        illustration="default"
+        illustration="registerValidator"
         status={status}
         title={template.title}
         message={template.message}

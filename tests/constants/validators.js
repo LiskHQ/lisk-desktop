@@ -1,4 +1,4 @@
-const delegate = index => ({
+const validator = index => ({
   name: `gr33ndrag0n_${index}`,
   totalStakeReceived: `100600000000${index}`,
   selfStake: `10060000000${index}`,
@@ -18,18 +18,18 @@ const delegate = index => ({
   consecutiveMissedBlocks: index < 15 ? index + 1 : 0,
 });
 
-const validators = Array(30).fill(1).map((item, index) => delegate(index));
+const validators = Array(30).fill(1).map((item, index) => validator(index));
 
-const generateDelegate = (index) => ({
+const generateValidator = (index) => ({
   [`lskdwsyfmcko6mcd357446yatromr9vzgu7eb8y1${index}`]: {
     summary: {
       address: `lskdwsyfmcko6mcd357446yatromr9vzgu7eb8y1${index}`,
-      username: `testUsername_${index}`,
+      name: `testUsername_${index}`,
     },
   },
 });
 
-export const delegateList = (delegateCount = 0) =>
-  Array(delegateCount).fill(1).map((_, index) => generateDelegate(index));
+export const delegateList = (validatorCount = 0) =>
+  Array(validatorCount).fill(1).map((_, index) => generateValidator(index));
 
 export default validators;

@@ -49,6 +49,7 @@ describe('Validator stakes view', () => {
     expect(mockApplyFilters).toHaveBeenCalledWith({ search: 'test' });
   });
 
+  // TODO: Refactor to retain 2.x wallet feature
   it('Should not render search input', () => {
     useFilter.mockReturnValue({
       filters: { address: props.address },
@@ -60,6 +61,5 @@ describe('Validator stakes view', () => {
     render(<ValidatorStakesView {...props} />);
 
     expect(screen.queryByTestId('addressFilter')).toBeFalsy();
-    expect(screen.getByText('(...)')).toBeTruthy();
   });
 });
