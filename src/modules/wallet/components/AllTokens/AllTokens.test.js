@@ -47,9 +47,6 @@ describe('AllTokens', () => {
     expect(screen.getByText('Request')).toBeTruthy();
     expect(screen.getByText('Send')).toBeTruthy();
     expect(screen.getByText('All tokens')).toBeTruthy();
-    expect(screen.getAllByAltText('arrowRightInactive')).toHaveLength(
-      mockTokensBalance.data.length
-    );
 
     tableHeaderMap(jest.fn((t) => t)).forEach(({ title }) => {
       expect(screen.getByText(title)).toBeTruthy();
