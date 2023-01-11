@@ -1,0 +1,19 @@
+.ClaimRewardsForm {
+  padding: 20px 20px 0 20px;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: flex-start;
+
+  & .title {
+    font-size: var(--font-size-h5);
+    font-weight: var(--font-weight-bold);
+    color: var(--color-content-light);
+    margin: 0;
+  }
+
+  & .description {
+    margin-top: 16px;
+    color: var(--color-slate-gray);
+  }
+}

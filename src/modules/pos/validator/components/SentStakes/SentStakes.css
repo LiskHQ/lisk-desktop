@@ -44,7 +44,6 @@
 }
 
 .actionButtons {
-  max-width: 300px;
   display: flex;
   flex-direction: row;
   column-gap: 16px;
