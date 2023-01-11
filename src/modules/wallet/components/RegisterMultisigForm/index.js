@@ -20,8 +20,8 @@ const placeholderMember = {
 };
 
 const getInitialMembersState = (prevState) => {
-  if (prevState.transactionJSON) {
-    const { mandatoryKeys, optionalKeys } = prevState.transactionJSON?.params;
+  if (prevState.transactionJSON && prevState.transactionJSON.params) {
+    const { mandatoryKeys, optionalKeys } = prevState.transactionJSON.params;
     return [
       ...mandatoryKeys.map((item) => ({
         isMandatory: true,

@@ -26,33 +26,6 @@
   }
 }
 
-.lockedBalance {
-  display: flex;
-  flex-direction: row;
-  align-items: center;
-  justify-content: space-between;
-  width: 100%;
-
-  & > p:first-child {
-    flex: 1;
-    height: 100%;
-    display: flex;
-    justify-content: flex-end;
-    align-items: center;
-  }
-
-  & img {
-    width: 10px;
-  }
-
-  & > p ~ div {
-    display: flex;
-    margin-left: 10px;
-    padding: 10px;
-    cursor: pointer;
-  }
-}
-
 .token {
   padding: 20px 22px 20px 0px;
   display: flex;

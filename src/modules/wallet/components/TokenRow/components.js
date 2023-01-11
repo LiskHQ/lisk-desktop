@@ -19,11 +19,3 @@ export const Balance = ({ amount, Wrapper = DiscreetMode }) => (
     {amount}
   </Wrapper>
 );
-
-export const LockedBalance = ({ amount }) => (
-  <div className={`${styles.lockedBalance} ${grid['col-xs-3']}`}>
-    <p className={styles.balance}>
-      <DiscreetMode>{amount}</DiscreetMode>
-    </p>
-  </div>
-);
