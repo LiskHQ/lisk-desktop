@@ -41,7 +41,7 @@ describe('Summary', () => {
         sendingChain: mockBlockchainApplications[0],
         recipientChain: mockBlockchainApplications[1],
       },
-      rawTx: {
+      formProps: {
         params: {
           recipient: { address: wallets.genesis.summary.address },
           amount: 112300000,
@@ -113,12 +113,12 @@ describe('Summary', () => {
       <Summary
         {...{
           ...props,
-          rawTx: {
-            ...props.rawTx,
+          formProps: {
+            ...props.formProps,
             params: {
-              ...props.rawTx.params,
+              ...props.formProps.params,
               recipient: {
-                ...props.rawTx.params.recipient,
+                ...props.formProps.params.recipient,
                 title,
               },
             },

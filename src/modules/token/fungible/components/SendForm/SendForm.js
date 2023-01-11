@@ -79,15 +79,15 @@ const SendForm = (props) => {
   const [maxAmount, setMaxAmount] = useState({ value: 0, error: false });
 
   const [reference, setReference] = useMessageField(
-    getInitialData(props.prevState?.rawTx, props.initialValue?.reference)
+    getInitialData(props.prevState?.formProps, props.initialValue?.reference)
   );
   const [amount, setAmountField] = useAmountField(
-    getInitialAmount(props.prevState?.rawTx, props.initialValue?.amount),
+    getInitialAmount(props.prevState?.formProps, props.initialValue?.amount),
     account.summary?.balance,
     token?.symbol
   );
   const [recipient, setRecipientField] = useRecipientField(
-    getInitialRecipient(props.prevState?.rawTx, props.initialValue?.recipient)
+    getInitialRecipient(props.prevState?.formProps, props.initialValue?.recipient)
   );
 
   const onComposed = useCallback((status) => {
