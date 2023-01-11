@@ -20,11 +20,11 @@ const moduleCommandMap = {
   },
   [moduleCommandNameMap.unlock]: {
     maxFee: 1e7,
-    icon: 'unlockToken',
+    icon: 'unlock',
   },
   [moduleCommandNameMap.stake]: {
     maxFee: 1e8,
-    icon: 'vote',
+    icon: 'stake',
   },
   [moduleCommandNameMap.registerValidator]: {
     maxFee: 25e8,
