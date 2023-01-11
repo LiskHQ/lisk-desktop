@@ -70,7 +70,7 @@ const Overview = ({ isWalletRoute, history }) => {
         isBanned,
         pomHeight: pomHeights ? pomHeights[pomHeights.length - 1] : 0,
         readMore: () => {
-          const url = 'https://lisk.com/blog/development/lisk-voting-process';
+          const url = 'https://lisk.com/blog/development/lisk-staking-process';
           window.open(url, 'rel="noopener noreferrer"');
         },
       });
@@ -116,6 +116,7 @@ const Overview = ({ isWalletRoute, history }) => {
           accountName={account?.meta?.name || name}
           detailsClassName={styles.accountSummary}
           truncate={false}
+          isMultisig={account?.data?.numberOfSignatures > 1}
         />
       </div>
       <div className={`${grid['col-xs-6']} ${grid['col-md-6']} ${grid['col-lg-6']}`}>

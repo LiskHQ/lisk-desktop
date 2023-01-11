@@ -1,11 +1,11 @@
 /* eslint-disable max-lines */
 const validatorsPage = {
-  totalVotingNumber: '.total-voting-number',
-  startVotingButton: '.start-voting-button',
+  totalVotingNumber: '.total-staking-number',
+  startVotingButton: '.start-staking-button',
   addedVotesCount: '.added-votes-count',
   removedVotesCount: '.removed-votes-count',
   goToConfirmationButton: '.go-to-confirmation-button',
-  votingHeader: '.voting-header',
+  stakingHeader: '.staking-header',
 };
 
 const managedApplications = {

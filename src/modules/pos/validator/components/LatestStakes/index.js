@@ -15,7 +15,7 @@ const LatestStakes = ({ filters }) => {
       config: {
         params: {
           ...filters,
-          moduleCommand: MODULE_COMMANDS_NAME_MAP.voteDelegate,
+          moduleCommand: MODULE_COMMANDS_NAME_MAP.stake,
           sort: 'timestamp:desc',
         },
       },

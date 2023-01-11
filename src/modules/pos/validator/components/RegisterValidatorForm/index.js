@@ -64,7 +64,7 @@ const RegisterValidatorForm = ({ nextStep, prevState }) => {
 
   const registerValidatorFormProps = {
     isValid: isFormValid(name, generatorKey, blsKey, proofOfPossession),
-    moduleCommand: MODULE_COMMANDS_NAME_MAP.registerDelegate,
+    moduleCommand: MODULE_COMMANDS_NAME_MAP.registerValidator,
     fields: { token },
   };
   const commandParams = {
@@ -80,6 +80,7 @@ const RegisterValidatorForm = ({ nextStep, prevState }) => {
         onConfirm={onConfirm}
         formProps={registerValidatorFormProps}
         commandParams={commandParams}
+        buttonTitle="Go to confirmation"
       >
         <>
           <BoxHeader className={styles.header}>

@@ -15,8 +15,6 @@ const ClaimRewardsForm = ({ nextStep }) => {
   const [currentAccount] = useCurrentAccount();
   const address = currentAccount?.metadata?.address;
 
-  const { data: rewardsClaimable } = useRewardsClaimable({ config: { params: { address } } });
-
   const onConfirm = (formProps, transactionJSON, selectedPriority, fees) => {
     nextStep({
       formProps,

@@ -121,9 +121,9 @@ const moduleCommandSchemas = {
         maxItems: 20,
         items: {
           type: "object",
-          required: ["delegateAddress", "amount"],
+          required: ["validatorAddress", "amount"],
           properties: {
-            delegateAddress: {
+            validatorAddress: {
               dataType: "bytes",
               fieldNumber: 1,
               format: "lisk32",

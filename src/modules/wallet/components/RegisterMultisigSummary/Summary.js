@@ -36,6 +36,7 @@ const Summary = ({
   const onConfirmAction = useMemo(
     () => ({
       label: t('Sign'),
+      className: styles.actionBtn,
       onClick: () => {
         const actionFunction = (form, _, privateKey) =>
           multisigTransactionSigned({
@@ -63,7 +64,8 @@ const Summary = ({
   );
 
   const onCancelAction = {
-    label: t('Go back'),
+    label: t('Edit'),
+    className: styles.actionBtn,
     onClick: () => {
       prevStep({ formProps, transactionJSON });
     },
@@ -87,7 +89,7 @@ const Summary = ({
         transactionJSON={transactionJSON}
       >
         <div className={styles.header}>
-          <h1>{t('Register multisignature account')}</h1>
+          <h5 className={styles.title}>{t('Register multisignature account')}</h5>
         </div>
         <ProgressBar current={2} />
       </TransactionSummary>

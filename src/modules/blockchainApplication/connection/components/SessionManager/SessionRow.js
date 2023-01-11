@@ -18,7 +18,7 @@ const SessionRow = ({ data, t, disconnect }) => (
       <span>{truncateAddress(data.topic)}</span>
     </div>
     <div className={grid['col-xs-2']}>
-      <TertiaryButton onClick={() => (disconnect(data.topic))}>{t('Diconnect')}</TertiaryButton>
+      <TertiaryButton onClick={() => (disconnect(data.topic))}>{t('Disconnect')}</TertiaryButton>
     </div>
   </div>
 );

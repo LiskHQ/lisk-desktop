@@ -35,7 +35,7 @@ const SearchBar = ({ className, history }) => {
 
   const onSelectedRow = (type, value) => {
     if (type === 'transactions') {
-      addSearchParamsToUrl(history, { modal: 'transactionDetails', transactionId: value });
+      addSearchParamsToUrl(history, { modal: 'transactionDetails', transactionID: value });
     } else if (type === 'delegate-account') {
       history.push(`${routes.validatorProfile.path}?${routes.explorer.searchParam}=${value}`);
     } else {

@@ -53,7 +53,7 @@ describe('Restore account form component', () => {
     expect(wrapper.find('.feedback').text()).toBeTruthy();
   });
 
-  it('should show feedback erro text when uploading incorrect JSON file', async () => {
+  it('should show feedback error text when uploading incorrect JSON file', async () => {
     jest.spyOn(global, 'FileReader').mockImplementation(function () {
       this.readAsText = jest.fn();
     });

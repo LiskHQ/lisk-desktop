@@ -9,16 +9,16 @@ import { mockSentStakes } from '../../__fixtures__';
 describe('SentStakesRow', () => {
   it('should display properly', async () => {
     const props = {
-      data: mockSentStakes.data.votes[0],
+      data: mockSentStakes.data.stakes[0],
       stakeEdited: jest.fn(),
       dposToken: mockTokensBalance.data[0],
     };
     renderWithRouter(TokenRow, props);
 
-    const { delegateAddress, amount, name } = props.data;
+    const { address, amount, name } = props.data;
 
     expect(screen.getByText(name)).toBeTruthy();
-    expect(screen.getByText(truncateAddress(delegateAddress))).toBeTruthy();
+    expect(screen.getByText(truncateAddress(address))).toBeTruthy();
     expect(screen.queryByText(`${fromRawLsk(amount)} ${props.dposToken.symbol}`));
     expect(screen.getByAltText('deleteIcon')).toBeTruthy();
     expect(screen.getByAltText('edit')).toBeTruthy();
@@ -28,7 +28,7 @@ describe('SentStakesRow', () => {
     expect(props.stakeEdited).toHaveBeenCalledWith([
       {
         name,
-        address: delegateAddress,
+        address,
         amount: 0,
       },
     ]);

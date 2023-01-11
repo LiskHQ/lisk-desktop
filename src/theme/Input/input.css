@@ -47,6 +47,7 @@
     & .toggleBtn {
       top: calc(var(--height-l) / 2) !important;
       right: var(--horizontal-padding-m);
+      background-color: transparent;
     }
   }
 
@@ -71,6 +72,7 @@
     & .toggleBtn {
       top: calc(var(--height-m) / 2) !important;
       right: var(--horizontal-padding-m);
+      background-color: transparent;
     }
   }
 
@@ -95,6 +97,7 @@
     & .toggleBtn {
       top: calc(var(--height-s) / 2) !important;
       right: var(--horizontal-padding-m);
+      background-color: transparent;
     }
   }
 
@@ -231,6 +234,7 @@
   top: calc(var(--height-xs) / 2);
   transform: translateY(-50%);
   right: 10px;
+  background-color: transparent;
 
   & .toggleIcon {
     display: flex;

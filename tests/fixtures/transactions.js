@@ -155,11 +155,11 @@ const getState = () => ({
                 items: {
                   type: "object",
                   required: [
-                    "delegateAddress",
+                    "validatorAddress",
                     "amount"
                   ],
                   properties: {
-                    delegateAddress: {
+                    validatorAddress: {
                       dataType: "bytes",
                       fieldNumber: 1,
                       format: "lisk32"
@@ -191,7 +191,7 @@ const getState = () => ({
                       dataType: "uint64",
                       fieldNumber: 2
                     },
-                    delegateAddress: {
+                    validatorAddress: {
                       dataType: "bytes",
                       fieldNumber: 1,
                       minLength: 20,
@@ -203,7 +203,7 @@ const getState = () => ({
                     }
                   },
                   required: [
-                    "delegateAddress",
+                    "validatorAddress",
                     "amount",
                     "unstakeHeight"
                   ],

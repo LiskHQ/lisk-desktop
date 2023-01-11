@@ -11,7 +11,7 @@ import { useTokensBalance } from '@token/fungible/hooks/queries';
 import { useCommandSchema } from '@network/hooks/useCommandsSchema';
 import { mockCommandParametersSchemas } from 'src/modules/common/__fixtures__';
 import StakeRow from './StakeRow';
-import Form from './StakeForm';
+import StakeForm from './StakeForm';
 import { usePosConstants } from '../../hooks/queries';
 import { mockPosConstants } from '../../__fixtures__/mockPosConstants';
 
@@ -48,20 +48,20 @@ const addresses = [
   'lskarccxj6xqdeqtuvakr3hjdjh8a6df73b6pqk6s',
 ];
 
-describe('VoteForm', () => {
+describe('StakeForm', () => {
   const props = {
     t: (str) => str,
     account: accounts.genesis,
     nextStep: jest.fn(),
-    dposToken: mockTokensBalance.data[0],
+    posToken: mockTokensBalance.data[0],
   };
 
-  const mixedVotes = {
+  const mixedStakes = {
     [addresses[0]]: { confirmed: 1e10, unconfirmed: 1e10 },
     [addresses[1]]: { confirmed: 1e10, unconfirmed: 2e10 },
   };
 
-  const elevenVotes = addresses.reduce((dict, item, index) => {
+  const elevenStakes = addresses.reduce((dict, item, index) => {
     if (index > 1) {
       dict[item] = {
         confirmed: index > 9 ? 0 : 1e10,
@@ -71,7 +71,7 @@ describe('VoteForm', () => {
     return dict;
   }, {});
 
-  const expensiveVotes = {
+  const expensiveStakes = {
     [addresses[0]]: {
       confirmed: 0,
       unconfirmed: Math.floor(parseInt(accounts.genesis.token.balance, 10) / 2),
@@ -82,7 +82,7 @@ describe('VoteForm', () => {
     },
   };
 
-  const minimumBalanceVotes = {
+  const minimumBalanceStakes = {
     [addresses[0]]: {
       confirmed: 0,
       unconfirmed: Math.floor(parseInt(accounts.genesis.token.balance, 10) * 0.6),
@@ -107,8 +107,8 @@ describe('VoteForm', () => {
     )
   );
 
-  it('Render only the changed votes', async () => {
-    const wrapper = shallow(<Form {...props} votes={mixedVotes} />);
+  it('Render only the changed Stakes', async () => {
+    const wrapper = shallow(<StakeForm {...props} stakes={mixedStakes} />);
     const table = wrapper.find(Table);
     expect(table.props()).toEqual(
       expect.objectContaining({
@@ -129,7 +129,7 @@ describe('VoteForm', () => {
   });
 
   it('Shows an error if trying to stake for more than 10 delegates', () => {
-    const wrapper = shallow(<Form {...props} votes={elevenVotes} />);
+    const wrapper = shallow(<StakeForm {...props} stakes={elevenStakes} />);
     expect(wrapper.find('.available-stakes-num').text()).toBe('-1/');
     expect(wrapper.find('.feedback').text()).toBe(
       'These stakes in addition to your current stakes will add up to 11, exceeding the account limit of 10.'
@@ -137,29 +137,28 @@ describe('VoteForm', () => {
   });
 
   it('Shows an error if trying to stake more than your balance', async () => {
-    const wrapper = mountWithRouterAndQueryClient(Form, { ...props, votes: expensiveVotes });
-    await flushPromises();
-    act(() => {
-      wrapper.update();
-    });
-    expect(wrapper.find('.available-stakes-num').text()).toBe('8/');
-    expect(wrapper.find('.feedback').text()).toBe(
-      'The minimum required balance for this action is {{minRequiredBalance}} {{token}}'
-    );
-  });
-
-  it('Shows an error if trying to stake with amounts leading to insufficient balance', async () => {
-    props.account.token.balance = `${
-      parseInt(accounts.genesis.token.balance, 10) + MIN_ACCOUNT_BALANCE * 0.8
-    }`;
-    const wrapper = mountWithRouterAndQueryClient(Form, { ...props, votes: minimumBalanceVotes });
+    const wrapper = mountWithRouterAndQueryClient(StakeForm, { ...props, stakes: expensiveStakes });
     await flushPromises();
     act(() => {
       wrapper.update();
     });
     expect(wrapper.find('.available-stakes-num').text()).toBe('8/');
     expect(wrapper.find('.feedback').at(0).text()).toBe(
-      'The stake amounts are too high. You should keep 0.05 LSK available in your account.'
+      "You don't have enough LSK in your account."
+    );
+  });
+
+  it('Shows an error if trying to stake with amounts leading to insufficient balance', async () => {
+    props.account.token.balance = `${parseInt(accounts.genesis.token.balance, 10) + MIN_ACCOUNT_BALANCE * 0.8
+      }`;
+    const wrapper = mountWithRouterAndQueryClient(StakeForm, { ...props, stakes: minimumBalanceStakes });
+    await flushPromises();
+    act(() => {
+      wrapper.update();
+    });
+    expect(wrapper.find('.available-stakes-num').text()).toBe('8/');
+    expect(wrapper.find('.feedback').at(0).text()).toBe(
+      "You don't have enough LSK in your account."
     );
   });
 });

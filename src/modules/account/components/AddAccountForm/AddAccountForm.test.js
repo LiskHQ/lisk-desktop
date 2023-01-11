@@ -22,7 +22,7 @@ beforeEach(() => {
 
 describe('AddAccountForm', () => {
   it('should render successfully', () => {
-    expect(screen.getByText('Add account')).toBeTruthy();
+    expect(screen.getByText('Add your account')).toBeTruthy();
     expect(
       screen.getByText('Enter your secret recovery phrase to manage your account.')
     ).toBeTruthy();

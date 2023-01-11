@@ -5,31 +5,31 @@ import TransactionDetailsContext from '../../context/transactionDetailsContext';
 import styles from './styles.css';
 import StakeItem from '../StakeItem';
 
-export const StakesPure = ({ t, votedDelegates }) => {
+export const StakesPure = ({ t, stakedValidator }) => {
   const { transaction } = React.useContext(TransactionDetailsContext);
-  const { votes } = transaction.params;
+  const { stakes } = transaction.params;
 
   useEffect(() => {
     if (transaction.params) {
-      const addressList = votes.map((item) => item.delegateAddress);
-      votedDelegates.loadData({ addressList });
+      const addressList = stakes.map((item) => item.address);
+      stakedValidator.loadData({ addressList });
     }
   }, []);
 
   return (
     <div className={`${styles.stakeValue}`}>
       <div className={styles.detailsWrapper}>
-        <span className={styles.label}>{`${t('Stakes')} (${votes.length})`}</span>
+        <span className={styles.label}>{`${t('Stakes')} (${stakes.length})`}</span>
         <div className={`${styles.stakesContainer} ${styles.added} tx-added-stakes`}>
-          {votes.map((vote) => (
+          {stakes.map((stake) => (
             <StakeItem
-              key={`stake-${vote.delegateAddress}`}
-              vote={{ confirmed: vote.amount }}
-              address={vote.delegateAddress}
+              key={`stake-${stake.address}`}
+              vote={{ confirmed: stake.amount }}
+              address={stake.address}
               truncate
               title={
-                votedDelegates.data[vote.delegateAddress] &&
-                votedDelegates.data[vote.delegateAddress].pos?.validator?.username
+                stakedValidator.data[stake.address] &&
+                stakedValidator.data[stake.address].pos?.validator?.name
               }
             />
           ))}
@@ -40,7 +40,7 @@ export const StakesPure = ({ t, votedDelegates }) => {
 };
 
 export default withData({
-  votedDelegates: {
+  stakedValidator: {
     apiUtil: ({ networks }, params) => getValidators({ network: networks.LSK, params }),
     defaultData: {},
     transformResponse: (response) =>

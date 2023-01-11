@@ -10,10 +10,10 @@ import ChooseAvatar from './chooseAvatar';
 describe.skip('Register Process - Choose Avatar', () => {
   let wrapper;
 
-  const crypotObj = window.crypto || window.msCrypto;
+  const cryptoObj = window.crypto || window.msCrypto;
   const passphrases = [...Array(5)].map(() =>
     generatePassphraseFromSeed({
-      seed: [...crypotObj.getRandomValues(new Uint16Array(16))].map(x => (`00${(x % 256).toString(16)}`).slice(-2)),
+      seed: [...cryptoObj.getRandomValues(new Uint16Array(16))].map(x => (`00${(x % 256).toString(16)}`).slice(-2)),
     }));
   const accounts = passphrases.map(pass => ({
     address: extractAddressFromPassphrase(pass),

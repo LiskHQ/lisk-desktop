@@ -1,3 +1,5 @@
+import { useEffect } from 'react';
+import { useDispatch } from 'react-redux';
 import to from 'await-to-js';
 // import { tokenMap } from '@token/fungible/consts/tokens';
 import { selectActiveTokenAccount } from 'src/redux/selectors';
@@ -6,6 +8,7 @@ import txActionTypes from '@transaction/store/actionTypes';
 import { joinModuleAndCommand } from '@transaction/utils';
 import { getVotes } from '../../api';
 import actionTypes from './actionTypes';
+import { useSentStakes } from '../../hooks/queries';
 
 export const stakesReset = () => ({
   type: actionTypes.stakesReset,
@@ -70,33 +73,33 @@ export const stakeEdited = (data) => async (dispatch) =>
  * @param {promise} API call response
  */
 export const stakesSubmitted =
-  (formProps, transactionJSON, privateKey,_, senderAccount, moduleCommandSchemas) =>
-  async (dispatch, getState) => {
-    const state = getState();
-    const activeWallet = selectActiveTokenAccount(state);
-    const [error, tx] = await to(
-      signTransaction({
-        transactionJSON,
-        wallet: activeWallet,
-        schema: moduleCommandSchemas[joinModuleAndCommand(transactionJSON)],
-        chainID: state.network.networks.LSK.chainID,
-        privateKey,
-        senderAccount,
-      })
-    );
-    if (error) {
-      dispatch({
-        type: txActionTypes.transactionSignError,
-        data: error,
-      });
-    } else {
-      dispatch({ type: actionTypes.stakesSubmitted });
-      dispatch({
-        type: txActionTypes.transactionCreatedSuccess,
-        data: tx,
-      });
-    }
-  };
+  (formProps, transactionJSON, privateKey, _, senderAccount, moduleCommandSchemas) =>
+    async (dispatch, getState) => {
+      const state = getState();
+      const activeWallet = selectActiveTokenAccount(state);
+      const [error, tx] = await to(
+        signTransaction({
+          transactionJSON,
+          wallet: activeWallet,
+          schema: moduleCommandSchemas[joinModuleAndCommand(transactionJSON)],
+          chainID: state.network.networks.LSK.chainID,
+          privateKey,
+          senderAccount,
+        })
+      );
+      if (error) {
+        dispatch({
+          type: txActionTypes.transactionSignError,
+          data: error,
+        });
+      } else {
+        dispatch({ type: actionTypes.stakesSubmitted });
+        dispatch({
+          type: txActionTypes.transactionCreatedSuccess,
+          data: tx,
+        });
+      }
+    };
 
 /**
  * Fetches the list of votes of the host wallet.
@@ -118,6 +121,31 @@ export const stakesRetrieved = () => async (dispatch, getState) => {
       },
     });
   }
+};
+
+
+export const useStakesRetrieved = address => {
+  const dispatch = useDispatch();
+  const {
+    data: sentStakes,
+    isSuccess: isSentStakesSuccess,
+  } = useSentStakes({ config: { params: { address } } });
+
+  useEffect(() => {
+    if (!isSentStakesSuccess) {
+      dispatch({
+        type: actionTypes.stakesRetrieved,
+        data: {
+          account: {},
+        },
+      });
+      return;
+    }
+    dispatch({
+      type: actionTypes.stakesRetrieved,
+      data: sentStakes.data,
+    });
+  }, [sentStakes, isSentStakesSuccess]);
 };
 
 /**

@@ -33,7 +33,7 @@ describe('Reclaim balance screen', () => {
       },
     },
     token: { active: tokenMap.LSK.key },
-    voting: {},
+    staking: {},
   };
 
   it('Should display register validator button and send', () => {
@@ -93,7 +93,7 @@ describe('Reclaim balance screen', () => {
       {
         ...state,
         wallet: { info: { LSK: balanceAccount } },
-        voting: {
+        staking: {
           [balanceAccount.summary.address]: {},
         },
       },

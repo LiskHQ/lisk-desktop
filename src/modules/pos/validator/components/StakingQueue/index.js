@@ -11,6 +11,11 @@ import StakeStatus from '../StakeStatus';
 import styles from './styles.css';
 import { usePosConstants } from '../../hooks/queries';
 
+const stepClass = {
+  3: styles.confirm,
+  2: styles.signatureCollector,
+};
+
 const StakingQueue = ({ history, processLaunchProtocol }) => {
   const [{ step }, setMultiStepState] = useState({});
 
@@ -30,20 +35,20 @@ const StakingQueue = ({ history, processLaunchProtocol }) => {
     processLaunchProtocol(history.location.search);
 
     // remove the search params from the url after applying the values to the staking queue
-    removeSearchParamsFromUrl(history, ['votes', 'unvotes']);
+    removeSearchParamsFromUrl(history, ['stake', 'unstake']);
   }, []);
 
   return (
     <MultiStep
       key="staking-queue"
       finalCallback={closeModal}
-      className={step?.current === 3 ? styles.confirmModal : styles.modal}
+      className={stepClass[step?.current] || styles.modal}
       onChange={setMultiStepState}
     >
-      <StakeForm dposToken={token} />
+      <StakeForm posToken={token} />
       <StakeSummary />
       <TxSignatureCollector />
-      <StakeStatus dposToken={token} />
+      <StakeStatus posToken={token} />
     </MultiStep>
   );
 };

@@ -5,6 +5,8 @@
 }
 
 .content {
+  padding-bottom: 0px;
+
   & > h1 {
     margin: 19px 0 0 0;
     padding: 0;
@@ -13,9 +15,9 @@
   & > p {
     @mixin contentLargest;
 
-    margin: 0;
+    margin: 12px 0px 0px 0px;
     padding: 0;
-    color: var(--color-maastricht-blue);
+    color: var(--color-blue-gray);
   }
 
   & > button {
@@ -31,6 +33,10 @@
     & > button {
       margin-bottom: 30px;
     }
+  }
+
+  & > img:first-child {
+    width: 100px !important;
   }
 }
 
@@ -70,5 +76,81 @@
 
   & > .spinner {
     margin-left: 10px;
+  }
+}
+
+.reclaimStatusSection {
+  width: 70%;
+  max-width: 336px;
+  margin-bottom: -20px;
+
+  & > p {
+    margin-top: 14px;
+    text-align: center;
+    color: var(--color-slate-gray);
+  }
+
+  & > ul {
+    list-style: none;
+    padding-left: 0;
+    margin-bottom: 0;
+
+    & > li {
+      @mixin contentLargest;
+
+      color: var(--color-black);
+      display: flex;
+      margin-top: 16px;
+      line-height: 26px;
+
+      &:last-of-type {
+        margin-top: 0px !important;
+      }
+
+      &:not(:first-of-type) {
+        margin-top: 12px;
+      }
+
+      & > span {
+        margin-top: 0;
+        margin-bottom: 10px;
+      }
+
+      &::before {
+        display: block;
+        content: '';
+        margin-right: 10px;
+        margin-top: 11px;
+        width: 4px;
+        height: 4px;
+        border-radius: 4px;
+        background: var(--color-ultramarine-blue);
+      }
+
+      &.step::before {
+        display: block;
+        content: '';
+        margin-right: 10px;
+        margin-top: 4px;
+        width: 16px;
+        min-width: 16px;
+        height: 16px;
+        border-radius: 16px;
+        border: 1px solid var(--color-blue-gray);
+        background: transparent;
+      }
+
+      &.step.green::before {
+        border: 1px solid var(--color-jade-green);
+      }
+
+      &.step.check::before {
+        border: 1px solid var(--color-jade-green);
+        background: var(--color-jade-green);
+        background-image: url('../../../../../setup/react/assets/images/icons/checkmark-white.svg');
+        background-repeat: no-repeat;
+        background-position: center;
+      }
+    }
   }
 }

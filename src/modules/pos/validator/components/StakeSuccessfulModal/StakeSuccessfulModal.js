@@ -20,7 +20,7 @@ function StakeSuccessfulModal({ history, statusMessage }) {
     <Box className={styles.successContainer}>
       <BoxHeader>{t('Staking confirmation')}</BoxHeader>
       <BoxContent>
-        <Illustration className={styles.illustartion} name="votingSuccess" />
+        <Illustration className={styles.illustartion} name="stakingSuccess" />
         <h4>{t('Tokens are now staked')}</h4>
         <p>{statusMessage.message}</p>
       </BoxContent>

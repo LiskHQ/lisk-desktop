@@ -1,7 +1,9 @@
 import React from 'react';
+import { withRouter } from 'react-router-dom';
 import grid from 'flexboxgrid/dist/flexboxgrid.css';
 import Icon from 'src/theme/Icon';
 import WalletVisualWithAddress from '@wallet/components/walletVisualWithAddress';
+import { addSearchParamsToUrl } from 'src/utils/searchParams';
 import DialogLink from 'src/theme/dialog/link';
 import classNames from 'classnames';
 import styles from './SentStakesRow.css';
@@ -18,7 +20,7 @@ export const Balance = ({ className, colSpanXs = 2, value }) => (
   </div>
 );
 
-export const Actions = ({ address, name, stakeEdited }) => {
+export const Actions = withRouter (({ history, address, name, stakeEdited }) => {
   const handleRemoveVote = () => {
     stakeEdited([
       {
@@ -27,6 +29,7 @@ export const Actions = ({ address, name, stakeEdited }) => {
         amount: 0,
       },
     ]);
+    addSearchParamsToUrl(history, { modal: 'editStake', address });
   };
 
   return (
@@ -41,4 +44,4 @@ export const Actions = ({ address, name, stakeEdited }) => {
       </button>
     </div>
   );
-};
+});

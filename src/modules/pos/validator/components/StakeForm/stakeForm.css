@@ -264,7 +264,7 @@
   }
 }
 
-.delegateAddress {
+.validatorAddress {
   @mixin contentLarge;
 }
 

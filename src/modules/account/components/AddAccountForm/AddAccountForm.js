@@ -63,7 +63,7 @@ const AddAccountFormContainer = ({
     <div className={`${styles.addAccount}`}>
       <div className={`${styles.wrapper} ${grid['col-xs-12']}`}>
         <div className={`${styles.titleHolder} ${grid['col-xs-12']}`}>
-          <h1>{t('Add account')}</h1>
+          <h1>{t('Add your account')}</h1>
           <p>{t('Enter your secret recovery phrase to manage your account.')}</p>
         </div>
         <form onSubmit={onFormSubmit}>
@@ -75,7 +75,7 @@ const AddAccountFormContainer = ({
               </fieldset>
             )}
             <fieldset>
-              <label>{t('Secret recovery phrase')}</label>
+              <label>{t('Secret recovery phrase (12-24 mnemonic phrases supported)')}</label>
               <PassphraseInput
                 inputsLength={passphraseArray?.length > 12 ? 24 : 12}
                 maxInputsLength={24}

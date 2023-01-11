@@ -5,7 +5,6 @@ import { Actions, Balance, ValidatorWalletVisual } from './components';
 import styles from './SentStakesRow.css';
 
 const SentStakeRow = ({ data: stakes, stakeEdited, token }) => {
-  console.log('SentStakeRow delegate', stakes);
   const {
     address: validatorAddress,
     amount,

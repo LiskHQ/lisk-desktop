@@ -1,13 +1,13 @@
 /* eslint-disable import/prefer-default-export */
 
 const generateStakes = (index) => ({
-  delegateAddress: `lsktzb4j7e3knk4mkxckdr3y69gtu2nwmsb3hjbkg`,
+  address: `lsktzb4j7e3knk4mkxckdr3y69gtu2nwmsb3hjbkg`,
   amount: `1000${index}`,
   name: `liskhq-${index}`,
 });
 
 const data = {
-  votes: Array(30)
+  stakers: Array(30)
     .fill(1)
     .map((_, idx) => generateStakes(idx)),
   account: {

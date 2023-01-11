@@ -25,7 +25,7 @@ const RemoveApplicationDetails = ({
 }) => {
   const { t } = useTranslation();
   const chainId = parseSearchParams(location.search)?.chainId;
-  // TODO: this needs to be reisntated when the set application flow is completed
+  // TODO: this needs to be reinstated when the set application flow is completed
   // because presently, there is no way to set current application on runtime
 
   // const { deleteApplicationByChainId } = useApplicationManagement();
@@ -66,7 +66,7 @@ const RemoveApplicationDetails = ({
   ];
 
   const handleRemoveApplication = () => {
-    // TODO: this needs to be reisntated when the set application flow is completed
+    // TODO: this needs to be reinstated when the set application flow is completed
     // because presently, there is no way to set current application on runtime
 
     // deleteApplicationByChainId(chainID);

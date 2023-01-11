@@ -1,6 +1,6 @@
 /* Two mocks exist for blockchain explore. The mock here matches the response for
  * /blockchain/apps endpoint while the mock in the tests/fixtures folder
- * matches the data here concatentated with the meta data
+ * matches the data here concatenated with the meta data
  */
 
 /* eslint-disable import/prefer-default-export */

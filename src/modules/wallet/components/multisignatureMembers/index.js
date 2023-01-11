@@ -5,10 +5,10 @@ import { truncateAddress } from '../../utils/account';
 
 import styles from './styles.css';
 
-const Member = ({ member, i, t }) => (
+const Member = ({ member, i, t, size }) => (
   <div className={`${styles.memberInfo} member-info`}>
     {i !== undefined && <p className={styles.memberInfoIndex}>{`${i + 1}.`}</p>}
-    <WalletVisual address={member.address} />
+    <WalletVisual address={member.address} size={size} />
     <div className={styles.memberDetails}>
       <p className={`${styles.memberTitle} member-title`}>
         {member.name || truncateAddress(member.address)}
@@ -19,7 +19,7 @@ const Member = ({ member, i, t }) => (
   </div>
 );
 
-const Members = ({ members, t, className }) => {
+const Members = ({ members, t, className, size }) => {
   const sliceIndex = Math.round(members.length / 2);
   const leftColumn = members.slice(0, sliceIndex);
   const rightColumn = members.slice(sliceIndex, members.length);
@@ -28,11 +28,23 @@ const Members = ({ members, t, className }) => {
       <p className={styles.title}>{t('Members')}</p>
       <div>
         {leftColumn.map((member, i) =>
-          <Member member={member} i={i} key={`registerMultiSignature-members-list-${i}`} t={t} />)}
+          <Member
+            member={member}
+            i={i}
+            key={`registerMultiSignature-members-list-${i}`}
+            t={t}
+            size={size}
+          />)}
       </div>
       <div>
         {rightColumn.map((member, i) =>
-          <Member member={member} i={i + sliceIndex} key={`registerMultiSignature-members-list-${i + sliceIndex}`} t={t} />)}
+          <Member
+            member={member}
+            i={i + sliceIndex}
+            key={`registerMultiSignature-members-list-${i + sliceIndex}`}
+            t={t}
+            size={size}
+          />)}
       </div>
     </div>
   );

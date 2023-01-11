@@ -19,7 +19,7 @@ describe('actions: legacy', () => {
   };
   const formProps = {
     isValid: true,
-    moduleCommand: 'legacy:reclaimLSK',
+    moduleCommand: 'legacy:reclaimLSKLSK',
   };
 
   beforeEach(() => {
@@ -51,7 +51,7 @@ describe('actions: legacy', () => {
       fee: 100000,
       module: 'legacy',
       command: 'reclaim',
-      moduleCommand: 'legacy:reclaimLSK',
+      moduleCommand: 'legacy:reclaimLSKLSK',
     };
     const privateKey = '0x0';
 

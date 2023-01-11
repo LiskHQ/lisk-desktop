@@ -86,13 +86,7 @@
     "react/require-default-props": "off",
     "react/sort-comp": "off",
     "react/display-name": "off",
-    "no-unused-vars": "warn",
-    "arrow-body-style": "warn",
-    "no-unreachable": "warn",
-    "import/order": "warn",
-    "react/jsx-curly-brace-presence": "warn",
-    "prefer-template": 1,
-    "no-use-before-define": "off",
+
     "implicit-arrow-linebreak": "off",
     "react/jsx-closing-tag-location": "off",
 
@@ -117,7 +111,7 @@
     "complexity": ["error", 10],
     "max-depth": ["error", 3],
     "max-nested-callbacks": ["error", 3],
-    "max-statements": "warn",
+    "max-statements": ["error", 10],
     "max-lines": ["error", 300]
   },
   "overrides": [

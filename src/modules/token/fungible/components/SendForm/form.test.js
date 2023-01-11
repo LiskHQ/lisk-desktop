@@ -20,6 +20,7 @@ import { mockBlockchainAppMeta } from '@blockchainApplication/manage/__fixtures_
 import useMessageField from '../../hooks/useMessageField';
 import Form from './SendForm';
 import { useTokensBalance, useTokensSupported } from '../../hooks/queries';
+import { useTransferableTokens } from '../../hooks';
 
 const mockSetMessage = jest.fn();
 const mockSetCurrentApplication = jest.fn();
@@ -30,6 +31,7 @@ jest.mock('@blockchainApplication/manage/hooks/useApplicationManagement');
 jest.mock('@blockchainApplication/manage/hooks/useCurrentApplication');
 jest.mock('@account/hooks/useCurrentAccount');
 jest.mock('@token/fungible/hooks/queries');
+jest.mock('../../hooks');
 jest.mock('@blockchainApplication/manage/hooks/queries/useBlockchainApplicationMeta');
 jest.mock('@blockchainApplication/explore/hooks/queries/useBlockchainApplicationExplore');
 
@@ -61,6 +63,16 @@ describe('Form', () => {
   useCurrentAccount.mockReturnValue([mockSavedAccounts[0], mockSetAccount]);
   useBlockchainApplicationExplore.mockReturnValue({ data: mockBlockchainApp, isSuccess: true });
   useBlockchainApplicationMeta.mockReturnValue({ data: mockBlockchainAppMeta, isSuccess: true });
+
+  useTransferableTokens.mockReturnValue({
+    data: mockTokensBalance.data.map((token) => ({
+      ...token,
+      tokenName: token.name,
+      logo: { svg: '', png: '' },
+    })),
+    isSuccess: true,
+    isLoading: false,
+  });
 
   beforeEach(() => {
     bookmarks = {

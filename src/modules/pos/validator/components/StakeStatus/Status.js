@@ -17,7 +17,7 @@ const Status = ({ account, transactions, statusInfo, t, dposToken }) => {
       ) : (
         <TxBroadcaster
           title={template.title}
-          illustration="vote"
+          illustration="stake"
           status={status}
           message={template.message}
           transactions={transactions}

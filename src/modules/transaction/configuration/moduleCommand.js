@@ -2,10 +2,10 @@ const moduleCommandNameMap = {
   transfer: 'token:transfer',
   crossChainTransfer: 'token:crossChaintransfer',
   registerMultisignature: 'auth:registerMultisignature',
-  registerDelegate: 'dpos:registerDelegate',
-  voteDelegate: 'dpos:voteDelegate',
-  unlock: 'dpos:unlock',
-  reportDelegateMisbehavior: 'dpos:reportDelegateMisbehavior',
+  registerValidator: 'pos:registerValidator',
+  stake: 'pos:stake',
+  unlock: 'pos:unlock',
+  reportDelegateMisbehavior: 'pos:reportMisbehavior',
   reclaim: 'legacy:reclaimLSK',
 };
 
@@ -22,11 +22,11 @@ const moduleCommandMap = {
     maxFee: 1e7,
     icon: 'unlockToken',
   },
-  [moduleCommandNameMap.voteDelegate]: {
+  [moduleCommandNameMap.stake]: {
     maxFee: 1e8,
     icon: 'vote',
   },
-  [moduleCommandNameMap.registerDelegate]: {
+  [moduleCommandNameMap.registerValidator]: {
     maxFee: 25e8,
     icon: 'registerValidator',
   },

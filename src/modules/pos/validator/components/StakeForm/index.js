@@ -9,10 +9,10 @@ import StakeForm from './StakeForm';
 
 const mapStateToProps = (state) => ({
   account: selectActiveTokenAccount(state),
-  votes: state.voting,
-  isVotingTxPending: containsTransactionType(
+  stakes: state.staking,
+  isStakingTxPending: containsTransactionType(
     state.transactions.pending,
-    MODULE_COMMANDS_NAME_MAP.voteDelegate,
+    MODULE_COMMANDS_NAME_MAP.stake,
   ),
 });
 

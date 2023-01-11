@@ -18,10 +18,10 @@ const transaction = (index) => ({
       index >= 15
         ? [
             {
-              delegateAddress: 'lskkkb9gcggfqzsusrnu7zb9uzfop96u7596zr5w2',
+              validatorAddress: 'lskkkb9gcggfqzsusrnu7zb9uzfop96u7596zr5w2',
             },
             {
-              delegateAddress: 'lskma5wphbxzf8zkvwumtamjosauzdo5s2qepgrty',
+              validatorAddress: 'lskma5wphbxzf8zkvwumtamjosauzdo5s2qepgrty',
             },
           ]
         : undefined,

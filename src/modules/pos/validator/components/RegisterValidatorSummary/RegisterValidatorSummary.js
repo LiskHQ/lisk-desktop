@@ -14,6 +14,7 @@ const RegisterValidatorSummary = ({
 }) => {
   const onConfirmAction = {
     label: t('Register validator'),
+    className: styles.actionBtn,
     onClick: () => {
       nextStep({
         formProps,
@@ -31,7 +32,7 @@ const RegisterValidatorSummary = ({
 
   return (
     <TransactionSummary
-      title={t('Validator registration Summary')}
+      title={t('Register validator summary')}
       confirmButton={onConfirmAction}
       cancelButton={onCancelAction}
       className={`${styles.box} ${styles.summaryContainer}`}

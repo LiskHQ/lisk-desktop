@@ -22,7 +22,7 @@ describe('Locked balance Summary', () => {
         Transaction: '0 LSK',
       },
       isValid: true,
-      moduleCommand: 'dpos:unlock',
+      moduleCommand: 'pos:unlock',
     },
     selectedPriority: { title: 'Normal', selectedIndex: 0, value: 0 },
     transactionJSON: {

@@ -33,7 +33,7 @@ describe('ConnectionStatus', () => {
 
   it('Shows a message if events are not ready yet', () => {
     const wrapper = mountWithRouter(ConnectionStatus, props);
-    expect(wrapper.find('h6').text()).toEqual('An error occurred while responding to web app');
+    expect(wrapper.find('h6').text()).toEqual('Encountered an error while connecting to web app application.');
   });
 
   it('Should mount correctly', () => {

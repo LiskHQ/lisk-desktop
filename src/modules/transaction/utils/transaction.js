@@ -14,7 +14,7 @@ import { signTransactionByHW } from './hwManager';
 import { fromTransactionJSON } from './encoding';
 import { joinModuleAndCommand } from './moduleCommand';
 
-const { transfer, voteDelegate, unlock, reclaim, registerMultisignature } =
+const { transfer, stake, unlock, reclaim, registerMultisignature } =
   MODULE_COMMANDS_NAME_MAP;
 
 // @todo import the following 4 values from lisk-elements (#4497)
@@ -179,8 +179,8 @@ const getTxAmount = ({ module, command, params, moduleCommand }) => {
       0
     );
   }
-  if (moduleCommand === voteDelegate) {
-    return params.votes.reduce((sum, vote) => sum + Number(vote.amount), 0);
+  if (moduleCommand === stake) {
+    return params.stakes.reduce((sum, stakeObject) => sum + Number(stakeObject.amount), 0);
   }
 
   return undefined;

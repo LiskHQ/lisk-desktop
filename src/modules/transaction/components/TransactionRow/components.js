@@ -65,7 +65,7 @@ export const DelegateDetails = () => {
           <WalletVisual address={data.sender.address} />
           <div>
             <p className={styles.delegateName}>{data.sender.name}</p>
-            <p className={styles.delegateAddress}>{truncateAddress(data.sender.address)}</p>
+            <p className={styles.validatorAddress}>{truncateAddress(data.sender.address)}</p>
           </div>
         </div>
       </div>
@@ -208,10 +208,10 @@ export const Status = ({ t }) => {
 
 const generateStakes = (params, delegates, token, t) => {
   const voteElements = params.votes.slice(0, 1).map((vote) => (
-    <span className={`${styles.container} stake-item-address`} key={`vote-${vote.delegateAddress}`}>
-      <Link to={`${routes.wallet.path}?address=${vote.delegateAddress}`}>
+    <span className={`${styles.container} stake-item-address`} key={`vote-${vote.validatorAddress}`}>
+      <Link to={`${routes.wallet.path}?address=${vote.validatorAddress}`}>
         <span className={styles.primaryText}>
-          {delegates[vote.delegateAddress]?.name ?? truncateAddress(vote.delegateAddress)}
+          {delegates[vote.validatorAddress]?.name ?? truncateAddress(vote.validatorAddress)}
         </span>
       </Link>
       <span className={`${styles.value}`}>

@@ -25,45 +25,51 @@ import WarnPunishedValidator from '@pos/validator/components/WarnPunishedValidat
 import { useLatestBlock } from '@block/hooks/queries/useLatestBlock';
 import { useAuth } from '@auth/hooks/queries';
 import { PrimaryButton, SecondaryButton, WarningButton } from 'src/theme/buttons';
-import useVoteAmountField from '../../hooks/useVoteAmountField';
+import useStakeAmountField from '../../hooks/useStakeAmountField';
 import getMaxAmount from '../../utils/getMaxAmount';
 import styles from './editStake.css';
 import { useValidators, usePosConstants, useSentStakes } from '../../hooks/queries';
 import { NUMBER_OF_BLOCKS_PER_DAY } from '../../consts';
+import { useStakesRetrieved } from '../../store/actions/staking';
 
 const getTitles = (t) => ({
   edit: {
     title: t('Edit stake'),
     description: t(
-      'Increase or decrease your stake amount, or remove your stake from this validator. Your updated stake will be added to the staking queue.'
+      'After changing your Stake amount, it will be added to the staking queue.'
     ),
   },
   add: {
     title: t('Add to staking queue'),
     description: t(
-      'Insert an amount you wish to stake for this validator. Your new stake will then be added to the staking queue.'
+      'Input your Stake amount. This value shows how much trust you have in this validator.'
     ),
   },
 });
 
 // eslint-disable-next-line max-statements
-const EditStake = ({ history, stakeEdited, network, voting, stakesRetrieved }) => {
+const EditStake = ({ history, stakeEdited, network, staking }) => {
   const { t } = useTranslation();
   useSchemas();
+
   const { moduleCommandSchemas } = useCommandSchema();
   const [
     {
       metadata: { address: currentAddress },
     },
   ] = useCurrentAccount();
+  const { data: sentStakes } = useSentStakes({
+    config: { params: { address: currentAddress } },
+  });
+  useStakesRetrieved(currentAddress);
+
   const [maxAmount, setMaxAmount] = useState(0);
   const [isForm, setIsForm] = useState(true);
 
   const [address] = selectSearchParamValue(history.location.search, ['address']);
-  const validatorAddress = address || currentAddress; // this holds the address of either other validators or the user's address
 
   const { data: validators, isLoading: isLoadingValidators } = useValidators({
-    config: { params: { address: validatorAddress } },
+    config: { params: { address } },
   });
 
   const validator = useMemo(() => validators?.data?.[0] || {}, [isLoadingValidators]);
@@ -71,10 +77,6 @@ const EditStake = ({ history, stakeEdited, network, voting, stakesRetrieved }) =
   const {
     data: { height: currentHeight },
   } = useLatestBlock();
-
-  const { data: sentVotes } = useSentStakes({
-    config: { params: { address: currentAddress } },
-  });
 
   const { data: posConstants, isLoading: isGettingPosConstants } = usePosConstants();
 
@@ -84,7 +86,7 @@ const EditStake = ({ history, stakeEdited, network, voting, stakesRetrieved }) =
   });
   const token = useMemo(() => tokens?.data?.[0] || {}, [tokens]);
 
-  const { data: authData } = useAuth({ config: { params: { address: validatorAddress } } });
+  const { data: authData } = useAuth({ config: { params: { address } } });
   const auth = useMemo(() => ({ ...authData?.data, ...authData?.meta }), [authData]);
   const { nonce, publicKey, numberOfSignatures, optionalKeys = [], mandatoryKeys = [] } = auth;
 
@@ -93,17 +95,17 @@ const EditStake = ({ history, stakeEdited, network, voting, stakesRetrieved }) =
     ['start', 'end']
   );
 
-  const voteSentVoteToDelegate = useMemo(() => {
-    const votes = sentVotes?.data?.votes;
-    if (!votes) return false;
+  const validatorStake = useMemo(() => {
+    const stakes = sentStakes?.data?.stakes;
+    if (!stakes) return false;
 
-    return votes.find(({ validatorAddress: dAddress }) => dAddress === validatorAddress);
-  }, [sentVotes, validatorAddress, voting]);
+    return stakes.find(({ address: stakerAddress }) => stakerAddress === address);
+  }, [sentStakes, address, staking]);
 
-  const [voteAmount, setVoteAmount, isGettingDposToken] = useVoteAmountField(
-    fromRawLsk(voting[validatorAddress]?.unconfirmed || voteSentVoteToDelegate?.amount || 0)
+  const [stakeAmount, setStakeAmount, isGettingPosToken] = useStakeAmountField(
+    fromRawLsk(staking[address]?.unconfirmed || validatorStake?.amount || 0)
   );
-  const mode = voteSentVoteToDelegate || voting[validatorAddress] ? 'edit' : 'add';
+  const mode = validatorStake || staking[address] ? 'edit' : 'add';
   const titles = getTitles(t)[mode];
 
   useEffect(() => {
@@ -111,7 +113,7 @@ const EditStake = ({ history, stakeEdited, network, voting, stakesRetrieved }) =
       balance: token.availableBalance,
       nonce,
       publicKey,
-      voting,
+      staking,
       address,
       network,
       numberOfSignatures,
@@ -119,11 +121,7 @@ const EditStake = ({ history, stakeEdited, network, voting, stakesRetrieved }) =
       optionalKeys,
       moduleCommandSchemas,
     }).then(setMaxAmount);
-  }, [token, auth, network, voting]);
-
-  useEffect(() => {
-    stakesRetrieved();
-  }, []);
+  }, [token, auth, network, staking]);
 
   const handleConfirm = () => {
     if (!isForm) {
@@ -132,8 +130,8 @@ const EditStake = ({ history, stakeEdited, network, voting, stakesRetrieved }) =
     }
     stakeEdited([
       {
-        address: validatorAddress,
-        amount: toRawLsk(voteAmount.value),
+        address,
+        amount: toRawLsk(stakeAmount.value),
         name: validator.name,
       },
     ]);
@@ -141,14 +139,14 @@ const EditStake = ({ history, stakeEdited, network, voting, stakesRetrieved }) =
     setIsForm(false);
   };
 
-  const handleContinueVoting = () => history.push(routes.validators.path);
+  const handleContinueStaking = () => history.push(routes.validators.path);
 
   const removeVote = () => {
     stakeEdited([
       {
+        address,
+        amount: toRawLsk(0),
         name: validator.name,
-        address: validatorAddress,
-        amount: 0,
       },
     ]);
     removeSearchParamsFromUrl(history, ['modal']);
@@ -182,9 +180,9 @@ const EditStake = ({ history, stakeEdited, network, voting, stakesRetrieved }) =
           {isForm && (
             <>
               <BoxInfoText className={styles.accountInfo}>
-                <WalletVisual size={40} address={validatorAddress} />
+                <WalletVisual size={40} address={address} />
                 <p>{validator.name}</p>
-                <p>{validatorAddress}</p>
+                <p>{address}</p>
               </BoxInfoText>
               <label className={styles.fieldGroup}>
                 <p className={styles.availableBalance}>
@@ -195,8 +193,8 @@ const EditStake = ({ history, stakeEdited, network, voting, stakesRetrieved }) =
                 </p>
 
                 <AmountField
-                  amount={voteAmount}
-                  onChange={setVoteAmount}
+                  amount={stakeAmount}
+                  onChange={setStakeAmount}
                   maxAmount={{ value: maxAmount }}
                   displayConverter
                   label={t('Stake amount ({{symbol}})', { symbol: token.symbol })}
@@ -226,8 +224,8 @@ const EditStake = ({ history, stakeEdited, network, voting, stakesRetrieved }) =
           {!isForm && (
             <SecondaryButton
               className={`${styles.confirmButton}`}
-              onClick={handleContinueVoting}
-              disabled={voteAmount.error}
+              onClick={handleContinueStaking}
+              disabled={stakeAmount.error}
             >
               {t('Continue staking')}
             </SecondaryButton>
@@ -235,7 +233,7 @@ const EditStake = ({ history, stakeEdited, network, voting, stakesRetrieved }) =
           <PrimaryButton
             className={`${styles.confirmButton} confirm`}
             onClick={handleConfirm}
-            disabled={voteAmount.error || isGettingDposToken}
+            disabled={stakeAmount.error || isGettingPosToken}
           >
             {t(isForm ? 'Confirm' : 'Go to the staking queue')}
           </PrimaryButton>
