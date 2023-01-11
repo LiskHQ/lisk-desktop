@@ -38,7 +38,7 @@ const sampleTransaction = {
     votes: [
       {
         amount: BigInt(2000000000),
-        delegateAddress: Buffer.from('b9c228bae5f9a6f8a0bd7787b4c123bf1de4bedd', 'hex'),
+        validatorAddress: Buffer.from('b9c228bae5f9a6f8a0bd7787b4c123bf1de4bedd', 'hex'),
       },
     ],
   },

@@ -7,9 +7,9 @@ jest.spyOn(React, 'useContext').mockImplementation(() => ({
   transaction: {
     type: 3,
     params: {
-      votes: [
-        { delegateAddress: 'lsk123', amount: '1000000000' },
-        { delegateAddress: 'lsk987', amount: '-2000000000' },
+      stakes: [
+        { address: 'lsk123', amount: '1000000000' },
+        { address: 'lsk987', amount: '-2000000000' },
       ],
     },
   },
@@ -19,7 +19,7 @@ describe('Transaction stakes', () => {
   let wrapper;
   const props = {
     t: v => v,
-    votedDelegates: {
+    stakedValidator: {
       data: {},
       loadData: jest.fn(),
     },
@@ -34,11 +34,11 @@ describe('Transaction stakes', () => {
     expect(wrapper.find('.stake-item-value').at(1).text()).toEqual('-20 LSK');
   });
 
-  it('Should fetch and render delegate names', () => {
+  it('Should fetch and render validator names', () => {
     const newProps = {
       ...props,
-      votedDelegates: {
-        ...props.votedDelegates,
+      stakedValidator: {
+        ...props.stakedValidator,
         data: {
           lsk123: {
             ...accounts.validator_candidate,
@@ -52,8 +52,8 @@ describe('Transaction stakes', () => {
       },
     };
     wrapper = mount(<StakesPure {...newProps} />);
-    expect(newProps.votedDelegates.loadData).toHaveBeenCalled();
-    expect(wrapper.find('.primaryText').at(0).text()).toEqual('test');
-    expect(wrapper.find('.primaryText').at(1).text()).toEqual('genesis_17');
+    expect(newProps.stakedValidator.loadData).toHaveBeenCalled();
+    expect(wrapper.find('.primaryText').at(0).text()).toEqual('lsk123');
+    expect(wrapper.find('.primaryText').at(1).text()).toEqual('lsk987');
   });
 });

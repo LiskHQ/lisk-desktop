@@ -14,12 +14,12 @@ import { usePosConstants } from './queries';
 let loaderTimeout = null;
 
 /**
- * Returns error and feedback of vote amount field.
+ * Returns error and feedback of stake amount field.
  *
- * @param {String} value - The vote amount value difference in Beddows
+ * @param {String} value - The stake amount value difference in Beddows
  * @param {String} balance - The account balance value in Beddows
  * @param {String} minValue - The minimum value checker in Beddows
- * @param {String} inputValue - The input vote amount value in Beddows
+ * @param {String} inputValue - The input stake amount value in Beddows
  * @returns {Object} The boolean error flag and a human readable message.
  */
 const getAmountFeedbackAndError = (value, balance, minValue, inputValue) => {
@@ -28,10 +28,10 @@ const getAmountFeedbackAndError = (value, balance, minValue, inputValue) => {
     token: tokenMap.LSK.key,
     funds: parseInt(balance, 10),
     checklist: [
-      'NEGATIVE_VOTE',
+      'NEGATIVE_STAKE',
       'ZERO',
       'STAKE_10X',
-      'INSUFFICIENT_VOTE_FUNDS',
+      'INSUFFICIENT_STAKE_FUNDS',
       'MIN_BALANCE',
       'FORMAT',
     ],
@@ -43,14 +43,14 @@ const getAmountFeedbackAndError = (value, balance, minValue, inputValue) => {
 };
 
 /**
- * Formats and defines potential errors of the vote mount value
+ * Formats and defines potential errors of the stake mount value
  * Also provides a setter function
  *
- * @param {String} initialValue - The initial vote amount value in Beddows
+ * @param {String} initialValue - The initial stake amount value in Beddows
  * @returns {[Boolean, Function]} The error flag, The setter function
  */
 // eslint-disable-next-line max-statements
-const useVoteAmountField = (initialValue) => {
+const useStakeAmountField = (initialValue) => {
   // @TODO: we need to change the caching time from 5mins to something larger since this is a constant that doesn't frequently change
   const { data: posConstants, isLoading: isGettingPosConstants } = usePosConstants();
 
@@ -59,21 +59,21 @@ const useVoteAmountField = (initialValue) => {
     config: { params: { tokenID: posConstants?.posTokenID } },
     options: { enabled: !isGettingPosConstants },
   });
-  const token = useMemo(() => tokens?.data?.[0] || {}, [tokens]);
+  const token = useMemo(() => tokens?.data?.[0], [tokens]);
 
   const { i18n } = useTranslation();
-  const balance = Number(token.availableBalance || 0);
+  const balance = Number(token?.availableBalance);
   // const balance = useSelector(selectAccountBalance); // @todo account has multiple balance now
   const host = useSelector(selectLSKAddress);
   const searchDetails = window.location.href.replace(/.*[?]/, '');
   const address = selectSearchParamValue(`?${searchDetails}`, 'address');
-  const voting = useSelector((state) => state.voting);
-  const existingVote = voting[address || host];
-  const totalUnconfirmedVotes = Object.values(voting)
-    .filter((vote) => vote.confirmed < vote.unconfirmed)
-    .map((vote) => vote.unconfirmed - vote.confirmed)
+  const staking = useSelector((state) => state.staking);
+  const existingStake = staking[address || host];
+  const totalUnconfirmedStake = Object.values(staking)
+    .filter((stake) => stake.confirmed < stake.unconfirmed)
+    .map((stake) => stake.unconfirmed - stake.confirmed)
     .reduce((total, amount) => total + amount, 0);
-  const previouslyConfirmedVotes = existingVote ? existingVote.confirmed : 0;
+  const previouslyConfirmedStake = existingStake ? existingStake.confirmed : 0;
   const [amountField, setAmountField] = useState({
     value: initialValue,
     isLoading: false,
@@ -103,9 +103,9 @@ const useVoteAmountField = (initialValue) => {
       isLoading: true,
     });
     const feedback = getAmountFeedbackAndError(
-      value - fromRawLsk(previouslyConfirmedVotes - totalUnconfirmedVotes),
+      value - fromRawLsk(previouslyConfirmedStake - totalUnconfirmedStake),
       balance,
-      -1 * fromRawLsk(previouslyConfirmedVotes),
+      -1 * fromRawLsk(previouslyConfirmedStake),
       value
     );
     loaderTimeout = setTimeout(() => {
@@ -120,4 +120,4 @@ const useVoteAmountField = (initialValue) => {
   return [amountField, onAmountInputChange, isGettingDposToken];
 };
 
-export default useVoteAmountField;
+export default useStakeAmountField;

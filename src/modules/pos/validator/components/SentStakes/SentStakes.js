@@ -53,7 +53,7 @@ const SentStakes = ({ history }) => {
             </div>
             <div className={styles.actionButtons}>
               <DialogLink component="lockedBalance">
-                <PrimaryButton>{t('Available to unlock')}</PrimaryButton>
+                <PrimaryButton>{t('Unlock stakes')}</PrimaryButton>
               </DialogLink>
             </div>
           </div>

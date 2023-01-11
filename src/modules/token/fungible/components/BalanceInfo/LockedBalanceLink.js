@@ -40,7 +40,7 @@ const LockedBalanceLink = ({
 
   if (isWalletRoute && host) {
     lockedInVotes = useSelector((state) =>
-      calculateBalanceLockedInVotes(state.voting));
+      calculateBalanceLockedInVotes(state.staking));
   } else {
     lockedInVotes = calculateBalanceLockedInUnvotes(account.dpos?.sentVotes);
   }

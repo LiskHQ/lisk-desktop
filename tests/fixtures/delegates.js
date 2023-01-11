@@ -38,7 +38,7 @@ export default {
     },
     sentVotes: [
       {
-        delegateAddress: 'lskyrwej7xuxeo39ptuyff5b524dsmnmuyvcaxkag',
+        validatorAddress: 'lskyrwej7xuxeo39ptuyff5b524dsmnmuyvcaxkag',
         amount: '1626000000000',
       },
     ],

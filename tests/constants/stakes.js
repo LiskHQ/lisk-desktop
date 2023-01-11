@@ -1,7 +1,7 @@
 export default [
   {
     amount: '1000000000000',
-    delegateAddress: '5059876081639179984L',
+    validatorAddress: '5059876081639179984L',
     delegate: {
       username: 'genesis_1',
       totalStakeReceived: '1000000000000',
@@ -16,7 +16,7 @@ export default [
 ];
 
 const generateStakes = (index) => ({
-  params: { votes: [{ delegateAddress: `lskdwsyfmcko6mcd357446yatromr9vzgu7eb8y${index + 10}`, amount: `${index + 10}0000000` }] },
+  params: { votes: [{ validatorAddress: `lskdwsyfmcko6mcd357446yatromr9vzgu7eb8y${index + 10}`, amount: `${index + 10}0000000` }] },
   block: {
     height: 16418742 + index,
     id: '1f48b9f4dae3a027b73685810016edadfff45175955b6ea3b24951597a99b498',

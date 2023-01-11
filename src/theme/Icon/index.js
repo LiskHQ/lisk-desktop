@@ -83,9 +83,9 @@ import transactionPending from '@setup/react/assets/images/icons/transaction-sta
 import transactionSuccess from '@setup/react/assets/images/icons/transaction-success.svg';
 import txDefault from '@setup/react/assets/images/icons/tx-default.svg';
 import txDefaultDark from '@setup/react/assets/images/icons/tx-default-dark.svg';
-import registerValidator from '@setup/react/assets/images/icons/tx-delegate.svg';
+import registerValidator from '@setup/react/assets/images/icons/tx-registerValidator.svg';
 import registerValidatorDark from '@setup/react/assets/images/icons/tx-delegate-dark.svg';
-import vote from '@setup/react/assets/images/icons/tx-vote.svg';
+import stake from '@setup/react/assets/images/icons/tx-stake.svg';
 import user from '@setup/react/assets/images/icons/user.svg';
 import userActive from '@setup/react/assets/images/icons/user-active.svg';
 import verifyMessageInputsView from '@setup/react/assets/images/icons/verify-message-inputs-view.svg';
@@ -124,8 +124,8 @@ import validatorsMonitor from '@setup/react/assets/images/icons/delegatesMonitor
 import validatorsMonitorActive from '@setup/react/assets/images/icons/delegatesMonitorActive.svg';
 import networkMonitor from '@setup/react/assets/images/icons/networkMonitor.svg';
 import networkMonitorActive from '@setup/react/assets/images/icons/networkMonitorActive.svg';
-import voting from '@setup/react/assets/images/icons/voting.svg';
-import votingActive from '@setup/react/assets/images/icons/votingActive.svg';
+import staking from '@setup/react/assets/images/icons/staking.svg';
+import stakingActive from '@setup/react/assets/images/icons/stakingActive.svg';
 import signOut from '@setup/react/assets/images/icons/signOut.svg';
 import plus from '@setup/react/assets/images/icons/plus.svg';
 import plusActive from '@setup/react/assets/images/icons/plusActive.svg';
@@ -164,8 +164,8 @@ import unlock from '@setup/react/assets/images/icons/unlock.svg';
 import loading from '@setup/react/assets/images/icons/loading.svg';
 import unlockToken from '@setup/react/assets/images/icons/tx-unlock.svg';
 import unlockTokenDark from '@setup/react/assets/images/icons/tx-unlock-dark.svg';
-import stakingQueueInactive from '@setup/react/assets/images/icons/voting-queue-inactive.svg';
-import stakingQueueActive from '@setup/react/assets/images/icons/voting-queue-active.svg';
+import stakingQueueInactive from '@setup/react/assets/images/icons/staking-queue-inactive.svg';
+import stakingQueueActive from '@setup/react/assets/images/icons/staking-queue-active.svg';
 import deleteIcon from '@setup/react/assets/images/icons/delete.svg';
 import deleteRedIcon from '@setup/react/assets/images/icons/delete-red-icon.svg';
 import arrowRightTailed from '@setup/react/assets/images/icons/arrow-right-tailed.svg';
@@ -204,8 +204,8 @@ import warningYellow from '@setup/react/assets/images/icons/warning-yellow.svg';
 import linkIcon from '@setup/react/assets/images/icons/link-icon.svg';
 import refresh from '@setup/react/assets/images/icons/refresh.svg';
 import refreshActive from '@setup/react/assets/images/icons/refresh-active.svg';
-import reportValidatorMisbehavior from '@setup/react/assets/images/icons/reportDelegateMisbehavior.svg';
-import reportValidatorMisbehaviorDark from '@setup/react/assets/images/icons/reportDelegateMisbehavior-dark.svg';
+import reportValidatorMisbehavior from '@setup/react/assets/images/icons/reportValidatorMisbehavior.svg';
+import reportValidatorMisbehaviorDark from '@setup/react/assets/images/icons/reportValidatorMisbehavior-dark.svg';
 import downloadUpdateFinish from '@setup/react/assets/images/icons/download-update-finish.svg';
 import downloadUpdateProgress from '@setup/react/assets/images/icons/download-update-progress.svg';
 import whiteLinkIcon from '@setup/react/assets/images/icons/white-link-icon.svg';
@@ -316,7 +316,7 @@ export const icons = {
   txDefaultDark,
   registerValidator,
   registerValidatorDark,
-  vote,
+  stake,
   user,
   userActive,
   verifyMessageInputsView,
@@ -368,8 +368,8 @@ export const icons = {
   validatorsMonitorActive,
   networkMonitor,
   networkMonitorActive,
-  voting,
-  votingActive,
+  staking,
+  stakingActive,
   signOut,
   plus,
   plusActive,

@@ -22,7 +22,7 @@ describe('Validator Registration Summary', () => {
         Transaction: '0 LSK',
       },
       isValid: true,
-      moduleCommand: 'dpos:registerDelegate',
+      moduleCommand: 'pos:registerValidator',
     },
     selectedPriority: { title: 'Normal', selectedIndex: 0, value: 0 },
     transactionJSON: {

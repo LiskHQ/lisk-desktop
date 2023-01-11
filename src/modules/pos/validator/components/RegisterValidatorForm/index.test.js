@@ -171,9 +171,9 @@ describe('RegisterValidatorForm', () => {
     };
     const rawTx = {
       transactionJSON: {
-        fee: '100000000',
-        module: 'dpos',
-        command: 'registerDelegate',
+        fee: '1100000000',
+        module: 'pos',
+        command: 'registerValidator',
         nonce: '1',
         params: {
           blsKey: blsKey.value,
@@ -193,7 +193,7 @@ describe('RegisterValidatorForm', () => {
           token: mockTokensBalance.data[0],
         },
         isValid: true,
-        moduleCommand: 'dpos:registerDelegate',
+        moduleCommand: 'pos:registerValidator',
       },
       fees: {
         Initialisation: '0 LSK',

@@ -36,7 +36,7 @@ const StakingQueue = ({ history, processLaunchProtocol }) => {
     processLaunchProtocol(history.location.search);
 
     // remove the search params from the url after applying the values to the staking queue
-    removeSearchParamsFromUrl(history, ['votes', 'unvotes']);
+    removeSearchParamsFromUrl(history, ['stake', 'unstake']);
   }, []);
 
   return (
@@ -46,10 +46,10 @@ const StakingQueue = ({ history, processLaunchProtocol }) => {
       className={stepClass[step?.current] || styles.modal}
       onChange={setMultiStepState}
     >
-      <StakeForm dposToken={token} />
+      <StakeForm posToken={token} />
       <StakeSummary />
       <TxSignatureCollector />
-      <StakeStatus dposToken={token} />
+      <StakeStatus posToken={token} />
     </MultiStep>
   );
 };

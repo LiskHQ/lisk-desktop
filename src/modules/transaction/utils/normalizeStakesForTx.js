@@ -1,6 +1,6 @@
 /**
  * Converts the votes object stored in Redux store
- * which looks like { delegateAddress: { confirmed, unconfirmed } }
+ * which looks like { validatorAddress: { confirmed, unconfirmed } }
  * into an array of objects that Lisk Element expects, looking like
  * [{ delegatesAddress, amount }]
  *
@@ -10,9 +10,9 @@
 const normalizeStakesForTx = votes =>
   Object.keys(votes)
     .filter(address => votes[address].confirmed !== votes[address].unconfirmed)
-    .map(delegateAddress => ({
-      delegateAddress,
-      amount: (votes[delegateAddress].unconfirmed - votes[delegateAddress].confirmed).toString(),
+    .map(validatorAddress => ({
+      validatorAddress,
+      amount: (votes[validatorAddress].unconfirmed - votes[validatorAddress].confirmed).toString(),
     }));
 
 export default normalizeStakesForTx;

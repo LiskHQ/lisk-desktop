@@ -26,10 +26,10 @@ const selectServiceUrl = state => state.network.networks?.LSK?.serviceUrl;
 const selectNetworkIdentifier = state => state.network.networks?.LSK?.networkIdentifier;
 const selectNetworkName = state => state.network.name;
 const selectActiveTokenNetwork = state => state.network.networks[state.token.active];
-const selectVoting = state => state.voting;
+const selectStaking = state => state.staking;
 
 export {
-  selectVoting,
+  selectStaking,
   selectNetwork,
   selectBookmark,
   selectSettings,

@@ -112,7 +112,7 @@ export default [
     params: {
       votes: [
         {
-          delegateAddress: 'lsk9gf9y56k8emm4byye44c92av2fzd65om95kxp8',
+          validatorAddress: 'lsk9gf9y56k8emm4byye44c92av2fzd65om95kxp8',
           amount: '-30000000000',
         },
       ],

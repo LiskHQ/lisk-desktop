@@ -8,10 +8,10 @@ import TopBar from './topBar';
 const mapStateToProps = state => ({
   stakeCount: containsTransactionType(
     state.transactions.pending,
-    MODULE_COMMANDS_NAME_MAP.voteDelegate,
+    MODULE_COMMANDS_NAME_MAP.stake,
   ) ? 0
-    : Object.values(state.voting)
-      .filter(vote => (vote.confirmed !== vote.unconfirmed))
+    : Object.values(state.staking)
+      .filter(stake => (stake.confirmed !== stake.unconfirmed))
       .length,
 });
 
