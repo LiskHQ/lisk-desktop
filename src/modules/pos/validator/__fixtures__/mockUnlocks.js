@@ -1,8 +1,6 @@
-/* eslint-disable  max-lines, import/prefer-default-export */
-
 const generateUnlock = (index) => ({
   validatorAddress: `lsk24cd35u4jdq8szo3pnsqe5dsxwrnazyqqqg${index}eu`,
-  amount: `100${index}`,
+  amount: `${100 + index}`,
   tokenID: '0000000000000000',
   unstakeHeight: 30 + index,
   expectedUnlockableHeight: 300 + index,

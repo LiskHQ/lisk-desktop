@@ -1,5 +1,5 @@
 import { useSelector } from 'react-redux';
-import { calculateBalanceLockedInVotes, calculateUnlockableBalance } from '@wallet/utils/account';
+import { calculateBalanceLockedInStakes, calculateUnlockableBalance } from '@wallet/utils/account';
 import { useUnlocks } from '@pos/validator/hooks/queries';
 import { useCurrentAccount } from '@account/hooks';
 
@@ -11,9 +11,9 @@ const useUnlockableCalculator = () => {
   const pendingUnlocks = unlocks?.data?.pendingUnlocks;
 
   const unlockableBalance = calculateUnlockableBalance(pendingUnlocks);
-  const lockedInVotes = useSelector((state) => calculateBalanceLockedInVotes(state.staking));
+  const lockedInStakes = useSelector((state) => calculateBalanceLockedInStakes(state.staking));
 
-  return { pendingUnlocks, lockedInVotes, unlockableBalance };
+  return { pendingUnlocks, lockedInStakes, unlockableBalance };
 };
 
 export default useUnlockableCalculator;

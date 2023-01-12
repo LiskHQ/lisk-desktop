@@ -163,7 +163,7 @@ export const truncateTransactionID = (id) => {
  * @param {Object} votes - Votes dictionary, values must include vote.confirmed
  * @returns {Number} - Sum of vote amounts
  */
-export const calculateBalanceLockedInVotes = (stakes = {}) =>
+export const calculateBalanceLockedInStakes = (stakes = {}) =>
   Object.values(stakes).reduce((total, stake) => (total + stake.confirmed), 0);
 
 /**

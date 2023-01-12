@@ -1,8 +1,6 @@
 import React from 'react';
-import { useSelector } from 'react-redux';
 import { useTranslation } from 'react-i18next';
 import { MODULE_COMMANDS_NAME_MAP } from '@transaction/configuration/moduleCommand';
-import { selectActiveToken } from 'src/redux/selectors';
 import BoxContent from 'src/theme/box/content';
 import BoxHeader from 'src/theme/box/header';
 import { useLatestBlock } from '@block/hooks/queries/useLatestBlock';
@@ -15,9 +13,8 @@ import styles from './unlockBalance.css';
 // eslint-disable-next-line max-statements
 const UnlockBalanceForm = ({ nextStep }) => {
   const { t } = useTranslation();
-  const activeToken = useSelector(selectActiveToken);
   const { data: latestBlock } = useLatestBlock();
-  const { pendingUnlocks, lockedInVotes, unlockableBalance } = useUnlockableCalculator();
+  const { pendingUnlocks, lockedInStakes, unlockableBalance } = useUnlockableCalculator();
 
   const onConfirm = async (formProps, transactionJSON, selectedPriority, fees) => {
     nextStep({
@@ -42,7 +39,7 @@ const UnlockBalanceForm = ({ nextStep }) => {
         onConfirm={onConfirm}
         formProps={unlockBalanceFormProps}
         commandParams={commandParams}
-        buttonTitle={getUnlockButtonTitle(unlockableBalance, activeToken, t)}
+        buttonTitle={getUnlockButtonTitle(unlockableBalance, t)}
       >
         <>
           <BoxHeader className={styles.header}>
@@ -55,7 +52,7 @@ const UnlockBalanceForm = ({ nextStep }) => {
               )}
             </p>
             <BalanceTable
-              lockedInVotes={lockedInVotes}
+              lockedInStakes={lockedInStakes}
               unlockableBalance={unlockableBalance}
               currentBlockHeight={latestBlock.data?.height ?? 0}
               pendingUnlocks={pendingUnlocks}

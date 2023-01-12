@@ -1,5 +1,3 @@
-/* eslint-disable import/prefer-default-export */
-
 import validators from '../../../../../tests/constants/validators';
 
 const generateStakes = validators.slice(0, 7).map((validator, index) => ({
@@ -8,7 +6,6 @@ const generateStakes = validators.slice(0, 7).map((validator, index) => ({
     name: validator.name,
   }));
 
-console.log('generateStakes', generateStakes);
 
 const data = {
   stakes: generateStakes,
