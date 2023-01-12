@@ -163,8 +163,8 @@ export const truncateTransactionID = (id) => {
  * @param {Object} votes - Votes dictionary, values must include vote.confirmed
  * @returns {Number} - Sum of vote amounts
  */
-export const calculateBalanceLockedInVotes = (votes = {}) =>
-  Object.values(votes).reduce((total, vote) => (total + vote.confirmed), 0);
+export const calculateBalanceLockedInVotes = (stakes = {}) =>
+  Object.values(stakes).reduce((total, stake) => (total + stake.confirmed), 0);
 
 /**
  * calculates balance locked for the account in unvotes
@@ -187,33 +187,16 @@ export const isBlockHeightReached = (unlockHeight, currentBlockHeight) =>
   currentBlockHeight >= unlockHeight;
 
 /**
- * returns unlocking objects for broadcasting an unlock transaction
- * at the current height
- *
- * @param {Array} unlocking - unlocking values array from the account details
- * @param {Number} currentBlockHeight - Current block height
- * @returns {Array} Array of LSK rows available to unlock
- */
-export const getUnlockableUnlockObjects = (unlocking = [], currentBlockHeight = 0) =>
-  unlocking.filter(vote => isBlockHeightReached(vote.expectedUnlockableHeight, currentBlockHeight))
-    .map(vote => ({
-      validatorAddress: vote.validatorAddress,
-      amount: vote.amount,
-      unstakeHeight: Number(vote.unstakeHeight),
-    }));
-
-/**
  * returns the balance that can be unlocked at the current block height
  *
  * @param {Array} unlocking - unlocking values array from the account details
  * @param {Number} currentBlockHeight - Current block height
  * @returns {Number} - The LSK value that can be unlocked
  */
-export const calculateUnlockableBalance = (unlocking = [], currentBlockHeight = 0) =>
+export const calculateUnlockableBalance = (unlocking = []) =>
   unlocking.reduce(
     (sum, unlockable) =>
-    (isBlockHeightReached(unlockable.expectedUnlockableHeight, currentBlockHeight)
-      ? sum + parseInt(unlockable.amount, 10) : sum),
+    (sum + parseInt(unlockable.amount, 10)),
     0,
   );
 
