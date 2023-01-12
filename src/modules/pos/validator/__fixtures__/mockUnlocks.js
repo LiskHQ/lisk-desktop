@@ -7,11 +7,12 @@ const generateUnlock = (index) => ({
   unstakeHeight: 30 + index,
   expectedUnlockableHeight: 300 + index,
   unlockable: true,
-}
-);
+});
 
 const data = {
-  pendingUnlocks: Array(30).fill(1).map((_, idx) => generateUnlock(idx)),
+  pendingUnlocks: Array(30)
+    .fill(1)
+    .map((_, idx) => generateUnlock(idx)),
   account: {
     address: 'lsk24cd35u4jdq8szo3pnsqe5dsxwrnazyqqqg5eu',
     publicKey: 'aq02qkbb35u4jdq8szo3pnsqe5dsxwrnazyqqqg5eu',
