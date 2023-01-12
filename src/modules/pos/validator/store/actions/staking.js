@@ -74,32 +74,32 @@ export const stakeEdited = (data) => async (dispatch) =>
  */
 export const stakesSubmitted =
   (formProps, transactionJSON, privateKey, _, senderAccount, moduleCommandSchemas) =>
-    async (dispatch, getState) => {
-      const state = getState();
-      const activeWallet = selectActiveTokenAccount(state);
-      const [error, tx] = await to(
-        signTransaction({
-          transactionJSON,
-          wallet: activeWallet,
-          schema: moduleCommandSchemas[joinModuleAndCommand(transactionJSON)],
-          chainID: state.network.networks.LSK.chainID,
-          privateKey,
-          senderAccount,
-        })
-      );
-      if (error) {
-        dispatch({
-          type: txActionTypes.transactionSignError,
-          data: error,
-        });
-      } else {
-        dispatch({ type: actionTypes.stakesSubmitted });
-        dispatch({
-          type: txActionTypes.transactionCreatedSuccess,
-          data: tx,
-        });
-      }
-    };
+  async (dispatch, getState) => {
+    const state = getState();
+    const activeWallet = selectActiveTokenAccount(state);
+    const [error, tx] = await to(
+      signTransaction({
+        transactionJSON,
+        wallet: activeWallet,
+        schema: moduleCommandSchemas[joinModuleAndCommand(transactionJSON)],
+        chainID: state.network.networks.LSK.chainID,
+        privateKey,
+        senderAccount,
+      })
+    );
+    if (error) {
+      dispatch({
+        type: txActionTypes.transactionSignError,
+        data: error,
+      });
+    } else {
+      dispatch({ type: actionTypes.stakesSubmitted });
+      dispatch({
+        type: txActionTypes.transactionCreatedSuccess,
+        data: tx,
+      });
+    }
+  };
 
 /**
  * Fetches the list of votes of the host wallet.
@@ -108,15 +108,21 @@ export const stakesRetrieved = () => async (dispatch, getState) => {
   const { network, account } = getState();
   const address = account.current?.metadata?.address;
   try {
-    const votes = await getStakes({ network, params: { address } });
+    const stakes = await getStakes({ network, params: { address } });
     const validators = await getValidatorList({
-      addresses: votes.data.map(({ delegateAddress }) => delegateAddress),
+      addresses: stakes.data.map(({ delegateAddress }) => delegateAddress),
     });
-    const mapValidatorToAddress = validators.data.reduce((result, validator) => ({...result, [validator.address]: validator}), {})
+    const mapValidatorToAddress = validators.data.reduce(
+      (result, validator) => ({ ...result, [validator.address]: validator }),
+      {}
+    );
 
     dispatch({
       type: actionTypes.stakesRetrieved,
-      data: votes.data.map((vote) => ({...vote, commission: mapValidatorToAddress[vote.delegateAddress]}) ),
+      data: stakes.data.map((vote) => ({
+        ...vote,
+        commission: mapValidatorToAddress[vote.delegateAddress].commission,
+      })),
     });
   } catch (exp) {
     dispatch({
@@ -128,13 +134,11 @@ export const stakesRetrieved = () => async (dispatch, getState) => {
   }
 };
 
-
-export const useStakesRetrieved = address => {
+export const useStakesRetrieved = (address) => {
   const dispatch = useDispatch();
-  const {
-    data: sentStakes,
-    isSuccess: isSentStakesSuccess,
-  } = useSentStakes({ config: { params: { address } } });
+  const { data: sentStakes, isSuccess: isSentStakesSuccess } = useSentStakes({
+    config: { params: { address } },
+  });
 
   useEffect(() => {
     if (!isSentStakesSuccess) {
