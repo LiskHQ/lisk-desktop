@@ -1,0 +1,35 @@
+/* istanbul ignore file */
+import React from 'react';
+import { withRouter } from 'react-router';
+import { useTranslation } from 'react-i18next';
+
+import MultiStep from '@common/components/OldMultiStep';
+import TxSignatureCollector from '@transaction/components/TxSignatureCollector';
+import Dialog from '@theme/dialog/dialog';
+import { ChangeCommissionForm as Form } from '../Form';
+import Summary from '../Summary';
+import Status from '../Status';
+import styles from './ChangeCommissionDialog.css';
+
+
+export const ChangeCommission = ({ history }) => {
+  const { t } = useTranslation();
+
+  return (
+    <Dialog hasClose size="sm">
+      <MultiStep
+        className={styles.multiStep}
+        prevPage={history.goBack}
+        backButtonLabel={t('Back')}
+        // onChange={onMultiStepChange}
+      >
+        <Form />
+        <Summary />
+        <TxSignatureCollector />
+        <Status />
+      </MultiStep>
+    </Dialog>
+  );
+};
+
+export const ChangeCommissionDialog = withRouter(ChangeCommission)

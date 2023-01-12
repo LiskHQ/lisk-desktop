@@ -14,7 +14,7 @@ import TokenAmount from '@token/fungible/components/tokenAmount';
 import AmountField from 'src/modules/common/components/amountField';
 import useStakeAmountField from '../../hooks/useStakeAmountField';
 import styles from './stakeForm.css';
-import { extractValidatorCommission } from '../../utils';
+import { convertCommissionToPercentage } from '../../utils';
 
 const componentState = Object.freeze({ editing: 1, notEditing: 2 });
 const token = tokenMap.LSK.key;
@@ -70,7 +70,7 @@ const StakeRow = ({
         </div>
       </div>
       <span className={`${styles.commissionsColumn} ${styles.centerContent}`}>
-        {extractValidatorCommission(commission)}%
+        {convertCommissionToPercentage(commission)}%
       </span>
       {state === componentState.notEditing ? (
         <>
